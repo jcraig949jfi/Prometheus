@@ -1,0 +1,600 @@
+                                                                                                                                                                                                                                                           1
+
+                                         Scalable Co-Optimization of Morphology and
+                                                  Control in Embodied Machines
+
+                                                             Nick Cheney1,2, Josh Bongard3, Vytas SunSpiral4, and Hod Lipson5
+                                            1 Department of Computational Biology and Biological Statistics, Cornell University, Ithaca, NY
+
+                                                         2 Department of Computer Science, University of Wyoming, Laramie, WY
+                                                         3 Department of Computer Science, University of Vermont, Burlington, VT
+                                        4 Intelligent Robotics Group, Intelligent Systems Division, NASA Ames/SGT Inc., Mountain View, CA
+                                                       5 Department of Mechanical Engineering, Columbia University, New York, NY
+
+                                                                                            nac93@cornell.edu
+
+arXiv:1706.06133v2 [cs.AI] 12 Dec 2017     Abstract--Evolution sculpts both the body plans and nervous       that can provide the same beneficial functions if instantiated
+                                        systems of agents together over time. In contrast, in AI and         in a machine. It can yield machines that do not resemble any
+                                        robotics, a robot's body plan is usually designed by hand, and       animals currently found on earth [23], as it allows for machines
+                                        control policies are then optimized for that fixed design. The task  that are specialized for behaviors and environments that differ
+                                        of simultaneously co-optimizing the morphology and controller        from those of the model organism. Additionally, the optimiza-
+                                        of an embodied robot has remained a challenge. In psychology,        tion process can serve as a controlled and repeatable test-bed
+                                        the theory of embodied cognition posits that behavior arises         for the study of evolutionary, developmental, or behavioral
+                                        from a close coupling between body plan and sensorimotor             theory [25], [26], [4].
+                                        control, which suggests why co-optimizing these two subsystems
+                                        is so difficult: most evolutionary changes to morphology tend           However, the generalization of design automation to include
+                                        to adversely impact sensorimotor control, leading to an overall      both the optimization of robot neural controllers and body
+                                        decrease in behavioral performance. Here, we further examine         plans has proven to be problematic. While recent successes
+                                        this hypothesis and demonstrate a technique for "morphologi-         have demonstrated the potential of effective optimization for
+                                        cal innovation protection", which temporarily reduces selection      the control policies of agents with fixed morphologies [17],
+                                        pressure on recently morphologically-changed individuals, thus       [13], [27] or ­ to a lesser extent ­ the optimization of
+                                        enabling evolution some time to "readapt" to the new morphology      morphologies (body plans) for agents with minimal and fixed
+                                        with subsequent control policy mutations. We show the potential      control policies [12], [10], [1], the co-optimization of the two
+                                        for this method to avoid local optima and converge to similar        has seen very limited success [16], [8].
+                                        highly fit morphologies across widely varying initial conditions,
+                                        while sustaining fitness improvements further into optimization.        This inability to perform robot brain-body co-optimization
+                                        While this technique is admittedly only the first of many steps      at scale has been experienced and noted informally by many
+                                        that must be taken to achieve scalable optimization of embodied      researchers involved with robot optimization, yet published
+                                        machines, we hope that theoretical insight into the cause of         rarely. Thus the lack of publication is presumably because
+                                        evolutionary stagnation in current methods will help to enable       the field lacks incentives for the publication of negative
+                                        the automation of robot design and behavioral training ­ while       results [14], rather than a lack of negative results in un-
+                                        simultaneously providing a testbed to investigate the theory of      published works. Joachimczak et al. provide an anecdotal
+                                        embodied cognition.                                                  example of premature convergence in the co-optimization of
+                                                                                                             robot brain and body plan (Fig. 19 of [22]). Cheney et al. [8]
+                                                                  I. INTRODUCTION                            further analyze the phenomenon of premature convergence in
+                                                                                                             embodied machines and suggest that traditional evolutionary
+                                           Designing agile, autonomous machines has been a long-             algorithms are hindered in this setting primarily in their ability
+                                        standing challenge in the field of robotics [31]. Animals,           to perform continued optimization on the morphology of the
+                                        including humans, have served as examples of inspiration for         robot. They hypothesized that the premature convergence may
+                                        many researchers, who meticulously and painstakingly attempt         be due to an effect of embodied cognition, in which an
+                                        to reverse engineer the biological organisms that navigate even      individual's body plan and brain have an incentive to specialize
+                                        the most dynamic, rugged, and unpredictable environments             their behaviors to complement one another. This specialization
+                                        with relative ease [11], [32], [38]. However, another competing      makes improvements to either subsystem difficult without
+                                        approach is the use of evolutionary algorithms to search for         complementary changes in the other (a highly unlikely event
+                                        robotic designs and behaviors without presupposing what those        given current algorithms) and thus results in an embodied
+                                        designs and behaviors may be. These methods often take               agent which is fragile with respect to design perturbations.
+                                        inspiration from the evolutionary method itself, rather than
+                                        the exact specifications of any given organism produced by it.                                 II. BACKGROUND
+
+                                           The use of an evolutionary algorithm for automated design            Attempts to solve this problem of fully-automated robot
+                                        comes with many benefits: It removes the costly endeavour            evolution are frequently traced back to the work of Sims [34].
+                                        of determining which traits of a given organism are specific
+                                        to its biological niche, and which are useful design features
+                                                                   2
+
+This work introduced the use of evolutionary algorithms to         evolutionary methods would treat this robot as the recipient
+produce goal-directed behaviors and morphologies simultane-        of a detrimental mutation and remove it from the population.
+ously. Despite the advance this work represented, the evolved      If all such variations display an immediate detrimental fitness
+robots tended to be composed of a small number of com-             impact and are rejected (regardless of their long term poten-
+ponents (figures show a mean of 6.042 segments per robot,          tial), then the evolutionary algorithm has converged to a local
+with each typically controlled by a few neurons). It has been      optima in the search space.
+suggested that current computational power should have vastly
+increased the scale and complexity of robots evolved using            However, the newly proposed morphology would have
+Sims' and similar methods. Yet surveys of evolved robots           resulted in a robot which outperformed its predecessor, if
+(e.g. [16], [5]) fail to exhibit any significant increase in size  coupled with a controller suited to that morphology. We can
+or complexity.                                                     determine that the newly proposed morphology is superior
+                                                                   by suppressing mutations to that body plan and allowing
+   A wide range of hypotheses for the lack of scalability          readaptation of its controller to properly coordinate behavior.
+have been proposed. Some focused on a lack of efficient
+evolutionary search algorithms [20], [24], [29] or genetic            Herein lies the foundation for our proposed algorithm:
+encodings [21], [6], [10], while others pointed to a lack of       readapt each controller until the new proposed morphology
+incentives for complexity in the simple tasks and environ-         is more fit than its predecessor.
+ments [1], [7]. Yet attempts to evolve robots using methods
+designed to overcome these challenges have yet to obviously        B. Controller Readaptation
+surpass Sims' work in terms of complexity and scale. This
+work investigates a different hypotheses, first suggested in [8],     The most obvious method for modeling controller readap-
+that considers the way in which an agent's brain and body plan     tation would be to protect any lineage that has recently
+interact during the optimization process.                          experienced a mutation to the body plan by allowing it to
+                                                                   undergo several generations of evolutionary change restricted
+                            III. METHODS                           to the control subsystem. If any member of the lineage
+                                                                   achieves higher fitness than the pre-mutation ancestor during
+A. The Interdependency of Body and Brain                           that time period, the descendant is retained. Otherwise, the
+                                                                   new morphological variant dies out.
+   We investigate the notion that the specialization of brain and
+body plan to one another during evolution creates a fragile           However, it is unclear how to set the time period for this
+co-dependent system that is not easily amenable to change.         protection a priori. Surely the amount of time a controller
+This specialization creates local optima in the search space       takes to readapt to a new morphology depends on many
+and premature convergence to suboptimal designs. In this           specific features of the complexity, genetic encoding, desired
+paper, we explore a direct solution to the problem of fragile      behavior, and current ability level of the robot (which changes
+coupled systems: explicitly readapting one subsystem (e.g. the     over optimization time). Determining the correct value of this
+body plan or the brain) after each evolutionary perturbation       parameter would require a full parameter sweep over various
+to the other. The proposed method differs from a traditional       values of readaptation time for each new combination of brain,
+evolutionary algorithm, which evaluates the fitness of a newly     body, and environment. If our goal is simply to optimize a
+proposed variation immediately (i.e. with no readaptation), and    robot, then searching for this value in each unique optimization
+uses only this valuation of fitness to determine the long term     scenario is intractable.
+potential of that variation.
+                                                                   C. Proposed Method: Morphological Innovation Protection
+   As a thought experiment, consider a hypothetical robot with
+a partially optimized body plan (for example a quadrupedal            In response to the unintuitive nature of the optimal value
+form) and a partially optimized controller (for example the legs   for readaptation length, our proposed approach is free of this
+swing forward and back through the sagittal plane). Suppose        parameter. Descendants of robots that experience morphologi-
+that this controller has co-adapted to the morphology during       cal mutations are retained in the population and the number of
+evolution such that for each step forward, the robot contracts     generations that have elapsed since that mutation occurred are
+a muscle near its hip with enough force to swing one of its        tracked (referred to as the "morphological age" of the robot). If
+legs forward with just enough force to land in front of the        two individuals are found in the population such that the latter
+body and successfully take a step. Consider a variation of this    robot exhibits better performance on the desired task and has
+morphology proposed by an evolutionary algorithm in which          experienced fewer generations since a morphological mutation
+the new robot possesses longer legs but the controller has not     than the former robot, this latter robot is said to "dominate"
+changed.                                                           the former robot in this mutli-objective optimization (on "age"
+                                                                   and "fitness") ­ and the former robot is removed from the
+   If this machine were being evolved for rapid locomotion,        population. In effect, the latter robot has exhibited an ability
+having longer legs and being able to take longer strides would     to not only recover from its ancestor's morphological mutation
+be beneficial and this variation should be more successful than    but improve upon it (and others in the population). The concept
+the original design. However, during evaluation of this new        of tracking age using it as an optimization objective are
+robot, the original controller applies the same amount of force    borrowed from [20], [33]. The major difference here being
+to the now-longer leg, failing to move it, and thus frustrating    that the age refers to the length of time that a subsystem of
+the robot's ability to walk in a coordinated fashion. Current      the agent (e.g. the morphology) has remained unvaried, rather
+                                                                    3
+
+than (the original definition of) the total time since a random        This network is optimized to produce high performing mor-
+individual was introduced to the population.                        phologies by iterating through various proposed perturbations
+                                                                    to it. These include the addition or removal of a node, or edge
+   This procedure has the effect of "protecting" new mor-           to the network, as well as the mutation of the weight of any
+phologies with poorly adapted controllers, and thus we will         edge or the activation function at each node.
+henceforth refer to this procedure as "morphological innova-
+tion protection." This protection is a form a diversity mainte-     F. Soft Robot Resolution
+nance, though reduced selection pressure for newly mutated
+morphologies. Various other methods exist for encouraging              As the CPPN genetic encoding is a continuous function
+diversity (e.g. fitness sharing, crowding, random restart parallel  (mapping the location of a cell to its cell fate) it may be
+hillclimbers [18], novelty [24], or speciation [36]), however       discretized into a phenotype at any resolution (i.e. creating
+age was chosen for its simplicity of implementation, its            any number of voxels in the morphology, and a unique
+parallels to multi-timescale learning in biology, and because       controller for each voxel), and in practice this resolution is
+it helps to avoid the cost of extended control re-optimization      only limited by computational resources (as more elements are
+for non-promising morphologies ­ since the the age-pareto           more computationally expensive to simulate). In the default
+optimization allows fitness comparisons between all new             lower-resolution treatment, this discretization occurs over a
+"child" morphologies that have had equal readaptation time,         5 × 5 × 5 space. The higher-resolution robots use phenotypes
+even if they are not yet fully readapted (rather than making        created at a 10 × 10 × 10 resolution. Note that the distance
+comparisons only after a predefined amount of readaptation).        values are noted in absolute number of voxels, so higher fitness
+                                                                    values tend to be produced by phenotypes of higher resolution.
+D. Evolutionary Algorithm
+                                                                    G. Controllers and their Genetic Encoding
+   All optimization is performed by a population-based evo-
+lutionary algorithm. All trials follow a (µ, )-Evolutionary            A unique controller is optimized for each muscle cell
+Strategy [3] with µ = 25 parents and  = 25 mutants for              in the robot's morphology. For each voxel's controller, two
+a population size of 50. Trials last for 5000 generations.          parameters are optimized (the outputs of a separate CPPN with
+Crossover was not considered in this work. Mutation had a           the same inputs as before). One is the phase offset between
+50% chance of creating a variation to either the morphology         each individual cell's muscle oscillations and that of the global
+or the controller of a given robot, but not both. Other ratios      sinusoidal oscillator (which acts as a central pattern generator),
+of morphology:controller mutations were considered (1:99,           and the second is the frequency of this global clock (since
+20:80, 50:50, 80:20, and 99:1), but none showed a significant       CPPNs don't currently enable global parameters, this is done
+effect on resolving the premature convergence and resulting         by averaging the local values at each cell to produce a single
+fitness in preliminary trials without innovation protection.        global value).
+
+E. Genetic Encoding for Soft Robot Morphologies                        All controllers output a value between -1 and 1 at each time
+                                                                    step, which corresponds to a linear change in each dimension
+   Consistent with prior work studying the co-optimization of       of a muscle cell (±14% of its original length, or ±48% of its
+robot morphologies [10] and controllers [8], we choose soft         original volume), defining a robot's behavior. Passive tissue
+robots as our model system due to the open-ended complex-           cells remain at their original size (though they also deform
+ity of deformable voxel-based morphologies and distributed          based on their intrinsic compliance).
+controllers. The soft robot morphologies are encoded with
+a Compositional Pattern Producing Network (CPPN) [35].                 While this encoding is simple and straightforward, it has the
+The CPPN encoding produces the cell fate of each voxel in           ability to produce complex behaviors, such as multiple patches
+the robot through a type of neural network that takes each          of muscle groups that are in sync, counter-sync, or any real
+cell's geometric location (x, y, z Cartesian coordinates and r      valued phase offset from each other. It also has the ability to
+radial polar coordinate) and outputs a variety of "morphogens"      produce gradually varying sweeps of phase offset, resulting in
+(in this work, there is one to determine whether a cell is          propagating waves of excitation across large muscle groups.
+present in that location and one to determine whether a present     Furthermore, the optimization of the global frequency is able
+voxel should be a muscle or a passive tissue cell). Since           to produce oscillation speeds which are fine tuned to the
+nearby voxels tend to have similar coordinate inputs, they also     properties of individual morphologies (such as optimizing to
+tend to produce similar outputs from the network ­ creating         maximize the resonance of soft tissues in appendages).
+continuous muscle or tissue patches. CPPNs also produce
+complex geometric patterns, as the activation functions at             The encoding of the morphology and the controller of the
+each node can take on a variety of functions (here: sigmoid,        robot into two separate CPPN networks emphasizes the false
+sine, absolute value, negative absolute value, square, negative     dichotomy of robot brains and body plans. However, this
+square, square root, and negative square root). These func-         explicit separation allows us to make changes specific and
+tions tend to produce regular patterns and features across the      isolated to either the brain or the body. This is necessary
+coordinate inputs (for example: an absolute value node with         for the proposed algorithm, as controller readaptation requires
+an x input would produce left-right symmetry, or a sine node        iterating through controller changes without affecting the
+with a y input would produce front-to-back repetition).             morphology.
+                                                                               4
+
+H. Physics Simulation for Evaluation                              IV. RESULTS
+
+   Once the morphology and controller for a given robot are       A. The Effect of Morphological Innovation Protection on
+specified, the fitness (locomotion distance) of that robot is     Fitness
+determined by constructing and simulating that robot in the
+VoxCad soft-body physics simulator [19]. Simulations last for        For the task of locomotion ability (a standard task in
+20 actuation cycles (which may be a variable amount of time,      evolutionary robotics [5]), we first optimize the robots using
+depending on the length of the globally optimized frequency ­     the traditional method of "greedy" fitness evaluations for our
+though this method of normalizing for the number of "steps"       selection criteria (where immediate locomotion ability deter-
+taken leads to a more fair comparison than normalizing by the     mines survival in the population of candidate morphologies
+amount of time per simulation).                                   ­ i.e. with no "innovation protection"). In this setup, the
+                                                                  traditional method produces robots with an average fitness of
+I. Morphological Innovation Protection                            21.717 voxels (with 95% bootstrapped confidence (CI) interval
+                                                                  of 19.457 to 22.426 voxels).
+   In our newly proposed method we set the "morphological
+age" to zero for each new "child" that was the result of a           Additionally, we optimized robots in the same task and envi-
+morphological mutation to a current individual in the popula-     ronment setup, but this time using "morphological innovation
+tion. This means that for an individual to have a large value in  protection" for our selection method ­ in which individuals can
+their age objective, that individual must have been the result    only be out-competed by those with equal or lesser amounts
+of a large number of successive controller mutations without      of controller (re)adaptation to their current morphologies.
+any change to that robot's body plan. This setup thus allows      This treatment produces significantly more effective robots
+a simple comparison method for individuals who have had           (p = 6.067  10-6), with a mean distance travelled of 31.953
+similar amounts of controller (re)adaptation to their current     voxels (and 95% CI of 28.157 to 36.511 voxels).
+morphologies ­ as a dominated individual would have to have
+been out-competed in fitness ability by a morphology that is         The increase in fitness shows that morphological innovation
+paired with a controller that is less-well adapted to it. This    protection is a more effective way of optimizing robots, yet it
+diversity maintenance mechanism encourages the exploration        does not conclusively demonstrate that the intuition of [8] is
+of new peaks in the rugged landscape of brain-body plans          correct, as that work demonstrated the asymmetric difficulty in
+­ with the implicit assumption that unique morphologies           optimizing the morphology of a robot (as compared to optimiz-
+correspond to peaks in this landscape.                            ing its controller) and drew the hypotheses that this because the
+                                                                  morphology encapsulated the controller (acting as a translator
+   The method of age resets corresponding to morphologi-          between the "language" of the "cognitive" functions and the
+cal mutations to existing individuals differs from the prior      outside environment). While the above experiment does help
+technique (e.g. [20], [33]) of inserting completely random        to support the intuition that the controller must readapt to a
+individuals, as it allows the improvement in the fitness levels   new morphological encoding, it also introduces confounding
+of age-zero individuals over time. In the case of traditional     effects, such as the added population diversity afforded by
+age-fitness optimization, age-zero individuals are drawn from     "protection" and the added dimensionality of the search space
+the same distribution of fitness values for random genotypes      from its this protection age ­ moving search from a single-
+regardless of when they are created. However, in the case         objective to multi-objective optimization problem.
+of morphological innovation protection, age-zero individuals
+are not random and inherit many of the properties of their           To tease apart the influence of these two confounds, we
+parents ­ meaning that they show higher fitness values over       present a treatment where the controllers of the robot undergo
+time. To demonstrate this empirically, we performed linear        an equivalent protection to which the morphologies did in the
+regression on the age-zero individuals from Fig. 2 (containing    above experiment. In this treatment, individuals can only be
+morphological innovation protection), which showed a signif-      out-competed by others whose morphology has had equal or
+icant (p < 0.001) increase in fitness over time (from 18.715      lesser amounts of readaptation to their newly mutated con-
+at generation 0 to 22.916 at generation 5000). This confirms      trollers ­ deemed "controller innovation protection". This con-
+a major difference between our proposed technique and the         dition provides the potential advantages of multi-dimensional
+standard approach of age-based diversity maintenance through      search and the added diversity from temporary reductions in
+the introduction of random individuals.                           selection pressure. Yet it does not rely on the idea of a broken
+                                                                  "morphological language." In this treatment, robots locomote
+J. Statistical Analysis                                           22.049 voxels on average (95% CI of 20.726 to 22.641 voxels),
+                                                                  which fails to show a significant improvement over the single-
+   All treatments were performed for 30 independent trials,       objective case of no protection (p = 0.240), and performs
+with random seeds consistent between treatments. All plots        significantly worse (p = 1.211  10-4) than the protection of
+show mean values averaged across the most fit individual of       morphological innovations.
+30 trials for each condition with shaded areas representing
+95% bootstrapped confidence intervals of this average, and all       The fitness trajectories over evolutionary time (Fig. 1)
+p-values are generated by a Wilcoxon Rank-Sum Test [37].          demonstrate a typical logarithmic fitness improvement over
+                                                                  the first 1000 generations or so, but then show a stagnation
+                                                                  for the traditional optimization procedure without innovation
+                                                                  protection. The mean fitness value of the treatment without
+                                                                  protection shows no significant improvement (p = 0.085)
+                                                                               5
+
+                                                                               turnover of morphologies, with just 10.115 unique robot body
+                                                                               plans doing so.
+
+Fig. 1. The fitness impact (distance travelled, in voxels) over optimization      The question of how temporary reduced selection pressure
+time (in generations) for various types of brain/body plan protection mecha-   (via the morphological-age dimension) of morphological in-
+nisms. Values plotted represent the mean value of 30 independent trials, with  novation protection may help to improve overall fitness and
+95% bootstrapped confidence intervals denoted by colorized regions.            continued optimization may be best demonstrated in the pop
+                                                                               out box for Fig. 2. Here we see the current best morphology,
+from generation 1000 to 5000 (with average fitness values                      in teal. This morphology was unable to improve on itself for
+of 20.988 and 21.717 voxels, respectively). Contrary to this,                  some time, as we see its fitness value (y-xais) flatlining. This
+the treatment with morphological innovation protection shows                   "parent" morphology has a "child," a new proposed variation
+significant improvements over this time (p = 0.013) from                       of its morphology, highlighted in red. As the original fitness
+25.925 at generation 1000 to 31.953 voxels at generation 5000.                 value of this morphology falls below its parent, this indi-
+                                                                               vidual empirically shows worse performance than its parent
+   The rapid improvement in the controller innovation protec-                  ­ and thus would not be considered as a viable solution in
+tion and no protection cases during the first 1000 generations                 a traditional evolutionary method. However, since this new
+does not contradict the hypotheses of a fragile "morphologi-                   morphology does not have a controller that is well adapted to
+cal language," as the coupling between the morphology and                      it (as the controller is specialized for the previous morphology,
+controller takes time to become established ­ and would not                    in teal), morphological innovation protection does not expect
+introduce fragility into the system before then.                               this new robot to immediately outperform its parent, and keeps
+                                                                               this individual in consideration as one which could hold long
+B. The Effect of Morphological Innovation Protection on                        term potential but does not show immediate promise.
+Population Stagnation
+                                                                                  Indeed, we see that after a number of controller optimiza-
+   Perhaps more telling than the average locomotion ability                    tion iterations later (occurring in equal amounts to both the
+at the end of optimization time is the examination of the                      parent and child during this intermediate period), the child
+optimization process within each individual run. Figs. 2 and 3                 morphology (in red) overtakes the parent morphology (in teal)
+represent typical runs, and help to give an intuition of the                   ­ achieving higher fitness and demonstrating that it did indeed
+optimization process. In these figures, each randomly colored                  hold a better long term potential than its parent, despite the
+line represents a unique morphology, plotted by its locomotion                 immediate drop in fitness. As the fitness of the parent is
+ability over optimization time.                                                outperformed by the child (which has had less time to fine-tune
+                                                                               its controller to its morphology), we assume that the parent is
+   Note the continued improvement in performance of the most                   unlikely to be the most promising robot body plan in the long
+fit individual over optimization time in the case of morpho-                   run, and thus remove it from the population.
+logical innovation protection (Fig. 2) ­ which is consistent
+with the trend seen on average in Fig. 1. This is not seen                        We see this trend of "overtakes" ­ where children start out
+in the case without innovation protection (Fig. 3), where the                  with worse fitness than their parents, but eventually outperform
+best individual was found before generation 2000 ­ and by                      them ­ continuing throughout this run (as the blue child then
+generation 1000, fitness has reached 99.6% of its final value.                 overtakes the red parent, and green overtakes blue in the pop
+                                                                               out of Fig. 2). We see morphological overtakes significantly
+   Consistent with the above observation, we see that the most                 (p  6.939  10-10) more often in runs with morphological
+fit individual in Fig 2 changes rapidly, continually turning                   innovation protection (an average of 76.714 overtakes in the
+over in the trial with morphological innovation protection. As                 first 5000 generations) than without any innovation protection
+each color in the figure represents a unique morphology, we                    (where there are only 1.432 overtakes) or in the trials with
+notice that a wide variety of different morphologies hold the                  controller innovation protection (where there are just 1.333
+title of "best-so-far". On average, in runs with morphological                 morphological overtakes on average).
+innovation protection, 24.179 unique morphologies are the
+best-so-far at some point in optimization, where the runs                         Interestingly, the number of morphological overtakes in the
+without protection show significantly (p = 1.555  10-6) less                   morphological innovation protection treatment is not signif-
+                                                                               icantly different (p = 0.533) than the number of controller
+                                                                               overtakes in the controller innovation protection treatment
+                                                                               (where a "child" is a robot with a new controller variation,
+                                                                               that readapts its morphology to catch back up to its "parent"
+                                                                               controller ­ which happens 74.542 times on average). Com-
+                                                                               bined with the finding in Fig. 1 that morphological innovation
+                                                                               protection outperforms the other two treatments, this suggests
+                                                                               a greater potential for the relative importance of morphological
+                                                                               overtakes over controller overtakes ­ and again reinforces the
+                                                                               asymmetry between morphologies and controllers from an
+                                                                               optimization perspective.
+                                                                                 6
+
+Fig. 2. A single optimization trial featuring morphological innovation           Fig. 3. The fitness over time of a single optimization trial with the same initial
+protection. Each unique morphology is represented by a random color. The         conditions as Fig. 2, but without any innovation protection. Again, each unique
+pop out in this figure highlights an example of an "overtake" where the new      color represents a unique morphology. The prevalence of colored dots filling
+child morphology (in red) initially performs worse than its parent morphology    the space underneath the best performing individual, which represent new
+(in teal), only to outperform that previous morphology after successive control  morphologies which initially performed worse than the current best individual
+optimization to both the parent and child.                                       and were thus rejected and thrown out of the population (as opposed to those
+                                                                                 individuals which were protected and eventually led to "overtakes" in Fig. 2).
+
+C. The Effects of Morphological Innovation Protection on the                     pronounced in Fig. 6.
+Progression of Morphologies over Evolutionary Time
+                                                                                 D. The Potential for Convergence Across Initial Conditions
+   Visual inspection of actual morphologies over evolution-
+ary time further supports the proposed method's improved                            To explore the question of scale, we apply morphological
+optimization efficiency and ability to escape local optima.                      innovation protection to the evolution of robots with higher
+Fig. 4 shows the current best individual at various points over                  resolution morphologies ­ up to 103 = 1000 voxels rather
+evolutionary time for each of the top 10 runs in the treatment                   than the lower resolution morphologies (53 = 125 voxels)
+with morphological innovation protection. Note how the fitness                   employed in the previous experiments.
+values of the robots increase over time (from left to right, and
+indicated by the color of each robot). Also note how the final                      The increased number of voxel cells that make up each
+morphology of some robots (e.g. runs 24, 27, 18, 11, and                         robot allows for greater expressiveness and finer details in
+16) result in identical morphologies, despite starting from a                    its morphology. However this also presents a challenge for
+range of starting morphologies and not finding this convergent                   the above algorithm. As the number of cells increases, the
+morphology until hundreds or thousands of generations into                       effect of changing a single voxel (the minimum morphological
+the optimization process.                                                        variation) is reduced. In the extreme, the concept of readapt-
+                                                                                 ing controllers since the last "morphological change" is less
+   In contrast to the sustained turnover of morphologies shown                   straightforward ­ as increasingly small changes can modify
+above, Fig. 5 shows the snapshots of the 10 best runs in the                     minor details of the morphology without affecting its overall
+treatment without innovation protection. Notice how the colors                   function.
+of the robots tend to show little change over the evolutionary
+process, mirroring the stagnation shown in Fig. 1. While                            To help address the problem of non-functional morphology
+convergence of the final morphologies is present here as well,                   changes, we introduce a parameter to represent the minimum
+the gross morphologies found here (variants of the a full cube                   percentage of voxels that must be varied in order to qualify
+with no appendages) are found early on in the search ­ and                       as a "gross morphological change". It is important to note
+often provided in the set of random initial morphologies. In                     that this parameter is specific to the voxel-based soft robot
+this treatment, gross morphological changes tend to be absent                    implementation employed in this work ­ and thus the optimal
+after generation 50 (just 1% into the full 5000 generations).                    setting of this parameter is not of great importance for its
+                                                                                 generalization outside of this soft robot encoding. But the
+   The differences between Figs. 4 and 5 suggests that the                       general concept of a threshold for the minimum morphological
+traditional method without morphological innovation protec-                      change is a universal concept that could be applied to any robot
+tion tends to converge prematurely to morphologies early                         instantiation, as necessary.
+in the evolutionary search, while morphological innovation
+protection may allow search to escape these local optima                            In the case of robots with higher-resolution morphologies,
+and converge to "more global" optima. The convergence of                         we find that resetting the "morphological age" of an individual
+morphologies across varied initial conditions is even further                    only after a mutation that changes more than 20% of their
+                                                                                 voxels produces optimal results. The value was found via a
+                                                                                 parameter sweep (of minimum age-resets of 0%, 5%, 10%,
+                                                                                 7
+
+Fig. 4. The progression of morphologies over evolutionary time with              Fig. 5. The progression of morphologies over evolutionary time for the top 10
+morphological innovation protection. Rows represent the top 10 (out of 30)       performing runs with no innovation protection. The color legend and column
+performing runs at generation 5000, while columns represent snapshots of         snapshots times are identical to Fig. 4.
+the morphology at various points during the optimization process. Note how
+some of the runs converge upon the same morphology (a front and back                Visualization of these soft robot morphologies over time
+"legged" robot), despite starting from varying initial conditions. The color of  in the trials with a 20% morphological change threshold is
+the morphologies represent their fitness values.                                 depicted in Fig. 6 and compared to the case with no protection
+                                                                                 in Fig. 7. The ability of evolution to converge to the same
+20%, 30%, 40%, and 50% of voxels changed). We also inves-                        high-performing morphology across many independent trials,
+tigated a minimum change threshold for controller innovation                     despite starting from different initial conditions suggests that
+protection and found that its benefit falls as the threshold                     (in this particular soft robot implementation) the inclusion
+increases (showing optimal performance with no threshold),                       of thresholded morphological innovation protection is able to
+so we ignore the threshold for minimum controller change                         escape the local optima around these starting conditions and
+here.                                                                            find "more global" optima in this search space.
+
+   In this setting, basic morphological innovation protection                       In the case without any protection, search stagnates quickly
+(with no threshold) travels significantly farther (60.728 vox-                   and again appears unable to escape the local optima near its
+els) than both the case with no protection (32.575 voxels,                       initial conditions (Fig. 7).
+p = 1.208  10-4) and the case with controller innovation
+protection (35.375 voxels, p = 0.018). While trials employing                       Interestingly, the low resolution soft robot implementation
+the threshold on morphological changes did achieve higher                        (in Figs. 4 and 5) does not benefit from the inclusion of a
+average fitness than the case of morphological innovation                        threshold. As presumably the more discrete construction of
+protection without a threshold (where robots traveled 43.340                     these robots mean that all mutations are large enough to create
+voxels on average), this difference was not significant at the                   a meaningful "morphological change".
+p = 0.05 level (p = 0.063).
+                                                                                                            V. DISCUSSION
+   As a side note, in other more difficult trials (where the robots
+need to optimize a closed-loop neural network controller ­                          The above results demonstrate a new method for entire robot
+not depicted visually due to space constraints), trials with the                 evolution (i.e. both brain and body-plan) that is more scalable
+morphological change threshold significantly outperform all                      in terms of continued optimization for longer periods of time
+other treatments (as they travel 31.313 voxels ­ while trials                    and better resulting fitness than the traditional evolutionary
+with no protection, controller protection, and morphological                     methods. This method for "morphological innovation protec-
+innovation protection with no threshold travel 13.941, 15.356,                   tion" helps prevent premature convergence to the many local
+and 17.224 voxels, respectively; all p  7.287  10-8).
+                                                                                8
+
+Fig. 6. The progression of morphologies over evolutionary time in the           Fig. 7. The progression of high-resolution morphologies over evolutionary
+setting with high-resolution morphologies and evolution with morphological      time for the top 10 performing runs with no innovation protection. The color
+innovation protection with a 20% threshold. The rows represent the top          legend and column snapshots times are identical to Fig. 6.
+10 (of 30) independent trials, while the columns represent the progression
+over evolutionary time. Color represent the fitness values of the robot (their  fitness landscape.
+locomotion speed), with warmer values depicting more fit individuals. Note         Despite the significant improvement to our ability to si-
+the convergence of all 10 of these runs to the same final morphology.
+                                                                                multaneously optimize the brain and body plan of embodied
+optima which appear to be present in the rugged search space                    robots, there is much work still to be done. Firstly, the
+of robot morphologies and controllers [8].                                      proposed method was only applied to one class of robot. This
+                                                                                class may actually represent the simplest form of brain-body
+   The hypothesis from [8] that the fragile co-optimization                     co-optimization because the distributed sensing, actuation, and
+of brain and body plan caused by specialization of one sub-                     information processing that the cellular soft robot paradigm
+component to the other is consistent with the findings above.                   was designed to possess helps to blur the line between physical
+This work also reveals that there is an asymmetry between the                   interactions of the morphology with the environment and
+brain and body plan: protecting innovations to the morphology                   information processing of a controller [10], [9].
+leads to more effective optimization that protecting innovations
+to the controller.                                                                 In the case of centralized controllers and robots composed
+                                                                                of rigid components, topological (rather than parametric)
+   The benefits of the temporarily reduced selection pressure                   changes to the cognitive architecture would be required for
+provided by morphological innovation protection suggests that                   control readaptation if morphological mutations add or remove
+the long-term potential and immediate fitness impact of a                       physical components (e.g. limbs). Future work should explore
+morphological mutation are not always correlated. Thus, we                      the effect of morphological innovation protection in such
+require a form of diversity maintenance to help evolution                       a paradigm, where there is the potential for morphological
+to rate proposed solutions based on their long-term potential                   changes to more drastically change the function of the robot
+rather than on immediate fitness impact. As was shown here,                     ­ and thus for readaptation to those morphologies to play an
+using morphological innovation protection for this purpose can                  even more critical role in optimization.
+help to reduce premature convergence in the search space and
+stagnation at suboptimal values.                                                   In these experiments, the genotype encoding of the soft
+                                                                                robots was modularized such that one part of the genome
+   We believe this to be the first example of a design automa-                  dictated the shape and material properties of the robot and a
+tion algorithm for robotics that considers the interdependence                  separate part encoded the actuations in the form of volumetric
+of neural controllers and body plans arising from the psy-                      deformations of the voxels during behavior. In these robots
+chological theory of embodied cognition [30] and uses this                      (and those with even more complex phenotypes), one can
+intuition to propose a method to escape local optima in the
+                                                                   9
+
+envision different splits as to what constitutes morphology and    of this technique to escape local optima in the search space
+control ­ and what qualifies as a "morphological change" in        by demonstrating the convergence to a similar morphology
+this proposed algorithm. It would be of interest to investigate    across many independent trials from randomly initial condi-
+the effect of various splitting points of this dichotomy on the    tions. While we hope that this technique will be surpassed in
+efficacy of morphological innovation protection.                   the future by a developmental process with feedback loops
+                                                                   between the body and brain, we propose the above algorithm
+   Furthermore, the very idea of a distinct split between body     as a short term improvement over the current techniques for the
+and brain is a false dichotomy, as information processing and      co-optimization of morphology and control in virtual creatures.
+physical processes happen throughout the agent [2]. Rather
+than various mutation operators which affect only the "brain"                           VII. ACKNOWLEDGMENT
+or the "body-plan" of a robot, we desire agents that grown
+and develop as the result of rich crosstalk and feedback loops        We thank NASA Space Technology Research Fellow-
+between the processes responsible for creating both of these       ship #NNX13AL37H and Army Research Office Contract
+components (creating complex adaptive systems like we see          #W911NF1610304 for support, Steve Strogatz for advice,
+in biological organisms).                                          Kathryn Miller for copy editing, and the UVM Morphology,
+                                                                   Evolution & Cognition Lab for feedback.
+   How this proposed method relates to, and informs, bio-
+logical analogs not entirely clear, but some rough analogies                                    REFERENCES
+can be drawn. For example, the observation that brains learn
+and adapt at a much faster rate than bodies grow fits into          [1] J. E. Auerbach and J. C. Bongard. Environmental influence on the
+this paradigm, as does the even slower change of gross                   evolution of morphological complexity in machines. PLoS Comput Biol,
+morphological features over evolutionary time. In this way, the          10(1):e1003399, 2014.
+readaptation of controller strategies for varying body plans is
+built into the neuroplasticity of the brain.                        [2] F. Baluska and M. Levin. On having no head: Cognition throughout
+                                                                         biological systems. Frontiers in Psychology, 7:902, 2016.
+   One could also imagine periods of evolutionary time when
+an entire species is under relatively little morphological          [3] H.-G. Beyer and H.-P. Schwefel. Evolution strategies­a comprehensive
+selection pressure before an environmental shock suddenly                introduction. Natural computing, 1(1):3­52, 2002.
+reapplies that pressure. Also possible are periods of a sin-
+gle individual's lifetime when selection pressure varies: For       [4] J. Bongard. Morphological change in machines accelerates the evolution
+example, human infants may not be selected highly for their              of robust behavior. Proc. of the National Academy of Sciences,
+locomotion speed, as their parents tend to physically carry and          108(4):1234­1239, 2011.
+protect them early in life.
+                                                                    [5] J. C. Bongard. Evolutionary robotics. Comm. of the ACM, 56(8):74­83,
+   We do not believe that the methods introduced here are                2013.
+restricted to this particular domain. The above algorithm is
+simple to implement (requiring only: an age counter, a check        [6] J. C. Bongard and R. Pfeifer. Evolving complete agents using artificial
+for variations in brain and/or body for each mutation, and ­             ontogeny. In Morpho-functional Machines: The new species, pages 237­
+optionally ­ a criterion for the minimal gross morphological             258. Springer Japan, 2003.
+change), and thus we believe it will be widely applicable.
+Future work will test this supposition.                             [7] N. Cheney, J. Bongard, and H. Lipson. Evolving soft robots in tight
+                                                                         spaces. In Proceedings of the 2015 Annual Conference on Genetic and
+   Due to the recent interest in co-optimization of neural               Evolutionary Computation, pages 935­942. ACM, 2015.
+network topology and weights [15], [28], we should also note
+that this work ­ an agent's controller embodied within its mor-     [8] N. Cheney, J. Bongard, V. SunSpiral, and H. Lipson. On the difficulty of
+phology ­ is closely related to that of neural network's weights         co-optimizing morphology and control in evolved virtual creatures. In
+embodied within its topology. Future work will show whether              ALIFE XV, The Fifteenth International Conference on the Synthesis and
+the method proposed here will show similar optimization gains            Simulation of Living Systems, volume 15, pages 226­233. MIT Press.
+in the design of neural network topologies as well.
+                                                                    [9] N. Cheney, J. Clune, and H. Lipson. Evolved electrophysiological soft
+                          VI. CONCLUSION                                 robots. In ALIFE 14: The Fourteenth Conference on the Synthesis and
+                                                                         Simulation of Living Systems, volume 14, pages 222­229, 2014.
+   We demonstrate an example of a robot design automa-
+tion algorithm that considers the interdependence of neural        [10] N. Cheney, R. MacCurdy, J. Clune, and H. Lipson. Unshackling
+controllers and body plans (due to the theory of embodied                evolution: evolving soft robots with multiple materials and a powerful
+cognition) on the optimization process. We use this intuition to         generative encoding. In Proc. of the 15th Genetic and Evol. Comp.
+temporarily reduce selection pressure on newly mutated robot             Conf., pages 167­174. ACM, 2013.
+morphologies, thus allowing the agents to readapt their con-
+trollers and better escape local optima in the fitness landscape.  [11] J. Chestnutt, M. Lau, G. Cheung, J. Kuffner, J. Hodgins, and T. Kanade.
+We have shown that this technique ­ deemed "morphological                Footstep planning for the honda asimo humanoid. In Robotics and Au-
+innovation protection" ­ produces evolutionary optimization              tomation, 2005. ICRA 2005. Proceedings of the 2005 IEEE International
+which delays premature convergence and stagnation, and re-               Conference on, pages 629­634. IEEE, 2005.
+sults in more efficient evolved robots. We showcase the ability
+                                                                   [12] S. Collins, A. Ruina, R. Tedrake, and M. Wisse. Efficient bipedal
+                                                                         robots based on passive-dynamic walkers. Science, 307(5712):1082­
+                                                                         1085, 2005.
+
+                                                                   [13] A. Cully, J. Clune, D. Tarapore, and J.-B. Mouret. Robots that can adapt
+                                                                         like animals. Nature, 521(7553):503­507, 2015.
+
+                                                                   [14] D. Fanelli. Negative results are disappearing from most disciplines and
+                                                                         countries. Scientometrics, 90(3):891­904, 2011.
+
+                                                                   [15] C. Fernando, D. Banarse, C. Blundell, Y. Zwols, D. Ha, A. A. Rusu,
+                                                                         A. Pritzel, and D. Wierstra. Pathnet: Evolution channels gradient descent
+                                                                         in super neural networks. arXiv preprint arXiv:1701.08734, 2017.
+
+                                                                   [16] T. Geijtenbeek and N. Pronost. Interactive character animation using
+                                                                         simulated physics: A state-of-the-art review. In Computer Graphics
+                                                                         Forum, volume 31, pages 2492­2515. Wiley Online Library, 2012.
+
+                                                                   [17] T. Geijtenbeek, M. van de Panne, and A. F. van der Stappen. Flexible
+                                                                         muscle-based locomotion for bipedal creatures. ACM Transactions on
+                                                                         Graphics (TOG), 32(6):206, 2013.
+
+                                                                   [18] V. S. Gordon and D. Whitley. Serial and parallel genetic algorithms as
+                                                                         function optimizers. In ICGA, pages 177­183, 1993.
+
+                                                                   [19] J. Hiller and H. Lipson. Dynamic simulation of soft multimaterial 3d-
+                                                                         printed objects. Soft Robotics, 1(1):88­101, 2014.
+                                                                                                                                                                                                                            10
+
+[20] G. S. Hornby. Alps: the age-layered population structure for reducing
+      the problem of premature convergence. In Proceedings of the 8th annual
+      conference on Genetic and evolutionary computation, pages 815­822.
+      ACM, 2006.
+
+[21] G. S. Hornby and J. B. Pollack. Body-brain co-evolution using l-
+      systems as a generative encoding. In Proceedings of the 3rd Annual
+      Conference on Genetic and Evolutionary Computation, pages 868­875.
+      Morgan Kaufmann Publishers Inc., 2001.
+
+[22] M. Joachimczak, R. Suzuki, and T. Arita. Artificial metamorphosis:
+      evolutionary design of transforming, soft-bodied robots. Artificial life,
+      2016.
+
+[23] C. G. Langton et al. Artificial life. Addison-Wesley Publishing Company
+      Redwood City, CA, 1989.
+
+[24] J. Lehman and K. O. Stanley. Evolving a diversity of virtual creatures
+      through novelty search and local comp. In Proc. of 13th Genetic &
+      Evol. Comp. Conf, pages 211­8. ACM, 2011.
+
+[25] R. E. Lenski, C. Ofria, T. C. Collier, and C. Adami. Genome com-
+      plexity, robustness and genetic interactions in digital organisms. Nature,
+      400(6745):661­664, 1999.
+
+[26] R. E. Lenski, C. Ofria, R. T. Pennock, and C. Adami. The evolutionary
+      origin of complex features. Nature, 423(6936):139­144, 2003.
+
+[27] S. Levine, C. Finn, T. Darrell, and P. Abbeel. End-to-end training of deep
+      visuomotor policies. Journal of Machine Learning Research, 17(39):1­
+      40, 2016.
+
+[28] R. Miikkulainen, J. Liang, E. Meyerson, A. Rawal, D. Fink, O. Francon,
+      B. Raju, A. Navruzyan, N. Duffy, and B. Hodjat. Evolving deep neural
+      networks. arXiv preprint arXiv:1703.00548, 2017.
+
+[29] J.-B. Mouret and J. Clune. Illuminating search spaces by mapping elites.
+      arXiv preprint arXiv:1504.04909, 2015.
+
+[30] R. Pfeifer and J. C. Bongard. How the body shapes the way we think:
+      a new view of intelligence. MIT press, 2006.
+
+[31] R. Pfeifer, M. Lungarella, and F. Iida. Self-organization, embodiment,
+      and biologically inspired robotics. science, 318(5853):1088­1093, 2007.
+
+[32] M. Raibert, K. Blankespoor, G. Nelson, R. Playter, and T. B. Team.
+      Bigdog, the rough-terrain quadruped robot. In Proceedings of the 17th
+      world congress, volume 17, pages 10822­10825. Proceedings Seoul,
+      Korea, 2008.
+
+[33] M. Schmidt and H. Lipson. Age-fitness pareto optimization. In Genetic
+      Programming Theory and Practice VIII, pages 129­146. Springer, 2011.
+
+[34] K. Sims. Evolving virtual creatures. In Proceedings of the 21st annual
+      conference on Computer graphics and interactive techniques, pages 15­
+      22. ACM, 1994.
+
+[35] K. O. Stanley. Compositional pattern producing networks: A novel
+      abstraction of development. Genetic Programming and Evolvable
+      Machines, 8(2):131­162, 2007.
+
+[36] K. O. Stanley and R. Miikkulainen. Evolving neural networks through
+      augmenting topologies. Evolutionary computation, 10(2):99­127, 2002.
+
+[37] F. Wilcoxon and R. A. Wilcox. Some rapid approximate statistical
+      procedures. Lederle Laboratories, 1964.
+
+[38] R. J. Wood. The first takeoff of a biologically inspired at-scale robotic
+      insect. IEEE transactions on robotics, 24(2):341­347, 2008.
+

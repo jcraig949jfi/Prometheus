@@ -1,0 +1,361 @@
+Finding Needles in Haystacks is Harder with Neutrality.
+
+                                                 M. Collins CISA
+
+                                                         Edinburgh University
+                                                                 Scotland
+
+                                              mcc@dcs.ed.ac.uk
+
+ABSTRACT                                                                                  of a CGP style random walk algorithm and a random re-
+                                                                                          sampling algorithm, using the same parameters and repre-
+This research presents an analysis of the reported successes                              sentation. We were unable to repeat the same performance
+of the Cartesian Genetic Programming method on a sim-                                     as reported for the CGP, but are able to show that all CGP
+plified form of the Boolean parity problem. We show the                                   based sampling methods - including the unrepeated reported
+method of sampling used by the CGP is significantly less                                  performance - are underperforming in terms of solutions per
+effective at locating solutions than the solution density of                              sample when the solution density is considered.
+the corresponding formula space would warrant.
+                                                                                             We also implement and test a trivial random sampling
+   We present results indicating that the loss of performance                             algorithm which uses a fully expressed genotype. We show
+is caused by the sampling bias of the CGP, due to the neu-                                that this algorithm considerably exceeds expectations un-
+trality friendly representation. We implement a simple in-                                expectedly performing better than random sampling. An
+tron free random sampling algorithm which performs con-                                   analysis of how simply removing introns from the represen-
+siderably better on the same problem and then explain how                                 tation can produce such a result is provided.
+such performance is possible.
+                                                                                          2. PREVIOUS WORK
+Categories and Subject Descriptors
+                                                                                             Previous work by Langdon and Poli [3] into the structure
+I.2 [ARTIFICIAL INTELLIGENCE]: Automatic Pro-                                             of solutions to Boolean problems, including a special form
+gramming; D.2.8 [Software Engineering]: Metrics--com-                                     of the parity problem using a reduced operator set of only
+plexity measures, performance measures                                                    the xor eq operators indicated the solution density in the
+                                                                                          space of formulas tended to a limit. Hereafter this special
+General Terms                                                                             form of the Boolean parity problem which is solved using
+                                                                                          only eq and/or the xor operator will be referred to as the
+Algorithms                                                                                'reduced Boolean parity problem' to distinguish it from the
+                                                                                          version with unrestricted logical operators.
+Keywords
+                                                                                             Yu and Miller used the reduced Boolean parity problem as
+Reduced Boolean Parity, Cartesian Genetic Programming,                                    a test case for the CGP algorithm. CGP used a representa-
+Search Space                                                                              tion which supports introns, the belief being that the introns
+                                                                                          and the 'neutrality' which they permit could be exploited by
+1. INTRODUCTION                                                                           the search algorithm.
+
+   This paper investigates the expected and actual success                                   Previous work [1, 2] has provided and empirically proved
+rates of the Cartesian Genetic Programming (CGP) algo-                                    the accuracy of a method for counting the number of solu-
+rithm as reported by Yu and Miller in [7]. The CGP system                                 tions to the reduced Boolean parity problem in the space
+has gained attention following its performance on certain                                 of all possible formulas. This gives a method for calculat-
+types of Boolean parity problems, a classic test problem in                               ing the number of solutions which are in existence in the
+both Evolutionary Algorithm and Evolutionary Hardware                                     space sampled by the algorithms. This work supported the
+research.                                                                                 findings of Langdon and Poli and gave exact results for the
+                                                                                          solution density and the limit.
+   We compare the reported performance of the CGP algo-
+rithm on the Boolean parity problem to the performance                                    3. REPORTED PERFORMANCE
+
+Permission to make digital or hard copies of all or part of this work for                    The CGP has performance reported for the 5 8 10 and
+personal or classroom use is granted without fee provided that copies are                 12 parity problems. We will concentrate on the 12 parity
+not made or distributed for profit or commercial advantage and that copies                problem, since this is a) the hardest of the reduced Boolean
+bear this notice and the full citation on the first page. To copy otherwise, to           parity problems for which CGP results are reported, b) Yu
+republish, to post on servers or to redistribute to lists, requires prior specific        and Miller reported the failure of random sampling on this
+permission and/or a fee.                                                                  problem see ([7] page 5, table 1), and, c) Yu and Miller
+GECCO'05, June 25­29, 2005, Washington, DC, USA.                                          obtained an outstanding >55 % success rate from a hundred
+Copyright 2005 ACM 1-59593-010-8/05/0006 ...$5.00.                                        runs, each of a mere 10,000 iterations. We use only reported
+                                                                                          results for comparison in this investigation.
+
+                                                                                    1613
+4. REPRESENTATION ISSUES                                                  from unit 3) where letters represent references to the p in-
+                                                                          puts and numbers represent references to the output of pre-
+   In the Boolean parity problem the input alphabet I of                  vious units. The actual active expression of this genotype is
+size |I| is a set of distinct Boolean values {I1, ..., I|I|}, cor-        A eq B eq E.
+responding to the parity of the problem.
+                                                                             The significant feature of the CGP representation is that
+4.1 The space of all possible formulas                                    the genotype implicitly supports 'neutral' mutations. In-
+                                                                          trons in CGP are sections of the genotype which are left out
+   In the reduced Boolean p-parity problem, the input alpha-              of the interpretation due to simply not being included in the
+bet is p elements, and the function set is either {xor,eq}                chain of references from the chosen output gate. Mutation
+or simply only {eq}. The number of possible arrangements                  of the introned code has no effect on the expression of the
+using from 1 up to FMax functions is:                                     genotype or the phenotype and is termed 'neutral'. Neutral
+                                                                          movement in the genotype is hypothesised to aid search by
+             FM ax                                                        allowing small mutations to accumulate to create large and
+                                                                          complex genotype changes. These changes can then be easily
+                          2i pi+1                  (1)                    brought into and removed from the phenotype by relatively
+                                                                          small mutations in referencing code.
+             i=1
+                                                                             Since the CGP representation has introns as an enevitable
+   Where an example formula constructed using 2 functions                 part of its representation, it has a bias towards representing
+and an alphabet of 3 inputs is: I1 eq I2 eq I3 and is a                   smaller solutions more frequently than a representation in
+solution to the 3 parity problem. Another formula but this                which all the code was expressed: There is no one to one
+time constructed with 3 functions, I1 eq I2 eq I3 eq I1 is                mapping from the formula which are represented by CGP
+not a solution to the 3 parity problem.                                   solutions and the space of possible formula. The question
+                                                                          is, does this help or hinder? As a benchmark for researching
+4.2 The number of solutions                                               neutrality the reduced Boolean parity problem is actually a
+                                                                          strange choice - due to the fitness function, all movement ex-
+   The number of formulas which are solutions to the re-                  cept that which finds a solution is score neutral. Differences
+duced Boolean p parity problem for all possible functions                 in performance between the CGP and other tactics on the
+referencing up to a maximum of n inputs is shown in fig-                  same landscape must then be a function of the effect of neu-
+ure 1. Please see earlier work in [1, 2] for an explanation of            trality on the sampling strategy, and not due to permitting
+the derivation of this equation and empirical evidence of its             score neutral movement.
+accuracy.
+                                                                          5. THE CONTEXT OF THIS
+4.3 The CGP representation
+                                                                               INVESTIGATION
+   In the reported CGP representation the genotypes are
+composed of sequences of integer triples, each of which rep-                 The aim of this investigation is to determine if the CGP
+resents a unit equivalent to a reprogramable gate or cell.                representation is better or worse at generating solutions than
+The first integer represents the gate type, though the re-                one would have a right to expect from a given solution den-
+ported work on the 12 parity problem only used one gate                   sity.
+type. The second and the third integers represent the con-
+nections to either one of the 12 parity inputs or the outputs                Previous work [1, 2] has provided calculations for the num-
+of previous gates. The output of the gate is then the result              ber of solutions present in the space of possible functions.
+of applying the operation represented by the gate type to                 For Boolean formulas using between 1 and 100 operations,
+the inputs referenced by the gate. The values of the input                the solution density of the reduced Boolean 12 parity prob-
+references are limited to enforce a feedforward connectivity              lem space is 0.0019531 percent for two operator types, and
+which with a fixed interpretation order removes the require-              0.003756 percent for one operator type. Since the reduced
+ment for a clock and prevents looping. The final output is                Boolean search space is devoid of fitness gradient clues, and
+determined by selecting one of the gates and tracing back                 consequently search is unguided, this represents the best
+the connections to previous gates and inputs, which are then              expected performance for an algorithm which samples the
+evaluated in the logical order.                                           space without bias.
+
+Unit 1       Unit 2                Unit 3  Output                            In [7] Yu and Miller report CGP has a peak success rate
+ EQ           EQ                    EQ                                    of over 55% on the reduced Boolean 12 parity problem. The
+                                                                          average success rate is approximately 45% for the optimal
+Input Input  Input Input  Input                                           combination of parameters. These results are achieved using
+ AB           CD           E                                              the CGP algorithm over 10,000 iterations, which is a sample
+                                                                          of at most 40,000 points.
+Figure 2: Interpretation of a CGP genotype is de-
+pendent upon the unit selected to generate the out-                          A search using one operator type (EQ), sampling evenly
+put and the subsequent linkage of the units. Where                        from the search space of possible formulas until finding a so-
+units are not linked to the output unit (here marked                      lution, performing 40,000 samples has an expected success
+with colour) they are introns and candidates for neu-                     rate of 1 - (1 - 0.00003756)40000 = 0.778. This contrasts
+tral mutations.                                                           with the empirically obtained expectation of just over 0.55
+                                                                          which was reported for the CGP. The difference in perfor-
+   Figure 2 shows a simple CGP arrangement correspond-                    mance is then a consequence of the mapping imposed by the
+ing to the genotype (eq,A,B)(eq,C,D)(eq,1,E) (interpreted                 CGP implicitly neutral representation and the CGP search
+                                                                          tactics.
+
+                                                                    1614
+¡ ¢ n          ¤ ¥ ¦ ¦ n!
+                                                                || p -  b-1  ||   (b    =  s)
+     £ 2(n-1)                                                           c=0  b=1
+               ||
+                                                                        ||       =  s)
+               ¦ §©¨  a=1                                               d=1
+i=p            (2a  +  1)!                                      b=1          (d
+
+Where n is the maximum number of inputs, p is the parity and  represents the set of integer partitions of (n - p)/2.
+
+Figure 1: The number of solutions in formula space of the reduced Boolean parity problem
+
+6. THE EFFECT OF AN IMPLICITLY                                       CGP algorithm. Figures 4(a) and 4(b) show the distribu-
+                                                                     tion of samples as performed by; the CGP algorithm, and
+     NEUTRAL REPRESENTATION                                          by random sampling of the 1000 unit CGP representation
+                                                                     space.
+   The CGP representation method encourages a simple graph
+structure, in which functional sequences are established by             Notice that no representation has a larger effective size
+chaining outputs of earlier units to inputs of later ones. In-       than 150 units - a vast amount of the space is not sampled.
+evitably some sections of the genotype are not interpreted,          Smoothing out the sampling of the representation space re-
+and it is these sections in which neutral mutation is expected       duces the amount of samples which are wasted on sampling
+to occur, though due to the scoring function of the reduced          formulas less than 11 operators in length. This has a notica-
+Boolean parity problem, all mutations except those which             ble effect on the success rate of the algorithm, which changes
+create solutions are score neutral. Using some of the geno-          from approximately 20% to approximately 90% as the sam-
+type to represent introns shortens the expressions which can         pling method is changed from the CGP controlled random
+be composed for any given genotype length. This in turn              walk to independant random sampling of the CGP space.
+has an interesting effect on the ability of CGP style rep-
+resentations to sample the reduced Boolean formula space                Using the CGP representation and the CGP search strat-
+effectively.                                                         egy we have been unable to recreate the original results. The
+                                                                     best results we obtained using the 100 unit CGP represen-
+6.1 Candidate generation in CGP                                      tation and the (1+4) CGP strategy over 10,000 iterations
+                                                                     (40,000 samples) was 22% of runs resulting in a solution
+   Irrespective of the quantity of the genotype that is ex-          being located, and are frequently much lower.
+pressed, all CGP candidates have a genotype which is fully
+defined for all units. Assuming the use of a suitable random         6.2 Randomly sampling CGP representations
+selection method, the following proceedure may be used to
+create a candidate solution to the reduced Boolean parity               The significance of the inheritability of traits from the
+problem in the CGP representation:                                   parent to effectiveness of the CGP search can be tested by
+                                                                     comparing the performance of CGP to that of an algorithm
+set the output of the expression to:                                 which simply samples from the CGP representation space.
+    the output of a randomly selected unit.
+                                                                        The random sampling of the CGP representation shares
+for each unit, do                                                    essentially the same function length distribution as the sam-
+    set the type of the unit to:                                     pling by the CGP algorithm. Figure 5 shows the distribution
+           a randomly selected gate type                             of samples generated at random using the CGP representa-
+    set each of the input connections to:                            tion. Comparing figures 3 and 5 shows the exact nature of
+           a randomly selected choice from all the                   the sampling - in terms of the proportions of representation
+           previous gate outputs and the initial                     lengths sampled is largely independant of the CGP search
+           input lines                                               mechanism for representations of this length.
+
+done                                                                 6.3 Randomly sampling non-CGP
+                                                                           representations
+   The CGP population strategy is a (1 + ) evolution strat-
+egy with  = 4 samples being created by mutating the sole                Replacing the CGP representation with one that does not
+parent. Samples replace the parent if certain criteria regard-       permit introns allows us to compare the effect of using a
+ing active genotypic difference and score are met, (see [7, 8,       CGP representation with a representation which does not
+4, 5] for details). In the reduced Boolean parity problem, the       permit 'neutral' genotype changes. All changes to the geno-
+score is always the same unless a solution is found. As re-          type in such representation will be interpreted, though it
+ported by Yu and Miller in [7], relaxing the active genotype         does not necessarilly follow that they will alter the actual
+similarity constraint does not impair search performance.            phenotype.
+
+   As figure 3 shows, the default setting of the CGP algo-              The following method generates candidates which sample
+rithm favours shorter sequences than those which are capa-           from the space of possible reduced Boolean formulas. The
+ble of yeilding solutions to the 12 parity problem. Generat-         chaining property, where the output of one unit is fed into
+ing more offspring in each iteration does not smooth out the         the next, must be maintained if introns are to be avoided.
+sampling. This sampling bias is more extraordinary when              This is achieved here by marking the reference immutable,
+it is taken into account that there are vastly more lengthly         which allows the similarity between the representation gen-
+formulas than there are short.                                       eration methods to be clearly seen. In practice this is most
+                                                                     simply done by implicitly coding the structure and using the
+   By increasing the length of the representation used, more         genotype to specify only the function type and the input ref-
+promising areas of the formula space can be sampled by the           erence(s) for each unit.
+
+                       1615
+                                                                                                       100000
+
+                       100000
+
+                                                                                                       10000
+
+                       10000
+
+Number of evaluations                                                           Number of evaluations  1000
+
+                       1000
+
+                                                                                                       100
+
+                       100
+
+                                                                                                       10
+
+                       10
+
+                                                                                                       1
+
+                       1                                                                                       0  20  40  60  80                  100  120  140
+
+                               0  10  20  30                  40  50                                                      Number of units active
+
+                                      Number of units active                                           (a) 1000 Units: 4 Children per iteration, 20% success
+
+                       (a) 100 Units: 4 Children per iteration, : (1 + 4
+                       strategy)
+
+                                                                                                       100000
+
+                       100000
+
+                                                                                                       10000
+
+                       10000
+
+                                                                                Number of evaluations  1000
+
+Number of evaluations  1000
+
+                                                                                                       100
+
+                       100
+
+                                                                                                       10
+
+                       10
+
+                                                                                                       1
+
+                                                                                                               0  20  40  60  80                  100  120  140
+
+                       1                                                                                                  Number of units active
+
+                               0  10  20  30                  40  50                                   (b) 1000 Units: random sampling of the CGP repre-
+                                                                                                       sentation space, 90% success
+                                      Number of units active
+
+                       (b) 100 Units: 10 Children per iteration: (1 + 10        Figure 4: The distribution of samples for represen-
+                       strategy)                                                tations using 1000 units, in terms of the number
+                                                                                of gates active throughout 5 runs of the CGP al-
+Figure 3: The distribution of samples, in terms of                              gorithm. Results shown are a) the CGP sampling
+the number of gates active, throughout 5 runs of the                            method and b) random sampling. Note the Y axis
+CGP algorithm. Note the Y axis log scale.                                       log scale.
+
+                                                                          1616
+                       100000                                                     The apparent 'overperformance' of the random sampling
+                                                                               is entirely due to the distribution of the samples it uses, in
+                       10000                                                   particular the manner in which it avoids sampling the very
+                                                                               largest formulas in favour of shorter formulas. Uniform sam-
+Number of evaluations  1000                                                    pling of the space would result in a large proportion of the
+                                                                               test cases being drawn from the set of formulas of length 100
+                       100                                                     operators, since so much of the formula space is composed of
+                                                                               these formulas. All formulas which reference an odd number
+                       10                                                      of inputs (such as those with 100 operators) are not solutions
+                                                                               to the reduced Boolean 12 parity problem. Hence the vast
+                       1                                                       majority of the search space is occupied by formulas which
+                                                                               are not solutions. Algorithms which are capable of sampling
+                               0  10  20  30                  40  50           long formula lengths less than a uniform sampling method
+                                                                               but still maintain sufficient sampling of all areas to detect
+                                      Number of units active                   solutions are likely to yeild better than random results.
+
+                       (a) Randomly sampling 40,000 independent samples        7. CONCLUSION
+                       from the CGP representation space
+                                                                                  One of the key features of the neutrality argument is that a
+Figure 5: The distribution of samples, in terms of                             representation which permits neutrality in genotype changes
+the number of gates active, through 5 repetitions of                           does not hinder nor worsen performance on the problems
+40,000 independent samples of the CGP representa-                              where neutrality is not of benefit. One of the findings of the
+tion space. Note the Y axis log scale.                                         Yu and Millar paper studying the reduced Boolean parity
+                                                                               probem is that they found neutrality did not impair perfor-
+select a random expression length L                                            mance in those cases where it did not give improvement. The
+                                                                               performance of the CGP algorithm on the reduced Boolean
+set the output of the expression to:                                           12 parity problem seems to indicate that the asymmetry in
+    the output of the unit L.                                                  the intron mappings does in fact cause damage to the ability
+                                                                               of the algorithm to sample the space effectively.
+for each unit up to L, do
+    set the type of the unit to:                                                  In this work we have presented evidence that the CGP re-
+           a random gate type                                                  sults as reported in [7] are actually worse than random. This
+    set one of the input connections of the unit to:                           serves to highlight that the effect of neutrality in evolution
+           the previous gate (make this immutable)                             is not as benign as it might first appear, and reinforces the
+    set the other input connection to                                          case for a full understanding of the test problems on which
+           a randomly selected input line                                      algorithms are evaluated.
+
+done                                                                           8. ANTICIPATED RESULTS
+
+   Notice that this sampling method is also not 'fair' - it over                  Thanks to Julian Miller for his insightful response when
+samples short functions as well, however, it allocates approx-                 shown a draft construction of the paper in November 2004.
+imately the same number of samples to each of the possible                     At the time of writing (14th April 2005) we are awaiting his
+function lengths, and as a consequence has a much better                       detailed response following a re-running of the CGP exper-
+success rate, we recorded 0.0204% success from a sample of                     iment set from [7].
+10 million trials. This is equivalent to expecting a solution
+to be located every 5000 trials.                                               9. REFERENCES
+
+6.4 Uniformly sampling the formula space                                       [1] M. Collins. Counting Solutions in Reduced Boolean
+                                                                                  Parity 2004. GECCO 2004.
+   For formulas using up to 100 operators of one type the ac-
+tual solution density is approximately 0.003756%. For each                     [2] M. Collins. Monte Carlo Sampling and Counting
+sample of 40,000 independently selected formulas this gives                       Solutions in Reduced Boolean Parity
+an expected solution occurence of 1.502 per 40000 samples.                        2004.EDI-INF-RR-0240.
+Thus an algorithm which samples uniformly from the space                          http://www.inf.ed.ac.uk/publications/report/
+of formulas and stops when it finds a solution has an expec-
+tation of success of 0.778. The simple sampling strategy has                   [3] W. Langdon. R. Poli. Boolean Functions Fitness Spaces
+an expected success rate of around 0.9997 under the same                          1997. University of Birmingham Technical Report
+conditions.                                                                       CSRP-98-16.
+
+                                                                               [4] J. Miller. An empirical study of the efficiency of
+                                                                                  learning boolean functions using a Cartesian Genetic
+                                                                                  Program ming approach R. Poli et al (Eds.) Proceedings
+                                                                                  of the Third European Conference on Genetic
+                                                                                  Programming. 2000. pp. 121-132.
+
+                                                                               [5] J. Miller. Cartesian Genetic Programming R. poli et al
+                                                                                  (Eds.) Genetic Programming, Proceedings of
+                                                                                  EuroGP'2000
+
+                                                                               [6] J. Miller. What Bloat? Cartesian Genetic Programming
+                                                                                  on Boolean problems E. Goodman (Ed.) 2001 Genetic
+
+                                                                         1617
+   and Evolutionary Computation Conference Late
+   Breaking Papers, pp 295-302.
+[7] T. Yu. J. Miller. Finding Needles in Haystacks Is Not
+   Hard with Neutrality J. Foster et al (Eds.) EuroGP 2002,
+   LNCS 2278, pp. 13-25.
+[8] T. Yu. J. Miller. Neutrality and the Evolvabilty of
+   Boolean Function Landscapes Proceedings of the Fourth
+   European Conference on Genetic Programming. 2001.
+
+                                                                                 1618
+

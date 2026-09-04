@@ -1,0 +1,1272 @@
+Proceedings of the Congress on Evolutionary Computation (CEC 2002)
+
+Neutrality: A Necessity for Self-Adaptation
+
+Marc Toussaint
+
+Christian Igel
+
+Institut f¨ur Neuroinformatik, Ruhr-Universit¨at Bochum
+44780 Bochum, Germany
+{ Marc.Toussaint,Christian.Igel }@neuroinformatik.ruhr-uni-bochum.de
+
+2
+0
+0
+2
+
+r
+p
+A
+6
+1
+
+]
+
+O
+A
+.
+n
+i
+l
+n
+[
+
+1
+v
+8
+3
+0
+4
+0
+2
+0
+/
+n
+i
+l
+n
+:
+v
+i
+X
+r
+a
+
+Abstract—Self-adaptation is used in all main
+paradigms of evolutionary computation to increase
+eﬃciency. We claim that the basis of self-adaptation
+is the use of neutrality. In the absence of external
+control neutrality allows a variation of the search dis-
+tribution without the risk of ﬁtness loss.
+
+I. Introduction
+
+(A variation is called neutral
+
+It is well known that the genotype-phenotype map-
+ping in natural evolution is highly redundant (i.e., the
+mapping is not injective) and that neutral variations
+frequently occur.
+if it
+alters the genotype but not the phenotype of an in-
+dividual.) The potential positive eﬀects of neutrality
+have extensively been discussed [6, 12, 14, 24] and there
+is growing interest in investigating how these results
+from biology carry over to evolutionary algorithms (EAs)
+[5, 7, 13, 17, 27, 28, 32]. However, this dissents with
+the opinion that redundant encodings are inappropriate
+for real-world problems—a bijective genotype-phenotype
+mapping is often regarded as a design principle for eﬃ-
+cient EAs (e.g., see [20]).
+
+Unlike neutrality, self-adaptation is an established key
+concept in evolutionary computation [4]. We will point
+out that neutrality is a necessity for self-adaptation.
+And since there is no doubt about the beneﬁts of self-
+adaptation for a wide range of problems, this is a strong
+argument for the usefulness of neutral encodings. Our
+point of view is that, in the absence of external control,
+neutrality provides a way to vary the search distribution
+without the risk of ﬁtness loss. We propose to term this
+way of adapting the search strategy self-adaptation. This
+approach generalizes standard deﬁnitions and underlines
+the central role of neutrality.
+
+We reconsider two instructive examples from the litera-
+ture: The ﬁrst example is from molecular biology, where
+it is shown how neutrality can increase the variability
+of certain regions in the genome and conserve the infor-
+mation in other regions. Using our deﬁnition, this is self-
+adaptation. The second one deals with self-adaptation in
+evolution strategies, a well-known example of successful
+self-adaptation in evolutionary computation. These algo-
+rithms rely on neutrality to adapt the search strategy and
+are frequently applied for solving real-world optimization
+tasks.
+
+Our arguments are based on recent eﬀorts to provide
+a unifying view on the search distribution in evolution-
+ary algorithms and its (self-)adaptation [31]. We intro-
+
+duce this formalism in the following section. Section III
+describes the relation between self-adaptation and neu-
+trality and in section IV we present the two examples to
+illustrate our ideas.
+
+II. Modeling evolutionary exploration
+
+In this section, we outline that the individuals in the
+population, the genotype-phenotype mapping and the
+variation operators including their parameters can be re-
+garded as a parameterization of the search distribution.
+This is done in the framework of global random search
+and evolutionary optimization, although all considera-
+tions can be transfered to adaptation in natural evolu-
+tion, see Sec. III-B.
+
+Evolutionary algorithms can be considered as a certain
+class of global random search algorithms. Let the search
+problem under consideration be described by a quality
+denotes
+P → R to be optimized. The set
+function Φ :
+the search space. According to [33], the general scheme
+of global random search is given by:1
+1. Choose a probability distribution P (t)
+P
+2. Obtain points g(t)
+the distribution P (t)
+P
+dom noise) at these points.
+
+λ by taking λ samples from
+. Evaluate Φ (perhaps with ran-
+
+1 , . . . , g(t)
+
+on
+
+P
+
+P
+
+.
+
+3. According to a ﬁxed (algorithm dependent) rule con-
+struct a probability distribution P (t+1)
+4. Check for some appropriate stopping condition; if the
+algorithm has not terminated, substitute t := t+ 1 and
+return to Step 2.
+
+on
+
+P
+
+P
+
+.
+
+The core ingredient of this search scheme is the search
+distribution P (t)
+, also called exploration distribution, on
+P
+the search space. Random search algorithms can dif-
+fer fundamentally in the way they represent and alter
+the search distribution. Typically, the distribution is
+represented by a semi-parametric model. The choice of
+the model determines the exploration distributions the
+search algorithm can represent, which is in general only
+a small subset of all possible probability distributions on
+= R. Then the class of repre-
+
+. For example, let
+
+P
+
+P
+
+1This scheme does not account for all kinds of evolutionary com-
+putation. For example, if the evolutionary programming scheme
+is used, where each parent generates exactly one oﬀspring [9], or
+recombination is employed, then the EA is better described as op-
+erating on a search distribution P (t)
+P λ on P λ. However, in these
+cases P (t)
+
+P can still be derived from P (t)
+P λ .
+
+ 
+ 
+ 
+ 
+ 
+ 
+2
+
+P
+
+−
+
+(x
+
+exp n−
+
+(x; m, σ) = 1
+
+sentable distributions may be given by the class of normal
+m)
+2σ2 o, where m
+densities, p
+√2πσ
+is the expectation and σ2 the variance. This equation
+deﬁnes a parameterization of the search distribution, it
+2 into the set of proba-
+maps the parameters (m, σ)
+bility distributions on
+(see Fig. 2). A global random
+search algorithm alters its exploration distribution (see
+Step 3) by changing such parameters.
+
+∈ R
+
+P
+
+We believe that two of the most fundamental questions
+
+in evolution theory can be stated as:
+
+1. How is the exploration distribution parameterized?
+
+2. How is the exploration distribution altered?
+
+G
+
+P
+
+P
+
+In the framework of evolutionary systems, we identify
+with certain phenotypic traits of in-
+each element of
+P
+the phenotype space. Each pheno-
+dividuals and call
+, is encoded by a genotype g,
+type p, i.e., element of
+which is an element of a genotype space
+. The map-
+ping φ :
+is called genotype-phenotype mapping.
+G → P
+If φ is not injective we speak of a neutral encoding. A
+number of genotypes ˜g(t)
+1 , . . . , ˜g(t)
+µ , the parents, are stored
+in a population. The superscript indicates the iteration
+of the algorithm, i.e., the generation.
+In each genera-
+tion, λ oﬀspring g(t)
+λ are generated by applying
+stochastic and / or deterministic variation operators. Let
+the probability that parents ˜g1, . . . , ˜gµ ∈ G
+generate an
+oﬀspring g
+be described by the probability distribu-
+g
+. This distribution is addition-
+tion P
+(cid:1)
+ally parameterized by some external strategy parameters
+θ
+Θ. Examples of such externally controlled param-
+eters include the probabilities that certain variation op-
+erators are applied and parameters that determine the
+mutation strength. We call the probability
+
+∈ G
+˜g1, . . . , ˜gµ; θ
+|
+
+1 , . . . , g(t)
+
+G (cid:0)
+
+∈
+
+P (t)
+G
+
+(g) := P
+
+G (cid:16)g
+
+˜g(t)
+1 , . . . , ˜g(t)
+
+µ ; θ(t)
+
+(cid:17)
+
+|
+that in generation t an oﬀspring g is created the explo-
+ration distribution on
+
+at generation t.
+
+(1)
+
+The genotype-phenotype mapping φ lifts P (t)
+G
+
+genotype space onto the phenotype space:
+
+G
+
+from the
+
+p
+
+∀
+
+∈ P
+
+: P (t)
+P
+
+(p) =
+
+P (t)
+G
+
+(g′) ,
+
+(2)
+
+g′
+
+1(p) :=
+
+{
+
+}
+
+∈ P
+
+∈ G |
+
+is called the neutral
+where φ−
+set of p
+together
+[25]. Thus, the genotype space
+with the genotype-phenotype mapping φ, the variation
+operators, and external parameters θ can be regarded as
+a parameterization of the exploration distribution on the
+search space
+. We refer to [31] for more details on this
+way of formalizing evolutionary exploration.
+
+P
+
+G
+
+Also algorithms recently developed in the ﬁeld of evolu-
+tionary computing can be captured by this point of view:
+M¨uhlenbein et al. [16] and Pelikan et al. [19] parameter-
+ize the exploration density by means of a Bayesian de-
+pendency network in order to introduce correlations in
+
+g′
+
+X
+φ−1(p)
+∈
+φ(g′) = p
+
+2
+
+the exploration distribution. The CMA evolution strat-
+egy proposed by Hansen and Ostermeier [11] adapts a
+covariance matrix that describes the dependencies be-
+tween real-valued variables in the exploration density. In
+the remainder of this paper, we focus on a diﬀerent ap-
+proach that might be considered biologically more plausi-
+ble, namely to utilize an appropriate genotype-phenotype
+mapping to parameterize the exploration density P
+. It
+does not explicitly encode correlations but models such
+interactions indirectly via the genotype-phenotype map-
+ping. What we will ask for in the next section is the way
+it allows for self-adaptation of the exploration strategy.
+
+P
+
+III. Self-adaptation
+
+A. Introduction
+
+The ability of an evolutionary algorithm to adapt its
+search strategy during the optimization process is a key
+concept in evolutionary computation, see the overviews
+[1, 29, 8]. Online adaptation of strategy parameters is
+important, because the best setting of an EA is usually
+not known a priori for a given task and a constant search
+strategy is usually not optimal during the evolutionary
+process. One way to adapt the search strategy online
+is self-adaptation, see [4] for an overview. This method
+can be described as follows [8]: “The idea of the evo-
+lution of evolution can be used to implement the self-
+adaptation of parameters. Here the parameters to be
+adapted are encoded into the chromosomes and undergo
+mutation and recombination. The better values of these
+encoded parameters lead to better individuals, which in
+turn are more likely to survive and produce oﬀspring and
+hence propagate these better parameter values.” In other
+words, each individual not only represents a candidate
+solution for the problem at hand, but also certain strat-
+egy parameters that are subject to the same selection
+process—they hitchhike with the object parameters.
+
+Self-adaptation is used in all main paradigms of evo-
+lutionary computation. The most prominent examples
+stem from evolution strategies, where it is used to adapt
+the covariance matrix of the mutation operator, see
+Sec. IV-B. Self-adaptation is employed in evolutionary
+programming for the same purpose, but also in the orig-
+inal framework of ﬁnite-state machines [10]. In genetic
+algorithms, the concept of self-adaptation has been used
+to adapt mutation probabilities [3] and crossover oper-
+ators [23]. Self-adaptive crossover operators have also
+been investigated in genetic programming [2]. In the fol-
+lowing, we will propose an alternative deﬁnition of self-
+adaptation, which includes these approaches as special
+cases.
+
+B. Neutrality and self-adaptation
+
+Following the formalism we developed in the previous
+, cor-
+
+section, a variation of the exploration density P (t)
+P
+
+responding to Step 3 in the global random search algo-
+rithm, occurs if
+1. the parent population (˜g(t)
+µ ) varies, or
+2. the external strategy parameters θ(t) vary, or
+
+1 , . . . , ˜g(t)
+
+PG(g
+
+PG(g
+
+˜g1
+˜g1; θ)
+
+˜g2
+˜g2; θ)
+
+|
+
+|
+
+3
+
+φ(˜g1) = φ(˜g2)
+
+PP (p
+|
+
+˜g1; θ)
+
+PP (p
+|
+
+˜g2; θ)
+
+G
+
+φ
+−→
+
+P
+
+Fig. 1. Two diﬀerent points ˜g1, ˜g2 in G are mapped onto the same
+point in P. The elliptic ranges around the points illustrate the
+exploration distributions by suggesting the range of probable
+mutants. Thus, the two points ˜g1, ˜g2 belong to one neutral set
+but represent two diﬀerent exploration strategies on the search
+space P.
+
+C. Discussion
+
+It is widely accepted that changing the genotypes with-
+out signiﬁcantly changing the phenotypes in the pop-
+ulation is a key search strategy in natural evolution
+[12, 14, 24]. We emphasize that under the stated assump-
+tions, neutrality is even a necessity for self-adaptation
+of the search strategy. Thus, we propose to deﬁne self-
+adaptation as the use of neutrality in order to vary the
+exploration strategy.
+
+|
+
+(g
+
+P
+G
+
+Existing approaches to self-adaptation developed in
+the realm of evolutionary computation can be embed-
+ded in this point of view; only the style in which the
+notion of self-adaptation was originally introduced is dif-
+ferent. Usually one refers to “strategy parameters” that
+typically control the mutation operators (i.e., the map-
+˜gi; θ)), in contrast to “object param-
+ping ˜gi 7→
+In the case of
+eters” describing ﬁtness relevant traits.
+self -adaptation these strategy parameters are considered
+as parts of the genotype. In this view, strategy parame-
+ters are neutral, i.e., altering them does not change the
+In turn, we regard neutral genotypic vari-
+phenotype.
+ables as potential strategy parameters. There still is a
+slight diﬀerence: In case of standard self-adaptation, al-
+tering a strategy parameter is phenotypically neutral and
+has no other implication than a change of the exploration
+strategy. In contrast, two or more genetic variables may
+be phenotypically non-neutral but a speciﬁc simultaneous
+mutation of them might be neutral and induce a change
+of the exploration density. Hence, a neutral set is a gen-
+eral concept for self-adaptation, which is not bound to the
+idea of single loci being responsible for the search strat-
+egy. A good example is that also topological properties of
+the search space (i.e., neighborhood relations/the set of
+most probable mutations of a phenotype) may vary along
+such a neutral set if the genotype-phenotype mapping is
+chosen similar to grammars [31]—which seems hard to
+realize by explicit strategy parameters.
+
+We believe that allowing for a self-adaptive exploration
+strategy is the main beneﬁt of neutral encodings, as
+stated in [27]: “For redundancy to be of use it must allow
+for mutations that do not change the current phenotype,
+thus maintaining ﬁtness, and which allow for moves to
+
+3. the genotype-phenotype mapping φ varies.
+
+From a biological point of view, one might associate en-
+vironmental conditions (like the temperature, etc.) with
+external parameters that vary the mutation probabilities
+or the genotype-phenotype mapping. In most cases one
+would not consider them as subject to evolution.2 Some-
+times mechanisms that adapt the exploration distribu-
+tion by genotype variations are regarded as examples of
+adaptive genotype-phenotype mappings. To our minds,
+this is a misleading point of view. For example, t-RNA
+determines a part of the genotype-phenotype mapping
+and it is itself encoded in the genome. However, the
+genotype-phenotype mapping should be understood as
+a whole—mapping all the genotype (including the parts
+that code for the t-RNA) to the phenotype, such that it
+becomes inconsistent to speak of genotypic information
+parameterizing the genotype-phenotype mapping.
+
+The same arguments also apply in the context of evo-
+lutionary computation and thus we consider only option
+1 as a possibility to vary the exploration distribution in
+a way that is itself subject to evolution in the sense of
+section III-A. However, if the genotype-phenotype map-
+ping is injective, every variation of genotypes alters phe-
+notypes and bears the risk of a ﬁtness loss. Hence, we
+conclude:
+
+|
+
+(g
+
+In the absence of external control, only neutral genetic
+variations can allow a self-adaptation of the exploration
+distribution without changing the phenotype, i.e., without
+the risk of loosing ﬁtness.
+A neutral genetic variation means that parent and oﬀ-
+spring have the same phenotype. For instance, con-
+sider two genotypes ˜g1, ˜g2 in a neutral set. Neglect
+crossover and assume that the probability for an oﬀ-
+spring g of a single parent ˜gi is given by P
+˜gi; θ).
+G
+The two genotypes may induce two arbitrarily diﬀerent
+exploration distributions “around” the same phenotype
+p = φ(˜g1) = φ(˜g2), see Fig. 1. Transitions between these
+genotypes allow for switching the exploration strategy.
+In general, the variety of exploration densities that can
+be explored in a neutral set φ−
+˜gi ∈
+
+(cid:12)
+(cid:12)
+2Counter-examples that go far beyond the scope of our formal-
+ism are, for instance, the embryonic environment (uterus) and the
+inherited ovum, or individuals whose behavior have an inﬂuence
+on mutations (e.g., sexual behavior inﬂuencing crossover) or on the
+embryonic development (e.g., a mother taking drugs). All of these
+inﬂuences might be considered as subject to evolution. In partic-
+ular the interpretation of an ovum is a critical issue. Should one
+regard it as part of the genotype or as an inherited “parameter” of
+the genotype-phenotype mapping?
+
+1(p) is given by
+
+1(p)
+(cid:9)
+
+˜gi; θ)
+
+(3)
+
+φ−
+
+(p
+
+P
+
+(cid:8)
+
+P
+
+|
+
+.
+
+areas where new phenotypes are accessible”. Changing
+the exploration distribution corresponds to the ability of
+reaching new phenotypes.3
+
+In this view, neutrality is not necessarily redundant :
+Diﬀerent points in a neutral set can encode diﬀerent
+exploration strategies and thus diﬀerent information; a
+genotype encodes not only the information on the phe-
+notype but also information on further explorations.
+One might state it like this: Although a non-injective
+genotype-phenotype mapping can be called redundant,
+the corresponding mapping from genotype to exploration
+distribution may in general be non-redundant.
+
+IV. Examples
+
+A. Codon Bias in natural evolution
+
+An intriguing study of the interrelationship between
+neutrality and self-adaptation in nature is the one by
+Stephens and Waelbroeck [30]. They empirically analyze
+the codon bias and its eﬀect in RNA sequences of the HI
+virus.
+In biology, several nucleotide triplets eventually
+encode the same amino acid. For example, there are 9
+triplets that are mapped to the amino acid Arginine. If
+Arginine is encoded by the triplet CGA, then the chance
+that a single point mutation within the triplet is neutral
+(does not chance the encoded amino acid) is 4/9. In con-
+trast, if it is encoded by AGA, then this neutral degree is
+2/9. Now, codon bias means that, although there exist
+several codons that code for the same amino acid (which
+form a neutral set), HIV sequences exhibit a preference
+on which codon is used to code for a speciﬁc amino acid.
+More precisely, at some places of the sequence codons
+are preferred that are “in the center of this neutral set”
+(with high neutral degree) and at other places codons
+are biased to be “on the edge of this neutral set” (with
+low neutral degree). It is clear that these two cases in-
+duce diﬀerent exploration densities; the prior case means
+low mutability whereas the latter means high mutabil-
+ity. Stephens and Waelbroeck go further by giving an
+explanation for these two (marginal) exploration strate-
+gies: Loci with low mutability cause “more resistance to
+the potentially destructive eﬀect of mutation”, whereas
+loci with high mutability might induce a “change in a
+neutralization epitope which has come to be recognized
+by the [host’s] immune system” [30].
+
+B. Self-adaptation in evolution strategies
+
+In this section, we describe a rather simple example
+of self-adaptation in evolution strategies.4 The candi-
+date solutions for the problem at hand are represented by
+
+3However, we think that there might be at least one additional
+case where neutrality can be useful, namely when it introduces—by
+chance—a bias in the search space, such that desired phenotypes
+are (in global average) represented more often than other ones [13].
+4More sophisticated and eﬃcient algorithms exist for dealing with
+real-world optimization tasks, e.g., the derandomized adaptation as
+proposed in [11, 18].
+
+4
+
+∈ P
+
+G ⊆ R
+
+n. These real-valued
+real-valued vectors x
+=
+object parameters are mutated by adding a realization
+of a normally distributed random vector with zero mean
+[21, 26]. The symmetric n
+n covariance matrix of this
+×
+random vector is subject to self-adaptation. To describe
+any possible covariance matrix, n(n + 1)/2 strategy pa-
+rameters are needed. However, often a reduced number
+of parameters is used. In the following, let the covariance
+matrix be given by (σI)2, where I = diag(1, . . . , 1) is the
+n corresponds to n strategy
+identity matrix and σ
+parameters that describe the standard deviations along
+the coordinate axes.
+
+∈ R
+
+Let µ denote the size of the parent population. Each
+generation, λ oﬀspring g(t)
+, i = 1, . . . , λ are generated.
+i
+(µ, λ)-selection is used,
+i.e., the µ best individuals of
+the oﬀspring form the new parent population. An in-
+dividual g(t)
+2n can be divided into two parts,
+i
+, σ(t)
+i = (x(t)
+g(t)
+n and
+the strategy parameters σ(t)
+For each oﬀspring g(t)
+i
+
+∈ R
+i ), the object variables x(t)
+n.
+i ∈ R
+, two indices a, b
+
+}
+are selected randomly, where a determines the parent
+and b its mating partner. For each component k =
+1, . . . , n of the oﬀspring, the new standard deviation
+i = (σ(t)
+σ(t)
+i,n) is computed as
+
+i,1 , . . . , σ(t)
+
+i ∈ R
+
+1, . . . , µ
+
+∈ {
+
+i
+
+σ(t)
+i,k =
+
+1
+
+2 h˜σ(t)
+
+a,k + ˜σ(t)
+
+b,ki ·
+
+exp (cid:16)τ ′
+
+·
+
+ξ(t)
+i + τ
+
+ξ(t)
+i,k(cid:17) .
+
+·
+
+(4)
+
+i,k ∼ N
+
+Here, ξ(t)
+(0, 1) is a realization of a normally dis-
+tributed random variable with zero mean and variance
+one that is sampled anew for each component i for each
+individual, whereas ξ(t)
+(0, 1) is sampled once per
+individual and is the same for each component. The log-
+normal distribution ensures that the standard deviations
+2√n
+stay positive. For the mutation strengths τ
+1/√2n are recommended [26, 4]. It has been
+and τ ′
+shown that recombination of the strategy parameters is
+beneﬁcial (e.g., [15]). Equation (4) realizes an interme-
+diate recombination of the strategy parameters.
+
+i ∼ N
+
+1/
+
+p
+
+∝
+
+∝
+
+Thereafter the objective parameters are altered using
+
+the new strategy parameters:
+
+i,k = ˜x(t)
+x(t)
+
+a,k + σ(t)
+
+i,k z(t)
+i,k,
+
+(5)
+
+i,k ∼ N
+
+where z(t)
+(0, 1). For simplicity, we do not employ
+recombination of the objective parameters. An exam-
+ple of this strategy compared to algorithms without self-
+adaptation is shown in Fig. 3. The adaptive strategy
+performs considerably better than the other methods, as
+known from many theoretical results and empirical stud-
+ies. However, we would like to underline that the self-
+adaptive EA uses a highly redundant encoding instead
+of a one-to-one genotype-phenotype mapping—the geno-
+type space has twice the dimensionality of the phenotype
+space. The neutrality does not alter the distribution of
+
+PSfrag replacements
+
+Φ
+
+Φ
+
+|| hσi(t)
+
+µ ||
+
+200
+
+300
+
+400
+500
+600
+700
+800
+900
+Φ
+
+PSfrag replacements
+
+Φ
+
+oﬀspring distributions around single individuals
+PG = PP
+
+no adaptation, σi = 1
+no adaptation, σi = σ†
+self-adaptation
+
+PSfrag replacements
+
+0.5
+
+0.4
+
+0.3
+
+0.2
+
+0.1
+
+5
+
+self-adaptation
+no adaptation, σi = 1
+no adaptation, σi = σ†
+
+200
+10000
+300
+1000
+400
+500
+600
+700
+800
+0.01
+10−3
+900
+10−4
+10−5
+10−6
+10−7
+10−8
+10−10
+10−12
+10−14
+
+100
+
+10
+
+Φ
+
+1
+
+0.1
+
+0
+
+100
+
+1
+
+2000
+
+4000
+
+6000
+
+generation
+
+10000
+1000
+
+10
+
+0.1
+
+10−3
+
+10−5
+
+10−7
+
+0.01
+
+10−4
+
+10−6
+
+10−8
+
+10−10
+
+10−12
+
+10−14
+
+0
+
+|| hσi(t)
+
+Φ
+µ ||
+2000
+
+4000
+
+6000
+
+generation
+
+8000
+
+10000
+
+8000
+
+10000
+
+Fig. 3. As an example, we compare evolution strategies as de-
+scribed in Sec. IV-B with and without self-adaptation on a
+simple test problem: a 100-dimensional sphere model, Φ(x) =
+||x||. First, the EA is run without self-adaptation, each σi is
+set to one. After that, we employ self-adaptation as described,
+where the σi are also initialized to one. Based on these results,
+we determine the average standard deviation σ† (averaged over
+all parents, all generations, and all trials). Then we repeat the
+experiments without self-adaptation but ﬁx each σi = σ†. The
+ﬁtness trajectories of the best individual averaged over 50 tri-
+als are shown in the upper plot (σ† = 0.0125). In case of the
+self-adaptive EA the ﬁtness curves show steps. The lower plot
+shows a typical single trial and the corresponding average of the
+1/2
+standard deviations || hσi(t)
+µ || = (cid:16) P
+.
+It becomes obvious that each step in the ﬁtness trajectory cor-
+responds to a change in the search strategy.
+In general, the
+mutation strength decreases, but sometimes a larger step size
+takes over the population and leads to a high ﬁtness gain. In
+the continuum, the probability that an oﬀspring has exactly the
+same phenotype, i.e., represents the same object parameters,
+is not measurable. Further, even small changes in the geno-
+type are relevant for selection due to the use of a rank-based
+selection scheme. Hence, drifting along a neutral network, i.e.,
+traversing the search space by a sequence of (neutral ) muta-
+tions that do not alter the phenotype, does not occur.
+
+µ
+i=1 σi,j (cid:17)
+
+1
+µ P
+
+n
+j=1 (cid:16)
+
+(cid:17)
+
+2
+
+0
+-10
+
+-5
+
+0
+
+5
+
+10
+
+Fig. 2. An example for parameterizing the exploration distribu-
+tion in evolution strategies: Consider the search space P = R,
+µ = 3 parent individuals, and no recombination. The par-
+ents represent the object parameters −2, −0.25, and 3.5. The
+oﬀspring is generated in the following manner: First, one ran-
+domly chosen parent is reproduced. Second, the reproduced
+individual is mutated by adding a realization of a normally
+distributed random number with variance one and expectation
+zero. Hence, the resulting search distribution (the joint gener-
+ating distribution [22]) is a multimodal mixture of Gaussians.
+
+the ﬁtness values, it just allows the search strategy to
+adapt.
+
+V. Conclusion
+
+Neutrality is a necessity for self-adaptation. Actually,
+the design of neutral encodings to improve the eﬃciency
+of evolutionary algorithms is a well-established approach:
+strategy parameters are an example of neutrality. Hence,
+there already exists clear evidence for the beneﬁt of neu-
+trality.
+
+The notion of neutrality provides a unifying formalism
+for embedding approaches to self-adaptation in evolution-
+ary computation. But it also inspires new approaches
+that are not bound to the idea of only single genes being
+responsible for the exploration strategy. Generally, any
+local properties of the phenotypic search space—metric
+or topological—may vary along a neutral set. An exam-
+ple are grammar-based genotype-phenotype mappings,
+for which diﬀerent points in a neutral set represent com-
+pletely diﬀerent topologies (and thus exploration strate-
+gies) on the phenotype space.
+
+On the other hand, the beneﬁts of neutrality in natural
+evolution can be better understood when the simple—
+but concrete and well-established—paradigms of self-
+adaptation and neutrality in evolutionary computation
+are taken into account. As we exempliﬁed with the sec-
+ond example, these computational approaches may serve
+as a model to investigate the relation between evolution-
+ary progress, neutrality, and self-adaptation.
+
+Finally, let us recall that neutrality is not necessarily
+equivalent to redundancy: in general, a genotype encodes
+
+6
+
+[21] I. Rechenberg. Evolutionsstrategie ’94. Werkstatt Bionik und
+Evolutionstechnik. Frommann-Holzboog, Stuttgart, 1994.
+[22] G. Rudolph. Massively parallel simulated annealing and its re-
+lation to evolutionary algorithms. Evolutionary Computation,
+1(4):361–382, 1994.
+
+[23] J. D. Schaﬀer and A. Morishima. An adaptive crossover distri-
+bution mechanism for genetic algorithms. In J. J. Grefenstette,
+editor, Proceedings of the Second International Conference on
+Genetic Algorithms and Their Applications (ICGA’87), pages
+36–40. Lawrence Erlbaum Associates, 1987.
+
+[24] P. Schuster. Molecular insights into evolution of phenotypes.
+In J. P. Crutchﬁeld and P. Schuster, editors, Evolutionary
+Dynamics—Exploring the Interplay of Accident, Selection,
+Neutrality and Function, Santa Fe Institute Series in the Sci-
+ence of Complexity. Oxford University Press. To appear.
+[25] P. Schuster. Landscapes and molecular evolution. Physica D,
+
+107:331–363, 1996.
+
+[26] H.-P. Schwefel. Evolution and Optimum Seeking.
+
+Sixth-
+Generation Computer Technology Series. John Wiley & Sons,
+New York, 1995.
+
+[27] M. A. Shackleton, R. Shipman, and M. Ebner. An investi-
+gation of redundant genotype-phenotype mappings and their
+role in evolutionary search. In A. Zalzala, C. Fonseca, J.-H.
+Kim, and A. Smith, editors, Proceedings of the International
+Congress on Evolutionary Computation (CEC 2000), pages
+493–500. IEEE Press, 2000.
+
+[28] R. Shipman. Genetic redundancy: Desirable or problematic
+for evolutionary adaptation. In M. A. Bedau, S. Rasmussen,
+J. S. McCaskill, and N. H. Packard, editors, Proceedings of
+the 4th International Conference on Artiﬁcial Neural Net-
+works and Genetic Algorithms (ICANNGA), pages 337–344.
+Springer-Verlag, 1999.
+
+[29] J. E. Smith and T. C. Fogarty. Operator and parameter
+adaptation in genetic algorithms. Soft Computing, 1(2):81–
+87, 1997.
+
+[30] C. R. Stephens and H. Waelbroeck. Codon bias and mutability
+in HIV sequences. Journal of Molecular Evolution, 48:390–
+397, 1999.
+[31] M. Toussaint.
+
+Self-adaptive exploration in evolutionary
+search. Technical Report IRINI 2001-05, Institut f¨ur Neu-
+f¨ur Theoretische Biologie, Ruhr-
+roinformatik, Lehrstuhl
+Universit¨at Bochum, 44780 Bochum, Germany, 2001.
+
+[32] K. Weicker and N. Weicker. Burden and beneﬁts of redun-
+dancy. In Proceedings ot the Sixth Workshop on Foundations
+of Genetic Algorithms, 2000.
+
+[33] A. A. Zhigljavsky. Theory of global random search. Kluwer
+
+Academic Publishers, 1991.
+
+not only the information on the phenotype but also in-
+formation on further explorations.
+
+Acknowledgments
+
+The authors acknowledge support by the DFG under
+
+grant Solesys SE 251/41-1.
+
+References
+
+[1] P. J. Angeline. Adaptive and self-adaptive evolutionary com-
+putations. In M. Palaniswami, Y. Attikiouzel, R. Marks, D. B.
+Fogel, and T. Fukuda, editors, Computational Intelligence: A
+Dynamic Systems Perspective, pages 152–163. IEEE Press,
+1995.
+
+[2] P. J. Angeline. Two self-adaptive crossover operations for ge-
+netic programming. In P. Angeline and K. Kinnear, editors,
+Advances in Genetic Programming, volume 2, Cambridge,
+MA, 1996. MIT Press.
+
+[3] T. B¨ack. Self–adaptation in genetic algorithms. In F. J. Varela
+and P. Bourgine, editors, Towards a Practice of Autonomous
+Systems: Proceedings of the First European Conference on
+Artiﬁcial Life, pages 263–271. MIT Press, 1992.
+
+[4] T. B¨ack. An overview of parameter control methods by self-
+adaptation in evolutionary algorithms. Fundamenta Informat-
+icae, 35(1-4):51–66, 1998.
+
+[5] L. Barnett. Ruggedness and neutrality –The NKp family of
+ﬁtness landscapes. In C. Adami, R. K. Belew, H. Kitano, and
+C. E. Taylor, editors, Alive VI: Sixth International Conference
+on Articial Life, pages 18–27. MIT Press, 1998.
+
+[6] M. Conrad. The geometry of evolution. Biosystems, 24:61–81,
+
+1990.
+
+[7] M. Ebner, P. Langguth, J. Albert, M. Shackleton, and R. Ship-
+man. On neutral networks and evolvability. In Proceedings of
+the 2001 Congress on Evolutionary Computation, pages 1–8.
+IEEE Press, 2001.
+
+[8] A. E. Eiben, R. Hinterding, and Z. Michalewicz. Parameter
+IEEE Transactions on
+
+control in evolutionary algorithms.
+Evolutionary Computation, 3(2):124–141, 1999.
+
+[9] D. B. Fogel. Evolutionary Computation: Toward a New Phi-
+
+losophy of Machine Intelligence. IEEE Press, 1995.
+
+[10] L. J. Fogel, P. J. Angeline, and D. B. Fogel. An evolution-
+ary programming approach to self-adaptation on ﬁnite state
+machines. In J. R. McDonnell, R. G. Reynolds, and D. B. Fo-
+gel, editors, Proceedings of the Fourth Annual Conference on
+Evolutionary Programming, pages 355–365. MIT Press, 1995.
+[11] N. Hansen and A. Ostermeier. Completely derandomized self-
+adaptation in evolution strategies. Evolutionary Computation,
+9(2):159–195, 2001.
+
+[12] M. A. Huynen. Exploring phenotype space through neutral
+evolution. Journal of Molecular Evolution, 43:165–169, 1996.
+[13] C. Igel and P. Stagge. Eﬀects of phenotypic redundancy in
+structure optimization. IEEE Transactions on Evolutionary
+Computation. In press.
+
+[14] M. Kimura. Evolutionary rate at the molecular level. Nature,
+
+217:624–626, 1968.
+
+[15] F. Kursawe. Grundlegende empirische Untersuchungen der
+Parameter von Evolutionsstrategien — Metastrategien. Dis-
+sertation, Fachbereich Informatik, Universit¨at Dortmund,
+1999.
+
+[16] H. M¨uhlenbein, T. Mahnig, and A. O. Rodriguez. Schemata,
+distributions and graphical models in evolutionary optimiza-
+tion. Journal of Heuristics, 5(2):215–247, 1999.
+
+[17] M. E. J. Newman and R. Engelhardt. Eﬀects of neutral se-
+lection on the evolution of molecular species. Proceedings of
+the Royal Society of London, Series B: Biological Sciences,
+265(1403):1333–1338, 1998.
+
+[18] A. Ostermeier, A. Gawelczyk, and N. Hansen. A derandomized
+approach to self-adaptation of evolution strategies. Evolution-
+ary Computation, 2(4):369–380, 1995.
+
+[19] M. Pelikan, D. E. Goldberg, and E. Cant´u-Paz. Linkage prob-
+lem, distribution estimation, and bayesian networks. Evolu-
+tionary Computation, 9:311–340, 2000.
+
+[20] N. J. Radcliﬀe. Equivalence class analysis of genetic algo-
+
+rithms. Complex Systems, 5:183–205, 1991.
+
+

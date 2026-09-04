@@ -1,0 +1,1852 @@
+   bioRxiv preprint doi: https://doi.org/10.1101/2023.01.04.520634; this version posted June 16, 2024. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made
+
+                                                       available under a CC-BY-NC-ND 4.0 International license.
+
+             Evolution takes multiple paths to evolvability when facing
+                                      environmental change
+
+              Bhaskar Kumawat1, Alexander Lalejini1,2, Monica Acosta1,2, and Luis Zaman1,2,*
+
+           1Department of Ecology and Evolutionary Biology, University of Michigan, Ann Arbor, MI, 48109, USA
+               2Center for the Study of Complex Systems, University of Michigan, Ann Arbor, MI, 48109, USA
+                                        *Corresponding author: Luis Zaman, zamanlh@umich.edu
+
+     Keywords: Digital Evolution, Evolvability, Mutation Rate
+     Subject: Biological Sciences/{Evolution, Computational Biology}
+     ORCIDs:
+     Bhaskar Kumawat, 0000-0002-6128-8971
+     Alexander Lalejini, 0000-0003-0994-2718
+     Luis Zaman, 0000-0001-6838-7385
+
+                                                                     1
+   bioRxiv preprint doi: https://doi.org/10.1101/2023.01.04.520634; this version posted June 16, 2024. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made
+
+                                                       available under a CC-BY-NC-ND 4.0 International license.
+
+1                          Abstract
+
+2   Living systems are surprisingly effective at exploiting new opportunities, as evidenced by the
+
+3   rapid emergence of antimicrobial resistance and novel pathogens. How populations attain this level
+
+4   of evolvability and the various ways it aids their survival are major open questions with direct implica-
+
+5   tions for human health. Here, we use digital evolution to show that particular kinds of environments
+
+6   facilitate the simultaneous evolution of high mutation rates and a distribution of mutational effects
+
+7   skewed towards beneficial phenotypes. The evolved mutational neighborhoods allow rapid adaptation
+
+8   to previously encountered environments, whereas higher mutation rates aid adaptation to completely
+
+9   new environmental conditions. By precisely tracking evolving lineages and the phenotypes of their
+
+10  mutants, we show that evolving populations localize on phenotypic boundaries between distinct re-
+
+11  gions of genotype space. Our results demonstrate how evolution shapes multiple determinants of
+
+12  evolvability concurrently, fine-tuning a population's adaptive responses to unpredictable or recurrent
+
+13  environmental shifts.
+
+14 Introduction
+
+15 Biological life has flourished in every seemingly uninhabitable part of our world, and even as ongoing
+16 environmental change challenges ecosystems, rapid adaptation is a trademark response of natural pop-
+17 ulations. Emerging viral pathogens like SARS-CoV-2 and avian influenza (H5N1) are prime examples of
+18 populations that show a remarkable capacity to adapt to new hosts [1­5]. Similarly, controlling microbial
+19 growth is a constant struggle across industries--for example, in wastewater treatment, healthcare, and
+20 agriculture--precisely because antimicrobial resistance evolves so readily [6­8]. It is not obvious that
+21 living systems need to be so evolvable (i.e., able to generate adaptive variation), so why has evolution
+22 produced populations that are able to evolve so relentlessly? One challenge to addressing this question is
+23 that directly observing how evolvability evolves in natural populations is intractable due to the timescales
+24 and resolution of historical data that would be required [9­13]. A holistic picture of the processes that
+25 drive the evolution of evolvability is necessary to understand why evolution is so effective and to limit
+26 (or harness) its future potential [14].
+27 To thrive in a rapidly changing world, organisms must give rise to mutant offspring that can survive
+28 impending environmental shifts [15­18]. At its core, Darwinian evolution is fueled by the continual emer-
+29 gence and fixation of new phenotypic variants in a population [19]. Such phenotypic variants arise as a
+30 result of two coupled processes. Replication of genetic material during the reproduction of an organism
+31 is susceptible to occasional errors that lead to mutations with a frequency quantified by the mutation
+32 rate [20]. However, only a small proportion of errors result in adaptive phenotypic change, since most
+
+                                                                    2
+   bioRxiv preprint doi: https://doi.org/10.1101/2023.01.04.520634; this version posted June 16, 2024. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made
+
+                                                       available under a CC-BY-NC-ND 4.0 International license.
+
+33 mutations are neutral or deleterious [21]. Because of this property, mutation rates often rapidly decay,
+34 where they are maintained above zero through genetic drift [22, 23]. The set of mutants accessible from
+35 existing genotypes in a population and their corresponding phenotypes (i.e., the mutational neighbor-
+36 hood) governs the fraction of mutations that are ultimately beneficial [24]. Collectively, the mutation
+37 rate and mutational neighborhood govern the pace at which populations generate new phenotypes, pro-
+38 viding the raw materials on which natural selection can act [12]. Nonetheless, the ability of populations
+39 to maintain high fitness becomes challenging in changing environments, where phenotypes can only be
+40 transiently well-adapted.
+41 Prior work on phenotypic bias in mutations probes the ability of populations to adapt to specific
+42 environments [15, 16, 25­27]. In contrast, macroevolutionary studies view evolvability as a latent property
+43 of clades that promotes phenotypic divergence and diversification regardless of any selective advantage
+44 this variation provides [28, 29]. Alternatively, work on mutators and mutational modifiers focuses on an
+45 escalation in the rate at which variation is created, but ignores the phenotypic identity of the variants
+46 [30­32]. Bridging these scales, recent work suggests that microevolutionary evolvability shapes the rate
+47 of macroevolutionary diversification because the gradient of selection is constantly being perturbed as
+48 environments shift [33]. It is clear that the term evolvability is used ambiguously to describe several
+49 distinct processes in evolution. Furthermore, the conditions that shape the simultaneous evolution of
+50 multiple determinants of evolvability, how these determinants influence each other, and the way they
+51 aid adaptation in specific or novel environments remains unexplored [13].
+52 In this work, we use populations of self-replicating computer programs in the digital evolution frame-
+53 work Avida to study how environmental conditions influence the evolution of evolvability [34]. The com-
+54 putational nature of this systems affords us unparalleled precision in tracking the mutational changes
+55 that occur along lineages over evolutionary time, while recording information about the external envi-
+56 ronment when mutations arise. In addition, it allows an in-depth analysis of the mutational landscapes
+57 of these lineages, extending to the second mutational step and encompassing over three million mu-
+58 tants per genotype. Using this framework, we study the mutation rates and structures of the mutational
+59 neighborhood that evolve as a result of exposure to different environments. We assess the performance
+60 of evolved organisms in their native and non-native conditions to highlight the way these determinants
+61 shape adaptation. Our findings demonstrate the existence of specific modes of environment change
+62 where the mutation rate and mutational neighborhoods evolve in ways that enhance future evolutionary
+63 innovation (Fig. 1). Taking advantage of tractability these digital organisms allows us to overcome the
+64 challenges previously limiting the direct observation of evolving evolvability.
+
+                                                                     3
+   bioRxiv preprint doi: https://doi.org/10.1101/2023.01.04.520634; this version posted June 16, 2024. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made
+
+                                                       available under a CC-BY-NC-ND 4.0 International license.
+
+a  Slow environmental change                                          Intermediate environmental change                                                                                                               Fast environmental change
+                                                                      (~ 10x Generation Time)                                                                                                                         (~ Generation Time)
+   (~ 100x Generation Time)
+                                                                                        Evolving mutation rates
+   Evolutionary Time                                                                                                                                                                                                                             Generation Time
+
+b  Static mutation rates                                                                                                                                                                                              c
+                                                                                                                                                                                                                             B-Adapted
+   (MSultoawtioennavlirroobnumsetnnetsss)
+                                           Intermediate environments
+   Number of mutants with
+      alternative phenotype
+                                                                                 Number of mutants with
+                                                                                     alternative phenotype
+
+                                                                                                                                                                                           Intermediate Environments
+                                                                                                                           Slow environments
+                                                                                                   Fast environments                                                                                                                                           Lineage progression
+               Mutation Rate
+   Rate of adaptation to new environments                                                      Mutation Rate                                                                                                                                                 A-Adapted
+                                                                      Rate of adaptation to historic environments                                                                                                                       Genotype Space
+
+Figure 1: Schematic summarizing some key results for three environments (a) We study evolution
+under environments that switch between two states (A and B) at three different rates. Evolution in all
+environments concludes in a specific environmental state (say A) and thus "alternate phenotype" here is
+the phenotype adapted to environment B. The switches in the three environments happen with an interval
+that is on the order of one generation, 10 generations, or 100 generations. (b) We perform two types of
+experiments, those where the mutation rate is fixed (left) and those where the mutation rates are allowed
+to evolve (right). When mutation rates are fixed and the environment switches slowly (orange curve,
+left), we observe classical mutation robustness, with increasing mutation rates leading to a decrease
+in the number of mutants with an alternate phenotype. However, at intermediate rates (purple curve,
+left) increasing mutation rate favors development of alternate phenotype mutants in the mutational
+neighborhood. When mutation rates are allowed to evolve, the intermediate environments lead to high
+mutation rates as well as a large number of alternative phenotypes in the mutational neighborhood. We
+find that while elevated mutation rates help adapt to completely new environments (blue shade), an
+increasing number of alternate phenotype mutants allows for quicker adaptation to historic environments
+(yellow shades). Thus, intermediate environments promote evolution of evolvability through two different
+pathways and buffer the population against different types of environmental change. (c) Upon analyzing
+lineage dynamics, we find that intermediate environments lead to populations localizing on phenotypic
+boundaries in the genotype space, where alternate mutants are easily accessible.
+
+                                                                      4
+   bioRxiv preprint doi: https://doi.org/10.1101/2023.01.04.520634; this version posted June 16, 2024. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made
+
+                                                       available under a CC-BY-NC-ND 4.0 International license.
+
+65 Results
+
+66 Evolution of the mutational neighborhood
+
+67 The genotype-phenotype map is a conceptual tool that describes the connection between an organism's
+68 genetic code and its phenotypic traits [35]. Because there is redundancy in most genotype-phenotype
+69 maps, the local mutational neighborhood of organisms with the same phenotype may differ, making some
+70 of them more prone to expressing alternate phenotypes when mutated [24, 35­37]. First, we tested if
+71 the propensity of genotypes to generate mutants with alternate phenotypes can evolve and identified
+72 environmental conditions that favored this evolution.
+73 Starting with a naive ancestral genotype, we evolved Avida populations under six different environ-
+74 ment change regimes for approximately 30,000 generations (or equivalently 300,000 Avida updates, with
+75 an average generation time of 10 updates). We fixed the per-site copy mutation rate of the organisms in
+76 these experiments at 0.001, corresponding to an average of one mutation per 1,000 copied Avida instruc-
+77 tions. Our experimental Avida world supported a maximum of 22,500 digital organisms. We explored
+78 stable environments in two regimes--Const-A, which is always in environment state A, and Const-B,
+79 which is always in environment state B. Additionally, four regimes--Cyclic, Cyclic (Slow), Cyclic (Fast),
+80 and Random--fluctuate between environmental states. The Cyclic- regimes switch between recurrent
+81 environmental states (A  B  A  B...) at different rates. The Cyclic (Slow), Cyclic, and Cyclic
+82 (Fast) regimes stochastically switch states every 3, 30, and 300 generations on average, respectively.
+83 The Random regime switches randomly between one of 64 possible environmental states every 30 gen-
+84 erations on average. Figure 2a shows a schematic detailing these environmental dynamics. Note that
+85 the environmental states A and B have strong fitness trade-offs between traits, with adaptations to
+86 environment A being deleterious in environment B, and vice versa.
+87 Following experimental evolution, we isolated the dominant sequence (i.e., the genotype present at
+88 the highest frequency at the end of evolution) from each evolved population and created all possible single
+89 and double point mutations in those sequences (Fig. S1b). We then assayed the resulting phenotypes,
+90 counting the number of mutants with a phenotype that is exactly alternative to the phenotype of the
+91 evolved dominant genotype--if the dominant genotype was perfectly adapted to environment A, we
+92 counted the number of mutants that were adapted to environment B, and vice versa. Figure 2b shows
+93 the number of these mutants with the alternative phenotype that evolved under different regimes (Figure
+94 S2a details the overall distribution of all mutant adaptations).
+95 Genotypes isolated from the Cyclic regime had a markedly larger pool of mutants expressing the alter-
+
+                                                                     5
+    bioRxiv preprint doi: https://doi.org/10.1101/2023.01.04.520634; this version posted June 16, 2024. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made
+
+                                                        available under a CC-BY-NC-ND 4.0 International license.
+
+96 native phenotype when compared to genotypes from constant environments (median for Cyclic=45802.5
+97 versus median for Const-A=1.0; Mann-Whitney U = 6, n = 20, p = 1.4 × 10-7, two-tailed. No al-
+98 ternate phenotype mutants were observed for Const-B genotypes). This escalation in alternate pheno-
+99 types was contingent on a predictable environment; the Random regime where future environmental
+100 states do not recapitulate historical conditions lacked genotypes with increased accessibility of alter-
+101 nate phenotypes (median for Random=16.0 versus median for Const-A= 1.0; Mann-Whitney U = 224,
+102 n = 20, p = 0.221, two-tailed). Notably, genotypes isolated from the intermediate Cyclic regime--with
+103 the environment switching every 30 generations on average--generated more alternate phenotypes on
+104 mutation compared to other regimes (median for Cyclic (Slow)=4556.0, median for Cyclic=45802.5;
+105 Mann-Whitney U = 312, n = 20, p = 0.0019, two-tailed). To test if these alternative phenotypes were
+106 enriched in the mutational neighborhood at the expense of robustness, we measured the correlation
+107 between the number of four different classes of mutants--alternate (perfectly adapted to the alter-
+108 nate environment), terminal (perfectly adapted to the terminal environment), intermediate (perfectly
+109 adapted to neither environments), and inviable (unable to self-replicate). The number of alternate phe-
+110 notype mutants was not significantly correlated with changes in any other category (Fig. S2b). Thus,
+111 our observations support theoretical predictions that increased evolvability does not necessarily lead to
+112 a reduction in genetic robustness [27, 38].
+113 These results indicate that the populations subjected to cyclically changing environments tend to
+114 evolve towards regions in the genotype space where adaptive phenotypes--those with high fitness in
+115 frequently encountered environments--are mutationally accessible. To explicitly test whether the muta-
+116 tional neighborhoods of evolved genotypes encode measurable information about the historic environ-
+117 ment states encountered by the population, we analyzed the normalized pointwise mutual information
+118 (NPMI) between tasks . The NPMI metric calculates whether the co-occurrence of any two tasks within
+119 a genotype's mutational neighborhood is significantly higher than expected assuming independent task
+120 probabilities (see Methods section). Figure 2c shows the NPMI values for different task pairs derived from
+121 genotypes evolved in all six regimes. We observed that the mutational neighborhood of organisms from
+122 changing environments systematically captured the pattern of tasks rewarded in different environmental
+123 states. Specifically, in Cyclic and Cyclic (Slow) regimes, task pairs that are rewarded concurrently in an
+124 environment state (i.e., are cognate) yielded positive NPMIs whereas task pairs that were rewarded in
+125 alternate environments had a negative NPMI.
+126 We calculated the total NPMI by consolidating the task-pair NPMIs depending on whether or not the
+127 task pairs were cognate in cyclic environments (i.e., tasks rewarded together or punished together). This
+
+                                                                     6
+   bioRxiv preprint doi: https://doi.org/10.1101/2023.01.04.520634; this version posted June 16, 2024. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made
+
+                                                       available under a CC-BY-NC-ND 4.0 International license.
+
+a                                                              b                             105
+
+                                                               Alternate phenotypes          103
+                                                                  (Single & double mutants)
+                                                                       101
+                                                                                                            *       Random  Cyclic (Slow)  Cyclic  Cyclic (Fast)
+                                                                               Const-A
+                                                                                                           Const-B
+                                                               d
+c
+       Const-A           Const-B     Random
+    6
+    5                                                          Total NPMI                    10
+    4                                                             (Double mutants)
+    3                                               Avg. NPMI                                5
+    2                                                    0.9
+    1
+                                                         0.0
+Task      Cyclic (Slow)      Cyclic  Cyclic (Fast)
+                                     123456              -0.9
+      6                  123456                                                              0
+      5                       Task
+      4                                                                                           Const-A  Const-B  Random  Cyclic (Slow)  Cyclic  Cyclic (Fast)
+      3
+      2
+      1
+
+          123456
+
+                                                                                                                            Regime
+
+Figure 2: Evolution in a changing environment shapes the mutational neighborhood. (a) The two
+environments A and B recognize a set of six possible computational tasks performed by the organisms
+(left, x-axis). The fitness effects of task execution is determined by the respective fitness multipliers
+in each environment (see Methods). The two environments reward a complementary set of tasks. The
+schematic on the right details the different environmental change regimes used in this study and the
+environmental states they exhibit during evolution. The Cyclic- regimes switch between two environ-
+ments with a waiting time ( ) picked from a Gaussian distribution, as detailed below the schematic. The
+Random regime rewards a randomly picked set of tasks and switches with a similar waiting time distri-
+bution as Cyclic. Each regime ends with 300 updates of evolution in a fixed terminal environment (grey
+region). (b) Total number of single and double mutants of the end-point dominant genotype with an
+alternate phenotype. Labels on the x-axis correspond to the six environmental regimes. (c) Normalized
+pointwise mutual information (NPMI) between task pairs for dominant genotypes isolated from popu-
+lations evolved in different regimes (averaged over 20 replicates). The marginal and joint probabilities
+for calculating the NPMIs are measured using only the double mutants of the dominant genotype at
+the end of the experiment. Axes labels in blue and red denote tasks rewarded in environments A and
+B, respectively. (d) Total NPMI for the dominant genotypes isolated from the six environmental change
+regimes. Total NPMIs are calculated by summing up the individual task-pair NPMIs after assigning
+them a positive or negative sign based on their cognate or non-cognate nature. The boundaries of the
+boxplot represent the first (Q1) and third quartiles (Q3), with the median represented by the central
+horizontal line. Whiskers extend to maximum values within the upper (Q3 + 1.5 × IQR) and lower
+fences (Q1 - 1.5 × IQR), where IQR = Q3 - Q1.
+
+                                                               7
+    bioRxiv preprint doi: https://doi.org/10.1101/2023.01.04.520634; this version posted June 16, 2024. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made
+
+                                                        available under a CC-BY-NC-ND 4.0 International license.
+
+128 allowed us to quantify the magnitude of information about the environment encoded in the mutational
+129 neighborhood. Figure 2d shows the total NPMIs for the dominant genotypes from 20 replicates in each
+130 regime. The median total NPMIs for Cyclic and Cyclic (Slow) genotypes were considerably larger than
+131 NPMIs from the static regimes (Median for Const-A=3.43, median for Cyclic=10.28; Mann-Whitney
+132 U = 46, p = 8.17 × 10-6, two-tailed). Further, to exclude the influence of perfectly adapted mutants,
+133 we recalculated the total NPMIs after removing all perfectly adapted mutants (Fig. S3). Even without
+134 the contributions from these mutants, the Cyclic and Cyclic (Slow) genotypes had larger total NPMIs
+135 (Median NPMI for Const-A=-0.43, Cyclic median=3.59; Mann-Whitney U = 52, p = 2.138 × 10-5,
+136 two-tailed). Therefore, evolution under these intermediate-rate predictably-switching environments had a
+137 two-fold effect: genotypes were able to create more mutants with an alternate phenotype and their local
+138 mutational neighborhoods reflected combinations of traits in a manner that mimicked the environmental
+139 states the populations encountered over their evolutionary history.
+
+140 Evolution along lineages
+
+141 These results demonstrated that the properties of the mutational neighborhood can dramatically shift
+142 during evolution in changing environments. To investigate the implications of these shifts on adapting
+143 lineages, we first isolated the lineage of the dominant genotypes, tracking mutation events back to
+144 the ancestral genotype. We then calculated the mismatch between the environment state and the
+145 phenotypic state of the lineage over evolutionary time, as detailed in the Methods section. Figure 3a
+146 shows a moving window average of the mismatch over time. We found that lineages from Cyclic and
+147 Cyclic (Slow) regimes had a lower overall mismatch compared to Random and Cyclic (Fast) regimes
+148 (Median mismatch index for Cyclic=0.238, median for Random=0.930; Mann-Whitney U = 2, n = 20,
+149 p = 5.8 × 10-11, two-tailed). Moreover, Cyclic lineages show a mismatch only about three times that of
+150 Cyclic (Slow) even though these lineages evolved in an environment that switched ten times as frequently
+151 (Median mismatch index for Cyclic=0.238, median for Cyclic (Slow)=0.072; Mann-Whitney U = 353,
+152 n = 20, p = 9.65 × 10-6, two-tailed). To estimate the rate of adaptation, we analyzed the number of
+153 elapsed updates before dominant lineages were adapted to an altered environment--a measure we denote
+154 as lineage lag (see Methods; Fig S1c). In comparison to Random or Cyclic (Slow), lineages that evolved
+155 under the Cyclic regime exhibited a substantially faster phenotypic response following environmental
+156 change (median lineage lag for Cyclic=3.0, median for Cyclic (Slow)=19.0; Mann-Whitney U = 50,
+157 p = 4.94 × 10-5, two-tailed; Fig 3b).
+158 We extended our analyses to the mutational neighborhoods surrounding lineage sequences near en-
+
+                                                                     8
+   bioRxiv preprint doi: https://doi.org/10.1101/2023.01.04.520634; this version posted June 16, 2024. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made
+
+                                                       available under a CC-BY-NC-ND 4.0 International license.
+
+a                                      Cyclic (Fast)      b
+                                                                40
+     0.4
+Mismatch index                                                                                            30
+                                                                                             Lineage lag
+0.2                                       Random                                                          20
+            Const-A
+0.0                                         Cyclic                                                        10
+         0  1                       2  Cyclic (Slow)
+                                                                                                           0
+                                         Const-B                                                                     Random Cyclic (Slow) Cyclic
+                                                       3
+                                                                                                                                    Regime
+                     Update (x105)
+
+Figure 3: Lineages evolving under specific regimes adapt better and faster to their environments
+(a) Moving window average of the mismatch between the environment and the lineage phenotypes
+evolving in different regimes over evolutionary time (window size=10,000 updates). The mismatch index
+measures the number of task losses or gains required to be perfectly adapted to the lineage genotype's
+contemporaneous environment. The central dark line in each curve denotes the mean across replicates,
+and the width of the ribbons signifies standard error calculated from 20 replicates. (b) The lineage lag
+between the environment and the lineage phenotypes. Lineage lag is calculated as the number of updates
+elapsed until the lineage achieves a perfectly adapted phenotype after the environment switches. Only
+lineages from Random, Cyclic (Slow), and Cyclic regimes are shown here as they consistently achieved
+perfect adaptation within 100 updates after a switch. Each point is the median of lineage lags calculated
+from different environmental switches over a single replicate experiment. Box-plot characteristics are the
+same as in Fig. 2.
+
+159 vironmental switch events. An abridged version of this data is presented in figure 4a, with complete data
+160 in figure S4. We found that mutational neighborhoods for Cyclic lineages appeared to anticipate the
+161 environment change; these lineages showed a high concentration of alternate mutants before the envi-
+162 ronment switched, unlike lineages under the Cyclic (Slow) regime that only developed such adaptations
+163 gradually after the switch. Synthesizing our observations thus far, we hypothesized that the lineages
+164 evolved in cyclic environments localized on phenotypic boundaries in the genotype space, allowing them
+165 to switch rapidly between alternate phenotypes (Fig. S1d). Prior theoretical work posits that lineages
+166 positioning on such boundaries are able to out-compete lineages farther away from the boundary and
+167 thus maximize their long-term fitness [15, 39, 40]. We tested evolved lineages for such localization by
+168 calculating the mutational trade-offs between adjacent sequences along a line of descent. Essentially,
+169 we measured the change in the number of mutants adapted to both environments A and B whenever
+170 there was a change in the genotype while moving along the lineage (detailed in Methods). Lineages
+171 that localize on boundaries between phenotypes will show the development of strong mutant pheno-
+172 type trade-offs between adjacent genotypes along their evolved lineages (Fig. S1d). Figure 4b shows
+173 these trade-offs as recorded during the last 10,000 generations. Lineages from both Cyclic and Cyclic
+
+                                       9
+   bioRxiv preprint doi: https://doi.org/10.1101/2023.01.04.520634; this version posted June 16, 2024. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made
+
+                                                       available under a CC-BY-NC-ND 4.0 International license.
+
+                        a                                       Environment A Environment B
+                                             8
+                                             7                                                                          Cyclic
+                                             6
+                                             5                                                                                         log10(B Adapted)
+                                             4
+                                             3
+                                             2
+                                             1
+
+                              Epoch  8                                                                                  Cyclic (Slow)
+                                     7
+                                     6                                                                                                                   3
+                                     5
+                                     4
+                                     3
+                                     2
+                                     1
+
+                                                -200   -100                  0               100                200                                      2
+
+                                     8                                                                                  Cyclic (Slow)                    1
+                                     7
+                                     6                                                                                                                   0
+                                     5
+                                     4
+                                     3
+                                     2
+                                     1
+
+                                                -2000  -1000                 0               1000         2000
+
+                                                                              Updates
+
+                        b
+
+ Fraction adapted to B               Const-A           Const-B               Random          Cyclic       Cyclic (Slow) Cyclic (Fast)
+
+                         0.4
+                         0.0
+                        -0.4
+
+                              -0.4 0.0 0.4             -0.4 0.0 0.4          -0.4 0.0 0.4 -0.4 0.0 0.4    -0.4 0.0 0.4                 -0.4 0.0 0.4
+                                                                      Count        Fraction adapted to A  1.00
+
+                                                                             0.25      0.50  0.75
+
+Figure 4: Lineages from the Cyclic regime migrate to phenotypic boundaries in the genotype
+space. (a) Median counts of lineage sequence mutants that are adapted to environment B before and
+after the environment switches from state A to B. The x-axis denotes the number of updates before and
+after a switch where lineage mutants are recorded. In the top two graphs, each square covers a range
+of 5 updates. The y-axis segments the entire evolutionary time into eight equal spans, or 'epochs'. Only
+Cyclic and Cyclic (Slow) regimes are plotted here. The lower graph extends the analysis to include up
+to 2000 updates around the environmental switch for the Cyclic (Slow) regime, with the range of each
+square extended to 50 updates. Grey squares denote points where lineages mutate but do not have any
+B-adapted mutants. White squares denote points where the lineage does not mutate within the time
+span of observation. (b) Trade-offs between the number of mutants adapted to environment A and B
+across different regimes during mutation events on the lineage. Points along the y = -x line denote a
+1-to-1 trade-off between mutant phenotype distributions whenever the lineage acquires a new mutation
+(See Fig. S1d). This plot includes only mutational trade-off data from the final 100,000 updates of
+evolution. Points from all 20 replicates in each regime are aggregated to calculate the density.
+
+                                                                                   10
+    bioRxiv preprint doi: https://doi.org/10.1101/2023.01.04.520634; this version posted June 16, 2024. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made
+
+                                                        available under a CC-BY-NC-ND 4.0 International license.
+
+174 (Slow) regimes exhibit trade-offs, with Cyclic lineages having the strongest. These trade-offs gradually
+175 developed as populations evolved and remained stable for long periods of time (Fig. S5).
+176 Together, these results demonstrate that selection under changing conditions actively shapes the
+177 mutational landscape of populations in a manner that is dependent on the rate and character of en-
+178 vironmental change. Both the accessibility of alternative phenotypes and the information stored in the
+179 distribution of mutant phenotypes are substantially enhanced during this process. These features, in
+180 turn, help the population adapt quickly when facing ongoing environmental fluctuations.
+
+181 Evolution of mutation rates
+
+182 Mutation rates in natural populations are known to evolve rapidly under stressful conditions [41, 42].
+183 However, the drift barrier hypothesis proposes that the mutation rate should decrease to a minimal
+184 value sustained above zero by genetic drift [22]. To explore the dynamic interaction between mutation
+185 rate evolution and the evolution of the mutational neighborhood, we conducted a series of experiments
+186 allowing the mutation rates to evolve naturally. In Avida, organisms inherit their parent's mutation rate,
+187 subject to small stochastic variation proportional to their parent's rate (see Methods, Fig. S1e). To
+188 mitigate bias introduced by any specific starting mutation rate, we initiated experiments with rates
+189 spanning several orders of magnitude (0.0001, 0.001, and 0.0316). Then, we measured the average
+190 mutation rate of organisms in these populations as they evolved under different regimes. Figure 5a
+191 shows the average evolved mutation rates for populations starting from three different initial values.
+192 Environments undergoing intermediate fluctuations--specifically, the Cyclic and Random regimes--
+193 were conducive to the evolution of higher mutation rates (with initial mutation rate of 10-3, median
+194 evolved mutation rate in Cyclic=9.19×10-4, median in Const-A=7.37×10-6; Mann-Whitney U = 400,
+195 n = 20, p = 1.45 × 10-11, two-tailed). This trend toward greater mutation rates in Cyclic held true
+196 across all starting mutation rates studied (with an initial mutation rate of 10-4, median evolved mutation
+197 rate for Cyclic=1.88 × 10-4, median for Const-A=1.611 × 10-5; Mann-Whitney U = 387, n = 20,
+198 p = 5.41 × 10-9, two-tailed).
+199 Elevated mutation rates can increase the mutational load in populations by raising the incidence of
+200 deleterious genotypes, thereby diminishing the average fitness within a static environment [43]. Hence,
+201 we anticipated a detrimental impact of high mutation rates on the accessibility of beneficial alternative
+202 phenotypes. Counter to this expectation, the Cyclic regime populations maintained increased access to
+203 mutants adapted to the alternative environments, while simultaneously elevating their mutation rates
+204 (Fig. 5b; for initial mutation rate of 10-3, median number of alternate mutants for Cyclic=16378.5,
+
+                                                                    11
+    bioRxiv preprint doi: https://doi.org/10.1101/2023.01.04.520634; this version posted June 16, 2024. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made
+
+                                                        available under a CC-BY-NC-ND 4.0 International license.
+
+205 median for Const-A=0.0, Const-A mean=27.5; Mann-Whitney U = 399, n = 20, p = 2.86 × 10-8, two-
+206 tailed). The number of alternate mutants in the evolving mutation rate experiments were comparable
+207 to the fixed mutation rate case (median number of alternate mutants in Cyclic with fixed mutation
+208 rate=45802.5, Cyclic with an initial mutation rate of 0.001 median=16378.5; Mann-Whitney U = 139,
+209 n = 20, p = 0.102, two-tailed). The evolved NPMIs were also similar to genotypes from the fixed
+210 rate treatment (Fig. S6). Thus, populations evolved higher mutation rates and greater accessibility of
+211 adaptive variation for alternative environments simultaneously in the Cyclic regime.
+
+212 Adaptive performance under alternative fluctuations
+
+213 Populations typically excelled when subjected to the same environmental conditions that shaped them;
+214 however, it remains unclear if such specific adaptations confer benefits across varying ecological con-
+215 ditions. To ascertain whether adaptation within a certain regime delivered cross-regime fitness im-
+216 provements, we isolated genotypes from the initial evolution experiments and subjected them to each
+217 alternative regime. Due to computational constraints, the evolving mutation rate treatment was repre-
+218 sented by genotypes from the intermediate initial mutation rate treatment only, with a starting mutation
+219 rate of 0.001. To measure the evolutionary performance of genotypes, we calculated the average mis-
+220 match index and the average lineage lag over approximately 1,000 generations of evolution. The data
+221 is summarized in figure S7.
+222 We found that genotypes evolved in the Cyclic regime had a lower average mismatch and adapted
+223 faster following environmental changes than their counterparts from the Cyclic (Slow) or Cyclic regimes
+224 (Fig. S7). Contrary to expectations, genotypes from variable mutation rate experiments perform worse
+225 those from the fixed mutation rate experiments. This decrease in performance may be attributable
+226 to the slight reduction in the evolved mutation rates compared to the fixed rates (basal mutation
+227 rate=10-3, median evolved mutation rate in Cyclic with intermediate starting mutation rate=9.19 ×
+228 10-4). Nevertheless, the possibility remained that adaptation via mutation rates may come at the cost
+229 of evolvability via the mutational neighborhood -- a hypothesis we examine further in the concluding
+230 section of our results.
+
+231 Adaptation in novel environments
+
+232 To measure how the ability of populations to adapt to new environments changed during our evolution
+233 experiments, we subjected evolved genotypes to a novel environment with 127 unique rewarded tasks
+234 unrelated to those rewarded in environments A or B. During 30,000 generations of evolution, we measured
+
+                                                                    12
+   bioRxiv preprint doi: https://doi.org/10.1101/2023.01.04.520634; this version posted June 16, 2024. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made
+
+                                                       available under a CC-BY-NC-ND 4.0 International license.
+
+a                                                                        Initial mut. rate: 0.001      Initial mut. rate: 0.0316
+
+                    Initial mut. rate: 0.0001
+
+                    10-2
+
+Copy mutation rate  10-3                                                         Random
+                                                                                  Cyclic
+
+                                                                                 Cyclic (Slow)
+
+                    10-4                                                         Cyclic (Fast)
+
+                    10-5                                                 Const-A
+                                                                                 Const-B
+
+                                   0  1                      2  30       1               2         30          1  2               3
+
+                                                                         Update (x10-5)
+
+b                                     Initial mutation rate
+
+Alternate phenotypes          105     0.0001
+   (Single & double mutants)
+                                      0.001
+
+                                      0.0316
+
+                              103
+
+                              101
+
+                                      Const-A                   Const-B  Random  Cyclic (Slow)         Cyclic     Cyclic (Fast)
+
+                                                                                 Regime
+
+Figure 5: Concurrent evolution of high mutation rates and accessible mutational neighborhoods
+in fluctuating environments. (a) Mean mutation rate for populations evolved under different regimes
+of environmental change. Dark lines represent the average mutation rates calculated from 20 distinct
+replicates, while the ribbons denote confidence intervals defined by two times the standard error. The
+three panels show the data from three sets of experiments that were started with different initial mutation
+rates. (b) The total number of single and double mutants of the end-point dominant genotype with an
+alternative phenotype. The patterned box plots categorize dominant genotypes according to the initial
+mutation rates used in the experiments. Other box plot characteristics are the same as in Fig. 2. The
+red filled circles denote the median number of alternate phenotype mutants from the fixed mutation
+experiments, with the error bars denoting the lower and upper quartiles (allowing direct comparison to
+the data from Fig. 2b).
+
+                                                                         13
+    bioRxiv preprint doi: https://doi.org/10.1101/2023.01.04.520634; this version posted June 16, 2024. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made
+
+                                                        available under a CC-BY-NC-ND 4.0 International license.
+
+235 the total number of tasks performed by the descendants of evolved genotypes, initially adapted to
+236 different environmental regimes. Data reflecting the progression of task acquisition over time is shown
+237 in S7c. We found that no marked differences in the evolvability of genotypes from the fixed mutation rate
+238 experiments to this new environment, as indicated by the number of new tasks they perform (Kruskal-
+239 Wallis 2 on the number of tasks evolved at the end, for fixed mutation rate genotypes=4.1292, df = 5,
+240 p = 0.531).
+241 By contrast, genotypes from the evolving mutation rate experiments exhibited significant diversity
+242 in their adaptive success in this new environment (Kruskal-Wallis 2 for the number of tasks evolved for
+243 evolving mutation rate genotypes=94.221, df = 5, p < 2.2 × 10-16). Notably, genotypes from Random
+244 and Cyclic regimes that underwent mutation rate escalation acquired more functions than their ancestral
+245 genotypes (median tasks evolved by ancestral genotype=30, median tasks evolved by Cyclic genotypes
+246 = 42.3, 18 of 18 samples evolved more tasks than the ancestral median, p = 7.629 × 10-6, two-tailed
+247 one-sample sign test). Inversely, genotypes conditioned to Const-A, Const-B, and Cyclic (Fast) evolved
+248 fewer tasks compared to their ancestor (median tasks evolved by Cyclic (Fast) genotypes = 17.9, 19
+249 of 19 samples evolved fewer tasks than the ancestral median, p = 3.815 × 10-6, two-tailed one-sample
+250 sign test).
+251 To test whether mutation rate was the key driver of the observed differences, we transplanted the
+252 evolved mutation rates into organisms from the fixed rate experiments. This exchange recapitulated the
+253 difference in the rate of adaptation seen between treatments in this new environment (Fig. S7c; Kruskal-
+254 Wallis 2 for the number of tasks evolved at the end for fixed mutation rate genotypes transplanted with
+255 evolved mutation rates=95.167, df = 5, p < 2.2 × 10-16). Conversely, when the evolving mutation rate
+256 genotypes were transplated with the ancestral mutation rate, their rate of adaptation remained largely
+257 unchanged (Kruskal-Wallis 2 for the number of tasks evolved at the end for the evolution mutation rate
+258 genotypes transplanted with the ancestral mutation rates=3.5192, df = 5, p = 0.6205). In conclusion,
+259 the data suggests that while the ability to access alternate phenotypes provides a mechanism to quickly
+260 adapt to previously encountered environments, elevated mutation rates are a primary driver of adaptation
+261 to entirely new environments.
+
+262 Interaction between evolution of the mutation rate and the mutational neighborhood
+
+263 The mutation rate is a key determinant of the rate at which populations explore genetic landscapes and
+264 is a regulator of their equilibrium genetic diversity [44, 45]. Thus, we expect that different mutation rates
+265 would lead to distinct evolved mutational neighborhoods. To understand the role of the mutation rate
+
+                                                                    14
+   bioRxiv preprint doi: https://doi.org/10.1101/2023.01.04.520634; this version posted June 16, 2024. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made
+
+                                                       available under a CC-BY-NC-ND 4.0 International license.
+
+                                                     Const-A              Cyclic (Slow)                                          Cyclic
+                              105
+Alternate phenotypes
+   (Single & double mutants)  103
+
+                              101
+
+                                   1e-04 0.000919  0.005      0.01  0.05  1e-04 0.000919      0.005  0.01  0.05  1e-04 0.000919  0.005   0.01  0.05
+
+                                                                          Mutation Rate
+
+Figure 6: Interplay of mutation rate and the mode of environmental change shapes the muta-
+tional neighborhood. This graph plots total number of single and double mutants of the end-point
+dominant genotype with an alternative phenotype. The data is plotted for evolution experiments in three
+different regimes with different values of a fixed mutation rate (x-axis) . The mutation rate of 9.19×10-4
+was set to mimic the evolved mutation rate in previous experiments (specifically, in the Cyclic regime
+starting with an initial mutation rate of 10-3). The filled grey circle and error bars denote the mean
+and quartiles of alternate phenotype counts observed during the evolving mutation rate experiments.
+
+266 in the evolution of mutational neighborhoods, we evolved twenty replicate populations at five different
+267 fixed mutation rates in three different environmental regimes. One selected mutation rate mirrored the
+268 evolved mutation rate from previous experiments (µ = 9.19×10-4). The number of alternate phenotype
+269 mutants that evolved in different regimes under different values of the mutation rate are shown in figure
+270 6. We found that the effect of the mutation rate on the evolution of the mutational neighborhood
+271 depends on the way the environments changed. In the static Const-A regime, only a small number of
+272 the populations evolved alternate phenotypic mutations. In the Cyclic (Slow) regime, increasing the
+273 mutation rate decreased the abundance of alternate phenotypic mutations (p = 0.00104, see Table
+274 S1). This observation is perhaps expected since frequent mutations would favor populations in more
+275 robust regions of the genotype-phenotype map (e.g., "survival of the flattest") [46]. In these gradually
+276 shifting environments, the drive towards robustness seemed to impede the evolution of the mutational
+277 neighborhood as mutation rates increased.
+278 Surprisingly, we found a non-monotonic relationship between mutation rate and the number of alter-
+279 nate phenotypic mutants in the Cyclic regime (p = 2.39×10-05, see Table S1). The number of alternate
+280 phenotypic mutants first increased with mutation rate but subsequently decreased at the highest muta-
+281 tion rates, with an estimated peak at a mutation rate of 0.0018. Notably, we see the largest increase in
+
+                                                                                          15
+    bioRxiv preprint doi: https://doi.org/10.1101/2023.01.04.520634; this version posted June 16, 2024. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made
+
+                                                        available under a CC-BY-NC-ND 4.0 International license.
+
+282 the number of alternate phenotypic mutants at a similar mutation rate to which the populations evolved
+283 in our evolving mutation rate experiments. On one hand, the negative correlation between alternate
+284 phenotypes and mutation rate at high values of the mutation rate mirrors the results in more slowly
+285 varying environments. On the other hand, the number of alternate phenotypes increased over a large
+286 range of mutation rates in this environment. Considering the number of alternate mutants in Cyclic
+287 is always higher than the Slow regime, these results suggest synergy rather than antagonism between
+288 the evolution of mutation rates and the availability of alternate phenotype mutations in environments
+289 fluctuating at an appropriate speed.
+
+290 Discussion
+
+291 Here, we experimentally study the evolution of the primary determinants of evolvability simultaneously
+292 (the mutational neighborhood and the mutation rate), uncover their interaction with one another, and
+293 tie their emergence to the mode of environmental change. We show that evolved organisms can reside
+294 in mutational neighborhoods with an elevated number of alternate phenotypes that allow them to adapt
+295 to changing environments quickly. This occurs when evolving populations move to areas of the genotype
+296 space where such phenotype-altering mutations are more abundant--i.e., to phenotype boundaries (see
+297 Fig. 1c for an illustration). Importantly, this shift does not occur from directly biasing mutations towards
+298 particular phenotypes as modifier theory posits [47]. Rather, the phenotypic bias we observe manifests
+299 indirectly from structural changes in the mutational neighborhood. The movement towards phenotypic
+300 boundaries is most readily evolved in environments that switch between predictable states at intermediate
+301 rates. By predictable, we mean that future environments reliably resemble those encountered previously.
+302 In our experiments, the ideal rate for evolvability is realized when the environment switches between
+303 two states approximately every 30 generations. Therefore, our results indicate that evolution in certain
+304 environments can favor genotypes that are not necessarily more fit presently, but rather have a propensity
+305 to generate more adaptive mutants in the future.
+306 We devise a mutual information metric that captures the extent to which the mutational neigh-
+307 borhood reflects the mode of environmental change. Using this metric, we find that the distribution of
+308 mutant phenotypes becomes tuned to environments encountered by the population during evolution.
+309 Thus, we show that the set of phenotypes available to a population via mutations evolves to store
+310 information about environmental change, allowing the population to "learn" how to adapt to recur-
+311 ring environments [48]. We note an interesting macroevolutionary consequence of this result, where one
+
+                                                                    16
+    bioRxiv preprint doi: https://doi.org/10.1101/2023.01.04.520634; this version posted June 16, 2024. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made
+
+                                                        available under a CC-BY-NC-ND 4.0 International license.
+
+312 would expect a lineage that had adapted to changing environments to show greater phenotypic variation
+313 than lineages adapted to more stable environments (Fig. S9 presents brief evidence of this in our sys-
+314 tem). As a corollary, the variation revealed through mutation can offer clues to the kinds of environments
+315 encountered by lineages in the past [33, 49]. These results provide a link between the microevolutionary
+316 processes that generate adaptive mutations and patterns that manifest at macroevolutionary scales.
+317 Elevated mutation rates can limit adaptation by increasing the accumulation of deleterious mutations
+318 [43]. Yet, the frequency of such deleterious mutations is also contingent upon an organism's local
+319 mutational neighborhood. In agreement with the drift barrier hypothesis, we find that the mutation
+320 rate precipitously decreases to minuscule values in static environments or environments changing very
+321 rapidly [22]. Remarkably, however, we see that the populations maintain much higher mutation rates
+322 in environments changing at intermediate rates. In these environments, the evolved mutation rates
+323 approximated those required for the evolution of the most evolvable mutational neighborhoods (as
+324 inferred from static mutation rate experiments). In contrast to previous work in which evolution failed
+325 to optimize mutation rates in a static environment, we show that such optimization is possible in
+326 more complex fluctuating environments [50]. The effect of fluctuations on evolving mutation rates was
+327 also observed in a recent study, where populations evolved elevated mutation rates when population
+328 bottlenecks were applied at intermediate frequencies during experimental evolution [23]. Whether the
+329 observed mutation rate increase in our study derives from a similar mechanism -- specifically, the pruning
+330 of maladaptive phenotypes during environmental shifts -- remains an open question.
+331 Counter to our expectations based on their compounding effects on mutational load, we observe
+332 increases in both the mutation rate and the accessibility of alternate phenotypic mutants in the recurrent
+333 and intermediately switching environments[18]. The benefits of these evolvability mechanisms manifest
+334 in different ways. On one hand, evolved accessibility of alternate phenotypes helps populations rapidly
+335 adapt to previously encountered environments, thus exhibiting a "memory-like" response to changes.
+336 Furthermore, organisms with such evolvability demonstrate quicker adaptation across a range of envi-
+337 ronmental change rates, not just the rate they historically experienced. Elevated mutation rates allow
+338 quick adaptation in completely new environments. Furthermore, in these novel environments, organisms
+339 starting with the same mutation rate but different mutational neighborhoods ultimately achieve similar
+340 fitness. When the mutation rate is artificially forced high, mutational neighborhoods evolve few alterna-
+341 tive phenotypes, except when the environment fluctuates at intermediate rates. Thus, intermediate-rate
+342 environmental fluctuations are able to overcome the otherwise overwhelming selection for mutational
+343 robustness. Together, these mechanisms of evolvability prime genotypes for rapid adaptation to both
+
+                                                                    17
+    bioRxiv preprint doi: https://doi.org/10.1101/2023.01.04.520634; this version posted June 16, 2024. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made
+
+                                                        available under a CC-BY-NC-ND 4.0 International license.
+
+344 historical and novel environments.
+345 The emergence of evolvability is inherently tied to the structure of genotype space [51­54]. Bound-
+346 aries between distinct regions in genotype space that encode different phenotypes are central to the
+347 evolvability that we study, but their presence in every genotype-phenotype map is not guaranteed [55­
+348 58]. Moreover, such boundaries may not always be accessible through evolution from the ancestral
+349 genotype. It is essential to address the abundance of such structural features in the genotype-phenotype
+350 map for more general conclusions to be drawn [35, 59]. Previously studied models demonstrate that
+351 intermediate rates of environmental change influence population localization, but these results are de-
+352 rived from necessarily simple models under idealized assumptions [15, 39]. Our work demonstrates that
+353 this effect can be readily observed in a realistic­but quite unnatural­evolving system with a markedly
+354 complex genotype-phenotype map and identifies the kinds of environmental change regimes that favor
+355 such localization.
+356 In conclusion, we show that evolution under specific modes of environmental change promotes high
+357 mutation rates and simultaneously shapes the local mutational neighborhood of populations. By mea-
+358 suring the rate of adaptation of evolved organisms in new environments, we show that increases in
+359 evolvability acquired through these two mechanisms play distinct roles in historical and novel environ-
+360 ments. Using large-scale digital evolution experiments, we trace the dynamics and interplay of these
+361 modes of evolvability as they evolve, and show that this escalation is characterized by the movement
+362 of populations towards boundaries in genetic space. In subsequent work, we aim to analytically resolve
+363 the dependence of evolvability on the environment, and test if our results can be harnessed for the
+364 directed evolution of populations with greater evolvability. Although we use an unnatural study system,
+365 our results provide insight into how and why evolution in nature can evolve to be so relentless.
+
+366 Methods
+
+367 In silico experiments
+
+368 We used the Avida Digital Evolution Platform to perform in silico evolution experiments. Avida organ-
+369 isms are autonomous, asexual, self-replicating computer programs that compete for space and execution
+370 time in a virtual environment [34]. These organisms possess a genome--a linear sequence of computer
+371 instructions--that enables them to reproduce and perform computations (Fig. S1a). The Avida instruc-
+372 tion set includes operations for basic computations, flow control (e.g., conditional logic and looping),
+373 input, output, and the building blocks of self-replication. To reproduce, organisms must copy their
+
+                                                                    18
+    bioRxiv preprint doi: https://doi.org/10.1101/2023.01.04.520634; this version posted June 16, 2024. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made
+
+                                                        available under a CC-BY-NC-ND 4.0 International license.
+
+374 genome instruction-by-instruction and then divide. Copy operations are imperfect and result in single-
+375 instruction mutations in the offspring genome. Time in Avida is measured in updates. On average, an
+376 update spans the execution of 30 instructions in an organism's genome. After division, new offspring
+377 are placed randomly in the world, replacing any existing occupants. Organisms thus compete for space,
+378 which drives selection to improve their replication rate in order to not be overwritten by competitors.
+379 Performing computations allows organisms to acquire a fitness multiplier depending on the environment.
+380 The average generation time of an Avida organism in our experiments is around 10 updates. We
+381 ran the primary evolution experiments in this work for a total of 300,000 updates (around 30,000
+382 generations) with a carrying capacity of 22,500 organisms. The two environments in our experiments--
+383 A and B--rewarded an alternate set of computations (tasks) (Fig. S1b). Environment A rewarded the
+384 organisms with a fitness multiplier of 2.0 if they performed tasks NOT, AND, or OR - and penalized
+385 NAND, ORN, or ANDN with a multiplier of 0.8. Environment B rewarded the organisms with a fitness
+386 multiplier of 2.0 for NAND, ORN, or ANDN - and penalized NOT, AND, or OR with a 0.8 multiplier.
+387 The rewards and penalties stacked, thus providing the maximum fitness benefits to organisms that were
+388 perfectly adapted to perform only the tasks rewarded in each environment.
+389 We initiated all primary evolution experiments with identical ancestral organisms having a genome
+390 that was 100 instructions in length, which was fixed at this size. For experiments under a fixed mutation
+391 rate, we used a copy mutation rate of 0.001, which created approximately one substitution out of every
+392 1000 instructions copied. For experiments where mutation rates were allowed to evolve, we started with
+393 three different initial mutation rates--0.0001, 0.001, and 0.0316. New offspring inherited the mutation
+394 rate of their parents, but were modified by adding a deviation drawn from a Gaussian distribution with
+395 a mean of 0 and a standard deviation of 1% of the parent's mutation rate value (Fig. S1f) [50].
+
+396 Environment change regimes
+
+397 The environment change regime determines the way environments switch in an experiment (Fig. S1b).
+398 The Const-A and Const-B regimes were in environmental states A and B, respectively, throughout
+399 evolutionary time. The Cyclic regime switched between environments A and B, with the waiting time
+400 between switches picked from a Gaussian distribution with a mean of 300 updates (30 generations)
+401 and a standard deviation of 60 updates. The Cyclic (Fast) regime switched between A and B with a
+402 mean waiting time of 30 updates (3 generations) and a standard deviation of 6 updates. The Cyclic
+403 (Slow) regime switched between A and B with a mean waiting time of 3000 updates (300 generations)
+404 and a standard deviation of 600 updates. In the Random regime, tasks to be rewarded or penalized were
+
+                                                                    19
+   bioRxiv preprint doi: https://doi.org/10.1101/2023.01.04.520634; this version posted June 16, 2024. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made
+
+                                                       available under a CC-BY-NC-ND 4.0 International license.
+
+405 redrawn randomly from the set of six tasks described before, with a mean waiting time of 300 updates
+406 (standard deviation of 60 updates). All regimes ended with 300 updates of evolution in a constant
+407 terminal environment, which was environment B for Const-B, and environment A otherwise. Evolution
+408 in these terminal environments allowed us to compare adaptive states at the end of the experiments
+409 consistently across regimes.
+
+410 Characterizing the mutational neighborhood
+
+411 We performed an exhaustive survey of the 2-step mutational neighborhood of the dominant genotype
+412 from the end of the experiments (Fig. S1c). To do so, we created every possible single- and double-point
+413 mutation in the dominant genotypes isolated after evolution. We tested each mutant for viability (i.e.,
+414 the ability to self-replicate) and measured the phenotypes for viable mutants (i.e., the set of tasks the
+415 mutant could perform). We also isolated the lineages of the dominant genotypes and performed a similar
+416 mutational neighborhood analysis on the entire lineage. Only single-point mutations were assayed for
+417 lineages. The mutant phenotype data from endpoint dominant genotypes was used to calculate the
+418 pointwise mutual information. The mutant phenotype data from lineages was used to measure the
+419 mismatch index, lineage lag, and mutational tradeoffs (see below).
+
+420 Pointwise mutual information
+
+421 The pointwise mutual information (PMI) for two events x, y   is defined as,
+
+                        P (x, y)                                                 (1)
+pmi(x, y) = log2 p(x)p(y)
+
+422 Where  is the sample space of events, p is the probability mass function on , and P is the
+423 probability mass function on the joint space  × . We normalized this value between -1 and 1 by
+424 defining the normalized pointwise mutual information (NPMI) as,
+
+                  log2   P (x,y)                                                 (2)
+npmi(x, y) =            p(x)p(y)
+
+- log2 P (x, y)
+
+425 The NPMI measures the excess probability of occurrence for certain event pairs in the joint probability
+
+426 distribution when compared to the expected probabilities based on these events' marginal distribution.
+
+427 For the measurements in this work, x and y denote the different tasks in the set of possible tasks
+
+428 recognized by the environments. p(i) was measured as the fraction of all possible double mutants that
+
+429 performed the task i. P (i, j) was measured as the fraction of all possible double mutants that performed
+
+20
+   bioRxiv preprint doi: https://doi.org/10.1101/2023.01.04.520634; this version posted June 16, 2024. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made
+
+                                                       available under a CC-BY-NC-ND 4.0 International license.
+
+430 both tasks i and j. A positive NPMI indicates that a task pair is over-represented in the mutants than
+431 expected based on the occurrence of each individual task. A negative NPMI indicates that the task pair
+432 is underrepresented on average.
+433 The joint sample space S =  ×  consists of 15 unique, non-similar, task pairs. These pairs are
+434 labeled as cognate ( SC) or non-cognate ( SN ) depending on whether they were rewarded by the
+435 same environment or not, respectively. The total NPMI was calculated as the sum of individual NPMIs
+436 after assigning the task pair a sign based on its cognate/non-cognate label.
+
+             Total npmi =          s npmi(x, y)  (3)
+
+                           (x,y)×
+
+437  Where,
+
+                 
+
+             s=  1 , if (x, y)  SC               (4)
+
+                 -1 , if (x, y)  SN
+
+438 We use this total NPMI metric to compare the information encoded on the mutational neighborhood
+439 of the dominant genotypes obtained from different regimes.
+
+440 Lineage measurements
+
+441 We calculated the mismatch index for lineages as the Hamming distance between the lineage phenotype
+442 and the phenotype most fit in the current environment. Hamming distance between phenotypes measured
+443 the minimum number of task losses/gains required to change between two phenotypes. For example,
+444 an organism that performs NOT, AND, and OR is three units away from an environment that has
+445 the maximum fitness for organisms performing NOT and NAND (two losses and one gain of function
+446 required). We further averaged the mismatch index over multiple updates to smooth out jumps in the
+447 index that happened due to sudden environmental changes.
+448 The lineage lag was calculated to assay the time required for a lineage to adapt to a changed
+449 environment (Fig. S1d). We surveyed 100 updates both before and after environment switches to see
+450 if the lineage ever acquired a phenotype perfectly fit for the new environment. Then, we calculated the
+451 amount of time between when the lineage became perfectly adapted and the environment switch. This
+452 number is positive if the lineage switched after the environment changed and negative if it switched
+453 before the environment.
+454 We measured the mutational trade-offs along the lineage by calculating the change in the fraction
+
+                                                                    21
+    bioRxiv preprint doi: https://doi.org/10.1101/2023.01.04.520634; this version posted June 16, 2024. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made
+
+                                                        available under a CC-BY-NC-ND 4.0 International license.
+
+455 of mutants adapted to environment A (A) and environment B (B) between genotypes occurring
+456 along the dominant lineage (Fig. S1e). Points with coordinate (A, B) were then plotted in a 2D
+457 Cartesian plane. Points along the axes of the 2D plane indicate mutation events along the lineage where
+458 an increase or decrease in mutants with one adaptation was not accompanied by a change in the number
+459 of mutants with the other adaptation. A high density along the y = -x line denotes a 1-to-1 trade-off
+460 between mutations, where an increase in mutants adapted to one environment came at a cost of the
+461 number of mutants adapted to the other environment (Fig. S1e).
+
+462 Cross-regime experiments
+
+463 We evolved the dominant genotypes--isolated from both fixed and evolving mutation rate experiments--
+464 under different regimes to test their performance directly. We released a single organism with the isolated
+465 genotype in a new Avida world where the environment switched as described by the four fluctuating
+466 regimes - Cyclic, Cyclic (Slow), Cyclic (Fast), and Random. Mutation rates were set at the start of
+467 the experiment based on whether the genotypes were isolated from a fixed or evolving mutation rate
+468 experiment but were not allowed to evolve further. These Avida worlds had a carrying capacity of
+469 22,500 organisms (same as the primary evolution experiments) and the experiments were run for 10,000
+470 updates. The performance of these genotypes was measured by calculating the time-averaged mismatch
+471 and average lineage lag as described earlier.
+
+472 Measuring evolvability in new environments
+
+473 To test the evolvability of organisms that evolved under different regimes in new environments, we
+474 released the dominant genotypes in an environment where 127 novel tasks--distinct from the 6 tasks
+475 encountered during primary evolution--were rewarded. We then performed a secondary evolution ex-
+476 periment for 300,000 updates where the organisms evolved under a fixed mutation rate. For genotypes
+477 isolated from fixed mutation conditions, we used a basal mutation rate of 0.001. For genotypes isolated
+478 from evolving mutation rate conditions, the mutation rate was set to the rate they had evolved in the
+479 primary evolution experiments. To account for the direct effect of mutation rates, we also performed
+480 reciprocal experiments where the organisms that evolved in evolving mutation rates were assigned a
+481 mutation rate of 0.001, and the organisms that evolved under fixed mutation rates were assigned the
+482 mean mutation rate that evolved in the evolving mutation rate treatments.
+
+                                                                    22
+   bioRxiv preprint doi: https://doi.org/10.1101/2023.01.04.520634; this version posted June 16, 2024. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made
+
+                                                       available under a CC-BY-NC-ND 4.0 International license.
+
+483 Statistics
+
+484 Statistical analyses were performed using functions in base R [60]. The correlation plot in figure S2 was
+485 generated using the corrplot package. Details about the statistical tests, including the type of test
+486 used, test statistic value, and p-values are provided in the text. For more details and the code used
+487 to perform statistical analyses, please refer to the "Plotter/Statistics file path" field in the data guide
+488 mentioned below.
+
+489 Data Availability
+
+490 The data generated for and used in this work has been archived publicly at https://doi.org/10.
+491 17605/OSF.IO/7P9KX. The data guide.pdf file (found in the root directory of the repository) is a
+492 data guide that annotates the provided data. It points to scripts used to run experiments, analyze data,
+493 perform statistics, and plot the figures. Interested readers can follow the steps mentioned in the data
+494 guide and repository to reproduce the data and figures in this paper.
+
+495 Code Availability
+
+496 Avida, the open-source digital evolution framework used in this work, is available under the MIT license
+497 at https://github.com/devosoft/avida. All data, scripts, and analysis files used in this work have
+498 been archived publicly. They are available in the repository mentioned under Data availability.
+
+499 References
+
+500 [1] L. Bashor, R. B. Gagne, A. M. Bosco-Lauth, R. A. Bowen, M. Stenglein, and S. VandeWoude,
+
+501  "SARS-CoV-2 evolution in animals suggests mechanisms for rapid variant selection," en, Proc.
+
+502  Natl. Acad. Sci. U. S. A., vol. 118, no. 44, Nov. 2021.
+
+503 [2] C. M. Duarte et al., "Rapid evolution of SARS-CoV-2 challenges human defenses," en, Sci. Rep.,
+
+504  vol. 12, no. 1, p. 6457, Apr. 2022.
+
+505 [3] P. V. Markov et al., "The evolution of SARS-CoV-2," en, Nat. Rev. Microbiol., vol. 21, no. 6,
+
+506  pp. 361­379, Jun. 2023.
+
+507 [4] J. Y. Siegers et al., "Evolution of highly pathogenic H5N1 influenza a virus in the central nervous
+
+508  system of ferrets," en, PLoS Pathog., vol. 19, no. 3, e1011214, Mar. 2023.
+
+                                          23
+   bioRxiv preprint doi: https://doi.org/10.1101/2023.01.04.520634; this version posted June 16, 2024. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made
+
+                                                       available under a CC-BY-NC-ND 4.0 International license.
+
+509 [5] A. Kandeil et al., "Rapid evolution of A(H5N1) influenza viruses after intercontinental spread to
+
+510  north america," en, Nat. Commun., vol. 14, no. 1, p. 3082, May 2023.
+
+511 [6] K. J. Card, T. LaBar, J. B. Gomez, and R. E. Lenski, "Historical contingency in the evolution of
+
+512  antibiotic resistance after decades of relaxed selection," en, PLoS Biol., vol. 17, no. 10, e3000397,
+
+513  Oct. 2019.
+
+514 [7] J. Diaz Caballero et al., "Mixed strain pathogen populations accelerate the evolution of antibiotic
+
+515  resistance in patients," en, Nat. Commun., vol. 14, no. 1, p. 4083, Jul. 2023.
+
+516 [8] C. Torres-Barcelo´, P. E. Turner, and A. Buckling, "Mitigation of evolved bacterial resistance to
+
+517  phage therapy," en, Curr. Opin. Virol., vol. 53, p. 101 201, Apr. 2022.
+
+518 [9] J. L. Payne and A. Wagner, "The causes of evolvability and their evolution," en, Nat. Rev. Genet.,
+
+519  vol. 20, no. 1, pp. 24­38, Jan. 2019.
+
+520 [10] M. Pigliucci, "Is evolvability evolvable?" en, Nat. Rev. Genet., vol. 9, no. 1, pp. 75­82, Jan. 2008.
+
+521 [11] A. Wagner, "Robustness and evolvability in living systems," in Robustness and evolvability in
+
+522  living systems, Princeton university press, 2013.
+
+523 [12] J. M. Riederer, S. Tiso, T. J. B. van Eldijk, and F. J. Weissing, "Capturing the facets of evolvability
+
+524  in a mechanistic framework," Trends Ecol. Evol., vol. 37, no. 5, pp. 430­439, May 2022.
+
+525 [13] J. A. Draghi and C. B. Ogbunugafor, "Exploring the expanse between theoretical questions and
+
+526  experimental approaches in the modern study of evolvability," J. Exp. Zool. B Mol. Dev. Evol.,
+
+527  jez.b.23134, Apr. 2022.
+
+528 [14] P. P. Palmes and S. Usui, "Robustness, evolvability, and optimality of evolutionary neural net-
+
+529  works," en, Biosystems., vol. 82, no. 2, pp. 168­188, Nov. 2005.
+
+530 [15] L. A. Meyers, F. D. Ancel, and M. Lachmann, "Evolution of genetic potential," en, PLoS Comput.
+
+531  Biol., vol. 1, no. 3, e32, Aug. 2005.
+
+532 [16] J. Draghi and G. P. Wagner, "The evolutionary dynamics of evolvability in a gene network model,"
+
+533  en, J. Evol. Biol., vol. 22, no. 3, pp. 599­611, Mar. 2009.
+
+534 [17] M. Lynch, "The frailty of adaptive hypotheses for the origins of organismal complexity," Proceed-
+
+535  ings of the National Academy of Sciences, vol. 104, no. suppl 1, pp. 8597­8604, May 2007.
+
+536 [18] P. D. Sniegowski, P. J. Gerrish, T. Johnson, and A. Shaver, "The evolution of mutation rates:
+
+537  Separating causes from consequences," en, Bioessays, vol. 22, no. 12, pp. 1057­1066, Dec. 2000.
+
+                                            24
+   bioRxiv preprint doi: https://doi.org/10.1101/2023.01.04.520634; this version posted June 16, 2024. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made
+
+                                                       available under a CC-BY-NC-ND 4.0 International license.
+
+538 [19] S. Matuszewski, J. Hermisson, and M. Kopp, "Catch me if you can: Adaptation from standing
+
+539  genetic variation to a moving phenotypic optimum," Genetics, vol. 200, no. 4, pp. 1255­1274,
+
+540  Aug. 2015.
+
+541 [20] L. A. Bergeron et al., "Evolution of the germline mutation rate across vertebrates," en, Nature,
+
+542  vol. 615, no. 7951, pp. 285­291, Mar. 2023.
+
+543 [21] A. Eyre-Walker and P. D. Keightley, "The distribution of fitness effects of new mutations," en,
+
+544  Nat. Rev. Genet., vol. 8, no. 8, pp. 610­618, Aug. 2007.
+
+545 [22] W. Sung, M. S. Ackerman, S. F. Miller, T. G. Doak, and M. Lynch, "Drift-barrier hypothesis and
+
+546  mutation-rate evolution," en, Proc. Natl. Acad. Sci. U. S. A., vol. 109, no. 45, pp. 18 488­18 492,
+
+547  Nov. 2012.
+
+548 [23] W. Wei, W.-C. Ho, M. G. Behringer, S. F. Miller, G. Bcharah, and M. Lynch, "Rapid evolution
+
+549  of mutation rate and spectrum in response to environmental and population-genetic challenges,"
+
+550  en, Nat. Commun., vol. 13, no. 1, p. 4752, Aug. 2022.
+
+551 [24] C. L. Burch and L. Chao, "Evolvability of an RNA virus is determined by its mutational neigh-
+
+552  bourhood," en, Nature, vol. 406, no. 6796, pp. 625­628, Aug. 2000.
+
+553 [25] J. Draghi and G. P. Wagner, "Evolution of evolvability in a developmental model," en, Evolution,
+
+554  vol. 62, no. 2, pp. 301­315, Feb. 2008.
+
+555 [26] J. A. Draghi and M. C. Whitlock, "Phenotypic plasticity facilitates mutational variance, genetic
+
+556  variance, and evolvability along the major axis of environmental variation," en, Evolution, vol. 66,
+
+557  no. 9, pp. 2891­2902, Sep. 2012.
+
+558 [27] J. A. Draghi, T. L. Parsons, G. P. Wagner, and J. B. Plotkin, "Mutational robustness can facilitate
+
+559  adaptation," en, Nature, vol. 463, no. 7279, pp. 353­355, Jan. 2010.
+
+560 [28] D. Jablonski, "Evolvability and macroevolution: Overview and synthesis," Evol. Biol., vol. 49,
+
+561  no. 3, pp. 265­291, Sep. 2022.
+
+562 [29] D. L. Rabosky et al., "Rates of speciation and morphological evolution are correlated across the
+
+563  largest vertebrate radiation," en, Nat. Commun., vol. 4, no. 1, p. 1958, Jun. 2013.
+
+564 [30] O. Carja, U. Liberman, and M. W. Feldman, "Evolution in changing environments: Modifiers of
+
+565  mutation, recombination, and migration," en, Proc. Natl. Acad. Sci. U. S. A., vol. 111, no. 50,
+
+566  pp. 17 935­17 940, Dec. 2014.
+
+                                              25
+   bioRxiv preprint doi: https://doi.org/10.1101/2023.01.04.520634; this version posted June 16, 2024. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made
+
+                                                       available under a CC-BY-NC-ND 4.0 International license.
+
+567 [31] L. Altenberg, U. Liberman, and M. W. Feldman, "Unified reduction principle for the evolution of
+
+568  mutation, migration, and recombination," en, Proc. Natl. Acad. Sci. U. S. A., vol. 114, no. 12,
+
+569  E2392­E2400, Mar. 2017.
+
+570 [32] L. K. M'Gonigle, J. J. Shen, and S. P. Otto, "Mutating away from your enemies: The evolution
+
+571  of mutation rate in a host-parasite system," en, Theor. Popul. Biol., vol. 75, no. 4, pp. 301­311,
+
+572  Jun. 2009.
+
+573 [33] A. Holstad et al., "Evolvability predicts macroevolution under fluctuating selection," en, Science,
+
+574  vol. 384, no. 6696, pp. 688­693, May 2024.
+
+575 [34] C. Ofria, D. M. Bryson, and C. O. Wilke, "Avida: A software platform for research in computational
+
+576  evolutionary biology," in Artificial Life Models in Software, M. Komosinski and A. Adamatzky,
+
+577  Eds., London: Springer London, 2009, pp. 3­35.
+
+578 [35] S. E. Ahnert, "Structural properties of genotype­phenotype maps," en, J. R. Soc. Interface,
+
+579  vol. 14, no. 132, p. 20 170 275, 2017.
+
+580 [36] S. F. Greenbury, S. Schaper, S. E. Ahnert, and A. A. Louis, "Genetic correlations greatly increase
+
+581  mutational robustness and can both reduce and enhance evolvability," en, PLoS Comput. Biol.,
+
+582  vol. 12, no. 3, R. A. Goldstein, Ed., e1004773, Mar. 2016.
+
+583 [37] M. A. Fortuna, L. Zaman, C. Ofria, and A. Wagner, "The genotype-phenotype map of an evolving
+
+584  digital organism," en, PLoS Comput. Biol., vol. 13, no. 2, e1005414, Feb. 2017.
+
+585 [38] A. Wagner, "Robustness and evolvability: A paradox resolved," Proceedings of the Royal Society
+
+586  B: Biological Sciences, vol. 275, no. 1630, pp. 91­100, Jan. 2008.
+
+587 [39] E. Kussell, S. Leibler, and A. Grosberg, "Polymer-population mapping and localization in the
+
+588  space of phenotypes," en, Phys. Rev. Lett., vol. 97, no. 6, p. 068 101, Aug. 2006.
+
+589 [40] E. Kussell and M. Vucelja, "Non-equilibrium physics and evolution­adaptation, extinction, and
+
+590  ecology: A key issues review," en, Rep. Prog. Phys., vol. 77, no. 10, p. 102 602, Oct. 2014.
+
+591 [41] M. A. Bedau and N. H. Packard, "Evolution of evolvability via adaptation of mutation rates," en,
+
+592  Biosystems., vol. 69, no. 2, pp. 143­162, May 2003.
+
+593 [42] M. Lukacisinov´a, S. Novak, and T. Paix~ao, "Stress-induced mutagenesis: Stress diversity facilitates
+
+594  the persistence of mutator genes," en, PLoS Comput. Biol., vol. 13, no. 7, e1005609, Jul. 2017.
+
+595 [43] K. Sprouffske, J. Aguilar-Rodr´iguez, P. Sniegowski, and A. Wagner, "High mutation rates limit
+
+596  evolutionary adaptation in escherichia coli," en, PLoS Genet., vol. 14, no. 4, e1007324, Apr. 2018.
+
+                                                 26
+   bioRxiv preprint doi: https://doi.org/10.1101/2023.01.04.520634; this version posted June 16, 2024. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made
+
+                                                       available under a CC-BY-NC-ND 4.0 International license.
+
+597 [44] I. M. Rouzine, J. Wakeley, and J. M. Coffin, "The solitary wave of asexual evolution," en, Proc.
+
+598  Natl. Acad. Sci. U. S. A., vol. 100, no. 2, pp. 587­592, Jan. 2003.
+
+599 [45] J. F. Crow and M. Kimura, An Introduction to Population Genetics Theory, en. Harper and Row,
+
+600  1970.
+
+601 [46] C. O. Wilke, "Adaptive evolution on neutral networks," en, Bull. Math. Biol., vol. 63, no. 4,
+
+602  pp. 715­730, Jul. 2001.
+
+603 [47] S. Karlin and J. McGregor, "Towards a theory of the evolution of modifier genes," en, Theor.
+
+604  Popul. Biol., vol. 5, no. 1, pp. 59­103, Feb. 1974.
+
+605 [48] R. A. Watson and E. Szathm´ary, "How can evolution learn?" en, Trends Ecol. Evol., vol. 31,
+
+606  no. 2, pp. 147­157, Feb. 2016.
+
+607 [49] A. Bukkuri, K. J. Pienta, S. R. Amend, R. H. Austin, E. U. Hammarlund, and J. S. Brown, "The
+
+608  contribution of evolvability to the eco-evolutionary dynamics of competing species," en, Ecol.
+
+609  Evol., vol. 13, no. 10, e10591, Oct. 2023.
+
+610 [50] J. Clune, D. Misevic, C. Ofria, R. E. Lenski, S. F. Elena, and R. Sanju´an, "Natural selection
+
+611  fails to optimize mutation rates for long-term adaptation on rugged fitness landscapes," en, PLoS
+
+612  Comput. Biol., vol. 4, no. 9, e1000187, Sep. 2008.
+
+613 [51] M. C. Cowperthwaite and L. A. Meyers, "How mutational networks shape evolution: Lessons from
+
+614  RNA models," en, Annu. Rev. Ecol. Evol. Syst., vol. 38, no. 1, pp. 203­230, Dec. 2007.
+
+615 [52] M. C. Cowperthwaite, E. P. Economo, W. R. Harcombe, E. L. Miller, and L. A. Meyers, "The
+
+616  ascent of the abundant: How mutational networks constrain evolution," en, PLoS Comput. Biol.,
+
+617  vol. 4, no. 7, e1000110, Jul. 2008.
+
+618 [53] E. J. Hayden, E. Ferrada, and A. Wagner, "Cryptic genetic variation promotes rapid evolutionary
+
+619  adaptation in an RNA enzyme," en, Nature, vol. 474, no. 7349, pp. 92­95, Jun. 2011.
+
+620 [54] R. Canino-Koning, M. J. Wiser, and C. Ofria, "Fluctuating environments select for short-term
+
+621  phenotypic variation leading to long-term exploration," PLoS Comput. Biol., vol. 15, no. 4, L.
+
+622  Keller, Ed., e1006445, Apr. 2019.
+
+623 [55] B. M. R. Stadler, P. F. Stadler, G. P. Wagner, and W. Fontana, "The topology of the possible:
+
+624  Formal spaces underlying patterns of evolutionary change," en, J. Theor. Biol., vol. 213, no. 2,
+
+625  pp. 241­274, Nov. 2001.
+
+                                                 27
+   bioRxiv preprint doi: https://doi.org/10.1101/2023.01.04.520634; this version posted June 16, 2024. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made
+
+                                                       available under a CC-BY-NC-ND 4.0 International license.
+
+626 [56] E. Ferrada and A. Wagner, "A comparison of Genotype-Phenotype maps for RNA and proteins,"
+
+627  en, Biophys. J., vol. 102, no. 8, pp. 1916­1925, Apr. 2012.
+
+628 [57] E. Ib´an~ez-Marcelo and T. Alarco´n, "The topology of robustness and evolvability in evolutionary
+
+629  systems with genotype­phenotype map," en, J. Theor. Biol., vol. 356, pp. 144­162, Sep. 2014.
+
+630 [58] S. Manrubia and J. A. Cuesta, "Distribution of genotype network sizes in sequence-to-structure
+
+631  genotype­phenotype maps," J. R. Soc. Interface, vol. 14, no. 129, p. 20 160 976, Apr. 2017.
+
+632 [59] T. C. B. McLeish, "Are there ergodic limits to evolution? ergodic exploration of genome space
+
+633  and convergence," Interface Focus, vol. 5, no. 6, p. 20 150 041, Dec. 2015.
+
+634 [60] R Core Team, "R: A language and environment for statistical computing," Vienna, Austria, Tech.
+
+635  Rep., 2022.
+
+636 Acknowledgments
+
+637 We thank Dr. Jordan Horowitz for his valuable comments. This work was supported by the computational
+638 resources and services provided by Advanced Research Computing at the University of Michigan, Ann
+639 Arbor. This research was supported in part by the National Science Foundation grant DEB 1813069.
+
+640 Author Contributions
+
+641 B.K. and L.Z. wrote the manuscript. B.K., A.L., M.A., and L.Z. conceptualized the project, designed
+642 the experiments, and ran the analyses. All authors edited and reviewed the manuscript. L.Z. supervised
+643 and funded the work.
+
+644 Competing Interests
+
+645 The authors declare that they have no competing interests.
+
+                  28
+   bioRxiv preprint doi: https://doi.org/10.1101/2023.01.04.520634; this version posted June 16, 2024. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made
+
+                                                       available under a CC-BY-NC-ND 4.0 International license.
+
+Supplementary Figures & Tables
+
+a                                      Read                                                                         b
+
+                                                                              Copy        &                                                                                                                   ...
+                                                                          Mutation
+                                                                                              Read
+
+                                       Write                                                                                                   Single mutants
+
+             Input 1                                                      Division                                             Double mutants   NOT 1 1 1                             010  Phenotypes
+                Input 2                                                                                                                        NAND 0 1 1                             111
+                                                                                                                                                                                      100
+                                                                                              Write                                             AND 1 1 0                        ...  111
+                                                                                                                                                ORN 0 0 1                             100
+   Output                    Parent                                                                                                                                                   111
+             Computation                                                                                                                          OR 1 1 0
+                                                                                                                                               ANDN 0 0 0
+c
+                                                                                          Offspring                       ...                  A-Adapted                              B-Adapted
+
+                                             Reproduction                                                                                      Intermediate
+
+                                                                                          Environment State
+
+                          Lineage lag                                                                                                                                                      Dominant Genotype
+
+                                                                          (A-Adapted)                                  X
+
+                                                                                                     X
+
+                                       X                                  Single mutants             B-Adapted
+
+                          X                                               ... Phenotypes                A-Adapted
+
+   Ancestor                                                                                   Fractions of mutants
+
+                                                                                                  Time
+
+d            A adapted                        n                           A                   B                           e
+
+                                              n+1                                                                                       Parent
+
+                                                             A=-B                                                                                   Mutation rate
+                                                                                                                                                          mparent
+                                                n
+
+                                                                     n+1     A-B
+
+                               B adapted
+                          Genotype space
+   Fraction of mutants                                                                                                        Inherit                                                  0
+                                                        DB                                                                Mutation Rate                                          SD 0.01mparent
+                                                                                                                                                                       Prob(Dm)
+   DA DB                     B-Adapted                                                                    No Tradeoff                                             Dm
+                             A-Adapted                                                                  1:1 Trade-off          Offspring
+
+                                                                                                                                            Mutation rate
+                                                                                                                                             mparent + Dm
+
+       n+1   Mutation steps                                                               DA
+   n
+
+                                       Figure S1: (Continued on the following page.)
+
+                                                                                              29
+   bioRxiv preprint doi: https://doi.org/10.1101/2023.01.04.520634; this version posted June 16, 2024. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made
+
+                                                       available under a CC-BY-NC-ND 4.0 International license.
+
+     Figure S1: In silico evolution in Avida and experimental methods. (a) An Avida world consists
+     of multiple genetic sequences, encoded as a circular series of instructions (black circles) that can be
+     executed by a virtual CPU (purple square) that translates these instructions into organismal function.
+     The main organismal functions include computation - where organisms perform logical tasks to increase
+     reproductive efficacy - and reproduction - where the sequence instructs the CPU to copy instructions into
+     a new memory location (grey and red circles). During computation, the sequence requests inputs from the
+     environment and acts upon these inputs to generate an output. We use two environments in this study -
+     A and B - both of which recognize a set of six possible computations or tasks. Refer to Fig. 2a for more
+     details about the environment states and regimes. (b) To survey the mutational neighborhood of evolved
+     organisms, we create every possible single (top-right) and double mutant (bottom-left) and measure
+     their phenotype. Phenotypes denoting tasks that are rewarded in environments A or B are labeled A-
+     adapted or B-adapted respectively. All other phenotypes are classified as intermediate. Sequences that
+     cannot self-replicate are classified as an inviable phenotype (c) An example of a pruned phylogeny of
+     digital organisms evolving in a cyclically changing environment. The colors on a branch denote the set
+     of mutations acquired by the branch compared to the ancestral genome. For most of the data, we look
+     at the lineage of the dominant genotype which is shown as solid lines. Circles on the phylogeny denote
+     mutation events where the phenotype of the lineage may or may not change. Lineage lag is calculated as
+     the time it takes for the lineage to adopt a perfectly adapted phenotype following an environment switch,
+     as shown on the top left. When calculating mutational neighborhoods for the lineages, we only look at
+     the single mutants of the lineage genotypes. (d) A hypothesized mechanism of localization that promotes
+     increased access to alternate phenotypes (top). Lineages start in the intermediate adapted region of a
+     genotype space (grey) but slowly find regions where a few mutations allow quick changes in phenotype
+     (yellow curve). If this hypothesis holds, we expect the development of increased mutational trade-offs
+     between consecutive mutational steps on the lineage--i.e., an increase in lineage mutations where the
+     increase in number of mutants adapted to environment A is accompanied by an equivalent decrease
+     in the number of mutants adapted to environment B. We check for these trade-offs by measuring the
+     number of mutants of lineage sequences adapted to environments A and B (bottom-left) and calculating
+     the differences (A and B). When plotted on a Cartesian plane, mutation events that show trade-
+     offs appear along the y = -x line. (e) Schematic of the mechanism for evolving mutation rates.
+     Offspring inherit the mutation rate by sampling from a Gaussian distribution with a mean that is equal
+     to the parent's mutation rate (µparent) and a standard deviation that is 1% the parent's mutation rate
+     (µ = 0.01µparent).
+
+                                                                    30
+   bioRxiv preprint doi: https://doi.org/10.1101/2023.01.04.520634; this version posted June 16, 2024. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made
+
+                                                       available under a CC-BY-NC-ND 4.0 International license.
+
+            a        Const-A       Const-B               b  Const-A                     Const-B
+                     Random      Cyclic (Slow)
+                 3                                          Int -0.02 -0.58 -0.74  Int  ? -0.50 -0.49
+                 2
+                 1                                          0.94 Alt 0.04 -0.01    ?    Alt  ?   ?
+                 0
+                                                            0.01 0.86 Inv -0.12    0.02 ?    Inv -0.50
+                 3
+                 2                                          0.00 0.96 0.61 Term    0.03 ?    0.02 Term
+                 1
+Count (x106)     0                                               Random               Cyclic (Slow)
+
+                                                            Int 0.24 -0.43 -0.88   Int -0.16 -0.22 -0.90
+                                                            0.30 Alt -0.33 -0.10   0.51 Alt 0.18 -0.01
+                                                                                   0.36 0.44 Inv -0.21
+                         Cyclic  Cyclic (Fast)              0.06 0.16 Inv -0.04    0.00 0.97 0.37 Term
+                                                            0.00 0.66 0.86 Term
+              3                                                                        Cyclic (Fast)
+              2                                                    Cyclic
+              1                                                                    Int 0.33 -0.40 -0.90
+                                                                                   0.15 Alt -0.13 -0.31
+              0      5 10 15 20 0 5 10 15 20                Int 0.17 -0.24 -0.81   0.08 0.58 Inv -0.05
+                  0                                         0.47 Alt 0.10 -0.36    0.00 0.18 0.84 Term
+                               Replicate ID
+
+                    Adaptation   Alternate     Terminal     0.31 0.66 Inv -0.36
+                        Type     Intermediate  Inviable     0.00 0.12 0.12 Term
+
+Figure S2: Distribution of different adaptations in the mutational neighborhood of dominant
+genotypes. (a) The number of mutants of the dominant genotype - isolated from populations evolved
+in the different regimes - that are either perfectly adapted to the terminal environment ('Terminal'), the
+environment alternate to the terminal ('Alternate'), have an intermediate phenotype ('Intermediate') or
+are unable to self-replicate ('Inviable'). Each bar corresponds to one dominant genotype from a replicate
+population evolved under a particular environment change regime. Adaptations for both single and double
+mutants have been plotted here. (b) Correlation matrix between the number of mutants with different
+adaptation types for dominant genotypes from the six regimes. The upper diagonal numbers denote
+the Pearson correlation coefficient between the number of mutants with given adaptation types. The
+lower diagonal numbers (grey) denote the respective p-values for these correlations. Significant p-values
+(< 0.05) and respective correlation coefficients have been colored red. Text on the diagonal indicates
+the correlation being measured (Int=Intermediate, Alt=Alternate, Inv=Inviable, Term=Terminal).
+
+                                                31
+   bioRxiv preprint doi: https://doi.org/10.1101/2023.01.04.520634; this version posted June 16, 2024. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made
+
+                                                       available under a CC-BY-NC-ND 4.0 International license.
+
+a                     Const-B        b 10
+             Const-A
+
+    6
+    5
+    4
+    3
+    2
+    1
+
+Task                  Cyclic (Slow)                                5
+                                                                               Total NPMI
+                                     Avg. NPMI
+                                                                                   (Double mutants)0.9
+         Random                           0.0
+                                          -0.9
+6                                                                  0
+5
+4
+3
+2
+1
+
+   Cyclic             Cyclic (Fast)
+
+6                                                                                                    Const-A  Const-B  RandomCyclic (Slow)  Cyclic Cyclic (Fast)
+5                                                                                                                           Regime
+4
+3
+2
+1
+
+   123456 123456
+                      Task
+
+Figure S3: NPMIs evolved under fixed mutation rate experiments after removal of perfectly
+adapted mutants (a) Pairwise NPMI between different task pairs plotted using double mutant data.
+Mutants that are perfectly adapted to environment A or B have been removed. Axes labels in blue and
+red denote tasks rewarded in environments A and B, respectively. (b) Total NPMIs calculated using
+the pairwise NPMIs in the previous panel. Total NPMIs are calculated by summing up the individual
+task-pair NPMIs after assigning them a positive or negative sign based on their cognate or non-cognate
+nature. Box-plot characteristics are the same as in Fig. 1.
+
+                                     32
+   bioRxiv preprint doi: https://doi.org/10.1101/2023.01.04.520634; this version posted June 16, 2024. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made
+
+                                                       available under a CC-BY-NC-ND 4.0 International license.
+
+               Cyclic       Cyclic (Slow)                             Cyclic (Slow)
+
+           20                                                 -2000 -1000 0 1000 2000  1
+           15
+           10
+
+            5
+            0
+
+           20                                                                          2
+           15
+           10
+
+            5
+            0
+
+           20                                                                          3
+           15
+           10
+
+            5
+            0
+
+Replicate  20                                                                          4
+           15
+           10                                                                             Epoch
+
+            5
+            0
+
+           20                                                                          5
+           15
+           10
+
+            5
+            0
+
+           20                                                                          6
+           15
+           10
+
+            5
+            0
+
+           20                                                                          7
+           15
+           10
+
+            5
+            0
+
+           20                                                                          8
+           15
+           10
+
+            5
+            0
+
+               -200 -100 0  100 200-200 -100 0 100 200
+
+                                                     Updates
+
+                            log10(B Adapted)
+
+                                                          0123
+
+Figure S4: Median number of point-mutants of lineage sequences adapted to environment B
+before and after the environment switches from state A to B. The x-axis tracks the number of
+updates from the point of environmental transition where lineage mutants are recorded. The experiment
+time has been divided into eight epochs of 37,500 updates (approx. 375 generations) each, shown here
+as different rows. The y-axis in each figure shows 20 different replicates. Median tallies of point mutants
+were computed within intervals: bins of 5 updates for the two leftmost graphs, and an expanded bin
+size of 50 updates for the graph on the far right. The middle Cyclic (Slow) figure restricts the range to
+±200 updates.
+
+                            33
+   bioRxiv preprint doi: https://doi.org/10.1101/2023.01.04.520634; this version posted June 16, 2024. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made
+
+                                                       available under a CC-BY-NC-ND 4.0 International license.
+
+                                1                 2                 3                     4             5
+
+                           0.4
+                           0.0
+                          -0.4
+
+                                6                 7                 8                     9             10
+
+.. Fraction adapted to B   0.4
+                           0.0
+                          -0.4
+
+                                11                12                13                    14            15
+
+                           0.4
+                           0.0
+                          -0.4
+
+                                           16     17                18                    19                   20
+                           0.4                                                                          -0.4 0.0 0.4
+                           0.0                    -0.4 0.0 0.4  -0.4 0.0 0.4              -0.4 0.0 0.4
+                          -0.4
+
+                                    -0.4 0.0 0.4
+
+                                                                .. Fraction adapted to A
+
+Figure S5: Mutational trade-offs over evolutionary time under the Cyclic regime. Density of points
+in the trade-off plane (See figure S1d and methods) plotted over 20 equally spaced time intervals during
+evolution in the Cyclic regime (all replicates). Each panel is a time interval spanning 15000 updates
+(approx. 1500 generations). Points along the y = -x diagonal represent mutation events on a lineage
+where an increase in number of mutants adapted to a particular environmental state was accompanied
+by an equal decrease in the number of mutants to the alternate environmental state.
+
+                                                                34
+   bioRxiv preprint doi: https://doi.org/10.1101/2023.01.04.520634; this version posted June 16, 2024. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made
+
+                                                       available under a CC-BY-NC-ND 4.0 International license.
+
+                     101
+
+Total NPMI           100
+   (Double mutants)
+
+                           Initial mutation rate
+                                 0.0001
+
+                     10-1  0.001
+                           0.0316
+
+                           Const-A                Const-B  Random  Cyclic (Slow)  Cyclic  Cyclic (Fast)
+
+                                                                   Regime
+
+Figure S6: Evolved total NPMIs under fixed and evolving mutation rates. Total NPMI for the
+dominant genotypes isolated from the six environmental change regimes with evolving mutation rates.
+Box plots with different patterns denote NPMI values from experiments that started with different initial
+mutation rates. The red filled circles denote the median NPMI for genotypes from the fixed mutation
+rate experiments, with the error bars denoting the lower and upper quartiles.
+
+                                                           35
+   bioRxiv preprint doi: https://doi.org/10.1101/2023.01.04.520634; this version posted June 16, 2024. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made
+
+                                                       available under a CC-BY-NC-ND 4.0 International license.
+
+a                                            Random                     Cyclic (Slow)                                             Cyclic                      Cyclic (Fast)
+
+     3   Time-averaged mismatch                                                                                                                                Source regime type
+                                                                                                                                                                    Fix. mut. rate
+     2                                                                                                                                                              Var. mut. rate
+
+     1   Median lineage lag
+                       Const-A
+     0                        Const-B
+                                     Random
+b 75                                        Cyclic (Slow)
+
+      50                                           Cyclic
+      25                                                  Cyclic (Fast)
+
+        0                                                            Const-A
+     -25                                                                    Const-B
+                                                                                   Random
+                                                                                          Cyclic (Slow)
+
+                                                                                                 Cyclic
+                                                                                                        Cyclic (Fast)
+
+                                                                                                                  Const-A
+                                                                                                                         Const-B
+                                                                                                                                Random
+                                                                                                                                       Cyclic (Slow)
+
+                                                                                                                                              Cyclic
+                                                                                                                                                     Cyclic (Fast)
+
+                                                                                                                                                                Const-A
+                                                                                                                                                                       Const-B
+                                                                                                                                                                              Random
+                                                                                                                                                                                     Cyclic (Slow)
+
+                                                                                                                                                                                            Cyclic
+                                                                                                                                                                                                   Cyclic (Fast)
+
+                                                                            Source genotype regime
+
+c        Number of new evolved tasks         Fix. mut. genotypes        Var. mut. genotypes                                       Reciprocal mut. rate        Reciprocal mut. rate
+                                                                                           Random                                 Fix. mut. genotypes         Var. mut. genotypes
+     40                                                                                      Cyclic
+     30
+                                                                                        Cyclic (Slow)
+
+                                      20                                    Cyclic (Fast)
+
+                                                                                                            ConsCt-oBnst-A
+                                      10
+
+                                      0      10  20               30 0  10  20                                              30 0  10      20            30 0  10  20                30
+                                          0
+
+                                                                            Time (Updates x104)
+
+Figure S7: Performance of evolved genotypes transplanted into other regimes and completely
+new environments. (a) Median value of the time-averaged mismatch (over 10,000 updates) for geno-
+types isolated from primary evolution experiments in different test regimes (columns). The mismatch
+is calculated as the hamming distance between the dominant lineage phenotype and the environmental
+state--i.e, the number of task gains/losses required by the phenotype to be perfectly adapted to the
+extant environment. The x-axis denotes the regime the genotype was isolated from. (b) The median
+value of the mean lineage lag for genotypes from primary evolution in different test regimes. The lineage
+lag measures the time taken by the lineages to achieve a phenotype perfectly adapted to the environ-
+ment after a switch. (c) The number of tasks evolved by genotypes from different source regimes when
+evolving in a new environment with 127 new tasks that increase fitness incrementally. The first panel
+shows the evolution of tasks in this new environment for genotypes isolated from the fixed mutation rate
+experiments (with a mutation rate of 10-3). The second panel shows the evolution of genotypes from
+evolving mutation rate experiments, retaining their evolved mutation rates. The third panel shows the
+evolution of fixed mutation rate genotypes when assigned the average evolved mutation rate from the
+evolving mutation rate experiments. The fourth panel shows the evolution of genotypes from evolving
+mutation rate experiments when assigned a basal mutation rate of 10-3. The dark lines denote the
+average across 20 replicates, and the ribbons represent the standard error.
+
+                                                                                                                            36
+   bioRxiv preprint doi: https://doi.org/10.1101/2023.01.04.520634; this version posted June 16, 2024. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made
+
+                                                       available under a CC-BY-NC-ND 4.0 International license.
+
+a                                                                      Fix. Mut. Rate                                                    Var. Mut. Rate
+
+    60Number of unique phenotypes                                                                                                                                                    Single mutants
+
+    40
+
+    20
+
+                                                 60                                                                                                                                  Double mutants
+                                                 40
+                                                 20
+
+                                                     Const-A  Const-B  Random Cyclic (Slow)  Cyclic Cyclic (Fast)      Const-A  Const-B  Random Cyclic (Slow)  Cyclic Cyclic (Fast)
+
+                                                                                                                   Regime
+
+      b                                                                Fix. Mut. Rate                                                    Var. Mut. Rate
+
+      Shannon entropy of phenotype distribution  3                                                                                                                                   Single mutants
+
+                                                 2
+
+                                                 3                                                                                                                                   Double mutants
+
+                                                 2
+
+                                                     Const-A  Const-B  Random Cyclic (Slow)  Cyclic Cyclic (Fast)  Const-A      Const-B  Random Cyclic (Slow)  Cyclic Cyclic (Fast)
+
+                                                                                                                   Regime
+
+Figure S8: Diversity of phenotypes in the mutational neighborhood of evolved genotypes. (a)
+Total number of unique phenotypes found in the mutational neighborhood of dominant genotypes
+isolated from different evolutionary regimes. Individual columns are different mutation rate experiments
+(fixed or variable). Rows denote the mutant identity being tested (single mutants or double mutants).
+(b) Shannon entropy of the distribution of phenotypes in the mutational neighborhood of dominant
+genotypes isolated from different evolutionary regimes.
+
+                                                                                                                   37
+   bioRxiv preprint doi: https://doi.org/10.1101/2023.01.04.520634; this version posted June 16, 2024. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made
+
+                                                       available under a CC-BY-NC-ND 4.0 International license.
+
+                                                                                      Fix. Mut. Rate                                              Var. Mut. Rate
+                                         3.0
+
+Average Hamming distance b/w phenotypes  2.5                                                                                                                                                  Single mutants
+
+                                         2.0
+
+                                         1.5
+
+                                         1.0
+                                         3.0
+
+                                         2.5                                                                                                                                                  Double mutants
+
+                                         2.0
+
+                                         1.5
+
+                                         1.0            Const-B  Random Cyclic (Slow)                 Cyclic Cyclic (Fast)      Const-A  Const-B  Random Cyclic (Slow)  Cyclic Cyclic (Fast)
+                                               Const-A
+
+                                                                                                                            Regime
+
+Figure S9: Phenotypic dissimilarity in the mutational neighborhood of evolved genotypes. Av-
+erage hamming distance between phenotype pairs found in the mutational neighborhood of dominant
+genotypes isolated from different evolutionary regimes. Hamming distance is calculated as the number of
+task gains/losses required to convert one phenotype to another. Individual columns are different muta-
+tion rate experiments (fixed or variable). Rows denote the mutant identity being tested (single mutants
+or double mutants).
+
+                                                                                                                            38
+   bioRxiv preprint doi: https://doi.org/10.1101/2023.01.04.520634; this version posted June 16, 2024. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made
+
+                                                       available under a CC-BY-NC-ND 4.0 International license.
+
+Regime         Model                                                    BIC       Estimate
+Cyclic (Slow)  num alternate a * mutrate + b                            2145.591
+               num alternate a * mutrate^2 + b * mutrate + c            2146.862  a = -3718 (p=0.00104)
+Cyclic                                                                            b = -4900 (p=0.10096)
+               num alternate a * log(mutrate) + b                       2140.682
+                                                                                  a = -35136 (p=2.39e-05)
+               num alternate a * log(mutrate)^2 + b * log(mutrate) + c  2145.264  b = -192056 (p=2.15e-05)
+               num alternate a * mutrate + b                            2514.165  c = -196493 (p=0.0004)
+               num alternate a * mutrate^2 + b * mutrate + c            2518.596
+               num alternate a * log(mutrate) + b                       2520.119
+
+               num alternate a * log(mutrate)^2 + b * log(mutrate) + c  2506.231
+
+Table 1: Statistical analyses associated with the number of alternate mutants evolved under different
+static mutation rates.
+
+               39
+

@@ -1,0 +1,1115 @@
+                                        Evolvability Degeneration in Multi-Objective Genetic
+                                                  Programming for Symbolic Regression
+
+                                                Dazhuang Liu                 Tanja Alderliesten                     Peter A. N. Bosman
+                                                Marco Virgolin
+                                                                              t.alderliesten@lumc.nl                  peter.bosman@cwi.nl
+                                                dazhuang.liu@cwi.nl     Leiden University Medical Center       Centrum Wiskunde & Informatica
+                                               marco.virgolin@cwi.nl
+                                        Centrum Wiskunde & Informatica        Leiden, the Netherlands             Amsterdam, the Netherlands
+                                           Amsterdam, the Netherlands                                            Delft University of Technology
+
+                                                                                                                      Delft, the Netherlands
+
+arXiv:2202.06983v2 [cs.NE] 16 Feb 2022  ABSTRACT                                                               to be evaluated, i.e., they are programs. In the case of SR, the so-
+                                                                                                               lutions evolved by GP encode functions as symbolic models that
+                                        Genetic programming (GP) is one of the best approaches today           are evaluated in terms of their accuracy in fitting a (training) data
+                                        to discover symbolic regression models. To find models that trade      set [34]. However, when maximizing accuracy alone, GP tends to
+                                        off accuracy and complexity, the non-dominated sorting genetic         generate solutions that become unnecessarily large in the number
+                                        algorithm II (NSGA-II) is widely used. Unfortunately, it has been      of components (arithmetic operations, variables, constants, etc.), a
+                                        shown that NSGA-II can be inefficient: in early generations, low-      phenomenon known as bloat, which harms interpretability [46].
+                                        complexity models over-replicate and take over most of the popula-
+                                        tion. Consequently, studies have proposed different approaches to         To deal with this problem, GP can be set to optimize different
+                                        promote diversity. Here, we study the root of this problem, in order   objectives at the same time. Multi-objective GP (MOGP) is typi-
+                                        to design a superior approach. We find that the over-replication       cally used with the intention to search for solutions with different
+                                        of low complexity-models is due to a lack of evolvability, i.e., the   trade-offs between accuracy and interpretability [33]. At the end
+                                        inability to produce offspring with improved accuracy. We therefore    of a single run of MOGP, decision makers can choose the model
+                                        extend NSGA-II to track, over time, the evolvability of models of      that strikes the right balance between accuracy and interpretability.
+                                        different levels of complexity. With this information, we limit how    Since interpretability is hard or impossible to define (in general
+                                        many models of each complexity level are allowed to survive the        terms) [45, 79], the common way by which interpretability in pur-
+                                        generation. We compare this new version of NSGA-II, evoNSGA-II,        sued in MOGP for SR is by minimization of solution size (or deriva-
+                                        with the use of seven existing multi-objective GP approaches on ten    tions thereof, see e.g., the related work section in [78]), i.e., the
+                                        widely-used data sets, and find that evoNSGA-II is equal or superior   number of components that constitutes the solution. Minimizing
+                                        to using these approaches in almost all comparisons. Furthermore,      size is typically in conflict with maximizing accuracy in (MO)GP,
+                                        our results confirm that evoNSGA-II behaves as intended: models        because (MO)GP typically discovers better solutions by refining
+                                        that are more evolvable form the majority of the population.           the function approximation they represent, i.e., by incorporating
+                                        Code: https://github.com/dzhliu/evoNSGA-II                             additional components [40].
+
+                                        CCS CONCEPTS                                                              Just like solution size is the objective that is typically adopted, the
+                                                                                                               second version of the non-dominated sorting genetic algorithm [15]
+                                        · Computing methodologies  Genetic programming; · Ap-                  (NSGA-II) is the most adopted framework to realize MOGP. Unfor-
+                                        plied computing  Multi-criterion optimization and decision-            tunately, as it has been shown by several works before [4, 14, 85, 87]
+                                        making.                                                                and is confirmed once more in this paper, NSGA-II can be inefficient
+                                                                                                               when adopted for MOGP when one of the objectives is solution
+                                        KEYWORDS                                                               size. In particular, small solutions are observed to take over the
+                                                                                                               majority of the population in a few generations, while larger and
+                                        Symbolic regression, genetic programming, multi-objective opti-        more accurate solutions are hardly discovered.
+                                        mization, evolvability
+                                                                                                                  In this paper, we tackle this problem at its root. Specifically, we
+                                        1 INTRODUCTION                                                         identify that the reason why small solutions over-replicate and
+                                                                                                               hamper the discovery of larger but more accurate solutions is the
+                                        In recent years, we are seeing a renewed interest in symbolic re-      fact that, besides obviously minimizing size well and thus having
+                                        gression (SR), the sub-field of machine learning (ML) which con-       high chances of survival, small solutions lack evolvability. Here,
+                                        cerns searching for ML models in the form of mathematical ex-          by evolvability of a solution we mean the likelihood that variation
+                                        pressions [11, 13, 75, 97]. These models are appealing because, by     (e.g., subtree crossover and mutation) produces a relatively accurate
+                                        their very nature, they stand a chance of being interpretable. This    offspring when using that solution as a parent. We call this cause of
+                                        is increasingly considered important, e.g., to ensure that ML is used  inefficiency of NSGA-II evolvability degeneration. Consequently, we
+                                        in a fair and responsible manner [1, 28, 38].                          present a new algorithm, named evoNSGA-II, which improves upon
+                                                                                                               standard NSGA-II by restraining the over-replication of solutions
+                                           Today, genetic programming (GP) [34] is one of the best ap-         whose size is identified to be unhelpful in terms of discovering more
+                                        proaches to discover SR models [11]. GP is a bio-inspired meta-        accurate solutions. Thanks to this, we find evoNSGA-II to be far
+                                        heuristic that works by evolving a population of solutions that,
+                                        differently from traditional genetic algorithms, need be executed
+                                                                                Liu, et al.
+
+more efficient than NSGA-II as well as other algorithms designed                generations, NSGA-II remains able to recover, i.e., larger solutions
+to deal with this issue.                                                        are discovered later on, albeit at a very slow rate. To prevent pop-
+                                                                                ulation collapse, the use of a diversity preservation mechanism is
+2 BACKGROUND & RELATED WORK                                                     advised in [14]. Instead, in [4] it is argued that employing muta-
+2.1 Brief recall on SR and (MO)GP                                               tion is enough. Here, we find that even if one employs mutation,
+                                                                                NSGA-II still suffers from evolvability degeneration.
+In SR, we seek a model (or equivalently, function approximation)
+                                                                                   Other works have also noted, and proposed means to deal with,
+ that is accurate in terms of fitting a given data set. Accuracy is             the problem of small solutions flooding the population. In [6], it is
+                                                                                proposed to use SPEA2 for MOGP[99], to overcome the problem
+typically measured in terms of minimizing a loss function, such                 just mentioned as well as bloat. SPEA2, which we also consider
+                                                                                in our experiments, works in a fundamentally different way than
+as the mean-squared-error (MSE). Formally, given a data set D =                 NSGA-II. For example, SPEA2 maintains two separate populations
+                                                                                during the search, and measures the performance of a solution
+{(x,  )}=1, where  is the number of observations, x  R is the                   based on how many solutions are dominated by that solution.
+                                                         
+vector of d feature values x =       (1)          ( )                 R the        Recently, [85] and [87] explored the idea of using -dominance.
+                                      , . . . ,           , and                 Instead of the original objectives (here, accuracy and size), these
+                                                                                algorithms use linear combinations of the original objectives which
+                                                                                are weighted by coefficients () that vary over time, so as to be
+                                                                                able to put more pressure on finding solutions of a certain trade-off.
+label or target variable, we seek an optimal   such that:                       In particular,  is adapted to increase the importance of accuracy
+                                                                                over the importance of size. In the first work [85], fixed schedules
+                                                         (  -    (x ))2         are considered to adapt , according to a function of the number
+                                                     =1                         of generations that is linear, a cosine, or a sigmoid. In the second
+  := argmin {MSE (D,  )} = argmin                                          .    work [87],  is adapted dynamically based on the state of the popu-
+                                                                                lation: if more small than accurate (and vice versa, accurate than
+                                                                                small) solutions are detected, then  is adapted to give more weight
+                                                                                to accuracy (respectively, to size).
+An SR algorithm searches in the space of functions  that is defined
+                                                                                   For NSGA-II applied to discrete optimization, in [30] strategies
+in terms of an encoding (see next paragraph), and what atomic                   are explored to remove duplicate solutions from the population.
+sub-functions (+, -, ×, ÷, exp, log, etc.), variables ( (1) ,  (2) , etc.),     One such strategy is used for MOGP in [79], where NSGA-II is
+                                                                                modified so that duplicate solutions are assigned the lowest priority
+and  constants   1  - ,  42,  etc.)  appear  in  what    order   in  that  en-  to survive selection. Together with classic NSGA-II, SPEA2, and the
+                                                                                -dominance based algorithms, we also include this algorithm in
+                (,                                                              our comparisons.
+                2
+                                                                                   To the best of our knowledge, our work differs from the previous
+coding. Alongside maximizing accuracy, we wish the model to be                  ones because it makes an explicit link between the over-replication
+                                                                                of small solutions and their lack of evolvability, and proposes an
+interpretable. Various metrics have been proposed to seek inter-                algorithm that uses this information to improve the search.
+
+pretable/simpler models, see e.g., [78, 80]. However, reducing model            3 EVOLVABILITY DEGENERATION
+
+size remains a simple and popular approach (e.g., it was recently               In this section, we analyze the phenomenon of evolvability degen-
+                                                                                eration in NSGA-II for MOGP. First, we describe it by considering a
+used in a large SR benchmark [11]).                                             use case. Then, we show what causes it. The latter is done by means
+                                                                                of an experiment in which we trace how solutions of different sizes
+GP is a popular and often top-performing method for SR [11]. In                 contribute to finding offspring solutions that are relatively accurate.
+
+this work, we adopt traditional GP, where solutions are encoded by              3.1 Over-replication of small solutions
+
+trees in which each node contains one of the possible sub-functions,            We begin by reporting how the size of solutions changes over time
+                                                                                when using NSGA-II on an examplary use case. The parameter
+variables, and constants [34, 60]. To discover of multiple solutions            settings for NSGA-II are those in bold font in Table 1, except for
+                                                                                the population size, which is set to 500. We show the behavior of
+with trade-offs between accuracy and interpretability, GP is set to             NSGA-II on the data set Airfoil (see Sec. B of the Appendix). We
+                                                                                use this data set as a recurring example for no particular reason
+work in a multi-objective fashion (MOGP), where the concept of                  other than it being first in alphabetic order among the data sets we
+                                                                                considered; we observe similar trends also on the other data sets.
+Pareto-dominance is used to rank solutions. Specifically, we say that
+solution  Pareto-dominates solution  if  is equal or better than
+
+ in all objectives, and strictly better in at least one objective. The
+outcome of MOGP is the best-found front, i.e., the set of solutions
+
+that are not Pareto-dominated by any other ever found.
+
+NSGA-II is widely considered to be the most popular multi-
+
+objective evolutionary algorithm (MOEA). We conducted a small
+
+literature survey to assess whether this is indeed the case for MOGP.
+
+We detail how the survey was conducted in the Appendix. We found
+
+that, in the last five years, NSGA-II was typically adopted as MOGP
+
+algorithm in approximately 70% of the works that we surveyed,
+
+either as the main algorithm or as a baseline. We thus believe that
+
+our intent of improving NSGA-II for MOGP is amply justified.
+
+2.2 Prior works on improving NSGA-II for GP
+
+Several works in the literature have identified the problem of small
+solutions over-replicating and hampering further evolution, which
+we refer to as evolvability degeneration. A very-closely related con-
+cept was discovered almost twenty years ago in [14], and termed
+later as population collapse [4]. Population collapse refers to the
+process where the entire population converges to copies of a single
+solution that has a single component, i.e., the population is unable
+to evolve any further. As it will be shown in this paper (in Sec. 3),
+the behavior we observe is less extreme: even though copies of
+small solutions do initially occupy most of the population in early
+Evolvability Degeneration in Multi-Objective Genetic Programming for Symbolic Regression
+
+Proportion of solutions in population  100%                  Solution size
+                                        80%
+                                        60%               1                 11 - 20
+
+                                                          2-5               21 - 40
+
+                                                          6 - 10            41 - 100
+
+                                       40%
+
+                                       20%
+
+                                       0%         20  40       60  80       100
+                                               0
+
+                                                      Generation
+
+Figure 1: Proportion of solutions of different sizes during                           Figure 2: Frequency (normalized between min and max,
+the evolution for 30 runs of NSGA-II on Airfoil. Lines indi-                          color coded as depicted by the legend on the right) of pro-
+cate means and shaded areas represent standard deviations.                            ducing an offspring with a good accuracy (above the 90th
+Note the exponential scaling of solution size intervals.                              percentile of those obtained in all runs) based on the size of
+                                                                                      the parent and donor solutions. Left: For subtree crossover.
+   Fig. 1 shows that, at the initial stages of the evolution, the pro-                Right: For subtree mutation. Note that a solution of size 2 (to
+portion of small solutions grows to occupy the majority of the                        be used as a parent or donor) was never returned by single-
+population. Only later small solutions start to diminish and slightly                 objective GP because a more accurate solution of size 1 exists
+larger solutions start to appear and compete. However, the largest                    and was systematically discovered.
+solutions, in this case the ones with more than 20 nodes, are basi-
+cally not discovered. Importantly, the solutions of size one always                   information later. Next, for each bucket, we repeatedly (100 times)
+occupy a rather large portion of the population (above 30%). This                     take a random solution to act as parent, and generate an offspring
+abundance of small solutions can be explained by the fact that, rea-                  solution via subtree mutation. We do the same for subtree crossover,
+sonably, small solutions of relatively high accuracy and duplicates                   this time considering pair of buckets and, importantly, generating
+thereof are produced by GP relatively quickly; in particular, before                  a single offspring instead of two (this is rather common in GP [60]).
+larger and more accurate solutions are discovered. Because of how                     Specifically, the offspring is generated by cloning the first parent
+NSGA-II works, solutions that have the best-so-far accuracy for any                   and transplanting a random subtree from the second parent (which
+given size are set to survive the generation with high priority, no                   from now on will be called donor to avoid confusion) to replace
+matter if they are duplicates or not. Now, this abundance of small                    a random subtree of the first parent (which from now on will be
+solutions would not necessarily be a problem if small solutions                       simply called parent). We perform crossover this way because, for a
+would represent fertile grounds to discover larger, more accurate                     sufficiently large parent, in expectation the majority of the nodes in
+solutions. In the next section, we show that this is not the case.                    the offspring comes from the parent instead of the donor; this may
+                                                                                      play an important role in terms of evolvability. Lastly, we measure
+3.2 Evolvability of small and large solutions                                         how frequently parents of different sizes produce relatively accurate
+                                                                                      offspring, using acc90 as a threshold.
+A simple way to understand whether evolution stagnates or pro-
+ceeds well is to measure evolvability in terms of the frequency by                       We apply the proposed workflow and display the result in Fig. 2
+which well-performing offspring solutions are discovered. Here, we                    (all the parameter settings are as per Sec. 3.1), which concerns Air-
+particularly want to measure the frequency with which solutions                       foil and best-found solutions at generation 40. We remark that we
+of different size contribute to offspring solutions with an accuracy                  repeated the same approach on the second data set we consider,
+that is relatively high. Since we aim to improve NSGA-II, we would                    Boston, as well as with other termination limits (generation 10, 20,
+ideally do this within an NSGA-II evolution. However, as shown                        and 30), and means of assessing whether an offspring is relatively
+in Fig. 1, larger solutions are hardly ever discovered, making it                     accurate (e.g., with respect to the accuracy of the parent); we ob-
+impossible for us to estimate their evolvability. Thus, we design a                   served the same general trends as shown in Fig. 2. Note that the
+workflow to collect enough solutions of various sizes.                                heat-map for subtree crossover is not symmetric due to the reasons
+                                                                                      explained in the previous paragraph. The frequencies found for
+   First, we repeatedly run single-objective GP, 100 times, with                      subtree crossover indicate that the parent needs to be sufficiently
+different maximal size limitations, for up to a certain number of                     large for variation to be successful with large probability, while
+generations (e.g., 40). This allows us to collect best-found solutions                the donor can be of any size. Similarly, also for mutation larger
+of various sizes which are relatively accurate, and can be imagined                   solutions are more evolvable.
+to contribute to a best-found front at a certain stage of an "ideal"
+NSGA-II evolution, where evolvability degeneration does not occur.                       The result just shown confirms our hypothesis that smaller solu-
+Second, we collect these solutions in different buckets, based on                     tions hamper the search. Therefore, the fact that in the early stages
+their size. We also record the 90th percentile of accuracy (acc90)
+out of all solutions collected, irrespective of their size; we use this
+                                                                                                                               Liu, et al.
+
+of an NSGA-II run, the population is flooded by copies of small           Algorithm 1 Workflow of NSGA-II and evoNSGA-II
+solutions, is highly undesirable. We remark that penalizing dupli-        Note: Truncation is the only step that is different between the two.
+cates altogether, as in fact was done in some earlier approaches
+(see Sec. 2.2), is not necessarily the optimal strategy. In fact, having  Require: Pop_size, stop_criteria
+duplicates of highly-evolvable solutions may be the best option.
+This idea is explored in our algorithm, presented in the next section.    1: P  Initialize_population(Pop_size)
+
+4 IMPROVING NSGA-II BASED ON                                              2: Evaluate(P)
+    EVOLVABILITY
+                                                                          3: FrontsFast_non-dominated_sorting(P)
+We now present our proposal to improve NSGA-II, i.e., evoNSGA-II.
+Since evoNSGA-II mostly follows NSGA-II, we begin by recalling            4: for front in Fronts do
+the workings of NSGA-II. Next, we explain what is new in evoNSGA-
+II, i.e., the estimation of the evolvability of solutions of different    5: Crowding_distance(front)
+size, and the use of this information to prevent the over-replication
+of solutions with low evolvability.                                       6: end for
+
+4.1 NSGA-II                                                               7: while ¬ stop_criteria do
+
+Algorithm 1 shows the pseudo-code of NSGA-II, as well as that of          8: P  Tournament(P)
+evoNSGA-II: In fact, the only change we apply is regarded to how
+the population is updated at the end of a generation. In every gener-                                                        
+ation of (evo)NSGA-II, firstly an offspring population O is generated
+from promising solutions of the current population P. Promising           9: O  Variation(P )
+solutions are typically chosen with tournament selection, and then
+undergo variation, typically by means of subtree crossover and            10: Evaluate(O)
+subtree mutation. In (evo)NSGA-II, tournament selection compares
+solutions based on their non-domination rank (explained below)            11: Fronts  Fast_non-dominated_sorting(P  O)
+and, if the solutions share the same rank, based on their crowding
+distance (explained below too).                                           12: for front in Fronts do
+
+   Next, P and O are merged and undergo non-dominated sorting.            13:  Crowding_distance(front)
+Non-dominated sorting is a process that subdivides all solutions into
+layers called fronts, such that for any two solutions in a same front,    14: end for
+those two solutions do not Pareto-dominate each other; moreover,
+for each solution in the th front, there exists at least one solution in  15: P  Truncation(Fronts)
+the ( - 1)th front that Pareto-dominates it. The rank of a solution
+represents the front to which that solution belongs, rank 1 being the     16: end while
+best. The algorithm proceeds by parsing each front and assigning
+to each solution in that front a crowding distance. The crowding          4.2 Construction of B
+distance is a measure of sparseness (the more a solution is isolated
+the better) that is computed in the objective space using the L1          We keep track of the evolvability of solutions in terms of their
+norm. A solution for which an objective has the maximum value for
+that front is assigned an infinite (and thus best) crowding distance.     capability of generating accurate offspring of different sizes. Namely,
+                                                                          we build a table B containing pairs (,), where  is a size and 
+   Finally, the population is updated for the next generation, using      is a bound on the number of times that solutions of size  can be
+an NSGA-II-specific form of truncation selection. This is where
+NSGA-II and evoNSGA-II differ. In NSGA-II, the new population             selected by truncation selection to form the new population of
+is formed by selecting the solutions with rank 1, then those with
+rank 2, and so on, until the selection of all solutions with a certain    evoNSGA-II. We want the number  to be proportionate to the
+rank would result in exceeding the population size. In that case,
+the crowding distance is used to discern which subset of solutions        (estimated) evolvability of the solutions of size .
+with that certain rank still to select for the new population. The           Algorithm 2 shows the construction of B in detail. For each
+remaining solutions are discarded.
+                                                                          offspring, the size of its parent  is considered. Then, a counter
+   evoNSGA-II additionally uses estimates of evolvability for each        (successes) that is dedicated to that  is increased if the accuracy of
+size of solution to decide whether a solution should be selected.         the offspring is larger than that of the median accuracy computed
+Specifically, we generate a table of bounds B that tells how many         over P (we choose the median over the mean because outliers are
+solutions of a certain size can be selected in the truncation selection   common in GP for SR). Note that we do not need to re-compute the
+step. This way we can prevent the over-replication of small, non-
+evolvable solutions. We proceed by explaining how B is built.             accuracy of solutions, as they can simply be cached when solutions
+
+                                                                          are evaluated. We also keep track of the number of offsprings that
+                                                                          was generated from parents of size  (attempts). Finally, a simple
+                                                                          measure of evolvability is computed for , as the ratio between the
+
+                                                                          number of successes and the number of attempts. This ratio is in
+                                                                          [0, 1] and the larger its value, the better it is. We fill B with these
+                                                                          ratios, for each size.
+
+                                                                             Recall that we wish to use B in the truncation selection process,
+                                                                          which is applied to PO. Importantly, PO contains both solutions
+                                                                          that were not selected as parents, and offspring solutions: for those,
+                                                                          there may exist a size that is not in B, i.e., for which we have no
+                                                                          information on its evolvability. Therefore, we artificially fill this
+                                                                          information for potentially-missing sizes in B (line 13). Namely,
+                                                                          for each missing size, we take the weighted average of the ratios
+
+                                                                          observed for the closest smaller and closest larger size. Last but
+                                                                          not least, we perform a normalization step on B, transforming the
+                                                                          ratios so that their sum amounts to the population size (|P |). This
+                                                                          way, for any size , B [] defines how many solutions should be
+                                                                          selected at most. In the next section, we illustrate how B is used in
+                                                                          the truncation selection of evoNSGA-II.
+Evolvability Degeneration in Multi-Objective Genetic Programming for Symbolic Regression
+
+Algorithm 2 Build_B                                                       are standardized (based on the information in the training set) by
+
+Require: P, O                                                             subtracting the mean and dividing by the standard deviation for
+
+1: max_size  Max_size(P  O)                                               each feature separately, as advised in [16].
+
+2: attempts[i]  0 for   {1, . . . , max_size}                                             For comparison, we consider seven algorithms besides evoNSGA-
+
+3: successes[i]  0 for   {1, . . . , max_size}                            II: classic NSGA-II [15], SPEA2 [99], -dominance-based NSGA-
+
+4: median_accuracy  Median_accuracy(P)                                    II [85] with  varied with a linear (-dom. lin.), cosine (-dom.
+
+5: for   O do                                                             cos.), or sigmoid (-dom. sig.) schedule, as well as its adaptive
+
+6:   Fetch_parent_size()                                                  version [87] (Adap. -dom.), and a simple extension of NSGA-II
+
+7: if Accuracy() > median_accuracy then                                   as mentioned in [79], where non-dominated sorting assigns an
+
+8:         successes[]  successes[] + 1                                   artificial worst-possible rank to duplicate solutions. We refer to the
+
+9: end if                                                                 latter as NSGA-II with penalization of duplicates, NSGA-II+PD in
+
+10: attempts[]  attempts[] + 1                                            short. For each algorithm, we keep track of the best-ever found
+
+11: end for                                                               non-dominated solutions (with respect to the training set) in an
+
+12:  B []    successes[ ]  for    {1, . . . , max_size} : attempts[i]  0  external archive, and return that archive at the end of the evolution.
+             attempts[ ]
+                                                                                          Solutions are evaluated in terms of accuracy (to maximize) and
+13: B  Fill_missing_sizes(B, P, O)
+
+14: B  Normalize(B, |P |)                                                 size (to minimize). To maximize accuracy, we minimize the MSE
+
+15: return B                                                              (Sec. 2.1) augmented by linear scaling [31]. Linear scaling effectively
+
+                                                                          enables to optimize in terms of a form of absolute correlation to
+
+                                                                          the target variable , typically causing a large improvement when
+
+4.3 Use of B during truncation selection                                  GP is applied on real-world SR data sets [76]. Many state-of-the-art
+
+The way truncation selection works in evoNSGA-II is the same as           GP algorithms use linear scaling during the evolution [11].
+in NSGA-II (as described before, in Sec. 4.1), except for the fact that
+we will now use B to decide how many solutions of a certain size                          To evaluate the quality of multi-objective search, we compute
+can be selected. We build B after the offspring population O has
+been evaluated, so that it is ready to be used for truncation selection.  the hypervolume (HV) of the archive of best-found non-dominated
+Like in NSGA-II, our truncation selection parses the solutions pro-
+gressively, based on their rank. Different from NSGA-II, we do not        solutions [100]. The HV indicates, for a set of solutions, the area in
+immediately copy the solution that is currently in consideration;
+first, we consider the size of  of that solution, and the respective      objective that is Pareto-dominated by that set of solutions, bounded
+bound B []. If the number of solutions of size  copied so far is less
+or equal to B [], then the solution is selected; else, the solution is    by a reference point. The reference point represents an artificial
+skipped, and the next solution is considered.
+                                                                          solution with (very) poor performance in terms of all considered
+   It can happen that, in Algorithm 2, large evolvability values are
+estimated for sizes for which there is a limited number of solutions      objectives, and should be chosen to be commensurate to the ranges
+in P  O, while low values are estimated for sizes for which there         of the objectives at play. We set the reference point to be (1.1, 1.1)
+is an abundant number of solutions. Consequently, to respect the          (meaning that the best-possible HV will be 1.12 = 1.21) and nor-
+bounds in B, the number of selected solutions may be lower than the
+population size. If that happens, we reset the counters for how many      malize the MSE and size to be within 0 and 1. Even though the
+solutions of each size have been copied, and start the truncation
+selection process anew, from rank 1 onwards. This way, even if            MSE would normally be unbounded from above, performing linear
+the bound for the size  is exceeded, we maintain an approximate
+proportionality between estimated evolvability of  and the number         scaling guarantees that the maximal training error corresponds
+of selected solutions of size .
+                                                                          to predicting the mean of ; thus we can achieve the desired nor-
+   Lastly, we remark that a single generation of evoNSGA-II is
+basically as fast as NSGA-II, as it entails minimial overhead. In fact,   malization by dividing by the variance of . Regarding size, since
+from the perspective of computational complexity, all operations
+needed to build and use B are linear in the population size, and          very large solutions will likely not be interpretable, we enforce a
+thus subsumed by the complexity of other operations, particularly
+non-dominated sorting and evaluation of accuracy.                         maximal solution size of 100 (see Table 1) by deleting any offspring
+
+5 EXPERIMENTAL SETUP                                                      that exceeds that limit (and cloning the parent in its place); size is
+
+We consider ten data sets that are commonly used in recent litera-        then normalized by dividing by 100.
+ture on GP for SR. The information for these data sets is reported
+in Appendix B due to space limitations. For any run, we use a tra-                        We perform 30 repetitions for each run, to account for the ran-
+ditional Monte-Carlo split of the data set into training and test
+set, with respective proportions of 75-25%. Moreover, all data sets       domness of train-test splitting and the stochasticity inherent to
+
+                                                                          GP. We strive to present our results in terms of a typical parameter
+
+                                                                          configuration that appears often in GP literature. To that end, we
+
+                                                                          actually consider a number of typical configurations; see Table 1,
+
+                                                                          where some parameters have different possible settings (namely,
+
+                                                                          population size, tournament size, and proportion between crossover
+                                                                          and mutation). Note that starred operators (e.g., ÷) implement pro-
+
+                                                                          tection and ephemeral random constants (ERC) [60] are sampled
+
+                                                                          within          U (-5,  +5)  ×  max,   | ( )  |.  For  each  algorithm,  we  find  the
+
+                                                                                                                   
+
+                                                                          configuration that leads to the average performance for that al-
+
+                                                                          gorithm (on the training set). The configuration that leads to the
+                                                                          average performance for an algorithm is found as follows. First,
+
+                                                                          for each data set, we consider the training HV (averaged across
+
+                                                                          30 runs) obtained on that data set by the different configurations.
+
+                                                                          Configurations are sorted based on their HV, and their sort order
+
+                                                                          is taken as a score. Next, an overall, single score is assigned to
+                                                                                                                                                Liu, et al.
+
+Table 1: Parameter settings considered for evoNSGA-II and                 0.8                                                                   100
+the other algorithms. Tournament size of 1 corresponds to
+random parent selection. SPEA2 does not employ tourna-                    0.7                                                                     80
+ment selection. For parameters with multiple possible set-                Hypervolume
+tings (i.e., the first three), the settings in bold correspond to                                                                Solution size0.6 60
+those that result in evoNSGA-II achieving the average over-
+all performance in terms of hyper-volume on the training                                                                                          40
+set.
+                                                                                                                                              NS2G0A-II
+Parameter                      Considered settings                        0.5       -dom. lin.                                                NSGA-II+PD
+                                                                                    Adap. -dom.                                               SPEA02
+                               250, 500, 1000, 2000, 5000                 0.4       evoNSGA-II
+                                           1, 2, 7                               0                                                                    0.2 0.4 0.6 0.8
+Population size                                                                     50          100                                                            Training MSE
+Tournament size                      0.5-0.5, 0.9-0.1
+Crossover-mutation proportion                                                       Generation
+Initialization                 Ramped half-&-half (2­6)
+Maximum solution size                                                     Figure 3: Comparison between the algorithms in terms of
+Function set                                100                           HV during the evolution (left) and final front (right) for 30
+Terminal set                       {+, -, ×, ÷, , log }                   runs on Airfoil at training time. Left: Lines represent means
+                                   { (1) , . . . ,  ( ) , ERC}            and shaded areas represent standard deviations. Right: All
+                                                                          solutions in the archives from the 30 runs are shown.
+
+each configuration, by averaging the scores across the data sets          in the Appendix. Across the algorithms, using a larger population
+of that configuration. Finally, we select the configuration whose         size and larger tournament size contribute to improve the perfor-
+overall score is closest to the one obtained by averaging the scores      mance, while it is unclear whether using more or less crossover
+of all configurations. For example, the parameter settings in bold in     than mutation is preferable. Across the configurations, evoNSGA-II
+Table 1 represent the configuration obtained for evoNSGA-II; The          remains the best-performing approach, although it is sometimes
+configurations for the other algorithms are reported in Appendix          matched by NSGA-II+PD. However, we observe that with larger
+C.                                                                        population sizes, the gap between evoNSGA-II and NSGA-II+PD
+                                                                          grows in favor of the former. For example, at training time with the
+   We use the Mann-Whitney-U test [47] to assess whether the              best-possible parameter configurations (for both algorithms, using
+distribution of HVs obtained by an algorithm is better than that of       a population size of 5000), evoNSGA-II is significantly superior to
+another, determining significance for -value < 0.05, with Bonfer-         NSGA-II+PD on 6 data sets, equal on 4, and worse on none. This is
+roni correction [8].                                                      likely because larger population sizes allow for better estimations
+                                                                          of evolvability.
+6 RESULTS
+6.1 Benchmarking results                                                  6.1.2 Further analysis: convergence of HV. To provide further evi-
+                                                                          dence that evoNSGA-II is typically superior to the other algorithms,
+6.1.1 Results and analysis. Tables 2 and 3 show the results obtained      Fig. 3 (left) shows the convergence of the (training) HV, again with
+when considering the accuracy as measured on the training set and         using parameter configurations that represent average performance,
+on the test set, respectively, for the parameter settings that result in  on Airfoil. Due to space limitations, we show the respective plots
+the average performance. At training time, evoNSGA-II performs            for other data sets in Appendix E. For clarity, since the non-adaptive
+significantly better than any other algorithm in a vast number of         -dominance algorithms perform similarly, we report only the one
+cases, sometimes substantially so (e.g., when compared to Adap. -         with linear scheduling (-dom. lin.) in Fig. 3. As can be seen, the HV
+dom., NSGA-II, and SPEA2 on several data sets). In fact, evoNSGA-II       obtained by NSGA-II, SPEA2, and Adap. -dom. tends to converge
+is found to be significantly better than another algorithm 64 times,      to a suboptimal value very soon after the first dozen generations.
+worse only 1 times, and not significantly different 5 times. When it      The other algorithms, i.e., evoNSGA-II, -dom. lin., and NSGA-
+comes to the test set, evoNSGA-II remains vastly superior, although       II+PD perform similarly, however evoNSGA-II is slightly superior
+the number of statistical comparisons that are not significantly          throughout the whole search.
+different raises to 19 (better 50 times, worse 1 time). This is due to
+the generalization gap between the training and the test set. In fact,       Furthermore, Fig. 3 (right) shows the distribution of the solutions
+improving generalization is not on focus in this paper.                   in the final archives (for the 30 runs). The most apparent result is
+                                                                          that only evoNSGA-II is capable of reliably discovering accurate
+   Overall, only NSGA-II+PD is capable of coming close to the             solutions with a larger size than 30 (approximately). Interestingly,
+performance of evoNSGA-II. At training time, evoNSGA-II is better         NSGA-II and NSGA-II+PD can be better than evoNSGA-II in discov-
+than NSGA-II+PD on 1 data sets, worse on 4, and equal on 5. At            ering some relatively accurate solutions of size between 10 and 20
+test time, the difference between the two shrinks even more, due to       (approximately). This is because the search of NSGA-II and NSGA-
+the generalization gap. Nevertheless, except for in one case (Yacht),     II+PD can concentrate more in that area, as they discover larger
+evoNSGA-II is essentially equal or better than NSGA-II+PD.                and even more accurate solutions less frequently than evoNSGA-II.
+
+   We proceed by briefly describing what we observe for the other
+parameter configurations. More detailed information is reported
+Evolvability Degeneration in Multi-Objective Genetic Programming for Symbolic Regression
+
+Table 2: Mean (standard deviation) of the HV computed on the training set for 30 runs of the considered algorithms. This table
+corresponds to the settings in bold in Table 1. The symbols +, -, = indicate, for each algorithm other than evoNSGA-II, whether
+the corresponding distribution of results for evoNSGA-II is, respectively, significantly better, worse, or not significantly dif-
+ferent. The last row summarizes this information.
+
+Data set         evoNSGA-II Adap. -dom. -dom. cos. -dom. lin. -dom. sig. NSGA-II NSGA-II+PD SPEA2
+
+Airfoil          0.799(0.021)   0.595(0.023)-  0.744(0.016)-  0.745(0.019)-  0.736(0.016)-  0.652(0.035)-  0.780(0.017)-  0.624(0.049)-
+Boston           1.023(0.012)   0.895(0.024)-  0.984(0.010)-  0.986(0.014)-  0.980(0.014)-  0.954(0.015)-  1.017(0.010)=  0.929(0.019)-
+Concrete         0.939(0.018)   0.684(0.033)-  0.884(0.029)-  0.876(0.025)-  0.864(0.030)-  0.792(0.037)-  0.941(0.018)=  0.725(0.053)-
+Dow chemical     0.972(0.013)   0.714(0.043)-  0.914(0.013)-  0.914(0.018)-  0.908(0.023)-  0.779(0.057)-  0.977(0.007)=  0.836(0.037)-
+Energy: cooling  1.119(0.008)   1.043(0.013)-  1.094(0.010)-  1.094(0.010)-  1.088(0.014)-  1.058(0.009)-  1.097(0.015)-  1.040(0.013)-
+Energy: heating  1.152(0.004)   1.076(0.017)-  1.125(0.010)-  1.125(0.008)-  1.117(0.012)-  1.098(0.010)-  1.131(0.010)-  1.054(0.014)-
+Tower            1.027(0.013)   0.824(0.046)-  0.994(0.012)-  0.985(0.027)-  0.984(0.024)-  0.941(0.030)-  1.029(0.006)=  0.867(0.047)-
+Wine: red        0.513(0.005)   0.446(0.007)-  0.491(0.004)-  0.490(0.008)-  0.486(0.008)-  0.461(0.009)-  0.509(0.004)-  0.459(0.009)-
+Wine: white      0.449(0.005)   0.378(0.008)-  0.426(0.007)-  0.422(0.008)-  0.416(0.009)-  0.403(0.007)-  0.446(0.004)=  0.387(0.010)-
+Yacht            1.177(0.004)   1.141(0.019)-  1.174(0.001)-  1.174(0.001)-  1.174(0.001)-  1.163(0.013)-  1.178(0.001)+  1.150(0.011)-
+Total +/-/=
+                       --          0/10/0         0/10/0         0/10/0         0/10/0         0/10/0          1/4/5         0/10/0
+
+                 Table 3: Results for the test set, formatting similar to that of Table 2.
+
+Data set         evoNSGA-II Adap. -dom. -dom. cos. -dom. lin. -dom. sig. NSGA-II NSGA-II+PD SPEA2
+
+Airfoil          0.813(0.021)   0.669(0.027)-  0.781(0.018)-  0.782(0.017)-  0.781(0.013)-  0.708(0.030)-  0.795(0.019)-  0.690(0.041)-
+Boston           0.969(0.019)   0.895(0.028)-  0.966(0.013)=  0.951(0.073)=  0.959(0.017)=  0.949(0.012)-  0.976(0.019)=  0.923(0.023)-
+Concrete         0.930(0.025)   0.692(0.040)-  0.892(0.027)-  0.883(0.025)-  0.875(0.025)-  0.815(0.040)-  0.939(0.015)=  0.734(0.056)-
+Dow chemical     0.920(0.020)   0.696(0.050)-  0.864(0.016)-  0.862(0.017)-  0.855(0.025)-  0.752(0.055)-  0.927(0.026)=  0.785(0.036)-
+Energy: cooling  1.111(0.009)   1.033(0.017)-  1.092(0.009)-  1.089(0.012)-  1.082(0.016)-  1.052(0.009)-  1.097(0.016)-  1.028(0.016)-
+Energy: heating  1.144(0.007)   1.087(0.016)-  1.128(0.010)-  1.126(0.009)-  1.124(0.012)-  1.101(0.009)-  1.136(0.009)=  1.067(0.013)-
+Tower            1.022(0.020))  0.812(0.049)-  0.986(0.035)-  0.981(0.039)-  0.985(0.025)-  0.941(0.037)-  1.031(0.005)=  0.859(0.050)-
+Wine: red        0.629(0.059)   0.591(0.009)-  0.634(0.009)=  0.633(0.013)=  0.632(0.011)=  0.615(0.014)-  0.647(0.013)=  0.613(0.011)-
+Wine: white      0.359(0.074)   0.354(0.010)=  0.390(0.020)=  0.378(0.050)=  0.387(0.012)=  0.379(0.006)=  0.400(0.025)=  0.361(0.012)=
+Yacht            1.170(0.002)   1.131(0.024)-  1.167(0.004)-  1.167(0.002)-  1.167(0.003)-  1.155(0.013)-  1.172(0.001)+  1.137(0.013)-
+Total +/-/=
+                       --           0/9/1          0/7/3          0/7/3          0/7/3          0/9/1          1/2/7          0/9/1
+
+6.2 Did it work as expected?                                           7 DISCUSSION
+
+As last result, we show that evoNSGA-II does not, in fact, exhibit     In this work, we investigated evolvability degeneration, i.e., the
+evolvability degeneration. Fig. 4 shows, on Airfoil, the evolvability  phenomenon by which small solutions over-replicate and hamper
+that is estimated using the workflow proposed in Sec. 3.2 (left        search progress because they represent unfruitful parents for the
+panel), and also the proportion of solutions of different sizes in     discovery of larger and more accurate offspring. Next, we proposed
+the population of evoNSGA-II during the evolution (right panel),       to extend NSGA-II into evoNSGA-II, which estimates the evolv-
+again using the parameter configuration that represents average        ability of solutions based on their size and, based on this, bounds
+performance. As can be seen, the proportion of solutions of larger     how many solutions of any given size can be selected for the next
+sizes increases over time during the evolution process of evoNSGA-     generation. Lastly, we found that evoNSGA-II is largely superior to
+II, which is in agreement with the expected evolvability from our      other recent MOGP algorithms, and is indeed capable of allowing
+analysis. This result is in stark contrast with the one displayed in   solutions of highly-evolvable size to thrive.
+Fig. 1 (note the different scale in sizes), where NSGA-II could not
+discover larger and more accurate solutions.                              The reason for evolvability degeneration can be linked to the fact
+                                                                       that the algorithm has insufficient time to discover more accurate
+   We produced the same plots for the other algorithms and in-         solutions (because the probability that variation succeeds is low)
+cluded them in the Appendix D; there, it can be seen that SPEA2        compared to the speed by which small solutions duplicate. Such
+and Adap.  dom., like NSGA-II, suffer from evolvability degen-         hypothesis is strongly supported by the findings of [70], where it is
+eration. The other algorithms perform better, yet still assign less    shown that GP tends to fail when the pressure surpasses a certain
+copies to larger solutions than evoNSGA-II.                            threshold. It is thus natural that MOGP algorithms that improve
+                                                                       the diversity of the population perform better than classic NSGA-II.
+                                                                       In fact, the algorithms that we used in our comparisons that were
+                                                                       built to improve NSGA-II, essentially realize some form of diversity
+                                                                       preservation. However, none of them considers tracking and using
+                                                                        Liu, et al.
+
+Figure 4: Left: Each column of the heat-map shows,                      necessarily a problem, since it is reasonable to impose a cap on the
+for a given generation, the average evolvability between                maximally allowed size, above which solutions would certaintly not
+crossover and mutation computed with the workflow of                    be interpretable. However, capping the size might not be desirable
+Sec. 3.2 on Airfoil, and normalized across solution size                for other problems. There, evoNSGA-II might keep discovering
+(dashed entries represent absent sizes). Right: Proportions             larger and larger solutions, and thus fail to find medium-sized ones.
+of solutions of different sizes in evoNSGA-II during 30 evolu-          Thus, bloat-control mechanisms may need to be considered.
+tions on Airfoil (lines are means, shaded areas are standard
+deviations).                                                               Finally, we conclude this work by reflecting on the fact that our
+                                                                        results may, in principle, transfer to problems of very different na-
+evolvability to decide which solutions to keep and which to dis-        ture than GP for SR. Indeed, we remark that maximizing accuracy
+card. In our view, this is the fundamental reason why evoNSGA-II        and minimizing solution size is an imbalanced multi-objective prob-
+performed best. Interestingly, NSGA-II+PD, which is perhaps an          lem: on the one hand, minimizing solution size is easily done, since
+even simpler approach than evoNSGA-II, performed similarly to           random deletion of components suffices to improve this objective;
+evoNSGA-II in many data sets. Still, evoNSGA-II performed typ-          on the other hand, maximizing accuracy is almost always challeng-
+ically equal to or better than NSGA-II+PD, suggesting that one          ing, since the right components need to appear in the right order
+may not always want to discard all duplicate solutions: keeping a       to obtain an accurate model. There might exist a number of prob-
+number of copies for highly-evolvable solutions seems to be gen-        lems where a similar situation happens, i.e., the objective that is
+erally more helfpul. Moreover, we observed that the performance         easy-to-optimize inhibits the search of solutions with respect to the
+gap between evoNSGA-II and NSGA-II+PD tends to increase when            objective that is hard-to-optimize. For any given problem, tracking
+the population size is larger. We believe that this happens because     and exploiting information on the evolvability in terms of the hard-
+larger population sizes allow for better estimations of evolvability.   to-optimize objective that is associated with the easy-to-optimize
+                                                                        objective might be a consistent way to improve multi-objective
+   There exist a number of limitations in this paper that call for      evolutionary search.
+future research. Firstly, our estimations of evolvability are repeated
+every generation, using solely the current population. We attempted     8 CONCLUSION
+to use exponential-moving-averages to incorporate estimations
+from previous generations but preliminary findings indicated no         We studied an important cause of inefficiency in the use of the non-
+statistically significant improvement. However, one could study         dominated sorting genetic algorithm II (NSGA-II) for the discovery
+whether other approaches can lead to an improvement, such as            of symbolic regression models with trade-offs between accuracy
+learning an accurate model of evolvability of solution size across      and simplicity. Namely, we experimentally found that simpler mod-
+multiple data sets and parameter configurations, and using that         els over-replicate and take over the majority of the population,
+model as starting point when dealing with a new problem. A second       because they lack evolvability, i.e., they represent infertile grounds
+important limitation is that we considered minimizing solution size,    for larger but more accurate models to be discovered. We named this
+which is a simple but coarse way of pursuing interpretability. Future   phenomenon evolvability degeneration, and proposed evoNSGA-II,
+work should consider other and better proxies of interpretability       an algorithm that is explicitly built to prevent it. With compar-
+(e.g., [10, 78]), and assess whether the good performance found         isons to NSGA-II and six other algorithms, upon ten real-world
+here for evoNSGA-II transfers to those settings. Transferability of     data sets, and across different parameter configurations, we found
+the quality of our approach should also be assessed when other          evoNSGA-II to be the superior approach. The working principles
+variation operators are used, such as geometric semantic- [52, 58]      of evoNSGA-II are not limited to symbolic regression: studying
+or linkage-based ones [77], as well as, e.g., gradient descent ot       their transferability to other imbalanced multi-objective problems
+optimize coefficients [16]. A third limitation is that evoNSGA-II       represents an interesting avenue for future research.
+makes no attempt to limit bloat. If bloated solutions have larger
+evolvability, they will replicate more than others. For SR this is not  ACKNOWLEDGMENTS
+
+                                                                        This research was funded by the European Commission within the
+                                                                        HORIZON Programme (Trust AI Project, Contract No.:952060). We
+                                                                        further thank Maurits and Anna de Kock Foundation for financing
+                                                                        a high-performance computing system.
+
+                                                                        APPENDIX
+                                                                        A SURVEY ON THE POPULARITY OF NSGA-II
+
+                                                                        We performed a small survey to assess the popularity of NSGA-
+                                                                        II as a recent approach for multi-objective genetic programming
+                                                                        (MOGP). The survey was carried out considering the following
+                                                                        journals and conferences:
+
+                                                                             · Evolutionary Computation Journal;
+                                                                             · European Conference on Genetic Programming (EuroGP);
+                                                                             · Genetic Programming and Evolvable Machines;
+Evolvability Degeneration in Multi-Objective Genetic Programming for Symbolic Regression
+
+     · IEEE Congress on Evolutionary Computatin Evolvable Ma-            rather, our goal was to improve search efficiency (by contrasting
+        chines (IEEE CEC);                                               evolvability degeneration). With the configurations that represent
+                                                                         worst performance, which always use the smallest population size
+     · IEEE Transactions on Cybernetics;                                 of 250 (cfr. Table 7), evoNSGA-II and NSGA-II+PD are essentially
+     · IEEE Transactions on Evolutionary Computation;                    equivalent. With the configurations that represt best performance,
+     · International Conference on Evolutionary Multi-Criterion          which always use the largest population size of 5000, evoNSGA-II
+                                                                         outperforms also NSGA-II+PD on more datasets than for the other
+        Optimization (EMO);                                              configurations. We believe this is a consequence of the fact that,
+     · International Conference on Parallel Problem Solving from         with the largest population size, the estimations of evolvability
+                                                                         are more accurate. At test time, evoNSGA-II remains preferable
+        Nature (PPSN);                                                   in many cases, except when compared with NSGA-II+PD, which
+     · Swarm and Evolutionary Computation;                               performs better than evoNSGA-II for worst-case scenarios, or sim-
+     · The Genetic and Evolutionary Computation Conference               ilarly for best-case scenarios. Since evoNSGA-II obtains a better
+                                                                         training performance than NSGA-II+PD, we can expect that includ-
+        (GECCO).                                                         ing mechanisms to improve generalization will benefit evoNSGA-II
+                                                                         more than NSGA-II+PD. As mentioned above, the result of SPEA2
+   We searched for works on NSGA-II for MOGP on Scopus (www.             with population size 5000 is omitted due to the high computational
+scopus.com) provided by Elsevier, using the query listed in Table 4.     cost of running this algorithm.
+
+   Ultimately, we obtained Table 5. The column #MOGP indicates           D PROPORTION OF SOLUTION SIZES
+the number of works matched by the query in Table 4. The column               DURING THE EVOLUTION FOR ALL
+#NSGA-II indicates the number of works that use NSGA-II as MOGP               COMPARISON ALGORITHMS
+method. We consider a work to use NSGA-II if NSGA-II is effectively
+run (either as the main approach, or as a baseline approach). If         In this section we present the proportion of solution sizes that co-
+NSGA-II is cited but not run, then we do not consider it to be used.     exist in the population during the evolution on the Airfoil data set
+Overall, NSGA-II is a very popular MOGP method, as it is used on         for all considered algorithms, under the parameter configurations
+approximately 70% of the considered works. For completeness, all         that represent average performance. The heat-map of estimated
+works are listed in the references at the end of this document [2, 3,    evolvability (computed with the workflow described in Sec. 2 of
+5, 7, 9, 10, 12, 17­27, 29, 32, 35­37, 39, 41­44, 48­51, 53­57, 59, 61­  the paper) is also presented here. We report the heat-map in terms
+69, 71­74, 81­84, 86, 88­96, 98, 101].                                   of average estimated evolvability between crossover and mutation,
+                                                                         when computed at different generation limits, namely 10, 20, 30,
+B INFORMATION ON THE DATASETS                                            and 40. These results are displayed in Fig. 5
+
+The number of samples and attributes about datasets used in the             Among all eight comparison algorithms, evoNSGA-II tends to
+comparison study are summarized in Table 6.                              search for small solutions at the initial stage and then gives more
+                                                                         importance to large solutions. For the other algorithms, small so-
+C HYPER-VOLUME RESULTS UNDER BEST                                        lutions often occupy a large extent of the population through the
+     AND WORSE PARAMETER SETTINGS                                        entire evolution. When it comes to the (non-adaptive) -dominance
+                                                                         methods, the growth of large solutions is dictated by the chosen
+We begin by reporting, in Table 7, the parameter configurations          schedule. Note that small solutions are relatively abundant at initial-
+that result, for each algorithm, in worst, average, and best perfor-     ization anyway, due to the use of the ramped half-and-half scheme.
+mance with respect to training HVs. The way in which we compute
+how parameter configurations fare with respect to each other is          E HYPER-VOLUME ON THE TRAINING SET
+explained in Sec. 5 of the paper. Note that due to the high computa-         DURING THE EVOLUTION
+tional cost of SPEA2, we did not run the algorithm for a population
+size of 5000. Hence, the parameter configuration that represents         Fig. 6 shows the training hyper-volume (HV) during the evolution
+average performance cannot be computed. We therefore decided             using the parameter configurations that represent average perfor-
+to set it to a population size of 1000, since this population size is    mance across all data sets, except for Airfoil (the respective plot is
+the most frequent for the configurations that represent the average      already reported in the paper). It can be seen that evoNSGA-II is
+performance for the other algorithms, and the crossover-mutation         almost always the best method consistently through the entirety of
+proportion that leads to the best performance under that population      the evolution. NSGA-II+PD is the main contender to evoNSGA-II.
+size (tournament selection is not used in SPEA2). Since we do not        For example, NSGA-II matches the performance of evoNSGA-II
+have results for a population size of 5000 for SPEA2, we do not          on Concrete, Dow chemical, and Yacht. However, evoNSGA-II per-
+consider this algorithm in terms of best-case performance.               forms better than NSGA-II+PD on the other data sets, sometimes
+                                                                         notably so, as on the two Energy data sets.
+   In the paper, we show results for the parameter configurations
+that represent average performance. Here we additional show the
+results obtained for the configurations that represent worst and
+best performance. The training and test results for worst-case are
+respectively shown in Tables 8 and 9. The training and test results
+for best-case are respectively shown in Tables 10 and 11.
+
+   The most important result is that evoNSGA-II is still typically
+preferable to the other algorithms at training time. As said in the
+paper, we consider training results to be more relevant because
+we made no attempt to improve generalization performance here,
+                                                                                                                                                                                                               Liu, et al.
+
+Table 4: Query used in SCOPUS to compile the short survey on the use of NSGA-II in MOGP. Keywords "VENUE1", "VENUE2",
+etc. represent the names of journals (for which the field SOURCE-TITLE is used for the search) and conferences (for which
+the field CONFERENCE is used for the search) from the list provided above.
+
+              VenueQuery      SOURCE-TITLE(VENUE1) OR CONFERENCE(VENUE2) OR . . .
+             MultiObjQuery          KEY ( ( multi-objective ) OR ( multi AND objective )
+                                          OR ( multiobjective )OR ( many-objective )
+             GPorSRQuery             OR ( many AND objective ) OR ( manyobjective ) )
+               YearQuery                      KEY ( ( genetic AND programming )
+                                               OR ( symbolic AND regression ) ) )
+                                           PUBYEAR > 2016 AND PUBYEAR < 2022
+
+             Filter criteria      VenueQuery AND MultiObjQuery AND
+                                       GPorSRQuery AND YearQuery
+
+Table 5: Result of our brief survey on the popularity of NSGA-II as MOGP algorithm in recent years. The column #MOGP
+reports the number of papers we found that are about MOGP, #NSGA-II how many of those papers use NSGA-II, and Ratio
+reports the latter over the former.
+
+                              Year #MOGP #NSGA-II Ratio
+
+                              2021 10                                                   7  70.0%
+                              2020 20
+                              2019 13                                                   13 65.0%
+                              2018 18
+                              2017 6                                                    9  69.2%
+
+                                                                                        13 72.2%
+
+                                                                                        3  50.0%
+
+                              Total 67                                                  45 67.2%
+
+Table 6: Summary of the data sets considered in this work. For some data sets, we could not find the original link: those links
+will be updated to point to our own repository after double-blind review.
+
+Name         #Samples #Attributes Link
+
+Airfoil      1503             6         https://archive.ics.uci.edu/ml/datasets/airfoil+self- noise
+
+Boston       506              14        https://archive.ics.uci.edu/ml/machine- learning- databases/housing
+
+Concrete     1030             9         https://archive.ics.uci.edu/ml/datasets/concrete+compressive+strength
+
+Dow chemical 1066             58        original-link-missing
+
+Energy: cooling 768           8         https://archive.ics.uci.edu/ml/datasets/energy+efficiency
+
+Energy: heating 768           8         https://archive.ics.uci.edu/ml/datasets/energy+efficiency
+
+Tower        4999             26        original-link-missing
+
+Wine: red    1599             12        https://archive.ics.uci.edu/ml/datasets/wine+quality
+
+Wine: white  4898             12        https://archive.ics.uci.edu/ml/datasets/wine+quality
+
+Yacht        308              7         https://archive.ics.uci.edu/ml/datasets/yacht+hydrodynamics
+
+REFERENCES                                                                                   Programming. In Proceedings of the 9th Annual Conference on Genetic and Evolu-
+                                                                                             tionary Computation. Association for Computing Machinery, 1551­1558.
+  [1] Amina Adadi and Mohammed Berrada. 2018. Peeking Inside the Black-box:             [5] Ying Bi, Bing Xue, and Mengjie Zhang. 2020. Automatically extracting features
+        A Survey on eXplainable Artificial Intelligence (XAI). IEEE Access 6 (2018),         for face classification using multi-objective genetic programming. In In pro-
+        52138­52160.                                                                         ceedings of the Genetic and Evolutionary Computation Conference Companion.
+                                                                                             Association for Computing Machinery, 117­118.
+  [2] Guilherme Seidyo Imai Aldeia and Fabrício Olivetti de França. 2020. A Paramet-
+                                                                                        [6] Stefan Bleuler, Martin Brack, Lothar Thiele, and Eckart Zitzler. 2001. Multiob-
+        ric Study of Interaction-Transformation Evolutionary Algorithm for Symbolic          jective Genetic Programming: Reducing Bloat using SPEA2. In Proceedings of
+        Regression. In In proceedings of the 2020 IEEE Congress on Evolutionary Compu-       the 2001 Congress on Evolutionary Computation, Vol. 1. IEEE, 536­543.
+        tation (CEC). IEEE, 1­8.
+  [3] Fateme Azimlu, Shahryar Rahnamayan, Masoud Makrehchi, and Pedram                  [7] Syed Mohtashim Abbas Bokhari and Oliver Theel. 2020. A genetic programming-
+
+        Karimipour-Fard. 2019. Designing Solar Chimney Power Plant Using Meta-               based multi-objective optimization approach to data replication strategies for
+        modeling, Multi-objective Optimization, and Innovization. In In proceedings          distributed systems. In In proceedings of the 2020 IEEE Congress on Evolutionary
+        of the International Conference on Evolutionary Multi-Criterion Optimization.        Computation (CEC). IEEE, 1­9.
+        Springer, 731­742.                                                              [8] Carlo Bonferroni. 1936. Teoria Statistica delle Classi e Calcolo delle Probabilita´.
+                                                                                             Pubblicazioni del R Istituto Superiore di Scienze Economiche e Commericiali di
+  [4] Khaled M. S. Badran and Peter I. Rockett. 2007. The Roles of Diversity Preserva-       Firenze 8 (1936), 3­62.
+
+        tion and Mutation in Preventing Population Collapse in Multiobjective Genetic
+Evolvability Degeneration in Multi-Objective Genetic Programming for Symbolic Regression
+
+Table 7: Parameter settings of all comparison methods that lead to worst, average and best performance. For SPEA2, tourna-
+ment size does not apply.
+
+                               Worst case                                              Average case                          Best case
+                                                                                                                           Cross.-Mut.
+Algorithm        Pop. size  Cross.-Mut. Tourn. size  Pop. size                         Cross.-Mut. Tourn. size  Pop. size                 Tourn. size
+evoNSGA-II          250                                1000                                                       5000        0.9-0.1           7
+Adap. -dom.         250        0.5-0.5        1        1000                            0.9-0.1       2            5000        0.9-0.1           7
+-dom. cos.          250                                 250                                                       5000        0.5-0.5           7
+-dom. lin.          250        0.5-0.5        1        1000                            0.9-0.1       1            5000        0.5-0.5           7
+-dom. sigm.         250                                1000                                                       5000        0.5-0.5           7
+NSGA-II             250        0.5-0.5        1        1000                            0.9-0.1       7            5000        0.5-0.5           7
+NSGA-II+PD          250                                1000                                                       5000        0.5-0.5           7
+SPEA2               250        0.5-0.5        1        1000                            0.5-0.5       7              -                           -
+                                                                                                                                 -
+                               0.5-0.5        1                                        0.9-0.1       2
+
+                               0.5-0.5        1                                        0.9-0.1       2
+
+                               0.9-0.1        1                                        0.9-0.1       2
+
+                               0.9-0.1        -                                        0.5-0.5       -
+
+Table 8: Mean (standard deviation) of the HV computed on the training set for 30 runs of the considered algorithms. This table
+corresponds to the parameter configurations that represent worst performance. The symbols +, -, = indicate, for each algo-
+rithm other than evoNSGA-II, whether the corresponding distribution of results for evoNSGA-II is, respectively, significantly
+better, worse, or not significantly different. The last row summarizes this information.
+
+Dataset          evoNSGA-II Adap. -dom. -dom. cos. -dom. lin. -dom. sig. NSGA-II NSGA-II+PD SPEA2
+
+Airfoil          0.731(0.026)  0.564(0.019)-  0.564(0.019)-  0.564(0.019)-             0.564(0.019)-    0.589(0.043)-      0.720(0.017)=  0.596(0.040)-
+Boston           0.983(0.016)  0.866(0.024)-  0.866(0.024)-  0.866(0.024)-             0.866(0.024)-    0.923(0.035)-      0.987(0.011)=  0.888(0.021)-
+Concrete         0.877(0.034)  0.636(0.031)-  0.636(0.031)-  0.636(0.031)-             0.636(0.031)-    0.711(0.064)-      0.890(0.026)=  0.669(0.050)-
+Dow chemical     0.904(0.023)  0.664(0.042)-  0.664(0.042)-  0.664(0.042)-             0.664(0.042)-    0.744(0.076)-      0.934(0.014)+  0.771(0.062)-
+Energy: cooling  1.108(0.015)  1.032(0.015)-  1.032(0.015)-  1.032(0.015)-             1.032(0.015)-    1.043(0.015)-      1.075(0.014)-  1.020(0.008)-
+Energy: heating  1.134(0.013)  1.050(0.020)-  1.050(0.020)-  1.050(0.020)-             1.050(0.020)-    1.079(0.023)-      1.111(0.013)-  1.029(0.017)-
+Tower            0.962(0.033)  0.767(0.031)-  0.767(0.031)-  0.767(0.031)-             0.767(0.031)-    0.852(0.059)-      1.003(0.009)+  0.813(0.048)-
+Wine: red        0.493(0.012)  0.440(0.002)-  0.440(0.002)-  0.440(0.002)-             0.440(0.002)-    0.449(0.013)-      0.493(0.006)=  0.451(0.014)-
+Wine: white      0.422(0.016)  0.361(0.014)-  0.361(0.014)-  0.361(0.014)-             0.361(0.014)-    0.372(0.021)-      0.430(0.007)=  0.371(0.007)-
+Yacht            1.176(0.010)  1.112(0.044)-  1.112(0.044)-  1.112(0.044)-             1.112(0.044)-    1.126(0.052)-      1.173(0.002)=  1.122(0.033)-
+Total +/-/=
+                       --         0/10/0         0/10/0         0/10/0                    0/10/0           0/10/0              2/2/6         0/10/0
+
+                            Table 9: Results for the test set, formatting similar to that of Table 8.
+
+Dataset          evoNSGA-II Adap. -dom. -dom. cos. -dom. lin. -dom. sig. NSGA-II NSGA-II+PD SPEA2
+
+Airfoil          0.761(0.027)  0.634(0.018)-  0.634(0.018)-  0.634(0.018)-             0.634(0.018)-    0.658(0.042)-      0.763(0.021)=  0.671(0.038)-
+Boston           0.951(0.022)  0.868(0.024)-  0.868(0.024)-  0.868(0.024)-             0.868(0.024)-    0.925(0.030)-      0.973(0.013)+  0.888(0.026)-
+Concrete         0.872(0.042)  0.643(0.031)-  0.643(0.031)-  0.643(0.031)-             0.643(0.031)-    0.729(0.070)-      0.900(0.019)=  0.683(0.056)-
+Dow chemical     0.840(0.041)  0.619(0.066)-  0.619(0.066)-  0.619(0.066)-             0.619(0.066)-    0.719(0.070)-      0.883(0.019)+  0.732(0.059)-
+Energy: cooling  1.088(0.015)  1.014(0.019)-  1.014(0.019)-  1.014(0.019)-             1.014(0.019)-    1.035(0.018)-      1.072(0.015)-  1.003(0.011)-
+Energy: heating  1.122(0.013)  1.058(0.019)-  1.058(0.019)-  1.058(0.019)-             1.058(0.019)-    1.083(0.022)-      1.120(0.011)=  1.042(0.016)-
+Tower            0.957(0.035)  0.754(0.030)-  0.754(0.030)-  0.754(0.030)-             0.754(0.030)-    0.846(0.062)-      1.004(0.010)+  0.806(0.049)-
+Wine: red        0.623(0.021)  0.587(0.004)-  0.587(0.004)-  0.587(0.004)-             0.587(0.004)-    0.596(0.016)-      0.638(0.010)=  0.600(0.017)-
+Wine: white      0.362(0.063)  0.330(0.023)-  0.330(0.023)-  0.330(0.023)-             0.330(0.023)-    0.350(0.025)-      0.392(0.018)=  0.350(0.014)-
+Yacht            1.155(0.019)  1.095(0.055)-  1.095(0.055)-  1.095(0.055)-             1.095(0.055)-    1.107(0.067)-      1.166(0.003)+  1.101(0.042)-
+Total +/-/=
+                       --         0/10/0         0/10/0         0/10/0                    0/10/0           0/10/0              4/1/5         0/10/0
+
+ [9] Bogdan Burlacu, Michael Affenzeller, Gabriel Kronberger, and Michael Kom-         [11] William La Cava, Patryk Orzechowski, Bogdan Burlacu, Fabricio Olivetti de
+
+      menda. 2019. Online diversity control in symbolic regression via a fast hash-          Franca, Marco Virgolin, Ying Jin, Michael Kommenda, and Jason H. Moore. 2021.
+      based tree similarity measure. In In proceedings of the 2019 IEEE congress on
+      evolutionary computation (CEC). IEEE, 2175­2182.                                       Contemporary Symbolic Regression Methods and their Relative Performance.
+[10] Bogdan Burlacu, Gabriel Kronberger, Michael Kommenda, and Michael Affen-                In Thirty-fifth Conference on Neural Information Processing Systems Datasets and
+                                                                                             Benchmarks Track.
+      zeller. 2019. Parsimony Measures in Multi-Objective Genetic Programming for      [12] Alexandre Sawczuk da Silva, Yi Mei, Hui Ma, and Mengjie Zhang. 2017.
+      Symbolic Regression. In Proceedings of the Genetic and Evolutionary Computation
+      Conference Companion. Association for Computing Machinery, 338­339.                    Fragment-based genetic programming for fully automated multi-objective web
+                                                                                             service composition. In In proceedings of the Genetic and Evolutionary Computa-
+                                                                                             tion Conference. Association for Computing Machinery, 353­360.
+                                                                                                                                                                                                               Liu, et al.
+
+Table 10: Mean (standard deviation) of the HV computed on the training set for 30 runs of the considered algorithms. This table
+corresponds to the parameter configurations that represent best performance. The symbols +, -, = indicate, for each algorithm
+other than evoNSGA-II, whether the corresponding distribution of results for evoNSGA-II is, respectively, significantly better,
+worse, or not significantly different. The last row summarizes this information.
+
+Dataset      evoNSGA-II Adap. -dom. -dom. cos. -dom. lin. -dom. sig. NSGA-II NSGA-II+PD SPEA2
+
+Airfoil      0.843(0.015) 0.629(0.032)- 0.821(0.017)- 0.816(0.014)- 0.822(0.016)- 0.727(0.026)- 0.818(0.017)- -
+
+Boston       1.057(0.007) 0.926(0.021)- 1.037(0.008)- 1.036(0.009)- 1.042(0.008)- 0.995(0.010)- 1.050(0.007)- -
+
+Concrete     0.969(0.011) 0.751(0.059)- 0.950(0.011)- 0.943(0.015)- 0.952(0.014)- 0.897(0.029)- 0.967(0.016)= -
+
+Dow chemical 1.008(0.007) 0.773(0.065)- 0.989(0.007)- 0.983(0.006)- 0.994(0.005)- 0.872(0.036)- 1.011(0.005)= -
+
+Energy: cooling 1.132(0.003) 1.064(0.015)- 1.127(0.004)- 1.125(0.005)- 1.129(0.005)= 1.080(0.016)- 1.123(0.009)- -
+
+Energy: heating 1.164(0.003) 1.093(0.011)- 1.150(0.004)- 1.150(0.004)- 1.154(0.004)- 1.119(0.016)- 1.151(0.005)- -
+
+Tower        1.058(0.006)) 0.923(0.046)- 1.041(0.007)- 1.038(0.007)- 1.044(0.005)- 0.992(0.022)- 1.058(0.006)= -
+
+Wine: red    0.531(0.005) 0.459(0.012)- 0.521(0.004)- 0.522(0.005)- 0.523(0.004)- 0.485(0.010)- 0.525(0.004)- -
+
+Wine: white 0.467(0.003) 0.386(0.014)- 0.455(0.004)- 0.454(0.003)- 0.457(0.003)- 0.419(0.010)- 0.460(0.002)- -
+
+Yacht        1.178(0.002) 1.162(0.011)- 1.178(0.001)- 1.177(0.001)- 1.178(0.001)= 1.170(0.007)- 1.179(0.000)= -
+
+Total +/-/=  --  0/10/0  0/10/0                                                          0/10/0  0/8/2  0/10/0  0/6/4   -
+
+                 Table 11: Results for the test set, formatting similar to that of Table 10.
+
+Dataset      evoNSGA-II Adap. -dom. -dom. cos. -dom. lin. -dom. sig. NSGA-II NSGA-II+PD SPEA2
+
+Airfoil      0.836(0.029) 0.696(0.026)- 0.825(0.017)= 0.825(0.018)= 0.828(0.020)= 0.768(0.029)- 0.821(0.021)= -
+
+Boston       0.919(0.149) 0.922(0.039)+ 0.918(0.168)= 0.944(0.106)= 0.974(0.019)= 0.964(0.016)= 0.964(0.092)= -
+
+Concrete     0.959(0.010)) 0.760(0.061)- 0.940(0.015)- 0.936(0.014)- 0.944(0.013)- 0.905(0.023)- 0.957(0.011)= -
+
+Dow chemical 0.962(0.013) 0.745(0.056)- 0.940(0.020)- 0.928(0.027)- 0.940(0.022)- 0.827(0.032)- 0.966(0.015)= -
+
+Energy: cooling 1.122(0.005) 1.056(0.018)- 1.118(0.005)= 1.118(0.006)= 1.121(0.006)= 1.075(0.018)- 1.119(0.007)= -
+
+Energy: heating 1.158(0.007) 1.104(0.010)- 1.152(0.004)- 1.152(0.005)- 1.155(0.003)= 1.120(0.014)- 1.154(0.006)= -
+
+Tower        1.053(0.009) 0.918(0.053)- 1.015(0.096)- 1.014(0.065)- 1.033(0.030)- 0.994(0.028)- 1.057(0.005)= -
+
+Wine: red    0.641(0.012) 0.610(0.017)- 0.634(0.014)= 0.620(0.070)= 0.638(0.019)= 0.640(0.011)= 0.647(0.008)= -
+
+Wine: white 0.360(0.087) 0.365(0.012)= 0.303(0.091)= 0.308(0.085)= 0.334(0.067)= 0.390(0.009)= 0.373(0.060)= -
+
+Yacht        1.173(0.003) 1.155(0.010)- 1.172(0.002)= 1.172(0.002)= 1.173(0.002)= 1.162(0.009)- 1.175(0.001)= -
+Total +/-/=
+             --  1/8/1   0/4/6                                                           0/4/6   0/3/7  0/7/3   0/0/10  -
+
+[13] Stéphane d'Ascoli, Pierre-Alexandre Kamienny, Guillaume Lample, and                 [21] Diane P Fraser, Edward Keedwell, Stephen L Michell, and Ray Sheridan. 2019.
+
+      François Charton. 2022. Deep Symbolic Regression for Recurrent Sequences.                EMOCS: evolutionary multi-objective optimisation for clinical scorecard gener-
+                                                                                               ation. In In proceedings of the Genetic and Evolutionary Computation Conference.
+      arXiv:2201.04600                                                                         Association for Computing Machinery, 1174­1182.
+
+[14] Edwin D. De Jong and Jordan B. Pollack. 2003. Multi-Objective Methods for           [22] Edgar Galván and Marc Schoenauer. 2019. Promoting semantic diversity in multi-
+      Tree Size Control. Genetic Programming and Evolvable Machines 4, 3 (2003),               objective genetic programming. In In proceedings of the Genetic and Evolutionary
+      211­233.                                                                                 Computation Conference. Association for Computing Machinery, 1021­1029.
+
+[15] Kalyanmoy Deb, Amrit Pratap, Sameer Agarwal, and TAMT Meyarivan. 2002.              [23] Mahmoud Golabi, Soheila Ghambari, Julien Lepagnot, Laetitia Jourdan, Mathieu
+      A fast and elitist multiobjective genetic algorithm: NSGA-II. IEEE transactions
+      on evolutionary computation 6, 2 (2002), 182­197.                                        Brévilliers, and Lhassane Idoumghar. 2020. Bypassing or flying above the
+                                                                                               obstacles? A novel multi-objective UAV path planning problem. In In proceedings
+[16] Grant Dick, Caitlin A. Owen, and Peter A. Whigham. 2020. Feature Standardisa-             of the 2020 IEEE Congress on Evolutionary Computation (CEC). IEEE, 1­8.
+      tion and Coefficient Optimisation for Effective Symbolic Regression. In Proceed-   [24] Raquel Hernández Gómez and Carlos A Coello Coello. 2017. A hyper-heuristic
+      ings of the 22th Annual Conference on Genetic and Evolutionary Computation.              of scalarizing functions. In In proceedings of the genetic and evolutionary compu-
+      Association for Computing Machinery, 306­314.                                            tation conference. Association for Computing Machinery, 577­584.
+                                                                                         [25] Dunwei Gong, Biao Xu, Yong Zhang, Yinan Guo, and Shengxiang Yang. 2019.
+[17] Tiantian Dou and Peter Rockett. 2018. Comparison of semantic-based local
+      search methods for multiobjective genetic programming. Genetic Programming               A similarity-based cooperative co-evolutionary algorithm for dynamic inter-
+      and Evolvable Machines 19, 4 (2018), 535­563.                                            val multiobjective optimization problems. IEEE Transactions on Evolutionary
+                                                                                               Computation 24, 1 (2019), 142­156.
+[18] Juan José Escobar, Julio Ortega, Antonio Francisco Díaz, Jesús González, and        [26] David Grochol and Lukas Sekanina. 2018. Multi-objective evolution of ultra-fast
+                                                                                               general-purpose hash functions. In In proceedings of the European Conference on
+      Miguel Damas. 2018. Multi-objective feature selection for EEG classification with        Genetic Programming. Springer, 187­202.
+      multi-level parallelism on heterogeneous CPU-GPU clusters. In In proceedings       [27] David Grochol and Lukas Sekanina. 2020. Evolutionary Design of Hash Func-
+      of the Genetic and Evolutionary Computation Conference Companion. Association            tions for IPv6 Network Flow Hashing. In In proceedings of the 2020 IEEE Congress
+      for Computing Machinery, 1862­1869.                                                      on Evolutionary Computation (CEC). IEEE, 1­8.
+                                                                                         [28] David Gunning and David W. Aha. 2019. DARPA's Explainable Artificial Intelli-
+[19] Benjamin P Evans, Bing Xue, and Mengjie Zhang. 2019. What's inside the                    gence (XAI) Program. AI Magazine 40, 2 (2019), 44­58.
+                                                                                         [29] Marwa Hammami, Slim Bechikh, Chih-Cheng Hung, and Lamjed Ben Said. 2018.
+      black-box? a genetic programming method for interpreting complex machine
+      learning models. In In proceedings of the Genetic and Evolutionary Computation           A multi-objective hybrid filter-wrapper evolutionary approach for feature con-
+      Conference. Association for Computing Machinery, 1012­1020.                              struction on high-dimensional data. In In proceedings of the 2018 IEEE Congress
+[20] João Victor C Fracasso and Fernando J Von Zuben. 2018. Multi-objective se-
+      mantic mutation for genetic programming. In In proceedings of the 2018 IEEE
+      Congress on Evolutionary Computation (CEC). IEEE, 1­8.
+Evolvability Degeneration in Multi-Objective Genetic Programming for Symbolic Regression
+
+Figure 5: Top-left: Each column of the heat-map shows, for a given generation, the average evolvability between crossover and
+mutation computed with the workflow described in Section 2 of the paper for the data set Airfoil. Values in each column are
+normalized (dashed entries represent absent values). Other plots: Proportion of solutions of different sizes for the considered
+algorithms during the evolution on Airfoil.
+
+      on Evolutionary Computation (CEC). IEEE, 1­8.                                       [36] William La Cava, Thomas Helmuth, Lee Spector, and Jason H Moore. 2019. A
+[30] Hisao Ishibuchi, Kaname Narukawa, and Yusuke Nojima. 2005. An Empirical
+                                                                                                probabilistic and multi-objective analysis of lexicase selection and -lexicase
+      Study on the Handling of Overlapping Solutions in Evolutionary Multiobjec-                selection. Evolutionary Computation 27, 3 (2019), 377­402.
+      tive Optimization. In Proceedings of the 7th Annual Conference on Genetic and       [37] William La Cava and Jason H Moore. 2018. An analysis of -lexicase selection
+      Evolutionary Computation. Association for Computing Machinery, 817­824.                   for large-scale many-objective optimization. In In proceedings of the Genetic and
+[31] Maarten Keijzer. 2003. Improving Symbolic Regression with Interval Arithmetic              Evolutionary Computation Conference Companion. Association for Computing
+      and Linear Scaling. In European Conference on Genetic Programming. Springer,              Machinery, 185­186.
+      70­82.
+                                                                                          [38] William La Cava and Jason H. Moore. 2020. Genetic programming approaches
+[32] Jinhan Kim and Shin Yoo. 2019. Software review: Deap (distributed evolutionary             to learning fair classifiers. In Proceedings of the 2020 Genetic and Evolutionary
+      algorithm in python) library. Genetic Programming and Evolvable Machines 20,              Computation Conference. 967­975.
+      1 (2019), 139­142.
+                                                                                          [39] Leonardo Lai, Lorenzo Fiaschi, and Marco Cococcioni. 2020. Solving mixed
+[33] Michael Kommenda, Gabriel Kronberger, Michael Affenzeller, Stephan M Win-
+                                                                                                Pareto-Lexicographic multi-objective optimization problems: The case of prior-
+      kler, and Bogdan Burlacu. 2016. Evolving Simple Symbolic Regression Models                ity chains. Swarm and Evolutionary Computation 55 (2020), 100687.
+      by Multi-objective Genetic Programming. In Genetic Programming Theory and           [40] William B. Langdon. 2021. Genetic programming convergence. Genetic Pro-
+      Practice XIII. Springer, 1­19.                                                            gramming and Evolvable Machines (2021), 1­34.
+[34] John R Koza. 1992. Genetic programming: on the programming of computers by           [41] Andrew Lensen, Mengjie Zhang, and Bing Xue. 2020. Multi-objective genetic
+      means of natural selection. Vol. 1. MIT press, Cambridge, MA, USA.                        programming for manifold learning: balancing quality and dimensionality. Ge-
+[35] Jií Kubalík, Erik Derner, and Robert Babuska. 2020. Symbolic regression driven             netic Programming and Evolvable Machines 21, 3 (2020), 399­431.
+      by training data and prior knowledge. In In proceedings of the Genetic and          [42] Dashuang Li, Chaoyong Zhang, Guangdong Tian, Xinyu Shao, and Zhiwu Li.
+      Evolutionary Computation Conference. 958­966.
+                                                                                                2018. Multiobjective Program and Hybrid Imperialist Competitive Algorithm
+                                                                                      Liu, et al.
+
+Figure 6: HV on the training set for 30 runs on all the considered datasets under average-case parameter settings for all algo-
+rithms (means are lines, standard deviations are shaded areas).
+
+      for the Mixed-Model Two-Sided Assembly Lines Subject to Multiple Constraints.   [44] Hao Li, Yangjian Ji, Liang Chen, and Roger Jianxin Jiao. 2017. Bi-Level Co-
+      IEEE Transactions on Systems, Man, and Cybernetics: Systems 48, 1 (2018), 119­
+      129.                                                                                  ordinated Configuration Optimization for Product-Service System Modular
+                                                                                            Design. IEEE Transactions on Systems, Man, and Cybernetics: Systems 47, 3 (2017),
+[43] Haoran Li, Fazhi He, Yilin Chen, and Jinkun Luo. 2020. Multi-objective self-           537­554.
+      organizing optimization for constrained sparse array synthesis. Swarm and
+      Evolutionary Computation 58 (2020), 100743.                                     [45] Zachary C Lipton. 2018. The Mythos of Model Interpretability: In machine
+                                                                                            learning, the concept of interpretability is both important and slippery. Queue
+                                                                                            16, 3 (2018), 31­57.
+Evolvability Degeneration in Multi-Objective Genetic Programming for Symbolic Regression
+
+[46] Sean Luke and Liviu Panait. 2006. A Comparison of Bloat Control Methods for                proceedings of the 2019 IEEE Congress on Evolutionary Computation (CEC). IEEE,
+      Genetic Programming. Evolutionary Computation 14, 3 (2006), 309­344.                      850­857.
+
+[47] Henry B. Mann and Donald R. Whitney. 1947. On a Test of Whether One of               [69] Igor Rafael S. Silva, Jose Eduardo Almeida de Alencar, and Ricardo A. L. Rabêlo.
+      Two Random Variables is Stochastically Larger than the Other. The Annals of               2020. A preference-based multi-objective demand response mechanism. In In
+      Mathematical Statistics (1947), 50­60.                                                    proceedings of the 2020 IEEE Congress on Evolutionary Computation (CEC). IEEE,
+                                                                                                1­8.
+[48] Luca Mariot, Stjepan Picek, Domagoj Jakobovic, and Alberto Leporati. 2021.
+      Evolutionary Algorithms for Designing Reversible Cellular Automata. Genetic         [70] Terence Soule and James A. Foster. 1998. Effects of Code Growth and Parsimony
+      Programming and Evolvable Machines 22, 4 (2021), 429­461.                                 Pressure on Populations in Genetic Programming. Evolutionary Computation 6,
+                                                                                                4 (1998), 293­309.
+[49] Atiya Masood, Gang Chen, Yi Mei, Harith Al-Sahaf, and Mengjie Zhang. 2020.
+                                                                                          [71] Gabriel L Souza, Anderson R Duarte, Gladston JP Moreira, and Frederico RB
+      A Fitness-based Selection Method for Pareto Local Search for Many-Objective
+      Job Shop Scheduling. In In proceedings of the 2020 IEEE Congress on Evolutionary          Cruz. 2020. A novel formulation for multi-objective optimization of general
+      Computation (CEC). IEEE, 1­8.                                                             finite single-server queueing networks. In In proceedings of the 2020 IEEE congress
+[50] Suraj S Meghwani and Manoj Thakur. 2017. Multi-criteria algorithms for port-               on evolutionary computation (CEC). IEEE, 1­8.
+      folio optimization under practical constraints. Swarm and evolutionary compu-       [72] Runjia Sun and Yutian Liu. 2019. Preference-based Multiobjective Evolutionary
+      tation 37 (2017), 104­125.                                                                Algorithm for Power Network Reconfiguration. In In proceedings of the 2019
+[51] Milos Minarik and Lukas Sekanina. 2017. On Evolutionary Approximation                      IEEE Congress on Evolutionary Computation (CEC). IEEE, 845­849.
+      of Sigmoid Function for HW/SW Embedded Systems. In In proceedings of the            [73] Amirhessam Tahmassebi, Amir H Gandomi, and Anke Meyer-Baese. 2018. A
+      European Conference on Genetic Programming. Springer, 343­358.                            Pareto front based evolutionary model for airfoil self-noise prediction. In In
+[52] Alberto Moraglio, Krzysztof Krawiec, and Colin G Johnson. 2012. Geometric                  proceedings of the 2018 IEEE Congress on Evolutionary Computation (CEC). IEEE,
+      semantic genetic programming. In International Conference on Parallel Problem             1­8.
+      Solving from Nature. Springer, 21­31.
+[53] Kaustuv Nag and Nikhil R Pal. 2019. Feature extraction and selection for parsi-      [74] Anish Thite, Mohan Dodda, Alex Liu, Pulak Agarwal, and Jason Zutty. 2021.
+      monious classifiers with multiobjective genetic programming. IEEE Transactions
+      on Evolutionary Computation 24, 3 (2019), 454­466.                                        Concurrent neural tree and data preprocessing AutoML for image classifica-
+[54] Jacob Nyman and Kazi Shah Nawaz Ripon. 2018. Metaheuristics for the mul-                   tion. In In proceedings of the Genetic and Evolutionary Computation Conference
+      tiobjective surgery admission planning problem. In In proceedings of the 2018             Companion. 1990­1993.
+      IEEE Congress on Evolutionary Computation (CEC). IEEE, 1­8.                         [75] Silviu-Marian Udrescu and Max Tegmark. 2020. AI Feynman: A physics-inspired
+[55] Makoto Ohki. 2020. A benchmark with facile adjustment of difficulty for many-              method for symbolic regression. Science Advances 6, 16 (2020).
+      objective genetic programming and its reference set. In In proceedings of the       [76] Marco Virgolin, Tanja Alderliesten, and Peter A. N. Bosman. 2019. Linear Scaling
+      Genetic and Evolutionary Computation Conference Companion. Association for
+      Computing Machinery, 1915­1922.                                                           with and within Semantic Backpropagation-based Genetic Programming for
+                                                                                                Symbolic Regression. In Proceedings of the Genetic and Evolutionary Computation
+[56] Varun Ojha and Giuseppe Nicosia. 2020. Multi-objective optimisation of multi-              Conference. 1084­1092.
+      output neural trees. In In proceedings of the 2020 IEEE Congress on Evolutionary    [77] Marco Virgolin, Tanja Alderliesten, Cees Witteveen, and Peter A. N. Bosman.
+      Computation (CEC). IEEE, 1­8.
+                                                                                                2021. Improving Model-based Genetic Programming for Symbolic Regression
+[57] Samuel Oliveira, Victor Diniz, Anisio Lacerda, and Gisele L Pappa. 2018. Multi-            of Small Expressions. Evolutionary Computation 29, 2 (2021), 211­237.
+      objective evolutionary rank aggregation for recommender systems. In In pro-         [78] Marco Virgolin, Andrea De Lorenzo, Eric Medvet, and Francesca Randone.
+      ceedings of the 2018 IEEE Congress on Evolutionary Computation (CEC). IEEE,
+      1­8.                                                                                      2020. Learning a formula of interpretability to learn interpretable formulas.
+                                                                                                In International Conference on Parallel Problem Solving from Nature. Springer,
+[58] Tomasz P. Pawlak, Bartosz Wieloch, and Krzysztof Krawiec. 2014. Semantic                   79­93.
+      backpropagation for designing search operators in genetic programming. IEEE
+      Transactions on Evolutionary Computation 19, 3 (2014), 326­340.                     [79] Marco Virgolin, Andrea De Lorenzo, Francesca Randone, Eric Medvet, and Mat-
+                                                                                                tias Wahde. 2021. Model Learning with Personalized Interpretability Estimation
+[59] Michal Pinos, Vojtech Mrazek, and Lukas Sekanina. 2021. Evolutionary neural                (ML-PIE). Association for Computing Machinery, 1355­1364.
+
+      architecture search supporting approximate multipliers. (2021), 82­97.              [80] Ekaterina J. Vladislavleva, Guido F. Smits, and Dick den Hertog. 2009. Order
+[60] Riccardo Poli, William B. Langdon, and Nicholas Freitag McPhee. 2008. A Field
+                                                                                                of Nonlinearity as a Complexity Measure for Models Generated by Symbolic
+      Guide to Genetic Programming. Lulu Enterprises, UK Ltd.                                   Regression via Pareto Genetic Programming. IEEE Transactions on Evolutionary
+[61] Christian Raymond, Qi Chen, Bing Xue, and Mengjie Zhang. 2021. Multi-                      Computation 13, 2 (2009), 333­349.
+                                                                                          [81] Tuong Manh Vu, Eli Davies, Charlotte Buckley, Alan Brennan, and Robin C
+      objective genetic programming for symbolic regression with the adaptive
+      weighted splines representation. In In proceedings of the Genetic and Evolution-          Purshouse. 2021. Using multi-objective grammar-based genetic programming
+      ary Computation Conference Companion. Association for Computing Machinery,                to integrate multiple social theories in agent-based modeling. In In proceedings
+      165­166.                                                                                  of the International Conference on Evolutionary Multi-Criterion Optimization,
+                                                                                                Vol. 12654. Springer, 721­733.
+[62] Peter Rockett. 2021. Constant optimization and feature standardization in mul-
+      tiobjective genetic programming. Genetic Programming and Evolvable Machines         [82] Tuong Manh Vu, Charlotte Probst, Joshua M Epstein, Alan Brennan, Mark
+      (2021), 1­33.
+                                                                                                Strong, and Robin C Purshouse. 2019. Toward inverse generative social science
+[63] Ibai Roman, Alexander Mendiburu, Roberto Santana, and José Antonio Lozano.                 using multi-objective genetic programming. In In proceedings of the Genetic and
+      2019. Sentiment analysis with genetically evolved Gaussian kernels. In In                 Evolutionary Computation Conference. Association for Computing Machinery,
+      proceedings of the Genetic and Evolutionary Computation Conference. Association           1356­1363.
+      for Computing Machinery, 1328­1337.
+                                                                                          [83] Yuting Wan, Ailong Ma, Liangpei Zhang, and Yanfei Zhong. 2021. Multiobjective
+[64] Amani Saad, Salman A Khan, and Amjad Mahmood. 2018. A multi-objective
+                                                                                                Sine Cosine Algorithm for Remote Sensing Image Spatial-Spectral Clustering.
+      evolutionary artificial bee colony algorithm for optimizing network topology              IEEE Transactions on Cybernetics (2021), 1­15.
+      design. Swarm and Evolutionary Computation 38 (2018), 187­201.                      [84] Bing-Chuan Wang, Han-Xiong Li, Qingfu Zhang, and Yong Wang. 2021.
+[65] Krzysztof L Sadowski, Marjolein C van der Meer, Ngoc Hoang Luong, Tanja
+                                                                                                Decomposition-based multiobjective optimization for constrained evolutionary
+      Alderliesten, Dirk Thierens, Rob van der Laarse, Yury Niatsetski, Arjan Bel,              optimization. IEEE Transactions on Systems, Man, and Cybernetics: Systems 51, 1
+                                                                                                (2021), 574­587.
+      and Peter AN Bosman. 2017. Exploring trade-offs between target coverage,
+                                                                                          [85] Shaolin Wang, Yi Mei, and Mengjie Zhang. 2020. A Multi-Objective Genetic
+      healthy tissue sparing, and the placement of catheters in HDR brachytherapy for
+                                                                                                Programming Hyper-Heuristic Approach to Uncertain Capacitated Arc Routing
+      prostate cancer using a novel multi-objective model-based mixed-integer evolu-            Problems. In Proceedings of the 2020 IEEE Congress on Evolutionary Computation
+      tionary algorithm. In In proceedings of the Genetic and Evolutionary Computation          (CEC). 1­8.
+      Conference. Association for Computing Machinery, 1224­1231.                         [86] Shaolin Wang, Yi Mei, and Mengjie Zhang. 2020. A multi-objective genetic
+[66] Islem Saidani, Ali Ouni, Moataz Chouchen, and Mohamed Wiem Mkaouer.
+                                                                                                programming hyper-heuristic approach to uncertain capacitated arc routing
+      2020. On the prediction of continuous integration build failures using search-            problems. In In proceedings of the 2020 IEEE Congress on Evolutionary Computa-
+      based software engineering. In In proceedings of the Genetic and Evolutionary             tion (CEC). IEEE, 1­8.
+      Computation Conference Companion. Association for Computing Machinery,              [87] Shaolin Wang, Yi Mei, and Mengjie Zhang. 2021. A Multi-Objective Genetic Pro-
+      313­314.
+                                                                                                gramming Approach with Self-Adaptive  Dominance to Uncertain Capacitated
+[67] Roberto Santana, Luis Marti, and Mengjie Zhang. 2019. GP-based methods for                 Arc Routing Problem. In Proceedings of the 2021 IEEE Congress on Evolutionary
+      domain adaptation: using brain decoding across subjects as a test-case. Genetic           Computation (CEC). 636­643.
+      Programming and Evolvable Machines 20, 3 (2019), 385­411.                           [88] Shaolin Wang, Yi Mei, and Mengjie Zhang. 2021. Two-stage multi-objective
+
+[68] Shaimaa Seyam, Khaled HM Al-Hamed, Ali MMI Qureshy, Ibrahim Dincer,                        genetic programming with archive for uncertain capacitated arc routing prob-
+                                                                                                lem. In In proceedings of the Genetic and Evolutionary Computation Conference.
+      Martin Agelin-Chaab, and Shahryar Rahnamayan. 2019. Multi-objective opti-                 Association for Computing Machinery, 287­295.
+      mization of hydrogen production in hybrid renewable energy systems. In In
+                                                                                        Liu, et al.
+
+[89] Tetsuroh Watanabe, Taro Kanno, and Kazuo Furuta. 2018. Analyzing effects of         [95] Yuan Yuan and Wolfgang Banzhaf. 2022. Expensive Multiobjective Evolution-
+                                                                                                ary Optimization Assisted by Dominance Prediction. IEEE Transactions on
+      various trust in product recalls using a social simulation with a co-evolution            Evolutionary Computation 26, 1 (2022), 159­173.
+      model. In In proceedings of the Genetic and Evolutionary Computation Conference
+      Companion. Association for Computing Machinery, 274­275.                           [96] Fangfang Zhang, Yi Mei, and Mengjie Zhang. 2019. Evolving dispatching rules
+[90] Jake Weiner, Andreas Ernst, Xiaodong Li, and Yuan Sun. 2020. Automatic
+                                                                                                for multi-objective dynamic flexible job shop scheduling via genetic program-
+      decomposition of mixed integer programs for lagrangian relaxation using a                 ming hyper-heuristics. In In proceedings of the 2019 IEEE Congress on Evolutionary
+      multiobjective approach. In In proceedings of the Genetic and Evolutionary Com-           Computation (CEC). IEEE, 1366­1373.
+      putation Conference. Association for Computing Machinery, 263­270.                 [97] Hengzhe Zhang and Aimin Zhou. 2021. RL-GEP: Symbolic Regression via Gene
+[91] Junhua Wu, Sergey Polyakovskiy, Markus Wagner, and Frank Neumann. 2018.                    Expression Programming and Reinforcement Learning. In 2021 International
+                                                                                                Joint Conference on Neural Networks (IJCNN). IEEE, 1­8.
+      Evolutionary computation plus dynamic programming for the bi-objective             [98] Heiner Zille, Sanaz Mostaghim, Fabien Evrard, and Berend van Wachem. 2021.
+      travelling thief problem. In In proceedings of the Genetic and Evolutionary Com-
+      putation Conference. Association for Computing Machinery, 777­784.                        Unit-aware Multi-objective Genetic Programming for the Prediction of the
+[92] Ning Xue, Dario Landa-Silva, Isaac Triguero, and Grazziela P Figueredo. 2018.
+                                                                                                Stokes Flow around a Sphere. (2021), 327­328.
+      A genetic algorithm with composite chromosome for shift assignment of part-
+      time employees. In In proceedings of the 2018 IEEE Congress on Evolutionary        [99] Eckart Zitzler, Marco Laumanns, and Lothar Thiele. 2001. SPEA2: Improving
+      Computation (CEC). IEEE, 1­8.                                                             the Strength Pareto Evolutionary Algorithm. TIK-report 103 (2001).
+[93] Dongsheng Yang, Xianyu Zhou, Zhile Yang, Qiangqiang Jiang, and Wei Feng.
+                                                                                        [100] Eckart Zitzler and Lothar Thiele. 1998. Multiobjective optimization using evo-
+      2020. Multi-objective optimization model for flexible job shop scheduling                 lutionary algorithms -- A comparative case study. In International Conference
+      problem considering transportation constraints: A comparative study. In In                on Parallel Problem Solving from Nature, Agoston E. Eiben, Thomas Bäck, Marc
+      proceedings of the 2020 IEEE Congress on Evolutionary Computation (CEC). IEEE,            Schoenauer, and Hans-Paul Schwefel (Eds.). Springer Berlin Heidelberg, Berlin,
+      1­8.
+                                                                                                Heidelberg, 292­301.
+[94] Yuan Yuan and Wolfgang Banzhaf. 2019. A hybrid evolutionary system for
+      automatic software repair. In In proceedings of the Genetic and Evolutionary      [101] Marko Urasevi and Domagoj Jakobovi. 2018. Evolving Dispatching Rules for
+      Computation Conference. Association for Computing Machinery, 1417­1425.
+                                                                                                Optimising Many-Objective Criteria in the Unrelated Machines Environment.
+                                                                                                Genetic Programming and Evolvable Machines 19, 1­2 (2018).
+

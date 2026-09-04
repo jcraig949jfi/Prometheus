@@ -1,0 +1,492 @@
+================================================================================
+EXTERNAL REVIEW PACKET
+HC-T01 ZERO-COMPUTE CONDITIONAL-ACCESSIBILITY ADJUDICATION
+RA-1 PRIMARY + RA-2 MACHINERY-PRESENCE DIAGNOSTIC
+================================================================================
+Prepared:        2026-09-03   adjudication layer over a frozen experiment
+Seat:            Herakles / Historical Collider
+Location:        herakles/specimens/spec-toussaint-exploration/
+                 reanalysis/conditional_accessibility_2026-09-03/
+New compute:     NONE. No evolution, no simulation, no detector re-sampling.
+                 Every number is a re-analysis of already-committed rows.
+Headline:        RA-1 is INDETERMINATE, and that is not a failure. The original
+                 K7 window has r(fitness, gain) = EXACTLY -1.0000, so the
+                 conditional question could not be asked there. RA-2 is a
+                 downgrade: the detector is largely reading whether the genome
+                 has at least one operator.
+
+--------------------------------------------------------------------------------
+1. FROZEN INPUTS AND HASHES
+--------------------------------------------------------------------------------
+  commit analysed .......... 226e89711b8f8740f74ea841438fcd4bba39303d
+  prompt sha256 ............ c55e33b4c62cce46648443b94d47aa35fe051c1b6c6247b1
+                             2a66366fbe360eb6
+  grid manifest sha256 ..... 93c208b1f92c979643cb1472704885de1a4b5ab9abc6e6b2
+                             03b5b45983f16ef2
+                             (sha256 over the sorted list of all 120 grid
+                             filenames each paired with its own sha256)
+  HC_T01_FROZEN_CONFIG ..... 4efbf213addd2feb0eb21e2a228744ba...
+  derived/noise_floor.json . 3e45b96e59ca45071acdded004d99634...
+  grid files ............... 120
+
+No historical result file was altered. All new work is in the RA directory.
+
+--------------------------------------------------------------------------------
+2. DATA AUDIT
+--------------------------------------------------------------------------------
+  runs ..................... 120
+  arms ..................... 4, being alpha in {0.03, 0.06} x beta in {0.1, 0.0}
+  runs per arm ............. 30
+  checkpoints .............. 25, at generations 0 5 10 15 20 30 40 50 65 80
+                             100 125 150 175 200 250 300 350 400 500 600 700
+                             800 900 1000
+  missing rows ............. none
+  duplicated rows .......... none
+  seed pairing ............. every (alpha, seed) cell has both beta arms
+  fitness convention ....... column `best`, HIGHER IS BETTER, optimum is exactly
+                             0.0, values are the negative fraction of mismatched
+                             target symbols
+  detector convention ...... column `md_on`, modular degree under the frozen
+                             beta_probe = 0.1, higher means more period-5
+                             aligned correlated variation
+  prior filtering .......... none in HC-T01; its K7 used two fixed windows
+                             within beta=0.1 only
+
+  nops distribution, and this is hazard H-3 as a fact rather than an argument:
+
+    arm                        min    median     max   fraction zero
+    ----------------------   -----   -------   -----   -------------
+    alpha=0.03 beta=0.0        0.0       0.0     0.0           1.000
+    alpha=0.03 beta=0.1        0.0       1.2    10.4           0.168
+    alpha=0.06 beta=0.0        0.0       0.0     0.0           1.000
+    alpha=0.06 beta=0.1        0.0       1.2     7.5           0.121
+
+  Zero rows in either beta=0.0 arm have any operator, at any generation,
+  verified directly.
+
+  Ceiling occupancy, and this is hazard H-2, note the asymmetry across exactly
+  the arms HC-T01 compared. Fraction of runs already at the optimum:
+
+    arm                       g40    g50    g65    g80   g100   g150   g175
+    ----------------------   ----   ----   ----   ----   ----   ----   ----
+    alpha=0.03 beta=0.0      0.00   0.00   0.00   0.00   0.00   0.00   0.00
+    alpha=0.03 beta=0.1      0.00   0.00   0.17   0.20   0.30   0.60   0.70
+    alpha=0.06 beta=0.0      0.00   0.00   0.00   0.00   0.00   0.00   0.00
+    alpha=0.06 beta=0.1      0.07   0.17   0.30   0.63   0.73   0.87   0.90
+
+--------------------------------------------------------------------------------
+3. PREREGISTERED RA-1 ESTIMATOR, AND WHY
+--------------------------------------------------------------------------------
+Partial Spearman of accessibility against gain, conditioning on current fitness,
+computed on the runs that still have headroom at t.
+
+    rho_partial = (r_AG - r_AF * r_GF) / sqrt((1 - r_AF^2)(1 - r_GF^2))
+
+  A = md_on(t)        B = gain(t, h) = best(t+h) - best(t)      F = best(t)
+
+Rank-based rather than regression residualisation because gain is heavily tied,
+bounded above by -best(t), and best is discretised to multiples of 1/25. An OLS
+residual assumes a linear conditional mean on variables that are neither
+continuous nor linearly related. A rank partial is also the conditional analogue
+of the marginal Spearman K7 used, so the comparison is like for like.
+
+Restriction to runs with headroom IS the treatment of H-2, not a workaround. A
+run at the optimum contributes gain = 0 by construction and can only add a tie
+whose value is fixed by F.
+
+Stability guard: a point with |r_GF| > 0.95 or |r_AF| > 0.95 has a
+near-zero denominator and is recorded UNSTABLE, never reported as a large
+effect.
+
+Ordering disclosure, made in the preregistration itself rather than here: the
+data audit including the horizon-feasibility table was inspected BEFORE the
+eligibility thresholds were set. No association between accessibility and
+acquisition existed in any form before the plan was frozen and committed.
+
+--------------------------------------------------------------------------------
+4. HORIZONS AND ELIGIBILITY
+--------------------------------------------------------------------------------
+  horizons ................. h = 150 and h = 400 generations, being the spans of
+                             HC-T01's own two committed K7 windows, 50->200 and
+                             100->500. No sweep, no other horizon examined.
+  eligibility E1 ........... at least 15 of 30 runs still able to improve at t
+  eligibility E2 ........... at least 8 distinct gain values among those runs
+  eligibility E3 ........... the stability guard passes
+
+  Eligible points surviving all three, per cell and horizon:
+
+    cell                        h=150   h=400
+    ----------------------      -----   -----
+    alpha=0.03 beta=0.1             0       0
+    alpha=0.06 beta=0.1             0       0
+    alpha=0.03 beta=0.0             1       0
+    alpha=0.06 beta=0.0             2       2
+
+--------------------------------------------------------------------------------
+5. THE ORIGINAL K7 COMPARISON, REPRODUCED EXACTLY
+--------------------------------------------------------------------------------
+Recomputed from the same frozen rows to prove this re-analysis reads the same
+data the original verdict was built on. Marginal Spearman against subsequent
+gain, beta=0.1 only, n=30.
+
+  predictor                        a=.03      a=.03      a=.06      a=.06
+                                 100-500    50-200    100-500    50-200
+  -----------------------------  -------   -------   -------   -------
+  current best fitness  CHEAP     -1.000    -0.686    -1.000    -0.987
+  avgfit  POSITIVE CONTROL        -0.975    -0.683    -0.750    -0.954
+  modular degree  ACCESSIBILITY   -0.950    -0.624    -0.765    -0.949
+  mi_aligned  ACCESSIBILITY       -0.920    -0.619    -0.693    -0.905
+  neutral degree  ACCESSIBILITY   +0.491    +0.588    +0.281    +0.635
+  operator count  CHEAP STATE     -0.447    -0.583    -0.214    -0.397
+
+Every figure matches the original HC-T01 report.
+
+--------------------------------------------------------------------------------
+6. WHY THAT COMPARISON COULD NOT HAVE COME OUT DIFFERENTLY
+--------------------------------------------------------------------------------
+At the 100->500 window, beta=0.1:
+
+  alpha    n with headroom at t=100   r(F, G)     1 - r(F,G)^2   partial
+  -----    ------------------------   --------    ------------   ---------
+  0.03                          21    -1.0000          0.00000   UNDEFINED
+  0.06                           8    (E1 fails)             -           -
+
+The Spearman between current fitness and subsequent gain is exactly minus one.
+Once a run reaches the optimum, gain = 0 - best(t) = -best(t) identically, so
+gain is a deterministic decreasing function of the conditioner. The partial
+correlation has a zero denominator. It is not small; it does not exist.
+
+This is Lexis's H-2, and it is stronger than argued: at the very window where K7
+was computed, no conditional statistic is definable at all.
+
+--------------------------------------------------------------------------------
+7. CONDITIONAL RA-1 TIME SERIES
+--------------------------------------------------------------------------------
+All points that passed E1 and E2, with the guard outcome. Full file:
+RA1_TIME_SERIES.csv.
+
+  cell                      t     h   nhr  ceil    r(A,G)    r(F,G)   partial
+  --------------------   ----   ---   ---  ----   -------   -------   --------
+  a=.03 b=0.0              50   150    30  0.00   +0.1686   +0.0436    +0.2832
+  a=.03 b=0.0             100   150    30  0.00   +0.1434   +0.0481   UNSTABLE
+  a=.03 b=0.0             150   150    30  0.00   +0.1932   +0.0769   UNSTABLE
+  a=.03 b=0.0             200   150    30  0.00   +0.0774   +0.0555   UNSTABLE
+  a=.03 b=0.0             250   150    30  0.00   +0.1725   +0.1855   UNSTABLE
+  a=.03 b=0.0             350   150    30  0.00   +0.2379   +0.2352   UNSTABLE
+  a=.03 b=0.0             300   400    30  0.00   -0.1969   -0.2943   UNSTABLE
+  a=.03 b=0.0             400   400    30  0.00   -0.7356   -0.7349   UNSTABLE
+  a=.03 b=0.0             500   400    27  0.10   -0.8449   -0.8431   UNSTABLE
+  a=.03 b=0.0             600   400    24  0.20   -0.8483   -0.8530   UNSTABLE
+  a=.06 b=0.0             150   150    30  0.00   -0.7845   -0.8596    +0.1369
+  a=.06 b=0.0             350   150    30  0.00   -0.3521   -0.7595    +0.1764
+  a=.06 b=0.0             300   400    30  0.00   -0.7412   -0.8320    -0.1092
+  a=.06 b=0.0             400   400    30  0.00   -0.5866   -0.8887    -0.1487
+  a=.03 b=0.1              50   150    30  0.00   -0.6237   -0.6863   UNSTABLE
+  a=.03 b=0.1             100   150    21  0.30   -0.9083   -0.9944   UNSTABLE
+  a=.03 b=0.1             100   400    21  0.30   -0.9054   -1.0000   UNDEFINED
+  a=.06 b=0.1              50   150    25  0.17   -0.9255   -0.9780   UNSTABLE
+
+95 per cent bootstrap intervals on the four stable points, 2000 resamples:
++0.2832 [-0.012, +0.591]; +0.1369 [-0.201, +0.382]; +0.1764 [-0.247, +0.569];
+-0.1092 [-0.552, +0.530]; -0.1487 [-0.566, +0.279]. Every interval spans zero.
+
+SENSITIVITY, reported as a reviewer aid and never as a basis for the verdict.
+With the guard removed, the treated arm's partials are -0.179, -0.002 and
++0.272: small and not sign-consistent. Across all 26 candidate points in every
+arm the unguarded partial ranges -0.244 to +0.604, with 22 of 26 below 0.38 in
+absolute value. This is consistent with there being no large hidden effect, but
+it CANNOT be a verdict because at these points the estimator is not defined.
+
+--------------------------------------------------------------------------------
+8. SERIES-LEVEL ADJUDICATION AND NEGATIVE CONTROLS
+--------------------------------------------------------------------------------
+Series statistic: the mean partial over a cell's eligible points, tested against
+a cross-seed permutation that preserves each run's entire time series and all
+marginals, 2000 permutations.
+
+  alpha=0.06 beta=0.0  h=150   mean +0.1567  sign consistent  perm p = 0.275
+  alpha=0.06 beta=0.0  h=400   mean -0.1290  sign consistent  perm p = 0.368
+
+  All other cell-horizon combinations had fewer than two eligible points.
+
+NC1, REVERSE PRECEDENCE, and it is the most informative result in the pass.
+Replacing md_on(t) with md_on(t+h) and repeating the identical conditional
+statistic gives, in the ablated arm where the forward test was computable:
+
+  cell                  forward partial       NC1 backward partial
+  -------------------   ----------------      --------------------
+  a=.03 b=0.0 h=150     +0.283 (one point)    +0.844 to +0.971 across six points
+  a=.06 b=0.0 h=150     +0.137, +0.176        +0.387 to +0.926 across six points
+
+The backward association is three to seven times the forward one. Accessibility
+measured AFTER the outcome window tracks the outcome far better than
+accessibility measured before it.
+
+Read carefully, because part of that is structural: md_on(t+h) is
+contemporaneous with best(t+h), so NC1 partly measures accessibility against
+present state. That is exactly the point. It shows the detector behaves like a
+readout of where a run currently is, and gives no support to reading it as a
+leading indicator.
+
+NC2 is the permutation null above and it did not need to be beaten, because
+nothing reached significance to begin with.
+
+--------------------------------------------------------------------------------
+9. RA-1 VERDICT
+--------------------------------------------------------------------------------
+    RA1_CONDITIONAL_SIGNAL_SURVIVES ......... no
+    RA1_NO_INCREMENTAL_SIGNAL ............... no, for the treated arm
+    RA1_INDETERMINATE ....................... YES
+
+Per cell:
+
+    alpha=0.03 beta=0.1  h=150, h=400 ....... RA1_INDETERMINATE
+    alpha=0.06 beta=0.1  h=150, h=400 ....... RA1_INDETERMINATE
+    alpha=0.03 beta=0.0  h=150, h=400 ....... RA1_INDETERMINATE
+    alpha=0.06 beta=0.0  h=150 .............. RA1_NO_INCREMENTAL_SIGNAL
+    alpha=0.06 beta=0.0  h=400 .............. RA1_NO_INCREMENTAL_SIGNAL
+
+The treated cells decide the HC-T01 question and both are INDETERMINATE: zero
+eligible points at either horizon, because every candidate fails headroom,
+distinct-value count, or stability.
+
+INDETERMINATE IS NOT NO_SIGNAL AND IS NOT REPORTED AS ONE. What the frozen rows
+establish is that this substrate cannot answer the conditional question, not
+that the answer is negative.
+
+The two ablated cells that could be tested returned no incremental signal, on
+effects of 0.13 to 0.16 against a preregistered nontrivial threshold of 0.30,
+with permutation p of 0.27 and 0.37. Those cells contain no operators at all, so
+they are a statement about the detector, not about the mechanism.
+
+--------------------------------------------------------------------------------
+10. RA-2 METHOD AND RESULT
+--------------------------------------------------------------------------------
+Within beta=0.1 only. No beta=0.0 contrast used as evidence. n = 750
+observations per cell, being 30 runs x 25 checkpoints.
+
+  quantity                                    alpha=0.03   alpha=0.06
+  ----------------------------------------    ----------   ----------
+  A  spearman(md_on, nops)                        +0.860       +0.733
+     the same, excluding generation 0             +0.843       +0.699
+  B  generation trend, unconditional              +0.786       +0.712
+     mean |generation trend| within nops strata   +0.291       +0.258
+  D  rank R-squared of nops alone                  0.739        0.537
+
+  C  mean md_on by operator-count bin, alpha=0.03:
+
+     nops bin      n     mean md_on
+     --------   ----     ----------
+        0        284          0.341
+        1        185          2.730
+        2        123          3.092
+        3         90          3.172
+        4         43          3.161
+        5         14          3.167
+
+The relationship is a STEP, not a gradient. Going from no operator to one
+operator moves the detector by 2.39. Every subsequent operator together moves it
+by 0.44. alpha=0.06 shows the same shape: 0.343, 2.827, 3.072, 3.088, 3.116,
+3.129.
+
+--------------------------------------------------------------------------------
+11. RA-2 VERDICT
+--------------------------------------------------------------------------------
+    RA2_MACHINERY_COUNT_EXPLAINS_EFFECT ..... YES, both treated cells
+    RA2_HISTORY_EFFECT_SURVIVES_NOPS ........ no
+    RA2_MIXED ............................... no
+    RA2_INDETERMINATE ....................... no
+
+Criteria as preregistered: spearman(md_on, nops) at or above 0.7 in both cells,
+and the unconditional generation trend falls by roughly two thirds when nops is
+held fixed.
+
+--------------------------------------------------------------------------------
+12. IS MACHINERY COUNT SUFFICIENT
+--------------------------------------------------------------------------------
+Count is not quite the right word. PRESENCE is.
+
+nops alone accounts for a rank R-squared of 0.74 and 0.54, and the bin table
+shows almost all of it is the zero-to-one step. Beyond one operator the detector
+is flat. So the detector is largely reading:
+
+    does this genome contain at least one production rule?
+
+A residual generation trend does survive inside strata, mean absolute 0.29 and
+0.26, and it is largest inside the floor-zero bin at +0.65 and +0.76. But that
+bin is the least trustworthy: nops in these rows is a POPULATION MEAN, so the
+floor-zero bin contains populations averaging anywhere in [0, 1) operators and
+is internally heterogeneous. The residual is therefore not clean evidence of
+anything beyond presence.
+
+Consequence, applying the prompt's own instruction. Language of the form
+"evolved reorganisation of the generator" or "history changed machinery
+organisation" is NOT supported by these rows. The defensible statement concerns
+accumulated machinery, and specifically its presence. CP-REPRESENTATION-REWRITE
+is downgraded accordingly in HC_T01_REANALYSIS_CORRECTIONS.md.
+
+Not proven, and not claimed: that structural organisation plays no role. RA-2
+shows count-or-presence is largely sufficient here. It does not show
+organisation is absent, and the prompt's warning against jumping from "not
+count" to "organisation" applies symmetrically in the other direction.
+
+--------------------------------------------------------------------------------
+13. RECIPROCAL-TRANSPLANT FEASIBILITY
+--------------------------------------------------------------------------------
+    TRANSPLANT_REQUIRES_NEW_COMPUTE
+
+The frozen rows preserve ONE genotype per checkpoint, in parseable form, being
+the shortest genotype that still encodes the correct phenotype. The POPULATION
+is not preserved, and HC-T01's detector is a population mean over 100
+individuals. Matching it would require regenerating populations by
+deterministic replay, which is cheap at about 8 seconds per run but is new
+compute and outside this pass.
+
+Qualification: a weaker single-genotype transplant IS feasible with zero
+evolution, by parsing the preserved string and calling the existing detector
+under both settings. It would answer a narrower question than HC-T01 asked and
+could not be compared with any HC-T01 number. Recorded as an option, not a
+recommendation. Nothing was run.
+
+--------------------------------------------------------------------------------
+14. EFFECT ON THE FROZEN HC-T01 VERDICT
+--------------------------------------------------------------------------------
+    HC_T01_WEAK_SIGNAL_ONLY ................. UNCHANGED
+
+An upgrade requires RA1_CONDITIONAL_SIGNAL_SURVIVES. It was not obtained.
+
+What changes is the standing of K7. Its original marginal comparison is
+reproduced exactly and is not disputed as arithmetic, but the conclusion drawn
+from it is withdrawn: at the windows where it was computed, gain was a
+deterministic function of the conditioner, so the comparison could not have come
+out any other way. K7 should no longer be cited as evidence that accessibility
+carries no prospective information.
+
+It must equally not be cited the other way. The corrected conditional test
+returns INDETERMINATE. The honest position is that the question is unanswered in
+this substrate.
+
+What is untouched: the durable HC-T01 result that evolutionary history changed
+measured local accessibility at 24 to 108 times estimator noise while the
+contemporaneous mechanical knob effect was at or below that noise. RA-2 explains
+much of WHY the accessibility differed, and does not make the difference unreal.
+
+--------------------------------------------------------------------------------
+15. CORRECTIONS PROPAGATED FROM LEXIS
+--------------------------------------------------------------------------------
+Recorded as received. This seat did not re-verify them.
+
+  - Misevic, Ofria and Lenski 2006 is prior art for five of six headline cells
+    and was absent from the original HC-T01 population.
+  - Kumawat et al. 2024 supplies the within-run acquisition shape, also five of
+    six.
+  - Petak 2025 DOES contain a variation-regime intervention. The HC-R01 packet
+    and registry describe it as having no operator-side intervention. That is
+    wrong and is corrected.
+  - The prior missing-cell justification for HC-T01 is obsolete.
+  - A Kouvaris reconstruction is NOT required as calibration.
+
+The narrow truth on prior art, neither overclaim: the exact intersection appears
+unoccupied in the surveyed literature, but essentially all constituent design
+ideas were already demonstrated in closely adjacent published systems.
+
+--------------------------------------------------------------------------------
+16. LIMITATIONS AND AMBIGUITIES
+--------------------------------------------------------------------------------
+The eligibility thresholds, 15 runs with headroom and 8 distinct gain values,
+were set after seeing the feasibility table and before computing any
+association. The prompt permits inspecting distributions for estimator
+validity; the ordering is disclosed rather than hidden, and a reviewer who
+prefers different thresholds can recompute from RA1_TIME_SERIES.csv, which
+reports every candidate point including those excluded.
+
+The stability guard at 0.95 is a judgement. It is vindicated at the extreme,
+where r(F,G) is exactly -1, but points at 0.94 pass and points at 0.96 do not.
+The sensitivity table reports every unguarded value so the guard's effect is
+fully visible.
+
+nops is a population mean, not a per-genome integer, so RA-2's integer bins
+conflate populations of differing composition. The floor-zero bin is the worst
+affected and it carries the largest residual trend.
+
+The ablated arm has no operators, so its RA-1 result speaks about the detector
+and not about the mechanism. It should not be read as a test of the HC-T01
+claim.
+
+NC1's strength is partly structural, since md_on(t+h) is contemporaneous with
+best(t+h). It is diagnostic of direction, not a clean effect size.
+
+Only four points in the entire dataset yielded a stable partial, and each of the
+four has a bootstrap interval spanning zero. Even the two cells that produced a
+verdict rest on two points each.
+
+The Lexis corrections in section 15 are taken on trust from a sibling seat.
+
+--------------------------------------------------------------------------------
+17. REPRODUCTION
+--------------------------------------------------------------------------------
+From the RA directory, in order:
+
+    python ra_audit.py
+    python ra1.py
+    python ra1_sensitivity_and_k7.py
+    python ra2.py
+
+About ten seconds total. RNG seeded at 20260903, so bootstrap intervals and
+permutation p-values reproduce exactly. Spot checks are in REPRODUCTION.md,
+including a four-line command that confirms r(fitness, gain) = -1 at the
+original K7 window, and one that confirms zero operators in any beta=0.0 row.
+
+--------------------------------------------------------------------------------
+18. NEW ARTIFACTS
+--------------------------------------------------------------------------------
+  PROMPT_RA_CONDITIONAL_ACCESSIBILITY_2026-09-03.txt   prompt, verbatim
+  RA1_PREREGISTRATION.md                               frozen before any result
+  RA1_DATA_AUDIT.json                                  audit and hashes
+  RA1_TIME_SERIES.csv                                  every candidate point
+  RA1_SUMMARY.json                                     series stats and verdicts
+  RA1_NEGATIVE_CONTROLS.csv                            NC1 and NC2
+  RA1_SENSITIVITY_AND_K7.csv / .json                   guard sensitivity, K7
+  RA2_SUMMARY.json                                     RA-2 result and verdict
+  RA2_DETAIL.csv                                       bins and strata
+  TRANSPLANT_FEASIBILITY.md                            inspection only
+  HC_T01_REANALYSIS_CORRECTIONS.md                     annotations, not rewrites
+  REPRODUCTION.md                                      commands and spot checks
+  REVIEW_PACKET.txt                                    this file
+  ra_audit.py ra1.py ra1_sensitivity_and_k7.py ra2.py  analysis code
+
+--------------------------------------------------------------------------------
+19. DID ANY NEW SCIENTIFIC COMPUTE OCCUR
+--------------------------------------------------------------------------------
+NO. No evolutionary run, no simulation, no detector sampling. The only
+computation performed was statistical re-analysis of committed rows, plus
+bootstrap and permutation resampling of those same rows.
+
+--------------------------------------------------------------------------------
+RECOMMENDATION
+--------------------------------------------------------------------------------
+    CLOSE_TOUSSAINT_ACQUISITION_LINE ........ no
+    PRESERVE_SIGNAL_DESIGN_SUCCESSOR ........ no
+    REQUEST_EXTERNAL_ADJUDICATION ........... no
+    EVIDENCE_INDETERMINATE_STOP ............. YES
+
+The frozen rows cannot answer the conditional question. The original kill
+condition was computed where it could not have failed to fire, and the corrected
+test has no eligible points in the arm that matters. Closing the line would
+record a negative that was not established; preserving a signal would preserve
+one that was not found.
+
+What the Toussaint substrate structurally cannot provide, stated plainly as the
+prompt requires: a fixed target with a reachable optimum makes subsequent gain a
+bounded function of current fitness, and the treated arm reaches that optimum
+early and in most runs. Any prospective question asked of it collapses into the
+conditioner. That is a property of the design, not of the analysis, and no
+re-analysis of these rows will repair it.
+
+REVIEWER'S BOTTOM LINE: given that RA-2 shows the detector is largely reading
+whether a genome has at least one operator, is there any version of the
+prospective question worth asking in a substrate where the accessibility
+statistic and the machinery it measures are this close to the same variable?
+================================================================================
+END OF PACKET
+================================================================================

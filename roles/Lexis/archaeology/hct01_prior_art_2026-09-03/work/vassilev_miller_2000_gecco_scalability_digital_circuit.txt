@@ -1,0 +1,55 @@
+CEmonbveedndtiionngaLl atnodascMapoereNEeutcriaelnittyTthorBeeu-bilidt aMBurltiidpgleiefrroCmirctuhiet
+
+                Vesselin K. Vassilev                                                                                   Julian F. Miller
+
+                    School of Computing                                                                             School of Computer Science
+                     Napier University                                                                               University of Birmingham
+                                                                                                                  Birmingham, B15 2TT, England
+              Edinburgh, EH14 1DJ, Scotland                                                                         Tel: ++44(0)121-414 3710
+                 Tel: ++44(0)131-455 4432                                                                        E-mail: j.miller@cs.bham.ac.uk
+
+          E-mail: v.vassilev@dcs.napier.ac.uk                                                                A2                                  P5
+A genotype-phenotype mapping has been devised to
+allow digital circuits to be evolved on an array of                                                          A1
+logic cells. The resulting tness landscapes are charac-
+terised with neutral networks that are connected sub-                                                        A0
+graphs of genotypes with equal tness values. The                                                                                                                                                                                                                                                 P4
+paper shows that landscape neutrality embedded by
+the genotype-phenotype mapping is bene cial for the                                                                                                                                                                                                                                              P3
+evolutionary design of digital circuits and particularly                                                     B2
+the three-bit multiplier circuit. This is further used
+in the design of a neutral network that connects the                                                                                                                                                                                                                                             P2
+conventional with other more e cient designs. The
+paper shows that very e cient digital circuits can be                                                        B1
+obtained from the conventional by building a \neutral                                                                                                                                                                                                                                            P1
+bridge" between the conventional and the unconven-
+tional designs (Figure 1). Thus a three-bit multiplier                                                       B0                                  P0
+
+                                            Neutral networks                                                 Figure 2: The three-bit multiplier circuit evolved from
+                                                                                                             the conventional solution. The circuit consists of 23
+                                                                                         Human design space  two-input gates.
+                                                                            Neutral bridge
+                                                                                                             sible alternative. It suggests that an e cient solution
+                                                  Space of all designs                                       may be attained in a much more reliable way.
+                                                                                                             An electronic circuit can be designed by using smaller
+Figure 1: The \neutral bridge" between the human                                                             circuits as building blocks. The electronic circuits are
+design space and the evolved more e cient digital cir-                                                       modular in construction and this is cleverly used in the
+cuits in the space of all designs.                                                                           conventional design to construct bigger circuits from
+was evolved that is 23% more e cient (in terms of                                                            many building blocks also known as modules. Unfor-
+number of two-input gates used) than the most e -                                                            tunately modules for assembling circuits that have the
+cient known conventional design (Figure 2). This is                                                          \nice" features of the evolved designs have not yet been
+                                                                                                             inferred (Miller et al., 2000). The approach described
+the most e cient design ever produced and it is                                                              here together with the principles of the conventional
+                                                                                                             design de nes a new method of building e cient cir-
+shown for a rst time here.                                                                                   cuits without expert recommendations. Perhaps this
+E cient three-bit multiplier circuits can also be                                                            is a step towards the automatic design of more e cient
+evolved from scratch. A disadvantage of such an ap-                                                          circuits.
+proach however is that the evolution may end up with
+a functionally incorrect evolved circuit. This may be                                                        References
+a problem if circuit evolution is implemented on hard-
+ware and a functionally correct circuit is required in                                                       Miller, J. F., Job, D. and Vassilev, V. K. (2000). Prin-
+real time. The approach described here gives a pos-                                                             ciples in the evolutionary design of digital circuits.
+                                                                                                                Journal of Genetic Programming and Evolvable
+
+                                                                                                                Machines 1 (1/2,3). In press.
+

@@ -1,0 +1,751 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Publishing DTD v1.1d3 20150301//EN" "http://jats.nlm.nih.gov/publishing/1.1d3/JATS-journalpublishing1.dtd">
+<article article-type="research-article" dtd-version="1.1d3" xml:lang="en" xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink">
+<front>
+<journal-meta>
+<journal-id journal-id-type="nlm-ta">PLoS Comput Biol</journal-id>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="pmc">ploscomp</journal-id>
+<journal-title-group>
+<journal-title>PLOS Computational Biology</journal-title>
+</journal-title-group>
+<issn pub-type="ppub">1553-734X</issn>
+<issn pub-type="epub">1553-7358</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, CA USA</publisher-loc>
+</publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="publisher-id">PCOMPBIOL-D-16-01159</article-id>
+<article-id pub-id-type="doi">10.1371/journal.pcbi.1005358</article-id>
+<article-categories>
+<subj-group subj-group-type="heading">
+<subject>Research Article</subject>
+</subj-group>
+<subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Genetics</subject><subj-group><subject>Phenotypes</subject></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Developmental biology</subject><subj-group><subject>Evolutionary developmental biology</subject></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Evolutionary biology</subject><subj-group><subject>Evolutionary developmental biology</subject></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Physical sciences</subject><subj-group><subject>Physics</subject><subj-group><subject>Acoustics</subject><subj-group><subject>Sound pressure</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Evolutionary biology</subject><subj-group><subject>Evolutionary processes</subject><subj-group><subject>Natural selection</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Neuroscience</subject><subj-group><subject>Cognitive science</subject><subj-group><subject>Cognitive psychology</subject><subj-group><subject>Learning</subject></subj-group></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Psychology</subject><subj-group><subject>Cognitive psychology</subject><subj-group><subject>Learning</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Social sciences</subject><subj-group><subject>Psychology</subject><subj-group><subject>Cognitive psychology</subject><subj-group><subject>Learning</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Neuroscience</subject><subj-group><subject>Learning and memory</subject><subj-group><subject>Learning</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Evolutionary biology</subject><subj-group><subject>Organismal evolution</subject></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Evolutionary biology</subject><subj-group><subject>Evolutionary genetics</subject></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Evolutionary biology</subject><subj-group><subject>Evolutionary processes</subject><subj-group><subject>Evolutionary adaptation</subject></subj-group></subj-group></subj-group></subj-group></article-categories>
+<title-group>
+<article-title>How evolution learns to generalise: Using the principles of learning theory to understand the evolution of developmental organisation</article-title>
+<alt-title alt-title-type="running-head">How evolution learns to generalise</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" corresp="yes" xlink:type="simple">
+<name name-style="western">
+<surname>Kouvaris</surname> <given-names>Kostas</given-names></name>
+<xref ref-type="aff" rid="aff001"><sup>1</sup></xref>
+<xref ref-type="corresp" rid="cor001">*</xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Clune</surname> <given-names>Jeff</given-names></name>
+<xref ref-type="aff" rid="aff002"><sup>2</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<contrib-id authenticated="true" contrib-id-type="orcid">http://orcid.org/0000-0002-9133-9178</contrib-id>
+<name name-style="western">
+<surname>Kounios</surname> <given-names>Loizos</given-names></name>
+<xref ref-type="aff" rid="aff001"><sup>1</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Brede</surname> <given-names>Markus</given-names></name>
+<xref ref-type="aff" rid="aff001"><sup>1</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Watson</surname> <given-names>Richard A.</given-names></name>
+<xref ref-type="aff" rid="aff001"><sup>1</sup></xref>
+</contrib>
+</contrib-group>
+<aff id="aff001">
+<label>1</label>
+<addr-line>ECS, University of Southampton, Southampton, United Kingdom</addr-line>
+</aff>
+<aff id="aff002">
+<label>2</label>
+<addr-line>University of Wyoming, Laramie, Wyoming, United States of America</addr-line>
+</aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple">
+<name name-style="western">
+<surname>Rzhetsky</surname> <given-names>Andrey</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/>
+</contrib>
+</contrib-group>
+<aff id="edit1">
+<addr-line>University of Chicago, UNITED STATES</addr-line>
+</aff>
+<author-notes>
+<fn fn-type="conflict" id="coi001">
+<p>The authors have declared that no competing interests exist.</p>
+</fn>
+<fn fn-type="con">
+<p>
+<list list-type="simple">
+<list-item>
+<p><bold>Conceived and designed the experiments:</bold> RAW KK JC.</p>
+</list-item>
+<list-item>
+<p><bold>Performed the experiments:</bold> KK.</p>
+</list-item>
+<list-item>
+<p><bold>Analyzed the data:</bold> KK RAW MB LK.</p>
+</list-item>
+<list-item>
+<p><bold>Wrote the paper:</bold> KK RAW JC MB LK.</p>
+</list-item>
+</list>
+</p>
+</fn>
+<corresp id="cor001">* E-mail: <email xlink:type="simple">kk6g11@soton.ac.uk</email></corresp>
+</author-notes>
+<pub-date pub-type="collection">
+<month>4</month>
+<year>2017</year>
+</pub-date>
+<pub-date pub-type="epub">
+<day>6</day>
+<month>4</month>
+<year>2017</year>
+</pub-date>
+<volume>13</volume>
+<issue>4</issue>
+<elocation-id>e1005358</elocation-id>
+<history>
+<date date-type="received">
+<day>19</day>
+<month>7</month>
+<year>2016</year>
+</date>
+<date date-type="accepted">
+<day>5</day>
+<month>1</month>
+<year>2017</year>
+</date>
+</history>
+<permissions>
+<copyright-year>2017</copyright-year>
+<copyright-holder>Kouvaris et al</copyright-holder>
+<license xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">
+<license-p>This is an open access article distributed under the terms of the <ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">Creative Commons Attribution License</ext-link>, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p>
+</license>
+</permissions>
+<self-uri content-type="pdf" xlink:href="info:doi/10.1371/journal.pcbi.1005358"/>
+<abstract>
+<p>One of the most intriguing questions in evolution is how organisms exhibit suitable phenotypic variation to rapidly adapt in novel selective environments. Such variability is crucial for evolvability, but poorly understood. In particular, how can natural selection favour developmental organisations that facilitate adaptive evolution in previously unseen environments? Such a capacity suggests foresight that is incompatible with the short-sighted concept of natural selection. A potential resolution is provided by the idea that evolution may discover and exploit information not only about the particular phenotypes selected in the past, but their underlying structural regularities: new phenotypes, with the same underlying regularities, but novel particulars, may then be useful in new environments. If true, we still need to understand the conditions in which natural selection will discover such deep regularities rather than exploiting ‘quick fixes’ (i.e., fixes that provide adaptive phenotypes in the short term, but limit future evolvability). Here we argue that the ability of evolution to discover such regularities is formally analogous to learning principles, familiar in humans and machines, that enable generalisation from past experience. Conversely, natural selection that fails to enhance evolvability is directly analogous to the learning problem of over-fitting and the subsequent failure to generalise. We support the conclusion that evolving systems and learning systems are different instantiations of the same algorithmic principles by showing that existing results from the learning domain can be transferred to the evolution domain. Specifically, we show that conditions that alleviate over-fitting in learning systems successfully predict which biological conditions (e.g., environmental variation, regularity, noise or a pressure for developmental simplicity) enhance evolvability. This equivalence provides access to a well-developed theoretical framework from learning theory that enables a characterisation of the general conditions for the evolution of evolvability.</p>
+</abstract>
+<abstract abstract-type="summary">
+<title>Author summary</title>
+<p>A striking feature of evolving organisms is their ability to acquire novel characteristics that help them adapt in new environments. The origin and the conditions of such ability remain elusive and is a long-standing question in evolutionary biology. Recent theory suggests that organisms can evolve designs that help them generate novel features that are more likely to be beneficial. Specifically, this is possible when the environments that organisms are exposed to share common regularities. However, the organisms develop robust designs that tend to produce what had been selected in the past and might be inflexible for future environments. The resolution comes from a recent theory introduced by Watson and Szathmáry that suggests a deep analogy between learning and evolution. Accordingly, here we utilise learning theory to explain the conditions that lead to more evolvable designs. We successfully demonstrate this by equating evolvability to the way humans and machines generalise to previously-unseen situations. Specifically, we show that the same conditions that enhance generalisation in learning systems have biological analogues and help us understand why environmental noise and the reproductive and maintenance costs of gene-regulatory connections can lead to more evolvable designs.</p>
+</abstract>
+<funding-group>
+<funding-statement>This work was supported by DSTLX-1000074615 from Defence Science and Technology Laboratory (DSTL) to KK, link: <ext-link ext-link-type="uri" xlink:href="https://www.gov.uk/government/organisations/defence-science-and-technology-laboratory" xlink:type="simple">https://www.gov.uk/government/organisations/defence-science-and-technology-laboratory</ext-link>. JC was supported by an NSF CAREER award (CAREER: 1453549). The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement>
+</funding-group>
+<counts>
+<fig-count count="5"/>
+<table-count count="1"/>
+<page-count count="20"/>
+</counts>
+<custom-meta-group>
+<custom-meta id="data-availability">
+<meta-name>Data Availability</meta-name>
+<meta-value>All relevant data are within the paper and its Supporting Information files. No data sets are associated with this publication.</meta-value>
+</custom-meta>
+</custom-meta-group>
+</article-meta>
+</front>
+<body>
+<sec id="sec001" sec-type="intro">
+<title>Introduction</title>
+<sec id="sec002">
+<title>Linking the evolution of evolvability with generalisation in learning systems</title>
+<p>Explaining how organisms adapt in novel selective environments is central to evolutionary biology [<xref ref-type="bibr" rid="pcbi.1005358.ref001">1</xref>–<xref ref-type="bibr" rid="pcbi.1005358.ref005">5</xref>]. Living organisms are both robust and capable of change. The former property allows for stability and reliable functionality against genetic and environmental perturbations, while the latter provides flexibility allowing for the evolutionary acquisition of new potentially adaptive traits [<xref ref-type="bibr" rid="pcbi.1005358.ref005">5</xref>–<xref ref-type="bibr" rid="pcbi.1005358.ref009">9</xref>]. This capacity of an organism to produce suitable phenotypic variation to adapt to new environments is often identified as a prerequisite for <italic>evolvability</italic>, i.e., the capacity for adaptive evolution [<xref ref-type="bibr" rid="pcbi.1005358.ref007">7</xref>, <xref ref-type="bibr" rid="pcbi.1005358.ref010">10</xref>, <xref ref-type="bibr" rid="pcbi.1005358.ref011">11</xref>]. It is thus important to understand the underlying variational mechanisms that enable the production of adaptive phenotypic variation [<xref ref-type="bibr" rid="pcbi.1005358.ref006">6</xref>, <xref ref-type="bibr" rid="pcbi.1005358.ref007">7</xref>, <xref ref-type="bibr" rid="pcbi.1005358.ref012">12</xref>–<xref ref-type="bibr" rid="pcbi.1005358.ref018">18</xref>].</p>
+<p>Phenotypic variations are heavily determined by intrinsic tendencies imposed by the genetic and the developmental architecture [<xref ref-type="bibr" rid="pcbi.1005358.ref018">18</xref>–<xref ref-type="bibr" rid="pcbi.1005358.ref021">21</xref>]. For instance, developmental biases may permit high variability for a particular phenotypic trait and limited variability for another, or cause certain phenotypic traits to co-vary [<xref ref-type="bibr" rid="pcbi.1005358.ref006">6</xref>, <xref ref-type="bibr" rid="pcbi.1005358.ref015">15</xref>, <xref ref-type="bibr" rid="pcbi.1005358.ref022">22</xref>–<xref ref-type="bibr" rid="pcbi.1005358.ref026">26</xref>]. Developmental processes are themselves also shaped by previous selection. As a result, we may expect that past evolution could adapt the distribution of phenotypes explored by future natural selection to amplify promising variations and avoid less useful ones by evolving developmental architectures that are predisposed to exhibit effective adaptation [<xref ref-type="bibr" rid="pcbi.1005358.ref010">10</xref>, <xref ref-type="bibr" rid="pcbi.1005358.ref013">13</xref>]. Selection though cannot favour traits for benefits that have not yet been realised. Moreover, in situations when selection can control phenotypic variation, it nearly always reduces such variation because it favours canalisation over flexibility [<xref ref-type="bibr" rid="pcbi.1005358.ref023">23</xref>, <xref ref-type="bibr" rid="pcbi.1005358.ref027">27</xref>–<xref ref-type="bibr" rid="pcbi.1005358.ref029">29</xref>].</p>
+<p>Developmental canalisation may seem to be intrinsically opposed to an increase in phenotypic variability. Some, however, view these notions as two sides of the same coin, i.e., a predisposition to evolve some phenotypes more readily goes hand in hand with a decrease in the propensity to produce other phenotypes [<xref ref-type="bibr" rid="pcbi.1005358.ref008">8</xref>, <xref ref-type="bibr" rid="pcbi.1005358.ref030">30</xref>, <xref ref-type="bibr" rid="pcbi.1005358.ref031">31</xref>]. Kirschner and Gerhart integrated findings that support these ideas under the unified framework of <italic>facilitated variation</italic> [<xref ref-type="bibr" rid="pcbi.1005358.ref008">8</xref>, <xref ref-type="bibr" rid="pcbi.1005358.ref032">32</xref>]. Similar ideas and concepts include the <italic>variational properties</italic> of the organisms [<xref ref-type="bibr" rid="pcbi.1005358.ref013">13</xref>], the <italic>self-facilitation</italic> of evolution [<xref ref-type="bibr" rid="pcbi.1005358.ref020">20</xref>] and evolution as <italic>tinkering</italic> [<xref ref-type="bibr" rid="pcbi.1005358.ref033">33</xref>] and related notions [<xref ref-type="bibr" rid="pcbi.1005358.ref006">6</xref>, <xref ref-type="bibr" rid="pcbi.1005358.ref007">7</xref>, <xref ref-type="bibr" rid="pcbi.1005358.ref010">10</xref>, <xref ref-type="bibr" rid="pcbi.1005358.ref012">12</xref>]. In facilitated variation, the key observation is that the intrinsic developmental structure of the organisms biases both the amount and the direction of the phenotypic variation. Recent work in the area of facilitated variation has shown that multiple selective environments were necessary to evolve evolvable structures [<xref ref-type="bibr" rid="pcbi.1005358.ref025">25</xref>, <xref ref-type="bibr" rid="pcbi.1005358.ref027">27</xref>, <xref ref-type="bibr" rid="pcbi.1005358.ref034">34</xref>–<xref ref-type="bibr" rid="pcbi.1005358.ref036">36</xref>]. When selective environments contain underlying structural regularities, it is possible that evolution learns to limit the phenotypic space to regions that are evolutionarily more advantageous, promoting the discovery of useful phenotypes in a single or a few mutations [<xref ref-type="bibr" rid="pcbi.1005358.ref035">35</xref>, <xref ref-type="bibr" rid="pcbi.1005358.ref036">36</xref>]. But, as we will show, these conditions do not necessarily enhance evolvability in novel environments. Thus the general conditions which favour the emergence of adaptive developmental constraints that enhance evolvability are not well-understood.</p>
+<p>To address this we study the conditions where evolution by natural selection can find developmental organisations that produce what we refer to here as <italic>generalised phenotypic distributions</italic>—i.e., not only are these distributions capable of producing multiple distinct phenotypes that have been selected in the past, but they can also produce novel phenotypes from the same family. Parter et al. have already shown that this is possible in specific cases studying models of RNA structures and logic gates [<xref ref-type="bibr" rid="pcbi.1005358.ref034">34</xref>]. Here we wish to understand more general conditions under which, and to what extent, natural selection can enhance the capacity of developmental structures to produce suitable variation for selection in the future. We follow previous work on the evolution of development [<xref ref-type="bibr" rid="pcbi.1005358.ref025">25</xref>] through computer simulations based in gene-regulatory network (GRN) models. Many authors have noted that GRNs share common functionality to artificial neural networks [<xref ref-type="bibr" rid="pcbi.1005358.ref025">25</xref>, <xref ref-type="bibr" rid="pcbi.1005358.ref037">37</xref>–<xref ref-type="bibr" rid="pcbi.1005358.ref040">40</xref>]. Watson et al. demonstrated a further result, more important to our purposes here; that the way regulatory interactions <italic>evolve</italic> under natural selection is mathematically equivalent to the way neural networks <italic>learn</italic> [<xref ref-type="bibr" rid="pcbi.1005358.ref025">25</xref>]. During evolution a GRN is capable of learning a memory of multiple phenotypes that were fit in multiple past selective environments by internalising their statistical correlation structure into its ontogenetic interactions, in the same way that learning neural networks store and recall training patterns. Phenotypes that were fit in the past can then be recreated by the network spontaneously (under genetic drift without selection) in the future or as a response to new selective environments that are partially similar to past environments [<xref ref-type="bibr" rid="pcbi.1005358.ref025">25</xref>]. An important aspect of the evolved systems mentioned above is modularity. Modularity has been a key feature of work on evolvability [<xref ref-type="bibr" rid="pcbi.1005358.ref006">6</xref>, <xref ref-type="bibr" rid="pcbi.1005358.ref029">29</xref>, <xref ref-type="bibr" rid="pcbi.1005358.ref041">41</xref>, <xref ref-type="bibr" rid="pcbi.1005358.ref042">42</xref>] aiming to facilitate variability that respects the natural decomposable structure of the selective environment, i.e., keep the things together that need to be kept together and separate the things that are independent [<xref ref-type="bibr" rid="pcbi.1005358.ref006">6</xref>, <xref ref-type="bibr" rid="pcbi.1005358.ref012">12</xref>, <xref ref-type="bibr" rid="pcbi.1005358.ref020">20</xref>, <xref ref-type="bibr" rid="pcbi.1005358.ref041">41</xref>]. Accordingly, the system can perform a simple form of generalisation by separating knowledge from the context in which it was originally observed and re-deploying it in new situations.</p>
+<p>Here we show that this functional equivalence between learning and evolution predicts the evolutionary conditions that enable the evolution of generalised phenotypic distributions. We test this analogy between learning and evolution by testing its predictions. Specifically, we resolve the tension between canalisation of phenotypes that have been successful in past environments and anticipation of phenotypes that are fit in future environments by recognising that this is equivalent to prediction in learning systems. Such predictive ability follows simply from the ability to represent structural regularities in previously seen observations (i.e., the training set) that are also true in the yet-unseen ones (i.e., the test set). In learning systems, such generalization is commonplace and not considered mysterious. But it is also understood that successful generalisation in learning systems is not for granted and requires certain well-understood conditions. We argue here that understanding the evolution of development is formally analogous to model learning and can provide useful insights and testable hypotheses about the conditions that enhance the evolution of evolvability under natural selection [<xref ref-type="bibr" rid="pcbi.1005358.ref042">42</xref>, <xref ref-type="bibr" rid="pcbi.1005358.ref043">43</xref>]. Thus, in recognising that learning systems do not really ‘see into the future’ but can nonetheless make useful predictions by generalising past experience, we demystify the notion that short-sighted natural selection can produce novel phenotypes that are fit for previously-unseen selective environments and, more importantly, we can predict the general conditions where this is possible. This functional equivalence between learning and evolution produces many interesting, testable predictions (<xref ref-type="table" rid="pcbi.1005358.t001">Table 1</xref>).</p>
+<table-wrap id="pcbi.1005358.t001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1005358.t001</object-id>
+<label>Table 1</label>
+<caption>
+<title>Predictions made by porting key lessons of learning theory to evolutionary theory.</title>
+<p>Confirmed by experiment: † Conditions that facilitate generalised phenotypic distributions, ‡ How generalisation changes over evolutionary time, ◇ Conditions that facilitate generalised phenotypic distributions and ⋆ Sensitivity analysis to parameters affecting phenotypic generalisation.</p>
+</caption>
+<alternatives>
+<graphic id="pcbi.1005358.t001g" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005358.t001" xlink:type="simple"/>
+<table border="0" frame="box" rules="all">
+<colgroup>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+</colgroup>
+<thead>
+<tr>
+<th align="left" style="border-bottom:thick"/>
+<th align="left" style="border-bottom:thick">Learning Theory</th>
+<th align="left" style="border-bottom:thick">Evolutionary Theory</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="right">(a)</td>
+<td align="left">Generalisation; ability to produce an appropriate response to novel situations by exploiting regularities observed in past experience (i.e., not rote learning).</td>
+<td align="left">Facilitated variation; predisposition to produce fit phenotypes in novel environments (i.e., not just canalisation of past selected targets).†</td>
+</tr>
+<tr>
+<td align="right">(b)</td>
+<td align="left">The performance of online learning algorithms (i.e., processing one training example at a time) are learning-rate dependent. Both high and low learning rates can lead to situations of under-fitting; failure of the learning system to capture the regularities of the training data [<xref ref-type="bibr" rid="pcbi.1005358.ref051">51</xref>].</td>
+<td align="left">The evolution of generalised phenotypic distributions is dependent on the time-scale of environmental switching. Both high and low time-scales can lead to inflexible developmental structures that fail to capture the functional dependencies of the past phenotypic targets.◇</td>
+</tr>
+<tr>
+<td align="right">(c)</td>
+<td align="left">The problem of over-fitting: improved performance on the training set comes at the expense of generalisation performance on the test set. Over-fitting occurs when the model learns to focus on idiosyncrasies or noise in the training set [<xref ref-type="bibr" rid="pcbi.1005358.ref052">52</xref>]. Accordingly, the model starts learning the particular irrelevant relationships existing in the training examples rather than the ‘true’ underlying relationships that are relevant to the general class. This leads to memorisation of specific training examples, which decreases the ability to generalize, and thus perform well, on new data.</td>
+<td align="left">Failure of natural selection to evolve generalised developmental organisations: improved average fitness gained by decreasing the phenotypic variation of descendants comes at the expense of potentially useful variability for future selective environments. Favouring immediate fitness benefits would lead to robust developmental structures that canalise the production of the selected phenotypes in the current selective environment. Yet, this sets up a trade-off between robustness and evolvability, since natural selection would always favour inflexible developmental organisations that reduce phenotypic variability and thus hinder the discovery of useful phenotypes that can have fitness benefits in the future.‡</td>
+</tr>
+<tr>
+<td align="right">(d)</td>
+<td align="left">Conditions that alleviate the problem of over-fitting: (1) training with noisy data, i.e., adding noise during the learning phase (jittering), (2) regularisation (parsimony pressure), i.e., introducing a connection cost term into the objective function that favours connections of small values (<italic>L</italic><sub>2</sub>-regularisation) or fewer connections (<italic>L</italic><sub>1</sub>-regularisation).</td>
+<td align="left">Evolutionary conditions that facilitate the evolution of generalised phenotypic distributions, and thus evolvability: (1) extrinsic noise in selective environments, (2) direct selection pressure on the cost of ontogenetic interactions, which favour simpler developmental processes and sparse network structures.†‡</td>
+</tr>
+<tr>
+<td align="right">(e)</td>
+<td align="left"><italic>L</italic><sub>2</sub>-regularisation results in similar behaviour as early stopping; an ad-hoc technique that prevents over-fitting by stopping learning when over-fitting begins [<xref ref-type="bibr" rid="pcbi.1005358.ref051">51</xref>].</td>
+<td align="left">Favouring weak connectivity via connection costs results in similar behaviour as stopping adaptation at an early stage.†‡.</td>
+</tr>
+<tr>
+<td align="right">(f)</td>
+<td align="left">Training with noise results in similar behaviour to <italic>L</italic><sub>2</sub>-regularisation [<xref ref-type="bibr" rid="pcbi.1005358.ref051">51</xref>].</td>
+<td align="left">Noisy environments can enhance the evolution of generalised developmental organisation in a similar manner as favouring weak connectivity.†‡.</td>
+</tr>
+<tr>
+<td align="right">(g)</td>
+<td align="left">Generalisation performance is dependent on the appropriate level of regularisation and the level of noise, i.e., it depends on the inductive biases, or prior assumptions about which models are more likely to be correct, such as a priori perference for simple models via parsimony pressures.</td>
+<td align="left">The evolution of generalised phenotypic distributions is dependent on the strength of selection pressure on the cost of connections and the level of environmental noise.⋆</td>
+</tr>
+<tr>
+<td align="right">(h)</td>
+<td align="left"><italic>L</italic><sub>1</sub>-regularisation results in better generalisation performance than <italic>L</italic><sub>2</sub>-regularisation in problems with simple modularity/independent features.</td>
+<td align="left">Favouring sparsity results in more evolvable developmental structures than favouring weak connectivity for modularly varying environments with weak or unimportant inter-modular dependencies.†‡</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+<p>In particular, the following experiments show that techniques that enhance generalisation in machine learning correspond to evolutionary conditions that facilitate generalised phenotypic distributions and hence increased evolvability. Specifically, we describe how well-known machine learning techniques, such as learning with noise and penalising model complexity, that improve the generalisation ability of learning models have biological analogues and can help us understand how noisy selective environments and the direct selection pressure on the reproduction cost of the gene regulatory interactions can enhance evolvability in gene regulation networks. This is a much more sophisticated and powerful form of generalisation than previous notions that simply extrapolate previous experience. The system does not merely extend its learned behaviour outside its past ‘known’ domain. Instead, we are interested in situations where the system can create new knowledge by discovering and systematising emerging patterns from past experience, and more notably, how the system separates that knowledge from the context in which it was originally observed, so that it can be re-deployed in new situations.</p>
+<p>Some evolutionary mechanisms and conditions have been proposed as important factors for improved evolvability. Some concern the modification of genetic variability (e.g., [<xref ref-type="bibr" rid="pcbi.1005358.ref036">36</xref>, <xref ref-type="bibr" rid="pcbi.1005358.ref044">44</xref>, <xref ref-type="bibr" rid="pcbi.1005358.ref045">45</xref>] and [<xref ref-type="bibr" rid="pcbi.1005358.ref046">46</xref>]), while others concern the nature of selective environments and the organisation of development including multiple selective environments [<xref ref-type="bibr" rid="pcbi.1005358.ref036">36</xref>], sparsity [<xref ref-type="bibr" rid="pcbi.1005358.ref047">47</xref>], the direct selective pressure on the cost of connections (which can induce modularity [<xref ref-type="bibr" rid="pcbi.1005358.ref027">27</xref>, <xref ref-type="bibr" rid="pcbi.1005358.ref044">44</xref>] and hierarchy [<xref ref-type="bibr" rid="pcbi.1005358.ref048">48</xref>]), low developmental biases and constraints [<xref ref-type="bibr" rid="pcbi.1005358.ref049">49</xref>] and stochasticity in GRNs [<xref ref-type="bibr" rid="pcbi.1005358.ref050">50</xref>]. In this paper, we focus on mechanisms and conditions that can be unified and better understood in machine learning terms, and more notably, how we can utilise well-established theory in learning to characterise general conditions under which evolvability is enhanced. We thus provide the first theory to characterise the general conditions that enhance the evolution of developmental organisations that generalise information gained from past selection, as required to enhance evolvability in novel environments.</p>
+</sec>
+<sec id="sec003">
+<title>Experimental setup</title>
+<p>The main experimental setup involves a non-linear recurrent GRN which develops an embryonic phenotypic pattern, <italic>G</italic>, into an adult phenotype, <italic>P</italic><sub><italic>a</italic></sub>, upon which selection can act [<xref ref-type="bibr" rid="pcbi.1005358.ref025">25</xref>]. An adult phenotype represents the gene expression profile that results from the dynamics of the GRN. Those dynamics are determined by the gene regulatory interactions of the network, <italic>B</italic> [<xref ref-type="bibr" rid="pcbi.1005358.ref038">38</xref>, <xref ref-type="bibr" rid="pcbi.1005358.ref039">39</xref>, <xref ref-type="bibr" rid="pcbi.1005358.ref047">47</xref>, <xref ref-type="bibr" rid="pcbi.1005358.ref053">53</xref>, <xref ref-type="bibr" rid="pcbi.1005358.ref054">54</xref>] (see Developmental Model in <xref ref-type="supplementary-material" rid="pcbi.1005358.s001">S1 Appendix</xref>). We evaluate the fitness of a given genetic structure based on how close the developed phenotype is to the target phenotypic pattern, <italic>S</italic>. <italic>S</italic> characterises the direction of selection for each phenotypic trait, i.e., element of gene expression profile, in the current environment. The dynamics of selective environments are modelled by switching from one target phenotype to another every <italic>K</italic> generations. <italic>K</italic> is chosen to be considerably smaller than the overall number of generations simulated. Below, we measure evolutionary time in <italic>epochs</italic>, where each epoch denotes <italic>N</italic><sub><italic>T</italic></sub> × <italic>K</italic> generations and <italic>N</italic><sub><italic>T</italic></sub> corresponds to the number of target phenotypes. (Note that <italic>epoch</italic> here is a term we are borrowing from machine learning and does not represent geological timescale.)</p>
+<p>In the following experiments all phenotypic targets are chosen from the same class (as in [<xref ref-type="bibr" rid="pcbi.1005358.ref025">25</xref>, <xref ref-type="bibr" rid="pcbi.1005358.ref034">34</xref>]). This class consists of 8 different modular patterns that correspond to different combinations of sub-patterns. Each sub-pattern serves as a different function as pictorialised in <xref ref-type="fig" rid="pcbi.1005358.g001">Fig 1</xref>. This modular structure ensures that the environments (and thus the phenotypes that are fittest in those environments) share common regularities, i.e., they are all built from different combinations from the same set of modules. We can then examine whether the system can actually ‘learn’ these systematicities from a limited set of examples and thereby generalise from these to produce novel phenotypes within the same class. Our experiments are carried out as follows. The population is evolved by exposure to a limited number of selective environments (training). We then analyse conditions under which new phenotypes from the same family are produced (test). As an exemplary problem we choose a training set comprised of three phenotypic patterns from the class (see <xref ref-type="fig" rid="pcbi.1005358.g002">Fig 2a</xref>).</p>
+<fig id="pcbi.1005358.g001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1005358.g001</object-id>
+<label>Fig 1</label>
+<caption>
+<title>Pictorial representation of phenotypes.</title>
+<p>(Top) Schematic representation of mapping from phenotypic pattern sequences onto pictorial features. Each phenotypic ‘slot’ represents a set of features (here 4) controlling a certain aspect of the phenotype (e.g., front wings, halteres and antennae). Within the possible configurations in each slot (here 16), there are two particular configurations (state A and B) that are fit in some environment or another (see Developmental Model in <xref ref-type="supplementary-material" rid="pcbi.1005358.s001">S1 Appendix</xref>). For example, ‘+ + −−’ in the second slot (from the top, green) of the phenotypic pattern encodes for a pair of front wings (state B), while ‘− − ++’ encodes for their absence (state A). States A and B are the complement of one another, i.e., not neighbours in phenotype space. All of the other intermediate states (here 14) are represented by a random mosaic image of state A and B, based on their respective distance. <italic>d</italic><sub><italic>A</italic></sub> indicates the Hamming distance between a given state and state A. Accordingly, there exist <inline-formula id="pcbi.1005358.e001"><alternatives><graphic id="pcbi.1005358.e001g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005358.e001" xlink:type="simple"/><mml:math display="inline" id="M1"><mml:mrow><mml:mrow><mml:mo>(</mml:mo> <mml:mrow><mml:mtable><mml:mtr><mml:mtd><mml:mn>4</mml:mn></mml:mtd></mml:mtr> <mml:mtr><mml:mtd><mml:mrow><mml:msub><mml:mi>d</mml:mi> <mml:mi>A</mml:mi></mml:msub></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:mrow> <mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></inline-formula> potential intermediate states (i.e., 4 for <italic>d</italic><sub><italic>A</italic></sub> = 1, 6 for <italic>d</italic><sub><italic>A</italic></sub> = 2 and 4 for <italic>d</italic><sub><italic>A</italic></sub> = 3). (Bottom) Pictorial representation of all phenotypes that are perfectly adapted to each of eight different environments. Each target phenotype is analogous to an insect-like organism comprised of 4 functional features. The grey phenotypic targets correspond to bit-wise complementary patterns of the phenotypes on the top half of the space. For example, in the rightmost, top insect, the antennae, forewings, and hindwings are present, and the tail is not. In the rightmost, bottom insect (the bitwise complement of the insect above it), the antennae, forewings, and hindwings are absent, but the tail is present. We define the top row as ‘the class’ and we disregard the bottom complements as degenerate forms of generalisation.</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005358.g001" xlink:type="simple"/>
+</fig>
+<fig id="pcbi.1005358.g002" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1005358.g002</object-id>
+<label>Fig 2</label>
+<caption>
+<title>Conditions that facilitate generalised phenotypic distributions.</title>
+<p>Potential phenotypic distributions induced by the evolved developmental process under 1) different time-scales of environmental switching, 2) environmental noise (<italic>κ</italic> = 35 × 10<sup>−4</sup>) and 3) direct selection pressure for weak (<italic>λ</italic> = 38) and sparse connectivity (<italic>λ</italic> = 0.22). The organisms were exposed to three selective environments (a) from the general class (i). Developmental memorisation of past phenotypic targets clearly depends on the time-scale of environmental change. Noisy environments and parsimony pressures enhance the generalisation ability of development predisposing the production of previously unseen targets from the class. The size of the insect-like creatures describes relative frequencies and indicates the propensity of development to express the respective phenotype (phenotypes with frequency less than 0.01 were ignored). Note that the initial developmental structure represented all possible phenotypic patterns equally (here 2<sup>12</sup> possible phenotypes).</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005358.g002" xlink:type="simple"/>
+</fig>
+<p>One way to evaluate the generalisation ability of developmental organisations is to evolve a population to new selective environments and evaluate the evolved predisposition of the development system to produce suitable phenotypes for those environments (as per [<xref ref-type="bibr" rid="pcbi.1005358.ref034">34</xref>]). We do this at the end of experimental section. We also use a more stringent test and examine the spontaneous production of such phenotypes induced by development from random genetic variation. Specifically, we examine what phenotypes the evolved developmental constraints and biases <italic>B</italic> are predisposed to create starting from random initial gene expression levels, <italic>G</italic>. For this purpose, we perform a post-hoc analysis. First, we estimate the phenotypic distributions induced by the evolved developmental architecture under drift. Since mutation on the direct effects on the embryonic phenotypes (<italic>G</italic>) in this model is much greater than mutation on regulatory interactions (<italic>B</italic>) (see <xref ref-type="sec" rid="sec014">Methods</xref>), we estimate drift with a uniformly random distribution over <italic>G</italic> (keeping <italic>B</italic> constant). Then we assess how successful the evolved system is at producing high-fitness phenotypes, by seeing if the phenotypes produced by the evolved correlations, <italic>B</italic>, tend to be members of the general class (see <xref ref-type="sec" rid="sec014">Methods</xref>).</p>
+</sec>
+</sec>
+<sec id="sec004" sec-type="conclusions">
+<title>Results and discussion</title>
+<sec id="sec005">
+<title>Conditions that facilitate generalised phenotypic distributions</title>
+<p>In this section, we focus on the conditions that promote the evolution of adaptive developmental biases that facilitate generalised variational structures. To address this, we examine the distributions of potential phenotypic variants induced by the evolved developmental structure in a series of different evolutionary scenarios: 1) different time-scales of environmental switching, 2) environmental noise and 3) direct selection pressure for simple developmental processes applied via a the cost of ontogenetic interactions favouring i) weak and ii) sparse connectivity.</p>
+<sec id="sec006">
+<title>Rate of environmental switching (learning rates)</title>
+<p>In this scenario, we assess the impact of the rate at which selective environments switch on the evolution of generalised developmental organisations. This demonstrates prediction (b) from <xref ref-type="table" rid="pcbi.1005358.t001">Table 1</xref>. The total number of generations was kept fixed at 24 × 10<sup>6</sup>, while the switching intervals, <italic>K</italic>, varied. In all reproductive events, <italic>G</italic> is mutated by adding a uniformly distributed random value drawn in [−0.1, 0.1]. Additionally, in half the reproduction events, all interaction coefficients are mutated slightly by adding a uniformly distributed value drawn from [−0.1/(15<italic>N</italic><sup>2</sup>), 0.1/(15<italic>N</italic><sup>2</sup>)], where <italic>N</italic> corresponds to the number of phenotypic traits.</p>
+<p>Prior work on facilitated variation has shown that the evolution of evolvability in varying selective environments is dependent on the time-scale of environmental change [<xref ref-type="bibr" rid="pcbi.1005358.ref034">34</xref>–<xref ref-type="bibr" rid="pcbi.1005358.ref036">36</xref>]. This is analogous to the sensitivity of generalisation to learning rate in learning systems. The longer a population is exposed to a selective environment, the higher the expected adaptation accumulated to that environment would be. Accordingly, the rate of change in a given environment (learning rate) can be controlled by the rate of environmental change (sample rate). Slow and fast environmental changes thus correspond to fast and slow learning rates respectively.</p>
+<p>We find that when the environments rapidly alternated from one to another (e.g., <italic>K</italic> = 2), natural selection canalised a single phenotypic pattern (<xref ref-type="fig" rid="pcbi.1005358.g002">Fig 2b</xref>). This phenotype however did not correspond to any of the previously selected ones (<xref ref-type="fig" rid="pcbi.1005358.g002">Fig 2a</xref>). Rather, this corresponds to the combination of phenotypic characters that occurs most in each of the seen target phenotypes. Hence, it does best on average over the past selective environments. For example, over the three patterns selected in the past it is more common that halteres are selected than a pair of back wings, or a pair of front wings is present more often than not and so on.</p>
+<p>When environments changed very slowly (e.g., <italic>K</italic> = 4 × 10<sup>6</sup>), development canalised the first selective environment experienced, prohibiting the acquisition of any useful information regarding other selective environments (<xref ref-type="fig" rid="pcbi.1005358.g002">Fig 2c</xref>). The situation was improved for a range of slightly faster environmental switching times (e.g., <italic>K</italic> = 2 × 10<sup>6</sup>), where natural selection also canalised the second target phenotype experienced, but not all three (<xref ref-type="fig" rid="pcbi.1005358.g002">Fig 2d</xref>). Canalisation can therefore be opposed to evolvability, resulting in very inflexible models that fail to capture any or some of the relevant regularities in the past or current environments, i.e., <italic>under-fitting</italic>. Such developmental organisations could provide some limited immediate fitness benefits in the short-term, but are not good representatives of either the past, or the general class.</p>
+<p>When the rate of environmental switching was intermediate (e.g., <italic>K</italic> = 4 × 10<sup>4</sup>), the organisms exhibited developmental memory [<xref ref-type="bibr" rid="pcbi.1005358.ref025">25</xref>]. Although initially all possible phenotypic patterns (here 2<sup>12</sup>) were equally represented by development, the variational structure of development was adapted over evolutionary time to fit the problem structure of that past, by canalising the production of previously seen targets (<xref ref-type="fig" rid="pcbi.1005358.g002">Fig 2e</xref>, see also Fig B in Supporting Figures in <xref ref-type="supplementary-material" rid="pcbi.1005358.s001">S1 Appendix</xref>). This holds for a wide range of intermediate switching intervals (see Fig C in Supporting Figures in <xref ref-type="supplementary-material" rid="pcbi.1005358.s001">S1 Appendix</xref>). This observations illustrates the ability of evolution to genetically acquire and utilise information regarding the statistical structure of previously experienced environments.</p>
+<p>The evolved developmental constraints also exhibited generalised behaviour by allowing the production of three additional phenotypes that were not directly selected in the past, but share the same structural regularities with the target phenotypes. These new phenotypic patterns correspond to novel combinations of previously-seen phenotypic features. Yet, the propensity to express these extra phenotypes was still limited. The evolved variational mechanism over-represented past targets, failing to properly generalise to all potential, but yet-unseen selective environments from the same class as the past ones, i.e., over-fitted (see below). We find no rate of environmental variation capable of causing evolution by natural selection to evolve a developmental organisation that produces the entire class. Consequently, the rate of environmental change can facilitate the evolution of developmental memory, but does not always produce good developmental generalisation.</p>
+<p>Here we argue that the problem of natural selection failing to evolve generalised phenotypic distributions in certain cases is formally analogous to the problem of learning systems failing to generalise due to either under- or over-fitting. In learning, under-fitting is observed when a learning system is incapable of capturing a set of exemplary observations. On the other hand, over-fitting is observed when a model is over-trained and memorises a particular set of exemplary observations, at the expense of predictive performance on previously unseen data from the class [<xref ref-type="bibr" rid="pcbi.1005358.ref051">51</xref>]. Over-fitting occurs when the model learns to focus on idiosyncrasies or noise in the training set [<xref ref-type="bibr" rid="pcbi.1005358.ref052">52</xref>]. Similarly, canalisation to past selective environments can be opposed to evolvability if canalised phenotypes from past environments are not fit in future environments. Specifically, canalisation can be opposed to evolvability by either 1) (first type of underfitting, from high learning rates) reducing the production of all phenotypic characters except those that are fit in the selective environments that happen to come early (<xref ref-type="fig" rid="pcbi.1005358.g002">Fig 2c</xref>), 2) (second type of under-fitting, from low learning rates) reducing the production of all characters except those that are fit on average over the past selective environments (<xref ref-type="fig" rid="pcbi.1005358.g002">Fig 2b</xref>), or 3) (over-fitting) successfully producing a sub-set of or all phenotypes that were fit in the past selective environments, but inhibiting the production of new and potentially useful phenotypic variants for future selective environments (<xref ref-type="fig" rid="pcbi.1005358.g002">Fig 2d and 2e</xref>).</p>
+<p>Below, we investigate the conditions under which an evolutionary process can avoid canalising the past and remain appropriately flexible to respond to novel selective environments in the future. To do so, we test whether techniques used to avoid under-fitting and over-fitting that improve generalisation to unseen test sets in learning models will likewise alleviate canalisation to past phenotypic targets and improve fit to novel selective environments in evolutionary systems. For this purpose, we choose the time scale of environmental change to be moderate (<italic>K</italic> = 20000). This constitutes our control experiment in the absence of environmental noise and/or any selective pressure on the cost of connections. In the following evolutionary scenarios, simulations were run for 150 epochs. This demonstrates prediction d,e, and f from <xref ref-type="table" rid="pcbi.1005358.t001">Table 1</xref>.</p>
+</sec>
+<sec id="sec007">
+<title>Noisy environments (training with noisy data)</title>
+<p>In this scenario, we investigate the evolution of generalised developmental organisations in noisy environments by adding Gaussian noise, <italic>n</italic><sub><italic>μ</italic></sub> ∼ <italic>N</italic>(0, 1) to the respective target phenotype, <italic>S</italic>, at each generation. The level of noise was scaled by parameter <italic>κ</italic>. In order to assess the potential of noisy selection to facilitate phenotypic generalisation, we show results for the optimal amount of noise (here <italic>κ</italic> = 35 × 10<sup>−4</sup>). Later, we will show how performance varies with the amount of noise.</p>
+<p>We find that the distribution of potential phenotypic variants induced by the evolved development in noisy environments was still biased in generating past phenotypic patterns (<xref ref-type="fig" rid="pcbi.1005358.g002">Fig 2f</xref>). However, it slightly improved fit to other selective environments in the class compared with <xref ref-type="fig" rid="pcbi.1005358.g002">Fig 2e</xref>. The evolved developmental structure was characterised by more suitable variability, displaying higher propensity, compared to the control, in producing those variants from the class that were not directly selected in the past.</p>
+<p>Masking spurious details in the training set by adding noise to the training samples during the training phase is a general method to combat the problem of over-fitting in learning systems. This technique is known as ‘training with noise’ or ‘jittering’ [<xref ref-type="bibr" rid="pcbi.1005358.ref051">51</xref>] and is closely related to the use of intrinsic noise in deep neural networks; a technique known as ‘dropout’ [<xref ref-type="bibr" rid="pcbi.1005358.ref055">55</xref>]. The intuition is that when noise is applied during the training phase, it makes it difficult for the optimisation process to fit the data precisely, and thus it inhibits capturing the idiosyncrasies of the training set. Training with noise is mathematically equivalent to a particular way of controlling model complexity known as Tikhonov regularisation [<xref ref-type="bibr" rid="pcbi.1005358.ref051">51</xref>].</p>
+</sec>
+<sec id="sec008">
+<title>Favouring weak connectivity (<italic>L</italic><sub>2</sub>-regularisation)</title>
+<p>In this scenario, the developmental structure was evolved under the direct selective pressure for weak connectivity—favouring regulatory interactions of small magnitude, i.e., <italic>L</italic><sub>2</sub>-regularisation (see <xref ref-type="sec" rid="sec014">Methods</xref>). Weak connectivity is achieved by applying a direct pressure on the cost of connections that is proportional to their magnitude. This imposes constraints on the evolution of the model parameters by penalising extreme values.</p>
+<p>Under these conditions natural selection discovered more general phenotypic distributions. Specifically, developmental generalisation was enhanced in a similar manner as in the presence of environmental noise, favouring similar weakly generalised phenotypic distributions. The distribution of potential phenotypic variants induced by development displayed higher propensity in producing useful phenotypic variants for potential future selective environments (<xref ref-type="fig" rid="pcbi.1005358.g002">Fig 2g</xref>).</p>
+</sec>
+<sec id="sec009">
+<title>Favouring sparse connectivity (<italic>L</italic><sub>1</sub>-regularisation)</title>
+<p>In this scenario, the developmental structure was evolved under the direct selective pressure for sparse connectivity—favouring fewer regulatory interactions, i.e., <italic>L</italic><sub>1</sub>-regularisation. Sparse connectivity is achieved by applying an equal direct pressure on the cost of connections. This imposes constraints on the evolution of the parameters by decreasing all non-zero values equally, and thus favouring models using fewer connections.</p>
+<p>We find that under these conditions the evolution of generalised developmental organisations was dramatically enhanced. The evolved phenotypic distribution (<xref ref-type="fig" rid="pcbi.1005358.g002">Fig 2h</xref>) was a perfect representation of the class (<xref ref-type="fig" rid="pcbi.1005358.g002">Fig 2i</xref>). We see that the evolved developmental process under the pressure for sparsity favoured the production of novel phenotypes that were not directly selected in the past. Those novel phenotypes were not arbitrary, but characterised by the time-invariant intra-modular regularities common to past selective environments. Although the developmental system was only exposed to three selective environments, it was able to generalise and produce all of the phenotypes from the class by creating novel combinations of previously-seen modules. More notably, we see that the evolved developmental process also pre-disposed the production of that phenotypic pattern that was missing under the conditions for weak connectivity and environmental noise due to strong developmental constraints.</p>
+<p>Moreover, the parsimonious network topologies we find here arise as a consequence of a direct pressure on the cost of connections. The hypothesis that sparse network can arise through a cost minimisation process is also supported by previous theoretical findings advocating the advantages of sparse gene regulation networks [<xref ref-type="bibr" rid="pcbi.1005358.ref056">56</xref>]. Accordingly, natural selection favours the emergence of gene-regulatory networks of minimal complexity. In [<xref ref-type="bibr" rid="pcbi.1005358.ref056">56</xref>], Leclerc argues that sparser GRNs exhibit higher dynamical robustness. Thus, when the cost of complexity is considered, robustness also implies sparsity. In this study, however, we demonstrated that sparsity gives rise to enhanced evolvability. This indicates that parsimony on the connectivity of the GRNs is a property that may facilitate both robustness and evolvability.</p>
+<p>Favouring weak or sparse connectivity belongs in a general category of <italic>regularisation</italic> methods that alleviate over-fitting by penalising unnecessary model complexity via the application of a parsimony pressure that favours simple models with fewer assumptions on the data, i.e., imposing a form of Occam’s razor on solutions (e.g., the Akaike [<xref ref-type="bibr" rid="pcbi.1005358.ref057">57</xref>] and [<xref ref-type="bibr" rid="pcbi.1005358.ref058">58</xref>] Bayesian information criteria, limiting the number of features in decision trees [<xref ref-type="bibr" rid="pcbi.1005358.ref059">59</xref>], or limiting the tree depth in genetic programming [<xref ref-type="bibr" rid="pcbi.1005358.ref060">60</xref>]). The key observation is that networks with too few connections will tend to under-fit the data (because they are unable to represent the relevant interactions or correlations in the data); whereas networks with more connections than necessary will tend to over-fit the idiosyncrasies of the training data, because they can memorize those idiosyncrasies instead of being forced to learn the underlying general pattern.</p>
+</sec>
+</sec>
+<sec id="sec010">
+<title>How generalisation changes over evolutionary time</title>
+<p>We next asked why costly interactions and noisy environments facilitate generalised developmental organisations. To understand this, we monitor the match between the phenotypic distribution induced by the evolved developmental process and the ones that describe the past selective environments (training set) and all potential selective environments (test set) respectively over evolutionary time in each evolutionary setting (see <xref ref-type="sec" rid="sec014">Methods</xref>). Following conventions in learning theory, we term the first measure ‘training error’ and the second ‘test error’. This demonstrates predictions c, e and f from <xref ref-type="table" rid="pcbi.1005358.t001">Table 1</xref>.</p>
+<p>The dependence of the respective errors on evolutionary time are shown in <xref ref-type="fig" rid="pcbi.1005358.g003">Fig 3</xref>. For the control scenario (panel A) we observe the following trend. Natural selection initially improved the fit of the phenotypic distributions to both distributions of past and future selective environments. Then, while the fit to past selective environments continued improving over evolutionary time, the fit to potential, but yet-unseen, environments started to deteriorate (see also Fig B in Supporting Figures in <xref ref-type="supplementary-material" rid="pcbi.1005358.s001">S1 Appendix</xref>). The evolving organisms tended to accurately <italic>memorise</italic> the idiosyncrasies of their past environments, at the cost of losing their ability to retain appropriate flexibility for the future, i.e., over-fitting. The dashed-line in <xref ref-type="fig" rid="pcbi.1005358.g003">Fig 3A</xref> indicates when the problem of over-fitting begins, i.e., when the test error first increases. We see that canalisation can be opposed to the evolution of generalised phenotypic distributions in the same way over-fitting is opposed to generalisation. Then, we expect that preventing the canalisation of past targets can enhance the generalisation performance of the evolved developmental structure. Indeed, <xref ref-type="fig" rid="pcbi.1005358.g003">Fig 3B, 3C and 3D</xref> confirm this hypothesis (predictions a-c from <xref ref-type="table" rid="pcbi.1005358.t001">Table 1</xref>).</p>
+<fig id="pcbi.1005358.g003" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1005358.g003</object-id>
+<label>Fig 3</label>
+<caption>
+<title>How generalisation changes over evolutionary time.</title>
+<p>The match between phenotypic distributions generated by evolved GRN and the target phenotypes of selective environments the developmental system has been exposed to (training error) and all selective environments (test error) against evolutionary time for (A) moderate environmental switching, (B) noisy environments, (C) favouring weak connectivity and (D) favouring sparse connectivity. The vertical dashed line denotes when the ad-hoc technique of early stopping would be ideal, i.e. at the moment the problem of over-fitting begins. Favouring weak connectivity and jittering exhibits similar effects on test error as applying early stopping.</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005358.g003" xlink:type="simple"/>
+</fig>
+<p>In the presence of environmental noise, the generalisation performance of the developmental structure was improved by discovering a set of regulatory interactions that corresponds to the minimum of the generalisation error curve of 0.34 (<xref ref-type="fig" rid="pcbi.1005358.g003">Fig 3B</xref>). However, natural selection in noisy environments was only able to postpone canalisation of past targets and was unable to avoid it in the long term. Consequently, stochasticity improved evolvability by decreasing the speed at which over-fitting occurs, allowing for the developmental system to spend more time at a state which was characterised by high generalisation ability (see also Fig A in The Structure of Developmental Organisation in <xref ref-type="supplementary-material" rid="pcbi.1005358.s001">S1 Appendix</xref>). On the other hand, under the parsimony pressure for weak connectivity, the evolving developmental system maintained the same generalisation performance over evolutionary time. The canalisation of the selected phenotypes was thus prevented by preventing further limitation of the system’s phenotypic variability. Note that the outcome of these two methods (<xref ref-type="fig" rid="pcbi.1005358.g003">Fig 3B and 3C</xref>) resembles in many ways the outcome as if we stopped at the moment when the generalisation error was minimum, i.e., early stopping; an ad-hoc solution to preventing over-fitting [<xref ref-type="bibr" rid="pcbi.1005358.ref051">51</xref>]. Accordingly, learning is stopped before the problem of over-fitting begins (see also Fig A in The Structure of Developmental Organisation in <xref ref-type="supplementary-material" rid="pcbi.1005358.s001">S1 Appendix</xref>). Under parsimony pressure for sparse connectivity, we observe that the generalisation error of the evolving developmental system reached zero (<xref ref-type="fig" rid="pcbi.1005358.g003">Fig 3D</xref>). Accordingly, natural selection successfully exploited the time-invariant regularities of the environment properly representing the entire class (<xref ref-type="fig" rid="pcbi.1005358.g002">Fig 2h</xref>). Additionally, Fig D in Supporting Figures in <xref ref-type="supplementary-material" rid="pcbi.1005358.s001">S1 Appendix</xref> shows that the entropy of the phenotypic distribution reduces as expected over evolutionary time as the developmental process increasingly canalises the training set phenotypes. In the case of perfect generalisation to the class (sparse connectivity), this convergence reduces from 16 bits (the original phenotype space) to four bits, corresponding to four degrees of freedom where each of the four modules vary independently. In the other cases, overfitting is indicated by reducing to less than four bits.</p>
+</sec>
+<sec id="sec011">
+<title>Sensitivity analysis to parameters affecting phenotypic generalisation</title>
+<p>As seen so far, the generalisation ability of development can be enhanced under the direct selective pressure for both sparse and weak connectivity and the presence of noise in the selective environment, when the strength of parsimony pressure and the level of noise were properly tuned. Different values of <italic>λ</italic> and <italic>κ</italic> denote different evolutionary contexts, where <italic>λ</italic> determines the relative burden placed on the fitness of the developmental system due to reproduction and maintenance of its elements, or other physical constraints and limitations, and <italic>κ</italic> determines the amount of extrinsic noise found in the selective environments (see Evaluation of fitness).</p>
+<p>In the following, we analyse the impact of the strength of parsimony pressure and the level of environmental noise on the evolution of generalised developmental organisations. Simulations were run for various values of parameters <italic>λ</italic> and <italic>κ</italic>. Then, the training and generalisation error were evaluated and recorded (<xref ref-type="fig" rid="pcbi.1005358.g004">Fig 4</xref>). This demonstrates prediction (g) from <xref ref-type="table" rid="pcbi.1005358.t001">Table 1</xref>.</p>
+<fig id="pcbi.1005358.g004" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1005358.g004</object-id>
+<label>Fig 4</label>
+<caption>
+<title>Role of the strength of parsimony pressure and the level of environmental noise.</title>
+<p>The match between phenotypic distributions and the selective environments the network has been exposed to (training error) and all possible selective environments of the same class (generalisation error) for (A) noisy environments against parameter <italic>κ</italic> and under the parsimony pressure weak (B) and sparse (C) connectivity against parameter <italic>λ</italic>.</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005358.g004" xlink:type="simple"/>
+</fig>
+<p>We find that in the extremes, low and high levels of parsimony pressures, or noise, gave rise to situations of over-fitting and under-fitting respectively (<xref ref-type="fig" rid="pcbi.1005358.g004">Fig 4</xref>). Very small values of <italic>λ</italic>, or <italic>κ</italic>, were insufficient at finding good regulatory interactions to facilitate high evolvability to yet-unseen environments, resulting in the canalisation of past targets, i.e., over-fitting. On the other hand, very large values of <italic>λ</italic> over-constrained the search process hindering the acquisition of any useful information regarding environment’s causal structure, i.e., under-fitting. Specifically, with a small amount of <italic>L</italic><sub>1</sub>-regularisation, the generalisation error is dropped to zero. This outcome holds for a wide spectrum of the regularisation parameter <italic>ln</italic>(<italic>λ</italic>) ∈ [0.15, 0.35]. However, when <italic>λ</italic> is very high (here <italic>λ</italic> = 0.4), the selective pressure on the cost of connection was too large; this resulted in the training and the generalisation errors corresponds to the original ‘no model’ situation (<xref ref-type="fig" rid="pcbi.1005358.g004">Fig 4C</xref>). Similarly, with a small amount of <italic>L</italic><sub>2</sub>-regularisation, the generalisation error quickly drops. In the range [10, 38] the process became less sensitive to changes in <italic>λ</italic>, resulting in one optimum at <italic>λ</italic> = 38 (<xref ref-type="fig" rid="pcbi.1005358.g004">Fig 4B</xref>). Similar results were also obtained for jittering (<xref ref-type="fig" rid="pcbi.1005358.g004">Fig 4A</xref>). But the generalisation performance of the developmental process changes ‘smoothly’ with <italic>κ</italic>, resulting in one optimum at <italic>κ</italic> = 35 × 10<sup>−4</sup> (<xref ref-type="fig" rid="pcbi.1005358.g004">Fig 4A</xref>). Inductive biases need to be appropriate for a given problem, but in many cases a moderate bias favouring simple models is sufficient for non-trivial generalisation.</p>
+</sec>
+<sec id="sec012">
+<title>Generalised developmental biases improve the rate of adaptation</title>
+<p>Lastly we examine whether generalised phenotypic distributions can actually facilitate evolvability. For this purpose, we consider the rate of adaptation to each of all potential selective environments as the number of generations needed for the evolving entities to reach the respective target phenotype.</p>
+<p>To evaluate the propensity of the organisms to reach a target phenotype as a systemic property of its developmental architecture, the regulatory interactions were kept fixed, while the direct effects on the embryonic phenotype were free to evolve for 2500 generations, which was empirically found to be sufficient for the organisms to find a phenotypic target in each selective environment (when that was allowed by the developmental structure). In each run, the initial gene expression levels were uniformly chosen at random. The results here were averaged over 1000 independent runs, for each selective environment and for each of the four different evolutionary scenarios (as described in the previous sections). Then, counts of the average number of generations to reach the target phenotype of the corresponding selective environment were taken. This was evaluated by measuring the first time the developmental system achieved maximum fitness possible. If the target was not reached, the maximum number of generations 2500 was assigned.</p>
+<p>We find that organisms with developmental organisations evolved in noisy environments or the parsimony pressure on the cost of connections adapted faster than the ones in the control scenario (<xref ref-type="fig" rid="pcbi.1005358.g005">Fig 5</xref>). The outliers in the evolutionary settings of moderate environmental switching, noisy environments and favouring weak connectivity, indicate the inability of the developmental system to express the target phenotypic pattern for that selective environment due to the strong developmental constraints that evolved in those conditions. This corresponds to the missing phenotype from the class we saw above in the evolved phenotypic distributions induced by development (<xref ref-type="fig" rid="pcbi.1005358.g002">Fig 2e, 2f and 2g</xref>). In all these three cases development allowed for the production of the same set of phenotypic patterns. Yet, developmental structures evolved in the presence of environmental noise or under the pressure for weak connectivity exhibited higher adaptability due to their higher propensity to produce other phenotypes of the structural family. In particular, we see that for the developmental process evolved under the pressure for sparsity, the rate of adaptation of the organisms was significantly improved. The variability structure evolved under sparsity to perfectly represent the functional dependencies between phenotypic traits. Thus, it provided a selective advantage guiding phenotypic variation in more promising directions.</p>
+<fig id="pcbi.1005358.g005" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1005358.g005</object-id>
+<label>Fig 5</label>
+<caption>
+<title>Generalised developmental organisations improve the rate of adaptation to novel selective environments.</title>
+<p>Boxplot of the generations taken for the evolved developmental systems to reach the target phenotype for all potential selective environments under different evolutionary conditions. The developmental architecture is kept fixed and only the direct effects on the embryonic phenotype are free to evolve. Organisms that facilitate generalised phenotypic distributions, such as the ones evolved in noisy environments or under the direct pressure on the cost connections, adapt faster to novel selective environments exhibiting enhanced evolvability. The outliers indicate the inability of the corresponding evolved developmental structures to reach that selective target due to strong developmental constraints.</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005358.g005" xlink:type="simple"/>
+</fig>
+</sec>
+<sec id="sec013">
+<title>Conclusions</title>
+<p>The above experiments demonstrated the transfer of predictions from learning models into evolution, by specifically showing that: a) the evolution of generalised phenotypic distributions is dependent on the time-scale of environmental switching, in the same way that generalisation in online learning algorithms is learning-rate dependent, b) the presence of environmental noise can be beneficial for the evolution of generalised phenotypic distributions in the same way training with corrupted data can improve the generalisation performance of learning systems with the same limitations, c) direct selection pressure for weak connectivity can enhance the evolution of generalised phenotypic distributions in the same way <italic>L</italic><sub>2</sub>-regularisation can improve the generalisation performance in learning systems, d) noisy environments result in similar behaviour as favouring weak connectivity, in the same way that Jittering can have similar effects to <italic>L</italic><sub>2</sub>-regularisation in learning systems, e) direct selection pressure for sparse connectivity can enhance the evolution of generalised phenotypic distributions in the same way that <italic>L</italic><sub>1</sub>-regularisation can improve the generalisation performance in learning systems, f) favouring weak connectivity (i.e., <italic>L</italic><sub>2</sub>-regularisation) results in similar behaviour to early stopping, g) the evolution of generalised phenotypic distributions is dependent on the strength of selection pressure on the cost of connections and the level of environmental noise, in the same way generalisation is dependent on the level of inductive biases and h) in simple modularly varying environments with independent modules, sparse connectivity enhances the generalisation of phenotypic distributions better than weak connectivity, in the same way that in problems with independent features, <italic>L</italic><sub>1</sub>-regularisation results in better generalisation than <italic>L</italic><sub>2</sub>-regularisation.</p>
+<p>Learning is generally <italic>contextual</italic>; it gradually builds upon what <italic>concepts</italic> are already known. Here these concepts correspond to the repeated modular sub-patterns persisting over all observations in the training set which become encoded in the modular components of the evolved network. The inter-module connections determine which combinations of (sub-)attractors in each module are compatible and which are not. Therefore, the evolved network representation can be seen as dictating a higher-order conceptual (combinatorial) space based on previous experience. This enables the evolved developmental system to explore permitted combinations of features constrained by past selection. Novel phenotypes can thus arise through new combinations of previously selected phenotypic features explicitly embedded in the developmental architecture of the system [<xref ref-type="bibr" rid="pcbi.1005358.ref025">25</xref>]. Indeed, under the selective pressure for sparse connectivity, we observe that the phenotypic patterns generated by the evolved developmental process consisted of combinations of features from past selected phenotypic patterns. Thus, we see that the ‘developmental memories’ are stored and recalled in combinatorial fashion allowing generalisation.</p>
+<p>We see that noisy environments and the parsimony pressure on the cost of connections led to more evolvable genotypes by internalising more general models of the environment into their developmental organisation. The evolved developmental systems did not solely capture and represent the specific idiosyncrasies of past selective environments, but internalised the regularities that remained time-invariant in all environments of the given class. This enabled natural selection to ‘anticipate’ novel situations by accumulating information about and exploiting the tendencies in that class of environments defined by the regularities. Peculiarities of past targets were generally represented by weak correlations between phenotypic characters as these structural regularities were not typically present in all of the previously-seen selective environments. Parsimony pressures and noise then provided the necessary selective pressure to neglect or de-emphasise such spurious correlations and maintain only the strong ones which tended to correspond to the underlying problem structure (in this case, the intra-module correlations only, allowing all combinations of fit modules). More notably, we see that the parsimony pressure for sparsity favoured more evolvable developmental organisations that allowed for the production of a novel and otherwise inaccessible phenotype. Enhancing evolvability by means of inductive biases is not for granted in evolutionary systems any more than such methods have guarantees in learning systems. The quality of the method depends on information about past targets and the strength of the parsimony pressure. Inductive biases can however constrain phenotypic evolution into more promising directions and exploit systematicities in the environment when opportunities arise.</p>
+<p>In this study we demonstrated that canalisation can be opposed to evolvability in biological systems the same way under- or over-fitting can be opposed to generalisation in learning systems. We showed that conditions that are known to alleviate over-fitting in learning are directly analogous to the conditions that enhance the evolution of evolvability under natural selection. Specifically, we described how well-known techniques, such as learning with noise and penalising model complexity, that improve the generalisation ability of learning models can help us understand how noisy selective environments and the direct selection pressure on the reproduction cost of the gene regulatory interactions can enhance context-specific evolvability in gene regulation networks. This opens-up a well-established theoretical framework, enabling it to be exploited in evolutionary theory. This equivalence demystifies the basic idea of the evolution of evolvability by equating it with generalisation in learning systems. This framework predicts the conditions that will enhance generalised phenotypic distributions and evolvability in natural systems.</p>
+</sec>
+</sec>
+<sec id="sec014" sec-type="materials|methods">
+<title>Methods</title>
+<sec id="sec015">
+<title>Evolution of GRNs</title>
+<p>We model the evolution of a population of GRNs under strong selection and weak mutation where each new mutation is either fixed or lost before the next arises. This emphasises that the effects we demonstrate do not require lineage-level selection [<xref ref-type="bibr" rid="pcbi.1005358.ref061">61</xref>–<xref ref-type="bibr" rid="pcbi.1005358.ref063">63</xref>]—i.e., they do not require multiple genetic lineages to coexist long enough for their mutational distributions to be visible to selection. Accordingly a simple hill-climbing model of evolution is sufficient [<xref ref-type="bibr" rid="pcbi.1005358.ref025">25</xref>, <xref ref-type="bibr" rid="pcbi.1005358.ref036">36</xref>].</p>
+<p>The population is represented by a single genotype [<italic>G</italic>, <italic>B</italic>] (the direct effects and the regulatory interactions respectively) corresponding to the average genotype of the population. Similarly, mutations in <italic>G</italic> and <italic>B</italic> indicate slight variations in population means. Consider that <italic>G</italic>′ and <italic>B</italic>′ denote the respective mutants. Then the adult mutant phenotype, <inline-formula id="pcbi.1005358.e002"><alternatives><graphic id="pcbi.1005358.e002g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005358.e002" xlink:type="simple"/><mml:math display="inline" id="M2"><mml:msubsup><mml:mi>P</mml:mi> <mml:mrow><mml:mi>a</mml:mi></mml:mrow> <mml:mo>′</mml:mo></mml:msubsup></mml:math></alternatives></inline-formula>, is the result of the developmental process, which is characterised by the interaction <italic>B</italic>′, given the direct effects <italic>G</italic>′. Subsequently, the fitness of <italic>P</italic><sub><italic>a</italic></sub> and <inline-formula id="pcbi.1005358.e003"><alternatives><graphic id="pcbi.1005358.e003g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005358.e003" xlink:type="simple"/><mml:math display="inline" id="M3"><mml:msubsup><mml:mi>P</mml:mi> <mml:mrow><mml:mi>a</mml:mi></mml:mrow> <mml:mo>′</mml:mo></mml:msubsup></mml:math></alternatives></inline-formula> are calculated for the current selective environment, <italic>S</italic>. If <inline-formula id="pcbi.1005358.e004"><alternatives><graphic id="pcbi.1005358.e004g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005358.e004" xlink:type="simple"/><mml:math display="inline" id="M4"><mml:mrow><mml:msub><mml:mi>f</mml:mi> <mml:mi>S</mml:mi></mml:msub> <mml:mrow><mml:mo>(</mml:mo> <mml:msubsup><mml:mi>P</mml:mi> <mml:mrow><mml:mi>a</mml:mi></mml:mrow> <mml:mo>′</mml:mo></mml:msubsup> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>&gt;</mml:mo> <mml:msub><mml:mi>f</mml:mi> <mml:mi>S</mml:mi></mml:msub> <mml:mrow><mml:mo>(</mml:mo> <mml:msub><mml:mi>P</mml:mi> <mml:mi>a</mml:mi></mml:msub> <mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></inline-formula>, the mutation is beneficial and therefore adopted, i.e., <italic>G</italic><sub><italic>t</italic>+1</sub> = <italic>G</italic>′ and <italic>B</italic><sub><italic>t</italic>+1</sub> = <italic>B</italic>′. On the other hand, when a mutation is deleterious, <italic>G</italic> and <italic>B</italic> remain unchanged.</p>
+<p>The variation on the direct effects, <italic>G</italic>, occurs by applying a simple point mutation operator. At each evolutionary time step, <italic>t</italic>, an amount of <italic>μ</italic><sub>1</sub> mutation, drawn from [−0.1, 0.1] is added to a single gene <italic>i</italic>. Note that we enforce all <italic>g</italic><sub><italic>i</italic></sub> ∈ [−1, 1] and hence the direct effects are hard bounded, i.e., <italic>g</italic><sub><italic>i</italic></sub> = <italic>min</italic>{<italic>max</italic>{<italic>g</italic><sub><italic>i</italic></sub> + <italic>μ</italic><sub>1</sub>, −1}, 1}. For a developmental architecture to have a meaningful effect on the phenotypic variation, the developmental constraints should evolve considerably slower than the phenotypic variation they control. We model this by setting the rate of change of <italic>B</italic> to lower values as that for <italic>G</italic>. More specifically, at each evolutionary time step, <italic>t</italic>, mutation occurs on the matrix with probability 1/15. The magnitude <italic>μ</italic><sub>2</sub> is drawn from [−0.1/(15<italic>N</italic><sup>2</sup>), 0.1/(15<italic>N</italic><sup>2</sup>)] for each element <italic>b</italic><sub><italic>ij</italic></sub> independently, where <italic>N</italic> corresponds to the number of phenotypic traits.</p>
+</sec>
+<sec id="sec016">
+<title>Evaluation of fitness</title>
+<p>Following the framework used in [<xref ref-type="bibr" rid="pcbi.1005358.ref064">64</xref>], we define the fitness of the developmental system as a benefit minus cost function.</p>
+<p>The benefit of a given genetic structure, <italic>b</italic>, is evaluated based on how close the developed adult phenotype is to the target phenotype of a given selective environment. The target phenotype characterises a favourable direction for each phenotypic trait and is described by a binary vector, <italic>S</italic> = 〈<italic>s</italic><sub>1</sub>, …, <italic>s</italic><sub><italic>N</italic></sub>〉, where <italic>s</italic><sub><italic>i</italic></sub> ∈ {−1, 1}, ∀<italic>i</italic>. For a certain selective environment, <italic>S</italic>, the selective benefit of an adult phenotype, <italic>P</italic><sub><italic>a</italic></sub>, is given by (modified from [<xref ref-type="bibr" rid="pcbi.1005358.ref025">25</xref>]):
+<disp-formula id="pcbi.1005358.e005"><alternatives><graphic id="pcbi.1005358.e005g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005358.e005" xlink:type="simple"/><mml:math display="block" id="M5"><mml:mrow><mml:mi>b</mml:mi> <mml:mo>=</mml:mo> <mml:mi>w</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:msub><mml:mi>P</mml:mi> <mml:mi>a</mml:mi></mml:msub> <mml:mo>,</mml:mo> <mml:mi>S</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>=</mml:mo> <mml:mstyle displaystyle="true" scriptlevel="0"><mml:mfrac><mml:mn>1</mml:mn> <mml:mn>2</mml:mn></mml:mfrac></mml:mstyle> <mml:mfenced close=")" open="(" separators=""><mml:mn>1</mml:mn> <mml:mo>+</mml:mo> <mml:mstyle displaystyle="true" scriptlevel="0"><mml:mfrac><mml:mrow><mml:msub><mml:mi>P</mml:mi> <mml:mi>a</mml:mi></mml:msub> <mml:mo>·</mml:mo> <mml:mi>S</mml:mi></mml:mrow> <mml:mi>N</mml:mi></mml:mfrac></mml:mstyle></mml:mfenced> <mml:mo>,</mml:mo></mml:mrow></mml:math></alternatives> <label>(1)</label></disp-formula>
+where the term <italic>P</italic><sub><italic>a</italic></sub> ⋅ <italic>S</italic> indicates the inner product between the two respective vectors. The adult phenotype is normalised in [−1, 1] by <italic>P</italic><sub><italic>a</italic></sub> ← <italic>P</italic><sub><italic>a</italic></sub>/(<italic>τ</italic><sub>1</sub>/<italic>τ</italic><sub>2</sub>), i.e., <italic>b</italic> ∈ [0, 1].</p>
+<p>The cost term, <italic>c</italic>, is related to the values of the regulatory coefficients, <italic>b</italic><sub><italic>ij</italic></sub> ∈ <italic>B</italic> [<xref ref-type="bibr" rid="pcbi.1005358.ref065">65</xref>]. The cost represents how fitness is reduced as a result of the system’s effort to maintain and reproduce its elements, e.g., in <italic>E. coli</italic> it corresponds to the cost of regulatory protein production. The cost of connection has biological significance [<xref ref-type="bibr" rid="pcbi.1005358.ref027">27</xref>, <xref ref-type="bibr" rid="pcbi.1005358.ref064">64</xref>–<xref ref-type="bibr" rid="pcbi.1005358.ref067">67</xref>], such as being related to the number of different transcription factors or the strength of the regulatory influence. We consider two cost functions proportional to i) the sum of the absolute magnitudes of the interactions, <inline-formula id="pcbi.1005358.e006"><alternatives><graphic id="pcbi.1005358.e006g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005358.e006" xlink:type="simple"/><mml:math display="inline" id="M6"><mml:mrow><mml:mi>c</mml:mi> <mml:mo>=</mml:mo> <mml:msub><mml:mrow><mml:mo>∥</mml:mo> <mml:mi>B</mml:mi> <mml:mo>∥</mml:mo></mml:mrow> <mml:mn>1</mml:mn></mml:msub> <mml:mo>=</mml:mo> <mml:msubsup><mml:mo>∑</mml:mo> <mml:mrow><mml:mi>i</mml:mi> <mml:mo>=</mml:mo> <mml:mn>1</mml:mn></mml:mrow> <mml:msup><mml:mi>N</mml:mi> <mml:mn>2</mml:mn></mml:msup></mml:msubsup> <mml:mrow><mml:mrow><mml:mo>|</mml:mo></mml:mrow> <mml:msub><mml:mi>b</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mrow><mml:mi>j</mml:mi> <mml:mo>|</mml:mo></mml:mrow></mml:mrow> <mml:mo>/</mml:mo> <mml:msup><mml:mi>N</mml:mi> <mml:mn>2</mml:mn></mml:msup></mml:mrow></mml:math></alternatives></inline-formula>, and ii) the sum of the squares of the magnitudes of the interactions, <inline-formula id="pcbi.1005358.e007"><alternatives><graphic id="pcbi.1005358.e007g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005358.e007" xlink:type="simple"/><mml:math display="inline" id="M7"><mml:mrow><mml:mi>c</mml:mi> <mml:mo>=</mml:mo> <mml:msubsup><mml:mrow><mml:mo>∥</mml:mo> <mml:mi>B</mml:mi> <mml:mo>∥</mml:mo></mml:mrow> <mml:mn>2</mml:mn> <mml:mn>2</mml:mn></mml:msubsup> <mml:mspace width="1pt"/><mml:mo>=</mml:mo> <mml:msubsup><mml:mo>∑</mml:mo> <mml:mrow><mml:mi>i</mml:mi> <mml:mo>=</mml:mo> <mml:mn>1</mml:mn></mml:mrow> <mml:msup><mml:mi>N</mml:mi> <mml:mn>2</mml:mn></mml:msup></mml:msubsup> <mml:msubsup><mml:mi>b</mml:mi> <mml:mrow><mml:mi>i</mml:mi> <mml:mi>j</mml:mi></mml:mrow> <mml:mn>2</mml:mn></mml:msubsup> <mml:mo>/</mml:mo> <mml:msup><mml:mi>N</mml:mi> <mml:mn>2</mml:mn></mml:msup></mml:mrow></mml:math></alternatives></inline-formula>, which put a direct selection pressure on the weights of connections, favouring sparse (<italic>L</italic><sub>1</sub>-regularisation) and weak connectivity (<italic>L</italic><sub>2</sub>-regularisation) respectively [<xref ref-type="bibr" rid="pcbi.1005358.ref068">68</xref>].</p>
+<p>Then, the overall fitness of <italic>P</italic><sub><italic>a</italic></sub> for a certain selective environment <italic>S</italic> is given by:
+<disp-formula id="pcbi.1005358.e008"><alternatives><graphic id="pcbi.1005358.e008g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005358.e008" xlink:type="simple"/><mml:math display="block" id="M8"><mml:mrow><mml:msub><mml:mi>f</mml:mi> <mml:mi>S</mml:mi></mml:msub> <mml:mrow><mml:mo>(</mml:mo> <mml:msub><mml:mi>P</mml:mi> <mml:mi>a</mml:mi></mml:msub> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>=</mml:mo> <mml:mi>b</mml:mi> <mml:mo>-</mml:mo> <mml:mi>λ</mml:mi> <mml:mi>c</mml:mi> <mml:mo>,</mml:mo></mml:mrow></mml:math></alternatives> <label>(2)</label></disp-formula>
+where parameter <italic>λ</italic> indicates the relative importance between <italic>b</italic> and <italic>c</italic>. Note that the selective advantage of structure <italic>B</italic> is solely determined by its immediate fitness benefits on the current selective environment.</p>
+</sec>
+<sec id="sec017">
+<title>Chi-squared error</title>
+<p>The <italic>χ</italic><sup>2</sup> measure is used to quantify the lack of fit of the evolved phenotypic distribution <inline-formula id="pcbi.1005358.e009"><alternatives><graphic id="pcbi.1005358.e009g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005358.e009" xlink:type="simple"/><mml:math display="inline" id="M9"><mml:mrow><mml:mover accent="true"><mml:msub><mml:mi>P</mml:mi> <mml:mi>t</mml:mi></mml:msub> <mml:mo>^</mml:mo></mml:mover> <mml:mrow><mml:mo>(</mml:mo> <mml:msub><mml:mi>s</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></inline-formula> against the distribution of the previously experienced target phenotypes <italic>P</italic><sub><italic>t</italic></sub>(<italic>s</italic><sub><italic>i</italic></sub>) and/or the one of all potential target phenotypes of the same family <italic>P</italic>(<italic>s</italic><sub><italic>i</italic></sub>). Consider two discrete distribution profiles, the observed frequencies <italic>O</italic>(<italic>s</italic><sub><italic>i</italic></sub>) and the expected frequencies <italic>E</italic>(<italic>s</italic><sub><italic>i</italic></sub>), <italic>s</italic><sub><italic>i</italic></sub> ∈ <italic>S</italic>, ∀<italic>i</italic> = 1, …, <italic>k</italic>. Then, the chi square error between distribution <italic>O</italic> and <italic>E</italic> is given by:
+<disp-formula id="pcbi.1005358.e010"><alternatives><graphic id="pcbi.1005358.e010g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005358.e010" xlink:type="simple"/><mml:math display="block" id="M10"><mml:mrow><mml:msup><mml:mi>χ</mml:mi> <mml:mn>2</mml:mn></mml:msup> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>O</mml:mi> <mml:mo>,</mml:mo> <mml:mi>E</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>=</mml:mo> <mml:munder><mml:mo>∑</mml:mo> <mml:mi>i</mml:mi></mml:munder> <mml:mstyle displaystyle="true" scriptlevel="0"><mml:mfrac><mml:msup><mml:mrow><mml:mo>(</mml:mo> <mml:mi>O</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:msub><mml:mi>s</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>-</mml:mo> <mml:mi>E</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:msub><mml:mi>s</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>)</mml:mo></mml:mrow> <mml:mn>2</mml:mn></mml:msup> <mml:mrow><mml:mi>E</mml:mi> <mml:mo>(</mml:mo> <mml:msub><mml:mi>s</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mo>)</mml:mo></mml:mrow></mml:mfrac></mml:mstyle></mml:mrow></mml:math></alternatives> <label>(3)</label></disp-formula> <italic>S</italic> corresponds to the training set and the test set when the training and the generalisation error are respectively estimated. Each <italic>s</italic><sub><italic>i</italic></sub> ∈ <italic>S</italic> indicates a phenotypic pattern and <italic>P</italic>(<italic>s</italic><sub><italic>i</italic></sub>) denotes the probability of this phenotype pattern to arise.</p>
+<p>The samples, over which the distribution profiles are estimated, are uniformly drawn at random (see Estimating the empirical distributions). This guarantees that the sample is not biased and the observations under consideration are independent. Although the phenotypic profiles here are continuous variables, they are classified into binned categories (discrete phenotypic patterns). These categories are mutually exclusive and the sum of all individual counts in the empirical distribution is equal to the total number of observations. This indicates that no observation is considered twice, and also that the categories include all observations in the sample. Lastly, the sample size is large enough to ensure large expected frequencies, given the small number of expected categories.</p>
+</sec>
+<sec id="sec018">
+<title>Estimating the empirical distributions</title>
+<p>For the estimation of the empirical (sample) probability distribution of the phenotypic variants over the genotypic space, we follow the Classify and Count (CC) approach [<xref ref-type="bibr" rid="pcbi.1005358.ref069">69</xref>]. Accordingly, 5000 embryonic phenotypes, <italic>P</italic>(0) = <italic>G</italic>, are uniformly generated at random in the hypercube [−1, 1]<sup><italic>N</italic></sup>. Next, each of these phenotypes is developed into an adult phenotype and the produced phenotypes are categorised by their closeness to target patterns to take counts. Note that the development of each embryonic pattern in the sample is unaffected by development of other embryonic patterns in the sample. Also, the empirical distributions are estimated over all possible combinations of phenotypic traits, and thus each developed phenotype in the sample falls into exactly one of those categories. Finally, low discrepancy quasi-random sequences (Sobol sequences; [<xref ref-type="bibr" rid="pcbi.1005358.ref070">70</xref>]) with Matousek’s linear random scramble [<xref ref-type="bibr" rid="pcbi.1005358.ref071">71</xref>] were used to reduce the stochastic effects of the sampling process, by generating more homogeneous fillings over the genotypic space.</p>
+</sec>
+</sec>
+<sec id="sec019">
+<title>Supporting information</title>
+<supplementary-material id="pcbi.1005358.s001" mimetype="application/pdf" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005358.s001" xlink:type="simple">
+<label>S1 Appendix</label>
+<caption>
+<title>Supplementary material.</title>
+<p>(PDF)</p>
+</caption>
+</supplementary-material>
+</sec>
+</body>
+<back>
+<ack>
+<p>No data sets are associated with this publication.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pcbi.1005358.ref001">
+<label>1</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Bedau</surname> <given-names>MA</given-names></name>, <name name-style="western"><surname>McCaskill</surname> <given-names>JS</given-names></name>, <name name-style="western"><surname>Packard</surname> <given-names>NH</given-names></name>, <name name-style="western"><surname>Rasmussen</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Adami</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Green</surname> <given-names>DG</given-names></name>, <etal>et al</etal>. <article-title>Open problems in artificial life</article-title>. <source>Artificial life</source>. <year>2000</year>;<volume>6</volume>(<issue>4</issue>):<fpage>363</fpage>–<lpage>376</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1162/106454600300103683" xlink:type="simple">10.1162/106454600300103683</ext-link></comment> <object-id pub-id-type="pmid">11348587</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref002">
+<label>2</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Adami</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Ofria</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Collier</surname> <given-names>TC</given-names></name>. <article-title>Evolution of biological complexity</article-title>. <source>Proceedings of the National Academy of Sciences</source>. <year>2000</year>;<volume>97</volume>(<issue>9</issue>):<fpage>4463</fpage>–<lpage>4468</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.97.9.4463" xlink:type="simple">10.1073/pnas.97.9.4463</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref003">
+<label>3</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Lenski</surname> <given-names>RE</given-names></name>, <name name-style="western"><surname>Ofria</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Pennock</surname> <given-names>RT</given-names></name>, <name name-style="western"><surname>Adami</surname> <given-names>C</given-names></name>. <article-title>The evolutionary origin of complex features</article-title>. <source>Nature</source>. <year>2003</year>;<volume>423</volume>(<issue>6936</issue>):<fpage>139</fpage>–<lpage>144</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nature01568" xlink:type="simple">10.1038/nature01568</ext-link></comment> <object-id pub-id-type="pmid">12736677</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref004">
+<label>4</label>
+<mixed-citation publication-type="book" xlink:type="simple">
+<name name-style="western"><surname>Bedau</surname> <given-names>MA</given-names></name>. <source>The evolution of complexity</source>. <publisher-name>Springer</publisher-name>; <year>2009</year>.</mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref005">
+<label>5</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Moczek</surname> <given-names>AP</given-names></name>, <name name-style="western"><surname>Sultan</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Foster</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Ledón-Rettig</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Dworkin</surname> <given-names>I</given-names></name>, <name name-style="western"><surname>Nijhout</surname> <given-names>HF</given-names></name>, <etal>et al</etal>. <article-title>The role of developmental plasticity in evolutionary innovation</article-title>. <source>Proceedings of the Royal Society B: Biological Sciences</source>. <year>2011</year>; p. rspb20110971. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1098/rspb.2011.0971" xlink:type="simple">10.1098/rspb.2011.0971</ext-link></comment> <object-id pub-id-type="pmid">21676977</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref006">
+<label>6</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Wagner</surname> <given-names>GP</given-names></name>, <name name-style="western"><surname>Altenberg</surname> <given-names>L</given-names></name>. <article-title>Perspective: Complex adaptations and the evolution of evolvability</article-title>. <source>Evolution</source>. <year>1996</year>; p. <fpage>967</fpage>–<lpage>976</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.2307/2410639" xlink:type="simple">10.2307/2410639</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref007">
+<label>7</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Conrad</surname> <given-names>M</given-names></name>. <article-title>Bootstrapping on the adaptive landscape</article-title>. <source>BioSystems</source>. <year>1979</year>;<volume>11</volume>(<issue>2</issue>):<fpage>167</fpage>–<lpage>182</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/0303-2647(79)90009-1" xlink:type="simple">10.1016/0303-2647(79)90009-1</ext-link></comment> <object-id pub-id-type="pmid">497367</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref008">
+<label>8</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Kirschner</surname> <given-names>MW</given-names></name>, <name name-style="western"><surname>Gerhart</surname> <given-names>JC</given-names></name>. <article-title>Evolvability</article-title>. <source>Proceedings of the National Academy of Sciences</source>. <year>1998</year>;<volume>95</volume>(<issue>15</issue>):<fpage>8420</fpage>–<lpage>8427</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.95.15.8420" xlink:type="simple">10.1073/pnas.95.15.8420</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref009">
+<label>9</label>
+<mixed-citation publication-type="book" xlink:type="simple">
+<name name-style="western"><surname>Schlichting</surname> <given-names>CD</given-names></name>, <name name-style="western"><surname>Murren</surname> <given-names>CJ</given-names></name>. <chapter-title>Evolvability and the raw materials for adaptation</chapter-title>. <source>Plant Adaptation: Molecular genetics and ecology</source> <publisher-name>NRC research Press</publisher-name>, <publisher-loc>Ottawa</publisher-loc>. <year>2004</year>; p. <fpage>18</fpage>–<lpage>29</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref010">
+<label>10</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Conrad</surname> <given-names>M</given-names></name>. <article-title>The importance of molecular hierarchy in information processing</article-title>. <source>Towards a theoretical biology</source>. <year>1972</year>;<volume>4</volume>:<fpage>222</fpage>–<lpage>228</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref011">
+<label>11</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Pigliucci</surname> <given-names>M</given-names></name>. <article-title>Is evolvability evolvable?</article-title> <source>Nature Reviews Genetics</source>. <year>2008</year>;<volume>9</volume>(<issue>1</issue>):<fpage>75</fpage>–<lpage>82</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nrg2278" xlink:type="simple">10.1038/nrg2278</ext-link></comment> <object-id pub-id-type="pmid">18059367</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref012">
+<label>12</label>
+<mixed-citation publication-type="book" xlink:type="simple">
+<name name-style="western"><surname>Riedl</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Jefferies</surname> <given-names>RPS</given-names></name>. <source>Order in living organisms: a systems analysis of evolution</source>. <publisher-name>Wiley</publisher-name> <publisher-loc>New York</publisher-loc>; <year>1978</year>.</mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref013">
+<label>13</label>
+<mixed-citation publication-type="book" xlink:type="simple">
+<name name-style="western"><surname>Altenberg</surname> <given-names>L</given-names></name>. <chapter-title>Genome growth and the evolution of the genotype-phenotype map</chapter-title>. In: <source>Evolution and biocomputation</source>. <publisher-name>Springer</publisher-name>; <year>1995</year>. p. <fpage>205</fpage>–<lpage>259</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref014">
+<label>14</label>
+<mixed-citation publication-type="other" xlink:type="simple">Toussaint M. On the Evolution of Phenotypic Exploration Distributions. In: FOGA. Citeseer; 2002. p. 169–182.</mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref015">
+<label>15</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Brakefield</surname> <given-names>PM</given-names></name>. <article-title>Evo-devo and constraints on selection</article-title>. <source>Trends in Ecology &amp; Evolution</source>. <year>2006</year>;<volume>21</volume>(<issue>7</issue>):<fpage>362</fpage>–<lpage>368</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.tree.2006.05.001" xlink:type="simple">10.1016/j.tree.2006.05.001</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref016">
+<label>16</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Gerhart</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Kirschner</surname> <given-names>M</given-names></name>. <article-title>The theory of facilitated variation</article-title>. <source>Proceedings of the National Academy of Sciences</source>. <year>2007</year>;<volume>104</volume>(<issue>suppl 1</issue>):<fpage>8582</fpage>–<lpage>8589</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.0701035104" xlink:type="simple">10.1073/pnas.0701035104</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref017">
+<label>17</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Toussaint</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>von Seelen</surname> <given-names>W</given-names></name>. <article-title>Complex adaptation and system structure</article-title>. <source>BioSystems</source>. <year>2007</year>;<volume>90</volume>(<issue>3</issue>):<fpage>769</fpage>–<lpage>782</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.biosystems.2007.03.004" xlink:type="simple">10.1016/j.biosystems.2007.03.004</ext-link></comment> <object-id pub-id-type="pmid">17512656</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref018">
+<label>18</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Braendle</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Baer</surname> <given-names>CF</given-names></name>, <name name-style="western"><surname>Félix</surname> <given-names>MA</given-names></name>. <article-title>Bias and evolution of the mutationally accessible phenotypic space in a developmental system</article-title>. <source>PLoS genetics</source>. <year>2010</year>;<volume>6</volume>(<issue>3</issue>):<fpage>e1000877</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pgen.1000877" xlink:type="simple">10.1371/journal.pgen.1000877</ext-link></comment> <object-id pub-id-type="pmid">20300655</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref019">
+<label>19</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Smith</surname> <given-names>JM</given-names></name>, <name name-style="western"><surname>Burian</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Kauffman</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Alberch</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Campbell</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Goodwin</surname> <given-names>B</given-names></name>, <etal>et al</etal>. <article-title>Developmental constraints and evolution: a perspective from the Mountain Lake conference on development and evolution</article-title>. <source>Quarterly Review of Biology</source>. <year>1985</year>; p. <fpage>265</fpage>–<lpage>287</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1086/414425" xlink:type="simple">10.1086/414425</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref020">
+<label>20</label>
+<mixed-citation publication-type="book" xlink:type="simple">
+<name name-style="western"><surname>Conrad</surname> <given-names>M</given-names></name>. <chapter-title>Towards high evolvability dynamics introduction</chapter-title>. In: <source>Evolutionary systems</source>. <publisher-name>Springer</publisher-name>; <year>1998</year>. p. <fpage>33</fpage>–<lpage>43</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref021">
+<label>21</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Yampolsky</surname> <given-names>LY</given-names></name>, <name name-style="western"><surname>Stoltzfus</surname> <given-names>A</given-names></name>. <article-title>Bias in the introduction of variation as an orienting factor in evolution</article-title>. <source>Evolution &amp; development</source>. <year>2001</year>;<volume>3</volume>(<issue>2</issue>):<fpage>73</fpage>–<lpage>83</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1046/j.1525-142x.2001.003002073.x" xlink:type="simple">10.1046/j.1525-142x.2001.003002073.x</ext-link></comment> <object-id pub-id-type="pmid">11341676</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref022">
+<label>22</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Hansen</surname> <given-names>TF</given-names></name>. <article-title>Is modularity necessary for evolvability?: Remarks on the relationship between pleiotropy and evolvability</article-title>. <source>Biosystems</source>. <year>2003</year>;<volume>69</volume>(<issue>2</issue>):<fpage>83</fpage>–<lpage>94</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/S0303-2647(02)00132-6" xlink:type="simple">10.1016/S0303-2647(02)00132-6</ext-link></comment> <object-id pub-id-type="pmid">12689723</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref023">
+<label>23</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Pavlicev</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Cheverud</surname> <given-names>JM</given-names></name>, <name name-style="western"><surname>Wagner</surname> <given-names>GP</given-names></name>. <article-title>Evolution of adaptive phenotypic variation patterns by direct selection for evolvability</article-title>. <source>Proceedings of the Royal Society B: Biological Sciences</source>. <year>2010</year>; p. rspb20102113. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1098/rspb.2010.2113" xlink:type="simple">10.1098/rspb.2010.2113</ext-link></comment> <object-id pub-id-type="pmid">21106581</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref024">
+<label>24</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Pavlicev</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Hansen</surname> <given-names>TF</given-names></name>. <article-title>Genotype-phenotype maps maximizing evolvability: Modularity revisited</article-title>. <source>Evolutionary Biology</source>. <year>2011</year>;<volume>38</volume>(<issue>4</issue>):<fpage>371</fpage>–<lpage>389</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1007/s11692-011-9136-5" xlink:type="simple">10.1007/s11692-011-9136-5</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref025">
+<label>25</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Watson</surname> <given-names>RA</given-names></name>, <name name-style="western"><surname>Wagner</surname> <given-names>GP</given-names></name>, <name name-style="western"><surname>Pavlicev</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Weinreich</surname> <given-names>DM</given-names></name>, <name name-style="western"><surname>Mills</surname> <given-names>R</given-names></name>. <article-title>The Evolution of Phenotypic Correlations and “Developmental Memory”</article-title>. <source>Evolution</source>. <year>2014</year>;<volume>68</volume>(<issue>4</issue>):<fpage>1124</fpage>–<lpage>1138</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/evo.12337" xlink:type="simple">10.1111/evo.12337</ext-link></comment> <object-id pub-id-type="pmid">24351058</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref026">
+<label>26</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Pavličev</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Cheverud</surname> <given-names>JM</given-names></name>. <article-title>Constraints Evolve: Context-Dependency of Gene Effects Allows Evolution of Pleiotropy</article-title>. <source>Annual Review of Ecology, Evolution, and Systematics</source>. <year>2015</year>;<volume>46</volume>(<issue>1</issue>).</mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref027">
+<label>27</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Clune</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Mouret</surname> <given-names>JB</given-names></name>, <name name-style="western"><surname>Lipson</surname> <given-names>H</given-names></name>. <article-title>The evolutionary origins of modularity</article-title>. <source>Proceedings of the Royal Society b: Biological sciences</source>. <year>2013</year>;<volume>280</volume>(<issue>1755</issue>):<fpage>20122863</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1098/rspb.2012.2863" xlink:type="simple">10.1098/rspb.2012.2863</ext-link></comment> <object-id pub-id-type="pmid">23363632</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref028">
+<label>28</label>
+<mixed-citation publication-type="other" xlink:type="simple">Clune J, Misevic D, Ofria C, Lenski RE, Elena SF, Sanjuán R, et al. Natural selection fails to optimize mutation rates for long-term adaptation on rugged fitness landscapes. In: GECCO (Companion); 2013. p. 25–26.</mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref029">
+<label>29</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Wagner</surname> <given-names>GP</given-names></name>, <name name-style="western"><surname>Pavlicev</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Cheverud</surname> <given-names>JM</given-names></name>. <article-title>The road to modularity</article-title>. <source>Nature Reviews Genetics</source>. <year>2007</year>;<volume>8</volume>(<issue>12</issue>):<fpage>921</fpage>–<lpage>931</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nrg2267" xlink:type="simple">10.1038/nrg2267</ext-link></comment> <object-id pub-id-type="pmid">18007649</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref030">
+<label>30</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Brigandt</surname> <given-names>I</given-names></name>. <article-title>Typology now: homology and developmental constraints explain evolvability</article-title>. <source>Biology &amp; Philosophy</source>. <year>2007</year>;<volume>22</volume>(<issue>5</issue>):<fpage>709</fpage>–<lpage>725</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1007/s10539-007-9089-3" xlink:type="simple">10.1007/s10539-007-9089-3</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref031">
+<label>31</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Draghi</surname> <given-names>JA</given-names></name>, <name name-style="western"><surname>Parsons</surname> <given-names>TL</given-names></name>, <name name-style="western"><surname>Wagner</surname> <given-names>GP</given-names></name>, <name name-style="western"><surname>Plotkin</surname> <given-names>JB</given-names></name>. <article-title>Mutational robustness can facilitate adaptation</article-title>. <source>Nature</source>. <year>2010</year>;<volume>463</volume>(<issue>7279</issue>):<fpage>353</fpage>–<lpage>355</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nature08694" xlink:type="simple">10.1038/nature08694</ext-link></comment> <object-id pub-id-type="pmid">20090752</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref032">
+<label>32</label>
+<mixed-citation publication-type="book" xlink:type="simple">
+<name name-style="western"><surname>Kirschner</surname> <given-names>MW</given-names></name>, <name name-style="western"><surname>Gerhart</surname> <given-names>JC</given-names></name>. <source>The plausibility of life: Resolving Darwin’s dilemma</source>. <publisher-name>Yale University Press</publisher-name>; <year>2006</year>.</mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref033">
+<label>33</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Jacob</surname> <given-names>F</given-names></name>. <article-title>Evolution and tinkering</article-title>. <source>Science</source>. <year>1977</year>;. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1126/science.860134" xlink:type="simple">10.1126/science.860134</ext-link></comment> <object-id pub-id-type="pmid">860134</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref034">
+<label>34</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Parter</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Kashtan</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Alon</surname> <given-names>U</given-names></name>. <article-title>Facilitated variation: how evolution learns from past environments to generalize to new environments</article-title>. <source>PLoS Computational Biology</source>. <year>2008</year>;<volume>4</volume>(<issue>11</issue>):<fpage>e1000206</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pcbi.1000206" xlink:type="simple">10.1371/journal.pcbi.1000206</ext-link></comment> <object-id pub-id-type="pmid">18989390</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref035">
+<label>35</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Kashtan</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Alon</surname> <given-names>U</given-names></name>. <article-title>Spontaneous evolution of modularity and network motifs</article-title>. <source>Proceedings of the National Academy of Sciences of the United States of America</source>. <year>2005</year>;<volume>102</volume>(<issue>39</issue>):<fpage>13773</fpage>–<lpage>13778</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.0503610102" xlink:type="simple">10.1073/pnas.0503610102</ext-link></comment> <object-id pub-id-type="pmid">16174729</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref036">
+<label>36</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Kashtan</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Noor</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Alon</surname> <given-names>U</given-names></name>. <article-title>Varying environments can speed up evolution</article-title>. <source>Proceedings of the National Academy of Sciences</source>. <year>2007</year>;<volume>104</volume>(<issue>34</issue>):<fpage>13711</fpage>–<lpage>13716</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.0611630104" xlink:type="simple">10.1073/pnas.0611630104</ext-link></comment> <object-id pub-id-type="pmid">17698964</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref037">
+<label>37</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Wagner</surname> <given-names>A</given-names></name>. <article-title>Does evolutionary plasticity evolve?</article-title> <source>Evolution</source>. <year>1996</year>; p. <fpage>1008</fpage>–<lpage>1023</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.2307/2410642" xlink:type="simple">10.2307/2410642</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref038">
+<label>38</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Vohradský</surname> <given-names>J</given-names></name>. <article-title>Neural model of the genetic network</article-title>. <source>Journal of Biological Chemistry</source>. <year>2001</year>;<volume>276</volume>(<issue>39</issue>):<fpage>36168</fpage>–<lpage>36173</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1074/jbc.M104391200" xlink:type="simple">10.1074/jbc.M104391200</ext-link></comment> <object-id pub-id-type="pmid">11395518</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref039">
+<label>39</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Vohradský</surname> <given-names>J</given-names></name>. <article-title>Neural network model of gene expression</article-title>. <source>The FASEB Journal</source>. <year>2001</year>;<volume>15</volume>(<issue>3</issue>):<fpage>846</fpage>–<lpage>854</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1096/fj.00-0361com" xlink:type="simple">10.1096/fj.00-0361com</ext-link></comment> <object-id pub-id-type="pmid">11259403</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref040">
+<label>40</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Fierst</surname> <given-names>JL</given-names></name>, <name name-style="western"><surname>Phillips</surname> <given-names>PC</given-names></name>. <article-title>Modeling the evolution of complex genetic systems: The gene network family tree</article-title>. <source>Journal of Experimental Zoology Part B: Molecular and Developmental Evolution</source>. <year>2015</year>;<volume>324</volume>(<issue>1</issue>):<fpage>1</fpage>–<lpage>12</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1002/jez.b.22597" xlink:type="simple">10.1002/jez.b.22597</ext-link></comment> <object-id pub-id-type="pmid">25504926</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref041">
+<label>41</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Lipson</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Pollack</surname> <given-names>JB</given-names></name>, <name name-style="western"><surname>Suh</surname> <given-names>NP</given-names></name>. <article-title>On the origin of modular variation</article-title>. <source>Evolution</source>. <year>2002</year>;<volume>56</volume>(<issue>8</issue>):<fpage>1549</fpage>–<lpage>1556</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.0014-3820.2002.tb01466.x" xlink:type="simple">10.1111/j.0014-3820.2002.tb01466.x</ext-link></comment> <object-id pub-id-type="pmid">12353747</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref042">
+<label>42</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Watson</surname> <given-names>RA</given-names></name>, <name name-style="western"><surname>Mills</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Buckley</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Kouvaris</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Jackson</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Powers</surname> <given-names>ST</given-names></name>, <etal>et al</etal>. <article-title>Evolutionary connectionism: algorithmic principles underlying the evolution of biological organisation in evo-devo, evo-eco and evolutionary transitions</article-title>. <source>Evolutionary Biology</source>. <year>2015</year>; p. <fpage>1</fpage>–<lpage>29</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1007/s11692-015-9358-z" xlink:type="simple">10.1007/s11692-015-9358-z</ext-link></comment> <object-id pub-id-type="pmid">27932852</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref043">
+<label>43</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Watson</surname> <given-names>RA</given-names></name>, <name name-style="western"><surname>Szathmáry</surname> <given-names>E</given-names></name>. <article-title>How can evolution learn?</article-title> <source>Trends in Ecology and Evolution</source>. <year>2015</year>;. <object-id pub-id-type="pmid">26705684</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref044">
+<label>44</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Friedlander</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Mayo</surname> <given-names>AE</given-names></name>, <name name-style="western"><surname>Tlusty</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Alon</surname> <given-names>U</given-names></name>. <article-title>Mutation rules and the evolution of sparseness and modularity in biological systems</article-title>. <source>PloS one</source>. <year>2013</year>;<volume>8</volume>(<issue>8</issue>):<fpage>e70444</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pone.0070444" xlink:type="simple">10.1371/journal.pone.0070444</ext-link></comment> <object-id pub-id-type="pmid">23936433</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref045">
+<label>45</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Livnat</surname> <given-names>A</given-names></name>. <article-title>Interaction-based evolution: how natural selection and nonrandom mutation worktogether</article-title>. <source>Biology direct</source>. <year>2013</year>;<volume>8</volume>(<issue>1</issue>):<fpage>1</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1186/1745-6150-8-24" xlink:type="simple">10.1186/1745-6150-8-24</ext-link></comment> <object-id pub-id-type="pmid">24139515</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref046">
+<label>46</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Livnat</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Papadimitriou</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Dushoff</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Feldman</surname> <given-names>MW</given-names></name>. <article-title>A mixability theory for the role of sex in evolution</article-title>. <source>Proceedings of the National Academy of Sciences</source>. <year>2008</year>;<volume>105</volume>(<issue>50</issue>):<fpage>19803</fpage>–<lpage>19808</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.0803596105" xlink:type="simple">10.1073/pnas.0803596105</ext-link></comment> <object-id pub-id-type="pmid">19073912</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref047">
+<label>47</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Aldana</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Balleza</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Kauffman</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Resendiz</surname> <given-names>O</given-names></name>. <article-title>Robustness and evolvability in genetic regulatory networks</article-title>. <source>Journal of theoretical biology</source>. <year>2007</year>;<volume>245</volume>(<issue>3</issue>):<fpage>433</fpage>–<lpage>448</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.jtbi.2006.10.027" xlink:type="simple">10.1016/j.jtbi.2006.10.027</ext-link></comment> <object-id pub-id-type="pmid">17188715</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref048">
+<label>48</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Mengistu</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Huizinga</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Mouret</surname> <given-names>JB</given-names></name>, <name name-style="western"><surname>Clune</surname> <given-names>J</given-names></name>. <article-title>The evolutionary origins of hierarchy</article-title>. <source>PLOS Comput Biol</source>. <year>2016</year>;<volume>12</volume>(<issue>6</issue>):<fpage>e1004829</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pcbi.1004829" xlink:type="simple">10.1371/journal.pcbi.1004829</ext-link></comment> <object-id pub-id-type="pmid">27280881</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref049">
+<label>49</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Arthur</surname> <given-names>W</given-names></name>. <article-title>Evolutionary developmental biology: developmental bias and constraint</article-title>. <source>eLS</source>. <year>2006</year>;. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/npg.els.0004214" xlink:type="simple">10.1038/npg.els.0004214</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref050">
+<label>50</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>MacNeil</surname> <given-names>LT</given-names></name>, <name name-style="western"><surname>Walhout</surname> <given-names>AJ</given-names></name>. <article-title>Gene regulatory networks and the role of robustness and stochasticity in the control of gene expression</article-title>. <source>Genome research</source>. <year>2011</year>;<volume>21</volume>(<issue>5</issue>):<fpage>645</fpage>–<lpage>657</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1101/gr.097378.109" xlink:type="simple">10.1101/gr.097378.109</ext-link></comment> <object-id pub-id-type="pmid">21324878</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref051">
+<label>51</label>
+<mixed-citation publication-type="book" xlink:type="simple">
+<name name-style="western"><surname>Bishop</surname> <given-names>CM</given-names></name>, <etal>et al</etal>. <source>Pattern recognition and machine learning</source>. <volume>vol. 1</volume>. <publisher-name>springer</publisher-name> <publisher-loc>New York</publisher-loc>; <year>2006</year>.</mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref052">
+<label>52</label>
+<mixed-citation publication-type="book" xlink:type="simple">
+<name name-style="western"><surname>Abu-Mostafa</surname> <given-names>YS</given-names></name>, <name name-style="western"><surname>Magdon-Ismail</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Lin</surname> <given-names>HT</given-names></name>. <source>Learning from data</source>. <publisher-name>AMLBook</publisher-name>; <year>2012</year>.</mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref053">
+<label>53</label>
+<mixed-citation publication-type="book" xlink:type="simple">
+<name name-style="western"><surname>Kauffman</surname> <given-names>SA</given-names></name>. <source>The origins of order: Self-organization and selection in evolution</source>. <publisher-name>Oxford university press</publisher-name>; <year>1993</year>.</mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref054">
+<label>54</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Gu</surname> <given-names>X</given-names></name>, <name name-style="western"><surname>Zhang</surname> <given-names>Z</given-names></name>, <name name-style="western"><surname>Huang</surname> <given-names>W</given-names></name>. <article-title>Rapid evolution of expression and regulatory divergences after yeast gene duplication</article-title>. <source>Proceedings of the National Academy of Sciences of the United States of America</source>. <year>2005</year>;<volume>102</volume>(<issue>3</issue>):<fpage>707</fpage>–<lpage>712</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.0409186102" xlink:type="simple">10.1073/pnas.0409186102</ext-link></comment> <object-id pub-id-type="pmid">15647348</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref055">
+<label>55</label>
+<mixed-citation publication-type="other" xlink:type="simple">Hinton GE, Srivastava N, Krizhevsky A, Sutskever I, Salakhutdinov RR. Improving neural networks by preventing co-adaptation of feature detectors. arXiv preprint arXiv:12070580. 2012;.</mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref056">
+<label>56</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Leclerc</surname> <given-names>RD</given-names></name>. <article-title>Survival of the sparsest: robust gene networks are parsimonious</article-title>. <source>Molecular systems biology</source>. <year>2008</year>;<volume>4</volume>(<issue>1</issue>). <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/msb.2008.52" xlink:type="simple">10.1038/msb.2008.52</ext-link></comment> <object-id pub-id-type="pmid">18682703</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref057">
+<label>57</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Akaike</surname> <given-names>H</given-names></name>. <article-title>A new look at the statistical model identification</article-title>. <source>IEEE transactions on automatic control</source>. <year>1974</year>;<volume>19</volume>(<issue>6</issue>):<fpage>716</fpage>–<lpage>723</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1109/TAC.1974.1100705" xlink:type="simple">10.1109/TAC.1974.1100705</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref058">
+<label>58</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Schwarz</surname> <given-names>G</given-names></name>, <etal>et al</etal>. <article-title>Estimating the dimension of a model</article-title>. <source>The annals of statistics</source>. <year>1978</year>;<volume>6</volume>(<issue>2</issue>):<fpage>461</fpage>–<lpage>464</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1214/aos/1176344136" xlink:type="simple">10.1214/aos/1176344136</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref059">
+<label>59</label>
+<mixed-citation publication-type="other" xlink:type="simple">Deng H, Runger G. Feature selection via regularized trees. In: The 2012 International Joint Conference on Neural Networks (IJCNN). IEEE; 2012. p. 1–8.</mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref060">
+<label>60</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Soule</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Foster</surname> <given-names>JA</given-names></name>. <article-title>Effects of code growth and parsimony pressure on populations in genetic programming</article-title>. <source>Evolutionary Computation</source>. <year>1998</year>;<volume>6</volume>(<issue>4</issue>):<fpage>293</fpage>–<lpage>309</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1162/evco.1998.6.4.293" xlink:type="simple">10.1162/evco.1998.6.4.293</ext-link></comment> <object-id pub-id-type="pmid">10030466</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref061">
+<label>61</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Palmer</surname> <given-names>ME</given-names></name>, <name name-style="western"><surname>Feldman</surname> <given-names>MW</given-names></name>. <article-title>Survivability is more fundamental than evolvability</article-title>. <source>PloS one</source>. <year>2012</year>;<volume>7</volume>(<issue>6</issue>):<fpage>e38025</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pone.0038025" xlink:type="simple">10.1371/journal.pone.0038025</ext-link></comment> <object-id pub-id-type="pmid">22723844</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref062">
+<label>62</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Masel</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Trotter</surname> <given-names>MV</given-names></name>. <article-title>Robustness and evolvability</article-title>. <source>Trends in Genetics</source>. <year>2010</year>;<volume>26</volume>(<issue>9</issue>):<fpage>406</fpage>–<lpage>414</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.tig.2010.06.002" xlink:type="simple">10.1016/j.tig.2010.06.002</ext-link></comment> <object-id pub-id-type="pmid">20598394</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref063">
+<label>63</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Rajon</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Masel</surname> <given-names>J</given-names></name>. <article-title>Evolution of molecular error rates and the consequences for evolvability</article-title>. <source>Proceedings of the National Academy of Sciences</source>. <year>2011</year>;<volume>108</volume>(<issue>3</issue>):<fpage>1082</fpage>–<lpage>1087</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.1012918108" xlink:type="simple">10.1073/pnas.1012918108</ext-link></comment> <object-id pub-id-type="pmid">21199946</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref064">
+<label>64</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Kashtan</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Mayo</surname> <given-names>AE</given-names></name>, <name name-style="western"><surname>Kalisky</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Alon</surname> <given-names>U</given-names></name>. <article-title>An analytically solvable model for rapid evolution of modular structure</article-title>. <source>PLoS computational biology</source>. <year>2009</year>;<volume>5</volume>(<issue>4</issue>):<fpage>e1000355</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pcbi.1000355" xlink:type="simple">10.1371/journal.pcbi.1000355</ext-link></comment> <object-id pub-id-type="pmid">19360090</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref065">
+<label>65</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Dekel</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Alon</surname> <given-names>U</given-names></name>. <article-title>Optimality and evolutionary tuning of the expression level of a protein</article-title>. <source>Nature</source>. <year>2005</year>;<volume>436</volume>(<issue>7050</issue>):<fpage>588</fpage>–<lpage>592</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nature03842" xlink:type="simple">10.1038/nature03842</ext-link></comment> <object-id pub-id-type="pmid">16049495</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref066">
+<label>66</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Striedter</surname> <given-names>GF</given-names></name>. <article-title>Précis of principles of brain evolution</article-title>. <source>Behavioral and Brain Sciences</source>. <year>2006</year>;<volume>29</volume>(<issue>01</issue>):<fpage>1</fpage>–<lpage>12</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1017/S0140525X06009010" xlink:type="simple">10.1017/S0140525X06009010</ext-link></comment> <object-id pub-id-type="pmid">16542524</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref067">
+<label>67</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Cherniak</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Mokhtarzada</surname> <given-names>Z</given-names></name>, <name name-style="western"><surname>Rodriguez-Esteban</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Changizi</surname> <given-names>K</given-names></name>. <article-title>Global optimization of cerebral cortex layout</article-title>. <source>Proceedings of the National Academy of Sciences of the United States of America</source>. <year>2004</year>;<volume>101</volume>(<issue>4</issue>):<fpage>1081</fpage>–<lpage>1086</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.0305212101" xlink:type="simple">10.1073/pnas.0305212101</ext-link></comment> <object-id pub-id-type="pmid">14722353</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref068">
+<label>68</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Russell</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Norvig</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Intelligence</surname> <given-names>A</given-names></name>. <article-title>A modern approach</article-title>. <source>Artificial Intelligence Prentice-Hall, Egnlewood Cliffs</source>. <year>1995</year>;<volume>25</volume>:<fpage>27</fpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref069">
+<label>69</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Forman</surname> <given-names>G</given-names></name>. <article-title>Quantifying counts and costs via classification</article-title>. <source>Data Mining and Knowledge Discovery</source>. <year>2008</year>;<volume>17</volume>(<issue>2</issue>):<fpage>164</fpage>–<lpage>206</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1007/s10618-008-0097-y" xlink:type="simple">10.1007/s10618-008-0097-y</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref070">
+<label>70</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Galanti</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Jung</surname> <given-names>A</given-names></name>. <article-title>Low-discrepancy sequences: Monte Carlo simulation of option prices</article-title>. <source>The Journal of Derivatives</source>. <year>1997</year>;<volume>5</volume>(<issue>1</issue>):<fpage>63</fpage>–<lpage>83</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.3905/jod.1997.407985" xlink:type="simple">10.3905/jod.1997.407985</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1005358.ref071">
+<label>71</label>
+<mixed-citation publication-type="book" xlink:type="simple">
+<name name-style="western"><surname>Matoušek</surname> <given-names>J</given-names></name>. <source>Geometric discrepancy: An illustrated guide</source>. <publisher-name>Springer</publisher-name>; <year>1999</year>.</mixed-citation>
+</ref>
+</ref-list>
+</back>
+</article>

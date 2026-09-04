@@ -409,3 +409,14 @@ prometheus_math/tests/killvector_fuzz_failures.json
 # Written by integration/sfe_battery.py -- CONTAINS A BEARER TOKEN.
 handoff.json
 handoff*.json
+
+# Ergon/Avida2003: keep source tarballs + derived artifacts, not the extracted tree
+ergon/avida2003/artifacts/x22/
+
+# Ergon/Kouvaris2017: keep source tarballs + derived text + registries,
+# not extracted trees or duplicated PDFs already in original/
+ergon/kouvaris2017/work/code_*/
+ergon/kouvaris2017/work/src1508/
+ergon/kouvaris2017/work/src1612/
+ergon/kouvaris2017/work/ft/
+ergon/kouvaris2017/work/*.pdf

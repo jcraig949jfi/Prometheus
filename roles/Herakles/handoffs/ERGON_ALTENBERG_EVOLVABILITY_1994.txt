@@ -1,0 +1,146 @@
+================================================================================
+HERAKLES -> ERGON DEEP-DIVE BRIEF 1 of 3
+ERGON_ALTENBERG_EVOLVABILITY_1994
+
+Issued by Herakles, 2026-09-03, under James's ruling
+roles/Herakles/prompts/RULING_V0_CONTINUE_HYPOTHESIS_DAMAGED_2026-09-03.txt
+sha256 31816dc2bb7c40c7a5252e164a7fdcb228509388927459279d45ca18fa10811a
+authorisation 3: "Give Ergon three deep-dives, not one."
+
+Ergon owns execution and its own tree. Herakles owns the registries this
+feeds. Nothing in this brief authorises Herakles to write into Ergon's tree,
+and nothing authorises compute (see HARD GATE below).
+================================================================================
+
+TARGET
+
+Altenberg, Lee (1994), "The Evolution of Evolvability in Genetic Programming",
+chapter 3 of Kinnear (ed.), Advances in Genetic Programming, MIT Press.
+Author-hosted PDF: https://dynamics.org/Altenberg/FILES/LeeEEGP.pdf
+Also relevant: https://dynamics.org/~altenber/PAPERS/CAEE/
+
+WHY THIS MATTERS TO PROMETHEUS
+
+This chapter killed the strong form of the Herakles opening hypothesis. It is
+also, per the ruling, potentially a PART rather than merely a citation:
+
+    structure X appears
+      -> X changes the offspring distribution
+        -> descendants have altered probability of useful variation
+          -> X is selected BECAUSE of that second-order effect
+
+That is candidate machinery for the evolution of evolvability. Not reasoning,
+not intelligence, but plausibly one of the parts below the threshold this
+programme hunts. It therefore belongs in BOTH the mechanism-parts registry
+(E_PARTS_REGISTRY.jsonl) and the detector-parts registry
+(Q_DETECTOR_PARTS_REGISTRY.md, entry det-part-01).
+
+THE GOVERNING QUESTION, from the ruling verbatim
+
+    What exactly was Altenberg able to demonstrate theoretically, what was
+    subsequently demonstrated empirically, and what portions of that mechanism
+    have never been instrumented longitudinally?
+
+WHAT IS ALREADY ESTABLISHED (do not re-derive; verify and extend)
+
+Confirmed 3-0 by an earlier adversarial verification pass, from the full
+29-page extracted text:
+
+  - Four numbered theorems exist: Thm 1 (Covariance and Selection, Price 1970),
+    Thm 2 (Evolution of the Fitness Distribution), Thm 3 (Evolvability),
+    Thm 4 (Evolution of Evolvability), plus Lemma 1 (Exploration Rate Limit).
+  - Thm 3 DECOMPOSES (it is not a bare equality; there is a sign condition)
+    the probability of producing individuals fitter than any existing, into a
+    search-bias term plus a parent-offspring regression term scaled by fitness
+    variance. Altenberg proposes it as a replacement foundation for the Schema
+    Theorem.
+  - Thm 4 gives a RATE LAW: evolvability, defined as the probability that a
+    duplicated random block of code increases fitness, increases at a rate
+    proportional to the variance in the constructional fitnesses of its blocks.
+    Altenberg's own words: "Fisher's fundamental theorem of Natural Selection,
+    but applied not to the fitness of the evolving programs, but to their
+    evolvability."
+  - The chapter is THEORY plus a deliberately simplified analytic model. It
+    performs no measurement campaign. Altenberg writes the quantity "should be
+    possible to measure in GP runs" and that tests "are currently under way".
+  - Stated simplifying assumptions: blocks can be added but not deleted or
+    disrupted; GP hill-climbing; constructional fitness e_i assumed constant,
+    which Altenberg himself flags as unrealistic.
+  - The Thm 4 proportionality constant nu_0/rho_t DECAYS as the program grows.
+  - Thm 4 addresses only the DUPLICATION half of the robustness-versus-
+    duplication question; it says nothing about robustness selection.
+
+Three precision corrections already logged, which this deep-dive must respect:
+  (i)   say "decomposes into", never "equals", for Thm 3;
+  (ii)  "computable" is Prometheus's editorial word, not Altenberg's -- the
+        search-bias term is defined against a random-search reference and is
+        NOT directly computable for a real GP system;
+  (iii) Thm 3 measures the LEVEL of reachability at one generation and Thm 4
+        the CHANGE; conflating them is an off-by-one-derivative error.
+
+WHAT THE DEEP-DIVE MUST PRODUCE
+
+1. THE EXACT QUANTITY. State the evolvability quantity in full, with its
+   definition, its units, its reference distribution, and every symbol
+   defined. Write the equations out. Distinguish the quantity Thm 3 bounds
+   from the quantity Thm 4 differentiates.
+
+2. WHAT THE PRICE DERIVATION ACTUALLY IMPLIES. Price's theorem is an identity,
+   so it constrains rather than predicts. State precisely what additional
+   assumptions convert the identity into the reported rate law, and what
+   happens to the law when each assumption is relaxed one at a time.
+   Specifically: what survives when blocks CAN be deleted or disrupted, and
+   what survives when constructional fitness is allowed to depend on context?
+
+3. CONSTRUCTIONAL FITNESS, PRECISELY. Define e_i as Altenberg does. Then
+   answer: is it measurable in a real system, and if so by what procedure and
+   at what cost? This is the crux -- if it is measurable, Prometheus should
+   measure it rather than invent a substitute; if it is not, say exactly which
+   term blocks measurement.
+
+4. THE THEORY / EMPIRICISM SPLIT. For every claim in the chapter, mark it as
+   MATHEMATICAL ARGUMENT or EXPERIMENTAL MEASUREMENT. The expectation from the
+   earlier pass is that essentially all of it is the former. Confirm or refute.
+
+5. THE FORWARD TRACE, WHICH IS THE REAL DELIVERABLE. Altenberg said tests were
+   under way. FIND OUT WHAT HAPPENED. Trace forward from 1994: Altenberg's own
+   later work; anyone who implemented the upward-mobility selection conjecture;
+   anyone who measured constructional fitness empirically; anyone who tested
+   Thm 4's rate law against data. Cite what you find, and state plainly where
+   the trail goes cold. A documented "this was never followed up" is a
+   first-class result and is exactly what the seat needs.
+
+6. THE LONGITUDINAL GAP. Assign a D-level (defined in
+   Q_DETECTOR_PARTS_REGISTRY.md) to Altenberg 1994 and to every follow-up you
+   find. Identify which portions of the mechanism have NEVER been instrumented
+   longitudinally. This directly answers the ruling's governing question.
+
+7. THE BOXED CONJECTURE. The chapter contains a boxed conjecture on
+   upward-mobility selection, brood selection and evolvability. State it
+   exactly. Then design the smallest experiment that would test it, with its
+   cost. If it was never tested, it is a candidate first experiment in its own
+   right and would be a genuine result rather than a methodology proof.
+
+EVIDENCE DISCIPLINE
+
+  - Primary source only. Read the chapter; do not summarise a summary.
+  - Every claim carries a locator: page, theorem number, equation number.
+  - Mark anything written from background knowledge as UNVERIFIED. An LLM may
+    retrieve, translate and triage; it may NOT establish causal equivalence,
+    replication, historical fact without a source, or significance.
+  - Where you are tempted to assert, write CLAIM_REQUIRES: <test or source>.
+
+HARD GATE
+
+No evolutionary compute may be run under this brief. Ruling authorisation 5:
+no compute until a specimen reaches ARTIFACT_IN_HAND or a reconstruction is
+proven sufficiently exact. This deep-dive is reading and formalisation only.
+Designing an experiment is in scope; running one is not.
+
+DELIVERABLE
+
+A document in Ergon's tree, plus rows for
+herakles/HERAKLES_HISTORICAL_COLLIDER_V0/Q_DETECTOR_PARTS_REGISTRY.md
+(det-part-01 expansion) and E_PARTS_REGISTRY.jsonl (part-structural-
+duplication). Herakles merges into the registries; Ergon owns the analysis.
+================================================================================

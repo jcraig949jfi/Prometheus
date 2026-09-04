@@ -1,0 +1,108 @@
+{
+  "specimen_id": "spec-evca-density",
+  "artifact": "The six evolved and hand-designed r=3 cellular-automaton rule tables of the EvCA density-classification programme",
+  "provenance_class": "RECOVERED_SPECIMEN",
+  "provenance_note": "These are the original evolved genomes, produced by the original investigators between 1993 and 1995 and preserved only as printed hexadecimal in published tables. The bytes here were reassembled from those printed tables. Two documented repair steps were required; both are recorded under extraction_hazards. Nothing was inferred or filled in.",
+  "recovered": "2026-09-03",
+  "recovered_by": "Herakles seat, artifact hunt under ruling authorisation 4",
+  "verified_by": "independent re-derivation and execution by the seat, not by the recovering agent",
+
+  "encoding_convention": {
+    "table_length_bits": 128,
+    "neighbourhood": "7 cells, radius r=3, periodic boundaries",
+    "bit_order": "Output bits in lexicographic order starting from the all-0s neighbourhood at the LEFTMOST bit of the 128-bit string. Stated explicitly in the EvCA review Table 1 caption: 'To recover the 128-bit string giving the CA look-up table output bits, expand each hexadecimal digit (the first row followed by the second row) to binary. The output bits are then given in lexicographic order starting from the all-0s neighborhood at the leftmost bit in the 128-bit binary string.'",
+    "neighbourhood_msb": "The leftmost neighbour, cell i-3, is the most significant bit of the neighbourhood index. NOT stated in either source; determined empirically and confirmed here by deriving maj and GKL from their definitions and matching all 32 published hex digits.",
+    "index_formula": "idx = sum over j in 0..6 of cell[i-3+j] << (6-j); output = table_bit[idx] counting from the left"
+  },
+
+  "rules": [
+    {
+      "name": "maj",
+      "hex": "000101170117177f0117177f177f7fff",
+      "kind": "hand-designed (simple majority)",
+      "published_P": {"149": 0.000, "599": 0.000, "999": 0.000},
+      "measured_P149_seat": 0.000,
+      "source": "EvCA review Table 1",
+      "verification": "DERIVED FROM FIRST PRINCIPLES (output 1 iff popcount >= 4) and matches the review's printed hex in ALL 32 DIGITS.",
+      "confidence": "certain"
+    },
+    {
+      "name": "exp",
+      "hex": "0505408305c90101200b0efb94c7cff7",
+      "kind": "GA-evolved, block-expanding strategy",
+      "published_P": {"149": 0.652, "599": 0.515, "999": 0.503},
+      "measured_P149_seat": 0.664,
+      "source": "EvCA review Table 1; also EvEmComp Table 1",
+      "verification": "executed; within about 2.5 measurement SE of published, plausibly a max-relaxation-steps convention difference",
+      "confidence": "high"
+    },
+    {
+      "name": "par",
+      "hex": "0504058705000f77037755837bffb77f",
+      "kind": "GA-evolved, particle-based strategy",
+      "published_P": {"149": 0.769, "599": 0.725, "999": 0.714},
+      "measured_P149_seat": 0.765,
+      "source": "EvCA review Table 1; also EvEmComp Table 1",
+      "verification": "executed; within 1 SE of published",
+      "confidence": "certain"
+    },
+    {
+      "name": "particle1",
+      "hex": "1000022441170231155f57dd734bffff",
+      "kind": "GA-evolved, particle-based strategy, different run",
+      "published_P": {"149": 0.742, "599": 0.718, "999": 0.701},
+      "measured_P149_seat": 0.733,
+      "source": "EvEmComp Table 1 ONLY. Appears in neither the review nor the PPSN III paper.",
+      "verification": "executed; within about 2 SE of published",
+      "confidence": "high",
+      "note": "This genome was one printed table away from being lost."
+    },
+    {
+      "name": "particle2",
+      "hex": "031001001fa00013331f9fff5975ffff",
+      "kind": "GA-evolved, particle-based strategy, different run",
+      "published_P": {"149": 0.755, "599": 0.696, "999": 0.670},
+      "measured_P149_seat": 0.742,
+      "measured_scaling_seat": {"149": 0.750, "599": 0.695, "999": 0.694},
+      "source": "EvEmComp Table 1 ONLY. Appears in neither the review nor the PPSN III paper.",
+      "verification": "executed; the recovering agent reported an anomaly here (performance apparently RISING with lattice size). THE SEAT COULD NOT REPRODUCE THAT ANOMALY. Independent measurement shows normal monotone degradation with N. The reported anomaly is attributed to the agent's own scoring, not to the digits or the rule.",
+      "confidence": "high",
+      "note": "This genome was one printed table away from being lost."
+    },
+    {
+      "name": "GKL",
+      "hex": "005f005f005f005f005fff5f005fff5f",
+      "kind": "hand-designed (Gacs-Kurdyumov-Levin)",
+      "published_P": {"149": 0.816, "599": 0.766, "999": 0.757},
+      "measured_P149_seat": 0.820,
+      "source": "EvEmComp Table 1",
+      "verification": "DERIVED FROM ITS DEFINITION (if cell is 0, majority of {i, i-1, i-3}; if 1, majority of {i, i+1, i+3}) and matches the printed hex in ALL 32 DIGITS. Executed to 0.820 against a published 0.816.",
+      "confidence": "certain"
+    }
+  ],
+
+  "published_error_found": {
+    "where": "EvEmComp (Crutchfield & Mitchell, PNAS 92:10742-10746, 1995), Table 1, the maj row",
+    "printed": "000101170117177701171777177f7fff",
+    "correct": "000101170117177f0117177f177f7fff",
+    "differing_hex_positions": [15, 23],
+    "demonstration": "Hex position 15 covers neighbourhood indices 60-63 and position 23 covers 92-95. Every one of those eight neighbourhoods has popcount >= 4, so the simple-majority rule must output 1 for all of them, which requires the nibble f, not 7. Neighbourhood 0111100 (index 60) has popcount 4, a majority of 7, so its output bit must be 1.",
+    "status": "CONFIRMED by independent first-principles derivation by the seat. The EvCA review paper prints it correctly; the PNAS version does not.",
+    "significance": "A reproduction that trusted the PNAS table for the majority baseline would have used a rule that is not the majority rule. The error is harmless for the reported result, because maj scores 0.000 either way, but it is a real defect in a printed specimen and is exactly the class of thing that silently corrupts a reconstruction."
+  },
+
+  "extraction_hazards": {
+    "note": "Both hazards produce plausible-looking wrong data rather than an obvious failure. Recorded because they generalise to any recovery of a printed table from a 1990s PDF.",
+    "hazard_1_row_pairing": "pdftotext -layout mis-pairs the continuation rows, moving each rule's second hex row onto the following rule's line. The resulting tables are syntactically valid and score near zero. The seat confirmed the discriminating power directly: deliberately mis-pairing par's first row with exp's second row yields a rule scoring 0.010, effectively dead.",
+    "hazard_2_ligature_map": "evca-review.pdf has a broken Computer Modern ligature map: the glyph extracted as one character is really the two-character sequence ff. Glyph width 5.81 against 3.03 for a single f confirms it. The same defect renders body text as 'flrst' and 'difierent'.",
+    "resolution": "The table was resolved three independent ways that all agree: per-character x/y coordinates, pdftotext table mode, and executing the resulting rules.",
+    "general_lesson": "For a printed historical specimen, EXECUTION is the only trustworthy transcription check. Two of these six rules are derivable from their definitions and served as the calibration for the other four."
+  },
+
+  "what_did_not_survive": {
+    "simulation_source_code": "NOT FOUND. The project site has directory indexing enabled and was fully enumerated: every file is html, pdf, ps or ps.gz, with no archive or source extension anywhere. Software, code, data, rules, download and src paths all return 404. The Santa Fe FTP host is DNS-dead. GitHub returns only modern third-party reimplementations. First-party corroboration: Hordijk's own retrospective describes the surviving site as containing the papers only.",
+    "run_logs_populations_seeds": "No evidence of survival in any checked location.",
+    "one_channel_still_open": "The Internet Archive CDX and replay API returned HTTP 429 on every attempt across roughly fourteen retries. The lightweight availability API confirms snapshots exist for the pre-migration Santa Fe project site and for the later site. This is the single unchecked channel and should be pulled by a later un-throttled session.",
+    "honest_status": "This is a DOCUMENTED negative for the code, not an asserted one. It names what was checked. It does not claim the code never existed or cannot be found."
+  }
+}

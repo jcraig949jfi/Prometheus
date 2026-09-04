@@ -1,0 +1,612 @@
+                                                   Meta-Learning an Evolvable Developmental Encoding
+
+                                       Milton L. Montero, Erwan Plantec, Eleni Nisioti, Joachim W. Pedersen, and Sebastian Risi
+
+                                                                                  IT University of Copenhagen, Denmark
+                                                                                              {mlle,sebr}@itu.dk
+
+arXiv:2406.09020v2 [cs.NE] 5 Jul 2024                                Abstract                               available. More and more powerful generative models have
+                                                                                                            shown that this approach can create a large diversity of arte-
+                                          Representations for black-box optimization methods (such as       facts. Recently, generative models have been combined with
+                                          evolutionary algorithms) are traditionally constructed using      evolutionary approaches, by using them to search through
+                                          a delicate manual process. This is in contrast to the repre-      the learned latent spaces of Generative Adversarial Net-
+                                          sentation that maps DNAs to phenotypes in biological or-          works (GANs) and Variational Auto-encoders (VAEs) (Volz
+                                          ganisms, which is at the heart of biological complexity and       et al., 2018; Bontrager et al., 2018). To extend the expres-
+                                          evolvability. Additionally, the core of this process is fun-      sivity of these models beyond what was part of the original
+                                          damentally the same across nearly all forms of life, reflect-     training data, they can also be trained further on high-quality
+                                          ing their shared evolutionary origin. Generative models have      solutions discovered through evolution (Gaier et al., 2020;
+                                          shown promise in being learnable representations for black-       Moreno et al., 2018) However, while these representations
+                                          box optimization but they are not per se designed to be easily    generate diverse and high-quality solutions, they are not di-
+                                          searchable. Here we present a system that can meta-learn          rectly optimized for being easily searchable. A representa-
+                                          such representation by directly optimizing for a representa-      tion might include the artefacts we are looking for but this
+                                          tion's ability to generate quality diversity. In more detail, we  property is only really useful if the employed optimization
+                                          show our meta-learning approach can find one Neural Cellu-        method is able to navigate the fitness landscape induced by
+                                          lar Automata, in which cells can attend to different parts of     that representation (Volz et al., 2023; Ashlock et al., 2012).
+                                          a "DNA" string genome during development, enabling it to
+                                          grow different solvable 2D maze structures. We show that             The main insight in this paper is that it is possible to
+                                          the evolved genotype-to-phenotype mappings become more            learn a representation that is easily searchable by a partic-
+                                          and more evolvable, not only resulting in a faster search but     ular black-box optimization algorithm, i.e. it can be used to
+                                          also increasing the quality and diversity of grown artefacts.     generate a diversity of high-quality solutions using an evo-
+                                                                                                            lutionary algorithm. We achieve this by using a novel meta-
+                                                             Introduction                                   learning approach in combination with a variant of a de-
+                                                                                                            velopmental encoding, namely a Neural Cellular Automata
+                                       Evolutionary computation algorithms used for black-box               (NCA) (Mordvintsev et al., 2020; Palm et al., 2022; Earle
+                                       optimization have two fundamental requirements: 1) deter-            et al., 2022; Sudhakaran et al., 2021; Niklasson et al., 2021).
+                                       mining the data structure that describes valid solutions and         NCAs have been shown to be very expressive, being able
+                                       2) the variation operations that modify said solutions during        to encode a large diversity of different artefacts with inter-
+                                       optimisation (Rothlauf and Rothlauf, 2006; Ashlock et al.,           esting regularities without the need to specifically bias the
+                                       2012). For complex problems, a well-chosen representation            representations towards them. In contrast to previous NCA
+                                       can significantly enhance the effectiveness of the particu-          work, the particular NCA representation in this paper can
+                                       lar operators being used. Researchers often imposing prop-           be conditioned on a "DNA" input string, to which each cell
+                                       erties such as symmetric and repeating structures (Stanley,          can attend during growth, allowing one NCA to produce a
+                                       2007), or modularity (Doncieux and Meyer, 2004; Schrum               diversity of artefacts (Figure 1a). In other words, we sep-
+                                       and Miikkulainen, 2014). However, crafting the "right" rep-          arate the genotype-to-phenotype mapping (NCA) from the
+                                       resentations on case-by-case basis is a challenging problem,         genomic input (DNA). To find one NCA that can generate a
+                                       since it requires identifying the characteristics of the design      diversity of high-quality solutions, we evaluate its ability to
+                                       space over which such properties could be imposed. Op-               perform a quality-diversity (QD) search (Lehman and Stan-
+                                       timal representations strike a balance between emphasizing           ley, 2011; Mouret and Clune, 2015): For each NCA, we run
+                                       high-quality solutions, making them readily accessible, and          MAP-Elites in the inner loop, evolving a population of DNA
+                                       supporting a diversity of potential solutions, allowing for ex-
+                                       tensive exploration of the search space.
+
+                                          Instead of designing representations by hand, they can
+                                       also be learned when a dataset of high-quality solutions is
+string to maximize that NCA's QD score (Figure 1b).               Welling, 2013) have allowed representations to be directly
+   We compare this approach with an alternative model that        learned from example data. Approaches that employ evo-
+                                                                  lutionary algorithms to search inside these learned latent
+uses a continuous embedding as a genotype and show that it        spaces for artefacts with specific properties, also called la-
+is superior on a simple level generation task. Additionally,      tent variable evolution (LVE) approaches (Bontrager et al.,
+we analyze the properties of the system, specifically how         2018), have been applied to a variety of different domains
+the DNA effectively guides development. We also show that         (Volz et al., 2018; Bontrager et al., 2018; Olesen et al.,
+the genotype-to-phenotype mapping becomes more evolv-             2021).
+able over time, reducing the time it takes to find high-quality
+and diverse solutions. Finally, we study the properties of the       If no data set with high-quality solutions is available for
+evolved DNA genomes using a variety of different measures         a supervised learning approach, generative models can be
+such as total disentanglement and information gap.                repeatedly trained through a bootstrapping approach on dis-
+                                                                  covered high-quality solutions (Moreno et al., 2018; Gaier
+                      Background                                  et al., 2020; Torrado et al., 2020).
+
+Evolvability                                                      Neural Cellular Automata
+
+"Evolvability" is a concept in evolutionary biology that          Neural Cellular Automata (NCA), replace the traditional
+refers to the capacity of a biological system -- such as a        lookup table in Cellular Automata with a learned neural net-
+population, an organism, or a genetic architecture -- to gen-     work. Importantly for this paper, they have been shown to be
+erate heritable phenotypic variation that can be acted upon       a very expressive encoding, able to grow complex 2D image
+by natural selection. In simpler terms, it describes how ca-      (Mordvintsev et al., 2020), video game levels (Earle et al.,
+pable a system is of evolving. In this paper, we define evolv-    2022), and even 3D Minecraft structures (Sudhakaran et al.,
+ability as the capacity of an organism to "generate heritable     2021).
+phenotypic variation" (Kirschner and Gerhart, 1998).
+                                                                     Additionally, these systems were shown to be robust to
+   Lehman et al. (2016) showed that there is a fundamental        corruptions introduced during the generative process. How-
+connection between a more divergent selection process and         ever, the standard NCA approach is limited in the fact that
+evovability, both on the individual and population level. In      each NCA only grows one particular pattern, thereby limit-
+the work presented here, we specifically optimize for evolv-      ing their usability as a generative model.
+ability by rewarding individual NCAs for a high QD-score.
+                                                                     Several related works have attempted to overcome this
+   Alternatively, it is possible to directly optimize for Evolv-  limitation in different ways. Sudhakaran et al. (2021) ex-
+ability. In an approach (conveniently) called Evolvability        tended the basic NCA model to use one-hot vectors as in-
+Search (Mengistu et al., 2016), the potential for future di-      puts. Each of these vectors would correspond to a different
+versity in an individual is measured by the behavioral diver-     class in the emoji dataset introduced in Mordvintsev et al.
+sity of its direct offspring. Organisms that exhibit greater      (2020), and can be used to modify the NCA states in a class-
+variation among their offspring are then directly optimized       dependent way during development. Thus the NCA could
+for. Follow up work, called Evovability ES, showed that           be trained to generate more than output in accordance with
+it is also possible to directly reward representations to be      the target vector.
+highly evolvable without the need for this computational
+intensive estimation by optimizing an evolvability-inspired          On the other hand, Palm et al. (2022) showed how the
+objective (Gajewski et al., 2019). In general, however, these     NCA approach could be combined with the autoencoder
+approaches optimize for diversity and do not take quality         architecture to generate a distribution of examples without
+into account (beyond measuring viability).                        class supervision, though it does require a dataset of exam-
+                                                                  ples for training, much like any other auto-encoder variant.
+Learning Representations
+                                                                     A different approach introduced in Earle et al. (2022) is
+Learning representations has a long history in evolutionary       to forgo any attempt to learn an NCA that can generate a
+computation but is still not very well understood (Scott and      large diversity of artefacts and instead learn a population of
+Bassett, 2015; Bongard and Pfeifer, 2003; Simo~es et al.,         NCAs, each of which generates a different instance. To en-
+2014; Altenberg, 1994). Particularly relevant to our ap-          sure that the NCA population is not limited to known classes
+proach is the work by Simo~es et al. (2014) in which the au-      they use quality-diversity training, defining a feature space
+thors evolve both a genome and the genotype-to-phenotype          of interest that the training procedure must cover using the
+mapping. However, in contrast to our approach, the map-           different NCA instances (their model was applied to simple
+ping is not a developmental encoding and not optimized to         2D level generation).
+create a large diversity of high-quality solutions.
+                                                                                          Methods
+   Supervised methods have also been successfully em-
+ployed to learn representations. Generative models such as        We now describe both the general architecture of our model
+GANs (Goodfellow et al., 2020)) and VAEs (Kingma and              and its training method. Based on the properties observed
+a)  ADC BC A            b)                Evo Strat                            coverage * quality
+                                 DNA1 DNA2                      tell
+
+    ej                      ask       S(d)
+
+                                                                DNAM  ask                                                                                                                                                                                                                                 Emitter
+
+        Attentioncit        S1                                                                                                                                                                                                                                                                      tell
+                +
+                                                                                                                                                                                                                                                                                            Symmetryuit
+                            S2                                                                                                                                                                                                                                                                            QD Repertoire
+                                                                                                                                                                                                                                                                                                                                             1
+
+                                                                      f, b                                                                                                                                                                                                                                         5                            Connected components
+
+        hit                 S3                                                                                                                                                                                                                                                                                     10
+
+                                                                                                                                                                                                                                                                                                                   15
+
+                            SN                                                                                                                                                                                                                                                                                                              20
+                                                                                                                                                                                                                                                                                                          Path Length
+
+Figure 1: Meta-learning DNA-like representations. (a) The sketch of DNA-guided development. A component i of a
+developmental system with some hidden state hti sends and receives information from other components in the system (blue
+arrows). Additionally, the DNA encoding (gray) provides a global set of instructions via state-dependent decoding mechanism
+(red). The decoding mechanism produces an output cti which conditions the state vector (plus sign) producing a vector uti which
+is then used for any downstream operation in the node (e.g. determining which information to send to other components). (b)
+
+General procedure to train a parameterized developmental system S (e.g. NCA). An outer loop evolutionary strategy generates
+
+a population of possible parameters for S. Each of these (blue) is evaluated (inside the red square) on their capacity to fill an
+
+archive of solutions (in this example, simple mazes) defined according to their quality and diversity values. The developmental
+
+system must achieve this by maximizing its usage of the potential structure in the DNA-like encodings (red).
+
+in biological developmental systems, the proposed encod-        features characterize relevant entities. However, unlike the
+ing should exhibit the following three properties: (1) The      approach in Earle et al. (2022) it is not the parameters of the
+genotype-to-phentoype mapping should be able to gener-          genotype-to-phenotype mapping which we wish to train (i.e.
+ate diverse entities when conditioned on different DNA          the NCAs) but of the DNA input. This will require us to use
+genomes. Additionally, each cell should be able to attend to    a slightly different training scheme, which we describe next
+different parts of the DNA-string during the growth process,    along with the proposed developmental system.
+allowing the DNA to guide this self-organizing process.
+                                                                Attention-based guidance
+   (2) The latent space described by such as mapping should
+possess structure, preferably one that is easy to manipu-       Given a genotype-to-phenotype mapping composed of state-
+late/explore. (3) Ideally, the system should not rely on su-    ful components (such as cells or nodes), we define a
+pervised training. That is, it should at most receive some      guidance mechanism as a function that performs state-
+guidance regarding what are the properties of interest for a    conditioned decoding of a shared genome. For a "DNA"-like
+specific domain, but should not require specific examples.      genome, we can use a standard attention mechanism (Bah-
+                                                                danau et al., 2014) as decoding mechanism as follows.
+   It is easy to satisfy the first requirement by conceptual-
+izing the generative process as a self-organizing system un-       Let hti be the state vectors for at time t for neurons i's
+folding through time. The DNA genome can then bias state        and d be the DNA with characters drawn from the alphabet
+updates at each time step.                                      A. The system first translates each character dj of d into a
+                                                                token embedding ej (with j being the character position) to
+   The second property can be satisfied by taking inspiration   create the matrix E = [e1, e2, ...]. It then produces a control
+from DNA itself and parameterize it as a string of charac-      (or conditioning) vector by applying the attention function1:
+ters. Notice that this is similar to the LLM approach used
+in Nasir et al. (2023) except that we let the model define      cti = v(E)T · softmax  E ·q(hti)                                                                                                                                                                                                                   (1)
+it's own language based on how the encoding is used by the                                   d
+generative process. This could potentially overcome a limi-
+tation of LLMs -- our own language may not be sufficiently      where functions q : R|h|  R|e| and v : R|e|  R|h|
+adequate to describe how a developmental process should         correspond to the query and value projections (the latter be-
+unfold over time in a general and robust way.                   ing applied row-wise) whose parameters must be learned by
+
+   As for the final property, using quality-diversity training      1Notice that we are describing the per-query-operation as op-
+enables us to forgo having to provide a set of examples for     posed to the more standard, but slightly harder to read, batched
+supervised training. Instead, we can define what interesting    operation that is usually presented.
+the developmental model, and d = |d| is a normalisation          genotype-to-phenotype mapping at generating diverse out-
+constant (see Figure 1a). Notice that we do not require a        puts for different inputs.
+key projection since, unlike self-attention, the DNA string
+remains constant throughout the generative process.                 Given a developmental genotype-to-phenotype mapping
+                                                                 S : D  Ro which generates an output from a genome d,
+   The resulting control vector can then be used to update       we can evaluate said mapping by computing quality and di-
+the internal state of each component:                            versity values for its corresponding output. This enables us
+                                                                 to run QD optimization of the encoding space and determine
+hit+1 = update(cit, hit)  (2)                                    how good the mapping is a exploiting the representation ca-
+                                                                 pacity of the genotypes.
+where the the function update(.) can be any (learnable) func-
+tion which produces an output of the same shape as the              More formally, let A be the archive resulting from a QD
+states. The vector uti can then be used by downstream opera-     algorithm run for a particular mapping S, and let f : Ro 
+tions, enabling the DNA to indirectly guide these operations.    R and b : Ro  Rb the fitness and descriptor functions
+                                                                 respectively. The overall fitness of S is defined as:
+   Overall, this mechanism should thus enable two things.
+First, providing different inputs to the system should change     (S)  =  |A|     ·        f (S(di))  (3)
+its developmental trajectory, and thus, guide it towards dif-
+ferent outcomes. Second, because the decoding depends on                  |A|max     di A
+the state of each component, these can learn to take on differ-
+ent roles during the unfolding of the developmental process,     where the first term is the coverage achieved: the ra-
+potentially making said process more expressive and robust.      tio between the number solutions in the archive (|A| =
+Notice that this directly solves the aforementioned main lim-
+itation found in Sudhakaran et al. (2021), since the system         diA 1) and the maximum number of solutions it could
+is not restricted to one-hot encoded goals.                      store |A|max, which depend on the binning of the descriptor
+                                                                 space Rb. The second term is the accumulated fitness of all
+Meta-learning using Quality-Diversity algorithms                 the solutions stored.
+
+Provided with this guidance mechanism we wish to train the          With this procedure we can evaluate a mapping regard-
+developmental mapping (for brevity just mapping) to exploit      less of implementation. However, if said mapping is a neu-
+the potential structure of the DNA genome in order to gener-     ral network (as in our experiments), we still need to fit its
+ate a diverse set of potential outputs. However, unlike more     parameters. To achieve this we can use the above score as
+traditional generative models, the system should learn this      the objective function for a meta-training procedure using an
+in an open-ended way, without having to provide a dataset        evolutionary strategy:
+of examples.
+                                                                 1. Initialize an initial population of mappings S0 for the evo-
+   Quality-Diversity (QD) algorithms (Pugh et al., 2016) are        lutionary algorithm
+a popular class of algorithms, which do not require such ex-
+plicit supervision while aiming to discover a diverse set of     2. For a number of training iterations do n:
+high-quality solutions for a particular problem. In particu-
+lar, we use the MAP-Elites algorithm (Mouret and Clune,           (a) Evaluate each si with the above procedure.
+2015), which achieves this by combining three components:         (b) Adjust the parameters of the evolutionary strategy ac-
+a measure of the quality of the solutions, a set of behavioral
+descriptors that define the space of interesting solutions, and        cording to  (si)
+an evolutionary algorithm for searching the space.
+                                                                 3. After n iterations the set Sn contains the best performing
+   At each training iteration an archive containing the best-       developmental systems.
+performing solutions for each discovered descriptor combi-
+nation is kept. The evolutionary algorithm then generates           In other words, the outer loop is tasked with optimizing
+new potential solutions for which both their descriptor val-     the developmental system's towards producing as much high
+ues and quality is determined. If a new descriptor combi-        quality coverage as possible using the indirect encoding's
+nation is discovered, it is added to the archive, otherwise it   inherent structure and variability.
+replaces the older one if it is of higher quality. Thus the al-
+gorithm progressively maximizes the coverage of the space           An illustration of the overall approach can be seen in Fig-
+defined by the behavioral descriptors with quality solutions.    ure 1b. In the next sections we will apply this approach to
+                                                                 a standard self-organizing system -- a Neural Cellular Au-
+   Traditionally, this type of approach is applied to the prob-  tomata -- to illustrate its ability to generate diverse solutions
+lem of finding a set of parameters (e.g. neural network          given a simple input encoding.
+weights) that generate a diverse set of outputs. Here we
+propose to use these algorithms to evaluate the ability of a                          Experiments
+
+                                                                 We illustrate how the system can be trained with a simple
+                                                                 maze generation task. In this task the model must generate
+124                                                                                                 0.98                                           3000
+                                    40                                                                                                             2800
+                                                                                                                                                   2600
+                                                                                                                                                   2400
+123                                 35                                                                        0.96                                 2200
+
+122                                 30                                                                                                             2000
+mean fitness
+                                                coverage12125                                                 0.94                                 1800  epochs
+                                                                                                                                                   1600
+                                                                                              quality ratios                                       1400
+120                                 20                                                                                                             1200
+
+119                                 15                                                                        0.92                                 1000
+
+118                                 10                                                                                                             800
+                                                                                                                                                   600
+                                                                                                                                                   400
+117                                 5                                                                         0.90                                 200
+
+     0  2 inne4r loop s6teps 8  10      0  2 inne4r loop s6teps 8   10                                              0  2 inne4r loop s6teps 8  10  0
+
+Figure 2: Progression of QD metrics across training. Left panel: the mean fitness scores (y-axis) for solutions in an archive
+at each step of an inner loop run (x-axis) at different points during training (different colored curves). Middle panel: Same but
+for the coverage. Right: The quality ratio at each time-step defined as the average quality of the solutions in the archive relative
+to the maximum possible. These results demonstrate the evolvability of the NCAs. Early in evolution, NCAs produce neither
+high coverage nor high-quality solutions. After the NCA training (i.e. the genotype-to-phenotype mapping), DNA genomes
+can quickly be evolved that result in high-quality and diverse phenotypes. Note that the first and last panel are similar, but
+complement each other since the latter tracks the maximum performance that could have been achieved without increasing
+coverage.
+
+mazes by placing either traversable or wall tiles in a pre-         formance. up This function is a simple extension of the one
+determined grid of a particular size. We define the qual-           presented in Springer and Kenyon (2021), which only uses
+ity function f (.) as the number of connected components            the sigmoid component and thus limits the state values to
+in the in the maze (with 1 being the best value). The de-           only increase in size.
+scriptor function b(.) determines the location of the maze
+along the axes of maximum minimum-path-length between                  Our choice of QD algorithm in the inner loop is the stan-
+all pairs of valid tiles and symmetry of the levels (averaged       dard MAP-Elites (Mouret and Clune, 2015) with an archive
+between horizontal and vertical). The grid size is 16 × 16          of 500 solutions maximum and a batch size of 100. The
+which in turn means that path lengths can go from 0 to              algorithm runs for a maximum of 10 iterations, emitting a
+256/2 + 16 = 144 (i.e. a zig-zagging pattern across the             new batch of solutions using point-wise mutations and uni-
+full width and height of the image, with a cross-section of 1       form cross-over (each of which is used to generate half of
+cell). Symmetry can range from 0 to 128, where 128 equals           the batch). For the former, each character has a 1/|d| chance
+perfect vertical and horizontal symmetry.                           of being modified, picking one of the other characters with
+                                                                    uniform probability p = 1/(|A| - 1). For cross-over, half
+   For this problem, the developmental system used is an ex-        of the positions in two randomly drawn solutions in the
+tension of a Neural Cellular Automata model (Mordvintsev            archive are picked uniformly at random and their characters
+et al., 2020; Earle et al., 2022). The extension is straight-       are swapped. For the outer loop, any evolutionary strategy
+forward following the description in the previous section.          can be applied. In our experiments, we use Covariance Ma-
+That is, we use the state of each cell as queries for the           trix Adaptation (CMA-ES, Hansen and Ostermeier (2001))
+attention-based decoding mechanism. For the DNA encod-              with a population size of 100 and keep all other parameters
+ing, first we set the string size |s| = 8 the alphabet size to      as found in the Evosax implementation (Lange, 2023).
+|A| = 4. This gives a total of 65,536 possible combinations.
+Each cell in the NCA has a state size of 9. In our implemen-           All the code for our experiments was implemented in Jax
+tation, the update function is defined as:                          (Bradbury et al., 2018) using Equinox (Kidger and Garcia,
+                                                                    2021), Evosax (Lange, 2023) and Qdax (Chalumeau et al.,
+        hit+1 = hti+1 + uti,               (4)                      2023). Code to run all the experiments is available here.
+
+        uti = sign(zis)  (zia),            (5)                                               Results
+
+where [zsi ; zia] = M LP (cit) (i.e. the vector is split in half).  We will first analyse the results for the trained model, and
+This non-linearity enables the model to move in any direc-          then discuss some important ablations. Figure 2 shows how
+tion of the latent space (by using the sign function) while         the models' evolvability progresses throughout training. We
+using the gating to stop the state from being modified if re-       define evolvability in this context as the ability of the model
+quired. We also normalize the resulting hidden state using          to create high-quality solutions that differ from preexisting
+the standard euclidean norm, which we found improves per-           high-quality ones. In other words, the solutions added to the
+a)                                                                     b)
+
+                                                                   1
+
+                                                                   10  Connected components
+
+                                                                   20
+                                                                   30
+                                                                   40
+
+Figure 3: Repertoires during inner loop exploration of the encoding space. a) Each panel shows a different state of the
+archive during an inner loop run for a trained model. Yellow represents higher-quality solutions and purple low-quality ones
+as defined by the number of connected components in the maze, with lower being better. b) Example mazes all grown by the
+same NCA shown together with the associated DNA sequences. The model succeeds at covering almost half of the descriptor
+space with high-quality solutions. These have different sizes and shapes, showing that the model is effective at controlling its
+growth. Some similarities between the DNAs can be observed, especially in the top row examples.
+
+archive at each iterations would ideally be as high quality as     a large section of the space in only 10 iterations. For compar-
+the pre-existing ones and the model should learn to do this        ison, Earle et al. (2022) trains the model on a similar prob-
+early in the inner loop optimization, i.e. it must be easily       lem for 10000 iterations on a 3000 sized parameters space vs
+searchable.                                                        only 10 and 8 in our solution (albeit achieving higher cover-
+                                                                   age and not requiring a meta loop). Additionally, we observe
+   Following this definition, it is easy to see that the system    some structure in the corresponding DNA strings.
+does indeed increase in evolvability as training progresses
+(as determined by the color of the curves). Not only does             Figure 4 on the other hand shows several steps of a trained
+the performance at the start of each inner loop become pro-        NCA while generating a level. In the top row we see, how
+gressively higher further along in training, but so does the       starting from the center of the grid, the model slowly builds a
+rate of change in both total quality and coverage.                 pattern of valid tiles. In this case, the model achieves perfect
+                                                                   quality, so as growth progresses it must decide to convert
+   Importantly, the model could solve the problem via one of       cells into valid tiles in order to maintain connectivity.
+two strategies (or a combination of both): first, compute a set
+of solutions that achieve maximum coverage, then improve              In the bottom row, we see how the model attends to differ-
+upon them; or it could first obtain a set of solutions of high     ent positions in the DNA as development progresses. This
+quality and then mutate them to achieve maximum coverage.          provides a simple visualization of how the model uses the
+The latter is more inline with our notion of evolvability and      DNA in potentially interesting ways. Notice that cells at the
+the panel in Figure 2 indicates that it is indeed the latter that  edge of the generated map (adjacent to black tiles) predomi-
+the system uses.                                                   nantly attend to the first position of the DNA as they become
+                                                                   alive, but can switch to predominantly attending to other po-
+   In more detail, the results in said panel show the quality      sitions. On the other hand, cells in the central diagonal of
+ratio -- the ratio of average quality for all solutions in the     the pattern stay constant, attending to the second position in
+archive at each time-step over the maximum possible value.         the DNA, which suggests that they use this as a reference for
+Thus a value close to 1 for a particular iteration indicates that  which pattern to construct.
+the model first optimizes and then covers the space. This ef-
+fect also appears early in training, with the model adopting       Analysing the system
+said strategy within the first 200 outer loop iterations. This
+happens in spite of the fact that coverage and has a mul-          How does the developmental system use the genotype space
+tiplicative effect on the total performance f , which would        to achieve its goal? Does any structure emerge as the re-
+favor the opposite strategy. Note however that this does not       sult of training? In other words, are specific positions or
+by itself imply that the model is able to generalise -- i.e.       characters in the DNA representation associated with spe-
+generate solutions far outside the space that it tends to cover    cific properties of the output?
+during training. We will discuss possible implications of this
+issue in the final section.                                           Testing whether latent representations in neural networks
+                                                                   exhibit structure is an active area of research in the Deep
+   Furthermore, in Figure 3 we visualize the repertoires           Learning community. For this work, we will make use of
+themselves as the inner loop progresses, showing three dif-        three metrics from research on the topic of disentanglement
+ferent archives for different steps in said inner loop of a        (Eastwood and Williams, 2018) and emergent languages
+trained model. We can see that the model does indeed cover         (Chaabouni et al., 2020).
+dev step: 1  dev step: 10  dev step: 20                          dev step: 30                                   dev step: 40                                                    8
+                                                                                                                                                                                7
+                                                                                                                                                                                6
+                                                                                                                                                                                5
+                                                                                                                                                                                4
+                                                                                                                                                                                3
+                                                                                                                                                                                2
+
+                                                                                                                                             dev step: 50 1
+
+Figure 4: Growing mazes using DNA-guided NCAs. Each column in the top row shows a different step in the models
+development of a maze, from step 1 to 50. The bottom row shows the position of the DNA sequence with the highest attention
+weight for each cell in the NCA at the corresponding time step. Dark cells represent cells that are not yet alive. The attention
+maps show that these follow a similar pattern as the resulting shape, pointing to how each position is likely being used by the
+system to grow the corresponding shape.
+
+   Specifically, we can measure the total disentanglement        the structure of the DNA space. Such a limitation would
+of the model by measuring how each position in the DNA           have to be addressed in future approaches.
+is predictive of each behavioral feature. This procedure
+is based on fitting a Random Forest Regression model             Controlling for different design decisions
+(Breiman, 2001) for each dependent variable and measur-
+ing the feature importance of each input for that prediction.    Having analyzed the system we now test the effect of differ-
+Highly disentangled features will only be predictive of one      ent design decisions. First, the most important test we must
+dependent variable (or a small subset of them). The overall      perform is controlling for the effect of using a purely con-
+level of disentanglement of a model is then computed as the      tinuous genotype (as a opposed to DNA one). Second, we
+average disentanglement over all features. In the study of       must test how modifying the update function affects model
+emergent languages, a set of related metrics have been pro-      changes model performance, since this is the critical com-
+posed by Chaabouni et al. (2020) based on the "information       ponent that enables self-organisation. Specifically, we will
+gap" of a feature with respect to the predicted properties.      show that normalisation of the states after update is per-
+Briefly, the information gap of a feature is the difference      formed significantly affects model performance. Finally, we
+in mutual information between it and two properties witch
+which it has highest mutual information. The higher the in-                                     0.25                                         character info gap
+formation gap the more predictive the feature is one property                                   0.20                                         disentanglement
+and not the rest. We use two measures called position infor-                                    0.15                                         positon info gap
+mation gap and character information gap. These account                                         0.10
+for how predictive a character at a particular position and      Compositionality metric value  0.05
+the number of repetitions of a character in the DNA string                                      0.00
+are informative of the properties of the generated mazes.                                                  500  1000  1500             2000  2500  3000
+                                                                                                        0             Training epochs
+   The results of this analysis can be observed in Figure 5.
+We see that there is an initial structure present in the model,  Figure 5: Measuring the structure of the DNA represen-
+likely do to random initialisation and the nature of the atten-  tation. The values for three metrics which measure poten-
+tion mechanism (which tends to amplify the most attended         tial structure that appears in DNA-space as training of the
+position). This quickly disappears until roughly a third of      developmental system progresses. This indicates that there
+the way through training when the measures that compute          is emergent structure in the genotype space as a result of
+emergence of language-like features (position info gap and       training, but that the model is likely susceptible to becoming
+character info gap) show an increase in their value. How-        chaotic as this can be an effective strategy for covering the
+ever, disentanglement remains low until later in training,       behavioral space.
+when inf starts to fluctuate rapidly. At this point the other
+two metrics dip slightly. This indicates that the model may
+have a propensity towards over-fitting and/or using a chaotic
+strategy relying more on its inherent stochasticity then on
+7000                                 CMA-ES + DNA + Norm          tonomous and robust systems that could enact complex be-
+6000                                 CMA-ES + DNA                 haviour. Our results show that it is indeed possible to inte-
+5000                                 Continuous                   grate these principles with an artificial developmental sys-
+4000                                 Continuous + Norm            tem. This enables it to exploit information in genotypic
+3000                                 DNA + Norm                   space to produce a diverse set of phenotypes.
+2000                                 DNA
+1000                                                                 Indeed, as training progresses the NCA learns to exploit
+        500  1000  e15p0o0 chs 2000  2500  3000                   variability in the DNA space to increase it's coverage of the
+   0                                                              descriptor space with high quality solutions. The fact that
+     0                                                            the model tends to prefer maximizing the quality of it's so-
+                                                                  lutions before increasing coverage shows that it has some
+Figure 6: Controlling for key design decisions. The plot          evolvable properties. Importantly, we can analyse how the
+shows the training performance by QD score of several runs        DNA space is used during development. This is possible be-
+where different components were swapped out. Violet and           cause this architecture makes explicit the parts of the DNA
+blue curves show the performance of a system using DNA            that are being attended to throughout development, which
+genotypes, one using GA and the other using CMA in the            makes it easier to understand its dynamics.
+inner loop. Brown and orange are the same, but the states of
+the model are not normalized after updating. Red and green           Nonetheless, there are still obvious limitations. First, the
+are models using continuous vectors serving as genotypes          system doesn't exhibit strong evolvability -- i.e. if we ex-
+with and without normalization after updates, respectively.       tend the number of inner loops iterations, the model does not
+Some decisions like the choice of inner loop emitter seem         substantially increase its coverage of the descriptor space.
+to have less of an impact on performance, while others like       Thus, the model is still fundamentally limited in its ability
+normalization matter more. Importantly, using a continuous        to effectively generalise to out-of-distribution outputs. Such
+vector facilitates fast convergence, but is ultimately less ex-   property is however fundamental to bridging the gap with
+pressive than a DNA genotype.                                     biological entities and to enable try open-ended innovation.
+
+will control for the usage of a more sophisticated emitter in        Second, the system shows a tendency towards structural
+the inner loop based on the CMA evolutionary strategy in-         properties in the DNA space degrading over time. Thus as
+stead of the standard GA.                                         training progresses we observe structure metrics decay (see
+                                                                  Figure 5). The fact that the model can still generate consis-
+   Figure 6 shows the results for 6 combinations of controls:     tent structures may indicate that it tends to over-fit on par-
+DNA with and without normalization (violet, brown), DNA           ticular patterns that increase coverage with minimal mod-
+trained with CMA with and without normalization (blue, or-        ifications. Thus the DNA space does not need to be very
+ange) and continuous vector genotype, again with and with-        structured for the model to succeed.
+out normalization (red, green). These results show that the
+system using a DNA genotype performs better than the one             Future research will be focused on addressing these is-
+using a continuous vector in spite of the latter converging       sues. In our view, the causes of these limitations are twofold.
+quicker. However, this is only true if we normalize the           First, while the system is in principle very expressive, this
+states of the model after the update, indicating once again       may come at the cost of inductive biases that favor the reuse
+that the system is more susceptible to instability. Finally, us-  of basic patterns in different combinations and at different
+ing CMA produces no significant difference in performance.        scales. Second, it may be the case that the current descrip-
+This is rather surprising considering that this algorithm is      tors allow the model to "cheat" by exploiting the fact that
+widely used in this context due to its efficiency and shows       minimal differences can crate diversity (for example only
+that the DNA encoding is powerful enough to enable effi-          removing one tile can increase the minimum path length
+cient exploration without a complex evolutionary algorithm.       significantly) without requiring fundamental changes to the
+                                                                  pattern being generated. Future research would thus ex-
+                       Discussion                                 plore two directions: different developmental system archi-
+                                                                  tectures and different task descriptions. Of particular inter-
+The separation between the DNA and the developmental              est would be to combine this approach with Neural Devel-
+mechanisms that transcribe the information contained in it,       opmental Programs for Neural Architecture Search (Najarro
+underpin the evolvable nature of biological systems. Har-         et al., 2023; Nisioti et al., 2024).
+nessing such capabilities, even if only minimally, could
+boost the capabilities of AI systems, enabling more au-                            Acknowledgements
+
+                                                                  This project was supported by a European Research Council
+                                                                  (ERC) grant (GA no. 101045094, project "GROW-AI").
+                       References                                         Goodfellow, I., Pouget-Abadie, J., Mirza, M., Xu, B., Warde-
+                                                                                Farley, D., Ozair, S., Courville, A., and Bengio, Y. (2020).
+Altenberg, L. (1994). Evolving better representations through                   Generative adversarial networks. Communications of the
+      selective genome growth. In Proceedings of the First                      ACM, 63(11):139­144.
+      IEEE Conference on Evolutionary Computation. IEEE World
+      Congress on Computational Intelligence, pages 182­187.              Hansen, N. and Ostermeier, A. (2001). Completely derandomized
+      IEEE.                                                                     self-adaptation in evolution strategies. Evolutionary compu-
+                                                                                tation, 9(2):159­195.
+Ashlock, D., McGuinness, C., and Ashlock, W. (2012). Represen-
+      tation in evolutionary computation. In IEEE World Congress          Kidger, P. and Garcia, C. (2021). Equinox: neural networks in
+      on Computational Intelligence, pages 77­97. Springer.                     jax via callable pytrees and filtered transformations. arXiv
+                                                                                preprint arXiv:2111.00254.
+Bahdanau, D., Cho, K., and Bengio, Y. (2014). Neural machine
+      translation by jointly learning to align and translate. CoRR,       Kingma, D. P. and Welling, M. (2013). Auto-encoding variational
+      abs/1409.0473.                                                            bayes. arXiv preprint arXiv:1312.6114.
+
+Bongard, J. C. and Pfeifer, R. (2003). Evolving complete agents us-       Kirschner, M. and Gerhart, J. (1998). Evolvability. Proceedings of
+      ing artificial ontogeny. In Morpho-functional machines: the               the National Academy of Sciences, 95(15):8420­8427.
+      new species: designing embodied intelligence, pages 237­
+      258. Springer.                                                      Lange, R. T. (2023). evosax: Jax-based evolution strategies. In
+                                                                                Proceedings of the Companion Conference on Genetic and
+Bontrager, P., Roy, A., Togelius, J., Memon, N., and Ross, A.                   Evolutionary Computation, pages 659­662.
+      (2018). Deepmasterprints: Generating masterprints for dic-
+      tionary attacks via latent variable evolution. In 2018 IEEE 9th     Lehman, J. and Stanley, K. O. (2011). Evolving a diversity of vir-
+      International Conference on Biometrics Theory, Applications               tual creatures through novelty search and local competition.
+      and Systems (BTAS), pages 1­9. IEEE.                                      In Proceedings of the 13th annual conference on Genetic and
+                                                                                evolutionary computation, pages 211­218.
+Bradbury, J., Frostig, R., Hawkins, P., Johnson, M. J., Leary,
+      C., Maclaurin, D., Necula, G., Paszke, A., VanderPlas, J.,          Lehman, J., Wilder, B., and Stanley, K. O. (2016). On the crit-
+      Wanderman-Milne, S., and Zhang, Q. (2018). JAX: compos-                   ical role of divergent selection in evolvability. Frontiers in
+      able transformations of Python+NumPy programs.                            Robotics and AI, 3:45.
+
+Breiman, L. (2001). Random forests. Machine learning, 45:5­32.            Mengistu, H., Lehman, J., and Clune, J. (2016). Evolvability
+                                                                                search: Directly selecting for evolvability in order to study
+Chaabouni, R., Kharitonov, E., Bouchacourt, D., Dupoux, E., and                 and produce it. In Proceedings of the Genetic and Evolu-
+      Baroni, M. (2020). Compositionality and generalization in                 tionary Computation Conference 2016, GECCO '16, page
+      emergent languages. arXiv preprint arXiv:2004.09124.                      141­148, New York, NY, USA. Association for Computing
+                                                                                Machinery.
+Chalumeau, F., Lim, B., Boige, R., Allard, M., Grillotti, L.,
+      Flageat, M., Mace´, V., Flajolet, A., Pierrot, T., and Cully, A.    Mordvintsev, A., Randazzo, E., Niklasson, E., and Levin, M.
+      (2023). Qdax: A library for quality-diversity and population-             (2020). Growing neural cellular automata. Distill, 5(2):e23.
+      based algorithms with hardware acceleration.
+                                                                          Moreno, M. A., Banzhaf, W., and Ofria, C. (2018). Learning
+Doncieux, S. and Meyer, J.-A. (2004). Evolving modular neural                   an evolvable genotype-phenotype mapping. In Proceedings
+      networks to solve challenging control problems. In Proceed-               of the Genetic and Evolutionary Computation Conference,
+      ings of the Fourth International ICSC Symposium on engi-                  pages 983­990.
+      neering of intelligent systems (EIS 2004), pages 1­7.
+                                                                          Mouret, J.-B. and Clune, J. (2015). Illuminating search spaces by
+Earle, S., Snider, J., Fontaine, M. C., Nikolaidis, S., and Togelius, J.        mapping elites. arXiv preprint arXiv:1504.04909.
+      (2022). Illuminating diverse neural cellular automata for level
+      generation. In Proceedings of the Genetic and Evolutionary          Najarro, E., Sudhakaran, S., and Risi, S. (2023). Towards self-
+      Computation Conference, pages 68­76.                                      assembling artificial neural networks through neural devel-
+                                                                                opmental programs. In Artificial Life Conference Proceed-
+Eastwood, C. and Williams, C. K. (2018). A framework for the                    ings 35, volume 2023, page 80. MIT Press One Rogers Street,
+      quantitative evaluation of disentangled representations. In In-           Cambridge, MA 02142-1209, USA journals-info . . . .
+      ternational conference on learning representations.
+                                                                          Nasir, M. U., Earle, S., Togelius, J., James, S. D., and Cleghorn,
+Gaier, A., Asteroth, A., and Mouret, J.-B. (2020). Discovering                  C. W. (2023). Llmatic: Neural architecture search via large
+      representations for black-box optimization. In Proceedings of             language models and quality-diversity optimization. ArXiv,
+      the 2020 Genetic and Evolutionary Computation Conference,                 abs/2306.01102.
+      pages 103­111.
+                                                                          Niklasson, E., Mordvintsev, A., Randazzo, E., and Levin, M.
+Gajewski, A., Clune, J., Stanley, K. O., and Lehman, J. (2019).                 (2021). Self-organising textures. Distill, 6(2):e00027­003.
+      Evolvability es: scalable and direct optimization of evolvabil-
+      ity. In Proceedings of the genetic and evolutionary computa-        Nisioti, E., Plantec, E., Montero, M. L., Pedersen, J., and Risi, S.
+      tion conference, pages 107­115.                                           (2024). Growing artificial neural networks for control: the
+                                                                                role of neuronal diversity. In Proceedings of the Compan-
+                                                                                ion Conference on Genetic and Evolutionary Computation,
+                                                                                GECCO '24 Companion, New York, NY, USA. Association
+                                                                                for Computing Machinery.
+Olesen, T. V., Nguyen, D. T., Palm, R. B., and Risi, S. (2021). Evo-
+      lutionary planning in latent space. In Applications of Evolu-
+      tionary Computation: 24th International Conference, EvoAp-
+      plications 2021, Held as Part of EvoStar 2021, Virtual Event,
+      April 7­9, 2021, Proceedings 24, pages 522­536. Springer.
+
+Palm, R. B., Gonza´lez-Duque, M., Sudhakaran, S., and Risi, S.
+      (2022). Variational neural cellular automata. arXiv preprint
+      arXiv:2201.12360.
+
+Pugh, J. K., Soros, L. B., and Stanley, K. O. (2016). Quality diver-
+      sity: A new frontier for evolutionary computation. Frontiers
+      in Robotics and AI, 3:202845.
+
+Rothlauf, F. and Rothlauf, F. (2006). Representations for genetic
+      and evolutionary algorithms. Springer.
+
+Schrum, J. and Miikkulainen, R. (2014). Evolving multimodal
+      behavior with modular neural networks in ms. pac-man. In
+      Proceedings of the 2014 annual conference on genetic and
+      evolutionary computation, pages 325­332.
+
+Scott, E. O. and Bassett, J. K. (2015). Learning genetic represen-
+      tations for classes of real-valued optimization problems. In
+      Proceedings of the Companion Publication of the 2015 An-
+      nual Conference on Genetic and Evolutionary Computation,
+      pages 1075­1082.
+
+Simo~es, L. F., Izzo, D., Haasdijk, E., and Eiben, A. E. (2014).
+      Self-adaptive genotype-phenotype maps: neural networks as
+      a meta-representation. In Parallel Problem Solving from
+      Nature­PPSN XIII: 13th International Conference, Ljubl-
+      jana, Slovenia, September 13-17, 2014. Proceedings 13,
+      pages 110­119. Springer.
+
+Springer, J. M. and Kenyon, G. T. (2021). It's hard for neural net-
+      works to learn the game of life. In 2021 International Joint
+      Conference on Neural Networks (IJCNN), pages 1­8. IEEE.
+
+Stanley, K. O. (2007). Compositional pattern producing networks:
+      A novel abstraction of development. Genetic programming
+      and evolvable machines, 8:131­162.
+
+Sudhakaran, S., Grbic, D., Li, S., Katona, A., Najarro, E., Glanois,
+      C., and Risi, S. (2021). Growing 3d artefacts and functional
+      machines with neural cellular automata. In Artificial Life
+      Conference Proceedings 33, volume 2021, page 108. MIT
+      Press One Rogers Street, Cambridge, MA 02142-1209, USA.
+
+Torrado, R. R., Khalifa, A., Green, M. C., Justesen, N., Risi, S.,
+      and Togelius, J. (2020). Bootstrapping conditional gans for
+      video game level generation. In 2020 IEEE Conference on
+      Games (CoG), pages 41­48. IEEE.
+
+Volz, V., Naujoks, B., Kerschke, P., and Tusar, T. (2023). Tools
+      for landscape analysis of optimisation problems in procedu-
+      ral content generation for games. Applied Soft Computing,
+      136:110121.
+
+Volz, V., Schrum, J., Liu, J., Lucas, S. M., Smith, A., and Risi, S.
+      (2018). Evolving mario levels in the latent space of a deep
+      convolutional generative adversarial network. In Proceed-
+      ings of the genetic and evolutionary computation conference,
+      pages 221­228.
+

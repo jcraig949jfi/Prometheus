@@ -1,0 +1,683 @@
+                                                                                                                                            ORIGINAL RESEARCH
+                                                                                                                                            published: 15 June 2021
+                                                                                                                                   doi: 10.3389/frobt.2021.672379
+
+                                                Constrained by Design: Influence of
+                                                Genetic Encodings on Evolved Traits
+                                                of Robots
+
+                                                Karine Miras *
+
+                                                Computer Science Department, Vrije Universiteit Amsterdam, Amsterdam, Netherlands
+
+                                  Edited by:    Genetic encodings and their particular properties are known to have a strong influence on
+                                Nick Cheney,    the success of evolutionary systems. However, the literature has widely focused on
+ University of Vermont, United States           studying the effects that encodings have on performance, i.e., fitness-oriented studies.
+                                                Notably, this anchoring of the literature to performance is limiting, considering that
+                              Reviewed by:      performance provides bounded information about the behavior of a robot system. In
+         José Antonio Becerra Permuy,           this paper, we investigate how genetic encodings constrain the space of robot phenotypes
+          University of A Coruña, Spain         and robot behavior. In summary, we demonstrate how two generative encodings of
+                                                different nature lead to very different robots and discuss these differences. Our principal
+                             Ken Livingston,    contributions are creating awareness about robot encoding biases, demonstrating how
+          Vassar College, United States         such biases affect evolved morphological, control, and behavioral traits, and finally
+                                                scrutinizing the trade-offs among different biases.
+                       *Correspondence:
+                                 Karine Miras   Keywords: locality, bias, phenotypic traits, behavioral traits, evolvable morphologies, evolvable robots, encoding
+
+           k.dasilvamirasdearaujo@vu.nl         1 INTRODUCTION
+
+                       Specialty section:       There are two main classes of genetic encodings, namely, direct encodings and indirect encodings;
+           This article was submitted to        the latter are also known as generative encodings. Direct encodings represent each phenotype
+         Robot Learning and Evolution,          component independently in the genotype. Conversely, generative encodings allow the reuse of
+                                                genotype portions that code for similar or identical phenotype components. When working with
+                   a section of the journal     evolutionary algorithms, it is well known that an encoding benefits from a high locality (Gottlieb and
+            Frontiers in Robotics and AI        Raidl, 1999; Rothlauf and Goldberg, 1999; Rothlauf and Goldberg, 2000). This means that small
+                                                changes in the genotype should result in smooth changes to the phenotype, and thus smooth changes
+          Received: 25 February 2021            to the fitness (Jones and Forrest, 1995). The lack of such a property could cause good quality parents
+                Accepted: 28 May 2021           to produce very low-quality offspring, thus leading to local optima around these parents. In
+              Published: 15 June 2021           particular, generative encodings often present a low locality (Gottlieb and Raidl, 2000; Rothlauf
+                                                and Oetzel, 2006; Rothlauf, 2006). This scenario is undesirable, once generative encodings afford very
+                                     Citation:  desirable properties, like reuse and regularity (Doursat et al., 2013). Reuse is of utmost importance
+Miras K (2021) Constrained by Design:           because it allows simplifying the optimization problem by solving small parts and then reusing them
+                                                together in different contexts. For instance, while only 30.000 genes code all traits of the human body
+    Influence of Genetic Encodings on           (Deloukas et al., 1998), our brain by itself has trillions of neurons (Dellaert, 1995). Because of this
+                Evolved Traits of Robots.       reuse capacity, evolution can, for example, discover a limb only once and regularly repeat this limb
+                                                multiple times in the body of a creature. The importance of reuse is corroborated by research on
+             Front. Robot. AI 8:672379.         modularity and its relevance for evo-devo (Bolker, 2000; Kuratani, 2009).
+       doi: 10.3389/frobt.2021.672379
+                                                   For the evolution of robots, generative encodings are commonly employed, sometimes focusing
+                                                on the controller (Harding and Miller, 2005), and sometimes evolving both morphology and
+                                                controller (Jelisavcic et al., 2018). In his seminal work, Sims applied directed graphs to conjointly
+
+Frontiers in Robotics and AI | www.frontiersin.org  1  June 2021 | Volume 8 | Article 672379
+Miras                                                                    Influence of Encodings on Robots
+
+evolve morphology and controller of virtual creatures (Sims,             conclusive about why this happened, another study hypothesized
+1994). Since then, many other examples have appeared in the              that this could be due to limitations of the encoding (Miras et al.,
+literature investigating diverse topics, like body-brain co-             2020). Finally, and on the other hand, the existence of a
+evolution itself (Hornby and Pollack, 2001), soft-robots                 constrained space could, for a particular application, be
+(Cheney et al., 2014), physical robots (Lee et al., 2013),               actually desirable.
+reconfigurable organisms (Kriegman et al., 2020),
+environmental influences (Auerbach and Bongard, 2014),                      In this paper, we investigate the effects of generative encodings
+developmental neural controllers (Kodjabachian and Meyer,                on evolved robots beyond performance, analyzing phenotypic
+1998), and even encodings that use low-level abstractions from           and behavioral traits. Our main contributions are a) create
+biology (Bongard, 2002). Among all this literature, the two              awareness about robot encoding biases, b) demonstrate how
+generative encodings most commonly used to evolve robots                 such biases affect evolved morphological, control, and
+are CPPNs (Stanley, 2007; Stanley et al., 2009) and L-Systems            behavioral traits, c) scrutinize the trade-offs among different
+(Lindenmayer, 1968).                                                     biases, and d) demonstrate a mechanism to evade undesired
+                                                                         biases.
+   With respect to encoding comparisons, studies in the literature
+have been excessively focused on performance (Komosin´ski and            2 SYSTEM DESCRIPTION
+Rotaru-Varga, 2001; Yosinski et al., 2011; Collins et al., 2019),
+i.e., fitness-oriented studies. This is the case from simple             Our experiments were realized using a simulator called Gazebo,
+encodings (Janikow and Michalewicz, 1991) for solving                    interfaced through a robot framework called Revolve (Hupkes
+classical problems like the Knapsack (Colombo and Mumford,               et al., 2018). Here, we refer to both morphology (body) and
+2005), to neuroevolution (Gruau et al., 1996; Siddiqi and Lucas,         controller (brain) as the phenotype of a robot.
+1998) and also complex applications like evolving robot
+morphologies coupled with controllers (Hornby et al., 2003).             2.1 Robot Morphology
+While scarce, a few studies extended their investigations to
+aspects beyond performance. For instance, two different                  Each morphology phenotype is composed of modules (Auerbach
+studies (Veenstra et al., 2017; Veenstra et al., 2019) compared          et al., 2014) as shown in Figure 1, and the shape of the
+performance when using a direct and a generative encoding, but           morphology is determined by evolution. Each module has a
+constraining body development to different limits of body parts,         cuboid shape and has slots where other modules can attach.
+and showed that the generative encoding is more efficient in the         The morphologies can only develop in two dimensions, that is,
+initial stages of evolution. Furthermore, it has been demonstrated       the modules do not allow attachment to the top or bottom slots,
+that though CPPNs are able to produce more regularity,                   but only to the lateral ones. There are five different types of
+i.e., repetitions in the phenotype, than a direct encoding, the          modules: core components, bricks, vertical joints, horizontal
+bias of the CPPNs towards regularity can be a complication for           joints, and touch sensors. Any module can be attached to any
+applications that require some level of irregularity (Clune et al.,      module through its slots, except for the touch sensors, which
+2011). Another interesting study (Tarapore and Mouret, 2015)             cannot be attached to joints. Each module type is represented by a
+discusses the trade-off between performance and phenotypic               distinct symbol, and these symbols are used in the genotype
+variation. Notably, this focus of the literature on performance          encodings.
+is limiting, considering that performance provides bounded
+information about the behavior of a robot system.                           Previous work (Jelisavcic et al., 2017) demonstrated that this
+                                                                         modular robot system functions in real hardware. Each module
+   It is relevant for our discussion to mention that an encoding         can be 3D printed, while the assembling of the modules and
+and its operators influence which phenotypes have more                   electronic parts (servos, sensors, board, etc.) is made manually.
+probability of being sampled. This may impose a space                    Production tutorials can be found in the link http://robogen.org/
+topology where some parts are more easily accessible than                docs/video-tutorials.
+others, which may naturally result in biases (Komosin´ski and
+Rotaru-Varga, 2001). Importantly, such biases can be associated          2.2 Robot Controller
+with the low locality previously discussed and can have a powerful
+effect in constraining searches in different ways. Considering that      Each controller phenotype is a hybrid artificial neural network
+two given encodings may produce different search spaces, they            (Figure 1), which we call Recurrent Central Pattern Generator
+may present different phenotypic constraints, despite acting upon        Perceptron (Miras et al., 2020). By hybrid we mean that we
+the same design space. This means that the choice of a particular        combine concepts from 1) CPGs, by having oscillator neurons; 2)
+encoding may be a limiting factor for a given application that does      Perceptrons, by having inputs connected to a single layer of
+not suit the imposed constraints. For example, the effect of             neurons; 3) Recurrent neural networks, by allowing these neurons
+environmental influences on robot traits was investigated                to have recurrent connections. In practice, the oscillator neurons
+(Miras and Eiben, 2019), demonstrating the difficulty of                 generate a constant pattern of movement, and the sensor inputs
+inducing phenotypic differentiation through environmental                can be used either to reduce or to reinforce movements, while the
+changes. In fact, despite some environmental changes having              influence of these inputs can be remembered from each previous
+caused clear degradation in evolvability, in some cases robots still     oscillation cycle. Every aspect of the network is defined by
+converged to the same phenotype. Although this study was not             evolution, and the network is formed by two types of nodes:
+                                                                         input nodes associated with the sensor modules; and oscillator
+
+Frontiers in Robotics and AI | www.frontiersin.org                    2  June 2021 | Volume 8 | Article 672379
+Miras                                                                        Influence of Encodings on Robots
+
+FIGURE 1 | In the first box, the robot modules: Core-component, which carries the controller electronic board (C); Structural brick (B); Active hinges with servo
+motor joints in the vertical (A1) and horizontal (A2) axes; and Touch sensor (T). The polygons above the pictures of the modules are used to illustrate robot parts in the
+results section, and the letters are used to represent the modules in the robot encoding. Modules C and B have attachment slots on their four lateral faces, and A1 and A2
+have slots on their two opposite lateral faces; T has a single slot, which can be attached to any slot of C or B. In the second box, an example of a robot (top-down
+view) before the simulation starts, while in the third, the same robot during a simulation. In the final box an example of a controller of a robot that has a single sensor and a
+single joint: the network controller has a single oscillator neuron (with a recurrent connection), and a single input.
+
+neuron nodes associated with the joint modules. For every joint in           and is used to generate structures. A structure is generated by
+the morphology, there exists a corresponding oscillator neuron in            inputting the network with a context related to the structure, for
+the network, whose activation function is defined by Eq. 1, which            instance, coordinates, and then using the outputs of the network
+represents a sine wave defined by amplitude, period, and phase               to define the building blocks of this structure. Figure 2 shows an
+offset parameters. This activation function adjusts the output to            example of CPPN and the substrate that it intends to populate.
+fit the range of our servo motors, as proposed in (Hupkes et al.,            The substrate is a 2D grid representing the robot morphology and
+2018).                                                                       has multiple cubes so that each cube may contain a module or
+                                                                             not. The size of the substrate equals z2, and here we define z 9,
+       O 0.5 - a + sin 2* p * t - ppo + 1 *a,       (1)                      having the central cube always containing the head. Using the
+       2  2                                                                  CPPN to define a morphology or controller trait is called
+                                                                             querying, and it means inputting the normalized coordinates
+where, t is the time step, a is the amplitude, p is the period, and o is     of a cube to the CPPN, so to use its outputs to define a trait.
+the phase offset. The parameters a, p, and o can vary from 0 to 10.          Additionally to the coordinates, the distance d between the center
+                                                                             and the queried cube is also inputted. The possible outputs of the
+   The different oscillator neurons can not be directly                      CPPN are the types of modules to be placed in a cube (or if the
+interconnected, and every oscillator neuron may or may not                   cube is supposed to stay empty), and parameters for the
+possess a direct recurrent connection. Additionally, for every               controller. In practice, the module selected by each query is
+sensor in the morphology, there exists a corresponding input in              the one with the highest value outputting from its respective
+the network, and each input might connect to one or more                     neuron. As for the parameters of the controller, they are used
+oscillator neurons.                                                          exactly like they are outputted by the network.
+
+3 METHODOLOGY                                                                   The querying happens in two stages, and some inputs and
+                                                                             outputs may be ignored depending on the stage. Stage one: 1) the
+3.1 Encodings                                                                querying starts from the head, as a turtle-reference is set to the
+                                                                             central cube; 2) clockwise around the turtle-reference cube, every
+In independent experiments, we utilized two different types of               direction around it is recursively queried using X and Y
+generative encodings, namely: CPPN and L-System. Note that                   destination; 3) the recursion stops when reaching the limits of
+while the terms "encoding" or "representation" may or may not                the substrate, or when encountering a cube that is already
+include both the genotype and its decoding (Eiben and Smith,                 occupied; 4) when a module is queried to be placed into an
+2003), also known as genotype-phenotype mapping, here we                     empty cube, if the new module is attachable to the module in the
+consider that it includes both. Because we, naturally, designed              turtle-reference cube then they become attached, and the turtle-
+our own decodings for the CPPN and the L-System, it would be                 reference moves to the new module; 5) if the new module is a
+more precise referring to them as CPPN-based and L-System-                   joint, the parameters for the controller are plugged to the
+based encodings. Nevertheless, for the sake of simplicity, we refer          controller accordingly, otherwise they are ignored. Stage two:
+to them as simply CPPN and L-System.                                         1) extra queries are made to define the weight between sensors
+                                                                             and joints when these modules have already been queried, where
+3.1.1 Compositional Pattern Producing Network                                X and Y origin represent a sensor and X and Y destination
+In this case, the robot genotypes are represented using                      represent a joint; 2) to query the weight of a recurrent connection
+compositional pattern producing networks (CPPNs) (Stanley,                   of a joint X and Y must be provided as the same for origin and
+2007; Stanley et al., 2009), conjointly encoding both                        destination; 3) the parameter weight must be above 0.05 for a
+morphology and controller. A CPPN is a neural network that                   connection to be created.
+evolves to have multiple layers with diverse activation functions
+
+Frontiers in Robotics and AI | www.frontiersin.org                        3  June 2021 | Volume 8 | Article 672379
+Miras                                                                 Influence of Encodings on Robots
+
+FIGURE 2 | (A) Didactical example of CPPN: inputs are the coordinates of the substrate, while outputs are used to define modules to be placed in the substrate and
+also the parameters of the controller. (B) Morphology substrate.
+
+   In the initialization, the CPPNs have no hidden neurons, and       controller. In the decoding process, the grammar uses its
+the inputs fully connect to the outputs using random weights          production-rules to grow from its axiom into a more complex
+drawn from a normal distribution with  0 and  1, while the            string of symbols, and finally, these symbols are translated into
+activation functions are also randomly chosen. The activation         morphology and controller components. To initialize a genotype,
+functions utilized were sigmoid, sinusoid, Gaussian, tanh,            for each production-rule, exactly one symbol is drawn uniformly
+absolute, and inverse. The reproduction is made by copying a          random from each of five categories of symbols in the alphabet.
+parent sampled using a binary tournament and then mutating it         This process is repeated s times, being s sampled from a uniform
+with a probability of 80%. When selected to be mutated, a             random distribution ranging from 1 to e. The crossover
+genotype can go through multiple different mutations, with            probability is 80%, and is done by uniformly random selecting
+probabilities: 50% for adding a new connection, 50% for               full production-rules from the parents. The mutation probability
+deleting a connection, 20% for adding a new node, 20% for             of a genotype is 80%, so that one uniformly-randomly chosen
+deleting a node, and 80% for mutating any weight, 50% for             production rule is mutated. For this production-rule, there is an
+changing any activation function. More details about these            equal chance of adding, deleting, or swapping one random
+operators can be found in (Stanley and Miikkulainen, 2002).           symbol from a random position of it. More details about the
+                                                                      operators can be found in (Miras et al., 2020), while the only
+3.1.2 L-System                                                        parameter we used differently is the maximum number of groups
+In this case, the robot genotype is represented using an L-System     of symbols e 3, and the maximum number of modules m 81.
+(Lindenmayer, 1968), conjointly encoding both morphology and          This was done to allow the L-System robots to grow as large as the
+controller. L-Systems are parallel rewriting systems composed by      CPPN robots can grow, given the substrate size of the CPPN.
+a grammar defined as a tuple G (V, w, P), where,
+                                                                      3.2 Robot Traits
+   · V, the alphabet, is a set of symbols containing replaceable
+      and non-replaceable symbols.                                    To access the phenotypic and behavioral traits of the populations
+                                                                      we utilized a set of trait descriptors proposed by (Miras et al.,
+   · w, the axiom, is a symbol from which the generative process      2018b; Miras et al., 2020), where more details about them can be
+      starts.                                                         found. The descriptor Stability of Speed was proposed in the
+                                                                      current paper. Importantly, with the term "behavior", we mean
+   · P is a set of production-rules for the replaceable symbols,      what results from the interaction between the phenotype (body
+      having one production-rule paired with each replaceable         and brain) and the environment.
+      symbol.
+                                                                      3.2.1 Behavioral Traits
+   The particular encoding and decoding design for the current           1. Speed: Describes the speed (cm/s) of the robot along the
+robot system were proposed and studied in (Miras et al., 2018b;             x axis.
+Miras et al., 2020). In summary, each genotype is a distinct             2. Balance: Describes the rotation of the robot in the x­y
+grammar instance, making use of the same alphabet. The                      dimensions, so that perfect Balance belongs to both pitch
+alphabet is formed by symbols that represent types of                       and roll being equal to zero. The higher the Balance, the less
+morphological modules as well as commands for assembling                    rotated the center of the robot is. The center is defined as the
+modules and commands for defining the structure of the
+
+Frontiers in Robotics and AI | www.frontiersin.org                 4  June 2021 | Volume 8 | Article 672379
+Miras                                                                                                  Influence of Encodings on Robots
+
+   center of mass of the head-link: the union of the head and a           · Experiment repetitions 20
+   possible group of non-actuated modules connected directly              · Evaluation time 30
+   to it.
+3. Stability of Speed: Describes the stability of robot behavior             The secondary initialization stage is inspired by (Buchanan
+   in regard to speed. This value represents the difference               Berumen et al., 2020), with the optimization searching for
+   between the speed of a robot on two occasions, and is                  morphological novelty using Novelty Search (Lehman and
+   defined by Eq. 2:                                                      Stanley, 2008). In this case, the fitness function is defined as
+                                                                          N n, where n is a measure of novelty which is calculated as the
+       s sd - ss                                    (2)                   average distance to the k-nearest neighbors of an individual, for
+                                                                          which k 10 and the distance is the Euclidean distance regarding
+where ss is the speed of the robot using the standard evaluation          the following morphological descriptors: Branching, Limbs,
+time, and sd is the speed of the robot using double this time.            Length of Limbs, Coverage, Joints, Proportion, and Symmetry.
+"Standard" means this evaluation time was used during the                 The set of neighbors for the comparison is formed by the current
+evolutionary process. The closer this value is to zero, the more          population, plus an archive, to which every new individual has a
+stable the behavior of speed is. Being stable means that the robot        5% probability of being added, with the individuals added to the
+speed on one occasion is not different than the speed in another          archive remaining in it until the end. This step of search space
+occasion, even if this second occasion is a longer period of time.        exploration is important because, in the forthcoming analysis, it
+                                                                          will help to demonstrate that the observed biases are not simply
+3.2.2 Phenotypic Traits                                                   fruit of an unlucky or biased initialization.
+   1. Size: Total number of modules in the morphology.
+   2. Proportion: The 2D ratio of the morphology.                            As for the optimization stage, the optimization concerns
+   3. Limbs: The number of extremities of a morphology relative           increasing speed in a task of directed locomotion on a plane
+      to its body size.                                                   terrain. The fitness function utilized is defined by Eq. 3:
+   4. Length of Limbs: Describes how extensive the limbs of the
+      body are.                                                           f1    sx                     if sx > 0,  (3)
+   5. Joints: Describes how movable the body is.                                sx                     if sx < 0,
+   6. Symmetry: Describes the reflexive symmetry of the body                                           if sx 0,
+      around the head.                                                           10
+   7. Coverage: Describes how full is the rectangular envelope                  -0.1
+      around the body.
+   8. Branching: Describes how the attachments of the modules             where sx is the speed of the robot. This function measures the
+      are grouped in the body, accounting for the ones that have          speed of the robots (only) in the x axis. Additionally, it has
+      module attachments to all of its slows.                             penalties for robots that do not move, or that go to the wrong
+   9. Average Period: Describes the average of the parameter              direction.
+      Period among the oscillators of the controller. The higher
+      this value, the slower the oscillation pattern, and thus slower     3.4 Abortion Mechanism
+      the movement of the motors.
+                                                                          The abortion mechanism acts upon the reproduction operator of
+3.3 Evolution                                                             the encodings and is employed in only one of two types of
+                                                                          experiments we carry out in this paper, aiming to evade the
+We use overlapping generations with a population size  100.               encoding biases. The mechanism is described hereby: 1) sample
+In each generation,  50 offspring are produced. From the                  c 50 children of a parent; 2) measure the distance between each
+resulting set of  parents plus  offspring, 100 individuals are            child and the parent using the Euclidean distance among the same
+selected for the next generation using binary tournaments.                descriptors utilized for the measure of novelty; 3) choose one
+                                                                          child to be born and abort all the others; 4) the child chosen to be
+   The evolutionary process is divided into three stages: 1)              born is the child closest to the parent, as long as it is not
+primary initialization: happens in generation 0, using the                identical--if every child is identical choose a random child.
+initialization operators of each encoding; 2) secondary                   This means that a total of 250 children are sampled in the
+initialization: happens from generation 1 to 49, optimizing for           reproduction step of each generation, while only 50 are
+morphological novelty; 3) optimization: happens from generation           ultimately born to be evaluated.
+50 to 149, optimizing for speed. During the optimization, each
+robot was evaluated for 30 s. Finally, for each encoding, the                Moreover, to simplify the comparison between parent and
+experiment was repeated independently 20 times. A summary                 child, we eliminate the crossover operator (if existent), and
+of the parameters for the evolutionary algorithm is provided here:        therefore reproduction is performed by copying the parent
+                                                                          and mutating it with probability of 100%.
+
+· Population size 100                                                     3.5 Experimental Setup
+· Offspring size 50
+· Number of generations 150                                               We conducted two types of experiments using the same setup,
+                                                                          except that in experiment 2 the abortion mechanism of the
+                                                                          previous section is employed. Both experiment 1 and
+                                                                          experiment 2 are divided into two sub-types, one using the
+
+Frontiers in Robotics and AI | www.frontiersin.org                     5                               June 2021 | Volume 8 | Article 672379
+Miras                                                                    Influence of Encodings on Robots
+
+FIGURE 3 | Illustration of the experimental setup.
+
+CPPN encoding and another using the L-System encoding.                   with extremely low or large size. Note that though these robots are
+Figure 3 illustrates the different experiments carried out. The          different from the rest, they are not functional. In the column
+code to reproduce all experiments is available on https://github.        "Gen 149/worst" of Figure 6 we see that they often have no joints
+com/ci-group/revolve/releases/tag/Frontiers21constrained_1.1.            and are either blobs or only-head robots, which seems to be a
+                                                                         consequence of a particular bias that will be discussed in the next
+4 RESULTS AND DISCUSSION                                                 section. As can be seen, the CPPN presents a higher
+                                                                         morphological bias, i.e., often discovering very similar
+Hereby we analyze the influence of the two encodings on                  morphologies, that starts at the initialization and persists
+phenotypic and behavioral traits of the robot populations                throughout the search to some extent. Nevertheless, these
+resultant from our experiments.                                          higher levels of morphological novelty of the L-System did not
+                                                                         prevent its populations from converging morphologically almost
+4.1 Novelty and Behavior                                                 as soon as the CPPN populations.
+
+We start by analyzing morphology holistically, comparing the                Turning now to the performance on the task (speed), the two
+multidimensional morphological novelty in the populations                encodings exhibit a drastic difference (Figure 4, middle), with
+evolved using each encoding (Figure 4, top). This measure                CPPN robots being on average more than three times slower for
+indicates how different from each other these individuals are            the median and third quartile. This difference is even more severe
+within their populations. The same measure of novelty utilized to        for the first quartile, where the CPPN has an average very close to
+evolve the initial populations is applied here, but discarding the       zero. This first quartile difference seems to stem from
+archive from the set of neighbors. The reason for not considering        dysfunctional robots discussed in the previous paragraph.
+the archive is that we are now interested in the present diversity       Interestingly, both encodings present cases of "extreme runs,"
+levels of the populations, and not in the history of the novelty         meaning runs with an average very far from the averages of the
+search. The novelty in generation 0 is lower with the CPPN than          other runs (Figure 7).
+with the L-System. This is true for the median as well as for the
+first and third quartile, and the difference is most intense for the        While speed is a behavioral trait that we directly optimize
+first quartile. Moreover, even after evolving the populations            through the fitness function, let us now observe a behavioral trait
+towards morphological novelty, novelty is still lower with the           that emerged to accomplish the task, despite not having been
+CPPN. Though the two encodings naturally present an                      directly optimized: Balance (Figure 4, bottom). This trait is
+improvement in novelty in generation 49, this novelty is                 interesting, because it can partially describe the gaits of the
+significantly lower with the CPPN for both median and first              robots, and they happen to be very different when using each
+quartile. Finally, around 25 generations after switching the fitness     encoding. For median and both quartiles, whereas from the start
+from novelty to speed, which happened from generation 50 on,             CPPN presents and maintains almost maximum Balance,
+novelty dropped to zero in both the CPPN and the L-systems               L-System quickly drops down to an average of around 0.7,
+populations, and remained there for the median and first quartile.       and maintains that until the end. This distinction is
+This drop seems to be caused by selection pressure for some given        corroborated when observing the robot gaits of the best
+morphological traits. As for the third quartile, though novelty is a     individuals of the populations. A video with some of the best
+little higher with the CPPN, this novelty is deceiving and, as we        robots of the experiments can be seen and in Supplementary
+are going to discuss soon, has a severe impact on the performance.       Material and here: https://www.youtube.com/watch?
+The heat-maps of Figure 5 show that differently from the                 v tZQ1dUoNHJY&feature youtu.be. L-System robots most
+L-System, the CPPN presents in most generations some robots              often locomote by rolling forward over their bodies, and only
+                                                                         sometimes by rowing--simultaneously stroking with multiple
+                                                                         limbs. In contrast, CPPN robots never roll, but most often
+
+Frontiers in Robotics and AI | www.frontiersin.org                    6  June 2021 | Volume 8 | Article 672379
+Miras                                                                   Influence of Encodings on Robots
+
+FIGURE 4 | Distributions of novelty and behavioral traits for the populations. The aggregation of measures happens in two levels: Firstly, the plots on the left, middle,
+and right regard aggregations within the population of each run using the first quartile, median, and third quartile respectively. Secondly, the lines represent the median
+among the runs while the clouds around it represent their first and third quartile. The red arrows point to the p values of Wilcoxon tests comparing the two encodings in a
+given generation. NS means non-significant. Note that there is no behavioral data before generation 50, when robots were evolved for morphological novelty only.
+
+row or walk. Note that rolling is a gait with low Balance, because      defined by messy irregular patterns of body motion. Though this
+by rolling the robot rotates its center. On the other hand, walking     recklessness may not necessarily be a problem, it is not hard to
+and rowing have a higher Balance, keeping the center relatively         imagine a situation in which this would be concerning. For
+stable and producing a coordinated gait. This particular                instance, the rolling robots have their heads often rotating and
+behavioral divergence is very relevant to our discussion                sometimes bashing them against the floor. Given that in our case
+because it helps us to elaborate on the trade-off between using         the head carries the processing board, this rolling gait could
+each of the two studied encodings. Although the L-System robots         increase the chance of damaging this board. Beyond this
+perform better on the task, as measured by speed, their gaits are       hypothesis, the irregularity in the gaits of the L-System
+somewhat "reckless". By reckless, we mean that their gaits are          snakes has a much more severe implication. During the
+
+Frontiers in Robotics and AI | www.frontiersin.org                   7  June 2021 | Volume 8 | Article 672379
+Miras                                                  Influence of Encodings on Robots
+
+FIGURE 5 | (A) Distribution of phenotypic traits for the populations. Aggregations and tests are the same as in Figure 4. (B) The heat-maps display the values for
+the robot traits of every robot in every generation, including three example runs.
+
+Frontiers in Robotics and AI | www.frontiersin.org  8  June 2021 | Volume 8 | Article 672379
+Miras                                                                  Influence of Encodings on Robots
+
+FIGURE 6 | Top-down 2D illustration of robots in different stages of the evolutionary process. Gen 0: random robot from primary initialization. Gen 49: random robot
+from secondary initialization. Gen 149/best: best robot after optimization. Gen 149/worst: worst robot after optimization. Images size was adjusted to fit the cells.
+
+optimization stage, the life-time of a robot is short, even though     4.2 Phenotypic Traits
+after deployment this lifetime would probably be much longer.
+Therefore, it is inherently desirable to have robots in the            As opposed to the previous section, here we analyze the
+population that behave well during a short life-time, and that         independent phenotypic traits and their relations to behavioral
+do not suffer significant degradation of their behavioral quality      traits. Figure 5 shows the distributions of four morphological
+if their life-time is stretched longer. Nevertheless, when             traits and also one trait of the controller. Looking at these curves,
+analyzing the stability of the behavior of speed with each             what is most striking is that L-System robots are always different
+encoding, we realize the L-System robots are very unstable             from CPPN robots, and this happens in all of the three stages of
+(Figure 8). The measurements done with Eq. 2: show that                our evolutionary process: primary initialization, secondary
+while the CPPN robots have average stability close to zero,            initialization, and optimization. Additionally, in all cases
+L-System robots have average stability close to -2. This means         except Size, traits that started at a higher value with one of the
+that while the CPPN robots present little difference in quality        encodings remained higher until the end. For instance, Symmetry
+when living a longer lifetime, the L-System robots are in average      was lower with the L-System than with the CPPN at generation 0,
+2 cm/s slower.                                                         generation 49, and generation 149. In the final populations,
+                                                                       L-System robots were much larger, less proportional, less
+
+Frontiers in Robotics and AI | www.frontiersin.org                  9  June 2021 | Volume 8 | Article 672379
+Miras                                                                              Influence of Encodings on Robots
+
+  FIGURE 7 | Average speed among runs: for each run, includes all robots           CPPN often produces cross-shape robots, i.e., "spiders."
+  of the final generation (149) aggregated using the median. Number above box      Moreover, the best robot and worst robot from a run
+  is the p value of a Wilcoxon test.                                               frequently look the same or very similar with the L-System. By
+                                                                                   contrast, in most cases with the CPPN, the worst robot is a
+symmetrical, had fewer limbs, and a slower oscillation pattern. To                 dysfunctional robot characterized by a blob or an only-head
+illustrate better, Figure 9 depicts the relationship between                       robot. This supports our previous observations about the
+phenotypic and behavioral traits. The density contours show                        CPPN maintaining a (deceiving) slightly higher diversity by
+that the L-System spreads not only to different areas, but to                      sampling simple dysfunctional robots. Another aspect to note
+vaster areas of the space. Corroborating this observation, for all                 is that in the primary initialization the CPPN already frequently
+traits, the quartile deviations from the medians among the runs                    produces spiders and simple dysfunctional robots, though this
+are wider for the L-System (Figures 4, 5). This means that with                    happens less frequently after the secondary initialization. The
+the CPPN, more often an evolutionary run converges to the same                     same can be said about the L-System, but the simple
+type of robot.                                                                     dysfunctional robots are accompanied by snakes instead of
+                                                                                   spiders. Notably, while with the L-System it is unclear why
+   Considering the search chronologically, firstly we see changes                  simple dysfunctional robots are produced so often right from
+in the average traits from generation 0 to generation 49--this is                  the initialization, in the case of the CPPN this phenomenon is
+the case for traits that were included in the definition of novelty                more simply explainable. Because the CPPNs are randomly
+and used during the secondary initialization (Figure 5). These                     initialized--before any optimization takes place, it is very easy
+changes are reflections of the Novelty Search attempt to find                      to obtain a neural network that (almost) always outputs (almost)
+diversity. Secondly, when optimization is taking place, we see all                 the same results regardless of the inputs. In our particular case,
+averages quickly dropping or increasing until stagnation. As                       outputting always the same results means the same module gets
+expected, this agrees with the previously discussed averages of                    selected to be placed in every position of the substrate. Finally,
+morphological novelty, in the sense that morphological                             given the nature of our decoding and how the modules are
+convergence does happen. On the other hand, the curves of                          allowed to attach, when this happens, the most common
+speed have not stagnated yet after the end of the evolutionary                     morphologies inevitably become something close to or exactly
+process. It is relevant to mention that, given that all phenotypic                 like 1) spiders--when the joint neuron always has the highest
+traits have converged but the speed continues to grow, we are led                  value, 2) blobs - when the block neuron always has the highest
+to conclude that what is still being optimized are traits that are not             value, 3) only-head--when the "no module" neuron always has
+captured by our current trait measures. Moreover, because                          the highest value, and 4) only-head with sensors--when the
+through visual inspection we see that most robots have                             sensors neuron always has the highest value. See illustrations
+converged to a particular body shape, as we will discuss soon,                     in Figure 6, run 11 generation 0 for spider, run 15 generation 149/
+this speed growth can most likely be attributed to changes in
+combinations of control parameters, which happen to be less                          FIGURE 8 | Average stability of speed among runs: for each run,
+intelligible and thus harder to observe.                                             includes all robots of the final generation (149) aggregated using the median. A
+                                                                                     marker above boxes represents a p < 0.001 for a Wilcoxon test.
+   We shall now inspect closer the appearance of the robot
+morphologies. Figure 6 displays examples of robots in each of
+the evolutionary stages. We see that after the optimization stage,
+the L-System often produces I-shape robots, i.e., "snakes," while
+
+Frontiers in Robotics and AI | www.frontiersin.org                             10  June 2021 | Volume 8 | Article 672379
+Miras                                                                                                                             Influence of Encodings on Robots
+
+FIGURE 9 | Density of robots for pairs of traits: includes all robots from each final generation (149) of each run all together.
+
+worst for blob, run 16 generation 0 for only-head, and run 19            continue to be so commonly born despite the efforts of Novelty
+generation 0 for only-head with sensors.                                 Search, then it may also persist despite the efforts of a task
+                                                                         optimization. Beyond that, because the other most frequently
+4.3 Encoding Biases                                                      born shapes are simply dysfunctional, this grants the spiders even
+                                                                         more advantage for the task of locomotion. As for the L-System,
+So far we described the traits of robots produced by each                the most commonly born shapes are often dysfunctional as well,
+encoding, and how they are biased. Let us now watch closely              but the large snakes predominant after optimization are never
+what these biases are, by inspecting the exploration of the search       part of these most commonly born shapes discussed in the
+space (Miras et al., 2018b). Figure 10 displays the robots most          analysis above. Nevertheless, the high frequency of the
+commonly born during the secondary initialization stage of the           dysfunctional shapes may grant the snakes as much advantage
+evolutionary process when the population was being evolved               as it does to the spiders. The difference is that the spiders have the
+towards novelty. This way, there was no selection pressure for           extra advantage of being part of the most commonly born shapes
+convergence, but divergence. However, while a perfectly unbiased         themselves. The observation that large snakes are not part of the
+search would result in cubes being uniformly visited, what we see        most commonly born shapes like spiders invites us to wonder
+is an exceedingly skewed distribution, with some cubes having an         whether the eventual dominance in the population of the large
+extremely higher frequency than most others. In practice, this           snakes is not simply a product of the bias, but of genuine selection
+means that a small number of morphology shapes are born much             pressure for rolling snakes in the current environment and task.
+more often than most other shapes. Note that though with both            Corroborating this thought, related work (Miras et al., 2018a)
+encodings we get skewed distributions, the very highest                  using the current L-System has shown that it is possible to obtain
+frequencies in the L-System cubes are lower than the ones                very diverse populations by combining the fitness of speed with
+within the CPPN cubes. Observing the robots at the top of the            rewards for diversity and the growth of limbs. They demonstrated
+histograms we see that, with both encodings, these most                  that this way, though populations of robots become diverse to the
+commonly born shapes are very simple, have few modules,                  point of resembling animal-like bodies and gaits, these robots
+and are often dysfunctional. In the case of the CPPN though,             were dramatically slower than the snakes. Moreover, let us
+one of these very often born robots has a shape that is not so           remember that the spiders are also dramatically slower than
+simple neither dysfunctional, i.e., the spider.                          the snakes. Another interesting aspect to be considered is that
+                                                                         though a medium size snake (four joints) is present as the third
+   At this stage, our observations begin to suggest that the             most common robot with the CPPN, snakes never take over after
+predominance of the spiders after the optimization stage when
+using the CPPN is due to this bias. We could reason that if spiders
+
+Frontiers in Robotics and AI | www.frontiersin.org                   11                                                           June 2021 | Volume 8 | Article 672379
+Miras                                                                     Influence of Encodings on Robots
+
+FIGURE 10 | Robots most frequently sampled by the reproduction operators during the secondary initialization. Each bar in the histogram represents how many
+times robots that fit into that cube were ever sampled (born). Each cube is part of a large multidimensional cube where each dimension is one of the morphological traits
+divided into 100 bins. The robots on the top of the plot are the representative of the cubes with the highest frequency (ordered from higher to lower). Each histogram
+concerns one random run. Plots were scaled in x and y to 300 and 100 respectively.
+
+FIGURE 11 | Examples of robot genealogy. From left to right, robots go from younger to older. The youngest robots were randomly sampled from generation 59 of
+a random run. The red arrows point out non-smooth morphological transitions from parent to child.
+
+the optimization. Perhaps what explains that is the fact that             shape, and vice versa. In particular, it seems possible to transition
+spiders are born even more often, or even it could be that four           from heads, blobs, etc. directly into spiders. For the sake of
+joints are not enough for an effective gate. Still, a more plausible      simplicity, in the case of the L-System that uses two parents,
+explanation may be that the best shape is never defined simply by         we depicted only one random parent. In any case, it is also
+a bias, but by the interaction of the search space and the task.          possible that a small body shape has a child that is a large snake
+                                                                          and vice versa. This effect of having non-smooth transitions
+   To conclude this section, we will investigate possible reasons         between parent and child is called a low locality. This means
+for the observed biases. In Figure 11 we see examples of robots           that the heritability of both methods is not good enough, and then
+that were alive in generation 59. We chose a generation belonging         too often small changes in the genotype have enormous effects on
+to the optimization stage so that we could see examples of the            the phenotype. We consider this to be a bias resulting from the
+"champion" robots, but we did not choose a too late generation so         interaction between the encodings with their reproduction
+that we could still see their parents differing from them. What is        operators, and advocate that awareness about this type of bias
+prominent in these genealogy illustrations is how easy it is to           must be created.
+transition from a simple dysfunctional shape into a more complex
+
+Frontiers in Robotics and AI | www.frontiersin.org                    12  June 2021 | Volume 8 | Article 672379
+Miras                                                                       Influence of Encodings on Robots
+
+FIGURE 12 | Best robots after optimization in experiment 2.
+
+4.4 Effects of Abortion                                                     our observation of the CPPN producing semi-spiders more often
+                                                                            than before. As far as performance is concerned, there was a
+The mechanism of abortion from experiment 2 had more                        significant drop in speed with both encodings, although this drop
+interesting effects on the L-System than on the CPPN. As                    was much more dramatic with the CPPN. The knowledge derived
+displayed by Figure 12, complex morphologies emerged with                   from the current experiments does not allow us to formulate
+the L-System in some of the runs. Note that by complex, we mean             clearly a reason for this drop. Still, it seems reasonable to consider
+that through visual inspection the shapes appear to be less simple,         that this drop is related to having eliminated the crossover of the
+e.g., multiple limbs to different directions and with different sizes,      L-System and increased mutation probability to the maximum
+resulting in walking gaits (as seen in the previous video). Though          for both encodings. This can be said because preliminary tests
+large snakes are still predominant among the runs, this type of             have demonstrated that, in terms of performance, the L-System
+complex morphology was never found with the L-System in                     benefits from crossover, while the CPPN benefits from not having
+experiment 1. With the CPPN, on the other hand, no complex                  crossover and using the mutation probability of experiment 1.
+shape emerged in any of the runs. Spiders are still almost always           The results achieved by this mechanism of abortion are very
+produced, though here they happen more often to be semi-                    preliminary, and do not permit drawing strong conclusions.
+spiders than in experiment 1. Figure 13 provides comparisons                Nevertheless, the purpose of this analysis is to illustrate an
+between the robots traits of experiment 1--presented                        alternative to tackling the biases discussed in this paper,
+earlier--and robot traits of experiment 2 using each encoding.              considering that the design of an unbiased encoding is still a
+These comparisons support our visual inspection, showing that               great challenge.
+some robot traits of the populations have changed when using the
+abortion mechanism. With the L-System, now robots are less                  5 CONCLUSION
+actuated and have more limbs--note that the p-value for Limbs is
+slightly above the convention, but becomes quite below it after             In this paper, we experimented with two different generative
+outliers are removed using the interquartile range. With the                encodings, namely, CPPN and L-System, and investigated their
+CPPN, an increase in limbs and decrease in joints happens as
+well, with an additional decrease in proportion. This agrees with
+
+Frontiers in Robotics and AI | www.frontiersin.org                      13  June 2021 | Volume 8 | Article 672379
+Miras                                                                  Influence of Encodings on Robots
+
+FIGURE 13 | Average robot traits among runs: for each run, includes all robots of the final generation (149) aggregated using the median. Numbers above boxes
+are p values of Wilcoxon tests.
+
+effects on phenotypic and behavioral robot traits. For robot           function(s), in practice fitness-function design is extremely
+encodings, we learned that there is a tendency for the two             challenging, specially if too many dimensions need to be
+encodings to sample robots with certain traits more often than         optimized. Reflecting on these results, as an alternative to
+others, and that the type of robots which are selectively sampled      fitness-function design, one could take advantage of such
+differs between the two encodings. This type of bias derives           encoding constraints, as a way of driving the search to a
+from the interaction between the encoding with its initialization      particularly convenient solution space. While in some cases
+and reproduction operators. Our results demonstrated that              a bias could be perceived as a curse that needs to be escaped, in
+both encodings generate biased samples of robots. More                 other cases it could also be seen as desirable. That may be the
+importantly, these biases have a very diverse nature and               case if, for instance, robots produced with an encoding were
+influence the production of very distinct types of robots.             biased to a particular trait, and this trait was suitable for their
+Fundamentally, this observation invites us to reflect on the           intended environment or task beyond performance. One
+trade-off that is imposed by such differentiation in the               example: let us imagine robots responsible for carrying water
+constrained space of each encoding. Robots produced by the             as fast as possible. These robots would need more than speed,
+CPPN often have a "spider" shape and are relatively slow, but          but also a balanced and stable gait, so that the water would not
+present very coordinated and stable gaits. By contrast, robots         be spilt. While designing fitness functions and optimizing for
+produced by the L-System often have a "snake" shape and are            multiple objectives can be tricky, one alternative solution is
+much faster, but present exceedingly uncoordinated and                 using an encoding that is very constrained in terms of gait
+unstable gaits. These trade-offs illustrate that producing             balance, e.g., the CPPN used in the current study. In this case,
+better robots does not necessarily mean producing robots               before making a final choice of encoding and operators, one
+with higher performance, i.e., faster robots. That is true             could experiment with different types, and assess which of them
+because "better" could be related to other qualities beyond            better allow to achieve such convenient solution space.
+the performance itself. While one could argue that every
+desirable trait could and should be reflected in the fitness-             At this point, it is essential to clarify that the differences we
+                                                                       have observed between robots produced by each encoding do not
+
+Frontiers in Robotics and AI | www.frontiersin.org                 14  June 2021 | Volume 8 | Article 672379
+Miras                                                                                     Influence of Encodings on Robots
+
+depend simply on the nature of CPPNs and L-Systems as                                     shapes emerged. The same result was not achieved with the CPPN
+genotypes representations. As mentioned in the Section 3.1,                               though, perhaps because its bias is stronger, as we have discussed
+for each one of them we designed our own decoding and                                     earlier.
+reproduction and initialization operators, fitting our design
+space, and this naturally plays a substantial role in shaping the                            For future work we propose to a) investigate the abortion
+search space. Therefore, the differences we hereby observed                               mechanism in more depth, allowing it to be carried also when
+depend on the search space as a whole, including genotype,                                there is crossover; b) investigate ways of increasing the locality of
+decoding, initialization operator, and variation operator. That                           both the studied encodings.
+being said, our main message is not about specific biases of such
+particular combinations, but to demonstrate how these                                     DATA AVAILABILITY STATEMENT
+combinations, whatever they are, can constrain evolved robot
+traits in different ways.                                                                 The datasets presented in this study can be found in online
+                                                                                          repositories. The names of the repository/repositories and
+   To finalize this discussion, let us recollect that the populations                     accession number(s) can be found in the article/
+of robots went through an extra stage of initialization aiming to                         Supplementary Material.
+tackle initialization biases. Notwithstanding, though this stage
+succeeded in increasing diversity in the initial population, the bias                     AUTHOR CONTRIBUTIONS
+persisted through the reproduction operators. This was the case
+because both of these encodings present problems with locality.                           Contributions of KM: design and implementation of the
+Because it is known that generative encodings often suffer from                           evolutionary process, including the encondings and the trait
+low locality (Rothlauf and Oetzel, 2006), we could hypothesize                            descriptors; design of the experimental setup; carrying out the
+that the biases originated from low locality are due to both tested                       experiments and the analysis; writing of the entire paper.
+encodings being generative. However, related work using this
+identical robot design space, but with a direct encoding, has                             SUPPLEMENTARY MATERIAL
+verified that a similar bias exists when searching for novelty
+(Miras et al., 2018b). Whereas in a first moment an obvious                               The Supplementary Material for this article can be found online at:
+solution to that would be improving the encodings so to increase                          https://www.frontiersin.org/articles/10.3389/frobt.2021.672379/
+their locality, this is frequently not a trivial endeavor. As one                         full#supplementary-material
+alternative to that, we experimented with evading the biases
+through an abortion mechanism. This mechanism resulted in
+interesting effects with the L-System, so that more often complex
+
+REFERENCES                                                                                Dellaert, F. (1995). Toward a Biologically Defensible Model of Development.
+                                                                                              Cleveland: Master's thesis, Case Western Reserve University.
+Auerbach, J. E., and Bongard, J. C. (2014). Environmental Influence on the
+    Evolution of Morphological Complexity in Machines. Plos Comput. Biol. 10,             Deloukas, P., Schuler, G., Gyapay, G., Beasley, E., Soderlund, C., Rodriguez-Tome,
+    e1003399. doi:10.1371/journal.pcbi.1003399                                                P., et al. (1998). A Physical Map of 30,000 Human Genes. Science 282, 744­746.
+                                                                                              doi:10.1126/science.282.5389.744
+Auerbach, J., Aydin, D., Maesani, A., Kornatowski, P., Cieslewski, T., Heitz, G.,
+    et al. (2014). "Robogen: Robot Generation through Artificial Evolution," in           Doursat, R., Sayama, H., and Michel, O. (2013). A Review of Morphogenetic
+    Artificial Life 14: Proceedings of the Fourteenth International Conference on             Engineering. Nat. Comput. 12, 517­535. doi:10.1007/s11047-013-9398-1
+    the Synthesis and Simulation of Living Systems (The MIT Press), 136­137.
+                                                                                          Eiben, A. E., and Smith, J. (2003). Introduction to Evolutionary Computing. Berlin
+Bolker, J. A. (2000). Modularity in Development and Why it Matters to Evo-Devo.               Heidelberg: Springer.
+    Am. Zool 40, 770­776. doi:10.1093/icb/40.5.770
+                                                                                          Gottlieb, J., and Raidl, G. R. (1999). "Characterizing Locality in Decoder-Based Eas
+Bongard, J. (2002). "Evolving Modular Genetic Regulatory Networks," in                        for the Multidimensional Knapsack Problem," in European Conference on
+    Proceedings of the 2002 Congress on Evolutionary Computation,                             Artificial Evolution (Springer), 38­52.
+    Cec'02(Cat. No. 02th8600)(IEEE), 2, 1872­1877.
+                                                                                          Gottlieb, J., and Raidl, G. R. (2000). The Effects of Locality on the Dynamics of
+Buchanan Berumen, E., Le Goff, L., Li, W., Hart, E., Eiben, G., De Carlo, M., et al.          Decoder-Based Evolutionary Search. GECCO (Citeseer), 283­290.
+    (2020). Bootstrapping Artificial Evolution to Design Robots for Autonomous
+    Fabrication. MDPI Robotics. 9, 106. doi:10.3390/robotics9040106                       Gruau, F., Whitley, D., and Pyeatt, L. (1996). "A Comparison between Cellular
+                                                                                              Encoding and Direct Encoding for Genetic Neural Networks," in Proceedings of
+Cheney, N., MacCurdy, R., Clune, J., and Lipson, H. (2014). Unshackling                       the 1st annual conference on genetic programming. 81­89.
+    Evolution. Sigevolution 7, 11­23. doi:10.1145/2661735.2661737
+                                                                                          Harding, S., and Miller, J. F. (2005). "Evolution of Robot Controller Using
+Clune, J., Stanley, K. O., Pennock, R. T., and Ofria, C. (2011). On the Performance           Cartesian Genetic Programming," in European Conference on Genetic
+    of Indirect Encoding across the Continuum of Regularity. IEEE Trans. Evol.                Programming. Springer, 62­73. doi:10.1007/978-3-540-31989-4_6
+    Computat. 15, 346­367. doi:10.1109/tevc.2010.2104157
+                                                                                          Hornby, G. S., and Pollack, J. B. (2001). "Body-brain Co-evolution Using L-Systems
+Collins, J., Cottier, B., and Howard, D. (2019). "Comparing Direct and Indirect               as a Generative Encoding," in Proceedings of the 3rd Annual Conference on
+    Representations for Environment-specific Robot Component Design," in 2019                 Genetic and Evolutionary Computation, San Francisco (Morgan Kaufmann
+    IEEE Congress on Evolutionary Computation (CEC) (IEEE), 2705­2712.                        Publishers), 868­875.
+
+Colombo, G., and Mumford, C. L. (2005). Comparing Algorithms, Representations             Hornby, G. S., Lipson, H., and Pollack, J. B. (2003). Generative Representations for
+    and Operators for the Multi-Objective Knapsack Problem. IEEE Congress Evol.               the Automated Design of Modular Physical Robots. IEEE Trans. Robot.
+    Comput. (IEEE) 2, 1268­1275.                                                              Automat. 19, 703­719. doi:10.1109/tra.2003.814502
+
+                                                                                          Hupkes, E., Jelisavcic, M., and Eiben, A. E. (2018). "Revolve: a Versatile Simulator
+                                                                                              for Online Robot Evolution," in International Conference on the Applications
+
+Frontiers in Robotics and AI | www.frontiersin.org                                    15  June 2021 | Volume 8 | Article 672379
+Miras                                                                                         Influence of Encodings on Robots
+
+    of Evolutionary Computation (Springer), 687­702. doi:10.1007/978-3-319-                   Rothlauf, F., and Goldberg, D. E. (2000). "Pruefer Numbers and Genetic
+    77538-8_46                                                                                    Algorithms: A Lesson on How the Low Locality of an Encoding Can
+Janikow, C. Z., and Michalewicz, Z. (1991). An Experimental Comparison of                         Harm the Performance of Gas," in International Conference on Parallel
+    Binary and Floating point Representations in Genetic Algorithms. ICGA 1991,                   Problem Solving from Nature (Springer), 395­404. doi:10.1007/3-540-
+    31­36.                                                                                        45356-3_39
+Jelisavcic, M., de Carlo, M., Hupkes, E., Eustratiadis, P., Orlowski, J., Haasdijk, E.,
+    et al. (2017). Real-world Evolution of Robot Morphologies: A Proof of Concept.            Rothlauf, F., and Oetzel, M. (2006). "On the Locality of Grammatical Evolution," in
+    Artif. Life. 23, 206­235. doi:10.1162/ARTL_a_00231                                            European Conference on Genetic Programming (Springer), 320­330. doi:10.
+Jelisavcic, M., Miras, K., and Eiben, A. (2018). "Morphological Attractors in                     1007/11729976_29
+    Darwinian and Lamarckian Evolutionary Robot Systems," in 2018 IEEE
+    Symposium Series on Computational Intelligence (SSCI) (IEEE), 859­866.                    Rothlauf, F. (2006). Representations for Genetic and Evolutionary Algorithms. San
+Jones, T., and Forrest, S. (1995). Fitness Distance Correlation as a Measure of                   Francisco: Springer, 9­32.
+    Problem Difficulty for Genetic Algorithms. ICGA 95, 184­192.
+Kodjabachian, J., and Meyer, J.-A. (1998). Evolution and Development of Neural                Siddiqi, A. A., and Lucas, S. M. (1998). "A Comparison of Matrix Rewriting versus
+    Controllers for Locomotion, Gradient-Following, and Obstacle-Avoidance in                     Direct Encoding for Evolving Neural Networks," in 1998 IEEE International
+    Artificial Insects. IEEE Trans. Neural Netw. 9, 796­812. doi:10.1109/72.712153                Conference on Evolutionary Computation Proceedings. IEEE World Congress
+Komosin´ski, M., and Rotaru-Varga, A. (2001). Comparison of Different Genotype                    on Computational Intelligence (Cat No. 98TH8360)(IEEE), 392­397.
+    Encodings for Simulated Three-Dimensional Agents. Artif. Life 7, 395­418.
+    doi:10.1162/106454601317297022                                                            Sims, K. (1994). Evolving 3d Morphology and Behavior by Competition. Artif. Life
+Kriegman, S., Blackiston, D., Levin, M., and Bongard, J. (2020). A Scalable Pipeline              1, 353­372. doi:10.1162/artl.1994.1.4.353
+    for Designing Reconfigurable Organisms. Proc. Natl. Acad. Sci. USA 117,
+    1853­1859. doi:10.1073/pnas.1910837117                                                    Stanley, K. O., and Miikkulainen, R. (2002). Evolving Neural Networks through
+Kuratani, S. (2009). Modularity, Comparative Embryology and Evo-Devo:                             Augmenting Topologies. Evol. Comput. 10, 99­127. doi:10.1162/
+    Developmental Dissection of Evolving Body Plans. Dev. Biol. 332, 61­69.                       106365602320169811
+    doi:10.1016/j.ydbio.2009.05.564
+Lee, S., Yosinski, J., Glette, K., Lipson, H., and Clune, J. (2013). "Evolving Gaits for      Stanley, K. O., D'Ambrosio, D. B., and Gauci, J. (2009). A Hypercube-Based
+    Physical Robots with the Hyperneat Generative Encoding: The Benefits of                       Encoding for Evolving Large-Scale Neural Networks. Artif. Life 15, 185­212.
+    Simulation," in European Conference on the Applications of Evolutionary                       doi:10.1162/artl.2009.15.2.15202
+    Computation (Springer), 540­549. doi:10.1007/978-3-642-37192-9_54
+Lehman, J., and Stanley, K. O. (2008). Exploiting Open-Endedness to Solve                     Stanley, K. O. (2007). Compositional Pattern Producing Networks: A Novel
+    Problems through the Search for novelty. ALIFE, 329­336.                                      Abstraction of Development. Genet. Program Evolvable Mach 8, 131­162.
+Lindenmayer, A. (1968). Mathematical Models for Cellular Interactions in                          doi:10.1007/s10710-007-9028-8
+    Development I. Filaments with One-Sided Inputs. J. Theor. Biol. 18,
+    280­299. doi:10.1016/0022-5193(68)90079-9                                                 Tarapore, D., and Mouret, J.-B. (2015). Evolvability Signatures of Generative
+Miras, K., and Eiben, A. E. (2019). "Effects of Environmental Conditions on                       Encodings: beyond Standard Performance Benchmarks. Inf. Sci. 313, 43­61.
+    Evolved Robot Morphologies and Behavior," in Proceedings of the Genetic and                   doi:10.1016/j.ins.2015.03.046
+    Evolutionary Computation Conference (Prague: ACM), 125­132.
+Miras, K., Haasdijk, E., Glette, K., and Eiben, A. E. (2018a). "Effects of Selection          Veenstra, F., Faina, A., Risi, S., and Stoy, K. (2017). "Evolution and
+    Preferences on Evolved Robot Morphologies and Behaviors," in Proceedings of                   Morphogenesis of Simulated Modular Robots: a Comparison between a
+    the Artificial Life Conference 2018 (ALIFE 2018). Editors T. Ikegami, N. Virgo,               Direct and Generative Encoding," in European Conference on the
+    O. Witkowski, R. Suzuki, M. Oka, and H. Iizuka (Tokyo: . MIT Press), 224­231.                 Applications of Evolutionary Computation (Springer), 870­885. doi:10.
+Miras, K., Haasdijk, E., Glette, K., and Eiben, A. E. (2018b). "Search Space Analysis             1007/978-3-319-55849-3_56
+    of Evolvable Robot Morphologies," in Applications of Evolutionary
+    Computation - 21st International Conference, EvoApplications 2018                         Veenstra, F., Hart, E., Buchanan, E., Li, W., De Carlo, M., and Eiben, A. E. (2019).
+    (Springer), 703­718.                                                                          "Comparing Encodings for Performance and Phenotypic Exploration in
+Miras, K., Ferrante, E., and Eiben, A. E. (2020). Environmental Influences on                     Evolving Modular Robots," in Proceedings of the Genetic and Evolutionary
+    Evolvable Robots. Plos One. 15, e0233848. doi:10.1371/journal.pone.0233848                    Computation Conference Companion, 127­128.
+Rothlauf, F., and Goldberg, D. (1999). "Tree Network Design with Genetic
+    Algorithms­An Investigation in the Locality of the Pruefernumber                          Yosinski, J., Clune, J., Hidalgo, D., Nguyen, S., Zagal, J. C., and Lipson, H. (2011).
+    Encoding," in Late Breaking Papers at the Genetic and Evolutionary                            Evolving Robot Gaits in Hardware: the Hyperneat Generative Encoding vs.
+    Computation Conference, 238­244.                                                              Parameter Optimization. Paris: ECAL. 890­897.
+
+                                                                                              Conflict of Interest: The author declares that the research was conducted in the
+                                                                                              absence of any commercial or financial relationships that could be construed as a
+                                                                                              potential conflict of interest.
+
+                                                                                              Copyright © 2021 Miras. This is an open-access article distributed under the terms of
+                                                                                              the Creative Commons Attribution License (CC BY). The use, distribution or
+                                                                                              reproduction in other forums is permitted, provided the original author(s) and
+                                                                                              the copyright owner(s) are credited and that the original publication in this journal is
+                                                                                              cited, in accordance with accepted academic practice. No use, distribution or
+                                                                                              reproduction is permitted which does not comply with these terms.
+
+Frontiers in Robotics and AI | www.frontiersin.org                                        16  June 2021 | Volume 8 | Article 672379
+

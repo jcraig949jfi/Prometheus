@@ -1,0 +1,119 @@
+ifndef OBJS
+OBJS	= main.o
+O	= x
+LIBS	= -lqt -lGL -lGLU -lW -lP -lG -lL -lX11
+endif
+
+SYS	= $(shell uname)
+MACH	= $(shell uname -m)
+
+OBJSS	= $(OBJS:%=$(SYS)/%)
+OUT	= $(O:%=$(SYS)/%)
+
+BASE	= /home/proj_vs/SONN/CODE
+
+IPATHS	+= \
+	$(BASE)/include \
+	$(BASE)/Shark/include \
+	/opt/openwin/share/include/GL \
+	/opt/qt/include \
+	/usr/lib/qt-3.1/include \
+	/opt/include
+#	/opt/sfw/include /opt/sfw/include/qt/ \
+
+LPATHS	+=  \
+	$(BASE)/Shark/lib_$(MACH) \
+	/opt/LEDA/ \
+	/opt/qt/lib \
+	/usr/lib/qt-3.1/lib
+#	/opt/openwin/lib/ \
+#	/opt/sfw/lib/ \
+
+ifeq ($(SYS),SunOS)
+CFLAGS	+= -DMT_$(SYS)
+LFLAGS	+= $(LPATHS:%=-L%) $(LPATHS:%=-R%)
+SHAREFLAG = -G
+CPP	= /opt/gnu/bin/g++
+#CPP	= gcc -v -pg 
+endif
+ifeq ($(SYS),Linux)
+CFLAGS	+= -DMT_$(SYS) -Wno-deprecated
+LPATHS	+= /usr/X11R6/lib
+LFLAGS	+= $(LPATHS:%=-L%) $(LPATHS:%=-Wl,-rpath,%)
+SHAREFLAG = -shared
+#CPP	= /opt/gnu/bin/g++
+CPP	= /usr/bin/g++
+endif
+
+.SECONDARY:
+
+debug: CFLAGS += -Wall -g $(IPATHS:%=-I%)
+debug: $(OUT)
+ddd:   CFLAGS += -Wall -g -fno-default-inline $(IPATHS:%=-I%)
+ddd:   $(OUT)
+fast:  CFLAGS += -Wall -O -DMT_NOCHECK -DMT_NODEBUG $(IPATHS:%=-I%)
+fast:  $(OUT)
+prof:  CFLAGS += -Wall -O -pg -DMT_NOCHECK -DMT_NODEBUG $(IPATHS:%=-I%)
+#-fno-default-inline 
+prof:  LFLAGS += -pg
+prof:  $(OUT)
+purify:	CPP = purify $(CPP)
+purify:	CFLAGS += -Wall -g $(IPATHS:%=-I%)
+#purify:	LIBS =
+purify:	$(OUT)
+
+# in der shell!!:
+# source /opt/Rational/purifyplus_setup.csh
+# setenv PUREOPTIONS "-cache-dir=$HOME/cache"
+
+
+
+
+%x: $(OBJSS)
+	$(CPP) $(LFLAGS) -o $@ $(OBJSS) $(LIBS)
+	chmod a+rx $@
+
+%.so: $(OBJSS)
+	$(CPP) $(LFLAGS) -o $@ $(OBJSS) $(LIBS) $(SHAREFLAG)
+	chmod a+rx $@
+
+%.o: %.c
+	$(CPP) $(CFLAGS) -o $@ -c $<
+
+%.o: %.cc
+	$(CPP) $(CFLAGS) -o $@ -c $<
+
+%.o: %.cpp
+	$(CPP) $(CFLAGS) -o $@ -c $<
+
+$(SYS)/%.o: %.c
+	$(CPP) $(CFLAGS) -o $@ -c $<
+
+$(SYS)/%.o: %.cc
+	$(CPP) $(CFLAGS) -o $@ -c $<
+
+$(SYS)/%.o: %.cpp
+	$(CPP) $(CFLAGS) -o $@ -c $<
+
+$(SYS)/%.o: src/%.cpp
+	$(CPP) $(CFLAGS) -o $@ -c $<
+
+$(SYS)/%.o: /home/mt/code/include/MT/%.cpp
+	$(CPP) $(CFLAGS) -o $@ -c $<
+
+%.h: %.ui
+	uic -o $@ $<
+
+%.cpp: ../%.ui ../%.h
+	uic -o $@ -i ../$(*F).h $<
+
+%_moc.cpp: ../%.h
+	cd $(*D); moc -o $(*F)_moc.cpp ../$(<F)
+
+%_moc.cpp: %.h
+	cd $(*D); moc -o $(*F)_$(SYS)_moc.cpp $(<F)
+
+clean :
+	rm $(OUT) $(OBJSS)
+
+force:	;

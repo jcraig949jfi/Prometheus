@@ -1,0 +1,634 @@
+The Role of Population Size in Rate of Evolution
+                  in Genetic Programming
+
+                               Ting Hu and Wolfgang Banzhaf
+
+       Department of Computer Science, Memorial University, St. John's, Canada
+                                      {tingh,banzhaf}@cs.mun.ca
+
+         Abstract. Population size is a critical parameter that affects the per-
+         formance of an Evolutionary Computation model. A variable population
+         size scheme is considered potentially beneficial to improve the quality of
+         solutions and to accelerate fitness progression. In this contribution, we
+         discuss the relationship between population size and the rate of evolu-
+         tion in Genetic Programming. We distinguish between the rate of fitness
+         progression and the rate of genetic substitutions, which capture two dif-
+         ferent aspects of a GP evolutionary process. We suggest a new indicator
+         for population size adjustment during an evolutionary process by mea-
+         suring the rate of genetic substitutions. This provides a separate feedback
+         channel for evolutionary process control, derived from concepts of popu-
+         lation genetics. We observe that such a strategy can stabilize the rate of
+         genetic substitutions and effectively accelerate fitness progression. A test
+         with the Mackey-Glass time series prediction verifies our observations.
+
+1 Introduction
+
+The search process in Evolutionary Computation (EC) systems is a simultaneous
+process of exploration in parallel and exploitation in depth. Population size is
+a key factor to maintain population diversity in this process, and thus critical
+for the performance of an EC method. Recently, population size control has
+attracted increasing interests in the literature [13]. Population size control is
+non-trivial and challenging because it is often problem-specific and the interac-
+tion among various EC parameters is not completely clear yet. In general, the
+literature on population size control has two main foci: i) initializing a proper
+population size a priori and ii) adjusting population size during evolution. In
+this article, we focus on the latter. Population size adjustment is motivated by
+the observation that the required population size changes during different stages
+of evolution [2]. Such an adjustment is usually directed by a feedback loop. This
+feedback has been implemented through the controlled persistence of individuals
+or through the measurement of fitness progression, both of which are able to re-
+flect the process of evolution to some extent. In Biology, particularly in the study
+on population genetics, population size has been intensely studied regarding its
+role in the rate of evolution [15,16]. It is generally accepted that the effect of
+population size on evolution acceleration is conditioned on the nature of selec-
+tion at a particular moment rather than on a monotonic relationship. Typically,
+
+L. Vanneschi et al. (Eds.): EuroGP 2009, LNCS 5481, pp. 85­96, 2009.
+c Springer-Verlag Berlin Heidelberg 2009
+86  T. Hu and W. Banzhaf
+
+under positive selection, i.e., selection mostly accepting adaptive phenotypes,
+a large population is favorable for rapid evolution. In contrast, under negative
+selection, i.e., selection mostly eliminating deleterious phenotypes, a small popu-
+lation evolves faster. These two selection conditions can be reflected by the rate
+of genetic substitutions. Although this perspective is still under debate in the
+biological community, it is intriguing to study this relationship in EC systems.
+Thus, we investigate the interplay between population size and rate of evolution
+in a GP model and see how this originally biological notion translates to artificial
+systems.
+
+2 Background and Motivation
+
+In this section, we first briefly review studies on population size control in EC.
+Then, we discuss the relation between population size and the rate of evolution
+from both an EC and biological point of view.
+
+2.1 Population Size Control
+
+Research on population size control in EC originated from Genetic Algorithms
+(GAs). A number of theoretical contributions on analyzing population size ini-
+tialization have been published based on Goldberg's seminal "components de-
+composition approach" and the notion of building blocks [8,9]. The essence of
+these works is that population size should be initialized according to the "com-
+plexity" of a specific problem. That is, for a more difficult problem, more di-
+versity of a population is required, and thus a larger population size should be
+initialized.
+
+   Recently, it was realized that even for a given problem instance the required
+population size can vary during the process of evolution. Therefore, besides a
+good initial population size, some empirical methods on adjusting population size
+dynamically have been proposed. Arabas et al. [1] propose the Genetic Algorithm
+with Variable Population Size (GAVaPS) by regulating the age and lifetime of
+each individual. Population size fluctuates as a result of removing over-aged in-
+dividuals and reproducing new ones. Back et al. [2] extend this lifetime notion in
+their Adaptive Population size Genetic Algorithm (APGA) to steady-state GAs.
+Fernandes and Rosa [5] propose the Self-Regulated Population size Evolutionary
+Algorithm (SRP-EA) to enhance APGA using a diversity-driven reproduction
+process. Alternatively, Harik and Lobo [10] introduce parameter-less GA, where
+several populations with different sizes evolve in parallel, starting with small
+population sizes. By inspecting the average fitness of these populations, less fit
+undersized populations are replaced by larger ones. Eiben et al. [4] suggest to
+use the pace of fitness improvements as the signal to control population size in
+Population Resizing on Fitness Improvement GA (PRoFIGA).
+
+   In GP, determination of an ideal population size is of even greater signifi-
+cance. As with the GA, population size in GP is relevant to its capabilities in
+finding the target and to its computational efficiency. In particular, it is related
+The Role of Population Size in Rate of Evolution in Genetic Programming  87
+
+to the phenomenon of bloat. Poli et al. [17] establish that smaller populations
+bloat at a slower rate than larger ones. Downing [3] investigates population size
+in relation to evolvability in GP. Thus, adjusting population size dynamically
+benefits GP in various ways. A theoretical analysis on population size in GP
+based on building blocks is conducted by Sastry et al. [18]. The empirical pop-
+ulation size adjustment schemes for GAs can also be applied to GP. Moreover,
+some GP-specific techniques have been employed as well. For example, Wedge
+and Kell [20] propose the Genotype-Fitness Correlation as a landscape metric
+to predict ideal population sizes in different systems. Tomassini et al. [19] de-
+sign a dynamic population size GP using fitness progression as signal to delete
+over-sized and worse-fit individuals or to insert mutated best-fit individuals with
+certain criteria.
+
+2.2 Population Size and Rate of Evolution
+
+The term rate of evolution is understood somewhat differently in EC and in
+Biology. The goal of evolution is much more explicit in computational systems
+than in nature. It is to find the fittest solution to a given problem. Therefore,
+the rate of evolution in EC usually refers to how fast an EC population improves
+its fitness value, i.e., the rate of fitness progression. In this sense, as long as an
+EC population is able to find solutions, a small size is favored because of a small
+overhead. Thus, computer scientists have been seeking intelligent population size
+control schemes to strike a balance between exploration and exploitation during
+the search process.
+
+   In Biology, there is no explicit fitness function to measure, and the rate of
+evolution comes in a few different flavors, depending on the objects being ex-
+amined, such as gene sequences, proteins, etc. Because of the infeasibility of
+defining fitness explicitly in natural systems, fitness is usually reflected by the
+likelihood that a relevant genetic change is selected. For instance, in molecular
+biology, the rate of evolution is usually measured by the rate that mutants are
+accepted and replace former alleles in genetic sequences. Biologists refer to this
+rate of evolution as rate of genetic substitutions. Here, we distinguish the rate of
+fitness progression and the rate of genetic substitutions to acknowledge the two
+aspects of rate of evolution. Fitness progression focuses on attaining the goal of
+the search, while rate of genetic substitutions concentrates on the dynamics of
+evolution and provides a different tool to study evolutionary processes.
+
+   Population geneticists have been identifying the effect of population size on
+the rate of molecular evolution, i.e., the rate of genetic substitutions. The Nearly
+Neutral Theory of molecular evolution by Ohta [15,16] is regarded as one of the
+most important principles for modern molecular evolution research. This theory
+defines both slightly deleterious and slightly advantageous mutations as nearly
+neutral mutations. It extends an earlier insight of Fisher [6] that the probability
+of a mutant being selected will be low if the outcome of this mutation on pheno-
+types is far-reaching. The theory predicts that there are a substantial number of
+nearly neutral mutations in molecular evolution. These nearly neutral mutations
+would be able to generate adaptation at a later time under certain genetic or
+88  T. Hu and W. Banzhaf
+
+environmental changes. Thus, they play an important role for providing varia-
+tion potential. In this theory, population size can influence the rate of molecular
+evolution by its effects on the chance of accepting a nearly neutral genetic change
+through statistical laws. That is, the chance of a random mutant being favored
+by selection is slimmer within a larger population. When the majority of muta-
+tions are deleterious, a smaller population can evolve faster because more nearly
+neutral changes are introduced into the population. In contrast, when muta-
+tions are mostly advantageous, evolution is faster in a larger population. When
+most mutations are neutral, the rate of evolution is nearly independent of the
+population size.
+
+   These predictions have been extensively tested and discussed in the biologi-
+cal community. Below are some examples where both increasing and decreasing
+population size may accelerate evolution, depending on the link to environments.
+Gillespie [7] examines the relation between population size and the rate of genetic
+substitutions via computer simulation of several well-known biological models.
+While verifying such a relation, he suggests the relation can sometimes be blurred
+by the extreme complexity of natural systems. With population size fluctuation
+being one of these complicating factors, he further emphasizes the necessity of
+studying such fluctuation in population genetics. Woolfit and Bromham [21] com-
+pare genetic sequences between island endemic species and closely related main-
+land species. This is an example where decreasing population size can accelerate
+evolution. In a study on the recent rapid molecular evolution in human genomes,
+Hawks et al. [11] hypothesize that the current dramatically growing human pop-
+ulation may be the major driving force of new adaptive evolution. They indicate
+that a growing population size can provide the potential for rapid adaptive inno-
+vations if a population is highly adaptive to the current environment.
+
+3 Adjusting Population Size during Evolution in GP
+
+We propose to apply the ideas from population genetics to a GP system. It
+is generally assumed that the fitness of new offspring generated by mutation
+or crossover in each generation approximately follows a Gaussian distribution.
+According to the Central Limit Theorem, the average fitness among a larger
+population has a smaller variance [15] (Fig. 1). We use the selection favoring
+degree Sf , similar to the selection coefficient in Biology, to denote the degree of
+new offspring being favored by selection. A positive value of Sf of an offspring
+implies that it is likely to be accepted, and a negative value of Sf means that
+it will most likely be rejected by selection. Further, if the majority of offspring
+have positive Sf , selection is referred to as positive (Fig. 1 left). In contrast, the
+selection is negative when Sf < 0 for most offspring (Fig. 1 right). From this
+figure, we observe that, under positive selection, increasing population size can
+accelerate the rate of genetic substitutions (left), while decreasing population
+size can allow more genetic substitutions under negative selection (right).
+
+   Selection acting positively or negatively may vary during different stages of
+an evolutionary process in GP, and the rate of genetic substitutions reflects this
+The Role of Population Size in Rate of Evolution in Genetic Programming                       89
+
+                Large population                            Large population
+                            Small population  Small population
+
+Sf < 0  Sf = 0  Sf > 0                        Sf < 0                          Sf = 0  Sf > 0
+
+Fig. 1. Selection effects. Positive selection (left) and negative selection (right).
+
+varying selection pressure. Therefore, adjusting population size according to the
+rate of genetic substitutions is expected to compensate the selection pressure.
+Thus, evolution can be guided away from stagnation and, further, can achieve
+better fitness progression. A measurement for the rate of genetic substitutions
+is reviewed briefly next, followed by our proposed population size adjustment
+approach.
+
+3.1 Measuring the Rate of Genetic Substitutions
+
+The nonsynonymous to synonymous substitution ratio ka/ks is a widely accepted
+measurement of the rate of genetic substitutions in molecular biology [23]. This
+metric has been applied by us [12] to measure the rate of genetic substitutions in
+GP. Not all genetic changes are effective in GP. Genetic changes that modify the
+encoded function can be regarded nonsynonymous, while others are regarded as
+synonymous changes. Specifically, in each generation the population is formed by
+surviving individuals under genetic variations and selection. Then, ka measures
+the rate of nonsynonymous genetic substitutions of the process, and ks measures
+the rate of neutral changes accepted. The rates ka and ks are obtained by count-
+ing the number of nonsynonymous (synonymous, resp.) genetic substitutions
+normalized by the total nonsynonymous (synonymous, resp.) sensitivities of in-
+dividuals to genetic operations in each generation. Therefore, ka measures the
+adaptive evolutionary "distance" (adaptive substitution rate) and ks practically
+provides the background "clock ticks" (neutral substitution rate). In Biology, the
+ratio ka/ks is regarded as a measure for the rate of genetic substitutions. On one
+hand, ka/ks > 1 implies that most genetic changes are adaptive and favored by
+selection. On the other hand, when ka/ks < 1, the majority of genetic changes
+are regarded deleterious and are diminished by selection.
+
+   Here, we slightly revise this ka/ks ratio to measure the rate of genetic substi-
+tutions. From one generation to the next, Na denotes the number of all nonsyn-
+onymous genetic changes (i.e., attempted changes) and Ma counts the number of
+nonsynonymous genetic substitutions (i.e., accepted changes). A sampled seman-
+tic test set different from the training set is fed to an individual before and after
+a genetic change to test whether this change is nonsynonymous or synonymous.
+For instance, if a parent and its offspring have the same output for all sampled
+90  T. Hu and W. Banzhaf
+
+semantic test cases, the genetic change generating this offspring from the parent
+
+is regarded as synonymous. Otherwise, the change is considered nonsynonymous.
+Thus, ka = Ma/Na measures the rate of nonsynonymous genetic substitutions.
+The synonymous substitution rate ks can be defined similarly by dividing the
+number of synonymous genetic substitutions Ms by the number of attempted
+synonymous genetic changes Ns. The ratio ka/ks measures the rate of adaptive
+genetic substitutions relatively to a background silent genetic substitution rate.
+The case ka/ks = 1 corresponds to the situation where nonsynonymous genetic
+changes are selected at the same rate as neutral changes. When ka/ks > 1, selec-
+tion is positive because a larger portion of nonsynonymous changes are favored
+by selection. In contrast, negative selection is reflected by the case ka/ks < 1.
+
+3.2 Adaptive Population Size Approach
+
+Next, an adaptive population size scheme is proposed using the ka/ks ratio de-
+fined above. We adopt truncation selection such that population size adjustment
+can be achieved easily without duplication or generating random individuals.
+Typically, at generation t, the current population produces an offspring popu-
+lation of the same size via genetic variations including crossover and mutation.
+Parents and offspring will compete through tournament selection to yield the
+next generation, and the population size Psize(t + 1) will be adjusted according
+to the currently observed rate of genetic substitutions (ka/ks)(t). Thus, the adap-
+tive population size is regulated in each generation in an attempt to maintain a
+stable rate of genetic substitutions as follows:
+
+ ­ If (ka/ks)(t) > 1 (positive selection), we increase the population size propor-
+     tional to the changes of the rate of genetic substitutions such that,
+
+                Psize(t + 1) = Psize(t) × (1 + |(ka/ks)(t) - (ka/ks)(t - 1)|).
+
+ ­ If (ka/ks)(t) = 1 (neutral selection), we keep the same population size that,
+
+                                        Psize(t + 1) = Psize(t).
+
+ ­ If (ka/ks)(t) < 1 (negative selection), when (ka/ks)(t) is increasing, we in-
+     crease the population size to suppress further deleterious genetic substitu-
+     tions, and when (ka/ks)(t) is decreasing, we decrease the population size to
+     encourage more genetic substitutions. That is,
+
+                Psize(t + 1) = Psize(t) × (1 + ((ka/ks)(t) - (ka/ks)(t - 1))).
+
+   Note that we do not limit the population size by an upper bound. However,
+a lower bound of population size will be established in applications.
+
+4 Experiments
+
+We expect that dynamic adjustment of population size according to the mea-
+sured ka/ks ratio can maintain a fairly stable rate of genetic substitutions. Since
+The Role of Population Size in Rate of Evolution in Genetic Programming   91
+
+                       1.4
+
+                       1.2
+
+                       1
+
+                Value  0.8
+
+                       0.6
+
+                       0.4
+
+                       0.2        200       400      600   800 1000
+                            0
+
+                                               Time steps
+
+                       Fig. 2. Mackey-Glass time series
+
+evolution is better guided this way, the performance of a GP system in fitness
+progression should improve as well. This is verified through simulations and
+comparisons to fixed-size populations. A tree structure is adopted to encode GP
+individuals here. The test benchmark will be introduced next, followed by our
+discussion of experimental results.
+
+4.1 Test Suite
+
+We use the Mackey-Glass chaotic time series prediction as our benchmark prob-
+lem. Mackey-Glass time series prediction is a difficult modeling problem in ma-
+chine learning and in GP [14]. It predicts future values of a time series based on
+history. GP is trained using these historical data. The series is generated using
+the following recursive function [22],
+
+                       xt+1    =  xt  -  b  ×    xt  +  1  a × xt-     ,
+                                                           + (xt- )10
+
+where x0 = 1, and the parameters are set to
+
+                               a = 0.2, b = 0.1,  = 17.
+
+   Fig. 2 depicts a plot of this function. We use the first 1,001 points as the
+training set. This problem is considered a difficult one because it does not have
+a closed-form solution. Thus, it will take GP a long time to converge.
+
+   Empirically, a population size between 500 and 1,000 is suitable for this type
+of problem. Here we conduct experiments in three scenarios. Two of the scenarios
+have fixed-size populations of 500 and 1,000, the third has an adaptive population
+size (APS) using our dynamic adjustment approach. It starts with an initial
+population size of 1,000 and a lower limit 300. The GP configuration is as shown
+in Table 1. Note that we adopt the number of function evaluations as a control
+metric although it operates in a generational mode. This allows a fair comparison
+among different scenarios.
+92  T. Hu and W. Banzhaf
+
+    Table 1. GP Configuration
+
+Population size                 500/1,000/APS(Adaptive Population Size)
+Tree initialization
+Function set                    Ramped-Half-and-Half with limit 6
+Terminal variable set
+                                +, -, ×, and protective /
+Terminal constant set
+                                x1, x2, ..., and x17, variable xi denotes the
+Crossover rate                  previous point i time steps ago
+Mutation rate
+Maximum mutation subtree depth  Random ephemeral numbers equally dis-
+Crossover and mutation method
+Maximum tree depth              tributed in [-1, 1] with granularity 0.01
+Training set
+Fitness function                0.9
+Selection
+Sampled sematic test set        0.1
+
+Maximum number of evaluations   4
+
+                                Subtree replacement
+
+                                100
+
+                                Points from 0 to 1,000 time steps
+
+                                Root Mean Square (RMS) error
+
+                                Tournament with size 4
+
+                                20  cases  such   that xji =  (i  +  j - 2) ×  0.04
+                                (1  i      17, 1   j  20),    0      xij  1.4
+
+                                100,000
+
+4.2 Results and Discussion
+
+We have run GP 200 times for each scenario. Before we present statistical results,
+we look into the details of a "typical" execution of the APS scenario (Fig. 3). This
+particular population evolves for 147 generations before it reaches the 100,000
+function evaluation number limit. In the figure, we plot (a) best fitness, (b)
+ka/ks ratio, (c) average tree size, and (d) population size over generations. We
+observe that the ka/ks ratio stays well under 1, which implies that selection is
+negative over time. This concurs with the general understanding that random
+genetic changes are mostly deleterious and with the property of the ka/ks ratio
+in Biology [23]. The population size drops from an initial 1,000 to approximately
+700 after 20 generations, and stabilizes at 650700 afterwards. Also notice that,
+as evolution progresses, the best fitness improves but at a slower rate and av-
+erage tree size increases, which is expected for tree GP. Normally, bloat would
+slow down the rate of genetic substitutions due to the introduction of redundant
+substructures. However, this is successfully alleviated by adjusting the popula-
+tion size to stimulate evolution so that there is a steady ka/ks ratio. This is
+verified by our next close study of the interaction between the ka/ks ratio and
+population size.
+
+   In Fig. 4, we depict the response of the ka/ks ratio change to population size
+adjustment, derived from the data recorded from 200 runs of the APS scheme.
+Using the recorded population size and the ka/ks ratio of each run, we quantify
+the correlation between the way they change over generations using a sequence
+of 1's and -1's. For a generation compared to the previous, if both population
+size and the ka/ks ratio increase, or if both population size and the ka/ks ratio
+The Role of Population Size in Rate of Evolution in Genetic Programming                                                                          93
+
+Best fitness                            (a) Fitness progression          Ratio ka/ks                          (b) Rate of genetic substitutions
+              0.04                                                                        0.5
+              0.03                                                                        0.4
+              0.02                                                                        0.3
+              0.01                                                                        0.2
+                                                                                          0.1
+
+Tree size          0   20 40 60 80 100 120 140                           Population size     0  20 40 60 80 100 120 140
+                                          Generation                                                                Generation
+              100                                                                         1000
+               80                  (c) Average tree size                                   900                 (d) Population size
+               60                                                                          800
+               40     20 40 60 80 100 120 140                                              700   20 40 60 80 100 120 140
+               20                         Generation                                       600                      Generation
+                 0                                                                         500
+
+Fig. 3. An example run with adaptive population size according to the rate of genetic
+substitutions ka/ks ratio
+
+                                              1
+
+                      Response coefficient C  0
+
+                                              -1
+
+                                                                 40  80                   120   160  200
+
+                                                                     Run index
+
+                      Fig. 4. Correlations between population size and ka/ks ratio
+
+decrease, we have a 1. Otherwise, we have a -1. Therefore, the number of 1's in
+the produced sequence records the number of occurrences where the change of
+the ka/ks ratio positively correlates to that of the population size; while -1's in-
+dicate negative correlation. We define the response coefficient C as C = (2n-l)/l,
+where n is the number of 1s in the sequence and l is the sequence length. Thus, if
+a run has C = 0, its ka/ks ratio is independent of the change of population size.
+Alternatively, a positive value of C indicates a positive correlation between the
+changes of the ka/ks ratio and that of the population size. On the other hand,
+a negative value of C suggests a negative correlation. The figure presents the
+coefficients for all the 200 simulation runs. Clearly, they are all well below the
+
+level of 0. This is indeed our intention of dynamically adjusting population size
+
+to stabilize the rate of genetic substitution as stated in Section 3.2.
+94           T. Hu and W. Banzhaf
+
+                 Table 2. Mean Best Fitness (×10-3) Comparison
+
+             Mean Best Fitness Standard Deviation Median 95% Confidence Interval
+
+Psize 500        13.980                                    6.941                                                                12.36  [13.153, 14.806]
+Psize 1,000      12.902                                    5.406                                                                12.98  [12.195, 13.610]
+APS              12.053                                    4.750                                                                11.56  [11.226, 12.888]
+
+                  (a) The percentage of runs to a fitness                                                                       (b) The average number of evaluations to a fitness
+    1
+
+Percantage of runs                                                                                                          50                        Psize 500
+                                                                                                Number of evaluations (E3)
+                                                                                                                                                      Psize 1000
+
+    0.8                                                                                                                                               APS
+
+                                                                                                                            40
+
+    0.6                                                                                                                     30
+
+    0.4                   Psize 500                                                                                         20
+                         Psize 1000
+
+                             APS
+
+    0.2                                                                                                                     10
+
+         10  15  20      25        30                      35                                                                   10     15                         20
+
+             Best fitness of a single run (E-3)                                                                                        Fitness (E-3)
+
+Fig. 5. Fitness progression with fixed population sizes (Psize 500, Psize 1000) and
+adaptive population size (APS)
+
+   Our next observation is that fitness progression can also be accelerated by our
+population size adjustment scheme. Here, we adopt the three most commonly
+used metrics to measure the performance of an EC model. They are mean best
+fitness, success rate, and average number of evaluations to a solution. Table 2
+presents the mean best fitness and standard deviation over 200 runs for the three
+scenarios of fixed population size 500, 1,000, and APS. Clearly, APS achieves an
+even better fitness than maintaining 1,000 individuals but its population size is
+mostly between 500 and 1,000. The cumulative success rates of these three groups
+are depicted in Fig. 5(a). We focus on the best fitness of a run once it terminates.
+The figure plots the percentage of the total 200 runs of each scenario that yield
+a better fitness than a given threshold between 0.01 and 0.035. Apparently, APS
+has the highest percentage for all of the cases, which indicates its superiority over
+fixed population size strategies. Fig. 5(b) reveals a dual measure for the three
+scenarios. In this chart, we compare the average number of evaluations needed
+for a simulation run to achieve fitness levels of 0.01, 0.15, and 0.02. For a given
+fitness level, APS always incurs less computation overhead, and this difference
+becomes greater as the fitness requirement gets higher.
+
+5 Conclusion and Future Work
+
+In this article, we investigated the role of population size for rate of evolution in
+a GP system. We distinguished between rate of genetic substitutions and rate of
+fitness progression, which describe two aspects of an evolutionary process. The
+The Role of Population Size in Rate of Evolution in Genetic Programming  95
+
+measurement of rate of genetic substitutions was revised and adopted. We trans-
+ferred an idea from population genetics that population size has varying effects
+on rate of genetic substitutions under differing selection regimes. We proposed
+and tested that dynamically adjusting population size can effectively stabilize
+the rate of genetic substitutions even during late stages of an evolutionary pro-
+cess. It has been further verified that this strategy can also successfully accelerate
+the rate of fitness progression.
+
+   Our observations suggest some future research. First, we would like to imple-
+ment this idea in GP with different representation structures, e.g., Linear GP and
+Graph GP, to see if similar conclusions hold in these GP systems. Applications
+to other branches of Evolutionary Computation, e.g., GAs, are also expected.
+Second, we will investigate this adaptive population size scheme in changing en-
+vironments, since dynamic environments may affect the regime of selection more
+dramatically than static environments. Third, we propose to apply our method
+to other benchmarks in order to test how it fares compared to other well-known
+adaptive population size strategies.
+
+Acknowledgements
+
+We thank NSERC for support under Discovery Grant RGPIN 283304-07.
+
+References
+
+ 1. Arabas, J., Michalewicz, Z., Mulawka, J.: GAVaPS ­ a genetic algorithm with
+     varying population size. In: Proceedings of IEEE Congress on Evolutionary Com-
+     putation (CEC 1994), pp. 73­78. IEEE Press, Los Alamitos (1994)
+
+ 2. Back, T., Eiben, A.E., van der Vaart, N.A.L.: An empirical study on GAs "without
+     parameters". In: Deb, K., Rudolph, G., Lutton, E., Merelo, J.J., Schoenauer, M.,
+     Schwefel, H.-P., Yao, X. (eds.) PPSN 2000. LNCS, vol. 1917, pp. 315­324. Springer,
+     Heidelberg (2000)
+
+ 3. Downing, R.M.: On population size and neutrality: Facilitating the evolution of
+     evolvability. In: Ebner, M., O'Neill, M., Ek´art, A., Vanneschi, L., Esparcia-Alc´azar,
+     A.I. (eds.) EuroGP 2007. LNCS, vol. 4445, pp. 181­192. Springer, Heidelberg
+     (2007)
+
+ 4. Eiben, A.E., Marchiori, E., Valk´o, V.A.: Evolutionary algorithms with on-the-fly
+     population size adjustment. In: Yao, X., Burke, E.K., Lozano, J.A., Smith, J.,
+     Merelo-Guervo´s, J.J., Bullinaria, J.A., Rowe, J.E., Tino, P., Kab´an, A., Schwefel,
+     H.-P. (eds.) PPSN 2004. LNCS, vol. 3242, pp. 41­50. Springer, Heidelberg (2004)
+
+ 5. Fernandes, C., Rosa, A.: Self-regulated population size in evolutionary algorithms.
+     In: Runarsson, T.P., Beyer, H.-G., Burke, E.K., Merelo-Guerv´os, J.J., Whitley,
+     L.D., Yao, X. (eds.) PPSN 2006. LNCS, vol. 4193, pp. 920­929. Springer, Heidel-
+     berg (2006)
+
+ 6. Fisher, R.A.: Genetical Theory of Natural Selection. Clarendon, Oxford (1930)
+ 7. Gillespie, J.H.: The role of population size in molecular evolution. Theoretical
+
+     Population Biology 55(2), 145­156 (1999)
+ 8. Goldberg, D.E.: Sizing populations for serial and parallel genetic algorithms. In:
+
+     Proceedings of the 3rd International Conference on Genetic Algorithms, pp. 70­79.
+     Morgan Kaufmann, San Francisco (1989)
+96  T. Hu and W. Banzhaf
+
+ 9. Goldberg, D.E., Deb, K., Clark, J.H.: Genetic algorithms, noise, and the sizing of
+     populations. Complex Systems 6(4), 333­362 (1992)
+
+10. Harik, G.R., Lobo, F.G.: A parameter-less genetic algorithm. In: Proceedings of the
+     Genetic and Evolutionary Computation Conference (GECCO 1999), pp. 258­267.
+     Morgan Kaufmann, San Francisco (1999)
+
+11. Hawks, J., Wang, E.T., Cochran, G.M., Harpending, H.C., Moyzis, R.K.: Recent
+     acceleration of human adaptive evolution. Proceedings of the National Academy
+     of Sciences 104(52), 20753­20758 (2007)
+
+12. Hu, T., Banzhaf, W.: Nonsynonymous to synonymous substitution ratio ka/ks:
+     Measurement for rate of evolution in evolutionary computation. In: Rudolph, G.,
+     Jansen, T., Lucas, S., Poloni, C., Beume, N. (eds.) PPSN 2008. LNCS, vol. 5199,
+     pp. 448­457. Springer, Heidelberg (2008)
+
+13. Lobo, F.G., Lima, C.F.: A review of adaptive population sizing schemes in genetic
+     algorithms. In: Proceedings of the 2005 workshops on Genetic and Evolutionary
+     Computation (GECCO 2005), pp. 228­234. ACM, New York (2005)
+
+14. Oakley, H.: Two scientific applications of genetic programming: stack filters and
+     non-linear equation fitting to chaotic data. In: Kinnear, K.L., Kinnear Jr., K.E.
+     (eds.) Advances in Genetic Programming, pp. 369­389. MIT Press, Cambridge
+     (1994)
+
+15. Ohta, T.: Population size and rate of evolution. Journal of Molecular Evolu-
+     tion 1(4), 305­314 (1972)
+
+16. Ohta, T.: The nearly neutral theory of molecular evolution. Annual Reviews in
+     Ecology and Systematics 23(1), 263­286 (1992)
+
+17. Poli, R., McPhee, N.F., Vanneschi, L.: The impact of population size on code
+     growth in GP: analysis and empirical validation. In: Proceedings of the 10th Annual
+     Conference on Genetic and Evolutionary Computation (GECCO 2008), pp. 1275­
+     1282. ACM, New York (2008)
+
+18. Sastry, K., O'Reilly, U.-M., Goldberg, D.E.: Population sizing for Genetic Program-
+     ming based upon decision making. In: O'Reilly, U.-M., Yu, T., Riolo, R., Worzel, B.
+     (eds.) Genetic Programming Theory and Practice II, pp. 49­66. Kluwer Academic
+     Publishers, Dordrecht (2004)
+
+19. Tomassini, M., Vanneschi, L., Cuendet, J.: A new technique for dynamic size popu-
+     lations in genetic programming. In: Proceedings of IEEE Congress on Evolutionary
+     Computation (CEC 2004), pp. 486­493. IEEE Press, Los Alamitos (2004)
+
+20. Wedge, D.C., Kell, D.B.: Rapid prediction of optimum population size in ge-
+     netic programming using a novel genotype - fitness correlation. In: Proceedings of
+     the 10th Annual Conference on Genetic and Evolutionary Computation (GECCO
+     2008), pp. 1315­1322. ACM, New York (2008)
+
+21. Woolfit, M., Bromham, L.: Population size and molecular evolution on islands.
+     Proceedings of The Royal Society B 272(1578), 2277­2282 (2005)
+
+22. Working Group on Data Modeling Benchmarks. Created on July 20, 2002,
+     http://neural.cs.nthu.edu.tw/jang/benchmark/
+
+23. Yang, Z., Bielawski, J.P.: Statistical methods for detecting molecular adaptation.
+     Trends in Ecology and Evolution 15(12), 496­503 (2000)
+

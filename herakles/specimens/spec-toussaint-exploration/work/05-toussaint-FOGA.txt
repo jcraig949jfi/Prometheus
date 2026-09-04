@@ -1,0 +1,1432 @@
+Compact genetic codes
+as a search strategy of evolutionary processes
+
+Marc Toussaint
+
+Institute for Adaptive and Neural Computation, University of Edinburgh,
+5 Forrest Hill, Edinburgh EH1 2QL, Scotland, UK
+mtoussai@inf.ed.ac.uk
+
+Abstract. The choice of genetic representation crucially determines the
+capability of evolutionary processes to ﬁnd complex solutions in which
+many variables interact. The question is how good genetic representa-
+tions can be found and how they can be adapted online to account for
+what can be learned about the structure of the problem from previous
+samples. We address these questions in a scenario that we term indi-
+rect Estimation-of-Distribution: We consider a decorrelated search dis-
+tribution (mutational variability) on a variable length genotype space.
+A one-to-one encoding onto the phenotype space then needs to induce
+an adapted phenotypic variability incorporating the dependencies be-
+tween phenotypic variables that have been observed successful previ-
+ously. Formalizing this in the framework of Estimation-of-Distribution
+Algorithms, an adapted phenotypic variability can be characterized as
+minimizing the Kullback-Leibler divergence to a population of previously
+selected individuals (parents). Our core result is a relation between the
+Kullback-Leibler divergence and the description length of the encoding
+in the speciﬁc scenario, stating that compact codes provide a way to
+minimize this divergence. A proposed class of Compression Evolutionary
+Algorithms and preliminary experiments with an L-system compression
+scheme illustrate the approach. We also discuss the implications for the
+self-adaptive evolution of genetic representations on the basis of neutral-
+ity (σ-evolution) towards compact codes.
+
+1 Introduction
+
+The complexity of a problem largely depends on the interactions between vari-
+ables of the solution. A stochastic search process like evolution will perform well
+on a complex problem only when the search distribution is adapted to these in-
+teractions, i.e., when the search distribution obeys these dependencies between
+variables. The ability of natural evolution to ﬁnd highly complex structured or-
+ganisms, in which many variables interact in determining the ﬁtness, can only
+be understood when acknowledging that evolution did not pursue an exhaustive
+search but “learned” to shape the search distribution towards complex, highly
+structured organisms (see also [25]).
+
+In evolutionary processes the search distribution is determined by the vari-
+ational operators (mutation and recombination) and, in the case of indirect en-
+codings, by the choice of genetic representation. The role of the genetic repre-
+sentation seems to become particularly important when large and regularly or
+hierarchically structured solutions need to be found. The eye-less gene [8] is an
+impressive example of a genetic representation speciﬁcally designed to induce
+modular structured variability in nature.
+
+The general questions are how to ﬁnd genetic representations that induce
+the desired dependencies on the phenotype space, and how they can be adapted
+online to account for what can be learned about the structure of the prob-
+lem from previous samples. There have been various approaches to characterize
+what a good representation is, considering, for example, all possible represen-
+tations, Gray vs. binary codes, redundant representations, and recursive encod-
+ings [12, 27, 4, 18, 11]. Theoretical approaches concerning the adaptation of the
+representation based on the speciﬁc current population include, for example,
+Estimation-Of-Distribution Algorithms [17], Walsh analysis [10], and Maximal
+Entropy principles [28].
+
+Our approach is to consider a speciﬁc scenario that we term indirect Estima-
+tion-of-Distribution: We assume that the search distribution (mutational vari-
+ability) on a variable length genotype space is decorrelated. A one-to-one en-
+coding onto the phenotype space then needs to induce a proper structured phe-
+notypic variability. The idea of this scenario is that the encoding receives all
+responsibilities to induce the structural properties of the phenotypic search dis-
+tribution, leaving a simple problem of unstructured (decorrelated) adaptation
+on the genotype level.
+
+We formalize the scenario within the framework of Estimation-of-Distribution
+Algorithms, where an adapted phenotypic variability can be characterized as
+minimizing the Kullback-Leibler divergence to a population of previously se-
+lected individuals (parents). Our core result is a relation between the Kullback-
+Leibler divergence and the description length of the encoding in the speciﬁc
+scenario of indirect Estimation-of-Distribution based on a variable length geno-
+type space. The result states that compact genetic codes provide a way to min-
+imize this divergence—and may thus be seen as transferring similar results on
+Minimum Description Length in the context of modeling, in particular model
+selection, (e.g., [5, 24]) to the speciﬁc domain of evolutionary search based on
+adaptive representations.
+
+An intuitive way to grasp these results might be the following: Consider a
+set of good (selected) individuals in the phenotype space. In this parent pop-
+ulation there will generally exist dependencies between phenotypic variables of
+the individuals, measurable as mutual information between them. This informa-
+tion on the dependencies—that stem from selection and have their origin in the
+structure of the problem—is what should be extracted and exploited for fur-
+ther search. Assume we can map these individuals on variable size strings such
+that the average string length is minimized. Before the compression there was
+mutual information between the (phenotypic) variables. After the compression,
+
+there should be no mutual information between the symbols that describe the
+individuals because otherwise the mapping would not be a minimum description
+length compression. Thus, a compression is one way (among others) to map on
+genotypic representations in which symbols are decoupled (i.e., to map on a fac-
+torial code). The compression can also be considered as an implicit analysis of
+the dependencies that have been present in the parent population because it is
+able to dissolve them by introducing new symbols. Eventually, the key idea is
+that inverting the compression is a mechanism to induce exactly these dependen-
+cies. In other words, when there is noise (decorrelated mutational variability) on
+the genetic symbols, this noise should translate to phenotypic noise that obeys
+these dependencies.
+
+The following two sections will introduce the theoretical framework, including
+the indirect induction of a search distribution and the principle of Estimation-
+of-Distribution Algorithms. Section 4 derives the main results on the relation
+between compact codes and Estimation-of-Distribution. Section 5 aims to illus-
+trate the approach by proposing a class of Compression Evolutionary Algorithms
+and presenting preliminary experiments with a Compression GA based on a sim-
+ple L-system compression scheme (similar to the ideas of Nevill-Manning and
+Witten [13]). This leads to the discussion, summarizing the main results, but also
+considering practical issues on accumulative versus each-time-step compression,
+and implications for understanding the fully self-adaptive evolution of genetic
+representations on the basis of neutrality (σ-evolution) towards compact codes.
+
+2 Indirect induction of search distributions
+
+Let P be the search space. A heuristic search scheme is a process in the space
+ΛP of distributions over the search space in which a search distribution q ∈ ΛP
+is propagated iteratively. In each iteration, samples from q are drawn, evaluated,
+and the outcome of evaluation is used to design, according to some heuristic, a
+new search distribution in the next step.
+
+For instance, in ordinary Evolutionary Algorithms (EAs) the search distri-
+bution is given by a ﬁnite parent population and recombination and mutation
+operators. This search distribution is sampled, leading to the ﬁnite oﬀspring pop-
+ulation, which is then evaluated, leading to the selection probability distribution
+over these oﬀspring. The heuristic to generate the new search distribution in
+simple EAs is to sample the selection probability distribution, leading to a new
+parent population which in turn induces a new search distribution. We do not
+need to specify these operators here explicitly. We develop the theory on the
+abstract level of search distributions.
+
+In this paper we are interested in indirect codings of search points. In the
+heuristic search framework, this means that a distribution ˜q ∈ ΛG over another
+search space G, the genotype space, is maintained. The search distribution q over
+the actual search space P (phenotype space) is then given indirectly via a coding
+
+φ : G → P ,
+
+q(x) =
+
+X
+
+g∈[x]φ
+
+˜q(g) , where x ∈ P, g ∈ G, [x]φ = {g ∈ G | φ(g) = x} .
+
+We also use the short notation q = ˜q ◦ φ−1 for this projection of ˜q under φ. The
+set [x]φ of all genotypes mapping to the same phenotype x is an equivalence
+class under φ, also called neutral set of x.
+
+Two additional constraints deﬁne the “indirect encoding case” considered
+in this paper: First, G is the space of variable length strings over some ﬁnite
+alphabet A,
+
+G =
+
+∞
+[
+
+l=1
+
+Al .
+
+It is technically unclear how to deﬁne a marginal over the ith symbol (or mutual
+information between symbols) directly for a variable length distribution ˜q ∈ ΛG.
+Thus we will consider the decomposition
+
+˜q(g) = ˜q(g|l) ˜q(l) , where g ∈ G, l = length(g) ∈ N .
+
+Here, ˜q(l) is a distribution over the genotype length l ∈ N, and ˜q(g|l) the con-
+ditional distribution over a ﬁxed length alphabet Al. We use the short notation
+˜ql ≡ ˜q(·|l) for this length-conditioned distribution. The marginal ˜qi
+l over the ith
+symbol (i ≤ l) and the mutual information I(˜ql) = P
+l ) − H(˜ql) can then
+be deﬁned as usual.1
+
+i H(˜qi
+
+As the second constraint we limit the space of possible search distributions
+in a certain way: We impose that φ : G → P shall be bijective (one-to-one). We
+denote the space of all bijective codings G → P by Φ. And we impose that the
+length-conditioned distributions ˜ql on the genotype space have to factorize. We
+denote the set of feasible genotype distributions by
+
+˜Q ⊆ {˜q ∈ ΛG | ∀l : I(˜ql) = 0} .
+
+Putting both together, we have the space Q ⊆ ΛP of feasible search distribution
+over P as
+
+Q = {˜q ◦ φ−1 | φ ∈ Φ, ˜q ∈ ˜Q} .
+
+(1)
+
+In summary, indirect induction of the search distribution means that, in order
+to design a search distribution q ∈ ΛP we have to pick a coding φ ∈ Φ and a
+decorrelated distribution ˜q ∈ ˜Q on the genotype space. In other terms, every
+feasible search distributions q correspond to a pair (φ, ˜q).
+
+1 For a distribution q over some product space A × · · · A, we generally denote the
+marginal over the ith variable by qi. The mutual information I(q) = P
+i H(qi) −
+H(q) measures all dependencies between variables of any order (not only pair-wise
+dependencies).
+
+3 Estimation-Of-Distribution
+
+What is a reasonable heuristic to design a search distribution given the results of
+evaluation of previous sample points? We will follow here the idea of Estimation-
+Of-Distribution Algorithms [17] which can be described as follows.
+
+We assume that the outcome of evaluation is given as a distribution p over P ,
+typically the parent population.2 Given that the space of feasible search distri-
+butions is limited to Q, a simple heuristic to chose the new search distribution
+is to pick the one that is most similar to p. Similarity can be measured by
+the Kullback-Leibler divergence (KLD) D(cid:0)p : q(cid:1) = Ep
+between two
+distributions, which also captures the structural similarity between two distri-
+butions in the sense of the similarity of the diﬀerent order dependencies (see [1,
+23], please note the relations between the KLD, log-likelihood, free energy, and
+mean energy3). Thus, the heuristic to design the new search distribution q0 reads
+
+log p(x)
+q(x)
+
+n
+
+o
+
+q0 = argmin
+q∈Q
+
+D(cid:0)p : q(cid:1) .
+
+(2)
+
+We term this speciﬁc kind of an EDA KL-search. The crucial parameter of KL-
+search is the choice of the set Q of feasible search distributions. On the one
+hand, the choice of Q determines the computational cost of the minimization
+(2) in every step. On the other hand, it determines the algorithm’s capability to
+exploit the structure observable in p.
+
+Some algorithms of the class of EDAs are exact instantiations of KL-search:
+MIMIC [6] chooses Q to be the set of Markov chains, PBIL [2] chooses Q as the
+set of factorized distributions. Other EDAs diﬀer from KL-search in the choice
+of the similarity measure (they use alternatives to the KLD, e.g., BOA [16] takes
+a Bayesian Dirichlet Metric). But all of them can distinctly be characterized by
+their choice of Q, which may also be the set of dependency trees [3], Bayesian
+networks (BOA, [16]), or Bayesian networks with decision trees at each node
+(hBOA, [15]).
+
+Despite its conceptual simplicity, the minimization required in each iteration
+of KL-search can be computationally very expensive, depending on the com-
+plexity of the distributions in Q. When only simple distributions, like factorized
+distributions (PBIL) or Markov chains (MIMIC) are allowed, the minimization
+
+2 Generally, in this formalism p is meant to encode any information that we receive
+from evaluations. Typically, p is non-vanishing only on a ﬁnite set of samples (the
+oﬀspring population) and the values of p might be (in a normalized way) the ﬁtness
+values of these oﬀspring. Alternatively, p might represent a resampling of such a
+“ﬁtness distribution over oﬀspring”, which corresponds to the parent population.
+3 With the deﬁnitions of the entropy H(p) = Ep {log p(x)} and the log-likelihood
+L(q) = Ep {log q(x)} we have D`p : q´ = −H(p)−L(q). One could roughly say, “min-
+imizing the KLD means maximizing the log-likelihood and the entropy”. Further,
+when deﬁning an energy functional E(x) = − log q(x) and considering its Boltzmann
+Z (cid:15)−E(x), then the mean energy E = Ep {E(x)} = −L(q) is the
+distribution p(x) = 1
+negative log-likelihood while the free energy F = − ln Z = E − H(p) is the KLD.
+
+can be calculated directly. For more complex distributions (like Bayesian net-
+works, BOA), the minimization itself requires an iterative procedure.
+
+Finally note that distributions in Q should typically be constrained to have a
+minimum entropy. In that way, a repeated cycle of entropy decrease (in the course
+of evaluation) and entropy increase (when picking a new search distribution)
+ensures exploration and prevents the algorithms from early convergence.
+
+4 Indirect Estimation-Of-Distribution via compression
+
+KL-search proposes how to pick a new search distribution out of Q incorporating
+the knowledge on the evaluation of previous samples. In the indirect coding case,
+a choice of q means to pick a coding φ and a factorized distribution ˜q on G.
+Putting this together, KL-search amounts to a heuristic to pick a coding φ such
+that knowledge on previous evaluations is incorporated. In this section we will
+derive results on how this heuristic to pick a coding reads more explicitly. We
+ﬁrst discuss the simpler ﬁxed-length case before addressing the general one:
+
+Fixed-length case. Let us ﬁrst assume that G contains only strings of ﬁxed
+length l, G = Al. Then the marginals ˜qi are straight-forward to deﬁne and
+I(˜q) = P
+i H(˜qi)−H(˜q) != 0 constrains ˜q to vanishing dependencies (of arbitrary
+order) between genes.
+
+Combining (2) with the deﬁnition (1) of Q for the case of indirect codings,
+
+we ﬁnd
+
+D(cid:0)p : q(cid:1) =
+
+X
+
+p(x) ln
+
+x
+
+p(x)
+
+P
+
+g0∈[x]φ
+
+˜q(g0)
+
+X
+
+=
+
+˜p(g) ln
+
+g
+
+˜p(g)
+˜q(g)
+
+.
+
+(3)
+
+Here we deﬁned ˜p as the back-projection of p onto the coding space G, ˜p = p ◦ φ.
+The last step uses that φ has to be bijective such that there exists exactly
+one g ∈ [x]φ. Next we use that ˜q has to factorize, ˜q(g) = ˜q(g1, g2, ..., gl) =
+˜q1(g1) ˜q2(g2) · · · ˜ql(gl),
+
+D(cid:0)p : q(cid:1) =
+
+X
+
+˜p(g) ln
+
+g
+
+˜p(g)
+˜p1(g1) · · · ˜pl(gl)
+
+X
+
++
+
+˜p(g) ln
+
+g
+
+˜p1(g1) · · · ˜pl(gl)
+˜q1(g1) · · · ˜ql(gl)
+
+= I(˜p) + D(cid:0)˜p(1) : ˜q(cid:1) .
+
+(4)
+
+Here we deﬁned ˜p(1)(g) = ˜p1(g1) ˜p2(g2) · · · ˜pl(gl) as the “factorized reduction” of
+˜p (i.e, the product of its marginals, see also [1, 23] on how to generally deﬁne the
+kth order reduction ˜p(k) of ˜p containing all and only the dependencies of order
+≤ k within ˜p).
+
+This result states that, in order to follow the KL-search scheme in the indirect
+coding case, one should ﬁnd a coding φ and a search distribution ˜q such that
+I(˜p) + D(cid:0)˜p(1) : ˜q(cid:1) is minimized.
+
+Here, I would like to distinguish two cases. In the ﬁrst case we assume that
+˜Q comprises all factorized distributions without a bound on the entropy. In this
+
+case, no matter which φ is chosen, one can always minimize D(cid:0)˜p(1) : ˜q(cid:1) down to
+zero by picking ˜q = ˜p(1). Thus, since I(˜p) is independent of ˜q, the minimization
+(2) can be realized by ﬁrst optimizing φ and then picking ˜q:
+
+q0 = argmin
+q∈Q
+
+D(cid:0)p : q(cid:1) = (φ, ˜q) , where φ = argmin
+
+I(˜p) and ˜q = ˜p(1) .
+
+φ
+
+We call this procedure (ﬁrst optimizing φ, then picking ˜q) the two step procedure.
+Note that ˜p(1) in the last equation depends on the φ chosen before.
+
+However, in a realistic algorithm, ˜Q should not comprise all factorized distri-
+butions but obey a lower bound on the entropy of these distributions to ensure
+exploration. (Recall that for ˜q = ˜p(1), and since φ is bijective, H(p) = H(˜p) =
+H(˜p(1)) − I(PG) = H(˜q) − I(˜p) = H(q) − I(˜p). Therefore, the entropy of search
+H(q) would only be greater than H(p) by the amount of I(˜p), which is min-
+imized.) Hence, in the second case, when ˜Q is only a subset of all factorized
+distributions, D(cid:0)˜p(1) : ˜q(cid:1) can generally not be minimized to zero and the mini-
+mization of (2) can not exactly be decomposed in the two steps of ﬁrst minimizing
+I(˜p) w.r.t. φ, and then, for a ﬁxed φ, minimizing D(cid:0)˜p(1) : ˜q(cid:1) w.r.t. ˜q. The exact
+minimization of (2) remains a coupled problem of ﬁnding a pair (φ, ˜q).
+
+For completeness, let us estimate a bound on the “error” made when still
+adopting the two step procedure of minimization. Let (φ∗, ˜q∗) be a coding and
+genotype distribution that indeed minimize (2), and let (φ0, ˜q0) be the result of
+the two step procedure, i.e., φ0 minimizes I(˜p0) and ˜q0 minimizes D(cid:0)˜p0(1) : ˜q0(cid:1)
+for the given coding φ0. Here, ˜p0 = p ◦ φ0 and ˜p∗ = p ◦ φ∗. A rough bound for the
+error made can be estimated as follows, to be explained in detail below,
+
+D(cid:0)p : q0(cid:1) − D(cid:0)p : q∗(cid:1) = D(cid:0)˜p0(1) : ˜q0(cid:1) − D(cid:0)˜p∗(1) : ˜q∗(cid:1) + I(˜p0) − I(˜p∗)
+≤ D(cid:0)˜p0(1) : ˜q0(cid:1) − D(cid:0)˜p∗(1) : ˜q∗(cid:1) ≤ D(cid:0)˜p0(1) : ˜q0(cid:1)
+
+=
+
+l
+X
+
+i=1
+
+D(cid:0)˜p0i : ˜q0i(cid:1)
+
+≤ −l log ˜q0i(ai) = − l log(1−α) ≤ l ~ .
+
+The ﬁrst inequality stems from the fact that φ0 minimizes I(˜p0) and thus I(˜p0) ≤
+I(˜p∗). Since both, ˜p0(1) and ˜q0, are factorized distributions, their Kullback-Leibler
+divergence decomposes into a sum. For each marginal, when there is a lower
+bound ~ on the entropy of ˜q0i, the divergence D(cid:0)˜p0i : ˜q0i(cid:1) is particularly large
+when ˜p0i has very low entropy. In the worst case, ˜p0i has zero entropy, i.e., is non-
+zero only for a single symbol ai ∈ A. In that case D(cid:0)˜p0i : ˜q0i(cid:1) = − log ˜q0i(ai). In
+order to minimize D(cid:0)˜p0i : ˜q0i(cid:1), ˜q0i is chosen to have the form of the typical symbol
+mutation distribution with mutation rate α, where ˜q0i(a) = 1−α for a = ai and
+˜q0i(a) = α
+|A|−1 . Given
+the lower bound ~ on the entropy, the minimal mutation rate α can be chosen
+to ensure H(˜qi) = ~ and D(cid:0)˜pi : ˜qi(cid:1) = − log(1 − α) ≤ ~. Thus, in the worst
+case, the “error” made when using the two step procedure instead of the exact
+minimization of (2) is smaller than l ~.
+
+|A|−1 for a 6= ai. Then, H(˜qi) = −(1−α) log(1−α) − α log
+
+α
+
+Variable-length case. Let us repeat the above derivations in the general case
+when G = S∞
+Al comprises strings of any length over the alphabet A. The con-
+l=1
+straint of vanishing mutual information in ˜q now refers to the length-conditioned
+distributions ˜ql, i.e., we impose I(˜ql) = 0 while ˜q(l) is unconstrained. (Recall
+˜q(g) = ˜ql(g) ˜q(l) where l = length(g).) Equation (3) now leads to
+
+D(cid:0)p :q(cid:1) =
+
+X
+
+X
+
+˜pl(g)˜p(l) ln
+
+˜pl(g)˜p(l)
+˜ql(g)˜q(l)
+
+l
+
+g
+
+X
+
+=
+
+˜p(l)
+
+X
+
+˜pl(g) ln
+
+l
+
+g
+
+X
+
+=
+
+˜p(l)
+
+X
+
+l
+
+g
+
+= El {I(˜pl)} + El
+
+˜pl(g)
+˜ql(g)
+
+X
+
++
+
+˜p(l) ln
+
+l
+
+˜p(l)
+˜q(l)
+
+˜pl(g) ln
+
+˜pl(g)
+˜p(1)
+(g)
+l
+n
+D(cid:0)˜p(1)
+
+l
+
+: ˜ql
+
+X
+
++
+
+˜p(l)
+
+X
+
+˜pl(g) ln
+
+l
+
+g
+
+(cid:1)o
+
++ D(cid:0)˜p(l) : ˜q(l)(cid:1) ,
+
+˜p(1)
+(g)
+l
+˜ql(g)
+
++ D(cid:0)˜p(l) : ˜q(l)(cid:1)
+
+(5)
+
+where we introduced El {·} as the expectation over ˜p(l) (which depends on φ).
+The entropy of p can be written as
+
+H(p) = −
+
+= −
+
+X
+
+g
+X
+
+l
+
+p(g) ln p(g) = −
+
+X
+
+˜p(l)
+
+l
+
+h X
+
+˜p(l)
+
+g
+
+˜pl(g) ln ˜pl(g) +
+
+X
+
+g
+X
+
+g
+
+˜pl(g) ln[˜pl(g) ˜p(l)]
+
+i
+˜pl(g) ln ˜p(l)
+
+X
+
+=
+
+l
+
+X
+
+=
+
+˜p(l)H(˜pl(g)) + H(˜p(l))
+
+h l
+X
+
+˜p(l)
+
+H(˜pi
+
+i
+l) − I(˜pl)
+
++ H(˜p(l))
+
+l
+
+i=1
+
+= El
+
+)
+
+H(˜pi
+l)
+
+( l
+
+X
+
+i=1
+
+− El {I(˜pl)} + H(˜p(l)) .
+
+(6)
+
+Adding equations (5) and (6) we ﬁnd
+
+Lemma 1. In the indirect encoding case, for any p ∈ ΛP , any bijective encoding
+φ : G → P , and any factorized genotype distributions ˜q ∈ ˜Q, we have
+
+D(cid:0)p :q(cid:1) = El {I(˜pl)} + El
+)
+( l
+
+= El
+
+H(˜pi
+l)
+
++ El
+
+X
+
+i=1
+
+n
+D(cid:0)˜p(1)
+
+l
+
+(cid:1)o
+
+: ˜ql
+
++ D(cid:0)˜p(l) : ˜q(l)(cid:1)
+
+(7)
+
+n
+D(cid:0)˜p(1)
+
+l
+
+(cid:1)o
+
+: ˜ql
+
++ D(cid:0)˜p(l) : ˜q(l)(cid:1) + H(˜p(l)) − H(p) .
+
+(8)
+
+The second RHS term in equation (8) is a comparison of only the marginals
+of ˜pl and ˜ql, the third term is a comparison of the length distributions, the
+fourth term is the entropy of the genotype length, which depends on φ, and
+
+the last term depends only on p, not on φ or ˜q. The ﬁrst term in equation (8)
+is of particular interest here. The following bounds show how it relates to the
+description length. Note that log |A| is the maximal entropy of a marginal:
+
+El
+
+( l
+
+X
+
+i=1
+
+)
+
+H(˜pi
+l)
+
+≤ log |A| El
+
+( l
+
+X
+
+)
+1
+
+i=1
+
+= log |A| El {l} = Lp log |A| ,
+
+(9)
+
+where we introduce Lp = El {l} as the expected description length of samples of
+p in the encoding φ. On the other hand, from (6), we get
+
+El
+
+( l
+
+X
+
+i=1
+
+)
+
+H(˜pi
+l)
+
+≥ H(p) − H(˜p(l)) .
+
+(10)
+
+Note that for an optimally compact coding Lp log |A| = H(p) − H(˜p(l)),4 and
+both bounds are exact.
+
+We collect these ﬁndings in
+
+Lemma 2. In the indirect encoding case, the description length Lp of samples
+from p (e.g., parents) gives an upper bound on D(cid:0)p : q(cid:1) as follows:
+
+0 ≤ D(cid:0)p : q(cid:1) − El
+
+n
+D(cid:0)˜p(1)
+
+l
+
+(cid:1)o
+
+: ˜ql
+
+− D(cid:0)˜p(l) : ˜q(l)(cid:1) ≤ Lp log |A| − H(p) + H(˜p(l)) .
+
+For an optimally compact encoding φ, these bounds are exact, i.e., we have
+
+D(cid:0)p : q(cid:1) = El
+
+n
+D(cid:0)˜p(1)
+
+l
+
+(cid:1)o
+
+: ˜ql
+
++ D(cid:0)˜p(l) : ˜q(l)(cid:1) ,
+
+and D(cid:0)p : q(cid:1) can easily be minimized by adapting the genotype marginals ˜qi
+the length distribution ˜q(l) (which can be set equal to ˜p(l)).
+
+l and
+
+Let us brieﬂy summarize and discuss these results by emphasizing certain
+
+aspects:
+
+(cid:8)P
+
+1. Compression is doing “more than we need”: Reconsider the exact expressions
+l)(cid:9) to the description Lp
+(7) and (8) of lemma 1. We related the term El
+via the bound (9) and showed that this bound is exact for an optimal compres-
+sion. One should note though that compression is not the only way to minimize
+(cid:8)P
+l)(cid:9); it can equally be minimized by reducing the marginal
+the term El
+entropies H(˜pi
+l), which means not to exploit the expressional power of the al-
+phabet. This can better be understood going back to expression (7) involving
+the mutual information: Ultimately, what matters is to reduce El {I(˜pl)}, i.e.
+ﬁnding a factorial code, which can also be done perfectly with very low marginal
+
+i H(˜pi
+
+i H(˜pi
+
+4 Here is a slight diﬀerence to the usually considered case of channel capacity: In our
+case, the length of a genome itself can carry information (even for A = {0}) of the
+amount H(˜p(l)) such that the symbols only need to encode H(p) − H(˜p(l)) entropy.
+In the channel capacity case, where a continuous stream of symbols is transmitted,
+the exact bound is Lp log |A| = H(p), as for the Shannon-Fano code.
+
+entropies, not exploiting the alphabet. By relating it to the description length
+we showed that a compression is reducing El {I(˜pl)} while additionally trying to
+exploit the alphabet optimally. Thus, compression is doing “more than we need”
+from the strict point of view of minimizing D(cid:0)p : q(cid:1). Clearly, this also means
+that an optimally compact coding is not the only solution to minimize D(cid:0)p : q(cid:1)
+via indirect induction—but it is one.
+
+2. If there are no further constraints on ˜q (e.g., no entropy bound) then ˜ql and
+(cid:1)o
+˜q(l) can be set equal to ˜p(1)
++
+D(cid:0)˜p(l) : ˜q(l)(cid:1). In this case, we have
+
+and ˜p(l), thus perfectly minimizing El
+
+n
+D(cid:0)˜p(1)
+
+: ˜ql
+
+l
+
+l
+
+D(cid:0)p : q(cid:1) = El {I(˜pl)} = El
+
+)
+
+H(˜pi
+l)
+
+( l
+
+X
+
+i=1
+
++ H(˜p(l)) − H(p) ,
+
+and the problem reduces to ﬁnding an encoding that extinguishes the mutual
+information El {I(˜pl)} or, as discussed, an optimal compression.
+
+3. The two step procedure: If ˜Q is additionally constrained by a bound on the
+entropy, minimizing D(cid:0)p : q(cid:1) remains a coupled problem of reducing El {I(˜pl)}
+n
+D(cid:0)˜p(1)
++D(cid:0)˜p(l) : ˜q(l)(cid:1) by a proper
+by a proper choice of φ and reducing El
+choice of ˜q, which though depends on φ. We discussed this coupled problem
+already in the ﬁxed-length case. The two step procedure of ﬁrst ﬁnding a compact
+coding φ of p and then adapting the marginals of ˜q to those of p ◦ φ is an
+approximate method for this minimization. In the worst case one may miss a
+reduction of D(cid:0)p : q(cid:1) by an amount ≤ Lp ~, when ~ is the lower bound on the
+entropy in each marginal ˜qi
+l . Note that a compact coding minimizes this worst
+case error.
+
+(cid:1)o
+
+: ˜ql
+
+l
+
+5 Compression EAs
+
+This section aims to provide a perspective on how the ideas on compact codes
+motivate the design of new Evolutionary Algorithms. We will propose a general
+scheme to design such algorithms but can present preliminary results only for a
+special case that is more in the line of conventional GAs rather than EDAs and
+close to algorithms proposed earlier. The results are promising. Most importantly
+though, the experiments exhibit what are crucial aspects to be discussed when
+the aim are practical implementations of the principle of compact codes.
+
+A straight-forward way to design a new Evolutionary Algorithm, exploiting
+the idea of compact codes, is to combine any compression technique with any
+standard EA. Such a Compression EA reads
+
+1. Initialize a ﬁnite population p = {p1, .., pµ}.
+2. Use a compression technique to ﬁnd an encoding φ that (approximately) mini-
+
+mizes Lp = Pµ
+
+i=1 length(φ−1(pi)).
+
+3. Apply standard operators (e.g., mixing or EDA-operators) to generate λ oﬀ-
+
+spring genotypes from the µ compressed parent genotypes.
+4. Map the λ oﬀspring genotypes from G back to P using φ.
+5. Apply evaluation and selection on these oﬀspring to generate the new parent
+
+population p0 and repeat from step 2.
+
+The operators in step 3 may be any standard operators used in Evolutionary
+Algorithms. They have to be memory-less though, since the encoding will change
+in each iteration step and thus integrating knowledge from previous time steps
+becomes futile (cf. the discussion of cumulative compression as an alternative in
+section 6).
+
+For instance, a most direct implementation of KL-search calculates the length
+and marginal distributions before resampling them (very similar to the PBIL
+algorithm, but accounting for variable size strings). This leads to the following
+Compression EDA:
+
+3.a Calculate the length distributions ˜p(l) and the symbol marginals ˜pi
+
+l for each l
+
+from the compressed population ˜p.
+
+3.b Set ˜q(l) = ˜p(l) and add entropy by mixing the marginals with the uniform
+
+symbol distribution U, ˜qi
+
+l = (1 − α) ˜pi
+
+l + α U.
+
+3.c Take λ samples from the distribution ˜q by recursively (i) picking an l from ˜q(l),
+l , and (iii) store g = (g1, .., gl) as a new
+
+i=1 pick a symbol gi from ˜qi
+
+(ii) ∀l
+oﬀspring genotype.
+
+We must leave it to future work to present results on this Compression EDA.
+In the following we will investigate a concrete algorithm that is based on conven-
+tional mutation operators rather than such an EDA and similar to algorithms
+proposed earlier [7, 20]. The compression technique is based on L-systems, very
+simple, but computationally expensive. It is inspired by the work of Nevill-
+Manning and Witten [13]. Below we will brieﬂy report on some experiences
+when using Lempel-Ziv compression (i.e., the algorithm of gzip) instead.
+
+5.1 A L-system Compression GA
+
+The Compression. Step 2 of a Compression EA requires to ﬁnd an encoding φ
+that minimizes the description length of individuals averaged over the current
+parent population. A simple technique of compression is to recursively analyze
+the samples for frequent pairs of neighboring symbols and replace such pairs by
+new symbols (cf. [13]). We realize this scheme with an L-system:
+
+A L-system is a sequence Π = hπ1, .., πki of k productions πi. Given the
+alphabet A, each production π = hl : r1, .., rmi consists of a LHS symbol l ∈ A
+and a sequence hr1, .., rmi of RHS symbols. The L-system Π deﬁnes a mapping
+φ from one sequence s to another by applying all productions πi, in the given
+order, on s. Applying a production hl : r1, .., rmi on s means to replace every l
+that occurs in s by the sequence hr1, .., rmi. For instance, if the L-system is Π =
+he:cd, f:dc, c:ab, d:bai, then a sequence hefi is mapped to φ(hefi) = habbabaabi.
+The mapping φ can easily be inverted by applying all productions, in reverse
+
+order, inversely on a sequence. Inverse application of a production hl : r1, .., rmi−1
+on s means to replace every subsequence hr1, .., rmi that occurs in s by l.
+
+Let A be the non-negative integer numbers, A = N0. Starting with a pop-
+ulation p = {s1, .., sµ} of {0, 1}-sequences, there is a straight-forward way to
+construct an L-system that compresses the population by recursively extracting
+and encapsulating pairs of symbols that occur frequently in the population. This
+scheme reads
+
+2.a Initialize the L-system as Π = h i and the new -symbol as c = 2.
+2.b Calculate the frequency of every symbol pair that occurs in the population.
+2.c For every pair hr1, r2i of symbols that occurs more often than once, create a
+new production hc : r1, r2i, append it to the beginning of Π, and increment the
+new -symbol c ← c + 1. This is to be done in order, beginning with the pair of
+highest frequencies, and random order between pairs of same frequency. If there
+is no such pairs, exit the recursion.
+
+2.d Recode the population p ← {φ−1(p1), .., φ−1(pµ)} (eﬀectively, only the new
+
+productions will result in replacements).
+
+2.f Repeat from step 2.b.
+
+The entropy. Following the general scheme of a Compression EA, we next need
+to specify a mixing operator in step 3. This operator is supposed to induce the
+necessary entropy in ˜q. We discussed earlier that this entropy should exceed the
+entropy H(p) of the parent population to ensure further exploration, and we han-
+dled this issue theoretically by putting a lower bound on the entropy of feasible
+search distributions in the minimization of the Kullback-Leibler divergence.
+
+However, ﬁrst experiments showed quickly that there is an interesting prob-
+lem when using the above compression in a straight-forward manner. Actually,
+the compression can be considered as too good and eventually violating the
+constraint of the lower bound on entropy: In the case of a ﬁnite population, the
+compression scheme often leads to what we term a full compression, where in the
+end every individual is represented by a diﬀerent single symbol. The compressed
+population thus is only a set of µ diﬀerent single symbols, and the description
+length was minimized down to 1. The mutual information indeed vanishes for the
+full compression. However, on this representation it is impossible to induce more
+entropy than the parent population had (which is, if they are disjoint, log µ).
+The parent population already has maximal entropy under all distributions over
+only one symbol (since ˜q(l) = ˜p(l) is ﬁxed) of the alphabet {1, .., µ}. Thus, the
+full compression violates the constraint of the lower bound on entropy of ˜q and
+is thus infeasible.
+
+A solution to this problem with the above compression scheme would be to
+stop compression at some level, maybe at the price that the mutual information
+is not fully extinguished, but allowing for the addition of entropy. We follow this
+approach by choosing the level of compression stochastically or, equivalently, to
+add entropy on diﬀerent levels of compression.
+
+Concretely, the algorithm stochastically decides whether to apply one-point
+mutations on each level of compression, i.e., in each recursion of the compression
+scheme. We insert the following step in the compression recursion:
+
+2.e For each individual, decide with a probability α whether to apply a one-point
+mutation. A one-point mutation randomly picks a location and, with equal
+probabilities, deletes it, replaces it with a new symbol in {0, .., c − 1}, or inserts
+such a new symbol.
+
+This competes the description of the algorithm which omits an additional step
+3.
+
+The Hierarchical XOR problem. The ﬁtness function we consider is the Hier-
+archical XOR (HXOR) function [26, 7]. For a string s ∈ {0, 1}n we ﬁrst de-
+ﬁne a boolean function h(s) ∈ {0, 1}, determining whether s is “valid” or not:
+Let n = length(s) be the string length, l ∈ N0 such that n/2 ≤ 2l < n
+(l = blog2(n − 1)c), and L = s1:2l and R = s2l+1:n the left and right parts of
+the string when cut at location 2l. Then, for n ≥ 2, we deﬁne
+
+h(s) = 1 ⇐⇒
+
+h
+
+n = 2l+1 ∧ h(L) = 1 ∧ h(R) = 1 ∧ L = ¯R
+
+i
+
+,
+
+and h(s) = 1 if n = 1. Here ¯R is the bit-wise negation of the right part. The last
+condition means that the bit-wise xor between left and right part must be true
+for each bit. For instance, the strings for which h(s) = 1 are, up to length 16,
+h0i, h01i, h0110i, h0110 1001i, h0110 1001 1001 0110i, and their bit-wise negations.
+Based on h, we deﬁne a ﬁtness function H(s) ∈ N, for n ≥ 2,
+
+H(s) = H(L) + H(R) +
+
+(cid:26) n if h(s) = 1
+
+0 else
+
+,
+
+and H(s) = 1 if n = 1. To normalize and put a limit on the string length, we
+deﬁne the lth HXOR function Hl(s) ∈ [0, 1]: If s is longer than 2l, let s0 = s1:2l
+and otherwise s0 = s. Then,
+
+Hl(s) =
+
+1
+2l(l + 1)
+
+H(s0) .
+
+The normalization is given by the highest possible value 2l(1 + l) of H(s) for a
+length 2l string. There exist two global optima of Hl, namely the two “valid”
+strings of length l for which h(s) = 1.
+
+Parameters. For the experiments, we use simple (µ,λ)-selection with population
+sizes µ = 30 and λ = 100 and one elitist. The mutation probability (as indicated
+in step 2.e of the algorithm) is α = 0.1. The population was initialized with all
+h01i individuals.
+
+Results. We tested the algorithm on the HXOR problem. Figure 1A displays
+the ﬁtness trajectories for 20 runs on the 1024-bit HXOR problem. All runs
+consistently found the optimal 1024-bit string. It took on average 519 generations
+to reach this global optimum (with standard deviation ±168 generations).
+
+Figure 1B displays the average ﬁrst hitting generation and standard deviation
+for diﬀerent length HXOR problems, up to a problem size of 8192 bits. (Beyond
+
+Table 1. A L-system found to compress a population of identical solutions to the
+1024-bit HXOR. The full L-system is composed of 27 productions and reads hC:10,
+D:1C, E:0D, F:CD, G:0F, H:EG, I:CH, J:CG, K:EI, L:EJ, M:LI, N:JK, O:NM, P:JM, Q:KO,
+R:PO, S:KR, T:QS, U:QP, V:UT, W:SV, X:US, Y:PT, Z:PW, a:XY, b:VZ, c:bai. In the
+table, we expanded the RHS of these productions and, for brevity, only displayed the
+ﬁrst 15 productions.
+
+C:10
+D:110
+E:0110
+F:1 0110
+G:01 0110
+H:01 1001 0110
+I:1001 1001 0110
+J:1001 0110
+
+K:0110 1001 1001 0110
+L:0110 1001 0110
+M:0110 1001 0110 1001 1001 0110
+N:1001 0110 0110 1001 1001 0110
+O:1001 0110 0110 1001 1001 0110 0110 1001 0110 1001 1001 0110
+P:1001 0110 0110 1001 0110 1001 1001 0110
+etc...
+
+that, exhaustive memory swapping slowed the algorithm too much down.) The
+algorithm found the optimum in all runs for all problem sizes and the variance of
+the ﬁrst hitting generation is relatively small for a stochastic search scheme. The
+diagram also shows that the number of generations needed to ﬁnd an optimum
+seems to grow linearly with the problem size.
+
+To give an impression on the codings developed by the L-system compression
+scheme, table 1 displays an L-system found to compress a population of identical
+solutions to the 1024-bit HXOR problem. As discussed above, this compression
+implements a full compression such that eventually every individual is repre-
+sented by a single symbol c. We ﬁnd that some productions represent the typical
+modules of HXOR solutions (like E:0110 or J:1001 0110) while others represent
+parts of these modules. Recall that the order in with productions are added to
+the L-system is stochastic (cf. step 2.c). Consequently, the coding is not strictly
+hierarchical as a human might have designed it (or DevRep, see below) and the
+L-system comprises more pair-productions than minimally necessary to encode
+the sequence of length 1024 (which is 19).
+
+Generally, the performance of the algorithm—in terms of the generations
+needed—is of the same order as the DevRep algorithm presented by de Jong
+[7], which is the only previous algorithm we are aware of capable of solving large
+HXOR problems. ([7] reported only on results for the 64-bit and 1024-bit HXOR
+problem, where about 2.3·107 bit evaluations were needed in the single 1024-bit
+run presented.) The DevRep algorithm is tailored to hierarchical problems,
+where diﬀerent hierarchy levels are explicitly distinguished and mutational vari-
+ations allowed only within a speciﬁc hierarchy level. It should be clear that plain
+variable length GAs perform extremely bad on the HXOR problem because of
+its complex deceptiveness when search is performed on an atomic representation
+(see [7] for experiments).
+
+Notes on gzip. The compression scheme used is computationally very expensive.
+We argue below that a proper solution might be a cumulative approach to ﬁnd
+compressions which are not recalculated in each generation. Alternatively, one
+
+A
+
+B
+
+Fig. 1. A. The trajectory of the best individual ﬁtness for 20 runs on the 1024-bit
+HXOR problem. One of the runs is drawn bold. B. First hitting generations, averaged
+over 20 runs for each of the diﬀerent HXOR problem sizes.
+
+Table 2. The ﬁrst line is the original string, composed of 15×abcd. The lines below
+show 20 variations, generated by compressing the string with LZ-compression, applying
+a single one-point mutation, and decompressing again. Dots indicate that the symbol
+has not varied compared to the original string
+
+abcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcd
+.a...a...a...a...a...a...a...a...a...a...a...a...a...a...a..
+..........................................d.ddabcdabcd
+..............................................abdabcdabcd
+........ddabcdabcddbcdd.dddbcddbcddbcddbcddbcdabcdabcd
+.....................cabcdabcdac.caccdaccdaccdabcdabcd
+......aabadabcdabaabcdab.dab.dabcdabcdab.aba..a...a...a.
+........bcdabcdabcdbbcdbcdbcd.bcd.bcd.bcd.bcd.bcdabcdabcd
+d...d...d...d...d...d...d...d...d...d...d...d...d...d...d...
+......ab..a.......ab......a...a...........ab..ab..a...a...a.
+............................................................
+.................................cdacdaccdabcdabcdabcdabcd
+......bc..b.......bc......b...b...........bc..bc..b...b...b.
+........................cc.bcd.bcd.bcdabcdabcdabcdabcd
+.............abcddaacdaabcd..........abcddaabcd..a...a...a..aacdaacd
+...a...a...a...a...a...a...a...a...a...a...a...a...a...a...a
+....dcd.cddbcddbcddbcddcdd..d...d...d...d...d...d...d...
+...................................................bcdabcdab
+.....................dabcabcdabcdadabca....adcdadcdadcdabcdabcd
+............................................................
+..................bcd.....................bcd.bcd.b...b...b.
+
+might want to use eﬃcient standard compression techniques, for example the
+Lempel-Ziv compression as used by gzip. We performed some experiments also
+with this compression algorithm.
+
+However, LZ-compression has some instructive practical drawbacks. Let us
+ﬁrst consider to compress a single sequence, mutate it, and decompress it. The
+symbol mutations of the compressed string have to obey some constraints such
+that the compressed sequence remains a valid string that can be decompressed
+by the LZ algorithm (the possible symbol range at each location is diﬀerent).
+Table 2 displays the result of 20 diﬀerent one-point mutations on the compressed
+representation. Here, a second issue about LZ-compression becomes apparent.
+The mutations at the beginning of the string are less likely to be severe or
+modular than at the end of the string. The reason is that LZ-compression is a 1-
+pass scheme which builds up codes while parsing the string. In the beginning, no
+codes have been build up yet and the string remains largely uncompressed. This
+a priori asymmetry is very undesirable in the context of evolutionary exploration.
+A possible trick is to concatenate the same string several times, compress the
+concatenation, mutate only the part which represents the last copy of the string,
+and decompress.
+
+When implementing an algorithm, we exploited this observation. To compress
+and mutate a single individual, we concatenated all individuals of the population
+and additionally appended the individual of interest into a long sequence and
+compressed it. In this manner, LZ-compression ﬁrst uses the whole population
+sequence to build up codes that are then used to compress the last individ-
+ual. Then we mutated the compressed representation of the last individual and
+decompressed it. A computationally very expensive scheme, again.
+
+Experiments with the HXOR problem showed a very high variance in per-
+formance between runs. For the 128-bit HXOR problem it frequently occurred
+that runs never ﬁnd the optimum while others ﬁnd it within a few hundred
+generations. Generally, the experiments with LZ-compression gave some impor-
+tant insight in the relevance of how the codes are build up. They do however
+not support the practical use of conventional LZ-compression for evolutionary
+algorithms.
+
+6 Discussion
+
+Summary. The basis on which we developed the theoretical analysis was the
+indirect Estimation-of-Distribution scenario, where a distribution over P is esti-
+mated via a distribution over a genotype space G and an encoding φ : G → P .
+The genotype distribution is restricted to factorize. Thus the problem of es-
+timating a distribution is split into “decoding” the structural aspects of the
+distribution (via compression) and then estimating the remaining structure-less
+factorized distribution. The main result are Lemmas 1 and 2 relating the KLD
+subject to minimization to the description length of the encoding.
+
+The class of Compression EAs proposed in the last section are straight-
+forward combinations of compression techniques with standard EA operators.
+An algorithm based on a simple type of L-system compression performs reli-
+ably well on the hierarchically deceptive HXOR function, which we tested up to
+a problem size of 8192 bits. The number of generations needed seems to grow
+linearly with the problem size.
+
+However, the main aim of giving this explicit example for a Compression
+EA was to introduce to the following discussion of two aspects that seem to be
+important (i) when thinking about future, computationally eﬃcient Compression
+EAs and (ii) when considering the implications of the presented theory for the
+understanding of natural evolution and the self-adaptive evolution of genetic
+representations.
+
+Cumulative compression. The L-system compression we used has properties that
+proved beneﬁcial in the experiments: unlike LZ-compression it is unbiased w.r.t.
+which modules are encapsulated and it can develop arbitrary hierarchies. To re-
+compute the compression from scratch at every generation also has advantages:
+the encoding is always adapted to the current population, i.e. the currently avail-
+able information about the problem, and the stochasticity of the compression
+scheme leads to more diversity in exploration at diﬀerent generations.
+
+Clearly though, recomputing the compression at every generation is compu-
+tationally very expensive. The general scheme of a Compression EA should thus
+be modiﬁed to develop the compact encoding in a cumulative manner rather
+than recomputing it at every generation. In the case of L-system compression,
+cumulative could mean that the L-system is persistent over the generations and
+at each generation only a single new production is added or an old, unused pro-
+duction deleted. Assuming that the inherent structure of found solutions will
+
+not evolve too fast, the cumulative scheme would still allow to provide a good
+compression of the current population.
+
+Besides being computationally much more eﬀective, the cumulative approach
+has another interesting perspective. Since the encoding is incrementally build up
+during evolution, the encoding becomes a variable that integrates information
+about the successful solutions over more than one generation. This is comparable
+to strategy parameters in Evolution Strategies which, for instance, integrate the
+average movement of the population over the recent history, assuming that this
+search direction will also be proﬁtable in the future [9]. Such schemes have hardly
+been transferred to ordinary GAs because the notion of “proceeding in the same
+direction” makes no sense on the hypercube. The notion does make sense though
+on the more abstract level of “proceeding by incorporating the same structural
+dependencies that have previously been successful”—where the notion of “search
+direction” is replaced by the notion of “structural properties of search”. The
+encoding becomes the variable which is capable to integrate such information.
+The objective of compactness indicates how an adequate permanent adaptation
+can be achieved.
+
+Self-adaptive σ-evolution of compact representations. In this work we addressed
+a bijective encoding φ that is adapted explicitly (externally) at each generation.
+This approach is complementary to the formalism we proposed earlier to describe
+the self-adaptive evolution of genetic representations [22, 21]. The proper way to
+formalize the self-adaptive case is to consider a ﬁxed but non-injective genotype-
+phenotype mapping. In that case there exists a variety (neutral set) of diﬀerent
+genotypes that map to the same phenotype. The “choice of genetic represen-
+tation” here means which genotype from the neutral set is chosen to encode
+the phenotype. The speciﬁc example investigated in [20] clariﬁes the relation
+between the two complementary frameworks: A genotype in the self-adaptive
+scenario may be the tuple (g0, Π) of a (compact) string g0 (termed axiom, or
+egg cell) and an L-system Π (termed genome). The global genotype-phenotype
+mapping from the space of such tuples to phenotype is clearly ﬁxed. But diﬀer-
+ent genotypes, involving diﬀerent L-systems Π, may map to the same phenotype
+and thus induce structurally completely diﬀerent phenotypic variabilities. In this
+scenario, the evolution of genetic representations can be understood as moves in
+the neutral set, e.g., neutral reorganizations of the L-system Π.
+
+In [22] it was show that the self-adaptive evolution of genetic representations
+is driven by an implicit selection which discriminates phenotypically equivalent
+genotypes by the quality of the phenotypic variability that they induce (which is
+related to the eﬀective ﬁtness [14, 19]). More precisely, the selectional advantage
+of diﬀerent genetic representations of the same phenotype is proportional to the
+negative Kullback-Leibler divergence between the phenotypic variability and the
+Boltzmann ﬁtness distribution (assuming a lower bound on phenotypic entropy,
+see [22] for details).
+
+The objective of minimizing the Kullback-Leibler divergence is thus the key
+to transfer the results we derived here to the self-adaptive scenario, now stat-
+ing that there is an eﬀective selection pressure on the description length of a
+
+genetic representation. Indeed, a tendency towards compact representations was
+observed in experiments on σ-evolution [20]. It was previously argued that its
+origin is the advantage of mutational robustness when every genetic symbol un-
+derlies a constant mutation rate. We can now add another origin, namely that
+compact representations are structurally more favorable—meaning that the phe-
+notypic variability they induce allows to reduce the Kullback-Leibler divergence
+and follow the Estimation-of-Distribution principle. However, it is yet open to
+which degree both eﬀects contributed to the evolution of compact codes.
+
+Acknowledgment
+
+I would like to thank the German Research Foundation (DFG) for their funding
+of the Emmy Noether fellowship TO 409/1-1, allowing me to pursue this research.
+
+References
+
+1. S. Amari. Information geometry on hierarchy of probability distributions. IEEE
+
+Transactions on Information Theory, 47(5):1701–1711, 2001.
+
+2. S. Baluja. Population-based incremental learning: A method for integrating genetic
+search based function optimization and competitive learning. Technical Report
+CMU-CS-94-163, Comp. Sci. Dep., Carnegie Mellon U., 1994.
+
+3. S. Baluja and S. Davies. Using optimal dependency-trees for combinatorial opti-
+mization: Learning the structure of the search space. In Proc. of Fourteenth Int.
+Conf. on Machine Learning (ICML 1997), pages 30–38, 1997.
+
+4. L. Barbulescu, J.-P. Watson, and D. Whitley. Dynamic representations and escap-
+ing local optima: Improving genetic algorithms and local search. In Seventeenth
+National Conference on Artiﬁcial Intelligence (AAAI), pages 879–884, 2000.
+
+5. A. Barron, J. Rissanen, and B. Yu. The minimum description length principle in
+coding and modeling. IEEE Transactions on Information Theory, 44:2743–2760,
+1998.
+
+6. J. S. de Bonet, C. L. Isbell, Jr., and P. Viola. MIMIC: Finding optima by estimating
+probability densities.
+In M. C. Mozer, M. I. Jordan, and T. Petsche, editors,
+Advances in Neural Information Processing Systems, volume 9, page 424. The MIT
+Press, 1997.
+
+7. E. D. de Jong. Representation development from Pareto-Coevolution.
+
+In 2003
+
+Genetic and Evolutionary Computation Conference (GECCO 2003), 2003.
+
+8. G. Halder, P. Callaerts, and W. Gehring. Induction of ectopic eyes by targeted
+
+expression of the eyeless gene in Drosophila. Science, 267:1788–1792, 1995.
+
+9. N. Hansen and A. Ostermeier. Completely derandomized self-adaption in evolu-
+
+tionary strategies. Evolutionary Computation, 9:159–195, 2001.
+
+10. R. B. Heckendorn and A. H. Wright. Eﬃcient linkage discovery by limited probing.
+
+Evolutionary Computation, 2004. Accepted for publication.
+
+11. G. S. Hornby and J. B. Pollack. The advantages of generative grammatical encod-
+ings for physical design. In Proc. of 2001 Congress on Evolutionary Computation
+(CEC 2001), pages 600–607. IEEE Press, 2001.
+
+12. G. E. Liepins and M. D. Vose. Representation issues in Genetic Algorithms. Journal
+
+of Experimental and Theoretical Artiﬁcial Intelligence, 2, 1990.
+
+13. C. G. Nevill-Manning and I. H. Witten. Identifying hierarchical structure in se-
+quences: A linear-time algorithm. Journal of Artiﬁcial Intelligence Research, 7:67–
+82, 1997.
+
+14. P. Nordin and W. Banzhaf. Complexity compression and evolution. In L. Eshel-
+man, editor, Genetic Algorithms: Proc. of Sixth International Conf. (ICGA 1995),
+pages 310–317. Morgan Kaufmann, Pittsburgh, 15-19 1995.
+
+15. M. Pelikan and D. E. Goldberg. Hierarchical BOA solves Ising spin glasses and
+MAXSAT. In Genetic and Evolutionary Computation Conference 2003 (GECCO-
+2003), pages pp. 1271–1282. Springer-Verlag, 2003.
+
+16. M. Pelikan, D. E. Goldberg, and E. Cant´u-Paz. Linkage problem, distribution
+estimation, and Bayesian networks. Evolutionary Computation, 9:311–340, 2000.
+17. M. Pelikan, D. E. Goldberg, and F. Lobo. A survey of optimization by building
+and using probabilistic models. Technical Report IlliGAL-99018, Illinois Genetic
+Algorithms Laboratory, 1999.
+
+18. F. Rothlauf and D. E. Goldberg. Redundant representations in Evolutionary Com-
+
+putation. Evolutionary Computation, 11:381–415, 2003.
+
+19. C. R. Stephens and J. M. Vargas. Eﬀective ﬁtness as an alternative paradigm
+for evolutionary computation I: General formalism. Genetic Programming and
+Evolvable Machines, 1:363–378, 2000.
+
+20. M. Toussaint. Demonstrating the evolution of complex genetic representations:
+An evolution of artiﬁcial plants. In 2003 Genetic and Evolutionary Computation
+Conference (GECCO 2003), pages 86–97, 2003.
+
+21. M. Toussaint. The evolution of genetic representations and modular neural adap-
+tation, April 2003. PhD thesis, Institut f¨ur Neuroinformatik, Ruhr-Universi¨at-
+Bochum, Germany. Published with the Logos Verlag Berlin (2004), ISBN 3-8325-
+0579-2, 173 pages.
+
+22. M. Toussaint. On the evolution of phenotypic exploration distributions.
+
+In
+C. Cotta, K. De Jong, R. Poli, and J. Rowe, editors, Foundations of Genetic Al-
+gorithms 7 (FOGA VII), pages 169–182. Morgan Kaufmann, 2003.
+
+23. M. Toussaint. Notes on information geometry and evolutionary processes, 2004.
+
+Los Alamos pre-print nlin.AO/0408040.
+
+24. P. M. B. Vit´anyi and M. Li. Minimum Description Length induction, Bayesianism,
+and Kolmogorov complexity. IEEE Trans. Inform. Theory, IT-46:446–464, 2000.
+25. G. P. Wagner and L. Altenberg. Complex adaptations and the evolution of evolv-
+
+ability. Evolution, 50:967–976, 1996.
+
+26. R. A. Watson and J. B. Pollack. Hierarchically consistent test problems for genetic
+algorithms: Summary and additional results. In Late breaking papers at the Genetic
+and Evolutionary Computation Conference, pages 292–297, 1999.
+
+27. D. Whitley, S. Rana, and R. Heckendorn. Representation issues in neighborhood
+search and evolutionary algorithms. In Genetic Algorithms and Evolution Strategy
+in Engineering and Computer Science, pages 39–58. John Wiley Sons Ltd., 1997.
+28. A. H. Wright, R. Poli, C. R. Stephens, W. B. Langdon, and S. Pulavarty. An
+Estimation of Distribution Algorithm based on maximum entropy. In 2004 Ge-
+netic and Evolutionary Computation Conference (GECCO 2004), pages 343–354.
+Springer, Berlin, 2004.
+
+

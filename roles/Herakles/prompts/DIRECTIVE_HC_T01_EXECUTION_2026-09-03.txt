@@ -1,0 +1,847 @@
+================================================================================
+PROMETHEUS / HERAKLES SEAT
+HC-T01 EXECUTION DIRECTIVE / TOUSSAINT MISSING-CELL EXPERIMENT
+
+Issued by James, 2026-09-03. Committed verbatim as the authoritative directive.
+Where this file and any later summary disagree, this file wins.
+Follows and supersedes the execution gate of
+  DIRECTIVE_HC_T01_TOUSSAINT_MISSING_CELL_2026-09-03.txt
+  (sha256 5cc0241fe85567e71201416cd16a88fd0672ff5cc4ae921996606e33c30b0354)
+================================================================================
+
+HERAKLES — HC-T01 EXECUTION DIRECTIVE
+
+TOUSSAINT MISSING-CELL EXPERIMENT
+
+Separate the direct mutation-operator effect from evolved changes in future accessibility
+
+Herakles,
+
+T0 is accepted.
+
+The historical claim survives:
+
+Toussaint’s programme contained both a longitudinal exploration-distribution detector and a genuine mechanism ablation with adaptive acquisition, but the detector was not run inside the ablation.
+
+HC-T01 is therefore authorized with one required methodological upgrade before execution.
+
+The generation-zero mechanical-effect null is necessary but insufficient.
+
+The central confound is:
+
+β directly parameterizes the variation operator that induces the detector.
+
+Therefore a raw difference in exploration distribution between β arms is partly true by construction.
+
+The experiment becomes scientifically meaningful only if we distinguish:
+
+1. the direct mechanical effect of applying β;
+2. the representational structure evolution produced under different β histories;
+3. the interaction between evolved representation and probe operator;
+4. later acquisition.
+
+The target particle is not:
+
+β changes the offspring distribution.
+
+The target particle is:
+
+Evolution under different variation regimes changes the organism/population so that the SAME subsequently applied variation operator produces a different distribution of reachable future phenotypes.
+
+That is the non-tautological quantity.
+
+⸻
+
+0. EXECUTION VERDICT
+
+Current state:
+
+MISSING_CELL_CONFIRMED .............. YES
+RECONSTRUCTABLE ..................... YES
+GENERATION-ZERO NULL ................ NECESSARY
+GENERATION-ZERO NULL SUFFICIENT ..... NO
+HC-T01 .............................. AUTHORISED AFTER REVISION BELOW
+
+Before the first confirmatory run, amend the preregistration and verifier to include the contemporaneous frozen-population cross-operator probe.
+
+Then execute.
+
+⸻
+
+1. CORE CAUSAL DECOMPOSITION
+
+Treat the observed detector trajectory as containing at least:
+
+direct operator effect
++
+evolved population / representation effect
++
+operator × representation interaction
++
+estimator noise
+
+Generation-zero probing estimates the direct operator effect only at the initial population.
+
+That is not enough because the mechanical effect of β may itself depend on the representation distribution of the population.
+
+At generation t, the effect of β on a population evolved under β may be different from its effect on a population evolved without β.
+
+That difference is potentially the phenomenon we care about.
+
+⸻
+
+2. REQUIRED FROZEN-POPULATION PROBE
+
+At preregistered checkpoints t:
+
+1. freeze the current population;
+2. do NOT allow offspring to enter the population;
+3. do NOT apply selection;
+4. do NOT alter evolutionary history;
+5. evaluate the historical exploration-distribution detector under both probe settings.
+
+For the exact same frozen population P_t measure:
+
+D(P_t, beta_on)
+D(P_t, beta_off)
+
+where D is Toussaint’s recovered detector and beta_on/beta_off are the historically defined operator settings.
+
+This is an observational counterfactual probe.
+
+The probe must not feed information back into the evolutionary run.
+
+⸻
+
+3. PRIMARY MECHANICAL CONTRAST
+
+For any frozen population P_t define:
+
+M(P_t) = D(P_t, beta_on) - D(P_t, beta_off)
+
+or the historically appropriate multivariate equivalent if D contains:
+
+* neutral degree;
+* mutual-information structure;
+* modular degree;
+* other recovered detector statistics.
+
+Do not collapse a vector detector into one scalar unless the historical detector already did so or the preregistration explicitly defines one primary quantity.
+
+M(P_t) estimates:
+
+how much the current population’s representation changes the consequences of turning second-type mutation on versus off.
+
+⸻
+
+4. EVOLUTIONARY-HISTORY CONTRAST
+
+The first non-tautological result compares populations with different evolutionary histories under the SAME probe.
+
+Let:
+
+P_on,t  = population evolved historically under beta > 0
+P_off,t = population evolved historically under beta = 0
+
+Then compare:
+
+D(P_on,t, beta_probe)
+versus
+D(P_off,t, beta_probe)
+
+for a fixed probe operator.
+
+The cleanest primary probe should be selected before execution.
+
+Candidate primary:
+
+beta_probe = historical beta_on
+
+Rationale:
+
+Both populations are exposed to exactly the same variation operator at measurement time.
+
+Any detector difference then reflects differences in the populations/representations themselves, not the immediate fact that one detector was evaluated under β and the other was not.
+
+⸻
+
+5. DIFFERENCE-IN-DIFFERENCES
+
+Also compute the interaction:
+
+E_t =
+    [D(P_on,t, beta_on) - D(P_on,t, beta_off)]
+    -
+    [D(P_off,t, beta_on) - D(P_off,t, beta_off)]
+
+This is the key operator × evolved-representation interaction.
+
+Interpretation:
+
+E_t ≈ 0
+
+means the direct effect of β is similar regardless of evolutionary history.
+
+E_t != 0
+
+means evolution has changed the representation so that the same operator now induces a different exploration distribution.
+
+This is a candidate microscopic evolvability effect.
+
+Do not assume the sign.
+
+⸻
+
+6. T0 — MECHANICAL CALIBRATION
+
+At generation zero, before evolutionary histories diverge:
+
+apply the cross-operator probe to the common initial population.
+
+This estimates:
+
+M(P_0)
+
+and establishes:
+
+* direct mechanical operator effect;
+* detector noise;
+* initial interaction floor;
+* whether the recovered detector behaves sensibly.
+
+Expected:
+
+beta_on and beta_off differ mechanically.
+
+This is calibration only.
+
+It is NOT a scientific positive result.
+
+⸻
+
+7. T1 — EVOLUTIONARY RESTRUCTURING
+
+Primary first-level claim:
+
+After evolutionary histories diverge, populations evolved under different β conditions respond differently to the same frozen probe operator.
+
+Evidence:
+
+D(P_on,t, beta_probe)
+!=
+D(P_off,t, beta_probe)
+
+at preregistered times and run-level inference.
+
+Stronger evidence:
+
+E_t departs from its generation-zero baseline.
+
+This is the first non-tautological HC-T01 result.
+
+⸻
+
+8. T2 — TEMPORAL PRECEDENCE
+
+Conditional on T1:
+
+ask whether the evolved-representation signal emerges before macroscopic acquisition/fitness differences.
+
+Freeze before execution:
+
+* primary detector statistic;
+* primary acquisition metric;
+* checkpoint cadence;
+* smoothing rule, if any;
+* lead window;
+* change-point or threshold method;
+* null;
+* run as unit of analysis.
+
+Do NOT use avgfit for the primary precedence claim.
+
+avgfit measures expected immediate offspring performance and is coupled too closely to acquisition.
+
+Use it as a comparator/positive control.
+
+T2 is valid only if the detector statistic is not mathematically forced to move earlier than the fitness outcome.
+
+⸻
+
+9. T3 — CAUSAL ACQUISITION DEPENDENCE
+
+The historical 2×2 ablation creates the possibility of T3.
+
+The target chain is:
+
+second-type mutation available during evolution
+    ↓
+representation restructures
+    ↓
+same probe mutation operator produces altered exploration distribution
+    ↓
+subsequent acquisition differs
+
+The strongest result available from HC-T01 is:
+
+1. β history changes evolved representation;
+2. this survives same-operator frozen probing;
+3. exploration structure changes beyond mechanical baseline;
+4. acquisition trajectory differs;
+5. β ablation suppresses both the representation/exploration effect and acquisition.
+
+Do not claim more than this.
+
+⸻
+
+10. KEEP THE HISTORICAL 2x2
+
+Retain Toussaint’s recovered design:
+
+Axis A:
+beta > 0
+beta = 0
+
+Axis B:
+alpha = historical low value
+alpha = historical high value
+
+The cross-operator probe is an OBSERVATION layer placed on top of the historical experimental arms.
+
+It is not a fifth treatment.
+
+Do not alter the evolutionary physics.
+
+⸻
+
+11. BETA PARAMETER CONFLICT
+
+The historical record contains:
+
+beta = 0.1
+versus
+beta = 0.01
+
+Primary reconstruction should use the value most strongly anchored by the historical figure/table record, presently:
+
+beta = 0.1
+
+Treat:
+
+beta = 0.01
+
+as a preregistered sensitivity arm.
+
+Do not choose between them after seeing results.
+
+If the result exists only under one reconstruction, report that as historical-parameter dependence.
+
+⸻
+
+12. INSERTION / DELETION CONFLICT
+
+Likewise, preserve the documented conflict regarding insertion/deletion rate.
+
+Do not guess silently.
+
+Use:
+
+primary interpretation
++
+preregistered sensitivity interpretation
+
+according to the parameter-certainty table.
+
+The missing-cell result should be reported as:
+
+ROBUST
+PARAMETER_SENSITIVE
+or
+RECONSTRUCTION_DEPENDENT
+
+as appropriate.
+
+⸻
+
+13. RUN-LENGTH AMBIGUITY
+
+Experiment 2’s historical run length is unspecified.
+
+Do not search across arbitrary horizons.
+
+Freeze:
+
+PRIMARY_RUN_LENGTH
+
+based on strongest historical/contextual evidence.
+
+Also freeze:
+
+SHORT_SENSITIVITY
+LONG_SENSITIVITY
+
+before execution.
+
+The primary claim lives or dies on the primary reconstruction.
+
+Sensitivity arms diagnose dependence.
+
+They do not rescue the primary result.
+
+⸻
+
+14. HISTORICAL VALIDATION FIRST
+
+Before HC-T01 interpretation, reconstruction must satisfy independent historical validation targets.
+
+At minimum include three or more of:
+
+* treatment-ordering of fitness;
+* final fitness range;
+* characteristic acquisition trajectory;
+* representation behavior;
+* recovered detector values from Experiment 1;
+* known phenotype structure;
+* other exact historical quantities.
+
+If any load-bearing target misses outside preregistered tolerance:
+
+RECONSTRUCTION_FAILS
+
+Stop interpretation.
+
+Do not continue to HC-T01 claims.
+
+⸻
+
+15. SHAKEDOWN
+
+Before the confirmatory grid, run a small shakedown.
+
+It must answer:
+
+1. does the implementation reproduce historical baseline behavior?
+2. does the detector reproduce Experiment-1 behavior?
+3. what is actual detector throughput?
+4. what is estimator variance at 2,000 samples?
+5. does the frozen-population probe leave evolution unchanged?
+6. is replay deterministic where promised?
+7. does T0 show the expected mechanical β effect?
+8. is E_0 approximately at the expected baseline?
+
+Replace all estimated compute timings with measured values.
+
+⸻
+
+16. ESTIMATOR-NOISE GATE
+
+Toussaint reported no uncertainty for the 2,000-sample detector.
+
+We must.
+
+At the same frozen population:
+
+repeat the detector sampling with multiple independent detector seeds.
+
+Estimate:
+
+detector variance
+confidence interval
+within-population sampling noise
+
+If sampling noise exceeds the between-history signal at plausible effect sizes, report:
+
+HISTORICAL_DETECTOR_UNDERPOWERED
+
+Do not increase samples until the historical detector gives the desired result.
+
+A later experiment may test a modernized estimator.
+
+HC-T01 first tests the historical instrument at historical resolution.
+
+⸻
+
+17. AVGfit — POSITIVE-CONTROL DETECTOR
+
+The recovered code computes:
+
+avgfit
+
+for the sampled offspring distribution.
+
+Do NOT use avgfit as the primary T2 precursor statistic.
+
+It is too directly coupled to expected offspring performance.
+
+Do preserve it as:
+
+HISTORICAL_POSITIVE_CONTROL
+
+Question:
+
+does avgfit behave differently from neutral degree / modular degree / mutual-information structure?
+
+This may help separate:
+
+immediate offspring quality
+
+from:
+
+structure of possible future variation.
+
+If avgfit alone predicts acquisition, that is ordinary adaptation evidence.
+
+If representation/accessibility metrics add independent information, that is more interesting.
+
+⸻
+
+18. MATCHED-STATE ANALYSIS
+
+Exploratory, not primary.
+
+Where feasible, identify individuals/populations from different evolutionary arms matched on:
+
+* current fitness;
+* phenotype;
+* generation;
+* perhaps population diversity.
+
+Apply the SAME frozen beta probe.
+
+Ask:
+
+Can two systems with comparable current capability have different distributions over what they can become next?
+
+This is highly relevant to Prometheus but must remain exploratory unless fully preregistered.
+
+Do not use post-hoc matching to rescue a failed primary result.
+
+⸻
+
+19. UNIT OF ANALYSIS
+
+The independent unit remains:
+
+RUN
+
+Never:
+
+generation
+individual
+detector sample
+offspring
+phenotype variable
+
+Temporal and population observations are repeated measurements within a run.
+
+Use run-level inference or an explicitly justified hierarchical model.
+
+No pseudoreplication.
+
+⸻
+
+20. PRIMARY OUTCOMES
+
+Report separately:
+
+O1
+
+Direct mechanical operator effect:
+
+M(P_0)
+
+O2
+
+Same-probe evolutionary-history difference:
+
+D(P_on,t, beta_probe) - D(P_off,t, beta_probe)
+
+O3
+
+Difference-in-differences interaction:
+
+E_t
+
+O4
+
+Acquisition / fitness trajectory difference.
+
+O5
+
+Lead/lag relationship, only if T2 remains valid.
+
+O6
+
+Historical positive control:
+
+avgfit
+
+Do not synthesize these into an “evolvability score.”
+
+⸻
+
+21. PRE-REGISTERED KILL CONDITIONS
+
+HC-T01 is scientifically negative if:
+
+K1
+
+The reconstruction misses independent historical validation.
+
+K2
+
+Generation-zero mechanical effect accounts for all later detector differences.
+
+K3
+
+Same-probe comparisons show no evolved-representation effect.
+
+K4
+
+E_t remains indistinguishable from baseline.
+
+K5
+
+Detector differences exist but are entirely explained by estimator noise.
+
+K6
+
+Detector changes do not relate to later acquisition across runs.
+
+K7
+
+Cheap conventional state metrics explain acquisition equally well.
+
+K8
+
+The result disappears under primary-vs-sensitivity historical parameter interpretations.
+
+K9
+
+The historical detector is too expensive/noisy to resolve its own ablation.
+
+K10
+
+The missing composition is discovered in an overlooked historical source before interpretation.
+
+Do not rescue a killed composition.
+
+⸻
+
+22. STRONG POSITIVE RESULT
+
+Do not aim for this, but define it.
+
+A strong HC-T01 result would be:
+
+1. historical reconstruction validates independently;
+2. T0 quantifies the direct mechanical β effect;
+3. after evolution, populations with different histories respond differently to the SAME β probe;
+4. the interaction E_t grows beyond generation-zero baseline;
+5. this effect appears before or independently of gross fitness divergence;
+6. the representation-sensitive detector predicts subsequent acquisition better than conventional state variables;
+7. β ablation suppresses both the evolved accessibility difference and acquisition.
+
+Then the permitted statement is:
+
+Evolution under a variation mechanism changed internal representation in a way that altered the distribution of future phenotypic variation beyond the mechanism’s direct mechanical effect, and that change was associated with subsequent adaptive acquisition.
+
+Nothing stronger.
+
+⸻
+
+23. COMPUTATIONAL-PART EXTRACTION
+
+If HC-T01 survives, create a candidate mechanism part described without cognition language.
+
+Candidate wording:
+
+Phenotype-preserving representational restructuring that modifies the effect distribution of future variation operators.
+
+Record:
+
+causal precondition
+historical implementation
+immediate phenotype effect
+immediate fitness effect
+future-variation effect
+acquisition effect
+parameter sensitivity
+ablation evidence
+detector evidence
+
+Do not assign an R rung.
+
+Do not call it reasoning.
+
+Pass it to the Parts Registry.
+
+⸻
+
+24. DETECTOR-PART EXTRACTION
+
+Likewise recover Toussaint’s detector as a historical instrument.
+
+Record:
+
+exploration distribution
+neutral degree
+mutual-information structure
+modular degree
+avgfit
+sampling cost
+estimator variance
+temporal resolution
+substrate dependence
+what each statistic sees
+what each misses
+
+These may later become components of the Prometheus Hadron Collider.
+
+Do not modify them yet.
+
+⸻
+
+25. EVCA REMAINS FROZEN
+
+Do not consume the EvCA gate while HC-T01 runs.
+
+HC-T01 and EvCA test different particles.
+
+HC-T01:
+
+evolution changes how variation maps to future possibilities.
+
+EvCA:
+
+locally successful structural change may narrow or redirect what becomes reachable later.
+
+Keep EvCA ready as the next historical specimen regardless of HC-T01 outcome.
+
+⸻
+
+26. REQUIRED ARTIFACT UPDATES
+
+Before execution update:
+
+HC_T01_PREREGISTRATION.md
+HC_T01_COMPUTE_MODEL.md
+HISTORICAL_VALIDATION_TARGETS.md
+TOUSSAINT_DETECTOR_SPEC.md
+verify_t0_claims.py
+
+Add:
+
+FROZEN_POPULATION_PROBE_SPEC.md
+OPERATOR_HISTORY_DID_SPEC.md
+ESTIMATOR_NOISE_PROTOCOL.md
+
+The verifier must fail if the primary probe operator, checkpoint cadence, denominator/statistic definitions, mechanical null, or run-level inference are unspecified.
+
+⸻
+
+27. EXECUTION SEQUENCE
+
+Run exactly in this order:
+
+X0
+
+Source/artifact re-verification.
+
+X1
+
+Implementation/unit/property tests.
+
+X2
+
+Historical validation shakedown.
+
+X3
+
+Detector noise qualification.
+
+X4
+
+Generation-zero mechanical-effect calibration.
+
+X5
+
+Small frozen-population cross-operator probe.
+
+X6
+
+Confirmatory historical 2×2 runs with detector instrumentation.
+
+X7
+
+Primary run-level analysis.
+
+X8
+
+Sensitivity arms.
+
+X9
+
+Exploratory matched-state analysis, only after primary verdict frozen.
+
+Do not inspect exploratory results before freezing the primary verdict.
+
+⸻
+
+28. FINAL REVIEW PACKET
+
+Return:
+
+HC_T01_EXECUTION_REVIEW_PACKET.txt
+
+with:
+
+1. historical validation verdict;
+2. measured compute;
+3. estimator-noise qualification;
+4. T0 mechanical effect;
+5. T1 same-probe history effect;
+6. difference-in-differences E_t;
+7. acquisition results;
+8. T2 precedence result or INVALID;
+9. T3 causal interpretation;
+10. avgfit comparator;
+11. parameter sensitivities;
+12. reconstruction sensitivities;
+13. all kill criteria;
+14. candidate detector parts;
+15. candidate mechanism parts;
+16. explicit statement of what the result does NOT establish;
+17. recommendation for EvCA;
+18. one of exactly:
+    HC_T01_PARTICLE_SURVIVES
+    HC_T01_WEAK_SIGNAL_ONLY
+    HC_T01_NULL
+    HC_T01_RECONSTRUCTION_FAILS
+    HC_T01_HISTORICAL_DETECTOR_INADEQUATE
+
+⸻
+
+FINAL PRINCIPLE
+
+The direct effect of β is not the particle.
+
+That is merely the knob turning.
+
+The candidate particle is:
+
+Evolution changes the machine such that the same knob now opens a different future.
+
+Two systems may look equally capable today.
+
+They may even have the same phenotype.
+
+But if identical variation applied to them produces systematically different reachable futures, then historical evolution has changed something deeper than current performance.
+
+That is what HC-T01 is now allowed to test.
+
+Measure the knob.
+
+Subtract the knob.
+
+Then see whether the machine changed.

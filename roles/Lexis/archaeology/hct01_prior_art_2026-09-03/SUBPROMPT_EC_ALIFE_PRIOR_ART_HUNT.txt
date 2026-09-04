@@ -1,0 +1,41 @@
+SUBORDINATE PROMPT, issued by Lexis 2026-09-03, delegated to a general-purpose
+subagent. Preserved verbatim per directive section 9. Purpose: adversarial
+prior-art hunt over the one literature population no earlier Prometheus pass had
+covered (evolutionary computation / genetic programming / artificial life /
+evolutionary robotics), searching for the six-element composition.
+---8<--- BODY ---8<---
+PRIOR-ART HUNT, adversarial. You are searching for work that would make a planned experiment REDUNDANT. Finding prior art is a SUCCESS, not a failure. Work in F:\Prometheus, save working files and any downloaded PDFs to F:\Prometheus\roles\Lexis\archaeology\hct01_prior_art_2026-09-03\work\ (create it). Use curl via Bash (Git Bash, POSIX), WebSearch and WebFetch. Do NOT report anything from memory - only what you actually retrieved and read, with a URL and a quoted sentence.
+
+THE COMPOSITION I AM TRYING TO FIND ALREADY DONE. A single experiment that has ALL SIX of:
+ A. LOCAL accessibility detector: samples or enumerates the phenotypes reachable in ONE application of the variation operator from the CURRENT state of the evolving lineage (offspring cloud / one-mutant neighbourhood / mutational spectrum). NOT a uniform sample over the whole genotype space; NOT a static landscape survey done outside a run.
+ B. LONGITUDINAL: that detector re-measured at multiple times DURING evolution, within the same run.
+ C. MECHANISM ABLATION: the manipulated variable is a VARIATION OPERATOR or a REPRESENTATION / genotype-phenotype-map mechanism switched on/off or swapped - NOT merely a change of environment, goal schedule, selection pressure, fitness function, or target set.
+ D. ACQUISITION LINK measured, ideally quantitatively relating detector state at time t to subsequent adaptation at t+n WITHIN a run.
+ E. REPLICATION with uncertainty: independent evolutionary replicates, and SE/CI/bands or a statistical test.
+ F. A CONTROL that separates the operator's IMMEDIATE mechanical effect (turning the knob changes the offspring distribution by definition) from the EVOLVED effect (having had the knob during history changed the representation). E.g. applying the same probe operator to both arms' evolved genotypes, or a generation-zero baseline.
+
+DOMAIN TO SEARCH - this is the gap. Evolutionary computation, genetic programming, artificial life, and evolutionary robotics. Earlier passes have already covered (do NOT re-cover): the RNA/protein neutral-network literature (Wagner, Draghi, Greenbury, Ahnert, Ancel & Fontana, Cowperthwaite, Aguirre, Catalan, Hayden, Zheng), the Toussaint 2001-2007 corpus and its citing works, and the Watson/Kouvaris/Kounios/Parter/Kashtan-Alon lineage plus Tiso 2024 and Petak 2025.
+
+SPECIFIC CANDIDATES to find and screen properly (find the PDF, read the methods, quote):
+ - Lehman & Stanley, "Evolvability is inevitable" (2013 PLoS ONE) and "Novelty search and the problem with objectives"; also any "evolvability search" paper (Mengistu? Lehman?) that SAMPLES OFFSPRING BEHAVIOURS per parent
+ - Wilder & Stanley, "Reconciling explanations for the evolution of evolvability" (2015, Adaptive Behavior)
+ - Mengistu, Huizinga, Mouret, Clune, "The evolutionary origins of hierarchy" (2016 PLoS CB) - connection-cost ablation
+ - Hu & Banzhaf, work on "evolvability" / "quantitative genetics of GP" / rate of evolution measures
+ - Cartesian GP neutrality: Miller & Smith "Redundancy and computational efficiency in CGP"; Vassilev & Miller; Yu & Miller "Neutrality and the evolvability of Boolean function landscape" - these ABLATE redundancy/neutrality, which is a representation mechanism
+ - Altenberg, "The evolution of evolvability in genetic programming" and "Genome growth and the evolution of the genotype-phenotype map"
+ - Self-adaptive mutation / self-adaptation in evolution strategies where the offspring distribution is MEASURED (not just the strategy parameter plotted) - e.g. Beyer, Meyer-Nieberg, Igel
+ - Any recombination on/off or sex on/off ablation that measures the OFFSPRING PHENOTYPE DISTRIBUTION longitudinally
+ - Evolutionary robotics: Bongard, Cheney, Kriegman on morphology/encoding ablations WITH offspring-variation measurement
+ - Tarapore & Mouret, "How do different encodings influence the performance of the MAP-Elites algorithm?" and their evolvability analyses
+ - Any paper using the phrase "evolvability signature" (Moreno/Banzhaf/Ofria 2018 is already screened - look for its descendants and predecessors)
+ - Anything measuring the "distribution of mutational effects" or "mutational spectrum" repeatedly DURING a digital-evolution run under an ablation (Avida: Ofria, Lenski, Wilke, Adami, LaBar)
+
+METHOD. Use WebSearch and Google Scholar-style queries combining terms: evolvability, offspring distribution, mutational neighbourhood, phenotypic variability, evolvability signature, representation ablation, encoding comparison, neutrality ablation, self-adaptation, distribution of mutational effects, longitudinal, over generations, within-run. Also search arXiv, PLOS, MIT Press (Artificial Life / Evolutionary Computation journals), ACM (GECCO), and Semantic Scholar / OpenAlex APIs.
+
+DELIVERABLE - a plain report with:
+ 1. A screening table: authors, year, title, venue, URL, then a score for EACH of A,B,C,D,E,F as YES / NO / PARTIAL / UNKNOWN, then a one-line verdict.
+ 2. For every YES or PARTIAL on A, B, C, D or F, an EXACT QUOTED SENTENCE from the paper plus where you found it (section/figure). No paraphrase for load-bearing cells.
+ 3. Explicitly state whether ANY work you found has all six. If one has five, say precisely which one is missing.
+ 4. A list of works you could NOT access, with the exact URLs tried and the failure (403/404/paywall).
+ 5. Save every PDF you successfully download into the work/ directory and give me filename + sha256 + bytes for each.
+Do not editorialise and do not try to protect any Prometheus position. If you find the composition, say so plainly.

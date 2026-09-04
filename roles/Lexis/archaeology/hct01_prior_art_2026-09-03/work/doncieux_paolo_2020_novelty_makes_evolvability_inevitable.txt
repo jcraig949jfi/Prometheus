@@ -1,0 +1,475 @@
+                                        Novelty Search makes Evolvability Inevitable
+
+arXiv:2005.06224v1 [cs.NE] 13 May 2020                       Stephane Doncieux                                                                    Giuseppe Paolo
+
+                                                Sorbonne Université, CNRS, Institut des Systèmes                                    AI Lab, SoftBank Robotics Europe, Paris, France
+                                             Intelligents et de Robotique, ISIR, F-75005 Paris, France                             Sorbonne Université, CNRS, Institut des Systèmes
+                                                                                                                                Intelligents et de Robotique, ISIR, F-75005 Paris, France
+                                                    stephane.doncieux@sorbonne-universite.fr
+                                                                                                                                          giuseppe.paolo@softbankrobotics.com
+                                                             Alban Laflaquière
+                                                                                                                                                 Alexandre Coninx
+                                                 AI Lab, SoftBank Robotics Europe, Paris, France
+                                                         alaflaquiere@softbankrobotics.com                                         Sorbonne Université, CNRS, Institut des Systèmes
+                                                                                                                                Intelligents et de Robotique, ISIR, F-75005 Paris, France
+                                        ABSTRACT
+                                                                                                                                        alexandre.coninx@sorbonne-universite.fr
+                                        Evolvability is an important feature that impacts the ability of evo-
+                                        lutionary processes to find interesting novel solutions and to deal                     1 INTRODUCTION
+                                        with changing conditions of the problem to solve. The estimation of
+                                        evolvability is not straight-forward and is generally too expensive                     Evolutionary Robotics studies the automatic design of robotic agents
+                                        to be directly used as selective pressure in the evolutionary process.                  through evolutionary mechanisms [2, 7]. Exploration has been
+                                        Indirectly promoting evolvability as a side effect of other easier and                  shown to be a critical issue in this field [18, 19, 26]. The search
+                                        faster to compute selection pressures would thus be advantageous.                       process at its core needs to be able to generate diverse individu-
+                                        In an unbounded behavior space, it has already been shown that                          als, among which the most relevant can be selected according to
+                                        evolvable individuals naturally appear and tend to be selected as                       their performance or to promote exploration [9]. The ability of the
+                                        they are more likely to invade empty behavior niches. Evolvability                      search process to generate creative individuals can be captured
+                                        is thus a natural byproduct of the search in this context. However,                     by the notion of evolvability. Different definitions of evolvability
+                                        practical agents and environments often impose limits on the reach-                     have been proposed in the literature to characterize the potential
+                                        able behavior space. How do these boundaries impact evolvability?                       creativity of the evolutionary process. This potential can be defined
+                                        In this context, can evolvability still be promoted without explicitly                  by the ability of the process to generate individuals that are diverse
+                                        rewarding it? We show that Novelty Search implicitly creates a                          [15, 20] and possibly efficient [1, 33, 34], eventually as an answer
+                                        pressure for high evolvability even in bounded behavior spaces, and                     to an adaptive challenge [34].
+                                        explore the reasons for such a behavior. More precisely we show
+                                        that, throughout the search, the dynamic evaluation of novelty                             Estimating the evolvability of an individual is not straightfor-
+                                        rewards individuals which are very mobile in the behavior space,                        ward. Some algorithms estimate it via sampling [24], which requires
+                                        which in turn promotes evolvability.                                                    a huge amount of costly evaluations. Finding a selective pressure
+                                                                                                                                that would be simple and cheap to compute while indirectly fos-
+                                        CCS CONCEPTS                                                                            tering evolvability is thus of critical interest. Several properties or
+                                                                                                                                mechanisms have already been shown to increase evolvability: a
+                                        · Computing methodologies  Search methodologies; Evo-                                   pressure on neural network connection cost [3], fitness landscape
+                                        lutionary robotics; Neural networks;                                                    ruggedness [16], extinction events [17], and divergent selection
+                                                                                                                                [22]. Among these different approaches, divergent selection is of
+                                        KEYWORDS                                                                                particular interest as its general formalization imposes little con-
+                                                                                                                                straints on the phenotype, problem dynamic or ruggedness. Any
+                                        Novelty search, evolutionary robotics, evolvability, behavior space                     breakthrough on this approach would thus apply to a large number
+                                                                                                                                of contexts.
+                                        ACM Reference Format:
+                                        Stephane Doncieux, Giuseppe Paolo, Alban Laflaquière, and Alexandre                        Novelty Search (NS) is one of the main divergent search algo-
+                                        Coninx. 2020. Novelty Search makes Evolvability Inevitable. In Genetic and              rithms [19]. Its ability to promote evolvability has already been
+                                        Evolutionary Computation Conference (GECCO '20), July 8­12, 2020, CancÃzn,              observed in different contexts [20, 35], but the reasons why select-
+                                        Mexico. ACM, New York, NY, USA, 9 pages. https://doi.org/10.1145/3377930.               ing for novelty also fosters evolvability are still unclear. In the case
+                                        3389840                                                                                 of an unbounded environment, it has been shown that evolvabil-
+                                                                                                                                ity is a natural byproduct of evolution, as evolvable individuals
+                                        Publication rights licensed to ACM. ACM acknowledges that this contribution was         tend to invade more niches than their competitors [21]. However,
+                                        authored or co-authored by an employee, contractor or affiliate of a national govern-   when considering realistic robotic applications, the behavior space
+                                        ment. As such, the Government retains a nonexclusive, royalty-free right to publish or  reachable by the physically limited robot is generally bounded.
+                                        reproduce this article, or to allow others to do so, for Government purposes only.      Still, it appears that NS successfully generates a high level of evolv-
+                                        GECCO '20, July 8­12, 2020, CancÃzn, Mexico                                             ability even in such bounded behavior spaces [20]. The behavior
+                                        © 2020 Copyright held by the owner/author(s). Publication rights licensed to the        is not surprising at the beginning of the search, when evolvable
+                                        Association for Computing Machinery.                                                    individuals can spread due to the "niche founder" effect [21], but
+                                        ACM ISBN 978-1-4503-7128-5/20/07. . . $15.00                                            is not fully explained once the boundaries of the behavior space
+                                        https://doi.org/10.1145/3377930.3389840                                                 have been reached. We hypothesize that, even after that point, NS
+GECCO '20, July 8­12, 2020, CancÃzn, Mexico     Stephane Doncieux, Giuseppe Paolo, Alban Laflaquière, and Alexandre Coninx
+
+continues pushing towards evolvable individuals. It is not trivially                          Algorithm 1: Novelty search
+apparent that such behavior would occur in practice, as NS has
+been shown to tend towards a uniform sampling of the behavior                                 Inputs: population size µ, number of offspring , environment
+space [8]. Once all areas of the behavior space have been reached,                             env, number of neighbors for novelty calculation k, number
+what is the dynamic? Is there still a pressure towards evolvability?                           of generations G;
+If so, why?                                                                                   Result: Generated policies.
+                                                                                              pop  RandomPopulation(µ);
+   In this work, we consider the evolvability of an individual (or set                        arch  ;
+of individuals) as the combination of two features relative to the
+new individuals it can generate through mutations: (1) how much                               gen = 0;
+of the reachable behavior space they cover and (2) how uniformly
+they do so. We experimentally show that NS generates evolvable                                while gen < G do
+individuals, even long after the boundaries of the reachable behavior                             off  generateOffspring(pop, );
+space have been reached. We hypothesize that this behavior is due
+to the dynamic nature of the novelty criterion, and investigate the                           for agent in (pop  off) do
+following explanations of the phenomenon:                                                         (agent.fit, agent.bd)=evaluate(agent,env)
+
+   (1) NS pushes individuals to constantly move in the behavior                               end
+        space: in new and unexplored areas first, but also then in
+        already explored areas as their density of individuals is never                       novRefSet  pop  off  arch;
+        exactly homogeneous,
+                                                                                              for agent in (pop  off) do
+   (2) the dynamic nature of the reference set used to compute                                    agent.novelty  getNovelty(agent.bd, novRefSet,
+        novelty (population and archive) has a causal role on keeping                               k );
+        evolvability high.
+                                                                                              end
+
+                                                                                              /* Update archive, either with random samples
+
+                                                                                                   or with the most novel ones:              */
+
+                                                                                              arch  arch  sample(off);
+
+2 NOVELTY SEARCH                                                                              pop  selectMostNovel(pop  off, µ);
+                                                                                              gen = gen +1;
+In the following, we will use the notations introduced in [8]. The
+main feature of NS is to replace the usual goal-oriented objective                            end
+driving the evolutionary process by a criterion measuring novelty
+as the average distance of an individual to its closest neighbors in                          3 EVOLVABILITY: DEFINITION AND
+a behavior space:                                                                                 ESTIMATION
+
+ (x )  =  1   k         B (x),  B (vi )      ,  (1)                                           Evolvability is a central topic in evolutionary processes, may it be
+          k                                                                                   in biology [29] or in evolutionary computation [14]. It has conse-
+                 dist                                                                         quently attracted a lot of attention and has been given different
+                                                                                              definitions. For Hu and Banzhaf, it is "the capability of a system
+             i =1                                                                             to generate adaptive phenotypic variation and to transmit it via an
+                                                                                              evolutionary process" [14]. This view actually highlights the two
+where x is the genotype, i.e. an individual, the vi are its n closest                         main facets of evolvability, which are (1) to generate a variability
+neighbors among an archive of previously explored individuals                                 that (2) may lead to adaptation. The ability to adapt to changes in
+and the current population in a behavior space B, and  B(.) is the                            the fitness landscape is a measure of what is actually expected from
+function mapping a genotype to its associated behavior descriptor1.                           evolvability, and it has been the focus of many works [3, 31, 32, 34].
+
+   Beyond this objective, NS does not impose strong constraints                                  In evolutionary robotics, the adaptation ability can be empirically
+on the evolutionary algorithm used to generate genomes. The first                             tested by changing the evaluation conditions of the robot, may it be
+experiments implementing NS relied on NEAT [19], but other works                              its morphology, including its motors [34], or its environment [32].
+have used evolutionary algorithms like NSGA-II ­which has the                                 From a theoretical perspective, selecting the conditions to which to
+advantage of not being specific to neuroevolution­ together with a                            adapt to is actually not straightforward. Too simple environmental
+simpler encoding [27]. Likewise, several strategies have been used                            changes may not need any adaptation, while too difficult ones may
+to manage the archive of previously explored individuals, either                              be out of reach [32]. To avoid this issue, in the following we will
+adding the most novel individuals [19] or adding randomly chosen                              focus on the ability to generate diverse behaviors, considering that,
+ones [12].                                                                                    if an adaptive challenge appears, a system with a greater ability to
+                                                                                              generate variation is more likely to successfully adapt.
+   In the following, we have chosen to use the simplest algorithm
+possible. We have considered a neural network with a fixed struc-                                For this assumption to hold, the space in which the variations are
+ture and a simple elitist selection algorithm that generates  indi-                           observed needs to be carefully chosen. This is the motivation for
+viduals at each generation and keeps the µ most novel ones.                                   recent approaches which propose to automatically build it [4, 28].
+                                                                                              Regardless of its origin, this space needs to make sense with respect
+1It should be noted that, besides the genotype, this function depends on many parame-         to the kind of task the robot could have to achieve. If it does not
+ters of the evaluation, like the initial state of the robot, the evaluation length and also,  capture at all the variations that could lead to an adaptation, this as-
+of course, the environment itself. All these elements will be considered as constant          sumption clearly does not hold. As a consequence, we will consider
+here.
+Novelty Search makes Evolvability Inevitable                                                GECCO '20, July 8­12, 2020, CancÃzn, Mexico
+
+variations in a behavior space that is aligned with what is expected      Figure 1: Environments. (a) A toy problem in which the out-
+from the robot [30]. For example, in maze navigation experiments,         come space is a sinusoidal function of the genome. (b) The
+the end position of the robot in the maze is an indirect indication       hard maze introduced in [18]. (c) A 2-jointed robotic arm
+of the navigation capability of the robot. On the contrary, the final     pushing a ball.
+orientation of the robot is not aligned with the navigation capa-
+bility, as a robot simply turning round without changing position         where P(O) is the discrete distribution of the offspring over the
+could reach any behavior characterized this way without exploring
+the maze. To highlight the importance of this characterization, we        cells:
+will call such a behavior space an outcome space.
+                                                                                     P(O) = c1 , . . . , ci , . . . cnr (O) ,
+   To adapt to new conditions that are not known in advance, the                                    |O| |O|  |O|
+reachable part of the outcome space needs to be as large as possible,
+to maximize the chances of rapidly discovering solutions to the           Q is the uniform distribution over the same cells:
+new challenge, or at least stepping stones leading to such solutions.
+Another important aspect is that each possible behavior needs to                            Q=         1 ,..., 1
+have similar chances to be reached. In the absence of any clue about                                nr (O) nr (O)
+what part of the outcome space is likely to be useful to deal with the
+new adaptive challenge, the best strategy is to generate a sampling       and JSD(PO, Q) is defined as:
+of the reachable space that is as uniform as possible, so that, on
+average, the number of generations required to discover a solution,                  JSD(P O, Q) =  DK L P O M + DK L (Q ||M) ,
+no matter where it is, is as low as possible. It leads to the definition                                            2
+of two different criteria to estimate evolvability: (1) a measure of
+the reachability and (2) a measure of the sampling uniformity.            with M  =  PO +Q  and DK L(·||·) being the Kullback-Leibler diver-
+                                                                                        2
+   Evolvability is an estimation of the potential to generate variabil-
+ity. Consequently, we estimate it on the basis of a large sampling of     gence.
+offspring: for each individual, a significant number of offspring is
+generated by applying the evolutionary process mutation operator.         Contrary to Gomes et al. [12], only cells with a non-null num-
+Those sets are then used to produce estimations of reachability
+and of uniformity, as detailed below, both per individual and at a        ber of offspring are taken into account to define P and Q. This
+population level [22]. For individual metrics, we analyze the set of
+generated offspring of each individual in the population individu-        choice has two motivations: the measure can easily be extended
+ally. For population level metrics, we merge those sets together and
+perform computations on the superset. Individual metrics allow us         to unbounded behavior spaces, and it prevents reachability and
+to explore the ability of an algorithm to produce highly evolvable
+individuals, whereas population level metrics show the adaptation         uniformity measures to overlap in terms of information content.
+capability of the whole evolutionary process. It measures the com-
+plementarity of individuals and estimates how well the algorithm          Reachability measures how much of the outcome space is covered
+pushes individuals to spread over the reachable space.
+                                                                          by the offspring, while uniformity measures to what extent this
+   The reachability corresponds to the portion of the outcome space
+that can be reached by the offspring. Such a measure is inspired from     coverage is uniform. If all cells are taken into account, the Jensen-
+MAP-Elites [25] and has frequently been used to characterize the
+exploration ability of divergent search algorithms [5]. In practice,      Shannon Distance also estimates the coverage. While this measure
+it is computed by dividing the outcome space into regular grid cells
+and by counting the ratio of those cells that are reached by at least     alone could be sufficient, we think that separating the two aspects
+one offspring:
+                                                                          makes interpretation easier as a same Jensen-Shannon Distance
+                            nr (O) = {ci > 0} ,
+                                                                          can be obtained with set of points having a different coverage.
+                               R(O) = nr (O) ,
+                                            n                             Note that regardless of the individual or population level of
+
+where O is the set of offspring, |.| denotes the cardinality, ci is the   analysis, the extra offspring generated this way are only used for
+number of offspring in cell i, n is the total number of cells, and
+nr (O) is the number of cells reached by at least one offspring. The      evolvability measures and are ignored by the evolutionary process
+uniformity measure is based on the same grid cells and is derived
+from the Jensen-Shannon Distance [11] between the discrete dis-           that drives the search.
+tribution of the offspring in the grid and its theoretical uniform
+counterpart, as done in Gomes et al. [12]:                                4 EXPERIMENTAL SETUP
+
+                         U (O) = 1 - JSD(P O, Q),                         In order to formulate and test hypotheses about the impact of NS
+                                                                          on evolvability, we introduce different experimental setups and
+                                                                          variants of NS algorithms. The detailed rationale for the choice of
+                                                                          those variants and the analysis of the experimental results will be
+                                                                          presented in section 5.
+
+                                                                          4.1 Simulations
+
+                                                                          Three simulated environments were considered:
+GECCO '20, July 8­12, 2020, CancÃzn, Mexico     Stephane Doncieux, Giuseppe Paolo, Alban Laflaquière, and Alexandre Coninx
+
+· Toy Problem: a simple synthetic environment allowing a fast and        The DEA variant tends to make the reachable space as large as
+  straightforward analysis of the search. It consists of a redundant     possible, but compared to the NS variants, it strongly discourages
+  sinusoidal mapping from a 2D genome space to a 1D outcome              the search to go back inside the hull, including already visited areas.
+  space, such that its phase and period are controlled by the 2          The Random variant does not take into account the novelty of the
+  dimensions of the genome space respectively:                           genomes during the search, and is only driven by random drift.
+                                                                         Finally, the Fitness variant does not take novelty into account either
+ B (x1, x2) = -5 · sin     2 x 1             .                           but only the fitness of each individual.
+                        11 - 1.8x2
+                                                                            Each evolutionary algorithm variant is run for 1000 generations
+  The variable periodicity of the mapping allows different genomes       on each environment2. The population size is set to µ = 20 on
+  to map to the same behavior, while having different evolvabili-        the toy problem, due to its low-dimensional nature, while it is set
+  ties. The value of the behavior associated with each genome is         to µ = 100 in the hard maze and robotic arm problems. At each
+  represented in the genome space in figure 1.(a);                       generation,  = 40 offspring are generated for the toy problem,
+· Hard maze: an environment introduced in [18] in which an agent         and  = 200 for the hard maze and for the robotic arm problems.
+  explores a maze, as illustrated in 1.(b). The two-wheeled agent is     Similarly, the polynomial bounded mutation [6] operator is used
+  equipped with 5 distance sensors in the front, shown in green,         in all runs with  = 45 for the toy problem and  = 15 for the
+  and two bumpers in the front. The policy controlling the speed of      hard maze and robotic arm problem. The minimum and maximum
+  each wheel is parametrized by a 2-layers fully connected neural        bounding values for each gene are set to -5 and 5. Finally, the
+  network, with 10 neurons per layer, and that takes as input the        number of neighbors considered to compute novelty in the NS
+  sensors readings. The genome consists of the neural network            variants is set to k = 10 for the toy problem and to k = 15 in the
+  weights, and the outcome space is the final (x, y) position of the     other two problems.
+  robot after 2000 timesteps;
+· Robotic arm: an environment in which a 2-jointed robotic arm can          In order to evaluate reachability and uniformity (see Section 3),
+  push a ball in a square arena, as shown in figure 1.(c). The arm is    the outcome spaces of the environments are discretized with a
+  controlled by a 2-layers fully connected neural network, with 10       resolution of 50. The 1D outcome space of the toy problem is thus
+  neurons per layer, taking as input the state of the environment        split into 50 regular cells, while the 2D outcome spaces of the hard
+  (ball position, joints angles and velocities). The genome consists     maze and robotic arm environments are split into 50 × 50 = 2500
+  of the neural network weights, with genome space being identical       cells. The number of offspring |O| generated per genome for these
+  to the hard maze experiment. The outcome space consists of the         measures is set to 1000 for the toy problem and 5000 for the other
+  final (x, y) position of the ball after 300 timesteps.                 two, which corresponds to 2 genomes per cell in the case of an ideal
+                                                                         uniform distribution.
+Although NS does not require a goal and fitness function in the
+outcome space, some were nonetheless defined in each environment            The source code of the experiments is available at
+in order to compare its behavior to fitness-based approaches in          https://github.com/alaflaquiere/simple-ns for the toy experiment,
+section 5. The fitness function is defined as the Euclidean distance     and https://github.com/robotsthatdream/diversity_algorithms for
+from the outcome to the goal in both the toy problem and hard            the other two experiments.
+maze experiments, and as a binary success value in the robotic
+arm experiment depending on if the ball lands in the goal or not.           Throughout this paper, in order to compare different conditions
+The goals are represented in red in figure 1. Note that, for the toy     and evaluate the statistical significance of the results, the datasets
+problem the outcome space is 1D in the range [-5, 5] and the goal        were compared by performing pairwise two-tailed Mann-Whitney
+corresponds to -4.                                                       tests [23]. In the case of multiple comparisons, the Holm-Bonferroni
+                                                                         correction [13] was applied for each figure on the tests of all the
+4.2 Evolutionary algorithms variants                                     algorithm variants.
+
+Five variants of search algorithms were run in all environments:         5 NS & EVOLVABILITY
+
+· NS novel: the vanilla NS algorithm described in Algorithm 1, with      In this section, we analyze the relation between NS and evolvability,
+  the most novel offspring added to the archive of genomes;              first by formalizing empirical observations, second by hypothesiz-
+                                                                         ing the dynamic behind these observations, and third by testing
+· NS random: another NS algorithm where random offspring are             these hypotheses.
+  added to the archive of genomes;
+                                                                         5.1 Novelty Search promotes evolvability
+· Distance to Explored Area (DEA): a divergent search algorithm in
+  which novelty is replaced by the distance to the convex hull [10]      Figure 2 shows the evolution of the reachability and uniformity, at
+  of individuals already explored in the outcome space (counted          an individual and population level, for all search variants and all
+  negatively if inside the hull and positively if outside), to be maxi-  environments. It allows us to formulate the following observation:
+  mized;
+                                                                           Observation: Novelty Search pushes towards high evolvabil-
+· Random: a variant in which the parents of the next generation are        ity throughout the search.
+  randomly selected among the offspring and the current parents;
+                                                                         2Each variant is run multiple times, in order to assess the statistical significance of the
+· Fitness: a fitness-based elitist algorithm in which novelty is re-     results.
+  placed by the fitness defined in the outcome space.
+Novelty Search makes Evolvability Inevitable                              GECCO '20, July 8­12, 2020, CancÃzn, Mexico
+
+Figure 2: Reachability and uniformity metrics at the individual and population level for all of the search algorithm variants
+in the three experimental environments. Median, first and third quartiles are shown for 100 runs on the Toy Problem and 20
+on the Hard Maze and on the Robotic Arm environments.
+
+Indeed, as can be seen in figure 2, reachability and uniformity at an     statistically significant on the hard maze and the robotic arm; pop-
+                                                                          ulation uniformity on toy problem: p  6.17 · 10-3, not statistically
+individual and population level increase and remain high through-         significant for hard maze and robotic arm).
+
+out the run for both NS novel and NS random (when comparing the              The similar profiles of these two variants also indicate that the
+                                                                          strategy chosen to add individuals to the archive has little impact
+two NS variants: individual reachability on hard maze and robotic         on the evolution of evolvability. We can also see that the population
+arm: p  8.9 · 10-4, not statistically significant on the toy problem;
+
+population reachability not statistically significant on the three envi-
+ronments; individual uniformity on toy problem: p  8.74·10-3, not
+GECCO '20, July 8­12, 2020, CancÃzn, Mexico  Stephane Doncieux, Giuseppe Paolo, Alban Laflaquière, and Alexandre Coninx
+
+reachability quickly reaches its maximum value3 and exhibit very                      comparing the two NS variants: distance to parent: p  3.14 · 10-3;
+little variability, which indicates that the genomes in the population                age on the toy problem and the hard maze: p  1.5 · 10-33, not
+quickly become complementary in covering all areas of the reach-                      statistically significant on the robotic arm. When comparing the NS
+able outcome space, even when no individual can cover it on its                       variants to the other variants: distance to parent: p  3.74 · 10-18;
+own. This phenomenon is confirmed by the high level of uniformity                     age: p  2.55 · 10-33).
+reached with respect to other variants (when comparing NS variants
+to the other variants: individual reachability: p  1.09 · 10-20; popu-                   The plots highlight a difference between NS variants: NS random
+lation reachability on hard maze and robotic arm: p  6 · 10-3, not                    tends to have older individuals and with a smaller distance to their
+statistically significant for the toy problem; individual uniformity:                 parents than NS novel. This is expected as the most novel individuals
+p  1.48 · 10-6; population uniformity: p  1.07 · 10-2).                               have a higher chance to stay novel for a while as they won't be
+                                                                                      systematically added to the novelty reference set. In NS novel, they
+   The other search algorithm variants considered in our experi-                      are added to the archive and thus can't stay novel for long and have
+ments show very different dynamics than NS. In the case of DEA,                       to move more rapidly.
+the reachability sometimes increases at the beginning of the run,
+but then tends to decrease significantly. This behavior is expected                      By contrast, with the other search algorithms, the distance to
+as the selection pressure for this variant pushes the genomes to-                     parent is high during the initial exploration phase, but it plummets
+wards the borders of the outcome space. Once the borders have                         once the algorithm has maximized its objective, i.e. has found the
+been reached, genomes with less evolvability are favored as they                      goal for Fitness or has reached the borders of the closed environment
+tend to stay on the borders of the outcome space. In the case of                      with DEA, while the age skyrockets as there is no pressure to renew
+the Fit and Random variants, reachability and uniformity fluctuate                    the already high performing individuals in the population (the
+significantly, while remaining lower than for the NS variants. This                   selection scheme is elitist).
+indicates that these variants tend to focus their exploration on only
+a subpart of the outcome space, and that the high evolvability gen-                      The random selection baseline also shows significantly lower
+erated by NS is not due to an intrinsic property of the environment                   distances to parent than the NS variants despite renewing the pop-
+or of its fitness function, but is due to the search for novelty.                     ulation very often, which demonstrates that population dynamism
+                                                                                      is specifically promoted by NS and not a sole consequence of a
+5.2 Evolvability results from the dynamic of                                          random drift.
+       the novelty landscape
+                                                                                         5.2.2 Impact of the reference set. We showed that NS makes the
+Given these empirical observations, we now formulate and test                         population very dynamic in the outcome space, and we gave the
+hypotheses to explain how NS promotes evolvability.                                   intuitive explanation that NS tends to re-explore areas once their
+                                                                                      novelty gets high again with respect to the rest of the outcome
+   5.2.1 NS promotes a dynamic population. Novelty Search has                         space. For this phenomenon to happen, it is important that the
+the particular property of selecting genomes based on a dynamic                       reference set used to compute novelty be regularly updated. When it
+measure: novelty. Once the boundaries of an outcome space have                        is, the recently explored areas get over-represented in the reference
+been reached, NS thus drives the population to re-explore previ-                      set and their novelty locally decreases; which in turns pushes the
+ously explored areas in which novelty can appear higher than in                       population to move away. Having a dynamic reference set should
+more recently explored ones. As a consequence, we formulate the                       thus be essential to promote evolvability.
+following hypothesis:
+                                                                                        Hypothesis 2: The dynamism of the reference set of individ-
+  Hypothesis 1: NS maintains a dynamic and ever moving                                  uals from which the novelty of new individuals is computed
+  population, where selected individuals are highly different                           is essential to promote evolvability.
+  from one generation to the next in the outcome space.
+                                                                                         To validate this hypothesis, we ran extra experiments with the NS
+If true, this property should in turn favor the selection of genomes                  Random algorithm to explore its behavior if the reference set used
+with higher evolvability throughout the search, as their ability to                   to compute the novelty does not change. We do not include results
+move in the outcome space is higher.                                                  on the toy problem, for which even the Random variant reaches the
+                                                                                      maximum population reachability, thus showing that the selection
+   In order to validate this hypothesis, we add two new metrics                       pressure may not be critical in this environment, probably because
+to characterize the individuals in a population: their age, which is                  of the small outcome space size (1D).
+the difference between the current generation and the generation
+at which they were generated, and the Euclidean distance to their                        To explore the impact of the reference set, the algorithm is first
+parent in the outcome space. A dynamic population should be                           run normally for a fixed number of generations, in order to create
+renewed often (low ages), and with children that are behaviorally                     a reference set (archive and population). This reference set is then
+different from their parent (high distance to parent).                                saved, and the population is reinitialized with randomly generated
+                                                                                      individuals. The NS algorithm resumes from this point, but using
+   The results, displayed in figure 3, indeed show that for both NS                   the saved reference set to compute the novelty scores in the subse-
+variants, the distance to parent is significantly higher that for other               quent generations: the archive is never updated, and the current
+methods, and remains high even after the outcome space has been                       population is not used for novelty computation. The reference set
+fully explored, while the age remains significantly lower (when                       is therefore populated, but remains static after the reinitialization.
+                                                                                      As a control condition, we run the same experiment, including the
+3Because of the configuration of the environment, some cells might not be reachable;  population reinitialization, but without freezing the reference set.
+in those cases, the maximum value is thus lower than 1 in practice.
+Novelty Search makes Evolvability Inevitable                             GECCO '20, July 8­12, 2020, CancÃzn, Mexico
+
+Figure 3: Age of individuals and distance to parent on the three experimental environments for all of the search algorithm
+variants. Median, first and third quartiles are shown for 100 runs on the Toy Problem, 20 on the Hard Maze and on the Robotic
+Arm environments.
+
+   The results shown in figure 4 validate our hypothesis and show-       also highlighted the dynamic nature of the novelty criterion that
+case the importance of a dynamic reference set for NS. In both           pushes individuals to move in the outcome space. One of the key
+conditions, reachability and uniformity metrics experience a sharp       ingredient of this dynamic is the reference set used to compute
+drop after the reinitialization, as the previous population is replaced  novelty. As it contains both an archive and the current popula-
+with randomly generated individuals that are not especially evolv-       tion, it changes at every generation as the archive grows and as
+able. In the control condition, those metrics quickly recover as the     the population changes. We have shown that this ever moving fit-
+reference set follows the new population and selects evolvable indi-     ness landscape is responsible for the pressure towards evolvability.
+viduals. In the frozen reference set condition, however, reachability    Besides that, the two archive growth strategies tested (random or
+and uniformity remain low, as the algorithm simply selects individ-      most novel individuals) lead to a similar reach of the whole outcome
+uals that are considered novel with regard to the frozen reference       space.
+set.
+                                                                            Other works have reached opposite conclusions and have shown
+6 DISCUSSION                                                             that NS may result in a poor evolvability, at least lower than for
+                                                                         experiments driven by the fitness [20, 32]. This seems to be a strong
+The fact that NS can incentivize the re-exploration of already ex-       contradiction, but we actually think that it is compatible with the
+plored areas of the outcome space is important to maintain evolv-        model of NS we have proposed. Our experiments show that evolv-
+ability, as DEA, that does not have such an incentive, is unable to      ability in NS results from a strong push towards movement in the
+maintain high evolvability throughout the run. Fitness does not          outcome space. Even long after the boundaries of the reachable
+warrant high evolvability, giving both lower coverage and unifor-        space have been reached, individuals in the population are, and
+mity than the NS variants. This is due to the fact that once areas       remain, young: the oldest ones are not kept and the new individuals
+with high fitness have been reached, the evolution process has no        that are selected are always far from their parents in the outcome
+incentive in maintaining high evolvability for the remainder of the      space. Individuals that survive are those that can reach an area a
+run. Selecting the genomes independently from their position in the      considered as novel at a given moment while its parent was equally
+outcome space, as in the Random variant case, produces individual        novel, but in another area that is likely far from a. It is this long trav-
+with low evolvability that tend to move only in a small and local        eled distance in a short number of generations that likely creates
+area of the outcome space. This highlights the importance of using       the pressure towards evolvability. This is the strategy used by NS
+a proper selective pressure measure to foster evolvability. We have
+GECCO '20, July 8­12, 2020, CancÃzn, Mexico  Stephane Doncieux, Giuseppe Paolo, Alban Laflaquière, and Alexandre Coninx
+
+Figure 4: NS Random with restart of the population vs NS Random with restart of the population and a frozen reference set.
+The plots show the reachability and uniformity metrics on the individual and the population level in the three experimental
+environments. Median, first and third quartiles are shown for 20 runs on the Hard Maze and the Robotic Arm environments.
+
+to push towards evolvability: by forcing individuals to constantly      offspring. It will stay in the population as long as no higher perform-
+move, the most evolvable ones are indirectly favored by evolution.      ers appears. In NS, it may just not have enough time to generate
+                                                                        enough of them for selection to properly work. Other divergent
+   In domains for which solutions are too fragile, as in the biped      algorithms like MAP-Elites [25] may not have this problem as one
+locomotion [20] or in maze navigation with narrow corridors [32],       individual will stay in the archive as long as it is not replaced by a
+this strategy may just fail. If generated individuals have trouble to   locally higher performer.
+"go" from one novel area to another, the dynamic we have observed
+will not work. One factor may be the number of generated samples.       7 CONCLUSION
+For the maze experiment, the population size was relatively small
+(25 individuals) in [32]. It may not be high enough for the selection   Evolvability can be obtained for free in unbounded environments
+pressure towards evolvability to play its role, for instance if most    [21]. We have defined evolvability as (1) the capacity to reach the
+individuals end up crashing against a wall near the starting position.  largest part of the outcome space and (2) as uniformly as possi-
+For the biped locomotion experiment, the number of individuals          ble. Our experiments suggest that NS pushes towards these two
+is larger (500), but it may not be enough for this domain. In a run     dimensions of evolvability and in bounded outcome spaces. It also
+driven by the fitness and with an elitist selection algorithm, an       maintains a high level of coverage and uniformity throughout the
+efficient individual may survive long enough to generate efficient      search. We have shown that this phenomenon results from the
+Novelty Search makes Evolvability Inevitable                                                                       GECCO '20, July 8­12, 2020, CancÃzn, Mexico
+
+dynamics of the novelty criterion, pushing individuals to perpet-                                 evolvability with learning theory: How evolution learns to improve evolvability
+ual movements in the outcome space, as a result of the constant                                   on rugged fitness landscapes. arXiv preprint arXiv:1612.05955 (2016).
+changes in the reference set used to compute novelty.                                       [17] Joel Lehman and Risto Miikkulainen. 2015. Extinction events can accelerate
+                                                                                                  evolution. PloS one 10, 8 (2015).
+   Acknowledgements: This work has benefited from a support                                 [18] Joel Lehman and Kenneth O Stanley. 2008. Exploiting open-endedness to solve
+of the Labex SMART (ANR-11-LABX-65), supported by French state                                    problems through the search for novelty.. In ALIFE. 329­336.
+funds managed by the ANR within the Investissements d'Avenir                                [19] Joel Lehman and Kenneth O Stanley. 2011. Abandoning objectives: Evolution
+programme under reference ANR-11-IDEX-0004-02.                                                    through the search for novelty alone. Evolutionary computation 19, 2 (2011),
+                                                                                                  189­223.
+REFERENCES                                                                                  [20] Joel Lehman and Kenneth O Stanley. 2011. Improving evolvability through nov-
+                                                                                                  elty search and self-adaptation. In 2011 IEEE congress of evolutionary computation
+ [1] Lee Altenberg et al. 1994. The evolution of evolvability in genetic programming.             (CEC). IEEE, 2693­2700.
+      Advances in genetic programming 3 (1994), 47­74.                                      [21] Joel Lehman and Kenneth O Stanley. 2013. Evolvability is inevitable: Increasing
+                                                                                                  evolvability without the pressure to adapt. PloS one 8, 4 (2013), e62186.
+ [2] Josh C Bongard. 2013. Evolutionary robotics. Commun. ACM 56, 8 (2013), 74­83.          [22] Joel Lehman, Bryan Wilder, and Kenneth O Stanley. 2016. On the critical role of
+ [3] Jeff Clune, Jean-Baptiste Mouret, and Hod Lipson. 2013. The evolutionary origins             divergent selection in evolvability. Frontiers in Robotics and AI 3 (2016), 45.
+                                                                                            [23] Henry B Mann and Donald R Whitney. 1947. On a test of whether one of
+      of modularity. Proceedings of the Royal Society b: Biological sciences 280, 1755            two random variables is stochastically larger than the other. The annals of
+      (2013), 20122863.                                                                           mathematical statistics (1947), 50­60.
+ [4] Antoine Cully. 2019. Autonomous skill discovery with quality-diversity and unsu-       [24] Henok Mengistu, Joel Lehman, and Jeff Clune. 2016. Evolvability search: directly
+      pervised descriptors. In Proceedings of the Genetic and Evolutionary Computation            selecting for evolvability in order to study and produce it. In Proceedings of the
+      Conference. ACM, 81­89.                                                                     Genetic and Evolutionary Computation Conference. ACM, 141­148.
+ [5] Antoine Cully and Yiannis Demiris. 2017. Quality and diversity optimization: A
+      unifying modular framework. IEEE Transactions on Evolutionary Computation 22,         [25] Jean-Baptiste Mouret and Jeff Clune. 2015. Illuminating search spaces by mapping
+      2 (2017), 245­259.                                                                          elites. arXiv preprint arXiv:1504.04909 (2015).
+ [6] Kalyanmoy Deb, Amrit Pratap, Sameer Agarwal, and TAMT Meyarivan. 2002. A
+      fast and elitist multiobjective genetic algorithm: NSGA-II. IEEE transactions on      [26] Jean-Baptiste Mouret and Stéphane Doncieux. 2009. Overcoming the bootstrap
+      evolutionary computation 6, 2 (2002), 182­197.                                              problem in evolutionary robotics using behavioral diversity. In 2009 IEEE Congress
+ [7] Stephane Doncieux, Nicolas Bredeche, Jean-Baptiste Mouret, and Agoston E Gusz                on Evolutionary Computation. IEEE, 1161­1168.
+      Eiben. 2015. Evolutionary robotics: what, why, and where to. Frontiers in Robotics
+      and AI 2 (2015), 4.                                                                   [27] J-B Mouret and Stéphane Doncieux. 2012. Encouraging behavioral diversity in
+ [8] Stephane Doncieux, Alban Laflaquière, and Alexandre Coninx. 2019. Novelty                    evolutionary robotics: An empirical study. Evolutionary computation 20, 1 (2012),
+      search: a theoretical perspective. In Proceedings of the Genetic and Evolutionary           91­133.
+      Computation Conference. ACM, 99­106.
+ [9] Stephane Doncieux and Jean-Baptiste Mouret. 2014. Beyond black-box opti-               [28] Giuseppe Paolo, Alban Laflaquiere, Alexandre Coninx, and Stephane Doncieux.
+      mization: a review of selective pressures for evolutionary robotics. Evolutionary           2020. Unsupervised Learning and Exploration of Reachable Outcome Space. In
+      Intelligence 7, 2 (2014), 71­93.                                                            IEEE International Conference on Robotics and Automation (ICRA). IEEE.
+[10] Herbert Edelsbrunner, David Kirkpatrick, and Raimund Seidel. 1983. On the
+      shape of a set of points in the plane. IEEE Transactions on information theory 29,    [29] Massimo Pigliucci. 2008. Is evolvability evolvable? Nature Reviews Genetics 9, 1
+      4 (1983), 551­559.                                                                          (2008), 75­82.
+[11] Dominik Maria Endres and Johannes E Schindelin. 2003. A new metric for
+      probability distributions. IEEE Transactions on Information theory 49, 7 (2003),      [30] Justin K Pugh, Lisa B Soros, and Kenneth O Stanley. 2016. Quality diversity: A
+      1858­1860.                                                                                  new frontier for evolutionary computation. Frontiers in Robotics and AI 3 (2016),
+[12] Jorge Gomes, Pedro Mariano, and Anders Lyhne Christensen. 2015. Devising                     40.
+      effective novelty search algorithms: A comprehensive empirical study. In Pro-
+      ceedings of the Genetic and Evolutionary Computation Conference. ACM, 943­950.        [31] Joseph Reisinger, Kenneth O Stanley, and Risto Miikkulainen. 2005. Towards an
+[13] Sture Holm. 1979. A simple sequentially rejective multiple test procedure. Scan-             empirical measure of evolvability. In Proceedings of the Genetic and Evolutionary
+      dinavian journal of statistics (1979), 65­70.                                               Computation Conference. ACM, 257­264.
+[14] Ting Hu and Wolfgang Banzhaf. 2010. Evolvability and speed of evolutionary al-
+      gorithms in light of recent developments in biology. Journal of Artificial Evolution  [32] David Shorten and Geoff Nitschke. 2014. How evolvable is novelty search?. In
+      and Applications 2010 (2010).                                                               2014 IEEE International Conference on Evolvable Systems. IEEE, 125­132.
+[15] Marc Kirschner and John Gerhart. 1998. Evolvability. Proceedings of the National
+      Academy of Sciences 95, 15 (1998), 8420­8427.                                         [33] Danesh Tarapore, Jeff Clune, Antoine Cully, and Jean-Baptiste Mouret. 2016. How
+[16] Loizos Kounios, Jeff Clune, Kostas Kouvaris, Günter P Wagner, Mihaela Pavlicev,              do different encodings influence the performance of the MAP-Elites algorithm?.
+      Daniel M Weinreich, and Richard A Watson. 2016. Resolving the paradox of                    In Proceedings of the Genetic and Evolutionary Computation Conference. ACM,
+                                                                                                  173­180.
+
+                                                                                            [34] Danesh Tarapore and Jean-Baptiste Mouret. 2015. Evolvability signatures of
+                                                                                                  generative encodings: beyond standard performance benchmarks. Information
+                                                                                                  Sciences 313 (2015), 43­61.
+
+                                                                                            [35] Bryan Wilder and Kenneth Stanley. 2015. Reconciling explanations for the
+                                                                                                  evolution of evolvability. Adaptive Behavior 23, 3 (2015), 171­179.
+

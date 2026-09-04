@@ -1,0 +1,1148 @@
+arXiv:1505.06353v1 [cs.NE] 23 May 2015               The evolutionary origins of hierarchy
+
+                                        Henok Mengistu, University of Wyoming
+                                        Joost Huizinga, University of Wyoming
+                                        Jean-Baptiste Mouret, Inria, Villers-l`es-Nancy, F-54600, France
+                                        Jeff Clune, University of Wyoming
+
+                                        Abstract
+
+                                              Hierarchical organization ­ the recursive composition of sub-modules ­ is ubiquitous in biological networks,
+                                              including neural, metabolic, ecological, and genetic regulatory networks, and in human-made systems, such
+                                              as large organizations and the Internet. To date, most research on hierarchy in networks has been limited to
+                                              quantifying this property. However, an open, important question in evolutionary biology is why hierarchical
+                                              organization evolves in the first place. It has recently been shown that modularity evolves because of the
+                                              presence of a cost for network connections. Here we investigate whether such connection costs also tend
+                                              to cause a hierarchical organization of such modules. In computational simulations, we find that networks
+                                              without a connection cost do not evolve to be hierarchical, even when the task has a hierarchical structure.
+                                              However, with a connection cost, networks evolve to be both modular and hierarchical, and these networks
+                                              exhibit higher overall performance and evolvability (i.e. faster adaptation to new environments). Additional
+                                              analyses confirm that hierarchy independently improves adaptability after controlling for modularity. Overall,
+                                              our results suggest that the same force­the cost of connections­promotes the evolution of both hierarchy and
+                                              modularity, and that these properties are important drivers of network performance and adaptability. In
+                                              addition to shedding light on the emergence of hierarchy across the many domains in which it appears, these
+                                              findings will also accelerate future research into evolving more complex, intelligent computational brains in
+                                              the fields of artificial intelligence and robotics.
+
+                                        Introduction
+
+                                        Hierarchy is an important organizational property in many biological and man-made systems, ranging from
+                                        neural [1, 2], ecological [3], metabolic [4], and genetic regulatory networks [5], to the organization of companies
+                                        [6], cities [7], societies [8], and the Internet [9, 10]. There are many types of hierarchy [11, 12, 13], but the
+                                        one most relevant for biological networks [14], especially neural networks [1, 2, 15], refers to a recursive
+                                        organization of modules [10, 13]. Modules are defined as highly connected clusters of entities that are only
+                                        sparsely connected to entities in other clusters [16, 17, 18]. Such hierarchy has long been recognized as
+                                        a ubiquitous and beneficial design principle of both natural and man-made systems [14]. For example, in
+                                        complex biological systems, the hierarchical composition of modules is thought to confer greater robustness
+                                        and adaptability [1, 2, 19, 15], whereas in engineered designs, a hierarchical organization of simple structures
+                                        accelerates the design, production, and redesign of artifacts [17, 20, 21].
+
+                                        While most studies of hierarchy focus on producing methods to quantify it [11, 4, 9, 22, 23, 24, 25, 26, 14],
+                                        a few have instead examined why hierarchy emerges in various systems. In some domains, the emergence of
+                                        hierarchy is well understood; e.g., in complex systems, such as social networks, ecosystems, and road networks,
+                                        the emergence of hierarchy can be explained solely by local decisions and or interactions [27, 28, 29, 3]. But,
+                                        in biological systems, where the evolution of hierarchy is shaped by natural selection, why hierarchy evolves,
+                                        and whether its evolution is due to direct or indirect selection, is an open and interesting question [3, 30].
+Non-adaptive theories state that the hierarchy in some, but not all, types of biological networks may emerge as
+a by-product of random processes [27]. Most adaptive explanations claim that hierarchy is directly selected for
+because it confers evolvability [31], which is the ability of populations to quickly adapt to novel environments
+[32]. Yet in computational experiments that simulate natural evolution, hierarchy rarely, if ever, evolves on
+its own [33, 34, 35], suggesting that alternate explanations are required to explain the evolutionary origins
+of hierarchy. Moreover, even if hierarchy, once present, is directly selected for because of the evolvability it
+confers, explanations are still required for how that hierarchy emerges in the first place.
+
+In this paper we investigate one such hypothesis: the existence of costs for network connections creates indirect
+selection for the evolution of hierarchy. This hypothesis is based on two lines of reasoning. The first is that
+hierarchy requires a recursive composition of modules [10], and the second is that hierarchy includes sparsity.
+A recent study demonstrated that both modularity and sparsity evolve because of the presence of a cost for
+network connections [16]. Connection costs may therefore promote both modularity and sparsity, and thus
+may also promote the evolution of hierarchy.
+
+It is realistic to incorporate connection costs into biological network models because it is known that there
+are costs to create connections, maintain them, and transmit information along them [36, 37]. Additionally,
+evidence supports the existence of a selection pressure in biological networks to minimize the net cost of
+connections. For example, multiple studies have shown that biological neural networks, which are hierarchical
+[1, 2], have been organized to reduce their amount of wiring by having fewer long connections and by locating
+neurons optimally to reduce the wiring between them [37, 38, 39, 40].
+
+A relationship between hierarchy and connection costs can also be observed in a variety of different man-made
+systems. For example, very large scale integrated circuits (VLSI), which are designed to minimize wiring, are
+hierarchically organized [15]. In organizations such as militaries and companies, a hierarchical communication
+model has been shown to be an ideal configuration when there is a cost for communication links between
+organization members [41]. However, there is no prior work that tests whether the presence of connection
+costs is responsible for the evolution of hierarchy. Here we test that hypothesis in computational simulations
+of evolution and our experiments confirm that hierarchy does indeed evolve when there is a cost for network
+connections (Fig. 1).
+
+We also investigate the hypothesis that hierarchy confers evolvability, which has long been argued [1, 2, 15, 42],
+but has not previously been extensively tested [15]. Our experiments confirm that hierarchical networks,
+evolved in response to connection costs, exhibit an enhanced ability to adapt.
+
+Experimentally investigating the evolution of hierarchy in biological networks is impractical, because natural
+evolution is slow and it is not currently possible to vary the cost of biological connections. Therefore, we
+conduct experiments in computational simulations of evolving networks. Computational simulations of evo-
+lution have shed substantial light on open, important questions in evolutionary biology [43, 44, 45], including
+
+Table 1: The main problem (pictured in Fig. 2A). Networks receive 8-bit vectors as inputs. As shown, a suc-
+
+cessful network could AND adjacent input pairs, XOR the resulting pairs, and AND the result. Performance
+
+is a function only of the final output, and thus does not depend on how the network solves the problem;
+
+Other, non-hierarchical solutions also exist.
+
+                                               Values
+
+Input pattern 0 0 1 1 0 1 1 1
+
+AND gate                                       0101
+
+XOR gate                                          1       1
+
+AND gate                                               1
+
+                                               2
+Figure 1: The main hypothesis. Evolution with selection for performance only results in non-hierarchical and
+non-modular networks, which take longer to adapt to new environments. Evolving networks with a connection
+cost, however, creates hierarchical and functionally modular networks that can solve the overall problem by
+recursively solving its sub-problems. These networks also adapt to new environments faster.
+
+the evolution of modularity [16, 18, 46, 47, 48], a structural property closely related to hierarchy. In such
+simulations, randomly generated individuals recombine, mutate, and reproduce based on a fitness function
+that evaluates each individual according to how well they perform a task. The task can be analogous to
+efficiently metabolizing resources or performing a required behavior. This process of evolution cycles for a
+predetermined number of generations.
+
+We evolved computational abstractions of animal brains called artificial neural networks (ANNs) [49, 50] to
+solve hierarchical Boolean logic problems (Fig. 2A). In addition to abstracting animal brains, ANNs have also
+been used as abstractions of gene regulatory networks [51]. They abstract both because they sense their envi-
+ronment through inputs and produce outputs, which can either be interpreted as regulating genes or moving
+muscles (Methods). In our experiments, we evolve the ANNs with or without a cost for network connections.
+Specifically, the experimental treatment selects for maximizing performance and minimizing connection costs
+(performance and connection cost, P&CC), whereas the control treatment selects for performance only (per-
+formance alone, PA).
+
+In all treatments the evolving networks have eight inputs and a single output. During evaluation, each network
+is tested on all possible (256) input patterns of zeros and ones, and the network's output is checked against
+a hierarchical Boolean logic function provided with the same input (Fig. 2A and Table 1). An ANN output
+ 0 is considered True and an output < 0 is considered False. A network's performance (fitness) is its percent
+of correct answers over all input patterns.
+
+Results
+
+On the main experimental problem (Fig. 2A), the addition of a connection cost leads to the evolution of
+significantly more hierarchical networks (Fig. 2B,G). Confirming previous findings on different problems [16,
+35], the addition of a connection cost also significantly increases modularity (Fig. 2C,G) and reduces the
+number of generations required to evolve a solution (Fig. 2D).
+
+Importantly, while final performance levels for the performance and connection cost (P&CC) treatment are
+similar to those of the performance alone (PA) treatment, there is a qualitative difference in how the networks
+solve the problem. P&CC networks exhibit functional hierarchy in that they solve the overall problem by
+recursively combining solutions to sub-problems (Fig. 2F), whereas the PA networks tend to combine all input
+
+                                                                       3
+   A                  12 34 56 78                               E
+
+                      AND AND AND AND
+
+                      XOR  XOR
+
+                          AND
+
+B 0.90
+            Performance and Connection Cost (P&CC)
+
+   hierarchy    0.80
+
+                0.70                                            F
+
+   p<00..60050                   Performance Alone (PA)
+                      5000 10000 15000 20000 25000
+
+C 0.60
+             Performance and Connection Cost (P&CC)
+
+   modularity   0.40
+
+                0.20
+                                        Performance Alone (PA)
+
+   p<00..00050        5000 10000 15000 20000 25000 G                                              hierarchy       modularity         % sub-problems
+                                                                                                                                            solved
+D                     Performance and Connection Cost (P&CC)       0.9                                       0.6
+                                                                           p <0.00001                                  p <0.00001           p <0.00001
+                                                                                                                                   100
+                                                                   0.8                                       0.4
+                1.00                                                                                                               80
+                                                                                                             0.2
+   performance            Performance Alone (PA)                                                                                   60
+                0.98
+                                                                                                                                   40
+                                                                                             0.7
+                                                                                                                                   20
+
+                0.96                                               1                                                               0
+
+                                                                   0.6 PA                         P&CC 0.0 PA  P&CC                    PA  P&CC
+
+   p<00..90450        5000 1g0e0n00erat1i5o0n0s0 20000 25000
+
+Figure 2: A cost for network connections produces networks that are significantly more hierarchical, modular,
+high-performing, and likely to functionally decompose a problem. The algorithms for quantifying hierarchy
+and modularity are described in Methods. The bars below plots indicate at which generation a significant
+difference exists between the two treatments. (A) The hierarchical AND-XOR-AND problem (the default for
+our experiments). The top eight nodes are inputs to the problem and the bottom node is an output. (B)
+P&CC networks are significantly more hierarchical than PA networks. p-values are from the Mann-Whitney-
+Wilcoxon rank-sum test, which is the default statistical test throughout the paper unless otherwise stated. (C)
+P&CC networks are also significantly more modular than PA networks, confirming a previous finding [16, 35].
+(D) P&CC networks evolve a solution to the problem significantly faster. (E) Evolved networks from the
+16 highest-performing replicates in the PA treatment. The networks are non-hierarchical, non-modular, and
+do not tend to decompose the problem. Each network panel reports fitness/performance (F), hierarchy (H),
+and modularity (M). Nodes are colored if they solve one of the logic sub-functions in (A). Fig. S1 shows
+networks from all 30 replicates for both treatments. (F) Evolved networks from the 16 highest-performing
+replicates in the P&CC treatment. The networks are hierarchical, modular, and decompose the problem. (G)
+A comparison of P&CC and PA networks from the final generation. P&CC networks are significantly more
+hierarchical, modular, and solve significantly more sub-problems.
+
+                                                                       4
+information in the first layer and then process it in a monolithic fashion (Fig. 2E). Such functional hierarchy
+can be quantified as the percent of sub-problems a network solves (e.g. the AND and XOR gates in Fig. 2A).
+A sub-problem is considered solved if, for all possible network inputs, and for any threshold, a neuron in a
+network exists that outputs an above-threshold value whenever the answer to the sub-problem is True, and
+a sub-threshold value when the answer is False, or vice-versa (Methods). This measure reveals that evolved
+P&CC networks solve significantly more sub-problems than their PA counterparts (Fig. 2G, p < 2.6 × 10-16
+via Fisher's exact test).
+To further investigate how the ability to solve sub-problems is related to hierarchy and modularity, we plotted
+the percent of sub-problems solved vs. both hierarchy and modularity (Fig. 3). The plots show a significant,
+strong, positive correlation between the ability to solve sub-problems and both hierarchy and modularity.
+
+Figure 3: Solving sub-problems is correlated with both hierarchy (left) and modularity (right). The shape
+sizes and enclosed numbers indicate the number of networks at that coordinate (an empty shape indicates only
+one network is present). The Pearson's correlation coefficient is 0.96 for hierarchy and 0.87 for modularity,
+indicating strong, linear, positive relationships. Both correlations are significant (p < 0.00001) according to a
+t-test with a correlation of zero as the null hypothesis.
+It has been hypothesized that one advantage of network hierarchy is that it confers evolvablity [1, 2, 15]. We
+test this hypothesis by first evolving networks to solve one problem (the base environment) and then evolving
+those networks to solve a different problem (the target environment). To isolate evolvability, we keep initial
+performance equal by taking the first 30 runs of each treatment (PA and P&CC) that evolve a perfectly-
+performing network for the base environment [16]. Each of these 30 networks then seeds 30 runs in the target
+environment (for 900 total replicates per treatment). The base and target problems are both hierarchical
+and share some, but not all, sub-problems (Fig. 4). Evolution in the target environment continues until the
+new problem is solved or 25000 generations elapse. We quantify evolvability as the number of generations
+required to solve the target problem [16]. We performed three such experiments, each with different base
+and target problems. In all experiments, P&CC networks take significantly fewer generations to adapt to the
+new environment than PA networks. They also solve significantly more of the target problem's sub-problems
+(Fig. 4).
+One possible reason for the fast adaptation of P&CC networks is that their modular structure allows solutions
+
+                                                                       5
+Figure 4: P&CC networks adapt significantly faster and solve significantly more sub-problems in new envi-
+ronments. In these experiments, networks first evolve to solve a problem perfectly in a base environment (left)
+and are then placed in a target environment (right) where they continue evolving to solve a different problem.
+The evolvability of PA and P&CC networks is quantified as the number of generations they take to solve
+the new problem perfectly. A pair of evolved networks is shown for both treatments. The left one shows the
+network with median hierarchy (here and elsewhere, rounding up) of 30 replicates in the base environment;
+the right one shows the median hierarchy network of the 30 runs in the target environment started with the
+network on the left. Figs. S5-S10 show all network pairs.
+
+to sub-problems to be re-used in different contexts [16]. A hierarchical structure may also be beneficial if
+both problems are hierarchical, even if the computation at points in the structure is different. For example,
+modules that solve XOR gates can quickly be rewired to solve EQU gates (Fig. 4A). Another reason for
+faster P&CC adaptation could be that these networks are sparser, meaning that fewer connections need to
+be optimized.
+
+To further understand why connection costs increase hierarchy, we generated 20000 random, valid networks
+for each number of connections a network could have (Methods). A network is valid if it has a path from each
+of the input nodes to the output node. The networks were neither evolved nor evaluated for performance.
+Of these networks, those that are low-cost tend to have high hierarchy, and those with a high cost have low
+hierarchy (Fig. 5, left). This inherent association between low connection costs and high hierarchy suggests
+why selecting for low-cost networks promotes the evolution of hierarchical networks. It also suggests why
+networks evolve to be non-hierarchical without a pressure to minimize connection costs. Indeed, most evolved
+PA networks reside in the high-cost, low-hierarchy region, whereas all P&CC networks occupy the low-cost,
+high-hierarchy region (Fig. 5 left).
+
+Similarly, there is also an inverse relationship between cost and modularity for these random networks (Fig. 5,
+right), as was shown in [16]. All evolved P&CC networks are found in the low-cost, high-modularity region;
+PA networks are spread over the low-modularity, high-cost region (Fig. 5, right).
+
+As Figs. 3 and 5 suggest, network modularity and hierarchy are highly correlated (Fig. S12, Pearson's
+correlation coefficient = 0.92, p < 0.00001 based on a t-test with a correlation of zero as the null hypothesis).
+
+                                                                       6
+                                   0.48                                    0.5  2                         0.54
+                                                                                3
+       6                     PA                                                                     PA    0.48
+                             P&CC
+0.85                               0.42                                         6                   P&CC  0.42
+
+        2 16                       0.36 0.4 15                                                            0.36
+hierarchy
+                                                               modularity0.80 40.30                       0.30
+
+0.75                               0.24 0.3                                                               0.24
+
+0.70                               0.18                                                                   0.18
+
+0.65                               0.12 0.2                                                               0.12
+            50
+                                   0.06                                                                   0.06
+
+                100cost 150  200   0.00                                    0.1     50  100cost 150      200 0.00
+
+Figure 5: Lower cost networks are more hierarchical and modular. The hierarchy (left) and modularity
+(right) of randomly generated (i.e. non-functional) networks is shown for each cost after being normalized
+per cost value and then smoothed by a Gaussian kernel density estimation function. Colors indicate the
+probability of a network being generated at that location (heat map). Networks evolved in either the P&CC
+or PA treatment are overlaid as green circles or blue triangles, respectively. Circle or triangle size and the
+enclosed number indicate the number of networks at that coordinate (no number means 1). All evolved
+P&CC networks are in the high-hierarchy, low-cost region. Most evolved PA networks are in the high-cost,
+low-hierarchy region.
+
+It is thus unclear whether hierarchy evolves as a direct consequence of connection costs, or if its evolution is a
+by-product of evolved modularity. To address this issue we ran an additional experiment where evolutionary
+fitness was a function of networks being low-cost (as in the P&CC treatment), high-performing (as in all
+treatments), and non-modular (achieved by selecting for low modularity scores). We call this treatment
+P&CC-NonMod. The results reveal that P&CC-NonMod networks have the same low level of modularity as
+PA networks (Fig. 6A-B, p = 0.23), but have significantly higher hierarchy (Fig. 6A, C, p < 0.00001) and
+solve significantly more sub-problems than PA networks (Fig. 6D). These results reveal that, independent of
+modularity, a connection cost promotes the evolution of hierarchy. Additionally, P&CC-NonMod networks
+are significantly more evolvable than PA networks (Fig. 6E-G), revealing that hierarchy promotes evolvability
+independently of the known evolvability improvements caused by modularity [16].
+
+To gain better insight into the relationship between modularity, hierarchy, and performance, we searched for
+the highest-performing networks at all possible levels of modularity and hierarchy. We performed this search
+with the multi-dimensional archive of phenotypic elites (MAP-Elites) algorithm [52]. The results show that
+networks with the same modularity can have a wide range of different levels of hierarchy, and vice-versa, which
+indicates that these network properties can vary independently (Fig. 7). Additionally, the high-hierarchy, high-
+modularity region, in which evolved P&CC networks reside, contains more high-performing solutions than the
+low-hierarchy, low-modularity region where PA networks reside (Fig. 7), suggesting an explanation for why
+P&CC networks find high-performing solutions faster (Fig. 2D).
+
+To test the generality of our hypothesis that the addition of a connection cost promotes the evolution of
+hierarchy in addition to modularity, we repeated our experiments with different Boolean-logic problems. For all
+problem variants, P&CC networks are significantly more hierarchical, modular, and solve more sub-problems
+than PA networks (Fig. 8). The P&CC treatment also evolved high-performing networks significantly faster
+on all of these additional problems (Fig. S13).
+
+                                                                       7
+A                                                E 12 34 5678 12 34 56 78
+
+                                                    AND AND AND AND              AND AND AND AND
+
+                                                    XOR                     XOR      EQU       EQU
+
+                                                                       AND                AND
+
+                                                 F
+
+                                                                                 PA
+
+B       modularity     C       hierarchy   D      G % sub-problems        P&CC-NonMod
+                                                          solved             generations to
+   0.6                    0.9  p <0.00001                                    adapt to a new
+                                                 100 p <0.00001               environment
+        p >0.05                                   80                                p <0.00001
+                                                  60
+   0.4                    0.8                     40                   25000
+                                                  20                   20000
+   0.2                    0.7                       0                  15000
+                                                       PA P&CC-NonMod  10000
+   0.0 PA P&CC-NonMod     0.6 PA P&CC-NonMod
+                                                                        5000
+                                                                             0 PA P&CC-NonMod
+
+Figure 6: Evolving low-cost, high-performing networks that are non-modular reveals that independent of
+modularity, a connection cost promotes the evolution of hierarchy. (A) Networks from the 16 highest-
+performing P&CC-NonMod replicates (Fig. S4 shows networks from all 30 trials). The networks are hierarchal,
+but not highly modular. (B) There is no significant difference in modularity between P&CC-NonMod and PA
+networks, but P&CC-NonMod networks are significantly more hierarchical (C) and solve significantly more
+sub-problems (D) than PA networks. (E-G) P&CC-NonMod networks also adapt significantly faster to a new
+environment than PA networks, suggesting that hierarchy promotes evolvability independently of modularity.
+(E) The base and target problem for this evolvability experiment. (F) A perfect-performing network evolved
+for the base problem (left) and a descendant network evolved on the target problem (right). The example
+networks are those with median hierarchy: Fig. S11 shows all pairs. (G) P&CC-NonMod networks adapt
+significantly faster to the new problem.
+
+Discussion
+
+The evolution of hierarchy is likely caused by multiple factors. These results suggest that one of those factors is
+indirect selection to reduce the net cost of network connections. Adding a cost for connections has previously
+been shown to evolve modularity [16, 35]; the results in this paper confirm that finding and further show
+that a cost for connections also leads to the evolution of hierarchy. Moreover, the hierarchy that evolves is
+functional, in that it involves solving a problem by recursively combining solutions to sub-problems. It is
+likely that there are other forces that encourage the evolution of hierarchy, and that this connection cost force
+operates in conjunction with them; identifying other drivers of the evolution of hierarchy and their relative
+contributions is an interesting area for future research.
+
+These results also reveal that, like modularity [47, 16], hierarchy improves evolvability. While modularity and
+hierarchy are correlated, the experiments we conducted where we explicitly select for networks that are hier-
+archical, but non-modular, reveal that hierarchy improves evolvability even when modularity is discouraged.
+
+An additional factor that is present in modular and hierarchal networks is sparsity, a term meaning that only
+a few connections exist of the total that could. It is possible that this property explains some or even all
+of the evolvability benefits of modular, hierarchical networks. Future work is needed to address the difficult
+challenge of experimentally teasing apart these related properties.
+
+As has been pointed out for the evolution of modularity [16], even if hierarchy, once present, is directly selected
+for because it increases evolvability, that does not explain its evolutionary origins, because enough hierarchy
+has to be present in the first place before those evolvability gains can be selected for. This paper offers one
+explanation for how sufficient hierarchy can emerge in the first place to then provide evolvability (or other)
+
+                                              8
+Figure 7: Network modularity and hierarchy can independently vary, and high-performing networks exist
+with a wide range of modularity and hierarchy scores. The highest-performing networks evolution discovered
+(with the MAP-Elites algorithm) for each combination of modularity and hierarchy. A few example networks
+are shown, along with their fitness (F), hierarchy (H), and modularity (M). The best network from each of the
+PA and P&CC treatments are also overlaid as blue triangles and green circles, respectively. The size of the
+circles or triangles and the enclosed number indicate the number of networks at that coordinate (no number
+means 1).
+
+benefits that can be selected for.
+
+This paper shows the effect of a connection cost on the evolution of hierarchy via experiments on many
+variants of one class of problem (hierarchical logic problems with many inputs and one output). In future
+work it will be interesting to test the generality of these results across different classes of problems, including
+non-hierarchical problems. The data in this paper suggest that a connection cost will always make it more
+likely for hierarchy to evolve, but it remains an open, interesting question how wide a range of problems
+hierarchy will evolve on even with a connection cost.
+
+In addition to shedding light on why biological networks evolve to be hierarchical, this work also lends
+additional support to the hypothesis that a connection cost may also drive the emergence of hierarchy in
+human-constructed networks, such as company organizations [41], road systems [53], and the Internet [9].
+Furthermore, knowing how to evolve hierarchical networks can improve medical research [54, 55], which
+benefits from more biologically realistic, and thus hierarchical, network models [56, 57].
+
+The ability to evolve hierarchy will also aid fields that harness evolution to automatically generate solutions to
+challenging engineering problems [58, 59], as it is known that hierarchy is a beneficial property in engineered
+
+                                                                       9
+Figure 8: Our results are qualitatively unchanged on different problems: P&CC networks are significantly
+more modular, hierarchical, and solve more sub-problems than PA networks on different, hierarchical Boolean-
+logic problems. For each problem, an example evolved network (specifically, the one with median hierarchy)
+from each treatment is shown. Figs. S2 and S3 show the final, evolved network from each replicate for both
+treatments on both problems. Note that for the problem on the right, an extra layer of hidden nodes was
+added due to the complexity of the problem (Methods).
+
+designs [17, 60]. In fact, artificial intelligence researchers have long sought to evolve computational neural
+models that have the properties of modularity, regularity, and hierarchy [17, 61, 62, 63, 64], which are key
+enablers of intelligence in animal brains [17, 65, 66, 67]. It has recently been shown that combining techniques
+known to produce regularity [68] with a connection cost produces networks that are both modular and
+regular [35]. This work suggests that doing so can produce networks that have all three properties, a hypothesis
+we will confirm in future work. Being able to create networks with all three properties will both improve our
+efforts to study the evolution of natural intelligence and accelerate our ability to recreate it artificially.
+
+Method and Materials
+
+Experimental setup
+
+There were 30 trials per treatment. Each trial is an independent evolutionary process that is initiated with
+a different random seed, meaning that the sequence of stochastic events that drive evolution (e.g. mutation,
+selection) are different. Each trial lasted 25000 generations and had a population size of 1000. Unless otherwise
+stated, all analyses and visualizations are based on the highest-performing network per trial (ties are broken
+randomly).
+
+Statistics
+
+The test of statistical significance is the Mann-Whitney-Wilcoxon rank-sum test, unless otherwise stated. We
+report and plot medians ± 95% bootstrapped confidence intervals of the medians, which are calculated by
+re-sampling the data 5000 times. For visual clarity we reduce the re-sampling noise inherent in bootstrapping
+by smoothing confidence intervals with a median filter (window size of 101).
+
+                                                                      10
+Evolutionary algorithm
+
+Networks evolve via a multi-objective evolutionary algorithm called the Non-dominated Sorting Genetic Al-
+gorithm version II (NSGA-II), which was first introduced in [69]. While the original NSGA-II weights all
+objectives equally, to explore the consequence of having the performance objective be more important than
+the connection cost objective, Clune et al. [16] created a stochastic version of NSGA-II (called probabilistic
+NSGA-II, or PNSGA) where each objective is considered for selection with a certain probability (a detailed
+explanation can be found in [16] and Fig. S15a). Specifically, performance factors into selection 100% of
+the time and the connection cost objective factors in p percent of the time. Preliminary experiments for this
+paper demonstrated that values of p of 0.25, 0.5, and 1.0 led to qualitatively similar results. However, for
+simplicity and because the largest differences between P&CC and PA treatments resulted from p = 1, we
+chose that value as the default for this paper. Note that when p = 1, NSGA-II and PNSGA are identical.
+
+Behavioral diversity
+
+Evolutionary algorithms notoriously get stuck in local optima (locally, but not globally, high-fitness areas), in
+part because limited computational resources require smaller population sizes than are found in nature [59].
+To make computational evolution more representative of natural evolutionary populations, which exhibit
+more diversity, we adopt the common technique of promoting behavioral diversity [59, 70, 71, 72, 73, 16] by
+adding another independent objective that rewards individuals for behaving differently than other individuals
+in the population. This diversity objective factored into selection 100% of the time. Preliminary experiments
+confirmed that this diversity-promoting technique is necessary. Without it, evolution does not reliably produce
+functional networks in either treatment, as has been previously shown when evolving networks with properties
+such as modularity [16, 35].
+
+To calculate the behavioral diversity of a network, for each input we store a network's output (response) in a
+binary vector; output values > 0 are stored as 1 and 0 otherwise. How different a network's behavior is from
+the population is calculated by computing the Hamming distance between that network's output vector and
+all the output vectors of all other networks (and normalizing the result to get a behavioral diversity measure
+between 0 and 1).
+
+Connection cost
+
+Following [16], the connection cost of a network is computed after finding an optimal node placement for
+internal (hidden) nodes (input and output nodes have fixed locations) that minimizes the overall network
+connection cost. These locations can be computed exactly [74]. Optimizing the location of internal nodes is
+biologically motivated; there is evidence that the location of neurons in animal nervous systems are optimized
+to minimize the summed length of connections between them [36, 37, 74]. The overall network connection
+cost is then computed as the summed squared length of all connections. Network visualizations show these
+optimal neural placements.
+
+Network nodes are located in a two-dimensional Cartesian space (x,y). The locations of input and output
+nodes are fixed, and the locations of hidden nodes vary according to their optimal location as just described.
+
+For all problems, the inputs have x coordinates of {-3.5, -2.5, ..., 2.5, 3.5}, a y coordinate of (0), and the output
+is located at (0,4), except for the problem in Fig. 8, right, which has an output located at (0, 5) because of
+the extra layer of hidden neurons.
+
+                                                                      11
+Network model and its biological relevance
+
+The network model is multi-layered and feed-forward, meaning a node at layer n receives incoming connections
+only from nodes at layer n - 1 and has outgoing connections only to nodes at layer n + 1. This network model
+is common for investigating questions in systems biology [49, 48, 75], including studies into the evolution
+of modularity [16, 76]. While the layered and feed-forward nature of networks may contribute to elevated
+hierarchy, this network architecture is the same across all treatments and we are interested in the differences
+between levels of hierarchy that occur with and without a connection cost.
+
+For the main problem, AND-XOR-AND, networks are of the form 8 \ 4 \ 4 \ 2 \ 1, which means that there are 8
+input nodes, 3 hidden layers each having 4, 4 and 2 nodes respectively, and 1 output node. The integers {-2, -1,
+1, 2} are the possible values for connection weights, whereas the possible values for the biases are {-2, -1, 0, 1, 2}.
+
+Information flows through the network in discrete time stpdf one layer at a time. The output yj of node j is
+the result of the function:
+
+                          yj = tanh  iIj ij yi + bj                               (1)
+
+where Ij is the set of nodes connected to node j, wij is the connection strength between node i and node
+j, yi is the output value of node i, and bj is a bias. The bias determines at which input value the output
+changes from negative to positive. The function, tanh(x), is an activation function that guarantees that the
+output of a node is in the range of [-1, 1]. The slope of the transition between the two extreme output values
+is determined by , which is here set to 20 (Figs. S15B-C).
+
+Following (16), in all treatments, the initial number of connections in networks is randomly chosen between
+20 and 100. If that chosen number of initial connections is more than the maximum number of connections
+that a network can have (which is 58), the network is fully connected. When random, valid networks are
+generated, the initial number of connections ranges from the minimum number needed, which is 11, to the
+maximum number possible, which is 58. Each connection is assigned a random weight selected from the
+possible values for connection weights and is placed between randomly chosen, unconnected neurons residing
+on two consecutive layers. Our results are qualitatively unchanged when the initial number of connections is
+smaller than the default, i.e. when evolution starts with sparse networks (Fig. S14).
+
+Mutations
+
+To create offspring, a parent network is copied and then randomly mutated. Each network has a 20% chance
+
+of having a single connection added. Candidates for new connections are pairs of unconnected nodes that
+
+reside on two consecutive layers. Each network also has a 20% chance of a randomly chosen connection being
+
+removed. Each node in the network has 0.067% chance of its bias being incremented or decremented with both
+
+options equally probable; five values are available {-2, -1, 0, 1, 2} and mutations that produce values higher
+
+or lower than these values are ignored.  Each connection in the network has  2.0  chance of its weight being
+                                                                              n
+
+incremented or decremented, where n is the total number of connections in the network. Because weights
+
+must be in the set of possible values {-2, -1, 1, 2}, mutations that produce values higher or lower than these
+
+four values are ignored.
+
+Modularity
+
+Network modularity is calculated with an efficient approximation [77] of the commonly used Q metric de-
+veloped by [78]. Because that metric has been extensively described before [78], here we only describe it
+briefly. The Q metric defines network modularity, for a particular division of the network, as the number of
+
+                                            12
+within-module edges minus the expected number of these edges in an equivalent network, where edges are
+placed randomly [78]. The formula for this metric is:
+
+                  1       [Aij  -  kiin kjout  ]ci,cj            (2)
+           Q=                         m
+
+                  m
+
+                     ij
+
+Where kiin and kjout are the in- and out-degree of node i and j, respectively, m is the total number of edges in
+the network, Aij is the connectivity matrix, which is 1 if there is an edge from node i to j, and 0 otherwise,
+
+and ci,cj is a function whose value is 1 if nodes i and j belong to the same module, and 0 otherwise.
+
+Hierarchy
+
+Our hierarchy measure comes from [11]. It ranks nodes based on their influence. A node's influence on a
+network equals the portion of a network that is reachable from that node (respecting the fact that edges are
+directed). Based on this metric, the larger the proportion of a network a node can reach, via its outgoing
+edges, the more influential it is. For example, a root node has more influence because a path can be traced
+from it to every node in the network, whereas leaf nodes have no influence. The metric calculates network
+hierarchy by computing the heterogeneity of the influence values of all nodes in the network. Intuitively,
+node-influence heterogeneity is high in hierarchical networks (where some nodes have a great deal of influence
+and others none), and low in non-hierarchical networks (e.g. in a fully connected network the influence of
+nodes is perfectly homogeneous).
+
+Because of the non-linear function that maps a node's inputs to its output, even a small change in the input
+to a node can change whether it fires. For that reason, it is difficult to determine the influence one node
+has on another based on the strength of the connection between them. We thus calculate hierarchy scores by
+looking only at the presence of connections between nodes, ignoring the strength of those connections. The
+score for a weighted directed network is calculated by:
+
+                     iV [CRmax - CR(i)]                          (3)
+
+                          N -1
+
+CRmax is the highest influence value and V represents a set of all nodes in the network. N is the number of
+
+nodes in the network. Each node in the network is represented by i. CR(i), the influence value of node i, is
+
+given by:
+
+           1                                   [  1           ]  (4)
+           CR(i) = N - 1
+                          j :0<dout (i,j )<       dout(i, j)
+
+Here, dout(i, j) is the length of the path that goes from node i to node j, meaning it is the number of outgoing
+connections along the path.
+
+Functional hierarchy
+
+As a proxy for quantifying functional hierarchy, we measure the percent of logic sub-problems of an overall
+problem that are solved by part of a network. Note that an overall logic problem can be solved without solving
+any specific sub-problem (e.g. in the extreme, if the entire problem is computed in one step). We determine
+whether a logic sub-problem is solved as follows: for all possible inputs to a network, a neuron solves a logic
+gate (a sub-problem) if, for its outputs, there exists any threshold value that correctly separates all the True
+answers from the False answers for the logic gate in question. We also consider a sub-problem as solved if it
+is solved by a group of neurons on the same layer. To check for this case, we consider all possible groupings
+of neurons in a layer (groups of all sizes are checked). We sum the outputs of the neurons in a group and
+
+                          13
+see if there is a threshold that correctly separates True and False for the logic sub-problem on all possible
+network inputs. To prevent counting solutions multiple times, each sub-problem is considered only once: i.e.
+the algorithm stops searching when a sub-problem is found to be solved.
+Supplementary Information
+
+                                                                      14
+A. 1 2 3 4 5 6 7 8
+
+                           AND AND AND AND
+
+                           XOR       XOR
+
+                                AND
+
+B. Performance Alone (PA)            C. Performance & Connection Cost (P&CC)
+
+Fig. S 1: The addition of a connection cost leads to the evolution of hierarchical, modular, and functionally
+hierarchical networks. In this visualization, networks are first sorted by fitness (F), then by hierarchy (H),
+and finally by modularity (M). Network nodes are colored if they solve a logic subproblem of the overall
+problem (Methods). (A) The main experimental problem in the paper, AND-XOR-AND. (B-C) The highest-
+performing networks at the end of each trial of the performance alone (PA) treatment (left) are less hierarchical,
+modular, and functionally hierarchical than networks from the performance and connection cost (P&CC)
+treatment (right).
+
+                                                                      15
+A. 1 2 3 4 5 6 7 8
+
+                           AND AND AND AND
+
+                           EQU       EQU
+
+                                AND
+
+B. Performance Alone (PA)            C. Performance & Connection Cost (P&CC)
+
+Fig. S 2: The results from the main experiment are qualitatively the same on a second, different, hierarchical
+problem: AND-EQU-AND (A). The highest-performing networks at the end of each trial of the performance
+alone (PA) treatment (B) are less hierarchical, modular, and functionally hierarchal than networks from the
+performance and connection cost (P&CC) treatment (C). Networks are first sorted by fitness (F), then by
+hierarchy(H), and finally by modularity (M).
+
+                                                                      16
+A. 1 2 3 4 5 6 7 8
+
+                           OR OR OR OR
+
+                           XOR       EQU
+
+                                EQU
+
+B. Performance Alone (PA)                 C. Performance & Connection Cost (P&CC)
+
+Fig. S 3: The results from the main experiment are qualitatively the same on a third, different, hierarchical
+problem: OR-XOR/EQU-EQU. See the previous caption for a lengthier explanation. These networks have
+an extra layer of hidden nodes vs. the default network model owing to the extra complexity of the last logic
+gate, EQU.
+
+                                                                      17
+A. 1 2 3 4 5 6 7 8
+
+AND AND AND AND
+
+XOR                  XOR
+
+                AND
+
+B. P&CC-NonMod
+
+Fig. S 4: Evolving networks with a connection cost, but an additional explicit pressure to be non-modular,
+produces networks that are hierarchical, but non-modular. These results show that a connection cost promotes
+hierarchy independent of the modularity-inducing effects of a connection cost. (A) The problem for this
+experiment, which was the default experiment for the paper (AND-XOR-AND). (B) Almost all of the end-
+of-run networks from this P&CC-NonMod treatment are hierarchical, yet have low modularity.
+
+                                                                      18
+A. 1 2 3 4 5 6 7 8                          12 34 56 78
+
+                           AND AND AND AND  AND AND AND AND
+
+                           XOR       XOR    EQU       EQU
+
+                                AND              AND
+
+B. Performance Alone (PA)
+
+Fig. S 5: (part 1 of 2) The networks from the PA treatment for the first evolvability experiment, in which
+networks are first evolved to perfect fitness on the AND-XOR-AND problem and then are transferred (black
+arrow) to the AND-EQU-AND problem (A). The highest-performing network from each replicate in the base
+environment seeds 30 independent runs in the target environment, leading to a total of 900 replicates per
+treatment in the target environment. (B) In this visualization the best-performing networks from the original
+environment are on the left side of each arrow and on the right side is an example descendant network from
+the target environment (specifically, the network with median hierarchy).
+
+                                                                      19
+      Performance & Connection Cost (P&CC)
+
+Fig. S 6: (part 2 of 2) The networks from the P&CC treatment for the first evolvability experiment. See the
+previous caption for a more detailed explanation.
+
+                                                                      20
+A. 1 2 3 4 5 6 7 8                   12 34 56 78
+
+AND AND AND AND                      OR OR   OR OR
+                                        XOR     XOR
+XOR                             XOR
+
+                           AND       AND
+
+B. Performance Alone (PA)
+
+Fig. S 7: (part 1 of 2) The second, AND-XOR-AND to OR-XOR-AND, evolvability experiment (A) and
+the networks from the PA treatment for this experiment (B). Except for a different target environment, this
+experiment has the same setup as the evolvability experiment in Fig. S5.
+
+                                                                      21
+     Performance & Connection Cost (P&CC)
+
+Fig. S 8: (part 2 of 2) The P&CC treatment networks from the second, AND-XOR-AND to OR-XOR-AND,
+evolvability experiment (pictured in Fig. S7). Except for a different target environment, this experiment has
+the same setup as the evolvability experiment shown in Fig. S5.
+
+                                                                      22
+A. 1 2 3 4 5 6 7 8         1 2 34 56 78
+
+OR OR   OR OR              AND AND AND AND
+   XOR    EQU
+                           EQU       EQU
+
+EQU                             AND
+
+B. Performance Alone (PA)
+
+Fig. S 9: (part 1 of 2) The third evolvability experiment, OR-XOR/EQU-EQU to AND-EQU-AND (A), and
+the networks from the PA treatment for this experiment (B). Except for a different base environment, this
+experiment has the same setup as the evolvability experiment shown in Fig. S5.
+
+                                                                      23
+     Performance & Connection Cost (P&CC)
+
+Fig. S 10: (part 2 of 2) The networks from the P&CC treatment for the third, OR-XOR/EQU-EQU to
+AND-EQU-AND, evolvability experiment (pictured in Fig. S9). Except for a different base environment, this
+experiment has the same setup as the evolvability experiment in Fig. S5.
+
+                                                                      24
+A. 1 2 3 4 5 6 7 8        12 34 56 78
+
+AND AND AND AND           AND AND AND AND
+
+XOR                  XOR  EQU       EQU
+
+                AND            AND
+
+B. P&CC-NonMod
+
+Fig. S 11: Evolvability is improved even in networks that are hierarchical, but non-modular, demonstrating
+that the property of hierarchy conveys evolvability independent of modularity. (A) The base problem that
+networks originally evolved on (left) and the new, target problem that networks are transferred to and further
+evolved on (right). (B) In each pair, on the left is a perfect-performing network evolved for the base problem
+and on the right is an example descendant network that evolved on the target problem (specifically, the
+descendant network with median hierarchy). Except for being the P&CC-NonMod treatment, this evolvability
+experiment has the same setup as the evolvability experiment in Fig. S5.
+
+                                                                      25
+                        0.85      PA                                      6
+                                  P&CC                            15
+
+             hierarchy  0.80                                                      3
+
+                        0.75
+
+                        0.70 2 2
+
+                        0.65        23
+                                  2
+                        0.1       0.2 mod0u.3larity0.4            0.5
+
+Fig. S 12: There is a strong, linear, and positive correlation between network hierarchy and modularity. The
+Pearson's correlation coefficient is 0.92. The correlation is significant (p < 0.00001), as calculated by a t-test
+with a correlation of zero as the null hypothesis. Larger circles or triangles indicate the presence of more than
+one network at that location (the number describes how many).
+
+       Performance and Connection Cost (P&CC)               1.00 Performance and Connection Cost (P&CC)
+1.00
+
+0.98performance                                             0.97
+                                               performance
+             Performance Alone (PA)
+
+0.96                                                        0.94
+
+p<00..90450  5000 1g0e0n00erat1i5o0n0s0 20000 25000 p<00..90150              Performance Alone (PA)
+
+                                                                  5000 1g0e0n00erat1i5o0n0s0 20000 25000
+
+Fig. S 13: In addition to the main experimental problem, the P&CC treatment also evolved high-performing
+networks faster than the PA treatment on two different problems (AND-EQU-AND, left, and OR-XOR/EQU-
+EQU, right; both are pictured in Fig. 8 in the main text). The bar below each plot indicates when a significant
+difference exists between the two treatments.
+
+                                               26
+A hierarchy        B  modularity C    % sub-problems
+                                               solved
+   0.9 p <0.00001     0.6 p <0.00001           p <0.00001
+   0.8                                1086000
+                      0.4
+
+0.7                   0.2             24000 PA
+
+0.6 PA P&CC           0.0 PA P&CC               P&CC
+
+Fig. S 14: Our results are qualitatively unchanged when initializing networks with sparsely connected net-
+works. In this experiment, the minimum and maximum number of initial connections that networks start
+with in generation 0 are 11 and 20, respectively. Due to the fact that at least 11 connections are needed
+to solve the experimental problem, networks that have an initial number of connections within this range
+are considered sparse (note: the default range for initial number of connections is [20, 100], Methods). The
+hierarchy (A), modularity (B), and percent of sub-problems solved (C) are significantly higher for end-of-run
+P&CC networks, indicating that, regardless of the initial connectivity of networks, a connection cost promotes
+the evolution of these traits.
+
+                           27
+A                            Copy                                                                     Pareto ranking            Selecting the first N
+                                                                                                                                   best individuals
+           N individuals                                                                                    L1 L2 L3
+                                                                                                                                       L1
+                                   N individuals
+                                                                                                                                                                      N
+                          Selection and mutation                                         Performance
+                                                                        N offspring                                                    L2
+
+                                                                                                                                       L3
+
+                                                                                                           Connection Cost
+                                                                                     New generation
+
+B                                                                                        C            1.0
+        Input pattern
+           Input layer                                                                                    0.5
+
+         hidden layer                                                                                 y 0.0
+         output layer
+      output pattern                                                                                  -0.5
+
+                                                                                                      -1.0-2                -1  x0  1                                    2
+
+Fig. S 15: Details of the evolutionary algorithm (figure adapted from [16]). (A) A graphical depiction of the
+
+the multi-objective evolutionary algorithm in our study, which is called the Non-dominated Sorting Genetic
+
+Algorithm version II (NSGA-II)[69]. In NSGA-II, evolution starts with a population of N randomly generated
+
+networks. N offspring are generated by randomly mutating the best of these individuals (as determined by
+
+tournament selection, wherein the best organism of 2 randomly selected organisms is chosen to produce
+
+offspring asexually). The combined pool of offspring and the current population are ranked based on Pareto
+
+dominance, and the best N networks are selected to form the next generation. This process continues for
+
+a fixed number of generations or until networks with the desired performance or properties evolve. (B) An
+
+example network model. Networks are typically used by researchers to abstract the activities of many biological
+
+networks, such as gene regulatory networks and neural networks [16, 47, 48, 51, 59]. Nodes (analogous to
+
+neurons or genes) represent processing units that receive inputs from neighbors or external sources and process
+
+them to compute an output signal that is propagated to other nodes. For example, nodes at the input layer are
+
+activated by environmental stimuli and their output is passed to internal nodes. In this figure, arrows indicate
+
+a connection between two nodes, and thus illustrate the pathways through which information flows. Each
+
+connection has a weight, which is a number that controls the strength of interaction between the two nodes.
+
+Information flows through the network, ultimately determining the firing pattern of output nodes. The firing
+
+patterns of output nodes can be considered as commands that activate genes in a gene regulatory network or
+
+that move muscles in an animal body. The output value of each node, y, is a function of its weighted inputs
+
+and bias. In this paper, the specific activation function is tanh(20x), where x = i (wiIi + b), and where Ii
+is the ith input, wi the associated synaptic weight, and b a bias that, like the weight vector, is evolved. The
+
+specific function is depicted in (C). Multiplying the input by 20 makes the function more like a step function.
+
+The output range is [-1,1].                                                          28
+References
+
+ [1] Meunier, David, Renaud Lambiotte, and Edward T. Bullmore (2010). Modular and hierarchically modular
+      organization of brain networks. Frontiers in neuroscience, 4.
+
+ [2] Meunier, D., Lambiotte, R., Fornito, A., Ersche, K. D., & Bullmore, E. T. (2009). Hierarchical modularity
+      in human brain functional networks. Frontiers in neuroinformatics, 3.
+
+ [3] Miller III, W. (2008). The hierarchical structure of ecosystems: connections to evolution. Evolution:
+      Education and Outreach, 1(1), 16-24.
+
+ [4] Ravasz, E., Somera, A. L., Mongru, D. A., Oltvai, Z. N., & Barabsi, A. L. (2002). Hierarchical organization
+      of modularity in metabolic networks. science, 297(5586), 1551-1555.
+
+ [5] Yu, H., & Gerstein, M. (2006). Genomic analysis of the hierarchical structure of regulatory networks.
+      Proceedings of the National Academy of Sciences, 103(40), 14724-14731.
+
+ [6] Rowe, R., Creamer, G., Hershkop, S., & Stolfo, S. J. (2007). Automated social hierarchy detection through
+      email network analysis. In Proceedings of the 9th WebKDD and 1st SNA-KDD 2007 workshop on Web
+      mining and social network analysis (pp. 109-117). ACM.
+
+ [7] Krugman, Paul (1996). Confronting the mystery of urban hierarchy. Journal of the Japanese and Inter-
+      national economies 10.4: 399-418.
+
+ [8] Guimera, Roger, et al (2003). Self-similar community structure in a network of human interactions.
+      Physical review E 68.6: 065103.
+
+ [9] Vzquez, A., Pastor-Satorras, R., & Vespignani, A. (2002). Large-scale topological and dynamical prop-
+      erties of the Internet. Physical Review E, 65(6), 066130.
+
+[10] Ravasz, E., & Barabsi, A. L. (2003). Hierarchical organization in complex networks. Physical Review E,
+      67(2), 026112.
+
+[11] Mones, E., Vicsek, L., & Vicsek, T. (2012). Hierarchy measure for complex networks. PloS one, 7(3),
+      e33799.
+
+[12] Pumain, D. (Ed.). (2006). Hierarchy in natural and social sciences (Vol. 3). Springer.
+
+[13] lane D (2006). Hierarchy, complexity, society. Dodrecht, the Netherlands: Springer. pp 81-120.
+
+[14] Sales-Pardo, M., Guimera, R., Moreira, A. A., & Amaral, L. A. N. (2007). Extracting the hierarchical
+      organization of complex systems. Proceedings of the National Academy of Sciences, 104(39), 15224-15229.
+
+[15] Bassett, D. S., Greenfield, D. L., Meyer-Lindenberg, A., Weinberger, D. R., Moore, S. W., & Bullmore,
+      E. T. (2010). Efficient physical embedding of topologically complex information processing networks in
+      brains and computer circuits. PLoS computational biology, 6(4), e1000748.
+
+[16] Clune, J., Mouret, J. B., & Lipson, H. (2013). The evolutionary origins of modularity. Proceedings of the
+      Royal Society b: Biological sciences, 280(1755), 20122863.
+
+[17] Lipson H (2007) Principles of modularity, regularity, and hierarchy for scalable systems. Journal of
+      Biological Physics and Chemistry, 7(4):125.
+
+[18] Wagner, G. P., Pavlicev, M., & Cheverud, J. M. (2007). The road to modularity. Nature Reviews Genetics,
+      8(12), 921-931.
+
+                                                                      29
+[19] Kaiser, Marcus, Claus C. Hilgetag, and Rolf Ktter (2010). Hierarchy and dynamics of neural networks.
+      Frontiers in neuroinformatics, 4.
+
+[20] Suh, N. P. (1990). The principles of design (Vol. 990). New York: Oxford University Press.
+
+[21] Ozaktas, H. M. (1992). Paradigms of connectivity for computer circuits and networks. Optical Engineer-
+      ing, 31(7), 1563-1567.
+
+[22] Trusina, A., Maslov, S., Minnhagen, P., & Sneppen, K. (2004). Hierarchy measures in complex networks.
+      Physical review letters, 92(17), 178702.
+
+[23] Corominas-Murtra, B., Rodrguez-Caso, C., Goi, J., & Sol, R. (2011). Measuring the hierarchy of feed-
+      forward networks. Chaos: An Interdisciplinary Journal of Nonlinear Science, 21(1), 016108.
+
+[24] Dehmer, M., Borgert, S., & Emmert-Streib, F. (2008). Entropy bounds for hierarchical molecular net-
+      works. PLoS One, 3(8), e3079.
+
+[25] Song, C., Havlin, S., & Makse, H. A. (2006). Origins of fractality in the growth of complex networks.
+      Nature Physics, 2(4), 275-281.
+
+[26] Ryazanov, A. I. (1988). Dynamics of hierarchical systems. Physics-Uspekhi, 31(3), 286-287.
+
+[27] Corominas-Murtra, B., Goi, J., Sol, R. V., & Rodrguez-Caso, C. (2013). On the origins of hierarchy in
+      complex networks. Proceedings of the National Academy of Sciences, 110(33), 13316-13321.
+
+[28] O'Neill, R. V. (1986). A hierarchical concept of ecosystems (Vol. 23). Princeton University Press.
+
+[29] Wu, J., & David, J. L. (2002). A spatially explicit hierarchical approach to modeling complex ecological
+      systems: theory and applications. Ecological Modelling, 153(1), 7-26.
+
+[30] Flack, J. C., D. Erwin, T. Elliot, & D. C. Krakauer. 2013. Timescales, symmetry, and uncertainty
+      reduction in the origins of hierarchy in biological systems. In Cooperation and its evolution,Cambridge:
+      MIT Press
+
+[31] Salthe, S. N. (2013). Evolving hierarchical systems: their structure and representation. Columbia Uni-
+      versity Press.
+
+[32] Pigliucci, M. (2008). Is evolvability evolvable?. Nature Reviews Genetics, 9(1), 75-82.
+
+[33] Clune, J., Beckmann, B. E., McKinley, P. K., & Ofria, C. (2010). Investigating whether hyperneat pro-
+      duces modular neural networks. In Proceedings of the 12th annual conference on Genetic and evolutionary
+      computation (pp. 635-642). ACM.
+
+[34] Paine, R. W., & Tani, J. (2005). How hierarchical control self-organizes in artificial adaptive systems.
+      Adaptive Behavior, 13(3), 211-225.
+
+[35] Huizinga, J., Mouret, J. B., & Clune, J. Evolving Neural Networks That Are Both Modular and Regular:
+      HyperNeat Plus the Connection Cost Technique. In Proceedings of GECCO(pp. 1-8).
+
+[36] Cherniak, C., Mokhtarzada, Z., Rodriguez-Esteban, R., & Changizi, K. (2004). Global optimization of
+      cerebral cortex layout. Proceedings of the National Academy of Sciences of the United States of America,
+      101(4), 1081-1086.
+
+[37] Chen, B. L., Hall, D. H., & Chklovskii, D. B. (2006). Wiring optimization can relate neuronal structure
+      and function. Proceedings of the National Academy of Sciences of the United States of America, 103(12),
+      4723-4728.
+
+                                                                      30
+[38] Raj, A., & Chen, Y. H. (2011). The wiring economy principle: connectivity determines anatomy in the
+      human brain. PloS one, 6(9), e14832.
+
+[39] Ahn, Y. Y., Jeong, H., & Kim, B. J. (2006). Wiring cost in the organization of a biological neuronal
+      network. Physica A: Statistical Mechanics and its Applications, 367, 531-537.
+
+[40] Laughlin, S. B., & Sejnowski, T. J. (2003). Communication in neuronal networks. Science, 301(5641),
+      1870-1874.
+
+[41] Guimera, R., A. Arenas, and A. Daz-Guilera (2001) Communication and optimal hierarchical networks.
+      Physica A: Statistical Mechanics and its Applications 299.1: 247-252.
+
+[42] Herbert A. Simon. The architecture of complexity. Proceedings of the American Philosophical Society.
+      1962
+
+[43] Lenski, R. E., Ofria, C., Collier, T. C., & Adami, C. (1999). Genome complexity, robustness and genetic
+      interactions in digital organisms. Nature, 400(6745), 661-664.
+
+[44] Lenski, R. E., Ofria, C., Pennock, R. T., & Adami, C. (2003). The evolutionary origin of complex features.
+      Nature, 423(6936), 139-144.
+
+[45] C.O. Wilke, J.L. Wang, C. Ofria, R.E. Lenski, and C. Adami. Evolution of digital organisms at high
+      mutation rates leads to survival of the flattest. Nature, 412(6844):331­333, 2001.
+
+[46] C. Espinosa-Soto and A. Wagner. Specialization can drive the evolution of modularity. PLoS Computa-
+      tional Biology, 6(3):e1000719, 2010.
+
+[47] Nadav Kashtan and Uri Alon. Spontaneous evolution of modularity and network motifs. Proceedings of
+      the National Academy of Sciences, 102(39):13773­13778, 2005.
+
+[48] Nadav Kashtan, Elad Noor, and Uri Alon. Varying environments can speed up evolution. Proceedings of
+      the National Academy of Sciences, 104(34):13711­13716, 2007.
+
+[49] Alon U (2007) An introduction to systems biology: Design principles of biological circuits. Mathematical
+      and computational biology series, vol. 10.
+
+[50] Trappenberg, T. (2009). Fundamentals of computational neuroscience. Oxford University Press.
+
+[51] Geard, N., & Wiles, J. (2005). A gene network model for developing cell lineages. Artificial Life, 11(3),
+      249-267.
+
+[52] Cully, A., Clune, J., & Mouret, J. B. (2014). Robots that can adapt like natural animals. arXiv preprint
+      arXiv:1407.3501.
+
+[53] Louf, R., Jensen, P., & Barthelemy, M. (2013). Emergence of hierarchy in cost-driven growth of spatial
+      networks. Proceedings of the National Academy of Sciences, 110(22), 8824-8829.
+
+[54] Li, G. L., Xu, X. H., Wang, B. A., Yao, Y. M., Qin, Y., Bai, S. R., ... & Hu, Y. H. (2014). Analysis of
+      protein-protein interaction network and functional modules on primary osteoporosis. European journal
+      of medical research, 19(1), 15.
+
+[55] Zhang, Y., Huang, Z., Zhu, Z., Liu, J., Zheng, X., & Zhang, Y. (2014). Network analysis of ChIP-Seq
+      data reveals key genes in prostate cancer. European journal of medical research, 19(1), 47.
+
+                                                                      31
+[56] Shmulevich, I., Dougherty, E. R., Kim, S., & Zhang, W. (2002). Probabilistic Boolean networks: a
+      rule-based uncertainty model for gene regulatory networks. Bioinformatics, 18(2), 261-274.
+
+[57] Albert, R. (2005). Scale-free networks in cell biology. Journal of cell science, 118(21), 4947-4957.
+
+[58] Keane, M. A., Streeter, M. J., Mydlowec, W., Lanza, G., & Yu, J. (2006). Genetic programming IV:
+      Routine human-competitive machine intelligence (Vol. 5). Springer.
+
+[59] D. Floreano and C. Mattiussi. Floreano, D., & Mattiussi, C. (2008). Bio-inspired artificial intelligence:
+      theories, methods, and technologies. MIT press.
+
+[60] Suh, N. P. (1990). The principles of design (Vol. 990). New York: Oxford University Press.
+
+[61] Stanley, K. O., & Miikkulainen, R. (2003). A taxonomy for artificial embryogeny. Artificial Life, 9(2),
+      93-130.
+
+[62] Hornby, Gregory S (2005). Measuring, enabling and comparing modularity, regularity and hierarchy in
+      evolutionary design. Proceedings of the 2005 conference on Genetic and evolutionary computation. ACM.
+
+[63] Clune, J., Stanley, K. O., Pennock, R. T., & Ofria, C. (2011). On the performance of indirect encoding
+      across the continuum of regularity. Evolutionary Computation, IEEE Transactions on, 15(3), 346-367.
+
+[64] Gruau, F. (1994). Automatic definition of modular neural networks. Adaptive behavior, 3(2), 151-183.
+
+[65] Nolfi, S., & Floreano, D. (2000). Evolutionary robotics: The biology, intelligence, and technology of
+      self-organizing machines. MIT press.
+
+[66] Striedter, G. F. (2005). Principles of brain evolution. Sinauer Associates.
+
+[67] Wagner, G. P., & Altenberg, L. (1996). Perspective: Complex adaptations and the evolution of evolv-
+      ability. Evolution, 967-976.
+
+[68] Stanley, K. O., D'Ambrosio, D. B., & Gauci, J. (2009). A hypercube-based encoding for evolving large-
+      scale neural networks. Artificial life, 15(2), 185-212.
+
+[69] Deb, K. (2001). Multi-objective optimization using evolutionary algorithms (Vol. 16). John Wiley & Sons.
+
+[70] Mouret, J., & Doncieux, S. (2009, May). Overcoming the bootstrap problem in evolutionary robotics
+      using behavioral diversity. In Evolutionary Computation, 2009. CEC'09. IEEE Congress on (pp. 1161-
+      1168). IEEE.
+
+[71] Doncieux, Stephane, and J-B. Mouret (2010) Behavioral diversity measures for Evolutionary Robotics.
+      Evolutionary Computation (CEC), 2010 IEEE Congress on. IEEE.
+
+[72] Mouret, J-B., and Stphane Doncieux (2012) Encouraging behavioral diversity in evolutionary robotics:
+      An empirical study. Evolutionary computation 20.1: 91-133.
+
+[73] Risi, S., Vanderbleek, S. D., Hughes, C. E., & Stanley, K. O. (2009, July). How novelty search escapes
+      the deceptive trap of learning to learn. In Proceedings of the 11th Annual conference on Genetic and
+      evolutionary computation (pp. 153-160). ACM.
+
+[74] Chklovskii, D. B. (2004). Exact solution for the optimal neuronal layout problem. Neural computation,
+      16(10), 2067-2078.
+
+[75] Karlebach, G., & Shamir, R. (2008). Modelling and analysis of gene regulatory networks. Nature Reviews
+      Molecular Cell Biology, 9(10), 770-780.
+
+                                                                      32
+[76] Kashtan, N., & Alon, U. (2005). Spontaneous evolution of modularity and network motifs. Proceedings
+      of the National Academy of Sciences of the United States of America, 102(39), 13773-13778.
+
+[77] Leicht, E. A., & Newman, M. E. (2008). Community structure in directed networks. Physical review
+      letters, 100(11), 118703.
+
+[78] Newman, M. E. (2006). Modularity and community structure in networks. Proceedings of the National
+      Academy of Sciences, 103(23), 8577-8582.
+
+                                                                      33
+

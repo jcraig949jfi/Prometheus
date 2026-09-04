@@ -1,0 +1,105 @@
+
+
+Example Documentation
+
+  overview  
+  classes
+
+  examples
+  Shark -
+  LEDA -
+  STL -
+  QT -
+  OpenGL
+goto: 
+[]
+
+02-stringRuleJTB/main.cpp
+
+#include<MT/controller.h>
+#include<MT/stringRule.h>
+#include<MT/genotype.h>
+
+#include<MT/evolution.h>
+
+typedef Genotype<StringRule,StringRule> genoT;
+typedef StringRule phenoT;
+
+Parameter<StringRule> init("init");
+Parameter<StringRule> target("target");
+ofstream _rep_,_geno_,_mutInfo_;
+
+using namespace std;
+
+double calcFitness(phenoT& p){
+  double distCost=0.;
+
+  //Permutation perm;
+  //distCost=p.annealedDistance(_target_,p,perm);
+  distCost=p.dist(target,p);
+
+  return -distCost;
+}
+
+void Evolution<genoT,phenoT>::monitor(){
+  //population report in _rep_
+  _rep_ <<generation <<"\t";
+  pop.report(_rep_);
+
+  //best genotype in _geno_
+  best=&pop.best();
+  _geno_ <<"generation: " <<generation <<"\n";
+  _geno_ <<*best <<"\n";
+  _geno_.flush();
+
+  //spectrum of best in _rep_
+  double neudeg,avgfit,moddeg,rules,length;
+  Statistics<int> stat;
+  ArrayMT<ArrayMT<int> > data;
+  neudeg=avgfit=moddeg=rules=length=0.;
+  best->spectrum(neudeg,avgfit,moddeg,rules,length,data);
+  _rep_ <<neudeg <<"\t" <<avgfit <<"\t" <<moddeg <<"\t"
+  <<rules <<"\t" <<length <<"\t";
+
+  //mutual information of best in _mutInfo_
+  stat.range=1<<_alpha_;
+  stat.copyData(data,25);
+  stat.calcH_MI();
+  _mutInfo_ <<stat.MI;
+  display(stat.MI);
+
+#if 1
+  //average spectrum of all
+  uint i;
+  double n,a,m,r,l;
+  neudeg=avgfit=moddeg=rules=length=0.;
+  for(i=0;i<pop.N();i++){
+    pop(i).spectrum(n,a,m,r,l,data);
+    neudeg+=n;avgfit+=a;moddeg+=m;rules+=r;length+=l;
+  }
+  _rep_ <<neudeg/i <<"\t" <<avgfit/i <<"\t" <<moddeg/i <<"\t"
+  <<rules/i <<"\t" <<length/i <<"\t";
+#endif
+    
+  _rep_ <<endl;
+
+}
+
+int main(int argc,char* argv[]){
+  MT::setLog(argc,argv);
+  MT::open(_rep_,"rep");
+  MT::open(_geno_,"geno");
+  MT::open(_mutInfo_,"mutInfo");
+
+  Evolution<genoT,phenoT> evo;
+
+  genoT initG(init(),0);
+  //init.random();
+  //cout <<"initialization: " <<init;
+
+  evo.init(initG);
+  evo.evolve();
+
+  return 0;
+}
+

@@ -1,0 +1,471 @@
+Evolvability Is Inevitable: Increasing Evolvability without
+the Pressure to Adapt
+
+Joel Lehman1*, Kenneth O. Stanley2
+
+1 Department of Computer Science, The University of Texas at Austin, Austin, Texas, United States of America, 2 Department of Electrical Engineering and Computer
+Science, University of Central Florida, Orlando, Florida, United States of America
+
+    Abstract
+
+     Why evolvability appears to have increased over evolutionary time is an important unresolved biological question. Unlike
+     most candidate explanations, this paper proposes that increasing evolvability can result without any pressure to adapt. The
+     insight is that if evolvability is heritable, then an unbiased drifting process across genotypes can still create a distribution of
+     phenotypes biased towards evolvability, because evolvable organisms diffuse more quickly through the space of possible
+     phenotypes. Furthermore, because phenotypic divergence often correlates with founding niches, niche founders may on
+     average be more evolvable, which through population growth provides a genotypic bias towards evolvability. Interestingly,
+     the combination of these two mechanisms can lead to increasing evolvability without any pressure to out-compete other
+     organisms, as demonstrated through experiments with a series of simulated models. Thus rather than from pressure to
+     adapt, evolvability may inevitably result from any drift through genotypic space combined with evolution's passive
+     tendency to accumulate niches.
+
+   Citation: Lehman J, Stanley KO (2013) Evolvability Is Inevitable: Increasing Evolvability without the Pressure to Adapt. PLoS ONE 8(4): e62186. doi:10.1371/
+   journal.pone.0062186
+   Editor: Sebastian D. Fugmann, Chang Gung University, Taiwan
+   Received February 7, 2013; Accepted March 18, 2013; Published April 24, 2013
+   Copyright: ß 2013 Lehman, Stanley. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits
+   unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.
+   Funding: This research was supported by Defense Advanced Research Projects Agency (DARPA) and Army Research Office through DARPA grant N11AP20003
+   (Computer Science Study Group Phase 3), and United States Army Research Office grant Award No. W911NF-11-1-0489. The funders had no role in study design,
+   data collection and analysis, decision to publish, or preparation of the manuscript.
+   Competing Interests: The authors have declared that no competing interests exist.
+   * E-mail: joel@cs.utexas.edu
+
+Introduction                                                                  all genotypes in the entire population. However, it turns out that
+                                                                              evolvability averaged over niches may still rise even in a purely
+   An unbroken hereditary chain links the simplest early                      drifting model (i.e. a model with a fixed-size population that
+replicators to the most complex modern macroscopic organisms.
+Observing this evolutionary trajectory raises the question of the             Figure 1. Evolvability in the abstract passive drift model. How
+cause for the appearance of increasing evolutionary potential, i.e.           the evolvability of organisms changes over generations is shown
+increasing evolvability [1]. Although the cause of such increase is still     averaged (in different ways) over 50 independent simulations that last
+debated, most candidate explanations for evolvability rely on                 3,000 generations each. If evolvability is averaged within each niche and
+selection pressure [1­8], reflecting natural selection's significant          then over all niches, then evolvability appears to increase. However, if
+explanatory power in other contexts. For example, selection on                instead evolvability is simply averaged over all organisms in the
+mutation or recombination rates [2], species-level selection to               population, there is no significant overall increase in evolvability over
+adapt [1,3], selection for stability of evolved structures [3,8], and         time.
+persisting through fluctuating selective environments [5] have all            doi:10.1371/journal.pone.0062186.g001
+been proposed as partial explanations for increasing evolvability.
+However, adaptive explanations may be unnecessary or at least
+merit more scrutiny if increasing evolvability is demonstrated
+without any pressure to adapt, that is, if evolvability results from a
+more fundamental (and potentially passive) process.
+
+   This paper investigates two such alternative hypotheses for
+evolvability. The first hypothesis is that if evolvability itself is
+heritable, then even a passive drifting process over genotypes will
+differentiate the evolvability of organisms, and the more evolvable
+of these organisms will be more likely to become phenotypically
+diverse and spread through niches. That is, a biased distribution of
+phenotypes can result from a passive drift over genotypes.
+
+   Intuitively, in a passive drift some mutations may increase an
+organism's evolutionary potential, while others may decrease it.
+Importantly, note that such passive drifting does not cause an
+inherent drive towards increasing evolvability when averaged over
+
+PLOS ONE | www.plosone.org                                                 1  April 2013 | Volume 8 | Issue 4 | e62186
+                                                                            Evolvability Is Inevitable
+
+Figure 2. Evolvability heat map for the abstract passive drift model. The average evolvability of organisms in each niche at the end of a
+simulation is shown averaged over 50 independent runs. The lighter the color, the more evolvable individuals are within that niche. The overall result
+is that evolvability increases with increasing distance from the starting niche in the center.
+doi:10.1371/journal.pone.0062186.g002
+
+evolves solely through genetic drift). This conclusion follows from         sampling the phenotype space (which is biased). The bias in the
+one widely-held conception of evolvability as the capacity of an            distribution of phenotypes is that less evolvable organisms are
+organism to ``generate heritable phenotypic variation'' [3], which          likely to be found densely concentrated in only a few niches (near
+is also the definition adopted in this paper. While evolvability is         their evolutionary origin), while the more evolvable organisms are
+also sometimes discussed in relation to adaptation [9,10], the              more likely to spread throughout reachable niches.
+chosen definition reflects a growing consensus in biology that
+phenotypic variability in its own right deserves study in the context          Thus if a population is drifting through a genotypic space, from
+of evolvability [3,4,6,11]. Thus, following this definition, those          surveying only the phenotypic space it might be mistakenly
+organisms that are least evolvable will on average change less              inferred that the average evolvability over all organisms had
+phenotypically from repeated mutation, while those that are more            increased, i.e. that there is a genotypic bias towards evolvability.
+evolvable will change more, i.e. more evolvable organisms will              Furthermore, the cause of this apparent increase might be
+have a higher average velocity of phenotypic change.                        misattributed to selection pressure. In reality, however, there is
+                                                                            no selection pressure, and the average evolvability of genotypes
+   As a result, the phenotype space itself can act as a filter, whereby     will not have significantly changed: Only the average evolvability
+more evolvable organisms will be separated from the less evolvable          per niche (i.e. averaged over divergent phenotypes) will have
+over time as they radiate at different velocities throughout the            increased. The interesting implication is that the deceptive
+phenotypic space. This sorting mechanism is similar to how a                appearance of increasing evolvability can result from a random
+centrifuge or a western blot separates particles of different densities     walk over genotypes. However, the main insight is that evolvability
+or charges. In other words, at any point in time the least evolvable        may be self-reinforcing: A drifting process in the genotypic space
+organisms are most likely to be found clustered together within the         may warp the phenotypic distribution in proportion to evolva-
+phenotypic space, occupying niches near their evolutionary                  bility, and given a sufficiently large population, the maximum
+origins. In contrast, the more evolvable organisms are more likely          evolvability may also increase over time, which further warps the
+to diverge phenotypically over time to inhabit niches divergent             phenotypic space. Supporting this hypothesis, experiments with
+from their ancestors. Thus, even if the genotypic space is evolving         both an abstract mathematical model and simulated evolved
+without direction, the resulting distribution in the phenotypic             machines reveal the appearance of increasing evolvability through
+space can still become biased towards the more evolvable. That is,          only a drifting process.
+uniformly sampling the genotype space (which is unbiased) would
+on average choose less evolvable organisms than would uniformly                However, while genetic drift biases only the phenotypic
+                                                                            distribution of organisms towards greater evolvability, an addi-
+
+PLOS ONE | www.plosone.org                                               2  April 2013 | Volume 8 | Issue 4 | e62186
+                                                                             Evolvability Is Inevitable
+
+Figure 3. Evolvability vs. distance from the initial niche for the           Figure 4. Evolvability of evolved robots with the passive drift
+abstract passive drift model. The evolvability of organisms at the           model. The evolvability of evolved robots subject to passive drift is
+end of a simulation is shown as a function of distance from the initial      shown averaged (in different ways) over 50 independent runs that
+starting niche (averaged over 50 independent runs). The main result is       lasted 250 generations each. If evolvability is averaged within each
+that there is a significant correlation between increasing distance from     niche and then over all niches, it appears to increase. If instead
+the initial niche and increasing evolvability in this model. The plotted     evolvability is averaged over all organisms, there is no significant
+line indicates the line of best fit by linear regression.                    increase.
+doi:10.1371/journal.pone.0062186.g003                                        doi:10.1371/journal.pone.0062186.g004
+
+tional non-adaptive mechanism may also similarly bias the genotypic          Appearance of Increasing Evolvability in Passive Drift
+distribution. This genotypic bias can result from the correlation            Models
+between phenotypic divergence and establishing new niches. In
+other words, evolvable organisms may be more likely to lead to                  The first set of experiments illustrate that evolvability can
+new ways of life [3]. Thus more evolvable organisms may become               appear to increase as a result of a passive drifting process over
+over-represented as founders of new niches, causing the resulting            genotypes. That is, if evolvability is heritable then a drifting
+population growth from niche foundation to bias the genetic space            process in a genotype space can separate the more evolvable
+also towards increasing evolvability. Thus the second hypothesis             organisms from the less evolvable ones over time, inducing a
+for non-adaptive evolvability increase is that founder effects in new        distorted distribution in phenotype space that yields the deceptive
+niches tend to amplify more evolvable organisms on average. The              impression of overall increasing evolvability. This first hypothesis is
+end result is that overall evolvability, i.e. not just its appearance,       explored in two models, a highly-abstract model and a model
+may also increase over time in nature ­ but not due to adaptive              based on simulated evolved robots.
+pressure to out-compete other organisms, which is a foundational
+assumption that underlies many other theories for the rise of                  Abstract passive drift model. The highly-abstract model
+evolvability [1­8].                                                          consists of a population of abstract organisms that evolve solely
+                                                                             due to genetic drift (i.e. there is no selection pressure nor
+   Supporting this second hypothesis, further experiments with               population growth). The idea is to investigate whether genetic drift
+growing populations in which evolution is initiated within a single          can yield the appearance of increasing evolvability in a minimal
+niche, and where each niche has a limited capacity (but where                model. Thus each organism in this model has only two hereditary
+selection is random within a niche) demonstrate a significant trend          properties: the niche that it occupies and its evolvability, both of
+towards increasing genotypic evolvability over time. Importantly, the        which are subject to mutation. An organism's niche is represented
+drive towards overall increasing genotypic evolvability in these             as a two-dimensional point within a discrete grid, which mutation
+experiments is qualitatively more substantial than in the drifting           perturbs by shifting the point one unit in either dimension. In
+models alone (where the appearance of increasing evolvability                other words, the genotype-to-phenotype map is trivial in this
+results only when averaged over niches). Another abstract model              model: The niche specified in an organism's genotype maps
+and two additional models with evolved machines exhibit the same             directly into its phenotypic niche (which is the two-dimensional
+trend towards increasing genotypic evolvability without selection            point in the discrete grid). The evolvability of an organism is thus
+pressure for adaptation. The surprising conclusion is that                   specified as the probability that an organism's niche will be
+increasing evolvability may not result from selective pressure to            perturbed through mutation, which reflects the assumption that
+adapt, but may instead be an inevitable byproduct of how                     more evolvable organisms have greater phenotypic variability
+evolvability warps the distribution of phenotypes and the tendency           [3,4,6,11]. In contrast to the initial probability for an organism's
+for founding new niches to amplify evolvable organisms.                      niche to be perturbed (i.e. the organism's initial evolvability),
+                                                                             evolvability itself mutates more infrequently through small
+Experiments                                                                  perturbations (exact parameter settings can be found in the
+                                                                             Methods Section). In other words, the assumption is that
+   The next sections describe experimental models that investigate           evolvability tends to evolve at slower rates than typical hereditary
+the hypotheses in this paper.                                                properties. Note that all organisms are initially identical, i.e. they
+                                                                             begin in the same niche (in the center of the grid) with the same
+                                                                             level of evolvability.
+
+PLOS ONE | www.plosone.org                                                3  April 2013 | Volume 8 | Issue 4 | e62186
+                                                                             Evolvability Is Inevitable
+
+Figure 5. True increasing evolvability in the abstract model with limited capacity niches. How the average evolvability of organisms in
+the population changes over time is shown (averaged over 50 independent simulations that lasted 1000 generations each). Note that the line shown
+for the passive model (reproduced from figure 0) represents only the appearance of increasing evolvability in that model when evolvability is
+averaged over niches.
+doi:10.1371/journal.pone.0062186.g005
+
+   The idea is that as the population drifts in this model, the                Passive DRIFT with evolved robots. To augment the
+evolvability of each organism undergoes a random walk. Thus                  evidence provided by the purely-abstract model in the previous
+over time the evolvability of organisms will become differentiated           section, a more concrete genetic space is considered in this model,
+as by chance mutation some become more evolvable and some                    which has a richer genotype-to-phenotype map. The idea is to
+become less so. However, across the entire population, evolvability          begin exploring whether the results from the abstract passive drift
+will remain constant on average because increasing and decreasing            model reflect a general tendency or if they are overly specific to
+are equiprobable. Concurrent with changes in evolvability, the               parameters or assumptions in the simple model. As an initial such
+niches of organisms are also evolving stochastically. Recall that in         exploration, a genotype-phenotype mapping and simulated
+this model the probability of an organism's niche mutating is                environment are implemented in the spirit of digital evolution
+linked to its evolvability.                                                  [12] and evolutionary robotics (ER; [13]). In particular, a
+                                                                             genotype-phenotype map for a simulated robot controlled by
+   The interesting effect of such linkage is that it causes the niche        evolved artificial neural networks (ANNs) is adapted from prior
+space to act as a filter that over time separates the less evolvable         ER experiments [14­16].
+organisms from the more evolvable. In other words, if all
+organisms are initialized to start from the same niche, on average              In this model, genotypes encode ANNs that control simple
+the organisms that become most evolvable (by chance mutation)                wheeled robots embedded in a simulated maze. The motivation is
+will also evolve to be farthest in the niche space from the starting         to abstract at a high level how evolved neural structures influence
+location (because evolvability here correlates with an increased             an organism's behavior in its environment. In other words, a
+future chance of changing niches). That is, the most evolvable               genotype in this model ultimately maps to the behavior of a robot
+organisms have a higher phenotypic velocity of change. As a result,          in a simulated maze environment. Though other domains could
+the least evolvable organisms will on average cluster near the               be applied, this environment is well-studied [14­16] and offers a
+initial niche, and the most evolvable organisms are more likely to           non-trivial genotype-phenotype mapping. Niches in this model are
+be found along the peripheral niches. Thus by observing the                  specified by creating a discrete grid over a space of possible robot
+distribution of evolvability across the niche space (which is equivalent     behaviors, i.e. what the robot actually does in the simulation, as
+to the phenotypic space in this simplified model) one might falsely          opposed to a characterization of its genotype or of the ANN
+conclude that evolvability in general has increased. In other words,         controller itself to which the genotype maps. So in this model, as in
+the average evolvability per niche will have increased.                      nature, the niche space is a many-to-one mapping from the space
+                                                                             of phenotypes, i.e. many similar phenotypic behaviors will map
+   However, evolvability across the population remains unchanged             into the same niche. The idea is that different classes of behaviors
+on average; it is only evolvability's distribution over the space of         are what facilitate niches, not simple differentiation of genotypes
+niches that becomes biased during evolution. This bias, and the              or encoded neural structures. Thus a robot is mapped into a niche
+unbiased population-wide average of evolvability are shown in                as a function of its behavior.
+figure 1. More clearly illustrating the bias over the niche space,
+figure 2 shows a heat-map of evolvability over the grid of niches at            While there there is no overall consensus on how to quantify
+the end of a simulation and figure 3 shows how evolvability varies           evolvability [5], a growing body of work supports that evolvability
+as a function of a niche's distance from the starting niche. Note            is related to phenotypic variability [3,4,6,11]. Thus the evolvability
+that there is a strong monotonic relationship between the distance           of genotypes in this model (also following precedent in ER [17]), is
+of an organism from the starting niche at the end of a simulation            given by quantifying the amount of behavioral variety (i.e. the
+and its evolvability (r~0:735, pv0:0001; Pearson's r).                       number of different behavioral niches) reachable on average by
+
+PLOS ONE | www.plosone.org                                                4  April 2013 | Volume 8 | Issue 4 | e62186
+                                                                          Evolvability Is Inevitable
+
+Figure 6. Evolvability heat map for the abstract model with limited capacity niches. The average evolvability of organisms in each niche at
+the end of a simulation is shown. The lighter the color, the more evolvable individuals are within that niche. The overall result is that, as in the first
+model, evolvability increases with increasing distance from the starting niche in the center.
+doi:10.1371/journal.pone.0062186.g006
+
+random mutations from a particular genotype. In other words, an           that was tractable to exhaustively characterize and explore was
+evolvable organism is more likely to lead to phenotypic divergence.       enumerated (i.e. a discrete subset was considered from a much
+Note that in this model evolvability is not directly encoded into the     larger space of ANNs with continuous weights and variable
+genotype as in the abstract model, but is a quantifiable emergent         network topologies). Then each one of the enumerated genotypes
+product of the genotype-phenotype map, more closely resembling            in the space (which consisted of 38.7 million different genotypes)
+the situation in biological evolution. Specific parameters and            were evaluated in the maze environment to quantify its behavior
+details about the evolvability measure are given in the Methods           and evolvability. For each simulation the population was
+Section.                                                                  uniformly initialized to a randomly chosen genotype (i.e. the
+                                                                          population is always initially homogeneous) and subject to
+   The general motivation for this model is that passively drifting       differentiating genetic drift for 250 generations. Importantly,
+with a relatively large population (e.g. on the order of millions)        supporting the assumption that evolvability is heritable, despite
+composed of this kind of more concrete genotype may exhibit the           overall wide variance in evolvability over the entire genetic space,
+same appearance of increasing evolvability as observed in the             the evolvability of a parent and its offspring are well correlated
+abstract passive drift model. A larger population is necessary in         (r~0:770; Pearson's r). The details of the particular neural model
+this experiment because most random genotypes in this more                applied can also be found in the Methods Section.
+realistic genotypic space represent similarly trivial behaviors, i.e.
+most randomly-connected ANNs encode no meaningful informa-                   Interestingly, a plot of evolvability over time from this model
+tion, and the appearance of increasing evolvability will only             also demonstrates the appearance of increasing evolvability over
+emerge when drifting over a sufficient quantity of differentiated         time (figure 4), providing evidence that the hypothesis that genetic
+non-trivial behaviors. Thus to facilitate these experiments in a          drift can lead to the appearance of increasing evolvability may
+computationally efficient way, a limited genetic space of ANNs            hold true not only in abstract theoretical circumstances.
+
+PLOS ONE | www.plosone.org                                             5  April 2013 | Volume 8 | Issue 4 | e62186
+                                                                             Evolvability Is Inevitable
+
+Figure 7. Evolvability vs. distance from the initial niche for the           Figure 8. True increasing evolvability in the evolved robots
+abstract model with limited-capacity niches. The average                     model with limited capacity niches. The evolvability of organisms is
+evolvability of organisms in the final population is shown as a function     shown averaged over 50 independent simulations that lasted 250
+of distance from the initial starting niche averaged over 50 independent     generations each. It is important to note that because the population
+simulations. The main result is that there is a significant correlation      size in the limited-niche model is much smaller, one generation of the
+between increasing distance from the initial niche and increasing            passive model encompasses more individuals (2,000,000) than is
+evolvability. The plotted line indicates the line of best fit by linear      considered over all generations in the niched model (1,094,313 on
+regression.                                                                  average). In other words, the limited-niche model is more directedly
+doi:10.1371/journal.pone.0062186.g007                                        and more efficiently biased towards evolvability. In particular, the
+                                                                             difference in evolvability between the limited-niche model and the
+Population Growth with Limited Capacity Niches                               passive model is significant for all comparisons after the 50th
+Increases Evolvability                                                       generation (pv0:01; Student's t-test).
+                                                                             doi:10.1371/journal.pone.0062186.g008
+   The previous models demonstrate how a purely random drifting
+process can create the deceptive appearance of increasing overall            organisms (which because of their higher velocity of phenotypic
+evolvability. The next experiments explore the hypothesis that a             change are more likely to mutate into new niches) are continually
+qualitatively more pervasive increase in evolvability (i.e. an overall       amplified from population growth as they diffuse through niches.
+bias towards genotypes with higher evolvability) can result from             Thus as more niches are discovered and filled, the population
+population growth and niches with limited capacity. First, an                becomes increasingly biased towards evolvability; in effect, the
+extension of the abstract passive drift model is considered.                 reward for discovering a new niche in this model accelerates the
+                                                                             filtering process that is purely passive in the passive drifting model.
+  Abstract model with limited capacity niches. This section
+considers a variation of the abstract model introduced earlier, but          Figure 9. Evolvability in the practical ER model with limited
+where the size of the population varies dynamically (previously this         capacity niches. The average evolvability of organisms in the
+size was fixed). In particular, the population grows geometrically           population over evolutionary time is shown, which is itself averaged
+(i.e. each organism is replaced by two offspring in the next                 over 50 independent simulations that lasted 50,000 evaluations each.
+generation), but the overall size of the population remains                  Note that evolvability of an organism is measured as the average
+tractable because in this model niches are limited in capacity               number of different behaviors generated through 300 random
+(i.e. when a new generation is created, niches can grow only to a            mutations. The main result is that niching based on behavior
+certain size, after which further individuals entering that niche are        significantly increases evolvability over a control that randomly assigns
+discarded). The idea is to roughly model the concept of limited              niches independently of an organism's behavior (pv0:01 for all
+resources in natural evolution and explore its effect on evolvability.       comparisons after 2,500 evaluations; Student's t-test).
+Importantly, this extended model still imposes no direct selection           doi:10.1371/journal.pone.0062186.g009
+pressure for evolvability, and if the model started at equilibrium
+(i.e. with all niches at full capacity), there would be no expectation
+of evolvability increasing over time. In other words, what is
+important for evolvability in this model is spreading through the
+space of niches. Furthermore, selection within a niche is purely
+random­there is no selection for adaptation to the niche nor any
+way for one organism to reliably out-compete another. Thus this is a
+model without adaptive pressure.
+
+   However, despite this lack of adaptive pressure, as evolution
+progresses in this model the passive filtering effect of the
+phenotypic space demonstrated in the fixed-sized population
+model is amplified. The explanation is that the resulting
+population growth from founding a new niche (by mutating out
+of the zone of previously explored niches) indirectly rewards
+increasing evolvability in this model: The more evolvable
+
+PLOS ONE | www.plosone.org                                                6  April 2013 | Volume 8 | Issue 4 | e62186
+                                                                          Evolvability Is Inevitable
+
+Figure 10. Wheeled robot. The simulated mobile robot is shown that        Figure 11. Maze environment. A top-down view of the maze is
+is used in the experiments with evolved machines. Rangefinder sensors     shown that robots navigate in the experiments with evolved machines.
+allow the robot to perceive obstacles, and the motors controlling its     The circle indicates where a robot begins its trial in the maze, which
+wheels enable the robot to traverse its environment.                      lasts for 400 simulated timesteps.
+doi:10.1371/journal.pone.0062186.g010                                     doi:10.1371/journal.pone.0062186.g011
+
+This acceleration is shown in figure 5, which compares evolvability       practical neuroevolution method called NEAT [18]. Instead of
+in this model to that of the passive drift model introduced earlier.      having only three discrete settings for ANN connection weights
+Note that the figure shows growth in overall evolvability (i.e.           (i.e. inhibitory, excitatory, or neutral), the connection weights in
+averaged over all organisms) in the limited capacity niche model          NEAT can vary continuously in strength. Additionally, to facilitate
+that greatly outpaces the growth in the passive drift model (which        increasingly complex evolved behaviors, the topology of the ANN
+is only significant when averaged over niches). In other words,           can itself become increasingly complex because of mutations that
+superficial niche-level evolvability in the passive drift model grows     incrementally introduce new connections and nodes during
+more slowly than evolvability over all genotypes in the limited           evolution. As a result of continuous weights and increasing
+capacity niche model. This result is important because it                 complexity, the space of ANNs that NEAT explores is effectively
+demonstrates a true increase in average evolvability over a               infinite and cannot be fully enumerated as in the previous model.
+population without selection pressure to out-compete other                However, the benefit is that this class of genetic space is more
+organisms.                                                                analogous to that provided by DNA in nature, which is also open-
+                                                                          ended in a similar way.
+   Similarly to the first model, figure 6 shows a heat-map of
+evolvability over the niche space averaged over all runs, and                Because the space cannot be fully enumerated due to
+figure 7 shows how evolvability varies over the niche space as a          computational limits, it is impossible to fully characterize the
+function of a niche's distance from the starting niche. There is a        genotypic space and precisely calculate evolvability (as was done in
+strong significant monotonic relationship between the distance            the fully passive model). This full characterization of the space also
+from starting niche and evolvability (r~0:967,pv0:0001; Pear-
+son's r).                                                                 Figure 12. Fixed-topology ANN. The figure illustrates the fully-
+                                                                          connected recurrent ANN with 18 possible connections that serves as a
+  Evolved robots model with limited capacity niches. Like                 space of possible controllers for robots embedded in a maze navigation
+the previous extension to the abstract model, this section extends        environment. Each connection can either be excitatory (a weight of 1.0),
+the drifting model with simulated evolved robots to include               inhibitory ({1:0) or neutral (0.0). The activation function in the ANN is a
+population growth and limited capacity niches. The idea is to             steepened sigmoid function [18]. The ANN has three rangefinder sensor
+explore whether this more realistic genotype-phenotype mapping            inputs, two hidden neurons, and two motor outputs.
+will also exhibit the same accelerated increase of evolvability seen      doi:10.1371/journal.pone.0062186.g012
+from extending the abstract model. The results of this experiment
+are shown in figure 8, and confirm that limiting niche capacity also
+biases population growth more strongly towards increasing
+evolvability in this more concrete genetic space. In other words,
+the limited niche capacity models (both the abstract model and the
+model with evolved robots) demonstrate a bias towards true
+evolvability (i.e. when averaged over the entire population) while
+the passive drift models exhibit a weaker bias towards evolvability
+that is significant only when averaged over niches.
+
+  Practical ER model with limited capacity niches. Finally,
+the last model explores evolvability in a less restricted space of
+ANNs. The idea is to examine whether the hypotheses in this
+paper hold even in a commonly used practical ER system. In
+particular, this model explores a limited-capacity niched model (as
+in the previous two experiments) but with a well-established
+
+PLOS ONE | www.plosone.org                                             7  April 2013 | Volume 8 | Issue 4 | e62186
+                                                                             Evolvability Is Inevitable
+
+Figure 13. NEAT ANN. The initial topology of the ANN in the practical        appearance of overall increasing evolvability can result from
+ER model is shown. Topologies change during evolution from structural        evolvable organisms filling a larger volume of phenotypic space.
+mutations that add new nodes and connections. In addition, unlike in
+the restricted ANN space, connection weights can vary continuously, i.e.        However, even assuming that evolvability has truly increased,
+weight mutations perturb connections with values drawn from the              these results still illustrate the danger in habitually viewing
+uniform distribution, and weights are capped between {3:0 and 3.0.           evolution through the lens of selection pressure. An alternative
+doi:10.1371/journal.pone.0062186.g013                                        perspective through which to interpret the results is to view
+                                                                             evolution as a process driven to diversity as it expands through
+facilitated efficient simulation of millions of evolved robots through       new niches. Such niche expansion is a ratcheting process, whereby
+a precomputed look-up table that mapped a genotype to its niche              niches rarely go unfilled after being discovered. The founder effect
+and evolvability. Such a table is impossible to construct for the            and population growth from uncovering new niches serve to bias
+practical ER model, and thus only the limited niche capacity setup           the genotypic space towards increasing evolvability because they
+is implemented here (because it exhibits a driven trend towards              amplify genomes that diverge phenotypically, which on average
+evolvability increase that is not dependent on a large population            tend to be those that are more evolvable. Thus if the assumption of
+size). As in the prior robot controller models, the niche space              evolvability's heritability holds, then such founder effects in
+consists of a discretized grid of the possible locations to which a          establishing new niches may yield a persistent bias towards
+robot can navigate within the maze. The evolvability of a genotype           increasing evolvability ­ even in the absence of adaptive
+is estimated (because the space cannot be exhaustively enumer-               competition between organisms.
+ated) by counting how many phenotypic niches are reachable from
+many independent random mutations of the original genotype. As                  In this view increasing evolvability may simply be an inevitable
+a control to show that niching robots in a structured way is having          result of open-ended exploration of a rich genetic space.
+a positive effect on evolvability, a comparison experiment is also           Importantly, in nature this passive drive towards evolvability
+run where niching is random (i.e. an ANN's niche is specified by a           may have bootstrapped the evolution of the genotype-phenotype
+random number generator instead of being derived from the                    map itself. That is, the genotypic code and biological development
+robot's behavior). In other words, the random control does not               themselves are encoded within organisms, and mutations that alter
+consistently reward behaviors that are different from those already          the structure of the genetic space or genotype-phenotype map may
+present in the system.                                                       also lead to more or less phenotypic possibilities. In this way, the
+                                                                             emergence of a complex evolvable genotypic code and biological
+   The results of these experiments are shown in figure 9, which             development may have been bootstrapped from far simpler
+reinforce the hypotheses in this paper by similarly demonstrating            reproductive processes by similar non-adaptive mechanisms. In
+the benefits for evolvability of population growth with limited              other words, there may be no selective benefit for development or
+niche capacity in a more realistic genetic setting. Note that as in          a complex genetic system, which may do no more than potentiate
+the previous two experiments, limiting niche capacity encourages             greater phenotypic possibilities. In this way the story of biological
+true evolvability growth.                                                    evolution may be more fundamentally about an accelerating drive
+                                                                             towards diversity than competition over limited resources.
+Conclusions
+                                                                             Methods
+   This paper presented evidence for two non-adaptive explana-
+tions for the appearance of increasing evolvability over the course             The following sections provide more details on the experimental
+of biological evolution. The first is that an unbiased drifting              models used in the experiments in this paper. Note that all error
+process over genotypes can nonetheless produce a distribution of             bars in figures indicate 95% confidence intervals around the mean,
+phenotypes (where multiple individuals in the population may                 and statistically significant differences are measured by Student's t-
+have the same phenotype) biased towards increasing evolvability,             test with a p-value of 0.01 unless otherwise noted.
+and the second is that founder effects for discovering niches can
+provide a genotypic bias towards true evolvability increase. While           Abstract Model Details
+such non-adaptive explanations do not contradict more popular                   For both abstract models, at the beginning of the simulation
+adaptive explanations, they call them into question because the
+mechanisms shown here require fewer assumptions, i.e. they result            each individual's evolvability was initialized to 0.05. At the
+from the structure of the genotype-phenotype map and founder                 beginning of each generation, an individual's niche is perturbed
+effects from uncovering new niches instead of particular transient           with a probability equivalent to its evolvability, and its evolvability
+selective pressures. In fact, the results from the passive drift models      itself is perturbed with a fixed probability (0.01). Changes in
+suggest even caution in the assumption that evolvability in general          evolvability are drawn from a uniform distribution between
+has truly increased over evolutionary time; the superficial                  20.005 and 0.005.
+
+                                                                                In the abstract passive drift model, the population consisted of
+                                                                             40,000 individuals that evolved solely due to genetic drift for 3,000
+                                                                             generations. In the model with limited capacity niches, niches were
+                                                                             limited to 5 individuals each, and the population was initialized in
+                                                                             the first generation with a single individual. Each individual has
+                                                                             two offspring in the next generation, which results in geometric
+                                                                             population growth except when the niche of an offspring is already
+                                                                             filled. Evolution proceeds for 3,000 generations.
+
+                                                                             Evolved Robot Model Details
+                                                                                In all experiments with evolved machines, a genome that maps
+
+                                                                             to an ANN controls a simulated wheeled robot (figure 10) with
+                                                                             rangefinder sensors in a maze environment (figure 11). The
+                                                                             experimental setup follows prior precedent [14].
+
+PLOS ONE | www.plosone.org                                                8  April 2013 | Volume 8 | Issue 4 | e62186
+                                                                                        Evolvability Is Inevitable
+
+   A uniform 20620 grid is superimposed over the maze for                               Practical ER Model Details
+calculating robots' niches. A robot's behavioral niche (applied for                        The practical ER model experiment uses the NEAT algorithm
+measuring evolvability in both experiments, as well as to limit
+population growth in the limited niche capacity experiment) is                          [18], which relaxes the constraints of fixed ANN topology and
+determined by the grid square within which the robot ends at the                        discrete connection weights. The ANN also provides a greater
+termination of an evaluation.                                                           resolution of sensors, i.e. six rangefinder sensors instead of three.
+                                                                                        Note that the resolution was reduced in the fixed topology ANN
+   The fixed-topology ANN providing the basis for the enumer-                           models for combinatorial reasons. The initial NEAT network
+ated genotypic space of ANNs is shown in figure 12. In particular,                      topology is shown in figure 13. All NEAT parameters are the same
+the genetic space spans variants of a fully-connected recurrent                         as those in Lehman and Stanley [14], which has the same
+ANN with two input nodes, three hidden nodes, and two output                            experimental ER maze setup.
+nodes. In total, this kind of ANN has eighteen possible ANN
+connections that can either be disabled, excitatory, or inhibatory.                        Note that the evolvability of a genome is calculated similarly to
+Thus the space investigated with this model consists of 318, or 38.7                    how it is with the enumerated ANN space, i.e. by counting the
+million possible genotypes. The evolvability of each genome is                          unique number of niches encoded by genomes in its mutational
+calculated by first enumerating the genomes reachable from it by                        neighborhood. However, because all reachable mutations cannot
+all possible single connection mutations, and then counting the                         be feasibly enumerated in the practical model, instead 200
+unique number of behavioral niches that those genomes encode                            mutations of a given genome are randomly sampled to generate
+when evaluated in the maze navigation environment.                                      a reasonable estimate of its evolvability.
+
+   The drifting model in the enumerated ANN space starts with                           Author Contributions
+two million genotypes initialized in each run to the same random
+starting genotype. The system then drifts for 250 generations.                          Conceived and designed the experiments: JAL KOS. Performed the
+                                                                                        experiments: JAL. Analyzed the data: JAL KOS. Wrote the paper: JAL
+References                                                                              KOS.
+
+ 1. Dawkins R (2003) The evolution of evolvability. On Growth, Form and                 10. Crombach A, Hogeweg P (2008) Evolution of evolvability in gene regulatory
+     Computers: 239­255.                                                                     networks. PLoS computational biology 4: e1000112.
+
+ 2. Earl D, Deem M (2004) Evolvability is a selectable trait. Proceedings of the        11. Dichtel-Danjoy M, Fe´lix M (2004) Phenotypic neighborhood and micro-
+     National Academy of Sciences of the United States of America 101: 11531­                evolvability. Trends in Genetics 20: 268­276.
+     11536.
+                                                                                        12. Lenski R, Ofria C, Pennock R, Adami C (2003) The evolutionary origin of
+ 3. Kirschner M, Gerhart J (1998) Evolvability. Proceedings of the National                  complex. Nature.
+     Academy of Sciences of the United States of America 95: 8420.
+                                                                                        13. Nolfi S, Floreano D (2000) Evolutionary Robotics. Cambridge: MIT Press.
+ 4. Wagner G, Altenberg L (1996) Complex adaptations and the evolution of               14. Lehman J, Stanley KO (2011) Abandoning objectives: Evolution through the
+     evolvability. Evolution 50: 967­976.
+                                                                                             search for novelty alone. Evol Comp 19: 189­223.
+ 5. Pigliucci M (2008) Is evolvability evolvable? Nature Reviews Genetics 9: 75­82.     15. Mouret JB, Doncieux S (2012) Encouraging behavioral diversity in evolutionary
+ 6. Brookfield J (2001) Evolution: The evolvability enigma. Current Biology 11:
+                                                                                             robotics: an empirical study. Evolutionary Computation 20: 91­133.
+     R106­R108.                                                                         16. Risi S, Hughes C, Stanley K (2010) Evolving plastic neural networks with
+ 7. Wagner A (2008) Robustness and evolvability: a paradox resolved. Proceedings
+                                                                                             novelty search. Adaptive Behavior.
+     of the Royal Society B: Biological Sciences 275: 91­100.                           17. Lehman J, Stanley KO (2011) Improving evolvability through novelty search
+ 8. Bloom J, Labthavikul S, Otey C, Arnold F (2006) Protein stability promotes
+                                                                                             and self-adaptation. In: Evolutionary Computation (CEC), 2011 IEEE Congress
+     evolvability. Proceedings of the National Academy of Sciences 103: 5869­5874.           on. IEEE, 2693­2700.
+ 9. Ancel LW, Fontana W (2000) Plasticity, evolvability, and modularity in rna.         18. Stanley KO, Miikkulainen R (2002) Evolving neural networks through
+                                                                                              augmenting topologies. Evolutionary Computation 10: 99­127.
+     Journal of Experimental Zoology 288: 242­283.
+
+PLOS ONE | www.plosone.org                                                           9  April 2013 | Volume 8 | Issue 4 | e62186
+

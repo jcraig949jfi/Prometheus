@@ -1,0 +1,172 @@
+Supplementary Information for Nature article by Lenski, Ofria, Pennock & Adami on "The Evolutionary Origin of Complex Features" (2003)
+The first three sections below provide some background information on Avida and the logic functions that digital organisms perform. The fourth section provides some additional data on phenotypic and genomic evolution along the line of descent in the case-study population, up to the time of origin of the EQU function.
+The Avida program and configuration files used in our experiments can be obtained free at myxo.css.msu.edu/papers/nature2003/. One can also view more background information about Avida as well as additional data from our experiments.
+
+I. Avida instruction set
+
+Each position in the genome sequence of a digital organism is one of 26 possible instructions. The table below shows the alphabetical code for each instruction, its mnemonic, and a brief description of its function.
+
+(a) nop-A (b) nop-B (c) nop-C (d) if-n-equ (e) if-less (f) pop (g) push (h) swap-stk (i) swap (j) shift-r (k) shift-l (l) inc (m) dec (n) add (o) sub (p) nand (q) IO (r) h-alloc (s) h-divide (t) h-copy (u) h-search (v) mov-head (w) jmp-head
+
+No-operation instruction; modifies other instructions No-operation instruction; modifies other instructions No-operation instruction; modifies other instructions Test if two registers contain equal values Test if one register contains a lesser value than another Remove a number from a stack and place it in a register Copy the value of a register onto the top of a stack Toggle the active stack Swap the contents of two specified registers Shift all the bits on a register one to the right Shift all the bits on a register one to the left Increment a register Decrement a register Calculate the sum of the values in two registers Calculate the difference between the values in two registers Perform a bitwise NAND on the values in two registers Output the value in a register and replace with a new input Allocate memory for an offspring Divide off an offspring contained in memory (specified by heads) Make a copy of a single instruction in memory (specified by heads) Find a pattern of nop-instruction in the genome Move a head to point to the same position as the flow-head Move a head by a fixed amount stored in a register
+
+(x) get-head (y) if-label (z) set-flow
+
+Write the position of a specified head into a register Test if a specified pattern of nops has recently been copied Move the flow-head to a specified position in memory
+
+II. One- and two-input logic operations
+There are two distinct one-input logic operations and eight distinct two-input operations. The tables below show the output obtained by performing these operations on each possible bitwise input. The bottom rows indicate the minimum number of nand computations required to perform each operation, proven through exhaustive search. To receive the reward for doing a particular logic function, a digital organism must return the correct values for an entire series of 32 bit-wise problems, including multiple examples of each possible combination of inputs.
+
+1Input
+
+Output
+
+2Input
+
+Output
+
+A ECHO NOT
+
+0
+
+01
+
+1
+
+10
+
+# nand
+
+01
+
+AB 00 01 10 11
+
+NAND AND OR_N* OR AND_N* NOR XOR EQU
+
+1 0 10 0
+
+101
+
+1 0 01 0
+
+010
+
+1 0 11 1
+
+010
+
+0 1 11 0
+
+001
+
+# nand
+
+1 2 23 3
+
+445
+
+* The order of the two inputs is arbitrary. Thus, the rewards for performing OR_N and AND_N are triggered by the reciprocal operations, in which A and B are reversed.
+
+III. Shortest hand-written EQU program
+
+The following hand-written program appears to be the shortest one using the set of available instructions that performs the EQU function, and that does not depend on the initial content of stacks and registers (whose initial contents are represented by '?' below). However, it has not been proven that this is the shortest program. Also, this program does not encode selfreplication, but only performs the EQU function.
+
+# Inst
+
+AX
+
+1 IO ?
+
+2 IO ?
+
+EQU
+
+BX
+
+CX
+
+X
+
+?
+
+X
+
+Y
+
+Stack ? ?
+
+Output ? ?
+
+2
+
+3 nop-C 4 push ? 5 nand ? 6 swap ? 7 nand ? 8 swap X or ~Y 9 nop-A 10 pop X or ~Y 11 nand X or ~Y 12 swap X nand Y 13 nop-C 14 nand X nand Y 15 push X nand Y 16 pop X nand Y 17 nop-C 18 nand X nand Y 19 IO X nand Y
+
+X X nand Y Y X or ~Y ?
+X Y or ~X Y or ~X
+X xor Y X xor Y X xor Y
+X equ Y Z
+
+Y Y X nand Y X nand Y X nand Y
+X nand Y X nand Y X or ~Y
+X or ~Y X or ~Y X xor Y
+X xor Y X xor Y
+
+X, ? X, ? X, ? X, ? X, ?
+? ? ?
+? X xor Y, ? ?
+? ?
+
+X equ Y
+
+IV. Phenotypic and genomic evolution along the line of descent in the case-study population through the origin of the EQU function at step 111
+
+The entire line of descent is available at myxo.css.msu.edu/papers/nature2003/ along with functional-genomic arrays for all 345 genotypes in the line of descent.
+Legend: PD = phylogenetic depth. Born = update when genotype first appeared. Functions 0 and 1 denote inability or ability, respectively, to perform nine logic functions: NOT, NAND, AND, OR_N, OR, AND_N, NOR, XOR, and EQU. Fit = fitness relative to immediate parent calculated as product of replication efficiency and computational merit; gains are shown in bold, losses in italics. Mutations are highlighted in bold in the genome sequences, as are changes in functions performed.
+
+PD Born Functions
+
+Fit Genome Sequence
+
+0
+
+0 0 0 0 0 0 0 0 0 0 -- rucavccccccccccccccccccccccccccccccccccccutycasvab
+
+1 32 0 0 0 0 0 0 0 0 0 1.00 rucavccccccccccccccccccccccccccccchccccccutycasvab
+
+2 93 0 0 0 0 0 0 0 0 0 1.01 rucavcccccccccccccccccccccccccpcccchccccccutycasvab
+
+3 143 0 0 0 0 0 0 0 0 0 1.36 rucavcccccccccccccccccccccccccp_ccchccccccutycastvab
+
+4 225 0 0 0 0 0 0 0 0 0 1.01 rucavcccccccccccccccccccccccccpcnchccccccutycastvab
+
+5 284 0 0 0 0 0 0 0 0 0 1.01 rucavcczccccccccccccccccccccccpcnchccccqcutycastvab
+
+6 352 0 0 0 0 0 0 0 0 0 1.00 rucavcczccccccccccccccccccccccqcnchccccqcutycastvab
+
+7 361 0 0 0 0 0 0 0 0 0 1.00 rucavcozccccccccccccccccccccccqcnchccccqcutycastvab
+
+8 379 0 0 0 0 0 0 0 0 0 1.01 rucavcozcccccccccccccccccccxccqcnchccccqcutycastvab
+
+9 411 0 0 0 0 0 0 0 0 0 1.00 rucavcozcccccccccccccccccacxccqcnchccccqcutycastvab
+
+10 567 0 0 0 0 0 0 0 0 0 1.00 rucavcozcccccccccccccccccacxecqcnchccccqcutycastvab
+
+3
+
+11 734 12 775 13 793 14 835 15 949 16 963 17 1118 18 1194 19 1250 20 1252 21 1263 22 1289 23 1325 24 1433 25 1439 26 1455 27 1645 28 1910 29 1947 30 2286 31 2479 32 2669 33 2711 34 2786 35 2828 36 2830 37 2987 38 3420 39 3551 40 3808 41 3914 42 3939 43 4190 44 4646 45 5292 46 5302 47 5323 48 5337 49 5481 50 6067 51 6200 52 6520 53 6765 54 7117 55 7478 56 7565 57 7977 58 8443 59 8742 60 8777 61 9399 62 9428 63 9582 64 9590 65 9823 66 9993 67 11029 68 11584 69 12028 70 12671 71 12853 72 12947 73 13119 74 13537
+
+000000000 000000000 000000000 000000000 000000000 000000000 010000000 010000000 010000000 000100000 000100000 010100000 010100000 010100000 010100000 010100000 010100000 010100000 010100000 010100000 010100000 010100000 010100000 110100000 110100000 110100000 110100000 110100000 110100000 011100000 011100000 011101000 011101000 011101000 011101000 011101000 011101000 011101000 011101000 011101000 011101000 011101000 011101000 011101000 011101000 010101100 010101100 010101100 010101100 010101100 110101100 110101100 110101100 110101100 110101100 110101100 110101100 110101100 110101100 110101100 110101100 110101100 110101100 110101100
+
+1.00 rucavcozcccccccccccccccccamxecqcnchccccqcutycastvab 1.00 rucavcozcccscccccccccccccamxecqcnchccccqcutycastvab 0.99 rucavcozcccscicccccccccccamxecqcnchccccqcutycastvab 1.00 rucavcozcccscicccccccccccamxelqcnchccccqcutycastvab 1.00 rucavcozjccscicccccccccccamxelqcnchccccqcutycastvab 0.99 rucavcozjccscicccccccccccamxelqcnqhccccqcutycastvab 2.01 rucavcozjccscicccccccccccamxelqcnqhccpcqcutycastvab 1.01 rucavcotzjccscicccccccccccamxelqcnqhccpcqcutycastvab 1.01 rucavcotzjciscicccccccccccamxelqcnqhccpcqcutycastvab 2.01 rucavcotzjciscicccccccccccamxelqcnqhpcpcqcutycastvab 1.00 rucavcotzjciscicccnccccckcamqelqcnqhpcpcqcutycastvab 2.00 rucavcotzjciscicccnccccckcamqelqcpqhpcpcqcutycastvab 1.00 rucavcotzjcisciccdnccccckcamqelqcpqhpcpcqcutycastvab 0.99 rucavcotzjcisciccdnceccckcamqelqcpqhpcpcqcutycastvab 1.15 rucavcotzjcisciccdnceccckcamqelqcpqhpcpcqcutycasttvab 0.99 rucavcotzjcisciccdnceccckramqelqcpqhpcpcqcutycasttvab 1.01 rucavcotzjaisciccdnceccckramqelqcpqhpcpcqcutycasttvab 1.00 rucavcotzjaisciccdncecccyramqelqcpqhpcpcqcutycasttvab 0.98 rucavcotzsaisciccdncecccyramqelqcpqhpcpcqcutycasttvab 1.01 rucavcotzsaisciccdnceiccyramqelqcpqhpcpcqcutycasttvab 1.00 rucavcotzsajsciccdnceiccyramqelqcpqhpcpcqcutycasttvab 1.00 rucavcotdsajsciccdnceiccyramqelqcpqhpcpcqcutycasttvab 1.01 rucavcotdqajsciccdnceiccyramqelqcpqhpcpcqcutycasttvab 2.00 rucavcotdqajsciccdncoiccyramqelqcpqhpcpcqcutycasttvab 1.00 rucavcotdqaqsciccdncoiccyramqelqcpqhpcpcqcutycasttvab 0.99 rucavcotdqaqsciccdncosccyramqelqcpqhpcpcqcutycasttvab 1.00 rucavcotdqaqsciccdncosccyramqetqcpqhpcpcqcutycasttvab 1.03 rucavcotdqaqsqciccdncosccyramqetqcpqhpcpcqcutycasttvab 1.00 rucavcitdqaqsqciccdncosccyramqetqcpqhpcpcqcutycasttvab 2.00 rucavcitdqaqsqcpccdncosccyramqetqcpqhpcpcqcutycasttvab 1.01 rucavcitdqaqsqcpccdncosccypamqetqcpqhpcpcqcutycasttvab 8.00 rucavcitdqaqsqcpcldncosccypamqetqcpqhpcpcqcutycasttvab 1.00 rucavcotdqaqsqcpcldncosccypamqetqcpqhpcpcqcutycasttvab 1.08 rucavcotdqaqsqcpcldncosccypamqetqcpqhpcpcqcutycastttvab 1.00 rucavcotdqaqsqcpcldncosccypamqrtqcpqhpcpcqcutycastttvab 1.00 rucavcotdqaqsqcpcldncosccdpamqrtqcpqhpcpcqcutycastttvab 0.99 ruzavcotdqaqsqcpcldncosccdpamqrtqcpqhpcpcqcutycastttvab 0.99 ruzavcotdqaqsqcpcldncosccdpamqrtqcpqhpgpcqcutycastttvab 1.02 ruzavcotcqaqsqcpcldncosccdpamqrtqcpqhpgpcqcutycastttvab 1.00 ruzavcotiqaqsqcpcldncosccdpamqrtqcpqhpgpcqcutycastttvab 1.00 ruzavcotizaqsqcpcldncosccdpamqrtqcpqhpgpcqcutycastttvab 1.01 ruzavcotizaqsqcpcldncosccdpamqbtqcpqhpgpcqcutycastttvab 1.00 rjzavcotizaqsqcpcldncosccdpamqbtqcpqhpgpcqcutycastttvab 1.01 rjzavcottizaqsqcpcldncosccdpamqbtqcpqhpgpcqcutycastttvab 1.00 rmzavcottizaqsqcpcldncosccdpamqbtqcpqhpgpcqcutycastttvab 4.00 rmzavcottizaqpqcpcldncosccdpamqbtqcpqhpgpcqcutycastttvab 1.01 rmzavcottizaqpqcpcldncoszcdpamqbtqcpqhpgpcqcutycastttvab 0.99 rmzavcottizaqpqcpcldncoszcdpamqgtqcpqhpgpcqcutycastttvab 0.99 rmzavcottizpqpqcpcldncoszcdpamqgtqcpqhpgpcqcutycastttvab 1.00 rmzavcothtizpqpqcpcldncoszcdpamqgtqcpq_pgpcqcutycastttvab 1.98 rmzavcothoiqpqpqcpcldncosztdpamqgtqcpqpgpcqcutycastttvab 1.00 rmzavcothhiqpqpqcpcldncosztdpamqgtqcpqpgpcqcutycastttvab 0.32 rmzavcothhiqpqpqcpcldncosztdpamqgtqcpqpsgpcqcutycastttvab 3.19 rmzavcothhiqpqpqcpcltncosztdpamqgtqcpqpsgpcqcutycastttvab 1.00 rmzavcotehiqpqpqcpcltncosztdpamqgtqcpqpdgpcqcutycastttvab 1.00 rmzavcotehiqpqpqcpcltncorztdpamqgtqcpqpdgpcqcutycastttvab 1.01 rmzavcotehiqpqpqcpctltncorztdpamqgtqcpqpdgpcqcutycastttvab 1.01 rmzavcotehiqptqpqcpctltncorztdpamqgtqcpqpdgpcqcutycastttvab 1.01 rmzavcotebiqptqpqcpctltncorztdpamqgtqcpqpdgpcqcutycastttvab 1.01 rmzavcytebiqptqpqcpctltncorztdpamqbtqcpqpdgpcqcutycastttvab 1.00 rmzavcytebiqptqpqcpctltncorctdpamqbtqcpqpdgpcqcutycastttvab 0.99 rmzavcytebiqptqpqcpctltncorctdpamqztqcpqpdgpcqcutycastttvab 1.00 rmzavcytnbiqptqpqcpctltncorctdpamqztqcpqpdgpcqcutycastttvab 1.00 rmzavcztnbiqptqpqcpctltncorctdpamqztqcpqpdgpcqcutycastttvab
+
+4
+
+75 13557 76 13869 77 13952 78 14478 79 15603 80 15769 81 15936 82 16039 83 16090 84 16672 85 16769 86 16786 87 16900 88 16979 89 17008 90 17145 91 17370 92 19260 93 19828 94 20740 95 20804 96 21032 97 21509 98 22229 99 22240 100 22404 101 22412 102 22487 103 22586 104 22629 105 22864 106 22886 107 23002 108 25881 109 26343 110 27437 111 27450
+
+110101100 110101100 110101100 110101100 110101100 110101100 110101100 110101100 110101100 110101100 110011100 110011100 100111100 100111100 100111100 100111100 100111100 100111100 100111100 100111100 100111100 110111100 110111100 110111100 110111100 111111100 111111100 111111100 111111100 111111100 111111100 111111100 111111100 111111100 111111100 101111100 100111101
+
+1.00 rmzavcztnbiqptqpqcpctltncorctdpamqstqcpqpdgpcqcutycastttvab 1.00 rmzavcztnbiqptqpqcpctltncorctdpamqdtqcpqpdgpcqcutycastttvab 1.01 rmzavcztnbiqptqpqcpctltncorctdpamqdtqcpqpdbpcqcutycastttvab 1.00 rmzavcztnbiqptqpqcpctltncorctdpamqdtqcpqpcbpcqcutycastttvab 1.00 rmzavcztwbiqptqpqcpctltncorctdpamqdtqcpqpcbpcqcutycastttvab 1.01 rmzavcztwbiqptqpqcpctltncogctdpamqdtqcpqpcbpcqcutycastttvab 1.00 rmzavcztwbiqptqpqcpctltncogctbpamqdtqcpqpcbpcqcutycastttvab 1.00 rmzavcztwbiqptqpqcpctltncogctbnamqdtqcpqpcbpcqcutycastttvab 1.00 rmzavcztwbiqptqpqcpctltncogctbnamqdtqcpqpibpcqcutycastttvab 0.93 rmzavcztwbiqptqpqcpctltncogctbnamqdtqcpqpibpcqcutycastt_vab 1.98 rmzavcztwbiqptqpqcpctltncogctbnamqdtqcpqpifpcqcutycasttvab 0.99 rmzavcztwbiqptqpqcpctltncogctbnamqdtqcpqpifpqqcutycasttvab 2.00 rmzavcztwbiqptqpqcpctltncogctbnamqdtqcpepifpqqcutycasttvab 1.08 rmzavcztwbiqptqpqcpctltncogctbnamqdtqcpepifpqqcutycastttvab 1.00 rmzavcztgbiqptqpqcpctltncogctbnamqdtqcpepifpqqcutycastttvab 1.00 rmzavcjtgbiqptqpqcpctltncogctbnamqdtqcpepifpqqcutycastttvab 1.01 rmzavcjtgbiqptqpqcpctltncogctbnamqdtqcpepifpqtqcutycastttvab 1.01 rmzavcjtgbiqptqpqcpctltncogctbnamqdtqcptepifpqtqcutycastttvab 1.00 rmzavcjtgbiqptqpqcpctltncogctbnamqdtqcptipifpqtqcutycastttvab 0.99 rmzavcjtgbiqptqpqcpctltncogctbnamqdtqcptipifpq_qcutycastttvab 1.00 rmzavcjtgciqptqpqcpctltncogctbnamqdtqcptipifpqqcutycastttvab 2.00 rmzavcjtdciqptqpqcpctltncogctbnamqdtqcptipqfpqqcutycastttvab 1.00 rmzavcjtzciqptqpqcpctltncogctbnamqdtqcptipqfpqqcutycastttvab 1.00 rmzavcatzciqptqpqcpctltncogctbnamqdtqcptipqfpqqcutycastttvab 1.00 rmzavcgtzciqptqpqcpctltncogctbnamqdtqcptipqfpqqcutycastttvab 2.90 rmzavcgtzciqptqpqcpctltncogctbnamqdtqcptipqfpqqcutycuastttvab 1.00 rmzavcgtzciqptqpqcpctltncogctbnamqdtqcptipqfpqqcutycuastttva_ 1.00 rmzavcgtmciqptqpqcpctltncogctbnamqdtqcptipqfpqqcutycuastttva 0.99 rmzavcg_mciqptqpqcpctltncogctbnamqdtqcptipqfpqqcutycuastttva 1.05 rmzavcgmciqptqpqcpctletncogctbnamqdtqcptipqfpqqcutycuastttva 1.00 rmzavcgmciqptqpqcpctletncogctbkamqdtqcptipqfpqqcutycuastttva 0.99 rmzavcgmciqptqpqcpctletncogc_bkamqdtqcptipqfpqqcutycuastttva 1.02 rmzavcgmciqqptqpqcpctletncogcbkamqdtqcptipqfpqqcutycuastttva 1.00 rmzavcgmciqqptqpqcpctletncogcbqamqdtqcptipqfpqqcutycuastttva 1.01 rmzavcgmciqqptqpqcpctletncogcbeamqdtqcptipqfpqqcutycuastttva 0.49 rmzavcgmciqqptqpqcpctletncogcbeamqdtqcptipqfpqqxutycuastttva 8.00 rmzavcgmciqqptqpqcpctletncogcbeamqdtqcptipqfpgqxutycuastttva
+
+5
+
+

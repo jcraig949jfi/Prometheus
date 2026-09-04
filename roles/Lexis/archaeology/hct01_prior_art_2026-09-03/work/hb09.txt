@@ -1,0 +1,662 @@
+                      Neutrality and Variability:
+Two Sides of Evolvability in Linear Genetic Programming
+
+                             Ting Hu                                                                  Wolfgang Banzhaf
+
+                   Department of Computer Science                                                Department of Computer Science
+                            Memorial University                                                           Memorial University
+                             St. John's, Canada                                                           St. John's, Canada
+
+                         tingh@mun.ca                                                                 banzhaf@mun.ca
+
+ABSTRACT                                                                                 Thus, the evolvability of an evolutionary system is consti-
+                                                                                         tuted by the capability to coordinate these operations in
+The notion of evolvability has been put forward to describe                              order to yield phenotypic improvements. A growing number
+the "core mechanism" of natural and artificial evolution. Re-                            of efforts have been dedicated to understanding [15, 21] and
+cently, studies have revealed the influence of the environ-                              enhancing [8, 25] evolvability.
+ment upon a system's evolvability. In this contribution, we
+study the evolvability of a system in various environmen-                                   Evolvability is the potential of a population to evolve.
+tal situations. We consider neutrality and variability as two                            While the concept of evolvability is still very much under
+sides of evolvability. The former makes a system tolerant to                             discussion, we want to venture to propose a definition that
+mutations and provides a hidden staging ground for future                                is equally applicable to natural and artificial systems:
+phenotypic changes. The latter produces explorative varia-
+tions yielding phenotypic improvements. Which of the two                                    Definition 1. Evolvability -- the capability of a system to
+dominates is influenced by the environment. We adopt two                                 generate adaptive phenotypic variation under certain envi-
+tools for this study of evolvability: i) the rate of adaptive                            ronmental conditions and to transmit it via an evolutionary
+evolution, which captures the observable adaptive variations                             process.
+driven by evolvability; and ii) the variability of individuals,
+which measures the potential of an individual to vary func-                                 Altenberg [1] describes evolvability from a viewpoint of
+tionally. We apply these tools to a Linear Genetic Program-                              Evolutionary Computation (EC) as the ability of a genetic
+ming system and observe that evolvability is able to exploit                             operator or representation scheme to produce offspring fitter
+its two sides in different environmental situations.                                     than their parents. In Biology, Kirschner and Gerhart [14]
+                                                                                         suggest that evolvability should be understood as an organ-
+Categories and Subject Descriptors                                                       ism's capacity to generate heritable and selectable pheno-
+                                                                                         typic variation. An explicit comparison between evolvability
+I.2.2 [Artificial Intelligence]: Automatic Programming,                                  of biological and computational systems has been performed
+Program Synthesis                                                                        by Wagner and Altenberg [25]. In their view, evolvability
+                                                                                         should be considered as the ability of random variants to
+General Terms                                                                            produce occasional improvements, which depends critically
+                                                                                         on the plasticity of the genotype-phenotype mapping. Mar-
+Experimentation, Measurement, Performance                                                row [16] suggests that evolvability means the capability to
+                                                                                         evolve, and this characteristic should be relevant to both
+Keywords                                                                                 natural and artificial evolutionary systems. Nehaniv [18]
+                                                                                         proposes the perspective of using evolutionary system com-
+Evolvability, Rate of Evolution, Neutrality, Variability                                 plexity to describe evolvability. Recently, a growing num-
+                                                                                         ber of evolutionary biologists and computer scientists have
+1. INTRODUCTION                                                                          shown interests in this topic. In an evolutionary system,
+                                                                                         many properties of a population are considered related to
+   In the process of evolution, genetic variation explores new                           evolvability, including adaptive representation [22], facilita-
+evolutionary material, the corresponding phenotypic varia-                               tion of extra-dimensional bypass and robustness against ge-
+tion provides adaptive characteristics, and stabilization op-                            netic variability [7, 23], redundancy and flexibility during
+erators like recombination and selection preserve these im-                              developmental processes [14], mutation rate adaptation [3],
+provements over the previous generations. It is the interac-                             and balancing between robustness and innovation [12].
+tions among these operations that allow evolution to work.
+                                                                                            It would be overly optimistic to expect a formula to de-
+Permission to make digital or hard copies of all or part of this work for                scribe evolvability mathematically, due to the complexity of
+personal or classroom use is granted without fee provided that copies are                organisms, the dynamics of populations, and the influence of
+not made or distributed for profit or commercial advantage and that copies               the environment. The most striking feature of evolvability is
+bear this notice and the full citation on the first page. To copy otherwise, to          its capability to generate adaptive phenotypic variation from
+republish, to post on servers or to redistribute to lists, requires prior specific       random genetic changes. Neutrality and variability are the
+permission and/or a fee.                                                                 two sides of evolvability important to control random ge-
+GECCO'09, July 8­12, 2009, Montréal Québec,Canada.                                       netic changes. Genetic changes do not necessarily result in
+Copyright 2009 ACM 978-1-60558-325-9/09/07 ...$5.00.                                     any observable phenotypic variation. This "neutrality" has
+
+                                                                                    963
+two functions, i) it improves a system's robustness against            that varying environments, especially in a mode that prefers
+deleterious genetic changes, and ii) neutrality also provides          modular changes, can facilitate rapid adaptive phenotypic
+variation potential through exploiting neutral networks [2,            variations.
+10]. In contrast, "variability" generates observable pheno-
+typic variations for adaptation to the environment. These                 In the GP literature, evolvability has also emerged as a
+two sides of evolvability may appear contradictory at first            very important research topic. Ebner et al. [10] incorporate
+sight. However, they closely cooperate to facilitate evolu-            redundant mapping from genotype to phenotype in evolu-
+tion. Moreover, it is the environment that dictates which              tionary computation models as a form of neutrality and show
+side dominates at which stage of an evolutionary process.              how neutral networks can influence evolvability. Further,
+                                                                       Banzhaf and Leier [2] examine the behavior of an evolution-
+   In this contribution, we investigate the two sides of evolv-        ary search process in neutral networks using Linear GP for
+ability under various environmental scenarios in the context           a stationary Boolean search problem. Belle and Ackley [4]
+of a Linear GP system, focusing on a polynomial symbolic               design a dynamic environment exploiting modularity among
+regression problem. The rest of the paper is organized as fol-         varying goals, and argue that enhancing the search modular-
+lows. In Section 2, we discuss the importance of the environ-          ity in a changing environment can increase a GP system's
+ment in evolvability research and review some of the relevant          evolvability. Yu [27] reports that GP populations exhibit
+recent discoveries in the biological community. We discuss             various program distributions under different environmental
+two metrics adopted in this work to investigate evolvability           variation rates.
+in Section 3. First, the nonsynonymous to synonymous sub-
+stitution ratio ka/ks [11] captures the adaptive and silent               In this contribution, we adopt interesting current discov-
+substitution rates of a population. Second, for a closer look          eries from Biology to GP. We focus on the influence of the
+at a population's structure, the variability of an individual is       environment on the two sides of evolvability, neutrality and
+defined based on its connectivity in neutral networks [2, 24].         variability. We hypothesize that evolvability of our com-
+Section 4 presents our simulated studies in a Linear GP sys-           putational evolutionary system can be different in various
+tem. Three typical environmental scenarios are modeled: i)             environments.
+random evolution (RE), ii) fixed target (FT), and iii) moving
+target (MT) evolution. Our concluding remarks and future               3. METHODS
+work will be discussed in Section 5.
+                                                                          Variation is the driving force of evolution. However, most
+2. EVOLVABILITY AND ENVIRONMENT                                        random genetic variations are well known to be deleteri-
+                                                                       ous. Evolutionary systems exploit neutrality and variabil-
+   It has been well accepted that evolution can be under-              ity, as two opposite strategies, to control random genetic
+stood in general with three fundamental elements: varia-               changes in different situations. The core of evolvability is
+tion, selection and inheritance. It is impossible to study a           to generate adaptive variations at the phenotypic level from
+system's evolutionary capability without consideration of its          random genetic changes. Therefore, we believe that the co-
+environment, which is the selection force that preserves vari-         operation of persistence and sensitivity to random genetic
+ations. The detection and investigation of evolvability are            changes contributes substantially to evolvability, and that it
+non-trivial and intriguing problems. Phenotypic fitness is             will be interesting to test whether the dominance of either
+directly observable and serves as a selection criterion. How-          side is driven by the environment. To do this, we adopt
+ever, as a potential to generate better fitness and a capability       two methods, one emphasizing the temporal aspect and the
+for adaptive evolution, evolvability is more difficult to ob-          other emphasizing the spatial aspect of evolvability.
+serve and to select for. Therefore, some empirical methods
+have been proposed in the literature to investigate evolvabil-         3.1 Nonsynonymous to Synonymous Substitu-
+ity "indirectly" in various environments.                                    tion Ratio ka/ks
+
+   Orr [19] analyzes the acceptance of mutations in a system              The nonsynonymous (amino acid) to synonymous substi-
+moving toward a stationary optimum, and suggests that the              tution ratio ka/ks is a widely accepted measurement of the
+effects of accepted mutations are decreasing. That is, to-             rate of genetic substitutions in molecular biology [26]. It is
+wards a fixed target, rapid phenotypic variations can be ob-           known that some mutations of a genetic sequence will lead
+served at the beginning, but the rate of observable adaptive           to amino acid substitutions while others will not, due to the
+evolution will slow down later on. Further, Collins et al. [6]         degenerate code employed for translation. Therefore, ka/ks
+study adaptive walks in dynamic environments, and report               measurement compares two homologous protein-coding gene
+that the rate of environmental change has a systematic effect          sequences from two related species. The ka/ks ratio result-
+on adaptive walks. Gradual changes allow more small-effect             ing from measuring the number of nonsynonymous (amino
+genetic substitutions than sudden changes, and favor more              acid) substitutions per nonsynonymous site (ka) to the num-
+robust individuals that do not behave poorly in any inter-             ber of synonymous substitutions per synonymous site (ks)
+mediate environment. Thus, a large drop in fitness almost              characterizes the adaptive evolution rate between these two
+never happens in a gradually changing environment. Earl                sequences. Recently, this metric has been applied to measure
+and Deem [9] suggest that evolvability can be selected for             the rate of genetic substitutions in tree-based GP by us [11].
+by varying the environment. By observing genetic changes               Similar to natural systems, in GP evolution, it is known that
+in protein evolution, they find that rapid or dramatic en-             not all genetic changes are effective [5]. Genetic changes
+vironmental changes generate strong selection pressure for             that can modify the encoded function are regarded nonsyn-
+evolvability. Thus, high evolvability can be detected and              onymous, while others are regarded as synonymous changes.
+favored by such selection pressure. Meyer et al. [17] state            Thus, accepting nonsynonymous genetic changes leads to ob-
+that fluctuating environments can drive populations towards            servable phenotypic variations in a system, and synonymous
+the edge of a neutral network. Kashtan et al. [13, 20] report          substitutions contribute to evolution in a "silent" manner. In
+                                                                       this measurement, ka measures the rate of nonsynonymous
+
+                                                                  964
+                                                                                  Table 1: LGP Configuration.
+
+                                                                      Population size                       1000
+
+                                                                      Initial program length                5  15
+
+                                                                      Maximum program length                200
+
+                                                                      Number of input register              1
+
+                                                                      Number of calculation register 3+1
+
+                                                                      Constants                             1,2,...,9
+
+                                                                      Operator set                          +, -, ×, protective ÷
+
+Figure 1: A simple example of neutral networks.                       Mutation rate                         1
+Black lines show the connection within a neutral
+network, and blue lines mark the connection among                     Sample set                            100 cases in [-1:1]
+different neutral networks.
+                                                                      Fitness function                      Mean error
+genetic substitutions of an evolutionary process, and ks mea-
+sures the rate of neutral changes accepted. Practically, ka           Truncation selection                  Tournament with size 6
+captures the adaptive evolution "distance", and ks provides
+the background "clock ticks". Thus, the ka/ks ratio is re-            Maximum generations                   500
+garded as a measure for the adaptive evolution rate [11].
+                                                                      Neutral network space                 1000 sampled neighbors
+   Here, we slightly adapt the ka/ks ratio measurement for
+Linear GP. Note that there can be variants in defining non-           as a simplification in this contribution, we assume that two
+synonymous and synonymous genetic changes. For a strict               genotypes are in the same neutral network if they have the
+analogy to biological systems, which often have no explicit           same fitness, instead of looking at their phenotypes.
+fitness, the effects of a genetic change would refer to the in-
+fluence on its phenotype. However, in a GP system, fitness               Fig. 1 depicts a simple example of three genotype neutral
+is explicitly defined and is in most cases the only criterion         networks. Genotypes with high variability are positioned
+for selection. Therefore, we make the simplifying assump-             near the edge of a neutral network, and genotypes more ro-
+tion that a GP genetic change is nonsynonymous (synony-               bust against genetic changes are placed close to the center
+mous resp.) if it changes (maintains resp.) the fitness of            of this network. Therefore, the distribution of individuals
+an individual. Further, we quantify the rates of nonsyn-              in neutral networks can reflect the dominance of either neu-
+onymous and synonymous substitutions in each generation               trality or variability of a population at a given point in time.
+of evolution in a way different from [11]. Specifically, in
+generation t, we observe all the surviving individuals from              For simple problems, all reachable genotypes can be ex-
+the previous generation. We use Na(t) to count the num-               haustively enumerated. However, the genotype space grows
+ber of all attempted nonsynonymous genetic changes and                exponentially with the complexity of a problem. Thus, we
+Ma(t) to count the number of accepted nonsynonymous ge-               need to sample the genotype space to obtain an approxima-
+netic changes when producing generation t. Thus, ka(t) =              tion for complex problems. That is, for a given genotype,
+Ma(t)/Na(t) measures the rate of nonsynonymous genetic                we sample a sufficiently large number of its neighbors to es-
+substitutions. The synonymous substitution rate ks(t) can             timate its variability. This is the approach we will adopt
+be defined similarly by dividing the number of accepted               here.
+synonymous genetic changes Ms(t) by the number of at-
+tempted synonymous genetic changes Ns(t). Typically, the              4. SIMULATED STUDIES
+ratio ka/ks is calculated over time, and it measures the rate
+of adaptive genetic substitutions relative to a background               We use Linear Genetic Programming in our experiments.
+silent genetic substitution rate as a time series.                    We choose Linear GP over the more commonly studied Tree
+                                                                      GP because Linear GP seems to have a better resemblance
+3.2 Neutral Networks                                                  to biological systems. Moreover, we would like to study a
+                                                                      different representation since we have tested the ka/ks ra-
+   In genotype space, a neutral network is usually defined as         tio on a Tree GP system previously [11]. We design a set
+a set of genotypes that map to the same phenotype [2, 10,             of varying environmental scenarios, and measure the ka/ks
+17, 24]. Each genotype corresponds to one vertex in the neu-          ratio and the variability of genotypes in neutral networks in
+tral networks. A genotype G1 is linked to another genotype            order to investigate evolvability in different environmental
+G2 if G2 can be obtained from G1 via a one-step mutation.             situations.
+Note that these links are usually bidirectional due to the re-
+versibility of mutation. Further, a link can exist both within        4.1 Test Case
+and across neutral networks. We say that a genotype is a
+"neighbor" of G1 if it is linked with G1. In addition, it is          lemOu(rPbnie=n1cxhim, aforkr  is the  polynomial symbolic  regression prob-
+a "neutral neighbor" if it belongs to the same neutral net-                                         some    n). Note that there  can be similar
+work as G1. Otherwise, it is a "non-neutral neighbor". For
+a given genotype, we follow Wagner [24] in defining its vari-         patterns within this polynomial. For example, when n = 4,
+ability as the fraction of non-neutral neighbors among all of         x4 + x3 + x2 + x = x(x + 1)(x2 + 1) = x2(x2 + 1) + x(x2 + 1).
+its neighbors. This quantifies the likelihood that a mutation
+from a given genotype leads to a phenotypic change. Again,            Also, if we increase n, we can design moving targets based
+
+                                                                      on this expression. Here, only mutation is used for genetic
+
+                                                                      changes. Each mutation can take two forms. A micro-
+
+                                                                      mutation limits the change to one element of a specific in-
+
+                                                                      struction, i.e., the return register, the operator, or one of
+
+                                                                      the two operand registers. A macro-mutation inserts a ran-
+
+                                                                      domly generated instruction into the program or deletes one
+
+                                                                      instruction, both at a random location. In particular, the
+
+                                                                      mutation rate of a program is 1, with half of the likelihood
+
+                                                                      happening at the micro level and half at the macro level.
+
+                                                                 965
+                                               (a) Average program length                            (b) Attempted nonsynonymous and synonymous mutations                  (c) Accepted nonsynonymous and synonymous mutations
+                        20                                                                        1000                                                                  500
+
+average program length  15                                                                        800                                                                   400
+
+                                                                                       mutations  600                         NNas                           mutations  300                           MMas
+
+                        10
+
+                                                                                                  400                                                                   200
+
+                        5                                                                         200                                                                   100
+
+                        0                                                                              0                                                                  0
+                                                                                                                                                                             0
+                            0     100  200  300                            400    500                     0  100  200  300          400                 500                     100  200  300               400  500
+                                                                                                                                                                        1.4
+                                       generation                                                                 generation                                                         generation
+
+                                  (d) Nonsynonymous substitution rate ka (Ma/Na)                           (e) synonymous substitution rate ks (Ms/Ns)                               (f) ka/ks ratio
+                            1                                                                     1
+
+                        0.8                                                                       0.8
+
+                                                                                                                                                                        1.2
+
+                        0.6                                                                       0.6                                                        ka/ks
+
+ka                                                                                     ks                                                                               1
+
+                        0.4                                                                       0.4
+
+                                                                                                                                                                        0.8
+
+                        0.2                                                                       0.2
+
+                            0                                                                     0                                                                     0.6
+                                                                                                                                                                             0
+                               0  100  200  300                            400    500                  0     100  200  300          400                 500                     100  200  300               400  500
+
+                                       generation                                                                 generation                                                         generation
+
+                                                                                  Figure 2: A typical single run of RE
+
+When a program adopts a macro-mutation, the instruction                                                                time snapshots. In particular, we plot our measures at the
+insertion and deletion occur with equal probability. We em-                                                            beginning and end of the evolution in Fig. 5(a). In the fig-
+ploy a truncation selection scheme where both parent and                                                               ure, each snapshot corresponds to one plotting. We sort the
+offspring populations will compete to form the next genera-                                                            individuals according to their degree of variability for better
+tion. The configuration is specified in Table 1.                                                                       readability. Apparently, the random evolution process does
+                                                                                                                       not alter the variability composition of the population.
+4.2 Varying Environmental Scenarios
+                                                                                                                       4.2.2 Fixed Target (FT) Evolution
+   Here, in the context of a Linear GP system with symbolic
+regression, we define environment as the target polynomial                                                                In this experiment, we start out with a simple fixed target
+expression. In this sense, typical environmental scenarios in-                                                         of x2 + x. The evolution quickly leads the first individual to
+clude i) random evolution, where no specific evolution target                                                          optimum at generation 5 and the entire system converges to
+is defined, ii) fixed target evolution, and iii) moving target                                                         this optimum at generation 10. After this, the average pro-
+evolution. In the following, we study the effects of these                                                             gram length keeps increasing (Fig. 3(a)), which builds more
+scenarios on Linear GP.                                                                                                and more redundancy into individual programs. Fig. 3(b)
+                                                                                                                       records the number of nonsynonymous mutations Na and
+4.2.1 Random Evolution (RE)                                                                                            that of the synonymous mutations Ns at each generation.
+                                                                                                                       These two metrics start with a 20-80 split as with the previ-
+   We implement random evolution by applying random se-                                                                ous scenario because of the randomness of the initial popu-
+lection when forming a new generation. We plot various                                                                 lation composition. As the system progresses the optimum
+measurements of the process in Fig. 2. In Fig. 2(a), we plot                                                           and converges (up to generation 10), Na increases as a large
+the average program length over time and observe that there                                                            number of the mutations are nonsynonymous. After this
+is no general trend of length. This is distinct from normal                                                            point, Na decreases and approaches 0 due to the increasing
+Linear GP, where average program length increases. All                                                                 robustness in the population. Ns follows the complemen-
+other metrics in this figure, however, indicate a fair level of                                                        tary trend in this process. As in Fig. 3(c), the system starts
+stability (Fig. 2(b)(f)). In Fig. 2(b), the system presents a                                                          to completely reject nonsynonymous changes (Ma) after the
+constant 20-80 split among the 1000 total mutations between                                                            convergence to the optimum because any such change is dele-
+the nonsynonymous (Na) and synonymous (Ns) changes.                                                                    terious and is not favored by selection. During the process,
+The accepted nonsynonymous (Ma) and synonymous (Ms)                                                                    Ms remains at about half of the level of Ns because of the
+substitutions remain at half of the level (Fig. 2(c)) because a                                                        half-half composition of a new generation before selection.
+new generation always starts with the combination of all par-                                                          The nonsynonymous substitution rate ka (Fig. 3(d)) has a
+ents and offspring and half of them survive at random. This                                                            positive value until convergence, indicating no phenotypic
+means that the ka and ks rates are both approximately 0.5                                                              evolution occurs after this point. The synonymous substi-
+(Fig. 2(d) and (e)), with ka having slightly higher variance.                                                          tution rate ks (Fig. 3(e)) suggests a very active background
+This further implies that the ka/ks ratio stays at around 1,                                                           evolution before system convergence, which stabilizes at ap-
+i.e., the neutrality and variability apply equal influence in a                                                        proximately 0.5 afterwards. As a result, the ka/ks is always
+random evolution system.                                                                                               less than 1, and has a positive value until the system con-
+                                                                                                                       verges. This is the result of the majority of random muta-
+   In addition to observing the system as it progresses, we
+are also interested in the variability of all the individuals at
+
+                                                                                                                  966
+                                               (a) Average program length                           (b) Attempted nonsynonymous and synonymous mutations                  (c) Accepted nonsynonymous and synonymous mutations
+                        60                                                                       1000                                                                  600
+
+average program length  50                                                                       800                                                                   500
+
+                        40                                                            mutations                                                             mutations  400
+
+                                                                                                 600                         NNas
+
+                        30                                                                                                                                             300                                      Ma
+
+                                                                                                 400                                                                                                            Ms
+
+                        20                                                                                                                                             200
+
+                        10                                                                       200                                                                   100
+
+                        0                                                                             0                                                                  0
+                                                                                                                                                                            0
+                            0     100  200  300                            400   500                     0  100  200  300          400                 500                     100       200  300                   400  500
+                                                                                                                                                                       0.8
+                                       generation                                                                generation                                                                   generation
+
+                                 (d) Nonsynonymous substitution rate ka (Ma/Na)                           (e) synonymous substitution rate ks (Ms/Ns)                                         (f) ka/ks ratio
+                        0.4                                                                      1
+
+                        0.3                                                                      0.8                                                                   0.6
+
+                                                                                                 0.6                                                        ka/ks
+
+ka                      0.2                                                           ks                                                                               0.4
+
+                                                                                                 0.4
+
+                        0.1                                                                      0.2                                                                   0.2
+
+                            0                                                                    0                                                                     0
+
+                               0  100  200  300                            400   500                  0     100  200  300          400                 500                  0  100       200  300                   400  500
+
+                                       generation                                                                generation                                                                   generation
+
+                                                                                Figure 3: A typical single run of FT on x2 + x
+
+tions being deleterious, which is a recognized phenomenon                                                                In terms of system variability (Fig. 5(b)), we are inter-
+in both biological and artificial evolutionary systems.                                                               ested in four points of time during the evolutionary process.
+                                                                                                                      That is, at the very beginning, when the fittest individual
+   We next zoom in to the results of quartic polynomial re-                                                           hits the optimum, when the system converges, and at the
+gression (x4 + x3 + x2 + x). Compared to the simpler target                                                           end. We observe that the initial population possesses the
+of x2 + x, the evolution here takes a longer time to com-                                                             same high diversity in variability as in random evolution
+plete, but the general trend of these two runs is the same.                                                           (Fig. 5(a)). As the system evolves, the population has a high
+The quartic case provides more abundant information to                                                                overall level of variability but less diverse. When the system
+study the process of locating various local and global op-                                                            converges the optimal fitness and the population starts to
+tima. Here, we plot only the first 200 generations during                                                             possess approximately the same genotypic structure, both
+evolution (Fig. 4). The best fitness and average fitness are                                                          the variability and diversity decrease, but the system is still
+plotted in Fig. 4(a), where the fittest individual hits the                                                           fairly sensitive to mutations. As the evolution progresses to
+global optimum at generation 117 and the fitness converges                                                            the end of the run and more redundancy accumulates, the
+at generation 123. Notice that there is always approximately                                                          entire population has very low variability eventually.
+5 generations of lag between hitting a local or global opti-
+mum and assembling the population to that point. Fig. 4(b)                                                               In both the temporal and spatial sense, when a system has
+plots the number of individuals that have the same fitness as                                                         a specific target posed by the environment, the coordination
+the fittest individual over time. Observe that the there are 4                                                        between neutrality and variability behaves rather differently
+periods of frequent replacement of the fittest individual, i.e.,                                                      from void environmental influences.
+generations 1015, 7075, 8590, and 110120. As with
+the previous scenario, we also plot the mutations (Fig. 4(c)),                                                        4.2.3 Moving Target (MT) Evolution
+accepted substitutions (Fig. 4(d)), and their relative rates
+(Fig. 4(e)). In all these measurements, we observe whenever                                                              We design a                   mPoinv=i1ngxitparegreiotdbicyalilnyc.reTahsainngksthtoe  degree n of
+there is frequent replacement of the fittest individual, the                                                          the polynomial                                                                            the similar-
+system is actively yielding and accepting phenotypic vari-
+ations. Note that the rate of ks remains at approximately                                                             ity among these targets, there is a good amount of inherent
+a constant level regardless of the system dynamics. How-
+ever, ka faithfully captures the rate at which the system                                                             modularity in these environmental changes [13]. In the fol-
+makes observable improvements. Thus, the ratio of ka to
+ks also provides a reliable measurement of evolution rate.                                                            lowing experiments, we study how the system responds to
+Consequently, all of the metrics taken in Fig. 4 verify that
+alternation of the dominance of neutrality and variability is                                                         such modular changes. At the outset, the system evolves
+a driving force for evolution throughout time. In addition,                                                           towards the polynomial x2 + x, but we change the target
+the observations we have made here coincide with biological
+evolution in that i) most random mutations are deleterious                                                            to a higher degree every c generations, called the switch-
+so that the ka/ks ratio is mostly less than 1, and ii) this ratio
+generally decreases as fitness improvements become finer-                                                             ing period. Specifically, the target is a function of time (or
+grained [19].
+                                                                                                                      generation) t,
+
+                                                                                                                                                                               t/X c +2  xi.
+
+                                                                                                                                                            T (t) =
+
+                                                                                                                                                                                   i=1
+
+                                                                                                                      Here, we change the target polynomial every 100 generations
+                                                                                                                      (c = 100), and then allow our Linear GP system to evolve
+                                                                                                                      for 500 generations. The target polynomial will increase its
+                                                                                                                      degree from 2 to 6. As the polynomial degree increases,
+
+                                                                                                                 967
+                                    (a) Fitness development                                     (b) Number of best fit individuals                            (c) Attempted nonsynonymous and synonymous mutations
+           0.6
+                                                                                          1000                                                                1000
+
+                                                                                                                                                                    Na
+                                                                                                                                                                    Ns
+           0.5  best fitness                                                              800                                                                 800
+                                                                   number of individuals
+                average fitness
+
+           0.4                                                                                                                                     mutations
+
+fitness                                                                                   600                                                                 600
+
+           0.3
+
+                                                                                          400                                                                 400
+
+           0.2
+
+           0.1                                                                            200                                                                 200
+
+              0                                                                               0                                                                0
+                 0 20 40 60 80 100 120 140 160 180 200                                           0 20 40 60 80 100 120 140 160 180 200                            0 20 40 60 80 100 120 140 160 180 200
+                                              generation                                                                     generation                                                       generation
+
+              (d) Accepted nonsynonymous and synonymous mutations                             (e) Nonsynonymous and synonymous substitution rates                                           (f) ka/ks ratio
+           500                                                                            0.8                                                                 1
+
+           400                                                                            0.6                                                                 0.8
+
+mutations  300  MMas                                               rates                             kkas                                          ka/ks      0.6
+
+                                                                                          0.4
+
+           200                                                                                                                                                0.4
+
+           100                                                                            0.2                                                                 0.2
+
+           0                                                                              0                                                                   0
+              0 20 40 60 80 100 120 140 160 180 200                                          0 20 40 60 80 100 120 140 160 180 200                               0 20 40 60 80 100 120 140 160 180 200
+
+                                          generation                                                                     generation                                                          generation
+
+                Figure 4: A typical single run of FT on x4 + x3 + x2 + x during the first 200 generations
+
+the target takes a more complex form. However, since the                                             of neutral networks, as the system finds and converges to a
+target changes in a modular way, there can be many reusable                                          target, the individuals of the system "settle to the center" of
+patterns from previous target polynomials, and the search                                            the neutral network, and the system becomes more robust.
+process is expected to learn from history.                                                           Thus, phenotypic variations start slowly once it is exposed
+                                                                                                     to new environmental challenges. In this case, the individ-
+   Fig. 6 depicts the metrics we looked into also in previous                                        uals need to first move to the edge of the neutral network,
+scenarios. Each time the target is switched, we see that the                                         i.e., to "pull" the system out of stagnation, before adapting
+fitness worsens (Fig. 6(a)) and the replacement of the fittest                                       to this new environment. Another observation is that the
+individual happens frequently (Fig. 6(b)). This is similar                                           polynomial target changing in a modular way can improve
+to the fixed target scenarios, where individuals are becom-                                          search efficiency. That is, an evolutionary system can find
+ing sensitive to mutations whenever the system is frequently                                         an ultimate target by following a series of intermediate goals
+replacing its currently fittest individual (Fig. 6(c)(d)). It is                                     faster than by trying to find it directly. This also suggests
+interesting to see from the chart for the nonsynonymous and                                          some interesting future research on problem modularity and
+synonymous substitution rates (Fig. 6(e)) that, despite the                                          evolvability.
+periodic target switching, the synonymous rate ks still stays
+fairly stable. This indicates that neutral genetic changes                                           5. CONCLUSION AND FUTURE WORK
+take place and are accepted at a stable rate during the en-
+tire evolutionary process, but phenotypic variations can only                                           The most important feature of evolvability is its capability
+be observed when the system adapts to its new environment.                                           to generate adaptive phenotypic variations from random ge-
+Again, this results from the close cooperation of neutrality                                         netic changes. Neutrality and variability are the two sides of
+and variability, as two sides of evolvability harnessing ran-                                        evolvability controlling random genetic variations. The envi-
+dom genetic changes to generate adaptive phenotypic varia-                                           ronment plays an important role in evolvability to determine
+tions.                                                                                               which of these two sides is dominant. In this contribution,
+                                                                                                     we employed a Linear GP system as a case study to ex-
+   Moreover, carefully designed modular target switching is                                          amine the behavior of evolvability in various environmental
+expected to accelerate evolution. We present three typical                                           situations, by using two tools that can capture evolvabil-
+runs in Fig. 7 to investigate this. For each case, we plot                                           ity in the temporal and spatial sense. We observed that an
+fitness development and the ka/ks ratio. In case 1, the sys-                                         evolutionary system actively generates phenotypic variation
+tem cannot reach the target in any period before the target                                          only when it is adapting to a new environmental challenge.
+moves. As discussed previously, in this case the system is                                           However, this adaptivity is not coming out of void but is the
+changing very actively. In case 2, the system only finds and                                         result of constant genetic variations in the background, with
+converges to the target for the first two periods. In case                                           the majority being neutral. To cope with environmental
+3, the system successfully reaches the target by the end of                                          fluctuations, a system can improve its phenotypic variation
+each period. In all of these cases, we observe that, when                                            rate without changing its genetic variation rate.
+the target is moved before the system finds and converges
+to it, the fitness changes are smaller at the target switching                                          This contribution is preliminary work on understanding
+point and the ka/ks ratio is higher at these points. In con-                                         the mechanisms in evolvability. It can be extended in the
+trast, the system is slower to respond to a target change if                                         following directions.
+it has found and converged to a target previously. In terms
+
+                                                                                                968
+    · The rate and intensity of environmental fluctuations is                Parallel Problem Solving from Nature (PPSN X),
+       expected to have considerable influence on the behav-                 volume 5199 of LNCS, pages 448­457. Springer, 2008.
+       ior of evolvability. An environment changing periodi-           [12] Y. Jin, R. Gruna, I. Paenke, and B. Sendhoff.
+       cally and in a modular fashion is used in the moving                  Multi-objective optimization of robustness and
+       target scenario here, with a fixed rate and intensity of              innovation in redundant genetic representations. In
+       the change. More dynamic environments will require                    Proceedings of the 2009 IEEE Symposium on
+       further investigation.                                                Computational Intelligence in Multicriteria
+                                                                             Decision-Making, pages 38­45. IEEE Press, 2009.
+    · Linear GP as a computation model, the scope of prim-             [13] N. Kashtan, E. Noor, and U. Alon. Varying
+       itive set and genetic operator can also play important                environments can speed up evolution. Proceedings of
+       roles in the system's variability and neutrality. The                 the National Academy of Sciences,
+       impact of these factors will be examined next.                        104(34):13713­13716, 2007.
+                                                                       [14] M. W. Kirschner and J. C. Gerhart. Evolvability.
+    · We expect to implement our methods in other branches                   Proceedings of the National Academy of Sciences,
+       of Evolutionary Computation and hope similar conclu-                  95(15):8420­8427, 1998.
+       sions can hold regarding evolvability in other artificial       [15] K. F. Liem. Key evolutionary innovations, differential
+       evolutionary systems.                                                 diversity, and symecomorphosis. In Evolutioanry
+                                                                             Innovations, pages 147­170. University of Chicago
+    · Our current work focuses on the understanding of evolv-                Press, Chicago, IL, USA, 1990.
+       ability. We hope to be able to explore mechanisms to            [16] P. Marrow, M. Heath, and I. I. Re. Evolvability:
+       enhance evolvability when applying EC models in more                  Evolution, Computation, and Biology. In GECCO'99:
+       complex problems.                                                     Proceedings of the 1999 Genetic and Evolutionary
+                                                                             Computation Conference Workshop on Evolvability,
+6. ACKNOWLEDGEMENTS                                                          pages 30­33. Morgan Kaufmann, 1999.
+                                                                       [17] L. A. Meyers, F. D. Ancel, and M. Lachmann.
+   We thank NSERC for support under Discovery Grant RG-                      Evolution of genetic potential. PLoS Computational
+PIN 283304-07.                                                               Biology, 1(3):0236­0243, 2005.
+                                                                       [18] C. L. Nehaniv. Measuring evolvability as the rate of
+7. REFERENCES                                                                complexity increase. In Proceedings of the Artificial
+                                                                             Life VII Workshop, pages 55­57. MIT Press, 2000.
+ [1] L. Altenberg. The evolution of evolvability in genetic
+      programming. In Advances in Genetic Programming,                 [19] H. A. Orr. The population genetics of adaptation: the
+      pages 47­74. MIT Press, Cambridge, MA, USA, 1994.                      distribution of factors fixed during adaptive evolution.
+                                                                             Evolution, 52(4):935­949, 1998.
+ [2] W. Banzhaf and A. Leier. Evolution on neutral
+      networks in genetic programming. In Genetic                      [20] M. Parter, N. Kashtan, and U. Alon. Facilitated
+      Programming Theory and Practice III, pages 207­221.                    variation: How evolution learns from past
+      Springer, 2006.                                                        environments to generalize to new environments. PLoS
+                                                                             Computational Biology, 4(11):e1000206, 2008.
+ [3] M. A. Bedau and N. H. Packard. Evolution of
+      evolvability via adaptation of mutation rates.                   [21] R. A. Raff. The Shape of Life: Genes, Development,
+      BioSystems, 69(2):143­162, 2003.                                       and the Evolution of Animal Form. University of
+                                                                             Chicago Press, Chicago, IL, USA, 1996.
+ [4] T. V. Belle and D. H. Ackley. Code factoring and the
+      evolution of evolvability. In GECCO '02: Proceedings             [22] J. Reisinger and R. Miikkulainen. Selecting for
+      of the Genetic and Evolutionary Computation                            evolvable representations. In GECCO'06: Proceedings
+      Conference, pages 1383­1390. ACM, 2002.                                of the 2006 Genetic and Evolutionary Computation
+                                                                             Conference, pages 1297­1304. ACM, 2006.
+ [5] M. Brameier and W. Banzhaf. Linear Genetic
+      Programming. Number XVI in Genetic and                           [23] A. Wagner. Robustness, evolvability, and neutrality.
+      Evolutionary Computation. Springer, 2007.                              Federation of European Biochemical Societies Letters,
+                                                                             579(8):1772­1778, 2005.
+ [6] S. Collins, J. de Meaux, and C. Acquisti. Adaptive
+      walks toward a moving optimum. Genetics,                         [24] A. Wagner. Robustness and evolvability: A paradox
+      176(2):1089­1099, 2007.                                                resolved. Proceedings of The Royal Society B,
+                                                                             275(1630):91­100, 2008.
+ [7] M. Conrad. The geometry of evolution. BioSystems,
+      24(11):61­81, 1990.                                              [25] G. P. Wagner and L. Altenberg. Complex adaptations
+                                                                             and the evolution of evolvability. Evolution,
+ [8] R. Dawkins. The evolution of evolvability. In Artificial                50(3):967­976, 1996.
+      Life: The Quest for a New Creation, pages 201­220.
+      Addison-Wesley, Reading, MA, USA, 1989.                          [26] Z. Yang and J. P. Bielawski. Statistical methods for
+                                                                             detecting molecular adaptation. Trends in Ecology and
+ [9] D. J. Earl and M. W. Deem. Evolvability is a                            Evolution, 15(12):496­503, 2000.
+      selectable trait. Proceedings of the National Academy
+      of Sciences, 101(32):11531­11536, 2004.                          [27] T. Yu. Program evolvability under environmental
+                                                                             variations and neutrality. In Proceedings of the 9th
+[10] M. Ebner, M. Shackleton, and R. Shipman. How                            European Conference on Advances in Artificial Life
+      neutral networks influence evolvability. Complexity,                   (ECAL07), pages 835­844. Springer, 2007.
+      7(2):19­33, 2002.
+
+[11] T. Hu and W. Banzhaf. Nonsynonymous to
+      synonymous substitution ratio ka/ks: Measurement
+      for rate of evolution in evolutionary computation. In
+      Proceedings of the 10th International Conference on
+
+                                                                  969
+                                                (a) Variability in random evoluion                                                                          (b) Variability in fixed target evolution
+                             0.8
+                                                                                                                                                  0.8
+
+                                                                                                                                                            Initial (0)
+
+                                                                                                                                                            Hit (117)
+
+                             0.6                                        Initial (0)                                                               0.6     Converge (123)
+                                                                       End (500)
+                                                                                                                                                            End (500)
+
+                        variability0.4                                                                                                            0.4
+                                                                                                                                     variability
+
+                             0.2                                                                                                                  0.2
+
+                                  0    200                        400  600                            800  1000                                        0    200           400              600  800    1000
+
+                                                                  individual index                                                                                        individual index
+
+                   Figure 5: Variability measurements (numbers in the brackets represent generations)
+
+                                    (a) Fitness development                                                (b) Number of best fit individuals                                        (c) Attempted nonsynonymous and synonymous mutations
+           0.5
+                                                                                              1000                                                                                   1000
+
+                                                                                                                                                                                                                        Na
+                                                                                                                                                                                                                        Ns
+           0.4                                                                                800                                                                                    800
+                                     best fitness                      number of individuals
+
+                             average fitness
+
+fitness    0.3                                                                                600                                                                         mutations  600
+
+           0.2                                                                                400                                                                                    400
+
+           0.1                                                                                200                                                                                    200
+
+           0                                                                                       0                                                                                     0
+                                                                                                                                                                                            0
+                0  100  200       300                        400  500                                 0    100   200     300                           400  500                                 100    200     300      400     500
+                                                                                                                                                                                     0.8
+                        generation                                                                               generation                                                                            generation
+
+              (d) Accepted nonsynonymous and synonymous mutations                                 (e) Nonsynonymous and synonymous substitution rates                                                  (f) ka/ks ratio
+           500                                                                                0.8
+
+           400                                                                                0.6                                                                                    0.6
+
+mutations  300                                               Ma        rates                                                                           ka                 ka/ks
+
+                                                             Ms                               0.4                                                      ks                            0.4
+
+           200
+
+           100                                                                                0.2                                                                                    0.2
+
+           0                                                                                  0                                                                                      0
+
+                0  100  200       300                        400  500                              0       100   200     300                           400  500                           0     100    200     300      400     500
+
+                        generation                                                                               generation                                                                            generation
+
+                                                                       Figure 6: A typical single run of MT
+
+           0.5          Case 1                                                                0.5                Case 2                                                              0.5               Case 3
+           0.4                                                                                0.4                                                                                    0.4
+           0.3                     best fitness                                               0.3                           best fitness                                             0.3                          best fitness
+           0.2                average fitness                                                 0.2                      average fitness                                               0.2                     average fitness
+           0.1                                                                                0.1                                                                                    0.1
+fitness                                                                fitness                                                                                            fitness
+             0                                                                                  0                                                                                      0
+                0  100  200       300                        400  500                              0       100   200     300                           400  500                           0     100    200     300      400     500
+
+           2.5          generation                                                            2.5                generation                                                          2.5               generation
+             2                                                                                  2                                                                                      2
+                        Case 1                                                                                   Case 2                                                                                Case 3
+           1.5                                                                                1.5                                                                                    1.5
+ka/ks        1                                                         ka/ks                    1                                                                         ka/ks        1
+
+           0.5     100  200       300                        400  500                         0.5          100   200     300                           400  500                      0.5        100    200     300      400     500
+             0                                                                                  0                                                                                      0
+                0                                                                                  0                                                                                      0
+
+                        generation                                                                               generation                                                                            generation
+
+                                                                       Figure 7: Three typical cases of MT
+
+                                                                                                                 970
+

@@ -1,0 +1,759 @@
+AUTHORITATIVE DIRECTIVE -- committed verbatim at issuance, 2026-09-03.
+This file wins over any later summary or paraphrase of it. Issued by James.
+Addressed to the Ergon seat; executed by this session because Ergon is tied up.
+The sha256 of the body (every byte after the marker line) is recorded in the
+commit message and in ergon/kouvaris2017/A_PRIMARY_SOURCE_LEDGER.md.
+---8<--- BODY ---8<---
+ERGON — HISTORICAL COLLIDER DEEP-FORENSICS DIRECTIVE
+
+KOUVARIS ET AL. 2017
+
+Determine whether “evolution learns to generalise” already contains the experiment Prometheus thinks is missing
+
+Ergon,
+
+Herakles is authorized to pursue HC-T01, the Toussaint missing-cell experiment.
+
+Your assignment is to attack that justification from the strongest known historical near-neighbor.
+
+Deep-dive:
+
+Kouvaris, Clune, Kounios, Brede & Watson (2017),
+“How evolution learns to generalise: Using the principles of learning theory to understand the evolution of developmental organisation.”
+
+Do not approach this paper as supporting evidence for Prometheus.
+
+Approach it as a potential prior solution.
+
+Your primary mission is:
+
+Determine whether Kouvaris et al. 2017 already measured longitudinal changes in a population’s reachable phenotype distribution under an intervention and causally related those changes to subsequent adaptive acquisition strongly enough that HC-T01 becomes redundant or merely confirmatory.
+
+Try to kill the novelty of the Historical Collider’s current target.
+
+⸻
+
+0. POSSIBLE VERDICTS
+
+End with exactly one:
+
+HC_T01_HISTORICALLY_REDUNDANT
+KOUVARIS_STRONGER_BUT_DIFFERENT
+KOUVARIS_COMPLEMENTARY
+KOUVARIS_NOT_D4_D5
+MORE_ARCHAEOLOGY_REQUIRED
+SPECIMEN_NOT_RECONSTRUCTABLE
+
+Do not protect HC-T01.
+
+⸻
+
+1. PRIMARY-SOURCE RECOVERY FIRST
+
+Acquire and hash:
+
+* published PLOS Computational Biology paper;
+* Supporting Information;
+* preprint(s);
+* source code;
+* configuration files;
+* datasets if any;
+* archived project pages;
+* theses from relevant authors if they contain extended experiments;
+* direct predecessor papers explicitly supplying its measures or methods;
+* direct descendant papers refining the same experiment.
+
+Record every item in a recovered-artifact manifest.
+
+No model-recall claim is load-bearing.
+
+⸻
+
+2. RECONSTRUCT THEIR ACTUAL QUESTION
+
+State precisely what the authors meant by:
+
+evolvability
+generalisation
+developmental organisation
+phenotypic variation
+unseen environments
+training environments
+
+Do not translate into Prometheus language until their definitions are frozen.
+
+The paper explicitly connects evolvability to generalisation in learning systems and asks why developmental organization can facilitate adaptive evolution in previously unseen environments. Verify exactly how that claim is operationalised.
+
+⸻
+
+3. RECONSTRUCT THE PHYSICS
+
+Describe the system completely enough to reproduce it:
+
+genotype
+phenotype
+developmental map
+mutation
+selection
+fitness
+environment
+training environment set
+unseen/test environment set
+population
+generations
+replication
+intervention arms
+network constraints
+connection costs
+noise
+regularisation-like pressures
+acquisition evaluation
+
+Every parameter:
+
+VERIFIED_EXACT
+VERIFIED_RANGE
+INFERRED
+UNSPECIFIED
+ASSUMED_FOR_RECONSTRUCTION
+
+Do not paper over ambiguity.
+
+⸻
+
+4. RECONSTRUCT THE DETECTOR
+
+This is the central question.
+
+What exactly did the authors measure about the distribution of phenotypic variation?
+
+Determine:
+
+1. Is the distribution one-step offspring variation from a fixed parent?
+2. Is it sampled locally around individual genotypes?
+3. Is it sampled uniformly over larger genotype space?
+4. Is it measured population-wide?
+5. Is it measured longitudinally during evolution?
+6. Is it measured in every intervention arm?
+7. Is it retained as a distribution or reduced to summary quantities?
+8. How many samples are used?
+9. Is sampling repeated through generations?
+10. What uncertainty is reported?
+11. Is the detector itself used for selection?
+12. Is the detector scientist-side only?
+13. Does the detector alter the experiment?
+14. Does it characterize current variation or future acquisition probability?
+
+Produce:
+
+KOUVARIS2017_DETECTOR_SPEC.md
+
+⸻
+
+5. APPLY THE HISTORICAL D-LADDER
+
+Classify the experiment:
+
+D0
+
+No accessibility measure.
+
+D1
+
+Selected individuals only.
+
+D2
+
+Population-wide snapshot accessibility.
+
+D3
+
+Longitudinal population accessibility.
+
+D4
+
+Longitudinal accessibility plus subsequent acquisition outcome.
+
+D5
+
+Causal intervention demonstrating accessibility change alters subsequent acquisition.
+
+Do not award D4/D5 because the story sounds causal.
+
+Map each criterion to explicit experimental evidence.
+
+⸻
+
+6. THE FOUR-ELEMENT COMPOSITION TEST
+
+Herakles previously used:
+
+A = detector samples reachable phenotype distribution
+B = longitudinal during evolution
+C = applied inside all intervention/ablation arms
+D = related to subsequent adaptive acquisition
+
+Score Kouvaris 2017 exactly on A/B/C/D.
+
+But refine each:
+
+A-local
+
+Is the detector specifically the distribution generated by the actual local variation operator from current organisms?
+
+B-within-run
+
+Is it measured repeatedly within individual evolving runs?
+
+C-mechanism
+
+Is the manipulated variable a mechanism that changes representation/variation, rather than merely selection pressure?
+
+D-within-run
+
+Is the detector trajectory linked to subsequent acquisition within the same run, rather than only at arm-level after evolution?
+
+This distinction is critical.
+
+Produce a matrix with evidence citations for every cell.
+
+⸻
+
+7. ATTACK HERAKLES’S CLAIM DIRECTLY
+
+Herakles currently claims the defensible missing historical composition is roughly:
+
+a ONE-VARIATION-STEP offspring distribution inside an ON/OFF ABLATION of a variation/representation mechanism, related to adaptive acquisition WITHIN RUNS.
+
+Determine whether Kouvaris 2017 actually satisfies that statement.
+
+If yes:
+
+HC_T01_HISTORICALLY_REDUNDANT
+
+Do not hedge.
+
+If almost:
+
+state exactly what is absent.
+
+⸻
+
+8. SELECTION PRESSURE VS VARIATION MECHANISM
+
+This may be the load-bearing distinction.
+
+Determine precisely what the 2017 intervention changes.
+
+Does it manipulate:
+
+developmental representation
+mutation operator
+genotype-phenotype mapping
+selection history
+environmental variability
+connection cost
+environmental noise
+training distribution
+
+or combinations?
+
+Prometheus is specifically interested in:
+
+evolution changing the machine that generates future variation.
+
+An experiment showing selection history produces more generalizable architectures may be highly relevant but scientifically different from switching a variation operator on/off.
+
+Do not blur these.
+
+⸻
+
+9. LOCAL OFFSPRING CLOUD VS GLOBAL GENOTYPE SAMPLING
+
+Herakles claims Kouvaris samples variation differently from Toussaint.
+
+Resolve this exactly.
+
+For each reported evolvability/generalisation measure determine whether it samples:
+
+immediate mutants of the evolved genotype
+developmental perturbations
+all possible phenotypic variants
+random genotype samples
+environmental variants
+network variants
+some other distribution
+
+This is not implementation trivia.
+
+It decides what “reachable from here” means.
+
+⸻
+
+10. ACQUISITION LINK
+
+Determine exactly how the paper relates evolved organization to future adaptation.
+
+Does it:
+
+transfer organisms to unseen environments?
+freeze architectures and optimize parameters?
+allow further evolution?
+measure immediate phenotype coverage?
+measure adaptation speed?
+measure final attainable fitness?
+measure probability of reaching novel targets?
+
+Distinguish:
+
+GENERALISES_IMMEDIATELY
+
+from:
+
+ACQUIRES_FASTER
+
+from:
+
+REACHES_PREVIOUSLY_UNREACHABLE
+
+These are not equivalent.
+
+⸻
+
+11. TEMPORALITY
+
+Does the paper show:
+
+detector changes at generation t
+    ↓
+subsequent acquisition changes at t+n
+
+within the same evolutionary run?
+
+Or only:
+
+treatment A evolves architecture X
+treatment B evolves architecture Y
+    ↓
+X later generalises better than Y
+
+The second is powerful evidence but not a longitudinal precursor detector.
+
+Resolve it explicitly.
+
+⸻
+
+12. CAUSALITY
+
+List every intervention.
+
+For each ask:
+
+what exactly was changed?
+what detector changed?
+what acquisition changed?
+was representation held fixed?
+was selection held fixed?
+was environment held fixed?
+was mutation held fixed?
+
+Build the causal graph supported by the actual design.
+
+Do not infer links the experiment does not identify.
+
+⸻
+
+13. RECOVER THE HISTORICAL MICROSCOPE
+
+Regardless of redundancy verdict, identify detector parts worth stealing.
+
+Examples may include:
+
+measure of phenotypic variation
+training/test environment split
+generalisation score
+developmental organisation metric
+modularity measure
+regularisation analogue
+adaptation-rate test
+
+For every detector part record:
+
+mathematical definition
+sampling protocol
+computational cost
+what it detects
+what it cannot detect
+whether longitudinal
+whether causal
+whether local
+whether transferable to SFE
+
+Output:
+
+HISTORICAL_DETECTOR_PARTS.jsonl
+
+⸻
+
+14. RECOVER MECHANISM PARTS
+
+Likewise describe any mechanism that alters future acquisition without cognition language.
+
+Possible candidate:
+
+historical environmental selection shapes developmental organization so offspring variation becomes biased toward structurally useful phenotypes in novel environments.
+
+But use this wording only if the evidence supports it.
+
+Record:
+
+precondition
+mechanism
+immediate effect
+future-variation effect
+acquisition effect
+intervention evidence
+substrate dependence
+
+Output:
+
+CANDIDATE_COMPUTATIONAL_PARTS.jsonl
+
+⸻
+
+15. COMPARE DIRECTLY WITH TOUSSAINT
+
+Create:
+
+TOUSSAINT_VS_KOUVARIS_MATRIX.md
+
+Rows should include:
+
+year
+genotype representation
+phenotype
+exploration distribution
+local vs global detector
+per-individual sampling
+population-wide sampling
+longitudinal sampling
+intervention
+intervention targets variation operator?
+intervention targets selection?
+within-run acquisition
+unseen-environment test
+ablation
+same-probe counterfactual
+run-level causal inference
+detector used for selection?
+D-level
+unresolved confound
+
+Then answer:
+
+What does HC-T01 measure that Kouvaris 2017 does not?
+
+If the answer is “nothing material,” kill HC-T01 novelty.
+
+⸻
+
+16. LOOK BACKWARD FROM 2017
+
+The paper explicitly builds on prior work.
+
+Trace the detector/mechanism genealogy backward.
+
+Identify which pieces came from:
+
+Clune
+Lehman
+Stanley
+Watson
+Wagner
+modularity/evolvability work
+learning-theory analogies
+developmental organization work
+
+Do not perform a giant literature review.
+
+Recover only direct ancestors of the mechanism/detector.
+
+Construct:
+
+DETECTOR_GENEALOGY.md
+
+This may reveal that the “2017 microscope” was actually assembled over many earlier experiments.
+
+⸻
+
+17. LOOK FORWARD FROM 2017
+
+Search direct descendants through the present.
+
+Ask whether later work performed the stronger experiment we are contemplating:
+
+longitudinal local offspring accessibility
+    +
+representational intervention
+    +
+subsequent acquisition
+    +
+causal perturbation
+
+If found, recover it.
+
+The Historical Collider should prefer the strongest already-built microscope.
+
+⸻
+
+18. RECONSTRUCTION VALUE
+
+Determine whether this specimen is worth reproducing independently of HC-T01.
+
+Candidate reasons:
+
+Positive-control value
+
+Known evolution of evolvability/generalisation.
+
+Detector calibration
+
+Can Prometheus detect the known change without being told the treatment?
+
+Transfer test
+
+Does the recovered developmental organization accelerate acquisition under held-out worlds?
+
+Composition test
+
+Can its detector be combined with Toussaint’s operator-focused intervention?
+
+Rank these by expected information gain.
+
+⸻
+
+19. THE MOST INTERESTING COMPOSITION
+
+If Toussaint and Kouvaris are scientifically different, ask whether their difference itself identifies an untested composition.
+
+Potentially:
+
+Toussaint:
+    variation-operator / representation self-adaptation
+Kouvaris:
+    selection-history / generalisation-shaped development
+
+Could we eventually test:
+
+variation machinery that changes itself under selection pressures favoring generalisable future variation?
+
+Do NOT run this.
+
+Record it as a composition candidate only.
+
+That may be a much larger circuit part.
+
+⸻
+
+20. FAILURE DATA
+
+Recover what the 2017 experiment records about failed adaptation.
+
+Specifically seek:
+
+failed unseen environments
+phenotype regions never reached
+architecture classes that overfit
+adaptation-rate plateaus
+developmental constraints
+mutations producing maladaptive variants
+network structures that generalise poorly
+
+Ask whether the paper reduced these into final scores and discarded trajectory structure.
+
+This is where the Historical Collider may still add resolution even to a strong detector.
+
+⸻
+
+21. TEST THE “HUMAN TRAINING SET” ANALOGY CAREFULLY
+
+The paper explicitly uses learning-theory language.
+
+Do not let that become anthropomorphic evidence.
+
+Ask only:
+
+Does evolution under a finite set of historical environments produce developmental organization that biases future variation toward useful phenotypes in unseen environments?
+
+If yes, that is a computational phenomenon.
+
+Do not call it reasoning.
+
+⸻
+
+22. NO PROMETHEUS-NATIVE METRICS
+
+For this pass, do not invent:
+
+failure topology
+R0 scores
+epistemic compounding metrics
+custom evolvability entropy
+
+Recover their experiment first.
+
+Only after determining what their microscope sees should any modern extension be proposed.
+
+⸻
+
+23. SPECIFIC FALSIFICATION QUESTIONS
+
+Try to establish whether any of these are true:
+
+F1
+
+The apparent evolvability effect is actually immediate generalisation, not faster future acquisition.
+
+F2
+
+The detector samples a global distribution that does not represent the organism’s actual one-step adjacent possible.
+
+F3
+
+The manipulated variable changes selection rather than variation machinery.
+
+F4
+
+The result is treatment-level and lacks within-run longitudinal precursor evidence.
+
+F5
+
+The effect disappears when architectures are matched.
+
+F6
+
+The experiment already contains a stronger causal accessibility test than Toussaint.
+
+Every F1-F5 narrows but does not dismiss the paper.
+
+F6 threatens HC-T01 novelty.
+
+⸻
+
+24. REQUIRED DELIVERABLES
+
+Produce:
+
+ergon/kouvaris2017/
+
+with:
+
+A
+
+PRIMARY_SOURCE_LEDGER.md
+
+B
+
+RECOVERED_ARTIFACT_MANIFEST.jsonl
+
+C
+
+HISTORICAL_PHYSICS_SPEC.md
+
+D
+
+HISTORICAL_DETECTOR_SPEC.md
+
+E
+
+D_LEVEL_ADJUDICATION.md
+
+F
+
+ABCD_COMPOSITION_MATRIX.md
+
+G
+
+CAUSAL_INTERVENTION_MAP.md
+
+H
+
+TEMPORALITY_ANALYSIS.md
+
+I
+
+TOUSSAINT_VS_KOUVARIS_MATRIX.md
+
+J
+
+DETECTOR_GENEALOGY.md
+
+K
+
+DESCENDANT_SEARCH.md
+
+L
+
+HISTORICAL_DETECTOR_PARTS.jsonl
+
+M
+
+CANDIDATE_COMPUTATIONAL_PARTS.jsonl
+
+N
+
+FAILURE_DATA_RECOVERY.md
+
+O
+
+SFE_CALIBRATION_PROPOSAL.md
+
+P
+
+EXTERNAL_REVIEW_PACKET.txt
+
+⸻
+
+25. FINAL REVIEW QUESTION
+
+Your review packet must answer:
+
+If Prometheus had existed in April 2017 and had been handed the complete Kouvaris experiment, what important question about changes in future computational accessibility would still have remained unanswered?
+
+If the honest answer is:
+
+NONE
+
+then HC-T01 loses much of its novelty.
+
+Say so.
+
+If the answer is specific, that defines the remaining particle.
+
+⸻
+
+FINAL DIRECTIVE
+
+Herakles found a 2003 missing cell.
+
+Now try to prove that 2017 already filled it.
+
+Do not defend Prometheus novelty.
+
+Do not defend Toussaint.
+
+Recover the strongest historical microscope you can find.
+
+Determine exactly what it saw.
+
+Determine exactly what it could not see.
+
+Then tell us whether HC-T01 is:
+
+redundant,
+complementary,
+or still genuinely missing.
+
+If history already solved the problem, the correct Prometheus response is not disappointment.
+
+It is to inherit the solution.

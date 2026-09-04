@@ -1,0 +1,654 @@
+Batut et al. BMC Bioinformatics 2013, 14(Suppl 15):S11
+http://www.biomedcentral.com/1471-2105/14/S15/S11
+
+PROCEEDINGS                                                             Open Access
+
+In silico experimental evolution: a tool to test
+evolutionary scenarios
+
+Bérénice Batut1,2, David P Parsons1, Stephan Fischer1, Guillaume Beslon1, Carole Knibbe3*
+
+From Eleventh Annual Research in Computational Molecular Biology (RECOMB) Satellite Workshop on Com-
+parative Genomics
+Lyon, France. 17-19 October 2013
+
+Abstract
+
+Comparative genomics has revealed that some species have exceptional genomes, compared to their closest
+relatives. For instance, some species have undergone a strong reduction of their genome with a drastic reduction
+of their genic repertoire. Deciphering the causes of these atypical trajectories can be very difficult because of the
+many phenomena that are intertwined during their evolution (e.g. changes of population size, environment
+structure and dynamics, selection strength, mutation rates...). Here we propose a methodology based on synthetic
+experiments to test the individual effect of these phenomena on a population of simulated organisms. We
+developed an evolutionary model - aevol - in which evolutionary conditions can be changed one at a time to test
+their effects on genome size and organization (e.g. coding ratio). To illustrate the proposed approach, we used
+aevol to test the effects of a strong reduction in the selection strength on a population of (simulated) bacteria. Our
+results show that this reduction of selection strength leads to a genome reduction of ~35% with a slight loss of
+coding sequences (~15% of the genes are lost - mainly those for which the contribution to fitness is the lowest).
+More surprisingly, under a low selection strength, genomes undergo a strong reduction of the noncoding
+compartment (~55% of the noncoding sequences being lost). These results are consistent with what is observed in
+reduced Prochlorococcus strains (marine cyanobacteria) when compared to close relatives.
+
+Background                                                              [5-7]. Moreover, when compared to known relatives
+Comparative genomics has revealed that some species                     (e.g. Synechococcus sp.) these genomes also show a strong
+have exceptional genomes, compared to their closest rela-               reductive history [6-9]. Yet there is almost nothing in
+tives. Testing hypotheses about the evolutionary causes of              common in the environmental conditions of endosym-
+these atypical trajectories is a challenge, because models of           bionts and marine bacteria. Effective population sizes,
+evolution usually used for phylogenetic reconstruction are              modes of transmission, resources, and environments are
+not always valid in such lineages. Explaining the reductive             all different. This raises at least two difficult questions:
+evolution observed in some bacterial species is one of                  (1) are the causes of genome streamlining similar in both
+these challenges. In this situation, the genomic sequence               situations and (2) why do such different ways of living pro-
+has been strongly reduced, resulting in the loss of genes,              duce similar dynamics on the genome? One way to
+metabolic pathways, regulation capacities, etc. Reductive               approach these questions is to perform evolutionary
+evolution is one of the characteristics of endosymbiotic life           experiments [10]. By cultivating bacteria lineages in the
+[1-4], but endosymbiotic life is not the only situation                 lab, one could theoretically modify one evolutionary para-
+where genomes have undergone a reductive evolution.                     meter at a time to observe which ones lead to genome
+Some oceanic bacteria (e.g. Pelagibacter ubique, Prochloro-             streamlining. Besides, the mutational events that led to
+coccus marinus) also possess a highly reduced genome                    genome reduction can be precisely identified [11] and the
+                                                                        structure of the reduced sequence can ultimately be com-
+* Correspondence: carole.knibbe@univ-lyon1.fr                           pared with the structure of real reduced bacteria to check
+3Université Lyon 1, INRIA, CNRS, LIRIS, UMR5205, F-69622, France        whether the mode of reduction is similar. Unfortunately,
+Full list of author information is available at the end of the article
+
+             © 2013 Batut et al.; licensee BioMed Central Ltd. This is an open access article distributed under the terms of the Creative Commons
+             Attribution License (http://creativecommons.org/licenses/by/2.0), which permits unrestricted use, distribution, and reproduction in
+             any medium, provided the original work is properly cited.
+Batut et al. BMC Bioinformatics 2013, 14(Suppl 15):S11         Page 2 of 11
+http://www.biomedcentral.com/1471-2105/14/S15/S11
+
+such a research program is almost impossible to perform.       question like reductive evolution, by testing the effect of a
+First, the environmental conditions in which streamlining      specific evolutionary scenario.
+occurs are impossible to reproduce in the lab. Second,
+numerous pressures act simultaneously on real evolving         Methods
+genomes (e.g. repair mechanisms, recombination, direct         In silico experimental evolution consists in building artifi-
+and indirect selective pressures, etc.) and it is almost       cial organisms and letting them reproduce and mutate
+impossible to manipulate them one at a time. Moreover,         inside the computer. An artificial "biochemistry" is
+when submitted to new conditions, an organism may react        designed to decode genomes and compute fitnesses, based
+in various ways. For instance, in the Long-Term Evolu-         on the achievement of a computational task. Evolutionary
+tionary Experiment initiated in 1988 by Richard Lenski at      runs are seeded with random genomes, hand-written gen-
+Michigan State University, half of the replicates rapidly      omes or evolved genomes from previous runs. At each
+experienced a strong increase in their mutation rates          time step, a part or the whole population is renewed by
+through mutations affecting their repair pathways [12]. In     letting the fittest organisms reproduce - possibly with
+one word, real organisms are far too complex to perform        mutations - and letting other organisms die. Backups of
+the "pure", fully controlled experiments that would help to    the whole population can be regularly saved on the disk to
+test the various hypothetic mechanisms that may cause an       constitute a "fossil record". Genealogical trees can also be
+atypical genome evolution. One way to perform such pure        saved to enable reconstruction of the line of descent of the
+experiments and to allow practitioners to strictly change      final best organism at the end of the run.
+one evolutionary parameter at a time is to use synthetic
+experiments in which the evolving organisms are not real         The size of the population, its spatial arrangement, the
+bacteria but rather models of bacteria. In these synthetic     mutation rates, the rate of sexual recombination, the fit-
+experiments (a.k.a. "in silico experimental evolution" [10]    ness measure and the strength of selection are chosen at
+or "digital genetics" [13]), simulated organisms compete,      the beginning of the run and some can also be allowed to
+reproduce and mutate inside the computer. It is then pos-      change during the run. For example, the population can
+sible to test evolutionary scenarios and to observe their      undergo regular bottlenecks followed by expansion, or the
+consequences on the organisms' structure, at the different     mutation rates can be fixed throughout the run or allowed
+levels implemented in the simulation (e.g. genome, regula-     to evolve. Mutations occur randomly and can have fitness
+tion network, phenotype, population). Obviously, working       effects ranging from lethal to beneficial and including neu-
+with simulated - false - organisms is the major drawback       tral. For a given parameter set, the experiment is usually
+of this approach. However, we argue that, on the other         repeated several times by performing independent evolu-
+hand, it allows for "perfect experiments" where all the        tionary runs. Contingency can thus be distinguished from
+characteristics of the organisms are perfectly mastered, as    necessity by searching for instances of parallel evolution in
+well as the characteristics of the evolutionary process        the repeated runs.
+(mutation rates, mutation bias, selection strength...). More-
+over, simulations can be repeated as many times as it is         Several formalisms have been proposed to represent the
+necessary to gain statistical power. They can also last for    genome. It can be a collection of alleles like in population
+millions of generations, the only limiting factor being the    genetics, but it can also be a computer program, a graph, a
+computational load. Finally, during the experiment, all        string of functional elements, or a sequence of nucleotides
+events can be recorded (including those that did not go to     (see [10,14] for recent reviews). The task depends on the
+fixation), thus enabling a complete analysis of the evolu-     formalism. For example, when the genome is a computer
+tionary history. These properties make synthetic experi-       program, the task can be the achievement of arithmetical
+ments a valuable - although not perfect - link between         or logical operations on numbers given as inputs. When
+phylogenetic approaches of evolution (that can study long      the genome encodes a gene regulatory network, either
+to very long time scales but without direct access to the      through a graph or through a string of functional ele-
+evolutionary process itself) and experimental evolution        ments, the task can be to reach to predefined target con-
+(that offers a close view of the evolutionary process but      centrations for specific proteins. We present below a
+that rarely goes over a few thousand generations).             platform for in silico experimental evolution that belongs
+                                                               to the "sequence-of-nucleotides" family, where the genome
+  Here, we present both the general principles of these        encodes a variable number of genes separated by a variable
+"synthetic experiments" and a specific platform, called        amount of non-coding DNA, and where the task is the
+aevol, in which the artificial organisms possess a genetic     approximation of a mathematical function with a combi-
+sequence that can be easily compared to real bacterial gen-    nation of elementary functions encoded by the genes.
+omes at the level of the dynamics of gene repertoire and
+organization on the chromosome. We then illustrate the         The aevol platform
+insights that can be gained through such an approach on a      The aevol (artificial evolution) platform was designed to
+                                                               study the evolution of the size and organization of bacterial
+Batut et al. BMC Bioinformatics 2013, 14(Suppl 15):S11         Page 3 of 11
+http://www.biomedcentral.com/1471-2105/14/S15/S11
+
+genomes in various scenarios. It comes as a set of C++         terminators do. Here the stem size was set to 4 bases and
+command-line programs, including (i) the main program          the loop size to 3 bases. Promoters and terminators deli-
+to perform evolutionary runs and (ii) auxiliary programs to    mit the transcribed regions. Note that several promoters
+prepare the initial population, visualize the state of an      can share the same terminator, in which case we obtain
+evolved population at a given time, or analyze the muta-       overlapping transcribed regions. We assign an expression
+tions on the line of descent of an evolved organism. These     level e = 1 - d to the transcript, according to the
+programs can be run under Linux or MacOS X, with or
+without graphical output, depending on whether one wants                        1 + dmax
+to get a live impression of the evolution or perform a sys-    distance d between the promoter and the consensus.
+tematic campaign of experiments on a computer cluster.
+The source code is available at http://www.aevol.fr.             Once all the transcribed regions have been localized,
+Overview                                                       we search inside each of them for the initiation and ter-
+The aevol platform simulates the evolution of a population     mination signals of the translation process. These signals
+of N artificial organisms using a variation-reproduction       delimit the coding sequences. The initiation signal is the
+cycle (Figure 1). In the default setup, the population size N  motif 011011****000 (Shine-Dalgarno-like signal fol-
+is constant over time and is completely renewed at each        lowed by a start codon, 000 here). The termination sig-
+time step. Each artificial organism owns a circular, double-   nal is simply the stop codon, 001 here. Each time an
+stranded chromosome, which is actually a string of binary      initiation signal is found, the following positions are
+nucleotides, 0 being complementary to 1. This chromo-          read three at a time (one codon at a time) until a stop
+some contains coding sequences (genes) separated by            codon is encountered. If no stop codon is found in the
+non-coding regions. Each coding sequence is detected by a      transcribed region, no protein is produced. A given tran-
+transcription-translation process (detailed below) and         scribed region can contain several coding sequences
+decoded into a "protein" able to either activate or inhibit a  (overlapping or not), implying that operons are allowed.
+range of abstract "cellular processes". The interaction of
+all proteins yields the set of processes the organism is able    To determine the phenotypic contribution of each cod-
+to perform. These global functional capabilities constitute    ing sequence, we use the fuzzy logic framework and the
+here the phenotype. Adaptation is then measured by com-        corresponding theory of possibility. We consider an
+paring the phenotypic capabilities to an arbitrary set of      abstract set = [0, 1]R of cellular processes that can
+cellular processes needed to survive in the environment.       be performed. A "cellular process" is simply represented
+At each time step, N new individuals are created by repro-     by a real number between 0.0 and 1.0. Since R is an
+ducing preferentially the best adapted individuals of the      ordered set, some "cellular processes" are closer to each
+parental generation. After that, all individuals from the      other than to others, just as - in a very informal manner -
+parental population die. With this "generational" repro-       glucose metabolism can be considered to be closer to lac-
+duction model, an individual could have several offspring.     tose metabolism than to DNA repair. Each protein can
+Thence a generation in aevol corresponds then to many          contribute to or inhibit a subset of , with a variable
+generations in real bacteria. In the experiments presented     degree of possibility depending on the cellular process.
+below, reproduction was strictly asexual. When a chromo-       Formally, the phenotypic contribution of a protein is
+some is replicated, it can undergo point mutations, small      represented by a mathematical function f :  [0, 1],
+insertions and small deletions, but also large chromosomal     called possibility distribution. For each "cellular process"
+rearrangements: duplications, large deletions, inversions,     x, it defines the degree of possibility f (x) with which the
+translocations. Thus mutations can modify existing genes,      protein can perform x. We have chosen to use piecewise-
+but also create new genes, delete some existing genes,         linear distributions with a triangular shape (Figure 1).
+modify the length of the intergenic regions, modify gene       Three parameters are necessary to fully characterize such
+order, etc.                                                    distributions: the position m ("mean") of the triangle on
+Details of the phenotype computation                           the axis, which corresponds to the main cellular process
+The phenotype computation starts by searching in both          of the protein, the height H of the triangle, which deter-
+strands for promoter and terminator sequences, delimiting      mines the degree of possibility for the main process, the
+the transcribed regions. Promoters are sequences whose         half-width w of the triangle, which represents the func-
+Hamming distance d with a pre-defined consensus is less        tional scope of the protein and is thus a way to quantify
+than or equal to dmax. In the experiments presented here,      its pleiotropy. Hence the protein can be involved in the
+the consensus was 0101011001110010010110 (22 base              "cellular processes" ranging from m - w to m + w, with a
+pairs) and up to dmax = 4 mismatches were allowed.             maximal degree of possibility for the function at position
+Terminators are sequences that would be able to form a         m. The subset of processes the protein affects is thus
+stem-loop structure, as the r-independent bacterial            defined on the interval ]m - w, m + w[ . While m and
+                                                               w are fully specified by the coding sequence, H is a com-
+                                                               posite parameter taking into account both the expression
+                                                               level of the sequence and the intrinsic efficiency of the
+Batut et al. BMC Bioinformatics 2013, 14(Suppl 15):S11       Page 4 of 11
+http://www.biomedcentral.com/1471-2105/14/S15/S11
+
+Figure 1 Graphical representation of the aevol platform. The underlying algorithm iterates three main steps: (1) genome decoding and
+evaluation, (2) selection of the best individuals and (3) reproduction with mutations and rearrangements. See the main text for details. The
+lightning shapes correspond to mutations and rearrangements undergone during reproduction. Cells are colored according to g, red cells being
+those with lowest g and blue highest.
+
+protein: H = e.|h|, where e is the expression level of the   shall see below, the sign of h determines whether the
+transcript and h is the efficiency of the protein, coded in  protein contributes to or inhibits the cellular processes ]m
+the gene sequence as m or w. Thus, the phenotypic contri-    - w, m + w[.
+bution of a given protein is tuned by its primary sequence
+(h), the quality (e) of its promoter(s) and possibly varia-    In computational terms, the coding sequence is inter-
+tions in gene copy number (concentration effect). As we      preted as the interlacing of the Gray codes of the three
+                                                             parameters m, w and h (the Gray code, also known as the
+Batut et al. BMC Bioinformatics 2013, 14(Suppl 15):S11                                                                              Page 5 of 11
+http://www.biomedcentral.com/1471-2105/14/S15/S11
+
+reflected binary code, is a variant of the binary encoding             the steepness of the distribution of the coefficient of selec-
+
+where two successive values differ by only one bit, thereby            tion s. The actual number of offspring of each individual is
+
+avoiding the so-called Hamming cliffs of the traditional               drawn according to the multinomial law with parameters
+
+binary code). In more biological terms, the coding                               e-kg1          e-kg2                e-kgN
+
+sequence is read one code at a time and an artificial                  N,        N    e-kgi  ,  N    e-kgi  ,  ...,  N    e-kgi  .
+                                                                                 i=1            i=1                  i=1
+genetic code (shown in Figure 1) is used to translate it
+                                                                       In the experiments reported below, the target distribu-
+into the three real numbers m, w and h. In this genetic
+                                                                       tion fE was built as the sum of three Gaussian functions
+code, two codons are assigned to each parameter. For                   (see Figure 1). The mean of each of the three bell-shaped
+
+instance, w is calculated from the codons W0 = 010 and                 functions fluctuated at each time step around their average
+
+W1 = 011. All the W codons encountered while reading                   position, according to an autoregressive process of order 1
+
+the coding sequence form the Gray code of w. The first bit             with parameters s and : xi (t + 1) = x¯i + xi(t + 1) with
+
+of the Gray code of w is a 0 (resp. a 1) if the first W codon                                           t        
+                                                                                                               +  2 - 1(t). In the last
+of the sequence is a W0 (resp. a W1). Hence, if the coding             xi (t + 1) =     xi (t)  1    -
+
+sequence contains nw codons of type W, it encodes an                   equation, the (t)  N(0, 1) for each Gaussian are inde-
+
+integer comprised between 0 and 2nW - 1. A normaliza-                  pendent from one another and normally distributed.
+
+tion enables us to bring the value of the parameter in the             s controls the amplitude of the fluctuations and  controls
+
+allowed range specified at the beginning of the simulation.            the speed at which xi tends to return to x¯i.
+                                                                       Details of the mutation step
+The parameter w, which determines the width of the trian-
+
+gle, is normalized between 0 and wmax, where wmax is a
+
+parameter defined at the beginning of the simulation. The              Each time an individual reproduces, its genome is repli-
+
+raw integer value, 1 in our example, is multiplied by                  cated and several types of mutations can occur during this
+
+  wmax   .  The  values  of  parameters  m  and  h      are  obtained  replication. For a point mutation, a random position is
+2nW -   1
+                                                                       changed from 0 to 1 or conversely. For a small insertion
+
+in a similar manner, m being normalized between 0 and 1,               (resp. small deletion), a short random sequence (with
+
+and h between -1 and 1.                                                length uniform between 1 and 6 bp) is inserted (resp.
+
+The possibility distribution of several proteins - i.e.                deleted) at a random location. For a large deletion or an
+
+their triangles - can overlap partially or completely. This            inversion, two positions p1 and p2 are uniformly drawn on
+                                                                       the chromosome and the segment {p1,..., p2} is deleted
+means that several proteins can contribute to the same                 (resp. inverted). For a duplication or a translocation, three
+
+"cellular process". Lukasiewicz's fuzzy operators are used
+
+to compute the global functional abilities of the indivi-              positions p1, p2 and p3 are uniformly drawn on the chro-
+                                                                       mosome and a copy of the segment {p1,..., p2} is inserted
+dual. If fi is the possibility distribution of the i-th activa-        (resp. moved after circularization) at position p3 in its
+tor protein (protein with h > 0), and fj the possibility               original orientation.
+distribution of the j-th inhibitory protein (with h < 0),
+
+then the phenotype of the individual is represented by                 For each of the seven types of mutation, a per-position
+
+the possibility distribution fP : [0, 1] suchthat                      rate utype is chosen at the beginning of the simulation.
+                                                                       The mutation algorithm proceeds as follows: when an
+
+fP(x) = max(min              fi(x), 1 - min  fj(x), 1 , 0).            individual reproduces, we compute the four numbers of
+
+                         i                       j                     rearrangements its genome will undergo. The number of
+
+Details of the selection step                                          large deletions is drawn from the binomial law B(L, ularge-
+                                                                       del), the number of duplications from the law B(L, uduplic),
+The environment in which the population evolves is also                and so on. All these rearrangements are then performed in
+
+modeled by a possibility distribution fE on the interval               a random order. Once all rearrangements have been
+[0,1]. fE specifies the optimal degree of possibility for
+each "cellular process" and it can be naught for some                  performed, we draw the three numbers of local mutations
+
+processes. This distribution is chosen at the beginning                (point mutations, small insertions and small deletions) and
+
+of the simulation and can fluctuate over time if desired               we perform all these events in a random order. The
+
+(see below). The adaptation of an individual is measured               genome length can vary throughout this process.
+
+by the gap g = 01 fE (x) - fP(x) dx between its pheno-                 Variants
+
+type fP and the target fE ("gap with target"). The prob-               In the default setup presented above and used in this
+
+                                         e-kg                          paper, the population is well-mixed, the individuals are
+
+ability of reproduction is then          N    e-kgi  where   k  is  a  asexual, they have a single chromosome, proteins do not
+                                         i=1
+                                                                       regulate gene expression levels of other genes and the
+parameter controlling the strength of selection. The value
+                                                                       breakpoints for rearrangements are drawn uniformly. It
+of k determines the steepness of the distribution of the fit-
+                                                                       is however possible to choose more complicated setups.
+ness effects of mutations, or, in population genetics terms,
+                                                                       The breakpoints for the rearrangements can be based
+Batut et al. BMC Bioinformatics 2013, 14(Suppl 15):S11       Page 6 of 11
+http://www.biomedcentral.com/1471-2105/14/S15/S11
+
+on sequence similarity [15]. The individuals can be spa-       A small effective population size (Ne) is supposed to
+tially arranged on a 2D grid and compete locally rather      increase the genetic drift [22,23] and the selective pres-
+than globally. They can cooperate by producing a public      sures are then reduced on non-essential genes. Because of
+good [16,17]. They can own one or several plasmids and       frequent reproductive bottlenecks, the endosymbionts are
+exchange them. Proteins can be allowed to modulate           supposed to live within populations with small Ne [24] due
+gene expression levels, thereby allowing for the study of    to host association. Populations of Prochlorococcus, on the
+gene regulatory network evolution [18].                      other hand, are very large [25]. However estimations of Ne
+                                                             are not available and can be considerably lower than the
+Results                                                      real population size in case e.g. of colonization of new
+In this section, we first present briefly the typical out-   niches or of a low recombination rate. No matter why
+puts and use of an in silico experimental evolution plat-    genetic drift may have (hypothetically) increased, such a
+form like aevol. Then we illustrate more concretely the      general relaxation of selection would impact genes differ-
+insights that such simulations can bring by detailing an     ently according to their essentiality.
+experiment aimed at testing whether a relaxed selection
+pressure can lead or not to genome shrinkage.                  Using aevol, we tested the effect of a relaxed selection
+                                                             alone, by simulating first a phase of "normal" selection and
+Typical use of an in silico experimental evolution           then a phase of weak selection, without changing the
+platform                                                     population size. In aevol, the strength of selection is con-
+The primary outputs of an in silico experimental evolu-      trolled by the parameter k, which is used to compute the
+tion are time series, giving for example the fitness, gen-   reproduction probability of each individual given its gi and
+ome size, gene number at each time step for the current      the total gap with target of the whole population (see
+best individual and for the average of the population.       Methods section). In population genetics terms, the para-
+Other outputs like genealogical trees can be used to         meter k influences the coefficient of selection (s) of muta-
+analyze the mutations that occurred in the line of des-      tions. In aevol, s is not explicit as it depends on genes,
+cent of the final best individual (see for example [19]).    mutations and phenotype of each individual. For two
+Additional tests can be performed on this final best         individuals that differ by only one mutation leading to
+individual, like mutagenesis experiments to measure its      gaps g1 and g2, k determines how the difference between
+mutational robustness or the level of epistasis in its gen-  g1 and g2 will impact the reproductive success. The higher
+ome (see for example [20]).                                  k, the more the difference between g1 and g2 impacts the
+                                                             relative reproductive success. Thus, the higher k the stee-
+  Distinguishing between fortuitous events and systema-      per the distribution of s (although the exact distribution
+tic trends can be done by comparing repetitions (runs        remains unknown).
+seeded with different initial sequences), or replay experi-
+ments (runs seeded with a backup of a past state of an         To test the impact of relaxed selection, four simulations
+evolved population but with a different random genera-       with identical parameters (Table 1) were run with popula-
+tor seed). Such backups can also be used to re-run the       tions of 1,000 individuals, starting from a clonal popula-
+evolution from a point in the past but with different        tion with a random sequence of 5,000 bases and at least
+parameters, to simulate evolutionary scenarios like a        one functional gene. They were run during 300,000 gen-
+sudden decrease in population size or an increase in         erations with k = 750 (control). These four simulations
+mutation rates. It is also possible to combine backups of    were then replayed between t = 150,000 and t = 300,000
+evolved genomes to create mixed populations for com-         with a lower value for k (k = 250) (scenario).
+petition assays (see for example [21]).
+                                                               After 150,000 generations of relaxed selection, the final
+An example of aevol usage: testing whether relaxed           best individual was less fit than in the control (higher g:
+selection alone leads to reductive evolution                 Figure 2a and Figure 3) because of the loss of functional
+Aevol was designed as a tool for testing evolutionary        genes (Figure 3). Genome size had decreased between gen-
+scenarios. Here we show how it can be used for testing       erations t = 150,000 and t = 200,000 (Figure 2b) leading to
+different evolutionary conditions that may lead to a         a significant difference in genome size at t = 300,000
+reductive genome evolution. Among all possible causes        between the control and the scenario (Figure 2b and
+for reductive evolution, we focus here on a reduction in     Figure 3). As shown on Figure 3, the genomes had lost
+the selective pressures. Note that this test is presented    functional genes but the remaining ones were not shorter.
+here as a demonstration of the possibilities of aevol.       Genomes that had evolved under relaxed selection con-
+More thorough experiments will have to be performed          tained fewer genes with a small contribution to phenotype
+to test conditions of reductive evolution in the model.      but more genes with a high contribution (Figure 4a). Actu-
+                                                             ally, under low selection pressure, the "cellular processes"
+                                                             are performed in a simpler way (i.e. fewer triangles but
+Batut et al. BMC Bioinformatics 2013, 14(Suppl 15):S11                                                      Page 7 of 11
+http://www.biomedcentral.com/1471-2105/14/S15/S11
+
+Table 1 Parameter values used for the runs detailed in the Results section
+
+Parameter                                                     Symbol        Value
+
+Population size                                                  N          1,000
+Size of the initial (random) genome                             Linit
+Promoter sequence                                                           5,000 base pairs
+                                                                 
+Terminator sequences                                           wmax         0101011001110010010110,
+Initiation signal for the translation                                       with up to dmax = 4 mismatches
+Termination signal for the translation                          f¯E
+Genetic code                                                                abcd    d¯c¯b¯a¯
+Global set of "cellular processes"                               
+Maximal pleiotropy of the proteins                               s          011011****000
+Environmental target fluctuates around...                        k
+Environmental fluctuations: characteristic time                upoint       001
+Environmental fluctuations: standard deviation                usmallins
+Selection intensity                                           usmalldel     See Figure 1
+Point mutation rate                                           ulargedel
+Small insertion rate                                          uduplic       [0,1]
+Small deletion rate                                             uinv        5.10-3
+Large deletion rate                                           utransloc
+Duplication rate                                                            See Figure 1
+Inversion rate
+Translocation rate                                                          2,500
+Length of small indels                                                      5.10-3
+
+                                                                            750 initially, then 250
+                                                                            5.10-6 per bp
+                                                                            5.10-6 per bp
+                                                                            5.10-6 per bp
+                                                                            5.10-5 per bp
+                                                                            5.10-5 per bp
+                                                                            5.10-5 per bp
+                                                                            5.10-5 per bp
+
+                                                                            Uniform law bw. 1 and 6 bp
+
+These parameter values were chosen after preliminary analyses. Some parameters like the structural signals have been shown not to impact the genome
+
+structure. The impact of wmax has been studied [30] as well as the impact of mutation rates and particularly rearrangement rates [26]. Here, the mutation rates
+and wmax values were chosen to obtain a gene density close to bacterial gene density and with enough genes to allow experiments on reductive genome
+evolution. The intensity and frequency of environmental variations (s and  respectively) are currently under study; k is tested here.
+
+with a higher individual contribution) than under a high      This phenomenon is caused by an indirect selection
+selection pressure (Figure 4b). Indeed, reducing k from 750
+to 250 homogenizes the population in terms of reproduc-       for an appropriate level of mutational variability. Indeed,
+tion probabilities. Hence the proportion of quasi-neutral
+mutations/rearrangements increases: genes having a small      we have shown in a previous study [26] that the suc-
+impact on the phenotype are more at risk of being lost by
+genetic drift than others. This leads to a reorganization of  cessful genomes at the evolutionary time scale are those
+the phenotype which is then performed by fewer genes
+having a higher individual impact. Moreover, analyses of      that produce a little more than one "neutral offspring",
+RNA sequences after 300,000 generations show that, under
+a reduced selection, genomes carry operons with slightly      that is to say, offspring without mutations or with only
+more genes than under a high selection pressure: under
+high selection (k = 750), the mean number of functional       neutral mutations. In more formal terms, FW  1,
+CDS per RNA is equal to 1.99 ± 0.41. It increases to 2.50 ±
+0.34 under relaxed selection (k = 250).                       where W = N   e-kg         is  the  expected  number  of  off-
+
+  Although the coding sequences have been impacted by                       N    e-kgi
+the reduction of the selection pressure, the major cause                    i=1
+of genome reduction with relaxed selection is the loss of
+non-coding bases (Figure 3). This is a good example of        spring and F is the probability for an offspring to have
+the surprises that can arise with this experimental
+approach, which makes no a priori assumptions about           either no mutations or only neutral ones. This reflects
+what selection acts upon. In the model, non-coding
+DNA has strictly no influence on the phenotype and is         the indirect selection of a trade-off between replication
+thus not expected to be affected by the strength of
+selection. Yet, it clearly is.                                accuracy and evolvability, which acts along with the
+
+                                                              direct selection of adapted individuals. Under relaxed
+
+                                                              selection (low values of k), the reproductions are more
+
+                                                              equally shared and the values of W in the population
+
+                                                              are more homogenous. Ill-adapted individuals thus
+
+                                                              "take" reproductions from the fit ones. Since W no
+
+                                                              longer has much of an effect, the successful lineages will
+
+                                                              be those where F is increased. Reducing the amount of
+
+                                                              non-coding DNA is a way to increase F, because non-
+
+                                                              coding DNA is mutagenic for the genes it surrounds
+
+                                                              [26]. Indeed, large intergenic sequences flanking a gene
+
+                                                              or a gene cluster enhance its probability of being lost
+
+                                                              through a large deletion.
+Batut et al. BMC Bioinformatics 2013, 14(Suppl 15):S11  Page 8 of 11
+http://www.biomedcentral.com/1471-2105/14/S15/S11
+
+Figure 2 Gap with target and genome size over time. The presented data is g and genome size for the best individual of the population
+every 2,000 generations (red: runs with k = 750, green: runs with k = 250). At t = 150,000, the blue line symbolizes the moment at which k is
+changed in 4 out of 8 simulations. The insets correspond to a zoom from t = 150,000 to t = 300,000.
+
+Figure 3 Several genome architecture characteristics. For each run, estimates of the genomic characteristics at equilibrium were computed
+by averaging the values of the best individuals of the last 10,000 generations. Each bar represents the mean of those equilibrium values over
+the 4 repetitions (red: runs with k = 750, green: runs with k = 250). The functional CDS are genes involved in cellular processes. The number of
+noncoding bases corresponds to bases that are not in any RNA with at least one functional gene. The percentage of coding bases is the ratio
+between the number of bases involved in functional genes and the genome size.
+Batut et al. BMC Bioinformatics 2013, 14(Suppl 15):S11      Page 9 of 11
+http://www.biomedcentral.com/1471-2105/14/S15/S11
+
+Figure 4 Distribution of triangle areas and number of triangles per cellular process. a. The area of a gene's triangle is a proxy for its
+impact on phenotype and fitness. For each run, the genes of the final best individual were binned into area classes. The red (resp. green) bar
+plot is the average of the four distributions obtained from the final best individuals of the four runs where k = 750 (resp. k = 250). b. Distribution
+of the number of triangles per cellular process for the best individual of one simulation with k = 750 in red and one simulation with k = 250 in
+green. Under relaxed selection, the number of triangles per process is reduced.
+
+  According to the hypothesis of Lynch and Conery [22],     Conclusion
+genetic drift impacts genome size with accumulation of      In this paper, we have presented a methodology based on
+non functional DNA by the spread of selfish DNA ele-        synthetic experiments to test hypotheses about atypical
+ments, or any DNA sequence that may eventually inter-       evolutionary trajectories like reductive genome evolution.
+fere with the organism's fitness. This relation is broadly  The aevol model, specifically designed to study the evolu-
+accepted for eukaryotes but not for prokaryotes [23,27].    tion of gene repertoire and gene organization in bacterial
+Endosymbionts like Buchnera aphidicola with a high          genomes, was presented. As an illustration of the possibili-
+level of genetic drift kept a low percentage of non-coding  ties of the methodology, we used aevol to let populations
+DNA despite many gene losses [28,29]. It thus appears       of the same artificial "species" evolve under different selec-
+that bacteria where the efficacy of selection is low have   tive strengths. The simulations show that the genome
+their genome reduced drastically. In support of this idea,  reduction by loss of some genes and of large segments of
+efficacy of selection seems to correlate positively with    noncoding DNA observed e.g. in Prochlorococcus, could
+genome size in bacteria [23]. The genome shrinkage we       be explained by a relaxed selection. However, our results
+observed under relaxed selection would generally support    are less consistent with patterns of reduced genomes in
+this theory. However, the loss of noncoding DNA             endosymbionts (more drastic reduction but same propor-
+observed in the simulations is more in agreement with       tion of coding bases in endosymbionts than in free-living
+the high coding ratio observed in Pelagibacter ubique       relatives - Table 2). Alternative explanations are thus
+genome [5] or in the reduced Prochlorococcus strains        required in this case. Indeed, the present methodology
+(Table 2). Endosymbionts, on the contrary, exhibit          could be used to test other hypotheses like a reduced
+approximately the same proportion of noncoding DNA          population size, an elevated mutation rate or a stabiliza-
+as other prokaryotes ([29] and Table 2). Thus, while        tion of the environment. Another perspective of the pre-
+relaxed selection could have played a role in reductive     sent study is to study the dynamics of genome reduction.
+evolution, it alone cannot account for all the patterns of  Indeed, as shown in Figure 2, the reduction occurs in the
+reductive evolution observed in both endosymbionts and      first 5,000 generations after the lowering of selection
+marine bacteria.                                            strength. Although a generation in aevol corresponds to
+Batut et al. BMC Bioinformatics 2013, 14(Suppl 15):S11                                                                          Page 10 of 11
+http://www.biomedcentral.com/1471-2105/14/S15/S11
+
+Table 2 Genome characteristics of Escherichia coli, Buchnera, Prochlorococcus and simulations.
+
+   Genome          Free-living vs Endosymbionts                                        Prochlorococcus                  Experimental evolution
+characteristics
+
+                   E. coli             Buchnera                             Non reduced        Reduced                  k = 750 k = 250
+
+Genome size (bp)   5.13 × 106 ±0.2 ×   0.586 × 106 ±0.09  -89%              2.545 × 106 ±0.19  1.726 × 106 ±0.07 -32%   11,836  7,746    -35%
+                            106               × 106       -89%                     × 106               × 106            ±261    ±652     -20%
+Coding bases (bp)                                         -87%                                                                           -55%
+                   4.54 × 106 ±0.14 ×  0.508 × 106 ±0.1                     2.136 × 106 ±0.22  1.54 × 106 ±0.05 × -28%  6,797   5,453
+    Non coding              106               × 106                                × 106                106             ±320    ±729
+     bases (bp)
+                   5.882 × 105 ±0.74   0.774 × 105 ±0.18                    4.112 × 105 ±0.26  1.849 × 105 ±0.27 -55%   5,038   2,293
+                           × 105              × 105                                × 105               × 105            ±168    ±329
+
+% coding bases     88.6 ±1             86.5 ±4            -2%               83.2 ±2.3          89.3 ±1.2    +7% 57.4 ±1.7 70.2 ±5 +22%
+
+Gene number        5,095 ±166          545 ±98            -89% 2,733 ±570                      1,987 ±153 -27% 107 ±9 91 ±8 -15%
+
+Average gene       896.2 ±4.7          931 ±14.2          +4%               797 ±85.6          769.1 ±36.3  -4% 66.6 ±6.2 67.5 +1%
+ length (bp)                                                                                                                       ±14.1
+
+Genomic data (genome size, genes) was obtained from the NCBI database. Coding and non coding bases, gene length and percentage of coding bases are
+computed using custom Python scripts for Escherichia coli (O157:H7 str. Sakai, 55989, E24377A, O127:H6 str. E2348/69, S88), Buchnera aphidicola (str. APS, Cinara
+tujafilina, Bp, Sg), non reduced Prochlorococcus (MIT9303, MIT9313), reduced Prochlorococcus (str. AS9601, MIT9211, MIT9215, MIT9301, MIT9312, MIT9515,
+NATL1A, NATL2A, CCMP1375, CCMP1986) and simulations with k = 750 and k = 250. For the simulated genomes the real values are irrelevant and cannot be
+compared with real organisms. To compare with the evolutionary scenario, we show the percentages of reduction (resp. increase) of the different structural
+parameters. While the reductive evolution of Buchnera has equally affected all genomic compartments, in Prochlorococcus as well as in aevol the reductive
+evolution mainly affected the non-coding sequences, resulting in an increase in the coding proportion and a moderate loss of genes.
+
+multiple bacterial generations, this dynamics of change is                  Published: 15 October 2013
+rapid. It could be very interesting to study which kind of
+mutational events have been fixed in this interval and                      References
+compare them to early events that occurred in endosym-                      1. McCutcheon JP, Moran NA: Extreme genome reduction in symbiotic
+bionts and in Prochlorococcus. Indeed, although there are
+no spontaneous mutational biases in the simulation, it is                         bacteria. Nat Rev Microbiol 2012, 10:13-26.
+clear that, during these 5,000 generations, a fixed bias                    2. Moran NA, McCutcheon JP, Nakabachi A: Genomics and Evolution of
+should be observed in the winning lineage. Whether this
+bias will be more visible on rearrangements or on small                           Heritable Bacterial Symbionts. Annu Rev Genet 2008, 42:165-190.
+indels could shed light on the reduction process and on                     3. Moran NA, McLaughlin HJ, Sorek R: The Dynamics and Time Scale of
+the way genes and noncoding sequences have been lost
+due to the lowering of selection pressure.                                        Ongoing Genomic Erosion in Symbiotic Bacteria. Science 2009, 323:379-382.
+                                                                            4. Moran NA: Accelerated evolution and Muller's rachet in endosymbiotic
+Competing interests
+The authors declare that they have no competing interests.                        bacteria. P Natl Acad Sci USA 1996, 93:2873-2878.
+                                                                            5. Giovannoni SJ, Tripp HJ, Givan S, Podar M, Vergin KL, Baptista D, Bibbs L,
+Authors' contributions
+GB, CK and DPP designed the model. BB, GB and CK designed the                     Eads J, Richardson TH, Noordewier M, Rappé MS, Short JM, Carrington JC,
+experiments. BB, GB, CK and SF analyzed the results. BB, GB, DPP and CK           Mathur EJ: Genome Streamlining in a Cosmopolitan Oceanic Bacterium.
+wrote the paper.                                                                  Science 2005, 309:1242-1245.
+                                                                            6. Rocap G, Larimer FW, Lamerdin J, Malfatti S, Chain P, Ahlgren NA,
+Acknowledgements                                                                  Arellano A, Coleman M, Hauser L, Hess WR, Johnson ZI, Land M, Lindell D,
+BB would like to thank the French Research Ministry for PhD funding. We           Post AF, Regala W, Shah M, Shaw SL, Steglich C, Sullivan MB, Ting CS,
+would like to thank Gabriel Marais and Vincent Daubin for their comments.         Tolonen A, Webb EA, Zinser ER, Chisholm SW: Genome divergence in two
+                                                                                  Prochlorococcus ecotypes reflects oceanic niche differentiation. Nature
+Declarations                                                                      2003, 424:1042-1047.
+This research and publication were funded by the Centre National de la      7. Partensky F, Garczarek L: Prochlorococcus: Advantages and Limits of
+Recherche Scientifique (interdisciplinary programs PEPS and PEPII) and the        Minimalism. Annu Rev Mar Sci 2010, 2:305-331.
+Institut Rhône-Alpin des Systèmes Complexes (IXXI).                         8. Yu T, Li J, Yang Y, Qi L, Chen B, Zhao F, Bao Q, Wu J: Codon usage
+This article has been published as part of BMC Bioinformatics Volume 14           patterns and adaptive evolution of marine unicellular cyanobacteria
+Supplement 15, 2013: Proceedings from the Eleventh Annual Research in             Synechococcus and Prochlorococcus. Mol Phylogenet Evol 2012, 62:206-213.
+Computational Molecular Biology (RECOMB) Satellite Workshop on              9. Luo H, Friedman R, Tang J, Hughes AL: Genome Reduction by Deletion of
+Comparative Genomics. The full contents of the supplement are available           Paralogs in the Marine Cyanobacterium Prochlorococcus. Mol Biol Evol
+online at http://www.biomedcentral.com/bmcbioinformatics/supplements/             2011, 28:2751-2760.
+14/S15.                                                                     10. Hindré T, Knibbe C, Beslon G, Schneider D: New insights into bacterial
+                                                                                  adaptation through in vivo and in silico experimental evolution. Nat Rev
+Authors' details                                                                  Microbiol 2012, 10:352-365.
+1Université de Lyon, CNRS, INRIA, INSA-Lyon, LIRIS, UMR5205, F-69621,       11. Nilsson AI, Koskiniemi S, Eriksson S, Kugelberg E, Hinton JCD, Andersson DI:
+France. 2Université de Lyon, CNRS, LBBE, UMR5558, F-69622, France.                Bacterial genome size reduction by experimental evolution. P Natl Acad
+3Université Lyon 1, INRIA, CNRS, LIRIS, UMR5205, F-69622, France.                 Sci USA 2005, 102:12112-12116.
+                                                                            12. Barrick JE, Yu DS, Yoon SH, Jeong H, Oh TK, Schneider D, Lenski RE, Kim JF:
+                                                                                  Genome evolution and adaptation in a long-term experiment with
+                                                                                  Escherichia coli. Nature 2009, 461:1243-1247.
+                                                                            13. Adami C: Digital genetics: unravelling the genetic basis of evolution. Nat
+                                                                                  Rev Genet 2006, 7:109-118.
+                                                                            14. Mozhayskiy V, Tagkopoulos I: Microbial evolution in vivo and in silico:
+                                                                                  methods and applications. Integr Biol 2013, 5:262-277.
+                                                                            15. Parsons DP, Knibbe C, Beslon G: Homologous and Nonhomologous
+                                                                                  Rearrangements: Interactions and Effects on Evolvability. In Proceedings
+                                                                                  of ECAL. Volume 11. MIT Press; 2011:622-629.
+Batut et al. BMC Bioinformatics 2013, 14(Suppl 15):S11                               Page 11 of 11
+http://www.biomedcentral.com/1471-2105/14/S15/S11
+
+16. Misevic D, Frénoy A, Parsons DP, Taddei F: Effects of public good
+      properties on the evolution of cooperation. In Proceedings of Artificial Life
+      XIII. Volume 12. MIT Press; 2012:218-225.
+
+17. Frénoy A, Taddei F, Misevic D: Robustness and evolvability of
+      cooperation. In Proceedings of Artificial Life XIII. Volume 12. MIT Press;
+      2012:53-58.
+
+18. Beslon G, Parsons DP, Sanchez-Dehesa Y, Peña J-M, Knibbe C: Scaling laws
+      in bacterial genomes: A side-effect of selection of mutational
+      robustness? Biosystems 2010, 102:32-40.
+
+19. Cuypers TD, Hogeweg P: Virtual Genomes in Flux: An Interplay of
+      Neutrality and Adaptability Explains Genome Expansion and
+      Streamlining. Genome Biol Evol 2012, 4:212-229.
+
+20. Lenski RE, Ofria C, Collier TC, Adami C: Genome complexity, robustness
+      and genetic interactions in digital organisms. Nature 1999, 400:661-664.
+
+21. Wilke CO, Wang JL, Ofria C, Lenski RE, Adami C: Evolution of digital
+      organisms at high mutation rates leads to survival of the flattest. Nature
+      2001, 412:331-333.
+
+22. Lynch M, Conery JS: The Origins of Genome Complexity. Science 2003,
+      302:1401-1404.
+
+23. Kuo C-H, Moran NA, Ochman H: The consequences of genetic drift for
+      bacterial genome complexity. Genome Res 2009, 19:1450-1454.
+
+24. Mira A, Moran NA: Estimating Population Size and Transmission
+      Bottlenecks in Maternally Transmitted Endosymbiotic Bacteria. Microb
+      Ecol 2002, 44:137-143.
+
+25. Partensky F, Hess WR, Vaulot D: Prochlorococcus, a marine photosynthetic
+      prokaryote of global significance. Microbiol Mol Biol R 1999, 63:106-127.
+
+26. Knibbe C, Coulon A, Mazet O, Fayard J-M, Beslon G: A Long-Term
+      Evolutionary Pressure on the Amount of Noncoding DNA. Mol Biol Evol
+      2007, 24:2344-2353.
+
+27. Daubin V, Moran NA: Comment on "The Origins of Genome Complexity.".
+      Science 2004, 306:978-978.
+
+28. Mira A, Ochman H, Moran NA: Deletional bias and the evolution of
+      bacterial genomes. Trends Genet 2001, 17:589-596.
+
+29. Moran NA, Plague GR: Genomic changes following host restriction in
+      bacteria. Curr Opin Genet Dev 2004, 14:627-633.
+
+30. Knibbe C, Mazet O, Chaudier F, Fayard J-M, Beslon G: Evolutionary
+      coupling between the deleteriousness of gene mutations and the
+      amount of non-coding sequences. Journal of Theoretical Biology 2007,
+      244:621-630.
+
+  doi:10.1186/1471-2105-14-S15-S11
+  Cite this article as: Batut et al.: In silico experimental evolution: a tool to
+  test evolutionary scenarios. BMC Bioinformatics 2013 14(Suppl 15):S11.
+
+                                                                                     Submit your next manuscript to BioMed Central
+                                                                                     and take full advantage of:
+
+                                                                                     · Convenient online submission
+                                                                                     · Thorough peer review
+                                                                                     · No space constraints or color figure charges
+                                                                                     · Immediate publication on acceptance
+                                                                                     · Inclusion in PubMed, CAS, Scopus and Google Scholar
+                                                                                     · Research which is freely available for redistribution
+
+                                                                                     Submit your manuscript at
+                                                                                     www.biomedcentral.com/submit
+

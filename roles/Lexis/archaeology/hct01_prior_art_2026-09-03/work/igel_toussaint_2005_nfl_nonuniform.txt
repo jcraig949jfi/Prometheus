@@ -1,0 +1,496 @@
+Journal of Mathematical Modelling and Algorithms 3: 313­322, 2004.  313
+
+© 2004 Kluwer Academic Publishers. Printed in the Netherlands.
+
+A No-Free-Lunch Theorem for Non-Uniform
+Distributions of Target Functions
+
+CHRISTIAN IGEL and MARC TOUSSAINT
+
+Chair of Theoretical Biology, Institut für Neuroinformatik, Ruhr-Universität Bochum,
+44780 Bochum, Germany. e-mail: {christian.igel,marc.toussaint}@neuroinformatik.rub.de
+
+Abstract. The sharpened No-Free-Lunch-theorem (NFL-theorem) states that, regardless of the per-
+formance measure, the performance of all optimization algorithms averaged uniformly over any finite
+set F of functions is equal if and only if F is closed under permutation (c.u.p.). In this paper, we
+first summarize some consequences of this theorem, which have been proven recently: The number
+of subsets c.u.p. can be neglected compared to the total number of possible subsets. In particular,
+problem classes relevant in practice are not likely to be c.u.p. The average number of evaluations
+needed to find a desirable (e.g., optimal) solution can be calculated independent of the optimization
+algorithm in certain scenarios. Second, as the main result, the NFL-theorem is extended. Neces-
+sary and sufficient conditions for NFL-results to hold are given for arbitrary distributions of target
+functions. This yields the most general NFL-theorem for optimization presented so far.
+
+Mathematics Subject Classifications (2000): 90C27, 68T20.
+
+Key words: evolutionary computation, No-Free-Lunch theorem.
+
+1. Introduction
+
+Search heuristics such as evolutionary algorithms, grid search, simulated anneal-
+ing, and tabu search are general in the sense that they can be applied to any target
+function f : X  Y, where X denotes the search space and Y is a set of totally
+ordered cost-values. Much research is spent on developing search heuristics that are
+superior to others when the target functions belong to a certain class of problems.
+But under which conditions can one search method be better than another? The No-
+Free-Lunch-theorem for optimization (NFL-theorem) roughly speaking states that
+all non-repeating search algorithms have the same mean performance when aver-
+aged uniformly over all possible objective functions f : X  Y [14, 9, 2, 15, 8, 1].
+Of course, in practice an algorithm need not perform well on all possible functions,
+but only on a subset that arises from the real-world problems at hand. Recently, a
+sharpened version of the NFL-theorem has been proven that states that NFL-results
+hold (i.e., the mean performance of all search algorithms is equal) for any subset
+F of the set of all possible functions if and only if F is closed under permutation
+(c.u.p.) and each target function in F is equally likely [11].
+314            CHRISTIAN IGEL AND MARC TOUSSAINT
+
+   In this paper, we address the following basic questions: When all algorithms
+have the same mean performance ­ how long does it take on average to find a
+desirable solution? How likely is it that a randomly chosen subset of functions
+is c.u.p., i.e., fulfills the prerequisites of the sharpened NFL-theorem? Do con-
+straints relevant in practice lead to classes of target functions that are c.u.p.? And
+finally: How can the NFL-theorem be extended to non-uniform distributions of tar-
+get functions? These questions can be accessed from the sharpened NFL-theorem.
+Answers are given in the following sections, after a formal description of the
+scenario considered in NFL-theorems.
+
+2. Preliminaries
+
+A finite search space X and a finite set of cost-values Y are presumed. Let F
+be the set of all objective functions f : X  Y to be optimized (also called target,
+fitness, energy, or cost functions). NFL-theorems are concerned with non-repeating
+black-box search algorithms (referred to as algorithms) that choose a new explo-
+ration point in the search space depending on the history of prior explorations: The
+sequence Tm = (x1, f (x1)), (x2, f (x2)), . . . , (xm, f (xm)) represents m pairs of
+different search points xi  X, i, j : xi = xj and their cost-values f (xi)  Y.
+An algorithm a appends a pair (xm+1, f (xm+1)) to this sequence by mapping Tm to
+a new point xm+1, i: xm+1 = xi. In many search heuristics, such as evolutionary
+algorithms or simulated annealing in their canonical form, it is not ensured that a
+point in the search space is evaluated only once. However, these algorithms can
+become non-repeating when they are coupled with a search-point database, see [4]
+for an example in the field of structure optimization of neural networks.
+
+   We assume that the performance of an algorithm a after m iterations with
+respect to a function f depends only on the sequence
+
+      Y (f, m, a) = f (x1), f (x2), . . . , f (xm)
+
+of cost-values the algorithm has produced. Let the function c denote a performance
+measure mapping sequences of cost-values to the real numbers. For example, in the
+case of function minimization a performance measure that returns the minimum
+cost-value in the sequence could be a reasonable choice. See Figure 1 for a schema
+of the scenario assumed in NFL-theorems.
+
+   Using these definitions, the original NFL-theorem for optimization reads:
+
+THEOREM 1 (NFL-theorem [15]). For any two algorithms a and b, any k  R,
+any m  {1, . . . , |X|}, and any performance measure c
+
+          (k, c(Y (f, m, a))) = (k, c(Y (f, m, b))).  (1)
+
+     f F  f F
+
+   Herein,  denotes the Kronecker function ((i, j ) = 1 if i = j , (i, j ) = 0
+otherwise). Proofs can be found in [14, 15, 8]. This theorem implies that for any two
+NON-UNIFORM NO-FREE-LUNCH THEOREM                315
+
+Figure 1. Scheme of the optimization scenario considered in NFL-theorems. A non-repeating
+black-box search algorithm a chooses a new exploration point in the search space depending
+on the sequence Tm of the already visited points with their corresponding cost-values. The
+target function f returns the cost-value of a candidate solution as the only information. The
+performance of a is determined using the performance measure c, which is a function of the
+sequence Y (f, m, a) containing the cost-values of the visited points.
+
+(deterministic or stochastic, cf. [1]) algorithms a and b and any function fa  F ,
+there is a function fb  F on which b has the same performance as a on fa.
+Hence, statements like "Averaged over all functions, my search algorithm is the
+
+best" are misconceptions. Note that the summation in (1) corresponds to uniformly
+
+averaging over all functions in F , i.e., each function has the same probability to be
+the target function.
+
+   Recently, Theorem 1 has been extended to subsets of functions that are closed
+under permutation (c.u.p.). Let  : X  X be a permutation of X. The set of all
+permutations of X is denoted by (X). A set F  F is said to be c.u.p. if for any
+  (X) and any function f  F the function f   is also in F .
+
+EXAMPLE 1. Consider the mappings {0, 1}2  {0, 1}, denoted by f0, f1, . . . , f15
+as shown in Table I. Then the set {f1, f2, f4, f8} is c.u.p., also {f0, f1, f2, f4, f8}.
+The set {f1, f2, f3, f4, f8} is not c.u.p., because some functions are "missing", e.g.,
+
+f5, which results from f3 by switching the elements (0, 1) and (1, 0).
+
+In [10, 11] it is proven:
+
+THEOREM 2 (sharpened NFL-theorem [10, 11]). If and only if F is c.u.p., then
+for any two algorithms a and b, any k  R, any m  {1, . . . , |X|}, and any
+performance measure c
+
+     (k, c(Y (f, m, a))) = (k, c(Y (f, m, b))).  (2)
+
+f F                        f F
+
+   This is an important extension of Theorem 1, because it gives necessary and
+sufficient conditions for NFL-results for subsets of functions. But still Theorem 2
+316                                         CHRISTIAN IGEL AND MARC TOUSSAINT
+
+        Table I. Functions {0, 1}2  {0, 1}
+
+(x1, x2) f0 f1 f2 f3 f4 f5 f6 f7 f8 f9 f10 f11 f12 f13 f14 f15
+
+(0, 0) 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1
+(0, 1) 0 0 1 1 0 0 1 1 0 0 1 1 0 0 1 1
+(1, 0) 0 0 0 0 1 1 1 1 0 0 0 0 1 1 1 1
+(1, 1) 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1
+
+can only be applied if all elements in F have the same probability to be the target
+function, because the summations average uniformly over F . A variant of The-
+orem 1 giving sufficient, but not necessary conditions for NFL-results for more
+general distributions of the functions in F  F was already stated in [2], see
+Section 4 where we prove necessary and sufficient conditions for NFL-results to
+hold for arbitrary distributions of target functions.
+
+   However, note that violation of the precondition of the NFL-theorem does not
+lead to a "Free Lunch", but nevertheless ensures the possibility of a "Free Appe-
+tizer".
+
+3. Recently Proven Implications of the Sharpened NFL
+
+Theorem 2 tells us that on average all algorithms need the same time to find a
+desirable, say optimal, solution ­ but how long does it take? The average number
+of evaluations, i.e., the mean first hitting time, needed to find an optimum depends
+on the cardinality of the search space |X| and the number n of search points that
+are mapped to a desirable solution. As the set of all functions where n search points
+represent desirable solutions is c.u.p., it is sufficient to compute the average time
+to find one of these points for an arbitrary algorithm. It is given by
+
+|X| + 1                                     (3)
+n+1 .
+
+A proof can be found in [5], where this result is used to study the influence of
+neutrality (i.e., of non-injective genotype-phenotype mappings) on the time to find
+a desirable solution.
+
+   The NFL-theorems can be regarded as the basic skeleton of combinatorial opti-
+mization and are important for deriving theoretical results (e.g., see [5]). However,
+are the preconditions of the NFL-theorems ever fulfilled in practice? How likely is
+it that a randomly chosen subset is c.u.p.?
+
+   There exist 2(|Y||X|) - 1 non-empty subsets of F and it holds:
+NON-UNIFORM NO-FREE-LUNCH THEOREM                                   317
+
+Figure 2. The ordinate gives the fraction of subsets closed under permutation on logarithmic
+scale given the cardinality of the search space X. The different curves correspond to different
+cardinalities of the codomain Y.
+
+THEOREM 3 ([6]). The number of non-empty subsets of YX that are c.u.p. is
+given by
+
+   |X| + |Y| - 1
+
+2     |X|            -1                                             (4)
+
+and therefore the fraction of non-empty subsets c.u.p. is given by
+
+      |X| + |Y| - 1      2(|Y||X|) - 1 .
+
+   2  |X|            -1                                             (5)
+
+   A proof (using Lemma 1 quoted in Section 4) is given in [6].
+   Figure 2 shows a plot of the fraction of non-empty subsets c.u.p. versus the
+cardinality of X for different values of |Y|. The fraction decreases for increasing
+|X| as well as for increasing |Y|. More precisely, using bounds for binomial co-
+efficients one can show that (5) converges to zero double exponentially fast with
+increasing |X| (for |Y| > e|X|/(|X| - e), where e is Euler's number). Already for
+small |X| and |Y| the fraction almost vanishes.
+   Thus, the statement "I'm only interested in a subset F of all possible functions
+and the precondition of the sharpened NFL-theorem is not fulfilled" is true with a
+probability close to one (if F is chosen uniformly and Y and X have reasonable
+cardinalities).
+   Although the fraction of subsets c.u.p. is close to zero already for small search
+and cost-value spaces, the absolute number of subsets c.u.p. grows rapidly with
+increasing |X| and |Y|. What if these classes of functions are the relevant ones,
+i.e., those we are dealing with in practice?
+318  CHRISTIAN IGEL AND MARC TOUSSAINT
+
+   Two assumptions can be made for most of the functions relevant in real-world
+optimization: First, the search space has some structure. Second, the set of objective
+functions fulfills some constraints defined based on this structure. More formally,
+there exists a non-trivial neighborhood relation on X based on which constraints on
+the set of functions under consideration are formulated, e.g., concepts like rugged-
+ness or local optimality and constraints like upper bounds on the ruggedness or on
+the maximum number of local minima can be defined.
+
+   A neighborhood relation on X is a symmetric function n: X × X  {0, 1}.
+Two elements xi, xj  X are called neighbors iff n(xi, xj ) = 1. A neighbor-
+hood relation is called non-trivial iff xi, xj  X: xi = xj  n(xi, xj ) = 1 and
+xk, xl  X: xk = xl  n(xk, xl) = 0. There are only two trivial neighborhood
+relations, either every two points are neighbored or no points are neighbored.
+
+   It holds:
+
+THEOREM 4 ([6]). A non-trivial neighborhood relation on X is not invariant
+under permutations of X, i.e.,
+
+     xi, xj  X,   (X): n(xi, xj ) = n((xi), (xj )).  (6)
+
+   This result is quite general. Assume that the search space X can be decomposed
+as X = X1 × · · · × Xl, l > 1, and let on one component Xi exist a non-trivial
+neighborhood ni: Xi × Xi  {0, 1}. This neighborhood induces a non-trivial
+neighborhood on X, where two points are neighbored iff their i-th components
+are neighbored with respect to ni ­ regardless of the other components. Thus, the
+constraints discussed below need only refer to a single component. Note that the
+neighborhood relation need not be the canonical one (e.g., the Hamming-distance
+for Boolean search spaces). For example, if integers are encoded by bit-strings,
+then the bit-strings can be defined as neighbored iff the corresponding integers are.
+
+   The following examples illustrate implications of Theorem 4.
+
+EXAMPLE 2. Consider a non-empty subset F  F where the codomains of
+the functions have more than one element and a non-trivial neighborhood relation
+exists. If for each f  F it is not allowed that a global maximum is neighbored to
+a global minimum (i.e., we have a constraint "steepness"), then F is not c.u.p. ­
+because for every f  F there exists a permutation that maps a global minimum
+and a global maximum of f to neighboring points.
+
+EXAMPLE 3. Consider the number of local minima, which is often regarded
+
+as a measure of complexity [13]. Given a neighborhood relation on X, a local
+
+minimum can be defined as a point whose neighbors all have worse fitness. Let
+l(f ) be the number of local minima of a function f  F and let Bhf  F be
+the set of functions in F with the same Y-histogram as f (i.e., functions where
+the number of points in X that are mapped to each Y-value is the same as for f ,
+see Section 4 for details). Given a function f we define lmax(f ) = maxf Bhf l(f )
+NON-UNIFORM NO-FREE-LUNCH THEOREM           319
+
+as the maximal number of local minima that functions in F with the same Y-
+histogram as f can possibly have. For a non-empty subset F  F we define
+lmax(F ) = maxf F lmax(f ). Let g(F )  F be a function with l(g(F )) = lmax(F )
+local minima and the same Y-histogram as a function in F . Now, if the number of
+local minima of every function f  F is constrained to be smaller than lmax(F )
+(i.e., maxf F l(f ) < lmax(F )), then F is not c.u.p. ­ because f  F with the
+same Y-histogram as g and thus   (X): f   = g. As a concrete example,
+consider all mappings {0, 1}  {0, 1} that have less than the maximum number of
+2n-1 local minima w.r.t. the ordinary hypercube topology on {0, 1} . For example,
+
+this set does not contain mappings such as the parity function, which is one iff the
+
+number of ones in the input bitstring is even. This set is not c.u.p.
+
+4. A Non-Uniform NFL-Theorem
+
+In the sharpened NFL-theorem it is implicitly presumed that all functions in the
+subset F are equally likely since averaging is done by uniform summation over F .
+Here, we investigate the general case when every function f  F has an arbitrary
+probability p(f ) to be the objective function. Such a non-uniform distribution of
+the functions in F appears to be much more realistic. Until now, there exist only
+very weak results for this general scenario. For example, let for all x  X and
+yY
+
+px(y) := p(f ) (f (x), y),                  (7)
+
+f F
+
+i.e., px(y) denotes the probability that the search point x is mapped to the cost-
+value y. In [2, 3] it has been shown that a NFL-result holds if within a class of
+functions the function values are i.i.d. (independently and identically distributed),
+i.e., if
+
+x1, x2  X: px1 = px2 and px1,x2 = px1px2 ,  (8)
+
+where px1,x2 is the joint probability distribution of the function values of the search
+points x1 and x2. However, this is not a necessary condition and applies only to
+
+extremely "unstructured" problem classes.
+
+   To derive a more general result let us introduce the concept of Y-histograms. A
+Y-histogram (histogram for short) is a mapping h: Y  N0 such that yY h(y) =
+|X|. The set of all histograms is denoted H . Any function f : X  Y implies
+the histogram hf (y) = |f -1(y)| that counts the number of elements in X that
+are mapped to the same value y  Y by f . Herein, f -1(y) returns the preimage
+{x | f (x) = y} of y under f . Further, two functions f, g are called h-equivalent
+iff they have the same histogram. The corresponding h-equivalence class Bh  F
+
+containing all functions with histogram h is termed a basis class.
+320                                             CHRISTIAN IGEL AND MARC TOUSSAINT
+
+EXAMPLE 4. Consider the functions in Table I. The Y-histogram of f1 contains
+the value zero three times and the value one one time, i.e., we have hf1(0) = 3
+and hf1(1) = 1. The mappings f1, f2, f4, f8 have the same Y-histogram and
+are therefore in the same basis class Bhf1 = {f1, f2, f4, f8}. It turns out that all
+basis classes are c.u.p. Furthermore, every set c.u.p. can be expressed as a union of
+basis classes. For example, the set {f1, f2, f4, f8, f15} is c.u.p. and corresponds to
+Bhf1  Bhf15 .
+
+   It holds:
+
+LEMMA 1 ([6]). (1) Any subset F  F that is c.u.p. is uniquely defined by a
+union of pairwise disjoint basis classes.
+
+   (2) Bh is equal to the permutation orbit of any function f with histogram h, i.e.,
+for all f
+
+     Bhf =        {f   }.                                         (9)
+
+             (X)
+
+   A proof is given in [6].
+   The following ramification of the sharpened NFL-theorem (derived indepen-
+dently in [7] and [12]) gives a necessary and sufficient condition for a NFL-result
+in the general case of non-uniform distributions:
+
+THEOREM 5 (non-uniform sharpened NFL). If and only if for all histograms h
+
+     f, g  Bh  p(f ) = p(g),                                      (10)
+
+then for any two algorithms a and b, any value k  R, any m  {1, . . . , |X|}, and
+any performance measure c
+
+          p(f ) (k, c(Y (f, m, a))) = p(f ) (k, c(Y (f, m, b))).  (11)
+
+     f F                               f F
+
+   Proof. First, we show that (10) implies that (11) holds for any a, b, k, m, and c.
+It holds by Lemma 1(1)
+
+          p(f ) (k, c(Y (f, m, a))) =           p(f )(k, c(Y (f, m, a))) (12)
+
+     f F                               hH f Bh
+
+using f, g  Bh  p(f ) = p(g) = ph
+
+                              = ph (k, c(Y (f, m, a)))            (13)
+
+                                       hH f Bh
+
+as each Bh is c.u.p. we may use Theorem 2 proven in [10, 11]
+
+                              = ph (k, c(Y (f, m, b)))            (14)
+
+                                       hH f Bh
+
+                              = p(f ) (k, c(Y (f, m, b))).        (15)
+
+                                       f F
+NON-UNIFORM NO-FREE-LUNCH THEOREM                                        321
+
+Now we prove that (11) being true for any a, b, k, m, and c implies (10) by showing
+
+that if (10) is not fulfilled then there exist a, b, k, m, and c such that (11) is also
+not valid. Let f, g  Bh, f = g, p(f ) = p(g), and g = f   . Let X =
+{1, . . . , n}. Let a be an algorithm that always enumerates the search space in the
+order 1, . . . , n regardless of the observed cost-values and let b be an algorithm
+that enumerates the search space always in the order  -1(1), . . . ,  -1(n). It holds
+g( -1(i)) = f (i) for i = 1, . . . , n and Y (f, n, a) = Y (g, n, b). We consider the
+performance measure
+
+     c( y1, . . . , ym ) =  1 if m = n
+
+                            and y1, . . . , ym = f (1), . . . , f (n) ,  (16)
+
+                            0 otherwise
+
+for any y1, . . . , ym  Y. Then, for m = n and k = 1, we have
+
+          p(f ) (k, c(Y (f , n, a))) = p(f ),                            (17)
+
+     f F
+
+as f = f is the only function f  F that yields
+
+     f (1), . . . , f (n) = f (1), . . . , f (n) ,                       (18)
+
+and
+
+          p(f )(k, c(Y (f , n, b))) = p(g),                              (19)
+
+     f F
+
+and therefore (11) does not hold.                                        2
+
+   The sufficient condition given in [3] is a special case of Theorem 5, because (8)
+implies
+
+     g = f    p(f ) = p(g)                                               (20)
+
+for any f, g  F and   (X), which in turn implies g, f  Bh  p(f ) =
+p(g) due to Lemma 1(2).
+
+   The probability that a randomly chosen distribution over the set of objective
+functions fulfills the preconditions of Theorem 5 has measure zero. This means
+that in this general and realistic scenario the probability that the conditions for a
+NFL-result hold vanishes.
+
+5. Conclusion
+
+Recent studies on NFL-theorems for optimization were summarized and extended.
+As the main result, we derived necessary and sufficient conditions for NFL-results
+for arbitrary distributions of target functions and thereby presented the "sharpest"
+NFL theorem so far. It turns out that in this generalized scenario, the necessary
+conditions for NFL-results can not be expected to be fulfilled.
+322  CHRISTIAN IGEL AND MARC TOUSSAINT
+
+Acknowledgements
+
+This work was supported by the DFG, grant Solesys-II SCHO 336/5-2. We thank
+Stefan Wiegand for fruitful discussions.
+
+References
+
+ 1. Droste, S., Jansen, T. and Wegener, I.: Optimization with randomized search heuristics ­ The
+      (A)NFL theorem, realistic scenarios, and difficult functions, Theoret. Comput. Sci. 287(1)
+      (2002), 131­144.
+
+ 2. English, T. M.: Evaluation of evolutionary and genetic optimizers: No free lunch, in L. J. Fogel,
+      P. J. Angeline and T. Bäck (eds), Proceedings of the Fifth Annual Conference on Evolutionary
+      Programming (EP V), 1996, pp. 163­169.
+
+ 3. English, T. M.: Optimization is easy and learning is hard in the typical function, in A. Zalzala,
+      C. Fonseca, J.-H. Kim and A. Smith (eds), Proceedings of the 2000 Congress on Evolutionary
+      Computation (CEC 2000), 2000, pp. 924­931.
+
+ 4. Igel, C. and Stagge, P.: Graph isomorphisms effect structure optimization of neural networks,
+      in International Joint Conference on Neural Networks (IJCNN 2002), 2002, pp. 142­147.
+
+ 5. Igel, C. and Toussaint, M.: Neutrality and self-adaptation, Natural Computing 2(2) (2003),
+      117­132.
+
+ 6. Igel, C. and Toussaint, M.: On classes of functions for which no free lunch results hold, Inform.
+      Process. Lett. 86(6) (2003), 317­321.
+
+ 7. Igel, C. and Toussaint, M.: Recent results on no-free-lunch theorems for optimization, arXiv
+      preprint cs.NE/0303032, http://arxiv.org/abs/cs.NE/0303032, 2003.
+
+ 8. Köppen, M., Wolpert, D. H. and Macready, W. G.: Remarks on a recent paper on the "No Free
+      Lunch" theorems, IEEE Trans. Evolut. Comput. 5(3) (1995), 295­296.
+
+ 9. Radcliffe, N. J. and Surry, P. D.: Fundamental limitations on search algorithms: Evolutionary
+      computing in perspective, in J. van Leeuwen (ed.), Computer Science Today: Recent Trends
+      and Development, Lecture Notes in Comput. Sci. 1000, 1995, pp. 275­291.
+
+10. Schumacher, C.: Fundamental limitations of search, Ph.D. thesis, University of Tennessee,
+      2000.
+
+11. Schumacher, C., Vose, M. D. and Whitley, L. D.: The no free lunch and description length,
+      in L. Spector, E. Goodman, A. Wu, W. Langdon, H.-M. Voigt, M. Gen, S. Sen, M. Dorigo,
+      S. Pezeshk, M. Garzon and E. Burke (eds), Genetic and Evolutionary Computation Conference
+      (GECCO 2001), 2001, pp. 565­570.
+
+12. Streeter, M. J.: Two broad classes of functions for which a no free lunch result does not hold, in
+      E. Cantú-Paz, J. A. Foster, K. Deb, D. Davis, R. Roy, U.-M. O'Reilly, H.-G. Beyer, R. Standish,
+      G. Kendall, S. Wilson, M. Harman, J. Wegener, D. Dasgupta, M. A. Potter, A. C. Schultz,
+      K. Dowsland, N. Jonoska and J. Miller (eds), Proceedings of the Genetic and Evolutionary
+      Computation Conference (GECCO 2003), 2003, pp. 1418­1430.
+
+13. Whitley, D.: A free lunch proof for gray versus binary encodings, in W. Banzhaf, J. Daida,
+      A. E. Eiben, M. H. Garzon, V. Honavar, M. Jakiela and R. E. Smith (eds), Proceedings of the
+      Genetic and Evolutionary Computation Conference (GECCO 1999), Vol. 1, 1999, pp. 726­733.
+
+14. Wolpert, D. H. and Macready, W. G.: No free lunch theorems for search, Technical Report
+      SFI-TR-05-010, Santa Fe Institute, Santa Fe, NM, USA, 1995.
+
+15. Wolpert, D. H. and Macready, W. G.: No free lunch theorems for optimization, IEEE Trans.
+      Evolut. Comput. 1(1) (1997), 67­82.
+

@@ -1,0 +1,1031 @@
+On the evolution of phenotypic exploration
+distributions
+
+Marc Toussaint
+
+Institut f¨ur Neuroinformatik, Ruhr-Universit¨at Bochum, ND 04, 44780 Bochum—Germany
+mt@neuroinformatik.ruhr-uni-bochum.de
+
+In Foundations of Genetic Algorithms, Volume 7 (FOGA VII), 169-182, 2003.
+
+Abstract.
+In nature, phenotypic variability is highly structured with respect to correla-
+tions between diﬀerent phenotypic traits. In this paper we argue that this structuredness
+can be understood as the outcome of an adaptive process of phenotypic exploration dis-
+tributions, similar to the adaptation of the search distribution in heuristic search schemes
+or Estimation-of-Distribution Algorithms. The key ingredient of this process is a non-trivial
+genotype-phenotype mapping: We rigorously deﬁne non-triviality, in which case neutral traits
+(as a generalization of strategy parameters) inﬂuence phenotype evolution by determining
+exploration distributions. Our main result is the description of the evolution of exploration
+distributions themselves in terms of an ordinary evolution equation. Accordingly, the “ﬁt-
+ness” of an exploration distribution is proportional to its similarity (in the sense of the
+Kullback-Leibler divergence) to the ﬁtness distribution over phenotype space. Hence, ex-
+ploration distributions evolve such that dependencies and correlations between phenotypic
+variables in selection are naturally adopted by the way evolution explores phenotype space.
+
+Keywords: genotype-phenotype mapping, non-trivial neutrality, evolvability, self-adaptation
+
+1
+
+Introduction
+
+Evolution explores a space of creatures (phenotypes) by successive mutation, recombination,
+and selection. The exploration is governed by the variational topology of possible mutations
+on phenotype space. For many evolutionary algorithms this variational topology is preﬁxed
+ad hoc by specifying phenotypic mutation operators. In contrast, in the case of a non-trivial
+genotype-phenotype mapping (GP-map), and in particular in nature, phenotypic variational
+topology is not ﬁxed. An impressive example has been analyzed by Schuster (1996) and
+Fontana & Schuster (1998): Protein folding induces very complex topologies on the space
+of secondary protein structures which depend on the genetic representative (i.e., primary
+structure) the secondary structure is encoded with. Obviously, the choice of the genetic
+representative within a neutral set that encodes for a phenotype decisively determines the
+possibilities of phenotypic mutations and innovations. Consequently is has been argued that
+
+Marc Toussaint
+
+FOGA VII, 169-182, 2003
+
+the genetic representations in todays organisms, in particular their complexity with respect
+to dependencies, gene interactions, epistatis, etc., are not a mere incident but the outcome
+of an adaptive process that optimized these representations with respect to the phenotypic
+variability and “innovatability” they induce (Wagner & Altenberg 1996).
+
+To formalize that idea of genetic representations and their inﬂuence on phenotypic variabil-
+ity is the basis of this paper. The major result is a description of exactly that adaptive
+process that explains the direction of adaptation, i.e., explains why genetic representations
+have evolved in nature that encode highly structured and adapted distributions of pheno-
+typic variability: The evolution equation that governs the (self-) adaptation of exploration
+distributions shows that they are selected with higher probability the better they match the
+ﬁtness distribution over phenotype space; in particular they are selected more likely if they
+exhibit a correlational structure similar to the correlations between phenotypic variables
+in selection. Hence, exploration distributions evolve such that dependencies and correla-
+tions between phenotypic variables in selection are naturally adopted by the way evolution
+explores phenotype space.
+
+A new formalism for neutrality clariﬁes the conceptual relation to other topics in theoretical
+evolutionary computation. We introduce a genotype-phenotype mapping φ such that ﬁtness
+(generally any kind of selection relevant character) does only depend on the phenotype;
+two genotypes are called equivalent if they have the same phenotype. Such an equivalence
+relation is related to a projection similar to schemata or coarse grainings (Radcliﬀe 1991;
+Stephens & Waelbroeck 1999). The question is whether this projection is compatible with
+evolution dynamics, i.e., whether “coarse-grained” evolution can be described without track-
+ing microscopic traits (Vose 1999, chapter 17). We deﬁne a genotype-phenotype mapping
+non-trivial iﬀ phenotype equivalence is not compatible, i.e., when phenotype evolution can-
+not be understood (i.e., modeled) without tracking neutral traits. We prove that this is the
+case whenever phenotypic mutation probabilities depend on neutral traits—vice versa, the
+“only” impact of neutral traits on phenotype evolution is that they determine exploration
+distributions. This leads to the embedding of neutral sets in the space of exploration distri-
+butions. Eventually, this formalism allows to derive the evolution equation for exploration
+distributions.
+
+Section 2 introduces the formalism of phenotype equivalence and discusses in general terms
+under which conditions phenotype evolution depends on neutral traits. Section 3 is an
+extended discussion of our approach and relations to various topics in evolutionary com-
+putation, e.g., the concept of self-adaptation, strategy parameters, and evolving genetic
+representations. Section 4 describes the embedding of neutral traits in a larger space of
+exploration distributions appropriate to formulate an evolution equation for them. Section
+5 then derives this equation, which we call σ-evolution. The equation exhibits a delay eﬀect
+of evaluation of exploration traits which is well-known for conventional strategy parame-
+ters and which we generalize to n-th order delay eﬀects in the appendix. A brief summary
+concludes.
+
+2 Phenotype equivalence: When does phenotype evo-
+
+lution depend on neutral traits?
+
+The following notation is adapted from Vose (1999, chapter 17). Let Ω denote the space
+of genotypes; which may be any space, e.g., the space of strings of arbitrary length, trees,
+or grammars, or even the union of these spaces (which would allow a self-adaptive “change
+of representation”, see later sections). We interpret evolution as discrete-time stochastic
+dynamics of a population p(t) of genotypes. At every time t, p(t) ∈ ΛΩ evolves as
+
+p(t+1) = G p(t) ,
+
+Marc Toussaint
+
+FOGA VII, 169-182, 2003
+
+where G : ΛΩ → ΛΩ is the evolution operator deﬁned on the space (simplex) ΛΩ of dis-
+In the ﬁnite population case, p(t) is a normalized ﬁnite sum of delta-
+tributions over Ω.
+distributions and G is stochastic (due to sampling); here we keep to the inﬁnite population
+approach, where the population is an arbitrary point in the simplex and G is deterministic.
+Later, we will assume that G is composed of a mutation and a selection operator, the latter
+of which depends on a ﬁtness function f : Ω → R.
+
+Phenotype equivalence. Let ˜Ω be a phenotype space and φ : Ω → ˜Ω a surjective genotype-
+phenotype map (GP-map) such that ﬁtness depends only on the phenotype, f (g) = ˜f (φ(g)),
+˜f : ˜Ω → R. Generally, φ may be non-injective. We deﬁne two genotypes g1 and g2 equivalent
+iﬀ they have the same phenotype,
+
+g1 ≡ g2 ⇐⇒ φ(g1) = φ(g2) .
+
+The set of equivalence classes Ω/ ≡ is one-to-one with the set ˜Ω = φ(Ω) = {φ(g)|g ∈ Ω} of
+phenotypes. Thus, we use the phenotype x ∈ ˜Ω to indicate an equivalence class
+
+[x] := φ−1(x) = {g ∈ Ω | φ(g) = x} ,
+
+which is also called neutral set or phenotypic class. As we map genotypes on phenotypes,
+we can also map genotype populations on phenotype populations: The mapping Ξ projects
+genotype distributions to distributions on the phenotype space,
+
+Ξ : ΛΩ → Λ ˜Ω : p (cid:55)→ Ξp , Ξp (x) =
+
+p(g) .
+
+(cid:88)
+g∈[x]
+
+(1)
+
+By this projection, the equivalence relation carries over to distributions in ΛΩ: two distri-
+butions p1, p2 are called equivalent iﬀ they induce the same distribution over the phenotype
+space,
+
+p1
+
+≡ p2 ⇐⇒ Ξp1 = Ξp2 .
+(cid:98)
+
+Again, the quotient space ΛΩ/
+Λ ˜Ω of distributions over the phenotype space.
+
+≡ of equivalence classes in ΛΩ is one-to-one with the space
+(cid:98)
+
+Compatibility. Based on this formalism we investigate the following question: When G
+describes the evolutionary process on the genotype level and if we observe only the projected
+process on the phenotype level, can we model the phenotypic evolution process without
+reference to the genotype level? I.e., is the genotype level irrelevant for understanding the
+phenotypic process? Formally, this amounts to whether G is compatible with ≡ or not: An
+operator G : ΛΩ → ΛΩ is compatible with an equivalence relation ≡ iﬀ
+
+p1
+
+≡ p2 =⇒ G(p1)
+(cid:98)
+
+≡ G(p2) ,
+(cid:98)
+
+which is true iﬀ there exists an operator ˜G such that the diagram
+
+ΛΩ
+Ξ
+
+(cid:121)
+Λ ˜Ω
+
+G−→ ΛΩ
+Ξ
+
+˜G−→ Λ ˜Ω
+(cid:121)
+
+(2)
+
+(3)
+
+commutes, i.e., Ξ ◦ G = ˜G ◦ Ξ. This means that, in the case of compatibility, one can deﬁne
+a process ˜G : Λ ˜Ω → Λ ˜Ω solely on the phenotypic level that equals the projected original
+process G: ˜G represents the phenotypic version of evolutionary dynamics and the population
+Ξp of phenotypes evolves independent of the neutral traits within the genotype population
+p. Accordingly, we make the following deﬁnition:
+
+Marc Toussaint
+
+FOGA VII, 169-182, 2003
+
+Deﬁnition 2.1 (Trivial neutrality, trivial genotype-phenotype mapping). Given a
+genotype space Ω, an evolutionary process G : ΛΩ → ΛΩ, and a genotype-phenotype map-
+ping φ : Ω → ˜Ω, we deﬁne the GP-map to be trivial iﬀ phenotype equivalence ≡ commutes
+with the evolutionary process G. In that case we also speak of trivial neutrality.
+
+The meaning of this deﬁnition should become clear from the deﬁnition of compatibility: In
+the case of trivial neutrality, the evolution of phenotypes can be completely understood (i.e.,
+modeled) without referring at all to genotypes, in particular, neutral traits are completely
+irrelevant for the evolution of phenotypes. Based on this formalism we can derive exact
+conditions for the case of trivial neutrality:
+Theorem 2.1. Let the evolution operator G = F M be composed of selection and mutation
+only (no crossover), and let M be given by the conditional probability M(g(cid:48)|g) of mutating a
+genotype g into g(cid:48). Then, neutrality is trivial iﬀ
+
+∀x ∈ ˜Ω : g1, g2 ∈ [x] ⇒ ΞM(·|g1) = ΞM(·|g2) .
+
+In other words, neutrality is non-trivial if and only if there exists at least one neutral set
+[x] such that the projected exploration distribution ΞM(·|g) ∈ Λ ˜Ω is non-constant over this
+neutral neutral set (i.e., diﬀers for diﬀerent g ∈ [x]).
+(The footnote1 explains the · notation.)
+
+Proof. Since selection depends only on phenotypes it is obvious that the selection operator
+F commutes with phenotype projection. The composition of two compatible operators is
+also compatible (Vose 1999, Theorem 17.4). Hence, we need to focus only on the mutation
+operator M:
+
+Let us consider the mutational process given by
+
+p(t+1)(g(cid:48)) =
+
+(cid:88)
+g
+
+M(g(cid:48)|g) p(t)(g)
+
+Following deﬁnition (2) of compatibility we investigate what happens under projection Ξ:
+
+Ξp(t+1)(x(cid:48)) =
+
+(cid:88)
+g(cid:48)∈[x(cid:48)]
+
+(cid:88)
+g
+
+M(g(cid:48)|g) p(t)(g) =
+
+(cid:88)
+g
+
+(cid:88)
+g(cid:48)∈[x(cid:48)]
+
+M(g(cid:48)|g) p(t)(g) =
+
+ΞM(x(cid:48)|g) p(t)(g) .
+
+(cid:88)
+g
+
+We distinguish two cases:
+
+First case: For all neutral sets [x], let ΞM(·|g) be constant over the neutral set, i.e., inde-
+pendent of g ∈ [x], and we can write ΞM(·|g) = ΞM(·|x). It follows:
+
+Ξp(t+1)(x(cid:48)) =
+
+(cid:88)
+x
+
+(cid:88)
+g∈[x]
+
+ΞM(x(cid:48)|g) p(t)(g) =
+
+ΞM(x(cid:48)|x)
+
+(cid:88)
+x
+
+p(t)(g) =
+
+(cid:88)
+x
+
+(cid:88)
+g∈[x]
+
+ΞM(x(cid:48)|x) Ξp(t)(x) .
+
+M given by ΞM(x(cid:48)|x).
+(cid:101)
+
+Hence, M is compatible with phenotype equivalence; the diagram (3) commutes with the
+“coarse-grained” mutation operator
+Second case: Let there exist at least one neutral set [x] with diﬀerent genotypes g1, g2 ∈ [x]
+such that the corresponding projected exploration distributions are not equal, ΞM(·|g1) (cid:54)=
+ΞM(·|g1). Further, consider the two single genotype populations p(t)
+2 (g) =
+δg,g2 , which are phenotypically equivalent, Ξp(t)
+2 . Their projected oﬀspring popula-
+tions though are diﬀerent: Ξp(t+1)
+= ΞM(·|g2). Hence, in the second
+2
+case M is not compatible with phenotype equivalence.
+
+1 = Ξp(t)
+= ΞM(·|g1) (cid:54)= Ξp(t+1)
+
+1 (g) = δg,g1 and p(t)
+
+1
+
+1We use the · as a “wild card” for a function argument. E.g., given a function f : R2 → R : (x, y) (cid:55)→
+f (x, y), if we want to ﬁx y and consider the function on that hyperplane, we write f (·, y) : R → R : x (cid:55)→
+f (x, y). Accordingly, for a conditional probability we write M : Ω → ΛΩ : g (cid:55)→ M(·|g) ∈ ΛΩ.
+
+Marc Toussaint
+
+FOGA VII, 169-182, 2003
+
+3 Behind this formalism
+
+The variability of variational topology.
+We introduced M(g(cid:48)|g) as the conditional probability distribution describing mutations from
+g to g(cid:48). Actually, this mutation probability is the only “structure” given on Ω; there exists
+no other relevant a priori topological or metric structure. I call it the variational structure
+on Ω and often it is associated with a variational topology on Ω, where g(cid:48) may be deﬁned a
+neighbor of g if the transition probability M(g(cid:48)|g) is greater than some lower bound (Stadler,
+Stadler, Wagner, & Fontana 2001). Fundamental aspects of evolutionary transitions are
+often discussed in terms of the variational topology (Schuster 1996; Fontana & Schuster
+1998; Reidys & Stadler 2002), and we will also use this intuitive language.
+
+The role of the projection Ξ becomes more evident: while M(·|g) describes the variational
+structure on Ω, its projection ΞM(·|g) describes the variational structure on ˜Ω. The pro-
+jection Ξ may be interpreted as a lift of variational structure from the genotype space onto
+the phenotype space—similar to the lift of a metric structure from a base space onto a
+Riemannian manifold. There is, however, a crucial diﬀerence: the GP-map φ need not be
+one-to-one. If φ is non-injective, there exist diﬀerent genotypes gi that map to the same
+phenotype; and thus there exist diﬀerent neighborhoods Ugi that map to potentially diﬀer-
+ent neighborhoods of the same phenotype. Hence, the variational topology on phenotype
+space is generally not ﬁxed but variable and depends on the genotypic representation gi that
+induces the topology!
+
+On evolving genetic representations.
+
+The GP-map is commonly been thought of “the choice of representation”. When applying
+evolutionary algorithms for problem solving, this choice of representation is usually crucial
+for the algorithm’s eﬃciency. Even if one has two isomorphic representations, their eﬀects
+on evolution may be very diﬀerent since the algorithm’s designer will usually deﬁne the
+mutation operators according to a seemingly natural topology on that representation (like
+the hypercube topology on bit strings). A common but misleading conclusion is that adapt-
+ability of exploration strategies requires an adaptability of the GP-map (Altenberg 1995;
+Wagner & Altenberg 1996). However, as our formalism clariﬁes, adaptability of exploration
+can be achieved by a ﬁxed, but non-trivial genotype-phenotype mapping. In this case, a
+variation of exploration strategy does not occur by varying the GP-map but by neutral
+variations in the genotype space. For example, the genotype space may be considered very
+large, comprising all thinkable genetic representations of phenotypes (strings and trees and
+grammars, etc.). In that case, diﬀerent neutral traits literally correspond to diﬀerent ge-
+netic representations—such that a neutral variation allows for a change of representation
+although the genotype-phenotype map as a whole remains ﬁxed. Of course, this presumes
+that there exist possible neutral mutations between these representations—in the case of
+the artiﬁcial evolution of strings, trees, and grammars, this can be realized and is subject to
+current research (Toussaint 2001). (See also the symbiotic composition approach (Watson &
+Pollack 2002).) In the case of natural evolution, the neutral transition from RNA to DNA
+genomes in early evolution is a corresponding paradigm. In contrast, a self-adaptation of the
+whole genotype-phenotype mapping hardly makes sense because it is generally inconsistent
+to speak of a mapping from genotype to phenotype being parameterized by the genotype.
+
+Strategy parameters as a special case.
+
+In a less formal account (Toussaint & Igel 2002) we already discussed the implications of an
+exploration distribution M(·|g) that depends on neutral traits (i.e., genotypic representations
+
+Marc Toussaint
+
+FOGA VII, 169-182, 2003
+
+g ∈ [x] in a given neutral set):
+It allows the exploration strategy (e.g., the variational
+topology) to self-adapt.
+In traditional approaches, in particular evolution strategies, so-
+called strategy parameters play the part of neutral traits—strategy parameters are a direct
+parameterization of mutation operators which are themselves part of the genotype (Angeline
+1995; Smith & Fogarty 1997). In these approaches, the genotype space is a Cartesian product
+Ω = ˜Ω × Z of the phenotype space and the space Z of neutral strategy parameters. In some
+sense, our formalism generalizes the concept of strategy parameters to the case where the
+genotype space can not be decomposed into a product of phenotype and strategy parameter
+spaces but consists of arbitrarily interweaved neutral sets.
+
+Examples.
+
+Assume that we encode (phenotype) strings of length n by (genotype) strings of length n+1,
+such that the GP-map simply ignores the genotype’s last symbol. Obviously, this encoding
+is non-injective. But what is more important is that neutrality is trivial in that case, i.e., G
+commutes with Ξ. Hence, the encoding really is redundant—the additional bit has no eﬀect
+whatsoever on phenotype evolution. Many investigations that aim to argue against neutral
+encodings actually only investigate such trivial neutrality; they forget that neutrality (in
+their terms “redundancy”) can have an absolute crucial impact on phenotypic variability in
+the case of a non-trivial GP-map.
+
+In contrast, non-trivial neutrality is implicit in many models of evolutionary computation.
+Evolution strategies that make use of strategy parameters are the most basic paradigm,
+which we have already mentioned. But non-trivial neutrality occurs also in many other
+models. An excellent example are grammar-like genotype-phenotype mappings. Here, the
+same ﬁnal phenotype can be represented by diﬀerent sets of “developmental” rules. De-
+pending on this representation, exploration in the space of phenotypes is very diﬀerent. The
+example given in the footnote2 nicely demonstrates the variability of variational topology
+on the phenotype space. In (Toussaint 2001), neutral variations between such equivalent
+grammar-type representations have been introduced and proved eﬃcient.
+
+Evolvability.
+
+All of this is strongly related to the discussion of evolvability in the biology literature. Many
+discussions are based on some relation between neutrality and evolvability (Schuster 1996;
+Kimura 1983) but to my knowledge there hardly exists a generic theoretical formalism to
+investigate such issues. (Analytical approaches to describe canalization, i.e. the evolution of
+mutational robustness of certain characters, based on neutral variations have been proposed
+by Rice (1998) and Wagner, Booth, & Bagheri-Chaichian (1997).) Following Wagner &
+Altenberg (1996), evolvability denotes the capability to explore further and further good
+individuals during evolution, which seems possible only when the exploration strategy itself
+is adapted in favor of evolvability during evolution. In our formalism this raises the question
+of how neutral traits, and thereby exploration distributions, do actually evolve. We will
+propose an answer to this question in section 5, which requires the formalism introduced in
+the next section.
+
+2Let the string abab be represented (1.) by the grammar {start-symbol→x, x→ab} or (2.) by the grammar
+{start-symbol→abab}. If mutations are only rhs symbol ﬂips, then the phenotypic variational neighbors of
+abab are either (1.) {*, *b*b, a*a*} or (2.) {*bab, a*ab, ab*b, aba*}, where * means a symbol ﬂip. These are
+quite diﬀerent topologies! See (Toussaint 2001, chapter 5) for details.
+
+Marc Toussaint
+
+FOGA VII, 169-182, 2003
+
+4 Embedding neutral sets in the variety of exploration
+
+distributions
+
+Our goal is to describe the evolution of neutral traits and thereby the evolution of exploration
+distributions M(·|g). In simple cases where the genotype space decomposes, Ω = X × Z,
+there seems no conceptual diﬃculty to do this: the evolutionary process as described on the
+genotype space may be projected on the hyperplane Z. This is the case for conventional
+strategy parameters and enabled Beyer (2001) to even derive analytical solutions for this
+process. However, since in general neutral traits live in arbitrarily interweaved neutral sets
+it seems tedious to ﬁnd a description of their evolution. We are missing some embedding
+space to formulate equations—this actually reﬂects that we are missing a uniform way of
+interpreting and modeling neutral traits.
+
+We now propose such an embedding. To simplify the notation let us “not distinguish”
+between two genotypes g1, g2 ∈ [x] which induce the same exploration distribution M(·|g1) =
+M(·|g2) ∈ ΛΩ. Formally, this means that we deﬁne another equivalence relation. Not
+distinguishing equivalent g’s means considering only the evolution equation on the respective
+quotient space. It is clear the M commutes with this equivalence and of course also selection
+does. Since these circumstances are rather obvious we skip introducing formal symbols and,
+from now on, just assume that all g’s in [x] induce diﬀerent distributions M(·|g).
+
+Thus, there exists an bijection between [x] and the set
+
+[x] = {M(·|g) | g ∈ [x]} ⊂ ΛΩ
+
+of exploration distributions. It is this bijection that we want to emphasize because it deﬁnes
+an embedding of neutral sets in the space of exploration distributions. Speciﬁcally, it deﬁnes
+an embedding of the non-decomposable genotype space Ω in a product space of “Phenotype
+× Distribution”:
+
+Deﬁnition 4.1 (σ-embedding). Given a genotype space Ω, a genotype-phenotype map-
+ping φ : Ω → ˜Ω, and a mutation operator M : Ω → ΛΩ, we deﬁne the σ-embedding
+as:
+
+Ω → ˜Ω × ΛΩ : g (cid:55)→ (x, σ) =
+
+φ(g), M(·|g)
+
+.
+
+(cid:1)
+
+(cid:0)
+
+(4)
+
+The embedding space is ¯Ω = ˜Ω × ΛΩ. Note that this mapping is injective (but of course
+not surjective) and thus there exists a one-to-one relation between the genotype space Ω
+and the subset {(x, σ) | x ∈ ˜Ω, σ ∈ [x]} ⊂ ¯Ω. The injectiveness allows to directly associate a
+genotype distribution p ∈ ΛΩ with a distribution over ¯Ω by
+
+p(x, σ) = (cid:40)
+
+0
+p(g)
+
+if σ (cid:54)∈ [x]
+if σ ∈ [x], x = φ(g), and σ = M(·|g) .
+
+(5)
+
+The product structure of the embedding space is the key to formulate the evolution equation
+of exploration distributions in the next section. The embedding also oﬀers a new formal way
+of modeling neutral traits as specifying an exploration distribution σ ∈ [x]; the neutral set
+[x] being nothing but an isomorphic copy of the space [x] ⊂ ΛΩ of exploration distributions.
+
+5 σ-evolution: The evolution of exploration
+
+How in principle can the exploration distribution be adapted in order to allow for evolv-
+ability, i.e., successful exploration? There seems to be a hidden consensus in the class
+
+Marc Toussaint
+
+FOGA VII, 169-182, 2003
+
+of so-called Estimation-of-Distribution Algorithms (EDAs) (Pelikan, Goldberg, & Cant´u-
+Paz 2000; M¨uhlenbein, Mahnig, & Rodriguez 1999; Baluja & Davies 1997). All of these
+approaches use probabilistic models (Bayesian networks, dependency trees, or factorized
+distributions instead of population and mutation operators) to directly describe the ex-
+ploration distribution. Their strategy to adapt this distribution is straightforward: in the
+forthcoming exploration, make solutions more probable that have been selected currently.
+This means that the exploration distribution has been adapted to become “more similar”
+to the distribution of selected solutions. Formally, such similarity can be captured by a
+distance measure in the space of distributions, the relative entropy or Kullback-Leibler di-
+vergence. In fact, Pelikan, Goldberg, & Cant´u-Paz (2000) directly work with a variant of the
+Kullback-Leibler divergence speciﬁcally deﬁned on their Bayesian models. These approaches
+are by no means self-adaptive, adaptation occurs by an explicit (“external”) algorithm, not
+implicitly by evolutionary selection. Could the mere interaction of mutation and selection
+induce a similar kind of adaptation of exploration? We will argue so in the following.
+
+Let us write the evolution equation for mutation and selection as
+
+p(t+1)(g(cid:48)) =
+
+f (t)(g(cid:48))
+¯f (t)
+
+(cid:88)
+g∈Ω
+
+M(g(cid:48)|g) p(t)(g) .
+
+(6)
+
+We embed the equation in ¯Ω and, according to equations (4) and (5), identify the exploration
+distribution M(x(cid:48), σ(cid:48)|g) with σ(x(cid:48), σ(cid:48)),
+
+p(t+1)(x(cid:48), σ(cid:48)) =
+
+˜f (t)(x(cid:48))
+¯f (t)
+
+(cid:88)
+x∈ ˜Ω
+
+(cid:88)
+σ∈ΛΩ
+
+σ(x(cid:48), σ(cid:48)) p(t)(x, σ) .
+
+This allows to run the summation over all possible distributions σ ∈ ΛΩ; note that σ (cid:54)∈ [x] ⇒
+p(t)(x, σ) = 0. We now beneﬁt from ¯Ω being a product space: The summations commute
+and executing summation over x gives
+
+p(t+1)(x(cid:48), σ(cid:48)) =
+
+˜f (t)(x(cid:48))
+¯f (t)
+
+(cid:88)
+σ
+
+σ(x(cid:48), σ(cid:48)) p(t)(σ) .
+
+Here, p(t)(σ) is the marginal distribution of p(t)(x, σ), well deﬁned because ¯Ω = ˜Ω × ΛΩ is
+a product space. Summing over x(cid:48) and decomposing the mutation probability σ(x(cid:48), σ(cid:48)) =
+σ(x(cid:48)|σ(cid:48)) σ(σ(cid:48)) we ﬁnally get
+
+p(t+1)(σ(cid:48)) =
+
+(cid:80)x(cid:48) ˜f (t)(x(cid:48)) σ(x(cid:48)|σ(cid:48))
+¯f (t)
+
+(cid:88)
+σ
+
+σ(σ(cid:48)) p(t)(σ) .
+
+We summarize this in
+
+Theorem 5.1 (σ-evolution). Given the evolutionary process (6) on the genotype space Ω,
+the evolution of exploration distributions is described by the projection of the process on ΛΩ
+given by the σ-evolution equation
+
+p(t+1)(σ(cid:48)) =
+
+˜f (t) , σ(·|σ(cid:48))
+(cid:11)
+(cid:10)
+¯f (t)
+
+(cid:88)
+σ
+
+σ(σ(cid:48)) p(t)(σ) ,
+
+(7)
+
+where
+
+f , g
+(cid:10)
+
+(cid:11)
+
+:=
+
+(cid:80)x(cid:48)∈ ˜Ω f (x(cid:48)) g(x(cid:48)) denotes the scalar product in the function space L2.
+
+σ-evolution describes the transition of a parent population p(t)(σ) of exploration distribu-
+tions to the oﬀspring population p(t+1)(σ(cid:48)) of exploration distributions. Therein, the term
+σ(σ(cid:48)) corresponds to the mutation operator on ΛΩ (recall that σ(x(cid:48), σ(cid:48)) corresponds to a
+
+Marc Toussaint
+
+FOGA VII, 169-182, 2003
+
+mutation distribution M(x(cid:48), σ(cid:48)|g)), and the equation matches the standard evolution equa-
+tion in the form “p(t+1) = F M p(t)”. In the following we discuss three aspects of the most
+interesting part of this equation, the ﬁtness term
+
+˜f (t) , σ(·|σ(cid:48))
+(cid:10)
+
+.
+(cid:11)
+
+The scalar product as quality measure. A term
+is a measure for σ that we call
+σ-quality. In the ﬁrst place, it is the scalar product of ˜f (t) with σ in the space of functions
+over ˜Ω. The scalar product is a measure of the similarity and thus, σ-quality measures the
+similarity between the exploration distribution and ﬁtness. σ-quality is very similar to the
+concept of eﬀective ﬁtness (Nordin & Banzhaf 1995; Stephens & Vargas 2000).
+
+(cid:10)
+
+(cid:11)
+
+˜f (t) , σ
+
+(cid:10)
+
+˜f (t) , σ(·|σ(cid:48))
+
+¯f (t) is actually
+A delay eﬀect. However, equation (7) exhibits that the term
+the ﬁtness term for the oﬀspring σ(cid:48). Thus, the ﬁtness one has to associate with an oﬀspring
+is the σ-quality of its parent under the condition that σ has in fact generated the oﬀspring σ(cid:48)
+(σ(·|σ(cid:48)) is the parent’s phenotypic exploration distribution). Roughly speaking, the oﬀspring
+is selected according to the quality of its parent. This circumstance can be coined a ﬁrst
+order delay of evaluation. The quality of an individual’s exploration distribution is not
+rewarded immediately by higher selection probability of this individual itself. It is rewarded
+when its oﬀspring are selected with higher probability. This delay eﬀect is well-known in the
+context of evolution strategies, see the footnote.3 With our formalism it is straightforward to
+generalize it to arbitrary degrees of equivalence leading to n-th order delay, see the appendix.
+
+(cid:11)(cid:14)
+
+The information theoretic interpretation. Since σ is actually a probability distribution
+we can also give an information theoretic interpretation. Let us introduce the exponential
+ﬁtness distribution as
+
+F (t) =
+
+exp ˜f (t)
+C (t)
+
+, C (t) =
+
+(cid:88)
+x(cid:48)
+
+exp ˜f (t)(x(cid:48)) .
+
+One would also call F (t) the soft-max or Boltzmann distribution of ˜f (t). σ-quality can now
+be rewritten as
+
+˜f (t) , σ
+(cid:10)
+
+(cid:11)
+
++ ln C (t) =
+
+(cid:88)
+x(cid:48)
+
+σ(x(cid:48)) ln F (t)(x(cid:48)) = −D
+
+F (t)
+
+(cid:1)
+
+σ
+
+(cid:0)
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+− H(σ) ,
+
+where D denotes the relative entropy or Kullback-Leibler divergence 4 between two distribu-
+tions, and H the entropy,
+
+D
+
+p
+
+(cid:0)
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+=
+
+q
+
+(cid:1)
+
+(cid:88)
+x
+
+p(x) ln
+
+p(x)
+q(x)
+
+, H(p) = −
+
+p(x) ln p(x) .
+
+(cid:88)
+x
+
+3For evolution strategies it is a common approach to ﬁrst mutate the strategy parameters z before mu-
+tating the objective variables x according to the new strategy parameters (Schwefel 1995; B¨ack 1998). In our
+formalism this means that in equation (7) the evaluated distribution σ(·|σ(cid:48)) = ΞM(·|x, z(cid:48)) is “similar” (with
+same strategy parameter z(cid:48)) to the oﬀspring’s distribution Ξσ(cid:48)(·) = ΞM(·|x(cid:48), z(cid:48)). However, the evaluated
+and the oﬀspring’s exploration distributions still diﬀer signiﬁcantly because they depend on the objective
+variables x and x(cid:48), respectively. It is thus questionable to state that this method cancels the delay eﬀect:
+the real σ-quality of strategy parameters z(cid:48) becomes evident only in the next generation in combination with
+the oﬀspring’s objective parameters x(cid:48).
+
+(cid:0)
+
+(cid:1)
+
+q
+
+p
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+4Relative entropy D
+
+is a measure for the loss of information (or gain of entropy) when a “true”
+distribution p is represented (approximated) by a model distributions q. For example, when p(x, y) is
+approximated by p(x) p(y) one loses information on the mutual dependence between x and y. Accordingly,
+is equal to the mutual information between x and y. Generally,
+the relative entropy D
+If,
+when knowing the real distribution p, one needs on average H(p) bits to describe a random sample.
+however, one knows only an approximate model q, then one will need on average H(p) + D
+bits to
+describe a random sample. The loss of knowledge about the true distribution induces an increase of entropy
+and thereby an increase of description length for random samples.
+
+p(x) p(y)
+
+p(x, y)
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+p
+
+q
+
+(cid:1)
+
+(cid:0)
+
+(cid:1)
+
+(cid:0)
+
+Marc Toussaint
+
+FOGA VII, 169-182, 2003
+
+Hence, σ-quality is proportional to the negative of the divergence between the exploration
+distribution σ and the exponential ﬁtness distribution F (t) minus the entropy of exploration.
+We summarize this:
+
+Corollary 5.2. The evolution of exploration distributions (σ-evolution) naturally has a se-
+lection pressure towards
+
+– minimizing the KL-divergence between exploration and the exponential ﬁtness distri-
+
+bution, and
+
+– minimizing the entropy of exploration.
+
+This also means that, assuming ﬁxed entropy of σ, the exponential ﬁtness distribution
+is a ﬁx point of σ-evolution that corresponds to the quasispecies (Eigen, McCaskill, &
+Schuster 1989). We aimed at this interpretation because we ﬁnd it establishes a bridge
+to numerous approaches and discussions already present in the literature. First of all we
+understand the relation between self-adaptive σ-evolution and the deterministic adaptation
+schemes of the exploration distribution in Estimation-of-Distribution Algorithms (Pelikan,
+Goldberg, & Cant´u-Paz 2000; Baluja & Davies 1997; M¨uhlenbein, Mahnig, & Rodriguez
+1999). Actually, σ-evolution realizes a similar kind of adaptation—minimization of the
+Kullback-Leibler divergence between exploration and ﬁtness—but in a self-adaptive way.
+
+Further, the question of how variational properties evolve has also been raised in numerous
+variations (pleiotropy, canalization, epistatis, etc.) in the biology literature. These discus-
+sions aim at understanding how evolution can handle to introduce correlations or mutational
+robustness or functional modularity in phenotypic exploration. Our answer is that varia-
+tional properties evolve as to approximate the selection distribution. If, for example, certain
+phenotypic traits are correlated in the selection distribution F , then the Kullback-Leibler
+divergence decreases if these correlations are also present in the exploration distribution σ.
+
+6 Summary
+
+Why have we applied Vose’s formalism of compatibility? The literature is full of discussions
+on the purpose or relevance of neutrality or redundancy in genetic representations. There
+is a lack of a formal basis on which to ground these discussions. The approach to formalize
+neutrality by means of equivalence classes is not new—but the strict application of simple
+and fundamental arguments concerning the compatibility of G with phenotype equivalence
+allows to derive under which conditions neutrality inﬂuences phenotype evolution: non-
+dependence of (projected) mutation on neutral traits is equivalent to compatibility of the
+evolution equation with phenotype equivalence, which we termed trivial neutrality.
+
+Why have we introduced the σ-embedding of neutral traits? For a description of the evo-
+lution of neutral traits it is essential to have an embedding space in which to formulate
+In simple cases where the genotype space decomposes (strategy
+the evolution equation.
+parameters) an embedding space of neutral sets is obvious. To generalize to arbitrary neu-
+tral sets and arbitrary genotype-phenotype mappings we introduced the σ-embedding, i.e.,
+we embedded neutral sets in the space of probability distributions over the genotype space
+(exploration distributions).
+
+Finally, what have we learned about σ-evolution? We derived an evolution equation for
+exploration distributions. The selection term can be interpreted as a ﬁtness of exploration
+distributions that measures the (scalar product) similarity to the ﬁtness function. In terms
+of information theory, σ-evolution minimizes the Kullback-Leibler divergence between the
+exploration distribution and the exponential (Boltzmann) ﬁtness distribution, and minimizes
+
+the entropy of exploration. We argued that this result provides a bridge between heuris-
+tic search approaches to adaptation, conventional self-adaptation, and theoretical biology
+concerning the origin of epistatis.
+
+Appendix — n-th order equivalence and n-th order delay
+
+How could we consider also higher order delays? Eventually, how could evolution arrange to
+increase the probability for children to generate with high probability children that generate
+with high probability ...et cetera... children with high ﬁtness. We propose the following. What
+we considered up to now was the case when two genotypes g1, g2 are equivalent, g1 ≡ g2,
+because they share the same phenotype. As a result we found a ﬁrst order delay of selection
+of neutral characters. Now consider the case when two genotypes are 2nd order equivalent
+because their phenotypes are the same, g1 ≡ g2, and their phenotypic explorations are the
+≡ σ2. Then, these two exploration distributions have, in fact, the
+same, Ξσ1 = Ξσ2, i.e. σ1
+same σ-quality and there is no immediate diﬀerence in selection between them. However,
+(cid:98)
+when writing equation (7) for two time steps we ﬁnd
+
+p(t+2)(σ(cid:48)(cid:48)) =
+
+(cid:88)
+σ(cid:48),σ
+
+˜f (t+1) , σ(cid:48)(·|σ(cid:48)(cid:48))
+(cid:11)
+(cid:10)
+¯f (t+1)
+
+˜f (t) , σ(·|σ(cid:48))
+(cid:10)
+¯f (t)
+
+σ(cid:48)(σ(cid:48)(cid:48)) σ(σ(cid:48)) p(t)(σ) .
+
+(cid:11)
+
+Which means that there exists a longer term diﬀerence in selection between σ1 and σ2 iﬀ
+the expected exploration distributions σ(cid:48) of their oﬀspring are not equivalent in the sense
+
+σ1(σ(cid:48)) (Ξσ(cid:48)) (cid:54)=
+
+σ2(σ(cid:48)) (Ξσ(cid:48)) .
+
+(cid:88)
+σ(cid:48)
+
+(cid:88)
+σ(cid:48)
+
+This diﬀerence in selection after two generations may be coined a second order delay eﬀect.
+Generally, let us deﬁne two genotypes, (x1, σ1) and (x2, σ2), n-th order equivalent iﬀ their
+phenotype and all their expected phenotypic exploration distributions after 0..n−2 mutations
+are the same,
+
+(x1, σ1) ≡n (x2, σ2) ⇐⇒ x1 = x2 , n ≥ 2 ⇒ Ξσ1 = Ξσ2 ,
+
+∀1≤k≤n−2 :
+
+(cid:80)σ1,..,σk σ1(σ1) σ1(σ2) .. σk−1(σk) (Ξσk)
+(cid:80)σ1,..,σk σ2(σ1) σ1(σ2) .. σk−1(σk) (Ξσk)
+
+=
+
+It follows that, if two genotypes are n-th order equivalent, then there exists no diﬀerence be-
+tween the phenotypic dynamics of their evolution for the next n − 1 generations. Thereafter
+though, with a delay of n generations, their evolution diﬀers because the expected explo-
+ration distributions of the n-th order oﬀspring of these two genotypes are not phenotypically
+equivalent.
+
+Acknowledgments
+
+The work was supported by the German Research Foundation DFG under grant SoleSys-II
+SCHO 336/5-2.
+
+References
+
+Altenberg, L. (1995). Genome growth and the evolution of the genotype-phenotype map. In
+W. Banzhaf & F. H. Eeckman (Eds.), Evolution and Biocomputation: Computational Models
+of Evolution, pp. 205–259. Springer, Berlin.
+
+Marc Toussaint
+
+FOGA VII, 169-182, 2003
+
+Angeline, P. (1995). Adaptive and self-adaptive evolutionary computations. In M. Palaniswami,
+Y. Attikiouzel, R. Marks, D. B. Fogel, & T. Fukuda (Eds.), Computational Intelligence: A
+Dynamic Systems Perspective, pp. 152–163. IEEE Press.
+
+B¨ack, T. (1998). On the behavior of evolutionary algorithms in dynamic environments. In D. Fo-
+gel, H.-P. Schwefel, T. B¨ack, & X. Yao (Eds.), Proc. of Fifth IEEE Int. Conf. on Evolutionary
+Computation (ICEC 1998), pp. 446–451. IEEE Press.
+
+Baluja, S. & S. Davies (1997). Using optimal dependency-trees for combinatorial optimization:
+Learning the structure of the search space. In Proc. of Fourteenth Int. Conf. on Machine
+Learning (ICML 1997), pp. 30–38.
+
+Beyer, H.-G. (2001). The Theory of Evolution Strategies. Springer, Berlin.
+Eigen, M., J. McCaskill, & P. Schuster (1989). The molecular quasispecies. Advances in chemical
+
+physics 75, 149–263.
+
+Fontana, W. & P. Schuster (1998). Continuity in evolution: On the nature of transitions. Sci-
+
+ence 280, 1431–1433.
+
+Kimura, M. (1983). The Neutral Theory of Molecular Evolution. Cambridge University Press.
+M¨uhlenbein, H., T. Mahnig, & A. O. Rodriguez (1999). Schemata, distributions and graphical
+
+models in evolutionary optimization. J. of Heuristics 5, 215–247.
+
+Nordin, P. & W. Banzhaf (1995, 15-19). Complexity compression and evolution. In L. Eshelman
+(Ed.), Genetic Algorithms: Proc. of Sixth International Conf. (ICGA 1995), pp. 310–317.
+Morgan Kaufmann, Pittsburgh.
+
+Pelikan, M., D. E. Goldberg, & E. Cant´u-Paz (2000). Linkage problem, distribution estimation,
+
+and Bayesian networks. Evolutionary Computation 9, 311–340.
+
+Radcliﬀe, N. J. (1991). Equivalence class analysis of genetic algorithms. Complex Systems 5,
+
+183–205.
+
+Reidys, C. M. & P. F. Stadler (2002). Combinatorial landscapes. SIAM Review 44, 3–54.
+Rice, S. H. (1998). The evolution of canalization and the breaking of von Bear’s laws: Modeling
+
+the evolution of development with epistatis. Evolution 52, 647–656.
+
+Schuster, P. (1996). Landscapes and molecular evolution. Physica D 107, 331–363.
+Schwefel, H.-P. (1995). Evolution and Optimum Seeking. John Wiley & Sons, New York.
+Smith, J. & T. Fogarty (1997). Operator and parameter adaption in genetic algorithms. Soft
+
+Computing 1, 81–87.
+
+Stadler, B. M., P. F. Stadler, G. P. Wagner, & W. Fontana (2001). The topology of the possible:
+Formal spaces underlying patterns of evolutionary change. Journal of Theoretical Biology 213,
+241–274.
+
+Stephens, C. & J. M. Vargas (2000). Eﬀective ﬁtness as an alternative paradigm for evolutionary
+computation I: General formalism. Genetic Programming and Evolvable Machines 1, 363–378.
+Stephens, C. & H. Waelbroeck (1999). Codon bias and mutability in HIV sequences. Molecular
+
+Evolution 48, 390–397.
+
+Toussaint, M. (2001). Self-adaptive exploration in evolutionary search. Technical Report IRINI-
+
+2001-05, Institut f¨ur Neuroinformatik, Ruhr-Universit¨at Bochum, Germany.
+
+Toussaint, M. & C. Igel (2002). Neutrality: A necessity for self-adaptation. In Proc. of IEEE
+
+Congress on Evolutionary Computation (CEC 2002), pp. 1354–1359.
+Vose, M. D. (1999). The Simple Genetic Algorithm. MIT Press, Cambridge.
+Wagner, G. P. & L. Altenberg (1996). Complex adaptations and the evolution of evolvability.
+
+Evolution 50, 967–976.
+
+Wagner, G. P., G. Booth, & H. Bagheri-Chaichian (1997). A population genetic theory of canal-
+
+ization. Evolution 51, 329–347.
+
+Watson, R. & J. Pollack (2002). A computational model of symbiotic composition in evolutionary
+
+transitions. Biosystems, Special Issue on Evolvability.
+
+

@@ -1,0 +1,700 @@
+================================================================================
+RESEARCH REVIEW PACKET HC-R01 / CROSS-SPECIMEN ACCESSIBILITY RECURRENCE
+================================================================================
+Prepared: 2026-09-03 first pass, no compute run Seat: Herakles / Historical
+Collider Location: herakles/HERAKLES_HISTORICAL_COLLIDER_V0/ Deliverables: Q
+HISTORY_CONDITIONED_ACCESSIBILITY_REGISTRY.jsonl 16 rows
+                 R ACCESSIBILITY_WITHOUT_ACQUISITION_NEGATIVES.jsonl   8 rows
+                 S HCA_DETECTOR_COMPARISON.jsonl                      14 rows
+                 T HCA_MECHANISM_RECURRENCE_GRAPH.jsonl                2 rows
+                 U ACCESSIBILITY_CONTROLLER_CANDIDATES.jsonl           9 rows
+                 V EVCA_HCA1_HCA2_DESIGN_NOTE.md
+                 W this packet
+Directive: DIRECTIVE_HC_R01_ACCESSIBILITY_RECURRENCE_2026-09-03.txt
+                 sha256 6c21f6cd85c197a1d0963bf54ea7f887fca1ed9d07ba4613cb5e
+                        db1c76820d60
+Corrections: HC-T01 verdict downgraded to HC_T01_WEAK_SIGNAL_ONLY and its
+                 wider-literature claim withdrawn, see
+                 spec-toussaint-exploration/HC_T01_CORRECTION_2026-09-03.md
+                 THIS PACKET's section 6 was WRONG and is corrected, see
+                 HC_R01_CORRECTION_2026-09-03.md
+Headline: S3 AND S4 BOTH FIRE. HCA-1 was settled in RNA in 2008 by exact
+                 enumeration. HCA-2 is cleared once, thinly, by Petak 2025. An
+                 H4-shaped causal result exists, Zheng 2019. And the
+                 conditioning method HC-T01 lacked is published with code,
+                 Wagner 2023. PART C DOES NOT EXIST. Recover, do not rebuild.
+
+--------------------------------------------------------------------------------
+1. WHAT WAS SEARCHED
+--------------------------------------------------------------------------------
+Four lanes, run in parallel against a fixed five-level scale H0 to H4. ALL FOUR
+reported. The neutral-network lane returned late and as registry-builder
+scripts rather than a report, which is why sections 9, 12 and 14 were revised
+after first drafting; its rows are merged into Q and R and tagged with the
+lane.
+
+Roughly twenty-five works screened, of which about nineteen were read in full
+text. Every row in every registry carries a read-depth tag. Nothing is
+populated from recall, per directive section 4.
+
+One conflict between lanes was resolved by this seat reading the primary source
+directly. See section 4.
+
+--------------------------------------------------------------------------------
+2. THE TWELVE REQUIRED ANSWERS, SHORT FORM
+--------------------------------------------------------------------------------
+ 1 Does the effect recur in another substrate? ............ YES, in FOUR
+ 2 Can it recur with matched machinery? .................... YES, routinely
+ 3 Is matched-state different-future common or rare? ....... COMMON, and
+                                                              systematic across
+                                                              genotype-phenotype
+                                                              maps; but SMALL
+                                                              outside RNA
+ 4 Does any detector predict acquisition beyond fitness? ... YES, twice, both
+                                                              qualified
+ 5 Which detector does it best? .......................... Wagner 2023 for the
+                                                            METHOD, Petak 2025
+                                                            for the SETTING,
+                                                            Parter 2008 for
+                                                            being CONTENT-
+                                                            ADDRESSED
+ 6 Which mechanism most reliably changes accessibility
+   while preserving current phenotype? ................... neutral drift on a
+                                                            genotype network,
+                                                            not Toussaint's
+ 7 Is neutral-network position the cleanest control? ...... YES, AND IT IS
+                                                            ALREADY USED. The
+                                                            gap is acquisition,
+                                                            not accessibility
+ 8 Is history necessary, or is hidden state sufficient? ... HIDDEN STATE IS
+                                                            SUFFICIENT, and one
+                                                            case INVERTS the
+                                                            sign of history
+ 9 Has anyone evolved an accessibility controller? ........ NO
+10 Does shaper + detector + controller exist? ............. NO 11 How must EvCA
+change? ................................. see section 11 and
+                                                            the design note
+12 Promote CP-REPRESENTATION-REWRITE? .................... NO
+
+--------------------------------------------------------------------------------
+3. THE FINDING THAT MATTERS MOST: HCA-2 IS ALREADY DONE
+--------------------------------------------------------------------------------
+Petak, Frati, Vroomans, Pespeni and Cheney 2025, "The variability of
+evolvability", PNAS. Read in full as the bioRxiv preprint.
+
+  substrate ............ recurrent gene-regulatory network developing a
+                         spatiotemporal expression pattern, selected against
+                         patterns from elementary cellular automata rules
+  machinery matched .... YES. Identical architecture, identical mutation rule,
+                         identical selection. ONLY the environment-switching
+                         schedule differs.
+  operator ............. identical, and the SAME operator is reused for the
+                         accessibility sampling
+  detector ............. LOCAL. 2500 clones for robustness, 10000 mutated
+                         clones for phenotypic variability, applied to the
+                         population's OWN current best genotype
+  longitudinal ......... YES, slopes taken after each environmental change
+  replication .......... 15 replicates with 95 percent confidence intervals
+
+And the row that decides everything:
+
+  predictor                                         r-squared    p
+  ----------------------------------------------    ---------    ------
+  local mutational-variance accessibility measure       0.502    0.0067
+  cross-environment fitness correlation (cheap)         0.089    0.279 (n.s.)
+
+That is the literal criterion HC-T01 failed. An accessibility-shaped variable
+outpredicting a matched current-state fitness variable, in a machinery-matched
+substrate, published, with code at
+github.com/Cpetak/Variability_of_Evolvability and data at Zenodo
+10.5281/zenodo.16094874.
+
+  HCA-1 supported in a second substrate ............ YES
+  HCA-2 supported at all ........................... YES, here
+  Stop condition S3 ................................ FIRES
+
+Caveats, and they are not small. The version read is the preprint, not the
+copy-edited PNAS text. The regression rests on 15 data points, one per
+landscape pair. Two outlier rules were explicitly excluded from it. So this is
+a real effect and a fragile one, and the honest description is that the field
+has cleared the bar once, thinly.
+
+--------------------------------------------------------------------------------
+4. A LANE CONFLICT, RESOLVED FROM PRIMARY SOURCE
+--------------------------------------------------------------------------------
+Two lanes disagreed about Kounios et al. 2016, arXiv 1612.05955. One reported
+an internal frozen-depth sub-analysis reaching H4. The Ergon lane reported the
+basin detector measured in a single unablated condition. This seat read the
+paper. THE ERGON LANE IS CORRECT.
+
+  Figures 4 and 5, the freeze experiment: G-P maps frozen at episodes 800 and
+  1600, 1000 genotypes microevolved for 40000 generations under each, alongside
+  a one-to-one map. The reported outcome is MEDIAN FITNESS and endpoint
+  fitness histograms. No accessibility distribution is measured anywhere.
+
+  Figure 8, the basin detector: the caption states the experiment evolves "only
+  the regulatory interactions under natural selection for 1600 evolutionary
+  episodes", sampling 10000 genotypes against maps from the end of every
+  episode. ONE condition. No arms. No ablation.
+
+So Kounios 2016 does NOT reach H4. What it is instead is more interesting:
+
+THE SAME MISSING CELL AS TOUSSAINT, IN A SECOND PAPER, FOUR MONTHS EARLIER. A
+longitudinal accessibility detector in one experiment. Machinery-MATCHED
+history arms with an acquisition outcome in another. Never composed.
+
+Finding that structural failure twice, independently, in unrelated substrates,
+makes it a property of the field rather than of one author. That is a stronger
+and more useful claim than HC-T01's original one.
+
+It also hands us the cheapest experiment in the programme. The 800-versus-1600
+frozen maps are machinery-matched, static, and already held locally. Running a
+detector across them is a machinery-matched H2 test that attacks precisely the
+confound that downgraded HC-T01, at negligible compute.
+
+--------------------------------------------------------------------------------
+5. PART C DOES NOT EXIST, AND HERE IS HOW IT GETS FAKED
+--------------------------------------------------------------------------------
+Ten search lines were worked. Nothing assembles shaper plus detector plus
+controller. The closest single candidate:
+
+  Edmonds 1998, Meta-Genetic Programming, CPM Report 98-32.
+    online estimate ....... YES. Operator fitness is the measured average
+                            proportionate fitness change in the operand genes,
+                            from 50 sampled operand pairs per operator per
+                            generation, three-generation running average.
+    fed back .............. YES. That score IS the operator's fitness, and
+                            ordinary selection on the OPERATOR population
+                            constructs the next generation's variation
+                            machinery.
+    generative ............ YES. Operators are tree structures over primitives,
+                            so novel operator forms can be assembled. Not a
+                            menu.
+    shortfall ............. the estimate is BACKWARD-LOOKING, a realised effect
+                            of operators already applied, not a forward estimate
+                            of a distribution over future consequences
+    author's own caveat ... the loop is fragile: it destroyed population
+                            diversity in initial trials, needed manual fixes, is
+                            sensitive to operator syntax, and degrades under an
+                            unrelated depth ceiling which the author says
+                            "disrupts the effective estimation of the operator's
+                            effectiveness"
+
+CMA-ES is the strongest engineered analogue and is precisely specified and
+robust, which is exactly what Edmonds is not. But its update law is fixed by
+the authors, and what it estimates is the covariance of PAST selected steps.
+
+  THE WARNING, WHICH IS THE MOST USEFUL NEGATIVE IN THIS PASS
+
+Four independent lines show the way future variation is generated CHANGING over
+a run, with NO estimate computed or consulted anywhere:
+
+  Baeck self-adaptive GA ......... mutation rate in the genome, pure hitchhiking
+  Altenberg 1994 ................. constructional selection in GP
+  Spector 2001 Pushpop ........... reproduction drifts sexual to asexual
+  mutator alleles ................ in Avida and in biology
+
+Altenberg states it himself: "the constructional fitness is never evaluated by
+the GP algorithm, nor is it obtained by averaging current program fitnesses."
+
+Observing that variational behaviour changed over a run is not evidence of a
+controller. Four substrates prove it. Any future Part-C claim in this programme
+must exhibit the estimate and the feedback pathway, never the outcome. Recorded
+as a standing rule in registry R.
+
+--------------------------------------------------------------------------------
+6. PRIORITY A: THIS SECTION WAS WRONG AND IS CORRECTED
+--------------------------------------------------------------------------------
+CORRECTED 2026-09-03. Full notice in HC_R01_CORRECTION_2026-09-03.md.
+
+This section originally stated that the Kashtan and Alon line is H1 and that
+all three papers never measured an offspring or variant distribution. That is
+wrong.
+
+PARTER, KASHTAN AND ALON 2008, "Facilitated variation", Text S1 section 7,
+"Complete characterization of the phenotypic neighborhood", measured it and
+more:
+
+  detector ......... A-LOCAL AND EXHAUSTIVE. "Neutrality was defined as the
+                     fraction of 1-mutant circuits that compute the same Boolean
+                     function as the wild-type." The genome is 104 bits, so the
+                     one-mutant neighbourhood is ENUMERATED. No sampling error.
+  statistics ....... several, not one: maximal next-goal fitness in the
+                     neighbourhood, averaged modularity of neighbouring
+                     circuits, counts of modular and non-modular goals in it
+  arms ............. ALL THREE, fixed goal, modularly varying goal, and a
+                     non-block-varying-goal control absent from the main text
+  uncertainty ...... mean and standard error per scenario over 30 simulations,
+                     which is better statistical practice than Toussaint 2003 or
+                     Kouvaris 2017
+  acquisition ...... linked, per the Elenchus seat's reading
+
+Two sibling seats retrieved the Text S1 independently and their sha256 matches
+byte for byte. One disagreement between them is recorded and NOT adjudicated
+here: Elenchus reads the measurement as longitudinal and scores it D4-weak;
+Ergon reads "genomes from the end of the last G1-epoch population were
+analyzed" as endpoint-per-arm.
+
+THE LOCAL-LONGITUDINAL ACCESSIBILITY CELL HAS NOT BEEN EMPTY SINCE 2008.
+
+  AND THE PHENOMENON IS WEAKER THAN A FAILED REPLICATION, IN A SHARPER WAY
+
+The original caveat here was one open replication attempt. The Elenchus seat's
+verdict is better evidenced: MVG_EFFECT_IS_AUTHORED_CURRICULUM.
+
+The authors' own difficulty-matched null: "MVG's outperformance occurred only
+toward goals within the modularity language. MVG adaptation toward non-modular
+goals was not significantly different from FG's." The advantage lives on about
+1e-4 of the phenotype space, and it is the part the experimenter wrote.
+
+Two dissociations break the standard causal story. Randomly varying goals
+produce NO modularity yet give 45x to 160x speedups. Alternation with no
+selection at all gives 190x against MVG's 265x. Modularity is a correlate of
+the speed effect, not its cause; the operative condition is genotype-space
+proximity between successive goals.
+
+And an independent replication REVERSED THE SIGN: Clune, Beckmann, McKinley and
+Ofria 2010, retina arm, with a direct-encoding control at Kashtan's own
+switching rate out to 30,000 generations. The NAND-circuit arm, which carries
+every accessibility result in the line, has never been independently replicated
+or refuted by anyone.
+
+House consequence: calibration particle cal-08 must be marked CONTESTED and
+held out of the detector-scoring set.
+
+  WHY K7 FIRED, WHICH IS THE MOST USEFUL THING IN THIS CORRECTION
+
+From the Elenchus seat, addressed to HC-T01 explicitly:
+
+  the MVG detector is content-addressed, not a breadth statistic. Text S1
+  reports that organisms under unstructured variation vary MORE broadly and
+  score LOWER. A breadth detector has no reason to beat fitness at predicting
+  acquisition. Measuring WHICH phenotypes are reachable relative to a named
+  target set is an inheritable repair.
+
+HC-T01's modular degree, mutual information and neutral degree are ALL breadth
+or structure statistics. Not one of them asks whether the reachable set
+contains anything the population is trying to reach.
+
+On this reading K7 was not bad luck, and not a property of accessibility
+detectors in general. It was the predictable consequence of choosing a
+target-blind statistic. That is a repair, not a post-mortem, and section 11 is
+amended accordingly.
+
+--------------------------------------------------------------------------------
+7. THE DETECTOR STACK, AND TWO THINGS WORTH STEALING
+--------------------------------------------------------------------------------
+Fourteen rows in registry S. Two matter beyond their row.
+
+Smith, Husbands, Layzell and O'Shea 2002, "Fitness Landscapes and
+Evolvability". Read in full. It independently invented the offspring-
+distribution detector A YEAR BEFORE Toussaint's thesis, in the Cavalli-Sforza,
+Feldman and Altenberg transmission-function formalism. It enumerates the full
+one-mutant neighbourhood, it defines four statistics on the offspring-fitness
+distribution, and critically it VALIDATED THE MEASURE ONLINE, computing it from
+genotypes collected during a real hill-climbing run and showing the biased
+online sample gives the same qualitative predictions as unbiased sampling.
+
+Then it stopped one question short. The portrait is built BY conditioning on
+fitness, plotting evolvability as a function of current fitness, and the paper
+never asks the marginal question. Our K7 is the question this line set up and
+did not ask.
+
+van Nimwegen, Crutchfield and Huynen 1999, "Neutral evolution of mutational
+robustness". Average neutral degree equals the principal eigenvalue of the
+neutral network's adjacency matrix, and a population at quasi-equilibrium
+samples that eigenvector by construction. So the statistic is inferable from
+population data already being collected. Effectively zero marginal cost,
+against our 2000x. Worth stealing on cost grounds alone if the
+quasi-equilibrium precondition can be met.
+
+Also on record, and it is the mirror of our own failure: Weinberger's
+correlation length is DOCUMENTED BLIND to neutrality even when neutrality
+demonstrably changes search speed. Our detector saw a difference that did not
+matter; that one misses a difference that does. Both directions are now in
+registry R.
+
+How many detectors in the stack were ever tested for predictive power after
+conditioning on current performance? One. Petak 2025. Everything else is a
+static landscape characterisation or an aggregate difficulty predictor. The
+strongest named predictive result in the stack, a local-optima-network model
+explaining 99 percent of variance, predicts ALGORITHM success across problem
+INSTANCES, which is the wrong unit entirely.
+
+--------------------------------------------------------------------------------
+8. HISTORY VERSUS HIDDEN STATE, DIRECTIVE SECTION 8
+--------------------------------------------------------------------------------
+The directive warns against overclaiming path dependence when ordinary hidden
+state suffices. Applying that discipline honestly:
+
+  STATE-LOCATION ACCESSIBILITY ........ SUPPORTED. Everything found is
+                                        consistent with current hidden state
+                                        determining future reachability.
+  HISTORY-CONDITIONED ACCESSIBILITY ... NOT SEPARATED from the above by any work
+                                        found, including our own.
+  PATH-DEPENDENT ACCESSIBILITY ........ NO EVIDENCE. Nothing found requires
+                                        information persisting outside the
+                                        measured state.
+
+In HC-T01 the two arms differ in rule-table content, which is present state. In
+Petak the arms differ in evolved network weights, which is present state. In
+Kounios the frozen maps differ in accumulated regulatory strength, which is
+present state.
+
+So the honest answer to directive question 8 is that hidden current
+representation is sufficient, and history has not been shown to be necessary
+anywhere. Which makes the directive's section 9 the live question rather than a
+fallback: the finding is that phenotype and fitness are insufficient state
+descriptions, and the useful research programme is asking WHICH representation
+coordinates carry the information. That is a smaller and more tractable claim
+than historical memory, and it is the one the evidence supports.
+
+AND ONE SUBSTRATE INVERTS THE SIGN. Ancel and Fontana 2000 compared three
+sequence classes sharing an identical minimum-free-energy structure and
+differing only in history: random, neutrally evolved, and canalised. Their
+neutralities are 0.184, 0.412 and 0.456. The class with the RICHEST history and
+the HIGHEST robustness became an evolutionary dead end. More history bought
+LESS subsequent acquisition.
+
+So history is not merely unnecessary as an explanation. Where it has been
+varied and followed through to acquisition, it has once pointed the wrong way.
+Any claim in this programme that accumulated history improves future
+accessibility must now carry that counterexample.
+
+--------------------------------------------------------------------------------
+9. NEUTRAL NETWORKS: THE ANSWER IS YES, AND IT WAS SETTLED IN 2008
+--------------------------------------------------------------------------------
+The lane returned after first drafting and it overturns the cautious answer
+written here. Neutral-network position is the cleanest natural control, AND the
+field has already used it, with exact enumeration rather than sampling.
+
+Wagner 2008, 'Robustness and evolvability: a paradox resolved', Proc R Soc B.
+Sequences are drawn from the SAME neutral network by inverse folding, so
+phenotype is identical by construction and fitness identical by assumption. All
+3n one-mutant neighbours are ENUMERATED for 75,000 sequences of length 30. The
+result, in the paper's own words: "most structures found near two or more
+sequences sampled from the same neutral network are different from each other",
+median overlap Q = 0.6.
+
+That is HCA-1, at matched phenotype, matched fitness, matched machinery, exact
+rather than estimated, published in 2008. HC-T01 was not the first observation
+of this phenomenon and is not the cleanest.
+
+Draghi et al. 2010, Supplementary Information sections 6.1 and 6.2, read
+verbatim. This answers the directive's specific question. SI 6.1 is a clean H2
+at matched phenotype: neutral neighbours with an identical fold have
+significantly different accessible-phenotype sets, with roughly 30 per cent of
+the neighbourhood redrawn by ONE neutral mutation, from 100,000 sampled
+genotypes per length. And SI 6.2 DOES contain a longitudinal
+accessibility-and-acquisition measurement on evolving populations.
+
+But it fails the conditioning test BY CONSTRUCTION, and this is the sharpest
+methodological finding of the lane. The accessibility parameters were not
+tested against robustness as competing predictors; they were MODELLED AS
+FUNCTIONS OF IT. Verbatim: "the mutation rate to high-fitness types declined
+monotonically with q in the RNA data, and so we used a linear regression of
+this relationship in our analytic predictions." Accessibility and the cheap
+state are collinear on purpose. It is a near-miss of exactly our kind, and it
+is re-runnable.
+
+Greenbury, Schaper, Ahnert and Louis 2016, and Aguirre et al. 2011. The
+best-quantified accessibility measurement in the lane: 10,000 genotype triples
+per genotype-phenotype map, full one-mutation neighbourhood enumerated,
+Bhattacharyya coefficient comparing neighbourhood phenotype distributions with
+mutual neighbours excluded. Genotypes sharing a phenotype have systematically
+more similar neighbourhoods than genotypes that do not. Acquisition arm:
+COMPLETELY ABSENT in both.
+
+And a number this programme should size its bets against: outside RNA the
+effect is modest, 1.025 to 1.063. A programme betting on this phenomenon in a
+non-RNA-like substrate should expect a small effect and compute the standard
+error before choosing any gate.
+
+So the answer to question 7 is yes, and the gap is not where the directive
+supposed. Accessibility at matched state in this lineage is measured, exactly,
+repeatedly, and has been for seventeen years. What nobody in the lineage does
+is connect it to subsequent acquisition in a way that survives conditioning on
+robustness. The missing cell is the acquisition link, not the detector.
+
+  TWO RESULTS THAT CUT AGAINST THE PROGRAMME, AND THEY MATTER
+
+Cowperthwaite et al. 2008. Exhaustive folding of ALL RNA sequences of length 12
+to 18 gives the exact one-mutant neighbour-phenotype distribution per
+phenotype. Across 2400 forward simulations, TARGET phenotype abundance
+predicted whether a population reached it (r = 0.76, P = 2.2e-4). FOUNDING
+phenotype abundance did not predict the outcome. Where you start, measured
+exactly, did not matter. That is the closest thing to a direct refutation of
+the programme's premise that anyone has produced.
+
+Ancel and Fontana 2000, which the detector lane could not reach and this lane
+did. Three sequence classes sharing an IDENTICAL minimum-free-energy structure,
+differing in history: random, neutrally evolved, and canalised. Their
+neutrality differs sharply, 0.184, 0.412 and 0.456. And the class with the
+richest history and the highest robustness became an evolutionary DEAD END.
+More history and more robustness bought LESS subsequent acquisition, not more.
+
+The directive said do not assume the sign. One substrate has already inverted
+it. A tautology warning travels with that specimen too: its accessibility
+measure IS neutrality, so accessibility cannot be shown to beat robustness
+there because the two are collinear by construction.
+
+  ONE DISCREPANCY LEFT OPEN RATHER THAN RESOLVED
+
+Draghi et al. 2010 characterise Wagner 2008 as having found "no relationship
+between the robustness of a sequence, and a measure of its evolvability". The
+primary text of Wagner 2008 reports a strong NEGATIVE relationship, Spearman s
+= -0.64, p < 1e-17, and states plainly "the greater a sequence's robustness,
+the lesser its evolvability". Either they refer to different measures or one
+characterisation is wrong. Recorded in registry R and NOT silently resolved.
+
+--------------------------------------------------------------------------------
+10. PARTS ARCHAEOLOGY VERDICT
+--------------------------------------------------------------------------------
+    CP-REPRESENTATION-REWRITE promoted to a cross-substrate class ... NO
+    retained as a serious candidate part ............................ YES
+
+Registry T records five candidate implementations of the motif "phenotype-
+preserving internal reorganisation changes the distribution of future
+variation". Exactly one has an accessibility measurement, and its arms are not
+machinery-matched. Every other implementation fails on one of three counts. It
+is not phenotype-preserving (gene regulatory evolution, constructional
+selection), it has no accessibility measurement (gene duplication, MVG), or its
+intervention is selection-side rather than a reorganisation mechanism (Petak).
+
+Petak strengthens the PHENOMENON without strengthening the PART. That
+distinction is the whole of the answer to directive question 12.
+
+What would promote it: an H2-or-better measurement of a phenotype-preserving
+reorganisation under machinery-matched arms in a second substrate. The cheapest
+route is the Kounios 800-versus-1600 frozen maps.
+
+--------------------------------------------------------------------------------
+11. WHAT THIS DOES TO EVCA
+--------------------------------------------------------------------------------
+EvCA remains FROZEN and unauthorised. Full design in
+EVCA_HCA1_HCA2_DESIGN_NOTE.md. The four things that changed:
+
+The question is now HCA-2, not HCA-1. Petak has established HCA-1 in a
+machinery-matched substrate, so establishing it a third time is not worth a
+run. The primary EvCA question becomes whether a same-state same-probe
+accessibility signal predicts later transition probability beyond current
+classification performance and cheap rule-state metrics.
+
+EvCA's structural advantage is now the point of choosing it. Every rule is a
+128-entry binary table under the same bit-flip operator, so the machinery-
+presence confound cannot arise. And the one-step neighbourhood is EXACTLY 128
+rules, fully enumerable, so the sampling error that dominated HC-T01's
+estimator protocol is identically zero.
+
+The cheap-state baseline is specified first, not last, and includes mean
+neighbour performance, which is the EvCA analogue of the avgfit statistic that
+beat our structured detector. The detector must beat that or it is another K7.
+
+The detector must be CONTENT-ADDRESSED, not a breadth statistic. AMENDED
+2026-09-03. This note previously recommended a behavioural-distance cloud over
+the 128 neighbours as the primary detector. A behavioural-distance cloud is a
+breadth statistic, and by the Elenchus diagnosis in section 6 it would
+reproduce K7 rather than escape it. The corrected recommendation is to measure
+how much of the neighbourhood lands in a NAMED TARGET SET: neighbours that
+classify a held-out density regime correctly, or that exhibit a named particle
+interaction the parent lacks. Breadth statistics become secondary descriptors,
+and mean neighbour performance stays a cheap-state baseline. Recovering the
+historical particle-filtering method as a detector part is still the main
+prerequisite and is still not done.
+
+One question for James, flagged rather than decided: Stage 0 is pure
+archaeology on six recovered genomes and consumes nothing. Stage 1 onward
+GENERATES new evolutionary histories, which is a different kind of object from
+HC-T01 and may need separate authorisation.
+
+--------------------------------------------------------------------------------
+12. STOP CONDITIONS
+--------------------------------------------------------------------------------
+    S1 HC-T01 unique to its machinery asymmetry ......... NO. Petak shows the
+                                                          phenomenon survives
+                                                          matched machinery.
+    S2 accessibility common but never predictive ....... NO, but nearly. One
+                                                          case clears it,
+                                                          thinly.
+    S3 literature already establishes HCA-2 cleanly .... FIRES, with "cleanly"
+                                                          qualified: n=15, two
+                                                          outliers dropped,
+                                                          preprint read
+    S4 a historical experiment reaches H4 .............. FIRES, on Zheng 2019.
+                                                          A separate H4 claim
+                                                          about Kounios 2016 did
+                                                          NOT survive this seat
+                                                          reading that paper.
+
+S3 AND S4 BOTH FIRE, and each carries its own instruction.
+
+S3: recover and strengthen the existing HCA-2 result rather than building a new
+microscope.
+
+S4: elevate the H4 specimen for independent reconstruction. That specimen is
+Zheng, Payne and Wagner 2019, 'Cryptic genetic variation accelerates evolution
+by opening access to diverse adaptive peaks', Science 365(6451):347-353.
+
+  substrate .......... yellow fluorescent protein, directed evolution in E. coli
+  present state ...... MATCHED BY CONSTRUCTION. Phase I applied stringent
+                       STABILIZING selection keeping only the cells whose
+                       fluorescence lay in a narrow band around the ancestral
+                       median.
+  machinery .......... matched. Same protein, same mutagenesis, same sorting.
+                       The arms differ in accumulated standing variation, not in
+                       permitted machinery.
+  accessibility ...... MEASURED CAUSALLY BY ENGINEERING, not by sampling. Every
+                       constituent mutation of seven high-fluorescence genotypes
+                       was engineered into the ancestor and into intermediate
+                       backgrounds. One target is reachable by 3.3 per cent of
+                       paths; another by ZERO accessible paths.
+  acquisition ........ measured, with sequencing, over four generations
+  ablation ........... yes, a remove-the-history arm
+
+  H4 pattern present ...... YES. Removing the historical organisation changes
+                            BOTH what is reachable and what is acquired.
+  H3 reached .............. NO. No analysis pits path-accessibility against a
+                            current-state variable as competing predictors.
+
+And the strongest rival explanation is documented in the paper itself and left
+unaddressed: the history arm simply carries more standing genetic variation,
+with more mutations per molecule and greater diversity, all reported. So faster
+adaptation may be a mutation-supply effect rather than a positional
+accessibility effect. The paper measures the confound and never separates it.
+
+That is the trap worth naming: a causal design can be strong, engineered rather
+than inferred, and still leave the conditioning question entirely untouched. It
+is our own K7 failure wearing better clothes.
+
+--------------------------------------------------------------------------------
+13. KNOWN LIMITATIONS OF THIS PASS
+--------------------------------------------------------------------------------
+The neutral-network lane reported LATE and as registry-builder scripts rather
+than a report. Its findings arrived after sections 2, 9, 12 and 14 had been
+drafted and forced them to be rewritten. That is disclosed because it means
+those sections were revised against evidence rather than written against it,
+and a reviewer should weight them accordingly. Its rows are merged into Q and R
+and tagged with the lane.
+
+Two of its five specimens carry access limits that bound their claims. Zheng et
+al. 2019's Supplementary Materials returned HTTP 403, and figure S2A, which
+would settle whether phase-II starting green fluorescence was matched across
+arms, sits behind that wall. That is the cheap current-state variable in the
+new environment, so its absence is exactly the gap that keeps the specimen at
+H4 without H3. Hayden et al. 2011's main text could not be obtained at all;
+only the abstract and the full supplementary information were read, and its
+H-level is recorded as an honest floor of H2 with a note that the design is
+H4-shaped.
+
+Tiso 2024 is NOT independently read by this seat. The PDF is held locally at
+ergon/kouvaris2017/original/, so the access gap is closed at programme level.
+Its characterisation still rests on the Ergon lane. One question about it is
+open and matters: if its GRN architectures are ASSIGNED rather than evolved,
+its difference is design-conditioned, not history-conditioned, and it is a
+different phenomenon from the one HC-R01 targets. Resolving that requires only
+reading a file we already have.
+
+Watson et al. 2014 could not be read; publisher 403 and a bot wall on the
+author copy. Deliberately left UNVERIFIED rather than assigned an H-level.
+
+Ancel and Fontana 2000 could not be read; expired certificate and 403 mirrors.
+
+Petak's numbers come from the preprint, not the PNAS version.
+
+THREE GAPS THE NEUTRAL-NETWORK LANE FLAGGED RATHER THAN SILENTLY CLOSED, and
+they are recorded here for the same reason it flagged them.
+
+Payne and Wagner 2019, "The causes of evolvability and their evolution", Nature
+Reviews Genetics. The lane never obtained the full text; ZORA served a bot
+challenge on every endpoint. Registry S carries a characterisation of this
+review, and that characterisation is NOT independently verified by the lane
+that would have had to verify it. Treat the row as second-hand.
+
+Ferrada and Wagner's RNA and protein genotype-network papers. On the original
+task list and never resolved to specific titles or URLs, so never screened.
+That is a genuine hole in the coverage, not a null result.
+
+Fontana and Schuster 1998, "Shaping space", J Theor Biol 194:491-515. NOT_FOUND
+across two independent threads: Elsevier paywall, an IIASA record with no
+retrievable PDF, ResearchGate 403, PubMed cookie wall. Unscored.
+
+One correction the lane made to its own earlier reading, which matters for how
+section 9 should be read: Draghi et al. 2010 SI section 6.2 also fails
+present-state matching, not only the conditioning test. Its own words: "each
+replicate begins from a potentially unique genotype". Founder fitness is
+matched only trivially, viable against inviable; founder PHENOTYPE is not
+matched at all. So it is a weaker H2 than section 9 implies, and re-running it
+would need founder phenotype held fixed as well as the collinearity removed.
+
+And one ruling worth keeping: plastogenetic congruence, which this programme
+might have reached for, is CROSS-SECTIONAL. It is computed on a single genotype
+at one instant, with no time-t-predicts-t-plus-n structure in the core
+measurement. It caps at H1 or H2 and must never be cited as H3.
+
+Roughly a third of the twenty-five screened works are abstract-only. Every such
+row is tagged and none of them carries a positive claim.
+
+Directive question 3 is answered only for the RNA and genotype-phenotype-map
+lineage, where Greenbury et al. show the effect is systematic across maps. It
+remains unanswered for computational substrates generally, and the answer that
+does exist carries a warning: outside RNA the effect is modest, 1.025 to 1.063.
+A programme betting on this phenomenon elsewhere should size for a small effect
+and compute the standard error before choosing any gate.
+
+--------------------------------------------------------------------------------
+14. RECOMMENDATION
+--------------------------------------------------------------------------------
+Four actions, in cost order. None is a new experiment. Two are re-analyses of
+data that already exists, and one is reading a file we already hold.
+
+FIRST, AND NEARLY FREE: steal the conditioning method from Wagner 2023. This is
+the single most useful thing in the pass and it is a method, not a result.
+Wagner defines an evolvability-enhancing mutation so that the neighbourhood
+improvement must EXCEED the mutation's own fitness benefit. The additive
+current-state contribution is subtracted before anything is claimed, so the
+accessibility term is a residual rather than a fitness proxy. That is precisely
+the discipline HC-T01 lacked when K7 fired, it is published, and the code is at
+github.com/andreas-wagner-uzh/EE_mutations.
+
+And Wagner names our target level as unoccupied, in his own words: "I define
+but do not explicitly study neutral EE mutations further here, because such
+mutations cannot be reliably identified in large populations with today's
+technology to measure fitness." A published author defining the matched-fitness
+case and declining it for a stated technical reason is far better evidence of a
+genuine gap than any absence-from-the-literature argument this seat has
+produced.
+
+SECOND: re-analyse Petak 2025. Code and data survive. The published result is
+r-squared 0.502 on 15 points with two outlier rules dropped. Re-run with the
+outliers in, with a proper conditional model rather than two marginal
+regressions, and on the full 105 landscape pairs. If it holds, the programme
+has its foundation from data someone else already collected. If it does not,
+that is the most important negative available and it costs a day.
+
+THIRD: re-run the Draghi 2010 supplementary analysis without the collinearity.
+SI 6.2 already contains a longitudinal accessibility-and-acquisition
+measurement on evolving populations, and it fails the conditioning test only
+because the accessibility parameters were derived from robustness by regression
+rather than entered as competing predictors. The design is sound and the defect
+is in the analysis, which makes it re-runnable.
+
+FOURTH: elevate Zheng 2019 for independent reconstruction, per S4, but scope it
+to the question the original left open. The accessibility side is already
+established causally by engineering. What is missing is whether path
+accessibility outpredicts standing genetic variance, which the paper measures
+and never uses as a rival. That is a conditioning analysis on an existing
+design, not a new experiment.
+
+Then, and only then, EvCA. It stays frozen until at least the first two of
+these report, because if the conditioning method is already published and the
+phenomenon already established twice, EvCA's value is the rigour cell and
+nothing larger, and that should be decided before compute is spent.
+
+REVIEWER'S BOTTOM LINE: given that HCA-2 is already established by someone else
+in a machinery-matched substrate, is this programme's remaining contribution
+the rigour cell (quantified, all arms, run-level uncertainty, operator-side
+intervention), or should it stop building microscopes and start asking which
+representation coordinates carry the information phenotype and fitness do not?
+================================================================================
+END OF PACKET
+================================================================================

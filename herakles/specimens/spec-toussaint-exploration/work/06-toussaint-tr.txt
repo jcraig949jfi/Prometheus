@@ -1,0 +1,2377 @@
+School of Informatics, University of Edinburgh
+
+Institute for Adaptive and Neural Computation
+
+Probabilistic inference for solving (PO)MDPs
+
+by
+
+Marc Toussaint, Stefan Harmeling and Amos Storkey
+
+Informatics Research Report 0934
+
+School of Informatics
+http://www.informatics.ed.ac.uk/
+
+December 2006
+
+THEUNIVERSITYOFEDINBURGHProbabilistic inference for solving (PO)MDPs
+
+Marc Toussaint, Stefan Harmeling and Amos Storkey
+
+Informatics Research Report 0934
+
+SCHOOL of INFORMATICS
+Institute for Adaptive and Neural Computation
+
+December 2006
+
+Abstract : The development of probabilistic inference techniques has made considerable progress in re-
+cent years, in particular with respect to exploiting the structure (e.g., factored, hierarchical or relational)
+of discrete and continuous problem domains. We show that these techniques can be used also for solving
+Markov Decision Processes (MDPs) or partial observable MDPs (POMDPs) when formulated in terms of
+a structured dynamic Bayesian network (DBN). The approach is based on an equivalence between maxi-
+mization of the expected future return in the time-unlimited MDP and likelihood maximization in a related
+mixture of ﬁnite-time MDPs. This allows us to use expectation maximization (EM) for computing optimal
+policies, using arbitrary inference techniques in the E-step. Unlike previous approaches we can show that
+this actually optimizes the discounted expected future return for arbitrary reward functions and without
+assuming an ad hoc ﬁnite total time.
+
+We ﬁrst develop the approach for standard MDPs and demonstrate it using exact inference on a discrete
+maze and Gaussian belief state propagation in non-linear stochastic optimal control problems. Then we
+present an extension for solving POMDPs. We consider an agent model that includes an internal memory
+variable used for gating reactive behaviors. Using exact inference on the respective DBN, the EM-algorithm
+solves complex maze problems by learning appropriate internal memory representations.
+
+Keywords : Markov Decision Process, probabilistic inference, POMDP, planning
+
+Copyright c(cid:13) 2006 University of Edinburgh. All rights reserved. Permission is hereby granted for this report
+to be reproduced for non-commercial purposes as long as this notice is reprinted in full in any reproduction.
+Applications to make other use of the material should be addressed to Copyright Permissions, School of
+Informatics, University of Edinburgh, 2 Buccleuch Place, Edinburgh EH8 9LW, Scotland.
+
+1 Introduction
+
+The problems of planning in stochastic environments and inference in Markovian models are
+closely related, in particular in view of the challenges both of them face: scaling to large state
+spaces spanned by multiple state variables, or realizing planning (or inference) in continuous
+state spaces. Both ﬁelds developed techniques to address these problems. For instance, in the
+ﬁeld of planning, they include work on Factored Markov Decision Processes (Boutilier et al. 1995;
+Koller & Parr 1999; Guestrin et al. 2003; Kveton & Hauskrecht 2005), abstractions (Hauskrecht
+et al. 1998), and relational models of the environment (Zettlemoyer et al. 2005). On the other
+hand, recent advances on inference techniques show how structure can be exploited both for
+exact inference as well as making efﬁcient approximations. Examples are message passing al-
+gorithms (loopy BP, Expectation Propagation), variational approaches, approximate belief repre-
+sentations (particles, Assumed Density Filtering, Boyen-Koller) and arithmetic compilation (see,
+e.g., Minka 2001; Murphy 2002; Chavira et al. 2006).
+
+In view of these similarities one may ask whether existing techniques for probabilistic infer-
+ence can directly be translated to solving MDPs or POMDPs. From a complexity theoretic point
+of view, the equivalence between inference and planning is well-known (see, e.g., Littman et al.
+2001). Bui, Venkatesh, & West (2002) have used inference on Abstract Hidden Markov Models for
+policy recognition, i.e., for reasoning about executed behaviors, but do not address the problem
+of computing optimal policies from such inference. Attias (2003) proposed a framework which
+suggests a straight-forward way to translate the problem of planning to a problem of inference:
+A Markovian state-action model is assumed, which is conditioned on a start state x0 and a goal
+state xT . Here, however, the total time T has to be ﬁxed ad hoc and the MAP action sequence that
+is proposed as a solution is not optimal in the sense of maximizing an expected future reward.
+Verma & Rao (2006) used inference to compute plans (considering the maximal probable expla-
+nation (MPE) instead of the MAP action sequence) but again the total time has to be ﬁxed and
+the plan is not optimal in the expected return sense.
+
+We provide a framework that translates the problem of maximizing the discounted expected
+future return in the time-unlimited MDP (or general DBN) into a problem of likelihood maxi-
+mization in a related mixture of ﬁnite-time MDPs. This allows us to use expectation maximiza-
+tion (EM) for computing optimal policies, utilizing arbitrary inference techniques in the E-step.
+Unlike previous approaches we can show that this actually optimizes the discounted expected
+future return for arbitrary reward functions and without assuming an ad hoc ﬁnite total time.
+The approach is generally applicable on any DBN-description of the problem whenever we have
+efﬁcient inference techniques for this structure. DBNs allow us to consider structured represen-
+tations of the environment (the world state) as well as the agent (or multiple agents, in fact).
+
+The next two sections will ﬁrst introduce this new approach in the context of an unstructured
+MDP. We establish the basic equivalence between maximizing expected future return and likeli-
+hood maximization. Section 3.4 also explains the relation to Policy Iteration in the unstructured
+MDP case. In section 4 we include some demonstrations of the basic approach using exact infer-
+ence on a discrete maze and Gaussian belief state propagation in non-linear stochastic optimal
+control problems.
+
+Then, in sections 5 and 6, we consider a non-trivial DBN representation of a POMDP prob-
+lem. We propose a certain model of an agent (similar to ﬁnite state controllers, FSCs) that uses an
+internal memory variable as a sufﬁcient representation of history which gates a reactive policy. In
+section 7 we use this to learn sufﬁcient memory representations (e.g., counting aisles) and primi-
+tive reactive behaviors (e.g., aisle or wall following) in some partially observable maze problems.
+This can be seen in analogy to the classical Machine Learning paradigm of learning latent vari-
+able models of data for bootstrapping interesting internal representations (e.g., ICA) — but here
+generalized to the learning of latent variable models of behavior. Sections 8 and 9 will conclude
+with a more detailed discussion of our approach and related work.
+
+1
+
+a0
+
+π
+
+x0
+
+a1
+
+x1
+
+a2
+
+x2
+
+r0
+
+r1
+
+r2
+
+Figure 1: Dynamic Bayesian network for a MDP. The x states denote the state variables, a the
+actions and r the rewards.
+
+2 Markov Decision Processes and likelihood maximization
+
+A stationary Markov Decision Process (MDP, (Kaelbling, Littman, & Moore 1996)) is deﬁned by
+the
+
+initial state distribution
+
+state transition
+
+rewards
+
+policy
+
+P (x0 = x) =: Px ,
+P (xt+1 = x0 | at = a, xt = x) =: Px0ax ,
+P (rt = r | at = a, xt = x) =: Prax ,
+P (at = a | xt = x; π) =: πax .
+
+We consider Px, Px0ax, and Prax as known and call the expectation Rax = E {r | a, x} = P
+r r Prax
+the reward function. In model-based Reinforcement Learning approaches such probabilities are
+estimated from experience (see, e.g., (Atkeson & Santamar´ıa 1997)), but this is not addressed
+here. The random variables xt and at can be discrete or continuous whereas the reward rt is
+a real number. Figure 1 displays the dynamic Bayesian network for a time-unlimited Markov
+Decision Process (MDP).
+
+The free parameter of this DBN is the policy π with numbers πax ∈ [0, 1] normalized w.r.t. a.
+
+The problem we address is solving the MDP:
+
+Deﬁnition 2.1. Solving an MDP means to ﬁnd a parameter π of the graphical model in Figure 1
+that maximizes the expected future return V π = E {P∞
+t=0 γt rt; π}, where γ ∈ [0, 1] is a discount
+factor.
+
+The classical approach to solving MDPs is anchored in Bellman’s equation, which simply
+
+reﬂects the recursive property of the future discounted return
+
+∞
+X
+
+t=0
+
+γt rt = r0 + γ
+
+h ∞
+X
+
+i
+
+γt rt
+
+t=1
+
+and consequently of its expectation conditioned on the current state,
+
+V π(x) = E
+
+( ∞
+X
+
+t=0
+
+γt rt
+
+(cid:12)
+(cid:12)
+(cid:12) x0 = x; π
+
+)
+
+=
+
+X
+
+x0,a
+
+Px0ax πax [Rax + γ V π(x0)] .
+
+(1)
+
+(2)
+
+Standard algorithms for computing value functions can be viewed as iterative schemes that con-
+verge towards the Bellman equation or as directly solving this linear equation w.r.t. V by matrix
+inversion.
+
+Our general approach is to translate the problem of solving an MDP into a problem of like-
+lihood maximization. There are different approaches for such a translation. One issue to be
+considered is that the quantity we want to maximize (the expected future return) is a sum of ex-
+pectations of every time slice, whereas the likelihood in Markovian models is usually the product
+of observation likelihoods in each time slice. Equivalence could be achieved, e.g., by introduc-
+ing exponentiated rewards as observation likelihoods. However, we follow a different approach
+based on a mixture of ﬁnite-time MDPs. This mixture model is in some respects different to the
+
+2
+
+a0
+
+x0
+
+a0
+
+x0
+
+a0
+
+x0
+
+a0
+
+x0
+
+ˆr
+
+a1
+
+x1
+
+a1
+
+x1
+
+a1
+
+x1
+
+T = 0
+
+time prior:
+P (T )
+
+ˆr
+
+a2
+
+x2
+
+a2
+
+x2
+
+T = 1
+
+ˆr
+
+T = 2
+
+aT
+
+xT
+
+ˆr
+
+Figure 2: Mixture of ﬁnite-time MDPs.
+
+original MDP but – and this is the important point – the likelihood of “observing reward” in this
+mixture model is proportional to the expected future return in the original MDP. The reasons for
+this choice of approach are related to inference (performing a backward pass) without pre-ﬁxing
+a ﬁnite time horizon T , the handling of discounting rewards, and also to the resulting relations
+to standard Policy Iteration, as it will later become more clear.
+
+We deﬁne each ﬁnite-time MDP as having the same probabilities Px, Px0ax and πax as the
+original MDP but (i) it ends at a ﬁnite time T and (ii) it emits a single binary reward ˆr only at the
+ﬁnial time step as given by
+
+P (ˆr = 1 | aT = a, xT = x) =: bRax .
+
+(3)
+
+Figure 2 displays graphical models of some ﬁnite-time MDPs. Let X = x0:T and A = a0:T denote
+state and action trajectories of length T , then each ﬁnite-time MDP deﬁnes the joint
+
+P (ˆr, X, A | T ; π) =P (ˆr | aT , xT ) P (aT | xT ; π)
+
+h T −1
+Y
+
+t=0
+
+i
+P (xt+1 | at, xt) P (at | xt; π)
+
+P (x0) .
+
+(4)
+
+Now let T be a random variable. The mixture of ﬁnite-time MDPs is given by the joint
+
+P (ˆr, X, A, T ; π) = P (ˆr, X, A | T ; π) P (T ) .
+
+(5)
+
+Here, P (T ) is a prior over the total time. Note that this gives a distribution over random variables
+X and A of the space of variable length trajectories. We ﬁnd
+
+Theorem 2.1. When introducing binary rewards ˆr such that bRax ∝ Rax and choosing the discounting
+time prior P (T ) = γT (1 − γ), maximizing the likelihood
+
+Lπ = P (ˆr = 1; π)
+
+(6)
+
+of observing reward in the mixture of ﬁnite-time MDPs is equivalent to solving the original MDP.
+
+Given the way we deﬁned the mixture, the proof is straight-forward and illustrated in Figure
+
+3.
+
+3
+
+MIXTURE of finite−time MDPsP (ˆr, X, A) = P2
+
+T =0 P (T ) P (ˆr, X, A | T )
+
+a0
+
+x0
+
+ˆr
+
+a0
+
+x0
+
+a1
+
+x1
+
+ˆr
+
+a0
+
+x0
+
+a1
+
+x1
+
+a2
+
+x2
+
+ˆr
+
+L = P
+
+T P (T ) E {ˆr | T }
+
+P (r0:2, X, A)
+
+a0
+
+x0
+
+a1
+
+x1
+
+a2
+
+x2
+
+r0
+
+r1
+
+r2
+
+V = P
+
+t γt E {rt}
+
+Figure 3: Equivalence between the mixture and the original MDP.
+
+Proof. Each ﬁnite-time MDP deﬁnes a likelihood
+
+Lπ
+
+T = P (ˆr = 1 | T ; π) = E {ˆr | T ; π} ,
+
+and for the full mixture of MDPs we have
+
+X
+
+Lπ =
+
+P (T ) Lπ
+
+T =
+
+T
+
+X
+
+T
+
+P (T ) E {ˆr | T ; π} .
+
+Since we chose bRax proportional to the reward function Rax the expectations E {ˆr | T ; π} here are
+proportional to the reward expectations E {rt; π} at time slice t = T of the original MDP. (We are
+taking the expectation w.r.t. a full probabilistic forward-sweep through the MDP, from time 0 to
+time T , given the policy π; all MDPs share the same transition probabilities.) Hence
+
+X
+
+Lπ ∝
+
+t
+
+P (t) E {rt; π} = (1 − γ) V π
+
+In appendix A the following points are discussed in some more details:
+
+1. the interpretation of the mixture with death probabilities of the agent,
+
+2. the difference between the models w.r.t. the correlation between rewards,
+
+3. choosing the binary rewards such that bRax ∝ Rax for arbitrary reward functions,
+
+4. and handling γ = 1.
+
+3 EM-algorithm for unstructured MDPs
+
+Formulating the objective function in terms of a likelihood allows us to apply expectation maxi-
+mization (EM) to ﬁnd optimal parameters π. All action and state variables are considered hidden
+variables. The E-step will, for a given π, compute posteriors over state-action sequences as well
+as T conditioned on “the data” ˆr = 1. The M-step then adapts the model parameters π to maxi-
+mize the expected “data” log-likelihood (expectations then taken w.r.t. the posteriors calculated
+in the E-step). Conceptually, inference in this Markovian model is straight-forward. However,
+the special structure of the ﬁnite-time MDPs will allow for certain simpliﬁcations and spare us
+from performing separate inference sweeps in each ﬁnite-time MDPs. In particular, we will not
+have to pre-decide on a ﬁnite time horizon Tmax before starting inference but rather can decide on
+a cutoff time on the ﬂy, similar to deciding on a cutoff time during Policy Evaluation. For those
+reasons we discuss the inference process in some more detail below.
+
+4
+
+3.1 E-step
+
+Forward-backward in all MDPs synchronously.
+In the E-step, we consider a ﬁxed given policy
+π and all the quantities we compute depend on π even if not explicitly annotated. Let Px0x =
+P (xt+1 = x0 | xt = x; π) = P
+a Px0ax πai. For a single MDP of ﬁnite time T the standard forward
+and backward equations are
+
+α0(x) = Px ,
+
+αt(x0) = P (xt = x; π) =
+
+X
+
+x
+
+Px0x αt−1(x) ,
+
+˜βT (x) =
+
+X
+
+a
+
+bRax πax ,
+
+˜βt(x) = P (ˆr = 1 | xt = x; π) =
+
+Px0x
+
+˜βt+1(x0) .
+
+X
+
+x0
+
+(7)
+
+(8)
+
+We ﬁnd that all the α-quantities do not depend on T in any way, i.e., they are valid for all MDPs
+of any ﬁnite time T . This is not true for the ˜β-quantities when deﬁned as above. However, we can
+use a simple trick, namely deﬁne the β’s to be indexed backward in time (with the ‘time-to-go’
+τ ), and get
+
+βτ (x) := P (ˆr = 1 | xT −τ = x; π) ,
+
+β0(x) =
+
+X
+
+a
+
+bRax πax ,
+
+βτ (x) =
+
+Px0x βτ −1(x0) .
+
+(9)
+
+X
+
+x0
+
+Deﬁned in that way, all β-quantities do indeed not depend on T . For a speciﬁc MDP of ﬁnite time
+T , setting τ = T − t would allow us to retrieve the traditional forward-indexed ˜β-quantities.
+
+This means that we can perform the α- and β-propagation in parallel, incrementing t and τ
+synchronously, and start both without pre-determining T or some Tmax. Although we introduce a
+mixture of MDPs we only have to perform a single forward and backward sweep. This procedure
+is, from the point of view of ordinary Hidden Markov Models, quite unusual—it is possible
+because in our setup we only condition on the very last state (ˆr = 1). Apart from realizing the
+additivity of V π and the discounting by means of time prior, this is the main reason for why we
+considered the mixture of ﬁnite-time MDPs rather than the original time-unbounded MDP that
+emits rewards at every time slice.
+
+Time posterior and choosing the cutoff. Say we have propagated α’s forward for t iterations
+and β’s backward for τ iterations. Then we can compute the T -conditioned likelihood for T =
+t + τ
+
+Lπ
+
+t+τ = P (ˆr = 1 | T = t + τ ; π) =
+
+X
+
+x
+
+αt(x) βτ (x)
+
+(10)
+
+For instance, if there is no overlap between the distributions αt(x) and βτ (x) we have Lπ
+t+τ = 0
+which means that there exists no trajectory of length T = t+τ from the initial start distribution Px
+to rewards bRax. In practice we will propagate α’s and β’s synchronously and compute Lπ
+2k after
+each step (both propagated for k steps). Monitoring Lπ
+2k on the ﬂy allows us to decide on a cutoff
+time: as long as Lπ
+2k is very small compared to
+the previously collected likelihood mass, γ2k Lπ
+T , we may choose to terminate
+the inference process and decide that the horizon Tmax = 2k is sufﬁcient to estimate posteriors.
+Note that using Bayes rule we get the time posterior (which corresponds to model selection in
+the mixture model)
+
+2k = 0 we need to continue propagation. When Lπ
+
+2k (cid:28) P2k
+
+T =0 γT Lπ
+
+P (T | ˆr = 1; π) =
+
+P (ˆr = 1 | T ; π)
+P (ˆr = 1; π)
+
+P (T ) =
+
+Lπ
+
+T P (T )
+Lπ
+
+.
+
+(11)
+
+Action, state, and state occupancy posteriors. Let
+
+qtτ (a, x) = P (ˆr = 1 | at = a, xt = x, T = t + τ ; π) =
+
+(cid:26) P
+
+x0 Px0ax βτ −1(x0)
+
+bRax
+
+τ > 1
+τ = 0
+
+.
+
+(12)
+
+5
+
+As expected, this quantity is independent of t because we conditioned on xt and the history
+before time t (including its length t) becomes irrelevant in the Markov chain. We may use the
+simpler notation qτ (a, x) = qtτ (a, x). Multiplying with the time prior and eliminating the total
+time we get the action-conditioned likelihood
+
+P (ˆr = 1 | at = a, xt = i; π) =
+
+1
+C
+
+∞
+X
+
+τ =0
+
+P (T = t + τ ) qτ (a, i) ,
+
+(13)
+
+where C = P
+τ 0 P (T = t+τ 0), and which is for the discounted time prior independent of t because
+P (t + τ ) = γtP (τ ) which is absorbed in the normalization. Further, with Bayes rule we get the
+action posterior
+
+P (at = a | xt = x, ˆr = 1; π) =
+
+πax
+C 0
+
+∞
+X
+
+τ =0
+
+P (T = t + τ ) qτ (a, x) ,
+
+(14)
+
+where C 0 = P (ˆr = 1 | xt = x; π) P
+which is also independent of t.
+
+τ 0 P (T = t + τ 0) can be computed from normalization, and
+
+We can also compute
+
+γtτ (x) = P (xt = x | ˆr = 1, T = t + τ ; π) =
+
+1
+Lπ
+
+t+τ
+
+βτ (x) αt(x) ,
+
+(15)
+
+where the likelihood Lπ
+In the
+experimental results we will display the posterior probability of visiting a certain state x within
+a rewarded trajectory, the state occupancy, which is given as
+
+t+τ plays the role of a normalization (as for standard HMMs).
+
+P (x ∈ X | ˆr = 1; π) =
+
+P (T ) Lπ
+T
+Lπ
+
+h
+
+1 −
+
+X
+
+T
+
+T
+Y
+
+t=0
+
+(cid:2)1 − γt,T −t(x)(cid:3)i
+
+.
+
+(16)
+
+3.2 M-step
+
+The exact M-step in an EM-algorithm maximizes the expected complete data log-likelihood
+
+Q(π, π∗) =
+
+X
+
+X
+
+T
+
+X,A
+
+P (ˆr = 1, X, A, T ; π) log P (ˆr = 1, X, A, T ; π∗)
+
+(17)
+
+w.r.t. the new parameters π∗, where expectations over the latent variables (T, X, A) are taken
+w.r.t. the posterior given the old parameters π. Although the mixture of ﬁnite-time MDPs com-
+plicates the derivation of the M-step, the result is in strong analogy to the standard HMM,
+
+Theorem 3.1. In the MDP case, the exact M-step is to assign the new parameters to the posterior action
+probability
+
+π∗
+ax =
+
+πax
+C 0
+
+∞
+X
+
+τ =0
+
+P (T = τ ) qτ (a, x) ,
+
+Proof. From (5) in more compact notation the full joint reads
+
+P (ˆr = 1, X, A, T ; π) = P (T )
+
+h
+
+bRaxπax
+
+i
+
+h T −1
+Y
+
+t=T
+
+t=0
+
+Px0ax πax
+
+i h
+
+i
+
+Px
+
+.
+
+t=0
+
+(18)
+
+(19)
+
+6
+
+where the brackets are to clarify the time indices, e.g., [Px0ax]t ≡ Pxt+1atxt. We have
+
+Q(π, π∗) = hterms indep. of π∗i +
+
+∞
+X
+
+X
+
+T =0
+
+X,A
+
+P (ˆr = 1, X, A, T ; π)
+
+h T
+X
+
+t=0
+
+i
+
+log π∗
+
+atxt
+
+= · · · +
+
+∞
+X
+
+T
+X
+
+X
+
+T =0
+
+t=0
+
+ax
+
+P (T ) P (ˆr = 1, at = a, xt = x | T, π) log π∗
+ax
+
+= · · · +
+
+(cid:0) log π∗
+
+ax
+
+(cid:1)
+
+X
+
+ax
+
+∞
+X
+
+T
+X
+
+T =0
+
+t=0
+
+P (T ) qT −t(a, x) πax at(x)
+
+(20)
+
+The time summations can be resolved as follows
+
+∞
+X
+
+T
+X
+
+T =0
+
+t=0
+
+P (T ) qT −t(a, x) αt(x) =
+
+∞
+X
+
+∞
+X
+
+(1 − γ) γT qT −t(a, x) αt(x)
+
+= (1 − γ)
+
+∞
+X
+
+∞
+X
+
+t=0
+
+τ =0
+
+t=0
+
+T =t
+
+γτ γt qτ (a, x) αt(x) =
+
+1
+1 − γ
+
+h ∞
+X
+
+τ =0
+
+P (τ ) qτ (a, x)
+
+i h ∞
+X
+
+i
+P (t) αt(x)
+
+t=0
+
+=:
+
+1
+
+1 − γ bq(a, x) bα(x) ,
+
+which gives us
+
+Q(θ, θ∗) = · · · +
+
+1
+1 − γ
+
+X
+
+ax
+
+(cid:0) log π∗
+
+ax
+
+(cid:1) πax bq(a, x) bα(x) .
+
+(21)
+
+(22)
+
+Since π∗
+
+ax must be a distribution over a (constrained to normalize over a), this is maximized by
+
+π∗
+ax =
+
+πax
+C bq(a, x)
+
+(23)
+
+for some normalization constant C. Note the independence on bα(x) because one can maximize
+for each x separately.
+
+3.3 Greedy M-step
+
+In the case of a plain unstructured MDP we can also derive a greedy and usually faster version
+of the M-step. Note however that this does not generalize to arbitrarily structured DBNs. In fact,
+in the POMDP case we will investigate later we are not aware of such a greedy version of the
+M-step.
+
+By integrating over the 0-th time slice we can write the likelihood as
+
+P (ˆr = 1; π) =
+
+=
+
+X
+
+ax
+X
+
+ax
+
+P (ˆr = 1 | a0 = a, x0 = x; π) πax P (x0 = x; π)
+
+bq(a, x) πax Px .
+
+(24)
+
+Following the EM idea, we can approximate P (ˆr = 1; π∗) by estimating bq(a, x) with the old pa-
+rameter π and maximize P
+ax Px w.r.t. the new parameter π∗. Again, maximization
+separates for each x and is thereby independent of Px. We have
+a∗(x) = argmax
+
+ax bq(a, x) π∗
+
+π∗
+ax = δ(a, a∗(x)) ,
+
+(25)
+
+bq(a, x) .
+
+a
+
+Note that this update corresponds to a greedy version of the previous M-step. For instance,
+if we would iterate (18) without recomputing bq(a, x) each time (skipping intermediate E-steps)
+we would converge to this greedy M-step. Further, as we know from Reinforcement Learning,
+the greedy M-step can be thought of exploiting our knowledge that the optimal policy must be a
+deterministic one.
+
+7
+
+3.4 Relation to Policy Iteration
+
+So far we have developed our approach for a plain unstructured MDP. It turns out that in this case
+the E- and M-step are very closely related to the policy evaluation and update steps in standard
+Policy Iteration.
+
+We introduced the mixture of MDPs in a way such that the likelihood is proportional to the ex-
+pected future return. In standard forward-backward algorithms the backward propagated mes-
+sages are likelihoods. For the unstructured MDP these are βτ (x) := P (ˆr = 1 | xT −τ = x; π) which
+is proportional to the expected reward in exactly τ time steps in the future (from “now”) condi-
+tioned on the current state (the value function of the ﬁnite-time MDP of length τ ). Hence, the
+mixture of β’s,
+
+bβ(x) =
+
+X
+
+τ
+
+P (T = τ ) βτ (x) = (1 − γ) V π(x) ,
+
+(26)
+
+is proportional to the value function V π(x) of the original MDP. Analogously we deﬁned qτ (a, x) =
+P (ˆr = 1 | aT −τ = a, xT −τ = x; π) and we have
+
+bq(a, x) =
+
+X
+
+τ
+
+P (T = τ ) qτ (a, x) = (1 − γ) Qπ(a, x) ,
+
+(27)
+
+where Qπ(a, x) is the Q-function in the original MDP. Note that this is also the action-conditioned
+likelihood (13) and, interestingly, the action posterior (14) is proportional to πax Qπ(a, x).
+
+We conclude that the E-step in an unstructured MDP is a form of Policy Evaluation since it
+also yields the value function (at least quantities from which we can retrieve the value function).
+However, quite different to traditional Policy Evaluation, the E-step also computes α’s, i.e., prob-
+abilities to visit states given the current policy, which may be compared to previous approaches
+like Diverse Densities (in the context of subgoal analysis (McGovern & Barto 2001)) or Policy
+Search by Density Estimation (Ng, Parr, & Koller 1999). The full E-step provides us with posteri-
+ors over actions, states and the total time. In practice we can use the α’s in an efﬁcient heuristic
+for pruning computations during inference (see section 4.1 and appendix B). Further, the E-step
+generalizes to arbitrarily structured DBNs and thereby goes beyond standard Policy Evaluation,
+particularly when using approximate inference techniques like message passing or approximate
+belief representations.
+
+Concerning the M-step, in the unstructured MDP the greedy M-step is identical to the policy
+update in Policy Iteration. That means that one iteration of the EM will yield exactly the same
+policy update as one iteration of Policy Iteration (provided one does exact inference and exact
+value function computation without time horizon cutoffs). Again, the M-step goes beyond a
+standard policy update in the generalized case. This becomes particularly apparent when in
+structured DBNs (e.g.
+the POMDP case in section 5) the full posteriors computed via inference
+(including forward propagated messages analogous to α’s) are necessary for the M-step. Only
+computing backward propagated messages (like value functions or β’s) is not sufﬁcient for the
+M-step.
+
+In summary,
+
+Lemma 3.2. The EM-algorithm on an unstructured MDP using exact inference and the greedy M-step
+is equivalent to Policy Iteration in terms of the policy updates performed.
+
+Interestingly, this also means they are equivalent w.r.t. convergence. (Recall that Policy Itera-
+tion is guaranteed to converge to the global optimum whereas EM-algorithms are only guaran-
+teed to converge to local optima.) The computational costs of both methods may differ depend-
+ing on the implementation (see experiment 4.1 and appendix B). On structured DBNs or using
+approximate inference techniques or approximate belief representations the EM-algorithm goes
+beyond Policy Iteration.
+
+8
+
+(a)
+
+(b)
+
+Figure 4: (a) State visiting probability calculated by EM for some start and goal state. The radii
+of the dots are proportional to (16). (b) The probability of reaching the goal (for EM) and the
+value calculated for the start state (PS) against the cost of the planning algorithms (measured by
+evaluations of p(j|i, a)) for both start/goal conﬁgurations.
+
+4 MDP experiments
+
+4.1 Discrete maze examples
+
+Efﬁciency. We tested the EM algorithm with greedy M-step on a discrete maze of size 100 × 100
+and compared it to standard Value Iteration (VI) and Policy Iteration (PI). Walls of the maze are
+considered to be trap states (leading to unsuccessful trials) and actions (north, south, east, west,
+stay) are highly noisy in that with a probability of 0.2 they lead to random transitions. In the
+experiment we chose a uniform time prior (discount factor γ = 1), initialized π uniformly, and
+iterated the policy update k = 5 times. To increase computational efﬁciency we exploited that the
+algorithm explicitly calculates posteriors which can be used to prune unnecessary computations
+during inference as explained in appendix B. For policy evaluation in PI we performed 100
+iterations of standard value function updates.
+
+Figure 4(a) displays the posterior state visiting probabilities (Equation (16)) of the optimal
+policy computed the EM for a problem where a reward of 1 is given when the goal state g is
+reached and the agent is initialized at a start state s (i.e., Px = δ(x, s)). Computational costs are
+measured by the number of evaluations of the environment Px0ax needed during the planning
+procedure. Figure 4(b) displays the probability of reaching the goal P (ˆr = 1; π) against these
+costs. Note that for EM (and PI) we can give this information only after a complete E- and M-step
+cycle (policy evaluation and update) which are the discrete dots (triangles) in the graph. The
+graph also displays the curve for VI, where the currently calculated value VA of the start state
+(which converges to P (ˆr = 1) for the optimal policy) is plotted against how often VI evaluated
+Px0ax.
+
+In contrast to VI and PI, the EM algorithm takes considerable advantage of knowing the start
+state in this planning scenario: the forward propagation allows for the pruning and the early
+decision on cutoff times in the E-step as described in appendix B. It should thus not surprise
+and not be overstated that the EM is more efﬁcient in this speciﬁc scenario. Certainly, a simi-
+lar kind forward propagations could also be introduced for VI or PI to achieve equal efﬁciency.
+Nonetheless, our approach provides a principled way of pruning by exploiting the computation
+of proper posteriors. The policies computed by all three methods are equal for states which have
+signiﬁcantly non-zero state visiting probabilities.
+
+Multi-modal time posteriors. The total time T plays a special role as a random variable in our
+mixture model. We use another simple experiment to illustrate this special role by considering
+the total time posteriors. Modelling walls as trap states leads to interesting trade-offs between
+staying away from walls in favor of security and choosing short paths. Figure 5 displays a 15x20
+maze with three possible pathways from the start (bottom left) to the goal (bottom right) state.
+
+9
+
+(a) k = 0
+P =1.5e-5
+
+(b) k = 1
+P =0.17
+
+(c) k = 2
+P =0.44
+
+(d) k = 3
+P =0.48
+
+(e) k = 4
+P =0.61
+
+(f)
+
+(g)
+
+Figure 5: (a-e) State visiting probabilities for various EM-iterations k. The start and goal states are
+to the bottom left and right, respectively. The radii of the dots are proportional to P (x ∈ X | ˆr = 1).
+The indicated P is P (ˆr = 1).
+(f) The different possible pathways lead to a multi-modal time
+posterior P (T | ˆr = 1). (g) The trade-off between the expected time to goal (mean of P (T | ˆr = 1))
+and the probability to reach the goal. The dots corresponds to k = 1, .., 4 (from left to right).
+
+The direct pathway is a narrow aisle clinched between two walls and thus highly risky. The next
+one up requires a step through a narrow doorway. The most top one is secure but longest. The
+ﬁve Figures illustrate the state visiting probability P (x ∈ X | ˆr = 1) for random walks (k = 0) and
+the policies calculated by EM for k = 1, .., 4 iterations. Also the success probability P (ˆr = 1) is
+indicated. Figure 5(f) displays the corresponding time posteriors P (T | ˆr = 1) for the different k’s.
+Interesting is the multi-modality of these time posteriors in that speciﬁc environment. The multi-
+modality in some way reﬂects the topological properties of the environment: that there exists
+multiple possible pathways from the start to the goal with different typical lengths (maxima
+of the time posterior) and different success probabilities (area (integral) of a mode of the time
+posterior). Already for k = 0 one can see that, besides the direct pathway (of typical length
+≈ 15), there exist alternative, longer routes which comprise signiﬁcant success probability. One
+way to exploit this insight could be to choose a new time prior for the next inference iteration
+that explicitly favors these longer routes. Figure 5(g) nicely exhibits the trade-off between the
+expected time to goal and the probability to reach the goal.
+
+4.2 Stochastic optimal control
+
+Gaussian belief state propagation. Next we want to show that the framework naturally allows
+to transfer other inference techniques to the problem of solving MDPs. We address the problem
+of stochastic optimal control in the case of a continuous state and control space. A standard infer-
+ence technique in continuous state spaces is to assume Gaussian belief states as representations
+for α’s and β’s and propagate forward-backward and using the unscented transform to handle
+also non-linear transition dynamics (see (Murphy 2002) for an overview on inference techniques
+in DBNs). Note that using Gaussian belief states implies that the effective value function (section
+3.4) becomes a mixture of Gaussians.
+
+10
+
+All the equations we derived remain valid when reinterpreted for the continuous case (sum-
+mations become integrations, etc) and the exact propagation equations (7) and (9) are replaced
+by propagations of Gaussian belief states using the unscented transform.
+In more detail, let
+N(x, a, A) be the normal distribution over x with mean a and covariance A and let N(x, a, A) be
+the respective non-normalized Gaussian function with N(a, a, A) = 1. As a transition model we
+assume
+
+P (x0|u, x) = N(x0, φ(u, x), Q(u)) , Q(u) = C + (|u|/µ)2 I
+
+(28)
+
+where φ(u, x) is an non-linear function, C is a constant noise covariance, and we introduced a pa-
+rameter µ for an additional noise term that is squared in the control signal. With the parameteri-
+zation αt(x) = N(x, at, At) and βτ (x) = N(x, bτ , Bτ ) (note that β’s always remain non-normalized
+Gaussian likelihoods during propagation), forward and backward propagation read
+
+(at, At) = U Tφ(at−1, AT −1)
+(bτ , Bτ ) = U Tφ−1(bτ −1, Bτ −1) ,
+
+where U Tφ(a, A) denotes the unscented transform of a mean and covariance under a non-linear
+function. In brief, this transform deterministically considers 2n + 1 points (say with standard
+deviation distance to the mean) representing the Gaussian. In the forward case (the backward
+case) it maps each point forward using φ (backward using φ−1), associates a covariance Q(u) (a
+covariance φ0−1 Q(u) φ0−1T , where φ0−1 is the local inverse linearization of φ at each point) with
+each point, and returns the Gaussian that approximates this mixture of Gaussians. Further, for
+any t and τ we have
+
+t+τ = N(at, bτ , At + Bτ )
+Lπ
+γtτ (x) = N(x, ctτ , Ctτ ) , C −1
+
+tτ = A−1
+
+t + B−1
+
+τ
+
+,
+
+ctτ = Ctτ (A−1
+
+t at + B−1
+
+τ
+
+bτ )
+
+The policy and the M-step.
+In general, the policy is given as an arbitrary non-linear function
+π : x 7→ u. Clearly, we cannot store such a function in memory. However, via the M-step the
+policy can always be implicitly expressed in terms of the β-quantities of the previous E-step and
+numerically evaluated at speciﬁc states x. This is particularly feasible in our case because the
+unscented transform used in the belief propagation (of the next E-step) only needs to evaluate
+the transition function (and thereby π) at some states; and we have the advantage of not needing
+to approximate the function π in any way. For the M-step we need equation (12),
+
+qτ (u, x) τ >1=
+
+Z
+
+x0
+
+P (x0|u, x) N(x0, bτ −1, Bτ −1) = |2πBτ −1|1/2 N(bτ −1, φ(u, x), Bτ −1 + Q(u)) ,
+
+(29)
+
+and we maximize the mixture of Gaussians bq(u, x) with a gradient ascent using
+(cid:17)i
+h
+∂uqτ (u, x) = −qτ (u, x)
+
+tr(A−1) − hT h
+
+∂uφ(u, x)
+
+hT (cid:16)
+
+(cid:16)
+
+(cid:17)
+
+− u
+
+1
+µ2
+h := A−1 (φ(u, x) − b)
+
+A := Bτ −1 + Q(u) ,
+
+(30)
+
+Examples. Consider a simple 2-dimensional problem where the start state is distributed around
+zero via α0(x) = N(x, (0, 0), .01I) and the goal region is determined by P (ˆr = 1 | x) = N(x, (1, 1),
+diag(.0001, .1)). Note that this goal region around (1, 1) is heavily skewed in that rewards de-
+pend more on the precision in the x−dimension than the y−dimension. The control law is simply
+φ(u, x) = x + .1 u and the discount factor γ = 1. When choosing µ = 0 (no control-dependent
+noise), the optimal control policy will try to jump directly to the goal (1, 1). Hence we ﬁrst con-
+sider the solution when manually constraining the norm of |u| to be small (effectively following
+the gradient of P (r = 1 | ut = u, xt = x; π)). Figure 6(a,b) shows the learned control policy π
+
+11
+
+(a)
+
+(b)
+
+(c)
+
+(d)
+
+(e)
+
+(f)
+
+Figure 6: Learned policies (left) and forward simulation (α’s) of these policies (right) for aspheric
+Gaussian-shaped targets. (a,b) are for the case of restricted action amplitude (the walker model).
+(c,d) are for unconstrained amplitude (the golfer model). And (e,f) are for the approach to a new
+position under phase space dynamics.
+
+and the forward simulation given this policy by displaying the covariance ellipses for α0:T (x)
+after k = 3 iterations. What we ﬁnd is a control policy that reduces errors in x−dimension more
+strongly than in y−direction, leading to the tangential approach to the goal region. This is related
+to studies on redundant control or the so-called uncontrolled manifold.
+
+Next we can investigate what the effect of control-dependent noise is without a constraint
+on the amplitude of u. Figure 6(c,d) displays results (after k = 3 iterations) for µ = 1 and no
+additional constraints on u. The process actually resembles a golf player: the stronger the hit, the
+more noise. The optimal strategy is to hit fairly hard in the beginning, hopefully coming closer
+to the goal, such that later a number of smaller and more precise hits can be made. The reason
+for the small control signals around the goal region is that small steps have much more accuracy
+and reward expectation is already fairly large for just the x−coordinate being close to 1.
+
+Finally we think of x being a phase space and consider the dynamics φ(u, x) = (x1 + .1x2, x2 +
+.1u) where u is the 1-dimensional acceleration of the velocity x2, and x1 is a position. This time we
+
+12
+
+set the start and goal to (0, 0) and (1, 0) respectively, both with variance .001 and choose µ = 10.
+Figure 6(e,f) display the result and show nicely how the learned control policy approaches the
+new position on the x−axis by ﬁrst gaining and then reducing velocity.
+
+5 POMDPs and the policy model
+
+A stationary, partially observable Markov decision process (POMDP, see e.g. (Kaelbling, Littman,
+& Cassandra 1998)) is given by four time-independent probability functions,
+
+the initial world state distribution
+
+the world state transitions
+
+the observation probabilities
+
+the reward probabilities
+
+P (x0 = x) =: Px
+P (xt+1 = x0 | at = a, xt = x) =: Px0ax
+P (yt = y | xt = x) =: Pyx
+P (rt = r | at = a, xt = x) =: Prax .
+
+These functions are considered known. We assume the world states, actions, and observations
+(xt, yt, at) are discrete random variables while the reward rt is a real number
+
+The POMDP only describes one “half” of the process to be described as a DBN — the other
+half is the agent interacting with the environment. Our point of view is that the agent could use
+an arbitrary “internal machinery” to decide on actions. FSCs are a simple example. However,
+a general DBN formulation of the agent’s internal machinery allows us to consider much more
+structured ways of behavior organization, including factorized and hierarchical internal repre-
+sentations (see, e.g., Theocharous et al. 2004). In the remainder of this section we investigate a
+policy model that is slightly different to ﬁnite state controllers but still rather simple. However,
+the approach is generally applicable to any DBN formulation of the POMDP and the agent.
+
+To solve a given POMDP challenge an agent needs to maintain some internal memory variable
+(if not the full belief state) that represents information gained from previous observations and
+actions. We assume that this variable is updated depending on the current observation and used
+to gate reactive policies rather than to directly emit actions. More precisely, the dynamic Bayesian
+network in Figure 7(a) captures the POMDP and the agent model which is deﬁned by the
+
+initial internal memory distribution
+
+internal memory transition
+
+reactive policies
+
+P (b0 = b) =: νb
+P (bt+1 = b0 | bt = b, yt = y) =: λb0by
+P (at = a | bt = b, yt = y) =: πaby .
+
+Here we introduced bt as the agent’s internal memory variable. It is comparable to the “node
+state” in ﬁnite state controllers (Figure 7(b)), but differs in that it does not directly emit actions
+but rather gates reactive policies: for each internal memory state b the agent uses a different
+“mapping” πaby (i.e. a different reactive policy) from observations to actions.
+
+As for the MDP case, solving the POMDP in this approach means to ﬁnd parameters θ =
+t=0 γt rt; θ}
+
+(ν, λ, π) of the DBN in Figure 7 that maximize the expected future return V θ = E {P∞
+for a discount factor γ ∈ [0, 1].
+
+6 EM-algorithm for the POMDP model
+
+Let us consider brieﬂy but explicitly how the previous EM-algorithm generalizes to the POMDP
+case. Each ﬁnite-time model (Figure 8) of the inﬁnite mixture is limited in time by T and emits
+only a single reward ˆr at the ﬁnal time step. Let zt = (xt, yt, bt, at) subsume all latent variables in
+a time slices and Z = z0:T be its trajectory. Given bRax ∝ Rax the joint for a ﬁnite-time MDP reads
+
+P (ˆr, Z | T ; θ) =
+
+h
+
+bRax πaby Pyx
+
+i
+
+h T −1
+Y
+
+t=T
+
+t=0
+
+13
+
+λb0by Px0ax πaby Pyx
+
+i h
+
+νb Px
+
+i
+
+,
+
+t=0
+
+(31)
+
+(a)
+
+(b)
+
+b0
+
+b1
+
+b2
+
+n0
+
+n1
+
+n2
+
+y0
+
+a0
+
+y1
+
+a1
+
+y2
+
+a2
+
+y0
+
+a0
+
+y1
+
+a1
+
+y2
+
+a2
+
+x0
+
+x1
+
+x2
+
+x0
+
+x1
+
+x2
+
+r0
+
+r1
+
+r2
+
+r0
+
+r1
+
+r2
+
+Figure 7: (a) DBN of the POMDP and policy with internal memory bt; the time is unbounded
+and rewards are emitted at every time step. (b) For comparison: the DBN of a POMDP with a
+standard FSC, with “node state” nt.
+
+b0
+
+b1
+
+b2
+
+bT
+
+y0
+
+a0
+
+y1
+
+a1
+
+y2
+
+yT
+
+aT
+
+x0
+
+x1
+
+x2
+
+xT
+
+ˆr
+
+Figure 8: The ﬁnite-time model, where the reward is emitted only at the ﬁnal state. The dotted
+line captures a clique of the graphical model; the junctions are (bt, xt) for t = 1..T , on which the
+E-steps are performed.
+
+where again the brackets clarify the time indices ([Px0ax]t ≡ Pxt+1atxt). The joint for the full
+mixture of ﬁnite-time models is P (ˆr, Z, T ; θ) = P (ˆr, Z | T ; θ) P (T ). Each ﬁnite-time model deﬁnes
+a likelihood Lθ
+
+T = P (ˆr = 1 | T ; θ). Consequently, the mixture model deﬁnes the likelihood
+
+Lθ = P (ˆr = 1; θ) =
+
+X
+
+T
+
+P (T ) P (ˆr = 1 | T ; θ) = (1 − γ)
+
+γT E {ˆr | T ; θ} ∝ V θ .
+
+(32)
+
+X
+
+T
+
+Concerning the E-step we perform exact inference by grouping random variables into cliques.
+Figure 8 indicates a clique in the graphical model with junctions (b, x). Thus, forward-backward
+propagation can most efﬁciently be realized on the reduced Markovian process on the (b, x)-state
+with transitions
+
+P (b0, x0 | b, x) =
+
+X
+
+a,y
+
+Px0ax λb0by πaby Pyx .
+
+Forward and backward propagation reads
+
+αt(b0, x0) = P (xt = x0, bt = b0 | T ; θ) =
+
+P (b0, x0 | b, x) αt−1(b, x)
+
+X
+
+b,x
+
+βτ (b, x) = P (ˆr = 1 | xT −τ = x, bT −τ = b, T ; θ) =
+
+P (b0, x0 | b, x) βτ −1(b0, x0) ,
+
+X
+
+b0,x0
+
+(33)
+
+(34)
+
+(35)
+
+where β’s are again indexed backward in time (with the time-to-go τ ). They are initialized with
+
+α0(b, x) = νb Px ,
+
+β0(b, x) =
+
+X
+
+a,y
+
+bRax πaby Pyx .
+
+(36)
+
+and we can synchronously propagate forward and backward. The result of the E-step are the
+quantities
+
+bα(b, x) :=
+
+∞
+X
+
+t=0
+
+P (T = t) αt(b, x) ,
+
+bβ(b, x) :=
+
+∞
+X
+
+τ =0
+
+P (T = τ ) βτ (b, x) .
+
+(37)
+
+14
+
+The M-step is derived from maximization of the expected complete log-likelihood
+
+Q(θ, θ∗) =
+
+∞
+X
+
+X
+
+T =0
+
+Z
+
+P (ˆr = 1, Z, T ; θ) log P (ˆr = 1, Z, T ; θ∗) ,
+
+(38)
+
+where expectation is taken w.r.t. the old parameters θ and we need to maximize w.r.t. the new
+parameters θ∗. In Appendix C we derive the exact M-steps
+
+π∗
+aby =
+
+πaby
+Cby
+
+X
+
+h γ
+
+1 − γ
+
+bβ(b0, x0) λb0by Px0ax + bRax
+
+i
+
+Pyx bα(b, x) ,
+
+X
+
+b0x0
+
+x
+X
+
+x0,a,x
+
+λ∗
+b0by =
+
+ν∗
+b =
+
+λb0by
+C 0
+by
+X
+
+x
+
+νb
+C 00
+b
+
+bβ(b, x) P (x0 = x) ,
+
+bβ(b0, x0) Px0ax πaby Pyx bα(b, x) ,
+
+(39)
+
+(40)
+
+(41)
+
+by and C 00
+
+where Cby, C 0
+b are normalization constants. Note that in these updates the α’s (related to
+state visiting probabilities) play a crucial role. Also we are not aware of a greedy version of these
+updates that proved efﬁcient (i.e. without immediate convergence to a local minimum).
+
+Complexity
+
+Let X, B, A and Y momentarily denote the cardinalities of random variables x, b, a, y, respec-
+tively. The main computational cost accumulates during α- and β-propagation (34) and (35),
+both of which have complexity O(Tmax B2 X 2). Here and below, X 2 scales with the number of
+non-zero elements in the transition matrix P (x0|x) (assuming non-zero action probabilities). We
+always use sparse matrix representations for transition matrices. The number of propagations
+Tmax scales with the expected time of reward (for a simple start-goal scenario this is the expected
+time to goal). Sparse vector representations of α’s and β’s ruther reduce the complexity depend-
+ing on the topological dimensionality of P (x0|x). The computational complexity of the M-step
+scales with O(AY B2X 2); in total this adds to O((Tmax + AY )B2X 2) for one EM-iteration.
+
+For comparison, let N denote the number of nodes in a FSC. The computation of a policy
+gradient w.r.t. a single parameter of a FSC scales with O((Tmax+AY )N 2X 2) (taken from (Meuleau
+et al. 1999), top of page 7). A fully parameterized FSC has N A + N 2Y parameters, bearing a total
+complexity of O((Tmax + AY )N 4X 2Y ) to compute a full policy gradient.
+
+For EM-learning as well as gradient ascent, the complexity additionally multiplies with the
+
+number k of EM-iterations respectively gradient updates.
+
+7 POMDP experiments
+
+Scaling. The POMDP EM-algorithm has no free parameters except for the initializations of
+λb0by, πaby, and νb. Roughly, we initialized νb and πaby approximately uniformly, while λb0by
+was initialized in a way that favors not to switch the internal memory state, i.e., the diagonal of
+the matrix λb0b· was initialized larger than the off-diagonal terms. More precisely, we ﬁrst draw
+non-normalized numbers
+
+πaby ∼ 1 + 0.1 U([0, 1]) , λb0by ∼ 1 + 5 δb0b + 0.1 U([0, 1]) ,
+
+νb = 1
+
+(42)
+
+where U([0, 1]) is the uniform distribution over [0, 1], and then normalize these parameters.
+
+To start with, we test the scaling behavior of our EM-algorithm and compare it with that of
+gradient ascent for a FSC (FSC-GA). We tried three options for coping with the problem that
+the simple policy gradient in (Meuleau et al. 1999) ignores the normalization constraints of the
+parameters: (1) projecting the gradient on the simplex, (2) using a step-size-adaptive gradient
+ascent (RPROP) with added soft-constraint gradients towards the simplex, (3) using MATLAB’s
+
+15
+
+(a)
+
+(b)
+
+Figure 9: (a) A simple scalable maze from (Meuleau et al. 1999), here with 330 states. The start
+(goal) position is marked gray (black). The robot has ﬁve actions (north, south, eat, west, stay)
+and his observation is a 4 bit number encoding the presence of adjacent walls. (b) Running times
+of EM-learning and FSC gradient ascent that show how both methods scale with the maze size.
+The lines are medians, the errorbars min and max of 10 independent runs for each of the various
+maze sizes. (For maze sizes beyond 1000 we display only 1 run).
+
+(c)
+
+(d)
+
+(a)
+
+(b)
+
+b = 1
+
+b = 2
+
+b = 3
+
+Figure 10: Further mazes considered in the experiments. (c): Top left is the maze with the start
+(light gray), goal (bottom right) and drain-states (dark). The other three illustrations display the
+internal memory state b (grey value ∝ bα(b, x) for b = 1, 2, 3) at different locations in the maze. (d):
+Large maze with 1516 turtle states.
+
+gradient-based constraint optimization method ‘fmincon’. The second option gave the best re-
+sults and we refer to those in the following. Note that our algorithms does not have such prob-
+lems: the M-step assigns correctly normalized parameters. Figure 9 displays the results for the
+simple maze considered in (Meuleau et al. 1999) for various maze sizes. Our policy model needs
+B = 2 internal memory states, the FSC N = 5 graph nodes to solve these problems. The discount
+factor was chosen γ = .99. The results conﬁrm the differences we noticed in the complexity
+analysis.
+
+Training the memory to gate primitive reactive behaviors. To exemplify the approach’s abil-
+ity to learn an appropriate memory representation for a given task we investigate further maze
+problems. We consider a turtle, which can move forward, turn right or left, or wait. With proba-
+bility 1−(cid:15) this action is successful; with probability (cid:15) = .1 the turtle does not respond. The state
+space is the cross product of positions and four possible orientations, and the observations are a
+4 bit number encoding the presence of adjacent walls relative to the turtle’s orientation. Further,
+whenever the agent reaches the goal (or a zero-reward drain state, see below) it is instantly reset
+to the start position.
+
+Figures 10(a) and 10(b) display two small mazes with two speciﬁc difﬁculties: The interior
+
+16
+
+S(cid:0)(cid:0)(cid:0)(cid:0)(cid:1)(cid:1)(cid:1)(cid:1)(cid:0)(cid:0)(cid:0)(cid:0)(cid:1)(cid:1)(cid:1)(cid:1)(cid:0)(cid:0)(cid:0)(cid:0)(cid:1)(cid:1)(cid:1)(cid:1)(cid:0)(cid:0)(cid:0)(cid:0)(cid:1)(cid:1)(cid:1)(cid:1)(cid:0)(cid:0)(cid:0)(cid:0)(cid:1)(cid:1)(cid:1)(cid:1)G(cid:0)(cid:0)(cid:0)(cid:0)(cid:1)(cid:1)(cid:1)(cid:1)S(cid:0)(cid:0)(cid:0)(cid:0)(cid:1)(cid:1)(cid:1)(cid:1)(cid:0)(cid:0)(cid:0)(cid:0)(cid:1)(cid:1)(cid:1)(cid:1)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)G(cid:0)(cid:0)(cid:0)(cid:0)(cid:1)(cid:1)(cid:1)(cid:1)(a)
+
+(b)
+
+(c)
+
+(d)
+
+Figure 11: Learning curves for the maze in Figure 10(d). The expected reward interval (see foot-
+note) is given over the number of EM-iterations. Solid: median over 100 independent trial runs
+(with noisy initializations (42)), dashed and dotted: 2.5, 25, 75 and 97.5 percentiles, dotted base-
+line: shortest path to the goal in the respective environment which were possible in the noise-free
+case. The optimal controller in our stochastic case is necessarily above this baseline.
+
+states and also the entries and exits (cross-shaded) of halls in 10(a) all have the same observation
+0000 and are highly susceptible for the agent to get lost. For B = 2, the turtle learns a wall-
+following strategy as a basic reactive behavior, while the internal memory is used only at the
+exists and entrances to halls: for observation b = 1 and y = 0000 the turtle turns left and switches
+to b = 2, while for b = 2 and y = 0000 the turtle goes straight and switches back to b = 1. The
+maze in Figure 10(b) is a binary-decision maze and poses the problem of remembering how many
+junctions have passed already: To reach the goal, the turtle has to follow aisles and at T-junctions
+make decisions [left, right, right, left]. For B = 3 the algorithm ﬁnds the obvious solution:
+Each internal memory state is associated with simple reactive behaviors that follows aisles and,
+depending on b, turn left or right at a T-junction. A ﬁnite state controller would certainly ﬁnd
+a very similar solution. However, in our case this solution generalizes to situations when the
+corridors are not straight: Figure 10(c, top left) displays a maze with 30 locations (number of
+states is 480), where the start state is in the top left corner and the goal state in the bottom right.
+Again, the turtle has to make decisions [left, right, right, left] at T-junctions to reach the goal, but
+additionally has to follow complex aisles in between. Unlike with FSCs, our turtle needs again
+only B = 3 internal memory states to represent the current corridor. The shading in Figure 10(c)
+displays the probability of visiting a location on a trajectory while being in memory state b = 1, 2
+or 3.
+
+Finally, we investigate the maze in Figure 10(d) with 379 locations (1516 turtle states). The
+maze is a complex combination of corridors, rooms and junctions. On this maze we also tested a
+normal robot (north, south, west, east actions with noise (cid:15) = .1), learning curves for B = 3 for the
+left and right most goals are given in Figure 11(a,b) and exhibit reliable convergence.1 We also
+investigated single runs in the turtle case for the left most goal (Figure 11(c)) and the second left
+goal (Figure 11(d) dashed line). Again, the turtle utilizes that aisle following can be implemented
+with a simple reactive behavior; the internal memory is only used for decision making in halls
+and at junctions. Since the aisle following behavior can well be generalized to all goal settings
+we performed another experiment: we took the ﬁnal policy πaby learned for the left most goal as
+an initialization for the task of ﬁnding the second left goal. Note that the start-to-goal paths are
+largely disjoint. Still, the algorithm converges, particularly in the beginning, much faster (Figure
+11(d) solid line), showing that such generalization is indeed possible.
+
+To conclude these experiments, we can summarize that the agent learned internal memory
+
+1As a performance measure we deﬁne the expected reward interval which is directly linked to P (ˆr = 1). Con-
+sider a cyclic process that receives a reward of 1 every d time steps; the expected future reward of this process is
+
+P (ˆr = 1) = P∞
+
+T =1 P (d T ) = (1 − γ) P∞
+
+T =1 γd T = γd (1−γ)
+
+1−γd
+
+.
+
+Inverting this relation, we translate a given expected future reward into an expected reward interval via
+d = log P (ˆr=1)−log(P (ˆr=1)+1−γ)
+This measure is rather intuitive: The performance can directly be compared with the shortest path length to the goal. Note
+though that in stochastic environment even an optimal policy has an expected reward interval larger than the shortest
+path to goal.
+
+log γ
+
+.
+
+17
+
+1100066400iterationfreqrobot, left goal (100 runs)1100087600iterationfreqrobot, right goal (100 runs)1100089150700iterationfreqturtle, left goal (1 runs)1100059100500iterationfreqturtle (init), bottom−left goal (1 runs)representations to switch between reactive behaviors. In the experiments they mainly turned out
+to represent different corridors. Generalization of the reactive behaviors to new goal situations
+is possible. Further, memorization is not time bounded, e.g., independent of the length of an
+aisle the turtle agent can sustain the current internal memory while executing the reactive aisle
+following behavior.
+
+8 Related work
+
+Let us brieﬂy draw links to related work that goes beyond what was mentioned in the introduc-
+tion:
+
+McGovern & Barto (2001) introduced Diverse Densities as a means to discover subgoals in RL.
+These densities are closely related the state occupancy distribution (16). In fact, if we imagined
+a typical ofﬁce environment and average (16) over randomly chosen goals (for uniform Px), this
+will peak at doorways (see also Figure 4).
+
+Ng, Parr, & Koller (1999) introduced a method based on density estimation for a more efﬁcient
+gradient-based policy search. The estimated density is basically the forward propagated α’s in
+our inference approach, but used for estimating the policy gradient.
+
+Wiegerinck, van den Broek, & Kappen (2006) proposed an approach for solving multi-agent
+problems using path integral methods based on a formulation of the objective function as a par-
+tition function. This seems related to our approach since we know that the EM-algorithm can be
+interpreted as a minimization of free energy. They do not address optimality w.r.t. discounted
+future return. Future research should investigate more into these relations.
+
+Finally, maybe surprisingly, this work had its origin in considering how neural systems could
+implement planning. In (Toussaint 2006) we proposed a simple neural architecture to effectively
+represent an MDP that realizes anticipation and planning on the basis of neural activation dy-
+namics. This approach relies on representing a neural activation ﬁeld (a value function) on an
+explicit, non-distributed state representation. Extending this to distributed (factored) represen-
+tations in the line of (Guestrin et al. 2003) seems biologically implausible. However, recent ex-
+periments with rats in a maze environment showed evidence for periodically traveling waves of
+neural activation in the hippocampus during decision making, which, given the place ﬁeld map-
+ping, correspond to a forward propagation through the spatial topology of the maze (Johnson &
+Redish 2006). These neural dynamics are stunningly similar to inference processes. In particu-
+lar the special role of time in these processes (the fact that there are traveling waves) allows for
+coping with distributed representations in a similar ways as inference on factored DBNs does.
+
+9 Conclusion
+
+We introduced a framework for solving (PO)MDPs by translating the problem of maximizing
+expected future return into a problem of likelihood maximization. One ingredient for this ap-
+proach is the mixture of ﬁnite-time models we introduced in section 2. We have shown that this
+approach establishes equivalence for arbitrary reward functions, allows for an efﬁcient inference
+procedure, propagating synchronously forward and backward without pre-ﬁxing a ﬁnite time
+horizon T , and allows for the handling of discounting rewards. We also showed that in the case
+of an unstructured MDP the resulting EM-algorithm using exact inference and a greedy M-step
+is closely related to standard Policy Iteration.
+
+However, unlike Policy Iteration, the EM-algorithm generalizes to arbitrary DBNs and the
+aim of this approach is to transfer the full variety of existing inference techniques to the problem
+of solving (PO)MDPs. This refers especially to structured problems, where DBNs allow us to
+consider structured representations of the environment (the world state, e.g. factorization or hi-
+erarchies) as well as the agent (e.g. hierarchical policies or multiple agents). Inference techniques
+like variational approaches, message-passing algorithms, or approximate belief representations
+in DBNs can now be used to exploit such structure in (PO)MDPs.
+
+18
+
+We exempliﬁed the approach for exact inference on unstructured MDPs, using Gaussian be-
+lief state propagation on a non-linear stochastic optimal control problem, and on a more complex
+DBN formulation of a POMDP problem. An application to a robotics planning problems is pre-
+sented in (Toussaint & Goerick 2007, submitted work) where we use loopy Gaussian BP in a factor
+graph representation. The 13D joint angle state of the robot, the 3D end-effector state, and the
+binary collision variable constitute the three random variables of the DBN description, while the
+robot’s kinematics deﬁne their non-linear coupling. Conditioning the model to non-collision and
+a ﬁnal target end-effector state, we can efﬁciently solve the typical redundant control problem
+under collision constraints. A natural extension of this approach to more complex domains is to
+use particle representations for multi-modal beliefs. Another interesting issue for future research
+is to consider max-product BP (a generalization of Viterbi) in the context of planning.
+
+In the POMDP context there are even more aspects to consider: Can we use inference tech-
+niques also to estimate the number of internal states we need to solve a problem (cf. Inﬁnite Hid-
+den Markov models (Beal, Ghahramani, & Rasmussen 2002) as a method to learn the number of
+hidden states needed to model the data)? Or are there efﬁcient heuristics to add hidden states
+in a DBN, e.g., analogous to how new nodes are added to FSCs in the Bounded FSCs approach
+(Poupart & Boutilier 2003)?
+
+Acknowledgments
+
+M.T. is grateful to the German Research Foundation (DFG) for the Emmy Noether fellowship
+TO 409/1-1. S.H. is grateful to the European Community for being supported by a Marie Curie
+Fellowship.
+
+A Remarks
+
+(i) The mixture of ﬁnite-time MDPs may be compared to a classical interpretation of reward
+discounting: Assume the agent has a probability (1 − γ) of dying after each time step. Then the
+distribution over his life span is the geometric distribution P (T ) = γT (1 − γ). In our mixture
+of ﬁnite-time MDPs we treat each possible life-span T separately. From the agent’s perspective,
+he knows that he has a ﬁnite life span T but he does not know what it is – he lives in a mixture
+of possible worlds. Each ﬁnite life span is terminated by a single binary reward (say, going to
+heaven or hell). The agent’s behavior must reﬂect his uncertainty about his life span and act by
+accounting for the probability that he might die now or later on, i.e., he must “average” over the
+mixture of possible worlds he might live in.
+
+(ii) In the original MDP, the rewards at two different time slices, say rt and rt+1, are strongly
+correlated. The mixture of ﬁnite-time MDPs does not include such correlations because the ob-
+servations of reward at T = t and T = t + 1 are treated by separate ﬁnite-time MDPs. However,
+since the expected future return V π is merely a sum of reward expectations at different time slices
+such correlations are irrelevant for solving the MDP and computing optimal policies.
+
+(iii) When the original reward function Rax has values between 0 and 1 we can set the binary
+reward probability bRax = P (ˆr | x, a) equal to Rax. When we have rewards outside the range [0, 1]
+we can linearly rescale them by bRax = (Rax − Rmin)/(Rmax − Rmin).
+
+(iv) The non-discounting case γ = 1 leads to a zero time prior P (T ) = 0. We handle such cases
+simply by setting P (T ) = 1/C for T < C and P (T ) = 0 for T ≥ C for some very large constant C
+(larger than we could possibly propagate forward-backward).
+
+B Pruning computations
+
+Consider a ﬁnite state space and assume that we ﬁxed the maximum allowed time T by some
+upper limit TM (e.g., by deciding on a cutoff time based on the time posterior computed on the
+ﬂy, see below). Then there are potentially large regions of the state space on which we may
+
+19
+
+TM
+
+e
+m
+
+i
+t
+
+TM
+2
+
+Rax
+
+Xβ(τ )
+
+Xα(t)
+
+0
+
+Px
+
+state space
+
+Figure 12: Only the envelopes emanating from the start distribution (Px) and rewards (Rax) con-
+tribute to the propagation. They are chopped where they do not overlap with the other envelope
+after TM /2 iterations.
+
+prune computations, i.e., states x for which the posterior γtτ (x) = 0 for any t and τ with t + τ ≤
+TM . Figure 12 illustrates the idea. Let us consider the α-propagation ﬁrst (all statements apply
+conversely for the β-propagation). For iteration time t we deﬁne a set of states
+
+Xα(t) = {x | αt(x) 6= 0 ∧ (t < TM /2 ∨ βTM −t(x) 6= 0)} .
+
+Further, given βτ (x) = 0 ⇒ ∀τ 0 ≤ τ : βτ 0(x) = 0, it follows
+
+i ∈ Xα(t) ⇐ αt(x) 6= 0 ∧ βTM −t(x) 6= 0
+
+⇐ ∃τ ≤TM −t : αt(x) 6= 0 ∧ βτ (x) 6= 0
+⇐⇒ ∃τ ≤TM −t : γtτ (x) 6= 0
+
+(43)
+
+Thus, every state that is potentially visited at time t (for which ∃τ :t+τ ≤TM : γtτ (x) 6= 0) is included
+in Xα(t). We will exclude all states x 6∈ Xα(t) from the α-propagation procedure and not deliver
+their messages. The constraint t < TM /2 concerning the β’s was inserted in the deﬁnition of
+Xα(t) only because of the feasibility of computing Xα(t) at iteration time t. Initializing Xα(0) =
+{x | Px 6= 0}, we can compute Xα(t) recursively via
+
+Xα(t) =
+
+( Xα(t−1) ∪ OUT(Xα(t−1))
+i
+Xα(t−1) ∪ OUT(Xα(t−1))
+
+h
+
+∩ {x | βTM −t(x) 6= 0}
+
+for t < TM /2
+for t ≥ TM /2
+
+,
+
+where OUT(Xα(t−1)) is the set of states which have non-zero probability transitions from states
+in Xα(t−1). Analogously, the book keeping for states that participate in the β-propagation is
+
+Xβ(0) ={x | Rax 6= 0}
+
+Xβ(τ ) =
+
+( Xβ(τ −1) ∪ IN(Xβ(τ −1))
+i
+Xβ(τ −1) ∪ IN(Xβ(τ −1))
+
+h
+
+∩ {x | αTM −τ (x) 6= 0}
+
+for τ < TM /2
+for τ ≥ TM /2
+
+.
+
+(44)
+
+(45)
+
+For the discount prior, we can use a time cutoff TM for which we expect further contributions
+to be insigniﬁcant. The choice of this cutoff involves a payoff between computational cost and
+accuracy of the E-step. Let T0 be the minimum time for which Lπ
+6= 0. It is clear that the cutoff
+T0
+needs to be greater than T0. In the experiment in section 4.1 we used an increasing schedule for
+the cutoff time, TM = (1 + 0.2 k) T0, depending on the iteration k of the EM-algorithm to ensure
+that with each iteratin we become more accurate.
+
+C Derivations of the POMDP M-steps
+
+All M-steps are of the same form: maximize Q(θ, θ∗) = P
+ization constraints, such that the M-step is θ∗
+
+z subject to some normal-
+z ∝ f (z, θ). Given Q(θ, θ∗) from (38) and in analogy
+
+z f (z, θ) log θ∗
+
+20
+
+prunedpruned(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:0)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)(cid:1)to the M-step in the MDP case, we derive the update (39) for πaby as
+
+Q(θ, θ∗) = hterms indep. of π∗i +
+
+∞
+X
+
+T
+X
+
+X
+
+T =0
+
+t=0
+
+aby
+
+(cid:0) log π∗
+
+aby
+
+(cid:1) P (ˆr = 1, at = a, bt = b, yt = y | T, θ) P (T )
+
+= · · · +
+
+(cid:0) log π∗
+
+aby
+
+(cid:1)
+
+X
+
+aby
+
+∞
+X
+
+T =0
+
+P (T )
+
+h X
+
+x
+
+bRax πaby Pyx αT (b, x)
+
++
+
+T −1
+X
+
+X
+
+t=0
+
+b0x0x
+
+i
+βT −t−1(b0, x0) λb0by Px0ax πaby Pyx αt(b, x)
+
+= · · · +
+
+X
+
+aby
+
+(cid:0) log π∗
+
+aby
+
+(cid:1) πaby
+
+h
+Pyx bα(b, x)
+
+bRax +
+
+X
+
+x
+
+γ
+1 − γ
+
+X
+
+b0x0
+
+bβ(b0, x0) λb0by Px0ax
+
+i
+
+(46)
+
+The updates for λbby and νb follow similarly. The last equality simpliﬁed time summations as
+follows:
+
+∞
+X
+
+T −1
+X
+
+T =0
+
+t=0
+
+P (T ) βT −t−1(b0, x0) αt(b, x) =
+
+∞
+X
+
+∞
+X
+
+t=0
+
+T =t+1
+
+(1 − γ) γT βT −t−1(b0, x0) αt(b, x)
+
+∞
+X
+
+∞
+X
+
+t=0
+
+τ =0
+
+γτ γt+1 βτ (b0, x0) αt(b, x) =
+
+γ
+1 − γ
+
+h ∞
+X
+
+τ =0
+
+P (τ ) βτ (b0, x0)
+
+i h ∞
+X
+
+i
+P (t) αt(b, x)
+
+t=0
+
+bβ(b0, x0) bα(b, x)
+
+(47)
+
+= (1 − γ)
+
+=
+
+γ
+1 − γ
+
+References
+
+Atkeson, C. & J. Santamar´ıa (1997). A comparison of direct and model-based reinforcement learning. In
+
+Int. Conf. on Robotics and Automation.
+
+Attias, H. (2003). Planning by probabilistic inference. In C. M. Bishop & B. J. Frey (Eds.), Proc. of the 9th
+
+Int. Workshop on Artiﬁcial Intelligence and Statistics.
+
+Beal, M. J., Z. Ghahramani, & C. E. Rasmussen (2002). The inﬁnite hidden markov model. In T. Dietterich,
+S. Becker, & Z. Ghahramani (Eds.), Advances in Neural Information Processing Systems 14. MIT Press.
+Boutilier, C., R. Dearden, & M. Goldszmidt (1995). Exploiting structure in policy construction. In Proc. of
+
+the 14th Int. Joint Conf. on Artiﬁcial Intelligence (IJCAI 1995), pp. 1104–1111.
+
+Bui, H., S. Venkatesh, & G. West (2002). Policy recognition in the abstract hidden markov models. Journal
+
+of Artiﬁcial Intelligence Research 17, 451–499.
+
+Chavira, M., A. Darwiche, & M. Jaeger (2006). Compiling relational bayesian networks for exact inference.
+
+International Journal of Approximate Reasoning 42, 4–20.
+
+Guestrin, C., D. Koller, R. Parr, & S. Venkataraman (2003). Efﬁcient solution algorithms for factored
+
+MDPs. Journal of Artiﬁcial Intelligence Research (JAIR) 19, 399–468.
+
+Hauskrecht, M., N. Meuleau, L. P. Kaelbling, T. Dean, & C. Boutilier (1998). Hierarchical solution of
+Markov decision processes using macro-actions. In Proc. of Uncertainty in Artiﬁcial Intelligence (UAI
+1998), pp. 220–229.
+
+Johnson, A. & A. Redish (2006). Neural ensembles in CA3 transiently encode paths forward of the animal
+at a decision point: a possible mechanisms for the consideration of alternatives. Program No. 574.2.
+2006 Neuroscience Meeting Planner. Society for Neuroscience, 2006.
+
+Kaelbling, L., M. Littman, & A. Moore (1996). Reinforcement learning: A survey. Journal of Artiﬁcial Intel-
+
+ligence Research 4, 237–285.
+
+Kaelbling, L. P., M. L. Littman, & A. R. Cassandra (1998). Planning and acting in partially observable
+
+stochastic domains. Artiﬁcial Intelligence 101, 99–134.
+
+Koller, D. & R. Parr (1999). Computing factored value functions for policies in structured MDPs. In Proc.
+
+of the 16th Int. Joint Conf. on Artiﬁcial Intelligence (IJCAI 1999), pp. 1332–1339.
+
+Kveton, B. & M. Hauskrecht (2005). An MCMC approach to solving hybrid factored MDPs. In Proc. of the
+
+19th Int. Joint Conf. on Artiﬁcial Intelligence (IJCAI 2005).
+
+21
+
+Littman, M. L., S. M. Majercik, & T. Pitassi (2001). Stochastic boolean satisﬁability. Journal of Automated
+
+Reasoning 27(3), 251–296.
+
+McGovern, A. & A. G. Barto (2001). Automatic discovery of subgoals in reinforcement learning using
+
+diverse density. In Proc. of 18th Int. Conf. on Machine Learning (ICML 2001), pp. 361–368.
+
+Meuleau, N., L. Peshkin, K.-E. Kim, & L. P. Kaelbling (1999). Learning ﬁnite-state controllers for partially
+observable environments. In Proc. of Fifteenth Conf. on Uncertainity in Artiﬁcial Intelligence (UAI 1999),
+pp. 427–436.
+
+Minka, T. (2001). A family of algorithms for approximate bayesian inference. PhD thesis, MIT.
+Murphy, K.
+
+inference and learning. PhD
+Thesis, UC Berkeley, Computer Science Division. See particularly the chapter on DBN at
+http://www.cs.ubc.ca/ murphyk/Papers/dbnchapter.pdf.
+
+(2002). Dynamic bayesian networks: Representation,
+
+Ng, A. Y., R. Parr, & D. Koller (1999). Policy search via density estimation. In Advances in Neural Informa-
+
+tion Processing Systems 12, pp. 1022–1028.
+
+Poupart, P. & C. Boutilier (2003). Bounded ﬁnite state controllers. In Advances in Neural Information Pro-
+
+cessing Systems 16 (NIPS 2003).
+
+Theocharous, G., K. Murphy, & L. Kaelbling (2004). Representing hierarchical POMDPs as DBNs for
+
+multi-scale robot localization. In Intl. Conf. on Robotics and Automation (ICRA 2004).
+
+Toussaint, M. (2006). A sensorimotor map: Modulating lateral interactions for anticipation and planning.
+
+Neural Computation 18, 1132–1155.
+
+Toussaint, M. & C. Goerick (2007). Probabilistic inference for structured planning in robotics. Submitted
+
+to Int. Conf. on Robotics and Automation (ICRA 2007).
+
+Verma, D. & R. P. N. Rao (2006). Goal-based imitation as probabilistic inference over graphical models.
+
+In Advances in Neural Information Processing Systems 18 (NIPS 2005).
+
+Wiegerinck, W., B. van den Broek, & H. Kappen (2006). Stochastic optimal control in continuous space-
+
+time multi-agent systems. In Proceedings UAI 2006.
+
+Zettlemoyer, L., H. Pasula, & L. P. Kaelbling (2005). Learning planning rules in noisy stochastic worlds.
+
+In Proc. of the Twentieth National Conference on Artiﬁcial Intelligence (AAAI-05).
+
+22
+
+

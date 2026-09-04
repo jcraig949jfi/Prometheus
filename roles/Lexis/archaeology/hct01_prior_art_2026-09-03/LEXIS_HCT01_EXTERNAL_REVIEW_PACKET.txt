@@ -1,0 +1,807 @@
+================================================================================
+LEXIS -- HC-T01 PRIOR-ART ADJUDICATION
+IS THE SURVIVING HC-T01 EXPERIMENT WORTH RUNNING?
+================================================================================
+Prepared:   2026-09-03   adjudication complete; nothing executed
+Seat:       Lexis (vocabulary / menu-growth seat), reopened by operator
+            directive from an IDLE state
+Location:   roles/Lexis/archaeology/hct01_prior_art_2026-09-03/
+Directive:  PROMPT_LEXIS_HCT01_PRIOR_ART_2026-09-03.txt
+            body sha256 1016564181100117 52f450e4f4111c2a
+                        4f3ea841977659a3 deb61c9ab7310084   (one string)
+Branch:     herakles/historical-collider-v0
+
+HEADLINE, THREE PARTS:
+
+ 1. The premise I was given is partly obsolete. HC-T01 IS NOT PENDING.
+    It executed 2026-09-03 and was adjudicated to HC_T01_WEAK_SIGNAL_ONLY.
+ 2. The prior-art frontier is not where any Prometheus document says it
+    is. MISEVIC, OFRIA & LENSKI 2006 is HC-T01's design, in Avida, twenty
+    years earlier, and scores 5 of 6. KUMAWAT ET AL. 2024 (PNAS) supplies
+    the one cell Misevic lacks and also scores 5 of 6. Their UNION covers
+    all six elements. Only their INTERSECTION is unoccupied.
+ 3. The kill condition that stopped HC-T01 was scored with the wrong
+    statistic against a structurally hostile outcome variable. That is
+    free to re-check from data already committed.
+
+RECOMMENDED NEXT ACTION: RUN_A_SMALLER_CALIBRATION_FIRST
+  -- specifically, two zero-compute re-analyses of already-committed
+     HC-T01 rows, with a decision rule fixed in advance. Details in
+     section 16.
+
+--------------------------------------------------------------------------------
+1. ORIENTATION FOR A READER WHO HAS NEVER SEEN THIS PROGRAMME
+--------------------------------------------------------------------------------
+Prometheus is a research programme interested in whether evolutionary
+systems change the machinery that generates their own future variation,
+in a way that alters what they can subsequently acquire. Its "Historical
+Collider" reconstructs old experiments to ask questions their authors
+could not afford.
+
+HC-T01 is one such experiment, built on Marc Toussaint's 2003 PhD thesis.
+Toussaint evolved variable-length symbol strings with rewriting operators
+toward a periodic target. A parameter beta controls "second-type"
+mutations, which create and modify those operators. HC-T01 switched beta
+on and off, and measured the distribution of phenotypes reachable in ONE
+application of the variation operator from the current genotype -- what
+this packet calls a LOCAL ACCESSIBILITY DETECTOR.
+
+The claim under test, in the programme's own words: did the mechanism
+change the distribution of future variation in a way that altered what
+the population subsequently acquired?
+
+This pass is literature adjudication and archaeology. NOTHING WAS RUN.
+
+--------------------------------------------------------------------------------
+2. THE EXACT RESEARCH QUESTION PUT TO ME
+--------------------------------------------------------------------------------
+I was handed a working position and told to attack it, not defend it. It
+asserted that HC-T01 is not historically redundant but its original
+justification is obsolete, that the surviving novelty is a
+methodological-rigour composition of six elements, and that a narrow
+reconstruction of a different paper (Kouvaris et al. 2017) might be
+better value first.
+
+The six elements, which I scored as A-F with sub-cells:
+
+  A-LOCAL          detector samples the actual local mutational
+                   neighbourhood from the lineage's current state
+  A-REAL-OPERATOR  it uses the SAME operator used during evolution
+  A-SAME-PROBE     the same probe draws are reused across time and arms
+  A-EXHAUSTIVE     the neighbourhood is enumerated, not sampled
+  B-LONGITUDINAL   measured at multiple evolutionary times
+  B-WITHIN-RUN     those repeats are along the same run
+  C-MECHANISM      the knob is a variation operator or representation,
+                   not a selection pressure or goal schedule
+  C-OPERATOR-CLEAN the intervention does not define the detector
+  C-NEG-CONTROL    the detector is measured in the disabled arm too
+  D-ACQUISITION    later adaptation is measured
+  D-WITHIN-RUN     detector at t is related to acquisition at t+n in the
+                   same run
+  D-UNREACHABILITY "slow" is distinguishable from "not reachable"
+  E-REPLICATION    independent evolutionary replicates
+  E-UNCERTAINTY    SE, CI, bands or a formal test
+  F-MECHANICAL-NULL the immediate effect of turning the knob is separated
+                   from the evolved consequence of having had it
+  F-COUPLING       are detector and outcome functionals of the same
+                   frozen object, making agreement near-definitional
+
+--------------------------------------------------------------------------------
+3. THE PREMISE IS PARTLY OBSOLETE -- HC-T01 ALREADY RAN
+--------------------------------------------------------------------------------
+Found in the repository, not supplied with the directive:
+
+  64cc041da  HC-T01 EXECUTED: the machine changed, and the knob did not
+  834e6e0d3  execution review packet: HC_T01_PARTICLE_SURVIVES, K7 fired
+  a22792dc6  HC-T01 CORRECTED: verdict downgraded to
+             HC_T01_WEAK_SIGNAL_ONLY by operator adjudication
+
+From its own results ledger:
+
+  X6-T2  temporal precedence of detector over acquisition  NOT ATTEMPTED
+  X6-T3  causal chain mechanism -> accessibility -> acq.   NOT ESTABLISHED
+  K7     do cheap state metrics explain acquisition too?   FIRED
+  X4-T0  generation-zero mechanical null                   VACUOUS
+
+So two of the six cells did not merely go unrun. One was UNIMPLEMENTABLE
+and the other was ABANDONED after a kill condition fired. The live
+question is not "should we run HC-T01" but "is the acquisition half
+reachable at all in this substrate".
+
+--------------------------------------------------------------------------------
+4. RECOVERED CORPUS
+--------------------------------------------------------------------------------
+This pass added, hashed, to recovered/ and work/:
+
+  Wagner 2023 Nat Commun paper + the COMPLETE EE_mutations repository
+    (both genotype networks, analysis code, precomputed outputs)   [by me]
+  Cowperthwaite et al. 2008 PLoS CB publisher PDF                  [by me]
+  Watson et al. 2014 PMC author manuscript + ITS SUPPLEMENT   [gap closed]
+  Payne & Wagner 2019 NRG accepted manuscript, 46pp           [gap closed]
+  Ferrada & Wagner: all SIX joint papers                      [gap closed]
+  Fontana & Schuster 1998 complete 42pp manuscript            [gap closed]
+  Petak 2025 SI Appendix + publisher PDF + Zenodo + GitHub
+  Tiso 2024 companion thesis (van Eldijk 2024) + Pure OAI record
+  55 evolutionary-computation / artificial-life PDFs, incl. Misevic 2006
+    (PMC full text), Kumawat 2024, Rutten 2019, Tarapore & Mouret 2015,
+    Reisinger & Miikkulainen 2006, Elena & Sanjuan 2008, the Hu/Banzhaf
+    cluster, Altenberg 1994/1995, the CGP-neutrality cluster
+
+Already in the repository from earlier passes and re-used, not
+re-fetched: Kouvaris 2017 article + S1 + preprint + PhD thesis + three
+author code repositories; Parter 2008 article + Text S1; Kashtan 2005 /
+2007; Kounios arXiv + MPhil thesis; Tiso 2024 thesis; the Toussaint
+1997-2007 corpus; HC-R01's RNA/neutral-network sources.
+
+--------------------------------------------------------------------------------
+5. ARCHAEOLOGY COMPLETENESS AND GAPS
+--------------------------------------------------------------------------------
+CLOSED THIS PASS (all were standing gaps in other lanes' records):
+  Watson 2014 -- Unpaywall showed green OA at PMC4131988, which three
+    earlier routes had missed. Its supplement was found by grepping the
+    XML for <supplementary-material>. Conclusion UNCHANGED: term census
+    over 25pp + 7pp gives "one-mutant" 0, "1-mutant" 0, "mutational
+    neighb*" 0, "offspring" 0. No local detector.
+  Payne & Wagner 2019 -- via a 2023 Wayback capture. ZORA's live
+    anti-bot endpoint is SERVER-SIDE BROKEN: a correctly solved
+    challenge returns HTTP 500.
+  Ferrada & Wagner -- THE UPSTREAM RECORD HAD THE WRONG FIRST NAME. It
+    is EVANDRO Ferrada, not Emanuel. Six joint papers, all retrieved.
+  Fontana & Schuster 1998 -- recorded NOT_FOUND by two prior threads.
+    Found. Unpaywall reports this DOI as "closed" and is WRONG; Semantic
+    Scholar's openAccessPdf field returned the IIASA preprint.
+  Hayden, Ferrada & Wagner 2011 -- CLOSED WITH CAVEAT. Recovered from a
+    Wayback capture of an UNAUTHORIZED third-party posting. Flagged.
+  Kounios 2016 -- definitively NEVER peer-review published. Established
+    with a negative control: the sibling preprint by the same group DID
+    publish, so the arXiv-to-journal linkage works for this author set.
+  Tiso 2024 ch.3 -- definitively unpublished, "In preparation" in the
+    co-first author's companion thesis. No code or data anywhere.
+
+RESIDUAL RISK CLOSED LATE IN THE PASS, AND HOW:
+  The full GP Bibliography was retrieved as a primary artifact --
+  11.8 MB gzip, 44.7 MB uncompressed, 19,986 entries, 12,860 with
+  abstracts -- which yielded the verbatim abstracts of the three papers
+  I had flagged as the largest unresolved risk.
+  Yu & Miller 2001, verbatim: "we introduce the use of explicit
+    neutrality with an integer string coding scheme to allow neutrality
+    to be measured during evolution ... We also identify four
+    characteristics of adaptive/neutral mutations that are associated
+    with high evolvability."
+  Yu & Miller 2002, verbatim: "when the ratio of adaptive/neutral
+    mutations during neutral walk is close to that of fitness
+    improvement step, the evolutionary search has a high success rate."
+  Miller & Smith 2006, verbatim: "The results presented demonstrate the
+    role of mutation and genotype length in the evolvability of the
+    representation."
+  ASSESSMENT: Yu & Miller's detector counts ACCEPTED versus ATTEMPTED
+  mutation CLASSES along the run -- the same family as Hu & Banzhaf's
+  ka/ks -- not a reachable-phenotype set. B is likely YES, A is PARTIAL
+  at best, and neither abstract hints at F. Miller & Smith's knobs are
+  mutation rate and genotype length with a search-efficiency outcome and
+  no accessibility detector. NONE OF THE THREE CAN REACH 6/6. The PDFs
+  remain unretrieved (the author directory 403s everything) but the
+  scientific risk is closed.
+
+A QUANTIFIED NULL ACROSS THE WHOLE GP LITERATURE, AND WHY IT MATTERS:
+  In those 19,986 entries, "mutational neighborhood" and "mutational
+  neighbourhood" occur ZERO times. So do "offspring distribution",
+  "distribution of offspring" and "single point mutation". A conjunction
+  sweep over the 12,860 abstracts -- after rebuilding the A probe from
+  vocabulary the corpus actually uses, giving non-degenerate marginals
+  A=282 / B=157 / C=131 -- returns A&B=10, A&C=10, B&C=1, A&B&C=0.
+  THIS EXPLAINS THE SHAPE OF THE WHOLE FINDING. Every 5/6 paper is an
+  Avida or Aevol paper and none is a GP, GECCO or evolutionary-robotics
+  paper, because the accessibility-detector concept is absent from GP's
+  own vocabulary. The gap is a CORPUS BOUNDARY, not an oversight -- and
+  that independently corroborates why two earlier Prometheus searches
+  missed it.
+
+STILL OPEN:
+  Lehman & Stanley 2011 CEC -- the lab site is dead, Wayback rate-limited.
+  Parsons, Knibbe & Beslon 2011 ECAL -- MIT Press 403, all HAL behind
+    proof-of-work.
+  Vassilev & Miller 2000 -- a free-to-read publisher link exists
+    (rdcu.be/dgo9d) that defeats curl but would open in a browser in
+    seconds. THE CHEAPEST REMAINING WIN IN THE PASS: about thirty
+    seconds of human time. Not load-bearing.
+  Zheng 2019 supplement; Elsevier typeset Fontana & Schuster.
+  Yu & Miller and Miller & Smith PDFs, per the assessment above.
+
+--------------------------------------------------------------------------------
+6. LITERATURE SCORECARD -- 22 WORKS, NONE WITH ALL SIX
+--------------------------------------------------------------------------------
+Full rows with quotes: L_LITERATURE_SCORECARD.jsonl. Compressed on the
+six headline cells. Y=yes P=partial N=no ?=unknown
+
+work                              A-LOC B-WRUN C-MECH D-WRUN E-REP F-NULL
+--------------------------------  ----- ------ ------ ------ ----- ------
+Misevic/Ofria/Lenski 2006           Y      Y      Y      N      Y     Y
+Kumawat/Lalejini/Acosta/Zaman 2024  Y      Y      P      Y      Y     Y
+Rutten/Hogeweg/Beslon 2019          Y      Y      P      P      Y     Y
+HC-T01 as executed (Toussaint)      Y      Y      Y      N      Y     P
+Hu/Banzhaf/Moore 2014 (ALife)       Y      P      Y      N      Y     Y
+Tiso 2024 (unpublished thesis)      Y      Y      Y      P      P     N
+Petak et al. 2025 (PNAS)            Y      Y      P      N      Y     -
+Tarapore & Mouret 2015              Y      N      Y      N      Y     N
+Parter/Kashtan/Alon 2008 + Text S1  Y      N      N      N      Y     -
+Elena & Sanjuan 2008                Y      N      P      Y      Y     P
+Kounios et al. 2016 (arXiv only)    N      Y      Y      P      Y     N
+Kouvaris et al. 2017                N      Y      N      N      N     -
+Cowperthwaite et al. 2008           Y      N      N      N      Y     -
+Wagner 2023 (Nat Commun)            Y      N      N      N      Y     -
+Wagner 2008 / Greenbury 2016        Y      N      N/P    N      Y     -
+Ancel & Fontana 2000                Y      N      N      N      ?     -
+Draghi et al. 2010 SI 6.2           Y      P      N      Y      Y     -
+Reisinger & Miikkulainen 2006       N      P      Y      N      P     Y
+Watson et al. 2014                  N      ?      N      N      ?     -
+Zheng 2019 / Hayden 2011            P/N    N      N      N      Y     -
+
+Distance from the full composition:
+  Misevic 2006 ....... missing ONE cell   (D-WITHIN-RUN)
+  Kumawat 2024 ....... missing ONE cell   (C-MECHANISM)
+  HC-T01 as executed . missing TWO cells  (D-WITHIN-RUN, F-MECHANICAL-NULL)
+
+--------------------------------------------------------------------------------
+7. STRONGEST EVIDENCE AGAINST HC-T01
+--------------------------------------------------------------------------------
+7a. MISEVIC, OFRIA & LENSKI 2006 IS HC-T01's DESIGN, TWENTY YEARS EARLY,
+    WITHOUT HC-T01's CONFOUND. Proc R Soc B 273:457-464. Quotes:
+      operator on/off -- "Reproductive mode is determined by whether the
+      divide-sex or divide-asex instruction is included in the
+      instruction set. All genomes used the default set of 25
+      instructions plus one of these divide instructions."
+      local exhaustive detector -- "We obtained an organism's
+      genotype-phenotype (GP) map by separately mutating each site in
+      its genome and recording any resulting changes in the
+      computational traits performed by the mutants."
+      longitudinal -- "Over time, the genomes of sexual organisms became
+      increasingly more physically modular than asexual ones (figure
+      3a)", with "Error bars are standard errors of the mean".
+      replication -- "100 sexual and 100 asexual populations".
+    AND IT AVOIDS THE CONFOUND THAT DOWNGRADED HC-T01. Swapping ONE
+    instruction for another leaves both arms with the same machinery
+    class. HC-T01's beta=0 arm cannot contain second-type operators at
+    all, so "history reorganised machinery" cannot be separated from
+    "only one arm was allowed to build machinery".
+    It never linked the detector to acquisition; that appears only as a
+    Discussion hypothesis.
+
+7b. KUMAWAT ET AL. 2024 (PNAS) SUPPLIES THE MISSING CELL, WITH THE RIGHT
+    OUTCOME VARIABLE. Quotes:
+      "We performed an exhaustive survey of the two-step mutational
+      neighborhood of the dominant genotype ... we created every
+      possible single- and double-point mutation."
+      "We also isolated the lineages of the dominant genotypes and
+      performed a similar mutational neighborhood analysis on the entire
+      lineage."
+      within-run precursor -- "mutational neighborhoods for Cyclic
+      lineages appeared to anticipate the environment change; these
+      lineages showed a high concentration of alternate mutants before
+      the environment switched".
+      acquisition -- "lineage lag", "the number of elapsed updates
+      before dominant lineages were adapted to a changed environment".
+      F control -- "we also performed reciprocal experiments where the
+      organisms that evolved in evolving mutation rates were assigned a
+      mutation rate of 0.001, and the organisms that evolved under fixed
+      mutation rates were assigned the mean mutation rate that evolved".
+      E -- "Width of the ribbons is SE from 20 replicates".
+    Its only miss is that C is a mutation RATE, not an on/off.
+
+7c. A PUBLISHED, WELL-POWERED NEGATIVE ON THE ORIGIN-SIDE CLAIM.
+    Cowperthwaite et al. 2008, Fig 6, verified by me in the publisher
+    PDF: "(A) The phenotype abundance of the target strongly affects the
+    success of adaptation (r = 0.76, P = 2.2e-4). (B) The phenotype
+    abundance at the start of the simulation has no effect on the
+    evolutionary outcome (r = -0.023, P = 0.17)." 2,400 simulations, 200
+    isogenic founding populations, 1e6 generations. Their accessibility
+    statistic tracks abundance "almost perfectly".
+    IT IS THE DESTINATION'S ACCESSIBILITY THAT PREDICTS, NOT THE
+    ORIGIN'S -- and HC-T01 measures origin-side. This agrees with
+    HC-T01's own K7 kill, seventeen years earlier, in another substrate.
+
+7d. THE SIGN CAN INVERT. Ancel & Fontana 2000: three RNA sequence
+    classes with an IDENTICAL minimum-free-energy structure differ in
+    one-error neutrality (0.184 random, 0.412 neutrally evolved, 0.456
+    canalised) and the class with the RICHEST history became an
+    evolutionary DEAD END. Any HC-T01 successor needs a pre-registered
+    direction and a reason for it.
+
+7e. HC-T01's OWN RESULT IS STRICTLY DOMINATED. It has A+B+C+E, a partial
+    F, no D, and a machinery-presence confound that Misevic does not
+    have. On every shared axis, one of the two 5/6 papers is better.
+
+--------------------------------------------------------------------------------
+8. STRONGEST EVIDENCE FOR PRESERVING HC-T01
+--------------------------------------------------------------------------------
+Stated as fairly as section 7, because the directive forbids advocacy in
+either direction.
+
+8a. THE MATCHED-CAPABILITY RESULT IS REAL AND WELL CONTROLLED. At alpha
+    0.03, generations 2000 and 3000: 12 of 12 run pairs with BOTH arms
+    exactly at the optimum, identical phenotype across all 25 symbols,
+    identical fitness of exactly 0.0, acquisition difference exactly
+    0.0000 -- and modular degree under the IDENTICAL probe differing by
+    +0.5157, SE 0.0283, 24x the noise floor. The seat notes the
+    conditioning "if anything biases the difference downward".
+
+8b. I INDEPENDENTLY VERIFIED THE NOISE FLOOR. Recomputing from the
+    committed noise files, grouping repeats at fixed generation and
+    confirming one distinct genotype per group:
+      gen   0   md_on 0.00000   SD 0.00000
+      gen 100   md_on 0.48286   SD 0.02061
+      gen 500   md_on 2.31926   SD 0.00264
+    The quoted 0.021 floor IS the generation-100 estimator SD and is the
+    MAXIMUM of the three checkpoints. The 24x-108x multiples are
+    computed against a conservative floor. The accessibility leg is
+    methodologically sound.
+
+8c. IT SEPARATED THE MECHANICAL FROM THE EVOLVED EFFECT, WHICH IS RARE.
+    Turning the knob now moves the detector 0.003-0.027, at or below
+    noise; having had the knob during evolution moves it up to 2.41.
+    Across the whole surveyed literature, criterion F appears cleanly in
+    only five works. HC-T01 belongs in that small set.
+
+8d. IT PRODUCED A GENUINE HISTORICAL FINDING. A parameter conflict in
+    Toussaint's record was resolved BY NECESSITY: Experiment 2 is
+    impossible with replacement-only mutation, measured as fitness
+    pinned at -0.960 in 40 of 40 runs with zero operators created. So
+    the record was per-experiment, never contradictory. That is a
+    reconstruct-to-read win that no amount of reading would have given.
+
+8e. IT REPLICATES A 2008 RNA RESULT IN A SYMBOL-REWRITING SUBSTRATE.
+    Wagner 2008 found that sequences on the SAME neutral network have
+    largely non-overlapping novel-structure neighbourhoods, median
+    Q = 0.6. HC-T01's matched-phenotype divergence is the same
+    phenomenon in a completely different system. Cross-substrate
+    recurrence of the H2-class effect is worth something and is banked.
+
+--------------------------------------------------------------------------------
+9. CORRECTIONS MADE DURING THIS PASS
+--------------------------------------------------------------------------------
+Full entries in L_CORRECTIONS.jsonl. Five matter.
+
+CO-01  I corrected another lane. HC-R01 recommended a Wagner-2023
+       neutral-EE re-analysis as "the cheapest available shot at the
+       exact level this programme needs", quoting Wagner's reason for
+       not doing it as a measurement-precision barrier. Wagner's METHODS
+       give a SECOND reason that lane omitted: "the number of 1-mutant
+       neighbor pairs where both fitness measurements happen to be
+       exactly equal is so small as to be negligible (38 pairs or 0.02%
+       ... 34 or 0.06%)". The re-analysis is still the best-shaped
+       option but needs a widened neutrality band and a power
+       calculation FIRST. The omission flattered the lane's own
+       recommendation.
+
+CO-04  I corrected myself. My Ergon pass called Petak 2025 purely
+       selection-side. It has a variation-REGIME arm: "Every 300
+       generations every individual was mutated at every connection in
+       the GRN by a value randomly drawn from a normal distribution
+       (N(0,1)) in addition to the regular mutation step". C revised
+       NO -> PARTIAL. CONSEQUENCE: the sentence "Petak 2025 has no
+       operator-side intervention" in HC_T01_CORRECTION_2026-09-03.md is
+       an INHERITED ERROR FROM ME and should be annotated by that lane.
+
+CO-05  Upstream record error: the Wagner collaborator is EVANDRO
+       Ferrada, not Emanuel. That name is why the gap never resolved.
+
+CO-07  A prior NOT_FOUND overturned: Fontana & Schuster 1998 exists in
+       full as an IIASA report. Unpaywall says "closed" and is wrong.
+       METHOD LESSON: query BOTH Unpaywall and Semantic Scholar's
+       openAccessPdf before concluding NOT_FOUND. Neither dominates --
+       Unpaywall cracked Watson 2014 where three routes failed; S2
+       cracked this one.
+
+CO-08  THE BIG ONE. Both the HC-T01 lane and my own Ergon pass treated
+       the Watson/Kouvaris/Tiso/Petak lineage as the frontier. It is
+       not. Misevic 2006 and Kumawat 2024 are AVIDA papers and were in
+       no Prometheus registry. Why it was missed TWICE: the first search
+       population was seeded on one author's citation graph, and the
+       second was seeded on one model family. The population was
+       mis-drawn again -- first by AUTHOR, then by DOMAIN. Rigour inside
+       a mis-drawn population does not repair it.
+
+--------------------------------------------------------------------------------
+10. CAUSAL AND COUPLING ANALYSIS
+--------------------------------------------------------------------------------
+Three hazards. Two are named here for the first time in this programme.
+
+H-1 COUPLING -- CONFIRMED FAMILY-WIDE. Wherever the accessibility
+    statistic and the acquisition outcome are both read off one frozen
+    object, their agreement is near-definitional. Kouvaris 2017 is the
+    extreme case: both readouts are deterministic functionals of the
+    same frozen matrix. Ancel & Fontana is degenerate: the accessibility
+    measure IS the robustness measure. The single clean exception found
+    anywhere is Wagner 2023, and it is clean because the current-state
+    term is subtracted in the DEFINITION.
+
+H-2 CEILING-BOUNDED OUTCOME -- NEW, AND IT EXPLAINS K7. HC-T01's
+    acquisition outcome is gain toward a bounded optimum, so gain is
+    capped by (ceiling - current fitness) and current fitness is the
+    SUFFICIENT STATISTIC for that cap. Any predictor correlated with
+    fitness inherits the correlation. Measured (execution packet s.10),
+    Spearman rho against subsequent gain:
+      current best fitness  CHEAP        -1.000  -0.686  -0.987
+      avgfit  positive control           -0.975  -0.683  -0.954
+      modular degree  ACCESSIBILITY      -0.950  -0.624  -0.949
+    The seat noticed one column was "partly degenerate". The defect is
+    not confined to one column; it is a property of the outcome. K7 AS
+    SPECIFIED IS CLOSE TO UNWINNABLE REGARDLESS OF WHETHER ACCESSIBILITY
+    CARRIES INFORMATION. That cuts BOTH ways: it rescues the hypothesis
+    from its strongest-sounding disconfirmation, and it convicts the
+    design, because a kill condition that cannot be passed is not a
+    test. Note also that HC-T01 reported MARGINAL Spearman correlations
+    only, never PARTIAL ones.
+
+H-3 MACHINERY PRESENCE -- CONFIRMED for HC-T01 and Kounios 2016. When an
+    ablation REMOVES A CLASS OF MACHINERY rather than reorganising it,
+    every downstream difference is explicable without any appeal to
+    evolved reorganisation. THIS IS THE DIRECT ANSWER TO THE DIRECTIVE'S
+    QUESTION 6: the operator ablation made causal identification WORSE
+    than a selection-side intervention would have. Misevic's
+    instruction-swap does not have this problem, which is precisely why
+    it is the better design.
+
+IS "LOCAL ACCESSIBILITY PREDICTS FUTURE ACQUISITION" SEPARABLE AT ALL?
+In principle yes, and Wagner 2023 shows the construction: define the
+statistic as a residual after the current-state contribution is removed,
+at which point it is formally equivalent to average positive epistasis.
+Whether it is separable in THIS substrate is unknown, because the one
+design that could have told us was scored with the wrong statistic
+against a hostile outcome. That is answerable from committed data.
+
+--------------------------------------------------------------------------------
+11. THE KOUVARIS RECONSTRUCTION, ASSESSED AS AN INSTRUMENT TEST
+--------------------------------------------------------------------------------
+The working position's second clause DOES NOT SURVIVE. Four reasons.
+
+ 1. IT CALIBRATES THE WRONG INSTRUMENT. HC-T01's detector is the
+    one-step offspring cloud from the current genotype. Kouvaris's is
+    5000 Sobol points drawn UNIFORMLY over the whole [-1,1]^16 cube and
+    developed through the current matrix. A detector that ranks
+    Kouvaris's arms has shown it can read a GLOBAL EXPRESSIBILITY
+    distribution. It has shown nothing about local accessibility.
+ 2. THE EQUIVALENT CALIBRATION HAS ALREADY BEEN PASSED, IN THE RIGHT
+    SUBSTRATE. HC-T01's V2 recovered Toussaint's published neutral
+    degree: 0.504 -> 0.657 against a historical 0.45 -> 0.70, both
+    within about 1.1 run-to-run SD of figure-read values. V1, V4 and V6
+    also passed, and the reconstruction reproduced unprompted both
+    misaligned modules the thesis names by hand.
+ 3. IT COULD PASS FOR THE WRONG REASON. The published effect is
+    enormous -- the L1 arm reaches ZERO generalisation error while the
+    control over-fits. Almost any competent distribution estimator will
+    rank the arms. Low discriminating power, high over-reading risk.
+ 4. A FAILURE WOULD BE UNINTERPRETABLE. The Kouvaris record carries
+    seven enumerated ambiguities, three of them direct code-versus-paper
+    contradictions: P(matrix mutates) is 1/15 in Methods, 1/2 in
+    Results and 1 in the code; the sigmoid gain is 0.5 in the appendix
+    and 0.3 in the code; developmental steps are 10 versus 15; and the
+    committed script CLAMPS the embryonic phenotype to the target with
+    the gene-mutation line commented out, which is a different
+    experiment from the one the Methods describe. A failure could not
+    distinguish a bad detector from a wrong branch of a contradictory
+    record.
+
+WHAT TRANSFERS WITHOUT RECONSTRUCTING ANYTHING: the held-out target
+class; the entropy statistic with a structurally derived target value (k
+independent modules implies exactly k bits, computable on HC-T01's own
+committed data); the frozen shared probe, which HC-T01 already adopted.
+
+WHAT MUST NOT BE RECONSTRUCTED: the 1000-run x 2500-generation
+acquisition assay, the 2^16 Hebbian enumeration (which replaced
+evolution with a learning rule and so does not test the evolutionary
+claim), and the parameter sweeps.
+
+MINIMUM VERSION IF OVERRIDDEN: control arm and L1 arm only, entropy as
+the single readout, validated against the two pre-derived values (16
+bits untrained, 4 bits under L1), tolerances from the reconstruction's
+own spread computed BEFORE any tolerance is chosen.
+
+--------------------------------------------------------------------------------
+12. WHAT SHOULD BE STOLEN FROM HISTORICAL DESIGNS
+--------------------------------------------------------------------------------
+Twelve entries in L_STEALABLE_METHODS.jsonl. The five that matter:
+
+SM-01 SUBTRACT THE CURRENT-STATE CONTRIBUTION IN THE DEFINITION of the
+      accessibility statistic (Wagner 2023, Eq.1/Eq.3). The direct fix
+      for K7. Changes the claim: the result is CONDITIONAL
+      accessibility, not accessibility.
+SM-08 USE TIME-TO-RE-ADAPT AFTER AN ENVIRONMENT SWITCH, not gain toward
+      a fixed optimum (Kumawat 2024's "lineage lag"). Defeats hazard
+      H-2 and yields one measurement per switch per run. COST: HIGH for
+      HC-T01, because it requires a CHANGING target, which Toussaint's
+      Experiment 2 does not have. This is a substrate change.
+SM-09 RECIPROCAL TRANSPLANT of the operator parameter between arms
+      (Kumawat 2024). A stronger F control than a generation-zero
+      baseline AND IT DOES NOT GO VACUOUS, because it is evaluated on
+      evolved genomes where the statistic is non-degenerate. HC-T01's
+      generation-zero null measured identically zero and had to be
+      abandoned mid-flight; this would have worked.
+SM-10 ABLATE BY INSTRUCTION-SET MEMBERSHIP so both arms keep the same
+      machinery class (Misevic 2006). Directly cures hazard H-3.
+SM-12 REPORT A TIME SERIES OF CROSS-RUN CORRELATIONS, not one
+      correlation at one checkpoint (Elena & Sanjuan 2008: "At each time
+      point, a Spearman's correlation coefficient ... using the 62
+      lineages as data points"). This is the shape K7 should have had,
+      and it is computable from HC-T01's committed grid.
+
+Also worth recording: Reisinger & Miikkulainen 2006 NAMED criterion F in
+2006 -- "latent evolvability" versus "acquired evolvability", estimated
+as delta-L = L_final - E(L_0) -- and also stated the tautology risk
+HC-T01 later hit. HC-T01 reinvented both.
+
+--------------------------------------------------------------------------------
+13. THE EIGHT PRIMARY QUESTIONS, ANSWERED
+--------------------------------------------------------------------------------
+Q1 Is the surviving cell actually absent from the historical record?
+   As a single experiment, YES -- 22 works scored, none has all six. But
+   it is absent only as an INTERSECTION. The UNION of Misevic 2006 and
+   Kumawat 2024 covers all six cells, and each is missing exactly one.
+
+Q2 Does any pre-existing work combine all of A-F?
+   No. Closest: Misevic 2006 (missing D-within-run), Kumawat 2024
+   (missing clean C), Rutten 2019 (missing clean C, D qualitative).
+
+Q3 Are the five named works characterised correctly?
+   Mostly, with two corrections. Petak 2025 was WRONGLY described as
+   having no operator-side intervention -- by me, in my own earlier
+   pass, and that error propagated into the HC-T01 correction notice.
+   Parter 2008's longitudinality remains DISPUTED between two lanes and
+   is recorded unresolved. Kouvaris 2017, Kounios 2016 and Tiso 2024 are
+   characterised correctly, and Kounios is confirmed to be grey
+   literature that never passed review.
+
+Q4 Other works that change the picture?
+   Yes, and they are the finding of this pass: Misevic 2006 and Kumawat
+   2024, neither previously in any Prometheus registry. Also Elena &
+   Sanjuan 2008 (the cleanest D shape found), Reisinger & Miikkulainen
+   2006 (names criterion F), Rutten 2019, Tarapore & Mouret 2015,
+   Wagner 2023 (solves conditioning), Cowperthwaite 2008 (the
+   origin-side negative).
+
+Q5 Is "local accessibility predicts future acquisition" separable?
+   Usually not, for three distinct reasons that must not be collapsed:
+   definitional coupling (H-1), arithmetic coupling to a bounded
+   outcome (H-2), and outright tautology where the accessibility
+   measure IS the cheap-state measure. Separable in principle, and
+   Wagner 2023 shows the construction.
+
+Q6 Does HC-T01's mechanism ablation improve causal identification, or
+   worsen the tautology?
+   IT WORSENS IT. Because beta=0 genomes cannot contain second-type
+   operators at all, the ablation removes a machinery CLASS rather than
+   reorganising it. Misevic's instruction swap keeps both arms in the
+   same class and is strictly better identified. HC-T01's contemporaneous
+   mechanical effect was small and honestly measured -- that part
+   worked -- but the presence confound is not cleared and the
+   preregistered generation-zero null was VACUOUS.
+
+Q7 Is a Kouvaris reconstruction useful as detector calibration?
+   Largely NO. It calibrates a global detector when HC-T01 uses a local
+   one; the equivalent calibration was already passed against
+   Toussaint's own values; a pass would be low-information; a failure
+   would be uninterpretable given three code-versus-paper
+   contradictions. See section 11.
+
+Q8 One next action?
+   RUN_A_SMALLER_CALIBRATION_FIRST. See section 16.
+
+--------------------------------------------------------------------------------
+14. UNRESOLVED AMBIGUITIES
+--------------------------------------------------------------------------------
+ 1. Parter 2008 Text S1: is the one-mutant measurement longitudinal?
+    Elenchus reads yes and scores D4-weak; I read the neighbourhood
+    measures as endpoint-per-arm ("genomes from the end of the last
+    G1-epoch population were analyzed"). Text S1 does contain a section
+    "Evolution of facilitated variation on a neutral network" which may
+    be the basis of the other reading. OWED TO THAT LANE, NOT SETTLED.
+ 2. Yu & Miller 2001/2002 and Miller & Smith 2006 PDFs remain
+    unretrieved. Their verbatim abstracts were recovered and rule out
+    6/6 for all three, so this is no longer the largest risk. What
+    survives is that their C cell is UNKNOWN: two independent probe
+    variants disagreed on whether Yu & Miller 2001 contrasts a neutral
+    against a non-neutral representation.
+ 3. Whether HC-T01's accessibility signal survives partialling out
+    current fitness. UNKNOWN and freely answerable.
+ 4. Whether the HC-T01 history effect scales with operator count within
+    the treated arm. UNKNOWN and freely answerable.
+ 5. Wagner 2023 Eq.1 was read from a glyph-mangled PDF extraction; the
+    MEANING is verified against the plain-words gloss at Eq.3, but the
+    symbols were reconstructed. Confidence MEDIUM-HIGH, not HIGH.
+ 6. Cell assignments for the delegated evolutionary-computation cluster
+    carry the sub-searches' judgement. All 40 load-bearing quotes were
+    verified verbatim, but for those rows the A-F assignment was not
+    independently re-derived from a second methods reading. The three
+    headline papers (Misevic, Kumawat, Rutten) WERE read directly.
+
+--------------------------------------------------------------------------------
+15. DECISION LADDER
+--------------------------------------------------------------------------------
+HC_T01_HISTORICALLY_REDUNDANT ................. FALSE, NARROWLY
+   No single work has all six. But it is one cell from redundancy and
+   the union of two published papers covers it.
+HC_T01_JUSTIFICATION_OBSOLETE .................. TRUE
+   Twice over. The original missing-cell claim is withdrawn, and the
+   replacement rigour-cell claim was itself written against a
+   mis-drawn population that excluded Avida.
+HC_T01_RESIDUAL_CELL_REAL ...................... TRUE, ONE CELL WIDE
+   A clean operator on/off AND a within-run quantified acquisition link
+   in ONE experiment. Misevic has the first, Kumawat the second.
+HC_T01_RESIDUAL_CELL_ALREADY_PUBLISHED ......... NO, AS AN INTERSECTION
+   YES as a union. Each half is published, replicated and peer reviewed.
+HC_T01_READY_TO_RUN_NOW ........................ FALSE
+   It already ran. The acquisition half is not reachable in this
+   substrate: the outcome is ceiling-bounded and the target is fixed.
+KOUVARIS_RECONSTRUCTION_USEFUL ................. MARGINAL
+KOUVARIS_RECONSTRUCTION_REQUIRED_FIRST ......... NO
+MORE_ARCHAEOLOGY_REQUIRED ...................... NO, DOWNGRADED
+   This started the pass as YES. The GP Bibliography sweep closed the
+   scientific risk on all three flagged papers by recovering their
+   verbatim abstracts, and established a quantified corpus-wide null.
+   What remains is one browser click (rdcu.be/dgo9d) and three PDFs
+   whose abstracts already rule out 6/6. A further search pass would
+   not change any cell.
+DETECTOR_CALIBRATION_REQUIRED .................. NO -- ALREADY DONE
+   HC-T01's V1/V2/V4/V6 recovered Toussaint's own published values in
+   the substrate where the detector is used.
+CAUSAL_CLAIM_IDENTIFIABLE_AS_CURRENTLY_DESIGNED  FALSE
+   No mediation, no precedence test, and the ablated arm lacks the
+   machinery class.
+MECHANICAL_EFFECT_NULL_REQUIRED ................ YES, BUT NOT THE
+   GENERATION-ZERO FORM. That form measured identically 0.00000 here.
+   Use a reciprocal transplant on evolved genomes instead (SM-09).
+FAMILY_WIDE_COUPLING_HAZARD_CONFIRMED .......... TRUE
+   Plus two further hazards named here: ceiling-bounded outcomes (H-2)
+   and machinery presence (H-3).
+
+--------------------------------------------------------------------------------
+16. ONE RECOMMENDED NEXT ACTION
+--------------------------------------------------------------------------------
+RUN_A_SMALLER_CALIBRATION_FIRST
+
+Concretely: two re-analyses of ALREADY-COMMITTED HC-T01 rows. Zero new
+compute. derived/grid/ holds 120 per-run CSVs (30 seeds x 2 alpha x 2
+beta), columns declared in derived/analyze.py, including best (fitness),
+md_on (accessibility), nops (operator count) per generation.
+
+RA-1  RE-SCORE K7 AS A PARTIAL CORRELATION. Residualise subsequent gain
+      on current fitness, then test whether accessibility explains the
+      residual; and report it as a TIME SERIES of cross-run
+      correlations in the Elena & Sanjuan shape rather than at one
+      checkpoint. HC-T01 reported marginal Spearman only.
+RA-2  TEST THE MACHINERY-PRESENCE CONFOUND WITHIN THE TREATED ARM.
+      beta=0 runs are pinned at nops=0, but beta=0.1 runs vary. Ask
+      whether the accessibility difference scales with operator count
+      and whether the history effect survives conditioning on it.
+
+DECISION RULE, FIXED BEFORE THE RE-ANALYSIS:
+  If RA-1 shows accessibility explains residual gain beyond current
+  fitness -- the K7 kill was a statistical artifact, HC-T01's verdict
+  upgrades from WEAK_SIGNAL_ONLY, and a rewritten successor is
+  justified.
+  If RA-1 shows no partial signal -- accessibility genuinely adds
+  nothing here, and HC-T01's line should be ABANDONED in the Toussaint
+  substrate rather than rewritten.
+  If RA-2 shows the effect is monotone in operator count -- the
+  machinery-presence reading is confirmed and CP-REPRESENTATION-REWRITE
+  should be downgraded.
+
+WHY THIS AND NOT THE ALTERNATIVES. Deciding to abandon or to rewrite
+before running a FREE analysis that could flip the kill condition would
+be deciding on a statistic we already know was the wrong one. And
+RUN_HC_T01_NOW is moot, REWRITE_AND_RUN is premature until RA-1 reports,
+RECONSTRUCT_KOUVARIS_FIRST calibrates the wrong instrument, and
+MORE_ARCHAEOLOGY_FIRST is now bounded to three access-blocked items that
+a search pass cannot fix.
+
+IF A SUCCESSOR IS EVER BUILT, THIS PASS ALREADY SPECIFIES IT: Misevic's
+instruction-set ablation (so both arms keep the machinery class) plus
+Kumawat's cyclic environment and lineage-lag outcome (so the outcome is
+not ceiling-bounded) plus Kumawat's reciprocal transplant (so the F null
+does not go vacuous). That is a different experiment in a different
+substrate, and it should not be called HC-T01.
+
+--------------------------------------------------------------------------------
+17. ARTIFACT PATHS
+--------------------------------------------------------------------------------
+roles/Lexis/archaeology/hct01_prior_art_2026-09-03/
+  PROMPT_LEXIS_HCT01_PRIOR_ART_2026-09-03.txt   the directive, verbatim
+  SUBPROMPT_EC_ALIFE_PRIOR_ART_HUNT.txt         delegated prompt 1
+  SUBPROMPT_ARCHAEOLOGY_GAP_CLOSING.txt         delegated prompt 2
+  L_LITERATURE_SCORECARD.jsonl        22 works x A-F sub-cells + quotes
+  L_PRIMARY_CLAIMS.jsonl              20 verbatim claims with tiers
+  L_CONTRADICTIONS.jsonl               6 conflicts, incl. 1 unresolved
+  L_CORRECTIONS.jsonl                  9 corrections
+  L_ARCHAEOLOGY_GAPS.jsonl            15 gaps, closures and open items
+  L_CANDIDATE_PRIOR_ART.jsonl          9 screened candidates
+  L_STEALABLE_METHODS.jsonl           12 demonstrated design elements
+  L_PROMPT_PROVENANCE.jsonl            3 prompts with sha256
+  CAUSALITY_AUDIT.md                  hazards H-1/H-2/H-3, RA-1/RA-2
+  KOUVARIS_RECONSTRUCTION_ASSESSMENT.md
+  LEXIS_HCT01_EXTERNAL_REVIEW_PACKET.txt        this file
+  recovered/    ~80 files, hashed
+  work/         55 EC/ALife PDFs, extracted text, the verification log
+                and the full GP Bibliography primary artifact
+
+Read alongside: herakles/specimens/spec-toussaint-exploration/ (HC-T01
+itself, its correction notice and its committed rows);
+herakles/HERAKLES_HISTORICAL_COLLIDER_V0/HCL01_* (the neutral-network
+lane); ergon/kouvaris2017/ (the Kouvaris forensics);
+elenchus/kashtan-alon-mvg/ (the Parter/Kashtan-Alon deep dive).
+
+--------------------------------------------------------------------------------
+18. REPRODUCTION
+--------------------------------------------------------------------------------
+  Verify the directive hash:
+    cd roles/Lexis/archaeology/hct01_prior_art_2026-09-03
+    python - <<'PYEOF'
+    import hashlib
+    fn = 'PROMPT_LEXIS_HCT01_PRIOR_ART_2026-09-03.txt'
+    b = open(fn, 'rb').read()
+    m = b'---8<--- BODY ---8<---' + bytes([10])
+    print(hashlib.sha256(b[b.index(m) + len(m):]).hexdigest())
+    PYEOF
+
+  Recompute the HC-T01 noise floor (section 8b):
+    group derived/noise3_*.csv by gen, take the SD of md_on across
+    repeats, confirming one distinct genotype per group. Columns are
+    declared at the top of derived/analyze.py.
+
+  Confirm the composition is unoccupied:
+    python - <<'EOF'
+    import json
+    rows = [json.loads(l) for l in
+            open('L_LITERATURE_SCORECARD.jsonl', encoding='utf-8')]
+    SIX = ('A_LOCAL', 'B_WITHIN_RUN', 'C_MECHANISM',
+           'D_WITHIN_RUN', 'E_REPLICATION', 'F_MECHANICAL_NULL')
+    print([r['work'][:40] for r in rows
+           if all(r.get(k) == 'YES' for k in SIX)])
+    EOF
+    -> []
+
+  Verify Cowperthwaite (section 7c): Fig 6 caption of
+    recovered/cowperthwaite2008_ascent.pdf
+  Verify Wagner's limiting sentence (CO-01): Methods of
+    recovered/wagner2023_EE_mutations.pdf
+  All artifact hashes: sha256sum recovered/* work/*.pdf
+
+--------------------------------------------------------------------------------
+19. LIMITATIONS AND CONFLICTS OF INTEREST
+--------------------------------------------------------------------------------
+ - CONFLICT DECLARED. I wrote the Kouvaris forensics whose
+   characterisation of Petak 2025 I am correcting here (CO-04), and my
+   own earlier error propagated into another seat's correction notice.
+   A reviewer should weigh section 9 before section 7.
+ - This pass DOWNGRADES the programme's position twice and upgrades it
+   nowhere. That is the direction the evidence ran, not a posture.
+ - I did not run HC-T01, the Kouvaris reconstruction, RA-1 or RA-2. All
+   are specified and none is executed, per the stop conditions.
+ - Delegated work: the enumeration and first-pass screening of the
+   evolutionary-computation cluster and of the archaeology gaps were
+   done by subagents. All 40 load-bearing quotes were verified verbatim
+   against retrieved documents, but for the non-headline rows the A-F
+   cell assignments carry the sub-searches' judgement rather than a
+   second independent methods reading. The three works that carry the
+   conclusion were read directly.
+ - THREE INSTRUMENT FAILURES OCCURRED IN THIS PASS AND ALL THREE
+   INITIALLY LOOKED LIKE FINDINGS: a shell harness whose grep produced
+   no output and so scored every check ABSENT, briefly read as evidence
+   of fabricated quotes; two-column pdftotext interleaving producing
+   false negatives on running sentences; and a corpus sweep returning
+   zero triple-hits with the A probe firing on 0 of 12,860 abstracts.
+   Each was caught and repaired before entering a conclusion, and the
+   corpus null was accepted only after the rebuilt probe was validated
+   against a known positive. Recorded as CO-09 because the programme's
+   standing rule is that a detector which fails is a claim about the
+   detector until resolved, and this session produced three instances.
+ - The largest surviving weakness is now narrower than it was: the C
+   cell for Yu & Miller 2001 is UNKNOWN, because two probe variants
+   disagreed on whether it contrasts representations.
+ - One lane disagreement is left open rather than settled (section 14
+   item 1). I could have picked a reading; I did not, because the
+   evidence I hold does not decide it.
+ - No Prometheus-native metric was invented. The A-F vocabulary is the
+   directive's own; H-1, H-2 and H-3 are named hazards, not scores.
+================================================================================
+END OF PACKET
+================================================================================

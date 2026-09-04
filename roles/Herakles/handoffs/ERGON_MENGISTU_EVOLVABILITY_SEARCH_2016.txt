@@ -1,0 +1,163 @@
+================================================================================
+HERAKLES -> ERGON DEEP-DIVE BRIEF 2 of 3
+ERGON_MENGISTU_EVOLVABILITY_SEARCH_2016
+
+Issued by Herakles, 2026-09-03, under James's ruling
+roles/Herakles/prompts/RULING_V0_CONTINUE_HYPOTHESIS_DAMAGED_2026-09-03.txt
+sha256 31816dc2bb7c40c7a5252e164a7fdcb228509388927459279d45ca18fa10811a
+authorisation 3.
+
+Ergon owns execution. Herakles owns the registries this feeds.
+================================================================================
+
+TARGET
+
+Mengistu, Lehman & Clune (2016), "Evolvability Search: Directly Selecting for
+Evolvability in order to Study and Produce It", GECCO 2016, pp.141-148.
+Proceedings PDF:
+http://www.cmap.polytechnique.fr/~nikolaus.hansen/proceedings/2016/GECCO/proceedings/p141.pdf
+DOI 10.1145/2908812.2908838
+
+ANTECEDENTS, which are part of the target and NOT optional:
+  - Lehman & Stanley (2013), "Evolvability is inevitable", PLoS ONE 8(4):e62186
+  - Lehman & Stanley (2011), IEEE CEC pp.2693-2700 (novelty search and
+    self-adaptation)
+  - Lehman & Miikkulainen (2015), extinction events, GECCO pp.951-958
+  - Velez & Clune (2014), GECCO
+  - Reisinger & Miikkulainen (2006), "Selecting for evolvable representations",
+    GECCO
+The 2016 measure is INHERITED, not invented. The anchor date for this
+instrument is 2011 or earlier, and establishing the true earliest instance is
+part of the job.
+
+WHY THIS MATTERS TO PROMETHEUS -- TWO USES, AND THE SECOND IS THE IMPORTANT ONE
+
+USE 1, historical detector. This is the closest thing the field has to the
+instrument Herakles was about to invent. It goes into
+Q_DETECTOR_PARTS_REGISTRY.md as det-part-02.
+
+USE 2, POSITIVE CONTROL. This is the ruling's sharpest instrument-design
+observation and the reason this brief exists:
+
+    They directly reward evolvability. We don't ultimately want to. We want
+    worlds in which evolvability becomes advantageous because it produces
+    downstream consequences, without EVOLVABILITY_SCORE appearing in the world
+    physics.
+
+That makes the 2016 design a manufacturable positive control. The three-step
+programme it enables, which eventually belongs to Daedalus:
+
+    1. Build a treatment where evolvability is deliberately rewarded,
+       reproducing something of the 2016 shape.
+    2. Verify Prometheus instruments DETECT the machinery that arises. A
+       detector that misses it under direct reward is broken and must be fixed
+       or killed before anything subtler is attempted.
+    3. Remove the direct reward and ask whether comparable machinery arises
+       endogenously.
+
+Step 2 is a stronger calibration than any particle currently in
+H_CALIBRATION_PARTICLES.md, because the phenomenon is produced on demand
+rather than hoped for.
+
+WHAT IS ALREADY ESTABLISHED (verify and extend, do not re-derive)
+
+Confirmed 3-0 from the proceedings PDF:
+  - The fitness function IS the evolvability estimate. 200 offspring are
+    generated per individual, evaluated, then DISCARDED; evolvability is the
+    count of behaviourally distinct offspring above a distance threshold of
+    0.01.
+  - Transfer test: the most evolvable organism from each run is moved WITHOUT
+    FURTHER EVOLUTION into an unseen 450x450 "mega maze"; 200 offspring are
+    generated; the endpoint is the percentage of a 450x450 grid visited at
+    least once by any transferred offspring. Evolvability Search beats Novelty
+    Search and objective-based search at p<0.001.
+  - Scale: maze treatment population 250, 1000 generations, 50 runs,
+    evolvability of Novelty/objective populations tracked every 100
+    generations; biped population 500, 2000 generations, tracked every 200.
+  - The authors hedge: the measure "captures some aspect of generalizable
+    evolvability".
+
+Limits already logged by verifiers, which this deep-dive must sharpen:
+  - It is a SCALAR summary (count at a threshold), not the full distribution of
+    mutational effects.
+  - It measures reachable-region SIZE at a point, i.e. a snapshot, rather than
+    change between two points -- though Fig 4b tracks it over time across
+    treatments.
+  - The mega-maze metric is a UNION over 200 offspring, so a single
+    far-wandering offspring inflates coverage.
+  - Offspring are ONE mutation step only.
+
+WHAT THE DEEP-DIVE MUST PRODUCE
+
+1. THE EXACT COMPUTATION. Write down the estimator precisely: the mutation
+   distribution used to generate offspring, the behavioural characterisation,
+   the distance metric, the threshold and its sensitivity, whether the count is
+   of distinct behaviours or of occupied bins, and how ties and duplicates are
+   handled. Enough that it can be reimplemented without the paper.
+
+2. THE ESTIMATOR'S STATISTICAL PROPERTIES. 200 offspring is a sample. What is
+   the sampling error of the count? How does the estimate scale with the number
+   of offspring, and where does it saturate? Is the threshold of 0.01 doing
+   most of the work? A threshold-count estimator can be dominated by its
+   threshold, and if so that is a defect Prometheus must not inherit silently.
+   Where the paper does not answer this, say so and state what would.
+
+3. WHAT IT DETECTS AND WHAT IT FAILS TO DETECT. Be concrete and adversarial.
+   Construct or describe a case where two organisms have identical scores but
+   materially different mutational-effect distributions. Construct a case where
+   the union-over-offspring coverage metric is misleading. These become the
+   "cannot see" clause of the registry entry, which is mandatory.
+
+4. THE UNION-METRIC PROBLEM, QUANTIFIED. Determine whether the transfer result
+   survives a metric that is not a union -- for example median per-offspring
+   coverage, or coverage by the offspring cloud minus its single largest
+   contributor. If the paper does not report this, state it as an open
+   vulnerability of the headline claim rather than asserting the claim fails.
+
+5. THE ANTECEDENT TRACE. Establish the genuine earliest instance of
+   offspring-neighbourhood measurement in this lineage. Read Lehman & Stanley
+   2013 (which ENUMERATES reachable genomes rather than sampling them, and is
+   therefore a different and exact instrument -- det-part-03) and Reisinger &
+   Miikkulainen 2006. Push back before 2006 if the trail continues. Report the
+   earliest instance you can source, with its locator.
+
+6. D-LEVELS. Assign a D-level (defined in Q_DETECTOR_PARTS_REGISTRY.md) to the
+   2016 paper and to every antecedent, distinguishing what the measure COULD
+   support from what the source ACTUALLY REPORTS. Where those differ, say both.
+   Pay attention to whether any of them is longitudinal per LINEAGE as opposed
+   to per TREATMENT -- that distinction is where the seat's residual hypothesis
+   now lives, and it should be attacked, not protected.
+
+7. THE POSITIVE-CONTROL SPECIFICATION. Draft the minimal specification for
+   step 1 of the three-step programme: the smallest world in which evolvability
+   can be directly rewarded and the resulting machinery is recognisable. State
+   what "the machinery" would look like concretely, so step 2 has a target.
+   Design only. Do not run it.
+
+8. THE ENDOGENOUS QUESTION. State precisely what would distinguish
+   "evolvability machinery arose because it was rewarded" from "evolvability
+   machinery arose because of downstream consequences". If you cannot state a
+   discriminating observation, say so -- that would be a serious problem for
+   step 3 and better discovered now than after the compute is spent.
+
+EVIDENCE DISCIPLINE
+
+  - Primary sources only; every claim carries a locator.
+  - Mark background-knowledge claims UNVERIFIED.
+  - Where tempted to assert, write CLAIM_REQUIRES: <test or source>.
+  - This literature is ACTIVE. Any "nobody has done X" statement carries a date
+    stamp, because such claims decay continuously. Check at least: Gajewski et
+    al. Evolvability ES (GECCO 2019), Doncieux et al. (GECCO 2020), and recent
+    divergent-search work.
+
+HARD GATE
+
+No evolutionary compute under this brief. Ruling authorisation 5. Specifying
+the positive control is in scope; running it is not.
+
+DELIVERABLE
+
+A document in Ergon's tree, plus rows for det-part-02 and det-part-03 in
+Q_DETECTOR_PARTS_REGISTRY.md, and a positive-control specification addressed to
+Daedalus. Herakles merges the registry rows; Ergon owns the analysis.
+================================================================================

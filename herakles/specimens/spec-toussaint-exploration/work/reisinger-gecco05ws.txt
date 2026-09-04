@@ -1,0 +1,1030 @@
+Towards an Empirical Measure of Evolvability
+
+Joseph Reisinger
+joeraii@cs.utexas.edu
+
+Kenneth O. Stanley
+kstanley@cs.utexas.edu
+
+Risto Miikkulainen
+risto@cs.utexas.edu
+
+Dept. of Computer Sciences
+University of Texas at Austin
+1 University Station, C0500
+Austin TX, 78712-0233
+
+ABSTRACT
+Genetic representations that do not employ a one-to-one
+mapping of genotype to phenotype are known as indirect
+encodings, and can be much more eﬃcient than direct en-
+codings for complex problems. Increasing a representation’s
+capacity to facilitate eﬀective search, i.e. its evolvability, has
+long been a goal of Evolutionary Computation. However,
+currently no benchmarks exist to measure evolvability. One
+reason is that it is diﬃcult to decouple a representation’s
+capacity to evolve under any ﬁtness function, i.e. the la-
+tent evolvability, and its performance on a speciﬁc bench-
+mark. Towards this goal, a method is proposed in this paper
+that measures the representation’s ability to extract invari-
+ant properties from a changing ﬁtness function. The test
+is applied to three distinct representations and it is able to
+distinguish all three. Ultimately, this test can serve as the
+foundation for performing controlled experiments determin-
+ing what factors contribute to evolvability.
+
+Categories and Subject Descriptors
+G.1.6 [Optimization]: Global Optimization; I.2.8 [Artiﬁcial
+Intelligence]: Problem Solving, Control Methods, and Search
+
+General Terms
+experimentation, measurement, performance
+Keywords
+genetic algorithms, evolvability, representations, indirect en-
+codings, genetic regulatory networks, development
+
+1.
+
+INTRODUCTION
+
+Evolvability is the genome’s ability to adaptively organize
+how mutations aﬀect the phenotype, through a many-to-one
+genotype-phenotype mapping [6, 17, 21]. This kind of adap-
+tation arises through the interactions between the genetic
+operators and the genetic representation (i.e. the genotype-
+phenotypic map). Although it is generally believed that
+improving the evolvability of artiﬁcial evolutionary systems
+
+Permission to make digital or hard copies of all or part of this work for
+personal or classroom use is granted without fee provided that copies are
+not made or distributed for proﬁt or commercial advantage and that copies
+bear this notice and the full citation on the ﬁrst page. To copy otherwise, to
+republish, to post on servers or to redistribute to lists, requires prior speciﬁc
+permission and/or a fee.
+GECCO’05, June 25–29, 2005, Washington, DC, USA.
+Copyright 2005 ACM 1-59593-097-3/05/0006 ...$5.00.
+
+would beneﬁt evolutionary computation (EC), to date no
+standardized test exists to measure it.
+
+Two primary reasons motivate an empirical measure of
+evolvability. First, such a test can determine whether or
+not representations exist that are evolvable across many ﬁt-
+ness functions. Second, such a test would make it easier to
+study what factors contribute to evolvability, which in turn
+will allow EC researchers to methodically construct repre-
+sentations more amenable to artiﬁcial evolution. Ultimately
+this may lead to a more fundamental understanding of why
+indirect encodings seem to be more evolvable in general.
+
+Determining exactly what factors aﬀect evolvability is im-
+portant because artiﬁcial developmental systems that are
+based on biology (e.g. models with multiple cells, genetic
+regulatory networks, etc.) are computationally expensive,
+and it is therefore important to ﬁnd the most tractable rep-
+resentation with high evolvability. Such models may provide
+valuable insight into more complex systems [6]. This paper
+takes a ﬁrst step in this direction, focusing on relatively sim-
+ple genotype-phenotype mappings.
+
+Unfortunately, directly measuring evolvability is diﬃcult
+
+for several reasons:
+
+1. Evolvability in natural evolution is the capacity for an
+adaptive response to a dynamic environment (ﬁtness
+function)[8], however in artiﬁcial evolution, the ﬁtness
+function is in many cases static, so there is little selec-
+tion pressure for “evolvability” in the biological sense.
+
+2. It is possible to overlook the eﬀects of convergence in
+a trained population. A population with training on
+a certain domain may have acquired some evolvabil-
+ity with respect to that domain, but may be more
+converged than a randomly initialized population, and
+thus may perform less eﬃciently. This is also inﬂu-
+enced by the location of the population in the genetic
+space, with respect to the target function.
+
+3. Finally, it is easy to confuse search performance and
+evolvability. For example, a particular encoding may
+solve a simple problem more eﬃciently, but not exhibit
+any traits associated with evolvability. Moreover, the
+traits that facilitate eﬀective long-term evolution may
+not directly beneﬁt evolution in the short-term.
+
+This paper describes a principled method to address these
+diﬃculties and establish a direct test for a representation’s
+contribution to evolvability (disregarding genetic operators
+as a source of evolvability). The evolvability of a particular
+representation acquired during the course of evolution can
+
+be measured as the degree to which the representation en-
+ables evolution to identify and exploit underlying factors in-
+herent in the ﬁtness function, for example fundamental sym-
+metries or modular structures. This measure can be used to
+augment more theoretical analysis, for example through an-
+alyzing representations that induce neutral networks [4].
+
+This paper is organized into four main sections: a descrip-
+tion of natural and artiﬁcial evolvability, the evolvability
+measure, the representations tested, and the results.
+
+2. EVOLVABILITY
+
+Evolvability has been deﬁned several ways, e.g. the “abil-
+ity to respond to a selective challenge” [8], the “ability of
+random variations to sometimes produce improvement” [21],
+etc. Evolvability can be intuitively understood as adaptive
+organization of the genotype-phenotype mapping such that
+the search operators produce more favorable phenotypes (i.e.
+choose a mapping with local neighborhoods around good so-
+lutions that are amenable to search). In this sense, evolv-
+ability is an aspect of the representation (genotype to phe-
+notype mapping) and the search algorithm employed. Al-
+though the phrase “evolvable representation” is commonly
+used in EC literature, representations generally only have a
+capacity to become evolvable: evolvability emerges over the
+course of evolution with a speciﬁc ﬁtness function, and is
+deﬁned within the terms of that function. Therefore, in this
+paper the term latent evolvability will be used to describe the
+representation’s underlying capacity for becoming evolvable,
+and acquired evolvability will be used to refer to its evolvabil-
+ity learned in response to a particular ﬁtness function. The
+test deﬁned in this paper will measure acquired evolvability,
+and use that as a proxy for latent evolvability.
+
+The general concept of evolvability applies to both natural
+evolution and in artiﬁcial evolution; however latent evolv-
+ability is not important in nature: sudden shifts in the en-
+vironment factors occur, but the genome is not restarted
+with a random conﬁguration with no acquired evolvability.
+Also in nature, evolvability can be selected for directly, since
+more evolvable representations are better able to survive in
+the long-term (the environment is not static); genomes that
+are able to react to changing environments quickly (i.e. have
+high acquired evolvability) are more likely to survive. How-
+ever, in artiﬁcial evolution, less selection pressure exists to
+generate “evolvable” phenotypes because a single “perfect”
+phenotype usually exists: outside of coevolution or incre-
+mental evolution [7], the ﬁtness function is generally not
+adaptive. If the ﬁtness function is static, there is little need
+for evolvability, since any solution with high ﬁtness, even
+one with low evolvability, is likely to survive. Thus if a
+representation will be ultimately used in a domain with a
+static ﬁtness function, it is more important to increase latent
+evolvability, since no evolvability will be acquired during
+evolution. Determining how to measure latent evolvability,
+and what representations exhibit a high latent evolvability
+will be a theme for future work.
+
+From studies of biological organisms it is clear that many
+
+factors aﬀect evolvability, including:
+
+• modularity: the organization of genotypic and pheno-
+
+typic features into reusable components [11, 13].
+
+• duplication and divergence: structure A is duplicated
+yielding structure B, then B is free to change function
+without resulting in a loss of A [13].
+
+• canalization: organizing the eﬀects of mutations such
+that some features become more resistant to change
+[19, 20].
+
+• developmental constraints: constraining phenotypic vari-
+ation against the appearance of less ﬁt individuals [12].
+
+• hidden genetic variation: the developmental system
+builds up phenotype-neutral mutations that can be ex-
+pressed en masse with a certain selection pressure [9].
+
+Whether or not these factors are products of selection for
+evolvability or necessary preconditions for it is not yet well
+understood. However, even simple developmental encodings
+such as GRNs and RNA folding can exhibit these features
+(see [2] for generic canalization in GRNs, and [6] for a gen-
+eral overview in the RNA folding case). Thus the contribu-
+tion to evolvability of these factors can be measured without
+modeling a full developmental system.
+
+3. MEASURING EVOLVABILITY
+
+One way to measure evolvability in artiﬁcial evolution is
+to compare the performance of several representations on
+a standard benchmark test. However, such a test would
+confuse the eﬀects of the representations’ latent evolvabil-
+ity and their performance on the given task. Such a test
+is ﬁne comparing the eﬀectiveness as an optimization algo-
+rithm, but does not give an accurate measure of the relative
+evolvability of each representation.
+
+Instead, acquired evolvability can be empirically measured
+as the representation’s ability to retain and generalize infor-
+mation learned about a changing domain. Speciﬁcally, by
+varying the amount of information provided during a train-
+ing period (i.e. training on an adaptive ﬁtness function) and
+measuring the resulting change in eﬃciency during a test
+phase, evolvability can be determined. If the representation
+exhibits a large diﬀerence in eﬃciency between cases where
+little information is provided, and cases where information
+about the underlying problem is plentiful, then the repre-
+sentation can be said to have acquired evolvability for the
+domain. Conversely, no change would indicate that the rep-
+resentation does not make use of the information provided.
+This test separates evolvability from benchmark perfor-
+mance and furthermore from the eﬀects of genetic variance
+(by comparing only trained populations). Separating perfor-
+mance and genetic variance is necessary because direct en-
+codings can perform well on some tasks, even on re-evolution,
+although they exhibit no evolvability. In other words, this
+separation allows systematic study of what is good for evolu-
+tion in the long-term (evolvability), instead of the short-term
+(ﬁnding the optimal solution).
+
+Since acquired evolvability is being measured in a manner
+uncoupled from the performance on a particular benchmark,
+it is important to ask what it means to have high evolv-
+ability, but to perform relatively poorly at a certain task?
+Certainly if the representation were poor for many tasks, it
+might not be particularly useful in general. However, repre-
+sentations with high evolvability should perform better, on
+average, on problems with adaptive ﬁtness functions, such
+as those found in coevolution or incremental evolution, since
+adaptability is more directly rewarded. Ultimately, the goal
+of this line of work is to develop an encoding that has both
+high evolvability and is eﬃcient in solving many tasks, but
+since performance is the best understood of the two goals,
+
+Figure 1: Calculating speciﬁc symmetry. The ﬁt-
+ness function is composed of the target function
+concatenated with its mirror image (in order to en-
+sure bilateral symmetry). The candidate solution is
+rewarded for characters matching the ﬁtness func-
+tion, but only when the character that is bilaterally-
+symmetric also matches.
+
+this paper emphasizes the eﬀort to raise evolvability, as op-
+posed to pure benchmark performance.
+
+The domain used to demonstrate the test procedure is bi-
+nary string symmetry. A distinction must be made between
+learning general symmetry of any target string that is sym-
+metric about the midpoint, and speciﬁc symmetry where
+one half of the target string is deﬁned explicitly, and this
+half is mirrored in order to complete the full target string.
+This distinction is important because the degree to which
+the representation learns general symmetry from instances
+of speciﬁc symmetry is taken as the measure for acquired
+evolvability. Fitness is calculated as the number of charac-
+ters in the phenotype that match both the target function
+and the character that is bilaterally-symmetric (ﬁgure 1).
+Phenotypic characters that only match the target function
+do not count towards ﬁtness, so that only matching symme-
+tries are rewarded.
+
+This domain was chosen for two reasons: ﬁrst, the ﬁt-
+ness calculation is computationally simple to perform, and
+second, there is a clear underlying structure to the prob-
+lem that does not change, even if the target is changed (i.e.
+target-independent bilateral symmetry). Thus, if the repre-
+sentation is capable, there is an opportunity for exploiting
+this invariance (general bilateral symmetry) in order to be-
+come more evolvable, and furthermore, no other opportuni-
+ties exist to do so.
+
+By varying how quickly the speciﬁc instances of bilateral
+symmetry change (the target drift rate), training sessions
+can be constructed that provide variable amounts of infor-
+mation about general symmetry. For example, a representa-
+tion trained on only a single instance of bilateral symmetry
+has no pressure to exploit general symmetry as a survival
+strategy. Therefore the representation might not exhibit ac-
+quired evolvability, even though it has the capacity for it.
+Conversely, if the target function is changed slowly, then
+there is a pressure for such learning. Since the optimal level
+of change for a given representation is not known ahead of
+time, several trials are run with the target drift rate varied
+between 0.0 to 0.5 (0-50% change per generation), i.e. rang-
+ing from static evaluation to evaluation on random noise.
+The idea that an adaptive target function may facilitate
+evolvability is due to Lipson et. al. [11].
+
+After the initial training period, the target function is
+completely randomized (maintaining bilateral symmetry),
+and the eﬃciency is measured by running for 100 genera-
+tions and then averaging the best ﬁtness of each trial at ev-
+ery epoch. This procedure ensures that the result is based
+
+• For each value of the target drift rate:
+
+– Evolve for a ﬁxed number of genera-
+tions (150), randomly changing the tar-
+get after each generation.
+
+– Reset to a new target function.
+
+– Evolve without changing the target
+function for a ﬁxed number of gener-
+ations (100).
+
+– Calculate the eﬃciency for this trial as
+the average of the best ﬁtness individ-
+ual over the last 100 generations.
+
+• Calculate the acquired evolvability as the
+variance of eﬃciency over all drift rates.
+
+Figure 2: Summary of the method employed to mea-
+sure acquired evolvability.
+
+not only on the quality of the ﬁnal solution reached, but
+also on how long it took the population to produce that so-
+lution. The number of training generations is set at 150,
+during which time the target function is allowed to change.
+In this paper, target drift rates ranging from 0 to 0.5 are
+tested in a total of nine trials: 0.0, 0.01, 0.05, 0.1, 0.15, 0.2,
+0.3, 0.4, and 0.5, in order to cover a full range of high- and
+low-information cases. See ﬁgure 2 for a summary.
+
+Finally, acquired evolvability can be identiﬁed qualita-
+tively from the shape of the average eﬃciency vs. target
+drift rate curve. The more pronounced the “bell-curve”
+shape, the higher the evolvability, since there is a signiﬁ-
+cant diﬀerence between the trials where information about
+general symmetry is provided (i.e. 1% - 10% drift), and trials
+where little or no information is provided (i.e. 0% drift, and
+50% drift). Conversely, a ﬂat line represents no evolvability,
+since both high-information and low-information cases pro-
+vide the same result. The “tails” of the bell-curve are ﬁxed
+at 0% (no information due to an unchanging ﬁtness func-
+tion) and 50% (no information due to the ﬁtness function
+changing too quickly). However, the location of the “peak”
+of the bell-curve depends on the representation, although in
+all three representations tested in this paper, the peak fell
+between 1% and 10% target drift. That the representation
+should be able to extract the most information from this case
+can be understood intuitively: the target is changing slowly
+enough for the population to adapt when it drifts, but fast
+enough to keep the population from converging on a speciﬁc
+target, providing information about general symmetry.
+
+Based on this qualitative analysis, acquired evolvability
+can be quantiﬁed as the variance of eﬃciency over all trials,
+
+E =
+
+X
+
+t
+
+(Xt − µ)2/N (t),
+
+where Xt is the eﬃciency of trial t, µ is the average over
+all the trials, and N (t) is the number of trials. High vari-
+ance corresponds to a steeper bell-curve and higher evolv-
+ability. Conversely, low variance corresponds to a ﬂat-line,
+or no diﬀerence in performance between low-information and
+high-information cases, thus little evolvability. By using this
+metric, representations can be assigned a numerical score for
+acquired evolvability and thus ranked empirically.
+
+Fitness:Target:Fitness Function:Candidate:Figure 3: The modiﬁed direct genetic representa-
+tion. Each gene consists of a phenotypic trait (P),
+and a linkage (L) and variance (V) parameter. In
+this example the ﬁrst two traits are linked very
+strongly and the second two traits are linked weakly.
+The addition of the linkage and variance parameters
+allows the genotype to encode information about
+general symmetry.
+
+4. CANDIDATE ENCODINGS
+
+Three encodings are tested using this method (for param-
+
+eters see appendix):
+
+1. A direct-encoding, where the genotype and phenotype
+
+are the same, represented by a binary string.
+
+2. A modiﬁed direct encoding, containing secondary pa-
+rameters aﬀecting how mutations should occur for each
+character, and at what rate.
+
+3. An encoding based on genetic regulatory networks,
+where the phenotype is read as the network state after
+a set number of iterations.
+
+These three encodings were chosen to cover as broad a
+range as possible, and in particular the modiﬁed direct en-
+coding is the simplest possible representation able to learn
+the underlying dynamics of the problem. It also serves as a
+basis for controlled testing of features found in natural devel-
+opmental systems (e.g. developmental variation and modu-
+larity). By distinguishing these encodings, the proposed test
+is shown to produce useful insights for future research.
+
+4.1 Direct
+
+The direct encoding tested in this paper consists of a bi-
+nary string representing both the genotype and phenotype.
+Standard point mutation (bit ﬂip) and one-point crossover
+are employed, and each phenotypic character has the same
+chance of being mutated. This encoding serves as a base-
+line to calibrate the test for evolvability. Any evolvability
+it exhibits must be strictly due to genetic variance inherent
+in the population, since the only other modiﬁable parame-
+ters are the phenotypic characters undergoing evolution. In
+other words, since the genotype is not extensible, there is no
+space to store information learned about the ﬁtness function
+in general; only speciﬁc instances can be stored.
+
+4.2 Modiﬁed Direct
+
+The modiﬁed direct encoding is similar to the direct en-
+coding, with the exception that each phenotypic trait also
+has a linkage and developmental variance parameter (ﬁgure
+3). The same evolutionary operators are used.
+
+The linkage parameter is a value from 0 to 1 which de-
+scribes how single mutations aﬀect multiple traits. If two
+traits have very similar linkage parameters, then they will
+most likely be mutated together (to the same value). The
+function used to determine this probability is
+
+E(‘1, ‘2) = e−T ∗(‘1−‘2)2
+
+,
+
+(1)
+
+where T is the tolerance parameter controlling what linkage
+distances are eﬀective, and ‘1 and ‘2 are the two linkage
+parameters being compared. This function is a Gaussian
+distribution with a maximum of 1.0 occurring when ‘1 = ‘2,
+i.e. when the two linkage parameters are equal.
+
+The linkage parameter allows the genetic representation
+to store knowledge it has gained of the ﬁtness function in
+a way that does not necessarily directly aﬀect ﬁtness. This
+type of parameter is known as a neutral trait [16], and can be
+considered a form of strategy parameter, commonly found in
+Evolutionary Strategies (ES) literature[15]. This neutrality
+is non-trivial, however, since although the linkage param-
+eters only aﬀect how future mutations are structured, the
+eﬀects of a linkage mutation will manifest over time as a
+ﬁtness change. In the case of learning speciﬁc symmetry, an
+optimal linkage pattern exists linking each phenotypic trait
+on the string to the corresponding trait on the second half
+that is bilaterally symmetry (i.e. general symmetry).
+
+The developmental variance parameter describes the trait’s
+propensity to be mis-expressed during ﬁtness evaluation.
+Each phenotypic trait has a probability of being mutated
+(ﬂipped) during development with a probability equal to
+the variance parameter. Combining developmental variance
+with multiple evaluations of a single genotype yields an av-
+erage of the local search space around the solution, biased
+by the linkage parameters. That is, if the linkage is bilater-
+ally symmetric, then only bilaterally symmetric variants will
+be included in the average. Tying linkage directly to ﬁtness
+is important for rewarding solutions that have learned the
+“correct” parameter linkage for the target problem.
+
+Two versions of the modiﬁed direct encoding were tested,
+one with developmental variance taking place as described
+above (the standard implementation), and a second with the
+eﬀects of developmental variance randomized. Thus the ef-
+fects both parameters have on evolvability can be measured
+independently; linkage by comparing the second version to
+direct, and variance by comparing both modiﬁed encodings.
+
+4.3 Genetic Regulatory Network
+
+The third encoding tested in this paper is based on a
+simple model of the processes inherent to genetic regulatory
+networks (GRNs), particularly those found in eukaryotes.
+GRN encodings are often used in EC research because they
+are considered to have high evolvability, which makes them
+a particularly interesting encoding to test.
+
+4.3.1 GRN Encodings
+
+Recent studies in EC highlight the use of GRN encodings,
+for example, the work of Eggenberger [5] and Bongard [3],
+as well as in theoretical biology, for example in the work of
+Hogeweg [10]. These methods are all multicellular, where
+the GRN state evolution over time describes cell division
+and diﬀerentiation. Since complex morphologies consisting
+of many cells can be computationally intensive to model,
+the implementation tested in this paper is limited to a single
+GRN, which corresponds to single-celled eukaryotes, such as
+yeast.
+
+Despite the relative simplicity of single GRN models, they
+have several features which make them important for study-
+ing evolvability. First, GRNs are capable of organizing as
+scale-free networks, i.e. a mix between random and hier-
+archical organizations [1]. Scale-free networks exhibit many
+properties that are important for evolvability, such as modu-
+
+VPLVPLVPLFigure 4: The GRN genetic representation. Each
+gene has a cis region and a transcription region, as
+well as an innovation number (not depicted). The
+GRN speciﬁed by this genome is shown in ﬁgure 5.
+
+Figure 5: The resulting network from the genome
+shown in ﬁgure 4. Arrows represent promotion, and
+the ﬂat connection between product 1 and 2 is in-
+hibitory. A and B are environmental tfs, i.e. they
+determine the state of the phenotype but do not
+perform any regulatory function like 1 and 2. GRN
+representations are able to represent complex net-
+works of interactions compactly.
+
+larity and robustness against failure due to single mutations.
+Second, GRNs inherently support the “duplication and di-
+vergence” scheme whereby a gene is ﬁrst duplicated, and the
+copy then begins to develop some new function, and slowly
+diverges from the original [22]. This phenomenon allows
+new function to develop while still preserving the old regu-
+latory structures. Duplication and divergence is implicated
+as a source of modularity, which is necessary for evolvability
+[14]. Finally, complex network models in general have been
+shown to exhibit canalization [2].
+4.3.2 Implementation
+
+In this paper, a GRN consists of a concentration of tran-
+scription factors (tfs) in some arbitrary substrate, and a set
+of fuzzy if-then rules for reading the current state and al-
+tering the production of one or more tfs. These rules are
+encoded directly into the genome itself. A single gene con-
+sists of a cis-regulatory (cis) region paired with a list of
+transcription factors (ﬁgure 4). The cis region contains the
+precondition for producing the proteins speciﬁed in the tf
+list. It is composed of promoter sites, which facilitate pro-
+tein transcription, and inhibitor binding sites, which inhibit
+production. Proteins in the environment bind to these sites
+and aﬀect the production of the tfs speciﬁed in the tf list.
+The transcription factors produced can either be environ-
+mental or regulatory. Environmental tfs correspond to the
+“outputs” of the GRN (and thus have a set number, one
+per phenotypic character). At each time-step during the
+simulation their concentrations are read and stored as en-
+tries in the output vector. The regulatory tfs bind back to
+the cis region to determine the current state of the network.
+New regulatory tfs can arise through mutation, however the
+number of environmental tfs is ﬁxed.
+
+A key feature of biological GRNs is the degree to which
+promoter binding is “fuzzy.” That is, an entire family of
+similar proteins are capable of binding to a speciﬁc promoter
+site, allowing complex GRNs to form with a compact spec-
+
+• Set all tf concentrations to a random value
+
+between 0 and 1, initially.
+
+• Set all production rates to 0.0, initially.
+
+• For a ﬁxed number of steps:
+
+– For each gene, calculate the production
+rate based on the concentrations of the
+proteins binding at each promoter and
+inhibitor site (eqn. 2).
+
+– For each tf in each gene, increase or de-
+crease that tf’s concentration based on
+the production rate (eqn. 3). Clamp
+the concentration [0, 1].
+
+– Decay the tf concentrations by a con-
+
+stant factor.
+
+• Record the absolute concentrations of the
+
+environmental tfs.
+
+Figure 6: GRN activation method.
+
+iﬁcation. This fuzziness is captured in the artiﬁcial GRN
+encoding as binding eﬃcacy, which depends on how com-
+patible the two proteins are.
+
+Initially the environment contains a set concentration of
+tfs (random). When a tf in the environment matches (within
+some tolerance level based on the binding eﬃcacy) either
+a promoter or an inhibitor region, it binds to that region
+and aﬀects the production rate of the transcription factors
+encoded in that gene (ﬁgure 5). The production rate is
+calculated in two steps. First, the promoter eﬃcacy of a
+single gene is calculated by
+X
+
+X
+
+sign(c) ∗ concentration(v) ∗ E(c, v),
+
+P (G) =
+
+(2)
+
+c∈C
+
+v∈V
+
+where C is the set of all binding sites in the cis region of gene
+G, V is the set of all regulatory tfs in the environment, and
+E is the binding eﬃcacy, given in equation 1. Then the tfs
+speciﬁed by that gene are added to the environment, with
+concentrations given by
+
+∆concentration(v) = P (G)/length(C).
+
+(3)
+
+The newly produced proteins are added to the existing en-
+vironmental concentrations. This cycle continues for a pre-
+deﬁned number of iterations, at the end of which the envi-
+ronmental tfs are arranged in order and the phenotype is
+read as the concentrations thresholded {0, 1} (ﬁgure 6).
+
+The GRN encoding uses the NeuroEvolution of Augment-
+ing Topologies (NEAT) method for performing crossover on
+variable length genomes [18]. Initially each genome contains
+40 genes (one for each environmental tf), but new genes can
+arise through mutation. Each gene consists of a cis region,
+transcription region, and a unique innovation number. In-
+novation numbers record when new regulatory structure, i.e.
+a new character in a cis or regulatory region, or a new gene,
+is introduced to a genome. During crossover, the innovation
+numbers are lined up so that similar coding regions can be
+crossed over correctly, regardless of the amount of genotypic
+complexiﬁcation (i.e. artiﬁcial synapsis is performed).
+
+4.3.3 Variants
+
+In addition to the standard implementation, three vari-
+
+ants of the GRN encoding are compared:
+
+A1Bcistranscription−12122AB11. A variant with the tolerance parameter set to one half
+of the baseline value. The tolerance parameter controls
+how similar a tf must be to a promoter/inhibitor site in
+order to bind to it. A decrease in tolerance means more
+proteins are compatible with more sites, and thus the
+overall network connectivity increases. If the tolerance
+value is set too low the network will become noisy and
+unable to perform meaningful computation. On the
+other hand if the tolerance value is set too high, then
+few interactions will take place.
+
+2. A variant with initially two regulators in each cis re-
+gion instead of one. Increasing the size of the cis re-
+gion has a similar eﬀect to decreasing the tolerance
+(increase connectivity), however since the cis region
+is under genetic control, the connectivity can be ﬁne
+tuned. The main cost is a two-fold increase in the
+initial genome size, which may make search ineﬃcient.
+
+3. A variant with non-random initial tf state. The base-
+line GRN has a randomized initial tf state, in order
+to encourage the GRN function to become robust (i.e.
+applicable to many environments). The non-random
+version does not select for this robustness, and there-
+fore may exploit the initial tf state to encode its phe-
+notype. Testing this variant will help determine the
+extent to which reliance on epigenetic factors (e.g. ini-
+tial tf state) may aﬀect evolvability.
+
+Comparing the evolvability of the four GRN variants will
+help determine what factors aﬀect the GRN’s ability to ex-
+tract and exploit information about the target problem.
+
+5. RESULTS
+
+Each encoding along with several parameter variants were
+tested with target drift rate values of 0.0, 0.01, 0.05, 0.1,
+0.15, 0.2, 0.3, 0.4, and 0.5. Though the optimal drift rate
+may diﬀer from encoding to encoding, this range should be
+suﬃcient to capture the full range of learning response. For
+each target drift rate setting, the encoding was tested 40
+times, to insure a useful average. An overview of the ac-
+quired evolvability scores is given in ﬁgure 7. All tests for
+statistical signiﬁcance were done using the standard Analy-
+sis of Variance (ANOVA) method, which gives the probabil-
+ity that any pairing of two means is statistically signiﬁcant.
+The direct encoding performs better during the test phase
+than either of the other two representations (an average ef-
+ﬁciency of about 91%; ﬁgures 8, 9, and 11), but exhibits lit-
+tle eﬃciency variance, less than 0.00001697 (ﬁgure 7). The
+means contributing to this variance are not statistically sig-
+niﬁcant (P = 0.59), thus indicating that there is no acquired
+evolvability. Since there is no genetic capacity for the direct
+representation to record information about the domain, any
+level of variance must be due to sampling bias or the pop-
+ulation’s genetic variance. In general, representations that
+do not show statistically signiﬁcant diﬀerences in eﬃciency
+have acquired no evolvability during the test, and thus may
+have little or no latent evolvability.
+
+Two versions of the modiﬁed direct encoding were tested:
+the standard implementation (modiﬁed), and a variant with
+random developmental variance (modiﬁed-random), as dis-
+cussed in discussed in Section 4.2. The variant exhibits no
+evolvability (variance is not statistically signiﬁcant, P =
+0.56), similar to the direct encoding (ﬁgure 7). However,
+
+Figure 7: Overall comparison of all encodings and
+parameter variants by acquired evolvability. The
+light-gray colored bars represent GRN-based vari-
+ants, the dark-gray bars represent modiﬁed direct
+variants, and the black bar is the baseline direct-
+encoding. “grn” refers to the baseline GRN imple-
+mentation, “grn-lowertol” to a GRN variant with
+the tolerance parameter halved, “grn-longercis” to
+a GRN variant with the initial cis region length dou-
+bled, “grn-nonrandom” to a variant with all initial
+tf levels set to 1.0. “Modiﬁed” refers to the modiﬁed
+direct baseline, “modiﬁed-random” to the modiﬁed
+direct implementation with random developmental
+variance, and “direct” to the direct encoding. The
+GRN encoding is the most evolvable, and the evolv-
+ability of the modiﬁed encoding depends heavily on
+the form of the developmental variance.
+
+the baseline implementation exhibited more than 14 times
+the evolvability of the direct encoding (variance is statisti-
+cally signiﬁcant, P < 0.0001), though performing on aver-
+age more than 10% worse (ﬁgure 8). This result indicates
+that developmental variance plays a large role in determin-
+ing evolvability, and in particular that this variance must
+be meaningful with respect to the target ﬁtness function,
+otherwise there is no evolvability increase.
+
+Four parameter variants of the GRN encoding were tested:
+the standard implementation (grn), from section 4.3, an im-
+plementation with the tolerance parameter set to one-half
+of the baseline value (lowertol), an implementation with
+initially two promoters in each cis region, instead of one
+(longercis), and an implementation with non-random initial
+tf state and all tfs initialized to 1.0 (nonrandom). Evolvabil-
+ity is summarized in ﬁgure 7 and eﬃciency vs. target drift in
+ﬁgure 9. With an acquired evolvability of 0.000558 (statis-
+tically signiﬁcant, P < 0.0001), the baseline GRN encoding
+is almost 33 times more evolvable than the direct encod-
+ing. The lower tolerance parameter variant performs slightly
+worse than the baseline GRN, and the other two variants
+(longer cis, and nonrandom initialization) both exhibit less
+evolvability than the modiﬁed direct encoding. The latter
+two variants exhibit eﬃciency variance that is not statis-
+tically signiﬁcant (and therefore no acquired evolvability),
+though only by a small margin (P = 0.52). The absolute
+performance of the GRN encoding is similar on average to
+the modiﬁed direct encoding, on average 5-10% worse than
+the direct encoding.
+
+02·10−44·10−46·10−4Evolvability(σ2)directmodiﬁed-randomgrn-nonrandomgrn-longercismodiﬁedgrn-lowertolgrnFigure 8: Comparison of two modiﬁed direct vari-
+ants for eﬃciency. Refer to ﬁgure 7 for variant
+descriptions. The direct encoding and modiﬁed-
+random show little variance, while the modiﬁed di-
+rect baseline encoding has distinct dips towards the
+low-information target drift settings (0.0 and 0.5).
+This is consistent with the “bell-curve” shape.
+
+Figure 9: Comparison of the GRN variants for ef-
+ﬁciency. Refer to ﬁgure 7 for variant descriptions.
+The direct encoding performs better on average at
+each target drift setting, but exhibits no variance in
+performance, unlike the GRN encodings.
+
+Figure 10: Comparison of the eﬀects of training on
+the acquired evolvability of GRN representations.
+A training period length of 300 generations (grn-
+longer) leads to an eﬀective tripling of evolvability.
+
+Figure 11: Comparison of the training period length
+GRN variants for eﬃciency. Refer to ﬁgure 7 for
+variant descriptions. The “grn-longer” plot refers
+to a GRN variant where the training period is 300
+generations, and exhibits high eﬃciency variance.
+
+Finally, the standard GRN implementation was run with
+a training period of 300 generations, instead of 150. This
+change resulted in nearly a 3-fold increase in the acquired
+evolvability (statistically signiﬁcant, P < 0.0001), an eﬀec-
+tive 91-fold increase over the direct implementation (ﬁgure
+10 for evolvability comparison, ﬁgure 11 for eﬃciencies).
+This result indicates that the length of training may play
+an important role in determining acquired evolvability.
+
+6. DISCUSSION AND FUTURE WORK
+
+Changing the ﬁtness function over time (adaptive ﬁtness
+function) plays an important role in evolution because a
+static ﬁtness function does not provide any pressure to se-
+lect for evolvability. Therefore, even if a representation is
+highly evolvable, there may be no pressure to become evolv-
+able in many domains. This insight is important because it
+may help explain the tendency to see many “brittle” evolved
+solutions, and in general low evolvability in artiﬁcial evolu-
+tion, even with developmental systems.
+
+The results highlight several questions about evolvability:
+
+• Can evolvability be used to counteract the eﬀects of
+convergence? For example, although the GRN encod-
+ing has high acquired evolvability, when comparing a
+population that has been undergoing training for 150
+generations to a randomly initialized population, the
+random population seems to always be more eﬃcient
+at solving the problem. The most likely explanation
+is because the trained population has converged some-
+what during evolution.
+
+• How broadly can the measure proposed in this paper
+be applied to other tasks? The test for evolvability
+requires a ﬁtness function that can be changed over
+time, in order to provide a variable amount of infor-
+mation about some invariant properties. What kinds
+of domains are amenable to such variation? One in-
+teresting direction would be to use coevolution as an
+adaptive benchmark, as it allows for theoretically un-
+bounded increases in acquired evolvability.
+
+• What factors inﬂuence acquired evolvability? For ex-
+ample, why does the version of the modiﬁed direct
+encoding with random developmental variance exhibit
+
+0.70.750.80.850.90.951Eﬃciency00.10.20.30.40.5TargetDriftRatedirectmodiﬁed-randommodiﬁed0.70.750.80.850.90.951Eﬃciency00.10.20.30.40.5TargetDriftRatedirectgrnnonrandomlowertollongercis05·10−41·10−31.5·10−32·10−3Evolvability(σ2)directgrngrn-longer0.70.750.80.850.90.951Eﬃciency00.10.20.30.40.5TargetDriftRatedirectgrnlongerno acquired evolvability? Both versions are the same
+genetically and thus have the same latent evolvability,
+however only the standard version acquires evolvability
+during training. The only diﬀerence is that “correct”
+developmental variance allows the linkage parameter
+to directly inﬂuence ﬁtness.
+
+Finally, there are three points that need to be addressed
+to improve the test procedure. First, work must be done to
+explore the relationship between acquired and latent evolv-
+ability. Is it suﬃcient just to repeat the test procedure on
+several domains, and average acquired evolvability? Sec-
+ond, a metric needs to be established to take into account
+the eﬀect of training time on acquired evolvability. Does
+evolvability saturate as training time increases? Some en-
+codings may become evolvable more slowly than others, but
+may have a greater capacity to do so. Each encoding should
+be tested not only on a range of target drift rate settings,
+but also on a range of training period lengths. Third, some
+context must be imposed on the relative result scale. What
+exactly does 33 times more evolvability mean, in practice?
+Is it signiﬁcant, i.e., does it impact long-term evolution?
+
+7. CONCLUSION
+
+Since the direct representation exhibits no signiﬁcant vari-
+ance in eﬃciency while the GRN and modiﬁed direct encod-
+ings do, the test proposed in this paper correctly contrasts
+relative acquired evolvability. Furthermore, this test eluci-
+dates many factors that inﬂuence evolvability, including the
+length of the training period, the genetic control of mutation
+eﬀects (linkage parameter and GRN encoding), and the ini-
+tial complexity of the representation (GRN initial cis region
+length). Only acquired evolvability in the general symmetry
+domain has been measured so far. In order to approximate
+a representation’s latent evolvability, a broad range of test
+problems must be employed.
+In spite of this caveat, the
+acquired evolvability test provides insight into evolvability,
+and raises many interesting questions for future inquiry.
+
+8. REFERENCES
+[1] A.-L. Barab´asi and Z. N. Oltvai. Network biology:
+Understanding the cell’s functional organization.
+Nature Reviews Genetics, 5:101–113, 2004.
+
+[2] A. Bergman and M. L. Siegal. Evolutionary
+
+capacitance as a general feature of complex gene
+networks. Nature, 424:549–552, 2003.
+
+[3] J. C. Bongard. Evolving modular genetic regulatory
+networks. In Proc. of CEC 2002, pages 1872–1877.
+IEEE Press, 2002.
+
+[4] M. Ebner, M. Shackleton, and R. Shipman. How
+
+neutral networks inﬂuence evolvability. Complexity,
+7(2):19–33, 2001.
+
+[5] P. Eggenberger. Evolving morphologies of simulated
+
+3d organisms based on diﬀerential gene expression.
+Proc. of the 4th European Conf. on Artiﬁcial Life,
+pages 205–213, 1997.
+
+[6] W. Fontana. Modeling ‘evo-devo’ with rna. BioEssays,
+
+24:1164–1177, 2002.
+
+[7] F. Gomez and R. Miikkulainen. Incremental evolution
+
+of complex general behavior. Adaptive Behavior,
+5:317–342, 1997.
+
+[8] T. F. Hansen. Is modularity necessary for evolvability?
+remarks on the relationship between pleiotropy and
+
+evolvability. BioSystems, 69:83–94, 2002.
+
+[9] J. Hermisson and G. Wagner. The population genetic
+theory of hidden variance and genetic robustness.
+Genetics, 168:2271–2284, 2004.
+
+[10] P. Hogeweg. Evolving mechanisms of morphogenesis:
+
+On the interplay between diﬀerential adhesion and cell
+diﬀerentiation. Jour. of Theo. Bio., 203:317–333, 2000.
+
+[11] H. Lipson, J. Pollack, and N. Suh. On the origin of
+
+modular variation. Evolution, 56(8):1549–1556, 2002.
+
+[12] J. Maynard-Smith, R. Burian, S. Kauﬀman,
+
+P. Alberch, J. Campbell, B. Goodwin, R. Lande,
+D. Raup, and L. Wolpert. Developmental constraints
+and evolution. The Quarterly Review of Biology,
+60(3):265–287, 1985.
+
+[13] R. A. Raﬀ. The Shape of Life: Genes, development,
+
+and the Evolution of Animal Form. The University of
+Chicago Press, 1996.
+
+[14] R. A. Raﬀ and B. J. Sly. Modularity and dissociation
+in the evolution of gene expression territories in
+development. Evolution and Development,
+2(2):102–113, 2000.
+
+[15] I. Rechenberg. Evolutionsstrategie ’94. Friedrich
+
+Frommann Verlag, 1994.
+
+[16] J. Smith and T. Fogarty. Operator and parameter
+
+adaption in genetic algorithms. Soft Computing,
+1:81–87, 1997.
+
+[17] B. M. R. Stadler, P. F. Stadler, G. Wagner, and
+
+W. Fontana. The topology of the possible: Formal
+spaces underlying patterns of evolutionary change.
+Journal of Theoretical Biology, 213:241–274, 2001.
+
+[18] K. O. Stanley and R. Miikkulainen. Evolving neural
+
+networks through augmenting topologies. Evolutionary
+Computation, 10(2):99–127, 2002.
+
+[19] K. O. Stanley and R. Miikkulainen. A taxonomy for
+artiﬁcial embryogeny. Artif. Life, 9(2):93–130, 2003.
+[20] C. H. Waddington. Canalization of development and
+the inheritance of acquired characters. Nature,
+150:563, 1942.
+
+[21] G. Wagner and L. Altenberg. Complex adaptations
+
+and the evolution of evolvability. Evolution,
+50(3):967–976, 1996.
+
+[22] C.-H. Yuh and E. H. Davidson. Modular cis-regulatory
+
+organization of endo16, a gut-speciﬁc gene of the sea
+urchin embryo. Development, 122:1069–1082, 1996.
+
+APPENDIX
+For all algorithms, population size is 50 and target string
+length is 40 bits. Selection is through a binary tournament.
+All parameters are encoded as doubles or unsigned integers,
+and crossover occurs only at gene boundaries.
+
+Direct and modiﬁed direct have a 1% chance per gene per
+generation of being mutated. Modiﬁed direct genomes are
+evaluated 5 times with the ﬁtness averaged. The linkage
+similarity tolerance is 150.
+
+GRN ﬁxed parameters: 10% weight mutation (Gaussian,
+variance = 1.0), 0.5% add new character, and 5% duplicate
+gene rate. The GRN model iterates for 10 steps (ﬁxed),
+each tf concentration is decayed 10% per step, and there
+is no limit to the number of tfs. The tolerance parameter
+is evolvable, initially 1500 (750 for lowertol). The initial
+number of genes is 40 (each gene has a random promoter
+and a ﬁxed environmental tf).
+
+

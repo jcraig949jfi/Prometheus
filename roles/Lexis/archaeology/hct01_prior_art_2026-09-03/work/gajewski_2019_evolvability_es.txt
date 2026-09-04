@@ -1,0 +1,1052 @@
+                                        Evolvability ES: Scalable and Direct Optimization of Evolvability
+
+                                        Alexander Gajewski                                                                                  Jeff Clune
+
+                                          Columbia University                                                                                Uber AI Labs
+                                                                                                                                       University of Wyoming
+
+arXiv:1907.06077v1 [cs.NE] 13 Jul 2019                      Kenneth O. Stanley                                                                             Joel Lehman
+
+                                                                       Uber AI Labs                                                                             Uber AI Labs
+
+                                        ABSTRACT                                                                                       1 INTRODUCTION
+
+                                        Designing evolutionary algorithms capable of uncovering highly                                 One challenge in evolutionary computation (EC) is to design al-
+                                        evolvable representations is an open challenge in evolutionary com-                            gorithms capable of uncovering highly evolvable representations;
+                                        putation; such evolvability is important in practice, because it ac-                           though evolvability's definition is debated, the idea is to find genomes
+                                        celerates evolution and enables fast adaptation to changing cir-                               with great potential for further evolution [2, 10, 15, 19, 21, 26, 33, 43].
+                                        cumstances. This paper introduces evolvability ES, an evolutionary                             Here, as in previous work, we adopt a definition of evolvability as
+                                        algorithm designed to explicitly and efficiently optimize for evolv-                           the propensity of an individual to generate phenotypic diversity
+                                        ability, i.e. the ability to further adapt. The insight is that it is                          [21, 23, 26]. Such evolvability is important in practice, because it
+                                        possible to derive a novel objective in the spirit of natural evolution                        broadens the variation accessible through mutation, thereby accel-
+                                        strategies that maximizes the diversity of behaviors exhibited when                            erating evolution; improved evolvability thus would benefit many
+                                        an individual is subject to random mutations, and that efficiently                             areas across EC, e.g. evolutionary robotics, open-ended evolution,
+                                        scales with computation. Experiments in 2-D and 3-D locomotion                                 and quality diversity (QD; [22, 32]). While evolvability is seemingly
+                                        tasks highlight the potential of evolvability ES to generate solutions                         ubiquitous in nature (e.g. the amazing diversity of dogs accessible
+                                        with tens of thousands of parameters that can quickly be adapted to                            within a few generations of breeding), its emergence in evolution-
+                                        solve different tasks and that can productively seed further evolu-                            ary algorithms (EAs) is seemingly rare [33, 43], and how best to
+                                        tion. We further highlight a connection between evolvability in EC                             encourage it remains an important open question.
+                                        and a recent and popular gradient-based meta-learning algorithm
+                                        called MAML; results show that evolvability ES can perform com-                                   There are two general approaches to encourage evolvability in
+                                        petitively with MAML and that it discovers solutions with distinct                             EAs. The first is to create environments or selection criteria that
+                                        properties. The conclusion is that evolvability ES opens up novel                              produce evolvability as an indirect consequence [6, 10, 17, 21, 33].
+                                        research directions for studying and exploiting the potential of                               For example, environments wherein goals vary modularly over
+                                        evolvable representations for deep neural networks.                                            generations may implictly favor individuals better able to adapt to
+                                                                                                                                       such variations [17]. The second approach, which is the focus of this
+                                        CCS CONCEPTS                                                                                   paper, is to select directly for evolvability, i.e. to judge individuals
+                                                                                                                                       by directly testing their potential for further evolution [26]. While
+                                        · Computing methodologies  Genetic algorithms; Neural                                          the first approach is more biologically plausible and is important
+                                        networks;                                                                                      to understanding natural evolvability, the second benefits from its
+                                                                                                                                       directness, its potential ease of application to new domains, and its
+                                        KEYWORDS                                                                                       ability to enable the study of highly-evolvable genomes without
+                                                                                                                                       fully understanding evolvability's natural emergence. However,
+                                        Evolvability, neuroevolution, evolution strategy, meta-learning                                current implementations of such evolvability search [26] suffer from
+                                                                                                                                       their computational cost.
+                                        ACM Reference Format:
+                                        Alexander Gajewski, Jeff Clune, Kenneth O. Stanley, and Joel Lehman. 2019.                        A separate (but complementary) challenge in EC is that of effec-
+                                        Evolvability ES: Scalable and Direct Optimization of Evolvability. In Genetic                  tively evolving large genomes. For example, there has been recent
+                                        and Evolutionary Computation Conference (GECCO '19), July 13­17, 2019,                         interest in training deep neural networks (DNNs) because of their
+                                        Prague, Czech Republic. ACM, New York, NY, USA, 15 pages. https://doi.org/                     potential for expressing complex behaviors, e.g. playing Atari games
+                                        10.1145/3321707.3321876                                                                        from raw pixels [28]. However, evolving DNNs is challenging be-
+                                                                                                                                       cause they have many more parameters than genomes typically
+                                        Work done during an internship at Uber AI Labs                                                 evolved by comparable approaches in EC (e.g. neural networks
+                                                                                                                                       evolved by NEAT [38]). For this reason, the study of scalable EAs
+                                        Permission to make digital or hard copies of all or part of this work for personal or          that can benefit from increased computation is of recent interest
+                                        classroom use is granted without fee provided that copies are not made or distributed          [5, 34, 40], and evolvability-seeking algorithms will require similar
+                                        for profit or commercial advantage and that copies bear this notice and the full citation      considerations to scale effectively to large networks.
+                                        on the first page. Copyrights for components of this work owned by others than the
+                                        author(s) must be honored. Abstracting with credit is permitted. To copy otherwise, or            This paper addresses both of these challenges, by synthesizing
+                                        republish, to post on servers or to redistribute to lists, requires prior specific permission  three threads of research in deep learning and EC. The first thread
+                                        and/or a fee. Request permissions from permissions@acm.org.                                    involves a popular gradient-based meta-learning algorithm called
+                                        GECCO '19, July 13­17, 2019, Prague, Czech Republic                                            MAML [11] that searches for points in the search space from which
+                                        © 2019 Copyright held by the owner/author(s). Publication rights licensed to the
+                                        Association for Computing Machinery.
+                                        ACM ISBN 978-1-4503-6111-8/19/07. . . $15.00
+                                        https://doi.org/10.1145/3321707.3321876
+GECCO '19, July 13­17, 2019, Prague, Czech Republic                       Alexander Gajewski, Jeff Clune, Kenneth O. Stanley, and Joel Lehman
+
+one (or a few) optimization step(s) can solve diverse tasks. We in-       help compare the advantages or drawbacks of different quantifi-
+troduce here a connection between this kind of parameter-space            cations of evolvability [24], and that it may facilitate the study of
+meta-learning and evolvability, as MAML's formulation is very             evolvability even before its natural emergence is understood.
+similar to that of evolvability search [26], which searches for in-
+dividuals from which mutations (instead of optimization) yield a             In evolvability search, the central idea is to calculate an indi-
+diverse repertoire of behaviors. MAML's formulation, and its suc-         vidual's fitness from domain evaluations of many of its potential
+cess with DNNs on complicated reinforcement learning (RL) tasks,          offspring. In particular, an individual's potential to generate phe-
+hints that there may similarly be efficient and effective formulations    notypic variability is estimated by quantifying the diversity of
+of evolvability. The second thread involves the recent scalable form      behaviors demonstrated from evaluating a sample of its offspring.
+of evolution strategy (ES) of Salimans et al. [34] (which at heart is     Note the distinction between evolvability search and QD: QD at-
+a simplified form of natural evolution strategy [45]) shown to be         tempts to build a collection of diverse well-adapted genomes, while
+surprisingly competitive with gradient-based RL. We refer to this         evolvability search attempts to find genomes from which diverse
+specific algorithm as ES in this paper for simplicity, and note that      behaviors can readily be evolved. In practice, evolvability search
+the field of ES as a whole encompasses many diverse algorithms            requires (1) quantifying dimensions of behavior of interest, as in
+[3, 36]. The final thread is a recent formalism called stochastic com-    the behavior characterizations of novelty search [20], and (2) a dis-
+putation graphs (SCGs) [35], which enables automatic derivations          tance threshold to formalize what qualifies as two behaviors being
+of gradient estimations that include expectations over distributions      distinct. Interestingly, optimizing evolvability, just like optimizing
+(such as the objective optimized by ES). We here extend SCGs to           novelty, can sometimes lead to solving problems as a byproduct
+handle a larger class of functions, which enables formulating an          [26]. However, evolvability search is computationally expensive (it
+efficient evolvability-inspired objective.                                requires evaluating enough offspring of each individual in the pop-
+                                                                          ulation to estimate its potential), and has only been demonstrated
+   Weaving together these three threads, the main insight in this         with small neural networks (NNs); evolvability ES addresses both
+paper is that it is possible to derive a novel algorithm, called evolv-   issues.
+ability ES, that optimizes an evolvability-inspired objective without
+incurring any additional overhead in domain evaluations relative          2.2 MAML
+to optimizing a traditional objective with ES. Such efficiency is
+possible because each iteration of ES can aggregate information           Meta-learning [42] focuses on optimizing an agent's learning po-
+across samples to estimate local gradients of evolvability.               tential (i.e. its ability to solve new tasks) rather than its immediate
+                                                                          performance (i.e. how well it solves the current task) as is more
+   The experiments in this paper demonstrate the potential of evolv-      typical in optimization and RL, and has a rich history both in EC
+ability ES in two deep RL locomotion benchmarks, wherein evolv-           and machine learning at large. The most common forms of neural
+ability ES often uncovers a diversity of high-performing behaviors        meta-learning algorithms train NNs to implement their own learn-
+using the same computation required for ES to uncover a single            ing algorithms, either through exploiting recurrence [16, 39, 44] or
+one. Further tests highlight the potential benefits of such evolv-        plastic connections [12, 27, 37, 39].
+able genomes for fast adaptability, show that evolvability ES can
+optimize a form of population-level evolvability [46], and demon-            However, another approach is taken by the recent and popular
+strate that evolvability ES performs competitively with the popular       model-agnostic meta-learning (MAML) algorithm [11]. Instead of
+MAML gradient-based method (while discovering pockets of the              training a NN that itself can learn from experience, MAML searches
+search space with interestingly distinct properties). The conclusion      for a fixed set of NN weights from which a single additional opti-
+is that evolvability ES is a promising new algorithm for producing        mization step can solve a variety of tasks. The insight is that it is
+and studying evolvability at deep-learning scale.                         possible to differentiate through the optimization step, to create
+                                                                          a fully gradient-based algorithm that seeks adaptable areas of the
+2 BACKGROUND                                                              search space. Interestingly, MAML's formulation shares deep sim-
+2.1 Evolvability and Evolvability Search                                  ilarities with the idea of evolvability in EC: Both involve finding
+                                                                          points in the search space nearby to diverse functional behaviors.
+No consensus exists on the measure or definition of evolvability          One contribution here is to expose this connection between MAML
+[31]; the definition we adopt here, as in prior work [21, 23, 26],        and evolvability and explore it experimentally.
+follows one mainstream conception of evolvability as phenotypic
+variability [4, 18, 31], i.e. the phenotypic diversity demonstrated by       Intriguingly, MAML has been successful in training DNNs with
+an individual's offspring. Exact definition aside, reproducing the        many parameters to quickly adapt in supervised and RL domains
+evolvability of natural organisms is an important yet unmet goal          [11]. These results suggest that evolvable DNNs exist and can some-
+in EC. Accordingly, researchers have proposed many approaches             times be directly optimized towards, a key source of inspiration for
+for encouraging evolvability [6, 10, 17, 19, 21, 29, 33]. This paper fo-  evolvability ES.
+cuses in particular on extending the ideas from evolvability search
+[26], an algorithm that directly rewards evolvability by explicitly       2.3 Natural Evolution Strategies
+measuring evolvability and guiding search towards it. The motiva-
+tion is that it often may be more straightforward to directly optimize    The evolvability ES algorithm introduced here builds upon the ES
+evolvability than to encourage its indirect emergence, that it may        algorithm of Salimans et al. [34], which itself is based on the Natural
+                                                                          Evolution Strategies (NES; [45]) black-box optimization algorithm.
+                                                                          Because in such a setting the gradients of the function to be opti-
+                                                                          mized, f (z), are unavailable, NES instead creates a smoother ver-
+                                                                          sion of f that is differentiable, by defining a population distribution
+Evolvability ES: Scalable and Direct Optimization of Evolvability                     GECCO '19, July 13­17, 2019, Prague, Czech Republic
+
+ (z;  ) and setting the smoothed loss function J ( ) = Ez [f (z)].      represent this as a SCG, because it involves a function applied to a
+This function is then optimized iteratively with gradient descent,      nested expectation (the key reason being that in general, Ez [f (z)]
+where the gradients are estimated by samples from  .                    f (Ez [z])).
+
+   Salimans et al. [34] showed recently that NES with an isotropic         In light of these limitations, in supplemental sections S2 and
+Gaussian distribution of fixed variance (i.e.  = N (µ, I ) and  = µ)    S3, we generalize SCGs [35] to more easily account for nested ex-
+is competitive with deep RL on high-dimensional RL tasks, and can       pectations, and show that this new formalism yields surrogate loss
+be very time-efficient because the expensive gradient estimation        functions that can automatically be differentiated by popular tools
+is easily parallelizable. Salimans et al. [34] refer to this algorithm  like PyTorch [30]. Through this approach, nearly any loss function
+as Evolution Strategies (ES), and we adopt their terminology in         involving potentially nested expectations over differentiable proba-
+this work, referring to it in the experiments as standard ES (to        bility distributions can be automatically optimized with gradient
+differentiate it from evolvability ES).                                 descent through sampling. This approach is applied in the next
+                                                                        section to enable an efficient evolvability-optimizing variant of ES.
+   Connecting to traditional EAs, the distribution  can be viewed
+as a population of individuals that evolves by one generation at        4 APPROACH: EVOLVABILITY ES
+every gradient step, where µ can be viewed as the parent individual,
+and samples from  can be termed that parent's pseudo-offspring          One motivation for evolvability ES is to create an algorithm similar
+cloud. NES is formulated differently from other EAs; unlike them        in effect to evolvability search [26] but without immense compu-
+it operates by gradient descent. Because of NES's formulation, the      tational requirements, such that it can scale efficiently with com-
+desired outcome (i.e. to increase the average fitness f ) can be rep-   putation to large DNNs. To enable such an algorithm, a driving
+resented by a differentiable function of trainable parameters of the    insight is that the same domain evaluations exploited in standard
+population distribution. We can then analytically compute the opti-     ES to estimate gradients of fitness improvement also contain the
+mal update rule for each generation: to take a step in the direction    information needed to estimate gradients of evolvability improve-
+of the gradient. For such algorithms, the burden shifts from design-    ment. That is, ES estimates fitness improvement by sampling and
+ing a generational update rule to designing an objective function.      evaluating policies drawn from the neighborhood of a central indi-
+Thus, to enable fast experimentation with new objective functions,      vidual, and updates the central individual such that future draws
+ES-like algorithms can benefit from automatic differentiation, an       of the higher-fitness policies are more likely. Similarly, the central
+idea explored in the next two sections.                                 individual could be updated to instead make policies that contribute
+                                                                        more to the diversity of the entire population-cloud more likely.
+2.4 Stochastic Computation Graphs                                       The result is an algorithm that does not incur the cost of evolvability
+                                                                        search of evaluating potential offspring of all individuals, because
+In most modern tensor computation frameworks (e.g. PyTorch [1]          in an algorithm like ES that represents the population as a formal
+and Tensorflow [30]), functions are represented as computation          distribution over the search space, information about local diversity
+graphs, with input nodes representing a function's arguments, and       is shared between individuals; a further benefit is the computational
+inner nodes representing compositions of certain elementary func-       efficiency and scalability of ES itself, which this algorithm retains.
+tions like addition or exponentiation. The significance of computa-
+tion graphs is that they support automatic differentiation, enabling       While such an insight sounds similar to what motivates novelty-
+easy use of gradient descent-like algorithms with novel architec-       driven ES algorithms [7, 9], there is a subtle but important differ-
+tures and loss functions. Note, however, that these computation         ence: Novelty-driven ES drives the central individual of ES towards
+graphs are deterministic, as these variables have no probability dis-   behaviors unseen in previous generations, while evolvability ES
+tributions associated with them. Recently introduced in Schulman        instead aims to optimize the diversity of offspring of the current
+et al. [35], Stochastic Computation Graphs (SCGs) are a formalism       central individual. Thus the product of evolvability ES is an evolv-
+adding support for random variables. Importantly, like deterministic    able central individual whose mutations lead to diverse behaviors
+computation graphs, SCGs support automatic differentiation.             (note that an experiment in section 5.4 extends evolvability ES to
+                                                                        include multiple central individuals). We now formally describe the
+   SCGs are thus a natural way to represent ES-like algorithms:         method, and two concrete variants1.
+The function ES tries to optimize is an expectation over individuals
+in the population of some function of their parameters. In this way,    4.1 Formal Description
+automatic differentiation of SCGs enables rapid experimentation
+with modifications of ES to different loss functions or population      Consider the isotropic Gaussian distribution  of ES. Recall the
+distributions; more details about SCGs can be found in supplemental     analogy wherein this distribution represents the population, and
+sections S2 and S3. The next section extends SCGs, which is needed      the distribution mean can be seen as the central individual, or par-
+to explore certain formulations of evolvability ES.                     ent. By the definition adopted here, evolvable points in the search
+                                                                        space can through mutation produce many different behaviors: In
+3 NESTED SCGS                                                           other words, mutations provide many different options for natu-
+                                                                        ral selection to select from. Thus, as in evolvability search [26],
+While SCGs are adequate for simple modifications of ES (e.g. chang-     our aim is to maximize some statistic of behavioral diversity of an
+ing the population distribution from an isotropic Gaussian to a         individual's mutations. Formally, behavior is represented as a be-
+Gaussian with diagonal covariance), they lack the expressiveness        havior characteristic (BC; [20]), a vector-valued function mapping
+needed to enable certain more complex objectives. For example,
+consider an ES-like objective of the form Ez [f (Ez[(z, z)])] (the      1Source code available at: https://github.com/uber-research/Evolvability-ES
+form of one variant of evolvability ES). There is no natural way to
+GECCO '19, July 13­17, 2019, Prague, Czech Republic                      Alexander Gajewski, Jeff Clune, Kenneth O. Stanley, and Joel Lehman
+
+a genome z to behaviors B(z). For example, in a locomotion task, a       In this figure, the horizontal axis represents a single-dimensional pa-
+policy's behavior can be its final position on a plane.                  rameter space, and the vertical axis represents the single-dimensional
+                                                                         BC. In this task, evolvability is maximized at the maximum of the
+Here, we consider two different diversity statistics which lead          slower sine wave, because this is the point at which the amplitude
+                                                                         of the faster sine wave is greatest, meaning that mutation will in-
+to maximum variance (MaxVar) and maximum entropy (MaxEnt)                duce the widest distribution of vertical change. Figure 1 shows that
+                                                                         both variants of evolvability ES approached the optimal value in
+variants of evolvability ES, here called MaxVar-EES and MaxEnt-          parameter space as training progressed. The next sections demon-
+                                                                         strate that the algorithm also successfully scales to more complex
+EES. MaxVar-EES maximizes the trace of the covariance matrix of          domains.
+
+the BC over the population. The motivation is that the variance of       5.2 2-D Locomotion Task
+
+a distribution captures one facet of the distribution's diversity. This  We next applied evolvability ES to a physically-simulated robotics
+                                                                         domain. In this 2-D locomotion task, a NN policy with 74, 246
+formulation results in the following loss function:                      parameters controlled the "Half-Cheetah" planar robot from the
+                                                                         PyBullet simulator [8]; this simulation and NN architecture are
+          J ( ) = Ez (Bj (z) - µj )2 ,                          (1)      modeled after the Half-Cheetah deep RL benchmark of Finn et al.
+                                                                         [11]. The NN policy received as input 26 variables consisting of the
+                      j                                                  robot's position, velocity, and the angle and angular velocity of its
+                                                                         joints; the policy controlled the robots through NN outputs that are
+where the expectation is over policies z   (·;  ), the summation is      interpreted as torques applied to each of the robot's 6 joints. In this
+over components j of the BC, and µj represents the mean of the jth       domain, we characterized behavior as the final horizontal offset of
+                                                                         the robot after a fixed number of simulation steps. All population
+component of the BC.                                                     sizes were 10, 000; other hyperparameters and algorithmic details
+                                                                         can be found in supplemental section S1.
+MaxEnt-EES maximizes a distribution's entropy rather than its
+                                                                            Figure 2 shows the distribution of behaviors in the population
+variance. We expect in general this method to behave more simi-          over training time for standard ES as well as both evolvability ES
+                                                                         variants. First, these results show that, perhaps surprisingly, the
+larly to evolvability search than MaxVar-EES, because over a fixed,      results from the interference pattern task generalize to domains
+                                                                         with complex dynamics and large NNs. In particular, evolvabil-
+bounded region of support in behavior space, the maximum-entropy         ity ES discovered policies such that small mutations resulted in
+                                                                         diametrically opposed behaviors, i.e. approximately half of all mu-
+distribution of behavior is a uniform distribution, which also would     tations caused the robot to move left, while the others resulted
+                                                                         in it moving right. Videos of evaluations of these policies (avail-
+maximize evolvability search's fitness criterion, i.e. to maximize       able at http://t.uber.com/evolvabilityes) show the striking differ-
+                                                                         ence between the rightward and leftward behaviors, highlighting
+the amount of distinct behaviors displayed by offspring. To esti-        the non-triviality in "fitting" both of these policies into the same
+                                                                         NN. Interestingly, both evolvability ES variants produced similar
+mate entropy, we first compute a kernel-density estimate of the          distributions of behavior, even though MaxEnt-EES's objective is
+                                                                         explicitly intended to incentivize more uniform distributions of
+distribution of behavior for a chosen kernel function , giving           behavior.
+
+          p(B(z);  )  Ez[(B(z) - z)],                           (2)         Supplemental figure S1 shows raw locomotion ability over train-
+                                                                         ing in this domain, i.e. the mean distance from the origin randomly
+which can be applied to derive a loss function which estimates the       sampled policies travel. Note that this is the metric optimized by
+                                                                         standard ES (and does not reflect evolvability), and standard ES
+entropy:                                                                 policies indeed moved further on average than both MaxVar- and
+                                                                         MaxEnt-EES (p < 0.05, 12 runs; all tests unless otherwise specified
+          J ( ) = -Ez log Ez[(B(z) - z)] .                      (3)      are Mann-Whitney U Tests). However, on average, the MaxVar- and
+                                                                         MaxEnt-EES variants yielded policies which moved 92.1% and 93.9%
+In practice, these losses are differentiated with PyTorch (MaxEnt-       as far on average as those found by standard ES, so the performance
+EES in particular depends on the nested SCGs described earlier) and      price for evolvability is minimal. There was no significant difference
+both the loss and their gradients are then estimated from samples        between MaxVar- and MaxEnt-EES (p > 0.1, 12 runs).
+(recall that these samples all come from the current population
+distribution, and information from all samples is integrated to es-         5.2.1 Comparison to MAML. Evolvability ES takes inspiration
+timate the direction of improving evolvability for the population        from MAML's ability to successfully find policies near in parameter
+as a whole). The gradient estimates are then applied to update the       space to diverse behaviors [11] and to (like evolvability-inspired
+population distribution, enabling a generation of evolution.             methods) adapt quickly to new circumstances. Two questions nat-
+                                                                         urally arise: (1) how does evolvability ES compare to MAML in
+4.2 Proof of Feasibility
+
+It may at first seem unreasonable to expect that Evolvability ES
+could even in theory optimize the objective set out for it, i.e. to
+uncover a particular region of DNN weight-space such that muta-
+tions can produce the arbitrarily different mappings from input to
+output necessary to demonstrate diverse behaviors. In addition to
+the empirical results in this paper, we also prove by construction
+that such parts of the search space do exist.
+
+   Specifically, we show that given any two continuous policies, it
+is possible to construct a five-layer network from which random
+mutations results in "flipping" between the two initial policies. This
+construction is described in supplemental section S6.
+
+5 EXPERIMENTS
+5.1 Interference Pattern Task
+
+To help validate and aid understanding of the evolvability ES ap-
+proach, consider the interference pattern in figure 1a, generated
+as the product of a high-frequency and a low-frequency sine wave.
+Evolvability ES: Scalable and Direct Optimization of Evolvability                     GECCO '19, July 13­17, 2019, Prague, Czech Republic
+
+                                                   8                                              8
+
+          4
+
+          2                                        6                                              6
+
+Behavior  0                                Genome  4                                      Genome  4
+
+          -2
+
+          -4                                       2                                              2
+
+              0  5          10  15                    0  500              1000 1500 2000             0  500  1000 1500 2000
+
+                    Genome                                                Generation                         Generation
+
+                 (a) Interference Pattern             (b) MaxVar Evolvability ES                     (c) MaxEnt Evolvability ES
+
+Figure 1: Interference Pattern Results. In the interference pattern task, a genome consisted of a single floating point parameter
+(x), and the resulting behavior was generated as a function of the genome parameter by: f (x) = 5 sin(x/5) sin(20x). (a) Shows
+the plot of behavior (vertical axis) as a function of genome (horizontal axis). The training plots shown in (b) and (c) validate
+both evolvablity ES variants, showing that they converged to the point with behavior that is most sensitive to perturbations,
+shown as a dashed line in all three plots.
+
+                                                                                                                         103  Number of Pseudo-Offspring
+                                                                                                                         102
+                                                                                                                         101
+                                                                                                                         100
+
+Figure 2: Distribution of behaviors across evolution in the 2-D locomotion domain. Heat-maps of the final horizontal positions
+of 10,000 policies sampled from the population distribution are shown for each generation over training time for representa-
+tive runs of each method. These plots suggest that both evolvability ES methods discovered policies that travel nearly as far
+both backwards and forwards as standard ES travels forward alone (note that standard ES is rewarded for traveling forward).
+
+enabling fast adaptation, and (2) is MAML itself drawn towards            selected (and its reported performance calculated from 10 separate
+evolvable parts of the search space, i.e. are mutations of MAML           evaluations with different random seeds). For MAML, in an RL
+solutions similar to those of evolvability ES solutions?                  environment like the 2-D locomotion task, first the unmodified
+                                                                          learned policy was evaluated in a new task (many times in parallel
+   To address these questions, MAML was trained in the 2-D loco-          to reduce noise in the gradient), and then a policy-gradient update
+motion task. Recall that MAML learns a policy which can readily           modified the MAML solution to solve the new task. During such
+adapt to a new task through further training. MAML, unlike evolv-         test-time adaptation, MaxEnt-EES performed statistically signif-
+ability ES, requires a distribution of training tasks to adapt to rather  icantly better than MAML (p < 0.005, 12 runs), walking further
+than a BC that recognizes distinct behaviors. MAML's task distri-         on average in the desired direction after mutation and selection
+bution consisted of two tasks of equal probability, i.e. to walk left     than MAML after adaptation. There was no significant difference
+or right. MAML additionally makes use of per-timestep rewards             between MaxVar-EES and MAML (p > 0.1, 12 runs), and MaxEnt-
+(rather than per-evaluation information as in EC), given here as          EES was significantly better than MaxVar-EES (p < 0.05, 12 runs).
+the distance travelled that timestep in the desired direction. All        The conclusion is that evolvability ES in this domain is competitive
+such details were similar to MAML's canonical application to this         with the leading gradient-based approach for meta-learning.
+domain [11]; see supplemental section S1 for more information.
+                                                                             To compare what areas of the search space are discovered by
+   To explore how evolvability ES compares to MAML in enabling            MAML and evolvability ES, we explored what distribution of be-
+fast adaptation, we iteratively chose tasks, here directions to walk      haviors resulted from applying random mutations to the solutions
+in, and allowed each algorithm to adapt to each given task. For           produced by MAML. First, we subjected MAML policies to muta-
+evolvability ES, when given a task to adapt to, the central individ-      tions with the same distribution as that used by evolvability ES,
+ual was mutated 40 times, and the mutation performing best was
+GECCO '19, July 13­17, 2019, Prague, Czech Republic                      Alexander Gajewski, Jeff Clune, Kenneth O. Stanley, and Joel Lehman
+
+and then recorded the final positions of each of these offspring         and rewarded the agent for walking as far as possible in a particular
+policies. Figure 3 shows the resulting distributions of behaviors for    direction, here, for simplicity, the positive x direction.
+representative runs of MAML and both EES-variants. Qualitatively,
+the MAML policies are clumped closer to the origin (i.e. they typi-         Figure 6 shows a heat-map of behavior characteristics for the
+cally move less far), and have less overall spread (i.e. their variance  pre-trained populations produced by MaxEnt-EES, as well as heat-
+is lower). Both of these observations are statistically significant      maps following up to twenty standard ES updates (for a similar
+over 12 runs of each algorithm: The mean final distance from the         MaxVar-EES plot see supplemental figure S3). The population suc-
+origin for both evolvability ES variants was higher than for MAML        cessfully converged in accordance with the new selection pressure,
+(p < 0.00005 for both), and the variance of the distribution of fi-      and importantly, it adapted much more quickly than randomly ini-
+nal distances from the origin was higher for both evolvability ES        tialized population, as shown in figure 5. Indeed, further standard
+variants than for MAML (p < 0.00005 for both). We also tested            ES training of both variants of evolvability ES resulted in policies
+smaller perturbations of the MAML policy, under the hypothesis           which moved statistically significantly further in the positive x
+that gradient steps may be smaller than evolvability ES mutations,       direction than a random initialization after 5, 10, and 20 genera-
+but found similar results; see supplemental figure S5. These two         tions of adaptation (p < 0.0005, 12 runs). There was no significant
+results together suggest that evolvability ES does indeed find more      difference between MaxVar- and MaxEnt-EES (p > 0.1, 12 runs).
+evolvable representations than MAML.
+                                                                         5.4 Optimizing Population-Level Evolvability
+5.3 3-D Locomotion Task
+                                                                         Finally, we explore (in the 3-D locomotion domain) the potential to
+The final challenge domain applied evolvability ES to a more com-        evolve what Wilder and Stanley [46] term population-level evolvabil-
+plex 3-D locomotion task that controls a four-legged robot; here         ity, i.e. to consider evolvability as the sum of behaviors reachable
+evolvability ES aimed to produce a genome with offspring that can        from possible mutations of all individuals within a population; this
+locomote in any direction. In particular, in the 3-D locomotion task,    is contrast to the individual evolvability targeted by evolvability
+a NN policy with 75, 272 parameters controlled the "Ant" robot           search and evolvability ES as described so far (both reward behav-
+from the PyBullet simulator [8], modeled after the domain in the         ioral diversity accessible from a single central individual). E.g. in
+MuJoCo simulator [41] that serves as a common benchmark in deep          nature different organisms are primed to evolve in different direc-
+RL [11]. The 28 variables the policy received as inputs consisted of     tions, and one would not expect a dandelion to be able to quickly
+the robot's position and velocity, and the angle and angular velocity    adapt into a dinosaur, though both may be individually highly-
+of its joints; the NN output torques for each of the ant's 8 joints. In  evolvable in certain phenotypic dimensions.
+this domain, a policy's BC was its final (x, y) position.
+                                                                            Indeed, for some applications, allowing for many separately-
+   Figure 4 shows the population of behaviors after training (note       evolvable individuals might be more effective than optimizing for a
+that standard ES is rewarded for traveling forward). Interestingly,      single evolvable individual, e.g. some environments may entail too
+both evolvability ES variants formed a ring of policies, i.e. they       many divergent phenotypes for the neighborhood around a single
+found parameter vectors from which nearly all directions of travel       central individual to encompass them all. Interestingly, the idea of
+were reachable through mutations. For evolvability ES there were         joint optimization of many individuals for maximizing evolvability
+few behaviors in the interior of the ring (i.e. few mutations were       is naturally compatible with evolvability ES. The main insight is
+degenerate), whereas standard ES exhibited a trail of reduced per-       recognizing that the population distribution need not be unimodal;
+formance (i.e. its policy was less robust to mutation). Supporting       as an initial investigation of this idea, we experimented with a popu-
+this observation, for standard ES more policies ended their evalua-      lation distribution that is the mixture of two unimodal distributions,
+tion less than 5 units from the origin than did those sampled from       each representing a different species of individuals.
+either variant of evolvability ES (p < 0.01, 12 runs).
+                                                                            As a proof of concept, we compared two multi-modal variants of
+   Supplemental figure S2 shows locomotion ability across training.      evolvability ES, where the different modes of a Gaussian Mixture
+As in the 2-D locomotion domain, standard ES policies moved              Model (GMM; [25]) distribution can learn to specialize. In the first
+further on average than MaxVar- and MaxEnt-EES (p < 0.05, 12             variant (vanilla GMM), we equipped Evolvability ES with a multi-
+runs). However, the MaxVar- and MaxEnt-EES variants yielded              modal GMM population, where each mode was equally likely and
+policies which moved on average 85.4% and 83.2% as far as those          was separately randomly initialized. In the second variant (splitting
+from standard ES, which strikes a reasonable trade-off given the         GMM), we first trained a uni-modal population (as before) with
+diversity of behaviors uncovered by evolvability ES relative to the      evolvability ES until convergence, then seeded a GMM from it, by
+single policy of standard ES. There was no significant difference in     initializing the new component means from independent samples
+performance between MaxVar- and MaxEnt-EES (p > 0.1, 12 runs).           from the pre-trained uni-modal population (to break symmetry).
+                                                                         The second variant models speciation, wherein a single species
+   5.3.1 Seeding Further Evolution. While previous experiments           splits into subspecies that can further specialize. A priori, it is
+demonstrate that evolvability ES enables adaptation to new tasks         unclear whether the different modes will specialize into different
+without further evolution, a central motivation for evolvability is      behaviors, because the only optimization pressure is for the union
+to accelerate evolution in general. As an initial investigation of       of both modes to cover a large region of behavior space. However,
+evolvability ES's ability to seed further evolution, we used trained     one might expect that more total behaviors be covered if the species
+populations from evolvability ES as initializations for standard ES,     do specialize.
+Evolvability ES: Scalable and Direct Optimization of Evolvability  GECCO '19, July 13­17, 2019, Prague, Czech Republic
+
+Figure 3: Distribution of behaviors compared to MAML in the 2-D locomotion domain. Histograms of the final x positions
+of 1,000 policies sampled from the final population distribution are shown each variant of evolvability ES, as well as for
+perturbations of MAML solutions of the same size as those of evolvability ES. These plots suggest that both evolvability ES
+methods discovered more evolvable regions of parameter space than did MAML.
+
+                                                                                                                                                                                                          101
+
+                                                                                                                                                                                                          6 × 100
+                                                                                                                                                                                                          4 × 100
+                                                                                                                                                                                                          3 × 100
+                                                                                                                                                                                                          2 × 100
+
+                                                                                                                                                                                                          100
+Mean Final X
+                                                                                                                                                                                                       Number of Pseudo-Offspring
+Figure 4: Distribution of behaviors in the final population in the 3-D locomotion domain. Shown are heat-maps (taken from
+representative runs) of the final positions of 10,000 policies sampled from the population distribution at generation 100 for
+each of (a) standard ES, (b) MaxVar-EES, and (c) MaxEnt-EES. These plots suggest that both evolvability ES variants successfully
+found policies which moved in many different directions, and roughly as far as standard ES traveled in the positive x direction
+alone.
+
+       Standard                                                       Figure 7 and supplemental figure S4 show the qualitative per-
+                                                                   formance of these two variants. These figures first show that spe-
+30     MaxVar                                                      cialization did emerge in both variants, without direct pressure
+                                                                   to do so, although there was no significant difference in how the
+       MaxEnt                                                      speciated version covered the space relative to individual-based
+                                                                   evolability ES (p > 0.1, 6 runs). This result shows that intriguingly
+20                                                                 it is possible to directly optimize population-level evolvability, but
+                                                                   its benefit may come only from domains with richer possibilities
+10                                                                 for specialization (e.g. an environment in which it is possible to
+                                                                   either swim or fly), a direction to be explored in future work.
+0
+                                                                   6 DISCUSSION AND CONCLUSION
+    0  5         10          15
+                                                                   This paper's results highlight that, surprisingly, it is possible to
+                 Generation                                        directly, efficiently, and successfully optimize evolvability in the
+                                                                   space of large neural networks. One key insight enabling such
+Figure 5: Adaptation performance. The plot compares the            efficient optimization of evolvability is that there exist deep con-
+                                                                   nections between evolvability and parameter-space meta-learning
+performance of standard ES adapting to a new behavior              algorithms like MAML, a gradient-based approach to meta-learning
+                                                                   popular in traditional ML. These results suggest that not only may
+when seeded with a random initialization, or initializations
+from completed runs of MaxVar- and MaxEnt-EES. Mean
+and standard deviation over 12 runs shown. Populations
+
+trained by both methods of Evolvability ES evolved more
+
+quickly than randomly initialized populations.
+GECCO '19, July 13­17, 2019, Prague, Czech Republic                     Alexander Gajewski, Jeff Clune, Kenneth O. Stanley, and Joel Lehman
+
+                                                                                                                                                                                                          101Number of Pseudo-Offspring
+
+                                                                                                                                                                                                          100
+
+Figure 6: Distribution of behaviors during adaptation in the 3-D locomotion domain. Heat-maps are shown of the final posi-
+tions of 10,000 policies sampled from the population distribution initialized with MaxEnt-EES, and adapted to move in the
+positive x direction with standard ES over several generations. These plots suggest that MaxEnt-EES successfully found poli-
+cies that could quickly adapt to perform new tasks. See supplemental figure S3 for the MaxVar version.
+
+                                                                                                                                                                                                          101
+                                                                             Number of Pseudo-Offspring
+
+                                                                        100
+
+Figure 7: Distribution of behaviors for uni- and multi-modal MaxEnt-EES variants. Heat-maps are shown of the final positions
+of 10,000 policies sampled from the population at generation 100 of MaxEnt-EES, with (a) one component and (b) a vanilla
+GMM with two components. Also shown is the result of (c) splitting the trained single component into two components, and
+evolving for 20 additional generations. These plots suggest that both bi-modal variants performed similarly. See supplemental
+figure S4 for the MaxVar version.
+
+MAML-like algorithms be used to uncover evolvable policies, evolu-         Interestingly, while part of Evolvability ES's origin comes from
+tionary algorithms that in general incline towards evolvability may     inspiration from gradient-based ML (i.e. MAML), it also offers the
+serve as a productive basis for meta-learning. That is, evolution-      opportunity to inspire new gradient-based algorithms: A reformu-
+ary meta-learning has largely focused on plastic neural networks        lation of the evolvability ES loss function could enable a policy
+[12, 37, 39], but evolvable genomes that are primed to quickly adapt    gradients version of evolvability ES which exploits the differentia-
+are themselves a form of meta-learning (as MAML and evolvability        bility of the policy to decrease the variance of gradient estimates
+ES demonstrate); such evolvability could be considered instead of,      (supplemental section S5 further discusses this possibility). The con-
+or complementary to, NNs that adapt online.                             clusion is that Evolvability ES is a new and scalable addition to the
+                                                                        set of tools for exploring, encouraging, and studying evolvability,
+   The results of this paper also open up many future research          one we hope will continue to foster cross-pollination between the
+directions. One natural follow-up concerns the use of evolvability      EC and deep RL communities.
+as an auxiliary objective to complement novelty-driven ES [7, 9] or
+objective-driven ES. The intuition is that increased evolvability will
+catalyze the accumulation of novelty or progress towards a goal. In-
+terestingly, the same samples used for calculating novelty-driven or
+objective-driven ES updates can be reused to estimate the gradient
+of evolvability; in other words, such an auxiliary objective could be
+calculated with no additional domain evaluations. Additionally, the
+population-level formulation of evolvability ES is itself similar to
+novelty-driven ES, and future work could compare them directly.
+Evolvability ES: Scalable and Direct Optimization of Evolvability                                       GECCO '19, July 13­17, 2019, Prague, Czech Republic
+
+REFERENCES                                                                                [26] Henok Mengistu, Joel Lehman, and Jeff Clune. Evolvability search. Proceedings of
+                                                                                                the 2016 on Genetic and Evolutionary Computation Conference - GECCO 16, 2016.
+ [1] Martín Abadi, Ashish Agarwal, Paul Barham, Eugene Brevdo, Zhifeng Chen,                    doi: 10.1145/2908812.2908838.
+
+      Craig Citro, Greg S. Corrado, Andy Davis, Jeffrey Dean, Matthieu Devin, San-        [27] Thomas Miconi, Jeff Clune, and Kenneth O Stanley. Differentiable plastic-
+                                                                                                ity: training plastic neural networks with backpropagation. arXiv preprint
+      jay Ghemawat, Ian Goodfellow, Andrew Harp, Geoffrey Irving, Michael Isard,                arXiv:1804.02464, 2018.
+
+      Yangqing Jia, Rafal Jozefowicz, Lukasz Kaiser, Manjunath Kudlur, Josh Leven-        [28] Volodymyr Mnih, Koray Kavukcuoglu, David Silver, Andrei A Rusu, Joel Veness,
+
+      berg, Dan Mané, Rajat Monga, Sherry Moore, Derek Murray, Chris Olah, Mike                 Marc G Bellemare, Alex Graves, Martin Riedmiller, Andreas K Fidjeland, Georg
+
+      Schuster, Jonathon Shlens, Benoit Steiner, Ilya Sutskever, Kunal Talwar, Paul             Ostrovski, et al. Human-level control through deep reinforcement learning.
+                                                                                                Nature, 518(7540):529, 2015.
+      Tucker, Vincent Vanhoucke, Vijay Vasudevan, Fernanda Viégas, Oriol Vinyals,         [29] Anh Mai Nguyen, Jason Yosinski, and Jeff Clune. Innovation engines: Automated
+                                                                                                creativity and improved stochastic optimization via deep learning. In Proceedings
+      Pete Warden, Martin Wattenberg, Martin Wicke, Yuan Yu, and Xiaoqiang Zheng.               of the 2015 Annual Conference on Genetic and Evolutionary Computation, pages
+                                                                                                959­966. ACM, 2015.
+      TensorFlow: Large-scale machine learning on heterogeneous systems, 2015. URL
+                                                                                          [30] Adam Paszke, Sam Gross, Soumith Chintala, Gregory Chanan, Edward Yang,
+      http://tensorflow.org/. Software available from tensorflow.org.
+                                                                                                Zachary DeVito, Zeming Lin, Alban Desmaison, Luca Antiga, and Adam Lerer.
+ [2] Lee Altenberg et al. The evolution of evolvability in genetic programming.                 Automatic differentiation in PyTorch. In NIPS-W, 2017.
+      Advances in genetic programming, 3:47­74, 1994.                                     [31] M. Pigliucci. Is evolvability evolvable? Nature Reviews Genetics, 9(1):75­82, 2008.
+                                                                                                ISSN 1471-0056.
+ [3] Hans-Georg Beyer and Hans-Paul Schwefel. Evolution strategies: A comprehen-
+      sive introduction. Natural Computing, 1:3­52, 2002.                                 [32] Justin K Pugh, Lisa B Soros, and Kenneth O Stanley. Quality diversity: A new
+                                                                                                frontier for evolutionary computation. Frontiers in Robotics and AI, 3:40, 2016.
+ [4] J.F.Y Brookfield. Evolution: The evolvability enigma. Current Biology, 11(3):R106
+      ­ R108, 2001. ISSN 0960-9822. doi: DOI:10.1016/S0960-9822(01)00041-0.               [33] Joseph Reisinger, Kenneth O. Stanley, and Risto Miikkulainen. Towards an
+                                                                                                empirical measure of evolvability. In Genetic and Evolutionary Computation
+ [5] Patryk Chrabaszcz, Ilya Loshchilov, and Frank Hutter. Back to basics: Bench-               Conference (GECCO2005) Workshop Program, pages 257­264, Washington, D.C.,
+      marking canonical evolution strategies for playing atari. arXiv preprint                  2005. ACM Press. URL http://nn.cs.utexas.edu/?reisinger:gecco05.
+      arXiv:1802.08842, 2018.
+                                                                                          [34] Tim Salimans, Jonathan Ho, Xi Chen, Szymon Sidor, and Ilya Sutskever. Evolution
+ [6] Jeff Clune, Jean-Baptiste Mouret, and Hod Lipson. The evolutionary origins of              strategies as a scalable alternative to reinforcement learning. arXiv preprint
+      modularity. Proc. R. Soc. B, 280(1755):20122863, 2013.                                    arXiv:1703.03864, 2017.
+
+ [7] Edoardo Conti, Vashisht Madhavan, Felipe Petroski Such, Joel Lehman, Kenneth         [35] John Schulman, Nicolas Heess, Theophane Weber, and Pieter Abbeel. Gradient
+                                                                                                estimation using stochastic computation graphs. CoRR, abs/1506.05254, 2015.
+      Stanley, and Jeff Clune. Improving exploration in evolution strategies for deep           URL http://arxiv.org/abs/1506.05254.
+      reinforcement learning via a population of novelty-seeking agents. In Advances
+      in Neural Information Processing Systems 31. 2018.                                  [36] Hans-Paul Paul Schwefel. Evolution and optimum seeking: the sixth generation.
+ [8] E Coumans and Y Bai. Pybullet, a python module for physics simulation for                  John Wiley & Sons, Inc., 1993.
+      games, robotics and machine learning. GitHub repository, 2016.
+ [9] Giuseppe Cuccu and Faustino Gomez. When novelty is not enough. In Euro-              [37] Andrea Soltoggio, John A Bullinaria, Claudio Mattiussi, Peter Dürr, and Dario
+      pean Conference on the Applications of Evolutionary Computation, pages 234­243.
+      Springer, 2011.                                                                           Floreano. Evolutionary advantages of neuromodulated plasticity in dynamic,
+                                                                                                reward-based scenarios. In Proceedings of the 11th international conference on
+[10] M. Ebner, M. Shackleton, and R. Shipman. How neutral networks influence                    artificial life (Alife XI), number LIS-CONF-2008-012, pages 569­576. MIT Press,
+      evolvability. Complexity, 7(2):19­33, 2001. ISSN 1099-0526.                               2008.
+
+[11] Chelsea Finn, Pieter Abbeel, and Sergey Levine. Model-agnostic meta-learning         [38] Kenneth O. Stanley and Risto Miikkulainen. Evolving neural networks through
+      for fast adaptation of deep networks. arXiv preprint arXiv:1703.03400, 2017.              augmenting topologies. Evolutionary Computation, 10:99­127, 2002.
+
+[12] Dario Floreano and Francesco Mondada. Evolution of plastic neurocontrollers          [39] Kenneth O Stanley, Bobby D Bryant, and Risto Miikkulainen. Evolving adaptive
+      for situated agents. In Proc. of The Fourth International Conference on Simulation        neural networks with and without adaptive synapses. In Evolutionary Compu-
+      of Adaptive Behavior (SAB), From Animals to Animats. ETH Zürich, 1996.                    tation, 2003. CEC'03. The 2003 Congress on, volume 4, pages 2557­2564. IEEE,
+                                                                                                2003.
+[13] Meire Fortunato, Mohammad Gheshlaghi Azar, Bilal Piot, Jacob Menick, Ian
+                                                                                          [40] Felipe Petroski Such, Vashisht Madhavan, Edoardo Conti, Joel Lehman, Ken-
+      Osband, Alex Graves, Vlad Mnih, Rémi Munos, Demis Hassabis, Olivier Pietquin,
+      Charles Blundell, and Shane Legg. Noisy networks for exploration. CoRR,                   neth O Stanley, and Jeff Clune. Deep neuroevolution: genetic algorithms are
+      abs/1706.10295, 2017. URL http://arxiv.org/abs/1706.10295.
+[14] Michael C. Fu. Chapter 19 gradient estimation. Simulation Handbooks in Opera-              a competitive alternative for training deep neural networks for reinforcement
+      tions Research and Management Science, 13:575, 2006. doi: 10.1016/s0927-0507(06)          learning. arXiv preprint arXiv:1712.06567, 2017.
+      13019- 4.                                                                           [41] E. Todorov, T. Erez, and Y. Tassa. Mujoco: A physics engine for model-based
+                                                                                                control. In 2012 IEEE/RSJ International Conference on Intelligent Robots and
+[15] J.J. Grefenstette. Evolvability in dynamic fitness landscapes: A genetic algorithm         Systems, pages 5026­5033, Oct 2012. doi: 10.1109/IROS.2012.6386109.
+      approach. In Evolutionary Computation, 1999. CEC 99. Proceedings of the 1999        [42] Ricardo Vilalta and Youssef Drissi. A perspective view and survey of meta-
+      Congress on, volume 3. IEEE, 2002. ISBN 0780355369.                                       learning. Artificial Intelligence Review, 18(2):77­95, 2002.
+                                                                                          [43] Günter P Wagner and Lee Altenberg. Perspective: complex adaptations and the
+[16] Sepp Hochreiter, A Steven Younger, and Peter R Conwell. Learning to learn using            evolution of evolvability. Evolution, 50(3):967­976, 1996.
+      gradient descent. In International Conference on Artificial Neural Networks, pages  [44] Jane X Wang, Zeb Kurth-Nelson, Dhruva Tirumala, Hubert Soyer, Joel Z Leibo,
+      87­94. Springer, 2001.
+                                                                                                Remi Munos, Charles Blundell, Dharshan Kumaran, and Matt Botvinick. Learning
+[17] Nadav Kashtan, Elad Noor, and Uri Alon. Varying environments can speed up                  to reinforcement learn. arXiv preprint arXiv:1611.05763, 2016.
+      evolution. Proceedings of the National Academy of Sciences, 104(34):13711­13716,    [45] Daan Wierstra, Tom Schaul, Tobias Glasmachers, Yi Sun, and JÃrgen Schmid-
+      2007.
+                                                                                                huber. Natural evolution strategies, 2011.
+[18] Marc Kirschner and John Gerhart. Evolvability. Proceedings of the National
+      Academy of Sciences, 95(15):8420­8427, 1998.                                        [46] Bryan Wilder and Kenneth Stanley. Reconciling explanations for the evolution
+                                                                                                of evolvability. Adaptive Behavior, 23(3):171­179, 2015.
+[19] Loizos Kounios, Jeff Clune, Kostas Kouvaris, Günter P Wagner, Mihaela Pavlicev,
+
+      Daniel M Weinreich, and Richard A Watson. Resolving the paradox of evolvability
+
+      with learning theory: How evolution learns to improve evolvability on rugged
+      fitness landscapes. arXiv preprint arXiv:1612.05955, 2016.
+[20] Joel Lehman and Kenneth O Stanley. Abandoning objectives: Evolution through
+      the search for novelty alone. Evolutionary computation, 19(2):189­223, 2011.
+[21] Joel Lehman and Kenneth O Stanley. Improving evolvability through novelty
+      search and self-adaptation. In IEEE Congress on Evolutionary Computation, pages
+      2693­2700, 2011.
+
+[22] Joel Lehman and Kenneth O Stanley. Evolving a diversity of virtual creatures
+      through novelty search and local competition. In Proceedings of the 13th annual
+      conference on Genetic and evolutionary computation, pages 211­218. ACM, 2011.
+
+[23] Joel Lehman and Kenneth O Stanley. Evolvability is inevitable: Increasing evolv-
+      ability without the pressure to adapt. PloS one, 8(4):e62186, 2013.
+
+[24] Joel Lehman and Kenneth O Stanley. On the potential benefits of knowing
+      everything. In Artificial Life Conference Proceedings, pages 558­565. MIT Press,
+      2018.
+
+[25] Geoffrey J. McLachlan, Sharon X. Lee, and Suren I. Rathnayake. Finite mix-
+      ture models. Annual Review of Statistics and Its Application, 6(1):355­378, 2019.
+      doi: 10.1146/annurev-statistics-031017-100325. URL https://doi.org/10.1146/
+
+      annurev- statistics- 031017- 100325.
+GECCO '19, July 13­17, 2019, Prague, Czech Republic                    Alexander Gajewski, Jeff Clune, Kenneth O. Stanley, and Joel Lehman
+
+       50                                                                                                                      40     Standard
+
+                                                                                                                                      MaxVar
+
+       40                                                                                                                      30     MaxEnt
+Max Final Distance
+                                                                                                           Max Final Distance30
+
+                                                                                                                               20
+
+       20
+
+       10                     Standard                                                                                         10
+
+                              MaxVar
+
+       0                      MaxEnt                                                                                           0
+
+           0  20  40  60      80                     100                                                                           0  20               40     60     80       100
+
+                  Generation                                                                                                                           Generation
+
+Figure S1: 2-D locomotion ability across training. This plot           Figure S2: 3-D locomotion ability across training. This plot
+                                                                       compares raw locomotion ability of policies samples from
+compares raw locomotion ability of policies sampled from               standard ES, MaxVar-EES, and MaxEnt-EES. Each curve
+                                                                       shows the mean final distance from the origin over 10,000
+standard ES, MaxVar-EES, and MaxEnt-EES during train-                  samples from the population distribution during training.
+                                                                       Mean and standard deviation over 12 runs shown. While
+ing. Each curve plots the mean final distance from the ori-            standard ES learned its single forward-moving policy more
+                                                                       quickly, this plot highlights that both evolvability ES vari-
+gin over 10,000 samples from the population distribution.              ants found policies which moved almost as far as standard
+                                                                       ES on the ant domain, despite encoding policies that move
+The error bars indicate standard deviation over the 12 train-          in many more directions.
+
+ing runs. While standard ES learned slightly faster, this
+
+plot shows that both evolvability ES variants found policies
+
+which moved almost as far as standard ES in this domain,
+
+despite encoding both forwards and backwards-moving poli-
+
+cies.
+
+SUPPLEMENTAL INFORMATION                                               S1.2 Hyperparameters and Training Details
+
+Included in the supplemental information are experimental details      For standard ES, fitness was rank-normalized to take values sym-
+and hyperparameters for all algorithms (section S1); a description of  metrically between -0.5 and 0.5 at each generation before comput-
+stochastic computation graphs and how we extended them (sections       ing gradient steps. For both variants of evolvability ES, BCs were
+S2 and S3); and the particular stochastic computation graphs that      whitened to have mean zero and a standard deviation of one at
+enable calculating loss and gradients for ES and Evolvability ES       each generation before computing losses and gradients. This was
+(section S4).                                                          done instead of rank normalization in order to preserve density
+                                                                       information for variance and entropy estimation.
+S1 EXPERIMENTAL DETAILS
+                                                                          A Gaussian kernel with standard deviation 1.0 was used for the
+This section presents additional plots useful for better understand-   MaxEnt-EES to estimate the density of behavior given samples from
+ing the performance of evolvability ES, as well as further details     the population distribution.
+and hyperparameters for all algorithms.
+                                                                       S1.2.1 Interference Pattern Details. The interference pattern was
+S1.1 Additional Plots
+                                                                       generated by the function
+Figures S1 and S2 display the mean distance from the origin of both
+standard ES and both variants of evolvability ES, on the 2D and 3D                                                                    f (x) = 5 sin x sin 20x .                    (4)
+locomotion tasks respectively.
+                                                                                                                                                           5
+   Figure S3 highlights how the distribution of behaviors changes
+during meta-learning test-time to quickly adapt to the task at hand    Hyperparameters for the interference pattern task are shown in
+for MaxVar-EES (see figure 6 for the MaxEnt version).
+                                                                       Tables S1 and S2.
+   Figure S4 contrasts the two variants of multi-modal MaxVar-ES
+(see figure 7 for the MaxEnt version).                                                                                                Hyperparameter                 Setting
+
+   Figure S5 compares perturbations of central evolvability ES poli-                                                                  Learning Rate                  0.03
+cies to perturbations of MAML policies with a standard deviation 4
+times smaller than that of EES.                                                                                                       Population Standard Deviation  0.5
+
+                                                                                                                                      Population Size                500
+
+                                                                       Table S1: MaxVar Hyperparameters: Interference Pattern
+                                                                       Task.
+Evolvability ES: Scalable and Direct Optimization of Evolvability  GECCO '19, July 13­17, 2019, Prague, Czech Republic
+
+                                                                   101  Number of Pseudo-Offspring
+                                                                   100
+
+Figure S3: Distribution of behaviors during adaptation in the 3D locomotion domain. Heat-maps of the final positions of
+10,000 policies sampled from the population distribution initialized with MaxVar-EES, and adapted to move in the positive x
+direction with Standard ES over several generations. These plots suggest that MaxVar-EES successfully found policies which
+could quickly adapt to perform new tasks. See figure 6 for the MaxEnt version.
+
+                                                                   101  Number of Pseudo-Offspring
+
+                                                                   100
+
+Figure S4: Distribution of behaviors for uni- and multi-modal MaxVar-EES variants. Heat-maps of the final positions of 10,000
+policies sampled from the population distribution at generation 100 of MaxVar-EES, with (a) one component and (b) a vanilla
+GMM with two components. Also shown is the result of splitting the single component in (a) into two components and evolving
+for 20 additional generations. These plots suggest that both bi-modal variants performed similarly. See figure 7 for the MaxEnt
+version.
+
+Hyperparameter                 Setting                             in the environment for 1, 000 timesteps. For comparison to evolv-
+                                                                   ability ES, the fitness function for standard ES was set to be the
+Learning Rate                  0.1                                 final x position of a policy, rewarding standard ES for walking as
+                                                                   far as possible in positive x direction.
+Population Standard Deviation  0.5
+                                                                      NNs for both 2D and 3D locomotion were composed of two
+Population Size                500                                 hidden layers with 256 hidden units each, resulting in 166.7K total
+                                                                   parameters, and were regularized with L2 penalties during training.
+Kernel Standard Deviation      1.0
+                                                                   Inputs to the networks were normalized to have mean zero and a
+Table S2: MaxEnt Hyperparameters: Interference Pattern
+Task.                                                              standard deviation of one based the mean and standard deviation
+
+   S1.2.2 Locomotion Task Details. For the locomotion tasks, all   of the states seen in a random subset of all training rollouts, with
+environments were run deterministically and no action noise was    each rollout having probability 0.01 of being sampled.
+used during training. The only source of randomness was from
+sampling from the population distribution. Policies were executed     Experiments were performed on a cluster system and were dis-
+
+                                                                   tributed across a pool of 550 CPU cores shared between two runs
+
+                                                                   of the same algorithm. Each run took approximately 5 hours to
+
+                                                                   complete.
+GECCO '19, July 13­17, 2019, Prague, Czech Republic                    Alexander Gajewski, Jeff Clune, Kenneth O. Stanley, and Joel Lehman
+
+Figure S5: Distribution of behaviors compared to MAML in the 2-D locomotion domain. Histograms of the final x positions
+of 1,000 policies sampled from the final population distribution are shown each variant of evolvability ES, as well as for
+perturbations of MAML policies 4 times smaller than those of evolvability ES. Smaller perturbations of MAML did not change
+the fundamental result (and interestingly eliminated the potential of generating far-right-walking policies).
+
+   Hyperparameters for both variants of Evolvability ES are shown                     Hyperparameter                       Setting
+Tables S3 and S4.
+
+                                                                                      Adaptation Learning Rate                    0.1
+
+Hyperparameter                 Setting                                                Conjugate Gradient Damping                  1e-5
+
+                                                                                      Conjugate Gradient Iterations               10
+
+Learning Rate                  0.01                                                   Max Number of Line Search Steps             15
+
+Population Standard Deviation 0.02                                                    Line Search Backtrack Ratio                 0.8
+
+Population Size                10,000                                                 Discount Factor                             0.99
+
+L2 Regularization Coefficient  0.05                                                   Adaptation Batch Size                       10
+
+Table S3: MaxVar Hyperparameters: Locomotion Tasks.                                   Outer Batch Size                            40
+
+                                                                                      Table S5: MAML Hyperparameters.
+
+Hyperparameter                 Setting
+
+Learning Rate                  0.01
+
+Population Standard Deviation 0.02
+
+Population Size                10,000
+
+L2 Regularization Coefficient  0.05
+
+Kernel Bandwidth               1.0                                     S2 STOCHASTIC COMPUTATION GRAPHS
+
+Table S4: MaxEnt Hyperparameters: Locomotion Tasks.                    A stochastic computation graph, as defined in Schulman et al. [35],
+
+                                                                       is a directed acyclic graph consisting of fixed input nodes, determin-
+
+                                                                       istic nodes representing functions of their inputs, and stochastic
+
+                                                                       nodes representing random variables distributed conditionally on
+
+   S1.2.3 MAML Details. The MAML algorithm was run on the              their inputs.
+2D locomotion task using the same fully-connected neural network
+with 2 hidden layers of 256 hidden units each as that used in evolv-   A stochastic computation graph G represents the expectation
+ability ES. There are two main differences between our usage of
+MAML and those typically done in the past (e.g. in Finn et al. [11]).  (over its stochastic nodes {zi }) of the sum of its output nodes { fi },
+First, we used the PyBullet simulator [8] as opposed to the more       as a function of its input nodes {xi }:
+canonical MuJoCo simulator [41]. Second, typically locomotion
+tasks have associated with them an energy penalty, supplementing                                                        n
+the standard distance-based reward function. Because it is unclear
+how to incorporate an energy penalty into a (potentially vector-                      G(x1, . . . , xl ) = Ez1, ...,zm        fi        (5)
+valued) behavior characteristic, we used no energy penalty in our
+evolvability ES experiments. Consequently, for a fairer comparison                                                      i =1
+we also used no energy penalty in our MAML experiments. Table
+S5 displays additional hyperparameters for MAML.                          For example, consider the stochastic computation graph in figure
+                                                                       S6, reproduced from [35]. This graph G represents the expectation
+
+                                                                                      G(x0,  ) = Ex1,x2 [f1(x1) + f2(x2)] ,             (6)
+
+                                                                       where x1  p(·; x0,  ) and x2  p(·; x1,  ).
+
+                                                                       A key property of stochastic computation graphs is that they
+
+                                                                       may be differentiated with respect to their inputs. Using the score
+Evolvability ES: Scalable and Direct Optimization of Evolvability                                             GECCO '19, July 13­17, 2019, Prague, Czech Republic
+
+                                            f1                   f2                                           Ex1 [+]                        +   Ex2 [f2]
+
+               x0                           x1                   x2                                                                          f1     f2
+
+Figure S6: Example stochastic computation graph: input
+
+nodes are depicted with no border, deterministic nodes with
+
+square borders, and stochastic nodes with circular borders.                                               x0                                 x1     x2
+
+function estimator [14], we have that                                                                     Figure S7: Example nested stochastic computation graph: in-
+                                                                                                          put nodes are depicted with no border, deterministic nodes
+ G(x0,  ) = Ex1,x2  log p(x1;  , x0)(f1(x1) + f2(x2))                                                     with square borders, stochastic nodes with circular borders,
+                                                                       (7)                                and expectation nodes with double elliptical borders.
+
+                                  + log p(x2; , x1)f2(x2) .
+
+Schulman et al. [35] also derive surrogate loss functions for stochas-
+
+tic computation graphs, allowing for implementations of stochastic                                           As an example, consider the nested stochastic computation graph
+                                                                                                          G depicted in figure S7. First, note that G is indeed a nested sto-
+computation graphs with existing automatic differentiation soft-
+
+ware.                                                                                                     chastic computation graph, because the stochastic nodes and ex-
+
+For example, given a           sample       {x  i  }1  i   N     of x1  and   {x  i    }1  i   N  of      pectation nodes correspond, and because all stochastic nodes are
+                                                1                                 2                       leaves of the graph. Next, note that G is equivalent to the stochastic
+
+x2, we can write
+
+         1                                                                                                computation graph of figure S6 in the sense that it computes the
+L^( ) = N
+               log  p  (x1i ;    ,  x0  )(  f1(x1i )+  f2  (x2i  ))+log  p(x  i;    ,  x1i  )  f2(x2i ).  same function of its inputs:
+
+                                                                              2
+
+            i                                                                                                 G(x0,  ) = Ex1 f1(x1) + Ex2 [f2(x2)]         (10)
+
+                                                                                                  (8)
+
+Now to estimate  G(x0,  ), we have                                                                            = Ex1,x2 [f1(x1) + f2(x2)]                   (11)
+
+                        G(x0,  )   L^( ),                                                         (9)     The original stochastic computation graph formalism has the ad-
+
+which may be computed with popular automatic differentiation                                              vantage of more clearly depicting conditional relationships, but this
+
+software.                                                                                                 new formalism has two advantages:
+
+S3 NESTED STOCHASTIC COMPUTATION                                                                             (1) Nested stochastic computation graphs can represent arbi-
+      GRAPHS
+                                                                                                                  trarily nested expectations. We have already seen this in part
+We make two changes to the stochastic computation graph formal-
+ism:                                                                                                              with the example of figure S7, but we shall see this more
+
+   (1) We add a third type of node which represents the expectation                                               clearly in a few sections.
+        over one of its parent stochastic nodes of one of its inputs. We
+        require that a stochastic node representing a random variable                                        (2) It is trivial to define surrogate loss functions for nested sto-
+        z be a dependency of exactly one expectation node over z,
+        and that every expectation node over a random variable z                                                  chastic computation graphs. Moreover, these surrogate loss
+        depend on a stochastic node representing z.
+                                                                                                                  functions have the property that in the forward pass, they
+   (2) Consider a stochastic node representing a random variable z
+        conditionally dependent on a node y. Rather than expressing                                               estimate the true loss function.
+        this as a dependency of z on y, we represent this as a depen-
+        dency between the expectation node over z on y. Formally,                                            Consider a nested stochastic computation graph G with input
+        this means all stochastic nodes are required to be leaves of                                      nodes { }  {xi }, and suppose we wish to compute the gradient
+        the computation graph.                                                                             G(, x1, . . . , xn ). We would like to be able to compute the gradi-
+                                                                                                          ent of any node with respect to any of its inputs, as this would allow
+Because "nested stochastic computation graphs," as we term them,
+contain their expectations explicitly, they simply represent the sum                                      us to use the well-known backpropagation algorithm to compute
+of their output nodes (instead of the expected sum of their output                                         G. Unfortunately, it is often impossible to write the gradient of
+nodes, as with regular stochastic computation graphs).                                                    an expectation in closed form; we shall instead estimate  G given
+                                                                                                          a sample from the stochastic nodes of G.
+
+                                                                                                             Suppose G has a output node Ez [f ], the only expectation node
+                                                                                                          in G. Suppose moreover that Ez [f ] has inputs {i } (apart from f )
+                                                                                                          so z  p(·, 1 . . . m ), and suppose f has inputs {yi }. Note that to
+                                                                                                          satisfy the definition of a nested stochastic computation graph f
+                                                                                                          must ultimately depend on z, so we write f as f (y1, . . . , yl ; z). See
+                                                                                                          figure S8 for a visual representation of G.
+GECCO '19, July 13­17, 2019, Prague, Czech Republic                         Alexander Gajewski, Jeff Clune, Kenneth O. Stanley, and Joel Lehman
+
+1                                                                                             z                    f
+                          Ez [f ]
+                                                                                                                            Ez [f ]
+...
+
+m                                               f                                                                 
+
+                            y1               ...                  yl        Figure S9: Nested stochastic computation graph represent-
+                                                                            ing Natural Evolution Strategies.
+
+                                                z                           z                    B                    (·)2
+
+Figure S8: Nested stochastic computation graph with a sin-                                                                                Ez [(·)2]
+gle expectation node.
+                                                                                                                           
+   If we wish to compute  Ez [f (y1, . . . , yl ; z)], using the likeli-    Figure S10: Nested stochastic computation graph represent-
+hood ratio interpretation of the score function [14] and given a            ing the loss function of MaxVar-EES.
+sample {zi }1i N of z, we can write
+
+                         1
+L^() = N i f (y1, . . . , yl ; z)L(zi ),
+                                                                      (12)
+
+where L is the likelihood ratio given by                                    and 18 are. In particular, this similarity makes it straightforward
+                                                                            to write a custom "expectation" operation for use in automatic
+                L(zi )      =   p(zi ; 1, .     .  .  ,  m  )  ,      (13)  differentiation software which computes the sample mean weighted
+                                                .  .  ,  m  )               by the likelihood ratio.
+                                p(zi  ;   ,  .
+
+                                          1
+
+and setting i = i gives                                                     S4 STOCHASTIC COMPUTATION GRAPHS
+                                                                                  FOR STANDARD ES AND EVOLVABILITY
+ L(zi )                  =  p(zi ; 1, . . . , m )                     (14)        ES
+                             p(zi ; 1, . . . , m )
+
+                         =  log p(zi ; 1, . . . , m ).                (15)  As mentioned in the main text of the paper, we can estimate the
+                                                                            gradients of the standard ES and evolvability ES loss functions
+   Note that f can either depend on  directly, if   {yi }, or
+through the distribution of z, if   {i }. Differentiating, we have          with the score function estimator because we can represent these
+
+              1                                                             loss functions as (nested) stochastic computation graphs. Figure S9
+ L^() = N i f (y1, . . . , yl ; z) L(zi )+ f (y1, . . . , yl ; z)L(zi ),
+                                                                            shows a (nested) stochastic computation graph representing the
+
+                                                                            standard ES loss function. This yields the following surrogate loss
+
+                                                                      (16)
+
+and setting i = i we see that  L^() is an estimate of                       function for ES:
+
+                                                                                                             1
+                                                                                                 L^( ) = N i f (zi )L(zi ),
+                 Ez [f (y1, . . . , yl ; z)]                          (17)                                                                (19)
+
+   Generalizing this trick to an arbitrary nested stochastic com-           where L(zi ) is the likelihood function.
+
+putation graph G, we see that creating a surrogate loss function            Figure S10 shows a nested stochastic computation graph repre-
+L^ is as simple as replacing each expectation node with a sample
+mean as in Equation 12, weighted by the likelihood ratio L(zi ).            senting MaxVar-EES, yielding the following surrogate loss function:
+Note that since L(zi ) = 1, the surrogate loss is simply the method
+                                                                                                          1           B(zi )2L(zi ;  )    (20)
+of moments estimate of the true loss.                                                            L^( ) = N
+                                                                                                                i
+
+Considering again the graph of figure S7, we can construct a                Finally, figure S11 shows a nested stochastic computation graph rep-
+
+surrogate loss function                                                     resenting the loss function for MaxEnt-EES, yielding the following
+                                                                            surrogate loss function:
+             1  f1(x1i ) + f2(x2i )L(x2i ;  ) L(x1i ;  , x0). (18)
+L^(, x0) = N i                                                                 1                           (B(z) - z)L(zj ;  ) L(zi ;  )
+                              j                                             L^( ) = - N
+                                                                                                    log  j                                (21)
+
+While this may not seem like very much of an improvement at                                      i
+
+first, it is insightful to note how similar the forms of Equations 10
+Evolvability ES: Scalable and Direct Optimization of Evolvability                      GECCO '19, July 13­17, 2019, Prague, Czech Republic
+
+     z        B                                                          S6 THEORETICAL RESULTS
+
+                              Ez []  - log              Ez [- log]          Theorem S6.1. For every pair of continuous functions  : [0, 1]n 
+                                                                         R and h : [0, 1]n  R, and for every  > 0, there exists a 2 > 0
+z             B                                                          such that for every 0 < 1 < 2, there exists 5-hidden-layer neural
+                                                                         network f (x;W 1, . . . ,W 5) : [0, 1]n  R with ReLU activations such
+                                                                         that for any distribution of weight perturbations such that each com-
+                                                                         ponent is sampled i.i.d. from a distribution with distribution function
+                                                                         F , | f (x;W 1, . . . ,W 5) - (x)| <  for all x  [0, 1]n with probability
+                                                                         at least F (2) - F (1), and | f (x;W 1, . . . ,W 5) - h(x)| <  for all
+                                                                         x  [0, 1]n with probability at least F (-1) - F (-2), where W l are
+                                                                         the perturbed weights.
+
+Figure S11: Nested stochastic computation graph represent-
+ing the loss function of MaxEnt-EES.
+
+S5 POLICY GRADIENTS EVOLVABILITY ES                                         Proof sketch. First, note that  and h can each be arbitrarily
+                                                                         approximated as 2-layer neural networks G and H .
+With MaxVar-EES, the loss function we wish to optimize is given
+                                                                            Next, construct a 2-layer neural network  : R  R2 with ReLU
+by:                                                                      activations which is uniformly  -close in each component to the
+                                                                         function x  (I [x > 0], I [x < 0]).
+                        
+
+J (µ) = E N (µ, 2)            Eat  (· |st , )(B - E (B ))21[t =  ]       Each of these 3 neural networks is uniformly continuous both in
+
+                        t =1                                             the inputs and in the weights). We now connect them into a neural
+
+                                                                   (22)  network F . Create a node K in the first hidden layer of F with bias
+
+where  is the length of an episode; the action at at time t is sampled   B, and connect G and H to the inputs such that their outputs are
+from a distribution  (·|st ,  ) depending on the current state st and    in the second hidden layer of F . Also construct a node K  in the
+the parameters of the current policy  ; and B is the behavior at         second hidden layer of F , and label the weight connecting K and K 
+time  . Evolvability ES uses the following representation of the
+                                                                         wk . Now place  such that its outputs are in the fourth hidden layer
+gradient of this function:                                               of F . Next, create two nodes G^ and H^ in the 5th hidden layer of F ,
+
+                                                                         initialize the weight connecting G and G^ to 1, and that connecting
+
+     µ J (µ) = E N (µ, 2)           Eat  (· |st , )(B - E (B ))2         H and H^ to 1. Label the weight connecting 1 to G^ w and that
+
+                              t =1                                 (23)  connecting 2 to H^ wh . Finally, connect G^ and H^ to the output node
+                                                                         F with weight 1 each. Initialize all unmentioned weights to 0.
+                                    µ log N ( ; µ,  2)1[t =  ]
+                                                                         Now pick 2 such that uniformly over perturbations less than
+
+Another way to write this same gradient is as follows, using the          /2, nodes G and H are 1-close to their original outputs, and such
+
+reparametrization trick:                                                 that nodes 1 and 2 are 1/M-close to its original output, where
+
+                                                                         M is a bound on the activations of nodes  and h.
+
+µ J (µ) = E N (0, 2)            Eat  (· |st , µ+ )(B - E (B ))2x         Fix 0 < 1 < 2. Set B such that every perturbation in (1, 2) to
+
+                          t =1                                     (24)  wk results in node K positive over all inputs, and every perturbation
+                                                                         in (-2, -1) to wk results in node K negative over all inputs. We
+                                µ log  (at |st , µ + )1[t =  ]           can do this because the inputs to K are bounded.
+
+This representation is reminiscent of the NoisyNet formulation of           Then for perturbations to wk in (1, 2), we can make  2-close
+                                                                         to (1, 0) (in each component). We can then set w and wh small
+the policy gradient algorithm [13]. Evolvability ES estimates its
+
+representation of the gradient from samples like this:                   enough that when 1 is 1/M-close to 1, node G^ is 0 and node H^
+
+              m                                                          is 3-close to its original output, and when 2 is 1/M-close to 1,
+
+µ J(µ)              (Bk - B¯ )21[t =  ]µ log N (k ; µ,  2) (25)          H^ is 0 and G^ is 3-close to its original output. Putting everything
+
+         k =1 t =1                                                       together, we can choose 1, 2, and 3 such that for perturbations
+
+where Bk is the BC of the kth individual, and B¯ is the mean BC          to wk in (1, 2), F is -close to , and for perturbations to wk in
+among all m individuals. A hypothetical policy gradients version
+                                                                         (-2, -1), F is -close to h.                       
+
+of Evolvability ES could estimate its gradient as follows:
+
+              m
+
+     µ J(µ)             (Bk - B¯ )21[t =  ]µ log  (at |st , µ + )           We hope that future work will strengthen these results in sev-
+                                                                         eral ways. First, the number of layers can likely be made more
+              k=1 t =1                                                   economical, and the results should be extensible to other activa-
+                                                                         tion functions like Tanh. It should also be possible to merge more
+                                                                   (26)  than two continuous functions in a similar way; a more open-ended
+                                                                         question is whether, as in the Ant domain, some uncountable family
+The formulation above in terms of an explicit sum over  timesteps        of functions can be merged into a single neural network.
+
+and an indicator on the current timestep makes it easy to extend
+both of these algorithms to allow for diversity of behavior at multi-
+
+ple timesteps, closer to a traditional RL per-timestep reward func-
+
+tion.
+

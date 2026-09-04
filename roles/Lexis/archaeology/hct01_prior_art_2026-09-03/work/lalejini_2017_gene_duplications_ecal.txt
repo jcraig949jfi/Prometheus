@@ -1,0 +1,537 @@
+                                                                                                          Oral presentation
+
+Gene Duplications Drive the Evolution of Complex Traits and Regulation
+
+               Alexander Lalejini1,2,3, Michael J. Wiser2,3, and Charles Ofria 1,2,3
+
+               1Department of Computer Science, Michigan State University, East Lansing, MI, USA
+                                  2BEACON Center for the Study of Evolution in Action
+
+  3Ecology, Evolutionary Biology, and Behavior Program, Michigan State University, East Lansing, MI, USA
+                                                        alex@lalejini.com
+
+                              Abstract                                          ate adaptive phenotypic variation and to transmit that infor-
+                                                                                mation via an evolutionary process (Hu and Banzhaf, 2010)
+   Gene duplications have been shown to promote evolvabil-                      ­ both in biology and in computational evolution.
+   ity in biology and in computational systems. We use digi-
+   tal evolution to explore why; that is, what characteristics of                  Gene duplications have been shown to enhance evolv-
+   gene duplications increase evolutionary potential? Are du-                   ability in a number of biological systems. A striking ex-
+   plications valuable because they inflate the effective muta-                 ample comes from the Long-Term Evolution Experiment in
+   tion rate, generating increased amounts of genetic variation?                Escherichia coli, where a duplication in one population al-
+   Or is it that those mutations are clustered together? Or, is                 lowed a protein to be expressed in an environment where it
+   it that the mutations insert genetic material, providing evolu-              would normally be inhibited (Blount et al., 2012). By ex-
+   tion an easy technique to select for longer genomes? Does                    pressing this protein in a different context, the cell gained
+   the value pertain to the information being duplicated in the                 access to a resource that it previously could not metabolize
+   genome? If so, is the full structure of duplicated code criti-               resulting in a 7-fold increase in population size. Beyond spe-
+   cal, or would the duplication of functional building blocks be               cific cases of how a gene duplication led to increased evolv-
+   valuable even if rearranged? Using the Avida Digital Evolu-                  ability, large scale genomic studies have discovered cases
+   tion Platform, we experimentally tease apart these aspects in                where a strikingly high fraction of the genes in an organ-
+   two qualitatively different environments: one where complex                  ism show evidence of having arisen from gene duplications
+   computational traits are directly selected, and another where                (Teichmann et al., 1998; Teichmann and Babu, 2004), em-
+   those traits need to be regulated based on current environmen-               phasizing the role of duplication in evolutionary innovation.
+   tal conditions. We confirm that gene duplications promote                    Comparative studies further suggest that many ancient dupli-
+   evolvability in both static and changing environments. Fur-                  cation events were associated with increases in both genetic
+   thermore, we find that the primary value of gene duplications                robustness and evolutionary innovation (reviewed in (Wag-
+   comes from their capacity to duplicate existing genetic in-                  ner, 2008)). Though comparative studies lack the definitive
+   formation within a genome. Specifically, while duplications                  proof of laboratory manipulation, the accumulated weight of
+   that randomize the order of genetic material are valuable, the               evidence clearly suggests that gene and genome duplication
+   most useful form of duplication also preserve the structure                  events can have long-term evolutionary consequences.
+   (and thus information content) of duplicated sequences.
+                                                                                   The prominence of gene duplications in biological evolu-
+                      Introduction                                              tion has inspired their use in artificial evolutionary systems.
+                                                                                In genetic programming, the optimal program architecture
+Gene duplication is a phenomenon by which additional                            for solving a particular problem is challenging to predict
+copies of a region of genetic material are incorporated into                    a priori. Inspired by Ohno's Evolution by Gene Duplica-
+a genome. There are numerous processes that can result in                       tion (Ohno, 1970), Koza used gene duplication and deletion
+gene duplication, each with their own specific outcomes (as                     operators to co-evolve genetic programs and their structure,
+reviewed in (Zhang, 2003)), ranging from repeats of gene                        finding that gene duplication and deletion increased program
+fragments to whole genome duplication. All of these pro-                        evolvability and produced simpler solutions (Koza, 1995).
+cesses result in an increase in genome size, but more im-                       Calabretta et al. evolved modular neural network motor con-
+portantly, genetic material that is likely more structured and                  trollers for robots with and without module duplication op-
+meaningful than random insertions. As such, gene duplica-                       erators, finding evidence that access to duplication opera-
+tion is an important mechanism for generating genetic nov-                      tions resulted in increased functional specialization in net-
+elty, providing a source of new genetic material for evolu-                     work modules (Calabretta et al., 1998, 2000). These and
+tionary processes to act on and enabling new evolutionary                       other computational studies (Ryan et al., 1998; Sawai and
+opportunities (Zhang, 2003; Crow and Wagner, 2006; Mag-
+adum et al., 2013). Indeed, gene duplication has been shown
+to promote evolvability ­ the capacity of a system to gener-
+
+Carole Knibbe et al, eds., Proceedings of the ECAL 2017, Lyon, France, 4-8 September 2017,                257
+
+(Cambridge, MA: The MIT Press, ©2017 Massachusetts Institute of Technology).
+
+This work is licensed to the public under a Creative Commons Attribution - NonCommercial - NoDerivatives
+
+4.0 license (international): http://creativecommons.org/licenses/by-nc-nd/4.0/
+Adachi, 1999, 2000; Schmitt, 2005) corroborate some of the                                                                                           Oral presentation
+benefits of gene duplication seen in natural systems.
+                                                                                how each of our slip mutation operators affect the evolution
+   Given the evidence that gene duplication promotes evolv-                     of digital organisms in different contexts, we are able to iso-
+ability in both computational and natural systems, we use                       late which aspects of gene duplications are most important
+a digital evolution approach to explore why. That is, what                      for promoting evolvability.
+aspects of gene duplications promote evolvability?
+                                                                                                        Methods
+   Is the full structure of duplicated code critical, or would
+the duplication of the functional elements be valuable even                     The Avida Digital Evolution Platform
+if they are rearranged? Exact duplications can result in                        We conducted all experiments with Avida, which provides
+functionally redundant genes that can increase the muta-                        a computational instance of evolution where researchers can
+tional robustness of a genotype (Crow and Wagner, 2006)                         empirically test hypotheses that would be difficult or impos-
+or allow the organism to produce additional gene product                        sible to test in natural systems (Ofria et al., 2009).
+(Zhang, 2003). If a highly constrained genetic sequence
+is duplicated, one of the versions can mutate more freely,                      Figure 1: A visual representation of an organism's virtual hard-
+which may lead to new functionality (Zhang, 2003; Wagner                        ware in Avida. The original figure is from (Ofria et al., 2009).
+et al., 2003) ­ a process known as neofunctionalization. Al-
+ternatively, subfunctionalization may occur where the two                       Digital Organisms in Avida are self-replicating computer
+`daughter' genes diverge from the ancestral gene state, spe-                    programs that compete for space in a finite world. Each or-
+cializing on different aspects of the ancestral gene's func-                    ganism is defined by a linear sequence of program instruc-
+tionality (Zhang, 2003). Gene duplications are also thought                     tions (i.e. its genotype) and a set of virtual hardware. The
+to play an important role in the evolution of complex genetic                   instruction set in Avida is Turing Complete and syntactically
+regulation (Teichmann and Babu, 2004). If a regulatory gene                     robust ­ any ordering of instructions is syntactically valid,
+is duplicated, the copy could continue to regulate the same                     though not always useful. The instruction set includes op-
+target genes, but mutations may cause it to respond to new                      erations for basic computations, execution flow control, in-
+signals; or, the duplicated regulatory gene may continue to                     put and output, and self-replication. Additionally, we incor-
+respond to the same signals, but it may begin regulating a                      porate sensory instructions into the instruction set, enabling
+different gene (Teichmann and Babu, 2004).                                      organisms to sense the state of their current environment.
+                                                                                An organism's virtual hardware (depicted in Figure 1) con-
+   Aside from creating redundant copies of existing genetic                     sists of components such as a central processing unit (CPU),
+code in a genome, there are other features of gene dupli-                       registers for computation, buffers for input and output, and
+cation that may result in increased evolvability. Are gene                      memory stacks.
+duplications valuable because they inflate the effective mu-
+tation rate of genomes, increasing genetic variation? Or is                        Organisms in Avida replicate asexually by allocat-
+the important factor that those new mutations are clustered                     ing memory for their offspring, copying their genome
+together? Or is it that the mutations are insertions that pro-                  instruction-by-instruction, and then dividing. However,
+vide evolution with an easy technique to select for longer                      copy and divide operations are not perfect and can result
+genomes and increased information storage capacity? These                       in mutated offspring. Organisms can influence their replica-
+aspects are nearly impossible to disentangle in biological                      tion speed by improving their metabolic rate. An organism's
+systems, but can be addressed in computational ones.                            metabolic rate determines the speed at which it executes
+                                                                                instructions in its genome; a higher metabolic rate allows
+   Using the Avida Digital Evolution Platform, we imple-                        an organism to execute its genome faster, and thus, allows
+mented a series of mutation operators to systematically iso-                    the organism to copy itself faster. Initially, an organism's
+late aspects of gene duplication and tease apart which factors
+promote evolvability. We tested these operators in two con-
+texts: in a static environment that rewards the performance
+of nine basic Boolean logic operations, and in two dynamic
+environmental conditions that require the evolution of regu-
+latory mechanisms capable of altering which operations are
+expressed as a function of current environmental conditions.
+There are several mechanisms that produce gene duplica-
+tions in biological systems. Here, we use gene duplication
+mutation operators in Avida that resemble replication slip-
+page (Bzymek and Lovett, 2001) (slip mutations) and allow
+for gene duplications or deletions at any scale.
+
+   We introduce five slip mutation operators to tease apart
+the specific components of a gene duplication. By observing
+
+Carole Knibbe et al, eds., Proceedings of the ECAL 2017, Lyon, France, 4-8 September 2017,                258
+
+(Cambridge, MA: The MIT Press, ©2017 Massachusetts Institute of Technology).
+
+This work is licensed to the public under a Creative Commons Attribution - NonCommercial - NoDerivatives
+
+4.0 license (international): http://creativecommons.org/licenses/by-nc-nd/4.0/
+                                                                                                               Oral presentation
+
+metabolic rate is roughly proportional to its length. How-                      inserted into the genome; however, depending on the partic-
+ever, an organism's metabolic rate can be adjusted when an                      ular slip mutation operator, which instructions are inserted
+organism completes a particular task, such as a mathemati-                      and where the insertions take place may be different. Fig-
+cal computation. In this way, we can differentially reward or                   ure 2 provides description and examples of how each slip
+punish the performance of different computational tasks.                        mutation operator handles insertions.
+
+   When an organism finishes replicating, its offspring is                      Sensing in Avida In Avida, organisms can use regulatory
+placed in a random location anywhere in the population,                         mechanisms that alter which operations are expressed as
+replacing that location's previous occupant. Thus, improv-                      a function of environmental conditions. Such (phenotypic
+ing the efficiency of self-replication or performing rewarded                   plasticity) has been shown to evolve in a temporally chang-
+computational tasks are both advantageous in the competi-                       ing environment (Clune et al., 2007; Lalejini and Ofria,
+tion for space in Avida. The combination of competition and                     2016). In our changing environment experiments, we in-
+heritable variation due to imperfect copy and divide opera-                     clude sensory instructions that, when executed, provide in-
+tions results in evolution by natural selection in Avida.                       formation about the current environmental conditions. Us-
+                                                                                ing a combination of these task-specific sensors, an organ-
+Mutation events in Avida come in four types (substitution,                      ism can fully resolve the current state of its environment.
+insertion, deletion, or slip) and can be set to occur when
+an instruction is copied or when an offspring is being born.                    Experimental Design
+All mutation rates are independently configurable for any
+combination of type and timing.                                                 To investigate how gene duplication affects evolvability, we
+                                                                                evolved populations in three different environments: a static
+   Copy mutations occur when a copy instruction errs. If it                     environment, a simple changing environment, and a com-
+is a substitution error, a random instruction is written to the                 plex changing environment.
+copy location instead of the intended instruction. If it is an
+insertion, a random extra instruction is copied along with the                     In the static environment, we rewarded the performance
+intended instruction. If it is a deletion, the copy instruction                 of nine Boolean logic functions: NOT, NAND, OR-NOT,
+fails to write any instruction at all.                                          AND, OR, AND-NOT, NOR, XOR, and EQUALS (for more
+                                                                                information on these functions in Avida see (Lenski et al.,
+   Divide mutations act on an organism's offspring during                       2003)). Rewards for these functions were identical and con-
+division. When a divide insertion mutation occurs, a random                     sistent for the duration of the experiment.
+instruction is inserted into the offspring's genome at a ran-
+dom position, increasing the size of the offspring's genome                        To analyze an organism evolved in the static environment,
+by one. When a divide deletion mutation occurs, a random                        we evaluated the number of unique computational tasks it
+instruction in the offspring's genome is removed, decreasing                    could perform, resulting in a phenotypic match score that
+the size of the offspring's genome by one.                                      indicates how well the organism is adapted to the static envi-
+                                                                                ronment. Phenotypic match scores in the static environment
+   A new type of divide mutations are Slip mutations, which                     range from a minimum of 0 (i.e. the organism performs no
+enable gene duplications and deletions. When a slip muta-                       tasks) to a maximum of 9 (i.e. the organism performs all 9
+tion occurs, two sites in the offspring genome are randomly                     tasks). Equation 1 describes the static match score (Scores),
+selected, defining the target segment for the operation. If                     where P is a phenotype and Ps represents the set of tasks
+the first site is upstream of the second, the slip mutation re-                 phenotype P performs in the static environment.
+sults in an insertion; this is as if the organism's replication
+machinery had slipped backward during replication and re-                                   Scores(P ) = |Ps|  (1)
+copied a segment. If the second site is upstream of the first,
+the slip mutation results in a deletion; this is as if the organ-                  In the simple changing environment, we considered the
+ism's replication machinery slipped forward during replica-                     performance of only four boolean logic tasks: NOT, NAND,
+tion, skipping over a genetic segment. Our slip mutation                        OR-NOT, and AND-NOT. At any given time each of these
+operators ensure that insertions and deletions due to slip mu-                  tasks was either rewarded or punished. Thus, there were a
+tations occur with equal probability; thus, absent selection,                   total of 16 possible environmental conditions. Starting at the
+we do not create an inherent bias on genome length.                             beginning of the experiment and every 50 updates1 there-
+                                                                                after, the environment changed to a random one of the 16
+   We use five variants of slip mutations: slip-duplicate, slip-                possible conditions. These environmental fluctuations cre-
+scramble, slip-random, slip-NOP, and slip-scatter. When a                       ated a selective pressure for organisms to use sensory in-
+slip mutation results in a deletion, in all but the slip-scatter                structions to regulate which tasks they perform (i.e. pheno-
+variant, the target segment is deleted. Rather than deleting                    typic plasticity) to match the current condition. We chose an
+the target segment, the slip-scatter mutation operator dis-
+tributes a number of single-instruction deletions equal to                          1An update in Avida is equal to the amount of time it takes for
+the length of the target segment uniformly throughout the                       the average organism to execute 30 instructions; see (Ofria et al.,
+genome. When a slip mutation results in an insertion, a num-                    2009) for further detail.
+ber of instructions equal to the length of the target segment is
+
+Carole Knibbe et al, eds., Proceedings of the ECAL 2017, Lyon, France, 4-8 September 2017,                     259
+
+(Cambridge, MA: The MIT Press, ©2017 Massachusetts Institute of Technology).
+
+This work is licensed to the public under a Creative Commons Attribution - NonCommercial - NoDerivatives
+
+4.0 license (international): http://creativecommons.org/licenses/by-nc-nd/4.0/
+                                                                                                                                        Oral presentation
+
+Figure 2: Descriptions and visual examples of how each of our slip mutation operator handles insertions. A) Slip-duplicate: The inserted
+segment is an exact duplicate of the target segment and is inserted directly after the target segment. B) Slip-scramble: The inserted segment
+is a shuffled duplicate of the target segment and is inserted directly after the target segment. C) Slip-random: The inserted segment consists
+of random instructions and is inserted directly after the target segment. D) Slip-NOP: The inserted segment consists of nop-X instructions (a
+no operation instruction in Avida) and is inserted directly after the target segment. E) Slip-scatter: The inserted segment consists of random
+instructions and is broken up and inserted into random locations in the genome. F) For comparison, we include an example with no mutation.
+
+environmental change rate of once per 50 updates because                        if the task execution did not match the condition (i.e. per-
+previous work has shown that it facilitates the evolution of                    formed a punished task or did not perform a rewarded task).
+phenotypic plasticity (Lalejini and Ofria, 2016).                               We describe phenotypic match scores for a changing envi-
+                                                                                ronment, Scorec, in Equation 2 where P is a phenotype, E
+   The complex changing environment was identical to the                        is the set of all environmental conditions, Pe is the set of
+simple changing environment, except instead of considering                      tasks phenotype P performs in environmental condition e,
+only four boolean logic tasks, we considered nine: NOT,                         ¬Pe is the set of tasks phenotype P does not perform in en-
+NAND, OR-NOT, AND, OR, AND-NOT, NOR, XOR, and                                   vironmental condition e, Re is the set of tasks rewarded in
+EQUALS. Thus, there were a total of 512 possible environ-                       environmental condition e, and ¬Re is the set of tasks pun-
+mental conditions, making it significantly more challenging                     ished in environmental condition e. Given this method of
+than the simple changing environment.                                           scoring, any non-plastic organisms always receive a pheno-
+                                                                                typic match score of 0. In the simple changing environment,
+   To analyze an organism that evolved in a changing envi-                      scores range from a minimum of -64 (i.e. perfectly mal-
+ronment, we computed a phenotypic match score that indi-                        adaptive plasticity) to a maximum of 64 (optimally adaptive
+cates how well the organism can cope with all possible envi-                    plasticity), and in the complex changing environment, scores
+ronmental conditions. Across each environmental condition                       range from -4608 to +4608.
+(16 in the simple changing environment, 512 in the complex
+changing environment) and for each task we increased an                         Scorec(P ) =  E  |Re    Pe|  +  |¬Re    ¬Pe|  -  |Re    ¬Pe|  -  |¬Re    Pe|
+organism's score by one if the task execution matched the                                     e
+condition (i.e. performed a rewarded task, or avoided a pun-
+ished task), and we decreased an organism's score by one                                                                                                 (2)
+
+Carole Knibbe et al, eds., Proceedings of the ECAL 2017, Lyon, France, 4-8 September 2017,                                                               260
+
+(Cambridge, MA: The MIT Press, ©2017 Massachusetts Institute of Technology).
+
+This work is licensed to the public under a Creative Commons Attribution - NonCommercial - NoDerivatives
+
+4.0 license (international): http://creativecommons.org/licenses/by-nc-nd/4.0/
+Treatments Each of our three experiments consisted of                                                                                                Oral presentation
+seven treatments: one baseline treatment and six experimen-
+tal treatments. Treatments differed only in the available mu-                      The high mutation rate treatment served a similar pur-
+tation operators and the rates at which those operators were                    pose to the slip-scatter treatment. However, instead of sin-
+applied. Each treatment was designed to tease apart why                         gle mutation events (slip-scatter mutations) causing the in-
+gene duplications promote evolvability. Table 1 provides                        sertion of many random instructions, we elevated the rates
+details about each treatment, and these details were shared                     at which the copy instruction makes a random insertion or
+across all three experiments.                                                   random deletion to result in approximately the same number
+                                                                                of mutations per divide as in any treatment that includes a
+   The baseline treatment was used as a control; we used                        slip mutation operator. This allowed us to evaluate the im-
+the results from this treatment as a baseline for evolvability                  portance of having an increased mutation rate due to large-
+with which we compared the results from all other experi-                       scale, single-event mutations versus having a higher copy
+mental treatments. Mutation rates in the baseline treatment                     mutation rate.
+have been shown to facilitate both the evolution of complex
+boolean logic tasks, such as EQUALS, and the evolution of                          In all experiments, organisms were limited to a minimum
+task regulation in Avida (Lenski et al., 2003; Lalejini and                     genome size (i.e. instruction sequence length) of 1002. We
+Ofria, 2016)                                                                    limited the population size to 3600 and seeded each ex-
+                                                                                periment with an ancestral genotype capable only of self-
+   The slip-duplicate treatment allowed for mutation                            replication. In both the static environment and simple chang-
+events that resulted in full code duplications via the slip-                    ing environments, populations evolved for 200000 updates.
+duplicate mutation operator. Duplications in this treatment                     In the complex changing environment, populations evolved
+preserved both the content and the structure of duplicated                      for 400000 updates. We ran 100 trials of each treatment in
+code. This allowed us to answer the following question: how                     each of our three environments.
+important is it that gene duplications can exactly duplicate
+sequences in a genome in both content and structure?                            Statistical Methods
+
+   The slip-scramble treatment allowed for mutation                             In each of three environments (static environment, simple
+events (via the slip-scramble operator) that resulted in code                   changing environment, complex changing environment), we
+duplications where the content of the duplicated code was                       performed experiments with six experimental treatments to
+preserved, but the structure of the duplicated code was not                     be compared against a control. To determine if any of
+preserved. This, when compared with the slip-duplicate                          the treatments was significant within a set, we performed
+treatment, allowed us to answer the following question: is                      a Kruskal-Wallis test, applying a Bonferroni correction for
+it that the duplication of particular instructions is important,                the three different environments to keep the experiment-wise
+regardless of their arrangement?                                                 = 0.05. For an environment in which the Kruskal-Wallis
+                                                                                test was significant, we performed Mann-Whitney U tests
+   The slip-random treatment allowed us to answer the fol-                      for each experimental treatment against the control, and ap-
+lowing question: is it the case that gene duplications pro-                     plied a Bonferroni correction for the six such tests within
+mote evolvability because they result in the insertion of                       each environment. All statistical analysis was conducted in
+large, clustered mutations, regardless of what those muta-                      R 3.2.3 (R Core Team, 2015).
+tions may be? The slip-random treatment (via the slip-
+random mutation operator) allowed for mutation events that                      Digital Organism Evaluation At the end of each trial, we
+could insert large, contiguous clusters of random instruc-                      extracted the final dominant (most abundant) genotype in the
+tions; one could also think of these mutations as maximally                     population, and we traced back that genotype's full ancestral
+noisy duplications where neither the content or structure of                    lineage. We calculated the phenotypic match score for each
+the duplicated code is preserved.                                               final dominant organism and all of their ancestors. In both
+                                                                                the simple and complex changing environments, however,
+   The slip-NOP treatment allowed for mutations capable                         the final dominant organism at the end of a trial was biased
+of inserting contiguous segments of blank `genetic tape' (via                   by the final environmental condition. The final dominant
+the slip-NOP mutation operator) in the form of no operation                     organism may have been well-adapted and abundant in the
+instructions. This allowed us to answer the following ques-                     final environmental conditions, but it may not have been ca-
+tion: how important is it that gene duplications provide evo-                   pable of surviving if the environmental conditions were al-
+lution with an easy technique for increasing genome size?                       lowed to change again. To avoid any edge effects associated
+
+   The slip-scatter treatment helped us to tease apart                              2In exploratory experiments, we found that, without enforcing
+whether or not gene duplications promote evolvability be-                       a minimum genome size, slip mutations caused many lineages to
+cause they inflate the effective mutation rate, generating in-                  quickly shrink in genome size because of inherent selection pres-
+creased amounts of genetic variation. This treatment al-                        sure for smaller genome size. Organisms became fast replicators
+lowed for mutations that, when triggered, could insert many                     but were then trapped on a local fitness optima, unable to evolve to
+random instructions into random locations in a genome (via                      perform complex computational tasks.
+the slip-scatter mutation operator).
+
+Carole Knibbe et al, eds., Proceedings of the ECAL 2017, Lyon, France, 4-8 September 2017,                261
+
+(Cambridge, MA: The MIT Press, ©2017 Massachusetts Institute of Technology).
+
+This work is licensed to the public under a Creative Commons Attribution - NonCommercial - NoDerivatives
+
+4.0 license (international): http://creativecommons.org/licenses/by-nc-nd/4.0/
+                                                                                                               Oral presentation
+
+                    Slip Mutation                                 Substitution rate              Insertion     Insertion and
+                                                                       per copy             and deletion rate  deletion rate
+    Treatment       Operator         Rate
+                                  per divide                            0.0025                   per copy        per divide
+      Baseline                                                          0.0025
+  Slip-duplicate    Slip-duplicate 0.05                                 0.0025                    0.0075             0.05
+   Slip-scramble                                                        0.0025                                       0.05
+   Slip-random      Slip-scramble 0.05                                  0.0025                                       0.05
+                                                                        0.0025                                       0.05
+     Slip-NOP       Slip-random   0.05                                  0.0025                                       0.05
+    Slip-scatter                                                                                                     0.05
+High mutation rate  Slip-NOP      0.05                                                                               0.05
+
+                    Slip-scatter  0.05
+
+Table 1: Differences in mutation operators and rates among the seven treatments.
+
+with this bias, instead of comparing final dominant organ-                      ators were capable of duplicating meaningful information
+isms in the simple and complex changing environments, we                        in a genome. Slip-scramble mutations maintain the con-
+compared the ancestors of these final dominant organisms                        tent but not the ordering of duplicated instruction sequences;
+that existed 1000 updates prior to the end of the experiment.                   thus, they can duplicate information about what instruc-
+                                                                                tions make-up already successful genetic sequences but do
+               Results and Discussion                                           not maintain the particular ordering of those instructions.
+                                                                                Slip-duplicate mutations are the full form of gene duplica-
+Does gene duplication promote evolvability?                                     tion, able to exactly duplicate the ordered instruction make-
+                                                                                up of existing genetic sequences. In contrast to the slip-
+We found that gene duplication promotes evolvability in                         scramble and slip-duplicate operators, all other slip mutation
+all three environments. As shown in Figure 3, organ-                            operators do not duplicate information about instruction se-
+isms evolved in the slip-duplicate treatment had significantly                  quences already present in the genome.
+higher phenotypic match scores than organisms evolved in
+the baseline treatment across the static, simple changing and                      Because the slip-scramble treatment was significantly bet-
+complex changing environments (two-tailed Mann-Whitney                          ter at promoting evolvability than the baseline treatment,
+U tests, W = 562.5, 2702.5, 1540 respectively, Bonferroni-                      we can conclude that the duplication of functional building
+adjusted p values all << 0.0001). This result suggests that                     blocks is valuable no matter how they are arranged when
+the slip-duplicate operator promotes the evolution of com-                      duplicated. However, is it important to preserve both the
+plexity both in static environments that require the evolu-                     contents and ordering of duplicated sequences?
+tion of unconditional task performance (Boolean logic op-
+erations), and in dynamic environmental conditions that re-                     Is more information better? From Figure 3, organisms
+quire the evolution of regulatory mechanisms that alter ex-                     evolved in the slip-duplicate treatment had higher pheno-
+pression based on current environmental conditions. These                       typic match scores than organisms evolved in the slip-
+results, as expected, support the existing literature on the ca-                scramble treatment, implying that the additional informa-
+pacity of gene duplications to promote evolvability (Koza,                      tion in a gene duplication event does promote evolvability.
+1995; Zhang, 2003; Teichmann and Babu, 2004).                                   To confirm this relationship and reduce multiple compar-
+                                                                                ison issues with statistical tests, we re-ran 100 new trials
+What aspects of gene duplication promote                                        of both the slip-duplicate and slip-scramble treatments and
+evolvability?                                                                   compared the phenotypic match scores of the evolved or-
+                                                                                ganisms. In all three environments, organisms that evolved
+Across all three environments we found that the most im-                        in the slip-duplicate treatment had significantly higher phe-
+portant aspect of gene duplications is the capacity to dupli-                   notypic match scores than organisms evolved in the slip-
+cate meaningful information in the genome. As shown in                          scramble treatment (two-tailed Mann-Whitney U tests, W
+Figure 3, only organisms that evolved in the slip-duplicate                     = 4305, 4028.5, 3621.5 respectively, Bonferroni-adjusted p
+and slip-scramble treatments had significantly higher phe-                      values 0.0109, 0.0222, 0.0017, respectively). This result
+notypic match scores than organisms evolved in the base-                        supports that duplicating both the content and structure of
+line treatment. Organisms evolved in all other experimental                     existing genetic code is an important factor in their ability to
+treatments were either not significantly different from the                     promote evolvability.
+baseline treatment or significantly worse than the baseline
+treatment.
+
+   Of the five types of slip mutation operators used (see
+Figure 2), only the slip-duplicate and slip-scramble oper-
+
+Carole Knibbe et al, eds., Proceedings of the ECAL 2017, Lyon, France, 4-8 September 2017,                                    262
+
+(Cambridge, MA: The MIT Press, ©2017 Massachusetts Institute of Technology).
+
+This work is licensed to the public under a Creative Commons Attribution - NonCommercial - NoDerivatives
+
+4.0 license (international): http://creativecommons.org/licenses/by-nc-nd/4.0/
+Figure 3: Experimental results from all three environments: A)                                                                                       Oral presentation
+static environment, B) simple changing environment, and C) com-
+plex changing environment. The violin plots for each environment                than organisms evolved in the baseline treatment, which can
+indicate the phenotypic match scores for final dominants in the                 be seen in Figure 3 (two-tailed Mann-Whitney U tests, W
+static environment and for the ancestors of final dominants that                = 9958 and 9944, respectively, Bonferroni-adjusted p values
+existed 1000 updates prior to the end of a trial in the simple and              both << 0.0001). A similar result was found in (Lalejini
+complex changing environments. Each time series shows the phe-                  and Ofria, 2016). Although higher mutation rates increase
+notypic match scores for the lineages of final dominant organisms               genetic variation, most mutations have deleterious effects
+over time. The colors in each time series correspond to the col-                (Schlichting and Smith, 2002). Thus, higher mutation rates
+ors in the violin plots. Treatments that have significantly higher              may increase the difficulty of maintaining the genetic ma-
+phenotypic match scores than the baseline treatment are marked                  chinery necessary for complex regulation.
+with blue *, and treatments that have significantly lower pheno-
+typic match scores than the baseline treatment are marked with red                 If elevated mutation rates inhibit the evolution of regula-
+*.                                                                              tion and all experimental treatments with slip mutation oper-
+                                                                                ators have an effectively higher mutation rate than the base-
+High mutation rate inhibits the evolution of                                    line treatment, why do we see this effect only in the high
+regulation in changing environments                                             mutation rate treatment? The rates of insertions and dele-
+                                                                                tions per instruction copied in the high mutation rate treat-
+In addition to our results on why gene duplications pro-                        ment were selected to, on average, result in approximately
+mote evolvability, our experiments indicate that high mu-                       the same number of mutations per divide as in our treat-
+tation rates inhibit the evolution of regulation in changing                    ments with slip mutations. Yet, only organisms evolved in
+environments. In both the simple and complex changing                           the high mutation rate treatment had significantly lower phe-
+environments, organisms evolved in the high mutation rate                       notypic match scores than organisms evolved in the base-
+treatment had significantly lower phenotypic match scores                       line treatment in the changing environments; all other ex-
+                                                                                perimental treatments were either significantly better or not
+                                                                                significantly different than the baseline treatment.
+
+                                                                                   Why is it that only the high mutation rate treatment inhib-
+                                                                                ited evolvability in the changing environments? One pos-
+                                                                                sibility stems from the higher mutation load imposed on
+                                                                                populations by the high mutation rate treatment. Slip mu-
+                                                                                tations result in large mutational events that affect few off-
+                                                                                spring, whereas the elevated rate of copy mutations in the
+                                                                                high mutation rate treatment results in an increased number
+                                                                                of smaller mutational events spread across many offspring.
+                                                                                Thus, many offspring in the high mutation rate treatment are
+                                                                                subject to the increased rate of deleterious mutations that re-
+                                                                                sults from the higher rates of copy insertions and copy dele-
+                                                                                tions. This is in contrast to treatments with slip mutations
+                                                                                where relatively fewer offspring are subjected to large mu-
+                                                                                tational events, which results in the concentration of delete-
+                                                                                rious mutations in fewer offspring relative to the high mu-
+                                                                                tation rate treatment. Further analysis is needed to confirm
+                                                                                that this is, indeed, the case.
+
+                                                                                                      Conclusion
+
+                                                                                In this work, we investigated both if and how gene dupli-
+                                                                                cations promote evolvability in two qualitatively different
+                                                                                contexts: 1) in a static environment that requires the evo-
+                                                                                lution of unconditionally expressed complex traits, and 2) in
+                                                                                changing environmental conditions that require the evolu-
+                                                                                tion of regulatory mechanisms capable of altering which op-
+                                                                                erations are expressed as a function of current environmen-
+                                                                                tal conditions. Our results show that, indeed, gene duplica-
+                                                                                tions promote evolvability in both static and changing envi-
+                                                                                ronments. We found evidence that the most important as-
+                                                                                pect of gene duplications for promoting evolvability is their
+                                                                                capacity to duplicate existing genetic information within a
+
+Carole Knibbe et al, eds., Proceedings of the ECAL 2017, Lyon, France, 4-8 September 2017,                263
+
+(Cambridge, MA: The MIT Press, ©2017 Massachusetts Institute of Technology).
+
+This work is licensed to the public under a Creative Commons Attribution - NonCommercial - NoDerivatives
+
+4.0 license (international): http://creativecommons.org/licenses/by-nc-nd/4.0/
+genome. Additionally, we found that the capacity to dupli-                                                                                           Oral presentation
+cate multiple types of information is beneficial; mutation op-
+erators that duplicated both the content and structure of ge-                   Calabretta, R., Nolfi, S., Parisi, D., and Wagner, G. P. (2000). Du-
+netic sequences promoted evolvability more than operators                          plication of modules facilitates the evolution of functional spe-
+that duplicated content but not structure.                                         cialization. Artificial life, 6(1):69­84.
+
+   Broadly speaking, gene duplications can facilitate signif-                   Clune, J., Ofria, C., and Pennock, R. T. (2007). Investigating the
+icant jumps in a fitness landscape in many different ways.                         emergence of phenotypic plasticity in evolving digital organ-
+For example, when genes are duplicated, processes like sub-                        isms. In Advances in Artificial Life, pages 74­83. Springer.
+functionalization or neofunctionalization may occur, allow-
+ing populations to more easily cross fitness valleys and es-                    Crow, K. D. and Wagner, G. P. (2006). What is the role of genome
+cape local optima. In the domain of evolutionary compu-                            duplication in the evolution of complexity and diversity? Molec-
+tation, the more we understand about why gene duplication                          ular biology and evolution, 23(5):887­892.
+is so important in promoting evolvability in different sce-
+narios, the more we can customize our mutation operators                        Hu, T. and Banzhaf, W. (2010). Evolvability and Speed of Evolu-
+to emphasize those factors. These results suggest that when                        tionary Algorithms in Light of Recent Developments in Biology.
+designing gene duplication operators for evolutionary com-                         Journal of Artificial Evolution and Applications, 2010(4):1­28.
+putation systems, we should try to maximize the amount of
+information the operators are capable of duplicating.                           Koza, J. R. (1995). Gene duplication to enable genetic program-
+                                                                                   ming to concurrently evolve both the architecture and work-
+   The results presented here motivate several future stud-                        performing steps of a computer program. IJCAI (1).
+ies. Performing deeper analyses of lineages evolved with
+gene duplications would allow us to more specifically iden-                     Lalejini, A. and Ofria, C. (2016). The evolutionary origins of phe-
+tify how much different types of high-level processes are                          notypic plasticity. In Proceedings of the 15th International Con-
+contributing to evolvability post-duplication event. Can we                        ference for Artificial Life, pages 372­379.
+identify examples of subfunctionalization or neofunctional-
+ization, and if so, can we identify their contributions to pro-                 Lenski, R. E., Ofria, C., Pennock, R. T., and Adami, C.
+moting the evolution of complex features? Or, would we                             (2003). The evolutionary origin of complex features. Nature,
+find that duplications that are most likely to successfully                        423(6936):139­144.
+sweep a population are those that have the highest infor-
+mation content? Answers to these questions will allow us                        Magadum, S., Banerjee, U., Murugan, P., Gangapur, D., and
+to better understand the role that gene duplication plays in                       Ravikesavan, R. (2013). Gene duplication as a major force in
+natural evolution and could play in computational systems.                         evolution. Journal of genetics, 92(1):155­161.
+
+                 Acknowledgements                                               Ofria, C., Bryson, D. M., and Wilke, C. O. (2009). Avida: A soft-
+                                                                                   ware platform for research in computational evolutionary biol-
+We would like to acknowledge Jeffrey E. Barrick and David                          ogy. In Artificial Life Models in Software, pages 3­35. Springer.
+M. Bryson for laying the groundwork for this research. We
+also thank Rosangela Canino-Koning and Emily Dolson for                         Ohno, S. (1970). Evolution by Gene Duplication. Springer.
+their comments on this manuscript and the Digital Evolu-
+tion Laboratory for thoughtful discussions, ideas and sup-                      R Core Team (2015). R: A language and environment for statistical
+port. This research was supported in part by the BEACON                            computing.
+Center for the Study of Evolution in Action and by Michigan
+State University through the computational resources pro-                       Ryan, C., Collins, J. J., and Neill, M. O. (1998). Grammatical
+vided by the Institute for Cyber-Enabled Research.                                 evolution: Evolving programs for an arbitrary language. In Ge-
+                                                                                   netic Programming, pages 83­96. Springer, Berlin, Heidelberg,
+                       References                                                  Berlin, Heidelberg.
+
+Blount, Z. D., Barrick, J. E., Davidson, C. J., and Lenski, R. E.               Sawai, H. and Adachi, S. (1999). Genetic algorithm inspired by
+   (2012). Genomic analysis of a key innovation in an experimental                 gene duplication. In Evolutionary Computation, 1999. CEC 99.
+   Escherichia coli population. Nature, 489(7417):513­518.                         Proceedings of the 1999 Congress on, volume 1, pages 480­487.
+                                                                                   IEEE.
+Bzymek, M. and Lovett, S. T. (2001). Instability of repetitive DNA
+   sequences: The role of replication in multiple mechanisms. Pro-              Sawai, H. and Adachi, S. (2000). A comparative study of gene-
+   ceedings of the National Academy of Sciences, 98(15):8319­                      duplicated gas based on pfga and ssga. In Proceedings of the 2nd
+   8325.                                                                           Annual Conference on Genetic and Evolutionary Computation,
+                                                                                   pages 74­81. Morgan Kaufmann Publishers Inc.
+Calabretta, R., Nolfi, S., Parisi, D., and Wagner, G. P. (1998).
+   Emergence of functional modularity in robots. From animals                   Schlichting, C. D. and Smith, H. (2002). Phenotypic plastic-
+   to animats.                                                                     ity: linking molecular mechanisms with evolutionary outcomes.
+                                                                                   Evolutionary Ecology, 16(3):189­211.
+
+                                                                                Schmitt, K. (2005). Using gene deletion and gene duplication in
+                                                                                   evolution strategies. ACM, New York, New York, USA.
+
+                                                                                Teichmann, S. A. and Babu, M. M. (2004). Gene regulatory net-
+                                                                                   work growth by duplication. Nat Genet, 36(5):492­496.
+
+                                                                                Teichmann, S. A., Park, J., and Chothia, C. (1998). Structural as-
+                                                                                   signments to the Mycoplasma genitalium proteins show exten-
+                                                                                   sive gene duplications and domain rearrangements. Proceedings
+                                                                                   of the National Academy of Sciences, 95(25):14658­14663.
+
+                                                                                Wagner, A. (2008). Gene duplications, robustness and evolutionary
+                                                                                   innovations. BioEssays, 30(4):367­373.
+
+                                                                                Wagner, G. P., Amemiya, C., and Ruddle, F. (2003). Hox cluster
+                                                                                   duplications and the opportunity for evolutionary novelties. Pro-
+                                                                                   ceedings of the National Academy of Sciences, 100(25):14603­
+                                                                                   14606.
+
+                                                                                Zhang, J. (2003). Evolution by gene duplication: an update. Trends
+                                                                                   in Ecology & Evolution, 18(6):292­298.
+
+Carole Knibbe et al, eds., Proceedings of the ECAL 2017, Lyon, France, 4-8 September 2017,                264
+
+(Cambridge, MA: The MIT Press, ©2017 Massachusetts Institute of Technology).
+
+This work is licensed to the public under a Creative Commons Attribution - NonCommercial - NoDerivatives
+
+4.0 license (international): http://creativecommons.org/licenses/by-nc-nd/4.0/
+

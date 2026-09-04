@@ -1,0 +1,592 @@
+Evolutionary Algorithms: Exploring the Dynamics of
+                        Self-Adaptation
+
+                 Matthew Glickman and Katia Sycara
+
+                                          School of Computer Science
+                                          Carnegie Mellon University
+
+                                                5000 Forbes Ave.
+                                          Pittsburgh, PA 15381-3891
+                                glickman+@cs.cmu.edu, katia+@ri.cmu.edu
+
+                      ABSTRACT                                   of the chosen search operators on the chosen representation
+                                                                 that the relative lack of general principles for making these
+         Self-adaptation refers to allowing                      choices is a worrisome issue. Self-adaption (for a review
+     characteristics of search­most often                        see (Angeline 1995)) is the practice of encoding aspects of
+     mutation rates­to evolve on a per-                          these choices along with each member of the population, al-
+     individual basis rather than be specified                   lowing them to vary and (hopefully) adapt on a per-individual
+     by the user. This practice is gaining in-                   basis. Self-adaptation can thus free the user from having to
+     creasing attention and moving beyond                        make some possibly arbitrary implementation choices, pro-
+     classical mutation rates to explore other                   viding some measure of relief to representation and operator
+     traits affecting search. The potential im-                  selection dilemma.
+     pact of self-adaptation is vast because it
+     provides an implicit approach to prob-                        By far the most common class of trait to be self-adapted
+     lems of operator selection and parame-                      is that of mutation rates (see (Schwefel 1981), (Fogel et
+     ter tuning, and possibly to those of rep-                   al. 1991), (Ba¨ck 1992b)). A recent paper (Saravanan and
+     resentation as well. Studies have demon-                    Fogel 1997) extended this notion to self-adapt the choice be-
+     strated many successful applications of                     tween sampling mutations from one of two different under-
+     self-adaptation, but in light of its po-                    lying distributions. Other examples have included crossover
+     tential impact, it is important to gain                     (e.g. (Angeline 1996)) and inversion (Chellapilla and Fogel
+     insight into the dynamics of this pro-                      1997).
+     cess to guide further experimentation.
+     To this end, we present here an illumi-                       The clearest path to further, more powerful mechanisms of
+     nating relationship between the strength                    self-adaptation is via a deeper understanding of its dynamics.
+     of selection pressure and the magnitude                     In considering self-adaptation, perhaps the most immediate
+     of self-adapting mutation rates, as well                    question is: How does the selection process act upon a trait
+     as an observation on when self-adapting                     that isn't directly measured by the objective function? To ex-
+     mutation rates are most likely to be of                     plore this and related questions, we've conducted experiments
+     greatest utility.                                           with self-adapting mutation rates in a simple domain, and ob-
+                                                                 served phenomena consistent with the experimental results in
+1 Introduction                                                   a simplified domain model.
+
+  Evolutionary algorithms are composed of two processes:         2 Implementation
+(1) selection, which differentially boosts the frequency in the
+population of those forms favored by the fitness function, and   Mutational operators, as defined by Jones (Jones 1995),
+(2) variation, which then stochastically perturbs the selected   "modify each component of their input with a given, typi-
+forms, hopefully yielding a few of higher fitness than any pre-  cally small, probability". In practice, such modifications take
+viously found. The performance of evolutionary algorithms is     many forms, typically driven by the chosen representation,
+thus ultimately limited by the ability of the variation process  e.g.: flipping bits in bitstring representations favored by Ge-
+to continue to generate new forms of yet higher fitness. It is   netic Algorithms; substituting symbols in the Lisp parse-trees
+because the variation process is a direct result of the action   of Genetic Programming; or the addition of Gaussian noise
+                                                                 to the real-valued vector elements of Evolution Strategies and
+                                                                 (often) Evolutionary Programming. The mutation rate is a pa-
+                                                                 rameter that specifies the frequency or magnitude of the mu-
+tational events.                                                                Without variable mutation rates, the mutation rate, p, is set
+  Rather than including mutation rates among the global pa-
+                                                                                to some fixed, global value for the duration of the run. If vari-
+rameters that must be set in implementations of artificial evo-
+lution. an alternative is to encode one or more mutation rates                  able mutation rates are to be used, then each individual, gi,
+along with each individual in the population. When the muta-                    is extended by some additional number of bits, r. These ad-
+tion operator is applied to an individual, the mutational events
+then occur with a probability determined by the individual's                    ditional bits are ignored by the fitness function, but are inter-
+own encoded mutation rate(s), rather than a globally-fixed pa-
+rameter.                                                                        preted by the mutation operator to yield pi, the mutation rate
+                                                                                for gi. At the suggestion of Ba¨ck (personal communication),
+  In contrast to more commonly encoded traits, these indi-
+vidually varying mutation rates are never expressed in the in-                  we encoded the mutation rate for the One-Max problem as a
+dividual's phenotype, the aspect of an individual that is eval-
+uated by the fitness function. Encoded mutation rates instead                   real (floating-point) value, as is characteristic of both Evolu-
+constitute an example of a pure transmission-related trait, a
+trait which affects parent-offspring transmission by influenc-                  tion Strategies and Evolutionary Programming.
+ing the probability distribution from which the given individ-
+ual's offspring are sampled.                                                    The magnitude of the mutation of the mutation rates them-
+
+  The encoded mutation rates themselves are also subject to                     selves is then determined by another parameter­a globally
+mutation, so variation among the rates themselves is continu-
+ously maintained in the population, Selection will then favor                   fixed one in this case­ . refers to the standard deviation
+some rates of others to the extent to which particular rates are
+more often associated with individuals of high fitness.                         of an exponential Gaussian distribution from which a value is
+
+  A few guidelines for the application of self-adapting muta-                   sampled. The  product   mofutthaitsiovnalruaetea, npdi0:  the  mutation  rate,  pi,
+tion rates have been asserted, e.g. the importance of extinctive                then becomes  the new
+selection (Ba¨ck 1992b). However, their theoretical analysis
+has only just begun (Beyer 1995).                                                                        pi0 = pi e N0;1
+
+2.1 The domain: "One Max"                                                        where N 0; 1 denotes a random value sampled from a
+
+To simplify the mechanics as much as possible, we chose                         Gaussian distribution with mean 0 and standard deviation .
+a problem domain that was as simple as possible, Ackley's                         This form of "mutation-rate-mutation" has some nice prop-
+"One Max" problem (Ackley 1987). Ba¨ck had already re-
+ported some results with self-adapting mutation rates in this                   erties, including the fact that it varies mutation rates in pro-
+domain (Ba¨ck 1992a), providing us with a opportunity for                       portion to their own size. This is important because it is often
+comparison as well as a starting point for our investigation.                   the case that it is the magnitude of the mutation rate that really
+                                                                                matters (rather than its exact value). Whether a mutation rate
+  In One-Max each individual, gi, is a bit-string of some                       is 0.001 or 0.1, multiplying it by 1.2 is likely to be a plausi-
+length, l, that is globally fixed for the problem:                              bly interesting variation, while adding 0.08 may or may not.
+                                                                                At the same time, the median value by which to multiply the
+                                                                                mutation rate is still 1, so we're neither more likely to mu-
+                                                                                tate it up or down. Moreover, multiplying by an exponential
+                                                                                also guarantees that resulting mutation probability will never
+                                                                                be meaninglessly negative, nor zero, which could prematurely
+                                                                                stop further variation.
+
+                                                                                2.1.2 Selection
+
+                                                                                In the selection process employed here, known as ;  se-
+
+                           gi = b1; :::; bl 2 f0; 1gl                           lection in the Evolution Strategies literature, the population,
+
+                                                                                of size , is sorted in order of increasing fitness. Each of the
+The fitness function, f : f0; 1gl ! f0::lg, then simply maps                                                                                                    
+                                                                                top    individuals  in  the  resulting  ordering          are  then  copied     
+a bitstring to the total number of bits set to one among its l
+                                                                                times to yield the new population.
+
+bits:                                             Xl
+
+                           f b1; b2; :::; bl  = bi                              3 Experimental Observations
+
+                                                  i=1                           3.1 Selection and mutation
+
+The more bits set to 1 in a string, the higher its fitness.                     Figures 1 and 2 races the average progress, over several runs,
+                                                                                of the population mean fitness and mean mutation rate respec-
+2.1.1 Variation                                                                 tively. The fact that the mutation rates do evolve (rather than
+                                                                                diffusing randomly) indicates a correlation between an indi-
+Variation was induced via mutation, whereby a bit-string,                       vidual's mutation rate and the expected number of offspring
+                                                                                it is assigned via the selection process. In general then at any
+b10 ;  :b::1;;b:0l::;  bl      , is   copied  to yield another bit-string,      given generation, those individuals favored by the selection
+                           identical  to the  original string except that each  process­the highest fitness individuals­must be likely to have
+                                                                                mutation rates within some particular range. Note that this
+bit is inverted with a probability p, the mutation rate:                        is a rather probabilistic effect: A inappropriate mutation rate
+                                                                                can still produce a high-fitness individual, and vice versa, but
+       , for i = 1 ... l, b0i =               bi  if X p                        this is the exception rather than the rule.
+
+                                              1 bi otherwise
+
+where X is a random variable sampled from a uniform distri-
+bution over 0; 1 .
+                                   1000         (10,100) selection, l=1000, tau=0.1            are themselves mutated that limits the rate of decrease of the
+                                    950                                                        population mean mutation rate. This possibility, however, is
+                                                                                               not borne out by experimental results (presented below), the
+                                   900                                                         reason for which is suggested by observation of a simplified
+                                                                                               model of this system, detailed in the following section.
+Population mean fitness            850
+
+                                   800
+
+                                   750                                                         3.2 A Two-Level Mutation Rate, Infinite Pop-
+                                                                                                     ulation Model
+                                   700
+
+                                   650                                                         3.2.1 The Model
+
+                                   600                                                         A model that permits clearer examination of the selective
+
+                                   550                                                         forces acting on self-adapting mutation rates in One-Max may
+
+                                   500                                                         be constructed via two simplifications. The first is to substi-
+
+                                   450          50 100 150 200 250 300 350 400 450 500         tute the real-valued mutation rates with a simple, "two-level"
+                                         0                              Generations            self-adapting mutation rate1 gene that only has two states:
+
+Figure 1 Population mean fitness over time, averaged                                           p = 0:01, and p = 0:1. We retain the global parameter ,
+
+over several runs                                                                              but it now simply refers to the probability of an individual's
+
+                                                                                               mutation rate changing from one value to the other. The dy-
+
+                                   1                                                           namics resulting from this simplification may be significantly
+                                                          (10,100) selection, l=1000, tau=0.1
+                                                                                               different than those of the original system over multiple gen-
+Log population mean mutation rate
+                                                                                               erations. However, the property of providing for genetic vari-
+
+                                   0.1                                                         ation over mutation rates in the population is still preserved,
+
+                                                                                               yielding the same essential interaction between this variabil-
+
+                                                                                               ity and the selection process in the short term.
+
+                                   0.01                                                        The second simplification draws on Ba¨ck's analysis (Ba¨ck
+
+                                                                                               1992a). of the probabilities of transitions in fitness from mu-
+
+                                                                                               tation in One-Max. Ba¨ck's derivation of p+a , the probability
+                                                                                                                  pst,ari,ntghewpirtohbaab1il'istywthitaht  mutation rate p will
+                                   0.001                                                       that mutating a
+                                                                                               increase fitness,                                            the mutation will de-
+
+                                                                                               crease fitness, and p0a, the probability of no change in fitness,
+                                                                                               is easily extended to yield pa b , the probability that muta-
+                                   0.0001                                                      tion of an element with a 1's with mutation rate p will yield a
+                                             0  50 100 150 200 250 300 350 400 450 500
+                                                                        Generations
+                                                                                               string with fitness b. The model is shown in figure 3.
+Figure 2 Population mean mutation rate over time, av-
+                                                                                               Given a particular fitness distribution, this analysis permits
+eraged over several runs
+                                                                                               us to predict the expected change due to mutation over the
+
+                                                                                               entire population by considering in turn the number of indi-
+
+  That lower mutation rates tend to be selected as fitness in-                                 viduals at each fitness level and their mutation rates. The re-
+creases is not surprising in light of the fact that the higher
+the fitness, the more likely random perturbations are going                                    sults of mutation in finite populations will vary about these
+to degrade it rather than improve it. The more specific issue
+of which particular mutation rate(s) are favored for individu-                                 expected values due to sampling. However, the effects of
+als of a given fitness was addressed by Ba¨ck (Ba¨ck 1992a).
+He defined the optimal mutation rate for a string of given fit-                                sampling may be ignored by considering an "infinite" popu-
+
+ness as p+, the mutation rate which maximizes the chance a                                     lation, and instead speak of the frequencies in the population
+
+fitness improvement due to mutation, and observed that this                                    of each fitness value rather than numbers of individuals.
+rate, which decreases as fitness increases, remains within the
+range of rates expressed in the population over the course of                                  3.2.2 Observations: Mutation
+adaptation, suggesting that allowing mutation rates to self-
+adapt move search performance in the direction of optimality.                                  Figures 4 and 5 show such a population (of strings of length l)
+
+  Note, however, that for any string with more than half of its                                before and after mutation respectively. In this and many of the
+bits set to one, any mutation is more likely to change a one to                                following graphs, the range of fitness levels shown excludes
+a zero rather than a zero to a one, and thus the higher the mu-                                the extrema where the frequencies of individuals are all not
+tation rate, the lower the expected fitness after mutation. This                               perceptibly greater than 0. The proportion of individuals at
+observations raises the possibility that once more than half the                               each fitness level that have each mutation rate is depicted via
+bits are set to one, selection always favors the lowest mutation                               the two different levels of shading.
+rate possible, and it is only the rate at which mutation rates
+                                                                                                 The first step in mutation is the mutation of the mutation
+                                                                                               rates. In general, in this model the effect of this step is to
+                                                                                               moderate the ratio of one mutation rate to the other. For ex-
+                                                                                               ample, if is, say, 0.2, and 90 percent of the population has
+
+                                                                                               1Many thanks to Shumeet Baluja for suggesting this simplification
+                    8  Pil,=ab,a    l  ,,,,iillaa,,aa,,aa ppbbii11,,ppppii11ll,,,,ii         a                                   a and a + b  l
+                       Pbi=b,a      l                                                                  a  pi1 , pl,i
+                  =    Pli,=ba,b                                                           i , b ,    a pi1 , pl,i           if b    a and a + b l
+                       Pai=a,b      i                                                             a     pi1 , pl,i            if b
+                    :                i                                                        i ,b ,                           if b    a and a + b  l
+           pa  b                                                                           pl,i   a     pi1 , pl,i             if b
+                                                                                                   i                                    a and a + b l
+
+                                                                                           pl,i    a
+                                                                                                   i
+
+Figure 3 The probability that mutating an individual with a 1's with mutation rate p will yield a string with b 1's
+
+frequency                             p=0.1 freq 0.5                                             fitness will always be produced with some frequency.
+   1                                 p=0.01 freq 0.5                                               As can be seen in figure 5, the distribution of fitness result-
+
+0.8                                                                                              ing from mutation at a rate of 0.1 is more spread out than that
+                                                                                                 from mutation at 0.01. Moreover, the less conservative mu-
+0.6                                                                                              tation rate results in more individuals of at both the highest
+                                                                                                 (perceptible) fitness levels as well as the lowest, but because
+0.4                                                                                              of mutation's general fitness-degrading tendency, the mean of
+                                                                                                 the distribution of individuals resulting from the higher mu-
+0.2                                                                                              tation rate is in fact less than that of the distribution resulting
+                                                                                                 from the lower rate. Looking now at the effect of selection on
+           50     55   60            65  70                 fitness                              the mutated distribution leads to insight into selection's action
+                                                        75                                       on mutation rates in general.
+
+Figure 4 Initial frequency distribution                                                          3.2.3 Observations: Selection
+
+frequency                                                                                        frequency
+
+0.5                                     p=0.1 freq 0.5                                             0.5                                  p=0.1 freq 0.67
+
+                                     p=0.01 freq 0.5                                                                                    p=0.01 freq 0.33
+
+0.4                                                                                                0.4
+
+0.3                                                                                                0.3
+
+0.2                                                                                                0.2
+
+0.1                                                                                                0.1
+
+                                                            fitness                                          50         55          60  65           70    75      fitness
+
+           50     55   60            65  70             75
+
+Figure 5 Frequency distribution after mutation                                                   Figure 6    Frequency distribution after selecting the top
+                                                                                                 tenth
+
+mutation rate 0.01 and the other 10 percent has rate 0.1, when                                   The    application  ;      selection   with    =    0:1   simply  "chops
+                                                                                                                                              
+ mutation occurs, 0:2 90 percent of the individuals will change                                  off" the fitness distribution below the 90th percentile, thus
+ from rate 0.01 to rate 0.1, while only 0:2 10 percent of the
+                                                                                                 multiplying the remaining frequencies by 10. As it turns out,
+individuals will change from rate 0.1 to rate 0.01. However,
+as is the case in figure 4, starting with an equal proportion of                                 the proportion of rate 0.1 to rate 0.01 in the selected top 10
+individuals with each mutation rate at each fitness level (in
+this case only 1), no change to this proportion is expected due                                  percent (see figure 6) of the mutated distribution (see figure 5)
+to the mutation of the rates.
+                                                                                                 is actually near to two. Selection in this case thus favors the
+  The mutation on the One-Max part of the strings is in a
+sense a moderating effect as well. As discussed in the previ-                                    higher mutation rate. However, when selection is performed
+ous section, when mutating a string with more 1's than 0's,                                             
+more 1's are expected to change to 0's than 0's are expected                                     with     =  0:5,  the  result  is  quite different  (see  figure  7).  The
+to change to 1's. The net result is that mutation of such strings
+will tend to decrease their fitness, although strings of higher                                  top 50 percent of the population, as might be expected, con-
+
+                                                                                                 tains more lower mutation rates than higher rates.
+
+                                                                                                      This example illustrates the general principle at work here.
+
+                                                                                                 Given parents of better-than-random fitness, a smaller, more
+
+                                                                                                 conservative mutation rate will yield an offspring fitness dis-
+
+                                                                                                 tribution that is both more narrow and possessed of a higher
+frequency                                                           that the relationship between selection strength and favored
+                                                                    mutation rates demonstrated for One-Max generally carries
+0.5                    p=0.1 freq 0.32                              over to other problem domains.
+
+                       p=0.01 freq 0.68                             3.3 Selection strength and the favored muta-
+                                                                          tion rate in the original system
+0.4
+                                                                    Considering again the full evolutionary algorithm described
+0.3                                                                 in section 2, another way to understand the relationship be-
+                                                                    tween the intensity of selection and variable mutation rates is
+0.2                                                                 to observe that selection favors those individuals which max-
+                                                                    imize their individual reproductive success (RS), the number
+0.1                                                                 of surviving offspring they produce. A trait will then be fa-
+                                                                    vored by selection to the extent to which it correlates with
+           50  55  60  65  70  75        fitness
+                                                                    reproductive success (as in (Price 1970)). In (,)-selection,
+Figure 7   Frequency distribution after selecting the top
+half                                                                RS is determined by the number of offspring that rank in the
+
+mean that that of a larger, less conservative mutation rate. Al-    top  of the population. The mutation rate that should then be
+though the lower-fitness tail of the distribution yielded by the
+higher mutation rate will grow more quickly than the higher-        favored is the one which maximizes the expected number of
+fitness tail, both will grow as the mutation rate increases. As     offspring being of sufficiently high fitness to rank in this frac-
+the intensity of selection is increased, more offspring will be     tion. The higher the selection strength (the lower the ratio of
+rewarded to an increasingly elite fraction of the fitness distri-
+bution, ultimately favoring the offspring of those individuals       to ), the smaller this fraction will be, and thus the higher
+possessed of increasingly higher mutation rates.
+                                                                    the fitness value required for offspring to survive.
+3.2.4 Other Factors                                                   However, to the extent to which expected fitness correlates
+
+Note that which specific mutation rates are favored to what         directly with RS­as is the case with "fitness proportional se-
+degree in the population is also dependent on the pre-mutation      lection", whereby individuals are selected to reproduce with
+parental fitness distribution. For example, given the same se-      a probability linearly proportional to their fitness­we should
+lection pressure, the mutation rate favored by selection for an     indeed expect selection to generally favor the lowest mutation
+individual of a given fitness will be different in the case that
+it is the highest fitness individual in the population than in the  rate available (after l=2 bits are set to one), as was postulated
+case that it is the lowest. Selection will tend to favor a higher
+mutation rate for this individual when it is on the low end         to be the general case at the end of section 3
+of the population fitness distribution because such a rate will
+probably be necessary for the individual to be able to place                                                                                                                 to maximize the best of 20
+offspring in the higher end of the next population; when you                                                                                                                  to maximize the best of 5
+have little to lose, there is little incentive to "play it safe".                                                                                                             to maximize the best of 3
+                                                                                                                                                                                                 Baeck's p+
+  Neither can we expect the mutation rates favored by selec-
+tion to be independent of the shape of the particular fitness                   0.1
+landscape. In One-Max, as the optimum is approached (the
+string of all ones, in the case of One-Max), there is less-and-     optimal mutation rate  0.01
+less room on the high end of the fitness distribution for any
+"elite fraction" to be favored by stronger selection. Further-                             0.001
+more, real-world landscapes often have many local optima,
+a condition that is rarely negligible when considering evolu-                                     50  55  60  65  70  75                80  85  90  95  100
+tionary dynamics.
+                                                                                                                      parental fitness
+  Nonetheless, One-Max captures one essential characteris-
+tic common to the vast majority of fitness landscapes: Points       Figure 8 Mutation rates optimal for maximizing the
+of increasingly high fitness are increasingly rare. One conse-
+quence of this fact is that the deleterious effect of mutation      best-out-of-n offspring
+is usually more severe at higher fitness levels, which permits
+us to expect that independent of selection strength, selection        To estimate the mutation rates favored in (; ) lambda se-
+will tend to favor individuals with lower mutation rates as fit-
+ness increases. Another consequence appears to be, judging          lection, we ran large numbers of mutation trials at various
+from empirical observations (an example is shown below),
+                                                                    rates in order to find the mutation rate that maximized the
+
+                                                                    highest fitness produced from sets of n trials of the muta-
+
+                                                                    tion of a parent bitstring. Parental fitness values were varied
+
+                                                                    from 50 to 100, and n was set at each of 3, 5, and 20, the re-
+
+                                                                    sults of which are shown in figure 8 (including a similarly de-
+
+                                                                    rived curve for Ba¨ck's p+). Each of the rate curves decreases
+                                                                    with fitness, but the rate optimal to maximize the best-of-n
+increases with n. To see how well these curves matched the                                                                                                                                   0.09
+
+actual rates selected during evolution, we wanted to know, for                                                                                                                                                                         (10,100)-selection
+various selection strengths, which mutation rate was selected
+on average at each population mean fitness level (as opposed                                                                                                                                                                           (25,100)-selection
+to at each generation).
+                                                                                                                                                                                             0.08                                      50,100-selection
+                                                                                                         to maximize the best of 20
+                                                                                                                         1,20 selection                                                      0.07
+                                                                                                                         4,20 selection
+                                                                                                                                                                                             0.06
+                                                                                                     fitness proportional selection
+                                                                                                          to maximize the best of 3
+
+            0.1
+
+          0.01
+population average mutation rate                                                                                                                                                             0.05
+                                                                                                                                                                      average mutation rate
+                                                                                                                                                                                             0.04
+
+                                                                                                                                                                                             0.03
+
+                                                                                                                                                                                             0.02
+
+                                                                                                                                                                                             0.01
+
+                                                                                                                                                                                             0
+
+                                                                                                                                                                                                   0  5  10  15                    20  25                  30
+
+                                                                                                                                                                                                             Sum of Squared Error
+
+                                                                                                                                                                                           Figure 10 Population average mutation rate vs. Sum of
+
+                                                                                                                                         Squared Error for the Box problem
+
+0.001                                                                                                                                                                                      moid units with five units in a single hidden layer, and a one
+                                                                                                                                                                                           unit in the output layer. A network's fitness measure is the
+       50  55  60    65  70  75  80                  85  90  95  100                                                                                                                       sum of squared error values (with respect to the target func-
+                                                                                                                                                                                           tion) accumulated as each of 100 uniformly distributed train-
+                         population average fitness                                                                                                                                        ing examples are presented as input to the network. Each
+                                                                                                                                                                                           training example consists of a pair of X and Y coordinates,
+Figure 9 Average mutation rate by fitness for varying                                                                                                                                      along with 5 separate random noise values that are chosen
+                                                                                                                                                                                           before the run and then remain fixed for each XY pair.
+selection strengths
+                                                                                                                                                                                             There are a total of 46 connection weights that are supplied
+  Due to the amount of variance in behavior between individ-                                                                                                                               by each population member. Each population members con-
+ual runs, it was necessary to collect data from a large number                                                                                                                             sists of a vector of 46 floating-point weight values, along with
+of One-Max runs (100) for each selection strength. The popu-                                                                                                                               a corresponding vector of 46 floating-point mutation rates.
+lation average mutation rate was noted at each population av-                                                                                                                              Mutation of the weights is via the addition of Gaussian noise,
+erage fitness level, and then averaged over all runs of a given                                                                                                                            and the standard-deviation of the distribution from which the
+strength. The results are shown in figure 9, along with some                                                                                                                               mutational noise is sampled is determined via its own associ-
+of the empirically derived "optimal" curves for comparison.                                                                                                                                ated mutation rate.
+
+  In general, the curves seem to match relatively well, e.g.                                                                                                                                 Figure 10 shows the association between the population
+the optimal rates to maximize the best of 20 mutations seem                                                                                                                                mean fitness (the sum of the squared error values, in this case)
+quite close to the population-mean mutation rates that are                                                                                                                                 and the population mean mutation rate for each of three dif-
+
+evolved over the course of 1; 20 selection, in which each                                                                                                                                  ferent (; ) selection intensities. The data were collected
+
+parent has 20 offspring, and is hence mutated 20 times. Note                                                                                                                               from and averaged over several runs at each selection inten-
+that, in line with the expectation raised above, the mutation                                                                                                                              sity. There are two distinct differences from the results pre-
+rates decrease the most quickly with fitness in the case of                                                                                                                                sented for One-Max in figure 9: (1) The mutation rates were
+fitness-proportional selection                                                                                                                                                             all initially set to a low value and were then quickly selected
+                                                                                                                                                                                           up to a peak value before beginning to descend with fitness;
+4 An Alternate Problem Domain                                                                                                                                                              and (2) "better" fitness in this case corresponds to lower error
+                                                                                                                                                                                           values, explaining why rates are decreasing going to the left
+We've found that the relationship between stronger selec-                                                                                                                                  rather than to the right as in One Max.
+tion and higher average mutation rates carries over both to
+at least one other fitness scheme (tournament selection) that                                                                                                                                Implementation details aside, the key point is that we find
+does not assign offspring in a manner linearly proportional to                                                                                                                             the same correlation between the chosen selection intensity
+fitness, as well as to other, more complex problem domains                                                                                                                                 and the population mean mutation rate favored for each mean
+that have local optima. An example shown here is from an ar-                                                                                                                               fitness level as shown above for One Max. This result is par-
+tificial neural network training problem originally described                                                                                                                              ticularly indicative of the generality of this effect given the
+by Baluja (Baluja 1995), referred to here as the Box problem.                                                                                                                              differences between the Box problem scenario presented here
+The target function is a classification of points from a fixed                                                                                                                             and that of One Max. Differences in this case include: 46
+region of the XY-plane. Points found inside a larger rectan-                                                                                                                               real-valued traits per individual, rather than 100 binary traits;
+gular region but not inside a smaller, enclosed rectangle are                                                                                                                              mutation via the addition of Gaussian noise, rather than bit-
+to be labeled 0.5, while all others are to be labeled -0.5. Each
+individual in the evolving population encodes a vector of con-
+nection weights for a fixed architecture neural network.
+
+  The architecture is that of a feedforward network of sig-
+flipping; the specification of variable mutation rates on a one-        make reasonable progress in differing regions of the search
+per-trait basis, rather than simply one rate per individual; and        space that must be traversed to arrive at the goal.
+a much more complicated fitness landscape containing many
+local optima. Although pathological cases may well exist                6 Conclusion
+where the general relationship between selection strength and
+variable mutation rates is absent or fundamentally different,           We've offered some insight into the relationship between se-
+we have yet to observe them despite experience with a variety           lection and self-adapting mutation rates. It seems likely that
+of differing scenarios.                                                 the relationship between selection intensity and variable mu-
+                                                                        tation rates explored here may generalize beyond just muta-
+5 When are self-adapting rates most                                     tion rates. This is because the understanding of this effect
+                                                                        gleaned in section 3.2 seems applicable to any transmission-
+    beneficial?                                                         related trait that varies the degree of conservatism of parent-
+                                                                        offspring transmission. This hypothesis is in line with results
+Insight into the dynamics of self-adaptation does not neces-            presented on the action of selection on representation in Ge-
+sarily address questions of utility, such as when the use of            netic Programming (Altenberg 1994), particularly in the case
+self-adapting rates is likely to be the most advantageous for           of the "program bloat" phenomenon of Genetic Programming
+search.                                                                 (e.g. (Soule and Foster 1997), (Blickle and Thiele 1994)).
+
+  In fact, for the One Max domain our findings were in                    We are currently exploring this and related hypotheses
+fact that the use of a single, well-chosen, fixed global mu-            about the dynamics of self-adaptation. The more insight that
+tation rate often yielded equal or better results than the use of       is gained into the dynamics underlying self-adaptation, the
+one-per-individual self-adapting rates. For practical purposes,         more likely it is that self-adaptation can be further extended
+however, this result says very little because in fact, the num-         to provide for successful search in problem domains currently
+ber of trials it took to find an ideally well-adapted fixed rate        beyond reach of exploration.
+typically far exceeded the amount of time it took to conduct a
+self-adapting run.                                                      7 Acknowledgements
+
+         9000                                  Variable mutation rate   The authors wish to thank James Thomas for many ex-
+         8500                                   Mutation rate = 0.001   tended, helpful discussions, Shumeet Baluja for suggestions
+         8000                                  Mutation rate = 0.0001   and encouragement, and two anonymous reviewers for their
+                                                                        thoughtful commentary and corrections. This research was
+                                                  Mutation rate = 0.01  partially supported by the Office of Naval Research, Contract
+                                                                        N00014-95-1-0591. Matthew Glickman was partially sup-
+         7500                                                           ported by an NSF Graduate Fellowship.
+
+Fitness  7000                                                           References
+
+         6500                                                           Ackley, D. H. (1987). A connectionist machine for genetic
+                                                                              hillclimbing. Kluwer. Boston.
+         6000
+                                                                        Altenberg, Lee (1994). The evolution of evolvability in ge-
+         5500                                                                 netic programming. In: Advances in Genetic Program-
+                                                                              ming (K. Kinnear, Ed.). MIT Press.
+         5000
+                                                                        Angeline, P. J. (1995). Adaptive and self-adaptive evolution-
+         4500      200  400  600  800 1000 1200 1400 1600 1800 2000           ary computations. In: Computational Intelligence: A
+                0                                                             Dynamic Systems Perspective (M. Palaniswami, Y. At-
+                                                                              tikiouzel, R. Marks, D. Fogel and T. Fukuda, Eds.).
+                                  Generations                                 pp. 152­163. IEEE Press. Piscataway, NJ.
+
+Figure 11 Fitness over time for fixed vs. variable muta-                Angeline, P. J. (1996). Two self-adaptive crossover opera-
+                                                                              tions for genetic programming. In: Advances in Genetic
+tion rates with l = 10000                                                     Programming II (P. Angeline and K.Kinnear, Eds.).
+                                                                              pp. 152­163. MIT Press.
+  One situation in which we observed self-adapting muta-
+tion rates become clearly advantageous is once the string is            Angeline, P.J., Reynolds, R.G., McDonnell, J.R. and Eber-
+long enough (see figure 11). This result seems likely to be                   hart, R., Eds.) (1997). Evolutionary Programming VI.
+due to the very large discrepancy in magnitude of the mu-                     Springer.
+tation rates that produce reasonable progress near the begin-
+ning, and those that produce reasonable progress near the end
+when evolving a very long string.
+
+  Because with shorter strings fixed-rates often outperform
+variable rates, it would seem that there is indeed a cost to self-
+adaptation. At the same time, the example presented here sug-
+gests one point where the benefit of self-adaption exceeds its
+cost: when there is a sufficient difference between the modes
+of variation (i.e. parent-offspring transmission) necessary to
+Ba¨ck, T. (1992a). The interaction of mutation rate, selection,
+      and self-adaptation within a genetic algorithm. In: Par-
+      allel Problem Solving 2 (R. Ma¨nner and B. Manderick,
+      Eds.). Elsevier. Amsterdam.
+
+Ba¨ck, Thomas (1992b). Self-adaptation in genetic algorithms.
+      In: (Varela and Bourgine 1992). pp. 263­271.
+
+Baluja, Shumeet (1995). An empirical comparison of seven
+      iterative and evolutionary function optimization heuris-
+      tics. Technical Report CMU-CS-95-193. School of
+      Computer Science, Carnegie Mellon University.
+
+Beyer, Hans-Georg (1995). Towards a theory of evolution
+      strategies. Evolutionary Computation 3(3), 311­347.
+
+Blickle, Tobias and Lothar Thiele (1994). Genetic program-
+      ming and redundancy. In: Genetic Algorithms within the
+      Framework of Evolutionary Computation, Proceedings
+      of the KI-94 Workshop. number MPI-I-94-241.
+
+Chellapilla, K. and D. B. Fogel (1997). Exploring self-
+      adaptive methods to improve the efficiency of generat-
+      ing approximate solutions to traveling salesman prob-
+      lems using evolutionary programming. In: Angeline et
+      al. (1997).
+
+Fogel, D. B., L. J. Fogel and J. W. Atmar (1991). Meta-
+      evolutionary programming. In: Proceedings of 25th
+      Asilomar Conference on Signals, Systems and Com-
+      puters (R. R. Chen, Ed.). Pacific Grove, California.
+      pp. 540­545.
+
+Jones, Terry (1995). Evolutionary Algorithms, Fitness Land-
+      scapes, and Search. PhD thesis. The Univerisity of New
+      Mexico. Albuquerque, New Mexico.
+
+Price, G. R. (1970). Selection and covariance. Nature
+      227, 520­521.
+
+Saravanan, N. and D. B. Fogel (1997). Multi-operator evolu-
+      tionary programming: A preliminary study on function
+      optimization. In: Angeline et al. (1997).
+
+Schwefel, H. P. (1981). Numerical Optimization of Computer
+      Models. Wiley. Chichester.
+
+Soule, Terence and James A. Foster (1997). Code size and
+      depth flows in genetic programming. In: Genetic Pro-
+      gramming 1997 (J. R. Koza, K. Deb, M. Dorigo, D. B.
+      Fogel, M. Garzon, H. Iba and R. L. Riolo, Eds.). Morgan
+      Kauffman. San Francisco.
+
+Varela, Francisco J. and Bourgine, Paul, Eds.) (1992). To-
+      wards a Pratice of Autonomous Systems: Proceedings
+      of the First European Conference on Artificial Life. MIT
+      Press. Cambridge, MA.
+

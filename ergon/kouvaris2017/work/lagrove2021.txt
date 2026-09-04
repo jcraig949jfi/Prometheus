@@ -1,0 +1,942 @@
+The Importance of Noise Colour
+in Simulations of
+Evolutionary Systems
+Abstract Simulations of evolutionary dynamics often employ
+white noise as a model of stochastic environmental variation. Whilst
+white noise has the advantages of being simply generated and
+analytically tractable, empirical analyses demonstrate that most real
+environmental time series have power spectral densities consistent
+with pink or red noise, in which lower frequencies contribute
+proportionally greater amplitudes than higher frequencies. Simulated
+white noise environments may therefore fail to capture key
+components of real environmental time series, leading to erroneous
+results. To explore the effects of different noise colours on evolving
+populations, a simple evolutionary model of the interaction between
+life-history and the specialism-generalism axis was developed.
+Simulations were conducted using a range of noise colours as the
+environments to which agents adapted. Results demonstrate
+complex interactions between noise colour, reproductive rate, and
+the degree of evolved generalism; importantly, contradictory
+conclusions arise from simulations using white as opposed to red
+noise, suggesting that noise colour plays a fundamental role in
+generating adaptive responses. These results are discussed in the
+context of previous research on evolutionary responses to
+ﬂuctuating environments, and it is suggested that Artiﬁcial Life as a
+ﬁeld should embrace a wider spectrum of coloured noise models to
+ensure that results are truly representative of environmental and
+evolutionary dynamics.
+Matt Grove *
+University of Liverpool
+Department of Archaeology,
+Classics and Egyptology
+matt.grove@liverpool.ac.uk
+Lucy Timbrell
+University of Liverpool
+Department of Archaeology,
+Classics and Egyptology
+lucy.timbrell@liverpool.ac.uk
+Ben Jolley
+Keele University, UK
+School of Computing and
+Mathematics
+b.p.jolley1@keele.ac.uk
+Fiona Polack
+Keele University, UK
+School of Computing and
+Mathematics
+f.a.c.polack@keele.ac.uk
+James M. Borg *
+Keele University, UK
+School of Computing and
+Mathematics
+Aston University, UK
+School of Informatics and
+Digital Engineering
+j.borg@keele.ac.uk
+Keywords
+Coloured noise, evolutionary dynamics,
+life-history evolution, variable
+environments, ﬂuctuating environments,
+evolved generalism
+1 Introduction
+Numerous modelling and simulation approaches in artiﬁcial life, biology, ecology, and other dis-
+ciplines require initial input of a stochastic environmental time series to which agents or individ-
+uals respond. Frequently the time series used represent white noise, as this is easily simulated and
+generally regarded as a simple and useful way to introduce an environment that varies randomly.
+Minimally, a white noise time series is deﬁned as one without signiﬁcant autocorrelation at any lag
+other than zero. In practice, white noise is often created from a series of independent, identically
+distributed random variables with zero mean and ﬁnite variance, with the generating distribution
+* Corresponding authors.
+© 2022 Massachusetts Institute of Technology Artiﬁcial Life 00: 1–19 (2022) https://doi.org/10.1162/artl_a_00354
+Downloaded from http://direct.mit.edu/artl/article-pdf/doi/10.1162/artl_a_00354/1986825/artl_a_00354.pdf by Keele University user on 12 February 2022
+
+M. Grove et al. Noise Colour in Evolutionary Systems
+often Gaussian. Due to the lack of autocorrelation, the power spectral density of white noise is
+ﬂat, with equal power in any given frequency band. It is this latter characteristic that gives white
+noise its name, by analogy with the approximately ﬂat power spectral density of white light over the
+visible range.
+Though there are many instances in which white noise is a valuable approximation of a ﬂuctu-
+ating environment—its stationarity, lack of memory ( ≈ autocorrelation), and long-term symmetry
+are valuable properties that facilitate analysis—it is not realistic as a depiction of real environmental
+ﬂuctuation in the majority of cases. Empirically, most environmental and ecological time series fall
+within the pink to red noise spectrum, in the sense that their power spectral densities display greater
+power at lower frequencies. Empirical records of marine and terrestrial temperatures, precipitation
+and river levels, and ecological phenomena such as population ﬂuctuations, persistence times, and
+times to extinction are all found to exhibit power spectral densities with these “reddened” prop-
+erties (Cuddington and Yodzis, 1999; Halley & Inchausti, 2004; Inchausti & Halley, 2001, 2002;
+Mandelbrot & Wallis, 1969; Miramontes & Rohani, 1998; Steele, 1985; Vasseur & Yodzis, 2004).
+As an example, Figure 1(a) shows the terminal Pleistocene section of the North Greenland Ice
+Core Project (NGRIP) benthic δ18O data (Rasmussen et al., 2014)—an isotopic ratio proxy for
+temperature—with Figure 1(b) showing the power spectral density of these data.
+The exponent (β) marked on Figure 1(b) is the (negative) slope of the black line, and is used to
+measure the colour of the time series. The equation relating power ( p) to frequency ( f ) is then:
+In (p) ∝ 1/ ln( f )β (1)
+This format leads to the closely related concept of 1 /f noise frequently encountered in the physical
+sciences literature. In the format of Equation 1, β = 0 equates to white noise, β = 1 to pink noise,
+and β = 2 to red noise. Perfect pink noise at β = 1 is a special case in that power is the exact
+reciprocal of frequency, but in practice the deﬁnition of pink noise is often extended to refer to a
+wider region around this particular case with 0.5 ≲ β ≲ 1.5. The NGRIP benthic δ18O data display
+a power spectral density in the pink to red spectrum, as is common with empirical palaeoclimatic
+and palaeoenvironmental time series.
+Figure 2 shows examples of simulated white, pink, and red time series together with their associ-
+ated power spectral density plots. In relation to empirical data it is important to note that time series
+in the pink to red range—those with greater power at lower frequencies—allow for longer-term
+excursions of the time series that result from increased autocorrelation. At millennial and longer
+timescales, empirical palaeoclimatic signals are heavily inﬂuenced by long-term oscillations such as
+those resulting from the Milankovitch cycles that affect the amount of solar radiation reaching the
+earth and govern the transitions from glacial to interglacial periods. Though not all empirical records
+are perfectly characterized by the linear approximation of Equation 1, the coloured noise framework
+Figure 1. The Late Pleistocene section of the benthic δ18O record from the North Greenland Ice Core Project (NGRIP).
+(a) shows the time series itself, and (b) its logarithmically transformed power spectral density. The black line ﬁtted to
+the data in (b) represents the equation ln (p) = 1/ ln( f )1.459, indicating that the time series has a power spectral density
+between pink and red noise.
+2 Artiﬁcial Life Volume 00, Number 00
+Downloaded from http://direct.mit.edu/artl/article-pdf/doi/10.1162/artl_a_00354/1986825/artl_a_00354.pdf by Keele University user on 12 February 2022
+
+M. Grove et al. Noise Colour in Evolutionary Systems
+Figure 2. Examples of simulated white (a), pink (c), and red (e) time series. Respective power spectral densities are
+shown (logarithmically transformed) in (b), (d), and (f). The black lines ﬁtted to the data in these latter three plots
+represent equations of the form ln (p) = 1/ ln( f )β . Exact values of β are given in the plots, and closely resemble white
+(β = 0), pink (β = 1), and red ( β = 2) noise.
+remains a valuable shorthand for describing time series, and importantly includes white noise as a
+special case.
+Stochastic simulation models are highly important in many disciplines, and are a necessity when
+dealing with responses to natural environments, which are highly variable through time and often
+unpredictable. As there are many sources of environmental variability, and as these combine addi-
+tively to create the ﬂuctuations observed empirically, white noise (particularly Gaussian white noise)
+seems at ﬁrst to be a logical choice as a proxy environment. However, different sources of variation
+act at different frequencies and provide contributions of differing amplitude to the overall pattern
+of environmental ﬂuctuation; empirical studies suggest that in general lower-frequency sources of
+variation are of higher amplitude than higher-frequency sources of variation, and this ﬁnding sug-
+gests that time series with pink to red power spectral densities may be more realistic as proxies for
+real environments.
+The fact that empirical environmental and ecological time series rarely conform to white noise
+suggests that models could be made more realistic by extending them to encompass other colours
+of noise. Critically, it is important to assess whether models of evolutionary processes that em-
+ploy white noise produce results that differ from those employing more realistic pink or red noises
+(Grove et al., 2020). Using a simple model of the trade-off between specialism and generalism,
+Grove and colleagues demonstrate that markedly different results are generated when time series of
+different colours are used as the environments to which agents adapt. Below, we report this model,
+which we then extended to include differences in the reproductive rate of the species modelled
+in order to study the interactions of noise colour, reproductive rate, and the specialism-generalism
+trade-off. Reproductive rate (or life history more generally) is a fundamental part of a species’ adap-
+tation; despite a growing interest in coloured noise environments among ecologists and environ-
+mental scientists in recent years, however, the interaction of noise colour and life history remains a
+largely neglected area of research.
+Artiﬁcial Life Volume 00, Number 00 3
+Downloaded from http://direct.mit.edu/artl/article-pdf/doi/10.1162/artl_a_00354/1986825/artl_a_00354.pdf by Keele University user on 12 February 2022
+
+M. Grove et al. Noise Colour in Evolutionary Systems
+1.1 Coloured Noise Research in Ecology and Evolution
+Coloured noise research within ecology in recent years has seen a focus on evolutionary
+changes in population size, and particularly on the effects of noise colour on extinction risk. Ripa
+and Lundberg (1996) applied the Ricker model of population growth (Ricker, 1954) to show that
+redder noise lessens the risk of extinction, concluding that autocorrelation was critical in determin-
+ing whether a population grew (under red noise) or declined, ultimately to extinction (under blue
+noise, with β< 0). Similar results were obtained by Cuddington and Yodzis (1999), using another
+variant of the Ricker model that explicitly included coloured noise (see also Petchey et al., 1997), ex-
+tending the noise colours to encompass black noise with β → 3. Extremely high values were found
+to be associated with increasingly long population persistence times compared to less reddened
+noise (0.5 ≤ β ≤ 1), suggesting that evolution under highly autocorrelated noise produces robust
+populations that can adapt effectively to rare but potentially highly signiﬁcant environmental events.
+The conclusions of Cuddington and Yodzis (1999) are conﬁrmed by Halley and Kunin (1999) and
+Inchausti and Halley (2001, 2002, 2003), all of whom note that the effect of reddening is to increase
+the variance observed in longer time series but that, contrary to the expectation that populations are
+more likely to become extinct in more extreme environments, evolution in such conditions is more
+robust to environmental variance. Cuddington and Yodzis (1999) also note that white noise, with
+its lack of autocorrelation, does not capture the features of the natural environments within which
+evolution occurs. These simulations demonstrate that different frequencies of coloured noise pro-
+foundly affect population dynamics, and that research must extend beyond traditional white noise
+models to establish realistic simulations of environmental ﬂuctuation.
+Halley (1996) proposes pink noise as the most suitable model of a typical environmental time
+series. His proposal rests on the fact that white noise, consisting of equal power at all frequencies and
+lacking any form of autocorrelation, under-represents rare but signiﬁcant disruptive events, whereas
+red noise over-emphasises longer-term periodicities. Pink noise, however, gives equal weight to both
+common and rare environmental events. Further to this, Inchausti and Halley (2002) demonstrate
+that animal population dynamics display pink noise far more often than would be expected given
+the power spectral densities of the environmental time series that the populations are exposed to.
+Halley and colleagues suggest that time series towards the reddened end of spectrum, rather than
+white noise, produce ecologically valid models of environmental variability; pink noise, with its
+proportional power across the frequency range, its long memory, and its non-stationarity, shows
+important characteristics present in empirical ecological time series (Halley & Inchausti, 2004).
+Evolution responds to environmental variability over multiple timescales by mitigating the risk
+associated with both short-term and long-term environment change, maximising immediate ﬁt-
+ness whilst also ensuring continued survival. Under real environmental ﬂuctuations, evolution can
+select for individuals who are generalists rather than specialists, favouring plasticity to increase the
+long-term likelihood of population endurance (Haaland et al., 2019, 2020). To explore how different
+colours of noise affect the trade-off between specialism and generalism in ﬂuctuating environments,
+Grove (2014) and Grove et al. (2020) developed a simple evolutionary model of this trade-off. They
+conﬁrmed that generalism was more likely to evolve as environmental variability became whiter,
+whilst specialism was more likely to develop under redder environmental variability; importantly,
+pink noise was found to be the point of balance between selective regimes favouring generalism
+and specialism. However, Grove et al. (2020) note that since recombination events (a major gener-
+ator of genotypic variation in sexually reproducing species) occur with less frequency in organisms
+with longer generation times, there is potentially a confounding relationship between life history
+and the development of environmental tolerance in populations experiencing different colours of
+environmental noise.
+1.2 Evolution in Fluctuating Environments
+There is a substantial body of research in evolutionary biology examining the relationships be-
+tween ﬂuctuating environments and generalism, plasticity, niche breadth, and environmental tol-
+erance (Baker, 1965; Grove, 2015; Levins, 1968; Mayr, 1965; Moran, 1992; Sol, 2008). Some of
+4 Artiﬁcial Life Volume 00, Number 00
+Downloaded from http://direct.mit.edu/artl/article-pdf/doi/10.1162/artl_a_00354/1986825/artl_a_00354.pdf by Keele University user on 12 February 2022
+
+M. Grove et al. Noise Colour in Evolutionary Systems
+these terms are used interchangeably in the literature; although there are subtle differences, conclu-
+sions can be generalised by stating that most previous research suggests that increases in temporal
+environmental heterogeneity produce more eurytopic organisms. Eurytopic organisms are able to
+tolerate a wide range of habitats and environmental conditions; this can be achieved via generalism
+or plasticity, and necessitates increases in niche breadth and environmental tolerance.
+An extensive series of analyses, beginning with initial genetic research by Levene, Dempster,
+and others (Cohen, 1966; Dempster, 1955; Gillespie, 1973; Haldane & Jayakar, 1963; Levene, 1953;
+Lewontin & Cohen, 1969) has suggested that temporal heterogeneity in environmental conditions
+is likely to promote the evolution of various forms of ﬂexibility or plasticity at the individual or
+population levels. Much early research focussed on the maintenance of genetic polymorphisms via
+mechanisms such as heterozygote advantage, but such research also provided a basic mathemati-
+cal template for the study of evolutionary dynamics in ﬂuctuating environments across far broader
+scales (Lee & Doughty, 2003; Simons, 2002). In essence, the contrast between selection in spatially
+and temporally heterogeneous environments rests on the distinction between the arithmetic and
+geometric means. An organism that encounters differing environmental states across space ( ≈ si-
+multaneously) will have an overall ﬁtness that is the arithmetic mean of its ﬁtnesses in those states.
+If these environmental states differ only spatially, with each being constant through time, the arith-
+metic mean will be identical in each generation for organisms utilising the same territory; there will
+therefore be no variance in ﬁtness between generations. If environmental states change through
+time, however, such that subsequent generations experience different environmental mosaics, the
+appropriate measure of ﬁtness becomes multiplicative, and the geometric mean effect comes into play
+(Carja et al., 2013; Lee & Doughty, 2003; Simons, 2002).
+The geometric mean is highly sensitive to variance, and therefore the most successful lineages of
+organisms in the long-term will be those that minimise variance in ﬁtness between generations rather
+than maximising (arithmetic) mean ﬁtness within generations. Eurytopic organisms naturally fulﬁl
+this criterion, whether via generalism or plasticity; they may never be the ﬁttest organisms in a partic-
+ular environment, but they are also rarely the least ﬁt organisms in that environment. Dobzhansky’s
+(1950, p. 216) observation that temporally variable environments “put the highest premium on
+versatility rather than on perfection in adaptation” remains one of the clearest statements of
+this principle. A series of more recent studies have explicitly examined ﬂuctuations in autocorre-
+lated environments, with a particular focus on the evolution of bet-hedging strategies (e.g., Carja
+& Creanza, 2019; Libby & Ratcliff, 2019; Wang & Dai, 2019). Wang and Dai (2019) suggest that
+generalist phenotypes evolve under intermediate levels of environmental correlation, while Libby
+and Ratcliff (2019) argue that structured populations and dispersal can maintain sufﬁcient genetic
+variance at the population scale to reduce the risk of extinction in unpredictable environments.
+Carja and colleagues (e.g., Carja & Creanza, 2019) extend such approaches to examine “cultural
+bet-hedging” (see also Grove, 2018, 2019) and the evolution of diversity in populations of socially
+learning organisms.
+It is important to note, however, that the relationship between autocorrelation and noise colour
+is neither linear nor simple. The equation for iteratively generating an autocorrelated time series is
+frequently given as
+φt+1 = αφt + ϵ(t+1) (2)
+where φ is the time series, α is the autocorrelation parameter, and ϵ is a series of normally dis-
+tributed random variates with zero mean and unit variance. It is then often assumed that the au-
+tocorrelation parameter α relates to the β parameter in 1 /fβ noise (at least in the region between
+white [ β = 0] and red [ β = 2] noise) as α = β/2. However, there exists no simple linear relation
+of this kind between autocorrelated and 1 /f noise, as shown via simulation in Figure 3. Figure 3
+shows the β value realised when simulating autocorrelated environments according to Equation 2;
+beyond white noise, for which α = β = 0, the simulation results deviate considerably from the as-
+sumed relationship of α = β/2. This deviation is caused by the fact that Equation 2 describes an
+Artiﬁcial Life Volume 00, Number 00 5
+Downloaded from http://direct.mit.edu/artl/article-pdf/doi/10.1162/artl_a_00354/1986825/artl_a_00354.pdf by Keele University user on 12 February 2022
+
+M. Grove et al. Noise Colour in Evolutionary Systems
+Figure 3. The relationship between the autocorrelation parameter of Equation 2 and the noise colour of the resultant
+time series. Each data point represents the median noise colour of 1,000 time series generated via Equation 2; whiskers
+represent the full range of variation around the median. The red dashed line represents β = 2α where β is the
+exponent of a coloured noise series 1 /fβ and α is the autocorrelation parameter of Equation 2.
+AR-1 process whereas coloured noise consists of self-similar patterns of recurrence across the entire
+time series.
+1.3 The Interaction of Life History and Environmental Fluctuation
+Animals have been found to show substantial variation in life history variables, as characterised in
+Pianka’s (1970) expansion of MacArthur and Wilson’s (1967) Theory of Island Biogeography .P i a n k a ’ s
+(1970, p. 593) focus on r-a n dK-selected species differentiates between organisms of small body and
+brain size, which develop rapidly, reach sexual maturity early, and have short lifespans ( r-selected
+species), and those of large body and brain size, which develop slowly, take longer to reach sexual
+maturity, and show greater longevity ( K-selected species). Though these conditions are necessar-
+ily relative rather than absolute, and the theory has received considerable criticism (reviewed in
+Reznick et al., 2002), the basic essence of the theory—that animals can be organised on a life his-
+tory continuum between those that have “fast” reproductive rates ( r) and those that have “slow”
+reproductive rates ( K )—is evidently true, and continues to permeate the literature (e.g., Engen &
+Sæther, 2017; Lande et al., 2017; Wright et al., 2019). Importantly, Bromham (2009, 2011) notes that
+if reproductive rates vary between species, then rates of potential evolution must also vary. This is
+due to the fact that mutation rates vary considerably between species (e.g., Bromham et al., 1996;
+Lanfear et al., 2010), with a substantial part of this variation correlated with life history variables
+such as reproductive rate (e.g., Nabholz et al., 2008; Nikolaev et al., 2007). Since mutation provides
+the raw material for evolutionary change, the potential for evolutionary change is greater in those
+species with higher reproductive rates. This leads to the theory that rapidly reproducing species may
+be more able to track environmental ﬂuctuations via natural selection, whereas slowly reproducing
+species may be more dependent upon behavioural adaptation, individual and social learning, and,
+ultimately, cultural evolution (e.g., Grove, 2017, in press).
+Modiﬁcations and extensions of Pianka’s (1970) classiﬁcation are too numerous to cover in detail,
+but of relevance to the analyses below is the ﬁnding of Bielby and colleagues (Bielby et al., 2007)
+that there may not be a single axis of variation corresponding to the continuum between fast and
+slow species. Whilst Stearns (1983) argued for the existence of both fast-slow and precocial-altricial
+life history axes, factor analyses conducted by Bielby et al. (2007) suggest that, after controlling for
+body size, the two main factors concern the timing of reproductive bouts and the reproductive
+output per bout. Age at sexual maturity, inter-birth interval, and weaning age load heavily on the
+ﬁrst factor, with gestation length and litter size associated with the second factor. Modelling efforts
+may ultimately have to incorporate these two factors separately, but overall measures of reproductive
+output such as the maximum intrinsic rate of increase (rmax) remain useful as summaries of a species’
+position on the classic life history continuum between fast and slow.
+6 Artiﬁcial Life Volume 00, Number 00
+Downloaded from http://direct.mit.edu/artl/article-pdf/doi/10.1162/artl_a_00354/1986825/artl_a_00354.pdf by Keele University user on 12 February 2022
+
+M. Grove et al. Noise Colour in Evolutionary Systems
+The response of a species to environmental change has been found to be strongly affected by
+life history. Chiba (1998) predicts that, under gradual climatic change, K-selected species inhabit-
+ing previously stable environments would face the most serious risk of extinction, whilst modelling
+by Benton & Grant (1996) and Tuljapurkar (1989, 1990) suggest that r-selected organisms would
+be most severely impacted by rapid climate perturbation and catastrophic events. These outcomes
+may seem contradictory, yet they make sense in terms of life history theory. K-selected species,
+characterised by great competitive capability and high chance of survival to adulthood but low re-
+productive yield, are anticipated to persist in stable environments (MacArthur & Wilson, 1967).
+Such animals with slow life histories are found to be resistant to environmental disruption but lack
+the ability to rebound from long-term change due to their low reproductive rate. On the other hand,
+r-selected species have a higher capacity for reproduction and therefore tend to occupy more varied
+environments in the short term, avoiding extinction by recolonisation and tracking environmental
+change (Pribil & Houlahan, 2003). Behavioural and/or genetic adaptions allow animals with faster
+generation times to react quickly to climate change, improving their likelihood of survival. This to-
+gether suggests that there are likely to be complex evolutionary responses to environmental change;
+crucially, species with differing life histories may respond in quite different ways to different types
+of environmental change. Based on previous work, both slower life histories and “whiter” environ-
+ments are predicted to produce increased selection for generalism as opposed to specialism, but
+there has to date been no research into the interaction of these two effects.
+To examine the interaction of noise colour and life history, the model described below extends
+the work of Grove and colleagues (Grove, 2014; Grove et al., 2020) by varying the reproductive
+rates of the simulated populations. Speciﬁcally, the model assumes a constant overall population
+size while varying R, the proportion of individuals replaced each iteration. Modelling life history
+in this way does not vary rmax (as the number of births is equal to the number of deaths in each
+iteration of each simulation, which is equivalent to assuming a constant carrying capacity); instead,
+increasing the replacement proportion mimics the effects of a faster life history in that it increases
+the amount of genetic variation produced via recombination in each iteration. The replacement
+proportion also acts as a viable proxy for both generation time and longevity, as both are directly
+related to its reciprocal; both the average longevity of an agent (in units of iterations) and the average
+number of iterations required to completely replace the existing population are equal to 1 /R.
+1.4 Environmental Variability in Artiﬁcial Evolutionary Systems
+Artiﬁcial evolutionary systems, often employed in artiﬁcial life, evolutionary robotics, computa-
+tional biology, and computational social sciences, employ a variety of methods to either inject noise
+into the environment, or to vary the environment over time. Examples include the addition of
+noise to external forces (Bongard & Pfeifer, 2003) or sensor inputs (Jakobi, 1997; Jakobi et al.,
+1995) in evolutionary robotics; the application of an external environment (i.e., time-dependent
+changing of objective functions) (Borg & Channon, 2012; Bullinaria, 2018; Grove, 2014, 2018); the
+time-dependent determination of rewards/punishments (Canino-Koning et al., 2016); the varying
+of task difﬁculty over time (either predetermined, or determined by the performance of agents)
+(Borg et al., 2011; Jolley et al., 2016; Stanton, 2018; Stanton & Channon, 2013); and the exploration
+of complex and noisy environments for the emergence of open-ended evolution (Channon, 2019;
+Channon & Damper, 1998). In all of these examples, one thing is consistent—agents are expected
+to adapt to changes or uncertainty in their environment. The approaches taken to implementing
+this change or uncertainty vary signiﬁcantly between systems. These implementations include the
+application of coloured noise, typically white noise/Gaussian random noise (Jakobi, 1997; Jakobi
+et al., 1995; Kouvaris et al., 2017) or, to a lesser extent, red noise/Brownian noise (Steiner, 2012;
+Whitehead & Richerson, 2009). Other implementations include the use of sine waves to determine
+environmental ﬂuctuations over time, or variations on this theme (Borg & Channon, 2012; Grove,
+2014, 2018; Khan et al., 2020; Stanton, 2018; Stanton & Channon, 2013). A ﬁnal common ap-
+proach is to predetermine a series of states which an environment could be in, and move between
+these states given a certain frequency, this frequency determining the difﬁculty or harshness of
+Artiﬁcial Life Volume 00, Number 00 7
+Downloaded from http://direct.mit.edu/artl/article-pdf/doi/10.1162/artl_a_00354/1986825/artl_a_00354.pdf by Keele University user on 12 February 2022
+
+M. Grove et al. Noise Colour in Evolutionary Systems
+environmental change (Asakura et al., 2015; Canino-Koning et al., 2016; Ellefsen, 2014; Nolﬁ &
+Parisi, 1996; Ofria & Lalejini, 2016; Wilder & Stanley, 2015). One thing is common across all of
+these approaches, they all rarely consider pink noise, or ground the method of environmental un-
+certainty in empirical observations.
+The application of environmental variability or noise is used to address a number of questions
+concerned with the affects of environmental uncertainty. The most common amongst these are
+whether changing environments affect: the emergence of phenotypic plasticity (Kouvaris et al.,
+2017; Wilder & Stanley, 2015) and evolvability (Canino-Koning et al., 2016; Ofria & Lalejini, 2016;
+Steiner, 2012); the evolution of robust controllers in 3D virtual creatures (Stanton, 2018; Stanton
+& Channon, 2013) and robots (physical and simulated) (Asakura et al., 2015; Bongard & Pfeifer,
+2003; Jakobi, 1997; Jakobi et al., 1995); and the evolution of versatile adaptations such as learn-
+ing (Ellefsen, 2014; Nolﬁ & Parisi, 1996) and social learning (Borg & Channon, 2012; Bullinaria,
+2018). What is common amongst all these questions and domains is that they are seeking to under-
+stand the interaction between changing environments, specialist-generalist evolutionary dynamics,
+and adaptability. The work of Grove (2014) provides a suitable general framework for address-
+ing the question of specialist-generalist evolutionary dynamics under environmental variability in
+artiﬁcial evolutionary systems, with Grove et al. (2020) demonstrating the beneﬁts of accommo-
+dating coloured noise under this framework, and the importance of considering coloured noise as
+the basis for environmental variability and uncertainty as opposed to the more common methods
+discussed above.
+2 Methodology
+The model is based on a population of 1,000 agents each possessing a chromosome consisting
+of just two loci. These loci are continuous variables corresponding to the mean (Locus 1) and
+standard deviation (Locus 2) of a Gaussian distribution that describes an agent’s environmental
+tolerance. Locus 1 therefore represents the environment in which the agent achieves its optimal
+ﬁtness and can take any value, while Locus 2 represents how sharply the agent’s ﬁtness declines
+when the environment differs from this optimum and is necessarily positive. Agents with relatively
+low values at Locus 2 can be considered specialists, whereas those with relatively high values at
+Locus 2 can be considered generalists. Locus 2 can also therefore be considered a measure of an
+agent’s niche breadth in a single dimension. At the start of each simulation, agents are initiated with
+Locus 1 values randomly distributed as N (0, 0.1) and Locus 2 values as | N(0, 0.1)| with N(μ,σ)
+a Gaussian random variable. During each iteration of a simulation, each agent is assigned a ﬁtness
+score calculated via a standard Gaussian function, given as:
+F
+(
+ai,t
+)
+= 1
+σi,t
+√
+2π
+e
+− 1
+2
+( Et−μi,t
+σi,t
+)2
+(3)
+where F(ai,t) denotes the ﬁtness of agent i at time t, Et denotes the environmental value at time t,
+and μi,t and σi,t denote respectively the values at Locus 1 and Locus 2 of agent i at time t.
+Each iteration R individuals are chosen for reproduction via ﬁtness-proportionate selection (henceforth
+FPS); a mutated copy of each of these individuals is produced, with these copies taking the place
+of the least ﬁt R individuals in the population. Reproduction is therefore asexual, with the two loci
+fully linked; alternative simulations utilising sexual reproduction with values at the two loci inherited
+separately from two parents chosen independently via FPS did not appreciably alter the results. The
+mutation equations differ slightly for the two loci due to the necessity for positive values at Locus
+2. Mutation at Locus 1 is given by:
+L′
+1 = L1 + N(0, 0.1) (4)
+8 Artiﬁcial Life Volume 00, Number 00
+Downloaded from http://direct.mit.edu/artl/article-pdf/doi/10.1162/artl_a_00354/1986825/artl_a_00354.pdf by Keele University user on 12 February 2022
+
+M. Grove et al. Noise Colour in Evolutionary Systems
+and mutation at Locus 2 by:
+L′
+2 = L2 · eN(0,0.1) (5)
+where the prime indicates the mutated value at the respective locus in the new agent. The coloured
+noise time series to which agents adapt are generated via the inverse fast Fourier transform (hence-
+forth IFFT), which allows for accurate generation of coloured noise. Time series were generated
+from a vector of frequencies f = t/2s/n, with t = (s,2 s,... , ns), a vector of sampling times, s the
+sampling period, and n a scalar equal to the length of the vector t. The sampling frequency is there-
+fore 1/s with the Nyquist frequency equal to 1 /2s. The vector of desired amplitudes at each fre-
+quency is then calculated as:
+A =
+√
+1
+2|1/fβ| (6)
+where β is the log-spectral exponent (e.g., β = 0 for white noise, β = 2 for red noise). A is then
+doubled in length from n to 2n by adding an inverted copy to the bottom of the existing vector. A
+is then multiplied by an exponentiated vector of 2 n random phase angles and passed to the IFFT,
+with the ﬁnal coloured noise series calculated as:
+Eβ = R
+(
+IFFT
+{
+A ◦
+(
+e2πu√−1
+)})
+(7)
+where u is a vector of 2 n uniformly distributed random numbers on the interval [ 0, 1], ◦ indicates
+the Hadamard product (element-wise multiplication), and R indicates that only the real part of the
+complex output is retained. The vector Eβ is now a coloured noise time series of length 2 n with
+log-spectral exponent β. Time series were scaled to have zero mean and unit variance before being
+incorporated into the model. Two sets of tests were undertaken, the ﬁrst with R ﬁxed to replace half
+of the population (also reported in Grove et al., 2020), and a second set of tests where R is varied.
+For simplicity and to reduce padding during the IFFT procedure, s = 1 in all tests. In the ﬁrst set of
+tests n = 216 = 65,536, and in the second set of tests n = 212 = 4,096; this leads to coloured noise
+series consisting of 2 n = 131,072 and 2 n = 8,192 timesteps respectively. The reason for reducing
+the length of the coloured noise series in the second set of tests was that it was clear from the ﬁrst
+set of tests that simulations had stabilised early into the test and therefore did not require time series
+of such length. To examine the interaction of noise colour and reproductive rate, simulations were
+run on time series with log-spectral exponents from 0 to 2 in increments of 0.1 and reproductive
+numbers R from 50 to 950 in increments of 50 (corresponding to a range of 5% to 95% of the
+population replaced each iteration), yielding a total of 399 simulation runs. Population medians and
+2.5th and 97.5th percentiles were recorded for Loci 1 and 2 each iteration. To produce a measure
+of central tendency indicative of a whole simulation run, the median of all agents across the last
+130,000 (in the ﬁrst set of tests) and 8,000 (in the second set of tests) iterations was calculated for
+both loci; to produce a measure of dispersion (population diversity) indicative of a whole simulation
+run, the median distance across the last 130,000 or 8,000 iterations between the 2.5th and 97.5th
+percentiles of the population was calculated for both loci.
+3 Results
+As ﬁrst reported in Grove et al. (2020), our ﬁrst set of simulations found that agents are more
+successful at tracking environments under reddened noise (increased values of β), as shown in the
+2,000-iteration snapshots of example runs in Figure 4. Conversely, greater tolerance is selected for
+under whiter noise ( β → 0) as agents are unable to closely track the environment. This pattern is
+demonstrated by Figure 5 (top). We found that greater tolerance implies lower ﬁtness (Figure 5,
+Artiﬁcial Life Volume 00, Number 00 9
+Downloaded from http://direct.mit.edu/artl/article-pdf/doi/10.1162/artl_a_00354/1986825/artl_a_00354.pdf by Keele University user on 12 February 2022
+
+M. Grove et al. Noise Colour in Evolutionary Systems
+Figure 4. Three 2,000-iteration snapshots of single model runs where the proportion of agents replaced each itera-
+tion = 0.5. Agents are better able to track reddened noise, whereas the trajectory for white noise suggests that agents
+evolve towards the running mean of the environmental series and couple this with a broader environmental tolerance.
+bottom) as agents are required to generalise to ﬂuctuating environmental conditions rather than
+specialise under relatively stable redder noise. Evolution under pink noise, however, provides an
+intermediary between white and red noise. To understand the relationship between noise colour and
+the rate of change in evolved tolerance, we applied a local polynomial regression method, known as
+Figure 5. Tolerance and ﬁtness values for populations evolving in environments characterised as white 1 /f 0 to red 1/f 2
+noise, where the proportion of agents replaced each iteration = 0.5. In line with the snapshots of Figure 4, whiter
+noises require greater levels of tolerance and result in accordingly lower ﬁtness. Points show medians, and error bars
+show 2.5th and 97.5th percentiles, each over the last 130,000 iterations of a given run.
+10 Artiﬁcial Life Volume 00, Number 00
+Downloaded from http://direct.mit.edu/artl/article-pdf/doi/10.1162/artl_a_00354/1986825/artl_a_00354.pdf by Keele University user on 12 February 2022
+
+M. Grove et al. Noise Colour in Evolutionary Systems
+Figure 6. A robust LOESS curve ﬁtted against the ﬁrst derivative of raw tolerance data where the proportion of agents
+replaced each iteration = 0.5 (as seen in Figure 5). The ﬁtted curve demonstrates that the rate of change in tolerance
+against the noise exponent peaks at pink 1 /f noise.
+robust locally estimated scatterplot smoothing (LOESS), to the ﬁrst derivative of the raw tolerance
+data (see Figure 6). This shows that pink noise is the central point of the exponent, with the shift
+from white to pink eliciting a rate of change in evolved tolerance that increases to its peak, which
+falls away as the environment reddens beyond pink noise. Pink noise is thus the pivot between two
+relatively stable evolutionary states: high tolerance in white noise environments and low tolerance
+in red noise environments.
+Similarly, in our second set of simulations, environmental tolerance values (as represented by
+Locus 2) decreased as the environmental noise became increasingly reddened. However, a more
+nuanced pattern is returned when considering the interaction between different noise colours and
+reproductive rate. As shown in Figure 7(a), populations experiencing relatively white noise ( β → 0)
+evolved greater environmental tolerance under higher reproductive rates, whereas populations ex-
+periencing relatively red noise ( β → 2) evolved lower environmental tolerance under higher repro-
+ductive rates.
+To examine this result in greater detail, a more extensive series of simulations was carried out
+from β = 0t o β = 2 in increments of 0.02 for reproductive rates of R = 50, 500, and 950. This
+allowed for high-resolution examination of variation in evolved environmental tolerance levels at
+three horizontal transects across the surface of Figure 7(a). Figure 8(a) shows these transects as
+raw simulation output (median tolerance levels) with curves ﬁtted via a robust LOESS procedure
+with 25% span; Figure 8(b) shows the ﬁtted LOESS curves relative to a baseline in which half the
+Figure 7. (a) shows the median value at Locus 2 (tolerance or niche breadth) under each combination of noise colour
+and reproductive rate. (b) shows population diversity at Locus 1 (measured as the distance between the 2.5th and
+97.5th percentiles of the population) under each combination of noise colour and reproductive rate. Both plots show
+medians over the last 8,000 iterations of each simulation run.
+Artiﬁcial Life Volume 00, Number 00 11
+Downloaded from http://direct.mit.edu/artl/article-pdf/doi/10.1162/artl_a_00354/1986825/artl_a_00354.pdf by Keele University user on 12 February 2022
+
+M. Grove et al. Noise Colour in Evolutionary Systems
+Figure 8. Higher resolution simulations of evolved niche breadth across a range of noise colours for three reproductive
+rates. (a) shows raw simulation output with ﬁtted robust LOESS curves using a 25% span. (b) shows the resulting LOESS
+curves plotted relative to a baseline in which half the population is replaced each iteration (shown by the green line in
+(a)). PR = proportion of agents replaced each iteration.
+population is replaced each iteration (R = 500). Figure 8 emphasizes the fact that conclusions drawn
+from a simulation employing white noise ( β = 0) would be the opposite of the conclusions drawn
+from a simulation employing the more realistic pink noise (the transition from higher reproduc-
+tive rates generating higher levels of tolerance to higher reproductive rates generating lower levels
+of tolerance occurs at β ≈ 0.8). These results demonstrate not only that noise colour inﬂuences
+evolved levels of environmental tolerance but also that the interaction between noise colour and
+reproductive rate produces complex, nonlinear patterns in the response of this important evolu-
+tionary variable.
+As shown in Figure 7(b), the diversity of values at Locus 1 increases markedly with reproductive
+rate under relatively white noise, but shows relatively little variation under reddened noise (β> 1.6).
+Diversity at Locus 2 (not shown) follows a very similar pattern. This result demonstrates that the
+effect of reproductive rate on population diversity depends heavily upon the colour of the envi-
+ronmental noise experienced by the population; simulations employing white noise would produce
+results qualitatively different from those employing the pink to red noises found more frequently in
+natural ecological and environmental settings.
+4 Discussion
+The results presented above highlight that the colour of noise chosen to represent the environment
+to which agents are adapting has a profound inﬂuence on model output. Gaussian (white noise)
+and Brownian (red noise) signals are found to represent the two extremes of a wide spectrum of
+noise colour variation, with the former eliciting selection for specialism, the latter generalism, and
+pink noise a balance between the two. We also found a complex non-linear interaction between the
+reproductive rate of the agents in a simulation and noise colour. Widely divergent and somewhat
+contradictory responses in niche breadth and population diversity are reported when applying these
+two most frequently used models for environmental signals to simulated populations with differing
+life histories. Together, this highlights the need to give serious consideration to the colour of noise
+applied in evolutionary simulations.
+As originally reported in Grove et al. (2020), these results show that whiter environments gener-
+ally require greater levels of environmental tolerance than those that exhibit redder power spectral
+densities, demonstrated by Figure 4. This result is closely related to the geometric mean effect in
+evolutionary biology, which states that under high levels of environmental variability (indicated here
+by environments with white power spectral densities), selection acts to reduce the variance in ﬁtness
+over generations, even if this entails the sacriﬁce of highly ﬁt individuals within any given generation
+(Lewontin & Cohen, 1969; Phillipi & Seger, 1989; Simons, 2002). At macro-evolutionary timescales,
+natural selection favours lineages with low variance in ﬁtness over time rather than those with high
+instantaneous ﬁtness at any given time; put simply, in a highly variable environment high ﬁtness
+12 Artiﬁcial Life Volume 00, Number 00
+Downloaded from http://direct.mit.edu/artl/article-pdf/doi/10.1162/artl_a_00354/1986825/artl_a_00354.pdf by Keele University user on 12 February 2022
+
+M. Grove et al. Noise Colour in Evolutionary Systems
+today may mean low ﬁtness tomorrow, whereas moderate ﬁtness today may equate to moderate
+ﬁtness tomorrow (Figure 5). This is particularly true of white noise environments, due to their lack
+of autocorrelation; in a white noise environment, today’s conditions are completely unrelated to
+tomorrow’s conditions. In a red noise environment, by contrast, today’s conditions act as at least
+a partial guide to tomorrow’s conditions. The unpredictability of white noise leads logically to the
+evolution of greater generalism or tolerance, as this is the only strategy available when there are no
+available cues to future conditions.
+The above is coherent with Potts’ (1996, 1998, 2013) variability selection hypothesis, which ar-
+gues that organisms develop greater versatility under varying conditions in order to deal with novel
+and unpredictable environments in the future. Potts (1998) draws evidence from hominin evolution,
+noting that key physiological and behavioural adaptations seem to have emerged in the hominin lin-
+eage during times of heightened variability. Paleoenvironmental data from the archaeological site of
+Olorgesailie reveal that whilst long-term evolutionary trends such as orbital cycles are detectable,
+there is also strong evidence of signiﬁcant abrupt ﬂuctuations in climatic conditions; this suggests a
+balance between low-frequency ( ≈red) oscillations and high-frequency ( ≈white) variability. If vari-
+ability is considered to be the white noise component of a signal, then our results show support for
+the variability selection hypothesis; however, a more complex pattern in the behavioural response
+to environmental noise is reported above, requiring a careful consideration of the type of noise
+assumed when simulating evolution in response to environmental change.
+Figure 7(a) demonstrates that all simulated populations, regardless of reproductive rate, evolve
+greater environmental tolerance under whiter noise; this is the primary output of the analyses con-
+ducted above. However, the analyses also demonstrate an intriguing interaction with reproductive
+rates in that under white noise, higher reproductive rates lead to greater levels of environmental
+tolerance, whereas under red noise, higher reproductive rates lead to lower levels of environmental
+tolerance. This latter result is made explicit by the analyses presented in Figure 8. As white noise and
+red noise are the two most widely used forms of environmental ﬂuctuation in stochastic simulation
+models, the fact that they produce contrasting results in this regard suggests that more caution is
+needed when interpreting the results of such models, and that more focus is needed to establish the
+most appropriate form of environmental ﬂuctuation for a given application.
+It has been hypothesised that organisms with short life histories (and fast reproductive rates)
+are less likely to exhibit signs of behavioural versatility and instead are likely to track environmental
+ﬂuctuations via genetic mechanisms (Grove, 2017; Grove et al., 2020). Encephalisation facilitates
+behavioural versatility (Reader & Laland, 2002; Street et al., 2017), and, whilst standard life-history
+theory in terms of the r/K division (Pianka, 1970; MacArthur & Wilson, 1967) does not directly con-
+sider the relationship between encephalisation and reproduction rate, brain and body size are tightly
+correlated in mammals (Herculano-Houzel et al., 2015; Jerison, 1975; Tsuboi et al., 2018). Indeed,
+many studies have suggested that brain size is in fact a more likely determinant of life-history varia-
+tion than is body size (e.g., Barrickman et al., 2008; Deaner et al., 2003; Isler & van Schaik, 2009a,b).
+This makes sense in light of the expensive tissue hypothesis (Aiello & Wheeler, 1995), as the energy
+required to grow and maintain a large brain may have elicited a reduction in the energy allocated to
+reproduction (Isler & van Schaik, 2009a). Animals with lower reproductive rates have, on average,
+smaller brains when compared to related taxa with longer generational times (Grove, 2017), and rel-
+atively large-brained mammals show reduced annual fertility (Isler & van Schaik, 2009a). Over the
+past ﬁve million years, empirical paleoenvironmental data have shown a steady increase in variability
+(Lisiecki & Raymo, 2005), likely playing a key role in the increasing versatility observed in the ho-
+minin behavioural record, as proposed by the variability selection hypothesis. As human ancestors
+evolved slower life histories and larger brains, they would have become more dependent on cultural
+rather than biological evolution to adapt to environmental challenges.
+Reproductive rates are inherently linked to evolutionary rates in sexually reproducing organisms;
+as recombination events are a major source of genotypic variation, species with faster reproduc-
+tive rates produce more variation per unit time. The rate of molecular evolution varies consis-
+tently with life history parameters such as generation time across a wide range of mammalian taxa
+Artiﬁcial Life Volume 00, Number 00 13
+Downloaded from http://direct.mit.edu/artl/article-pdf/doi/10.1162/artl_a_00354/1986825/artl_a_00354.pdf by Keele University user on 12 February 2022
+
+M. Grove et al. Noise Colour in Evolutionary Systems
+(e.g., Bromham, 2011). Elevation of the mutation rate itself—not directly explored in the above
+analyses—would be expected to produce an effect similar to an increase in reproductive rates (and
+mutation rate alone governs evolutionary rates in asexually reproducing organisms). Whilst higher
+mutation rates may permit faster evolution in a lineage, however, the vast majority of mutations are
+deleterious to individuals, and thus selection for increases in mutation rate is considered to be ex-
+ceptionally rare (e.g., Kimura, 1967). Selection for faster or slower life history, by contrast, depends
+on a complex series of trade-offs; for example, a faster life history may be associated with greater
+fecundity but lower survivorship, and numerous life history strategies may lead to equivalent ﬁtness
+(in the sense of the number of offspring surviving to reproductive age). The traditional dichotomy
+between investment in offspring quantity ( r-selection) in variable environments and investment in
+offspring quality ( K-selection) in stable environments may not be sufﬁcient in cases where sexual
+maturity is delayed by substantial energetic investment in brain development, with individual and so-
+cial learning subsequently employed to provide solutions to the challenges posed by environmental
+variability.
+The results reported above agree with those of Halley (1996) that pink noise (broadly construed)
+is likely the most appropriate model of typical environmental noise for understanding long-term
+evolutionary dynamics. Both the niche breadth and the population diversity responses, depicted
+in Figure 7, are most consistent with standard life history theory under pink noise scenarios, with
+populations with higher reproductive rates exhibiting traits of specialists and populations with lower
+reproductive rates exhibiting traits of generalists. Animal population dynamics typically exhibit pink
+noise at a level that appears to be greater than would be expected from the environmental noise that
+the populations are exposed to. As demonstrated by Grove et al. (2020), these results show that pink
+noise is the pivot around which a change from high environmental tolerance (under white noise) to
+low environmental tolerance (under red noise) occurs, offering a critical balance between the need
+for plasticity during periods of high variability and to track longer-term environmental changes.
+4.1 Conclusion
+Our simulations suggest that populations evolving under increasingly reddened environmental
+regimes will tend to be more specialised, with narrower niches and a lower tolerance of environmen-
+tal variability. This is due to the higher autocorrelation of redder relative to whiter noise, which leads
+in turn to redder environments being more predictable. However, there exists a complex interaction
+between noise colour and reproductive rate: Populations experiencing relatively white noise evolved
+greater environmental tolerance under higher reproductive rates, whereas populations experiencing
+relatively red noise evolved lower environmental tolerance under higher reproductive rates. Thus,
+conclusions drawn from simulations employing white noise would be the opposite of those drawn
+from simulations employing red noise. Further to this, the effect of reproductive rate on popula-
+tion diversity also depends heavily upon the colour of the environmental noise experienced by the
+population. It is recommended that future simulations should be conducted using a wider range of
+coloured noise models and that, where related empirical data are available, these should be analysed
+to determine the power spectral density of the environment being studied. This should ensure that
+simulation results are genuinely representative of both environmental and evolutionary dynamics.
+References
+Aiello, L. C., & Wheeler, P. (1995). The expensive-tissue hypothesis: The brain and the digestive system in
+human and primate evolution. Current Anthropology, 36(2), 199–221. https://doi.org/10.1086/204350
+Asakura, A., Suzuki, R., & Arita, T. (2015). Evolving 3D virtual creatures through exaptation triggered by
+environmental change. Artiﬁcial Life and Robotics , 20(3), 244–250. https://doi.org/10.1007/s10015-015
+-0222-0
+Baker, H. G. (1965). Characteristics and modes of origin of weeds. In H. G. Baker & G. L. Stebbins (Eds.),
+The genetics of colonizing species (pp. 147–172). Academic Press.
+14 Artiﬁcial Life Volume 00, Number 00
+Downloaded from http://direct.mit.edu/artl/article-pdf/doi/10.1162/artl_a_00354/1986825/artl_a_00354.pdf by Keele University user on 12 February 2022
+
+M. Grove et al. Noise Colour in Evolutionary Systems
+Barrickman, N. L., Bastian, M. L., Isler, K., & van Schaik, C. P. (2008). Life history costs and beneﬁts of
+encephalization: A comparative test using data from long-term studies of primates in the wild. Journal of
+Human Evolution, 54(5), 568–590. https://doi.org/10.1016/j.jhevol.2007.08.012, PubMed: 18068214
+Benton, T., & Grant, A. (1996). How to keep ﬁt in the real world: Elasticity analyses and selection pressures
+on life histories in a variable environment. American Society of Naturalists , 147(1), 115–139. https://doi.org
+/10.1086/285843
+Bielby, J., Mace, G. M., Bininda-Emonds, O. R. P., Cardillo, M., Gittleman, J. L., Jones, K. E., Orme, C. D. L.,
+& Purvis, A. (2007). The fast-slow continuum in mammalian life history: An empirical reevaluation.
+The American Naturalist , 169(6), 748–757. https://doi.org/10.1086/516847, PubMed: 17479461
+Bongard, J. C., & Pfeifer, R. (2003). Evolving complete agents using artiﬁcial ontogeny. In F. Hara &
+R. Pfeifer (Eds.), Morpho-functional machines: The new species (pp. 237–258). Springer. https://doi.org/10.1007
+/978-4-431-67869-4_12
+Borg, J. M., & Channon, A. (2012). Testing the variability selection hypothesis: The adoption of social
+learning in increasingly variable environments. In C. Adami, D. M. Bryson, C. Ofria, & R. T. Pennock
+(Eds.), Proceedings of the artiﬁcial life conference 2012: The thirteenth international conference on the synthesis and
+simulation of living systems (pp. 317–324). https://doi.org/10.7551/978
+-0-262-31050-5-ch042
+Borg, J. M., Channon, A., & Day, C. (2011). Discovering and maintaining behaviours inaccessible to
+incremental genetic evolution through transcription errors and cultural transmission. In T. Lenaerts,
+M. Giacobini, H. Bersini, P. Bourgine, M. Dorigo, & R. Doursat (Eds.), Proceedings of the eleventh European
+conference on the synthesis and simulation of living systems (pp. 101–108). MIT Press.
+Bromham, L. (2009). Why do species vary in their rate of molecular evolution? Biology Letters, 5(3), 401–404.
+https://doi.org/10.1098/rsbl.2009.0136, PubMed: 19364710
+Bromham, L. (2011). The genome as a life-history character: Why rate of molecular evolution varies between
+mammal species. Philosophical Transactions of the Royal Society of London. Series B: Biological Sciences , 366(1577),
+2503–2513. https://doi.org/10.1098/rstb.2011.0014, PubMed: 21807731
+Bromham, L., Rambaut, A., & Harvey, P. H. (1996). Determinants of rate variation in mammalian DNA
+sequence evolution. Journal of Molecular Evolution , 43(6), 610–621. https://doi.org/10.1007/BF02202109,
+PubMed: 8995058
+Bullinaria, J. A. (2018). Evolution of learning strategies in changing environments. Cognitive Systems Research, 52,
+429–449. https://doi.org/10.1016/j.cogsys.2018.07.024
+Canino-Koning, R., Wiser, M. J., & Ofria, C. (2016). The evolution of evolvability: Changing environments
+promote rapid adaptation in digital organisms. In C. Gershenson, T. Froese, J. M. Siqueiros, W. Aguilar,
+E. J. Izquierdo, & H. Sayama (Eds.), ALIFE 2016, The ﬁfteenth international conference on the synthesis and
+simulation of living systems (pp. 268–275). MIT Press. https://doi.org/10.7551/978-0-262-33936-0-ch047
+Carja, O., & Creanza, N. (2019). The evolutionary advantage of cultural memory on heterogeneous contact
+networks. Theoretical Population Biology , 129, 118–125. https://doi.org/10.1016/j.tpb.2018.09.006, PubMed:
+30731105
+Carja, O., Liberman, U., & Feldman, M. W. (2013). Evolution with stochastic ﬁtnesses: A role for
+recombination. Theoretical Population Biology , 86, 29–42. https://doi.org/10.1016/j.tpb.2013.02.005,
+PubMed: 23517905
+Channon, A. (2019). Maximum individual complexity is indeﬁnitely scalable in Geb. Artiﬁcial Life, 25(2),
+134–144. https://doi.org/10.1162/artl_a_00285, PubMed: 31150288
+Channon, A., & Damper, R. I. (1998). The evolutionary emergence of socially intelligent agents. In B.
+Edmonds & K. Dautenhahn (Eds.), Socially situated intelligence: A workshop held at SAB’98, University of Zurich
+(pp. 41–49). http://eprints.soton.ac.uk/id/eprint/262387
+Chiba, S. (1998). A mathematical model for long-term patterns of evolution: Effects of environmental
+stability and instability on macroevolutionary patterns and mass extinctions. Paleobiology, 24(3), 336–348.
+Cohen, D. (1966). Optimizing reproduction in a randomly varying environment. Journal of Theoretical Biology ,
+12(1), 119–128. https://doi.org/10.1016/0022-5193(66)90188-3
+Cuddington, K. M., & Yodzis, P. (1999). Black noise and population persistence. Proceedings of the Royal Society of
+London. Series B: Biological Sciences , 266(1422), 969–973. https://doi.org/10.1098/rspb.1999.0731
+Artiﬁcial Life Volume 00, Number 00 15
+Downloaded from http://direct.mit.edu/artl/article-pdf/doi/10.1162/artl_a_00354/1986825/artl_a_00354.pdf by Keele University user on 12 February 2022
+
+M. Grove et al. Noise Colour in Evolutionary Systems
+Deaner, R. O., Barton, R. A., & van Schaik, C. P. (2003). Primate brains and life histories: Renewing the
+connection. In P. M. Kappeler & M. E. Pereira (Eds.), Primate life histories and socioecology (pp. 233–65).
+University of Chicago Press.
+Dempster, E. R. (1955). Maintenance of genetic heterogeneity. Cold Spring Harbor Symposia on Quantitative
+Biology, 20, 25–31. https://doi.org/10.1101/SQB.1955.020.01.005, PubMed: 13433552
+Dobzhansky, T. (1950). Evolution in the tropics. American Scientist, 38, 209–221.
+Ellefsen, K. (2014). The evolution of learning under environmental variability. In H. Sayama, J. Reiffel, S. Risi,
+R. Doursat, & H. Lipson (Eds.), ALIFE 14: The fourteenth international conference on the synthesis and simulation of
+living systems (pp. 649–656). MIT Press. https://doi.org/10.7551/978-0-262-32621-6-ch104
+Engen, S., & Sæther, B. (2017). r- and K-selection in ﬂuctuating populations is determined by the evolutionary
+trade-off between two ﬁtness measures: Growth rate and lifetime reproductive success. Evolution, 71(1),
+167–173. https://doi.org/10.1111/evo.13104, PubMed: 27804129
+Gillespie, J. (1973). Polymorphism in random environments. Theoretical Population Biology , 4, 193–195.
+https://doi.org/10.1016/0040-5809(73)90028-2
+Grove, M. (2014). Evolution and dispersal under climatic instability: A simple evolutionary algorithm. Adaptive
+Behavior, 22(4), 235–254. https://doi.org/10.1177/1059712314533573
+Grove, M. (2015). Palaeoclimates, plasticity, and the early dispersal of homosapiens. Quaternary International,
+369, 17–37. https://doi.org/10.1016/j.quaint.2014.08.019
+Grove, M. (2017). Environmental complexity, life history, and encephalization in human evolution. Biology &
+Philosophy, 32(3), 395–420. https://doi.org/10.1007/s10539-017-9564-4
+Grove, M. (2018). Strong conformity requires a greater proportion of asocial learning and achieves lower
+ﬁtness than a payoff-based equivalent. Adaptive Behavior, 26(6), 323–333. https://doi.org/10.1177
+/1059712318807127
+Grove, M. (2019). Evolving conformity: Conditions favouring conformist social learning over random
+copying. Cognitive Systems Research , 54, 232–245. https://doi.org/10.1016/j.cogsys.2018.10.012
+Grove, M. (in press). Culture as a life-history character: The cognitive continuum in primates and hominins.
+In H. Desmond & G. Ramsey (Eds.), Human success: Evolutionary origins and ethical implication . Oxford
+University Press.
+Grove, M., Borg, J. M., & Polack, F. (2020). Coloured noise time series as appropriate models for
+environmental variation in artiﬁcial evolutionary systems. In Alife 2020: The 2020 conference on artiﬁcial life
+(pp. 292–299). MIT Press. https://doi.org/10.1162/isal_a_00284
+Haaland, T. R., Wright, J., & Ratikainen, I. I. (2020). Generalists versus specialists in ﬂuctuating environments:
+A bet-hedging perspective. Oikos, 129(6), 879–890. https://doi.org/10.1111/oik.07109
+Haaland, T. R., Wright, J., Tufto, J., & Ratikainen, I. I. (2019). Short-term insurance versus long-term
+bet-hedging strategies as adaptations to variable environments. Evolution, 73(2), 145–157. https://doi.org
+/10.1111/evo.13659, PubMed: 30549260
+Haldane, J. B. S., & Jayakar, S. D. (1963). Polymorphism due to selection of varying direction. Journal of
+Genetics, 58, 237–242. https://doi.org/10.1007/BF02986143
+Halley, J. M. (1996). Ecology, evolution and 1f-noise. Trends in Ecology & Evolution , 11(1), 33–37. https://doi
+.org/10.1016/0169-5347(96)81067-6
+Halley, J. M., & Inchausti, P. (2004). The increasing importance of 1/f-noises as models of
+ecological variability. Fluctuation and Noise Letters , 4(2), R1–R26. https://doi.org/10.1142
+/S0219477504001884
+Halley, J. M., & Kunin, W. E. (1999). Extinction risk and the 1/f family of noise models. Theoretical Population
+Biology, 56(3), 215–230. https://doi.org/10.1006/tpbi.1999.1424, PubMed: 10607517
+Herculano-Houzel, S., Catania, K., Manger, P. R., & Kaas, J. H. (2015). Mammalian brains are made of
+these: A dataset of the numbers and densities of neuronal and nonneuronal cells in the brain
+of glires, primates, scandentia, eulipotyphlans, afrotherians and artiodactyls, and their relationship with
+body mass. Brain, Behavior and Evolution , 86(3–4), 145–163. https://doi.org/10.1159/000437413, PubMed:
+26418466
+Inchausti, P., & Halley, J. M. (2001). Investigating long-term ecological variability using the global population
+dynamics database. Science, 293(5530), 655–657. https://doi.org/10.1126/science.293.5530.655, PubMed:
+11474102
+16 Artiﬁcial Life Volume 00, Number 00
+Downloaded from http://direct.mit.edu/artl/article-pdf/doi/10.1162/artl_a_00354/1986825/artl_a_00354.pdf by Keele University user on 12 February 2022
+
+M. Grove et al. Noise Colour in Evolutionary Systems
+Inchausti, P., & Halley, J. M. (2002). The long-term temporal variability and spectral colour of animal
+populations. Evolutionary Ecology Research , 4(7), 1033–1048.
+Inchausti, P., & Halley, J. M. (2003). On the relation between temporal variability and persistence time in
+animal populations. Journal of Animal Ecology , 72(6), 899–908. https://doi.org/10.1046/j.1365-2656.2003
+.00767.x
+Isler, K., & van Schaik, C. P. (2009a). The expensive brain: A framework for explaining evolutionary changes
+in brain size. Journal of Human Evolution , 57(4), 392–400. https://doi.org/10.1016/j.jhevol.2009.04.009,
+PubMed: 19732937
+Isler, K., & van Schaik, C. P. (2009b). Why are there so few smart mammals (but so many smart birds)? Biology
+Letters, 5(1), 125–129. https://doi.org/10.1098/rsbl.2008.0469, PubMed: 18842563
+Jakobi, N. (1997). Evolutionary robotics and the radical envelope-of-noise hypothesis. Adaptive Behavior, 6(2),
+325–368. https://doi.org/10.1177/105971239700600205
+Jakobi, N., Husbands, P., & Harvey, I. (1995). Noise and the reality gap: The use of simulation in evolutionary
+robotics. In F. Morán, A. Moreno, J. J. Merelo, P. Chacón (Eds.), ECAL 1995: Proceedings of the European
+conference on artiﬁcial life 1995 (pp. 704–720). Springer. https://doi.org/10.1007/3-540-59496-5_337
+Jerison, H. J. (1975). Evolution of the brain and intelligence. Current Anthropology, 16(3), 403–426. https://doi
+.org/10.1086/201571
+Jolley, B. P., Borg, J. M., & Channon, A. (2016). Analysis of social learning strategies when discovering and
+maintaining behaviours inaccessible to incremental genetic evolution. In E. Tuci, A. Giagkos, M. Wilson,
+& J. Hallan (Eds.), From animals to animats 14: 14th international conference on simulation of adaptive behavior
+(pp. 293–304). Springer. https://doi.org/10.1007/978-3-319-43488-9_26
+Khan, I., Lewis, M., & Cañamero, L. (2020). Modelling the social buffering hypothesis in an artiﬁcial life
+environment. In J. Bongard, J. Lovato, L. Hebert-Dufrésne, R. Dasari, & L. Soros (Eds.), Proceedings of the
+Alife 2020: The 2020 conference on artiﬁcial life (pp. 393–401). MIT Press. https://doi.org/10.1162
+/isal_a_00302
+Kimura, M. (1967). On the evolutionary adjustment of spontaneous mutation rates. Genetics Research, 9(1),
+23–34. https://doi.org/10.1017/S0016672300010284
+Kouvaris, K., Clune, J., Kounios, L., Brede, M., & Watson, R. A. (2017). How evolution learns to generalise:
+Using the principles of learning theory to understand the evolution of developmental organisation. PLOS
+Computational Biology, 13(4), Article e1005358. https://doi.org/10.1371/journal.pcbi.1005358, PubMed:
+28384156
+Lande, R., Engen, S., & Sæther, B. (2017). Evolution of stochastic demography with life history tradeoffs in
+density-dependent age-structured populations. Proceedings of the National Academy of Sciences , 114(44),
+11582–11590. https://doi.org/10.1073/pnas.1710679114, PubMed: 29078347
+Lanfear, R., Welch, J. J., & Bromham, L. (2010). Watching the clock: Studying variation in rates of molecular
+evolution between species. Trends in Ecology & Evolution , 25(9), 495–503. https://doi.org/10.1016/j.tree
+.2010.06.007, PubMed: 20655615
+Lee, M. S. Y., & Doughty, P. (2003). The geometric meaning of macroevolution. Trends in Ecology & Evolution ,
+18(6), 263–266. https://doi.org/10.1016/S0169-5347(03)00103-4
+Levene, H. (1953). Genetic equilibrium when more than one ecological niche is available. American Naturalist,
+87(836), 331–333. https://doi.org/10.1086/281792
+Levins, R. (1968). Evolution in changing environments: Some theoretical explorations . Princeton University Press.
+https://doi.org/10.1515/9780691209418
+Lewontin, R. C., & Cohen, D. (1969). On population growth in a randomly varying environment. Proceedings of
+the National Academy of Sciences , 62(4), 1056–1069. https://doi.org/10.1073/pnas.62.4.1056, PubMed:
+5256406
+Libby, E., & Ratcliff, W. C. (2019). Shortsighted evolution constrains the efﬁcacy of long-term bet hedging.
+American Naturalist, 193(3), 409–423. https://doi.org/10.1086/701786, PubMed: 30794447
+Lisiecki, L. E., & Raymo, M. E. (2005). A pliocene-pleistocene stack of 57 globally distributed benthic δ 18O
+records. Paleoceanography and Paleoclimatology , 20(1), 1–17. https://doi.org/10.1029/2004PA001071
+MacArthur, R. H., & Wilson, E. O. (1967). The theory of island biogeography . Princeton University Press.
+Artiﬁcial Life Volume 00, Number 00 17
+Downloaded from http://direct.mit.edu/artl/article-pdf/doi/10.1162/artl_a_00354/1986825/artl_a_00354.pdf by Keele University user on 12 February 2022
+
+M. Grove et al. Noise Colour in Evolutionary Systems
+Mandelbrot, B. B., & Wallis, J. R. (1969). Some long-run properties of geophysical records. Water Resources
+Research, 5(2), 321–340. https://doi.org/10.1029/WR005i002p00321
+Mayr, E. (1965). The nature of colonizations in birds. In H. G. Baker & G. L. Stebbins (Eds.), The genetics of
+colonizing species (pp. 29–43). Academic.
+Miramontes, O., & Rohani, P. (1998). Intrinsically generated coloured noise in laboratory insect populations.
+Proceedings of the Royal Society of London. Series B: Biological Sciences , 265(1398), 785–792. https://doi.org/10
+.1098/rspb.1998.0361
+Moran, N. A. (1992). The evolutionary maintenance of alternative phenotypes. The American Naturalist , 139(5),
+971–989. https://doi.org/10.1086/285369
+Nabholz, B., Glémin, S., & Galtier, N. (2008). Strong variations of mitochondrial mutation rate across
+mammals—the longevity hypothesis. Molecular Biology and Evolution , 25(1), 120–130. https://doi.org/10
+.1093/molbev/msm248, PubMed: 17998254
+Nikolaev, S. I., Montoya-Burgos, J. I., Popadin, K., Parand, L., Margulies, E. H., National Institutes of Health
+Intramural Sequencing Center Comparative Sequencing Program, & Antonarakis, S. E. (2007). Life-history
+traits drive the evolutionary rates of mammalian coding and noncoding genomic elements. Proceedings of the
+National Academy of Sciences , 104(51), 20443–20448. https://doi.org/10.1073/pnas.0705658104, PubMed:
+18077382
+Nolﬁ, S., & Parisi, D. (1996). Learning to adapt to changing environments in evolving neural networks.
+Adaptive Behavior, 5(1), 75–98. https://doi.org/10.1177/105971239600500104
+Ofria, C., & Lalejini, A. (2016). The evolutionary origins of phenotypic plasticity. In C. Gershenson, T.
+Froese, J. M. Siqueiros, W. Aguilar, E. J. Izquierdo, & H. Sayama (Eds.), Alife 2016: The ﬁfteenth international
+conference on the synthesis and simulation of living systems (pp. 372–379). https://doi.org/10.7551/978-0-262
+-33936-0-ch063
+Petchey, O. L., Gonzalez, A., & Wilson, H. B. (1997). Effects on population persistence: The
+interaction between environmental noise colour, intraspeciﬁc competition and space. Proceedings
+of the Royal Society of London. Series B: Biological Sciences , 264(1389), 1841–1847. https://doi.org/10.1098/rspb
+.1997.0254
+Phillipi, T., & Seger, J. (1989). Hedging one’s evolutionary bets, revisited. Trends in Ecology & Evolution , 4(2),
+41–44. https://doi.org/10.1016/0169-5347(89)90138-9
+Pianka, E. R. (1970). On r-and K-selection. The American Naturalist , 104(940), 592–597. https://doi.org/10
+.1086/282697
+Potts, R. (1996). Evolution and climate variability. Science, 273(5277), 922–923. https://doi.org/10.1126
+/science.273.5277.922
+Potts, R. (1998). Variability selection in hominid evolution. Evolutionary Anthropology: Issues, News, and Reviews ,
+7(3), 81–96. https://doi.org/10.1002/(SICI)1520-6505(1998)7:3<81::AID-EVAN3>3.0.CO;2-A
+Potts, R. (2013). Hominin evolution in settings of strong environmental variability. Quaternary Science Reviews ,
+73, 1–13. https://doi.org/10.1016/j.quascirev.2013.04.003
+Pribil, S., & Houlahan, J. E. (2003). Life–history strategies associated with local population variability confer
+regional stability. Proceedings of the Royal Society of London. Series B: Biological Sciences , 270(1522), 1419–1423.
+https://doi.org/10.1098/rspb.2003.2378, PubMed: 12965035
+Rasmussen, S. O., Bigler, M., Blockley, S. P., Blunier, T., Buchardt, S. L., Clausen, H. B., Cvijanovic, I.,
+Dahl-Jensen, D., Johnsen, S. J., Fischer, H., Gkinis, V., Guillevic, M., Hoek, W. Z., Lowe, J. J., Pedro, J. B.,
+Popp, T., Seierstad, I. K., Steffensen, J. P., Svensson, A. M. ,...W i n s t rup, M. (2014). A stratigraphic
+framework for abrupt climatic changes during the last glacial period based on three synchronized
+Greenland ice-core records: Reﬁning and extending the intimate event stratigraphy. Quaternary Science
+Reviews, 106, 14–28. https://doi.org/10.1016/j.quascirev.2014.09.007
+Reader, S. M., & Laland, K. N. (2002). Social intelligence, innovation, and enhanced brain size in primates.
+Proceedings of the National Academy of Sciences , 99(7), 4436–4441. https://doi.org/10.1073/pnas.062041299,
+PubMed: 11891325
+Reznick, D., Bryant, M. J., & Baey, F. (2002). r-and K-selection revisited: The role of population regulation in
+life-history evolution. Ecology, 83(6), 1509–1520. https://doi.org/10.1890/0012-9658(2002)083[1509:
+RAKSRT]2.0.CO;2
+Ricker, W. E. (1954). Stock and recruitment. Journal of the Fisheries Research Board of Canada , 11, 559–623.
+https://doi.org/10.1139/f54-039
+18 Artiﬁcial Life Volume 00, Number 00
+Downloaded from http://direct.mit.edu/artl/article-pdf/doi/10.1162/artl_a_00354/1986825/artl_a_00354.pdf by Keele University user on 12 February 2022
+
+M. Grove et al. Noise Colour in Evolutionary Systems
+Ripa, J., & Lundberg, P. (1996). Noise colour and the risk of population extinctions. Proceedings of the Royal
+Society of London. Series B: Biological Sciences , 263(1377), 1751–1753. https://doi.org/10.1098/rspb.1996.0256
+Simons, A. M. (2002). The continuity of microevolution and macroevolution. Journal of Evolutionary Biology ,
+15(5), 688–701. https://doi.org/10.1046/j.1420-9101.2002.00437.x
+Sol, D. (2008). Do successful invaders exist? Pre-adaptations to novel environments in terrestrial vertebrates.
+In W. Nentwig (Ed.), Biological invasions (pp. 127–141). Springer. https://doi.org/10.1007/978-3-540
+-36920-2_8
+Stanton, A. (2018). Stochastic ontogenesis in evolutionary robotics. In ALIFE 2018: The 2018 Conference on
+Artiﬁcial Life (pp. 214–221). MIT Press. https://doi.org/10.1162/isal_a_00045
+Stanton, A., & Channon, A. (2013). Heterogeneous complexiﬁcation strategies robustly outperform
+homogeneous strategies for incremental evolution. In Proceedings of the ECAL 2013: The twelfth European
+conference on artiﬁcial life (pp. 973–980). MIT Press. https://doi.org/10.7551/978-0-262-31709-2-ch145
+Stearns, S. C. (1983). The inﬂuence of size and phylogeny on patterns of covariation among life-history traits
+in the mammals. Oikos, 41(2), 173–187. https://doi.org/10.2307/3544261
+Steele, J. H. (1985). A comparison of terrestrial and marine ecological systems. Nature, 313(6001), 355–358.
+https://doi.org/10.1038/313355a0
+Steiner, C. F. (2012). Environmental noise, genetic diversity and the evolution of evolvability and robustness
+in model gene networks. PLOS One, 7(12), Article e52204. https://doi.org/10.1371/journal.pone
+.0052204, PubMed: 23284934
+Street, S. E., Navarrete, A. F., Reader, S. M., & Laland, K. N. (2017). Coevolution of cultural intelligence,
+extended life history, sociality, and brain size in primates. Proceedings of the National Academy of Sciences ,
+114(30), 7908–7914. https://doi.org/10.1073/pnas.1620734114, PubMed: 28739950
+Tsuboi, M., van der Bijl, W., Kopperud, B. T., Erritzøe, J., Voje, K. L., Kotrschal, A., Yopak, K. E., Collin,
+S. P., Iwaniuk, A. N., & Kolm, N. (2018). Breakdown of brain–body allometry and the encephalization of
+birds and mammals. Nature Ecology & Evolution , 2(9), 1492–1500. https://doi.org/10.1038/s41559-018
+-0632-1, PubMed: 30104752
+Tuljapurkar, S. (1989). An uncertain life: Demography in random environments. Theoretical Population Biology ,
+35(3), 227–294. https://doi.org/10.1016/0040-5809(89)90001-4
+Tuljapurkar, S. (1990). Delayed reproduction and ﬁtness in variable environments. Proceedings of the National
+Academy of Sciences , 87(3), 1139–1143. https://doi.org/10.1073/pnas.87.3.1139, PubMed: 2300574
+Vasseur, D. A., & Yodzis, P. (2004). The color of environmental noise. Ecology, 85(4), 1146–1152. https://doi
+.org/10.1890/02-3122
+Wang, S., & Dai, L. (2019). Evolving generalists in switching rugged landscapes. PLOS Computational Biology ,
+15(10), Article e1007320. https://doi.org/10.1371/journal.pcbi.1007320, PubMed: 31574088
+Whitehead, H., & Richerson, P. J. (2009). The evolution of conformist social learning can cause population
+collapse in realistically variable environments. Evolution and Human Behavior , 30(4), 261–273. https://doi
+.org/10.1016/j.evolhumbehav.2009.02.003
+Wilder, B., & Stanley, K. (2015). Reconciling explanations for the evolution of evolvability. Adaptive Behavior,
+23(3), 171–179. https://doi.org/10.1177/1059712315584166
+Wright, J., Bolstad, G. H., Araya-Ajoy, Y. G., & Dingemanse, N. J. (2019). Life-history evolution under
+ﬂuctuating density-dependent selection and the adaptive alignment of pace-of-life syndromes. Biological
+Reviews, 94(1), 230–247. https://doi.org/10.1111/brv.12451, PubMed: 30019372
+Artiﬁcial Life Volume 00, Number 00 19
+Downloaded from http://direct.mit.edu/artl/article-pdf/doi/10.1162/artl_a_00354/1986825/artl_a_00354.pdf by Keele University user on 12 February 2022
