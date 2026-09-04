@@ -166,14 +166,26 @@ class Foundry:
         if key is None:
             return None
         row = cx.execute(
-            "SELECT request_hash, response FROM idempotency_keys WHERE "
-            "client_id=? AND idem_key=?", (client_id, key)).fetchone()
+            "SELECT request_hash, response, route, world_id FROM "
+            "idempotency_keys WHERE client_id=? AND idem_key=?",
+            (client_id, key)).fetchone()
         if row is None:
             return None
         if row["request_hash"] != request_hash:
+            # Say WHAT differed. request_hash binds route + world + body, and
+            # by far the most common cause is a key that is unique per logical
+            # step but NOT per world -- reused across worlds it conflicts on
+            # every world after the first, which reads as a random scatter of
+            # 409s. Naming the first-use route and world turns that into an
+            # obvious diagnosis.
             raise ConflictError(
-                "idempotency key reused for a materially different request",
-                idem_key=key)
+                "idempotency key reused for a materially different request; "
+                "the key is scoped to (client, key) and the request hash binds "
+                "route + world_id + body, so a key reused for a different world "
+                "conflicts rather than de-duplicating. Make the key unique per "
+                "(world, step).",
+                idem_key=key, first_used_route=row["route"],
+                first_used_world_id=row["world_id"])
         return json.loads(row["response"])
 
     def _idem_record(self, cx, client_id, key, world_id, route, request_hash,

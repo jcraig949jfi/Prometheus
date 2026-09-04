@@ -12,7 +12,9 @@ machine.
 from __future__ import annotations
 
 import base64
+import binascii
 import hashlib
+import logging
 import secrets
 from typing import Any, Literal, Optional
 
@@ -206,6 +208,13 @@ def create_app(db_path: str, *, registration_open: bool = True) -> FastAPI:
         try:
             response = await call_next(request)
         except Exception:                            # noqa: BLE001
+            # The RESPONSE stays deliberately opaque -- it must not leak
+            # internals to a client. But swallowing the traceback entirely made
+            # every 500 undiagnosable after the fact: a real one sat in this
+            # log for days as a bare "internal_error" with no way to tell what
+            # raised it. Log it server-side; the wire contract is unchanged.
+            logging.getLogger("sfe.api").exception(
+                "unhandled error: %s %s", request.method, request.url.path)
             response = JSONResponse(status_code=500, content={
                 "detail": {"error": "internal_error",
                            "message": "unhandled server error"}})
@@ -440,7 +449,26 @@ def create_app(db_path: str, *, registration_open: bool = True) -> FastAPI:
                   f: Foundry = Depends(get_foundry),
                   idem: Optional[str] = Header(default=None,
                                                alias="Idempotency-Key")):
-        data = base64.b64decode(body.data_b64)
+        # DFX-5: decode STRICTLY and fail closed. Python's b64decode defaults to
+        # validate=False, which DISCARDS characters outside the standard
+        # alphabet instead of rejecting them -- so URL-safe base64 ("-" and "_")
+        # was accepted with a 200 and silently stored DIFFERENT, SHORTER bytes
+        # (measured: 24 bytes in, 15 stored, no error), and malformed input
+        # escaped as an unhandled binascii.Error -> opaque 500. Both contradict
+        # the fail-closed posture every other field on this endpoint has.
+        # A client sending standard base64 -- including the shipped sfclient --
+        # is unaffected.
+        try:
+            data = base64.b64decode(body.data_b64, validate=True)
+        except (binascii.Error, ValueError) as exc:
+            raise HTTPException(status_code=422, detail={
+                "error": "validation_error",
+                "message": "data_b64 is not valid standard base64: %s. Use "
+                           "standard base64 with padding (Python: "
+                           "base64.b64encode) -- URL-safe base64 ('-' and '_') "
+                           "is NOT accepted, because silently decoding it would "
+                           "store different bytes than you sent." % exc,
+                "loc": ["body", "data_b64"]}) from exc
         return f.create_artifact(wid, body.kind, data, client_id=cid,
                                  meta=body.meta, idem_key=idem,
                                  request_hash=_req_hash("artifacts", wid, body))
