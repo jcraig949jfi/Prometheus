@@ -449,10 +449,21 @@ unimplemented would have sent Mnemosyne to build something that exists.
 
 **What is actually missing — three specific things:**
 
-1. **The claim/evidence path cannot carry world provenance.** `ClaimIn` and
-   `EvidenceIn` have no world field of any kind (full field lists in §8). So the
-   objects that constitute a *scientific claim* in PEW cannot, by themselves,
-   say which world produced the result.
+1. **The claim/evidence path cannot carry world provenance — and fails OPEN, not
+   closed.** `ClaimIn` and `EvidenceIn` have no world field of any kind (full
+   field lists in §8). Worse: the five ordinary-path models
+   (`PacketIn`, `ExperimentIn`, `ClaimIn`, `EvidenceIn`, `RelationIn`) declare
+   **no** `model_config`, so Pydantic's default `extra="ignore"` applies —
+   whereas all four fossil models **do** declare `extra="forbid"`. Verified by
+   reading the model definitions in `evidence_wiki/ew/service.py` (lines 227,
+   351, 185, 246, 296 vs 913, 929, 634).
+
+   **Consequence: a producer who adds `world_id` to an evidence POST gets HTTP
+   200 and the field is silently discarded.** No 422, no warning. Provenance
+   does not fail to attach loudly — it disappears quietly, which is the harder
+   failure to notice and the one most likely to be discovered months later in a
+   result nobody can trace. This is the single most actionable item in this
+   filing.
 
 2. **No documented convention binds an evidence row to a fossil row.**
    `RelationIn` could express it — `src_type`/`dst_type` are unconstrained
@@ -465,9 +476,16 @@ unimplemented would have sent Mnemosyne to build something that exists.
 3. **No producer is known to write fossil rows.** The read endpoints require a
    PEW bearer token, which I do not hold and did not seek, so I cannot state
    whether the tables contain anything. **This is unverified, not verified
-   empty.** The `ew` client that would write them is on branch
-   `mnemosyne/evidence-wiki-v0`, not `main`, and its own contract says it "has
-   not been exercised against the service."
+   empty.**
+
+4. **The branch topology is worse than "the client isn't on main."**
+   `evidence_wiki/` does not exist on `main` or `origin/main` **at all** (0
+   files). It lives on `mnemosyne/evidence-wiki-v0` and on
+   `herakles/historical-collider-v0` (275 files) — and the Herakles branch is
+   *ahead*, carrying `migrations/006_first_integration.sql` and
+   `integration/pew_battery.py`. **The world-carrying fossil work is therefore
+   not on the branch peers are told to pull.** Whoever owns PEW should decide
+   which branch is canonical before anyone builds against it.
 
 **Why the chain breaks today.** Hold a complete SFE result —
 `world_id`, `event_seq`, `artifact_id`/`blob_hash`, `engine_source_hash` — and
@@ -562,6 +580,40 @@ Proteus registry entry  +  immutable player manifest  +  Proteus provenance
 | `proteus/integration/PLAYER_REGISTRY.json` | **64 frozen specimens**, selection rule: *"NONE beyond manifest validity"* |
 | `proteus/contracts/player_registry.schema.v1.json` | the schema |
 | `roles/Proteus/HARMONIA_HANDOFF.md` | Proteus's own note to you |
+
+**Three traps on the Proteus side, all verified 2026-09-03. Each one will tell
+you the registry does not exist.**
+
+1. **A committed document denies it in bold.**
+   `roles/Proteus/CONSUMER_SURFACE_V0_6.md` says: *"**NO. It does not exist.**
+   There is no registry file, no dictionary, no catalog, and no enumeration
+   endpoint anywhere in `proteus/`."* That was true when written and became
+   false about seven hours later, when the registry was built. **It was never
+   amended and still sits beside the registry.** Anyone grepping
+   `roles/Proteus/` for "registry" hits the denial first. Treat that section as
+   superseded; `HARMONIA_HANDOFF.md` is the current word.
+
+2. **Local `main` is stale — use `origin/main`.** At time of writing the local
+   `main` ref is **22 commits behind** `origin/main`, and
+   `git ls-tree -r main -- proteus/integration/` returns **zero files**. The
+   usual "check it against `main`" rule produces a confident false negative for
+   the entire consumer surface. `git fetch` first, and check `origin/main`.
+
+3. **The import quarantine does not cover the package you bind to.**
+   `SFE_INTEGRATION.md` says the audit "forbids any network import in
+   `proteus/`". It does not: `quarantine.py:31` sets
+   `FOUNDRY = proteus/foundry` and `audit_identity.py:26` sets
+   `COVERED_DIRS = (proteus/foundry,)`. **`proteus/integration/` — the exact
+   package a Harmonia adapter imports — is outside the audit's scope.** The
+   property still holds in fact (it imports only stdlib plus Proteus siblings),
+   but it is enforced by nobody. Do not rely on the audit to keep your adapter's
+   dependency honest; that is now your discipline, not a mechanical guarantee.
+
+One naming detail that will bite an adapter asserting on strings: the registry
+uses the **bare** values `NOT_YET_ADJUDICATED` and
+`FULL_SPACE_CURRENT_SOURCE_UNRESOLVED`, while the review packets use prefixed
+tokens like `OPERATIONAL_SIGNIFICANCE_NOT_YET_ADJUDICATED`. Assert on the
+registry form.
 
 ```python
 from proteus.integration import registry
@@ -760,7 +812,15 @@ keep them consistent.
 | | |
 |---|---|
 | `blob_hash` | **Exactly `sha256(raw bytes)`.** World-independent. Verified: equals the locally computed digest of the posted bytes. |
-| `artifact_id` | **World-scoped.** Deterministic over (world, `kind`, `meta`, content). |
+| `artifact_id` | **World-scoped.** Content-addressed over an *envelope*, not the bytes alone. |
+
+Derivation, `sfe/runtime.py:1091-1094`:
+
+```python
+blob = self.store.put_blob(data)
+aid  = content_hash({"world": world_id, "kind": kind, "blob": blob,
+                     "meta": meta or {}})
+```
 
 Measured behaviour:
 
@@ -796,10 +856,34 @@ In Python: `base64.b64encode(...)`. **Never** `base64.urlsafe_b64encode(...)`.
 
 ### Bounds
 
-**No size limit exists in the code path, and none was reached.** Measured
-accepted: 1 KB, 64 KB, 1 MB, 8 MB, and **32 MB** (a 44 MB base64 body) in 0.94 s.
-Treat large artifacts as a courtesy question to the operator, not a guarded one —
-the Engine will not stop you, and it is a shared service.
+**No size limit exists in the code path, and none was reached.** Confirmed
+absent at every layer — no pydantic constraint, no FastAPI/Starlette body cap,
+no uvicorn limit, no blob-store check, no budget interaction. Measured accepted:
+1 KB, 64 KB, 1 MB, 8 MB, and **32 MB** (a 44 MB base64 body) in 0.94 s.
+
+Two reasons to impose your own cap anyway:
+
+- The request path **re-serializes and hashes the full `data_b64` string on
+  every request** (idempotency `_req_hash`), giving roughly 4–5× memory
+  amplification over the raw payload.
+- The Engine is a single, effectively serial process, and the same box also
+  hosts PEW on 8377.
+
+So: any number you adopt is a **self-imposed client-side courtesy cap, not a
+server-enforced limit.** The Engine will not stop you.
+
+### Lifecycle: terminating a world does NOT seal it
+
+Measured. After `POST …/terminate` (state `TERMINATED`):
+
+| Operation on a terminated world | Result |
+|---|---|
+| `POST …/artifacts` | **HTTP 200 — still accepted** |
+| `POST …/experiments` (commit) | `409 invalid_transition`, "world must be RUNNING" |
+
+The artifact endpoint has **no lifecycle guard**; the experiment path does. If
+your design treats termination as sealing a world's artifact set, it does not.
+Enforce that yourself, or check `state` before writing.
 
 ### Authorization — measured
 
