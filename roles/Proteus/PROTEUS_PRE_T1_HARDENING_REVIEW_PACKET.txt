@@ -1,0 +1,292 @@
+====================================================================
+PROTEUS -- PRE-T1 HARDENING PASS
+EXTERNAL REVIEW PACKET
+2026-09-04
+====================================================================
+
+Bounded maintenance pass following Harmonia's first end-to-end integration.
+Self-contained.
+
+--------------------------------------------------------------------
+1. FROZEN MAINTENANCE VERDICT
+--------------------------------------------------------------------
+
+    MAINTENANCE_COMPLETE_SURFACE_UNCHANGED_GATES_ARMED
+
+Seven defects confirmed, five fixed, one deliberately left in place with its
+blast radius pinned by a gate, one procedural rule tightened. The consumer
+surface Harmonia bound to is byte-for-byte unchanged: same registry_id, same
+first specimen, same entry_id, phenotype still UNKNOWN.
+
+SCOPE HELD. No published V0.6 scientific result altered. First specimen not
+reinterpreted. Campaign 1 not unblocked. Frozen organism semantics unchanged.
+Nothing under proteus/foundry/ modified; the audit stamp still reads FRESH on
+its ORIGINAL tree digest 3ae4ee8b773e0fcf, which is the mechanical proof.
+
+--------------------------------------------------------------------
+2. DEFECTS CONFIRMED
+--------------------------------------------------------------------
+
+D1  A LIVING DOCUMENT DENIED THE REGISTRY IT SITS BESIDE.
+    CONSUMER_SURFACE_V0_6.md stated in bold that no registry, dictionary or
+    catalog exists. True 2026-09-03; false ~7 hours later when
+    PLAYER_REGISTRY.json was committed. Never amended.
+    FOUND BY A SIBLING SEAT, NOT BY PROTEUS.
+
+D2  A QUARANTINE CLAIM BROADER THAN ITS ENFORCEMENT.
+    SFE_INTEGRATION.md asserted the quarantine forbids any network import in
+    "proteus/". It does not: quarantine.py scopes its allowlist to
+    proteus/foundry only, so proteus/integration -- the package Harmonia binds
+    to -- was unenforced. The property held in fact and was guaranteed by
+    nobody.
+
+D3  `random` IMPORTED IN V0.6 ANALYSIS CODE, AGAINST PROTEUS POLICY.
+    Surfaced immediately by closing D2. proteus/v0_6/equilibrium.py imports the
+    stdlib `random` and calls random.Random(seed) inside stationary_empirical().
+    SplitMix64 exists precisely so bit-exact replay never depends on random's
+    float and choice paths.
+
+D4  PUBLISHED HASHES DID NOT REPRODUCE ON A CONSUMER'S CHECKOUT.
+    Harmonia's F2: the readiness packet hashed 0bf104bb... on her working copy
+    against the published 5059f44c.... CRLF conversion. She diagnosed it and
+    moved on; she should not have had to.
+
+D5  COMPILED BYTECODE COMMITTED.
+    `git add -f proteus/integration` swept six __pycache__/*.pyc files in. The
+    -f existed to defeat .gitignore for run logs the directive required
+    preserving, and it took the bytecode with it.
+
+D6  I QUOTED AN ORPHANED COMMIT SHA TO THE OPERATOR.
+    I cited 8735d85c6 as carrier of the D1-D3 fixes. NOT reachable from
+    origin/main -- my pre-push rebase rewrote it. Real carrier: f27c448b8. The
+    object still exists locally, which is exactly why it looked correct.
+    SECOND OCCURRENCE OF THIS FAILURE MODE. The first was d5185d092, cited in
+    the V0.6 interim packet and already recorded as F3 in the V0.6 final
+    ledger. I verified reachability for every SHA inside that packet, then
+    quoted an unverified one conversationally a day later: the habit was
+    attached to the artifact, not to the act of citing.
+
+D7  MY OWN D1 FIX WAS INCOMPLETE.
+    The first amendment patched the section-0 sub-heading and left two further
+    denials, including THE MOST PROMINENT ONE -- the one-line answer at the top
+    of the document, still reading "there are no player families, no player
+    types, and no registry". A reader hits that sentence first. Caught by this
+    pass's verification step, not by the original edit.
+
+--------------------------------------------------------------------
+3. FIXES ALREADY PRESENT
+--------------------------------------------------------------------
+
+D1 + D7  All three registry denials in CONSUMER_SURFACE_V0_6.md now marked
+         AMENDED / Historical / SUPERSEDED, with a forward pointer to
+         HARMONIA_HANDOFF.md. Original text preserved rather than deleted,
+         because removing it would hide that the document sat beside the
+         registry it denied for a day.
+
+D2       Wording corrected. Enforcement added package-wide by
+         proteus/tests/test_package_import_hygiene.py, which IMPORTS
+         quarantine's own FORBIDDEN_ANYWHERE vocabulary so there is no second
+         source of truth. Written as a new test rather than an edit to
+         quarantine.py or audit_identity.py, both of which sit inside the V0.6
+         audit identity -- changing them would force an identity transition for
+         a check that does not need one.
+
+D4       proteus/.gitattributes and roles/Proteus/.gitattributes pin eol=lf.
+         Scoped to Proteus paths deliberately: line-ending policy for other
+         seats' trees is not Proteus's to set.
+         PLAYER IDENTITY WAS NEVER AT RISK -- organism_id hashes canonical bytes
+         held in memory, never a file, and Harmonia's read-back confirmed 64/64
+         manifests re-hash correctly. D4 touched document hashes only.
+
+D5       Untracked. Gate G4 is the actual control, because .gitignore cannot be
+         one: -f overrides it, and -f is intrinsic to the preservation
+         workflow.
+
+D6       Rule tightened: any SHA quoted ANYWHERE, including in conversation, is
+         checked with `git merge-base --is-ancestor` before it is uttered.
+         Section 6 of this packet is the result.
+
+--------------------------------------------------------------------
+4. DEFECTS INTENTIONALLY NOT FIXED, AND WHY
+--------------------------------------------------------------------
+
+D3  `random` in proteus/v0_6/equilibrium.py -- NOT FIXED, DELIBERATELY.
+
+    BLAST RADIUS, MEASURED NOT ASSUMED. stationary_empirical() is called from
+    exactly two places, both in v0_6/run_full.py:
+        (a) the empirical-occupancy cross-check   -- NON-ADJUDICATED
+            (an external check by preregistration, never a gate)
+        (b) the matched-trajectory arm            -- NON-ADJUDICATED
+            (explicitly discounted in V0.6 section M as under-converged)
+    NOT called by the numerical replay contract, which uses stationary_power,
+    so the cross-runtime byte-identity result is untouched.
+    NO ADJUDICATED V0.6 NUMBER DEPENDS ON THIS IMPORT.
+
+    WHY NOT FIXED. Swapping to SplitMix64 changes those two published numbers.
+    This pass is forbidden to alter published V0.6 results, and a repair that
+    silently moves a published figure is worse than a documented defect.
+
+    WHAT WAS DONE INSTEAD. Gate G1 pins the blast radius: `random` may appear
+    only inside stationary_empirical(). If anyone later uses it elsewhere in
+    that module, the published bounded-blast-radius statement would become
+    false, and the suite fails instead.
+
+    A FROZEN HISTORICAL RECORD LEFT ALONE. The V0.6 final packet also states
+    "no registry exists". That document is a sealed scientific record, true at
+    its date, and is NOT amended. Only the living consumer document was
+    corrected. Flagged here so a reader is not surprised by the discrepancy.
+
+--------------------------------------------------------------------
+5. TESTS RUN AND RESULTS
+--------------------------------------------------------------------
+
+    pytest proteus/tests -q                106 passed   (was 97 pre-pass)
+    run_smoke.py                           PASSED, 8 specimens, 11 error paths
+    run_determinism_check.py               matches committed registry: True
+    audit_identity.py verify               FRESH, tree 3ae4ee8b773e0fcf
+    quarantine.py                          STRING LAYER: PASS
+
+    CONSUMER SURFACE UNCHANGED vs Harmonia's run
+      registry_id      b15e0a7f5f2dcb99b8b28c73a99441d8d53e82b1bae42fdd...
+      specimen count   64
+      first organism   7743b3527ea44fb5...  == the specimen she used
+      entry_id         88c8818853ccfd46...  == her recorded value
+      phenotype        UNKNOWN
+
+    EOL / HASH REPRODUCTION (D4 closure)
+      git check-attr on Proteus artifacts   text: set, eol: lf
+      readiness packet from checkout        5059f44c... MATCH, 0 CRLF lines
+      V0.6 final packet from checkout       a5b1a7a1... MATCH, 0 CRLF lines
+
+    FIVE NEW GATES, EACH PROVEN ABLE TO FAIL
+    A gate that has never fired is unproven, so each was run against a
+    synthetic reintroduction of its own defect before being trusted:
+      G1 random outside stationary_empirical()          FIRED
+      G2 replay contract referencing the random path    FIRED
+      G3 exemption leaked onto the protected surface    FIRED
+      G4 a tracked .pyc                                 FIRED
+      G5 an unqualified registry denial                 FIRED
+    G5 additionally fired for real during development, on a FALSE POSITIVE -- a
+    generic "does not exist" sentence unrelated to the registry. It was
+    TIGHTENED to require registry context rather than weakened.
+
+--------------------------------------------------------------------
+6. EXACT COMMITS AND HASHES
+--------------------------------------------------------------------
+
+    ALL VERIFIED with `git merge-base --is-ancestor <sha> origin/main`
+    immediately before publication.
+
+    REACHABLE FROM origin/main
+      7e17e1e18  integration directive, verbatim + hashed
+      d5e3d3dbb  the integration surface (registry, menagerie, smoke, tests)
+      c45aca26b  integration-readiness final packet
+      f27c448b8  D1-D3 fixes           <-- the REAL carrier (see D6)
+      b2ec2d1aa  D4 eol pinning + D5 untracking
+      a2e69f7bc  THIS PASS: gates G1-G5, archaeology requirements, D7 fix,
+                 maintenance record
+      15873d6c0  Harmonia first end-to-end integration (for reference)
+      d968baba1  Harmonia adapter + runner, committed before execution
+
+    NOT REACHABLE -- ORPHANS, LISTED RATHER THAN QUIETLY REPLACED
+      8735d85c6  the SHA I wrongly quoted for f27c448b8   (D6, occurrence 2)
+      d5185d092  the SHA wrongly quoted in the V0.6 interim packet
+                 (occurrence 1, already recorded as F3 in the V0.6 ledger)
+
+    IDENTITIES, UNCHANGED
+      grammar
+        5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832
+      runtime
+        73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0
+      affordance
+        f1607ee8be680acc33288a95c1a25c09ad4c799a47b0975381be8ca02d7638ce
+      registry
+        b15e0a7f5f2dcb99b8b28c73a99441d8d53e82b1bae42fddd5e274eeef396917
+      audit tree 3ae4ee8b773e0fcf   stamp 5de328849043c86f
+
+    PUBLISHED DOCUMENT HASHES (LF-normalised; now reproduce from checkout)
+      V0.6 final packet
+        a5b1a7a137022dbaad42894dc8fc289f580ab0fdb59b4ec3654354c3a5906f6d
+      integration-readiness packet
+        5059f44ca83ca91f51773f8b18613cfcb19154ab88e545d32314f3e77379cbf5
+
+    NEW ARTIFACTS (sha256 prefix)
+      5f0b4477bf444f94  roles/Proteus/MAINTENANCE_RECORD_2026-09-04.md
+      f8e7177b07d6947b  proteus/integration/ARCHAEOLOGY_REQUIREMENTS.json
+      38d51ae2a6ca03fc  proteus/tests/test_pre_t1_gates.py
+
+--------------------------------------------------------------------
+7. ARCHAEOLOGY REQUIREMENTS
+--------------------------------------------------------------------
+
+Machine-readable at proteus/integration/ARCHAEOLOGY_REQUIREMENTS.json, schema
+proteus.archaeology_requirements.v1. GENERATED FROM LIVE ARTIFACTS, not
+transcribed, so it cannot drift from what it describes. Regenerate with
+`python proteus/integration/run_archaeology_requirements.py`.
+
+PRINCIPLE. An archaeologist starting from a single evidence id must reach a
+specimen and prove it unaltered, without living memory, without Proteus
+internals, and without trusting any write echo.
+
+  IDENTITIES TO RECOVER (8)
+    organism_id, entry_id, registry_id, lineage_id, generation_manifest_id,
+    foundry_identity, population_seed, encounter_id -- each with the rule that
+    reconstructs it and what it is recoverable from.
+
+  HASHES THAT MUST REMAIN STABLE (10)
+    grammar / runtime / affordance / registry_id / registry serialization /
+    first specimen organism_id and entry_id / both published packet hashes.
+    RULE: changing grammar, runtime or affordance hashes invalidates every
+    specimen identity derived under them and requires a NEW registry version
+    plus an explicit identity transition -- never a silent refresh.
+
+  SOURCE-QUALIFICATION FIELDS THAT MUST PROPAGATE (9)
+    deterministic_generation, semantic_quarantine, mutation_neutrality,
+    mutation_current_source, operational_significance, permitted_use,
+    prohibited_use, plain_statement, evidence.
+    RULE: this block travels inside every registry. Dropping, flattening or
+    summarising it downstream is a contract violation.
+
+  DETERMINISM / QUARANTINE PROPERTIES THAT MUST STAY QUERYABLE (12)
+    Each with the exact command that answers it -- manifest identity is
+    file-independent; population rebuild is deterministic; replay excludes the
+    nondeterministic path; the known random defect stays in its blast radius;
+    no forbidden imports package-wide; protected surface has zero exemptions;
+    audit freshness; semantic quarantine; no taxonomy in the registry;
+    extrinsic writes cannot alter identity; no tracked generated artifacts;
+    the consumer document does not deny the registry.
+    NOTE RECORDED THERE EXPLICITLY: audit_identity covers proteus/foundry ONLY
+    and does NOT cover proteus/integration, which is why the hygiene test
+    exists.
+
+  KNOWN DEFECTS CARRIED FORWARD (1)
+    D3, with its measured blast radius, what it is NOT in, and its gate.
+
+--------------------------------------------------------------------
+8. REMAINING BLOCKERS FOR HARMONIA T1/T2
+--------------------------------------------------------------------
+
+    NONE on the Proteus consumer surface.
+
+The surface is unchanged from the one that carried a specimen end to end, and
+is now additionally gated. T1/T2 boundary probes may proceed against it.
+
+INHERITED AND UNCHANGED, not blockers for T1/T2 but still true:
+    mutation_neutrality       NOT_QUALIFIED_AUTHORED_NONEQUILIBRIUM_CURRENT
+    mutation_current_source   FULL_SPACE_CURRENT_SOURCE_UNRESOLVED
+    operational_significance  NOT_YET_ADJUDICATED
+    USE A permitted. USE B prohibited. Campaign 1 BLOCKED.
+Nothing in this pass adjudicates any of them, and Proteus does not
+self-authorize Campaign 1.
+
+ONE THING HARMONIA SHOULD KNOW FOR T1/T2. `restore()` still raises ValueError on
+a runtime mismatch but KeyError on a structurally malformed snapshot. Both fail
+closed; the type is not uniform; catch both. Unfixed because normalising it
+means editing proteus/foundry/lineage.py, inside the audit identity, which this
+pass has no authorisation to disturb.
+
+====================================================================
+
+PROTEUS_READY_FOR_HARMONIA_T1_T2 = YES
+
+====================================================================
