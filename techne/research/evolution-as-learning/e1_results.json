@@ -1,0 +1,70 @@
+{
+  "experiment": "E1_same_probe_counterfactual",
+  "prereg_sha256": "4d03d8753248a130ba360b4f7feddad0f5db4194e7cd9a38181cfef70e941ebf",
+  "params": {
+    "N": 16,
+    "T": 10,
+    "POP": 200,
+    "GENERATIONS": 2000,
+    "K_PERTURB": 200,
+    "alpha": 0.01,
+    "tau_match": 0.2
+  },
+  "arms": {
+    "E1A": {
+      "arm": "E1A_match_P",
+      "status": "INSUFFICIENT_MATCHES",
+      "n_pairs": 0,
+      "min_required": 30,
+      "note": "not interpreted, per preregistration section 5"
+    },
+    "E1B": {
+      "arm": "E1B_match_P_and_G",
+      "status": "INSUFFICIENT_MATCHES",
+      "n_pairs": 0,
+      "min_required": 30,
+      "note": "not interpreted, per preregistration section 5"
+    }
+  },
+  "controls": {
+    "C0_within_history": {
+      "arm": "C0",
+      "status": "INSUFFICIENT_MATCHES",
+      "n_pairs": 0,
+      "min_required": 30,
+      "note": "not interpreted, per preregistration section 5"
+    },
+    "C1_replicate": {
+      "arm": "C1",
+      "status": "INSUFFICIENT_MATCHES",
+      "n_pairs": 0,
+      "min_required": 30,
+      "note": "not interpreted, per preregistration section 5"
+    },
+    "C3_linear": {
+      "arm": "C3",
+      "status": "INSUFFICIENT_MATCHES",
+      "n_pairs": 0,
+      "min_required": 30,
+      "note": "not interpreted, per preregistration section 5"
+    }
+  },
+  "sensitivity": {
+    "sigma_0.01": {
+      "status": "INSUFFICIENT_MATCHES",
+      "p": null,
+      "E": null
+    },
+    "sigma_0.05": {
+      "status": "INSUFFICIENT_MATCHES",
+      "p": null,
+      "E": null
+    },
+    "sigma_0.2": {
+      "status": "INSUFFICIENT_MATCHES",
+      "p": null,
+      "E": null
+    }
+  },
+  "elapsed_sec": 196.3
+}
