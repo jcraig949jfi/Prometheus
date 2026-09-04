@@ -1,0 +1,46 @@
+[
+  {
+    "proposal": "P",
+    "D1": 4, "D3": 4, "D4": 3, "D5": 4, "D6": 4,
+    "justifications": {
+      "D1": "The family-specificity failure is a decisive falsifier, and flagged experiments 'run to completion (arm remains blind; no early stopping)' so false-kills are measurable: 'F3 (cross-family generalization): Sensitivity and specificity must not differ by > 2-fold across identified problem families... FAMILY_SPECIFIC_SIGNATURE_ONLY. Signature not generalizable.'",
+      "D3": "F1-F5 all numeric with a fixed-N freeze stopping rule ('Phase 0 decision packet frozen before Phase 1 begins; no post-hoc experiments added'); F5 ('>= 95% of dmax derivations must cite specific quantitative evidence... If < 95% grounded: BOUND_DERIVATION_WEAK') is cheap, early, and independent of the signature's predictive mechanism.",
+      "D4": "Summary confounds are each addressed (per-family stratification, within-family replication, independent analyst, 'Null classifier baseline: Randomly classify experiments as doomed/viable'), but no planted positive control demonstrates the instrument detects a known-doomed design in-run.",
+      "D5": "States its new cell relative to the discovery: 'Reframed the design from policy comparison to meta-experimental validation' and 'Does this signature generalize beyond within-lineage paired designs?' - prospective cross-family validation of a single-instance finding.",
+      "D6": "Each falsifier yields a named distinct verdict and a vacuous path is pre-committed ('report as PHASE_0_VALIDITY_COMPROMISED and demote results to exploratory'; F3's family-specific demotion; F2's VIABLE_CATEGORY_UNRELIABLE)."
+    }
+  },
+  {
+    "proposal": "Q",
+    "D1": 4, "D3": 4, "D4": 3, "D5": 4, "D6": 4,
+    "justifications": {
+      "D1": "The exact refuted inference path is redesigned into controls that would detect it: 'adjacent family IDs from the same submission batch are NOT independent cross-family evidence... only Phase 3's different-batch family counts toward a genuine cross-family claim', plus frozen predicate, base-rate-matched null, regime-degenerate ablation, and family-specific false-abort bound F5.",
+      "D3": "F1-F5 all numeric with an explicit early-kill stopping rule ('Stop and report FALSIFIED-CROSS-FAMILY the moment F2 or F3 triggers on the first fully-covered held-out family'); F2 ('strict-match count in held-out extension = 0 at N>=90 covered instances => signature FALSIFIED') is cheap, early, and independent of the geometric mechanism story.",
+      "D4": "Each summary confound has a concrete element ('require near-complete battery coverage on every held-out family before scoring lift, never a small biased slice'; small-N provisional rule; Phase 0 per-regime power), but no explicit in-protocol positive control demonstrating the frozen battery still fires on a known-positive.",
+      "D5": "Acknowledges the REFUTED prior and frames explicit supersession with new cells (regime-crossing, different-provenance families): 'this SPEC does not resolve that, it only ensures the next attempt does not repeat the same falsified inference path.'",
+      "D6": "Phase 2's 'Three mutually exclusive, pre-registered outcomes: fires with similar lift (genuine geometric signal); fires only in the discovery regime (regime-specific artifact); fails to fire in either (original result was selection bias)' plus F4's family-specific cap map every branch to a distinct conclusion."
+    }
+  },
+  {
+    "proposal": "R",
+    "D1": 4, "D3": 4, "D4": 4, "D5": 4, "D6": 4,
+    "justifications": {
+      "D1": "The within-family-artifact failure is what the design detects: per-family validation against an independent oracle ground truth, with the naive trigger's known mis-classification built in ('a naive trigger reading navigator-hit-rate alone would have mis-classified it as doomed') and F1's single-counterexample kill plus per-family false-abort measurement.",
+      "D3": "F1-F5 numeric with a preregistered-panel stopping rule ('Stop immediately... if F1 fires on any completed family'); F1 ('trigger predicts doomed but its full-budget oracle far-episode-reach exceeds 0.10') is adjudicated by an independent measurement process and fires on the first completed family.",
+      "D4": "Summary confounds each addressed plus explicit reachability/positive checks: 'confirm the target signature COULD in principle fire there at all' and F5's 'confirm 0.80 lies within the attainable precision range given the panel's actual class balance... the gate is redesigned before scoring, not after seeing the result.'",
+      "D5": "States the new cell explicitly: 'whether a CHEAP, early-checkpoint version of the compound signature... can be validated as a program-wide early-abort trigger across problem families neighboring the four already tested.'",
+      "D6": "Every branch is distinct and pre-committed, including the deploy-vs-valid split ('F4... the trigger is statistically defensible but not worth deploying... report this as a distinct outcome from F1-F3, not folded into them') and per-family closure modes documented."
+    }
+  },
+  {
+    "proposal": "S",
+    "D1": 2, "D3": 4, "D4": 3, "D5": 4, "D6": 3,
+    "justifications": {
+      "D1": "A false-kill guard exists (F2 false-positive rate, F3 family consistency) but is structurally unverifiable for the abort branch: 'FLAGGED experiments that were ABORTED do not execute (no outcome data collected)', so a viable experiment killed by the trigger can never be detected - the summary's false-kill-bound requirement is only partially met.",
+      "D3": "F1-F6 all numeric with a fixed-N stopping rule and enumerated outcome-blind early stops ('the pilot is declared INVALID and results are reported as exploratory only'); F5's dmax audit rubric ('< 80% of dmax derivations meet the audit rubric') is cheap, early, and independent of the predictive mechanism.",
+      "D4": "Summary confounds get concrete elements ('families are described a priori by design class... Cross-family stratification is reported'; null classifier baseline; override auditing), but no positive control or gate-reachability demonstration is included.",
+      "D5": "States its new cell explicitly against the prior arm: 'This tests whether the signature is operationally deployable as a program-wide early-stop mechanism across neighboring problem families, not merely predictively valid post-hoc.'",
+      "D6": "Named conclusions per falsifier and a pre-committed low-doom reading ('this is a valid outcome; report as \"the signature works, but the targeted problem families have higher power than feared\"'), but the aborted cohort's unobservable ground truth leaves the primary sensitivity outcome ambiguous between working trigger and indiscriminate aborting."
+    }
+  }
+]

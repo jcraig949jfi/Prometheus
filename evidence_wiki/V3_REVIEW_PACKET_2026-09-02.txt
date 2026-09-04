@@ -1,0 +1,244 @@
+================================================================================
+V3 REVIEW PACKET
+PEW V3 -- EXPLICIT MEMORY, FOSSIL RECORD, INCUBATOR EVIDENCE SUBSTRATE
+================================================================================
+Prepared:        2026-09-02   frozen, adjudicated; work STOPPED at V3 per
+                 charter s27 (no V4, no mass ingestion begun)
+Location/Code:   evidence_wiki/ (migrations/005, ew/fossil.py,
+                 ew/evidence_pack.py, v3/, benchmarks/gates_v3.json,
+                 docs/{PREREGISTRATION_V3, AMBIENT_MEMORY_AUDIT_V3,
+                 ARCHITECTURE_V3}.md)
+Version/Hash:    charter sha256 0d24ff4fb5e6b9e3d31b10d9219c8ecac617020c43e
+                 e20ebaaa3481469fde031; prereg frozen 4f8f6c875; AMENDMENT 1
+                 committed 20560088e BEFORE any arm output read; ground
+                 truth sealed 11f16bdd...; pack 8345ba29...; final commit
+                 10e6892f3 (+ this packet)
+
+--------------------------------------------------------------------------------
+1. EXECUTIVE VERDICT
+--------------------------------------------------------------------------------
+EARNED: the explicit-memory chain (query -> pack hash -> consumer ->
+decision -> execution -> result) is LIVE and auditable; the fossil substrate
+holds 11,731 rows of real SFE history by hash reference; the semantic
+firewall holds; reinterpretation-without-mutation works on real immutable
+events; concurrency/idempotency/recovery are clean; the batch ingest path
+does 712 ev/s.
+FAILED / LIMITED: ambient memory CANNOT be disabled from a live session
+(probe-proven three ways - a discovery, not a workaround gap); the
+execution experiment saturated its instrument, bounding the explicit-memory
+result to MARGINAL (+0.111); cross-host M1-M4 operation remains unqualified
+because peers have not pulled the branch.
+IS PEW READY FOR INCUBATOR INGESTION?   READY_WITH_LIMITATIONS (sec 17).
+IS DISTRIBUTED M1-M4 QUALIFIED?         NO (cross-host legs untested).
+IS AMBIENT MEMORY ISOLATED?             NO - DECLARED mode only (sha-pinned).
+DID EXPLICIT MEMORY IMPROVE EXECUTION?  MARGINALLY (+0.111, frozen band),
+concentrated precisely where knowledge rather than skill was binding, under
+a saturated instrument. Not overclaimed.
+
+--------------------------------------------------------------------------------
+2. V2 -> V3 RATIONALE
+--------------------------------------------------------------------------------
+V2 showed retrieval advantage without design advantage and discovered an
+invisible harness memory channel steering all agents. V3 therefore stopped
+optimizing the Wiki and instead: made memory explicit and provenance-bound,
+audited the invisible channel, and prepared PEW as the fossil/analysis
+substrate for the coming Incubator, with SFE as untouchable ground truth.
+
+--------------------------------------------------------------------------------
+3. ARCHITECTURE AND TRUST BOUNDARIES
+--------------------------------------------------------------------------------
+SFE (hash-chained SQLite ledger; 31,218 events; PEW opens mode=ro ONLY)
+  -> PEW substrate (Postgres ew; append-only; every fossil row anchored to
+     an SFE entry_hash or content hash; interpretations versioned and
+     never mutating; candidate bumps carry prospective falsification plans
+     - PEW proposes, SFE adjudicates)
+  -> three projections: HUMAN WIKI (prose) | EVIDENCE PACKS (frozen,
+     content-hashed) | PEW-NATIVE (ids/hashes/numbers only, firewalled).
+Full delta: docs/ARCHITECTURE_V3.md.
+
+--------------------------------------------------------------------------------
+4. AMBIENT-MEMORY AUDIT (the discovery hardened)
+--------------------------------------------------------------------------------
+WHAT: 226 files / 1.2MB operator auto-memory; MEMORY.md index (30,272 B,
+sha 05dbe05e...) with ~130 doctrine items. Per-file sha256 manifest sealed
+(v3/AMBIENT_MEMORY_INVENTORY.json, sha cb402aa6...), registered in PEW
+under the new LEGACY_AMBIENT_MEMORY provenance class.
+HOW INJECTED (3 probes): full index into EVERY session incl. subagents;
+relevant file bodies recalled on topic. Worktree isolation does NOT block
+it. Physically relocating the directory does NOT block it for subagents of
+a running session - the injection is CACHED AT PARENT-SESSION LEVEL.
+Official docs say subagents do not receive it; behavior differs (vendor
+feedback drafted).
+ISOLATION NOW: impossible from a live session => G3 FAIL, verdict
+AMBIENT_MEMORY_CANNOT_YET_BE_SAFELY_REMOVED. Controlled work runs in
+DECLARED mode (content sha pinned in the experiment manifest, arms at
+parity) - exactly how the V3 experiment ran. True disablement requires an
+operator-launched fresh session with the directory pre-relocated (untested)
+or an upstream harness change.
+
+--------------------------------------------------------------------------------
+5-6. EXPLICIT-MEMORY EXECUTION EXPERIMENT AND RESULTS
+--------------------------------------------------------------------------------
+Preregistered (frozen 4f8f6c875): 6 database/file tasks answerable only by
+EXECUTION, each with a sealed deterministic ground truth (sha 11f16bdd...)
+and known traps (empty-table mirror, n_live_tup lie, last-wins dedup, Sha
+circularity, id collisions, one no-trap calibration task). No LLM judge.
+AMENDMENT 1 (committed before any output was read): the isolation leg was
+voided by the in-window probe; arms amended to ambient-DECLARED parity -
+A = no PEW (service port closed: technically unable), B = frozen doctrine
+pack (7 provenance-bound items, hash 8345ba29) + service.
+
+  Arm A (no PEW):   5/6, 5/6, 6/6   mean 0.889
+  Arm B (pack):     6/6, 6/6, 6/6   mean 1.000
+  Delta +0.111 -> frozen MARGINAL band [0.083, 0.25)
+
+G6 non-saturation FAILED (control trapped-task mean 0.867 > 0.80): capable
+models execute superbly cold; the delta is a floor-bounded reading. The
+entire differential is task X1 - the ONLY task where knowledge (which
+table holds the data) rather than skill was binding: controls 1/3, pack
+3/3. Every B agent VERIFIED pack claims live before using them, and two B
+agents overrode the pack's X5 headline after verification (G9
+anti-anchoring PASS - explicit memory informed without commanding). The s6
+chain closed for every B run: ew.memory_artifacts -> ew.memory_influences
+(MI-895f/MI-d433/MI-e822) -> hashed decision artifacts -> scored results.
+Honest summary: EXPLICIT MEMORY HELPED EXACTLY WHERE MEMORY, NOT SKILL,
+WAS THE BINDING CONSTRAINT - and nowhere else, because skill was
+everywhere else sufficient. The instrument needs knowledge-bound (not
+skill-bound) tasks at scale before a stronger claim is attempted.
+
+--------------------------------------------------------------------------------
+7. INCUBATOR READINESS (fossil schema + SFE linkage)
+--------------------------------------------------------------------------------
+Migration 005 live: fossil_players/worlds/encounters/edges, interpretations,
+candidate_bumps, memory chain, LEGACY_AMBIENT_MEMORY class. Real
+metabolization executed: 242 worlds (+31 fork edges), 6,006 candidate
+organisms (content-hash identity), 5,452 encounters each carrying a true
+ledger entry_hash - 11,731 rows, none copying authoritative history.
+One candidate bump registered from a real KL-anomaly world with a
+prospective falsification plan (PEW proposes; SFE adjudicates).
+UPSTREAM REQUIREMENT DISCOVERED: only 2/6,006 SFE candidate artifacts carry
+phenotype scores in meta - architecture-discrimination mining is blocked
+until Incubator organisms emit phenotype observations. Handed to Daedalus.
+
+--------------------------------------------------------------------------------
+8. TENSOR / FOSSIL QUERY QUALIFICATION
+--------------------------------------------------------------------------------
+Attempted and OPERATIONAL (all <= 7ms at current scale): family x failure
+occupancy matrix; KL-divergence anomaly ranking of worlds vs family
+marginals; SVD factorization exercise (32x5, rel err 0.0013); fork-lineage
+survival comparison. BLOCKED BY DATA: discrimination-per-cost (phenotype
+coverage). SCAFFOLDING ONLY: the factorization adds nothing over marginals
+at this scale - consistent with V0's verdict; association value beyond
+marginal/graph remains unproven and unclaimed. Implementation is
+sparse/relational by justification, not buzzword loyalty.
+
+--------------------------------------------------------------------------------
+9. REINTERPRETATION DEMONSTRATION
+--------------------------------------------------------------------------------
+Real immutable SFE failure event (entry hash 249f0ef0...) acquired
+I1 (FAILURE_CLASS: player-side reading) then I2 (ASSOCIATION: landscape-
+level reading, supersedes I1). Both recoverable; supersession is a pointer;
+the SFE row verified byte-identical before/after (v3/reinterpretation_demo
+.json). History immutable; interpretation evolutionary.
+
+--------------------------------------------------------------------------------
+10. DISTRIBUTED QUALIFICATION
+--------------------------------------------------------------------------------
+4 concurrent worker processes with distinct machine identities: 600/600
+unique rows under 10% duplicate/retry injection; worker killed mid-batch
+and fully replayed with zero loss/duplication; 30/30 concurrent reads
+during write load (p95 2.9s under pressure); batch replay re-inserted 0.
+Envelope: 7.1 ev/s single-event REST, 712 ev/s batch REST, 8,191 rows/s
+direct bulk. CROSS-HOST: NOT QUALIFIED - M2-M4 have not pulled the branch;
+no LAN leg has run. PEW outage cannot corrupt SFE (read-only by
+construction; verified during the service-down window).
+
+--------------------------------------------------------------------------------
+11. SEMANTIC-FIREWALL AUDIT
+--------------------------------------------------------------------------------
+PEW-NATIVE endpoints emit only ids/hashes/numbers/opaque family tokens.
+Scanner built from the LIVE substrate prose (claims + interpretations +
+ontology labels + world family names): zero leaks on native surfaces; the
+human search endpoint trips the scanner (35 hits) as a working negative
+control. Player-access interfaces remain unbuilt by design.
+
+--------------------------------------------------------------------------------
+12-13. PERFORMANCE ENVELOPE + LEAKAGE/ADVERSARIAL RECORD
+--------------------------------------------------------------------------------
+Bottlenecks: per-request connection path; recommendation: batch-only for
+Incubator, add pooling before sustained multi-thousand ev/s. Contamination
+events, none summarized away: (1) the in-window probe voided the isolation
+leg (parent-session caching) -> amendment committed before outputs read;
+(2) V2's haiku access violations and ambient-gold overlap remain on file
+in v2/LEAKAGE_AUDIT_V2.md; (3) A-arm doc-restriction relies on instruction
++ transcripts (service-down and port-closed legs are technical; file-read
+legs are not) - disclosed.
+
+--------------------------------------------------------------------------------
+14. GATE TABLE (full evidence per gate: benchmarks/gates_v3.json)
+--------------------------------------------------------------------------------
+G1 PASS  G2 PASS  G3 FAIL(ambient undisable-able)  G4 PASS  G5 PASS
+G6 FAIL(instrument saturated)  G7 PASS  G8 PASS  G9 PASS
+G10 ADJUDICATED: MARGINAL(+0.111, floor-bounded)  G11 PASS  G12 PASS
+G13 PASS(1 query data-blocked)  G14 PASS  G15 PASS  G16 PASS  G17 PASS
+G18 PARTIAL(cross-host NOT READY)  G19 PASS  G20 CHARACTERIZED  G21 PASS
+G22 PASS  G23 PASS  G24 PASS
+
+--------------------------------------------------------------------------------
+15. KNOWN LIMITATIONS (severe, as ordered)
+--------------------------------------------------------------------------------
+- The execution instrument saturated; the MARGINAL result is a floor, not a
+  measurement of explicit memory's ceiling; n=6 agents, 6 tasks.
+- The isolated-control concept is currently IMPOSSIBLE in this harness;
+  every "control" in every campaign to date has been ambient-informed.
+- All experiment agents share one model family; adjudicator = builder
+  (Mnemosyne), mitigated by sealed truths/frozen criteria, not eliminated.
+- Fossil ingest covered one SFE database on one machine; lineage depth in
+  current data is shallow (130 TESTS edges, 31 forks).
+- The tensor remains scaffolding; no association claim beyond marginals.
+- Cross-host everything is untested until peers pull.
+
+--------------------------------------------------------------------------------
+16. REPRODUCTION
+--------------------------------------------------------------------------------
+  cd F:\Prometheus\evidence_wiki
+  python ingest/ingest_sfe_fossils.py            (idempotent re-ingest)
+  python -c "import sys;sys.path.insert(0,'.');from ew import fossil,db; \
+    c=db.connect(); print(fossil.run_all(c))"    (fossil queries)
+  python tests/test_firewall_v3.py               (G16)
+  python tests/test_distributed_v3.py            (G17-G21)
+  sha256sum v3/ground_truth_sha256.txt gold/* roles-committed charters
+Raw arm outputs: v3/exec_outputs/*.json. Probes: task transcripts.
+
+--------------------------------------------------------------------------------
+17. RECOMMENDED INCUBATOR DECISION
+--------------------------------------------------------------------------------
+    READY_WITH_LIMITATIONS
+Ready: fossil schema, hash-anchored SFE linkage, batch ingest (712 ev/s),
+idempotency under retry/crash, semantic firewall, provenance-bound memory
+chain, reinterpretation machinery. Required before scale-up: (1) cross-host
+qualification (M2-M4 pull + rerun test_distributed_v3 legs over LAN);
+(2) SFE-side phenotype emission; (3) connection pooling for sustained
+ingest; (4) an operator-launched memory-clean session procedure for any
+future controlled-memory campaign. Not schedule-driven: these are evidence-
+driven blockers, each cheap relative to Incubator cost.
+
+--------------------------------------------------------------------------------
+18. QUESTIONS FOR THE EXTERNAL REVIEWER (genuine, unresolved)
+--------------------------------------------------------------------------------
+1. Ambient channel disposition: mirror the 226-file doctrine into PEW as
+   LEGACY_AMBIENT_MEMORY-backed evidence (making the invisible explicit),
+   or keep the channels separate and declare per-experiment? V3 began the
+   mirror with 4 operational claims; full mirroring is a policy choice.
+2. Do you accept MARGINAL-under-saturation as grounds to fund a
+   knowledge-bound (not skill-bound) execution instrument at larger n,
+   or should the behavior question rest until Incubator-era tasks provide
+   natural knowledge-bound endpoints?
+3. The X5 adjudication precedent: when an agent's answer field disagrees
+   with the frozen criterion but its notes satisfy the criterion's literal
+   disjunct, V3 scored by the letter. Ratify or tighten for future prereg?
+4. Phenotype emission spec: who owns the schema - Daedalus (SFE) with PEW
+   consuming, or jointly preregistered? PEW recommends SFE-owned.
+================================================================================
+END OF PACKET
+================================================================================

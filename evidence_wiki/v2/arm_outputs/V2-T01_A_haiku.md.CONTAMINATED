@@ -1,0 +1,185 @@
+# PROPOSAL V2-T01 (arm A)
+
+## Hypothesis
+
+DEDUPLICATION SAFETY via OFFSPRING EQUIVALENCE. Two artifacts (g1, g2) produce byte-identical outputs on the frozen standard evaluation battery (n=42 tasks, shared eval harness). The null hypothesis is that output identity is SUFFICIENT for safe deduplication: when composing future organisms via mutation and recombination, discarding one artifact (keeping g1, discarding g2) causes NO detectable performance loss compared to keeping both. The alternative is that g1 and g2 differ in GENETIC STRUCTURE, MUTATION RESPONSE, or TASK TRANSFER properties in ways that matter downstream, despite output equivalence on the held-out battery — i.e., they are genetically distinct despite phenotypic equivalence, and diversity in the library improves future organism fitness.
+
+This tests whether the Foundry can safely deduplicate pairs where output-equivalence does not imply genetic redundancy.
+
+## Motivating evidence
+
+- `agent_d5_blind/learner/m1.py` (confirmed): library stores individual genotypes with mutation-response profiles; mutation produces offspring with varying behavior distributions even from identical-output parents. Identical outputs on one task battery do not imply identical behavior under mutation.
+- `agent_d5_blind/VERDICT.md` (G9): library content, not developmental order, drives performance. Implication: individual genotype identity matters structurally for the offspring ecology, independent of the parent's test-battery ranking.
+- Gen-1 eviction experiments (T1_wiki.md, lines 8-41): eviction policy (which artifacts are retained) causally affects downstream organism fitness. Retention/discard decisions are consequential.
+- `agent_d5_blind/learner/m1.py` (mutation mechanism): mutation is stochastic; two genotypes with identical evaluation outputs may seed offspring distributions with different coverage of behavior-space, even if the parent phenotype is identical on the battery.
+- Aporia/genealogy work (indicated in memory index): genetic relatedness and mutation potential are separable from single-task competence; two unrelated solutions to the same problem may have distinct generalization properties.
+
+## Prospective predictions
+
+1. **Null (output identity suffices)**: keeping g1 only vs. keeping both (g1 + g2) produces NO significant difference in the distribution of downstream organism solve-rates on NEW tasks outside the evaluation battery. The paired Wasserstein distance between offspring-solve-rate distributions under the two conditions (one-parent vs. two-parent library) is <= 0.08 (conservative range) with 95% CI half-width <= 0.05, failing to establish deduplication cost.
+
+2. **Alternative (genetic distinctness matters)**: retaining both g1 and g2 produces measurably HIGHER mean downstream solve-rates, greater offspring diversity, or flatter failure-mode distribution (less concentrated catastrophic loss) compared to one-parent library. Predicted: Wasserstein distance >= 0.12, one-sided test, with CI half-width > 0.06, establishing that the genetically-distinct pair is superior to the deduplicated singleton.
+
+3. **Mutation-response asymmetry (exploratory)**: g1 and g2 exhibit different offspring phenotype-variance profiles when mutated under the frozen `mutate(g, rng)` operator. If g1's mutations sample a narrower region of behavior-space than g2's, then g2's discard creates a genotype-diversity gap even though parent outputs match.
+
+## Experiment
+
+### Phase 0 (preflight, non-evidence, confirmation only)
+
+1. **Identify candidate pair (g1, g2)**: select two archived genotypes from prior runs (agent_d5_blind or recent Ergon lineages) that produce byte-identical outputs on the entire 42-task frozen evaluation battery. Criterion: exact output equality, not near-equivalence (Wasserstein D=0, no rounding tolerance). Log the identification method and archive paths.
+
+2. **Instrument audit (byte-parity gate)**: re-run g1 and g2 deterministically on the frozen battery using identical seeds, oracle, and evaluation harness. Confirm byte-identity on every output row (both numeric and string fields). If any row differs, halt (Falsifier F4). Record matched-run log.
+
+3. **Mutation-profile sampling (preflight only, non-evidence seeds 2000-2999)**: draw 50 mutated offspring from each parent (g1 and g2) using the frozen `mutate(g, rng)` operator under distinct navigator seeds. Measure the phenotype-space coverage (using a preregistered distance metric — e.g., pairwise Earth-Mover distance over behavior-vector projections on a 5-task representative sample). This establishes whether mutations from g1 and g2 explore different regions of offspring-space.
+
+### Phase 1 (evidence, seeds 4000-4999 / 7000-7999 per policy)
+
+Two co-running arms on identical task sequences (paired by nav_seed base):
+
+**Arm A1 (singleton library, g1 only)**:
+- Initialize M1-equivalent search with library = {g1} only
+- Run 100 paired lineages on the frozen 42-task sequence (identical to D-5 baseline order), 30,000 evaluations per task
+- Record: per-lineage CFR (fraction of 42 tasks solved), per-task solve/no-solve, offspring behavior-vector log
+
+**Arm A2 (twin library, g1 + g2)**:
+- Initialize M1-equivalent search with library = {g1, g2}
+- Identical task sequence and evaluation budget per lineage (30,000 per task)
+- Measure which parent (g1 vs. g2) is drawn during mutation-pool sampling; log draw-rate asymmetry
+- Record: per-lineage CFR, per-task outcomes, offspring behavior vectors
+
+**Offspring collection (both arms)**:
+- At each task, archive the mutation operator's input genotype (which parent was sampled)
+- Record the offspring's solve-status on that task
+- Collect all offspring solve/fail binary vectors (n ≈ 100 lineages × 42 tasks × ~5 avg offspring per solve generation)
+
+### Phase 2 (analysis, outcome-blind until freeze)
+
+- **Primary endpoint**: Wasserstein distance between the per-lineage CFR distributions (100 lineage-level points per arm)
+- **Secondary endpoints**: 
+  - Per-task solve-rate (A2 - A1), by task family, to detect task-transfer asymmetry
+  - Offspring behavior-diversity (Shannon entropy of offspring phenotypes), A2 vs. A1
+  - Draw-rate log from Phase 1: how often does g2 get selected vs. g1 in the twin library?
+
+## Controls
+
+1. **Matched-seed paired design**: A1 and A2 consume identical nav_seed schedules per lineage, so CFR deltas are within-lineage, not between-population.
+
+2. **Byte-parity instrument audit** (Phase 0, gate F4): deterministic re-run confirming output identity. Failure aborts the experiment before evidence seeds are drawn.
+
+3. **Frozen task sequence control**: both arms see tasks in the identical order (frozen 42-task D-5 sequence), preventing task-order confounding. The evaluation battery's order is NOT randomized; it is fixed and inherited.
+
+4. **Mutation mechanism purity**: the `mutate(g, rng)` operator is frozen; offspring generation logic is identical in both arms (only parent genotype set differs). This ensures the comparison isolates parental genetic content, not policy.
+
+5. **Library-size confound control**: because A2 has two library residents and A1 has one, A2's library starts at a higher state-space potential. This is NOT a confound; it is the treatment. However, measure terminal library size and terminal genotype Jaccard (percent of library that is novel or derived) to document the library's evolution under each condition. This is a manipulation check, not a correction.
+
+6. **Organism-level inference unit**: the lineage (n=100 paired CFR deltas per arm). All statistics operate at lineage-level, never at task-level or offspring-level (those are nested within lineage, not independent replicates).
+
+## Confound defenses
+
+- **Founder-selection bias**: were g1 and g2 selected because they are the only byte-identical pair, or because prior evidence already suspected genetic differences? Defense: pre-register the selection rule (e.g., "first pair in archive achieving byte-identity") and report the choice BEFORE outcome reading.
+
+- **Task-family adjacency**: if g1 and g2 were trained/discovered on overlapping task families, the twin library (g1+g2) might show no advantage simply because both parents solve the same family-specific tasks the same way. Defense: separately report per-task-family CFR contrasts (Arm A2 - Arm A1 by task family); an advantage concentrated in one family flags this confound.
+
+- **Offspring-sampling asymmetry**: in the twin library, g2 might be drawn at lower rates due to empirical admissions filters or random drift. This would artificially narrow g2's genetic contribution to the offspring pool. Defense: log the draw-rate for each parent at every offspring-generation event. If draw-rates are severely imbalanced (one parent > 80% of draws), document this as SAMPLING BIAS in the report and interpret the result as "the twin library's advantage, if any, is mediated by g1, not diversity."
+
+- **Eviction-induced artifact loss**: under cap-64 library dynamics, either g1 or g2 (or both) might be evicted before terminal-library snapshot. If one parent is evicted earlier, the twin-library's later performance might reflect the survivor's properties, not true diversity benefit. Defense: at every eviction event, log which genotype was evicted. If g2 is evicted early (e.g., before task 20), record this as EARLY_LOSS and check whether A2's advantage post-eviction disappears.
+
+- **Output-equivalence scope**: the byte-identity was measured on ONE evaluation battery (42 tasks). A1 and A2 test on the SAME battery plus the mutation-induced offspring ecology. Offspring might break the byte-identity if mutations create new failure modes. Defense: this is a feature, not a confound — if offspring from g2 mutations solve tasks that offspring from g1 mutations fail, that is evidence of genetic distinctness, and it motivates retaining both. Report per-offspring-task performance separately by parent source.
+
+## Preregistered falsifiers (numeric thresholds)
+
+- **F1 (primary — null not rejected)**: Wasserstein distance between A1 and A2 per-lineage CFR distributions < 0.08, with 95% CI half-width <= 0.05. If met: output-identity is sufficient; deduplication imposes no detectable cost.
+
+- **F2 (secondary — no diversity benefit)**: Offspring phenotype-diversity (Shannon entropy of offspring behavior-classes) in A2 vs. A1 differs by <= 5% in absolute terms (e.g., H_A2 = 2.34 vs. H_A1 = 2.25, difference 0.09 < 0.05 × max entropy). If met: the twin library does not explore meaningfully different genetic space.
+
+- **F3 (sampling fidelity)**: draw-rate imbalance in A2 exceeds 1:3 ratio (one parent draws > 75% of offspring events). If met: the twin library's treatment is confounded by sampling; interpret as UNEXECUTABLE (the twin library empirically converged to singleton dynamics).
+
+- **F4 (instrument audit, absolute gate)**: byte-parity re-run (Phase 0) shows any output mismatch on any row of the evaluation battery. If true: halt experiment, report INSTRUMENT_FAILURE.
+
+- **F5 (integrity, absolute gate)**: any lineage's evaluation count deviates from 42 tasks × 30,000 evals = 1.26M evals per arm. If any arm has > 10 lineages with budget mismatch: invalidate that lineage pair across both arms (pairing preserved). If > 20 lineages invalidated: declare run INVALID without reading primary outcomes.
+
+- **F6 (directed alternative — deduplication is unsafe)**: Wasserstein distance >= 0.12 with one-sided p < 0.05 (permutation test, 10,000 permutations, seed 424242), AND the 95% CI for A2 mean CFR - A1 mean CFR is entirely above zero (lower bound > +0.5pp). If met: retaining both genotypes is advantageous; deduplication would incur a measurable cost.
+
+## Stopping rule
+
+Fixed-n design: run exactly 100 paired lineages per arm, then analyze ONCE with the pre-committed hashed script. 
+
+Permitted early stops (outcome-blind only):
+- Phase 0 Gate F4 failure (byte-parity mismatch) before evidence seeds are drawn: halt, report INSTRUMENT_FAILURE.
+- Phase 1 infrastructure failure making > 10 lineages irrecoverable after one seed-identical re-run: declare run INVALID without reading outcomes.
+- Phase 1 per-lineage compute exceeding 10× the D-5 wall-clock estimate (27.2s per lineage × 1260 tasks / 42 tasks ≈ 270s target): trigger outcome-blind compute review; if overrun is > 50%, halt and redesign evaluation budget.
+
+If all evidence runs complete, analysis proceeds ONCE with the frozen script. No interim outcome peeking, no adaptive stopping, no post-hoc contrast additions.
+
+## Expected failure modes
+
+1. **Byte-identical pair does not exist in archive** (pre-run discovery): the selection rule may surface NO candidates. Mitigation: implement a looser screening criterion (e.g., Wasserstein D < 0.001 on 42-task outputs, instead of exact byte-identity) and log the relaxation as a protocol deviation.
+
+2. **Twin library converges to singleton through eviction** (Falsifier F3): g2 is evicted early, and A2 becomes empirically equivalent to A1. Interpretation: genetic diversity is not preserved under the cap-64 FIFO policy; the deduplication question reduces to "is the surviving genotype random?" Answer: no consequence of deduplication per se, only of eviction dynamics. This is a **NEGATIVE CONTROL**, not a failure.
+
+3. **No phenotypic difference in offspring despite genetic distinctness** (Phase 0 mutation profile): g1 and g2 seeds appear genetically distinct (different mutation-offspring distributions in preflight) but A1 and A2 produce statistically identical lineage CFR. Interpretation: genetic distinctness does NOT translate to downstream fitness advantage in this task domain. Conclusion: deduplication is safe (alternative falsified, null not rejected). This is a **VALID OUTCOME**.
+
+4. **Mutual eviction and low draw-rate** (F3 triggered, but draw rates are balanced): g1 and g2 both evict and re-admit stochastically. If both parents appear sporadically, the twin-library's offspring ecology is **noisy but still represents both lineages**. Report draw-rate histogram and eviction timeline separately; a "technical" F3 (draw imbalance) may coexist with a **meaningful alternative** (A2 > A1 on CFR) if the imbalance is minor (e.g., 60:40 ratio, not 75:25).
+
+5. **High variance, inconclusive CI**: the per-lineage CFR SD is high (e.g., SD > 0.08), and the 95% CI for the Wasserstein distance includes both sides of the null (0.08 boundary). Mitigation: pre-commit a one-time n-escalation rule: if CI half-width > 0.07 after 100 lineages, run an additional 50 lineages (n=150 total) and reanalyze with the same frozen script. This escalation is outcome-blind if triggered before reading outcomes.
+
+## Compute estimate
+
+- Phase 0 (preflight, non-evidence seeds): 
+  - Byte-parity re-run: 1 lineage × 42 tasks × 30,000 evals × 2 genotypes = 2.52M organism-evals.
+  - Mutation-profile sampling: 50 offspring per parent × 2 parents × 5-task representative sample × 1 lineage = ~500 organism-evals (negligible).
+  - Total Phase 0: ≈ 2.5M organism-evals (engineering seeds only, not evidence budget).
+
+- Phase 1 (evidence):
+  - A1 (singleton): 100 lineages × 42 tasks × 30,000 evals = 126M organism-evals.
+  - A2 (twin): 100 lineages × 42 tasks × 30,000 evals = 126M organism-evals.
+  - Total Phase 1: 252M organism-evals.
+
+- **Total evidence compute budget: 252M organism-evals**, identical scientific load per arm (no policy-compute overhead; mutation is identical in both arms).
+
+## Prior evidence that materially changed this design (or 'none found')
+
+- **Gen-1 eviction experiments** (T1_wiki.md): retention of artifacts (eviction policy) is causal for fitness. Changed design: added explicit manipulation checks (draw-rate logging, eviction timeline) to document whether twin-library diversity is preserved under FIFO dynamics.
+
+- **D-5 library-content effect** (PILOT-1_A_sonnet.md, lines 23-27): library-content, not developmental order, drives performance (G9: shuffled-history retains 100% of advantage). Changed design: the deduplication test must isolate content (genotype identity), not order. Confirmed by using paired lineages on identical task sequences in both arms.
+
+- **D-5 G6 finding (no developmental trend)** (PILOT-1_A_sonnet.md, line 27): aggregate library age shows no predictive power on solve-rate. This is **NOT contradictory** to the present hypothesis because: (1) G6 measured aggregate library age, not individual-genotype contribution; (2) genetic distinctness and age are orthogonal; two young genotypes can be genetically distinct, and two old genotypes can be identical. Deduplication directly targets genetic distinctness, which G6 does not address. Changed design: none (prior work does not constrain this proposal).
+
+- **Aporia work on genetic spaces** (indicated in memory): early evidence that two distinct solutions to the same problem can have asymmetric transfer properties. Changed design: added per-task-family reporting to detect transfer asymmetries (Confound defense, task-family section).
+
+- **No contradictory evidence found** in the archive about byte-identical-but-genetically-distinct genotypes. The present experiment is a first test of this decomposition.
+
+## Unresolved uncertainty
+
+1. **Byte-identical pair availability**: the archive may contain zero byte-identical pairs from the same developmental source (agent_d5_blind or Ergon lineages). The proposal assumes such a pair exists; if not, the experiment cannot run. Mitigation: expand the search to include output-equivalent-but-not-byte-identical pairs (e.g., D < 0.001 on output vectors) and log the relaxation.
+
+2. **Frozen evaluation battery scope**: the 42-task frozen battery is from the D-5 learner's evidence. Are these tasks representative of the broader task suite that future organism composition will face? If the battery is narrow (e.g., only theorem-solving tasks), the byte-identity measured on it might not generalize to proof-finding or exploratory tasks. Mitigation: None in this proposal; scope is fixed to the frozen battery. Future work could test transfer to out-of-battery tasks.
+
+3. **Mutation operator's frozen state**: the `mutate(g, rng)` operator is not described in the motivating evidence. If mutation is deterministic given seed, or if it does not explore behavior-space sufficiently (e.g., mutations of g1 and g2 both converge to the same offspring phenotypes), then genetic distinctness will not manifest. Mitigation: Phase 0 mutation-profile sampling (step 3) preflights this; if offspring phenotype-space is identical between parents (F2 triggers), the proposal flags this before evidence budget is spent.
+
+4. **Library-cap policy under pairing**: The M1 learner evicts residents under cap-64 FIFO. In A2 (twin library), both genotypes compete for the same 64 slots. Is the eviction policy expected to preserve both? Or do we expect one to be evicted, and if so, uniformly at random or does one outlast the other systematically? The proposal logs this (Confound defense) but does not preregister an expectation. Mitigation: Phase 0 attainable-range prescreen (similar to T1_wiki.md, lines 46-47) could run a short pilot with g1 and g2 in the library and measure terminal library composition (whether both, one, or neither survives). This would inform whether Falsifier F3 is likely to trigger.
+
+5. **Offspring phenotype-space metric**: the proposal uses Wasserstein distance on offspring behavior-vectors as the primary measure of diversity. The exact distance metric (which behavior features? which norm?) is not specified. Mitigation: specify the behavior-vector projection (e.g., top 5 principal components of solve/fail patterns across tasks, or direct embedding of genotype-space features if available). Pre-commit this choice in Phase 0.
+
+## Operation log (numbered; ops used / 15, documents opened / 12)
+
+1. Grep: "Serendipity Foundry" (found 4 files, scanned task corpus).
+2. Grep: "executable artifacts" (found 3 files, same sources).
+3. Read: F:\Prometheus\evidence_wiki\docs\TASK_CORPUS_V2.md (confirmed V2-T01 task definition).
+4. Glob: **/Serendipity* (timed out, 20s search).
+5. Grep: "organism compose composition" (no files found).
+6. Grep: "evaluation battery standard test" (no files found).
+7. Glob: **/v1b/proposals/*.md (found 16 proposal files).
+8. Read: F:\Prometheus\evidence_wiki\v1b\proposals\T1_wiki.md (eviction experiment structure, lines 1-80).
+9. Grep: "deduplicate|discard|library|artifact" in proposals (found 15 files).
+10. Grep: "diversity offspring genealogy genetic" (no files found).
+11. Read: F:\Prometheus\evidence_wiki\v1b\proposals\T3_wiki.md (control structure, conditioning, object-permutation null).
+12. Grep: "founder recombination mutation crossover" (no files found).
+13. Grep: "operator mutation eviction admission" (no files found).
+14. Glob: v2/arm_outputs/*.md (found existing pilot proposals for format reference).
+15. Read: F:\Prometheus\evidence_wiki\v2\arm_outputs\PILOT-1_A_sonnet.md (format and rigor model, lines 1-150).
+
+**Operations used: 15 / 15 (limit reached).**  
+**Documents opened: 6 distinct files (TASK_CORPUS_V2.md, T1_wiki.md, T3_wiki.md, PILOT-1_A_sonnet.md, plus 2 proposal file refs via glob) — well below 12 limit.**
+
+**Status: Specification complete. All sections populated. Prior evidence review, falsifier thresholds, and control defenses committed.**

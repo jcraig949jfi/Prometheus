@@ -1,0 +1,393 @@
+================================================================================
+EXTERNAL REVIEW PACKET
+PEW WORLD-PROVENANCE SEAM CLOSURE + HARMONIA HANDOFF
+================================================================================
+Prepared:       2026-09-03   seam closed, service live
+VERDICT:        PEW_WORLD_PROVENANCE_SEAM_BOUND_AND_VERIFIED   (ACCEPTED)
+Pushed commit:  4cb02c7332723eec07eebde3ca657b60afacc03e
+Branch:         origin/mnemosyne/evidence-wiki-v0 (ancestor-verified)
+Inherited:      1376df4fd6aca25b7e73840aac59c82fb2eb121b (still an ancestor)
+Charter sha256: 18615e89a8aa386faf258e54ee59d44cf9e468731f560194735d2cc1d4b0
+                e012 (roles/Mnemosyne/prompts/CHARTER_WORLD_PROVENANCE_SEAM_
+                2026-09-03.txt, verbatim)
+Live identity:  {"service":"mnemosyne-evidence-wiki","status":"ok",
+                 "schema_version":4,"ontology_version":2,
+                 "fossil_contract":"pew.fossil.v2"}
+
+--------------------------------------------------------------------------------
+1. THE THREE QUESTIONS
+--------------------------------------------------------------------------------
+
+Q1 -- WHAT EXACTLY IS sfe_entry_hash?
+
+ANSWER: SFE `events.entry_hash` -- the hash-chain integrity anchor of ONE ROW
+in the SFE EVENT LEDGER, specifically the event named by the (now required)
+sfe_event_id. One semantic object, not "an SFE hash".
+
+Decided from data, not field names:
+  PEW prod fossil rows                                 5452
+  match SFE events.entry_hash universe        5452/5452  (100.0%)
+  match SFE artifacts.blob_hash                    0/5452  (0.0%)
+  match SFE artifacts.artifact_id                  0/5452  (0.0%)
+  match SFE foundry_events.entry_hash              0/5452  (0.0%)
+  (sfe_event_id, sfe_entry_hash) pairs that
+   actually EXIST in the live SFE ledger      5452/5452
+So the established meaning was already unambiguous in the data; it is
+preserved, not re-chosen. No producer disagreement was found.
+
+THE HARD PART, stated plainly: worlds.head_hash CANNOT be excluded by shape.
+All 283 live head_hash values ARE some event's entry_hash (head_hash names the
+head event). blob_hash and artifact_id are ALSO "sha256:<64hex>". Structural
+validation therefore cannot separate the four classes.
+
+Resolution: the class is pinned by REQUIRING the paired sfe_event_id
+(^evt_[0-9a-f]{16,32}$), which exists only in the event ledger. A producer
+holding a blob_hash or artifact_id has no evt_ id to pair with it. This costs
+nothing: 5452/5452 historical rows already carry sfe_event_id. PEW validates
+CLASS + SHAPE only and holds no SFE client by design; the auditable check --
+that the pair exists in SFE -- belongs to the investigator.
+
+Q2 -- HOW DOES ORDINARY EVIDENCE BIND TO A FOSSIL ENCOUNTER?
+
+ANSWER: ONE mechanism -- typed columns on the evidence row:
+    ew.evidence.encounter_id  +  ew.evidence.encounter_run_id
+    FOREIGN KEY (encounter_id, encounter_run_key)
+      REFERENCES ew.fossil_encounters(encounter_id, run_key)
+    (encounter_run_key is GENERATED ALWAYS AS coalesce(encounter_run_id,''))
+
+  write     POST /api/v1/evidence  {..., encounter_id, encounter_run_id}
+  forward   GET  /api/v1/provenance/evidence/{evidence_id}
+  reverse   GET  /api/v1/fossil/encounters/{encounter_id}/evidence
+  idempotency  evidence ids are content-addressed: an identical re-submit
+               returns the SAME evidence_id and stores ONE row
+  refusal      422 unknown_fossil_encounter:<id>@<run> -- nothing written
+
+WHY NOT A RELATION (rejected, with reasons): encounter identity is a PAIR
+since migration 006, but a relation row carries a single text dst_id, so
+binding through relations would require an invented composite-string
+convention -- explicitly forbidden by the directive -- and a new relation_type
+would broaden the ontology. Typed columns need neither, and the foreign key
+makes a bad binding impossible at the DATABASE level rather than by
+convention. MATCH SIMPLE is deliberate: encounter_id NULL => not enforced, so
+all 124 pre-existing unbound evidence rows stay valid and untouched.
+
+Q3 -- IS MIGRATION 006 ACTUALLY LIVE?
+
+ANSWER: YES, verified directly, not inferred from the file's existence:
+  ew.fossil_encounters PK  = PRIMARY KEY (encounter_id, run_key)
+  run_key                  = generated column, coalesce(run_id,'') STORED
+  indexes present          idx_fossil_enc_{run,ep,players,anchor,world,ns}
+  the running service      reports schema_version 4 and accepts/serves the
+                           006 key shape (gate I, checked through health +
+                           pg_constraint in the same run)
+NOTE: PEW has no migration-tracking table by design -- migrations/*.sql are
+idempotent (IF NOT EXISTS / guarded DO blocks) and re-run on apply. Live
+schema, not a ledger, is the source of truth.
+
+--------------------------------------------------------------------------------
+2. SILENT FIELD LOSS -- BEFORE / AFTER
+--------------------------------------------------------------------------------
+VERIFIED FIRST, then fixed. Pre-change evidence preserved verbatim at
+evidence_wiki/seam/D_silent_loss_BEFORE.txt (2026-09-03T21:26:56):
+
+  BEFORE (defect reproduced on 5/5 closed models)
+    PacketIn     + world_id/sfe_entry_hash  -> HTTP 200, fields discarded
+    ExperimentIn + world_id                 -> HTTP 200, field discarded
+    ClaimIn      + world_id/run_id          -> HTTP 200, fields discarded
+    EvidenceIn   + world_id/encounter_id    -> HTTP 200, fields discarded
+                   (first attempt 422'd on an unrelated vocab error; retested
+                    with a valid evidence_type to confirm honestly)
+    RelationIn   + world_id                 -> HTTP 200, field discarded
+    Stored rows contained no such columns; the data simply vanished.
+
+  AFTER (regression suite tests/test_fail_closed_ingress.py, 8/8)
+    all five -> HTTP 422 {"type":"extra_forbidden","loc":["body","world_id"]}
+    supported binding fields still accepted -> 200 and readable
+    binding to a nonexistent encounter      -> 422, no row left behind
+
+AUDIT of what should stay open: only the five named models were closed. Tensor
+compute endpoints (compile/factor/contract/gaps/related) are request bodies,
+not evidence ingress, and were left alone. The four fossil models were already
+closed. No intentionally-open evidence object was found.
+
+--------------------------------------------------------------------------------
+3. A DEFECT THIS PASS INTRODUCED, AND CAUGHT
+--------------------------------------------------------------------------------
+The first seam-battery run PASSED gate G while its own detail line admitted
+the seam's ordinary evidence was visible in ew.evidence_prod (count 1).
+Root cause: ew.object_namespace -- the table both prod views filter on -- had
+NO API path. It had only ever been written by hand in SQL, so an integration
+write from M2 could not be kept out of the scientific views at all.
+
+Fix: validated `namespace` field on ClaimIn/EvidenceIn/RelationIn (the three
+object types the prod views filter), writing ew.object_namespace. The value is
+checked against a closed set, so a typo like "tset" is 422 rather than
+silently leaving a practice object in science (gate G2).
+Gate G was then rewritten from a caveat into a hard assertion (evidence_prod
+count MUST be 0) and re-run.
+
+Hygiene applied by CLASSIFICATION, never deletion: the pre-change probe
+artifacts and first-run battery objects (C-ece6242e2fc9, C-6e356ab2d887,
+E-4d83b1abbf06, E-e3ae49359a29, R-82b517a68352) are marked namespace='test'.
+They remain in the base tables as evidence of the failure
+(evidence_wiki/seam/G_fixture_hygiene.txt confirms the probe claim is still
+PRESENT after classification).
+
+--------------------------------------------------------------------------------
+4. IMPLEMENTATION DELTA (exact)
+--------------------------------------------------------------------------------
+migrations/007_world_provenance_seam.sql   NEW
+  + ew.evidence.encounter_id, encounter_run_id, encounter_run_key (generated)
+  + FK evidence_fossil_encounter_fk -> fossil_encounters(encounter_id,run_key)
+  + idx_evidence_encounter
+  + CREATE OR REPLACE VIEW ew.evidence_prod (column list and namespace
+    predicate preserved verbatim; two binding columns added)
+ew/__init__.py      SCHEMA_VERSION 3->4; FOSSIL_CONTRACT_VERSION v1->v2
+ew/store.py         submit_evidence takes encounter_id/encounter_run_id,
+                    pre-checks existence (typed logged refusal), persists them
+ew/service.py       _check_sfe_anchor(): shape + required evt_ event id, wired
+                    into single AND batch ingest
+                    extra="forbid" on Packet/Experiment/Claim/Evidence/
+                    RelationIn
+                    namespace field + _check_namespace + _classify()
+                    GET /api/v1/provenance/evidence/{id}          (forward)
+                    GET /api/v1/fossil/encounters/{id}/evidence   (reverse)
+                    /api/v1/fossil/contract now documents entry_hash
+                    semantics, the binding, and the corrected mapping
+                    (internal rename _classify -> _classify_encounter to avoid
+                    a collision with the new namespace helper)
+integration/fixture_harmonia_v1.json  anchors made contract-conforming; ids
+                    bumped 0001->0002 because CONTENT changed and PEW refuses
+                    to overwrite (re-registering 0001 correctly 409s)
+integration/seam_battery.py           NEW (A-J)
+tests/test_fail_closed_ingress.py     NEW (regression)
+tests/test_distributed_v3.py          synthetic anchors made v2-conforming
+docs/HARMONIA_PEW_WRITE_CONTRACT.md   NEW (the handoff)
+docs/FIRST_INTEGRATION_EVIDENCE_CONTRACT.md  superseding header + corrected
+                    identifier mapping rows
+seam/*.txt                            preserved probe/finding evidence
+
+NO SFE client was added. SFE and Proteus were not modified.
+
+--------------------------------------------------------------------------------
+5. SEAM BATTERY -- EVERY GATE (integration/seam_results.json, 12/12)
+--------------------------------------------------------------------------------
+ I  live_migration_state ......... PASS  schema_version=4, contract=v2, PK
+                                         (encounter_id, run_key), FK present
+ A  hash_semantics ............... PASS  sanctioned event entry_hash+event_id
+                                         -> 200; blob_hash 422; artifact_id
+                                         422; world_head_hash 422; bad hash
+                                         shape 422; non-evt event_id 422
+ B  evidence_to_fossil_traversal . PASS  from the evidence id alone, recovered
+                                         encounter_id, run_id, world_id,
+                                         players[], sfe_entry_hash,
+                                         sfe_event_id, sfe_event_seq
+ C  reverse_query ................ PASS  encounter -> 1 evidence row, contains
+                                         the expected id
+ D  unsupported_field_fails_closed  PASS {"PacketIn":422,"ExperimentIn":422,
+                                         "ClaimIn":422,"EvidenceIn":422,
+                                         "RelationIn":422}
+ D2 unknown_encounter_binding ..... PASS 422 unknown_fossil_encounter:
+                                         NO-SUCH-ENCOUNTER@nope; 0 rows left
+ E  duplicate_replay ............. PASS  encounter replay=duplicate_identical;
+                                         evidence replay returns the same
+                                         content-addressed id; 1 stored copy
+ F  conflict_fails_overtly ....... PASS  differing encounter -> 409 naming
+                                         "outcome"; differing world anchor 409
+ G  namespace_firewall ........... PASS  0 test/seam rows in prod fossil
+                                         namespace; prod encounters still
+                                         5452; seam evidence in evidence_prod
+                                         = 0; classification=['test']
+ G2 unknown_namespace_refused ..... PASS 422 unknown_namespace:tset
+ H  independent_read_back ........ PASS  direct SQL, never through the writing
+                                         function, shows the binding columns
+ J  contract_is_self_describing ... PASS contract defines entry_hash as
+                                         events.entry_hash and documents the
+                                         binding
+
+FRESH-CONSUMER TEST (gate J, done for real): a clean worktree of
+origin/mnemosyne/evidence-wiki-v0 @ 4cb02c733, run over the LAN with M2
+credentials:
+    python integration/seam_battery.py --host 192.168.1.202 --machine M2 \
+        --agent harmonia --no-sql
+    -> 9/9 scored PASS, all_pass true; A/G/H correctly SKIPPED (no SFE ledger
+       or DB access off-host). A skipped gate is never counted as a pass.
+
+OTHER SUITES RE-RUN ON THE FINAL CODE
+    integration/pew_battery.py ............... 15/15 PASS
+    tests/test_fail_closed_ingress.py ........  8/8 PASS
+    pooled-write requalification (invariant fired: the write path's
+      transaction lifecycle changed) .......... G17 30/30, G19 crash+replay
+                                                PASS, G21 160/160 distinct,
+                                                0 provenance failures
+    tests/test_firewall_v3.py ................ PASS (negative control tripped)
+
+--------------------------------------------------------------------------------
+6. INDEPENDENTLY VERIFIED TRAVERSAL (live, over the LAN, M2 credential)
+--------------------------------------------------------------------------------
+GET /api/v1/provenance/evidence/E-87a3eb776a36
+  evidence      E-87a3eb776a36  bound: True
+  encounter     TESTFIX-HARMONIA-ENC-0002 / run TESTFIX-RUN-0002
+  sfe           world_id TESTFIX-SFE-WORLD-0001, run_id TESTFIX-RUN-0002,
+                event_id evt_d1c585e3133da4f58554cf24,
+                entry_hash sha256:7c44ef40bee6775773ea1c365f238e056dadb864
+                747f03ab692b831a73067d60, event_seq 1
+  proteus       organism_ids ['TESTFIX-PLAYER-0002']
+  world anchor  TESTFIX-WORLD-0002, manifest sha256:20935e0287129475...
+  player anchor TESTFIX-PLAYER-0002, genome sha256:b738db98a623554...
+Gate A additionally wrote and read back an encounter anchored to a REAL live
+SFE event (SEAM-evt_3de2c28540a956b6bd29b4e3) in namespace test.
+
+--------------------------------------------------------------------------------
+7. MIGRATION EVIDENCE / PROD ISOLATION
+--------------------------------------------------------------------------------
+007 pre/post (seam/I_migration_evidence.txt), same connection, same run:
+    PRE-007   evidence 124  claims 124  fossil_encounters 11754  ev_prod 119
+    POST-007  evidence 124  claims 124  fossil_encounters 11754  ev_prod 119
+Nothing rewritten, nothing deleted, append-only preserved.
+Rollback: DROP CONSTRAINT evidence_fossil_encounter_fk; DROP COLUMN
+encounter_run_key/encounter_run_id/encounter_id; restore the prior view
+definition (retained verbatim in the migration's comment block). No data loss,
+because the columns are additive and every historical row has them NULL.
+
+Final namespace state:
+    fossil_encounters   prod 5452 | synthetic 6432 | test 38
+    prod encounter count UNCHANGED at 5452 across the whole pass
+    bound evidence visible in ew.evidence_prod ......... 0
+    evidence rows total 127, of which bound 3
+    refusals recorded in ew.write_log during this pass . 28
+
+--------------------------------------------------------------------------------
+8. FAILURES ENCOUNTERED DURING THIS PASS (kept, not summarized away)
+--------------------------------------------------------------------------------
+F1  Silent field loss on all 5 ordinary models -- reproduced deliberately
+    before any change; artifact retained (seam/D_silent_loss_BEFORE.txt),
+    including a first EvidenceIn attempt that 422'd for an unrelated vocab
+    reason and therefore did NOT test the defect until retested.
+F2  Gate G passed while admitting prod-view pollution; object_namespace had no
+    API path (section 3). Fixed; gate hardened; probe rows classified.
+F3  First seam-battery patch failed to insert the binding fields -- the anchor
+    text did not match. Caught by grep, re-applied explicitly.
+F4  Fixture and batch fixtures 409'd on re-run after their anchors changed.
+    This was CORRECT behaviour (content changed => identity must change), not
+    a bug: fixture ids were bumped 0001->0002 and batch run to
+    TESTFIX-BATCHRUN-0002 rather than overwriting history.
+F5  Internal name collision: the new namespace `_classify` shadowed the fossil
+    conflict classifier; renamed to `_classify_encounter`.
+
+--------------------------------------------------------------------------------
+9. UNRESOLVED GAPS (upstream; none closable by PEW)
+--------------------------------------------------------------------------------
+U1  Measurement definition/version for scores. SFE `measurements` holds 0 rows;
+    2/6006 candidates carry phenotype. `outcome` stays a token; no metric is
+    joinable. PRESERVED AS AN EXPLICIT GAP, not papered over.
+U2  episode_id is minted by nobody. Column exists, stays NULL. Not invented.
+U3  Proteus's own claim/evidence path (export.pew_rows) has still NEVER run
+    against the service; only the fossil + binding path is qualified.
+U4  No PEW test has run FROM M2. Harmonia's first run is the real cross-host
+    qualification; the M2 legs here originated on M1.
+U5  PEW cannot verify SFE ledger membership of an anchor (no SFE client, by
+    design). Class and shape are enforced; membership is the auditor's check.
+
+--------------------------------------------------------------------------------
+10. BRANCH / DISTRIBUTION -- ACTION NEEDED FROM THE OPERATOR
+--------------------------------------------------------------------------------
+Measured, not assumed:
+    evidence_wiki on origin/main ....... 0 entries (it does NOT exist there)
+    proteus on origin/main ............. present
+So the two halves of the integration live on different branches. Harmonia must
+NOT be told "pull main".
+
+AUTHORITATIVE FOR PEW:  origin/mnemosyne/evidence-wiki-v0 @ 4cb02c733
+    git fetch origin mnemosyne/evidence-wiki-v0
+    git checkout -b pew origin/mnemosyne/evidence-wiki-v0
+
+evidence_wiki was NOT merged into main: that is a cross-seat action affecting
+every other seat, and it is the operator's call. The instructions above work
+today without it.
+
+Repository note: F:\Prometheus was held by the Herakles seat on
+herakles/historical-collider-v0 during this pass. The work was committed there
+(0d36a07fc1c49c7e8b64a15c9a12feedb47c6f12) and cherry-picked onto the
+Mnemosyne branch through a temporary worktree, now removed. Nothing of
+Herakles's was touched.
+
+--------------------------------------------------------------------------------
+11. HARMONIA'S EXACT PROCEDURE (full text in the handoff doc)
+--------------------------------------------------------------------------------
+docs/HARMONIA_PEW_WRITE_CONTRACT.md -- base URL, auth, branch, the five
+identities that are NOT synonyms, field mapping, minimal bodies, queries,
+namespaces, duplicate/conflict semantics, expected 4xx, gaps, battery command,
+and the explicit statement that frozen Proteus specimens are AUTHORIZED while
+Proteus breeding/mutation remains NOT_QUALIFIED_AUTHORED_NONEQUILIBRIUM_
+CURRENT with Campaign 1 BLOCKED.
+
+Order (the FK makes it mandatory, not advisory):
+  1 POST /api/v1/fossil/worlds     world anchor  (manifest_hash, binding,
+                                                  seed_root, head_hash)
+  2 POST /api/v1/fossil/players    player anchor (player_id = Proteus
+                                                  organism_id, genome_hash)
+  3 POST /api/v1/fossil/encounters encounter_id = Proteus encounter_identity,
+                                   run_id = "exp_<hex>:wrk_<hex>",
+                                   sfe_event_id = evt_<hex>,
+                                   sfe_entry_hash = entry_hash OF THAT EVENT,
+                                   sfe_event_seq, world_id, players[]
+  4 POST /api/v1/packets, /claims, then /evidence with
+                                   encounter_id + encounter_run_id
+  5 GET  /api/v1/provenance/evidence/{evidence_id}   <- the whole chain back
+Practice writes carry "namespace":"test".
+
+--------------------------------------------------------------------------------
+12. REPRODUCTION
+--------------------------------------------------------------------------------
+  curl http://192.168.1.202:8377/api/v1/health
+  curl -H "Authorization: Bearer <M2 token>" -H "X-Prometheus-Machine: M2" \
+       http://192.168.1.202:8377/api/v1/fossil/contract
+  cd evidence_wiki
+  python integration/seam_battery.py                 # 12/12 on M1
+  python integration/pew_battery.py                  # 15/15 on M1
+  python tests/test_fail_closed_ingress.py           # 8/8
+  python tests/test_distributed_v3.py 40             # requalification subset
+  python tests/test_firewall_v3.py
+Off-host: add --host 192.168.1.202 --machine M2 --agent harmonia --no-sql
+
+--------------------------------------------------------------------------------
+13. FILES / ARTIFACTS
+--------------------------------------------------------------------------------
+  roles/Mnemosyne/prompts/CHARTER_WORLD_PROVENANCE_SEAM_2026-09-03.txt
+  evidence_wiki/migrations/007_world_provenance_seam.sql
+  evidence_wiki/ew/{service.py, store.py, __init__.py}
+  evidence_wiki/integration/{seam_battery.py, seam_results.json,
+                             pew_battery.py, battery_results.json,
+                             fixture_harmonia_v1.json}
+  evidence_wiki/tests/test_fail_closed_ingress.py
+  evidence_wiki/seam/{q1_hash_semantics_probe.txt, q1_shapes_and_coverage.txt,
+                      q1_pair_verification.txt, D_silent_loss_BEFORE.txt,
+                      I_migration_evidence.txt, G_fixture_hygiene.txt}
+  evidence_wiki/docs/{HARMONIA_PEW_WRITE_CONTRACT.md,
+                      FIRST_INTEGRATION_EVIDENCE_CONTRACT.md}
+  evidence_wiki/SEAM_REVIEW_PACKET_2026-09-03.txt  (this file)
+  roles/Mnemosyne/SESSION_JOURNAL_20260901.md (addendum 8)
+
+--------------------------------------------------------------------------------
+14. CLOSURE STATEMENT
+--------------------------------------------------------------------------------
+PEW_WORLD_PROVENANCE_SEAM_BOUND_AND_VERIFIED is ACCEPTED, on this basis: each
+arrow now means exactly one thing -- Proteus organism_id -> players[]; SFE
+event (event_id + entry_hash) -> the encounter's anchor; SFE exp_id:work_id ->
+run_id; (encounter_id, run_id) -> the fossil encounter; and evidence -> that
+encounter through one FK-enforced typed binding, traversable in both
+directions and demonstrated live from a fresh checkout of the branch Harmonia
+is told to use.
+
+Scope was not broadened after closure. The pass added no ontology terms, no
+SFE client, no speculative fields, and did not touch SFE or Proteus.
+
+Reviewer's bottom line: do you accept requiring sfe_event_id as the class
+pin -- given PEW structurally cannot tell an event entry_hash from a
+head_hash, and the alternative is trusting the producer to pick the right
+sha256 -- or do you want PEW to gain a read-only SFE membership check, which
+would mean giving PEW an SFE client it does not currently have?
+================================================================================
+END OF PACKET
+================================================================================

@@ -1,0 +1,46 @@
+{
+ "M1_submits": {
+  "packet": "SP-472b760d26da",
+  "claim": "C-0a47904c5623",
+  "evidence": "E-c9a5a4f51eb9"
+ },
+ "M2_reads": {
+  "claim_found": true,
+  "provenance_reaches_packet": true,
+  "packet_uri": "roles/Mnemosyne/SESSION_JOURNAL_20260415.md"
+ },
+ "M3_submits": {
+  "claim": "C-d03da007578d",
+  "relation": "R-925d37aec04e"
+ },
+ "M4_query": {
+  "both_found": true,
+  "canonical_revision": 409
+ },
+ "G13_idempotency": {
+  "same_id_on_retry": true
+ },
+ "G12_multiwriter": {
+  "distinct_ids": [
+   "E-28b734959e08"
+  ],
+  "single_record": true
+ },
+ "G15_reject_empty_quote": true,
+ "G14_parity": {
+  "identical_results": true
+ },
+ "G18_freshness": {
+  "canonical_revision": 414,
+  "derived": {
+   "cp": {
+    "revision": 403,
+    "behind": 11
+   },
+   "embedding_index": {
+    "revision": 403,
+    "behind": 11
+   }
+  }
+ }
+}

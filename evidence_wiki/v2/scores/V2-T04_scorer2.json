@@ -1,0 +1,62 @@
+[
+  {
+    "proposal": "P",
+    "D1": 4,
+    "D3": 4,
+    "D4": 4,
+    "D5": 4,
+    "D6": 4,
+    "justifications": {
+      "D1": "Carries the metadata-null prior as the hypothesis and instruments it: 'Real-field semantic similarity ranking will NOT beat a field-shuffled null ... when scored against a behavioral usefulness label', with SEM-SHUFFLE, POP, and a behavioral ground truth so the failure mode would be detected, not committed.",
+      "D3": "F1-F5 numeric ('ΔAUC(SEM-REAL - SEM-SHUFFLE) < 0.05 OR bootstrap P(Δ <= 0) >= 0.01', 'overlap ... exceeds 60%') plus a one-pass stopping rule with BLOCKED_ON_CORPUS; F2's popularity reclassifier ('reclassifies a passing F1 as \"popularity, not similarity\"') kills the similarity story independent of mechanism, cheaply in the same run.",
+      "D4": "Each summary confound has an element (POP arm for base-rate, corpus-wide shuffle 'must break the selection relation', full-rank truncation defense, circularity disqualification) plus a positive control: BEHAV 'validates that the eval harness is capable of detecting real signal at all'.",
+      "D5": "Acknowledges the settled prior ('routing on semantic labels ... was NULL') and states the new cell verbatim from its ceiling: 'names these two gaps as \"the spec for a router-grade artifact.\" A title/subject/tag recommender is exactly this untested router-grade artifact'.",
+      "D6": "Every branch is pre-committed and distinct: F2 reattributes to popularity, F4 'would be a genuinely novel finding worth its own follow-up, not a design bug', and the vacuous branch is pre-legitimated ('reported as BLOCKED_ON_CORPUS and closed')."
+    }
+  },
+  {
+    "proposal": "Q",
+    "D1": 2,
+    "D3": 4,
+    "D4": 2,
+    "D5": 2,
+    "D6": 3,
+    "justifications": {
+      "D1": "A null framing and behavioral ground truth exist ('transfer-useful\" = solver achieved >= +5pp CFR boost'), but the guard is incomplete: no popularity baseline or field-shuffle null, so an apparent similarity win could be exactly the popularity artifact the summary warns of; arms are only 'random vs. ranked'.",
+      "D3": "F1-F7 numeric ('mean CFR(B2) - mean CFR(B1) < +0.05 with 95% CI lower bound < -0.02', 'rho <= 0.10') with explicit preflight/mid-run stopping rules; F2 embedding-instability ('correlation < 0.95 ... halt') is cheap, early, and independent of the transfer mechanism.",
+      "D4": "Some confounds isolated by design ('Matched-problem paired design ... Deltas are within-problem', outcome-blind embedding freeze as F3), but the summary's popularity confound has no concrete element, so the known confounds are not each addressed.",
+      "D5": "Partially duplicative of the settled semantic-signal question with a defensible extension (solver-in-loop transfer utility: 'high-ranked recommendations ... do not correlate with actual downstream solver performance'), but the cold-start NULL prior is never acknowledged.",
+      "D6": "Falsifiers map to distinct named outcomes (INVALIDATED, EMBEDDING_UNSTABLE, THRESHOLD_MISCALIBRATION) and null/alternative both carry predictions, but a positive result stays ambiguous between similarity and the unmodeled popularity/base-rate account, so branch mapping is incomplete."
+    }
+  },
+  {
+    "proposal": "R",
+    "D1": 0,
+    "D3": 3,
+    "D4": 2,
+    "D5": 2,
+    "D6": 3,
+    "justifications": {
+      "D1": "The design walks into the summary's refuted pattern: it validates a metadata-similarity recommender against metadata ground truth expecting success ('>75% rank correlation to expert ground truth' from 'BM25 ... semantic embeddings ... domain/subdomain taxonomy, and content-derived tags'), with no behavioral features, no field-shuffle-vs-real test, no popularity control, and no acknowledgment of the prior null.",
+      "D3": "Six numeric falsifiers ('If Spearman ρ on V1 canonical queries < 0.72', 'coverage ... < 70%') and an explicit decision rule, but the stopping rule tolerates a fired falsifier ('If 0-1 fire, proceed to secondary validation') so no single falsifier kills the hypothesis, and none is independent of the similarity mechanism.",
+      "D4": "At least one confound isolated by design (per-domain stratified ρ, N1 'Shuffle statement text character-wise ... expected ρ floor ≈ 0.05', locked embedding version), but the summary's popularity and metadata-circularity confounds have no concrete element.",
+      "D5": "Partially duplicative of the semantic-metadata-signal axis the priors substantially addressed, without acknowledgment, though reproducing 'domain-expert-curated problem relations' (related_ids) is a defensible extension of scope.",
+      "D6": "Each falsifier carries a distinct verdict string ('embedding generalization gap', 'ground truth unreliable; redesign metric') including a ground-truth-invalid reading, but the success branch conflates similarity with structure/popularity and no vacuous no-signal reading is pre-committed."
+    }
+  },
+  {
+    "proposal": "S",
+    "D1": 4,
+    "D3": 4,
+    "D4": 3,
+    "D5": 4,
+    "D6": 4,
+    "justifications": {
+      "D1": "Carries metadata similarity as the expected weak/null case and instruments every leg: 'tag-Jaccard-only signal ... will not be statistically distinguishable from a within-stratum tag-shuffled null', the popularity-correlation prediction, and the deployment-realistic 'cold-start ablation ... as the headline ... number' would each detect the failure mode.",
+      "D3": "Falsifiers 1-5 numeric ('within 2 points of the pooled ... gain', 'alpha = 0.05', 'r < 0.15', 'at least 2 percentage points above the title-only baseline') plus a locked-sample stopping rule; falsifier 1's tag-fill-rate census is cheap, first, and independent of any similarity mechanism ('<10% fill, stop after reporting that finding').",
+      "D4": "Summary confounds each get elements (prominence/popularity check preregistered per LIM-002, tag-vocabulary-blind adjudicator against circularity, default-label collapse flagging, tag-shuffle random-pairing null for MI bias), but there is no positive control demonstrating the harness can detect genuine neighbor signal.",
+      "D5": "Acknowledges the closest prior and states the new cell: 'this repo has already designed (though not fully executed) almost exactly this recommender-quality test once before, on a different corpus' - this design executes it on the actual problem ledgers with new default-label and prominence controls.",
+      "D6": "Each prediction has a two-sided falsifier mapping to a distinct conclusion, falsifier 5 gives the no-value reading ('providing no detectable value at all under deployment-realistic conditions'), and the vacuous branch is pre-committed ('stop after reporting that finding rather than proceeding to build a tag axis the corpus cannot support')."
+    }
+  }
+]

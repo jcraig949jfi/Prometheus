@@ -1,0 +1,211 @@
+{
+ "generated": "2026-09-01 19:08:13",
+ "T1_known_item": {
+  "n": 82,
+  "bm25_mrr": 1.0,
+  "bm25_hits@1": 1.0
+ },
+ "T2_cross_vocabulary_holdout": {
+  "n_pairs": 10,
+  "corpus_size": 82,
+  "methods": {
+   "bm25": {
+    "mrr": 0.07791924414137412,
+    "hits@5": 0.1,
+    "hits@10": 0.3,
+    "ranks": [
+     64,
+     55,
+     13,
+     4,
+     6,
+     8,
+     31,
+     34,
+     28,
+     34
+    ]
+   },
+   "embedding": {
+    "mrr": 0.06204299796841813,
+    "hits@5": 0.1,
+    "hits@10": 0.1,
+    "ranks": [
+     68,
+     50,
+     32,
+     13,
+     3,
+     56,
+     40,
+     21,
+     30,
+     49
+    ]
+   },
+   "graph_2hop": {
+    "mrr": 0.0,
+    "hits@5": 0.0,
+    "hits@10": 0.0,
+    "ranks": [
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   },
+   "tensor_cp": {
+    "mrr": 0.022985209235209237,
+    "hits@5": 0.0,
+    "hits@10": 0.0,
+    "ranks": [
+     65,
+     27,
+     30,
+     52,
+     24,
+     42,
+     77,
+     54,
+     65,
+     80
+    ]
+   },
+   "metadata_exact": {
+    "mrr": 0.6050000000000001,
+    "hits@5": 0.9,
+    "hits@10": 1.0,
+    "ranks": [
+     2,
+     4,
+     10,
+     1,
+     1,
+     1,
+     5,
+     2,
+     1,
+     2
+    ]
+   }
+  },
+  "tensor_per_pair": [
+   {
+    "pair": "A-003->C-004",
+    "type": "SAME_MECHANISM",
+    "tensor_rank": 65
+   },
+   {
+    "pair": "A-003->B-015",
+    "type": "SAME_MECHANISM",
+    "tensor_rank": 27
+   },
+   {
+    "pair": "A-003->B-024",
+    "type": "SAME_MECHANISM",
+    "tensor_rank": 30
+   },
+   {
+    "pair": "A-024->C-024",
+    "type": "SAME_MECHANISM",
+    "tensor_rank": 52
+   },
+   {
+    "pair": "A-020->C-029",
+    "type": "SAME_MECHANISM",
+    "tensor_rank": 24
+   },
+   {
+    "pair": "A-017->B-019",
+    "type": "SAME_MECHANISM",
+    "tensor_rank": 42
+   },
+   {
+    "pair": "A-017->C-015",
+    "type": "SAME_MECHANISM",
+    "tensor_rank": 77
+   },
+   {
+    "pair": "B-012->A-023",
+    "type": "SAME_MECHANISM",
+    "tensor_rank": 54
+   },
+   {
+    "pair": "B-010->B-022",
+    "type": "SAME_MECHANISM",
+    "tensor_rank": 65
+   },
+   {
+    "pair": "A-007->C-028",
+    "type": "SAME_FAILURE_CLASS",
+    "tensor_rank": 80
+   }
+  ],
+  "leakage_note": "tensor/metadata use curated labels; text methods do not"
+ },
+ "T3_counterevidence": {
+  "checks": [
+   {
+    "claim": "A-001",
+    "expect": "A-002 QUALIFIES",
+    "found": true
+   },
+   {
+    "claim": "C-023",
+    "expect": "C-024 CORRECTS visible via relations",
+    "found": true
+   }
+  ],
+  "pass": true
+ },
+ "T5_missing_cell": {
+  "held_out_cells": 10,
+  "mean_percentile": {
+   "cp": 0.7347793805685194,
+   "tucker": 0.6329019940602459,
+   "tt": 0.36414109272615847,
+   "random": 0.5,
+   "marginal": 0.7867699052467826
+  },
+  "note": "percentile of the removed observed cell among unobserved cells; 1.0 = ranked top"
+ },
+ "T6_provenance": {
+  "n": 81,
+  "failures": [],
+  "pass": true
+ },
+ "stability_18A": {
+  "cp_seed_factor_match_cosine": [
+   0.5554935478390447,
+   0.6860528891354941,
+   0.42089901713118794,
+   0.6507043987600662
+  ],
+  "mean": 0.5782874632164483,
+  "cp_relative_error_by_rank": {
+   "2": 0.9586615874057682,
+   "4": 0.8765390280033161,
+   "6": 0.8491347844672361,
+   "8": 0.8281844057650242
+  }
+ },
+ "recovery_18B": {
+  "n_evidence_obs": 135,
+  "kmeans_k": 8,
+  "ari_vs_mechanism_labels": 0.0253075461332517,
+  "note": "mechanism mode marginalized before factorization; labels never shown to the model"
+ },
+ "contamination_G8": {
+  "derived_view_rejected_as_evidence": true
+ },
+ "rebuild_G17": {
+  "snapshot_sha_stable": true,
+  "factor_repro_sha_stable_after_delete": true
+ }
+}

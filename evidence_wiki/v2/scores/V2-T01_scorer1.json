@@ -1,0 +1,57 @@
+[
+  {
+    "proposal": "P",
+    "D1": 4, "D3": 4, "D4": 4, "D5": 3, "D6": 4,
+    "justifications": {
+      "D1": "Mutational-neighborhood divergence is a first-class axis with its own falsifier ('F4 (axis d): Dedup declared evolvability-unsafe if offspring fitness distributions differ (KS test, Holm p<0.05) for >20% of pairs') and a planted negative that 'MUST trip its designed axis; if not, run is INVALID (fail-closed)' - the known output-equality failure would be detected, not merely avoided.",
+      "D3": "Multiple numeric falsifiers plus explicit freeze/stopping ('Minimum n=30 pairs to reach verdict... report \"pair-scarcity - verdict not reached\" rather than lowering n post hoc'); F2 ('cost-unsafe if >30% of pairs show relative cost divergence >10%') is metered independently, cheap, and kills the safe-dedup claim regardless of the compositional mechanism story.",
+      "D4": "Battery-narrowness, cost, memorization, multiple-comparisons and underpower confounds each get a concrete element, plus a positive control ('Positive (literal duplicate)... Calibrates floor/instrument-noise level') and planted-negative sensitivity demonstration (F6 fail-closed).",
+      "D5": "Extension is defensible and framed ('reframed away from \"does dedup work\" toward \"under what stronger equivalence is it licensed\"'), but the design never engages the summary's core mutational-redundancy prior and states no explicit new empirical cell relative to it.",
+      "D6": "Per-axis verdicts plus composite verdict map all branches, with pre-committed vacuous readings ('report \"pair-scarcity - verdict not reached\"', F6 'entire run INVALID; no verdict issued', 'extended-probe vacuous... disclose rather than paper over')."
+    }
+  },
+  {
+    "proposal": "Q",
+    "D1": 4, "D3": 4, "D4": 4, "D5": 3, "D6": 4,
+    "justifications": {
+      "D1": "Axis (d) tests mutational neighborhoods directly with F4's KS falsifier, and the planted negative 'MUST trip divergence on the axis it was planted to violate; if it does not, the instrument is declared insensitive and the run is aborted' - the output-equality failure mode is converted into a decisive control.",
+      "D3": "F1-F6 carry numeric thresholds, the freeze order and 'minimum n=30 pairs to reach a verdict... reports \"pair-scarcity - verdict not reached\"' is an explicit stopping rule, and F2's cost-divergence gate ('>30% of pairs show relative token/VM-step cost divergence > 10%') is cheap and independent of the compositional mechanism.",
+      "D4": "Each named confound (battery-narrowness, cost blindness, memorization, multiple comparisons, single-context underpower) has a concrete element, plus positive control ('bit-for-bit copy of A_i... Expected: zero divergence') and planted-negative instrument validation (fail-closed).",
+      "D5": "'No precedent in this lineage has ever deduplicated on behavioral grounds, which is why this experiment is needed' frames a clear extension, but it never engages the summary's mutational-redundancy prior and no explicit new-cell statement relative to that prior work is made.",
+      "D6": "All F1-F6 branches yield distinct verdicts and vacuous outcomes are pre-committed ('the experiment reports \"pair-scarcity - verdict not reached\" rather than lowering n post hoc'; F6 'no safe/unsafe verdict is issued')."
+    }
+  },
+  {
+    "proposal": "R",
+    "D1": 4, "D3": 4, "D4": 3, "D5": 4, "D6": 3,
+    "justifications": {
+      "D1": "Directly implements the expected redesign: 'generate K=120 offspring via matched single mutations... MR(a,b) = Jaccard(N_K(a), N_K(b))' plus a keep-both arm ('ARM_KEEP (both members of every byte-identical pair retained)') and F1 detects the failure if present.",
+      "D3": "F1-F4 are numeric, stopping is explicit ('No interim peeking: analyze once at the pre-specified n, apply Holm correction'), and F3's canonicalization audit ('if >=1 diverges, the byte-comparison gate is declared UNRELIABLE... independent of the MR/CFR results') is cheap, early, and mechanism-independent.",
+      "D4": "Canonicalization, seeding independence, reverse-causation, identity-vs-distribution and selection-relation confounds are each isolated by a concrete element ('ARM_RANDOM... drawn independently of duplicate-pair membership'), but there is no planted positive control demonstrating the instrument detects real divergence.",
+      "D5": "Explicitly a powered superseding application naming its new cells: 'confirmed the risk is live for Foundry-adjacent consumers specifically... motivating Phase 2's composition ablation rather than treating this as a purely academic MR question' on the Foundry's own byte-identical pairs.",
+      "D6": "F1-F4 map to distinct safe/unsafe verdicts per axis, but no vacuous/no-signal interpretation is pre-committed for an ambiguous primary CI - 'Early stop is allowed only for a Phase 0 precondition failure... that is a design failure, not a result' is the only null-path reading."
+    }
+  },
+  {
+    "proposal": "S",
+    "D1": 2, "D3": 4, "D4": 2, "D5": 4, "D6": 4,
+    "justifications": {
+      "D1": "A guard exists on a different axis ('it tests whether artifact identity creates CAUSAL dependencies in the Foundry's epistemic model (knowledge-frontier, adjudication state)') and a keep-both arm (B2 g1+g2) is present, but the summary's core failure - dedup decisions ignoring mutation/transition neighborhoods - is never measured, so the guard is incomplete.",
+      "D3": "Numeric falsifiers (F1 'Jaccard... >= 0.98', F3 'Zero observations... violate falsification-monotonicity', F4 '2x' asymmetry halt) plus a fixed-n stopping rule with enumerated outcome-blind early stops; the F3 replay check is cheap and independent of the frontier-visibility mechanism.",
+      "D4": "Several internal confounds are isolated by design ('use fresh worlds (new world_ids) with empty libraries before replay'; seeded task order), but none of the summary's known confounds (phenotype-vs-affordance) are addressed by any concrete element.",
+      "D5": "The new cell is stated explicitly relative to prior work: 'this arm does NOT test policy/distribution effects (that would be redundant with Arm A)... This orthogonalizes Arm B from Arm A.'",
+      "D6": "Every branch is pre-mapped to a distinct conclusion including vacuous readings ('Report as TIMING_NOISE (valid outcome, null not rejected)'; causal-depth abort; 'F3 MONOTONICITY FAILURE... valid outcome and triggers DIRECTED_ALTERNATIVE')."
+    }
+  },
+  {
+    "proposal": "T",
+    "D1": 4, "D3": 3, "D4": 4, "D5": 4, "D6": 4,
+    "justifications": {
+      "D1": "The known failure is made the test itself, 'reusing the preregistered tau=0.50 cut from the prior Gen-1A test' with falsifiers that would detect it ('SUPPORTS H1 (dedup unsafe) if: median MR(A,B) < 0.50 AND composed-organism divergence... exceeds 2x the same-genotype noise floor for >=50% of sampled pairs').",
+      "D3": "Two-plus numeric falsifiers with an explicit stopping rule ('Fixed-n, single-pass, no interim peeking... thresholds above are hashed/frozen'), but no falsifier is both independent of the affordance/composability mechanism and cheap to evaluate early.",
+      "D4": "Seed-matching, precondition check, stratified full-inventory sampling and SE-vs-threshold discipline cover the summary's confounds, with calibration controls in both directions ('Non-duplicate control... to anchor the expected MR' and 'Same-genotype replicate control' noise floor).",
+      "D5": "States its new cell against prior work: '[REF] revealed that behavior-fingerprint deduplication is already the live admission policy... which reframed the task from \"should we start deduplicating\" to \"is an existing, unaudited policy safe\"', with the which-to-keep question explicitly scoped out as settled.",
+      "D6": "SUPPORTS / REFUTES / 'INDETERMINATE (no decision, escalate n or refine metric)' / 'VACUOUS precommitment: if the full inventory... contains fewer than 30 true byte-identical pairs... stop and report' - all outcome branches pre-committed."
+    }
+  }
+]

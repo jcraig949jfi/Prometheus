@@ -1,0 +1,171 @@
+{
+  "task": "V2-T03: new learner in a procedurally generated world; evaluate whether it reaches goal states 'better than chance', including how the comparison bar is chosen",
+  "retrieval_agent": "V2-T03-C-retrieval",
+  "canonical_revision": 838,
+  "queries": [
+    "better than chance baseline goal reaching procedurally generated world",
+    "on-policy score exposure competence common reference distribution",
+    "gate threshold must exceed measurement error",
+    "gate reachability attainable range preregistered cut",
+    "random pairing chance floor null control",
+    "procedurally generated world learner viability navigable phenotype space",
+    "control drawn from selection relation is the treatment exchangeability",
+    "invariance null asymmetric one-sided failure equivariance"
+  ],
+  "mechanisms": [
+    "chance floor ceiling not a floor",
+    "permutation null",
+    "common reference distribution",
+    "gate reachability attainable range",
+    "measurement error standard error gate"
+  ],
+  "selection_note": "10 of 34 build_pack hits selected as directly load-bearing for (a) how a 'beats chance' comparison bar is computed/calibrated for a learner reaching goal states, and (b) whether goal-states are even reachable/navigable in the substrate the learner acts in. Dropped items: duplicate/pipeline-internal findings about Ergon library retention and leak-gate mechanics, D-7/agent_d7 barrier-crossing and Lens/Incubation recursive-effect results (relevant to learners-in-worlds generally but not to chance-bar construction), and Charon/LoRA items that concern unrelated corpora. No items added beyond what search/build_pack returned.",
+  "items": [
+    {
+      "claim_id": "C-353ec1eb022a",
+      "finding": "The claim that the 57.8% action-divergence statistic sits above a ~50% chance floor whose excess is the effect size was retracted: 2p(1-p) is a ceiling, not a floor, and the excess is not an effect size.",
+      "status": "RETRACTED",
+      "claim_ceiling": "exceeding 2p(1-p) remains a sound one-sided test; the corpus does not exceed it and D is silent in both directions; non-vacuity is not navigability",
+      "agent": "Harmonia",
+      "mechanisms": ["chance_floor_calibration"],
+      "negative": true,
+      "quote": "**Status:** RETRACTED (the floor framing, the excess-as-effect-size reading, and the non-vacuity conclusion). The instrument `harmonia/diagnostics/action_divergence_floor.py` is SUPERSEDED, banner added, code retained.\n**Mechanism:** Two independent defects that compound.\n- **(a) The bound points the other way.** With per-state success probabilities `q_s`, an irrelevant action gives `D = E[2 q_s (1-q_s)] <= 2 E[q_s](1-E[q_s]) = 2p(1-p)` by Jensen. `2p(1-p)` is a **ceiling** on action-irrelevant divergence, not a floor; state heterogeneity always pushes `D` down.",
+      "metrics": "corrected input: 41.1% over 932,852 both-action parents, 0.085 BELOW the ceiling; identity D - 2p(1-p) = 2(E[d_s^2] - Var(q_s)) verified to Monte-Carlo error",
+      "source_packet": "harmonia/memory/retraction_registry.md",
+      "corrections_contradictions": [],
+      "why_retrieved": "hybrid search: 'invariance null asymmetric one-sided failure equivariance'"
+    },
+    {
+      "claim_id": "C-82fe472469ca",
+      "finding": "A one-line non-LLM heuristic (count of the five integers coprime to 30) scores 0.5225 on fresh unseen tasks while the free-host solver scores 0.4794, so the probe band's attainable-without-reasoning floor is ~0.52, not the 0.25 chance floor the [0.35, 0.60] band was reasoned against.",
+      "status": "OBSERVED",
+      "claim_ceiling": "If neither proposed repair is adopted, any Delta_carry from this family must be reported with the heuristic floor stamped beside it, and a positive result cannot distinguish metabolization from method-priming; the F-generic control arm is itself confounded by envelope shape (separable by shape alone, no classifier required).",
+      "agent": "Ergon",
+      "mechanisms": ["chance_floor_calibration"],
+      "negative": true,
+      "quote": "\"Count how many of the five numbers are not divisible by 2, 3, or 5\" scores 0.5225 on unseen tasks. The solver scores 0.4794.** A one-line arithmetic filter, with no primality reasoning of any kind, beats the model by ~4pp — and it generalizes, so it is not a lookup table memorizing this manifest.",
+      "metrics": "coprime-to-30 heuristic CV 0.5700, fresh-seed 0.5225; solver 0.4794; chance 0.2500; sized confound ~+4pp, half the +8pp the probe is powered for",
+      "source_packet": "ergon/probe/FINDING_heuristic_floor_2026-08-24.md",
+      "corrections_contradictions": [],
+      "why_retrieved": "hybrid search: 'random pairing chance floor null control'"
+    },
+    {
+      "claim_id": "C-750f2b6fc3ac",
+      "finding": "A state-conditioned ranking gain of D = +0.24395 at seventy times its own standard error was declared VACUOUS and not reportable because the shuffled-label null scored 0.5903 against chance 0.5029, failing to perturb the axis the statistic varies on.",
+      "status": "NOT_ESTABLISHED",
+      "claim_ceiling": "No claim whatever is made about whether the substrate has navigational information — the pass establishes only that the harness cannot currently answer it; no accuracy figure from this pass should be cited; 12 of 165 batches.",
+      "agent": "Aporia",
+      "mechanisms": ["null_model_discipline"],
+      "negative": true,
+      "quote": "D clears its materiality bar by seventy-fold. Reported naively this reads as *the substrate has powerful state-dependent navigational information*. **Two of four controls failed, so it is not reportable.** ## Control C3 failed: the shuffled-label null scored 0.5903 against chance 0.5029",
+      "metrics": "D = M4 - M1 = +0.24395; paired McNemar SE 0.00178; shuffled-label null 0.5903 vs chance 0.5029 (more than twenty SE above); n = 132,009; verdict VACUOUS on the preregistered branch (C = 2 of 4), terminal REDESIGN",
+      "source_packet": "aporia/docs/CYCLE_146J_OPERATOR_RANKING_2026-08-24.md",
+      "corrections_contradictions": [],
+      "why_retrieved": "hybrid search: 'random pairing chance floor null control'"
+    },
+    {
+      "claim_id": "C-31e6f516f20b",
+      "finding": "Independent re-evaluation resurrected 0 of 92 historical kills with 176 of 176 records representable, killing the router-thesis explanation for the program's nulls, and the non-promoted survivors re-evaluate TRUE only at 45.9% against a 46.1% random-pairing chance floor.",
+      "status": "REFUTED",
+      "claim_ceiling": "A zero on a finite sample is a ceiling, not a certainty; kills the router explanation for the Theseus substrate's 255K REJECTED population — what dies is the generalization; only S3_random supports unbiased extrapolation.",
+      "agent": "Harmonia",
+      "mechanisms": ["chance_floor_calibration", "null_model_discipline"],
+      "negative": true,
+      "quote": "**Retrodiction 1: 0 of 92 historical kills resurrect. 176 of 176 records are representable. The router thesis does not explain the program's nulls.** **And the survivors are worse news than the kills.** 84/84 non-promoted records that passed the content check re-evaluate TRUE — but at **45.9% observed** ",
+      "metrics": "0/92 pooled (95% upper bound 3.3% by rule of three), 0/30 on the unbiased stratum (upper bound 10.0%); representability 176/176; fidelity control 0 disagreements; pooled 45.9% observed vs 46.1% null mean — AT CHANCE",
+      "source_packet": "roles/Harmonia/RETRODICTIONS_20260819_harmonia_C.md",
+      "corrections_contradictions": [],
+      "why_retrieved": "hybrid search: 'better than chance baseline goal reaching procedurally generated world'"
+    },
+    {
+      "claim_id": "C-b3b4b28a3a62",
+      "finding": "The cycle 004 verdict CONTEXTUAL_BASIS_REQUIRED was demoted to CHALLENGED-AND-NOT-SUSTAINED: under a common reference distribution of decision states the circuit main effect dominates (0.8528) and circuit x world collapses to 0.1021, so much of what was called contextual competence was support mismatch (exposure, not competence).",
+      "status": "RETRACTED",
+      "claim_ceiling": "Cycle 004's 'what survives is rank, not magnitude' is wrong as applied to worlds (cross-world rank does not survive; half the real world pairs negatively correlated); the sharper finding: WHERE a circuit is wrong is world-conditional, but how much its errors cost where competent play goes is largely circuit-determined; r_i(W) is NOT built and the world-property registry is deferred",
+      "agent": "Ludus",
+      "mechanisms": ["instrument_tautology"],
+      "negative": true,
+      "quote": "**Under a common reference distribution of decision states, the circuit main effect dominates (0.8528) and `circuit x world` collapses to 0.1021.** Cycle 004 measured 0.2126 / 0.4374 on the same worlds. The review was right: a large part of what was called contextual competence was **support mismatch**",
+      "metrics": "reference-occupancy decomposition (real worlds): circuit 0.8528, world 0.0451, circuit x world 0.1021 vs cycle 004 on-policy 0.2126 / 0.0696 / 0.4374; the three weightings disagree violently; cross-world rank: real mean tau +0.1079 with 3 of 6 pairs negative, FOUNDRY +0.7981",
+      "source_packet": "roles/Ludus/CYCLE_005_verdict_demotion.md",
+      "corrections_contradictions": [
+        {"relation_type": "CORRECTS", "src_id": "C-b3b4b28a3a62", "dst_id": "C-6f69aafca4e1", "epistemic_class": "OBSERVED"}
+      ],
+      "why_retrieved": "hybrid search: 'on-policy score exposure competence common reference distribution'"
+    },
+    {
+      "claim_id": "C-eb3e53602cce",
+      "finding": "Free validity and rich viable navigation did not co-occur in any of D-3's four bases; the two properties traded off cleanly across the family, and S4 showed a phenotype space can be enormous and still be unnavigable.",
+      "status": "OBSERVED",
+      "claim_ceiling": "S4 is the sharpest single lesson: 'A phenotype space can be enormous and still be unnavigable' — every mutation lands in a fresh phenotype, so nothing accumulates and no target can be re-found; whether a physics exists that is both validity-closed and family-broad is the successor's sharper question",
+      "agent": "Aporia",
+      "mechanisms": ["accessibility_geometry", "latent_affordance"],
+      "negative": true,
+      "quote": "**Free validity and rich viable navigation did not co-occur in any of the four bases.** The two properties traded off cleanly across the family:",
+      "metrics": "P(valid|r=1)/best M0 coverage: S1 1.000/0.533, S2 1.000/0.400, S3 0.440/0.317, S4 1.000/0.100; S3 viability collapses 0.440 -> 0.222 -> 0.128 -> 0.045 -> 0.022 across r = 1,2,3,5,8; S4: 6,019 census classes, giant component 0.24, zero mid/far-stratum hits",
+      "source_packet": "agent_d3_blind/VERDICT-PHASE1.md",
+      "corrections_contradictions": [],
+      "why_retrieved": "hybrid search: 'procedurally generated world learner viability navigable phenotype space'"
+    },
+    {
+      "claim_id": "C-45bd5ff28211",
+      "finding": "S3_REWRITE was killed as a learning substrate despite the highest validity/viability (0.996) and largest phenotype mass of the four substrates: its accessibility geometry is dead, with far-stratum hits 0.00 for every navigator and oracle far episode-reach 0.00 across ~1.5M metered evaluations.",
+      "status": "REFUTED",
+      "claim_ceiling": "Validity is a coordinate, not the objective; diversity is a coordinate, not the objective. S3 maximized both and failed the only property that matters for a learning substrate",
+      "agent": "Aporia",
+      "mechanisms": ["accessibility_geometry", "latent_affordance"],
+      "negative": true,
+      "quote": "with a dead accessibility geometry: far-stratum hits 0.00 for every navigator, and oracle far episode-reach 0.00 — across ~1.5M metered evaluations, not one observed viable path led from any episode's starts into any far target's ball.",
+      "metrics": "ACCESSIBILITY_FRAGMENTED; viability 0.996 [0.995, 0.997]; 11,717 combined phenotype classes, unseen mass 0.99; far-stratum hits 0.00 for every navigator; oracle far episode-reach 0.00 over ~1.5M metered evaluations",
+      "source_packet": "agent_d4_blind/VERDICT-PHASE1.md",
+      "corrections_contradictions": [],
+      "why_retrieved": "hybrid search: 'procedurally generated world learner viability navigable phenotype space'"
+    },
+    {
+      "claim_id": "C-98702f29ab81",
+      "finding": "For INSERT-complete mutation physics, reachability equals expressibility (R == E): every expressible witness is reachable by an explicit edge-checked path, so reachability can never be the failure mode and every failure on an expressible task is a findability failure.",
+      "status": "ESTABLISHED",
+      "claim_ceiling": "A successor wanting a live reachability axis needs physics without universal single-edit insertion; validated here only on ablated-physics synthetic cases",
+      "agent": "Aporia",
+      "mechanisms": ["accessibility_geometry", "latent_affordance"],
+      "negative": false,
+      "quote": "P1 PASS (structural): R == E theorem — INSERT-complete physics makes every expressible witness reachable by an explicit edge-checked path (<= 26 steps). Reachability carries no information in this generation; every failure on an expressible task is a findability failure. DISCLOSED.",
+      "metrics": "explicit edge-checked paths <= 26 steps for all 78 tasks; P0 78/78 constructive witnesses",
+      "source_packet": "agent_d5_blind/VERDICT.md",
+      "corrections_contradictions": [
+        {"relation_type": "QUALIFIES", "src_id": "C-98702f29ab81", "dst_id": "C-3d12c440f087", "epistemic_class": "OBSERVED"}
+      ],
+      "why_retrieved": "hybrid search: 'gate reachability attainable range preregistered cut'"
+    },
+    {
+      "claim_id": "C-305b3854fef0",
+      "finding": "D-3's preregistered taxonomy-neutrality gate G6 is near-tautological: each frozen edit operator maps onto exactly one human family, so the measured family distribution is a relabelling of the experimenter's own uniform sampling over operators, and whatever G6 measured, it was not the substrate.",
+      "status": "OBSERVED",
+      "claim_ceiling": "G6's aggregated form additionally conflates operator bias with composition depth (splice degenerates to catch-all at composed radii); a real test must derive family assignment from behavioural parent-child relations with operator identity held out; also G4 is vacuous wherever validity is total, and G3 rewards the pathology G8 punishes",
+      "agent": "Aporia",
+      "mechanisms": ["instrument_tautology"],
+      "negative": true,
+      "quote": "**A taxonomy-neutrality gate built from a classifier over the mutation operator's output shapes cannot distinguish \"the physics does not privilege human categories\" from \"I sampled my six edit operators uniformly, and each one is a human category.\"** Whatever G6 measured, it was not the substrate.",
+      "metrics": "operator->family confusion on S2/S3/S4: E-DELETE->delete 1.00, E-SUBST->relabel 0.98-1.00, E-DUPBLOCK->duplication 0.97-1.00, E-TRANSPOSE->permutation 0.86-0.89, E-SPLICE->splice 0.85-0.93; on S1, E-SWAP produced an identical token string in 100% of 806 sampled draws (a dead operator undetected before freeze)",
+      "source_packet": "agent_d3_blind/VERDICT-PHASE1.md",
+      "corrections_contradictions": [
+        {"relation_type": "QUALIFIES", "src_id": "C-305b3854fef0", "dst_id": "C-5a1e687671e3", "epistemic_class": "OBSERVED"}
+      ],
+      "why_retrieved": "hybrid search: 'control drawn from selection relation is the treatment exchangeability'"
+    },
+    {
+      "claim_id": "C-b5c1a85cca8b",
+      "finding": "D-4 Phase 1 established accessibility geometry on 2 of 4 substrates (S4_MEM robust, S2_STACK marginal): under the frozen physics, executable behavioral change forms a diverse, reproducibly navigable geometry under multiple generic history-free search processes without single-mechanism or encoding privilege.",
+      "status": "ESTABLISHED",
+      "claim_ceiling": "Does NOT establish AGI, intelligence, understanding, autonomous diagnosis, human-independent cognition, elimination of human priors, or open-ended evolution; scoped to two frozen substrates under a 1,200-evaluation budget, 8 frozen probes, d1 <= 0.10 hit ball; S1_REG -> NAVIGATION_FAILURE (far stratum dead: N2 0.00 vs gate 0.10); S4 is the load-bearing basis",
+      "agent": "Aporia",
+      "mechanisms": ["accessibility_geometry"],
+      "negative": false,
+      "quote": "For S4_MEM (and, with the two disclosures, S2_STACK): \"Under the frozen computational physics, executable behavioral change forms a substantially diverse, reproducibly navigable accessibility geometry under multiple generic history-free search processes, without evidence that navigation is dominated\" ",
+      "metrics": "ACCESSIBILITY_GEOMETRY_ESTABLISHED: S2_STACK, S4_MEM (2 of 4). S4_MEM: viability 0.593 [0.583, 0.602]; N2 pooled 0.522 CI [0.38, 0.67] clearing the 0.25 gate; far stratum N2 0.53; re-findability 0.69-0.71; worst privilege ablation z = 0.77",
+      "source_packet": "agent_d4_blind/VERDICT-PHASE1.md",
+      "corrections_contradictions": [],
+      "why_retrieved": "hybrid search: 'procedurally generated world learner viability navigable phenotype space'"
+    }
+  ]
+}

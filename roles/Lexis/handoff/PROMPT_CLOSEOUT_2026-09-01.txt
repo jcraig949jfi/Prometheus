@@ -1,0 +1,271 @@
+AUTHORITATIVE PROMPT -- committed verbatim at issuance, 2026-09-01.
+This file wins over any later summary or paraphrase of it. Issued by James to
+the Lexis seat. The sha256 of the body (every byte after the marker line) is
+recorded in the commit message and in roles/Lexis/handoff/LEXIS_G7_HANDOFF.md.
+---8<--- BODY ---8<---
+LEXIS — CLOSEOUT / CONSUMER HANDOFF BLOCK
+
+You have completed the G7 authorship-change measurement. The result is valuable, but this is not authorization for another open-ended Lexis research cycle.
+
+Your mandate now is to **mop up the remaining work, make the result consumable by downstream agents, and then stop**.
+
+The governing principle is:
+
+> No more validation for validation’s sake. A Lexis artifact must now either enter a live consumer and improve something measurable, or remain a preserved fossil until a consumer exists.
+
+## 1. Freeze the current scientific claims
+
+Treat the existing G7 result as the record of evidence.
+
+Preserve, without inflating:
+
+* Apollo home ceiling: 100/120 = 0.8333.
+* Charon ceiling: 2/42 = 0.0476.
+* Charon decomposition: dS = 0, dE = 40/42.
+* 15/42 tasks completely unrecognised.
+* 19/42 tasks reaching only number extraction.
+* 34/42 therefore failing before meaningful capability evaluation.
+* `subtract + value-match`:
+
+  * each primitive alone: +0;
+  * together: +4/6 on Charon `all_but_n`;
+  * survives all 24 candidate permutations;
+  * primitives predate the blind battery;
+  * also converts two abstentions into wrong guesses.
+
+The pair may be described as:
+
+> MEASURED ACROSS TWO AUTHORS / ONE INDEPENDENT AUTHORSHIP CHANGE.
+
+Do not describe it as generally transferable, generally useful, or promoted.
+
+Do not redesign anything against the now-spent Charon battery.
+
+## 2. Produce a clean downstream handoff for the interface pair
+
+Package the frozen:
+
+* `lexis_op_subtract`
+* `lexis_score_by_value_match__g`
+
+as a **quarantined candidate bundle**, preserving their exact frozen implementations and provenance.
+
+The handoff must specify:
+
+* source commits;
+* pre-battery timestamps;
+* required input state;
+* output semantics;
+* failure modes;
+* Charon +4 correct / +2 wrong behavior;
+* permutation robustness;
+* where each primitive alone fails;
+* why the pair is complementary;
+* explicit prohibition on claiming admission or promotion.
+
+Do not modify Apollo's production registry unless separately authorized.
+
+The goal is to make the object trivial for a downstream consumer to import and test without Lexis becoming its own deployment authority.
+
+## 3. Convert G7 into a state-injection test fixture
+
+The highest-value result from G7 is not merely the pair.
+
+It is the observation that the Charon distribution largely fails **before the existing reasoning substrate is exercised**.
+
+Produce a machine-readable fixture for the downstream Apollo/state-injection experiment.
+
+For each of the 42 Charon tasks, record at minimum:
+
+* task ID;
+* category;
+* correct answer;
+* baseline recognition state;
+* which parser(s), if any, fire;
+* whether only `parse_numbers` fires;
+* whether the task is completely unrecognised;
+* baseline reachable closure;
+* baseline answer outcome;
+* dE/dS classification;
+* candidate ordering information needed for robustness checks.
+
+For the 34 tasks that do not reach a meaningful semantic representation, identify the semantic state that a state-injection experiment would need to provide **without implementing a task-specific parser**.
+
+This is a diagnostic specification, not a new solver.
+
+The downstream question must be made executable:
+
+> If the surface layer is bypassed and the correct semantic state is injected, can the existing substrate solve the task?
+
+That experiment should distinguish:
+
+A. surface/representation failure;
+B. reasoning/capability failure;
+C. readout/answer-target failure.
+
+Pay particular attention to `numeric_comparison`, where Charon's candidate representation differs from Apollo's home assumptions.
+
+Do not run a large new capability campaign unless explicitly assigned. Your job is to make the counterfactual well-specified and reproducible.
+
+## 4. Define a consumer-level acceptance test for the pair
+
+The existing Lexis measurements primarily quantify reach/ceiling.
+
+That is insufficient for admission because the pair turns two Charon abstentions into wrong guesses.
+
+Define a downstream acceptance contract that distinguishes:
+
+* CORRECT
+* ABSTAIN
+* WRONG
+
+Do not silently treat increased answer rate as increased utility.
+
+At minimum report the pair under several explicit loss functions, including:
+
+* correct +1, abstain 0, wrong -1;
+* correct +1, abstain 0, wrong -2;
+* a fail-closed scientific regime where unsupported wrong answers are treated as substantially worse than abstention.
+
+The acceptance test should answer:
+
+> Does admitting the frozen pair improve the consumer's held-out objective under its actual error cost?
+
+If the answer depends on the wrong-answer penalty, state the break-even point exactly.
+
+Lexis must not choose the final loss function for Apollo or another consumer. Define the measurement interface; let the consumer own its utility function.
+
+## 5. Establish the minimum handoff/admission protocol
+
+Write the smallest rigorous protocol by which a Lexis-certified artifact can be offered to another seat.
+
+The protocol should separate:
+
+1. DISCOVERY — candidate exists.
+2. LEXIS MEASUREMENT — deterministic evidence and known failures.
+3. QUARANTINE — frozen artifact available but not active.
+4. CONSUMER TRIAL — downstream system evaluates it under its own objective.
+5. ADMISSION or REJECTION — owned by the consumer / operator.
+6. POST-ADMISSION MONITORING — regression/failure accounting if admitted.
+
+Make provenance and negative evidence first-class.
+
+A rejected artifact must remain useful as a fossil rather than disappearing.
+
+Do not build an elaborate framework. Prefer the smallest interoperable artifact/manifest that another agent can actually consume.
+
+## 6. Do NOT commission another blind battery yet
+
+Backlog item 12 is deferred.
+
+Do not:
+
+* ask Charon for another battery;
+* construct another Lexis-authored battery;
+* ask Apollo for one;
+* recruit another author;
+* generate synthetic "blind" tasks;
+* perform post-hoc primitive development against Charon;
+* continue STEP-3 bundle search.
+
+A second independent author becomes justified only after a live downstream consumer demonstrates that further generalization evidence would affect an admission, rejection, or design decision.
+
+Until then it is measurement without metabolism.
+
+## 7. Do not expand the primitive vocabulary
+
+No new:
+
+* complement primitive;
+* polarity primitive;
+* parser patch;
+* Charon-specific readout;
+* bundle search;
+* scorer designed from observed misses.
+
+The two complement failures are preserved negative evidence.
+
+They may motivate a future independently specified experiment, but Lexis must not repair them after exposure.
+
+## 8. Required closeout artifacts
+
+Produce and commit:
+
+1. A concise `LEXIS_G7_HANDOFF.md` containing:
+
+   * frozen claims;
+   * negative evidence;
+   * exact limits of inference;
+   * consumer instructions.
+
+2. A machine-readable manifest for the frozen interface pair.
+
+3. A machine-readable state-injection fixture derived from the 42-task G7 measurement.
+
+4. A deterministic consumer-utility evaluator supporting correct / abstain / wrong costs.
+
+5. A minimal proposed Lexis → consumer admission protocol.
+
+6. Updated `ROLE.md` marking:
+
+   * G7 complete;
+   * Charon battery spent;
+   * second blind author DEFERRED;
+   * further bundle search BLOCKED pending consumer evidence;
+   * Lexis returned to idle after handoff unless new downstream evidence reopens the role.
+
+7. Reproduction commands and tests sufficient for another agent to verify all of the above without model judgment.
+
+## 9. Final report
+
+Return a compact closeout packet answering exactly:
+
+### A. What did Lexis produce that another agent can consume?
+
+List concrete files/interfaces, not concepts.
+
+### B. Who is the intended first consumer?
+
+Prefer the Apollo/state-injection lane if it still exists in the live repo.
+
+If another current consumer is clearly better, identify it and justify the substitution from repo evidence.
+
+### C. What experiment should the consumer run?
+
+State the falsifiable experiment and possible outcomes.
+
+### D. What result would justify waking Lexis again?
+
+Specify explicit reopening criteria.
+
+Examples:
+
+* consumer gains materially from a Lexis artifact;
+* consumer encounters an admission ambiguity Lexis gates can resolve;
+* generalization uncertainty becomes the blocker to deployment;
+* a new independent battery already exists for reasons unrelated to Lexis.
+
+### E. What result would keep Lexis idle?
+
+Explicitly include:
+
+* no consumer;
+* consumer rejects the pair;
+* improvement disappears under realistic wrong-answer costs;
+* state injection reveals a deeper capability failure unrelated to Lexis's interface work.
+
+### F. Did you discover any hidden dependency that makes this handoff non-consumable?
+
+If yes, fix only the minimum plumbing required for consumption or document the blocker. Do not turn the blocker into a new research program.
+
+## STOP CONDITION
+
+When the handoff artifacts reproduce and a downstream agent can consume them, **stop**.
+
+Do not interpret spare time or available tokens as authorization to continue exploring.
+
+The objective of this block is not to make Lexis more sophisticated.
+
+The objective is to determine whether anything Lexis has already produced can enter Prometheus's metabolism.
+
+If it cannot yet be consumed, preserve it cleanly and go idle.

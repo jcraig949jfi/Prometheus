@@ -1,0 +1,77 @@
+[
+  {
+    "proposal": "P",
+    "D1": 4,
+    "D3": 4,
+    "D4": 4,
+    "D5": 2,
+    "D6": 4,
+    "justifications": {
+      "D1": "Multi-axis divergence measurement incl. 'Axis (d) - mutational neighborhood ... Compare offspring fitness distributions (KS)' plus 'Planted negative ... MUST trip its designed axis; if not, run is INVALID' - the design would detect the failure mode of output-equality dedup.",
+      "D3": "F1-F4 carry numeric thresholds plus a freeze-order stopping rule ('Minimum n=30 pairs to reach verdict'), and 'F5 (axis e, hard veto): ANY pair with n_unreconstructible_edges > 0 ... no threshold to tune' is mechanism-independent and cheap (binary structural check).",
+      "D4": "Confounds each get a concrete element ('Extended probe M=2000 stratified', 'Holm-corrected jointly', 'K=20 varied contexts') plus a positive control: 'Positive (literal duplicate) ... Calibrates floor/instrument-noise level' and the planted negative proving the instrument can detect signal.",
+      "D5": "Axis (d) re-measures mutational neighborhoods the priors already settled (77% non-redundant) without citing that finding - only 'ERGON GEN-1/1B MUT_REDUNDANT' is weighed - so partially duplicative, though the cost/composition/provenance axes are a defensible extension.",
+      "D6": "Branches are pre-committed including vacuous readings: 'report \"pair-scarcity - verdict not reached\" rather than lowering n post hoc', 'Extended-probe vacuous ... disclose rather than paper over', and per-axis verdicts F1-F6 each map to a distinct conclusion."
+    }
+  },
+  {
+    "proposal": "Q",
+    "D1": 4,
+    "D3": 4,
+    "D4": 4,
+    "D5": 2,
+    "D6": 4,
+    "justifications": {
+      "D1": "Design directly measures the neighborhoods the summary demands: 'Axis (d) - mutational neighborhood. Apply the frozen M0c-style mutation operators ... compare the resulting offspring fitness distributions (KS test)' with a planted negative that 'MUST trip divergence on the axis it was planted to violate'.",
+      "D3": "F1-F4 numeric + freeze-order stopping rule ('Minimum n=30 pairs to reach a verdict'), and 'F5 (axis e, hard veto) ... no threshold to tune' plus 'F6 ... run is INVALID' are mechanism-independent, cheap, and checked before pair-level data is read.",
+      "D4": "Every named confound has a concrete element ('M=2000 extended/held-out probe, stratified', 'Holm-corrected jointly', 'K=20 varied host contexts') plus 'Positive control (literal duplicate) ... Calibrates the floor' and the fail-closed planted-negative sensitivity check.",
+      "D5": "The mutational-neighborhood axis re-tests what the priors settled, and P4 even predicts 'the weakest divergence of the four axes' against that prior, without citing it (only the ERGON MUT_REDUNDANT retention result is weighed) - partially duplicative with a defensible multi-axis extension.",
+      "D6": "'a global \"always safe to dedup on battery match alone\" claim ... is explicitly disclaimed regardless of outcome', pair-scarcity reports 'verdict not reached', and F1-F6 each map an outcome branch to a distinct conclusion including a vacuous extended-probe reading."
+    }
+  },
+  {
+    "proposal": "R",
+    "D1": 4,
+    "D3": 4,
+    "D4": 3,
+    "D5": 4,
+    "D6": 4,
+    "justifications": {
+      "D1": "Directly rebuilds the dedup decision on neighborhoods and a keep-both arm: 'Phase 1 - Mutational Redundancy (MR) test ... MR(a,b) = Jaccard(N_K(a), N_K(b))' and 'ARM_KEEP (both members ... retained) and ARM_DEDUP' - the failure mode is converted into a measured contrast.",
+      "D3": "F1 (surviving fraction >= 0.50), F2 (90% CI excludes harm > MDE), F4 numeric + 'No interim peeking: analyze once at the pre-specified n'; F3's canonicalization audit ('if >= 1 diverges, the gate is declared UNRELIABLE') is independent of the MR/diversity mechanism and cheap in Phase 0.",
+      "D4": "Each known confound has a concrete element ('Phase 0b directly tests for this on the Foundry's own gate', matched-seed streams, matched draw-count reads, distributional-not-identity framing) but no planted positive control demonstrating the instrument detects real divergence.",
+      "D5": "Explicitly acknowledges and supersedes: 'adopted the Gen-1B MR methodology ... as Phase 1 verbatim' while naming the new cell - 'confirmed the risk is live for Foundry-adjacent consumers specifically ... motivating Phase 2's composition ablation rather than treating this as a purely academic MR question'.",
+      "D6": "F1-F4 give independent per-axis verdicts, Phase 0 failure is pre-read as 'a design failure, not a result', small-corpus branch is pre-committed as 'instrument calibration' with real-corpus replication required, and the mediation question is explicitly declined in advance."
+    }
+  },
+  {
+    "proposal": "S",
+    "D1": 4,
+    "D3": 3,
+    "D4": 4,
+    "D5": 4,
+    "D6": 4,
+    "justifications": {
+      "D1": "Redesigns dedup safety around neighborhoods with native operators: 'apply K matched, identically-seeded mutation/composition operators ... Compute MR(a,b) = Jaccard' plus the composition substitution test - divergence between 'duplicates' is directly detected, not assumed away.",
+      "D3": "Two-sided numeric falsifiers ('SUPPORTS H1 ... median MR(A,B) < 0.50 AND ... >= 50%'; 'REFUTES ... >= 0.70 AND ... < 20%') plus 'Fixed-n, single-pass, no interim peeking' stopping rule; no falsifier is both mechanism-independent and an early hypothesis-killer (VACUOUS is a scarcity stop).",
+      "D4": "Known confounds each addressed ('Identical seeds across the A-side and B-side', precondition check before any statistic, stratified full-inventory sampling, PROXY_EVIDENCE flag) plus a positive-signal anchor: 'Non-duplicate control ... to anchor the \"expected\" MR and edit-distance distribution'.",
+      "D5": "Acknowledges the settled prior and names its new cell: the prior 'revealed that behavior-fingerprint deduplication is *already* the live admission policy ... which reframed the task from \"should we start deduplicating\" to \"is an existing, unaudited policy safe\"', and scopes out the settled which-to-keep question.",
+      "D6": "Outcome space fully pre-committed: SUPPORTS / REFUTES / 'INDETERMINATE (no decision, escalate n or refine metric)' / 'VACUOUS precommitment: if the full inventory ... contains fewer than 30 true byte-identical pairs, stop and report' - no branch is wasted."
+    }
+  },
+  {
+    "proposal": "T",
+    "D1": 2,
+    "D3": 3,
+    "D4": 2,
+    "D5": 4,
+    "D6": 4,
+    "justifications": {
+      "D1": "Tests dedup consequences only at the ledger level ('the knowledge frontier reconstructed by the Foundry's F10 semantics remains MONOTONE, TRANSITIVE, and COMPLETE') - a guard against discard harm exists but never compares mutation/transition neighborhoods or per-consumer equivalence, so it is incomplete.",
+      "D3": "Numeric falsifiers exist ('F1 ... Jaccard ... >= 0.98', 'F3 ... Zero observations ... violate falsification-monotonicity') plus a fixed-n stopping rule with outcome-blind early stops, but no falsifier is independent of the causal-dependency mechanism story.",
+      "D4": "Several design isolations ('Seeded task order: both arms use identical seeded task generators', F4 selection-bias gate) but the summary's confounds - output-equality masking mutational-affordance differences - are not addressed by any concrete element.",
+      "D5": "Clearly new question with the new cell stated: 'this arm does NOT test policy/distribution effects ... Instead, it tests whether artifact identity creates CAUSAL dependencies in the Foundry's epistemic model ... This orthogonalizes Arm B from Arm A'.",
+      "D6": "Branches pre-committed including a no-signal reading: 'this is a **measurement artifact** ... Report as TIMING_NOISE (valid outcome, null not rejected)', F3 silent breach 'triggers DIRECTED_ALTERNATIVE', and insufficient causal depth aborts before evidence."
+    }
+  }
+]

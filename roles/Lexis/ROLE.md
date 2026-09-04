@@ -3,6 +3,10 @@
 **Role:** the vocabulary seat — *own the question of how Prometheus's operator menu grows, as a
 product decision with pre-committed gates, not as a research interest.*
 **Status:** **v1, proposed. Not ratified, not registered.** §8 lists what needs James.
+**2026-09-01 — IDLE AFTER CONSUMER HANDOFF.** G7 complete; Charon's battery spent; second blind
+author DEFERRED; further bundle search BLOCKED pending consumer evidence. Everything consumable is
+in `roles/Lexis/handoff/` (see `LEXIS_G7_HANDOFF.md`, which also states the reopening criteria).
+Governing prompt: `handoff/PROMPT_CLOSEOUT_2026-09-01.txt` (authoritative, hashed at issuance).
 **Agent:** Claude Code (Opus 5). **Machine:** *unassigned* — see §8.
 **Named for:** λέξις — *diction, the vocabulary available for saying things*. In the program's
 conceptual-Greek namespace alongside Aporia (impasse), Techne (craft), Ergon (work), Noesis
@@ -118,6 +122,21 @@ Full record: `SESSION_2026-08-25.md`. Notes: `notes/G0_FORGE_RATCHET_2026-08-25.
   `parse_comparison` (home accuracy 1.000, fires 0/6 on Charon's comparisons). The correct
   sentence about `T_home` is: its 83.33% *solved* was authorship-bound; its 16.67% ΔE is a lower
   bound.
+- **The pair, dropped into the production organism, REGRESSES the home battery [M, 2026-09-01,
+  closeout].** Reach and ceiling count answers, not errors. At organism level (`handoff/
+  consumer_utility.py`): the compute primitive alone flips **9** home synth `two_stage_count`
+  tasks CORRECT→WRONG when placed after the transformers — a **write-write hazard on the reused
+  `max_value` slot** with `op_aggregate_quantities`, which the primitive's own docstring calls a
+  deliberate choice. A `compute_first` placement orders around it (+5, 0 wrong on the seed-0
+  draw). On Charon the organism-level count is **4 correct / 3 wrong**, not 2: task 11
+  (`240 − 45 = 195`, a Charon distractor) is the third. Break-even wrong-answer penalty on Charon
+  is exactly **4/3**: the pair helps under (1, 0, −1), hurts under (1, 0, −2) and any fail-closed
+  regime. The ceiling did not show any of this because the BFS reports the best program in the
+  closure, which orders around the hazard.
+- **`T_home` is not one object [M, 2026-09-01].** Its `synth` subset (30 of 120 tasks) is
+  redrawn with `PYTHONHASHSEED` — the generator samples names through a set. Every per-task home
+  number in this slice is a property of a draw; the ceiling and P1 are draw-invariant, the
+  regression count is not. Handoff artifacts pin seed 0 and report a 5-seed sweep.
 - **Two of Apollo's 27 operators are provably decorative [M].** `distribution_reducer` and
   `evidence_updater` write only slots outside `D`; they cannot change any answer in any pipeline at
   any depth.
@@ -262,7 +281,10 @@ writes, aliasing and hidden state together.
    against Charon's E9 battery under the same clean-routing pool and the same 24-permutation
    standard. Pre-committed readings are fixed in `notes/E9_INGESTION_2026-08-27.md` §7.
 
-1. **Re-specify STEP 3 around BUNDLES, then run it.** *(UNBLOCKED 2026-09-01, with a proviso.)*
+1. **Re-specify STEP 3 around BUNDLES, then run it.** *(BLOCKED 2026-09-01 by operator closeout
+   prompt: no further bundle search until a live consumer shows that more generalisation
+   evidence would change an admission, rejection or design decision. The earlier "unblocked"
+   reading below is superseded.)*
    Admission under G7 now needs a **second blind author** — Charon's battery is spent for this
    seat, and Charon has said a second independent author is a stronger test than a second tier
    from Charon. STEP 3's generator arms can be *built and run for ΔE on `T_home`* (diagnosis is
@@ -375,14 +397,18 @@ that strictly dominates a coverage trace.
 
 **Added 2026-09-01, from G7 run 1:**
 
-12. **Commission a second blind battery author** for the slice — not Charon (Charon's own caveat:
-    same-author second tier is confounded by style drift), not Lexis, not Apollo. Without it G7
-    can never fire again on this slice and STEP 3 cannot admit anything.
-13. **The pair is the first object to clear every gate the seat has** (G5 NEW=1, G6 all-24, G7 on a
-    second author by timestamp, congruence audit). It is *not* self-admitted: admission is a build
-    into Apollo's registry and Lexis is read-only there (§3, item 4 above). Your call whether the
-    handoff protocol in item 4 now exists, and to whom — Apollo Gen-2 has re-chartered as a
-    substrate miner and its revival packet ranks parser-fix-then-retest as one of three framings.
+12. **Commission a second blind battery author** — **DEFERRED by operator instruction 2026-09-01.**
+    Justified only after a live consumer demonstrates that further generalisation evidence would
+    affect an admission, rejection or design decision. *Original text:* not Charon (same-author
+    second tier is confounded by style drift), not Lexis, not Apollo. Without it G7 cannot fire
+    again on this slice.
+13. **The pair is the first object to clear every Lexis gate** — **HANDED OFF 2026-09-01** as a
+    quarantined candidate (`handoff/interface_pair_manifest.json`, loader `handoff/lexis_pair.py`).
+    Admission or rejection is the consumer's and yours, under the consumer's loss function
+    (`handoff/consumer_utility.py`), per `handoff/ADMISSION_PROTOCOL.md`. Lexis does not admit.
+    The closeout also found, at organism level, that the pair regresses the home battery unless
+    placed before `op_aggregate_quantities`, and that its Charon break-even penalty is 4/3 — the
+    consumer's decision is not obvious and Lexis has not made it.
 
 ## 9. Artifacts
 
@@ -414,6 +440,21 @@ that strictly dominates a coverage trace.
   arms, the per-task pair trace with the complement trap, recognition at the initial state,
   verdicts against the pre-committed readings, and what was deliberately not done
 - `notes/g7_charon_result.json` — the rows
+
+**Added 2026-09-01, closeout — `handoff/` (the consumable surface; verify with
+`python roles/Lexis/handoff/verify_handoff.py`).**
+
+- `PROMPT_CLOSEOUT_2026-09-01.txt` — the governing prompt, verbatim, hashed at issuance
+- `LEXIS_G7_HANDOFF.md` — frozen claims, negative evidence, limits of inference, consumer
+  instructions, reopening criteria
+- `interface_pair_manifest.json` — the frozen pair: provenance, contract, failure modes, evidence
+- `lexis_pair.py` — hash-pinned loader; `augmented_program()` in three placements
+- `state_injection_fixture.json` — 42 Charon tasks with recognition, outcomes, ΔE/ΔS, robustness
+  columns, and oracle semantic states per injection level (self-checked paths)
+- `consumer_utility.py`, `consumer_utility_result.json` — CORRECT / ABSTAIN / WRONG under explicit
+  loss functions, both batteries, three placements, 5-seed home sweep
+- `ADMISSION_PROTOCOL.md` — the six-stage Lexis → consumer protocol and manifest schema
+- `build_handoff.py`, `verify_handoff.py` — deterministic build and byte-identity verification
 
 **Instruments** (`instruments/`, all deterministic, all repo-relative, all read-only on `apollo/`):
 

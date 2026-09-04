@@ -1,0 +1,77 @@
+[
+  {
+    "proposal": "P",
+    "D1": 4,
+    "D3": 4,
+    "D4": 4,
+    "D5": 3,
+    "D6": 4,
+    "justifications": {
+      "D1": "The known bar-misspecification failures are converted into gates: 'Heuristic floor: an adversarial short red-team pass ... to find the best simple, non-learning, closed-form heuristic ... reported as the real floor, not the uniform/formula value', computed in Phase 1 'BEFORE the learner is scored', with F1/F5 detecting dead geometry and under-margined cuts.",
+      "D3": "F1-F5 all numeric ('CI lower bound ... <= 0', '|shuffled-goal null score - N1 floor| < 1 SE', 'z >= 1.96', '3x the floor's own SE') plus a powered fixed-sample stopping rule; F1's oracle reachability check is mechanism-independent, cheap, and run in Phase 0 before any learner claim.",
+      "D4": "Every summary confound has a concrete element (dead geometry precondition, empirical heuristic floor, common reference distribution, ceiling-vs-floor Jensen check for the 2p(1-p) precedent, tautological-stratification ban) plus positive/validity checks: the null must 'differ measurably (>= 1 SE) from the raw N1 floor' before use.",
+      "D5": "Evaluating a new learner against a calibrated bar is a clearly new question, with the priors' impact explicitly narrated ('The design was reordered so that reachability is verified before any \"beats chance\" claim'), though no new empirical cell is explicitly named.",
+      "D6": "Each falsifier maps to a distinct verdict (DISQUALIFIED / NOT ESTABLISHED / 'null ruled VACUOUS' / 'demoted ... to mechanism-specific') and marginal passes are pre-read as 'a marginal disclosure, not a clean pass' - no outcome is wasted."
+    }
+  },
+  {
+    "proposal": "Q",
+    "D1": 2,
+    "D3": 4,
+    "D4": 2,
+    "D5": 3,
+    "D6": 4,
+    "justifications": {
+      "D1": "F1's attainable-range check ('if all five worlds have random > 45%, the task family is too easy') partially guards the bar, but no non-learning state-reading heuristic (greedy/shallow search) floor is ever computed - the composite baseline is 'random + frequency-matched + held-out-learned', so the coprime-30/greedy failure could still bite.",
+      "D3": "F1-F6 numeric ('exceed 15pp ... 95% CI lower bound > 0pp', '< 5pp') with a fixed-N no-early-stopping rule; F1 is a cheap Phase-0 gate and F4 kills the world-conditioned-reasoning claim independent of the primary margin ('learner absorbed frequency, not strategy').",
+      "D4": "Multiple confounds isolated by design ('within-world paired design - learner and baselines run on identical goal sequences', preregistered P_test), but the summary's central confound - an attainable-without-reasoning heuristic floor above chance - has no concrete element.",
+      "D5": "A new learner evaluation with exchangeability-broken baselines is a clearly new question ('baseline must not be a subset or distillation of the learner's own training distribution'), acknowledging the D-5/D-8 contradiction, but no new empirical cell is stated.",
+      "D6": "Every branch maps to a named distinct conclusion (TASK_FAMILY_UNFIT, LEARNER_ADVANTAGE_NOT_ESTABLISHED, IMPLEMENTER_ERROR, NO_WORLD_CONDITIONED_REASONING, CONFOUNDED_BY_FAMILY_STRUCTURE) with the null pre-read as 'a different, valuable null result, not ... a failure'."
+    }
+  },
+  {
+    "proposal": "R",
+    "D1": 4,
+    "D3": 4,
+    "D4": 4,
+    "D5": 3,
+    "D6": 4,
+    "justifications": {
+      "D1": "Directly converts the priors into a decisive precondition: 'World-triviality audit ... runs BEFORE the learner is scored' with F1 thresholds 'set directly from the observed 85-100% range', and makes 'shallow fixed-depth search (B2), not uniform-random chance, the primary comparator'.",
+      "D3": "F1-F4 numeric ('>= 85% optimal-action rate OR ... >= 90%', '>= 10 percentage points AND ... 3x B2's bootstrap SE', 'Holm-corrected p<0.01 across >= 5 ... replicates') plus a hashed fixed-N stopping rule; F1 is cheap, early, and independent of any learner mechanism.",
+      "D4": "Each summary confound is mapped to a defense (triviality gate, empirically characterized floor SE, common reference distribution, cross-world permutation null breaking the selection relation) plus gate reachability: 'computing the maximum attainable goal-reach rate under the generator's own reachability guarantees ... before fixing F2's margin'.",
+      "D5": "Clearly new evaluation question with priors explicitly reshaping it ('without it, this proposal would have used a naive random-chance baseline'), but it does not state a distinct new cell of the empirical space relative to prior work.",
+      "D6": "Branches all pre-committed: F1 'INADMISSIBLE ... halts', F2 'FALSIFIED for this world class', F3 'the world/metric combination is declared uninformative and the evaluation is voided' - including an explicit vacuous/uninformative reading."
+    }
+  },
+  {
+    "proposal": "S",
+    "D1": 4,
+    "D3": 4,
+    "D4": 4,
+    "D5": 4,
+    "D6": 4,
+    "justifications": {
+      "D1": "The failure mode becomes a zero-learner-call gate: 'Step 0 - attainable range (zero learner calls) ... random-legal hit rate, one-ply-greedy hit rate, majority-class rate' with 'the bar is never \"beats random\"' and G0 excluding degenerate cells before any learner runs.",
+      "D3": "G0-G5 numeric ('cheap floor ... >= 0.80', 'margin >= 0.15, two-proportion z >= 1.96', 're-find ratio ... < 0.40') plus a frozen, hash-recorded stopping rule; G0/G1 are cheap, early, and mechanism-independent (G1 voids the world family as a test bed regardless of the learner).",
+      "D4": "Every summary confound is addressed ('Attainable-range-before-gate', common reference distribution, hit-ball filtering, winner's-curse guard, budget symmetry) plus a reachability/positive-signal check: 'budget per run set so that the cheapest comparator ... achieves a non-trivial near-stratum hit rate (attainability check, done before freezing the budget)'.",
+      "D5": "States its new cell explicitly relative to prior work: 'a direct adaptation of that precedent to a single-learner \"reaches goal states\" claim rather than D4's accessibility-geometry claim', with each borrowed mechanic named.",
+      "D6": "Fixed gate order with every branch pre-labeled ('WORLD_DEGENERATE', G1 'preserved as a null result about instrument choice, not about the learner', G3/G4 downgrades 'reported, never suppressed') - vacuous and downgrade readings are all pre-committed."
+    }
+  },
+  {
+    "proposal": "T",
+    "D1": 2,
+    "D3": 4,
+    "D4": 2,
+    "D5": 3,
+    "D6": 4,
+    "justifications": {
+      "D1": "A greedy control and triviality screen exist, but the guard is incomplete: F5 only fires 'if M0_greedy achieves >= 0.60 solve rate and is significantly superior', so a learner below a sub-0.60 greedy floor but above random still passes F1, and the depth-profile measure is 'Deferred pending Phase 0'.",
+      "D3": "F1-F5 numeric ('>= +0.15', 'exceed 2x bootstrap SE', '> 50% of tasks ... below random floor 0.10') with a frozen fixed-N stopping rule; F3 is a cheap Phase-0 battery check and F5 kills the hypothesis 'regardless of F1's outcome', independent of the learner story.",
+      "D4": "Some confounds isolated ('Δ is a within-task paired delta', hyperparameters 'frozen in Phase 0 before Phase 1 evidence is read'), but the summary's heuristic-floor-above-chance and search-triviality confounds are only partially covered (random-only screen; greedy hole above).",
+      "D5": "Clearly new goal-achievement evaluation, reshaped by priors ('the null ... changed the target from \"learner discovers reusable sub-programs\" ... to \"learner reaches goal states\"'), without stating a distinct new empirical cell.",
+      "D6": "Branches map to named distinct verdicts (GOAL_ACHIEVEMENT_NOT_ESTABLISHED, INSTRUMENT_UNDERPOWERED, TRIVIAL_BATCH, F4 'learning-interference claim') and the ambiguous budget-exhaustion branch is pre-flagged: 'morphologically identical to \"learner is broken.\" Must be disclosed explicitly'."
+    }
+  }
+]

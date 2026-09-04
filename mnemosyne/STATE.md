@@ -1,252 +1,161 @@
-# Mnemosyne State — 2026-04-16 (Session 3) + 2026-04-29 addendum
+# Mnemosyne State — 2026-09-01 (read-only world-state refresh)
 
 ## NOTE TO MNEMOSYNE
-Body of this file reflects reality as of 2026-04-16. **2026-04-29 addendum at the bottom**: sigma_kernel schema added in `prometheus_fire` by a Claude fill-in session while you were out sick. Read both, trust the addendum for anything sigma-related.
+This file was fully rewritten 2026-09-01 after a four-month gap (previous body:
+2026-04-16 + a 2026-04-29 sigma addendum; both preserved in git history and in
+`roles/Mnemosyne/SESSION_JOURNAL_20260415.md` / `_20260429.md`). Everything
+below was verified against the LIVE databases on 2026-09-01. This session was
+survey-only: no ingestion, no schema changes, no writes to any database, per
+James's explicit directive.
 
 ---
 
 ## Identity
-- **Role:** DBA & Data Steward (roles/Mnemosyne/RESPONSIBILITIES.md)
-- **Machine:** M2 (SpectreX5)
-- **Agora name:** Mnemosyne
+- **Role:** DBA & Data Steward (roles/Mnemosyne/RESPONSIBILITIES.md — WARNING:
+  its stack diagram is stale, see "Stale documentation" below)
+- **This session ran on:** M1 (the machine hosting the local Postgres spine)
 
-## Connections
+## Connections — THE BIG CHANGE since April
 
-| Service | Host | Port | User | Status |
-|---------|------|------|------|--------|
-| LMFDB Postgres | 192.168.1.176 | 5432 | lmfdb/lmfdb | READ-ONLY, 30M+ rows, 6 indexes on lfunc, bsd_joined view |
-| prometheus_sci | 192.168.1.176 | 5432 | postgres/prometheus | LIVE, 1,142,469 rows — zero empty tables |
-| prometheus_fire | 192.168.1.176 | 5432 | postgres/prometheus | LIVE, ~600K rows |
-| Redis | 192.168.1.176 | 6379 | password=prometheus | LIVE, graph/landscape/bridges/hypothesis populated |
-| DuckDB | charon/data/charon.duckdb | local | — | FULLY MIGRATED — archive only, do NOT read from it |
+**The Postgres spine is LOCAL on M1 (`192.168.1.202` / localhost).**
+`192.168.1.176` is a powered-off dead box; every doc that mentions it is stale.
 
-**Password note:** Agent users (harmonia, ergon, charon, ingestor) were created with `CHANGE_ME_*` placeholder passwords in `scripts/db_setup.sql` and still have those. Keep using `postgres/prometheus` — it works across all three databases.
+| Service | Where | Status (verified 2026-09-01) |
+|---------|-------|------------------------------|
+| PostgreSQL 17.9 | localhost:5432 (M1) | LIVE — all three DBs served |
+| lmfdb | 365 GB | READ-ONLY mirror, on `fast_space` tablespace (F:\pg_tablespace) |
+| prometheus_sci | 320 MB | LIVE, unchanged since 04-16 |
+| prometheus_fire | 2.76 GB | LIVE and ACTIVELY WRITTEN (agora schema, today) |
+| Redis | — | **RETIRED 2026-06-24.** PgRedis (`thesauros/prometheus_data/pg_redis.py`) is the drop-in, backed by `prometheus_fire.bus`. `PROMETHEUS_USE_REDIS=1` reverts. |
+| DuckDB | — | **RETIRED 2026-06-24.** Mirrored verbatim into `prometheus_fire.charon_duckdb.*` (14 tables). `.duckdb` files frozen as fallback. |
 
-**Permissions (2026-04-16 Aporia unblock):** The `lmfdb` user now has SELECT across all three databases — all LMFDB public tables, `bsd_joined` view, and every schema in `prometheus_sci` and `prometheus_fire`. So agents can connect as `lmfdb/lmfdb` for read-only work if they prefer not to use the superuser.
-
----
-
-## What's Loaded (2026-04-16 state)
-
-### prometheus_sci (1,142,469 rows — every table populated)
-
-| Table | Rows | Source | Loader |
-|-------|------|--------|--------|
-| algebra.groups | 544,831 | cartography/groups/data/abstract_groups.json | mnemosyne/ingest_priority1.py |
-| analysis.oeis | 394,454 | cartography/oeis/data/ (names + stripped + keywords) | thesauros/ingest_oeis.py |
-| chemistry.qm9 | 133,885 | cartography/chemistry/data/qm9.csv | mnemosyne/ingest_priority1.py |
-| algebra.lattices | 39,293 | cartography/lattices/data/lattices_full.json (key: "records") | thesauros/ingest_empty_tables.py (reload, was 26) |
-| topology.knots | 12,965 | cartography/knots/data/knots.json | mnemosyne/ingest_priority1.py |
-| physics.materials | 10,000 | cartography/physics/data/materials_project_10k.json | mnemosyne/migrate_m2.py |
-| analysis.fungrim | 3,130 | cartography/fungrim/fungrim_formulas.json | thesauros/ingest_empty_tables.py |
-| physics.superconductors | 2,012 | cartography/physics/data/superconductors/aflow_canonical_superconductors.csv | thesauros/ingest_empty_tables.py |
-| topology.polytopes | 980 | cartography/polytopes/data/polytopes.json | mnemosyne/migrate_m2.py |
-| physics.codata | 355 | cartography/physics/data/codata_constants.json | thesauros/ingest_empty_tables.py |
-| algebra.space_groups | 230 | cartography/spacegroups/data/space_groups.json | mnemosyne/ingest_priority1.py |
-| physics.pdg_particles | 226 | cartography/physics/data/pdg/particles.json | thesauros/ingest_empty_tables.py |
-| biology.metabolism | 108 | cartography/metabolism/data/*.json (109 BiGG models) | thesauros/ingest_empty_tables.py |
-| core.data_source | 6 | provenance tracking | — |
-
-### prometheus_fire (~600K rows across 40+ tables, 8 schemas)
-
-| Table | Rows | Source | Status |
-|-------|------|--------|--------|
-| xref.object_registry | 134,475 | charon.duckdb objects | migrated 2026-04-15 |
-| xref.bridges | 17,314 | charon.duckdb known_bridges | migrated, also in Redis |
-| zeros.object_zeros | 120,649 | charon.duckdb object_zeros | **NEW 2026-04-16** (P3 migration) |
-| zeros.dirichlet_zeros | 184,830 | charon.duckdb dirichlet_zeros | **NEW 2026-04-16** |
-| zeros.object_zeros_ext | 17,313 | charon.duckdb object_zeros_ext | **NEW 2026-04-16** |
-| analysis.disagreement_atlas | 119,397 | charon.duckdb disagreement_atlas | **NEW 2026-04-16** |
-| noesis.* (19 tables) | 51,992 | noesis/v2/noesis_v2.duckdb | **NEW 2026-04-16** (migrate_noesis_v2.py) |
-| agora.messages | 107 | Agora streams | grows each session |
-| agora.decisions | 3 | Agora decisions | — |
-| agora.open_questions | 1 | OQ1 (spectral tail — RESOLVED as conductor confound) | can be marked resolved |
-| meta.ingestion_log | 4 | Ingestion provenance | — |
-| signals.specimens | 0 | Ready for population | schema created 2026-04-16 |
-| signals.battery_results | 0 | Ready for population | schema created 2026-04-16 |
-| results.hypotheses, results.ergon_runs, results.harmonia_bonds | 0 | Empty, schemas exist | — |
-| kill.taxonomy, kill.shadow_cells | 0 | Empty, schemas exist | — |
-| tensor.domain_features, tensor.domain_metadata | 0 | Empty, schemas exist | — |
-
-### LMFDB Mirror (M1:5432, READ-ONLY)
-
-| Table | Rows | Notes |
-|-------|------|-------|
-| lfunc_lfunctions | 24,351,376 | 341 GB. **6 indexes**: origin, conductor_numeric (523 MB), conductor, degree, motivic_weight, order_of_vanishing |
-| ec_curvedata | 3,824,372 | **2 indexes (2026-04-16)**: idx_ec_iso, idx_ec_conductor_numeric |
-| mf_newforms | 1,141,510 | **2 indexes (2026-04-16)**: idx_mf_weight_level, idx_mf_level |
-| artin_reps | 798,140 | **2 indexes (2026-04-16)**: idx_artin_dim_conductor, idx_artin_dim (use ::numeric for Conductor, .0 suffixes) |
-| g2c_curves | 66,158 | No indexes yet |
-| nf_fields | 22,178,569 | **FULL** (completed 2026-04-16, indexes: degree, disc_abs) |
-| **bsd_joined** | 2,481,157 | **NEW materialized view** (2026-04-16). EC + L-function joined via `lf.origin = 'EllipticCurve/Q/' || conductor || '/' || iso_letter`. 3 indexes. See `thesauros/bsd_joined_view.md`. |
-
-### Redis (M1:6379, migrated from DuckDB 2026-04-16)
-
-| Key Pattern | Type | Count | Purpose |
-|-------------|------|-------|---------|
-| graph:neighbors:{id} | Set | 96,210 | 396K adjacency edges |
-| landscape:{id} | Hash | 119,464 | coords, curvature, cluster |
-| landscape:by_curvature | Sorted Set | 119,464 | exploration priority queue |
-| bridge:{src}:{tgt} | Hash | 17,314 | bridge metadata |
-| bridges:by_source/target/type | Set | — | bridge indexes |
-| hypothesis:queue | Sorted Set | 100 | pending hypotheses |
-| agora:main, agora:challenges, agora:discoveries, agora:tasks | Stream | ~140+ msgs | team comms |
+Credentials: read-only `lmfdb/lmfdb`; superuser `postgres/prometheus`; belong in
+`%APPDATA%\postgresql\pgpass.conf`, never in tracked files. `psql.exe` at
+`C:\Program Files\PostgreSQL\17\bin`.
 
 ---
 
-## Completed Since Last Session (2026-04-15 → 2026-04-16)
+## lmfdb (365 GB — verified reltuples + sizes)
 
-### Data ingestion
-- All 6 empty prometheus_sci tables filled (codata, fungrim, pdg, superconductors, metabolism, lattices reload)
-- OEIS 394K sequences loaded with computed features (growth_rate, entropy, is_monotone)
-- Noesis v2 DuckDB migrated (19 tables, 52K rows)
-- `bsd_joined` materialized view built (2.48M rows)
+| Table | Rows | Size | Notes |
+|-------|------|------|-------|
+| lfunc_lfunctions | 24,351,376 | 346 GB | all-TEXT columns; 6 indexes |
+| nf_fields | 22,178,568 | 9.8 GB | **FULL** (the P6 partial-pull item is DONE) |
+| ec_curvedata | 3,824,372 | 2.0 GB | |
+| bsd_joined (matview) | 2,481,569 | 2.6 GB | EC ↔ L-function join, see thesauros/bsd_joined_view.md |
+| mf_newforms | 1,141,510 | 3.9 GB | |
+| artin_reps | 798,140 | 468 MB | |
+| g2c_curves | 66,158 | 43 MB | |
 
-### Infrastructure
-- `idx_lfunc_origin` built (complements the conductor_numeric index)
-- DuckDB killed across the codebase:
-  - `prometheus_data/pool.py` — `get_duckdb()` deprecated with warning
-  - `harmonia/src/domain_index.py` — all 12 DuckDB calls replaced with Postgres/Redis
-  - `ergon/tensor_builder.py`, `forge/v3/executor.py` — EC + MF loaders use lmfdb Postgres
-  - 13 directories have `DUCKDB_NOTICE.md` for legacy script reference
-- `signals` schema created in prometheus_fire (specimens + battery_results tables)
-- `noesis` schema created in prometheus_fire
+## prometheus_sci (unchanged since 2026-04-16)
+~1.16M rows across 14 tables (groups 545K, oeis 394K, qm9 134K, lattices 39K,
+knots 13K, materials 10K, …). See `thesauros/data_dictionary.md`.
 
-### Documentation
-- `thesauros/data_dictionary.md` — 810 lines, every column, every source, every script
-- `thesauros/unified_data_plan.md` — P1-P5 marked DONE, P6/P7 partial
-- `thesauros/bsd_joined_view.md` — full column reference for the new view
-- `thesauros/loose_files.md` — verified paths and row counts
-- `thesauros/duckdb_legacy.md` — updated to reflect FULLY MIGRATED status
+## prometheus_fire (2.76 GB) — what changed since April
 
-### Scripts added (thesauros/)
-- `create_bsd_joined.py`, `migrate_p3_duckdb.py`, `migrate_p6_nffields.py`, `migrate_p7_cartography.py`
-- `migrate_noesis_v2.py`, `ingest_empty_tables.py`, `ingest_oeis.py`
+Real `COUNT(*)` where noted; otherwise reltuples (spot-checks matched).
 
----
-
-## Priority Scorecard (thesauros/unified_data_plan.md)
-
-| Priority | Status |
-|----------|--------|
-| P1 — lfunc origin index | **DONE** |
-| P2 — EC↔lfunc join key + bsd_joined | **DONE** |
-| P3 — DuckDB → Postgres + Redis | **DONE** (854K rows, 61s) |
-| P4 — Signal registry | **DONE** (schema ready, empty) |
-| P5 — Redis tensor/battery cache | **DONE** (part of P3) |
-| P6 — nf_fields full pull | PARTIAL (2.4M / 22M) |
-| P7 — Cartography ingestion | **DONE** (all empty tables filled) |
-| P8 — Cleanup | NOT STARTED |
-
----
-
-## Pending Work for Next Session
-
-### Small / mechanical
-1. Complete `nf_fields` pull (remaining 19.8M rows — overnight streaming job, resume from row 2.4M)
-2. Fix agent user passwords in scripts/db_setup.sql (harmonia, ergon, charon, ingestor still have CHANGE_ME_* placeholders)
-3. Mark OQ1 spectral tail resolved in `agora.open_questions` (downgraded to MARGINAL, conductor confound)
-
-### Medium / could be big
-4. OEIS auxiliary data: crossrefs (62 MB), formulas (60 MB), programs (73 MB) — new tables in analysis schema
-5. Additional datasets per `thesauros/loose_files.md`:
-   - physics.exoplanets (6,158 rows from confirmed_exoplanets.csv)
-   - physics.gw_events (219 from gwtc_params.csv)
-   - physics.pulsars (4,351)
-   - topology.mahler_measures (2,977 already computed in charon/data/mahler_measures.json)
-   - analysis.findstat (FindStat mathematical statistics)
-
-### Prometheus v2 infrastructure (if we go that direction)
-6. `prometheus_fire.operators` schema for the Operator Telescope (see `docs/Prometheus_v2/0_Prometheus_v2_Base_Paper.md`)
-7. Compute first 4 operators (Alexander-at-roots-of-unity for knots, Mahler measure, Hecke eigenvalues, splitting patterns)
+- **xref.object_registry: 2,118,642** (was 134K on 04-16). Grew ~15x via the
+  object_id NULL repair / rekey — see `ergon/repair/README_rekey_2026-06-23.md`
+  and commit 6f06e1b8a ("slow-roll repair for object_zeros NULL object_id").
+- **zeros.object_zeros: 2,009,089** (was 121K) — same repair campaign.
+- **zeros.dirichlet_zeros: 0** (was 184,830). The rows live in
+  `charon_duckdb.dirichlet_zeros` (184,830). Emptying looks deliberate
+  (dedup with the mirror) but I have not found the doc that says so —
+  OPEN QUESTION below.
+- **charon_duckdb.*: 14 tables, ~1.24M rows** — DuckDB retirement mirror
+  (graph_edges 396K, dirichlet_zeros 185K, objects 130K, object_zeros 121K,
+  landscape 119K, disagreement_atlas 119K, modular_forms 102K, …). See
+  `roles/Ergon/DUCKDB_RETIREMENT_AUDIT_2026-06-24.md`.
+- **agora schema is now the live operations center** (13 tables; grew from 3):
+  - machine_probes: 112,307 rows, 2026-05-24 → **2026-09-01 (written today)**
+  - intelligence_outputs: 13,357 rows, 2026-05-17 → **2026-09-01**
+  - agent_heartbeats: 36 agents; online today: Pronoia (M4), Elenchus (M2),
+    MachineProbe-M4
+  - clio_papers 596 / clio_claim_extractions 1,082 / clio_quality_snapshots 238
+  - research_queue 425, gpu_reservations 4, messages 196 (last message
+    2026-04-29 — stream-style messaging effectively superseded by these tables)
+- **sigma schema grew from 3 to 7 tables** and is in use: claims **1,079**,
+  capabilities 7; symbols/residuals/evaluations/refinements/bindings 0.
+  NOTE: `sigma.claims` columns (target_name, hypothesis, evidence, kill_path,
+  target_tier, verdict_* …) differ from the 04-29 MVP shape — the kernel
+  evolved after my last session (Substrate-Tester fire commits in git).
+- signals.specimens: 72 (was 0). battery_results still 0.
+- Still empty: results.*, tensor.*, kill.* schemas.
+- **bus schema (PgRedis backend): provisioned, essentially unused** — all six
+  tables empty, stream gid sequence at 8 (eight entries ever). The bus exists;
+  traffic doesn't. Agora coordination happens via the agora.* tables instead.
 
 ---
 
-## Key Findings From the 04-15/04-16 Sessions
-
-1. **BSD Sha circularity** — Rank >= 2 Sha computed assuming BSD. Testing BSD with it is circular.
-2. **NF backbone killed** — All 3 scorers (cosine, distributional, alignment) measure feature geometry only. Permutation null z=0. Harmonia + Ergon confirmed.
-3. **AlignmentCoupling seed-dependent** — z=2.67 did not replicate across 10 seeds (6 returned flat 0.5). Retracted.
-4. **OQ1 spectral tail killed** — Conductor confound. rho=-0.068 globally but p>0.05 in every conductor bin.
-5. **abc strongly supported** — Szpiro ratio monotone decrease survives bad-prime stratification.
-6. **Langlands GL(2)** — 100% match (10,880/10,880) within LMFDB range.
-7. **Tensor measures feature geometry, not object-level coupling** — the single most important methodological finding.
-
----
-
-## Files
-
-- `mnemosyne/migrate_m2.py` — M2 migration script (ran 2026-04-15)
-- `mnemosyne/ingest_priority1.py` — Priority 1 ingestion (ran 2026-04-15)
-- `mnemosyne/STATE.md` — this file
-- `mnemosyne/data_audit_20260415.md` — data inventory (partly stale, refer to thesauros/data_dictionary.md instead)
-- `mnemosyne/README.md` — role intro
-- `roles/Mnemosyne/SESSION_JOURNAL_20260415.md` — session 2 journal
-- `roles/Mnemosyne/RESPONSIBILITIES.md` — role definition
-- `thesauros/data_dictionary.md` — **authoritative** data reference
-- `thesauros/unified_data_plan.md` — priority tracker
-- `thesauros/bsd_joined_view.md` — bsd_joined column reference
-- `thesauros/duckdb_legacy.md` — migration record
-- `docs/Prometheus_v2/0_Prometheus_v2_Base_Paper.md` — local-only v2 vision paper
+## Standing traps (still true)
+1. `pg_stat_user_tables.n_live_tup` reads 0 on populated 300GB+ tables (stats
+   reset at the 04-16 migration, never re-ANALYZEd). Use `reltuples` or real
+   `COUNT(*)`. This false-empty reading once got the spine called "dark."
+2. lfunc_lfunctions is all-TEXT; cast-heavy queries are slow by construction —
+   use bsd_joined or typed matviews.
+3. Do not read from the frozen `.duckdb` files; the Postgres mirror is
+   authoritative.
 
 ---
 
-# 2026-04-29 ADDENDUM — sigma_kernel schema in prometheus_fire
+## Open queue (mnemosyne/queue/requests.jsonl)
+- **REQ-001** (Aporia, 04-26, medium): Bloom Erdős catalog → questions.jsonl.
+  Cloudflare 403 gating. **OPEN — HELD: James directed 2026-09-01 "don't
+  ingest anything."**
+- **REQ-002** (04-26, high): MathNet olympiad corpus (30,676 problems).
+  License + download URL unverified. **OPEN — HELD, same directive.**
 
-Added during a fill-in session (actual-Mnemosyne out sick). Author: Claude session
-acting under @roles/Mnemosyne per HITL. Revert to normal Mnemosyne attribution
-when she's back.
+## Open questions / hygiene backlog (no action taken)
+1. `zeros.dirichlet_zeros` emptied — confirm intentional and record where.
+2. RESPONSIBILITIES.md stack diagram describes the dead .176/Redis world;
+   rewrite when authorized.
+3. Agent DB users (harmonia, ergon, charon, ingestor) still ride
+   `postgres/prometheus`; per-agent creds never rotated in.
+4. ANALYZE never rerun since the migration (reltuples close but stats stale).
+5. `thesauros/data_dictionary.md` (authoritative data reference) predates the
+   rekey, DuckDB retirement, agora expansion, and sigma v2 — needs a refresh
+   pass.
+6. sigma.claims schema drift vs the 04-29 MVP — read the Substrate-Tester
+   fire history before touching sigma.
 
-## What landed
+## Legacy non-Postgres stores — 2026-09-01 inventory (full report in journal)
 
-Schema `sigma` in `prometheus_fire` (host 192.168.1.176, port 5432):
+Deletion of `charon/data/charon.duckdb` (1.18 GB) and `noesis/v2/noesis_v2.duckdb`
+is gated on a todo-sweep: I placed `todo_20260901.md` in roles/{Charon,
+CrossDomainCartographer, Harmonia, Koios, Ergon}; each seat flips its Status
+to DONE when its legacy-store code is repointed/retired. **Sweep
+`roles/*/todo_*.md` each session; delete only when all flipped, after a final
+grep for `duckdb.connect` outside archive/.**
 
-| Table | PK | Purpose |
-|---|---|---|
-| `sigma.symbols` | `(name, version)` | Append-only substrate of promoted symbols. Indexed on `def_hash`. |
-| `sigma.claims` | `id` | Provisional claim lifecycle (replayable; not part of immutable substrate). |
-| `sigma.capabilities` | `cap_id` | Linear capability tokens; `consumed` flag flips once on PROMOTE / ERRATA. |
+- charon/src: REPOINTED to Postgres via facade (commit fa8f625a1) — the
+  06-24 audit's "still on duckdb.connect" is stale. Remaining: trivial
+  version-banner import in charon/scripts/full_audit.py:162.
+- Biggest blocker: ~180 read-only duckdb call sites in cartography/shared/
+  scripts (~110), cartography/v2 (~50), harmonia/scripts (~20), koios (1).
+- **MNEMOSYNE DEFECT — kill_taxonomy never migrated:** `mnemosyne/
+  migrate_m2.py:231-248` reads DuckDB `hypothesis_queue` instead of
+  `forge/v3/kill_taxonomy.db` (SQLite: 21 kills, 10 negative_dimensions)
+  and returns 0 as success — that is why `kill.taxonomy` is empty. Ergon's
+  live hypothesis gate (`ergon/tensor_executor.py:131`) consumes the SQLite
+  file today. Fix loader + migrate (awaiting go-ahead), then Ergon repoints.
+- `thesauros/prometheus_data/pool.py:191` `get_duckdb()` — deprecated, zero
+  callers, still exported from `__init__.py:33,35`. Remove from the public
+  API as part of the deletion checklist (my item).
+- Deliberately SQLite, NOT debt: `theseus/orchestration/signature_index.sqlite`
+  (live ledger, 3,311 sigs), `ludus/atlas_of_worlds/atlas.db`,
+  `SerendipityFoundry/.../var/engine.db` (Gen-2 design choice, per its
+  migration doc). Leave alone.
+- Dormant never-migrated agent stores (aletheia KG / clymene vault / skopos
+  scores, last touched Mar–Apr): RETIRE-after-HITL candidates per
+  `pivot/COMPONENT_DOSSIERS_2026-06-24.md:627`; DB files kept, no todo issued
+  (no role seats). Dead: archive seti mlflow.db, sigma_kernel demo dbs.
+- sigma_kernel defaults to its SQLite backend (`sigma_kernel.py:449`); the
+  Postgres `sigma` schema serves a newer 7-table shape with 1,079 claims.
 
-Migration: `sigma_kernel/migrations/001_create_sigma_schema.sql` (idempotent;
-`CREATE ... IF NOT EXISTS` everywhere; safe to re-apply).
-
-GRANTs: `ergon` has `USAGE` on schema `sigma` + `SELECT/INSERT/UPDATE` on all three
-tables. `DEFAULT PRIVILEGES` set so future tables in the schema auto-grant the
-same to ergon. **No DELETE granted** — kernel discipline is append-only;
-substrate cleanup needs superuser.
-
-## Verification done in-session
-
-- `sigma_kernel/demo_postgres.py` passes 5/5 scenarios end-to-end against the
-  live schema (CLEAR / WARN / BLOCK / double-spend / overwrite / ERRATA).
-- Smoke test data swept post-run; `sigma.symbols` at 0 rows on disk.
-- Connection path: `thesauros.prometheus_data.pool.get_fire()` →
-  `_PostgresAdapter` in `sigma_kernel/sigma_kernel.py`.
-
-## Bug fix bundled in same session
-
-Three internal imports in `thesauros/prometheus_data/{__init__.py, pool.py}`
-were referring to the pre-rename `prometheus_data.*` paths and silently
-broken. Fixed to relative imports (`from .pool import ...`). Anything else
-that was depending on `from prometheus_data import ...` should now resolve
-through `thesauros.prometheus_data.*` cleanly.
-
-## Open Mnemosyne items that did NOT change
-
-The fill-in session did not pick up these (out of scope without actual-Mnemosyne
-context). Logged here so they're visible:
-
-- `lfunc_lfunctions` conductor index — was building 2026-04-15, status unknown
-  on 2026-04-29. If still building or stalled, that blocks `bsd_joined` view +
-  EC ↔ lfunc join key discovery (per SESSION_JOURNAL_20260415.md).
-- Agent user passwords (harmonia, ergon, charon, ingestor) — still using
-  `postgres/prometheus` superuser per the 2026-04-16 note. Hygiene cleanup.
-- 6 DuckDB tables waiting on Agora schema design (677K rows; per
-  SESSION_JOURNAL_20260415.md, request was posted to agora:tasks).
-
-## Agora announcements posted
-
-Three messages on `agora:harmonia_sync` 2026-04-29:
-- `SCHEMA_LIVE: sigma in prometheus_fire (sigma_kernel MVP)` (id 1777460358274-0)
-- `MNEMOSYNE_FILLIN: Claude session covering roles/Mnemosyne today` (heartbeat, id 1777460358283-0)
-- `MNEMOSYNE_ASK: what else can I help with today?` (id 1777460358284-0)
+## Documents of record for the April→September gap
+- `roles/Ergon/DB_DIAGNOSIS_2026-06-23.md`
+- `roles/Ergon/DUCKDB_RETIREMENT_AUDIT_2026-06-24.md`
+- `roles/Ergon/REDIS_TO_POSTGRES_2026-06-24.md`
+- `ergon/repair/README_rekey_2026-06-23.md`
+- `roles/Mnemosyne/SESSION_JOURNAL_20260901.md` (this refresh)

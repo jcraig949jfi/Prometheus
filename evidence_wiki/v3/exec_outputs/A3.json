@@ -1,0 +1,19 @@
+{
+  "X1": {
+    "count": 184830,
+    "table": "charon_duckdb.dirichlet_zeros"
+  },
+  "X2": {
+    "estimate": 24351376,
+    "method": "SELECT reltuples::bigint FROM pg_class WHERE relname='lfunc_lfunctions' (planner's row-count estimate, maintained by autovacuum/ANALYZE from table statistics; avoids scanning the ~346GB table). pg_total_relation_size confirmed the table is 346 GB."
+  },
+  "X3": 59,
+  "X4": {
+    "count": 282373,
+    "independent_ground_truth": "no",
+    "why": "In lmfdb.public.bsd_joined the sha column is not an independently measured/proven Sha order but a value derived analytically by rearranging the BSD formula itself (leading L-function term, regulator, periods, Tamagawa numbers), so using it to verify BSD on the rank>=2 population would be circular."
+  },
+  "X5": 534,
+  "X6": 0,
+  "notes": "X1: zeros.dirichlet_zeros exists but is empty (0 rows); the populated table is charon_duckdb.dirichlet_zeros (184830 rows, columns include conductor/degree/rank/zeros_vector), which is the one holding Dirichlet-zero data in prometheus_fire. X3: triage.jsonl has 531 lines but only 510 distinct problem ids (21 ids duplicated, mostly one empty test_spec row + one authored row per dup id); counting by row and by distinct qualifying id both give 59, and no duplicated id had two qualifying rows, so the count is robust to that ambiguity. X4: bsd_joined is a materialized view; rank column used per question wording (there is also an analytic_rank column, not used here). X5: questions.jsonl has 537 lines but 3 duplicate ids (MATH-0491/0492/0493 each appear twice), so distinct problem count is 534, not 537. X6: agora.research_queue only contains statuses 'complete' (422) and 'abandoned' (3) currently -- no rows with status pending/dispatched/in_progress, hence 0."
+}

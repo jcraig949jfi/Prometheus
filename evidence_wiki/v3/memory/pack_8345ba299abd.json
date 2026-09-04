@@ -1,0 +1,125 @@
+{
+ "canonical_revision": 13339,
+ "items": [
+  {
+   "agent": "Mnemosyne",
+   "claim_ceiling": null,
+   "claim_id": "C-002b052e2797",
+   "corrections_contradictions": [],
+   "finding": "The prometheus_fire table zeros.dirichlet_zeros is EMPTY (0 rows); the 184,830 Dirichlet-zero rows survive verbatim in charon_duckdb.dirichlet_zeros \u2014 repoint queries there",
+   "mechanisms": [],
+   "metrics": null,
+   "negative": false,
+   "quote": "The spec sources unfolded first-zero heights from `zeros.dirichlet_zeros` \"(184,830 rows)\". That count is the 2026-04-16 state. As of the 2026-09-01 world-state survey, `prometheus_fire.zeros.dirichlet_zeros` is EMPTY (0 rows); the data survives verbatim in `prometheus_fire.charon_duckdb.dirichlet_z",
+   "retrieval_method": "hybrid",
+   "source_packet": "evidence_wiki/v1b/DATA_NOTES.md",
+   "status": "OBSERVED",
+   "why_retrieved": "hybrid search: 'dirichlet zeros table empty mirror charon_duckdb'"
+  },
+  {
+   "agent": "Mnemosyne",
+   "claim_ceiling": null,
+   "claim_id": "C-8222e18e2261",
+   "corrections_contradictions": [],
+   "finding": "pg_stat_user_tables.n_live_tup reads 0 on populated 300GB+ lmfdb tables (stats never re-ANALYZEd); use reltuples or COUNT(*) \u2014 never n_live_tup \u2014 to estimate row counts",
+   "mechanisms": [],
+   "metrics": null,
+   "negative": true,
+   "quote": "`pg_stat_user_tables.n_live_tup` reads 0 on populated 300GB+ tables (stats reset at the 04-16 migration, never re-ANALYZEd). Use `reltuples` or real `COUNT(*)`. This false-empty reading once got the spine called \"dark.\"",
+   "retrieval_method": "hybrid",
+   "source_packet": "mnemosyne/STATE.md",
+   "status": "OBSERVED",
+   "why_retrieved": "hybrid search: 'dirichlet zeros table empty mirror charon_duckdb'"
+  },
+  {
+   "agent": "Aporia",
+   "claim_ceiling": "sha is the ANALYTIC order computed under BSD-formula assumptions where unproven \u2014 rows verify internal consistency of LMFDB's BSD machinery plus the square law, not BSD itself at rank >= 2; sampling doctrine kills a naive Goldfeld refutation before it starts.",
+   "claim_id": "C-848fcc579bcb",
+   "corrections_contradictions": [],
+   "finding": "At full-table scale, analytic and algebraic rank agree with zero mismatches across 3,824,372 elliptic curves and every distinct analytic-Sha value in the table is a perfect square, adjudicated SUPPORTIVE on both laws.",
+   "mechanisms": [
+    "circular_verification"
+   ],
+   "metrics": "3,824,372 curves with both ranks, ZERO mismatches; zero non-square analytic-Sha values",
+   "negative": false,
+   "quote": "## Result: SUPPORTIVE on both laws \u2014 at FULL TABLE scale, not a sample 1. RANK AGREEMENT: 3,824,372 curves with both ranks; ZERO mismatches. The analytic=algebraic rank equality holds across the entire database \u2014 every curve, not a sample. 2. CASSELS FINGERPRINT: every distinct analytic-Sha value in",
+   "retrieval_method": "hybrid",
+   "source_packet": "aporia/catalog_attacks/ATTACK_MATH-0063_2026-08-19.md",
+   "status": "SUPPORTED",
+   "why_retrieved": "hybrid search: 'dirichlet zeros table empty mirror charon_duckdb'"
+  },
+  {
+   "agent": "Mnemosyne",
+   "claim_ceiling": null,
+   "claim_id": "C-cb222b4f6684",
+   "corrections_contradictions": [],
+   "finding": "triage.jsonl contains 21 duplicate ids where authored specs were APPENDED over earlier unspecced rows; only last-wins readers see the authored specs \u2014 first-wins or naive line counting is wrong",
+   "mechanisms": [],
+   "metrics": null,
+   "negative": true,
+   "quote": "Authored-spec rows APPENDED over an earlier unspecced row (safe only for last-wins readers like backlog_gen.py:67; a first-wins reader sees bucket-C/unspecced): MATH-0057, MATH-0058, MATH-0060, MATH-0065, MATH-0066, MATH-0067, MATH-0129, MATH-0137, MATH-0154, MATH-0211, MATH-0212, MATH-0287, MATH-02",
+   "retrieval_method": "hybrid",
+   "source_packet": "mnemosyne/DATA_EXISTENCE_AUDIT_2026-09-01.md",
+   "status": "OBSERVED",
+   "why_retrieved": "hybrid search: 'triage duplicate ids authored test_spec last-wins'"
+  },
+  {
+   "agent": "Mnemosyne",
+   "claim_ceiling": null,
+   "claim_id": "C-6e07df34bd76",
+   "corrections_contradictions": [],
+   "finding": "questions.jsonl has 537 lines but only 534 unique problem ids: MATH-0491/0492/0493 are id COLLISIONS (same id, two different problems); line counts overstate the catalog",
+   "mechanisms": [],
+   "metrics": null,
+   "negative": true,
+   "quote": "questions.jsonl: 537 lines, 534 unique ids; duplicate ids: MATH-0491, MATH-0492, MATH-0493 ... ID COLLISIONS (same id, DIFFERENT problem \u2014 one problem is shadowed everywhere downstream)",
+   "retrieval_method": "hybrid",
+   "source_packet": "mnemosyne/DATA_EXISTENCE_AUDIT_2026-09-01.md",
+   "status": "OBSERVED",
+   "why_retrieved": "hybrid search: 'triage duplicate ids authored test_spec last-wins'"
+  },
+  {
+   "agent": "Mnemosyne",
+   "claim_ceiling": "the circularity is a calibration-anchor design choice, not a Pattern 30 COUPLED verdict; it means F005 cannot verify BSD itself on rank >= 2",
+   "claim_id": "C-e0352ce96e11",
+   "corrections_contradictions": [
+    {
+     "dst_id": "C-954b8ae3b448",
+     "epistemic_class": "OBSERVED",
+     "relation_type": "QUALIFIES",
+     "src_id": "C-e0352ce96e11"
+    }
+   ],
+   "finding": "F005 cannot be used to verify BSD at rank >= 2 because Sha values on that stratum are themselves computed assuming BSD.",
+   "mechanisms": [
+    "circular_verification"
+   ],
+   "metrics": null,
+   "negative": true,
+   "quote": "**Caveat:** Sha values at rank \u2265 2 are themselves computed **assuming BSD** (per F003's own description quote: \"circular at rank \u2265 2 \u2014 computed assuming BSD\"). F005 is therefore circular on the rank \u2265 2 portion of its stratum.",
+   "retrieval_method": "hybrid",
+   "source_packet": "harmonia/memory/algebraic_coupling_audit.md",
+   "status": "OBSERVED",
+   "why_retrieved": "hybrid search: 'Sha computed assuming BSD rank 2 circular verification'"
+  },
+  {
+   "agent": "Harmonia",
+   "claim_ceiling": "F043 becomes the load-bearing pedagogy anchor for Pattern 30; the finding-as-finding is gone",
+   "claim_id": "C-450a0c8756cf",
+   "corrections_contradictions": [],
+   "finding": "F043, the BSD-Sha anticorrelation finding, was retracted: the anticorrelation is a tautological consequence of how the BSD ingredients are defined (algebraic identity rearrangement).",
+   "mechanisms": [
+    "algebraic_identity_artifact"
+   ],
+   "metrics": "corr(log Sha, log A) = -0.4343 at z_block = -348 (audit doc)",
+   "negative": true,
+   "quote": "**Status:** RETRACTED. Re-classified as algebraic-identity rearrangement (Pattern 30 Level 4 \u2014 IDENTITY).\n**Mechanism:** The \"anticorrelation\" was a tautological consequence of how the BSD ingredients are defined (algebraic identity). Cross-checking against PATTERN_BSD_TAUTOLOGY precondition surface",
+   "retrieval_method": "hybrid",
+   "source_packet": "harmonia/memory/retraction_registry.md",
+   "status": "RETRACTED",
+   "why_retrieved": "hybrid search: 'Sha computed assuming BSD rank 2 circular verification'"
+  }
+ ],
+ "kind": "doctrine_pack",
+ "note": "provenance-bound retrieval artifact; not a conclusion"
+}

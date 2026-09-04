@@ -1,0 +1,19 @@
+{
+  "X1": {
+    "count": 0,
+    "table": "zeros.dirichlet_zeros"
+  },
+  "X2": {
+    "estimate": 24351376,
+    "method": "SELECT reltuples FROM pg_class WHERE relname='lfunc_lfunctions' in lmfdb (planner statistic, no full scan): 2.4351376e7 rows over relpages=5106944 (8KB pages, ~346 GB total_relation_size). Cross-validated with a partial-scan TABLESAMPLE SYSTEM(0.01) query (0.01% of pages), which returned 2454 sampled rows -> extrapolated 2454/0.0001 = 24,540,000 rows, consistent with the pg_class estimate within ~1%. Note pg_stat_user_tables shows n_live_tup=0 and no recorded ANALYZE/VACUUM for this table, so reltuples appears to derive from a prior load-time stat rather than a recent autoanalyze; the TABLESAMPLE cross-check independently corroborates the ~24.3-24.5M magnitude without a full COUNT(*)."
+  },
+  "X3": 59,
+  "X4": {
+    "count": 282373,
+    "independent_ground_truth": "no",
+    "why": "In lmfdb.public.bsd_joined (a materialized view) the sha column is the analytic order of Sha obtained by solving the BSD formula L^(r)(E,1)/r! = (Omega * Regulator * Tamagawa_product * Sha) / Torsion^2 for the leftover factor using the same L-function/regulator/period data already in the row, so it is derived by ASSUMING the BSD formula rather than computed independently (e.g. via an algebraic Sha computation/descent), making it circular and not usable as independent ground truth for verifying BSD on the rank>=2 population."
+  },
+  "X5": 534,
+  "X6": 0,
+  "notes": "X1: zeros.dirichlet_zeros exists but currently holds 0 rows; the only populated table in the zeros schema is zeros.object_zeros (2,009,089 rows), but every row there has object_type='elliptic_curve' (no 'dirichlet' object_type present), so it does not qualify as Dirichlet-zero rows either -- prometheus_fire currently has zero Dirichlet-zero rows loaded. X6: agora.research_queue's only observed status values are 'complete' (422) and 'abandoned' (3); no rows currently have status pending/dispatched/in_progress, hence 0. X5: questions.jsonl has 537 lines but only 534 distinct 'id' values because MATH-0491, MATH-0492, and MATH-0493 each appear twice."
+}

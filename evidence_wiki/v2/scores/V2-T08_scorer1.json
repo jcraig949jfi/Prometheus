@@ -1,0 +1,57 @@
+[
+  {
+    "proposal": "P",
+    "D1": 4, "D3": 3, "D4": 3, "D5": 4, "D6": 4,
+    "justifications": {
+      "D1": "\"This is a deliberate bet AGAINST the naive story ('more solved/failed examples make the judge smarter')\" — the calibration-vs-discrimination failure mode is converted into falsifiers F2/F3 that would detect it (decoy-gap and survivorship-bias signature).",
+      "D3": "\"ΔAUC-ROC(FT-paired vs B-prompt) on E-near... does not exceed 0.03 AUC at the Holm-corrected 0.05 level\" plus a fixed-length no-extension stopping rule — >=2 numeric falsifiers with an explicit stop, but no cheap early mechanism-independent falsifier.",
+      "D4": "\"B-prompt is the same exposure without the weight update\" — each summary confound (format/template via typed decoys, prior via base-rate reporting, entity via lineage split) has a concrete element, but the signature-exists check is cited rather than specified as a runnable positive control.",
+      "D5": "\"the direct reason this design runs TWO training arms (pooled vs paired) rather than one\" — acknowledges the near-duplicate precedent and states its new cell (matched-twin format and the near-vs-decoy gap).",
+      "D6": "\"declared underpowered rather than the bar lowered post hoc\" and \"reported as a pipeline exercise, not a decisive result\" — every branch including vacuous/underpowered readings is pre-committed."
+    }
+  },
+  {
+    "proposal": "Q",
+    "D1": 4, "D3": 3, "D4": 4, "D5": 4, "D6": 4,
+    "justifications": {
+      "D1": "\"the calibrating kill generalizes past its original confounds and is a property of the archive/objective, not an artifact of the first experiment's hygiene gaps\" — the prior failure is rebuilt as the experiment's own two-sided question with LOSO promoted to the primary gate.",
+      "D3": "\"the fine-tuned judge... must beat the heuristic floor... by >=5pp accuracy/AUC on at least 3 of 4... held-out sources\" plus a frozen-manifest, one-pass stopping rule — numeric falsifiers with explicit stops, but no cheap early mechanism-independent kill.",
+      "D4": "\"reproducing the 0.228->0.908-style headline check but on hygiene-fixed data, to confirm the fix didn't kill the in-distribution signal outright\" — every summary confound addressed concretely (de-templating, label balance, fitness manifest) plus an in-distribution signal-reachability check.",
+      "D5": "\"H1 confirmed closes the LLM-judge-from-raw-text approach on this archive with a cleaner methodology than the first kill; H0 confirmed reopens it with a concrete recipe\" — an explicitly framed superseding rerun naming its new (hygiene-fixed) cell.",
+      "D6": "\"Any result landing between falsifiers 1 and 3... is reported as NOT_ESTABLISHED with both numbers shown side by side\" — every branch pre-committed, including INVALIDATED-on-leak and LOSO-not-applicable downgrades."
+    }
+  },
+  {
+    "proposal": "R",
+    "D1": 3, "D3": 3, "D4": 3, "D5": 2, "D6": 3,
+    "justifications": {
+      "D1": "\"Falsifier 2: If truncated-data AUC >= 0.68 (within 0.04 of full-data model), reject transfer-learning interpretation; model learned format, not structure\" — the format failure mode cannot silently bite, though the prior-only decomposition arm is missing.",
+      "D3": "\"Falsifier 1: If fine-tuned AUC < 0.62 on held-out test, hypothesis rejected\" plus a 3-seed stopping rule — >=2 numeric falsifiers with an explicit stopping rule.",
+      "D4": "\"Hold-out task family: ... AUC drop >0.10 signals overfitting to task-family-specific heuristics\" — the summary's confounds each have concrete elements (truncated-data control, shuffled labels, ablation), but no positive control demonstrating detectability.",
+      "D5": "\"can learn to classify new attempts as success/failure with AUC > 0.70\" — substantially re-asks the refuted fine-tune-a-judge question with defensible added controls, but never frames itself as superseding the prior kill.",
+      "D6": "\"If (B) achieves >75% accuracy but (A) < 65%, then outcome information is carrying the signal\" — falsifier branches map to distinct conclusions, but no vacuous/no-signal reading (e.g., unusable archive) is pre-committed."
+    }
+  },
+  {
+    "proposal": "S",
+    "D1": 4, "D3": 4, "D4": 3, "D5": 4, "D6": 4,
+    "justifications": {
+      "D1": "\"the observed gain is ~entirely format-following + outcome base-rate + value memorization... taken seriously because it is the modal outcome in this archive's own history\" — the prior decomposition is rebuilt as mandatory Phase 3 with falsifier 3 gating success on the residual's CI excluding 0.",
+      "D3": "\"if fewer than 3 independent sources each yield >=100 usable triples with a solved:failed ratio between 20:80 and 80:20, the experiment HALTS at Phase 0\" — a cheap, early, mechanism-independent falsifier plus Holm-corrected numeric falsifiers 2-5 and fixed stops.",
+      "D4": "\"genuine-judgment residual = raw gain − max(shuffled-label gain, format-only gain, base-rate-only gain)\" — every summary confound isolated by a named control (decomposition battery, GroupKFold, two-sided leakage read), but no planted-signal positive control is concretely specified in the design.",
+      "D5": "\"relation/domain-disjoint transfer falsifier (anti-transfer check)... distinct from and in addition to entity-disjoint holdout\" — an explicitly framed superseding rerun naming its new cells (this archive's structure, the relation-disjoint split).",
+      "D6": "\"reported as an archive-readiness null, not a modeling failure\" — every branch pre-committed; even a pure-memorization judge's Phase 4 is declared informative (\"how memorization fails to transfer\")."
+    }
+  },
+  {
+    "proposal": "T",
+    "D1": 2, "D3": 3, "D4": 2, "D5": 3, "D6": 3,
+    "justifications": {
+      "D1": "\"A learned model can discover non-obvious feature interactions... that domain rules miss\" — permutation null and an ablation exist, but there is no format/template decomposition control, so the surface-learning failure mode from the priors can still bite; guard incomplete.",
+      "D3": "\"Accuracy floor: FAIL if test accuracy < 58%\" plus training-time falsifier abort and a wall-time cap — >=2 numeric falsifiers with stopping rules.",
+      "D4": "\"Permutation null (label shuffle)... Expected: accuracy drops to ~50% (random)\" — at least one confound isolated by design, but the summary's format-only/prior-only decomposition confounds have no concrete design elements.",
+      "D5": "\"classify whether a new experiment will receive a pass verdict... better than domain heuristics\" — a genuinely different question from the refuted attempt-record judge, though the new cell is not explicitly stated against prior work.",
+      "D6": "\"If (B) achieves >75% accuracy but (A) < 65%, then outcome information is carrying the signal, not design parameter interactions\" — falsifier branches map to distinct conclusions, but no vacuous/no-signal reading is pre-committed."
+    }
+  }
+]

@@ -1,0 +1,46 @@
+{
+ "run_tag": "reqal-20260903T213647",
+ "workers": {
+  "M1": {
+   "exit": 0,
+   "out": "{\"machine\": \"M1\", \"n\": 40, \"p50_ms\": 46.855926513671875, \"p95_ms\": 273.4565734863281}"
+  },
+  "M2": {
+   "exit": 0,
+   "out": "{\"machine\": \"M2\", \"n\": 40, \"p50_ms\": 44.71302032470703, \"p95_ms\": 361.5999221801758}"
+  },
+  "M3": {
+   "exit": 9,
+   "out": ""
+  },
+  "M4": {
+   "exit": 0,
+   "out": "{\"machine\": \"M4\", \"n\": 40, \"p50_ms\": 51.671743392944336, \"p95_ms\": 339.9627208709717}"
+  },
+  "M3_replay": {
+   "exit": 0,
+   "out": "{\"machine\": \"M3\", \"n\": 40, \"p50_ms\": 2.000093460083008, \"p95_ms\": 2.562999725341797}"
+  }
+ },
+ "n_per_worker": 40,
+ "expected_unique": 160,
+ "stored_rows": 160,
+ "stored_distinct": 160,
+ "no_silent_duplicates_G21": true,
+ "provenance_failures": 0,
+ "writes_logged_by_machine": {
+  "M1": 40,
+  "M2": 40,
+  "M3": 40,
+  "M4": 40
+ },
+ "reads_during_writes_G17": {
+  "ok": 30,
+  "of": 30,
+  "p95_ms": 2200.8
+ },
+ "crash_recovery_G19": true,
+ "wall_seconds": 76.3,
+ "service_path_events_per_sec": 2.1,
+ "cross_host_caveat": "4 concurrent processes with distinct machine identities on M1; LAN legs pending M2-M4 pulling the branch"
+}

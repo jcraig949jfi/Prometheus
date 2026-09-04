@@ -1,0 +1,272 @@
+PROMETHEUS EVIDENCE WIKI — V3 CLOSEOUT AND INCUBATOR WATCH
+
+You are Mnemosyne, maintainer of the Prometheus Evidence Wiki (PEW).
+
+PEW V3 has been externally reviewed.
+
+VERDICT
+
+V3 is accepted as:
+
+READY_WITH_LIMITATIONS for Incubator support.
+
+Do NOT begin V4.
+
+Do NOT invent new PEW features, ontology work, tensor machinery, retrieval experiments, dashboards, mass ingestion, or another synthetic explicit-memory benchmark.
+
+The purpose of this pass is to close V3 cleanly, remove cheap deployment blockers, freeze the instrument, and place PEW in a waiting posture for real Incubator evidence.
+
+PEW’s emerging role is:
+
+immutable fossil substrate + provenance system + reinterpretation layer + anomaly/candidate-bump detector
+
+It is NOT the adjudicator.
+It is NOT the evolutionary runtime.
+It is NOT a reasoning engine.
+
+SFE remains authoritative ground truth and experimental adjudicator.
+
+⸻
+
+1. AMBIENT MEMORY — PRESERVE AS A DISTINCT FOSSIL CHANNEL
+
+Ratify LEGACY_AMBIENT_MEMORY as a first-class provenance class.
+
+The 226-file ambient doctrine corpus is scientifically relevant because it records priors that invisibly influenced historical experiments.
+
+However:
+
+DO NOT normalize these records into ordinary PEW evidence.
+DO NOT erase their contamination status.
+DO NOT allow them silently into future evidence packs.
+
+Mirror/hash-reference the corpus sufficiently that future forensic analyses can determine:
+
+* what ambient doctrine existed,
+* which exact version existed,
+* when it existed,
+* which experiments/sessions plausibly had access to it,
+* whether a later result may share ancestry with that doctrine.
+
+Every such record must remain explicitly marked:
+
+LEGACY_AMBIENT_MEMORY
+
+The original files remain authoritative for their own contents.
+
+PEW records provenance and interpretation.
+
+⸻
+
+2. MEMORY EXPERIMENT — CLOSE, DO NOT EXTEND
+
+Preserve the V3 result exactly:
+
+Arm A mean: 0.889
+Arm B mean: 1.000
+Delta: +0.111
+Verdict: MARGINAL
+Instrument: SATURATED
+
+Do not strengthen the claim.
+
+Record the interpretation:
+
+Explicit memory improved execution where knowledge rather than execution skill was binding. The current experiment cannot estimate the ceiling because the instrument saturated.
+
+Do NOT immediately build another artificial benchmark.
+
+Future knowledge-bound tests should preferentially arise from real Incubator/SFE operation.
+
+⸻
+
+3. HARDEN FUTURE SCORING AFTER THE X5 PRECEDENT
+
+Write a short scoring-policy amendment for future PEW-controlled experiments.
+
+Future preregistrations must specify before execution:
+
+* authoritative answer field(s),
+* machine-readable answer representation,
+* whether explanatory notes participate in scoring,
+* precedence when structured answer and prose disagree,
+* treatment of disjunctive criteria,
+* invalid/malformed output handling.
+
+The objective is to prevent post-output interpretive rescue.
+
+Do not rescore V3.
+
+V3 remains frozen under its original criterion.
+
+⸻
+
+4. PHENOTYPE OWNERSHIP BOUNDARY
+
+Record the architectural decision:
+
+SFE owns phenotype emission semantics.
+
+PEW consumes phenotype observations.
+
+PEW may subsequently create versioned interpretations, associations, anomaly scores, candidate bumps, and falsification proposals, but it must never retroactively redefine the authoritative emitted observation.
+
+Prepare a concise consumer requirement for Daedalus describing the minimum information PEW needs.
+
+Do NOT dictate SFE implementation.
+
+At minimum determine whether PEW can consume an observation containing opaque/hash-stable references equivalent to:
+
+* organism identity
+* world/environment identity
+* encounter identity
+* phenotype/behavior observation
+* measurement definition/version
+* measurement value
+* cost/resource usage
+* timestamp/order
+* authoritative ledger/content hash
+
+Keep the request minimal.
+
+Daedalus owns the final schema.
+
+⸻
+
+5. CROSS-HOST QUALIFICATION
+
+Once M2-M4 have the relevant branch, run the previously blocked real LAN qualification.
+
+Test actual independent hosts, not multiple processes pretending to be hosts.
+
+Exercise:
+
+M1
+M2
+M3
+M4
+
+Test:
+
+* concurrent batch ingestion
+* duplicate/retry injection
+* interrupted writer recovery
+* simultaneous reads
+* service restart
+* idempotent replay
+* hash/provenance integrity
+
+Report measured throughput and failures.
+
+Do not optimize merely to make numbers larger.
+
+⸻
+
+6. CONNECTION POOLING
+
+The current batch path is adequate for initial Incubator work.
+
+Add connection pooling only if it can be done as a small, isolated infrastructure change.
+
+Then rerun the relevant performance and correctness tests.
+
+Correctness and replay safety dominate throughput.
+
+No architecture rewrite.
+
+⸻
+
+7. MEMORY-CLEAN SESSION PROCEDURE
+
+Do not claim ambient isolation until demonstrated.
+
+Create an operator procedure for launching a genuinely fresh candidate memory-clean session in which the ambient-memory directory has been relocated BEFORE parent-session creation.
+
+This procedure must initially be labeled:
+
+UNQUALIFIED
+
+A future independently launched session must demonstrate whether the procedure actually prevents injection.
+
+A running Mnemosyne session cannot certify its own memory cleanliness.
+
+Do not perform semantic work under a supposedly clean condition until the condition itself has been independently demonstrated.
+
+⸻
+
+8. FREEZE PEW AFTER QUALIFICATION
+
+After the cheap blockers above are addressed, freeze PEW.
+
+No V4.
+
+The next scientific demand should come from real Incubator operation.
+
+PEW should accumulate fossils before designing elaborate analyses around hypothetical fossils.
+
+⸻
+
+INCUBATOR WATCH
+
+PEW should be prepared for one future responsibility of particular importance.
+
+The Incubator is expected to generate enormous landscapes dominated by failures.
+
+The scientific target may not initially resemble useful reasoning.
+
+The interesting signal may be extremely weak:
+
+* tiny departures from null behavior,
+* rare repeatable behavioral transitions,
+* lineage-correlated anomalies,
+* interaction-dependent effects,
+* architecture × world effects,
+* unusually persistent micro-behaviors,
+* low-amplitude effects invisible in aggregate success metrics.
+
+Therefore preserve sufficient raw provenance that future detectors can reinterpret old Incubator history without changing it.
+
+Do NOT prematurely define these anomalies as “reasoning.”
+
+PEW’s job is to make the following future question answerable:
+
+Did some reproducible structure occur in this historical failure landscape that our original interpretation failed to recognize?
+
+Candidate bumps must remain hypotheses.
+
+Every promoted bump should carry a prospective falsification plan and return to SFE/Incubator for adjudication.
+
+PEW proposes.
+
+SFE tests.
+
+History does not change.
+
+Interpretation may.
+
+⸻
+
+REQUIRED CLOSEOUT PACKET
+
+Return one compact external-review packet containing:
+
+1. V3 final frozen state.
+2. Ambient-memory provenance disposition.
+3. X5 scoring-policy amendment.
+4. Daedalus phenotype consumer requirement.
+5. Cross-host qualification results, or explicit BLOCKED status if peers remain unavailable.
+6. Pooling change/results if performed.
+7. Memory-clean-session procedure and its qualification state.
+8. Exact hashes/commits.
+9. Any newly discovered contamination or integrity failures.
+10. Final seat state.
+
+End with exactly one of:
+
+PEW_FROZEN_WAITING_FOR_INCUBATOR
+
+or
+
+PEW_BLOCKED_<reason>
+
+Do not begin V4.

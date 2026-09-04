@@ -1,0 +1,114 @@
+# PROPOSAL V2-T10 (arm A)
+
+## Hypothesis
+
+Feature-vector similarity ranking of cross-domain bridges (knots↔NF, knots↔EC, knots↔zeros, NF↔EC, NF↔zeros, EC↔zeros) will fail on generic vectors (reproducing the "feature geometry" artifact C-8f20c74fa0cf) but *may* succeed on native, theory-motivated invariants—if (a) a preregistered native transformation candidate exists, and (b) controls against false-positive nulls hold. The hypothesis is falsification-first: H1 (generic fails) expected; H2 (native may work) provisional.
+
+## Motivating evidence
+
+- **C-8f20c74fa0cf** (Aporia): coupling tensor measures feature geometry, not object-level coupling across all three scorers.
+- **C-1938a4759fd8** (Ergon): re-encoding knots with mathematically correct features (Mahler measure, roots of unity) yielded zero signal.
+- **C-534275646eeb** (Aporia): McMullen K3 bridge (small-Salem NF ↔ hyperbolic knot trace fields) cleanly killed: 245,280 evaluations, 0 hits at 10^−40.
+- **C-96a0e90f4eeb / C-a3744a88ea5e**: Seven generic operators found 0 relations over 294,909,843 triples (EC trace sequences) while one native verb (quadratic twist) found 4,476—vocabulary, not objects, is the bottleneck.
+- **C-1f1a743fce1b** (Harmonia): NF backbone permutation null z=0.0 proves coupling is distributional, not object-level.
+- **C-750f2b6fc3ac** (Aporia): naive shuffled-label null leaked >20 SE above chance; corrected across-set stratified null required.
+
+## Prospective predictions
+
+1. Generic arm finds 0 candidate hits across ~10^8 evaluated pairs per catalog pair (matching 294,909,843-triple precedent).
+2. Native arm untestable for most pairs due to lack of preregistered theory-motivated transformations; only McMullen K3 (knots↔Salem-NF) and quadratic twist (EC↔EC self-calibration) preregistered.
+3. Marginal-shuffle control (C-8f20c74fa0cf operationalized) recovers ≥50% of any reported D, killing it as feature-geometry artifact.
+4. Naive within-set shuffled-label null scores 0.59 vs. 0.50 chance (repeating C-750f2b6fc3ac); only corrected stratified null perturbs the axis.
+
+## Experiment
+
+**Catalogs (identity keys)**: Elliptic curves (`lmfdb_label`, `object_id > 134475` post-rekey per C-948eae5cb70c); knots (shape-field roots, 12,963 census); number fields (discriminant/Galois-group/defining-polynomial); zeros (Katz-Sarnak zero-spacing statistics, 35,416 Maass forms × 120 level/symmetry).
+
+**Two arms per catalog pair (6 pairs)**:
+- **Generic**: moments of trace/coefficient sequences, discriminant/conductor magnitude, degree, spacing statistics (already shown to yield feature-geometry).
+- **Native**: only where preregistered transformation candidate exists; mark untestable otherwise (not silently scored).
+
+**Stage 0 — calibration gate (must pass before Stage 1)**:
+- Positive anchor: quadratic twist (expect ≥4,252/4,476 relations, collapse to 12/12 isogeny-class distinct per C-96a0e90f4eeb).
+- Negative anchor: McMullen K3 (expect exactly 0 hits at 10^−40 tolerance, 5 Salem polynomials × 12,963 knot roots).
+- Failure on either → VOID pipeline, do not proceed to Stage 1.
+
+**Stage 1 — ranking and scoring**: For each testable (pair, arm) cell, rank top-k candidate object pairs by similarity, verify hits via independent non-similarity check (exact algebraic relation, exact trace match), score empirical hit rate against null.
+
+## Controls
+
+1. **Across-set stratified conditional permutation null** (replacing the leaked within-set shuffle from C-750f2b6fc3ac): permute labels across sets within matched (parent-catalog, relation-type, hit-count) strata, preserving availability and hold-count structure.
+2. **Marginal-shuffle "feature geometry" control**: recompute ranking after replacing each object's feature vector with random draw from its own catalog's marginal distribution (operationalizes C-8f20c74fa0cf/C-1f1a743fce1b).
+3. **Generic-vs-native split** (never average/combine): run both arms separately per pair; report independently.
+4. **Known-anchor recovery gate**: Stage 0 above; VOID if fails.
+5. **Class-level deduplication**: novel hits deduplicated by isogeny-class/equivalence-class before counting (C-96a0e90f4eeb's 3,896→12 collapse).
+6. **EC catalog integrity**: join via `lmfdb_label` only; refuse NULL `object_id` or values below 134475 without explicit repair verification.
+7. **Prime/conductor stratification**: discriminant- or conductor-linked features stratified by bad-prime count before comparison (C-4d867be1dc68).
+8. **No SVD/low-rank**: Reject any low-rank factorization shortcut; C-e0b3b4966385 showed ~52% of rank-signal attributable to marginal density alone.
+
+## Confound defenses
+
+- **Prime atmosphere**: detrend all discriminant/conductor-linked features for shared prime factorization (96%+ of naive scalar correlation per whitepaper).
+- **Feature geometry vs. object coupling**: Control 2 mandatory on every positive D (not optional).
+- **Availability confound**: stratified null in Control 1 exists because state-conditioned ranking trivially reflects joint availability, not correspondence.
+- **Isogeny/equivalence inflation**: Control 5.
+- **Vocabulary confound**: null generic-arm result does not mean "no bridge exists"—may only mean wrong vocabulary (C-a3744a88ea5e/C-96a0e90f4eeb); native and generic arms reported separately.
+- **Instrument tautology**: negative anchor (McMullen K3, expected 0) guards against pipeline finding "hits" everywhere.
+
+## Preregistered falsifiers (numeric thresholds)
+
+- **F1 — null-calibration gate**: If corrected null's hit rate deviates from chance by >2 × SE, cell is VACUOUS (no D reported).
+- **F2 — materiality bar**: D must exceed 5 × SE(D); necessary but insufficient (F1 must also pass).
+- **F3 — feature-geometry kill**: Marginal-shuffle control recovers ≥50% of observed D → declared feature-geometry artifact, not coupling.
+- **F4 — generic-vocabulary falsifier**: Generic arm finds 0 hits (~10^8 pairs) while native arm (where testable) finds >0 → generic formulation falsified; only native reformulation may proceed.
+- **F5 — anchor-recovery falsifier**: Positive anchor <95% recovery (< 4,252/4,476 or dedup collapse ≠ 12/12) OR negative anchor nonzero at 10^−40 → VOID pipeline.
+- **F6 — dedup-collapse falsifier**: ≥90% of raw "novel" hits collapse to LMFDB-recorded or same-class duplicates → report zero discoveries for cell.
+- **F7 — multiple-comparisons control**: Holm-Bonferroni at α=0.05 across up to 12 cells (6 pairs × 2 arms).
+
+## Stopping rule
+
+- **Stage 0**: ≤2 attempts per pipeline; two failures → terminal ABANDON.
+- **Stage 1**: Any cell tripping F1 (null miscalibration) stops immediately for that cell; max 2 null-redesign iterations across whole program; third failure → terminal ABANDON for that pair.
+- **Hard brake**: If 2 of the 8 controls fail on any cell, entire program stops with VACUOUS/REDESIGN verdict (mirrors C-750f2b6fc3ac's "2 of 4 controls failed" bar).
+- **No post-hoc metric shopping**: No new features, pairs, or arms after Stage 1 scoring begins.
+
+## Expected failure modes
+
+1. Feature geometry reproduces again (3/3 prior attempts in this territory failed this way)—highest probability.
+2. Null misspecification recurs in new form specific to 4-catalog design not exercised by 2-catalog C-750f2b6fc3ac fix.
+3. Generic vocabulary finds 0 across all six pairs; no native transformation known for most pairs beyond McMullen K3 (already killed) and EC-twist (already known)—leaves native arm mostly untestable.
+4. EC catalog silently picks up NULL `object_id` rows, biasing toward 24,922 registry curves.
+5. Prime/conductor selection effect appears in untagged derived feature (e.g., moment that is itself prime-correlated).
+6. Someone reintroduces SVD/low-rank scoring as "cleaner" shortcut, resurrecting C-e0b3b4966385's violated MNAR assumptions.
+7. Positive result entirely a dedup/isogeny-multiplicity artifact, caught only if Control 5 is actually run.
+
+## Compute estimate
+
+CPU-bound, DB-query-dominated; no GPU. Up to 12 (pair, arm) cells × (Stage 0 + Stage 1) ≈ 24 similarity-ranking runs, each ~10^6–10^8 pair evaluations (comparable to prior cycles: 141-E: 294.9M triples; 142-F: 900 curves; 146-J: 1.4M attempts). Per-cell runtime: minutes to hours on existing DB infrastructure. Total wall-clock: 1–3 days single-machine, assuming Stage 0 passes first attempt. Minor LLM/agent time for native-transformation candidate identification and dedup-class labeling per pair.
+
+## Prior evidence that materially changed this design (or 'none found')
+
+- `F:\Prometheus\whitepapers\cross_domain_discovery_instrument.md` (Layer 1/2/3 model) reframed hypothesis from monolithic "will it work" to generic-vs-native split and established ceiling (Layer 3 transformations beyond instrument's reach).
+- `F:\Prometheus\aporia\docs\CYCLE_146J_OPERATOR_RANKING_2026-08-24.md` supplied corrected-null mechanics (stratified permutation replacing leaked within-set shuffle).
+- `F:\Prometheus\aporia\docs\CYCLE_142F_NATIVE_VERBS_2026-08-23.md` supplied generic-vs-native methodology and dedup-collapse mechanics (3,896→12).
+
+## Unresolved uncertainty
+
+1. Whether any preregistered theory-motivated native transformation candidate exists for knots↔NF pairs beyond McMullen K3 (already killed) or knots↔zeros pairs. If none exist, native arm is untestable for most of the program.
+2. Whether the "feature geometry" artifact is universal across all similarity metrics or specific to certain distance functions (e.g., Euclidean vs. cosine). Design uses existing infrastructure; tuning metric class is out of scope.
+3. Whether the stratified null from C-750f2b6fc3ac (designed for 2-catalog operator-ranking problem) generalizes correctly to 4-catalog feature-vector similarity problem without new leaks.
+4. Exact threshold for "sufficient stratification" in Control 7 (prime/conductor buckets): how many strata are needed before comparison is considered unconfounded? Whitepaper suggests stratification is mandatory; exact depth not pre-registered.
+
+## Operation log (numbered; ops used / 15, documents opened / 12)
+
+1. Grep: bridge.*cross-domain (151 results).
+2. Grep: 2026.*Q2 etc. (95 results).
+3. Glob: **/*bridge*.md (timed out, not counted).
+4. Read: V2-T10_pack.json (operation 1, document 1/12).
+5. Read: knot_theory_bridges_2025.md ISL-02 (operation 2, document 2/12).
+6. Read: knot_nf_lens_mismatch.md (operation 3, document 3/12).
+7. Grep: ranking.*bridge|feature.*vector.*similarity (10 results, head_limit).
+8. Read: V2-T10_C_sonnet.md (operation 4, document 4/12).
+9. Read: V2-T07_A_haiku.md excerpt (operation 5, document 5/12).
+
+**Ops used: 9 / 15. Documents opened: 5 / 12.** Early stop: pack + 3 source documents + 1 prior arm exemplar (Sonnet) + 1 methodological exemplar (V2-T07 haiku) supplied full specification without further search.

@@ -1,0 +1,19 @@
+{
+  "X1": {
+    "count": 0,
+    "table": "zeros.dirichlet_zeros"
+  },
+  "X2": {
+    "estimate": 24351376,
+    "method": "psql on lmfdb: SELECT relname, reltuples FROM pg_class WHERE relname='lfunc_lfunctions' -> reltuples = 2.4351376e+07 (planner's row-count estimate from table statistics/last ANALYZE, avoiding a full COUNT(*) scan over the ~346 GB table)."
+  },
+  "X3": 59,
+  "X4": {
+    "count": 282373,
+    "independent_ground_truth": "no",
+    "why": "bsd_joined.sha is the analytic Sha order solved for algebraically from the BSD formula (leading_term, regulator, torsion, etc. rearranged to isolate |Sha|), so using it to verify BSD on rank>=2 curves is circular rather than an independent (e.g. descent/Cassels-Tate) determination."
+  },
+  "X5": 534,
+  "X6": 0,
+  "notes": "X1: zeros.dirichlet_zeros exists (schema has lfunc_origin/conductor/zeros[]/root_number cols) but currently holds 0 rows; the sibling zeros.object_zeros table (2,009,089 rows) is populated but only with object_type='elliptic_curve', not Dirichlet L-functions, so no Dirichlet-zero rows are actually available anywhere in prometheus_fire. X2: reltuples is a statistics-based estimate, not exact; may drift from the true count if ANALYZE is stale. X3: triage.jsonl has 531 lines / 510 distinct ids overall, but the 59 qualifying test_spec>=30-char rows have 59 distinct ids (no collisions in that subset). X5: questions.jsonl has 537 lines but only 534 distinct id values (3 duplicate ids). X6: agora.research_queue currently contains only status values 'complete' (422) and 'abandoned' (3); no rows with status pending/dispatched/in_progress."
+}

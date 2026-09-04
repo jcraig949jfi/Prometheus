@@ -1,0 +1,62 @@
+{
+ "all_pass": false,
+ "checks": {
+  "unknown_packet": {
+   "pass": true,
+   "error": "rejected: unknown_source_packet"
+  },
+  "missing_quote": {
+   "pass": true,
+   "error": "rejected: evidence_requires_packet_and_quote"
+  },
+  "bad_evidence_type": {
+   "pass": true,
+   "error": "rejected: unknown_evidence_type:VIBES"
+  },
+  "bad_packet_kind": {
+   "pass": true,
+   "error": "rejected: unknown_packet_kind:vibes_packet"
+  },
+  "bad_status": {
+   "pass": true,
+   "error": "rejected: unknown_claim_status:TRUE_FACT"
+  },
+  "claim_no_provenance": {
+   "pass": true,
+   "error": "rejected: claim_requires_packet_or_experiment"
+  },
+  "observed_rel_no_packet": {
+   "pass": true,
+   "error": "rejected: observed_relation_requires_packet"
+  },
+  "bad_relation_type": {
+   "pass": true,
+   "error": "rejected: unknown_relation_type:VIBES_WITH"
+  },
+  "v2_relation_type_accepted": {
+   "pass": true
+  },
+  "concurrent_duplicate_single_record": {
+   "pass": true
+  },
+  "staleness_fields": {
+   "pass": true
+  },
+  "correction_versions_preserved": {
+   "pass": true,
+   "current": "WPTEST: claim A corrected wording"
+  },
+  "correction_relation_present": {
+   "pass": false
+  },
+  "dependency_traversal": {
+   "pass": true
+  },
+  "contradiction_traversal": {
+   "pass": true
+  },
+  "fixture_isolation_after_namespacing": {
+   "pass": true
+  }
+ }
+}

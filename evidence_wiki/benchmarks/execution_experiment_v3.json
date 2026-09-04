@@ -1,0 +1,54 @@
+{
+ "arms": {
+  "A1": 5,
+  "A2": 5,
+  "A3": 6,
+  "B1": 6,
+  "B2": 6,
+  "B3": 6
+ },
+ "meanA": 0.889,
+ "meanB": 1.0,
+ "delta": 0.111,
+ "paired": "B>A in 2/3, tie 1/3",
+ "frozen_verdict_band": "MARGINAL [0.083, 0.25)",
+ "G6_nonsaturation": {
+  "A_trapped_mean": 0.867,
+  "band": [
+   0.1,
+   0.8
+  ],
+  "violated": true,
+  "meaning": "sonnet execution competence nearly saturates the instrument; the delta is a floor-bounded reading"
+ },
+ "only_discriminating_task": "X1 (mirror location): controls 1/3, pack 3/3",
+ "g9_anti_anchoring": "B2/B3 overrode the pack's X5 headline after live verification (content-distinct reading), while still satisfying the frozen criterion via stated line/id counts - explicit memory did NOT induce blind deference",
+ "s6_chain": "pack 8345ba29 -> 3 consumers -> decision artifacts (hashed) -> executed queries -> scored results, all in ew.memory_influences",
+ "verdict": "EXPLICIT_MEMORY_MARGINAL_EXECUTION_BENEFIT (delta +0.111, frozen MARGINAL band) under an instrument that saturated for capable models; the benefit concentrated exactly on the one task where knowledge, not skill, was binding",
+ "per_task": {
+  "X1": {
+   "A": "1/3 (only A3 found charon_duckdb mirror)",
+   "B": "3/3"
+  },
+  "X2": {
+   "A": "3/3 (A1 even diagnosed n_live_tup=0 + TABLESAMPLE cross-check)",
+   "B": "3/3 (citing C-8222e18e2261, verified live)"
+  },
+  "X3": {
+   "A": "3/3 (python dict iteration is incidentally last-wins)",
+   "B": "3/3 (B1 quantified counterfactual: first-wins yields 41)"
+  },
+  "X4": {
+   "A": "3/3 (controls reasoned the circularity unaided)",
+   "B": "3/3 (citing C-e0352ce96e11)"
+  },
+  "X5": {
+   "A": "3/3",
+   "B": "3/3 per frozen disjunct ('537 lines / 534 unique' stated verbatim in notes); B2/B3 answer-field 537 on a content-distinct reading that OVERRODE the pack headline - logged as anti-anchoring evidence (G9)"
+  },
+  "X6": {
+   "A": "3/3",
+   "B": "3/3 (calibration clean both arms)"
+  }
+ }
+}

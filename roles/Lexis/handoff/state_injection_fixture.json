@@ -1,0 +1,3587 @@
+{
+ "fixture": "lexis_g7_state_injection_fixture",
+ "version": 1,
+ "battery": "roles/Charon/apollo_e9/charon_battery_E9.json",
+ "battery_commit": "5097b0c8f",
+ "evidence": "roles/Lexis/notes/g7_charon_result.json",
+ "clean_pool_C": [
+  "entity_counter",
+  "forward_chain",
+  "op_aggregate_quantities",
+  "op_build_ordering",
+  "parse_box_items",
+  "parse_comparison",
+  "parse_names_and_relations",
+  "parse_numbers",
+  "parse_ordinal",
+  "parse_question_target",
+  "parse_rules",
+  "parse_which_extreme",
+  "relations_from_facts",
+  "score_by_aggregate__g",
+  "score_by_comparison__g",
+  "score_by_derivability__g",
+  "score_by_extreme_number__g",
+  "select_nth__g"
+ ],
+ "production_organism": [
+  "parse_comparison",
+  "parse_which_extreme",
+  "parse_box_items",
+  "op_aggregate_quantities",
+  "parse_rules",
+  "parse_ordinal",
+  "forward_chain",
+  "parse_names_and_relations",
+  "relations_from_facts",
+  "op_build_ordering",
+  "score_by_extreme_number__g",
+  "score_by_aggregate__g",
+  "score_by_derivability__g",
+  "score_by_comparison__g",
+  "select_nth__g"
+ ],
+ "slot_groups": {
+  "parsed": [
+   "numbers",
+   "names",
+   "relations",
+   "quantities",
+   "question_target"
+  ],
+  "derived": [
+   "counts",
+   "ordered",
+   "max_value",
+   "comparison",
+   "extreme_number",
+   "rules",
+   "facts",
+   "derived_facts"
+  ]
+ },
+ "experiment": {
+  "question": "If the surface layer is bypassed and the correct semantic state is injected, can the existing substrate solve the task?",
+  "arms": {
+   "A_raw": "KNOWN_0833 on the raw prompt (= E9; 2/42, 40 abstain)",
+   "B_oracle_parsed": "inject `injection.parsed.slots`, run `then_run`, score",
+   "B_oracle_derived": "inject `injection.derived.slots`, run `then_run`, score",
+   "C_corrupted": "consumer-owned: inject a plausible-but-wrong state of the same shape (e.g. swapped relation direction, off-by-one count) and confirm the gold does NOT come out; a level whose corrupted arm also scores is an answer leak, not a capability"
+  },
+  "readings": {
+   "A_surface": "raw fails, parsed-level oracle solves",
+   "B_capability": "parsed-level has no consumer or fails; derived-level solves",
+   "C_readout": "derived-level path fails, or exists only as readout_only",
+   "score_readout_only_separately": "rows with injection.derived.readout_only must be reported apart from the rest; they carry no capability content"
+  },
+  "not_run_here": "the fixture self-check runs each oracle path once to prove the fixture is consumable; the arm comparison and the corrupted control are the consumer's experiment"
+ },
+ "summary": {
+  "n_tasks": 42,
+  "unrecognised": 15,
+  "number_extraction_only": 19,
+  "fail_before_capability_layer": 34,
+  "baseline_outcomes": {
+   "CORRECT": 2,
+   "ABSTAIN": 40,
+   "WRONG": 0
+  },
+  "class_counts": {
+   "dE_bound": 40,
+   "solved": 2
+  },
+  "parsed_level": {
+   "NO_CONSUMER_OP (B-gap by construction)": 22,
+   "PATH_EXISTS": 9,
+   "NO_SLOT": 11
+  },
+  "derived_level": {
+   "PATH_EXISTS": 39,
+   "NO_SLOT": 3
+  },
+  "derived_readout_only": 13,
+  "selfcheck_paths": {
+   "derived_True": 39,
+   "parsed_True": 9
+  },
+  "discriminates": {
+   "B vs C: parsed level has no consumer; derived-level path exists": 17,
+   "NONE: no slot can carry the needed state at either level": 3,
+   "A vs (B or C): parsed-level path exists": 9,
+   "C only: derived injection is one string match from the answer": 13
+  }
+ },
+ "tasks": [
+  {
+   "charon_index": 0,
+   "g7_sorted_index": 12,
+   "category": "numeric_comparison",
+   "prompt": "A cargo drone has a payload limit of 47.5 kg. A survey drone has a payload limit of 47.05 kg. Which drone can carry more?",
+   "candidates": [
+    "the survey drone",
+    "both are identical",
+    "the cargo drone",
+    "undetermined"
+   ],
+   "correct": "the cargo drone",
+   "correct_slot": 2,
+   "candidate_lens": [
+    16,
+    18,
+    15,
+    12
+   ],
+   "correct_is_longest": false,
+   "correct_is_strictly_longest": false,
+   "correct_is_shortest": false,
+   "correct_is_strictly_shortest": false,
+   "recognition": {
+    "fired_at_initial_state": [
+     "parse_numbers"
+    ],
+    "closure_size_under_C": 2,
+    "unrecognised": false,
+    "number_extraction_only": true,
+    "reaches_meaningful_representation": false
+   },
+   "baseline": {
+    "organism": "KNOWN_0833",
+    "outcome": "ABSTAIN",
+    "selected": "",
+    "correct_reachable_under_C": false,
+    "robust_under_C_all_24_permutations": false,
+    "positional_fallback": false,
+    "class": "dE_bound"
+   },
+   "frozen_pair": {
+    "reachable_with_pair": false,
+    "robust_with_pair": false,
+    "bundle_readout_last_outcome": "ABSTAIN",
+    "bundle_readout_last_selected": "",
+    "trace": null
+   },
+   "injection": {
+    "parsed": {
+     "slots": {
+      "quantities": {
+       "the cargo drone": 47.5,
+       "the survey drone": 47.05
+      },
+      "question_target": "first"
+     },
+     "then_run": [],
+     "status": "NO_CONSUMER_OP (B-gap by construction)",
+     "verified": null
+    },
+    "derived": {
+     "slots": {
+      "relations": [
+       [
+        "the cargo drone",
+        "the survey drone"
+       ]
+      ],
+      "question_target": "first"
+     },
+     "then_run": [
+      "op_build_ordering",
+      "select_nth__g"
+     ],
+     "status": "PATH_EXISTS",
+     "verified": true,
+     "selected": "the cargo drone"
+    }
+   },
+   "oracle_encodes": "relation direction = 'more'; readout by entity phrase",
+   "discriminates": "B vs C: parsed level has no consumer; derived-level path exists"
+  },
+  {
+   "charon_index": 1,
+   "g7_sorted_index": 13,
+   "category": "numeric_comparison",
+   "prompt": "Station A recorded -12 \u00b0C overnight. Station B recorded -3 \u00b0C overnight. Which station was colder?",
+   "candidates": [
+    "station B",
+    "neither, both equal",
+    "station A",
+    "it cannot be determined"
+   ],
+   "correct": "station A",
+   "correct_slot": 2,
+   "candidate_lens": [
+    9,
+    19,
+    9,
+    23
+   ],
+   "correct_is_longest": false,
+   "correct_is_strictly_longest": false,
+   "correct_is_shortest": true,
+   "correct_is_strictly_shortest": false,
+   "recognition": {
+    "fired_at_initial_state": [
+     "parse_numbers"
+    ],
+    "closure_size_under_C": 2,
+    "unrecognised": false,
+    "number_extraction_only": true,
+    "reaches_meaningful_representation": false
+   },
+   "baseline": {
+    "organism": "KNOWN_0833",
+    "outcome": "ABSTAIN",
+    "selected": "",
+    "correct_reachable_under_C": false,
+    "robust_under_C_all_24_permutations": false,
+    "positional_fallback": false,
+    "class": "dE_bound"
+   },
+   "frozen_pair": {
+    "reachable_with_pair": false,
+    "robust_with_pair": false,
+    "bundle_readout_last_outcome": "ABSTAIN",
+    "bundle_readout_last_selected": "",
+    "trace": null
+   },
+   "injection": {
+    "parsed": {
+     "slots": {
+      "quantities": {
+       "station A": -12,
+       "station B": -3
+      },
+      "question_target": "first"
+     },
+     "then_run": [],
+     "status": "NO_CONSUMER_OP (B-gap by construction)",
+     "verified": null
+    },
+    "derived": {
+     "slots": {
+      "relations": [
+       [
+        "station A",
+        "station B"
+       ]
+      ],
+      "question_target": "first"
+     },
+     "then_run": [
+      "op_build_ordering",
+      "select_nth__g"
+     ],
+     "status": "PATH_EXISTS",
+     "verified": true,
+     "selected": "station A"
+    }
+   },
+   "oracle_encodes": "relation direction = 'colder' (min); readout by entity phrase",
+   "discriminates": "B vs C: parsed level has no consumer; derived-level path exists"
+  },
+  {
+   "charon_index": 2,
+   "g7_sorted_index": 14,
+   "category": "numeric_comparison",
+   "prompt": "One reservoir is 3/8 full. Another is 0.4 full. Which holds the larger fraction of its capacity?",
+   "candidates": [
+    "the reservoir at 3/8",
+    "they are equally full",
+    "it depends on the reservoir sizes",
+    "the reservoir at 0.4"
+   ],
+   "correct": "the reservoir at 0.4",
+   "correct_slot": 3,
+   "candidate_lens": [
+    20,
+    21,
+    33,
+    20
+   ],
+   "correct_is_longest": false,
+   "correct_is_strictly_longest": false,
+   "correct_is_shortest": true,
+   "correct_is_strictly_shortest": false,
+   "recognition": {
+    "fired_at_initial_state": [
+     "parse_numbers",
+     "parse_question_target",
+     "parse_which_extreme"
+    ],
+    "closure_size_under_C": 8,
+    "unrecognised": false,
+    "number_extraction_only": false,
+    "reaches_meaningful_representation": true
+   },
+   "baseline": {
+    "organism": "KNOWN_0833",
+    "outcome": "ABSTAIN",
+    "selected": "",
+    "correct_reachable_under_C": false,
+    "robust_under_C_all_24_permutations": false,
+    "positional_fallback": false,
+    "class": "dE_bound"
+   },
+   "frozen_pair": {
+    "reachable_with_pair": false,
+    "robust_with_pair": false,
+    "bundle_readout_last_outcome": "ABSTAIN",
+    "bundle_readout_last_selected": "",
+    "trace": null
+   },
+   "injection": {
+    "parsed": {
+     "slots": {
+      "quantities": {
+       "the reservoir at 3/8": 0.375,
+       "the reservoir at 0.4": 0.4
+      },
+      "question_target": "first"
+     },
+     "then_run": [],
+     "status": "NO_CONSUMER_OP (B-gap by construction)",
+     "verified": null
+    },
+    "derived": {
+     "slots": {
+      "relations": [
+       [
+        "the reservoir at 0.4",
+        "the reservoir at 3/8"
+       ]
+      ],
+      "question_target": "first"
+     },
+     "then_run": [
+      "op_build_ordering",
+      "select_nth__g"
+     ],
+     "status": "PATH_EXISTS",
+     "verified": true,
+     "selected": "the reservoir at 0.4"
+    }
+   },
+   "oracle_encodes": "fraction/decimal already compared; readout by entity phrase",
+   "discriminates": "B vs C: parsed level has no consumer; derived-level path exists"
+  },
+  {
+   "charon_index": 3,
+   "g7_sorted_index": 15,
+   "category": "numeric_comparison",
+   "prompt": "Ledger A lists 1,204,000 entries. Ledger B lists 1,240,000 entries. Which ledger lists more entries?",
+   "candidates": [
+    "ledger A",
+    "the two are equal",
+    "it cannot be determined",
+    "ledger B"
+   ],
+   "correct": "ledger B",
+   "correct_slot": 3,
+   "candidate_lens": [
+    8,
+    17,
+    23,
+    8
+   ],
+   "correct_is_longest": false,
+   "correct_is_strictly_longest": false,
+   "correct_is_shortest": true,
+   "correct_is_strictly_shortest": false,
+   "recognition": {
+    "fired_at_initial_state": [
+     "parse_numbers"
+    ],
+    "closure_size_under_C": 2,
+    "unrecognised": false,
+    "number_extraction_only": true,
+    "reaches_meaningful_representation": false
+   },
+   "baseline": {
+    "organism": "KNOWN_0833",
+    "outcome": "ABSTAIN",
+    "selected": "",
+    "correct_reachable_under_C": false,
+    "robust_under_C_all_24_permutations": false,
+    "positional_fallback": false,
+    "class": "dE_bound"
+   },
+   "frozen_pair": {
+    "reachable_with_pair": false,
+    "robust_with_pair": false,
+    "bundle_readout_last_outcome": "ABSTAIN",
+    "bundle_readout_last_selected": "",
+    "trace": null
+   },
+   "injection": {
+    "parsed": {
+     "slots": {
+      "quantities": {
+       "ledger A": 1204000,
+       "ledger B": 1240000
+      },
+      "question_target": "first"
+     },
+     "then_run": [],
+     "status": "NO_CONSUMER_OP (B-gap by construction)",
+     "verified": null
+    },
+    "derived": {
+     "slots": {
+      "relations": [
+       [
+        "ledger B",
+        "ledger A"
+       ]
+      ],
+      "question_target": "first"
+     },
+     "then_run": [
+      "op_build_ordering",
+      "select_nth__g"
+     ],
+     "status": "PATH_EXISTS",
+     "verified": true,
+     "selected": "ledger B"
+    }
+   },
+   "oracle_encodes": "thousands separators already parsed; readout by entity phrase",
+   "discriminates": "B vs C: parsed level has no consumer; derived-level path exists"
+  },
+  {
+   "charon_index": 4,
+   "g7_sorted_index": 16,
+   "category": "numeric_comparison",
+   "prompt": "Machine A completes 9 items every 4 minutes. Machine B completes 11 items every 5 minutes. Which machine is faster?",
+   "candidates": [
+    "machine B",
+    "they run at the same rate",
+    "machine A",
+    "it cannot be determined"
+   ],
+   "correct": "machine A",
+   "correct_slot": 2,
+   "candidate_lens": [
+    9,
+    25,
+    9,
+    23
+   ],
+   "correct_is_longest": false,
+   "correct_is_strictly_longest": false,
+   "correct_is_shortest": true,
+   "correct_is_strictly_shortest": false,
+   "recognition": {
+    "fired_at_initial_state": [
+     "parse_numbers"
+    ],
+    "closure_size_under_C": 2,
+    "unrecognised": false,
+    "number_extraction_only": true,
+    "reaches_meaningful_representation": false
+   },
+   "baseline": {
+    "organism": "KNOWN_0833",
+    "outcome": "ABSTAIN",
+    "selected": "",
+    "correct_reachable_under_C": false,
+    "robust_under_C_all_24_permutations": false,
+    "positional_fallback": false,
+    "class": "dE_bound"
+   },
+   "frozen_pair": {
+    "reachable_with_pair": false,
+    "robust_with_pair": false,
+    "bundle_readout_last_outcome": "ABSTAIN",
+    "bundle_readout_last_selected": "",
+    "trace": null
+   },
+   "injection": {
+    "parsed": {
+     "slots": {
+      "quantities": {
+       "machine A": 2.25,
+       "machine B": 2.2
+      },
+      "question_target": "first"
+     },
+     "then_run": [],
+     "status": "NO_CONSUMER_OP (B-gap by construction)",
+     "verified": null
+    },
+    "derived": {
+     "slots": {
+      "relations": [
+       [
+        "machine A",
+        "machine B"
+       ]
+      ],
+      "question_target": "first"
+     },
+     "then_run": [
+      "op_build_ordering",
+      "select_nth__g"
+     ],
+     "status": "PATH_EXISTS",
+     "verified": true,
+     "selected": "machine A"
+    }
+   },
+   "oracle_encodes": "rates 9/4 vs 11/5 already computed; readout by entity phrase",
+   "discriminates": "B vs C: parsed level has no consumer; derived-level path exists"
+  },
+  {
+   "charon_index": 5,
+   "g7_sorted_index": 17,
+   "category": "numeric_comparison",
+   "prompt": "A beam is 5/4 metres long. A rod is 1.25 metres long. Which is longer?",
+   "candidates": [
+    "the beam",
+    "they are the same length",
+    "the rod",
+    "it cannot be determined"
+   ],
+   "correct": "they are the same length",
+   "correct_slot": 1,
+   "candidate_lens": [
+    8,
+    24,
+    7,
+    23
+   ],
+   "correct_is_longest": true,
+   "correct_is_strictly_longest": true,
+   "correct_is_shortest": false,
+   "correct_is_strictly_shortest": false,
+   "recognition": {
+    "fired_at_initial_state": [
+     "parse_numbers"
+    ],
+    "closure_size_under_C": 2,
+    "unrecognised": false,
+    "number_extraction_only": true,
+    "reaches_meaningful_representation": false
+   },
+   "baseline": {
+    "organism": "KNOWN_0833",
+    "outcome": "ABSTAIN",
+    "selected": "",
+    "correct_reachable_under_C": false,
+    "robust_under_C_all_24_permutations": false,
+    "positional_fallback": false,
+    "class": "dE_bound"
+   },
+   "frozen_pair": {
+    "reachable_with_pair": false,
+    "robust_with_pair": false,
+    "bundle_readout_last_outcome": "ABSTAIN",
+    "bundle_readout_last_selected": "",
+    "trace": null
+   },
+   "injection": {
+    "parsed": {
+     "slots": {
+      "quantities": {
+       "the beam": 1.25,
+       "the rod": 1.25
+      }
+     },
+     "then_run": [],
+     "status": "NO_CONSUMER_OP (B-gap by construction)",
+     "verified": null
+    },
+    "derived": {
+     "slots": "NO_SLOT",
+     "then_run": [],
+     "status": "NO_SLOT",
+     "verified": null
+    }
+   },
+   "oracle_encodes": "EQUALITY: no slot represents a tie and no readout selects it",
+   "discriminates": "NONE: no slot can carry the needed state at either level"
+  },
+  {
+   "charon_index": 6,
+   "g7_sorted_index": 18,
+   "category": "numeric_stated_premise",
+   "prompt": "Every crate holds exactly 18 bolts. A shipment contains 7 crates. How many bolts are in the shipment?",
+   "candidates": [
+    "125",
+    "128",
+    "132",
+    "126"
+   ],
+   "correct": "126",
+   "correct_slot": 3,
+   "candidate_lens": [
+    3,
+    3,
+    3,
+    3
+   ],
+   "correct_is_longest": true,
+   "correct_is_strictly_longest": false,
+   "correct_is_shortest": true,
+   "correct_is_strictly_shortest": false,
+   "recognition": {
+    "fired_at_initial_state": [
+     "parse_numbers"
+    ],
+    "closure_size_under_C": 2,
+    "unrecognised": false,
+    "number_extraction_only": true,
+    "reaches_meaningful_representation": false
+   },
+   "baseline": {
+    "organism": "KNOWN_0833",
+    "outcome": "ABSTAIN",
+    "selected": "",
+    "correct_reachable_under_C": false,
+    "robust_under_C_all_24_permutations": false,
+    "positional_fallback": false,
+    "class": "dE_bound"
+   },
+   "frozen_pair": {
+    "reachable_with_pair": false,
+    "robust_with_pair": false,
+    "bundle_readout_last_outcome": "ABSTAIN",
+    "bundle_readout_last_selected": "",
+    "trace": null
+   },
+   "injection": {
+    "parsed": {
+     "slots": {
+      "numbers": [
+       18,
+       7
+      ]
+     },
+     "then_run": [],
+     "status": "NO_CONSUMER_OP (B-gap by construction)",
+     "verified": null
+    },
+    "derived": {
+     "slots": {
+      "counts": {
+       "bolts": {
+        "count": 126
+       }
+      }
+     },
+     "then_run": [
+      "op_aggregate_quantities",
+      "score_by_aggregate__g"
+     ],
+     "status": "PATH_EXISTS",
+     "verified": true,
+     "selected": "126"
+    }
+   },
+   "oracle_encodes": "the product; parse_box_items would have written this for 'boxes with'",
+   "discriminates": "B vs C: parsed level has no consumer; derived-level path exists"
+  },
+  {
+   "charon_index": 7,
+   "g7_sorted_index": 19,
+   "category": "numeric_stated_premise",
+   "prompt": "A recipe uses exactly 250 millilitres of stock per serving. You prepare 6 servings. How much stock is used in total?",
+   "candidates": [
+    "1250 millilitres",
+    "1500 millilitres",
+    "1560 millilitres",
+    "2500 millilitres"
+   ],
+   "correct": "1500 millilitres",
+   "correct_slot": 1,
+   "candidate_lens": [
+    16,
+    16,
+    16,
+    16
+   ],
+   "correct_is_longest": true,
+   "correct_is_strictly_longest": false,
+   "correct_is_shortest": true,
+   "correct_is_strictly_shortest": false,
+   "recognition": {
+    "fired_at_initial_state": [
+     "parse_numbers"
+    ],
+    "closure_size_under_C": 2,
+    "unrecognised": false,
+    "number_extraction_only": true,
+    "reaches_meaningful_representation": false
+   },
+   "baseline": {
+    "organism": "KNOWN_0833",
+    "outcome": "ABSTAIN",
+    "selected": "",
+    "correct_reachable_under_C": false,
+    "robust_under_C_all_24_permutations": false,
+    "positional_fallback": false,
+    "class": "dE_bound"
+   },
+   "frozen_pair": {
+    "reachable_with_pair": false,
+    "robust_with_pair": false,
+    "bundle_readout_last_outcome": "ABSTAIN",
+    "bundle_readout_last_selected": "",
+    "trace": null
+   },
+   "injection": {
+    "parsed": {
+     "slots": {
+      "numbers": [
+       250,
+       6
+      ]
+     },
+     "then_run": [],
+     "status": "NO_CONSUMER_OP (B-gap by construction)",
+     "verified": null
+    },
+    "derived": {
+     "slots": {
+      "counts": {
+       "stock": {
+        "count": 1500
+       }
+      }
+     },
+     "then_run": [
+      "op_aggregate_quantities",
+      "score_by_aggregate__g"
+     ],
+     "status": "PATH_EXISTS",
+     "verified": true,
+     "selected": "1500 millilitres"
+    }
+   },
+   "oracle_encodes": "the product",
+   "discriminates": "B vs C: parsed level has no consumer; derived-level path exists"
+  },
+  {
+   "charon_index": 8,
+   "g7_sorted_index": 20,
+   "category": "numeric_stated_premise",
+   "prompt": "A tank loses exactly 3.5 litres of water per hour. How much does it lose over 8 hours?",
+   "candidates": [
+    "24.5 litres",
+    "28 litres",
+    "28.5 litres",
+    "35 litres"
+   ],
+   "correct": "28 litres",
+   "correct_slot": 1,
+   "candidate_lens": [
+    11,
+    9,
+    11,
+    9
+   ],
+   "correct_is_longest": false,
+   "correct_is_strictly_longest": false,
+   "correct_is_shortest": true,
+   "correct_is_strictly_shortest": false,
+   "recognition": {
+    "fired_at_initial_state": [
+     "parse_numbers"
+    ],
+    "closure_size_under_C": 2,
+    "unrecognised": false,
+    "number_extraction_only": true,
+    "reaches_meaningful_representation": false
+   },
+   "baseline": {
+    "organism": "KNOWN_0833",
+    "outcome": "ABSTAIN",
+    "selected": "",
+    "correct_reachable_under_C": false,
+    "robust_under_C_all_24_permutations": false,
+    "positional_fallback": false,
+    "class": "dE_bound"
+   },
+   "frozen_pair": {
+    "reachable_with_pair": false,
+    "robust_with_pair": false,
+    "bundle_readout_last_outcome": "ABSTAIN",
+    "bundle_readout_last_selected": "",
+    "trace": null
+   },
+   "injection": {
+    "parsed": {
+     "slots": {
+      "numbers": [
+       3.5,
+       8
+      ]
+     },
+     "then_run": [],
+     "status": "NO_CONSUMER_OP (B-gap by construction)",
+     "verified": null
+    },
+    "derived": {
+     "slots": {
+      "counts": {
+       "litres": {
+        "count": 28
+       }
+      }
+     },
+     "then_run": [
+      "op_aggregate_quantities",
+      "score_by_aggregate__g"
+     ],
+     "status": "PATH_EXISTS",
+     "verified": true,
+     "selected": "28 litres"
+    }
+   },
+   "oracle_encodes": "the product",
+   "discriminates": "B vs C: parsed level has no consumer; derived-level path exists"
+  },
+  {
+   "charon_index": 9,
+   "g7_sorted_index": 21,
+   "category": "numeric_stated_premise",
+   "prompt": "Each page of the register holds exactly 42 lines. A chapter fills 15 pages. How many lines does the chapter occupy?",
+   "candidates": [
+    "620",
+    "588",
+    "672",
+    "630"
+   ],
+   "correct": "630",
+   "correct_slot": 3,
+   "candidate_lens": [
+    3,
+    3,
+    3,
+    3
+   ],
+   "correct_is_longest": true,
+   "correct_is_strictly_longest": false,
+   "correct_is_shortest": true,
+   "correct_is_strictly_shortest": false,
+   "recognition": {
+    "fired_at_initial_state": [
+     "parse_numbers"
+    ],
+    "closure_size_under_C": 2,
+    "unrecognised": false,
+    "number_extraction_only": true,
+    "reaches_meaningful_representation": false
+   },
+   "baseline": {
+    "organism": "KNOWN_0833",
+    "outcome": "ABSTAIN",
+    "selected": "",
+    "correct_reachable_under_C": false,
+    "robust_under_C_all_24_permutations": false,
+    "positional_fallback": false,
+    "class": "dE_bound"
+   },
+   "frozen_pair": {
+    "reachable_with_pair": false,
+    "robust_with_pair": false,
+    "bundle_readout_last_outcome": "ABSTAIN",
+    "bundle_readout_last_selected": "",
+    "trace": null
+   },
+   "injection": {
+    "parsed": {
+     "slots": {
+      "numbers": [
+       42,
+       15
+      ]
+     },
+     "then_run": [],
+     "status": "NO_CONSUMER_OP (B-gap by construction)",
+     "verified": null
+    },
+    "derived": {
+     "slots": {
+      "counts": {
+       "lines": {
+        "count": 630
+       }
+      }
+     },
+     "then_run": [
+      "op_aggregate_quantities",
+      "score_by_aggregate__g"
+     ],
+     "status": "PATH_EXISTS",
+     "verified": true,
+     "selected": "630"
+    }
+   },
+   "oracle_encodes": "the product",
+   "discriminates": "B vs C: parsed level has no consumer; derived-level path exists"
+  },
+  {
+   "charon_index": 10,
+   "g7_sorted_index": 22,
+   "category": "numeric_stated_premise",
+   "prompt": "A single ticket costs exactly 23 credits. A group buys 14 tickets. What is the total cost?",
+   "candidates": [
+    "322 credits",
+    "312 credits",
+    "329 credits",
+    "337 credits"
+   ],
+   "correct": "322 credits",
+   "correct_slot": 0,
+   "candidate_lens": [
+    11,
+    11,
+    11,
+    11
+   ],
+   "correct_is_longest": true,
+   "correct_is_strictly_longest": false,
+   "correct_is_shortest": true,
+   "correct_is_strictly_shortest": false,
+   "recognition": {
+    "fired_at_initial_state": [
+     "parse_numbers"
+    ],
+    "closure_size_under_C": 2,
+    "unrecognised": false,
+    "number_extraction_only": true,
+    "reaches_meaningful_representation": false
+   },
+   "baseline": {
+    "organism": "KNOWN_0833",
+    "outcome": "ABSTAIN",
+    "selected": "",
+    "correct_reachable_under_C": false,
+    "robust_under_C_all_24_permutations": false,
+    "positional_fallback": false,
+    "class": "dE_bound"
+   },
+   "frozen_pair": {
+    "reachable_with_pair": false,
+    "robust_with_pair": false,
+    "bundle_readout_last_outcome": "ABSTAIN",
+    "bundle_readout_last_selected": "",
+    "trace": null
+   },
+   "injection": {
+    "parsed": {
+     "slots": {
+      "numbers": [
+       23,
+       14
+      ]
+     },
+     "then_run": [],
+     "status": "NO_CONSUMER_OP (B-gap by construction)",
+     "verified": null
+    },
+    "derived": {
+     "slots": {
+      "counts": {
+       "credits": {
+        "count": 322
+       }
+      }
+     },
+     "then_run": [
+      "op_aggregate_quantities",
+      "score_by_aggregate__g"
+     ],
+     "status": "PATH_EXISTS",
+     "verified": true,
+     "selected": "322 credits"
+    }
+   },
+   "oracle_encodes": "the product",
+   "discriminates": "B vs C: parsed level has no consumer; derived-level path exists"
+  },
+  {
+   "charon_index": 11,
+   "g7_sorted_index": 23,
+   "category": "numeric_stated_premise",
+   "prompt": "A sensor samples exactly 240 times per minute. How many samples does it take in 45 seconds?",
+   "candidates": [
+    "160",
+    "195",
+    "320",
+    "180"
+   ],
+   "correct": "180",
+   "correct_slot": 3,
+   "candidate_lens": [
+    3,
+    3,
+    3,
+    3
+   ],
+   "correct_is_longest": true,
+   "correct_is_strictly_longest": false,
+   "correct_is_shortest": true,
+   "correct_is_strictly_shortest": false,
+   "recognition": {
+    "fired_at_initial_state": [
+     "parse_numbers",
+     "parse_ordinal"
+    ],
+    "closure_size_under_C": 4,
+    "unrecognised": false,
+    "number_extraction_only": false,
+    "reaches_meaningful_representation": true
+   },
+   "baseline": {
+    "organism": "KNOWN_0833",
+    "outcome": "ABSTAIN",
+    "selected": "",
+    "correct_reachable_under_C": false,
+    "robust_under_C_all_24_permutations": false,
+    "positional_fallback": false,
+    "class": "dE_bound"
+   },
+   "frozen_pair": {
+    "reachable_with_pair": false,
+    "robust_with_pair": false,
+    "bundle_readout_last_outcome": "WRONG",
+    "bundle_readout_last_selected": "195",
+    "trace": null
+   },
+   "injection": {
+    "parsed": {
+     "slots": {
+      "numbers": [
+       240,
+       45
+      ]
+     },
+     "then_run": [],
+     "status": "NO_CONSUMER_OP (B-gap by construction)",
+     "verified": null
+    },
+    "derived": {
+     "slots": {
+      "counts": {
+       "samples": {
+        "count": 180
+       }
+      }
+     },
+     "then_run": [
+      "op_aggregate_quantities",
+      "score_by_aggregate__g"
+     ],
+     "status": "PATH_EXISTS",
+     "verified": true,
+     "selected": "180"
+    }
+   },
+   "oracle_encodes": "the product after a unit conversion (per minute -> 45 s)",
+   "discriminates": "B vs C: parsed level has no consumer; derived-level path exists"
+  },
+  {
+   "charon_index": 12,
+   "g7_sorted_index": 30,
+   "category": "transitivity",
+   "prompt": "Ana is taller than Bruno. Bruno is taller than Chen. Who is tallest?",
+   "candidates": [
+    "Bruno",
+    "Chen",
+    "Ana",
+    "it cannot be determined"
+   ],
+   "correct": "Ana",
+   "correct_slot": 2,
+   "candidate_lens": [
+    5,
+    4,
+    3,
+    23
+   ],
+   "correct_is_longest": false,
+   "correct_is_strictly_longest": false,
+   "correct_is_shortest": true,
+   "correct_is_strictly_shortest": true,
+   "recognition": {
+    "fired_at_initial_state": [
+     "parse_names_and_relations",
+     "parse_ordinal",
+     "parse_question_target"
+    ],
+    "closure_size_under_C": 42,
+    "unrecognised": false,
+    "number_extraction_only": false,
+    "reaches_meaningful_representation": true
+   },
+   "baseline": {
+    "organism": "KNOWN_0833",
+    "outcome": "CORRECT",
+    "selected": "Ana",
+    "correct_reachable_under_C": true,
+    "robust_under_C_all_24_permutations": true,
+    "positional_fallback": false,
+    "class": "solved"
+   },
+   "frozen_pair": {
+    "reachable_with_pair": true,
+    "robust_with_pair": true,
+    "bundle_readout_last_outcome": "CORRECT",
+    "bundle_readout_last_selected": "Ana",
+    "trace": null
+   },
+   "injection": {
+    "parsed": {
+     "slots": {
+      "names": [
+       "Ana",
+       "Bruno",
+       "Chen"
+      ],
+      "relations": [
+       [
+        "Ana",
+        "Bruno"
+       ],
+       [
+        "Bruno",
+        "Chen"
+       ]
+      ],
+      "question_target": "first"
+     },
+     "then_run": [
+      "op_build_ordering",
+      "select_nth__g"
+     ],
+     "status": "PATH_EXISTS",
+     "verified": true,
+     "selected": "Ana"
+    },
+    "derived": {
+     "slots": {
+      "ordered": [
+       "Ana",
+       "Bruno",
+       "Chen"
+      ],
+      "question_target": "first"
+     },
+     "then_run": [
+      "select_nth__g"
+     ],
+     "status": "PATH_EXISTS",
+     "verified": true,
+     "selected": "Ana"
+    }
+   },
+   "oracle_encodes": "taller = dominates",
+   "discriminates": "A vs (B or C): parsed-level path exists"
+  },
+  {
+   "charon_index": 13,
+   "g7_sorted_index": 31,
+   "category": "transitivity",
+   "prompt": "Crate W is heavier than crate X. Crate X is heavier than crate Y. Crate Y is heavier than crate Z. Which crate is lightest?",
+   "candidates": [
+    "crate W",
+    "crate X",
+    "crate Z",
+    "crate Y"
+   ],
+   "correct": "crate Z",
+   "correct_slot": 2,
+   "candidate_lens": [
+    7,
+    7,
+    7,
+    7
+   ],
+   "correct_is_longest": true,
+   "correct_is_strictly_longest": false,
+   "correct_is_shortest": true,
+   "correct_is_strictly_shortest": false,
+   "recognition": {
+    "fired_at_initial_state": [],
+    "closure_size_under_C": 1,
+    "unrecognised": true,
+    "number_extraction_only": false,
+    "reaches_meaningful_representation": false
+   },
+   "baseline": {
+    "organism": "KNOWN_0833",
+    "outcome": "ABSTAIN",
+    "selected": "",
+    "correct_reachable_under_C": false,
+    "robust_under_C_all_24_permutations": false,
+    "positional_fallback": false,
+    "class": "dE_bound"
+   },
+   "frozen_pair": {
+    "reachable_with_pair": false,
+    "robust_with_pair": false,
+    "bundle_readout_last_outcome": "ABSTAIN",
+    "bundle_readout_last_selected": "",
+    "trace": null
+   },
+   "injection": {
+    "parsed": {
+     "slots": {
+      "names": [
+       "crate W",
+       "crate X",
+       "crate Y",
+       "crate Z"
+      ],
+      "relations": [
+       [
+        "crate W",
+        "crate X"
+       ],
+       [
+        "crate X",
+        "crate Y"
+       ],
+       [
+        "crate Y",
+        "crate Z"
+       ]
+      ],
+      "question_target": "smallest"
+     },
+     "then_run": [
+      "op_build_ordering",
+      "select_nth__g"
+     ],
+     "status": "PATH_EXISTS",
+     "verified": true,
+     "selected": "crate Z"
+    },
+    "derived": {
+     "slots": {
+      "ordered": [
+       "crate W",
+       "crate X",
+       "crate Y",
+       "crate Z"
+      ],
+      "question_target": "smallest"
+     },
+     "then_run": [
+      "select_nth__g"
+     ],
+     "status": "PATH_EXISTS",
+     "verified": true,
+     "selected": "crate Z"
+    }
+   },
+   "oracle_encodes": "'lightest' -> index -1, spelled 'smallest' (select_nth has no 'last')",
+   "discriminates": "A vs (B or C): parsed-level path exists"
+  },
+  {
+   "charon_index": 14,
+   "g7_sorted_index": 32,
+   "category": "transitivity",
+   "prompt": "Mira finished before Noor. Noor finished before Omar. Who finished last?",
+   "candidates": [
+    "Mira",
+    "Omar",
+    "Noor",
+    "it cannot be determined"
+   ],
+   "correct": "Omar",
+   "correct_slot": 1,
+   "candidate_lens": [
+    4,
+    4,
+    4,
+    23
+   ],
+   "correct_is_longest": false,
+   "correct_is_strictly_longest": false,
+   "correct_is_shortest": true,
+   "correct_is_strictly_shortest": false,
+   "recognition": {
+    "fired_at_initial_state": [],
+    "closure_size_under_C": 1,
+    "unrecognised": true,
+    "number_extraction_only": false,
+    "reaches_meaningful_representation": false
+   },
+   "baseline": {
+    "organism": "KNOWN_0833",
+    "outcome": "ABSTAIN",
+    "selected": "",
+    "correct_reachable_under_C": false,
+    "robust_under_C_all_24_permutations": false,
+    "positional_fallback": false,
+    "class": "dE_bound"
+   },
+   "frozen_pair": {
+    "reachable_with_pair": false,
+    "robust_with_pair": false,
+    "bundle_readout_last_outcome": "ABSTAIN",
+    "bundle_readout_last_selected": "",
+    "trace": null
+   },
+   "injection": {
+    "parsed": {
+     "slots": {
+      "names": [
+       "Mira",
+       "Noor",
+       "Omar"
+      ],
+      "relations": [
+       [
+        "Mira",
+        "Noor"
+       ],
+       [
+        "Noor",
+        "Omar"
+       ]
+      ],
+      "question_target": "smallest"
+     },
+     "then_run": [
+      "op_build_ordering",
+      "select_nth__g"
+     ],
+     "status": "PATH_EXISTS",
+     "verified": true,
+     "selected": "Omar"
+    },
+    "derived": {
+     "slots": {
+      "ordered": [
+       "Mira",
+       "Noor",
+       "Omar"
+      ],
+      "question_target": "smallest"
+     },
+     "then_run": [
+      "select_nth__g"
+     ],
+     "status": "PATH_EXISTS",
+     "verified": true,
+     "selected": "Omar"
+    }
+   },
+   "oracle_encodes": "'finished last' -> index -1, spelled 'smallest'",
+   "discriminates": "A vs (B or C): parsed-level path exists"
+  },
+  {
+   "charon_index": 15,
+   "g7_sorted_index": 33,
+   "category": "transitivity",
+   "prompt": "Kai is older than Lena. Mateo is older than Lena. Who is oldest?",
+   "candidates": [
+    "it cannot be determined",
+    "Kai",
+    "Lena",
+    "Mateo"
+   ],
+   "correct": "it cannot be determined",
+   "correct_slot": 0,
+   "candidate_lens": [
+    23,
+    3,
+    4,
+    5
+   ],
+   "correct_is_longest": true,
+   "correct_is_strictly_longest": true,
+   "correct_is_shortest": false,
+   "correct_is_strictly_shortest": false,
+   "recognition": {
+    "fired_at_initial_state": [
+     "parse_names_and_relations",
+     "parse_question_target"
+    ],
+    "closure_size_under_C": 24,
+    "unrecognised": false,
+    "number_extraction_only": false,
+    "reaches_meaningful_representation": true
+   },
+   "baseline": {
+    "organism": "KNOWN_0833",
+    "outcome": "CORRECT",
+    "selected": "it cannot be determined",
+    "correct_reachable_under_C": true,
+    "robust_under_C_all_24_permutations": false,
+    "positional_fallback": true,
+    "class": "solved"
+   },
+   "frozen_pair": {
+    "reachable_with_pair": true,
+    "robust_with_pair": false,
+    "bundle_readout_last_outcome": "CORRECT",
+    "bundle_readout_last_selected": "it cannot be determined",
+    "trace": null
+   },
+   "injection": {
+    "parsed": {
+     "slots": {
+      "names": [
+       "Kai",
+       "Lena",
+       "Mateo"
+      ],
+      "relations": [
+       [
+        "Kai",
+        "Lena"
+       ],
+       [
+        "Mateo",
+        "Lena"
+       ]
+      ],
+      "question_target": "first"
+     },
+     "then_run": [],
+     "status": "NO_CONSUMER_OP (B-gap by construction)",
+     "verified": null
+    },
+    "derived": {
+     "slots": "NO_SLOT",
+     "then_run": [],
+     "status": "NO_SLOT",
+     "verified": null
+    }
+   },
+   "oracle_encodes": "UNDERDETERMINED: `ordered` cannot represent 'cannot be determined'; op_build_ordering breaks the Kai/Mateo tie arbitrarily",
+   "discriminates": "NONE: no slot can carry the needed state at either level"
+  },
+  {
+   "charon_index": 16,
+   "g7_sorted_index": 34,
+   "category": "transitivity",
+   "prompt": "Item R costs more than item S. Item S costs more than item T. Item T costs more than item U. Is item R more expensive than item U?",
+   "candidates": [
+    "no",
+    "yes",
+    "they cost the same",
+    "it cannot be determined"
+   ],
+   "correct": "yes",
+   "correct_slot": 1,
+   "candidate_lens": [
+    2,
+    3,
+    18,
+    23
+   ],
+   "correct_is_longest": false,
+   "correct_is_strictly_longest": false,
+   "correct_is_shortest": false,
+   "correct_is_strictly_shortest": false,
+   "recognition": {
+    "fired_at_initial_state": [],
+    "closure_size_under_C": 1,
+    "unrecognised": true,
+    "number_extraction_only": false,
+    "reaches_meaningful_representation": false
+   },
+   "baseline": {
+    "organism": "KNOWN_0833",
+    "outcome": "ABSTAIN",
+    "selected": "",
+    "correct_reachable_under_C": false,
+    "robust_under_C_all_24_permutations": false,
+    "positional_fallback": false,
+    "class": "dE_bound"
+   },
+   "frozen_pair": {
+    "reachable_with_pair": false,
+    "robust_with_pair": false,
+    "bundle_readout_last_outcome": "ABSTAIN",
+    "bundle_readout_last_selected": "",
+    "trace": null
+   },
+   "injection": {
+    "parsed": {
+     "slots": {
+      "names": [
+       "item R",
+       "item S",
+       "item T",
+       "item U"
+      ],
+      "relations": [
+       [
+        "item R",
+        "item S"
+       ],
+       [
+        "item S",
+        "item T"
+       ],
+       [
+        "item T",
+        "item U"
+       ]
+      ]
+     },
+     "then_run": [],
+     "status": "NO_CONSUMER_OP (B-gap by construction)",
+     "verified": null
+    },
+    "derived": {
+     "slots": {
+      "comparison": true
+     },
+     "then_run": [
+      "score_by_comparison__g"
+     ],
+     "status": "PATH_EXISTS",
+     "verified": true,
+     "selected": "yes",
+     "readout_only": true
+    }
+   },
+   "oracle_encodes": "yes/no question over a chain; no op derives `comparison` from `relations`",
+   "discriminates": "C only: derived injection is one string match from the answer"
+  },
+  {
+   "charon_index": 17,
+   "g7_sorted_index": 35,
+   "category": "transitivity",
+   "prompt": "Village D lies south of village E. Village E lies south of village F. Which village is furthest north?",
+   "candidates": [
+    "village F",
+    "village D",
+    "village E",
+    "it cannot be determined"
+   ],
+   "correct": "village F",
+   "correct_slot": 0,
+   "candidate_lens": [
+    9,
+    9,
+    9,
+    23
+   ],
+   "correct_is_longest": false,
+   "correct_is_strictly_longest": false,
+   "correct_is_shortest": true,
+   "correct_is_strictly_shortest": false,
+   "recognition": {
+    "fired_at_initial_state": [],
+    "closure_size_under_C": 1,
+    "unrecognised": true,
+    "number_extraction_only": false,
+    "reaches_meaningful_representation": false
+   },
+   "baseline": {
+    "organism": "KNOWN_0833",
+    "outcome": "ABSTAIN",
+    "selected": "",
+    "correct_reachable_under_C": false,
+    "robust_under_C_all_24_permutations": false,
+    "positional_fallback": false,
+    "class": "dE_bound"
+   },
+   "frozen_pair": {
+    "reachable_with_pair": false,
+    "robust_with_pair": false,
+    "bundle_readout_last_outcome": "ABSTAIN",
+    "bundle_readout_last_selected": "",
+    "trace": null
+   },
+   "injection": {
+    "parsed": {
+     "slots": {
+      "names": [
+       "village D",
+       "village E",
+       "village F"
+      ],
+      "relations": [
+       [
+        "village F",
+        "village E"
+       ],
+       [
+        "village E",
+        "village D"
+       ]
+      ],
+      "question_target": "first"
+     },
+     "then_run": [
+      "op_build_ordering",
+      "select_nth__g"
+     ],
+     "status": "PATH_EXISTS",
+     "verified": true,
+     "selected": "village F"
+    },
+    "derived": {
+     "slots": {
+      "ordered": [
+       "village F",
+       "village E",
+       "village D"
+      ],
+      "question_target": "first"
+     },
+     "then_run": [
+      "select_nth__g"
+     ],
+     "status": "PATH_EXISTS",
+     "verified": true,
+     "selected": "village F"
+    }
+   },
+   "oracle_encodes": "north = dominates",
+   "discriminates": "A vs (B or C): parsed-level path exists"
+  },
+  {
+   "charon_index": 18,
+   "g7_sorted_index": 0,
+   "category": "all_but_n",
+   "prompt": "A depot received 60 crates. All but 14 of them were sealed. How many crates were sealed?",
+   "candidates": [
+    "14",
+    "60",
+    "46",
+    "74"
+   ],
+   "correct": "46",
+   "correct_slot": 2,
+   "candidate_lens": [
+    2,
+    2,
+    2,
+    2
+   ],
+   "correct_is_longest": true,
+   "correct_is_strictly_longest": false,
+   "correct_is_shortest": true,
+   "correct_is_strictly_shortest": false,
+   "recognition": {
+    "fired_at_initial_state": [
+     "parse_numbers"
+    ],
+    "closure_size_under_C": 2,
+    "unrecognised": false,
+    "number_extraction_only": true,
+    "reaches_meaningful_representation": false
+   },
+   "baseline": {
+    "organism": "KNOWN_0833",
+    "outcome": "ABSTAIN",
+    "selected": "",
+    "correct_reachable_under_C": false,
+    "robust_under_C_all_24_permutations": false,
+    "positional_fallback": false,
+    "class": "dE_bound"
+   },
+   "frozen_pair": {
+    "reachable_with_pair": true,
+    "robust_with_pair": true,
+    "bundle_readout_last_outcome": "CORRECT",
+    "bundle_readout_last_selected": "46",
+    "trace": {
+     "idx": 0,
+     "numbers": [
+      60.0,
+      14.0
+     ],
+     "max_value": 46.0,
+     "selected": "46",
+     "correct": "46",
+     "ok": true,
+     "wrong_guess": false,
+     "prompt": "A depot received 60 crates. All but 14 of them were sealed. How many crates were sealed?"
+    }
+   },
+   "injection": {
+    "parsed": {
+     "slots": {
+      "numbers": [
+       60,
+       14
+      ]
+     },
+     "then_run": [],
+     "status": "NO_CONSUMER_OP (B-gap by construction)",
+     "verified": null
+    },
+    "derived": {
+     "slots": {
+      "counts": {
+       "sealed": {
+        "count": 46
+       }
+      }
+     },
+     "then_run": [
+      "op_aggregate_quantities",
+      "score_by_aggregate__g"
+     ],
+     "status": "PATH_EXISTS",
+     "verified": true,
+     "selected": "46"
+    }
+   },
+   "oracle_encodes": "N - K",
+   "discriminates": "B vs C: parsed level has no consumer; derived-level path exists"
+  },
+  {
+   "charon_index": 19,
+   "g7_sorted_index": 1,
+   "category": "all_but_n",
+   "prompt": "A shelf holds 33 volumes. All but 8 of them are hardback. How many are hardback?",
+   "candidates": [
+    "25",
+    "8",
+    "33",
+    "41"
+   ],
+   "correct": "25",
+   "correct_slot": 0,
+   "candidate_lens": [
+    2,
+    1,
+    2,
+    2
+   ],
+   "correct_is_longest": true,
+   "correct_is_strictly_longest": false,
+   "correct_is_shortest": false,
+   "correct_is_strictly_shortest": false,
+   "recognition": {
+    "fired_at_initial_state": [
+     "parse_numbers"
+    ],
+    "closure_size_under_C": 2,
+    "unrecognised": false,
+    "number_extraction_only": true,
+    "reaches_meaningful_representation": false
+   },
+   "baseline": {
+    "organism": "KNOWN_0833",
+    "outcome": "ABSTAIN",
+    "selected": "",
+    "correct_reachable_under_C": false,
+    "robust_under_C_all_24_permutations": false,
+    "positional_fallback": false,
+    "class": "dE_bound"
+   },
+   "frozen_pair": {
+    "reachable_with_pair": true,
+    "robust_with_pair": true,
+    "bundle_readout_last_outcome": "CORRECT",
+    "bundle_readout_last_selected": "25",
+    "trace": {
+     "idx": 1,
+     "numbers": [
+      33.0,
+      8.0
+     ],
+     "max_value": 25.0,
+     "selected": "25",
+     "correct": "25",
+     "ok": true,
+     "wrong_guess": false,
+     "prompt": "A shelf holds 33 volumes. All but 8 of them are hardback. How many are hardback?"
+    }
+   },
+   "injection": {
+    "parsed": {
+     "slots": {
+      "numbers": [
+       33,
+       8
+      ]
+     },
+     "then_run": [],
+     "status": "NO_CONSUMER_OP (B-gap by construction)",
+     "verified": null
+    },
+    "derived": {
+     "slots": {
+      "counts": {
+       "hardback": {
+        "count": 25
+       }
+      }
+     },
+     "then_run": [
+      "op_aggregate_quantities",
+      "score_by_aggregate__g"
+     ],
+     "status": "PATH_EXISTS",
+     "verified": true,
+     "selected": "25"
+    }
+   },
+   "oracle_encodes": "N - K",
+   "discriminates": "B vs C: parsed level has no consumer; derived-level path exists"
+  },
+  {
+   "charon_index": 20,
+   "g7_sorted_index": 2,
+   "category": "all_but_n",
+   "prompt": "Of the 120 seats in the hall, all but 27 were occupied. How many seats were occupied?",
+   "candidates": [
+    "27",
+    "120",
+    "147",
+    "93"
+   ],
+   "correct": "93",
+   "correct_slot": 3,
+   "candidate_lens": [
+    2,
+    3,
+    3,
+    2
+   ],
+   "correct_is_longest": false,
+   "correct_is_strictly_longest": false,
+   "correct_is_shortest": true,
+   "correct_is_strictly_shortest": false,
+   "recognition": {
+    "fired_at_initial_state": [
+     "parse_numbers"
+    ],
+    "closure_size_under_C": 2,
+    "unrecognised": false,
+    "number_extraction_only": true,
+    "reaches_meaningful_representation": false
+   },
+   "baseline": {
+    "organism": "KNOWN_0833",
+    "outcome": "ABSTAIN",
+    "selected": "",
+    "correct_reachable_under_C": false,
+    "robust_under_C_all_24_permutations": false,
+    "positional_fallback": false,
+    "class": "dE_bound"
+   },
+   "frozen_pair": {
+    "reachable_with_pair": true,
+    "robust_with_pair": true,
+    "bundle_readout_last_outcome": "CORRECT",
+    "bundle_readout_last_selected": "93",
+    "trace": {
+     "idx": 2,
+     "numbers": [
+      120.0,
+      27.0
+     ],
+     "max_value": 93.0,
+     "selected": "93",
+     "correct": "93",
+     "ok": true,
+     "wrong_guess": false,
+     "prompt": "Of the 120 seats in the hall, all but 27 were occupied. How many seats were occupied?"
+    }
+   },
+   "injection": {
+    "parsed": {
+     "slots": {
+      "numbers": [
+       120,
+       27
+      ]
+     },
+     "then_run": [],
+     "status": "NO_CONSUMER_OP (B-gap by construction)",
+     "verified": null
+    },
+    "derived": {
+     "slots": {
+      "counts": {
+       "occupied": {
+        "count": 93
+       }
+      }
+     },
+     "then_run": [
+      "op_aggregate_quantities",
+      "score_by_aggregate__g"
+     ],
+     "status": "PATH_EXISTS",
+     "verified": true,
+     "selected": "93"
+    }
+   },
+   "oracle_encodes": "N - K",
+   "discriminates": "B vs C: parsed level has no consumer; derived-level path exists"
+  },
+  {
+   "charon_index": 21,
+   "g7_sorted_index": 3,
+   "category": "all_but_n",
+   "prompt": "All but 5 of the 19 sensors reported in. How many sensors reported in?",
+   "candidates": [
+    "5",
+    "19",
+    "14",
+    "24"
+   ],
+   "correct": "14",
+   "correct_slot": 2,
+   "candidate_lens": [
+    1,
+    2,
+    2,
+    2
+   ],
+   "correct_is_longest": true,
+   "correct_is_strictly_longest": false,
+   "correct_is_shortest": false,
+   "correct_is_strictly_shortest": false,
+   "recognition": {
+    "fired_at_initial_state": [
+     "parse_numbers"
+    ],
+    "closure_size_under_C": 2,
+    "unrecognised": false,
+    "number_extraction_only": true,
+    "reaches_meaningful_representation": false
+   },
+   "baseline": {
+    "organism": "KNOWN_0833",
+    "outcome": "ABSTAIN",
+    "selected": "",
+    "correct_reachable_under_C": false,
+    "robust_under_C_all_24_permutations": false,
+    "positional_fallback": false,
+    "class": "dE_bound"
+   },
+   "frozen_pair": {
+    "reachable_with_pair": true,
+    "robust_with_pair": true,
+    "bundle_readout_last_outcome": "CORRECT",
+    "bundle_readout_last_selected": "14",
+    "trace": {
+     "idx": 3,
+     "numbers": [
+      5.0,
+      19.0
+     ],
+     "max_value": 14.0,
+     "selected": "14",
+     "correct": "14",
+     "ok": true,
+     "wrong_guess": false,
+     "prompt": "All but 5 of the 19 sensors reported in. How many sensors reported in?"
+    }
+   },
+   "injection": {
+    "parsed": {
+     "slots": {
+      "numbers": [
+       5,
+       19
+      ]
+     },
+     "then_run": [],
+     "status": "NO_CONSUMER_OP (B-gap by construction)",
+     "verified": null
+    },
+    "derived": {
+     "slots": {
+      "counts": {
+       "reported": {
+        "count": 14
+       }
+      }
+     },
+     "then_run": [
+      "op_aggregate_quantities",
+      "score_by_aggregate__g"
+     ],
+     "status": "PATH_EXISTS",
+     "verified": true,
+     "selected": "14"
+    }
+   },
+   "oracle_encodes": "N - K with the numbers in reversed prompt order",
+   "discriminates": "B vs C: parsed level has no consumer; derived-level path exists"
+  },
+  {
+   "charon_index": 22,
+   "g7_sorted_index": 4,
+   "category": "all_but_n",
+   "prompt": "A batch contains 250 parts. All but 36 of them passed inspection. How many parts failed inspection?",
+   "candidates": [
+    "36",
+    "214",
+    "250",
+    "286"
+   ],
+   "correct": "36",
+   "correct_slot": 0,
+   "candidate_lens": [
+    2,
+    3,
+    3,
+    3
+   ],
+   "correct_is_longest": false,
+   "correct_is_strictly_longest": false,
+   "correct_is_shortest": true,
+   "correct_is_strictly_shortest": true,
+   "recognition": {
+    "fired_at_initial_state": [
+     "parse_numbers"
+    ],
+    "closure_size_under_C": 2,
+    "unrecognised": false,
+    "number_extraction_only": true,
+    "reaches_meaningful_representation": false
+   },
+   "baseline": {
+    "organism": "KNOWN_0833",
+    "outcome": "ABSTAIN",
+    "selected": "",
+    "correct_reachable_under_C": false,
+    "robust_under_C_all_24_permutations": false,
+    "positional_fallback": false,
+    "class": "dE_bound"
+   },
+   "frozen_pair": {
+    "reachable_with_pair": false,
+    "robust_with_pair": false,
+    "bundle_readout_last_outcome": "WRONG",
+    "bundle_readout_last_selected": "214",
+    "trace": {
+     "idx": 4,
+     "numbers": [
+      250.0,
+      36.0
+     ],
+     "max_value": 214.0,
+     "selected": "214",
+     "correct": "36",
+     "ok": false,
+     "wrong_guess": true,
+     "prompt": "A batch contains 250 parts. All but 36 of them passed inspection. How many parts failed inspection?"
+    }
+   },
+   "injection": {
+    "parsed": {
+     "slots": {
+      "numbers": [
+       250,
+       36
+      ]
+     },
+     "then_run": [],
+     "status": "NO_CONSUMER_OP (B-gap by construction)",
+     "verified": null
+    },
+    "derived": {
+     "slots": {
+      "counts": {
+       "failed": {
+        "count": 36
+       }
+      }
+     },
+     "then_run": [
+      "op_aggregate_quantities",
+      "score_by_aggregate__g"
+     ],
+     "status": "PATH_EXISTS",
+     "verified": true,
+     "selected": "36"
+    }
+   },
+   "oracle_encodes": "the COMPLEMENT K, not N - K (the frozen pair answers 214 here)",
+   "discriminates": "B vs C: parsed level has no consumer; derived-level path exists"
+  },
+  {
+   "charon_index": 23,
+   "g7_sorted_index": 5,
+   "category": "all_but_n",
+   "prompt": "Of 84 submitted entries, all but 11 were valid. How many entries were invalid?",
+   "candidates": [
+    "73",
+    "11",
+    "84",
+    "95"
+   ],
+   "correct": "11",
+   "correct_slot": 1,
+   "candidate_lens": [
+    2,
+    2,
+    2,
+    2
+   ],
+   "correct_is_longest": true,
+   "correct_is_strictly_longest": false,
+   "correct_is_shortest": true,
+   "correct_is_strictly_shortest": false,
+   "recognition": {
+    "fired_at_initial_state": [
+     "parse_numbers"
+    ],
+    "closure_size_under_C": 2,
+    "unrecognised": false,
+    "number_extraction_only": true,
+    "reaches_meaningful_representation": false
+   },
+   "baseline": {
+    "organism": "KNOWN_0833",
+    "outcome": "ABSTAIN",
+    "selected": "",
+    "correct_reachable_under_C": false,
+    "robust_under_C_all_24_permutations": false,
+    "positional_fallback": false,
+    "class": "dE_bound"
+   },
+   "frozen_pair": {
+    "reachable_with_pair": false,
+    "robust_with_pair": false,
+    "bundle_readout_last_outcome": "WRONG",
+    "bundle_readout_last_selected": "73",
+    "trace": {
+     "idx": 5,
+     "numbers": [
+      84.0,
+      11.0
+     ],
+     "max_value": 73.0,
+     "selected": "73",
+     "correct": "11",
+     "ok": false,
+     "wrong_guess": true,
+     "prompt": "Of 84 submitted entries, all but 11 were valid. How many entries were invalid?"
+    }
+   },
+   "injection": {
+    "parsed": {
+     "slots": {
+      "numbers": [
+       84,
+       11
+      ]
+     },
+     "then_run": [],
+     "status": "NO_CONSUMER_OP (B-gap by construction)",
+     "verified": null
+    },
+    "derived": {
+     "slots": {
+      "counts": {
+       "invalid": {
+        "count": 11
+       }
+      }
+     },
+     "then_run": [
+      "op_aggregate_quantities",
+      "score_by_aggregate__g"
+     ],
+     "status": "PATH_EXISTS",
+     "verified": true,
+     "selected": "11"
+    }
+   },
+   "oracle_encodes": "the COMPLEMENT K, not N - K (the frozen pair answers 73 here)",
+   "discriminates": "B vs C: parsed level has no consumer; derived-level path exists"
+  },
+  {
+   "charon_index": 24,
+   "g7_sorted_index": 24,
+   "category": "temporal_ordering",
+   "prompt": "The alarm sounded before the door opened. The door opened before the lights came on. Which happened last?",
+   "candidates": [
+    "the lights came on",
+    "the alarm sounded",
+    "the door opened",
+    "undetermined"
+   ],
+   "correct": "the lights came on",
+   "correct_slot": 0,
+   "candidate_lens": [
+    18,
+    17,
+    15,
+    12
+   ],
+   "correct_is_longest": true,
+   "correct_is_strictly_longest": true,
+   "correct_is_shortest": false,
+   "correct_is_strictly_shortest": false,
+   "recognition": {
+    "fired_at_initial_state": [],
+    "closure_size_under_C": 1,
+    "unrecognised": true,
+    "number_extraction_only": false,
+    "reaches_meaningful_representation": false
+   },
+   "baseline": {
+    "organism": "KNOWN_0833",
+    "outcome": "ABSTAIN",
+    "selected": "",
+    "correct_reachable_under_C": false,
+    "robust_under_C_all_24_permutations": false,
+    "positional_fallback": false,
+    "class": "dE_bound"
+   },
+   "frozen_pair": {
+    "reachable_with_pair": false,
+    "robust_with_pair": false,
+    "bundle_readout_last_outcome": "ABSTAIN",
+    "bundle_readout_last_selected": "",
+    "trace": null
+   },
+   "injection": {
+    "parsed": {
+     "slots": {
+      "relations": [
+       [
+        "the alarm sounded",
+        "the door opened"
+       ],
+       [
+        "the door opened",
+        "the lights came on"
+       ]
+      ],
+      "question_target": "smallest"
+     },
+     "then_run": [
+      "op_build_ordering",
+      "select_nth__g"
+     ],
+     "status": "PATH_EXISTS",
+     "verified": true,
+     "selected": "the lights came on"
+    },
+    "derived": {
+     "slots": {
+      "ordered": [
+       "the alarm sounded",
+       "the door opened",
+       "the lights came on"
+      ],
+      "question_target": "smallest"
+     },
+     "then_run": [
+      "select_nth__g"
+     ],
+     "status": "PATH_EXISTS",
+     "verified": true,
+     "selected": "the lights came on"
+    }
+   },
+   "oracle_encodes": "earlier = dominates; 'last' -> index -1 spelled 'smallest'",
+   "discriminates": "A vs (B or C): parsed-level path exists"
+  },
+  {
+   "charon_index": 25,
+   "g7_sorted_index": 25,
+   "category": "temporal_ordering",
+   "prompt": "The survey was filed after the permit was issued. The permit was issued after the site was cleared. Which happened first?",
+   "candidates": [
+    "the survey was filed",
+    "the permit was issued",
+    "the site was cleared",
+    "undetermined"
+   ],
+   "correct": "the site was cleared",
+   "correct_slot": 2,
+   "candidate_lens": [
+    20,
+    21,
+    20,
+    12
+   ],
+   "correct_is_longest": false,
+   "correct_is_strictly_longest": false,
+   "correct_is_shortest": false,
+   "correct_is_strictly_shortest": false,
+   "recognition": {
+    "fired_at_initial_state": [
+     "parse_ordinal"
+    ],
+    "closure_size_under_C": 2,
+    "unrecognised": false,
+    "number_extraction_only": false,
+    "reaches_meaningful_representation": true
+   },
+   "baseline": {
+    "organism": "KNOWN_0833",
+    "outcome": "ABSTAIN",
+    "selected": "",
+    "correct_reachable_under_C": false,
+    "robust_under_C_all_24_permutations": false,
+    "positional_fallback": false,
+    "class": "dE_bound"
+   },
+   "frozen_pair": {
+    "reachable_with_pair": false,
+    "robust_with_pair": false,
+    "bundle_readout_last_outcome": "ABSTAIN",
+    "bundle_readout_last_selected": "",
+    "trace": null
+   },
+   "injection": {
+    "parsed": {
+     "slots": {
+      "relations": [
+       [
+        "the site was cleared",
+        "the permit was issued"
+       ],
+       [
+        "the permit was issued",
+        "the survey was filed"
+       ]
+      ],
+      "question_target": "first"
+     },
+     "then_run": [
+      "op_build_ordering",
+      "select_nth__g"
+     ],
+     "status": "PATH_EXISTS",
+     "verified": true,
+     "selected": "the site was cleared"
+    },
+    "derived": {
+     "slots": {
+      "ordered": [
+       "the site was cleared",
+       "the permit was issued",
+       "the survey was filed"
+      ],
+      "question_target": "first"
+     },
+     "then_run": [
+      "select_nth__g"
+     ],
+     "status": "PATH_EXISTS",
+     "verified": true,
+     "selected": "the site was cleared"
+    }
+   },
+   "oracle_encodes": "'after' inverted to earlier = dominates",
+   "discriminates": "A vs (B or C): parsed-level path exists"
+  },
+  {
+   "charon_index": 26,
+   "g7_sorted_index": 26,
+   "category": "temporal_ordering",
+   "prompt": "Packet A arrived before packet B. Packet B arrived before packet C. Packet C arrived before packet D. Which packet arrived third?",
+   "candidates": [
+    "packet C",
+    "packet A",
+    "packet B",
+    "packet D"
+   ],
+   "correct": "packet C",
+   "correct_slot": 0,
+   "candidate_lens": [
+    8,
+    8,
+    8,
+    8
+   ],
+   "correct_is_longest": true,
+   "correct_is_strictly_longest": false,
+   "correct_is_shortest": true,
+   "correct_is_strictly_shortest": false,
+   "recognition": {
+    "fired_at_initial_state": [
+     "parse_ordinal"
+    ],
+    "closure_size_under_C": 2,
+    "unrecognised": false,
+    "number_extraction_only": false,
+    "reaches_meaningful_representation": true
+   },
+   "baseline": {
+    "organism": "KNOWN_0833",
+    "outcome": "ABSTAIN",
+    "selected": "",
+    "correct_reachable_under_C": false,
+    "robust_under_C_all_24_permutations": false,
+    "positional_fallback": false,
+    "class": "dE_bound"
+   },
+   "frozen_pair": {
+    "reachable_with_pair": false,
+    "robust_with_pair": false,
+    "bundle_readout_last_outcome": "ABSTAIN",
+    "bundle_readout_last_selected": "",
+    "trace": null
+   },
+   "injection": {
+    "parsed": {
+     "slots": {
+      "relations": [
+       [
+        "packet A",
+        "packet B"
+       ],
+       [
+        "packet B",
+        "packet C"
+       ],
+       [
+        "packet C",
+        "packet D"
+       ]
+      ],
+      "question_target": "third"
+     },
+     "then_run": [
+      "op_build_ordering",
+      "select_nth__g"
+     ],
+     "status": "PATH_EXISTS",
+     "verified": true,
+     "selected": "packet C"
+    },
+    "derived": {
+     "slots": {
+      "ordered": [
+       "packet A",
+       "packet B",
+       "packet C",
+       "packet D"
+      ],
+      "question_target": "third"
+     },
+     "then_run": [
+      "select_nth__g"
+     ],
+     "status": "PATH_EXISTS",
+     "verified": true,
+     "selected": "packet C"
+    }
+   },
+   "oracle_encodes": "earlier = dominates; 'third' -> 2",
+   "discriminates": "A vs (B or C): parsed-level path exists"
+  },
+  {
+   "charon_index": 27,
+   "g7_sorted_index": 27,
+   "category": "temporal_ordering",
+   "prompt": "Event X happened after event Y. Event Z happened after event X. Which event happened second?",
+   "candidates": [
+    "event Y",
+    "event Z",
+    "it cannot be determined",
+    "event X"
+   ],
+   "correct": "event X",
+   "correct_slot": 3,
+   "candidate_lens": [
+    7,
+    7,
+    23,
+    7
+   ],
+   "correct_is_longest": false,
+   "correct_is_strictly_longest": false,
+   "correct_is_shortest": true,
+   "correct_is_strictly_shortest": false,
+   "recognition": {
+    "fired_at_initial_state": [
+     "parse_ordinal"
+    ],
+    "closure_size_under_C": 2,
+    "unrecognised": false,
+    "number_extraction_only": false,
+    "reaches_meaningful_representation": true
+   },
+   "baseline": {
+    "organism": "KNOWN_0833",
+    "outcome": "ABSTAIN",
+    "selected": "",
+    "correct_reachable_under_C": false,
+    "robust_under_C_all_24_permutations": false,
+    "positional_fallback": false,
+    "class": "dE_bound"
+   },
+   "frozen_pair": {
+    "reachable_with_pair": false,
+    "robust_with_pair": false,
+    "bundle_readout_last_outcome": "ABSTAIN",
+    "bundle_readout_last_selected": "",
+    "trace": null
+   },
+   "injection": {
+    "parsed": {
+     "slots": {
+      "relations": [
+       [
+        "event Y",
+        "event X"
+       ],
+       [
+        "event X",
+        "event Z"
+       ]
+      ],
+      "question_target": "second"
+     },
+     "then_run": [
+      "op_build_ordering",
+      "select_nth__g"
+     ],
+     "status": "PATH_EXISTS",
+     "verified": true,
+     "selected": "event X"
+    },
+    "derived": {
+     "slots": {
+      "ordered": [
+       "event Y",
+       "event X",
+       "event Z"
+      ],
+      "question_target": "second"
+     },
+     "then_run": [
+      "select_nth__g"
+     ],
+     "status": "PATH_EXISTS",
+     "verified": true,
+     "selected": "event X"
+    }
+   },
+   "oracle_encodes": "'after' inverted; 'second' -> 1",
+   "discriminates": "A vs (B or C): parsed-level path exists"
+  },
+  {
+   "charon_index": 28,
+   "g7_sorted_index": 28,
+   "category": "temporal_ordering",
+   "prompt": "The report was signed after the audit began. The audit began after the invoice was paid. The invoice was paid after the contract was signed. Which happened earliest?",
+   "candidates": [
+    "the report was signed",
+    "the audit began",
+    "the contract was signed",
+    "the invoice was paid"
+   ],
+   "correct": "the contract was signed",
+   "correct_slot": 2,
+   "candidate_lens": [
+    21,
+    15,
+    23,
+    20
+   ],
+   "correct_is_longest": true,
+   "correct_is_strictly_longest": true,
+   "correct_is_shortest": false,
+   "correct_is_strictly_shortest": false,
+   "recognition": {
+    "fired_at_initial_state": [],
+    "closure_size_under_C": 1,
+    "unrecognised": true,
+    "number_extraction_only": false,
+    "reaches_meaningful_representation": false
+   },
+   "baseline": {
+    "organism": "KNOWN_0833",
+    "outcome": "ABSTAIN",
+    "selected": "",
+    "correct_reachable_under_C": false,
+    "robust_under_C_all_24_permutations": false,
+    "positional_fallback": false,
+    "class": "dE_bound"
+   },
+   "frozen_pair": {
+    "reachable_with_pair": false,
+    "robust_with_pair": false,
+    "bundle_readout_last_outcome": "ABSTAIN",
+    "bundle_readout_last_selected": "",
+    "trace": null
+   },
+   "injection": {
+    "parsed": {
+     "slots": {
+      "relations": [
+       [
+        "the contract was signed",
+        "the invoice was paid"
+       ],
+       [
+        "the invoice was paid",
+        "the audit began"
+       ],
+       [
+        "the audit began",
+        "the report was signed"
+       ]
+      ],
+      "question_target": "first"
+     },
+     "then_run": [
+      "op_build_ordering",
+      "select_nth__g"
+     ],
+     "status": "PATH_EXISTS",
+     "verified": true,
+     "selected": "the contract was signed"
+    },
+    "derived": {
+     "slots": {
+      "ordered": [
+       "the contract was signed",
+       "the invoice was paid",
+       "the audit began",
+       "the report was signed"
+      ],
+      "question_target": "first"
+     },
+     "then_run": [
+      "select_nth__g"
+     ],
+     "status": "PATH_EXISTS",
+     "verified": true,
+     "selected": "the contract was signed"
+    }
+   },
+   "oracle_encodes": "'after' inverted; earliest -> 0",
+   "discriminates": "A vs (B or C): parsed-level path exists"
+  },
+  {
+   "charon_index": 29,
+   "g7_sorted_index": 29,
+   "category": "temporal_ordering",
+   "prompt": "Task P finished before task Q. Task R finished before task Q. Which task finished first?",
+   "candidates": [
+    "task P",
+    "task Q",
+    "task R",
+    "it cannot be determined"
+   ],
+   "correct": "it cannot be determined",
+   "correct_slot": 3,
+   "candidate_lens": [
+    6,
+    6,
+    6,
+    23
+   ],
+   "correct_is_longest": true,
+   "correct_is_strictly_longest": true,
+   "correct_is_shortest": false,
+   "correct_is_strictly_shortest": false,
+   "recognition": {
+    "fired_at_initial_state": [
+     "parse_ordinal"
+    ],
+    "closure_size_under_C": 2,
+    "unrecognised": false,
+    "number_extraction_only": false,
+    "reaches_meaningful_representation": true
+   },
+   "baseline": {
+    "organism": "KNOWN_0833",
+    "outcome": "ABSTAIN",
+    "selected": "",
+    "correct_reachable_under_C": false,
+    "robust_under_C_all_24_permutations": false,
+    "positional_fallback": false,
+    "class": "dE_bound"
+   },
+   "frozen_pair": {
+    "reachable_with_pair": false,
+    "robust_with_pair": false,
+    "bundle_readout_last_outcome": "ABSTAIN",
+    "bundle_readout_last_selected": "",
+    "trace": null
+   },
+   "injection": {
+    "parsed": {
+     "slots": {
+      "relations": [
+       [
+        "task P",
+        "task Q"
+       ],
+       [
+        "task R",
+        "task Q"
+       ]
+      ],
+      "question_target": "first"
+     },
+     "then_run": [],
+     "status": "NO_CONSUMER_OP (B-gap by construction)",
+     "verified": null
+    },
+    "derived": {
+     "slots": "NO_SLOT",
+     "then_run": [],
+     "status": "NO_SLOT",
+     "verified": null
+    }
+   },
+   "oracle_encodes": "UNDERDETERMINED: `ordered` cannot represent it",
+   "discriminates": "NONE: no slot can carry the needed state at either level"
+  },
+  {
+   "charon_index": 30,
+   "g7_sorted_index": 36,
+   "category": "vacuous_truth",
+   "prompt": "The jar contains no red marbles. Consider the claim: every red marble in the jar is chipped. Is the claim true?",
+   "candidates": [
+    "yes, it is true",
+    "no, it is false",
+    "undetermined",
+    "the claim is not well formed"
+   ],
+   "correct": "yes, it is true",
+   "correct_slot": 0,
+   "candidate_lens": [
+    15,
+    15,
+    12,
+    28
+   ],
+   "correct_is_longest": false,
+   "correct_is_strictly_longest": false,
+   "correct_is_shortest": false,
+   "correct_is_strictly_shortest": false,
+   "recognition": {
+    "fired_at_initial_state": [],
+    "closure_size_under_C": 1,
+    "unrecognised": true,
+    "number_extraction_only": false,
+    "reaches_meaningful_representation": false
+   },
+   "baseline": {
+    "organism": "KNOWN_0833",
+    "outcome": "ABSTAIN",
+    "selected": "",
+    "correct_reachable_under_C": false,
+    "robust_under_C_all_24_permutations": false,
+    "positional_fallback": false,
+    "class": "dE_bound"
+   },
+   "frozen_pair": {
+    "reachable_with_pair": false,
+    "robust_with_pair": false,
+    "bundle_readout_last_outcome": "ABSTAIN",
+    "bundle_readout_last_selected": "",
+    "trace": null
+   },
+   "injection": {
+    "parsed": {
+     "slots": "NO_SLOT",
+     "then_run": [],
+     "status": "NO_SLOT",
+     "verified": null
+    },
+    "derived": {
+     "slots": {
+      "comparison": true
+     },
+     "then_run": [
+      "score_by_comparison__g"
+     ],
+     "status": "PATH_EXISTS",
+     "verified": true,
+     "selected": "yes, it is true",
+     "readout_only": true
+    }
+   },
+   "oracle_encodes": "universal over an empty domain -> true",
+   "discriminates": "C only: derived injection is one string match from the answer"
+  },
+  {
+   "charon_index": 31,
+   "g7_sorted_index": 37,
+   "category": "vacuous_truth",
+   "prompt": "No book on this shelf has more than 500 pages. Consider the claim: every book on the shelf with more than 500 pages is overdue. Is the claim true?",
+   "candidates": [
+    "yes, it is true",
+    "no, it is false",
+    "undetermined",
+    "only if some book is overdue"
+   ],
+   "correct": "yes, it is true",
+   "correct_slot": 0,
+   "candidate_lens": [
+    15,
+    15,
+    12,
+    28
+   ],
+   "correct_is_longest": false,
+   "correct_is_strictly_longest": false,
+   "correct_is_shortest": false,
+   "correct_is_strictly_shortest": false,
+   "recognition": {
+    "fired_at_initial_state": [
+     "parse_numbers"
+    ],
+    "closure_size_under_C": 2,
+    "unrecognised": false,
+    "number_extraction_only": true,
+    "reaches_meaningful_representation": false
+   },
+   "baseline": {
+    "organism": "KNOWN_0833",
+    "outcome": "ABSTAIN",
+    "selected": "",
+    "correct_reachable_under_C": false,
+    "robust_under_C_all_24_permutations": false,
+    "positional_fallback": false,
+    "class": "dE_bound"
+   },
+   "frozen_pair": {
+    "reachable_with_pair": false,
+    "robust_with_pair": false,
+    "bundle_readout_last_outcome": "ABSTAIN",
+    "bundle_readout_last_selected": "",
+    "trace": null
+   },
+   "injection": {
+    "parsed": {
+     "slots": "NO_SLOT",
+     "then_run": [],
+     "status": "NO_SLOT",
+     "verified": null
+    },
+    "derived": {
+     "slots": {
+      "comparison": true
+     },
+     "then_run": [
+      "score_by_comparison__g"
+     ],
+     "status": "PATH_EXISTS",
+     "verified": true,
+     "selected": "yes, it is true",
+     "readout_only": true
+    }
+   },
+   "oracle_encodes": "universal over an empty domain -> true",
+   "discriminates": "C only: derived injection is one string match from the answer"
+  },
+  {
+   "charon_index": 32,
+   "g7_sorted_index": 38,
+   "category": "vacuous_truth",
+   "prompt": "There are exactly three blue tiles, and exactly one of them is cracked. Consider the claim: every blue tile is cracked. Is the claim true?",
+   "candidates": [
+    "yes, it is true",
+    "no, it is false",
+    "undetermined",
+    "the claim is not well formed"
+   ],
+   "correct": "no, it is false",
+   "correct_slot": 1,
+   "candidate_lens": [
+    15,
+    15,
+    12,
+    28
+   ],
+   "correct_is_longest": false,
+   "correct_is_strictly_longest": false,
+   "correct_is_shortest": false,
+   "correct_is_strictly_shortest": false,
+   "recognition": {
+    "fired_at_initial_state": [],
+    "closure_size_under_C": 1,
+    "unrecognised": true,
+    "number_extraction_only": false,
+    "reaches_meaningful_representation": false
+   },
+   "baseline": {
+    "organism": "KNOWN_0833",
+    "outcome": "ABSTAIN",
+    "selected": "",
+    "correct_reachable_under_C": false,
+    "robust_under_C_all_24_permutations": false,
+    "positional_fallback": false,
+    "class": "dE_bound"
+   },
+   "frozen_pair": {
+    "reachable_with_pair": false,
+    "robust_with_pair": false,
+    "bundle_readout_last_outcome": "ABSTAIN",
+    "bundle_readout_last_selected": "",
+    "trace": null
+   },
+   "injection": {
+    "parsed": {
+     "slots": "NO_SLOT",
+     "then_run": [],
+     "status": "NO_SLOT",
+     "verified": null
+    },
+    "derived": {
+     "slots": {
+      "comparison": false
+     },
+     "then_run": [
+      "score_by_comparison__g"
+     ],
+     "status": "PATH_EXISTS",
+     "verified": true,
+     "selected": "no, it is false",
+     "readout_only": true
+    }
+   },
+   "oracle_encodes": "universal over a non-empty domain with a counterexample -> false",
+   "discriminates": "C only: derived injection is one string match from the answer"
+  },
+  {
+   "charon_index": 33,
+   "g7_sorted_index": 39,
+   "category": "vacuous_truth",
+   "prompt": "No employee in the department holds a pilot licence. Consider the claim: some employee in the department who holds a pilot licence works weekends. Is the claim true?",
+   "candidates": [
+    "yes, it is true",
+    "undetermined",
+    "only on weekends",
+    "no, it is false"
+   ],
+   "correct": "no, it is false",
+   "correct_slot": 3,
+   "candidate_lens": [
+    15,
+    12,
+    16,
+    15
+   ],
+   "correct_is_longest": false,
+   "correct_is_strictly_longest": false,
+   "correct_is_shortest": false,
+   "correct_is_strictly_shortest": false,
+   "recognition": {
+    "fired_at_initial_state": [],
+    "closure_size_under_C": 1,
+    "unrecognised": true,
+    "number_extraction_only": false,
+    "reaches_meaningful_representation": false
+   },
+   "baseline": {
+    "organism": "KNOWN_0833",
+    "outcome": "ABSTAIN",
+    "selected": "",
+    "correct_reachable_under_C": false,
+    "robust_under_C_all_24_permutations": false,
+    "positional_fallback": false,
+    "class": "dE_bound"
+   },
+   "frozen_pair": {
+    "reachable_with_pair": false,
+    "robust_with_pair": false,
+    "bundle_readout_last_outcome": "ABSTAIN",
+    "bundle_readout_last_selected": "",
+    "trace": null
+   },
+   "injection": {
+    "parsed": {
+     "slots": "NO_SLOT",
+     "then_run": [],
+     "status": "NO_SLOT",
+     "verified": null
+    },
+    "derived": {
+     "slots": {
+      "comparison": false
+     },
+     "then_run": [
+      "score_by_comparison__g"
+     ],
+     "status": "PATH_EXISTS",
+     "verified": true,
+     "selected": "no, it is false",
+     "readout_only": true
+    }
+   },
+   "oracle_encodes": "existential over an empty domain -> false",
+   "discriminates": "C only: derived injection is one string match from the answer"
+  },
+  {
+   "charon_index": 34,
+   "g7_sorted_index": 40,
+   "category": "vacuous_truth",
+   "prompt": "The box contains no item weighing more than two kilograms. Consider the claim: if an item in the box weighs more than two kilograms, then it is fragile. Is the claim true?",
+   "candidates": [
+    "no, it is false",
+    "yes, it is true",
+    "it cannot be determined",
+    "only if the box is empty"
+   ],
+   "correct": "yes, it is true",
+   "correct_slot": 1,
+   "candidate_lens": [
+    15,
+    15,
+    23,
+    24
+   ],
+   "correct_is_longest": false,
+   "correct_is_strictly_longest": false,
+   "correct_is_shortest": true,
+   "correct_is_strictly_shortest": false,
+   "recognition": {
+    "fired_at_initial_state": [],
+    "closure_size_under_C": 1,
+    "unrecognised": true,
+    "number_extraction_only": false,
+    "reaches_meaningful_representation": false
+   },
+   "baseline": {
+    "organism": "KNOWN_0833",
+    "outcome": "ABSTAIN",
+    "selected": "",
+    "correct_reachable_under_C": false,
+    "robust_under_C_all_24_permutations": false,
+    "positional_fallback": false,
+    "class": "dE_bound"
+   },
+   "frozen_pair": {
+    "reachable_with_pair": false,
+    "robust_with_pair": false,
+    "bundle_readout_last_outcome": "ABSTAIN",
+    "bundle_readout_last_selected": "",
+    "trace": null
+   },
+   "injection": {
+    "parsed": {
+     "slots": "NO_SLOT",
+     "then_run": [],
+     "status": "NO_SLOT",
+     "verified": null
+    },
+    "derived": {
+     "slots": {
+      "comparison": true
+     },
+     "then_run": [
+      "score_by_comparison__g"
+     ],
+     "status": "PATH_EXISTS",
+     "verified": true,
+     "selected": "yes, it is true",
+     "readout_only": true
+    }
+   },
+   "oracle_encodes": "conditional with unsatisfiable antecedent -> true",
+   "discriminates": "C only: derived injection is one string match from the answer"
+  },
+  {
+   "charon_index": 35,
+   "g7_sorted_index": 41,
+   "category": "vacuous_truth",
+   "prompt": "Nobody in the room is taller than two metres. Consider the claim: everyone in the room taller than two metres is asleep. Is the claim true?",
+   "candidates": [
+    "yes, it is true",
+    "no, it is false",
+    "it cannot be determined",
+    "only if the room is empty"
+   ],
+   "correct": "yes, it is true",
+   "correct_slot": 0,
+   "candidate_lens": [
+    15,
+    15,
+    23,
+    25
+   ],
+   "correct_is_longest": false,
+   "correct_is_strictly_longest": false,
+   "correct_is_shortest": true,
+   "correct_is_strictly_shortest": false,
+   "recognition": {
+    "fired_at_initial_state": [],
+    "closure_size_under_C": 1,
+    "unrecognised": true,
+    "number_extraction_only": false,
+    "reaches_meaningful_representation": false
+   },
+   "baseline": {
+    "organism": "KNOWN_0833",
+    "outcome": "ABSTAIN",
+    "selected": "",
+    "correct_reachable_under_C": false,
+    "robust_under_C_all_24_permutations": false,
+    "positional_fallback": false,
+    "class": "dE_bound"
+   },
+   "frozen_pair": {
+    "reachable_with_pair": false,
+    "robust_with_pair": false,
+    "bundle_readout_last_outcome": "ABSTAIN",
+    "bundle_readout_last_selected": "",
+    "trace": null
+   },
+   "injection": {
+    "parsed": {
+     "slots": "NO_SLOT",
+     "then_run": [],
+     "status": "NO_SLOT",
+     "verified": null
+    },
+    "derived": {
+     "slots": {
+      "comparison": true
+     },
+     "then_run": [
+      "score_by_comparison__g"
+     ],
+     "status": "PATH_EXISTS",
+     "verified": true,
+     "selected": "yes, it is true",
+     "readout_only": true
+    }
+   },
+   "oracle_encodes": "universal over an empty domain -> true",
+   "discriminates": "C only: derived injection is one string match from the answer"
+  },
+  {
+   "charon_index": 36,
+   "g7_sorted_index": 6,
+   "category": "consistency_check",
+   "prompt": "Consider these three statements together: P is heavier than Q; Q is heavier than R; R is heavier than P. Can all three hold at once?",
+   "candidates": [
+    "yes, all three can hold",
+    "only if two of them are equal",
+    "it cannot be determined",
+    "no, they contradict one another"
+   ],
+   "correct": "no, they contradict one another",
+   "correct_slot": 3,
+   "candidate_lens": [
+    23,
+    29,
+    23,
+    31
+   ],
+   "correct_is_longest": true,
+   "correct_is_strictly_longest": true,
+   "correct_is_shortest": false,
+   "correct_is_strictly_shortest": false,
+   "recognition": {
+    "fired_at_initial_state": [],
+    "closure_size_under_C": 1,
+    "unrecognised": true,
+    "number_extraction_only": false,
+    "reaches_meaningful_representation": false
+   },
+   "baseline": {
+    "organism": "KNOWN_0833",
+    "outcome": "ABSTAIN",
+    "selected": "",
+    "correct_reachable_under_C": false,
+    "robust_under_C_all_24_permutations": false,
+    "positional_fallback": false,
+    "class": "dE_bound"
+   },
+   "frozen_pair": {
+    "reachable_with_pair": false,
+    "robust_with_pair": false,
+    "bundle_readout_last_outcome": "ABSTAIN",
+    "bundle_readout_last_selected": "",
+    "trace": null
+   },
+   "injection": {
+    "parsed": {
+     "slots": {
+      "names": [
+       "P",
+       "Q",
+       "R"
+      ],
+      "relations": [
+       [
+        "P",
+        "Q"
+       ],
+       [
+        "Q",
+        "R"
+       ],
+       [
+        "R",
+        "P"
+       ]
+      ]
+     },
+     "then_run": [],
+     "status": "NO_CONSUMER_OP (B-gap by construction)",
+     "verified": null
+    },
+    "derived": {
+     "slots": {
+      "comparison": false
+     },
+     "then_run": [
+      "score_by_comparison__g"
+     ],
+     "status": "PATH_EXISTS",
+     "verified": true,
+     "selected": "no, they contradict one another",
+     "readout_only": true
+    }
+   },
+   "oracle_encodes": "cycle -> inconsistent -> 'no'",
+   "discriminates": "C only: derived injection is one string match from the answer"
+  },
+  {
+   "charon_index": 37,
+   "g7_sorted_index": 7,
+   "category": "consistency_check",
+   "prompt": "Consider these three statements together: the meeting is on Tuesday; the meeting is in the afternoon; the room is booked for that meeting all Tuesday afternoon. Can all three hold at once?",
+   "candidates": [
+    "no, they contradict one another",
+    "only if the meeting is moved",
+    "yes, all three can hold",
+    "it cannot be determined"
+   ],
+   "correct": "yes, all three can hold",
+   "correct_slot": 2,
+   "candidate_lens": [
+    31,
+    28,
+    23,
+    23
+   ],
+   "correct_is_longest": false,
+   "correct_is_strictly_longest": false,
+   "correct_is_shortest": true,
+   "correct_is_strictly_shortest": false,
+   "recognition": {
+    "fired_at_initial_state": [],
+    "closure_size_under_C": 1,
+    "unrecognised": true,
+    "number_extraction_only": false,
+    "reaches_meaningful_representation": false
+   },
+   "baseline": {
+    "organism": "KNOWN_0833",
+    "outcome": "ABSTAIN",
+    "selected": "",
+    "correct_reachable_under_C": false,
+    "robust_under_C_all_24_permutations": false,
+    "positional_fallback": false,
+    "class": "dE_bound"
+   },
+   "frozen_pair": {
+    "reachable_with_pair": false,
+    "robust_with_pair": false,
+    "bundle_readout_last_outcome": "ABSTAIN",
+    "bundle_readout_last_selected": "",
+    "trace": null
+   },
+   "injection": {
+    "parsed": {
+     "slots": "NO_SLOT",
+     "then_run": [],
+     "status": "NO_SLOT",
+     "verified": null
+    },
+    "derived": {
+     "slots": {
+      "comparison": true
+     },
+     "then_run": [
+      "score_by_comparison__g"
+     ],
+     "status": "PATH_EXISTS",
+     "verified": true,
+     "selected": "yes, all three can hold",
+     "readout_only": true
+    }
+   },
+   "oracle_encodes": "consistent scheduling statements",
+   "discriminates": "C only: derived injection is one string match from the answer"
+  },
+  {
+   "charon_index": 38,
+   "g7_sorted_index": 8,
+   "category": "consistency_check",
+   "prompt": "Consider these three statements together: x + y = 10; x - y = 2; x = 7. Can all three hold at once?",
+   "candidates": [
+    "yes, all three can hold",
+    "no, they contradict one another",
+    "only if y is negative",
+    "it cannot be determined"
+   ],
+   "correct": "no, they contradict one another",
+   "correct_slot": 1,
+   "candidate_lens": [
+    23,
+    31,
+    21,
+    23
+   ],
+   "correct_is_longest": true,
+   "correct_is_strictly_longest": true,
+   "correct_is_shortest": false,
+   "correct_is_strictly_shortest": false,
+   "recognition": {
+    "fired_at_initial_state": [
+     "parse_numbers"
+    ],
+    "closure_size_under_C": 2,
+    "unrecognised": false,
+    "number_extraction_only": true,
+    "reaches_meaningful_representation": false
+   },
+   "baseline": {
+    "organism": "KNOWN_0833",
+    "outcome": "ABSTAIN",
+    "selected": "",
+    "correct_reachable_under_C": false,
+    "robust_under_C_all_24_permutations": false,
+    "positional_fallback": false,
+    "class": "dE_bound"
+   },
+   "frozen_pair": {
+    "reachable_with_pair": false,
+    "robust_with_pair": false,
+    "bundle_readout_last_outcome": "ABSTAIN",
+    "bundle_readout_last_selected": "",
+    "trace": null
+   },
+   "injection": {
+    "parsed": {
+     "slots": "NO_SLOT",
+     "then_run": [],
+     "status": "NO_SLOT",
+     "verified": null
+    },
+    "derived": {
+     "slots": {
+      "comparison": false
+     },
+     "then_run": [
+      "score_by_comparison__g"
+     ],
+     "status": "PATH_EXISTS",
+     "verified": true,
+     "selected": "no, they contradict one another",
+     "readout_only": true
+    }
+   },
+   "oracle_encodes": "linear system with x=7 contradicts x+y=10, x-y=2 (x=6)",
+   "discriminates": "C only: derived injection is one string match from the answer"
+  },
+  {
+   "charon_index": 39,
+   "g7_sorted_index": 9,
+   "category": "consistency_check",
+   "prompt": "Three meetings occupy three different days, Monday to Wednesday. Meeting A is not on Monday. Meeting B is not on Tuesday. Meeting C is not on Wednesday. Can all of this hold at once?",
+   "candidates": [
+    "no, it contradicts itself",
+    "yes, all of it can hold",
+    "only if two meetings share a day",
+    "it cannot be determined"
+   ],
+   "correct": "yes, all of it can hold",
+   "correct_slot": 1,
+   "candidate_lens": [
+    25,
+    23,
+    32,
+    23
+   ],
+   "correct_is_longest": false,
+   "correct_is_strictly_longest": false,
+   "correct_is_shortest": true,
+   "correct_is_strictly_shortest": false,
+   "recognition": {
+    "fired_at_initial_state": [],
+    "closure_size_under_C": 1,
+    "unrecognised": true,
+    "number_extraction_only": false,
+    "reaches_meaningful_representation": false
+   },
+   "baseline": {
+    "organism": "KNOWN_0833",
+    "outcome": "ABSTAIN",
+    "selected": "",
+    "correct_reachable_under_C": false,
+    "robust_under_C_all_24_permutations": false,
+    "positional_fallback": false,
+    "class": "dE_bound"
+   },
+   "frozen_pair": {
+    "reachable_with_pair": false,
+    "robust_with_pair": false,
+    "bundle_readout_last_outcome": "ABSTAIN",
+    "bundle_readout_last_selected": "",
+    "trace": null
+   },
+   "injection": {
+    "parsed": {
+     "slots": "NO_SLOT",
+     "then_run": [],
+     "status": "NO_SLOT",
+     "verified": null
+    },
+    "derived": {
+     "slots": {
+      "comparison": true
+     },
+     "then_run": [
+      "score_by_comparison__g"
+     ],
+     "status": "PATH_EXISTS",
+     "verified": true,
+     "selected": "yes, all of it can hold",
+     "readout_only": true
+    }
+   },
+   "oracle_encodes": "a satisfying day assignment exists",
+   "discriminates": "C only: derived injection is one string match from the answer"
+  },
+  {
+   "charon_index": 40,
+   "g7_sorted_index": 10,
+   "category": "consistency_check",
+   "prompt": "Consider these three statements together: the room holds at most 40 people; 25 adults are in the room; 12 children are in the room. Can all three hold at once?",
+   "candidates": [
+    "no, they contradict one another",
+    "yes, all three can hold",
+    "only if some people leave",
+    "it cannot be determined"
+   ],
+   "correct": "yes, all three can hold",
+   "correct_slot": 1,
+   "candidate_lens": [
+    31,
+    23,
+    25,
+    23
+   ],
+   "correct_is_longest": false,
+   "correct_is_strictly_longest": false,
+   "correct_is_shortest": true,
+   "correct_is_strictly_shortest": false,
+   "recognition": {
+    "fired_at_initial_state": [
+     "parse_numbers"
+    ],
+    "closure_size_under_C": 2,
+    "unrecognised": false,
+    "number_extraction_only": true,
+    "reaches_meaningful_representation": false
+   },
+   "baseline": {
+    "organism": "KNOWN_0833",
+    "outcome": "ABSTAIN",
+    "selected": "",
+    "correct_reachable_under_C": false,
+    "robust_under_C_all_24_permutations": false,
+    "positional_fallback": false,
+    "class": "dE_bound"
+   },
+   "frozen_pair": {
+    "reachable_with_pair": false,
+    "robust_with_pair": false,
+    "bundle_readout_last_outcome": "ABSTAIN",
+    "bundle_readout_last_selected": "",
+    "trace": null
+   },
+   "injection": {
+    "parsed": {
+     "slots": "NO_SLOT",
+     "then_run": [],
+     "status": "NO_SLOT",
+     "verified": null
+    },
+    "derived": {
+     "slots": {
+      "comparison": true
+     },
+     "then_run": [
+      "score_by_comparison__g"
+     ],
+     "status": "PATH_EXISTS",
+     "verified": true,
+     "selected": "yes, all three can hold",
+     "readout_only": true
+    }
+   },
+   "oracle_encodes": "25 + 12 <= 40",
+   "discriminates": "C only: derived injection is one string match from the answer"
+  },
+  {
+   "charon_index": 41,
+   "g7_sorted_index": 11,
+   "category": "consistency_check",
+   "prompt": "Consider these three statements together: every technician is certified; no certified person works nights; Sam is a technician who works nights. Can all three hold at once?",
+   "candidates": [
+    "no, they contradict one another",
+    "yes, all three can hold",
+    "only if Sam is uncertified",
+    "it cannot be determined"
+   ],
+   "correct": "no, they contradict one another",
+   "correct_slot": 0,
+   "candidate_lens": [
+    31,
+    23,
+    26,
+    23
+   ],
+   "correct_is_longest": true,
+   "correct_is_strictly_longest": true,
+   "correct_is_shortest": false,
+   "correct_is_strictly_shortest": false,
+   "recognition": {
+    "fired_at_initial_state": [],
+    "closure_size_under_C": 1,
+    "unrecognised": true,
+    "number_extraction_only": false,
+    "reaches_meaningful_representation": false
+   },
+   "baseline": {
+    "organism": "KNOWN_0833",
+    "outcome": "ABSTAIN",
+    "selected": "",
+    "correct_reachable_under_C": false,
+    "robust_under_C_all_24_permutations": false,
+    "positional_fallback": false,
+    "class": "dE_bound"
+   },
+   "frozen_pair": {
+    "reachable_with_pair": false,
+    "robust_with_pair": false,
+    "bundle_readout_last_outcome": "ABSTAIN",
+    "bundle_readout_last_selected": "",
+    "trace": null
+   },
+   "injection": {
+    "parsed": {
+     "slots": "NO_SLOT",
+     "then_run": [],
+     "status": "NO_SLOT",
+     "verified": null
+    },
+    "derived": {
+     "slots": {
+      "comparison": false
+     },
+     "then_run": [
+      "score_by_comparison__g"
+     ],
+     "status": "PATH_EXISTS",
+     "verified": true,
+     "selected": "no, they contradict one another",
+     "readout_only": true
+    }
+   },
+   "oracle_encodes": "syllogism: technician -> certified -> not nights, Sam works nights",
+   "discriminates": "C only: derived injection is one string match from the answer"
+  }
+ ]
+}

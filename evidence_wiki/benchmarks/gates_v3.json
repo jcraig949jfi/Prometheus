@@ -1,0 +1,37 @@
+{
+ "adjudicated": "2026-09-02",
+ "prereg": "docs/PREREGISTRATION_V3.md frozen at 4f8f6c875; AMENDMENT 1 committed at 20560088e BEFORE any arm output was read",
+ "gates": {
+  "G1_v2_integrity": {"verdict": "PASS", "evidence": "V2 artifacts untouched; V3 additive (migrations 005, v3/)"},
+  "G2_ambient_inventory": {"verdict": "PASS", "evidence": "226 files / 1.2MB hashed per-file (v3/AMBIENT_MEMORY_INVENTORY.json, sha cb402aa6...); MEMORY.md sha 05dbe05e...; registered as LEGACY_AMBIENT_MEMORY packet SP-a960f1327491"},
+  "G3_harness_disable": {"verdict": "FAIL - AMBIENT_MEMORY_CANNOT_YET_BE_SAFELY_REMOVED", "evidence": "Probe-proven: the memory index persists in subagents under worktree isolation AND with the memory directory physically relocated - injection is cached at the parent-session level. No userland mechanism available to a live session disables it. DECLARED mode (sha-pinned) qualified instead; upstream harness fix required (feedback drafted). Docs/behavior discrepancy: official docs state subagents do not receive auto-memory."},
+  "G4_pack_reproducibility": {"verdict": "PASS", "evidence": "doctrine pack content-hashed (8345ba29...), frozen file, deterministic build from canonical revision"},
+  "G5_provenance_bound_influence": {"verdict": "PASS", "evidence": "ew.memory_artifacts + ew.memory_influences close the s6 chain for all 3 B consumers (MI-895f..., MI-d433..., MI-e822...)"},
+  "G6_nonsaturation": {"verdict": "FAIL (band violated)", "evidence": "Control trapped-task mean 0.867 > frozen 0.80: capable-model execution competence nearly saturates the instrument; primary delta is a floor-bounded reading (frozen instrument-verdict rule applied)"},
+  "G7_no_llm_judge": {"verdict": "PASS", "evidence": "deterministic criteria vs sealed ground truth (sha 11f16bdd...), frozen before any run"},
+  "G8_negative_evidence_preserved": {"verdict": "PASS", "evidence": "pack carried negative/correction items (n_live_tup trap, Sha circularity, id collisions); B arms verified each live rather than trusting"},
+  "G9_misleading_resistance": {"verdict": "PASS", "evidence": "B2/B3 overrode the pack's X5 headline after live verification (content-distinct vs id-distinct) while stating the criterion facts verbatim - explicit memory did not induce deference"},
+  "G10_explicit_vs_control": {"verdict": "ADJUDICATED: EXPLICIT_MEMORY_MARGINAL_EXECUTION_BENEFIT", "evidence": "A 5/5/6, B 6/6/6; delta +0.111 in the frozen MARGINAL band [0.083,0.25); benefit concentrated on X1, the one task where knowledge (mirror location) rather than skill was binding (controls 1/3, pack 3/3); bounded by G6 saturation"},
+  "G11_sfe_reference_integrity": {"verdict": "PASS", "evidence": "all 11,731 fossil rows carry SFE entry/content hashes; SFE opened mode=ro only; reinterpretation demo verified the underlying event byte-identical before/after"},
+  "G12_incubator_schema": {"verdict": "PASS", "evidence": "fossil_players/worlds/encounters/edges/interpretations/candidate_bumps live with real SFE history (242 worlds, 6,006 players, 5,452 encounters, 31 fork edges)"},
+  "G13_tensor_fossil_queries": {"verdict": "PASS with one data-blocked query", "evidence": "5 fossil-class queries operational at <=6.2ms (family x failure matrix, KL-anomaly worlds, SVD factorization err 0.0013, lineage survival); q3 (architecture discrimination) blocked by SFE phenotype coverage 2/6006 - a REAL Incubator requirement handed to Daedalus: organisms must emit phenotype observations"},
+  "G14_compression_backlinks": {"verdict": "PASS", "evidence": "invariant enforced by construction (derived artifacts carry snapshot ids + repro hashes); no destructive compression exists"},
+  "G15_reinterpretation": {"verdict": "PASS", "evidence": "I-9aaffea6934d -> I-7428363fe81f supersession chain on a real hash-verified immutable SFE failure event; both readings recoverable; event unchanged (v3/reinterpretation_demo.json)"},
+  "G16_semantic_firewall": {"verdict": "PASS", "evidence": "native fossil surfaces emit only ids/hashes/numbers/opaque family tokens; scanner (built from LIVE substrate prose) finds zero leaks; human endpoint trips the scanner as negative control (v3/firewall_audit.json)"},
+  "G17_concurrent_reads": {"verdict": "PASS", "evidence": "30/30 reads during 4-writer load; p95 2.9s under write pressure (noted for envelope)"},
+  "G18_distributed_writes": {"verdict": "PARTIAL - DISTRIBUTED_INGEST_NOT_READY (cross-host)", "evidence": "4 concurrent worker processes with distinct machine identities on M1: clean; true M2-M4 LAN legs still pending peers pulling the branch"},
+  "G19_worker_failure_recovery": {"verdict": "PASS", "evidence": "worker killed mid-batch (exit 9), full-batch replay clean, zero loss/duplication"},
+  "G20_ingest_envelope": {"verdict": "CHARACTERIZED", "evidence": "single-event REST 7.1 ev/s; batch(100) REST 712 ev/s; direct bulk 8,191 rows/s; bottleneck = per-request connection path; batch endpoint is the Incubator path"},
+  "G21_no_silent_duplicates": {"verdict": "PASS", "evidence": "600/600 unique under 10% retry injection + crash replay; batch replay re-inserted 0"},
+  "G22_pew_outage_sfe_safe": {"verdict": "PASS", "evidence": "PEW holds no write path to SFE (mode=ro everywhere); service was fully stopped during the A window with SFE unaffected"},
+  "G23_ontology_versioning": {"verdict": "PASS", "evidence": "ontology v3 vocab additions; mechanism_registry v2 supersession rows live; interpretations carry versioned supersession"},
+  "G24_claims_bounded": {"verdict": "PASS", "evidence": "this table; every verdict carries its artifact"}
+ },
+ "explicit_verdicts": [
+  "AMBIENT_MEMORY_CANNOT_YET_BE_SAFELY_REMOVED (G3)",
+  "EXPLICIT_MEMORY_MARGINAL_EXECUTION_BENEFIT (G10, floor-bounded by G6 saturation)",
+  "DISTRIBUTED_INGEST_NOT_READY for cross-host claims (G18)",
+  "TENSOR fossil queries OPERATIONAL; association value beyond marginals still unproven at this scale"
+ ],
+ "incubator_decision": "READY_WITH_LIMITATIONS: fossil schema + batch ingest + firewall + provenance chain ready; NOT ready: cross-host legs unqualified, SFE phenotype coverage (2/6006) blocks architecture-discrimination mining, per-event ingest path too slow, ambient memory undisable-able from a live session"
+}

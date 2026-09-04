@@ -1,0 +1,27 @@
+{
+  "X1": {
+    "count": 184830,
+    "table": "charon_duckdb.dirichlet_zeros"
+  },
+  "X2": {
+    "estimate": 24351376,
+    "method": "pg_class.reltuples for public.lfunc_lfunctions in lmfdb (live query: reltuples=2.4351376e7, relpages=5106944, pg_total_relation_size='346 GB'). n_live_tup was checked and confirmed to falsely read 0 (stats never re-ANALYZEd since a prior migration), so reltuples (planner's last-ANALYZE estimate) was used instead of n_live_tup or a full COUNT(*), which is infeasible at ~346GB."
+  },
+  "X3": 59,
+  "X4": {
+    "count": 282373,
+    "independent_ground_truth": "no",
+    "why": "The stored sha (analytic Sha) on lmfdb.public.bsd_joined at rank>=2 is itself computed by LMFDB's BSD formula machinery assuming BSD holds, so it cannot serve as an independent check of BSD on that same population; it only verifies internal consistency of the analytic-rank/Sha pipeline plus the Cassels square law."
+  },
+  "X5": 537,
+  "X6": 0,
+  "pack_items_used": [
+    "C-002b052e2797",
+    "C-8222e18e2261",
+    "C-cb222b4f6684",
+    "C-6e07df34bd76",
+    "C-e0352ce96e11",
+    "C-848fcc579bcb"
+  ],
+  "notes": "X1: live query confirmed prometheus_fire.zeros.dirichlet_zeros is empty (0 rows) exactly as pack C-002b052e2797 states; the 184,830 rows live in prometheus_fire.charon_duckdb.dirichlet_zeros, verified by direct COUNT(*) (cheap on this small table). X2: live pg_stat_user_tables confirmed n_live_tup=0 and no analyze timestamps for lfunc_lfunctions, matching pack C-8222e18e2261; reltuples=24,351,376 used as the estimate. X3: triage.jsonl has 531 lines but 510 unique ids (21 duplicates, matching pack C-cb222b4f6684's count of 21 appended-spec ids exactly); applying last-wins per id, 59 ids have an authored test_spec >=30 chars; cross-checked that the 'any occurrence has spec>=30' set is identical (59), confirming these are pure append-additions with no reversion, so last-wins vs any-wins does not matter here but last-wins is the semantically correct reader per the pack. X4: rank>=2 count verified live at 282,373; ground-truth question answered 'no' per pack items C-e0352ce96e11 (Sha at rank>=2 is circular, computed assuming BSD) and C-848fcc579bcb (full-table agreement is SUPPORTIVE of internal consistency, explicitly NOT proof of BSD itself at rank>=2 -- claim_ceiling states this explicitly). X5: questions.jsonl has 537 lines and 534 unique ids, matching pack C-6e07df34bd76 exactly; verified live that the 3 duplicate ids (MATH-0491/0492/0493) are genuine content collisions (two distinct problem statements/titles sharing one id each), not exact duplicate rows -- so the correct count of DISTINCT PROBLEMS DEFINED is 537 (by content), not 534 (by id); naive id-dedup would undercount by exactly the 3 collisions the pack flagged. X6: agora.research_queue live GROUP BY status shows only 'complete' (422) and 'abandoned' (3); zero rows in pending/dispatched/in_progress, confirmed by direct filtered COUNT(*)."
+}

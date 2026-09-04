@@ -1,0 +1,153 @@
+================================================================================
+V2 REVIEW PACKET
+PROMETHEUS EVIDENCE WIKI -- MEMORY ADVANTAGE UNDER RETRIEVAL CONSTRAINTS
+================================================================================
+Prepared:        2026-09-02   frozen, adjudicated
+Location/Code:   evidence_wiki/v2/ (arm_outputs, packs, scores, blind,
+                 LEAKAGE_AUDIT_V2.md), benchmarks/*_v2.json, docs/*_V2.md
+Version/Hash:    prereg+tasks+sealed gold frozen at cab825adc BEFORE any
+                 designer; final commit d4da2f4f5; charter sha256 7e5d2dae
+                 85a7613c3257bd0f362bea7f913adca4c96b8408a68303f522848a24;
+                 gold sha 731b5b8c...; blind-map sha 61d2735a...
+Headline:        RETRIEVAL_ADVANTAGE_WITHOUT_DESIGN_ADVANTAGE, and it is
+                 MODEL-SPECIFIC. The evidence pack -- not interactive
+                 consultation -- is the interface that earned promotion
+                 candidacy. The campaign also caught Prometheus operating
+                 an IMPLICIT memory channel nobody had accounted for.
+
+--------------------------------------------------------------------------------
+1. CLAIM AND INSTRUMENT
+--------------------------------------------------------------------------------
+V1's metabolization test saturated. V2 rebuilt the instrument around a real
+retrieval bottleneck: 10 frozen tasks whose gold evidence (34 items, sealed
+before launch) hides behind different vocabulary, seats, substrates, ages,
+and one deliberate misleading-transfer trap. Roles firewalled (designers
+never saw gold; scorers never saw arms); budgets identical (15 ops / 12
+docs, logged); pilots confirmed non-saturation (control recall 0.0 / 1.0);
+primary slate: {ordinary-repo A, wiki B} x {sonnet, haiku} x 10 tasks + a
+diagnostic evidence-pack arm C on 5 tasks. ~70 agents total. No paid APIs.
+
+--------------------------------------------------------------------------------
+2. RETRIEVAL RESULTS (deterministic, sealed-gold matching)
+--------------------------------------------------------------------------------
+  Condition       core recall   negative-ev   corrections
+  -------------   -----------   -----------   -----------
+  A ordinary          0.474         0.288         0.333
+  B wiki              0.625         0.531         0.667
+  C evidence pack     0.900         0.700         1.000
+
+  By model (core delta B-A):  sonnet +0.300   haiku +0.011
+  Sonnet delta by task class: clean +0.250, memory-overlap +0.333
+  Pooled delta +0.151 < frozen bar 0.25 -> G3 FAIL_POOLED;
+  disclosed decomposition -> MODEL_SPECIFIC_ADVANTAGE_ONLY.
+Cleanest single instance: T05's cross-family kill (OBSTRUCTION_SHAPE,
+REFUTED 1/244) reached BOTH wiki arms via mechanism search and NEITHER
+control -- both controls substituted a different real signature.
+
+--------------------------------------------------------------------------------
+3. DESIGN RESULTS (blind, 2 scorers, frozen weights)
+--------------------------------------------------------------------------------
+Primary endpoint: mean composite delta (B - A) over 19 cells = -0.016
+(threshold +0.40); B > A in 8/19; non-stylistic D3+D4 subcomposite -0.02.
+  G5 = DESIGN ADVANTAGE NOT DEMONSTRATED.
+Inter-rater: 0.882 exact, 0.982 within-1 (220 paired dims).
+Caveat, per the frozen acceptance band: control composite 3.72 > 3.4 --
+the rubric saturates on strong designers (G2 design-side CEILING flag).
+Exploratory: on the 4 cleanest tasks wiki arms scored -0.234 LOWER --
+retrieval noise/anchoring is the first harm channel to instrument
+(exemplar: T01-B-haiku detoured into tangential release-packet mechanics).
+G6 metabolization differential: NOT DEMONSTRATED -- concrete evidence->
+decision reuse is near-universal in BOTH arms. G9 misleading-resistance:
+PASS everywhere (0 adoption of the planted D-5 transplant temptation).
+G10 mediation: retrieval improved, design did not follow -- the causal
+edge breaks at integration, not recovery.
+
+--------------------------------------------------------------------------------
+4. THE TWO LEAKAGE EVENTS (preserved, protocol-handled)
+--------------------------------------------------------------------------------
+1. Haiku controls violated the evidence_wiki access boundary in 7/15
+   attempts (sonnet: 0/12), despite explicit instructions; cells
+   quarantined, re-run once with byte-identical prompts, one cell (T10
+   haiku) excluded after a second violation. Lesson: condition isolation
+   (and any future access policy) must be HARNESS-enforced for weak models.
+2. THE DISCOVERY: designer agents cited operator memory doctrine that
+   exists NOWHERE in the repository. The agent harness injects the
+   project's auto-memory into every session, subagents included. Both arms
+   received it equally (parity held), but it pre-seeded condensed gold on
+   ~5 tasks, inflating control recall -- the wiki's measured advantage is
+   a LOWER BOUND. More important than the bias: Prometheus already runs an
+   implicit memory channel that shapes design behavior -- unlogged,
+   unversioned, provenance-free, single-operator, single-machine. The
+   Evidence Wiki's V3 case is now precisely about replacing that channel
+   with a provenance-preserving, shared, queryable one.
+
+--------------------------------------------------------------------------------
+5. OTHER GATES
+--------------------------------------------------------------------------------
+G1 prior integrity PASS. G2 PARTIAL (retrieval side PASS; design rubric
+ceiling flagged). G4 negative-evidence: sonnet +0.405 (pooled 0.243).
+G7 duplication ADJUDICATED_NULL. G8 falsifier delta ~0. G11 cost parity.
+G12 characterized (treatment x model interaction dominates). G13 ontology
+STABLE; s17 rulings encoded as HUMAN v2 registry rows. G14 DISTRIBUTED_
+OPERATION_NOT_QUALIFIED (M2-M4 still have not pulled). G15/G16/G17/G18/G19
+PASS (provenance, separation, blind scoring, sealed gap slate, tensor
+untouched).
+
+--------------------------------------------------------------------------------
+6. KNOWN LIMITATIONS
+--------------------------------------------------------------------------------
+- One base-model family (sonnet/haiku variants); disclosed per charter s8.
+- Task miner + gold curator + adjudicator = Mnemosyne (disclosed); blind
+  scorers and deterministic matching mitigate; gold and mappings sealed by
+  hash before launch.
+- n = 10 tasks / 19 cells: effect sizes reported, categorical language
+  avoided where the CI would not support it.
+- Design-quality ceiling means "no design advantage" is bounded by this
+  instrument at this designer strength; execution-based scoring is the
+  specified V3 instrument before H2 is retested.
+- The ambient-memory channel confounds the "hidden evidence" premise for
+  ~5 tasks in a direction ADVERSE to the wiki (bias against, not for).
+
+--------------------------------------------------------------------------------
+7. REPRODUCTION
+--------------------------------------------------------------------------------
+  cd F:\Prometheus\evidence_wiki
+  python benchmarks/build_gold_v2.py          (rebuild + verify gold hash)
+  python benchmarks/score_retrieval_v2.py     (deterministic recall)
+  python benchmarks/strip_proposals_v2.py     (blinding, sealed mapping)
+  python benchmarks/write_gates_v2.py         (gate artifacts)
+Spot-checks: v2/LEAKAGE_AUDIT_V2.md; grep any control op log for
+"evidence_wiki"; benchmarks/design_v2.json cells vs v2/scores/*.json;
+T05 wiki-vs-control retrieval divergence in v2/arm_outputs/V2-T05_*.
+
+--------------------------------------------------------------------------------
+8. VERDICT AND V3 RECOMMENDATION
+--------------------------------------------------------------------------------
+RECOVERS HISTORY ORDINARY SEARCH MISSES ...... YES at sonnet tier; pack
+                                               condition strongest (0.90)
+IMPROVES DESIGN MEASURABLY ................... NO (instrument-ceilinged null)
+INCREASES GENUINE NEGATIVE-EVIDENCE REUSE .... differential NO
+ROBUST ACROSS MODELS ......................... NO - MODEL_SPECIFIC_ONLY
+CROSS-DOMAIN TRANSFER WITHOUT FALSE ANALOGY .. YES in instances (T03-C,
+                                               T05-B); no false adoptions
+COST ......................................... parity
+READ_BEFORE_REINVENTING PROMOTION ............ NOT YET. Promote only the
+                                               EVIDENCE PACK interface, as
+                                               advisory retrieval for
+                                               capable-model authoring lanes
+
+The wiki earned retrieval. It did not earn behavior. And the sharpest thing
+V2 found was not about the wiki at all: the program's design behavior is
+already being steered by an invisible memory channel. Making memory
+explicit, shared, and provenance-bound is no longer an aesthetic
+preference -- it is the difference between doctrine you can audit and
+doctrine you cannot. That is the V3 question James must rule on
+(HUMAN_AUDIT_PACKET_V2, question 1).
+
+Reviewer's bottom line: do you accept RETRIEVAL_ADVANTAGE_WITHOUT_DESIGN_
+ADVANTAGE with the pack as the promoted interface -- and how do you rule on
+the implicit auto-memory channel: ingest it into the wiki with provenance,
+or isolate it from future experiments?
+================================================================================
+END OF PACKET
+================================================================================
