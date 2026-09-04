@@ -1,0 +1,596 @@
+====================================================================
+PROTEUS / PLAYER FOUNDRY -> HARMONIA
+INTEGRATION-READINESS -- FINAL EXTERNAL REVIEW PACKET
+2026-09-03
+====================================================================
+
+Self-contained. A reviewer who has read none of V0 through V0.6 should be able
+to adjudicate this pass from this document alone.
+
+--------------------------------------------------------------------
+1. HEADLINE VERDICT
+--------------------------------------------------------------------
+
+    THE ADVENTURERS ARE READY FOR HARMONIA.
+
+Ready for USE A ONLY: as a source of frozen, semantics-free player specimens
+that Harmonia can enumerate, fetch, validate, instantiate, tick, checkpoint,
+restore, replay and trace to their origin.
+
+NOT ready, and not claimed to be, for USE B: the mutation machinery as a
+neutral evolutionary operator. That remains NOT QUALIFIED, unchanged by this
+pass, and Campaign 1 remains blocked. Proteus does not self-authorize it.
+
+Evidence: 97 tests pass; the consumer smoke harness passes across 8
+structurally distinct specimens with 11 error paths all failing closed; the
+registry and the 64-specimen population are byte-identical on CPython 3.11.9 and
+3.12.10; the V0.6 audit stamp still reads FRESH on its original tree digest.
+
+--------------------------------------------------------------------
+2. SCOPE, AND EXPLICIT NON-SCOPE
+--------------------------------------------------------------------
+
+IN SCOPE, AND DONE
+  * a canonical machine-readable specimen inventory
+  * a deterministic frozen starter menagerie of 64 organisms
+  * a verified consumer contract for directive operations A through K
+  * a consumer-side smoke harness using the generic ABI only
+  * error paths that fail closed
+  * packaging and invocation documented and tested from a clean environment
+  * a handoff document written from Harmonia's point of view
+  * tests covering the whole new surface
+
+EXPLICITLY NOT DONE, BY INSTRUCTION
+  * no world adapter and no binding of any kind
+  * no player types, families, taxonomy, tags, tiers or quality scores
+  * no behavioural ranking, scoring or selection
+  * no evolution toward a task, no phenotyping by Proteus
+  * no repair of V0.6, no reweighting, no alternative mutation kernel
+  * no operational-significance experiment (U1), no resolution of U2 or U3
+  * no Campaign 1 activity
+  * no SFE or Harmonia-side integration work
+  * no silent refresh of the audit identity
+
+--------------------------------------------------------------------
+3. V0.6 QUALIFICATION STATE -- INHERITED UNCHANGED
+--------------------------------------------------------------------
+
+    mutation_neutrality      NOT_QUALIFIED_AUTHORED_NONEQUILIBRIUM_CURRENT
+    mutation_current_source  FULL_SPACE_CURRENT_SOURCE_UNRESOLVED
+    operational_significance NOT_YET_ADJUDICATED
+    deterministic_generation QUALIFIED
+    semantic_quarantine      QUALIFIED
+
+Nothing in this pass re-opened, softened or re-measured any of these. In one
+paragraph, for a reviewer who has not read V0.6: the structural mutation kernel
+over the complete 2,044-state space is reproducibly NOT reversible. Entropy
+production is 1.4010e-02 nats per mutation step (1.4086e-02 on an independent
+second measurement, 0.5% apart) against a reversible reference of 1.75e-18, and
+11.3% of all two-way probability flux appears as net imbalance. The MAGNITUDE of
+that current is causally attributed to authored operator weighting; what makes
+the chain irreversible at all is NOT attributed. Whether it would bias a real
+campaign is not established either way.
+
+WHY THAT DOES NOT BLOCK THIS PASS. The finding is about BREEDING. These 64
+specimens were generated once, deterministically, and are frozen. Running a
+frozen organism does not invoke the mutation grammar at all.
+
+HOW IT STAYS VISIBLE. Every registry carries a `source_qualification` block
+containing the five strings above plus `permitted_use`,
+`prohibited_use` and a plain-language statement, so a consumer cannot
+accidentally treat these players as coming from a proven neutral source, and
+needs no archaeological knowledge of V0.6 to know the limitation. A test
+asserts the block says so.
+
+--------------------------------------------------------------------
+4. FILES, SCHEMA AND API ADDED
+--------------------------------------------------------------------
+
+    proteus/integration/registry.py              inventory contract, fail closed
+    proteus/integration/menagerie.py             deterministic population build
+    proteus/integration/run_build_menagerie.py   builder runner
+    proteus/integration/run_smoke.py             consumer smoke harness
+    proteus/integration/run_determinism_check.py cross-runtime identity check
+    proteus/integration/__init__.py
+    proteus/integration/PLAYER_REGISTRY.json          the inventory, 169,812 B
+    proteus/integration/ABI_LIVENESS_OBSERVATIONS.json  EXTRINSIC store
+    proteus/integration/RESULT_SMOKE.json             smoke evidence
+    proteus/contracts/player_registry.schema.v1.json  descriptive contract doc
+    proteus/tests/test_integration.py                 30 tests
+    roles/Proteus/HARMONIA_HANDOFF.md                 consumer guide
+    roles/Proteus/PROMPT_PROTEUS_HARMONIA_INTEGRATION_READINESS_2026-09-03.txt
+
+NOTHING under proteus/foundry/ was created, modified or deleted.
+
+Public API, the whole of it:
+
+    registry.load_default() / load(path) / save(reg, path)
+    registry.enumerate_ids(reg)                        -> [organism_id]
+    registry.get_entry(reg, oid)                       -> full entry
+    registry.get_manifest(reg, oid)                    -> the player
+    registry.get_resource_envelope(reg, oid)           -> scheduling bounds
+    registry.validate_registry / validate_entry        -> raise RegistryError
+    registry.resource_envelope(manifest)
+    registry.intrinsic_view(entry) / compute_entry_id(entry)
+    registry.source_qualification()
+    menagerie.build_population() / observe_abi_liveness(reg)
+
+Everything else a consumer needs is the pre-existing generic ABI
+(`Player`, `Meter`, `validate_manifest`, `checkpoint`, `restore`, `SplitMix64`).
+
+--------------------------------------------------------------------
+5. REGISTRY DESIGN
+--------------------------------------------------------------------
+
+    THE REGISTRY DESCRIBES SPECIMENS. IT DOES NOT DEFINE PLAYER TYPES.
+
+Schemas: `proteus.player_registry.v1`, `proteus.player_registry_entry.v1`.
+
+An entry carries, and carries only:
+
+    organism_id, lineage_id, generation
+    manifest                      the immutable player, embedded verbatim
+    identity                      manifest_schema_version, runtime_hash,
+                                  grammar_hash, grammar_version, affordance_hash
+    provenance                    source, foundry_identity, population_seed,
+                                  index_in_population, derivation,
+                                  generation_manifest_id
+    resource_envelope             n_regs, tape_words, genome_words,
+                                  genome_instructions, code_writable, persist,
+                                  tick_budget, out_cap,
+                                  max_state_footprint_words,
+                                  persistent_state_words, max_ops_per_tick,
+                                  max_output_values_per_channel_per_tick
+    validation                    the authoritative validator's verdict
+    extrinsic                     THE ONE OPEN NAMESPACE
+    entry_id
+
+THE IDENTITY RULE, WHICH IS THE LOAD-BEARING PART.
+`entry_id = sha256(entry minus extrinsic minus entry_id)`. A consumer may write
+phenotype, scores, encounters or anything else into `extrinsic` and NEITHER
+`organism_id` NOR `entry_id` changes. Two tests assert it, and the smoke harness
+re-checks it at runtime by writing a phenotype and a score and confirming
+identity holds.
+
+UNKNOWN IS FIRST-CLASS AND PERMANENT. Every specimen ships
+`extrinsic.phenotype == "UNKNOWN"` and Proteus never writes another value. There
+is no scoring step, no classification step and no deletion path anywhere in the
+package, so the lifecycle generate -> score -> classify -> delete is not merely
+discouraged, it is absent.
+
+FAIL CLOSED. `RegistryError` is raised on: unknown schema version, missing
+required field, unknown field in any CLOSED object, organism_id that is not the
+hash of its own manifest, entry_id disagreeing with recomputation,
+resource_envelope disagreeing with the manifest it describes, duplicate
+organism_id, tampered registry_id, or a missing registry file.
+
+UNKNOWN FIELDS ARE HANDLED DELIBERATELY, NOT ACCIDENTALLY. Every object is
+CLOSED and rejects unrecognised keys by name, with the message saying which. The
+single exception is `extrinsic`, which is declared OPEN in the code, in the
+schema document, and in the handoff.
+
+ONE SOURCE OF TRUTH. Manifest validity is decided by
+`proteus.foundry.vm.validate_manifest` and nowhere else; the registry records
+the verdict and never re-implements the rules. The JSON contract document is
+DESCRIPTIVE, exactly as the pre-existing player-manifest schema is, and a test
+asserts its required-field lists equal the Python constants so the two cannot
+drift.
+
+--------------------------------------------------------------------
+6. THE STARTER MENAGERIE
+--------------------------------------------------------------------
+
+    population size          64
+    registry_id              b15e0a7f5f2dcb99b8b28c73a99441d8d53e82b1bae42fdd...
+    generation_manifest_id   a760019badb8c3527cc721bdf62a3050e95eecb81c1bc2ef...
+    foundry_identity         4f5ffe91f35a87505f50f3d7e71f64b75c072158e139d06b...
+    population seed          15025105317373938188
+                             = int(sha256(integration directive)[:16], 16)
+    first organism           7743b3527ea44fb5eb2bc80076cb1d2ea4dca2094975c862...
+    last  organism           922ea28cc2f52225901c14938336bc1f0f653a39a962fb9f...
+
+Generation manifest: the committed `DEFAULT_FOUNDRY_MANIFEST` with only `seed`
+and `n` set. Nothing else was tuned, because choosing narrower ranges would be
+an authored claim about what a starter population should look like and this pass
+has no basis for one.
+
+STRUCTURAL SPREAD ACTUALLY OBTAINED
+    tape sizes            16, 32, 64, 128, 256, 512, 1024   (all 7 choices)
+    genome instructions   1 .. 64
+    registers             2 .. 16
+    persist policies      none, regs, tape, all             (all 4)
+    code_writable         both values
+    tick budgets          16, 64, 256, 1024                 (all 4)
+    out_cap               1, 4, 16                          (all 3)
+    state footprint       18 .. 1,040 words
+
+--------------------------------------------------------------------
+7. PROOF THAT NO SEMANTIC SELECTION PRODUCED THIS POPULATION
+--------------------------------------------------------------------
+
+The selection rule is one line of code, and it is the whole rule:
+
+    organisms = generate(fm)        # <-- the entire selection rule
+
+There is no filter after it. The only rejection path is the authoritative
+manifest validator, and the build report records what it did:
+
+    requested                  64
+    generated                  64
+    registered                 64
+    rejected_invalid_manifest   0
+
+Zero is an OBSERVATION here, not an assumption: the counter exists and is
+committed. `registered == generated == requested` is asserted by a test.
+
+THE DECISIVE EVIDENCE IS WHAT SURVIVED. Under a fixed synthetic ABI fixture the
+population's first-tick outcomes were:
+
+    halt 13     yield 7     budget 44
+    silent 54   emitting 10
+
+All three statuses and both emission classes are present, and NOT ONE specimen
+was removed on account of any of it. Halters, immediate-yielders, budget
+exhausters and silent organisms are all retained deliberately: removing them is
+precisely the semantic selection pressure Proteus exists to avoid, and a
+population containing only "interesting" organisms would be the failure.
+
+THE SEED COULD NOT HAVE BEEN SHOPPED. It is derived from the sha256 of the
+integration directive, which was committed and hashed before any specimen
+existed.
+
+THE BEHAVIOURAL DATA IS STRUCTURALLY INCAPABLE OF FEEDING BACK. It lives in a
+separate extrinsic file keyed by organism_id, is produced AFTER the registry is
+written, and `observe_abi_liveness` has no return path into the population. The
+runner re-validates the registry after writing the extrinsic store and confirms
+`registry_id` is unchanged.
+
+--------------------------------------------------------------------
+8. THE HARMONIA CONSUMER WORKFLOW
+--------------------------------------------------------------------
+
+    export PYTHONPATH=/path/to/Prometheus
+    # Windows:  set PYTHONPATH=F:\Prometheus
+
+    from proteus.integration import registry as R
+    from proteus.foundry.vm import Player, Meter, validate_manifest
+    from proteus.foundry.prng import SplitMix64
+    from proteus.foundry.lineage import checkpoint, restore
+
+    reg      = R.load_default()                 # A. enumerate/discover
+    ids      = R.enumerate_ids(reg)
+    manifest = R.get_manifest(reg, ids[0])      # B. obtain by organism_id
+    validate_manifest(manifest)                 # C. validate (authoritative)
+    env      = R.get_resource_envelope(reg, ids[0])   # K. limits BEFORE run
+    p        = Player(manifest)                 # D. instantiate
+    st       = p.fresh_state()                  # E. fresh state
+    rng      = SplitMix64(my_seed)              # caller owns the RNG, always
+    outs, status = p.run_tick(st, inputs, n_out, rng, meter=Meter())  # F. tick
+    snap     = checkpoint(ids[0], st, encounter_id, tick)              # G.
+    st2      = restore(snap)                                           # H.
+    entry    = R.get_entry(reg, ids[0])         # J. provenance + identity
+
+    # I. replay: same manifest + runtime + seed + inputs => identical outputs,
+    #    statuses, final state and op counts.
+
+`status` is `"halt" | "yield" | "budget"` -- an outcome, never an exception.
+Output overflow beyond `out_cap` is dropped AND counted, not an error.
+`tick_budget` is a ceiling a caller may lower and cannot raise.
+
+--------------------------------------------------------------------
+9. SMOKE-TEST RESULTS
+--------------------------------------------------------------------
+
+    SMOKE PASSED. 8 specimens, 11 error paths, all operations A-K.
+
+Specimens were chosen by STRUCTURAL SHAPE -- distinct
+(tape_words, persist, code_writable, tick_budget) -- and never by behaviour.
+The harness never inspects what a player did in order to decide whether to test
+it.
+
+    7743b3527ea4  tape   16  persist none   cw True   budget   64  PASS
+    2ca4d2ca0501  tape  128  persist all    cw False  budget   64  PASS
+    beb28a204fcb  tape   16  persist tape   cw False  budget  256  PASS
+    17c7812c3eec  tape 1024  persist regs   cw True   budget  256  PASS
+    4f9ae18b0010  tape  512  persist all    cw False  budget 1024  PASS
+    d7aa6e69495e  tape  128  persist none   cw True   budget   64  PASS
+    4d6fe0190923  tape  512  persist all    cw True   budget  256  PASS
+    ce56853169b6  tape   32  persist all    cw True   budget  256  PASS
+
+THE FIXTURE IS NOT A WORLD. Two channels of arbitrary constants
+([[3,5,8],[13,21]]), two output channels, a fixed seed, five ticks. No task, no
+reward, no objective, no persistent state between specimens, no name. The
+harness answers "can Harmonia reliably operate these organisms?" and is
+forbidden from answering "which organisms are good?" -- there is no ranking,
+scoring or winner anywhere in it.
+
+--------------------------------------------------------------------
+10. REPLAY AND DETERMINISM RESULTS
+--------------------------------------------------------------------
+
+CROSS-RUNTIME, byte-identical on both supported interpreters:
+
+                       CPython 3.11.9        CPython 3.12.10
+    registry_id        b15e0a7f5f2dcb99...   b15e0a7f5f2dcb99...   IDENTICAL
+    serialized sha256  17fcb728339604f6...   17fcb728339604f6...   IDENTICAL
+    first organism     7743b3527ea44fb5...   7743b3527ea44fb5...   IDENTICAL
+    last  organism     922ea28cc2f52225...   922ea28cc2f52225...   IDENTICAL
+    matches committed registry                              True on both
+
+PER-SPECIMEN ENCOUNTER REPLAY, all 8 smoke specimens: running the same encounter
+twice from a fresh state with the same seed produced identical outputs,
+identical statuses, identical final state and identical op counts.
+
+REBUILD DETERMINISM: rebuilding the population from scratch reproduces the same
+`registry_id` and the same organism ids in the same order (asserted by test).
+
+WHAT DETERMINISM DOES NOT COVER, stated so nobody is surprised: `Meter.wall_s`
+and `Meter.cpu_s` are timings and vary between runs. Every other field is exact.
+
+--------------------------------------------------------------------
+11. CHECKPOINT AND RESTORE RESULTS
+--------------------------------------------------------------------
+
+For all 8 smoke specimens:
+
+    checkpoint produced a content-addressed snapshot bound to organism and tick
+    restore returned a state exactly equal to the pre-checkpoint state
+    CONTINUATION MATCHED THE UNBROKEN RUN: running 2 ticks, checkpointing,
+      restoring, and continuing with the RNG at the same point reproduced the
+      remaining 3 ticks of an uninterrupted 5-tick run exactly
+
+The RNG is the caller's, so a consumer that wants exact continuation must
+preserve its own RNG position alongside the checkpoint. The checkpoint contains
+player state only. That is a contract detail Harmonia must know and it is in the
+handoff.
+
+--------------------------------------------------------------------
+12. VALIDATION AND ERROR-PATH RESULTS
+--------------------------------------------------------------------
+
+All 11 raise. None returns something usable.
+
+    malformed_manifest_missing_field              ManifestError
+    malformed_manifest_out_of_bounds              ManifestError
+    malformed_manifest_genome_not_multiple_of_4   ManifestError
+    player_rejects_bad_manifest                   ManifestError
+    unknown_organism_id                           RegistryError
+    stale_runtime_identity_on_restore             ValueError
+    invalid_checkpoint_missing_state              KeyError
+    registry_entry_tampered_manifest              RegistryError
+    registry_unknown_field_rejected               RegistryError
+    registry_unknown_schema_version_rejected      RegistryError
+    registry_tampered_registry_id                 RegistryError
+
+    extrinsic_write_keeps_identity                HELD
+
+RESOURCE BOUNDS ACTUALLY BIND, not merely documented: passing budget = 1e9 to
+`run_tick` yields ops <= the manifest's `tick_budget` (tested), and every output
+channel respects `out_cap` (tested across 12 specimens).
+
+--------------------------------------------------------------------
+13. PACKAGING AND RUNTIME REQUIREMENTS
+--------------------------------------------------------------------
+
+    CPython 3.11 or 3.12. Standard library ONLY.
+    No third-party dependency, no network, no model, no API key, no GPU.
+    No install step. Put the repository root on PYTHONPATH and import.
+
+VERIFIED FROM A CLEAN ENVIRONMENT: with `PYTHONPATH` set and the working
+directory somewhere unrelated (C:\Users\...\Temp), `import proteus.integration`,
+`R.load_default()`, `Player(...)` and `fresh_state()` all worked. There is no
+cwd assumption, no import trick, no hidden local file and no test-only fixture
+on the consumer path. `registry.default_path()` locates the committed registry
+so a consumer never hardcodes a path.
+
+DEVIATIONS FROM STDLIB-ONLY: none. The property is preserved.
+
+--------------------------------------------------------------------
+14. AUDIT AND QUARANTINE RESULTS
+--------------------------------------------------------------------
+
+    audit_identity.py verify  ->  FRESH
+        binds tree 3ae4ee8b773e0fcf, grammar 5043f5e11a72,
+        runtime 73f110e21b9d, stamp 5de328849043c86f
+    quarantine.py             ->  STRING LAYER: PASS
+    pytest proteus/tests -q   ->  97 passed
+
+The tree digest is UNCHANGED from V0.6. That is the mechanical proof that this
+pass did not touch the player-facing runtime.
+
+--------------------------------------------------------------------
+15. FILES THAT CAUSED AN IDENTITY OR AUDIT VERSION TRANSITION
+--------------------------------------------------------------------
+
+    NONE.
+
+The audit identity binds `proteus/foundry/*.py` plus the auditor and the
+affordance table. This pass added files to `proteus/integration/`,
+`proteus/contracts/`, `proteus/tests/` and `roles/Proteus/`, and modified
+nothing under `proteus/foundry/`, so the stamp legitimately still reads FRESH
+rather than having been refreshed.
+
+THIS WAS A DESIGN CHOICE, NOT LUCK. The integration surface was deliberately put
+in a separate package that never executes inside a player, precisely so the V0.6
+specimen would stay intact and the directive's "do not silently refresh
+identity" instruction would be satisfied by construction rather than by
+discipline. The one place it cost something is recorded in section 16 as F4.
+
+--------------------------------------------------------------------
+16. EVERY FAILURE ENCOUNTERED DURING THIS PASS
+--------------------------------------------------------------------
+
+F1. MY OWN ANTI-TAXONOMY GUARD CAUGHT ME, AND IT WAS RIGHT TO.
+    `test_no_semantic_taxonomy_anywhere_in_registry` scans the committed
+    registry for authored player-type and merit vocabulary. On first run it
+    FAILED, reporting "quality" and "garbage". Both came from my own explanatory
+    prose inside the registry -- the selection rule said "no behavioural,
+    phenotypic or quality filter", and the extrinsic note said UNKNOWN "does not
+    mean garbage". The registry has no business editorialising, so the prose was
+    reworded and the guard left strict. Weakening the test to accommodate my own
+    wording would have disarmed the one mechanical defence against a taxonomy
+    appearing later. Cost: one registry rebuild; registry_id changed from
+    390a22676d93b4c6... to b15e0a7f5f2dcb99....
+
+F2. A MALFORMED HEX LITERAL I WROTE AND ALMOST SHIPPED.
+    The smoke harness contained `FIXTURE_SEED = 0x5C0PE if False else 0x5C09E`
+    -- an artifact of typing a hex-like word. `0x5C0PE` is not valid Python and
+    would have been a SyntaxError on first execution. Caught before the first
+    run by reading the file back, and replaced with the plain constant.
+
+F3. I GUESSED A PRIVATE ATTRIBUTE NAME INSTEAD OF READING IT.
+    The checkpoint-continuation test needed the PRNG's internal position. I
+    wrote `rng.s`; the actual attribute is `rng.state` (SplitMix64 uses
+    `__slots__ = ("state",)`). Caught by reading prng.py before running. The
+    lesson is small and repeated: I guessed at an interface I had not opened,
+    in a file I could have read in two seconds.
+
+F4. AN ERROR-TYPE INCONSISTENCY I FOUND AND DELIBERATELY DID NOT FIX.
+    `restore()` raises `ValueError` on a runtime-hash mismatch but `KeyError` on
+    a structurally malformed snapshot. Both FAIL CLOSED -- no consumer can
+    proceed on bad data -- but the error type is not uniform, so a consumer must
+    catch both. Fixing it means editing `proteus/foundry/lineage.py`, which is
+    inside the V0.6 audit identity, and would force an identity transition for a
+    cosmetic gain this pass has no authorisation to spend. Reported here and in
+    the handoff instead of silently changing an audited file.
+
+F5. NO OTHER FAILURES. The population built, validated and replayed on the first
+    attempt; no specimen was rejected; no determinism check disagreed.
+
+--------------------------------------------------------------------
+17. COMMITS, HASHES AND ARTIFACT PATHS
+--------------------------------------------------------------------
+
+COMMITS, all verified reachable from origin/main before publication
+    7e17e1e18  integration directive committed verbatim and hashed
+    d5e3d3dbb  the integration surface: registry, menagerie, smoke, tests, docs
+
+IDENTITIES
+    integration directive sha256
+      d083e5ae02e80a0c78112b1bbae61d077071b80b74669b6978a34139aa3a24a5
+    registry_id
+      b15e0a7f5f2dcb99b8b28c73a99441d8d53e82b1bae42fddd5e274eeef396917
+    registry serialized sha256
+      17fcb728339604f68798bdcf257b55dfdd387b133bb2c362807a2cebc5f5fd19
+    generation_manifest_id
+      a760019badb8c3527cc721bdf62a3050e95eecb81c1bc2ef27efd9f276bbe39e
+    foundry_identity
+      4f5ffe91f35a87505f50f3d7e71f64b75c072158e139d06b05f53cd49167f844
+    population seed          15025105317373938188
+    grammar
+      5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832
+    runtime
+      73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0
+    affordance
+      f1607ee8be680acc33288a95c1a25c09ad4c799a47b0975381be8ca02d7638ce
+    audit tree 3ae4ee8b773e0fcf   stamp 5de328849043c86f   (UNCHANGED from V0.6)
+
+ARTIFACTS
+    proteus/integration/PLAYER_REGISTRY.json
+    proteus/integration/ABI_LIVENESS_OBSERVATIONS.json
+    proteus/integration/RESULT_SMOKE.json
+    proteus/contracts/player_registry.schema.v1.json
+    roles/Proteus/HARMONIA_HANDOFF.md
+    roles/Proteus/PROMPT_PROTEUS_HARMONIA_INTEGRATION_READINESS_2026-09-03.txt
+    roles/Proteus/PROTEUS_V0_6_FINAL_EXTERNAL_REVIEW_PACKET.txt   (the science)
+
+--------------------------------------------------------------------
+18. REPRODUCTION COMMANDS
+--------------------------------------------------------------------
+
+    export PYTHONPATH=/path/to/Prometheus
+
+    python -m pytest proteus/tests -q                     # 97 pass
+    python proteus/integration/run_build_menagerie.py    # rebuild, determinist
+    python proteus/integration/run_smoke.py               # A-K + 11 error paths
+    python proteus/integration/run_determinism_check.py   # run on 3.11 AND 3.12
+    python proteus/audits/audit_identity.py verify        # expect FRESH
+    python proteus/audits/quarantine.py                  # STRING LAYER PASS
+
+--------------------------------------------------------------------
+19. REMAINING BLOCKERS BEFORE A REAL EVOLUTIONARY CAMPAIGN 1
+--------------------------------------------------------------------
+
+None of these are integration problems. All are inherited from V0.6 and none
+was touched.
+
+B1. USE B IS NOT QUALIFIED. The mutation kernel carries a reproducible authored
+    nonequilibrium current. An external decision is owed on whether a process
+    violating detailed balance by 11.3% of two-way flux is admissible as a
+    neutral player source for evolutionary conclusions.
+
+B2. OPERATIONAL_SIGNIFICANCE_NOT_YET_ADJUDICATED (U1). Whether that current
+    would bias structural composition over a realistic campaign is unknown.
+    Answering it needs a preregistered experiment with a reference that does NOT
+    inherit the active kernel's stationary distribution, campaign-matched
+    horizons and replicate seeds. Deliberately not run in this pass, because we
+    now know the result that motivates it.
+
+B3. FULL_SPACE_CURRENT_SOURCE_UNRESOLVED (U2). The irreversibility that survives
+    every tested reweighting is unattributed between authored proposal asymmetry
+    and published geometry.
+
+B4. Behavioural coupling (U3) is unmeasured and unmeasurable under this grammar
+    without changing more than the structural kernel.
+
+B5. No world, no adapter, no binding exists. Harmonia owns that side.
+
+B6. Selection semantics are undefined. Nothing in Proteus decides what survives,
+    and nothing should.
+
+--------------------------------------------------------------------
+20. WHAT HARMONIA MUST KNOW BEFORE THE FIRST INTEGRATION TEST
+--------------------------------------------------------------------
+
+1.  Read `reg["source_qualification"]` once. It is the whole caveat, it travels
+    with the data, and you never need V0.6 archaeology.
+
+2.  Running these 64 frozen specimens is fine. BREEDING them is not qualified.
+    If you mutate, do not call the result unbiased evolution.
+
+3.  You own the RNG. The player can never seed its own randomness. For exact
+    replay you must preserve your RNG position alongside any checkpoint --
+    the checkpoint stores player state only.
+
+4.  `status` is an outcome, not an error. `"budget"` means the organism used its
+    tick allowance; it is not a failure. A silent organism is not broken. 54 of
+    64 emitted nothing under the fixture and all of them are valid players.
+
+5.  `tick_budget` is a ceiling you can lower and cannot raise. Read
+    `resource_envelope` before scheduling; the numbers are hard bounds.
+
+6.  Write your observations into `entry["extrinsic"]`. It is the one open
+    namespace and nothing you put there can change any identity. Leave
+    `phenotype` as UNKNOWN until you actually know something -- UNKNOWN is a
+    permanent legitimate state, not a defect to be cleaned up.
+
+7.  Do not ask Proteus what a player is good for. There is no such field, by
+    design, and a test fails if one appears.
+
+8.  Channel counts may vary per tick and per world. Players address channels by
+    register value mod channel count, so a genome written against two channels
+    runs unchanged against seven. The ABI is deliberately not specialised to any
+    arena, present or future.
+
+9.  Everything fails closed. If something is wrong you get an exception, not a
+    plausible-looking result. Catch `ManifestError`, `RegistryError`, and both
+    `ValueError` and `KeyError` around `restore` (see F4).
+
+10. The handoff document `roles/Proteus/HARMONIA_HANDOFF.md` is the short path.
+    This packet is the audit trail.
+
+====================================================================
+
+    THE ADVENTURERS ARE READY FOR HARMONIA.
+
+Ready to be opened, identified, led into the arena and returned to exactly the
+state they left in, with their origin provable at every step.
+
+NOT ready, and not claimed to be, as a qualified neutral evolutionary source.
+Campaign 1 remains blocked and Proteus does not self-authorize it.
+
+Proteus stops here and waits for adjudication.
+
+-- Proteus, integration-readiness packet, 2026-09-03.
+   The stable is catalogued, the equipment is packed, and not one creature has
+   been told what it is for.
