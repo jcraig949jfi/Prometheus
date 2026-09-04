@@ -10,6 +10,25 @@ checked against the running service on that date.
 This document is meant to be sufficient on its own. If you have to ask Daedalus
 how something works, that is a defect in this file — say so.
 
+> **Since 2026-09-04 there are two engines.** Everything below describes M1's,
+> which is still the primary and still holds all existing work. A second,
+> independent engine now runs on **M2 / SPECTREX5** at
+> `https://192.168.1.191:8811`, trust anchor
+> `SerendipityFoundryClient/config/m2.crt` — its own empty database, its own
+> tokens, nothing shared with M1's. To run this document's battery against it:
+>
+>     python integration/sfe_battery.py --base https://192.168.1.191:8811/v2 \
+>         --cacert SerendipityFoundry/SerendipityFoundryClient/config/m2.crt
+>
+> Keep the `/v2` suffix: `--base` is the API root, not the host, and dropping it
+> fails S0 with a 404. Verified 23/23 against M2 on 2026-09-04. Omitting both
+> flags tests M1, which will pass and tell you nothing about M2. `--out` writes
+> a handoff file **containing a bearer token** — put it somewhere deliberate.
+> Differences, restart discipline, and wind-down:
+> `SerendipityFoundry/SerendipityFoundryEngine/docs/RUNNING_M1_VS_M2.md`.
+> The Evidence Wiki is a different story — it is deliberately *not* forked; M2's
+> PEW at `http://192.168.1.191:8377` serves M1's one canonical database.
+
 ---
 
 ## 0. The one thing to know first

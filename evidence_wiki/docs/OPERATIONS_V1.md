@@ -13,8 +13,41 @@
 
 ## Firewall
 Inbound TCP 8377, rule "Mnemosyne Evidence Wiki 8377", remote scope
-192.168.1.0/24 + localhost, profiles private/domain. The Postgres port is
-NOT exposed; the REST API is the only cross-machine surface.
+192.168.1.0/24 + localhost, profiles private/domain.
+
+> **Correction, 2026-09-04 (Daedalus).** The line that used to stand here —
+> "The Postgres port is NOT exposed; the REST API is the only cross-machine
+> surface" — is **false as measured**. From M2 (`192.168.1.191`), M1's
+> `192.168.1.202:5432` accepts TCP *and* authenticates the `config.json`
+> credentials: a direct `psycopg2.connect` returned `ew.claims` = 128 rows
+> without going through the service at all. So Postgres, not just the REST API,
+> is a cross-machine surface today, and any machine on the LAN holding
+> `config.json` has full read/write access to canonical state, bypassing
+> `ew.write_log` attribution entirely.
+>
+> This is now load-bearing rather than incidental: M2's PEW service
+> (`ops/pew_serve_m2.cmd`) deliberately uses that exposure to serve M1's
+> canonical store rather than fork it. Two honest ways forward, Mnemosyne's
+> call — scope Postgres to the specific peers that need it and treat the
+> service-bypassing path as a documented trusted-LAN limit, or close 5432 and
+> give M2's service another route. Either way the doc should describe what is
+> true.
+
+## PEW on M2 (2026-09-04, temporary deployment window)
+A second PEW service runs on M2/SPECTREX5 at `http://192.168.1.191:8377`. It is
+**not** a second evidence store: `ops/pew_serve_m2.cmd` forces
+`EW_DB_HOST=192.168.1.202` so it reads and writes M1's canonical
+`prometheus_fire`. Its watchdog is `MnemosyneEvidenceWikiWatchdogM2` running
+`scripts/ew_watchdog_m2.ps1`; the M1-named task was deleted on M2 because it
+starts a bare `python -m ew.service`, which on M2 resolves `db_host=localhost`
+to a **restored copy** of `prometheus_fire` in M2's own PostgreSQL 17.11 — a
+writable fork, identical in census as of 2026-09-04 12:43 and not diverged.
+Do not point a service at that copy. Full context, including the wind-down
+steps, is in
+`SerendipityFoundry/SerendipityFoundryEngine/docs/RUNNING_M1_VS_M2.md`.
+Gate battery through the M2 service: 15/15 on 2026-09-04
+(`EW_DB_HOST=192.168.1.202 python integration/pew_battery.py --host
+192.168.1.191 --port 8377 --machine M2`).
 
 ## Auth (V1)
 - Per-machine bearer tokens in `config.json` `machine_tokens` (M1-M4). A

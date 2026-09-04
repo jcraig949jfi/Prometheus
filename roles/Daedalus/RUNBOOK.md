@@ -3,6 +3,17 @@
 Operational reference for keeping the Engine alive, healthy, and honest. All
 paths are on **M1 / SKULLPORT** unless noted.
 
+> **Two engines are live since 2026-09-04.** M1 is the original; M2 / SPECTREX5
+> (`192.168.1.191`, repo on `D:`) runs a second, independent engine with its own
+> empty database, its own TLS cert, and its own tokens. Every `F:`/`H:` path and
+> every `192.168.1.202` URL below is M1-only. The difference sheet — paths,
+> launchers, watchdogs, restart discipline, wind-down — is
+> [`SerendipityFoundry/SerendipityFoundryEngine/docs/RUNNING_M1_VS_M2.md`](../../SerendipityFoundry/SerendipityFoundryEngine/docs/RUNNING_M1_VS_M2.md).
+> The Evidence Wiki is deliberately NOT forked the same way: M2's PEW serves
+> M1's canonical Postgres. Read that document's PEW section before touching
+> anything on M2 — a local restored copy of `prometheus_fire` sits on M2's own
+> Postgres and a defaulted `python -m ew.service` there will serve it.
+
 > **This is a maintainer document.** Several steps below run only on M1.
 > If you are *integrating* against the Engine from another machine, read
 > [`integration/HARMONIA_FIRST_INTEGRATION.md`](../../integration/HARMONIA_FIRST_INTEGRATION.md)

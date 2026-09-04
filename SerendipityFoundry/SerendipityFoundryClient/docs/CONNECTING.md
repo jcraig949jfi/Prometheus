@@ -10,6 +10,15 @@ machine on the LAN.
 > surface in one command and hands you a working world. This file is the
 > connection reference it builds on.
 
+> **There are two engines as of 2026-09-04.** This document describes M1, which
+> remains the primary. A second, independent engine runs on **M2 / SPECTREX5**
+> at **`https://192.168.1.191:8811`** with cert `config/m2.crt` — separate
+> database, separate tokens, nothing shared with M1. Everything below applies
+> to it with the address and cert swapped; the differences are listed in
+> [`SerendipityFoundryEngine/docs/RUNNING_M1_VS_M2.md`](../../SerendipityFoundryEngine/docs/RUNNING_M1_VS_M2.md).
+> Be explicit about which engine you are talking to: a token or a world id from
+> one is meaningless on the other.
+
 ---
 
 ## 1. Where the Engine listens

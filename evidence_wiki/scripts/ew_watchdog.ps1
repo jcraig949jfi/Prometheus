@@ -10,8 +10,23 @@ try {
     if ($r.StatusCode -eq 200) { exit 0 }
 } catch { }
 
-Log "health check failed; starting service"
-Start-Process -FilePath "python" -ArgumentList "-m","ew.service" `
+# Interpreter resolution (machine-aware, backwards-compatible):
+#   1. $env:EW_PYTHON if set
+#   2. a repo-local venv beside the repo root (M2 uses .venv-m2)
+#   3. bare "python" from PATH  <- M1's original behaviour, unchanged
+# M2 needs this: bare "python" there is the WindowsApps 3.14 shim, which has
+# none of the service dependencies, so the watchdog would restart-fail forever.
+$py = $env:EW_PYTHON
+if (-not $py) {
+    foreach ($cand in @("..\.venv-m2\Scripts\python.exe", "..\.venv\Scripts\python.exe")) {
+        $full = Join-Path $root $cand
+        if (Test-Path $full) { $py = (Resolve-Path $full).Path; break }
+    }
+}
+if (-not $py) { $py = "python" }
+
+Log "health check failed; starting service via $py"
+Start-Process -FilePath $py -ArgumentList "-m","ew.service" `
     -WorkingDirectory $root -WindowStyle Hidden `
     -RedirectStandardOutput (Join-Path $root "derived\service.out.log") `
     -RedirectStandardError  (Join-Path $root "derived\service.err.log")
