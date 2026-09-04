@@ -1,0 +1,18 @@
+# Proteus artifacts are content-addressed and their sha256 values are published in review
+# packets. Windows CRLF conversion on checkout changes those bytes and makes a published hash
+# irreproducible for a consumer -- exactly the friction Harmonia hit as F2 in the first
+# integration (readiness packet hashed 0bf104bb on her working copy against the published
+# 5059f44c, resolved only after diagnosing it as a line-ending artifact).
+#
+# Pinning eol=lf here means a checkout on any platform yields the bytes the published hash was
+# computed over. Scoped to proteus/ deliberately: line-ending policy for other seats' trees is
+# not Proteus's to set.
+#
+# NOTE: player identity was never at risk. organism_id is sha256 over canonical_json bytes held
+# in memory, never over a file, so CRLF could not and did not affect any specimen id -- Harmonia
+# verified 64/64 manifests re-hash correctly. This is about DOCUMENT and ARTIFACT hashes only.
+*.py      text eol=lf
+*.json    text eol=lf
+*.md      text eol=lf
+*.txt     text eol=lf
+*.jsonl   text eol=lf
