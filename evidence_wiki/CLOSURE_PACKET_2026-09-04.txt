@@ -1,0 +1,384 @@
+======================================================================
+PROMETHEUS / PEW -- MNEMOSYNE CLOSURE PACKET
+Credential / Fossil / Epistemic closure lane
+2026-09-04   owner: Mnemosyne (M2)   for external review + Harmonia handoff
+======================================================================
+All claims below were measured against LIVE state (M2 PEW @ 8377,
+source_commit 7cbe43ecf) and the M2-local prometheus_fire, not inferred
+from git ancestry. Batteries cited are reproducible and were re-run live.
+
+----------------------------------------------------------------------
+1. FINAL PEW VERDICT
+----------------------------------------------------------------------
+PEW answers, durably and independently of authentication:
+  WHICH host/service produced a record ...... YES (server attestation)
+  WHAT evidence can we trust ................ YES, with a named ceiling:
+     the causal ANCHOR is client-asserted, recorded honestly, NOT yet
+     engine-verified (see 6). Everything else in the chain is typed +
+     machine-checkable.
+  WHAT can we replay ........................ IDENTITY + CAUSAL locus,
+     NOT the exact action/input/output (see 5,6). REPLAY_COMPLETE=NO.
+  WHICH prior lessons constrain the future .. YES (constraint store, 9).
+  HOW wrong lessons are corrected ........... YES (errata/supersession,
+     append-only, never mutated; 8,10).
+Net: the interpretation layer is closed enough to be trusted as memory
+and to remember its own corrections; two closures (exact replay, and
+engine-verified anchors) are gated on SFE/Proteus and are named in 12.
+
+----------------------------------------------------------------------
+2. M1/M2 SEPARATION VERDICT
+----------------------------------------------------------------------
+data store ......... CLEAN. Separate PostgreSQL clusters; db_system_id
+                     M2=7681719240261676752 vs M1=7628127204585430828.
+                     M2 serves its OWN prometheus_fire (db_host=localhost);
+                     evidence does not cross machines (James's ruling).
+config (engine) .... CLEAN (SFE; owned by Daedalus).
+credentials ........ WAS NOT SEPARATED -> now REMEDIABLE without a code
+                     change (3). Shared bearer token still authenticates
+                     on both hosts by construction.
+service identity ... CLEAN AND NOW ATTESTED. GET /api/v1/identity returns
+                     the db_system_id of the store actually connected to;
+                     a consumer verifies which PEW it reached from THIS,
+                     never from the token. Every new fossil is stamped
+                     with it.
+provenance ......... host identity no longer depends on the token or the
+                     self-declared X-Prometheus-Machine header. Anchor
+                     genuineness still delegated to the client (6).
+
+----------------------------------------------------------------------
+3. CREDENTIAL RULING
+----------------------------------------------------------------------
+A. Should PEW machine creds be machine-specific?  YES -- eventually. But
+   machine identity for PROVENANCE must not rely on the token at all
+   (see 3G); per-machine tokens are a SECURITY hardening, not the
+   provenance fix. The provenance fix (server attestation) is done and
+   does not wait on rotation.
+B. Should machine_tokens stay git-tracked?  NO. They are a shared secret
+   in a repo cloned to every host.
+C. Should db_password / auth_token stay in committed config?  NO.
+D. Replacement mechanism (IMPLEMENTED, backward-compatible):
+   load_config() precedence is now  env var > config.local.json
+   (untracked, gitignored) > committed config.json. Absent overrides ->
+   identical to today, so M1 and M2 keep running. Operators move real
+   secrets to env/config.local.json with no code change.
+E. Migration/back-compat impact: none forced. The committed cleartext
+   remains a working default until an operator removes it; removal must
+   be simultaneous on M1 and M2 (both read the same file) or the machine
+   without the new secret source breaks.
+F. What is compromised: SECURITY -- yes (any LAN peer holding the repo
+   authenticates on any host; and 192.168.1.202:5432 accepts config.json
+   creds directly, bypassing ew.write_log attribution entirely).
+   PROVENANCE -- NO LONGER, given 3G: host identity is now independently
+   attested, so a shared token no longer implies a shared host.
+G. Must tokens be rotated because they lived in git history?  YES, they
+   should be treated as compromised and rotated. This is OPERATOR ACTION
+   (below); nothing in PEW can rotate a secret that other hosts and the
+   raw 5432 port also trust.
+RISK CLASS: SECURITY DEFECT (urgent-ish, trusted LAN) that does NOT
+   invalidate any existing fossil.
+REMEDIATION (done, mine): override mechanism + .gitignore.
+ROTATION / OPERATOR ACTIONS (not mine, stated explicitly):
+   (i)  choose new db_password + auth_token + per-machine tokens;
+   (ii) place them in each host's config.local.json/env;
+   (iii) delete the cleartext from config.json and purge history;
+   (iv) scope inbound 5432 to the specific peer IPs that need it, or
+        close it and give M2's service another route (closing it as-is
+        breaks the M2 deploy -- coordinate first).
+
+----------------------------------------------------------------------
+4. LIVE PEW STATE  (IMPLEMENTED != DEPLOYED != LIVE VERIFIED != QUALIFIED)
+----------------------------------------------------------------------
+source_commit ...... 7cbe43ecf   (== HEAD at deploy; deploy-aware)
+schema_version ..... 4           (v4 contract UNCHANGED; 008 is additive)
+fossil_contract .... pew.fossil.v2
+ontology_version ... 2
+closure_version .... pew.closure.v0   (migration 008)
+db target .......... M2-local prometheus_fire, system_id 7681719240261676752
+service URL/bind ... http://192.168.1.191:8377  (binds 0.0.0.0; localhost ok)
+credential mode .... V0 shared bearer (legacy) + machine tokens, with the
+                     env/config.local.json override available; NOT rotated.
+new paths LIVE ..... GET /api/v1/identity ; GET /api/v1/packets/{id} ;
+                     POST/GET /api/v1/constraints ;
+                     GET /api/v1/constraints/{id} ;
+                     POST /api/v1/constraints/{id}/events ;
+                     fossil rows now carry server .attestation.
+status ............. IMPLEMENTED + DEPLOYED + LIVE-VERIFIED on M2.
+                     QUALIFIED: single-host (M2) only. Cross-host M1 is
+                     NOT qualified -- M1 must apply migration 008 and
+                     redeploy; its service is a separate deploy.
+
+----------------------------------------------------------------------
+5. FOSSIL COMPLETENESS MATRIX   (purpose-specific, NOT field-count)
+----------------------------------------------------------------------
+identity                 class                       note
+organism_identity ...... PRESENT_CONTENT_ADDRESSED   player/genome/arch/runtime hash
+world_identity ......... PRESENT_CONTENT_ADDRESSED   world_id+manifest_hash+sfe_world_id
+causal_engine_event .... PRESENT_TYPED               sfe_event_id+sfe_entry_hash (client-asserted, see 6)
+ledger_position ........ PRESENT_TYPED               sfe_event_seq
+namespace .............. PRESENT_TYPED
+producing_host/service . PRESENT_TYPED  [NEW 008]    attestation.db_system_id/service_name/db_name
+contract_schema_versions PRESENT_TYPED  [CLOSED 008] attestation.schema_version/fossil_contract/closure_version
+experiment_identity .... DERIVABLE_BUT_NOT_DURABLE   from run_id = exp:work
+work_identity .......... DERIVABLE_BUT_NOT_DURABLE   from run_id
+software_source_identity PARTIAL                     PEW's = PRESENT (attestation.source_commit);
+                                                     SFE/Proteus's = STILL_AMBIGUOUS (producer free-form)
+sfe_engine_identity .... STILL_AMBIGUOUS             which of two engines? only producer.* free-form; needs SFE attest
+world_configuration .... STILL_AMBIGUOUS             seed_root present; sharing_policy/budget partial
+exact_output_digest .... STILL_MISSING               no typed output digest
+registry_identity ...... STILL_MISSING
+entry_id ............... STILL_MISSING               event_id present; distinct ledger entry_id not stored
+exact_action ........... STILL_MISSING               no action field
+exact_input ............ STILL_MISSING               no input field
+
+Purpose-specific completeness:
+  IDENTITY_COMPLETE ..... YES for organism/world/event/ledger/ns/host;
+                          NO for sfe_engine_identity.
+  CONTRACT_COMPLETE ..... YES  (closed by 008; /fossil/contract + /identity self-describe)
+  CAUSAL_COMPLETE ....... NO   (anchor client-asserted; see 6)
+  REPLAY_COMPLETE ....... NO   (see 6)
+  COMPOSITION_COMPLETE .. NO   (needs Proteus provenance; see 11)
+Naming note: I kept the directive's five names. "purpose-specific" is the
+point -- 13 present fields did not make the fossil replayable; naming the
+FIVE purposes shows exactly which purpose each missing field blocks.
+(Historical rows written before 008 have attestation=NULL: documented,
+not backfilled -- backfill would fabricate a producer identity we cannot
+attest retroactively.)
+
+----------------------------------------------------------------------
+6. REPLAY VERDICT
+----------------------------------------------------------------------
+Test: could a future agent reconstruct the EXACT intended encounter from
+durable evidence after today's working tree is gone? -- NO.
+  recover fossil ................. YES (GET /fossil/encounters/{id}: all
+                                   runs + anchors + attestation)
+  identify producing PEW host .... YES [NEW] (attestation.db_system_id)
+  reconstruct inputs ............. NO  (exact_input STILL_MISSING)
+  instantiate equivalent world ... PARTIAL (world_id+manifest_hash+
+                                   seed_root; full config missing)
+  rerun same action .............. NO  (exact_action STILL_MISSING)
+For REPLAY_COMPLETE, the durable minimum is:
+  immutable refs: (encounter_id, run_id); (sfe_event_id, sfe_entry_hash,
+    sfe_engine_identity); world manifest_hash + full config digest;
+    player genome_hash + runtime_hash; exact_action; exact_input digest.
+  retrieval: PEW read API (5,8) for the fossil + attestation; SFE ledger
+    for the event by (engine, event_id, entry_hash); Proteus store for
+    the serialized player by runtime_hash.
+  digest validation: recompute manifest/genome/input/output digests and
+    compare; any mismatch => REFUSE (HARD constraint).
+  version interpretation: read attestation.schema_version/fossil_contract
+    + SFE engine schema; interpret fields under those, never latest.
+  failure behavior: if any immutable ref or digest source is unavailable,
+    fail LOUD (no partial "best-effort" replay).
+Gap owners: exact_action/exact_input/output_digest (producer contract,
+12); sfe_engine_identity (SFE attest, 12).
+
+----------------------------------------------------------------------
+7. CAUSAL-ANCHOR REGRESSION RESULT
+----------------------------------------------------------------------
+Regression: integration/closure_battery.py, gates C3+C4 (live PASS).
+  C3  valid exact anchor (sha256:64hex + evt_ id) -> ACCEPTED;
+      wrong CLASS (blob_hash / world head_hash, no evt_ id) -> 422;
+      malformed shape -> 422.   [enforced, no fuzzy matching]
+  C4  KNOWN GAP, PINNED: a well-formed but WRONG (real) event/hash pair
+      is still ACCEPTED (200), because _check_sfe_anchor validates
+      CLASS+SHAPE only and PEW holds no SFE client by design. The fossil
+      records attestation.sfe_anchor_verified=false, so provenance stays
+      honest: "THIS encounter -> a well-formed anchor the CLIENT chose",
+      not "-> THIS verified ledger entry".
+Machine-checkable linkage that IS enforced: evidence -> encounter is an
+exact composite FK (unknown encounter -> refused); duplicate/conflict is
+exact-value (409, never absorbed). The encounter -> ledger hop is the one
+that is not verifiable inside PEW.
+To make "wrong real event -> REJECTED" true requires SFE attestation
+(12). This is a cross-component contract, not a PEW-only fix, and I did
+not fake it with fuzzy matching.
+
+----------------------------------------------------------------------
+8. PACKET / READ-SURFACE STATUS
+----------------------------------------------------------------------
+I-NO-PACKET-READ (K3): CLOSED. GET /api/v1/packets/{id} returns uri,
+  content_sha256, git_commit, kind, provenance (was 405). closure C1 PASS.
+Read surface available WITHOUT host-local SQL or repo archaeology:
+  fossil inspection ........ GET /fossil/encounters/{id} (+ /worlds,/players)
+  packet inspection ........ GET /packets/{id}          [NEW]
+  completeness inspection .. attestation on the fossil row + /identity
+  causal provenance ........ GET /provenance/evidence/{id} (one call:
+                             evidence->encounter->run/world->SFE anchor->
+                             Proteus organism ids)
+  replay reconstruction .... the above + SFE/Proteus (6)
+  constraint provenance .... GET /constraints, /constraints/{id}   [NEW]
+Not built (deliberately, "no analytics product"): dashboards, aggregate
+report endpoints.
+
+----------------------------------------------------------------------
+9. CONSTRAINT-TRANSFER V0
+----------------------------------------------------------------------
+ew.constraints (immutable) + ew.constraint_events (append-only lifecycle),
+served by POST/GET /constraints[/{id}][/events]. Fields carried:
+  failure/lesson ..... statement + native_payload
+  executable ......... native_payload (HARD: a predicate spec)
+  provenance ......... source_evidence_ids, source_claim_id, packet_id,
+                       origin_ref, + server attestation
+  scope .............. scope jsonb, MANDATORY (422 if empty)
+  severity ........... severity
+  applicability ...... applicability jsonb (when it fires)
+  firing/outcome ..... recorded as lifecycle events
+  errata ............. constraint_events (10)
+CRITICAL SPLIT enforced by kind:
+  HARD ...... a violation invalidates the experimental envelope
+              (content/anchor mismatch, missing attestation, schema
+              incompatibility, wrong deployed service version).
+  ADVISORY .. an empirical finding that shapes design but must NOT
+              prohibit exploration.
+Anti-Goodhart guard (tested, closure C6): scope is MANDATORY, so
+"R~=0 in world family W" cannot be recorded as "never test primitive P".
+Scope is part of the evidence.
+
+----------------------------------------------------------------------
+10. ERRATA / SUPERSESSION V0   (with the real corrections as examples)
+----------------------------------------------------------------------
+A lesson transitions PROPOSED -> SUPPORTED -> NARROWED -> SUPERSEDED, or
+PROPOSED -> REFUTED, by APPENDING a constraint_events row (from_status,
+to_status, adjudicating_evidence_id, successor_constraint_id, rationale,
+reproducer). The original row is NEVER mutated; current status = latest
+event; a REFUTED/SUPERSEDED lesson is excluded from an "active" listing
+but stays fully recoverable. Seeded live (namespace prod):
+  K-f694d315650a  I-EVENTS-SHAPE      PROPOSED -> REFUTED
+     original: SFE /events shape inconsistent (dict vs bare list)
+     correction (Daedalus): two CALL STYLES, interface confusion; scoped
+       to builds >= c358a53b. origin_ref -> Daedalus issue_disposition.
+  K-60724e7c13ff  I-WORLD-ENUM-UNSCOPED  PROPOSED -> NARROWED
+     original: /v2/worlds unscoped (189 worlds, no owner filter)
+     correction (Daedalus): NO isolation hole; the 189 were all hers; the
+       missing capability is FILTERING, not scoping. successor ->
+       D-WORLDCFG-1 (FIXED_TESTED).
+Both readable at GET /constraints/{id} with the full trail; REFUTED is
+absent from status=PROPOSED listings. This is the behavior the whole lane
+exists for: Prometheus cannot accumulate knowledge without also
+accumulating corrections to it.
+
+----------------------------------------------------------------------
+11. COMPOSITION PROVENANCE CONTRACT  (exact request to Proteus)
+----------------------------------------------------------------------
+PEW stores exactly the typed provenance Proteus supplies; it invents no
+Proteus semantics. Today fossil_players carries lineage_id, generation,
+runtime_hash, producer; fossil_encounters carries players[] + producer.
+Before COMPOSITION_COMPLETE can be claimed for a composite A+B, PEW
+REQUIRES Proteus to supply (as typed provenance, not free-form producer):
+  - exact A identity, exact B identity (content-addressed);
+  - exact composition identity (composition_id) + topology/order;
+  - player serialization digest (the bytes that ran);
+  - lineage + mutation state (mutation_ref / genome delta);
+  - world/run identity (already carried);
+  - intervention/ablation identity (which ablation this row is);
+  - outcome measurements (typed, joinable -- blocked upstream, see 12);
+  - preserved negatives (the ablations that did NOT survive).
+Proposed shape: a composition provenance block Proteus posts alongside
+the encounter; PEW adds typed columns/edges for composition_id, topology,
+serialization_digest, ablation_id when Proteus fixes their names. PEW
+will not guess them.
+
+----------------------------------------------------------------------
+12. CROSS-COMPONENT REQUESTS  (only unresolved)
+----------------------------------------------------------------------
+TO SFE (Daedalus):
+  R-SFE-1  Anchor attestation. Provide a way to verify a (engine_id,
+           event_id, entry_hash) triple against the ledger -- either a
+           verify endpoint or a signed anchor token PEW can check
+           offline. Without it, "wrong real event -> rejected" (6,7)
+           cannot be enforced in PEW.
+  R-SFE-2  Engine identity in the anchor. So sfe_engine_identity (5)
+           stops being ambiguous across the two engines.
+TO PROTEUS:
+  R-PRO-1  The composition provenance block (11).
+  R-PRO-2  exact_action + exact_input digest + exact_output_digest on the
+           encounter, so REPLAY_COMPLETE (6) is reachable.
+  R-PRO-3  A measurement definition/version so outcome is a joinable
+           metric, not a bare token (this is the upstream gap already
+           noted in the write contract s9).
+
+----------------------------------------------------------------------
+13. ISSUE DISPOSITION
+----------------------------------------------------------------------
+FIXED (live on M2):
+  server-attested identity endpoint;  per-fossil attestation;
+  contract_schema_versions on fossils;  packet read (I-NO-PACKET-READ);
+  constraint-transfer V0;  errata/supersession V0;
+  credential override mechanism + .gitignore;
+  deploy-lag (deploy-aware watchdog).
+LIVE_NOT_QUALIFIED:
+  cross-host (M1) closure -- M1 must apply 008 + redeploy.
+PARTIAL:
+  software_source_identity (PEW yes, SFE/Proteus no);
+  world_configuration.
+DEFERRED (cross-component, owners named in 12):
+  engine-verified anchor (R-SFE-1);  sfe_engine_identity (R-SFE-2);
+  exact_action/input/output + measurement (R-PRO-1..3);
+  registry_identity, entry_id.
+REFUTED / superseded (recorded, not deleted):
+  I-EVENTS-SHAPE (REFUTED);  I-WORLD-ENUM-UNSCOPED (NARROWED).
+OPERATOR-ONLY (stated, not done): token rotation + cleartext purge from
+  git history; scoping/closing 5432 (3).
+
+----------------------------------------------------------------------
+14. COMMITS / ARTIFACTS / TESTS
+----------------------------------------------------------------------
+commits (main):
+  d9375acc1  PEW closure V0 (identity, packet read, constraints, 008)
+  13f9b8d7c  deploy-aware M2 watchdog
+  88ce41bf7  gate redeploy on service-code changes
+  dcb624815  credential override
+  7cbe43ecf  fix watchdog code-change pathspec  (== deployed source)
+artifacts:
+  migrations/008_closure_v0.sql          (additive: attestation col +
+    ew.constraints + ew.constraint_events + ew.constraints_current view)
+  ew/closure.py                          (attestation, packet read,
+    constraint/errata helpers)
+  ew/service.py                          (5 new routes + attestation stamp)
+  ew/db.py                               (credential override)
+  scripts/ew_watchdog_m2.ps1             (deploy-aware)
+  integration/closure_battery.py         (C0-C9)
+tests (re-run LIVE @ 8377, EW_DB_HOST=localhost):
+  pew_battery E0-E13 ........ all_pass=true
+  seam_battery A-J .......... all_pass=true (no regression from 008)
+  closure_battery C0-C9 ..... all_pass=true
+     C0 identity attested   C1 packet read (405->200)   C2 fossil attested
+     C3 anchor shape        C4 wrong-real gap pinned+honest
+     C5 HARD+ADVISORY       C6 scope mandatory
+     C7 errata transition   C8 refuted-not-active   C9 history recoverable
+
+----------------------------------------------------------------------
+15. HANDOFF TO HARMONIA
+----------------------------------------------------------------------
+WHAT PEW NOW PROVES:
+  - which PEW/store you reached (GET /identity, db_system_id) -- from the
+    service, never from your token;
+  - which host/service produced any new fossil (row .attestation);
+  - the typed chain evidence->encounter->run/world->SFE event->ledger pos
+    ->Proteus organisms, in one /provenance call, all exact joins.
+WHAT PEW CAN NOW REPLAY:
+  - the IDENTITY and CAUSAL LOCUS of an encounter (who/where/which event);
+  - NOT the exact action/input/output yet (REPLAY_COMPLETE=NO; R-PRO-2).
+WHAT PEW CAN NOW REMEMBER AS A CONSTRAINT:
+  - HARD invariants vs ADVISORY scoped lessons, with mandatory scope,
+    provenance, and a full errata trail; refuted lessons go inactive but
+    stay recoverable (/constraints).
+WHAT HARMONIA MUST STILL NOT INFER:
+  - do NOT treat a stored anchor as engine-verified: sfe_anchor_verified
+    is false until R-SFE-1 lands; verify (event_id, entry_hash) against
+    SFE yourself before trusting causal correctness;
+  - do NOT read "ADVISORY R~=0 in family W" as "primitive is dead" --
+    scope is the evidence;
+  - do NOT infer machine identity from the bearer token;
+  - do NOT assume M1 has this closure -- it is M2-live only until M1
+    applies 008 and redeploys.
+
+DEFINITION OF DONE: the six questions Harmonia should no longer need to
+ask (which PEW / token=machine? / enough to replay? / wrong event? / what
+on refutation? / hard vs narrow?) are now answered explicitly and
+durably, EXCEPT "could this fossil cite the wrong real event?" whose
+honest answer is "yes, and the fossil says so" until SFE attestation
+(R-SFE-1) closes it.
+
+PEW_CLOSURE_V0 = LIVE_ON_M2 ; CROSS_HOST + ENGINE_VERIFIED_ANCHOR = OPEN
+======================================================================
