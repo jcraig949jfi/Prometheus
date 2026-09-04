@@ -1,0 +1,603 @@
+================================================================================
+PROMPT — MNEMOSYNE
+PEW WORLD-PROVENANCE SEAM CLOSURE + HARMONIA FIRST-INTEGRATION HANDOFF
+2026-09-03
+
+ROLE
+
+You are Mnemosyne, owner of the Prometheus Evidence Wiki (PEW).
+
+This is a BOUNDED SEAM-CLOSURE PASS.
+
+Do not redesign PEW.
+Do not broaden the ontology.
+Do not begin a new research programme.
+Do not manufacture provenance that upstream systems do not provide.
+Do not weaken existing fossil-contract requirements.
+Do not modify SFE or Proteus.
+Do not perform Harmonia’s integration for her.
+
+Your job is to close the remaining SFE -> PEW/Mnemosyne provenance ambiguity
+identified by Daedalus, make silent provenance loss impossible on the affected
+surface, prove the resulting contract live, preserve all evidence and failures,
+and hand Harmonia an exact contract she can use for the first real integration.
+
+At completion, produce an EXTERNAL REVIEW PACKET in chat as a single ASCII
+block that can be cut and pasted.
+
+Preserve:
+
+* this prompt verbatim in the appropriate roles/Mnemosyne/prompts/ location;
+* all research/findings generated during this pass;
+* all test results, including failures and intermediate failed attempts;
+* exact commits, hashes, migrations, service identities and reproduction
+    commands;
+* the final review packet in the repository if that is consistent with
+    Mnemosyne’s existing evidence-preservation convention.
+
+===============================================================================
+0. INHERITED STATE — DO NOT RE-LITIGATE WITHOUT CONTRADICTORY EVIDENCE
+
+PEW has already completed first-integration readiness.
+
+Inherited verdict:
+
+PEW_READY_FOR_FIRST_INTEGRATION
+
+Authoritative readiness commit:
+
+1376df4fd6aca25b7e73840aac59c82fb2eb121b
+
+on:
+
+origin/mnemosyne/evidence-wiki-v0
+
+The qualified fossil contract is:
+
+pew.fossil.v1
+schema_version 3
+
+The fossil path already carries typed identifiers including:
+
+world_id
+players[]
+encounter_id
+run_id
+sfe_event_seq
+sfe_entry_hash
+
+and already has fail-closed validation, read-back, query, duplicate/conflict
+semantics and namespace isolation.
+
+DO NOT rebuild that surface merely because another document describes an older
+state.
+
+Daedalus independently inspected the live SFE/PEW seam and correctly refined
+the remaining issue to:
+
+PEW_WORLD_PROVENANCE_SEAM_BUILT_BUT_UNBOUND
+
+That is the starting state for this pass.
+
+===============================================================================
+
+1. THE THREE QUESTIONS MNEMOSYNE MUST ANSWER
+    ===============================================================================
+
+Answer these from source, live contracts and actual persisted semantics.
+Do not guess from field names.
+
+QUESTION 1 — WHAT EXACTLY IS sfe_entry_hash?
+
+The fossil contract requires sfe_entry_hash, but Daedalus reports that its
+meaning is insufficiently defined.
+
+Determine and freeze exactly which SFE identity it means.
+
+Candidate objects must be explicitly distinguished:
+
+SFE event ledger entry_hash
+SFE artifact_id
+SFE blob_hash
+SFE world head_hash
+any other actual SFE object if the evidence proves that is the intended one
+
+The answer must identify ONE semantic object, not merely “an SFE hash.”
+
+If existing PEW implementation and historical evidence already establish the
+answer, preserve that meaning.
+
+If existing producers disagree, expose the disagreement rather than silently
+choosing whichever value is convenient.
+
+The final machine-readable and human-readable contracts must define the field
+unambiguously enough that Harmonia cannot reasonably substitute another SFE
+hash.
+
+QUESTION 2 — HOW DOES ORDINARY PEW EVIDENCE BIND TO A FOSSIL ENCOUNTER?
+
+Freeze ONE canonical, typed, queryable binding between an ordinary evidence
+record and the corresponding:
+
+fossil_encounter
+
+The binding must make the following traversal mechanically possible:
+
+evidence
+    -> fossil encounter
+    -> run_id
+    -> SFE event/work/world provenance
+    -> Proteus organism_id(s)
+
+Use the smallest compatible mechanism already present in PEW.
+
+Candidates include, but are not limited to:
+
+* a sanctioned relation type;
+* typed provenance fields;
+* an existing interpretations surface if it is genuinely the intended
+  mechanism.
+
+DO NOT create parallel provenance mechanisms merely because several are
+possible.
+
+DO NOT use:
+free-text world identifiers,
+opaque URI conventions,
+overloaded citation keys,
+prose-only conventions,
+or anything that cannot be queried and validated mechanically.
+
+If a relation is selected, freeze its exact:
+
+src_type
+dst_type
+relation_type
+epistemic_class
+identifier semantics
+duplicate/idempotency semantics
+
+QUESTION 3 — IS MIGRATION 006 ACTUALLY LIVE?
+
+Daedalus could not verify whether:
+
+migrations/006_first_integration.sql
+
+is applied to the live PEW database.
+
+Determine this directly.
+
+Record:
+migration state,
+live schema state,
+relevant constraints/indexes/generated keys,
+pre-existing row preservation,
+and whether the running service is actually operating against that schema.
+
+Do not infer migration state merely because the file exists.
+
+===============================================================================
+2. SILENT FIELD LOSS — FAIL CLOSED
+
+Daedalus reports that the five ordinary request models:
+
+PacketIn
+ExperimentIn
+ClaimIn
+EvidenceIn
+RelationIn
+
+do not declare a strict extra-field policy and therefore inherit Pydantic’s
+extra-field ignore behaviour.
+
+He reports the following failure mode:
+
+producer sends an unsupported provenance field such as world_id
+    ->
+HTTP 200
+    ->
+field silently disappears
+
+VERIFY THIS YOURSELF before changing anything.
+
+If reproduced, repair the affected ordinary ingress models so unsupported
+fields FAIL OVERTLY rather than disappearing.
+
+Expected semantic requirement:
+
+unsupported field -> 422
+supported field   -> persisted/readable according to its contract
+
+extra="forbid" is the obvious minimal mechanism if compatible with the live
+PEW model layer, but the requirement is semantic, not syntactic.
+
+Do not casually break intentional open-extension objects. Audit which objects
+are supposed to be closed and which, if any, are intentionally open.
+
+Add regression tests demonstrating that the exact historical silent-success
+case now fails loudly.
+
+This repair is independent of which evidence->fossil binding is selected and
+should be treated as a general evidence-integrity invariant.
+
+===============================================================================
+3. DO NOT CONFUSE THE FOUR IDENTITIES
+
+The handoff must explicitly distinguish at minimum:
+
+PROTEUS
+organism_id
+intrinsic player identity
+sha256(canonical player manifest)
+
+SFE
+blob_hash
+identity of artifact BYTES
+world-independent
+
+artifact_id
+    identity of the artifact envelope
+    world-scoped
+event entry_hash
+    identity/integrity anchor in the SFE event ledger
+world head_hash
+    world-ledger/head state, not interchangeable with the above
+
+PEW
+fossil encounter identity
+(encounter_id, run_id) under pew.fossil.v1
+
+These are NOT synonyms.
+
+A first-integration producer must never be able to satisfy a required field by
+choosing whichever SHA-256-looking string happens to be available.
+
+===============================================================================
+4. INHERITED CROSS-SYSTEM CONTRACT
+
+The existing identifier mapping is approximately:
+
+PEW                 SFE                         Proteus
+-----------------   -------------------------   --------------------------
+world_id            world_id                    not minted
+players[]           not minted                  organism_id
+encounter_id        not minted                  encounter_identity(spec)
+run_id              exp_id + work_id            not minted
+seed                worlds.seed_root            encounter seed argument
+sfe_event_seq       event ledger sequence       --
+sfe_entry_hash      MUST BE FROZEN THIS PASS    --
+outcome             observation outcome         NEVER authored by Proteus
+
+Verify every row against the actual current contracts.
+
+Correct inaccuracies.
+
+Do not preserve a mapping merely because it appeared in an earlier packet.
+
+===============================================================================
+5. PROTEUS/SFE FACTS HARMONIA WILL RELY ON
+
+Frozen Proteus specimens are authorized for USE A:
+
+enumerate
+fetch
+validate
+instantiate
+tick
+checkpoint
+restore
+replay
+supply to worlds
+
+Proteus breeding/mutation remains NOT QUALIFIED:
+
+NOT_QUALIFIED_AUTHORED_NONEQUILIBRIUM_CURRENT
+operational significance NOT_YET_ADJUDICATED
+Campaign 1 BLOCKED
+
+Do not weaken or reinterpret that distinction.
+
+Daedalus has frozen the live SFE artifact contract:
+
+POST /v2/worlds/{world_id}/artifacts
+
+required:
+kind
+data_b64
+
+optional:
+meta
+
+The first Harmonia adapter belongs to Harmonia, not Proteus and not Mnemosyne.
+
+World association is EXTRINSIC to Proteus identity.
+
+Daedalus has also measured an SFE defect:
+
+URL-safe base64 can be accepted with HTTP 200 while corrupting bytes.
+
+Harmonia therefore needs to use STANDARD base64 and verify artifact integrity.
+
+For canonical Proteus manifest bytes:
+
+organism_id == sha256(canonical manifest)
+
+and SFE returns a world-independent blob_hash.
+
+Do not redesign this. PEW merely needs to preserve the correct downstream
+provenance anchors.
+
+===============================================================================
+6. MINIMUM IMPLEMENTATION PRINCIPLE
+
+Prefer the smallest change that establishes:
+
+1. exact SFE hash semantics;
+2. exact evidence -> fossil encounter binding;
+3. fail-closed unsupported fields;
+4. typed/queryable traversal;
+5. live verification;
+6. Harmonia-readable documentation.
+
+Do not add speculative fields for future campaigns.
+
+Do not invent episode_id. If nobody mints it, NULL remains correct.
+
+Do not invent measurement definitions.
+
+If measurement definition/version remains an upstream gap, preserve it as an
+explicit gap.
+
+Do not create an SFE client inside PEW unless the existing architecture
+absolutely requires one. PEW records evidence; Harmonia owns orchestration.
+
+===============================================================================
+7. REQUIRED ADVERSARIAL TESTS
+
+Before declaring closure, construct a bounded seam battery.
+
+At minimum prove:
+
+A. HASH SEMANTICS
+A known live SFE object is written/referenced using the sanctioned
+sfe_entry_hash meaning and independently read back.
+
+A wrong SFE hash class must be rejected where mechanically distinguishable,
+or explicitly identified as semantically invalid if structural validation
+alone cannot distinguish 256-bit hashes.
+
+B. EVIDENCE -> FOSSIL BINDING
+Create or use a TEST-namespace fossil encounter.
+
+Create ordinary PEW evidence bound through the newly sanctioned mechanism.
+
+Starting only from the evidence identifier, mechanically recover:
+fossil encounter
+encounter_id
+run_id
+world_id
+players[]
+sfe_entry_hash
+sfe_event_seq
+
+C. REVERSE QUERY
+Starting from the fossil encounter, mechanically discover the bound evidence
+if the selected model claims bidirectional/queryable traversal.
+
+D. SILENT-LOSS NEGATIVE CONTROL
+Submit an unsupported field to every affected CLOSED ordinary ingress model.
+
+Expected:
+422 or equivalent explicit refusal
+
+Forbidden:
+HTTP 200 with field discarded
+
+E. DUPLICATE / REPLAY
+Repeat the binding/write.
+
+Demonstrate the documented idempotency or duplicate semantics.
+
+F. CONFLICT
+Attempt to reuse an identity with materially different provenance.
+
+It must fail overtly rather than overwrite or silently coexist unless
+coexistence is explicitly part of the frozen contract.
+
+G. NAMESPACE FIREWALL
+All integration fixtures remain outside scientific/prod evidence.
+
+H. INDEPENDENT READ-BACK
+Do not prove persistence solely through the same function that performed the
+write.
+
+I. LIVE MIGRATION
+Demonstrate the service is operating against the expected post-006 schema.
+
+J. FRESH-CONSUMER TEST
+From the branch/checkout Harmonia is actually instructed to use, execute the
+documented contract exactly as written.
+
+===============================================================================
+8. BRANCH AND DISTRIBUTION PROBLEM
+
+Daedalus reports an important repository fact:
+
+evidence_wiki is not on origin/main.
+
+The authoritative readiness work is on:
+
+origin/mnemosyne/evidence-wiki-v0
+
+and related/newer material may also exist on:
+
+herakles/historical-collider-v0
+
+Do not leave Harmonia with instructions that say “pull main” if doing so makes
+PEW disappear.
+
+Determine the authoritative integration branch and state it explicitly.
+
+If this pass should be promoted/cherry-picked/merged somewhere before Harmonia
+can consume it, make that repository transition explicit and verify ancestry.
+
+Do not silently assume local main, remote main, and the active seat branch
+contain the same tree.
+
+===============================================================================
+9. LIVE SERVICE SAFETY
+
+PEW is live and shared.
+
+Do not stop PostgreSQL merely to prove that a stopped database is stopped.
+
+Do not destroy production evidence.
+
+Use namespace=test or the existing sanctioned integration fixture namespace.
+
+Preserve append-only semantics.
+
+If a migration is necessary:
+inspect it first,
+prove existing-row preservation,
+record pre/post counts,
+record constraints,
+and provide rollback/recovery information appropriate to the existing PEW
+migration discipline.
+
+If no migration is necessary, say so explicitly.
+
+===============================================================================
+10. SUCCESS CRITERION
+
+This pass succeeds only if Harmonia can be handed an exact, executable answer
+to this question:
+
+"After I run a frozen Proteus organism in an SFE world and receive the SFE
+ identities, exactly what do I write to PEW so that a future investigator
+ can start from the resulting evidence and mechanically reconstruct which
+ organism ran, in which world, in which SFE run, and which immutable SFE
+ ledger event anchors that assertion?"
+
+The answer must not require:
+tribal knowledge,
+reading Daedalus’s archaeology,
+guessing which hash is meant,
+putting identifiers in free text,
+or contacting Mnemosyne.
+
+Target closure label, IF AND ONLY IF the evidence supports it:
+
+PEW_WORLD_PROVENANCE_SEAM_BOUND_AND_VERIFIED
+
+If the evidence does not support that label, stop with the narrowest accurate
+failure/blocker label.
+
+Do not lower the criterion to obtain closure.
+
+===============================================================================
+11. REQUIRED HARMONIA HANDOFF
+
+Create/update a canonical Harmonia-facing document containing:
+
+* PEW base URL and authentication requirements;
+* authoritative branch/commit;
+* fossil contract/schema versions;
+* exact field mapping from Proteus + SFE -> PEW;
+* exact definition of sfe_entry_hash;
+* exact evidence -> fossil binding;
+* minimal example request bodies;
+* minimal query/read-back procedure;
+* namespace rules;
+* duplicate/conflict semantics;
+* expected 4xx failures;
+* known remaining gaps;
+* reproduction/battery command;
+* one explicit statement that frozen Proteus specimens are authorized but
+  Proteus breeding/mutation remains unqualified.
+
+Do not put live secrets into committed documentation.
+
+===============================================================================
+12. PRESERVATION REQUIREMENTS
+
+Preserve all of the following:
+
+directive/prompt verbatim + sha256
+source inspection notes
+schema/migration findings
+pre-change reproduced silent-failure evidence
+implementation delta
+tests
+seam battery
+negative controls
+failed attempts
+migration evidence if any
+service identity
+branch/commit ancestry
+final Harmonia handoff
+final external review packet
+
+Failures are evidence.
+
+Do not delete a failed artifact because the bug was subsequently fixed.
+
+===============================================================================
+13. FINAL EXTERNAL REVIEW PACKET
+
+At completion, produce a self-contained external review packet.
+
+PUT THE COMPLETE PACKET HERE IN CHAT AS ONE ASCII BLOCK OF TEXT THAT I CAN
+CUT AND PASTE.
+
+It must include at minimum:
+
+HEADLINE VERDICT
+exact answer to the three questions:
+    what is sfe_entry_hash?
+    how does evidence bind to fossil_encounter?
+    is migration 006 live?
+BEFORE/AFTER description of the silent-field-loss defect
+exact implementation delta
+live service/schema identity
+seam battery with every gate and result
+negative controls
+independently verified traversal:
+    evidence
+      -> fossil encounter
+      -> SFE run/world/event
+      -> Proteus organism(s)
+namespace/prod isolation evidence
+migration evidence
+failures encountered during this pass
+unresolved gaps
+exact Harmonia write/read procedure
+files/artifacts
+commits/hashes/branch ancestry
+reproduction commands
+explicit statement of whether:
+    PEW_WORLD_PROVENANCE_SEAM_BOUND_AND_VERIFIED
+is accepted or rejected.
+
+Do not summarize away failures.
+Do not self-qualify beyond the evidence.
+Do not broaden the pass after the seam is closed.
+
+===============================================================================
+
+The objective is not to make PEW richer.
+
+The objective is to make ONE provenance chain impossible to misunderstand:
+
+Proteus organism
+    -> Harmonia binding
+    -> SFE world/run/event
+    -> PEW fossil encounter
+    -> PEW evidence
+
+Every arrow must mean exactly one thing.
+
+Close that seam, prove it, preserve the evidence, hand the contract to Harmonia,
+and stop.
+
+– External integration directive, 2026-09-03

@@ -296,9 +296,12 @@ def main():
 
     # E13 -------------------- batch path: idempotent and all-or-nothing
     def brow(n, **kw):
+        import hashlib as _h
+        _d = _h.sha256(f"pew.integration.batch|{n}".encode()).hexdigest()
         return dict({"encounter_id": f"TESTFIX-BATCH-{n:03d}",
-                     "run_id": "TESTFIX-BATCHRUN-0001",
-                     "sfe_entry_hash": f"sha256:TESTFIXTURE-BATCH-{n:03d}",
+                     "run_id": "TESTFIX-BATCHRUN-0002",
+                     "sfe_entry_hash": "sha256:" + _d,
+                     "sfe_event_id": "evt_" + _d[:24],
                      "world_id": fx["world"]["world_id"],
                      "players": [fx["player"]["player_id"]],
                      "outcome": "committed", "namespace": "test"}, **kw)
@@ -307,7 +310,7 @@ def main():
     # one poisoned row (differs from what is stored) must refuse the WHOLE batch
     poisoned = [brow(i) for i in range(5, 8)] + [brow(0, outcome="DIFFERENT")]
     b3 = c.post("fossil/encounters/batch", {"encounters": poisoned})
-    after = c.get("fossil/encounters", run_id="TESTFIX-BATCHRUN-0001")
+    after = c.get("fossil/encounters", run_id="TESTFIX-BATCHRUN-0002")
     n_after_batch = after.json().get("n") if after.status_code == 200 else -1
     ok = (b1.status_code == 200 and
           b2.status_code == 200 and b2.json().get("duplicate_identical") == 5 and

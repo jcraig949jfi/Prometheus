@@ -99,33 +99,83 @@ def fossil_contract():
         "fossil_contract": FOSSIL_CONTRACT_VERSION,
         "schema_version": SCHEMA_VERSION,
         "row_key": ["encounter_id", "run_id"],
-        "required": ["encounter_id", "sfe_entry_hash"],
+        "required": ["encounter_id", "sfe_entry_hash", "sfe_event_id"],
         "accepted_fields": sorted(FossilEncounterIn.model_fields),
         "unknown_fields": "rejected with 422 (extra=forbid)",
+        "sfe_entry_hash": {
+            "IS": "SFE events.entry_hash -- the hash-chain integrity anchor of "
+                  "ONE row in the SFE EVENT LEDGER, namely the event named by "
+                  "sfe_event_id",
+            "IS_NOT": ["artifacts.blob_hash (identity of artifact BYTES, "
+                       "world-independent)",
+                       "artifacts.artifact_id (world-scoped envelope; ALSO "
+                       "sha256:-shaped)",
+                       "worlds.head_hash (world ledger head state)",
+                       "Proteus organism_id (sha256 of the player manifest)"],
+            "shape": "^sha256:[0-9a-f]{64}$",
+            "class_pinned_by": "the REQUIRED paired sfe_event_id (^evt_[0-9a-f]"
+                               "{16,32}$), which exists only in the event "
+                               "ledger. head_hash cannot be excluded by shape: "
+                               "every live head_hash IS some event's "
+                               "entry_hash, so the event id is what "
+                               "disambiguates.",
+            "audit": "an investigator verifies the (sfe_event_id, "
+                     "sfe_entry_hash) pair against SFE. PEW holds no SFE "
+                     "client by design and validates class+shape only.",
+            "evidence": "5452/5452 historical prod rows match SFE "
+                        "events.entry_hash and their pairs verify; blob_hash "
+                        "and artifact_id overlap by 0."},
+        "evidence_binding": {
+            "mechanism": "typed columns on ordinary evidence: encounter_id + "
+                         "encounter_run_id",
+            "enforced_by": "FOREIGN KEY (encounter_id, encounter_run_key) "
+                           "REFERENCES ew.fossil_encounters(encounter_id, "
+                           "run_key) -- binding to an unknown encounter is "
+                           "refused (422 unknown_fossil_encounter:<id>@<run>)",
+            "write": "POST /api/v1/evidence with encounter_id/encounter_run_id",
+            "forward": "GET /api/v1/provenance/evidence/{evidence_id}",
+            "reverse": "GET /api/v1/fossil/encounters/{encounter_id}/evidence",
+            "note": "this is the ONLY sanctioned evidence->fossil binding; "
+                    "no relation type, URI convention or free-text carries it"},
         "write": {"single": "POST /api/v1/fossil/encounters",
                   "batch": "POST /api/v1/fossil/encounters/batch",
                   "world": "POST /api/v1/fossil/worlds",
-                  "player": "POST /api/v1/fossil/players"},
+                  "player": "POST /api/v1/fossil/players",
+                  "evidence": "POST /api/v1/evidence"},
         "read": {"by_encounter": "GET /api/v1/fossil/encounters/{encounter_id}",
                  "by_selector": "GET /api/v1/fossil/encounters"
                                 "?run_id=|world_id=|player_id=|episode_id=",
                  "world": "GET /api/v1/fossil/worlds/{world_id}",
-                 "player": "GET /api/v1/fossil/players/{player_id}"},
+                 "player": "GET /api/v1/fossil/players/{player_id}",
+                 "provenance": "GET /api/v1/provenance/evidence/{evidence_id}",
+                 "evidence_of_encounter":
+                     "GET /api/v1/fossil/encounters/{encounter_id}/evidence"},
         "write_outcomes": {
             "inserted": "200, row committed and readable",
             "duplicate_identical": "200, row already present, byte-identical",
             "conflict": "409, a row with this key exists and DIFFERS; nothing written",
             "missing_provenance": "422, sfe_entry_hash required",
+            "wrong_hash_class": "422, sfe_entry_hash shape / missing sfe_event_id",
+            "unknown_encounter_binding": "422, evidence bound to an encounter "
+                                         "that does not exist",
             "unknown_field": "422, producer/consumer schema mismatch",
             "partial_batch": "impossible: a batch commits whole or not at all"},
         "identifier_mapping": {
-            "world_id": "SFE world_id",
-            "players[]": "Proteus organism_id (a player IS its manifest)",
-            "encounter_id": "Proteus encounter_identity() -- the SPECIFICATION",
-            "run_id": "the EXECUTION: SFE 'exp_id:work_id'",
+            "world_id": "SFE worlds.world_id (wld_<hex>)",
+            "players[]": "Proteus organism_id = sha256(canonical player "
+                         "manifest); SFE mints none",
+            "encounter_id": "Proteus encounter_identity(organism_ids, "
+                            "world_binding_id, seed, checkpoint_ids) -- the "
+                            "SPECIFICATION, not an execution",
+            "run_id": "the EXECUTION: SFE 'exp_id:work_id' (exp_<hex>:wrk_<hex>)",
             "episode_id": "no producer mints one today; nullable, never invented",
-            "seed": "encounter seed (SFE world-level seed_root is on the world row)",
-            "sfe_event_seq": "SFE ledger order; PEW revision is NOT producer order"},
+            "seed": "encounter seed argument; the world-level SFE "
+                    "worlds.seed_root lives on the world anchor row",
+            "sfe_event_id": "SFE events.event_id (evt_<hex>)",
+            "sfe_event_seq": "SFE events.event_seq -- producer order. PEW's own "
+                             "`revision` is PEW write order and is NOT it.",
+            "outcome": "SFE observations.outcome or the work item's terminal "
+                       "status; Proteus never authors an outcome"},
     }
 
 
@@ -183,6 +233,10 @@ def search(request: Request, q: str, mode: str = "hybrid", k: int = 10,
 
 # ---------------------------------------------------------------- claims
 class ClaimIn(BaseModel):
+    # Closed model: an unsupported field is a producer/consumer schema
+    # mismatch and must fail loudly. Silently dropping it would report a
+    # partial write as success (defect reproduced in seam/D_silent_loss_BEFORE.txt).
+    model_config = {"extra": "forbid"}
     text_canonical: str
     status: str
     creation_method: str = "MODEL_EXTRACTED"
@@ -193,6 +247,9 @@ class ClaimIn(BaseModel):
     packet_id: str | None = None
     source_span: str | None = None
     write_stage: str = "SUBMITTED"
+    # "test"/"fixture" keep this object OUT of the scientific
+    # views (ew.*_prod). Validated against a closed set.
+    namespace: str = "prod"
     idempotency_key: str | None = None
 
 
@@ -211,6 +268,7 @@ def get_claim(claim_id: str, request: Request, conn=Depends(get_conn)):
 @app.post("/api/v1/claims")
 def post_claim(body: ClaimIn, request: Request, conn=Depends(get_conn)):
     ident = identity(request, write=True)
+    _check_namespace(body.namespace)
     try:
         cid = store.submit_claim(
             conn, body.text_canonical, body.status, body.creation_method,
@@ -221,10 +279,16 @@ def post_claim(body: ClaimIn, request: Request, conn=Depends(get_conn)):
             idempotency_key=body.idempotency_key)
     except store.RejectedWrite as e:
         raise HTTPException(422, e.reason)
-    return {"claim_id": cid, "write_stage": body.write_stage}
+    _classify(conn, "claim", cid, body.namespace, ident, "api-declared namespace")
+    return {"claim_id": cid, "write_stage": body.write_stage,
+            "namespace": body.namespace}
 
 
 class PacketIn(BaseModel):
+    # Closed model: an unsupported field is a producer/consumer schema
+    # mismatch and must fail loudly. Silently dropping it would report a
+    # partial write as success (defect reproduced in seam/D_silent_loss_BEFORE.txt).
+    model_config = {"extra": "forbid"}
     uri: str
     kind: str
     git_commit: str | None = None
@@ -244,6 +308,10 @@ def post_packet(body: PacketIn, request: Request, conn=Depends(get_conn)):
 
 
 class EvidenceIn(BaseModel):
+    # Closed model: an unsupported field is a producer/consumer schema
+    # mismatch and must fail loudly. Silently dropping it would report a
+    # partial write as success (defect reproduced in seam/D_silent_loss_BEFORE.txt).
+    model_config = {"extra": "forbid"}
     packet_id: str
     source_quote: str
     evidence_type: str
@@ -259,12 +327,22 @@ class EvidenceIn(BaseModel):
     agent: str | None = None
     creation_method: str = "MODEL_EXTRACTED"
     write_stage: str = "SUBMITTED"
+    # THE canonical binding to a fossil encounter (pew.fossil.v2). Typed,
+    # queryable, and foreign-keyed to ew.fossil_encounters(encounter_id,
+    # run_key): a binding to an unknown encounter is refused, not stored.
+    # There is exactly one binding mechanism; do not add a second.
+    encounter_id: str | None = None
+    encounter_run_id: str | None = None
+    # "test"/"fixture" keep this object OUT of the scientific
+    # views (ew.*_prod). Validated against a closed set.
+    namespace: str = "prod"
     idempotency_key: str | None = None
 
 
 @app.post("/api/v1/evidence")
 def post_evidence(body: EvidenceIn, request: Request, conn=Depends(get_conn)):
     ident = identity(request, write=True)
+    _check_namespace(body.namespace)
     try:
         eid = store.submit_evidence(
             conn, body.packet_id, body.source_quote, body.evidence_type,
@@ -275,10 +353,17 @@ def post_evidence(body: EvidenceIn, request: Request, conn=Depends(get_conn)):
             negative=body.negative, substrate=body.substrate,
             source_span=body.source_span, experiment_id=body.experiment_id,
             agent=body.agent, creation_method=body.creation_method,
-            write_stage=body.write_stage, idempotency_key=body.idempotency_key)
+            write_stage=body.write_stage, idempotency_key=body.idempotency_key,
+            encounter_id=body.encounter_id,
+            encounter_run_id=body.encounter_run_id)
     except store.RejectedWrite as e:
         raise HTTPException(422, e.reason)
-    return {"evidence_id": eid}
+    _classify(conn, "evidence", eid, body.namespace, ident,
+              "api-declared namespace")
+    return {"evidence_id": eid, "namespace": body.namespace,
+            "encounter_id": body.encounter_id,
+            "encounter_run_id": body.encounter_run_id,
+            "provenance": f"/api/v1/provenance/evidence/{eid}"}
 
 
 @app.get("/api/v1/evidence/{evidence_id}")
@@ -293,7 +378,84 @@ def get_evidence(evidence_id: str, request: Request, conn=Depends(get_conn)):
     return JSONResponse(json.loads(json.dumps(dict(row), default=str)))
 
 
+@app.get("/api/v1/provenance/evidence/{evidence_id}")
+def provenance_of_evidence(evidence_id: str, request: Request,
+                           conn=Depends(get_conn)):
+    """FORWARD traversal, one call: evidence -> fossil encounter -> run/world/
+    SFE ledger anchor -> Proteus organism ids. Every hop is a typed join, not
+    a naming convention."""
+    t0 = time.time()
+    ident = identity(request)
+    with ewdb.dict_cur(conn) as cur:
+        cur.execute("SELECT evidence_id, claim_id, packet_id, evidence_type, "
+                    "encounter_id, encounter_run_id, source_quote "
+                    "FROM ew.evidence WHERE evidence_id=%s", (evidence_id,))
+        ev = cur.fetchone()
+        if not ev:
+            raise HTTPException(404, "unknown evidence")
+        out = {"evidence": dict(ev), "bound": ev["encounter_id"] is not None}
+        if out["bound"]:
+            cur.execute("SELECT * FROM ew.fossil_encounters WHERE "
+                        "encounter_id=%s AND run_key=%s",
+                        (ev["encounter_id"], ev["encounter_run_id"] or ""))
+            enc = dict(cur.fetchone())
+            for tf in ("occurred_ts", "created_at"):
+                enc[tf] = _utc_iso(enc.get(tf))
+            out["fossil_encounter"] = enc
+            out["sfe"] = {"world_id": enc["sfe_world_id"] or enc["world_id"],
+                          "run_id": enc["run_id"],
+                          "event_id": enc["sfe_event_id"],
+                          "entry_hash": enc["sfe_entry_hash"],
+                          "event_seq": enc["sfe_event_seq"],
+                          "entry_hash_means":
+                              "SFE events.entry_hash of the named event_id"}
+            out["proteus"] = {"organism_ids": enc["players"] or []}
+            cur.execute("SELECT * FROM ew.fossil_worlds WHERE world_id=%s",
+                        (enc["world_id"],))
+            w = cur.fetchone()
+            out["world_anchor"] = dict(w) if w else None
+            players = []
+            for pid in (enc["players"] or []):
+                cur.execute("SELECT * FROM ew.fossil_players WHERE player_id=%s",
+                            (pid,))
+                p = cur.fetchone()
+                players.append(dict(p) if p else {"player_id": pid,
+                                                  "registered": False})
+            out["player_anchors"] = players
+    log_read(conn, "provenance.evidence", ident, {"evidence_id": evidence_id},
+             1, t0)
+    return JSONResponse(json.loads(json.dumps(out, default=str)))
+
+
+@app.get("/api/v1/fossil/encounters/{encounter_id}/evidence")
+def evidence_for_encounter(encounter_id: str, request: Request,
+                           run_id: str | None = None, conn=Depends(get_conn)):
+    """REVERSE traversal: every ordinary evidence record bound to this
+    encounter. Same typed columns, read the other way."""
+    t0 = time.time()
+    ident = identity(request)
+    where, args = ["encounter_id=%s"], [encounter_id]
+    if run_id is not None:
+        where.append("encounter_run_key=%s")
+        args.append(run_id)
+    with ewdb.dict_cur(conn) as cur:
+        cur.execute("SELECT evidence_id, claim_id, evidence_type, packet_id, "
+                    "encounter_id, encounter_run_id, created_at FROM "
+                    "ew.evidence WHERE " + " AND ".join(where) +
+                    " ORDER BY revision", args)
+        rows = [dict(r) for r in cur.fetchall()]
+    log_read(conn, "fossil.encounter.evidence", ident,
+             {"encounter_id": encounter_id, "run_id": run_id}, len(rows), t0)
+    return JSONResponse(json.loads(json.dumps(
+        {"encounter_id": encounter_id, "run_id": run_id, "n": len(rows),
+         "evidence": rows}, default=str)))
+
+
 class RelationIn(BaseModel):
+    # Closed model: an unsupported field is a producer/consumer schema
+    # mismatch and must fail loudly. Silently dropping it would report a
+    # partial write as success (defect reproduced in seam/D_silent_loss_BEFORE.txt).
+    model_config = {"extra": "forbid"}
     src_type: str
     src_id: str
     relation_type: str
@@ -306,12 +468,16 @@ class RelationIn(BaseModel):
     packet_id: str | None = None
     source_span: str | None = None
     derived_artifact_id: str | None = None
+    # "test"/"fixture" keep this object OUT of the scientific
+    # views (ew.*_prod). Validated against a closed set.
+    namespace: str = "prod"
     idempotency_key: str | None = None
 
 
 @app.post("/api/v1/relations")
 def post_relation(body: RelationIn, request: Request, conn=Depends(get_conn)):
     ident = identity(request, write=True)
+    _check_namespace(body.namespace)
     try:
         rid = store.submit_relation(
             conn, body.src_type, body.src_id, body.relation_type, body.dst_type,
@@ -323,7 +489,9 @@ def post_relation(body: RelationIn, request: Request, conn=Depends(get_conn)):
             idempotency_key=body.idempotency_key)
     except store.RejectedWrite as e:
         raise HTTPException(422, e.reason)
-    return {"relation_id": rid}
+    _classify(conn, "relation", rid, body.namespace, ident,
+              "api-declared namespace")
+    return {"relation_id": rid, "namespace": body.namespace}
 
 
 @app.get("/api/v1/relations")
@@ -349,6 +517,10 @@ def get_relations(request: Request, claim_id: str | None = None,
 
 
 class ExperimentIn(BaseModel):
+    # Closed model: an unsupported field is a producer/consumer schema
+    # mismatch and must fail loudly. Silently dropping it would report a
+    # partial write as success (defect reproduced in seam/D_silent_loss_BEFORE.txt).
+    model_config = {"extra": "forbid"}
     agent: str
     project: str
     title: str
@@ -657,6 +829,77 @@ class FossilEncounterIn(BaseModel):
     idempotency_key: str | None = None
 
 
+# ---- namespace classification (fixture hygiene, charter s9) ---------------
+# ew.claims_prod / evidence_prod / relations_prod exclude objects classified
+# 'test' or 'fixture' in ew.object_namespace. That table previously had NO API
+# path, so an integration write from another machine could not be kept out of
+# the scientific views. This is that path.
+NAMESPACES = ("prod", "test", "fixture")
+
+
+def _check_namespace(ns):
+    if ns not in NAMESPACES:
+        raise HTTPException(422, f"unknown_namespace:{ns} (allowed {NAMESPACES})")
+
+
+def _classify(conn, object_type, object_id, namespace, ident, reason):
+    """Record a non-prod classification. A namespace outside the closed set is
+    refused: a typo like 'tset' would silently leave the object in the
+    scientific views, which is the exact failure this prevents."""
+    if namespace == "prod":
+        return
+    with conn.cursor() as cur:
+        cur.execute(
+            "INSERT INTO ew.object_namespace(object_type, object_id, "
+            "namespace, reason, created_by) VALUES (%s,%s,%s,%s,%s) "
+            "ON CONFLICT (object_type, object_id, namespace) DO NOTHING",
+            (object_type, object_id, namespace, reason, ident["agent"]))
+    conn.commit()
+
+
+# ---- sfe_entry_hash semantics (frozen 2026-09-03, pew.fossil.v2) ----------
+# sfe_entry_hash IS: ew.fossil_encounters.sfe_entry_hash == SFE
+# events.entry_hash -- the hash-chain integrity anchor of ONE row in the SFE
+# EVENT LEDGER. Established empirically, not by field name: all 5,452 historical
+# prod rows match the SFE events.entry_hash universe exactly, while
+# artifacts.blob_hash and artifacts.artifact_id overlap it by ZERO
+# (seam/q1_hash_semantics_probe.txt).
+#
+# It is NOT: artifacts.blob_hash (bytes identity), artifacts.artifact_id
+# (world-scoped envelope, also "sha256:"-shaped), or worlds.head_hash.
+# head_hash cannot be structurally excluded -- every one of the 283 live
+# head_hash values IS some event's entry_hash (it names the head event) -- so
+# shape alone cannot separate the classes.
+#
+# Therefore the class is pinned by REQUIRING the paired sfe_event_id, which is
+# 'evt_'-shaped and exists only in the event ledger. A producer holding a
+# blob_hash or artifact_id has no evt_ id to pair with it, and an auditor can
+# verify the (sfe_event_id, sfe_entry_hash) pair against SFE directly: that
+# check passes 5452/5452 on historical rows (seam/q1_pair_verification.txt).
+import re as _re
+
+_SHA256_RE = _re.compile(r"^sha256:[0-9a-f]{64}$")
+_EVT_RE = _re.compile(r"^evt_[0-9a-f]{16,32}$")
+
+
+def _check_sfe_anchor(e):
+    """Returns a rejection reason, or None. PEW holds no SFE client by design
+    (Harmonia owns orchestration), so this validates CLASS and SHAPE, never
+    ledger membership."""
+    h = (e.sfe_entry_hash or "").strip()
+    if not h:
+        return "fossil_encounter_requires_sfe_entry_hash"
+    if not _SHA256_RE.match(h):
+        return ("sfe_entry_hash_must_match_sha256_64hex:"
+                "expected SFE events.entry_hash, got " + h[:40])
+    if not e.sfe_event_id or not _EVT_RE.match(e.sfe_event_id.strip()):
+        return ("sfe_event_id_required_and_must_be_evt_prefixed:"
+                "sfe_entry_hash is the entry_hash OF a named SFE ledger event; "
+                "supply that event_id so the hash class is unambiguous "
+                "(blob_hash/artifact_id/head_hash have no evt_ id)")
+    return None
+
+
 def _reject(conn, endpoint, ident, reason, key=None, obj=None, code=422):
     """Every refusal is recorded before it is raised: a rejected write is
     visible in ew.write_log (accepted=false), never only in a client's
@@ -716,7 +959,7 @@ def _utc_iso(v):
     return v.astimezone(timezone.utc).isoformat().replace("+00:00", "+00:00")
 
 
-def _classify(existing, e):
+def _classify_encounter(existing, e):
     """inserted | duplicate_identical | conflict. A duplicate that DIFFERS is
     never absorbed: it is a producer defect and is reported as 409."""
     if existing is None:
@@ -748,16 +991,16 @@ def post_fossil_encounter(body: FossilEncounterIn, request: Request,
     hash -> 422), idempotent on an identical replay, and OVERT on a differing
     duplicate (409). HTTP 200 means the row is committed and readable."""
     ident = identity(request, write=True)
-    if not body.sfe_entry_hash or not body.sfe_entry_hash.strip():
-        _reject(conn, "fossil.encounter", ident,
-                "fossil_encounter_requires_sfe_entry_hash", body.idempotency_key,
+    bad = _check_sfe_anchor(body)
+    if bad:
+        _reject(conn, "fossil.encounter", ident, bad, body.idempotency_key,
                 body.encounter_id)
     with ewdb.dict_cur(conn) as cur:
         # run_key is the stored generated column, so this hits the composite
         # primary key on both columns rather than filtering after the scan.
         cur.execute("SELECT * FROM ew.fossil_encounters WHERE encounter_id=%s "
                     "AND run_key=%s", (body.encounter_id, body.run_id or ""))
-        status, diff = _classify(cur.fetchone(), body)
+        status, diff = _classify_encounter(cur.fetchone(), body)
         if status == "conflict":
             _reject(conn, "fossil.encounter", ident,
                     "conflict_existing_row_differs:" + ",".join(diff),
@@ -794,9 +1037,10 @@ def post_fossil_batch(body: FossilBatchIn, request: Request,
     so a 200 never means 'some of your rows landed'."""
     ident = identity(request, write=True)
     encs = body.encounters
-    if any(not e.sfe_entry_hash or not e.sfe_entry_hash.strip() for e in encs):
-        _reject(conn, "fossil.batch", ident,
-                "fossil_encounter_requires_sfe_entry_hash",
+    bads = [f"{e.encounter_id}:{_check_sfe_anchor(e)}" for e in encs
+            if _check_sfe_anchor(e)]
+    if bads:
+        _reject(conn, "fossil.batch", ident, "; ".join(bads[:5]),
                 body.idempotency_key, f"batch:{len(encs)}")
     keys = [(e.encounter_id, e.run_id or "") for e in encs]
     if len(set(keys)) != len(keys):
@@ -811,7 +1055,7 @@ def post_fossil_batch(body: FossilBatchIn, request: Request,
         have = {(r["encounter_id"], r["run_id"] or ""): r for r in cur.fetchall()}
         fresh, dup, conflicts = [], 0, []
         for e in encs:
-            status, diff = _classify(have.get((e.encounter_id, e.run_id or "")), e)
+            status, diff = _classify_encounter(have.get((e.encounter_id, e.run_id or "")), e)
             if status == "conflict":
                 conflicts.append(f"{e.encounter_id}:{','.join(diff)}")
             elif status == "inserted":

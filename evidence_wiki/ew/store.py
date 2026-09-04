@@ -176,7 +176,8 @@ def submit_evidence(conn, packet_id, source_quote, evidence_type, submitted_by,
                     negative=False, substrate=None, source_span=None,
                     experiment_id=None, agent=None,
                     creation_method="MODEL_EXTRACTED",
-                    write_stage="SUBMITTED", idempotency_key=None):
+                    write_stage="SUBMITTED", idempotency_key=None,
+                    encounter_id=None, encounter_run_id=None):
     payload = dict(packet=packet_id, quote=source_quote[:80])
     with conn.cursor() as cur:
         prior = _idempotency_gate(cur, idempotency_key, "evidence", machine,
@@ -205,6 +206,27 @@ def submit_evidence(conn, packet_id, source_quote, evidence_type, submitted_by,
                        payload, False, "derived_view_cannot_back_evidence")
             conn.commit()
             raise RejectedWrite("derived_view_cannot_back_evidence")
+        # World-provenance seam (migration 007): a binding names a fossil
+        # encounter that MUST already exist. Checked here so the refusal is
+        # logged and typed; the foreign key is the backstop, not the message.
+        if encounter_run_id is not None and encounter_id is None:
+            _log_write(cur, idempotency_key, "evidence", machine, submitted_by,
+                       payload, False, "encounter_run_id_without_encounter_id")
+            conn.commit()
+            raise RejectedWrite("encounter_run_id_without_encounter_id")
+        if encounter_id is not None:
+            cur.execute("SELECT 1 FROM ew.fossil_encounters WHERE "
+                        "encounter_id=%s AND run_key=%s",
+                        (encounter_id, encounter_run_id or ""))
+            if cur.fetchone() is None:
+                _log_write(cur, idempotency_key, "evidence", machine,
+                           submitted_by, payload, False,
+                           "unknown_fossil_encounter:"
+                           f"{encounter_id}@{encounter_run_id or ''}")
+                conn.commit()
+                raise RejectedWrite(
+                    "unknown_fossil_encounter:"
+                    f"{encounter_id}@{encounter_run_id or ''}")
         if agent:
             cur.execute("INSERT INTO ew.agents(agent_id) VALUES (%s) "
                         "ON CONFLICT DO NOTHING", (agent,))
@@ -215,13 +237,14 @@ def submit_evidence(conn, packet_id, source_quote, evidence_type, submitted_by,
             "verdict_source, outcome_canonical, metric_text, gate, negative, "
             "substrate, packet_id, source_span, source_quote, experiment_id, "
             "agent_id, creation_method, write_stage, ontology_version, "
-            "submitted_by, machine, revision) "
-            "VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) "
+            "submitted_by, machine, revision, encounter_id, encounter_run_id) "
+            "VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) "
             "ON CONFLICT (evidence_id) DO NOTHING",
             (eid, claim_id, evidence_type, verdict_source, outcome_canonical,
              metric_text, gate, negative, substrate, packet_id, source_span,
              source_quote, experiment_id, agent, creation_method, write_stage,
-             ONTOLOGY_VERSION, submitted_by, machine, rev))
+             ONTOLOGY_VERSION, submitted_by, machine, rev, encounter_id,
+             encounter_run_id))
         _log_write(cur, idempotency_key, "evidence", machine, submitted_by,
                    payload, True, result_id=eid)
     conn.commit()
