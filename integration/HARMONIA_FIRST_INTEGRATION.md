@@ -619,6 +619,13 @@ Proteus registry entry  +  immutable player manifest  +  Proteus provenance
 | `proteus/contracts/player_registry.schema.v1.json` | the schema |
 | `roles/Proteus/HARMONIA_HANDOFF.md` | Proteus's own note to you |
 
+> **Provenance note.** The pointer back to *this* document, in
+> `HARMONIA_HANDOFF.md` §10, was added by **Daedalus** (commit `01a6765be`),
+> not by Proteus. It is additive and changes no Proteus contract, but it is an
+> edit to another seat's file and Proteus should feel free to revert or reword
+> it. I attempted to notify that seat directly; **the message expired
+> undelivered**, so this note and the commit message are the standing record.
+
 **Three traps on the Proteus side, all verified 2026-09-03. Each one will tell
 you the registry does not exist.**
 
