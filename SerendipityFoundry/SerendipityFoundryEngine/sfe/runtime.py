@@ -9,6 +9,7 @@ id does not grant access). Open one Foundry per thread/worker.
 
 from __future__ import annotations
 
+import hashlib
 import json
 import random
 from typing import Any, Optional
@@ -203,13 +204,34 @@ class Foundry:
                      sharing_policy: str = "ISOLATED",
                      seed_root: Optional[int] = None,
                      topology_group: Optional[str] = None,
-                     budget: Optional[dict] = None) -> dict:
+                     budget: Optional[dict] = None,
+                     require_attestation: bool = False,
+                     idem_key: Optional[str] = None,
+                     request_hash: Optional[str] = None) -> dict:
+        """Create a world.
+
+        RETRY SAFETY (D-IDEM-1, 2026-09-04): pass idem_key to make creation
+        retry-safe. Without one, world creation is UNSAFE TO RETRY BLINDLY --
+        the config is NOT the identity, so an orchestrator that retries after a
+        timeout mints a SECOND CAUSAL UNIVERSE and both halves of the
+        experiment look real. With a key, a repeat of the SAME semantic request
+        replays the first world; a DIFFERENT request under that key is a
+        diagnosable 409 conflict, never a silent second world.
+
+        The key + the world row + the WORLD_CREATED event commit in ONE
+        transaction, so a crash mid-retry leaves either both or neither -- the
+        same exactly-once property the other epistemic writes already have."""
         if sharing_policy not in SHARING_POLICIES:
             raise ValidationError("unknown sharing policy",
                                   sharing_policy=sharing_policy,
                                   allowed=sorted(SHARING_POLICIES))
         wid = new_id("world")
         if seed_root is None:
+            # NOTE: a caller relying on idempotency MUST pass an explicit
+            # seed_root. A server-minted seed differs per call, so it is
+            # deliberately excluded from the caller's request_hash (which is
+            # computed from the REQUEST body upstream) -- the replay returns
+            # the FIRST world, seed included, which is the retry-safe answer.
             seed_root = random.SystemRandom().randrange(1 << 62)
         with self.store.write() as cx:
             s = cx.execute("SELECT client_id FROM sessions WHERE session_id=? "
@@ -218,24 +240,63 @@ class Foundry:
                 raise NotFound("unknown or closed session",
                                session_id=session_id)
             cid = s["client_id"]
+            replay = self._idem_check(cx, cid, idem_key, request_hash)
+            if replay is not None:
+                return replay
             cx.execute(
                 "INSERT INTO worlds(world_id,session_id,client_id,name,state,"
                 "sharing_policy,topology_group,seed_root,budget_root,"
-                "created_ts) VALUES(?,?,?,?,'CREATED',?,?,?,?,?)",
+                "require_attestation,created_ts) "
+                "VALUES(?,?,?,?,'CREATED',?,?,?,?,?,?)",
                 (wid, session_id, cid, name, sharing_policy, topology_group,
-                 int(seed_root), wid, now()))
+                 int(seed_root), wid, 1 if require_attestation else 0, now()))
             self._init_budget(cx, wid, budget or {})
             events.append(cx, wid, "WORLD_CREATED", actor=cid, payload={
                 "name": name, "sharing_policy": sharing_policy,
                 "topology_group": topology_group, "seed_root": int(seed_root),
+                "require_attestation": bool(require_attestation),
                 "session_id": session_id})
-        return self.get_world(wid, cid)
+            out = _world_dict(self._world_row(cx, wid))
+            self._idem_record(cx, cid, idem_key, wid, "worlds", request_hash,
+                              out)
+            return out
 
     def _world_row(self, cx, world_id: str):
         r = cx.execute("SELECT * FROM worlds WHERE world_id=?",
                        (world_id,)).fetchone()
         if r is None:
             raise NotFound("unknown world", world_id=world_id)
+        return r
+
+    def _authorize_write(self, cx, world_id: str, client_id: Optional[str]):
+        """Ownership check PLUS the terminal-state gate (D-LIFECYCLE-1).
+
+        TERMINATED is a TERMINAL state and ends the world's scientific write
+        lifetime. Before 2026-09-04 it ended only STATE TRANSITIONS and work
+        ENQUEUE: artifacts, hypotheses, budget debits and fresh work claims all
+        still succeeded afterwards (Harmonia B4, and it generalized further than
+        artifacts when measured). That made "terminated" mean nothing a fossil
+        could rely on -- the head hash at termination was not final, so a replay
+        could not trust that it had the whole world.
+
+        What is STILL permitted after termination, deliberately and typed:
+          * every read (events, history, status, artifact content, knowledge)
+          * checkpoint  -- snapshots already-final state; appends no science
+          * fork        -- the CHILD is a new world; replay, counterfactual and
+                           fixed-world rerun all depend on forking a FINISHED
+                           world, so forbidding this would break the experiment
+                           designs the engine exists to serve
+          * complete_work / fail_work for work claimed BEFORE termination --
+            in-flight settlement. Refusing would strand the lease forever and
+            force the ledger to misreport what the worker actually did.
+        """
+        r = self._authorize(cx, world_id, client_id)
+        if r["state"] == "TERMINATED":
+            raise InvalidTransition(
+                "world is TERMINATED; its scientific write lifetime has ended. "
+                "Reads, checkpoint and fork still work -- fork the world if you "
+                "need to continue or vary the run.",
+                world_id=world_id, state="TERMINATED")
         return r
 
     def _authorize(self, cx, world_id: str, client_id: Optional[str]):
@@ -250,9 +311,18 @@ class Foundry:
         return r
 
     def get_world(self, world_id: str, client_id: Optional[str] = None) -> dict:
+        """The world's FULL configuration.
+
+        B5 (Harmonia, 2026-09-04): `budget` used to be absent here, so a fossil
+        could not record the world configuration it ran under without a second
+        call to /resources -- and the replay analysis scored world_configuration
+        AMBIGUOUS for exactly that reason. The enforcement limits are part of
+        the world's identity for replay, so they are returned with it."""
         cx = self.store.read()
         r = self._authorize(cx, world_id, client_id)
-        return _world_dict(r)
+        out = _world_dict(r)
+        out["budget"] = self._budget_config(cx, world_id)
+        return out
 
     def _transition(self, world_id: str, client_id: Optional[str], target: str,
                     event_type: str, payload: Optional[dict] = None) -> dict:
@@ -288,13 +358,28 @@ class Foundry:
         return self._transition(world_id, client_id, "TERMINATED",
                                 "WORLD_TERMINATED")
 
-    def list_worlds(self, *, session_id=None, client_id=None) -> list:
+    def list_worlds(self, *, session_id=None, client_id=None, state=None,
+                    created_after=None, created_before=None) -> list:
+        """Enumerate worlds, always scoped to the caller when client_id is given.
+
+        The optional filters answer the four questions an orchestrator actually
+        has -- which worlds are mine, which are active, which are finished,
+        which are cleanup candidates -- without becoming a search engine."""
+        if state is not None and state not in _WORLD_TRANSITIONS:
+            raise ValidationError("unknown world state", state=state,
+                                  allowed=sorted(_WORLD_TRANSITIONS))
         cx = self.store.read()
         q, a = "SELECT * FROM worlds WHERE 1=1", []
         if session_id:
             q += " AND session_id=?"; a.append(session_id)
         if client_id:
             q += " AND client_id=?"; a.append(client_id)
+        if state:
+            q += " AND state=?"; a.append(state)
+        if created_after is not None:
+            q += " AND created_ts>?"; a.append(float(created_after))
+        if created_before is not None:
+            q += " AND created_ts<?"; a.append(float(created_before))
         q += " ORDER BY created_ts"
         return [_world_dict(r) for r in cx.execute(q, tuple(a)).fetchall()]
 
@@ -612,13 +697,21 @@ class Foundry:
         exhaustion (COMMIT-THEN-RAISE: raising inside the write() block would
         roll the transition back)."""
         with self.store.write() as cx:
-            w = self._authorize(cx, world_id, client_id)
+            w = self._authorize_write(cx, world_id, client_id)
             blocked, info = self._debit_budget(cx, w, resource, amount,
                                                client_id or "foundry")
         if blocked:
             raise BudgetExhausted(
                 "world resource budget exhausted", world_id=world_id, **info)
         return {**info, "exhausted": False}
+
+    def _budget_config(self, cx, world_id: str) -> dict:
+        """The world's budget LIMITS as configured -- the part of the world's
+        identity a replay must reproduce. Live consumption is deliberately NOT
+        here: it is state, not configuration, and belongs to /resources."""
+        b = cx.execute("SELECT limits FROM budgets WHERE world_id=?",
+                       (world_id,)).fetchone()
+        return json.loads(b["limits"]) if b is not None else {}
 
     def budget_status(self, world_id: str) -> dict:
         cx = self.store.read()
@@ -653,7 +746,7 @@ class Foundry:
                            request_hash: Optional[str] = None) -> str:
         hid = new_id("hypothesis")
         with self.store.write() as cx:
-            r = self._authorize(cx, world_id, client_id)
+            r = self._authorize_write(cx, world_id, client_id)
             replay = self._idem_check(cx, r["client_id"], idem_key, request_hash)
             if replay is not None:
                 return replay
@@ -680,7 +773,7 @@ class Foundry:
         position is authoritative (I6)."""
         pid = new_id("prediction")
         with self.store.write() as cx:
-            r = self._authorize(cx, world_id, client_id)
+            r = self._authorize_write(cx, world_id, client_id)
             replay = self._idem_check(cx, r["client_id"], idem_key, request_hash)
             if replay is not None:
                 return replay
@@ -731,7 +824,7 @@ class Foundry:
         out = {"exp_id": eid, "work_id": None, "committed_seq": None}
         blocked_info = None
         with self.store.write() as cx:
-            r = self._authorize(cx, world_id, client_id)
+            r = self._authorize_write(cx, world_id, client_id)
             replay = self._idem_check(cx, r["client_id"], idem_key, request_hash)
             if replay is not None:
                 return replay
@@ -838,7 +931,7 @@ class Foundry:
         REGISTERED and non-executable, with the exhaustion durably recorded
         (COMMIT-THEN-RAISE)."""
         with self.store.write() as cx:
-            r = self._authorize(cx, world_id, client_id)
+            r = self._authorize_write(cx, world_id, client_id)
             blocked_info, out = self._commit_core(
                 cx, r, exp_id, enqueue=enqueue, kind=kind, priority=priority)
         if blocked_info is not None:
@@ -884,7 +977,7 @@ class Foundry:
             raise ValidationError("bad outcome", outcome=outcome)
         oid = new_id("observation")
         with self.store.write() as cx:
-            r = self._authorize(cx, world_id, client_id)
+            r = self._authorize_write(cx, world_id, client_id)
             replay = self._idem_check(cx, r["client_id"], idem_key, request_hash)
             if replay is not None:
                 return replay
@@ -898,6 +991,23 @@ class Foundry:
                     "close the prospective window before any outcome can be "
                     "recorded", exp_id=exp_id)
             evidence_class, ev_work_refs = "CLIENT_ASSERTED", {}
+            # D-ATTEST-1 (2026-09-04): a world may be created with
+            # require_attestation=true, which makes the DEGRADED evidence class
+            # unreachable in that world instead of merely visible after the
+            # fact. Harmonia's C3 showed the engine types the class honestly but
+            # nothing FORCES it -- an orchestrator that omits one identifier
+            # silently produces CLIENT_ASSERTED "evidence", and only a separate
+            # status read reveals which class it got. Fail closed, at the write.
+            if r["require_attestation"] and work_id is None:
+                raise ValidationError(
+                    "this world requires engine-attested evidence: pass the "
+                    "work_id of the COMPLETED work item that produced this "
+                    "observation. The world was created with "
+                    "require_attestation=true, so CLIENT_ASSERTED observations "
+                    "are refused here rather than silently recorded as a weaker "
+                    "evidence class.",
+                    world_id=world_id, exp_id=exp_id,
+                    required_evidence_class="ENGINE_WORK_RESULT")
             if work_id is not None:
                 wrow = cx.execute("SELECT * FROM work_items WHERE work_id=?",
                                   (work_id,)).fetchone()
@@ -1002,9 +1112,24 @@ class Foundry:
                                   refs={"hyp_id": ex["hyp_id"], "obs_id": oid},
                                   payload={"prospective": prospective,
                                            "evidence_class": evidence_class})
+            # D-ANCHOR-1 (2026-09-04): return the EXACT causal identifiers of
+            # the event this call just appended. Harmonia's D1 showed a
+            # downstream consumer (PEW) can only check that an (event_id,
+            # entry_hash) pair EXISTS -- not that it is THIS run's observation
+            # -- so an agent that searched the ledger could anchor a fossil to
+            # WORLD_CREATED and pass every shape check. Returning the anchor
+            # from the write removes the search, and with it the class of
+            # wrong-but-real anchors: the caller never has to guess which event
+            # was its own.
+            out = {"obs_id": oid, "event_id": ev["event_id"],
+                   "entry_hash": ev["entry_hash"],
+                   "event_seq": ev["event_seq"],
+                   "world_index": ev["world_index"],
+                   "evidence_class": evidence_class,
+                   "evidence_role": evidence_role}
             self._idem_record(cx, r["client_id"], idem_key, world_id,
-                              "observations", request_hash, oid)
-        return oid
+                              "observations", request_hash, out)
+        return out
 
     def record_failure(self, world_id: str, *, failure_type: str,
                        falsifier: str, violated: str,
@@ -1021,7 +1146,7 @@ class Foundry:
                        request_hash: Optional[str] = None) -> str:
         fid = new_id("failure")
         with self.store.write() as cx:
-            r = self._authorize(cx, world_id, client_id)
+            r = self._authorize_write(cx, world_id, client_id)
             replay = self._idem_check(cx, r["client_id"], idem_key, request_hash)
             if replay is not None:
                 return replay
@@ -1051,7 +1176,7 @@ class Foundry:
         causally or empirically useful is a separate, measurable question
         (section 8)."""
         with self.store.write() as cx:
-            r = self._authorize(cx, world_id, client_id)
+            r = self._authorize_write(cx, world_id, client_id)
             if cx.execute("SELECT 1 FROM failures WHERE failure_id=? AND "
                           "world_id=?", (failure_id, world_id)).fetchone() is None:
                 raise NotFound("failure not in this world", failure_id=failure_id)
@@ -1078,7 +1203,7 @@ class Foundry:
     def add_lineage_edge(self, world_id, src_kind, src_id, dst_kind, dst_id,
                          relation, *, client_id=None) -> str:
         with self.store.write() as cx:
-            r = self._authorize(cx, world_id, client_id)
+            r = self._authorize_write(cx, world_id, client_id)
             return self._edge(cx, world_id, r["client_id"], src_kind, src_id,
                               dst_kind, dst_id, relation)
 
@@ -1087,7 +1212,18 @@ class Foundry:
                         client_id: Optional[str] = None,
                         meta: Optional[dict] = None,
                         idem_key: Optional[str] = None,
+                        expected_blob_hash: Optional[str] = None,
                         request_hash: Optional[str] = None) -> dict:
+        """Store bytes as a content-addressed artifact.
+
+        CONTENT-ID GATE (D-CIDGATE-1, 2026-09-04): pass expected_blob_hash to
+        make the engine ENFORCE the content identity. The engine always computes
+        the digest itself -- a client has never been able to assert a false one
+        here -- but before this gate it had no way to be TOLD what the bytes were
+        supposed to be, so corruption in transit or in a caller's own pipeline
+        was stored as a perfectly valid artifact with an honest digest of the
+        WRONG bytes (Harmonia A3). The check is one comparison and it belongs
+        here, not re-implemented in every caller."""
         # meta is freeform USER metadata BY DESIGN -- except info_kind, which is
         # CONTROL configuration for the sharing machinery and must come from the
         # closed vocabulary (DFX-4: scientific config fails closed recursively).
@@ -1095,13 +1231,25 @@ class Foundry:
         if ik is not None and ik not in INFO_KINDS:
             raise ValidationError("unknown info_kind", info_kind=ik,
                                   allowed=sorted(INFO_KINDS))
+        raw = data if isinstance(data, bytes) else str(data).encode()
+        if expected_blob_hash is not None:
+            actual = "sha256:" + hashlib.sha256(raw).hexdigest()
+            claimed = expected_blob_hash.strip()
+            if not claimed.startswith("sha256:"):
+                claimed = "sha256:" + claimed
+            if claimed.lower() != actual:
+                raise ValidationError(
+                    "content identity mismatch: the bytes received do not hash "
+                    "to the asserted expected_blob_hash. Nothing was stored. "
+                    "The bytes were corrupted or the wrong object was sent.",
+                    world_id=world_id, expected=claimed, actual=actual,
+                    received_bytes=len(raw))
         with self.store.write() as cx:
-            r = self._authorize(cx, world_id, client_id)
+            r = self._authorize_write(cx, world_id, client_id)
             replay = self._idem_check(cx, r["client_id"], idem_key, request_hash)
             if replay is not None:
                 return replay
-            blob = self.store.put_blob(data if isinstance(data, bytes)
-                                       else str(data).encode())
+            blob = self.store.put_blob(raw)
             aid = content_hash({"world": world_id, "kind": kind, "blob": blob,
                                 "meta": meta or {}})
             ev = events.append(cx, world_id, "ARTIFACT_CREATED",
@@ -1287,7 +1435,7 @@ class Foundry:
         destination (I5, section 14, T10). Governed by the destination's sharing
         policy (T14)."""
         with self.store.write() as cx:
-            dst = self._authorize(cx, dst_world, client_id)   # must own dest
+            dst = self._authorize_write(cx, dst_world, client_id)   # must own dest
             src = self._world_row(cx, src_world)
             same_client = (client_id is None
                            or src["client_id"] == client_id)
@@ -1708,7 +1856,8 @@ def _world_dict(r) -> dict:
             "sharing_policy": r["sharing_policy"],
             "topology_group": r["topology_group"], "seed_root": r["seed_root"],
             "created_ts": r["created_ts"], "terminated_ts": r["terminated_ts"],
-            "next_index": r["next_index"], "head_hash": r["head_hash"]}
+            "next_index": r["next_index"], "head_hash": r["head_hash"],
+            "require_attestation": bool(r["require_attestation"])}
 
 
 def _work_dict(r) -> dict:

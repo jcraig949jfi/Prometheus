@@ -67,6 +67,8 @@ class WorldCreate(_Body):
     topology_group: Optional[str] = None
     budget: dict[str, BudgetSpec] = Field(default_factory=dict)
     seed_root: Optional[int] = None
+    require_attestation: bool = False   # observations in this world MUST carry
+                                        # a work_id; set at creation, immutable
 
 
 class HypothesisCreate(_Body):
@@ -131,6 +133,9 @@ class ArtifactCreate(_Body):
     kind: str
     data_b64: str
     meta: dict[str, Any] = Field(default_factory=dict)
+    expected_blob_hash: Optional[str] = None   # D-CIDGATE-1: assert the content
+                                               # identity; engine recomputes and
+                                               # fails closed on mismatch
 
 
 class ImportArtifact(_Body):
@@ -293,7 +298,13 @@ def create_app(db_path: str, *, registration_open: bool = True) -> FastAPI:
     # -- worlds ------------------------------------------------------------
     @app.post("/v2/worlds")
     def create_world(body: WorldCreate, cid: str = Depends(auth),
-                     f: Foundry = Depends(get_foundry)):
+                     f: Foundry = Depends(get_foundry),
+                     idem: Optional[str] = Header(default=None,
+                                                  alias="Idempotency-Key")):
+        # D-IDEM-1: creating a world is the ONE epistemic write that had no
+        # idempotency key, which made it the one call an orchestrator could not
+        # safely retry -- a timeout produced a second causal universe. It now
+        # takes the same Idempotency-Key header as artifacts and experiments.
         # session must belong to this client (create_world checks session; the
         # session's client is bound at creation, and we re-check ownership)
         s = f.store.read().execute("SELECT client_id FROM sessions WHERE "
@@ -305,12 +316,26 @@ def create_app(db_path: str, *, registration_open: bool = True) -> FastAPI:
                               sharing_policy=body.sharing_policy,
                               topology_group=body.topology_group,
                               seed_root=body.seed_root,
+                              require_attestation=body.require_attestation,
                               budget={k: v.model_dump()
-                                      for k, v in body.budget.items()})
+                                      for k, v in body.budget.items()},
+                              idem_key=idem,
+                              request_hash=_req_hash("worlds", None, body))
 
     @app.get("/v2/worlds")
-    def list_worlds(cid: str = Depends(auth), f: Foundry = Depends(get_foundry)):
-        return {"worlds": f.list_worlds(client_id=cid)}
+    def list_worlds(cid: str = Depends(auth), f: Foundry = Depends(get_foundry),
+                    session_id: Optional[str] = None,
+                    state: Optional[str] = None,
+                    created_after: Optional[float] = None,
+                    created_before: Optional[float] = None):
+        # Always client-scoped (a client has NEVER been able to see another's
+        # worlds here). The filters exist so an ORCHESTRATOR can answer "which
+        # of my worlds are still active / finished / from this run" without
+        # pulling every world it has ever made. This is scoping, not search.
+        return {"worlds": f.list_worlds(client_id=cid, session_id=session_id,
+                                        state=state,
+                                        created_after=created_after,
+                                        created_before=created_before)}
 
     @app.get("/v2/worlds/{wid}")
     def get_world(wid: str, cid: str = Depends(auth),
@@ -422,12 +447,16 @@ def create_app(db_path: str, *, registration_open: bool = True) -> FastAPI:
                      f: Foundry = Depends(get_foundry),
                      idem: Optional[str] = Header(default=None,
                                                   alias="Idempotency-Key")):
-        return {"obs_id": f.record_observation(
+        # D-ANCHOR-1: returns obs_id AND the exact causal identifiers of the
+        # OBSERVATION_RECORDED event (event_id / entry_hash / event_seq), so a
+        # caller fossilizes the event it actually produced instead of searching
+        # the ledger for a plausible one.
+        return f.record_observation(
             wid, body.exp_id, body.content, body.outcome, client_id=cid,
             pred_id=body.pred_id, work_id=body.work_id,
             retrospective=body.retrospective, replication=body.replication,
             idem_key=idem,
-            request_hash=_req_hash("observations", wid, body))}
+            request_hash=_req_hash("observations", wid, body))
 
     @app.post("/v2/worlds/{wid}/failures")
     def record_failure(wid: str, body: FailureCreate, cid: str = Depends(auth),
@@ -471,6 +500,7 @@ def create_app(db_path: str, *, registration_open: bool = True) -> FastAPI:
                 "loc": ["body", "data_b64"]}) from exc
         return f.create_artifact(wid, body.kind, data, client_id=cid,
                                  meta=body.meta, idem_key=idem,
+                                 expected_blob_hash=body.expected_blob_hash,
                                  request_hash=_req_hash("artifacts", wid, body))
 
     @app.get("/v2/worlds/{wid}/artifacts/{aid}/content")

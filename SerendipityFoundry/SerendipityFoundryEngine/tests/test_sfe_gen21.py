@@ -149,7 +149,7 @@ def test_G13_probe8_duplicate_binding_rejected_without_replication(foundry):
     o3 = foundry.record_observation(w, e2, {"r": 1}, "SURVIVED", client_id=c,
                                     pred_id=p, replication=True)
     role = foundry.store.read().execute(
-        "SELECT evidence_role FROM observations WHERE obs_id=?", (o3,)
+        "SELECT evidence_role FROM observations WHERE obs_id=?", (o3["obs_id"],)
     ).fetchone()["evidence_role"]
     assert role == "REPLICATION"
 

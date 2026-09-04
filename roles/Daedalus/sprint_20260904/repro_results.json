@@ -1,0 +1,192 @@
+{
+ "engine": {
+  "api": "v2",
+  "schema_version": 3,
+  "runtime": "serendipity-foundry-sfe",
+  "registration_open": true,
+  "engine_source_hash": "sha256:c358a53b9899fa16acb70c69747c8ec4ca494cdc62bd10fa9a550d574eef8c39",
+  "source_commit": "71e4e80e8783270585f635cbf239468213c8d988"
+ },
+ "probed_at": 1788555984.0325181,
+ "results": [
+  {
+   "probe": "I-CREATE-IDEMPOTENCY",
+   "title": "blind retry doubles worlds",
+   "verdict": "REPRODUCED",
+   "detail": "same config x3 -> 3 distinct world_ids",
+   "evidence": {
+    "world_ids": [
+     "wld_911e38e041fe92636db6976c",
+     "wld_2f63985b69c55924814e857b",
+     "wld_9b3a41e07ccdfae1eab9f871"
+    ]
+   }
+  },
+  {
+   "probe": "I-CREATE-IDEM-HEADER",
+   "title": "Idempotency-Key header honored?",
+   "verdict": "REPRODUCED",
+   "detail": "header IGNORED -> 2 worlds",
+   "evidence": {
+    "w2": "wld_79b9be5eca07f1f1a0bdd4c8",
+    "w3": "wld_61ad475ebeba72e1e0c1f865"
+   }
+  },
+  {
+   "probe": "I-WORLD-ENUM-UNSCOPED",
+   "title": "GET /v2/worlds scoping",
+   "verdict": "REFINED",
+   "detail": "fresh client sees n=5 (its own only); no state/session filter params",
+   "evidence": {
+    "n_for_fresh_client": 5,
+    "world_fields": [
+     "client_id",
+     "created_ts",
+     "fork_point",
+     "head_hash",
+     "name",
+     "next_index",
+     "parent_world_id",
+     "seed_root",
+     "session_id",
+     "sharing_policy",
+     "state",
+     "terminated_ts",
+     "topology_group",
+     "world_id"
+    ]
+   }
+  },
+  {
+   "probe": "I-EVENTS-SHAPE",
+   "title": "GET events return shape",
+   "verdict": "NOT_REPRODUCED",
+   "detail": "raw HTTP returns a dict with keys ['events']",
+   "evidence": {
+    "shape": "dict"
+   }
+  },
+  {
+   "probe": "I-CLIENT-GATE-UNENFORCED",
+   "title": "organism content-id gate",
+   "verdict": "REFINED",
+   "detail": "server digest authoritative (correct=True); corrupt bytes accepted (200); no expected-hash field (422)",
+   "evidence": {
+    "server_hash_correct": true,
+    "corrupt_status": 200,
+    "expected_hash_field_status": 422,
+    "expected_hash_field_error": {
+     "detail": [
+      {
+       "type": "extra_forbidden",
+       "loc": [
+        "body",
+        "expected_blob_hash"
+       ],
+       "msg": "Extra inputs are not permitted",
+       "input": "sha256:346a9fda34cf5f4982a3cf318041de3748c4d592c56f32e0a61ae94757fdae11"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "probe": "I-ATTEST-NOT-FORCED",
+   "title": "unattested observation accepted",
+   "verdict": "REPRODUCED",
+   "detail": "observation with NO work_id accepted (200); no world-level setting can require attestation",
+   "evidence": {
+    "obs_status": 200,
+    "obs": {
+     "obs_id": "obs_d9a81b419cffa676188e9cbb"
+    },
+    "epistemics": {
+     "hypotheses_proposed": 1,
+     "predictions_registered": 0,
+     "experiments_created": 1,
+     "experiments_committed": 1,
+     "observations_recorded": 1,
+     "observations_prospectively_predicted": 0,
+     "observations_with_retrospective_binding": 0,
+     "observations_engine_attested": 0,
+     "observations_client_asserted": 1,
+     "claims_falsified": 0,
+     "claims_surviving": 1,
+     "failures_generated": 0,
+     "failures_consumed": 0,
+     "failure_consumption_rate": 0.0,
+     "mutations_attributed_to_failure": 0,
+     "unused_failure_count": 0,
+     "note": "failures_consumed counts CLAIMED references only; whether a consumed failure improved search is a separate empirical question, not implied by this count"
+    },
+    "status_keys": [
+     "active_worker_count",
+     "active_workers",
+     "checkpoints",
+     "engine",
+     "epistemics",
+     "event_count",
+     "expired_leases",
+     "failure_counts",
+     "head_hash",
+     "ledger_integrity_ok",
+     "queue_depth",
+     "resources",
+     "state",
+     "world_id"
+    ]
+   }
+  },
+  {
+   "probe": "I-CAUSAL-CLIENT",
+   "title": "exact causal anchor returned?",
+   "verdict": "REPRODUCED",
+   "detail": "POST observations returns ['obs_id']; caller must SEARCH the ledger for its own event",
+   "evidence": {
+    "returned_keys": [
+     "obs_id"
+    ]
+   }
+  },
+  {
+   "probe": "I-LIFECYCLE-TERMINATED",
+   "title": "writes after TERMINATED",
+   "verdict": "REPRODUCED",
+   "detail": "terminate=200; worked-before AND after: ['artifact', 'budget_consume', 'hypothesis', 'work_claim']; correctly blocked: ['experiment']",
+   "evidence": {
+    "before": {
+     "artifact": 200,
+     "hypothesis": 200,
+     "experiment": 200,
+     "budget_consume": 200,
+     "work_claim": 200
+    },
+    "after": {
+     "artifact": 200,
+     "hypothesis": 200,
+     "experiment": 409,
+     "budget_consume": 200,
+     "work_claim": 200
+    },
+    "survived": [
+     "artifact",
+     "budget_consume",
+     "hypothesis",
+     "work_claim"
+    ],
+    "blocked": [
+     "experiment"
+    ]
+   }
+  },
+  {
+   "probe": "B5-WORLD-CONFIG",
+   "title": "GET /v2/worlds/{id} completeness",
+   "verdict": "REPRODUCED",
+   "detail": "fields: ['client_id', 'created_ts', 'fork_point', 'head_hash', 'name', 'next_index', 'parent_world_id', 'seed_root', 'session_id', 'sharing_policy', 'state', 'terminated_ts', 'topology_group', 'world_id']",
+   "evidence": {
+    "has_budget": false
+   }
+  }
+ ]
+}

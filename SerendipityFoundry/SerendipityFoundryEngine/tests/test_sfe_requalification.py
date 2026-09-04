@@ -45,7 +45,7 @@ def test_D1_01_predict_then_commit_is_prospective(foundry):
     o = foundry.record_observation(w, e, {"r": 1}, "SURVIVED", client_id=c,
                                    pred_id=p)
     row = foundry.store.read().execute(
-        "SELECT pred_prospective FROM observations WHERE obs_id=?", (o,)
+        "SELECT pred_prospective FROM observations WHERE obs_id=?", (o["obs_id"],)
     ).fetchone()
     assert row["pred_prospective"] == 1
 
@@ -60,7 +60,7 @@ def test_D1_02_register_then_predict_then_commit(foundry):
     o = foundry.record_observation(w, e, {"r": 1}, "SURVIVED", client_id=c,
                                    pred_id=p)
     row = foundry.store.read().execute(
-        "SELECT pred_prospective FROM observations WHERE obs_id=?", (o,)
+        "SELECT pred_prospective FROM observations WHERE obs_id=?", (o["obs_id"],)
     ).fetchone()
     assert row["pred_prospective"] == 1
 
@@ -79,7 +79,7 @@ def test_D1_03_commit_then_late_prediction_never_prospective(foundry):
     o = foundry.record_observation(w, e, {"r": 1}, "SURVIVED", client_id=c,
                                    pred_id=p_late, retrospective=True)
     row = foundry.store.read().execute(
-        "SELECT pred_prospective FROM observations WHERE obs_id=?", (o,)
+        "SELECT pred_prospective FROM observations WHERE obs_id=?", (o["obs_id"],)
     ).fetchone()
     assert row["pred_prospective"] == 0
 
@@ -125,7 +125,7 @@ def test_D1_07_prospective_survives_multiple_observations(foundry):
     o1 = foundry.record_observation(w, e, {"r": 1}, "SURVIVED", client_id=c,
                                     pred_id=p)
     assert foundry.store.read().execute(
-        "SELECT pred_prospective FROM observations WHERE obs_id=?", (o1,)
+        "SELECT pred_prospective FROM observations WHERE obs_id=?", (o1["obs_id"],)
     ).fetchone()["pred_prospective"] == 1
 
 
@@ -305,7 +305,7 @@ def test_H4_01_client_asserted_class_recorded(foundry):
                                   commit=True)["exp_id"]
     o = foundry.record_observation(w, e, {"r": 1}, "SURVIVED", client_id=c)
     ec = foundry.store.read().execute(
-        "SELECT evidence_class FROM observations WHERE obs_id=?", (o,)
+        "SELECT evidence_class FROM observations WHERE obs_id=?", (o["obs_id"],)
     ).fetchone()["evidence_class"]
     assert ec == "CLIENT_ASSERTED"
 
@@ -321,7 +321,7 @@ def test_H4_engine_attested_requires_real_work(foundry):
     o = foundry.record_observation(w, eid, {"score": 1.0}, "SURVIVED",
                                    client_id=c, work_id=work_id)
     assert foundry.store.read().execute(
-        "SELECT evidence_class FROM observations WHERE obs_id=?", (o,)
+        "SELECT evidence_class FROM observations WHERE obs_id=?", (o["obs_id"],)
     ).fetchone()["evidence_class"] == "ENGINE_WORK_RESULT"
 
 

@@ -31,7 +31,7 @@ import time
 from pathlib import Path
 from typing import Any, Iterator, Optional
 
-SCHEMA_VERSION = 3
+SCHEMA_VERSION = 4
 
 # The schema is intentionally explicit and constrained: NOT NULLs, CHECK
 # enumerations on lifecycle columns, and foreign keys, so a bad transition or a
@@ -73,6 +73,10 @@ CREATE TABLE IF NOT EXISTS worlds (
     seed_root       INTEGER NOT NULL,
     next_index      INTEGER NOT NULL DEFAULT 0,   -- next world event index
     head_hash       TEXT NOT NULL DEFAULT '',     -- entry_hash of last event
+    require_attestation INTEGER NOT NULL DEFAULT 0,
+                                        -- 1 = observations in this world MUST
+                                        -- carry a work_id (ENGINE_WORK_RESULT);
+                                        -- set at creation, immutable after
     budget_root     TEXT,               -- world whose budget row is AUTHORITATIVE
                                         -- for this lineage (self for roots; a
                                         -- fork child inherits the parent's root
@@ -396,6 +400,8 @@ class Store:
                 self._migrate_1_to_2(cx)
             if have <= 2:
                 self._migrate_2_to_3(cx)
+            if have <= 3:
+                self._migrate_3_to_4(cx)
             cx.execute("UPDATE meta SET value=? WHERE key='schema_version'",
                        (str(SCHEMA_VERSION),))
 
@@ -448,6 +454,21 @@ class Store:
             "route TEXT NOT NULL, request_hash TEXT NOT NULL, "
             "response TEXT NOT NULL, created_ts REAL NOT NULL, "
             "PRIMARY KEY (client_id, idem_key))")
+
+    @staticmethod
+    def _migrate_3_to_4(cx) -> None:
+        """v3 -> v4 (DAEDALUS 2026-09-04, orchestration-safety pass). Additive:
+        worlds.require_attestation. Pre-v4 worlds default to 0 -- attestation
+        stays OPTIONAL for every world that already exists, because retro-
+        actively requiring it would reclassify historical CLIENT_ASSERTED
+        observations that were legitimately recorded under the old contract
+        (invariant V: old events remain old events). A world opts in at
+        creation; the flag is immutable thereafter."""
+        have = {r["name"] for r in cx.execute(
+            "PRAGMA table_info(worlds)").fetchall()}
+        if "require_attestation" not in have:
+            cx.execute("ALTER TABLE worlds ADD COLUMN require_attestation "
+                       "INTEGER NOT NULL DEFAULT 0")
         cx.execute("CREATE INDEX IF NOT EXISTS ix_obs_pred "
                    "ON observations(world_id, pred_id)")
 
