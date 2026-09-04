@@ -1,0 +1,200 @@
+{
+ "engine": {
+  "api": "v2",
+  "schema_version": 4,
+  "runtime": "serendipity-foundry-sfe",
+  "registration_open": true,
+  "engine_source_hash": "sha256:3325ac5fa05de7ae4e98778d67a2767251e90e6c4ee5e2abc934ad0f30a095b6",
+  "source_commit": "0d3a52249fd9de92a2733e01b843889d85f99357"
+ },
+ "probed_at": 1788565725.2077186,
+ "results": [
+  {
+   "probe": "I-CREATE-IDEMPOTENCY",
+   "title": "blind retry doubles worlds",
+   "verdict": "REPRODUCED",
+   "detail": "same config x3 -> 3 distinct world_ids",
+   "evidence": {
+    "world_ids": [
+     "wld_b47478150d25e00d7b96c2dd",
+     "wld_0e72900b6b8795fd77de4545",
+     "wld_93a885202fcfb1798c017b51"
+    ]
+   }
+  },
+  {
+   "probe": "I-CREATE-IDEM-HEADER",
+   "title": "Idempotency-Key header honored?",
+   "verdict": "NOT_REPRODUCED",
+   "detail": "header honored -> 1 world",
+   "evidence": {
+    "w2": "wld_cab9b664108f81633e8af129",
+    "w3": "wld_cab9b664108f81633e8af129"
+   }
+  },
+  {
+   "probe": "I-WORLD-ENUM-UNSCOPED",
+   "title": "GET /v2/worlds scoping",
+   "verdict": "REFINED",
+   "detail": "fresh client sees n=4 (its own only); no state/session filter params",
+   "evidence": {
+    "n_for_fresh_client": 4,
+    "world_fields": [
+     "client_id",
+     "created_ts",
+     "fork_point",
+     "head_hash",
+     "name",
+     "next_index",
+     "parent_world_id",
+     "require_attestation",
+     "seed_root",
+     "session_id",
+     "sharing_policy",
+     "state",
+     "terminated_ts",
+     "topology_group",
+     "world_id"
+    ]
+   }
+  },
+  {
+   "probe": "I-EVENTS-SHAPE",
+   "title": "GET events return shape",
+   "verdict": "NOT_REPRODUCED",
+   "detail": "raw HTTP returns a dict with keys ['events']",
+   "evidence": {
+    "shape": "dict"
+   }
+  },
+  {
+   "probe": "I-CLIENT-GATE-UNENFORCED",
+   "title": "organism content-id gate",
+   "verdict": "REFINED",
+   "detail": "server digest authoritative (correct=True); corrupt bytes accepted (200); no expected-hash field (422)",
+   "evidence": {
+    "server_hash_correct": true,
+    "corrupt_status": 200,
+    "expected_hash_field_status": 422,
+    "expected_hash_field_error": {
+     "detail": {
+      "error": "validation_error",
+      "message": "content identity mismatch: the bytes received do not hash to the asserted expected_blob_hash. Nothing was stored. The bytes were corrupted or the wrong object was sent.",
+      "world_id": "wld_b47478150d25e00d7b96c2dd",
+      "expected": "sha256:346a9fda34cf5f4982a3cf318041de3748c4d592c56f32e0a61ae94757fdae11",
+      "actual": "sha256:d4bedd47ac2f0dd709b9ce975186ae043088a6cbb5e43fc42549ae6e2fc18b7c",
+      "received_bytes": 27
+     }
+    }
+   }
+  },
+  {
+   "probe": "I-ATTEST-NOT-FORCED",
+   "title": "unattested observation accepted",
+   "verdict": "REPRODUCED",
+   "detail": "observation with NO work_id accepted (200); no world-level setting can require attestation",
+   "evidence": {
+    "obs_status": 200,
+    "obs": {
+     "obs_id": "obs_c124c50b854e2808d44036a5",
+     "event_id": "evt_f3bf9dd4cde76610e52d6c13",
+     "entry_hash": "sha256:7d5b49e951b1a1c69b7e998b6801b3ccb62df9184f8e599536e1ea74dea67ec9",
+     "event_seq": 1340,
+     "world_index": 9,
+     "evidence_class": "CLIENT_ASSERTED",
+     "evidence_role": "ORIGINAL"
+    },
+    "epistemics": {
+     "hypotheses_proposed": 1,
+     "predictions_registered": 0,
+     "experiments_created": 1,
+     "experiments_committed": 1,
+     "observations_recorded": 1,
+     "observations_prospectively_predicted": 0,
+     "observations_with_retrospective_binding": 0,
+     "observations_engine_attested": 0,
+     "observations_client_asserted": 1,
+     "claims_falsified": 0,
+     "claims_surviving": 1,
+     "failures_generated": 0,
+     "failures_consumed": 0,
+     "failure_consumption_rate": 0.0,
+     "mutations_attributed_to_failure": 0,
+     "unused_failure_count": 0,
+     "note": "failures_consumed counts CLAIMED references only; whether a consumed failure improved search is a separate empirical question, not implied by this count"
+    },
+    "status_keys": [
+     "active_worker_count",
+     "active_workers",
+     "checkpoints",
+     "engine",
+     "epistemics",
+     "event_count",
+     "expired_leases",
+     "failure_counts",
+     "head_hash",
+     "ledger_integrity_ok",
+     "queue_depth",
+     "resources",
+     "state",
+     "world_id"
+    ]
+   }
+  },
+  {
+   "probe": "I-CAUSAL-CLIENT",
+   "title": "exact causal anchor returned?",
+   "verdict": "NOT_REPRODUCED",
+   "detail": "POST observations returns ['entry_hash', 'event_id', 'event_seq', 'evidence_class', 'evidence_role', 'obs_id', 'world_index']; caller must SEARCH the ledger for its own event",
+   "evidence": {
+    "returned_keys": [
+     "entry_hash",
+     "event_id",
+     "event_seq",
+     "evidence_class",
+     "evidence_role",
+     "obs_id",
+     "world_index"
+    ]
+   }
+  },
+  {
+   "probe": "I-LIFECYCLE-TERMINATED",
+   "title": "writes after TERMINATED",
+   "verdict": "NOT_REPRODUCED",
+   "detail": "terminate=200; worked-before AND after: []; correctly blocked: ['artifact', 'budget_consume', 'experiment', 'hypothesis']",
+   "evidence": {
+    "before": {
+     "artifact": 200,
+     "hypothesis": 200,
+     "experiment": 200,
+     "budget_consume": 200,
+     "work_claim": "200_but_empty"
+    },
+    "after": {
+     "artifact": 409,
+     "hypothesis": 409,
+     "experiment": 409,
+     "budget_consume": 409,
+     "work_claim": "200_but_empty"
+    },
+    "survived": [],
+    "blocked": [
+     "artifact",
+     "budget_consume",
+     "experiment",
+     "hypothesis"
+    ]
+   }
+  },
+  {
+   "probe": "B5-WORLD-CONFIG",
+   "title": "GET /v2/worlds/{id} completeness",
+   "verdict": "NOT_REPRODUCED",
+   "detail": "fields: ['budget', 'client_id', 'created_ts', 'fork_point', 'head_hash', 'name', 'next_index', 'parent_world_id', 'require_attestation', 'seed_root', 'session_id', 'sharing_policy', 'state', 'terminated_ts', 'topology_group', 'world_id']",
+   "evidence": {
+    "has_budget": true
+   }
+  }
+ ]
+}

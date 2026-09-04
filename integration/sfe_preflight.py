@@ -154,9 +154,23 @@ def main():
               "this host?" % exc, {"cert": ident})
         return _finish(a, 1)
     except (urllib.error.URLError, OSError) as exc:
-        check("reachable", HARD, False,
-              "no answer: %s -- service down, firewall, or wrong bind address "
-              "(T17)" % exc)
+        # urllib WRAPS ssl.SSLError inside URLError, so the SSLError branch
+        # above never fires for a certificate mismatch and this handler used to
+        # report a perfectly healthy service as "service down" -- which is
+        # precisely the T18 confusion this tool exists to prevent. Measured
+        # 2026-09-04 by pointing m1.crt at the live M2 engine. Unwrap and
+        # classify before blaming the service.
+        reason = getattr(exc, "reason", None)
+        if isinstance(reason, ssl.SSLError) or "CERTIFICATE" in str(exc).upper():
+            check("reachable", HARD, False,
+                  "TLS FAILURE, not a dead service (T18): %s -- the service "
+                  "may be perfectly healthy; this is the WRONG CERT for this "
+                  "host. Check cert+host form before declaring an outage."
+                  % reason or exc, {"cert": ident})
+        else:
+            check("reachable", HARD, False,
+                  "no answer: %s -- service down, firewall, or wrong bind "
+                  "address (T17)" % exc)
         return _finish(a, 1)
 
     live_commit = version.get("source_commit")
