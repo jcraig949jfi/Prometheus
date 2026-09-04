@@ -1,0 +1,827 @@
+======================================================================
+PROMETHEUS / PROTEUS
+PLAYER + PRIMITIVE SUBSTRATE -- CLOSURE PACKET
+2026-09-04   commit 6be6103f1 (verified reachable from origin/main)
+======================================================================
+
+Scope: the player side only. Daedalus closes SFE, Mnemosyne closes PEW.
+No specimen was selected, scored, ranked or interpreted. No phenotype was
+read or written. No campaign was launched. Every number below is a
+measurement with a script beside it, not an architecture claim.
+
+----------------------------------------------------------------------
+1. FINAL PROTEUS VERDICT
+----------------------------------------------------------------------
+
+READY, WITH ONE BLOCKER THAT IS MINE AND ONE THAT IS NOT.
+
+  Identity, composition and ablation are CLOSED and mechanised.
+  A, B and A+B can be constructed, hashed, reconstructed, ablated
+  exactly, and checked for activation. 200/200 constructed pairs.
+
+  The blocker is NOT composition. It is the MEASUREMENT SURFACE.
+  On the frozen probe ensemble, A+B differed from BOTH parents in
+  0 of 200 pairs -- because the transcript is degenerate (3 distinct
+  classes over 56 players, 87.5% of them in one class, 52/56 emitting
+  nothing at all). An emergence experiment read through the transcript
+  alone would be measuring a near-constant. The meter vector on the
+  same population resolves 37 classes at 10.7% largest share.
+
+  So: the experimental OBJECT is exact. The experimental INSTRUMENT is
+  not yet adequate, and the fix is available and named in section 9.
+
+  Second, smaller: organism_id pins BYTES, not EXECUTION. Quoting a
+  specimen by organism_id alone is under-specified for replay. Fix is
+  a contract change, not code: quote the triple.
+
+----------------------------------------------------------------------
+2. CURRENT PLAYER REALITY (measured, not conceptual)
+----------------------------------------------------------------------
+Source: proteus/v0_7/RESULT_PLAYER_REALITY.json
+Registry b15e0a7f5f2dcb99..., 64 committed specimens.
+
+  WHAT A PLAYER PHYSICALLY IS
+    a manifest of 8 fields, interpreted by a frozen tape machine
+    fields: schema_version, n_regs, tape_words, genome,
+            code_writable, persist, tick_budget, out_cap
+    the genome is DATA, never host code
+
+  SERIALIZATION SIZE (canonical bytes, the exact bytes hashed)
+    min 196   median 622   max 2891   total 53,354 bytes for all 64
+
+  GENOME / PROGRAM STRUCTURE
+    instructions      min 1     median 11    max 64    total 1013
+    words             min 4     median 44    max 256   (4 words/instr)
+    organism_id recomputes from its own manifest .... 64/64
+
+  PRIMITIVE / OPERATOR COUNT
+    25 opcodes in 9 affordance classes
+    distinct classes present per organism: min 1, median 5, max 9
+    organisms containing each class:
+      arithmetic 51  logical 49  comparison 34  control 39
+      halt_yield 38  indirection 37  opaque_io 35  read_write 35
+      randomness 25
+
+  ACTION SURFACE
+    OUT appends a 32-bit word to an integer-indexed output channel.
+    That is the entire external action surface. No strings, no
+    structured actions, no world vocabulary.
+
+  MUTABLE FIELDS
+    all 8 manifest fields; the grammar carries deletion and
+    simplification operators with pre-registered probability mass
+
+  STATE / MEMORY
+    tape (16..1024 words here, median 128) + registers (2..16,
+    median 9) + instruction pointer. Persistence across ticks is a
+    manifest field: none 15, regs 8, tape 21, all 20.
+    code_writable: 34 True / 30 False (self-modification is an axis
+    the population varies on, not a design choice)
+
+  RANDOMNESS SOURCES
+    exactly one: RND, reading an EXTERNALLY supplied stream the
+    player cannot seed. Present in 25/64 organisms.
+
+  COMPOSITION SUPPORT ..... NEW, this packet (proteus/compose)
+  MUTATION SUPPORT ........ existing (foundry/grammar.py)
+  LINEAGE SUPPORT ......... existing (contracts/lineage_record.schema)
+  REGISTRY DEPENDENCIES ... see section 4; load-bearing and previously
+                            undeclared
+
+  NOT CLAIMED: none of these 25 primitives is a "reasoning primitive."
+  They are structural affordances. Calling one reasoning-relevant is a
+  scientific claim and nothing here supports one.
+
+----------------------------------------------------------------------
+3. SPECIMEN IDENTITY CONTRACT
+----------------------------------------------------------------------
+Normative: proteus/contracts/SPECIMEN_AND_COMPOSITION_IDENTITY.md
+Vectors:   proteus/compose/GOLDEN_VECTORS.json
+
+  CANONICAL SERIALIZATION -- the whole rule, no other knowledge needed
+
+    canonical_bytes(obj) =
+      json.dumps(obj, sort_keys=True, separators=(",", ":"),
+                 ensure_ascii=True).encode("utf-8")
+    digest(obj)  = sha256(canonical_bytes(obj)).hexdigest()   # lower
+    blob_hash    = "sha256:" + digest(manifest)
+
+    keys sorted at every depth, no whitespace, non-ASCII escaped, UTF-8
+
+  HASH ALGORITHM ............ sha256, lowercase hex, no prefix
+  SCHEMA CONTRIBUTION ....... schema_version is INSIDE the hashed
+                              manifest, so a schema bump changes the id
+  REGISTRY CONTRIBUTION ..... NONE to organism_id. This is the gap.
+                              See section 4.
+
+  WHAT CHANGES CONTENT IDENTITY
+    any genome word; any envelope field (n_regs, tape_words,
+    code_writable, persist, tick_budget, out_cap); schema_version
+
+  WHAT DOES NOT CHANGE CONTENT IDENTITY
+    a segment label; anything written into `extrinsic`, phenotype
+    included; line endings (ids hash memory, never a file); the
+    affordance table (that is the defect, not a feature)
+
+  WHAT PLACEMENT CHANGES
+    artifact_id in a world. Harmonia already proved the separation is
+    clean: same specimen, two worlds -> identical blob_hash, distinct
+    artifact_id. That boundary is preserved untouched by this work.
+
+  WHAT COMPOSITION CHANGES
+    a new organism_id (new bytes) AND a new composition_id (which
+    parts, in which order). Both are recorded; neither substitutes for
+    the other, because concatenation is not injective on component
+    boundaries.
+
+  GOLDEN VECTORS: 8 vectors, 10 identities. Each ships the document,
+  the exact byte string hashed, its length, and the digest. A consumer
+  in any language reproduces them with sha256 and a canonical-JSON
+  serialiser and never imports Proteus.
+    verify: python -m proteus.compose.golden verify
+
+  GATE (closes Proteus's side of I-CLIENT-GATE-UNENFORCED)
+    proteus/integration/specimen_gate.py -- verify_specimen()
+    separates and never collapses three questions:
+      BYTES   do these bytes hash to the claimed id?
+      SHAPE   are they a manifest the frozen runtime accepts, AND are
+              they CANONICAL (non-canonical bytes rehash differently on
+              the next hop and silently break content addressing)?
+      MEANING were they produced under the runtime/table we replay
+              against? Reported UNVERIFIED when the caller declares
+              nothing -- never silently true.
+    Refuses Harmonia's exact probe: corrupt bytes + plausible
+    blob_hash -> False. Locked by 12 tests.
+
+----------------------------------------------------------------------
+4. REGISTRY IDENTITY CONTRACT
+----------------------------------------------------------------------
+Source: proteus/v0_7/RESULT_REGISTRY_IDENTITY.json
+
+  THE QUESTION: can the same serialized bytes mean something different
+  under another registry version?  ANSWER: YES, and almost entirely.
+
+  organism_id hashes the manifest ONLY. The manifest does not carry
+  runtime_hash or affordance_hash. The runtime decodes every
+  instruction as  op = word mod N_OPCODES,  and N_OPCODES lives in the
+  affordance table, outside the hashed bytes.
+
+  MEASURED, probing the smallest possible amendment (25 -> 26 opcodes):
+
+    organism_id changes ......................... NO
+    instructions that re-decode ................. 961 / 1013  = 94.87%
+    per-organism fraction, median ............... 1.0000
+    organisms completely unaffected ............. 1 / 64
+
+  IS THE REGISTRY VERSIONED?  Yes:
+    proteus.player_registry.v1, registry_id = hash over the registry
+    entry.identity carries manifest_schema_version, runtime_hash,
+    grammar_hash, grammar_version, affordance_hash
+    entry_id is computed over the intrinsic view, which INCLUDES that
+    identity block -> entry_id DOES pin execution (verified 64/64)
+
+  THE IMMUTABLE IDENTIFIER PEW MUST PRESERVE
+    organism_id AND entry_id, or equivalently the triple
+      (organism_id, runtime_hash, affordance_hash)
+    Current: runtime 73f110e21b9df879..., affordance f1607ee8be680acc...
+
+  WHAT SFE MUST RECEIVE
+    the canonical blob + blob_hash + the interpretation triple.
+    Today it receives the first two and verifies neither.
+
+  RULE. Registry interpretation affects execution, therefore registry
+  identity belongs in the replay contract and must never be left as
+  ambient checkout state. A specimen quoted by organism_id alone is
+  under-specified for replay.
+
+----------------------------------------------------------------------
+5. PRIMITIVE IDENTITY CONTRACT
+----------------------------------------------------------------------
+
+  A PRIMITIVE (segment) is a contiguous run of whole instructions.
+  Purely STRUCTURAL. Nothing knows or asks what it computes. Directive
+  section 5 permits exactly this and V0 takes it.
+
+    segment_id = digest({schema_version, words})
+    a label is NOT hashed: renaming a primitive must never move its id
+
+  THE SIX OPERATIONAL REQUIREMENTS, and how each is met
+
+    reconstruct it ......... decompose() re-hashes the composed bytes
+                             and REFUSES on mismatch ..... 200/200
+    insert it .............. compose() ................... 200/200
+    remove it .............. ablate(), position-preserving  200/200
+    hold it fixed .......... other components asserted
+                             byte-identical per report .... 200/200
+    mutate something else .. ranges declared and disjoint . asserted
+    identify it inside a
+      composition .......... components[].segment_id +
+                             offset_instructions ......... round-trip
+
+  NOT REQUIRED and NOT SUPPLIED: semantic interpretation. A segment is
+  not claimed to do anything.
+
+----------------------------------------------------------------------
+6. COMPOSITION IDENTITY CONTRACT
+----------------------------------------------------------------------
+
+  V0 admits exactly ONE glue: "concat.v0". Components laid end to end,
+  no separator, executed from ip=0, ip advancing by 4, wrapping mod
+  tape_words. This is the only join that needs NO new runtime
+  semantics, which is the entire reason it is the only one built.
+
+  A composition document answers every required question:
+
+    which exact A ......... components[i].segment_id
+    which exact B ......... components[j].segment_id
+    ordering / topology ... offset_instructions (total order)
+    glue .................. "concat.v0"
+    resulting player bytes  manifest.genome; organism_id=digest(manifest)
+    deterministic? ........ YES; compose() is a pure function of
+                            (components, envelope, glue)
+    own content identity? . YES, composition_id, distinct from
+                            organism_id
+    reconstructable? ...... YES, decompose(), which refuses on mismatch
+
+  ORDER MATTERS: A+B != B+A, shipped as a golden vector
+  (organism_id_AB != organism_id_BA).
+
+  PREPARED FOR, NOT IMPLEMENTED
+    A+B+C .......................... works today (ordered list, any n)
+    A->B / B->A as CONTROL FLOW .... NOT implemented, needs a new glue
+    conditional activation ......... NOT implemented, needs a new glue
+    world-conditioned activation ... NOT implemented, needs a new glue
+
+  No universal graph language was built. A+B did not prove one
+  necessary, and the directive says not to until it does.
+
+----------------------------------------------------------------------
+7. EXACT ABLATION CONTRACT
+----------------------------------------------------------------------
+Source: proteus/v0_7/RESULT_ABLATION_EXACTNESS.json, RESULT_AB_READINESS.json
+
+  ABLATION IS NOP-SUBSTITUTION, NEVER DELETION.
+
+  Why: deleting a component's words shifts every later component's tape
+  address. LD/ST address the tape by register contents and jumps are
+  signed instruction offsets, so a shift silently changes what every
+  surviving instruction reads and where every jump lands. The ablated
+  system would then differ in the removed component AND in the
+  addresses of everything after it -- exactly the confound forbidden.
+  Substitution preserves length, offsets, envelope, and every other
+  component's words byte for byte.
+
+  WHAT IS PROVEN PER ABLATION (structural, exact, unconditional)
+    original A+B identity known .............. composition_id + organism_id
+    ablated composition identity known ....... both recomputed
+    intended component removed ............... words_changed ==
+                                               instructions_in_component
+    unrelated components unchanged ........... byte-identical, asserted
+    change attributable to the operation ..... changes_outside_declared
+                                               _range == 0, and
+                                               changes_to_operand_words == 0
+    size/budget consequences measurable ...... length preserved;
+                                               meter vector reported
+
+  THE RESIDUAL CONFOUND, AND THE GATE THAT CATCHES IT
+
+  Substitution is still not perfectly inert: the genome is copied into
+  the tape, so an opcode word is ALSO a datum LD can read. Since every
+  word w with w mod 25 == 0 decodes to NOP, ablating to 0, 25 and 50
+  are three operations that are INSTRUCTION-IDENTICAL and
+  DATA-DISTINCT. Disagreement means the ablation moved a data channel.
+
+    class knockout over the registry ....... 343 pairs tested
+      identical under all three aliases .... 342
+      CONFOUNDED ........................... 1  (0.29%, halt_yield)
+    constructed A+B pairs .................. 200
+      certified EXACT ...................... 200/200
+      decompose exact ...................... 200/200
+
+  THREE VERDICTS, never a bare boolean:
+    EXACT / CONFOUNDED_BY_DATA_CHANNEL / STRUCTURALLY_INEXACT
+
+  HONEST LIMIT: the certificate is ENSEMBLE-RELATIVE and is a LOWER
+  BOUND on confounding. It detects a data dependence only if that
+  dependence reaches the transcript on the probes actually run.
+
+  THE GATE IS PROVEN ABLE TO FAIL. test_data_channel_confound_is_
+  detected_when_present builds a reader that LDs its neighbour's opcode
+  word; it reports CONFOUNDED_BY_DATA_CHANNEL with 3 distinct
+  transcripts while remaining structurally clean.
+
+----------------------------------------------------------------------
+8. R ~= 0.000001 RETENTION V0
+----------------------------------------------------------------------
+Normative: proteus/contracts/RETENTION_AND_MEASUREMENT_V0.md
+
+  THE ONE IDEA: EVICTION IS NOT DELETION.
+
+    ACTIVE RESERVOIR   bounded, R_MAX. What compositions are drawn from.
+    ARCHIVE            unbounded, append-only, ids + records only.
+                       A segment NEVER leaves it and stays permanently
+                       resolvable by segment_id.
+
+  This is what defeats both failure modes at once. Premature pruning is
+  impossible because nothing is deleted. The noise museum is avoided
+  because the ACTIVE set is bounded, and the archive costs ~100 bytes
+  of record per evaluation.
+
+  RECORDS (immutable, append-only; a later evaluation appends)
+    EvaluationRecord { segment_id, context_id, observable, activation,
+                       marginal_effect, ablation_verdict,
+                       recorded_at, recorded_by }
+    context_id = digest{composition_id, envelope, ensemble_identity,
+                        world_id|null, runtime_hash, affordance_hash}
+
+  context_id is MANDATORY and is why "no effect" can never be stored as
+  a bare fact. A record always reads "no effect IN CONTEXT C".
+
+  Composition-result records: same shape, keyed on composition_id.
+  Negative controls: retained under a separate quota the eviction
+  policy may not touch. A segment that showed no effect is EVIDENCE.
+
+  DETERMINISTIC EVICTION, when |active| > R_MAX, ties by segment_id:
+    1. contexts_evaluated                       DESC
+    2. distinct contexts with effect == CHANGED  ASC
+    3. segment_id                                ASC
+
+  Note the direction of rule 1: it evicts the MOST-EXAMINED and
+  least-productive, not the untested -- because that is the segment the
+  archive already knows most about, and re-admitting it costs one
+  lookup.
+
+  HARD GUARDS
+    G-COVERAGE     contexts_evaluated < K_MIN -> never evictable.
+                   Untested is not useless. V0 K_MIN = 3 contexts.
+    G-CONTROL      negative-control quota is exempt.
+    G-NEVER-DELETE eviction writes an EVICTED record and archives.
+                   There is no delete path in V0.
+
+  V0 PARAMETERS (round numbers, sufficient for the first experiment,
+  deliberately NOT tuned): R_MAX 4096, K_MIN 3, control quota 256.
+
+  NOT SOLVED, DELIBERATELY: open-ended evolution; any value model; any
+  rule letting a SCORE drive retention. There is no fitness scalar in
+  this contract and adding one is a contract change.
+
+----------------------------------------------------------------------
+9. RAW MEASUREMENT SURFACE  ***CONTAINS THE REAL BLOCKER***
+----------------------------------------------------------------------
+Source: proteus/v0_7/RESULT_TRANSCRIPT_DEGENERACY.json
+
+  THREE LEVELS, KEPT SEPARATE
+    RAW OBSERVABLE   exact, mechanical, no interpretation  <- Proteus
+    DERIVED METRIC   a function of raw observables         <- Harmonia
+    SCIENTIFIC INTERPRETATION                              <- adjudication
+
+  THE FINDING. The probe transcript -- the observable the V0 signatures
+  are built on -- is DEGENERATE at this scale:
+
+    population                     classes  largest   emitting >=1 value
+    2-instruction segment players     3      87.5%          4 / 56
+    full committed specimens         12      60.9%         10 / 64
+
+  52 of 56 segment players emit NOTHING; their transcript is the
+  per-tick status word and nothing else. THIS is why A+B differed from
+  both parents in 0/200 pairs. That is a fact about the INSTRUMENT, not
+  about composition.
+
+  The internal resource vector is NOT degenerate on the same population:
+
+    observable            distinct classes (n=56)   largest share
+    probe transcript                3                  87.5%
+    ops_by_category                37                  10.7%
+    full meter vector              39                  10.7%
+
+  ~13x richer. THEREFORE: the first emergence measurement must read the
+  METER VECTOR, not the transcript alone. A transcript-only experiment
+  at this scale would be measuring a near-constant.
+
+  WHAT PROTEUS EXPOSES (all exact, all per-encounter, already built)
+    ops; ops_by_category; branches_taken; code_region_writes;
+    in_reads; out_writes; out_dropped; rnd_draws; ticks;
+    budget_exhausted_ticks; footprint_words; persistent_state_words;
+    wall_s / cpu_s (NEVER an identity input, not deterministic);
+    gpu = literal "unavailable", never fabricated;
+    proxy_search_expenditure = branches_taken     (DECLARED PROXY)
+    proxy_adaptation_expenditure = code_region_writes (DECLARED PROXY)
+    activation_evidence(); ablation_report(); transcript + its hash
+
+  ACTIVATION, AND ITS ONE DECLARED BLIND SPOT
+    No runtime instrumentation was added -- instrumenting vm.py would
+    change runtime_hash and therefore every frozen specimen's
+    interpretation identity. Activation is a DIFFERENTIAL: if a
+    component never executes, ablating it to NOP cannot change what the
+    runtime does, so ops_by_category is identical. ANY difference
+    proves execution.
+    Exception, reported not guessed: a component already entirely
+    halt_yield class -> INDETERMINATE_COMPONENT_IS_ALREADY_NOP_CLASS.
+    Verified both directions (behind-a-HALT -> NOT_ACTIVATED).
+
+  NOT AVAILABLE (genuine NOs, see section 10)
+    per-instruction execution counts localised to a component
+    composition activation ORDER
+    internal state transitions per tick
+
+  THE DISTINCTION THAT MUST SURVIVE CONTACT
+    ACTIVATED means instructions executed. It does NOT mean the
+    component mattered. Measured: 200/200 ACTIVATED, but only 30/200
+    changed the transcript -- 170/200 (85%) ACTIVATED WITH NO MARGINAL
+    EFFECT. SUPPORT and INCREMENTALITY are different questions and the
+    surface reports them separately, by construction.
+
+----------------------------------------------------------------------
+10. A / B / A+B READINESS MATRIX
+----------------------------------------------------------------------
+
+  Can we construct exact A? ........................... YES
+  Can we construct exact B? ........................... YES
+  Can we construct exact A+B? ......................... YES
+  Can we reconstruct all three? ....................... YES  200/200
+  Can we hash all three canonically? .................. YES  8 vectors
+  Can PEW identify their relationships? ............... NO   (see below)
+  Can SFE independently validate specimen content
+    identity? ......................................... NO   (see below)
+  Can we ablate A exactly? ............................ YES  200/200
+  Can we ablate B exactly? ............................ YES  200/200
+  Can we detect whether A/B activated? ................ YES* 200/200
+  Can we hold composition fixed across world replay? .. YES* (Proteus
+                                                        side; SFE side
+                                                        is Daedalus's)
+
+  ADDED BY THIS PASS, because the matrix as given does not ask it and
+  it is the question that decides whether the experiment can run:
+
+  Can we MEASURE a compositional effect? .............. NO
+
+  EVERY "NO", CLASSIFIED
+
+  N1  Can we measure a compositional effect?
+      MISSING CAPABILITY: a non-degenerate observable. The transcript
+      resolves 3 classes at 87.5% concentration; A+B differed from both
+      parents 0/200 times.
+      CLASSIFICATION: **BLOCKS FIRST EXPERIMENT** as currently
+      instrumented.
+      HONEST WORKAROUND EXISTS: read the meter vector (37 classes,
+      10.7%). This needs no new code -- Meter.as_dict() is already
+      recorded per encounter. It needs Harmonia to declare the meter,
+      not the transcript, as the primary observable, and to state the
+      chance floor for it before running.
+
+  N2  Can PEW identify their relationships?
+      MISSING CAPABILITY: the fossil has no typed fields for
+      registry_identity, entry_id, segment ids, composition topology or
+      ablation relation. Harmonia measured 9 of 16 identities
+      MISSING or AMBIGUOUS (I-FOSSIL-INCOMPLETE).
+      CLASSIFICATION: CAN BE WORKED AROUND HONESTLY -- Proteus emits
+      the whole provenance block (section 12) and PEW stores it as a
+      typed opaque record. It becomes BLOCKS only if the relationships
+      must be QUERYABLE in PEW for the first experiment. Mnemosyne's
+      call, not mine.
+
+  N3  Can SFE independently validate specimen content identity?
+      MISSING CAPABILITY: the engine is content-addressed but does not
+      verify that bytes hash to the id they are filed under
+      (I-CLIENT-GATE-UNENFORCED, Harmonia).
+      CLASSIFICATION: CAN BE WORKED AROUND HONESTLY, TODAY. The gate is
+      built and callable: specimen_gate.verify_specimen(). It must live
+      in the ONE shared arena primitive and never be re-typed per
+      caller. It becomes BLOCKS only if the requirement is that SFE
+      itself verify -- that is Daedalus's repair, not Proteus's.
+
+  N4  Per-instruction activation counts / activation ORDER
+      MISSING CAPABILITY: runtime instrumentation.
+      CLASSIFICATION: DEFER. Adding it changes runtime_hash and
+      therefore the interpretation identity of every frozen specimen,
+      which would invalidate Harmonia's existing fossils. Binary
+      activation is available now and is enough for SUPPORT.
+
+  * YES with a declared exception: a component that is already entirely
+    halt_yield class reports INDETERMINATE rather than a guess.
+
+----------------------------------------------------------------------
+11. CONSTRAINT-TRANSFER CANDIDATES
+----------------------------------------------------------------------
+Framework: Herakles, SHARE_cross_experiment_constraint_transfer.md
+(CEGAR / metamorphic-relation framing; a local failure becomes an
+executable invariant, not a note).
+
+  HARD (executable now; violation should stop the line)
+
+  H1  canonical bytes must match player content identity
+      blob_hash == "sha256:" + digest(canonical_json(manifest)).
+      CHECK: specimen_gate.verify_specimen(). SCOPE: every hop.
+      PROVENANCE: Harmonia I-CLIENT-GATE-UNENFORCED.
+
+  H2  non-canonical bytes are refused even when valid
+      Valid JSON that re-serialises differently silently breaks content
+      addressing on the NEXT hop. CHECK: same gate, SHAPE arm.
+      PROVENANCE: found building the gate; a live near-miss class.
+
+  H3  a specimen is quoted as (organism_id, runtime_hash,
+      affordance_hash), never organism_id alone
+      SCOPE: replay contract, PEW fossil, SFE artifact.
+      PROVENANCE: measured -- 94.87% of instructions re-decode under a
+      one-opcode table amendment with an unchanged organism_id.
+
+  H4  composition manifest must reconstruct the exact composition
+      CHECK: decompose() re-hashes and refuses on mismatch.
+
+  H5  a frozen component must not silently mutate
+      CHECK: ablation_report structural arm -- other components
+      byte-identical, offsets and envelope preserved.
+
+  H6  exact ablation may change only the declared composition structure
+      CHECK: changes_outside_declared_range == 0 AND
+      changes_to_operand_words == 0 AND alias-invariant. A
+      CONFOUNDED_BY_DATA_CHANNEL result is a REFUSAL, not a warning.
+
+  H7  registry interpretation must match the recorded registry version
+      CHECK: gate MEANING arm, when the caller declares its
+      expectation. UNVERIFIED is a legitimate state; silently-true is
+      not.
+
+  ADVISORY (scoped, revisable; must never become a hard gate)
+
+  A1  "A did not activate in world family W."
+      SCOPE: that family, that ensemble, that envelope.
+      REVISION: re-test in another context; the archive keeps A
+      permanently resolvable (section 8, G-NEVER-DELETE).
+
+  A2  "A's apparent effect was explained by program size in E."
+      A confound record, not a verdict on A.
+
+  A3  "A had no marginal effect alone but interacted with B."
+      MEASURED SHAPE, not hypothetical: 170/200 components ACTIVATED
+      with no marginal transcript effect. Zero marginal effect alone is
+      the MODAL case here, so treating it as evidence of uselessness
+      would discard 85% of the population by construction.
+
+  A4  "A's effect failed cross-seed replication."
+      SCOPE: those seeds. Requires the coverage record to say which.
+
+  THE RULE THAT KEEPS ADVISORIES ADVISORY
+    NO MARGINAL EFFECT IN CONTEXT C  !=  UNIVERSALLY USELESS.
+    Mechanised by context_id being mandatory on every record and by
+    G-COVERAGE forbidding eviction below K_MIN distinct contexts.
+
+  NOT JUSTIFIED AS A CONSTRAINT (named so nobody promotes them later)
+
+  X1  "composition adds nothing" -- 0/200 A+B differing from both
+      parents is an INSTRUMENT reading, not a fact about composition.
+      Promoting it would fossilise a measurement artifact. This is the
+      single most promotable-looking and most wrong candidate here.
+  X2  any threshold on transcript-class counts, while the transcript
+      resolves 3 classes at 87.5%.
+  X3  any retention rule keyed on a score. There is no fitness scalar.
+  X4  "structural primitive" as a stand-in for "reasoning primitive."
+
+----------------------------------------------------------------------
+12. PEW HANDOFF CONTRACT
+----------------------------------------------------------------------
+For Mnemosyne. Proteus supplies identity and provenance; PEW preserves
+it. PEW is never asked to understand player semantics, and never asked
+to reverse-engineer any of this from opaque bytes later.
+
+  PER SPECIMEN
+    content_identity        organism_id (sha256 hex)
+    serialization_digest    blob_hash "sha256:"+organism_id
+    schema_version          proteus.player_manifest.v0
+    registry_identity       { runtime_hash, affordance_hash,
+                              grammar_hash, grammar_version,
+                              manifest_schema_version }
+    entry_id                registry entry intrinsic hash
+    registry_id             which registry build it came from
+    lineage                 lineage_id, generation, parent ids,
+                            mutation seed + operators
+    phenotype               UNKNOWN  (a permanent legitimate state;
+                            never a negative judgement)
+
+  PER PRIMITIVE (segment)
+    segment_id, words length, instruction count
+    NO label is hashed; a label may be stored as extrinsic only
+
+  PER COMPOSITION
+    composition_id
+    glue                    "concat.v0"
+    components[]            { component, segment_id,
+                              offset_instructions, n_instructions }
+    resulting organism_id
+    envelope                the 6 non-genome manifest fields
+
+  PER ABLATION
+    parent_composition_id, ablated_component, null_word
+    ablated_composition_id, ablated_organism_id
+    verdict                 EXACT | CONFOUNDED_BY_DATA_CHANNEL |
+                            STRUCTURALLY_INEXACT
+    structural row          the 8 booleans/counts from ablation_report
+    alias_differential      aliases, distinct_transcripts, invariant,
+                            ensemble_identity
+
+  RELATIONS PEW SHOULD BE ABLE TO EXPRESS
+    composition  CONTAINS      segment
+    composition  ABLATES_TO    composition   (with the component named)
+    organism     DERIVED_FROM  composition
+    organism     MUTATION_OF   organism      (existing lineage)
+
+  ASK: these want typed fields. Today the fossil has none of
+  registry_identity, entry_id, segment ids, topology or ablation
+  relation, so a fossil proves WHICH organism ran WHERE but not what it
+  was made of. Storing the block as one typed opaque record is an
+  honest interim; queryability is the upgrade.
+
+----------------------------------------------------------------------
+13. SFE / ARENA HANDOFF CONTRACT
+----------------------------------------------------------------------
+For Daedalus and Harmonia. The specimen package sufficient for
+
+    arena.run(organism, world_config, action_plan)
+
+  WHAT SFE RECEIVES
+    blob            the canonical bytes -- produced ONLY by
+                    specimen_gate.canonical_blob(manifest), never by a
+                    caller's own json.dumps
+    blob_hash       "sha256:" + organism_id
+    interpretation  { runtime_hash, affordance_hash,
+                      manifest_schema_version }
+    optional        composition block (section 12) when the specimen
+                    is a composition rather than a drawn specimen
+
+  WHAT SFE MUST VERIFY (today it verifies none of these)
+    1. sha256(blob) == blob_hash minus the prefix
+    2. blob parses and validates as a manifest
+    3. blob is CANONICAL (re-serialising is a fixed point)
+    4. the declared interpretation matches the arena's own
+
+  Until the engine does this, the gate must sit in the ONE shared arena
+  primitive and never be re-typed per caller -- Harmonia's own
+  disposition of I-CLIENT-GATE-UNENFORCED, and the reason
+  specimen_gate.py is a single callable rather than advice.
+
+  WHAT THE ARENA DOES NOT NEED
+    No hidden Proteus process state. A specimen is fully determined by
+    (blob, interpretation triple). The compose package is a
+    CONSTRUCTOR: it emits ordinary manifests the frozen runtime
+    interprets exactly as it interprets any drawn specimen, and it is
+    not needed at run time.
+
+  WHAT THE ARENA MUST NOT DO
+    Read or write phenotype. Filter for "interesting" specimens.
+    Harmonia's first draw was a silent budget-burner recorded as a
+    valid outcome -- had the population been filtered, that draw would
+    not have existed. That property is preserved here.
+
+----------------------------------------------------------------------
+14. REMAINING BLOCKERS / DEFERRED WORK
+----------------------------------------------------------------------
+
+  BLOCKING THE FIRST EXPERIMENT
+  B1  Degenerate measurement surface (section 9 / N1). Fix is available
+      and needs no new code: adopt the meter vector as the primary
+      observable and publish its chance floor before running.
+      OWNER: Harmonia (experiment design), Proteus (already exposes it).
+
+  NOT BLOCKING, BUT OPEN
+  O1  SFE does not verify content identity (N3). Gate exists; must be
+      placed once. OWNER: Daedalus / shared arena primitive.
+  O2  PEW fossil lacks typed identity fields (N2). OWNER: Mnemosyne.
+  O3  affordance table prose vs runtime: affordances.py's docstring
+      says the LDC immediate is operand c; vm.py reads it from slot b.
+      The TABLE row ("a,imm") is right, the prose is not. NOT FIXABLE
+      IN PLACE -- runtime_hash covers the whole file, docstring
+      included, so correcting the sentence changes every frozen
+      specimen's interpretation identity. Recorded in the contract and
+      in test_composition.py. It cost one wrong test before it was
+      caught; anyone hand-writing a genome must encode from vm.py.
+      OWNER: whoever next opens a runtime transition.
+  O4  Alias differential is a LOWER BOUND on confounding, ensemble
+      relative. 1/343 class knockouts confounded. Widening the ensemble
+      widens the bound; it does not make it exact.
+
+  DEFERRED
+  D1  Per-instruction / ordered activation tracing (N4). Requires a
+      runtime transition.
+  D2  Any glue beyond concat.v0 (A->B control flow, conditional or
+      world-conditioned activation).
+  D3  Retention parameter tuning. R_MAX/K_MIN/quota are round numbers
+      chosen to be sufficient, not optimised, per directive section 8.
+
+  UNCHANGED AND INHERITED (not adjudicated here)
+    NOT_QUALIFIED_AUTHORED_NONEQUILIBRIUM_CURRENT
+    FULL_SPACE_CURRENT_SOURCE_UNRESOLVED
+    OPERATIONAL_SIGNIFICANCE_NOT_YET_ADJUDICATED
+    USE A permitted; USE B and Campaign 1 remain BLOCKED.
+
+----------------------------------------------------------------------
+15. COMMITS / TESTS / ARTIFACTS
+----------------------------------------------------------------------
+
+  COMMIT  6be6103f1  verified reachable from origin/main with
+                     git merge-base --is-ancestor
+
+  TESTS   proteus/tests: 106 -> 146 passed
+          + test_composition.py    (28) segment/composition/ablation/
+                                        activation/golden/runtime
+          + test_specimen_gate.py  (12) Harmonia's attack and near
+                                        misses
+          BOTH NEW GATES PROVEN ABLE TO FAIL, not merely to pass:
+            data-channel confound -> CONFOUNDED, 3 distinct transcripts
+            corrupt bytes + plausible id -> refused
+
+  FROZEN IDENTITIES UNMOVED (the point of putting compose/ outside
+  the audited tree)
+          audit_identity verify ..... FRESH, tree 3ae4ee8b773e0fcf
+                                      (the ORIGINAL digest, unchanged)
+          runtime_hash .............. 73f110e21b9d... unchanged
+          quarantine string layer ... PASS
+          run_determinism_check ..... registry reproduces byte for byte
+          golden vectors ............ 8 vectors, 10 identities, OK
+
+  CODE
+    proteus/compose/segments.py ............ identity + ablation
+    proteus/compose/golden.py .............. emit/verify vectors
+    proteus/compose/GOLDEN_VECTORS.json .... the vectors
+    proteus/compose/run_ab_readiness.py .... the 200-pair study
+    proteus/compose/measure_transcript_degeneracy.py
+    proteus/integration/specimen_gate.py ... the identity gate
+    proteus/integration/measure_player_reality.py
+    proteus/integration/measure_registry_identity.py
+    proteus/integration/measure_ablation_exactness.py
+
+  CONTRACTS
+    proteus/contracts/SPECIMEN_AND_COMPOSITION_IDENTITY.md
+    proteus/contracts/RETENTION_AND_MEASUREMENT_V0.md
+
+  ROWS (verdicts ship with their rows, same commit)
+    proteus/v0_7/RESULT_PLAYER_REALITY.json
+    proteus/v0_7/RESULT_REGISTRY_IDENTITY.json
+    proteus/v0_7/RESULT_ABLATION_EXACTNESS.json
+    proteus/v0_7/RESULT_AB_READINESS.json
+    proteus/v0_7/RESULT_TRANSCRIPT_DEGENERACY.json
+
+  REPRODUCE
+    python -m pytest proteus/tests -q
+    python -m proteus.compose.golden verify
+    python -m proteus.compose.run_ab_readiness 200
+    python proteus/audits/audit_identity.py verify
+
+----------------------------------------------------------------------
+16. HANDOFF TO HARMONIA
+----------------------------------------------------------------------
+
+  WHAT A PLAYER NOW MEANS
+    A manifest of 8 fields whose canonical bytes hash to organism_id,
+    interpreted by a frozen tape machine. Median 622 bytes, median 11
+    instructions. It is fully specified by the TRIPLE
+    (organism_id, runtime_hash, affordance_hash) -- and by organism_id
+    alone it is NOT, because 94.87% of instructions re-decode under a
+    one-opcode table change that leaves organism_id identical.
+    Your existing boundary properties are preserved untouched: content
+    identity vs placement identity stays clean, blob_hash is still
+    "sha256:"+organism_id, and a second unknown organism still crosses
+    generically with no bespoke editing.
+
+  WHAT A PRIMITIVE NOW MEANS
+    A contiguous run of whole instructions with its own content hash.
+    STRUCTURAL ONLY. It can be reconstructed, inserted, removed, held
+    fixed, mutated around, and located inside a composition. It is not
+    claimed to compute anything.
+
+  WHAT A COMPOSITION NOW MEANS
+    An ordered concatenation under glue "concat.v0", with its own
+    composition_id separate from the resulting organism_id, fully
+    reconstructable, order-sensitive (A+B != B+A). A+B+C works. Control
+    flow, conditional and world-conditioned activation do not exist and
+    would each need a new declared glue.
+
+  WHAT CAN BE ABLATED EXACTLY
+    Any named component, by NOP-substitution, position-preserving.
+    200/200 certified EXACT on constructed pairs; 342/343 on class
+    knockout over the registry. The certificate is ensemble-relative
+    and a LOWER BOUND -- a CONFOUNDED verdict is a refusal, not a
+    warning. Deletion-based ablation is not offered and should not be
+    built: it moves every later component's tape address.
+
+  WHAT MUST STILL NOT BE CALLED "REASONING"
+    Everything above. Specifically:
+      - a structural primitive is not a reasoning primitive
+      - ACTIVATED means instructions executed, nothing more; 85% of
+        activations had no marginal transcript effect at all
+      - a transcript difference is an inequality on a NOISE ensemble
+        with no task in it; it is not a capability
+      - and "A+B adds nothing" is NOT supported by the 0/200 result.
+        That number is an instrument reading. Fix the observable before
+        anyone reads it as a finding about composition.
+
+  THE ONE THING TO DECIDE BEFORE RUNNING
+    Declare the meter vector, not the probe transcript, as the primary
+    observable, and publish its chance floor first. The transcript
+    resolves 3 classes at 87.5% concentration; the meter resolves 37 at
+    10.7%. Every other piece of the experimental object is exact and
+    waiting.
+
+======================================================================
+Proteus gives shapes, not verdicts. The object is exact; what it means
+is yours to adjudicate.
+======================================================================
