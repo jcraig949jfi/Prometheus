@@ -1,0 +1,779 @@
++==========================================================================+
+|                                                                          |
+|   SFE ENGINE -- BOUNDARY REPAIR + EMERGENCE-READY ENGINE SPRINT          |
+|                                                                          |
+|   Author:  Daedalus (maintainer, Serendipity Foundry Engine) on M2       |
+|   Date:    2026-09-04                                                    |
+|   For:     James (HITL), Harmonia (integrator), external reviewers       |
+|   Status:  P0 CLOSED IN CODE / NOT YET LIVE-VERIFIED                     |
+|                                                                          |
+|   Self-contained: every load-bearing number is inline. No repo access    |
+|   is needed to review or to disagree with this document.                 |
+|                                                                          |
++==========================================================================+
+
+--------------------------------------------------------------------------
+0. MANDATE AND ONE-PARAGRAPH VERDICT
+--------------------------------------------------------------------------
+
+Mandate: repair the engine in the smallest way that makes high-throughput,
+trustworthy experiments on weak/compositional/emergent reasoning primitives
+possible. Engine validity hard; scientific interpretation open.
+
+Verdict: the engine's HONESTY was already good and its ENFORCEMENT was thin.
+In every hazard examined, the engine recorded the truth correctly and then
+let a caller walk past it. It typed CLIENT_ASSERTED evidence accurately but
+could not be asked to require attestation. It computed artifact digests
+correctly but had no way to be TOLD what the bytes should have been. It
+sealed the experiment spec's hash into the tamper-evident ledger but served
+no way to read the spec back. It marked worlds TERMINATED but kept accepting
+writes into them. Six hazards are now closed in code with 31 new regression
+tests (suite 88 -> 119, all green) and the schema migration is verified
+against a copy of the live database. NOTHING here has been re-verified
+against the running service: both engines are still on the old build and I
+could not restart them from this session. Treat every claim below as
+"green in-process, unproven in production."
+
+--------------------------------------------------------------------------
+1. ENGINE VERDICT
+--------------------------------------------------------------------------
+
+SAFE TO ORCHESTRATE, CONDITIONALLY -- after a restart and a live re-run.
+
+  Engine build examined : sha256:c358a53b9899fa16acb70c69747c8ec4ca494cdc...
+  M1 commit             : ce79401b1524fe20eba9c051cb8c0d9bf18fc0d9
+  M2 commit             : 71e4e80e8783270585f635cbf239468213c8d988
+  Both machines run the SAME engine source hash. The sprint directive
+  listed "qualification status of rebuilt engine c358a53b" as UNKNOWN.
+  It is now qualified at 119/119 in-process; live qualification pending.
+
+The four P0 "quiet success" hazards are closed IN CODE:
+
+  create-world retry duplication ...... CLOSED (D-IDEM-1)
+  silent unattested evidence .......... CLOSED, opt-in (D-ATTEST-1)
+  unenforceable organism identity ..... CLOSED, opt-in (D-CIDGATE-1)
+  loose causal-anchor selection ....... CLOSED (D-ANCHOR-1)
+
+Two further hazards, one of them not on Harmonia's list, also closed:
+
+  writes after TERMINATED ............. CLOSED (D-LIFECYCLE-1)
+  action unrecoverable for replay ..... CLOSED (D-REPLAY-1)  [NEW FINDING]
+
+The honest headline: the engine was never LYING. It was failing to make its
+own truthful record binding on the caller. That distinction matters, because
+it means the repairs are gates, not corrections -- no historical record was
+wrong, and nothing had to be retracted.
+
+--------------------------------------------------------------------------
+2. REPRODUCED / NOT-REPRODUCED HARMONIA FINDINGS
+--------------------------------------------------------------------------
+
+Method: a 9-probe script run against the LIVE M2 engine BEFORE any code was
+changed, on the same build Harmonia probed. Artifact:
+roles/Daedalus/sprint_20260904/repro_harmonia_findings.py + repro_results.json
+
+Tally: 6 REPRODUCED, 2 REFINED, 1 NOT_REPRODUCED.
+
+  ID                       VERDICT         WHAT ACTUALLY HAPPENED
+  ---------------------------------------------------------------------
+  I-CREATE-IDEMPOTENCY     REPRODUCED      same config x3 -> 3 world_ids
+  I-CREATE-IDEM-HEADER     REPRODUCED      Idempotency-Key header was
+                                           ACCEPTED AND SILENTLY IGNORED
+                                           -> 2 worlds. Worse than absent:
+                                           a caller sending the header the
+                                           other endpoints honour would
+                                           reasonably believe it worked.
+  I-ATTEST-NOT-FORCED      REPRODUCED      observation, no work_id -> 200,
+                                           evidence_class CLIENT_ASSERTED
+  I-CAUSAL-CLIENT          REPRODUCED      POST observations returned only
+                                           {"obs_id"} -- the caller MUST
+                                           search the ledger for its event
+  I-LIFECYCLE-TERMINATED   REPRODUCED      and GENERALIZED (see below)
+  B5-WORLD-CONFIG          REPRODUCED      get_world omitted budget
+
+  I-CLIENT-GATE-UNENFORCED REFINED         see below
+  I-WORLD-ENUM-UNSCOPED    REFINED         see below
+
+  I-EVENTS-SHAPE           NOT_REPRODUCED  see below
+
+Three findings did not survive contact in the form they were filed. This is
+the part of the packet most worth attacking.
+
+I-EVENTS-SHAPE -- NOT REPRODUCED.
+  Claim: "GET .../events returns dict {'events':[...]} sometimes, a bare
+  list other times; the harness broke mid-run."
+  Measured: the HTTP endpoint returns a dict, always. sfe/api.py has exactly
+  one return statement for that route: {"events": f.world_events(...)}.
+  sfclient/client.py:145 unwraps it: return self._req(...)["events"].
+  So the two "shapes" are two CALL STYLES -- raw HTTP vs the client method --
+  not an inconsistent endpoint. Nothing was fixed because nothing was broken.
+  What IS real is the documentation defect: nothing told her that. Filed as
+  a doc fix, not a code fix. I could be wrong here in one specific way: I
+  probed the current build, and if the shape genuinely varied on an EARLIER
+  build then this is a regression that has since been repaired by accident.
+  I have not excavated the history to rule that out.
+
+I-WORLD-ENUM-UNSCOPED -- REFINED, and the correction matters.
+  Claim: "GET /v2/worlds returns all 189 worlds unscoped; an agent can't
+  tell which are its own."
+  Measured: the endpoint has ALWAYS been client-scoped --
+  list_worlds(client_id=cid) in the route, filtered in SQL. A freshly minted
+  client on M2 saw n=5, its own only. The 189 worlds Harmonia saw were all
+  hers. The isolation guarantee was never in question; what was missing was
+  FILTERING (which of mine are active / finished / from this run). Fixed as
+  scoping, not as an isolation repair -- and pinned with a test asserting a
+  second client still sees only its own, so the new filters cannot erode the
+  property that was never broken.
+
+I-CLIENT-GATE-UNENFORCED -- REFINED.
+  Claim: "SFE accepts corrupt organism bytes paired with a valid-looking
+  client-asserted blob_hash."
+  Measured: SFE never accepts a client-asserted blob_hash at all. The
+  ArtifactCreate model is (kind, data_b64, meta) with extra="forbid"; the
+  engine always computes the digest itself and returned the CORRECT digest of
+  the corrupt bytes. The hazard is real but its shape is different: the
+  engine had no way to be TOLD what the bytes were supposed to be. Sending
+  expected_blob_hash returned 422 extra_forbidden -- the assertion was
+  unexpressible. So this was never "the engine trusts the client"; it was
+  "the engine cannot be asked to check." That reframing is what made the fix
+  four lines instead of a redesign.
+
+I-LIFECYCLE-TERMINATED -- REPRODUCED AND WORSE THAN FILED.
+  Filed as "artifact write after terminate succeeds." My first probe agreed
+  and ALSO reported experiment-write and work-claim surviving termination.
+  Both were my own instrument error, and I record them because they nearly
+  entered this packet as findings:
+    - the experiment write had failed with 409 "world must be RUNNING",
+      i.e. it was blocked by the CREATED state, not by TERMINATED. I had
+      never started the world, so termination was not the variable.
+    - work_claim answered HTTP 200 with body {"work": null}. 200 there means
+      "nothing claimable", not "claimed". claim_work already filters
+      d.state='RUNNING' and could never have claimed from a dead world.
+  Re-probed with a RUNNING-world control so termination was the only
+  variable, and scoring a claim only if an item actually came back:
+    worked before AND after terminate: artifact, hypothesis, budget_consume
+    correctly blocked:                 experiment
+  So it generalized beyond artifacts to hypotheses and budget debits, but
+  not as far as my broken probe claimed.
+
+--------------------------------------------------------------------------
+3. BUGFIXES IMPLEMENTED
+--------------------------------------------------------------------------
+
+Two commits on main:
+  c49f2983c  close the four quiet-success hazards in the SFE engine
+  bfb9501bd  D-REPLAY-1 -- make the exact action recoverable, not just sealed
+
+Test suite: 88 -> 119, all green (31 new tests in
+tests/test_sfe_orchestration_safety.py). Every test names the Harmonia probe
+that justifies it, so a future maintainer can trace each guard to evidence.
+
+D-IDEM-1  CREATE-WORLD RETRY SAFETY                     [Harmonia B1/H2]
+  POST /v2/worlds now takes the Idempotency-Key header the other epistemic
+  writes already took. Same key + same semantic request -> the SAME world
+  replayed. Same key + different body -> 409 naming the first-use route and
+  world. The key row, the world row and the WORLD_CREATED event commit in ONE
+  transaction, so a process that dies mid-retry leaves either both or
+  neither. Tested across a real close-and-reopen of the database, which is
+  the case a single-process test cannot reach.
+  Caveat, stated because it will bite someone: a caller relying on
+  idempotency MUST pass an explicit seed_root. A server-minted seed differs
+  per call; the replay returns the FIRST world, seed included.
+
+D-ATTEST-1  FORCED EVIDENCE ATTESTATION                 [Harmonia C3]
+  Worlds may be created with require_attestation=true, which makes the
+  CLIENT_ASSERTED class UNREACHABLE in that world rather than merely visible
+  after the fact. Default is unchanged and deliberately so: unattested
+  observation stays legal, typed, and honestly labelled everywhere it
+  appears (observation row, event, CLAIM_* adjudication). The narrowest
+  fail-closed contract is a per-world opt-in, not a global rule -- a global
+  rule would have been an execution veto on exploratory work, which the
+  mandate forbids.
+  The flag is readable on the world, so a consumer learns the evidence
+  regime WITHOUT running an observation to find out.
+
+D-CIDGATE-1  ORGANISM CONTENT-IDENTITY GATE            [Harmonia A3]
+  Artifacts accept an optional expected_blob_hash. The engine recomputes the
+  digest and fails closed on mismatch: nothing stored, NO event appended
+  (asserted by test -- a rejected write must not perturb the ledger). Bare
+  hex and "sha256:"-prefixed forms both accepted. Opt-in, because this
+  endpoint has non-organism callers whose bytes are not content-asserted.
+  The gate lives in the engine so no caller re-implements it -- which was
+  the actual risk, since a caller that skips its own gate fossilizes
+  corruption behind a valid-looking hash.
+
+D-ANCHOR-1  EXACT CAUSAL ANCHOR FROM THE WRITE          [Harmonia D1]
+  POST observations now returns event_id, entry_hash, event_seq,
+  world_index, evidence_class and evidence_role alongside obs_id. This
+  removes the search that made wrong-but-real anchors possible: a caller no
+  longer has to find "its" event, it is handed the one it just created.
+  BREAKING: record_observation returns a dict, not a bare obs_id string.
+  Seven existing tests updated to read o["obs_id"]. Called out loudly
+  because it is a silent-breakage shape for any caller I do not know about.
+
+D-LIFECYCLE-1  TERMINAL-STATE WRITE GATE                [Harmonia B4]
+  TERMINATED now ends the scientific write lifetime. Previously it ended
+  only state transitions and work enqueue. The ruling, encoded and tested:
+    FORBIDDEN after terminate: artifacts, hypotheses, predictions,
+      experiments, commits, observations, failures, lineage edges, imports,
+      budget debits, new work claims
+    STILL PERMITTED, deliberately and typed:
+      - every read (a terminated world IS the evidence; it must stay legible)
+      - checkpoint (snapshots already-final state; appends no science)
+      - fork (the CHILD is a new world -- replay, counterfactual and
+        fixed-world rerun all require branching from a FINISHED world;
+        forbidding this would break the experiment designs the engine
+        exists to serve)
+      - complete_work / fail_work for work claimed BEFORE termination
+        (in-flight settlement; refusing would strand the lease forever and
+        force the ledger to misreport what the worker actually did)
+  Rationale for making this fail closed at all: if the head hash at
+  termination is not final, a fossil cannot claim to have the whole world,
+  and "terminated" means nothing a replay can rely on.
+
+D-WORLDCFG-1  WORLD CONFIG COMPLETENESS + SCOPED ENUM   [Harmonia B5/K1]
+  get_world now carries budget limits and require_attestation. list_worlds
+  filters by session_id, state, created_after, created_before -- enough for
+  an orchestrator to answer which worlds are mine / active / finished /
+  cleanup candidates, and deliberately NOT a search engine. Unknown state
+  values are rejected 422 rather than silently returning everything.
+
+D-REPLAY-1  THE ACTION IS RECOVERABLE                   [NEW -- NOT FILED]
+  Not on Harmonia's list; found by chasing "exact_action MISSING" to its
+  cause. The action was never missing from the engine. create_experiment
+  stores the full spec with spec_hash, and EXPERIMENT_COMMITTED seals
+  spec_hash AND engine_source_hash into the tamper-evident chain. What was
+  missing was a READ PATH -- there was no GET for experiments or
+  observations at all. The consequence is precise: a consumer could VERIFY a
+  spec it already held and could never RECOVER one it did not, so the action
+  lived only in whatever repo checkout produced the run. That is exactly the
+  "derivable while today's checkout exists" state the completeness analysis
+  flagged, reached by a different route than assumed.
+  Added, read-only and client-scoped:
+    GET /v2/worlds/{wid}/experiments        (optional ?state=)
+    GET /v2/worlds/{wid}/experiments/{eid}  -> spec + spec_hash
+    GET /v2/worlds/{wid}/observations       (optional ?exp_id=)
+  Tested: recovered spec is byte-equal, re-deriving its hash matches the
+  value the ledger committed to, and a foreign client gets AccessDenied
+  (the new reads must not become a cross-experimenter oracle).
+
+SCHEMA MIGRATION 3 -> 4, additive: worlds.require_attestation DEFAULT 0.
+  Pre-v4 worlds keep the old contract. Retroactively requiring attestation
+  would reclassify historical CLIENT_ASSERTED observations recorded
+  legitimately under the old rules (invariant V: old events remain old
+  events).
+  VERIFIED against a COPY of the live M2 database, not a fixture:
+    before: schema_version 3, 56 worlds, 896 events, 59 observations,
+            20 artifacts, 69 experiments, 53 work_items, 16 clients
+    after:  schema_version 4, ALL COUNTS IDENTICAL
+            require_attestation present, all 56 pre-existing worlds = 0
+            ledger verify on 12 real worlds: 12 ok / 0 bad
+
+--------------------------------------------------------------------------
+4. REMAINING P0 / P1 / P2
+--------------------------------------------------------------------------
+
+P0 -- REMAINING (blocks trusting the repairs, not the design)
+  P0-1  LIVE VERIFICATION NOT DONE. Both engines still run the old build.
+        Process termination was blocked in my session, so I could not
+        restart the service. Required before any campaign:
+          restart M2 -> confirm /v2/version reports a NEW source hash
+          python -m pytest .../tests -q            expect 119
+          test_harness/harness.py                  expect 12/12
+          test_harness/isolation_two_experimenters.py  expect 7/7
+          repro_harmonia_findings.py               expect the 6 REPRODUCED
+                                                   rows to flip
+        Until then the correct status line is "green in-process."
+  P0-2  M1 IS UNPATCHED. M1 holds the fuller history and is untouched by
+        this work. Whether M1 takes this build is James's call, not mine --
+        it is a live service with other consumers.
+
+P1 -- EXPERIMENT VELOCITY
+  P1-1  events() shape is a DOC defect, adjudicated not fixed. The client
+        guide must state: raw HTTP returns {"events": [...]}, sfclient
+        returns a bare list.
+  P1-2  Dry-run / preflight validation for frozen specs (section 9).
+  P1-3  arena.run bounded implementation (section 8) -- spec only this pass.
+  P1-4  Qualification probes for N isolated worlds (section 10).
+  P1-5  No typed measurement definition on observations. content is
+        freeform JSON, so the engine cannot tell a caller WHAT was measured.
+        This is the MEASUREMENT coordinate gap and it is also Mnemosyne's
+        standing ask (roles/Daedalus/todo_20260902.md: 9 recoverable items;
+        only 2 of 6,006 candidate artifacts carry phenotype scores).
+
+P2 -- OPERATIONS
+  P2-1  Test-world GC. M1 stood at 189 worlds, M2 at 56 and climbing; my
+        own repro run added 7. No reaper exists.
+  P2-2  Same-world contention probe (UNMEASURED -- see section 10).
+  P2-3  Duplicate work-completion semantics (UNMEASURED).
+  P2-4  Restart durability probe design.
+  P2-5  Measured throughput ceiling (UNMEASURED; no number exists).
+
+--------------------------------------------------------------------------
+5. ENGINE SCIENTIFIC CONTRACT
+--------------------------------------------------------------------------
+
+HARD INVARIANTS (the engine enforces these; violation is a bug in ME)
+  H-1  Isolation. No client observes, mutates, corrupts or starves another's
+       worlds, ledgers, queues, budgets or artifacts, even knowing their ids.
+  H-2  Ledger integrity. Events form a per-world hash chain; entry_hash binds
+       world, index, type, ts, actor, payload, refs, causal, artifacts, prev.
+  H-3  Commit is irreversible and closes the prospective window BEFORE
+       execution is possible. A prediction is prospective iff
+       created_seq < committed_seq. No later observation reopens it.
+  H-4  Evidence class is mechanically derived, never self-reported.
+       ENGINE_WORK_RESULT requires a COMPLETED work item of THIS world
+       enqueued for THIS experiment.
+  H-5  Falsification is monotonic. SURVIVED never un-falsifies.
+  H-6  First observation of an experiment is ORIGINAL and fixes adjudication;
+       a later one must be an explicit REPLICATION and never re-adjudicates.
+  H-7  Provenance is permanent. Imported artifacts keep origin=IMPORTED plus
+       source lineage forever.
+  H-8  Content addressing is server-computed. A client cannot assert a digest
+       the engine did not derive from the bytes it received.
+  H-9  [NEW] TERMINATED ends the scientific write lifetime.
+  H-10 [NEW] Idempotent creation. One (client, key) yields one world, or a
+       diagnosable conflict -- never two causal universes.
+
+SCIENTIFIC ASSUMPTIONS (the engine ASSUMES these; it does not check them)
+  A-1  The experimenter's spec is meaningful. spec is freeform and opaque --
+       sealed by hash, never interpreted.
+  A-2  Observation content means what the experimenter says. The engine
+       records outcome in {FALSIFIED, SURVIVED, INCONCLUSIVE} and treats
+       content as an opaque blob.
+  A-3  seed_root determines whatever the experimenter's own code makes of it.
+       The engine stores and returns it; it does not drive execution with it.
+  A-4  A work result is authoritative because the engine watched the work
+       complete -- NOT because the result is correct.
+
+EXPLORATORY FREEDOMS (deliberately unconstrained; do not "fix" these)
+  F-1  Effect size is never a gate. R ~= 0.000001 executes exactly like
+       R = 0.9. No threshold anywhere in the execution path.
+  F-2  A primitive may be useless, harmful, suppressive or valuable only in
+       combination. The engine has no opinion.
+  F-3  Unattested observation remains legal by default. It is typed, not
+       forbidden.
+  F-4  Replicates are new worlds by design. Config is NOT identity -- that
+       is why idempotency is opt-in via an explicit key rather than inferred
+       from config equality.
+  F-5  No baseline, significance or incrementality rule is embedded in
+       execution. That belongs above the engine and it stays there.
+
+--------------------------------------------------------------------------
+6. EMERGENCE SUPPORT -- WHAT SFE CAN AND CANNOT DO
+--------------------------------------------------------------------------
+
+Target regime: effect(A) ~= 0, effect(B) ~= 0, effect(A+B) >> sum.
+
+  OPERATION                          STATUS   NOTES
+  ---------------------------------------------------------------------
+  run(A) in an isolated world        YES      ISOLATED policy, 7/7 live
+                                              isolation verified previously
+  run(B) independently               YES      same
+  run(A+B)                           YES*     * the engine HOSTS it but
+                                              cannot VERIFY that A+B is the
+                                              composition of A and B
+  hold world configuration fixed     YES      seed_root settable; config now
+                                              fully readable (D-WORLDCFG-1)
+  fixed-world rerun                  YES      checkpoint + fork, now legal
+                                              on a terminated world
+  fixed-player / changed-world       YES      same organism bytes -> two
+                                              worlds; A2 showed blob_hash
+                                              identical, artifact_id distinct
+  changed-player / fixed-world       YES      fork from one checkpoint
+  exact replay                       PARTIAL  spec + spec_hash now readable
+                                              (D-REPLAY-1) and verifiable
+                                              against the sealed ledger
+                                              value. Still PARTIAL: the
+                                              engine does not re-execute.
+                                              It can prove you have the same
+                                              action; running it is yours.
+  isolated parallel worlds           YES      bounded concurrency PASS;
+                                              ceiling unmeasured (sec 10)
+  preserved negative conditions      YES      F-1/F-2: nothing is discarded
+                                              for being weak or negative
+  ablate A from A+B                  NO       see below
+  primitive / composition ablation   NO       see below
+  intervention, action substitution  NO       see below
+  world perturbation                 PARTIAL  fork supports `interventions`
+                                              (freeform, uninterpreted)
+  temporal / conditional primitives  NO       see below
+
+THE ONE STRUCTURAL GAP, stated plainly:
+
+  The engine has NO TYPED REPRESENTATION OF AN ACTION OR A COMPOSITION.
+  `spec` is a freeform dict, opaque by design (A-1). This is deliberate and
+  it is correct for scientific freedom -- and it is exactly why the engine
+  cannot support ablation as an ENGINE primitive. To ablate A from A+B the
+  engine would have to know which part of the spec is A, and it cannot,
+  because it has never been allowed to look inside.
+
+  Consequence: run(A), run(B), run(A+B) are three opaque specs that the
+  engine cannot relate to each other. It can prove all three ran, prove
+  WHICH spec each one ran (sealed spec_hash), prove what each produced, and
+  prove nothing crossed between the worlds. It cannot verify that the third
+  is the composition of the first two. That verification is the
+  experimenter's obligation today and there is no engine-side check for a
+  mislabelled composition.
+
+  MINIMUM MISSING ENGINE PRIMITIVE, if composition is to become checkable:
+  an OPTIONAL typed `components` field on the experiment spec --
+      spec.components = [{"id": "A", "hash": "..."}, {"id": "B", ...}]
+  -- sealed at commit like the rest of the spec. The engine would not
+  interpret A or B; it would only assert structural relations it CAN check:
+    * the components of A+B are exactly {A, B} by hash
+    * an ablation experiment declares parent + removed component, and the
+      engine verifies the remainder matches the parent minus that component
+    * a composition cannot silently change a component's hash between runs
+  That is roughly 100 lines and it buys mechanical protection against the
+  single most likely error in this research programme -- claiming an
+  interaction effect between two things that were not actually the things
+  that ran. I have NOT built it. It changes the meaning of `spec` and that
+  is a contract decision that belongs to Harmonia and James, not to me
+  unilaterally.
+
+--------------------------------------------------------------------------
+7. CONSTRAINT-TRANSFER V0 -- EXECUTABLE, NOT PHILOSOPHY
+--------------------------------------------------------------------------
+
+Herakles' finding is that the local-failure -> structural-constraint pipeline
+is CEGAR, and that it demonstrably drives recurrence to near zero in
+deterministic systems. The cheapest correct instance of it for an engine is
+not a rule engine. It is a regression test that cannot be skipped.
+
+So constraint-transfer v0 for SFE is: A PROVEN FAILURE BECOMES A NAMED TEST
+IN THE STANDING BATTERY, CARRYING ITS PROVENANCE IN ITS DOCSTRING.
+
+Structure actually used (not proposed -- this is what shipped):
+
+  constraint_id     D-IDEM-1
+  source_failure    Harmonia B1/H2, 2026-09-04: same config x3 -> 3 worlds
+  scope             POST /v2/worlds
+  severity          HARD
+  predicate         same (client, key, request) -> same world_id;
+                    conflicting request under one key -> ConflictError
+  provenance        repro_results.json probe I-CREATE-IDEMPOTENCY
+  introduced_at     commit c49f2983c
+  fires_on          every pytest run of the engine suite
+  result            4 tests green
+
+  constraint_id     D-CIDGATE-1
+  source_failure    Harmonia A3: corrupt bytes stored with an honest digest
+                    of the WRONG object
+  scope             POST /v2/worlds/{wid}/artifacts
+  severity          HARD when expected_blob_hash is supplied; ADVISORY (no
+                    gate) when it is not
+  predicate         sha256(bytes) == asserted -> store; else refuse AND
+                    append no event
+  provenance        repro probe I-CLIENT-GATE-UNENFORCED
+  introduced_at     c49f2983c
+  result            4 tests green, incl. "a rejected artifact appends NO
+                    event" -- the check that a naive fix would miss
+
+  constraint_id     D-LIFECYCLE-1
+  source_failure    Harmonia B4 + my controlled re-probe
+  scope             all scientific write paths
+  severity          HARD
+  predicate         world.state == TERMINATED -> InvalidTransition, EXCEPT
+                    reads, checkpoint, fork, in-flight work settlement
+  provenance        repro probe I-LIFECYCLE-TERMINATED (before/after control)
+  introduced_at     c49f2983c
+  result            5 tests green, including two that assert the PERMITTED
+                    exceptions still work -- a constraint that only tests
+                    the forbidden side silently over-blocks
+
+Same shape for D-ATTEST-1, D-ANCHOR-1, D-WORLDCFG-1, D-REPLAY-1.
+
+WHAT I DELIBERATELY DID NOT BUILD: a universal constraint registry with a
+predicate DSL. Herakles' own MVP for the failure-to-regression compiler is
+"a database of 5 known failure graphs" -- and at 7 constraints, a table of
+tests IS that database, with the advantage that it executes on every commit
+and cannot drift from the code it guards. Build the registry when there is a
+constraint that a test cannot express. There is not one yet.
+
+ONE HONEST WEAKNESS: my constraints all fire at COMMIT time, in CI. None of
+them fire at EXPERIMENT DESIGN time, which is where Herakles' linter concept
+actually lives. An engine cannot lint a design it is forbidden to interpret
+(A-1). Design-time linting belongs to Harmonia, above the engine, and the
+engine's contribution to it is the preflight interface in section 9.
+
+--------------------------------------------------------------------------
+8. ARENA ENGINE CONTRACT
+--------------------------------------------------------------------------
+
+Harmonia measured the encounter path at ~14 manual steps with six identities
+transcribed by hand between two services. The directive is explicit that
+arena.run must NOT automate that hazard, only a repaired version of it.
+
+PREREQUISITES -- status after this sprint:
+  create-world retry safety ......... MET (D-IDEM-1)
+  forced attestation ................ MET (D-ATTEST-1)
+  exact causal-anchor selection ..... MET (D-ANCHOR-1)
+  organism identity enforcement ..... MET (D-CIDGATE-1)
+  action recoverable for replay ..... MET (D-REPLAY-1)
+  PEW fossil completeness ........... NOT MET -- owned by PEW/Mnemosyne
+
+Five of six prerequisites are met. The sixth is not mine. Therefore:
+SPEC ONLY THIS PASS, as directed. I did not implement arena.run.
+
+ENGINE-FACING CONTRACT (what SFE must offer so the wrapper is safe):
+
+  arena.run(organism_bytes, world_config, action_plan, *, idem_key)
+
+  INPUTS the engine requires
+    organism_bytes     raw bytes
+    expected_blob_hash caller's asserted content id -- MANDATORY in the
+                       arena path even though optional at the endpoint
+    world_config       {seed_root (REQUIRED, not server-minted -- see the
+                       D-IDEM-1 caveat), sharing_policy, budget,
+                       require_attestation: true}
+    action_plan        the experiment spec, sealed at commit
+    idem_key           REQUIRED. Every one of the wrapper's engine calls
+                       derives its key from this one, so the WHOLE encounter
+                       is retry-safe, not just its parts.
+
+  OUTPUTS the engine now guarantees (all available today)
+    world_id, session_id
+    artifact_id + blob_hash        (identity-gated)
+    exp_id + spec_hash             (sealed in EXPERIMENT_COMMITTED)
+    work_id + result_hash          (engine-attested)
+    obs_id
+    event_id + entry_hash + event_seq + world_index   <- the causal anchor
+    evidence_class + evidence_role
+    engine_source_hash + source_commit
+    head_hash at termination
+
+  GUARANTEES
+    G-1  Retried in full with the same idem_key, it yields the SAME encounter
+         -- not a second one.
+    G-2  The returned anchor is THE event this encounter produced. No search.
+    G-3  evidence_class is ENGINE_WORK_RESULT or the call FAILED
+         (require_attestation=true makes the degraded class unreachable).
+    G-4  Organism bytes that do not match the assertion never enter a world.
+    G-5  The action is recoverable and hash-verifiable after the fact.
+
+  WHAT THE WRAPPER MUST NOT DO
+    - must not select the anchor by searching events (G-2 removes the need)
+    - must not fall back to an unattested observation on work failure
+    - must not proceed on a digest mismatch
+    - must not mint a fresh idem_key on retry
+
+  INVALID STATES NOW UNEXPRESSIBLE (rather than merely discouraged):
+    unattested observation in a require_attestation world; artifact whose
+    bytes contradict its asserted id; a second world from one keyed create;
+    any scientific write into a terminated world; an anchor the caller
+    never produced (it is handed the real one).
+
+--------------------------------------------------------------------------
+9. FREEZE EXECUTABILITY -- INTERFACE REQUEST TO HARMONIA
+--------------------------------------------------------------------------
+
+The V2 failure: SplitMix64('20260904b') -- a STRING passed to an integer
+operation. Frozen, durable, reachable, READY_TO_EXECUTE=YES, and not
+executable. Harmonia owns the freeze-process fix.
+
+FIRST, THE HONEST BOUNDARY: the engine could not have caught this one. The
+seed was consumed by Harmonia's own action code, not by an engine call. The
+engine never sees SplitMix64. Any claim that an engine preflight would have
+prevented this specific failure is false, and I want that on the record
+before offering the interface below.
+
+WHAT THE ENGINE CAN OFFER (P1, not built):
+
+  POST /v2/worlds/{wid}/experiments?dry_run=true
+
+  Validates and returns WITHOUT side effects:
+    - spec is well-formed JSON and canonically hashable
+    - the spec_hash the real call WOULD seal (so a freeze can record the
+      hash it expects, and a mismatch at execution is caught immediately)
+    - referenced hyp_id / pred_id exist in this world
+    - the prospective-window verdict the real commit WOULD reach
+    - budget admissibility: whether committing would exceed an enforceable
+      limit, WITHOUT debiting
+    - world state admissibility (RUNNING? terminated?)
+  Guarantees: no event appended, no budget debited, no id minted, no
+  idempotency key consumed. A dry run must be invisible in the ledger --
+  otherwise the preflight is itself a side effect and the freeze is dirtier
+  after checking it than before.
+
+  Also useful and cheap:
+  POST /v2/worlds?dry_run=true  -- validate sharing_policy, budget
+  enforcement classes and seed_root TYPE before a campaign mints anything.
+  A seed_root that is a string fails HERE, at the engine boundary, with a
+  422 naming the field. That would not have caught the V2 failure (the seed
+  never reached the engine) but it does catch the same TYPE ERROR CLASS at
+  the one boundary the engine controls.
+
+  REQUEST TO HARMONIA: tell me whether the freeze primitive wants
+  (a) spec_hash prediction only -- cheapest, purely functional, or
+  (b) full admissibility including budget and window verdicts -- more
+      useful, requires a read transaction against live world state, so its
+      answer can go stale between preflight and execution.
+  I will build whichever you name. I lean (a) plus seed_root/enforcement
+  TYPE validation, because (b) returns an answer with a shelf life and a
+  stale PASS is worse than no PASS.
+
+--------------------------------------------------------------------------
+10. QUALIFICATION / CONCURRENCY PLAN
+--------------------------------------------------------------------------
+
+MEASURED AND SAFE NOW
+  - Independent ISOLATED worlds + separate worker identities: bounded
+    concurrency PASS (Harmonia I1; two workers, two worlds, work_id and
+    claim_id cleanly separated).
+  - Two-experimenter isolation: 7/7 live, previously verified.
+  - Claim atomicity is structurally sound by construction: claims run under
+    BEGIN IMMEDIATE with a UNIQUE(world_id, world_index) backstop and a
+    server-issued fencing claim_id. NOTE THE EPISTEMIC STATUS -- that is a
+    CODE READING, not a measurement. It is the reason I expect the probes
+    below to pass; it is not a substitute for running them.
+
+REQUIRES BOUNDED QUALIFICATION (run before any N-world campaign)
+  Q-1  N isolated worlds, N in {4, 16, 64}, one worker each. Measure
+       wall-clock, error rate, and SQLite lock contention. Success: zero
+       errors, no world's ledger fails verify.
+  Q-2  Same-world concurrency. UNMEASURED and NOT ASSUMED SAFE. Two workers
+       claiming from ONE world; assert no work item is claimed twice and no
+       ledger index duplicates.
+  Q-3  Duplicate work-completion. Complete the same work_id twice, and
+       complete with a stale claim_id after lease expiry. Assert the second
+       is refused, not silently accepted.
+  Q-4  Restart durability. Kill the engine mid-transaction under load;
+       assert WAL recovery leaves every world's ledger verifiable and no
+       half-written idempotency key.
+  Q-5  Throughput ceiling. No number exists today. Measure encounters/sec
+       at the concurrency Q-1 establishes as safe.
+
+DESTRUCTIVE / OPERATOR AUTHORIZATION REQUIRED
+  Q-4 involves killing a live service. Not to be run against an engine
+  holding anyone's uncommitted campaign.
+
+WORLD-LEVEL PARALLELISM IS THE PROMISING UNIT. Same-world concurrency stays
+UNSAFE-UNTIL-MEASURED, and I would rather Harmonia design campaigns that
+never need it than have me certify it on a code reading.
+
+--------------------------------------------------------------------------
+11. KILL / DEFER LIST
+--------------------------------------------------------------------------
+
+KILLED
+  K-1  I-EVENTS-SHAPE as a code defect. The endpoint has one return shape.
+       Reclassified as a documentation defect. No code change.
+  K-2  I-WORLD-ENUM-UNSCOPED as an ISOLATION defect. The endpoint was
+       always client-scoped. Reclassified as a missing-filter defect.
+  K-3  "SFE accepts a client-asserted blob_hash." It never did. Killed and
+       replaced by the accurate framing: the engine could not be ASKED to
+       check.
+  K-4  My own first-pass probe results for experiment-write-after-terminate
+       and work-claim-after-terminate. Both were instrument error (an
+       uncontrolled world state; a 200 that meant "nothing claimable").
+       Retracted before they became findings.
+
+DEFERRED (with the trigger that would revive each)
+  D-1  Universal constraint registry / predicate DSL. Revive when a
+       constraint appears that a pytest cannot express.
+  D-2  arena.run implementation. Revive when PEW fossil completeness lands.
+  D-3  Typed `components` field for composition/ablation (section 6).
+       Revive on Harmonia+James contract decision. This is the highest-value
+       deferred item in this packet.
+  D-4  Test-world GC. Revive at world count > ~500 or on disk pressure.
+  D-5  Same-world concurrency support. Revive only after Q-2 measures it.
+
+NOT DEFERRED, JUST NOT MINE
+  PEW fossil completeness (9 of 16 identities MISSING or AMBIGUOUS) and
+  GET /packets readability are Mnemosyne's. Proteus owns organism identity
+  upstream of the gate I added.
+
+--------------------------------------------------------------------------
+12. HANDOFF TO HARMONIA -- FIVE CONSTRAINING FACTS
+--------------------------------------------------------------------------
+
+  1. THE ENGINE YOU PROBED IS STILL THE ENGINE THAT IS RUNNING. Every fix in
+     this packet is committed but NOT deployed; both engines still serve
+     build c358a53b. Do not design against these guarantees until a restart
+     shows a new engine_source_hash at /v2/version.
+
+  2. IF YOU WANT RETRY SAFETY YOU MUST PASS AN EXPLICIT seed_root. The
+     idempotency key alone is not enough: a server-minted seed differs per
+     call and the replay hands back the FIRST world, seed included. A
+     campaign that omits seed_root and relies on retries will get correct
+     but surprising worlds.
+
+  3. YOUR OBSERVATION CALL NOW RETURNS ITS OWN CAUSAL ANCHOR. Stop searching
+     the ledger for the run's event -- POST observations returns event_id and
+     entry_hash directly. This is also BREAKING: the response is a dict, not
+     a bare obs_id. Anything that treated the return as a string will break
+     loudly, which is the intent.
+
+  4. TWO OF YOUR FINDINGS DID NOT REPRODUCE AS FILED, AND ONE OF THE
+     CORRECTIONS AFFECTS YOUR MENTAL MODEL OF THE ENGINE: /v2/worlds was
+     never unscoped. Your 189 worlds were all yours. There is no isolation
+     hole there and there never was. Likewise events() has one shape; you
+     were seeing raw-HTTP vs sfclient. I may be wrong about events() if it
+     genuinely varied on an older build -- I did not excavate the history.
+
+  5. ABLATION IS NOT AN ENGINE CAPABILITY AND WILL NOT BECOME ONE BY
+     ACCIDENT. `spec` is opaque by design, so the engine cannot verify that
+     A+B is the composition of A and B, and cannot ablate A from it. Today
+     that verification is entirely YOUR obligation, with no engine-side
+     check against a mislabelled composition. Section 6 specifies the ~100
+     line typed-components primitive that would make it mechanical. It needs
+     your contract decision, not my initiative.
+
+--------------------------------------------------------------------------
+ARTIFACTS
+--------------------------------------------------------------------------
+  Commits (branch main)
+    c49f2983c  four quiet-success hazards closed
+    bfb9501bd  D-REPLAY-1 action recoverable
+  Code
+    SerendipityFoundry/SerendipityFoundryEngine/sfe/runtime.py
+    SerendipityFoundry/SerendipityFoundryEngine/sfe/api.py
+    SerendipityFoundry/SerendipityFoundryEngine/sfe/store.py
+  Tests (31 new, suite 119 green)
+    SerendipityFoundry/SerendipityFoundryEngine/tests/
+      test_sfe_orchestration_safety.py
+  Reproduction evidence (run BEFORE any change, live M2, build c358a53b)
+    roles/Daedalus/sprint_20260904/repro_harmonia_findings.py
+    roles/Daedalus/sprint_20260904/repro_results.json
+  This packet
+    roles/Daedalus/sprint_20260904/
+      REVIEW_PACKET_ENGINE_SPRINT_2026-09-04.txt
+  Inputs collided against
+    genesis/harmonia_a/first_integration/{boundary_findings,ranked_issues,
+      completeness_analysis,v2_result}.json
+    roles/Herakles/deep_research/2026-09-04_constraint_transfer/
+      SHARE_cross_experiment_constraint_transfer.md
+
+--------------------------------------------------------------------------
+QUESTIONS FOR THE REVIEWER (written to resist agreement)
+--------------------------------------------------------------------------
+  Q1  D-LIFECYCLE-1 is a BREAKING change to a live contract. I ruled that
+      TERMINATED forbids writes because otherwise the head hash at
+      termination is not final. Is that worth breaking a caller who was
+      legitimately writing summary artifacts after terminate? I permitted
+      checkpoint and fork to soften it -- is that line in the right place,
+      or did I just invent a distinction that will confuse people?
+  Q2  I made attestation OPT-IN per world rather than default-on. That
+      preserves exploratory freedom, and it also means the unsafe default is
+      the one everyone gets. Is opt-in cowardice here?
+  Q3  D-REPLAY-1 adds read paths to spec and observation content. I argued
+      it is safe because it is client-scoped. But it converts the engine
+      from "seals identity" to "serves content." Does that widen the blast
+      radius of a leaked token in a way that matters?
+  Q4  I killed two of Harmonia's findings on the strength of reading the
+      current code plus one live probe run. That is exactly the move that
+      goes wrong when an old build behaved differently. How hard should I
+      have to work to rule out a regression that repaired itself?
+  Q5  Section 6 says ablation cannot be an engine primitive without a typed
+      components field. Is the freeform `spec` actually load-bearing for
+      scientific freedom, or am I defending a design choice past its
+      usefulness because it is in the charter?
+
++==========================================================================+
+|  "Not worth continuing" remains a first-class answer. If the reviewer's  |
+|  judgement is that the engine should not be hardened further until a     |
+|  campaign actually demands it, say so -- five of these six repairs were  |
+|  driven by a probe suite, not by a blocked experiment, and that is a     |
+|  legitimate reason to call them premature.                               |
++==========================================================================+
