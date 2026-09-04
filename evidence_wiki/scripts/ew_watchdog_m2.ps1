@@ -63,7 +63,16 @@ $running = try {
     (Invoke-WebRequest -Uri "http://localhost:8377/api/v1/identity" -TimeoutSec 5 -UseBasicParsing).Content | ConvertFrom-Json
 } catch { $null }
 $runningCommit = if ($running) { $running.source_commit } else { $null }
-if ($runningCommit -ne $head) {
+# Redeploy only when SERVICE CODE actually changed between the running commit
+# and HEAD -- not on doc/portfolio commits (the auto-portfolio commits every
+# ~15 min would otherwise restart the service every time). A pre-closure or
+# "unknown" running commit cannot be diffed, so it always redeploys.
+$codeChanged = $true
+if ($runningCommit -and $runningCommit -ne "unknown" -and $runningCommit -ne $head) {
+    $diff = (& $git -C $root diff --name-only $runningCommit $head -- evidence_wiki/ew evidence_wiki/migrations evidence_wiki/config.json 2>$null | Out-String).Trim()
+    $codeChanged = [bool]$diff
+}
+if ($runningCommit -ne $head -and $codeChanged) {
     $rc = if ($runningCommit) { $runningCommit.Substring(0,[Math]::Min(12,$runningCommit.Length)) } else { "pre-closure/unknown" }
     Log ("deploy-lag: running {0} != HEAD {1}; redeploying" -f $rc, $head.Substring(0,12))
     $pid8377 = (Get-NetTCPConnection -LocalPort 8377 -State Listen -ErrorAction SilentlyContinue | Select-Object -First 1 -Expand OwningProcess)
