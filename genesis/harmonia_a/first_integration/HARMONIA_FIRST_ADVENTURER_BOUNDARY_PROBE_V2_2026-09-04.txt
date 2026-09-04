@@ -1,0 +1,509 @@
+========================================================================
+HARMONIA_FIRST_ADVENTURER_BOUNDARY_PROBE_V2_2026-09-04
+VERBATIM SUCCESSOR DIRECTIVE + FROZEN EXECUTION PARAMETERS
+========================================================================
+This artifact is the frozen governing directive for the successor
+boundary probe that REPLACES the lost original T1/T2. It contains, in
+order: (A) the operator's complete directive VERBATIM, and (B)
+Harmonia's frozen execution parameters (world configuration, the one
+action, the one preregistered consequence, namespace). Per the
+DIRECTIVE DURABILITY RULE, the experiment begins ONLY after this
+artifact is committed, pushed, proven reachable from origin/main, and
+its sha256 recomputed from the reachable bytes and shown to match.
+
+Original T1/T2 classification carried forward, NOT rewritten:
+  ORIGINAL_T1_T2_DIRECTIVE ...... LOST
+  ORIGINAL_T1_T2_EXECUTED ....... NO
+  ORIGINAL_T1_T2_ADJUDICATED .... NO
+  ORIGINAL_T1_T2_RECONSTRUCTED .. NO
+  ORIGINAL_T1_T2_STATUS ......... RETIRED_UNEXECUTED
+This V2 does NOT reproduce and does NOT claim to be the original T1/T2.
+
+========================================================================
+PART A -- OPERATOR DIRECTIVE (VERBATIM)
+========================================================================
+HARMONIA — ORIGINAL T1/T2 DIRECTIVE RETIRED AS LOST.
+ISSUE AND FREEZE A NEW SUCCESSOR BOUNDARY PROBE BEFORE EXECUTION.
+
+Your blocker is accepted as genuine.
+
+The original frozen T1/T2 15-minute boundary-probe directive cannot be recovered from the operator, repository current state, searched branches, integration/directive paths, readiness artifacts, or the searches already documented in your blocker packet.
+
+Do NOT reconstruct it.
+
+Do NOT claim that the experiment below is the original T1/T2.
+
+Do NOT reuse an old directive hash, freeze identity, or experimental identity.
+
+The original experiment is now formally classified:
+
+ORIGINAL_T1_T2_DIRECTIVE ............ LOST
+ORIGINAL_T1_T2_EXECUTED ............. NO
+ORIGINAL_T1_T2_ADJUDICATED .......... NO
+ORIGINAL_T1_T2_RECONSTRUCTED ........ NO
+ORIGINAL_T1_T2_STATUS ............... RETIRED_UNEXECUTED
+
+We will replace it with a newly issued experiment.
+
+========================================================================
+NEW EXPERIMENT
+HARMONIA FIRST-ADVENTURER BOUNDARY PROBE V2
+
+PURPOSE
+
+Take exactly ONE existing UNKNOWN Proteus adventurer, place it into exactly
+ONE real SFE world, execute exactly ONE encounter containing exactly ONE
+adventurer action producing exactly ONE world consequence, persist exactly
+ONE resulting fossil through PEW, and then reconstruct the complete identity
+chain from the authoritative persisted surfaces.
+
+This is an integration/boundary experiment only.
+
+It is NOT:
+
+- a fitness experiment
+- a scoring experiment
+- a selection experiment
+- an evolutionary campaign
+- a phenotype-classification experiment
+- a learning experiment
+- a balance test
+- a performance benchmark
+
+No scores.
+No selection.
+No mutation.
+No reproduction.
+No population.
+No campaign.
+
+The scientific question is narrowly:
+
+Can one UNKNOWN Proteus organism cross the
+Proteus -> SFE -> PEW boundary through one real encounter,
+leave one persisted fossil, and have the resulting chain
+reconstructed without identity loss or invented semantics?
+
+========================================================================
+PRE-EXECUTION FREEZE — MANDATORY
+
+DO NOT EXECUTE THE EXPERIMENT YET.
+
+First create a verbatim directive artifact containing THIS COMPLETE PROMPT.
+
+Give the successor experiment a new durable identity, for example:
+
+HARMONIA_FIRST_ADVENTURER_BOUNDARY_PROBE_V2_2026-09-04
+
+Record:
+
+- artifact path
+- complete sha256
+- commit containing the verbatim directive
+- SFE authoritative identity
+- PEW schema / ontology / fossil contract
+- Proteus registry identity
+- selected organism identity
+- selected SFE world identity
+- namespace
+- all other identities required to reproduce the run
+
+Commit it.
+
+Push it to origin/main.
+
+Fetch origin/main again.
+
+Verify that the exact directive artifact is reachable from origin/main.
+
+Recompute the sha256 from the fetched/reachable artifact and prove that it
+matches the frozen hash.
+
+ONLY AFTER THAT VERIFICATION MAY EXECUTION BEGIN.
+
+If the directive cannot be proven reachable from origin/main:
+
+STOP.
+
+This gate exists specifically because the original T1/T2 directive was lost.
+
+========================================================================
+FIXED SPECIMEN
+
+Use the already-established first Proteus specimen:
+
+organism_id prefix: 7743b352...
+
+Use its authoritative complete identifier from the live registry.
+
+Before execution verify:
+
+registry identity = b15e0a7f...
+entry_id unchanged
+phenotype = UNKNOWN
+
+Do not classify the phenotype.
+
+Do not infer capabilities from the genome beyond what the authoritative
+interface itself exposes.
+
+Do not modify the organism.
+
+========================================================================
+WORLD
+
+Use ONE real SFE world through the authoritative rebuilt SFE service.
+
+Do not create a mock world.
+
+Do not bypass SFE.
+
+Record the complete world identity returned by SFE.
+
+The exact world/configuration choice MUST be frozen in the pre-execution
+artifact before the encounter is executed.
+
+If more than one legitimate world/configuration is available and no existing
+authoritative rule uniquely determines which to use, STOP and report the
+choice set rather than selecting opportunistically.
+
+========================================================================
+ENCOUNTER
+
+Execute exactly ONE encounter.
+
+Within that encounter permit exactly ONE adventurer action that produces
+exactly ONE externally observable SFE consequence.
+
+The precise action and expected consequence MUST be selected from the
+authoritative SFE interface/runbook and written into the frozen
+pre-execution artifact BEFORE execution.
+
+They may not be selected after observing results.
+
+The action must exercise a genuine integration boundary. It must not be a
+pure read/no-op whose success is established without state transition.
+
+Do not optimize the action for success.
+
+Do not retry with a different action if it fails.
+
+========================================================================
+IDENTITY / ORDERING RULES
+
+Preserve the operational constraints already established by the integration
+work:
+
+- unique idempotency key per (world, step)
+- event_seq is ordering truth
+- blob_hash and artifact_id are distinct identities
+- preserve the required namespace
+- do not infer TERMINATED lifetime unless authoritative evidence
+  establishes it
+- account for restore() raising ValueError on runtime mismatch
+- account for malformed snapshots raising KeyError
+
+Do not silently normalize an identity mismatch.
+
+Do not repair evidence after the fact.
+
+========================================================================
+ONE FOSSIL
+
+Persist exactly ONE fossil representing this encounter through the
+authoritative PEW write path.
+
+Record all authoritative identities necessary to connect:
+
+Proteus organism
+    ->
+SFE world
+    ->
+encounter/event
+    ->
+action
+    ->
+consequence
+    ->
+PEW fossil/artifact
+
+Do not create additional experimental fossils to repair or improve the run.
+
+If the write fails, preserve the failure.
+
+========================================================================
+READ-BACK
+
+After persistence, reconstruct the chain from authoritative persisted
+surfaces.
+
+Do not prove success merely from in-memory objects retained during execution.
+
+Read it back.
+
+Verify every identity that the contracts make verifiable, including the
+appropriate:
+
+organism identity
+registry/entry identity
+world identity
+event identity
+event_seq
+action linkage
+consequence linkage
+fossil identity
+entry_hash
+artifact_id
+blob_hash
+artifact bytes
+
+Use the existing minimum seam/read-back verification where applicable.
+
+========================================================================
+PASS / FAIL
+
+PASS only if the ONE encounter completes through the intended boundary and
+the resulting persisted chain can subsequently be reconstructed from the
+authoritative surfaces with every contractually required identity intact.
+
+FAIL if any required boundary transition, persistence operation, identity
+link, ordering fact, hash, artifact byte verification, or required read-back
+cannot be established.
+
+A clean failure is experimental evidence.
+
+Do NOT patch and rerun.
+
+Do NOT substitute another organism.
+
+Do NOT substitute another world.
+
+Do NOT substitute another action.
+
+Do NOT create a second fossil.
+
+If infrastructure makes the preregistered experiment impossible to execute,
+classify it BLOCKED rather than FAIL where appropriate and preserve the exact
+reason.
+
+========================================================================
+ADJUDICATION LIMIT
+
+The strongest positive claim permitted by PASS is:
+
+ONE Proteus UNKNOWN adventurer successfully crossed the specified
+Proteus -> SFE -> PEW integration path in ONE preregistered encounter,
+produced the specified consequence, left ONE persisted fossil, and the
+required identity chain was reconstructed from authoritative persisted
+surfaces.
+
+PASS does NOT establish:
+
+general correctness
+general durability
+evolutionary fitness
+useful behavior
+intelligence
+learning
+phenotype meaning
+cross-world portability
+campaign readiness
+population behavior
+
+Keep the existing maintenance-provenance durability observation separate
+from this experiment.
+
+========================================================================
+TIME BOUND
+
+This remains a deliberately tiny boundary probe.
+
+Target operational execution time:
+
+15 minutes
+
+Do not expand scope merely to fill the time.
+
+If the frozen experiment encounters a genuine blocker, stop.
+
+========================================================================
+AFTER EXECUTION
+
+Create a review packet for external review.
+
+Put the COMPLETE packet here in chat as a single ASCII block of text that I
+can cut and paste.
+
+Preserve and commit:
+
+- this complete directive
+- its sha256
+- freeze commit
+- execution commands
+- raw outputs/evidence
+- identities
+- hashes
+- read-back results
+- failures/exceptions, if any
+- adjudication
+- review packet
+
+The review packet must clearly distinguish:
+
+ORIGINAL T1/T2
+    LOST / RETIRED / NEVER EXECUTED
+
+from:
+
+FIRST-ADVENTURER BOUNDARY PROBE V2
+    NEWLY ISSUED / NEWLY FROZEN / independently adjudicated
+
+No historical rewriting.
+
+No claim that V2 reproduces the missing T1/T2 directive.
+
+========================================================================
+DIRECTIVE DURABILITY RULE
+
+Treat this incident as a process failure.
+
+From this point forward, every significant experimental directive issued to
+Harmonia must be preserved verbatim, hashed, committed, pushed, and verified
+reachable from origin/main BEFORE the experiment it governs begins.
+
+A directive existing only in chat is not frozen.
+
+A hash without recoverable directive bytes is not frozen.
+
+A readiness document referring to an experiment is not the experiment
+definition.
+
+The experiment begins only after its governing bytes are durable.
+
+========================================================================
+FIRST RESPONSE
+
+Do NOT execute yet.
+
+First perform the PRE-EXECUTION FREEZE.
+
+Then report back with:
+
+DIRECTIVE_ARTIFACT_PATH
+DIRECTIVE_SHA256
+FREEZE_COMMIT
+ORIGIN_MAIN_REACHABILITY
+SFE_IDENTITY
+PEW_IDENTITY
+PROTEUS_REGISTRY_IDENTITY
+ORGANISM_ID
+WORLD_ID / WORLD_CONFIGURATION
+ACTION
+PREREGISTERED_CONSEQUENCE
+NAMESPACE
+READY_TO_EXECUTE = YES/NO
+
+If READY_TO_EXECUTE = YES, stop there and wait for operator authorization
+before crossing the experimental boundary.
+
+========================================================================
+PART B -- HARMONIA FROZEN EXECUTION PARAMETERS (bound before execution)
+========================================================================
+All values below are FROZEN by this artifact. Values that only SFE can
+mint at run time (world_id, exp_id, work_id, event ids/hashes, seqs)
+are marked SFE-ASSIGNED-AT-EXECUTION and will be recorded verbatim in
+the post-execution packet; nothing about them is chosen by Harmonia.
+
+FIXED SPECIMEN (verified live before freeze)
+  organism_id   7743b3527ea44fb5eb2bc80076cb1d2ea4dca2094975c8621962152d419364a0
+  registry_id   b15e0a7f5f2dcb99b8b28c73a99441d8d53e82b1bae42fddd5e274eeef396917
+  entry_id      88c8818853ccfd46771fa4aa572bfb8a61546916fe774320e7254be9ef4aff6b
+  phenotype     UNKNOWN (not classified, not modified)
+  selection     the already-established first specimen, per directive
+
+WORLD CONFIGURATION (frozen; uniquely determined by the authoritative
+runbook, integration/HARMONIA_FIRST_INTEGRATION.md S2 and section 7 --
+"the standard integration world")
+  service       SFE, https://192.168.1.202:8811/v2 (rebuilt authoritative)
+  seed_root     424242            (authoritative standard integration world)
+  sharing_policy ISOLATED         (authoritative default)
+  budget        {"experiments":{"limit":4,"enforcement":"enforceable"}}
+                (a smaller-than-default lawful cap; enforcement explicit)
+  world_id      SFE-ASSIGNED-AT-EXECUTION
+  No ambiguity requiring a STOP: the runbook uniquely names seed_root
+  424242 / ISOLATED as the standard world; no competing authoritative
+  rule exists.
+
+THE ONE ENCOUNTER
+  A single bounded encounter over the frozen player, seed 20260904b,
+  external RNG SplitMix64(seed). Setup steps (world create+start,
+  manifest artifact placement with the identity gate, experiment
+  commit+enqueue, work claim) are SCAFFOLDING, not "the action".
+
+THE ONE ADVENTURER ACTION (frozen)
+  Execute EXACTLY ONE tick of the frozen Proteus player: tick index 0,
+  input = one channel [[0]], n_out = 1, via
+  proteus.foundry.vm.Player.run_tick under SplitMix64(seed). This is
+  the single adventurer action. Its output (outputs, status) is
+  captured verbatim; it is NOT optimized for success and will NOT be
+  retried or substituted if it halts/yields/budgets or emits nothing.
+
+THE ONE PREREGISTERED CONSEQUENCE (frozen, selected from the
+authoritative SFE interface -- integration/HARMONIA_FIRST_INTEGRATION.md
+section 6 loop and section 4 attestation rule)
+  The action's result is committed to SFE as ONE engine-attested
+  observation: complete(work_id, worker_id, claim_id, result=<tick
+  output digest>) then observation(exp_id, content=<tick output
+  digest + status>, outcome, pred_id, work_id). The externally
+  observable world consequence is the resulting SINGLE
+  OBSERVATION_RECORDED event: a genuine ledger state transition --
+  new event_seq, prev_hash-chained entry_hash, head_hash advance,
+  evidence_class ENGINE_WORK_RESULT (observations_engine_attested >= 1)
+  because work_id is bound. This is NOT a read/no-op: it advances the
+  hash-chained ledger and is causally downstream of the tick (the
+  observation content carries the tick's output digest).
+  outcome token: SURVIVED iff the boundary prediction (identity gate
+  held + one attested observation event produced) holds, INCONCLUSIVE
+  otherwise. The outcome describes the SEAM, never organism quality,
+  and is a verbatim SFE token (never translated to GOOD/BAD).
+
+THE ONE FOSSIL (frozen anchor rule)
+  Anchor event = the ONE OBSERVATION_RECORDED event whose refs.exp_id
+  == this run's exp_id (strict single match; 0 or 2+ => STOP,
+  SFE_EVENT_PROVENANCE_AMBIGUOUS). PEW writes (pew.fossil.v2):
+  world anchor -> player anchor (player_id = organism_id) ->
+  encounter (encounter_id = encounter_identity([organism_id],
+  world_id, seed, []); run_id = exp_id:work_id; sfe_event_id +
+  sfe_entry_hash + sfe_event_seq from the anchor event) -> packet ->
+  claim -> evidence bound by (encounter_id, encounter_run_id). Exactly
+  one fossil chain; no repair fossils.
+
+NAMESPACE (frozen)
+  test  -- this is an integration/boundary probe, explicitly NOT being
+  admitted as scientific evidence (directive: "integration/boundary
+  experiment only"; operational note 5).
+
+ENGINE PROVENANCE
+  engine_source_hash sha256:c358a53b9899fa16acb70c69747c8ec4ca494cdc
+  62bd10fa9a550d574eef8c39 (source_commit ce79401b) is recorded in the
+  fossil producer field and the packet; a mid-run hash change =>
+  discontinuous => STOP.
+
+IDENTITY / ORDERING DISCIPLINE (frozen, carried from the integration)
+  unique idem key per (world, step) with a run-uuid; event_seq is
+  ordering truth (never wall-clock); blob_hash (content) kept distinct
+  from artifact_id (envelope); no TERMINATED-lifetime inference;
+  restore() catches BOTH ValueError (runtime mismatch) and KeyError
+  (malformed snapshot); no silent identity normalization; no
+  post-hoc evidence repair.
+
+DISTINCTNESS FROM THE FIRST INTEGRATION
+  The first integration (evidence E-dbe8c504b8cc) stands as its own
+  record. This V2 is a NEW run with its own world, exp/work, encounter
+  seed (20260904b), event anchor, and fossil. It reuses only the frozen
+  SPECIMEN (as the directive requires) and the adapter/runner code
+  (transport/binding only). No maintenance-durability claim is folded
+  into this experiment.
+========================================================================
+END DIRECTIVE ARTIFACT
+========================================================================
