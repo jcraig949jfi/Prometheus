@@ -6,6 +6,12 @@
 
 ---
 
+> **Open work lives in [`TODO.md`](TODO.md).** What is not done, what is
+> deferred and why, what is blocked on another component, and the standing
+> discipline for anyone picking the Engine up. Read it before starting Engine
+> work — in particular D0-1, which is a deployment that requires an operator
+> and blocks everything under it.
+
 ## What I Maintain
 
 Everything under **`F:\Prometheus\SerendipityFoundry`**:

@@ -1,0 +1,482 @@
++==========================================================================+
+|                                                                          |
+|   SERENDIPITY FOUNDRY ENGINE (SFE) -- EXTERNAL REVIEW PACKET             |
+|   Boundary repair, orchestration safety, and deployment closure          |
+|                                                                          |
+|   Author:  Daedalus (maintainer, SFE) -- agent seat on host M2           |
+|   Date:    2026-09-04                                                    |
+|   For:     HITL (James), Harmonia (integrator), external reviewers       |
+|   Status:  CODE COMPLETE AND TESTED / SERVICE NOT YET DEPLOYED           |
+|                                                                          |
+|   Self-contained: every load-bearing number is inline. No repo access    |
+|   is required to review, or to disagree.                                 |
+|                                                                          |
+|   NOTE ON AUDIENCE: this packet is written for a reviewer with NO        |
+|   context on this programme. Component names are generalized and         |
+|   internal identifiers are expanded. The two internal-facing packets     |
+|   (REVIEW_PACKET_ENGINE_SPRINT and CLOSURE_PACKET_SFE, same directory)   |
+|   carry the same facts with programme-specific naming.                   |
+|                                                                          |
++==========================================================================+
+
+
+--------------------------------------------------------------------------
+0. WHAT THIS IS, AND THE VERDICT UP FRONT
+--------------------------------------------------------------------------
+
+SFE is a durable multi-world research runtime: an HTTP/JSON service over
+SQLite that hosts isolated "worlds", each carrying a tamper-evident event
+ledger, a work queue, budgets, and typed epistemic objects (hypotheses,
+predictions, experiments, observations). It is an INSTRUMENT. Experiments run
+on top of it and belong to other agents. It is being prepared to host
+experiments on weak and compositional effects, where the regime of interest is
+
+    effect(A) ~= 0,  effect(B) ~= 0,  effect(A+B) >> effect(A) + effect(B)
+
+so the engine must make invalid EXECUTION states hard to express while making
+no judgement whatsoever about whether a weak effect is worth studying.
+
+An integrator (Harmonia) ran a boundary-expansion probe against the engine and
+filed 13 issues. This packet reports what happened when those issues were
+collided with the actual code and a live service.
+
+VERDICT, IN ONE PARAGRAPH:
+
+The engine's HONESTY was already sound; its ENFORCEMENT was thin. In every
+hazard examined, the engine recorded the truth correctly and then let a caller
+walk straight past it. It typed weak evidence accurately but could not be asked
+to require strong evidence. It computed content digests correctly but had no
+field in which a caller could say what the bytes were supposed to be. It sealed
+an experiment's specification hash into the tamper-evident ledger but served no
+way to read that specification back. It marked worlds TERMINATED and kept
+accepting writes into them. Nine of eleven findings are now closed in code with
+31 new regression tests (suite 88 -> 119, all green). Two findings did not
+survive reproduction and were refuted or reclassified. One further hazard,
+found during closure and not filed by anyone, is the operationally important
+one: the running service was still executing a build from BEFORE all of this
+work, and nothing in the stack could notice.
+
+BECAUSE THE REPAIRS ARE GATES AND NOT CORRECTIONS, NO HISTORICAL RECORD WAS
+WRONG AND NOTHING HAD TO BE RETRACTED. That is the single most important fact
+for a reviewer to hold: this was not a data-integrity incident.
+
+
+--------------------------------------------------------------------------
+1. METHOD (AND WHAT WAS FIXED IN PLACE BEFORE MEASUREMENT)
+--------------------------------------------------------------------------
+
+Sequence, deliberately in this order:
+
+  1. Read the engine source and the integrator's evidence.
+  2. Write a 9-probe reproduction script and run it against a LIVE engine
+     on the SAME build the integrator probed, BEFORE changing any code.
+  3. Fix only what reproduced, each fix pinned by a regression test that
+     names the probe justifying it.
+  4. Re-run the full suite; rehearse the schema migration against a COPY
+     of the live production database.
+  5. Attempt deployment. Report the gap honestly when blocked.
+
+Engine build under test, identical on both hosts:
+  engine_source_hash sha256:c358a53b9899fa16acb70c69747c8ec4ca494cdc...
+  host M1 source_commit ce79401b1524...   (untouched by this work)
+  host M2 source_commit 71e4e80e8783...   (the machine used here)
+
+The reproduction script and its raw output were committed BEFORE the fixes, so
+the "before" state is independently checkable and cannot be retrofitted.
+
+
+--------------------------------------------------------------------------
+2. REPRODUCTION RESULTS -- 9 PROBES, LIVE, PRE-CHANGE
+--------------------------------------------------------------------------
+
+Tally: 6 REPRODUCED, 2 REFINED, 1 NOT_REPRODUCED.
+
+  PROBE                     VERDICT          WHAT ACTUALLY HAPPENED
+  ---------------------------------------------------------------------
+  create-world idempotency  REPRODUCED       same config x3 -> 3 world_ids
+  idempotency-key header    REPRODUCED       header ACCEPTED AND SILENTLY
+                                             IGNORED -> 2 worlds
+  forced attestation        REPRODUCED       observation with no work_id ->
+                                             200, class CLIENT_ASSERTED
+  causal anchor             REPRODUCED       write returned only {obs_id};
+                                             caller must SEARCH the ledger
+  terminated lifecycle      REPRODUCED       and generalized (see 2.3)
+  world config completeness REPRODUCED       budget absent from get_world
+  organism content gate     REFINED          see 2.2
+  world enumeration scope   REFINED          see 2.1
+  events() response shape   NOT_REPRODUCED   see 2.1
+
+Three findings changed shape under reproduction. This section is the part of
+the packet most worth attacking, because refuting a colleague's finding on the
+strength of one probe run is exactly the move that goes wrong quietly.
+
+2.1  TWO FINDINGS THAT WERE WRONG AS FILED
+
+  "events() returns a dict sometimes and a bare list other times; it broke
+   the harness mid-run."
+  -> NOT REPRODUCED. The HTTP endpoint returns {"events": [...]}, always;
+     there is exactly one return statement for that route. The shipped
+     client library unwraps it to a bare list. These are two CALL STYLES,
+     not two behaviours. The residual defect is documentation: nothing told
+     the caller which surface returns which shape. No code change; no
+     constraint recorded.
+     SCOPE OF THE REFUTATION: I probed the current build only. If the shape
+     genuinely varied on an EARLIER build, this is a regression that has
+     since repaired itself incidentally, and I did not excavate the history
+     to exclude that. The refutation is scoped, not absolute.
+
+  "GET /worlds returns all 189 worlds unscoped; an agent cannot tell which
+   are its own."
+  -> PARTIALLY REFUTED / RECLASSIFIED, and this correction matters most.
+     The route has ALWAYS been client-scoped, filtered in SQL. A freshly
+     minted client saw 5 worlds, its own only. The 189 worlds the integrator
+     saw WERE ALL HERS. Volume was mistaken for absence of scoping. There is
+     no isolation hole and there never was. The genuinely missing capability
+     is FILTERING -- which of my worlds are active, finished, from this run.
+     Fixed as filtering, and pinned with a test asserting a second client
+     still sees only its own, so new filters cannot erode a property that was
+     never broken.
+
+2.2  ONE FINDING THAT WAS REAL BUT MIS-MECHANISED
+
+  "The engine accepts corrupt organism bytes paired with a valid-looking
+   client-asserted content hash."
+  -> The engine never accepts a client-asserted hash at all. The request
+     model is (kind, data, meta) with unknown fields forbidden; the engine
+     always computes the digest itself, and it returned the CORRECT digest
+     of the corrupt bytes. Attempting to send an expected hash returned 422
+     "extra field not permitted" -- the assertion was UNEXPRESSIBLE.
+     So the framing is not "the engine trusts the client" but "the engine
+     could not be ASKED to check." The corruption risk was real; its
+     mechanism was different. The reframe turned a suspected trust-boundary
+     redesign into a four-line comparison.
+
+2.3  ONE FINDING THAT WAS WORSE THAN FILED -- AND FOUR OF MY OWN ERRORS
+
+  Filed as "artifact write after terminate succeeds." My FIRST probe agreed
+  and also reported experiment-writes and work-claims surviving termination.
+  Both of those were MY OWN INSTRUMENT ERROR and are recorded because they
+  nearly entered this packet as findings:
+
+    - the experiment write had failed with 409 "world must be RUNNING". It
+      was blocked by the world being in CREATED state, not by TERMINATED --
+      I had never started the world, so termination was not the variable.
+    - the work claim answered HTTP 200 with body {"work": null}. 200 there
+      means "nothing claimable", not "claimed". That code path already
+      filtered on state = RUNNING and could never have claimed from a dead
+      world.
+
+  Re-probed with a RUNNING-world control so termination was the ONLY
+  variable, and scoring a claim only if an item actually came back:
+      worked before AND after terminate: artifact, hypothesis, budget debit
+      correctly blocked:                 experiment
+  So it did generalize beyond artifacts -- to hypotheses and budget debits --
+  but not nearly as far as my broken probe claimed.
+
+  GENERAL LESSON, offered as the most transferable thing in this packet:
+  a probe that returns a status code is not measuring what you think unless
+  you have run the same battery against a CONTROL in which the variable of
+  interest is absent, and unless you have checked that a success code
+  actually corresponds to the effect occurring.
+
+
+--------------------------------------------------------------------------
+3. FIXES IMPLEMENTED
+--------------------------------------------------------------------------
+
+Test suite 88 -> 119, all green. Every test names the probe that justifies it,
+so a future maintainer can trace each guard back to its evidence.
+
+D-IDEM-1   CREATE-WORLD RETRY SAFETY
+  World creation was the one epistemic write with no idempotency key, so it
+  was the one call an orchestrator could not safely retry: a timeout produced
+  a SECOND CAUSAL UNIVERSE, and both halves of the experiment looked real.
+  It now takes the same Idempotency-Key header the other writes take. Same
+  key plus same semantic request replays the first world; a different body
+  under that key is a diagnosable 409 naming the first-use route. The key
+  row, the world row and the creation event commit in ONE transaction, so a
+  process dying mid-retry leaves either both or neither. Tested across a real
+  close-and-reopen of the database, which a single-process test cannot reach.
+  CAVEAT, because it will bite someone: a caller relying on this MUST pass an
+  explicit random seed. A server-minted seed differs per call, so the replay
+  returns the FIRST world, seed included.
+
+D-ATTEST-1  FORCED EVIDENCE ATTESTATION
+  Observations bound to a completed, engine-witnessed work item are classed
+  ENGINE_WORK_RESULT; unbound ones are CLIENT_ASSERTED. The engine typed this
+  honestly everywhere -- observation row, ledger event, and any adjudication
+  event -- but nothing could REQUIRE the stronger class, so an orchestrator
+  omitting one identifier silently produced weaker evidence, discoverable
+  only by a separate status read. A world may now be created with
+  require_attestation, which makes the degraded class UNREACHABLE there.
+  Default unchanged: unattested observation stays legal and typed. A global
+  rule would have been an execution veto on exploratory work, which the
+  mandate forbids.
+
+D-CIDGATE-1  CONTENT-IDENTITY GATE
+  Artifact writes accept an optional expected content hash; the engine
+  recomputes and fails closed on mismatch, storing nothing and appending NO
+  ledger event. (That last clause is the check a naive fix would miss: a
+  rejected write must not perturb the ledger.) Opt-in, because this endpoint
+  has callers whose bytes are not content-asserted. The gate lives in the
+  engine so no caller re-implements it -- a caller that skips its own gate
+  fossilizes corruption behind a hash that looks valid.
+
+D-ANCHOR-1  EXACT CAUSAL ANCHOR RETURNED BY THE WRITE
+  Recording an observation now returns the event id, entry hash, sequence and
+  index of the ledger event it just created. Previously the caller received
+  only an observation id and had to SEARCH the ledger for "its" event -- and
+  a search can select a wrong-but-real event. A downstream consumer could
+  therefore anchor a preserved record to an unrelated event (world creation,
+  say) and pass every existence and shape check downstream. Handing back the
+  real anchor removes the search, and with it the entire class.
+  BREAKING: this call now returns a structured object rather than a bare id
+  string. Seven existing tests updated. Called out loudly because it is a
+  silent-breakage shape for any caller I do not know about.
+
+D-LIFECYCLE-1  TERMINAL-STATE WRITE GATE
+  TERMINATED now ends a world's scientific write lifetime. It previously
+  ended only state transitions and work enqueue.
+  FORBIDDEN after termination: artifacts, hypotheses, predictions,
+    experiments, commits, observations, failures, lineage edges, imports,
+    budget debits, new work claims.
+  STILL PERMITTED, deliberately and tested:
+    - every read. A terminated world IS the evidence; it must stay legible.
+    - checkpoint. Snapshots already-final state; appends no science.
+    - fork. The CHILD is a new world. Replay, counterfactual and fixed-world
+      rerun all require branching from a FINISHED world; forbidding this
+      would break the experiment designs the engine exists to serve.
+    - settlement of work claimed BEFORE termination. Refusing would strand
+      the lease forever and force the ledger to misreport what a worker did.
+  RATIONALE: if the ledger head at termination is not final, a preserved
+  record cannot claim to hold the whole world, and "terminated" means nothing
+  a replay can rely on.
+
+D-WORLDCFG-1  CONFIG COMPLETENESS AND SCOPED ENUMERATION
+  World reads now carry budget limits and the attestation flag; enumeration
+  filters by session, state and creation window. Enough for an orchestrator
+  to answer which worlds are mine, active, finished, or cleanup candidates --
+  and deliberately not a search engine. Unknown state values are rejected
+  rather than silently returning everything.
+
+D-REPLAY-1  THE ACTION IS RECOVERABLE, NOT MERELY SEALED  [not filed by anyone]
+  The integrator's completeness analysis scored "exact action MISSING" and
+  concluded replay requires the repo checkout that produced the run. Chasing
+  that to its cause: the action was NEVER missing from the engine. The full
+  experiment specification is stored, and its hash plus the engine build hash
+  are sealed into the tamper-evident chain at commit. What was missing was a
+  READ PATH -- there was no retrieval endpoint for experiments or
+  observations at all. The consequence is precise: a consumer could VERIFY a
+  specification it already held and could never RECOVER one it did not, so
+  the action lived only in whatever working copy produced the run. Same
+  symptom as filed; different cause. Three read-only, client-scoped endpoints
+  added. Tests assert the recovered specification is byte-equal, that
+  re-deriving its hash matches the value the ledger committed to, and that a
+  foreign client is denied -- the new reads must not become a
+  cross-experimenter oracle.
+
+SCHEMA MIGRATION 3 -> 4, ADDITIVE (one column, default off)
+  Pre-existing worlds keep the old contract. Retroactively requiring
+  attestation would reclassify historical observations that were recorded
+  legitimately under the old rules.
+  REHEARSED AGAINST A COPY OF THE LIVE PRODUCTION DATABASE, not a fixture:
+    before: schema 3; 56 worlds, 896 events, 59 observations, 20 artifacts,
+            69 experiments, 53 work items, 16 clients
+    after:  schema 4; ALL COUNTS IDENTICAL; new column present and 0 for all
+            56 pre-existing worlds; ledger integrity verified on 12 real
+            worlds, 12 ok / 0 bad
+
+
+--------------------------------------------------------------------------
+4. THE DEPLOYMENT GAP -- THE MOST IMPORTANT FINDING IN THIS PACKET
+--------------------------------------------------------------------------
+
+Everything above was committed, tested and pushed. The running service was
+still executing a build from BEFORE any of it, and had been for hours.
+
+  running build      source_commit 71e4e80e8..., schema_version 3
+  running since      12:43:09, hours before the repairs existed
+  live route table   31 paths / 33 routes; the new read paths ABSENT
+  supervisor         watchdog task, State=Ready, LastTaskResult 0,
+                     firing every 5 minutes
+
+The mechanism, which generalizes far beyond this system: THE WATCHDOG
+RELAUNCHES THE ON-DISK BUILD ONLY WHEN ITS HEALTH PROBE FAILS, AND A
+STALE-BUT-HEALTHY DAEMON NEVER FAILS A HEALTH PROBE. Its result code was 0 the
+whole time because the engine answers. A healthy old engine is
+indistinguishable from a healthy new one to every check this stack had.
+
+So four states must be held apart, and conflating any two of them produces a
+confident false statement:
+
+    CODE_FIXED != SERVICE_DEPLOYED != LIVE_VERIFIED != QUALIFIED
+
+A green test suite says nothing about a running process. A commit log says
+nothing about a running process. Only the process says anything about the
+process.
+
+MITIGATION BUILT: a deployment-attestation preflight that answers "am I
+talking to the daemon I think I am" before an experiment runs. It checks
+reachability with the certificate identity REPORTED (so a certificate mismatch
+is diagnosed rather than presenting as a dead service), a non-null build
+identifier, containment of a required fix in the LIVE build via ancestry (not
+equality, so a service ahead of the pin still passes), a schema floor, and
+method-aware capability presence read from the service's own route table.
+Exits non-zero so it can gate a campaign script.
+
+VALIDATED IN BOTH DIRECTIONS, which mattered:
+  - against the real stale daemon: FAIL, exit 1, four hard failures.
+  - positive control, asking that same build only for what it genuinely has:
+    PASS, exit 0. A gate that only ever fails is not evidence it can
+    discriminate.
+
+TWO BUGS IN THAT GATE WERE FOUND BY RUNNING IT, NOT BY READING IT, and both
+produced false results:
+  - the shell rewrote POSIX-style endpoint arguments into local filesystem
+    paths before the program ever saw them. The check still failed -- for the
+    wrong reason.
+  - a path-only capability check reported an existing POST route as
+    satisfying a requirement for a NEW GET route on the same path. That is a
+    FALSE PASS on the exact build the tool exists to reject. Capability
+    checks must be (METHOD, path), not path.
+
+
+--------------------------------------------------------------------------
+5. WHAT THIS DOES AND DOES NOT ESTABLISH
+--------------------------------------------------------------------------
+
+ESTABLISHED
+  - Nine findings closed in code, each pinned by named regression tests.
+  - Two findings refuted or reclassified, with the original claim preserved
+    beside the correction, and a validator that forbids a refuted finding
+    from carrying a live constraint.
+  - The migration is safe against real production data (counts identical,
+    ledger integrity intact on a sample of 12 real worlds).
+  - The deployment gap is real, was measured, and is now detectable.
+
+NOT ESTABLISHED -- claim ceiling, stated plainly
+  - NO TEST HAS BEEN RUN AGAINST A REPAIRED SERVICE. There is no repaired
+    service. Every "green" number in this packet is in-process. The correct
+    status line is "green in-process, unproven in production."
+  - Concurrency beyond the already-verified case (independent worlds, one
+    worker each) is UNMEASURED. Same-world concurrent writes and duplicate
+    work completion are not certified. The code reads correct -- claims run
+    under an immediate-write transaction with a uniqueness backstop and a
+    server-issued fencing token -- but THAT IS A CODE READING, NOT A
+    MEASUREMENT, and I decline to present it as one.
+  - No throughput number exists.
+  - REPLAY IS NOT COMPLETE. Decomposed:
+      reconstruct world .............. YES (pending deploy)
+      reconstruct action ............. YES, and hash-verifiable against the
+                                       sealed ledger value (pending deploy)
+      reconstruct inputs ............. PARTIAL. The engine cannot know
+                                       whether a specification is COMPLETE
+                                       with respect to its run, because the
+                                       specification is opaque by design. An
+                                       input kept outside it is lost
+                                       silently.
+      execute an equivalent encounter  NO. The engine schedules and attests
+                                       work; it does not run the
+                                       experimenter's action.
+      prove execution equivalence .... NO. It can prove SPECIFICATION
+                                       identity and RESULT identity. Equal
+                                       result hashes across two runs are
+                                       evidence of a deterministic pipeline,
+                                       not proof of one.
+      preserved-record sufficiency ... NO. Owned by another component; 9 of
+                                       16 identities missing or ambiguous.
+  - THE ENGINE CANNOT VERIFY COMPOSITION. The experiment specification is
+    freeform and opaque by design, which is correct for scientific freedom
+    and is exactly why the engine cannot check that A+B is the composition
+    of A and B, nor ablate A from it. Today that verification rests entirely
+    with the experimenter, with NO mechanical check against a mislabelled
+    composition. This is the likeliest route by which this programme produces
+    a wrong interaction claim.
+
+
+--------------------------------------------------------------------------
+6. RECOMMENDATION
+--------------------------------------------------------------------------
+
+  1. DEPLOY, then run the pre-registered live bar: attestation passes; 119
+     tests; the live capability harness; the two-experimenter isolation
+     suite; and a re-run of the original reproduction script in which the six
+     REPRODUCED rows must FLIP and nothing else may move. Pre-registered
+     before deployment so it cannot be moved afterwards.
+  2. THEN STOP ENGINE WORK until a real experiment produces a real
+     complaint. Five of the six repairs were driven by a probe suite rather
+     than by a blocked experiment, and that is a legitimate reason to call
+     further hardening premature.
+  3. DECIDE the composition question separately. A small typed
+     "components" field would make composition and ablation mechanically
+     checkable. It changes the meaning of the specification field and is a
+     contract decision for the programme, not a maintainer's initiative.
+
+
+--------------------------------------------------------------------------
+7. QUESTIONS FOR THE REVIEWER (written to resist agreement)
+--------------------------------------------------------------------------
+
+  Q1  The terminal-state gate is a BREAKING change to a live contract. I
+      ruled that TERMINATED must forbid writes, because otherwise the ledger
+      head at termination is not final. Is that worth breaking a caller who
+      was legitimately writing summary artifacts after termination? I
+      permitted checkpoint and fork to soften it. Is that line in the right
+      place, or did I invent a distinction that will confuse people?
+
+  Q2  I made attestation OPT-IN per world rather than default-on, to
+      preserve exploratory freedom. That also means the unsafe default is
+      the one everyone gets. Is opt-in cowardice here?
+
+  Q3  The new read paths convert the engine from "seals identity" to
+      "serves content". I argued this is safe because reads are
+      client-scoped. Does it widen the blast radius of a leaked credential
+      in a way that matters?
+
+  Q4  I refuted two of a colleague's findings on the strength of reading
+      current code plus one live probe run. That is precisely the move that
+      goes wrong when an older build behaved differently. How hard should I
+      have to work to exclude a regression that repaired itself?
+
+  Q5  I claim the freeform specification field is load-bearing for
+      scientific freedom, and use that to explain why ablation cannot be an
+      engine primitive. Am I defending a design choice past its usefulness
+      because it is written into my charter?
+
+  Q6  I report four of my own probe results as retracted instrument error.
+      Does that inspire confidence in the remaining results, or should it
+      lower your confidence in the whole probe suite?
+
+
+--------------------------------------------------------------------------
+8. ARTIFACTS
+--------------------------------------------------------------------------
+
+  Commits (in order)
+    9bcba33d9   six quiet-success hazards closed
+    67c28acee   action made recoverable, not merely sealed
+    f2d461bf1   engine sprint review packet
+    da64f2b88   deployment attestation + issue disposition ledger
+    aa1aa74a3   closure packet
+
+  Engine code           sfe/{runtime,api,store}.py
+  Tests                 119 green (88 pre-existing + 31 new), in
+                        tests/test_sfe_orchestration_safety.py
+  Reproduction          repro_harmonia_findings.py + repro_results.json
+                        (committed BEFORE the fixes)
+  Attestation tool      integration/sfe_preflight.py
+  Disposition ledger    issue_disposition.json (11 findings, original claim
+                        preserved beside correction)
+  Ledger validator      validate_disposition.py -- enforces that cited tests
+                        exist, cited commits resolve, a REFUTED finding
+                        carries no constraint, and nothing claims live
+                        qualification while undeployed. Currently VALID.
+  Rollback point        online-API database backup taken before migration
+  Open work             roles/Daedalus/TODO.md
+
++==========================================================================+
+|  "Not worth continuing" remains a first-class answer. If the judgement   |
+|  is that this engine is now over-hardened relative to any experiment     |
+|  actually queued, the correct response to this packet is: deploy, run    |
+|  the pre-registered bar, and stop.                                       |
++==========================================================================+
