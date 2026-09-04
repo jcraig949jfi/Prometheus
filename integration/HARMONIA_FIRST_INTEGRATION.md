@@ -465,6 +465,24 @@ unimplemented would have sent Mnemosyne to build something that exists.
    result nobody can trace. This is the single most actionable item in this
    filing.
 
+   **Stated precisely, because the loose version of this claim is false.** The
+   ordinary path has no **typed, queryable, or joinable** world identity. It is
+   *not* true that a world identifier cannot physically reach PEW: a world URL
+   can legally ride as an opaque string in `source_packets.uri` — hashing is
+   conditional (`sha = None; p = REPO / uri; if p.is_file(): …`,
+   `store.py:84-88`), the schema documents `uri` as "repo-relative path or
+   external URI" with `content_sha256` "null if unhashable", and an SFE URL is
+   **not** caught by `DERIVED_URI_MARKERS = ("evidence_wiki/derived", "/wiki/",
+   "/api/v1/")` (`store.py:63`) — those markers quarantine PEW's *own* URL
+   space, not SFE's.
+
+   That route is not proposed here, and the directive governing this pass
+   forbids inventing it: it would be world identity encoded in free text, one
+   opaque string per packet, with no join key, no type, and **no read endpoint**
+   — there is no `GET /api/v1/packets` at all. It is recorded so the filing is
+   accurate about what is and is not possible, and so Mnemosyne can rule on it
+   rather than discover it.
+
 2. **No documented convention binds an evidence row to a fossil row.**
    `RelationIn` could express it — `src_type`/`dst_type` are unconstrained
    strings and the spec already contains the tokens `fossil_encounter`,
@@ -512,12 +530,32 @@ identity parked on a separate surface that nothing links to it.
 channel invented, no `world_id` smuggled into free text, no citation key
 overloaded, no provenance requirement weakened.
 
-**Two questions for Mnemosyne**, which only PEW can answer:
-(i) Is `sfe_entry_hash` intended to be the SFE `artifact_id`, the `blob_hash`,
-or the world `head_hash`? The contract requires it but does not define it, and
-three different producers will guess three different things.
-(ii) What is the sanctioned relation binding an evidence row to a
-`fossil_encounter`?
+**The concrete minimum change requested** — so this is a filing and not just a
+diagnosis. Any one of these would close it; the choice is Mnemosyne's:
+
+- add `sfe_world_id` / `sfe_entry_hash` columns plus model fields to
+  `ew.evidence`, so provenance is typed and joinable on the ordinary path; **or**
+- expose a write path for the already-existing `ew.interpretations` table,
+  which no route currently reaches; **or**
+- sanction and document an explicit relation type binding an evidence row to a
+  `fossil_encounter`, making `RelationIn` the official join.
+
+Whichever is chosen, **add `extra="forbid"` to the five ordinary-path models.**
+That is a two-line change and it converts the silent-drop above into a 422. It
+is worth doing on its own merits even if the seam is closed some other way.
+
+**Three questions only PEW can answer:**
+
+1. Is `sfe_entry_hash` intended to be the SFE `artifact_id`, the `blob_hash`, or
+   the world `head_hash`? The fossil contract **requires** it and never defines
+   it; three producers will guess three different things.
+2. What is the sanctioned relation binding an evidence row to a
+   `fossil_encounter`?
+3. **Is migration `006_first_integration.sql` applied to the live database?**
+   This is unverified and it gates the fix: if 006 is unapplied, the fossil
+   tables this filing points to as the real home may not yet have `run_id`,
+   `episode_id` or `sfe_event_seq`. `GET /api/v1/health` reports a schema
+   version; nobody has checked it against the applied migrations.
 
 ---
 
@@ -790,16 +828,40 @@ Content-Type: application/json
 | `data_b64` | **yes** | string | Standard base64. See the encoding warning below — this is the one that will silently hurt you. |
 | `meta` | no | object | Free-form. Carry organism identity and Proteus provenance here. |
 
-**Closed model.** Any field other than these three is a **422** with a field
-path (`extra_forbidden`). Inherited from `_Body`'s
-`model_config = ConfigDict(extra="forbid")` — "scientific requests fail closed."
-This is why the historical Proteus payload's `name` is rejected.
+**`Content-Type: application/json` is REQUIRED.** Omit it, or send
+`text/plain`, and you get a **422** — `model_attributes_type`, *"Input should be
+a valid dictionary or object"* — because the body is never parsed as JSON at
+all. Verified both ways. This comes from FastAPI 0.141.1's strict content-type
+default, not from SFE, and older FastAPI builds were lenient here, so this
+surprises people who have used the API before.
 
-**`kind` vs `info_kind` — do not confuse these.** The closed ontology
-(`INFO_KINDS = {artifact, failure, hypothesis, observation, success}`) governs
-**`meta.info_kind`**, which is what the sharing/visibility machinery reads. The
-top-level `kind` field is *not* checked against it. Convention: set both, and
-keep them consistent.
+**Closed model — but ONE LEVEL ONLY.** Any unknown *top-level* field is a
+**422** (`extra_forbidden`), inherited from `_Body`'s
+`model_config = ConfigDict(extra="forbid")` — "scientific requests fail closed."
+That is why the historical Proteus payload's `name` is rejected. **`meta` is
+NOT closed**: arbitrary nested keys are accepted (verified, 200). Put whatever
+you need in `meta`.
+
+**`kind` vs `meta.info_kind` — the highest-probability mistake in this
+handoff.** They are different fields at different nesting levels with opposite
+validation:
+
+| | Validated? | Verified |
+|---|---|---|
+| top-level `kind` | **No.** Any string, including `""` | `artifact`, `success`, `totally-made-up-kind`, `""` → all 200 |
+| `meta.info_kind` | **Yes — closed set** `{artifact, failure, hypothesis, observation, success}` | `bogus-info-kind` → **422** `"unknown info_kind"` |
+
+So the closed ontology governs the **nested** field, and it is `meta.info_kind`
+that the cross-world sharing machinery reads. **If you omit `info_kind`, no
+sharing policy will ever match that artifact** — which is the right default for
+an `ISOLATED` world, but is a silent no-op rather than an error if you later
+expect sharing. Set both, deliberately, and keep them consistent.
+
+**Idempotency-Key gotcha.** The optional `Idempotency-Key` header is scoped to
+`(client_id, key)`, and the stored request hash covers the **raw `data_b64`
+string**, not the decoded bytes. Two different base64 spellings of identical
+bytes under the same key are a **409 conflict**, even though they would mint the
+same artifact. On retry, resend byte-identical text.
 
 ### Response
 
