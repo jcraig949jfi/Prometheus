@@ -1,0 +1,652 @@
++==========================================================================+
+|                                                                          |
+|   SFE ENGINE -- CLOSURE PASS                                             |
+|   Remaining cleanup + deployment-qualification closure                   |
+|                                                                          |
+|   Author:  Daedalus (maintainer, Serendipity Foundry Engine) on M2       |
+|   Date:    2026-09-04                                                    |
+|   For:     James (HITL), Harmonia (integrator), external reviewers       |
+|   Status:  ENGINE CLOSED IN CODE / DEPLOYMENT BLOCKED AT OPERATOR STEP   |
+|                                                                          |
+|   Self-contained: every load-bearing number is inline.                   |
+|                                                                          |
++==========================================================================+
+
+--------------------------------------------------------------------------
+1. FINAL SFE VERDICT
+--------------------------------------------------------------------------
+
+THE ENGINE CODE IS READY. THE ENGINE SERVICE IS NOT. THESE ARE DIFFERENT
+SENTENCES AND THE WHOLE VALUE OF THIS PASS IS REFUSING TO CONFLATE THEM.
+
+  CODE_FIXED       YES   119 tests green, 11 findings dispositioned
+  SERVICE_DEPLOYED NO    M2 still serves source_commit 71e4e80e8 (12:43 PM)
+  LIVE_VERIFIED    NO    zero repaired-service tests have been run
+  QUALIFIED        NO    follows from the above
+
+Nine of eleven engine findings are closed in code. Two were refuted or
+reclassified and carry no constraint. One new hazard was found by this pass
+and it is the one that matters most operationally: THE STALE DAEMON. Six
+repairs sat committed, tested and pushed while the live engine served the old
+build, and nothing in the stack could notice, because the watchdog relaunches
+the on-disk build ONLY when its health probe fails -- and a stale-but-healthy
+engine never fails a health probe. That gap is now detectable
+(integration/sfe_preflight.py, CT-SFE-1) and the detector is the ONLY thing in
+this packet that is live-qualified, because it runs against the live service
+by construction.
+
+I could not deploy. Process termination is blocked in my session by the auto
+mode classifier. Per the directive I stopped at the destructive boundary;
+section 4 has the exact operator procedure and the before/after checks.
+
+--------------------------------------------------------------------------
+2. ISSUE DISPOSITION TABLE
+--------------------------------------------------------------------------
+
+Machine-readable: roles/Daedalus/sprint_20260904/issue_disposition.json
+Validator:        roles/Daedalus/sprint_20260904/validate_disposition.py
+                  -> VALID (11 issues, 119 cited tests all resolve, all cited
+                     commits resolve)
+
+Legend  IMPL: FIXED_TESTED / DEFERRED / OBSOLETE_REFUTED
+        DEPL: NOT_DEPLOYED / NA
+        QUAL: IN_PROCESS_ONLY / LIVE_QUALIFIED / NA
+
+ID                        DISPOSITION                     IMPL  DEPL  QUAL
+--------------------------------------------------------------------------
+I-CREATE-IDEMPOTENCY      CONFIRMED                       FIX   NO    PROC
+I-ATTEST-NOT-FORCED       CONFIRMED                       FIX   NO    PROC
+I-CLIENT-GATE-UNENFORCED  PARTIALLY REFUTED/RECLASSIFIED  FIX   NO    PROC
+I-CAUSAL-CLIENT           CONFIRMED                       FIX   NO    PROC
+I-LIFECYCLE-TERMINATED    CONFIRMED AND GENERALIZED       FIX   NO    PROC
+I-EVENTS-SHAPE            REFUTED                         OBS   NA    NA
+I-WORLD-ENUM-UNSCOPED     PARTIALLY REFUTED/RECLASSIFIED  FIX   NO    PROC
+B5-WORLD-CONFIG           CONFIRMED                       FIX   NO    PROC
+I-WORLD-GC                CONFIRMED                       DEF   NA    NA
+D-REPLAY-1                NEW, NOT FILED                  FIX   NO    PROC
+CT-SFE-1-DEPLOY-LAG       NEW, NOT FILED                  FIX   NA    LIVE
+
+The three that changed shape, with the epistemic chain preserved:
+
+I-EVENTS-SHAPE -- REFUTED.
+  ORIGINAL: "events() shape inconsistent dict vs list; broke the harness
+  mid-run."
+  REPRODUCED: raw HTTP returns {"events":[...]}, always -- sfe/api.py has
+  exactly one return for that route. sfclient/client.py:145 unwraps it to a
+  bare list.
+  WHY THE DISCREPANCY: two CALL STYLES, not two behaviours. The investigator
+  compared a raw-HTTP result against an sfclient result.
+  CORRECTED LESSON: the residual defect is DOCUMENTATION -- nothing told the
+  caller which surface returns which shape. No code change. No constraint.
+  SCOPE OF THE REFUTATION: builds at or after c358a53b, which is all I
+  probed. If the shape genuinely varied on an earlier build this is a
+  regression that repaired itself incidentally, and I did not excavate the
+  history to exclude that. The refutation is scoped, not absolute.
+
+I-WORLD-ENUM-UNSCOPED -- PARTIALLY REFUTED / RECLASSIFIED.
+  ORIGINAL: "GET /v2/worlds returns all 189 worlds unscoped; an agent can't
+  tell which are its own."
+  REPRODUCED: a FRESHLY MINTED client on M2 saw n=5, its own only. The route
+  has always called list_worlds(client_id=cid) and filtered in SQL.
+  WHY THE DISCREPANCY: the 189 worlds were ALL HERS. Volume was mistaken for
+  absence of scoping.
+  CORRECTED LESSON: there is NO isolation hole and there never was. The
+  missing capability is FILTERING, not scoping. Fixed as filtering, and
+  pinned with a test asserting a second client still sees only its own --
+  so the new filters cannot erode a property that was never broken.
+
+I-CLIENT-GATE-UNENFORCED -- PARTIALLY REFUTED / RECLASSIFIED.
+  ORIGINAL: "SFE accepts corrupt organism bytes paired with a valid-looking
+  client-asserted blob_hash."
+  REPRODUCED: SFE never accepts a client-asserted blob_hash at all.
+  ArtifactCreate is (kind, data_b64, meta) with extra="forbid"; the engine
+  always computes the digest and returned the CORRECT digest of the corrupt
+  bytes. Sending expected_blob_hash returned 422 extra_forbidden.
+  CORRECTED LESSON: not "the engine trusts the client" but "the engine could
+  not be ASKED to check" -- there was no field in which to state what the
+  bytes were supposed to be. The fossilization risk was real; its mechanism
+  was different, and the reframe turned a suspected trust-boundary redesign
+  into a four-line comparison.
+
+Also recorded in the ledger: FOUR of my own first-pass probe results that
+were instrument error and were retracted before publication (an uncontrolled
+CREATED world state; and an HTTP 200 whose body was {"work": null}, meaning
+"nothing claimable", not "claimed").
+
+--------------------------------------------------------------------------
+3. LIVE M2 STATE
+--------------------------------------------------------------------------
+
+Measured at closure, not inferred:
+
+  running source_commit  71e4e80e8783270585f635cbf239468213c8d988
+  running engine_source_hash
+                         sha256:c358a53b9899fa16acb70c69747c8ec4ca494cdc...
+  running schema_version 3
+  live route table       31 paths / 33 routes  (GET experiments ABSENT)
+  intended source_commit da64f2b88 (repo HEAD; any commit containing
+                         67c28acee satisfies the requirement)
+  intended schema_version 4
+  API/contract version   FastAPI title "Serendipity Foundry Gen-2" v2.2.0,
+                         OpenAPI at /v2/openapi.json (NOT /openapi.json)
+  endpoint used          https://192.168.1.191:8811   (T17: binds the LAN
+                         address, never 0.0.0.0 -- localhost FAILS)
+  certificate used       deploy/m2.crt  CN=192.168.1.191, SAN 192.168.1.191,
+                         expires 2036-09-01  (T18: m1.crt here fails TLS so
+                         quietly it looks like a dead service)
+  database               D:\Prometheus\SerendipityFoundry\
+                           SerendipityFoundryEngine\var\engine.db
+                         56 worlds (12 CREATED / 41 RUNNING / 3 TERMINATED),
+                         896 events, 59 observations, 20 artifacts,
+                         69 experiments, 53 work_items (ALL COMPLETED),
+                         16 clients
+  engine process         child PID 14372, parent cmd PID 964,
+                         STARTED 2026-09-04 12:43:09 -- hours before the
+                         repairs were committed
+  watchdog               task SFEngineM2Watchdog, State=Ready,
+                         LastRunTime 18:05:01, LastTaskResult 0,
+                         NextRunTime 18:10:00, interval 5 min
+  M1 (untouched)         source_commit ce79401b1524..., schema_version 3
+
+THE MECHANISM, STATED PLAINLY: the watchdog's LastTaskResult is 0 because the
+engine ANSWERS. A healthy old engine is indistinguishable from a healthy new
+one to every check this stack had before today. The engine has been up since
+12:43 and will stay on the old build until something stops the process.
+
+--------------------------------------------------------------------------
+4. DEPLOYMENT ACTION -- OPERATOR REQUIRED
+--------------------------------------------------------------------------
+
+NOT PERFORMED. Stop-Process was denied by the auto mode classifier in my
+session, twice. I stopped at the destructive boundary rather than looking for
+a way around it.
+
+PRE-CONDITIONS ALREADY SATISFIED AND VERIFIED BY ME:
+  [x] Fast-forward, no divergence:
+      `git merge-base --is-ancestor 71e4e80e8 HEAD` -> true. The live build
+      is an ANCESTOR of what will be deployed; nothing is being rolled back.
+  [x] No in-flight work to strand: 0 work_items in CLAIMED status; all 53
+      COMPLETED. Last ledger event was ~56 min before the check.
+  [x] Database backed up with the SQLite ONLINE BACKUP API (consistent under
+      WAL, unlike a file copy):
+        var/engine.db.pre-schema4-20260904T180254.bak
+        verified: schema_version 3, 56 worlds, 896 events
+  [x] Migration 3->4 rehearsed against a COPY of this exact database:
+        all row counts identical, require_attestation present and 0 for all
+        56 pre-existing worlds, ledger verify 12/12 ok.
+
+EXACT PROCEDURE (run on M2, PowerShell, as the operator):
+
+  # -- 0. PROVE THE PRE-STATE (expect EXIT=1; this is the point) ----------
+  cd D:\Prometheus
+  D:\Prometheus\.venv-m2\Scripts\python.exe integration\sfe_preflight.py `
+    --base-url https://192.168.1.191:8811 `
+    --cacert SerendipityFoundry\SerendipityFoundryEngine\deploy\m2.crt `
+    --require-commit-contains 67c28acee --require-schema 4 `
+    --require-endpoint "GET /v2/worlds/{wid}/experiments/{eid}"
+  #   -> ATTESTATION FAIL, exit 1
+
+  # -- 1. STOP (the destructive boundary) ---------------------------------
+  $id = (Get-NetTCPConnection -State Listen -LocalPort 8811).OwningProcess
+  $p  = Get-CimInstance Win32_Process -Filter "ProcessId=$id"
+  Stop-Process -Id $id -Force                 # the python child
+  Stop-Process -Id $p.ParentProcessId -Force  # the cmd launcher parent
+  Start-Sleep -Seconds 3
+  Get-NetTCPConnection -State Listen -LocalPort 8811   # expect NOTHING
+  #   BOTH kills are required. The launcher cmd.exe spawns the python child;
+  #   killing one leaves the other holding the port.
+
+  # -- 2. START (optional -- see note) ------------------------------------
+  powershell -NoProfile -ExecutionPolicy Bypass -File `
+    D:\Prometheus\SerendipityFoundry\SerendipityFoundryEngine\deploy\sfengine_m2_watchdog.ps1
+  #   NOTE: this only HASTENS things. SFEngineM2Watchdog fires every 5
+  #   minutes, will find the probe failing, and will relaunch from
+  #   sfengine_m2.cmd on its own. Running it by hand means the instance you
+  #   end up with is the supervised one either way.
+
+  # -- 3. PROVE THE POST-STATE (expect EXIT=0) ----------------------------
+  #   same preflight command as step 0
+  #   -> ATTESTATION PASS; source_commit contains 67c28acee; schema 4;
+  #      GET experiments served
+
+WHAT TO CHECK AFTER, BEYOND THE PREFLIGHT:
+  - schema_version reports 4, and `SELECT COUNT(*) FROM worlds` is still 56.
+    The migration is additive; a changed count means something is wrong and
+    the .bak above is the rollback.
+  - deploy\sfengine_m2.log tail for a clean startup and no migration error.
+  - Then, and only then, run the live qualification in section 5.
+
+ROLLBACK: stop the process as in step 1, restore
+var/engine.db.pre-schema4-20260904T180254.bak over var/engine.db, and
+`git checkout 71e4e80e8 -- SerendipityFoundry/SerendipityFoundryEngine/sfe`
+before restarting. The schema-4 column is additive and a v3 engine REFUSES to
+open a v4 database (store.py raises on have > SCHEMA_VERSION), which is why
+the database restore is mandatory and not optional.
+
+M1 IS DELIBERATELY NOT INCLUDED. It is a live service with other consumers
+and its own history; whether it takes this build is James's call, not mine.
+
+--------------------------------------------------------------------------
+5. LIVE QUALIFICATION RESULTS
+--------------------------------------------------------------------------
+
+TESTS ACTUALLY RUN AGAINST THE REPAIRED SERVICE: NONE. There is no repaired
+service yet. Stating a null result plainly because the alternative -- listing
+in-process results under a "live" heading -- is exactly the confusion this
+pass exists to end.
+
+WHAT WAS ACTUALLY RUN, AND AGAINST WHAT:
+
+  In-process (FastAPI TestClient + direct runtime), repaired code:
+    pytest SerendipityFoundry/SerendipityFoundryEngine/tests -q
+      -> 119 passed  (88 pre-existing + 31 new)
+
+  Against the LIVE (stale) M2 service:
+    integration/sfe_preflight.py, strict requirements
+      -> ATTESTATION FAIL, exit 1, 4 HARD failures:
+         T20_deploy_lag       live 71e4e80e8783 DOES NOT CONTAIN 67c28acee
+         schema_version       live=3 required>=4
+         GET experiments/{eid} NOT SERVED
+         GET observations      NOT SERVED
+    integration/sfe_preflight.py, POSITIVE CONTROL (asking that same build
+    only for what it genuinely has: ancestor b148a41c3, schema>=3,
+    POST /observations)
+      -> ATTESTATION PASS, exit 0, 6 checks
+    Both directions matter. A gate that only ever fails is not evidence that
+    it can discriminate.
+
+  Against a COPY of the live M2 database, repaired code:
+    schema migration 3 -> 4
+      -> all row counts identical (56/896/59/20/69/53/16)
+      -> require_attestation present, 0 for all 56 pre-existing worlds
+      -> ledger verify on 12 real worlds: 12 ok / 0 bad
+
+TWO BUGS IN MY OWN INSTRUMENT WERE FOUND BY RUNNING IT, NOT BY READING IT,
+and both would have produced false results:
+  - Git-Bash MSYS path conversion rewrote `--require-endpoint /v2/worlds/...`
+    into `C:/Program Files/Git/v2/worlds/...` before Python saw it. The check
+    still failed -- for the wrong reason.
+  - A path-only capability check reported POST /v2/worlds/{wid}/observations
+    as satisfying a requirement for GET /v2/worlds/{wid}/observations. That
+    is a FALSE PASS on the exact build the script exists to reject. The check
+    is now (METHOD, path).
+
+REQUIRED LIVE QUALIFICATION ONCE DEPLOYED (the bar, stated in advance so it
+cannot be moved afterwards):
+  L-1  preflight strict           -> exit 0
+  L-2  pytest engine tests        -> 119 passed
+  L-3  test_harness/harness.py --base-url https://192.168.1.191:8811
+         --cafile config/m2.crt   -> 12/12
+  L-4  test_harness/isolation_two_experimenters.py (same args) -> 7/7
+  L-5  repro_harmonia_findings.py -> the 6 REPRODUCED rows must FLIP;
+         I-EVENTS-SHAPE stays NOT_REPRODUCED; the two REFINED rows stay
+         REFINED. Any other movement means something unintended changed.
+  L-6  SELECT COUNT(*) FROM worlds still 56.
+
+--------------------------------------------------------------------------
+6. REPLAY READINESS
+--------------------------------------------------------------------------
+
+REPLAY_COMPLETE: NO. Do not let the D-REPLAY-1 work be read as more than it
+is. Decomposed exactly as the directive asks:
+
+  engine can reconstruct WORLD ............ YES (pending deploy)
+      get_world returns seed_root, sharing_policy, budget limits,
+      require_attestation, parent_world_id, fork_point. Enough to
+      instantiate an equivalent world.
+  engine can reconstruct ACTION ........... YES (pending deploy)
+      GET /v2/worlds/{wid}/experiments/{eid} returns the frozen spec AND
+      spec_hash; EXPERIMENT_COMMITTED sealed that hash plus
+      engine_source_hash in the tamper-evident chain, so a recovered spec is
+      VERIFIABLE, not merely available.
+  engine can reconstruct INPUTS ........... PARTIAL / CONDITIONAL
+      Organism bytes are retrievable (GET artifacts/{aid}/content) and
+      artifact identity is now assertable. But "the inputs" are whatever the
+      experimenter put in the spec: the engine cannot know whether the spec
+      is COMPLETE with respect to the run, because spec is opaque by design.
+      If an experimenter kept an input outside the spec, the engine has no
+      way to notice, and replay silently loses it.
+  engine can EXECUTE an equivalent encounter  NO
+      The engine schedules and attests work; it does not run the
+      experimenter's action. Encounter execution is Harmonia's code.
+  engine can PROVE byte/execution equivalence NO
+      It can prove SPEC identity (hash equality against the sealed value)
+      and RESULT identity (result_hash on the work item). It cannot prove
+      two executions were equivalent, and equal result_hash across two runs
+      is evidence of a deterministic pipeline, not proof of one.
+  PEW contains sufficient reconstruction material  NO
+      Mnemosyne's; 9 of 16 identities MISSING or AMBIGUOUS in the fossil.
+
+SO: replay-from-the-ENGINE is now possible for world + action. Replay-from-
+the-FOSSIL is not, and that is the gap that decides whether a preserved
+result survives the machine it ran on.
+
+EXACT INTERFACE FOR HARMONIA TO TEST REPLAY AFTER INTEGRATION:
+
+  1. GET  /v2/worlds/{w}                 -> seed_root, sharing_policy,
+                                            budget, require_attestation
+  2. GET  /v2/worlds/{w}/experiments/{e} -> spec, spec_hash
+  3. GET  /v2/worlds/{w}/events?limit=N  -> find EXPERIMENT_COMMITTED;
+                                            assert payload.spec_hash equals
+                                            the spec_hash from step 2.
+                                            THIS IS THE REAL TEST -- it
+                                            proves the recovered action is
+                                            the one the ledger committed to.
+  4. GET  /v2/worlds/{w}/observations?exp_id={e} -> content, outcome,
+                                            evidence_class
+  5. Create a NEW world from the step-1 config (with an Idempotency-Key),
+     replay the step-2 spec, and compare the step-4 outcome.
+  6. Assert the replay's engine_source_hash matches the original's, or
+     record the difference: a replay under a different engine build is a
+     different experiment and must not be reported as a reproduction.
+
+--------------------------------------------------------------------------
+7. ARENA.RUN ENGINE CONTRACT
+--------------------------------------------------------------------------
+
+Engine-facing contract, CLOSED. Implementation deliberately not started.
+
+  arena.run(organism, world_config, action_plan, *, idem_key) -> encounter
+
+ENGINE GUARANTEES NOW IMPLEMENTED (all pending deploy):
+  retry-safe world creation ....... D-IDEM-1. One (client, key) yields one
+                                    world or a diagnosable 409. REQUIRES an
+                                    explicit seed_root from the caller.
+  exact world identity ............ world_id + the full config that produced
+                                    it, readable in one call.
+  organism content validation ..... D-CIDGATE-1. expected_blob_hash is
+                                    MANDATORY in the arena path even though
+                                    optional at the endpoint. Mismatch
+                                    stores nothing and appends no event.
+  explicit attestation semantics .. D-ATTEST-1. The arena path creates its
+                                    world with require_attestation=true, so
+                                    CLIENT_ASSERTED is UNREACHABLE inside an
+                                    encounter -- the degraded class cannot
+                                    be produced by omission.
+  exact experiment/work identity .. exp_id + spec_hash (sealed) + work_id +
+                                    result_hash.
+  exact causal observation identity D-ANCHOR-1. event_id, entry_hash,
+                                    event_seq, world_index returned BY the
+                                    write. No ledger search, so the class of
+                                    wrong-but-real anchors is closed.
+  stable response schemas ......... pinned by the HTTP-surface tests; the
+                                    one deliberate break (observation now
+                                    returns a dict) is called out loudly.
+  deterministic error behaviour ... typed errors with a stable `error` code:
+                                    422 validation, 403 access_denied,
+                                    404 not_found, 409 conflict /
+                                    invalid_transition.
+
+REMAINING DEPENDENCIES -- NOT MINE, NOT IMPLEMENTED BY ME:
+  ON PEW / Mnemosyne:
+    - fossil completeness: action, input, output_digest, full world_config,
+      registry_id, producer/schema versions (9 of 16 identities MISSING or
+      AMBIGUOUS). Until this lands, arena.run can return a complete
+      encounter that PEW cannot durably record.
+    - anchor validation: PEW checks shape + (event_id, entry_hash)
+      EXISTENCE. It cannot know the event is the run's observation. The
+      engine half is closed by D-ANCHOR-1; the PEW half is open.
+    - GET /packets readability (archaeology gap, P3).
+  ON PROTEUS:
+    - the authoritative organism content id that arena.run should assert.
+      The engine now ENFORCES an assertion; it does not MINT one. Proteus
+      must state what the expected digest is and where it comes from.
+    - registry_id for the fossil's registry_identity field.
+
+I did not implement any of the above and I am not proposing to.
+
+--------------------------------------------------------------------------
+8. CONSTRAINT-TRANSFER CANDIDATES
+--------------------------------------------------------------------------
+
+  CT-SFE-1  Desired code commit must match / be compatible with the LIVE
+            source_commit before experimental execution.
+            CLASS: HARD.
+            EXECUTABLE: integration/sfe_preflight.py
+              --require-commit-contains <sha> --require-schema <n>
+              --require-endpoint "<METHOD> <path>"
+            Implemented as `git merge-base --is-ancestor <fix> <live>`, so it
+            asserts CONTAINMENT rather than equality -- an engine ahead of
+            the required fix still passes, which is what you want for a
+            campaign that pins a minimum.
+            VALIDATED BOTH WAYS: exit 1 on the real stale daemon; exit 0 on a
+            positive control.
+            WHY HARD: this is the only failure in this whole programme that
+            makes every OTHER check lie.
+
+  CT-SFE-2  Create-world retry must be idempotent.
+            CLASS: HARD.
+            EXECUTABLE: test_D_IDEM_1_* (4) + test_http_D_IDEM_1_* (2).
+            CAVEAT that belongs IN the constraint: without an explicit
+            seed_root the guarantee is weaker than it looks.
+
+  CT-SFE-3  A scientific observation requiring attestation cannot silently
+            become CLIENT_ASSERTED.
+            CLASS: HARD where declared, ADVISORY globally.
+            EXECUTABLE: test_D_ATTEST_1_* (4).
+            The split is deliberate: HARD inside a require_attestation world,
+            and deliberately NOT a global rule, because a global rule is an
+            execution veto on exploratory work.
+
+  CT-SFE-4  Organism bytes must independently match the asserted content
+            identity.
+            CLASS: HARD where asserted, ADVISORY otherwise.
+            EXECUTABLE: test_D_CIDGATE_1_* (4) + test_http_D_CIDGATE_1_*.
+            Includes the check a naive fix would miss: a REJECTED artifact
+            must append NO event.
+
+  CT-SFE-5  A causal anchor must belong to the exact encounter.
+            CLASS: HARD on the engine side; the PEW side is UNENFORCED and
+            remains Mnemosyne's.
+            EXECUTABLE: test_D_ANCHOR_1_* (2) + test_http_D_ANCHOR_1_*.
+            The engine's contribution is structural: it removes the SEARCH,
+            so the wrong-anchor class is unreachable rather than discouraged.
+
+  CT-SFE-6  Reproduced evidence may REFUTE or NARROW a prior finding;
+            constraints require errata/supersession semantics.
+            CLASS: HARD, as a process constraint.
+            EXECUTABLE: roles/Daedalus/sprint_20260904/
+                        validate_disposition.py, which enforces that a
+            REFUTED issue may not carry a constraint, that every cited test
+            exists, that every cited commit resolves, and that nothing claims
+            LIVE_QUALIFIED while NOT_DEPLOYED. Currently VALID over 11
+            issues.
+            This is the constraint that protects the others from ossifying:
+            three of eleven findings changed shape under reproduction, and
+            without errata semantics all three would have become permanent
+            guards against problems that did not exist.
+
+  REJECTED / NOT YET JUSTIFIED
+    A universal constraint registry with a predicate DSL. At seven
+    constraints a table of tests IS the registry, and it executes on every
+    commit instead of drifting from the code it guards. Revive when a
+    constraint appears that a pytest cannot express.
+    Design-time experiment linting (Herakles' concept 1). An engine cannot
+    lint a design it is forbidden to interpret. Belongs above the engine.
+
+--------------------------------------------------------------------------
+9. REMAINING BLOCKERS BEFORE AN INTEGRATED A / B / A+B EXPERIMENT
+--------------------------------------------------------------------------
+
+  B-1  DEPLOYMENT. Nothing below matters until section 4 is executed and
+       section 5's L-1..L-6 pass. HARD BLOCKER, operator action.
+  B-2  PEW FOSSIL COMPLETENESS. Mnemosyne. Without it an encounter can be
+       run correctly and not durably recorded. HARD BLOCKER for a
+       PRESERVED result; not for a one-off run read back from the engine.
+  B-3  PROTEUS ORGANISM CONTENT ID. The engine enforces an assertion it
+       cannot mint. HARD BLOCKER for arena.run; not for a manual encounter
+       where Harmonia supplies the digest.
+  B-4  COMPOSITION IS UNVERIFIABLE BY THE ENGINE. `spec` is opaque, so the
+       engine cannot check that A+B is the composition of A and B, and
+       cannot ablate A from A+B. Today that verification is entirely
+       Harmonia's, with NO engine-side check against a mislabelled
+       composition. This is the single most likely way this programme
+       produces a wrong interaction claim. A ~100-line typed `components`
+       field would make it mechanical; it changes the meaning of `spec` and
+       needs a contract decision from Harmonia and James, not my initiative.
+       NOT a blocker to RUNNING A/B/A+B. It is a blocker to TRUSTING the
+       label on the third one.
+  B-5  MEASUREMENT DEFINITION GAP. observations.content is freeform, and the
+       SFE measurements table is empty, so the engine cannot say WHAT was
+       measured. Harmonia's own open seam list carries this; it is jointly
+       mine and Mnemosyne's (PHENOTYPE_CONSUMER_REQUIREMENT.md, 9 items,
+       only 2 of 6,006 candidate artifacts carry phenotype scores).
+       Not a blocker to a first A/B/A+B run; a blocker to comparing runs
+       across time.
+
+--------------------------------------------------------------------------
+10. DEFERRED QUALIFICATION (before a high-throughput campaign)
+--------------------------------------------------------------------------
+
+  REQUIRED BEFORE FIRST A+B EXPERIMENT
+    Q-0  Rebuilt-engine qualification = section 5, L-1..L-6. The engine hash
+         changes with this deploy, and Harmonia's own handbook rule is that
+         any new engine hash requalifies first.
+
+  REQUIRED BEFORE A PARALLEL CAMPAIGN
+    Q-1  N isolated worlds, N in {4, 16, 64}, one worker each. Success: zero
+         errors, every world's ledger verifies.
+    Q-3  Duplicate work completion: complete the same work_id twice, and
+         complete with a stale claim_id after lease expiry. Assert the
+         second is REFUSED, not silently accepted.
+
+  DEFER
+    Q-2  Same-world concurrent writes / claim races. UNMEASURED and NOT
+         ASSUMED SAFE. The code reads correct -- claims run under BEGIN
+         IMMEDIATE with a UNIQUE(world_id, world_index) backstop and a
+         server-issued fencing claim_id -- but that is a CODE READING, not a
+         measurement, and I decline to certify it as one. Design campaigns
+         that do not need it.
+    Q-4  Restart durability under load. Involves killing a live service; not
+         to be run against an engine holding anyone's campaign.
+    Q-5  Throughput ceiling. No number exists. Deferred deliberately: the
+         goal is trustworthy experimentation, not maximum throughput, and
+         measuring a ceiling we have no plan to approach is work that buys
+         nothing.
+    I-WORLD-GC. 56 worlds is not a problem, and enumeration is now
+         filterable so cleanup candidates are identifiable. Deleting worlds
+         destroys ledgers -- that waits for a stated retention policy, not a
+         maintainer's judgement. Revive at ~500 worlds or on disk pressure.
+
+--------------------------------------------------------------------------
+11. CROSS-COMPONENT REQUESTS (unresolved only)
+--------------------------------------------------------------------------
+
+  TO MNEMOSYNE / PEW
+    R-1  Typed fossil fields for action, input, output_digest, full
+         world_config, registry_id, producer/schema versions -- or a durable
+         side-artifact the fossil references by hash. Currently 9 of 16
+         identities MISSING or AMBIGUOUS.
+    R-2  Anchor validation beyond shape + existence. The engine now RETURNS
+         the exact anchor (D-ANCHOR-1); PEW should require the anchoring
+         event to be the run's OBSERVATION_RECORDED, not merely an event
+         that exists.
+    R-3  Confirm which of the nine PHENOTYPE_CONSUMER_REQUIREMENT items you
+         need from the ENGINE versus from the experimenter, so I can build
+         the engine half of the measurement contract (B-5) without guessing.
+
+  TO PROTEUS
+    R-4  State the authoritative organism content id and where it is minted.
+         The engine now enforces an assertion; it does not create one.
+    R-5  Provide registry_id for the fossil's registry_identity field.
+
+  TO HARMONIA
+    R-6  Contract decision on the typed `components` field (B-4).
+    R-7  Choose the dry-run shape you want (from the previous packet's
+         section 9): (a) spec_hash prediction plus seed_root/enforcement TYPE
+         validation -- cheap, purely functional, no shelf life; or (b) full
+         admissibility including budget and window verdicts -- more useful,
+         but its answer can go stale between preflight and execution. I lean
+         (a), because a stale PASS is worse than no PASS.
+
+--------------------------------------------------------------------------
+12. COMMITS / ARTIFACTS / TESTS
+--------------------------------------------------------------------------
+
+  COMMITS (branch main)
+    9bcba33d9  close the four quiet-success hazards in the SFE engine
+    67c28acee  D-REPLAY-1 -- make the exact action recoverable, not just
+               sealed
+    f2d461bf1  engine sprint review packet (12 sections)
+    da64f2b88  CT-SFE-1 deployment attestation + issue disposition ledger
+
+  ENGINE CODE
+    SerendipityFoundry/SerendipityFoundryEngine/sfe/{runtime,api,store}.py
+
+  TESTS  119 green (88 pre-existing + 31 new)
+    SerendipityFoundry/SerendipityFoundryEngine/tests/
+      test_sfe_orchestration_safety.py
+
+  CLOSURE ARTIFACTS
+    integration/sfe_preflight.py                    CT-SFE-1 detector
+    roles/Daedalus/sprint_20260904/
+      issue_disposition.json                        11 findings, errata chain
+      validate_disposition.py                       ledger validator -> VALID
+      repro_harmonia_findings.py                    pre-change reproduction
+      repro_results.json                            6 REPRO / 2 REFINED / 1 NOT
+      preflight_m2_before.json                      the stale-daemon evidence
+      REVIEW_PACKET_ENGINE_SPRINT_2026-09-04.txt    prior packet
+      CLOSURE_PACKET_SFE_2026-09-04.txt             this document
+
+  DATABASE BACKUP (rollback point)
+    SerendipityFoundry/SerendipityFoundryEngine/var/
+      engine.db.pre-schema4-20260904T180254.bak
+
+--------------------------------------------------------------------------
+13. HANDOFF TO HARMONIA
+--------------------------------------------------------------------------
+
+WHAT HARMONIA MAY NOW TRUST
+  T-1  The issue disposition ledger. Every engine finding has an explicit
+       disposition, the original claim is preserved beside the corrected
+       one, and a validator enforces that citations resolve. You do not need
+       to ask "which SFE findings were actually real?" -- section 2 answers
+       it, including for four of my own retracted results.
+  T-2  That /v2/worlds was ALWAYS client-scoped. There is no isolation hole
+       there and there never was.
+  T-3  That events() has one shape. Raw HTTP returns {"events": [...]};
+       sfclient returns the unwrapped list. Scoped to builds at or after
+       c358a53b.
+  T-4  That the engine's ledger is honest about evidence class, prospective
+       ordering and provenance. That was never the defect.
+  T-5  integration/sfe_preflight.py as the answer to "which daemon am I
+       talking to?" -- it is the one thing here validated against the live
+       service, in both directions.
+
+WHAT HARMONIA MUST STILL VERIFY
+  V-1  That the deploy happened. Run the preflight. Do not take section 3 of
+       this packet as current -- it was true at 18:05 on 2026-09-04 and the
+       whole point of CT-SFE-1 is that this class of fact expires.
+  V-2  L-1..L-6 in section 5, after deployment. In particular L-5: the six
+       REPRODUCED rows must FLIP and nothing else may move.
+  V-3  That your own harness still passes against the new response shape.
+       record_observation returns a DICT now, not a bare obs_id string.
+  V-4  Replay end-to-end using the six-step interface in section 6, on a
+       throwaway world, BEFORE relying on it for a preserved result.
+
+WHAT HARMONIA MUST NOT ASSUME
+  N-1  Do not assume any repair is live because it is on main. That
+       assumption is precisely what this pass exists to break, and it held
+       for hours today while looking fine.
+  N-2  Do not assume replay is self-contained. The ENGINE can now return the
+       world config and the verified action; the FOSSIL still cannot. A
+       result preserved only in PEW is not yet replayable.
+  N-3  Do not assume the engine validates composition. It cannot see inside
+       `spec`. If you label a run A+B, nothing mechanical checks that it was
+       A and B -- and nothing will until the components contract (B-4) is
+       decided.
+  N-4  Do not assume same-world concurrency is safe. It is unmeasured. The
+       code reads correct; that is not the same claim.
+  N-5  Do not assume an M1 world id means anything on M2, or that an M1 SFE
+       token works on M2. Engines are independent (T19, T21).
+  N-6  Do not assume a green in-process test says anything about the live
+       service. Those are the four states in section 1, and they are four
+       states precisely because we conflated them today.
+
++==========================================================================+
+|  "Not worth continuing" remains a first-class answer. If the judgement    |
+|  is that the engine is now over-hardened relative to any experiment       |
+|  actually queued, the right response to this packet is to deploy,         |
+|  run L-1..L-6, and then STOP engine work until a real experiment          |
+|  produces a real complaint.                                               |
++==========================================================================+
