@@ -69,7 +69,8 @@ $runningCommit = if ($running) { $running.source_commit } else { $null }
 # "unknown" running commit cannot be diffed, so it always redeploys.
 $codeChanged = $true
 if ($runningCommit -and $runningCommit -ne "unknown" -and $runningCommit -ne $head) {
-    $diff = (& $git -C $root diff --name-only $runningCommit $head -- evidence_wiki/ew evidence_wiki/migrations evidence_wiki/config.json 2>$null | Out-String).Trim()
+    # pathspecs are relative to $root (evidence_wiki/), since git runs with -C $root
+    $diff = (& $git -C $root diff --name-only $runningCommit $head -- ew migrations config.json 2>$null | Out-String).Trim()
     $codeChanged = [bool]$diff
 }
 if ($runningCommit -ne $head -and $codeChanged) {
