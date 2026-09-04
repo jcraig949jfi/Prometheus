@@ -3,7 +3,9 @@
 **Audience:** the first experimentalist (Harmonia, M2) and anyone integrating
 against the Serendipity Foundry Engine for the first time.
 **Maintainer:** Daedalus (M1 / SKULLPORT).
-**Written:** 2026-09-03, verified live against the running service the same day.
+**Written:** 2026-09-03. **Re-verified 2026-09-04** against the restarted
+build `sha256:c358a53b…` (strict artifact decoding). Every claim below was
+checked against the running service on that date.
 
 This document is meant to be sufficient on its own. If you have to ask Daedalus
 how something works, that is a defect in this file — say so.
@@ -70,8 +72,8 @@ Expected — an `api` of `v2` and a `schema_version` of **3** or higher:
 ```json
 {"api":"v2","schema_version":3,"runtime":"serendipity-foundry-sfe",
  "registration_open":true,
- "engine_source_hash":"sha256:5274ddbe9120ddbbd75a36965106d2efe640a3b72278e7bb97b82e356e1fc9fc",
- "source_commit":"a2898d19601b9cfc2619e105418cb637562accb7"}
+ "engine_source_hash":"sha256:c358a53b9899fa16acb70c69747c8ec4ca494cdc62bd10fa9a550d574eef8c39",
+ "source_commit":"ce79401b1524fe20eba9c051cb8c0d9bf18fc0d9"}
 ```
 
 **Connect by IP, never by hostname.** The certificate carries an IP SAN
@@ -87,14 +89,14 @@ python integration/sfe_battery.py \
 
 It runs 23 checks against the live service (24 with `--expect-source-hash`),
 writes `handoff.json`, and **leaves you a RUNNING world**. Expect `23/23 PASS`.
-Verified 24/24 on 2026-09-03 against build `sha256:5274ddbe…`.
+Verified 24/24 on 2026-09-04 against build `sha256:c358a53b…`.
 
 To pin the exact build you expect (recommended once you are past first contact):
 
 ```bash
 python integration/sfe_battery.py \
     --cacert SerendipityFoundry/SerendipityFoundryClient/config/m1.crt \
-    --expect-source-hash sha256:5274ddbe9120ddbbd75a36965106d2efe640a3b72278e7bb97b82e356e1fc9fc
+    --expect-source-hash sha256:c358a53b9899fa16acb70c69747c8ec4ca494cdc62bd10fa9a550d574eef8c39
 ```
 
 `handoff.json` contains your `base_url`, `cacert`, `token`, `session_id`,
@@ -140,7 +142,7 @@ impossible, that claim is wrong and this battery disproves it every run.
 
 ---
 
-## 5. Frozen reference identity (as of 2026-09-03)
+## 5. Frozen reference identity (as of 2026-09-04)
 
 | | |
 |---|---|
@@ -148,8 +150,8 @@ impossible, that claim is wrong and this battery disproves it every run.
 | `schema_version` | `3` |
 | Paths / routes | 31 paths, 33 routes |
 | Route-surface digest | `sha256:723b369b81503b9008a4487e8b7dbc2e3d5cd435adb84e066ac6688ecc9b9b68` |
-| `engine_source_hash` | `sha256:5274ddbe9120ddbbd75a36965106d2efe640a3b72278e7bb97b82e356e1fc9fc` |
-| `source_commit` | `a2898d19601b9cfc2619e105418cb637562accb7` |
+| `engine_source_hash` | `sha256:c358a53b9899fa16acb70c69747c8ec4ca494cdc62bd10fa9a550d574eef8c39` |
+| `source_commit` | `ce79401b1524fe20eba9c051cb8c0d9bf18fc0d9` — **best-effort git metadata: the HEAD of the checked-out working tree (currently another role's branch), NOT the commit that contains the engine code.** `engine_source_hash` is the authoritative identity. |
 | `m1.crt` fingerprint | `sha256:825153dda5608783b605009748bf44aa8d1f109b88f26c7dac685c96fdf64237` |
 | Certificate validity | 2026-08-29 → 2028-12-01, IP SAN `192.168.1.202` |
 
@@ -402,7 +404,7 @@ Be precise about this, because the phrase is doing less work than it sounds
 like it is.
 
 The battery certifies that **this build, right now, does what this document
-says it does** — 24/24 against `sha256:5274ddbe…` on 2026-09-03. That is a
+says it does** — 24/24 against `sha256:c358a53b…` on 2026-09-03. That is a
 health-and-contract check, and it is genuinely what you need to start.
 
 It is **not** a qualification verdict. The only committed qualification result
@@ -806,7 +808,7 @@ manifest, stop.
 ## 10. FROZEN CONTRACT — `POST /v2/worlds/{world_id}/artifacts`
 
 Everything here was measured against the live Engine on 2026-09-03 (build
-`sha256:5274ddbe…`). It is sufficient to construct a request with no other
+`sha256:c358a53b…`). It is sufficient to construct a request with no other
 reference and no Proteus import.
 
 **Single source of truth:** the Engine's own request model,
@@ -913,15 +915,18 @@ seam fixture (§11). No normalization, no re-encoding.
 ### Encoding — READ THIS ONE
 
 - **Use STANDARD base64 (`+` and `/`), with padding.**
-- **URL-SAFE base64 (`-` and `_`) IS SILENTLY CORRUPTED.** It returns **HTTP
-  200** and stores **different, shorter bytes**. Measured: 24 bytes in → 15
-  bytes stored, no error, no warning. The decoder discards out-of-alphabet
-  characters instead of rejecting them.
-- Invalid base64 that breaks padding returns **HTTP 500
-  `{"error":"internal_error"}`** — not a 422. If you get a 500 from this
-  endpoint, suspect your encoding before you suspect the Engine.
+- **URL-safe base64 (`-` and `_`) is REJECTED with a 422** naming
+  `body.data_b64`. Decoding is strict as of build `c358a53b`.
+- **Invalid base64 is also a 422**, not a 500.
 
 In Python: `base64.b64encode(...)`. **Never** `base64.urlsafe_b64encode(...)`.
+
+*Fixed 2026-09-04.* On builds up to and including `5274ddbe` this endpoint
+failed **open**: URL-safe base64 was accepted with HTTP 200 and **silently
+stored different, shorter bytes** (measured 24 in, 15 stored), and malformed
+base64 escaped as an opaque 500. If you hold artifacts written before that
+date, verify them — `blob_hash` must equal your own `sha256(bytes)`. Nothing a
+standard-base64 client sends is affected, then or now.
 
 ### Bounds
 
@@ -1034,15 +1039,19 @@ common: a required field omitted, or an extra field sent (bodies are
 `extra="forbid"`). `budget.enforcement` must be one of `enforceable`,
 `measured`, `estimated`, `unavailable` — `"hard"` is not legal.
 
-**500 `internal_error` from the artifact endpoint.** Almost certainly your
-base64, not the Engine. Malformed base64 is not caught as a validation error —
-it surfaces as a 500. Check you used **standard** base64 with padding (§10).
+**422 `data_b64 is not valid standard base64` on the artifact endpoint.** Your
+encoder emitted URL-safe base64 (`-`/`_`) or something malformed. Use
+`base64.b64encode`, never `base64.urlsafe_b64encode`. As of build `c358a53b`
+the Engine rejects both rather than guessing; on older builds URL-safe input
+was accepted and **silently truncated**, so treat pre-2026-09-04 artifacts with
+suspicion (§13, R7).
 
-**An artifact came back shorter than you sent, with no error.** You used
-URL-safe base64 (`-`/`_`). It is accepted with HTTP 200 and **silently
-corrupted** — out-of-alphabet characters are discarded before decoding.
-`base64.b64encode`, never `base64.urlsafe_b64encode`. Verify with `blob_hash`:
-it must equal your own `sha256(bytes)`. If it doesn't, your encoding is wrong.
+**409 `conflict` scattered across hypotheses / experiments / observations.**
+Almost always one idempotency key reused across worlds. The key is scoped to
+`(client, key)` and the stored request hash binds **route + world_id + body**,
+so a key that is unique per logical step but not per world conflicts on every
+world after the first. The 409 body names `first_used_route` and
+`first_used_world_id` — make the key unique per `(world, step)`.
 
 **`POST /v2/clients` returns 403.** Registration was closed after bootstrap.
 Check `registration_open` in `GET /v2/version` and ask the operator for a token.
@@ -1086,22 +1095,33 @@ binding an address already in use. A stray manual `python serve.py` would bind
 alongside the service and split traffic rather than failing loudly. Worth a
 `var/engine.lock` exclusive-open guard in `serve.py` before `uvicorn.run`.
 
-**Known residual R7 — artifact body decoding does not fail closed.** Found
-2026-09-03, deliberately **not** fixed in this pass (a live shared service is
-not the place for a quiet change the day before first integration). Two
-behaviours, both on `POST /v2/worlds/{wid}/artifacts`:
+**R7 — artifact body decoding did not fail closed. FIXED 2026-09-04, live in
+build `c358a53b`.** Found 2026-09-03. Two behaviours on
+`POST /v2/worlds/{wid}/artifacts`, both now closed:
 
-- URL-safe base64 (`-`/`_`) is **accepted with HTTP 200 and silently
-  corrupted** — measured 24 bytes in, 15 bytes stored, no error. Out-of-alphabet
-  characters are discarded rather than rejected.
-- Invalid base64 returns **500 `internal_error`**, not a 422.
+| | before (≤ `5274ddbe`) | now (`c358a53b`) |
+|---|---|---|
+| URL-safe base64 (`-`/`_`) | **200, silently stored different, shorter bytes** (24 in → 15 stored) | **422** naming `body.data_b64` |
+| malformed base64 | **500 `internal_error`** | **422** `validation_error` |
 
-Both contradict the Engine's own fail-closed posture, which holds everywhere
-else (`extra="forbid"`, 422 with a field path). The fix is one argument —
-`base64.b64decode(..., validate=True)` — plus mapping the resulting error to a
-422. Until then, `blob_hash` is the client-side guard, and the documented
-adapter check (§9) catches it. Whoever picks this up: add a regression test
-asserting a 422 for both inputs before changing the decode.
+`base64.b64decode(..., validate=True)` plus an explicit 422. Re-proved against
+the live service after restart, along with: standard base64 still accepted and
+byte-exact, the shipped `sfclient.artifact()` path unchanged, and three bad
+payloads creating **zero** artifacts.
+
+**A caveat about older data.** Artifacts written before 2026-09-04 could have
+been silently truncated if their producer used URL-safe base64. Nothing detects
+that server-side — `blob_hash` is the hash of what was *stored*, not of what was
+*sent*. If you hold pre-2026-09-04 artifacts whose bytes matter, verify
+`blob_hash` against your own `sha256` of the original. No such corruption was
+found in this repository's data (only 7 artifacts carry an `organism_id`, and
+the mismatches among them are known test fixtures with deliberately synthetic
+ids).
+
+Also fixed the same day: the blanket 500 handler swallowed its traceback
+entirely, which is why the base64 defect sat in the log as a bare
+`internal_error` with nothing to chase. It now logs server-side; the wire
+response is unchanged.
 
 **Open registration** means any host on `192.168.1.0/24` can mint an identity.
 That is intentional for bootstrap; close it with `serve.py --registration

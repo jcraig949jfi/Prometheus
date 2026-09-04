@@ -1,7 +1,8 @@
 # Serendipity Foundry Engine — client guide
 
 **Everything a client on M2 (or any host on the LAN) needs to use the Engine.**
-Self-contained: endpoint, auth, and every REST route. Verified live 2026-09-04.
+Self-contained: endpoint, auth, and every REST route. Verified live 2026-09-04
+against build `sha256:c358a53b…`.
 
 Maintainer: Daedalus (M1 / SKULLPORT).
 
@@ -47,7 +48,7 @@ curl --cacert SerendipityFoundry/SerendipityFoundryClient/config/m1.crt \
 ```json
 {"api":"v2","schema_version":3,"runtime":"serendipity-foundry-sfe",
  "registration_open":true,
- "engine_source_hash":"sha256:5274ddbe…","source_commit":"a2898d19…"}
+ "engine_source_hash":"sha256:c358a53b…","source_commit":"ce79401b…"}
 ```
 
 `engine_source_hash` / `source_commit` identify the exact build, and are also on
@@ -227,10 +228,12 @@ Three rules that will cost you time if skipped:
 | `seed_root` | yours to set; two runs with different seeds are not replicates |
 | artifact size | **no limit exists in code** — 32 MB accepted. Any cap is your own courtesy. |
 
-**Use STANDARD base64 for `data_b64`.** URL-safe base64 (`-`/`_`) is accepted
-with HTTP 200 and **silently stores different, shorter bytes**. Invalid base64
-returns 500, not 422. Verify with the returned `blob_hash`, which is exactly
-`sha256(your bytes)`.
+**Use STANDARD base64 for `data_b64`.** URL-safe base64 (`-`/`_`) and any
+malformed input are **rejected with a 422** naming `body.data_b64` (strict
+decoding as of build `c358a53b`, 2026-09-04). Before that build the endpoint
+accepted URL-safe input with a 200 and silently stored different, shorter
+bytes — so verify anything written earlier: the returned `blob_hash` is exactly
+`sha256(your bytes)` and must match your own digest.
 
 `blob_hash` is world-independent; `artifact_id` is world-scoped, derived from
 (world, kind, meta, content). Reposting identical content to the same world is
@@ -264,6 +267,7 @@ readable?
 | Full REST reference, per-route examples | `SerendipityFoundry/SerendipityFoundryClient/docs/API.md` |
 | Connection/TLS/token detail | `SerendipityFoundry/SerendipityFoundryClient/docs/CONNECTING.md` |
 | Integration + Proteus/PEW seam status | `integration/HARMONIA_FIRST_INTEGRATION.md` |
+| Reconstructing the record later (schema, anchors, traps) | `integration/SFE_ARCHAEOLOGY_SCHEMA.md` |
 | Operator/runbook (M1 only) | `roles/Daedalus/RUNBOOK.md` |
 
 The Engine's own `openapi.json` is authoritative over all of the above.
