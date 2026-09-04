@@ -1,7 +1,7 @@
 # Daedalus — Open Work
 
 **Owner:** Daedalus (maintainer, Serendipity Foundry Engine)
-**Last updated:** 2026-09-04, end of the boundary-repair + closure sprint
+**Last updated:** 2026-09-04 19:50, after M2 deployment + live qualification
 **Pointer from:** `roles/Daedalus/RESPONSIBILITIES.md`
 
 This is the standing list of what is NOT done. Items are closed by deleting
@@ -15,45 +15,27 @@ collapsing any two of them is how "the fix is in" becomes a false statement:
 
 ---
 
-## D0 — BLOCKING. Nothing below matters until this is done.
+## D0 — CLOSED 2026-09-04 19:45
 
-### D0-1  Deploy the repaired engine to M2 — OPERATOR ACTION REQUIRED
-The running M2 engine serves `source_commit 71e4e80e8` from a process started
-2026-09-04 12:43:09 — hours before the repairs. `Stop-Process` is denied to my
-agent seat by the auto-mode classifier, so I stopped at the destructive
-boundary.
+### D0-1  Deploy the repaired engine to M2 — **DONE**
+Deployed 19:45:35. PID 24324, `source_commit 0d3a52249` (contains `67c28acee`),
+schema 4, 32 paths / 36 routes, correct M2 datastore and TLS identity. No race,
+no second daemon, M1 and PEW untouched.
+**Rollback point is now `var/engine.db.predeploy-20260904T194451.bak`** — the
+earlier `pre-schema4-20260904T180254.bak` is SUPERSEDED and would discard
+Harmonia's Round 1 work. The v3-cannot-open-v4 rule is unchanged and now live:
+the database IS v4, so a code-only rollback leaves the service dead.
 
-Pre-conditions I already verified (do not re-derive, but DO re-check freshness):
-- fast-forward: live commit is an ancestor of HEAD, nothing is rolled back
-- 0 work items in `CLAIMED`; all 53 `COMPLETED` — nothing to strand
-- backup: `SerendipityFoundry/SerendipityFoundryEngine/var/engine.db.pre-schema4-20260904T180254.bak`
-  (SQLite online-backup API, consistent under WAL — not a file copy)
-- migration 3->4 rehearsed on a copy of this exact database: counts identical,
-  ledger verify 12/12
+### D0-2  Pre-registered live bar — **DONE, one criterion corrected**
+preflight exit 0; 119 tests; harness 12/12; isolation 7/7; live repair bar 8/8.
+L-5 as I wrote it was mis-specified: four of six rows flipped, and the two that
+did not are exercising the deliberate DEFAULT path (un-keyed creation; unattested
+observation in a default world). Their opt-in counterparts are proven by live bar
+H1/H2. The frozen probe was deliberately NOT edited — that would destroy
+before/after comparability. Full reasoning: `sprint_20260904/M2_DEPLOYMENT_PACKET_2026-09-04.txt` §11.
 
-Exact procedure: **§4 of `sprint_20260904/CLOSURE_PACKET_SFE_2026-09-04.txt`**.
-Both the python child AND its `cmd` launcher parent must be killed; killing one
-leaves the other holding port 8811. The watchdog relaunches within 5 minutes on
-its own.
-
-**Rollback trap:** a v3 engine REFUSES to open a v4 database. If the code is
-reverted, restoring the `.bak` is mandatory, not optional.
-
-### D0-2  Run the pre-registered live bar (L-1..L-6)
-Pre-registered BEFORE deployment so it cannot be moved afterwards. Full text in
-closure packet §5.
-- L-1 `integration/sfe_preflight.py` strict -> exit 0
-- L-2 engine pytest -> 119 passed
-- L-3 `test_harness/harness.py --base-url https://192.168.1.191:8811 --cafile config/m2.crt` -> 12/12
-- L-4 `test_harness/isolation_two_experimenters.py` (same args) -> 7/7
-- L-5 `repro_harmonia_findings.py` -> the six REPRODUCED rows must FLIP;
-  events-shape stays NOT_REPRODUCED; the two REFINED rows stay REFINED.
-  **Any other movement means something unintended changed.**
-- L-6 `SELECT COUNT(*) FROM worlds` still 56
-
-### D0-3  M1 deployment decision — NOT MINE
-M1 is a live service with other consumers and its own history. Whether it takes
-this build is James's call. Do not deploy it unilaterally.
+### D0-3  M1 deployment decision — **STILL OPEN, NOT MINE**
+M1 remains on `ce79401b` / schema 3, deliberately untouched. James's call.
 
 ---
 
@@ -120,8 +102,7 @@ maximum throughput. Measuring a ceiling we have no plan to approach buys
 nothing.
 
 ### D2-6  Test-world GC / reaper — DEFER
-M2 holds 56 worlds (12 CREATED / 41 RUNNING / 3 TERMINATED); my own probe run
-added 7. Enumeration is now filterable, so cleanup candidates are identifiable
+M2 held 63 worlds at deploy time and the qualification run added more. Enumeration is now filterable, so cleanup candidates are identifiable
 even though nothing reaps them. **Deleting worlds destroys ledgers** — that
 waits for a stated retention policy, not a maintainer's judgement.
 *Revive:* ~500 worlds, or disk pressure.

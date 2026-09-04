@@ -1,0 +1,552 @@
++==========================================================================+
+|                                                                          |
+|   DAEDALUS M2 SFE DEPLOYMENT + LIVE QUALIFICATION PACKET                 |
+|                                                                          |
+|   Author:  Daedalus (maintainer, Serendipity Foundry Engine) on M2       |
+|   Date:    2026-09-04                                                    |
+|   For:     James (HITL), Harmonia (integrator), external reviewers       |
+|   Scope:   deployment closure only -- no science, no new engine work     |
+|                                                                          |
++==========================================================================+
+
+--------------------------------------------------------------------------
+1. VERDICT
+--------------------------------------------------------------------------
+
+  DEPLOYED_QUALIFIED
+
+The process listening on 192.168.1.191:8811 is demonstrably running the
+repaired engine, on the correct M2 datastore and TLS identity, and the exact
+hazards measured against the stale daemon now behave according to the repaired
+contract.
+
+  strict preflight ................. exit 0
+  capability harness (live) ........ 12/12
+  two-experimenter isolation (live)  7/7
+  live repair bar .................. 8/8
+  live database ................... migrated 3 -> 4, ZERO rows lost
+  engine unit suite ............... 119 passed
+
+ONE CRITERION I WROTE DID NOT SURVIVE CONTACT WITH ITS OWN INSTRUMENT. My
+pre-registered L-5 said "the six REPRODUCED rows must FLIP." Four flipped. Two
+did not, and they are CORRECT not to -- both probes exercise the DEFAULT path,
+where the old behaviour is the deliberate designed behaviour. The criterion was
+mis-specified by me; the deployment is not at fault. Section 11 gives the full
+reasoning and the evidence to overrule me. I am reporting this rather than
+quietly rescoring, because a bar that gets loosened after the run is not a bar.
+
+--------------------------------------------------------------------------
+2. PRE-DEPLOY STATE
+--------------------------------------------------------------------------
+
+Measured independently by me immediately before touching anything. Agrees with
+Harmonia's Round 1 section 6 baseline in every field.
+
+  endpoint             https://192.168.1.191:8811
+  source_commit        71e4e80e8783270585f635cbf239468213c8d988
+  engine_source_hash   sha256:c358a53b9899fa16acb70c69747c8ec4ca494cdc...
+  schema_version       3
+  route table          31 paths / 33 routes
+  absent               GET /v2/worlds/{wid}/experiments/{eid}
+                       GET /v2/worlds/{wid}/observations
+  process              PID 14372, started 2026-09-04 12:43:09
+  parent               PID 964
+  bind                 192.168.1.191:8811
+  TLS                  deploy\m2.crt / deploy\m2.key
+  database             ...\SerendipityFoundryEngine\var\engine.db
+
+ONE CORRECTION TO THE INHERITED DESCRIPTION. The parent is NOT a cmd launcher.
+Both Round 1 and my own closure packet said "cmd launcher parent". Measured:
+
+  PID 964    D:\Prometheus\.venv-m2\Scripts\python.exe  serve.py ...
+  PID 14372  C:\...\Python312\python.exe                serve.py ...
+
+The venv python is a shim that re-execs the base interpreter with the same
+argv. So the pair is python -> python, not cmd -> python. The operational rule
+is unchanged and still correct (kill BOTH, or the survivor holds the port), but
+anyone matching on process NAME to find the parent would have missed it.
+
+--------------------------------------------------------------------------
+3. TARGET COMMIT / REQUIRED FIX ANCESTRY
+--------------------------------------------------------------------------
+
+  deployed target      0d3a52249fd9de92a2733e01b843889d85f99357
+                       ("Harmonia: M2 qualification Round 1 -- STOP packet")
+
+  ancestry verified BEFORE deploying, not assumed from HEAD:
+    9bcba33d9  orchestration / quiet-success repairs .... IS an ancestor
+    67c28acee  D-REPLAY-1 read-path repair .............. IS an ancestor
+    da64f2b88  deployment attestation + disposition ..... IS an ancestor
+
+  engine working tree at deploy time: CLEAN (no uncommitted engine or
+    integration changes)
+  target test suite before deploy: 119 passed
+  live pre-state commit is an ANCESTOR of the target -> fast-forward, nothing
+    rolled back
+
+The deployed commit is a Harmonia packet commit rather than one of mine. That
+is expected and harmless: `source_commit` records the repo state the process
+launched from, and what matters is that it CONTAINS the required fixes, which
+is why the attestation asserts ancestry rather than equality.
+
+--------------------------------------------------------------------------
+4. BACKUP + MIGRATION PRECONDITIONS
+--------------------------------------------------------------------------
+
+Reconfirmed immediately before deployment, and ONE PRECONDITION HAD DECAYED:
+
+  engine.db.pre-schema4-20260904T180254.bak   present, 1,003,520 bytes
+  live engine.db at 19:44                     1,007,616 bytes
+
+The live database had GROWN since the 18:02 backup -- Harmonia's Round 1
+probing wrote to it. Census confirms: 63 worlds against the 56 in that backup,
+905 events against 896, 19 clients against 16. Restoring the 18:02 backup would
+therefore have SILENTLY DISCARDED HER ROUND 1 WORK.
+
+So I took a fresh one before proceeding:
+
+  engine.db.predeploy-20260904T194451.bak
+    SQLite ONLINE BACKUP API (consistent under WAL; not a file copy)
+    schema_version 3
+    63 worlds / 905 events / 59 observations / 21 artifacts /
+    69 experiments / 53 work items / 19 clients
+    work items in CLAIMED status: 0  -> nothing to strand on restart
+
+This is a general lesson worth keeping: a backup is a precondition with a
+SHELF LIFE, and "the backup file still exists" is not the same check as "the
+backup still represents the current state."
+
+--------------------------------------------------------------------------
+5. SERVICE STOP / START RESULT
+--------------------------------------------------------------------------
+
+STOP (19:45, using live PIDs, not the historical numbers)
+  stopped child  PID 14372
+  stopped parent PID 964
+  port 8811 RELEASED, verified by absence of a listener
+  PEW's python pair (PIDs 792 / 21024, started 18:58) deliberately untouched
+  M1 untouched throughout
+
+START
+  launched via the existing watchdog script, so the running instance is the
+  supervised one, and nothing was normalized to localhost or 0.0.0.0
+  watchdog exit 0
+  watchdog log:
+    2026-09-04T19:45:35  version probe failed; starting engine
+    2026-09-04T19:45:45  restart OK
+
+NO RACE, verified after the fact:
+  listeners on 8811: exactly ONE (PID 24324)
+  serve.py processes: exactly one launcher/child pair (29124 -> 24324)
+  the SCHEDULED watchdog then fired at 19:50:01, found the service healthy,
+  LastTaskResult 0, and did NOT launch a second daemon
+
+--------------------------------------------------------------------------
+6. LIVE PROCESS IDENTITY
+--------------------------------------------------------------------------
+
+  PID            24324          (was 14372)
+  parent PID     29124          (was 964)
+  start time     2026-09-04 19:45:35   (was 12:43:09) -- NEW, not a survivor
+  exe            C:\Users\James\AppData\Local\Programs\Python\Python312\
+                   python.exe
+  argv           serve.py
+                   --db   D:\Prometheus\SerendipityFoundry\
+                            SerendipityFoundryEngine\var\engine.db
+                   --host 192.168.1.191
+                   --port 8811
+                   --tls-cert ...\deploy\m2.crt
+                   --tls-key  ...\deploy\m2.key
+  bind           192.168.1.191:8811   (LAN address, never 0.0.0.0 -- T17)
+  TLS identity   CN=192.168.1.191, SAN 192.168.1.191, expires 2036-09-01
+  datastore      M2-local engine.db, unchanged path
+  M2 separation  credential/config separation preserved; nothing normalized
+
+--------------------------------------------------------------------------
+7. LIVE SERVICE IDENTITY
+--------------------------------------------------------------------------
+
+  source_commit        0d3a52249fd9de92a2733e01b843889d85f99357
+  engine_source_hash   sha256:3325ac5fa05de7ae4e98778d6...   (was c358a53b)
+  schema_version       4                                     (was 3)
+  route table          32 paths / 36 routes                  (was 31 / 33)
+  required routes      GET /v2/worlds/{wid}/experiments/{eid}  PRESENT
+                       GET /v2/worlds/{wid}/observations       PRESENT
+
+LIVE DATABASE AFTER MIGRATION -- nothing lost:
+
+  table          post   pre-deploy
+  worlds           63           63   OK
+  events          905          905   OK
+  observations     59           59   OK
+  artifacts        21           21   OK
+  experiments      69           69   OK
+  work_items       53           53   OK
+  clients          19           19   OK
+  require_attestation column present: yes
+  all 63 pre-existing worlds default to 0: yes
+
+--------------------------------------------------------------------------
+8. STRICT PREFLIGHT RESULT
+--------------------------------------------------------------------------
+
+Command (M2 trust material, strict flags per Round 1 S-1):
+
+  python integration/sfe_preflight.py
+    --base-url https://192.168.1.191:8811
+    --cacert  SerendipityFoundry/SerendipityFoundryEngine/deploy/m2.crt
+    --require-commit-contains 67c28acee
+    --require-schema 4
+    --require-endpoint "GET /v2/worlds/{wid}/experiments/{eid}"
+    --require-endpoint "GET /v2/worlds/{wid}/observations"
+
+  [PASS] reachable              GET /v2/version -> 200
+  [PASS] source_commit_present  0d3a52249fd9de92a2733e01b843889d85f99357
+  [PASS] T20_deploy_lag         live build 0d3a52249fd9 CONTAINS 67c28acee
+  [PASS] schema_version         live=4 required>=4
+  [PASS] openapi_readable       32 paths / 36 routes
+  [PASS] GET experiments/{eid}  served
+  [PASS] GET observations       served
+
+  ATTESTATION PASS -- 7 checks.   EXIT 0
+  raw: roles/Daedalus/sprint_20260904/preflight_m2_after.json
+  pre-state for comparison:       preflight_m2_before.json  (EXIT 1)
+
+--------------------------------------------------------------------------
+9. LIVE REPAIR BAR -- 8/8 PASS
+--------------------------------------------------------------------------
+
+Run against the DEPLOYED daemon. Raw: live_repair_bar_results.json
+
+H1 CREATE-WORLD IDEMPOTENCY .............................. PASS
+  PRE   same config x3 -> 3 world_ids; Idempotency-Key ACCEPTED AND SILENTLY
+        IGNORED -> 2 worlds
+  POST  same key + same request -> SAME world; same key + conflicting request
+        -> 409 conflict
+
+H2 REQUIRED ATTESTATION .................................. PASS
+  PRE   observation with no work_id -> 200, CLIENT_ASSERTED; no world-level
+        setting could require attestation
+  POST  require_attestation world created (flag readable = true);
+        unattested observation -> 422 REFUSED;
+        attested observation -> 200, evidence_class ENGINE_WORK_RESULT
+        (the gate does not block the path it exists to require)
+
+H3 CONTENT IDENTITY GATE ................................. PASS
+  PRE   expected_blob_hash did not exist (422 extra_forbidden); corrupt bytes
+        stored with an honest digest of the WRONG object
+  POST  correct bytes + expected hash -> 200, digest matches;
+        corrupt bytes + original expected hash -> 422 REFUSED;
+        ledger events 3 -> 3: the rejected write appended ZERO events
+
+H4 CAUSAL ANCHOR RETURN .................................. PASS
+  PRE   POST observations returned only ['obs_id']; the caller had to SEARCH
+        the ledger and could select a wrong-but-real event
+  POST  returns obs_id, event_id, entry_hash, event_seq, world_index,
+        evidence_class, evidence_role; the returned event_id resolves to
+        EXACTLY ONE event, of type OBSERVATION_RECORDED, whose entry_hash
+        matches the returned value
+
+H5 TERMINATED-WORLD CONTRACT ............................. PASS
+  PRE   artifact / hypothesis / budget writes SUCCEEDED after terminate
+  POST  forbidden: artifact 409, hypothesis 409, budget 409
+        permitted: read events 200, read status 200, checkpoint 200, fork 200
+        (fork of a terminated world still works -- replay depends on it)
+
+H6 D-REPLAY-1 ............................................ PASS
+  PRE   no GET for experiments existed; a spec could be VERIFIED if already
+        held, never RECOVERED
+  POST  GET experiment -> 200; recovered spec byte-equal to the submitted
+        spec; recovered spec_hash EQUALS the value sealed in the
+        EXPERIMENT_COMMITTED ledger payload
+
+H7 CLIENT ISOLATION REGRESSION ........................... PASS
+  PRE   isolation was ALREADY correct (7/7); the risk was that the NEW read
+        surfaces become a cross-experimenter oracle
+  POST  foreign client: GET experiment 403, GET experiments 403,
+        GET observations 403; intruder's own enumeration returns 0 worlds
+
+H8 CORRECTED FINDINGS STAY CORRECTED ..................... PASS
+  PRE   I-EVENTS-SHAPE claimed dict-vs-list inconsistency;
+        I-WORLD-ENUM-UNSCOPED claimed 189 unscoped worlds
+  POST  events STILL returns a dict with an 'events' key -- NOT flipped into
+        a fake success; enumeration client-scoped (7 mine) and the new
+        state filters work, with an unknown state rejected 422
+
+--------------------------------------------------------------------------
+10. CLIENT ISOLATION REGRESSION
+--------------------------------------------------------------------------
+
+  two-experimenter isolation harness (live)      7/7 properties hold
+  capability harness (live)                     12/12, including
+    "world isolation (foreign client denied, knowing the id)"
+  live bar H7 (the NEW read paths specifically)  403 on all three
+
+The property that was never broken is still not broken, and the surfaces added
+in this sprint were tested SPECIFICALLY against it rather than assumed safe.
+
+--------------------------------------------------------------------------
+11. CORRECTED-FINDING REGRESSION
+--------------------------------------------------------------------------
+
+I-EVENTS-SHAPE ....................... REMAINS NOT_REPRODUCED
+  Live raw HTTP still returns {"events": [...]}, a dict. Not flipped into a
+  fake success. The refutation stands, still scoped to builds at or after
+  c358a53b.
+
+I-WORLD-ENUM-UNSCOPED ................ REMAINS RECLASSIFIED
+  Isolation intact (H7, 7/7, 12/12). Filtering capability added and working.
+  Exactly the reclassification, no more.
+
+NOW THE PART THAT DID NOT GO AS I PRE-REGISTERED IT.
+
+L-5 as I wrote it: "the six REPRODUCED rows must FLIP." Measured on the
+repaired daemon: FOUR flipped. Two did not.
+
+  I-CREATE-IDEM-HEADER    REPRODUCED -> NOT_REPRODUCED   flipped
+  I-CAUSAL-CLIENT         REPRODUCED -> NOT_REPRODUCED   flipped
+  I-LIFECYCLE-TERMINATED  REPRODUCED -> NOT_REPRODUCED   flipped
+  B5-WORLD-CONFIG         REPRODUCED -> NOT_REPRODUCED   flipped
+  I-CREATE-IDEMPOTENCY    REPRODUCED -> REPRODUCED       DID NOT FLIP
+  I-ATTEST-NOT-FORCED     REPRODUCED -> REPRODUCED       DID NOT FLIP
+
+BOTH NON-FLIPS ARE CORRECT BEHAVIOUR, AND MY CRITERION WAS WRONG:
+
+  I-CREATE-IDEMPOTENCY creates three worlds WITHOUT an idempotency key. With
+  no key, config is NOT identity and three distinct worlds is the DELIBERATE
+  designed behaviour -- it is pinned by its own test
+  (test_D_IDEM_1_no_key_still_mints_distinct_worlds) and stated as exploratory
+  freedom F-4. The hazard is the SILENTLY IGNORED HEADER, which is the
+  companion probe, and that one flipped.
+
+  I-ATTEST-NOT-FORCED records an observation in a DEFAULT world, where
+  unattested observation remains legal and typed by design. The repair was
+  opt-in per world, deliberately, so that a global rule would not become an
+  execution veto on exploratory work. The probe never sets the flag.
+
+Both opt-in paths ARE covered, by live bar H1 (conflicting key -> 409) and H2
+(require_attestation -> 422 refused, attested -> ENGINE_WORK_RESULT), which is
+stronger evidence than the frozen probe could give.
+
+WHY I AM NOT EDITING THE FROZEN PROBE: repro_harmonia_findings.py is the
+pre-state instrument. Changing it now would destroy the before/after
+comparability that makes any of this checkable. It stays as it is, with the
+erratum recorded here and in the disposition ledger.
+
+ERRATUM ON A THIRD ROW (label, not behaviour):
+  I-CLIENT-GATE-UNENFORCED still prints "no expected-hash field (422)". That
+  text is now FALSE. The field exists; the 422 is now a CONTENT IDENTITY
+  MISMATCH rejection. The probe cannot tell the two apart because it reads
+  only the status code. Demonstrated live:
+    corrupt bytes + expected hash -> 422
+      {"error":"validation_error","message":"content identity mismatch: ...
+        Nothing was stored."}
+    unknown field                 -> 422
+      [{"type":"extra_forbidden","loc":["body","not_a_real_field"], ...}]
+  Same code, opposite meaning. The live bar disambiguates by reading the error
+  body AND by asserting the rejected write appended no ledger event.
+
+--------------------------------------------------------------------------
+12. WATCHDOG / DEPLOY-LAG VALIDATION
+--------------------------------------------------------------------------
+
+HOW DOES THE WATCHDOG NOW DETECT CODE/SERVICE DRIFT?
+
+  IT DOES NOT. The watchdog is UNCHANGED and remains HEALTH-ONLY. It probes
+  /v2/version and relaunches only if that probe fails. It compares no commit,
+  no schema, no capability. A stale-but-healthy daemon still satisfies it
+  completely -- it did so again at 19:50:01 today, LastTaskResult 0.
+
+  Drift detection lives entirely in integration/sfe_preflight.py, which is a
+  GATE RUN BY A CALLER, not an automatic supervisor action.
+
+WILL A FUTURE CODE CHANGE CAUSE A REDEPLOY/RESTART CONDITION?
+
+  NO. Commit anything you like; the watchdog will keep the old build running
+  indefinitely. Deployment remains a deliberate human/operator act.
+
+  I CONSIDERED MAKING THE WATCHDOG DRIFT-AWARE AND DECIDED AGAINST IT, and
+  this is a design judgement worth challenging: a watchdog that restarts the
+  engine whenever HEAD moves would kill a running campaign because somebody
+  committed a README. Auto-restart-on-drift converts a visible, gateable
+  problem into a surprise mid-experiment outage. Drift belongs at
+  experiment-start as a GATE, not in a supervisor as an ACTION. If the
+  programme disagrees, the change is small -- but it should be a decision,
+  not a default.
+
+CAN IT DISTINGUISH healthy-current / healthy-stale / unhealthy?
+
+  Watchdog:  NO. All three healthy-looking cases are identical to it; it sees
+             only answered/unanswered.
+  Preflight: YES. Four controls run live today, smallest safe set, service
+             never destabilized:
+
+    CONTROL                              RESULT
+    healthy-current (live, strict)       PASS, exit 0
+    healthy-stale (live, demand a
+      requirement it cannot meet)        FAIL, exit 1, names the deficient
+                                         field
+    unhealthy (dead port 8812)           FAIL, exit 1, "service down,
+                                         firewall, or wrong bind address"
+    wrong cert (m1.crt vs M2 engine)     FAIL, exit 1, "TLS FAILURE, not a
+                                         dead service (T18)"
+
+  The pre-deploy run against the genuinely stale daemon
+  (preflight_m2_before.json, exit 1, 4 hard failures) is the real-world
+  negative control; the four above are the deliberate ones.
+
+--------------------------------------------------------------------------
+13. NEW BUGS / HARNESS ERRATA
+--------------------------------------------------------------------------
+
+NEW ENGINE DEFECTS FOUND BY DEPLOYMENT: NONE. Nothing in section 9 or the
+harnesses exposed a correctness defect in the deployed engine.
+
+HARNESS ERRATA (all mine; all recorded rather than smoothed over):
+
+  E-1  MY DETECTOR MISDIAGNOSED A HEALTHY SERVICE AS DEAD. urllib WRAPS
+       ssl.SSLError inside URLError, so sfe_preflight's dedicated T18 branch
+       never fired, and pointing m1.crt at the healthy M2 engine reported
+       "service down, firewall, or wrong bind address". The tool written to
+       prevent exactly that confusion was committing it.
+       SEVERITY: moderate. QUIET-SUCCESS RISK: none (it fails closed), but it
+       would have sent an operator hunting a nonexistent outage.
+       FOUND BY: running the negative controls, not by reading the code.
+       FIXED and re-run; all four controls now discriminate. Commit 5b475a58a.
+       OWNER: Daedalus.
+
+  E-2  L-5 CRITERION MIS-SPECIFIED BY ME. "The six REPRODUCED rows must FLIP"
+       was wrong for two rows that exercise the deliberate default path.
+       Section 11 has the full reasoning.
+       SEVERITY: low as to the engine; HIGH as to process, because a
+       criterion that is wrong in the direction of "looks like a failure" is
+       the good kind, and I want it on record that I did not rescore it
+       silently. OWNER: Daedalus. NOT fixed by editing the frozen probe.
+
+  E-3  STALE PROBE LABEL. I-CLIENT-GATE-UNENFORCED prints "no expected-hash
+       field" when the field now exists and is enforcing. Status-code-only
+       measurement cannot separate the two 422s. Section 11 shows both bodies.
+       SEVERITY: low. OWNER: Daedalus. Recorded, probe left frozen.
+
+  E-4  PROCESS-SHAPE DESCRIPTION WAS WRONG in both my closure packet and
+       Round 1: the parent is a venv python shim, not cmd.exe. The
+       operational instruction was still correct. SEVERITY: low, but it would
+       defeat anyone matching on process name. Corrected in section 2.
+
+--------------------------------------------------------------------------
+14. ROLLBACK STATE
+--------------------------------------------------------------------------
+
+  CURRENT ROLLBACK POINT (use this one):
+    var/engine.db.predeploy-20260904T194451.bak
+      schema 3, 63 worlds / 905 events / 19 clients, taken 19:44:51,
+      immediately before the stop. Includes Harmonia's Round 1 work.
+
+  SUPERSEDED (do NOT use -- predates Round 1 and would discard it):
+    var/engine.db.pre-schema4-20260904T180254.bak
+      schema 3, 56 worlds / 896 events / 16 clients
+
+  ROLLBACK RULE, UNCHANGED AND LOAD-BEARING:
+    A v3 engine REFUSES to open a v4 database (store.py raises when the stored
+    schema version exceeds the engine's). The live database IS now v4.
+    Therefore a code-only rollback leaves the service DEAD.
+    To roll back you MUST do both:
+      1. restore engine.db.predeploy-20260904T194451.bak over var/engine.db
+      2. check out engine code that predates the schema-4 migration
+    Stop the service first, using the section 5 procedure.
+
+  NOT NEEDED. Nothing in this deployment recommends a rollback; the state is
+  recorded so the option stays real.
+
+--------------------------------------------------------------------------
+15. COMMITS / TESTS / RAW ARTIFACTS
+--------------------------------------------------------------------------
+
+  COMMITS
+    9bcba33d9  quiet-success repairs           (deployed)
+    67c28acee  D-REPLAY-1 read path            (deployed)
+    da64f2b88  CT-SFE-1 attestation + ledger   (deployed)
+    0d3a52249  the exact commit now running
+    5b475a58a  this deployment + TLS classification fix
+
+  TESTS
+    engine unit/integration suite        119 passed
+    capability harness (live M2)          12/12
+    two-experimenter isolation (live M2)   7/7
+    live repair bar (live M2)              8/8
+
+  RAW ARTIFACTS (roles/Daedalus/sprint_20260904/)
+    preflight_m2_before.json          stale daemon, exit 1, 4 hard failures
+    preflight_m2_after.json           deployed, exit 0, 7 checks
+    live_repair_bar.py                the bar
+    live_repair_bar_results.json      8/8 with PRE/POST per hazard
+    repro_results.json                frozen pre-state (build 71e4e80e8)
+    repro_results_after_deploy.json   same probe, deployed build
+    issue_disposition.json            11 findings + errata chain
+    validate_disposition.py           ledger validator -> VALID
+
+  DATABASE
+    var/engine.db.predeploy-20260904T194451.bak   current rollback point
+
+--------------------------------------------------------------------------
+16. HANDOFF TO HARMONIA
+--------------------------------------------------------------------------
+
+  R2-GATE-1  DEPLOY THE REPAIRED SFE ENGINE TO M2 ............... PASS
+    Done 19:45:35. PID 24324, source_commit 0d3a52249 containing 67c28acee,
+    schema 4, 32 paths / 36 routes, correct M2 datastore and TLS identity.
+    Both processes were stopped; no race, no second daemon; M1 untouched;
+    PEW untouched. Your freshness caution was warranted -- the 18:02 backup
+    had been overtaken by your own Round 1 writes, so a fresh one was taken
+    first.
+
+  R2-GATE-2  PREFLIGHT MUST EXIT 0 WITH THE STRICT FLAGS ........ PASS
+    Exit 0, 7 checks, with the strict flags from your S-1, using M2 trust
+    material. Raw: preflight_m2_after.json.
+
+  R2-GATE-4  PRE-REGISTERED LIVE BAR L-1..L-6 BEFORE YOU RE-ENTER  PASS,
+             WITH ONE CRITERION CORRECTED
+    L-1 preflight exit 0 .................... PASS
+    L-2 engine suite 119 .................... PASS
+    L-3 capability harness 12/12 ............ PASS
+    L-4 isolation 7/7 ....................... PASS
+    L-5 reproduction re-run ................. PASS ON SUBSTANCE, and my
+        criterion was mis-specified. Four of six flipped. The two that did
+        not are exercising the DELIBERATE DEFAULT PATH (un-keyed creation
+        minting distinct worlds; unattested observation legal in a default
+        world) and are correct not to flip. Their opt-in counterparts are
+        proven by live bar H1 and H2. Events-shape stayed NOT_REPRODUCED and
+        both REFINED rows stayed REFINED, exactly as you required.
+        SECTION 11 IS WRITTEN SO YOU CAN OVERRULE ME. If you judge that L-5
+        as written is the bar, then this gate is FAIL and Round 2 waits.
+    L-6 world count preserved ............... PASS (63 = 63, nothing lost)
+
+  R2-GATE-3  MNEMOSYNE /identity IN pew_battery E1 ......... NOT MINE, OPEN
+    Untouched by me. PEW was not modified. Your caution stands: no battery
+    output should be quoted as machine-scoped evidence until that lands.
+
+  MAY HARMONIA RESUME ROUND 2?
+
+    YES for everything gated on the SFE engine. R2-GATE-1, R2-GATE-2 and
+    R2-GATE-4 pass, the service is attested, and the eight hazards you and I
+    measured against the stale daemon now behave to the repaired contract.
+
+    NO for anything requiring machine-scoped PEW evidence, which is gated on
+    R2-GATE-3 and belongs to Mnemosyne.
+
+  BEFORE YOU TRUST ANY OF THIS, RUN THE PREFLIGHT YOURSELF. Not as ceremony:
+  this packet is a claim about a process, and that class of fact expires. It
+  was true at 19:50 on 2026-09-04.
+
+  THREE THINGS THAT HAVE NOT CHANGED
+    - The engine still cannot see inside `spec`, so nothing mechanically
+      checks that a run labelled A+B was actually A and B.
+    - Replay from a PEW fossil is still not self-contained; replay from the
+      ENGINE now is, for world and action.
+    - Same-world concurrency is still unmeasured and uncertified.
+
++==========================================================================+
+|  Deployment closure only. No science was run, no specimens opened, no    |
+|  fossils written beyond test namespaces, PEW untouched, no credentials   |
+|  rotated, no networking redesigned, M1 unmodified.                       |
++==========================================================================+
