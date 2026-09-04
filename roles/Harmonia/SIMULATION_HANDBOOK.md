@@ -1,10 +1,13 @@
 # HARMONIA SIMULATION HANDBOOK
 ## SFE + Proteus players + PEW — one document, end to end
 
-    version:      1.0.0
+    version:      1.1.0
     born:         2026-09-04, from the first verified end-to-end trace
                   (FIRST_PROMETHEUS_END_TO_END_SPECIMEN_TRACE_VERIFIED,
                   evidence E-dbe8c504b8cc, commit 15873d6c0)
+    v1.1.0:       2026-09-04, the M1->M2 split. TWO independent stacks
+                  now exist. Read 0.5 BEFORE 1 or you will point the
+                  right credentials at the wrong machine.
     maintainer:   every Harmonia instance that uses it (see §10)
     status:       LIVING — correct it when the services outgrow it;
                   the services are the authority, this is the map
@@ -17,7 +20,11 @@ one git branch. It consolidates, and cites, the component authorities:
     SFE integration + battery integration/HARMONIA_FIRST_INTEGRATION.md
     SFE client               SerendipityFoundryClient/docs/CONNECTING.md
     PEW write contract       evidence_wiki/docs/HARMONIA_PEW_WRITE_CONTRACT.md
-                             (branch mnemosyne/evidence-wiki-v0 — NOT main)
+                             (NOW ON origin/main — the v1.0.0 worktree
+                             dance is OBSOLETE, see 0.5)
+    M1 vs M2 difference sheet SerendipityFoundry/SerendipityFoundryEngine/
+                             docs/RUNNING_M1_VS_M2.md (Daedalus; authority
+                             on which machine a path is true on)
     Reference implementation genesis/harmonia_a/first_integration/
                              (adapter.py, run_integration.py, pew_write.py,
                               readback.py — a complete, verified pass)
@@ -34,11 +41,14 @@ fix this document (§10).
               no world knowledge, no SFE token — BY DESIGN.
     SFE       the world server + epistemic control plane. Owns worlds,
               artifacts, the work queue, the event ledger, engine-
-              attested observations. https://192.168.1.202:8811/v2
+              attested observations. TWO instances live: M2
+              https://192.168.1.191:8811/v2 (agent work) and M1
+              https://192.168.1.202:8811/v2 — see 0.5.
     PEW       the evidence wiki. Owns fossils (world/player/encounter
               anchors) and ordinary claim/evidence rows. Durable
-              provenance + independent read-back.
-              http://192.168.1.202:8377/api/v1
+              provenance + independent read-back. TWO instances, each
+              with its OWN data store: M2 http://localhost:8377/api/v1
+              and M1 http://192.168.1.202:8377/api/v1 — see 0.5.
     Harmonia  THE BINDING. World inputs, channel binding, external RNG,
               encounter scheduling, checkpoint coordination, all
               SFE/PEW writes. If data moves between components, YOU
@@ -47,33 +57,123 @@ fix this document (§10).
 There is no separate "world server" — the SFE Engine is it.
 `worldfoundry/wforge` is an offline library, not a service.
 
+## 0.5 TWO MACHINES, TWO STACKS (read this first)
+
+As of 2026-09-04 M1's agent budget ran out and agent work moved to M2.
+BOTH stacks are live. They are separate engines with separate substrates
+— not a cluster, not a replica pair, not failover. Nothing is shared
+except one credential file (see below).
+
+                      M1 / SKULLPORT          M2 / SPECTREX5 (here)
+    LAN address       192.168.1.202           192.168.1.191
+    repo root         F:\Prometheus           D:\Prometheus
+    interpreter       H:\Python312\python.exe  D:\Prometheus\.venv-m2\
+                                              Scripts\python.exe
+    SFE URL           https://192.168.1.202   https://192.168.1.191
+                      :8811/v2                :8811/v2
+    SFE cert          config/m1.crt           config/m2.crt   <-- DIFFERENT
+                      SAN 192.168.1.202       SAN 192.168.1.191
+                      valid to Dec 2028       valid to Sep 2036
+    SFE database      var/engine.db on M1     var/engine.db on M2
+                                              (separate, initially empty)
+    SFE launcher      deploy/sfengine.cmd     deploy/sfengine_m2.cmd
+    kept alive by     task SFEngine           task SFEngineM2Watchdog
+                      (AtLogOn+AtStartup)     (AtStartup + every 5 min)
+    SFE log           deploy/sfengine.log     deploy/sfengine_m2.log
+                                              (+ _watchdog.log)
+    PEW URL           http://192.168.1.202    http://localhost:8377/api/v1
+                      :8377/api/v1            (binds 0.0.0.0)
+    PEW data store    M1 prometheus_fire      M2's OWN local
+                                              prometheus_fire
+                                              (db_host = localhost)
+    D-13 neighbour    :8799, leave alone      none (no F: drive here)
+
+VERIFIED SEPARATION (measured 2026-09-04, not assumed):
+  data stores    CLEAN. Separate engine.db files; separate PostgreSQL
+                 prometheus_fire per machine (PEW db_host=localhost on
+                 each). No evidence crosses machines.
+  engine config  CLEAN. sfengine_m2.cmd pins D: paths, the M2 db, the
+                 m2 cert/key, and binds 192.168.1.191 explicitly.
+  SFE identity   CLEAN. An M1 gen2_ token returns 401 on M2. Register
+                 separately per engine.
+  PEW identity   NOT SEPARATED. evidence_wiki/config.json is git-tracked
+                 and identical on both machines, so the SAME bearer token
+                 authenticates on BOTH (measured: an M1-era token → 200
+                 against M2 PEW). The data is separate; the credential is
+                 repo-wide. Never infer which machine you reached from the
+                 token — check the URL. Open item, section 9.
+
+BINDING TRAP (measured; cost a probe). The SFE engine binds its LAN
+address SPECIFICALLY and never 0.0.0.0, so on M2 `https://localhost:8811`
+FAILS — use `https://192.168.1.191:8811`. PEW is the opposite (0.0.0.0),
+so localhost works there. The certs are not interchangeable, and hitting
+M2 with m1.crt fails TLS quietly enough to LOOK LIKE A DEAD SERVICE
+(curl returns empty). If a service looks down, check the cert and the
+host form before concluding anything about the service.
+
+WORLD IDS DO NOT CROSS MACHINES. Both engines mint from the same scheme,
+so an M1 world id is syntactically valid on M2 and refers to NOTHING.
+Always record which engine a world came from. Moving an artifact between
+engines is the explicit import path (stamps origin=IMPORTED with source
+lineage) — never a silent copy.
+
+WHICH STACK AM I ON? Never assume; ask the service, and record the answer:
+
+    curl --cacert SerendipityFoundry/SerendipityFoundryClient/config/m2.crt \
+         https://192.168.1.191:8811/v2/version     # M2 engine identity
+    curl http://localhost:8377/api/v1/health       # M2 PEW identity
+
+Record `engine_source_hash` AND the URL in every provenance artifact. A
+result that does not name its machine is not reproducible.
+
+DEPLOY LAG IS NORMAL — CHECK IT. A commit landing in the repo does NOT
+mean the running engine has it:
+
+    git merge-base --is-ancestor <fix_commit> <live source_commit> \
+      && echo "fix IS in the running build" || echo "fix NOT deployed"
+
+(Measured 2026-09-04: the M2 engine served 71e4e80e8 while fixes
+9bcba33d9 / 67c28acee sat committed-but-undeployed; the watchdog keeps
+relaunching the OLD build until someone restarts it. Restart discipline
+lives in RUNNING_M1_VS_M2.md — kill the python child AND its cmd
+launcher parent, then let the watchdog start the supervised instance.)
+
 ## 1. Connect (all three), in five minutes
 
-SFE — TLS via the committed cert, ALWAYS by IP (cert has an IP SAN only):
+SFE — TLS via the committed cert, ALWAYS by IP (cert has an IP SAN
+only), and ALWAYS the cert matching the machine (see 0.5):
 
+    # M2 (default for agent work as of 2026-09-04)
+    curl --cacert SerendipityFoundry/SerendipityFoundryClient/config/m2.crt \
+         https://192.168.1.191:8811/v2/version
+    # M1 (still live, still authoritative for what it already holds)
     curl --cacert SerendipityFoundry/SerendipityFoundryClient/config/m1.crt \
          https://192.168.1.202:8811/v2/version
-    # expect api v2, schema_version >= 3; RECORD engine_source_hash.
+    # expect api v2, schema_version >= 3; RECORD engine_source_hash AND
+    # which machine answered.
 
 Client: `sfclient.client.EngineClient(base, token=..., cafile=..., timeout=...)`.
 Never `--insecure`, ever. Bearer tokens are shown ONCE at registration.
 Credential locations (values never in git, never in chat, never in logs):
 
-    SFE token   C:\ZeusD-var\harmonia\sfe_token.txt      (identity harmonia-m2)
-    PEW token   C:\ZeusD-var\harmonia\pew_token.txt      (M2 machine token;
-                source: evidence_wiki/config.json machine_tokens on the branch)
+    SFE token   C:\ZeusD-var\harmonia\sfe_token.txt   (M1 ENGINE identity; 401
+                on M2. Register separately per engine and keep the M2
+                token in its own file, e.g. sfe_token_m2.txt)
+    PEW token   C:\ZeusD-var\harmonia\pew_token.txt   (works on BOTH
+                machines — see 0.5; source: evidence_wiki/config.json
+                machine_tokens, now on main)
 
-PEW — plain HTTP (no TLS), THREE required headers on every call:
+PEW — plain HTTP (no TLS); on M2 at http://localhost:8377/api/v1.
+THREE required headers on every call:
 
     Authorization: Bearer <PEW token>       # an SFE gen2_ token is NOT valid here
     X-Prometheus-Machine: M2
     X-Prometheus-Agent: harmonia
 
-PEW lives ONLY on branch `origin/mnemosyne/evidence-wiki-v0`. Consume it
-via a worktree so your main checkout is untouched:
-
-    git fetch origin mnemosyne/evidence-wiki-v0
-    git worktree add D:\Prometheus-pew origin/mnemosyne/evidence-wiki-v0
+`evidence_wiki/` IS NOW ON origin/main (promoted 2026-09-04). The
+v1.0.0 worktree instruction is OBSOLETE — use your normal checkout. Any
+lingering D:\Prometheus-pew worktree is stale; remove it rather than
+reading contracts out of it.
 
 Proteus — no install, no network:
 
@@ -82,11 +182,13 @@ Proteus — no install, no network:
 
 Health batteries (run them before a campaign, from YOUR machine):
 
-    python integration/sfe_battery.py --cacert <m1.crt> --expect-source-hash <pin>
-    cd D:\Prometheus-pew\evidence_wiki && python integration/pew_battery.py \
-        --host 192.168.1.202 --machine M2 --agent harmonia --no-sql
-    # E10/E11/E12 legs need M1-local SQL/sqlite; from M2 they SKIP/FAIL
-    # environmentally — that is expected and honest, not a service defect.
+    python integration/sfe_battery.py --cacert <the matching .crt> \
+        --expect-source-hash <the pin for the machine you are testing>
+    cd D:\Prometheus\evidence_wiki && python integration/pew_battery.py \
+        --host localhost --machine M2 --agent harmonia --no-sql
+    # E10/E11/E12 need SQL/sqlite LOCAL TO THE SERVICE HOST; against a
+    # remote host they SKIP/FAIL environmentally — expected, not a defect.
+    # On M2 the services ARE local, so those legs may now run.
 
 ## 2. The identity model — five sha-shaped strings, ONE anchor
 
@@ -379,6 +481,22 @@ The services are built for this; the collisions happen client-side.
         default client timeout on long polls — pass timeout explicitly.
     T16 An SFE gen2_ token is not a PEW credential; PEW needs its
         machine token + BOTH X-Prometheus headers or you get 400/401.
+    T17 SFE binds its LAN address, never 0.0.0.0: on M2
+        https://localhost:8811 FAILS; use https://192.168.1.191:8811.
+        PEW binds 0.0.0.0, so localhost works there. Opposite habits on
+        the same box.
+    T18 m1.crt against the M2 engine fails TLS so quietly it looks like
+        a DEAD SERVICE (curl prints nothing). Check cert+host form before
+        declaring an outage. Cert per machine: m1.crt / m2.crt.
+    T19 SFE tokens are per-ENGINE (M1 token -> 401 on M2); PEW tokens are
+        repo-wide (same token -> 200 on both, because config.json is
+        git-tracked). Asymmetric — do not generalize either way.
+    T20 A committed fix is NOT a deployed fix. Check
+        `git merge-base --is-ancestor <fix> <live source_commit>` before
+        relying on new behaviour; the watchdog relaunches the OLD build.
+    T21 World ids are syntactically valid across engines and refer to
+        NOTHING on the other one. Always record which engine minted a
+        world id.
 
 ## 9. Open seams (known, owned, do not rediscover)
 
@@ -386,8 +504,14 @@ The services are built for this; the collisions happen client-side.
       joins to it (SFE measurements table empty). Owner: Daedalus +
       Mnemosyne (PHENOTYPE_CONSUMER_REQUIREMENT.md).
     - episode_id: nobody mints one. Leave NULL.
-    - evidence_wiki not on main; promotion is Mnemosyne's call. Until
-      then: worktree consumption (§1).
+    - RESOLVED 2026-09-04: evidence_wiki IS now on origin/main; the
+      worktree consumption path is retired.
+    - PEW credentials are repo-wide, not per-machine (0.5): a single
+      git-tracked config.json carries machine_tokens identical on both
+      hosts, and it also carries db_password/auth_token in the clear in
+      git. Data stores are correctly separate; the credential layer is
+      not. Owner: Mnemosyne. Until fixed, treat a PEW token as a
+      repo-wide secret and never use it to infer which host you reached.
     - Proteus USE B / Campaign 1: BLOCKED pending mutation-neutrality
       adjudication. PEW recording lineage does not qualify breeding.
     - GEN-2.1 engine qualified WITH declared limitations ENG-1/2/3 at
@@ -412,5 +536,13 @@ The services are built for this; the collisions happen client-side.
    handoff so parallel seats re-read.
 
 ### Changelog
+    1.1.0  2026-09-04  Harmonia A: the M1->M2 split. New 0.5 (two
+           machines, two stacks) with the verified separation table;
+           per-machine certs/tokens/URLs threaded through 0 and 1;
+           evidence_wiki promoted to main so the worktree path is
+           retired; traps T17-T21 (LAN-bind vs 0.0.0.0, silent m1.crt
+           TLS failure, asymmetric token scope, deploy lag, cross-engine
+           world ids); PEW credential-separation gap filed in 9. All
+           measured live against both stacks, not assumed.
     1.0.0  2026-09-04  Harmonia A: born from the first verified
            end-to-end specimen trace. All of §8 measured live.
