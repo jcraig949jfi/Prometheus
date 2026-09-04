@@ -1,0 +1,40 @@
+{
+ "selection_rule": "first organism_id in R.enumerate_ids(load_default())",
+ "registry_id": "b15e0a7f5f2dcb99b8b28c73a99441d8d53e82b1bae42fddd5e274eeef396917",
+ "organism_id": "7743b3527ea44fb5eb2bc80076cb1d2ea4dca2094975c8621962152d419364a0",
+ "entry_id": "88c8818853ccfd46771fa4aa572bfb8a61546916fe774320e7254be9ef4aff6b",
+ "lineage_id": "7743b3527ea44fb5eb2bc80076cb1d2ea4dca2094975c8621962152d419364a0",
+ "generation": 0,
+ "identity": {
+  "affordance_hash": "f1607ee8be680acc33288a95c1a25c09ad4c799a47b0975381be8ca02d7638ce",
+  "grammar_hash": "5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832",
+  "grammar_version": "proteus.grammar.v0.4",
+  "manifest_schema_version": "proteus.player_manifest.v0",
+  "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0"
+ },
+ "provenance": {
+  "derivation": "SplitMix64(seed_from('proteus.generate.v0', seed, RUNTIME_HASH)).derive('organism', i)",
+  "foundry_identity": "4f5ffe91f35a87505f50f3d7e71f64b75c072158e139d06b05f53cd49167f844",
+  "generation_manifest_id": "a760019badb8c3527cc721bdf62a3050e95eecb81c1bc2ef27efd9f276bbe39e",
+  "index_in_population": 0,
+  "population_seed": 15025105317373938188,
+  "source": "proteus.foundry.generate.generate"
+ },
+ "resource_envelope": {
+  "code_writable": true,
+  "genome_instructions": 4,
+  "genome_words": 16,
+  "max_ops_per_tick": 64,
+  "max_output_values_per_channel_per_tick": 16,
+  "max_state_footprint_words": 31,
+  "n_regs": 15,
+  "out_cap": 16,
+  "persist": "none",
+  "persistent_state_words": 0,
+  "tape_words": 16,
+  "tick_budget": 64
+ },
+ "phenotype": "UNKNOWN",
+ "manifest_file": "adventurer_manifest.bytes",
+ "manifest_sha256": "7743b3527ea44fb5eb2bc80076cb1d2ea4dca2094975c8621962152d419364a0"
+}
