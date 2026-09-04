@@ -1,0 +1,177 @@
+{
+ "engine": {
+  "api": "v2",
+  "schema_version": 3,
+  "runtime": "serendipity-foundry-sfe",
+  "registration_open": true,
+  "engine_source_hash": "sha256:c358a53b9899fa16acb70c69747c8ec4ca494cdc62bd10fa9a550d574eef8c39",
+  "source_commit": "ce79401b1524fe20eba9c051cb8c0d9bf18fc0d9"
+ },
+ "n_findings": 19,
+ "verdicts": {
+  "PASS": 11,
+  "FAIL": 0,
+  "FINDING": 7,
+  "INFO": 1,
+  "BLOCKED": 0,
+  "DEFERRED": 0
+ },
+ "findings": [
+  {
+   "boundary": "A_organism",
+   "probe": "A1_second_organism_generic",
+   "verdict": "PASS",
+   "detail": "organism ids[1]=2ca4d2ca0501 placed with no bespoke editing; identity gate held",
+   "evidence": null
+  },
+  {
+   "boundary": "A_organism",
+   "probe": "A2_same_organism_two_worlds",
+   "verdict": "PASS",
+   "detail": "blob_hash (content) identical across worlds; artifact_id (envelope) distinct \u2014 no identity collision",
+   "evidence": {
+    "blob": "sha256:7743b3527ea44",
+    "aid_a": "sha256:5d4568706",
+    "aid_b": "sha256:0f9c93cb0"
+   }
+  },
+  {
+   "boundary": "A_organism",
+   "probe": "A3_corrupt_bytes_accepted_by_sfe",
+   "verdict": "FINDING",
+   "detail": "SFE accepts arbitrary bytes (content-addressed); it does NOT verify Proteus identity. Integrity is a CLIENT-side assertion (blob_hash==sha256:oid). An adapter that skips the gate would fossilize corrupted material with a wrong-but-valid blob_hash.",
+   "evidence": {
+    "sfe_accepted": true,
+    "client_gate_would_catch": true
+   }
+  },
+  {
+   "boundary": "B_world",
+   "probe": "B1_repeat_config_unique_ids",
+   "verdict": "PASS",
+   "detail": "same seed_root=424242 thrice -> 3 distinct world_ids; config is NOT the identity (a replicate is a new world)",
+   "evidence": null
+  },
+  {
+   "boundary": "B_world",
+   "probe": "B3_invalid_budget_rejected",
+   "verdict": "PASS",
+   "detail": "invalid enforcement rejected: 422",
+   "evidence": null
+  },
+  {
+   "boundary": "B_world",
+   "probe": "B4_artifact_after_terminate",
+   "verdict": "FINDING",
+   "detail": "artifact write AFTER terminate SUCCEEDED \u2014 TERMINATED does not end write lifetime; matches the addendum caution",
+   "evidence": {
+    "terminate": true,
+    "wrote": true
+   }
+  },
+  {
+   "boundary": "B_world",
+   "probe": "B5_world_config_in_get_world",
+   "verdict": "INFO",
+   "detail": "fields present on GET /v2/worlds/{id}: seed_root,sharing_policy,head_hash,state",
+   "evidence": {
+    "seed_root": true,
+    "sharing_policy": true,
+    "budget": false,
+    "head_hash": true,
+    "state": true
+   }
+  },
+  {
+   "boundary": "C_action",
+   "probe": "C2_budget_exhaustion",
+   "verdict": "PASS",
+   "detail": "2nd experiment under limit=1 -> 409 (budget cap enforced at commit)",
+   "evidence": null
+  },
+  {
+   "boundary": "C_action",
+   "probe": "C3_observation_without_work_id",
+   "verdict": "FINDING",
+   "detail": "observation with no work_id -> engine_attested=0 (evidence_class CLIENT_ASSERTED). Nothing forces attestation; an agent can silently produce unattested 'evidence'.",
+   "evidence": null
+  },
+  {
+   "boundary": "K_observability",
+   "probe": "K4_events_shape_inconsistent",
+   "verdict": "FINDING",
+   "detail": "GET .../events return shape is INCONSISTENT: dict {'events':[...]} in the first integration, bare list here. A client must defensively handle both or break (this harness did, mid-run).",
+   "evidence": {
+    "shape": "list"
+   }
+  },
+  {
+   "boundary": "D_causality",
+   "probe": "D1_anchor_is_client_chosen",
+   "verdict": "FINDING",
+   "detail": "PEW validates sfe_entry_hash SHAPE + (event_id,entry_hash) pair EXISTENCE in SFE, not that the event is the run's observation. Anchoring on WORLD_CREATED (evt evt_f1110bdb) would pass PEW shape checks \u2014 causal correctness is a CLIENT obligation, not enforced.",
+   "evidence": {
+    "chosen_event_type": "WORLD_CREATED"
+   }
+  },
+  {
+   "boundary": "G_failure",
+   "probe": "G1_nonexistent_world",
+   "verdict": "PASS",
+   "detail": "nonexistent world -> 404 (fails closed)",
+   "evidence": null
+  },
+  {
+   "boundary": "G_failure",
+   "probe": "G4_pew_missing_required",
+   "verdict": "PASS",
+   "detail": "fossil missing sfe_entry_hash/sfe_event_id -> 422 (fails closed, diagnosable)",
+   "evidence": null
+  },
+  {
+   "boundary": "H_idempotency",
+   "probe": "H1_artifact_idem_key",
+   "verdict": "PASS",
+   "detail": "artifact retry with same idem_key -> same artifact_id (idempotent)",
+   "evidence": null
+  },
+  {
+   "boundary": "H_idempotency",
+   "probe": "H2_create_world_not_idempotent",
+   "verdict": "FINDING",
+   "detail": "create_world has no idempotency key; a retried create mints a NEW world (see B1). An orchestrator that retries world creation on a timeout silently doubles worlds. UNSAFE-TO-RETRY-BLINDLY.",
+   "evidence": null
+  },
+  {
+   "boundary": "I_concurrency",
+   "probe": "I1_two_worlds_two_workers",
+   "verdict": "PASS",
+   "detail": "two worker identities claim work in two isolated worlds; work_id/claim_id separated",
+   "evidence": {
+    "w1": "wrk_30b79b7a09",
+    "w2": "wrk_a491e1664c"
+   }
+  },
+  {
+   "boundary": "K_observability",
+   "probe": "K1_list_worlds",
+   "verdict": "PASS",
+   "detail": "GET /v2/worlds returns a listing (n=189); an agent can enumerate worlds without shell archaeology",
+   "evidence": null
+  },
+  {
+   "boundary": "K_observability",
+   "probe": "K2_pew_list_by_world",
+   "verdict": "PASS",
+   "detail": "GET /fossil/encounters?world_id -> 200 (n=0); reverse lookup world->fossils exists",
+   "evidence": null
+  },
+  {
+   "boundary": "K_observability",
+   "probe": "K3_no_packet_read",
+   "verdict": "FINDING",
+   "detail": "GET /packets -> 405 (source packets not independently readable over HTTP \u2014 archaeology gap, per note 7)",
+   "evidence": null
+  }
+ ]
+}

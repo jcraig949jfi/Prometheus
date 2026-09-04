@@ -1,0 +1,393 @@
+=====================================================================
+PROMETHEUS -- SFE / PEW / PROTEUS BOUNDARY-EXPANSION + ACCELERATION PASS
+EXTERNAL REVIEW PACKET -- Harmonia A (M2) -- 2026-09-04
+=====================================================================
+
+2. HEADLINE BOUNDARY-EXPANSION VERDICT
+
+    The single prepared path works AND generalizes on the happy path
+    (a second unknown organism crosses with no bespoke editing; the
+    same organism enters two isolated worlds without identity
+    collision; budgets, uniqueness, and fail-closed errors behave).
+    The blockers to running MANY trustworthy experiments quickly are
+    NOT in the happy path -- they are in RETRY SAFETY, ATTESTATION
+    ENFORCEMENT, CAUSAL-ANCHOR ENFORCEMENT, FOSSIL COMPLETENESS, and
+    MANUAL FRICTION. 13 issues localized: 7 P1, 4 P2, 2 P3. Zero
+    hard FAILs; the danger is in things that succeed QUIETLY when they
+    should not (unattested evidence, duplicate worlds, mis-anchored
+    fossils). A pile of well-localized edges, exactly as asked.
+
+---------------------------------------------------------------------
+1. FROZEN FIRST-PROBE RESULT (kept separate; NOT scientific evidence)
+---------------------------------------------------------------------
+    ORIGINAL T1/T2 ............. LOST / RETIRED / NEVER EXECUTED
+    FIRST-ADVENTURER PROBE V2 .. NEWLY FROZEN (sha 84d7f198..., commit
+                                 9b2a6e0de, reachable from origin/main)
+    V2 EXECUTION TERMINAL ...... BLOCKED_NON_EXECUTABLE_FROZEN_PARAMETER
+
+    Executed exactly as frozen, no reinterpretation. Setup boundary
+    PASSED: standard world wld_34b902516b389a7b created, manifest
+    placed, blob_hash == sha256:organism_id, byte read-back equal. The
+    ONE frozen action then hit a non-executable frozen parameter:
+    SplitMix64('20260904b') -> TypeError (str & int). The directive
+    forbids reinterpreting/repairing a frozen probe mid-execution, so
+    the terminal state is preserved, not worked around. This is my own
+    error in the V2 freeze, and it is the first finding (I-FREEZE-EXEC):
+    the durability gate proved the directive's BYTES were reachable but
+    never proved its PARAMETERS were runnable. Frozen + reachable +
+    READY_TO_EXECUTE=YES is NOT the same as executable. Evidence:
+    v2_result.json. V2 remains a test artifact; no fossil was written.
+
+---------------------------------------------------------------------
+3-4. PROBES ATTEMPTED, PER-PROBE VERDICT
+---------------------------------------------------------------------
+    A_organism.A1 second unknown organism, generic ......... PASS
+    A_organism.A2 same organism, two isolated worlds ....... PASS
+    A_organism.A3 SFE accepts corrupt bytes (content-addr) . FINDING
+    B_world.B1 repeat config -> unique world_ids ........... PASS
+    B_world.B3 invalid budget enforcement rejected (422) ... PASS
+    B_world.B4 artifact write after terminate succeeds ..... FINDING
+    B_world.B5 world config on get_world (no budget) ....... INFO
+    C_action.C2 budget exhaustion enforced (409) .......... PASS
+    C_action.C3 observation without work_id -> unattested .. FINDING
+    D_causality.D1 PEW anchor is client-chosen ............. FINDING
+    G_failure.G1 nonexistent world -> 404 (fail closed) .... PASS
+    G_failure.G4 PEW missing required -> 422 (fail closed) . PASS
+    H_idem.H1 artifact idem_key -> same artifact_id ........ PASS
+    H_idem.H2 create_world NOT idempotent ................. FINDING
+    I_conc.I1 two worlds / two workers, separated ......... PASS
+    K_obs.K1 GET /v2/worlds lists (n=189, unscoped) ....... PASS
+    K_obs.K2 PEW list fossils by world_id (200) .......... PASS
+    K_obs.K3 no GET /packets (405) ....................... FINDING
+    K_obs.K4 events() shape dict-vs-list inconsistent ..... FINDING
+    E_fossil / F_replay ................................... ANALYSIS
+    J_recovery service-restart / backup ................... DEFERRED
+    Totals: 11 PASS, 0 FAIL, 7 FINDING, 1 INFO, 1 BLOCKED (V2),
+            2 ANALYSIS, 1 DEFERRED.
+
+---------------------------------------------------------------------
+5. UNEXPECTED FINDINGS (the ones that matter)
+---------------------------------------------------------------------
+    - A directive can pass every durability check and still be
+      non-executable (V2/I-FREEZE-EXEC). The gate we JUST built to
+      prevent lost directives does not prevent broken ones.
+    - The system's failures are quiet, not loud: unattested
+      "evidence", duplicated worlds on retry, and a fossil anchored on
+      the wrong (but real) event ALL return success. Fail-closed holds
+      for malformed input; it does NOT hold for well-formed-but-wrong
+      input. That is the throughput hazard.
+
+---------------------------------------------------------------------
+6. IDENTITY / PROVENANCE FINDINGS
+---------------------------------------------------------------------
+    - SFE is content-addressed and does NOT verify organism identity
+      (A3). blob_hash == sha256:organism_id is a CLIENT assertion; SFE
+      accepts corrupt bytes with a valid-looking blob_hash. The gate
+      is load-bearing and unenforced by the engine -> it MUST live in
+      the shared primitive, never be re-typed per caller
+      (I-CLIENT-GATE-UNENFORCED).
+    - Content identity vs envelope identity is clean: same organism in
+      two worlds -> identical blob_hash, distinct artifact_id (A2). No
+      collision. This boundary is trustworthy.
+    - Causal linkage at the PEW boundary is CLIENT-asserted: PEW
+      validates sfe_entry_hash shape and (event_id, entry_hash)
+      existence, not that the event is the run's observation (D1). A
+      wrong-but-real anchor fossilizes clean.
+
+---------------------------------------------------------------------
+7. FOSSIL COMPLETENESS FINDINGS (completeness_analysis.json)
+---------------------------------------------------------------------
+    PRESENT:    organism_identity, world_identity, causal_engine_event,
+                ledger_position, namespace
+    DERIVABLE:  experiment_identity, work_identity (both from run_id)
+    AMBIGUOUS:  sfe_engine_identity, world_configuration,
+                exact_output_digest, software_source_identity
+                (all only via free-form producer/resources_used, not
+                typed fields)
+    MISSING:    registry_identity, entry_id, exact_action, exact_input,
+                contract_schema_versions
+    => 9 of 16 identities MISSING or AMBIGUOUS. A fossil today proves
+    WHICH organism ran in WHICH world at WHICH ledger event, but not
+    WHAT it did, with WHAT input, under WHAT full world config, or
+    against WHICH contract versions (I-FOSSIL-INCOMPLETE).
+
+---------------------------------------------------------------------
+8. REPLAY FINDINGS
+---------------------------------------------------------------------
+    Replay is NOT self-contained. Recover-fossil YES; reconstruct-
+    inputs NO (input + encounter seed live in the frozen directive /
+    integration_record.json in the repo, not the fossil); instantiate-
+    equivalent-world PARTIAL (seed_root recoverable, sharing_policy/
+    budget ambient); run-same-action NO (action not in fossil).
+    "Derivable while today's checkout exists" is NOT durable
+    preservation (I-REPLAY-NOT-SELFCONTAINED, depends on 7).
+
+---------------------------------------------------------------------
+9. FAILURE / IDEMPOTENCY FINDINGS
+---------------------------------------------------------------------
+    Fail-closed on malformed input: nonexistent world 404 (G1),
+    invalid budget enum 422 (B3), PEW missing-required 422 (G4), all
+    diagnosable. Idempotency map:
+      IDEMPOTENT:            artifact placement w/ idem_key (H1);
+                             PEW fossil by (encounter_id, run_id)
+      DUPLICATE-DETECTING:   PEW 409 conflict_existing_row_differs
+      UNSAFE-TO-RETRY-BLIND: create_world (no idem key -> new world
+                             every call, H2/B1) -- the sharpest retry
+                             hazard for an orchestrator
+      UNKNOWN/UNTESTED:      duplicate work-complete, pause/resume
+                             races (deferred)
+
+---------------------------------------------------------------------
+10. CONCURRENCY FINDINGS
+---------------------------------------------------------------------
+    Bounded probe PASSED: two worlds, two worker identities
+    (harmonia-b-conc / harmonia-c-conc), interleaved claims ->
+    separate work_id + claim_id, no bleed (I1). ISOLATED worlds are a
+    sound isolation unit. NOT yet tested: concurrent writes to the
+    SAME world, claim races on one work item, concurrent PEW writes to
+    the same encounter (the row key would 409, by design). Multi-world
+    parallelism looks safe; single-world contention is unexplored.
+
+---------------------------------------------------------------------
+11. RECOVERY / DURABILITY FINDINGS
+---------------------------------------------------------------------
+    Cross-process read-back works (proven: readback.py fresh process).
+    Cross-ENGINE-REBUILD read-back works (the prior maintenance-
+    durability observation, kept separate). Service-restart / backup-
+    restore / ephemeral-state-loss are DEFERRED (would need authorized
+    destructive ops). Concrete deferred probe: restart SFE with a live
+    RUNNING world holding an uncommitted experiment; verify head_hash
+    and claim leases survive.
+
+---------------------------------------------------------------------
+12. OBSERVABILITY FINDINGS
+---------------------------------------------------------------------
+    GOOD: GET /v2/worlds lists worlds; GET /fossil/encounters filters
+    by world_id/player_id/run_id; status carries ledger_integrity_ok
+    and epistemics.
+    GAPS: /v2/worlds is UNSCOPED -- 189 worlds, no owner/session/state
+    filter, so an agent cannot tell which are its own
+    (I-WORLD-ENUM-UNSCOPED). No GET /packets (K3, archaeology gap). No
+    single "is this fossil complete?" check -- completeness is inferred
+    by reading fields.
+
+---------------------------------------------------------------------
+13. AUTOMATION / THROUGHPUT FINDINGS
+---------------------------------------------------------------------
+    The current path is ~14 manual steps (run_integration.py: 13
+    client calls; pew_write.py: 6 PEW calls) with six identities
+    (organism_id, world_id, exp_id, work_id, event_id, entry_hash)
+    copied by hand between SFE and PEW -- each a transcription-error
+    site an agent could get wrong silently. Expensive per-encounter
+    setup (world create + start + place + experiment + claim) repeats
+    every time. This is the friction evidence that the arena primitive
+    is missing (I-ARENA-PRIMITIVE).
+
+---------------------------------------------------------------------
+14. ALL ISSUES RANKED (ranked_issues.json)
+---------------------------------------------------------------------
+    P1 (blocks trustworthy multi-encounter operation)
+      I-FREEZE-EXEC            freeze gate != executability [INDEPENDENT]
+      I-CREATE-IDEMPOTENCY     create_world retry doubles [INDEPENDENT, SFE]
+      I-ATTEST-NOT-FORCED      unattested evidence is silent [INDEPENDENT]
+      I-CAUSAL-CLIENT          anchor correctness unenforced [SHARED:adapter]
+      I-CLIENT-GATE-UNENFORCED identity gate is client-only [SHARED:adapter]
+      I-FOSSIL-INCOMPLETE      9/16 identities missing/ambiguous
+                               [SHARED:fossil-schema]
+      I-REPLAY-NOT-SELFCONTAINED replay needs the repo
+                               [DEPENDS_ON:I-FOSSIL-INCOMPLETE]
+    P2 (acceleration / automation)
+      I-ARENA-PRIMITIVE        14-step manual path -> one primitive
+                               [DEPENDS_ON: ATTEST, CAUSAL, FOSSIL]
+      I-EVENTS-SHAPE           events() dict-vs-list [INDEPENDENT]
+      I-WORLD-ENUM-UNSCOPED    /v2/worlds unscoped [INDEPENDENT, SFE]
+      I-LIFECYCLE-TERMINATED   TERMINATED write semantics [INDEPENDENT]
+    P3 (usability / observability)
+      I-NO-PACKET-READ         no GET /packets [INDEPENDENT, PEW]
+      I-WORLD-GC               test worlds accumulate [INDEPENDENT]
+    None reached P0: no probe corrupted identity/evidence or broke
+    fail-closed on malformed input. I-CLIENT-GATE-UNENFORCED becomes
+    P0 the moment any caller skips the client gate.
+
+---------------------------------------------------------------------
+15. DEPENDENCY / PARALLELIZATION GRAPH
+---------------------------------------------------------------------
+    INDEPENDENT (start immediately, different owners):
+      I-FREEZE-EXEC .............. Harmonia freeze process
+      I-CREATE-IDEMPOTENCY ....... Daedalus / SFE
+      I-ATTEST-NOT-FORCED ........ Daedalus / SFE contract
+      I-EVENTS-SHAPE ............. Daedalus / SFE api (or sfclient)
+      I-WORLD-ENUM-UNSCOPED ...... Daedalus / SFE api
+      I-LIFECYCLE-TERMINATED ..... Daedalus / SFE contract (doc)
+      I-NO-PACKET-READ ........... Mnemosyne / PEW
+      I-WORLD-GC ................. Daedalus / SFE ops
+    SHARED_COMPONENT:adapter (one owner, serialize among themselves):
+      I-CLIENT-GATE-UNENFORCED, I-CAUSAL-CLIENT -> both fixed by the
+      shared arena primitive's gate + strict-anchor selector.
+    SHARED_COMPONENT:fossil-schema (PEW + SFE coordinate):
+      I-FOSSIL-INCOMPLETE -> then I-REPLAY-NOT-SELFCONTAINED unblocks.
+    SERIAL_GATE:
+      I-ARENA-PRIMITIVE waits on ATTEST + CAUSAL + FOSSIL landing so it
+      can encapsulate their fixes rather than paper over them.
+
+---------------------------------------------------------------------
+16. RECOMMENDED INDEPENDENT WORK PACKETS (attack in parallel now)
+---------------------------------------------------------------------
+    WP-1 (SFE, Daedalus): Idempotency-Key on POST /v2/worlds
+         (I-CREATE-IDEMPOTENCY) + pin events() shape (I-EVENTS-SHAPE) +
+         scope /v2/worlds by session/owner/state (I-WORLD-ENUM-UNSCOPED).
+         Small, independent, high orchestration payoff.
+    WP-2 (PEW, Mnemosyne): typed fossil fields for action, input_digest,
+         output_digest, world_config, registry_id, producer_versions,
+         schema_versions (I-FOSSIL-INCOMPLETE); add GET /packets/{id}
+         (I-NO-PACKET-READ). Unblocks replay.
+    WP-3 (Harmonia): the shared arena primitive SPEC (below) folding in
+         the identity gate, forced attestation, strict anchor selection,
+         and (once WP-2 lands) the complete fossil + auto read-back.
+    WP-4 (Harmonia freeze process): add a validate/dry-run gate to the
+         freeze primitive so a non-executable frozen parameter cannot
+         reach READY_TO_EXECUTE=YES (I-FREEZE-EXEC).
+    WP-5 (SFE ops): test-namespace world reaper (I-WORLD-GC) +
+         document TERMINATED write semantics (I-LIFECYCLE-TERMINATED).
+
+---------------------------------------------------------------------
+17. HIGHEST-LEVERAGE ACCELERATION (smallest change, largest payoff)
+---------------------------------------------------------------------
+    #1  Idempotency-Key on create_world (WP-1). One field closes the
+        single sharpest retry hazard and makes world creation safe to
+        wrap in a retry loop -- the precondition for any orchestrator.
+    #2  The arena primitive SPEC (WP-3). Collapses 14 hand-wired steps
+        with 6 hand-copied identities into
+            encounter = arena.run(organism, world_config, action_plan)
+        and, by construction, closes ATTEST, CAUSAL, and GATE at once.
+    #3  Typed fossil fields (WP-2). Turns fossils from "who/where/when"
+        into "who/where/when/what/with-what", which is the difference
+        between a citation and a reproducible record.
+
+    ACCELERATION MAP
+      CURRENT MANUAL PATH: 14 steps, 6 hand-copied ids, per encounter
+        v
+      FRICTION/FAILURE: retry doubles worlds; unattested evidence;
+        client-chosen anchor; 9/16 fossil identities missing; replay
+        needs the repo; events shape varies; worlds unscoped
+        v
+      REQUIRED CONTRACTS/FIXES: idem_key on create_world; forced
+        work_id attestation; strict refs.exp_id anchor; typed fossil
+        fields; pinned events shape; scoped world listing
+        v
+      AUTOMATABLE PRIMITIVE: arena.run(organism, world_config,
+        action_plan) -> {world_id, run_id, fossil, evidence_id,
+        readback}; GUARANTEES: identity gate held; work_id attested;
+        anchor = the run's own observation; fossil complete; read-back
+        auto-run; every step idempotent-retryable
+        v
+      SAFE PARALLEL EXECUTION: N independent ISOLATED worlds, distinct
+        worker_ids, run-unique idem keys, per-encounter fossils
+        v
+      HIGH-THROUGHPUT SFE<->PEW EXPERIMENTATION
+
+    MUST FIX FOR CORRECTNESS: I-CLIENT-GATE-UNENFORCED (via primitive),
+      I-CAUSAL-CLIENT, I-ATTEST-NOT-FORCED, I-FREEZE-EXEC.
+    SHOULD FIX FOR VELOCITY: I-CREATE-IDEMPOTENCY, I-ARENA-PRIMITIVE,
+      I-FOSSIL-INCOMPLETE, I-EVENTS-SHAPE, I-WORLD-ENUM-UNSCOPED.
+    NICE TO HAVE: I-NO-PACKET-READ, I-WORLD-GC, I-LIFECYCLE-TERMINATED
+      documentation.
+
+---------------------------------------------------------------------
+WHAT BREAKS WHEN WE TRY TO GO FAST?
+---------------------------------------------------------------------
+    1. RETRIES DOUBLE WORLDS. create_world has no idempotency key
+       (H2/B1). An orchestrator that retries a timed-out create silently
+       runs the organism in TWO worlds -> two divergent causal chains,
+       two fossils, one intended encounter. This is the first thing
+       that breaks under load.
+    2. EVIDENCE GOES UNATTESTED SILENTLY. Drop work_id (easy to do when
+       hand-wiring 14 steps) and the observation is CLIENT_ASSERTED with
+       no error (C3). At speed, unattested rows enter the record and
+       only a status read would ever reveal it.
+    3. FOSSILS ANCHOR ON THE WRONG EVENT. Pick any real event and PEW
+       accepts it (D1). Fast hand-wiring + a loose event match =
+       fossils that cite a real ledger row that is not the one that
+       happened. Correlation masquerading as causation, and it passes.
+    4. REPLAY DIES. The fossil lacks action/input/seed/full-config
+       (sec 7-8). A run recorded today cannot be replayed from its
+       fossil tomorrow without the exact repo checkout -- so "we ran
+       10,000 encounters" does not mean "we can reproduce any of them".
+    5. THE CLIENT BREAKS ON SHAPE DRIFT. events() returned a dict then
+       a list (K4); this harness broke mid-run. Every hand-rolled
+       client is one shape change from a crash.
+    6. YOU LOSE TRACK. 189 unscoped worlds already (K1); no way to ask
+       "which are mine, which are running, which are done".
+
+---------------------------------------------------------------------
+WHAT CAN WE FIX IN PARALLEL RIGHT NOW?
+---------------------------------------------------------------------
+    Four owners, no cross-dependencies, can start today:
+      DAEDALUS/SFE:  WP-1 -> idem_key on create_world; pin events()
+                     shape; scope /v2/worlds. (I-CREATE-IDEMPOTENCY,
+                     I-EVENTS-SHAPE, I-WORLD-ENUM-UNSCOPED)
+      MNEMOSYNE/PEW: WP-2 -> typed fossil fields + GET /packets.
+                     (I-FOSSIL-INCOMPLETE, I-NO-PACKET-READ)
+      HARMONIA:      WP-4 -> freeze validate/dry-run gate
+                     (I-FREEZE-EXEC); begin WP-3 arena primitive SPEC.
+      SFE OPS:       WP-5 -> world reaper + TERMINATED doc.
+    Only I-REPLAY and the arena primitive's completion wait on the
+    above; everything else is independent. This is the parallel map.
+
+---------------------------------------------------------------------
+18. DEFERRED / DESTRUCTIVE PROBES (need authorization)
+---------------------------------------------------------------------
+    - SFE service restart with a live RUNNING world + uncommitted
+      experiment: verify head_hash chain, claim leases, budget state
+      survive. (destructive: restarts a shared service)
+    - PEW backup/restore round-trip of a fossil. (needs M1-local ops)
+    - Same-world concurrent write / claim-race stress. (bounded load;
+      deferred to avoid contaminating the shared engine mid-pass)
+    - E10/E11/E12 PEW battery legs (M1-local SQL). (host-scoped)
+
+---------------------------------------------------------------------
+19. ARTIFACT PATHS + HASHES (genesis/harmonia_a/first_integration/)
+---------------------------------------------------------------------
+    HARMONIA_FIRST_ADVENTURER_BOUNDARY_PROBE_V2_2026-09-04.txt
+      sha256 84d7f198b32248f5965a90a334eabf34ee8d7a6fc44e7fe457dd24b8
+      19397e12 (frozen, reachable from origin/main)
+    v2_execute.py, v2_result.json               (frozen-probe terminal)
+    boundary_probes.py, boundary_findings.json  (live probes)
+    completeness_analysis.json                   (fossil + replay)
+    ranked_issues.json                           (13 issues)
+    REVIEW_PACKET_BOUNDARY_EXPANSION.txt         (this file)
+    JOURNAL.jsonl                                (hashes at issuance)
+    Exact per-file sha256 recorded in JOURNAL.jsonl.
+
+---------------------------------------------------------------------
+20. COMMITS + ORIGIN/MAIN REACHABILITY
+---------------------------------------------------------------------
+    Freeze commit 9b2a6e0de + verify 6cb8fe610 (V2 directive, reachable).
+    Boundary-pass commit: see git log; this packet + all evidence
+    committed and pushed; reachability from origin/main re-verified
+    after push (reported in the closing chat message with the hash).
+
+---------------------------------------------------------------------
+21. WHAT REMAINS UNKNOWN
+---------------------------------------------------------------------
+    - Same-world concurrency / claim-race behavior (not probed).
+    - Service-restart and backup/restore durability (deferred).
+    - Whether duplicate work-completion fails closed (untested).
+    - Real throughput ceiling (no load test run, by design).
+    - Whether the rebuilt engine c358a53b is qualified (no
+      qualification pass; this was integration, not qualification).
+    - Whether any of the 7 P1 issues interact (each localized
+      independently; combined behavior untested).
+
+---------------------------------------------------------------------
+EPISTEMIC BOUNDARY (unchanged, stated plainly)
+---------------------------------------------------------------------
+    This is infrastructure work. No organism was scored, selected,
+    mutated, evolved, or classified. Both specimens used (ids[0],
+    ids[1]) remain phenotype UNKNOWN. No test-namespace artifact is
+    scientific evidence. The frozen V2 probe is a test artifact and its
+    BLOCKED terminal state is an integration finding, not a result
+    about any organism.
+=====================================================================
+END PACKET
+=====================================================================

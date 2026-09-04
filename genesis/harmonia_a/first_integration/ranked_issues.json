@@ -1,0 +1,121 @@
+{
+ "issues": [
+  {
+   "id": "I-FREEZE-EXEC",
+   "P": "P1",
+   "parallel": "INDEPENDENT",
+   "component": "Harmonia/freeze-process",
+   "title": "Freeze/durability gate verifies hash-reachability, NOT parameter executability",
+   "evidence": "V2 froze seed '20260904b'; reachable from origin/main, sha 84d7f198, READY_TO_EXECUTE=YES, but SplitMix64('20260904b') -> TypeError. v2_result.json.",
+   "fix": "Add a dry-run/validate step to the freeze primitive: every frozen executable parameter must parse/typecheck before READY_TO_EXECUTE=YES."
+  },
+  {
+   "id": "I-CREATE-IDEMPOTENCY",
+   "P": "P1",
+   "parallel": "INDEPENDENT",
+   "component": "SFE",
+   "title": "create_world has no idempotency key; blind retry doubles worlds",
+   "evidence": "B1: same config thrice -> 3 world_ids. H2. K1 shows 189 worlds already accumulated.",
+   "fix": "Accept Idempotency-Key on POST /v2/worlds (as artifacts/experiments already do)."
+  },
+  {
+   "id": "I-ATTEST-NOT-FORCED",
+   "P": "P1",
+   "parallel": "INDEPENDENT",
+   "component": "SFE-contract/adapter",
+   "title": "Observation without work_id is silently CLIENT_ASSERTED; nothing forces attestation",
+   "evidence": "C3: observation, no work_id -> observations_engine_attested=0. Both classes accepted; only a status read reveals which.",
+   "fix": "Adapter must ALWAYS bind work_id; optionally a world flag requiring ENGINE_WORK_RESULT for a namespace."
+  },
+  {
+   "id": "I-CAUSAL-CLIENT",
+   "P": "P1",
+   "parallel": "SHARED_COMPONENT:adapter",
+   "component": "PEW+adapter",
+   "title": "PEW anchor causal-correctness is unenforced (shape+existence only)",
+   "evidence": "D1: anchoring on WORLD_CREATED would pass PEW's shape + (event_id,entry_hash) checks. PEW cannot know the event is the run's observation.",
+   "fix": "Adapter selects the anchor by strict refs.exp_id==exp_id single-match (already the rule in readback); make it a shared primitive so no agent hand-picks."
+  },
+  {
+   "id": "I-CLIENT-GATE-UNENFORCED",
+   "P": "P1",
+   "parallel": "SHARED_COMPONENT:adapter",
+   "component": "adapter",
+   "title": "Organism integrity is a client-only assertion; SFE accepts arbitrary bytes",
+   "evidence": "A3: corrupt bytes accepted by SFE (content-addressed); only blob_hash==sha256:organism_id catches it. An adapter skipping the gate fossilizes corruption with a valid-looking blob_hash.",
+   "fix": "The identity gate must live in the shared arena primitive, not be re-implemented per probe. P0 IF ever skipped."
+  },
+  {
+   "id": "I-FOSSIL-INCOMPLETE",
+   "P": "P1",
+   "parallel": "SHARED_COMPONENT:fossil-schema",
+   "component": "PEW+SFE",
+   "title": "Fossil cannot carry action/input/output-digest/full-world-config/registry-id/schema-versions",
+   "evidence": "completeness_analysis.json: 9 of 16 identities MISSING or AMBIGUOUS. B5: get_world omits budget.",
+   "fix": "Add typed fossil fields (action, input_digest, output_digest, world_config, registry_id, producer_versions, schema_versions) OR a durable side-artifact the fossil references by hash."
+  },
+  {
+   "id": "I-REPLAY-NOT-SELFCONTAINED",
+   "P": "P1",
+   "parallel": "DEPENDS_ON:I-FOSSIL-INCOMPLETE",
+   "component": "PEW+Harmonia",
+   "title": "Replay requires the repo checkout that produced the run; fossil alone is insufficient",
+   "evidence": "completeness_analysis.json replay: input+seed+action live in the frozen directive/integration_record.json, not the fossil.",
+   "fix": "Once I-FOSSIL-INCOMPLETE lands, a replay primitive can reconstruct inputs from the fossil alone."
+  },
+  {
+   "id": "I-ARENA-PRIMITIVE",
+   "P": "P2",
+   "parallel": "DEPENDS_ON:I-ATTEST-NOT-FORCED,I-CAUSAL-CLIENT,I-FOSSIL-INCOMPLETE",
+   "component": "Harmonia",
+   "title": "The 14-step manual path with hand-copied identities should be one primitive",
+   "evidence": "run_integration.py: 13 client calls + pew_write.py: 6 PEW calls; organism_id/world_id/exp_id/work_id/event_id/entry_hash copied by hand between systems (transcription risk).",
+   "fix": "arena.run(organism, world_config, action_plan) -> {fossil, evidence_id, readback}; must guarantee the identity gate, work_id attestation, strict anchor selection, full fossil, and auto read-back. SPEC ONLY this pass."
+  },
+  {
+   "id": "I-EVENTS-SHAPE",
+   "P": "P2",
+   "parallel": "INDEPENDENT",
+   "component": "SFE-api/client",
+   "title": "GET .../events return shape inconsistent: dict {'events':[...]} vs bare list",
+   "evidence": "K4: first integration got dict; this pass got a list, breaking the harness mid-run until patched.",
+   "fix": "Pin one shape in the API (or normalize in sfclient)."
+  },
+  {
+   "id": "I-WORLD-ENUM-UNSCOPED",
+   "P": "P2",
+   "parallel": "INDEPENDENT",
+   "component": "SFE-api",
+   "title": "GET /v2/worlds returns all 189 worlds unscoped; an agent can't tell which are its own",
+   "evidence": "K1: n=189. No session/agent/owner filter observed.",
+   "fix": "Add ?session_id=/?owner= filter + a state filter to /v2/worlds."
+  },
+  {
+   "id": "I-LIFECYCLE-TERMINATED",
+   "P": "P2",
+   "parallel": "INDEPENDENT",
+   "component": "SFE-contract",
+   "title": "TERMINATED does not end artifact-write lifetime; semantics undocumented",
+   "evidence": "B4: artifact write AFTER terminate succeeded.",
+   "fix": "Document (or enforce) what TERMINATED forbids; agents must not infer lifetime from it (addendum note 4)."
+  },
+  {
+   "id": "I-NO-PACKET-READ",
+   "P": "P3",
+   "parallel": "INDEPENDENT",
+   "component": "PEW",
+   "title": "Source packets not independently readable over HTTP",
+   "evidence": "K3: GET /packets -> 405. Archaeology gap (note 7).",
+   "fix": "Add GET /packets/{id} so evidence provenance is fully HTTP-traversable."
+  },
+  {
+   "id": "I-WORLD-GC",
+   "P": "P3",
+   "parallel": "INDEPENDENT",
+   "component": "SFE-ops",
+   "title": "Probe/test worlds accumulate with no GC (189 and counting)",
+   "evidence": "K1 n=189 after repeated integration + probe passes.",
+   "fix": "A test-namespace world reaper, or a TTL on ISOLATED worlds with no recent events."
+  }
+ ]
+}

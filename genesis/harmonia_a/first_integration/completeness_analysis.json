@@ -1,0 +1,76 @@
+{
+ "fossil_completeness": {
+  "organism_identity": [
+   "PRESENT",
+   "players[] = organism_id"
+  ],
+  "registry_identity": [
+   "MISSING",
+   "registry_id not a fossil field; player anchor carries genome/runtime/lineage only"
+  ],
+  "entry_id": [
+   "MISSING",
+   "not a fossil field"
+  ],
+  "sfe_engine_identity": [
+   "AMBIGUOUS",
+   "only via free-form producer.engine_source_hash; not typed/required"
+  ],
+  "world_identity": [
+   "PRESENT",
+   "world_id + sfe_world_id"
+  ],
+  "world_configuration": [
+   "AMBIGUOUS",
+   "seed_root PRESENT on world anchor; sharing_policy + budget MISSING (and get_world also omits budget - B5)"
+  ],
+  "experiment_identity": [
+   "DERIVABLE",
+   "run_id = exp_id:work_id"
+  ],
+  "work_identity": [
+   "DERIVABLE",
+   "run_id = exp_id:work_id"
+  ],
+  "exact_action": [
+   "MISSING",
+   "no action field; we smuggled ticks into resources_used"
+  ],
+  "exact_input": [
+   "MISSING",
+   "no input field anywhere in the fossil"
+  ],
+  "exact_output_digest": [
+   "AMBIGUOUS",
+   "only if hand-placed in resources_used/producer; not typed"
+  ],
+  "causal_engine_event": [
+   "PRESENT",
+   "sfe_event_id + sfe_entry_hash"
+  ],
+  "ledger_position": [
+   "PRESENT",
+   "sfe_event_seq"
+  ],
+  "namespace": [
+   "PRESENT",
+   "namespace"
+  ],
+  "software_source_identity": [
+   "AMBIGUOUS",
+   "producer free-form; no typed producer-version contract"
+  ],
+  "contract_schema_versions": [
+   "MISSING",
+   "pew.fossil.v2 / engine schema not recorded on the row"
+  ]
+ },
+ "replay": {
+  "recover_fossil": "YES (GET /provenance/evidence or /fossil/encounters)",
+  "reconstruct_inputs": "NO - input + encounter seed are NOT in the fossil; they live in the frozen directive / integration_record.json in the repo (ambient knowledge)",
+  "instantiate_equiv_world": "PARTIAL - seed_root recoverable; sharing_policy/budget are ambient",
+  "run_same_action": "NO - action spec not in fossil",
+  "compare_consequence": "YES if the above were recoverable",
+  "verdict": "REPLAY IS NOT SELF-CONTAINED: a fossil cannot be replayed without the repo checkout that produced it. 'Derivable while today's checkout exists' != durable."
+ }
+}

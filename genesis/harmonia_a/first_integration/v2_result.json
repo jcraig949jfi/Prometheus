@@ -1,0 +1,33 @@
+{
+ "directive": "HARMONIA_FIRST_ADVENTURER_BOUNDARY_PROBE_V2",
+ "frozen_sha256": "84d7f198b32248f5965a90a334eabf34ee8d7a6fc44e7fe457dd24b819397e12",
+ "started": 1788520792.1448781,
+ "organism_id": "7743b3527ea44fb5eb2bc80076cb1d2ea4dca2094975c8621962152d419364a0",
+ "engine": {
+  "api": "v2",
+  "schema_version": 3,
+  "runtime": "serendipity-foundry-sfe",
+  "registration_open": true,
+  "engine_source_hash": "sha256:c358a53b9899fa16acb70c69747c8ec4ca494cdc62bd10fa9a550d574eef8c39",
+  "source_commit": "ce79401b1524fe20eba9c051cb8c0d9bf18fc0d9"
+ },
+ "world": {
+  "world_id": "wld_34b902516b389a7b1b4c2344",
+  "seed_root": 424242,
+  "sharing_policy": "ISOLATED"
+ },
+ "placement": {
+  "organism_id": "7743b3527ea44fb5eb2bc80076cb1d2ea4dca2094975c8621962152d419364a0",
+  "blob_hash": "sha256:7743b3527ea44fb5eb2bc80076cb1d2ea4dca2094975c8621962152d419364a0",
+  "artifact_id": "sha256:14749b3017c65a6233cd860832d3541163d4bc9d2d04eda829d5650359ac457d",
+  "world_id": "wld_34b902516b389a7b1b4c2344",
+  "readback_bytes_equal": true
+ },
+ "encounter_id": "7ee40b05f98447cac4f3ca4db77c30925f223b036ba93e5841259adc1b7b9ec5",
+ "action_exception": {
+  "type": "TypeError",
+  "msg": "unsupported operand type(s) for &: 'str' and 'int'"
+ },
+ "terminal": "BLOCKED_NON_EXECUTABLE_FROZEN_PARAMETER: frozen RNG seed '20260904b' is not a valid SplitMix64 integer seed; directive forbids reinterpreting/repairing the frozen probe during execution",
+ "finished": 1788520792.9855478
+}
