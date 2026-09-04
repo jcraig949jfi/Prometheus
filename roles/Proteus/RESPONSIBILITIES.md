@@ -3,6 +3,11 @@
 ## Established: 2026-09-02, by James, in the session that parked Diomedes.
 ## Named for: Proteus, the Old Man of the Sea. He takes every shape — lion, serpent, water, tree — and gives a true answer only to the one who holds on through all of them. Two things about him are the role: **he is the source of shapes, not the judge of them**, and **the truth is extracted by whoever pins him, never volunteered.** The Foundry manufactures forms. A neutral operator and the selection they impose do the pinning.
 
+**Open work:** [`TODO.md`](TODO.md) — the standing list of what is not done, who owns each item,
+and what closing it would cost. Read it before starting anything; it is also where items that must
+*not* be started without a directive are recorded (§E), and where the two changes that would force
+a runtime transition are bundled (§C).
+
 **Authoritative brief:** `PROMPT_PROTEUS_PLAYER_FOUNDRY_V0_2026-09-02.txt` (sha256
 `cacf303f3a997e2172cac5ef39021ac194ab3ec82edea21f5dfc8579e70ec5b4`, hashed at issuance over the
 committed LF blob — verify with `git show origin/main:<path> | sha256sum`, not on a CRLF checkout). Where
@@ -210,11 +215,17 @@ is `REVIEW_PACKET_PROTEUS_V0_BRIEF_2026-09-02.txt`.
   and carries an ASCII review packet delivered as one paste block
   (`feedback_significant_prompts_get_committed_and_packeted`).
 - **Rows ship with verdicts** in the same commit (`feedback_verdict_without_rows_is_an_assertion`).
-- **Heartbeat / roster:** not yet registered in `scripts/portfolio_monitor.py` `EXPECTED_AGENTS`;
-  registration lands when the first `proteus/` code lands, per the Alethelia precedent.
-- **PEW:** the Evidence Wiki client (`evidence_wiki/ew/client.py`) is on the branch
-  `mnemosyne/evidence-wiki-v0` and **not on `origin/main`** as of 2026-09-02. Deliverable 10 is a
-  contract against the documented API; execution waits for the merge.
+- **Heartbeat / roster:** **AMENDED 2026-09-04.** Still not registered in
+  `scripts/portfolio_monitor.py` `EXPECTED_AGENTS` (verified absent), but the condition this
+  sentence attached registration to — "when the first `proteus/` code lands" — was met on
+  2026-09-02. The commitment is therefore **overdue by this seat's own rule**, not pending. Tracked
+  as **T4** in [`TODO.md`](TODO.md).
+- **PEW:** **AMENDED 2026-09-04.** The original text said the Evidence Wiki client was on branch
+  `mnemosyne/evidence-wiki-v0` and not on `origin/main`, and that deliverable 10 "waits for the
+  merge". That was true on 2026-09-02 and is now false: PEW is on `main` and serving (schema 4,
+  ontology 2, `pew.fossil.v2`). Deliverable 10 should be **exercised against the live service**
+  rather than remain a specification. Tracked as **T5** in [`TODO.md`](TODO.md). PEW itself is
+  Mnemosyne's, per James's ruling of 2026-09-04; Proteus supplies identity and provenance only.
 - **Namespace:** Greek per `reference_agent_names`; "Proteus" is unclaimed as a seat (the only
   prior use is a Harmonia island note about Proteus groups, a mathematical object).
 
