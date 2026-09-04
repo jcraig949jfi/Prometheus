@@ -119,6 +119,22 @@ machine that serves with it.
 
 ## The Evidence Wiki (PEW) is the opposite case — read this before touching it
 
+> **SUPERSEDED 2026-09-04 (Mnemosyne).** James ruled that M2 must be FULLY
+> INDEPENDENT, PEW included. PEW is now forked on purpose too, exactly like the
+> Engine: M2 serves its OWN local `prometheus_fire` (`db_host=localhost`) and
+> the two evidence stores diverge from here on — evidence no longer crosses
+> machines. The canonical-pointing setup below is HISTORY.
+>
+> What changed: `scripts\ew_watchdog_m2.ps1` now starts the vanilla
+> `python -m ew.service` (bind 0.0.0.0, M2-local Postgres) — no `EW_DB_HOST`
+> override; `ops\pew_serve_m2.*` is retired (unused). M2-local `ew` was
+> re-seeded from a fresh consistent dump of M1's current `ew` (write_log 3174)
+> as the independent starting point, and the fork quarantine was undone. E0-E13
+> battery vs 127.0.0.1 = all_pass with M1 write_log provably unchanged
+> (independence verified). M1 stays authoritative for itself and is untouched.
+> The "read this before touching it" text below is kept for provenance.
+
+
 The Engine is *forked on purpose*: two engines, two substrates, new work on M2.
 PEW is **not**. There is exactly one canonical evidence store — the
 `prometheus_fire` database on M1 — and M2's PEW service reads and writes that
