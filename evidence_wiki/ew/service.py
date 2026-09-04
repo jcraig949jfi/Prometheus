@@ -959,6 +959,21 @@ def _utc_iso(v):
     return v.astimezone(timezone.utc).isoformat().replace("+00:00", "+00:00")
 
 
+def _fmt_diff(field, old, new, cap=60):
+    """A conflict names the field AND both values, so a producer can diagnose
+    it without querying the substrate (charter 2026-09-04, Task 2). Values are
+    truncated and newline-flattened; the message prefix and the 409 status are
+    unchanged, so existing clients that match on either keep working."""
+    def show(v):
+        if v is None:
+            return "<unset>"
+        t = json.dumps(v, sort_keys=True, default=str) if isinstance(
+            v, (dict, list)) else str(v)
+        t = " ".join(t.split())
+        return t if len(t) <= cap else t[:cap] + "..."
+    return f"{field}(stored={show(old)} submitted={show(new)})"
+
+
 def _classify_encounter(existing, e):
     """inserted | duplicate_identical | conflict. A duplicate that DIFFERS is
     never absorbed: it is a producer defect and is reported as 409."""
@@ -973,14 +988,14 @@ def _classify_encounter(existing, e):
         if f == "occurred_ts":
             o, n = _as_instant(old), _as_instant(new)
             if o is None or n is None or o != n:
-                diff.append(f)
+                diff.append(_fmt_diff(f, old, new))
             continue
         if isinstance(old, (dict, list)) or isinstance(new, (dict, list)):
             if json.dumps(old, sort_keys=True, default=str) != \
                json.dumps(new, sort_keys=True, default=str):
-                diff.append(f)
+                diff.append(_fmt_diff(f, old, new))
         elif str(old) != str(new):
-            diff.append(f)
+            diff.append(_fmt_diff(f, old, new))
     return ("duplicate_identical" if not diff else "conflict"), diff
 
 
@@ -1003,7 +1018,7 @@ def post_fossil_encounter(body: FossilEncounterIn, request: Request,
         status, diff = _classify_encounter(cur.fetchone(), body)
         if status == "conflict":
             _reject(conn, "fossil.encounter", ident,
-                    "conflict_existing_row_differs:" + ",".join(diff),
+                    "conflict_existing_row_differs:" + "; ".join(diff),
                     body.idempotency_key, body.encounter_id, code=409)
         if status == "inserted":
             cur.execute("SELECT nextval('ew.canonical_revision_seq')")
@@ -1057,7 +1072,7 @@ def post_fossil_batch(body: FossilBatchIn, request: Request,
         for e in encs:
             status, diff = _classify_encounter(have.get((e.encounter_id, e.run_id or "")), e)
             if status == "conflict":
-                conflicts.append(f"{e.encounter_id}:{','.join(diff)}")
+                conflicts.append(f"{e.encounter_id}:{'; '.join(diff)}")
             elif status == "inserted":
                 fresh.append(e)
             else:
@@ -1211,12 +1226,12 @@ def _upsert_anchor(conn, ident, table, key, body, endpoint):
                 if isinstance(v, (dict, list)) or isinstance(old, (dict, list)):
                     if json.dumps(old, sort_keys=True, default=str) != \
                        json.dumps(v, sort_keys=True, default=str):
-                        diff.append(f)
+                        diff.append(_fmt_diff(f, old, v))
                 elif str(old) != str(v):
-                    diff.append(f)
+                    diff.append(_fmt_diff(f, old, v))
             if diff:
                 _reject(conn, endpoint, ident,
-                        "conflict_existing_row_differs:" + ",".join(diff),
+                        "conflict_existing_row_differs:" + "; ".join(diff),
                         None, d[key], code=409)
             return {key: d[key], "status": "duplicate_identical"}
         cur.execute("SELECT nextval('ew.canonical_revision_seq')")

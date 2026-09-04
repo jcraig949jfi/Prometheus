@@ -1,5 +1,5 @@
 {
- "ran_at": "2026-09-03T21:34:17",
+ "ran_at": "2026-09-04T06:19:44",
  "host": "127.0.0.1",
  "machine": "M1",
  "service": {
@@ -16,7 +16,7 @@
  "bound_evidence_id": "E-87a3eb776a36",
  "fixture_encounter": "TESTFIX-HARMONIA-ENC-0002",
  "fixture_run": "TESTFIX-RUN-0002",
- "real_sfe_encounter": "SEAM-evt_3de2c28540a956b6bd29b4e3",
+ "real_sfe_encounter": "SEAM-evt_29ed7871a9360344ce5a1503",
  "gates": [
   {
    "gate": "I_live_migration_state",
@@ -40,7 +40,7 @@
    "gate": "C_reverse_query",
    "pass": true,
    "skipped": false,
-   "detail": "encounter -> 2 evidence row(s); contains E-87a3eb776a36: True"
+   "detail": "encounter -> 3 evidence row(s); contains E-87a3eb776a36: True"
   },
   {
    "gate": "D_unsupported_field_fails_closed",
@@ -64,7 +64,7 @@
    "gate": "F_conflict_fails_overtly",
    "pass": true,
    "skipped": false,
-   "detail": "encounter differing -> 409 {\"detail\":\"conflict_existing_row_differs:outcome\"}; world anchor differing -> 409"
+   "detail": "encounter differing -> 409 {\"detail\":\"conflict_existing_row_differs:outcome(stored=committed subm; world anchor differing -> 409"
   },
   {
    "gate": "G_namespace_firewall",

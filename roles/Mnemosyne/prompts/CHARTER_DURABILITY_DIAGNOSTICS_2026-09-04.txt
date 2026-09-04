@@ -1,0 +1,107 @@
+PROMPT — MNEMOSYNE PEW DURABILITY + DIAGNOSTICS PASS
+2026-09-04
+
+Purpose: protect the interpretation/fossil layer before further experiments and improve one high-value diagnostic without changing Harmonia’s contract.
+
+Priority order is mandatory:
+
+1. BACKUP / RESTORE PROOF
+2. 409 DIAGNOSTIC IMPROVEMENT
+
+Do not broaden scope unless a serious integrity issue appears.
+
+TASK 1 — BACKUP
+
+Current risk:
+prometheus_fire contains the first end-to-end Harmonia evidence, thousands of fossils, and prior campaign interpretation state, but currently has no verified backup/restore path.
+
+Do this first.
+
+1. Create a pg_dump of the live PEW database using a documented, repeatable procedure.
+2. Record:
+    * source DB identity
+    * dump timestamp
+    * dump format/options
+    * size
+    * cryptographic hash
+    * storage path
+3. Restore the dump into a scratch database.
+4. Verify restoration mechanically, not by “restore command returned zero.”
+5. At minimum compare:
+    * key table counts
+    * fossil counts
+    * claims/evidence counts
+    * first Harmonia evidence E-dbe8c504b8cc and its complete provenance chain
+    * representative prod and test namespace rows
+    * schema/ontology/fossil-contract versions
+6. Destroy or clearly quarantine the scratch restore afterward according to safe operational policy.
+7. Establish a scheduled backup mechanism appropriate for this host.
+8. Add a minimal verification/rotation policy so backups do not become untested decoration.
+
+TASK 2 — 409 DIAGNOSTICS
+
+Improve conflict_existing_row_differs diagnostics so the error identifies, where safe:
+
+field
+stored value
+submitted value
+
+Maintain:
+
+* same HTTP status
+* same fail-closed behavior
+* no overwrite
+* no contract-breaking response redesign
+
+Add regression tests.
+
+TASK 3 — DOCUMENT, DO NOT YET HARDEN
+
+Preserve these known issues as explicit gaps without changing semantics in this pass unless necessary for safety:
+
+* no off-host endpoint yet for checking whether writes became visible in prod views
+* prod evidence can currently bind to test fossils / cross-namespace fossil binding is not prohibited
+* connection-pool fallback can open direct connections when pool is exhausted
+* evidence-binding race may surface as 500 rather than clean client error
+* PacketIn has no namespace field by schema; claim/evidence do
+
+Do not introduce a hard namespace-binding rule during Harmonia’s active integration phase without a separate contract decision.
+
+TASK 4 — ARCHAEOLOGY
+
+Document the minimum PEW objects/relations an independent digital archaeologist needs to reconstruct:
+
+evidence_id
+  -> claim / packet
+  -> encounter binding
+  -> fossil encounter
+  -> player(s)
+  -> world
+  -> SFE event anchor
+
+Flag any relation that currently requires:
+
+* SQL-only access
+* magic filenames
+* undocumented schema knowledge
+* host-local access
+
+Required output:
+Create a review packet for external review and put it HERE IN CHAT as one ASCII block I can cut and paste.
+
+Include:
+
+* backup verdict
+* dump hash/path
+* scratch restore proof
+* evidence-chain restoration proof
+* scheduled-backup state
+* 409 diagnostic change/tests
+* explicitly deferred issues
+* archaeology gaps
+* exact commits/hashes
+* any blocker for Harmonia T1/T2
+
+End with one line:
+
+PEW_READY_FOR_HARMONIA_T1_T2 = YES/NO

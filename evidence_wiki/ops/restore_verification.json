@@ -1,0 +1,331 @@
+{
+ "dump": "F:\\PrometheusBackups\\pew\\prometheus_fire_20260904T061043.dump",
+ "scratch_db": "pew_restore_check_20260904061415",
+ "started": "2026-09-04T06:14:15",
+ "pg_restore_rc": 0,
+ "pg_restore_stderr_tail": "",
+ "restore_seconds": 149.6,
+ "tables_live": 27,
+ "tables_restored": 27,
+ "tables_missing_in_restore": [],
+ "tables_with_differing_counts": {},
+ "total_rows_live": 23140,
+ "total_rows_restored": 23140,
+ "chain_evidence_id": "E-dbe8c504b8cc",
+ "chain_live": {
+  "found": true,
+  "evidence": {
+   "evidence_id": "E-dbe8c504b8cc",
+   "claim_id": "C-2f770424aa9a",
+   "packet_id": "SP-c49bf366d3a2",
+   "evidence_type": "OBSERVATIONAL_ANALYSIS",
+   "encounter_id": "8a95020171cc2c30abe5b38b2886d1cfc85ca4da0e6f233861f81cffe3313276",
+   "encounter_run_id": "exp_87d78f42e4382fa6cf7d4cf6:wrk_3184f39d764511e794556932",
+   "submitted_by": "harmonia",
+   "machine": "M2"
+  },
+  "claim": [
+   {
+    "claim_id": "C-2f770424aa9a",
+    "text_canonical": "First Prometheus end-to-end specimen trace: organism 7743b3527ea44fb5eb2bc80076cb1d2ea4dca2094975c8621962152d419364a0 traversed Proteus->SFE->encounter->PEW with identity preserved",
+    "status": "OBSERVED"
+   }
+  ],
+  "packet": [
+   {
+    "packet_id": "SP-c49bf366d3a2",
+    "uri": "genesis/harmonia_a/first_integration/FIRST_INTEGRATION_OBSERVATION.md",
+    "kind": "doc",
+    "content_sha256": null
+   }
+  ],
+  "encounter": [
+   {
+    "encounter_id": "8a95020171cc2c30abe5b38b2886d1cfc85ca4da0e6f233861f81cffe3313276",
+    "run_id": "exp_87d78f42e4382fa6cf7d4cf6:wrk_3184f39d764511e794556932",
+    "world_id": "wld_c3cba823e868d0ed339e95fa",
+    "players": [
+     "7743b3527ea44fb5eb2bc80076cb1d2ea4dca2094975c8621962152d419364a0"
+    ],
+    "sfe_event_id": "evt_af204ba67d4ffe36d6a63d77",
+    "sfe_entry_hash": "sha256:ced132e9ee7b117f06b9da998db5f3e03cc8b7e99559cb5e60bb2e12ddf505fc",
+    "sfe_event_seq": 31523,
+    "namespace": "test"
+   }
+  ],
+  "world": [
+   {
+    "world_id": "wld_c3cba823e868d0ed339e95fa",
+    "manifest_hash": null,
+    "sfe_head_hash": "sha256:b5db89aa908cdaa9e5f81995345d24b15ee03b20d43377d2a51b9ffeadebd4c8",
+    "namespace": "test"
+   }
+  ],
+  "players": [
+   {
+    "player_id": "7743b3527ea44fb5eb2bc80076cb1d2ea4dca2094975c8621962152d419364a0",
+    "genome_hash": "sha256:7743b3527ea44fb5eb2bc80076cb1d2ea4dca2094975c8621962152d419364a0",
+    "runtime_hash": "sha256:73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
+    "namespace": "test"
+   }
+  ],
+  "sfe_anchor": {
+   "event_id": "evt_af204ba67d4ffe36d6a63d77",
+   "entry_hash": "sha256:ced132e9ee7b117f06b9da998db5f3e03cc8b7e99559cb5e60bb2e12ddf505fc",
+   "event_seq": 31523
+  }
+ },
+ "chain_restored": {
+  "found": true,
+  "evidence": {
+   "evidence_id": "E-dbe8c504b8cc",
+   "claim_id": "C-2f770424aa9a",
+   "packet_id": "SP-c49bf366d3a2",
+   "evidence_type": "OBSERVATIONAL_ANALYSIS",
+   "encounter_id": "8a95020171cc2c30abe5b38b2886d1cfc85ca4da0e6f233861f81cffe3313276",
+   "encounter_run_id": "exp_87d78f42e4382fa6cf7d4cf6:wrk_3184f39d764511e794556932",
+   "submitted_by": "harmonia",
+   "machine": "M2"
+  },
+  "claim": [
+   {
+    "claim_id": "C-2f770424aa9a",
+    "text_canonical": "First Prometheus end-to-end specimen trace: organism 7743b3527ea44fb5eb2bc80076cb1d2ea4dca2094975c8621962152d419364a0 traversed Proteus->SFE->encounter->PEW with identity preserved",
+    "status": "OBSERVED"
+   }
+  ],
+  "packet": [
+   {
+    "packet_id": "SP-c49bf366d3a2",
+    "uri": "genesis/harmonia_a/first_integration/FIRST_INTEGRATION_OBSERVATION.md",
+    "kind": "doc",
+    "content_sha256": null
+   }
+  ],
+  "encounter": [
+   {
+    "encounter_id": "8a95020171cc2c30abe5b38b2886d1cfc85ca4da0e6f233861f81cffe3313276",
+    "run_id": "exp_87d78f42e4382fa6cf7d4cf6:wrk_3184f39d764511e794556932",
+    "world_id": "wld_c3cba823e868d0ed339e95fa",
+    "players": [
+     "7743b3527ea44fb5eb2bc80076cb1d2ea4dca2094975c8621962152d419364a0"
+    ],
+    "sfe_event_id": "evt_af204ba67d4ffe36d6a63d77",
+    "sfe_entry_hash": "sha256:ced132e9ee7b117f06b9da998db5f3e03cc8b7e99559cb5e60bb2e12ddf505fc",
+    "sfe_event_seq": 31523,
+    "namespace": "test"
+   }
+  ],
+  "world": [
+   {
+    "world_id": "wld_c3cba823e868d0ed339e95fa",
+    "manifest_hash": null,
+    "sfe_head_hash": "sha256:b5db89aa908cdaa9e5f81995345d24b15ee03b20d43377d2a51b9ffeadebd4c8",
+    "namespace": "test"
+   }
+  ],
+  "players": [
+   {
+    "player_id": "7743b3527ea44fb5eb2bc80076cb1d2ea4dca2094975c8621962152d419364a0",
+    "genome_hash": "sha256:7743b3527ea44fb5eb2bc80076cb1d2ea4dca2094975c8621962152d419364a0",
+    "runtime_hash": "sha256:73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
+    "namespace": "test"
+   }
+  ],
+  "sfe_anchor": {
+   "event_id": "evt_af204ba67d4ffe36d6a63d77",
+   "entry_hash": "sha256:ced132e9ee7b117f06b9da998db5f3e03cc8b7e99559cb5e60bb2e12ddf505fc",
+   "event_seq": 31523
+  }
+ },
+ "chain_identical": true,
+ "samples_live": {
+  "fossil_by_namespace": [
+   {
+    "namespace": "prod",
+    "n": 5452
+   },
+   {
+    "namespace": "synthetic",
+    "n": 6432
+   },
+   {
+    "namespace": "test",
+    "n": 39
+   }
+  ],
+  "prod_row": [
+   {
+    "encounter_id": "ENC-evt_000fd1bbf0a7fefe25449437",
+    "sfe_entry_hash": "sha256:ab500baeafd5084ff667da7c4bc5b20659c4e00182095b6ed0ec69d0a303c899",
+    "sfe_event_id": "evt_000fd1bbf0a7fefe25449437"
+   }
+  ],
+  "test_row": [
+   {
+    "encounter_id": "8a95020171cc2c30abe5b38b2886d1cfc85ca4da0e6f233861f81cffe3313276",
+    "run_id": "exp_87d78f42e4382fa6cf7d4cf6:wrk_3184f39d764511e794556932",
+    "sfe_entry_hash": "sha256:ced132e9ee7b117f06b9da998db5f3e03cc8b7e99559cb5e60bb2e12ddf505fc"
+   }
+  ],
+  "canonical_revision": [
+   {
+    "last_value": 17105
+   }
+  ],
+  "ontology_registry": [
+   {
+    "n": 26,
+    "v": 2
+   }
+  ],
+  "vocab_terms": [
+   {
+    "n": 72
+   }
+  ],
+  "object_namespace": [
+   {
+    "object_type": "claim",
+    "namespace": "fixture",
+    "n": 3
+   },
+   {
+    "object_type": "claim",
+    "namespace": "test",
+    "n": 7
+   },
+   {
+    "object_type": "evidence",
+    "namespace": "fixture",
+    "n": 4
+   },
+   {
+    "object_type": "evidence",
+    "namespace": "test",
+    "n": 6
+   },
+   {
+    "object_type": "relation",
+    "namespace": "fixture",
+    "n": 1
+   },
+   {
+    "object_type": "relation",
+    "namespace": "test",
+    "n": 1
+   }
+  ],
+  "evidence_bindings": [
+   {
+    "n": 4
+   }
+  ],
+  "fossil_pk": [
+   {
+    "d": "PRIMARY KEY (encounter_id, run_key)"
+   }
+  ],
+  "evidence_fk": [
+   {
+    "d": "FOREIGN KEY (encounter_id, encounter_run_key) REFERENCES ew.fossil_encounters(encounter_id, run_key)"
+   }
+  ]
+ },
+ "samples_restored": {
+  "fossil_by_namespace": [
+   {
+    "namespace": "prod",
+    "n": 5452
+   },
+   {
+    "namespace": "synthetic",
+    "n": 6432
+   },
+   {
+    "namespace": "test",
+    "n": 39
+   }
+  ],
+  "prod_row": [
+   {
+    "encounter_id": "ENC-evt_000fd1bbf0a7fefe25449437",
+    "sfe_entry_hash": "sha256:ab500baeafd5084ff667da7c4bc5b20659c4e00182095b6ed0ec69d0a303c899",
+    "sfe_event_id": "evt_000fd1bbf0a7fefe25449437"
+   }
+  ],
+  "test_row": [
+   {
+    "encounter_id": "8a95020171cc2c30abe5b38b2886d1cfc85ca4da0e6f233861f81cffe3313276",
+    "run_id": "exp_87d78f42e4382fa6cf7d4cf6:wrk_3184f39d764511e794556932",
+    "sfe_entry_hash": "sha256:ced132e9ee7b117f06b9da998db5f3e03cc8b7e99559cb5e60bb2e12ddf505fc"
+   }
+  ],
+  "canonical_revision": [
+   {
+    "last_value": 17105
+   }
+  ],
+  "ontology_registry": [
+   {
+    "n": 26,
+    "v": 2
+   }
+  ],
+  "vocab_terms": [
+   {
+    "n": 72
+   }
+  ],
+  "object_namespace": [
+   {
+    "object_type": "claim",
+    "namespace": "fixture",
+    "n": 3
+   },
+   {
+    "object_type": "claim",
+    "namespace": "test",
+    "n": 7
+   },
+   {
+    "object_type": "evidence",
+    "namespace": "fixture",
+    "n": 4
+   },
+   {
+    "object_type": "evidence",
+    "namespace": "test",
+    "n": 6
+   },
+   {
+    "object_type": "relation",
+    "namespace": "fixture",
+    "n": 1
+   },
+   {
+    "object_type": "relation",
+    "namespace": "test",
+    "n": 1
+   }
+  ],
+  "evidence_bindings": [
+   {
+    "n": 4
+   }
+  ],
+  "fossil_pk": [
+   {
+    "d": "PRIMARY KEY (encounter_id, run_key)"
+   }
+  ],
+  "evidence_fk": [
+   {
+    "d": "FOREIGN KEY (encounter_id, encounter_run_key) REFERENCES ew.fossil_encounters(encounter_id, run_key)"
+   }
+  ]
+ },
+ "samples_identical": true,
+ "VERDICT": "RESTORE_VERIFIED",
+ "scratch_disposition": "dropped"
+}
