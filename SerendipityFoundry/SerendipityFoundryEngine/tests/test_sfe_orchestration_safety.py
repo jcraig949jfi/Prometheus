@@ -480,3 +480,55 @@ def test_http_D_LIFECYCLE_1_terminated_world_refuses_writes_over_the_wire(http):
     # reads still answer
     assert http.get("/v2/worlds/%s/events?limit=5" % wid,
                     headers=h).status_code == 200
+
+
+# ===================== D-REPLAY-1: THE ACTION IS RECOVERABLE ================
+
+def test_D_REPLAY_1_frozen_spec_is_readable_and_matches_the_sealed_hash(foundry):
+    """Harmonia scored exact_action MISSING and concluded replay needs the repo
+    checkout. The action was never missing from the ENGINE -- spec_hash is
+    sealed in EXPERIMENT_COMMITTED -- it was unreachable from outside. Recover
+    the spec and re-derive the hash the ledger committed to."""
+    c, s, w = _running_world(foundry)
+    spec = {"action": "encounter", "ticks": 32, "seed": 424242}
+    h = foundry.propose_hypothesis(w, "H", client_id=c)
+    e = foundry.create_experiment(w, spec, client_id=c, hyp_id=h, commit=True)
+    got = foundry.get_experiment(w, e["exp_id"], client_id=c)
+    assert got["spec"] == spec, "the exact action must come back byte-equal"
+    assert got["spec_hash"] == content_hash(spec)
+    committed = [ev for ev in foundry.world_events(w, client_id=c, limit=1000)
+                 if ev["event_type"] == "EXPERIMENT_COMMITTED"]
+    assert len(committed) == 1
+    sealed = committed[0]["payload"]["spec_hash"]
+    assert sealed == got["spec_hash"], "recovered spec must hash to the sealed value"
+    assert committed[0]["payload"]["engine_source_hash"]
+
+
+def test_D_REPLAY_1_observations_are_recoverable_for_comparison(foundry):
+    """A replay is only meaningful against the outcome it replays."""
+    c, s, w = _running_world(foundry)
+    h = foundry.propose_hypothesis(w, "H", client_id=c)
+    e = foundry.create_experiment(w, {"a": 1}, client_id=c, hyp_id=h,
+                                  commit=True)["exp_id"]
+    o = foundry.record_observation(w, e, {"score": 0.5}, "SURVIVED",
+                                   client_id=c)
+    got = foundry.list_observations(w, client_id=c, exp_id=e)
+    assert len(got) == 1
+    assert got[0]["obs_id"] == o["obs_id"]
+    assert got[0]["content"] == {"score": 0.5}
+    assert got[0]["evidence_class"] == "CLIENT_ASSERTED"
+
+
+def test_D_REPLAY_1_experiment_read_is_client_scoped(foundry):
+    """The new read path must not become a cross-experimenter oracle."""
+    from sfe.errors import AccessDenied
+    c1, s1 = _client_session(foundry, "one")
+    c2, s2 = _client_session(foundry, "two")
+    w = foundry.create_world(s1, "w")["world_id"]
+    foundry.start_world(w, c1)
+    e = foundry.create_experiment(w, {"secret": 1}, client_id=c1,
+                                  commit=True)["exp_id"]
+    with pytest.raises(AccessDenied):
+        foundry.get_experiment(w, e, client_id=c2)
+    with pytest.raises(AccessDenied):
+        foundry.list_experiments(w, client_id=c2)

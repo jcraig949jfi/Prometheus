@@ -705,6 +705,54 @@ class Foundry:
                 "world resource budget exhausted", world_id=world_id, **info)
         return {**info, "exhausted": False}
 
+    def get_experiment(self, world_id: str, exp_id: str, *,
+                       client_id: Optional[str] = None) -> dict:
+        """The frozen experiment specification -- the EXACT ACTION of a run.
+
+        D-REPLAY-1 (2026-09-04). The engine has always SEALED the action's
+        identity: EXPERIMENT_COMMITTED carries spec_hash and engine_source_hash
+        in the tamper-evident chain. But the spec PREIMAGE had no read path, so
+        a consumer could VERIFY a spec it already held and could never RECOVER
+        one it did not. That is the precise mechanism behind Harmonia's "replay
+        is not self-contained": the action was not missing from the engine, it
+        was unreachable from outside it, and so lived only in whatever repo
+        checkout happened to produce the run.
+
+        Returning spec WITH spec_hash lets any consumer re-derive the hash and
+        check it against the sealed ledger payload -- recovery and verification
+        in one call."""
+        cx = self.store.read()
+        self._authorize(cx, world_id, client_id)
+        r = cx.execute("SELECT * FROM experiments WHERE exp_id=? AND world_id=?",
+                       (exp_id, world_id)).fetchone()
+        if r is None:
+            raise NotFound("experiment not in this world", exp_id=exp_id)
+        return _experiment_dict(r)
+
+    def list_experiments(self, world_id: str, *,
+                         client_id: Optional[str] = None,
+                         state: Optional[str] = None) -> list:
+        cx = self.store.read()
+        self._authorize(cx, world_id, client_id)
+        q, a = "SELECT * FROM experiments WHERE world_id=?", [world_id]
+        if state:
+            q += " AND state=?"; a.append(state)
+        q += " ORDER BY created_seq"
+        return [_experiment_dict(r) for r in cx.execute(q, tuple(a)).fetchall()]
+
+    def list_observations(self, world_id: str, *,
+                          client_id: Optional[str] = None,
+                          exp_id: Optional[str] = None) -> list:
+        """The recorded outcomes, with their evidence class and role. Needed to
+        COMPARE a replay against the run it replays."""
+        cx = self.store.read()
+        self._authorize(cx, world_id, client_id)
+        q, a = "SELECT * FROM observations WHERE world_id=?", [world_id]
+        if exp_id:
+            q += " AND exp_id=?"; a.append(exp_id)
+        q += " ORDER BY created_seq"
+        return [_observation_dict(r) for r in cx.execute(q, tuple(a)).fetchall()]
+
     def _budget_config(self, cx, world_id: str) -> dict:
         """The world's budget LIMITS as configured -- the part of the world's
         identity a replay must reproduce. Live consumption is deliberately NOT
@@ -1858,6 +1906,26 @@ def _world_dict(r) -> dict:
             "created_ts": r["created_ts"], "terminated_ts": r["terminated_ts"],
             "next_index": r["next_index"], "head_hash": r["head_hash"],
             "require_attestation": bool(r["require_attestation"])}
+
+
+def _experiment_dict(r) -> dict:
+    return {"exp_id": r["exp_id"], "world_id": r["world_id"],
+            "hyp_id": r["hyp_id"], "pred_id": r["pred_id"],
+            "spec": json.loads(r["spec"]), "spec_hash": r["spec_hash"],
+            "work_id": r["work_id"], "state": r["state"],
+            "committed_seq": r["committed_seq"],
+            "committed_ts": r["committed_ts"],
+            "created_ts": r["created_ts"], "created_seq": r["created_seq"]}
+
+
+def _observation_dict(r) -> dict:
+    return {"obs_id": r["obs_id"], "world_id": r["world_id"],
+            "exp_id": r["exp_id"], "pred_id": r["pred_id"],
+            "content": json.loads(r["content"]), "outcome": r["outcome"],
+            "pred_prospective": r["pred_prospective"],
+            "evidence_class": r["evidence_class"],
+            "evidence_role": r["evidence_role"], "work_id": r["work_id"],
+            "created_ts": r["created_ts"], "created_seq": r["created_seq"]}
 
 
 def _work_dict(r) -> dict:

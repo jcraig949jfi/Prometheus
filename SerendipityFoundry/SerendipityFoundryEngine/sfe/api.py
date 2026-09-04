@@ -511,6 +511,28 @@ def create_app(db_path: str, *, registration_open: bool = True) -> FastAPI:
         # nothing. Content hashes to the recorded source identity.
         return f.get_artifact_content(wid, aid, client_id=cid)
 
+    @app.get("/v2/worlds/{wid}/experiments")
+    def list_experiments(wid: str, state: Optional[str] = None,
+                         cid: str = Depends(auth),
+                         f: Foundry = Depends(get_foundry)):
+        return {"experiments": f.list_experiments(wid, client_id=cid,
+                                                  state=state)}
+
+    @app.get("/v2/worlds/{wid}/experiments/{eid}")
+    def get_experiment(wid: str, eid: str, cid: str = Depends(auth),
+                       f: Foundry = Depends(get_foundry)):
+        # D-REPLAY-1: the frozen spec IS the exact action of a run. It was
+        # sealed in the ledger by hash from the beginning but had no read path,
+        # so replay depended on the repo checkout that produced the run.
+        return f.get_experiment(wid, eid, client_id=cid)
+
+    @app.get("/v2/worlds/{wid}/observations")
+    def list_observations(wid: str, exp_id: Optional[str] = None,
+                          cid: str = Depends(auth),
+                          f: Foundry = Depends(get_foundry)):
+        return {"observations": f.list_observations(wid, client_id=cid,
+                                                    exp_id=exp_id)}
+
     @app.get("/v2/worlds/{wid}/knowledge")
     def knowledge(wid: str, seq: Optional[int] = None, cid: str = Depends(auth),
                   f: Foundry = Depends(get_foundry)):
