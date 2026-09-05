@@ -1,0 +1,342 @@
+"""Deterministic reads of the fossil record.
+
+Two sources, one normalized row type.
+
+  SFE   ``var/engine.db``  (SQLite, schema 6) -- experiments JOIN observations.
+        This is where the numeric observables actually live today: 3241 of
+        3315 observations carry ``content.score`` and 3009 experiment specs
+        carry a numeric ``spec.candidate`` coordinate.
+
+  PEW   ``ew.fossil_*``    (PostgreSQL, prometheus_fire) -- the encounter /
+        player / world fossils, plus ``fossil_worlds.family`` which is the
+        only world-FAMILY key either substrate publishes.
+
+Deliberate choices:
+
+* **Structured queries, never textual summaries.** Nothing here reads prose.
+* **Ordered by the ledger anchor, never by wall clock.** ``events.event_seq``
+  is the authority (SFE_ARCHAEOLOGY_SCHEMA.md s1); ``ts`` is informational and
+  ordering by it would silently reorder the corpus under clock skew.
+* **Every row keeps its anchors.** A FossilRow can always name the SFE
+  experiment, observation and (where present) ledger event it came from, so a
+  proposal derived from it is traceable back to immutable evidence.
+* **The window is recorded, not implied.** ``corpus_hash`` fingerprints the
+  exact set of row ids read, so "re-run Archaeon on the same corpus" is a
+  checkable statement rather than a hope.
+"""
+from __future__ import annotations
+
+import hashlib
+import json
+import os
+import sqlite3
+from dataclasses import dataclass, field
+from pathlib import Path
+from typing import Any, Dict, Iterable, List, Optional, Sequence
+
+from . import config as cfg
+
+REPO_ROOT = Path(__file__).resolve().parent.parent
+DEFAULT_SFE_DB = REPO_ROOT / "SerendipityFoundry" / "SerendipityFoundryEngine" / "var" / "engine.db"
+
+
+# --------------------------------------------------------------------------
+# The normalized row
+# --------------------------------------------------------------------------
+@dataclass(frozen=True)
+class FossilRow:
+    """One observation, projected through a CoordinateChart.
+
+    ``coords`` are RAW parameter values. Normalization to [0, 1] happens in
+    ``Corpus.normalized()`` and is recorded there, because a detector threshold
+    expressed in normalized units is meaningless without the scaling that
+    produced it.
+    """
+    row_id: str                       # stable within a corpus; provenance handle
+    source: str                       # 'sfe' | 'pew'
+    seq: int                          # ledger order (event_seq); the only order
+    region: str                       # world
+    family: Optional[str]             # world family
+    player: Optional[str]             # player identity, or None if absent
+    metric: float                     # the numeric observable
+    coords: Dict[str, float] = field(default_factory=dict)
+    anchors: Dict[str, Any] = field(default_factory=dict)
+
+    def anchor_ref(self) -> Dict[str, Any]:
+        """The provenance-safe reference written into a proposal."""
+        return {"row_id": self.row_id, "source": self.source,
+                "seq": self.seq, "region": self.region,
+                "player": self.player, "anchors": dict(self.anchors)}
+
+
+@dataclass
+class Corpus:
+    """The exact set of rows one Archaeon cycle read."""
+    rows: List[FossilRow]
+    chart: cfg.CoordinateChart
+    source_ref: str                   # db path / dsn description
+    window: Dict[str, Any]            # what the query asked for
+
+    # ---- identity -------------------------------------------------------
+    def corpus_hash(self) -> str:
+        """sha256 over the ordered row ids AND their metric values.
+
+        Ids alone would not notice a corrected metric; including the values
+        makes the hash a statement about the DATA, not just the selection.
+        """
+        h = hashlib.sha256()
+        for r in sorted(self.rows, key=lambda r: (r.seq, r.row_id)):
+            h.update(r.row_id.encode("utf-8"))
+            h.update(b"\x00")
+            h.update(repr(round(r.metric, 12)).encode("utf-8"))
+            h.update(b"\x00")
+        return "corpus:" + h.hexdigest()[:24]
+
+    def __len__(self) -> int:
+        return len(self.rows)
+
+    # ---- coordinate normalization ---------------------------------------
+    def coord_scales(self) -> Dict[str, Dict[str, float]]:
+        """min/max per coordinate axis over this corpus.
+
+        Returned (not hidden) so the scaling that a normalized threshold was
+        applied against is written into provenance.
+        """
+        scales: Dict[str, Dict[str, float]] = {}
+        for axis in self.chart.coord_fields:
+            vals = [r.coords[axis] for r in self.rows if axis in r.coords]
+            if not vals:
+                continue
+            lo, hi = min(vals), max(vals)
+            scales[axis] = {"min": lo, "max": hi, "span": (hi - lo)}
+        return scales
+
+    def normalized_coords(self, row: FossilRow,
+                          scales: Optional[Dict[str, Dict[str, float]]] = None
+                          ) -> Dict[str, float]:
+        scales = scales if scales is not None else self.coord_scales()
+        out: Dict[str, float] = {}
+        for axis, s in scales.items():
+            if axis not in row.coords:
+                continue
+            span = s["span"]
+            # A degenerate axis (every row identical) normalizes to 0.0 rather
+            # than dividing by zero. It carries no locality information, and
+            # the eligibility census reports it as such.
+            out[axis] = 0.0 if span <= 0 else (row.coords[axis] - s["min"]) / span
+        return out
+
+
+# --------------------------------------------------------------------------
+# helpers
+# --------------------------------------------------------------------------
+def _dig(obj: Any, dotted: str) -> Any:
+    """Fetch a dotted path out of nested dicts. Missing -> None."""
+    cur = obj
+    for part in dotted.split("."):
+        if not isinstance(cur, dict) or part not in cur:
+            return None
+        cur = cur[part]
+    return cur
+
+
+def _num(v: Any) -> Optional[float]:
+    if isinstance(v, bool):
+        return None
+    if isinstance(v, (int, float)):
+        return float(v)
+    return None
+
+
+def _loads(s: Any) -> Any:
+    if isinstance(s, (dict, list)):
+        return s
+    if not isinstance(s, str):
+        return None
+    try:
+        return json.loads(s)
+    except Exception:
+        return None
+
+
+# --------------------------------------------------------------------------
+# SFE reader
+# --------------------------------------------------------------------------
+def read_sfe(db_path: Optional[str] = None,
+             chart: Optional[cfg.CoordinateChart] = None,
+             lookback_rows: int = cfg.DEFAULT.lookback_rows) -> Corpus:
+    """Read completed SFE experiments joined to their observations.
+
+    Only OBSERVED experiments with a bound observation are fossils: an
+    experiment with no observation has not happened yet, and including it would
+    let an un-run experiment contribute to a detector.
+    """
+    chart = chart or cfg.CHARTS[cfg.DEFAULT_CHART]
+    path = str(db_path or DEFAULT_SFE_DB)
+    if not os.path.exists(path):
+        return Corpus([], chart, path, {"error": "sfe db not found",
+                                        "path": path})
+
+    uri = "file:{}?mode=ro".format(path.replace("?", "%3f"))
+    conn = sqlite3.connect(uri, uri=True)
+    conn.row_factory = sqlite3.Row
+    try:
+        # world family: SFE has no family column, so topology_group is the
+        # nearest published grouping. NULL is honest and stays NULL.
+        sql = """
+            SELECT o.obs_id, o.exp_id, o.world_id, o.content, o.outcome,
+                   o.evidence_class, o.work_id, o.created_seq AS obs_seq,
+                   e.spec, e.spec_hash, e.committed_seq, e.state,
+                   w.topology_group AS world_family
+              FROM observations o
+              JOIN experiments  e ON e.exp_id  = o.exp_id
+              JOIN worlds       w ON w.world_id = o.world_id
+             ORDER BY o.created_seq DESC
+             LIMIT ?
+        """
+        raw = conn.execute(sql, (int(lookback_rows),)).fetchall()
+    finally:
+        conn.close()
+
+    rows: List[FossilRow] = []
+    for r in raw:
+        content = _loads(r["content"])
+        spec = _loads(r["spec"])
+        if not isinstance(content, dict):
+            continue
+        metric = _num(_dig({"content": content}, chart.metric_field))
+        if metric is None:
+            continue
+        coords: Dict[str, float] = {}
+        for axis in chart.coord_fields:
+            v = _num(_dig({"spec": spec if isinstance(spec, dict) else {}}, axis))
+            if v is not None:
+                coords[axis] = v
+        player = None
+        if chart.player_field:
+            pv = _dig({"spec": spec if isinstance(spec, dict) else {},
+                       "content": content}, chart.player_field)
+            player = str(pv) if pv is not None else None
+        rows.append(FossilRow(
+            row_id=r["obs_id"],
+            source="sfe",
+            seq=int(r["obs_seq"]),
+            region=r["world_id"],
+            family=r["world_family"],
+            player=player,
+            metric=metric,
+            coords=coords,
+            anchors={"obs_id": r["obs_id"], "exp_id": r["exp_id"],
+                     "work_id": r["work_id"], "world_id": r["world_id"],
+                     "spec_hash": r["spec_hash"],
+                     "committed_seq": r["committed_seq"],
+                     "observation_created_seq": int(r["obs_seq"]),
+                     "evidence_class": r["evidence_class"],
+                     "outcome": r["outcome"]},
+        ))
+
+    rows.sort(key=lambda x: (x.seq, x.row_id))
+    return Corpus(rows, chart, path,
+                  {"lookback_rows": int(lookback_rows),
+                   "order": "observations.created_seq DESC",
+                   "join": "observations JOIN experiments JOIN worlds",
+                   "returned": len(rows)})
+
+
+# --------------------------------------------------------------------------
+# PEW reader
+# --------------------------------------------------------------------------
+def read_pew(chart: Optional[cfg.CoordinateChart] = None,
+             lookback_rows: int = cfg.DEFAULT.lookback_rows,
+             namespace: str = "prod",
+             conn=None) -> Corpus:
+    """Read PEW player fossils joined to their world family.
+
+    ``namespace='prod'`` by default: the ``synthetic`` and ``test`` namespaces
+    exist precisely so that fixtures cannot enter a production read.
+    """
+    chart = chart or cfg.CHARTS[cfg.PEW_PHENOTYPE_CHART.name]
+    owns = conn is None
+    if conn is None:
+        try:
+            from evidence_wiki.ew import db as ewdb  # type: ignore
+            conn = ewdb.connect()
+        except Exception as exc:                     # pragma: no cover
+            return Corpus([], chart, "pew:unavailable",
+                          {"error": "pew unreachable: {}".format(exc)})
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            """
+            SELECT p.player_id, p.genome_hash, p.sfe_world_id, p.sfe_entry_hash,
+                   p.parent_player, p.phenotype, p.resources, p.revision,
+                   w.family AS world_family, w.manifest_hash
+              FROM ew.fossil_players p
+              LEFT JOIN ew.fossil_worlds w ON w.sfe_world_id = p.sfe_world_id
+             WHERE p.namespace = %s
+             ORDER BY p.revision DESC
+             LIMIT %s
+            """, (namespace, int(lookback_rows)))
+        raw = cur.fetchall()
+        cols = [d[0] for d in cur.description]
+    finally:
+        if owns:
+            try:
+                conn.close()
+            except Exception:
+                pass
+
+    rows: List[FossilRow] = []
+    for rec in raw:
+        r = dict(zip(cols, rec))
+        pheno = r.get("phenotype") if isinstance(r.get("phenotype"), dict) else {}
+        metric = _num(_dig({"phenotype": pheno}, chart.metric_field))
+        if metric is None:
+            continue
+        region = r.get("sfe_world_id") or "<unbound>"
+        rows.append(FossilRow(
+            row_id=str(r["player_id"]),
+            source="pew",
+            # PEW revision is PEW's own write order, not producer order. It is
+            # the only monotonic handle on a player fossil, and it is labelled
+            # as such rather than passed off as an SFE event_seq.
+            seq=int(r["revision"]),
+            region=region,
+            family=r.get("world_family"),
+            player=str(r["player_id"]),
+            metric=metric,
+            coords={},
+            anchors={"player_id": r["player_id"],
+                     "genome_hash": r.get("genome_hash"),
+                     "sfe_world_id": r.get("sfe_world_id"),
+                     "sfe_entry_hash": r.get("sfe_entry_hash"),
+                     "parent_player": r.get("parent_player"),
+                     "pew_revision": int(r["revision"]),
+                     "seq_kind": "pew.revision"},
+        ))
+
+    rows.sort(key=lambda x: (x.seq, x.row_id))
+    return Corpus(rows, chart, "pew:ew.fossil_players",
+                  {"namespace": namespace, "lookback_rows": int(lookback_rows),
+                   "order": "fossil_players.revision DESC",
+                   "returned": len(rows)})
+
+
+def read(chart_name: str = cfg.DEFAULT_CHART, **kw) -> Corpus:
+    """Read the corpus for a named chart."""
+    chart = cfg.CHARTS[chart_name]
+    if chart.source == "sfe":
+        return read_sfe(chart=chart, **kw)
+    if chart.source == "pew":
+        return read_pew(chart=chart, **kw)
+    raise ValueError("unknown chart source: {}".format(chart.source))
+
+
+def corpus_from_rows(rows: Sequence[FossilRow],
+                     chart: Optional[cfg.CoordinateChart] = None,
+                     source_ref: str = "synthetic") -> Corpus:
+    """Build a Corpus from rows in memory. Used by the calibration harness."""
+    chart = chart or cfg.CHARTS[cfg.DEFAULT_CHART]
+    ordered = sorted(rows, key=lambda x: (x.seq, x.row_id))
+    return Corpus(list(ordered), chart, source_ref,
+                  {"synthetic": True, "returned": len(ordered)})
