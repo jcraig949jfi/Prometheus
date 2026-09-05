@@ -24,9 +24,26 @@ ALTER TABLE ew.fossil_encounters
     ADD COLUMN IF NOT EXISTS run_key text
     GENERATED ALWAYS AS (coalesce(run_id, '')) STORED;
 
-ALTER TABLE ew.fossil_encounters DROP CONSTRAINT IF EXISTS fossil_encounters_pkey;
-ALTER TABLE ew.fossil_encounters
-    ADD CONSTRAINT fossil_encounters_pkey PRIMARY KEY (encounter_id, run_key);
+-- Re-runnable (fixed 2026-09-05, M1 bring-up): migrations/*.sql are re-applied
+-- in full on every apply_migration(), and once 007 added
+-- evidence_fossil_encounter_fk -- which depends on this primary key's index --
+-- an unconditional DROP CONSTRAINT started failing with
+-- DependentObjectsStillExist, so no machine could re-run the migration set.
+-- Only rebuild the key when it is not ALREADY the composite one.
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_constraint
+        WHERE conrelid = 'ew.fossil_encounters'::regclass
+          AND contype = 'p'
+          AND pg_get_constraintdef(oid) = 'PRIMARY KEY (encounter_id, run_key)'
+    ) THEN
+        ALTER TABLE ew.fossil_encounters
+            DROP CONSTRAINT IF EXISTS fossil_encounters_pkey;
+        ALTER TABLE ew.fossil_encounters
+            ADD CONSTRAINT fossil_encounters_pkey PRIMARY KEY (encounter_id, run_key);
+    END IF;
+END $$;
 
 CREATE INDEX IF NOT EXISTS idx_fossil_enc_run    ON ew.fossil_encounters(run_id);
 CREATE INDEX IF NOT EXISTS idx_fossil_enc_ep     ON ew.fossil_encounters(episode_id);

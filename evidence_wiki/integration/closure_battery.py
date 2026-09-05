@@ -12,14 +12,30 @@ import json
 import ssl
 import sys
 import time
+import os
+import pathlib
+import socket
 import urllib.error
 import urllib.request
 import uuid
 
 import requests
 
-_DEFAULT_CA = "D:/prometheus/SerendipityFoundry/SerendipityFoundryEngine/deploy/m2.crt"
-_DEFAULT_SFE = "https://192.168.1.191:8811/v2"
+# Machine-aware defaults (fixed 2026-09-05, M1 bring-up). These were hardcoded
+# to M2's absolute paths, so the battery could only run on M2 -- on M1 it died
+# in ssl.create_default_context with FileNotFoundError before any gate ran.
+# Both stacks are independent and either machine must be able to self-verify.
+# Precedence: explicit CLI flag > env var > this host's own deploy cert/URL.
+_HOSTS = {                       # hostname -> (LAN address, cert basename, PEW machine id)
+    "SKULLPORT": ("192.168.1.202", "m1.crt", "M1"),
+    "SPECTREX5": ("192.168.1.191", "m2.crt", "M2"),
+}
+_HOST = os.environ.get("PROM_HOST", socket.gethostname()).upper()
+_ADDR, _CERT, _MACHINE = _HOSTS.get(_HOST, ("192.168.1.191", "m2.crt", "M2"))
+_DEPLOY = (pathlib.Path(__file__).resolve().parent.parent.parent
+           / "SerendipityFoundry" / "SerendipityFoundryEngine" / "deploy")
+_DEFAULT_CA = os.environ.get("PEW_SFE_CACERT", str(_DEPLOY / _CERT))
+_DEFAULT_SFE = os.environ.get("PEW_SFE_URL", f"https://{_ADDR}:8811/v2")
 
 
 def sfe_sealed_run(sfe_url, ca):
@@ -56,8 +72,27 @@ def sfe_sealed_run(sfe_url, ca):
         evs = req("GET", "/worlds/%s/events" % wid)
         evs = evs["events"] if isinstance(evs, dict) else evs
         wc = next(e for e in evs if e["event_type"] == "WORLD_CREATED")
+        # The newer engine returns the binding ids on the observation itself.
+        # Older builds (e.g. M1's running c358a53b) return only obs_id, so the
+        # anchor is resolved from the ledger by STRICT SINGLE MATCH on
+        # refs.obs_id -- the same rule the readback uses. Ambiguity is an error,
+        # never a guess: picking "some plausible event" is exactly the
+        # wrong-but-real anchor this battery exists to reject.
+        ev_id, ev_hash = o.get("event_id"), o.get("entry_hash")
+        if not (ev_id and ev_hash):
+            cands = [e for e in evs
+                     if (e.get("refs") or {}).get("obs_id") == o["obs_id"]]
+            if len(cands) != 1:
+                cands = [e for e in evs
+                         if e.get("event_type") == "OBSERVATION_RECORDED"
+                         and (e.get("refs") or {}).get("exp_id") == eid]
+            if len(cands) != 1:
+                raise RuntimeError(
+                    "anchor not uniquely resolvable from the ledger "
+                    f"({len(cands)} candidates); refusing to guess")
+            ev_id, ev_hash = cands[0]["event_id"], cands[0]["entry_hash"]
         return {"world_id": wid, "exp_id": eid, "obs_id": o["obs_id"],
-                "event_id": o["event_id"], "entry_hash": o["entry_hash"],
+                "event_id": ev_id, "entry_hash": ev_hash,
                 "wc_event_id": wc["event_id"], "wc_entry_hash": wc["entry_hash"]}
     except Exception as exc:                                  # noqa: BLE001
         print("  (sfe_sealed_run failed: %s: %s)" % (type(exc).__name__, exc))
@@ -93,7 +128,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--host", default="127.0.0.1")
     ap.add_argument("--port", type=int, default=8377)
-    ap.add_argument("--machine", default="M2")
+    ap.add_argument("--machine", default=_MACHINE)
     ap.add_argument("--agent", default="closure-test")
     ap.add_argument("--sfe-url", default=_DEFAULT_SFE)
     ap.add_argument("--sfe-cacert", default=_DEFAULT_CA)

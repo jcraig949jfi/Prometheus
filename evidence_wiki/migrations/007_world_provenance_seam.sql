@@ -40,12 +40,14 @@ CREATE INDEX IF NOT EXISTS idx_evidence_encounter
 -- Expose the binding through the production view. Column list and namespace
 -- predicate are preserved verbatim from the pre-007 definition; only the two
 -- binding columns are added.
+-- Re-runnable (fixed 2026-09-05, M1 bring-up): migration 004 defines this view
+-- as `SELECT e.*`, so on a re-apply it expands to EVERY column of ew.evidence
+-- (including the generated encounter_run_key). An explicit narrower column list
+-- here then tried to DROP that column and failed with
+-- "cannot drop columns from view", making the migration set un-re-runnable.
+-- Using e.* makes 004 and 007 converge by construction, whatever columns exist.
 CREATE OR REPLACE VIEW ew.evidence_prod AS
- SELECT evidence_id, claim_id, evidence_type, verdict_source, outcome_canonical,
-    metric_text, gate, negative, substrate, packet_id, source_span, source_quote,
-    experiment_id, agent_id, creation_method, write_stage, ontology_version,
-    submitted_by, machine, created_at, revision,
-    encounter_id, encounter_run_id
+ SELECT e.*
    FROM ew.evidence e
   WHERE NOT (EXISTS ( SELECT 1
            FROM ew.object_namespace ns
