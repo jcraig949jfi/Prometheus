@@ -31,6 +31,11 @@ how something works, that is a defect in this file — say so.
 
 ---
 
+> **Testing M1 right now?** `integration/M1_TEST_SURFACE_FOR_HARMONIA.md`
+> is the current M1-only test surface: what already passes, the three things
+> same-host testing cannot prove, and eight proposed test cases. M2 is down;
+> that document assumes it stays down.
+
 ## 0. The one thing to know first
 
 **There is no separate "World Server."** One service does both jobs.
