@@ -1,0 +1,201 @@
+Mnemosyne —
+
+Daedalus is being tasked with adding explicit SFE experiment-session affinity so a client cannot silently wander between M1, M2, or future servers during an experiment.
+
+I want you to attack the PEW/evidence/provenance side of the same problem independently.
+
+Context
+
+Current failure:
+
+A client can create/register experimental state against one SFE engine and later send requests to another engine because of a wrong base_url or routing/configuration mistake.
+
+M1 and M2 are now byte-parity engines, so code differences are no longer an explanation.
+
+Daedalus will implement a session key issued at experiment start and required on subsequent experiment-scoped API calls. A session belonging to another engine should yield a machine-readable WRONG_SESSION failure.
+
+We eventually want a server farm where a future allocator chooses M1/M2/etc. based on capacity. That allocator is future work.
+
+Your lane is:
+
+make sure PEW, evidence binding, fossils, audit verification, replay, and provenance cannot become ambiguous or false once SFE becomes multi-engine and session-affine.
+
+Questions to resolve
+
+Determine what PEW must know about the new SFE session identity.
+
+At minimum evaluate whether every evidence-bearing record associated with an experiment should bind to:
+
+* experiment ID
+* observation ID / existing anchors
+* SFE logical engine-instance identity
+* SFE session identity or a non-secret session fingerprint
+* relevant source/engine version
+* existing PEW identity fields
+
+The goal is not to dump runtime trivia into every record.
+
+The goal is to make the following impossible:
+
+1. Evidence generated under session A is later presented as if generated under session B.
+2. An experiment partially executed on M1 and partially on M2 looks like one coherent experiment.
+3. A restored/migrated engine creates provenance that is indistinguishable from the original engine when that distinction matters.
+4. Replayed historical evidence is accidentally assigned modern session provenance.
+5. A wrong-engine request fails at SFE but PEW records misleading partial evidence around the failed operation.
+6. A client accidentally points PEW at one machine and SFE at another and still produces apparently valid closure artifacts.
+
+Preserve the important distinction
+
+The SFE session token may be secret/bearer material.
+
+PEW should probably NOT persist the raw token.
+
+Work with Daedalus’s design and establish a safe durable identity/fingerprint or binding representation that can be recorded and verified without exposing the session credential.
+
+We need a provenance handle, not another secret repository.
+
+C4 / anchor extension
+
+Revisit the existing bound-anchor verification mechanism.
+
+C4b currently proves a wrong-but-real anchor fails because experiment/observation binding is checked.
+
+Extend the threat model:
+
+A cryptographically real anchor from the correct experiment/observation but from the WRONG SFE SESSION or WRONG LOGICAL ENGINE must not verify as equivalent unless an explicitly defined migration/continuity operation says it should.
+
+Design the next adversarial gates around this.
+
+Examples:
+
+A. correct exp + obs + correct session/engine → verify TRUE
+B. correct exp + obs + wrong session → verify FALSE
+C. correct exp + obs + session from other engine → verify FALSE
+D. correct session + wrong exp → verify FALSE
+E. correct session + wrong obs → verify FALSE
+F. raw random session fingerprint → verify FALSE
+G. replay of historical pre-session evidence → handled explicitly, never fabricated into strict provenance
+H. engine restore/migration continuity case → behavior matches documented policy
+
+Make the discriminator visible in diagnostics, analogous to the current binds_exp_id / binds_obs_id.
+
+Likely additions might resemble:
+
+* binds_session
+* binds_engine_instance
+
+Use your judgment on names and representation.
+
+Cross-system qualification
+
+Once Daedalus has the mechanism, independently run the failure case rather than trusting his packet.
+
+I want a real sequence such as:
+
+1. Harmonia/client starts an experiment on M1.
+2. Session is issued.
+3. At least one evidence-bearing event is generated and PEW-bound.
+4. Client is intentionally pointed at M2.
+5. SFE rejects the next operation as WRONG_SESSION.
+6. PEW does not produce a misleading success artifact.
+7. Return client to M1.
+8. Continue the experiment.
+9. Verify resulting evidence chain shows one coherent engine/session lineage.
+10. Attempt to substitute a valid artifact/anchor/session lineage from M2 and prove closure fails.
+
+Then reverse M1/M2.
+
+Restart / restore / migration semantics
+
+This matters for PEW more than it initially appears.
+
+Daedalus will decide how a logical engine instance behaves across restart and backup/restore.
+
+You must determine what that means for evidence identity.
+
+Attack at least these cases:
+
+* service process restart
+* machine reboot
+* same database + same logical engine identity
+* cold rollback to an older DB
+* code rollback with newer DB rejected
+* backup restored onto same host
+* backup restored onto a different host
+* intentional future migration of an active session
+* accidental cloned database running simultaneously on two hosts
+
+That last case is particularly important.
+
+If somebody clones an SFE DB onto M3 and starts it while M1 is still alive, can both claim the same session lineage?
+
+If yes, we have split brain.
+
+Either prove the design prevents it or log it as a blocker with a concrete proposed mechanism.
+
+Instrumentation / archaeology
+
+Update PEW documentation so future readers can distinguish:
+
+* legacy pre-session experiments
+* strict session-bound experiments
+* engine identity
+* session lineage
+* migration/restore events if supported
+* historical semantics without rewriting old records
+
+Do not “repair” old evidence by synthesizing session bindings that did not exist when it was created.
+
+Legacy means legacy.
+
+Fleet-readiness review
+
+We are not asking you to build the allocator.
+
+But assess whether the combined SFE + PEW design is sufficient for the future architecture:
+
+client
+→ fleet allocator
+→ chosen SFE instance
+→ session affinity
+→ experiment
+→ PEW evidence / closure
+
+Identify any assumptions in PEW today that still imply “there is only one SFE.”
+
+Search for:
+
+* hardcoded M1/M2 paths
+* singleton endpoints
+* globally assumed experiment IDs
+* engine-local IDs treated as globally unique
+* hostname assumptions
+* source hashes without engine identity
+* audit code that accepts a valid object without checking its execution lineage
+
+Treat these as potential scale blockers.
+
+Deliverable
+
+Produce a review packet with:
+
+* threat model
+* proposed PEW binding model
+* schema/protocol changes if needed
+* compatibility treatment for existing evidence
+* extension of C4 / verification gates
+* split-brain analysis
+* restart/restore/migration findings
+* live cross-machine adversarial results
+* remaining assumptions that prevent N-engine scale-out
+* concrete blocker backlog ranked by severity
+* commits
+* rollback path
+
+Do not optimize for making all gates green.
+
+Optimize for finding ways a future 10-, 50-, or 100-engine deployment could silently corrupt scientific provenance.
+
+The success condition is stronger than “PEW works on both machines”:
+
+PEW must be able to prove which execution lineage produced a piece of evidence, and must refuse closure when otherwise-valid evidence is spliced across incompatible SFE sessions or engines.

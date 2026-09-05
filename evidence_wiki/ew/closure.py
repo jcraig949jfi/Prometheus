@@ -160,15 +160,36 @@ def verify_sfe_anchor(e):
     except Exception as exc:                                 # noqa: BLE001
         return (False, {"reason": "verify_call_failed", "error": type(exc).__name__})
     ck = resp.get("checks") or {}
+    eng = resp.get("engine") or {}
+    # WHICH ENGINE ANSWERED (2026-09-05, session-affinity sprint). M1 and M2 are
+    # byte-parity builds, so engine_source_hash cannot separate them; only the
+    # instance id can. If the producer asserted an engine and a DIFFERENT engine
+    # verified the anchor, the client had PEW pointed at one machine and SFE at
+    # another -- the anchor may be perfectly real and still belong to another
+    # execution lineage, so it must not verify.
+    claimed_engine = getattr(e, "sfe_engine_instance_id", None)
+    answering = eng.get("engine_instance_id")
+    binds_engine = None
+    if claimed_engine:
+        binds_engine = bool(answering) and answering == claimed_engine
+    # binds_session is the engine's to assert; consumed when present, never
+    # invented here. Absent (older engine) stays None = "not established".
+    binds_session = ck.get("binds_session")
     verified = (resp.get("valid") is True
                 and ck.get("binds_exp_id") is True
-                and ck.get("binds_obs_id") is True)
+                and ck.get("binds_obs_id") is True
+                and binds_engine is not False
+                and binds_session is not False)
     return (verified, {"valid": resp.get("valid"),
                        "event_exists": ck.get("event_exists"),
                        "entry_hash_matches": ck.get("entry_hash_matches"),
                        "binds_exp_id": ck.get("binds_exp_id"),
                        "binds_obs_id": ck.get("binds_obs_id"),
-                       "engine": resp.get("engine")})
+                       "binds_engine_instance": binds_engine,
+                       "claimed_engine_instance": claimed_engine,
+                       "answering_engine_instance": answering,
+                       "binds_session": binds_session,
+                       "engine": eng})
 
 
 def attestation_for_encounter(conn, e):

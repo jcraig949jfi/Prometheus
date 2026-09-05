@@ -1,0 +1,101 @@
+{
+ "ran_at": "2026-09-05T07:00:01",
+ "n_scored": 15,
+ "n_pass": 15,
+ "skipped": [],
+ "all_pass": true,
+ "gates": [
+  {
+   "gate": "L0_local_run",
+   "pass": true,
+   "skipped": false,
+   "detail": "engine=eng_8a37a5d305969034d488c43e session=ses_56aa74983297d10e93d78add affinity=STRICT"
+  },
+  {
+   "gate": "A_correct_lineage_verifies",
+   "pass": true,
+   "skipped": false,
+   "detail": "write=200 stored_engine=eng_8a37a5d305969034d488c43e stored_session=ses_56aa74983297d10e93d78add affinity=STRICT"
+  },
+  {
+   "gate": "F_random_session_lineage_refused",
+   "pass": true,
+   "skipped": false,
+   "detail": "HTTP 409 cross_session_splice: world wld_8e9a6d3c73d2aaa8ced0d515 on engine eng_8a37a5d305969034d488c43e is already bound to session ses_56aa74983297"
+  },
+  {
+   "gate": "F2_unverifiable_fingerprint_stored_not_promoted",
+   "pass": true,
+   "skipped": false,
+   "detail": "stored_fp=sfp_0000000000000000 binds_session=None (None = engine does not assert it; PEW does not invent it)"
+  },
+  {
+   "gate": "K_raw_session_key_refused",
+   "pass": true,
+   "skipped": false,
+   "detail": "HTTP 422 session_key_must_not_be_sent_to_pew: send key_fingerprint (sfp_<16 hex>) instead; the key "
+  },
+  {
+   "gate": "D_wrong_exp_not_verified",
+   "pass": true,
+   "skipped": false,
+   "detail": "anchor_verified=False binds_exp_id=False"
+  },
+  {
+   "gate": "E_wrong_obs_not_verified",
+   "pass": true,
+   "skipped": false,
+   "detail": "anchor_verified=False binds_obs_id=False"
+  },
+  {
+   "gate": "C_engine_mismatch_not_verified",
+   "pass": true,
+   "skipped": false,
+   "detail": "claimed=eng_d9298a10d1b0.. answering=eng_8a37a5d30596.. binds_engine_instance=False verified=False"
+  },
+  {
+   "gate": "G_legacy_stays_legacy",
+   "pass": true,
+   "skipped": false,
+   "detail": "affinity=LEGACY session=None engine=None -- no binding synthesized for evidence that had none"
+  },
+  {
+   "gate": "H0_hollow_strict_claim_refused",
+   "pass": true,
+   "skipped": false,
+   "detail": "HTTP 422 strict_affinity_requires_engine_and_session: a STRICT claim without sfe_engine_i"
+  },
+  {
+   "gate": "H1_session_without_engine_refused",
+   "pass": true,
+   "skipped": false,
+   "detail": "HTTP 422 sfe_session_id_requires_engine_instance_id: session ids are engine-local and are"
+  },
+  {
+   "gate": "SB_split_brain_fork_refused",
+   "pass": true,
+   "skipped": false,
+   "detail": "HTTP 409 split_brain_ledger_fork: engine eng_8a37a5d305969034d488c43e already recorded a DIFFERENT entry_hash at event_seq 32706 (stored sha256:db4c77b4a2e329c"
+  },
+  {
+   "gate": "SB2_fork_event_recorded",
+   "pass": true,
+   "skipped": false,
+   "detail": "1 fork event(s) durably recorded for (engine, seq) -- a refused write still leaves the evidence that a fork was seen"
+  },
+  {
+   "gate": "B_wrong_session_refused",
+   "pass": true,
+   "skipped": false,
+   "detail": "HTTP 409 splice_refused=True engine_binds_session=None cross_session_splice: world wld_8e9a6d3c73d2aaa8ced0d515 on engine eng_8a37a5d305969034d488c43e is already bou"
+  },
+  {
+   "gate": "P_peer_engine_anchor_not_verified",
+   "pass": true,
+   "skipped": false,
+   "detail": "anchor minted on peer engine eng_906356f7fb1d.. verified by local engine -> verified=False binds_engine_instance=False event_exists=False"
+  }
+ ],
+ "engine": "eng_8a37a5d305969034d488c43e",
+ "strict": true
+}

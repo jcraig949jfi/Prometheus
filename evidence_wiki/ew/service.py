@@ -6,6 +6,7 @@ X-Prometheus-Agent headers (attribution recorded on every write; documented
 V1 upgrade: per-machine tokens + TLS). Run:  python -m ew.service
 """
 import json
+import re as _re
 import time
 
 from fastapi import Depends, FastAPI, HTTPException, Query, Request
@@ -800,7 +801,20 @@ def native_fossil_matrix(request: Request, conn=Depends(get_conn)):
 FOSSIL_FIELDS = ("sfe_world_id", "sfe_event_id", "sfe_entry_hash",
                  "sfe_event_seq", "world_id", "players", "ecology", "seed",
                  "budget", "outcome", "failure_class", "resources_used",
-                 "occurred_ts", "episode_id", "producer", "namespace")
+                 "occurred_ts", "episode_id", "producer", "namespace",
+                 "sfe_engine_instance_id", "sfe_session_id",
+                 "sfe_session_key_fp", "sfe_affinity_mode",
+                 "sfe_ledger_head_hash")
+
+# Session/engine lineage shapes (migration 010). The session KEY is bearer
+# material and must never reach PEW; only its fingerprint may. Rejecting a
+# raw key outright is deliberate: silently hashing it for the caller would
+# make PEW a place where credentials get posted "safely", which is how a
+# credential store starts.
+_ENG_RE = _re.compile(r"^eng_[0-9a-f]{16,32}$")
+_SFP_RE = _re.compile(r"^sfp_[0-9a-f]{16}$")
+_SESSION_KEY_RE = _re.compile(r"^sfes_[0-9a-f]{24}_")
+_AFFINITY = ("STRICT", "LEGACY")
 
 
 class FossilEncounterIn(BaseModel):
@@ -825,6 +839,13 @@ class FossilEncounterIn(BaseModel):
     resources_used: dict | None = None
     occurred_ts: str | None = None
     producer: dict | None = None
+    # --- SFE session affinity / engine lineage (migration 010, all optional
+    # so LEGACY producers keep working unchanged) ---
+    sfe_engine_instance_id: str | None = None
+    sfe_session_id: str | None = None
+    sfe_session_key_fp: str | None = None      # fingerprint ONLY, never the key
+    sfe_affinity_mode: str | None = None       # STRICT | LEGACY
+    sfe_ledger_head_hash: str | None = None
     namespace: str = "prod"
     idempotency_key: str | None = None
 
@@ -876,8 +897,6 @@ def _classify(conn, object_type, object_id, namespace, ident, reason):
 # blob_hash or artifact_id has no evt_ id to pair with it, and an auditor can
 # verify the (sfe_event_id, sfe_entry_hash) pair against SFE directly: that
 # check passes 5452/5452 on historical rows (seam/q1_pair_verification.txt).
-import re as _re
-
 _SHA256_RE = _re.compile(r"^sha256:[0-9a-f]{64}$")
 _EVT_RE = _re.compile(r"^evt_[0-9a-f]{16,32}$")
 
@@ -898,6 +917,117 @@ def _check_sfe_anchor(e):
                 "supply that event_id so the hash class is unambiguous "
                 "(blob_hash/artifact_id/head_hash have no evt_ id)")
     return None
+
+
+def _check_session_lineage(e):
+    """Validate the session/engine lineage a producer asserts. Returns a
+    rejection reason or None.
+
+    PEW records a PROVENANCE HANDLE, never a credential: a raw SFE session key
+    (sfes_<engine>_<secret tail>) is refused outright rather than hashed on the
+    caller's behalf."""
+    fp = (e.sfe_session_key_fp or "").strip()
+    eng = (e.sfe_engine_instance_id or "").strip()
+    ses = (e.sfe_session_id or "").strip()
+    mode = (e.sfe_affinity_mode or "").strip()
+    for val in (fp, ses, eng):
+        if val and _SESSION_KEY_RE.match(val):
+            return ("session_key_must_not_be_sent_to_pew: send key_fingerprint "
+                    "(sfp_<16 hex>) instead; the key is bearer material and PEW "
+                    "is not a credential store")
+    if eng and not _ENG_RE.match(eng):
+        return f"sfe_engine_instance_id_malformed: expected eng_<hex>, got {eng[:24]}"
+    if fp and not _SFP_RE.match(fp):
+        return f"sfe_session_key_fp_malformed: expected sfp_<16 hex>, got {fp[:24]}"
+    if mode and mode not in _AFFINITY:
+        return f"sfe_affinity_mode_invalid: expected one of {_AFFINITY}, got {mode}"
+    if mode == "STRICT" and not (eng and ses):
+        return ("strict_affinity_requires_engine_and_session: a STRICT claim "
+                "without sfe_engine_instance_id + sfe_session_id asserts a "
+                "lineage it cannot support")
+    # A session id without the engine that minted it is not lineage: session ids
+    # are engine-local, so the pair is the only globally meaningful handle.
+    if ses and not eng:
+        return ("sfe_session_id_requires_engine_instance_id: session ids are "
+                "engine-local and are not globally unique")
+    return None
+
+
+def _witness_ledger(cur, e, ident):
+    """Fork witness (migration 010). One (engine_instance_id, event_seq) must
+    have exactly ONE entry_hash. A second, different hash proves two divergent
+    ledgers claim one engine identity -- the cloned-database split brain
+    measured on 2026-09-05. Returns a rejection reason or None.
+
+    The divergence is recorded even though the write is refused: a refused write
+    that leaves no trace would erase the only evidence a fork was ever seen."""
+    eng, seq = e.sfe_engine_instance_id, e.sfe_event_seq
+    if not (eng and seq is not None and e.sfe_entry_hash):
+        return None                      # legacy/incomplete: nothing to witness
+    cur.execute("SELECT entry_hash, first_encounter_id, first_run_id FROM "
+                "ew.ledger_observations WHERE engine_instance_id=%s AND "
+                "event_seq=%s", (eng, seq))
+    row = cur.fetchone()
+    if row is None:
+        cur.execute(
+            "INSERT INTO ew.ledger_observations(engine_instance_id, event_seq, "
+            "entry_hash, first_encounter_id, first_run_id, observed_by) "
+            "VALUES (%s,%s,%s,%s,%s,%s) ON CONFLICT DO NOTHING",
+            (eng, seq, e.sfe_entry_hash, e.encounter_id, e.run_id,
+             ident.get("agent")))
+        return None
+    if row["entry_hash"] == e.sfe_entry_hash:
+        return None
+    cur.execute(
+        "INSERT INTO ew.ledger_fork_events(engine_instance_id, event_seq, "
+        "stored_entry_hash, offered_entry_hash, offered_encounter, "
+        "offered_run_id, detected_by) VALUES (%s,%s,%s,%s,%s,%s,%s)",
+        (eng, seq, row["entry_hash"], e.sfe_entry_hash, e.encounter_id,
+         e.run_id, ident.get("agent")))
+    return ("split_brain_ledger_fork: engine %s already recorded a DIFFERENT "
+            "entry_hash at event_seq %s (stored %s, offered %s, first seen on "
+            "encounter %s). Two divergent ledgers are claiming one engine "
+            "identity; the anchor cannot identify an execution lineage."
+            % (eng, seq, row["entry_hash"][:22], e.sfe_entry_hash[:22],
+               row["first_encounter_id"]))
+
+
+def _witness_session(cur, e, ident):
+    """Cross-session splice witness (migration 010). An SFE world belongs to
+    exactly one session, so for one engine (engine_instance_id, world_id) must
+    map to ONE session_id. A different session claiming an already-witnessed
+    world is evidence spliced across sessions.
+
+    Fires only where PEW saw the world's true session first, and cannot police a
+    world PEW never observed -- engine-side binds_session remains the real fix."""
+    eng = e.sfe_engine_instance_id
+    wid = e.sfe_world_id or e.world_id
+    ses = e.sfe_session_id
+    if not (eng and wid and ses):
+        return None
+    cur.execute("SELECT session_id, first_encounter_id FROM "
+                "ew.world_session_bindings WHERE engine_instance_id=%s AND "
+                "world_id=%s", (eng, wid))
+    row = cur.fetchone()
+    if row is None:
+        cur.execute(
+            "INSERT INTO ew.world_session_bindings(engine_instance_id, world_id,"
+            " session_id, first_encounter_id, observed_by) VALUES (%s,%s,%s,%s,%s)"
+            " ON CONFLICT DO NOTHING",
+            (eng, wid, ses, e.encounter_id, ident.get("agent")))
+        return None
+    if row["session_id"] == ses:
+        return None
+    cur.execute(
+        "INSERT INTO ew.session_splice_events(engine_instance_id, world_id, "
+        "stored_session_id, offered_session_id, offered_encounter, detected_by) "
+        "VALUES (%s,%s,%s,%s,%s,%s)",
+        (eng, wid, row["session_id"], ses, e.encounter_id, ident.get("agent")))
+    return ("cross_session_splice: world %s on engine %s is already bound to "
+            "session %s (first seen on encounter %s); this fossil claims "
+            "session %s. Evidence from one session is being presented under "
+            "another." % (wid, eng, row["session_id"], row["first_encounter_id"],
+                          ses))
 
 
 def _reject(conn, endpoint, ident, reason, key=None, obj=None, code=422):
@@ -928,15 +1058,23 @@ def _enc_values(e, rev, attest=None):
             json.dumps(e.resources_used) if e.resources_used else None,
             e.occurred_ts, e.episode_id,
             json.dumps(e.producer) if e.producer else None, e.namespace, rev,
-            attest)
+            attest,
+            e.sfe_engine_instance_id, e.sfe_session_id, e.sfe_session_key_fp,
+            # An explicit mode is preserved verbatim; absent one, a row that
+            # carries no session is recorded LEGACY rather than left unknown.
+            # LEGACY is never inferred INTO a strict claim -- only the reverse.
+            (e.sfe_affinity_mode or (None if e.sfe_session_id else "LEGACY")),
+            e.sfe_ledger_head_hash)
 
 
 _ENC_INSERT = (
     "INSERT INTO ew.fossil_encounters(encounter_id, run_id, sfe_world_id, "
     "sfe_event_id, sfe_entry_hash, sfe_event_seq, world_id, players, ecology, "
     "seed, budget, outcome, failure_class, resources_used, occurred_ts, "
-    "episode_id, producer, namespace, revision, attestation) VALUES ")
-_ENC_NCOLS = 20   # keep in lockstep with _ENC_INSERT and _enc_values
+    "episode_id, producer, namespace, revision, attestation, "
+    "sfe_engine_instance_id, sfe_session_id, sfe_session_key_fp, "
+    "sfe_affinity_mode, sfe_ledger_head_hash) VALUES ")
+_ENC_NCOLS = 25   # keep in lockstep with _ENC_INSERT and _enc_values
 
 
 def _as_instant(v):
@@ -1008,7 +1146,7 @@ def post_fossil_encounter(body: FossilEncounterIn, request: Request,
     hash -> 422), idempotent on an identical replay, and OVERT on a differing
     duplicate (409). HTTP 200 means the row is committed and readable."""
     ident = identity(request, write=True)
-    bad = _check_sfe_anchor(body)
+    bad = _check_sfe_anchor(body) or _check_session_lineage(body)
     if bad:
         _reject(conn, "fossil.encounter", ident, bad, body.idempotency_key,
                 body.encounter_id)
@@ -1023,6 +1161,11 @@ def post_fossil_encounter(body: FossilEncounterIn, request: Request,
                     "conflict_existing_row_differs:" + "; ".join(diff),
                     body.idempotency_key, body.encounter_id, code=409)
         if status == "inserted":
+            fork = _witness_ledger(cur, body, ident) or _witness_session(cur, body, ident)
+            if fork:
+                conn.commit()      # keep the recorded fork event, refuse the row
+                _reject(conn, "fossil.encounter", ident, fork,
+                        body.idempotency_key, body.encounter_id, code=409)
             cur.execute("SELECT nextval('ew.canonical_revision_seq')")
             rev = cur.fetchone()["nextval"]
             attest = closure.attestation_for_encounter(conn, body)
@@ -1055,8 +1198,8 @@ def post_fossil_batch(body: FossilBatchIn, request: Request,
     so a 200 never means 'some of your rows landed'."""
     ident = identity(request, write=True)
     encs = body.encounters
-    bads = [f"{e.encounter_id}:{_check_sfe_anchor(e)}" for e in encs
-            if _check_sfe_anchor(e)]
+    bads = [f"{e.encounter_id}:{_check_sfe_anchor(e) or _check_session_lineage(e)}"
+            for e in encs if (_check_sfe_anchor(e) or _check_session_lineage(e))]
     if bads:
         _reject(conn, "fossil.batch", ident, "; ".join(bads[:5]),
                 body.idempotency_key, f"batch:{len(encs)}")
@@ -1083,6 +1226,16 @@ def post_fossil_batch(body: FossilBatchIn, request: Request,
         if conflicts:
             _reject(conn, "fossil.batch", ident,
                     "conflict_existing_rows_differ:" + ";".join(conflicts[:10]),
+                    body.idempotency_key, f"batch:{len(encs)}", code=409)
+        # Fork witness applies to every fresh row; a batch carrying a
+        # divergent ledger observation is refused WHOLE, like any other
+        # conflicting batch -- partial acceptance would file half a split
+        # brain as coherent evidence.
+        forks = [f for f in ((_witness_ledger(cur, e, ident)
+                              or _witness_session(cur, e, ident)) for e in fresh) if f]
+        if forks:
+            conn.commit()          # keep the recorded fork events
+            _reject(conn, "fossil.batch", ident, "; ".join(forks[:3]),
                     body.idempotency_key, f"batch:{len(encs)}", code=409)
         cur.execute("SELECT nextval('ew.canonical_revision_seq')")
         rev = cur.fetchone()["nextval"]
@@ -1111,7 +1264,9 @@ def _enc_rows(conn, where, args, limit):
                     "players, seed, outcome, failure_class, sfe_world_id, "
                     "sfe_event_id, sfe_entry_hash, sfe_event_seq, ecology, "
                     "budget, resources_used, occurred_ts, producer, namespace, "
-                    "attestation, revision, created_at FROM ew.fossil_encounters WHERE "
+                    "attestation, sfe_engine_instance_id, sfe_session_id, "
+                    "sfe_session_key_fp, sfe_affinity_mode, sfe_ledger_head_hash, "
+                    "revision, created_at FROM ew.fossil_encounters WHERE "
                     + where + " ORDER BY sfe_event_seq NULLS LAST, revision "
                     "LIMIT %s", args + [limit])
         # Wire format is UTC ISO-8601 regardless of the server's timezone, so
