@@ -397,17 +397,70 @@ def _engine_db(client) -> str:
     return client.app.state.db_path
 
 
-# ---- route coverage ---------------------------------------------------------
-def test_route_coverage_is_complete(m1, m2):
-    """EVERY experiment-scoped route must reject a foreign session.
+# ---- route coverage (R-G: enumerate everything, exempt explicitly) ---------
+#
+# HARMONIA, 2026-09-05, finding 3: the previous version of this test scoped its
+# probe with the SAME PREDICATE that created the gap it was meant to catch --
+#     if not (path.startswith("/v2/worlds/{wid}") or path.startswith("/v2/work/"))
+# so POST/GET /v2/worlds were outside the population the completeness claim was
+# measured over, and "coverage complete" was true only of a FILTERED route
+# table. Widening the prefix closed that instance and left the general defect:
+# any hand-drawn boundary can be drawn wrong, and had been, twice.
+#
+# The probe is now INVERTED. Every route on the live app must be either covered
+# or on the named exemption list below. Adding a route forces a decision
+# instead of defaulting to unprotected.
 
-    This exists because the first implementation missed four routes: start,
-    pause, resume and terminate are registered in a `for` loop rather than with
-    decorators, so a wiring pass that matched decorators skipped them, and
-    `terminate` answered a foreign session with 404 -- the exact confusion this
-    feature removes. Enumerating from the live route table, rather than from a
-    hand-written list, is what makes the check honest: a new route is covered
-    the day it is added or this test fails."""
+# Routes that must NOT require a session key, each with the reason. Changing
+# this list is a deliberate act that shows up in review.
+EXEMPT = {
+    ("GET", "/v2/version"):        "liveness/identity; no auth, no resource",
+    ("GET", "/v2/openapi.json"):   "the contract itself; must be readable to "
+                                   "discover how to send a session at all",
+    ("GET", "/v2/docs"):           "human documentation UI",
+    ("POST", "/v2/clients"):       "bootstrap: mints the bearer token you need "
+                                   "before a session can exist",
+    ("POST", "/v2/sessions"):      "bootstrap: this is where a key is MINTED, "
+                                   "so it cannot require one",
+    ("POST", "/v2/audit/verify-anchor"):
+        "deliberately credential-free and CROSS-ENGINE by design (R-SFE-1): "
+        "PEW verifies an anchor it did not produce and holds no session. "
+        "Requiring affinity here would break third-party attestation.",
+    ("POST", "/v2/topology-groups"):
+        "client-level capability, not experiment-scoped: it mints a sharing "
+        "group id bound to the CLIENT, touches no world and names no session. "
+        "Exempted deliberately after the R-G census surfaced it -- previously "
+        "it was unprotected by accident rather than by decision.",
+}
+
+
+def _live_routes(client):
+    out = set()
+    for r in client.app.routes:
+        path = getattr(r, "path", "")
+        if not path.startswith("/v2"):
+            continue
+        for m in (getattr(r, "methods", None) or set()):
+            if m in ("GET", "POST"):
+                out.add((m, path))
+    return out
+
+
+def test_exemption_list_has_no_stale_entries(m1):
+    """An exemption for a route that no longer exists is a rule nobody is
+    enforcing. It must be deleted, not left to rot."""
+    live = _live_routes(m1[0])
+    stale = sorted(set(EXEMPT) - live)
+    assert not stale, "exemptions for routes that do not exist: %r" % stale
+
+
+def test_route_coverage_is_complete(m1, m2):
+    """EVERY live route is covered or explicitly exempt -- no prefix filter.
+
+    A foreign session key must be refused by every non-exempt route BEFORE the
+    resource is touched. 421 is required; 422 is tolerated only where body
+    validation fires first, and 404/200 never are.
+    """
     c1, h1, _ = m1
     c2, h2, _ = m2
     s1, hs1 = _session(c1, h1)
@@ -415,32 +468,23 @@ def test_route_coverage_is_complete(m1, m2):
     foreign = dict(h2)
     foreign[HDR] = s1["session_key"]
 
-    scoped = []
-    for r in c2.app.routes:
-        path = getattr(r, "path", "")
-        # NOTE the collection routes. Scoping this probe to /v2/worlds/{wid}
-        # is what let the first version miss POST /v2/worlds (403 access_denied
-        # -- a permissions diagnosis for a wrong-machine problem) and, worse,
-        # GET /v2/worlds, which returned 200 and let a foreign key enumerate
-        # the engine. A silent 200 was exactly the defect class being closed.
-        if not (path.startswith("/v2/worlds") or
-                path.startswith("/v2/work/")):
-            continue
-        for m in (getattr(r, "methods", None) or set()):
-            if m in ("GET", "POST"):
-                scoped.append((m, path))
-    assert scoped, "no experiment-scoped routes found -- the probe is broken"
+    live = _live_routes(c2)
+    assert live, "no routes found -- the probe is broken"
 
-    missed = []
-    for method, path in sorted(set(scoped)):
+    unprotected = []
+    for method, path in sorted(live):
+        if (method, path) in EXEMPT:
+            continue
         url = (path.replace("{wid}", wid)
                    .replace("{aid}", "sha256:" + "0" * 64)
                    .replace("{eid}", "exp_000000000000000000000000")
                    .replace("{work_id}", "wrk_000000000000000000000000"))
+        body = {"session_id": s1["session_id"], "name": "w"}             if path == "/v2/worlds" else {}
         r = (c2.get(url, headers=foreign) if method == "GET"
-             else c2.post(url, json={}, headers=foreign))
-        # 421 is required. 422 is acceptable ONLY for a body-validation failure
-        # that fires before the dependency -- but it must never be 404/200.
+             else c2.post(url, json=body, headers=foreign))
         if r.status_code not in (421, 422):
-            missed.append((method, path, r.status_code))
-    assert not missed, "routes that did not fail closed on a foreign session: %r" % missed
+            unprotected.append((method, path, r.status_code))
+
+    assert not unprotected, (
+        "routes that did not fail closed on a foreign session key "
+        "(neither covered nor exempt): %r" % unprotected)
