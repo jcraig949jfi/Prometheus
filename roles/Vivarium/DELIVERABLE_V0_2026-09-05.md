@@ -293,5 +293,7 @@ Stated, not hidden. In rough order of how much they should worry a reviewer.
 
 ## 7. Commit hash
 
-PENDING — stamped by the follow-up commit, because a document cannot contain
-the hash of the commit that carries it.
+`8b940a16561b621b4763b002f0b2d37bb7b71de8` — Vivarium v0: migration, code, 37 tests, role docs.
+Branch `vivarium/v0-2026-09-05`. This stamp is carried by the immediately
+following commit, because a document cannot contain the hash of the commit
+that carries it.
