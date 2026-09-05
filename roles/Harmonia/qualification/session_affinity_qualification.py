@@ -652,7 +652,11 @@ def main():
     ap.add_argument("--machine", default="M1")
     ap.add_argument("--agent", default="harmonia")
     ap.add_argument("--direction", choices=["both", "m1m2", "m2m1"], default="both")
-    ap.add_argument("--out", default=str(HERE / "results"))
+    # NOT "results/": .gitignore has a repo-wide **/results/ rule, so the
+    # default output would land somewhere git refuses to track. A verdict
+    # whose rows are untracked is an assertion -- that is exactly how two
+    # August verdicts lost their ledgers.
+    ap.add_argument("--out", default=str(HERE / "ledgers"))
     ap.add_argument("--go", action="store_true",
                     help="actually write to the live engines and PEW; without "
                          "it the run is a plan and touches nothing")
