@@ -37,12 +37,17 @@ class EngineError(Exception):
 class EngineClient:
     def __init__(self, base_url: str, token: Optional[str] = None, *,
                  cafile: Optional[str] = None, insecure: bool = False,
-                 timeout: float = 30.0):
+                 timeout: float = 30.0, session_key: Optional[str] = None):
         self._u = urllib.parse.urlsplit(base_url.rstrip("/"))
         if self._u.scheme not in ("http", "https"):
             raise ValueError("base_url must be http(s)")
         self.token = token
         self.timeout = timeout
+        # Session affinity: set automatically by create_session() and then sent
+        # on EVERY subsequent call. A caller never appends it per-endpoint --
+        # that was the whole point of choosing one header. Pass it to the
+        # constructor to resume an existing session in a second process.
+        self.session_key = session_key
         if self._u.scheme == "https":
             if insecure:
                 self._ctx = ssl._create_unverified_context()
@@ -65,6 +70,8 @@ class EngineClient:
         headers = {"accept": "application/json"}
         if self.token:
             headers["authorization"] = f"Bearer {self.token}"
+        if self.session_key:
+            headers["X-SFE-Session"] = self.session_key
         if idem_key is not None:
             # F5: a transport retry with the same key replays the same result;
             # the same key + a different request is a 409 conflict.
@@ -98,7 +105,15 @@ class EngineClient:
         return self._req("GET", "/v2/version")
 
     def create_session(self, name: str) -> str:
-        return self._req("POST", "/v2/sessions", {"name": name})["session_id"]
+        """Open a session and ADOPT its affinity key.
+
+        Returns session_id, as before, so existing callers are unchanged. The
+        key is stored on the client and sent on every later call; read it from
+        `.session_key` if you need to hand it to another process."""
+        r = self._req("POST", "/v2/sessions", {"name": name})
+        self.session_key = r.get("session_key") or self.session_key
+        self.engine_instance_id = r.get("engine_instance_id")
+        return r["session_id"]
 
     def create_topology_group(self, note: Optional[str] = None) -> str:
         """Mint a REGISTERED sharing group (an unguessable server-issued

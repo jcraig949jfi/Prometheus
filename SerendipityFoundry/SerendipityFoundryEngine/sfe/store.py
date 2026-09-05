@@ -31,7 +31,7 @@ import time
 from pathlib import Path
 from typing import Any, Iterator, Optional
 
-SCHEMA_VERSION = 4
+SCHEMA_VERSION = 5
 
 # The schema is intentionally explicit and constrained: NOT NULLs, CHECK
 # enumerations on lifecycle columns, and foreign keys, so a bad transition or a
@@ -54,7 +54,13 @@ CREATE TABLE IF NOT EXISTS sessions (
     name        TEXT NOT NULL,
     state       TEXT NOT NULL DEFAULT 'OPEN'
                 CHECK (state IN ('OPEN','CLOSED')),
-    created_ts  REAL NOT NULL
+    created_ts  REAL NOT NULL,
+    -- session affinity (v5): the key is bearer-like, so only its SHA-256 is
+    -- stored; engine_instance_id is the binding a router will later use to
+    -- answer "which SFE instance owns this experiment?".
+    key_hash            TEXT,
+    engine_instance_id  TEXT,
+    affinity_mode       TEXT NOT NULL DEFAULT 'STRICT'
 );
 CREATE INDEX IF NOT EXISTS ix_sessions_client ON sessions(client_id);
 
@@ -402,6 +408,8 @@ class Store:
                 self._migrate_2_to_3(cx)
             if have <= 3:
                 self._migrate_3_to_4(cx)
+            if have <= 4:
+                self._migrate_4_to_5(cx)
             cx.execute("UPDATE meta SET value=? WHERE key='schema_version'",
                        (str(SCHEMA_VERSION),))
 
@@ -471,6 +479,39 @@ class Store:
                        "INTEGER NOT NULL DEFAULT 0")
         cx.execute("CREATE INDEX IF NOT EXISTS ix_obs_pred "
                    "ON observations(world_id, pred_id)")
+
+    @staticmethod
+    def _migrate_4_to_5(cx) -> None:
+        """v4 -> v5 (DAEDALUS 2026-09-05, session affinity). Additive:
+        sessions.key_hash / .engine_instance_id / .affinity_mode.
+
+        Sessions that already exist get affinity_mode='LEGACY' with a NULL
+        key_hash and a NULL engine_instance_id. THIS IS DELIBERATE AND IT IS
+        THE HONEST OPTION: those sessions were created before affinity existed,
+        so no session key was ever issued for them and no engine binding was
+        ever recorded. Back-filling this engine's instance id onto them would
+        MANUFACTURE A PROVENANCE CLAIM THAT WAS NEVER MADE -- it would assert
+        that this engine is where they were created, which happens to be true
+        on M1 today and would become false the moment a database is restored
+        elsewhere. A NULL says "unknown", which is what we actually know.
+
+        LEGACY sessions keep working without a key (a mandatory key would
+        strand 106 sessions and 346 worlds). They are visibly marked, counted
+        at startup, and can never be silently mistaken for bound sessions:
+        every response about them carries affinity_mode, and the strict-mode
+        cutover is a single flag, not a rewrite."""
+        have = {r["name"] for r in cx.execute(
+            "PRAGMA table_info(sessions)").fetchall()}
+        if "key_hash" not in have:
+            cx.execute("ALTER TABLE sessions ADD COLUMN key_hash TEXT")
+        if "engine_instance_id" not in have:
+            cx.execute("ALTER TABLE sessions ADD COLUMN engine_instance_id TEXT")
+        if "affinity_mode" not in have:
+            # every pre-existing row becomes LEGACY; new rows are written STRICT
+            cx.execute("ALTER TABLE sessions ADD COLUMN affinity_mode TEXT "
+                       "NOT NULL DEFAULT 'LEGACY'")
+        cx.execute("CREATE INDEX IF NOT EXISTS ix_sessions_keyhash "
+                   "ON sessions(key_hash)")
 
     # -- transactions ------------------------------------------------------
     @contextlib.contextmanager

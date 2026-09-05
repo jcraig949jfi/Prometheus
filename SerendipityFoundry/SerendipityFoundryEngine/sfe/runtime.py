@@ -20,8 +20,15 @@ from sfe import release
 from sfe.errors import (AccessDenied, BudgetExhausted, ConflictError,
                          InvalidTransition, IsolationViolation, NotFound,
                          PredictionOrderingError, ValidationError)
-from sfe.ids import content_hash, new_id
+from sfe.ids import (content_hash, engine_id_from_key, key_fingerprint,
+                     new_id, session_key_for, sha256_hex)
 from sfe.store import SCHEMA_VERSION, Store, now
+
+
+def _sha(x: str) -> str:
+    """SHA-256 of a bearer-like secret. Mirrors _token_hash in api.py:
+    the plaintext is never stored."""
+    return sha256_hex(x.encode())
 
 # The closed info_kind ontology the sharing machinery understands. An artifact's
 # meta may carry arbitrary freeform user metadata, but info_kind is CONTROL
@@ -93,19 +100,123 @@ class Foundry:
                                   payload={"name": name})
         return cid
 
-    def create_session(self, client_id: str, name: str) -> str:
+    def open_session(self, client_id: str, name: str) -> dict:
+        """Open a session and mint its AFFINITY KEY.
+
+        The key is bearer-like: returned once, stored only as a SHA-256, and
+        never logged whole. Its plaintext deliberately CARRIES this engine's
+        instance id, because that is what makes a wrong-engine request
+        distinguishable from noise: an engine that receives a key minted
+        elsewhere can read the instance id out of the key itself and answer
+        WRONG_SESSION without any database lookup. If the id were only in the
+        database, a foreign key and a random string would be the same event --
+        an absent row -- and the engine could not tell "you are talking to the
+        wrong machine" from "that session never existed", which is the exact
+        confusion this feature exists to end.
+
+        The instance id is not a secret. It is already published by
+        verify_anchor and the audit envelope to any holder of an anchor. The
+        secret is the random tail."""
         sid = new_id("session")
+        iid = self.engine_instance_id()
+        key = session_key_for(iid)
         with self.store.write() as cx:
             if cx.execute("SELECT 1 FROM clients WHERE client_id=?",
                           (client_id,)).fetchone() is None:
                 raise NotFound("unknown client", client_id=client_id)
             cx.execute("INSERT INTO sessions(session_id,client_id,name,"
-                       "created_ts) VALUES(?,?,?,?)",
-                       (sid, client_id, name, now()))
+                       "created_ts,key_hash,engine_instance_id,affinity_mode)"
+                       " VALUES(?,?,?,?,?,?,'STRICT')",
+                       (sid, client_id, name, now(), _sha(key), iid))
             events.append_foundry(cx, "SESSION_CREATED", actor=client_id,
                                   scope_kind="session", scope_id=sid,
-                                  payload={"name": name, "client_id": client_id})
-        return sid
+                                  payload={"name": name, "client_id": client_id,
+                                           "engine_instance_id": iid,
+                                           "affinity_mode": "STRICT",
+                                           "session_key_fp": key_fingerprint(key)})
+        return {"session_id": sid, "session_key": key,
+                "engine_instance_id": iid, "affinity_mode": "STRICT",
+                "note": "session_key shown once; send it as X-SFE-Session on "
+                        "every experiment-scoped call"}
+
+    def create_session(self, client_id: str, name: str) -> str:
+        """Backwards-compatible: returns ONLY the session id.
+
+        open_session() returns the affinity key as well. This wrapper is kept
+        because the session key is a NEW capability and changing an existing
+        method's return type breaks every caller silently -- which it did:
+        117 tests failed with a dict being bound as a SQL parameter before this
+        was split back apart."""
+        return self.open_session(client_id, name)["session_id"]
+
+    # ---- session affinity -------------------------------------------------
+    def resolve_session(self, key: Optional[str]) -> dict:
+        """Classify a presented session key WITHOUT touching any resource.
+
+        Returns {"status": ..., ...}. Never raises: the caller decides the HTTP
+        mapping, because 'missing' is legal for a LEGACY session and fatal for
+        a strict one, and only the caller knows which route it is on.
+
+        Order matters and is deliberate: the wrong-engine test is made from the
+        key's own bytes BEFORE any lookup, so a foreign key is never merely
+        'not found'."""
+        if key is None or key == "":
+            return {"status": "MISSING"}
+        iid = self.engine_instance_id()
+        claimed = engine_id_from_key(key)
+        if claimed is None:
+            return {"status": "MALFORMED"}
+        if claimed != iid:
+            # THE headline case. Answered from the key alone -- no lookup, so
+            # it cannot be confused with a missing resource, and it is decided
+            # identically whether or not the far engine is reachable.
+            return {"status": "WRONG_ENGINE", "claimed_engine": claimed,
+                    "this_engine": iid}
+        row = self.store.read().execute(
+            "SELECT session_id, client_id, state, affinity_mode "
+            "FROM sessions WHERE key_hash=?", (_sha(key),)).fetchone()
+        if row is None:
+            # Well-formed, names THIS engine, but no such session: a restore
+            # from a different backup, or a revoked/pruned session.
+            return {"status": "UNKNOWN"}
+        if row["state"] != "OPEN":
+            return {"status": "CLOSED", "session_id": row["session_id"]}
+        return {"status": "OK", "session_id": row["session_id"],
+                "client_id": row["client_id"],
+                "affinity_mode": row["affinity_mode"]}
+
+    def session_affinity_mode(self, session_id: str) -> Optional[str]:
+        row = self.store.read().execute(
+            "SELECT affinity_mode FROM sessions WHERE session_id=?",
+            (session_id,)).fetchone()
+        return row["affinity_mode"] if row else None
+
+    def world_session_id(self, world_id: str) -> Optional[str]:
+        row = self.store.read().execute(
+            "SELECT session_id FROM worlds WHERE world_id=?",
+            (world_id,)).fetchone()
+        return row["session_id"] if row else None
+
+    def affinity_census(self) -> dict:
+        """Operator/roadmap signal: how far the LEGACY tail has drained. The
+        strict-mode cutover is defined against these numbers, not a feeling."""
+        cx = self.store.read()
+        one = lambda q: cx.execute(q).fetchone()[0]      # noqa: E731
+        return {
+            "engine_instance_id": self.engine_instance_id(),
+            "sessions_total": one("SELECT COUNT(*) FROM sessions"),
+            "sessions_strict":
+                one("SELECT COUNT(*) FROM sessions WHERE affinity_mode='STRICT'"),
+            "sessions_legacy":
+                one("SELECT COUNT(*) FROM sessions WHERE affinity_mode='LEGACY'"),
+            "sessions_legacy_open":
+                one("SELECT COUNT(*) FROM sessions WHERE affinity_mode='LEGACY'"
+                    " AND state='OPEN'"),
+            "worlds_on_legacy_sessions":
+                one("SELECT COUNT(*) FROM worlds w JOIN sessions s"
+                    " ON s.session_id=w.session_id"
+                    " WHERE s.affinity_mode='LEGACY'"),
+        }
 
     def revoke_token(self, client_id: str) -> None:
         """Operator-controlled revocation: the client's current token stops

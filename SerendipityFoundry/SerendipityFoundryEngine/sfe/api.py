@@ -22,10 +22,18 @@ from fastapi import Depends, FastAPI, Header, HTTPException
 from pydantic import BaseModel, ConfigDict, Field
 
 from sfe import release
-from sfe.errors import FoundryError
+from sfe.errors import (FoundryError, SessionClosed, SessionMalformed,
+                        SessionMismatch, SessionRequired, SessionUnknown,
+                        WrongSession)
+from sfe.ids import key_fingerprint
 from sfe.runtime import Foundry
 
 API_VERSION = "v2"
+
+# ONE transport for session affinity, applied uniformly. Clients set it
+# once (sfclient does it automatically after create_session); no endpoint
+# takes it differently.
+SESSION_HEADER = "X-SFE-Session"
 
 
 def _token_hash(tok: str) -> str:
@@ -204,7 +212,17 @@ class WorkFail(_Body):
     retry: bool = True
 
 
-def create_app(db_path: str, *, registration_open: bool = True) -> FastAPI:
+def create_app(db_path: str, *, registration_open: bool = True,
+               session_enforcement: str = "advisory") -> FastAPI:
+    """session_enforcement:
+      "advisory" (default) -- a MISSING session key is allowed and counted.
+      "strict"             -- a missing key on a bound session is 428.
+
+    A PRESENTED key is fully judged in BOTH modes: a key minted by another
+    engine is always 421 WRONG_SESSION. That is the defect this feature exists
+    to close, so it is never optional. What the mode phases is only the
+    requirement to send one, because 106 pre-existing sessions and every
+    already-written client would otherwise break on the hour it shipped."""
     app = FastAPI(title="Serendipity Foundry Gen-2",
                   version="2.2.0", openapi_url="/v2/openapi.json",
                   docs_url="/v2/docs")
@@ -212,6 +230,9 @@ def create_app(db_path: str, *, registration_open: bool = True) -> FastAPI:
     # after-bootstrap hardening: the operator can close unauthenticated client
     # registration (serve.py --registration closed); existing tokens still work.
     app.state.registration_open = registration_open
+    if session_enforcement not in ("advisory", "strict"):
+        raise ValueError("session_enforcement must be advisory|strict")
+    app.state.session_enforcement = session_enforcement
 
     @app.middleware("http")
     async def _stamp_release(request, call_next):
@@ -269,6 +290,94 @@ def create_app(db_path: str, *, registration_open: bool = True) -> FastAPI:
         return JSONResponse(status_code=exc.http_status,
                             content={"detail": exc.to_detail()})
 
+    # -- session affinity (v5) ---------------------------------------------
+    #
+    # THE DEFECT THIS CLOSES: M1 and M2 run byte-identical builds over separate
+    # databases. A client could register on one and send otherwise-valid
+    # requests to the other; the best case was a confusing 404, the worst was
+    # writing into the wrong engine. World ids and tokens are engine-local, but
+    # nothing SAID so on the wire.
+    #
+    # The check is deliberately ordered: the engine-binding test is made from
+    # the KEY'S OWN BYTES before any world/artifact/experiment lookup, so a
+    # wrong-engine request can never be reported as a missing resource.
+    def session_ctx(wid: Optional[str] = None,
+                    x_sfe_session: Optional[str] = Header(
+                        default=None, alias=SESSION_HEADER),
+                    cid: str = Depends(auth),
+                    f: Foundry = Depends(get_foundry)) -> dict:
+        r = f.resolve_session(x_sfe_session)
+        st = r["status"]
+
+        # 1. A PRESENTED key is always fully judged, on every route, before
+        #    anything else. This is what makes the cross-engine case loud.
+        if st == "WRONG_ENGINE":
+            _audit(f, "WRONG_SESSION", x_sfe_session, cid, wid,
+                   claimed=r.get("claimed_engine"))
+            raise WrongSession(
+                "this session key was minted by a different engine instance; "
+                "re-send it to the engine that owns it (the experiment does "
+                "not move between engines)",
+                claimed_engine_instance_id=r.get("claimed_engine"),
+                this_engine_instance_id=r.get("this_engine"))
+        if st == "MALFORMED":
+            _audit(f, "SESSION_MALFORMED", x_sfe_session, cid, wid)
+            raise SessionMalformed(
+                "%s is not a well-formed session key" % SESSION_HEADER)
+        if st == "UNKNOWN":
+            _audit(f, "SESSION_UNKNOWN", x_sfe_session, cid, wid)
+            raise SessionUnknown(
+                "no such session on this engine instance; it may have been "
+                "closed, pruned, or created against a database this engine is "
+                "not serving",
+                this_engine_instance_id=f.engine_instance_id())
+        if st == "CLOSED":
+            raise SessionClosed("session is CLOSED",
+                                session_id=r.get("session_id"))
+
+        # 2. Requirement only bites where a STRICT session is involved, so the
+        #    106 legacy sessions and 346 worlds keep working (see the v5
+        #    migration note). LEGACY is visible, counted, and drains.
+        if wid is not None:
+            target = f.world_session_id(wid)
+            if target is not None:                # None -> genuinely no world;
+                mode = f.session_affinity_mode(target)   # the route 404s below
+                if st == "MISSING":
+                    if mode == "STRICT" and                             app.state.session_enforcement == "strict":
+                        _audit(f, "SESSION_REQUIRED", None, cid, wid)
+                        raise SessionRequired(
+                            "this world belongs to a STRICT session; send its "
+                            "key as %s" % SESSION_HEADER, world_id=wid)
+                    # ADVISORY (or a LEGACY session): allowed, but counted, so
+                    # the cutover trigger is measured and not guessed.
+                    _audit(f, "SESSION_ABSENT_ALLOWED", None, cid, wid,
+                           mode=mode, enforcement=app.state.session_enforcement)
+                    return {"affinity": "UNBOUND_ALLOWED", "session_id": target,
+                            "session_mode": mode}
+                # 3. A valid key for THIS engine, but for a different session.
+                if r.get("session_id") != target:
+                    _audit(f, "SESSION_MISMATCH", x_sfe_session, cid, wid)
+                    raise SessionMismatch(
+                        "this session does not own that world",
+                        world_id=wid, session_id=r.get("session_id"))
+        elif st == "MISSING":
+            return {"affinity": "NO_KEY"}
+        return {"affinity": "BOUND", "session_id": r.get("session_id")}
+
+    def _audit(f: Foundry, code: str, key: Optional[str], cid: Optional[str],
+               wid: Optional[str], **extra) -> None:
+        """Fleet-allocator signal. NEVER logs the key: it is bearer-like, so a
+        log line would be a credential leak. A stable fingerprint is enough to
+        correlate repeated attempts from one client."""
+        try:
+            logging.getLogger("sfe.affinity").warning(
+                "affinity_reject code=%s engine=%s client=%s world=%s key_fp=%s%s",
+                code, f.engine_instance_id(), cid or "-", wid or "-",
+                key_fingerprint(key) if key else "-",
+                "".join(" %s=%s" % kv for kv in extra.items()))
+        except Exception:                            # noqa: BLE001
+            pass                                      # never fail a request to log
+
     # -- identity ----------------------------------------------------------
     @app.post("/v2/clients")
     def create_client(body: ClientCreate, f: Foundry = Depends(get_foundry)):
@@ -285,7 +394,7 @@ def create_app(db_path: str, *, registration_open: bool = True) -> FastAPI:
     @app.post("/v2/sessions")
     def create_session(body: SessionCreate, cid: str = Depends(auth),
                        f: Foundry = Depends(get_foundry)):
-        return {"session_id": f.create_session(cid, body.name)}
+        return f.open_session(cid, body.name)
 
     @app.post("/v2/topology-groups")
     def topology_group(body: TopologyGroupCreate, cid: str = Depends(auth),
@@ -349,7 +458,7 @@ def create_app(db_path: str, *, registration_open: bool = True) -> FastAPI:
                                         created_before=created_before)}
 
     @app.get("/v2/worlds/{wid}")
-    def get_world(wid: str, cid: str = Depends(auth),
+    def get_world(wid: str, _sess: dict = Depends(session_ctx), cid: str = Depends(auth),
                   f: Foundry = Depends(get_foundry)):
         return f.get_world(wid, cid)
 
@@ -357,19 +466,27 @@ def create_app(db_path: str, *, registration_open: bool = True) -> FastAPI:
                       ("resume", "resume_world"),
                       ("terminate", "terminate_world")):
         def _make(fnname):
-            def handler(wid: str, cid: str = Depends(auth),
+            # These four are registered in a loop rather than with decorators,
+            # so they are easy to miss when wiring a cross-cutting dependency.
+            # They were, in fact, missed on the first pass -- the acceptance
+            # test caught `terminate` answering 404 to a foreign session while
+            # its four decorator-registered siblings correctly answered 421.
+            # A route-coverage test now asserts the whole set (see
+            # test_sfe_session_affinity.py::test_route_coverage_is_complete).
+            def handler(wid: str, _sess: dict = Depends(session_ctx),
+                        cid: str = Depends(auth),
                         f: Foundry = Depends(get_foundry)):
                 return getattr(f, fnname)(wid, cid)
             return handler
         app.post(f"/v2/worlds/{{wid}}/{_act}")(_make(_fn))
 
     @app.post("/v2/worlds/{wid}/checkpoint")
-    def checkpoint(wid: str, cid: str = Depends(auth),
+    def checkpoint(wid: str, _sess: dict = Depends(session_ctx), cid: str = Depends(auth),
                    f: Foundry = Depends(get_foundry)):
         return f.checkpoint(wid, client_id=cid)
 
     @app.post("/v2/worlds/{wid}/fork")
-    def fork(wid: str, body: ForkRequest, cid: str = Depends(auth),
+    def fork(wid: str, body: ForkRequest, _sess: dict = Depends(session_ctx), cid: str = Depends(auth),
              f: Foundry = Depends(get_foundry)):
         # drop unset optionals so the runtime's parent-inheritance defaults
         # apply; strictness already enforced by the ForkChild model (DFX-4)
@@ -379,31 +496,31 @@ def create_app(db_path: str, *, registration_open: bool = True) -> FastAPI:
                                    client_id=cid)}
 
     @app.get("/v2/worlds/{wid}/events")
-    def world_events(wid: str, limit: int = 100, cid: str = Depends(auth),
+    def world_events(wid: str, limit: int = 100, _sess: dict = Depends(session_ctx), cid: str = Depends(auth),
                      f: Foundry = Depends(get_foundry)):
         return {"events": f.world_events(wid, client_id=cid, limit=limit)}
 
     @app.get("/v2/worlds/{wid}/status")
-    def status(wid: str, cid: str = Depends(auth),
+    def status(wid: str, _sess: dict = Depends(session_ctx), cid: str = Depends(auth),
                f: Foundry = Depends(get_foundry)):
         return f.world_status(wid, client_id=cid)
 
     @app.get("/v2/worlds/{wid}/resources")
-    def resources(wid: str, cid: str = Depends(auth),
+    def resources(wid: str, _sess: dict = Depends(session_ctx), cid: str = Depends(auth),
                   f: Foundry = Depends(get_foundry)):
         f.get_world(wid, cid)     # ownership check
         return f.budget_status(wid)
 
     @app.get("/v2/worlds/{wid}/failures")
     def failures(wid: str, failure_type: Optional[str] = None,
-                 consumed: Optional[bool] = None, cid: str = Depends(auth),
+                 consumed: Optional[bool] = None, _sess: dict = Depends(session_ctx), cid: str = Depends(auth),
                  f: Foundry = Depends(get_foundry)):
         return {"failures": f.query_failures(wid, failure_type=failure_type,
                                              consumed=consumed, client_id=cid)}
 
     @app.get("/v2/worlds/{wid}/lineage")
     def lineage(wid: str, kind: str, id: str, direction: str = "descendants",
-                cid: str = Depends(auth), f: Foundry = Depends(get_foundry)):
+                _sess: dict = Depends(session_ctx), cid: str = Depends(auth), f: Foundry = Depends(get_foundry)):
         f.get_world(wid, cid)
         fn = f.descendants if direction == "descendants" else f.ancestors
         return {"nodes": fn(wid, kind, id)}
@@ -413,7 +530,7 @@ def create_app(db_path: str, *, registration_open: bool = True) -> FastAPI:
     # transport retry with the same key + same request replays the same logical
     # result, and the same key + a different request is a 409 conflict.
     @app.post("/v2/worlds/{wid}/hypotheses")
-    def hypotheses(wid: str, body: HypothesisCreate, cid: str = Depends(auth),
+    def hypotheses(wid: str, body: HypothesisCreate, _sess: dict = Depends(session_ctx), cid: str = Depends(auth),
                    f: Foundry = Depends(get_foundry),
                    idem: Optional[str] = Header(default=None,
                                                 alias="Idempotency-Key")):
@@ -422,7 +539,7 @@ def create_app(db_path: str, *, registration_open: bool = True) -> FastAPI:
             request_hash=_req_hash("hypotheses", wid, body))}
 
     @app.post("/v2/worlds/{wid}/predictions")
-    def predictions(wid: str, body: PredictionCreate, cid: str = Depends(auth),
+    def predictions(wid: str, body: PredictionCreate, _sess: dict = Depends(session_ctx), cid: str = Depends(auth),
                     f: Foundry = Depends(get_foundry),
                     idem: Optional[str] = Header(default=None,
                                                  alias="Idempotency-Key")):
@@ -431,7 +548,7 @@ def create_app(db_path: str, *, registration_open: bool = True) -> FastAPI:
             request_hash=_req_hash("predictions", wid, body))}
 
     @app.post("/v2/worlds/{wid}/experiments")
-    def experiments(wid: str, body: ExperimentCreate, cid: str = Depends(auth),
+    def experiments(wid: str, body: ExperimentCreate, _sess: dict = Depends(session_ctx), cid: str = Depends(auth),
                     f: Foundry = Depends(get_foundry),
                     idem: Optional[str] = Header(default=None,
                                                  alias="Idempotency-Key")):
@@ -445,7 +562,7 @@ def create_app(db_path: str, *, registration_open: bool = True) -> FastAPI:
 
     @app.post("/v2/worlds/{wid}/experiments/{eid}/commit")
     def commit_experiment(wid: str, eid: str, body: ExperimentCommit,
-                          cid: str = Depends(auth),
+                          _sess: dict = Depends(session_ctx), cid: str = Depends(auth),
                           f: Foundry = Depends(get_foundry)):
         # the irreversible boundary: freezes spec, closes the prospective
         # window, debits budget, records release identity, authorizes execution
@@ -454,7 +571,7 @@ def create_app(db_path: str, *, registration_open: bool = True) -> FastAPI:
                                    priority=body.priority)
 
     @app.post("/v2/worlds/{wid}/observations")
-    def observations(wid: str, body: ObservationCreate, cid: str = Depends(auth),
+    def observations(wid: str, body: ObservationCreate, _sess: dict = Depends(session_ctx), cid: str = Depends(auth),
                      f: Foundry = Depends(get_foundry),
                      idem: Optional[str] = Header(default=None,
                                                   alias="Idempotency-Key")):
@@ -470,7 +587,7 @@ def create_app(db_path: str, *, registration_open: bool = True) -> FastAPI:
             request_hash=_req_hash("observations", wid, body))
 
     @app.post("/v2/worlds/{wid}/failures")
-    def record_failure(wid: str, body: FailureCreate, cid: str = Depends(auth),
+    def record_failure(wid: str, body: FailureCreate, _sess: dict = Depends(session_ctx), cid: str = Depends(auth),
                        f: Foundry = Depends(get_foundry),
                        idem: Optional[str] = Header(default=None,
                                                     alias="Idempotency-Key")):
@@ -485,7 +602,7 @@ def create_app(db_path: str, *, registration_open: bool = True) -> FastAPI:
             idem_key=idem, request_hash=_req_hash("failures", wid, body))}
 
     @app.post("/v2/worlds/{wid}/artifacts")
-    def artifacts(wid: str, body: ArtifactCreate, cid: str = Depends(auth),
+    def artifacts(wid: str, body: ArtifactCreate, _sess: dict = Depends(session_ctx), cid: str = Depends(auth),
                   f: Foundry = Depends(get_foundry),
                   idem: Optional[str] = Header(default=None,
                                                alias="Idempotency-Key")):
@@ -515,7 +632,7 @@ def create_app(db_path: str, *, registration_open: bool = True) -> FastAPI:
                                  request_hash=_req_hash("artifacts", wid, body))
 
     @app.get("/v2/worlds/{wid}/artifacts/{aid}/content")
-    def artifact_content(wid: str, aid: str, cid: str = Depends(auth),
+    def artifact_content(wid: str, aid: str, _sess: dict = Depends(session_ctx), cid: str = Depends(auth),
                          f: Foundry = Depends(get_foundry)):
         # F1: policy-gated content retrieval -- visible iff native here or
         # legally imported here; a miss is deny-by-default (404), disclosing
@@ -524,13 +641,13 @@ def create_app(db_path: str, *, registration_open: bool = True) -> FastAPI:
 
     @app.get("/v2/worlds/{wid}/experiments")
     def list_experiments(wid: str, state: Optional[str] = None,
-                         cid: str = Depends(auth),
+                         _sess: dict = Depends(session_ctx), cid: str = Depends(auth),
                          f: Foundry = Depends(get_foundry)):
         return {"experiments": f.list_experiments(wid, client_id=cid,
                                                   state=state)}
 
     @app.get("/v2/worlds/{wid}/experiments/{eid}")
-    def get_experiment(wid: str, eid: str, cid: str = Depends(auth),
+    def get_experiment(wid: str, eid: str, _sess: dict = Depends(session_ctx), cid: str = Depends(auth),
                        f: Foundry = Depends(get_foundry)):
         # D-REPLAY-1: the frozen spec IS the exact action of a run. It was
         # sealed in the ledger by hash from the beginning but had no read path,
@@ -538,7 +655,7 @@ def create_app(db_path: str, *, registration_open: bool = True) -> FastAPI:
         return f.get_experiment(wid, eid, client_id=cid)
 
     @app.get("/v2/worlds/{wid}/experiments/{eid}/audit-envelope")
-    def audit_envelope(wid: str, eid: str, cid: str = Depends(auth),
+    def audit_envelope(wid: str, eid: str, _sess: dict = Depends(session_ctx), cid: str = Depends(auth),
                        f: Foundry = Depends(get_foundry)):
         # R2-1: OWNER-SCOPED, exactly like every other read -- ordinary client
         # isolation is untouched. This does not open the engine to a third
@@ -561,32 +678,32 @@ def create_app(db_path: str, *, registration_open: bool = True) -> FastAPI:
 
     @app.get("/v2/worlds/{wid}/observations")
     def list_observations(wid: str, exp_id: Optional[str] = None,
-                          cid: str = Depends(auth),
+                          _sess: dict = Depends(session_ctx), cid: str = Depends(auth),
                           f: Foundry = Depends(get_foundry)):
         return {"observations": f.list_observations(wid, client_id=cid,
                                                     exp_id=exp_id)}
 
     @app.get("/v2/worlds/{wid}/knowledge")
-    def knowledge(wid: str, seq: Optional[int] = None, cid: str = Depends(auth),
+    def knowledge(wid: str, seq: Optional[int] = None, _sess: dict = Depends(session_ctx), cid: str = Depends(auth),
                   f: Foundry = Depends(get_foundry)):
         # F10: the legal information frontier of this world at/<= seq (global
         # event_seq; omit for now), reconstructed from the ledger.
         return f.knowledge_set(wid, seq=seq, client_id=cid)
 
     @app.post("/v2/worlds/{wid}/import")
-    def import_artifact(wid: str, body: ImportArtifact, cid: str = Depends(auth),
+    def import_artifact(wid: str, body: ImportArtifact, _sess: dict = Depends(session_ctx), cid: str = Depends(auth),
                         f: Foundry = Depends(get_foundry)):
         return f.import_artifact(wid, body.source_world, body.source_artifact,
                                  client_id=cid)
 
     @app.post("/v2/worlds/{wid}/budget/consume")
-    def consume(wid: str, body: ConsumeBudget, cid: str = Depends(auth),
+    def consume(wid: str, body: ConsumeBudget, _sess: dict = Depends(session_ctx), cid: str = Depends(auth),
                 f: Foundry = Depends(get_foundry)):
         return f.consume_budget(wid, body.resource, body.amount, client_id=cid)
 
     # -- work queue --------------------------------------------------------
     @app.post("/v2/work/claim")
-    def claim(body: WorkClaim, cid: str = Depends(auth),
+    def claim(body: WorkClaim, _sess: dict = Depends(session_ctx), cid: str = Depends(auth),
               f: Foundry = Depends(get_foundry)):
         # A claim is ALWAYS scoped to the caller's own worlds (experimenter
         # isolation): client_id=cid filters claim_work to this client's queue,
@@ -599,7 +716,7 @@ def create_app(db_path: str, *, registration_open: bool = True) -> FastAPI:
         return {"work": claim}
 
     @app.post("/v2/work/{work_id}/heartbeat")
-    def heartbeat(work_id: str, body: WorkHeartbeat, cid: str = Depends(auth),
+    def heartbeat(work_id: str, body: WorkHeartbeat, _sess: dict = Depends(session_ctx), cid: str = Depends(auth),
                   f: Foundry = Depends(get_foundry)):
         # ownership is enforced at the runtime layer (client_id), where the
         # ledger write actually happens -- not only here at the API wrapper.
@@ -608,13 +725,13 @@ def create_app(db_path: str, *, registration_open: bool = True) -> FastAPI:
                            claim_id=body.claim_id, client_id=cid)
 
     @app.post("/v2/work/{work_id}/complete")
-    def complete(work_id: str, body: WorkComplete, cid: str = Depends(auth),
+    def complete(work_id: str, body: WorkComplete, _sess: dict = Depends(session_ctx), cid: str = Depends(auth),
                  f: Foundry = Depends(get_foundry)):
         return f.complete_work(work_id, body.worker_id, body.result,
                                claim_id=body.claim_id, client_id=cid)
 
     @app.post("/v2/work/{work_id}/fail")
-    def fail(work_id: str, body: WorkFail, cid: str = Depends(auth),
+    def fail(work_id: str, body: WorkFail, _sess: dict = Depends(session_ctx), cid: str = Depends(auth),
              f: Foundry = Depends(get_foundry)):
         return f.fail_work(work_id, body.worker_id, body.error,
                            retry=body.retry, claim_id=body.claim_id,
