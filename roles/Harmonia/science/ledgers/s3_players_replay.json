@@ -1,0 +1,116 @@
+{
+ "findings": [
+  {
+   "id": "S3-1",
+   "title": "A byte-identical frozen spec guarantees NOTHING about reproduction beyond the deterministic class",
+   "class": "SCIENTIFIC_DESIGN_GAP",
+   "detail": "All four classes produced IDENTICAL spec hashes across both runs. Only P_DET reproduced its exact score sequence. The spec-seeded stochastic player reproduced because its seed is IN the spec; the otherwise-identical player whose seed is NOT in the spec did not, and NOTHING IN THE RECORD DISTINGUISHES THE TWO -- their executed configs are written the same way. 'We replayed the experiment' is therefore a claim about the executor's seeding discipline, not about the frozen spec. Replay strength must be declared per claim: L0 exact sequence / L1 terminal outcome / L2 distribution / L3 ranking only."
+  },
+  {
+   "id": "S3-2",
+   "title": "Encounter ORDER changes the outcome while the set of frozen specs is identical",
+   "class": "BLOCKS_LONG_RUN",
+   "detail": "A stateful player run over the SAME checkpoint with the SAME set of frozen specs in a different ORDER terminated at 0.5312 vs 0.5625. The specs hash identically as a set, so any 'same experiment' claim resting on spec equality is unsupported for stateful players. Order IS recoverable from the ledger (world_index is dense and ordered), so this is a missing CHECK rather than lost information -- but nothing currently checks it, and for a stateless player order genuinely does not matter, so the check must be conditional on the player class being declared."
+  },
+  {
+   "id": "S3-3",
+   "title": "Hidden cross-world player state turns independent replicates into a trend (r=+0.58 vs -0.05)",
+   "class": "BLOCKS_LONG_RUN",
+   "detail": "The SAME hill-climbing policy was run over 8 worlds twice: once reset between worlds, once carrying its state across them. Reset, the world means correlate with run order at r=-0.049 -- no structure, as it should be. Carrying state, r=+0.577. The worlds are then NOT independent replicates: each one starts from where the last finished, so the unit of analysis declared in packet 1 (the world) is a LIE for this player class, and every world-level test silently inherits it. Worse, the effect is indistinguishable from a real improvement over time. Nothing in the engine record marks the difference between these two runs -- same policy name, same specs, same world structure."
+  },
+  {
+   "id": "S3-4",
+   "title": "The entry-state hash detects leakage, but ONLY while the leaked state is still moving",
+   "class": "INSTRUMENTATION_GAP",
+   "detail": "Adversarial positive control for my own proposed remediation, and it found a limit in it. A properly reset player enters every world with an IDENTICAL state hash (all identical). The leaking player entered with a different hash in 5 of 5 worlds, so the field does detect the leak. BUT its entry states converge after world 1: once a leaking learner CONVERGES, every subsequent world is entered from the same fixed point and the hash stops distinguishing it from a reset player. A converged leaker is invisible to the very check designed to catch it. The hash is therefore necessary and NOT sufficient: it must be paired with a declaration of intended reset discipline, so that 'identical entry state across worlds' is checked against what the experiment CLAIMED rather than taken as evidence of hygiene."
+  }
+ ],
+ "data": {
+  "replay": {
+   "P_DET": {
+    "spec_identical": true,
+    "L0_sequence": true,
+    "L1_terminal": true,
+    "L2_distribution": true,
+    "level": "L0 exact sequence",
+    "mean_a": 0.4375,
+    "mean_b": 0.4375
+   },
+   "P_STOCH_seeded_from_spec": {
+    "spec_identical": true,
+    "L0_sequence": true,
+    "L1_terminal": true,
+    "L2_distribution": true,
+    "level": "L0 exact sequence",
+    "mean_a": 0.4779,
+    "mean_b": 0.4779
+   },
+   "P_STOCH_unseeded_from_spec": {
+    "spec_identical": true,
+    "L0_sequence": false,
+    "L1_terminal": false,
+    "L2_distribution": true,
+    "level": "L2 distribution only",
+    "mean_a": 0.5117,
+    "mean_b": 0.5299
+   },
+   "P_STATEFUL_within_world": {
+    "spec_identical": true,
+    "L0_sequence": true,
+    "L1_terminal": true,
+    "L2_distribution": true,
+    "level": "L0 exact sequence",
+    "mean_a": 0.4987,
+    "mean_b": 0.4987
+   }
+  },
+  "order": {
+   "same_spec_set": true,
+   "terminal_fwd": 0.53125,
+   "terminal_rev": 0.5625
+  },
+  "independence": {
+   "honest_means": [
+    0.4817708333333333,
+    0.6197916666666666,
+    0.5104166666666666,
+    0.5520833333333334,
+    0.4817708333333333,
+    0.4348958333333333,
+    0.5963541666666666,
+    0.5260416666666666
+   ],
+   "leaky_means": [
+    0.4817708333333333,
+    0.578125,
+    0.578125,
+    0.578125,
+    0.578125,
+    0.578125,
+    0.578125,
+    0.578125
+   ],
+   "honest_trend": -0.049019166135513305,
+   "leaky_trend": 0.5773502691896257
+  },
+  "remediation": {
+   "honest_entries": [
+    "9b5ccacd436f",
+    "9b5ccacd436f",
+    "9b5ccacd436f",
+    "9b5ccacd436f",
+    "9b5ccacd436f"
+   ],
+   "leaky_entries": [
+    "bbbe9fc0ebad",
+    "bbbe9fc0ebad",
+    "bbbe9fc0ebad",
+    "bbbe9fc0ebad",
+    "bbbe9fc0ebad"
+   ],
+   "honest_all_same": true,
+   "leaky_converged": true,
+   "detected": 5
+  }
+ }
+}

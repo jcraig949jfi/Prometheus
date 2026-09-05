@@ -1,0 +1,8 @@
+{
+ "S3-3_correction": {
+  "was": "'hidden cross-world state turns independent replicates into a trend (r=+0.58)'",
+  "now": "the r=+0.577 is driven by a single step, not a gradient. The sharper and more dangerous fact is VARIANCE COLLAPSE: reset worlds have sd=0.0580 across 8 worlds with 8 distinct values; leaked worlds have sd=0.0319 overall and worlds 2-8 are IDENTICAL to 6dp (sd=0.0000, 1 distinct value in 7).",
+  "why_it_matters": "the naive reading of the leaked arm is not 'suspicious trend' but 'outstanding reproducibility'. Hidden state leakage disguises itself as the thing an experimenter most wants to see. Effective n after convergence is 1, not 8.",
+  "class": "BLOCKS_LONG_RUN, unchanged"
+ }
+}
