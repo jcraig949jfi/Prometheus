@@ -138,6 +138,17 @@ class ArtifactCreate(_Body):
                                                # fails closed on mismatch
 
 
+class VerifyAnchor(_Body):
+    """R-SFE-1. exp_id / obs_id are optional but are what turn EXISTENCE into
+    BINDING: without them a wrong-but-real event passes, which is exactly the
+    hazard D-ANCHOR-1 closed on the write side."""
+    world_id: str
+    event_id: str
+    entry_hash: str
+    exp_id: Optional[str] = None
+    obs_id: Optional[str] = None
+
+
 class ImportArtifact(_Body):
     source_world: str
     source_artifact: str
@@ -525,6 +536,28 @@ def create_app(db_path: str, *, registration_open: bool = True) -> FastAPI:
         # sealed in the ledger by hash from the beginning but had no read path,
         # so replay depended on the repo checkout that produced the run.
         return f.get_experiment(wid, eid, client_id=cid)
+
+    @app.get("/v2/worlds/{wid}/experiments/{eid}/audit-envelope")
+    def audit_envelope(wid: str, eid: str, cid: str = Depends(auth),
+                       f: Foundry = Depends(get_foundry)):
+        # R2-1: OWNER-SCOPED, exactly like every other read -- ordinary client
+        # isolation is untouched. This does not open the engine to a third
+        # party; it lets the PRODUCER export the sealed material as ONE
+        # verifiable object, which PEW then stores immutably and serves to
+        # anyone. producer -> SFE sealed record -> PEW audit envelope.
+        return f.audit_envelope(wid, eid, client_id=cid)
+
+    @app.post("/v2/audit/verify-anchor")
+    def verify_anchor(body: VerifyAnchor, cid: str = Depends(auth),
+                      f: Foundry = Depends(get_foundry)):
+        # R-SFE-1: deliberately NOT owner-scoped, and deliberately not a read.
+        # Returns booleans plus engine identity -- never payload, refs or
+        # content -- and cannot enumerate: you must already hold the 256-bit
+        # entry_hash to ask a question at all. The auth wall still stands (a
+        # valid client token is required), so this is a scoped attestation
+        # grant, not anonymous access.
+        return f.verify_anchor(body.world_id, body.event_id, body.entry_hash,
+                               exp_id=body.exp_id, obs_id=body.obs_id)
 
     @app.get("/v2/worlds/{wid}/observations")
     def list_observations(wid: str, exp_id: Optional[str] = None,

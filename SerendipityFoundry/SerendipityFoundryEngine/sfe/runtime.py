@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import secrets
 import random
 from typing import Any, Optional
 
@@ -20,7 +21,7 @@ from sfe.errors import (AccessDenied, BudgetExhausted, ConflictError,
                          InvalidTransition, IsolationViolation, NotFound,
                          PredictionOrderingError, ValidationError)
 from sfe.ids import content_hash, new_id
-from sfe.store import Store, now
+from sfe.store import SCHEMA_VERSION, Store, now
 
 # The closed info_kind ontology the sharing machinery understands. An artifact's
 # meta may carry arbitrary freeform user metadata, but info_kind is CONTROL
@@ -704,6 +705,181 @@ class Foundry:
             raise BudgetExhausted(
                 "world resource budget exhausted", world_id=world_id, **info)
         return {**info, "exhausted": False}
+
+    # ================= audit / third-party attestation ===================
+    def engine_instance_id(self) -> str:
+        """A stable id for THIS ENGINE INSTANCE, distinct from its build.
+
+        R-SFE-2 (Mnemosyne, 2026-09-04). release.identity() returns
+        engine_source_hash + source_commit, which identify the BUILD. Two
+        engines running the same build are indistinguishable by it -- M1 and M2
+        both reported engine_source_hash c358a53b for most of today, so a
+        consumer holding an anchor could not tell WHICH engine minted it, and
+        world ids are syntactically valid across both. This mints an instance
+        id once, lazily, and stores it in the meta k/v table (no migration).
+        It is minted ONCE and stored in the database, so it TRAVELS WITH THE
+        SUBSTRATE rather than with the filesystem path: restoring this database
+        elsewhere keeps the identity of the ledger it contains, which is the
+        property an anchor consumer actually needs. It is deliberately NOT
+        derived from the path -- a rollback that restores a backup to a
+        different directory must not silently mint a new engine identity for
+        the same events."""
+        cx = self.store.read()
+        row = cx.execute("SELECT value FROM meta WHERE key='engine_instance_id'"
+                         ).fetchone()
+        if row is not None:
+            return row["value"]
+        with self.store.write() as w:
+            row = w.execute(               # re-read under the write lock
+                "SELECT value FROM meta WHERE key='engine_instance_id'"
+            ).fetchone()
+            if row is not None:
+                return row["value"]
+            iid = "eng_" + secrets.token_hex(12)
+            w.execute("INSERT OR IGNORE INTO meta(key,value) VALUES(?,?)",
+                      ("engine_instance_id", iid))
+            got = w.execute(
+                "SELECT value FROM meta WHERE key='engine_instance_id'"
+            ).fetchone()
+            return got["value"]
+
+    def engine_identity(self) -> dict:
+        return {"engine_instance_id": self.engine_instance_id(),
+                **release.identity()}
+
+    def verify_anchor(self, world_id: str, event_id: str, entry_hash: str, *,
+                      exp_id: Optional[str] = None,
+                      obs_id: Optional[str] = None) -> dict:
+        """Verify a causal anchor WITHOUT disclosing anything it protects.
+
+        R-SFE-1 (Mnemosyne). PEW must be able to establish that an anchor on a
+        fossil is genuine, and it does not hold the producing client's
+        credential. This is deliberately NOT owner-scoped -- but it is also not
+        a read: it returns booleans and the engine's identity, never payload,
+        never refs, never content, and it cannot enumerate. To ask a question
+        at all you must already possess the 256-bit entry_hash, which is only
+        obtainable from the producer or from the fossil the producer published.
+
+        CRITICALLY, this enforces BINDING, not merely existence. Harmonia's D1
+        showed that checking a (event_id, entry_hash) pair EXISTS lets a
+        wrong-but-real event pass every downstream check -- anchoring on
+        WORLD_CREATED would satisfy a pure existence test. So when the caller
+        names the exp_id or obs_id the anchor is CLAIMED to belong to, this
+        checks the event actually references it. That is what makes
+        'wrong real event -> rejected' enforceable in PEW."""
+        cx = self.store.read()
+        r = cx.execute(
+            "SELECT event_id, world_id, event_type, entry_hash, refs, "
+            "event_seq, world_index FROM events WHERE event_id=? AND world_id=?",
+            (event_id, world_id)).fetchone()
+        checks = {"event_exists": r is not None, "entry_hash_matches": False,
+                  "binds_exp_id": None, "binds_obs_id": None}
+        out = {"valid": False, "checks": checks,
+               "engine": self.engine_identity()}
+        if r is None:
+            return out                      # uniform answer; discloses nothing
+        # constant-shape comparison: a mismatched hash is indistinguishable
+        # from a missing event in everything but the checks block
+        checks["entry_hash_matches"] = (r["entry_hash"] == entry_hash)
+        if not checks["entry_hash_matches"]:
+            return out
+        refs = json.loads(r["refs"] or "{}")
+        if exp_id is not None:
+            checks["binds_exp_id"] = (refs.get("exp_id") == exp_id)
+        if obs_id is not None:
+            checks["binds_obs_id"] = (refs.get("obs_id") == obs_id)
+        out["event_type"] = r["event_type"]
+        out["event_seq"] = r["event_seq"]
+        out["world_index"] = r["world_index"]
+        out["valid"] = (checks["entry_hash_matches"]
+                        and checks["binds_exp_id"] is not False
+                        and checks["binds_obs_id"] is not False)
+        return out
+
+    def audit_envelope(self, world_id: str, exp_id: str, *,
+                       client_id: Optional[str] = None) -> dict:
+        """The complete immutable material for ONE experiment, sealed.
+
+        R2-1 (Harmonia). The sealed record exists in SFE but its read routes
+        are client-scoped, so a third-party investigator holding a PEW fossil
+        gets 403 and cannot reconstruct what ran. The fix is NOT to let an
+        arbitrary investigator bypass SFE authorization. It is for the PRODUCER
+        -- who legitimately holds the credential -- to export a self-contained,
+        hash-sealed envelope that PEW stores immutably and serves to anyone.
+
+            producer -> SFE sealed record -> PEW immutable audit envelope
+
+        So this call is OWNER-SCOPED exactly like every other read: ordinary
+        client isolation is untouched. What changes is that the material can
+        now LEAVE the engine as one verifiable object instead of five
+        credentialed reads.
+
+        envelope_hash seals the whole document, and every identity inside it is
+        independently checkable: spec against the sealed spec_hash in the
+        ledger, and the anchors against verify_anchor(), which needs no
+        credential."""
+        cx = self.store.read()
+        w = self._authorize(cx, world_id, client_id)      # isolation preserved
+        ex = cx.execute("SELECT * FROM experiments WHERE exp_id=? AND "
+                        "world_id=?", (exp_id, world_id)).fetchone()
+        if ex is None:
+            raise NotFound("experiment not in this world", exp_id=exp_id)
+
+        obs = [_observation_dict(o) for o in cx.execute(
+            "SELECT * FROM observations WHERE world_id=? AND exp_id=? "
+            "ORDER BY created_seq", (world_id, exp_id)).fetchall()]
+
+        # the ledger events that BIND this experiment: its commit (which seals
+        # spec_hash + engine build) and each observation's causal anchor
+        anchors = []
+        for e in cx.execute(
+                "SELECT event_id, event_type, entry_hash, event_seq, "
+                "world_index, refs, ts FROM events WHERE world_id=? "
+                "ORDER BY world_index", (world_id,)).fetchall():
+            refs = json.loads(e["refs"] or "{}")
+            if refs.get("exp_id") != exp_id:
+                continue
+            anchors.append({"event_id": e["event_id"],
+                            "event_type": e["event_type"],
+                            "entry_hash": e["entry_hash"],
+                            "event_seq": e["event_seq"],
+                            "world_index": e["world_index"], "ts": e["ts"],
+                            "refs": refs})
+
+        committed = next((a for a in anchors
+                          if a["event_type"] == "EXPERIMENT_COMMITTED"), None)
+        sealed_spec_hash = None
+        if committed is not None:
+            ev = cx.execute("SELECT payload FROM events WHERE event_id=?",
+                            (committed["event_id"],)).fetchone()
+            sealed_spec_hash = json.loads(ev["payload"]).get("spec_hash")
+
+        work = None
+        if ex["work_id"]:
+            wr = cx.execute("SELECT work_id, status, result_hash, dedup_key "
+                            "FROM work_items WHERE work_id=?",
+                            (ex["work_id"],)).fetchone()
+            if wr is not None:
+                work = {"work_id": wr["work_id"], "status": wr["status"],
+                        "result_hash": wr["result_hash"]}
+
+        body = {
+            "envelope_version": "sfe.audit_envelope.v1",
+            "engine": self.engine_identity(),
+            "api_version": "v2",
+            "schema_version": SCHEMA_VERSION,
+            "world": {**_world_dict(w),
+                      "budget": self._budget_config(cx, world_id)},
+            "experiment": _experiment_dict(ex),
+            "sealed_spec_hash_in_ledger": sealed_spec_hash,
+            "spec_hash_recomputed": content_hash(json.loads(ex["spec"])),
+            "observations": obs,
+            "work": work,
+            "anchors": anchors,
+            "ledger_head_hash": w["head_hash"],
+        }
+        body["envelope_hash"] = content_hash(body)
+        return body
 
     def get_experiment(self, world_id: str, exp_id: str, *,
                        client_id: Optional[str] = None) -> dict:
