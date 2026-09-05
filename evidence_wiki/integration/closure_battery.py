@@ -9,11 +9,59 @@ scientific query). Exit 0 = all_pass.
 """
 import argparse
 import json
+import ssl
 import sys
 import time
+import urllib.error
+import urllib.request
 import uuid
 
 import requests
+
+_DEFAULT_CA = "D:/prometheus/SerendipityFoundry/SerendipityFoundryEngine/deploy/m2.crt"
+_DEFAULT_SFE = "https://192.168.1.191:8811/v2"
+
+
+def sfe_sealed_run(sfe_url, ca):
+    """Create a genuine sealed SFE run over HTTP (own client, no key-file read)
+    and return the real anchor tuple + the WORLD_CREATED event for the wrong-
+    but-real control. Returns None if SFE is unreachable."""
+    ctx = ssl.create_default_context(cafile=ca)
+    tok = {"t": None}
+
+    def req(m, p, body=None):
+        d = json.dumps(body).encode() if body is not None else None
+        h = {"content-type": "application/json"}
+        if tok["t"]:
+            h["authorization"] = "Bearer " + tok["t"]
+        r = urllib.request.Request(sfe_url.rstrip("/") + p, data=d, headers=h, method=m)
+        with urllib.request.urlopen(r, context=ctx, timeout=20) as z:
+            return json.loads(z.read().decode() or "{}")
+    try:
+        tag = "pewC4-%d" % int(time.time())
+        tok["t"] = req("POST", "/clients", {"name": tag})["token"]
+        sid = req("POST", "/sessions", {"name": tag})["session_id"]
+        w = req("POST", "/worlds", {"session_id": sid, "name": "c4",
+                "seed_root": 424242, "sharing_policy": "ISOLATED",
+                "budget": {"ticks": {"limit": 9, "enforcement": "enforceable"}}})
+        wid = w["world_id"]
+        req("POST", "/worlds/%s/start" % wid)
+        h = req("POST", "/worlds/%s/hypotheses" % wid, {"statement": "H"})
+        x = req("POST", "/worlds/%s/experiments" % wid,
+                {"spec": {"action": "encounter", "ticks": 32},
+                 "hyp_id": h["hyp_id"], "commit": True})
+        eid = x["exp_id"]
+        o = req("POST", "/worlds/%s/observations" % wid,
+                {"exp_id": eid, "content": {"score": 0.5}, "outcome": "SURVIVED"})
+        evs = req("GET", "/worlds/%s/events" % wid)
+        evs = evs["events"] if isinstance(evs, dict) else evs
+        wc = next(e for e in evs if e["event_type"] == "WORLD_CREATED")
+        return {"world_id": wid, "exp_id": eid, "obs_id": o["obs_id"],
+                "event_id": o["event_id"], "entry_hash": o["entry_hash"],
+                "wc_event_id": wc["event_id"], "wc_entry_hash": wc["entry_hash"]}
+    except Exception as exc:                                  # noqa: BLE001
+        print("  (sfe_sealed_run failed: %s: %s)" % (type(exc).__name__, exc))
+        return None
 
 R = []
 _ZERO = "sha256:" + "0" * 64
@@ -47,6 +95,8 @@ def main():
     ap.add_argument("--port", type=int, default=8377)
     ap.add_argument("--machine", default="M2")
     ap.add_argument("--agent", default="closure-test")
+    ap.add_argument("--sfe-url", default=_DEFAULT_SFE)
+    ap.add_argument("--sfe-cacert", default=_DEFAULT_CA)
     a = ap.parse_args()
     c = C(a.host, a.port, a.machine, a.agent)
     tag = uuid.uuid4().hex[:8]
@@ -99,23 +149,59 @@ def main():
          good.status_code == 200 and badhash.status_code == 422 and badev.status_code == 422,
          f"good={good.status_code} bad_hash={badhash.status_code} bad_evid={badev.status_code}")
 
-    # C4 --- KNOWN GAP, pinned: a well-formed-but-WRONG (real) event/hash pair
-    #        is ACCEPTED, because PEW validates shape/class only and holds no
-    #        SFE client. This is I-CAUSAL-CLIENT / probe D1. The regression
-    #        LOCKS the gap and the fossil records sfe_anchor_verified=false so
-    #        provenance stays honest. Closing it requires SFE attestation
-    #        (cross-component request to Daedalus), not a PEW-only change.
-    wrong = c.post("fossil/encounters", {
-        "encounter_id": f"CLOSURE-{tag}-WRONG", "run_id": "r", "namespace": "test",
-        "sfe_event_id": "evt_" + "f" * 16,           # a real-looking but wrong event
-        "sfe_entry_hash": _H1})                        # not that event's hash
-    wrb = c.get(f"fossil/encounters/CLOSURE-{tag}-WRONG").json()
-    watt = (wrb.get("runs") or [{}])[0].get("attestation") or {}
-    gate("C4_wrong_real_anchor_gap_pinned",
-         wrong.status_code == 200 and watt.get("sfe_anchor_verified") is False,
-         f"wrong-but-real accepted={wrong.status_code} (KNOWN GAP), "
-         f"recorded sfe_anchor_verified={watt.get('sfe_anchor_verified')} -> "
-         "needs SFE attestation to reject")
+    # C4 --- REAL causal-anchor verification (R-SFE-1 wired to SFE verify-anchor).
+    #        The old known-gap pin is retired: PEW now calls the BOUND form and
+    #        sets sfe_anchor_verified=true ONLY when the engine returns valid AND
+    #        both bindings are explicitly true. Four controls, against a genuine
+    #        sealed SFE run:
+    #          C4a correct bound anchor          -> verified=true   (PASS)
+    #          C4b wrong-but-real event          -> verified=false  (binds false)
+    #          C4c forged entry_hash             -> verified=false  (hash mismatch)
+    #          C4d unbound (no exp_id/obs_id)     -> verified=false  (cannot bind)
+    run = sfe_sealed_run(a.sfe_url, a.sfe_cacert)
+
+    def _verified(encid, sfe_event_id, entry_hash, prod):
+        body = {"encounter_id": encid, "run_id": "r", "namespace": "test",
+                "sfe_world_id": run["world_id"], "sfe_event_id": sfe_event_id,
+                "sfe_entry_hash": entry_hash}
+        if prod is not None:
+            body["producer"] = prod
+        w = c.post("fossil/encounters", body)
+        rb = c.get(f"fossil/encounters/{encid}").json()
+        att = (rb.get("runs") or [{}])[0].get("attestation") or {}
+        return w.status_code, att
+
+    if not run:
+        for g in ("C4a_correct_bound_anchor_verified", "C4b_wrong_but_real_rejected",
+                  "C4c_forged_hash_rejected", "C4d_unbound_cannot_verify"):
+            gate(g, False, "SFE unreachable; cannot exercise the real mechanism")
+    else:
+        bound = {"exp_id": run["exp_id"], "obs_id": run["obs_id"]}
+        st, att = _verified(f"CLOSURE-{tag}-C4A", run["event_id"], run["entry_hash"], bound)
+        gate("C4a_correct_bound_anchor_verified",
+             st == 200 and att.get("sfe_anchor_verified") is True,
+             f"verified={att.get('sfe_anchor_verified')} checks={att.get('sfe_anchor_checks')}")
+
+        st, att = _verified(f"CLOSURE-{tag}-C4B", run["wc_event_id"], run["wc_entry_hash"], bound)
+        ck = att.get("sfe_anchor_checks") or {}
+        gate("C4b_wrong_but_real_rejected",
+             st == 200 and att.get("sfe_anchor_verified") is False
+             and ck.get("entry_hash_matches") is True and ck.get("binds_exp_id") is False,
+             f"verified={att.get('sfe_anchor_verified')} (real event, binds_exp_id="
+             f"{ck.get('binds_exp_id')}, entry_hash_matches={ck.get('entry_hash_matches')})")
+
+        st, att = _verified(f"CLOSURE-{tag}-C4C", run["event_id"], "sha256:" + "0" * 64, bound)
+        ck = att.get("sfe_anchor_checks") or {}
+        gate("C4c_forged_hash_rejected",
+             st == 200 and att.get("sfe_anchor_verified") is False
+             and ck.get("entry_hash_matches") is False,
+             f"verified={att.get('sfe_anchor_verified')} entry_hash_matches={ck.get('entry_hash_matches')}")
+
+        st, att = _verified(f"CLOSURE-{tag}-C4D", run["event_id"], run["entry_hash"], None)
+        gate("C4d_unbound_cannot_verify",
+             st == 200 and att.get("sfe_anchor_verified") is False,
+             f"verified={att.get('sfe_anchor_verified')} (no exp_id/obs_id supplied -> "
+             f"reason={(att.get('sfe_anchor_checks') or {}).get('reason')})")
 
     # C5 --- create a HARD and an ADVISORY constraint -----------------------
     hard = c.post("constraints", {

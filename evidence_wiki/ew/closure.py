@@ -12,8 +12,11 @@ comes from the Postgres cluster the service is actually connected to.
 import hashlib
 import json
 import os
+import ssl
 import subprocess
 import time
+import urllib.error
+import urllib.request
 from pathlib import Path
 
 from . import FOSSIL_CONTRACT_VERSION, ONTOLOGY_VERSION, SCHEMA_VERSION
@@ -86,12 +89,91 @@ def service_attestation(conn):
 
 
 def fossil_attestation_json(conn):
-    """The block stamped onto each fossil row (as a JSON string). sfe_anchor_
-    verified is FALSE by construction: PEW validates anchor class/shape, never
-    SFE ledger membership (no SFE client by design), so a fossil records that
-    its causal anchor is client-asserted, not PEW-verified."""
+    """Server-identity block for non-fossil-encounter rows (constraints, seals).
+    sfe_anchor_verified is False here (these carry no fossil anchor). The fossil
+    ENCOUNTER write uses attestation_for_encounter(), which verifies the anchor."""
     a = dict(service_attestation(conn))
     a["sfe_anchor_verified"] = False
+    return json.dumps(a)
+
+
+# ---- R-SFE-1: causal-anchor verification against SFE (BOUND form) -----------
+_SFE_CFG = None
+
+
+def _sfe_verify_config():
+    """URL / CA cert / token for the SFE audit endpoint. Config only (no
+    committed secret): env EW_SFE_VERIFY_URL / EW_SFE_CACERT / EW_SFE_TOKEN, or
+    the untracked config.local.json keys sfe_verify_url / sfe_verify_cacert /
+    sfe_verify_token. Absent -> verification is OFF and anchors stay unverified."""
+    global _SFE_CFG
+    if _SFE_CFG is not None:
+        return _SFE_CFG
+    cfg = ewdb.load_config()
+    _SFE_CFG = {
+        "url": (os.environ.get("EW_SFE_VERIFY_URL") or cfg.get("sfe_verify_url") or "").rstrip("/"),
+        "ca": os.environ.get("EW_SFE_CACERT") or cfg.get("sfe_verify_cacert"),
+        "token": os.environ.get("EW_SFE_TOKEN") or cfg.get("sfe_verify_token"),
+    }
+    return _SFE_CFG
+
+
+def verify_sfe_anchor(e):
+    """BOUND-form anchor verification against SFE POST /v2/audit/verify-anchor.
+    Returns (verified: bool, checks: dict|None).
+
+    verified is True ONLY when the engine returns valid=true AND BOTH bindings
+    (binds_exp_id, binds_obs_id) are EXPLICITLY true. A null/missing binding, an
+    unbound response, a wrong-but-real event (bindings false), a forged hash
+    (entry_hash_matches false), missing config, missing ids, or an unreachable
+    engine all yield (False, ...). A fossil write NEVER fails because
+    verification could not run -- an unverified anchor is honest, not an error.
+    PEW connects only to the configured (M2) engine, with its own token."""
+    c = _sfe_verify_config()
+    if not (c["url"] and c["token"]):
+        return (False, {"reason": "verify_not_configured"})
+    world_id = getattr(e, "sfe_world_id", None)
+    event_id = getattr(e, "sfe_event_id", None)
+    entry_hash = getattr(e, "sfe_entry_hash", None)
+    prod = getattr(e, "producer", None)
+    exp_id = prod.get("exp_id") if isinstance(prod, dict) else None
+    obs_id = prod.get("obs_id") if isinstance(prod, dict) else None
+    if not (world_id and event_id and entry_hash and exp_id and obs_id):
+        return (False, {"reason": "missing_bound_fields"})   # cannot ask the BOUND form
+    body = {"world_id": world_id, "event_id": event_id, "entry_hash": entry_hash,
+            "exp_id": exp_id, "obs_id": obs_id}
+    try:
+        ctx = (ssl.create_default_context(cafile=c["ca"]) if c["ca"]
+               else ssl.create_default_context())
+        req = urllib.request.Request(
+            c["url"] + "/audit/verify-anchor", data=json.dumps(body).encode("utf-8"),
+            headers={"content-type": "application/json",
+                     "authorization": "Bearer " + c["token"]}, method="POST")
+        with urllib.request.urlopen(req, context=ctx, timeout=6) as z:
+            resp = json.loads(z.read().decode() or "{}")
+    except Exception as exc:                                 # noqa: BLE001
+        return (False, {"reason": "verify_call_failed", "error": type(exc).__name__})
+    ck = resp.get("checks") or {}
+    verified = (resp.get("valid") is True
+                and ck.get("binds_exp_id") is True
+                and ck.get("binds_obs_id") is True)
+    return (verified, {"valid": resp.get("valid"),
+                       "event_exists": ck.get("event_exists"),
+                       "entry_hash_matches": ck.get("entry_hash_matches"),
+                       "binds_exp_id": ck.get("binds_exp_id"),
+                       "binds_obs_id": ck.get("binds_obs_id"),
+                       "engine": resp.get("engine")})
+
+
+def attestation_for_encounter(conn, e):
+    """Fossil-encounter attestation: the server-identity block plus a REAL
+    sfe_anchor_verified from a bound verify-anchor call (and the checks that
+    justify it). Wrong-but-real / forged / unbound anchors stay false."""
+    a = dict(service_attestation(conn))
+    verified, checks = verify_sfe_anchor(e)
+    a["sfe_anchor_verified"] = bool(verified)
+    if checks is not None:
+        a["sfe_anchor_checks"] = checks
     return json.dumps(a)
 
 

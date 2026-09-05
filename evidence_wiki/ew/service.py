@@ -1025,7 +1025,7 @@ def post_fossil_encounter(body: FossilEncounterIn, request: Request,
         if status == "inserted":
             cur.execute("SELECT nextval('ew.canonical_revision_seq')")
             rev = cur.fetchone()["nextval"]
-            attest = closure.fossil_attestation_json(conn)
+            attest = closure.attestation_for_encounter(conn, body)
             cur.execute(_ENC_INSERT + "(" + ",".join(["%s"] * _ENC_NCOLS) + ")",
                         _enc_values(body, rev, attest))
         cur.execute(
@@ -1088,9 +1088,10 @@ def post_fossil_batch(body: FossilBatchIn, request: Request,
         rev = cur.fetchone()["nextval"]
         if fresh:
             from psycopg2.extras import execute_values
-            attest = closure.fossil_attestation_json(conn)
+            # per-row: each encounter's anchor verifies independently
             execute_values(cur, _ENC_INSERT + "%s",
-                           [_enc_values(e, rev, attest) for e in fresh])
+                           [_enc_values(e, rev, closure.attestation_for_encounter(conn, e))
+                            for e in fresh])
         cur.execute(
             "INSERT INTO ew.write_log(idempotency_key, endpoint, machine, "
             "agent, payload_sha256, accepted, result_object_id) "
