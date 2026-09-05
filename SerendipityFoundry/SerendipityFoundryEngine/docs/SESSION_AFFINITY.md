@@ -17,7 +17,9 @@ were always engine-local — nothing *said so on the wire*.
 
 ## Protocol
 
-**Transport:** one header, everywhere — `X-SFE-Session`. No endpoint takes it
+**Transport:** one header, everywhere — `X-SFE-Session`. Covers every
+experiment-scoped route INCLUDING the collection routes `POST /v2/worlds`
+and `GET /v2/worlds` (see the coverage note below). No endpoint takes it
 differently. `sfclient` adopts the key at `create_session()` and sends it on
 every later call; a caller never appends it per-callsite.
 
@@ -138,3 +140,32 @@ The architectural boundary this release establishes:
 
 The session is already the durable answer to *"which SFE instance owns this
 experiment?"* — readable from the key itself, without consulting any registry.
+
+---
+
+## Coverage note — two holes found after the first implementation
+
+Both were found by widening a test, not by review, and both are recorded
+because the *shape* of the mistake is the interesting part.
+
+1. **`start` / `pause` / `resume` / `terminate`** are registered in a `for`
+   loop rather than with decorators, so a decorator-matching wiring pass
+   skipped them. `terminate` answered a foreign session with **404** — a
+   missing-resource diagnosis for a wrong-machine problem, the exact confusion
+   this feature removes.
+
+2. **`POST /v2/worlds` and `GET /v2/worlds`** were outside the first
+   route-coverage probe, which was scoped to `/v2/worlds/{wid}`. `POST` gave
+   **403 access_denied** (a permissions diagnosis for a wrong-machine problem)
+   and `GET` gave **200** — a foreign session key silently enumerating the
+   engine. A silent 200 is precisely the defect class being closed.
+
+The coverage test now enumerates the **live route table** and probes every
+`/v2/worlds*` and `/v2/work/*` route, so a route added tomorrow is either
+covered or the test fails. A hand-maintained list would have reproduced both
+holes.
+
+`POST /v2/worlds` additionally binds the presented key to the `session_id` in
+the body: holding session A's key while creating a world under session B is
+`403 SESSION_MISMATCH`, because that would break the affinity chain at its root
+and every later call on that world would look consistent.

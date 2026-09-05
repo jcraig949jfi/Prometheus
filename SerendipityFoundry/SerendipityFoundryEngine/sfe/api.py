@@ -417,7 +417,8 @@ def create_app(db_path: str, *, registration_open: bool = True,
 
     # -- worlds ------------------------------------------------------------
     @app.post("/v2/worlds")
-    def create_world(body: WorldCreate, cid: str = Depends(auth),
+    def create_world(body: WorldCreate, _sess: dict = Depends(session_ctx),
+                     cid: str = Depends(auth),
                      f: Foundry = Depends(get_foundry),
                      idem: Optional[str] = Header(default=None,
                                                   alias="Idempotency-Key")):
@@ -432,6 +433,16 @@ def create_app(db_path: str, *, registration_open: bool = True,
         if s is None or s["client_id"] != cid:
             raise HTTPException(status_code=403, detail={"error": "access_denied",
                                "message": "session not owned by this client"})
+        # A presented key must be the key OF THE SESSION being built into.
+        # Without this a client could hold session A's key and create worlds
+        # under session B, which would silently break the affinity chain at
+        # its root -- every later call on that world would look consistent.
+        bound = _sess.get("session_id")
+        if _sess.get("affinity") == "BOUND" and bound != body.session_id:
+            raise SessionMismatch(
+                "the presented session key is not the key of session_id in "
+                "this request", session_id=bound,
+                requested_session_id=body.session_id)
         return f.create_world(body.session_id, body.name,
                               sharing_policy=body.sharing_policy,
                               topology_group=body.topology_group,
@@ -443,7 +454,8 @@ def create_app(db_path: str, *, registration_open: bool = True,
                               request_hash=_req_hash("worlds", None, body))
 
     @app.get("/v2/worlds")
-    def list_worlds(cid: str = Depends(auth), f: Foundry = Depends(get_foundry),
+    def list_worlds(_sess: dict = Depends(session_ctx),
+                    cid: str = Depends(auth), f: Foundry = Depends(get_foundry),
                     session_id: Optional[str] = None,
                     state: Optional[str] = None,
                     created_after: Optional[float] = None,

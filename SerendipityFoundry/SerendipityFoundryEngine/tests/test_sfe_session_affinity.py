@@ -418,7 +418,12 @@ def test_route_coverage_is_complete(m1, m2):
     scoped = []
     for r in c2.app.routes:
         path = getattr(r, "path", "")
-        if not (path.startswith("/v2/worlds/{wid}") or
+        # NOTE the collection routes. Scoping this probe to /v2/worlds/{wid}
+        # is what let the first version miss POST /v2/worlds (403 access_denied
+        # -- a permissions diagnosis for a wrong-machine problem) and, worse,
+        # GET /v2/worlds, which returned 200 and let a foreign key enumerate
+        # the engine. A silent 200 was exactly the defect class being closed.
+        if not (path.startswith("/v2/worlds") or
                 path.startswith("/v2/work/")):
             continue
         for m in (getattr(r, "methods", None) or set()):
