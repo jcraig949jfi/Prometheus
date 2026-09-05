@@ -183,6 +183,98 @@ def get_constraint(conn, cid):
         return c
 
 
+# ---- R2-1 PEW side: immutable content-addressed audit/replay envelope --------
+# The documented slots. PEW does not invent them; a producer supplies the ones
+# it has (content-addressed / immutable identities), and PEW seals the whole set.
+SEAL_SLOTS = (
+    "experiment_spec_id", "organism_ids", "interpretation_id",
+    "registry_id", "entry_id", "composition_id", "topology", "ablation",
+    "action_id", "input_digest", "world_id", "world_config_digest",
+    "measurement_def", "measurement_version", "output_digest",
+    "sfe_engine_id", "causal_anchor",
+)
+
+
+def _canon(obj):
+    return json.dumps(obj, sort_keys=True, separators=(",", ":"), default=str)
+
+
+def seal_record(conn, encounter_id, run_id, envelope, namespace, ident):
+    """Content-address {encounter_id, run_id, envelope} and store it immutably.
+    Returns:
+      None                     -> the encounter does not exist
+      ("__anchor__", stored)   -> the envelope's causal_anchor conflicts with the fossil
+      (envelope_id, csha, inserted)
+    Idempotent on identical content (ON CONFLICT DO NOTHING); a changed slot is a
+    different envelope_id (tamper-evident). PEW stores the producer slots verbatim."""
+    canonical = _canon({"encounter_id": encounter_id, "run_id": run_id or "",
+                        "envelope": envelope})
+    csha = hashlib.sha256(canonical.encode("utf-8")).hexdigest()
+    eid = "SEAL-" + csha[:24]
+    attest = fossil_attestation_json(conn)
+    # plain (tuple) cursor: next_revision() does fetchone()[0], which a
+    # RealDictCursor would break.
+    with conn.cursor() as cur:
+        cur.execute("SELECT sfe_entry_hash FROM ew.fossil_encounters WHERE "
+                    "encounter_id=%s AND run_key=%s", (encounter_id, run_id or ""))
+        f = cur.fetchone()
+        if f is None:
+            return None
+        fossil_anchor = f[0]
+        # integrity: a seal must not claim a different anchor than the fossil it
+        # seals (machine-checkable, not invented semantics).
+        anchor = envelope.get("causal_anchor") if isinstance(envelope, dict) else None
+        if isinstance(anchor, dict) and anchor.get("sfe_entry_hash") and \
+           anchor["sfe_entry_hash"] != fossil_anchor:
+            return ("__anchor__", fossil_anchor)
+        cur.execute("SELECT 1 FROM ew.sealed_records WHERE envelope_id=%s", (eid,))
+        inserted = cur.fetchone() is None
+        if inserted:
+            rev = ewdb.next_revision(cur)
+            cur.execute(
+                "INSERT INTO ew.sealed_records(envelope_id, content_sha256, "
+                "content_canonical, encounter_id, encounter_run_id, envelope, "
+                "attestation, namespace, created_by, machine, revision) "
+                "VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) "
+                "ON CONFLICT (envelope_id) DO NOTHING",
+                (eid, csha, canonical, encounter_id, run_id, json.dumps(envelope),
+                 attest, namespace, ident["agent"], ident["machine"], rev))
+    conn.commit()
+    return (eid, csha, inserted)
+
+
+def get_seal(conn, envelope_id):
+    """The sealed record + a tamper check + the bound fossil, so the record is
+    self-contained and recoverable from PEW alone (no SFE client credential)."""
+    with ewdb.dict_cur(conn) as cur:
+        cur.execute("SELECT * FROM ew.sealed_records WHERE envelope_id=%s",
+                    (envelope_id,))
+        r = cur.fetchone()
+        if not r:
+            return None
+        recomputed = hashlib.sha256(r["content_canonical"].encode("utf-8")).hexdigest()
+        r["seal_valid"] = (recomputed == r["content_sha256"]
+                           and envelope_id == "SEAL-" + recomputed[:24])
+        cur.execute("SELECT * FROM ew.fossil_encounters WHERE encounter_id=%s "
+                    "AND run_key=%s", (r["encounter_id"], r["encounter_run_id"] or ""))
+        r["fossil"] = cur.fetchone()
+        r["slots_present"] = sorted(k for k in (r["envelope"] or {}) if k in SEAL_SLOTS)
+        r["slots_absent"] = sorted(k for k in SEAL_SLOTS if k not in (r["envelope"] or {}))
+        return r
+
+
+def list_seals_for_encounter(conn, encounter_id, run_id=None):
+    q = ("SELECT envelope_id, content_sha256, encounter_id, encounter_run_id, "
+         "namespace, created_at FROM ew.sealed_records WHERE encounter_id=%s")
+    args = [encounter_id]
+    if run_id is not None:
+        q += " AND encounter_run_key=%s"; args.append(run_id or "")
+    q += " ORDER BY created_at"
+    with ewdb.dict_cur(conn) as cur:
+        cur.execute(q, args)
+        return cur.fetchall()
+
+
 def list_constraints(conn, kind=None, status=None, scope_key=None,
                      scope_val=None, namespace="prod", limit=200):
     q = "SELECT * FROM ew.constraints_current WHERE namespace=%s"

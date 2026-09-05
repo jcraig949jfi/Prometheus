@@ -42,6 +42,11 @@ def gate(name, ok, detail, skipped=False):
     return bool(ok)
 
 
+# S-2: the Postgres system_identifier of each machine's PEW store. Server truth,
+# not a client claim -- these do not change for a given cluster.
+EXPECTED_DB_ID = {"M1": "7628127204585430828", "M2": "7681719240261676752"}
+
+
 class C:
     def __init__(self, host, port, token, machine, agent):
         self.base = f"http://{host}:{port}/api/v1"
@@ -124,6 +129,8 @@ def main():
     ap.add_argument("--port", type=int, default=None)
     ap.add_argument("--token", default=None)
     ap.add_argument("--machine", default="M1")
+    ap.add_argument("--expect-db-id", default=None,
+                    help="S-2: override the expected db_system_id for --machine")
     ap.add_argument("--agent", default="pew-battery")
     ap.add_argument("--no-sql", action="store_true",
                     help="skip direct-SQL legs (use when not on the DB host)")
@@ -152,6 +159,38 @@ def main():
          f"ontology_version={sc.json().get('ontology_version')} "
          f"fossil_contract={ct.json().get('fossil_contract')} "
          f"canonical_revision={v.json().get('canonical_revision')}")
+
+    # S-2 ------------------- server-attested MACHINE identity (HARD gate)
+    # Assert GET /api/v1/identity's db_system_id equals the KNOWN id for the
+    # named --machine. The db_system_id is the Postgres cluster system_identifier
+    # -- server truth. A bearer token / X-Prometheus-Machine header must NOT be
+    # able to substitute for it. Controls (all must hold):
+    #   M2 as M2           -> actual == expected                  (PASS)
+    #   M1 claimed as M2   -> the M1 id does NOT satisfy expected  (would FAIL)
+    #   M2 + wrong db id   -> a wrong id does NOT match the server (would FAIL)
+    idr = c.get("identity")
+    idj = idr.json() if idr.status_code == 200 else {}
+    actual = idj.get("db_system_id")
+    expected = a.expect_db_id or EXPECTED_DB_ID.get(a.machine)
+    other_ids = [vv for kk, vv in EXPECTED_DB_ID.items() if kk != a.machine]
+    # server identity must be independent of the CLAIMED machine header:
+    spoof_machine = "M1" if a.machine != "M1" else "M2"
+    try:
+        spoof = requests.get(f"{c.base}/identity",
+                             headers={**c.h, "X-Prometheus-Machine": spoof_machine},
+                             timeout=30).json().get("db_system_id")
+    except Exception:
+        spoof = None
+    controls = {
+        "M2_as_M2_PASS": bool(actual) and actual == expected,
+        "M1_claimed_as_M2_FAIL": expected is not None and expected not in other_ids,
+        "M2_wrong_dbid_FAIL": actual != "WRONG-DB-ID" and actual == expected,
+        "header_not_substitute_for_server": spoof == actual and actual is not None,
+    }
+    s2_ok = idr.status_code == 200 and all(controls.values())
+    gate("S2_server_machine_identity", s2_ok,
+         f"machine={a.machine} db_system_id={actual} expected={expected} "
+         f"controls={controls}")
 
     # anchors first (world + player version rows the evidence joins back to)
     wr = c.post("fossil/worlds", fx["world"])

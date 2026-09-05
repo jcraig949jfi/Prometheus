@@ -169,6 +169,73 @@ def main():
     gate("C9_history_recoverable", len(still) == 1 and still[0].get("rationale") == "initial",
          "original PROPOSED event preserved after REFUTED (never mutated)")
 
+    # ---- R2-1 PEW side: immutable audit/replay envelope ------------------
+    # A full producer-supplied envelope (content-addressed identities). enc was
+    # written in C2 with sfe_entry_hash=_H1.
+    env = {
+        "experiment_spec_id": "X-spec-" + tag, "organism_ids": ["org-A", "org-B"],
+        "interpretation_id": "I-" + tag, "registry_id": "REG-" + tag,
+        "entry_id": "ENTRY-" + tag, "composition_id": "COMP-" + tag,
+        "topology": {"order": ["A", "B"], "glue": "seq"}, "ablation": "none",
+        "action_id": "ACT-" + tag, "input_digest": "sha256:" + "1" * 64,
+        "world_id": f"CLOSURE-{tag}-W", "world_config_digest": "sha256:" + "2" * 64,
+        "measurement_def": "branches_taken", "measurement_version": "v0",
+        "output_digest": "sha256:" + "3" * 64, "sfe_engine_id": "sha256:" + "e" * 64,
+        "causal_anchor": {"sfe_event_id": "evt_" + "a" * 16, "sfe_entry_hash": _H1,
+                          "sfe_event_seq": 1},
+    }
+    s1 = c.post("fossil/seal", {"encounter_id": enc, "run_id": "r1",
+                                "envelope": env, "namespace": "test"})
+    eid = s1.json().get("envelope_id") if s1.status_code == 200 else None
+    gate("C10_seal_written",
+         s1.status_code == 200 and str(eid).startswith("SEAL-")
+         and s1.json().get("inserted") is True,
+         f"seal={eid} inserted={s1.json().get('inserted')}")
+
+    # C11 recover -- self-contained, PEW credential only (no SFE client cred)
+    if eid:
+        rr = c.get(f"fossil/seal/{eid}").json()
+        slots_ok = not rr.get("slots_absent")     # every documented slot supplied
+        gate("C11_seal_recoverable_sealed",
+             rr.get("seal_valid") is True and slots_ok
+             and (rr.get("fossil") or {}).get("encounter_id") == enc
+             and (rr.get("envelope") or {}).get("sfe_engine_id"),
+             f"seal_valid={rr.get('seal_valid')} slots_absent={rr.get('slots_absent')} "
+             f"bound_fossil={(rr.get('fossil') or {}).get('encounter_id')}")
+    else:
+        gate("C11_seal_recoverable_sealed", False, "no seal to recover")
+
+    # C12 immutable / idempotent: identical content -> same id, inserted False
+    s2 = c.post("fossil/seal", {"encounter_id": enc, "run_id": "r1",
+                                "envelope": env, "namespace": "test"})
+    gate("C12_seal_idempotent",
+         s2.status_code == 200 and s2.json().get("envelope_id") == eid
+         and s2.json().get("inserted") is False,
+         f"re-seal id={s2.json().get('envelope_id')} inserted={s2.json().get('inserted')}")
+
+    # C13 content-addressed (NEGATIVE control): one changed slot -> different id
+    env2 = dict(env); env2["action_id"] = "ACT-CHANGED"
+    s3 = c.post("fossil/seal", {"encounter_id": enc, "run_id": "r1",
+                                "envelope": env2, "namespace": "test"})
+    gate("C13_content_addressed_tamper_evident",
+         s3.status_code == 200 and s3.json().get("envelope_id") != eid,
+         f"changed-slot seal={s3.json().get('envelope_id')} != {eid}")
+
+    # C14 unknown encounter (NEGATIVE control) -> 404, no seal
+    s4 = c.post("fossil/seal", {"encounter_id": f"NOPE-{tag}", "run_id": "r",
+                                "envelope": env, "namespace": "test"})
+    gate("C14_unknown_encounter_refused", s4.status_code == 404,
+         f"seal of unknown encounter -> {s4.status_code}")
+
+    # C15 anchor integrity (NEGATIVE control): envelope claims a DIFFERENT anchor
+    # than the fossil it seals -> 409 (a seal cannot misrepresent the anchor)
+    env3 = dict(env); env3["causal_anchor"] = {"sfe_event_id": "evt_" + "a" * 16,
+                                               "sfe_entry_hash": _H2, "sfe_event_seq": 1}
+    s5 = c.post("fossil/seal", {"encounter_id": enc, "run_id": "r1",
+                                "envelope": env3, "namespace": "test"})
+    gate("C15_seal_anchor_must_match_fossil", s5.status_code == 409,
+         f"conflicting-anchor seal -> {s5.status_code}")
+
     all_pass = all(r["pass"] for r in R)
     out = {"all_pass": all_pass, "n": len(R), "passed": sum(r["pass"] for r in R),
            "gates": R}

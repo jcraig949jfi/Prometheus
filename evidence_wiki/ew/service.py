@@ -1422,6 +1422,58 @@ def post_constraint_event(constraint_id: str, body: ConstraintEventIn,
             "from_status": frm, "to_status": body.to_status}
 
 
+# --------------------- R2-1 PEW side: immutable audit/replay envelope
+class SealIn(BaseModel):
+    model_config = {"extra": "forbid"}
+    encounter_id: str
+    run_id: str | None = None
+    envelope: dict                  # producer-supplied immutable slots (see SEAL_SLOTS)
+    namespace: str = "prod"
+    idempotency_key: str | None = None
+
+
+@app.post("/api/v1/fossil/seal")
+def post_seal(body: SealIn, request: Request, conn=Depends(get_conn)):
+    """Seal a fossil encounter into a content-addressed, immutable audit/replay
+    envelope carrying the producer's immutable identities, recoverable from PEW
+    alone (R2-1 PEW side). Idempotent on identical content; any changed slot is a
+    new seal. PEW invents no semantics -- it stores the producer slots verbatim."""
+    ident = identity(request, write=True)
+    res = closure.seal_record(conn, body.encounter_id, body.run_id,
+                              body.envelope, body.namespace, ident)
+    if res is None:
+        raise HTTPException(404, f"unknown fossil encounter "
+                            f"{body.encounter_id}@{body.run_id or ''}")
+    if res[0] == "__anchor__":
+        raise HTTPException(409, "seal_causal_anchor_conflicts_with_fossil:"
+                            f"fossil sfe_entry_hash={res[1]}")
+    eid, csha, inserted = res
+    return {"envelope_id": eid, "content_sha256": csha, "inserted": inserted,
+            "read_back": f"/api/v1/fossil/seal/{eid}"}
+
+
+@app.get("/api/v1/fossil/seal/{envelope_id}")
+def get_seal_endpoint(envelope_id: str, request: Request,
+                      conn=Depends(get_conn)):
+    """Recover a sealed experiment record: the producer slots + a tamper check
+    (seal_valid) + the bound fossil + which SEAL_SLOTS are present/absent. Needs
+    only a PEW credential, never the producing SFE client's."""
+    identity(request)
+    r = closure.get_seal(conn, envelope_id)
+    if not r:
+        raise HTTPException(404, f"unknown seal {envelope_id}")
+    return r
+
+
+@app.get("/api/v1/fossil/encounters/{encounter_id}/seal")
+def get_encounter_seals(encounter_id: str, request: Request,
+                        run_id: str | None = None, conn=Depends(get_conn)):
+    """The seal(s) attached to an encounter."""
+    identity(request)
+    return {"encounter_id": encounter_id,
+            "seals": closure.list_seals_for_encounter(conn, encounter_id, run_id)}
+
+
 # ---------------------------------------------------------------- wiki
 @app.get("/wiki", response_class=HTMLResponse)
 @app.get("/wiki/{page:path}", response_class=HTMLResponse)
