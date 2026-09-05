@@ -80,9 +80,213 @@ DEFAULT_LEASE_S = 30.0
 # resource enforcement classes (section 12): never fabricate precision.
 ENFORCEMENT = ("enforceable", "measured", "estimated", "unavailable")
 
+# ---------------------------------------------------------------------------
+# v6 SCIENTIFIC PROVENANCE VOCABULARIES
+#
+# All closed sets (DFX-4: scientific control configuration fails closed). The
+# one deliberate exception is a family's manifest and an experiment's spec,
+# which stay freeform because they are the experimenter's own payload.
+# ---------------------------------------------------------------------------
+SCIENCE_PROFILES = ("off", "warn", "strict")
+
+FAMILY_KINDS = frozenset({"campaign", "analysis", "comparison", "selection"})
+FAMILY_MEMBER_KINDS = frozenset({"experiment", "analysis", "world", "claim"})
+FAMILY_ROLES = frozenset({"planned", "executed", "abandoned",
+                          "selected", "alternative"})
+
+CLAIM_STATUSES = frozenset({"SUPPORTED", "SUCCESSFUL_NEGATIVE",
+                            "INCONCLUSIVE", "RETRACTED"})
+
+# COMPOSITIONAL, never an ordinal. Two replication ladders were proposed two
+# loops apart on different axes (sequence/terminal/distribution/ranking/
+# phenotype, then resampling/world-distribution/landscape/implementation/
+# player-build/full). Encoding either as a rank would hard-code a taxonomy that
+# has already moved once. Independent booleans survive the taxonomy changing,
+# and any ladder anyone prefers is derivable from them.
+REPLICATION_DIMENSIONS = frozenset({
+    "resampled_noise",      # same world, new draws from the same noise process
+    "new_world_draws",      # new worlds from the same generator
+    "new_landscape",        # a different problem landscape
+    "reimplemented",        # the procedure rewritten independently
+    "rebuilt_player",       # the agent/player rebuilt, not merely re-seeded
+    "independent_team",     # executed by people who did not run the original
+})
+
+# What a declared unit of analysis may be. Counting distinct units under one of
+# these keys is COUNTING; it is what separates n=128 from n=8 when 128
+# observations come from 8 worlds.
+UNITS_OF_ANALYSIS = frozenset({"observation", "experiment", "world",
+                               "seed_root", "topology_group"})
+
+# The executed-side attestation columns (v6). The engine already held the
+# REQUESTED configuration -- spec_hash, sealed at commit -- and never held the
+# executed side, so a run that quietly used a different config was
+# indistinguishable from a faithful one.
+ATTESTATION_FIELDS = ("executed_config_hash", "entry_state_hash",
+                      "player_identity_hash", "measurement_identity_hash")
+
+# Findings that FAIL the call under --science-profile strict. Everything else
+# is reported in every non-off profile and blocks in none: a finding blocks
+# only when it contradicts a declaration the caller itself sealed.
+_STRICT_BLOCKING_CLAIM = frozenset({"CLAIM_CITES_NON_ANALYSIS",
+                                    "TRANSPORT_OVERREACH"})
+
+# World fields the engine can actually SEE change across a fork. An
+# intervention naming anything else is opaque and the engine says nothing --
+# silence is the honest answer, not a green light.
+_ENGINE_VISIBLE_INTERVENTIONS = ("seed_root", "sharing_policy",
+                                 "topology_group")
+
+
+def _normalize_replication(rep):
+    """Validate a compositional replication declaration. Absent is NOT False:
+    a dimension the claimant did not mention was not asserted either way, and
+    recording it as False would manufacture a negative claim."""
+    if rep is None:
+        return {}
+    if not isinstance(rep, dict):
+        raise ValidationError("replication must be an object of "
+                              "dimension -> bool",
+                              allowed=sorted(REPLICATION_DIMENSIONS))
+    unknown = sorted(set(rep) - REPLICATION_DIMENSIONS)
+    if unknown:
+        raise ValidationError(
+            "unknown replication dimension(s); the set is closed on purpose "
+            "so that a claim of replication means the same thing to every "
+            "reader", unknown=unknown,
+            allowed=sorted(REPLICATION_DIMENSIONS))
+    bad = sorted(k for k, v in rep.items() if not isinstance(v, bool))
+    if bad:
+        raise ValidationError("replication dimensions are booleans", bad=bad)
+    return {k: v for k, v in sorted(rep.items())}
+
+
+def _as_set(v):
+    if v is None:
+        return None
+    if isinstance(v, (list, tuple, set)):
+        return {json.dumps(x, sort_keys=True) for x in v}
+    if isinstance(v, dict):
+        return {json.dumps([k, v[k]], sort_keys=True) for k in sorted(v)}
+    return {json.dumps(v, sort_keys=True)}
+
+
+def _transport_findings(transport_domain, analysis_spec) -> list:
+    """Is the asserted claim domain wider than the domain actually tested?
+
+    A containment check over two DECLARATIONS. The engine asserts nothing about
+    whether a result transports -- it only reports that the claimant said it
+    holds somewhere they never tested, which is arithmetic on sets."""
+    tested = analysis_spec.get("tested_domain") if isinstance(
+        analysis_spec, dict) else None
+    t, d = _as_set(transport_domain), _as_set(tested)
+    if t is None:
+        return []
+    if d is None:
+        return [{"code": "TRANSPORT_UNCHECKABLE",
+                 "message": "a transport_domain was claimed but the cited "
+                            "analysis declares no tested_domain, so the "
+                            "engine cannot compare them"}]
+    excess = sorted(t - d)
+    if excess:
+        return [{"code": "TRANSPORT_OVERREACH", "excess": excess,
+                 "message": "the claimed transport domain includes values the "
+                            "cited analysis never tested"}]
+    return []
+
+
+def _normalize_attestation(att) -> dict:
+    """Accept EITHER the executed config itself (the engine hashes it with the
+    same canonicalization that produced spec_hash, so a faithful executor
+    matches by construction) OR a precomputed hash for an executor that will
+    not disclose its config."""
+    if att is None:
+        return {}
+    if not isinstance(att, dict):
+        raise ValidationError("attestation must be an object")
+    known = set(ATTESTATION_FIELDS) | {"executed_config"}
+    unknown = sorted(set(att) - known)
+    if unknown:
+        raise ValidationError("unknown attestation field(s)", unknown=unknown,
+                              allowed=sorted(known))
+    if "executed_config" in att and "executed_config_hash" in att:
+        raise ValidationError(
+            "send executed_config OR executed_config_hash, not both: two "
+            "sources for one fact is exactly the ambiguity this closes")
+    out = {}
+    if "executed_config" in att:
+        out["executed_config_hash"] = content_hash(att["executed_config"])
+    for f in ATTESTATION_FIELDS:
+        if f in att:
+            v = att[f]
+            if not isinstance(v, str) or not v.strip():
+                raise ValidationError("attestation values are non-empty "
+                                      "strings", field=f)
+            out[f] = v
+    return out
+
+
+def _intervention_finding(parent_row, child_spec, child_values):
+    """NO_EFFECTIVE_INTERVENTION: the cheapest honest check in the release.
+
+    Interventions were recorded VERBATIM in WORLD_FORKED and nowhere else, so a
+    perturbation that changed nothing was indistinguishable from one that
+    worked -- a mistake that has actually been made and caught by hand. Two
+    deterministic tests, no statistics:
+
+      1. a DECLARED before/after pair whose content hashes are equal;
+      2. every engine-visible field the intervention names already holding the
+         parent's value in the child.
+
+    Where an intervention names something the engine cannot see, the engine
+    returns nothing rather than a reassurance it has not earned."""
+    iv = child_spec.get("interventions") or {}
+    if not isinstance(iv, dict) or not iv:
+        return None
+    eff = child_spec.get("intervention_effect")
+    if isinstance(eff, dict) and "before" in eff and "after" in eff:
+        bh, ah = content_hash(eff["before"]), content_hash(eff["after"])
+        if bh == ah:
+            return {"code": "NO_EFFECTIVE_INTERVENTION",
+                    "basis": "declared_before_after",
+                    "before_hash": bh, "after_hash": ah,
+                    "message": "the declared before/after states are "
+                               "byte-identical: this intervention changed "
+                               "nothing"}
+        return None
+    visible = [k for k in _ENGINE_VISIBLE_INTERVENTIONS if k in iv]
+    if not visible:
+        return None
+    not_applied = [k for k in visible if child_values.get(k) != iv[k]]
+    if not_applied:
+        return {"code": "INTERVENTION_NOT_APPLIED", "fields": not_applied,
+                "message": "the intervention declares a value the forked "
+                           "child does not actually carry"}
+    inert = [k for k in visible if child_values.get(k) == parent_row[k]]
+    if inert and len(visible) == len(iv):
+        if len(inert) == len(visible):
+            return {"code": "NO_EFFECTIVE_INTERVENTION",
+                    "basis": "engine_visible_fields", "fields": inert,
+                    "message": "every field this intervention names already "
+                               "holds the parent's value in the child"}
+        return {"code": "PARTIALLY_INERT_INTERVENTION", "fields": inert,
+                "message": "some fields this intervention names already hold "
+                           "the parent's value in the child"}
+    return None
+
 
 class Foundry:
-    def __init__(self, db_path: str):
+    def __init__(self, db_path: str, *, science_profile: str = "warn"):
+        """science_profile grades the v6 provenance checks: off | warn | strict.
+
+        It defaults to "warn" because a check nobody sees is a check nobody
+        acts on, and warn cannot break a caller -- it only adds keys. "off" is
+        a genuine control arm: the checks are not computed at all, so an
+        off/warn A/B measures the feature rather than two different engines."""
+        if science_profile not in SCIENCE_PROFILES:
+            raise ValueError("science_profile must be one of %s"
+                             % (SCIENCE_PROFILES,))
+        self.science_profile = science_profile
         self.store = Store(db_path)
         self.store.initialize()
 
@@ -692,7 +896,8 @@ class Foundry:
 
     def complete_work(self, work_id: str, worker_id: str, result: dict, *,
                       claim_id: Optional[str] = None,
-                      client_id: Optional[str] = None) -> dict:
+                      client_id: Optional[str] = None,
+                      attestation: Optional[dict] = None) -> dict:
         """Idempotent, exactly-once completion (I3, T7). If already completed
         under THIS claim attempt, the stored result is returned; any other
         attempt -- a distinct worker, or a STALE lease whose claim_id was
@@ -730,6 +935,18 @@ class Foundry:
                             "authoritative and was not replaced",
                             work_id=work_id, stored_result_hash=r["result_hash"],
                             submitted_result_hash=incoming)
+                    att_r = _normalize_attestation(attestation)
+                    ech = att_r.get("executed_config_hash")
+                    if ech is not None and r["executed_config_hash"] \
+                            is not None and ech != r["executed_config_hash"]:
+                        raise ConflictError(
+                            "this work item is already COMPLETED under a "
+                            "DIFFERENT executed-config attestation; the stored "
+                            "attestation is authoritative and was not replaced",
+                            work_id=work_id,
+                            stored_executed_config_hash=r[
+                                "executed_config_hash"],
+                            submitted_executed_config_hash=ech)
                     return _work_dict(r)          # idempotent replay
                 raise ConflictError("work already completed by another claim "
                                     "attempt", work_id=work_id,
@@ -743,14 +960,63 @@ class Foundry:
                     work_id=work_id, status=r["status"],
                     claimed_by=r["claimed_by"])
             rhash = content_hash(result)
+            att = _normalize_attestation(attestation)
+            # v6: the engine has always held the REQUESTED configuration --
+            # spec_hash, sealed at commit and order-proved by committed_seq. It
+            # never held the EXECUTED side, so a worker that ran a different
+            # config returned a result the ledger could not distinguish from a
+            # faithful one. Comparing two hashes closes that; the engine
+            # understands none of the parameters involved.
+            ex = cx.execute("SELECT exp_id, spec_hash FROM experiments "
+                            "WHERE work_id=?", (work_id,)).fetchone()
+            finding = None
+            if self.science_profile != "off" and ex is not None:
+                ech = att.get("executed_config_hash")
+                if ech is None:
+                    finding = {"code": "NO_EXECUTION_ATTESTATION",
+                               "exp_id": ex["exp_id"],
+                               "requested_config_hash": ex["spec_hash"],
+                               "message": "the result carries no executed-"
+                                          "config attestation, so it cannot be "
+                                          "checked against the sealed spec"}
+                elif ech != ex["spec_hash"]:
+                    finding = {"code": "CONFIG_DIVERGENCE",
+                               "exp_id": ex["exp_id"],
+                               "requested_config_hash": ex["spec_hash"],
+                               "executed_config_hash": ech,
+                               "message": "the executor attests to a "
+                                          "configuration that is not the one "
+                                          "sealed at commit"}
+                if self.science_profile == "strict" and finding is not None:
+                    raise ConflictError(
+                        "science-profile=strict: " + finding["message"],
+                        work_id=work_id, **{k: v for k, v in finding.items()
+                                            if k != "message"})
             cx.execute("UPDATE work_items SET status='COMPLETED', result=?, "
-                       "result_hash=?, completed_ts=?, updated_ts=? "
-                       "WHERE work_id=?",
-                       (json.dumps(result), rhash, now(), now(), work_id))
+                       "result_hash=?, executed_config_hash=?, "
+                       "entry_state_hash=?, player_identity_hash=?, "
+                       "measurement_identity_hash=?, completed_ts=?, "
+                       "updated_ts=? WHERE work_id=?",
+                       (json.dumps(result), rhash,
+                        att.get("executed_config_hash"),
+                        att.get("entry_state_hash"),
+                        att.get("player_identity_hash"),
+                        att.get("measurement_identity_hash"),
+                        now(), now(), work_id))
+            payload = {"attested": bool(att)}
+            if att:
+                payload["attestation"] = att
+            if finding is not None:
+                payload["finding"] = finding
             events.append(cx, r["world_id"], "WORK_COMPLETED", actor=worker_id,
-                          refs={"work_id": work_id, "result_hash": rhash})
-            return _work_dict(cx.execute("SELECT * FROM work_items WHERE "
-                                         "work_id=?", (work_id,)).fetchone())
+                          refs={"work_id": work_id, "result_hash": rhash},
+                          payload=payload)
+            out = _work_dict(cx.execute("SELECT * FROM work_items WHERE "
+                                        "work_id=?", (work_id,)).fetchone())
+            if self.science_profile != "off":
+                out["science"] = {"profile_findings":
+                                  [] if finding is None else [finding]}
+            return out
 
     def fail_work(self, work_id: str, worker_id: str, error: str, *,
                   retry: bool = True, claim_id: Optional[str] = None,
@@ -1197,6 +1463,9 @@ class Foundry:
                           commit: bool = True,
                           enqueue: bool = False, kind: str = "experiment",
                           priority: int = 100,
+                          unit_of_analysis: Optional[str] = None,
+                          declared_n: Optional[int] = None,
+                          source_set: Optional[list] = None,
                           idem_key: Optional[str] = None,
                           request_hash: Optional[str] = None) -> dict:
         """REGISTER an experiment and (by default) COMMIT it atomically in the
@@ -1214,6 +1483,36 @@ class Foundry:
             raise ValidationError(
                 "enqueue requires commit: an experiment cannot be released for "
                 "execution without crossing the commit boundary")
+        # v6: an ANALYSIS is an experiment that declares a SOURCE SET. It is
+        # deliberately not a parallel object stack -- an analysis has a
+        # specification, is sealed by spec_hash, crosses the same irreversible
+        # commit boundary, and must not be edited after its result is known.
+        # Those are the properties the experiment lifecycle already provides,
+        # and a second stack would have had to reimplement every one of them.
+        # The DURABLE marker is source_set_hash, not the work item's kind: kind
+        # only exists once an experiment is committed with enqueue, so a
+        # registered-but-uncommitted analysis would otherwise have no identity.
+        if source_set is not None:
+            if not isinstance(source_set, list):
+                raise ValidationError("source_set must be a list of ids")
+            if unit_of_analysis is None:
+                raise ValidationError(
+                    "an analysis with a source_set must declare a "
+                    "unit_of_analysis",
+                    allowed=sorted(UNITS_OF_ANALYSIS))
+        if (unit_of_analysis is not None or declared_n is not None) \
+                and source_set is None:
+            raise ValidationError(
+                "unit_of_analysis/declared_n describe a source_set; supply one")
+        source_set_hash = None
+        if source_set is not None:
+            # ORDER-INDEPENDENT and WORLD-INDEPENDENT: the same evidentiary base
+            # hashes identically no matter who assembled it or in what order,
+            # which is what makes "these two analyses used the same sources" a
+            # comparison rather than a claim.
+            source_set_hash = content_hash(sorted(
+                x if isinstance(x, str) else json.dumps(x, sort_keys=True)
+                for x in source_set))
         eid = new_id("experiment")
         out = {"exp_id": eid, "work_id": None, "committed_seq": None}
         blocked_info = None
@@ -1231,10 +1530,36 @@ class Foundry:
                                refs={"exp_id": eid, "hyp_id": hyp_id,
                                      "pred_id": pred_id})
             cx.execute("INSERT INTO experiments(exp_id,world_id,hyp_id,pred_id,"
-                       "spec,spec_hash,created_ts,created_seq) "
-                       "VALUES(?,?,?,?,?,?,?,?)",
+                       "spec,spec_hash,unit_of_analysis,declared_n,"
+                       "source_set_hash,created_ts,created_seq) "
+                       "VALUES(?,?,?,?,?,?,?,?,?,?,?)",
                        (eid, world_id, hyp_id, pred_id, json.dumps(spec),
-                        content_hash(spec), now(), ev["event_seq"]))
+                        content_hash(spec), unit_of_analysis, declared_n,
+                        source_set_hash, now(), ev["event_seq"]))
+            if source_set_hash is not None:
+                ver = {"unit_of_analysis": unit_of_analysis,
+                       "declared_n": declared_n,
+                       "source_set_hash": source_set_hash,
+                       "profile": self.science_profile}
+                if self.science_profile != "off":
+                    ver.update(self._verify_units(
+                        cx, r["client_id"], unit_of_analysis, source_set))
+                    ver["unit_mismatch"] = (
+                        declared_n is not None
+                        and declared_n != ver["verified_n"])
+                    if self.science_profile == "strict" and ver["unit_mismatch"]:
+                        raise ValidationError(
+                            "science-profile=strict: declared_n does not match "
+                            "the number of distinct units the engine counted "
+                            "in the source set",
+                            unit_of_analysis=unit_of_analysis,
+                            declared_n=declared_n,
+                            verified_n=ver["verified_n"],
+                            sources_unresolved=ver["sources_unresolved"])
+                events.append(cx, world_id, "ANALYSIS_REGISTERED",
+                              actor=r["client_id"], refs={"exp_id": eid},
+                              payload=ver)
+                out["analysis"] = ver
             if hyp_id:
                 self._edge(cx, world_id, r["client_id"], "hypothesis", hyp_id,
                            "experiment", eid, "TESTS")
@@ -1999,16 +2324,606 @@ class Foundry:
                 cx.execute("INSERT INTO budgets(world_id,limits,consumed,"
                            "updated_ts) VALUES(?,?,?,?)",
                            (cwid, plimits["limits"], json.dumps({}), now()))
+                # v6 NO_EFFECTIVE_INTERVENTION. Computed BEFORE the event so
+                # the finding is sealed in the chain, not merely returned.
+                finding = None
+                if self.science_profile != "off":
+                    finding = _intervention_finding(
+                        parent, spec,
+                        {"seed_root": int(sroot), "sharing_policy": pol,
+                         "topology_group": spec.get(
+                             "topology_group", parent["topology_group"])})
+                    if finding is not None \
+                            and finding["code"] == "NO_EFFECTIVE_INTERVENTION" \
+                            and (spec.get("intervention_effective") is True
+                                 or self.science_profile == "strict"):
+                        # Warn by default; REJECT when the fork's own manifest
+                        # declares the intervention effective. The engine is
+                        # not overruling a scientist -- it is refusing to
+                        # record a fork whose declaration contradicts its own
+                        # arithmetic.
+                        raise ValidationError(
+                            "fork declares an effective intervention that "
+                            "changed nothing: " + finding["message"],
+                            world_id=world_id, **{k: v for k, v in
+                                                  finding.items()
+                                                  if k != "message"})
+                fpayload = {"fork_point": fork_point,
+                            "parent_head": fork_head,
+                            "interventions": spec.get("interventions", {})}
+                if finding is not None:
+                    fpayload["finding"] = finding
                 # the child's FIRST event chains onto the parent's fork head
                 events.append(cx, cwid, "WORLD_FORKED", actor=parent["client_id"],
                               refs={"parent_world": world_id,
                                     "checkpoint_id": checkpoint_id},
                               artifacts=inherited_hashes,
-                              payload={"fork_point": fork_point,
-                                       "parent_head": fork_head,
-                                       "interventions": spec.get("interventions",
-                                                                 {})})
-                out.append(self.get_world(cwid, parent["client_id"]))
+                              payload=fpayload)
+                child = self.get_world(cwid, parent["client_id"])
+                if self.science_profile != "off":
+                    child["science"] = {"profile_findings":
+                                        [] if finding is None else [finding]}
+                out.append(child)
+        return out
+
+    # ================= v6 scientific provenance =========================
+    #
+    # ONE rule governs everything in this section: the engine compares HASHES,
+    # COUNTS distinct things, and checks CONTAINMENT of declared sets. It never
+    # computes a variance, fits a model, chooses an estimator, or judges whether
+    # a design was adequate. Where an answer would need statistical
+    # interpretation the engine records the DECLARATION and the PROVENANCE and
+    # stops -- the scientist keeps the science.
+    #
+    # Every check here is graded by ONE flag, --science-profile:
+    #   off    -- not computed, not recorded, not reported. A true control arm:
+    #             the engine behaves exactly as v5 did.
+    #   warn   -- computed and reported (in the response AND sealed in the
+    #             event), never blocking. The default.
+    #   strict -- the same findings, but a finding that contradicts a sealed
+    #             declaration fails the call.
+    # warn and strict agree on every FACT and differ only in CONSEQUENCE, which
+    # is what makes an off/warn/strict A/B a fair test rather than two engines.
+
+    def _sci(self) -> str:
+        return self.science_profile
+
+    @staticmethod
+    def _member_scope(cx, member_kind: str, member_id: str, client_id: str):
+        """Resolve a family member to (world_id, owning_client), or None.
+
+        A member owned by a DIFFERENT client resolves to None rather than
+        raising: a family is cross-world by construction, and an engine that
+        answered "access denied" here would turn family membership into an
+        existence oracle for another client's substrate (I5)."""
+        if member_kind == "world":
+            r = cx.execute("SELECT world_id, client_id FROM worlds WHERE "
+                           "world_id=?", (member_id,)).fetchone()
+            if r is None or r["client_id"] != client_id:
+                return None
+            return r["world_id"]
+        if member_kind in ("experiment", "analysis"):
+            r = cx.execute(
+                "SELECT e.world_id AS world_id, w.client_id AS client_id, "
+                "e.source_set_hash AS ssh FROM experiments e "
+                "JOIN worlds w ON w.world_id = e.world_id WHERE e.exp_id=?",
+                (member_id,)).fetchone()
+            if r is None or r["client_id"] != client_id:
+                return None
+            if member_kind == "analysis" and r["ssh"] is None:
+                raise ValidationError(
+                    "member_kind='analysis' but this experiment carries no "
+                    "source_set_hash; an analysis is an experiment REGISTERED "
+                    "with a source set (see create_experiment source_set)",
+                    exp_id=member_id)
+            return r["world_id"]
+        if member_kind == "claim":
+            r = cx.execute("SELECT client_id FROM claims WHERE claim_id=?",
+                           (member_id,)).fetchone()
+            if r is None or r["client_id"] != client_id:
+                return None
+            return None          # a claim belongs to no single world (v6)
+        raise ValidationError("unknown member_kind", member_kind=member_kind,
+                              allowed=sorted(FAMILY_MEMBER_KINDS))
+
+    def create_family(self, *, client_id: str, kind: str, manifest: dict,
+                      name: Optional[str] = None) -> dict:
+        """Create a CROSS-WORLD scientific container and seal its manifest.
+
+        This is the first container in the engine that is not world-scoped, and
+        that is the whole reason it exists: a campaign, an analysis family, a
+        comparison or a selection spans worlds BY DEFINITION, so no amount of
+        per-world lineage can express one. Without it, "the survivor of twelve"
+        and "the only one I ran" are the same record.
+
+        The manifest is FREEFORM and OPAQUE -- the engine hashes it, never reads
+        it -- with exactly one convention it does read: an integer under
+        `planned_members` (or `planned_experiments`) is compared against the
+        members actually recorded, which is counting, not judgement.
+
+        manifest_hash is sealed at creation and never rewritten. A family whose
+        declared extent grows after the results are in is precisely the failure
+        this makes visible."""
+        if kind not in FAMILY_KINDS:
+            raise ValidationError("unknown family kind", kind=kind,
+                                  allowed=sorted(FAMILY_KINDS))
+        if not isinstance(manifest, dict):
+            raise ValidationError("manifest must be an object")
+        fid = new_id("family")
+        mh = content_hash(manifest)
+        ts = now()
+        with self.store.write() as cx:
+            if cx.execute("SELECT 1 FROM clients WHERE client_id=?",
+                          (client_id,)).fetchone() is None:
+                raise NotFound("unknown client", client_id=client_id)
+            body = dict(manifest)
+            if name is not None:
+                body = {**manifest, "_name": name}
+            cx.execute("INSERT INTO families(family_id,client_id,kind,manifest,"
+                       "manifest_hash,state,created_ts) "
+                       "VALUES(?,?,?,?,?,'OPEN',?)",
+                       (fid, client_id, kind, json.dumps(body), mh, ts))
+            events.append_foundry(cx, "FAMILY_CREATED", actor=client_id,
+                                  scope_kind="family", scope_id=fid,
+                                  payload={"kind": kind, "manifest_hash": mh,
+                                           "engine_source_hash":
+                                               release.ENGINE_SOURCE_HASH})
+        return {"family_id": fid, "kind": kind, "state": "OPEN",
+                "manifest_hash": mh, "created_ts": ts}
+
+    def _family_row(self, cx, family_id: str, client_id: Optional[str]):
+        r = cx.execute("SELECT * FROM families WHERE family_id=?",
+                       (family_id,)).fetchone()
+        if r is None:
+            raise NotFound("unknown family", family_id=family_id)
+        if client_id is not None and r["client_id"] != client_id:
+            raise AccessDenied("family belongs to another client",
+                               family_id=family_id)
+        return r
+
+    def add_family_member(self, family_id: str, *, member_kind: str,
+                          member_id: str, role: Optional[str] = None,
+                          client_id: Optional[str] = None) -> dict:
+        """Attach one member. Idempotent on (family, kind, id): re-adding with
+        the SAME role is a no-op replay; re-adding with a DIFFERENT role is a
+        409, because a member silently moving from `alternative` to `selected`
+        after the fact is exactly the rewrite this table exists to prevent."""
+        if member_kind not in FAMILY_MEMBER_KINDS:
+            raise ValidationError("unknown member_kind",
+                                  member_kind=member_kind,
+                                  allowed=sorted(FAMILY_MEMBER_KINDS))
+        if role is not None and role not in FAMILY_ROLES:
+            raise ValidationError("unknown role", role=role,
+                                  allowed=sorted(FAMILY_ROLES))
+        ts = now()
+        with self.store.write() as cx:
+            fam = self._family_row(cx, family_id, client_id)
+            if fam["state"] != "OPEN":
+                raise InvalidTransition("family is CLOSED; membership is sealed",
+                                        family_id=family_id)
+            owner = fam["client_id"]
+            prior = cx.execute(
+                "SELECT role FROM family_members WHERE family_id=? AND "
+                "member_kind=? AND member_id=?",
+                (family_id, member_kind, member_id)).fetchone()
+            if prior is not None:
+                if prior["role"] == role:
+                    return {"family_id": family_id, "member_kind": member_kind,
+                            "member_id": member_id, "role": role,
+                            "already_member": True}
+                raise ConflictError(
+                    "member already in this family under a DIFFERENT role; "
+                    "membership roles are append-only",
+                    family_id=family_id, member_id=member_id,
+                    recorded_role=prior["role"], submitted_role=role)
+            wid = self._member_scope(cx, member_kind, member_id, owner)
+            if wid is None and member_kind != "claim":
+                raise NotFound(
+                    "member not found in this client's substrate",
+                    member_kind=member_kind, member_id=member_id)
+            cx.execute("INSERT INTO family_members(family_id,member_kind,"
+                       "member_id,world_id,role,created_ts) VALUES(?,?,?,?,?,?)",
+                       (family_id, member_kind, member_id, wid, role, ts))
+            events.append_foundry(cx, "FAMILY_MEMBER_ADDED", actor=owner,
+                                  scope_kind="family", scope_id=family_id,
+                                  payload={"member_kind": member_kind,
+                                           "member_id": member_id,
+                                           "world_id": wid, "role": role})
+        return {"family_id": family_id, "member_kind": member_kind,
+                "member_id": member_id, "world_id": wid, "role": role,
+                "already_member": False}
+
+    def close_family(self, family_id: str, *,
+                     client_id: Optional[str] = None) -> dict:
+        with self.store.write() as cx:
+            fam = self._family_row(cx, family_id, client_id)
+            if fam["state"] == "CLOSED":
+                return {"family_id": family_id, "state": "CLOSED",
+                        "already_closed": True}
+            cx.execute("UPDATE families SET state='CLOSED' WHERE family_id=?",
+                       (family_id,))
+            events.append_foundry(cx, "FAMILY_CLOSED", actor=fam["client_id"],
+                                  scope_kind="family", scope_id=family_id,
+                                  payload={})
+        return {"family_id": family_id, "state": "CLOSED",
+                "already_closed": False}
+
+    def get_family(self, family_id: str, *,
+                   client_id: Optional[str] = None) -> dict:
+        """The family plus its provenance census.
+
+        `selection_visible` is the property the whole table was added for: a
+        family that records BOTH a selected member and at least one alternative
+        makes best-of-N legible. One selected member and no alternatives is not
+        a lie, but it is not a selection family either, and the engine says so
+        rather than letting the reader assume."""
+        cx = self.store.read()
+        fam = self._family_row(cx, family_id, client_id)
+        rows = cx.execute(
+            "SELECT member_kind, member_id, world_id, role, created_ts "
+            "FROM family_members WHERE family_id=? ORDER BY created_ts, "
+            "member_id", (family_id,)).fetchall()
+        members = [{"member_kind": r["member_kind"], "member_id": r["member_id"],
+                    "world_id": r["world_id"], "role": r["role"],
+                    "created_ts": r["created_ts"]} for r in rows]
+        by_role: dict = {}
+        by_kind: dict = {}
+        for m in members:
+            by_role[m["role"] or "unspecified"] = \
+                by_role.get(m["role"] or "unspecified", 0) + 1
+            by_kind[m["member_kind"]] = by_kind.get(m["member_kind"], 0) + 1
+        worlds = {m["world_id"] for m in members if m["world_id"]}
+        manifest = json.loads(fam["manifest"])
+        out = {"family_id": family_id, "client_id": fam["client_id"],
+               "kind": fam["kind"], "state": fam["state"],
+               "manifest": manifest, "manifest_hash": fam["manifest_hash"],
+               "created_ts": fam["created_ts"],
+               "members": members, "member_count": len(members),
+               "by_role": by_role, "by_kind": by_kind,
+               "worlds_spanned": len(worlds),
+               "selection_visible": by_role.get("selected", 0) >= 1
+                                    and by_role.get("alternative", 0) >= 1}
+        if self._sci() != "off":
+            out["science"] = self._family_findings(manifest, members, by_role)
+        return out
+
+    @staticmethod
+    def _family_findings(manifest: dict, members: list, by_role: dict) -> dict:
+        """Declared extent vs recorded extent. Pure counting."""
+        findings = []
+        planned = manifest.get("planned_members",
+                               manifest.get("planned_experiments"))
+        if isinstance(planned, bool) or not isinstance(planned, int):
+            planned = None
+        if planned is not None:
+            recorded = len(members)
+            if recorded != planned:
+                findings.append({
+                    "code": "FAMILY_EXTENT_DIVERGENCE",
+                    "declared_members": planned, "recorded_members": recorded,
+                    "message": "the manifest declared an extent the recorded "
+                               "membership does not match"})
+        if by_role.get("selected", 0) > 1:
+            findings.append({
+                "code": "MULTIPLE_SELECTED",
+                "selected": by_role["selected"],
+                "message": "more than one member is marked selected; a "
+                           "best-of-N family has exactly one survivor"})
+        if by_role.get("selected", 0) == 1 and by_role.get("alternative", 0) == 0:
+            findings.append({
+                "code": "SELECTION_WITHOUT_ALTERNATIVES",
+                "message": "a selected member with no recorded alternatives: "
+                           "the selection is asserted but not visible"})
+        return {"profile_findings": findings,
+                "declared_members": planned,
+                "recorded_members": len(members)}
+
+    def list_families(self, *, client_id: Optional[str] = None,
+                      kind: Optional[str] = None, limit: int = 100) -> list:
+        q = "SELECT family_id, client_id, kind, state, manifest_hash, " \
+            "created_ts FROM families WHERE 1=1"
+        args: list = []
+        if client_id is not None:
+            q += " AND client_id=?"
+            args.append(client_id)
+        if kind is not None:
+            q += " AND kind=?"
+            args.append(kind)
+        q += " ORDER BY created_ts DESC LIMIT ?"
+        args.append(int(limit))
+        return [dict(r) for r in self.store.read().execute(q, args).fetchall()]
+
+    # ---- claims -----------------------------------------------------------
+
+    def create_claim(self, *, client_id: str, estimand: str, status: str,
+                     family_id: Optional[str] = None,
+                     analysis_exp_id: Optional[str] = None,
+                     relevance_floor: Optional[Any] = None,
+                     replication: Optional[dict] = None,
+                     transport_domain: Optional[Any] = None) -> dict:
+        """Record a scientific CLAIM: the assertion, not the data.
+
+        A claim is deliberately NOT a world record. It cites an analysis, which
+        cites observations, which live in worlds -- so binding it to one world
+        would force every multi-world conclusion to pick a world to lie in.
+
+        SUCCESSFUL_NEGATIVE exists because "the effect is bounded below a
+        declared relevance floor" is a POSITIVE result. Today it can only be
+        stored as SURVIVED (ambiguous with "the hypothesis stood") or
+        INCONCLUSIVE (which destroys exactly the information that makes it
+        valuable). The engine stores the conclusion the experimenter reached;
+        it does not judge whether their equivalence test was valid. It enforces
+        exactly one thing, in every profile: SUCCESSFUL_NEGATIVE without a
+        declared relevance_floor is incoherent, because the claim is ABOUT the
+        floor.
+
+        `replication` is COMPOSITIONAL and never an ordinal. The L0-L4 and L1-L6
+        ladders proposed two loops apart were on different axes; encoding either
+        as a rank would hard-code a taxonomy that has already moved once. A dict
+        of independent, individually-checkable dimensions survives the taxonomy
+        changing, and any ladder anyone prefers can be derived from it later."""
+        if status not in CLAIM_STATUSES:
+            raise ValidationError("unknown claim status", status=status,
+                                  allowed=sorted(CLAIM_STATUSES))
+        if status == "RETRACTED":
+            raise ValidationError(
+                "a claim is RETRACTED by retract_claim, never born retracted")
+        if not isinstance(estimand, str) or not estimand.strip():
+            raise ValidationError("estimand must be a non-empty string")
+        if status == "SUCCESSFUL_NEGATIVE" and relevance_floor is None:
+            raise ValidationError(
+                "SUCCESSFUL_NEGATIVE requires a declared relevance_floor: the "
+                "claim is that the effect is bounded BELOW something, and "
+                "without the bound there is no claim",
+                status=status)
+        rep = _normalize_replication(replication)
+        cid_ = new_id("claim")
+        ts = now()
+        findings: list = []
+        with self.store.write() as cx:
+            if cx.execute("SELECT 1 FROM clients WHERE client_id=?",
+                          (client_id,)).fetchone() is None:
+                raise NotFound("unknown client", client_id=client_id)
+            if family_id is not None:
+                self._family_row(cx, family_id, client_id)
+            awid = None
+            if analysis_exp_id is not None:
+                a = cx.execute(
+                    "SELECT e.world_id AS world_id, e.spec AS spec, "
+                    "e.source_set_hash AS ssh, w.client_id AS client_id "
+                    "FROM experiments e JOIN worlds w ON w.world_id=e.world_id "
+                    "WHERE e.exp_id=?", (analysis_exp_id,)).fetchone()
+                if a is None or a["client_id"] != client_id:
+                    raise NotFound("unknown analysis experiment",
+                                   analysis_exp_id=analysis_exp_id)
+                awid = a["world_id"]
+                if self._sci() != "off":
+                    if a["ssh"] is None:
+                        findings.append({
+                            "code": "CLAIM_CITES_NON_ANALYSIS",
+                            "analysis_exp_id": analysis_exp_id,
+                            "message": "the cited experiment declares no "
+                                       "source set, so the claim's evidentiary "
+                                       "base is not recorded"})
+                    findings.extend(_transport_findings(
+                        transport_domain, json.loads(a["spec"])))
+            if self._sci() != "off" and status == "SUPPORTED" and not rep:
+                findings.append({
+                    "code": "NO_REPLICATION_DECLARED",
+                    "message": "a SUPPORTED claim declares no replication "
+                               "dimensions; the engine records this and "
+                               "enforces nothing"})
+            if self._sci() == "strict":
+                blocking = [f for f in findings
+                            if f["code"] in _STRICT_BLOCKING_CLAIM]
+                if blocking:
+                    raise ValidationError(
+                        "science-profile=strict: claim contradicts its own "
+                        "declarations", findings=blocking)
+            body = {"estimand": estimand, "status": status,
+                    "family_id": family_id, "analysis_exp_id": analysis_exp_id,
+                    "relevance_floor": relevance_floor, "replication": rep,
+                    "transport_domain": transport_domain}
+            ch = content_hash(body)
+            cx.execute(
+                "INSERT INTO claims(claim_id,client_id,family_id,"
+                "analysis_exp_id,analysis_world_id,estimand,status,"
+                "relevance_floor,replication,transport_domain,content_hash,"
+                "created_ts) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)",
+                (cid_, client_id, family_id, analysis_exp_id, awid, estimand,
+                 status,
+                 None if relevance_floor is None else json.dumps(relevance_floor),
+                 json.dumps(rep),
+                 None if transport_domain is None else json.dumps(transport_domain),
+                 ch, ts))
+            events.append_foundry(cx, "CLAIM_RECORDED", actor=client_id,
+                                  scope_kind="claim", scope_id=cid_,
+                                  payload={"status": status,
+                                           "family_id": family_id,
+                                           "analysis_exp_id": analysis_exp_id,
+                                           "content_hash": ch,
+                                           "findings": findings,
+                                           "engine_source_hash":
+                                               release.ENGINE_SOURCE_HASH})
+        out = {"claim_id": cid_, "status": status, "content_hash": ch,
+               "family_id": family_id, "analysis_exp_id": analysis_exp_id,
+               "analysis_world_id": awid, "replication": rep,
+               "created_ts": ts}
+        if self._sci() != "off":
+            out["science"] = {"profile_findings": findings}
+        return out
+
+    def get_claim(self, claim_id: str, *,
+                  client_id: Optional[str] = None) -> dict:
+        r = self.store.read().execute("SELECT * FROM claims WHERE claim_id=?",
+                                      (claim_id,)).fetchone()
+        if r is None:
+            raise NotFound("unknown claim", claim_id=claim_id)
+        if client_id is not None and r["client_id"] != client_id:
+            raise AccessDenied("claim belongs to another client",
+                               claim_id=claim_id)
+        return _claim_dict(r)
+
+    def list_claims(self, *, client_id: Optional[str] = None,
+                    family_id: Optional[str] = None,
+                    status: Optional[str] = None, limit: int = 100) -> list:
+        q, args = "SELECT * FROM claims WHERE 1=1", []
+        if client_id is not None:
+            q += " AND client_id=?"
+            args.append(client_id)
+        if family_id is not None:
+            q += " AND family_id=?"
+            args.append(family_id)
+        if status is not None:
+            q += " AND status=?"
+            args.append(status)
+        q += " ORDER BY created_ts DESC LIMIT ?"
+        args.append(int(limit))
+        return [_claim_dict(r)
+                for r in self.store.read().execute(q, args).fetchall()]
+
+    def retract_claim(self, claim_id: str, *, reason: str,
+                      client_id: Optional[str] = None) -> dict:
+        """RETRACTED is a transition, never an origin state, and the original
+        content_hash is preserved: a retraction records that a claim was made
+        and withdrawn, which is a different fact from the claim never existing."""
+        if not isinstance(reason, str) or not reason.strip():
+            raise ValidationError("a retraction requires a reason")
+        with self.store.write() as cx:
+            r = cx.execute("SELECT * FROM claims WHERE claim_id=?",
+                           (claim_id,)).fetchone()
+            if r is None:
+                raise NotFound("unknown claim", claim_id=claim_id)
+            if client_id is not None and r["client_id"] != client_id:
+                raise AccessDenied("claim belongs to another client",
+                                   claim_id=claim_id)
+            if r["status"] == "RETRACTED":
+                return _claim_dict(r)
+            cx.execute("UPDATE claims SET status='RETRACTED' WHERE claim_id=?",
+                       (claim_id,))
+            events.append_foundry(cx, "CLAIM_RETRACTED", actor=r["client_id"],
+                                  scope_kind="claim", scope_id=claim_id,
+                                  payload={"reason": reason[:500],
+                                           "prior_status": r["status"],
+                                           "content_hash": r["content_hash"]})
+            return _claim_dict(cx.execute(
+                "SELECT * FROM claims WHERE claim_id=?", (claim_id,)).fetchone())
+
+    # ---- analysis (an experiment with a declared source set) ---------------
+
+    def _verify_units(self, cx, client_id: str, unit: str,
+                      source_set: list) -> dict:
+        """COUNT the distinct units under a declared key. Counting, not
+        statistics -- and it is the difference between n=128 and n=8 when 128
+        observations come from 8 worlds.
+
+        A source owned by another client resolves to `unresolved` rather than
+        raising, for the same isolation reason as _member_scope. That has a
+        useful side effect: a cross-client analysis silently undercounts, and
+        the declared-vs-verified check then makes the undercount visible."""
+        if unit not in UNITS_OF_ANALYSIS:
+            raise ValidationError("unknown unit_of_analysis", unit=unit,
+                                  allowed=sorted(UNITS_OF_ANALYSIS))
+        units, unresolved = set(), 0
+        for sid in source_set:
+            if not isinstance(sid, str):
+                unresolved += 1
+                continue
+            row = None
+            if sid.startswith("obs_"):
+                row = cx.execute(
+                    "SELECT o.world_id AS world_id, o.exp_id AS exp_id, "
+                    "o.obs_id AS obs_id, w.client_id AS client_id, "
+                    "w.seed_root AS seed_root, w.topology_group AS tg "
+                    "FROM observations o JOIN worlds w ON w.world_id=o.world_id "
+                    "WHERE o.obs_id=?", (sid,)).fetchone()
+            elif sid.startswith("exp_"):
+                row = cx.execute(
+                    "SELECT e.world_id AS world_id, e.exp_id AS exp_id, "
+                    "NULL AS obs_id, w.client_id AS client_id, "
+                    "w.seed_root AS seed_root, w.topology_group AS tg "
+                    "FROM experiments e JOIN worlds w ON w.world_id=e.world_id "
+                    "WHERE e.exp_id=?", (sid,)).fetchone()
+            elif sid.startswith("wld_"):
+                row = cx.execute(
+                    "SELECT world_id, NULL AS exp_id, NULL AS obs_id, "
+                    "client_id, seed_root, topology_group AS tg "
+                    "FROM worlds WHERE world_id=?", (sid,)).fetchone()
+            if row is None or row["client_id"] != client_id:
+                unresolved += 1
+                continue
+            key = {"observation": row["obs_id"], "experiment": row["exp_id"],
+                   "world": row["world_id"], "seed_root": row["seed_root"],
+                   "topology_group": row["tg"]}[unit]
+            if key is None:
+                unresolved += 1
+                continue
+            units.add(key)
+        return {"verified_n": len(units), "sources_submitted": len(source_set),
+                "sources_unresolved": unresolved}
+
+    def analysis_report(self, world_id: str, exp_id: str, *,
+                        client_id: Optional[str] = None) -> dict:
+        """The SEALED verification, read back from the ledger rather than
+        recomputed. The engine stores the source set's HASH, not the set, so
+        there is nothing to recompute from -- and that is the honest design: the
+        verification is a fact recorded at registration inside the world's hash
+        chain, not a number regenerated later from state that may have moved."""
+        cx = self.store.read()
+        self._authorize(cx, world_id, client_id)
+        ex = cx.execute("SELECT * FROM experiments WHERE exp_id=? AND "
+                        "world_id=?", (exp_id, world_id)).fetchone()
+        if ex is None:
+            raise NotFound("experiment not in this world", exp_id=exp_id)
+        if ex["source_set_hash"] is None:
+            raise NotFound(
+                "this experiment is not an analysis: it declares no source set",
+                exp_id=exp_id)
+        ev = cx.execute(
+            "SELECT payload FROM events WHERE world_id=? AND "
+            "event_type='ANALYSIS_REGISTERED' AND refs LIKE ? "
+            "ORDER BY world_index DESC LIMIT 1",
+            (world_id, '%"' + exp_id + '"%')).fetchone()
+        sealed = json.loads(ev["payload"]) if ev is not None else {}
+        return {"exp_id": exp_id, "world_id": world_id,
+                "unit_of_analysis": ex["unit_of_analysis"],
+                "declared_n": ex["declared_n"],
+                "source_set_hash": ex["source_set_hash"],
+                "spec_hash": ex["spec_hash"],
+                "committed_seq": ex["committed_seq"],
+                "sealed_verification": sealed}
+
+    # ---- work attestation --------------------------------------------------
+
+    def work_attestation(self, work_id: str, *,
+                         client_id: Optional[str] = None) -> dict:
+        """What the EXECUTOR said it ran, beside what the engine SEALED.
+
+        The engine holds the requested configuration already -- spec_hash, frozen
+        at commit and order-proved by committed_seq. What it never had was the
+        executed side, so a run that quietly used a different config produced a
+        result indistinguishable from a faithful one. Three hashes and a
+        comparison close that; the engine understands none of the parameters."""
+        cx = self.store.read()
+        r = cx.execute("SELECT * FROM work_items WHERE work_id=?",
+                       (work_id,)).fetchone()
+        if r is None:
+            raise NotFound("unknown work item", work_id=work_id)
+        if client_id is not None:
+            self._authorize(cx, r["world_id"], client_id)
+        ex = cx.execute("SELECT exp_id, spec_hash FROM experiments WHERE "
+                        "work_id=?", (work_id,)).fetchone()
+        att = {f: r[f] for f in ATTESTATION_FIELDS}
+        out = {"work_id": work_id, "world_id": r["world_id"],
+               "status": r["status"], "result_hash": r["result_hash"],
+               "exp_id": None if ex is None else ex["exp_id"],
+               "requested_config_hash": None if ex is None else ex["spec_hash"],
+               "attestation": att,
+               "attested": any(v is not None for v in att.values())}
+        if ex is not None and att["executed_config_hash"] is not None:
+            out["config_match"] = (att["executed_config_hash"] == ex["spec_hash"])
+        else:
+            out["config_match"] = None
         return out
 
     # ================= measurements ====================================
@@ -2261,6 +3176,10 @@ def _experiment_dict(r) -> dict:
             "work_id": r["work_id"], "state": r["state"],
             "committed_seq": r["committed_seq"],
             "committed_ts": r["committed_ts"],
+            "unit_of_analysis": r["unit_of_analysis"],
+            "declared_n": r["declared_n"],
+            "source_set_hash": r["source_set_hash"],
+            "is_analysis": r["source_set_hash"] is not None,
             "created_ts": r["created_ts"], "created_seq": r["created_seq"]}
 
 
@@ -2283,4 +3202,20 @@ def _work_dict(r) -> dict:
             "lease_expires": r["lease_expires"], "heartbeat_ts": r["heartbeat_ts"],
             "result": json.loads(r["result"]) if r["result"] else None,
             "result_hash": r["result_hash"], "error": r["error"],
-            "dedup_key": r["dedup_key"]}
+            "dedup_key": r["dedup_key"],
+            "attestation": {f: r[f] for f in ATTESTATION_FIELDS}}
+
+
+def _claim_dict(r) -> dict:
+    return {"claim_id": r["claim_id"], "client_id": r["client_id"],
+            "family_id": r["family_id"],
+            "analysis_exp_id": r["analysis_exp_id"],
+            "analysis_world_id": r["analysis_world_id"],
+            "estimand": r["estimand"], "status": r["status"],
+            "relevance_floor": json.loads(r["relevance_floor"])
+                               if r["relevance_floor"] else None,
+            "replication": json.loads(r["replication"])
+                           if r["replication"] else {},
+            "transport_domain": json.loads(r["transport_domain"])
+                                if r["transport_domain"] else None,
+            "content_hash": r["content_hash"], "created_ts": r["created_ts"]}

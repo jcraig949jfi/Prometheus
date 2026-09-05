@@ -191,17 +191,40 @@ class EngineClient:
 
     def experiment(self, wid, spec: dict, *, hyp_id=None, pred_id=None,
                    commit: bool = True, enqueue: bool = False,
-                   kind: str = "experiment", priority: int = 100) -> dict:
+                   kind: str = "experiment", priority: int = 100,
+                   unit_of_analysis: Optional[str] = None,
+                   declared_n: Optional[int] = None,
+                   source_set: Optional[list] = None) -> dict:
         """Register an experiment. commit=True (default) crosses the irreversible
         COMMIT boundary in the same call: it freezes the spec, CLOSES the
         prospective-prediction window, debits the experiment budget, and (with
         enqueue) releases it for execution. commit=False registers a plan only
         (no budget, window still open, non-executable) -- commit it later with
-        commit_experiment()."""
+        commit_experiment().
+
+        v6 -- ANALYSIS. Supplying unit_of_analysis + declared_n + source_set
+        (all three, or none) registers this experiment as an ANALYSIS. The
+        engine hashes the source set (order- and world-independent), COUNTS the
+        distinct units under your declared key, and reports its count beside
+        your declared_n in the returned `analysis` block. It never decides
+        which number is scientifically right -- counting is not statistics --
+        but 128 observations drawn from 8 worlds are n=8 under
+        unit_of_analysis="world" and n=128 under "observation", and the engine
+        will tell you which one your source set actually contains.
+
+        Only the set's HASH is stored. Put the set itself in `spec` if you want
+        it recoverable; there spec_hash seals it at commit."""
         return self._req("POST", f"/v2/worlds/{wid}/experiments", {
             "spec": spec, "hyp_id": hyp_id, "pred_id": pred_id,
             "commit": commit, "enqueue": enqueue, "kind": kind,
-            "priority": priority})
+            "priority": priority, "unit_of_analysis": unit_of_analysis,
+            "declared_n": declared_n, "source_set": source_set})
+
+    def analysis(self, wid, exp_id: str) -> dict:
+        """The SEALED unit-of-analysis verification for an analysis, read back
+        from the world's hash chain rather than recomputed."""
+        return self._req("GET",
+                         f"/v2/worlds/{wid}/experiments/{exp_id}/analysis")
 
     def commit_experiment(self, wid, exp_id: str, *, enqueue: bool = False,
                           kind: str = "experiment", priority: int = 100) -> dict:
@@ -286,10 +309,126 @@ class EngineClient:
                           "lease_s": lease_s})
 
     def complete(self, work_id: str, worker_id: str, claim_id: str,
-                 result: dict):
+                 result: dict, *, attestation: Optional[dict] = None):
+        """v6 -- ATTESTATION. The engine has always held the REQUESTED
+        configuration (spec_hash, sealed at commit) and never the executed one,
+        so a run that quietly used different parameters returned a result the
+        ledger could not tell from a faithful one.
+
+        Pass attestation={"executed_config": <the config you actually ran>} and
+        the engine hashes it with the SAME canonicalization that produced
+        spec_hash -- so a faithful executor matches by construction and needs
+        to do nothing special. Send "executed_config_hash" instead if you will
+        not disclose the config; never both. The other three optional fields
+        are "entry_state_hash" (what state the player ENTERED the world
+        holding), "player_identity_hash" (which build of the agent) and
+        "measurement_identity_hash" (which scorer/regime)."""
         return self._req("POST", f"/v2/work/{work_id}/complete",
                          {"worker_id": worker_id, "claim_id": claim_id,
-                          "result": result})
+                          "result": result, "attestation": attestation})
+
+    def attestation(self, work_id: str) -> dict:
+        """What the executor said it ran, beside what the engine sealed."""
+        return self._req("GET", f"/v2/work/{work_id}/attestation")
+
+    # ---- v6 families: the first CROSS-WORLD scientific container -----------
+    #
+    # Every other scientific object carries a world_id, which is right for a
+    # ledger and makes a campaign, an analysis family or a comparison
+    # inexpressible -- they span worlds by definition. Without this, "the
+    # survivor of twelve" and "the only one I ran" are the same record.
+
+    def family(self, kind: str, manifest: Optional[dict] = None, *,
+               name: Optional[str] = None) -> dict:
+        """kind: campaign | analysis | comparison | selection.
+
+        The manifest is freeform and sealed by hash at creation. One convention
+        the engine reads: an integer `planned_members` is compared against what
+        you actually record, so a declared extent that grew after the results
+        came in becomes visible."""
+        return self._req("POST", "/v2/families",
+                         {"kind": kind, "manifest": manifest or {},
+                          "name": name})
+
+    def family_member(self, family_id: str, member_kind: str, member_id: str,
+                      *, role: Optional[str] = None) -> dict:
+        """member_kind: experiment | analysis | world | claim.
+        role: planned | executed | abandoned | selected | alternative.
+
+        Roles are APPEND-ONLY: re-adding the same member under a different role
+        is a 409. A member quietly moving from `alternative` to `selected`
+        after the fact is the rewrite this table exists to prevent."""
+        return self._req("POST", f"/v2/families/{family_id}/members",
+                         {"member_kind": member_kind, "member_id": member_id,
+                          "role": role})
+
+    def get_family(self, family_id: str) -> dict:
+        """The family plus its provenance census, including
+        `selection_visible` -- true only when BOTH a selected member and at
+        least one alternative are recorded. A survivor with no recorded losers
+        is not a lie, but it is not a visible selection either."""
+        return self._req("GET", f"/v2/families/{family_id}")
+
+    def list_families(self, *, kind: Optional[str] = None,
+                      limit: int = 100) -> list:
+        q = f"/v2/families?limit={limit}" + (f"&kind={kind}" if kind else "")
+        return self._req("GET", q)["families"]
+
+    def close_family(self, family_id: str) -> dict:
+        """Seal membership. A CLOSED family accepts no further members."""
+        return self._req("POST", f"/v2/families/{family_id}/close")
+
+    # ---- v6 claims --------------------------------------------------------
+
+    def record_claim(self, estimand: str, status: str, *,
+                     family_id: Optional[str] = None,
+                     analysis_exp_id: Optional[str] = None,
+                     relevance_floor: Optional[Any] = None,
+                     replication: Optional[dict] = None,
+                     transport_domain: Optional[Any] = None) -> dict:
+        """The scientific assertion -- deliberately NOT a world record, because
+        it cites an analysis, which cites observations, which live in worlds.
+
+        status: SUPPORTED | SUCCESSFUL_NEGATIVE | INCONCLUSIVE.
+        SUCCESSFUL_NEGATIVE exists because "the effect is bounded below a
+        declared relevance floor" is a POSITIVE result that could otherwise
+        only be stored as SURVIVED (ambiguous) or INCONCLUSIVE (which destroys
+        the information that made it valuable). It REQUIRES relevance_floor:
+        the claim is about the bound, so without the bound there is no claim.
+
+        replication is COMPOSITIONAL, never an ordinal. Declare any of
+        resampled_noise, new_world_draws, new_landscape, reimplemented,
+        rebuilt_player, independent_team as booleans. An UNDECLARED dimension
+        is not a False -- it was simply not asserted.
+
+        transport_domain is checked for containment against the cited
+        analysis's spec `tested_domain`, if it declares one. The engine asserts
+        nothing about whether a result transports; it reports that you claimed
+        it holds somewhere you never tested."""
+        return self._req("POST", "/v2/claims", {
+            "estimand": estimand, "status": status, "family_id": family_id,
+            "analysis_exp_id": analysis_exp_id,
+            "relevance_floor": relevance_floor, "replication": replication,
+            "transport_domain": transport_domain})
+
+    def get_claim(self, claim_id: str) -> dict:
+        return self._req("GET", f"/v2/claims/{claim_id}")
+
+    def list_claims(self, *, family_id: Optional[str] = None,
+                    status: Optional[str] = None, limit: int = 100) -> list:
+        q = f"/v2/claims?limit={limit}"
+        if family_id:
+            q += f"&family_id={family_id}"
+        if status:
+            q += f"&status={status}"
+        return self._req("GET", q)["claims"]
+
+    def retract_claim(self, claim_id: str, reason: str) -> dict:
+        """RETRACTED is a transition, never an origin state, and the original
+        content_hash is preserved: a claim made and withdrawn is a different
+        fact from a claim that never existed."""
+        return self._req("POST", f"/v2/claims/{claim_id}/retract",
+                         {"reason": reason})
 
     def fail(self, work_id: str, worker_id: str, claim_id: str, error: str,
              retry: bool = True):

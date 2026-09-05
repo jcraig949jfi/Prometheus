@@ -26,7 +26,7 @@ from sfe.errors import (FoundryError, SessionClosed, SessionMalformed,
                         SessionMismatch, SessionRequired, SessionUnknown,
                         WrongSession)
 from sfe.ids import key_fingerprint
-from sfe.runtime import Foundry
+from sfe.runtime import Foundry, SCIENCE_PROFILES
 
 API_VERSION = "v2"
 
@@ -99,6 +99,26 @@ class ExperimentCreate(_Body):
     enqueue: bool = False       # requires commit
     kind: str = "experiment"
     priority: int = 100
+    # ---- v6: an ANALYSIS is an experiment that declares a SOURCE SET -------
+    #
+    # It is deliberately NOT a parallel object stack. An analysis has a
+    # specification, is sealed by a hash, crosses the same irreversible commit
+    # boundary, and must not be edited once its result is known -- every one of
+    # which the experiment lifecycle already provides. A second stack would
+    # have had to reimplement all of them and then be kept in step forever.
+    #
+    # declared_n is DECLARED by the analyst and VERIFIED by the engine, which
+    # counts distinct units under unit_of_analysis. Counting is not statistics,
+    # and it is exactly what separates n=128 from n=8 when 128 observations
+    # come from 8 worlds.
+    #
+    # The engine stores only the SET'S HASH (order- and world-independent). Put
+    # the set itself in `spec` if you want it recoverable -- there spec_hash
+    # seals it. Supply all of these or none; unit_of_analysis is one of
+    # observation | experiment | world | seed_root | topology_group.
+    unit_of_analysis: Optional[str] = None
+    declared_n: Optional[int] = None
+    source_set: Optional[list[Any]] = None
 
 
 class ExperimentCommit(_Body):
@@ -171,6 +191,13 @@ class ForkChild(_Body):
     topology_group: Optional[str] = None
     seed_root: Optional[int] = None
     interventions: dict[str, Any] = Field(default_factory=dict)
+    # v6 NO_EFFECTIVE_INTERVENTION. `intervention_effect` is an optional
+    # before/after pair; if the two hash identically the intervention changed
+    # nothing, which is a hash comparison and not a judgement. Declaring
+    # `intervention_effective: true` makes that finding FATAL -- the engine
+    # will not record a fork whose own manifest contradicts its arithmetic.
+    intervention_effect: Optional[dict[str, Any]] = None
+    intervention_effective: Optional[bool] = None
 
 
 class ForkRequest(_Body):
@@ -199,10 +226,80 @@ class WorkHeartbeat(_Body):
     lease_s: float = 30.0
 
 
+class WorkAttestation(_Body):
+    """What the EXECUTOR says it actually ran.
+
+    The engine has always held the REQUESTED configuration -- spec_hash, sealed
+    at commit and order-proved by committed_seq -- and never held the executed
+    side, so a run that quietly used a different config produced a result the
+    ledger could not tell from a faithful one.
+
+    Send `executed_config` (the engine hashes it with the same canonicalization
+    that produced spec_hash, so a faithful executor matches by construction) OR
+    `executed_config_hash` if you will not disclose the config. Never both."""
+    executed_config: Optional[dict[str, Any]] = None
+    executed_config_hash: Optional[str] = None
+    entry_state_hash: Optional[str] = None       # R3: the state the player
+                                                 # ENTERED the world holding
+    player_identity_hash: Optional[str] = None   # which build of the agent
+    measurement_identity_hash: Optional[str] = None   # which scorer/regime
+
+
+class FamilyCreate(_Body):
+    """v6. The first CROSS-WORLD scientific container.
+
+    Every other scientific table carries world_id NOT NULL, which is right for
+    a ledger but makes a campaign, an analysis family or a comparison
+    inexpressible -- they span worlds by definition. Without this, "the
+    survivor of twelve" and "the only one I ran" are the same record.
+
+    `manifest` is freeform and opaque; the engine hashes it and seals it at
+    creation. It reads exactly one convention: an integer `planned_members`
+    (or `planned_experiments`) is compared against what was actually recorded,
+    which is counting."""
+    kind: str                       # campaign | analysis | comparison | selection
+    manifest: dict[str, Any] = Field(default_factory=dict)
+    name: Optional[str] = None
+
+
+class FamilyMemberAdd(_Body):
+    member_kind: str                # experiment | analysis | world | claim
+    member_id: str
+    role: Optional[str] = None      # planned | executed | abandoned |
+                                    # selected | alternative
+
+
+class ClaimCreate(_Body):
+    """The scientific assertion, deliberately NOT a world record: it cites an
+    analysis, which cites observations, which live in worlds.
+
+    SUCCESSFUL_NEGATIVE exists because "bounded below a declared relevance
+    floor" is a POSITIVE result that could previously only be stored as
+    SURVIVED (ambiguous) or INCONCLUSIVE (which destroys the information that
+    made it valuable). The engine records the conclusion the experimenter
+    reached and judges no equivalence test -- it enforces one structural rule:
+    SUCCESSFUL_NEGATIVE without a relevance_floor is incoherent.
+
+    `replication` is COMPOSITIONAL, never an ordinal."""
+    estimand: str
+    status: str                     # SUPPORTED | SUCCESSFUL_NEGATIVE |
+                                    # INCONCLUSIVE
+    family_id: Optional[str] = None
+    analysis_exp_id: Optional[str] = None
+    relevance_floor: Optional[Any] = None
+    replication: Optional[dict[str, Any]] = None
+    transport_domain: Optional[Any] = None
+
+
+class ClaimRetract(_Body):
+    reason: str
+
+
 class WorkComplete(_Body):
     worker_id: str
     claim_id: str               # H1 fencing token from the claim response
     result: dict[str, Any]
+    attestation: Optional[WorkAttestation] = None
 
 
 class WorkFail(_Body):
@@ -213,7 +310,8 @@ class WorkFail(_Body):
 
 
 def create_app(db_path: str, *, registration_open: bool = True,
-               session_enforcement: str = "advisory") -> FastAPI:
+               session_enforcement: str = "advisory",
+               science_profile: str = "warn") -> FastAPI:
     """session_enforcement:
       "advisory" (default) -- a MISSING session key is allowed and counted.
       "strict"             -- a missing key on a bound session is 428.
@@ -233,6 +331,19 @@ def create_app(db_path: str, *, registration_open: bool = True,
     if session_enforcement not in ("advisory", "strict"):
         raise ValueError("session_enforcement must be advisory|strict")
     app.state.session_enforcement = session_enforcement
+    # v6: one graded flag for the whole scientific-provenance bundle.
+    #   off    -- checks not computed, not recorded, not reported (a true
+    #             control arm: the engine behaves exactly as v5 did)
+    #   warn   -- computed, reported, and SEALED in the event; never blocking
+    #   strict -- the same findings, but one that contradicts a sealed
+    #             declaration fails the call
+    # warn and strict agree on every FACT and differ only in CONSEQUENCE, which
+    # is what makes an off/warn/strict comparison a test of the feature rather
+    # than a comparison of two different engines.
+    if science_profile not in SCIENCE_PROFILES:
+        raise ValueError("science_profile must be one of %s"
+                         % (SCIENCE_PROFILES,))
+    app.state.science_profile = science_profile
 
     @app.middleware("http")
     async def _stamp_release(request, call_next):
@@ -260,11 +371,12 @@ def create_app(db_path: str, *, registration_open: bool = True,
         response.headers["X-SFE-Schema-Version"] = str(SCHEMA_VERSION)
         return response
     # one Foundry to run the schema migration + resolve tokens (short-lived use)
-    boot = Foundry(db_path)
+    boot = Foundry(db_path, science_profile=science_profile)
     boot.close()
 
     def get_foundry():
-        f = Foundry(app.state.db_path)
+        f = Foundry(app.state.db_path,
+                    science_profile=app.state.science_profile)
         try:
             yield f
         finally:
@@ -444,9 +556,17 @@ def create_app(db_path: str, *, registration_open: bool = True,
         # DFX-3: identify the EXACT running instrument, not the product family.
         # engine_source_hash is computed from the loaded source at process
         # start (build-derived, not operator-attested).
+        # v6: the ENFORCEMENT MODES are now on the wire. Two engines could
+        # report an identical engine_source_hash and still behave differently,
+        # because the mode was a launch argument that appeared nowhere in any
+        # response -- so "same build" did not imply "same contract", and a
+        # client could not tell which rules it was actually being judged by.
+        # Build identity answers "what code"; these answer "under what rules".
         return {"api": API_VERSION, "schema_version": SCHEMA_VERSION,
                 "runtime": "serendipity-foundry-sfe",
                 "registration_open": bool(app.state.registration_open),
+                "session_enforcement": app.state.session_enforcement,
+                "science_profile": app.state.science_profile,
                 **release.identity()}
 
     # -- worlds ------------------------------------------------------------
@@ -602,7 +722,10 @@ def create_app(db_path: str, *, registration_open: bool = True,
                                    hyp_id=body.hyp_id, pred_id=body.pred_id,
                                    commit=body.commit,
                                    enqueue=body.enqueue, kind=body.kind,
-                                   priority=body.priority, idem_key=idem,
+                                   priority=body.priority,
+                                   unit_of_analysis=body.unit_of_analysis,
+                                   declared_n=body.declared_n,
+                                   source_set=body.source_set, idem_key=idem,
                                    request_hash=_req_hash("experiments", wid,
                                                           body))
 
@@ -692,6 +815,19 @@ def create_app(db_path: str, *, registration_open: bool = True,
         return {"experiments": f.list_experiments(wid, client_id=cid,
                                                   state=state)}
 
+    @app.get("/v2/worlds/{wid}/experiments/{eid}/analysis")
+    def analysis_report(wid: str, eid: str,
+                        _sess: dict = Depends(session_ctx),
+                        cid: str = Depends(auth),
+                        f: Foundry = Depends(get_foundry)):
+        """The SEALED unit-of-analysis verification, read back from the world's
+        hash chain rather than recomputed. The engine stores the source set's
+        HASH, not the set, so there is nothing to recompute from -- and that is
+        the honest design: the verification is a fact recorded at registration
+        inside the chain, not a number regenerated later from state that may
+        have moved underneath it."""
+        return f.analysis_report(wid, eid, client_id=cid)
+
     @app.get("/v2/worlds/{wid}/experiments/{eid}")
     def get_experiment(wid: str, eid: str, _sess: dict = Depends(session_ctx), cid: str = Depends(auth),
                        f: Foundry = Depends(get_foundry)):
@@ -773,8 +909,90 @@ def create_app(db_path: str, *, registration_open: bool = True,
     @app.post("/v2/work/{work_id}/complete")
     def complete(work_id: str, body: WorkComplete, _sess: dict = Depends(session_ctx), cid: str = Depends(auth),
                  f: Foundry = Depends(get_foundry)):
+        att = None
+        if body.attestation is not None:
+            att = {k: v for k, v in body.attestation.model_dump().items()
+                   if v is not None}
         return f.complete_work(work_id, body.worker_id, body.result,
-                               claim_id=body.claim_id, client_id=cid)
+                               claim_id=body.claim_id, client_id=cid,
+                               attestation=att)
+
+    @app.get("/v2/work/{work_id}/attestation")
+    def work_attestation(work_id: str, _sess: dict = Depends(session_ctx),
+                         cid: str = Depends(auth),
+                         f: Foundry = Depends(get_foundry)):
+        return f.work_attestation(work_id, client_id=cid)
+
+    # -- v6 families: the cross-world scientific container -------------------
+    @app.post("/v2/families")
+    def create_family(body: FamilyCreate, _sess: dict = Depends(session_ctx),
+                      cid: str = Depends(auth),
+                      f: Foundry = Depends(get_foundry)):
+        return f.create_family(client_id=cid, kind=body.kind,
+                               manifest=body.manifest, name=body.name)
+
+    @app.get("/v2/families")
+    def list_families(kind: Optional[str] = None, limit: int = 100,
+                      _sess: dict = Depends(session_ctx),
+                      cid: str = Depends(auth),
+                      f: Foundry = Depends(get_foundry)):
+        return {"families": f.list_families(client_id=cid, kind=kind,
+                                            limit=limit)}
+
+    @app.get("/v2/families/{fid}")
+    def get_family(fid: str, _sess: dict = Depends(session_ctx),
+                   cid: str = Depends(auth),
+                   f: Foundry = Depends(get_foundry)):
+        return f.get_family(fid, client_id=cid)
+
+    @app.post("/v2/families/{fid}/members")
+    def add_family_member(fid: str, body: FamilyMemberAdd,
+                          _sess: dict = Depends(session_ctx),
+                          cid: str = Depends(auth),
+                          f: Foundry = Depends(get_foundry)):
+        return f.add_family_member(fid, member_kind=body.member_kind,
+                                   member_id=body.member_id, role=body.role,
+                                   client_id=cid)
+
+    @app.post("/v2/families/{fid}/close")
+    def close_family(fid: str, _sess: dict = Depends(session_ctx),
+                     cid: str = Depends(auth),
+                     f: Foundry = Depends(get_foundry)):
+        return f.close_family(fid, client_id=cid)
+
+    # -- v6 claims ----------------------------------------------------------
+    @app.post("/v2/claims")
+    def create_claim(body: ClaimCreate, _sess: dict = Depends(session_ctx),
+                     cid: str = Depends(auth),
+                     f: Foundry = Depends(get_foundry)):
+        return f.create_claim(client_id=cid, estimand=body.estimand,
+                              status=body.status, family_id=body.family_id,
+                              analysis_exp_id=body.analysis_exp_id,
+                              relevance_floor=body.relevance_floor,
+                              replication=body.replication,
+                              transport_domain=body.transport_domain)
+
+    @app.get("/v2/claims")
+    def list_claims(family_id: Optional[str] = None,
+                    status: Optional[str] = None, limit: int = 100,
+                    _sess: dict = Depends(session_ctx),
+                    cid: str = Depends(auth),
+                    f: Foundry = Depends(get_foundry)):
+        return {"claims": f.list_claims(client_id=cid, family_id=family_id,
+                                        status=status, limit=limit)}
+
+    @app.get("/v2/claims/{clm}")
+    def get_claim(clm: str, _sess: dict = Depends(session_ctx),
+                  cid: str = Depends(auth),
+                  f: Foundry = Depends(get_foundry)):
+        return f.get_claim(clm, client_id=cid)
+
+    @app.post("/v2/claims/{clm}/retract")
+    def retract_claim(clm: str, body: ClaimRetract,
+                      _sess: dict = Depends(session_ctx),
+                      cid: str = Depends(auth),
+                      f: Foundry = Depends(get_foundry)):
+        return f.retract_claim(clm, reason=body.reason, client_id=cid)
 
     @app.post("/v2/work/{work_id}/fail")
     def fail(work_id: str, body: WorkFail, _sess: dict = Depends(session_ctx), cid: str = Depends(auth),

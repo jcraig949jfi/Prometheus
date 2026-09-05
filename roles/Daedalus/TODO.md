@@ -1,7 +1,7 @@
 # Daedalus — Open Work
 
 **Owner:** Daedalus (maintainer, Serendipity Foundry Engine)
-**Last updated:** 2026-09-05, after Harmonia's independent qualification of session affinity v5 (ACCEPT ON ONE HOST)
+**Last updated:** 2026-09-05, after shipping schema v6 (scientific provenance). Session affinity v5 remains ACCEPT ON ONE HOST.
 **Pointer from:** `roles/Daedalus/RESPONSIBILITIES.md`
 
 This is the standing list of what is NOT done. Items are closed by deleting
@@ -652,6 +652,115 @@ leaker.
 to be organism-independent all the way down — no-effective-intervention hashes,
 then the cross-world edge, then executed-config attestation. Nothing in D7/D8
 gates a second organism, and **the substrate can run one today.**
+
+---
+
+## D10 — SHIPPED 2026-09-05: schema v6, scientific provenance
+
+The point release. Built from D7/D8/D9 with my stated opinions resolved as
+final decisions. **236 tests green** (171 pre-existing + 65 new), migration
+additive, no contract change that forces any client to adapt.
+
+### What shipped, and which recorded item it closes
+
+| Shipped | Closes |
+|---|---|
+| `families` / `family_members`, cross-world, `world_id` NULLABLE | D7's single blocking dependency: the lineage edge that crosses world boundaries. `lineage_edges` is world-scoped and could not express a claim family. |
+| `selection_visible`, `SELECTION_WITHOUT_ALTERNATIVES`, append-only roles | D8 R4/R7: best-of-twelve stays visible as one selection family |
+| `claims` + `SUCCESSFUL_NEGATIVE` + compositional `replication` | D8's epistemic state-machine gap and R8 |
+| `executed_config_hash` + 3 sibling attestations, compared to `spec_hash` | D8 R2, "the largest provenance hole", ranked #3 in the build order |
+| `NO_EFFECTIVE_INTERVENTION` / `INTERVENTION_NOT_APPLIED` | D8's structural change #7, which I said I would rank higher than its position. It shipped first, as recorded. |
+| analysis-as-experiment + unit-of-analysis counting | D9's finding that `analysis_config_hash` was the one of three hashes with **no home in the engine at all** |
+| `session_enforcement` + `science_profile` on `/v2/version` | my own finding: two engines could report an identical `engine_source_hash` and behave differently |
+
+### Decisions I made and would defend
+
+**Analysis is an experiment, not a new object.** An analysis has a spec, is
+sealed by a hash, crosses the same irreversible commit boundary, and must not be
+edited once its result is known. A parallel stack would have reimplemented all
+four and then had to be kept in step forever. The durable marker is
+`source_set_hash`, NOT the work item's `kind` -- `kind` only exists after commit
+with enqueue, so a registered-but-uncommitted analysis would have had no
+identity.
+
+**Replication is compositional, never an ordinal.** D8 already recorded that the
+taxonomy moved once in two loops (L0-L4 on one axis, L1-L6 on another).
+Independent booleans survive that; any ladder is derivable from them. An
+UNDECLARED dimension is not a `false` -- recording it as one would manufacture a
+negative claim nobody made.
+
+**One graded flag, `--science-profile off|warn|strict`, answering the operator's
+"could some of the debated items be flag driven".** `off` is a genuine control
+arm: not computed, not recorded, not reported. That is what makes an off/warn
+A/B measure the FEATURE rather than compare two different engines. `warn` and
+`strict` must agree on every FACT and differ only in CONSEQUENCE, and there is a
+test for exactly that.
+
+**Two rules bind in every profile including `off`**, because they are structural
+coherence and not science: `SUCCESSFUL_NEGATIVE` without a `relevance_floor`,
+and every closed vocabulary.
+
+**Isolation beat diagnosis twice.** A family member or an analysis source owned
+by another client resolves to NOT FOUND / `unresolved`, never to ACCESS DENIED
+-- a denial would make either surface an existence oracle. Useful side effect: a
+cross-client analysis silently undercounts, and the declared-vs-verified check
+then makes the undercount visible.
+
+**Paired tests, and I mutation-checked them.** Every detector is exercised once
+on input that should trip it and once on input that should not. Blinding four
+detectors (intervention, unit count, config comparison, relevance floor) turns
+17 tests red. This is the direct consequence of Harmonia's R-G finding that my
+coverage probe was scoped by the predicate that created the gap it missed.
+
+### What I deliberately did NOT build, and why it is not an omission
+
+**Degenerate-replication detection.** D9 recorded that my own D7 correction --
+fire on identical content hashes, never on computed variance -- is FITTED TO HER
+ORGANISM. Her S3 leaker converged, so hash identity catches it; a leaker that
+does not converge produces correlated-but-not-identical outcomes, visible only
+to variance or correlation, which is on the far side of the boundary. The honest
+response is to state the detector's domain and leave the general case to
+Harmonia, so the detector is not in v6. Documented in
+`docs/SCIENTIFIC_PROVENANCE.md` section 10 rather than hidden.
+
+**Silence on opaque interventions.** Where an intervention names something the
+engine cannot see (noise inside a player, reward shaping), the engine returns
+NOTHING -- not "verified", not "probably fine". A reassurance it has not earned
+would manufacture exactly the looks-good failure D6 catalogues. There is a test
+asserting the silence.
+
+**The independence contract still cannot be verified, only compared.** The
+engine never sees player state and can never know whether a reset happened; it
+checks a DECLARED discipline against an ATTESTED `entry_state_hash`, a claim
+against a claim. Harmonia's S3 Q4 blind spot ships beside it in the doc: a
+CONVERGED leaker enters every world from the same fixed point, so its hashes are
+indistinguishable from an honest reset.
+
+**Nothing statistical.** Multiplicity, null calibration, stopping rules,
+estimator choice, power thresholds, sweep sufficiency, equivalence validity.
+Fields exist; none is enforced. `NO_REPLICATION_DECLARED` is reported and never
+enforced in ANY profile -- strict does not turn a missing declaration into a
+mandate.
+
+### Open after this release
+
+1. **`source_commit` still names the working-tree HEAD of a shared detached
+   checkout.** The live M1 tree sits on another role's commit with other roles'
+   files dirty, and moving its HEAD to publish a truthful `source_commit` is out
+   of my lane. `engine_source_hash` is authoritative and is what consumers must
+   compare. The field's limitation is already documented; this is the second
+   release where it bites.
+2. **`ObservationCreate.replication: bool` (api.py) still ships**, still means
+   the narrow and correct F3 thing (a retest that never re-adjudicates), and
+   still has a name that invites the misreading D8 flagged. The v6 compositional
+   `replication` on CLAIMS now sits beside it. Renaming the observation field
+   would be a contract change; deferred deliberately.
+3. **M2 is still down.** Every cross-engine property in v5 and v6 -- 421
+   WRONG_SESSION, families not spanning engines -- is proven only by in-process
+   twin engines, never by two hosts.
+4. **A second organism.** D9's scheduling note holds and is now stronger:
+   everything in v6 is organism-INDEPENDENT (facts about records, not about
+   dynamics), so nothing here gates one, and the substrate can run one today.
 
 ---
 

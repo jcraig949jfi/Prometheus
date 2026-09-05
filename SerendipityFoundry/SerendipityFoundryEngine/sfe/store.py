@@ -31,7 +31,7 @@ import time
 from pathlib import Path
 from typing import Any, Iterator, Optional
 
-SCHEMA_VERSION = 5
+SCHEMA_VERSION = 6
 
 # The schema is intentionally explicit and constrained: NOT NULLs, CHECK
 # enumerations on lifecycle columns, and foreign keys, so a bad transition or a
@@ -154,6 +154,13 @@ CREATE TABLE IF NOT EXISTS work_items (
     heartbeat_ts  REAL,
     result        TEXT,
     result_hash   TEXT,
+    -- v6 EXECUTED-side attestation. The engine holds the REQUESTED config
+    -- (spec_hash, sealed at commit); these are what the executor says it
+    -- ACTUALLY ran. Divergence is then a hash comparison, not a judgement.
+    executed_config_hash      TEXT,
+    entry_state_hash          TEXT,
+    player_identity_hash      TEXT,
+    measurement_identity_hash TEXT,
     error         TEXT,
     created_ts    REAL NOT NULL,
     updated_ts    REAL NOT NULL,
@@ -207,6 +214,13 @@ CREATE TABLE IF NOT EXISTS experiments (
                                        -- budget and authorizes execution.
                                        -- NULL = REGISTERED (non-executable).
     committed_ts  REAL,
+    -- v6: for kind='analysis'. unit_of_analysis is DECLARED by the analyst and
+    -- VERIFIED by the engine -- counting distinct units under a declared key is
+    -- counting, not statistics, and it is what turns 128 observations over 8
+    -- worlds from n=128 into n=8.
+    unit_of_analysis TEXT,
+    declared_n       INTEGER,
+    source_set_hash  TEXT,
     created_ts  REAL NOT NULL,
     created_seq INTEGER NOT NULL
 );
@@ -310,6 +324,62 @@ CREATE TABLE IF NOT EXISTS budgets (
 -- UNGUESSABLE capability: two clients share it only by deliberate transfer, so
 -- matching topology_group strings alone can never manufacture "bilateral
 -- consent" -- the group must exist here for a cross-client crossing.
+-- v6 SCIENTIFIC PROVENANCE.
+--
+-- families is the FIRST cross-world scientific container. Every other
+-- scientific table carries world_id NOT NULL, which is correct for a ledger
+-- but makes a campaign, an analysis family or a comparison family
+-- inexpressible: they span worlds by definition. Without this, a selected
+-- survivor cannot be attached to the alternatives it was selected from, which
+-- is the provenance that makes best-of-N visible.
+CREATE TABLE IF NOT EXISTS families (
+    family_id     TEXT PRIMARY KEY,
+    client_id     TEXT NOT NULL REFERENCES clients(client_id),
+    kind          TEXT NOT NULL,          -- campaign | analysis | comparison
+    manifest      TEXT NOT NULL,          -- DECLARED intended extent (freeform)
+    manifest_hash TEXT NOT NULL,          -- sealed at creation, immutable
+    state         TEXT NOT NULL DEFAULT 'OPEN'
+                  CHECK (state IN ('OPEN','CLOSED')),
+    created_ts    REAL NOT NULL
+);
+
+-- world_id is NULLABLE here ON PURPOSE: a member may be an analysis or a claim
+-- that belongs to no single world. This is the whole point of the table.
+CREATE TABLE IF NOT EXISTS family_members (
+    family_id   TEXT NOT NULL REFERENCES families(family_id),
+    member_kind TEXT NOT NULL,            -- experiment | analysis | world | claim
+    member_id   TEXT NOT NULL,
+    world_id    TEXT,
+    role        TEXT,                     -- planned | executed | abandoned
+    created_ts  REAL NOT NULL,
+    PRIMARY KEY (family_id, member_kind, member_id)
+);
+CREATE INDEX IF NOT EXISTS ix_family_members ON family_members(family_id, role);
+
+-- A claim is the scientific assertion. It is deliberately NOT a world record:
+-- it cites analyses, which cite observations, which live in worlds.
+CREATE TABLE IF NOT EXISTS claims (
+    claim_id        TEXT PRIMARY KEY,
+    client_id       TEXT NOT NULL REFERENCES clients(client_id),
+    family_id       TEXT REFERENCES families(family_id),
+    analysis_exp_id TEXT,                 -- the kind='analysis' experiment
+    analysis_world_id TEXT,
+    estimand        TEXT NOT NULL,
+    -- SUCCESSFUL_NEGATIVE exists because "the effect is bounded below a
+    -- declared relevance floor" is a POSITIVE result, and collapsing it into
+    -- INCONCLUSIVE destroys exactly the information that makes it valuable.
+    -- The engine stores the conclusion; it does not judge the equivalence test.
+    status          TEXT NOT NULL
+                    CHECK (status IN ('SUPPORTED','SUCCESSFUL_NEGATIVE',
+                                      'INCONCLUSIVE','RETRACTED')),
+    relevance_floor TEXT,
+    replication     TEXT,                 -- COMPOSITIONAL dict, never an ordinal
+    transport_domain TEXT,
+    content_hash    TEXT NOT NULL,
+    created_ts      REAL NOT NULL
+);
+CREATE INDEX IF NOT EXISTS ix_claims_family ON claims(family_id);
+
 CREATE TABLE IF NOT EXISTS topology_groups (
     group_id    TEXT PRIMARY KEY,
     created_by  TEXT NOT NULL REFERENCES clients(client_id),
@@ -410,6 +480,8 @@ class Store:
                 self._migrate_3_to_4(cx)
             if have <= 4:
                 self._migrate_4_to_5(cx)
+            if have <= 5:
+                self._migrate_5_to_6(cx)
             cx.execute("UPDATE meta SET value=? WHERE key='schema_version'",
                        (str(SCHEMA_VERSION),))
 
@@ -479,6 +551,28 @@ class Store:
                        "INTEGER NOT NULL DEFAULT 0")
         cx.execute("CREATE INDEX IF NOT EXISTS ix_obs_pred "
                    "ON observations(world_id, pred_id)")
+
+    @staticmethod
+    def _migrate_5_to_6(cx) -> None:
+        """v5 -> v6 (DAEDALUS 2026-09-05, scientific-provenance point release).
+
+        Purely additive. The new tables are created by the schema script; this
+        adds columns to existing tables. NOTHING is back-filled: a pre-v6 work
+        item has NULL attestation hashes because no executor ever attested
+        anything, and inventing a value would manufacture a provenance claim
+        that was never made -- the same reasoning as the v5 LEGACY sessions."""
+        have = {r["name"] for r in cx.execute(
+            "PRAGMA table_info(work_items)").fetchall()}
+        for col in ("executed_config_hash", "entry_state_hash",
+                    "player_identity_hash", "measurement_identity_hash"):
+            if col not in have:
+                cx.execute("ALTER TABLE work_items ADD COLUMN %s TEXT" % col)
+        have = {r["name"] for r in cx.execute(
+            "PRAGMA table_info(experiments)").fetchall()}
+        if "unit_of_analysis" not in have:
+            cx.execute("ALTER TABLE experiments ADD COLUMN unit_of_analysis TEXT")
+            cx.execute("ALTER TABLE experiments ADD COLUMN declared_n INTEGER")
+            cx.execute("ALTER TABLE experiments ADD COLUMN source_set_hash TEXT")
 
     @staticmethod
     def _migrate_4_to_5(cx) -> None:

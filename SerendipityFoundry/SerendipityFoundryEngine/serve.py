@@ -38,6 +38,13 @@ def main() -> int:
     ap.add_argument("--tls-key", default=None)
     ap.add_argument("--insecure", action="store_true",
                     help="allow a non-loopback bind without TLS (tokens in clear)")
+    ap.add_argument("--science-profile", choices=("off", "warn", "strict"),
+                    default="warn",
+                    help="v6 scientific-provenance checks. off = not computed "
+                         "(a true v5 control arm); warn = computed, reported "
+                         "and sealed in the event, never blocking (default); "
+                         "strict = a finding that contradicts a sealed "
+                         "declaration fails the call.")
     ap.add_argument("--session-enforcement", choices=("advisory", "strict"),
                     default="advisory",
                     help="advisory (default): a missing X-SFE-Session is "
@@ -66,7 +73,8 @@ def main() -> int:
     import uvicorn
     app = create_app(args.db,
                      registration_open=(args.registration == "open"),
-                     session_enforcement=args.session_enforcement)
+                     session_enforcement=args.session_enforcement,
+                     science_profile=args.science_profile)
     scheme = "https" if tls else "http"
     print(f"Serendipity Foundry Engine listening on {scheme}://{args.host}:"
           f"{args.port}  db={args.db}")

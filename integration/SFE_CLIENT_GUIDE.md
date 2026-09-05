@@ -90,7 +90,7 @@ body is never parsed as JSON: `422 model_attributes_type`.
 
 ---
 
-## 3. All 38 routes
+## 3. All 49 routes
 
 Generated from the live `openapi.json`. "Body required" lists required fields;
 `?x&y` means required query parameters.
@@ -145,6 +145,7 @@ Generated from the live `openapi.json`. "Body required" lists required fields;
 | `POST /v2/worlds/{wid}/predictions` | `hyp_id`, `content` |
 | `POST /v2/worlds/{wid}/experiments` | `spec` |
 | `POST /v2/worlds/{wid}/experiments/{eid}/commit` | — |
+| `GET /v2/worlds/{wid}/experiments/{eid}/analysis` | — |
 | `POST /v2/worlds/{wid}/observations` | `exp_id`, `content`, `outcome` |
 | `POST /v2/worlds/{wid}/failures` | `failure_type`, `falsifier`, `violated` |
 | `POST /v2/worlds/{wid}/budget/consume` | `resource`, `amount` |
@@ -157,6 +158,46 @@ Generated from the live `openapi.json`. "Body required" lists required fields;
 | `POST /v2/work/{work_id}/heartbeat` | `worker_id`, `claim_id` |
 | `POST /v2/work/{work_id}/complete` | `worker_id`, `claim_id`, `result` |
 | `POST /v2/work/{work_id}/fail` | `worker_id`, `claim_id`, `error` |
+| `GET /v2/work/{work_id}/attestation` | — |
+
+### Scientific provenance (v6, 2026-09-05)
+
+All additive. Every field below is optional and no existing call changes shape.
+Full reference: **`SerendipityFoundryEngine/docs/SCIENTIFIC_PROVENANCE.md`**.
+
+| Route | Body required |
+|---|---|
+| `POST /v2/families` | `kind` |
+| `GET /v2/families` | — (`?kind&limit`) |
+| `GET /v2/families/{fid}` | — |
+| `POST /v2/families/{fid}/members` | `member_kind`, `member_id` |
+| `POST /v2/families/{fid}/close` | — |
+| `POST /v2/claims` | `estimand`, `status` |
+| `GET /v2/claims` | — (`?family_id&status&limit`) |
+| `GET /v2/claims/{clm}` | — |
+| `POST /v2/claims/{clm}/retract` | `reason` |
+
+A **family** is the first cross-world container in the engine — a campaign,
+comparison or selection spans worlds by definition, and every other scientific
+table declares `world_id NOT NULL`. Without it, "the survivor of twelve" and
+"the only one I ran" are the same record.
+
+Three additive fields on existing calls:
+
+* `POST /v2/worlds/{wid}/experiments` accepts `unit_of_analysis` + `declared_n`
+  + `source_set` (all three or none). That registers the experiment as an
+  **analysis**; the engine hashes the source set and **counts distinct units**
+  under your key. 128 observations from 8 worlds are n=8 under `world` and
+  n=128 under `observation` — it reports both numbers and decides neither.
+* `POST /v2/work/{work_id}/complete` accepts
+  `attestation: {executed_config | executed_config_hash, entry_state_hash,
+  player_identity_hash, measurement_identity_hash}`. The engine compares your
+  executed config against the `spec_hash` it sealed at commit. Send the config
+  and it is hashed with the same canonicalization, so a faithful executor
+  matches by construction.
+* `POST /v2/worlds/{wid}/fork` children accept `intervention_effect:
+  {before, after}` and `intervention_effective`. Identical before/after hashes
+  mean the perturbation changed nothing.
 
 **Every request body is `extra="forbid"` at the top level** — an unknown field
 is a `422`, not a warning. Nested objects (`meta`, `content`, `spec`) are open.
@@ -242,6 +283,21 @@ idempotent.
 Terminating a world does **not** stop artifact writes (still 200); only the
 experiment path enforces `RUNNING`.
 
+**`GET /v2/version` now reports the RULES, not only the build.** Two engines can
+report an identical `engine_source_hash` and still behave differently, because
+the enforcement modes were launch arguments that appeared in no response. Check
+both before you trust a comparison across engines:
+
+| field | M1 today | meaning |
+|---|---|---|
+| `session_enforcement` | `advisory` | `strict` = a missing session key on a bound session is a `428`. A **presented** key is fully judged in both modes. |
+| `science_profile` | `warn` | `off` = v6 checks not computed at all; `warn` = computed, returned and sealed, never blocking; `strict` = a finding that contradicts your own sealed declaration fails the call. |
+
+On `warn`, **nothing you send can be refused by a v6 check.** Findings arrive as
+a `science.profile_findings` list on the response and are sealed into the event
+chain.
+
+
 ---
 
 ## 6. Verify your setup
@@ -264,6 +320,7 @@ readable?
 
 | | |
 |---|---|
+| Scientific provenance: families, claims, analysis, attestation (v6) | `SerendipityFoundry/SerendipityFoundryEngine/docs/SCIENTIFIC_PROVENANCE.md` |
 | Full REST reference, per-route examples | `SerendipityFoundry/SerendipityFoundryClient/docs/API.md` |
 | Connection/TLS/token detail | `SerendipityFoundry/SerendipityFoundryClient/docs/CONNECTING.md` |
 | Integration + Proteus/PEW seam status | `integration/HARMONIA_FIRST_INTEGRATION.md` |
