@@ -1,0 +1,102 @@
+{
+ "all_pass": false,
+ "n": 19,
+ "passed": 16,
+ "gates": [
+  {
+   "gate": "C0_identity_attested",
+   "pass": true,
+   "detail": "db_system_id=7628127204585430828 source_commit=f2e3148e3722 dirty=True"
+  },
+  {
+   "gate": "C1_packet_read",
+   "pass": true,
+   "detail": "GET packets/SP-3138654647ba=200 (was 405), unknown=404"
+  },
+  {
+   "gate": "C2_fossil_attested",
+   "pass": true,
+   "detail": "write=200 attest.db_system_id=7628127204585430828 sfe_anchor_verified=False"
+  },
+  {
+   "gate": "C3_anchor_shape_enforced",
+   "pass": true,
+   "detail": "good=200 bad_hash=422 bad_evid=422"
+  },
+  {
+   "gate": "C4a_correct_bound_anchor_verified",
+   "pass": false,
+   "detail": "verified=False checks={'reason': 'verify_not_configured'}"
+  },
+  {
+   "gate": "C4b_wrong_but_real_rejected",
+   "pass": false,
+   "detail": "verified=False (real event, binds_exp_id=None, entry_hash_matches=None)"
+  },
+  {
+   "gate": "C4c_forged_hash_rejected",
+   "pass": false,
+   "detail": "verified=False entry_hash_matches=None"
+  },
+  {
+   "gate": "C4d_unbound_cannot_verify",
+   "pass": true,
+   "detail": "verified=False (no exp_id/obs_id supplied -> reason=verify_not_configured)"
+  },
+  {
+   "gate": "C5_constraint_kinds",
+   "pass": true,
+   "detail": "HARD=K-58ffd114cccd ADVISORY=K-74091d57ae16"
+  },
+  {
+   "gate": "C6_scope_mandatory",
+   "pass": true,
+   "detail": "scopeless constraint rejected=422 (prevents 'R~=0 here' -> 'never test this')"
+  },
+  {
+   "gate": "C7_errata_transition",
+   "pass": true,
+   "detail": "current_status=REFUTED history=['PROPOSED', 'REFUTED']"
+  },
+  {
+   "gate": "C8_refuted_not_active",
+   "pass": true,
+   "detail": "REFUTED K-74091d57ae16 absent from status=PROPOSED listing (n_proposed=0)"
+  },
+  {
+   "gate": "C9_history_recoverable",
+   "pass": true,
+   "detail": "original PROPOSED event preserved after REFUTED (never mutated)"
+  },
+  {
+   "gate": "C10_seal_written",
+   "pass": true,
+   "detail": "seal=SEAL-617a2cccab07365b7ef9f7f3 inserted=True"
+  },
+  {
+   "gate": "C11_seal_recoverable_sealed",
+   "pass": true,
+   "detail": "seal_valid=True slots_absent=[] bound_fossil=CLOSURE-4ce54f21-ENC"
+  },
+  {
+   "gate": "C12_seal_idempotent",
+   "pass": true,
+   "detail": "re-seal id=SEAL-617a2cccab07365b7ef9f7f3 inserted=False"
+  },
+  {
+   "gate": "C13_content_addressed_tamper_evident",
+   "pass": true,
+   "detail": "changed-slot seal=SEAL-687313cf451d6a27726040ed != SEAL-617a2cccab07365b7ef9f7f3"
+  },
+  {
+   "gate": "C14_unknown_encounter_refused",
+   "pass": true,
+   "detail": "seal of unknown encounter -> 404"
+  },
+  {
+   "gate": "C15_seal_anchor_must_match_fossil",
+   "pass": true,
+   "detail": "conflicting-anchor seal -> 409"
+  }
+ ]
+}

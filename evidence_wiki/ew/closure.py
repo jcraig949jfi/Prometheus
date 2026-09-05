@@ -44,8 +44,14 @@ def source_commit():
             commit = subprocess.run(
                 ["git", "-C", str(_ROOT), "rev-parse", "HEAD"],
                 capture_output=True, text=True, timeout=5).stdout.strip()
+        # Scoped to THIS service's own tree (fixed 2026-09-05). The check used
+        # to run over the whole repository, which on a shared multi-seat
+        # checkout is another seat's experiment ledger churning -- M1 reported
+        # dirty=true permanently for files PEW does not ship. A flag that is
+        # always true cannot distinguish a genuinely undeployed PEW from
+        # background noise, which is exactly what it exists to say.
         st = subprocess.run(
-            ["git", "-C", str(_ROOT), "status", "--porcelain"],
+            ["git", "-C", str(_ROOT), "status", "--porcelain", "--", str(_ROOT)],
             capture_output=True, text=True, timeout=5).stdout
         dirty = bool(st.strip())
     except Exception:

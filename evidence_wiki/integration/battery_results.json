@@ -1,8 +1,8 @@
 {
- "ran_at": "2026-09-04T06:20:27",
- "n_gates": 15,
- "n_scored": 15,
- "n_pass": 15,
+ "ran_at": "2026-09-05T05:38:54",
+ "n_gates": 16,
+ "n_scored": 16,
+ "n_pass": 16,
  "n_skipped": 0,
  "skipped": [],
  "all_pass": true,
@@ -11,13 +11,19 @@
    "gate": "E0_service_reachable",
    "pass": true,
    "skipped": false,
-   "detail": "200 {'service': 'mnemosyne-evidence-wiki', 'status': 'ok', 'schema_version': 4, 'ontology_version': 2, 'fossil_contract': 'pew.fossil.v2'} in 25ms"
+   "detail": "200 {'service': 'mnemosyne-evidence-wiki', 'status': 'ok', 'schema_version': 4, 'ontology_version': 2, 'fossil_contract': 'pew.fossil.v2'} in 4ms"
   },
   {
    "gate": "E1_version_schema_identity",
    "pass": true,
    "skipped": false,
-   "detail": "schema_version=4 ontology_version=2 fossil_contract=pew.fossil.v2 canonical_revision=17114"
+   "detail": "schema_version=4 ontology_version=2 fossil_contract=pew.fossil.v2 canonical_revision=17125"
+  },
+  {
+   "gate": "S2_server_machine_identity",
+   "pass": true,
+   "skipped": false,
+   "detail": "machine=M1 db_system_id=7628127204585430828 expected=7628127204585430828 controls={'M2_as_M2_PASS': True, 'M1_claimed_as_M2_FAIL': True, 'M2_wrong_dbid_FAIL': True, 'header_not_substitute_for_server': True}"
   },
   {
    "gate": "E2a_anchor_writes_accepted",
@@ -77,7 +83,7 @@
    "gate": "E10_no_silent_success",
    "pass": true,
    "skipped": false,
-   "detail": "rejected writes that left rows: none; row count across conflict attempt 1->1; refusals recorded in write_log: 18 kinds"
+   "detail": "rejected writes that left rows: none; row count across conflict attempt 1->1; refusals recorded in write_log: 20 kinds"
   },
   {
    "gate": "E13_batch_idempotent_and_atomic",
@@ -89,7 +95,7 @@
    "gate": "E11_real_run_recorded",
    "pass": true,
    "skipped": false,
-   "detail": "200 inserted encounter=SFEREAL-exp_0f57cf1ed4b095511e213a8f run=exp_0f57cf1ed4b095511e213a8f:wrk_ea195aeb832732164464071b"
+   "detail": "200 duplicate_identical encounter=SFEREAL-exp_0f57cf1ed4b095511e213a8f run=exp_0f57cf1ed4b095511e213a8f:wrk_ea195aeb832732164464071b"
   },
   {
    "gate": "E12_real_run_reconstructable",
