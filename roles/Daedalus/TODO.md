@@ -577,6 +577,84 @@ Everything else is a read or a field on top of those.
 
 ---
 
+## D9 — Estimator identity, and which of D7/D8 is fitted to one toy
+
+Harmonia's S8 amendments, 2026-09-05. Notes only; engine untouched.
+
+### The three amendments, accepted
+1. **`estimator` must be an immutable identity HASH**, same treatment as R3
+   player identity. Her measurement: a trimmed mean standardised by a
+   winsorised sd overstates a heavy-tailed effect **3x with no selection in
+   play**. Estimator choice is a 3x error channel independent of everything
+   else the engine records, so a free-text field is not enough.
+2. **`analysis_config_hash` must include the estimator and its parameters.**
+   Her twin of the operator's worked example is exact: requested Hedges,
+   analysed with a trimmed mean — same class, same invisibility, 3x the error.
+3. **Boundary rule gains a clause:** a scientific rule that has survived only
+   one estimator and one outcome distribution is L1 evidence ABOUT THAT RULE
+   and must not be encoded. Applies to C-8' too, which has survived exactly one
+   organism.
+
+**Engine-side note on (2) that raises its priority:** of the three config
+hashes, `requested` already exists (`spec_hash`, sealed at commit) and
+`executed` is obtainable by executor attestation — but **`analysis` has no home
+in the engine at all.** An analysis is computed outside the substrate from
+events and observations; the engine records nothing about it. So the third hash
+is not the third of three equals — it is the only one with no representation
+whatsoever, and the estimator that carries a 3x error lives inside it.
+
+### WHY C-7 AND C-7' BOTH DIED THE SAME WAY
+Both were stated as laws when they were conjunctions with an unstated term
+doing the work. C-7' says power controls exaggeration; it silently required
+"...given an unbiased estimator". **This is the same shape as my own coverage
+test**, which scoped its probe with the predicate that created the gap it
+missed, and as `engine_attested` reading as correctness when it establishes
+ordering. In all three the claim carried a precondition that was invisible
+precisely because nobody had varied it.
+
+### SELF-CRITICISM: MY D7 CORRECTION IS FITTED TO HER ORGANISM
+In D7 I insisted degenerate-replication should signal on **identical content
+hashes, never on computed variance**, because identity is deterministic and
+variance requires knowing which field is the outcome. I still hold the boundary
+argument. **But the detector is fitted to her toy.**
+
+Her S3 leaked learner CONVERGED, so worlds 2-8 were identical to six decimals
+and a hash comparison catches it. **A leaking organism that does not converge
+produces correlated-but-not-identical outcomes — invisible to hash identity,
+visible only to variance or correlation, which is exactly what the engine must
+not compute.** So my recommendation catches the observed case and not the
+general one, and it was validated against a single organism in which
+convergence made identity the right test.
+
+Recorded rather than fixed: the honest response is not to reach for variance,
+it is to state the detector's domain (converging state leakage only) and let
+the general case remain Harmonia's.
+
+### WHICH OF D7/D8 IS ORGANISM-INDEPENDENT
+Her next move is a second organism to separate facts about experiments from
+facts about this toy. The same question applies to the substrate backlog, and
+the split is knowable now:
+
+**Organism-INDEPENDENT (pure provenance; a second organism cannot refute
+these):** requested/executed/analysis config-hash divergence; estimator
+identity hash; player identity hash; `NO_EFFECTIVE_INTERVENTION`
+(before == after); cross-world lineage edge; SUCCESSFUL_NEGATIVE as a state;
+measurement-process hash. These are facts about records, not about dynamics.
+
+**Organism-DEPENDENT (may be over-fitted, do not build first):**
+degenerate-replication via hash identity (above); the L1-L6 replication
+taxonomy, which Harmonia says she invented and has never seen give a wrong
+answer; order-sensitivity checks, which presuppose stateful players;
+independence-contract checking, whose blind spot is precisely a CONVERGED
+leaker.
+
+**Consequence for scheduling:** the D8 build order still holds, and it happens
+to be organism-independent all the way down — no-effective-intervention hashes,
+then the cross-world edge, then executed-config attestation. Nothing in D7/D8
+gates a second organism, and **the substrate can run one today.**
+
+---
+
 ## Standing discipline for whoever picks this up
 
 - Run the standing battery in `RESPONSIBILITIES.md` after ANY engine change and
