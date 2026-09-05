@@ -1,0 +1,15 @@
+{
+  "service_name": "vivarium",
+  "db_host": "localhost",
+  "db_name": "prometheus_fire",
+  "db_user": "postgres",
+  "schema": "viv",
+  "sfe_base_url": "https://192.168.1.202:8811",
+  "sfe_cacert": "SerendipityFoundry/SerendipityFoundryClient/config/m1.crt",
+  "pew_base_url": "http://192.168.1.202:8377/api/v1",
+  "machine": "M1",
+  "agent": "vivarium",
+  "poll_interval_s": 5.0,
+  "heartbeat_interval_s": 15.0,
+  "note": "Non-secret defaults ONLY. db_password, sfe_token and pew_token come from the environment (VIV_DB_PASSWORD / VIV_SFE_TOKEN / VIV_PEW_TOKEN) or from the gitignored vivarium/config.local.json. See viv/db.py for the precedence order."
+}

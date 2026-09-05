@@ -1,0 +1,48 @@
+============================= test session starts =============================
+platform win32 -- Python 3.12.10, pytest-9.1.1, pluggy-1.6.0 -- H:\Python312\python.exe
+cachedir: .pytest_cache
+hypothesis profile 'default'
+benchmark: 5.3.0 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
+rootdir: F:\Prometheus\vivarium
+plugins: anyio-4.13.0, dash-4.4.1, hypothesis-6.165.10, benchmark-5.3.0
+collecting ... collected 37 items
+
+tests/test_cli.py::test_status_answers_the_operational_questions PASSED  [  2%]
+tests/test_cli.py::test_enqueue_reports_every_reason_a_spec_was_rejected PASSED [  5%]
+tests/test_cli.py::test_status_exits_nonzero_when_something_is_stranded PASSED [  8%]
+tests/test_live_pew.py::test_the_queue_item_is_traceable_all_the_way_into_pew PASSED [ 10%]
+tests/test_live_sfe.py::test_a_real_experiment_runs_once_and_is_traceable PASSED [ 13%]
+tests/test_loop.py::test_one_queued_experiment_executes_once PASSED      [ 16%]
+tests/test_loop.py::test_two_queued_experiments_execute_serially PASSED  [ 18%]
+tests/test_loop.py::test_a_failure_is_preserved_and_the_queue_moves_on PASSED [ 21%]
+tests/test_loop.py::test_a_cancelled_experiment_is_never_executed PASSED [ 24%]
+tests/test_loop.py::test_a_corrupted_stored_spec_fails_without_ever_running PASSED [ 27%]
+tests/test_loop.py::test_a_second_worker_will_not_start_over_a_stranded_row PASSED [ 29%]
+tests/test_loop.py::test_pew_is_written_when_declared PASSED             [ 32%]
+tests/test_loop.py::test_pew_failure_is_not_fatal_unless_the_spec_says_so PASSED [ 35%]
+tests/test_queue.py::test_enqueue_seals_the_hash_and_records_an_event PASSED [ 37%]
+tests/test_queue.py::test_claim_order_is_priority_then_created_at PASSED [ 40%]
+tests/test_queue.py::test_not_before_is_respected PASSED                 [ 43%]
+tests/test_queue.py::test_only_one_experiment_may_be_active_globally PASSED [ 45%]
+tests/test_queue.py::test_concurrent_claim_attempts_do_not_double_run PASSED [ 48%]
+tests/test_queue.py::test_completed_experiment_cannot_be_reclaimed_or_edited PASSED [ 51%]
+tests/test_queue.py::test_failed_experiment_remains_visible_and_is_not_retried PASSED [ 54%]
+tests/test_queue.py::test_cancelled_experiment_does_not_execute PASSED   [ 56%]
+tests/test_queue.py::test_a_claimed_experiment_cannot_be_cancelled PASSED [ 59%]
+tests/test_queue.py::test_illegal_transitions_are_refused_by_the_database PASSED [ 62%]
+tests/test_queue.py::test_the_sealed_request_is_immutable PASSED         [ 64%]
+tests/test_queue.py::test_events_are_append_only PASSED                  [ 67%]
+tests/test_queue.py::test_worker_crash_leaves_reconstructable_state PASSED [ 70%]
+tests/test_queue.py::test_release_never_returns_an_item_to_the_queue PASSED [ 72%]
+tests/test_queue.py::test_enqueue_refuses_a_malformed_specification PASSED [ 75%]
+tests/test_spec.py::test_same_specification_hashes_identically PASSED    [ 78%]
+tests/test_spec.py::test_key_order_does_not_change_the_hash PASSED       [ 81%]
+tests/test_spec.py::test_changed_specification_hashes_differently PASSED [ 83%]
+tests/test_spec.py::test_hash_matches_the_engine_canonicalization PASSED [ 86%]
+tests/test_spec.py::test_malformed_specifications_are_rejected_with_reasons PASSED [ 89%]
+tests/test_spec.py::test_validation_never_repairs_a_spec PASSED          [ 91%]
+tests/test_spec.py::test_outcome_rule_is_applied_mechanically PASSED     [ 94%]
+tests/test_spec.py::test_absent_rule_or_absent_field_is_inconclusive_not_negative PASSED [ 97%]
+tests/test_spec.py::test_pew_block_requires_declared_scientific_identity PASSED [100%]
+
+============================= 37 passed in 5.55s ==============================
