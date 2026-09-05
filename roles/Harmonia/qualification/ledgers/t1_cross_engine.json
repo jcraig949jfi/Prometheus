@@ -1,10 +1,14 @@
 {
  "engine_a": "eng_8a37a5d305969034d488c43e",
- "engine_b": "eng_b38b912862c0f55013eecdc8",
- "build": "sha256:2892116274a09cdc3d6c4e4fbbb405d762120f7bcfdb60720b50924fdc3b5ffa",
- "routes_total": 38,
+ "engine_b": "eng_7e6b3a6141b6d200b3b9463b",
+ "exemption_divergence": {
+  "only_harmonia": [],
+  "only_engine": []
+ },
+ "build": "sha256:2f35868c379a0ecd20c2c2b82bf2b84560c7116b7f424547eca4a605483f9b65",
+ "routes_total": 39,
  "session_scoped": 33,
- "exempt": 5,
+ "exempt": 6,
  "foreign_arm_failures": [],
  "control_arm_failures": [],
  "verify_anchor_exempt_answers": true,
@@ -37,6 +41,15 @@
    "foreign_code": null,
    "control_status": 200,
    "control_code": null
+  },
+  {
+   "method": "POST",
+   "path": "/v2/sessions/{sid}/close",
+   "session_scoped": false,
+   "foreign_status": 404,
+   "foreign_code": "not_found",
+   "control_status": 404,
+   "control_code": "not_found"
   },
   {
    "method": "POST",

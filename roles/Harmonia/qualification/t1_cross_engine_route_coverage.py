@@ -25,14 +25,54 @@ from __future__ import annotations
 
 import argparse
 import json
+import pathlib
 import ssl
 import sys
 import urllib.request
 
+# MY OWN exemption list, with MY OWN reasons. Kept separate from the engine's
+# on purpose: this instrument exists to check the engine, and adopting the
+# engine's declaration as my expectation would make the check circular.
+#
+# But a parallel hand-written list is exactly the R-G defect I raised against
+# the engine's coverage test, so it is not left to drift: --engine-exemptions
+# parses the engine's declared list and any DIVERGENCE is reported for
+# adjudication. Neither list silently wins.
 EXEMPT = {
-    "/v2/version", "/v2/clients", "/v2/sessions", "/v2/topology-groups",
-    "/v2/audit/verify-anchor",
+    ("GET", "/v2/version"):      "liveness/identity, unauthenticated",
+    ("GET", "/v2/openapi.json"): "the contract; must be readable before a "
+                                 "client knows how to send a session at all",
+    ("GET", "/v2/docs"):         "human documentation UI",
+    ("POST", "/v2/clients"):     "bootstrap: mints the bearer token",
+    ("POST", "/v2/sessions"):    "bootstrap: mints the session key itself",
+    ("POST", "/v2/audit/verify-anchor"):
+        "cross-engine BY DESIGN: PEW verifies an anchor it did not produce "
+        "and holds no session. Affinity here would break attestation.",
+    ("POST", "/v2/topology-groups"):
+        "client-scoped capability; touches no world, names no session",
+    ("POST", "/v2/sessions/{sid}/close"):
+        "ownership-gated so the 106 keyless LEGACY sessions stay drainable. "
+        "NB: this is the first exempt route that MUTATES an existing "
+        "resource -- see the observation gate below.",
 }
+
+
+def engine_declared_exemptions(path):
+    """Parse the engine's own EXEMPT declaration WITHOUT importing or executing
+    it. Used only to detect divergence from my list, never to set expectations."""
+    import ast
+    tree = ast.parse(pathlib.Path(path).read_text(encoding="utf-8"))
+    for node in tree.body:
+        if isinstance(node, ast.Assign) and any(
+                getattr(t, "id", "") == "EXEMPT" for t in node.targets):
+            out = set()
+            for k in node.value.keys:
+                try:
+                    out.add(tuple(ast.literal_eval(k)))
+                except Exception:                                  # noqa: BLE001
+                    pass
+            return out
+    return None
 
 
 class Http:
@@ -128,6 +168,10 @@ def main():
     ap.add_argument("--a-url", default="https://192.168.1.202:8811/v2")
     ap.add_argument("--a-cacert", required=True)
     ap.add_argument("--b-url", default="http://127.0.0.1:8899/v2")
+    ap.add_argument("--engine-exemptions", default=None,
+                    help="path to the engine's affinity test file; its declared "
+                         "EXEMPT list is parsed for DIVERGENCE only, never used "
+                         "as this instrument's expectation")
     ap.add_argument("--out", required=True)
     a = ap.parse_args()
 
@@ -197,7 +241,7 @@ def main():
 
     rows, foreign_fail, control_fail = [], [], []
     for method, path in routes:
-        scoped = path not in EXEMPT
+        scoped = (method, path) not in EXEMPT
         body = body_for(spec, comps, method, path)
         if body is not None and "session_id" in body:
             body["session_id"] = sb["session_id"]       # a valid id ON B
@@ -222,6 +266,29 @@ def main():
 
     n_scoped = sum(1 for r in rows if r["session_scoped"])
     n_exempt = len(rows) - n_scoped
+
+    # --- divergence between my exemptions and the engine's ----------------
+    divergence = None
+    if a.engine_exemptions:
+        theirs = engine_declared_exemptions(a.engine_exemptions)
+        if theirs is not None:
+            mine = set(EXEMPT)
+            live = {(m, p) for m, p in routes} | {("GET", "/v2/openapi.json"),
+                                                  ("GET", "/v2/docs")}
+            only_mine = sorted((mine - theirs) & live)
+            only_theirs = sorted((theirs - mine) & live)
+            divergence = {"only_harmonia": only_mine, "only_engine": only_theirs}
+            print("\nEXEMPTION DIVERGENCE (my list vs the "
+                  "engine's declared list)")
+            if not only_mine and not only_theirs:
+                print("  none -- both lists name the same routes")
+            else:
+                for x in only_mine:
+                    print("  exempt for me ONLY   : %s %s" % x)
+                for x in only_theirs:
+                    print("  exempt for engine ONLY: %s %s" % x)
+                print("  -> ADJUDICATE. A route exempt on one side only is an "
+                      "unreviewed decision, whichever side is right.")
 
     print("\nroutes enumerated from live openapi.json : %d" % len(rows))
     print("  session-scoped                         : %d" % n_scoped)
@@ -256,6 +323,7 @@ def main():
 
     ok = (not foreign_fail) and (not control_fail) and va_ok
     out = {"engine_a": a_id, "engine_b": b_id,
+           "exemption_divergence": divergence,
            "build": av.get("engine_source_hash"),
            "routes_total": len(rows), "session_scoped": n_scoped,
            "exempt": n_exempt,

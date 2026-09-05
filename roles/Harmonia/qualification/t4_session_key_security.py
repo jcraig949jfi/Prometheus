@@ -130,17 +130,35 @@ def main():
     # 5. A CLOSED session should be indistinguishable from a never-issued one
     #    at the status-code level. There is no close route on the API surface,
     #    so this cannot be exercised from a client.
-    paths = [p for p in c.call("GET", "/openapi.json")[1]["paths"]]
-    has_close = any("session" in p and ("close" in p or "delete" in p)
-                    for p in paths)
-    R.append({"gate": "T4e_closed_session_indistinguishable_from_unknown",
-              "pass": None, "state": "INDETERMINATE",
-              "detail": "no session-close route is exposed on the API "
-                        "(searched %d paths); SESSION_CLOSED/409 exists in the "
-                        "taxonomy but a client cannot reach it, so the "
-                        "enumeration property was NOT measured" % len(paths)})
-    print("  [INDT] %-46s %s" % ("T4e_closed_session_indistinguishable_from_unknown",
-                                 "no close route exposed; not measurable"))
+    # T4e was INDETERMINATE on build 2892116274: SESSION_CLOSED existed in the
+    # taxonomy but no route could produce it. POST /v2/sessions/{sid}/close
+    # (b35046a60) makes it reachable, so the property is now MEASURED.
+    paths = list(c.call("GET", "/openapi.json")[1]["paths"])
+    if "/v2/sessions/{sid}/close" not in paths:
+        R.append({"gate": "T4e_closed_session_is_409_not_404",
+                  "pass": None, "state": "INDETERMINATE",
+                  "detail": "no session-close route on this build"})
+        print("  [INDT] T4e_closed_session_is_409_not_404  no close route")
+    else:
+        s2 = c.call("POST", "/sessions", {"name": "t4-close"})[1]
+        k2 = s2["session_key"]
+        st_pre, _, _ = c.call("GET", "/worlds", key=k2)
+        st_cl, p_cl, _ = c.call("POST", "/sessions/%s/close" % s2["session_id"])
+        st_use, p_use, _ = c.call("GET", "/worlds", key=k2)
+        st_again, _, _ = c.call("POST", "/sessions/%s/close" % s2["session_id"])
+        gate("T4e_closed_session_is_409_SESSION_CLOSED",
+             st_cl == 200 and st_use == 409 and code(p_use) == "SESSION_CLOSED",
+             "before close=%s, close=%s, key after close=%s %s"
+             % (st_pre, st_cl, st_use, code(p_use)))
+        gate("T4f_close_is_idempotent", st_again == 200,
+             "second close -> %s" % st_again)
+        # A closed session must be DISTINGUISHABLE from a forged one only in
+        # the way the taxonomy intends: 409 vs 401, both refusals, neither
+        # confirming or denying the existence of any other session.
+        gate("T4g_closed_and_unknown_are_different_refusals",
+             st_use == 409 and 401 == c.call("GET", "/worlds",
+                 key="sfes_%s_%s" % (body, secrets.token_urlsafe(24)))[0],
+             "closed=409 SESSION_CLOSED, never-issued=401 SESSION_UNKNOWN")
 
     ok = all(r["pass"] for r in R if r.get("state") != "INDETERMINATE")
     with open(a.out, "w", encoding="utf-8") as f:

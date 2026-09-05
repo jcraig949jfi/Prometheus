@@ -109,7 +109,12 @@ def main():
     ids = {"wid": wid2, "eid": x.get("exp_id", "exp_" + "0" * 24),
            "aid": "sha256:" + "0" * 64, "work_id": "wrk_" + "0" * 24}
     exempt = {"/v2/version", "/v2/clients", "/v2/sessions",
-              "/v2/topology-groups", "/v2/audit/verify-anchor"}
+              "/v2/topology-groups", "/v2/audit/verify-anchor",
+              # added for build 2f35868c: ownership-gated by design so the
+              # keyless LEGACY sessions stay drainable. Probing it with a
+              # placeholder {sid} correctly answers 404, which is not a
+              # coverage hole.
+              "/v2/sessions/{sid}/close"}
     n428 = other = 0
     others = []
     for path, ops in sorted(spec["paths"].items()):

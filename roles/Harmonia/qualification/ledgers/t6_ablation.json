@@ -1,12 +1,12 @@
 {
  "all_pass": true,
  "arms": {
-  "none": "wld_976a6c6d6dddcf4261471d2d",
-  "A": "wld_f2c847d11c097da4b83f13c4",
-  "B": "wld_51165011dd4dd7f5d96ce0a3",
-  "AB": "wld_775de34e52653b3e1f2b5e73"
+  "none": "wld_d6cb89559caab0ce17a50d5a",
+  "A": "wld_7524b51336025118d3be4419",
+  "B": "wld_f472b0ebff66f403c72ae603",
+  "AB": "wld_151cba33cc061c1757027238"
  },
- "checkpoint": "ckp_6fdf1ce6cdcdb050150fa041",
+ "checkpoint": "ckp_3976fee66c0d0c043046aec0",
  "gates": [
   {
    "gate": "T6_1_all_arms_share_one_fork_point",
@@ -16,7 +16,7 @@
   {
    "gate": "T6_2_all_arms_share_one_fork_head",
    "pass": true,
-   "detail": "parent_head=\"sha256:0e3516a0398a618bc4d63f (present=True)"
+   "detail": "parent_head=\"sha256:db86baf414275f108290f0 (present=True)"
   },
   {
    "gate": "T6_3_all_arms_inherit_identical_artifacts",
@@ -51,7 +51,7 @@
   {
    "gate": "T6_9_ablation_pair_differs_by_exactly_one_component",
    "pass": true,
-   "detail": "AB minus B = ['A']; both forked from ckp_6fdf1ce6cdcdb050150fa041"
+   "detail": "AB minus B = ['A']; both forked from ckp_3976fee66c0d0c043046aec0"
   },
   {
    "gate": "T6_10_engine_does_not_verify_the_declared_intervention",

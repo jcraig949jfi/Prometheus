@@ -221,13 +221,19 @@ def main():
              and p2.get("result_hash") == p1.get("result_hash"),
              "second identical completion -> %s, same result_hash=%s"
              % (st2, p2.get("result_hash") == p1.get("result_hash")))
-        gate("C3e_replay_with_a_DIFFERENT_result_does_not_overwrite",
-             p_over.get("result") == p1.get("result") and n_after == n_before,
-             "differing result -> %s, stored result unchanged=%s, new ledger "
-             "events=%d (NB: returns 200 replay, not the 409 the engine's own "
-             "idempotency rule uses for same-key-different-request)"
-             % (st_over, p_over.get("result") == p1.get("result"),
-                n_after - n_before))
+        # UPDATED 2026-09-05 for build 2f35868c (Daedalus b35046a60). This
+        # gate previously measured 200 + the original result, and recorded the
+        # inconsistency with the engine's own "same key, different request ->
+        # 409" idempotency rule. That is now fixed, in ADVISORY mode too, so
+        # the expectation is 409 and the stored result must still be intact.
+        det = p_over.get("detail") if isinstance(p_over.get("detail"), dict) else {}
+        st_read, p_read = c.call("GET", "/worlds/%s/experiments" % w2id)
+        gate("C3e_replay_with_a_DIFFERENT_result_is_409",
+             st_over == 409 and n_after == n_before,
+             "differing result -> %s (%s), new ledger events=%d, detail names "
+             "hashes=%s"
+             % (st_over, det.get("error"), n_after - n_before,
+                any("hash" in k for k in det)))
         st3, p3 = c.call("POST", "/work/%s/complete" % work_id,
                          {"worker_id": me, "claim_id": "clm_" + "0" * 24,
                           "result": {"ok": True}})

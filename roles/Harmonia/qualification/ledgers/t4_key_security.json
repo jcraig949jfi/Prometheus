@@ -23,10 +23,19 @@
    "detail": "created_response_contains_key=True other_responses_echoing=0 echoed_when_used=False"
   },
   {
-   "gate": "T4e_closed_session_indistinguishable_from_unknown",
-   "pass": null,
-   "state": "INDETERMINATE",
-   "detail": "no session-close route is exposed on the API (searched 34 paths); SESSION_CLOSED/409 exists in the taxonomy but a client cannot reach it, so the enumeration property was NOT measured"
+   "gate": "T4e_closed_session_is_409_SESSION_CLOSED",
+   "pass": true,
+   "detail": "before close=200, close=200, key after close=409 SESSION_CLOSED"
+  },
+  {
+   "gate": "T4f_close_is_idempotent",
+   "pass": true,
+   "detail": "second close -> 200"
+  },
+  {
+   "gate": "T4g_closed_and_unknown_are_different_refusals",
+   "pass": true,
+   "detail": "closed=409 SESSION_CLOSED, never-issued=401 SESSION_UNKNOWN"
   }
  ]
 }

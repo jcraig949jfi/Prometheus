@@ -48,7 +48,7 @@
    "gate": "C3d_valid_claim_wrong_worker_refused",
    "pass": true,
    "state": "PASS",
-   "detail": "worker w4 using w3's claim_id -> 409"
+   "detail": "worker w1 using w0's claim_id -> 409"
   },
   {
    "gate": "C3a_first_completion_accepted",
@@ -63,10 +63,10 @@
    "detail": "second identical completion -> 200, same result_hash=True"
   },
   {
-   "gate": "C3e_replay_with_a_DIFFERENT_result_does_not_overwrite",
+   "gate": "C3e_replay_with_a_DIFFERENT_result_is_409",
    "pass": true,
    "state": "PASS",
-   "detail": "differing result -> 200, stored result unchanged=True, new ledger events=0 (NB: returns 200 replay, not the 409 the engine's own idempotency rule uses for same-key-different-request)"
+   "detail": "differing result -> 409 (conflict), new ledger events=0, detail names hashes=True"
   },
   {
    "gate": "C3c_stale_claim_id_refused",
@@ -84,13 +84,13 @@
    "gate": "C5_latency_scales_sublinearly_to_8",
    "pass": true,
    "state": "PASS",
-   "detail": "median latency N=8 is 1.6x N=1 (20.5 ms -> 33.6 ms); linear would be 8x"
+   "detail": "median latency N=8 is 1.2x N=1 (18.0 ms -> 22.0 ms); linear would be 8x"
   }
  ],
  "latency_ms": {
-  "1": 20.5,
-  "2": 8.3,
-  "4": 12.2,
-  "8": 33.6
+  "1": 18.0,
+  "2": 9.7,
+  "4": 20.1,
+  "8": 22.0
  }
 }
