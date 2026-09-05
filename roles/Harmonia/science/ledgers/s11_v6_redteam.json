@@ -1,0 +1,106 @@
+{
+ "probes": [
+  {
+   "probe": "I1_fork_children_counted_as_worlds",
+   "verdict": "INDETERMINATE",
+   "detail": "unit=world -> n=None, unit=seed_root -> n=None, forks share one seed_root"
+  },
+  {
+   "probe": "I3_best_of_twelve_recoverable",
+   "verdict": "OK",
+   "detail": "12 members recorded, deflated mean 0.367 recoverable vs survivor 0.600"
+  },
+  {
+   "probe": "I4a_extent_divergence_evadable",
+   "verdict": "DEFECT",
+   "detail": "one over-grown family -> ['FAMILY_EXTENT_DIVERGENCE'] ; four single-member families -> no findings"
+  },
+  {
+   "probe": "I4b_selection_visible_with_one_token_loser",
+   "verdict": "DEFECT",
+   "detail": "1 selected + 1 alternative (10 real losers omitted) -> selection_visible=True"
+  },
+  {
+   "probe": "I4c_config_divergence_detected",
+   "verdict": "OK",
+   "detail": "attested noise=0.02 against sealed noise=0 -> ['CONFIG_DIVERGENCE']"
+  },
+  {
+   "probe": "I4d_echoing_requested_hash_accepted",
+   "verdict": "ACCEPTED-BY-DESIGN",
+   "detail": "echoed the sealed spec_hash as executed_config_hash -> no findings (an executor that never ran anything passes this)"
+  },
+  {
+   "probe": "I7_same_facts",
+   "verdict": "OK",
+   "detail": "warn findings ['FAMILY_EXTENT_DIVERGENCE'] == strict findings ['FAMILY_EXTENT_DIVERGENCE']"
+  },
+  {
+   "probe": "I7_consequence_differs",
+   "verdict": "OK",
+   "detail": "over-growth POST: warn=200 strict=200 ; bare claim: warn=200 strict=200"
+  }
+ ],
+ "fork_counts": {
+  "world": {
+   "unit_of_analysis": "world",
+   "declared_n": 8,
+   "sealed_verification": {
+    "declared_n": 8,
+    "profile": "warn",
+    "source_set_hash": "sha256:df0be11e808d056a70fbd59a0a00e6b8b6b7fe3524d1b4caed11ee02a4ec0d94",
+    "sources_submitted": 8,
+    "sources_unresolved": 0,
+    "unit_mismatch": false,
+    "unit_of_analysis": "world",
+    "verified_n": 8
+   }
+  },
+  "seed_root": {
+   "unit_of_analysis": "seed_root",
+   "declared_n": 8,
+   "sealed_verification": {
+    "declared_n": 8,
+    "profile": "warn",
+    "source_set_hash": "sha256:df0be11e808d056a70fbd59a0a00e6b8b6b7fe3524d1b4caed11ee02a4ec0d94",
+    "sources_submitted": 8,
+    "sources_unresolved": 0,
+    "unit_mismatch": true,
+    "unit_of_analysis": "seed_root",
+    "verified_n": 1
+   }
+  },
+  "observation": {
+   "unit_of_analysis": "observation",
+   "declared_n": 8,
+   "sealed_verification": {
+    "declared_n": 8,
+    "profile": "warn",
+    "source_set_hash": "sha256:df0be11e808d056a70fbd59a0a00e6b8b6b7fe3524d1b4caed11ee02a4ec0d94",
+    "sources_submitted": 8,
+    "sources_unresolved": 0,
+    "unit_mismatch": false,
+    "unit_of_analysis": "observation",
+    "verified_n": 8
+   }
+  }
+ },
+ "twelve": {
+  "recovered": [
+   0.6,
+   0.26,
+   0.43,
+   0.54,
+   0.35,
+   0.43,
+   0.44,
+   0.31,
+   0.08,
+   0.49,
+   0.25,
+   0.22
+  ],
+  "mean": 0.3666666666666667,
+  "survivor": 0.6
+ }
+}
