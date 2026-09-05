@@ -47,8 +47,29 @@ Proteus already publishes it, and the SFE binding already works.
 - [ ] **A world running TWO players.** No SFE world holds more than one
       distinct Proteus player, so D2 and D4 have no comparison unit to form at
       any threshold. One two-player world unblocks both.
-- [ ] **Vivarium consumer** — claim/complete semantics against
-      `archaeon.experiment_queue`; the consumer columns are unexercised.
+- [ ] **QUEUE SEAM CONFLICT — the loop is currently broken.** The Vivarium
+      seat opened the same day (branch `vivarium/v0-2026-09-05`, commits
+      8b940a165 / 951036c57) and independently built its own queue. TWO live
+      tables now exist:
+          archaeon.experiment_queue        (Archaeon writes; 1 prod proposal)
+          viv.research_experiment_queue    (Vivarium reads; 2 rows)
+      Archaeon's proposals therefore go nowhere. NOT resolved unilaterally:
+      changing another seat's live schema is an outward-facing decision.
+      The two contracts are highly compatible, which makes this cheap to fix:
+        - viv REQUIRED columns are created_by, source_reason, experiment_spec,
+          spec_hash. Archaeon supplies all four (its `spec` -> `experiment_spec`,
+          `proposal_id` -> `experiment_id`).
+        - Archaeon's spec_hash already satisfies viv's
+          CHECK ^sha256:[0-9a-f]{64}$ (verified against the live proposal).
+        - source_evidence is jsonb on both, same provenance contract.
+      Deltas: status vocabulary (Archaeon UPPERCASE + DONE vs viv lowercase +
+      completed), and Archaeon's cadence columns (lane, day_ordinal, utc_day,
+      the partial unique index and the gate) do not exist on viv's table.
+      RECOMMENDATION: keep ONE table, Vivarium's, and move Archaeon's cadence
+      mechanism onto it — cadence is a property of WRITING to the queue, and
+      the queue should be one object. Vivarium's execution machinery (claim
+      lease, heartbeat, event log, BEFORE UPDATE state-machine trigger) is the
+      more intricate half and should not be re-implemented.
 
 ## Next — Archaeon's own
 
