@@ -468,6 +468,115 @@ D4-7 their regression tests are in the suite.
 
 ---
 
+## D8 — R1-R10 and nine structural changes from Harmonia S1-S7 (NOTES ONLY)
+
+Operator-relayed 2026-09-05 after her packet 6. **Ingested, not scheduled, not
+implemented; the engine was not restarted.** Same boundary rule as D7, and the
+operator's explicit list of things NOT to hard-code (power >= 0.8, shrinkage as
+universal estimator, mandatory replication, C-7'/C-8' as eternal laws) is
+adopted.
+
+Three items were checked against the engine before being written down, and two
+land harder than the packet states.
+
+### R8 — the defect has a CONCRETE INSTANCE ALREADY IN THE ENGINE
+`ObservationCreate.replication: bool = False` (`sfe/api.py:119`). The engine
+literally ships the boolean replication claim the packet calls actively
+dangerous.
+
+Important nuance before anyone "fixes" it: its real meaning is narrow and
+correct — F3, "this is a SECOND observation bound to a prediction, a retest
+that never re-adjudicates the original". It does **not** mean "independently
+replicated". So the defect is not the mechanism, it is that **the field name
+invites exactly the misreading the packet warns about**, and a typed
+replication level would sit naturally beside it rather than replacing it.
+Small, high value, and it must not silently change F3 semantics.
+
+**Caution the packet's own principle implies: the replication taxonomy is still
+moving.** S3 defined L0-L4 (sequence / terminal / distribution / ranking /
+phenotype); packet 6 defines L1-L6 (resampling / world-distribution /
+landscape / implementation / player-build / full independent). Those are not
+the same axis. Encoding either as an enum now risks hard-coding a taxonomy that
+changed once in two loops — the same failure the operator warns about for
+C-7'/C-8'. **Record the level as a declared STRING plus the dimensions
+reinstantiated/held constant; do not enum it yet.**
+
+### SUCCESSFUL_NEGATIVE — confirmed NOT representable today
+Outcome vocabulary is exactly `FALSIFIED | SURVIVED | INCONCLUSIVE`
+(`runtime.py:1370`); hypothesis states are `FALSIFIED | SURVIVED`. "The effect
+is bounded below a declared relevance floor" is a POSITIVE result, and today it
+can only be recorded as SURVIVED (ambiguous with "the hypothesis stood") or
+INCONCLUSIVE (which destroys exactly the information that makes it valuable).
+**The operator is right that this is an epistemic state-machine gap, not
+statistics.** The engine would not be judging whether an equivalence test is
+valid — only storing a conclusion the experimenter reached, which it already
+does for the other three outcomes.
+
+### NO_EFFECTIVE_INTERVENTION — cheapest item on the list, and I would rank it
+### HIGHER than its position as structural change #7
+Confirmed: interventions are recorded VERBATIM in `WORLD_FORKED`
+(`runtime.py:2009`) and nothing else. There is no before/after, so a
+perturbation that changed nothing is indistinguishable from one that worked.
+
+Why it is the cheapest: **`before_hash == after_hash` is a hash comparison, not
+a judgement.** It needs no statistical interpretation, no new taxonomy, and no
+cross-world primitive. It is fully inside the deterministic boundary, and it
+came from a real mistake Harmonia made and caught (a seed perturbation that
+initially had no effective change). Warning-only, not fail-closed: a legitimate
+no-op perturbation is conceivable and the engine should say so loudly rather
+than refuse.
+
+### requested / executed / analysis config hashes — the engine already has 1 of 3
+`spec_hash` at commit IS the requested-config hash, sealed and order-proved
+(D5-1). So the structural change reduces to: obtain `executed_config_hash` by
+executor attestation, obtain `analysis_config_hash` by analyst declaration, and
+**compare three hashes** — which is deterministic. The operator's worked example
+(requested noise 0, executor used 0.02, analyst assumed 0) is caught by
+comparison alone, with the engine understanding nothing about noise.
+
+### transport_domain vs tested_variation — deterministic set comparison
+"Does the asserted claim domain exceed the experimentally tested domain?" is a
+containment check over declared values. The engine asserts nothing about
+transport; it compares two declarations. Correctly inside the boundary.
+
+### R10 measurement-process provenance — the auditability half is deterministic
+The engine cannot know a scorer's precision or noise model. It CAN record a
+declared `measurement_process_hash` and then detect that **two runs with
+different measurement regimes are being compared as identical conditions** —
+again a hash comparison. This is the right split, and the 1.8%-noise
+sign-reversal is the motivating evidence rather than a rule to encode.
+
+### Still gated on the same missing primitive
+R4 (comparison family), R7 (campaign manifest), the claim-family lineage, and
+"best of twelve remains visible as one selection family" all still reduce to
+**a lineage edge that crosses world boundaries** (D7). `lineage_edges` is
+world-scoped. Nothing in packet 6 changes that; it adds more consumers of it.
+
+### First-class claim record
+Would subsume claim_family_id, transport_domain, replication level claimed vs
+observed, measurement_process_hash, and the SUCCESSFUL_NEGATIVE state. Note it
+is the LARGEST item here and depends on the cross-world primitive. Recorded as
+one coherent design, not as nine separate fields to bolt on.
+
+### NOT engine work, restated
+Multiplicity correction, null calibration, stopping rules, estimators, power
+thresholds, whether a sweep was sufficient, and whether an equivalence test is
+valid. Per the operator: expose `relevance_floor`, `design_effect`,
+`target_power`, `estimated_power`, `promotion_rule`, `estimator` as FIELDS;
+enforce none of them.
+
+### If any of this is ever scheduled, the order is
+1. NO_EFFECTIVE_INTERVENTION before/after hashes — deterministic, no
+   dependencies, catches a real mistake already made.
+2. Cross-world lineage edge — unblocks four other items.
+3. executed_config_hash attestation (R2) — the largest provenance hole, and
+   the one that makes R5/R9/R10 checkable rather than declarative.
+4. Typed replication level as a STRING plus dimensions — after the taxonomy
+   stops moving.
+Everything else is a read or a field on top of those.
+
+---
+
 ## Standing discipline for whoever picks this up
 
 - Run the standing battery in `RESPONSIBILITIES.md` after ANY engine change and
