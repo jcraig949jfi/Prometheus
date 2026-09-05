@@ -357,6 +357,117 @@ Which is Harmonia's INVARIANT III arriving from the engine side.
 
 ---
 
+## D7 — Substrate candidates from Harmonia S1-S5 (RECORDED, NOT ACCEPTED)
+
+Operator-proposed 2026-09-05, with a governing test I am adopting verbatim:
+
+> **Can SFE know the fact deterministically? If yes, expose or enforce it. If
+> knowing it requires statistical or scientific interpretation, leave it to
+> Harmonia and give her the provenance.**
+
+Nothing here is scheduled. Each candidate has been PUT THROUGH that test rather
+than transcribed, because three of eight turn out to be already-done, cheaper
+than proposed, or impossible as stated.
+
+### ALREADY DONE — do not schedule
+**P2 pre-registration manifest hashing.** Verified in D5-1: a manifest carried
+in the experiment spec is sealed by `spec_hash` at commit, recovers
+byte-identical, recomputes locally, and is fixed in ledger order by
+`committed_seq`. "Changes create a new hash rather than silently mutating" is
+already true: the spec is frozen at commit and a later commit is a new
+experiment. Satisfied by existing machinery plus the habit of putting the
+manifest in the spec.
+
+### CHEAPER THAN PROPOSED — expose, do not build
+**P0 experimental-unit provenance.** The engine ALREADY records what separates
+an independent world from a continuation: `parent_world_id`, `fork_point`, the
+originating `checkpoint_id`, `seed_root`, and root-vs-fork-child. Deterministic
+and durable today. The gap is that nothing SURFACES it as an independence
+signal, so an analyst must walk lineage to discover that seven replicates are
+fork children of one parent. Reduces to a derived read, not new state.
+
+### DETERMINISTIC — genuinely buildable
+**P0 replay-strength declaration (L0-L4).** The engine holds full event
+sequences and terminal outcomes, so it can MEASURE achieved replay level
+between two executions of one spec: L0 (sequence identical) and L1 (terminal
+outcome identical) are hash comparisons, not judgements. A claim can declare
+its required level; the engine can report the level achieved. L2-L4
+(distribution, ranking, phenotype) are statistical and stay with Harmonia.
+Buildable for L0/L1 ONLY — say so rather than implying all five.
+
+**P1 claim-to-configuration provenance / experiment family.** Checked whether
+`lineage_edges` already covers it. It has free-text `src_kind`/`dst_kind`/
+`relation`, `add_lineage_edge` accepts arbitrary kinds, and it carries a
+`claimed` flag separating asserted from derived edges. **But it is
+WORLD-SCOPED** — `world_id NOT NULL`, and the only query is
+`GET /v2/worlds/{wid}/lineage`. A claim family spans MANY worlds (the sweep,
+the replication, the moderator arms), so the existing DAG cannot express one.
+Real new work, and the reason is now precise.
+
+**P1 degenerate-replication warning — WITH A CORRECTION I would insist on.**
+The proposal says warn when replicates collapse to sd about 0. Computing sd
+requires knowing WHICH field of a freeform observation is the outcome, which is
+scientific interpretation and belongs to Harmonia. IDENTITY is not: "these
+seven nominal replicates carry byte-identical content_hash" is a hash
+comparison the engine can make deterministically. **Signal on exact
+duplication, never on variance.** That keeps the engine on the correct side of
+its own boundary and still catches the S3 artifact, whose worlds 2-8 were
+identical to six decimals rather than merely low-variance.
+
+**P2 machine-readable warning surface.** The `failures` table plus
+`FAILURE_RECORDED` already gives a typed, queryable attachment point with a
+`failure_type` vocabulary. Mostly a vocabulary decision
+(`NON_INDEPENDENT_UNITS`, `STATE_CONTINUITY`, `REPLAY_L1_ONLY`), not new
+storage.
+
+### BUILDABLE ONLY AS DECLARATION + ATTESTATION — with a stated blind spot
+**P0 replicate/state isolation contract.** The operator is right that this is
+the highest value, and equally right that SFE must not become the statistician.
+The precise limit: **the engine never sees player state and can never know
+whether a reset happened.** What it CAN do is deterministic:
+
+    1. the experiment DECLARES state_scope / independence_required
+    2. the executor ATTESTS an entry-state hash per world
+    3. the engine CHECKS (2) against (1) and emits
+       INDEPENDENCE_CONTRACT_VIOLATED on disagreement
+
+Step 3 is a hash comparison. Steps 1 and 2 are declarations the engine cannot
+validate — it is checking a claim against a claim, which is still worth far
+more than nothing because BOTH become part of the sealed record.
+
+**Harmonia's S3 Q4 blind spot must ship with it or the check will be trusted
+too far: a CONVERGED leaker enters every world from the same fixed point, so
+its entry-state hashes become indistinguishable from an honest reset.** Under a
+declared reset discipline identical entry states are expected; under declared
+carry-over they are a red flag. The same observation means opposite things
+depending on a declaration only the experimenter can make. An engine reporting
+"independence verified" there would manufacture exactly the looks-good failure
+D6 catalogues.
+
+**P1 fixed-vs-factor declaration.** Once declared in the manifest, checking
+that a declared-FIXED value actually stayed constant across a family is
+deterministic — but it needs the cross-world family link to have anything to
+check across. Depends on the family work; not independently useful.
+
+### NOT ENGINE WORK — recorded so nobody re-files it
+Multiplicity correction, null calibration, stopping rules, effect estimators,
+and deciding whether a moderator sweep was sufficient. The S1 p=0.0357 result
+and the S5 winner-curse finding are scientific-instrumentation
+responsibilities. The engine's job is to keep the twelve draws visible as
+twelve related attempts — the family work above — not to judge them.
+
+### THE DEPENDENCY THAT MATTERS
+Four candidates (fixed-vs-factor, claim provenance, cross-family degeneracy,
+and any "show me every experiment run while trying to make claim C survive"
+query) reduce to ONE missing primitive: **a lineage edge that crosses world
+boundaries.** If any of this is scheduled, build that first; the rest are reads
+on top of it.
+
+Not reopening the closed strict-session and completion-replay defects; per
+D4-7 their regression tests are in the suite.
+
+---
+
 ## Standing discipline for whoever picks this up
 
 - Run the standing battery in `RESPONSIBILITIES.md` after ANY engine change and
