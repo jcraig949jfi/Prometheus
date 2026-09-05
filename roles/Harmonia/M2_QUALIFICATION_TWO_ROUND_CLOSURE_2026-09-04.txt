@@ -1,0 +1,728 @@
+======================================================================
+HARMONIA M2 QUALIFICATION -- TWO-ROUND CLOSURE PACKET
+Author : Harmonia (systems integrator), executing on M2 / SPECTREX5
+Date   : 2026-09-04, second pass (after Daedalus deployed)
+Repo   : D:\Prometheus  HEAD c7207ea34
+Prior  : roles/Harmonia/M2_QUALIFICATION_ROUND1_STOP_2026-09-04.txt (0d3a52249)
+For    : James (HITL), Daedalus (SFE), Mnemosyne (PEW), Proteus, reviewers
+======================================================================
+
+----------------------------------------------------------------------
+1. FINAL VERDICT
+----------------------------------------------------------------------
+
+ROUND 1 = PASS.  ROUND 2 = RAN TO COMPLETION.
+
+Daedalus deployed. The blocking defect from the stop packet is gone and I
+re-derived that from the live service rather than from the deployment
+report: PID 24324, started 19:45:35, source_commit 0d3a52249,
+schema_version 4, both D-REPLAY-1 read routes served, engine_source_hash
+changed from c358a53b to 3325ac5f.
+
+All six orchestration hazards FLIPPED. Every one of them was measured by
+me against the stale build six hours earlier, so the flip is a
+before/after on one instrument, not a comparison of two reports.
+
+The shallow scientific traversal completed. Five exact conditions --
+A, B, A+B, and both exact ablations of A+B -- went through ONE shared
+arena path end to end, each producing an engine-attested observation with
+an exact causal anchor, a PEW fossil, and a verified round trip.
+
+Two things did not survive contact, and neither is a failure of the
+deployment:
+
+  THE TRANSCRIPT SURFACE IS NOT MERELY DEGENERATE HERE. IT IS CONSTANT.
+  All five conditions produced the identical transcript hash and zero
+  output writes. It carries zero bits distinguishing five structurally
+  distinct organisms, including a full ablation. Proteus reported 3
+  classes among 56 players; on this exercise it is 1 class among 5.
+
+  A PEW FOSSIL ALONE DOES NOT PERMIT THIRD-PARTY REPLAY.
+  Everything needed for replay is durably sealed -- in SFE, not PEW --
+  and the second hop into SFE is client-scoped. An investigator holding
+  the fossil but not the producing client's token gets 403 on every read
+  route of that world. This was not in anyone's packet.
+
+RECOMMENDATION: ANOTHER_TARGETED_REPAIR_PASS_REQUIRED. Two small named
+repairs with named owners, detailed in section 14. This is not "the stack
+failed" -- the stack held. It is that a result no third party can audit
+is not yet a scientific record.
+
+----------------------------------------------------------------------
+2. ROUND-1 EXIT BAR
+----------------------------------------------------------------------
+
+criterion                                  verdict  evidence
+-----------------------------------------  -------  --------------------
+SFE intended M2 endpoint verified          PASS     200 on LAN+m2.crt;
+                                                    localhost REFUSED
+                                                    (WinError 10061)
+SFE deployed repair lineage verified live  PASS     sfe_preflight 7/7,
+                                                    exit 0, 0d3a52249
+                                                    contains 67c28acee
+SFE M2 datastore verified                  PASS     live argv --db
+                                                    ...\var\engine.db;
+                                                    M2 world 404 on M1
+SFE credential separation verified         PASS     M1-minted token ->
+                                                    401 on M2
+SFE client isolation, touched surfaces     PASS     403 on all 5 new read
+                                                    routes; see sec.4
+PEW intended M2 endpoint verified          PASS     /identity 200 on LAN
+                                                    and localhost
+PEW db_system_id verified                  PASS     7681719240261676752,
+                                                    matches pg_controldata
+PEW M2-local store verified                PASS     probe object present
+                                                    M2 / 404 M1 under a
+                                                    HELD-CONSTANT token
+PEW shared-token limitation classified     PASS     known, not refiled;
+                                                    sec.4
+PEW server identity independent of token   PASS     /identity correct
+                                                    under every token
+create-world retry behavior verified       PASS     same key+body -> SAME
+                                                    world; conflicting
+                                                    body -> 409
+required attestation verified              PASS     3 controls, sec.5
+content gate verified                      PASS     accept/refuse + zero
+                                                    ledger growth
+returned causal anchor verified            PASS     event_id+entry_hash
+                                                    from the WRITE
+terminated-state contract verified         PASS     409 writes; reads,
+                                                    checkpoint, fork OK
+replay read path verified                  PASS     spec + sealed
+                                                    spec_hash match
+zero significant unresolved defects        QUALIFIED  S-2 still open; see
+                                                    the note below
+
+NOTE ON S-2, stated plainly rather than quietly discharged.
+S-2 (pew_battery cannot distinguish M1 from M2) is NOT fixed --
+pew_battery.py is unchanged since 4cb02c733. R2-GATE-3 did not land.
+
+I proceeded anyway, and the reasoning is auditable: S-2 is a defect in an
+INSTRUMENT, and its only effect is that battery output cannot be quoted as
+machine-scoped evidence. I do not quote it. The arena path performs the
+missing assertion itself as hard gate G2, and I verified G2 FIRES by
+pointing it at M1 (it refused, with a named reason). So no quiet-success
+path exists in my traversal. S-2 remains open, owned by Mnemosyne, and
+still contaminates any PAST claim that rested on the battery alone.
+
+----------------------------------------------------------------------
+3. M2 SERVICE / PORT MATRIX
+----------------------------------------------------------------------
+
+SFE   https://192.168.1.191:8811
+  cert            CN=192.168.1.191, expires 2036-09-01; m1.crt ->
+                  CERTIFICATE_VERIFY_FAILED (distinguishable from the
+                  WinError 10061 that localhost gives)
+  localhost       REFUSED. The listener binds the LAN address only.
+  source_commit   0d3a52249fd9de92a2733e01b843889d85f99357
+  engine_hash     sha256:3325ac5fa05de7ae4e98778d6  (was c358a53b...)
+  schema          4  (was 3)
+  routes          32 paths / 36 routes (was 31 / 33)
+  datastore       D:\...\SerendipityFoundryEngine\var\engine.db, from the
+                  live process argv; 1351680 b, grown from 1003520 --
+                  the migration ran
+  backups         .pre-schema4-20260904T180254.bak (Daedalus, pre-sprint)
+                  .predeploy-20260904T194451.bak   (taken at deploy)
+  process         PID 24324, parent 29124, created 2026-09-04 19:45:35
+  credentials     M1-minted token -> 401. Separated.
+
+PEW   http://192.168.1.191:8377  (also localhost; binds 0.0.0.0)
+  identity        service mnemosyne-evidence-wiki
+                  db_system_id 7681719240261676752
+                  db_name prometheus_fire, db_host localhost
+  source_commit   7cbe43ecff5728490df4e9fde8c5765b7f20591d
+  schema/ont      4 / 2      fossil pew.fossil.v2
+  closure         pew.closure.v0
+  datastore       local PostgreSQL 17 cluster; pg_controldata reports the
+                  same system identifier the service attests
+  credentials     NOT machine-separated. Every token authenticates
+                  against both M1 and M2. Known; see sec.4.
+
+M1 for contrast: SFE ce79401b1 / schema 3; PEW /health 200 but /identity
+and /constraints 404 -- LIVE_NOT_QUALIFIED, matching Mnemosyne A1.
+
+----------------------------------------------------------------------
+4. ISOLATION MATRIX
+----------------------------------------------------------------------
+
+SFE machine     SEPARATED. A client registered on M1 and its token
+                carried to M2 gets 401. m2.crt against M1 fails TLS.
+SFE client      ENFORCED, including on every surface D-REPLAY-1 added.
+                Client B against client A's world:
+                  GET /experiments        403
+                  GET /observations       403
+                  GET /experiments/{eid}  403
+                  GET /failures           403
+                  GET /events             403
+                  GET /lineage            422 (validation before authz;
+                                          see NB-5, not a leak)
+                  GET /worlds             200, n=0
+                positive control: A on its own world -> 200.
+PEW machine     SEPARATED AT THE STORE. A namespaced probe object written
+                to M2 reads 200 on M2 and 404 on M1 with the SAME bearer
+                token, so the 404 is a property of the store and not of
+                the credential.
+PEW namespace   ENFORCED. test/seam rows do not appear in the prod fossil
+                namespace (seam battery gate G: 0 leaked, prod encounters
+                still 5452); an unknown namespace is refused 422.
+SHARED SEAM     PEW bearer tokens. config.json defines five distinct
+                token strings (default + machine_tokens M1..M4, four
+                distinct fingerprints) and EVERY one authenticates
+                against both machines. They are per-machine by NAME and
+                not by EFFECT. Server-attested identity is unaffected:
+                /identity returned the correct M2 db_system_id under
+                every token tried. Owner: Mnemosyne B1, operator-gated.
+                Not refiled as new.
+
+----------------------------------------------------------------------
+5. DAEDALUS FIX VALIDATION
+----------------------------------------------------------------------
+
+Each row: measured by me on the stale build (2026-09-04 ~19:29) and again
+on the repaired build (~19:50). "flipped" means the pre-state I recorded
+myself reversed.
+
+I-CREATE-IDEMPOTENCY                       live? YES  flipped? YES
+  before  same Idempotency-Key + same body -> 2 DIFFERENT worlds
+          (header ignored); same key + CONFLICTING body -> 200 and a
+          third world, silently
+  after   same key + same body -> SAME world (wld_6a31ae68...)
+          same key + conflicting body -> 409, and the message names the
+          scoping rule: the key is (client, key) and the request hash
+          binds route + world_id + body
+  neg ctl DIFFERENT key + same body -> a new world. The fix de-duplicates
+          retries without over-collapsing distinct requests.
+  residual blind retry with NO key still yields 3 worlds. Correct: the
+          header is the mechanism, and callers must send it.
+
+I-ATTEST-NOT-FORCED                        live? YES  flipped? YES
+  before  require_attestation -> 422 extra_forbidden. The world could not
+          be ASKED to require attestation.
+  after   three controls, all in one run:
+            attested world, observation with NO work_id      -> 422
+            attested world, work claimed+COMPLETED, work_id  -> 200,
+                                        evidence_class ENGINE_WORK_RESULT
+            attested world, BOGUS work_id                    -> 422
+                     "does not name a COMPLETED work item of this world"
+            control world (require_attestation=false), no work_id -> 200,
+                                        evidence_class CLIENT_ASSERTED
+  This is a gate, not a wall: it refuses the unattested case, refuses a
+  forged case, accepts the attested case, and the control world still
+  accepts client assertion and LABELS it as the weaker class.
+
+I-CLIENT-GATE-UNENFORCED (reclassified)    live? YES  flipped? YES
+  before  expected_blob_hash -> 422 extra_forbidden. Daedalus's reframe
+          was right: not "the engine trusts the client" but "the engine
+          could not be ASKED to check".
+  after   correct bytes + correct hash -> 200
+          corrupt bytes + ORIGINAL hash -> 422 "content identity
+          mismatch ... Nothing was stored", with expected and actual
+          both named
+  ledger  event count before 2, after 3, delta 1 -- exactly the accepted
+          artifact. The refusal mutated nothing.
+
+I-CAUSAL-CLIENT / D-REPLAY-1               live? YES  flipped? YES
+  before  GET observations 405, GET experiments/{eid} 404
+  after   the observation WRITE returns obs_id, event_id, entry_hash,
+          event_seq, world_index, evidence_class, evidence_role.
+          The returned event_id was then found in the ledger exactly once
+          and its entry_hash matched byte for byte. No search heuristic
+          is needed and none was used.
+
+I-LIFECYCLE-TERMINATED                     live? YES  flipped? YES
+  after   TERMINATED world: observation 409, experiment 409, artifact 409
+          -- one message, naming the permitted alternatives: "Reads,
+          checkpoint and fork still work -- fork the world if you need to
+          continue or vary the run."
+          status 200, events 200, experiment-by-id 200, checkpoint 200,
+          fork 200 producing a child with parent_world_id and fork_point
+          set. The frozen contract behaves as written.
+
+I-WORLD-ENUM-UNSCOPED (partially refuted)  live? YES  flipped? N/A
+  There was never an isolation hole. Re-confirmed: a fresh client sees
+  only its own worlds (n=0 for a client that owns none). The missing
+  capability was filtering, and the new filter surfaces enforce 403.
+
+I-EVENTS-SHAPE                             REFUTED, stays refuted
+  Raw HTTP returns {"events":[...]}. Unchanged. No constraint.
+
+CT-SFE-1 deploy-lag detector               live? YES, and it is the one
+  thing that was live-qualified before deployment. It called the stale
+  daemon correctly twice and passes 7/7 now.
+
+----------------------------------------------------------------------
+6. SHARED ARENA PATH
+----------------------------------------------------------------------
+
+integration/harmonia_arena.py  (commit c7207ea34), arena.run(specimen,
+world_config, action_plan). One code path; no per-condition script
+reimplements identity, anchoring, attestation or fossil writing.
+
+Steps, in order, with the identities that travel:
+
+   1  G1 SFE deployment attestation      HARD GATE
+        live source_commit must CONTAIN 67c28acee (git merge-base, not a
+        string compare), schema 4, both D-REPLAY-1 routes present
+   2  G2 PEW server-attested identity    HARD GATE
+        db_system_id must equal 7681719240261676752
+   3  specimen canonicalization
+        organism_id = sha256(canonical_json(manifest))
+   4  G4 interpretation identity         HARD GATE
+        runtime_hash + affordance_hash must be present, else refuse:
+        organism bytes without a runtime_hash can be re-guessed, not
+        replayed
+   5  world create, Idempotency-Key = sha256(oid, world_config,
+        action_plan), require_attestation=true
+   6  G3 content identity                HARD GATE
+        POST the canonical manifest as an artifact with
+        expected_blob_hash = organism_id; SFE recomputes and must agree
+   7  experiment create with commit+enqueue in ONE call -> exp_id,work_id
+   8  work claim; a 200 whose body is work=null is treated as NOTHING
+        CLAIMABLE and raises, never as "claimed"
+   9  execute the player locally (Proteus VM), collect transcript + meter
+  10  work complete with result
+  11  observation write WITH work_id
+  12  G5 exact causal anchor             HARD GATE
+        event_id and entry_hash must both come back from THIS response;
+        evidence_class must be ENGINE_WORK_RESULT
+  13  PEW fossil write, sfe_anchor_verified left false
+  14  G6 PEW round-trip                  HARD GATE
+        the row must read back and its anchor must equal what went in
+  15  SFE readback: experiment spec + sealed spec_hash
+
+HARD GATES: G1..G6. All six abort the run. Four have been observed to
+FIRE, not merely to pass:
+  G1 refused a fabricated required-commit
+  G2 refused when pointed at M1 (404 on /identity, with the reason named)
+  G3 refused corrupt bytes carrying the original hash
+  G5's precondition (work=null) raised during development and is the
+     exact trap Daedalus retracted a false result on
+
+Two properties are deliberately NOT collapsed:
+  CAUSAL_SELECTION_SAFE            true  (anchor from the write itself)
+  CAUSAL_INDEPENDENTLY_VERIFIED    false (nothing checks it from PEW's
+                                          side), so every fossil carries
+                                          sfe_anchor_verified=false. All
+                                          5 rows do.
+
+----------------------------------------------------------------------
+7. LIGHT SCIENCE EXERCISE
+----------------------------------------------------------------------
+
+PRE-REGISTERED SELECTION RULE, fixed before any activation verdict was
+read: walk the frozen registry in its own order; A is the first specimen
+with >= 4 instructions not entirely halt_yield-class; B is the next such
+specimen. No activation, meter or transcript value participated.
+
+  parent A  registry organism 7743b3527ea44fb5...  entry 88c8818853ccfd46...
+  parent B  registry organism beb28a204fcb9184...  entry 1f30f0547df0606d...
+  shared interpretation identity for both:
+    runtime_hash    73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb...
+    affordance_hash f1607ee8be680acc33288a95c1a25c09ad4c799a47b097538...
+    grammar         proteus.grammar.v0.4 / 5043f5e11a726b63...
+
+Shared envelope, and the reason matters: tape_words is sized for the
+LARGEST object (A+B) and then used UNCHANGED for A and B. Had each
+condition been given its own minimal tape, the conditions would have
+differed in an execution RESOURCE as well as in genome content, and
+section 9 could not have separated the two explanations.
+  n_regs 16, tape_words 32, code_writable false, persist tape,
+  tick_budget 256, out_cap 16
+
+  cond    composition_id     organism_id        instr  components
+  ------  -----------------  -----------------  -----  ----------
+  A       35fed456a62b5418   fd217c152ca3951b     4    A
+  B       6b93b93809b343e9   3a21cd2e48272234     4    B
+  A+B     429c8f477c3ef5bc   db1cf6b69bcd04b4     8    A,B
+  A+B\A   65b9a3cdd12c7a0b   56099a167bcd0196     8    A(ablated),B
+  A+B\B   70027863df687596   07fdd6e9d1168a42     8    A,B(ablated)
+
+Worlds/runs: 5 worlds, 1 run each, one action plan, one seed
+(plan harmonia.r2.fixed_probe.v0, seed 20260904, 8 ticks, n_out 2,
+inputs [[1,2,3,4],[5,6,7,8]]). No loop, no selection, no optimization,
+no search over pairs.
+
+  cond    world                       exp                         anchor
+  A       wld_dcb0d125f8b17cd73ecdedbc exp_dfb4600695e187db0c35d546 evt_0b7e4beb972c9ea4aec472c7
+  B       wld_75593fc9fc91b9ab6e9a6c7e exp_296e080bef15b0b6d18da6a7 evt_59734d13bc261736c8704ebf
+  A+B     wld_8ac02f41a499e2dac35fe1c6 exp_4e22cc1a15c01bfe5ab2be3b evt_ea8c428f95d553973b64b306
+  A+B\A   wld_39ea8ffdb218438a2bbe0cdb exp_7d734a10f326aeca35c534b2 evt_d565bfdca78ae1fb47d94394
+  A+B\B   wld_b20e93d6aaef09134cc3bcea exp_9ee0cf4980b2cad93d494c03 evt_6c9729bb6210b2e6b3369678
+
+All 5: evidence_class ENGINE_WORK_RESULT, specimen blob_hash ==
+organism_id, spec_equals_submitted true, sfe_anchor_verified false.
+
+----------------------------------------------------------------------
+8. RAW OBSERVABLES
+----------------------------------------------------------------------
+
+TRANSCRIPT -- all five identical.
+  transcript_hash 943cf2b06d4fa15c0e6cf75f for every condition.
+  out_writes 0, out_dropped 0, statuses {budget} for every condition.
+  Nothing was emitted at all.
+
+ACTIVATION (Proteus differential, measured on A+B before any run):
+  component A   ACTIVATED     classes arithmetic, comparison, halt_yield,
+                              indirection
+  component B   ACTIVATED     classes arithmetic, control, halt_yield,
+                              read_write
+  Both components demonstrably execute. So the constant transcript is not
+  "nothing ran" -- a great deal ran and none of it reached an output
+  channel.
+
+METER -- four distinct vectors among five conditions.
+  cond    ops   ticks branches by_category
+  A       2048    8      0    arith 256 comp 256 halt 1280 indir 256
+  B       2048    8    344    arith 344 ctrl 344 halt 1360
+  A+B     2048    8    336    arith 680 comp 344 ctrl 336 halt 344 indir 344
+  A+B\A   2048    8    336    arith 336 ctrl 336 halt 1376
+  A+B\B   2048    8      0    arith 256 comp 256 halt 1280 indir 256
+
+  The one collision, A == A+B\B, is mechanistically expected: ablating B
+  from A+B leaves A's instructions plus NOPs. The surface passing that
+  coherence check is worth more than the count of distinct vectors.
+
+EXECUTION / RESOURCE COVARIATES, all constant by construction:
+  ops 2048, ticks 8, budget_exhausted_ticks 8, out_writes 0,
+  footprint_words 48, persistent_state_words 32 -- identical in all five.
+  Only genome instruction count (4 vs 8) and component count (1 vs 2)
+  vary.
+
+DETERMINISM CONTROL: every condition re-executed byte-identically,
+transcript and meter both. The meter is not noise.
+
+----------------------------------------------------------------------
+9. MEASUREMENT-SURFACE VERDICT
+----------------------------------------------------------------------
+
+This is not a scientific conclusion. It is a statement about the
+instrument.
+
+TRANSCRIPT: OBVIOUSLY DEGENERATE, and on this exercise worse than
+degenerate -- CONSTANT. One class among five conditions, including a full
+exact ablation of a demonstrably ACTIVATED component. Transcript-only
+science is refused for this configuration. Note this is stronger than
+Proteus's finding (3 classes / 87.5% largest among 56 players) because
+these five differ by construction and it still cannot see them.
+
+METER: USABLE, WITH A NAMED LIMIT.
+  The triviality attacks the directive asks for:
+    genome instruction count   does NOT explain the split
+    component count            does NOT explain the split
+    total executed ops         does NOT explain the split
+    ticks / budget exposure    does NOT explain the split
+    output opportunity         does NOT explain the split
+    state footprint            does NOT explain the split
+
+  The dissociation is real in BOTH directions, which is what makes it
+  worth anything: A (4 instr, 1 component) has a meter IDENTICAL to
+  A+B\B (8 instr, 2 components), while A and B (both 4 instr, 1
+  component) differ. Length and component count are decoupled from the
+  meter both ways.
+
+  THE LIMIT, stated because it would be easy to overclaim past it: four
+  of those six covariates could not have explained anything, because the
+  shared envelope and a fully saturated budget pinned them CONSTANT
+  across all five conditions. ops was 2048 everywhere -- tick_budget 256
+  x 8 ticks -- i.e. every condition burned its entire budget. This
+  exercise never entered a regime where execution size VARIES. The honest
+  reading is: "no confound was detectable here", not "the meter is
+  confound-free". The real experiment must include conditions that halt
+  early and conditions that emit, or the ops covariate will be untested
+  rather than cleared.
+
+  UNRESOLVED, and a design question rather than a bug:
+  proxy_search_expenditure equalled branches_taken exactly in all five
+  conditions. It is a derived alias, not a second independent signal, and
+  should not be counted twice.
+
+----------------------------------------------------------------------
+10. PEW ROUND-TRIP MATRIX
+----------------------------------------------------------------------
+
+Starting from the PEW encounter id ALONE.
+
+RECOVERED from the fossil row:
+  producing PEW identity     PRESENT (per-fossil attestation block:
+                             db_system_id, service, source_commit,
+                             schema, closure, fossil contract)
+  encounter identity         PRESENT
+  world identity             PRESENT (world_id and sfe_world_id)
+  organism identity          PRESENT (players[] = organism_id)
+  SFE event id               PRESENT
+  entry hash                 PRESENT
+  ledger position            PRESENT (sfe_event_seq)
+  run identity               PRESENT
+  contract versions          PRESENT
+  seed, outcome, resources   PRESENT
+  producer                   PRESENT
+
+NOT RECOVERABLE from the fossil row:
+  item                       classification
+  -------------------------  --------------------------------------
+  interpretation identity    INTEGRATION_NOT_YET_WIRED (Mnemosyne C6)
+    runtime_hash,            The arena carries them; PEW has no column.
+    affordance_hash          Sealed in the SFE spec instead.
+  composition identity       CONTRACT_NOT_IMPLEMENTED (Mnemosyne C3 /
+    composition_id, glue,    R-PRO-1). Typed columns do not exist.
+    segment ids, topology
+  ablation relation          CONTRACT_NOT_IMPLEMENTED (C3)
+    parent_composition_id,
+    ablated_component
+  registry identity          INTEGRATION_NOT_YET_WIRED (C6)
+    entry_id
+  exact experiment spec      CONTRACT_NOT_IMPLEMENTED (C4 / R-PRO-2)
+  exact input / ref digest   CONTRACT_NOT_IMPLEMENTED (C4)
+  exact output digest        CONTRACT_NOT_IMPLEMENTED (C4)
+  full world config          CONTRACT_NOT_IMPLEMENTED (C4)
+  measurement definition     CONTRACT_NOT_IMPLEMENTED (C5 / R-PRO-3)
+  experiment id              BUG-ADJACENT. exp_id is recoverable ONLY by
+                             string-splitting run_id on ":" -- a
+                             convention MY producer invented, not a typed
+                             field. A different producer breaks it.
+
+ALL of the CONTRACT_NOT_IMPLEMENTED items ARE durably recorded -- in the
+SFE experiment spec, not in PEW. The spec read back equal to what was
+submitted for all five conditions, and its spec_hash recomputed byte-
+identically (sha256:0434c9bf...). Nothing is lost. It is in the other
+system, behind a credential.
+
+THE SECOND HOP, with both controls:
+  with the PRODUCING client's token   200. composition_id, glue,
+                                      components, ablation relation,
+                                      runtime_hash, affordance_hash,
+                                      exact action plan and full world
+                                      config all recovered; spec_hash
+                                      SEALED MATCH true.
+  with a DIFFERENT client's token     403 access_denied "world is not
+                                      owned by this client" -- on
+                                      /experiments/{eid}, /events AND
+                                      /status.
+
+So client isolation, which is a property we want and which section 4
+records as correctly enforced, is the same mechanism that makes a
+recorded encounter unauditable by anyone but its author.
+
+----------------------------------------------------------------------
+11. REPLAY STATUS
+----------------------------------------------------------------------
+
+  IDENTITY_COMPLETE               YES, for the producing client.
+                                  NO, for a third party.
+  CAUSAL_SELECTION_SAFE           YES. Anchor taken from the write
+                                  response; found once in the ledger with
+                                  a byte-matching entry_hash.
+  CAUSAL_INDEPENDENTLY_VERIFIED   NO. Unchanged, and deliberately not
+                                  collapsed into the line above. All 5
+                                  fossils carry sfe_anchor_verified=false.
+                                  Blocked on Mnemosyne C1 / R-SFE-1.
+  REPLAY_COMPLETE                 NO. Blocked by TWO independent things,
+                                  not one:
+                                    (a) PEW has no typed columns for the
+                                        replay fields (known: C3/C4)
+                                    (b) the SFE fallback path is
+                                        client-scoped, so a third party
+                                        cannot use it either (NEW)
+                                  Fixing (a) alone would not fix replay
+                                  for anyone but the author; fixing (b)
+                                  alone leaves PEW rows unreadable.
+  COMPOSITION_COMPLETE            NO in PEW. YES in the SFE sealed spec.
+                                  The composition contract itself is
+                                  sound: composition_id, glue concat.v0,
+                                  per-component segment_ids, offsets and
+                                  the ablation relation all round-tripped
+                                  through the spec unchanged.
+
+----------------------------------------------------------------------
+12. CONSTRAINT-TRANSFER SMOKE TEST
+----------------------------------------------------------------------
+
+One HARD and one ADVISORY, both drawn from real lessons of these rounds,
+written to namespace "test".
+
+K-18869f54f091  HARD  SUPPORTED
+  "An experiment must not run against a service whose live source_commit
+   lacks the required fix." Carries the 6h46m stale-daemon incident, the
+   watchdog mechanism that hid it, and the sfe_preflight reproducer.
+  scope {component sfe, interface /v2/version, machine M2,
+         applies_to any scientific write path}
+  origin_ref points at the Round-1 stop packet, section S-1.
+
+K-c95d1560909b  ADVISORY  PROPOSED -> NARROWED
+  "A PEW fossil alone does not permit third-party replay: the second hop
+   into SFE is client-scoped." I then NARROWED my own constraint via the
+   errata path, with the rationale that it holds only when the reader is
+   not the producing client -- because I had just measured the 200 with
+   the owning token.
+
+Verified:
+  scope preserved             YES, read back intact on both
+  provenance preserved        YES, origin_ref and created_by=harmonia,
+                              plus a per-constraint attestation block
+                              carrying db_system_id
+  status readable             YES, current_status + status_since
+  refuted/superseded excluded YES. ?status=SUPPORTED returns only the
+  from the active set         HARD one; ?status=NARROWED returns only the
+                              advisory. Unfiltered returns all 10 test-
+                              namespace constraints WITH their statuses --
+                              by design, and the docstring says so.
+  original history recoverable YES. Full append-only trail:
+                              (null -> PROPOSED, KE-65c39fe57fd7)
+                              (PROPOSED -> NARROWED, KE-e9e83a1a2bbd)
+                              with my rationale attached, and the original
+                              statement unmutated.
+
+The memory path participates in the integrated system. This is the one
+section where the system demonstrably learned something from the session
+that produced it.
+
+----------------------------------------------------------------------
+13. BUGS FOUND DURING ROUND 2
+----------------------------------------------------------------------
+
+R2-1  THIRD-PARTY REPLAY IS BLOCKED AT A CREDENTIAL BOUNDARY.
+  severity   SIGNIFICANT for auditability; does not invalidate any result
+  owner      Mnemosyne (typed columns) AND Daedalus (a replay-capable
+             read path or a scoped read grant). Neither alone closes it.
+  observed   see section 10, with both controls.
+  quiet-success risk: LOW but real. Nothing errors. An investigator
+             simply cannot reconstruct what ran, and the fossil looks
+             complete because every field it HAS is populated.
+  not fixed by me: this is a contract decision across two components, not
+             a repair I should make unilaterally.
+
+R2-2  exp_id IS RECOVERABLE ONLY BY PARSING A PRODUCER CONVENTION.
+  severity   NON_BLOCKING
+  owner      Mnemosyne
+  run_id is "exp_...:wrk_..." because MY arena chose that. PEW has no
+  typed experiment_id column. Any other producer's run_id breaks the hop.
+
+R2-3  proxy_search_expenditure IS AN ALIAS OF branches_taken.
+  severity   DOCUMENTATION / measurement design
+  owner      Proteus
+  Equal in all five conditions. Should not be treated as an independent
+  observable in the real experiment.
+
+NB-5  GET /worlds/{wid}/lineage RETURNS 422 WHERE SIBLING ROUTES RETURN 403.
+  severity   DOCUMENTATION
+  owner      Daedalus
+  Validation runs before the ownership check on that route. Not a leak --
+  the 422 is a schema complaint and discloses nothing about the world --
+  but it is the one read route whose refusal shape differs from its five
+  siblings, which makes an isolation sweep harder to assert uniformly.
+
+BUGS FIXED AND VALIDATED DURING ROUND 2: none. No component defect found
+in Round 2 was mine to repair, and I did not repair any.
+
+----------------------------------------------------------------------
+14. REMAINING BLOCKERS BEFORE THE REAL A/B/A+B EXPERIMENT
+----------------------------------------------------------------------
+
+B-1  R2-1: make a recorded encounter auditable by someone other than its
+     author. Either PEW gains the typed columns (composition_id, glue,
+     topology, segment ids, ablation relation, runtime_hash,
+     affordance_hash, entry_id, exact action, digests, world config), or
+     SFE gains a read path a non-owning client can use for a world whose
+     anchor they can already name. Owners: Mnemosyne + Daedalus.
+
+B-2  S-2: wire GET /api/v1/identity into pew_battery E1 as a HARD gate
+     asserting db_system_id for the named --machine. Still open from the
+     stop packet. One assertion. Owner: Mnemosyne. Until it lands, no
+     battery output is machine-scoped evidence.
+
+B-3  MEASUREMENT DESIGN, not a repair: the real experiment must not use
+     the transcript, and must include conditions where execution size
+     actually varies (early halts, non-zero output). Section 9's clean
+     result was obtained in a regime where four of the six covariates
+     were pinned constant. Owner: whoever designs the experiment.
+
+B-4  sfe_anchor_verified is false on every fossil and should stay false
+     until Mnemosyne C1 / R-SFE-1 lands. Not a blocker for running an
+     experiment; a blocker for calling its provenance independently
+     verified.
+
+WHAT WOULD FLIP THE RECOMMENDATION TO READY: B-1 and B-2. B-3 is a design
+input for the experiment rather than a repair to the instrument, and B-4
+is already honestly pinned.
+
+----------------------------------------------------------------------
+15. DEFERRED WORK
+----------------------------------------------------------------------
+
+  PEW credential rotation, cleartext purge, git history purge  OPERATOR
+  Inbound 5432 scoping                                         OPERATOR
+    (M2 PEW currently depends on it; closing as-is breaks the deploy)
+  M1 PEW closure V0 (migration 008 + redeploy)                 Mnemosyne A1
+  engine_source_hash collides across M1/M2 -- content-addressed, so it
+    cannot answer "which of two engines"                       Daedalus,
+    a measured instance of why R-SFE-2 is needed               NB-1 prior
+  I-WORLD-GC                                                   Daedalus,
+                                                               deferred
+  Proteus mutation neutrality (NOT_QUALIFIED, authored current) -- not
+    touched, and not touchable: this exercise used only frozen specimens
+    under USE_A. No breeding, no mutation, no population comparison.
+
+----------------------------------------------------------------------
+16. COMMITS / TESTS / ARTIFACTS
+----------------------------------------------------------------------
+
+  c7207ea34  Harmonia: arena v0 -- the one shared orchestration path
+             integration/harmonia_arena.py
+  0d3a52249  Harmonia: Round-1 STOP packet (the pre-state this validates)
+  0b7635bb1  Daedalus: M2 deployment packet -- DEPLOYED_QUALIFIED
+  5b475a58a  Daedalus: M2 SFE deployed and live-qualified
+
+  instruments run, none modified:
+    integration/sfe_preflight.py                 7/7, exit 0
+    evidence_wiki/integration/pew_battery.py     15/15 all_pass  (NOT
+                                                 quoted as machine-scoped
+                                                 evidence; see sec.2)
+    evidence_wiki/integration/seam_battery.py    12/12 all_pass
+    proteus compose: activation_evidence, ablation_report
+    pg_controldata 17
+
+  Proteus certifications obtained before any world existed:
+    activation      A ACTIVATED, B ACTIVATED
+    ablation A      EXACT   (4 words changed, 0 outside the declared
+                    range, 0 operand words, other components byte-
+                    identical, length + offsets + envelope preserved)
+    ablation B      EXACT   (same shape)
+    alias differential invariant across aliases [0,25,50], ensemble
+                    4bba8716b364f9ff
+    NOTE: transcript_changed_by_ablation was FALSE for both components
+    even though both are ACTIVATED -- an early, independent sighting of
+    the same transcript blindness section 9 then measured directly.
+    No CONFOUNDED_BY_DATA_CHANNEL result was returned, so no refusal was
+    triggered and no specimen was swapped to manufacture a pass.
+
+  objects created on M2 (all namespace "test" or disposable):
+    SFE  ~30 worlds across Round 1 re-run and Round 2, 5 of them the
+         exercise proper; ~10 clients
+    PEW  6 encounters (5 exercise + 1 replay-control),
+         2 constraints K-18869f54f091, K-c95d1560909b
+  objects created on M1: SFE client registrations only, for the
+    credential-separation control. No PEW writes to M1 at any point.
+
+  raw results (scratchpad, not committed):
+    r1b_out.json  r2_objects.json  r2_results.json  r2_constraints.json
+
+----------------------------------------------------------------------
+17. RECOMMENDATION
+----------------------------------------------------------------------
+
+ANOTHER_TARGETED_REPAIR_PASS_REQUIRED
+
+Not because the stack failed. It held: five exact conditions crossed four
+components with machine identity, specimen identity, interpretation
+identity, experiment identity, causal identity and composition identity
+all intact and all checked, and it said clearly what it still does not
+know at every point where it did not know it.
+
+Because of B-1 and B-2, both small and both owned. A result nobody but
+its author can reconstruct is a lab notebook, not a scientific record,
+and an instrument that cannot tell which machine it measured should not
+be the thing that certifies the next one.
+
+======================================================================
+END TWO-ROUND CLOSURE PACKET
+======================================================================
