@@ -1,0 +1,57 @@
+{
+ "engine": {
+  "api": "v2",
+  "schema_version": 4,
+  "runtime": "serendipity-foundry-sfe",
+  "registration_open": true,
+  "engine_source_hash": "sha256:6a4f3aeec05a3ed9a31364e21f55cd11dc511f8f1d9789b2bcc37ce98f8447cf",
+  "source_commit": "0fd24e0f3f48b0d9cbac9cd846cec8486480e026"
+ },
+ "at": 1788571101.195951,
+ "results": [
+  {
+   "check": "R21-ENVELOPE",
+   "title": "producer exports sealed material",
+   "detail": "GET audit-envelope -> 200; identities present: {'engine_instance': True, 'engine_build': True, 'world_config': True, 'sealed_spec': True, 'hash_matches_ledger': True, 'recomputed_matches': True, 'observation': True, 'anchor': True, 'envelope_hash': True}",
+   "verdict": "PASS"
+  },
+  {
+   "check": "R21-ISOLATION",
+   "title": "third party still cannot read the engine",
+   "detail": "envelope=403 experiment=403 observations=403; auditor enumerates 0 worlds",
+   "verdict": "PASS"
+  },
+  {
+   "check": "RSFE1-VERIFY",
+   "title": "auditor verifies the genuine anchor",
+   "detail": "-> 200 valid=True checks={'event_exists': True, 'entry_hash_matches': True, 'binds_exp_id': True, 'binds_obs_id': True} engine_instance=eng_906356f7fb1da180131f9290",
+   "verdict": "PASS"
+  },
+  {
+   "check": "RSFE1-WRONG-EVENT",
+   "title": "real-but-wrong event rejected",
+   "detail": "WORLD_CREATED pair is genuine (exists=True hash_ok=True) but binds_exp=False -> valid=False",
+   "verdict": "PASS"
+  },
+  {
+   "check": "RSFE1-NO-DISCLOSURE",
+   "title": "verify is not a content oracle",
+   "detail": "response keys=['checks', 'engine', 'event_seq', 'event_type', 'valid', 'world_index']; leaked tokens=[]",
+   "verdict": "PASS"
+  },
+  {
+   "check": "RSFE1-AUTH-WALL",
+   "title": "anonymous verification refused",
+   "detail": "no token -> 401",
+   "verdict": "PASS"
+  },
+  {
+   "check": "RSFE2-INSTANCE-ID",
+   "title": "engine instance identity in the anchor",
+   "detail": "instance=eng_906356f7fb1da180131f9290 stable=True build=sha256:6a4f3aeec05a3",
+   "verdict": "PASS"
+  }
+ ],
+ "envelope_hash": "sha256:577c5a421b629c20ef07cc0ce0d494ab33e66fa567c0e98f601b9c5c48041d32",
+ "summary": "7/7 PASS"
+}

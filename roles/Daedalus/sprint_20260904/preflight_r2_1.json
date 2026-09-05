@@ -1,0 +1,69 @@
+{
+ "target": "https://192.168.1.191:8811",
+ "version": {
+  "api": "v2",
+  "schema_version": 4,
+  "runtime": "serendipity-foundry-sfe",
+  "registration_open": true,
+  "engine_source_hash": "sha256:6a4f3aeec05a3ed9a31364e21f55cd11dc511f8f1d9789b2bcc37ce98f8447cf",
+  "source_commit": "0fd24e0f3f48b0d9cbac9cd846cec8486480e026"
+ },
+ "checks": [
+  {
+   "check": "reachable",
+   "severity": "HARD",
+   "status": "PASS",
+   "detail": "GET /v2/version -> 200",
+   "evidence": null
+  },
+  {
+   "check": "source_commit_present",
+   "severity": "HARD",
+   "status": "PASS",
+   "detail": "source_commit=0fd24e0f3f48b0d9cbac9cd846cec8486480e026 (null means git was not on PATH at launch; the build is then UNIDENTIFIABLE)",
+   "evidence": null
+  },
+  {
+   "check": "T20_deploy_lag",
+   "severity": "HARD",
+   "status": "PASS",
+   "detail": "live build 0fd24e0f3f48 CONTAINS 0fd24e0f3",
+   "evidence": {
+    "git_error": null
+   }
+  },
+  {
+   "check": "schema_version",
+   "severity": "HARD",
+   "status": "PASS",
+   "detail": "live=4 required>=4",
+   "evidence": null
+  },
+  {
+   "check": "openapi_readable",
+   "severity": "HARD",
+   "status": "PASS",
+   "detail": "route table at /v2/openapi.json (34 paths / 38 routes)",
+   "evidence": null
+  },
+  {
+   "check": "GET audit-envelope",
+   "severity": "HARD",
+   "status": "PASS",
+   "detail": "GET /v2/worlds/{wid}/experiments/{eid}/audit-envelope -> served",
+   "evidence": {
+    "raw_arg": "GET /v2/worlds/{wid}/experiments/{eid}/audit-envelope"
+   }
+  },
+  {
+   "check": "POST verify-anchor",
+   "severity": "HARD",
+   "status": "PASS",
+   "detail": "POST /v2/audit/verify-anchor -> served",
+   "evidence": {
+    "raw_arg": "POST /v2/audit/verify-anchor"
+   }
+  }
+ ],
+ "exit_code": 0
+}

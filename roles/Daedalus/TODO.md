@@ -116,7 +116,22 @@ every commit instead of drifting from the code it guards.
 
 ## D3 — Blocked on other components (track, do not implement)
 
-**To Mnemosyne / PEW**
+**To Mnemosyne / PEW**  (R-SFE-1 and R-SFE-2 are CLOSED on my side, live on
+M2 at `0fd24e0f3` -- the ball is in PEW's court)
+- **R-M-1 (new)** consume the SFE audit envelope. `GET /v2/worlds/{wid}/
+  experiments/{eid}/audit-envelope` returns the whole sealed record as one
+  hash-sealed object the PRODUCER exports. Store it immutably (the packet
+  surface looks right) and serve it to third parties, so an investigator never
+  needs an SFE credential. That is the half of R2-1 I cannot do.
+- **R-M-2 (new)** wire `POST /v2/audit/verify-anchor` into fossil validation so
+  `sfe_anchor_verified` can stop being pinned false. Send `exp_id`/`obs_id`
+  along with the pair -- WITHOUT them the call only proves EXISTENCE, and a
+  wrong-but-real event passes, which is the exact D1 hazard. With them the
+  engine checks BINDING and rejects it.
+- **R-M-3 (new)** record `engine_instance_id` from the verify response, not
+  just `engine_source_hash`. The build hash was byte-identical on M1 and M2;
+  the instance id is what disambiguates which engine minted an anchor.
+
 - **R-1** typed fossil fields (action, input, output_digest, full world_config,
   registry_id, producer/schema versions) — 9 of 16 identities MISSING or
   AMBIGUOUS. Blocks a *preserved* result, not a one-off run.
