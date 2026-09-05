@@ -1,0 +1,93 @@
+{
+ "baseline": {
+  "greedy": 4.8088272532483325,
+  "spread": 5.453034531970312,
+  "rotate": 5.00532144168889
+ },
+ "T1": {
+  "world": 0.09,
+  "step": 0.0
+ },
+ "T2": [
+  {
+   "perturbation": "seed stream (new blocks)",
+   "d": 0.8551058556228872,
+   "delta": -0.04341930752265899,
+   "class": "INERT"
+  },
+  {
+   "perturbation": "scoring scale x100",
+   "d": 0.8985251631455462,
+   "delta": 0.0,
+   "class": "INERT"
+  },
+  {
+   "perturbation": "observation noise sd=0.02",
+   "d": 0.8535408385184079,
+   "delta": -0.044984324627138306,
+   "class": "INERT"
+  },
+  {
+   "perturbation": "observation noise sd=0.20",
+   "d": 0.3237398903172036,
+   "delta": -0.5747852728283426,
+   "class": "MAGNITUDE"
+  },
+  {
+   "perturbation": "horizon 40 -> 10 steps",
+   "d": 0.3562043825149977,
+   "delta": -0.5423207806305486,
+   "class": "MAGNITUDE"
+  },
+  {
+   "perturbation": "horizon 40 -> 120 steps",
+   "d": 0.8985251631455462,
+   "delta": 0.0,
+   "class": "INERT"
+  },
+  {
+   "perturbation": "patches 6 -> 24",
+   "d": 5.297801095839082,
+   "delta": 4.399275932693536,
+   "class": "MAGNITUDE"
+  },
+  {
+   "perturbation": "regeneration 0.25 -> 0.05",
+   "d": 0.05601763969848482,
+   "delta": -0.8425075234470614,
+   "class": "MAGNITUDE"
+  },
+  {
+   "perturbation": "regeneration 0.25 -> 0.60",
+   "d": 2.7516449838044736,
+   "delta": 1.8531198206589274,
+   "class": "MAGNITUDE"
+  }
+ ],
+ "T3": [
+  {
+   "n": 6,
+   "truth": 0.32924164124510724,
+   "p_promote": 0.008333333333333333,
+   "type_m": 4.499041870837115
+  },
+  {
+   "n": 12,
+   "truth": 0.32924164124510724,
+   "p_promote": 0.016666666666666666,
+   "type_m": 2.9360784914511
+  },
+  {
+   "n": 30,
+   "truth": 0.32924164124510724,
+   "p_promote": 0.05,
+   "type_m": 1.6766596302269026
+  },
+  {
+   "n": 80,
+   "truth": 0.32924164124510724,
+   "p_promote": 0.016666666666666666,
+   "type_m": 1.6437321662844788
+  }
+ ]
+}
