@@ -1,0 +1,39 @@
+{
+ "all_pass": false,
+ "gates": [
+  {
+   "gate": "T3_1_world_creation_without_a_key",
+   "pass": true,
+   "detail": "status=200 code=None -> ALLOWED"
+  },
+  {
+   "gate": "T3_2_unkeyed_client_can_use_what_it_created",
+   "pass": false,
+   "detail": "start=428 SESSION_REQUIRED  get=428 SESSION_REQUIRED"
+  },
+  {
+   "gate": "T3_3_key_recovers_the_orphaned_world",
+   "pass": true,
+   "detail": "start with key -> 200 None"
+  },
+  {
+   "gate": "T3_4_keyed_client_full_flow_under_strict",
+   "pass": true,
+   "detail": "world=200 start=200 hyp=200 exp=200 obs=200"
+  },
+  {
+   "gate": "T3_5_unkeyed_access_to_a_strict_world_is_refused",
+   "pass": false,
+   "detail": "27 routes 428 SESSION_REQUIRED, 6 did not"
+  }
+ ],
+ "unkeyed_routes_428": 27,
+ "unkeyed_routes_not_428": [
+  "POST /v2/work/claim -> 422 None",
+  "POST /v2/work/{work_id}/complete -> 422 None",
+  "POST /v2/work/{work_id}/fail -> 422 None",
+  "POST /v2/work/{work_id}/heartbeat -> 422 None",
+  "POST /v2/worlds -> 422 None",
+  "GET /v2/worlds -> 200 None"
+ ]
+}
