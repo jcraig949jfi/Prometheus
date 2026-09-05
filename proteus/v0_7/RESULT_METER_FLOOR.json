@@ -1,0 +1,96 @@
+{
+ "envelope": {
+  "code_writable": false,
+  "n_regs": 8,
+  "out_cap": 4,
+  "persist": "none",
+  "tape_words": 256,
+  "tick_budget": 256
+ },
+ "excluded_from_meter": {
+  "constant": [
+   "gpu"
+  ],
+  "nondeterministic": [
+   "wall_s",
+   "cpu_s"
+  ]
+ },
+ "part0_determinism": {
+  "deterministic_meter_reproduces": "40/40",
+  "full_meter_including_timings_reproduces": "0/40",
+  "gate": "PASS",
+  "note": "The second row is a NEGATIVE CONTROL. If the full meter also reproduced, excluding wall_s/cpu_s would be unnecessary caution; a shortfall there is the evidence that the exclusion is load-bearing.",
+  "players_tested": 40
+ },
+ "part1_population_structure_floor": {
+  "null_distribution_of_distinct_classes": {
+   "meter": {
+    "max": 48,
+    "mean": 38.47,
+    "median": 38.0,
+    "min": 30
+   },
+   "ops_by_category": {
+    "max": 43,
+    "mean": 35.52,
+    "median": 36.0,
+    "min": 27
+   },
+   "transcript": {
+    "max": 7,
+    "mean": 4.59,
+    "median": 4.0,
+    "min": 3
+   }
+  },
+  "observed_in_closure_pass": {
+   "meter": 39,
+   "ops_by_category": 37,
+   "transcript": 3
+  },
+  "population_size": 56,
+  "populations_resampled": 200,
+  "reading": "These are RANDOM segment players of the same shape. If the null median sits at the observed value, then class richness is a property of arbitrary programs under this observable, not a discovery about the population."
+ },
+ "part2_discrimination_floor": {
+  "alias_note": "Padding was run under all three NOP aliases. A disagreement means the padding acted as DATA, so the size floor is a lower bound for that pair.",
+  "definitions": {
+   "identity": "meter(A) vs meter(A) -- sanity, must be 0.0",
+   "independent": "meter(A) vs meter(A') unrelated, same size -- discrimination ceiling",
+   "order": "meter(A+B) vs meter(B+A) -- can the observable see ORDER at all? A prerequisite for any A->B ordered-composition question",
+   "partner_identity": "meter(A+B) vs meter(A+B') -- does it respond to WHICH partner, or merely to a second component being present?",
+   "size_floor": "meter(A) vs meter(A + NOP padding) -- same behaviour, bigger program",
+   "size_matched": "meter(A + NOP padding) vs meter(A + B) -- B beyond its length",
+   "treatment": "meter(A) vs meter(A + B) -- what the experiment proposes to use"
+  },
+  "differs_rate": {
+   "identity": 0.0,
+   "independent": 0.99,
+   "order": 0.49,
+   "partner_identity": 0.755,
+   "size_floor": 0.0,
+   "size_matched": 0.775,
+   "treatment": 0.775
+  },
+  "nop_alias_disagreements": 0,
+  "ops_delta_median": {
+   "size_floor": 0.0,
+   "treatment": 0.0
+  },
+  "pairs": 200
+ },
+ "purpose": "chance floor for the meter observable proposed by TODO T1; see T2",
+ "registry_id": "b15e0a7f5f2dcb99b8b28c73a99441d8d53e82b1bae42fddd5e274eeef396917",
+ "schema_version": "proteus.meter_floor.v1",
+ "seed_derivation": "seed_from('proteus.t2.meter_floor.v0', registry_id)",
+ "segment_instructions": 2,
+ "verdict": "METER_DISCRIMINATES_BEYOND_SIZE",
+ "verdict_inputs": {
+  "order_sensitive": true,
+  "partner_sensitive": true,
+  "size_matched_rate": 0.775,
+  "treatment_minus_size_floor": 0.775
+ },
+ "what_this_is_not": "No specimen was selected, scored, ranked or interpreted. Every rate is over an arbitrary random ensemble. A rate is a property of the OBSERVABLE, not a capability claim about any player, and nothing here says composition does or does not produce synergy."
+}
