@@ -63,6 +63,13 @@ The controlling precondition is engine schema version:
     schema >= 5 on BOTH engines   -> affinity gates are eligible
     schema  < 5 on EITHER engine  -> affinity eligible count is 0
 
+Build parity is a second controlling precondition, added 2026-09-05 after
+reviewing Daedalus's packet. Schema 5 alone does not pin behaviour: commits
+`9f6f11605` and `cfb40c293` are both schema 5 and differ on whether
+`GET /v2/worlds` rejects a foreign session key (200 vs 421). A pair running
+different builds is two systems, and a single verdict over two systems is not
+a verdict.
+
 With an eligible count of 0 the verdict is `NOT_RUN`. It is NOT `PASS` and it
 is NOT `FAIL`. A battery that cannot fire has not tested anything, and reading
 a clean exit as a clean result is how a preregistered gate becomes decorative.
@@ -83,6 +90,9 @@ report. A gap that is not named is a false clean result.
     P0  both engines answer /v2/version
     P1  both engines' schema_version, engine_source_hash, source_commit recorded
     P2  ELIGIBILITY: schema >= 5 on both
+    P2b BUILD PARITY: both engines report the same engine_source_hash
+    P2c the live build is one the operator names as qualified (--require-build);
+        INDETERMINATE when not supplied
     P3  engine_instance_id read LIVE from each engine and the two DIFFER
     P4  each engine's live identity matches the operator's --expect-*-engine
         value, when one was supplied; INDETERMINATE when not supplied

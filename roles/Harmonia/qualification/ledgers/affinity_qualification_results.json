@@ -3,11 +3,13 @@
  "counts": {
   "PASS": 3,
   "FAIL": 0,
-  "INDETERMINATE": 3
+  "INDETERMINATE": 5
  },
  "eligible_affinity": false,
  "mode": "plan",
  "indeterminate": [
+  "P2b_build_parity",
+  "P2c_build_is_qualified",
   "P2_affinity_eligible",
   "P3_engine_identities_distinct",
   "P4_expected_identity_binding"
@@ -33,6 +35,18 @@
    "direction": null
   },
   {
+   "gate": "P2b_build_parity",
+   "state": "INDETERMINATE",
+   "detail": "engines report DIFFERENT builds {'M1': 'sha256:2892116274a09cdc3d6c4e4fbbb405d762120f7bcfdb60720b50924fdc3b5ffa', 'M2': 'sha256:6a4f3aeec05a3ed9a31364e21f55cd11dc511f8f1d9789b2bcc37ce98f8447cf'}; affinity semantics are not guaranteed equal across builds, so a cross-engine verdict would be measuring two systems at once",
+   "direction": null
+  },
+  {
+   "gate": "P2c_build_is_qualified",
+   "state": "INDETERMINATE",
+   "detail": "no --require-build supplied: the run cannot say whether the live build is the one that was qualified, only that both engines agree",
+   "direction": null
+  },
+  {
    "gate": "P2_affinity_eligible",
    "state": "INDETERMINATE",
    "detail": "schema {'M1': 5, 'M2': 4}; affinity requires >= 5 on BOTH engines. Eligible count 0 -> verdict NOT_RUN.",
@@ -52,8 +66,8 @@
   }
  ],
  "provenance": {
-  "repo_head": "e906091512bd",
+  "repo_head": "30e2c302292b",
   "tree_dirty": true,
-  "harness_sha256": "5ef42b3d959d62fb"
+  "harness_sha256": "9cc1b7e9e65dd1cd"
  }
 }

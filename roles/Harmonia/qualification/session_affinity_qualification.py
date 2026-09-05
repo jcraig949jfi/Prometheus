@@ -346,8 +346,38 @@ def preflight(g, m1, m2, args, led):
          for k, p in v.items()}, sort_keys=True))
 
     schemas = {k: p.get("schema_version") for k, p in v.items()}
+    hashes = {k: p.get("engine_source_hash") for k, p in v.items()}
     eligible = all(isinstance(s, int) and s >= MIN_AFFINITY_SCHEMA
                    for s in schemas.values())
+
+    # P2b -- BUILD PARITY, added 2026-09-05 after the packet review. Schema 5
+    # alone does not pin behaviour: 9f6f11605 and cfb40c293 are both schema 5,
+    # and they differ on whether GET /v2/worlds rejects a foreign session key
+    # (200 vs 421). Qualifying a pair whose builds differ measures two systems
+    # and reports one verdict, so build divergence is an ELIGIBILITY failure,
+    # not a footnote.
+    same_build = len(set(hashes.values())) == 1 and all(hashes.values())
+    if not same_build:
+        eligible = False
+        g.indet("P2b_build_parity",
+                f"engines report DIFFERENT builds {hashes}; affinity semantics "
+                "are not guaranteed equal across builds, so a cross-engine "
+                "verdict would be measuring two systems at once")
+    else:
+        g.gate("P2b_build_parity", True, f"both engines on {list(hashes.values())[0][:22]}")
+    if args.require_build and same_build:
+        got = list(hashes.values())[0]
+        g.gate("P2c_build_is_qualified", got in args.require_build,
+               f"live build {got[:22]} vs allowed {[x[:22] for x in args.require_build]}")
+        if got not in args.require_build:
+            eligible = False
+    elif args.require_build:
+        g.indet("P2c_build_is_qualified", "builds differ; parity gate already failed")
+    else:
+        g.indet("P2c_build_is_qualified",
+                "no --require-build supplied: the run cannot say whether the "
+                "live build is the one that was qualified, only that both "
+                "engines agree")
     if eligible:
         g.gate("P2_affinity_eligible", True, f"schema {schemas} >= {MIN_AFFINITY_SCHEMA}")
     else:
@@ -651,6 +681,10 @@ def main():
     ap.add_argument("--pew-token", default=os.environ.get("PEW_TOKEN", ""))
     ap.add_argument("--machine", default="M1")
     ap.add_argument("--agent", default="harmonia")
+    ap.add_argument("--require-build", action="append", default=[],
+                    help="an engine_source_hash that is permitted to be "
+                         "qualified; repeatable. Without it, build parity "
+                         "is checked but not build identity.")
     ap.add_argument("--direction", choices=["both", "m1m2", "m2m1"], default="both")
     # NOT "results/": .gitignore has a repo-wide **/results/ rule, so the
     # default output would land somewhere git refuses to track. A verdict
