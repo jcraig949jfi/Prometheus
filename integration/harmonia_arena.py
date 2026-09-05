@@ -24,9 +24,11 @@ This module therefore does not delegate machine identity to that battery.
 
 CAUSAL_SELECTION_SAFE and CAUSAL_INDEPENDENTLY_VERIFIED are NOT the same
 property and this module never collapses them. The anchor is taken directly
-from the SFE write response, so selection is safe; nothing here verifies that
-anchor against SFE from PEW's side, so every fossil is written with
-sfe_anchor_verified=false until a real verification mechanism lands.
+from the SFE write response, so selection is safe. Independent verification
+landed 2026-09-05 (SFE 0fd24e0f3 verify-anchor, PEW 201106edb): the fossil
+carries exp_id and obs_id in its producer block, PEW asks the engine in the
+BOUND form, and sfe_anchor_verified comes back true only when the engine
+confirms the anchor is real AND bound to this run. G7 asserts that.
 """
 from __future__ import annotations
 
@@ -280,7 +282,12 @@ def run(specimen, world_config, action_plan, sfe=None, pew=None, session_id=None
         "outcome": "SURVIVED",
         "resources_used": outcome["meter"],
         "occurred_ts": time.strftime("%Y-%m-%dT%H:%M:%S+00:00", time.gmtime()),
-        "producer": {"component": "harmonia.arena.v0", "version": "0"},
+        # exp_id and obs_id are the BINDING ids. PEW passes them to SFE
+        # verify-anchor in the bound form; omit either and the engine can only
+        # be asked whether the event EXISTS, which any real event of the world
+        # would satisfy -- so the fossil would stay unverified by construction.
+        "producer": {"component": "harmonia.arena.v0", "version": "0",
+                     "exp_id": eid, "obs_id": obs["obs_id"]},
         "namespace": action_plan.get("namespace", "test")}
     s, fw = pew.call("POST", "/fossil/encounters", fossil)
     if s != 200:
@@ -298,7 +305,19 @@ def run(specimen, world_config, action_plan, sfe=None, pew=None, session_id=None
     if row["sfe_entry_hash"] != obs["entry_hash"] or row["sfe_event_id"] != obs["event_id"]:
         raise ArenaError("G6 anchor did not survive the round trip")
     rec["pew_readback"] = row
-    rec["sfe_anchor_verified"] = row.get("attestation", {}).get("sfe_anchor_verified")
+    att = row.get("attestation", {})
+    rec["sfe_anchor_verified"] = att.get("sfe_anchor_verified")
+    rec["sfe_anchor_checks"] = att.get("sfe_anchor_checks")
+
+    # -- G7 independent causal verification ----------------------------------
+    # The engine, asked by PEW rather than by us, must confirm the anchor is
+    # real AND bound to this run. A false here means the encounter is recorded
+    # but its causal claim is unconfirmed, which is not a result we may cite.
+    if att.get("sfe_anchor_verified") is not True:
+        raise ArenaError(
+            "G7 anchor not independently verified: %s -- the encounter exists "
+            "but its causal claim is unconfirmed" % json.dumps(att.get("sfe_anchor_checks")))
+    rec["causal_independently_verified"] = True
 
     s, exb = sfe.call("GET", "/worlds/%s/experiments/%s" % (wid, eid))
     rec["sfe_readback"] = {"status": s, "spec_hash": exb.get("spec_hash"),
