@@ -72,7 +72,15 @@ That discrimination is tested.
 |---|---|---|
 | key from another engine | **421** | **421** |
 | malformed key | **422** | **422** |
-| missing key on a bound session | allowed, **counted** | **428** |
+| missing key, ANY session-scoped route | allowed, **counted** | **428** |
+
+**"Strict" means every session-scoped route, including the collection routes
+and the four `/v2/work` routes.** It briefly meant "strict on `{wid}`-scoped
+routes only", which had two consequences Harmonia measured on 2026-09-05: an
+unkeyed `POST /v2/worlds` returned **200 and created a world the caller could
+never touch again** — an orphan at birth, in a system with no GC — and an
+unkeyed worker could still claim and complete work. Both now refuse at the
+point of the mistake.
 
 **The cross-engine defect is closed in both modes.** What the mode phases is
 only the *requirement to send* a key — because 106 pre-existing sessions and
@@ -169,3 +177,26 @@ holes.
 the body: holding session A's key while creating a world under session B is
 `403 SESSION_MISMATCH`, because that would break the affinity chain at its root
 and every later call on that world would look consistent.
+
+---
+
+## Ending a session
+
+`POST /v2/sessions/{sid}/close` — idempotent, **owner-gated (bearer token), not
+key-gated**.
+
+That choice is load-bearing. The 106 LEGACY sessions never had a key, so a
+key-gated close would leave exactly the sessions that need draining
+permanently undrainable.
+
+Closing does **not** terminate or delete worlds and does not touch their
+events. It ends the session: the key stops authenticating (`409
+SESSION_CLOSED`) and no new world can be created under it.
+
+It exists because Harmonia's pass found the same gap from two sides:
+`SESSION_CLOSED` was in the taxonomy but **unreachable** — a documented
+failure no client could trigger or test — and the strict-cutover drain
+condition (`sessions_legacy_open == 0`) could never move, because nothing in
+the system closed a session. The cutover was date-driven by accident rather
+than by decision. Both are now addressable, though **nothing is auto-closed**:
+draining is a deliberate operator act on sessions known to be finished.

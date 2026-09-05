@@ -361,6 +361,31 @@ def create_app(db_path: str, *, registration_open: bool = True,
                         "this session does not own that world",
                         world_id=wid, session_id=r.get("session_id"))
         elif st == "MISSING":
+            # HARMONIA 2026-09-05, T3 findings 6.2 and 6.3. This branch covers
+            # every session-scoped route that carries NO world id: the
+            # collection routes and the four /v2/work routes. It used to allow
+            # an unkeyed request unconditionally, even under strict, with two
+            # consequences:
+            #
+            #   * POST /v2/worlds returned 200 and CREATED A WORLD THE CALLER
+            #     COULD NEVER TOUCH AGAIN -- every later call on it answered
+            #     428. An orphan at birth, in a system with no GC, discovered
+            #     one call too late to prevent.
+            #   * "strict" silently meant "strict on {wid}-scoped routes", so
+            #     an unkeyed worker could still claim and complete work.
+            #
+            # Under strict a session key is now required on ALL session-scoped
+            # routes, so the name means what it says and the failure lands at
+            # the point of the mistake rather than after state exists.
+            if app.state.session_enforcement == "strict":
+                _audit(f, "SESSION_REQUIRED", None, cid, None)
+                raise SessionRequired(
+                    "strict enforcement: every experiment-scoped route "
+                    "requires a session key; send it as %s. Create a session "
+                    "with POST /v2/sessions and use the session_key it "
+                    "returns." % SESSION_HEADER)
+            _audit(f, "SESSION_ABSENT_ALLOWED", None, cid, None,
+                   enforcement=app.state.session_enforcement)
             return {"affinity": "NO_KEY"}
         return {"affinity": "BOUND", "session_id": r.get("session_id")}
 
@@ -395,6 +420,15 @@ def create_app(db_path: str, *, registration_open: bool = True,
     def create_session(body: SessionCreate, cid: str = Depends(auth),
                        f: Foundry = Depends(get_foundry)):
         return f.open_session(cid, body.name)
+
+    @app.post("/v2/sessions/{sid}/close")
+    def close_session(sid: str, cid: str = Depends(auth),
+                      f: Foundry = Depends(get_foundry)):
+        # Deliberately NOT session_ctx-gated: gated on OWNERSHIP, not on the
+        # session key. The 106 LEGACY sessions never had a key, and a key-gated
+        # close would leave precisely the sessions that need draining
+        # permanently undrainable.
+        return f.close_session(sid, client_id=cid)
 
     @app.post("/v2/topology-groups")
     def topology_group(body: TopologyGroupCreate, cid: str = Depends(auth),

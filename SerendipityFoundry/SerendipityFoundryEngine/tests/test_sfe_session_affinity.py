@@ -426,6 +426,10 @@ EXEMPT = {
         "deliberately credential-free and CROSS-ENGINE by design (R-SFE-1): "
         "PEW verifies an anchor it did not produce and holds no session. "
         "Requiring affinity here would break third-party attestation.",
+    ("POST", "/v2/sessions/{sid}/close"):
+        "gated on OWNERSHIP, not on the session key: the 106 LEGACY sessions "
+        "never had a key, so a key-gated close would leave exactly the "
+        "sessions that need draining permanently undrainable",
     ("POST", "/v2/topology-groups"):
         "client-level capability, not experiment-scoped: it mints a sharing "
         "group id bound to the CLIENT, touches no world and names no session. "

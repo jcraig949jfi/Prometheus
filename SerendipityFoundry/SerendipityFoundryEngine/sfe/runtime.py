@@ -149,6 +149,46 @@ class Foundry:
         was split back apart."""
         return self.open_session(client_id, name)["session_id"]
 
+    def close_session(self, session_id: str, *,
+                      client_id: Optional[str] = None) -> dict:
+        """End a session's lifecycle. Idempotent.
+
+        HARMONIA 2026-09-05 found two consequences of this not existing, and
+        they are the same gap seen from two sides:
+          * SESSION_CLOSED (409) was in the error taxonomy but UNREACHABLE --
+            a documented failure no client could ever trigger or test.
+          * the strict-cutover drain condition (sessions_legacy_open == 0) could
+            never move, because nothing closes a session. The cutover was
+            date-driven by accident rather than by decision.
+
+        Gated on OWNERSHIP (the bearer token), NOT on the session key. That is
+        deliberate: the 106 LEGACY sessions never had a key, so a key-gated
+        close would leave exactly the sessions that need draining permanently
+        undrainable.
+
+        Closing does NOT terminate or delete worlds and does not touch their
+        events. It ends the session: the key stops authenticating (409), and no
+        new world can be created under it."""
+        with self.store.write() as cx:
+            row = cx.execute("SELECT client_id, state, affinity_mode FROM "
+                             "sessions WHERE session_id=?",
+                             (session_id,)).fetchone()
+            if row is None:
+                raise NotFound("unknown session", session_id=session_id)
+            if client_id is not None and row["client_id"] != client_id:
+                raise AccessDenied("session not owned by this client",
+                                   session_id=session_id)
+            if row["state"] == "CLOSED":
+                return {"session_id": session_id, "state": "CLOSED",
+                        "already_closed": True}
+            cx.execute("UPDATE sessions SET state='CLOSED' WHERE session_id=?",
+                       (session_id,))
+            events.append_foundry(cx, "SESSION_CLOSED", actor=row["client_id"],
+                                  scope_kind="session", scope_id=session_id,
+                                  payload={"affinity_mode": row["affinity_mode"]})
+            return {"session_id": session_id, "state": "CLOSED",
+                    "already_closed": False}
+
     # ---- session affinity -------------------------------------------------
     def resolve_session(self, key: Optional[str]) -> dict:
         """Classify a presented session key WITHOUT touching any resource.
@@ -671,6 +711,25 @@ class Foundry:
                     work_id=work_id)
             if r["status"] == "COMPLETED":
                 if r["claimed_by"] == worker_id and r["claim_id"] == claim_id:
+                    # HARMONIA 2026-09-05, T2 case C3e. A replay of the SAME
+                    # result is idempotent and returns the stored row. A replay
+                    # carrying a DIFFERENT result used to return 200 with the
+                    # ORIGINAL result, so a caller that did not compare
+                    # result_hash could believe its second result had been
+                    # recorded. Nothing was ever overwritten -- the defect was
+                    # the DIAGNOSIS, and a silent 200 for a materially
+                    # different request contradicts the engine's own
+                    # idempotency rule everywhere else ("same key + a different
+                    # request is a 409 conflict").
+                    incoming = content_hash(result)
+                    if r["result_hash"] is not None and \
+                            incoming != r["result_hash"]:
+                        raise ConflictError(
+                            "this work item is already COMPLETED with a "
+                            "DIFFERENT result; the stored result is "
+                            "authoritative and was not replaced",
+                            work_id=work_id, stored_result_hash=r["result_hash"],
+                            submitted_result_hash=incoming)
                     return _work_dict(r)          # idempotent replay
                 raise ConflictError("work already completed by another claim "
                                     "attempt", work_id=work_id,
