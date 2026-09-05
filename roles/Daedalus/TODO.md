@@ -224,6 +224,75 @@ a regression.
 
 ---
 
+## D5 — Harmonia's scientific boundary campaign (S1/S2): what is ENGINE work
+
+Her packet found the pipeline manufacturing a false discovery on the real
+record: **p=0.0357 between a player and itself**, and p=0.4991 on the same data
+when counted at the world unit. Five ranked blockers, three with ZERO
+detectability after the fact. Logged, not fixed.
+
+**Most of her five blockers are NOT engine work, and saying so precisely
+matters more than volunteering to build things.**
+
+### D5-1  Pre-registration is already sealable — VERIFIED, no engine change
+Her C-3/C-4/C-5 (declare unit of analysis, comparison family, effect floor
+before the data is seen) do not need an engine feature. Measured on a scratch
+instance of the qualified build:
+
+    spec = {unit_of_analysis, n_per_arm, comparison_family_size,
+            smallest_effect_worth_believing, arms}   -> committed
+    spec recovered byte-identical .................... True
+    spec_hash sealed in the ledger ................... yes
+    recomputes locally to the same hash .............. True
+    EXPERIMENT_COMMITTED carries spec_hash + prospective_rule
+                                    + engine_source_hash
+
+So the declaration is **tamper-evident and order-provable**, not merely
+disciplined: `committed_seq` fixes it in ledger order exactly as the DFX-1
+prospective window fixes a prediction. Her §9 says these three are
+"unreconstructible after the fact" — correct, which is precisely why sealing
+them at commit is the whole fix, and it is available today.
+
+**Honest limit, same shape as ablation: the engine SEALS the declaration and
+does NOT check that the analysis obeyed it.** Detectable by audit, not
+prevented. An engine that adjudicated analyses would be computing outcomes,
+which it deliberately does not do.
+
+### D5-2  Blocker 3 (player identity is a name) — the mechanism already exists
+A player placed into a world as an artifact is content-addressed: `blob_hash`
+is `sha256(bytes)` and is **world-independent**. Two arms that are the same
+policy under two names would carry an IDENTICAL `blob_hash` — mechanically
+detectable, no engine change. The duplicate-under-a-new-name that produced
+p=0.036 against itself is catchable by comparing the hash the engine already
+returns. Her C-2 ("different requires the hashes to differ") is satisfiable
+today for any player that is placed as an artifact.
+**Worth telling her before SE-1**, since it converts blocker 3 from a build
+into a habit.
+
+### D5-3  Executor attestation (C-1) — engine half is optional, not required
+The executor's config hash can travel in the work `result`, which the engine
+already seals into `result_hash`. No engine change is needed to make it
+tamper-evident. A first-class typed field would be nicer to query and would let
+the engine refuse a completion that omits it — **that is the only genuinely
+engine-side option in her packet**, and it is a design choice, not a defect.
+Do not build it unasked; the client-side form is available now.
+
+### D5-4  The one thing no engine rule can close
+Her S2 case 6 — declared A, ran A plus an undeclared co-intervention C — leaves
+a record BYTE-IDENTICAL to the honest run. Five of six dishonest executions are
+detectable from fossils; this one is a missing MEASUREMENT, not a missing
+check. The engine cannot know what it was never told, and no engine-side rule
+closes it. Correctly classified in her packet; recorded here so nobody later
+files it as an engine bug.
+
+### D5-5  Not mine, tracked only
+Unit-of-analysis enforcement in ANALYSIS, comparison-family correction, effect
+floors, and player-class breadth (her directive item 12, unaddressed: only
+stochastic scalar-emitting policies exercised, nothing stateful or learning).
+These belong to whoever runs the campaign.
+
+---
+
 ## Standing discipline for whoever picks this up
 
 - Run the standing battery in `RESPONSIBILITIES.md` after ANY engine change and
