@@ -40,6 +40,14 @@ ignis/results/*/logs/
 
 # Local configs
 config.local.yaml
+# Credential override read by evidence_wiki/ew/db.py load_config()
+# (env > config.local.json > committed config.json). The code documents this
+# file as gitignored, but only the .yaml name was covered, so a real secret in
+# the documented .json filename could have been committed. A nested
+# evidence_wiki/.gitignore does NOT work for this: .git/info/exclude hides all
+# nested .gitignore files and is machine-local, so the rule has to live here to
+# reach M2 and fresh clones. Closed 2026-09-05.
+config.local.json
 *.user.json
 
 # OS
