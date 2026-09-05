@@ -293,6 +293,70 @@ These belong to whoever runs the campaign.
 
 ---
 
+## D6 — "What else fails in the direction of looking good?" (Harmonia S3)
+
+Her S3 closing question, answered by MEASUREMENT on a scratch instance of the
+qualified build rather than by listing suspicions. Four engine signals that
+return GREEN where a careful reader would reasonably take them to mean
+something they do not mean. Logged, not fixed.
+
+### D6-1  EVERY epistemic signal stays green on a contradicted execution
+The sharpest one, and it extends her S2 case 6 from ablation to the whole
+epistemic surface. Spec declared `arm-A`; the executor completed reporting
+`actually_ran: arm-NOT-A`; the observation bound that work_id. Result:
+
+    observations_engine_attested         1
+    observations_prospectively_predicted  1
+    claims_surviving                      1
+
+ENGINE-ATTESTED means the engine ran and sealed the work. It does NOT mean the
+executor did what the spec declared — the engine never reads the spec against
+the result, by design. PROSPECTIVE means ORDERING ONLY: the prediction preceded
+the commit. It is not evidence the predictor lacked foreknowledge; on a
+deterministic substrate it cannot be.
+**A reader who takes "engine-attested + prospective + surviving" as a quality
+stamp is reading three ordering facts as a correctness claim.**
+
+### D6-2  `ledger_integrity_ok: true` on deliberate garbage
+A world containing only meaningless bytes reports integrity TRUE. It verifies
+the HASH CHAIN, never the CONTENTS. "Integrity OK" is the phrase most likely to
+be quoted as assurance in a packet, and it assures only that nothing was
+tampered with after the fact.
+
+### D6-3  A budget that is REPORTED, looks tracked, and caps nothing
+Declared `limit 2, enforcement measured`; attempted 6; **accepted 6**;
+`resources` reports `consumed: {experiments: 6}` and `exhausted: false`. The
+presence of budget instrumentation in the output reads as control. `measured`
+is the DEFAULT, so this is the path of least resistance.
+
+### D6-4  Event count is NOT a count of distinct things — my hypothesis was wrong
+I predicted idempotent reposts would return 200 while creating nothing, so a
+loop counting successes would overcount. **Measured: the opposite shape.** 20
+identical reposts produced 20 HTTP 200s AND 20 `ARTIFACT_CREATED` events, while
+the knowledge frontier correctly reports **1** distinct artifact.
+
+So the inflation is in the LEDGER, not the response: an analyst who counts
+`ARTIFACT_CREATED` events as n gets 20x the distinct artifacts. This is
+Harmonia's unit-of-analysis defect one layer down — event rows are not
+independent units any more than observations within a world are. Her C-3
+(declare the unit) covers it only if "event count" is explicitly excluded as a
+unit.
+
+### D6-5  Advisory enforcement is itself a looks-good failure
+A campaign running with no session key sees 200s everywhere and looks entirely
+healthy while the affinity protection silently does not apply. The mode is the
+DEFAULT and the live engine runs it. Every unkeyed request is counted
+(`SESSION_ABSENT_ALLOWED`) — so the evidence exists, but nothing surfaces it to
+the experimenter.
+
+**Common shape across all five:** the engine reports faithfully on what it
+MEASURES, and every one of these is a reader inferring a property the engine
+never claimed to measure. That is not fixable by adding checks; it is fixable
+by naming, in the claim, which property each green signal actually establishes.
+Which is Harmonia's INVARIANT III arriving from the engine side.
+
+---
+
 ## Standing discipline for whoever picks this up
 
 - Run the standing battery in `RESPONSIBILITIES.md` after ANY engine change and
