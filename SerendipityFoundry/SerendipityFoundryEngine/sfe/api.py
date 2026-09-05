@@ -567,7 +567,14 @@ def create_app(db_path: str, *, registration_open: bool = True,
                 "registration_open": bool(app.state.registration_open),
                 "session_enforcement": app.state.session_enforcement,
                 "science_profile": app.state.science_profile,
-                **release.identity()}
+                # engine_identity() is release.identity() PLUS the instance id.
+                # The instance id is the identity of the LEDGER (minted once per
+                # database, travelling with the substrate rather than the path);
+                # the source hash is the identity of the BUILD. A consumer
+                # holding an anchor needs the first and could only get it from
+                # verify-anchor or by parsing a session key. It is not a secret
+                # -- both of those already publish it.
+                **f.engine_identity()}
 
     # -- worlds ------------------------------------------------------------
     @app.post("/v2/worlds")

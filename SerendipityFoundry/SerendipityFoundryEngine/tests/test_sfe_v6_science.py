@@ -162,6 +162,23 @@ def test_version_puts_the_enforcement_MODES_on_the_wire():
     assert c.get("/v2/version").json()["session_enforcement"] == "strict"
 
 
+def test_version_reports_the_LEDGER_identity_not_only_the_build():
+    """engine_source_hash identifies the BUILD; two engines running it are
+    indistinguishable by it. engine_instance_id identifies the LEDGER -- minted
+    once per DATABASE, so it travels with the substrate rather than the
+    filesystem path. A consumer holding an anchor needs the second and could
+    previously only get it from verify-anchor or by parsing a session key."""
+    db = os.path.join(tempfile.mkdtemp(), "one.db")
+    a, _h, _ = _engine(db=db)
+    b, _h2, _ = _engine(db=db)                 # same database, second process
+    c, _h3, _ = _engine()                      # different database
+    va, vb, vc = (x.get("/v2/version").json() for x in (a, b, c))
+    assert va["engine_instance_id"].startswith("eng_")
+    assert va["engine_instance_id"] == vb["engine_instance_id"],         "the instance id belongs to the DATABASE, not the process"
+    assert va["engine_instance_id"] != vc["engine_instance_id"]
+    assert va["engine_source_hash"] == vc["engine_source_hash"],         "same build, different ledger -- which is the whole distinction"
+
+
 def test_off_computes_nothing_anywhere():
     """A true v5 control arm: not merely unenforced, NOT COMPUTED."""
     c, h, sid = _engine("off")
