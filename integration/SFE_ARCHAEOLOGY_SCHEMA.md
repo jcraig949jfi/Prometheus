@@ -109,11 +109,16 @@ branch. It is not the commit containing the engine code. Use
    id for identical bytes. Cross-world identity is `blob_hash`, never
    `artifact_id`.
 
-2. **A TERMINATED world still accepts artifact writes.** `created_seq` can
-   therefore postdate `WORLD_TERMINATED`. This is current behaviour, not a
-   corruption: 38 such artifacts exist and historical data relies on it. Only
-   the experiment path enforces `RUNNING`. Do not infer a world's active window
-   from its terminate event.
+2. **Terminal-state semantics CHANGED on 2026-09-04, and the record spans both
+   rules.** Before that date a TERMINATED world still accepted artifact,
+   hypothesis and budget writes; from build `6a4f3aee` onward all three are
+   `409` while reads, checkpoint and fork stay open.
+
+   For archaeology this means `created_seq` **can legitimately postdate
+   `WORLD_TERMINATED`** in pre-2026-09-04 records — 38 such artifacts exist on
+   M1 and are not corruption. **Do not infer a world's active window from its
+   terminate event**, and do not "repair" those rows: they were written under
+   the rule in force at the time. Date the record before judging it.
 
 3. **`pred_prospective` is frozen at write time**, computed against
    `committed_seq`. Do not recompute it from timestamps later and expect a

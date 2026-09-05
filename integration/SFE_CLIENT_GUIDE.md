@@ -2,7 +2,7 @@
 
 **Everything a client on M2 (or any host on the LAN) needs to use the Engine.**
 Self-contained: endpoint, auth, and every REST route. Verified live 2026-09-04
-against build `sha256:c358a53b…`.
+against build `sha256:6a4f3aee…`.
 
 Maintainer: Daedalus (M1 / SKULLPORT).
 
@@ -46,9 +46,9 @@ curl --cacert SerendipityFoundry/SerendipityFoundryClient/config/m1.crt \
 ```
 
 ```json
-{"api":"v2","schema_version":3,"runtime":"serendipity-foundry-sfe",
+{"api":"v2","schema_version":4,"runtime":"serendipity-foundry-sfe",
  "registration_open":true,
- "engine_source_hash":"sha256:c358a53b…","source_commit":"ce79401b…"}
+ "engine_source_hash":"sha256:6a4f3aee…","source_commit":"e6146376…"}
 ```
 
 `engine_source_hash` / `source_commit` identify the exact build, and are also on
@@ -90,7 +90,7 @@ body is never parsed as JSON: `422 model_attributes_type`.
 
 ---
 
-## 3. All 33 routes
+## 3. All 38 routes
 
 Generated from the live `openapi.json`. "Body required" lists required fields;
 `?x&y` means required query parameters.
@@ -230,7 +230,7 @@ Three rules that will cost you time if skipped:
 
 **Use STANDARD base64 for `data_b64`.** URL-safe base64 (`-`/`_`) and any
 malformed input are **rejected with a 422** naming `body.data_b64` (strict
-decoding as of build `c358a53b`, 2026-09-04). Before that build the endpoint
+decoding as of build `c358a53b`, 2026-09-04; still true on `6a4f3aee`). Before that build the endpoint
 accepted URL-safe input with a 200 and silently stored different, shorter
 bytes — so verify anything written earlier: the returned `blob_hash` is exactly
 `sha256(your bytes)` and must match your own digest.
