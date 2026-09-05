@@ -49,6 +49,35 @@ def _corpus_block(corpus) -> Dict[str, Any]:
     }
 
 
+def _proteus_block(corpus, rows) -> Optional[Dict[str, Any]]:
+    """Proteus qualification, when the corpus carries Proteus players.
+
+    Two things go in, and both are load-bearing:
+
+    * ``source_qualification`` verbatim, so a reader of a stored proposal can
+      see what was and was not established about the players it used without
+      reconstructing it from Proteus's history. In particular
+      ``mutation_neutrality = NOT_QUALIFIED_AUTHORED_NONEQUILIBRIUM_CURRENT``.
+    * the USE-A audit, which records that no bred organism entered the
+      evidence. D1 and D4 build population comparisons against a family
+      baseline; if that population were bred by the non-neutral kernel the
+      comparison would inherit an authored probability current and NOTHING in
+      the arithmetic would show it.
+    """
+    if corpus.chart.source != "sfe_proteus":
+        return None
+    from . import proteus_link as px
+    try:
+        oids = {r.get("player") for r in rows if r.get("player")}
+        return {"source_qualification": px.qualification(),
+                "use_a_audit": px.assert_use_a_only(
+                    oids, context="detector evidence rows"),
+                "registry_schema": px.load_registry()["schema_version"],
+                "registry_id": px.load_registry()["registry_id"]}
+    except px.ProteusUnavailable as exc:
+        return {"error": str(exc)}
+
+
 def _rules_block(config: cfg.ArchaeonConfig) -> Dict[str, Any]:
     return {
         "config_fingerprint": config.fingerprint(),
@@ -68,11 +97,14 @@ def signal_provenance(*, corpus, config: cfg.ArchaeonConfig,
 
     considered = [c.to_json() for c in all_candidates[:MAX_CANDIDATES_RECORDED]]
 
+    out_proteus = _proteus_block(corpus, rows)
+
     return {
         "schema": PROVENANCE_SCHEMA,
         "mode": "weak_signal",
         "corpus": _corpus_block(corpus),
         "rules": _rules_block(config),
+        **({"proteus": out_proteus} if out_proteus else {}),
 
         "detector": sig.detector,
         "detector_version": sig.detector_version,
@@ -121,11 +153,14 @@ def exploration_provenance(*, corpus, config: cfg.ArchaeonConfig,
                            selection: Dict[str, Any],
                            census: Dict[str, Any]) -> Dict[str, Any]:
     """Provenance for an exploration-driven proposal."""
+    px_block = _proteus_block(corpus, [])
+
     return {
         "schema": PROVENANCE_SCHEMA,
         "mode": "exploration",
         "corpus": _corpus_block(corpus),
         "rules": _rules_block(config),
+        **({"proteus": px_block} if px_block else {}),
 
         "detector": None,
         "intent": "COVERAGE",

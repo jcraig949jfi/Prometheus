@@ -73,6 +73,19 @@ detector. Two ship:
                              metric=content.score, player=None
     pew.phenotype_score.v0   region=sfe_world_id, metric=phenotype.score,
                              player=player_id
+    sfe.proteus_player.v0    region=world_id, player=Proteus organism_id,
+                             coords=(tape_words, n_regs, genome_instructions,
+                                     tick_budget), metric=content.score
+
+The Proteus chart binds player identity through an artifact join rather than a
+new engine field: Proteus posts the canonical manifest and SFE content-
+addresses the bytes, so for `kind='proteus_player_manifest'`
+`artifacts.blob_hash == organism_id`. A world holding exactly one such artifact
+names the player that ran there. Worlds holding several are AMBIGUOUS and are
+excluded and counted, never resolved by a guess. Coordinates come from the
+registry's `resource_envelope` -- hard bounds read off the manifest, which are
+COORDINATES and not a taxonomy (Proteus supplies no player types or families by
+design). See `archaeon/proteus_link.py`.
 
 Every row keeps its anchors (`obs_id`, `exp_id`, `work_id`, `spec_hash`,
 `committed_seq`, or `sfe_entry_hash` on the PEW side), so a proposal is
@@ -252,9 +265,12 @@ effect; D6 additionally has a *gradual* control with the same total change.
    by its own upper bound. D1 sees a bounded window `[0.625, 1.00]` SDs and is
    blind above it (D5 covers that range instead). Reported, not hidden.
 4. **`spec.candidate` is a hash-like integer, not a physical parameter.**
-   Coordinate adjacency on the live chart is therefore close to meaningless,
-   which makes D2's neighbour radius and D6's boundary hints much weaker than
-   the synthetic results suggest. A chart over a real parameter is needed.
+   Coordinate adjacency on the DEFAULT chart is therefore close to meaningless,
+   which makes D2's neighbour radius and D6's boundary hints much weaker there
+   than the synthetic results suggest. `sfe.proteus_player.v0` fixes this in
+   principle -- `tape_words` (16..1024), `n_regs` (2..16),
+   `genome_instructions` (1..64), `tick_budget` (16..1024) are real ordered
+   axes -- but it has no data yet, so the fix is untested on production rows.
 5. **Exploration cannot propose an unobserved combination.** Legal cells come
    from the fossil record, so a never-instantiated world/player pair is
    unreachable until something else instantiates it. Archaeon cannot bootstrap
@@ -273,7 +289,26 @@ effect; D6 additionally has a *gradual* control with the same total change.
    directly and does not re-verify the `prev_hash`/`entry_hash` chain, so it
    asserts rather than checks that the record was not altered
    (`SFE_ARCHAEOLOGY_SCHEMA.md` §2).
-10. **Vivarium does not exist yet.** The queue's consumer side
+10. **Proteus's mutation machinery is NOT qualified as neutral.**
+    `mutation_neutrality = NOT_QUALIFIED_AUTHORED_NONEQUILIBRIUM_CURRENT`:
+    an authored probability current, 1.4e-02 nats per mutation step, 11.3% of
+    two-way flux as net imbalance, reproduced twice. `permitted_use` is
+    `USE_A_FROZEN_SPECIMEN_SOURCE`. This matters to Archaeon specifically
+    because D1 and D4 ARE population comparisons against a family baseline, and
+    a baseline drawn from a bred population would inherit that current with
+    nothing in the arithmetic showing it. `proteus_link.assert_use_a_only`
+    refuses bred organisms (generation > 0) in detector evidence and the
+    qualification block is copied into every Proteus-backed proposal. The guard
+    is precautionary today -- all 64 specimens are generation 0 -- and becomes
+    load-bearing the moment breeding starts.
+
+11. **`lineage_id` is not a usable player family yet.** It IS a family key in
+    general (the founder's `organism_id`), but all 64 starter specimens are
+    generation 0 and their own founders, so it partitions into 64 groups of
+    one. D1's family baseline and D4's related-region grouping must continue to
+    use the world family until bred lineages exist.
+
+12. **Vivarium does not exist yet.** The queue's consumer side
     (`status`, `claimed_by`, `result_ref`) is specified and unexercised.
 
 ---

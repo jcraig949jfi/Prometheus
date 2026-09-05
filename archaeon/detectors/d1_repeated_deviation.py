@@ -52,7 +52,7 @@ from collections import defaultdict
 from typing import Dict, List, Tuple
 
 from .. import stats
-from .base import (DetectorResult, Eligibility, Signal, INTENT_REPLICATE,
+from .base import (DetectorResult, Eligibility, Signal, player_block_reason, INTENT_REPLICATE,
                    mean, sem, stdev, variance, clamp01)
 
 NAME = "REPEATED_SMALL_DEVIATION"
@@ -66,14 +66,9 @@ FAMILY_ALPHA = 0.05
 def detect(corpus, dcfg) -> DetectorResult:
     rows = corpus.rows
 
-    if corpus.chart.player_field is None or not any(r.player for r in rows):
-        return DetectorResult(Eligibility(
-            NAME, 0, 0, UNIT,
-            blocked_reason=("corpus carries no player identity; this detector's "
-                            "unit cannot be formed"),
-            detail={"chart": corpus.chart.name,
-                    "player_field": corpus.chart.player_field,
-                    "rows": len(rows)}))
+    blocked = player_block_reason(corpus, UNIT, NAME)
+    if blocked is not None:
+        return DetectorResult(blocked)
 
     fam_rows: Dict[str, List] = defaultdict(list)
     for r in rows:

@@ -40,7 +40,7 @@ from collections import defaultdict
 from typing import Dict, List, Optional, Tuple
 
 from .. import stats
-from .base import (DetectorResult, Eligibility, Signal, INTENT_DISCRIMINATE,
+from .base import (DetectorResult, Eligibility, Signal, player_block_reason, INTENT_DISCRIMINATE,
                    mean, stdev, variance, clamp01)
 
 NAME = "SIGN_INSTABILITY"
@@ -58,12 +58,9 @@ def _dist(a: Dict[str, float], b: Dict[str, float]) -> Optional[float]:
 def detect(corpus, dcfg) -> DetectorResult:
     rows = corpus.rows
 
-    if corpus.chart.player_field is None or not any(r.player for r in rows):
-        return DetectorResult(Eligibility(
-            NAME, 0, 0, UNIT,
-            blocked_reason=("corpus carries no player identity; a player "
-                            "comparison cannot be formed"),
-            detail={"chart": corpus.chart.name, "rows": len(rows)}))
+    blocked = player_block_reason(corpus, UNIT, NAME)
+    if blocked is not None:
+        return DetectorResult(blocked)
 
     if not corpus.chart.coord_fields:
         return DetectorResult(Eligibility(

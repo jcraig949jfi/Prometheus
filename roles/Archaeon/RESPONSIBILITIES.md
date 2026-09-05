@@ -57,13 +57,25 @@ question rather than an answer.
 
 ## Open coordination
 
-- **Daedalus** — the live SFE corpus carries no player identity
-  (`spec.owner` NULL on 2934/2934 joined rows). Until experiment specs carry
-  one, D1/D2/D4 cannot run on production data.
+- **Proteus** — player identity is SOLVED and needs nothing new. 64 frozen
+  specimens at `proteus/integration/PLAYER_REGISTRY.json`; `organism_id` is
+  the key, and because Proteus posts the canonical manifest, SFE's
+  `artifacts.blob_hash == organism_id` for `kind='proteus_player_manifest'`.
+  Archaeon reads that join (`sfe.proteus_player.v0`). The registry's
+  `resource_envelope` also supplies the first REAL coordinate axes Archaeon
+  has had.
+  Standing constraint from Proteus: `permitted_use =
+  USE_A_FROZEN_SPECIMEN_SOURCE`, and mutation neutrality is NOT established.
+  Archaeon's D1/D4 are population comparisons, so bred organisms
+  (generation > 0) are refused in detector evidence
+  (`proteus_link.assert_use_a_only`) until that is adjudicated.
+- **Daedalus / whoever runs encounters** — the actual blocker is not identity
+  but ENCOUNTERS. 13 SFE worlds carry a Proteus player; exactly one has an
+  experiment, one has an observation, and that observation carries no numeric
+  metric. No world holds two players, so no comparison unit exists. D1/D2/D4
+  need scored encounters, and at least one world running two players.
 - **Mnemosyne** — PEW `fossil_encounters` carries no `players`, `ecology` or
   `resources_used` in `prod` (0/5452), and only 2 of 6006 `prod` player
   fossils have a `phenotype.score`. The PEW chart cannot fire a detector yet.
 - **Vivarium (unbuilt)** — owns the consumer side of `experiment_queue`:
   `status`, `claimed_by`, `claimed_at`, `completed_at`, `result_ref`.
-- **Proteus** — organism identity is the natural player key when Proteus
-  organisms start running in SFE worlds.

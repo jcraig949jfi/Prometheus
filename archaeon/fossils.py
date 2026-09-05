@@ -329,6 +329,8 @@ def read(chart_name: str = cfg.DEFAULT_CHART, **kw) -> Corpus:
         return read_sfe(chart=chart, **kw)
     if chart.source == "pew":
         return read_pew(chart=chart, **kw)
+    if chart.source == "sfe_proteus":
+        return read_sfe_proteus(chart=chart, **kw)
     raise ValueError("unknown chart source: {}".format(chart.source))
 
 
@@ -340,3 +342,131 @@ def corpus_from_rows(rows: Sequence[FossilRow],
     ordered = sorted(rows, key=lambda x: (x.seq, x.row_id))
     return Corpus(list(ordered), chart, source_ref,
                   {"synthetic": True, "returned": len(ordered)})
+
+
+# --------------------------------------------------------------------------
+# SFE + Proteus reader: player identity via the artifact join
+# --------------------------------------------------------------------------
+def read_sfe_proteus(db_path: Optional[str] = None,
+                     chart: Optional[cfg.CoordinateChart] = None,
+                     lookback_rows: int = cfg.DEFAULT.lookback_rows) -> Corpus:
+    """Read SFE fossils with PROTEUS player identity attached.
+
+    The join, and why it is legitimate rather than a convention:
+
+        artifacts.kind = 'proteus_player_manifest'
+        artifacts.blob_hash == Proteus organism_id
+
+    Proteus posts the canonical manifest serialization and SFE content-
+    addresses the BYTES, so the equality holds by construction. One assertion
+    proves the specimen crossed unaltered (HARMONIA_HANDOFF.md s10).
+
+    A world holding exactly one such artifact names the player that ran there.
+    A world holding SEVERAL is ambiguous under this chart -- Archaeon cannot
+    tell which player produced which observation from the artifact table alone
+    -- so those worlds are EXCLUDED and counted, rather than being resolved by
+    a guess. The exclusion count is reported in the corpus window, because a
+    silently dropped world is a silently biased corpus.
+
+    Coordinates come from the Proteus registry's resource envelope, not from
+    the SFE spec.
+    """
+    from . import proteus_link as px
+
+    chart = chart or cfg.PROTEUS_PLAYER_CHART
+    path = str(db_path or DEFAULT_SFE_DB)
+    if not os.path.exists(path):
+        return Corpus([], chart, path, {"error": "sfe db not found",
+                                        "path": path})
+    try:
+        known = px.entries_by_id()
+    except px.ProteusUnavailable as exc:
+        return Corpus([], chart, path,
+                      {"error": "proteus registry unavailable: {}".format(exc)})
+
+    uri = "file:{}?mode=ro".format(path.replace("?", "%3f"))
+    conn = sqlite3.connect(uri, uri=True)
+    conn.row_factory = sqlite3.Row
+    try:
+        # world -> the proteus players whose manifests entered it
+        world_players: Dict[str, set] = {}
+        for r in conn.execute(
+                "SELECT world_id, blob_hash FROM artifacts WHERE kind = ?",
+                (px.PROTEUS_ARTIFACT_KIND,)):
+            oid = str(r["blob_hash"]).split("sha256:")[-1]
+            world_players.setdefault(r["world_id"], set()).add(oid)
+
+        unique = {w: next(iter(p)) for w, p in world_players.items()
+                  if len(p) == 1}
+        ambiguous = sorted(w for w, p in world_players.items() if len(p) > 1)
+
+        if not unique:
+            return Corpus([], chart, path, {
+                "join": "artifacts.kind=proteus_player_manifest -> blob_hash=organism_id",
+                "worlds_with_proteus_artifact": len(world_players),
+                "worlds_with_unique_player": 0,
+                "worlds_ambiguous_excluded": len(ambiguous),
+                "reason": ("no SFE world carries exactly one proteus player "
+                           "manifest, so no player-bound fossil can be formed"),
+                "returned": 0})
+
+        marks = ",".join("?" for _ in unique)
+        sql = """
+            SELECT o.obs_id, o.exp_id, o.world_id, o.content, o.outcome,
+                   o.evidence_class, o.work_id, o.created_seq AS obs_seq,
+                   e.spec, e.spec_hash, e.committed_seq,
+                   w.topology_group AS world_family
+              FROM observations o
+              JOIN experiments  e ON e.exp_id  = o.exp_id
+              JOIN worlds       w ON w.world_id = o.world_id
+             WHERE o.world_id IN ({})
+             ORDER BY o.created_seq DESC
+             LIMIT ?
+        """.format(marks)
+        raw = conn.execute(sql, list(unique) + [int(lookback_rows)]).fetchall()
+    finally:
+        conn.close()
+
+    rows: List[FossilRow] = []
+    unregistered = set()
+    for r in raw:
+        content = _loads(r["content"])
+        if not isinstance(content, dict):
+            continue
+        metric = _num(_dig({"content": content}, chart.metric_field))
+        if metric is None:
+            continue
+        oid = unique[r["world_id"]]
+        if oid not in known:
+            unregistered.add(oid)
+        coords = {k: v for k, v in px.envelope_coords(oid).items()
+                  if k in chart.coord_fields}
+        rows.append(FossilRow(
+            row_id=r["obs_id"], source="sfe_proteus", seq=int(r["obs_seq"]),
+            region=r["world_id"], family=r["world_family"], player=oid,
+            metric=metric, coords=coords,
+            anchors={"obs_id": r["obs_id"], "exp_id": r["exp_id"],
+                     "work_id": r["work_id"], "world_id": r["world_id"],
+                     "spec_hash": r["spec_hash"],
+                     "committed_seq": r["committed_seq"],
+                     "observation_created_seq": int(r["obs_seq"]),
+                     "evidence_class": r["evidence_class"],
+                     "outcome": r["outcome"],
+                     "proteus_organism_id": oid,
+                     "proteus_generation": known.get(oid, {}).get("generation"),
+                     "player_binding": ("artifacts.blob_hash == organism_id "
+                                        "(kind=proteus_player_manifest)")},
+        ))
+
+    rows.sort(key=lambda x: (x.seq, x.row_id))
+    return Corpus(rows, chart, path, {
+        "join": "artifacts.kind=proteus_player_manifest -> blob_hash=organism_id",
+        "worlds_with_proteus_artifact": len(world_players),
+        "worlds_with_unique_player": len(unique),
+        "worlds_ambiguous_excluded": len(ambiguous),
+        "ambiguous_worlds": ambiguous[:20],
+        "distinct_players": len({r.player for r in rows}),
+        "unregistered_players": sorted(unregistered)[:10],
+        "lookback_rows": int(lookback_rows),
+        "order": "observations.created_seq DESC",
+        "returned": len(rows)})

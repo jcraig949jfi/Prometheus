@@ -171,3 +171,49 @@ def clamp01(x: float) -> float:
     if x != x:          # NaN
         return 0.0
     return 0.0 if x < 0.0 else (1.0 if x > 1.0 else x)
+
+
+def player_block_reason(corpus, unit: str, detector: str):
+    """Why a player-dependent detector cannot run, stated precisely.
+
+    Three different situations produce zero player-bearing rows, and calling
+    them all "no player identity" would be the very conflation this module
+    exists to prevent:
+
+      NO_PLAYER_FIELD   the chart does not model players at all (structural);
+      EMPTY_CORPUS      there are no rows to carry a player (no data yet);
+      PLAYER_UNBOUND    rows exist but none carries a player (a binding gap).
+
+    Returns an ``Eligibility`` when blocked, or ``None`` when the detector may
+    proceed.
+    """
+    rows = corpus.rows
+    if corpus.chart.player_field is None:
+        return Eligibility(
+            detector, 0, 0, unit,
+            blocked_reason=("chart {!r} does not model player identity, so "
+                            "this detector's unit cannot be formed"
+                            .format(corpus.chart.name)),
+            detail={"cause": "NO_PLAYER_FIELD", "chart": corpus.chart.name,
+                    "rows": len(rows)})
+    if not rows:
+        return Eligibility(
+            detector, 0, 0, unit,
+            blocked_reason=("corpus is empty under chart {!r}; the chart DOES "
+                            "model players, so this is an absence of data, not "
+                            "an absence of player identity"
+                            .format(corpus.chart.name)),
+            detail={"cause": "EMPTY_CORPUS", "chart": corpus.chart.name,
+                    "corpus_window": dict(corpus.window)})
+    if not any(r.player for r in rows):
+        return Eligibility(
+            detector, 0, 0, unit,
+            blocked_reason=("{} rows carry no player value although chart {!r} "
+                            "declares player_field={!r}: the binding from "
+                            "observation to player is missing"
+                            .format(len(rows), corpus.chart.name,
+                                    corpus.chart.player_field)),
+            detail={"cause": "PLAYER_UNBOUND", "chart": corpus.chart.name,
+                    "player_field": corpus.chart.player_field,
+                    "rows": len(rows)})
+    return None

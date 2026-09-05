@@ -65,7 +65,29 @@ PEW_PHENOTYPE_CHART = CoordinateChart(
     coord_fields=(),
 )
 
-CHARTS = {c.name: c for c in (SFE_SCORE_CHART, PEW_PHENOTYPE_CHART)}
+# The chart that uses PROTEUS player identity. An SFE world holding a
+# kind='proteus_player_manifest' artifact names the player that ran there,
+# because Proteus posts the canonical manifest and SFE content-addresses the
+# bytes -- so artifacts.blob_hash EQUALS organism_id. No new engine work and no
+# invented convention; see archaeon/proteus_link.py.
+#
+# Coordinates come from the registry's resource_envelope (tape_words, n_regs,
+# ...), which are hard bounds read off the manifest. They are COORDINATES, not
+# a taxonomy: Proteus supplies no player types or families by design and tests
+# that the vocabulary never appears. They are also far better axes than
+# spec.candidate, which is hash-like and whose adjacency means nothing.
+PROTEUS_PLAYER_CHART = CoordinateChart(
+    name="sfe.proteus_player.v0",
+    source="sfe_proteus",
+    region_field="world_id",
+    family_field="world_family",
+    player_field="proteus.organism_id",
+    metric_field="content.score",
+    coord_fields=("tape_words", "n_regs", "genome_instructions", "tick_budget"),
+)
+
+CHARTS = {c.name: c for c in (SFE_SCORE_CHART, PEW_PHENOTYPE_CHART,
+                              PROTEUS_PLAYER_CHART)}
 DEFAULT_CHART = SFE_SCORE_CHART.name
 
 

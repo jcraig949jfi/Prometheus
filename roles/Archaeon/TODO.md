@@ -17,14 +17,36 @@
 - [x] End-to-end: first production proposal `AX-9ec1f5fc35ae` written from
       3241 real SFE fossils
 
+## 2026-09-05 (later) — Proteus link
+
+Earlier entry said player identity was blocked on Daedalus. That was wrong:
+Proteus already publishes it, and the SFE binding already works.
+
+- [x] `sfe.proteus_player.v0` chart: player = Proteus `organism_id`, bound via
+      `artifacts.kind='proteus_player_manifest'` where `blob_hash ==
+      organism_id`. Ambiguous worlds (>1 player) excluded and counted.
+- [x] Real coordinate axes from the registry `resource_envelope`
+      (`tape_words` 16..1024, `n_regs` 2..16, `genome_instructions` 1..64,
+      `tick_budget` 16..1024) — replacing hash-like `spec.candidate`.
+- [x] USE-A neutrality guard: bred organisms (generation > 0) refused in
+      detector evidence, since D1/D4 are population comparisons and Proteus's
+      mutation kernel carries an authored probability current. Precautionary
+      today (all 64 specimens are generation 0); load-bearing once breeding
+      starts.
+- [x] Fixed a conflated blocked_reason: NO_PLAYER_FIELD / EMPTY_CORPUS /
+      PLAYER_UNBOUND are now distinguished. The Proteus chart was reporting
+      "no player identity" when it HAS identity and simply has no data.
+- [x] 13 tests for the link; 68 total.
+
 ## Next — blocked on other seats
 
-- [ ] **Player identity in SFE specs** (needs Daedalus). Until then D1/D2/D4
-      are eligible only on synthetic corpora. This is the single highest-value
-      unblock: it takes the suite from 3/6 to 6/6 on production data.
-- [ ] **A chart over a real parameter.** `spec.candidate` is a hash-like
-      integer, so coordinate adjacency is close to meaningless and D2/D6 are
-      much weaker on live data than synthetically.
+- [ ] **Scored Proteus encounters** — the real blocker. 13 worlds carry a
+      Proteus player; 1 has an experiment, 1 has an observation, and it
+      carries no numeric metric (`outputs_digest`/`statuses`/`identity_gate`/
+      `replay`). Only 2 of 64 specimens have crossed into SFE.
+- [ ] **A world running TWO players.** No SFE world holds more than one
+      distinct Proteus player, so D2 and D4 have no comparison unit to form at
+      any threshold. One two-player world unblocks both.
 - [ ] **Vivarium consumer** — claim/complete semantics against
       `archaeon.experiment_queue`; the consumer columns are unexercised.
 
