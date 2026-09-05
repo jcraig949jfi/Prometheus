@@ -292,6 +292,7 @@ both before you trust a comparison across engines:
 |---|---|---|
 | `session_enforcement` | `advisory` | `strict` = a missing session key on a bound session is a `428`. A **presented** key is fully judged in both modes. |
 | `science_profile` | `warn` | `off` = v6 checks not computed at all; `warn` = computed, returned and sealed, never blocking; `strict` = a finding that contradicts your own sealed declaration fails the call. |
+| `engine_instance_id` | `eng_8a37a5d305969034d488c43e` | identity of the **ledger**, minted once per database. `engine_source_hash` is the identity of the **build** — two engines running the same build share it. If you hold an anchor, this is the field that says which engine minted it. |
 
 On `warn`, **nothing you send can be refused by a v6 check.** Findings arrive as
 a `science.profile_findings` list on the response and are sealed into the event

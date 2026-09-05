@@ -44,7 +44,11 @@ And one thing about the engine itself: two engines could report an **identical**
 `engine_source_hash` and still behave differently, because the enforcement modes
 were launch arguments that appeared in no response. Build identity answers
 *what code*; it never answered *under what rules*. Both are now on
-`GET /v2/version`.
+`GET /v2/version` — along with `engine_instance_id`, the identity of the
+**ledger** (minted once per database, so it travels with the substrate rather
+than the filesystem path) as distinct from the identity of the **build**. If you
+hold an anchor, that is the field that says which engine minted it; previously
+you could only get it from `verify-anchor` or by parsing a session key.
 
 ---
 
@@ -327,11 +331,17 @@ replicate is not a failed intervention.
 ```json
 {"api":"v2","schema_version":6,"runtime":"serendipity-foundry-sfe",
  "registration_open":true,
- "session_enforcement":"advisory",
+ "session_enforcement":"advisory",     // the rules, not just the build
  "science_profile":"warn",
- "engine_source_hash":"sha256:…","engine_instance_id":"eng_…",
+ "engine_instance_id":"eng_…",         // identity of the LEDGER
+ "engine_source_hash":"sha256:…",      // identity of the BUILD
  "source_commit":"…"}
 ```
+
+`source_commit` is best-effort git metadata naming the working tree's HEAD and
+**may name a tree that cannot reproduce the build**. `engine_source_hash` is
+computed from the loaded source at import and is the authoritative build
+identity — compare that one.
 
 **Eleven new routes**, all inside the session-affinity perimeter (a container
 that spans worlds must not span *engines*): five families, four claims,
