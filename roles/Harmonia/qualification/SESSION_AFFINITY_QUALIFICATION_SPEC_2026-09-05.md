@@ -175,5 +175,9 @@ engine.
     <out>/affinity_qualification_results.json   gates, verdict, eligibility
     <out>/affinity_qualification_ledger.jsonl   every HTTP exchange, redacted
 
+`<out>` defaults to `roles/Harmonia/qualification/ledgers/`, NOT `results/`:
+the repo `.gitignore` carries a `**/results/` rule, so the obvious name
+would put the evidence somewhere git refuses to track.
+
 The verdict ships in the same commit as the ledger. A verdict without its rows
 is an assertion.
