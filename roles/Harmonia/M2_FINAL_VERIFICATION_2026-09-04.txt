@@ -1,0 +1,221 @@
+======================================================================
+HARMONIA -- M2 FINAL VERIFICATION (verification only; nothing repaired)
+Date  : 2026-09-04, after Daedalus 0fd24e0f3 + Mnemosyne d0cd80947
+Repo  : D:\Prometheus  HEAD d0cd80947
+======================================================================
+
+VERDICT: ANOTHER_TARGETED_REPAIR_PASS_REQUIRED
+
+Six of seven claims PROVEN. Claim 4 is half-met, and it is the half that
+decides the verdict: the SFE mechanism is built and correct, and PEW does
+not call it. No new significant defect was found. One unwired step.
+
+----------------------------------------------------------------------
+LIVE STATE, RE-DERIVED (not read from the deployment reports)
+----------------------------------------------------------------------
+SFE  https://192.168.1.191:8811   PID 21480
+     source_commit      0fd24e0f3f48b0d9cbac9cd846cec8486480e026
+     engine_source_hash sha256:6a4f3aeec05a3ed9a31364e21  (was 3325ac5f)
+     engine_instance_id eng_906356f7fb1da180131f9290       (NEW)
+     schema 4, 34 routes (was 32); sfe_preflight exit 0
+PEW  http://192.168.1.191:8377    PID 27056
+     source_commit  d0cd80947ab0ec2f2da409838ebbb0e21bea4ddd
+     db_system_id   7681719240261676752, closure pew.closure.v0
+M1   PEW /identity still 404 -- LIVE_NOT_QUALIFIED (Mnemosyne A1, open)
+
+----------------------------------------------------------------------
+1. S-2  PEW BATTERY MACHINE IDENTITY                          PROVEN
+----------------------------------------------------------------------
+Driven from OUTSIDE the battery; I did not accept its self-reported
+controls dict.
+
+  M2 as M2                          S2 PASS, 16/16, all_pass true
+  M2, expected = M1's real db id    S2 FAIL, all_pass false
+  M2, expected = "WRONG-DB-ID"      S2 FAIL, all_pass false
+  M1 host claimed as M2             S2 FAIL, all_pass false
+                                    (db_system_id=None; M1 404s /identity)
+
+The fix is load-bearing, and here is the proof: on the M1-as-M2 run,
+E0_service_reachable PASSED and E1_version_schema_identity PASSED. S2 is
+the ONLY gate that caught it -- exactly the blind spot the stop packet
+described.
+
+  NB-6  DOCUMENTATION. Two of the four entries in the gate's reported
+        `controls` dict are computed from the static EXPECTED_DB_ID table,
+        not from the live server: `M1_claimed_as_M2_FAIL` is
+        `expected not in other_ids`, and `M2_wrong_dbid_FAIL` restates
+        `actual == expected`. Both printed True during the M1 run while
+        the battery was in fact talking to M1. The load-bearing assertion
+        (live /identity db_system_id == expected) and
+        `header_not_substitute_for_server` are real and did their job, so
+        the gate is CORRECT -- but its control panel claims more
+        independent verification than it performs.
+  NB-7  NON_BLOCKING. The gate does not fail-fast. The M1-as-M2 run
+        continued past the FAIL and wrote test-namespace rows to M1
+        (E11/E12 inserted). all_pass is correctly false, so no false PASS
+        is possible; but pointing the battery at the wrong host still
+        contaminates that host.
+
+----------------------------------------------------------------------
+2. R2-1 SEAM: PRODUCER -> AUDIT ENVELOPE -> ew.sealed_records  PROVEN
+----------------------------------------------------------------------
+One minimal producer encounter (a verification probe, NOT a science
+condition; the Round-2 exercise was not rerun).
+
+  GET /v2/worlds/{wid}/experiments/{eid}/audit-envelope   200 (owner)
+      keys: anchors, api_version, engine, envelope_hash, envelope_version,
+            experiment, ledger_head_hash, observations, schema_version,
+            sealed_spec_hash_in_ledger, spec_hash_recomputed, work, world
+      envelope_hash sha256:75117a3fe7f405c964aa66ba963b9fc8...
+  POST /api/v1/fossil/seal                                200
+      SEAL-273591c964cd92866169621d
+      slots_present 17 of 17, slots_absent []
+      seal_valid true
+  tamper-evidence: one slot changed -> SEAL-4c10922eec700e2e (different)
+  idempotency:     identical content -> same SEAL id, inserted=False
+  closure_battery C0-C15: 16/16 all_pass
+
+----------------------------------------------------------------------
+3. engine_instance_id SURVIVES INTO PEW                       PROVEN
+----------------------------------------------------------------------
+Recovered by the investigator from the PEW seal, slot sfe_engine_id:
+  engine_instance_id  eng_906356f7fb1da180131f9290
+  engine_source_hash  sha256:6a4f3aeec05a3ed9a31364e21f55cd11...
+  source_commit       0fd24e0f3f48b0d9cbac9cd846cec8486480e026
+Also returned by every verify-anchor response. This closes the NB-1 I
+filed in the stop packet: engine_source_hash was byte-identical on M1 and
+M2 and could not answer "which engine minted this"; engine_instance_id
+now can.
+
+----------------------------------------------------------------------
+4. BOUND VERIFY-ANCHOR                                     HALF-MET
+----------------------------------------------------------------------
+THE SFE MECHANISM: PROVEN, including the hazard case.
+
+  bound, correct (world,event,entry_hash,exp_id,obs_id)
+      valid TRUE   event_exists T entry_hash_matches T
+                   binds_exp_id T binds_obs_id T
+  WRONG-BUT-REAL, bound: a genuine WORLD_CREATED event of the same world,
+  with its GENUINE entry_hash, claimed as this observation's anchor
+      valid FALSE  event_exists T entry_hash_matches T
+                   binds_exp_id F binds_obs_id F
+      -> the D1 hazard is enforceably rejected. Existence is not enough.
+  forged entry_hash        valid FALSE (entry_hash_matches F)
+  no token                 401 -- the auth wall stands
+  non-owning client        200 and correct -- credential-free by design
+  returns booleans + engine identity only; no payload, no refs, no
+  enumeration (you must already hold the 256-bit entry_hash)
+
+WHAT IS NOT MET: PEW does not call it.
+
+  evidence_wiki/ew/closure.py:94 -> a["sfe_anchor_verified"] = False
+  is the ONLY assignment. grep for 8811 / verify-anchor / audit/verify
+  across evidence_wiki/ew/ returns NOTHING. There is no outbound SFE call.
+  Every fossil written today, including mine, reads
+  sfe_anchor_verified=false.
+
+  Mnemosyne's own closure_battery states the residue explicitly and
+  passes on it:
+    C4_wrong_real_anchor_gap_pinned: "wrong-but-real accepted=200
+    (KNOWN GAP), recorded sfe_anchor_verified=False -> needs SFE
+    attestation to reject"
+
+  So at the PEW WRITE path a wrong-but-real anchor is still ACCEPTED; it
+  is merely labelled unverified. SFE has now supplied the attestation
+  that C4 says is needed, and it is not consumed.
+
+  The claim "verify-anchor succeeds BEFORE sfe_anchor_verified=true"
+  cannot be demonstrated because sfe_anchor_verified is never true. The
+  gating relationship does not exist yet. This is conservative and
+  test-enforced, not wrong -- but it is unbuilt, not proven.
+
+  FORWARD CONSTRAINT for whoever wires it: the UNBOUND call
+  (world_id + event_id + entry_hash, no exp_id/obs_id) returns
+  valid=TRUE for that same genuine WORLD_CREATED event, with
+  binds_exp_id=null and binds_obs_id=null. PEW must send the BOUND form
+  and must treat a null bind as NOT verified. Consuming the unbound
+  result would reinstate exactly the D1 hazard the endpoint was built to
+  kill.
+
+----------------------------------------------------------------------
+5. INDEPENDENT INVESTIGATOR, NO PRODUCER SFE CREDENTIAL       PROVEN
+----------------------------------------------------------------------
+A separate process holding a PEW token and its OWN fresh SFE client --
+never the producer's -- given ONE string, the encounter id.
+
+  fossil                              200
+  encounter -> seal                   200  SEAL-273591c964cd9286...
+  seal fetch                          200  seal_valid true, 17/17 slots
+  audit envelope present in PEW       yes
+  envelope_hash  stored == recomputed MATCH
+      sha256:75117a3fe7f405c964aa66ba963b9fc8114b1e1b99ccfe17...
+  sealed_spec_hash_in_ledger
+      == spec_hash_recomputed         MATCH
+      sha256:17388bf74655fa33d1c3eacf27f258b1856c7d6f6e414e4e...
+  recovered: exact spec, full world config (incl. seed_root, budget,
+      sharing_policy, head_hash), observations with
+      evidence_class=ENGINE_WORK_RESULT, ledger_head_hash
+  anchor verified credential-free     valid TRUE, all four checks TRUE
+
+The complete experiment was reconstructed and hash-verified without the
+producer's SFE credential. R2-1 is closed for the reader.
+
+----------------------------------------------------------------------
+6. ORDINARY CROSS-CLIENT ISOLATION                            PROVEN
+----------------------------------------------------------------------
+Non-owning client against the producer's world:
+  GET /worlds/{wid}/status                       403
+  GET /worlds/{wid}/events                       403
+  GET /worlds/{wid}/observations                 403
+  GET /worlds/{wid}/experiments/{eid}            403
+  GET .../experiments/{eid}/audit-envelope       403   <- the NEW route
+                                                        is owner-scoped
+                                                        like every other
+                                                        read
+Only /v2/audit/verify-anchor is deliberately non-owner-scoped, and it
+returns no content. Isolation is untouched.
+
+----------------------------------------------------------------------
+7. NO TYPED IDENTITY DEPENDS ON PARSING run_id                PROVEN
+----------------------------------------------------------------------
+Every identity the investigator used came from a NAMED slot:
+  experiment_spec_id, world_id, organism_ids, action_id, input_digest,
+  output_digest, world_config_digest, measurement_def,
+  measurement_version, interpretation_id, registry_id, entry_id,
+  composition_id, topology, ablation, sfe_engine_id, causal_anchor
+  slots_absent: []
+
+exp_id came from causal_anchor.exp_id, a typed field. As a control I also
+computed what run_id.split(":")[0] WOULD have given: identical string --
+but the investigator read the slot and never parsed. R2-2 from the
+closure packet is closed.
+
+----------------------------------------------------------------------
+SUMMARY
+----------------------------------------------------------------------
+  1  S-2 battery machine identity          PROVEN  (+NB-6, NB-7)
+  2  producer -> envelope -> sealed_records PROVEN
+  3  engine_instance_id into PEW           PROVEN  (closes NB-1)
+  4  bound verify-anchor                   HALF-MET
+       SFE mechanism + wrong-but-real reject  PROVEN
+       PEW consumption / the "before" gate    NOT WIRED
+  5  credential-free investigator replay    PROVEN  (closes R2-1 reader)
+  6  ordinary cross-client isolation        PROVEN
+  7  no typed identity from run_id          PROVEN  (closes R2-2)
+
+  new significant defects: NONE
+  remaining item: ONE. PEW must call POST /v2/audit/verify-anchor in the
+  BOUND form on fossil write, set sfe_anchor_verified from its `valid`,
+  refuse or flag a wrong-but-real anchor rather than accepting it 200,
+  treat null binds as unverified, and un-pin closure_battery C4.
+  Owner: Mnemosyne. Blocking-for: CAUSAL_INDEPENDENTLY_VERIFIED, which
+  remains FALSE.
+
+VERDICT: ANOTHER_TARGETED_REPAIR_PASS_REQUIRED
+
+Everything a third party needs to reconstruct and hash-verify an
+experiment now works, credential-free. What does not yet work is the
+system checking its own anchors: the engine will answer the question and
+nothing asks it.
+
+======================================================================
