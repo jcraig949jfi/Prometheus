@@ -1,0 +1,13 @@
+{
+ "supersedes": "first run of s1_known_null_campaign.py",
+ "S1-2": {
+  "was": "single null grid returned 0 celebrated findings, which contradicted the finding text",
+  "now": "test statistic calibrated (FPR 0.048/0.057/0.055 at n=6/12/24); grid repeated 10x -> 36/750 = 0.048, mean 3.6 false discoveries per 75-comparison sweep, range 1-6",
+  "lesson": "a single sweep is not a measurement of a rate"
+ },
+ "S1-5": {
+  "was": "reported as 'null as expected, luck of the draw'",
+  "now": "THE FALSE DISCOVERY ACTUALLY FIRED on the real record: p=0.0357 per observation for a player against itself; p=0.4991 per world on the SAME fossils",
+  "lesson": "understating a result that fired is the same error class as overstating one that did not"
+ }
+}

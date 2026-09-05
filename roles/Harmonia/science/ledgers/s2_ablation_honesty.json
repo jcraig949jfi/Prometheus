@@ -1,0 +1,147 @@
+{
+ "record": {
+  "HONEST": {
+   "world_id": "wld_9278db81b8c7783e81572807",
+   "truth": "declared A, applied A",
+   "recorded_interventions": {
+    "component": "A"
+   },
+   "recorded_spec": {
+    "action": "encounter",
+    "ticks": 8,
+    "applied": "A"
+   },
+   "spec_hash": "sha256:42f883ead3ddf8379ed45585dd5a5f3f7d6ee21a49eb01aad7ffeab448a59539",
+   "accepted": {
+    "complete": 200,
+    "observation": 200
+   }
+  },
+  "LIE_declared_A_executed_notA": {
+   "world_id": "wld_94958165359d52316935f093",
+   "truth": "declared A, applied NOT-A",
+   "recorded_interventions": {
+    "component": "A"
+   },
+   "recorded_spec": {
+    "action": "encounter",
+    "ticks": 8,
+    "applied": "NOT_A"
+   },
+   "spec_hash": "sha256:ab6627e095067acb98bc87ce08a59d4e92ed4e6a5bca8fbfcb32edcd8928cc5a",
+   "accepted": {
+    "complete": 200,
+    "observation": 200
+   }
+  },
+  "INVERSE_declared_none_executed_A": {
+   "world_id": "wld_45b538892a674fd7a2f431f9",
+   "truth": "declared nothing, applied A",
+   "recorded_interventions": {},
+   "recorded_spec": {
+    "action": "encounter",
+    "ticks": 8,
+    "applied": "A"
+   },
+   "spec_hash": "sha256:42f883ead3ddf8379ed45585dd5a5f3f7d6ee21a49eb01aad7ffeab448a59539",
+   "accepted": {
+    "complete": 200,
+    "observation": 200
+   }
+  },
+  "PARTIAL_A": {
+   "world_id": "wld_8aef78461a1f4b7666119ae1",
+   "truth": "declared A={a1,a2}, applied a1 only",
+   "recorded_interventions": {
+    "component": "A",
+    "parts": [
+     "a1",
+     "a2"
+    ]
+   },
+   "recorded_spec": {
+    "action": "encounter",
+    "ticks": 8,
+    "applied": "A_partial_a1_only"
+   },
+   "spec_hash": "sha256:df0de0b93fa0c93aa09bf537f28815c610eb3a5e613db741fff3a1bf2552404d",
+   "accepted": {
+    "complete": 200,
+    "observation": 200
+   }
+  },
+  "REORDERED_AB": {
+   "world_id": "wld_44dcd696d6689843064a3ed2",
+   "truth": "declared A then B, applied B then A",
+   "recorded_interventions": {
+    "component": "A+B",
+    "order": [
+     "A",
+     "B"
+    ]
+   },
+   "recorded_spec": {
+    "action": "encounter",
+    "ticks": 8,
+    "applied": "B_then_A"
+   },
+   "spec_hash": "sha256:0efdd97edb2700b8a9b8d63bb33c0ed346dea4ba724255fa830cae5fbf571a09",
+   "accepted": {
+    "complete": 200,
+    "observation": 200
+   }
+  },
+  "CO_INTERVENTION_unrecorded": {
+   "world_id": "wld_4b9b5e2abdc89e15fda02637",
+   "truth": "declared A, applied A *and* undeclared C",
+   "recorded_interventions": {
+    "component": "A"
+   },
+   "recorded_spec": {
+    "action": "encounter",
+    "ticks": 8,
+    "applied": "A"
+   },
+   "spec_hash": "sha256:42f883ead3ddf8379ed45585dd5a5f3f7d6ee21a49eb01aad7ffeab448a59539",
+   "accepted": {
+    "complete": 200,
+    "observation": 200
+   }
+  }
+ },
+ "verdicts": {
+  "HONEST": {
+   "verdict": "N/A (reference)",
+   "why": "the honest case",
+   "byte_identical_to_honest_record": true
+  },
+  "LIE_declared_A_executed_notA": {
+   "verdict": "DETECTABLE",
+   "why": "declared A vs spec applied=NOT_A -- disagreement is visible IF an auditor parses the spec string",
+   "byte_identical_to_honest_record": false
+  },
+  "INVERSE_declared_none_executed_A": {
+   "verdict": "DETECTABLE",
+   "why": "spec says applied=A while NOTHING was declared",
+   "byte_identical_to_honest_record": false
+  },
+  "PARTIAL_A": {
+   "verdict": "DETECTABLE",
+   "why": "declared A vs spec applied=A_partial_a1_only -- disagreement is visible IF an auditor parses the spec string",
+   "byte_identical_to_honest_record": false
+  },
+  "REORDERED_AB": {
+   "verdict": "DETECTABLE",
+   "why": "declared A+B vs spec applied=B_then_A -- two recorded statements disagree",
+   "byte_identical_to_honest_record": false
+  },
+  "CO_INTERVENTION_unrecorded": {
+   "verdict": "INVISIBLE",
+   "why": "the record is INDISTINGUISHABLE from the honest case: declared {\"component\": \"A\"}, spec applied=A, identical shape. Nothing the executor did beyond this was ever written down.",
+   "byte_identical_to_honest_record": true
+  }
+ },
+ "invisible_cases": [
+  "CO_INTERVENTION_unrecorded"
+ ]
+}
