@@ -1,7 +1,7 @@
 # Daedalus — Open Work
 
 **Owner:** Daedalus (maintainer, Serendipity Foundry Engine)
-**Last updated:** 2026-09-04 19:50, after M2 deployment + live qualification
+**Last updated:** 2026-09-05, after Harmonia's independent qualification of session affinity v5 (ACCEPT ON ONE HOST)
 **Pointer from:** `roles/Daedalus/RESPONSIBILITIES.md`
 
 This is the standing list of what is NOT done. Items are closed by deleting
@@ -152,6 +152,75 @@ M2 at `0fd24e0f3` -- the ball is in PEW's court)
   produces a wrong interaction claim.** ~100 LOC once decided. It changes the
   meaning of `spec`, so it is not mine to decide.
 - **R-7** dry-run shape (see D1-2).
+
+---
+
+## D4 — Session affinity v5: open items after Harmonia's qualification
+
+Her packet closed with ACCEPT ON ONE HOST and four defects found and fixed
+inside the review cycle (D-2, D-3, D-4/D-5, D-6/D-7 in her numbering). What
+follows is what she did NOT close. **Nothing here is being fixed now** — logged
+at James's instruction while she pushes on science.
+
+Her closing question was "is a one-host pass being read anywhere as a fleet
+pass?" **Checked, 2026-09-05: no.** No live doc makes a fleet claim;
+`integration/M1_TEST_SURFACE_FOR_HARMONIA.md` explicitly warns against that
+reading, and both engine packets say CLOSURE MET ON M1 / FLEET NOT CLOSED. The
+real exposure is not the repo, it is packet drift in conversation — which is
+exactly how the build-identity defect got written down in the first place.
+
+### D4-1  Cross-machine affinity is unqualified BY ANYONE — the headline gap
+The feature exists to stop an experiment wandering between MACHINES. Every
+result to date comes from two processes on one box, where the path is
+loopback-routed and **bypasses the host firewall entirely**. L1 (off-host
+reachability), L2 (trust-anchor validation by a foreign client) and L3
+(cross-machine affinity) are untouched by both seats.
+**Trigger:** M2 back up. **Blocked on:** M2 down; also still on schema 4 with
+no affinity layer, so deploy `b35046a60` or later there FIRST.
+
+### D4-2  Legacy drain is not moving; the cutover will be date-driven
+106 LEGACY sessions, all still OPEN, unchanged all day. `close_session` now
+exists and is verified, but **nothing auto-closes and nothing should**: closing
+a session to move a metric is gaming it unless the session is genuinely
+finished. On current behaviour the cutover is date-driven (2026-10-01), not
+drain-driven. **Decide before then:** drain deliberately, move the date, or
+accept a date-driven cutover and say so.
+
+### D4-3  Work-route claim scoping is HALF addressed (was R-E)
+Strict now requires a session key on the four `/v2/work` routes, but a claim is
+still bound only by `worker_id` — not to the session's own worlds. The unbound
+half is untested by anyone.
+
+### D4-4  Ablation is expressible but NOT enforced
+T6 measured it both ways: four arms fork from one checkpoint with the world held
+fixed structurally, specs re-hash identically on replay — but a child declaring
+intervention A whose executor applied nothing was accepted end to end.
+`interventions` are recorded verbatim and never interpreted BY DESIGN, so the
+engine cannot check a declaration against an execution.
+**This is not an engine fix.** Both the declaration and the executed spec are
+independently recoverable, so the disagreement is DETECTABLE by an auditor
+though not PREVENTED. Closing it needs an executor attestation binding the
+applied component to the work result. Belongs to whoever runs the ablation.
+
+### D4-5  Untested, and honestly recorded as such
+- **Restart durability under load** (T5): needs an operator restart, and the
+  restart procedure is itself hazardous — a stop can orphan the process tree
+  while the OLD build keeps serving. Has happened twice.
+- **Terminal-state sweep** across all 33 session-scoped routes (T7).
+- Clone hazard, key TTL/rotation, singleton guard: read and accepted, never
+  independently tested.
+
+### D4-6  Battery count discrepancy — 23 vs 24, uninvestigated
+I report `sfe_battery.py` at 23/23; she measures 24/24 on the same live engine.
+Neither of us chased it. Harmless today, but it means one of us has a wrong
+expectation of a control instrument, and a control whose expected value is
+disputed is a poor control. **Cheap to settle; do it before it is load-bearing.**
+
+### D4-7  C3e is a behaviour change in ADVISORY mode, not just strict
+A completion replayed with a DIFFERENT result now returns 409 where it returned
+200. Any instrument written against the old behaviour — including her T2 —
+needs its expectation updated. Flagged so a future run does not read the fix as
+a regression.
 
 ---
 
