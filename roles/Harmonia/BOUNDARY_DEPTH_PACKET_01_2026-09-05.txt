@@ -1,0 +1,200 @@
+======================================================================
+HARMONIA -- ITERATIVE BOUNDARY-DEPTH QUALIFICATION -- PACKET 01
+Loops L1-L7 (science surface / player / composition)
+2026-09-05   M2   SFE 0fd24e0f3 / PEW 201106edb
+======================================================================
+
+HEADLINE
+  The stack is sound; the POPULATION is not. Of 4,032 ordered pairs in the
+  frozen menagerie, SEVEN survive the preconditions a first interaction
+  experiment requires. The binding constraint is not composition and not
+  the instrument -- it is that 75% of the specimens cannot see the world at
+  all, and that composition destroys world-coupling in 94% of the cases
+  where both parts had it.
+
+  A long campaign over this menagerie would spend hours measuring organisms
+  for which the world is decorative. That is the failure this pass exists
+  to find, and it would not have been visible from any single run.
+
+----------------------------------------------------------------------
+L1  SPECIMEN CENSUS
+----------------------------------------------------------------------
+probe      all 64 specimens, one fixed UNSATURATED plan (6 ticks, budget 64)
+falsifier  >90% in one meter-class => classes cannot be varied deliberately
+result     meter 64/64 distinct . state 64/64 distinct . transcript 10
+           classes, 67% largest . 10 emit . 27 branch . 11 read input .
+           15 halt early . 44 budget-saturated
+verdict    census PASSES, but 64/64 is NOT evidence of a good instrument --
+           a sha256 of the genome would also score 64/64. Deferred to L2.
+
+----------------------------------------------------------------------
+L2  IS THE METER MEASURING BEHAVIOUR, OR RE-ENCODING THE GENOME?
+----------------------------------------------------------------------
+probe      per specimen vary ONE factor at a time: 4 input tuples / 4 seeds /
+           3 budgets. A specimen invariant across all inputs is WORLD-BLIND.
+falsifier  world-blind majority => the usable population is not 64
+result     WORLD-COUPLED  16/64        WORLD-BLIND  48/64  (75%)
+           seed-sensitive  6/64        budget-sensitive 31/64
+           in_reads>0 AND coupled 11 . in_reads==0 BUT coupled 5
+verdict    BLOCKER. For 48/64 specimens execution is a pure function of
+           (genome, envelope, seed, budget). No world can influence any
+           observable, so any "interaction with a world" measured on them
+           is an artifact of the instrument.
+           Also: in_reads>0 UNDERCOUNTS coupling by 5 -- it is not a valid
+           cheap filter and must not be used as one.
+
+----------------------------------------------------------------------
+L2b COLLISION WITH THE ROUND-2 CLOSURE PACKET
+----------------------------------------------------------------------
+  The Round-2 A and B were 7743b3527ea4 and beb28a204fcb. Both are
+  world-blind (in_reads 0, out_writes 0, input_sensitive False).
+
+  So "the transcript surface is CONSTANT across five conditions" is fully
+  explained by the ORGANISMS being inert, not by the transcript being
+  blind. That conclusion is NARROWED, not retracted: the measurement was
+  correct, its scope was wrong.
+
+  Worse for the earlier reading: the Round-2 pre-registered selection rule
+  ("first two registry-order specimens with >=4 instructions, not all
+  halt_yield") is exactly what selected an inert pair. Pre-registration
+  protected against post-hoc cherry-picking and did nothing about
+  selecting a population incapable of showing the effect. Both are needed.
+
+  And "use the meter, not the transcript" is now FALSE as a universal
+  rule. Surface sensitivity over the 16 world-coupled specimens:
+      final STATE  14/16      meter  11/16      transcript  2/16
+  One specimen (f38c1ac5e31e) is transcript-sensitive and meter-BLIND;
+  four are detectable ONLY via final state. The arena records transcript
+  and meter and NOT state, so it is currently blind to 4 of 16.
+
+----------------------------------------------------------------------
+L3/L4  IS A "COMPOSITION EFFECT" EXECUTION, OR THE BYTES SITTING THERE?
+----------------------------------------------------------------------
+probe      A / B / A+B / B+A / both exact ablations / preserved NULL, on
+           world-coupled specimens, unsaturated budget, 3 input sets.
+           Then split observables: EXECUTION (meter+statuses+transcript)
+           vs IMAGE (final tape/regs/ip digest).
+falsifier  A+B EXECUTION-identical to A+B\B => B did not run; any
+           "A+B differs from its parents" rests on the memory image
+result     L3 first reported 7/7 distinct profiles and F1 TRUE everywhere.
+           L4 decomposition: B executed in 0/6 pairs. A+B was
+           EXECUTION-identical to A alone in 4/6.
+           Proteus activation_evidence agreed 6/6 (0 disagreements).
+verdict    L3's headline was an artifact of the state digest: the runtime
+           copies the genome onto the tape, so a longer genome changes the
+           image whether or not it runs. Distinctness by construction --
+           the same trap as L1's 64/64.
+           TWO INSTRUMENTS AGREEING IS THE LOAD-BEARING PART: my execution
+           differential and Proteus's op-category differential are
+           independent and gave the same 6/6.
+
+----------------------------------------------------------------------
+L5  SELF-CORRECTION: HOW GENERAL WAS L4?
+----------------------------------------------------------------------
+probe      400 random ordered pairs from the full 64
+result     second component ACTIVATED in 223/400 (55.8%).
+           Predictor: first-segment solo status
+              halt   -> 0/75   activate  (0.0%)
+              yield  -> 15/47            (31.9%)
+              budget -> 208/278          (74.8%)
+verdict    L4's 0/6 was a property of the subset I had selected, NOT of
+           concat.v0. L4 is NARROWED. concat.v0 is not a selector in
+           general; it is a selector whenever the first segment halts.
+           Recording this because the pessimistic reading was mine and
+           survived one loop before the broad sample killed it.
+
+----------------------------------------------------------------------
+L6/L7  THE ACTUAL EXPERIMENTAL POPULATION (measured on the COMPOSED object)
+----------------------------------------------------------------------
+probe      every precondition re-measured ON A+B, never inherited from the
+           parts: P1 both activated . P2 A+B world-coupled . P3 A+B emits .
+           P4 A+B budget-unsaturated . P5 BOTH knockouts move execution
+falsifier  empty intersection => no first interaction experiment is
+           possible on this menagerie under concat.v0
+result     240 ordered pairs of world-coupled specimens:
+              P1 both activated        119  (49.6%)
+              P2 A+B still coupled      15  ( 6.2%)   <-- binding constraint
+              P3 A+B emits              78  (32.5%)
+              P4 unsaturated           175  (72.9%)
+              P5 both knockouts move   119  (49.6%)
+           FUNNEL 240 -> 119 -> 13 -> 9 -> 9 -> 7
+verdict    A usable population EXISTS and is SEVEN ordered pairs:
+              17c7812c+ed9b68d9   3b7d7aac+f38c1ac5   e24bc8f3+ed9b68d9
+              f9746968+ed237074   f9746968+e4d3b155   ed237074+ed9b68d9
+              25034c19+f9746968
+           Named here BEFORE any outcome was inspected.
+           The strict set (world-coupled AND output-producing parents)
+           is EMPTY: 0/12 of its ordered pairs activate the second
+           component. The 7 come from relaxing the parents' output
+           requirement and re-testing emission on the composition.
+
+  THE BINDING CONSTRAINT IS NEW: composition DESTROYS world-coupling.
+  Only 15/240 compositions of two world-coupled specimens are themselves
+  world-coupled. Coupling is not preserved under concat.v0.
+
+----------------------------------------------------------------------
+BACKLOG  (ranked: likelihood of silently invalidating a long run
+          x cost of discovering it late)
+----------------------------------------------------------------------
+SCIENTIFIC VALIDITY BLOCKERS
+ SV-1  75% of the menagerie is WORLD-BLIND. A campaign that samples the
+       registry uniformly spends 3 runs in 4 on organisms for which the
+       world cannot matter. SILENT: nothing errors; the runs look fine.
+       RANK 1 (highest likelihood x highest late cost).
+ SV-2  Composition destroys world-coupling (only 6.2% survive). Any
+       "A+B is not coupled" result would be a property of the glue, not
+       of the pair. RANK 2.
+ SV-3  Usable population is SEVEN ordered pairs. This cannot be a
+       campaign; it is at most 7 case studies. Any power calculation
+       written against "64 specimens" is wrong by three orders of
+       magnitude. RANK 3.
+ SV-4  Distinctness-by-construction. Both L1 (64/64 meters) and L3 (7/7
+       profiles) produced perfect separation for reasons unrelated to
+       behaviour. Any future "the surface discriminates" claim needs a
+       shuffled/structure-only null before it is quoted. RANK 4.
+
+MEASUREMENT / INSTRUMENTATION GAPS
+ MI-1  The arena records transcript+meter and NOT final state. State is
+       the most sensitive surface (14/16 vs 11/16 vs 2/16) and 4 of 16
+       coupled specimens are invisible without it. Small, mine, cheap.
+ MI-2  EXECUTION and IMAGE observables must be reported separately.
+       Merging them makes every structurally-distinct object look
+       behaviourally distinct (this is what produced L3's false headline).
+ MI-3  proxy_search_expenditure aliases branches_taken exactly (carried
+       from the closure packet, re-confirmed). Not a second signal.
+
+KILLED IDEAS / SURFACES
+ K-1   "in_reads>0 identifies world-coupled specimens" -- KILLED, misses 5.
+ K-2   "the meter is rich, the transcript is blind" -- KILLED as a
+       universal; one specimen is transcript-sensitive and meter-blind.
+ K-3   "A+B differs from its parents => composition did something" --
+       KILLED; the memory image guarantees difference.
+ K-4   my own L4 generalisation "B never executes" -- KILLED by L5.
+
+CANDIDATE NEW CONSTRAINTS (not yet filed; none proven to fire yet)
+ C-A  HARD    An interaction experiment may only enrol a specimen whose
+              observables respond to input variation, measured on the
+              COMPOSED object, not inherited from its parts.
+ C-B  HARD    Report EXECUTION and IMAGE observables separately; never
+              hash them together into one "profile".
+ C-C  ADVISORY Pre-registration of a selection RULE does not protect
+              against selecting a population incapable of showing the
+              effect. Preconditions must be measured, then pre-registered.
+
+NON-BLOCKING LIMITATIONS
+ NB  Seed-sensitivity is rare (6/64): randomness is nearly absent from
+     this substrate, so seed-based replication controls are weak here.
+
+----------------------------------------------------------------------
+NEXT BOUNDARY CHOSEN, AND WHY
+----------------------------------------------------------------------
+  Everything above is the science surface, run locally on the Proteus VM.
+  It has produced four new failure classes in seven loops and is still
+  producing them, but the SOFTWARE/SCALE surface is entirely untested for
+  a long run: ledger growth, world accumulation, verify-anchor latency
+  under load, idempotency across restarts, world GC (a deferred Daedalus
+  item), and whether the 7-pair population survives a full arena
+  traversal with G7 verification on.
+  Next loops go there, then descend into whichever mechanism is most
+  dangerous and still unresolved.
+======================================================================
