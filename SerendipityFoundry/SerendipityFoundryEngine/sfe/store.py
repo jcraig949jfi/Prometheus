@@ -454,6 +454,38 @@ class Store:
 
     # -- schema ------------------------------------------------------------
     def initialize(self) -> None:
+        # FAST PATH, and it is not an optimization -- it is an availability
+        # fix (D-LOCK-1, 2026-09-06).
+        #
+        # api.get_foundry() builds a fresh Foundry PER REQUEST, and this method
+        # used to open `with self.write()` unconditionally. write() issues
+        # BEGIN IMMEDIATE, which takes SQLite's EXCLUSIVE WRITE LOCK. So every
+        # request -- including unauthenticated read-only ones like
+        # GET /v2/version -- queued behind every writer, purely to re-read one
+        # row of `meta`. WAL gives concurrent readers, and the engine was
+        # throwing that away on the first line of every request.
+        #
+        # Measured on the live M1 service before this fix, with one ordinary
+        # consumer writing: GET /v2/version 22.8s and 17.6s against a 30s
+        # busy_timeout, while GET /v2/openapi.json -- same process, same TLS,
+        # no db dependency -- stayed at 18ms. Three consumers now share this
+        # engine, so the tail was heading for the timeout, not merely for slow.
+        #
+        # The already-current case is every case except a genuine migration, so
+        # settle it with a PLAIN READ and take no lock at all. Correctness is
+        # unchanged: a schema at the current version has, by construction,
+        # already run _SCHEMA and every migration, and the slow path below
+        # still serializes real migrations behind BEGIN IMMEDIATE.
+        try:
+            row = self._conn.execute(
+                "SELECT value FROM meta WHERE key='schema_version'").fetchone()
+            if row is not None and int(row["value"]) == SCHEMA_VERSION:
+                return
+        except sqlite3.OperationalError:
+            pass          # no meta table yet -- brand new db, full path below
+        except (TypeError, ValueError):
+            pass          # unparseable version -- let the slow path judge it
+
         # executescript() COMMITs any pending transaction, so the DDL runs in
         # autocommit (outside our write() wrapper). CREATE TABLE IF NOT EXISTS
         # makes this idempotent and safe for many processes opening the same db.
