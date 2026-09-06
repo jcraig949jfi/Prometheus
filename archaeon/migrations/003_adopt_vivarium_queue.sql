@@ -1,0 +1,40 @@
+-- 003: retire Archaeon's own queue. (Archaeon, 2026-09-06)
+--
+-- ORIGINALLY this migration also added the relation and cadence columns to
+-- viv.research_experiment_queue. IT NO LONGER DOES, and the reason is worth
+-- recording rather than quietly editing out.
+--
+-- The Vivarium seat was working the same seam concurrently and wrote
+-- vivarium/migrations/002_relations_cadence_idempotency.sql. The two designs
+-- converged independently on the SAME contract: identical column names
+-- (family_id, arm_id, replication_of, candidate_set_id, request_key,
+-- cadence_lane, cadence_day_ordinal, cadence_utc_day), identical constraint and
+-- index names, the same candidate_sets view, and the same extension of
+-- enforce_queue_transition freezing the relation declaration. That convergence
+-- is evidence the contract is right; two migrations competing to own it is not.
+--
+-- viv.research_experiment_queue is VIVARIUM'S TABLE, so Vivarium's migration is
+-- authoritative and this one steps back to the part that is actually Archaeon's.
+-- Their version is also a strict superset: it adds req_replication_not_self, and
+-- an `executed` column on the view (count FILTER started_at IS NOT NULL) that
+-- distinguishes "registered but never started" from "actually executed" -- which
+-- Archaeon needs for any per-experiment endpoint.
+--
+-- A concrete defect this collision exposed, in MY version: it used
+--     CREATE OR REPLACE VIEW viv.candidate_sets ...
+-- which cannot drop a column, so once Vivarium's view added `executed` my
+-- migration failed with "cannot drop columns from view" and the whole set became
+-- un-re-runnable. evidence_wiki/migrations/007 documents this exact trap from a
+-- previous occurrence. Vivarium's DROP VIEW IF EXISTS + CREATE VIEW is the
+-- correct pattern and is another reason to defer to it.
+--
+-- ORDERING: Archaeon does not apply Vivarium's migrations. archaeon/vivqueue.py
+-- fails loudly if the relation columns are absent rather than creating them, so
+-- a missing Vivarium migration is a visible error and never a silent divergence.
+
+-- --------------------------------------------------- retire Archaeon's queue
+-- RETIRED, not dropped. It holds a real proposal (AX-9ec1f5fc35ae), and deleting
+-- a pre-execution register to tidy an architecture is exactly the kind of
+-- erasure S15 classes as an unobservable selection mechanism. Left readable.
+COMMENT ON TABLE archaeon.experiment_queue IS
+ 'RETIRED 2026-09-06. Superseded by viv.research_experiment_queue, which is the single canonical pre-execution register (Vivarium migration 002). Kept readable, not dropped: it holds a real proposal, and deleting a pre-execution register to tidy an architecture is the kind of erasure S15 classes as an unobservable selection mechanism. Do not write here.';

@@ -1,0 +1,267 @@
+{
+ "stage": "archaeon.stage0.fragility_survey.v0",
+ "instrument": {
+  "commit": "21fbeffbbcb3ae7a0e729e591688066b895eff84",
+  "source_path": "roles/Harmonia/science/s17_prospective_fragility.py",
+  "ledger_path": "roles/Harmonia/science/ledgers/s17_fragility.json",
+  "source_blob": "0e2d654851ae11413f37f97d7087d747be4c394d",
+  "ledger_blob": "261b91e6b2830d1c9adda0a8c28ae3292f2d0c74",
+  "source_sha256": "23451d8aa7e14a706afcb43b7209516754a63788154bbf839a7c5332d808b5df",
+  "ledger_sha256": "e5ea8d9a2e3371b022667e3640cbdea283dd8239f269702c4787e4127dbf4247",
+  "predictor_hash_recorded": "0106e035868bbe10ef177c8e88a2dad79bd8364cb5b684844cd018b5f1dada73",
+  "predictor_hash_recomputed": "0106e035868bbe10ef177c8e88a2dad79bd8364cb5b684844cd018b5f1dada73",
+  "predictor_hash_verified": true,
+  "dims": [
+   "estimator",
+   "noise",
+   "transform",
+   "horizon",
+   "unit"
+  ],
+  "import_method": "pinned git blob, exec into a synthetic module"
+ },
+ "positive_control": {
+  "ran": true,
+  "ok": true,
+  "claim_shape": {
+   "arms": 2,
+   "worlds_per_arm": 6,
+   "obs_per_world": 10
+  },
+  "features": {
+   "rel_se": 0.509046,
+   "kurtosis": 4.598677,
+   "within_between": 2.548415,
+   "serial_ac": -0.04804
+  },
+  "note": "proves the imported instrument computes on a WELL-FORMED claim, so any zero-eligibility below is a property of the corpus and not of this adapter"
+ },
+ "frozen_rules": {
+  "estimator": {
+   "feature": "rel_se",
+   "higher_is_fragile": false,
+   "dev_auc": 0.798
+  },
+  "noise": {
+   "feature": null,
+   "higher_is_fragile": true,
+   "dev_auc": null
+  },
+  "transform": {
+   "feature": "kurtosis",
+   "higher_is_fragile": true,
+   "dev_auc": 0.834
+  },
+  "horizon": {
+   "feature": "within_between",
+   "higher_is_fragile": true,
+   "dev_auc": 0.768
+  },
+  "unit": {
+   "feature": "serial_ac",
+   "higher_is_fragile": false,
+   "dev_auc": 0.869
+  }
+ },
+ "narrative_ledger_discrepancy": {
+  "status": "FLAGGED_TO_HARMONIA_UNRESOLVED",
+  "detail": "S17's commit narrative reads as though higher serial dependence predicts unit fragility; the frozen ledger sets serial_ac.higher_is_fragile=false (LOWER is fragile), and rel_se likewise. The scorer applies score = v if higher_is_fragile else -v, so an inverted direction makes the policy anti-predictive. THIS SURVEY USES THE LEDGER. The frozen artifact is not altered to make prose agree."
+ },
+ "corpus": {
+  "source": "F:\\Prometheus\\SerendipityFoundry\\SerendipityFoundryEngine\\var\\engine.db",
+  "observations_total": 3325,
+  "observations_scored": 3241,
+  "worlds_with_scored_observations": 180,
+  "worlds_usable": 132,
+  "min_obs_per_world": 4,
+  "evidence_class_totals": {
+   "CLIENT_ASSERTED": 307,
+   "ENGINE_WORK_RESULT": 2934
+  },
+  "epistemic": "OBSERVED"
+ },
+ "arm_rules": {
+  "min_worlds_per_arm": 2,
+  "rules_tried": [
+   "TOPOLOGY_SPLIT",
+   "FORK",
+   "SPEC_ARM"
+  ],
+  "units_found": {
+   "TOPOLOGY_SPLIT": 0,
+   "FORK": 0,
+   "SPEC_ARM": 0
+  }
+ },
+ "exclusions": {
+  "TOPOLOGY_SPLIT": [
+   {
+    "group": "grp_07173a35b0b18d6cbbf4053c",
+    "usable_worlds": 2,
+    "reason": "fewer than 4 usable worlds; cannot form two arms of 2"
+   },
+   {
+    "group": "grp_0fd01f402dfaf080021a4dab",
+    "usable_worlds": 3,
+    "reason": "fewer than 4 usable worlds; cannot form two arms of 2"
+   },
+   {
+    "group": "grp_1446d0a78de92ed136869a1a",
+    "usable_worlds": 2,
+    "reason": "fewer than 4 usable worlds; cannot form two arms of 2"
+   },
+   {
+    "group": "grp_373e9935f77dafe80045a7b8",
+    "usable_worlds": 3,
+    "reason": "fewer than 4 usable worlds; cannot form two arms of 2"
+   },
+   {
+    "group": "grp_39054f7a1208ad95c0d2e04b",
+    "usable_worlds": 3,
+    "reason": "fewer than 4 usable worlds; cannot form two arms of 2"
+   },
+   {
+    "group": "grp_47139ce661bd46f87549e7af",
+    "usable_worlds": 3,
+    "reason": "fewer than 4 usable worlds; cannot form two arms of 2"
+   },
+   {
+    "group": "grp_5776f178decec8c60b55f4a2",
+    "usable_worlds": 3,
+    "reason": "fewer than 4 usable worlds; cannot form two arms of 2"
+   },
+   {
+    "group": "grp_643c024cddbdd1ffccfb2120",
+    "usable_worlds": 3,
+    "reason": "fewer than 4 usable worlds; cannot form two arms of 2"
+   },
+   {
+    "group": "grp_72f2dd0a6275cf73246deb75",
+    "usable_worlds": 2,
+    "reason": "fewer than 4 usable worlds; cannot form two arms of 2"
+   },
+   {
+    "group": "grp_a05e70cee51f0cd33cb11bc8",
+    "usable_worlds": 3,
+    "reason": "fewer than 4 usable worlds; cannot form two arms of 2"
+   },
+   {
+    "group": "grp_ab31e78bf5aa3ace45488635",
+    "usable_worlds": 3,
+    "reason": "fewer than 4 usable worlds; cannot form two arms of 2"
+   },
+   {
+    "group": "grp_bd378c93b3447718125a9118",
+    "usable_worlds": 3,
+    "reason": "fewer than 4 usable worlds; cannot form two arms of 2"
+   },
+   {
+    "group": "grp_bec7c8f357d27f878c6f45e1",
+    "usable_worlds": 2,
+    "reason": "fewer than 4 usable worlds; cannot form two arms of 2"
+   },
+   {
+    "group": "grp_ca61aebf3613df95466c01c0",
+    "usable_worlds": 3,
+    "reason": "fewer than 4 usable worlds; cannot form two arms of 2"
+   },
+   {
+    "group": "grp_de58b4f52556a9fbfd554547",
+    "usable_worlds": 3,
+    "reason": "fewer than 4 usable worlds; cannot form two arms of 2"
+   },
+   {
+    "group": "grp_dff69c26f16c0a69b9aedd65",
+    "usable_worlds": 3,
+    "reason": "fewer than 4 usable worlds; cannot form two arms of 2"
+   },
+   {
+    "group": "grp_e4eb68bb806687c72671c3dc",
+    "usable_worlds": 3,
+    "reason": "fewer than 4 usable worlds; cannot form two arms of 2"
+   },
+   {
+    "group": "grp_f2a086b0a39bcac333140e5b",
+    "usable_worlds": 3,
+    "reason": "fewer than 4 usable worlds; cannot form two arms of 2"
+   },
+   {
+    "group": "grp_f50f91b9e0391bd6cbaa9350",
+    "usable_worlds": 2,
+    "reason": "fewer than 4 usable worlds; cannot form two arms of 2"
+   },
+   {
+    "group": "grp_ffb329e8627c359cdfa23dbc",
+    "usable_worlds": 3,
+    "reason": "fewer than 4 usable worlds; cannot form two arms of 2"
+   }
+  ],
+  "FORK": [],
+  "SPEC_ARM": [
+   {
+    "group": null,
+    "reason": "no experiment on any usable world carries spec.arm"
+   }
+  ]
+ },
+ "claim_units": [],
+ "dimensions": {
+  "estimator": {
+   "feature": "rel_se",
+   "higher_is_fragile": false,
+   "dev_auc": 0.798,
+   "eligible_units": 0,
+   "epistemic": "INFERRED",
+   "ordering_meaningful": false,
+   "reason": "fewer than 2 eligible units; an ordering over <2 items carries no information"
+  },
+  "noise": {
+   "feature": null,
+   "rule": "NO_RULE",
+   "eligible_units": 0,
+   "epistemic": "UNKNOWN",
+   "reason": "frozen predictor holds NO RULE for this dimension (0 fragile cases on dev). This is UNKNOWN, not evidence of robustness, and its budget must not be reallocated.",
+   "ordering_meaningful": false
+  },
+  "transform": {
+   "feature": "kurtosis",
+   "higher_is_fragile": true,
+   "dev_auc": 0.834,
+   "eligible_units": 0,
+   "epistemic": "INFERRED",
+   "ordering_meaningful": false,
+   "reason": "fewer than 2 eligible units; an ordering over <2 items carries no information"
+  },
+  "horizon": {
+   "feature": "within_between",
+   "higher_is_fragile": true,
+   "dev_auc": 0.768,
+   "eligible_units": 0,
+   "epistemic": "INFERRED",
+   "ordering_meaningful": false,
+   "reason": "fewer than 2 eligible units; an ordering over <2 items carries no information"
+  },
+  "unit": {
+   "feature": "serial_ac",
+   "higher_is_fragile": false,
+   "dev_auc": 0.869,
+   "eligible_units": 0,
+   "epistemic": "INFERRED",
+   "ordering_meaningful": false,
+   "reason": "fewer than 2 eligible units; an ordering over <2 items carries no information"
+  }
+ },
+ "kill_gate": {
+  "condition": "STAGE 0 PASSES iff at least one ruled dimension has >= 2 eligible claim-units AND non-zero spread in its frozen feature, so a within-dimension ordering distinguishes at least two units.",
+  "ruled_dimensions": 4,
+  "dimensions_with_meaningful_ordering": 0,
+  "orderable_dimensions": [],
+  "eligible_claim_units": 0,
+  "verdict": "KILL",
+  "finding": "The real substrate does not currently support the frozen prospective-fragility primitive. Stage 1 must not be built on it yet. This is a statement about CORPUS STRUCTURE, not about whether fragility exists or whether the S17 rules transport."
+ },
+ "upstream_selection_history": {
+  "value": "UNKNOWN",
+  "note": "S14/S15: selection performed upstream of submission can be information-theoretically absent from the fossil record. Every feature below is conditioned on a SUBMITTED sample whose selection history is unobservable. This field is written on every survey as a VALUE. Its presence is not a caveat and its absence would be a reassuring negative."
+ }
+}
