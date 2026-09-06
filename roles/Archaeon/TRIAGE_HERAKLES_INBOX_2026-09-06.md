@@ -71,3 +71,29 @@ case. Requested of Vivarium as **E16**.
   admission-time ranges) to the expansion register.
 - Re-run this triage whenever `viv/kinds.py` changes; the count of runnable
   templates is a menu-growth measurement in its own right.
+
+## Correction after Herakles's expansion-design pass (later, 2026-09-06)
+
+Three claims above were wrong, and Herakles's re-examination found all three.
+
+1. **"8 runnable" counted name matches.** `check()` validated parameter names
+   only (Herakles F-2). Against a check that dry-draws and dry-builds, the
+   inbox stands at: 7 name an implemented kind, 6 of those fail the draw
+   (destroyed ranges), 1 draws and cannot build because no flat template
+   declares `seed_root`. Runnable by Archaeon's producer today: 0 of 69.
+2. **"`falsification_walk.v0` is measurable today" was false.** Archaeon's
+   spec builder is hard-wired to `evaluate_bitstring`; a `random_walk_v0` spec
+   cannot be built by this seat until E18. The bench change is not required;
+   the Archaeon change is. And per Herakles F-5, `step_scale` must be HELD
+   FIXED, not ranged — it is a pure rescaling.
+3. **All 69 were flat and my registry nested.** The roadmap example did not
+   show the nesting; the fault is Archaeon's. The loader now accepts both
+   forms and normalises by name (`seed_root` → world, all else → payload).
+
+What Herakles's packet adds that the bench-gap ranking missed: the smallest
+capability is free (C-0, now the `constant` form), the substrate has an
+analytic null (F-6; `bitstring.exchangeability_null.v0` proposed as the
+known-answer case), and the crux is whether a cross-observation statistic
+needs a new outcome rule or a home — it needs a home, and SFE already has one
+(`families(kind=analysis)`, E25). E16 is rescoped to within-experiment
+aggregation, which does not move adjudication inside the sealed spec.

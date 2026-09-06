@@ -173,7 +173,13 @@ ELIGIBLE at the start becomes eligible; wishlist entries close.
 
     archaeon/templates/<template_id>.json
     { template_id, kind (Vivarium-implemented to be ADMITTED),
-      param_space, origin {source: RNG|HUMAN|LLM|LITERATURE|CHAOS,
+      param_space: { world:   { seed_root: <form> },
+                     payload: { <kind param>: <form>, ... } },
+        forms: constant | choices | int_range | uniform_bits | from_region
+        (a FLAT param_space is accepted and normalised: seed_root -> world,
+         everything else -> payload; the 2026-09-06 example omitted this
+         and 69 templates were written flat against it),
+      origin {source: RNG|HUMAN|LLM|LITERATURE|CHAOS,
                            field, reference, proposed_by},
       status PROPOSED|ADMITTED|RETIRED, admitted_by, admitted_at, rationale }
 

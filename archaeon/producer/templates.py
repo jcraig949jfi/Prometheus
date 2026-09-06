@@ -46,11 +46,40 @@ class TemplateError(Exception):
     pass
 
 
+WORLD_PARAMS = ("seed_root",)
+
+
+def normalize_param_space(ps: Dict[str, Any]) -> Tuple[Dict[str, Any], str]:
+    """Accept both shapes, return the nested one and which was given.
+
+    The registry nests parameters under ``world`` and ``payload``. The
+    roadmap's illustrative example did not show the nesting, and Herakles
+    wrote 69 templates FLAT against it; against the real loader all 69 loaded
+    and zero were runnable (Herakles, expansion-design pass, 2026-09-06). The
+    inconsistency was Archaeon's. The mapping from flat to nested is fixed by
+    NAME, not inferred: ``seed_root`` is the only world parameter Vivarium's
+    kinds accept; everything else is payload.
+    """
+    if not isinstance(ps, dict):
+        raise TemplateError("param_space must be an object")
+    if {"world", "payload"} & set(ps):
+        extra = set(ps) - {"world", "payload"}
+        if extra:
+            raise TemplateError("nested param_space has unknown sections {}"
+                                .format(sorted(extra)))
+        return ({"world": dict(ps.get("world", {})),
+                 "payload": dict(ps.get("payload", {}))}, "nested")
+    world = {k: v for k, v in ps.items() if k in WORLD_PARAMS}
+    payload = {k: v for k, v in ps.items() if k not in WORLD_PARAMS}
+    return ({"world": world, "payload": payload}, "flat")
+
+
 def _content_hash(t: Dict[str, Any]) -> str:
     """Hash of the SCIENTIFIC content: kind + param_space + version. Not of
     status/admission fields, which are allowed to change exactly once."""
+    ps, _form = normalize_param_space(t["param_space"])   # hash the canonical form
     body = {"template_id": t["template_id"], "kind": t["kind"],
-            "param_space": t["param_space"],
+            "param_space": ps,
             "registry_version": t.get("registry_version")}
     blob = json.dumps(body, sort_keys=True, separators=(",", ":"))
     return "sha256:" + hashlib.sha256(blob.encode("utf-8")).hexdigest()
@@ -67,6 +96,7 @@ def load(path: Path) -> Dict[str, Any]:
         raise TemplateError("{}: origin.source must be one of {}"
                             .format(path.name, ORIGINS))
     t["_path"] = str(path)
+    t["param_space"], t["_param_space_form"] = normalize_param_space(t["param_space"])
     t["_content_hash"] = _content_hash(t)
     if t["status"] == "ADMITTED":
         if t.get("admitted_content_hash") != t["_content_hash"]:
@@ -106,35 +136,81 @@ def admitted(directory: Optional[Path] = None,
         if is_region_directed(t) != region_directed:
             continue
         c = check(t)
-        if c["runnable"]:
+        if c["runnable"] and c["drawable"] and c["buildable"]:
             menu.append(t)
     return menu
 
 
+_NOT_RUNNABLE = {"runnable": False, "drawable": False, "buildable": False,
+                 "lane": None, "reason": None}
+
+
 def check(t: Dict[str, Any]) -> Dict[str, Any]:
-    """Can this template be run? If not, which lane does the gap belong to?"""
+    """Can this template be run? If not, which lane does the gap belong to?
+
+    Three facts, in order, each only asked if the previous held:
+      runnable   the kind is implemented and the payload NAMES match
+      drawable   a fixed-seed draw succeeds (F-2: names are not drawability)
+      buildable  the drawn parameters build a valid spec (C-6: cross-axis
+                 coherence is enforced by the builder, not by the template)
+    """
     from .contract import ensure_viv_importable
     ensure_viv_importable()
     try:
         from viv import kinds as vk
     except Exception as exc:                       # pragma: no cover
-        return {"runnable": False, "lane": "vivarium",
-                "reason": "registry unavailable: {}".format(exc)}
+        return dict(_NOT_RUNNABLE, lane="vivarium",
+                    reason="registry unavailable: {}".format(exc))
     k = vk.get(t["kind"])
     if k is None:
-        return {"runnable": False, "lane": "vivarium",
-                "reason": "kind {!r} is not registered; this template is an "
-                          "expansion request".format(t["kind"])}
+        return dict(_NOT_RUNNABLE, lane="vivarium",
+                    reason="kind {!r} is not registered; this template is an "
+                           "expansion request".format(t["kind"]))
     if not k.implemented:
-        return {"runnable": False, "lane": "vivarium",
-                "reason": "kind {!r} is registered but has no executor"
-                          .format(t["kind"])}
+        return dict(_NOT_RUNNABLE, lane="vivarium",
+                    reason="kind {!r} is registered but has no executor"
+                           .format(t["kind"]))
     declared = set(t["param_space"].get("payload", {}))
+    base = dict(_NOT_RUNNABLE)
     if declared != set(k.params):
-        return {"runnable": False, "lane": "archaeon",
-                "reason": "template payload params {} != kind params {}"
-                          .format(sorted(declared), sorted(k.params))}
-    return {"runnable": True, "lane": None, "reason": None}
+        return dict(base, lane="archaeon",
+                    reason="template payload params {} != kind params {}"
+                           .format(sorted(declared), sorted(k.params)))
+    base["runnable"] = True
+    # F-2 (Herakles): validating NAMES let templates with destroyed ranges
+    # pass check() and raise inside the scheduled producer. A template is
+    # admissible only if a draw with a fixed seed succeeds ...
+    region = (PROBE_REGION if is_region_directed(t) else None)
+    try:
+        params = draw_params(t, seed=0, region_params=region)
+    except TemplateError as exc:
+        return dict(base, lane="archaeon", reason="not drawable: {}".format(exc))
+    except Exception as exc:
+        return dict(base, lane="archaeon",
+                    reason="not drawable: {}: {}".format(type(exc).__name__, exc))
+    base["drawable"] = True
+    # ... and (C-6) if the drawn parameters build a spec the kind accepts,
+    # which is where cross-axis coherence (len(bits) == length) is enforced.
+    from . import specbuild
+    if t["kind"] != specbuild.KIND:
+        return dict(base, lane="archaeon",
+                    reason="spec builder supports only {!r}; a template on "
+                           "{!r} needs the kind-generic builder with a "
+                           "template-declared outcome_rule (E18)"
+                           .format(specbuild.KIND, t["kind"]))
+    try:
+        specbuild.build_validated(dict(params))
+    except Exception as exc:
+        return dict(base, lane="archaeon",
+                    reason="drawn parameters do not build a valid spec: {}"
+                           .format(str(exc)[:200]))
+    base["buildable"] = True
+    return base
+
+
+# A synthetic region so a region-directed template can be dry-drawn at check
+# time. It is never published: check() builds and discards.
+PROBE_REGION = {"world_id": "probe", "seed_root": 1, "length": 16}
 
 
 # --------------------------------------------------------------------------
@@ -143,9 +219,20 @@ def check(t: Dict[str, Any]) -> Dict[str, Any]:
 def _draw_value(spec: Dict[str, Any], rng: random.Random,
                 already: Dict[str, Any]) -> Any:
     """One parameter from its declared space. The vocabulary is closed."""
+    if "constant" in spec:
+        # C-0 (Herakles): pin a value and every draw is a new query against
+        # the SAME hidden target -- a series of specs becomes one game.
+        return spec["constant"]
     if "choices" in spec:
+        if not spec["choices"]:
+            raise TemplateError("choices is empty; a REPAIRED axis with no "
+                                "value must be supplied at admission")
         return rng.choice(list(spec["choices"]))
     if "int_range" in spec:
+        if spec["int_range"] is None:
+            raise TemplateError("int_range is null: the value was destroyed "
+                                "in the source and left null on purpose; it "
+                                "must be supplied at admission, never guessed")
         lo, hi = spec["int_range"]
         return rng.randint(int(lo), int(hi))
     if "uniform_bits" in spec:

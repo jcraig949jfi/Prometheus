@@ -189,11 +189,17 @@ def read_sfe(db_path: Optional[str] = None,
     """
     chart = chart or cfg.CHARTS[cfg.DEFAULT_CHART]
     path = str(db_path or DEFAULT_SFE_DB)
+    ten = cfg.DEFAULT.tenancy
+    # Declared tenancy is a CONFIG fact and is recorded on every path,
+    # including the ones that read nothing: a census row must say what the
+    # reader would have admitted even when there was nothing to admit.
+    declared = {"admitted_client_names": list(ten.include_client_names),
+                "evidence_classes": list(ten.evidence_classes),
+                "expected_schema_version": ten.expected_schema_version}
     if not os.path.exists(path):
         return Corpus([], chart, path, {"error": "sfe db not found",
-                                        "path": path})
+                                        "path": path, "tenancy": declared})
 
-    ten = cfg.DEFAULT.tenancy
     uri = "file:{}?mode=ro".format(path.replace("?", "%3f"))
     conn = sqlite3.connect(uri, uri=True, isolation_level=None)
     conn.row_factory = sqlite3.Row
@@ -218,7 +224,7 @@ def read_sfe(db_path: Optional[str] = None,
                          "understands ({}); refusing to read rather than "
                          "misread a row shape".format(
                              have_v, ten.expected_schema_version),
-                "schema_version": have_v})
+                "schema_version": have_v, "tenancy": declared})
 
         # Declared tenancy: client NAMES, resolved to ids inside the same
         # snapshot. Everything else is counted, never silently dropped.

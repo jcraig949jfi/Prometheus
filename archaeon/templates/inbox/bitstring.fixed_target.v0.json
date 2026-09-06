@@ -1,0 +1,32 @@
+{
+  "calibration": {
+    "floor_queries_to_target": "L/log2(L+1) ~ 5.2 at L=24",
+    "random_arm": "bitstring.uniform.v0 restricted to this seed_root/length"
+  },
+  "kind": "evaluate_bitstring",
+  "origin": {
+    "field": "bench self-calibration",
+    "proposed_by": "Herakles (finding) / Archaeon (template)",
+    "reference": "Herakles, expansion-design pass 2026-09-06 (F-6, C-0, E1, E3)",
+    "source": "LLM"
+  },
+  "param_space": {
+    "payload": {
+      "bits": {
+        "uniform_bits": "length"
+      },
+      "length": {
+        "constant": 24
+      }
+    },
+    "world": {
+      "seed_root": {
+        "constant": 20260906
+      }
+    }
+  },
+  "rationale": "C-0, the fixed-seed pattern. seed_root and length are pinned, so every draw is a new query against the SAME hidden target and a series of specs is one game. One score gives the Hamming distance exactly, so the set of targets consistent with k queries is computable (E1, the version-space game). This is the substrate for an M-SIGNAL rehearsal in which the answer cannot lie: stage A publishes random queries under this template (fossils); stage B has both policies commit their next orders from stage-A fossils only, before execution. The adaptive one-query-at-a-time form is the later experiment the operator deferred. Admission is the operator's act.",
+  "registry_version": "archaeon.template.v0",
+  "status": "PROPOSED",
+  "template_id": "bitstring.fixed_target.v0"
+}

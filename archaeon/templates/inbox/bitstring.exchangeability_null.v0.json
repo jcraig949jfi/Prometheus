@@ -1,0 +1,40 @@
+{
+  "calibration": {
+    "expected_effect_on_bits": 0.0,
+    "expected_mean": 0.5,
+    "expected_sd": "sqrt(1/(4*length))"
+  },
+  "kind": "evaluate_bitstring",
+  "origin": {
+    "field": "bench self-calibration",
+    "proposed_by": "Herakles (finding) / Archaeon (template)",
+    "reference": "Herakles, expansion-design pass 2026-09-06 (F-6, C-0, E1, E3)",
+    "source": "LLM"
+  },
+  "param_space": {
+    "payload": {
+      "bits": {
+        "uniform_bits": "length"
+      },
+      "length": {
+        "choices": [
+          16,
+          24,
+          32
+        ]
+      }
+    },
+    "world": {
+      "seed_root": {
+        "int_range": [
+          1,
+          1000000000
+        ]
+      }
+    }
+  },
+  "rationale": "E3, the exchangeability null. Against a hashed target the score of ANY candidate is Binomial(L,1/2)/L: mean 0.5, sd sqrt(1/(4L)). This template draws exactly what the frozen baseline draws and is declared, in advance, to carry NO effect on the bits axis. Its purpose is to give the detector battery a case whose correct answer is known: any D1-D6 signal attributed to bits on worlds drawn from it is an instrument defect, a seeding fault, or a leak. It is byte-identical in space to bitstring.uniform.v0 by design; the template_id is the declaration. Admission is the operator's act.",
+  "registry_version": "archaeon.template.v0",
+  "status": "PROPOSED",
+  "template_id": "bitstring.exchangeability_null.v0"
+}
