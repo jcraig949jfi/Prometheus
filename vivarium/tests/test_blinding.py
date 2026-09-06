@@ -85,15 +85,18 @@ class RecordingClient:
         return {"science": {"profile_findings": []}}
 
     def observation(self, wid, exp_id, content, outcome, pred_id=None,
-                    work_id=None):
+                    work_id=None, replication=False):
         self._rec("observation", wid=wid, exp_id=exp_id, content=content,
-                  outcome=outcome, pred_id=pred_id, work_id=work_id)
-        return "obs_fixed"
+                  outcome=outcome, pred_id=pred_id, work_id=work_id,
+                  replication=replication)
+        return "obs_fixed_%d" % content.get("repeat_index", 0)
 
     def events(self, wid, limit=100):
-        return [{"event_type": "OBSERVATION_RECORDED", "event_id": "evt_fixed",
-                 "entry_hash": "sha256:" + "a" * 64, "event_seq": 1,
-                 "refs": {"exp_id": "exp_fixed", "obs_id": "obs_fixed"}}]
+        return [{"event_type": "OBSERVATION_RECORDED",
+                 "event_id": "evt_fixed_%d" % i,
+                 "entry_hash": "sha256:" + "a" * 64, "event_seq": 10 + i,
+                 "refs": {"exp_id": "exp_fixed", "obs_id": "obs_fixed_%d" % i}}
+                for i in range(8)]
 
     def _req(self, method, path, body=None):
         # the audit envelope; spec_hash is filled by the fixture below
@@ -118,6 +121,23 @@ def _runner_over(client, sealed):
     return r
 
 
+def _normalise(calls):
+    """Strip MEASURED COST from the transcript before comparing.
+
+    `seconds` is how long a repeat took, not what was asked for. Two runs of a
+    byte-identical spec must issue the same calls with the same arguments; they
+    are not required to take the same number of microseconds, and asserting
+    that would make the blinding test flaky for a reason that has nothing to do
+    with blinding. Everything an arm could influence is still compared."""
+    def scrub(o):
+        if isinstance(o, dict):
+            return {k: scrub(v) for k, v in o.items() if k != "seconds"}
+        if isinstance(o, list):
+            return [scrub(v) for v in o]
+        return o
+    return [(name, scrub(kw)) for name, kw in calls]
+
+
 def _transcript(spec):
     """The exact SFE call sequence a spec produces."""
     sealed = _spec.spec_hash(spec)
@@ -127,7 +147,7 @@ def _transcript(spec):
                            spec_json=_spec.canonical_bytes(spec),
                            spec_hash=sealed)
     runner.run(req)
-    return client.calls
+    return _normalise(client.calls)
 
 
 # ---------------------------------------------------------------------------
@@ -216,7 +236,7 @@ def test_identical_specs_with_opposite_provenance_execute_identically(conn,
         client = RecordingClient()
         runner = _runner_over(client, row["spec_hash"])
         runner.run(ExecutionRequest.from_queue_row(row))
-        transcripts.append(client.calls)
+        transcripts.append(_normalise(client.calls))
 
     assert transcripts[0] == transcripts[1]
     # and the world name is derived, so it is the same in both arms
@@ -253,6 +273,10 @@ def test_no_field_of_the_row_appears_anywhere_in_the_sfe_traffic(conn, schema):
     (lambda s: s["outcome_rule"].__setitem__("value", 0.5), "outcome_rule"),
     (lambda s: s.__setitem__("prediction", {"expect": "other"}), "prediction"),
     (lambda s: s["work"].__setitem__("kind", "noop_v0"), "work.kind"),
+    (lambda s: s["repeat"].__setitem__("count", 3), "repeat.count"),
+    (lambda s: s["repeat"].__setitem__("seed_derivation", "linear_index"),
+     "repeat.seed_derivation"),
+    (lambda s: s["repeat"].__setitem__("state", "persist"), "repeat.state"),
 ])
 def test_changing_an_execution_input_changes_execution_identity(mutate, label):
     base = make_spec(kind="evaluate_bitstring")
@@ -260,6 +284,12 @@ def test_changing_an_execution_input_changes_execution_identity(mutate, label):
     mutate(other)
     if label == "work.kind":
         other["work"]["payload"] = {}
+    if label == "repeat.count":
+        other["repeat"]["budget"]["max_observations"] = 3
+    if label == "repeat.state":
+        # persist is only legal for a stateful kind
+        other["work"] = {"kind": "random_walk_v0",
+                         "payload": {"steps": 3, "step_scale": 1.0}}
     assert base != other
     assert _spec.spec_hash(base) != _spec.spec_hash(other), \
         "%s changed the experiment without changing spec_hash" % label

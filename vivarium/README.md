@@ -118,9 +118,42 @@ into the sealed record. Every key below is an execution input; everything about
   "outcome_rule": {"field": "solved", "op": "==", "value": false,
                    "if_true": "SURVIVED", "if_false": "FALSIFIED",
                    "if_indeterminate": "INCONCLUSIVE"},
-  "pew": {"encounter_id": "...", "players": [], "required": false}
+  "pew": {"encounter_id": "...", "players": [], "required": false},
+  "repeat": {"count": 4,
+             "order": "sequential",
+             "seed_derivation": "sha256_index",
+             "state": "reset",
+             "budget": {"max_seconds": 120, "max_observations": 8}}
 }
 ```
+
+### `repeat` — N observations in ONE world
+
+One queue row used to be one world with one observation, so no family could
+reach S17's >=4-observations-per-world eligibility at any volume. `repeat`
+fixes that, and every axis is DECLARED because every axis changes the science:
+
+* **`count`** — how many. `1` is written out, not implied.
+* **`order`** — `sequential`. The lag-1 features read a trajectory, so which
+  observation is "next" is an execution input. Vivarium verifies against the
+  ledger that they were recorded in index order.
+* **`seed_derivation`** — `sha256_index` | `linear_index` | `constant`.
+  Never defaulted: reusing one seed gives zero within-world variance, a unit
+  that looks eligible while carrying no information. `constant` is permitted
+  and reported as `degenerate_by_construction`, which is arithmetic, not a
+  judgement.
+* **`state`** — `reset` | `persist`. `persist` is only legal for a stateful
+  kind, or the declaration would be a silent no-op.
+* **`budget`** — `max_seconds` and `max_observations`. Exhausting it fails as
+  `BUDGET_EXCEEDED`, distinct from an executor that broke.
+
+Repeats 2..N are recorded as SFE **replications** (same world, same
+experiment), which is the execution path where SFE's F3 semantics genuinely
+apply. One work item carries the whole trajectory, so every observation cites
+a work result that actually contains it.
+
+**spec_version 2 remains admissible** and means exactly one observation --
+that is v2's definition, not a default chosen later. New specs are v3.
 
 * **No `notes`, no `experiment_kind`, no `world.name`.** All three were
   measured to change `spec_hash` without changing what is executed. The world

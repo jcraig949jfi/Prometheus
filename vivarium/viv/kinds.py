@@ -31,6 +31,14 @@ from dataclasses import dataclass, field
 from typing import Dict, FrozenSet
 
 
+#: Lifecycle of a kind. RETIRED is not deletion: rows and fossils that named a
+#: retired kind stay readable and keep their meaning, and the entry stays here
+#: so an archaeologist reading a 2026-09 fossil can still learn what
+#: `archaeon.probe.v0` meant. What RETIRED forbids is a NEW admission.
+ACTIVE = "ACTIVE"
+RETIRED = "RETIRED"
+
+
 @dataclass(frozen=True)
 class Kind:
     kind: str
@@ -41,6 +49,20 @@ class Kind:
     owner: str
     note: str = ""
     provisional: bool = False
+    #: ACTIVE | RETIRED. A retired kind is refused at ADMISSION and keeps its
+    #: historical meaning for everything already recorded.
+    status: str = ACTIVE
+    #: Does the executor carry state between repeats? A spec may only declare
+    #: repeat.state="persist" for a stateful kind -- otherwise "persist" would
+    #: be a silent no-op: a declared scientific choice quietly not happening.
+    stateful: bool = False
+    #: Why it was retired, and what replaced it. Never blank when RETIRED.
+    retired_note: str = ""
+    retired_at: str = ""
+
+    @property
+    def retired(self) -> bool:
+        return self.status == RETIRED
 
     def check(self, payload: dict) -> list:
         """Reasons this payload does not satisfy the contract. Empty = ok."""
@@ -99,13 +121,46 @@ register(Kind(
     implemented=False,
     owner="archaeon",
     provisional=True,
-    note="PROVISIONAL. Transcribed by Vivarium from archaeon/propose.py "
-         "build_spec(); Archaeon owns this entry and should confirm or "
-         "correct it. `controls` is REQUIRED and must be [] when there are "
-         "none: a probe with no controls and a probe whose controls were "
-         "forgotten are different experiments, and only an explicit empty "
-         "list says which one was requested. No executor lives here, so a "
-         "row of this kind registers and fails visibly if executed."))
+    status=RETIRED,
+    retired_at="2026-09-06",
+    note="HISTORICAL MEANING, PRESERVED. A region-targeted re-interrogation of "
+         "the sfe.candidate_score.v0 chart. `probe_kind` named the operation "
+         "from Archaeon's fixed detector->probe table (RESAMPLE_REGION, "
+         "REPLICATE_AT_COORDINATE, INTERPOLATE_BETWEEN, CROSS_REPLICATE, "
+         "REPEAT_OUTLIER_CELL, BISECT_BOUNDARY); `target` gave the coordinate "
+         "in both normalized and raw form; `worlds`/`players` the region; "
+         "`hold_fixed` what the probe held constant; `replicates` how many "
+         "times; `controls` the nearby conditions, [] meaning explicitly none. "
+         "Any queue row or fossil naming this kind still means exactly that, "
+         "and this entry exists so it stays readable.",
+    retired_note="RETIRED 2026-09-06 by operator direction. No executor was "
+         "ever written for it and none can be written faithfully: the "
+         "sfe.candidate_score.v0 worlds it targets were scored by a harness "
+         "Vivarium does not have -- candidate 6926509 scores 0.42289 in the "
+         "corpus and 0.33333 under the engine's 24-bit reference executor, and "
+         "0.42289 is not a multiple of 1/24 -- so any substitution would "
+         "fabricate an execution that was not the one requested. Archaeon's "
+         "producer already routes around it with a declared random.v0 draw "
+         "over evaluate_bitstring. Its re-execution half is now served by "
+         "`repeat` (spec v3); its region-targeting half is an SFE substrate "
+         "request, not an executor kind. RETIRED refuses NEW admissions only."))
+
+
+# ------------------------------------------------- primitives for `repeat`
+register(Kind(
+    kind="random_walk_v0",
+    params=frozenset({"steps", "step_scale"}),
+    implemented=True,
+    owner="vivarium",
+    stateful=True,
+    note="A bench primitive, not a scientific claim. A deterministic 1-D walk: "
+         "`steps` increments drawn from the repeat's derived seed, each scaled "
+         "by `step_scale`. It exists because repeat.state has no observable "
+         "meaning without a kind that HAS state -- under `reset` the repeats "
+         "are independent draws, under `persist` they are one trajectory, and "
+         "that difference is exactly what within-world serial autocorrelation "
+         "reads. Available to templates; ADMITTING a template that uses it is "
+         "the operator's act, never mine."))
 
 
 def get(kind: str):
@@ -118,3 +173,12 @@ def known() -> list:
 
 def implemented() -> list:
     return sorted(k for k, v in REGISTRY.items() if v.implemented)
+
+
+def admissible() -> list:
+    """Kinds a NEW row may name. Excludes retired ones."""
+    return sorted(k for k, v in REGISTRY.items() if not v.retired)
+
+
+def retired() -> list:
+    return sorted(k for k, v in REGISTRY.items() if v.retired)

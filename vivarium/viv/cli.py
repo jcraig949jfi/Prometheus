@@ -205,10 +205,23 @@ def cmd_kinds(args, _conn) -> int:
     """The execution-kind contracts. What a spec of each kind must declare."""
     for name in _kinds.known():
         k = _kinds.get(name)
+        flags = []
+        if k.provisional:
+            flags.append("PROVISIONAL")
+        if k.stateful:
+            flags.append("stateful")
+        if k.retired:
+            flags.append("RETIRED " + k.retired_at)
         print("%-22s %-13s owner=%-9s params=%s%s"
               % (name, "IMPLEMENTED" if k.implemented else "external",
                  k.owner, sorted(k.params) or "(none)",
-                 "  [PROVISIONAL]" if k.provisional else ""))
+                 ("  [" + ", ".join(flags) + "]") if flags else ""))
+        if k.retired:
+            print("     retired: %s" % k.retired_note[:200])
+    print("")
+    print("admissible for a NEW spec: %s" % _kinds.admissible())
+    print("retired (meaning preserved, new admissions refused): %s"
+          % _kinds.retired())
     return 0
 
 

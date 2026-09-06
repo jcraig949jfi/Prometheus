@@ -114,19 +114,48 @@ def test_a_kind_contract_forbids_both_missing_and_extra_parameters():
     assert _spec.validate(ok) is ok
 
 
-def test_an_external_kind_is_registrable_but_not_executable():
+def test_an_external_kind_is_registrable_but_not_executable(external_kind):
     """A candidate registered before selection need not be runnable today."""
     spec = {**make_spec(),
-            "work": {"kind": "archaeon.probe.v0",
-                     "payload": {"procedure": "archaeon.probe.v0",
-                                 "probe_kind": "RESAMPLE_REGION",
-                                 "replicates": 16, "worlds": ["w"],
-                                 "players": [], "target": {},
-                                 "hold_fixed": "region", "controls": []}},
+            "work": {"kind": external_kind.kind,
+                     "payload": {"alpha": 1, "beta": 2}},
             "outcome_rule": None}
     assert _spec.validate(spec) is spec
     assert _spec.is_executable(spec) is False
     assert _spec.is_executable(make_spec()) is True
+
+
+def test_a_retired_kind_is_refused_for_a_NEW_specification():
+    """RETIRED forbids a new admission. It does not delete anything."""
+    from viv import kinds as _kinds
+    assert "archaeon.probe.v0" in _kinds.known()
+    assert "archaeon.probe.v0" in _kinds.retired()
+    assert "archaeon.probe.v0" not in _kinds.admissible()
+    spec = {**make_spec(),
+            "work": {"kind": "archaeon.probe.v0",
+                     "payload": {"procedure": "p", "probe_kind": "RESAMPLE_REGION",
+                                 "replicates": 16, "worlds": ["w"], "players": [],
+                                 "target": {}, "hold_fixed": "region",
+                                 "controls": []}},
+            "outcome_rule": None}
+    with pytest.raises(_spec.SpecError) as exc:
+        _spec.validate(spec)
+    assert any("RETIRED" in r for r in exc.value.reasons)
+
+
+def test_a_retired_kind_keeps_its_historical_meaning():
+    """An archaeologist reading a 2026-09 fossil must still be able to learn
+    what the kind meant. Retirement records; it does not erase."""
+    from viv import kinds as _kinds
+    k = _kinds.get("archaeon.probe.v0")
+    assert k.retired and k.retired_at == "2026-09-06"
+    assert k.retired_note, "a retired kind must say why"
+    for token in ("RESAMPLE_REGION", "hold_fixed", "controls", "target"):
+        assert token in k.note, "the historical meaning lost %s" % token
+    # the parameter contract survives, so an old payload is still readable
+    assert k.params == frozenset({"procedure", "probe_kind", "replicates",
+                                  "worlds", "players", "target", "hold_fixed",
+                                  "controls"})
 
 
 def test_an_executable_kind_must_declare_an_outcome_rule():

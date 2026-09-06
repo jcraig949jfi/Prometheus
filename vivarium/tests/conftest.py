@@ -87,11 +87,18 @@ BITSTRING_RULE = {"field": "solved", "op": "==", "value": True,
                   "if_indeterminate": "INCONCLUSIVE"}
 
 
+ONE_REPEAT = {"count": 1, "order": "sequential",
+              "seed_derivation": "sha256_index", "state": "reset",
+              "budget": {"max_seconds": 60, "max_observations": 1}}
+
+
 def make_spec(bits: str = "0" * 24, *, seed_root: int = 424242,
               kind: str = "noop_v0", outcome_rule=None, prediction=None,
-              pew=None, hypothesis=None, extra=None) -> dict:
-    """A valid spec v2. NOTE the shape: no name, no notes, no experiment_kind
-    -- the sealed spec is exactly the execution inputs."""
+              pew=None, hypothesis=None, extra=None, repeat=None,
+              legacy: bool = False) -> dict:
+    """A valid spec v3. NOTE the shape: no name, no notes, no experiment_kind
+    -- the sealed spec is exactly the execution inputs. `legacy=True` produces
+    a v2 spec, which is still admissible and means exactly one observation."""
     if kind == "noop_v0":
         payload = {}
         rule = outcome_rule or DEFAULT_RULE
@@ -99,7 +106,7 @@ def make_spec(bits: str = "0" * 24, *, seed_root: int = 424242,
         payload = {"bits": bits, "length": len(bits)}
         rule = outcome_rule or BITSTRING_RULE
     spec = {
-        "spec_version": 2,
+        "spec_version": 2 if legacy else 3,
         "world": {"seed_root": seed_root},
         "hypothesis": hypothesis or
                       "a mechanical loop runs what it is given, once",
@@ -108,6 +115,27 @@ def make_spec(bits: str = "0" * 24, *, seed_root: int = 424242,
         "outcome_rule": rule,
         "pew": pew,
     }
+    if not legacy:
+        spec["repeat"] = repeat or dict(ONE_REPEAT)
     if extra:
         spec.update(extra)
     return spec
+
+
+@pytest.fixture()
+def external_kind():
+    """An ACTIVE kind with no executor, registered for the duration of a test.
+
+    archaeon.probe.v0 used to serve this role; it is RETIRED now, and a retired
+    kind is refused at admission, which is a different property. Registering a
+    throwaway keeps "registrable but not runnable" tested on its own."""
+    from viv import kinds as _kinds
+    k = _kinds.Kind(kind="test.external.v0",
+                    params=frozenset({"alpha", "beta"}),
+                    implemented=False, owner="test-fixture",
+                    note="registered by a test fixture; removed afterwards")
+    _kinds.register(k)
+    try:
+        yield k
+    finally:
+        _kinds.REGISTRY.pop("test.external.v0", None)

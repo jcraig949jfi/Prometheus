@@ -298,16 +298,13 @@ def test_the_view_separates_never_attempted_from_failed_during_execution(
     assert rows[during]["crossed_execution_boundary"] is True
 
 
-def test_an_external_kind_registers_but_fails_visibly_if_executed(conn, schema):
+def test_an_external_kind_registers_but_fails_visibly_if_executed(
+        conn, schema, external_kind):
     """A candidate need not be runnable. Executing one is a terminal, named
     failure -- never a silent substitution."""
     spec = {**make_spec(), "outcome_rule": None,
-            "work": {"kind": "archaeon.probe.v0",
-                     "payload": {"procedure": "archaeon.probe.v0",
-                                 "probe_kind": "RESAMPLE_REGION",
-                                 "replicates": 16, "worlds": ["w"],
-                                 "players": [], "target": {},
-                                 "hold_fixed": "region", "controls": []}}}
+            "work": {"kind": external_kind.kind,
+                     "payload": {"alpha": 1, "beta": 2}}}
     eid = _q.enqueue(conn, created_by="archaeon", source_reason="t",
                      experiment_spec=spec, schema=schema)
     conn.commit()
@@ -317,4 +314,4 @@ def test_an_external_kind_registers_but_fails_visibly_if_executed(conn, schema):
     with pytest.raises(_ex.ExecutorNotImplemented) as exc:
         _ex.run(spec)
     assert "EXECUTOR_NOT_IMPLEMENTED" in str(exc.value)
-    assert "archaeon" in str(exc.value)
+    assert "test-fixture" in str(exc.value)

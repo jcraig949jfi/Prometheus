@@ -41,7 +41,12 @@ from typing import Any
 
 from . import kinds as _kinds
 
-SPEC_VERSION = 2
+SPEC_VERSION = 3
+#: v2 stays ADMISSIBLE and keeps its meaning: it had no repeat concept, so a v2
+#: spec is exactly one observation. That is v2's DEFINITION, not a default
+#: Vivarium is choosing now. New specs must be v3.
+LEGACY_SPEC_VERSIONS = (2,)
+ACCEPTED_SPEC_VERSIONS = (2, 3)
 
 OUTCOMES = ("FALSIFIED", "SURVIVED", "INCONCLUSIVE")
 OPS = ("==", "!=", "<", "<=", ">", ">=")
@@ -49,11 +54,34 @@ OPS = ("==", "!=", "<", "<=", ">", ">=")
 #: Closed. Every key is an execution input; adding one is a decision about
 #: what the sealed record means, not a convenience.
 _TOP_LEVEL = {"spec_version", "world", "hypothesis", "prediction", "work",
-              "outcome_rule", "pew"}
+              "outcome_rule", "pew", "repeat"}
 
-#: Present on every spec. `prediction`/`outcome_rule`/`pew` may be null but
-#: may not be missing.
-_REQUIRED = set(_TOP_LEVEL)
+#: Present on every v3 spec. `prediction`/`outcome_rule`/`pew` may be null but
+#: may not be missing. `repeat` may NOT be null: one observation is
+#: `{"count": 1, ...}` stated outright, because "I did not think about
+#: repetition" and "I chose exactly one" are different experiments.
+_REQUIRED_V3 = set(_TOP_LEVEL)
+_REQUIRED_V2 = _REQUIRED_V3 - {"repeat"}
+
+# ---------------------------------------------------------------- repeat ---
+#: How the per-repeat seed is derived from (world.seed_root, index). CLOSED,
+#: and never defaulted: Archaeon's own note is that reusing one seed across
+#: repeats gives zero within-world variance and a unit that looks eligible
+#: while carrying no information. Vivarium will not pick for them.
+SEED_DERIVATIONS = ("sha256_index", "linear_index", "constant")
+
+#: Only one order exists today, and it is stated rather than assumed: the
+#: lag-1 features read a trajectory, so which observation is "next" is an
+#: execution input.
+REPEAT_ORDERS = ("sequential",)
+
+#: Whether executor state survives between repeats. "persist" is only legal
+#: for a kind that HAS state; otherwise the declaration would be a silent
+#: no-op.
+REPEAT_STATES = ("reset", "persist")
+
+_REPEAT_KEYS = {"count", "order", "seed_derivation", "state", "budget"}
+_BUDGET_KEYS = {"max_seconds", "max_observations"}
 
 #: Fields that are provenance or design and must NEVER appear in a spec. Named
 #: explicitly so the failure says WHY rather than only "unknown key". Mirrors
@@ -151,10 +179,19 @@ def _check_work(work: Any, r: list) -> None:
         return
     kind = _kinds.get(kind_name)
     if kind is None:
-        r.append("work.kind %r is not a registered execution kind; known "
+        r.append("work.kind %r is not a registered execution kind; admissible "
                  "kinds are %s. An unregistered kind has no parameter "
                  "contract, so nothing could check it was fully specified."
-                 % (kind_name, _kinds.known()))
+                 % (kind_name, _kinds.admissible()))
+        return
+    if kind.retired:
+        # RETIRED refuses NEW admissions. Rows and fossils already naming it
+        # keep their meaning; that is the point of retiring rather than
+        # deleting the entry.
+        r.append("work.kind %r is RETIRED (%s) and may not be named by a new "
+                 "specification. %s Admissible kinds: %s"
+                 % (kind_name, kind.retired_at, kind.retired_note,
+                    _kinds.admissible()))
         return
     if "payload" not in work:
         r.append("work.payload is required (use {} for a kind that takes no "
@@ -190,6 +227,59 @@ def _check_outcome_rule(rule: Any, r: list) -> None:
                      "requester's declaration, not Vivarium's" % k)
         elif rule[k] not in OUTCOMES:
             r.append("outcome_rule.%s must be one of %s" % (k, list(OUTCOMES)))
+
+
+def _check_repeat(rep: Any, kind, r: list) -> None:
+    """The four declared axes of a repeat: how many, in what order, how the
+    seed moves, whether state survives, and what it is allowed to cost."""
+    if not isinstance(rep, dict):
+        r.append("repeat must be an object (use {\"count\": 1, ...} for a "
+                 "single observation; it may not be null)")
+        return
+    extra = sorted(set(rep) - _REPEAT_KEYS)
+    if extra:
+        r.append("repeat has unknown keys: %s" % extra)
+    missing = sorted(_REPEAT_KEYS - set(rep))
+    if missing:
+        r.append("repeat is missing %s; every axis of a repeat is an execution "
+                 "input and none has a default" % missing)
+
+    count = rep.get("count")
+    if not isinstance(count, int) or isinstance(count, bool) or count < 1:
+        r.append("repeat.count must be an integer >= 1")
+    if rep.get("order") not in REPEAT_ORDERS:
+        r.append("repeat.order must be one of %s" % list(REPEAT_ORDERS))
+    if rep.get("seed_derivation") not in SEED_DERIVATIONS:
+        r.append("repeat.seed_derivation must be one of %s"
+                 % list(SEED_DERIVATIONS))
+    state = rep.get("state")
+    if state not in REPEAT_STATES:
+        r.append("repeat.state must be one of %s" % list(REPEAT_STATES))
+    elif state == "persist" and kind is not None and not kind.stateful:
+        r.append("repeat.state='persist' is not legal for kind %r, which is "
+                 "stateless: nothing would carry between repeats and the "
+                 "declaration would be a silent no-op" % kind.kind)
+
+    budget = rep.get("budget")
+    if not isinstance(budget, dict):
+        r.append("repeat.budget must be an object")
+        return
+    bextra = sorted(set(budget) - _BUDGET_KEYS)
+    if bextra:
+        r.append("repeat.budget has unknown keys: %s" % bextra)
+    bmissing = sorted(_BUDGET_KEYS - set(budget))
+    if bmissing:
+        r.append("repeat.budget is missing %s" % bmissing)
+    secs = budget.get("max_seconds")
+    if not isinstance(secs, (int, float)) or isinstance(secs, bool) or secs <= 0:
+        r.append("repeat.budget.max_seconds must be a positive number")
+    obs = budget.get("max_observations")
+    if not isinstance(obs, int) or isinstance(obs, bool) or obs < 1:
+        r.append("repeat.budget.max_observations must be an integer >= 1")
+    elif isinstance(count, int) and not isinstance(count, bool) and count > obs:
+        r.append("repeat.count (%s) exceeds repeat.budget.max_observations "
+                 "(%s); the budget is a bound on what may run, so this request "
+                 "could never complete" % (count, obs))
 
 
 def _check_pew(pew: Any, r: list) -> None:
@@ -234,15 +324,24 @@ def validate(spec: Any) -> Any:
     extra = sorted(set(spec) - _TOP_LEVEL - set(_BANISHED))
     if extra:
         r.append("unknown top-level keys: %s" % extra)
-    missing = sorted(_REQUIRED - set(spec))
+    required = (_REQUIRED_V2 if spec.get("spec_version") in LEGACY_SPEC_VERSIONS
+                else _REQUIRED_V3)
+    missing = sorted(required - set(spec))
     if missing:
         r.append("missing required keys: %s (declare an explicit null where "
                  "one does not apply; an omitted field and a declared absence "
                  "are different experiments)" % missing)
+    if spec.get("spec_version") in LEGACY_SPEC_VERSIONS and "repeat" in spec:
+        r.append("spec_version %s predates `repeat` and means exactly one "
+                 "observation; a v2 spec carrying a repeat block is ambiguous. "
+                 "Declare spec_version %s."
+                 % (spec.get("spec_version"), SPEC_VERSION))
 
-    if spec.get("spec_version") != SPEC_VERSION:
-        r.append("spec_version must be %s, got %r"
-                 % (SPEC_VERSION, spec.get("spec_version")))
+    version = spec.get("spec_version")
+    if version not in ACCEPTED_SPEC_VERSIONS:
+        r.append("spec_version must be one of %s (new specs should be %s), "
+                 "got %r" % (list(ACCEPTED_SPEC_VERSIONS), SPEC_VERSION,
+                             version))
     if not isinstance(spec.get("hypothesis"), str) or not spec.get("hypothesis"):
         r.append("hypothesis must be a non-empty string")
 
@@ -250,6 +349,9 @@ def validate(spec: Any) -> Any:
         _check_world(spec["world"], r)
     if "work" in spec:
         _check_work(spec["work"], r)
+    if "repeat" in spec:
+        _check_repeat(spec["repeat"],
+                      _kinds.get((spec.get("work") or {}).get("kind")), r)
     if spec.get("prediction") is not None and \
             not isinstance(spec.get("prediction"), dict):
         r.append("prediction must be an object or null")
@@ -273,6 +375,48 @@ def validate(spec: Any) -> Any:
     if r:
         raise SpecError(r)
     return spec
+
+
+def repeat_plan(spec: dict) -> dict:
+    """The declared repeat, resolved into the exact per-index seeds.
+
+    A v2 spec resolves to one repeat with the world seed, because that is what
+    v2 MEANT -- not a default chosen here.
+
+    `degenerate_by_construction` is arithmetic, not a judgement: with a
+    constant seed derivation, a stateless kind and count > 1, every repeat is
+    provably the same computation, so the within-world variance is zero before
+    anything runs. Vivarium records that and executes the request as written.
+    """
+    seed_root = spec["world"]["seed_root"]
+    rep = spec.get("repeat")
+    if rep is None:
+        return {"count": 1, "order": "sequential",
+                "seed_derivation": "legacy_v2_world_seed", "state": "reset",
+                "budget": None, "seeds": [seed_root],
+                "degenerate_by_construction": False,
+                "note": "spec_version 2: one observation, the world seed"}
+    how = rep["seed_derivation"]
+    seeds = []
+    for i in range(rep["count"]):
+        if how == "constant":
+            seeds.append(seed_root)
+        elif how == "linear_index":
+            seeds.append(seed_root + i)
+        else:                                    # sha256_index
+            digest = hashlib.sha256(("%d:%d" % (seed_root, i)).encode()).digest()
+            seeds.append(int.from_bytes(digest[:8], "big"))
+    kind = _kinds.get((spec.get("work") or {}).get("kind"))
+    degenerate = (how == "constant" and rep["count"] > 1
+                  and rep["state"] == "reset"
+                  and not (kind.stateful if kind else False))
+    return {**{k: rep[k] for k in ("count", "order", "seed_derivation",
+                                   "state", "budget")},
+            "seeds": seeds,
+            "degenerate_by_construction": degenerate,
+            "note": ("every repeat is the same computation: constant seed, "
+                     "stateless kind, state=reset. Within-world variance is "
+                     "zero by construction." if degenerate else "")}
 
 
 def is_executable(spec: dict) -> bool:

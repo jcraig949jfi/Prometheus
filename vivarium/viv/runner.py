@@ -81,6 +81,10 @@ SECONDARY_ANCHOR = "WORK_COMPLETED"
 FAILURE_ANCHOR = "EXPERIMENT_COMMITTED"
 
 
+class _BudgetExceeded(RuntimeError):
+    """The declared execution budget ran out mid-repeat."""
+
+
 class LeaseLost(RuntimeError):
     """The engine took the work back while the executor was still running."""
 
@@ -177,6 +181,12 @@ class RunResult:
     science: dict = field(default_factory=dict)
     #: Lease renewals held during execution, and whether the lease was lost.
     lease: dict = field(default_factory=dict)
+    #: One entry per repeat, in declared index order. Partial on failure.
+    repeats: list = field(default_factory=list)
+    #: Every observation id, index-aligned with `repeats`.
+    obs_ids: list = field(default_factory=list)
+    #: Whether the ledger recorded the observations in the declared order.
+    order_check: dict = field(default_factory=dict)
     #: The sealed hash, carried so a FAILED run can still be fossilized with
     #: the identity of the specification that failed.
     spec_hash_hint: Optional[str] = None
@@ -248,6 +258,7 @@ class SfeRunner:
         return {"sfe_session_id": self._session_id, "sfe_session_key_fp": fp}
 
     # -- execution --------------------------------------------------------
+    # noqa: C901 -- the repeat loop is linear and reads top-to-bottom
     def run(self, request: ExecutionRequest, *,
             on_running: Optional[Callable[[str, dict], None]] = None,
             claim_attempts: int = 40, claim_pause_s: float = 0.25) -> RunResult:
@@ -333,14 +344,49 @@ class SfeRunner:
         # HOLD THE LEASE for as long as the executor runs. Without this a slow
         # executor loses its claim mid-flight and the completed result is
         # refused by the engine -- a correct computation with no fossil.
+        plan = _spec.repeat_plan(spec)
         keeper = _LeaseKeeper(c, work_id=work_id, worker_id=self.worker_id,
                               claim_id=claim_id, lease_s=self.lease_s,
                               log=self.log)
+        # ONE state object for the whole run under `persist`; a fresh one per
+        # repeat under `reset`. Which of those happens is declared, never
+        # inferred from whether the kind happens to have state.
+        carried = (_ex.new_state(spec["work"]["kind"])
+                   if plan["state"] == "persist" else None)
+        budget = plan.get("budget") or {}
+        max_seconds = budget.get("max_seconds")
+        repeats: list = []
+        # perf_counter, not time(): the wall clock has ~15ms resolution on
+        # Windows, so a fast repeat loop can finish inside a single tick and a
+        # budget measured against it never advances at all.
+        started = time.perf_counter()
         try:
             with keeper:
-                # The executor sees the SPEC, never the engine's payload
-                # envelope and never the queue row.
-                result = _ex.run(spec)
+                for index, seed in enumerate(plan["seeds"]):
+                    elapsed = time.perf_counter() - started
+                    if max_seconds is not None and elapsed > max_seconds:
+                        raise _BudgetExceeded(
+                            "execution budget exhausted after %d of %d "
+                            "repeat(s): %.1fs used of %.1fs declared"
+                            % (index, plan["count"], elapsed, max_seconds))
+                    state = (carried if plan["state"] == "persist"
+                             else _ex.new_state(spec["work"]["kind"]))
+                    r0 = time.perf_counter()
+                    value = _ex.run(spec, seed=seed, state=state)
+                    repeats.append({"repeat_index": index, "seed": seed,
+                                    "state_mode": plan["state"],
+                                    "seconds": round(time.perf_counter() - r0, 6),
+                                    "result": value})
+        except _BudgetExceeded as exc:
+            out.lease = keeper.status()
+            out.repeats = repeats
+            out.anchor = self._failure_anchor(wid, exp_id)
+            try:
+                c.fail(work_id, self.worker_id, claim_id, str(exc), retry=False)
+            except Exception:                       # noqa: BLE001, S110
+                pass
+            raise ExecutionFailure(str(exc), partial=out,
+                                   failure_class="BUDGET_EXCEEDED") from exc
         except Exception as exc:                    # noqa: BLE001
             # Tell the engine before telling the queue: the ledger must not
             # believe a work item is still in flight after Vivarium gave up.
@@ -351,14 +397,13 @@ class SfeRunner:
                 pass
             out.anchor = self._failure_anchor(wid, exp_id)
             out.lease = keeper.status()
+            out.repeats = repeats
             raise ExecutionFailure("executor raised: %s" % exc, partial=out,
                                    failure_class="EXECUTOR_ERROR") from exc
 
         out.lease = keeper.status()
-        out.work_result = result
+        out.repeats = repeats
         if keeper.error is not None:
-            # Say so BEFORE the engine says it. A bare 409 here reads like a
-            # bug in Vivarium; it is a lease that expired under a slow run.
             out.anchor = self._failure_anchor(wid, exp_id)
             raise ExecutionFailure(
                 "the work lease expired while the executor was running "
@@ -367,27 +412,53 @@ class SfeRunner:
                 % (keeper.renewals, keeper.error),
                 partial=out, failure_class="LEASE_LOST")
 
-        # science.profile_findings: the engine's answer to complete() is not
-        # an ack. It may carry CONFIG_DIVERGENCE or NO_EXECUTION_ATTESTATION --
-        # "this completed, but something about its configuration disagreed with
-        # what was sealed". Discarding that discards a scientific warning.
+        # ONE work item carries the WHOLE trajectory, so every observation
+        # below cites a work result that genuinely contains it. There is no SFE
+        # route to enqueue a second work item against one experiment, and
+        # citing one work result for a measurement it does not contain would be
+        # the dishonest alternative.
+        result = {"repeats": repeats, "repeat_plan":
+                  {k: plan[k] for k in ("count", "order", "seed_derivation",
+                                        "state", "degenerate_by_construction")},
+                  "executor": repeats[0]["result"].get("executor"),
+                  "reproducibility":
+                      repeats[0]["result"].get("reproducibility", "UNKNOWN")}
+        out.work_result = result
         completed = c.complete(work_id, self.worker_id, claim_id, result,
                                attestation={"executed_config": spec})
         out.science = (completed or {}).get("science") or {}
-        findings = out.science.get("profile_findings") or []
-        for f in findings:
+        for f in (out.science.get("profile_findings") or []):
             self.log("[viv] SFE SCIENCE FINDING %s work=%s exp=%s: %s"
                      % (f.get("code"), work_id, f.get("exp_id"),
                         f.get("message")))
 
-        outcome, provenance = _spec.apply_outcome_rule(spec, result)
-        out.outcome = outcome
-        obs_id = c.observation(
-            wid, exp_id,
-            {"result": result, "outcome_rule_provenance": provenance,
-             "executed_by": "vivarium", "worker_id": self.worker_id},
-            outcome, pred_id=pred_id, work_id=work_id)
+        # ONE OBSERVATION PER REPEAT, in declared index order. Observations
+        # 2..N are SFE replications: same world, same experiment, so
+        # `is_repeat` fires engine-side and the F3 guard requires the flag.
+        # This is the execution path where SFE's replication semantics genuinely
+        # apply, which the earlier single-shot path did not have.
+        obs_ids = []
+        for rep in repeats:
+            outcome_i, prov_i = _spec.apply_outcome_rule(spec, rep["result"])
+            oid = c.observation(
+                wid, exp_id,
+                {"result": rep["result"], "outcome_rule_provenance": prov_i,
+                 "repeat_index": rep["repeat_index"],
+                 "repeat_count": plan["count"],
+                 "repeat_seed": rep["seed"],
+                 "repeat_state_mode": plan["state"],
+                 "repeat_seed_derivation": plan["seed_derivation"],
+                 "executed_by": "vivarium", "worker_id": self.worker_id},
+                outcome_i, pred_id=pred_id, work_id=work_id,
+                replication=rep["repeat_index"] > 0)
+            obs_ids.append(oid)
+        out.obs_ids = obs_ids
+        obs_id = obs_ids[0]
         out.obs_id = obs_id
+        outcome, provenance = _spec.apply_outcome_rule(spec,
+                                                       repeats[0]["result"])
+        out.outcome = outcome
+        out.order_check = self._verify_order(wid, obs_ids)
 
         out.anchor = self._anchor(wid, work_id=work_id, obs_id=obs_id,
                                   exp_id=exp_id)
@@ -404,6 +475,13 @@ class SfeRunner:
             "exp_id": exp_id, "work_id": work_id, "obs_id": obs_id,
             "run_id": out.run_id, "hyp_id": hyp_id, "pred_id": pred_id,
             "outcome": outcome, "outcome_rule_provenance": provenance,
+            "obs_ids": obs_ids, "repeat": {
+                **{k: plan[k] for k in ("count", "order", "seed_derivation",
+                                        "state", "budget",
+                                        "degenerate_by_construction")},
+                "seeds": plan["seeds"], "note": plan["note"],
+                "order_check": out.order_check,
+                "elapsed_s": round(time.perf_counter() - started, 4)},
             "result": result, "anchor": out.anchor,
             "science": out.science, "lease": out.lease,
             "audit_envelope": envelope, "session": self.session_lineage,
@@ -465,6 +543,33 @@ class SfeRunner:
                     "result_hash": self._refs(e).get("result_hash")}
                 break
         return out
+
+    def _verify_order(self, wid: str, obs_ids: list) -> dict:
+        """Did the LEDGER record the observations in the declared order?
+
+        repeat.order is an execution input because the lag-1 features read a
+        trajectory, so "they were written in index order" must be checked
+        against the event chain rather than assumed from the loop that wrote
+        them."""
+        if len(obs_ids) < 2:
+            return {"checked": True, "in_order": True, "n": len(obs_ids),
+                    "note": "fewer than two observations; order is trivial"}
+        evs = self._events(wid)
+        if evs is None:
+            return {"checked": False, "reason": "events read failed"}
+        seq = {}
+        for e in evs:
+            if e.get("event_type") == PRIMARY_ANCHOR:
+                oid = self._refs(e).get("obs_id")
+                if oid in obs_ids:
+                    seq[oid] = e.get("event_seq")
+        found = [seq.get(o) for o in obs_ids]
+        if any(v is None for v in found):
+            return {"checked": False, "reason": "not every observation was "
+                                                "found in the ledger",
+                    "event_seqs": found}
+        return {"checked": True, "in_order": found == sorted(found),
+                "n": len(obs_ids), "event_seqs": found}
 
     def _failure_anchor(self, wid: str, exp_id: str) -> dict:
         """The anchor for a run that crossed the boundary and then failed.
