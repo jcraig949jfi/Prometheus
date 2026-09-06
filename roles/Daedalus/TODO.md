@@ -284,7 +284,7 @@ cross-machine qualification and nothing should be read as one.**
 **Deploy target is `d269c6c7a` (current tip, carries the build pin).** The old
 target `b35046a60` is now many releases stale and deploying it would land M2 on
 a build M1 no longer runs — re-opening the build-parity gate that exists to stop
-exactly that. Readiness report first (§ M2 READINESS below).
+exactly that. Readiness report written and NOT acted on: `roles/Daedalus/M2_V6_DEPLOYMENT_READINESS_2026-09-06.md`.
 
 ### D4-2  Legacy drain is not moving; the cutover will be date-driven
 106 LEGACY sessions, all still OPEN. `close_session` exists and is verified, but
