@@ -1,0 +1,1284 @@
+{
+ "manifest": {
+  "experiment": "S13 / T-B",
+  "question": "does the substrate support a useful CANDIDATE selection universe, and where does claimant control relocate?",
+  "rules_frozen_before_scoring": [
+   "R_LIN     same parent world (fork siblings)",
+   "R_SES     same session",
+   "R_SEED    same seed_root",
+   "R_SPEC    same experiment spec_hash",
+   "R_CLIENT  same client",
+   "R_TIME_10 created within 10s of the survivor",
+   "R_TIME_60 created within 60s of the survivor",
+   "R_SPEC_SES   same spec_hash AND same session",
+   "R_LIN_OR_SPEC same parent OR same spec_hash",
+   "R_CLIENT_SPEC_TIME same client AND same spec_hash AND within 60s"
+  ],
+  "scoring": "recall = |candidate AND truth| / |truth| ; precision = |candidate AND truth| / |candidate| ; both reported, neither optimised, no rule adjusted after seeing a score",
+  "constructions": [
+   "C1 twelve fork siblings, best one reported -> infer all 12",
+   "C2 the same twelve split into 12 singleton families -> still 12",
+   "C3 two genuinely separate experiments from one parent -> do NOT merge",
+   "C4 a repeat of the same experiment later -> separable",
+   "C5 two interleaved A/B campaigns sharing lineage -> do not collapse",
+   "C6 debugging/calibration forks -> not selection alternatives",
+   "C7 the same experiment across separate sessions -> is the session boundary meaningful or another evasion?",
+   "C8 adversary uses a FRESH PARENT for every trial -> does derivation survive, or does control merely relocate?"
+  ],
+  "prohibited": "tuning any window, threshold or rule after observing a score; adding a rule after seeing the constructions"
+ },
+ "manifest_hash": "ccc32cf84ee9efd2dbbaec6349a9d220cbfca4b0629659620cacece43caf1c36",
+ "pool_size": 80,
+ "results": {
+  "C1_twelve_siblings": {
+   "truth_size": 12,
+   "desired": "infer all 12",
+   "rules": {
+    "R_LIN": {
+     "recall": 1.0,
+     "precision": 1.0,
+     "size": 12
+    },
+    "R_SES": {
+     "recall": 1.0,
+     "precision": 0.15789473684210525,
+     "size": 76
+    },
+    "R_SEED": {
+     "recall": 1.0,
+     "precision": 0.9230769230769231,
+     "size": 13
+    },
+    "R_SPEC": {
+     "recall": 1.0,
+     "precision": 0.9230769230769231,
+     "size": 13
+    },
+    "R_CLIENT": {
+     "recall": 1.0,
+     "precision": 0.15,
+     "size": 80
+    },
+    "R_TIME_10": {
+     "recall": 1.0,
+     "precision": 0.15789473684210525,
+     "size": 76
+    },
+    "R_TIME_60": {
+     "recall": 1.0,
+     "precision": 0.15,
+     "size": 80
+    },
+    "R_SPEC_SES": {
+     "recall": 1.0,
+     "precision": 0.9230769230769231,
+     "size": 13
+    },
+    "R_LIN_OR_SPEC": {
+     "recall": 1.0,
+     "precision": 0.9230769230769231,
+     "size": 13
+    },
+    "R_CLIENT_SPEC_TIME": {
+     "recall": 1.0,
+     "precision": 0.9230769230769231,
+     "size": 13
+    }
+   }
+  },
+  "C2_twelve_singleton_families": {
+   "truth_size": 12,
+   "desired": "still infer the common universe",
+   "rules": {
+    "R_LIN": {
+     "recall": 1.0,
+     "precision": 1.0,
+     "size": 12
+    },
+    "R_SES": {
+     "recall": 1.0,
+     "precision": 0.15789473684210525,
+     "size": 76
+    },
+    "R_SEED": {
+     "recall": 1.0,
+     "precision": 0.9230769230769231,
+     "size": 13
+    },
+    "R_SPEC": {
+     "recall": 1.0,
+     "precision": 0.9230769230769231,
+     "size": 13
+    },
+    "R_CLIENT": {
+     "recall": 1.0,
+     "precision": 0.15,
+     "size": 80
+    },
+    "R_TIME_10": {
+     "recall": 1.0,
+     "precision": 0.15789473684210525,
+     "size": 76
+    },
+    "R_TIME_60": {
+     "recall": 1.0,
+     "precision": 0.15,
+     "size": 80
+    },
+    "R_SPEC_SES": {
+     "recall": 1.0,
+     "precision": 0.9230769230769231,
+     "size": 13
+    },
+    "R_LIN_OR_SPEC": {
+     "recall": 1.0,
+     "precision": 0.9230769230769231,
+     "size": 13
+    },
+    "R_CLIENT_SPEC_TIME": {
+     "recall": 1.0,
+     "precision": 0.9230769230769231,
+     "size": 13
+    }
+   }
+  },
+  "C3_two_separate_from_one_parent": {
+   "truth_size": 4,
+   "desired": "do NOT merge the beta arm",
+   "rules": {
+    "R_LIN": {
+     "recall": 1.0,
+     "precision": 0.5,
+     "size": 8
+    },
+    "R_SES": {
+     "recall": 1.0,
+     "precision": 0.05263157894736842,
+     "size": 76
+    },
+    "R_SEED": {
+     "recall": 1.0,
+     "precision": 0.4444444444444444,
+     "size": 9
+    },
+    "R_SPEC": {
+     "recall": 1.0,
+     "precision": 1.0,
+     "size": 4
+    },
+    "R_CLIENT": {
+     "recall": 1.0,
+     "precision": 0.05,
+     "size": 80
+    },
+    "R_TIME_10": {
+     "recall": 1.0,
+     "precision": 0.05,
+     "size": 80
+    },
+    "R_TIME_60": {
+     "recall": 1.0,
+     "precision": 0.05,
+     "size": 80
+    },
+    "R_SPEC_SES": {
+     "recall": 1.0,
+     "precision": 1.0,
+     "size": 4
+    },
+    "R_LIN_OR_SPEC": {
+     "recall": 1.0,
+     "precision": 0.5,
+     "size": 8
+    },
+    "R_CLIENT_SPEC_TIME": {
+     "recall": 1.0,
+     "precision": 1.0,
+     "size": 4
+    }
+   }
+  },
+  "C4_repeat_later": {
+   "truth_size": 4,
+   "desired": "separable from the later repeat",
+   "rules": {
+    "R_LIN": {
+     "recall": 1.0,
+     "precision": 0.5,
+     "size": 8
+    },
+    "R_SES": {
+     "recall": 1.0,
+     "precision": 0.05263157894736842,
+     "size": 76
+    },
+    "R_SEED": {
+     "recall": 1.0,
+     "precision": 0.4444444444444444,
+     "size": 9
+    },
+    "R_SPEC": {
+     "recall": 1.0,
+     "precision": 0.4444444444444444,
+     "size": 9
+    },
+    "R_CLIENT": {
+     "recall": 1.0,
+     "precision": 0.05,
+     "size": 80
+    },
+    "R_TIME_10": {
+     "recall": 1.0,
+     "precision": 0.05,
+     "size": 80
+    },
+    "R_TIME_60": {
+     "recall": 1.0,
+     "precision": 0.05,
+     "size": 80
+    },
+    "R_SPEC_SES": {
+     "recall": 1.0,
+     "precision": 0.4444444444444444,
+     "size": 9
+    },
+    "R_LIN_OR_SPEC": {
+     "recall": 1.0,
+     "precision": 0.4444444444444444,
+     "size": 9
+    },
+    "R_CLIENT_SPEC_TIME": {
+     "recall": 1.0,
+     "precision": 0.4444444444444444,
+     "size": 9
+    }
+   }
+  },
+  "C5_interleaved_campaigns": {
+   "truth_size": 4,
+   "desired": "do not collapse A and B",
+   "rules": {
+    "R_LIN": {
+     "recall": 1.0,
+     "precision": 0.5,
+     "size": 8
+    },
+    "R_SES": {
+     "recall": 1.0,
+     "precision": 0.05263157894736842,
+     "size": 76
+    },
+    "R_SEED": {
+     "recall": 1.0,
+     "precision": 0.4444444444444444,
+     "size": 9
+    },
+    "R_SPEC": {
+     "recall": 1.0,
+     "precision": 1.0,
+     "size": 4
+    },
+    "R_CLIENT": {
+     "recall": 1.0,
+     "precision": 0.05,
+     "size": 80
+    },
+    "R_TIME_10": {
+     "recall": 1.0,
+     "precision": 0.05,
+     "size": 80
+    },
+    "R_TIME_60": {
+     "recall": 1.0,
+     "precision": 0.05,
+     "size": 80
+    },
+    "R_SPEC_SES": {
+     "recall": 1.0,
+     "precision": 1.0,
+     "size": 4
+    },
+    "R_LIN_OR_SPEC": {
+     "recall": 1.0,
+     "precision": 0.5,
+     "size": 8
+    },
+    "R_CLIENT_SPEC_TIME": {
+     "recall": 1.0,
+     "precision": 1.0,
+     "size": 4
+    }
+   }
+  },
+  "C6_debug_forks": {
+   "truth_size": 4,
+   "desired": "calibration forks are not alternatives",
+   "rules": {
+    "R_LIN": {
+     "recall": 1.0,
+     "precision": 0.5714285714285714,
+     "size": 7
+    },
+    "R_SES": {
+     "recall": 1.0,
+     "precision": 0.05263157894736842,
+     "size": 76
+    },
+    "R_SEED": {
+     "recall": 1.0,
+     "precision": 0.5,
+     "size": 8
+    },
+    "R_SPEC": {
+     "recall": 1.0,
+     "precision": 1.0,
+     "size": 4
+    },
+    "R_CLIENT": {
+     "recall": 1.0,
+     "precision": 0.05,
+     "size": 80
+    },
+    "R_TIME_10": {
+     "recall": 1.0,
+     "precision": 0.05,
+     "size": 80
+    },
+    "R_TIME_60": {
+     "recall": 1.0,
+     "precision": 0.05,
+     "size": 80
+    },
+    "R_SPEC_SES": {
+     "recall": 1.0,
+     "precision": 1.0,
+     "size": 4
+    },
+    "R_LIN_OR_SPEC": {
+     "recall": 1.0,
+     "precision": 0.5714285714285714,
+     "size": 7
+    },
+    "R_CLIENT_SPEC_TIME": {
+     "recall": 1.0,
+     "precision": 1.0,
+     "size": 4
+    }
+   }
+  },
+  "C7_across_sessions": {
+   "truth_size": 8,
+   "desired": "is the session boundary meaningful, or an evasion?",
+   "rules": {
+    "R_LIN": {
+     "recall": 0.0,
+     "precision": NaN,
+     "size": 0
+    },
+    "R_SES": {
+     "recall": 0.5,
+     "precision": 0.05263157894736842,
+     "size": 76
+    },
+    "R_SEED": {
+     "recall": 1.0,
+     "precision": 1.0,
+     "size": 8
+    },
+    "R_SPEC": {
+     "recall": 1.0,
+     "precision": 1.0,
+     "size": 8
+    },
+    "R_CLIENT": {
+     "recall": 1.0,
+     "precision": 0.1,
+     "size": 80
+    },
+    "R_TIME_10": {
+     "recall": 1.0,
+     "precision": 0.1,
+     "size": 80
+    },
+    "R_TIME_60": {
+     "recall": 1.0,
+     "precision": 0.1,
+     "size": 80
+    },
+    "R_SPEC_SES": {
+     "recall": 0.5,
+     "precision": 1.0,
+     "size": 4
+    },
+    "R_LIN_OR_SPEC": {
+     "recall": 1.0,
+     "precision": 1.0,
+     "size": 8
+    },
+    "R_CLIENT_SPEC_TIME": {
+     "recall": 1.0,
+     "precision": 1.0,
+     "size": 8
+    }
+   }
+  },
+  "C8_adversary_fresh_parent": {
+   "truth_size": 12,
+   "desired": "does derivation survive, or does control relocate?",
+   "rules": {
+    "R_LIN": {
+     "recall": 0.08333333333333333,
+     "precision": 1.0,
+     "size": 1
+    },
+    "R_SES": {
+     "recall": 1.0,
+     "precision": 0.15789473684210525,
+     "size": 76
+    },
+    "R_SEED": {
+     "recall": 0.08333333333333333,
+     "precision": 0.5,
+     "size": 2
+    },
+    "R_SPEC": {
+     "recall": 1.0,
+     "precision": 0.5,
+     "size": 24
+    },
+    "R_CLIENT": {
+     "recall": 1.0,
+     "precision": 0.15,
+     "size": 80
+    },
+    "R_TIME_10": {
+     "recall": 1.0,
+     "precision": 0.15,
+     "size": 80
+    },
+    "R_TIME_60": {
+     "recall": 1.0,
+     "precision": 0.15,
+     "size": 80
+    },
+    "R_SPEC_SES": {
+     "recall": 1.0,
+     "precision": 0.5,
+     "size": 24
+    },
+    "R_LIN_OR_SPEC": {
+     "recall": 1.0,
+     "precision": 0.5,
+     "size": 24
+    },
+    "R_CLIENT_SPEC_TIME": {
+     "recall": 1.0,
+     "precision": 0.5,
+     "size": 24
+    }
+   }
+  }
+ },
+ "worlds": {
+  "wld_144681811633fbe631aa56ca": {
+   "world_id": "wld_144681811633fbe631aa56ca",
+   "parent": null,
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 4242,
+   "created_ts": 1788653209.266119,
+   "spec_hash": "sha256:fcb94ae53a3cd992c0d4629cde0a93476f155f6320be1ec429f3f9d09790356a",
+   "name": "C1-parent"
+  },
+  "wld_0b0af0c31bf275c4b38286ec": {
+   "world_id": "wld_0b0af0c31bf275c4b38286ec",
+   "parent": "wld_144681811633fbe631aa56ca",
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 4242,
+   "created_ts": 1788653209.357977,
+   "spec_hash": "sha256:fcb94ae53a3cd992c0d4629cde0a93476f155f6320be1ec429f3f9d09790356a",
+   "name": "C1-0"
+  },
+  "wld_1adee2cf4b41caa32346503c": {
+   "world_id": "wld_1adee2cf4b41caa32346503c",
+   "parent": "wld_144681811633fbe631aa56ca",
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 4242,
+   "created_ts": 1788653209.357977,
+   "spec_hash": "sha256:fcb94ae53a3cd992c0d4629cde0a93476f155f6320be1ec429f3f9d09790356a",
+   "name": "C1-1"
+  },
+  "wld_72c98376ae6281e77f15ab1a": {
+   "world_id": "wld_72c98376ae6281e77f15ab1a",
+   "parent": "wld_144681811633fbe631aa56ca",
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 4242,
+   "created_ts": 1788653209.3589768,
+   "spec_hash": "sha256:fcb94ae53a3cd992c0d4629cde0a93476f155f6320be1ec429f3f9d09790356a",
+   "name": "C1-2"
+  },
+  "wld_d28e8d5a0ed41916ae0fd768": {
+   "world_id": "wld_d28e8d5a0ed41916ae0fd768",
+   "parent": "wld_144681811633fbe631aa56ca",
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 4242,
+   "created_ts": 1788653209.3589768,
+   "spec_hash": "sha256:fcb94ae53a3cd992c0d4629cde0a93476f155f6320be1ec429f3f9d09790356a",
+   "name": "C1-3"
+  },
+  "wld_bea04d14458c7ef289d83536": {
+   "world_id": "wld_bea04d14458c7ef289d83536",
+   "parent": "wld_144681811633fbe631aa56ca",
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 4242,
+   "created_ts": 1788653209.3589768,
+   "spec_hash": "sha256:fcb94ae53a3cd992c0d4629cde0a93476f155f6320be1ec429f3f9d09790356a",
+   "name": "C1-4"
+  },
+  "wld_4d08d5c59ade5c20bccd4c69": {
+   "world_id": "wld_4d08d5c59ade5c20bccd4c69",
+   "parent": "wld_144681811633fbe631aa56ca",
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 4242,
+   "created_ts": 1788653209.3589768,
+   "spec_hash": "sha256:fcb94ae53a3cd992c0d4629cde0a93476f155f6320be1ec429f3f9d09790356a",
+   "name": "C1-5"
+  },
+  "wld_fdc4924d4417a581b6a20d78": {
+   "world_id": "wld_fdc4924d4417a581b6a20d78",
+   "parent": "wld_144681811633fbe631aa56ca",
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 4242,
+   "created_ts": 1788653209.3589768,
+   "spec_hash": "sha256:fcb94ae53a3cd992c0d4629cde0a93476f155f6320be1ec429f3f9d09790356a",
+   "name": "C1-6"
+  },
+  "wld_2a5fca2e9f9ce3ee312b9125": {
+   "world_id": "wld_2a5fca2e9f9ce3ee312b9125",
+   "parent": "wld_144681811633fbe631aa56ca",
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 4242,
+   "created_ts": 1788653209.3589768,
+   "spec_hash": "sha256:fcb94ae53a3cd992c0d4629cde0a93476f155f6320be1ec429f3f9d09790356a",
+   "name": "C1-7"
+  },
+  "wld_bd1fdd68282939d55ef1ff12": {
+   "world_id": "wld_bd1fdd68282939d55ef1ff12",
+   "parent": "wld_144681811633fbe631aa56ca",
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 4242,
+   "created_ts": 1788653209.3589768,
+   "spec_hash": "sha256:fcb94ae53a3cd992c0d4629cde0a93476f155f6320be1ec429f3f9d09790356a",
+   "name": "C1-8"
+  },
+  "wld_f7accde1db47c126f83dae40": {
+   "world_id": "wld_f7accde1db47c126f83dae40",
+   "parent": "wld_144681811633fbe631aa56ca",
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 4242,
+   "created_ts": 1788653209.3589768,
+   "spec_hash": "sha256:fcb94ae53a3cd992c0d4629cde0a93476f155f6320be1ec429f3f9d09790356a",
+   "name": "C1-9"
+  },
+  "wld_e639d1d138146677e3075bfb": {
+   "world_id": "wld_e639d1d138146677e3075bfb",
+   "parent": "wld_144681811633fbe631aa56ca",
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 4242,
+   "created_ts": 1788653209.3589768,
+   "spec_hash": "sha256:fcb94ae53a3cd992c0d4629cde0a93476f155f6320be1ec429f3f9d09790356a",
+   "name": "C1-10"
+  },
+  "wld_475ab4b6cb99fb5005be9bf4": {
+   "world_id": "wld_475ab4b6cb99fb5005be9bf4",
+   "parent": "wld_144681811633fbe631aa56ca",
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 4242,
+   "created_ts": 1788653209.3589768,
+   "spec_hash": "sha256:fcb94ae53a3cd992c0d4629cde0a93476f155f6320be1ec429f3f9d09790356a",
+   "name": "C1-11"
+  },
+  "wld_38fd10134fcf67741c2d9a33": {
+   "world_id": "wld_38fd10134fcf67741c2d9a33",
+   "parent": null,
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 71,
+   "created_ts": 1788653210.539534,
+   "spec_hash": "sha256:8dc28681fa75c9cc796beea6a7d6ce666b8db99053e8687b2ee9e2b6d029eb88",
+   "name": "C3-parent"
+  },
+  "wld_1a04934caa4d091fd72cd0f6": {
+   "world_id": "wld_1a04934caa4d091fd72cd0f6",
+   "parent": "wld_38fd10134fcf67741c2d9a33",
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 71,
+   "created_ts": 1788653210.6302605,
+   "spec_hash": "sha256:0e555731885d57eac0dca736a93259fd060a74cee35a99485b33ba89dd2332bf",
+   "name": "C3a-0"
+  },
+  "wld_b855f2728bc278501138f3ed": {
+   "world_id": "wld_b855f2728bc278501138f3ed",
+   "parent": "wld_38fd10134fcf67741c2d9a33",
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 71,
+   "created_ts": 1788653210.6302605,
+   "spec_hash": "sha256:0e555731885d57eac0dca736a93259fd060a74cee35a99485b33ba89dd2332bf",
+   "name": "C3a-1"
+  },
+  "wld_08a83b2a468b748c0e92d6a1": {
+   "world_id": "wld_08a83b2a468b748c0e92d6a1",
+   "parent": "wld_38fd10134fcf67741c2d9a33",
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 71,
+   "created_ts": 1788653210.6302605,
+   "spec_hash": "sha256:0e555731885d57eac0dca736a93259fd060a74cee35a99485b33ba89dd2332bf",
+   "name": "C3a-2"
+  },
+  "wld_0db305f25e19b85e6b75597f": {
+   "world_id": "wld_0db305f25e19b85e6b75597f",
+   "parent": "wld_38fd10134fcf67741c2d9a33",
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 71,
+   "created_ts": 1788653210.6302605,
+   "spec_hash": "sha256:0e555731885d57eac0dca736a93259fd060a74cee35a99485b33ba89dd2332bf",
+   "name": "C3a-3"
+  },
+  "wld_658738c77d1f800dc9121b99": {
+   "world_id": "wld_658738c77d1f800dc9121b99",
+   "parent": "wld_38fd10134fcf67741c2d9a33",
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 71,
+   "created_ts": 1788653210.7495441,
+   "spec_hash": "sha256:6c8e5f3717256925fe4cfbad3089287e6d84bc5d5bcfcaf46df889672c75ba73",
+   "name": "C3b-0"
+  },
+  "wld_65864ca345da8634a718a775": {
+   "world_id": "wld_65864ca345da8634a718a775",
+   "parent": "wld_38fd10134fcf67741c2d9a33",
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 71,
+   "created_ts": 1788653210.7495441,
+   "spec_hash": "sha256:6c8e5f3717256925fe4cfbad3089287e6d84bc5d5bcfcaf46df889672c75ba73",
+   "name": "C3b-1"
+  },
+  "wld_14d7b8f941739ccabe566809": {
+   "world_id": "wld_14d7b8f941739ccabe566809",
+   "parent": "wld_38fd10134fcf67741c2d9a33",
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 71,
+   "created_ts": 1788653210.7495441,
+   "spec_hash": "sha256:6c8e5f3717256925fe4cfbad3089287e6d84bc5d5bcfcaf46df889672c75ba73",
+   "name": "C3b-2"
+  },
+  "wld_66f44df33e79ef9c6cf46111": {
+   "world_id": "wld_66f44df33e79ef9c6cf46111",
+   "parent": "wld_38fd10134fcf67741c2d9a33",
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 71,
+   "created_ts": 1788653210.7495441,
+   "spec_hash": "sha256:6c8e5f3717256925fe4cfbad3089287e6d84bc5d5bcfcaf46df889672c75ba73",
+   "name": "C3b-3"
+  },
+  "wld_8c4cced24c6469815c28a375": {
+   "world_id": "wld_8c4cced24c6469815c28a375",
+   "parent": null,
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 88,
+   "created_ts": 1788653211.378079,
+   "spec_hash": "sha256:afb52d7432cf0bc8a8ba20433496375749c595b9190ed0c7adbcae8ad1d2f358",
+   "name": "C4-parent"
+  },
+  "wld_1e1db57910f51df1b5b19499": {
+   "world_id": "wld_1e1db57910f51df1b5b19499",
+   "parent": "wld_8c4cced24c6469815c28a375",
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 88,
+   "created_ts": 1788653211.5345988,
+   "spec_hash": "sha256:afb52d7432cf0bc8a8ba20433496375749c595b9190ed0c7adbcae8ad1d2f358",
+   "name": "C4first-0"
+  },
+  "wld_ec088f8216ca62fec03fa7b7": {
+   "world_id": "wld_ec088f8216ca62fec03fa7b7",
+   "parent": "wld_8c4cced24c6469815c28a375",
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 88,
+   "created_ts": 1788653211.5345988,
+   "spec_hash": "sha256:afb52d7432cf0bc8a8ba20433496375749c595b9190ed0c7adbcae8ad1d2f358",
+   "name": "C4first-1"
+  },
+  "wld_2cfe5c450b63f0f0515f79b2": {
+   "world_id": "wld_2cfe5c450b63f0f0515f79b2",
+   "parent": "wld_8c4cced24c6469815c28a375",
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 88,
+   "created_ts": 1788653211.5355973,
+   "spec_hash": "sha256:afb52d7432cf0bc8a8ba20433496375749c595b9190ed0c7adbcae8ad1d2f358",
+   "name": "C4first-2"
+  },
+  "wld_d80b904132cdfe9f5f87a009": {
+   "world_id": "wld_d80b904132cdfe9f5f87a009",
+   "parent": "wld_8c4cced24c6469815c28a375",
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 88,
+   "created_ts": 1788653211.5355973,
+   "spec_hash": "sha256:afb52d7432cf0bc8a8ba20433496375749c595b9190ed0c7adbcae8ad1d2f358",
+   "name": "C4first-3"
+  },
+  "wld_6b7e86df8ae0c852721124e6": {
+   "world_id": "wld_6b7e86df8ae0c852721124e6",
+   "parent": "wld_8c4cced24c6469815c28a375",
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 88,
+   "created_ts": 1788653213.9507306,
+   "spec_hash": "sha256:afb52d7432cf0bc8a8ba20433496375749c595b9190ed0c7adbcae8ad1d2f358",
+   "name": "C4later-0"
+  },
+  "wld_665855eb4c650e6a71c4f21f": {
+   "world_id": "wld_665855eb4c650e6a71c4f21f",
+   "parent": "wld_8c4cced24c6469815c28a375",
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 88,
+   "created_ts": 1788653213.9512339,
+   "spec_hash": "sha256:afb52d7432cf0bc8a8ba20433496375749c595b9190ed0c7adbcae8ad1d2f358",
+   "name": "C4later-1"
+  },
+  "wld_a1ff8b3bb984b6248ba989a5": {
+   "world_id": "wld_a1ff8b3bb984b6248ba989a5",
+   "parent": "wld_8c4cced24c6469815c28a375",
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 88,
+   "created_ts": 1788653213.9512339,
+   "spec_hash": "sha256:afb52d7432cf0bc8a8ba20433496375749c595b9190ed0c7adbcae8ad1d2f358",
+   "name": "C4later-2"
+  },
+  "wld_094158eba66f5d9c3c57c643": {
+   "world_id": "wld_094158eba66f5d9c3c57c643",
+   "parent": "wld_8c4cced24c6469815c28a375",
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 88,
+   "created_ts": 1788653213.9512339,
+   "spec_hash": "sha256:afb52d7432cf0bc8a8ba20433496375749c595b9190ed0c7adbcae8ad1d2f358",
+   "name": "C4later-3"
+  },
+  "wld_e6b198fb50820975176ba008": {
+   "world_id": "wld_e6b198fb50820975176ba008",
+   "parent": null,
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 99,
+   "created_ts": 1788653214.2909536,
+   "spec_hash": "sha256:1a8b8212372935ff52cd3296f2ff2319d69cb7013324cec5ed9a35f144bbcab4",
+   "name": "C5-parent"
+  },
+  "wld_2f5d79993dc1589c619fe416": {
+   "world_id": "wld_2f5d79993dc1589c619fe416",
+   "parent": "wld_e6b198fb50820975176ba008",
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 99,
+   "created_ts": 1788653214.4163492,
+   "spec_hash": "sha256:a2dc6c4877fbfb2879fe58a39b1578559a4c8bb6d665dbfeb708a4fa6fce8389",
+   "name": "C5-0"
+  },
+  "wld_2401b1b80d062ed8f6bc8844": {
+   "world_id": "wld_2401b1b80d062ed8f6bc8844",
+   "parent": "wld_e6b198fb50820975176ba008",
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 99,
+   "created_ts": 1788653214.4163492,
+   "spec_hash": "sha256:8106df3e83eb6c4b2533ffb6b9fab428c53868060f84d2397d38357a9efc2929",
+   "name": "C5-1"
+  },
+  "wld_f71570e4c4de071ae9306254": {
+   "world_id": "wld_f71570e4c4de071ae9306254",
+   "parent": "wld_e6b198fb50820975176ba008",
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 99,
+   "created_ts": 1788653214.4173539,
+   "spec_hash": "sha256:a2dc6c4877fbfb2879fe58a39b1578559a4c8bb6d665dbfeb708a4fa6fce8389",
+   "name": "C5-2"
+  },
+  "wld_0d0d2b36a7d09d7bd6070150": {
+   "world_id": "wld_0d0d2b36a7d09d7bd6070150",
+   "parent": "wld_e6b198fb50820975176ba008",
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 99,
+   "created_ts": 1788653214.4173539,
+   "spec_hash": "sha256:8106df3e83eb6c4b2533ffb6b9fab428c53868060f84d2397d38357a9efc2929",
+   "name": "C5-3"
+  },
+  "wld_01c3604fd1e02a3d2424300e": {
+   "world_id": "wld_01c3604fd1e02a3d2424300e",
+   "parent": "wld_e6b198fb50820975176ba008",
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 99,
+   "created_ts": 1788653214.4173539,
+   "spec_hash": "sha256:a2dc6c4877fbfb2879fe58a39b1578559a4c8bb6d665dbfeb708a4fa6fce8389",
+   "name": "C5-4"
+  },
+  "wld_38aa8b86906d7809c440f131": {
+   "world_id": "wld_38aa8b86906d7809c440f131",
+   "parent": "wld_e6b198fb50820975176ba008",
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 99,
+   "created_ts": 1788653214.4173539,
+   "spec_hash": "sha256:8106df3e83eb6c4b2533ffb6b9fab428c53868060f84d2397d38357a9efc2929",
+   "name": "C5-5"
+  },
+  "wld_803f490a01e993b44091c933": {
+   "world_id": "wld_803f490a01e993b44091c933",
+   "parent": "wld_e6b198fb50820975176ba008",
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 99,
+   "created_ts": 1788653214.4173539,
+   "spec_hash": "sha256:a2dc6c4877fbfb2879fe58a39b1578559a4c8bb6d665dbfeb708a4fa6fce8389",
+   "name": "C5-6"
+  },
+  "wld_8a6fd4c07af919c6e689c3a2": {
+   "world_id": "wld_8a6fd4c07af919c6e689c3a2",
+   "parent": "wld_e6b198fb50820975176ba008",
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 99,
+   "created_ts": 1788653214.4173539,
+   "spec_hash": "sha256:8106df3e83eb6c4b2533ffb6b9fab428c53868060f84d2397d38357a9efc2929",
+   "name": "C5-7"
+  },
+  "wld_828db536a092239f4a2b2223": {
+   "world_id": "wld_828db536a092239f4a2b2223",
+   "parent": null,
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 123,
+   "created_ts": 1788653215.2594593,
+   "spec_hash": "sha256:237f17e931e153fedf017e4ad27ef60516ad139cc72f1588882c1e150b3b8c01",
+   "name": "C6-parent"
+  },
+  "wld_266464ad22a53d4f70357b30": {
+   "world_id": "wld_266464ad22a53d4f70357b30",
+   "parent": "wld_828db536a092239f4a2b2223",
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 123,
+   "created_ts": 1788653215.400094,
+   "spec_hash": "sha256:15a8339b5d2c2d026e2dca35dcf378788065bf5a34d8cb73ee281c16880354c0",
+   "name": "C6real-0"
+  },
+  "wld_e291994179e54c40d4ce2001": {
+   "world_id": "wld_e291994179e54c40d4ce2001",
+   "parent": "wld_828db536a092239f4a2b2223",
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 123,
+   "created_ts": 1788653215.400094,
+   "spec_hash": "sha256:15a8339b5d2c2d026e2dca35dcf378788065bf5a34d8cb73ee281c16880354c0",
+   "name": "C6real-1"
+  },
+  "wld_7a4f85172f83fcb1c2a166ff": {
+   "world_id": "wld_7a4f85172f83fcb1c2a166ff",
+   "parent": "wld_828db536a092239f4a2b2223",
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 123,
+   "created_ts": 1788653215.400094,
+   "spec_hash": "sha256:15a8339b5d2c2d026e2dca35dcf378788065bf5a34d8cb73ee281c16880354c0",
+   "name": "C6real-2"
+  },
+  "wld_2bce035709596ad76ad23adb": {
+   "world_id": "wld_2bce035709596ad76ad23adb",
+   "parent": "wld_828db536a092239f4a2b2223",
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 123,
+   "created_ts": 1788653215.400094,
+   "spec_hash": "sha256:15a8339b5d2c2d026e2dca35dcf378788065bf5a34d8cb73ee281c16880354c0",
+   "name": "C6real-3"
+  },
+  "wld_222199e80aeac8d0bd02225f": {
+   "world_id": "wld_222199e80aeac8d0bd02225f",
+   "parent": "wld_828db536a092239f4a2b2223",
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 123,
+   "created_ts": 1788653215.5718317,
+   "spec_hash": "sha256:05fa96cd7916c050171240c0cb82875e7fbd67be8a06652868c2ec4c0199148e",
+   "name": "C6debug-0"
+  },
+  "wld_49458ff6d9779a4a972c72ba": {
+   "world_id": "wld_49458ff6d9779a4a972c72ba",
+   "parent": "wld_828db536a092239f4a2b2223",
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 123,
+   "created_ts": 1788653215.5718317,
+   "spec_hash": "sha256:05fa96cd7916c050171240c0cb82875e7fbd67be8a06652868c2ec4c0199148e",
+   "name": "C6debug-1"
+  },
+  "wld_08a2a6cfc4905940a2d2dd90": {
+   "world_id": "wld_08a2a6cfc4905940a2d2dd90",
+   "parent": "wld_828db536a092239f4a2b2223",
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 123,
+   "created_ts": 1788653215.5718317,
+   "spec_hash": "sha256:05fa96cd7916c050171240c0cb82875e7fbd67be8a06652868c2ec4c0199148e",
+   "name": "C6debug-2"
+  },
+  "wld_d6445de0388c3df62e3de99e": {
+   "world_id": "wld_d6445de0388c3df62e3de99e",
+   "parent": null,
+   "session": "ses_2fe3bf9cb7c03217c3b50d37",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 555,
+   "created_ts": 1788653216.2115617,
+   "spec_hash": "sha256:0e9668dfa89ffb18e78e85321f16186265ac898a8b66c44433e2fe73d7980bd0",
+   "name": "C7-s2-0"
+  },
+  "wld_307dc9cec1c90eb5b18f9f65": {
+   "world_id": "wld_307dc9cec1c90eb5b18f9f65",
+   "parent": null,
+   "session": "ses_2fe3bf9cb7c03217c3b50d37",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 555,
+   "created_ts": 1788653216.3195763,
+   "spec_hash": "sha256:0e9668dfa89ffb18e78e85321f16186265ac898a8b66c44433e2fe73d7980bd0",
+   "name": "C7-s2-1"
+  },
+  "wld_d36ef2bad4b4d7f19ed7ea76": {
+   "world_id": "wld_d36ef2bad4b4d7f19ed7ea76",
+   "parent": null,
+   "session": "ses_2fe3bf9cb7c03217c3b50d37",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 555,
+   "created_ts": 1788653216.4439197,
+   "spec_hash": "sha256:0e9668dfa89ffb18e78e85321f16186265ac898a8b66c44433e2fe73d7980bd0",
+   "name": "C7-s2-2"
+  },
+  "wld_33efe853f8cd11040c880561": {
+   "world_id": "wld_33efe853f8cd11040c880561",
+   "parent": null,
+   "session": "ses_2fe3bf9cb7c03217c3b50d37",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 555,
+   "created_ts": 1788653216.5392833,
+   "spec_hash": "sha256:0e9668dfa89ffb18e78e85321f16186265ac898a8b66c44433e2fe73d7980bd0",
+   "name": "C7-s2-3"
+  },
+  "wld_efcd8cb1bd9642bbe0c29499": {
+   "world_id": "wld_efcd8cb1bd9642bbe0c29499",
+   "parent": null,
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 555,
+   "created_ts": 1788653216.6513386,
+   "spec_hash": "sha256:0e9668dfa89ffb18e78e85321f16186265ac898a8b66c44433e2fe73d7980bd0",
+   "name": "C7-s1-0"
+  },
+  "wld_4639de54f11b6ffd53d38e3b": {
+   "world_id": "wld_4639de54f11b6ffd53d38e3b",
+   "parent": null,
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 555,
+   "created_ts": 1788653216.7744346,
+   "spec_hash": "sha256:0e9668dfa89ffb18e78e85321f16186265ac898a8b66c44433e2fe73d7980bd0",
+   "name": "C7-s1-1"
+  },
+  "wld_0abe01686036533faf014d95": {
+   "world_id": "wld_0abe01686036533faf014d95",
+   "parent": null,
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 555,
+   "created_ts": 1788653216.8819513,
+   "spec_hash": "sha256:0e9668dfa89ffb18e78e85321f16186265ac898a8b66c44433e2fe73d7980bd0",
+   "name": "C7-s1-2"
+  },
+  "wld_7455e90aeb2774fc5926c45a": {
+   "world_id": "wld_7455e90aeb2774fc5926c45a",
+   "parent": null,
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 555,
+   "created_ts": 1788653216.9920397,
+   "spec_hash": "sha256:0e9668dfa89ffb18e78e85321f16186265ac898a8b66c44433e2fe73d7980bd0",
+   "name": "C7-s1-3"
+  },
+  "wld_02b169cbdb2699321d7df777": {
+   "world_id": "wld_02b169cbdb2699321d7df777",
+   "parent": null,
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 1000,
+   "created_ts": 1788653217.118998,
+   "spec_hash": "sha256:08d82b81a3a7df871d7594ae68da2581ac3c4d3bf1ab60cfb8cbcc4de6482a5c",
+   "name": "C8-parent-0"
+  },
+  "wld_fb0d26ea9b23dfcc1e5fcae7": {
+   "world_id": "wld_fb0d26ea9b23dfcc1e5fcae7",
+   "parent": "wld_02b169cbdb2699321d7df777",
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 1000,
+   "created_ts": 1788653217.2424214,
+   "spec_hash": "sha256:08d82b81a3a7df871d7594ae68da2581ac3c4d3bf1ab60cfb8cbcc4de6482a5c",
+   "name": "C8-0-0"
+  },
+  "wld_76736461d653cc9b05ef4180": {
+   "world_id": "wld_76736461d653cc9b05ef4180",
+   "parent": null,
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 1001,
+   "created_ts": 1788653217.3532488,
+   "spec_hash": "sha256:08d82b81a3a7df871d7594ae68da2581ac3c4d3bf1ab60cfb8cbcc4de6482a5c",
+   "name": "C8-parent-1"
+  },
+  "wld_1159ea1e35d282aaafa47f2e": {
+   "world_id": "wld_1159ea1e35d282aaafa47f2e",
+   "parent": "wld_76736461d653cc9b05ef4180",
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 1001,
+   "created_ts": 1788653217.4610636,
+   "spec_hash": "sha256:08d82b81a3a7df871d7594ae68da2581ac3c4d3bf1ab60cfb8cbcc4de6482a5c",
+   "name": "C8-1-0"
+  },
+  "wld_d7fd7de0fec4ae8c6ae96d7c": {
+   "world_id": "wld_d7fd7de0fec4ae8c6ae96d7c",
+   "parent": null,
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 1002,
+   "created_ts": 1788653217.553211,
+   "spec_hash": "sha256:08d82b81a3a7df871d7594ae68da2581ac3c4d3bf1ab60cfb8cbcc4de6482a5c",
+   "name": "C8-parent-2"
+  },
+  "wld_79caa3817fd5d2b63e58daf0": {
+   "world_id": "wld_79caa3817fd5d2b63e58daf0",
+   "parent": "wld_d7fd7de0fec4ae8c6ae96d7c",
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 1002,
+   "created_ts": 1788653217.677414,
+   "spec_hash": "sha256:08d82b81a3a7df871d7594ae68da2581ac3c4d3bf1ab60cfb8cbcc4de6482a5c",
+   "name": "C8-2-0"
+  },
+  "wld_59abdb27ac554a9af0404118": {
+   "world_id": "wld_59abdb27ac554a9af0404118",
+   "parent": null,
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 1003,
+   "created_ts": 1788653217.8019493,
+   "spec_hash": "sha256:08d82b81a3a7df871d7594ae68da2581ac3c4d3bf1ab60cfb8cbcc4de6482a5c",
+   "name": "C8-parent-3"
+  },
+  "wld_bad82c453151281fc6373506": {
+   "world_id": "wld_bad82c453151281fc6373506",
+   "parent": "wld_59abdb27ac554a9af0404118",
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 1003,
+   "created_ts": 1788653217.9293652,
+   "spec_hash": "sha256:08d82b81a3a7df871d7594ae68da2581ac3c4d3bf1ab60cfb8cbcc4de6482a5c",
+   "name": "C8-3-0"
+  },
+  "wld_8e07a685173e12f34e09e3d6": {
+   "world_id": "wld_8e07a685173e12f34e09e3d6",
+   "parent": null,
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 1004,
+   "created_ts": 1788653218.0368655,
+   "spec_hash": "sha256:08d82b81a3a7df871d7594ae68da2581ac3c4d3bf1ab60cfb8cbcc4de6482a5c",
+   "name": "C8-parent-4"
+  },
+  "wld_7e94ed2003451a427159cb1e": {
+   "world_id": "wld_7e94ed2003451a427159cb1e",
+   "parent": "wld_8e07a685173e12f34e09e3d6",
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 1004,
+   "created_ts": 1788653218.1655886,
+   "spec_hash": "sha256:08d82b81a3a7df871d7594ae68da2581ac3c4d3bf1ab60cfb8cbcc4de6482a5c",
+   "name": "C8-4-0"
+  },
+  "wld_d9262e155486dde878d42e04": {
+   "world_id": "wld_d9262e155486dde878d42e04",
+   "parent": null,
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 1005,
+   "created_ts": 1788653218.2878847,
+   "spec_hash": "sha256:08d82b81a3a7df871d7594ae68da2581ac3c4d3bf1ab60cfb8cbcc4de6482a5c",
+   "name": "C8-parent-5"
+  },
+  "wld_a6d72ae2561bceef0b8a43b3": {
+   "world_id": "wld_a6d72ae2561bceef0b8a43b3",
+   "parent": "wld_d9262e155486dde878d42e04",
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 1005,
+   "created_ts": 1788653218.4153292,
+   "spec_hash": "sha256:08d82b81a3a7df871d7594ae68da2581ac3c4d3bf1ab60cfb8cbcc4de6482a5c",
+   "name": "C8-5-0"
+  },
+  "wld_1021193bc05bbe3bbae49438": {
+   "world_id": "wld_1021193bc05bbe3bbae49438",
+   "parent": null,
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 1006,
+   "created_ts": 1788653218.5559475,
+   "spec_hash": "sha256:08d82b81a3a7df871d7594ae68da2581ac3c4d3bf1ab60cfb8cbcc4de6482a5c",
+   "name": "C8-parent-6"
+  },
+  "wld_fc4bcbadc0ba36a1a9117b5d": {
+   "world_id": "wld_fc4bcbadc0ba36a1a9117b5d",
+   "parent": "wld_1021193bc05bbe3bbae49438",
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 1006,
+   "created_ts": 1788653218.6493347,
+   "spec_hash": "sha256:08d82b81a3a7df871d7594ae68da2581ac3c4d3bf1ab60cfb8cbcc4de6482a5c",
+   "name": "C8-6-0"
+  },
+  "wld_58cd6f99d1624b8a03b909df": {
+   "world_id": "wld_58cd6f99d1624b8a03b909df",
+   "parent": null,
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 1007,
+   "created_ts": 1788653218.7763748,
+   "spec_hash": "sha256:08d82b81a3a7df871d7594ae68da2581ac3c4d3bf1ab60cfb8cbcc4de6482a5c",
+   "name": "C8-parent-7"
+  },
+  "wld_c3d5bdc16b2e3290167b5ab0": {
+   "world_id": "wld_c3d5bdc16b2e3290167b5ab0",
+   "parent": "wld_58cd6f99d1624b8a03b909df",
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 1007,
+   "created_ts": 1788653218.8974192,
+   "spec_hash": "sha256:08d82b81a3a7df871d7594ae68da2581ac3c4d3bf1ab60cfb8cbcc4de6482a5c",
+   "name": "C8-7-0"
+  },
+  "wld_0228ae5e7a94c25f816b529b": {
+   "world_id": "wld_0228ae5e7a94c25f816b529b",
+   "parent": null,
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 1008,
+   "created_ts": 1788653218.9761329,
+   "spec_hash": "sha256:08d82b81a3a7df871d7594ae68da2581ac3c4d3bf1ab60cfb8cbcc4de6482a5c",
+   "name": "C8-parent-8"
+  },
+  "wld_ce8411431a3e8bebfdd439f5": {
+   "world_id": "wld_ce8411431a3e8bebfdd439f5",
+   "parent": "wld_0228ae5e7a94c25f816b529b",
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 1008,
+   "created_ts": 1788653219.1194296,
+   "spec_hash": "sha256:08d82b81a3a7df871d7594ae68da2581ac3c4d3bf1ab60cfb8cbcc4de6482a5c",
+   "name": "C8-8-0"
+  },
+  "wld_bb71649dd708f1785cff1528": {
+   "world_id": "wld_bb71649dd708f1785cff1528",
+   "parent": null,
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 1009,
+   "created_ts": 1788653219.227471,
+   "spec_hash": "sha256:08d82b81a3a7df871d7594ae68da2581ac3c4d3bf1ab60cfb8cbcc4de6482a5c",
+   "name": "C8-parent-9"
+  },
+  "wld_8192b59ddfe652856f2cc3d4": {
+   "world_id": "wld_8192b59ddfe652856f2cc3d4",
+   "parent": "wld_bb71649dd708f1785cff1528",
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 1009,
+   "created_ts": 1788653219.3387349,
+   "spec_hash": "sha256:08d82b81a3a7df871d7594ae68da2581ac3c4d3bf1ab60cfb8cbcc4de6482a5c",
+   "name": "C8-9-0"
+  },
+  "wld_2e8d48abb5312ec8c6638911": {
+   "world_id": "wld_2e8d48abb5312ec8c6638911",
+   "parent": null,
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 1010,
+   "created_ts": 1788653219.4490223,
+   "spec_hash": "sha256:08d82b81a3a7df871d7594ae68da2581ac3c4d3bf1ab60cfb8cbcc4de6482a5c",
+   "name": "C8-parent-10"
+  },
+  "wld_28665a46d336227e685e5ab1": {
+   "world_id": "wld_28665a46d336227e685e5ab1",
+   "parent": "wld_2e8d48abb5312ec8c6638911",
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 1010,
+   "created_ts": 1788653219.5709991,
+   "spec_hash": "sha256:08d82b81a3a7df871d7594ae68da2581ac3c4d3bf1ab60cfb8cbcc4de6482a5c",
+   "name": "C8-10-0"
+  },
+  "wld_6a1da00fe1c2e00d37ab2505": {
+   "world_id": "wld_6a1da00fe1c2e00d37ab2505",
+   "parent": null,
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 1011,
+   "created_ts": 1788653219.7271805,
+   "spec_hash": "sha256:08d82b81a3a7df871d7594ae68da2581ac3c4d3bf1ab60cfb8cbcc4de6482a5c",
+   "name": "C8-parent-11"
+  },
+  "wld_7a782229f0e768fae94b8c13": {
+   "world_id": "wld_7a782229f0e768fae94b8c13",
+   "parent": "wld_6a1da00fe1c2e00d37ab2505",
+   "session": "ses_f80a6603db156db103154ab0",
+   "client": "cli_06426410b7df9f547e7bdd1f",
+   "seed_root": 1011,
+   "created_ts": 1788653219.8852448,
+   "spec_hash": "sha256:08d82b81a3a7df871d7594ae68da2581ac3c4d3bf1ab60cfb8cbcc4de6482a5c",
+   "name": "C8-11-0"
+  }
+ }
+}
