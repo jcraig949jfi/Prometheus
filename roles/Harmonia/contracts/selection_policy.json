@@ -1,0 +1,58 @@
+{
+ "source": "Harmonia S17 (frozen predictor) and S18 (measured policy)",
+ "purpose": "choose the next experiment from fossil-derived prospective information. This is Archaeon's job and it is already validated.",
+ "predictor_hash": "sha256:0106e035868bbe10ef177c8e88a2dad7",
+ "features_required": [
+  "abs_d",
+  "n",
+  "ci_width",
+  "rel_se",
+  "skew",
+  "kurtosis",
+  "within_between",
+  "serial_ac",
+  "monotone_frac",
+  "hetero_ratio",
+  "bounded_frac"
+ ],
+ "features_computable_from": "observation values grouped by world; nothing else is needed",
+ "rules": {
+  "estimator": {
+   "feature": "rel_se",
+   "higher_is_fragile": false
+  },
+  "transform": {
+   "feature": "kurtosis",
+   "higher_is_fragile": true
+  },
+  "horizon": {
+   "feature": "within_between",
+   "higher_is_fragile": true
+  },
+  "unit": {
+   "feature": "serial_ac",
+   "higher_is_fragile": false
+  },
+  "noise": {
+   "feature": null,
+   "note": "NO RULE. Zero fragile cases on development. Select at random here and do not pretend to information you do not have."
+  }
+ },
+ "selection_procedure": "rank claims WITHIN each dimension by that dimension's rule; ROUND-ROBIN across dimensions. Form no cross-dimension score.",
+ "PROHIBITED": "any cross-dimension ranking. S17 measured top-1 dimension identification at 0.080 against random 0.200 and it is WITHDRAWN. Scores from different rules are on different scales and are not comparable.",
+ "measured_performance": {
+  "endpoint": "failures discovered per experiment executed",
+  "budget": "100 of 1000 candidate pairs, 5 populations",
+  "random": 0.288,
+  "best_simple_fossil_baseline": 0.392,
+  "this_policy": 0.462,
+  "oracle_ceiling": 1.0,
+  "lift_over_random": "+60.4%",
+  "beat_random_on": "5 of 5 populations",
+  "stability_sd": {
+   "random": 0.053,
+   "this_policy": 0.016
+  },
+  "caveat": "the oracle was SATURATED (fragile pairs exceeded the budget) so 'fraction of oracle' is the raw rate restated, not a quality measure"
+ }
+}
