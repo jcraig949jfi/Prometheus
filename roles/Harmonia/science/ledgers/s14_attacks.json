@@ -1,0 +1,72 @@
+{
+ "attacks": [
+  {
+   "attack": "A1_optional_stopping_underfilled_manifest",
+   "all_checks_silent": false,
+   "claim_status": "n/a",
+   "conclusion_false_by_construction": true,
+   "archaeologist": "TRIVIAL -- planned_members 40 vs 16 recorded is a subtraction",
+   "note": {
+    "codes": [
+     "FAMILY_EXTENT_DIVERGENCE"
+    ],
+    "planned": 40,
+    "recorded": 16,
+    "stopped_at": 16
+   }
+  },
+  {
+   "attack": "A2_source_set_omission",
+   "all_checks_silent": true,
+   "claim_status": "SUPPORTED",
+   "conclusion_false_by_construction": true,
+   "archaeologist": "HARD -- the 6 omitted observations exist in PEW but nothing links them to this analysis",
+   "note": {
+    "codes": [],
+    "declared_n": 6,
+    "verified_n": 6,
+    "universe_actually_run": 12,
+    "p_on_the_kept_six": 0.0943
+   }
+  },
+  {
+   "attack": "A3_adaptive_metric_choice",
+   "all_checks_silent": true,
+   "claim_status": "SUPPORTED",
+   "conclusion_false_by_construction": true,
+   "archaeologist": "MEDIUM -- all five metrics are in the observation content, so the multiplicity is RECOVERABLE by counting keys, but nothing declares it",
+   "note": {
+    "codes": [],
+    "metrics_recorded": 5,
+    "metric_chosen_after_seeing": "m_delta",
+    "p_of_chosen": 0.005,
+    "family_size_never_declared": 5
+   }
+  },
+  {
+   "attack": "A4_sequential_hypothesis_drift",
+   "all_checks_silent": true,
+   "claim_status": "SUPPORTED",
+   "conclusion_false_by_construction": true,
+   "archaeologist": "EASY -- ten hypotheses across ten worlds with one observation each is a visible pattern",
+   "note": {
+    "codes": [],
+    "hypotheses_registered": 10,
+    "each_precedes_its_own_observation": true
+   }
+  },
+  {
+   "attack": "A5_seed_shopping",
+   "all_checks_silent": true,
+   "claim_status": "SUPPORTED",
+   "conclusion_false_by_construction": true,
+   "archaeologist": "VERY HARD -- the 50 rejected seeds were never executed in the engine, so they left NO fossil at all",
+   "note": {
+    "codes": [],
+    "seeds_evaluated_offline": 60,
+    "seeds_recorded": 10,
+    "seeds_are_truthful": true
+   }
+  }
+ ]
+}
