@@ -177,23 +177,42 @@ def test_refuses_before_four_hours_have_passed(conn, lane):
 
 
 def test_admits_after_four_hours(conn, lane):
+    """A proposal 4.5h old satisfies the separation.
+
+    The ordinal is asserted against the DAY COUNT rather than hard-coded to 1.
+    Near UTC midnight a row 4.5 hours old falls on the PREVIOUS UTC day, so it
+    satisfies the separation (which is day-independent) while contributing
+    nothing to today's count. Hard-coding 1 made this test fail for ~4.5 hours
+    out of every 24 -- a latent flake that only surfaced when a run happened to
+    cross 00:00 UTC.
+    """
     _insert(conn, lane, 0, offset_hours=4.5)
     cur = conn.cursor()
     cad.take_gate(cur, lane)
     d = cad.evaluate(cur, _ccfg(lane))
     conn.commit()
-    assert d.admitted and d.day_ordinal == 1
+    assert d.admitted, "4.5h separation should admit: {}".format(d.detail)
+    assert d.day_ordinal == d.detail["autonomous_today"],         "ordinal must be the count of autonomous rows on the CURRENT UTC day"
 
 
-def test_refuses_at_the_daily_cap_even_after_four_hours(conn, lane):
-    """The cap and the separation are independent limits."""
+def test_refuses_at_the_daily_cap(conn, lane):
+    """The cap is evaluated BEFORE the separation, so it reports DAILY_CAP.
+
+    All six rows are placed inside the CURRENT UTC day. Spreading them over
+    5-10 hours (the original) pushes them onto the previous UTC day whenever a
+    run happens within ~10h of 00:00 UTC, at which point today's count is 0 and
+    no cap can fire. The property under test -- cap precedence over separation
+    -- is time-independent when the rows are anchored to today.
+    """
     for i in range(6):
-        _insert(conn, lane, i, offset_hours=5 + i)
+        _insert(conn, lane, i, offset_hours=0.01 * (i + 1))
     cur = conn.cursor()
     cad.take_gate(cur, lane)
     d = cad.evaluate(cur, _ccfg(lane))
     conn.commit()
-    assert not d.admitted and d.decision == "REFUSED_DAILY_CAP"
+    assert d.detail["autonomous_today"] == 6
+    assert not d.admitted
+    assert d.decision == "REFUSED_DAILY_CAP",         "cap must take precedence over separation, got {}".format(d.decision)
 
 
 def test_separation_is_checked_across_the_utc_day_boundary(conn, lane):

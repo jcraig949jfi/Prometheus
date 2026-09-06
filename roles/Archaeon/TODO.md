@@ -38,6 +38,40 @@ Proteus already publishes it, and the SFE binding already works.
       "no player identity" when it HAS identity and simply has no data.
 - [x] 13 tests for the link; 68 total.
 
+## 2026-09-06 (UTC) — STAGE 0 kill-gate: KILL
+
+Reframed around Harmonia S14-S18. Ran the approved kill-gate; it killed.
+
+- [x] Frozen S17 imported from a PINNED GIT BLOB (commit 21fbeffbb, blob
+      0e2d654851ae), not reimplemented. Stdlib-only, so no dependency obstacle.
+- [x] predictor_hash RECOMPUTED and verified == 0106e035868bbe10...
+- [x] Positive control PASSES, so zero-eligibility is attributable to the
+      corpus and not to the adapter.
+- [x] Gate tested in BOTH directions (PASS on a synthetic supportive corpus);
+      a gate that can only say KILL is indistinguishable from a broken one.
+- [x] VERDICT KILL: 0 eligible claim-units under all three arm rules
+      (TOPOLOGY_SPLIT / FORK / SPEC_ARM), insensitive to min_obs in 2..12.
+      Groups with >=4 worlds have 0 scored observations; groups with scored
+      observations cap at 3 worlds. S17 needs 2 arms x >=2 worlds.
+- [x] Evidence class reported: 2934 ENGINE_WORK_RESULT, 307 CLIENT_ASSERTED.
+- [x] OBSERVED/INFERRED/UNKNOWN written as VALUES; upstream_selection_history
+      stamped UNKNOWN on every survey.
+- [x] Discrepancy flagged to Harmonia (roles/Harmonia/INBOX_ARCHAEON_*).
+- [x] Fixed two latent time-dependent cadence tests that failed once the run
+      crossed 00:00 UTC. The cadence CODE was correct; the tests hard-coded a
+      same-UTC-day assumption and were flaky ~4.5h in every 24.
+
+STAGE 1 IS NOT BUILT and must not be until the gate passes.
+
+## Gate-flip condition (what would make Stage 1 buildable)
+
+One comparable group needs >=4 worlds carrying scored observations (two arms of
+>=2), each with >=4 observations, AND >=2 such groups (an ordering over one unit
+carries no information). Roughly 8 worlds x 4 observations, correctly grouped.
+Cheapest routes: an explicit `spec.arm` on experiments, or a topology_group with
+>=4 populated worlds. Neither needs new engine machinery -- both are properties
+of how experiments are ISSUED.
+
 ## Next — blocked on other seats
 
 - [ ] **Scored Proteus encounters** — the real blocker. 13 worlds carry a
