@@ -14,7 +14,7 @@ import hashlib
 import json
 from typing import Any, Dict, Optional
 
-from .contract import KIND, SPEC_VERSION
+from .contract import KIND, SPEC_VERSION, ensure_viv_importable
 
 
 class SpecInvalid(Exception):
@@ -92,6 +92,7 @@ def spec_hash(spec: Dict[str, Any]) -> str:
     are compared against, so theirs is authoritative; the local form is a
     byte-identical fallback for offline use and is asserted equal by a test.
     """
+    ensure_viv_importable()
     try:
         from viv import spec as vspec
         return vspec.spec_hash(spec)
@@ -103,6 +104,7 @@ def spec_hash(spec: Dict[str, Any]) -> str:
 
 def validate(spec: Dict[str, Any]) -> Dict[str, Any]:
     """Validate with VIVARIUM'S validator. Raises SpecInvalid on failure."""
+    ensure_viv_importable()
     try:
         from viv import spec as vspec
     except Exception as exc:

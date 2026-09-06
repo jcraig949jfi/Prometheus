@@ -10,8 +10,12 @@ recommendation for how the program should grow.
     Daedalus   SFE: substrate, contracts, enforcement, provenance, engine/client
     Harmonia   experimental design and adjudication: falsifiable experiments,
                attacks on conclusions, nulls/controls, what evidence licenses
-    Proteus    PEW: evaluates populations/players, measures behaviour and
-               discrimination, characterises what the machinery can detect
+    Mnemosyne  PEW (Prometheus Evidence Wiki): the immutable experimental
+               record; identities, measurement definitions and producer
+               provenance surviving ingestion and staying queryable
+    Proteus    Player Foundry: the bounded, frozen panel of specimens and
+               controls, with replay, lineage and resource metadata.
+               (Corrected 2026-09-06: an earlier lane list conflated the two.)
     Players    the mutation/proposal side: candidate hypotheses, artifacts,
                strategies, interventions for the system to test and select
     Vivarium   execution/orchestration: takes proposals, binds substrate and
@@ -37,7 +41,7 @@ recommendation for how the program should grow.
   DDL, ever; a missing column is a loud `QueueContractMissing`, never a silent
   `ALTER`.
 - **PEW tables.** Read `ew.fossil_*`; never write a claim, evidence row,
-  interpretation, or candidate bump. Proteus owns PEW.
+  interpretation, or candidate bump. Mnemosyne owns PEW.
 - **SFE.** Read `engine.db` read-only. Daedalus owns the Engine.
 - **Execution, and the executor process.** Archaeon proposes; Vivarium runs,
   and Vivarium's agent starts it.
@@ -91,7 +95,7 @@ driven. A proposal sitting `queued` is a fact to report.
 - **Daedalus** — how `family_id`/`arm_id` reach the fossil record
   (`topology_group` + a `lineage_edge` per world is the proposal). Parked until
   the plumbing milestone is stable.
-- **Proteus** — `fossil_encounters` carries no `players`/`ecology`/
+- **Mnemosyne (PEW)** — `fossil_encounters` carries no `players`/`ecology`/
   `resources_used` in `prod` (0/5452 measured 2026-09-05); which fields PEW
   will fossilize from an encounter decides which detectors can ever be eligible.
 - **Harmonia** — S17 narrative/ledger direction discrepancy, filed and

@@ -31,6 +31,7 @@ import traceback
 from typing import Any, Dict, Optional
 
 from .. import cadence as cad
+from .. import fossils
 from .. import config as cfg
 from .. import detectors, rank
 from .. import vivqueue as vq
@@ -148,16 +149,37 @@ def tick(conn, config: Optional[cfg.ArchaeonConfig] = None, *,
         # as the REASON and the experiment is still drawn from the declared
         # space. That is stated rather than hidden -- the alternative is
         # emitting a spec nothing can run.
-        # The draw comes from the TEMPLATE REGISTRY: an admitted template is
-        # chosen (uniformly -- the baseline policy), then parameters are drawn
-        # from its declared space. bitstring.uniform.v0 is the old random
-        # generator ported verbatim and frozen; a better random policy is a
-        # second template, never an edit. Sixteen attempts to find a spec
-        # hash this lane has not already published; then give up honestly.
+        # The draw comes from the TEMPLATE REGISTRY. Two named policies, never
+        # mixed:
+        #   menu.region_directed.v0 -- when a detector fired AND an admitted
+        #       region-directed template exists AND the fired region's
+        #       landscape parameters are recoverable. The experiment's
+        #       parameters are TAKEN FROM THE REGION: this is the step that
+        #       makes a signal change what runs.
+        #   menu.uniform.v0 -- the frozen random baseline, otherwise.
+        # Sixteen attempts to find a spec hash this lane has not already
+        # published; then give up honestly.
+        region_ctx = None
+        region_note = None
+        if ranked:
+            top = ranked[0].primary
+            rp = fossils.region_params(top.regions[0]) if top.regions else None
+            if rp and "length" in rp and templates.admitted(region_directed=True):
+                region_ctx = {"seed_root": rp["seed_root"],
+                              "length": rp["length"],
+                              "world_id": rp["world_id"]}
+            elif rp is None:
+                region_note = "fired region has no recoverable seed_root"
+            elif "length" not in rp:
+                region_note = ("fired region's landscape length is {}"
+                               .format("ambiguous" if "length_ambiguous" in rp
+                                       else "not recorded on its experiments"))
+            else:
+                region_note = "no region-directed template is ADMITTED"
         drawn = None
         builder = _SpecBuilder()
         for attempt in range(16):
-            d = templates.draw(lane, day, nonce=str(attempt))
+            d = templates.draw(lane, day, nonce=str(attempt), region=region_ctx)
             spec = builder(d["params"])
             h = builder.spec_hash(spec)
             if h in used:
@@ -200,8 +222,15 @@ def tick(conn, config: Optional[cfg.ArchaeonConfig] = None, *,
                        "menu_size": drawn.get("menu_size")},
             "policy_version": "{}@{}".format(drawn["policy"], TICK_VERSION),
             "template_id": drawn.get("template_id", "bitstring.uniform.v0"),
-            "selection_basis": ("weak_signal_recorded_only" if ranked
-                                else "random"),
+            # THREE bases, and the middle one is the honest one: a signal
+            # fired but could not direct the experiment, so the reason is
+            # recorded and the draw was random anyway.
+            "selection_basis": ("region_directed" if region_ctx is not None
+                                else ("weak_signal_recorded_only" if ranked
+                                      else "random")),
+            "region_direction": ({"region": region_ctx, "note": None}
+                                 if region_ctx is not None
+                                 else {"region": None, "note": region_note}),
             "corpus": out["fossils"],
             "eligibility_census": census,
             "weak_signal": ({"detector": ranked[0].primary.detector,

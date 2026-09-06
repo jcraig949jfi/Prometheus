@@ -90,11 +90,20 @@ def load_all(directory: Optional[Path] = None) -> List[Dict[str, Any]]:
     return out
 
 
-def admitted(directory: Optional[Path] = None) -> List[Dict[str, Any]]:
-    """The menu. Only ADMITTED templates whose kind Vivarium implements."""
+def admitted(directory: Optional[Path] = None,
+             region_directed: bool = False) -> List[Dict[str, Any]]:
+    """The menu. Only ADMITTED templates whose kind Vivarium implements.
+
+    Two menus, never mixed: the RANDOM menu (default) holds templates whose
+    every parameter is drawn; the REGION-DIRECTED menu holds templates with a
+    `from_region` parameter. The baseline policy draws only from the first,
+    so a directed template can never leak into the random control.
+    """
     menu = []
     for t in load_all(directory):
         if t["status"] != "ADMITTED":
+            continue
+        if is_region_directed(t) != region_directed:
             continue
         c = check(t)
         if c["runnable"]:
@@ -104,6 +113,8 @@ def admitted(directory: Optional[Path] = None) -> List[Dict[str, Any]]:
 
 def check(t: Dict[str, Any]) -> Dict[str, Any]:
     """Can this template be run? If not, which lane does the gap belong to?"""
+    from .contract import ensure_viv_importable
+    ensure_viv_importable()
     try:
         from viv import kinds as vk
     except Exception as exc:                       # pragma: no cover
@@ -140,10 +151,30 @@ def _draw_value(spec: Dict[str, Any], rng: random.Random,
     if "uniform_bits" in spec:
         n = int(already[spec["uniform_bits"]])
         return "".join(rng.choice("01") for _ in range(n))
+    if "from_region" in spec:
+        # TAKEN FROM THE DETECTED REGION, not drawn. This is what makes a
+        # template region-directed: its parameters change with the region a
+        # detector fired on. Drawable only with region context; without it the
+        # draw refuses rather than inventing a value (see draw_params).
+        return already["__region__"][spec["from_region"]]
     raise TemplateError("unknown parameter space form: {}".format(sorted(spec)))
 
 
-def draw_params(t: Dict[str, Any], seed: int) -> Dict[str, Any]:
+def is_region_directed(t: Dict[str, Any]) -> bool:
+    """True iff any parameter is taken from the region rather than drawn."""
+    return any("from_region" in spec
+               for section in t["param_space"].values()
+               for spec in section.values())
+
+
+def required_region_fields(t: Dict[str, Any]) -> List[str]:
+    return sorted({spec["from_region"]
+                   for section in t["param_space"].values()
+                   for spec in section.values() if "from_region" in spec})
+
+
+def draw_params(t: Dict[str, Any], seed: int,
+                region_params: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
     """Deterministic draw, INDEPENDENT of key order.
 
     A parameter that references another (uniform_bits -> length) is drawn
@@ -158,14 +189,29 @@ def draw_params(t: Dict[str, Any], seed: int) -> Dict[str, Any]:
     """
     rng = random.Random(seed)
     out: Dict[str, Any] = {}
+    need = required_region_fields(t)
+    if need:
+        missing = [f for f in need if not region_params or f not in region_params]
+        if missing:
+            raise TemplateError(
+                "template {} is region-directed and needs region fields {} "
+                "but none were supplied; a region-directed draw without a "
+                "region would be a random draw wearing a directed label"
+                .format(t["template_id"], missing))
+        out["__region__"] = dict(region_params)
     items = []
     for section in ("world", "payload"):
         for k, spec in t["param_space"].get(section, {}).items():
             items.append((k, spec))
-    independent = sorted((k, s) for k, s in items if "uniform_bits" not in s)
+    # region-taken first (they are inputs), then independent draws, then
+    # dependent ones -- all in name order so key order in the file is moot
+    region = sorted((k, s) for k, s in items if "from_region" in s)
+    independent = sorted((k, s) for k, s in items
+                         if "from_region" not in s and "uniform_bits" not in s)
     dependent = sorted((k, s) for k, s in items if "uniform_bits" in s)
-    for k, spec in independent + dependent:
+    for k, spec in region + independent + dependent:
         out[k] = _draw_value(spec, rng, out)
+    out.pop("__region__", None)
     return out
 
 
@@ -186,14 +232,23 @@ def choose_template(menu: List[Dict[str, Any]], lane: str, day: str,
 
 
 def draw(lane: str, day: str, nonce: str = "",
-         directory: Optional[Path] = None) -> Dict[str, Any]:
-    """One (template, params) draw with full provenance."""
-    menu = admitted(directory)
+         directory: Optional[Path] = None,
+         region: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+    """One (template, params) draw with full provenance.
+
+    With ``region`` supplied, draws from the REGION-DIRECTED menu under policy
+    menu.region_directed.v0 and the `from_region` parameters are taken from
+    it. Without, the uniform baseline over the random menu. Two named
+    policies, never mixed in one draw.
+    """
+    menu = admitted(directory, region_directed=region is not None)
     t = choose_template(menu, lane, day, nonce)
     seed = derive_seed(lane, day, t["template_id"], nonce)
-    params = draw_params(t, seed)
+    params = draw_params(t, seed, region_params=region)
     return {
-        "policy": "menu.uniform.v0",
+        "policy": ("menu.region_directed.v0" if region is not None
+                   else "menu.uniform.v0"),
+        "region": (dict(region) if region is not None else None),
         "template_id": t["template_id"],
         "template_content_hash": t["_content_hash"],
         "kind": t["kind"],

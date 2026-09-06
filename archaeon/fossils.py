@@ -37,7 +37,12 @@ from typing import Any, Dict, Iterable, List, Optional, Sequence
 from . import config as cfg
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-DEFAULT_SFE_DB = REPO_ROOT / "SerendipityFoundry" / "SerendipityFoundryEngine" / "var" / "engine.db"
+# The live ledger lives where the ENGINE runs, not where this reader's checkout
+# is. An isolated worktree (operator directive 2026-09-06) has no var/engine.db,
+# so ARCHAEON_SFE_DB names the file; the checkout-relative path is the fallback.
+DEFAULT_SFE_DB = Path(os.environ.get(
+    "ARCHAEON_SFE_DB",
+    str(REPO_ROOT / "SerendipityFoundry" / "SerendipityFoundryEngine" / "var" / "engine.db")))
 
 
 # --------------------------------------------------------------------------
@@ -554,3 +559,52 @@ def read_sfe_proteus(db_path: Optional[str] = None,
         "lookback_rows": int(lookback_rows),
         "order": "observations.created_seq DESC",
         "returned": len(rows)})
+
+
+
+# --------------------------------------------------------------------------
+# Region -> executable landscape parameters
+# --------------------------------------------------------------------------
+def region_params(world_id: str, db_path: Optional[str] = None
+                  ) -> Optional[Dict[str, Any]]:
+    """The parameters that would re-create a region's landscape.
+
+    A region is a world. Its landscape is fixed by ``worlds.seed_root`` and,
+    for evaluate_bitstring, by ``work.payload.length`` on its experiments (the
+    hidden target is sha256("target:<seed_root>:<length>")). Both are read from
+    the ledger, never guessed: a world whose experiments carry no length is
+    reported as such and no region-directed draw can target it.
+
+    Measured 2026-09-06: 146/146 attested worlds carry seed_root; 41 carry a
+    recoverable length (the Vivarium-shaped ones).
+    """
+    path = str(db_path or DEFAULT_SFE_DB)
+    if not os.path.exists(path):
+        return None
+    uri = "file:{}?mode=ro".format(path.replace("?", "%3f"))
+    conn = sqlite3.connect(uri, uri=True)
+    conn.row_factory = sqlite3.Row
+    try:
+        w = conn.execute("SELECT seed_root FROM worlds WHERE world_id = ?",
+                         (world_id,)).fetchone()
+        if w is None or w["seed_root"] is None:
+            return None
+        lengths = set()
+        for r in conn.execute("SELECT spec FROM experiments WHERE world_id = ?",
+                              (world_id,)):
+            sp = _loads(r["spec"])
+            if not isinstance(sp, dict):
+                continue
+            L = _num(_dig({"work": sp.get("work") or {}}, "work.payload.length"))
+            if L is not None:
+                lengths.add(int(L))
+    finally:
+        conn.close()
+    out: Dict[str, Any] = {"world_id": world_id, "seed_root": int(w["seed_root"])}
+    if len(lengths) == 1:
+        out["length"] = lengths.pop()
+    elif len(lengths) > 1:
+        # several lengths in one world means several landscapes; the region
+        # is not a single landscape and a directed draw cannot name one
+        out["length_ambiguous"] = sorted(lengths)
+    return out

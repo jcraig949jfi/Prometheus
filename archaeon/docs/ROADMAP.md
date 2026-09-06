@@ -191,7 +191,7 @@ detector or template it unblocks, and a status.
 - **Daedalus:** read grant (width stated); comparison-family arm contract;
   verify ordered `replication=True` semantics.
   → `roles/Daedalus/INBOX_ARCHAEON_READ_GRANT_AND_FAMILIES.md`
-- **Proteus (PEW):** what an encounter fossilizes (`players`/`ecology`/
+- **Mnemosyne (PEW):** what an encounter fossilizes (`players`/`ecology`/
   `resources_used` are 0/5452 in prod); `phenotype.score` on 2/6006.
 - **Players:** 2/64 specimens crossed into SFE; lineages of size 1.
 - **Harmonia:** adopt-or-replace D1–D6; nulls per template; S17 wording;

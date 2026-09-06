@@ -1,0 +1,24 @@
+{
+  "admitted_at": null,
+  "admitted_by": null,
+  "kind": "evaluate_bitstring",
+  "origin": {
+    "field": null,
+    "proposed_by": "archaeon",
+    "reference": "operator directive 2026-09-06: one executable, region-directed template whose parameters actually change with the detected region",
+    "source": "HUMAN"
+  },
+  "param_space": {
+    "payload": {
+      "bits": {"uniform_bits": "length"},
+      "length": {"from_region": "length"}
+    },
+    "world": {
+      "seed_root": {"from_region": "seed_root"}
+    }
+  },
+  "rationale": "RESAMPLE_REGION made executable. A detector (D3 LOCAL_VARIANCE_ANOMALY, D5 REPEATED_OUTLIER_REGION) fires on a WORLD; that world's landscape is fixed by worlds.seed_root and work.payload.length, both read from the ledger. This template re-runs evaluate_bitstring on the SAME landscape (seed_root and length taken from the fired region, never drawn) with a fresh uniformly random candidate. The dispersion a variance anomaly asks about needs n on the same landscape; this is n. Drawable only with region context: without a fired region the draw refuses rather than becoming a random draw wearing a directed label. Policy menu.region_directed.v0; the random baseline bitstring.uniform.v0 is untouched. Whether directing improves selection is M-SIGNAL and Harmonia's to judge; this template is the intervention M-SIGNAL needs to exist.",
+  "registry_version": "archaeon.template.v0",
+  "status": "PROPOSED",
+  "template_id": "bitstring.resample_region.v0"
+}

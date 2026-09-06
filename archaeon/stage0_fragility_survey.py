@@ -89,8 +89,10 @@ S17_PREDICTOR_HASH = ("0106e035868bbe10ef177c8e88a2dad79bd8364c"
                       "b5b684844cd018b5f1dada73")
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DEFAULT_SFE_DB = os.path.join(REPO_ROOT, "SerendipityFoundry",
-                              "SerendipityFoundryEngine", "var", "engine.db")
+DEFAULT_SFE_DB = os.environ.get(
+    "ARCHAEON_SFE_DB",
+    os.path.join(REPO_ROOT, "SerendipityFoundry",
+                 "SerendipityFoundryEngine", "var", "engine.db"))
 
 # Epistemic types. Written as VALUES, never by omission: an absent field reads
 # as "nothing to report", which is precisely the reassuring negative the
