@@ -668,3 +668,40 @@ def test_a_foreign_session_key_is_refused_by_every_v7_route(tmp_path):
         assert r.status_code in (421, 422), \
             "%s %s answered %d to a foreign key" % (method, path,
                                                     r.status_code)
+
+
+def test_a_grantee_resolves_the_outcome_through_the_read_surface(f):
+    """The point of registering a measurement: a reader must not have to guess
+    which field is the outcome. Resolved on /v2/read/* rather than by widening
+    the owner-scoped per-observation route -- a grantee reading another seat's
+    corpus must not acquire owner-shaped access to it."""
+    owner, sid, w, _o, arch = _two_seats_one_group(f)
+    m = f.register_measurement("demo.score", "1",
+                               implementation_hash="sha256:i", domain="d",
+                               value_path="result.score",
+                               direction="HIGHER_IS_BETTER",
+                               range_min=0.0, range_max=1.0)
+    e = f.create_experiment(w, {"x": 9}, client_id=owner)["exp_id"]
+    f.record_observation(w, e, {"result": {"score": 0.5}}, "SURVIVED",
+                         client_id=owner)
+    f.grant_read(sid, grantee_client_id=arch, granted_by=owner)
+
+    out = f.read_observations(arch, measurement_id=m["identity_hash"])
+    scored = [o for o in out["observations"] if o["measured"]["found"]]
+    assert scored and scored[0]["measured"]["value"] == 0.5
+    assert scored[0]["measured"]["in_declared_range"] is True
+    assert scored[0]["measured"]["direction"] == "HIGHER_IS_BETTER"
+    cm = out["corpus"]["measurement"]
+    assert cm["value_path"] == "result.score"
+    assert cm["resolved"] == 1 and cm["unresolved"] >= 1   # the {"score":1} one
+
+    # PAIRED: the owner-scoped per-observation route stays owner-scoped
+    with pytest.raises(AccessDenied):
+        f.read_measured_value(w, scored[0]["obs_id"], m["identity_hash"],
+                              client_id=arch)
+
+    # and a measurement with no path cannot be used here either
+    nop = f.register_measurement("nop", "1", implementation_hash="sha256:i",
+                                 domain="d")
+    with pytest.raises(ValidationError):
+        f.read_observations(arch, measurement_id=nop["measurement_id"])

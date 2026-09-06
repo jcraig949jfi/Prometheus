@@ -1161,6 +1161,7 @@ def create_app(db_path: str, *, registration_open: bool = True,
     def read_observations(scope: Optional[str] = None,
                           world_id: Optional[str] = None,
                           evidence_class: Optional[str] = None,
+                          measurement: Optional[str] = None,
                           limit: int = 1000,
                           _sess: dict = Depends(session_ctx),
                           cid: str = Depends(auth),
@@ -1170,7 +1171,8 @@ def create_app(db_path: str, *, registration_open: bool = True,
         drew from; the engine cannot stop a bad analysis but it can refuse to
         hand over rows without their provenance."""
         return f.read_observations(cid, group_id=scope, world_id=world_id,
-                                   evidence_class=evidence_class, limit=limit)
+                                   evidence_class=evidence_class,
+                                   measurement_id=measurement, limit=limit)
 
     @app.post("/v2/claims/{clm}/retract")
     def retract_claim(clm: str, body: ClaimRetract,

@@ -3597,6 +3597,7 @@ class Foundry:
                           group_id: Optional[str] = None,
                           world_id: Optional[str] = None,
                           evidence_class: Optional[str] = None,
+                          measurement_id: Optional[str] = None,
                           limit: int = 1000) -> dict:
         """The cross-seat read surface for OBSERVATIONS.
 
@@ -3631,13 +3632,41 @@ class Foundry:
         q += " ORDER BY o.created_seq LIMIT ?"
         args.append(int(limit))
         rows = cx.execute(q, args).fetchall()
+        # Resolve the outcome HERE rather than widening the owner-scoped
+        # per-observation route: a grantee reading another seat's corpus must
+        # not acquire owner-shaped access to it, and "which field is the
+        # outcome" is exactly what the reader needs and must not guess.
+        meas = None
+        if measurement_id is not None:
+            meas = self.get_measurement(measurement_id)
+            if not meas["value_path"]:
+                raise ValidationError(
+                    "this measurement declares no value_path, so the engine "
+                    "cannot say which field of a freeform observation is its "
+                    "value", measurement_id=measurement_id)
         by_client, by_ev, worlds = {}, {}, set()
         for r in rows:
             by_client[r["owner"]] = by_client.get(r["owner"], 0) + 1
             by_ev[r["evidence_class"]] = by_ev.get(r["evidence_class"], 0) + 1
             worlds.add(r["world_id"])
+        out_obs = []
+        for r in rows:
+            d = _observation_dict(r)
+            if meas is not None:
+                found, val = _dig(d["content"], meas["value_path"])
+                m = {"measurement_id": meas["measurement_id"],
+                     "identity_hash": meas["identity_hash"],
+                     "value_path": meas["value_path"], "found": found,
+                     "value": val, "direction": meas["direction"],
+                     "unit": meas["unit"]}
+                if found and isinstance(val, (int, float))                         and not isinstance(val, bool):
+                    lo, hi = meas["range_min"], meas["range_max"]
+                    m["in_declared_range"] = (
+                        (lo is None or val >= lo) and (hi is None or val <= hi))
+                d["measured"] = m
+            out_obs.append(d)
         return {
-            "observations": [_observation_dict(r) for r in rows],
+            "observations": out_obs,
             "corpus": {
                 "worlds": len(worlds),
                 "scopes": scopes,
@@ -3646,6 +3675,16 @@ class Foundry:
                 "by_evidence_class": [{"evidence_class": k, "observations": v}
                                       for k, v in sorted(by_ev.items())],
                 "filtered_evidence_class": evidence_class,
+                "measurement": None if meas is None else {
+                    "measurement_id": meas["measurement_id"],
+                    "name": meas["name"], "version": meas["version"],
+                    "identity_hash": meas["identity_hash"],
+                    "value_path": meas["value_path"],
+                    "direction": meas["direction"],
+                    "resolved": sum(1 for o in out_obs
+                                    if o.get("measured", {}).get("found")),
+                    "unresolved": sum(1 for o in out_obs
+                                      if not o.get("measured", {}).get("found"))},
                 "truncated": len(rows) >= int(limit)},
         }
 
