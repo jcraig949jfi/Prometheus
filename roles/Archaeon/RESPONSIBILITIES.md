@@ -1,100 +1,98 @@
 # Archaeon — responsibilities
 
-Layer of operation: **the read side of the experiment loop.** Archaeon converts
-the fossil record into the next question. It is the only seat whose output is a
-question rather than an answer.
+Layer of operation: **the read side of the experiment loop, and the seat that
+decides what the loop tries next.** Archaeon converts the fossil record into
+the next experiment, and converts the *absence* of a usable record into a
+recommendation for how the program should grow.
+
+## The lanes (as set by the operator, 2026-09-06)
+
+    Daedalus   SFE: substrate, contracts, enforcement, provenance, engine/client
+    Harmonia   experimental design and adjudication: falsifiable experiments,
+               attacks on conclusions, nulls/controls, what evidence licenses
+    Proteus    PEW: evaluates populations/players, measures behaviour and
+               discrimination, characterises what the machinery can detect
+    Players    the mutation/proposal side: candidate hypotheses, artifacts,
+               strategies, interventions for the system to test and select
+    Vivarium   execution/orchestration: takes proposals, binds substrate and
+               provenance, executes, records and fossilizes outcomes
+    Archaeon   mines PEW/SFE for weak signals; proposes the next experiments;
+               recommends program expansion
 
 ## Owns
 
-- `archaeon/` — the service: fossil readers, detectors, ranker, probe
-  generator, exploration fallback, cadence, queue writer.
-- `archaeon.*` in PostgreSQL (`prometheus_fire`) — `experiment_queue`,
-  `cadence_gate`, `cadence_log`, and the migrations that define them.
-- The detector thresholds and their measured calibration
-  (`archaeon/docs/CALIBRATION.md`).
-
-## Must not RUN (added 2026-09-06, operator directive)
-
-**Archaeon does not start, stop, restart or configure Vivarium.** Another agent
-owns that tool. No `viv.cli run`, no consumer process, no supervising another
-seat's service — not even to demonstrate something.
-
-This was violated during the E2E milestone: Archaeon started `viv.cli run`
-twice as a background process to watch its own proposal execute. It worked, and
-it was still the wrong seat doing it. The stray process outlived a `pkill` that
-matched only the shell wrapper, so it kept polling the production queue after
-Archaeon believed it had cleaned up.
-
-Consequence for future end-to-end work: **Archaeon can only demonstrate its own
-half.** It publishes to the queue and stops. The consumer side is observed, not
-driven — either the Vivarium agent runs its loop, or the operator does. If a
-proposal sits `queued` forever, that is a fact to report, never a reason to
-start a consumer.
+- `archaeon/` — the producer (`producer/`), detectors, cadence, queue writer,
+  Stage 0 survey, calibration harness, synthetic fossils, tests, docs, deploy.
+- `archaeon.*` in PostgreSQL — `cadence_gate`, `cadence_log`, and the retired
+  `experiment_queue` (kept readable, never written).
+- The **experiment template registry** (roadmap item; templates are data).
+- The **substrate census** and **program-health / monoculture report** (roadmap).
+- Archaeon's own entries in shared registries — e.g. the `archaeon.probe.v0`
+  row in `viv/kinds.py` is Archaeon's *content* in Vivarium's *file*.
 
 ## Does not own, and must not write
 
-- **PEW evidence tables.** Archaeon READS `ew.fossil_*`. It never writes a
-  claim, evidence row, interpretation, or candidate bump. Mnemosyne owns PEW.
-- **SFE.** Archaeon reads `engine.db` read-only. Daedalus owns the Engine.
-- **Execution, and the executor process itself.** Archaeon proposes; Vivarium
-  runs, and Vivarium's agent starts it. Archaeon never enqueues
-  work items, never claims one, and never writes an observation.
-- **Any scientific verdict.** See the charter. This is enforced in code at the
-  queue write boundary, not left to discipline.
+- **The canonical queue's schema.** `viv.research_experiment_queue` is
+  Vivarium's. Archaeon writes rows through `vivqueue.submit` and performs no
+  DDL, ever; a missing column is a loud `QueueContractMissing`, never a silent
+  `ALTER`.
+- **PEW tables.** Read `ew.fossil_*`; never write a claim, evidence row,
+  interpretation, or candidate bump. Proteus owns PEW.
+- **SFE.** Read `engine.db` read-only. Daedalus owns the Engine.
+- **Execution, and the executor process.** Archaeon proposes; Vivarium runs,
+  and Vivarium's agent starts it.
+- **Any scientific verdict.** Enforced in code at the write boundary.
+
+## Must not RUN (operator directive, 2026-09-06)
+
+**Archaeon does not start, stop, restart or configure Vivarium.** Another agent
+owns that tool. This was violated during the E2E milestone — Archaeon started
+`viv.cli run` twice to watch its own proposal execute, and the stray process
+outlived a `pkill` that matched only the shell wrapper. Archaeon demonstrates
+its own half only: publish, and stop. The consumer side is observed, never
+driven. A proposal sitting `queued` is a fact to report.
 
 ## Standing obligations
 
-1. **Report eligibility beside every firing.** No cycle may report "nothing
-   fired" without the census saying how much of the corpus could have. Today
-   three of six detectors are NOT ELIGIBLE on the live SFE corpus for a
-   structural reason (no player identity); that must stay visible and must
-   never be presented as an absence of phenomena.
-2. **Measure the detectors, do not assert them.** Any threshold change
-   re-runs `archaeon/calibrate.py`, updates `CALIBRATION.md`, and bumps
-   `THRESHOLDS_VERSION` — the version is stamped into every proposal and is
-   what makes an old proposal re-derivable.
-3. **Compute the attainable range before freezing a gate.** The first build
-   shipped a detector whose effect band was empty for every reachable n. Any
-   new detector states its attainable range and its ELIGIBLE COUNT before it
-   is trusted.
-4. **Pair every planted test with a structural control.** A detector that
-   fires on the planted effect and on the same structure without it has
-   learned the shape. The control is the test.
-5. **Never relax cadence for a convenience.** Not for an idle Vivarium, not
-   for an interesting-looking signal, not for a backlog. The limit is a
-   database invariant precisely so it is not a judgement call.
-6. **Keep v0 easy to prove wrong.** No LLM in the decision path, no learned
-   thresholds, no scoring anyone cannot recompute by hand from the stored
-   provenance.
+1. **Report eligibility beside every firing.** No cycle reports "nothing fired"
+   without the census saying how much of the corpus could have.
+2. **Measure detectors; never assert them.** A threshold change re-runs
+   `archaeon/calibrate.py`, updates `CALIBRATION.md`, bumps
+   `THRESHOLDS_VERSION`.
+3. **Compute the attainable range before trusting a gate.** The first build
+   shipped a detector whose effect band was empty at every reachable n.
+4. **Pair every planted test with a structural control.**
+5. **Never relax cadence for a convenience.** Not for an idle queue, not for an
+   interesting signal, not for a backlog.
+6. **Keep the tick path model-free.** LLMs and humans propose templates
+   offline; the tick draws deterministically.
+7. **Grow the menu, not the depth.** When no signal is found, the response is a
+   new experiment *type*, not another draw from the same one.
+8. **Report monoculture.** Measure the diversity of what crosses the queue and
+   say so when it collapses.
+9. **Lane discipline.** Change only Archaeon's code. Report other lanes'
+   problems to their owners in `roles/<Seat>/INBOX_ARCHAEON_*.md`. Watch their
+   commits.
 
 ## Interfaces
 
     reads   SFE  SerendipityFoundry/SerendipityFoundryEngine/var/engine.db (ro)
             PEW  ew.fossil_players / ew.fossil_worlds / ew.fossil_encounters (ro)
-    writes  archaeon.experiment_queue  (source_reason weak_signal|exploration)
-            archaeon.cadence_log       (every decision, refusals included)
+            VIV  viv/kinds.py (which kinds are executable), viv/spec.py (validator)
+    writes  viv.research_experiment_queue  via vivqueue.submit ONLY
+            archaeon.cadence_log           every decision, refusals included
 
-## Open coordination
+## Open coordination (live)
 
-- **Proteus** — player identity is SOLVED and needs nothing new. 64 frozen
-  specimens at `proteus/integration/PLAYER_REGISTRY.json`; `organism_id` is
-  the key, and because Proteus posts the canonical manifest, SFE's
-  `artifacts.blob_hash == organism_id` for `kind='proteus_player_manifest'`.
-  Archaeon reads that join (`sfe.proteus_player.v0`). The registry's
-  `resource_envelope` also supplies the first REAL coordinate axes Archaeon
-  has had.
-  Standing constraint from Proteus: `permitted_use =
-  USE_A_FROZEN_SPECIMEN_SOURCE`, and mutation neutrality is NOT established.
-  Archaeon's D1/D4 are population comparisons, so bred organisms
-  (generation > 0) are refused in detector evidence
-  (`proteus_link.assert_use_a_only`) until that is adjudicated.
-- **Daedalus / whoever runs encounters** — the actual blocker is not identity
-  but ENCOUNTERS. 13 SFE worlds carry a Proteus player; exactly one has an
-  experiment, one has an observation, and that observation carries no numeric
-  metric. No world holds two players, so no comparison unit exists. D1/D2/D4
-  need scored encounters, and at least one world running two players.
-- **Mnemosyne** — PEW `fossil_encounters` carries no `players`, `ecology` or
-  `resources_used` in `prod` (0/5452), and only 2 of 6006 `prod` player
-  fossils have a `phenotype.score`. The PEW chart cannot fire a detector yet.
-- **Vivarium (unbuilt)** — owns the consumer side of `experiment_queue`:
-  `status`, `claimed_by`, `claimed_at`, `completed_at`, `result_ref`.
+- **Vivarium** — drop or mark RETIRED the `archaeon.probe.v0` entry in
+  `viv/kinds.py`; Archaeon no longer emits it and will not edit their file.
+  Longer term: a declared `repeat` (N observations in one world) executor
+  capability, and new executor kinds as templates demand them.
+- **Daedalus** — how `family_id`/`arm_id` reach the fossil record
+  (`topology_group` + a `lineage_edge` per world is the proposal). Parked until
+  the plumbing milestone is stable.
+- **Proteus** — `fossil_encounters` carries no `players`/`ecology`/
+  `resources_used` in `prod` (0/5452 measured 2026-09-05); which fields PEW
+  will fossilize from an encounter decides which detectors can ever be eligible.
+- **Harmonia** — S17 narrative/ledger direction discrepancy, filed and
+  unresolved (`roles/Harmonia/INBOX_ARCHAEON_S17_DIRECTION_DISCREPANCY.md`).

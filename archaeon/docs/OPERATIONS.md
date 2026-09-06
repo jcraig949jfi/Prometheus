@@ -39,22 +39,42 @@ If a proposal sits `queued`, report it. Do not start a consumer to move it.
     archaeon/vivqueue.py   the writer: cadence, relation columns, candidate sets
     archaeon/cadence.py    gate + evaluation (database clock, DB-enforced cap)
 
-## Start
+## Start (deployed): a scheduled task, not a daemon
+
+    powershell -ExecutionPolicy Bypass -File archaeon/deploy/register_archaeon_tick.ps1
+
+Registers `ArchaeonTick`: one `tick()` every 15 minutes via
+`archaeon/deploy/archaeon_tick.cmd`. **There is deliberately no long-lived
+process.** Each run is one complete cycle; cadence is enforced by the database;
+a reboot or a crash loses nothing because there is nothing to lose. This is why
+"no process supervision" stopped being a blocker — the thing that needed
+supervising was removed.
+
+15 minutes is how often to **ask**, not how often to write. Against the
+four-hour cadence roughly 15 of every 16 runs return `NO_WRITE_CADENCE`, which
+is the design working.
+
+    schtasks /Query /TN ArchaeonTick /V /FO LIST      # inspect
+    schtasks /Delete /TN ArchaeonTick /F              # kill switch
+    Get-Content archaeon/deploy/archaeon_tick.log -Tail 40
+
+Set `ARCHAEON_LANE` in the task's environment to use a lane other than `prod`.
+
+## Start (interactive): the loop
 
     python -m archaeon.producer.loop --interval 900
 
-`--interval` is how often to **ask**, not how often to write. Asking every 15
-minutes against a four-hour cadence is the normal configuration: it keeps the
-producer responsive to the moment the window opens, and every extra ask is one
-refused database round-trip.
-
-Options: `--lane` (quota namespace, default `prod`), `--max-cycles`,
-`--log-level`.
+For debugging and demonstrations. Same `tick()`, in a foreground process.
+Options: `--lane`, `--max-cycles`, `--log-level`.
 
 ## Stop
 
-Ctrl-C, or `SIGTERM`. The current cycle finishes, the next does not start, and
-the process exits 0. There is no pidfile and no daemonisation.
+Deployed: `schtasks /Delete /TN ArchaeonTick /F`. A run already in progress
+finishes its single cycle (seconds) and exits.
+
+Interactive loop: Ctrl-C, or `SIGTERM`. The current cycle finishes, the next
+does not start, and the process exits 0. There is no pidfile and no
+daemonisation.
 
 **Safe to kill at any point.** Every write is one transaction, so a process
 killed mid-cycle either wrote its row or did not; there is no partial state to
