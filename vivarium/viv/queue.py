@@ -287,6 +287,21 @@ def family(conn, family_id: str, *, schema: Optional[str] = None):
         return cur.fetchall()
 
 
+def candidate_set_members(conn, candidate_set_id: str, *,
+                          schema: Optional[str] = None):
+    """Every row registered under one candidate set, in registration order.
+
+    The rows themselves, not a count: binding alternatives into an SFE
+    selection family needs their specs, and the register is the only place the
+    unchosen ones exist."""
+    s = schema or _db.schema()
+    with _db.dict_cur(conn) as cur:
+        cur.execute("SELECT " + COLUMNS + " FROM " + _q(s) +
+                    " WHERE candidate_set_id = %s ORDER BY created_at, "
+                    "experiment_id", (candidate_set_id,))
+        return cur.fetchall()
+
+
 def counts(conn, *, schema: Optional[str] = None) -> dict:
     s = schema or _db.schema()
     with conn.cursor() as cur:

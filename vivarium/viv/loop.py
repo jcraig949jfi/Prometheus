@@ -39,9 +39,11 @@ from dataclasses import asdict, dataclass, field
 from typing import Optional
 
 from . import db as _db
+from . import design as _design
 from . import identity as _identity
 from . import pew as _pew
 from . import queue as _q
+from . import selection as _selection
 from . import spec as _spec
 from .request import ExecutionRequest
 from .runner import ExecutionFailure, RunResult, SfeRunner
@@ -319,7 +321,11 @@ class Vivarium:
                 client, spec=spec, run=result,
                 engine=self.runner().engine_identity,
                 producer_version=__import__("viv").__version__,
-                relation=self._relation(row))
+                relation=self._relation(row),
+                producer=_design.producer_block(
+                    row, engine=self.runner().engine_identity,
+                    producer_version=__import__("viv").__version__,
+                    spec_hash=row["spec_hash"]))
         except Exception as exc:                    # noqa: BLE001
             detail = {"written": False, "reason": "write_failed",
                       "fatal": required and not failed,
@@ -336,6 +342,47 @@ class Vivarium:
                         payload=out, schema=self.schema)
         conn.commit()
         return out["pew_reference"], {"written": True, **out}
+
+    # =====================================================================
+    # STAGE 6b -- BIND SELECTION (E6).  Only when a candidate set exists.
+    # =====================================================================
+    def bind_selection(self, conn, row, result) -> Optional[dict]:
+        """Record the candidate set in SFE as a `selection` family.
+
+        Runs only when the row declares one, and NEVER fails the experiment: a
+        missing binding is a weaker provenance claim, not a wrong result. The
+        outcome is recorded either way, so "not bound" and "bound" stay
+        distinguishable in the event log."""
+        csid = row["candidate_set_id"]
+        if not csid:
+            return None
+        eid = str(row["experiment_id"])
+        try:
+            members = _q.candidate_set_members(conn, csid, schema=self.schema)
+            bound = _selection.bind(
+                self.runner().c, candidate_set_id=csid, members=members,
+                selected_row=row, selected_exp_id=result.sfe_experiment_id,
+                world_id=result.world_id, log=self.log)
+        except Exception as exc:                    # noqa: BLE001
+            detail = {"bound": False, "candidate_set_id": csid,
+                      "error": str(exc)[:1000]}
+            _q.record_event(conn, eid, actor=self.worker_id,
+                            event_type="selection_bind_failed", payload=detail,
+                            schema=self.schema)
+            conn.commit()
+            self.log("[viv] selection bind FAILED for %s: %s"
+                     % (csid, str(exc)[:200]))
+            return detail
+        detail = {"bound": True, **bound}
+        _q.record_event(conn, eid, actor=self.worker_id,
+                        event_type="selection_bound", payload=detail,
+                        schema=self.schema)
+        conn.commit()
+        self.log("[viv] selection bound %s family=%s selected=1 "
+                 "alternatives=%d visible=%s"
+                 % (csid, bound["family_id"], bound["alternatives_recorded"],
+                    bound["selection_visible"]))
+        return detail
 
     # =====================================================================
     # STAGE 7 -- FINALIZE.  Terminal, frozen, never reclaimed.
@@ -431,6 +478,9 @@ class Vivarium:
 
         # --- collect, fossilize, finalize ---------------------------------
         summary = self.collect(result)
+        selection = self.bind_selection(conn, row, result)
+        if selection is not None:
+            summary["selection"] = selection
         pew_ref, pew_detail = self.fossilize(conn, row, spec, result)
         if pew_detail.get("fatal"):
             self.finalize_failure(

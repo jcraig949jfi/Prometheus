@@ -56,7 +56,8 @@ def test_the_queue_item_is_traceable_all_the_way_into_pew(conn, schema):
                      outcome_rule={"field": "solved", "op": "==",
                                    "value": True, "if_true": "SURVIVED",
                                    "if_false": "FALSIFIED",
-                                   "if_indeterminate": "INCONCLUSIVE"})
+                                   "if_indeterminate": "INCONCLUSIVE",
+                                   "aggregate": "first"})
     spec["pew"] = {"encounter_id": "enc_viv_test_" + nonce,
                    "players": ["org_viv_test_" + nonce],
                    "world_binding_id": "vivarium-live-pew-%s" % nonce,

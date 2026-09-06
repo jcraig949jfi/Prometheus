@@ -42,7 +42,8 @@ def walk_spec(count=4, state="persist", seed_derivation="sha256_index",
         kind="random_walk_v0",
         outcome_rule={"field": "position", "op": ">=", "value": -1e18,
                       "if_true": "SURVIVED", "if_false": "FALSIFIED",
-                      "if_indeterminate": "INCONCLUSIVE"},
+                      "if_indeterminate": "INCONCLUSIVE",
+                      "aggregate": "all"},
         repeat=rep(count=count, state=state,
                    seed_derivation=seed_derivation), **kw)
 

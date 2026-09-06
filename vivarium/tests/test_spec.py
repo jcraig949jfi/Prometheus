@@ -177,7 +177,7 @@ def test_validation_never_repairs_a_spec():
 def test_outcome_rule_is_applied_mechanically():
     rule = {"field": "score", "op": ">=", "value": 1.0,
             "if_true": "SURVIVED", "if_false": "FALSIFIED",
-            "if_indeterminate": "INCONCLUSIVE"}
+            "if_indeterminate": "INCONCLUSIVE", "aggregate": "first"}
     spec = make_spec(kind="evaluate_bitstring", outcome_rule=rule)
     assert _spec.apply_outcome_rule(spec, {"score": 1.0})[0] == "SURVIVED"
     assert _spec.apply_outcome_rule(spec, {"score": 0.9})[0] == "FALSIFIED"
@@ -187,7 +187,8 @@ def test_if_indeterminate_is_required_and_is_the_requesters_branch():
     """Vivarium used to author INCONCLUSIVE under a condition the requester
     never anticipated. Now the branch is declared, and Vivarium takes it."""
     incomplete = {"field": "score", "op": ">=", "value": 1.0,
-                  "if_true": "SURVIVED", "if_false": "FALSIFIED"}
+                  "if_true": "SURVIVED", "if_false": "FALSIFIED",
+                  "aggregate": "first"}
     with pytest.raises(_spec.SpecError) as exc:
         _spec.validate(make_spec(kind="evaluate_bitstring",
                                  outcome_rule=incomplete))

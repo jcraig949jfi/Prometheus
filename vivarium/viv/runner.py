@@ -314,7 +314,11 @@ class SfeRunner:
                     "engine sealed a different spec: queue=%s %s=%s "
                     "(exp_id=%s)" % (sealed, key, got, exp_id))
 
-        # Execution really became possible at the commit above.
+        # Execution really became possible at the commit above. From here on,
+        # ANY exception is a failure of a run that crossed the boundary, and
+        # must reach the loop as an ExecutionFailure carrying what was
+        # observed -- otherwise the row records crossed=True with no fossil,
+        # which is exactly what a live SFE outage produced on 2026-09-06.
         out.crossed_boundary = True
         # PEW keys a fossil on (encounter_id, run_id). Until a work item is
         # claimed the execution's identity IS the experiment, so run_id is
@@ -325,6 +329,28 @@ class SfeRunner:
                                 "pred_id": pred_id,
                                 "engine": self.engine_identity})
 
+        try:
+            return self._execute_after_commit(
+                c, out, spec, sealed, wid, exp_id, hyp_id, pred_id,
+                claim_attempts, claim_pause_s)
+        except ExecutionFailure:
+            raise
+        except Exception as exc:                    # noqa: BLE001
+            # Unclassified, but NOT unrecorded.
+            try:
+                out.anchor = self._failure_anchor(wid, exp_id)
+            except Exception:                       # noqa: BLE001, S110
+                pass
+            raise ExecutionFailure(
+                "%s after the experiment was committed: %s"
+                % (type(exc).__name__, exc), partial=out,
+                failure_class="ENGINE_TRANSPORT") from exc
+
+    def _execute_after_commit(self, c, out, spec, sealed, wid, exp_id, hyp_id,
+                              pred_id, claim_attempts, claim_pause_s):
+        """Everything past the irreversible commit. Split out so a single
+        try/except can guarantee that no failure here escapes unclassified."""
+        plan = _spec.repeat_plan(spec)
         claim = None
         for _ in range(claim_attempts):
             claim = c.claim(self.worker_id, world_id=wid,
@@ -344,7 +370,6 @@ class SfeRunner:
         # HOLD THE LEASE for as long as the executor runs. Without this a slow
         # executor loses its claim mid-flight and the completed result is
         # refused by the engine -- a correct computation with no fossil.
-        plan = _spec.repeat_plan(spec)
         keeper = _LeaseKeeper(c, work_id=work_id, worker_id=self.worker_id,
                               claim_id=claim_id, lease_s=self.lease_s,
                               log=self.log)
@@ -455,8 +480,11 @@ class SfeRunner:
         out.obs_ids = obs_ids
         obs_id = obs_ids[0]
         out.obs_id = obs_id
-        outcome, provenance = _spec.apply_outcome_rule(spec,
-                                                       repeats[0]["result"])
+        # E16: ONE outcome for the run, by the reduction the spec declared.
+        # Each observation above keeps its own per-repeat outcome; this is the
+        # experiment-level answer, and it is what the fossil records.
+        outcome, provenance = _spec.aggregate_outcome(
+            spec, [r["result"] for r in repeats])
         out.outcome = outcome
         out.order_check = self._verify_order(wid, obs_ids)
 
@@ -475,6 +503,8 @@ class SfeRunner:
             "exp_id": exp_id, "work_id": work_id, "obs_id": obs_id,
             "run_id": out.run_id, "hyp_id": hyp_id, "pred_id": pred_id,
             "outcome": outcome, "outcome_rule_provenance": provenance,
+            "aggregate": provenance.get("aggregate"),
+            "per_repeat_outcomes": provenance.get("per_repeat_outcomes"),
             "obs_ids": obs_ids, "repeat": {
                 **{k: plan[k] for k in ("count", "order", "seed_derivation",
                                         "state", "budget",

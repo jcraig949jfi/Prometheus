@@ -61,7 +61,8 @@ class PewClient:
 
 
 def write_encounter(client: PewClient, *, spec: dict, run, engine: dict,
-                    producer_version: str, relation: dict = None) -> dict:
+                    producer_version: str, relation: dict = None,
+                    producer: dict = None) -> dict:
     """Write the world anchor and the fossil encounter. Returns a record with
     `pew_reference` when the encounter was persisted.
 
@@ -91,12 +92,18 @@ def write_encounter(client: PewClient, *, spec: dict, run, engine: dict,
 
     # The requester may ADD producer fields; it may not overwrite the identity
     # of what actually produced the record. Vivarium's own keys go last.
-    producer = {**dict(pew.get("producer") or {}),
-                "component": "vivarium.runner", "version": producer_version,
+    # `producer` is built by viv/design.py (the separately sealed design, the
+    # E1 policy identity, the queue ids). It is passed in rather than assembled
+    # here so the fossil's provenance half has ONE definition and one test.
+    mine = dict(producer or {})
+    if not mine:
+        mine = {"component": "vivarium.runner", "version": producer_version,
                 "engine_source_hash": engine.get("engine_source_hash"),
-                "spec_hash": run.summary.get("spec_hash") or run.spec_hash_hint,
+                "spec_hash": run.summary.get("spec_hash")
+                             or run.spec_hash_hint,
                 "queue": {k: v for k, v in (relation or {}).items()
                           if v is not None}}
+    producer = {**dict(pew.get("producer") or {}), **mine}
 
     envelope = run.summary.get("audit_envelope") or {}
     head_hash = envelope.get("ledger_head_hash")

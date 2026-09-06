@@ -51,6 +51,20 @@ ACCEPTED_SPEC_VERSIONS = (2, 3)
 OUTCOMES = ("FALSIFIED", "SURVIVED", "INCONCLUSIVE")
 OPS = ("==", "!=", "<", "<=", ">", ">=")
 
+#: E16. How ONE outcome is formed from N repeats. Closed, and required on a v3
+#: rule -- with repeats "the outcome" is ambiguous until someone says which
+#: reduction they meant, and Vivarium will not pick.
+#:
+#:   first  the rule applied to repeat 0 only (what a single-shot run meant)
+#:   any    the predicate held in AT LEAST ONE repeat
+#:   all    the predicate held in EVERY repeat
+#:   max    the rule applied once to the LARGEST observed field value
+#:   min    the rule applied once to the SMALLEST observed field value
+#:
+#: `any`/`all` reduce the PREDICATE; `max`/`min` reduce the MEASUREMENT and
+#: then test it once. Those are different questions and the spec must say which.
+AGGREGATES = ("first", "any", "all", "max", "min")
+
 #: Closed. Every key is an execution input; adding one is a decision about
 #: what the sealed record means, not a convenience.
 _TOP_LEVEL = {"spec_version", "world", "hypothesis", "prediction", "work",
@@ -200,7 +214,7 @@ def _check_work(work: Any, r: list) -> None:
     r.extend(kind.check(work["payload"]))
 
 
-def _check_outcome_rule(rule: Any, r: list) -> None:
+def _check_outcome_rule(rule: Any, r: list, legacy: bool = False) -> None:
     """The requester's PRE-REGISTERED decision procedure.
 
     Vivarium evaluates it; it does not author, amend or complete it. That is
@@ -210,7 +224,8 @@ def _check_outcome_rule(rule: Any, r: list) -> None:
     if not isinstance(rule, dict):
         r.append("outcome_rule must be an object or null")
         return
-    allowed = {"field", "op", "value", "if_true", "if_false", "if_indeterminate"}
+    allowed = {"field", "op", "value", "if_true", "if_false",
+               "if_indeterminate", "aggregate"}
     extra = set(rule) - allowed
     if extra:
         r.append("outcome_rule has unknown keys: %s" % sorted(extra))
@@ -227,6 +242,16 @@ def _check_outcome_rule(rule: Any, r: list) -> None:
                      "requester's declaration, not Vivarium's" % k)
         elif rule[k] not in OUTCOMES:
             r.append("outcome_rule.%s must be one of %s" % (k, list(OUTCOMES)))
+    if legacy:
+        if "aggregate" in rule:
+            r.append("outcome_rule.aggregate is a v3 field; a v2 spec has "
+                     "exactly one observation and nothing to aggregate")
+    elif "aggregate" not in rule:
+        r.append("outcome_rule.aggregate is required and has no default: with "
+                 "repeats, 'the outcome' is ambiguous until the requester says "
+                 "which reduction they meant. One of %s" % list(AGGREGATES))
+    elif rule["aggregate"] not in AGGREGATES:
+        r.append("outcome_rule.aggregate must be one of %s" % list(AGGREGATES))
 
 
 def _check_repeat(rep: Any, kind, r: list) -> None:
@@ -356,7 +381,9 @@ def validate(spec: Any) -> Any:
             not isinstance(spec.get("prediction"), dict):
         r.append("prediction must be an object or null")
     if spec.get("outcome_rule") is not None:
-        _check_outcome_rule(spec["outcome_rule"], r)
+        _check_outcome_rule(spec["outcome_rule"], r,
+                            legacy=spec.get("spec_version")
+                            in LEGACY_SPEC_VERSIONS)
     if spec.get("pew") is not None:
         _check_pew(spec["pew"], r)
 
@@ -467,3 +494,64 @@ def apply_outcome_rule(spec: dict, result: dict) -> tuple:
     return (rule["if_true"] if hit else rule["if_false"]), {
         "rule": rule, "branch": "if_true" if hit else "if_false",
         "observed": observed, "predicate_held": hit}
+
+
+def aggregate_outcome(spec: dict, results: list) -> tuple:
+    """E16. ONE outcome from N repeats, by the reduction the spec declared.
+
+    Returns (outcome, provenance). The provenance carries every per-repeat
+    outcome, so the aggregate never hides what it reduced.
+
+    ONE RULE IS STATED HERE RATHER THAN CHOSEN PER RUN: if any repeat is
+    indeterminate, the aggregate is indeterminate. A reduction over a set that
+    contains an unmeasured member is not a measurement of that set, and
+    quietly dropping the indeterminate repeat would turn "one of the four did
+    not measure" into "the four agreed".
+    """
+    rule = spec.get("outcome_rule")
+    if rule is None:
+        raise SpecError(["aggregate_outcome called on a spec with no "
+                         "outcome_rule; unreachable for an executable kind and "
+                         "never silently defaulted"])
+    how = rule.get("aggregate", "first")
+    per_repeat = [apply_outcome_rule(spec, res) for res in results]
+    outcomes = [o for o, _ in per_repeat]
+    provs = [p for _, p in per_repeat]
+    base = {"aggregate": how, "n": len(results),
+            "per_repeat_outcomes": outcomes,
+            "per_repeat_provenance": provs}
+
+    indeterminate = [i for i, p in enumerate(provs)
+                     if p["branch"] == "if_indeterminate"]
+    if indeterminate:
+        return rule["if_indeterminate"], {
+            **base, "branch": "if_indeterminate",
+            "reason": "repeat(s) %s were indeterminate; a reduction over a set "
+                      "containing an unmeasured member is not a measurement of "
+                      "that set" % indeterminate}
+
+    if how == "first":
+        return outcomes[0], {**base, "branch": provs[0]["branch"],
+                             "reason": "the rule applied to repeat 0"}
+
+    held = [p["predicate_held"] for p in provs]
+    if how in ("any", "all"):
+        hit = any(held) if how == "any" else all(held)
+        return (rule["if_true"] if hit else rule["if_false"]), {
+            **base, "branch": "if_true" if hit else "if_false",
+            "predicate_held_per_repeat": held,
+            "predicate_held_count": sum(1 for h in held if h)}
+
+    # max / min reduce the MEASUREMENT, then test once.
+    values = [p["observed"] for p in provs]
+    try:
+        chosen = max(values) if how == "max" else min(values)
+    except TypeError as exc:
+        return rule["if_indeterminate"], {
+            **base, "branch": "if_indeterminate", "reason": "uncomparable",
+            "detail": str(exc), "values": values}
+    reduced = {rule["field"]: chosen}
+    outcome, prov = apply_outcome_rule(spec, reduced)
+    return outcome, {**base, "branch": prov["branch"],
+                     "reduced_value": chosen, "values": values,
+                     "reduced_provenance": prov}
