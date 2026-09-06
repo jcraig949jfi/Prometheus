@@ -1,0 +1,36 @@
+{
+  "template_id": "knowledge_discovery.v0",
+  "kind": "two_node_search.v0",
+  "param_space": {
+    "query_a": {
+      "choices": [
+        "raynauds",
+        "migraine"
+      ]
+    },
+    "query_c": {
+      "choices": [
+        "fish_oil",
+        "magnesium"
+      ]
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Knowledge Discovery",
+    "reference": "Swanson (1986) Undiscovered Public Knowledge and the Arrowsmith system",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "This measures whether two logically disjoint queries share a statistically significant number of intermediate B-terms, forming an implicit link. The field would run this because literature-based discovery relies intrinsically on identifying hidden connections across disparate literatures. A SURVIVED verdict would indicate a structural lexical connection in the text, but it would NOT license the claim that the connection is biologically or clinically efficacious in reality.",
+  "_ingest": {
+    "source_report": "12_knowledge_discovery_and_serendipity.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'two_node_search.v0' is not implemented by Vivarium; this template is an expansion request by definition"
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

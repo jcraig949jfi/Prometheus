@@ -1,0 +1,31 @@
+{
+  "template_id": "creativity.v0",
+  "kind": "novelty_search.v0",
+  "param_space": {
+    "archive_size": {
+      "int_range": null
+    },
+    "k_nearest": {
+      "choices": null
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Computational Creativity",
+    "reference": "Lehman and Stanley 2008: Exploiting Open-Endedness to Solve Problems Through the Search for Novelty",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "Executes a divergent evolutionary search driven purely by behavioral novelty rather than objective fitness. The field would run this to bypass deception in complex search spaces where intermediate steps do not resemble the final goal. A SURVIVED verdict would license the claim that measuring behavioral distance via the specified nearest-neighbor parameters successfully generates increasing complexity, but it would NOT license the claim that the search will efficiently converge on a specific functional objective in bounded spaces.",
+  "_ingest": {
+    "source_report": "05_intrinsic_drives_and_creativity.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'novelty_search.v0' is not implemented by Vivarium; this template is an expansion request by definition",
+      "REPAIRED: source markers were removed from this block to make it parse. Structure is the report's; any value that a marker had overwritten is null, never guessed."
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

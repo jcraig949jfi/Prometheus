@@ -1,0 +1,31 @@
+{
+  "template_id": "simulate_study.v0",
+  "kind": "simulate_study_v0",
+  "param_space": {
+    "study_power": {
+      "choices": null
+    },
+    "bias_factor": {
+      "choices": null
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Meta-Science",
+    "reference": "Why Most Published Research Findings Are False (Ioannidis 2005)",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "This experiment simulates the hypothesis testing process of a single scientific study to output a Boolean indicator of whether it resulted in a true positive finding, given a specific statistical power and bias factor. Meta-science researchers would run this to model how methodological flexibility degrades the reliability of published claims. A SURVIVED verdict would indicate that this specific simulated study correctly identified a true effect without falling prey to false positive bias. It would NOT license the inference that an actual literature operating under these parameters has a high Positive Predictive Value, because a single simulated study cannot capture the population-level dynamics of the chase for significance across multiple research teams.",
+  "_ingest": {
+    "source_report": "07_experimental_design_and_falsification.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'simulate_study_v0' is not implemented by Vivarium; this template is an expansion request by definition",
+      "REPAIRED: source markers were removed from this block to make it parse. Structure is the report's; any value that a marker had overwritten is null, never guessed."
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

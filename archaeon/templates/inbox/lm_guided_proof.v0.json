@@ -1,0 +1,35 @@
+{
+  "template_id": "lm_guided_proof.v0",
+  "kind": "formal_prover.v0",
+  "param_space": {
+    "expansion_limit": {
+      "int_range": null
+    },
+    "search_strategy": {
+      "choices": [
+        "gpt-f-temp-0.0",
+        "gpt-f-temp-0.5",
+        "gpt-f-temp-0.8"
+      ]
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Proof Search",
+    "reference": "Polu and Sutskever 2020 Generative language modeling for automated theorem proving",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "This measures the capability of a generative language model to guide a mathematical proof search tree by predicting correct formal tactical steps up to a given node expansion budget. Researchers utilize this exact constraint to evaluate the reasoning capabilities of language models acting as provers within interactive formal environments. A SURVIVED verdict establishes that the model successfully closed the specific formal goal within the budget; it would not license claims about the model's capacity to auto-formalize natural language mathematics or generate fundamentally novel conjectures without guidance.",
+  "_ingest": {
+    "source_report": "08_synthesis_and_logic.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'formal_prover.v0' is not implemented by Vivarium; this template is an expansion request by definition",
+      "REPAIRED: source markers were removed from this block to make it parse. Structure is the report's; any value that a marker had overwritten is null, never guessed."
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

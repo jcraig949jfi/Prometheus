@@ -1,0 +1,35 @@
+{
+  "template_id": "maml_few_shot.v0",
+  "kind": "maml_adapt_v0",
+  "param_space": {
+    "inner_gradient_steps": {
+      "int_range": null
+    },
+    "inner_learning_rate": {
+      "choices": [
+        0.001,
+        0.01,
+        0.1
+      ]
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Meta-Learning",
+    "reference": "Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks (Finn et al. 2017)",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "Model-Agnostic Meta-Learning optimizes a model's initialization so that it can be quickly fine-tuned to new tasks with only a few gradient steps. This template tests if the meta-learned initialization achieves a target accuracy on a held-out task after the specified number of inner gradient steps. A SURVIVED verdict would confirm that the parameters successfully adapted to the new task within the few-shot constraint, but it would not license the claim that the model learned a universally adaptable representation that is immune to catastrophic forgetting on out-of-distribution tasks.",
+  "_ingest": {
+    "source_report": "04_open_ended_learning_and_architecture_search.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'maml_adapt_v0' is not implemented by Vivarium; this template is an expansion request by definition",
+      "REPAIRED: source markers were removed from this block to make it parse. Structure is the report's; any value that a marker had overwritten is null, never guessed."
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

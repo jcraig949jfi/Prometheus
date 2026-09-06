@@ -1,0 +1,31 @@
+{
+  "template_id": "science_of_science.v0",
+  "kind": "network_cascade.v0",
+  "param_space": {
+    "initial_nodes": {
+      "int_range": null
+    },
+    "attachment_rate": {
+      "choices": null
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Science of Science",
+    "reference": "Fortunato et al. (2018) Science of Science, focusing on citation dynamics and complex network perspectives",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "This measures the structural accumulation of citations or collaborations in a synthesized graph over time. The field would run this because modeling science as a complex, self-organizing network is its primary methodology. A SURVIVED verdict would indicate that the generative model accurately matches a threshold of structural inequality or clustering, but it would NOT license direct interventions in actual human science policy or funding allocation.",
+  "_ingest": {
+    "source_report": "12_knowledge_discovery_and_serendipity.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'network_cascade.v0' is not implemented by Vivarium; this template is an expansion request by definition",
+      "REPAIRED: source markers were removed from this block to make it parse. Structure is the report's; any value that a marker had overwritten is null, never guessed."
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

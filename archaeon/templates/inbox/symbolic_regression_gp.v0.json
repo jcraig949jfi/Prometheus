@@ -1,0 +1,31 @@
+{
+  "template_id": "symbolic_regression_gp.v0",
+  "kind": "evaluate_symbolic_tree_v0",
+  "param_space": {
+    "max_tree_depth": {
+      "int_range": null
+    },
+    "population_size": {
+      "int_range": null
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Symbolic Regression",
+    "reference": "Koza, J.R. 1992. Genetic Programming: On the Programming of Computers by Means of Natural Selection",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "This experiment evaluates whether a constrained space of hierarchically composed primitive functions can reliably converge on a minimum error threshold when evaluated against a static environment. The field runs this to demonstrate the efficacy of evolutionary search in symbolic space over random search. A SURVIVED verdict implies the population found an expression satisfying the scalar loss limit, but it would NOT license the conclusion that the discovered expression is the true data-generating physical law, nor does it guarantee the expression is parsimonious or generalizing beyond the exact training data.",
+  "_ingest": {
+    "source_report": "10_model_and_law_discovery.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'evaluate_symbolic_tree_v0' is not implemented by Vivarium; this template is an expansion request by definition",
+      "REPAIRED: source markers were removed from this block to make it parse. Structure is the report's; any value that a marker had overwritten is null, never guessed."
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

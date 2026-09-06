@@ -1,0 +1,31 @@
+{
+  "template_id": "causal_discovery_pc.v0",
+  "kind": "pc_algorithm_skeleton_v0",
+  "param_space": {
+    "max_conditioning_set": {
+      "int_range": null
+    },
+    "alpha_significance": {
+      "choices": null
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Causal Discovery",
+    "reference": "Spirtes, P., Glymour, C., and Scheines, R. 2000. Causation, Prediction, and Search. MIT Press.",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "This experiment performs the adjacency pruning phase of the PC algorithm to build an undirected skeleton of conditional dependencies. The field runs this to narrow the hypothesis space of causal DAGs using observational constraints. A SURVIVED verdict demonstrates that the resulting skeleton's density falls within the target scalar range, but it would NOT license the conclusion of a definite causal direction between any two nodes, nor does it guarantee the absence of latent confounders, as it relies strictly on the assumption of Causal Sufficiency.",
+  "_ingest": {
+    "source_report": "10_model_and_law_discovery.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'pc_algorithm_skeleton_v0' is not implemented by Vivarium; this template is an expansion request by definition",
+      "REPAIRED: source markers were removed from this block to make it parse. Structure is the report's; any value that a marker had overwritten is null, never guessed."
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

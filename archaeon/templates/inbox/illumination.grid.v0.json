@@ -1,0 +1,37 @@
+{
+  "template_id": "illumination.grid.v0",
+  "kind": "illuminate_space.v0",
+  "param_space": {
+    "grid_resolution": {
+      "choices": [
+        10,
+        20,
+        50
+      ]
+    },
+    "evaluations": {
+      "int_range": [
+        1000,
+        10000
+      ]
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Illumination Algorithms",
+    "reference": "Mouret and Clune 2015 Illuminating search spaces by mapping elites",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "Illumination algorithms return a holistic map of high-performing solutions rather than a single optimum. This template tests the ability to fill a discretized behavioral grid of a given resolution. A SURVIVED verdict showing the number of filled bins exceeds a target indicates the landscape is successfully illuminated, but would NOT license the claim that the highest performing individual in the grid is the global optimum, as illumination distributes evaluation budget across niches.",
+  "_ingest": {
+    "source_report": "02_diversity_and_illumination.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'illuminate_space.v0' is not implemented by Vivarium; this template is an expansion request by definition"
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

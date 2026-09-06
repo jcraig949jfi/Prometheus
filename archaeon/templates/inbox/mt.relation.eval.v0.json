@@ -1,0 +1,36 @@
+{
+  "template_id": "mt.relation.eval.v0",
+  "kind": "evaluate_metamorphic_v0",
+  "param_space": {
+    "base_bits": {
+      "choices": [
+        "00001111",
+        "10101010"
+      ]
+    },
+    "mutation_mask": {
+      "choices": [
+        "00000001",
+        "00000010"
+      ]
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Metamorphic Testing",
+    "reference": "Chen Cheung and Yiu 1998 Metamorphic testing a new approach for generating next test cases",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "Metamorphic testing bypasses the oracle problem by asserting that relations hold between the outputs of an original input and a systematically transformed follow-up input. A SURVIVED verdict indicates that the specific metamorphic relation holds for this exact input pair, but it does not license the assumption that the output data is actually mathematically correct, only that it is consistent with the transformation relation.",
+  "_ingest": {
+    "source_report": "09_testing_and_verification.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'evaluate_metamorphic_v0' is not implemented by Vivarium; this template is an expansion request by definition"
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

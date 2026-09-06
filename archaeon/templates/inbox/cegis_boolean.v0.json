@@ -1,0 +1,31 @@
+{
+  "template_id": "cegis_boolean.v0",
+  "kind": "bounded_synthesizer.v0",
+  "param_space": {
+    "max_iterations": {
+      "int_range": null
+    },
+    "sketch_size": {
+      "int_range": null
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Counterexample-Guided Inductive Synthesis (CEGIS)",
+    "reference": "Solar-Lezama 2008 Program Synthesis by Sketching",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "This evaluates a CEGIS algorithm's ability to iteratively converge on a correct program by querying a verification oracle for counterexamples up to a hard iteration limit. Measuring iteration bounds is characteristic of CEGIS literature to test the refinement loop's efficiency. A SURVIVED verdict means the synthesis loop successfully found a valid candidate before running out of iterations; it would not license the inference that the counterexamples chosen by the verifier were optimal or that a larger sketch space wouldn't cause exponential timeout.",
+  "_ingest": {
+    "source_report": "08_synthesis_and_logic.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'bounded_synthesizer.v0' is not implemented by Vivarium; this template is an expansion request by definition",
+      "REPAIRED: source markers were removed from this block to make it parse. Structure is the report's; any value that a marker had overwritten is null, never guessed."
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

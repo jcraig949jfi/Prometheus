@@ -1,0 +1,31 @@
+{
+  "template_id": "bacon_equation_discovery.v0",
+  "kind": "discover_equation_v0",
+  "param_space": {
+    "max_variables": {
+      "int_range": null
+    },
+    "heuristic_depth": {
+      "int_range": null
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Automated Scientific Discovery",
+    "reference": "BACON: A production system that discovers empirical laws (Langley 1977)",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "This measures whether a data-driven heuristic search can successfully identify an underlying empirical law from noisy observations. The field would run this to test the robustness of equation discovery algorithms. A SURVIVED verdict would indicate the system found a mathematical model with high explanatory power, but would NOT license the inference that the discovered equation represents the true physical causal mechanism.",
+  "_ingest": {
+    "source_report": "06_automated_discovery_systems.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'discover_equation_v0' is not implemented by Vivarium; this template is an expansion request by definition",
+      "REPAIRED: source markers were removed from this block to make it parse. Structure is the report's; any value that a marker had overwritten is null, never guessed."
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

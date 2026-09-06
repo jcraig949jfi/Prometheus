@@ -1,0 +1,31 @@
+{
+  "template_id": "am_concept_generation.v0",
+  "kind": "evaluate_lisp_concept_v0",
+  "param_space": {
+    "initial_concepts": {
+      "int_range": null
+    },
+    "agenda_steps": {
+      "int_range": null
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Machine Discovery",
+    "reference": "AM: Automated Mathematician (Lenat 1977)",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "This measures the ability of a heuristic-driven agenda to combine elementary set-theoretic concepts into novel, mathematically interesting constructs. A SURVIVED verdict indicates the system generated concepts scoring above a predefined novelty threshold, but would NOT license the claim that the system understands the semantic meaning of the mathematical concepts it proposes.",
+  "_ingest": {
+    "source_report": "06_automated_discovery_systems.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'evaluate_lisp_concept_v0' is not implemented by Vivarium; this template is an expansion request by definition",
+      "REPAIRED: source markers were removed from this block to make it parse. Structure is the report's; any value that a marker had overwritten is null, never guessed."
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "template_id": "nas_bench_evaluation.v0",
+  "kind": "nas_search_v0",
+  "param_space": {
+    "search_algorithm": {
+      "choices": [
+        "random_search",
+        "regularized_evolution"
+      ]
+    },
+    "query_budget": {
+      "int_range": null
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Neural Architecture Search",
+    "reference": "NAS-Bench-101: Towards Reproducible Neural Architecture Search (Ying et al. 2019)",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "Neural Architecture Search aims to algorithmically discover high-performing neural network topologies, often evaluated using reproducible tabular benchmarks to avoid prohibitive compute costs. This template asks whether an advanced search algorithm like regularized evolution can find an architecture exceeding a specific accuracy threshold within a strict evaluation budget. A SURVIVED verdict would demonstrate the search algorithm's efficiency on this surrogate benchmark, but it would not license the inference that the chosen algorithm will scale to larger, more complex search spaces without pre-computed weights.",
+  "_ingest": {
+    "source_report": "04_open_ended_learning_and_architecture_search.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'nas_search_v0' is not implemented by Vivarium; this template is an expansion request by definition",
+      "REPAIRED: source markers were removed from this block to make it parse. Structure is the report's; any value that a marker had overwritten is null, never guessed."
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "template_id": "d_optimal_design.v0",
+  "kind": "d_optimal_design_v0",
+  "param_space": {
+    "design_size": {
+      "int_range": null
+    },
+    "polynomial_degree": {
+      "int_range": null
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Optimal Experimental Design",
+    "reference": "Optimum Experimental Designs (Atkinson and Donev 1992)",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "This experiment computes the determinant of the Fisher information matrix to evaluate the D-optimality criterion of an exact design for a polynomial regression model. The field of Optimal Experimental Design would run this to verify that a computationally generated design achieves a specified theoretical efficiency. A SURVIVED verdict would confirm that the evaluated design meets the absolute information threshold required by the outcome rule. However, it would NOT license the claim that this design is the global optimum, nor would it license the claim that it outperforms standard classical designs, because the bench lacks the ability to simultaneously evaluate and compare two different experimental designs.",
+  "_ingest": {
+    "source_report": "07_experimental_design_and_falsification.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'd_optimal_design_v0' is not implemented by Vivarium; this template is an expansion request by definition",
+      "REPAIRED: source markers were removed from this block to make it parse. Structure is the report's; any value that a marker had overwritten is null, never guessed."
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "template_id": "structure_mapping.v0",
+  "kind": "structure_mapping_v0",
+  "param_space": {
+    "base_entities": {
+      "int_range": null
+    },
+    "target_entities": {
+      "int_range": null
+    },
+    "systematicity_bias": {
+      "choices": [
+        "enabled",
+        "disabled"
+      ]
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Analogical Reasoning",
+    "reference": "Falkenhainer, Forbus, and Gentner 1989 The Structure-Mapping Engine: Algorithm and Examples",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "This template instantiates the Structure-Mapping Engine to compute an analogical match between a base domain and a target domain. It measures the structural evaluation score of the maximal interpretation found by aligning relational predicates. Analogical reasoning researchers would run this to test how systematicity constraints affect the depth of the resulting match. A SURVIVED verdict asserting that the structural evaluation score exceeds a critical threshold would license the claim that a mathematically significant alignment was found between the two domains. It would NOT license the inference that the specific mapped correspondences are semantically meaningful, nor that the candidate inferences generated are valid in the target domain, because the bench's scalar outcome rule reduces the rich topological mapping to a single numerical score, blinding the experimenter to the actual content of the analogy.",
+  "_ingest": {
+    "source_report": "11_reasoning_modes.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'structure_mapping_v0' is not implemented by Vivarium; this template is an expansion request by definition",
+      "REPAIRED: source markers were removed from this block to make it parse. Structure is the report's; any value that a marker had overwritten is null, never guessed."
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "template_id": "l2o.meta.optimizer.v0",
+  "kind": "meta_optimize_quadratic_v0",
+  "param_space": {
+    "matrix_dimensions": {
+      "choices": null
+    },
+    "unroll_steps": {
+      "int_range": null
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Learning-to-Optimize",
+    "reference": "Andrychowicz et al. (2016) Learning to learn by gradient descent by gradient descent.",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "Learning-to-Optimize replaces handcrafted update rules with trained neural models. The smallest characteristic experiment trains a coordinate-wise recurrent network to optimize a random 10-dimensional quadratic function over a set number of unrolled steps. A SURVIVED verdict indicates the learned optimizer outperforms a baseline on the specific quadratic function family it was trained on, but it would NOT license the claim that the optimizer generalizes to fundamentally different loss landscapes, such as deep non-convex neural networks or different activation functions.",
+  "_ingest": {
+    "source_report": "13_learning_to_search_and_machine_minds.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'meta_optimize_quadratic_v0' is not implemented by Vivarium; this template is an expansion request by definition",
+      "REPAIRED: source markers were removed from this block to make it parse. Structure is the report's; any value that a marker had overwritten is null, never guessed."
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

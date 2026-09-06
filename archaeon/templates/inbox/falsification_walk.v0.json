@@ -1,0 +1,30 @@
+{
+  "template_id": "falsification_walk.v0",
+  "kind": "random_walk_v0",
+  "param_space": {
+    "steps": {
+      "int_range": null
+    },
+    "step_scale": {
+      "int_range": null
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Falsification-Based Search",
+    "reference": "S-TaLiRo: A Tool for Temporal Logic Falsification for Hybrid Systems (Annpureddy, Liu, Fainekos, and Sankaranarayanan 2011)",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "This experiment uses a deterministic random walk as a surrogate for a cyber-physical system trace, attempting to discover a trajectory that violates a defined safety envelope threshold. The Falsification-Based Search community would run this as a stochastic testing baseline, simulating Monte Carlo falsification methods used to find counterexamples to temporal logic properties. A SURVIVED verdict, meaning the safety property survived because no violation was found, would merely indicate that this specific trajectory remained within bounds. It would NOT license the inference that the underlying system is formally safe or verifiable, as the search is strictly incomplete and bound to a single localized seed.",
+  "_ingest": {
+    "source_report": "07_experimental_design_and_falsification.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "REPAIRED: source markers were removed from this block to make it parse. Structure is the report's; any value that a marker had overwritten is null, never guessed."
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

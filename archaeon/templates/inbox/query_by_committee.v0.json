@@ -1,0 +1,31 @@
+{
+  "template_id": "query_by_committee.v0",
+  "kind": "query_by_committee_v0",
+  "param_space": {
+    "committee_size": {
+      "int_range": null
+    },
+    "query_budget": {
+      "int_range": null
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Active Learning",
+    "reference": "Query by Committee (Seung, Opper, and Sompolinsky 1992)",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "This experiment evaluates a model trained via the Query by Committee active learning algorithm on a synthetic dataset, given a fixed budget of label queries and a specific committee size. The Active Learning field would run this to establish whether actively sampling regions of maximal disagreement yields a rapid decrease in prediction error. On this bench, a SURVIVED verdict would merely indicate that the query strategy reached a target error threshold for this specific seed; it would NOT license the inference that the active selection was strictly superior to a passive random baseline, because the bench currently cannot run a paired control arm for direct comparison.",
+  "_ingest": {
+    "source_report": "07_experimental_design_and_falsification.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'query_by_committee_v0' is not implemented by Vivarium; this template is an expansion request by definition",
+      "REPAIRED: source markers were removed from this block to make it parse. Structure is the report's; any value that a marker had overwritten is null, never guessed."
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

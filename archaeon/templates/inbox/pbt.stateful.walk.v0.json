@@ -1,0 +1,30 @@
+{
+  "template_id": "pbt.stateful.walk.v0",
+  "kind": "random_walk_v0",
+  "param_space": {
+    "steps": {
+      "int_range": null
+    },
+    "step_scale": {
+      "choices": null
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Property-Based Testing",
+    "reference": "Claessen and Hughes 2000 QuickCheck a lightweight tool for random testing of Haskell programs",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "Property-based testing asserts that specific invariants hold across randomly generated inputs. Here the stateful random walk executor models a system undergoing a sequence of randomly generated state-mutating API calls. A SURVIVED verdict demonstrates that the invariant was not violated for this specific generated sequence of inputs, but it explicitly does not license the claim that the software is completely free of bugs for all possible input sequences.",
+  "_ingest": {
+    "source_report": "09_testing_and_verification.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "REPAIRED: source markers were removed from this block to make it parse. Structure is the report's; any value that a marker had overwritten is null, never guessed."
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

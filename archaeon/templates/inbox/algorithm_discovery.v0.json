@@ -1,0 +1,33 @@
+{
+  "template_id": "algorithm_discovery.v0",
+  "kind": "evaluate_bitstring",
+  "param_space": {
+    "bits": {
+      "choices": [
+        "0101010101010101",
+        "1111000011110000"
+      ]
+    },
+    "length": {
+      "int_range": null
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Algorithm Discovery",
+    "reference": "Teller (1996) Parallel Algorithm Discovery and Orchestration and genetic programming search spaces",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "This measures whether a sequence of computational primitives, encoded as a bitstring genome, represents a valid algorithmic solution to a target problem. The field would run this because navigating a genetic search space of chained operations is the fundamental mechanism for automated algorithm discovery. A SURVIVED verdict would indicate functional parity with the hidden algorithmic target, but it would NOT license the assumption that the discovered algorithm is optimal, human-readable, or generalizable beyond the training landscape.",
+  "_ingest": {
+    "source_report": "12_knowledge_discovery_and_serendipity.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "REPAIRED: source markers were removed from this block to make it parse. Structure is the report's; any value that a marker had overwritten is null, never guessed."
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}
