@@ -77,7 +77,7 @@ def test_schema_is_v6_with_the_new_containers():
     db = os.path.join(tempfile.mkdtemp(), "s.db")
     st = Store(db)
     st.initialize()
-    assert SCHEMA_VERSION == 6
+    assert SCHEMA_VERSION >= 6, "the v6 containers must survive later schemas"
     names = {r["name"] for r in st.read().execute(
         "SELECT name FROM sqlite_master WHERE type='table'").fetchall()}
     assert {"families", "family_members", "claims"} <= names

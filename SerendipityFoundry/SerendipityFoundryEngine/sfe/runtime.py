@@ -237,6 +237,82 @@ def _analysis_verification_findings(cx, world_id, exp_id) -> list:
     return []
 
 
+# v7. What a measured value MEANS. Without direction "0.2 vs 0.4" is not even
+# orderable, and an automated analyst that guesses the sign produces a
+# confident answer with the wrong one.
+MEASUREMENT_DIRECTIONS = frozenset({"HIGHER_IS_BETTER", "LOWER_IS_BETTER",
+                                    "NEITHER"})
+
+_PATH_OK = set("abcdefghijklmnopqrstuvwxyz"
+               "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-")
+
+
+def _check_value_path(path) -> None:
+    """A dotted path into observations.content. Deliberately not JSONPath: a
+    query language would let a measurement SELECT its own value (first match,
+    filtered, aggregated), and choosing which of several values counts is the
+    interpretation the engine declines to do. A fixed address is a lookup."""
+    if not isinstance(path, str) or not path.strip():
+        raise ValidationError("value_path must be a non-empty string")
+    parts = path.split(".")
+    for p in parts:
+        if not p or any(c not in _PATH_OK for c in p):
+            raise ValidationError(
+                "value_path is a dotted path of plain keys, e.g. "
+                "'score' or 'metrics.terminal_fitness' -- no wildcards, "
+                "filters or indices, because selecting WHICH value counts is "
+                "interpretation", value_path=path, bad_segment=p)
+
+
+def _dig(obj, path: str):
+    """Walk a dotted path. Returns (found, value); never raises on a miss,
+    because 'the field is absent' is itself a finding an analyst needs."""
+    cur = obj
+    for p in path.split("."):
+        if not isinstance(cur, dict) or p not in cur:
+            return False, None
+        cur = cur[p]
+    return True, cur
+
+
+def measurement_identity(name, version, implementation_hash, params,
+                         value_path) -> str:
+    """The canonical identity of a measurement DEFINITION.
+
+    work_items.measurement_identity_hash was a free string: it could detect
+    that the scorer changed, but nothing tied it to any definition, so it could
+    not say WHAT was measured. Deriving it from the definition makes an
+    executor's attestation checkable against a registered measurement instead
+    of merely comparable with itself."""
+    return content_hash({"name": name, "version": version,
+                         "implementation_hash": implementation_hash,
+                         "params": params or {}, "value_path": value_path})
+
+
+def _measurement_dict(r) -> dict:
+    return {"measurement_id": r["measurement_id"], "name": r["name"],
+            "version": r["version"],
+            "implementation_hash": r["implementation_hash"],
+            "params": json.loads(r["params"]), "domain": r["domain"],
+            "inputs": json.loads(r["inputs"]),
+            "outputs": json.loads(r["outputs"]),
+            "provenance": json.loads(r["provenance"]),
+            "validation_status": r["validation_status"],
+            "value_path": r["value_path"], "direction": r["direction"],
+            "unit": r["unit"], "range_min": r["range_min"],
+            "range_max": r["range_max"],
+            "identity_hash": r["identity_hash"],
+            "created_ts": r["created_ts"]}
+
+
+def _grant_dict(r) -> dict:
+    return {"grant_id": r["grant_id"], "group_id": r["group_id"],
+            "grantee_client_id": r["grantee_client_id"],
+            "granted_by": r["granted_by"], "note": r["note"],
+            "created_ts": r["created_ts"], "revoked_ts": r["revoked_ts"],
+            "active": r["revoked_ts"] is None}
+
+
 def _normalize_attestation(att) -> dict:
     """Accept EITHER the executed config itself (the engine hashes it with the
     same canonicalization that produced spec_hash, so a faithful executor
@@ -1393,9 +1469,72 @@ class Foundry:
             "work": work,
             "anchors": anchors,
             "ledger_head_hash": w["head_hash"],
+            # v7: FAMILY AND ARM SURVIVE FOSSILIZATION.
+            #
+            # families/family_members is the engine's only cross-world
+            # container, and the envelope is the only thing that LEAVES the
+            # engine as one verifiable object. Before this, an exported fossil
+            # could not say that its experiment was arm B of a twelve-member
+            # campaign -- the membership stayed behind in a table the fossil's
+            # reader has no credential for, so best-of-N was invisible again at
+            # exactly the moment the record left the building.
+            #
+            # Included by VALUE, not by reference, for the same reason the
+            # envelope exists at all: a third party holding the fossil has no
+            # SFE credential and cannot resolve a family_id. envelope_hash
+            # seals this with everything else.
+            "families": self._envelope_families(cx, world_id, exp_id),
         }
         body["envelope_hash"] = content_hash(body)
         return body
+
+    def _envelope_families(self, cx, world_id: str, exp_id: str) -> list:
+        """Every family this experiment or its world belongs to, with the
+        member's role and the family's sealed manifest hash."""
+        out = []
+        rows = cx.execute(
+            "SELECT fm.family_id, fm.member_kind, fm.member_id, fm.role, "
+            "f.kind AS family_kind, f.manifest AS manifest, "
+            "f.manifest_hash AS manifest_hash, f.state AS state "
+            "FROM family_members fm JOIN families f "
+            "ON f.family_id = fm.family_id "
+            "WHERE (fm.member_kind IN ('experiment','analysis') "
+            "       AND fm.member_id = ?) "
+            "   OR (fm.member_kind = 'world' AND fm.member_id = ?) "
+            "ORDER BY fm.family_id", (exp_id, world_id)).fetchall()
+        for r in rows:
+            try:
+                manifest = json.loads(r["manifest"])
+            except (TypeError, ValueError):
+                manifest = {}
+            arm_key = manifest.get("arm_key", "arm")
+            arm = None
+            if r["member_kind"] in ("experiment", "analysis"):
+                ex = cx.execute("SELECT spec FROM experiments WHERE exp_id=?",
+                                (r["member_id"],)).fetchone()
+                if ex is not None and isinstance(arm_key, str) and arm_key:
+                    found, val = _dig(json.loads(ex["spec"]), arm_key)
+                    if found and isinstance(val, (str, int, float, bool)):
+                        arm = str(val)
+            census = cx.execute(
+                "SELECT COUNT(*) n, SUM(role='selected') sel, "
+                "SUM(role='alternative') alt FROM family_members "
+                "WHERE family_id=?", (r["family_id"],)).fetchone()
+            out.append({
+                "family_id": r["family_id"], "family_kind": r["family_kind"],
+                "state": r["state"], "manifest_hash": r["manifest_hash"],
+                "member_kind": r["member_kind"], "member_id": r["member_id"],
+                "role": r["role"],
+                "arm_key": arm_key if isinstance(arm_key, str) else None,
+                "arm": arm,
+                "family_member_count": census["n"],
+                "selected": census["sel"] or 0,
+                "alternatives": census["alt"] or 0,
+                # the property that makes best-of-N legible, carried OUT with
+                # the fossil rather than left behind in the engine
+                "selection_visible": bool((census["sel"] or 0) >= 1
+                                          and (census["alt"] or 0) >= 1)})
+        return out
 
     def get_experiment(self, world_id: str, exp_id: str, *,
                        client_id: Optional[str] = None) -> dict:
@@ -2669,9 +2808,52 @@ class Foundry:
                "worlds_spanned": len(worlds),
                "selection_visible": by_role.get("selected", 0) >= 1
                                     and by_role.get("alternative", 0) >= 1}
+        out["arms"] = self._family_arms(cx, manifest, rows)
         if self._sci() != "off":
             out["science"] = self._family_findings(manifest, members, by_role)
         return out
+
+    @staticmethod
+    def _family_arms(cx, manifest: dict, rows) -> dict:
+        """Arm structure, counted from SEALED specs.
+
+        An arm label must be un-reassignable once results are in, so the engine
+        reads it from the experiment's spec -- frozen by spec_hash at commit and
+        order-proved by committed_seq -- and not from a mutable field. The
+        family's manifest declares WHERE to look (`arm_key`, default "arm"), so
+        the engine never guesses which key means arm.
+
+        Worlds have no spec, so a world member contributes to `unresolved`
+        rather than to a count. That is not an oversight: a label attached to a
+        world could be changed after the fact, and an arm that can move after
+        the results are in is the thing this is meant to prevent."""
+        key = manifest.get("arm_key", "arm")
+        if not isinstance(key, str) or not key:
+            return {"arm_key": None, "counts": {}, "unresolved": len(rows),
+                    "note": "manifest arm_key is not a usable string"}
+        counts, unresolved = {}, 0
+        for r in rows:
+            if r["member_kind"] not in ("experiment", "analysis"):
+                unresolved += 1
+                continue
+            ex = cx.execute("SELECT spec FROM experiments WHERE exp_id=?",
+                            (r["member_id"],)).fetchone()
+            if ex is None:
+                unresolved += 1
+                continue
+            try:
+                found, val = _dig(json.loads(ex["spec"]), key)
+            except (TypeError, ValueError):
+                found, val = False, None
+            if not found or not isinstance(val, (str, int, float, bool)):
+                unresolved += 1
+                continue
+            label = str(val)
+            counts[label] = counts.get(label, 0) + 1
+        return {"arm_key": key, "counts": dict(sorted(counts.items())),
+                "distinct_arms": len(counts), "unresolved": unresolved,
+                "balanced": (len(set(counts.values())) == 1
+                             if len(counts) > 1 else None)}
 
     @staticmethod
     def _family_findings(manifest: dict, members: list, by_role: dict) -> dict:
@@ -3056,48 +3238,325 @@ class Foundry:
             out["config_match"] = None
         return out
 
-    # ================= measurements ====================================
+    # ================= v7 measurement identity and meaning ===============
+    #
+    # observations.content is freeform BY DESIGN, so nothing ever said which
+    # field of it was the outcome. That single gap is behind the engine's
+    # loudest decline -- "computing a variance requires knowing which field is
+    # the outcome, and that is interpretation" -- and behind an analyst reading
+    # a plausible column instead of the right one.
+    #
+    # A DECLARED path does not make the engine a statistician. It makes
+    # LOCATING the value a lookup instead of a guess. The engine still computes
+    # nothing over it.
+
     def register_measurement(self, name: str, version: str, *,
                              implementation_hash: str, domain: str,
                              params: Optional[dict] = None,
                              inputs: Optional[list] = None,
                              outputs: Optional[list] = None,
                              provenance: Optional[dict] = None,
-                             validation_status: str = "UNVALIDATED") -> str:
+                             validation_status: str = "UNVALIDATED",
+                             value_path: Optional[str] = None,
+                             direction: Optional[str] = None,
+                             unit: Optional[str] = None,
+                             range_min: Optional[float] = None,
+                             range_max: Optional[float] = None,
+                             client_id: Optional[str] = None) -> dict:
+        """Register a measurement DEFINITION: what it is, where its value
+        lives, and what a value means.
+
+        `(name, version)` is UNIQUE and a definition is never silently
+        replaced -- a changed oracle needs a new version, because two runs
+        scored by different definitions under one name are not comparable and
+        nothing downstream could tell.
+
+        v7 adds the half that was missing: `value_path` says WHERE in an
+        observation's content this measurement's value is (a dotted path), and
+        `direction` / `unit` / `range_min` / `range_max` say what a value
+        MEANS. Without direction, "0.2 vs 0.4" is not even orderable, and an
+        automated analyst that guesses the sign produces a confident answer
+        with the wrong one."""
+        if direction is not None and direction not in MEASUREMENT_DIRECTIONS:
+            raise ValidationError("unknown direction", direction=direction,
+                                  allowed=sorted(MEASUREMENT_DIRECTIONS))
+        if value_path is not None:
+            _check_value_path(value_path)
+        if (range_min is not None and range_max is not None
+                and range_min > range_max):
+            raise ValidationError("range_min exceeds range_max",
+                                  range_min=range_min, range_max=range_max)
+        ident = measurement_identity(name, version, implementation_hash,
+                                     params or {}, value_path)
         mid = new_id("measurement")
         with self.store.write() as cx:
             try:
                 cx.execute(
                     "INSERT INTO measurements(measurement_id,name,version,"
                     "implementation_hash,params,domain,inputs,outputs,"
-                    "provenance,validation_status,created_ts) "
-                    "VALUES(?,?,?,?,?,?,?,?,?,?,?)",
+                    "provenance,validation_status,value_path,direction,unit,"
+                    "range_min,range_max,identity_hash,created_ts) "
+                    "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
                     (mid, name, version, implementation_hash,
                      json.dumps(params or {}), domain, json.dumps(inputs or []),
                      json.dumps(outputs or []), json.dumps(provenance or {}),
-                     validation_status, now()))
-            except Exception as e:
+                     validation_status, value_path, direction, unit,
+                     range_min, range_max, ident, now()))
+            except Exception as e:                                 # noqa: BLE001
                 if "UNIQUE" in str(e):
                     raise ValidationError(
                         "measurement (name,version) already registered; a new "
                         "definition needs a new version -- oracles are not "
                         "silently replaced", name=name, version=version)
                 raise
-            events.append_foundry(cx, "MEASUREMENT_REGISTERED", actor="foundry",
-                                  scope_kind="foundry", scope_id=mid,
-                                  payload={"name": name, "version": version,
-                                           "implementation_hash":
-                                           implementation_hash})
-        return mid
+            events.append_foundry(
+                cx, "MEASUREMENT_REGISTERED", actor=client_id or "foundry",
+                scope_kind="measurement", scope_id=mid,
+                payload={"name": name, "version": version,
+                         "implementation_hash": implementation_hash,
+                         "value_path": value_path, "direction": direction,
+                         "identity_hash": ident,
+                         "engine_source_hash": release.ENGINE_SOURCE_HASH})
+        return self.get_measurement(mid)
 
     def get_measurement(self, measurement_id: str) -> dict:
         r = self.store.read().execute(
-            "SELECT * FROM measurements WHERE measurement_id=?",
-            (measurement_id,)).fetchone()
+            "SELECT * FROM measurements WHERE measurement_id=? OR "
+            "identity_hash=?", (measurement_id, measurement_id)).fetchone()
         if r is None:
-            raise NotFound("unknown measurement", measurement_id=measurement_id)
-        return {k: r[k] for k in r.keys()}
+            raise NotFound("unknown measurement",
+                           measurement_id=measurement_id)
+        return _measurement_dict(r)
 
+    def list_measurements(self, *, name: Optional[str] = None,
+                          domain: Optional[str] = None,
+                          limit: int = 100) -> list:
+        q, args = "SELECT * FROM measurements WHERE 1=1", []
+        if name is not None:
+            q += " AND name=?"
+            args.append(name)
+        if domain is not None:
+            q += " AND domain=?"
+            args.append(domain)
+        q += " ORDER BY name, version LIMIT ?"
+        args.append(int(limit))
+        return [_measurement_dict(r)
+                for r in self.store.read().execute(q, args).fetchall()]
+
+    def read_measured_value(self, world_id: str, obs_id: str,
+                            measurement_id: str, *,
+                            client_id: Optional[str] = None) -> dict:
+        """Resolve ONE observation's value for ONE registered measurement.
+
+        This is a LOOKUP, not an analysis: the engine walks the declared path
+        and reports what is there, plus whether it is inside the declared
+        range. It computes nothing across observations and takes no view on
+        what the number means."""
+        cx = self.store.read()
+        self._authorize(cx, world_id, client_id)
+        o = cx.execute("SELECT * FROM observations WHERE obs_id=? AND "
+                       "world_id=?", (obs_id, world_id)).fetchone()
+        if o is None:
+            raise NotFound("observation not in this world", obs_id=obs_id)
+        m = self.get_measurement(measurement_id)
+        if not m["value_path"]:
+            raise ValidationError(
+                "this measurement declares no value_path, so the engine has "
+                "no way to say which field of a freeform observation is its "
+                "value", measurement_id=measurement_id)
+        found, value = _dig(json.loads(o["content"]), m["value_path"])
+        out = {"obs_id": obs_id, "world_id": world_id,
+               "measurement_id": m["measurement_id"],
+               "identity_hash": m["identity_hash"],
+               "value_path": m["value_path"], "found": found, "value": value,
+               "direction": m["direction"], "unit": m["unit"],
+               "evidence_class": o["evidence_class"]}
+        if found and isinstance(value, (int, float)) \
+                and not isinstance(value, bool):
+            lo, hi = m["range_min"], m["range_max"]
+            out["in_declared_range"] = (
+                (lo is None or value >= lo) and (hi is None or value <= hi))
+        return out
+
+    # ================= v7 cross-seat read contract =======================
+    #
+    # Every read route is owner-scoped, which is right (I5) and which made an
+    # ARCHAEOLOGIST impossible: a seat that mines another seat's executed
+    # record could see nothing at all, and its only recourse was to open the
+    # SQLite file off disk -- no tenancy filter, no evidence-class filter, no
+    # schema guard, no contract.
+    #
+    # A grant is scoped to a TOPOLOGY GROUP because that id is already a
+    # server-issued unguessable capability two clients can only come to share
+    # deliberately (H5). It is READ ONLY, revocable, and it never widens the
+    # owner-scoped routes: the cross-seat surface is separate and says so, so
+    # an ordinary read can never quietly start returning someone else's rows.
+
+    def grant_read(self, group_id: str, *, grantee_client_id: str,
+                   granted_by: str, note: Optional[str] = None) -> dict:
+        """Grant READ over one topology group. Only the group's creator may
+        grant, so a capability cannot be re-lent by whoever it reaches."""
+        with self.store.write() as cx:
+            g = cx.execute("SELECT * FROM topology_groups WHERE group_id=?",
+                           (group_id,)).fetchone()
+            if g is None or g["created_by"] != granted_by:
+                # NOT FOUND rather than FORBIDDEN: a group id is a capability,
+                # and distinguishing "exists but not yours" would make this an
+                # existence oracle for other clients' groups.
+                raise NotFound("unknown topology group", group_id=group_id)
+            if cx.execute("SELECT 1 FROM clients WHERE client_id=?",
+                          (grantee_client_id,)).fetchone() is None:
+                raise NotFound("unknown grantee", client_id=grantee_client_id)
+            if grantee_client_id == granted_by:
+                raise ValidationError(
+                    "a client already reads its own worlds; a grant to "
+                    "yourself would only obscure who can see what")
+            prior = cx.execute(
+                "SELECT * FROM read_grants WHERE group_id=? AND "
+                "grantee_client_id=?", (group_id, grantee_client_id)).fetchone()
+            if prior is not None and prior["revoked_ts"] is None:
+                return _grant_dict(prior)
+            gid = new_id("grant")
+            if prior is not None:                      # re-grant after revoke
+                cx.execute("DELETE FROM read_grants WHERE grant_id=?",
+                           (prior["grant_id"],))
+            cx.execute(
+                "INSERT INTO read_grants(grant_id,group_id,grantee_client_id,"
+                "granted_by,note,created_ts) VALUES(?,?,?,?,?,?)",
+                (gid, group_id, grantee_client_id, granted_by, note, now()))
+            events.append_foundry(
+                cx, "READ_GRANTED", actor=granted_by, scope_kind="group",
+                scope_id=group_id,
+                payload={"grant_id": gid, "grantee": grantee_client_id,
+                         "note": note, "regrant": prior is not None})
+            return _grant_dict(cx.execute(
+                "SELECT * FROM read_grants WHERE grant_id=?",
+                (gid,)).fetchone())
+
+    def revoke_read(self, grant_id: str, *, client_id: str) -> dict:
+        """Revoke. The row is kept with revoked_ts set: a grant that existed
+        and was withdrawn is a different fact from one that never existed, and
+        an audit of who could see what WHEN needs both."""
+        with self.store.write() as cx:
+            r = cx.execute("SELECT * FROM read_grants WHERE grant_id=?",
+                           (grant_id,)).fetchone()
+            if r is None or r["granted_by"] != client_id:
+                raise NotFound("unknown grant", grant_id=grant_id)
+            if r["revoked_ts"] is not None:
+                return _grant_dict(r)
+            cx.execute("UPDATE read_grants SET revoked_ts=? WHERE grant_id=?",
+                       (now(), grant_id))
+            events.append_foundry(
+                cx, "READ_REVOKED", actor=client_id, scope_kind="group",
+                scope_id=r["group_id"],
+                payload={"grant_id": grant_id,
+                         "grantee": r["grantee_client_id"]})
+            return _grant_dict(cx.execute(
+                "SELECT * FROM read_grants WHERE grant_id=?",
+                (grant_id,)).fetchone())
+
+    def list_read_grants(self, client_id: str) -> dict:
+        cx = self.store.read()
+        out = {"granted_by_me": [], "granted_to_me": []}
+        for r in cx.execute("SELECT * FROM read_grants WHERE granted_by=? "
+                            "ORDER BY created_ts", (client_id,)).fetchall():
+            out["granted_by_me"].append(_grant_dict(r))
+        for r in cx.execute("SELECT * FROM read_grants WHERE "
+                            "grantee_client_id=? AND revoked_ts IS NULL "
+                            "ORDER BY created_ts", (client_id,)).fetchall():
+            out["granted_to_me"].append(_grant_dict(r))
+        return out
+
+    def _granted_groups(self, cx, client_id: str) -> list:
+        return [r["group_id"] for r in cx.execute(
+            "SELECT group_id FROM read_grants WHERE grantee_client_id=? AND "
+            "revoked_ts IS NULL", (client_id,)).fetchall()]
+
+    def read_worlds(self, client_id: str, *, group_id: Optional[str] = None,
+                    limit: int = 500) -> dict:
+        """The cross-seat read surface for WORLDS.
+
+        Returns only worlds the caller does NOT own, in groups it has been
+        granted. Own worlds are deliberately excluded: mixing them would let a
+        caller lose track of which rows are its own evidence and which are
+        another seat's, and that distinction is the whole point of recording
+        the corpus tenancy."""
+        cx = self.store.read()
+        groups = self._granted_groups(cx, client_id)
+        if group_id is not None:
+            # an ungranted group yields EMPTY, never 403 -- no existence oracle
+            groups = [g for g in groups if g == group_id]
+        if not groups:
+            return {"worlds": [], "groups": [], "corpus_tenancy": []}
+        qs = ",".join("?" * len(groups))
+        rows = cx.execute(
+            "SELECT * FROM worlds WHERE topology_group IN (%s) AND "
+            "client_id != ? ORDER BY created_ts DESC LIMIT ?" % qs,
+            (*groups, client_id, int(limit))).fetchall()
+        tenancy = {}
+        for r in rows:
+            tenancy[r["client_id"]] = tenancy.get(r["client_id"], 0) + 1
+        return {"worlds": [_world_dict(r) for r in rows],
+                "groups": groups,
+                "corpus_tenancy": [{"client_id": k, "worlds": v}
+                                   for k, v in sorted(tenancy.items())]}
+
+    def read_observations(self, client_id: str, *,
+                          group_id: Optional[str] = None,
+                          world_id: Optional[str] = None,
+                          evidence_class: Optional[str] = None,
+                          limit: int = 1000) -> dict:
+        """The cross-seat read surface for OBSERVATIONS.
+
+        `corpus` is returned beside the rows on purpose. An archaeologist's
+        first scientific obligation is to say what population it drew from,
+        and the commonest way to fail is to pool tenancies and evidence classes
+        without noticing. The engine cannot stop a bad analysis, but it can
+        refuse to hand over rows without also handing over their provenance."""
+        if evidence_class is not None and evidence_class not in EVIDENCE_CLASSES:
+            raise ValidationError("unknown evidence_class",
+                                  evidence_class=evidence_class,
+                                  allowed=list(EVIDENCE_CLASSES))
+        cx = self.store.read()
+        groups = self._granted_groups(cx, client_id)
+        if group_id is not None:
+            groups = [g for g in groups if g == group_id]
+        if not groups:
+            return {"observations": [], "corpus": {"worlds": 0, "by_client": [],
+                                                   "by_evidence_class": []}}
+        qs = ",".join("?" * len(groups))
+        q = ("SELECT o.*, w.client_id AS owner FROM observations o "
+             "JOIN worlds w ON w.world_id=o.world_id "
+             "WHERE w.topology_group IN (%s) AND w.client_id != ?" % qs)
+        args = [*groups, client_id]
+        if world_id is not None:
+            q += " AND o.world_id=?"
+            args.append(world_id)
+        if evidence_class is not None:
+            q += " AND o.evidence_class=?"
+            args.append(evidence_class)
+        q += " ORDER BY o.created_seq LIMIT ?"
+        args.append(int(limit))
+        rows = cx.execute(q, args).fetchall()
+        by_client, by_ev, worlds = {}, {}, set()
+        for r in rows:
+            by_client[r["owner"]] = by_client.get(r["owner"], 0) + 1
+            by_ev[r["evidence_class"]] = by_ev.get(r["evidence_class"], 0) + 1
+            worlds.add(r["world_id"])
+        return {
+            "observations": [_observation_dict(r) for r in rows],
+            "corpus": {
+                "worlds": len(worlds),
+                "groups": groups,
+                "by_client": [{"client_id": k, "observations": v}
+                              for k, v in sorted(by_client.items())],
+                "by_evidence_class": [{"evidence_class": k, "observations": v}
+                                      for k, v in sorted(by_ev.items())],
+                "filtered_evidence_class": evidence_class,
+                "truncated": len(rows) >= int(limit)},
+        }
+
+    # ================= measurements ====================================
     # ================= observability + accounting ======================
     def verify_world(self, world_id: str, *,
                      client_id: Optional[str] = None) -> dict:

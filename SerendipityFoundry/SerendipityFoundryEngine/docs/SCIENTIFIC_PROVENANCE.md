@@ -1,7 +1,9 @@
 # Scientific provenance — SFE schema v6
 
-**Status:** shipped 2026-09-05. Schema **v6**, API `v2` (unchanged), migration
-`_migrate_5_to_6` is purely additive and back-fills nothing.
+**Status:** v6 shipped 2026-09-05; **schema v7 added 2026-09-06** (measurement
+identity and meaning, the cross-seat read contract, and family structure
+surviving fossilization — §12). API `v2` throughout; every migration is purely
+additive and back-fills nothing.
 **Nothing in this release changes an existing contract.** Every field is
 optional, every route is new, and an unmodified v5 client keeps working with
 byte-identical results.
@@ -373,6 +375,47 @@ one fired — findings are **sealed**, not merely returned.
 hashes because no executor ever attested anything; inventing a value would
 manufacture a provenance claim that was never made. Same reasoning that left the
 v5 `LEGACY` sessions unbound rather than guessing at bindings.
+
+---
+
+## 12. v7 — measurement meaning, cross-seat reads, family in the fossil
+
+**Measurement.** `observations.content` is freeform, so nothing said which
+field was the outcome — the gap behind §1's loudest decline. A registered
+measurement now declares `value_path` (a dotted **address**, never a query: a
+query language would let a measurement select its own value, and choosing which
+of several values counts is interpretation), plus `direction`, `unit` and range.
+`identity_hash` is derived from the definition, so
+`work_items.measurement_identity_hash` resolves to a registered oracle instead
+of being comparable only with itself. `(name, version)` is UNIQUE and never
+silently replaced.
+
+**Cross-seat reads.** Every read route is owner-scoped, which made an
+archaeologist impossible: its only recourse was to open the SQLite file, a read
+with no tenancy filter, no evidence-class filter and no schema guard. A read
+grant is scoped to a **topology group** — already an unguessable server-issued
+capability — grantable only by that group's creator, **read only**, revocable
+with the revocation recorded. It lives on a separate `/v2/read/*` surface and
+does **not** widen the owner-scoped routes, so an ordinary read can never
+quietly begin returning another tenant's rows. An ungranted group returns empty
+rather than 403, for the same anti-oracle reason a foreign family member is 404.
+`/v2/read/observations` returns the corpus census — tenancy, evidence classes,
+truncation — beside the rows, because an archaeologist's first obligation is to
+say what population it drew from.
+
+**Family and arm survive fossilization.** The audit envelope is the only thing
+that leaves the engine as one verifiable object, and family membership stayed
+behind in a table the fossil's reader has no credential for — so best-of-N went
+invisible exactly when the record left the building. The envelope now carries a
+`families` block **by value**: role, arm, member count, selected/alternatives,
+and `selection_visible`. It is inside `envelope_hash`, so a fossil cannot be
+re-attributed to a different family after export without breaking its own seal.
+
+The **arm label is read from the sealed spec**, at a key the family's manifest
+declares (`arm_key`, default `arm`). Two consequences, both deliberate: the
+engine never guesses which key means arm, and a world member resolves to
+`unresolved` rather than a count — worlds have no spec, and a label that can be
+reassigned after the results are in is the thing this prevents.
 
 ---
 

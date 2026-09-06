@@ -31,7 +31,7 @@ import time
 from pathlib import Path
 from typing import Any, Iterator, Optional
 
-SCHEMA_VERSION = 6
+SCHEMA_VERSION = 7
 
 # The schema is intentionally explicit and constrained: NOT NULLs, CHECK
 # enumerations on lifecycle columns, and foreign keys, so a bad transition or a
@@ -387,6 +387,35 @@ CREATE TABLE IF NOT EXISTS topology_groups (
     created_ts  REAL NOT NULL
 );
 
+-- v7 CROSS-SEAT READ CONTRACT.
+--
+-- Every read route in this engine is owner-scoped, which is correct (I5) and
+-- which made a whole class of consumer impossible: an ARCHAEOLOGIST that mines
+-- another seat's executed record cannot see a single row, and its only recourse
+-- was to open the SQLite file off disk -- a read with no tenancy filter, no
+-- evidence-class filter, no schema guard and no contract at all.
+--
+-- A grant is scoped to a TOPOLOGY GROUP rather than to a client or a world.
+-- The group id is already a server-issued unguessable capability (H5) that two
+-- clients can only come to share by deliberate out-of-band transfer, so
+-- string-guessing can never manufacture consent. Reusing it means the grant
+-- names a set the granter has already had to curate deliberately.
+--
+-- READ ONLY, and only ever read: a grant confers no write, no claim, no work,
+-- no budget. It is revocable, and revocation is recorded rather than deleted.
+CREATE TABLE IF NOT EXISTS read_grants (
+    grant_id          TEXT PRIMARY KEY,
+    group_id          TEXT NOT NULL REFERENCES topology_groups(group_id),
+    grantee_client_id TEXT NOT NULL REFERENCES clients(client_id),
+    granted_by        TEXT NOT NULL REFERENCES clients(client_id),
+    note              TEXT,
+    created_ts        REAL NOT NULL,
+    revoked_ts        REAL,
+    UNIQUE (group_id, grantee_client_id)
+);
+CREATE INDEX IF NOT EXISTS ix_read_grants_grantee
+    ON read_grants(grantee_client_id, revoked_ts);
+
 -- F5: request-identity idempotency for epistemic writes. A key is scoped to the
 -- issuing client; request_hash binds the SEMANTIC request (route + world +
 -- canonical body), so the same key with a materially different request is a
@@ -429,6 +458,23 @@ CREATE TABLE IF NOT EXISTS measurements (
     validation_status TEXT NOT NULL DEFAULT 'UNVALIDATED'
                     CHECK (validation_status IN ('UNVALIDATED','VALIDATED',
                                                  'DEPRECATED')),
+    -- v7: WHERE the value is, and WHAT IT MEANS.
+    --
+    -- observations.content is freeform by design, so nothing said which field
+    -- of it was the outcome. That is the exact gap behind "computing a
+    -- variance requires knowing which field is the outcome" -- the reason the
+    -- engine declines to compute one. A DECLARED path does not make the engine
+    -- a statistician: it makes locating the value a lookup instead of a guess,
+    -- and it is the difference between an analyst reading the right column and
+    -- reading a plausible one.
+    value_path      TEXT,          -- dotted path into observations.content
+    direction       TEXT           -- HIGHER_IS_BETTER | LOWER_IS_BETTER |
+                    CHECK (direction IS NULL OR direction IN
+                           ('HIGHER_IS_BETTER','LOWER_IS_BETTER','NEITHER')),
+    unit            TEXT,
+    range_min       REAL,
+    range_max       REAL,
+    identity_hash   TEXT,          -- canonical id of the DEFINITION (v7)
     created_ts      REAL NOT NULL,
     UNIQUE (name, version)
 );
@@ -514,6 +560,8 @@ class Store:
                 self._migrate_4_to_5(cx)
             if have <= 5:
                 self._migrate_5_to_6(cx)
+            if have <= 6:
+                self._migrate_6_to_7(cx)
             cx.execute("UPDATE meta SET value=? WHERE key='schema_version'",
                        (str(SCHEMA_VERSION),))
 
@@ -583,6 +631,26 @@ class Store:
                        "INTEGER NOT NULL DEFAULT 0")
         cx.execute("CREATE INDEX IF NOT EXISTS ix_obs_pred "
                    "ON observations(world_id, pred_id)")
+
+    @staticmethod
+    def _migrate_6_to_7(cx) -> None:
+        """v6 -> v7 (2026-09-06): the cross-seat read contract and
+        measurement meaning.
+
+        Purely additive, and NOTHING is back-filled. read_grants starts empty
+        because no grant has ever been made, and every pre-v7 measurement has a
+        NULL value_path because nobody was ever asked for one -- inventing a
+        path would assert where a value lives on evidence nobody supplied,
+        which is the same reasoning that left v5 sessions LEGACY and v6
+        attestations NULL."""
+        have = {r["name"] for r in cx.execute(
+            "PRAGMA table_info(measurements)").fetchall()}
+        for col, typ in (("value_path", "TEXT"), ("direction", "TEXT"),
+                         ("unit", "TEXT"), ("range_min", "REAL"),
+                         ("range_max", "REAL"), ("identity_hash", "TEXT")):
+            if col not in have:
+                cx.execute("ALTER TABLE measurements ADD COLUMN %s %s"
+                           % (col, typ))
 
     @staticmethod
     def _migrate_5_to_6(cx) -> None:

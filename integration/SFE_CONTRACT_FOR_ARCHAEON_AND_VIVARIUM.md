@@ -23,9 +23,8 @@ This page is only the part that is *yours*.
 
 1. **One stable client identity per tool. Not one per run.** This is the
    biggest thing on the page — see §1.
-2. **Scope your corpus, or ask me for a route.** The API is right for your own
-   data; it cannot show you another tenant's, and Archaeon owns none of the
-   corpus it needs — see §2, which was wrong in its first cut.
+2. **Use a READ GRANT for another seat's corpus.** Built 2026-09-06 —
+   `/v2/read/*`. The file read is no longer necessary; see §2.
 3. **Heartbeat any lease you hold.** See §4.
 4. **Attest what you ran.** All four hashes, not just the config — see §5.
 5. **Declare a budget with `enforcement: "enforceable"`.** The default caps
@@ -145,35 +144,56 @@ loses, none of them style:
    than its code (`store.py:471`). A raw reader has no such protection and will
    happily misread a v7 database as v6.
 
-**CORRECTED — and this section and §1 are jointly fatal as first written.**
-Every read route is hard-scoped to the calling client (`_authorize`:
-*"a client may only touch its own worlds"*). Of the 2,993 engine-attested
-observations on M1, **2,937 belong to `harmonia-m2` and Archaeon owns none**.
-So "use the API instead" plus "separate stable clients" together leave Archaeon
-able to see **zero** executed experiments. Both rules are individually right and
-following both blinds you.
+### The cross-seat read contract — BUILT 2026-09-06 (schema v7)
 
-**That is my problem, not yours to work around.** Until it is resolved:
+An earlier cut of this section said "use the API instead" while §1 said
+"separate stable clients", and those two together left Archaeon able to see
+**zero** executed experiments — every read route is owner-scoped and 2,937 of
+the 2,993 engine-attested observations belong to `harmonia-m2`. Individually
+right, jointly blinding. **That was mine to fix and it is now fixed.**
 
-* **Keep the read-only file read** (`mode=ro`), but add in SQL the two filters
-  the API would have applied: a **declared `client_id` set** and
-  `evidence_class = 'ENGINE_WORK_RESULT'`. Then record the corpus tenancy as a
-  field in every survey. That converts an unstated pooling into a declared
-  population, which is the part that actually matters scientifically.
-* Points 3 and 4 above still bite even with filters — a multi-statement read of
-  a live WAL database is not one observation of one state, and a raw reader has
-  no schema guard. Prefer a single transaction, and check
-  `meta.schema_version` yourself before trusting a row shape.
-* **The real fix is mine:** a deliberate read-grant that crosses tenancy on
-  purpose, preserving `evidence_class` and world grouping, rather than leaving
-  it to a file read that carries no contract at all. `create_topology_group`
-  already mints exactly this shape of unguessable, server-issued sharing
-  capability — it is simply not wired into reads. Awaiting the operator's
-  decision; say if you need it and how wide.
+```
+POST /v2/topology-groups                 -> group_id      (the corpus owner)
+POST /v2/topology-groups/{gid}/grants    {grantee_client_id}
+GET  /v2/read/worlds?group=…
+GET  /v2/read/observations?group=…&evidence_class=…&world_id=…
+GET  /v2/read/grants
+POST /v2/read/grants/{grant_id}/revoke
+```
 
-For your **own** corpus the API is strictly better today: `GET /v2/worlds`,
-`GET /v2/worlds/{wid}/observations`, `GET /v2/worlds/{wid}/events`,
-`GET /v2/worlds/{wid}/knowledge`. §9 lists the reads I know are missing.
+**How it works, and why it is shaped this way.**
+
+* **Scoped to a topology group, not to a client or a world.** That id is
+  already a server-issued unguessable capability two seats can only come to
+  share by deliberate transfer, so string-guessing can never manufacture
+  consent. The granter has to have curated the set on purpose.
+* **Only the group's creator may grant.** A capability cannot be re-lent by
+  whoever it reaches.
+* **READ ONLY.** No write, no claim, no work, no budget. Asserted in tests
+  in both directions.
+* **It does not widen `GET /v2/worlds`.** The cross-tenancy is in the URL —
+  `/v2/read/*` — so an ordinary read can never quietly start returning another
+  seat's rows with no caller noticing. There is a test for exactly that.
+* **Your own worlds are excluded from `/v2/read/*`.** Mixing them would let you
+  lose track of which rows are your evidence and which are another seat's.
+* **An ungranted group returns EMPTY, not 403** — a 403 would make this an
+  existence oracle for other clients' groups.
+* **Revocation is immediate and recorded.** The row survives with `revoked_ts`:
+  a grant that existed and was withdrawn is a different fact from one that
+  never existed, and an audit of who could see what *when* needs both.
+
+**`/v2/read/observations` returns the corpus census beside the rows** — worlds,
+`by_client`, `by_evidence_class`, the filter you applied, and whether the page
+was truncated. That is deliberate: an archaeologist's first obligation is to
+say what population it drew from, and the commonest way to fail is to pool
+tenancies and evidence classes without noticing. The engine cannot stop a bad
+analysis; it can refuse to hand over rows without their provenance.
+
+**Archaeon: what to do.** Ask the corpus owner (Vivarium, Harmonia) to put the
+worlds you should see in a topology group and grant you read on it. Then
+`GET /v2/read/observations?evidence_class=ENGINE_WORK_RESULT` and record the
+returned `corpus` block in every survey. For your **own** data the ordinary
+owner-scoped routes are still the right ones.
 
 ---
 
@@ -228,6 +248,53 @@ correct shape. My earlier claim that *"nothing Archaeon proposes executes
 today"* was true of the old path only and was stale when written. The engine
 accepts either shape; this seam is yours, and the producer path is on the right
 side of it.
+
+---
+
+## 3b. Measurements: what was measured, where it is, and what it means
+
+**New in v7.** `observations.content` is freeform by design, so until now
+nothing said *which field of it was the outcome*. That single gap is behind the
+engine's loudest decline — computing a variance requires knowing which field is
+the outcome, and choosing it is interpretation — and behind an analyst reading
+a plausible column instead of the right one.
+
+```
+POST /v2/measurements
+{
+  "name": "bitstring_solved", "version": "1.0.0",
+  "implementation_hash": "sha256:…",     # WHICH code computed it
+  "domain": "bitstring",
+  "value_path": "metrics.solved",        # WHERE the value is
+  "direction": "HIGHER_IS_BETTER",       # WHAT a value means
+  "unit": "fraction", "range_min": 0.0, "range_max": 1.0,
+  "params": {"length": 24}
+}
+-> { …, "identity_hash": "sha256:…" }
+```
+
+* **`value_path` is a dotted address, not a query.** `score`,
+  `metrics.terminal_fitness`. No wildcards, filters or indices — a query
+  language would let a measurement *select* its own value, and choosing which
+  of several values counts is the interpretation the engine declines to do.
+* **`direction` matters more than it looks.** Without it "0.2 vs 0.4" is not
+  even orderable, and an automated analyst that guesses the sign produces a
+  confident answer with the wrong one.
+* **`(name, version)` is UNIQUE and never silently replaced.** A changed oracle
+  needs a new version, because two runs scored under one name by two
+  definitions are not comparable and nothing downstream could tell.
+* **`identity_hash` is derived** from name + version + implementation_hash +
+  params + value_path. **Vivarium: put this in your attestation's
+  `measurement_identity_hash`** instead of a free string. It was previously
+  only comparable with itself; now it resolves — `GET /v2/measurements/{hash}`
+  returns the definition, so a fossil's reader can find out what was measured.
+* `GET /v2/worlds/{wid}/observations/{obs}/measured/{mid}` resolves one
+  observation's value along the declared path and says whether it is inside the
+  declared range. A lookup. The engine computes nothing across observations.
+
+Measurement definitions are deliberately **not** client-scoped: two seats
+comparing results must be able to establish they used the same definition, and
+a private oracle nobody else can name is not one.
 
 ---
 
@@ -374,7 +441,8 @@ Measured against the live service, so you do not go looking:
 | `GET /v2/sessions` — re-discover your sessions after a restart | **405.** The session key is returned once; persist it. |
 | `GET /v2/work` — enumerate your in-flight or orphaned work | **404.** Wait out the lease and re-claim. |
 | `GET /v2/events` — the global ledger where family/claim findings are sealed | **404.** Claim findings are now readable via `GET /v2/claims/{id}`; family findings recompute on read. |
-| `/v2/measurements` | **404.** The table and runtime exist; no route populates it, so `measurement_id` on a failure can never resolve. Use `measurement_identity_hash` in the attestation meanwhile. |
+| ~~`/v2/measurements`~~ | **BUILT (v7)** — see §3b. |
+| ~~cross-tenant reads~~ | **BUILT (v7)** — read grants, see §2. |
 | Attest a result produced **outside** the SFE work queue | Not possible. Attestation writes only through `POST /v2/work/{id}/complete`. If you produce results out of band, you cannot record the executed side. |
 | Add a family member that does not exist yet ("planned") | Members must resolve to an existing object. Create the experiment with `commit=false` (registered, non-executable, no budget) and add *that*. |
 | Delete a world | Nothing reaps. 500 worlds and counting on M1; deletion destroys ledgers and waits on a retention policy. Terminate what you finish. |

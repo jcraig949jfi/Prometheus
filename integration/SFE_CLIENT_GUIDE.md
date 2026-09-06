@@ -90,10 +90,10 @@ body is never parsed as JSON: `422 model_attributes_type`.
 
 ---
 
-## 3. All 50 routes
+## 3. All 59 routes
 
-Counted from the live `openapi.json` on 2026-09-06: **44 distinct paths, 50
-method+path pairs**. (An earlier cut of this guide said 49 and its table was
+Counted from the live `openapi.json` on 2026-09-06 after schema v7: **52
+distinct paths, 59 method+path pairs**. (An earlier cut of this guide said 49 and its table was
 missing six live routes; both are corrected below.) "Body required" lists
 required fields; `?x&y` means required query parameters.
 
@@ -177,6 +177,32 @@ Send `exp_id`/`obs_id` too. Without them the call proves only that an event
 EXISTS, and a wrong-but-real event passes; with them the engine checks BINDING
 and rejects a mismatch. This route takes no bearer token and no session key on
 purpose, so a third party can verify an anchor it did not produce.
+
+### Measurements and cross-seat reads (v7, 2026-09-06)
+
+| Route | Body required |
+|---|---|
+| `POST /v2/measurements` | `name`, `version`, `implementation_hash`, `domain` |
+| `GET /v2/measurements` | — (`?name&domain&limit`) |
+| `GET /v2/measurements/{mid}` | — (accepts an id OR an identity_hash) |
+| `GET /v2/worlds/{wid}/observations/{obs_id}/measured/{mid}` | — |
+| `POST /v2/topology-groups/{gid}/grants` | `grantee_client_id` |
+| `GET /v2/read/grants` | — |
+| `POST /v2/read/grants/{grant_id}/revoke` | — |
+| `GET /v2/read/worlds` | — (`?group&limit`) |
+| `GET /v2/read/observations` | — (`?group&world_id&evidence_class&limit`) |
+
+A **measurement** says what was measured, **where its value is** in a freeform
+observation (`value_path`, a dotted address), and **what a value means**
+(`direction`, `unit`, range). `identity_hash` is derived from the definition,
+so an executor's `measurement_identity_hash` resolves to a registered oracle
+instead of being comparable only with itself.
+
+A **read grant** is the only way one client reads another's rows. It is scoped
+to a topology group, grantable only by that group's creator, read-only,
+revocable, and it does **not** widen `GET /v2/worlds` — the cross-tenancy is in
+the `/v2/read/*` path. `GET /v2/read/observations` returns a corpus census
+(tenancy, evidence classes, truncation) beside the rows.
 
 ### Scientific provenance (v6, 2026-09-05)
 

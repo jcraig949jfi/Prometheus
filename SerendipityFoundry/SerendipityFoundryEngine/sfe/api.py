@@ -295,6 +295,49 @@ class ClaimRetract(_Body):
     reason: str
 
 
+class MeasurementCreate(_Body):
+    """v7. A measurement DEFINITION: what it is, WHERE its value lives, and
+    what a value MEANS.
+
+    `observations.content` is freeform by design, so nothing ever said which
+    field of it was the outcome. That gap is behind the engine's loudest
+    decline -- computing a variance requires knowing which field is the
+    outcome, and choosing it is interpretation -- and behind an analyst reading
+    a plausible column instead of the right one.
+
+    `value_path` is a DOTTED PATH of plain keys ("score",
+    "metrics.terminal_fitness"), deliberately not JSONPath: a query language
+    would let a measurement select its own value, and choosing WHICH of several
+    values counts is exactly the interpretation the engine declines to do.
+
+    `(name, version)` is UNIQUE and never silently replaced. A changed oracle
+    needs a new version, because two runs scored under one name by two
+    definitions are not comparable and nothing downstream could tell."""
+    name: str
+    version: str
+    implementation_hash: str
+    domain: str
+    value_path: Optional[str] = None
+    direction: Optional[str] = None      # HIGHER_IS_BETTER | LOWER_IS_BETTER
+                                         # | NEITHER
+    unit: Optional[str] = None
+    range_min: Optional[float] = None
+    range_max: Optional[float] = None
+    params: dict[str, Any] = Field(default_factory=dict)
+    inputs: list[Any] = Field(default_factory=list)
+    outputs: list[Any] = Field(default_factory=list)
+    provenance: dict[str, Any] = Field(default_factory=dict)
+    validation_status: Literal["UNVALIDATED", "VALIDATED",
+                               "DEPRECATED"] = "UNVALIDATED"
+
+
+class ReadGrantCreate(_Body):
+    """v7 cross-seat read contract. READ ONLY, scoped to a topology group,
+    revocable. Only the group's creator may grant."""
+    grantee_client_id: str
+    note: Optional[str] = None
+
+
 class WorkComplete(_Body):
     worker_id: str
     claim_id: str               # H1 fencing token from the claim response
@@ -993,6 +1036,101 @@ def create_app(db_path: str, *, registration_open: bool = True,
                   cid: str = Depends(auth),
                   f: Foundry = Depends(get_foundry)):
         return f.get_claim(clm, client_id=cid)
+
+    # -- v7 measurements: identity, meaning, and where the value lives -----
+    @app.post("/v2/measurements")
+    def create_measurement(body: MeasurementCreate,
+                           _sess: dict = Depends(session_ctx),
+                           cid: str = Depends(auth),
+                           f: Foundry = Depends(get_foundry)):
+        return f.register_measurement(
+            body.name, body.version,
+            implementation_hash=body.implementation_hash, domain=body.domain,
+            params=body.params, inputs=body.inputs, outputs=body.outputs,
+            provenance=body.provenance,
+            validation_status=body.validation_status,
+            value_path=body.value_path, direction=body.direction,
+            unit=body.unit, range_min=body.range_min,
+            range_max=body.range_max, client_id=cid)
+
+    @app.get("/v2/measurements")
+    def list_measurements(name: Optional[str] = None,
+                          domain: Optional[str] = None, limit: int = 100,
+                          _sess: dict = Depends(session_ctx),
+                          cid: str = Depends(auth),
+                          f: Foundry = Depends(get_foundry)):
+        # measurement DEFINITIONS are deliberately not client-scoped: two seats
+        # comparing results must be able to establish they used the SAME
+        # definition, and a private oracle nobody else can name is not one.
+        return {"measurements": f.list_measurements(name=name, domain=domain,
+                                                    limit=limit)}
+
+    @app.get("/v2/measurements/{mid}")
+    def get_measurement(mid: str, _sess: dict = Depends(session_ctx),
+                        cid: str = Depends(auth),
+                        f: Foundry = Depends(get_foundry)):
+        """`mid` accepts a measurement_id OR an identity_hash, so an executor
+        holding only the hash it attested can resolve what it measured."""
+        return f.get_measurement(mid)
+
+    @app.get("/v2/worlds/{wid}/observations/{obs_id}/measured/{mid}")
+    def measured_value(wid: str, obs_id: str, mid: str,
+                       _sess: dict = Depends(session_ctx),
+                       cid: str = Depends(auth),
+                       f: Foundry = Depends(get_foundry)):
+        """Resolve one observation's value for one registered measurement.
+        A LOOKUP along a declared path -- the engine computes nothing across
+        observations and takes no view on what the number means."""
+        return f.read_measured_value(wid, obs_id, mid, client_id=cid)
+
+    # -- v7 cross-seat read contract ---------------------------------------
+    @app.post("/v2/topology-groups/{gid}/grants")
+    def grant_read(gid: str, body: ReadGrantCreate,
+                   _sess: dict = Depends(session_ctx),
+                   cid: str = Depends(auth),
+                   f: Foundry = Depends(get_foundry)):
+        return f.grant_read(gid, grantee_client_id=body.grantee_client_id,
+                            granted_by=cid, note=body.note)
+
+    @app.post("/v2/read/grants/{grant_id}/revoke")
+    def revoke_read(grant_id: str, _sess: dict = Depends(session_ctx),
+                    cid: str = Depends(auth),
+                    f: Foundry = Depends(get_foundry)):
+        return f.revoke_read(grant_id, client_id=cid)
+
+    @app.get("/v2/read/grants")
+    def list_read_grants(_sess: dict = Depends(session_ctx),
+                         cid: str = Depends(auth),
+                         f: Foundry = Depends(get_foundry)):
+        return f.list_read_grants(cid)
+
+    @app.get("/v2/read/worlds")
+    def read_worlds(group: Optional[str] = None, limit: int = 500,
+                    _sess: dict = Depends(session_ctx),
+                    cid: str = Depends(auth),
+                    f: Foundry = Depends(get_foundry)):
+        """Worlds you do NOT own, in groups you have been granted.
+
+        A SEPARATE surface from GET /v2/worlds on purpose: widening the
+        owner-scoped routes would make an ordinary read quietly start returning
+        another seat's rows, and no caller would see the change. Here the
+        cross-tenancy is in the URL."""
+        return f.read_worlds(cid, group_id=group, limit=limit)
+
+    @app.get("/v2/read/observations")
+    def read_observations(group: Optional[str] = None,
+                          world_id: Optional[str] = None,
+                          evidence_class: Optional[str] = None,
+                          limit: int = 1000,
+                          _sess: dict = Depends(session_ctx),
+                          cid: str = Depends(auth),
+                          f: Foundry = Depends(get_foundry)):
+        """Observations from granted groups, WITH the corpus census beside
+        them. An archaeologist's first obligation is to say what population it
+        drew from; the engine cannot stop a bad analysis but it can refuse to
+        hand over rows without their provenance."""
+        return f.read_observations(cid, group_id=group, world_id=world_id,
+                                   evidence_class=evidence_class, limit=limit)
 
     @app.post("/v2/claims/{clm}/retract")
     def retract_claim(clm: str, body: ClaimRetract,
