@@ -24,6 +24,7 @@ from datetime import datetime, timezone
 
 from . import db as _db
 from . import kinds as _kinds
+from . import daemon as _daemon
 from . import loop as _loop
 from . import queue as _q
 from . import spec as _spec
@@ -250,10 +251,84 @@ def cmd_release(args, conn) -> int:
 
 
 def cmd_run(args, conn) -> int:
+    """The daemon entry point. `--once` runs exactly one tick."""
     conn.close()
-    v = _loop.Vivarium(worker_id=args.worker_id, schema=args.schema)
-    return v.serve(interval_s=args.interval,
-                   max_cycles=1 if args.once else None)
+    d = _daemon.Daemon(worker_id=args.worker_id, schema=args.schema,
+                       idle_interval_s=args.interval)
+    return d.run(max_ticks=1 if args.once else args.max_ticks,
+                 stop_when_idle=args.stop_when_idle)
+
+
+def cmd_tick(args, conn) -> int:
+    """Exactly one tick, reported as JSON. The unit the daemon drives."""
+    v = _loop.Vivarium(worker_id=args.worker_id, schema=args.schema,
+                       log=(lambda *a: None) if args.quiet else print)
+    report = v.tick(conn)
+    print(_j(report.as_dict()))
+    return 0 if report.outcome != _loop.BLOCKED else 2
+
+
+def cmd_health(args, conn) -> int:
+    """Machine-readable health: is Vivarium alive, and what has it done."""
+    workers = _q.workers(conn, schema=args.schema)
+    counts = _q.counts(conn, schema=args.schema)
+    st = _q.stranded(conn, stale_after_s=args.stale_after, schema=args.schema)
+    now = datetime.now(timezone.utc)
+    out = {
+        "schema": args.schema or _db.schema(),
+        "queue": counts,
+        "queued_now": counts.get("queued", 0),
+        "slot_held_by": None,
+        "stranded": [str(r["experiment_id"]) for r in st],
+        "workers": [{"worker_id": w["worker_id"],
+                     "host": w["host"], "pid": w["pid"],
+                     "age_s": round((now - w["last_seen"]).total_seconds(), 1),
+                     "alive": (now - w["last_seen"]).total_seconds() < 60,
+                     "current": str(w["current_experiment"])
+                                if w["current_experiment"] else None,
+                     "build": w["build"]}
+                    for w in workers],
+    }
+    active = _q.active(conn, schema=args.schema)
+    if active is not None:
+        out["slot_held_by"] = {"experiment_id": str(active["experiment_id"]),
+                               "status": active["status"],
+                               "claimed_by": active["claimed_by"]}
+    out["healthy"] = (not st) and any(w["alive"] for w in out["workers"])
+    print(_j(out))
+    return 0 if out["healthy"] else 1
+
+
+def cmd_errata(args, conn) -> int:
+    """Declared contamination, and the exclusion it implies."""
+    with _db.dict_cur(conn) as cur:
+        s = args.schema or _db.schema()
+        cur.execute("SELECT erratum_id, declared_at, declared_by, kind, "
+                    "reason, detail FROM " + s + ".register_errata "
+                    "ORDER BY erratum_id")
+        errata = cur.fetchall()
+        cur.execute("SELECT count(*) n FROM " + s + ".research_experiment_queue")
+        total = cur.fetchone()["n"]
+        cur.execute("SELECT count(*) n FROM " + s + ".register_clean")
+        clean = cur.fetchone()["n"]
+    if not errata:
+        print("no errata declared; register_clean == the whole register (%d)"
+              % total)
+        return 0
+    for e in errata:
+        with _db.dict_cur(conn) as cur:
+            cur.execute("SELECT count(*) n FROM " + (args.schema or _db.schema())
+                        + ".register_errata_rows WHERE erratum_id = %s",
+                        (e["erratum_id"],))
+            n = cur.fetchone()["n"]
+        print("erratum %d  %s  %s  rows=%d" % (e["erratum_id"], e["kind"],
+                                               e["declared_at"], n))
+        print("  " + e["reason"][:400])
+        print("  rule: " + str(e["detail"].get("exclusion_rule", ""))[:300])
+    print("")
+    print("register: %d rows, %d clean, %d excluded"
+          % (total, clean, total - clean))
+    return 0
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -331,11 +406,27 @@ def build_parser() -> argparse.ArgumentParser:
     s.add_argument("--reason", required=True)
     s.set_defaults(fn=cmd_release)
 
-    s = sub.add_parser("run")
-    s.add_argument("--once", action="store_true")
+    s = sub.add_parser("run", help="the daemon: a thin loop around tick()")
+    s.add_argument("--once", action="store_true", help="exactly one tick")
+    s.add_argument("--max-ticks", type=int, default=None)
+    s.add_argument("--stop-when-idle", action="store_true",
+                   help="exit 0 the first time the queue is empty")
     s.add_argument("--interval", type=float, default=None)
     s.add_argument("--worker-id", default=None)
     s.set_defaults(fn=cmd_run)
+
+    s = sub.add_parser("tick", help="exactly one tick, reported as JSON")
+    s.add_argument("--worker-id", default=None)
+    s.add_argument("--quiet", action="store_true")
+    s.set_defaults(fn=cmd_tick)
+
+    s = sub.add_parser("health", help="machine-readable health")
+    s.add_argument("--stale-after", type=float, default=900.0)
+    s.set_defaults(fn=cmd_health)
+
+    sub.add_parser("errata",
+                   help="declared contamination and the exclusion rule"
+                   ).set_defaults(fn=cmd_errata)
     return p
 
 

@@ -160,13 +160,17 @@ def test_a_second_worker_will_not_start_over_a_stranded_row(conn, schema):
     conn.commit()
 
     v = _viv(schema, FakeRunner())
-    blocked = v.preflight(conn)
-    assert [str(r["experiment_id"]) for r in blocked] == [eid]
+    rec = v.recover(conn)
+    assert rec.safe is False
+    assert [str(r["experiment_id"]) for r in rec.stranded] == [eid]
+    assert v.tick(conn).outcome == "BLOCKED"
 
-    # And a differently-named worker simply finds the slot held.
+    # A differently-named worker is not blocked -- the row is not its to
+    # resolve -- but it finds the single slot held and does nothing.
     other = Vivarium(worker_id="other", schema=schema, runner=FakeRunner(),
                      pew_client=None, log=lambda *_a: None)
-    assert other.preflight(conn) == []
+    assert other.recover(conn).safe is True
+    assert other.tick(conn).outcome == "BUSY"
     assert other.cycle(conn) is None
 
 

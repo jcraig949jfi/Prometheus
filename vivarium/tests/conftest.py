@@ -43,9 +43,11 @@ def conn(schema):
     DDL under test is created exactly once and shared."""
     c = _db.connect()
     with c.cursor() as cur:
-        cur.execute("TRUNCATE %s.research_experiment_events, "
+        cur.execute("TRUNCATE %s.register_errata_rows, %s.register_errata, "
+                    "%s.research_experiment_events, "
                     "%s.research_experiment_queue, "
-                    "%s.worker_heartbeat" % (schema, schema, schema))
+                    "%s.worker_heartbeat RESTART IDENTITY"
+                    % (schema, schema, schema, schema, schema))
     c.commit()
     try:
         yield c

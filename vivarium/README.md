@@ -24,8 +24,10 @@ what it is given, exactly as given, once, and writes down what happened.
 | `viv/runner.py` | the SFE adapter: session -> world -> experiment -> work -> observation |
 | `viv/executors.py` | local executors (`noop_v0`, `evaluate_bitstring`) |
 | `viv/pew.py` | the fossil write (`pew.fossil.v2`) |
-| `viv/loop.py` | the service |
+| `viv/loop.py` | the nine stages and `tick()` |
+| `viv/daemon.py` | the thin loop around `tick()` |
 | `viv/cli.py` | the status surface |
+| `migrations/003_register_errata.sql` | contamination recorded, never erased |
 | `specs/` | example specifications |
 
 ## Configuration
@@ -54,7 +56,28 @@ python -m viv.cli show <experiment_id>
 python -m viv.cli kinds                        # the per-kind contracts
 python -m viv.cli family <family_id>           # a comparison, by arm
 python -m viv.cli candidates <candidate_set_id># OBSERVED set extent
+python -m viv.cli tick                         # exactly one tick, JSON out
+python -m viv.cli health                       # machine-readable health
+python -m viv.cli errata                       # declared contamination
 ```
+
+## The machine
+
+    recover -> claim -> validate -> build_request -> dispatch
+            -> collect -> fossilize -> finalize
+
+`tick()` composes those nine stages and processes **at most one** runnable
+item. `daemon.py` is a loop around `tick()` and holds no policy: fixed idle
+interval, no batching, no reordering, no retry. `run --once` is one tick;
+`run --stop-when-idle` drains and exits 0; a stranded row exits **2**.
+
+Tick outcomes are a closed set: `IDLE BUSY EXECUTED FAILED REJECTED BLOCKED`.
+
+## Contamination
+
+Excluded rows are never deleted. `viv.register_errata` + `register_errata_rows`
+enumerate them; **analysis reads `viv.register_clean`**, and a `candidate_sets`
+row with `excluded > 0` is contaminated. See `python -m viv.cli errata`.
 
 `status` exits non-zero when anything is stranded, so it works as a check.
 
