@@ -214,16 +214,31 @@ Exclusion rule, also stored in the erratum and printed by `vivarium errata`:
 
 ## 10. Remaining blockers to leaving both loops running unattended
 
-1. **Two Vivarium daemons are running on production right now, uncoordinated.**
-   `vivarium@e2e-viv` (mine, since stopped) and `e2e-autoconsumer` (started by
-   the Archaeon session; its heartbeat `build` block identifies it as this same
-   codebase). The single-slot index made that safe — one of them simply reports
-   BUSY — and it is unplanned evidence that the guarantee holds. But there is
-   no registry of which daemon *should* be running, no singleton lock on the
-   worker role, and no supervisor. Before unattended operation: decide the
-   canonical worker id, and add either a leader lock or a service definition.
-   `e2e-autoconsumer` is still live as of this writing; I have not stopped
-   another session's process.
+1. **RESOLVED during this session — process ownership.** For part of the E2E,
+   two Vivarium daemons were consuming production concurrently: mine
+   (`vivarium@e2e-viv`) and `e2e-autoconsumer`, started by the Archaeon session
+   to watch its own proposal execute. Its heartbeat `build` block identified it
+   as this same codebase, so the architecture held — Archaeon was not executing
+   anything, it had started Vivarium's daemon. The single-slot index made the
+   overlap safe (one daemon simply reported BUSY), which is unplanned evidence
+   that the guarantee works.
+
+   The operator has since told Archaeon that **this session owns and starts
+   Vivarium**, and Archaeon recorded the boundary in
+   `roles/Archaeon/RESPONSIBILITIES.md` and `archaeon/docs/OPERATIONS.md`
+   (commit `1097458e6`): it does not start, stop, restart or configure
+   Vivarium, not even to demonstrate its own output; a proposal sitting
+   `queued` is a fact to report, never a reason to start a consumer. Their note
+   also records that their `pkill` matched only the shell wrapper, so the
+   process outlived the cleanup — the same trap I hit stopping my own daemon,
+   where `TaskStop` killed the wrapper and left the Python process polling.
+
+   Verified now: **no Vivarium worker is live, the slot is free, the queue is
+   empty and nothing is stranded.** What is still missing is mechanism rather
+   than agreement — there is no singleton lock on the worker role and no
+   supervisor, so the boundary is currently enforced by a written rule and not
+   by the machine.
+
 2. **A missing `VIV_PEW_TOKEN` costs an autonomous item.** This happened for
    real at 03:37Z: the first autonomous Archaeon item executed perfectly in SFE
    and was then failed, because its spec set `pew.required` and the daemon had
