@@ -1,8 +1,15 @@
 ==============================================================================
 PROMPT -- HARMONIA / SFE SCHEMA v6 IS LIVE ON M1: SCIENTIFIC PROVENANCE
 From: Daedalus (maintainer, Serendipity Foundry Engine)
-Date: 2026-09-05
+Date: 2026-09-05, corrected 2026-09-06
 ==============================================================================
+
+CORRECTION, 2026-09-06. The first cut of this packet said "M2 IS STILL DOWN".
+That was FALSE and I did not check it before writing it. M2 is up, reachable
+and serving. Item 5 below is rewritten. The scientific conclusion it supported
+is unchanged -- no cross-machine qualification exists -- but the CAUSE was
+wrong, and the wrong cause pointed at a wait when it should have pointed at
+work of mine.
 
 WHERE WE LANDED
 
@@ -286,9 +293,39 @@ WHAT I WOULD LIKE YOU TO PUSH ON
      partly facts about one toy, v6 will not tell you which -- only a second
      organism will.
 
-  5. M2 IS STILL DOWN, and every cross-engine property in v5 and v6 is proven
-     only by twin engines in one process. 421 WRONG_SESSION and "a family
-     spans worlds but must not span engines" have never been tested across two
-     hosts. That is a real gap in my evidence, not yours.
+  5. CROSS-MACHINE AFFINITY IS STILL UNQUALIFIED -- but not for the reason I
+     first gave you. M2 is UP. Measured 2026-09-06 from M1:
+
+       curl --cacert deploy/m2.crt https://192.168.1.191:8811/v2/version
+       -> 200 {"api":"v2","schema_version":4,
+               "engine_source_hash":"sha256:6a4f3aee...",
+               "source_commit":"0fd24e0f3"}
+
+     It answers over the network, and its OWN trust anchor validates normally
+     -- no -k, no insecure flag. What it is running is the PRE-AFFINITY build:
+     schema 4, commit 0fd24e0f3, which predates session affinity entirely. Its
+     /v2/version carries no session_enforcement, no science_profile and no
+     engine_instance_id, and the v6 routes are simply absent there:
+
+       GET /v2/families   M2 -> 404      M1 -> 401 (present, needs a token)
+       GET /v2/claims     M2 -> 404      M1 -> 401
+
+     SO THE BLOCKER IS A DEPLOY, NOT AN OUTAGE. L1 (off-host reachability) and
+     a first cut of L2 (a foreign client validating the trust anchor) are
+     demonstrable today. L3 -- cross-machine affinity, the thing the feature
+     exists for -- cannot be run at all until M2 carries the affinity layer,
+     because a schema-4 engine has no session keys to mismatch.
+
+     WHAT HAS NOT CHANGED, AND DO NOT READ IT AS CHANGED: every cross-engine
+     property in v5 and v6 is still proven ONLY by twin engines in one
+     process. 421 WRONG_SESSION and "a family spans worlds but must not span
+     engines" have never been exercised across two hosts, where the path is
+     not loopback-routed and does not bypass the host firewall. There is no
+     cross-machine qualification. The gap is real, it is mine, and correcting
+     the cause makes it larger rather than smaller -- it was never a wait on
+     someone else's machine coming back.
+
+     I am not deploying v6 to M2 as part of this correction. A deployment
+     readiness report goes to James first.
 
 ==============================================================================
