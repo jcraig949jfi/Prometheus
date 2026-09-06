@@ -1,0 +1,32 @@
+{
+  "template_id": "evolcomp.fitness.v0",
+  "kind": "evaluate_bitstring",
+  "param_space": {
+    "bits": {
+      "uniform_bits": "length"
+    },
+    "length": {
+      "choices": [
+        16,
+        24,
+        32
+      ]
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Evolutionary Computation",
+    "reference": "John H. Holland 1975, Adaptation in Natural and Artificial Systems",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "This measures the objective fitness of a specific binary string against a hidden target landscape. The field would run this as the fundamental inner loop of a genetic algorithm to determine the viability of a single individual. A SURVIVED verdict indicating high fitness would not license the claim that the individual is the global optimum, nor that a full population would successfully maintain diversity on this landscape.",
+  "_ingest": {
+    "source_report": "01_evolutionary_substrates.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "template_id": "ada_thin_film.v0",
+  "kind": "synthesize_thin_film_v0",
+  "param_space": {
+    "dopant_ratio": {
+      "int_range": null
+    },
+    "annealing_time_sec": {
+      "int_range": null
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Automated Experimentation",
+    "reference": "Self-driving laboratory for accelerated discovery of thin-film materials (MacLeod et al. 2020)",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "This tests the optimization of hole mobility in organic hole transport materials by varying doping ratios and annealing times. The field runs this to rapidly map the processing landscape for thin-film materials. A SURVIVED verdict confirms that a specific parameter pair exceeds a target pseudomobility threshold, but would NOT license the conclusion that this material formulation will be structurally stable or durable in a fully assembled perovskite solar cell device.",
+  "_ingest": {
+    "source_report": "06_automated_discovery_systems.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'synthesize_thin_film_v0' is not implemented by Vivarium; this template is an expansion request by definition",
+      "REPAIRED: source markers were removed from this block to make it parse. Structure is the report's; any value that a marker had overwritten is null, never guessed."
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

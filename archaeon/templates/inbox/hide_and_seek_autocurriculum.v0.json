@@ -1,0 +1,31 @@
+{
+  "template_id": "hide_and_seek_autocurriculum.v0",
+  "kind": "multi_agent_competition_v0",
+  "param_space": {
+    "num_hiders": {
+      "choices": null
+    },
+    "num_seekers": {
+      "choices": null
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Autocurricula",
+    "reference": "Emergent Tool Use From Multi-Agent Autocurricula (Baker et al. 2019)",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "In multi-agent autocurricula, agents create a self-supervised curriculum through competition, leading to emergent strategies such as tool use without external task design. This template measures whether increasing the number of agents induces a higher rate of strategy shifts (phases) compared to a single-agent baseline. A SURVIVED verdict would confirm that competition drives strategic adaptation in this specific setting, but it would not license the assumption that these emergent skills transfer zero-shot to entirely unrelated domains or human-relevant tasks.",
+  "_ingest": {
+    "source_report": "04_open_ended_learning_and_architecture_search.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'multi_agent_competition_v0' is not implemented by Vivarium; this template is an expansion request by definition",
+      "REPAIRED: source markers were removed from this block to make it parse. Structure is the report's; any value that a marker had overwritten is null, never guessed."
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

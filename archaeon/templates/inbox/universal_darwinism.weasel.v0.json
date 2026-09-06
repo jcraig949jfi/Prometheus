@@ -1,0 +1,31 @@
+{
+  "template_id": "universal_darwinism.weasel.v0",
+  "kind": "cumulative_bitstring.v0",
+  "param_space": {
+    "length": {
+      "int_range": null
+    },
+    "mutation_rate": {
+      "int_range": null
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Universal Darwinism",
+    "reference": "Richard Dawkins' Weasel program from The Blind Watchmaker (1986)",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "This models cumulative selection by mutating a string and keeping variants that approach a target. A SURVIVED verdict would license the claim that cumulative selection exponentially outpaces single-step random generation, but it would NOT license the claim that biological evolution operates with a predefined distant target, as the model artificially supplies a fixed goal sequence.",
+  "_ingest": {
+    "source_report": "14_evolutionary_epistemology.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'cumulative_bitstring.v0' is not implemented by Vivarium; this template is an expansion request by definition",
+      "REPAIRED: source markers were removed from this block to make it parse. Structure is the report's; any value that a marker had overwritten is null, never guessed."
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

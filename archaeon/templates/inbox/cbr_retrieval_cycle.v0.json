@@ -1,0 +1,38 @@
+{
+  "template_id": "cbr_retrieval_cycle.v0",
+  "kind": "cbr_retrieval_cycle_v0",
+  "param_space": {
+    "case_base_size": {
+      "int_range": null
+    },
+    "feature_dimensions": {
+      "int_range": null
+    },
+    "similarity_metric": {
+      "choices": [
+        "euclidean",
+        "cosine",
+        "knowledge_guided"
+      ]
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Case-Based Reasoning",
+    "reference": "Aamodt and Plaza 1994 Case-Based Reasoning: Foundational Issues, Methodological Variations, and System Approaches",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "This experiment isolates the retrieval phase of the Case-Based Reasoning cycle, focusing on fetching the most similar historical cases to a new target problem. It measures the top-1 similarity score when querying a simulated memory of past experiences. A researcher would use this to evaluate the accuracy of different similarity metrics under varying case base sizes. A SURVIVED verdict indicating that a case was retrieved with a similarity score above a designated threshold would license the claim that the retrieval mechanism successfully navigated the feature space. It would NOT license the inference that the retrieved case is actually reusable or that the adaptation phase would succeed, because the bench cannot feed the retrieved case forward into a secondary outcome test, nor can it persist the complex case structure into a broader retention archive.",
+  "_ingest": {
+    "source_report": "11_reasoning_modes.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'cbr_retrieval_cycle_v0' is not implemented by Vivarium; this template is an expansion request by definition",
+      "REPAIRED: source markers were removed from this block to make it parse. Structure is the report's; any value that a marker had overwritten is null, never guessed."
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

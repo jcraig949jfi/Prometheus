@@ -1,0 +1,36 @@
+{
+  "template_id": "raf.detection.v0",
+  "kind": "detect_raf.v0",
+  "param_space": {
+    "max_length": {
+      "int_range": [
+        2,
+        10
+      ]
+    },
+    "catalysis_prob": {
+      "float_range": [
+        0.001,
+        0.1
+      ]
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Autocatalytic Sets",
+    "reference": "Hordijk and Steel 2004, Detecting autocatalytic, self-sustaining sets in chemical reaction systems",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "This experiment generates a binary polymer reaction network and runs a graph-theoretic algorithm to detect the presence of a Reflexively Autocatalytic and Food-generated network. The field would run this to verify the statistical probability of autocatalysis emerging at specific catalytic connectivity thresholds. A SURVIVED verdict would prove the structural existence of a closed catalytic subgraph, but would NOT license the assumption that the set is dynamically stable or capable of realistic chemical reproduction under mass-action kinetics.",
+  "_ingest": {
+    "source_report": "03_generative_and_developmental_representations.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'detect_raf.v0' is not implemented by Vivarium; this template is an expansion request by definition"
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

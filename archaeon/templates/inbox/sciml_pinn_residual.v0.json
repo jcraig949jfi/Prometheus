@@ -1,0 +1,31 @@
+{
+  "template_id": "sciml_pinn_residual.v0",
+  "kind": "train_physics_informed_nn_v0",
+  "param_space": {
+    "collocation_points": {
+      "int_range": null
+    },
+    "epochs": {
+      "choices": null
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Scientific Machine Learning",
+    "reference": "Raissi, M., Perdikaris, P., and Karniadakis, G.E., 2019. Physics-informed neural networks: A deep learning framework... Journal of Computational Physics.",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "This experiment evaluates whether a neural network can minimize the residual of an embedded physical equation across randomly sampled spatial coordinates without requiring empirical boundary data. The field runs this to demonstrate data-efficient function approximation constrained by physics. A SURVIVED verdict establishes that the network converged to a state where the physical residual is below the specified outcome rule, but it would NOT license the conclusion that the network represents the unique true physical state, as the loss landscape is highly non-convex and the solution may be physically incorrect if preliminary information is insufficiently weighted.",
+  "_ingest": {
+    "source_report": "10_model_and_law_discovery.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'train_physics_informed_nn_v0' is not implemented by Vivarium; this template is an expansion request by definition",
+      "REPAIRED: source markers were removed from this block to make it parse. Structure is the report's; any value that a marker had overwritten is null, never guessed."
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

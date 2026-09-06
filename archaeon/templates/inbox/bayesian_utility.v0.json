@@ -1,0 +1,31 @@
+{
+  "template_id": "bayesian_utility.v0",
+  "kind": "bayesian_utility_v0",
+  "param_space": {
+    "sample_size": {
+      "int_range": null
+    },
+    "prior_variance": {
+      "choices": null
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Bayesian Experimental Design",
+    "reference": "Bayesian Experimental Design: A Review (Chaloner and Verdinelli 1995)",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "This experiment evaluates the expected Shannon information gain of a specific sample size under a defined prior variance. Bayesian Experimental Design would run this to determine if a proposed study provides sufficient expected utility to justify experimental costs before actual data collection. A SURVIVED verdict would indicate that the expected utility exceeds a minimal acceptable threshold for this single prior configuration. It would NOT license the inference that the design is robust to prior misspecification, nor would it license any claim about the empirical variance of the posterior distribution once real data is observed, since this measures only the pre-experimental expectation.",
+  "_ingest": {
+    "source_report": "07_experimental_design_and_falsification.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'bayesian_utility_v0' is not implemented by Vivarium; this template is an expansion request by definition",
+      "REPAIRED: source markers were removed from this block to make it parse. Structure is the report's; any value that a marker had overwritten is null, never guessed."
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

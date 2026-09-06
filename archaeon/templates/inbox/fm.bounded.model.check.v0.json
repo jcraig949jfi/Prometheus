@@ -1,0 +1,34 @@
+{
+  "template_id": "fm.bounded.model.check.v0",
+  "kind": "bounded_model_check_v0",
+  "param_space": {
+    "transition_formula_bits": {
+      "choices": [
+        "1111000011110000",
+        "0101010101010101"
+      ]
+    },
+    "bound_k": {
+      "int_range": null
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Formal Methods",
+    "reference": "Biere et al 1999 Symbolic Model Checking without BDDs",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "Bounded model checking unrolls a system transition relation into a boolean formula up to length k to exhaustively search for property violations using a SAT solver. A SURVIVED unsatisfiable verdict provides a mathematical guarantee that no counterexample exists up to length k, but it strictly does not license the claim that the system is safe at step k+1 unless a k-induction proof is also successfully completed.",
+  "_ingest": {
+    "source_report": "09_testing_and_verification.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'bounded_model_check_v0' is not implemented by Vivarium; this template is an expansion request by definition",
+      "REPAIRED: source markers were removed from this block to make it parse. Structure is the report's; any value that a marker had overwritten is null, never guessed."
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

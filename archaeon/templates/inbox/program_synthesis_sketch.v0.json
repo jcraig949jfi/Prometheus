@@ -1,0 +1,31 @@
+{
+  "template_id": "program_synthesis_sketch.v0",
+  "kind": "bounded_synthesizer.v0",
+  "param_space": {
+    "max_iterations": {
+      "int_range": null
+    },
+    "sketch_size": {
+      "int_range": null
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Program Synthesis",
+    "reference": "Solar-Lezama 2008 Program Synthesis by Sketching",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "This measures whether a synthesis engine can resolve a partial program sketch of a given size within a maximum number of solver iterations. The field routinely sets up such experiments to benchmark solver efficiency on bounded correctness tasks. A SURVIVED verdict indicates that a program satisfying the bounded specification was successfully generated; it would not license the claim that the synthesized code is human-readable, optimal in execution time, or generalizable beyond the provided bounded specification.",
+  "_ingest": {
+    "source_report": "08_synthesis_and_logic.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'bounded_synthesizer.v0' is not implemented by Vivarium; this template is an expansion request by definition",
+      "REPAIRED: source markers were removed from this block to make it parse. Structure is the report's; any value that a marker had overwritten is null, never guessed."
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

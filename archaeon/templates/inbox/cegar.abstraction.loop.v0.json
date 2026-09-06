@@ -1,0 +1,35 @@
+{
+  "template_id": "cegar.abstraction.loop.v0",
+  "kind": "cegar_loop_v0",
+  "param_space": {
+    "initial_abstraction_bits": {
+      "choices": [
+        "11000000",
+        "11110000"
+      ]
+    },
+    "property_bits": {
+      "choices": [
+        "10101010"
+      ]
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Counterexample-Guided Verification",
+    "reference": "Clarke et al 2000 Counterexample-guided abstraction refinement",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "This experiment evaluates an initial over-approximation of a model, analyzing counterexamples to refine the abstraction until a property is proven or a genuine bug is found. A SURVIVED verdict implies the property successfully holds on the refined abstraction state space, but does not license the claim that the physical implementation is free from hardware faults or bugs outside the modeled abstraction layer.",
+  "_ingest": {
+    "source_report": "09_testing_and_verification.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'cegar_loop_v0' is not implemented by Vivarium; this template is an expansion request by definition"
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

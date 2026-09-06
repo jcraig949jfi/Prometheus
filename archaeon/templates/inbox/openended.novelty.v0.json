@@ -1,0 +1,42 @@
+{
+  "template_id": "openended.novelty.v0",
+  "kind": "novelty_maze_v0",
+  "param_space": {
+    "neural_weights": {
+      "float_range": [
+        -2.0,
+        2.0
+      ]
+    },
+    "maze_config": {
+      "choices": [
+        "hard_maze",
+        "medium_maze"
+      ]
+    },
+    "eval_steps": {
+      "int_range": [
+        100,
+        400
+      ]
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Open-Ended Evolution",
+    "reference": "Lehman and Stanley 2011, Abandoning Objectives: Evolution Through the Search for Novelty Alone",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "This measures the behavioral endpoint of a single agent in a maze, providing the raw coordinates needed to compute novelty without a fitness target. The field would run this to verify the behavioral characterization function operates correctly. A SURVIVED verdict indicating completion of the steps would not license the inference that the agent solved the maze, nor that its behavior is historically novel compared to a population.",
+  "_ingest": {
+    "source_report": "01_evolutionary_substrates.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'novelty_maze_v0' is not implemented by Vivarium; this template is an expansion request by definition"
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

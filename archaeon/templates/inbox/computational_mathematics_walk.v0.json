@@ -1,0 +1,30 @@
+{
+  "template_id": "computational_mathematics_walk.v0",
+  "kind": "random_walk_v0",
+  "param_space": {
+    "steps": {
+      "int_range": null
+    },
+    "step_scale": {
+      "choices": null
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Computational Mathematics",
+    "reference": "Standard discrete stochastic modeling texts (canonical method, matches existing bench capability)",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "This experiment executes a stateful computational walk to evaluate the bounds of accumulated spatial translation over time. The field runs this to model diffusion paths or verify the statistical bounds of pseudo-random scaling. A SURVIVED verdict demonstrates that the final position of the walk satisfied the scalar bounds defined in the outcome rule, but it would NOT license the inference that the walk is statistically unbiased or that the underlying seed derivation accurately reflects true physical Brownian motion.",
+  "_ingest": {
+    "source_report": "10_model_and_law_discovery.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "REPAIRED: source markers were removed from this block to make it parse. Structure is the report's; any value that a marker had overwritten is null, never guessed."
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

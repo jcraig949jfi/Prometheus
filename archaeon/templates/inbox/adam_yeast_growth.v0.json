@@ -1,0 +1,39 @@
+{
+  "template_id": "adam_yeast_growth.v0",
+  "kind": "simulate_yeast_knockout_v0",
+  "param_space": {
+    "knockout_orf": {
+      "choices": [
+        "YHR090C",
+        "YAL012W",
+        "YBR218C"
+      ]
+    },
+    "media_supplement": {
+      "choices": [
+        "none",
+        "uracil",
+        "histidine",
+        "leucine"
+      ]
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Robot Scientists",
+    "reference": "The Automation of Science / Robot Scientist Adam (King et al. 2009)",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "This experiment simulates the physical growth assay of a specific yeast strain knockout in defined media, which Adam used to infer gene-enzyme relationships. A SURVIVED verdict based on final optical density demonstrates that the given media supplement rescues the metabolic defect, but would NOT license the claim that the gene directly codes for the enzyme producing that supplement, as the rescue could occur via an alternative metabolic pathway.",
+  "_ingest": {
+    "source_report": "06_automated_discovery_systems.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'simulate_yeast_knockout_v0' is not implemented by Vivarium; this template is an expansion request by definition"
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

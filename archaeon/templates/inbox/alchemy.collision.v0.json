@@ -1,0 +1,44 @@
+{
+  "template_id": "alchemy.collision.v0",
+  "kind": "lambda_collision.v0",
+  "param_space": {
+    "combinator_a": {
+      "choices": [
+        "I",
+        "K",
+        "S"
+      ]
+    },
+    "combinator_b": {
+      "choices": [
+        "I",
+        "K",
+        "S"
+      ]
+    },
+    "max_reductions": {
+      "int_range": [
+        10,
+        1000
+      ]
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Artificial Chemistry",
+    "reference": "Fontana and Buss 1994, The arrival of the fittest: Toward a theory of biological organization",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "This measures whether two simple lambda-calculus combinators, when applied to each other, reduce to a stable normal form within a bounded number of reduction steps. The field relies on these pairwise application events as the fundamental chemical reactions of algorithmic chemistry. A SURVIVED verdict would indicate that the expressions halt and yield a product, but would NOT license the claim that these components can form a self-maintaining level one organization or autocatalytic closure in a larger population reactor.",
+  "_ingest": {
+    "source_report": "03_generative_and_developmental_representations.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'lambda_collision.v0' is not implemented by Vivarium; this template is an expansion request by definition"
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

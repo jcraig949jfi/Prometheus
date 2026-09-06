@@ -1,0 +1,37 @@
+{
+  "template_id": "novelty.search.v0",
+  "kind": "novelty_search_step.v0",
+  "param_space": {
+    "evaluations": {
+      "int_range": [
+        1000,
+        5000
+      ]
+    },
+    "k_nearest": {
+      "choices": [
+        15,
+        20,
+        25
+      ]
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Novelty Search",
+    "reference": "Lehman and Stanley 2008 Exploiting Open-Endedness to Solve Problems Through the Search for Novelty",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "Novelty search abandons the objective function entirely, scoring individuals solely by their behavioral distance to an archive of previous individuals. This measures whether ignoring objectives circumvents deception. A SURVIVED verdict showing high terminal novelty would indicate the search reached unexplored areas, but would NOT license the claim that the algorithm actually solved a specific task, only that it diverged successfully.",
+  "_ingest": {
+    "source_report": "02_diversity_and_illumination.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'novelty_search_step.v0' is not implemented by Vivarium; this template is an expansion request by definition"
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

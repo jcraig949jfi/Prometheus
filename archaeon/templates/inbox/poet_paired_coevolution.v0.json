@@ -1,0 +1,31 @@
+{
+  "template_id": "poet_paired_coevolution.v0",
+  "kind": "poet_loop_v0",
+  "param_space": {
+    "num_environments": {
+      "choices": null
+    },
+    "transfer_interval": {
+      "int_range": null
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "POET / Open-Ended Learning",
+    "reference": "Paired Open-Ended Trailblazer (POET): Endlessly Generating Increasingly Complex and Diverse Learning Environments and Their Solutions (Wang et al. 2019)",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "POET confronts open-endedness by evolving a population of diverse environmental challenges while collectively optimizing neural network agents to solve them, leveraging transfer learning between environments as stepping stones. This template tests if cross-environment transfers yield higher final scores than isolated training. A SURVIVED verdict would prove that paired co-evolution improves optimization on this specific set of environments, but it would not license the claim that the algorithm is capable of endlessly generating complexity without bound, as the bench's bounded evaluation budget cannot prove true open-endedness.",
+  "_ingest": {
+    "source_report": "04_open_ended_learning_and_architecture_search.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'poet_loop_v0' is not implemented by Vivarium; this template is an expansion request by definition",
+      "REPAIRED: source markers were removed from this block to make it parse. Structure is the report's; any value that a marker had overwritten is null, never guessed."
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

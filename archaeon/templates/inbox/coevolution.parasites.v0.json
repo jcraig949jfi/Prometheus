@@ -1,0 +1,38 @@
+{
+  "template_id": "coevolution.parasites.v0",
+  "kind": "coevaluate_populations.v0",
+  "param_space": {
+    "host_pop_size": {
+      "choices": [
+        50,
+        100,
+        200
+      ]
+    },
+    "parasite_pop_size": {
+      "choices": [
+        50,
+        100,
+        200
+      ]
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Coevolution",
+    "reference": "Hillis 1990 Co-evolving parasites improve simulated evolution as an optimization procedure",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "Competitive coevolution pits a population of candidate solutions against a population of test cases, where fitness depends on defeating the opposing population. This measures whether an arms race prevents premature convergence on static benchmarks. A SURVIVED verdict showing host improvement over time would indicate a productive arms race, but would NOT license the claim that the final host is robust against all possible tests, only against the final surviving parasites.",
+  "_ingest": {
+    "source_report": "02_diversity_and_illumination.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'coevaluate_populations.v0' is not implemented by Vivarium; this template is an expansion request by definition"
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

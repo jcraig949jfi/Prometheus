@@ -245,26 +245,37 @@ def parse_expansion(block):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--dry-run", action="store_true")
-    ap.add_argument("--reports", default=HERE,
+    ap.add_argument("--reports", nargs="+", default=[HERE],
                     help="directory holding the NN_*.md reports; defaults to "
                          "this directory. The v1 run's reports live in a "
                          "subdirectory because their template blocks were "
                          "corrupted, but their expansion blocks are intact and "
                          "worth reading.")
     args = ap.parse_args()
-    reports_dir = os.path.abspath(args.reports)
+    # Several report directories may be given. When the same PROMPT NUMBER
+    # appears in more than one, the LAST directory wins. That is how a re-run
+    # of a few clusters supersedes an earlier, damaged run of all of them
+    # without either discarding the good salvage or letting stale rows linger.
+    chosen = {}
+    for d in args.reports:
+        d = os.path.abspath(d)
+        if not os.path.isdir(d):
+            print("no such directory: %s" % d)
+            return 1
+        for f in os.listdir(d):
+            if re.match(r"^\d\d_.*\.md$", f):
+                chosen[f[:2]] = (d, f)
+    sources = [chosen[k] for k in sorted(chosen)]
 
     registry = load_registry()
-    reports = sorted(f for f in os.listdir(reports_dir)
-                     if re.match(r"^\d\d_.*\.md$", f))
+    reports = [f for _, f in sources]
     if not reports:
-        print("no NN_*.md reports in %s" % reports_dir)
+        print("no NN_*.md reports in %s" % ", ".join(args.reports))
         return 1
 
     accepted, rejected, expansions = [], [], []
-    for r in reports:
-        text = io.open(os.path.join(reports_dir, r),
-                       encoding="utf-8").read()
+    for d, r in sources:
+        text = io.open(os.path.join(d, r), encoding="utf-8").read()
         for raw in TEMPLATE_RE.findall(text):
             body = strip_fences(raw)
             repaired = False

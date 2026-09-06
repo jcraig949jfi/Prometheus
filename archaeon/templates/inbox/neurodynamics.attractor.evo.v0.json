@@ -1,0 +1,31 @@
+{
+  "template_id": "neurodynamics.attractor.evo.v0",
+  "kind": "attractor_evolution_v0",
+  "param_space": {
+    "population_size": {
+      "int_range": null
+    },
+    "retrain_iterations": {
+      "int_range": null
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Darwinian Neurodynamics",
+    "reference": "Szilagyi, Zachar, Fedor, de Vladar, Szathmary (2017) Breeding novel solutions in the brain: A model of Darwinian neurodynamics.",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "This field tests the hypothesis that true evolutionary dynamics including multiplication and heredity occur in the brain to solve cognitive problems. The experiment simulates a population of recurrent attractor networks that generate binary pattern variants, select the fittest candidates, and retrain to search for a target solution. A SURVIVED verdict establishes that this evolutionary search algorithm is mathematically capable of finding a target pattern faster than purely selectionist search, but it would NOT license the physiological claim that the biological human brain actually implements this exact mechanism.",
+  "_ingest": {
+    "source_report": "13_learning_to_search_and_machine_minds.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'attractor_evolution_v0' is not implemented by Vivarium; this template is an expansion request by definition",
+      "REPAIRED: source markers were removed from this block to make it parse. Structure is the report's; any value that a marker had overwritten is null, never guessed."
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "template_id": "sbse.hillclimb.search.v0",
+  "kind": "sbse_hill_climb_v0",
+  "param_space": {
+    "initial_candidate_bits": {
+      "choices": [
+        "00000000",
+        "11111111"
+      ]
+    },
+    "max_evaluations": {
+      "int_range": null
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Search-Based Software Engineering",
+    "reference": "Harman and Jones 2001 Search-based software engineering",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "Search-based software engineering formulates software engineering problems as optimization tasks, navigating a fitness landscape using metaheuristics to find an optimal bitstring candidate. A SURVIVED verdict indicates that an adequate solution crossing the fitness threshold was discovered by the search, but it does not license the claim that the discovered solution is the global optimum or the only valid candidate available.",
+  "_ingest": {
+    "source_report": "09_testing_and_verification.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'sbse_hill_climb_v0' is not implemented by Vivarium; this template is an expansion request by definition",
+      "REPAIRED: source markers were removed from this block to make it parse. Structure is the report's; any value that a marker had overwritten is null, never guessed."
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

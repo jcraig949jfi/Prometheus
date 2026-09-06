@@ -1,0 +1,31 @@
+{
+  "template_id": "l2s.dagger.v0",
+  "kind": "l2s_dagger_v0",
+  "param_space": {
+    "trajectory_length": {
+      "int_range": null
+    },
+    "oracle_probability": {
+      "choices": null
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Learning-to-Search",
+    "reference": "Ross, Gordon, and Bagnell (2011) A reduction of imitation learning and structured prediction to no-regret online learning.",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "Learning-to-Search treats structured prediction as a sequential decision problem. This characteristic experiment uses the DAgger algorithm to train a policy by rolling out trajectories and querying an expert oracle for corrections. A SURVIVED verdict based on test loss demonstrates the policy can successfully imitate the oracle on the specific training distribution, but it would NOT license the inference that the policy can improve upon a suboptimal reference policy, which would require an advanced algorithm like LOLS.",
+  "_ingest": {
+    "source_report": "13_learning_to_search_and_machine_minds.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'l2s_dagger_v0' is not implemented by Vivarium; this template is an expansion request by definition",
+      "REPAIRED: source markers were removed from this block to make it parse. Structure is the report's; any value that a marker had overwritten is null, never guessed."
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

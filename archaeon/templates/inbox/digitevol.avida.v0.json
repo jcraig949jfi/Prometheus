@@ -1,0 +1,36 @@
+{
+  "template_id": "digitevol.avida.v0",
+  "kind": "avida_cpu_v0",
+  "param_space": {
+    "genome_sequence": {
+      "choices": [
+        "default_ancestor",
+        "random_sequence"
+      ]
+    },
+    "environmental_resource": {
+      "choices": [
+        "logic_not",
+        "logic_equ"
+      ]
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Digital Evolution",
+    "reference": "Lenski, Ofria, Pennock, and Adami 2003, The Evolutionary Origin of Complex Features",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "This measures whether a specific virtual CPU executing a sequence of instructions can correctly perform a logical operation and trigger a simulated resource reward. The field would run this to trace the functional capability of a single genotype. A SURVIVED verdict confirming the logical operation was performed would not license the inference that the organism evolved this trait naturally, only that the provided sequence mechanically produces the desired output.",
+  "_ingest": {
+    "source_report": "01_evolutionary_substrates.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'avida_cpu_v0' is not implemented by Vivarium; this template is an expansion request by definition"
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

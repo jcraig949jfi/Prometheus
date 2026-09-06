@@ -1,0 +1,37 @@
+{
+  "template_id": "automated_conjecture_hr.v0",
+  "kind": "automated_conjecture_hr_v0",
+  "param_space": {
+    "initial_axioms": {
+      "int_range": null
+    },
+    "production_rules": {
+      "choices": [
+        "all",
+        "restrictive"
+      ]
+    },
+    "search_steps": {
+      "int_range": null
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Automated Conjecture Generation",
+    "reference": "Colton 2002 Automated Theory Formation in Pure Mathematics",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "This experiment models the HR system's theory formation loop, where novel mathematical concepts are invented and empirically evaluated to form conjectures. It measures the raw yield of non-trivial conjectures generated within a fixed number of search steps. A SURVIVED verdict based on generating a threshold number of conjectures would license the claim that the production rules are sufficiently productive over the given axioms. However, it would NOT license the inference that any of these conjectures are mathematically true, nor that they are interesting to a human, because the bench lacks an integrated automated theorem prover to verify the statements, and the scalar outcome rule cannot express the logical structure or novelty of the individual conjectures.",
+  "_ingest": {
+    "source_report": "11_reasoning_modes.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'automated_conjecture_hr_v0' is not implemented by Vivarium; this template is an expansion request by definition",
+      "REPAIRED: source markers were removed from this block to make it parse. Structure is the report's; any value that a marker had overwritten is null, never guessed."
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

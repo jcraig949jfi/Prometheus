@@ -1,0 +1,35 @@
+{
+  "template_id": "mil_predicate_invention.v0",
+  "kind": "metagol_induce.v0",
+  "param_space": {
+    "max_clauses": {
+      "int_range": null
+    },
+    "metarule_set": {
+      "choices": [
+        "chain",
+        "tailrec",
+        "dyadic"
+      ]
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Inductive Logic Programming",
+    "reference": "Muggleton et al. 2015 Metagol",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "This tests whether a meta-interpretive learning system can induce a higher-order logic program with predicate invention within a maximum number of clauses, using a specific metarule template bias. Researchers in this field use this setup to evaluate how different declarative biases impact the efficiency of hypothesis search. A SURVIVED verdict demonstrates that a set of logical clauses perfectly entailing the examples was found; it would not license the claim that the induced logic program is globally minimal or that the hypothesis scales to noisy, non-logical data.",
+  "_ingest": {
+    "source_report": "08_synthesis_and_logic.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'metagol_induce.v0' is not implemented by Vivarium; this template is an expansion request by definition",
+      "REPAIRED: source markers were removed from this block to make it parse. Structure is the report's; any value that a marker had overwritten is null, never guessed."
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

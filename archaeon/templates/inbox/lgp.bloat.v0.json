@@ -1,0 +1,41 @@
+{
+  "template_id": "lgp.bloat.v0",
+  "kind": "evaluate_lgp.v0",
+  "param_space": {
+    "program_bits": {
+      "uniform_bits": "bit_length"
+    },
+    "bit_length": {
+      "choices": [
+        256,
+        512,
+        1024
+      ]
+    },
+    "register_count": {
+      "choices": [
+        2,
+        4,
+        8
+      ]
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Genetic Programming",
+    "reference": "Brameier and Banzhaf 2001, Evolving Teams of Predictors with Linear Genetic Programming",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "This experiment measures the proportion of structurally effective code versus introns in a randomly generated linear genetic program before fitness selection is applied. This field would run it to establish a baseline for code neutrality and bloat dynamics. A SURVIVED verdict on the outcome rule would confirm that the program possesses at least one active path writing to the output register, but it would NOT license the inference that the program computes a useful function or solves a specific task.",
+  "_ingest": {
+    "source_report": "03_generative_and_developmental_representations.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'evaluate_lgp.v0' is not implemented by Vivarium; this template is an expansion request by definition"
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

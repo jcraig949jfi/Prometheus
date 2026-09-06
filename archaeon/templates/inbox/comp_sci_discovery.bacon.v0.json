@@ -1,0 +1,31 @@
+{
+  "template_id": "comp_sci_discovery.bacon.v0",
+  "kind": "bacon_heuristic_search.v0",
+  "param_space": {
+    "variables": {
+      "int_range": null
+    },
+    "noise": {
+      "int_range": null
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Computational Models of Scientific Discovery",
+    "reference": "Pat Langley and Herbert Simon's BACON systems for empirical discovery (1978-1987)",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "This experiments with heuristic search spaces to discover quantitative invariants like Kepler's third law from raw empirical data. The field uses this to demonstrate that scientific discovery can be formalized as rule-based problem solving. A SURVIVED verdict would license the claim that data-driven heuristic induction is capable of historical scientific discoveries, but it would NOT license the claim that human scientists operate without top-down structural models or theoretical priors.",
+  "_ingest": {
+    "source_report": "14_evolutionary_epistemology.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'bacon_heuristic_search.v0' is not implemented by Vivarium; this template is an expansion request by definition",
+      "REPAIRED: source markers were removed from this block to make it parse. Structure is the report's; any value that a marker had overwritten is null, never guessed."
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

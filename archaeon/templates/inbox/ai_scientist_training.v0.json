@@ -1,0 +1,35 @@
+{
+  "template_id": "ai_scientist_training.v0",
+  "kind": "train_llm_idea_v0",
+  "param_space": {
+    "idea_id": {
+      "choices": [
+        "nanoGPT_baseline",
+        "grokking_variant",
+        "diffusion_ablation"
+      ]
+    },
+    "training_steps": {
+      "int_range": null
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "AI Scientist systems",
+    "reference": "The AI Scientist: Towards Fully Automated Open-Ended Scientific Discovery (Lu et al. 2024)",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "This measures whether an LLM-generated codebase modification to a baseline machine learning training script results in successful execution and a measurable validation loss. The field runs this to validate if an AI can independently implement an architectural improvement. A SURVIVED verdict means the modified code compiled and achieved the target loss, but would NOT license the inference that the modification is conceptually novel or free of contamination from the LLM training data.",
+  "_ingest": {
+    "source_report": "06_automated_discovery_systems.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'train_llm_idea_v0' is not implemented by Vivarium; this template is an expansion request by definition",
+      "REPAIRED: source markers were removed from this block to make it parse. Structure is the report's; any value that a marker had overwritten is null, never guessed."
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

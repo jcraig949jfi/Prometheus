@@ -1,0 +1,31 @@
+{
+  "template_id": "empowerment.v0",
+  "kind": "channel_capacity_evaluator.v0",
+  "param_space": {
+    "lookahead_horizon": {
+      "int_range": null
+    },
+    "actuator_bits": {
+      "choices": null
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Empowerment",
+    "reference": "Klyubin, Polani, and Nehaniv 2005: Empowerment: A Universal Agent-Centric Measure of Control",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "Calculates the maximum mutual information between an agent's sequence of actions and future environmental states to establish an intrinsic utility function. The field would run this to determine if empowerment landscapes naturally guide agents toward states maximizing future options. A SURVIVED verdict would license the claim that local empowerment calculation correctly identifies maximum-control states within the lookahead horizon, but it would NOT license the claim that this metric alone can solve complex, sparse-reward tasks without external guidance.",
+  "_ingest": {
+    "source_report": "05_intrinsic_drives_and_creativity.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'channel_capacity_evaluator.v0' is not implemented by Vivarium; this template is an expansion request by definition",
+      "REPAIRED: source markers were removed from this block to make it parse. Structure is the report's; any value that a marker had overwritten is null, never guessed."
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

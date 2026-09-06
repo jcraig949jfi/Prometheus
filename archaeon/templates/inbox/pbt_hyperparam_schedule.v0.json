@@ -1,0 +1,31 @@
+{
+  "template_id": "pbt_hyperparam_schedule.v0",
+  "kind": "pbt_optimize_v0",
+  "param_space": {
+    "population_size": {
+      "choices": null
+    },
+    "exploit_explore_freq": {
+      "int_range": null
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Population-Based Training",
+    "reference": "Population Based Training of Neural Networks (Jaderberg et al. 2017)",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "PBT jointly optimizes network weights and hyperparameters by training a population of models and periodically replacing poor performers with mutated copies of strong performers, discovering dynamic hyperparameter schedules. This template tests whether the dynamic schedule achieves a target performance threshold faster than a random search baseline. A SURVIVED verdict would indicate that the adaptive mutation strategy accelerates convergence here, but it would not license the conclusion that the specific discovered hyperparameter schedule is optimal or transferable to different neural network architectures.",
+  "_ingest": {
+    "source_report": "04_open_ended_learning_and_architecture_search.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'pbt_optimize_v0' is not implemented by Vivarium; this template is an expansion request by definition",
+      "REPAIRED: source markers were removed from this block to make it parse. Structure is the report's; any value that a marker had overwritten is null, never guessed."
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

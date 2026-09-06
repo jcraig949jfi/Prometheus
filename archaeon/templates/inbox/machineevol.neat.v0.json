@@ -1,0 +1,36 @@
+{
+  "template_id": "machineevol.neat.v0",
+  "kind": "neat_eval_v0",
+  "param_space": {
+    "topology_genes": {
+      "choices": [
+        "minimal_feedforward",
+        "recurrent_feedforward"
+      ]
+    },
+    "weight_genes": {
+      "float_range": [
+        -1.0,
+        1.0
+      ]
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Machine Evolution",
+    "reference": "Stanley and Miikkulainen 2002, Evolving Neural Networks through Augmenting Topologies",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "This evaluates the control performance of a minimal starting neural network on a reinforcement learning task before any structural augmentation occurs. The field would run this to establish the baseline fitness of the simplest possible topology, which is the required starting point for structural complexification. A SURVIVED verdict indicating success would not license the inference that structural innovation is unnecessary, nor that speciation mechanisms were responsible for the performance.",
+  "_ingest": {
+    "source_report": "01_evolutionary_substrates.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'neat_eval_v0' is not implemented by Vivarium; this template is an expansion request by definition"
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

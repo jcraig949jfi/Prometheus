@@ -1,0 +1,40 @@
+{
+  "template_id": "evodevo.bias.v0",
+  "kind": "boolean_network.v0",
+  "param_space": {
+    "num_nodes": {
+      "choices": [
+        10,
+        20
+      ]
+    },
+    "connectivity_k": {
+      "choices": [
+        2
+      ]
+    },
+    "update_steps": {
+      "choices": [
+        500
+      ]
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Evolutionary Developmental Systems (Evo-Devo)",
+    "reference": "Psujek and Beer 2008, Developmental bias in evolution: evolutionary accessibility of phenotypes in a model evo-devo system",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "This experiment evaluates a Boolean network as a developmental map from an initial state genotype to a steady-state attractor phenotype, measuring the developmental bias inherent in the topology. We infer that querying a fixed architecture in the critical regime for its attractor basin size serves as the smallest probe of non-selective phenotypic bias. A SURVIVED verdict finding a highly frequent phenotype proves the existence of developmental simplicity bias, but would NOT license the conclusion that this phenotype would actually fix in a population under natural selection.",
+  "_ingest": {
+    "source_report": "03_generative_and_developmental_representations.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'boolean_network.v0' is not implemented by Vivarium; this template is an expansion request by definition"
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "template_id": "intrinsic.v0",
+  "kind": "iac_exploration.v0",
+  "param_space": {
+    "sensor_dim": {
+      "int_range": null
+    },
+    "learning_rate": {
+      "choices": [
+        0.01,
+        0.05,
+        0.1
+      ]
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Intrinsic Motivation",
+    "reference": "Oudeyer, Kaplan, and Hafner 2007: Intrinsic Motivation Systems for Autonomous Mental Development",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "Evaluates the Intelligent Adaptive Curiosity algorithm's ability to self-organize developmental trajectories. The field would run this to observe agents transitioning autonomously from simple to complex sensorimotor tasks based on empirical learning progress. A SURVIVED verdict would license the claim that the specified learning rate successfully differentiates task complexity to create an exploration curriculum, but it would NOT license the claim that the algorithm is sample-efficient in unbounded continuous spaces or avoids catastrophic forgetting.",
+  "_ingest": {
+    "source_report": "05_intrinsic_drives_and_creativity.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'iac_exploration.v0' is not implemented by Vivarium; this template is an expansion request by definition",
+      "REPAIRED: source markers were removed from this block to make it parse. Structure is the report's; any value that a marker had overwritten is null, never guessed."
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}
