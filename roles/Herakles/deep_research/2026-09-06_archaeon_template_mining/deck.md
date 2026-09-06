@@ -110,8 +110,8 @@ BEGIN_TEMPLATE
 {
   "template_id": "<lowercase dotted identifier, ending in .v0>",
   "kind": "<executor kind name>",
-  "param_space": {"<param>": {"choices": [..]},
-                  "<param>": {"int_range": [lo, hi]}},
+  "param_space": {"<param>": {"choices": "<v1>, <v2>, <v3>"},
+                  "<param>": {"int_range": "<lo> to <hi>"}},
   "origin": {"source": "LITERATURE",
              "field": "<the field name from the list above>",
              "reference": "<the specific method, system or paper this comes from>",
@@ -125,32 +125,41 @@ END_TEMPLATE
 
 HARD FORMAT RULE, AND IT IS THE ONE THAT MATTERS MOST.
 
-The text between BEGIN_TEMPLATE and END_TEMPLATE must be a single JSON object
-and nothing else. It has to parse with a strict JSON parser on the first
-attempt, with no repair.
+NEVER WRITE A SQUARE BRACKET ANYWHERE INSIDE A TEMPLATE BLOCK.
 
-A previous run of this exact prompt returned fourteen of fifteen template
-blocks UNPARSEABLE, every one for the same reason: bracketed source markers
-were inserted inside the JSON, including in place of the numbers. A field came
-back reading int_range followed by a source marker where the two integers
-should have been. The numbers were gone, so the templates were unusable and the
-work was wasted. Do not repeat that.
+Two previous runs of this prompt were destroyed by the same mechanism. The
+answers were good; the encoding killed them. Anything written inside square
+brackets was overwritten by the grounding layer with source markers before it
+reached us, so a choice list of three integers came back as a source marker and
+the integers were gone forever. Eighty-one of eighty-four templates were lost
+that way. The instruction "do not do that" did not help, because the
+substitution happens after you write.
 
-Concretely, inside a template block:
+So the format below has NO square brackets in it at all. Ranges and choice
+lists are written as ORDINARY STRINGS, in quotes. That is not a stylistic
+preference; it is the only encoding that survives the trip.
 
-- No bracketed source markers anywhere. None. Not beside a value, not inside a
-  string, not after the closing brace.
-- No footnotes, no annotations, no comments, no trailing commas, no ellipses.
-- Every numeric range is two literal integers, written out, for example
-  16 and 32 inside square brackets. Every choice list is literal values.
-- The ONLY place a source may be named is inside the origin.reference string
-  and inside the rationale string, written as ordinary prose within the quotes.
+  Write a choice list as a quoted, comma-separated string:
+      "length": {"choices": "16, 24, 32"}
 
-Before you emit each block, read it back and satisfy yourself that a strict
-parser would accept it. A block that does not parse is discarded whole, and the
-field it represents is simply lost.
+  Write a numeric range as a quoted string using the word "to":
+      "seed_root": {"int_range": "100000 to 999999"}
+      "step_scale": {"float_range": "0.01 to 1.0"}
 
-Rules for the template object, all of which matter:
+  Write a derived axis as a quoted string naming what it derives from:
+      "bits": {"uniform_bits": "length"}
+
+Every value in param_space is a quoted string. No arrays, no bare numbers, no
+square brackets, in param_space or anywhere else in the object. The numbers
+themselves must be real and literal inside those strings, because they are the
+scientific content and nobody downstream is permitted to invent them.
+
+The rest of the block is ordinary JSON and must parse strictly: no trailing
+commas, no comments, no ellipses, no annotations. Name sources ONLY in the
+origin.reference string and the rationale string, as ordinary prose inside the
+quotes, and without square brackets there either.
+
+Rules for the template object, all of which matter:Rules for the template object, all of which matter:
 
 - The param_space keys must be EXACTLY the payload parameters of the kind you
   named. For evaluate_bitstring that is bits and length. For random_walk_v0
@@ -307,8 +316,8 @@ BEGIN_TEMPLATE
 {
   "template_id": "<lowercase dotted identifier, ending in .v0>",
   "kind": "<executor kind name>",
-  "param_space": {"<param>": {"choices": [..]},
-                  "<param>": {"int_range": [lo, hi]}},
+  "param_space": {"<param>": {"choices": "<v1>, <v2>, <v3>"},
+                  "<param>": {"int_range": "<lo> to <hi>"}},
   "origin": {"source": "LITERATURE",
              "field": "<the field name from the list above>",
              "reference": "<the specific method, system or paper this comes from>",
@@ -322,32 +331,41 @@ END_TEMPLATE
 
 HARD FORMAT RULE, AND IT IS THE ONE THAT MATTERS MOST.
 
-The text between BEGIN_TEMPLATE and END_TEMPLATE must be a single JSON object
-and nothing else. It has to parse with a strict JSON parser on the first
-attempt, with no repair.
+NEVER WRITE A SQUARE BRACKET ANYWHERE INSIDE A TEMPLATE BLOCK.
 
-A previous run of this exact prompt returned fourteen of fifteen template
-blocks UNPARSEABLE, every one for the same reason: bracketed source markers
-were inserted inside the JSON, including in place of the numbers. A field came
-back reading int_range followed by a source marker where the two integers
-should have been. The numbers were gone, so the templates were unusable and the
-work was wasted. Do not repeat that.
+Two previous runs of this prompt were destroyed by the same mechanism. The
+answers were good; the encoding killed them. Anything written inside square
+brackets was overwritten by the grounding layer with source markers before it
+reached us, so a choice list of three integers came back as a source marker and
+the integers were gone forever. Eighty-one of eighty-four templates were lost
+that way. The instruction "do not do that" did not help, because the
+substitution happens after you write.
 
-Concretely, inside a template block:
+So the format below has NO square brackets in it at all. Ranges and choice
+lists are written as ORDINARY STRINGS, in quotes. That is not a stylistic
+preference; it is the only encoding that survives the trip.
 
-- No bracketed source markers anywhere. None. Not beside a value, not inside a
-  string, not after the closing brace.
-- No footnotes, no annotations, no comments, no trailing commas, no ellipses.
-- Every numeric range is two literal integers, written out, for example
-  16 and 32 inside square brackets. Every choice list is literal values.
-- The ONLY place a source may be named is inside the origin.reference string
-  and inside the rationale string, written as ordinary prose within the quotes.
+  Write a choice list as a quoted, comma-separated string:
+      "length": {"choices": "16, 24, 32"}
 
-Before you emit each block, read it back and satisfy yourself that a strict
-parser would accept it. A block that does not parse is discarded whole, and the
-field it represents is simply lost.
+  Write a numeric range as a quoted string using the word "to":
+      "seed_root": {"int_range": "100000 to 999999"}
+      "step_scale": {"float_range": "0.01 to 1.0"}
 
-Rules for the template object, all of which matter:
+  Write a derived axis as a quoted string naming what it derives from:
+      "bits": {"uniform_bits": "length"}
+
+Every value in param_space is a quoted string. No arrays, no bare numbers, no
+square brackets, in param_space or anywhere else in the object. The numbers
+themselves must be real and literal inside those strings, because they are the
+scientific content and nobody downstream is permitted to invent them.
+
+The rest of the block is ordinary JSON and must parse strictly: no trailing
+commas, no comments, no ellipses, no annotations. Name sources ONLY in the
+origin.reference string and the rationale string, as ordinary prose inside the
+quotes, and without square brackets there either.
+
+Rules for the template object, all of which matter:Rules for the template object, all of which matter:
 
 - The param_space keys must be EXACTLY the payload parameters of the kind you
   named. For evaluate_bitstring that is bits and length. For random_walk_v0
@@ -504,8 +522,8 @@ BEGIN_TEMPLATE
 {
   "template_id": "<lowercase dotted identifier, ending in .v0>",
   "kind": "<executor kind name>",
-  "param_space": {"<param>": {"choices": [..]},
-                  "<param>": {"int_range": [lo, hi]}},
+  "param_space": {"<param>": {"choices": "<v1>, <v2>, <v3>"},
+                  "<param>": {"int_range": "<lo> to <hi>"}},
   "origin": {"source": "LITERATURE",
              "field": "<the field name from the list above>",
              "reference": "<the specific method, system or paper this comes from>",
@@ -519,32 +537,41 @@ END_TEMPLATE
 
 HARD FORMAT RULE, AND IT IS THE ONE THAT MATTERS MOST.
 
-The text between BEGIN_TEMPLATE and END_TEMPLATE must be a single JSON object
-and nothing else. It has to parse with a strict JSON parser on the first
-attempt, with no repair.
+NEVER WRITE A SQUARE BRACKET ANYWHERE INSIDE A TEMPLATE BLOCK.
 
-A previous run of this exact prompt returned fourteen of fifteen template
-blocks UNPARSEABLE, every one for the same reason: bracketed source markers
-were inserted inside the JSON, including in place of the numbers. A field came
-back reading int_range followed by a source marker where the two integers
-should have been. The numbers were gone, so the templates were unusable and the
-work was wasted. Do not repeat that.
+Two previous runs of this prompt were destroyed by the same mechanism. The
+answers were good; the encoding killed them. Anything written inside square
+brackets was overwritten by the grounding layer with source markers before it
+reached us, so a choice list of three integers came back as a source marker and
+the integers were gone forever. Eighty-one of eighty-four templates were lost
+that way. The instruction "do not do that" did not help, because the
+substitution happens after you write.
 
-Concretely, inside a template block:
+So the format below has NO square brackets in it at all. Ranges and choice
+lists are written as ORDINARY STRINGS, in quotes. That is not a stylistic
+preference; it is the only encoding that survives the trip.
 
-- No bracketed source markers anywhere. None. Not beside a value, not inside a
-  string, not after the closing brace.
-- No footnotes, no annotations, no comments, no trailing commas, no ellipses.
-- Every numeric range is two literal integers, written out, for example
-  16 and 32 inside square brackets. Every choice list is literal values.
-- The ONLY place a source may be named is inside the origin.reference string
-  and inside the rationale string, written as ordinary prose within the quotes.
+  Write a choice list as a quoted, comma-separated string:
+      "length": {"choices": "16, 24, 32"}
 
-Before you emit each block, read it back and satisfy yourself that a strict
-parser would accept it. A block that does not parse is discarded whole, and the
-field it represents is simply lost.
+  Write a numeric range as a quoted string using the word "to":
+      "seed_root": {"int_range": "100000 to 999999"}
+      "step_scale": {"float_range": "0.01 to 1.0"}
 
-Rules for the template object, all of which matter:
+  Write a derived axis as a quoted string naming what it derives from:
+      "bits": {"uniform_bits": "length"}
+
+Every value in param_space is a quoted string. No arrays, no bare numbers, no
+square brackets, in param_space or anywhere else in the object. The numbers
+themselves must be real and literal inside those strings, because they are the
+scientific content and nobody downstream is permitted to invent them.
+
+The rest of the block is ordinary JSON and must parse strictly: no trailing
+commas, no comments, no ellipses, no annotations. Name sources ONLY in the
+origin.reference string and the rationale string, as ordinary prose inside the
+quotes, and without square brackets there either.
+
+Rules for the template object, all of which matter:Rules for the template object, all of which matter:
 
 - The param_space keys must be EXACTLY the payload parameters of the kind you
   named. For evaluate_bitstring that is bits and length. For random_walk_v0
@@ -701,8 +728,8 @@ BEGIN_TEMPLATE
 {
   "template_id": "<lowercase dotted identifier, ending in .v0>",
   "kind": "<executor kind name>",
-  "param_space": {"<param>": {"choices": [..]},
-                  "<param>": {"int_range": [lo, hi]}},
+  "param_space": {"<param>": {"choices": "<v1>, <v2>, <v3>"},
+                  "<param>": {"int_range": "<lo> to <hi>"}},
   "origin": {"source": "LITERATURE",
              "field": "<the field name from the list above>",
              "reference": "<the specific method, system or paper this comes from>",
@@ -716,32 +743,41 @@ END_TEMPLATE
 
 HARD FORMAT RULE, AND IT IS THE ONE THAT MATTERS MOST.
 
-The text between BEGIN_TEMPLATE and END_TEMPLATE must be a single JSON object
-and nothing else. It has to parse with a strict JSON parser on the first
-attempt, with no repair.
+NEVER WRITE A SQUARE BRACKET ANYWHERE INSIDE A TEMPLATE BLOCK.
 
-A previous run of this exact prompt returned fourteen of fifteen template
-blocks UNPARSEABLE, every one for the same reason: bracketed source markers
-were inserted inside the JSON, including in place of the numbers. A field came
-back reading int_range followed by a source marker where the two integers
-should have been. The numbers were gone, so the templates were unusable and the
-work was wasted. Do not repeat that.
+Two previous runs of this prompt were destroyed by the same mechanism. The
+answers were good; the encoding killed them. Anything written inside square
+brackets was overwritten by the grounding layer with source markers before it
+reached us, so a choice list of three integers came back as a source marker and
+the integers were gone forever. Eighty-one of eighty-four templates were lost
+that way. The instruction "do not do that" did not help, because the
+substitution happens after you write.
 
-Concretely, inside a template block:
+So the format below has NO square brackets in it at all. Ranges and choice
+lists are written as ORDINARY STRINGS, in quotes. That is not a stylistic
+preference; it is the only encoding that survives the trip.
 
-- No bracketed source markers anywhere. None. Not beside a value, not inside a
-  string, not after the closing brace.
-- No footnotes, no annotations, no comments, no trailing commas, no ellipses.
-- Every numeric range is two literal integers, written out, for example
-  16 and 32 inside square brackets. Every choice list is literal values.
-- The ONLY place a source may be named is inside the origin.reference string
-  and inside the rationale string, written as ordinary prose within the quotes.
+  Write a choice list as a quoted, comma-separated string:
+      "length": {"choices": "16, 24, 32"}
 
-Before you emit each block, read it back and satisfy yourself that a strict
-parser would accept it. A block that does not parse is discarded whole, and the
-field it represents is simply lost.
+  Write a numeric range as a quoted string using the word "to":
+      "seed_root": {"int_range": "100000 to 999999"}
+      "step_scale": {"float_range": "0.01 to 1.0"}
 
-Rules for the template object, all of which matter:
+  Write a derived axis as a quoted string naming what it derives from:
+      "bits": {"uniform_bits": "length"}
+
+Every value in param_space is a quoted string. No arrays, no bare numbers, no
+square brackets, in param_space or anywhere else in the object. The numbers
+themselves must be real and literal inside those strings, because they are the
+scientific content and nobody downstream is permitted to invent them.
+
+The rest of the block is ordinary JSON and must parse strictly: no trailing
+commas, no comments, no ellipses, no annotations. Name sources ONLY in the
+origin.reference string and the rationale string, as ordinary prose inside the
+quotes, and without square brackets there either.
+
+Rules for the template object, all of which matter:Rules for the template object, all of which matter:
 
 - The param_space keys must be EXACTLY the payload parameters of the kind you
   named. For evaluate_bitstring that is bits and length. For random_walk_v0
@@ -898,8 +934,8 @@ BEGIN_TEMPLATE
 {
   "template_id": "<lowercase dotted identifier, ending in .v0>",
   "kind": "<executor kind name>",
-  "param_space": {"<param>": {"choices": [..]},
-                  "<param>": {"int_range": [lo, hi]}},
+  "param_space": {"<param>": {"choices": "<v1>, <v2>, <v3>"},
+                  "<param>": {"int_range": "<lo> to <hi>"}},
   "origin": {"source": "LITERATURE",
              "field": "<the field name from the list above>",
              "reference": "<the specific method, system or paper this comes from>",
@@ -913,32 +949,41 @@ END_TEMPLATE
 
 HARD FORMAT RULE, AND IT IS THE ONE THAT MATTERS MOST.
 
-The text between BEGIN_TEMPLATE and END_TEMPLATE must be a single JSON object
-and nothing else. It has to parse with a strict JSON parser on the first
-attempt, with no repair.
+NEVER WRITE A SQUARE BRACKET ANYWHERE INSIDE A TEMPLATE BLOCK.
 
-A previous run of this exact prompt returned fourteen of fifteen template
-blocks UNPARSEABLE, every one for the same reason: bracketed source markers
-were inserted inside the JSON, including in place of the numbers. A field came
-back reading int_range followed by a source marker where the two integers
-should have been. The numbers were gone, so the templates were unusable and the
-work was wasted. Do not repeat that.
+Two previous runs of this prompt were destroyed by the same mechanism. The
+answers were good; the encoding killed them. Anything written inside square
+brackets was overwritten by the grounding layer with source markers before it
+reached us, so a choice list of three integers came back as a source marker and
+the integers were gone forever. Eighty-one of eighty-four templates were lost
+that way. The instruction "do not do that" did not help, because the
+substitution happens after you write.
 
-Concretely, inside a template block:
+So the format below has NO square brackets in it at all. Ranges and choice
+lists are written as ORDINARY STRINGS, in quotes. That is not a stylistic
+preference; it is the only encoding that survives the trip.
 
-- No bracketed source markers anywhere. None. Not beside a value, not inside a
-  string, not after the closing brace.
-- No footnotes, no annotations, no comments, no trailing commas, no ellipses.
-- Every numeric range is two literal integers, written out, for example
-  16 and 32 inside square brackets. Every choice list is literal values.
-- The ONLY place a source may be named is inside the origin.reference string
-  and inside the rationale string, written as ordinary prose within the quotes.
+  Write a choice list as a quoted, comma-separated string:
+      "length": {"choices": "16, 24, 32"}
 
-Before you emit each block, read it back and satisfy yourself that a strict
-parser would accept it. A block that does not parse is discarded whole, and the
-field it represents is simply lost.
+  Write a numeric range as a quoted string using the word "to":
+      "seed_root": {"int_range": "100000 to 999999"}
+      "step_scale": {"float_range": "0.01 to 1.0"}
 
-Rules for the template object, all of which matter:
+  Write a derived axis as a quoted string naming what it derives from:
+      "bits": {"uniform_bits": "length"}
+
+Every value in param_space is a quoted string. No arrays, no bare numbers, no
+square brackets, in param_space or anywhere else in the object. The numbers
+themselves must be real and literal inside those strings, because they are the
+scientific content and nobody downstream is permitted to invent them.
+
+The rest of the block is ordinary JSON and must parse strictly: no trailing
+commas, no comments, no ellipses, no annotations. Name sources ONLY in the
+origin.reference string and the rationale string, as ordinary prose inside the
+quotes, and without square brackets there either.
+
+Rules for the template object, all of which matter:Rules for the template object, all of which matter:
 
 - The param_space keys must be EXACTLY the payload parameters of the kind you
   named. For evaluate_bitstring that is bits and length. For random_walk_v0
@@ -1095,8 +1140,8 @@ BEGIN_TEMPLATE
 {
   "template_id": "<lowercase dotted identifier, ending in .v0>",
   "kind": "<executor kind name>",
-  "param_space": {"<param>": {"choices": [..]},
-                  "<param>": {"int_range": [lo, hi]}},
+  "param_space": {"<param>": {"choices": "<v1>, <v2>, <v3>"},
+                  "<param>": {"int_range": "<lo> to <hi>"}},
   "origin": {"source": "LITERATURE",
              "field": "<the field name from the list above>",
              "reference": "<the specific method, system or paper this comes from>",
@@ -1110,32 +1155,41 @@ END_TEMPLATE
 
 HARD FORMAT RULE, AND IT IS THE ONE THAT MATTERS MOST.
 
-The text between BEGIN_TEMPLATE and END_TEMPLATE must be a single JSON object
-and nothing else. It has to parse with a strict JSON parser on the first
-attempt, with no repair.
+NEVER WRITE A SQUARE BRACKET ANYWHERE INSIDE A TEMPLATE BLOCK.
 
-A previous run of this exact prompt returned fourteen of fifteen template
-blocks UNPARSEABLE, every one for the same reason: bracketed source markers
-were inserted inside the JSON, including in place of the numbers. A field came
-back reading int_range followed by a source marker where the two integers
-should have been. The numbers were gone, so the templates were unusable and the
-work was wasted. Do not repeat that.
+Two previous runs of this prompt were destroyed by the same mechanism. The
+answers were good; the encoding killed them. Anything written inside square
+brackets was overwritten by the grounding layer with source markers before it
+reached us, so a choice list of three integers came back as a source marker and
+the integers were gone forever. Eighty-one of eighty-four templates were lost
+that way. The instruction "do not do that" did not help, because the
+substitution happens after you write.
 
-Concretely, inside a template block:
+So the format below has NO square brackets in it at all. Ranges and choice
+lists are written as ORDINARY STRINGS, in quotes. That is not a stylistic
+preference; it is the only encoding that survives the trip.
 
-- No bracketed source markers anywhere. None. Not beside a value, not inside a
-  string, not after the closing brace.
-- No footnotes, no annotations, no comments, no trailing commas, no ellipses.
-- Every numeric range is two literal integers, written out, for example
-  16 and 32 inside square brackets. Every choice list is literal values.
-- The ONLY place a source may be named is inside the origin.reference string
-  and inside the rationale string, written as ordinary prose within the quotes.
+  Write a choice list as a quoted, comma-separated string:
+      "length": {"choices": "16, 24, 32"}
 
-Before you emit each block, read it back and satisfy yourself that a strict
-parser would accept it. A block that does not parse is discarded whole, and the
-field it represents is simply lost.
+  Write a numeric range as a quoted string using the word "to":
+      "seed_root": {"int_range": "100000 to 999999"}
+      "step_scale": {"float_range": "0.01 to 1.0"}
 
-Rules for the template object, all of which matter:
+  Write a derived axis as a quoted string naming what it derives from:
+      "bits": {"uniform_bits": "length"}
+
+Every value in param_space is a quoted string. No arrays, no bare numbers, no
+square brackets, in param_space or anywhere else in the object. The numbers
+themselves must be real and literal inside those strings, because they are the
+scientific content and nobody downstream is permitted to invent them.
+
+The rest of the block is ordinary JSON and must parse strictly: no trailing
+commas, no comments, no ellipses, no annotations. Name sources ONLY in the
+origin.reference string and the rationale string, as ordinary prose inside the
+quotes, and without square brackets there either.
+
+Rules for the template object, all of which matter:Rules for the template object, all of which matter:
 
 - The param_space keys must be EXACTLY the payload parameters of the kind you
   named. For evaluate_bitstring that is bits and length. For random_walk_v0
@@ -1292,8 +1346,8 @@ BEGIN_TEMPLATE
 {
   "template_id": "<lowercase dotted identifier, ending in .v0>",
   "kind": "<executor kind name>",
-  "param_space": {"<param>": {"choices": [..]},
-                  "<param>": {"int_range": [lo, hi]}},
+  "param_space": {"<param>": {"choices": "<v1>, <v2>, <v3>"},
+                  "<param>": {"int_range": "<lo> to <hi>"}},
   "origin": {"source": "LITERATURE",
              "field": "<the field name from the list above>",
              "reference": "<the specific method, system or paper this comes from>",
@@ -1307,32 +1361,41 @@ END_TEMPLATE
 
 HARD FORMAT RULE, AND IT IS THE ONE THAT MATTERS MOST.
 
-The text between BEGIN_TEMPLATE and END_TEMPLATE must be a single JSON object
-and nothing else. It has to parse with a strict JSON parser on the first
-attempt, with no repair.
+NEVER WRITE A SQUARE BRACKET ANYWHERE INSIDE A TEMPLATE BLOCK.
 
-A previous run of this exact prompt returned fourteen of fifteen template
-blocks UNPARSEABLE, every one for the same reason: bracketed source markers
-were inserted inside the JSON, including in place of the numbers. A field came
-back reading int_range followed by a source marker where the two integers
-should have been. The numbers were gone, so the templates were unusable and the
-work was wasted. Do not repeat that.
+Two previous runs of this prompt were destroyed by the same mechanism. The
+answers were good; the encoding killed them. Anything written inside square
+brackets was overwritten by the grounding layer with source markers before it
+reached us, so a choice list of three integers came back as a source marker and
+the integers were gone forever. Eighty-one of eighty-four templates were lost
+that way. The instruction "do not do that" did not help, because the
+substitution happens after you write.
 
-Concretely, inside a template block:
+So the format below has NO square brackets in it at all. Ranges and choice
+lists are written as ORDINARY STRINGS, in quotes. That is not a stylistic
+preference; it is the only encoding that survives the trip.
 
-- No bracketed source markers anywhere. None. Not beside a value, not inside a
-  string, not after the closing brace.
-- No footnotes, no annotations, no comments, no trailing commas, no ellipses.
-- Every numeric range is two literal integers, written out, for example
-  16 and 32 inside square brackets. Every choice list is literal values.
-- The ONLY place a source may be named is inside the origin.reference string
-  and inside the rationale string, written as ordinary prose within the quotes.
+  Write a choice list as a quoted, comma-separated string:
+      "length": {"choices": "16, 24, 32"}
 
-Before you emit each block, read it back and satisfy yourself that a strict
-parser would accept it. A block that does not parse is discarded whole, and the
-field it represents is simply lost.
+  Write a numeric range as a quoted string using the word "to":
+      "seed_root": {"int_range": "100000 to 999999"}
+      "step_scale": {"float_range": "0.01 to 1.0"}
 
-Rules for the template object, all of which matter:
+  Write a derived axis as a quoted string naming what it derives from:
+      "bits": {"uniform_bits": "length"}
+
+Every value in param_space is a quoted string. No arrays, no bare numbers, no
+square brackets, in param_space or anywhere else in the object. The numbers
+themselves must be real and literal inside those strings, because they are the
+scientific content and nobody downstream is permitted to invent them.
+
+The rest of the block is ordinary JSON and must parse strictly: no trailing
+commas, no comments, no ellipses, no annotations. Name sources ONLY in the
+origin.reference string and the rationale string, as ordinary prose inside the
+quotes, and without square brackets there either.
+
+Rules for the template object, all of which matter:Rules for the template object, all of which matter:
 
 - The param_space keys must be EXACTLY the payload parameters of the kind you
   named. For evaluate_bitstring that is bits and length. For random_walk_v0
@@ -1489,8 +1552,8 @@ BEGIN_TEMPLATE
 {
   "template_id": "<lowercase dotted identifier, ending in .v0>",
   "kind": "<executor kind name>",
-  "param_space": {"<param>": {"choices": [..]},
-                  "<param>": {"int_range": [lo, hi]}},
+  "param_space": {"<param>": {"choices": "<v1>, <v2>, <v3>"},
+                  "<param>": {"int_range": "<lo> to <hi>"}},
   "origin": {"source": "LITERATURE",
              "field": "<the field name from the list above>",
              "reference": "<the specific method, system or paper this comes from>",
@@ -1504,32 +1567,41 @@ END_TEMPLATE
 
 HARD FORMAT RULE, AND IT IS THE ONE THAT MATTERS MOST.
 
-The text between BEGIN_TEMPLATE and END_TEMPLATE must be a single JSON object
-and nothing else. It has to parse with a strict JSON parser on the first
-attempt, with no repair.
+NEVER WRITE A SQUARE BRACKET ANYWHERE INSIDE A TEMPLATE BLOCK.
 
-A previous run of this exact prompt returned fourteen of fifteen template
-blocks UNPARSEABLE, every one for the same reason: bracketed source markers
-were inserted inside the JSON, including in place of the numbers. A field came
-back reading int_range followed by a source marker where the two integers
-should have been. The numbers were gone, so the templates were unusable and the
-work was wasted. Do not repeat that.
+Two previous runs of this prompt were destroyed by the same mechanism. The
+answers were good; the encoding killed them. Anything written inside square
+brackets was overwritten by the grounding layer with source markers before it
+reached us, so a choice list of three integers came back as a source marker and
+the integers were gone forever. Eighty-one of eighty-four templates were lost
+that way. The instruction "do not do that" did not help, because the
+substitution happens after you write.
 
-Concretely, inside a template block:
+So the format below has NO square brackets in it at all. Ranges and choice
+lists are written as ORDINARY STRINGS, in quotes. That is not a stylistic
+preference; it is the only encoding that survives the trip.
 
-- No bracketed source markers anywhere. None. Not beside a value, not inside a
-  string, not after the closing brace.
-- No footnotes, no annotations, no comments, no trailing commas, no ellipses.
-- Every numeric range is two literal integers, written out, for example
-  16 and 32 inside square brackets. Every choice list is literal values.
-- The ONLY place a source may be named is inside the origin.reference string
-  and inside the rationale string, written as ordinary prose within the quotes.
+  Write a choice list as a quoted, comma-separated string:
+      "length": {"choices": "16, 24, 32"}
 
-Before you emit each block, read it back and satisfy yourself that a strict
-parser would accept it. A block that does not parse is discarded whole, and the
-field it represents is simply lost.
+  Write a numeric range as a quoted string using the word "to":
+      "seed_root": {"int_range": "100000 to 999999"}
+      "step_scale": {"float_range": "0.01 to 1.0"}
 
-Rules for the template object, all of which matter:
+  Write a derived axis as a quoted string naming what it derives from:
+      "bits": {"uniform_bits": "length"}
+
+Every value in param_space is a quoted string. No arrays, no bare numbers, no
+square brackets, in param_space or anywhere else in the object. The numbers
+themselves must be real and literal inside those strings, because they are the
+scientific content and nobody downstream is permitted to invent them.
+
+The rest of the block is ordinary JSON and must parse strictly: no trailing
+commas, no comments, no ellipses, no annotations. Name sources ONLY in the
+origin.reference string and the rationale string, as ordinary prose inside the
+quotes, and without square brackets there either.
+
+Rules for the template object, all of which matter:Rules for the template object, all of which matter:
 
 - The param_space keys must be EXACTLY the payload parameters of the kind you
   named. For evaluate_bitstring that is bits and length. For random_walk_v0
@@ -1686,8 +1758,8 @@ BEGIN_TEMPLATE
 {
   "template_id": "<lowercase dotted identifier, ending in .v0>",
   "kind": "<executor kind name>",
-  "param_space": {"<param>": {"choices": [..]},
-                  "<param>": {"int_range": [lo, hi]}},
+  "param_space": {"<param>": {"choices": "<v1>, <v2>, <v3>"},
+                  "<param>": {"int_range": "<lo> to <hi>"}},
   "origin": {"source": "LITERATURE",
              "field": "<the field name from the list above>",
              "reference": "<the specific method, system or paper this comes from>",
@@ -1701,32 +1773,41 @@ END_TEMPLATE
 
 HARD FORMAT RULE, AND IT IS THE ONE THAT MATTERS MOST.
 
-The text between BEGIN_TEMPLATE and END_TEMPLATE must be a single JSON object
-and nothing else. It has to parse with a strict JSON parser on the first
-attempt, with no repair.
+NEVER WRITE A SQUARE BRACKET ANYWHERE INSIDE A TEMPLATE BLOCK.
 
-A previous run of this exact prompt returned fourteen of fifteen template
-blocks UNPARSEABLE, every one for the same reason: bracketed source markers
-were inserted inside the JSON, including in place of the numbers. A field came
-back reading int_range followed by a source marker where the two integers
-should have been. The numbers were gone, so the templates were unusable and the
-work was wasted. Do not repeat that.
+Two previous runs of this prompt were destroyed by the same mechanism. The
+answers were good; the encoding killed them. Anything written inside square
+brackets was overwritten by the grounding layer with source markers before it
+reached us, so a choice list of three integers came back as a source marker and
+the integers were gone forever. Eighty-one of eighty-four templates were lost
+that way. The instruction "do not do that" did not help, because the
+substitution happens after you write.
 
-Concretely, inside a template block:
+So the format below has NO square brackets in it at all. Ranges and choice
+lists are written as ORDINARY STRINGS, in quotes. That is not a stylistic
+preference; it is the only encoding that survives the trip.
 
-- No bracketed source markers anywhere. None. Not beside a value, not inside a
-  string, not after the closing brace.
-- No footnotes, no annotations, no comments, no trailing commas, no ellipses.
-- Every numeric range is two literal integers, written out, for example
-  16 and 32 inside square brackets. Every choice list is literal values.
-- The ONLY place a source may be named is inside the origin.reference string
-  and inside the rationale string, written as ordinary prose within the quotes.
+  Write a choice list as a quoted, comma-separated string:
+      "length": {"choices": "16, 24, 32"}
 
-Before you emit each block, read it back and satisfy yourself that a strict
-parser would accept it. A block that does not parse is discarded whole, and the
-field it represents is simply lost.
+  Write a numeric range as a quoted string using the word "to":
+      "seed_root": {"int_range": "100000 to 999999"}
+      "step_scale": {"float_range": "0.01 to 1.0"}
 
-Rules for the template object, all of which matter:
+  Write a derived axis as a quoted string naming what it derives from:
+      "bits": {"uniform_bits": "length"}
+
+Every value in param_space is a quoted string. No arrays, no bare numbers, no
+square brackets, in param_space or anywhere else in the object. The numbers
+themselves must be real and literal inside those strings, because they are the
+scientific content and nobody downstream is permitted to invent them.
+
+The rest of the block is ordinary JSON and must parse strictly: no trailing
+commas, no comments, no ellipses, no annotations. Name sources ONLY in the
+origin.reference string and the rationale string, as ordinary prose inside the
+quotes, and without square brackets there either.
+
+Rules for the template object, all of which matter:Rules for the template object, all of which matter:
 
 - The param_space keys must be EXACTLY the payload parameters of the kind you
   named. For evaluate_bitstring that is bits and length. For random_walk_v0
@@ -1883,8 +1964,8 @@ BEGIN_TEMPLATE
 {
   "template_id": "<lowercase dotted identifier, ending in .v0>",
   "kind": "<executor kind name>",
-  "param_space": {"<param>": {"choices": [..]},
-                  "<param>": {"int_range": [lo, hi]}},
+  "param_space": {"<param>": {"choices": "<v1>, <v2>, <v3>"},
+                  "<param>": {"int_range": "<lo> to <hi>"}},
   "origin": {"source": "LITERATURE",
              "field": "<the field name from the list above>",
              "reference": "<the specific method, system or paper this comes from>",
@@ -1898,32 +1979,41 @@ END_TEMPLATE
 
 HARD FORMAT RULE, AND IT IS THE ONE THAT MATTERS MOST.
 
-The text between BEGIN_TEMPLATE and END_TEMPLATE must be a single JSON object
-and nothing else. It has to parse with a strict JSON parser on the first
-attempt, with no repair.
+NEVER WRITE A SQUARE BRACKET ANYWHERE INSIDE A TEMPLATE BLOCK.
 
-A previous run of this exact prompt returned fourteen of fifteen template
-blocks UNPARSEABLE, every one for the same reason: bracketed source markers
-were inserted inside the JSON, including in place of the numbers. A field came
-back reading int_range followed by a source marker where the two integers
-should have been. The numbers were gone, so the templates were unusable and the
-work was wasted. Do not repeat that.
+Two previous runs of this prompt were destroyed by the same mechanism. The
+answers were good; the encoding killed them. Anything written inside square
+brackets was overwritten by the grounding layer with source markers before it
+reached us, so a choice list of three integers came back as a source marker and
+the integers were gone forever. Eighty-one of eighty-four templates were lost
+that way. The instruction "do not do that" did not help, because the
+substitution happens after you write.
 
-Concretely, inside a template block:
+So the format below has NO square brackets in it at all. Ranges and choice
+lists are written as ORDINARY STRINGS, in quotes. That is not a stylistic
+preference; it is the only encoding that survives the trip.
 
-- No bracketed source markers anywhere. None. Not beside a value, not inside a
-  string, not after the closing brace.
-- No footnotes, no annotations, no comments, no trailing commas, no ellipses.
-- Every numeric range is two literal integers, written out, for example
-  16 and 32 inside square brackets. Every choice list is literal values.
-- The ONLY place a source may be named is inside the origin.reference string
-  and inside the rationale string, written as ordinary prose within the quotes.
+  Write a choice list as a quoted, comma-separated string:
+      "length": {"choices": "16, 24, 32"}
 
-Before you emit each block, read it back and satisfy yourself that a strict
-parser would accept it. A block that does not parse is discarded whole, and the
-field it represents is simply lost.
+  Write a numeric range as a quoted string using the word "to":
+      "seed_root": {"int_range": "100000 to 999999"}
+      "step_scale": {"float_range": "0.01 to 1.0"}
 
-Rules for the template object, all of which matter:
+  Write a derived axis as a quoted string naming what it derives from:
+      "bits": {"uniform_bits": "length"}
+
+Every value in param_space is a quoted string. No arrays, no bare numbers, no
+square brackets, in param_space or anywhere else in the object. The numbers
+themselves must be real and literal inside those strings, because they are the
+scientific content and nobody downstream is permitted to invent them.
+
+The rest of the block is ordinary JSON and must parse strictly: no trailing
+commas, no comments, no ellipses, no annotations. Name sources ONLY in the
+origin.reference string and the rationale string, as ordinary prose inside the
+quotes, and without square brackets there either.
+
+Rules for the template object, all of which matter:Rules for the template object, all of which matter:
 
 - The param_space keys must be EXACTLY the payload parameters of the kind you
   named. For evaluate_bitstring that is bits and length. For random_walk_v0
@@ -2080,8 +2170,8 @@ BEGIN_TEMPLATE
 {
   "template_id": "<lowercase dotted identifier, ending in .v0>",
   "kind": "<executor kind name>",
-  "param_space": {"<param>": {"choices": [..]},
-                  "<param>": {"int_range": [lo, hi]}},
+  "param_space": {"<param>": {"choices": "<v1>, <v2>, <v3>"},
+                  "<param>": {"int_range": "<lo> to <hi>"}},
   "origin": {"source": "LITERATURE",
              "field": "<the field name from the list above>",
              "reference": "<the specific method, system or paper this comes from>",
@@ -2095,32 +2185,41 @@ END_TEMPLATE
 
 HARD FORMAT RULE, AND IT IS THE ONE THAT MATTERS MOST.
 
-The text between BEGIN_TEMPLATE and END_TEMPLATE must be a single JSON object
-and nothing else. It has to parse with a strict JSON parser on the first
-attempt, with no repair.
+NEVER WRITE A SQUARE BRACKET ANYWHERE INSIDE A TEMPLATE BLOCK.
 
-A previous run of this exact prompt returned fourteen of fifteen template
-blocks UNPARSEABLE, every one for the same reason: bracketed source markers
-were inserted inside the JSON, including in place of the numbers. A field came
-back reading int_range followed by a source marker where the two integers
-should have been. The numbers were gone, so the templates were unusable and the
-work was wasted. Do not repeat that.
+Two previous runs of this prompt were destroyed by the same mechanism. The
+answers were good; the encoding killed them. Anything written inside square
+brackets was overwritten by the grounding layer with source markers before it
+reached us, so a choice list of three integers came back as a source marker and
+the integers were gone forever. Eighty-one of eighty-four templates were lost
+that way. The instruction "do not do that" did not help, because the
+substitution happens after you write.
 
-Concretely, inside a template block:
+So the format below has NO square brackets in it at all. Ranges and choice
+lists are written as ORDINARY STRINGS, in quotes. That is not a stylistic
+preference; it is the only encoding that survives the trip.
 
-- No bracketed source markers anywhere. None. Not beside a value, not inside a
-  string, not after the closing brace.
-- No footnotes, no annotations, no comments, no trailing commas, no ellipses.
-- Every numeric range is two literal integers, written out, for example
-  16 and 32 inside square brackets. Every choice list is literal values.
-- The ONLY place a source may be named is inside the origin.reference string
-  and inside the rationale string, written as ordinary prose within the quotes.
+  Write a choice list as a quoted, comma-separated string:
+      "length": {"choices": "16, 24, 32"}
 
-Before you emit each block, read it back and satisfy yourself that a strict
-parser would accept it. A block that does not parse is discarded whole, and the
-field it represents is simply lost.
+  Write a numeric range as a quoted string using the word "to":
+      "seed_root": {"int_range": "100000 to 999999"}
+      "step_scale": {"float_range": "0.01 to 1.0"}
 
-Rules for the template object, all of which matter:
+  Write a derived axis as a quoted string naming what it derives from:
+      "bits": {"uniform_bits": "length"}
+
+Every value in param_space is a quoted string. No arrays, no bare numbers, no
+square brackets, in param_space or anywhere else in the object. The numbers
+themselves must be real and literal inside those strings, because they are the
+scientific content and nobody downstream is permitted to invent them.
+
+The rest of the block is ordinary JSON and must parse strictly: no trailing
+commas, no comments, no ellipses, no annotations. Name sources ONLY in the
+origin.reference string and the rationale string, as ordinary prose inside the
+quotes, and without square brackets there either.
+
+Rules for the template object, all of which matter:Rules for the template object, all of which matter:
 
 - The param_space keys must be EXACTLY the payload parameters of the kind you
   named. For evaluate_bitstring that is bits and length. For random_walk_v0
@@ -2277,8 +2376,8 @@ BEGIN_TEMPLATE
 {
   "template_id": "<lowercase dotted identifier, ending in .v0>",
   "kind": "<executor kind name>",
-  "param_space": {"<param>": {"choices": [..]},
-                  "<param>": {"int_range": [lo, hi]}},
+  "param_space": {"<param>": {"choices": "<v1>, <v2>, <v3>"},
+                  "<param>": {"int_range": "<lo> to <hi>"}},
   "origin": {"source": "LITERATURE",
              "field": "<the field name from the list above>",
              "reference": "<the specific method, system or paper this comes from>",
@@ -2292,32 +2391,41 @@ END_TEMPLATE
 
 HARD FORMAT RULE, AND IT IS THE ONE THAT MATTERS MOST.
 
-The text between BEGIN_TEMPLATE and END_TEMPLATE must be a single JSON object
-and nothing else. It has to parse with a strict JSON parser on the first
-attempt, with no repair.
+NEVER WRITE A SQUARE BRACKET ANYWHERE INSIDE A TEMPLATE BLOCK.
 
-A previous run of this exact prompt returned fourteen of fifteen template
-blocks UNPARSEABLE, every one for the same reason: bracketed source markers
-were inserted inside the JSON, including in place of the numbers. A field came
-back reading int_range followed by a source marker where the two integers
-should have been. The numbers were gone, so the templates were unusable and the
-work was wasted. Do not repeat that.
+Two previous runs of this prompt were destroyed by the same mechanism. The
+answers were good; the encoding killed them. Anything written inside square
+brackets was overwritten by the grounding layer with source markers before it
+reached us, so a choice list of three integers came back as a source marker and
+the integers were gone forever. Eighty-one of eighty-four templates were lost
+that way. The instruction "do not do that" did not help, because the
+substitution happens after you write.
 
-Concretely, inside a template block:
+So the format below has NO square brackets in it at all. Ranges and choice
+lists are written as ORDINARY STRINGS, in quotes. That is not a stylistic
+preference; it is the only encoding that survives the trip.
 
-- No bracketed source markers anywhere. None. Not beside a value, not inside a
-  string, not after the closing brace.
-- No footnotes, no annotations, no comments, no trailing commas, no ellipses.
-- Every numeric range is two literal integers, written out, for example
-  16 and 32 inside square brackets. Every choice list is literal values.
-- The ONLY place a source may be named is inside the origin.reference string
-  and inside the rationale string, written as ordinary prose within the quotes.
+  Write a choice list as a quoted, comma-separated string:
+      "length": {"choices": "16, 24, 32"}
 
-Before you emit each block, read it back and satisfy yourself that a strict
-parser would accept it. A block that does not parse is discarded whole, and the
-field it represents is simply lost.
+  Write a numeric range as a quoted string using the word "to":
+      "seed_root": {"int_range": "100000 to 999999"}
+      "step_scale": {"float_range": "0.01 to 1.0"}
 
-Rules for the template object, all of which matter:
+  Write a derived axis as a quoted string naming what it derives from:
+      "bits": {"uniform_bits": "length"}
+
+Every value in param_space is a quoted string. No arrays, no bare numbers, no
+square brackets, in param_space or anywhere else in the object. The numbers
+themselves must be real and literal inside those strings, because they are the
+scientific content and nobody downstream is permitted to invent them.
+
+The rest of the block is ordinary JSON and must parse strictly: no trailing
+commas, no comments, no ellipses, no annotations. Name sources ONLY in the
+origin.reference string and the rationale string, as ordinary prose inside the
+quotes, and without square brackets there either.
+
+Rules for the template object, all of which matter:Rules for the template object, all of which matter:
 
 - The param_space keys must be EXACTLY the payload parameters of the kind you
   named. For evaluate_bitstring that is bits and length. For random_walk_v0
@@ -2474,8 +2582,8 @@ BEGIN_TEMPLATE
 {
   "template_id": "<lowercase dotted identifier, ending in .v0>",
   "kind": "<executor kind name>",
-  "param_space": {"<param>": {"choices": [..]},
-                  "<param>": {"int_range": [lo, hi]}},
+  "param_space": {"<param>": {"choices": "<v1>, <v2>, <v3>"},
+                  "<param>": {"int_range": "<lo> to <hi>"}},
   "origin": {"source": "LITERATURE",
              "field": "<the field name from the list above>",
              "reference": "<the specific method, system or paper this comes from>",
@@ -2489,32 +2597,41 @@ END_TEMPLATE
 
 HARD FORMAT RULE, AND IT IS THE ONE THAT MATTERS MOST.
 
-The text between BEGIN_TEMPLATE and END_TEMPLATE must be a single JSON object
-and nothing else. It has to parse with a strict JSON parser on the first
-attempt, with no repair.
+NEVER WRITE A SQUARE BRACKET ANYWHERE INSIDE A TEMPLATE BLOCK.
 
-A previous run of this exact prompt returned fourteen of fifteen template
-blocks UNPARSEABLE, every one for the same reason: bracketed source markers
-were inserted inside the JSON, including in place of the numbers. A field came
-back reading int_range followed by a source marker where the two integers
-should have been. The numbers were gone, so the templates were unusable and the
-work was wasted. Do not repeat that.
+Two previous runs of this prompt were destroyed by the same mechanism. The
+answers were good; the encoding killed them. Anything written inside square
+brackets was overwritten by the grounding layer with source markers before it
+reached us, so a choice list of three integers came back as a source marker and
+the integers were gone forever. Eighty-one of eighty-four templates were lost
+that way. The instruction "do not do that" did not help, because the
+substitution happens after you write.
 
-Concretely, inside a template block:
+So the format below has NO square brackets in it at all. Ranges and choice
+lists are written as ORDINARY STRINGS, in quotes. That is not a stylistic
+preference; it is the only encoding that survives the trip.
 
-- No bracketed source markers anywhere. None. Not beside a value, not inside a
-  string, not after the closing brace.
-- No footnotes, no annotations, no comments, no trailing commas, no ellipses.
-- Every numeric range is two literal integers, written out, for example
-  16 and 32 inside square brackets. Every choice list is literal values.
-- The ONLY place a source may be named is inside the origin.reference string
-  and inside the rationale string, written as ordinary prose within the quotes.
+  Write a choice list as a quoted, comma-separated string:
+      "length": {"choices": "16, 24, 32"}
 
-Before you emit each block, read it back and satisfy yourself that a strict
-parser would accept it. A block that does not parse is discarded whole, and the
-field it represents is simply lost.
+  Write a numeric range as a quoted string using the word "to":
+      "seed_root": {"int_range": "100000 to 999999"}
+      "step_scale": {"float_range": "0.01 to 1.0"}
 
-Rules for the template object, all of which matter:
+  Write a derived axis as a quoted string naming what it derives from:
+      "bits": {"uniform_bits": "length"}
+
+Every value in param_space is a quoted string. No arrays, no bare numbers, no
+square brackets, in param_space or anywhere else in the object. The numbers
+themselves must be real and literal inside those strings, because they are the
+scientific content and nobody downstream is permitted to invent them.
+
+The rest of the block is ordinary JSON and must parse strictly: no trailing
+commas, no comments, no ellipses, no annotations. Name sources ONLY in the
+origin.reference string and the rationale string, as ordinary prose inside the
+quotes, and without square brackets there either.
+
+Rules for the template object, all of which matter:Rules for the template object, all of which matter:
 
 - The param_space keys must be EXACTLY the payload parameters of the kind you
   named. For evaluate_bitstring that is bits and length. For random_walk_v0
@@ -2670,8 +2787,8 @@ BEGIN_TEMPLATE
 {
   "template_id": "<lowercase dotted identifier, ending in .v0>",
   "kind": "<executor kind name>",
-  "param_space": {"<param>": {"choices": [..]},
-                  "<param>": {"int_range": [lo, hi]}},
+  "param_space": {"<param>": {"choices": "<v1>, <v2>, <v3>"},
+                  "<param>": {"int_range": "<lo> to <hi>"}},
   "origin": {"source": "LITERATURE",
              "field": "<the field name from the list above>",
              "reference": "<the specific method, system or paper this comes from>",
@@ -2685,32 +2802,41 @@ END_TEMPLATE
 
 HARD FORMAT RULE, AND IT IS THE ONE THAT MATTERS MOST.
 
-The text between BEGIN_TEMPLATE and END_TEMPLATE must be a single JSON object
-and nothing else. It has to parse with a strict JSON parser on the first
-attempt, with no repair.
+NEVER WRITE A SQUARE BRACKET ANYWHERE INSIDE A TEMPLATE BLOCK.
 
-A previous run of this exact prompt returned fourteen of fifteen template
-blocks UNPARSEABLE, every one for the same reason: bracketed source markers
-were inserted inside the JSON, including in place of the numbers. A field came
-back reading int_range followed by a source marker where the two integers
-should have been. The numbers were gone, so the templates were unusable and the
-work was wasted. Do not repeat that.
+Two previous runs of this prompt were destroyed by the same mechanism. The
+answers were good; the encoding killed them. Anything written inside square
+brackets was overwritten by the grounding layer with source markers before it
+reached us, so a choice list of three integers came back as a source marker and
+the integers were gone forever. Eighty-one of eighty-four templates were lost
+that way. The instruction "do not do that" did not help, because the
+substitution happens after you write.
 
-Concretely, inside a template block:
+So the format below has NO square brackets in it at all. Ranges and choice
+lists are written as ORDINARY STRINGS, in quotes. That is not a stylistic
+preference; it is the only encoding that survives the trip.
 
-- No bracketed source markers anywhere. None. Not beside a value, not inside a
-  string, not after the closing brace.
-- No footnotes, no annotations, no comments, no trailing commas, no ellipses.
-- Every numeric range is two literal integers, written out, for example
-  16 and 32 inside square brackets. Every choice list is literal values.
-- The ONLY place a source may be named is inside the origin.reference string
-  and inside the rationale string, written as ordinary prose within the quotes.
+  Write a choice list as a quoted, comma-separated string:
+      "length": {"choices": "16, 24, 32"}
 
-Before you emit each block, read it back and satisfy yourself that a strict
-parser would accept it. A block that does not parse is discarded whole, and the
-field it represents is simply lost.
+  Write a numeric range as a quoted string using the word "to":
+      "seed_root": {"int_range": "100000 to 999999"}
+      "step_scale": {"float_range": "0.01 to 1.0"}
 
-Rules for the template object, all of which matter:
+  Write a derived axis as a quoted string naming what it derives from:
+      "bits": {"uniform_bits": "length"}
+
+Every value in param_space is a quoted string. No arrays, no bare numbers, no
+square brackets, in param_space or anywhere else in the object. The numbers
+themselves must be real and literal inside those strings, because they are the
+scientific content and nobody downstream is permitted to invent them.
+
+The rest of the block is ordinary JSON and must parse strictly: no trailing
+commas, no comments, no ellipses, no annotations. Name sources ONLY in the
+origin.reference string and the rationale string, as ordinary prose inside the
+quotes, and without square brackets there either.
+
+Rules for the template object, all of which matter:Rules for the template object, all of which matter:
 
 - The param_space keys must be EXACTLY the payload parameters of the kind you
   named. For evaluate_bitstring that is bits and length. For random_walk_v0

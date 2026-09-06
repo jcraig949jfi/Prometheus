@@ -107,6 +107,39 @@ babysit the terminal.
 
 ---
 
+## 5. Structured output: the square-bracket trap
+
+**Deep Research cannot return JSON containing square brackets.** Learned the
+hard way on 2026-09-06, across two full runs, at a cost of 17 of that day's 20
+reports.
+
+The grounding layer rewrites the report after the model writes it, replacing
+bracketed spans with source markers of the form `[cite: 11, 13, 14]`. It cannot
+tell a citation bracket from a JSON array, so **every array of numbers is
+overwritten and its contents are lost**. A choice list of three integers comes
+back as a source marker. Sometimes the value is deleted outright, leaving a key
+with an empty slot. In the first run 14 of 15 template blocks were unparseable;
+in the second, 67 of 69, after a prompt that explicitly forbade the behaviour.
+
+**Instructing the model not to do it does not work**, because the substitution
+happens after generation. This is a property of the tool, not of the prompt.
+
+**The fix is to remove brackets from the format.** Ask for ranges and choice
+lists as quoted strings and decode them on arrival:
+
+    "length":    {"choices": "16, 24, 32"}
+    "seed_root": {"int_range": "100000 to 999999"}
+
+**If you already have corrupted output**, it is partly salvageable. Replacing a
+source marker in a JSON value position with `null`, deleting markers inside
+strings, and filling emptied slots with `null` recovered all 69 structures. What
+never comes back is the numbers. Do not infer them: the value is gone, and a
+plausible-looking number invented downstream is worse than an explicit gap.
+`roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/ingest.py`
+implements that repair and flags every template it touched.
+
+---
+
 ## 5. Known gaps and cautions
 
 - The queue's `fired_log.jsonl` stops at 2026-05-14. Roughly four months of
