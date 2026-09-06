@@ -34,10 +34,20 @@ M1 is live and restarted:
   470 worlds and 34,484 events migrated in place. Nothing was back-filled.
   Pre-migration snapshot kept at var/engine.db.pre_v6_20260905.
 
-  READ THE HASH, NOT THE COMMIT. source_commit still names 4d315bafe because
-  the deployment tree is a shared detached checkout I will not move out of my
-  lane to update. engine_source_hash is computed from the loaded source and IS
-  the build identity. It matches the pushed tree exactly.
+  READ THE HASH, NOT THE COMMIT. source_commit names the deployment tree's
+  HEAD at the moment the process started -- 4d315bafe -- and that tree is a
+  SHARED checkout other roles switch branches in, so the field cannot be
+  trusted to name a tree that reproduces the build. engine_source_hash is
+  computed from the loaded source at import and IS the build identity.
+
+  Verified 2026-09-06, not asserted: the committed sfe/*.py at 465853b69
+  recomputes to exactly sha256:7b46e2b5..., the hash the live service reports.
+  You can check it yourself at any time:
+
+      python deploy/verify_deploy.py
+
+  which compares the pin in deploy/DEPLOYED_BUILD.json against both the tree
+  and the running service. It passes 8/8 today.
 
 ------------------------------------------------------------------------------
 DOCUMENTATION -- ON GITHUB, BRANCH main
