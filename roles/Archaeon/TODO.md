@@ -72,6 +72,40 @@ Cheapest routes: an explicit `spec.arm` on experiments, or a topology_group with
 >=4 populated worlds. Neither needs new engine machinery -- both are properties
 of how experiments are ISSUED.
 
+## 2026-09-06 — queue adoption + relation contract (design; NOT Stage 1)
+
+- [x] Adopted viv.research_experiment_queue as the single canonical
+      pre-execution register; archaeon.experiment_queue RETIRED not dropped.
+- [x] Relation contract in the PROVENANCE partition, none of it hashed:
+      family_id, arm_id, replication_of, candidate_set_id, request_key.
+      Spec guard refuses notes/experiment_kind/world.name/policy/arm/family.
+- [x] Cadence preserved on the new table (6/UTC-day/lane, 4h, DB-enforced,
+      6-thread concurrency verified). Only a SELECTED row consumes quota.
+- [x] Candidate registration: atomic, unchosen cancelled not deleted, and the
+      count is DERIVED (viv.candidate_sets) -- there is deliberately no
+      candidate_set_size column, so nobody attests a number they cannot know.
+- [x] Vivarium's freeze trigger REPLACED (six checks verbatim + relation
+      immutability). Flagged to Vivarium for review.
+- [x] 25 non-scientific integration tests; 104 total.
+- [x] Stage 0 preserved and still KILL. Not weakened, not re-tuned.
+
+## BLOCKER found: Vivarium cannot produce an eligible claim-unit at any volume
+
+runner.run() calls create_world() per row and records exactly ONE observation.
+One row = one new world = one observation, no world reuse. S17 needs >3
+observations WITHIN a world for lag-1 autocorrelation, so 1000 rows would give
+1000 worlds of 1 observation and eligibility would still be zero. Requested a
+declared `repeat` (an EXECUTION input, so inside spec_hash) plus a declared
+per-repeat seed derivation. See roles/Vivarium/INBOX_ARCHAEON_QUEUE_ADOPTION.md.
+
+## UNRESOLVED: how family/arm reaches the FOSSIL record
+
+Stage 0 reads SFE, not the queue. SFE publishes only worlds.topology_group and
+has no per-world arm field. Preference: topology_group := family_id plus an SFE
+lineage_edge per world (relation='IN_ARM'). Needs Daedalus + Vivarium consent.
+Until settled, a family fossilizes observations but not STRUCTURE, and Stage 0
+would still KILL.
+
 ## Next — blocked on other seats
 
 - [ ] **Scored Proteus encounters** — the real blocker. 13 worlds carry a
