@@ -1,0 +1,115 @@
+{
+ "findings": [
+  {
+   "id": "S4-1",
+   "title": "Order-dependent interaction is real (+0.121) and the record cannot express it",
+   "class": "BLOCKS_LONG_RUN",
+   "detail": "Under a known non-commutative ground truth the two orderings differ by +0.121 -- larger than the main effect of B (0.06) -- yet both arms are recorded with the SAME interventions payload {\"component\": \"A+B\"}. The freeform dict holds a LABEL, not an ordered composition, so antagonism, synergy and non-commutativity all collapse into 'combined intervention'. The interaction contrast is computable ONLY because this script kept the ordering outside the record. An analyst working from fossils alone could not have computed it. Minimum remediation: interventions must be recorded as an ORDERED LIST OF PARTS with a content hash per part, not as a display string."
+  },
+  {
+   "id": "S4-2",
+   "title": "The 2x2 contrast DOES recover additive/antagonistic/synergistic when the design includes a none arm",
+   "class": "KILLED_CONCERN",
+   "detail": "additive +0.005 (expect ~0), antagonistic -0.075 (expect <0), synergistic +0.076 (expect >0). The statistical machinery is fine and cheap. What it REQUIRES is the none arm: without it (AB-A) alone is not an interaction, it is just the B effect measured in the presence of A. Any campaign claiming synergy must run all four cells, and that is a design rule, not an engine feature."
+  },
+  {
+   "id": "S4-3",
+   "title": "A campaign that DIES partway is indistinguishable from a campaign that was always that small",
+   "class": "BLOCKS_LONG_RUN",
+   "detail": "Both records hold 5 worlds, the same arm label, the same intervention payload and the same shape. NO field anywhere records how many worlds the campaign INTENDED, so nothing distinguishes 'this run completed' from 'this run stopped'. Three consequences, in increasing severity: (1) a crashed long run is silently reinterpreted as a smaller completed one; (2) the surviving subset is not random if failures correlate with anything -- long worlds, expensive arms, late scheduling -- which is survivorship bias with no marker; (3) it makes OPTIONAL STOPPING undetectable, because 'we stopped when it looked good' and 'it died' produce identical fossils. This is not theoretical: the engine serving loop 3 died on its own during this campaign. Minimum remediation is one field -- a campaign manifest written BEFORE the first world, naming the intended arms and world count, so completion is checkable by subtraction."
+  }
+ ],
+ "data": {
+  "interactions": {
+   "additive": {
+    "means": {
+     "none": 0.4002775853612229,
+     "A": 0.49788568086018387,
+     "B": 0.45631648791921586,
+     "AB": 0.5590183395811653,
+     "BA": 0.5570770503088435
+    },
+    "interaction": 0.005093756162988461,
+    "order_gap": 0.0019412892723218445,
+    "recorded_AB_interventions": {
+     "component": "A+B"
+    },
+    "recorded_BA_interventions": {
+     "component": "A+B"
+    }
+   },
+   "antagonistic": {
+    "means": {
+     "none": 0.396584086723846,
+     "A": 0.5086669491641974,
+     "B": 0.4598540267698487,
+     "AB": 0.49711722324263014,
+     "BA": 0.502670725093609
+    },
+    "interaction": -0.07481966596757,
+    "order_gap": -0.005553501850978859,
+    "recorded_AB_interventions": {
+     "component": "A+B"
+    },
+    "recorded_BA_interventions": {
+     "component": "A+B"
+    }
+   },
+   "synergistic": {
+    "means": {
+     "none": 0.4054565742579222,
+     "A": 0.5015806381495035,
+     "B": 0.4649062654861566,
+     "AB": 0.6373877142949917,
+     "BA": 0.6355528353850501
+    },
+    "interaction": 0.07635738491725386,
+    "order_gap": 0.0018348789099416063,
+    "recorded_AB_interventions": {
+     "component": "A+B"
+    },
+    "recorded_BA_interventions": {
+     "component": "A+B"
+    }
+   },
+   "noncommutative": {
+    "means": {
+     "none": 0.4031702865894213,
+     "A": 0.4984664170603501,
+     "B": 0.46205107499043235,
+     "AB": 0.6354953948268584,
+     "BA": 0.51469858090266
+    },
+    "interaction": 0.07814818936549717,
+    "order_gap": 0.12079681392419839,
+    "recorded_AB_interventions": {
+     "component": "A+B"
+    },
+    "recorded_BA_interventions": {
+     "component": "A+B"
+    }
+   }
+  },
+  "truncation": {
+   "planned": 8,
+   "delivered": 5,
+   "event_fields": [
+    "actor",
+    "artifacts",
+    "causal",
+    "entry_hash",
+    "event_id",
+    "event_seq",
+    "event_type",
+    "payload",
+    "prev_hash",
+    "refs",
+    "ts",
+    "world_id",
+    "world_index"
+   ],
+   "truncated_worlds": 5,
+   "small_worlds": 5
+  }
+ }
+}

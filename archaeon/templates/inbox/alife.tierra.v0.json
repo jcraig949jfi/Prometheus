@@ -1,0 +1,42 @@
+{
+  "template_id": "alife.tierra.v0",
+  "kind": "tierra_core_v0",
+  "param_space": {
+    "ancestor_instructions": {
+      "choices": [
+        "80_tierran_opcodes",
+        "82_tierran_opcodes"
+      ]
+    },
+    "soup_size": {
+      "int_range": [
+        10000,
+        50000
+      ]
+    },
+    "cycles": {
+      "int_range": [
+        1000000,
+        5000000
+      ]
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Artificial Life (ALife)",
+    "reference": "Thomas S. Ray 1991, An Approach to the Synthesis of Life",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "This measures whether a handwritten ancestor program can execute and successfully replicate its instructions within a simulated memory block. The field of ALife would run this to establish the baseline viability of a digital substrate before introducing mutation. A SURVIVED verdict confirming replication would not license the inference that the system is capable of open-ended evolution, nor that the resulting programs are ecologically stable or resistant to parasites.",
+  "_ingest": {
+    "source_report": "01_evolutionary_substrates.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'tierra_core_v0' is not implemented by Vivarium; this template is an expansion request by definition"
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

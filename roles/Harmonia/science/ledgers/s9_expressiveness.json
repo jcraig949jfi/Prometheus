@@ -1,0 +1,100 @@
+{
+ "engine": {
+  "api": "v2",
+  "schema_version": 6,
+  "runtime": "serendipity-foundry-sfe",
+  "registration_open": true,
+  "session_enforcement": "advisory",
+  "science_profile": "warn",
+  "engine_instance_id": "eng_e5156b8d364330a7a1bcf4af",
+  "engine_source_hash": "sha256:7b46e2b5f86847fab0e029ef24b7d0dd7010dffad19af81fd5f7c9be083f6659",
+  "source_commit": "088591ab32daf0000f3ac9de719f2fb24f4f8ecb"
+ },
+ "probes": [
+  {
+   "probe": "A1_repeated_measures",
+   "verdict": "EXPRESSIBLE",
+   "detail": "5 sequential committed experiments in one world"
+  },
+  {
+   "probe": "A2_between_world_arms",
+   "verdict": "EXPRESSIBLE",
+   "detail": "two worlds, one arm each, ISOLATED"
+  },
+  {
+   "probe": "A3_factorial_2x2",
+   "verdict": "EXPRESSIBLE",
+   "detail": "4 cells, 4 distinct spec hashes; factors live in freeform spec"
+  },
+  {
+   "probe": "A4_crossover_within_world",
+   "verdict": "EXPRESSIBLE",
+   "detail": "phase order proved by committed_seq 278 < 284"
+  },
+  {
+   "probe": "A5_dose_response",
+   "verdict": "EXPRESSIBLE",
+   "detail": "5 dose levels, 5 distinct sealed specs"
+  },
+  {
+   "probe": "A6_cross_world_family",
+   "verdict": "EXPRESSIBLE",
+   "detail": "family=fam_8defc1e86da13f8fb9e0218c members=2 census keys=['by_kind', 'by_role', 'client_id', 'created_ts', 'family_id', 'kind']"
+  },
+  {
+   "probe": "A7_nested_grouping",
+   "verdict": "EXPRESSIBLE",
+   "detail": "topology_group=grp_cd0ff5828fc139ab8eea1a09 usable as a world-level grouping factor"
+  },
+  {
+   "probe": "A8_analysis_with_source_set",
+   "verdict": "EXPRESSIBLE",
+   "detail": "declared_n=2 vs engine count -> {\"exp_id\": \"exp_ea12764af6745b6042c99f40\", \"world_id\": \"wld_b76bd01afb459e0cee97691a\", \"unit_of_analysis\": \"wo"
+  },
+  {
+   "probe": "A9_claim_successful_negative",
+   "verdict": "EXPRESSIBLE",
+   "detail": "status=200 findings={\"profile_findings\": []}"
+  },
+  {
+   "probe": "A10_branch_design_midflight",
+   "verdict": "EXPRESSIBLE",
+   "detail": "forked 2 branches from a live world at checkpoint ckp_2c2bf09bbee83b5e6f9d8c26"
+  },
+  {
+   "probe": "A11_parent_continues_after_fork",
+   "verdict": "EXPRESSIBLE",
+   "detail": "parent state=RUNNING, further experiment committed=True"
+  },
+  {
+   "probe": "A12_heterogeneous_population",
+   "verdict": "EXPRESSIBLE",
+   "detail": "two structurally different worlds in one comparison family"
+  },
+  {
+   "probe": "B1_amend_by_new_committed_spec",
+   "verdict": "EXPRESSIBLE",
+   "detail": "a CHANGE is a new sealed experiment, not an edit -> 200"
+  },
+  {
+   "probe": "B2_grow_family_past_manifest",
+   "verdict": "EXPRESSIBLE",
+   "detail": "added past planned_members=4 -> 200 ; census says {\"members\": [{\"member_kind\": \"world\", \"member_id\": \"wld_16686e0d502edf60a6c6bd92\", \"world_id\": \"wld_16686e0d502edf60a6c6"
+  },
+  {
+   "probe": "B3_reassign_role_after_results",
+   "verdict": "NOT EXPRESSIBLE",
+   "detail": "re-role executed->selected -> 409 conflict (409 is the correct refusal)"
+  },
+  {
+   "probe": "B4_amendment_as_new_family",
+   "verdict": "EXPRESSIBLE-UNRECORDED",
+   "detail": "amends_family sealed in manifest=True, family-as-member refused (422), so amendment lineage is not traversable"
+  },
+  {
+   "probe": "B5_selection_visibility_transition",
+   "verdict": "EXPRESSIBLE",
+   "detail": "selection_visible before alternatives=False, after=True"
+  }
+ ]
+}

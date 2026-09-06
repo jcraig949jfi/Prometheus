@@ -1,0 +1,96 @@
+{
+ "all_pass": true,
+ "N": 8,
+ "gates": [
+  {
+   "gate": "C1a_all_concurrent_writes_accepted",
+   "pass": true,
+   "state": "PASS",
+   "detail": "40/40 accepted in 0.3s"
+  },
+  {
+   "gate": "C1b_ledger_integrity_after_concurrent_writes",
+   "pass": true,
+   "state": "PASS",
+   "detail": "ledger_integrity_ok=True event_count=42"
+  },
+  {
+   "gate": "C1c_world_index_unique",
+   "pass": true,
+   "state": "PASS",
+   "detail": "42 events, 42 distinct world_index"
+  },
+  {
+   "gate": "C1d_world_index_dense",
+   "pass": true,
+   "state": "PASS",
+   "detail": "range 0..41 over 42 events"
+  },
+  {
+   "gate": "C1e_event_seq_unique",
+   "pass": true,
+   "state": "PASS",
+   "detail": "42 distinct event_seq of 42"
+  },
+  {
+   "gate": "C2a_exactly_one_claim_winner",
+   "pass": true,
+   "state": "PASS",
+   "detail": "1 of 8 workers received a work_id+claim_id"
+  },
+  {
+   "gate": "C2b_losers_hold_no_claim_id",
+   "pass": true,
+   "state": "PASS",
+   "detail": "losers holding a claim_id: none"
+  },
+  {
+   "gate": "C3d_valid_claim_wrong_worker_refused",
+   "pass": true,
+   "state": "PASS",
+   "detail": "worker w1 using w0's claim_id -> 409"
+  },
+  {
+   "gate": "C3a_first_completion_accepted",
+   "pass": true,
+   "state": "PASS",
+   "detail": "status=200"
+  },
+  {
+   "gate": "C3b_duplicate_completion_is_idempotent_replay",
+   "pass": true,
+   "state": "PASS",
+   "detail": "second identical completion -> 200, same result_hash=True"
+  },
+  {
+   "gate": "C3e_replay_with_a_DIFFERENT_result_is_409",
+   "pass": true,
+   "state": "PASS",
+   "detail": "differing result -> 409 (conflict), new ledger events=0, detail names hashes=True"
+  },
+  {
+   "gate": "C3c_stale_claim_id_refused",
+   "pass": true,
+   "state": "PASS",
+   "detail": "forged claim_id -> 409"
+  },
+  {
+   "gate": "C4a_exactly_one_world_created",
+   "pass": true,
+   "state": "PASS",
+   "detail": "1 distinct world_id from 8 parallel requests; statuses=[200]"
+  },
+  {
+   "gate": "C5_latency_scales_sublinearly_to_8",
+   "pass": true,
+   "state": "PASS",
+   "detail": "median latency N=8 is 1.2x N=1 (18.0 ms -> 22.0 ms); linear would be 8x"
+  }
+ ],
+ "latency_ms": {
+  "1": 18.0,
+  "2": 9.7,
+  "4": 20.1,
+  "8": 22.0
+ }
+}

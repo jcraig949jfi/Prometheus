@@ -1,0 +1,80 @@
+{
+  "_what_this_is": "The exact source constituting the SFE build deployed on M1. It exists because the deployment tree (F:/Prometheus) is a SHARED checkout that other roles switch branches in, so the deployed source's presence there is not guaranteed by that tree's git state. This pin is the recovery record and does not depend on it.",
+  "engine": "M1 / SKULLPORT",
+  "endpoint": "https://192.168.1.202:8811",
+  "pinned_at": "2026-09-06",
+  "pinned_by": "Daedalus",
+  "schema_version": 6,
+  "release": "v6 scientific provenance",
+  "source_commit_containing_build": "8e52c50ab12cbb6da29de24d0c942e397502c7e9",
+  "release_commits": [
+    "869df1fa1",
+    "50ef81ba1",
+    "dfc2ac701",
+    "088591ab3"
+  ],
+  "engine_source_hash": "sha256:2f42e87f28f32065e8aa1c7cf4e0777c523e474ea4d1aa2ad4aa9a626143fe68",
+  "_engine_source_hash_definition": "sha256 over sorted sfe/*.py, each contributing name + NUL + LF-normalized bytes + NUL. Computed at import by sfe/release.py; LF-normalized so a checkout's line-ending convention cannot change build identity. This is the AUTHORITATIVE build id. source_commit on /v2/version is best-effort git metadata from the deployment tree and may name a commit that cannot reproduce the build.",
+  "expected_runtime_config": {
+    "session_enforcement": "advisory",
+    "science_profile": "warn",
+    "engine_instance_id": "eng_8a37a5d305969034d488c43e"
+  },
+  "_engine_instance_id_note": "identity of the LEDGER, minted once per database and stored in meta. It travels with the substrate, not the path, so it must survive any restore that preserves var/engine.db.",
+  "rollback_behaviour_measured_2026-09-06": "A pre-v6 engine opened against the live schema-6 ledger REFUSES to start: RuntimeError 'db schema version 6 is NEWER than this engine's 5; refusing to run (would misread state)' (sfe/store.py:471-474). Verified by running the 35758f9d0 source against a VACUUM INTO copy of the live ledger. So a source revert produces a LOUD OUTAGE, not a silent downgrade -- the service dies rather than quietly serving pre-v6 semantics over v6 data. That is the correct failure direction, and it is why this pin is a recovery aid rather than a safety interlock.",
+  "restore": {
+    "verify": "python deploy/verify_deploy.py",
+    "restore_source": "git -C <a checkout you own> fetch origin && git checkout 8e52c50ab12cbb6da29de24d0c942e397502c7e9 -- SerendipityFoundry/  # then copy into the deployment tree",
+    "do_not": "Do NOT 'git checkout -- .' or 'git clean' in F:/Prometheus to fix this: that tree carries uncommitted work belonging to ergon, evidence_wiki/PEW and other roles."
+  },
+  "files": {
+    "SerendipityFoundry/SerendipityFoundryEngine/sfe/__init__.py": {
+      "sha256_lf": "3485154f05c4aef08e9a5b5a99213aed9cd544846969bb56840c73b24f31e1ae",
+      "bytes_lf": 71
+    },
+    "SerendipityFoundry/SerendipityFoundryEngine/sfe/api.py": {
+      "sha256_lf": "99cc71ce1d72f2a4f4772b90ce5717b4b00928055bcd74ef2e3c1c50cc57fdfa",
+      "bytes_lf": 51991
+    },
+    "SerendipityFoundry/SerendipityFoundryEngine/sfe/canary.py": {
+      "sha256_lf": "88fb02720fdd5b9b8464481db14cd3da8dd509ac4bcd9e2f71203ae06b193238",
+      "bytes_lf": 11304
+    },
+    "SerendipityFoundry/SerendipityFoundryEngine/sfe/errors.py": {
+      "sha256_lf": "b782dc7cedce6e8ece28b8eca7d48ad28f396dba4e35211e0e95c362fcbfa1f1",
+      "bytes_lf": 3676
+    },
+    "SerendipityFoundry/SerendipityFoundryEngine/sfe/events.py": {
+      "sha256_lf": "802ddcd96f1c1ea09eca476020e4aeb9e06f2d49f385275347c5d0fea99698b7",
+      "bytes_lf": 9971
+    },
+    "SerendipityFoundry/SerendipityFoundryEngine/sfe/executors.py": {
+      "sha256_lf": "95b22d13a48eae32a037d8bdc13c25bb41b29579b165a5fca1aa377aed802956",
+      "bytes_lf": 6386
+    },
+    "SerendipityFoundry/SerendipityFoundryEngine/sfe/ids.py": {
+      "sha256_lf": "9c11fcf5c61c49bf2044e406fa108bccc25eda30e292a57ae30f99cef6b09e9c",
+      "bytes_lf": 4117
+    },
+    "SerendipityFoundry/SerendipityFoundryEngine/sfe/release.py": {
+      "sha256_lf": "7dad4ad6b016714d5e2c30a3756b3131f92cdc352a24a8cb5450d2b6957cd868",
+      "bytes_lf": 1717
+    },
+    "SerendipityFoundry/SerendipityFoundryEngine/sfe/runtime.py": {
+      "sha256_lf": "ea70f9a9d3ab83e9561dab47e703e2e4cc7154a5c0fceac36d94d692b71f0e24",
+      "bytes_lf": 184664
+    },
+    "SerendipityFoundry/SerendipityFoundryEngine/sfe/store.py": {
+      "sha256_lf": "9c03e590850f1cfe419f80cd656156cc3ad2fe3ca9b44776b35909c9cd2f8b2b",
+      "bytes_lf": 32913
+    },
+    "SerendipityFoundry/SerendipityFoundryEngine/serve.py": {
+      "sha256_lf": "568508fedcc8bcf1f6efad504214429709d5458db49c14a6d2242c7beef477d0",
+      "bytes_lf": 3782
+    },
+    "SerendipityFoundry/SerendipityFoundryClient/sfclient/client.py": {
+      "sha256_lf": "e7f6ae1ad681bb69c73e56310af3cf97d3e29a09b53d2eaa62e086dbb18c9c40",
+      "bytes_lf": 25604
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "template_id": "agi.mc.aixi.ctw.v0",
+  "kind": "aixi_ctw_eval_v0",
+  "param_space": {
+    "horizon_depth": {
+      "int_range": null
+    },
+    "context_tree_depth": {
+      "choices": null
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Artificial General Intelligence (AGI)",
+    "reference": "Veness, Ng, Hutter, Uther, and Silver (2011) A Monte-Carlo AIXI Approximation.",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "This field studies agents that can achieve goals in wide ranges of unknown environments using theoretical models like Solomonoff induction. The characteristic experiment evaluates the computationally feasible MC-AIXI-CTW agent in a small partially observable Markov decision process, compressing interaction histories using Context Tree Weighting and planning via Monte Carlo Tree Search. A SURVIVED verdict shows the agent can learn and exploit short-term environmental dependencies to maximize reward, but it would NOT license claims that the agent is capable of human-level generalization or scaling to environments with massive state spaces.",
+  "_ingest": {
+    "source_report": "13_learning_to_search_and_machine_minds.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'aixi_ctw_eval_v0' is not implemented by Vivarium; this template is an expansion request by definition",
+      "REPAIRED: source markers were removed from this block to make it parse. Structure is the report's; any value that a marker had overwritten is null, never guessed."
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

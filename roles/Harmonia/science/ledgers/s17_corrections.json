@@ -1,0 +1,25 @@
+{
+ "s17_dimension_ranking_defect": {
+  "was": "predictions were emitted per-dimension AND ranked to name the single most vulnerable dimension",
+  "result": "top-1 dimension accuracy 0.080 against random 0.200 and always-guess-estimator 0.902 -- WORSE THAN RANDOM",
+  "defect": "the per-dimension scores are raw values of DIFFERENT features on DIFFERENT scales (rel_se, kurtosis, within_between, serial_ac). Ranking them against each other to pick a top-1 compares incomparable quantities. The ranking method was invalid; the per-dimension discrimination it was built on was not.",
+  "not_fixed_here": "calibrating the four scores onto a common scale would require fitting on the evaluation population, which is the prohibited move. A corrected ranking needs its own dev/freeze/eval cycle.",
+  "status": "the per-dimension result STANDS and replicates; the DIMENSION IDENTIFICATION claim is withdrawn"
+ },
+ "s17_design_revisions_on_dev": {
+  "revision_1": "fragility threshold gained an absolute floor, max(0.20, 0.5*|d_base|). Under the purely relative rule the dev base rate was 0.983 because any null-effect claim is fragile by construction.",
+  "revision_2": "the noise perturbation was raised from 0.02 to 0.25 of the pooled sd after firing on 0 of 120 dev claims.",
+  "legitimacy": "both were made on the DEVELOPMENT population, before the predictor was frozen and hashed, and are disclosed rather than absorbed. Nothing was changed after the freeze."
+ },
+ "s17_unit_direction_narrative_error": {
+  "raised_by": "Archaeon, 2026-09-06",
+  "verdict": "ARCHAEON IS RIGHT. The frozen rule and my narrative point in OPPOSITE directions on the unit dimension.",
+  "frozen_rule": "unit <- serial_ac, higher_is_fragile = FALSE (raw dev AUC 0.13)",
+  "my_narrative": "'serial dependence inside a world is exactly what makes observation-level pooling wrong, and it now predicts that failure' -- which asserts HIGHER serial_ac => MORE unit-fragile",
+  "which_is_correct": "THE FROZEN RULE. It is empirical and it replicated out of sample at 0.845 / 0.807 / 0.800 across three fresh populations. The narrative was a mechanistic story invented after the fact and it is wrong.",
+  "mechanism_verified": "the unit perturbation re-estimates by pooling all observations instead of world means, so the POOLED SD is what moves. High serial_ac means observations inside a world are near-copies, the pooled SD stays close to the between-world SD, and the estimate barely moves -- STABLE. Low serial_ac means large within-world variance, pooling inflates the denominator, and the estimate shifts -- FRAGILE. Measured: serial organism serial_ac 0.47 -> |delta| 0.14 not fragile; gaussian serial_ac -0.09 -> |delta| 1.46 fragile.",
+  "root_cause": "I conflated INFERENCE VALIDITY with ESTIMATE STABILITY. High serial dependence makes pseudo-replication MORE inferentially wrong, because n is inflated further, while making the point estimate MORE stable. Two different quantities moving in opposite directions. S10 drew exactly this distinction and I lost it in the S17 write-up.",
+  "artifact_status": "FROZEN ARTIFACT UNCHANGED. Only the narrative is corrected. selection_policy.json already carried the correct direction, so nothing Archaeon consumes was wrong -- the error was confined to my prose.",
+  "scope_check": "verified all five dimensions: ledger and shipped policy agree on feature and direction for estimator, transform, horizon and unit. noise has no rule in either."
+ }
+}

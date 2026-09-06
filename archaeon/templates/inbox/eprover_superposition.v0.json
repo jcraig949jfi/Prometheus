@@ -1,0 +1,35 @@
+{
+  "template_id": "eprover_superposition.v0",
+  "kind": "formal_prover.v0",
+  "param_space": {
+    "expansion_limit": {
+      "int_range": null
+    },
+    "search_strategy": {
+      "choices": [
+        "auto",
+        "discount",
+        "neural"
+      ]
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Automated Theorem Proving",
+    "reference": "Schulz 2002 E - a brainiac theorem prover",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "This evaluates whether a first-order logic prover can find a contradiction refutation within a strict limit of generated clauses using a given literal selection heuristic. The ATP community relies on saturation limits and heuristic ablation to measure the raw search efficiency of inference engines. A SURVIVED verdict proves that a sound logical refutation path exists within the specific search envelope; it would not license the conclusion that the chosen strategy generalizes optimally to structurally different mathematical domains.",
+  "_ingest": {
+    "source_report": "08_synthesis_and_logic.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'formal_prover.v0' is not implemented by Vivarium; this template is an expansion request by definition",
+      "REPAIRED: source markers were removed from this block to make it parse. Structure is the report's; any value that a marker had overwritten is null, never guessed."
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

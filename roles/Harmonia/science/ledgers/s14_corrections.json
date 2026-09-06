@@ -1,0 +1,10 @@
+{
+ "s14_archaeology_correction": {
+  "was": "'derived universe = 12 worlds, T-B CATCHES A2'",
+  "defect": "I obtained the 12 by filtering world NAMES beginning 'A2-'. World names are author-supplied metadata, which is exactly what an archaeologist is not entitled to trust. I used the author's intent to prove the author's intent was recoverable.",
+  "corrected": "substrate-only, the frozen R_SPEC rule returns 64 worlds for the A2 analysis, precision 0.09. It does NOT isolate A2 in this store.",
+  "why": "every S14 attack used the same bare default spec, so spec_hash collapsed 64 worlds into one group. S13's constructions each carried a distinguishing spec, which is why R_SPEC scored 1.00/0.85 there.",
+  "qualification_of_TB": "R_SPEC's precision is a function of SPEC DISCIPLINE, which is claimant-controlled. A claimant who uses generic specs degrades the derived universe into uselessness -- so spec_hash is a fixed point against an adversary who VARIES the spec, but not against one who makes every spec identical.",
+  "open_not_result": "a spec+time composite may separate A2 (its worlds occupy a contiguous 1.1s window containing 0 others), but that rule was not pre-registered and inventing it after seeing which attack needs it is the prohibited move. Requires fresh pre-registration."
+ }
+}

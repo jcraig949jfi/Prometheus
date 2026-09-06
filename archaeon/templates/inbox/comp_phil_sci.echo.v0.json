@@ -1,0 +1,34 @@
+{
+  "template_id": "comp_phil_sci.echo.v0",
+  "kind": "echo_coherence_network.v0",
+  "param_space": {
+    "hypotheses": {
+      "int_range": null
+    },
+    "evidence": {
+      "int_range": null
+    },
+    "cycles": {
+      "int_range": null
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Computational Philosophy of Science",
+    "reference": "Paul Thagard's ECHO connectionist model of Explanatory Coherence (1989)",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "This models the acceptance or rejection of competing scientific theories by propagating activation through a network of excitatory and inhibitory links representing explanatory coherence. The field relies on this to operationalize how scientists weigh complex, sometimes contradictory evidence. A SURVIVED verdict would license the claim that explanatory coherence can be computationally modeled as constraint satisfaction, but it would NOT license the claim that this mechanism is statistically optimal or guarantees the objective truth of the accepted hypothesis.",
+  "_ingest": {
+    "source_report": "14_evolutionary_epistemology.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'echo_coherence_network.v0' is not implemented by Vivarium; this template is an expansion request by definition",
+      "REPAIRED: source markers were removed from this block to make it parse. Structure is the report's; any value that a marker had overwritten is null, never guessed."
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

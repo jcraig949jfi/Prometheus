@@ -1,0 +1,31 @@
+{
+  "template_id": "equation_discovery_sindy.v0",
+  "kind": "sparse_regression_sindy_v0",
+  "param_space": {
+    "library_size": {
+      "int_range": null
+    },
+    "sparsity_threshold": {
+      "choices": null
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Equation Discovery",
+    "reference": "Brunton, S.L., Proctor, J.L., and Kutz, J.N., 2016. Discovering governing equations from data by sparse identification of nonlinear dynamics. PNAS.",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "This experiment tests the ability of sparse regression to isolate active terms from a candidate library to represent dynamic constraints. The field runs this to identify parsimonious governing models without overfitting. A SURVIVED verdict indicates that a sparse subset successfully minimized the residual error below the bench's outcome threshold, but it would NOT license the claim that these specific terms are the true underlying physics, as correlated library terms or improper coordinates can yield mathematically equivalent but physically spurious sparse representations.",
+  "_ingest": {
+    "source_report": "10_model_and_law_discovery.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'sparse_regression_sindy_v0' is not implemented by Vivarium; this template is an expansion request by definition",
+      "REPAIRED: source markers were removed from this block to make it parse. Structure is the report's; any value that a marker had overwritten is null, never guessed."
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

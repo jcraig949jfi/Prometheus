@@ -1,0 +1,37 @@
+{
+  "template_id": "map.elites.v0",
+  "kind": "evaluate_qd_archive.v0",
+  "param_space": {
+    "evaluations": {
+      "int_range": [
+        1000,
+        5000
+      ]
+    },
+    "behavior_dimensions": {
+      "choices": [
+        2,
+        3,
+        4
+      ]
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Quality-Diversity (MAP-Elites)",
+    "reference": "Mouret and Clune 2015 Illuminating search spaces by mapping elites",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "MAP-Elites categorizes solutions into a behavioral grid and retains the highest performing individual per cell. This template measures whether an archive-based search can illuminate the performance landscape across specified behavioral dimensions. The field runs this to understand trade-offs rather than just finding a single optimum. A SURVIVED verdict would indicate successful exploration by exceeding an archive size threshold, but would NOT license the claim that any single solution outperforms an objective-only search, nor would it guarantee that the chosen behavioral dimensions map to a globally continuous phenotype space.",
+  "_ingest": {
+    "source_report": "02_diversity_and_illumination.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'evaluate_qd_archive.v0' is not implemented by Vivarium; this template is an expansion request by definition"
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

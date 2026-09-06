@@ -1,0 +1,370 @@
+{
+ "engine_a": "eng_8a37a5d305969034d488c43e",
+ "engine_b": "eng_7e6b3a6141b6d200b3b9463b",
+ "exemption_divergence": {
+  "only_harmonia": [],
+  "only_engine": []
+ },
+ "build": "sha256:2f35868c379a0ecd20c2c2b82bf2b84560c7116b7f424547eca4a605483f9b65",
+ "routes_total": 39,
+ "session_scoped": 33,
+ "exempt": 6,
+ "foreign_arm_failures": [],
+ "control_arm_failures": [],
+ "verify_anchor_exempt_answers": true,
+ "verify_anchor_status": 200,
+ "all_pass": true,
+ "rows": [
+  {
+   "method": "POST",
+   "path": "/v2/audit/verify-anchor",
+   "session_scoped": false,
+   "foreign_status": 200,
+   "foreign_code": null,
+   "control_status": 200,
+   "control_code": null
+  },
+  {
+   "method": "POST",
+   "path": "/v2/clients",
+   "session_scoped": false,
+   "foreign_status": 200,
+   "foreign_code": null,
+   "control_status": 200,
+   "control_code": null
+  },
+  {
+   "method": "POST",
+   "path": "/v2/sessions",
+   "session_scoped": false,
+   "foreign_status": 200,
+   "foreign_code": null,
+   "control_status": 200,
+   "control_code": null
+  },
+  {
+   "method": "POST",
+   "path": "/v2/sessions/{sid}/close",
+   "session_scoped": false,
+   "foreign_status": 404,
+   "foreign_code": "not_found",
+   "control_status": 404,
+   "control_code": "not_found"
+  },
+  {
+   "method": "POST",
+   "path": "/v2/topology-groups",
+   "session_scoped": false,
+   "foreign_status": 200,
+   "foreign_code": null,
+   "control_status": 200,
+   "control_code": null
+  },
+  {
+   "method": "GET",
+   "path": "/v2/version",
+   "session_scoped": false,
+   "foreign_status": 200,
+   "foreign_code": null,
+   "control_status": 200,
+   "control_code": null
+  },
+  {
+   "method": "POST",
+   "path": "/v2/work/claim",
+   "session_scoped": true,
+   "foreign_status": 421,
+   "foreign_code": "WRONG_SESSION",
+   "control_status": 200,
+   "control_code": null
+  },
+  {
+   "method": "POST",
+   "path": "/v2/work/{work_id}/complete",
+   "session_scoped": true,
+   "foreign_status": 421,
+   "foreign_code": "WRONG_SESSION",
+   "control_status": 404,
+   "control_code": "not_found"
+  },
+  {
+   "method": "POST",
+   "path": "/v2/work/{work_id}/fail",
+   "session_scoped": true,
+   "foreign_status": 421,
+   "foreign_code": "WRONG_SESSION",
+   "control_status": 404,
+   "control_code": "not_found"
+  },
+  {
+   "method": "POST",
+   "path": "/v2/work/{work_id}/heartbeat",
+   "session_scoped": true,
+   "foreign_status": 421,
+   "foreign_code": "WRONG_SESSION",
+   "control_status": 404,
+   "control_code": "not_found"
+  },
+  {
+   "method": "GET",
+   "path": "/v2/worlds",
+   "session_scoped": true,
+   "foreign_status": 421,
+   "foreign_code": "WRONG_SESSION",
+   "control_status": 200,
+   "control_code": null
+  },
+  {
+   "method": "POST",
+   "path": "/v2/worlds",
+   "session_scoped": true,
+   "foreign_status": 421,
+   "foreign_code": "WRONG_SESSION",
+   "control_status": 200,
+   "control_code": null
+  },
+  {
+   "method": "GET",
+   "path": "/v2/worlds/{wid}",
+   "session_scoped": true,
+   "foreign_status": 421,
+   "foreign_code": "WRONG_SESSION",
+   "control_status": 200,
+   "control_code": null
+  },
+  {
+   "method": "POST",
+   "path": "/v2/worlds/{wid}/artifacts",
+   "session_scoped": true,
+   "foreign_status": 421,
+   "foreign_code": "WRONG_SESSION",
+   "control_status": 422,
+   "control_code": "validation_error"
+  },
+  {
+   "method": "GET",
+   "path": "/v2/worlds/{wid}/artifacts/{aid}/content",
+   "session_scoped": true,
+   "foreign_status": 421,
+   "foreign_code": "WRONG_SESSION",
+   "control_status": 404,
+   "control_code": "not_found"
+  },
+  {
+   "method": "POST",
+   "path": "/v2/worlds/{wid}/budget/consume",
+   "session_scoped": true,
+   "foreign_status": 421,
+   "foreign_code": "WRONG_SESSION",
+   "control_status": 200,
+   "control_code": null
+  },
+  {
+   "method": "POST",
+   "path": "/v2/worlds/{wid}/checkpoint",
+   "session_scoped": true,
+   "foreign_status": 421,
+   "foreign_code": "WRONG_SESSION",
+   "control_status": 200,
+   "control_code": null
+  },
+  {
+   "method": "GET",
+   "path": "/v2/worlds/{wid}/events",
+   "session_scoped": true,
+   "foreign_status": 421,
+   "foreign_code": "WRONG_SESSION",
+   "control_status": 200,
+   "control_code": null
+  },
+  {
+   "method": "GET",
+   "path": "/v2/worlds/{wid}/experiments",
+   "session_scoped": true,
+   "foreign_status": 421,
+   "foreign_code": "WRONG_SESSION",
+   "control_status": 200,
+   "control_code": null
+  },
+  {
+   "method": "POST",
+   "path": "/v2/worlds/{wid}/experiments",
+   "session_scoped": true,
+   "foreign_status": 421,
+   "foreign_code": "WRONG_SESSION",
+   "control_status": 200,
+   "control_code": null
+  },
+  {
+   "method": "GET",
+   "path": "/v2/worlds/{wid}/experiments/{eid}",
+   "session_scoped": true,
+   "foreign_status": 421,
+   "foreign_code": "WRONG_SESSION",
+   "control_status": 404,
+   "control_code": "not_found"
+  },
+  {
+   "method": "GET",
+   "path": "/v2/worlds/{wid}/experiments/{eid}/audit-envelope",
+   "session_scoped": true,
+   "foreign_status": 421,
+   "foreign_code": "WRONG_SESSION",
+   "control_status": 404,
+   "control_code": "not_found"
+  },
+  {
+   "method": "POST",
+   "path": "/v2/worlds/{wid}/experiments/{eid}/commit",
+   "session_scoped": true,
+   "foreign_status": 421,
+   "foreign_code": "WRONG_SESSION",
+   "control_status": 404,
+   "control_code": "not_found"
+  },
+  {
+   "method": "GET",
+   "path": "/v2/worlds/{wid}/failures",
+   "session_scoped": true,
+   "foreign_status": 421,
+   "foreign_code": "WRONG_SESSION",
+   "control_status": 200,
+   "control_code": null
+  },
+  {
+   "method": "POST",
+   "path": "/v2/worlds/{wid}/failures",
+   "session_scoped": true,
+   "foreign_status": 421,
+   "foreign_code": "WRONG_SESSION",
+   "control_status": 200,
+   "control_code": null
+  },
+  {
+   "method": "POST",
+   "path": "/v2/worlds/{wid}/fork",
+   "session_scoped": true,
+   "foreign_status": 421,
+   "foreign_code": "WRONG_SESSION",
+   "control_status": 404,
+   "control_code": "not_found"
+  },
+  {
+   "method": "POST",
+   "path": "/v2/worlds/{wid}/hypotheses",
+   "session_scoped": true,
+   "foreign_status": 421,
+   "foreign_code": "WRONG_SESSION",
+   "control_status": 200,
+   "control_code": null
+  },
+  {
+   "method": "POST",
+   "path": "/v2/worlds/{wid}/import",
+   "session_scoped": true,
+   "foreign_status": 421,
+   "foreign_code": "WRONG_SESSION",
+   "control_status": 404,
+   "control_code": "not_found"
+  },
+  {
+   "method": "GET",
+   "path": "/v2/worlds/{wid}/knowledge",
+   "session_scoped": true,
+   "foreign_status": 421,
+   "foreign_code": "WRONG_SESSION",
+   "control_status": 200,
+   "control_code": null
+  },
+  {
+   "method": "GET",
+   "path": "/v2/worlds/{wid}/lineage",
+   "session_scoped": true,
+   "foreign_status": 421,
+   "foreign_code": "WRONG_SESSION",
+   "control_status": 200,
+   "control_code": null
+  },
+  {
+   "method": "GET",
+   "path": "/v2/worlds/{wid}/observations",
+   "session_scoped": true,
+   "foreign_status": 421,
+   "foreign_code": "WRONG_SESSION",
+   "control_status": 200,
+   "control_code": null
+  },
+  {
+   "method": "POST",
+   "path": "/v2/worlds/{wid}/observations",
+   "session_scoped": true,
+   "foreign_status": 421,
+   "foreign_code": "WRONG_SESSION",
+   "control_status": 422,
+   "control_code": "validation_error"
+  },
+  {
+   "method": "POST",
+   "path": "/v2/worlds/{wid}/pause",
+   "session_scoped": true,
+   "foreign_status": 421,
+   "foreign_code": "WRONG_SESSION",
+   "control_status": 200,
+   "control_code": null
+  },
+  {
+   "method": "POST",
+   "path": "/v2/worlds/{wid}/predictions",
+   "session_scoped": true,
+   "foreign_status": 421,
+   "foreign_code": "WRONG_SESSION",
+   "control_status": 404,
+   "control_code": "not_found"
+  },
+  {
+   "method": "GET",
+   "path": "/v2/worlds/{wid}/resources",
+   "session_scoped": true,
+   "foreign_status": 421,
+   "foreign_code": "WRONG_SESSION",
+   "control_status": 200,
+   "control_code": null
+  },
+  {
+   "method": "POST",
+   "path": "/v2/worlds/{wid}/resume",
+   "session_scoped": true,
+   "foreign_status": 421,
+   "foreign_code": "WRONG_SESSION",
+   "control_status": 200,
+   "control_code": null
+  },
+  {
+   "method": "POST",
+   "path": "/v2/worlds/{wid}/start",
+   "session_scoped": true,
+   "foreign_status": 421,
+   "foreign_code": "WRONG_SESSION",
+   "control_status": 409,
+   "control_code": "invalid_transition"
+  },
+  {
+   "method": "GET",
+   "path": "/v2/worlds/{wid}/status",
+   "session_scoped": true,
+   "foreign_status": 421,
+   "foreign_code": "WRONG_SESSION",
+   "control_status": 200,
+   "control_code": null
+  },
+  {
+   "method": "POST",
+   "path": "/v2/worlds/{wid}/terminate",
+   "session_scoped": true,
+   "foreign_status": 421,
+   "foreign_code": "WRONG_SESSION",
+   "control_status": 200,
+   "control_code": null
+  }
+ ]
+}

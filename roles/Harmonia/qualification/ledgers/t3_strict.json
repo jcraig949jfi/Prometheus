@@ -1,0 +1,32 @@
+{
+ "all_pass": true,
+ "gates": [
+  {
+   "gate": "T3_1_world_creation_without_a_key",
+   "pass": true,
+   "detail": "status=428 code=SESSION_REQUIRED -> REFUSED"
+  },
+  {
+   "gate": "T3_2_unkeyed_client_can_use_what_it_created",
+   "pass": true,
+   "detail": "n/a: creation already refused, so nothing is orphaned"
+  },
+  {
+   "gate": "T3_3_key_recovers_the_orphaned_world",
+   "pass": true,
+   "detail": "n/a"
+  },
+  {
+   "gate": "T3_4_keyed_client_full_flow_under_strict",
+   "pass": true,
+   "detail": "world=200 start=200 hyp=200 exp=200 obs=200"
+  },
+  {
+   "gate": "T3_5_unkeyed_access_to_a_strict_world_is_refused",
+   "pass": true,
+   "detail": "33 routes 428 SESSION_REQUIRED, 0 did not"
+  }
+ ],
+ "unkeyed_routes_428": 33,
+ "unkeyed_routes_not_428": []
+}

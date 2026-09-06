@@ -1,0 +1,135 @@
+{
+ "results": [
+  {
+   "mechanism": "M1_seed_shopping",
+   "class": "B",
+   "projections_identical": true,
+   "honest_fingerprint": "27b40dd8a831343b",
+   "adversarial_fingerprint": "27b40dd8a831343b",
+   "unavoidable_fossil": "none -- rejected seeds never executed anywhere",
+   "observable_is": "n/a",
+   "minimal_change_to_move_to_A": "require every candidate seed to be REGISTERED before any is run",
+   "diff": null
+  },
+  {
+   "mechanism": "M2_config_search",
+   "class": "B",
+   "projections_identical": true,
+   "honest_fingerprint": "27b40dd8a831343b",
+   "adversarial_fingerprint": "27b40dd8a831343b",
+   "unavoidable_fossil": "none -- the spec differs but a single spec is what an honest single-shot also shows",
+   "observable_is": "claimant-supplied (the spec value itself)",
+   "minimal_change_to_move_to_A": "declare the search space before the run",
+   "diff": null
+  },
+  {
+   "mechanism": "M3_policy_search",
+   "class": "B",
+   "projections_identical": true,
+   "honest_fingerprint": "27b40dd8a831343b",
+   "adversarial_fingerprint": "27b40dd8a831343b",
+   "unavoidable_fossil": "none",
+   "observable_is": "claimant-supplied (policy identity hash is of the SURVIVOR, not of the search)",
+   "minimal_change_to_move_to_A": "register candidate policy hashes before evaluation",
+   "diff": null
+  },
+  {
+   "mechanism": "M4_candidate_batching",
+   "class": "B",
+   "projections_identical": true,
+   "honest_fingerprint": "27b40dd8a831343b",
+   "adversarial_fingerprint": "27b40dd8a831343b",
+   "unavoidable_fossil": "none -- only the retained value is submitted",
+   "observable_is": "n/a",
+   "minimal_change_to_move_to_A": "the executor must attest how many candidates it produced",
+   "diff": null
+  },
+  {
+   "mechanism": "M5_retry_inside_engine",
+   "class": "A",
+   "projections_identical": false,
+   "honest_fingerprint": "27b40dd8a831343b",
+   "adversarial_fingerprint": "323d2e328d7ca37e",
+   "unavoidable_fossil": "YES -- six worlds, six event chains, six observations",
+   "observable_is": "ENGINE-DERIVED (row and event counts)",
+   "minimal_change_to_move_to_A": "already class A; nothing to change",
+   "diff": {
+    "n_experiments": [
+     1,
+     6
+    ],
+    "n_worlds": [
+     1,
+     6
+    ],
+    "event_type_counts": [
+     {
+      "BUDGET_CONSUMED": 1,
+      "CLAIM_SURVIVED": 1,
+      "EXPERIMENT_COMMITTED": 1,
+      "EXPERIMENT_CREATED": 1,
+      "HYPOTHESIS_PROPOSED": 1,
+      "LINEAGE_EDGE_ADDED": 1,
+      "OBSERVATION_RECORDED": 1,
+      "WORLD_CREATED": 1,
+      "WORLD_STARTED": 1
+     },
+     {
+      "BUDGET_CONSUMED": 6,
+      "CLAIM_SURVIVED": 6,
+      "EXPERIMENT_COMMITTED": 6,
+      "EXPERIMENT_CREATED": 6,
+      "HYPOTHESIS_PROPOSED": 6,
+      "LINEAGE_EDGE_ADDED": 6,
+      "OBSERVATION_RECORDED": 6,
+      "WORLD_CREATED": 6,
+      "WORLD_STARTED": 6
+     }
+    ],
+    "n_observations": [
+     1,
+     6
+    ],
+    "n_events": [
+     9,
+     54
+    ]
+   }
+  },
+  {
+   "mechanism": "M6_retry_rehearsed_on_replica",
+   "class": "B",
+   "projections_identical": true,
+   "honest_fingerprint": "27b40dd8a831343b",
+   "adversarial_fingerprint": "27b40dd8a831343b",
+   "unavoidable_fossil": "none IN THE ENGINE OF RECORD -- the six rehearsals exist, but in a different engine instance the archaeologist has no reason to hold and no pointer to",
+   "observable_is": "n/a",
+   "minimal_change_to_move_to_A": "cross-instance evidence federation, which does not exist and cannot be made mandatory for an actor who controls their own hardware",
+   "diff": null
+  },
+  {
+   "mechanism": "M7_fork_selection_rehearsed",
+   "class": "B",
+   "projections_identical": true,
+   "honest_fingerprint": "1db9597101a5d3f9",
+   "adversarial_fingerprint": "1db9597101a5d3f9",
+   "unavoidable_fossil": "none -- one parent and one child in both records; the ten rehearsed siblings live on the replica",
+   "observable_is": "n/a",
+   "minimal_change_to_move_to_A": "same as M6: only federation would help, and it is unenforceable",
+   "diff": null
+  },
+  {
+   "mechanism": "M8_estimator_search_offline",
+   "class": "B",
+   "projections_identical": true,
+   "honest_fingerprint": "ef5627462e948d37",
+   "adversarial_fingerprint": "ef5627462e948d37",
+   "unavoidable_fossil": "the estimator NAME differs, but a single named estimator is what an honest single-shot also records",
+   "observable_is": "claimant-supplied (the estimator string in the spec)",
+   "minimal_change_to_move_to_A": "declare the estimator BEFORE the source set is readable",
+   "diff": null
+  }
+ ],
+ "class_A": 1,
+ "class_B": 7
+}

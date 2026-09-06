@@ -1,0 +1,38 @@
+{
+  "template_id": "mcc.bipartite.v0",
+  "kind": "mcc_step.v0",
+  "param_space": {
+    "solvers": {
+      "choices": [
+        50,
+        100,
+        250
+      ]
+    },
+    "environments": {
+      "choices": [
+        50,
+        100,
+        250
+      ]
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Minimal-Criterion Coevolution",
+    "reference": "Brant and Stanley 2017 Minimal Criterion Coevolution: A New Approach to Open-Ended Search",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "Minimal-Criterion Coevolution replaces absolute fitness with a strict survival threshold: a solver must solve at least one environment, and an environment must be solved by at least one solver. This tests whether open-ended divergence can be sustained without objective gradients. A SURVIVED verdict showing sustained population sizes over many repeats would indicate successful open-ended generation, but would NOT license the assumption that the solvers are increasing in general capability, only that they satisfy their specific coupled niches.",
+  "_ingest": {
+    "source_report": "02_diversity_and_illumination.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'mcc_step.v0' is not implemented by Vivarium; this template is an expansion request by definition"
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

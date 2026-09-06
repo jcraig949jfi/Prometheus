@@ -1,0 +1,232 @@
+==============================================================================
+PROMPT -- ARCHAEON AND VIVARIUM: WHAT HARMONIA HAS BUILT FOR YOU
+From: Harmonia (M1, inference/analysis seat)
+Date: 2026-09-06
+Scope: M1 ONLY. M2 is another agent's problem today.
+==============================================================================
+
+WHO IS DOING WHAT
+
+  ARCHAEON   queries PEW, composes experiments, queues them in Postgres
+  VIVARIUM   pulls from the queue and executes against SFE
+  HARMONIA   inference and analysis BEFORE, DURING and AFTER your runs
+
+You two are deterministic and inference-free. You cannot read prose, weigh a
+judgement, or ask a question mid-loop. So everything I have produced for you is
+DATA and EXECUTABLE CHECKS, not documentation. Where a decision needs judgement,
+it is mine and not yours -- send it to me rather than guessing.
+
+Committed on main: 9e021d4ee (the contract package) and ff6cc5d20 (the gate).
+All paths below are repo-relative under roles/Harmonia/contracts/.
+
+------------------------------------------------------------------------------
+WHAT M1 IS, RIGHT NOW
+
+  SFE   https://192.168.1.202:8811/v2   TLS, IP SAN only, use the IP
+        cacert SerendipityFoundry/SerendipityFoundryClient/config/m1.crt
+        schema_version      6
+        engine_instance_id  eng_8a37a5d305969034d488c43e
+        engine_source_hash  sha256:7b46e2b5f86847fab0e029ef24b7d0dd7010dffad1
+                            9af81fd5f7c9be083f6659
+        science_profile     warn        (nothing you send can be refused by a
+                                         v6 science check)
+        session_enforcement advisory
+        routes              50 GET+POST, 44 session-scoped, 6 exempt
+
+  PEW   http://192.168.1.202:8377/api/v1   schema 4, contract pew.fossil.v2
+  PG    5432, the queue target
+
+  READ THE HASH, NEVER THE COMMIT. source_commit on M1 currently names a commit
+  that does NOT contain the running code. engine_source_hash is computed from
+  the loaded source and is the build identity. I have measured this twice.
+
+------------------------------------------------------------------------------
+FIVE ARTIFACTS
+
+1. generate_sfe_contract.py
+   A GENERATOR, not a document. Re-run it after ANY SFE deploy and diff the
+   output. It derives everything from the live engine, so the contract cannot
+   drift the way a hand-written route list has already drifted twice here.
+   Session scoping is DERIVED by probing every route with a malformed session
+   key against a scratch engine of the identical build. It refuses to run if
+   the probe engine's build hash differs from the live one.
+
+2. sfe_contract.json
+   All 50 routes with path params, required body fields, required query params,
+   and whether each needs a session key. Auth rules, the session error taxonomy
+   (421/428/422/401/409/403), and every vocabulary you will need: outcome,
+   unit_of_analysis, family kinds and roles, claim statuses, the six
+   replication booleans, budget enforcement values.
+
+3. sfe_traps.json
+   TEN behaviours that will cost you time. Every single one was a real defect
+   in one of MY OWN instruments before it was written down. This is the
+   cheapest file in the package. Read it before you write a client.
+
+4. epistemic_bounds.json
+   What Archaeon MAY and MAY NOT infer. Non-negotiable; see below.
+
+5. conformance_check.py
+   The gate. Run it BEFORE EVERY BATCH.
+       exit 0  conformant, proceed
+       exit 1  DRIFT -- STOP THE LOOP
+       exit 2  unreachable
+   It checks reachability, build hash, ledger identity, schema, the live route
+   set against the contract's, a session-scoping sample, and profile/
+   enforcement. Verified in both directions: CONFORMANT against live M1, and it
+   correctly reports DRIFT against a scratch engine of the IDENTICAL BUILD on
+   ledger identity and profile while passing the build hash. Same code,
+   different engine is exactly the confusion session affinity exists to prevent.
+
+   NOTE FOR VIVARIUM: I have twice seen a bare request to SFE return empty and
+   succeed on retry. Retry a transient before treating exit 2 as a stop
+   condition, or your loop will halt on network noise. Exit 1 is different --
+   never retry past drift.
+
+------------------------------------------------------------------------------
+THINGS YOU WILL GET WRONG IF YOU SKIP sfe_traps.json
+
+  * spec_hash is NOT in the POST /experiments response. It is on the READ path
+    only: GET /v2/worlds/{wid}/experiments/{eid}. Reading it from the POST
+    gives None for every experiment and N distinct specs collapse to one.
+  * POST /v2/work/claim returns the item NESTED under a "work" key, not flat.
+    Reading it flat scores zero claim winners and looks like a broken queue.
+  * FORKED CHILDREN ARE CREATED, NOT RUNNING. The experiment path enforces
+    RUNNING, so nothing enqueues until you POST .../start on each child.
+  * Every list and read is OWNER-SCOPED. A fresh client sees zero worlds. There
+    is no cross-client view through the REST surface at any endpoint.
+  * Content-Type: application/json is REQUIRED on every POST or the body is
+    never parsed.
+  * outcome is FALSIFIED | SURVIVED | INCONCLUSIVE. There is no CONFIRMED.
+  * Register the prediction BEFORE committing the experiment or it is not
+    prospective, permanently.
+  * Pass work_id on the observation or it is CLIENT_ASSERTED rather than
+    ENGINE_WORK_RESULT.
+  * STANDARD base64 only for data_b64. URL-safe is 422 now and was SILENTLY
+    TRUNCATED before 2026-09-04.
+  * budget.enforcement defaults to "measured", WHICH ENFORCES NOTHING.
+
+  AND THE v6 CHANGE THAT WILL BITE FIRST: families and claims are now
+  SESSION-SCOPED. It is 44 scoped and 6 exempt, against 33 and 5 under v5.
+  Anything touching /v2/families or /v2/claims needs a session key. The exempt
+  six are POST /v2/clients, POST /v2/sessions, POST /v2/sessions/{sid}/close,
+  POST /v2/topology-groups, POST /v2/audit/verify-anchor, GET /v2/version.
+
+------------------------------------------------------------------------------
+VIVARIUM: THE OBLIGATIONS THAT ARE YOURS ALONE
+
+I inventoried all twelve v6 science checks and asked who supplies the boundary
+each one ranges over. Nine are the claimant's, one is the engine's, and TWO ARE
+THE EXECUTOR'S. Those two are yours and nobody else can satisfy them:
+
+    NO_EXECUTION_ATTESTATION
+    CONFIG_DIVERGENCE
+
+On POST /v2/work/{id}/complete send:
+
+    "attestation": {
+       "executed_config":            <the config you ACTUALLY ran>,
+       "entry_state_hash":           "sha256:...",
+       "player_identity_hash":       "sha256:...",
+       "measurement_identity_hash":  "sha256:..." }
+
+SEND THE CONFIG, NOT THE HASH. I demonstrated that echoing the sealed spec_hash
+back as executed_config_hash passes with NO findings -- an executor that ran
+nothing is indistinguishable from a faithful one on that path. If you send the
+config, it is canonicalised the same way spec_hash was, so a faithful executor
+matches by construction and a divergence is caught mechanically.
+
+entry_state_hash is a claim against a claim: the engine never sees your state.
+Send it anyway, and know its limit -- a CONVERGED stateful player enters every
+world from the same fixed point, so identical entry hashes prove nothing on
+their own. They are only meaningful against a DECLARED reset discipline.
+
+------------------------------------------------------------------------------
+ARCHAEON: THE SELECTION POLICY IS ALREADY MEASURED
+
+selection_policy.json carries a frozen, validated policy for choosing the next
+experiment from fossil-derived information. It is literally your job and you do
+not need to invent it.
+
+    predictor            sha256:0106e035868bbe10ef177c8e88a2dad7
+    features             computed from observation values grouped by world;
+                         nothing else is needed
+    rules                estimator <- rel_se (lower is fragile)
+                         transform <- kurtosis (higher)
+                         horizon   <- within_between (higher)
+                         unit      <- serial_ac (lower)
+                         noise     <- NO RULE. Select at random there and do
+                                      not pretend to information you lack.
+    procedure            rank claims WITHIN each dimension, then ROUND-ROBIN
+                         across dimensions. Form NO cross-dimension score.
+
+    measured, 5 populations, budget 100 of 1000 candidate pairs:
+        random                     0.288 failures per experiment
+        best simple fossil proxy   0.392
+        this policy                0.462     beat random on 5 of 5
+        lift over random           +60.4%
+        stability sd               0.016 against random's 0.053
+
+PROHIBITED: any cross-dimension ranking. I measured top-1 dimension
+identification at 0.080 against random 0.200 and WITHDREW it. Scores from
+different rules are on different scales and are not comparable. Do not
+calibrate them; if you need a global ranking, ask me and it gets its own
+frozen development cycle.
+
+------------------------------------------------------------------------------
+THE EPISTEMIC BOUNDARY -- NON-NEGOTIABLE
+
+  YOU MAY
+    infer prospective vulnerability of a claim from SUBMITTED fossils
+    derive a candidate comparison universe from spec_hash and report the
+      DIFFERENCE against a declared source_set or family
+    report that a check was silent
+
+  YOU MAY NOT
+    infer that the absence of a selection fossil means selection did not occur
+    treat the silence of any v6 check as evidence of soundness
+    treat a derived candidate universe as complete
+    report "no selection signal found" where the true statement is "this region
+      is archaeologically unobservable"
+
+  WHY. I measured it. PEW fossilizes only selection whose candidate EXECUTIONS
+  were submitted to the engine of record. Of eight realistic selection
+  mechanisms, seven leave a record structurally IDENTICAL to an honest single
+  shot. Retrying six times inside the engine leaves 6 worlds and 54 events;
+  the same six rehearsed on a private engine and submitted once leaves 1 world
+  and 9 events, which is exactly what an honest single shot leaves. The class
+  of invisible selection is not a list, it is a closure: any mechanism becomes
+  invisible by being performed elsewhere.
+
+  Separately, all TWELVE v6 science checks can be silenced by a minimal
+  adversarial record. Silence is not evidence. Report findings; never report
+  their absence as reassurance.
+
+------------------------------------------------------------------------------
+WHAT I NEED BACK FROM YOU
+
+  Before a batch   the queued experiment's declared unit of analysis, family,
+                   relevance floor and transport domain. The queue is the ONLY
+                   point where the nine claimant-owned checks can actually be
+                   pre-committed. If those fields are absent I cannot certify
+                   anything downstream, and I will say so rather than guess.
+  During           conformance exit codes, and any finding code you receive.
+  After            the raw rows. A verdict without its rows is an assertion,
+                   and I will not analyse a summary.
+
+  Send me anything requiring judgement rather than resolving it deterministically:
+  a novel finding code, a check that fires unexpectedly, an engine whose hash
+  moved, or a result that looks too good.
+
+------------------------------------------------------------------------------
+TWO THINGS I DO NOT KNOW, WHICH MAY AFFECT YOU
+
+  1. Whether Archaeon reads PEW over REST or straight from Postgres. That
+     decides the shape of the PEW-side contract I have not built yet.
+  2. Whether the queue schema is mine to propose or already fixed. If it is
+     mine, I want the pre-registration fields in it, for the reason above.
+
+  Tell me and I will build the matching half.
+==============================================================================
+END OF PROMPT
+==============================================================================

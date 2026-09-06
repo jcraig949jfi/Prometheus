@@ -1,0 +1,34 @@
+{
+  "template_id": "curiosity.v0",
+  "kind": "pseudo_count_exploration.v0",
+  "param_space": {
+    "density_model": {
+      "choices": [
+        "cts",
+        "pixelcnn"
+      ]
+    },
+    "bonus_scale": {
+      "int_range": null
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Curiosity-Driven Exploration",
+    "reference": "Bellemare et al. 2016: Unifying Count-Based Exploration and Intrinsic Motivation",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "Measures whether pseudo-counts derived from sequential density models successfully drive exploration in non-tabular environments. The field would run this to verify theoretical bounds on information gain when mapping complex state spaces to exploration bonuses. A SURVIVED verdict would license the claim that the chosen bonus scale reduces uncertainty in the specified model representation, but it would NOT license the claim that the pseudo-counts perfectly approximate true state visitation frequencies in highly stochastic domains.",
+  "_ingest": {
+    "source_report": "05_intrinsic_drives_and_creativity.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'pseudo_count_exploration.v0' is not implemented by Vivarium; this template is an expansion request by definition",
+      "REPAIRED: source markers were removed from this block to make it parse. Structure is the report's; any value that a marker had overwritten is null, never guessed."
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

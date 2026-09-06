@@ -1,0 +1,129 @@
+{
+ "engine": {
+  "api": "v2",
+  "schema_version": 4,
+  "runtime": "serendipity-foundry-sfe",
+  "registration_open": true,
+  "engine_source_hash": "sha256:6a4f3aeec05a3ed9a31364e21f55cd11dc511f8f1d9789b2bcc37ce98f8447cf",
+  "source_commit": "e6146376843da06d7e14366cc5e8c89a006b7cb3"
+ },
+ "at": 1788603721.1550224,
+ "results": [
+  {
+   "hazard": "H1-IDEMPOTENCY",
+   "title": "create-world retry safety",
+   "pre": "same config x3 -> 3 world_ids; Idempotency-Key silently IGNORED",
+   "post": "same key+request -> same world (True); conflicting request -> 409 conflict",
+   "verdict": "PASS",
+   "evidence": {
+    "w1": "wld_13fe1daf85a7b31e6f9e406a",
+    "w2": "wld_13fe1daf85a7b31e6f9e406a",
+    "conflict_status": 409
+   }
+  },
+  {
+   "hazard": "H2-ATTESTATION",
+   "title": "forced evidence attestation",
+   "pre": "observation with no work_id -> 200 CLIENT_ASSERTED; nothing could require it",
+   "post": "require_attestation world created (flag=True); unattested -> 422; attested -> 200 class=ENGINE_WORK_RESULT",
+   "verdict": "PASS",
+   "evidence": {
+    "unattested_status": 422,
+    "attested_status": 200,
+    "attested_class": "ENGINE_WORK_RESULT"
+   }
+  },
+  {
+   "hazard": "H3-CONTENT-GATE",
+   "title": "organism content identity",
+   "pre": "expected_blob_hash field did not exist (422 extra_forbidden); corrupt bytes stored with an honest digest of the WRONG object",
+   "post": "correct bytes+hash -> 200 (True); corrupt bytes+original hash -> 422; ledger events 3 -> 3 (rejected write appended 0)",
+   "verdict": "PASS",
+   "evidence": {
+    "accept": 200,
+    "reject": 422,
+    "events_before": 3,
+    "events_after": 3
+   }
+  },
+  {
+   "hazard": "H4-CAUSAL-ANCHOR",
+   "title": "exact anchor returned by the write",
+   "pre": "POST observations returned only ['obs_id']; caller had to SEARCH the ledger and could pick a wrong-but-real event",
+   "post": "returns ['entry_hash', 'event_id', 'event_seq', 'evidence_class', 'evidence_role', 'obs_id', 'world_index']; anchor resolves to THIS OBSERVATION_RECORDED event: True",
+   "verdict": "PASS",
+   "evidence": {
+    "returned_keys": [
+     "entry_hash",
+     "event_id",
+     "event_seq",
+     "evidence_class",
+     "evidence_role",
+     "obs_id",
+     "world_index"
+    ],
+    "anchor_resolves": true
+   }
+  },
+  {
+   "hazard": "H5-TERMINATED",
+   "title": "terminal-state write gate",
+   "pre": "artifact/hypothesis/budget writes SUCCEEDED after terminate",
+   "post": "forbidden now {'artifact': 409, 'hypothesis': 409, 'budget': 409}; permitted still {'read_events': 200, 'read_status': 200, 'checkpoint': 200, 'fork': 200}",
+   "verdict": "PASS",
+   "evidence": {
+    "forbidden": {
+     "artifact": 409,
+     "hypothesis": 409,
+     "budget": 409
+    },
+    "permitted": {
+     "read_events": 200,
+     "read_status": 200,
+     "checkpoint": 200,
+     "fork": 200
+    }
+   }
+  },
+  {
+   "hazard": "H6-REPLAY",
+   "title": "action recoverable and hash-verified",
+   "pre": "no GET for experiments existed; spec could be VERIFIED if already held, never RECOVERED",
+   "post": "GET experiment -> 200; spec byte-equal: True; recovered hash == sealed ledger hash: True",
+   "verdict": "PASS",
+   "evidence": {
+    "spec_equal": true,
+    "sealed": "sha256:24c4089488e1aaea9bf22978de6feadc93740036f9300551aef61ad8d1d1bada",
+    "recovered": "sha256:24c4089488e1aaea9bf22978de6feadc93740036f9300551aef61ad8d1d1bada"
+   }
+  },
+  {
+   "hazard": "H7-ISOLATION",
+   "title": "new read surfaces do not weaken isolation",
+   "pre": "isolation was ALREADY correct (7/7); the risk is that new reads become a cross-experimenter oracle",
+   "post": "foreign GET experiment=403 list=403 observations=403; intruder sees 0 worlds (its own)",
+   "verdict": "PASS",
+   "evidence": {
+    "experiment": 403,
+    "list": 403,
+    "observations": 403,
+    "intruder_world_count": 0
+   }
+  },
+  {
+   "hazard": "H8-CORRECTED",
+   "title": "refuted findings stay refuted",
+   "pre": "I-EVENTS-SHAPE claimed dict-vs-list inconsistency; I-WORLD-ENUM-UNSCOPED claimed 189 unscoped worlds",
+   "post": "events STILL a dict with 'events' key: True (NOT flipped); enumeration client-scoped (7 mine) + filters work: True",
+   "verdict": "PASS",
+   "evidence": {
+    "events_is_dict": true,
+    "mine": 7,
+    "running": 4,
+    "terminated": 1,
+    "bad_state_status": 422
+   }
+  }
+ ],
+ "summary": "8/8 PASS"
+}

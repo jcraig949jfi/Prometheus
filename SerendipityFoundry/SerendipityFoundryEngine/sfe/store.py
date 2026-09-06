@@ -31,7 +31,7 @@ import time
 from pathlib import Path
 from typing import Any, Iterator, Optional
 
-SCHEMA_VERSION = 4
+SCHEMA_VERSION = 7
 
 # The schema is intentionally explicit and constrained: NOT NULLs, CHECK
 # enumerations on lifecycle columns, and foreign keys, so a bad transition or a
@@ -54,7 +54,13 @@ CREATE TABLE IF NOT EXISTS sessions (
     name        TEXT NOT NULL,
     state       TEXT NOT NULL DEFAULT 'OPEN'
                 CHECK (state IN ('OPEN','CLOSED')),
-    created_ts  REAL NOT NULL
+    created_ts  REAL NOT NULL,
+    -- session affinity (v5): the key is bearer-like, so only its SHA-256 is
+    -- stored; engine_instance_id is the binding a router will later use to
+    -- answer "which SFE instance owns this experiment?".
+    key_hash            TEXT,
+    engine_instance_id  TEXT,
+    affinity_mode       TEXT NOT NULL DEFAULT 'STRICT'
 );
 CREATE INDEX IF NOT EXISTS ix_sessions_client ON sessions(client_id);
 
@@ -148,6 +154,13 @@ CREATE TABLE IF NOT EXISTS work_items (
     heartbeat_ts  REAL,
     result        TEXT,
     result_hash   TEXT,
+    -- v6 EXECUTED-side attestation. The engine holds the REQUESTED config
+    -- (spec_hash, sealed at commit); these are what the executor says it
+    -- ACTUALLY ran. Divergence is then a hash comparison, not a judgement.
+    executed_config_hash      TEXT,
+    entry_state_hash          TEXT,
+    player_identity_hash      TEXT,
+    measurement_identity_hash TEXT,
     error         TEXT,
     created_ts    REAL NOT NULL,
     updated_ts    REAL NOT NULL,
@@ -201,6 +214,13 @@ CREATE TABLE IF NOT EXISTS experiments (
                                        -- budget and authorizes execution.
                                        -- NULL = REGISTERED (non-executable).
     committed_ts  REAL,
+    -- v6: for kind='analysis'. unit_of_analysis is DECLARED by the analyst and
+    -- VERIFIED by the engine -- counting distinct units under a declared key is
+    -- counting, not statistics, and it is what turns 128 observations over 8
+    -- worlds from n=128 into n=8.
+    unit_of_analysis TEXT,
+    declared_n       INTEGER,
+    source_set_hash  TEXT,
     created_ts  REAL NOT NULL,
     created_seq INTEGER NOT NULL
 );
@@ -304,12 +324,97 @@ CREATE TABLE IF NOT EXISTS budgets (
 -- UNGUESSABLE capability: two clients share it only by deliberate transfer, so
 -- matching topology_group strings alone can never manufacture "bilateral
 -- consent" -- the group must exist here for a cross-client crossing.
+-- v6 SCIENTIFIC PROVENANCE.
+--
+-- families is the FIRST cross-world scientific container. Every other
+-- scientific table carries world_id NOT NULL, which is correct for a ledger
+-- but makes a campaign, an analysis family or a comparison family
+-- inexpressible: they span worlds by definition. Without this, a selected
+-- survivor cannot be attached to the alternatives it was selected from, which
+-- is the provenance that makes best-of-N visible.
+CREATE TABLE IF NOT EXISTS families (
+    family_id     TEXT PRIMARY KEY,
+    client_id     TEXT NOT NULL REFERENCES clients(client_id),
+    kind          TEXT NOT NULL,          -- campaign | analysis | comparison
+    manifest      TEXT NOT NULL,          -- DECLARED intended extent (freeform)
+    manifest_hash TEXT NOT NULL,          -- sealed at creation, immutable
+    state         TEXT NOT NULL DEFAULT 'OPEN'
+                  CHECK (state IN ('OPEN','CLOSED')),
+    created_ts    REAL NOT NULL
+);
+
+-- world_id is NULLABLE here ON PURPOSE: a member may be an analysis or a claim
+-- that belongs to no single world. This is the whole point of the table.
+CREATE TABLE IF NOT EXISTS family_members (
+    family_id   TEXT NOT NULL REFERENCES families(family_id),
+    member_kind TEXT NOT NULL,            -- experiment | analysis | world | claim
+    member_id   TEXT NOT NULL,
+    world_id    TEXT,
+    role        TEXT,                     -- planned | executed | abandoned
+    created_ts  REAL NOT NULL,
+    PRIMARY KEY (family_id, member_kind, member_id)
+);
+CREATE INDEX IF NOT EXISTS ix_family_members ON family_members(family_id, role);
+
+-- A claim is the scientific assertion. It is deliberately NOT a world record:
+-- it cites analyses, which cite observations, which live in worlds.
+CREATE TABLE IF NOT EXISTS claims (
+    claim_id        TEXT PRIMARY KEY,
+    client_id       TEXT NOT NULL REFERENCES clients(client_id),
+    family_id       TEXT REFERENCES families(family_id),
+    analysis_exp_id TEXT,                 -- the kind='analysis' experiment
+    analysis_world_id TEXT,
+    estimand        TEXT NOT NULL,
+    -- SUCCESSFUL_NEGATIVE exists because "the effect is bounded below a
+    -- declared relevance floor" is a POSITIVE result, and collapsing it into
+    -- INCONCLUSIVE destroys exactly the information that makes it valuable.
+    -- The engine stores the conclusion; it does not judge the equivalence test.
+    status          TEXT NOT NULL
+                    CHECK (status IN ('SUPPORTED','SUCCESSFUL_NEGATIVE',
+                                      'INCONCLUSIVE','RETRACTED')),
+    relevance_floor TEXT,
+    replication     TEXT,                 -- COMPOSITIONAL dict, never an ordinal
+    transport_domain TEXT,
+    content_hash    TEXT NOT NULL,
+    created_ts      REAL NOT NULL
+);
+CREATE INDEX IF NOT EXISTS ix_claims_family ON claims(family_id);
+
 CREATE TABLE IF NOT EXISTS topology_groups (
     group_id    TEXT PRIMARY KEY,
     created_by  TEXT NOT NULL REFERENCES clients(client_id),
     note        TEXT,
     created_ts  REAL NOT NULL
 );
+
+-- v7 CROSS-SEAT READ CONTRACT.
+--
+-- Every read route in this engine is owner-scoped, which is correct (I5) and
+-- which made a whole class of consumer impossible: an ARCHAEOLOGIST that mines
+-- another seat's executed record cannot see a single row, and its only recourse
+-- was to open the SQLite file off disk -- a read with no tenancy filter, no
+-- evidence-class filter, no schema guard and no contract at all.
+--
+-- A grant is scoped to a TOPOLOGY GROUP rather than to a client or a world.
+-- The group id is already a server-issued unguessable capability (H5) that two
+-- clients can only come to share by deliberate out-of-band transfer, so
+-- string-guessing can never manufacture consent. Reusing it means the grant
+-- names a set the granter has already had to curate deliberately.
+--
+-- READ ONLY, and only ever read: a grant confers no write, no claim, no work,
+-- no budget. It is revocable, and revocation is recorded rather than deleted.
+CREATE TABLE IF NOT EXISTS read_grants (
+    grant_id          TEXT PRIMARY KEY,
+    group_id          TEXT NOT NULL REFERENCES topology_groups(group_id),
+    grantee_client_id TEXT NOT NULL REFERENCES clients(client_id),
+    granted_by        TEXT NOT NULL REFERENCES clients(client_id),
+    note              TEXT,
+    created_ts        REAL NOT NULL,
+    revoked_ts        REAL,
+    UNIQUE (group_id, grantee_client_id)
+);
+CREATE INDEX IF NOT EXISTS ix_read_grants_grantee
+    ON read_grants(grantee_client_id, revoked_ts);
 
 -- F5: request-identity idempotency for epistemic writes. A key is scoped to the
 -- issuing client; request_hash binds the SEMANTIC request (route + world +
@@ -353,6 +458,23 @@ CREATE TABLE IF NOT EXISTS measurements (
     validation_status TEXT NOT NULL DEFAULT 'UNVALIDATED'
                     CHECK (validation_status IN ('UNVALIDATED','VALIDATED',
                                                  'DEPRECATED')),
+    -- v7: WHERE the value is, and WHAT IT MEANS.
+    --
+    -- observations.content is freeform by design, so nothing said which field
+    -- of it was the outcome. That is the exact gap behind "computing a
+    -- variance requires knowing which field is the outcome" -- the reason the
+    -- engine declines to compute one. A DECLARED path does not make the engine
+    -- a statistician: it makes locating the value a lookup instead of a guess,
+    -- and it is the difference between an analyst reading the right column and
+    -- reading a plausible one.
+    value_path      TEXT,          -- dotted path into observations.content
+    direction       TEXT           -- HIGHER_IS_BETTER | LOWER_IS_BETTER |
+                    CHECK (direction IS NULL OR direction IN
+                           ('HIGHER_IS_BETTER','LOWER_IS_BETTER','NEITHER')),
+    unit            TEXT,
+    range_min       REAL,
+    range_max       REAL,
+    identity_hash   TEXT,          -- canonical id of the DEFINITION (v7)
     created_ts      REAL NOT NULL,
     UNIQUE (name, version)
 );
@@ -378,6 +500,38 @@ class Store:
 
     # -- schema ------------------------------------------------------------
     def initialize(self) -> None:
+        # FAST PATH, and it is not an optimization -- it is an availability
+        # fix (D-LOCK-1, 2026-09-06).
+        #
+        # api.get_foundry() builds a fresh Foundry PER REQUEST, and this method
+        # used to open `with self.write()` unconditionally. write() issues
+        # BEGIN IMMEDIATE, which takes SQLite's EXCLUSIVE WRITE LOCK. So every
+        # request -- including unauthenticated read-only ones like
+        # GET /v2/version -- queued behind every writer, purely to re-read one
+        # row of `meta`. WAL gives concurrent readers, and the engine was
+        # throwing that away on the first line of every request.
+        #
+        # Measured on the live M1 service before this fix, with one ordinary
+        # consumer writing: GET /v2/version 22.8s and 17.6s against a 30s
+        # busy_timeout, while GET /v2/openapi.json -- same process, same TLS,
+        # no db dependency -- stayed at 18ms. Three consumers now share this
+        # engine, so the tail was heading for the timeout, not merely for slow.
+        #
+        # The already-current case is every case except a genuine migration, so
+        # settle it with a PLAIN READ and take no lock at all. Correctness is
+        # unchanged: a schema at the current version has, by construction,
+        # already run _SCHEMA and every migration, and the slow path below
+        # still serializes real migrations behind BEGIN IMMEDIATE.
+        try:
+            row = self._conn.execute(
+                "SELECT value FROM meta WHERE key='schema_version'").fetchone()
+            if row is not None and int(row["value"]) == SCHEMA_VERSION:
+                return
+        except sqlite3.OperationalError:
+            pass          # no meta table yet -- brand new db, full path below
+        except (TypeError, ValueError):
+            pass          # unparseable version -- let the slow path judge it
+
         # executescript() COMMITs any pending transaction, so the DDL runs in
         # autocommit (outside our write() wrapper). CREATE TABLE IF NOT EXISTS
         # makes this idempotent and safe for many processes opening the same db.
@@ -402,6 +556,12 @@ class Store:
                 self._migrate_2_to_3(cx)
             if have <= 3:
                 self._migrate_3_to_4(cx)
+            if have <= 4:
+                self._migrate_4_to_5(cx)
+            if have <= 5:
+                self._migrate_5_to_6(cx)
+            if have <= 6:
+                self._migrate_6_to_7(cx)
             cx.execute("UPDATE meta SET value=? WHERE key='schema_version'",
                        (str(SCHEMA_VERSION),))
 
@@ -471,6 +631,81 @@ class Store:
                        "INTEGER NOT NULL DEFAULT 0")
         cx.execute("CREATE INDEX IF NOT EXISTS ix_obs_pred "
                    "ON observations(world_id, pred_id)")
+
+    @staticmethod
+    def _migrate_6_to_7(cx) -> None:
+        """v6 -> v7 (2026-09-06): the cross-seat read contract and
+        measurement meaning.
+
+        Purely additive, and NOTHING is back-filled. read_grants starts empty
+        because no grant has ever been made, and every pre-v7 measurement has a
+        NULL value_path because nobody was ever asked for one -- inventing a
+        path would assert where a value lives on evidence nobody supplied,
+        which is the same reasoning that left v5 sessions LEGACY and v6
+        attestations NULL."""
+        have = {r["name"] for r in cx.execute(
+            "PRAGMA table_info(measurements)").fetchall()}
+        for col, typ in (("value_path", "TEXT"), ("direction", "TEXT"),
+                         ("unit", "TEXT"), ("range_min", "REAL"),
+                         ("range_max", "REAL"), ("identity_hash", "TEXT")):
+            if col not in have:
+                cx.execute("ALTER TABLE measurements ADD COLUMN %s %s"
+                           % (col, typ))
+
+    @staticmethod
+    def _migrate_5_to_6(cx) -> None:
+        """v5 -> v6 (DAEDALUS 2026-09-05, scientific-provenance point release).
+
+        Purely additive. The new tables are created by the schema script; this
+        adds columns to existing tables. NOTHING is back-filled: a pre-v6 work
+        item has NULL attestation hashes because no executor ever attested
+        anything, and inventing a value would manufacture a provenance claim
+        that was never made -- the same reasoning as the v5 LEGACY sessions."""
+        have = {r["name"] for r in cx.execute(
+            "PRAGMA table_info(work_items)").fetchall()}
+        for col in ("executed_config_hash", "entry_state_hash",
+                    "player_identity_hash", "measurement_identity_hash"):
+            if col not in have:
+                cx.execute("ALTER TABLE work_items ADD COLUMN %s TEXT" % col)
+        have = {r["name"] for r in cx.execute(
+            "PRAGMA table_info(experiments)").fetchall()}
+        if "unit_of_analysis" not in have:
+            cx.execute("ALTER TABLE experiments ADD COLUMN unit_of_analysis TEXT")
+            cx.execute("ALTER TABLE experiments ADD COLUMN declared_n INTEGER")
+            cx.execute("ALTER TABLE experiments ADD COLUMN source_set_hash TEXT")
+
+    @staticmethod
+    def _migrate_4_to_5(cx) -> None:
+        """v4 -> v5 (DAEDALUS 2026-09-05, session affinity). Additive:
+        sessions.key_hash / .engine_instance_id / .affinity_mode.
+
+        Sessions that already exist get affinity_mode='LEGACY' with a NULL
+        key_hash and a NULL engine_instance_id. THIS IS DELIBERATE AND IT IS
+        THE HONEST OPTION: those sessions were created before affinity existed,
+        so no session key was ever issued for them and no engine binding was
+        ever recorded. Back-filling this engine's instance id onto them would
+        MANUFACTURE A PROVENANCE CLAIM THAT WAS NEVER MADE -- it would assert
+        that this engine is where they were created, which happens to be true
+        on M1 today and would become false the moment a database is restored
+        elsewhere. A NULL says "unknown", which is what we actually know.
+
+        LEGACY sessions keep working without a key (a mandatory key would
+        strand 106 sessions and 346 worlds). They are visibly marked, counted
+        at startup, and can never be silently mistaken for bound sessions:
+        every response about them carries affinity_mode, and the strict-mode
+        cutover is a single flag, not a rewrite."""
+        have = {r["name"] for r in cx.execute(
+            "PRAGMA table_info(sessions)").fetchall()}
+        if "key_hash" not in have:
+            cx.execute("ALTER TABLE sessions ADD COLUMN key_hash TEXT")
+        if "engine_instance_id" not in have:
+            cx.execute("ALTER TABLE sessions ADD COLUMN engine_instance_id TEXT")
+        if "affinity_mode" not in have:
+            # every pre-existing row becomes LEGACY; new rows are written STRICT
+            cx.execute("ALTER TABLE sessions ADD COLUMN affinity_mode TEXT "
+                       "NOT NULL DEFAULT 'LEGACY'")
+        cx.execute("CREATE INDEX IF NOT EXISTS ix_sessions_keyhash "
+                   "ON sessions(key_hash)")
 
     # -- transactions ------------------------------------------------------
     @contextlib.contextmanager

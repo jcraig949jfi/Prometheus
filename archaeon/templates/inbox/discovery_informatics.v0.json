@@ -1,0 +1,34 @@
+{
+  "template_id": "discovery_informatics.v0",
+  "kind": "evaluate_bitstring",
+  "param_space": {
+    "bits": {
+      "choices": [
+        "11110000",
+        "10101010",
+        "11111111"
+      ]
+    },
+    "length": {
+      "int_range": null
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Discovery Informatics",
+    "reference": "Torvik and Smalheiser (2007) quantitative logistic regression model for predicting B-term relevance",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "This measures the predicted relevance score of a synthesized connection, using a bitstring as a proxy for an eight-feature binary vector of an implicit link. The field would run this because discovery informatics frequently focuses on computationally predicting the utility of mined connections. A SURVIVED verdict would mean the feature vector successfully matched the statistical relevance target, but it would NOT license the conclusion that the automated workflow can operate without expert human curation.",
+  "_ingest": {
+    "source_report": "12_knowledge_discovery_and_serendipity.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "REPAIRED: source markers were removed from this block to make it parse. Structure is the report's; any value that a marker had overwritten is null, never guessed."
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

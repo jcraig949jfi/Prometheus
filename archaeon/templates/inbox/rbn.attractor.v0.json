@@ -1,0 +1,44 @@
+{
+  "template_id": "rbn.attractor.v0",
+  "kind": "boolean_network.v0",
+  "param_space": {
+    "num_nodes": {
+      "choices": [
+        16,
+        32,
+        64
+      ]
+    },
+    "connectivity_k": {
+      "choices": [
+        1,
+        2,
+        3
+      ]
+    },
+    "update_steps": {
+      "int_range": [
+        100,
+        1000
+      ]
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Artificial Gene Regulatory Networks",
+    "reference": "Kauffman 1969, Metabolic stability and epigenesis in randomly constructed genetic nets",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "This experiment instantiates a Random Boolean Network with a specific node count and in-degree connectivity, then updates the states to measure the length of the resulting periodic attractor. The field uses this to study phase transitions between ordered, critical, and chaotic regimes in gene regulation. A SURVIVED verdict would indicate that the network reached a stable periodic cycle within the allotted steps, but would NOT license the claim that this specific network is evolvable, robust to structural mutations, or capable of cellular differentiation.",
+  "_ingest": {
+    "source_report": "03_generative_and_developmental_representations.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'boolean_network.v0' is not implemented by Vivarium; this template is an expansion request by definition"
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

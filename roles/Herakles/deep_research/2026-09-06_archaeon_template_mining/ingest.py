@@ -65,6 +65,93 @@ def strip_fences(raw):
     return s.strip()
 
 
+#: A run's template blocks are destroyed if the research agent's grounding layer
+#: overwrites square-bracketed content with source markers. The deck therefore
+#: asks for ranges and choice lists as QUOTED STRINGS. These decode them back
+#: into real JSON, so the stored template is normal data and the bracket-free
+#: encoding never leaves this script.
+RANGE_RE = re.compile(r"^\s*(-?[\d.]+)\s*(?:to|\.\.|-)\s*(-?[\d.]+)\s*$", re.I)
+CITE_RE = re.compile(r"\[\s*cite[^\]]*\]", re.I)
+
+
+def _num(tok):
+    tok = tok.strip()
+    try:
+        return int(tok)
+    except ValueError:
+        pass
+    try:
+        return float(tok)
+    except ValueError:
+        return tok
+
+
+#: Source markers sitting in a JSON VALUE position (right after a colon) make
+#: the block unparseable. Replacing them with null recovers the template's
+#: structure -- its kind, its axis names, its rationale -- while recording that
+#: the value itself is gone. Markers inside a string are prose noise and are
+#: simply removed. Nothing is ever reconstructed: a destroyed number stays null
+#: and the template is flagged INCOMPLETE.
+CITE_VALUE_RE = re.compile(r"(:\s*)\[\s*cite[^\]]*\]", re.I)
+#: The renderer sometimes deletes the value outright rather than replacing it,
+#: leaving a key with an empty slot: a colon followed straight by a comma or a
+#: closing brace. That is the same loss, and it gets the same null.
+EMPTY_VALUE_RE = re.compile(r"(:\s*)(?=[,}])")
+
+
+def repair_citations(body):
+    """Return (repaired_text, was_repaired)."""
+    # a lambda, not a backreference string: the replacement must contain
+    # no backslash escape for the surrounding tooling to mangle
+    fixed, n = CITE_VALUE_RE.subn(lambda m: m.group(1) + "null", body)
+    fixed2, n2 = CITE_RE.subn("", fixed)
+    fixed3, n3 = EMPTY_VALUE_RE.subn(lambda m: m.group(1) + "null", fixed2)
+    return fixed3, bool(n or n2 or n3)
+
+
+def decode_axis(spec):
+    """Decode one param_space axis. Returns (decoded, note_or_None).
+
+    Leaves anything it does not recognise untouched: a silent reinterpretation
+    would be worse than an undecoded string an operator can read.
+    """
+    if not isinstance(spec, dict):
+        return spec, None
+    out, note = {}, None
+    for k, v in spec.items():
+        if not isinstance(v, str):
+            out[k] = v
+            continue
+        if CITE_RE.search(v):
+            out[k] = None
+            note = ("value destroyed by a source marker in the returned "
+                    "report; NOT reconstructed, and must be supplied by the "
+                    "operator before admission")
+            continue
+        m = RANGE_RE.match(v)
+        if m and k.endswith("range"):
+            out[k] = [_num(m.group(1)), _num(m.group(2))]
+        elif k == "choices":
+            parts = [t for t in (x.strip() for x in v.split(",")) if t]
+            out[k] = [_num(t) for t in parts] if parts else v
+        else:
+            out[k] = v
+    return out, note
+
+
+def decode_param_space(space):
+    """Decode every axis. Returns (decoded_space, list_of_incomplete_axes)."""
+    if not isinstance(space, dict):
+        return space, []
+    out, incomplete = {}, []
+    for axis, spec in space.items():
+        dec, note = decode_axis(spec)
+        out[axis] = dec
+        if note:
+            incomplete.append(axis)
+    return out, incomplete
+
+
 def validate(tpl, registry):
     """Reasons this template cannot go to the inbox as-is. Empty list = ok.
 
@@ -79,7 +166,10 @@ def validate(tpl, registry):
         return reasons, flags
 
     tid = tpl["template_id"]
-    if not re.match(r"^[a-z0-9]+(\.[a-z0-9_]+)*\.v\d+$", tid or ""):
+    # Underscores are normal in the first segment: kinds themselves are named
+    # random_walk_v0, and ids like version_space_search.v0 are correct. An
+    # earlier version of this rule allowed them only after the first dot.
+    if not re.match(r"^[a-z0-9_]+(\.[a-z0-9_]+)*\.v\d+$", tid or ""):
         reasons.append("template_id %r is not a lowercase dotted id ending "
                        ".vN" % tid)
     if tpl.get("status") != "PROPOSED":
@@ -155,36 +245,67 @@ def parse_expansion(block):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--dry-run", action="store_true")
-    ap.add_argument("--reports", default=HERE,
+    ap.add_argument("--reports", nargs="+", default=[HERE],
                     help="directory holding the NN_*.md reports; defaults to "
                          "this directory. The v1 run's reports live in a "
                          "subdirectory because their template blocks were "
                          "corrupted, but their expansion blocks are intact and "
                          "worth reading.")
     args = ap.parse_args()
-    reports_dir = os.path.abspath(args.reports)
+    # Several report directories may be given. When the same PROMPT NUMBER
+    # appears in more than one, the LAST directory wins. That is how a re-run
+    # of a few clusters supersedes an earlier, damaged run of all of them
+    # without either discarding the good salvage or letting stale rows linger.
+    chosen = {}
+    for d in args.reports:
+        d = os.path.abspath(d)
+        if not os.path.isdir(d):
+            print("no such directory: %s" % d)
+            return 1
+        for f in os.listdir(d):
+            if re.match(r"^\d\d_.*\.md$", f):
+                chosen[f[:2]] = (d, f)
+    sources = [chosen[k] for k in sorted(chosen)]
 
     registry = load_registry()
-    reports = sorted(f for f in os.listdir(reports_dir)
-                     if re.match(r"^\d\d_.*\.md$", f))
+    reports = [f for _, f in sources]
     if not reports:
-        print("no NN_*.md reports in %s" % reports_dir)
+        print("no NN_*.md reports in %s" % ", ".join(args.reports))
         return 1
 
     accepted, rejected, expansions = [], [], []
-    for r in reports:
-        text = io.open(os.path.join(reports_dir, r),
-                       encoding="utf-8").read()
+    for d, r in sources:
+        text = io.open(os.path.join(d, r), encoding="utf-8").read()
         for raw in TEMPLATE_RE.findall(text):
             body = strip_fences(raw)
+            repaired = False
             try:
                 tpl = json.loads(body)
-            except Exception as e:
-                rejected.append(dict(report=r, template_id="<unparseable>",
-                                     reasons=["not valid JSON: %s" % e],
-                                     body=body[:400]))
-                continue
+            except Exception:
+                body2, repaired = repair_citations(body)
+                try:
+                    tpl = json.loads(body2)
+                except Exception as e:
+                    rejected.append(dict(
+                        report=r, template_id="<unparseable>",
+                        reasons=["not valid JSON even after removing source "
+                                 "markers: %s" % e], body=body[:400]))
+                    continue
+            space, incomplete = decode_param_space(tpl.get("param_space"))
+            if isinstance(space, dict):
+                tpl["param_space"] = space
             reasons, flags = validate(tpl, registry)
+            if repaired:
+                flags.append(
+                    "REPAIRED: source markers were removed from this block to "
+                    "make it parse. Structure is the report's; any value that "
+                    "a marker had overwritten is null, never guessed.")
+            if incomplete:
+                flags.append(
+                    "INCOMPLETE: axes %s lost their values to source markers "
+                    "in the returned report. The axis names are real; the "
+                    "numbers are NOT reconstructed and must be set by the "
+                    "operator before admission." % sorted(incomplete))
             rec = dict(report=r, template_id=tpl.get("template_id"),
                        kind=tpl.get("kind"), flags=flags, tpl=tpl)
             if reasons:

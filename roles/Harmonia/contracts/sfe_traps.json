@@ -1,0 +1,72 @@
+{
+ "note": "every entry below was a real defect in one of MY OWN instruments before it was written down. They are the cheapest thing in this package.",
+ "traps": [
+  {
+   "id": "T1",
+   "surface": "POST /v2/worlds/{wid}/experiments",
+   "trap": "the response does NOT contain spec_hash",
+   "consequence": "reading it from the POST yields None for every cell, so N distinct experiments collapse to '1 distinct hash'",
+   "do": "GET /v2/worlds/{wid}/experiments/{eid} to obtain spec_hash"
+  },
+  {
+   "id": "T2",
+   "surface": "POST /v2/work/claim",
+   "trap": "the item is NESTED under a 'work' key, not flat",
+   "consequence": "reading it flat scores zero claim winners and looks exactly like a broken claim path",
+   "do": "response['work']['work_id'] and ['claim_id']"
+  },
+  {
+   "id": "T3",
+   "surface": "POST /v2/worlds/{wid}/fork",
+   "trap": "forked children are created in state CREATED, not RUNNING",
+   "consequence": "the experiment path enforces RUNNING, so nothing enqueues and work/claim returns nothing",
+   "do": "POST /v2/worlds/{child}/start before using a fork"
+  },
+  {
+   "id": "T4",
+   "surface": "GET /v2/worlds and every list route",
+   "trap": "owner-scoped; a new client sees zero worlds",
+   "consequence": "an 'archaeologist' registered as a fresh client sees an empty store and concludes wrongly",
+   "do": "use the owning client's token, or read the store directly"
+  },
+  {
+   "id": "T5",
+   "surface": "analysis verified_n",
+   "trap": "verified_n COMPUTES, it does not echo declared_n",
+   "measured": "10 observations from ONE world: declared_n 1/8/10/99 all return verified_n=1 and unit_mismatch flips true",
+   "do": "trust verified_n; treat unit_mismatch as the signal"
+  },
+  {
+   "id": "T6",
+   "surface": "artifact data_b64",
+   "trap": "STANDARD base64 only; URL-safe is 422",
+   "note": "before 2026-09-04 URL-safe was accepted and SILENTLY TRUNCATED -- distrust artifact bytes written earlier",
+   "do": "verify the returned blob_hash equals sha256(your bytes)"
+  },
+  {
+   "id": "T7",
+   "surface": "identity of an artifact",
+   "trap": "blob_hash is world-INdependent; artifact_id hashes an envelope {world, kind, blob, meta}",
+   "consequence": "the same bytes in two worlds give DIFFERENT artifact_ids",
+   "do": "use blob_hash for cross-world identity"
+  },
+  {
+   "id": "T8",
+   "surface": "epistemic protocol ordering",
+   "trap": "a prediction registered AFTER the experiment commit is not prospective and needs retrospective:true permanently",
+   "do": "hypotheses -> predictions -> experiments{commit,enqueue}"
+  },
+  {
+   "id": "T9",
+   "surface": "observations",
+   "trap": "without work_id an observation is CLIENT_ASSERTED, not ENGINE_WORK_RESULT",
+   "do": "pass work_id; check status.epistemics.observations_engine_attested"
+  },
+  {
+   "id": "T10",
+   "surface": "families",
+   "trap": "member_kind refuses 'family' (422), so an amendment chain is sealed text in the manifest and NOT a traversable relation",
+   "do": "record amends_family in the manifest and expect no engine-side traversal"
+  }
+ ]
+}

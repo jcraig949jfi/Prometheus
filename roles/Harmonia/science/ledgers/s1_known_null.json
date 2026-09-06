@@ -1,0 +1,170 @@
+{
+ "findings": [
+  {
+   "id": "S1-1",
+   "title": "Pseudo-replication inflates the false-positive rate ~10x on a pure null",
+   "class": "BLOCKS_LONG_RUN",
+   "detail": "Counting OBSERVATIONS instead of WORLDS turns a 5% nominal test into a 52% false-discovery machine (0.517 vs 0.050 over 400 known-null campaigns). The observations inside one world are noisy copies of ONE world-level draw, so they are not independent evidence. n is not 48 per arm, it is 6. Nothing in the engine stops an analyst using the larger number, and the larger number is the one that is easy to reach."
+  },
+  {
+   "id": "S1-2",
+   "title": "A null grid of 75 comparisons yields 0 'findings' at the CORRECT unit",
+   "class": "BLOCKS_LONG_RUN",
+   "detail": "Even with pseudo-replication fixed, searching 75 player x metric combinations over a pure null produced 0 results a campaign would celebrate. At one experiment per combination this is invisible; the curse arrives with the SECOND and THIRD combination and grows with the grid. A campaign that plans to sweep player x world x intervention MUST declare the comparison family and a correction or holdout BEFORE the sweep, because after the fact there is no way to reconstruct how many comparisons were actually looked at."
+  },
+  {
+   "id": "S1-3",
+   "title": "Significance is reachable for an effect of d~0.02 purely by extending the run",
+   "class": "SHOULD_FIX_BEFORE_SCALE",
+   "detail": "A true but scientifically trivial arm effect becomes reliably 'significant' as worlds per arm grows, while the effect size stays where it started. A longer campaign therefore BUYS significance rather than discovering it. Reporting p without a pre-registered minimum effect of interest makes every long run self-justifying. The fix is cheap and must precede scale: every claim carries an effect size with an interval, and a pre-declared smallest effect worth believing."
+  },
+  {
+   "id": "S1-4",
+   "title": "The record DOES retain the true unit; nothing enforces its use",
+   "class": "INSTRUMENTATION_GAP",
+   "detail": "Every observation is attributable to its world and every world to its fork parent and declared intervention, so a correct world-level analysis IS reconstructible from fossils -- the information is not lost. What is missing is any declaration of the intended unit of analysis. The record offers 24 observations and 6 worlds with equal prominence, and the wrong one is 4x larger. Remediation is cheap: an experiment must declare its unit of analysis at commit time, and any analysis whose n exceeds the count of independent units at that declared level is refused."
+  },
+  {
+   "id": "S1-5",
+   "title": "Duplicated player under a new identity is not flagged anywhere",
+   "class": "SCIENTIFIC_DESIGN_GAP",
+   "detail": "Two arms carrying different NAMES and the same behaviour are recorded as two distinct experimental arms with no marker that they are the same policy. The engine has no notion of player identity beyond a free-text name and a free-text intervention dict, so 'player A vs player B' is a claim the record cannot check. Observed p=0.035 here is null as expected, but that is luck of the draw, not protection: with the grid in S1-2 a duplicate-under-a-new-name WILL eventually produce a celebrated difference from itself. Minimum remediation: a content hash of the player's decision policy recorded on the fossil, so 'different player' is checkable rather than asserted."
+  }
+ ],
+ "data": {
+  "real_rows": [
+   {
+    "world_id": "wld_a5ba86c3c3aca44d91df476b",
+    "name": "player_alpha",
+    "score": -0.47439903234490594
+   },
+   {
+    "world_id": "wld_a5ba86c3c3aca44d91df476b",
+    "name": "player_alpha",
+    "score": -0.4848372404215937
+   },
+   {
+    "world_id": "wld_a5ba86c3c3aca44d91df476b",
+    "name": "player_alpha",
+    "score": -0.41394299828158404
+   },
+   {
+    "world_id": "wld_a5ba86c3c3aca44d91df476b",
+    "name": "player_alpha",
+    "score": -0.5407885453707882
+   },
+   {
+    "world_id": "wld_71da171c8aec52f26069b23a",
+    "name": "player_beta_SAME_POLICY",
+    "score": -0.9844456906848991
+   },
+   {
+    "world_id": "wld_71da171c8aec52f26069b23a",
+    "name": "player_beta_SAME_POLICY",
+    "score": -0.555487848641123
+   },
+   {
+    "world_id": "wld_71da171c8aec52f26069b23a",
+    "name": "player_beta_SAME_POLICY",
+    "score": -1.2174085581756857
+   },
+   {
+    "world_id": "wld_71da171c8aec52f26069b23a",
+    "name": "player_beta_SAME_POLICY",
+    "score": -0.8725640501710312
+   },
+   {
+    "world_id": "wld_95a8733136ecbdf7c4b674ed",
+    "name": "player_alpha",
+    "score": -1.0300090890546227
+   },
+   {
+    "world_id": "wld_95a8733136ecbdf7c4b674ed",
+    "name": "player_alpha",
+    "score": -1.1499821451307422
+   },
+   {
+    "world_id": "wld_95a8733136ecbdf7c4b674ed",
+    "name": "player_alpha",
+    "score": -1.1353592731069084
+   },
+   {
+    "world_id": "wld_95a8733136ecbdf7c4b674ed",
+    "name": "player_alpha",
+    "score": -0.8860830152518707
+   },
+   {
+    "world_id": "wld_5b22e3204228fe72a29e23ca",
+    "name": "player_beta_SAME_POLICY",
+    "score": -0.7900930525492713
+   },
+   {
+    "world_id": "wld_5b22e3204228fe72a29e23ca",
+    "name": "player_beta_SAME_POLICY",
+    "score": -0.3631789125961128
+   },
+   {
+    "world_id": "wld_5b22e3204228fe72a29e23ca",
+    "name": "player_beta_SAME_POLICY",
+    "score": -0.3896190363404751
+   },
+   {
+    "world_id": "wld_5b22e3204228fe72a29e23ca",
+    "name": "player_beta_SAME_POLICY",
+    "score": -0.31870869761783727
+   },
+   {
+    "world_id": "wld_9eef5279b47d25bc6a0cb8d3",
+    "name": "player_alpha",
+    "score": 0.3873101313126775
+   },
+   {
+    "world_id": "wld_9eef5279b47d25bc6a0cb8d3",
+    "name": "player_alpha",
+    "score": 0.76628763836608
+   },
+   {
+    "world_id": "wld_9eef5279b47d25bc6a0cb8d3",
+    "name": "player_alpha",
+    "score": 0.454114077230054
+   },
+   {
+    "world_id": "wld_9eef5279b47d25bc6a0cb8d3",
+    "name": "player_alpha",
+    "score": 0.568982054115391
+   },
+   {
+    "world_id": "wld_e027271eaabce250682dbe9c",
+    "name": "player_beta_SAME_POLICY",
+    "score": -1.2416668122830716
+   },
+   {
+    "world_id": "wld_e027271eaabce250682dbe9c",
+    "name": "player_beta_SAME_POLICY",
+    "score": -1.0209307665502412
+   },
+   {
+    "world_id": "wld_e027271eaabce250682dbe9c",
+    "name": "player_beta_SAME_POLICY",
+    "score": -0.9770893567804217
+   },
+   {
+    "world_id": "wld_e027271eaabce250682dbe9c",
+    "name": "player_beta_SAME_POLICY",
+    "score": -1.1054872280806398
+   }
+  ],
+  "obs_by_world": {
+   "wld_a5ba86c3c3aca44d91df476b": 4,
+   "wld_71da171c8aec52f26069b23a": 4,
+   "wld_95a8733136ecbdf7c4b674ed": 4,
+   "wld_5b22e3204228fe72a29e23ca": 4,
+   "wld_9eef5279b47d25bc6a0cb8d3": 4,
+   "wld_e027271eaabce250682dbe9c": 4
+  },
+  "fp_rate_per_observation": 0.5175,
+  "fp_rate_per_world": 0.05,
+  "null_grid_celebrated": 0,
+  "null_grid_comparisons": 75
+ }
+}

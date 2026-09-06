@@ -1,0 +1,12 @@
+{
+ "seed_stream_row": {
+  "was": "reported INERT with delta exactly +0.000",
+  "defect": "the perturbation re-used the identical seed offsets, so it compared the baseline to itself. A delta of exactly 0.000 is the signature of a tautological probe, not of an inert parameter.",
+  "corrected": "two genuinely new seed sets give d=+0.245 and +0.242 against a baseline of +0.328; deltas -0.083 and -0.085, both inside the 2SE material threshold of 0.142. Class INERT stands, but now on evidence.",
+  "lesson": "a perturbation that returns EXACTLY zero change has usually not been applied"
+ },
+ "noise_threshold": {
+  "finding": "measurement noise at 1.8% of the score scale REVERSES the sign of the claim (d +0.328 -> -0.329); at 0.9% it merely halves it",
+  "why_it_matters": "observation noise is normally treated as a nuisance that widens intervals. Here it is a SIGN-CLASS moderator: greedy acceptance locks in noise-inflated moves, so the exploiting policy is harmed by noise far more than the sampling policy. Any campaign whose measurement precision is not itself pinned down cannot claim a direction."
+ }
+}

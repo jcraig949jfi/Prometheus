@@ -1,0 +1,41 @@
+{
+ "all_pass": true,
+ "engine": "eng_8a37a5d305969034d488c43e",
+ "gates": [
+  {
+   "gate": "T4a_forged_key_naming_this_engine_is_unknown",
+   "pass": true,
+   "detail": "-> 401 SESSION_UNKNOWN"
+  },
+  {
+   "gate": "T4b_forged_key_naming_another_engine_is_wrong_session",
+   "pass": true,
+   "detail": "-> 421 WRONG_SESSION"
+  },
+  {
+   "gate": "T4c_malformed_keys_are_422_and_empty_means_absent",
+   "pass": true,
+   "detail": "{\"empty\": \"200/None\", \"no prefix\": \"422/SESSION_MALFORMED\", \"short body\": \"422/SESSION_MALFORMED\", \"non-hex body\": \"422/SESSION_MALFORMED\", \"short tail\": \"422/SESSION_MALFORMED\", \"prefix only\": \"422/SESSION_MALFORMED\", \"bearer-shaped\": \"422/SESSION_MALFORMED\"}"
+  },
+  {
+   "gate": "T4d_key_appears_only_in_its_own_creation_response",
+   "pass": true,
+   "detail": "created_response_contains_key=True other_responses_echoing=0 echoed_when_used=False"
+  },
+  {
+   "gate": "T4e_closed_session_is_409_SESSION_CLOSED",
+   "pass": true,
+   "detail": "before close=200, close=200, key after close=409 SESSION_CLOSED"
+  },
+  {
+   "gate": "T4f_close_is_idempotent",
+   "pass": true,
+   "detail": "second close -> 200"
+  },
+  {
+   "gate": "T4g_closed_and_unknown_are_different_refusals",
+   "pass": true,
+   "detail": "closed=409 SESSION_CLOSED, never-issued=401 SESSION_UNKNOWN"
+  }
+ ]
+}

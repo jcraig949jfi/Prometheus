@@ -1,0 +1,202 @@
+{
+ "manifest": {
+  "experiment": "SE-1",
+  "date": "2026-09-05",
+  "seat": "Harmonia",
+  "question": "On a 64-bit matching landscape under an identical encounter budget, does a hill-climbing policy achieve a higher final best-so-far score than an independent random sampler?",
+  "prediction": "ARM_HILL > ARM_SAMPLE with |d| >= 0.5",
+  "unit_of_analysis": "world",
+  "n_worlds_per_arm": 12,
+  "executor_attestation": [
+   "executed_config_hash",
+   "executor_entry_state_hash"
+  ],
+  "player_identity": "sha256 of the policy source",
+  "comparison_family": {
+   "declared_comparisons": [
+    "ARM_HILL vs ARM_SAMPLE",
+    "ARM_NULL_A vs ARM_NULL_B"
+   ],
+   "family_size": 2,
+   "alpha": 0.05,
+   "correction": "Bonferroni: reject only if p < 0.025"
+  },
+  "reset_discipline": "policy state reset between worlds",
+  "intervention_composition": "single-part arms only; no composite arm in SE-1, so no ordering claim is possible",
+  "campaign_extent": {
+   "arms": [
+    "ARM_HILL",
+    "ARM_SAMPLE",
+    "ARM_NULL_A",
+    "ARM_NULL_B"
+   ],
+   "worlds_per_arm": 12,
+   "total_worlds_intended": 48,
+   "encounters_per_world": 20
+  },
+  "primary_metric": "best_so_far_final",
+  "secondary_metrics_reported_not_claimed": [
+   "mean_score",
+   "encounters_to_0.75"
+  ],
+  "effect_floor": 0.5,
+  "stopping_rule": "run all declared worlds; no interim analysis; no stopping on a result",
+  "void_conditions": [
+   "the known-null arm pair separates at p < 0.025",
+   "fewer worlds are delivered than declared",
+   "any arm's encounter budget differs from any other's"
+  ]
+ },
+ "manifest_sha256": "4b5b84a0c7537f3c98153a9c80c574a8c3ae712e303707f39eed3291bde949aa",
+ "manifest_fossilised": true,
+ "void": false,
+ "void_checks": {
+  "extent": true,
+  "budget": true,
+  "null_arms_quiet": true,
+  "null_p": 1.0,
+  "null_d": 0.0
+ },
+ "primary": {
+  "p": 0.23369157710572358,
+  "d": 0.5485209873131345,
+  "survives": false,
+  "hill_mean": 0.625,
+  "sample_mean": 0.60546875
+ },
+ "secondary": {
+  "p": 0.2749312671832042,
+  "d": -0.4643718277674817,
+  "conclusion_flips": true
+ },
+ "results": {
+  "ARM_HILL": {
+   "final": [
+    0.625,
+    0.609375,
+    0.640625,
+    0.609375,
+    0.578125,
+    0.609375,
+    0.59375,
+    0.703125,
+    0.65625,
+    0.609375,
+    0.671875,
+    0.59375
+   ],
+   "mean": [
+    0.53984375,
+    0.5546875,
+    0.5609375,
+    0.50546875,
+    0.546875,
+    0.5328125,
+    0.509375,
+    0.6546875,
+    0.61484375,
+    0.559375,
+    0.60390625,
+    0.54921875
+   ],
+   "cfg": "5b155629668c2b3ac9a28af256b33d5b1f2a92209df65b990014b1959adb3e25",
+   "distinct_entry_states": 12
+  },
+  "ARM_SAMPLE": {
+   "final": [
+    0.65625,
+    0.65625,
+    0.625,
+    0.59375,
+    0.59375,
+    0.578125,
+    0.609375,
+    0.578125,
+    0.625,
+    0.609375,
+    0.53125,
+    0.609375
+   ],
+   "mean": [
+    0.625,
+    0.58984375,
+    0.57578125,
+    0.56484375,
+    0.5703125,
+    0.528125,
+    0.5984375,
+    0.5765625,
+    0.61328125,
+    0.60625,
+    0.5203125,
+    0.575
+   ],
+   "cfg": "f9f30998d0da84758750fa5861f142e2b8ecf58aea4126c8ec51776c40039ec9",
+   "distinct_entry_states": 12
+  },
+  "ARM_NULL_A": {
+   "final": [
+    0.625,
+    0.609375,
+    0.640625,
+    0.609375,
+    0.578125,
+    0.609375,
+    0.59375,
+    0.703125,
+    0.65625,
+    0.609375,
+    0.671875,
+    0.59375
+   ],
+   "mean": [
+    0.53984375,
+    0.5546875,
+    0.5609375,
+    0.50546875,
+    0.546875,
+    0.5328125,
+    0.509375,
+    0.6546875,
+    0.61484375,
+    0.559375,
+    0.60390625,
+    0.54921875
+   ],
+   "cfg": "5b155629668c2b3ac9a28af256b33d5b1f2a92209df65b990014b1959adb3e25",
+   "distinct_entry_states": 12
+  },
+  "ARM_NULL_B": {
+   "final": [
+    0.625,
+    0.609375,
+    0.640625,
+    0.609375,
+    0.578125,
+    0.609375,
+    0.59375,
+    0.703125,
+    0.65625,
+    0.609375,
+    0.671875,
+    0.59375
+   ],
+   "mean": [
+    0.53984375,
+    0.5546875,
+    0.5609375,
+    0.50546875,
+    0.546875,
+    0.5328125,
+    0.509375,
+    0.6546875,
+    0.61484375,
+    0.559375,
+    0.60390625,
+    0.54921875
+   ],
+   "cfg": "5b155629668c2b3ac9a28af256b33d5b1f2a92209df65b990014b1959adb3e25",
+   "distinct_entry_states": 12
+  }
+ }
+}

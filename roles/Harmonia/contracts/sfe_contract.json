@@ -1,0 +1,665 @@
+{
+ "generated_for": "Archaeon and Vivarium, headless and inference-free",
+ "generated_from": "the LIVE engine's /v2/openapi.json and /v2/version; session scoping DERIVED by probing a scratch engine of the identical build with a malformed session key",
+ "engine": {
+  "base_url": "https://192.168.1.202:8811/v2",
+  "api": "v2",
+  "schema_version": 6,
+  "engine_instance_id": "eng_8a37a5d305969034d488c43e",
+  "engine_source_hash": "sha256:2f42e87f28f32065e8aa1c7cf4e0777c523e474ea4d1aa2ad4aa9a626143fe68",
+  "science_profile": "warn",
+  "session_enforcement": "advisory",
+  "IDENTITY_RULE": "pin engine_source_hash, NEVER source_commit. source_commit is best-effort git metadata and is currently WRONG on M1 -- it names a commit that does not contain the running code. The hash is computed from the loaded source and is the build identity."
+ },
+ "auth": {
+  "register": "POST /v2/clients {name} -> {client_id, token}; no auth required for this call only",
+  "header": "Authorization: Bearer <token>",
+  "content_type": "application/json is REQUIRED on every POST; omitting it means the body is never parsed",
+  "token_shown_once": true,
+  "isolation": "every list/read is OWNER-SCOPED. A client cannot see another client's worlds through the API at any endpoint. Cross-client archaeology requires the store, not the REST surface."
+ },
+ "session_affinity": {
+  "header": "X-SFE-Session",
+  "obtain": "POST /v2/sessions returns session_key ONCE",
+  "errors": {
+   "421": "WRONG_SESSION -- key minted by another engine instance",
+   "428": "SESSION_REQUIRED -- strict mode, no key sent",
+   "422": "SESSION_MALFORMED",
+   "401": "SESSION_UNKNOWN -- well formed, this engine, not issued",
+   "409": "SESSION_CLOSED",
+   "403": "SESSION_MISMATCH -- valid key, wrong world"
+  },
+  "note": "a genuinely missing resource inside a VALID session is still 404 not_found"
+ },
+ "routes": [
+  {
+   "method": "POST",
+   "path": "/v2/audit/verify-anchor",
+   "path_params": [],
+   "required_query": [],
+   "required_body": [
+    "world_id",
+    "event_id",
+    "entry_hash"
+   ],
+   "requires_session_key": false
+  },
+  {
+   "method": "POST",
+   "path": "/v2/claims",
+   "path_params": [],
+   "required_query": [],
+   "required_body": [
+    "estimand",
+    "status"
+   ],
+   "requires_session_key": true
+  },
+  {
+   "method": "GET",
+   "path": "/v2/claims",
+   "path_params": [],
+   "required_query": [],
+   "required_body": [],
+   "requires_session_key": true
+  },
+  {
+   "method": "GET",
+   "path": "/v2/claims/{clm}",
+   "path_params": [
+    "clm"
+   ],
+   "required_query": [],
+   "required_body": [],
+   "requires_session_key": true
+  },
+  {
+   "method": "POST",
+   "path": "/v2/claims/{clm}/retract",
+   "path_params": [
+    "clm"
+   ],
+   "required_query": [],
+   "required_body": [
+    "reason"
+   ],
+   "requires_session_key": true
+  },
+  {
+   "method": "POST",
+   "path": "/v2/clients",
+   "path_params": [],
+   "required_query": [],
+   "required_body": [
+    "name"
+   ],
+   "requires_session_key": false
+  },
+  {
+   "method": "POST",
+   "path": "/v2/families",
+   "path_params": [],
+   "required_query": [],
+   "required_body": [
+    "kind"
+   ],
+   "requires_session_key": true
+  },
+  {
+   "method": "GET",
+   "path": "/v2/families",
+   "path_params": [],
+   "required_query": [],
+   "required_body": [],
+   "requires_session_key": true
+  },
+  {
+   "method": "GET",
+   "path": "/v2/families/{fid}",
+   "path_params": [
+    "fid"
+   ],
+   "required_query": [],
+   "required_body": [],
+   "requires_session_key": true
+  },
+  {
+   "method": "POST",
+   "path": "/v2/families/{fid}/close",
+   "path_params": [
+    "fid"
+   ],
+   "required_query": [],
+   "required_body": [],
+   "requires_session_key": true
+  },
+  {
+   "method": "POST",
+   "path": "/v2/families/{fid}/members",
+   "path_params": [
+    "fid"
+   ],
+   "required_query": [],
+   "required_body": [
+    "member_kind",
+    "member_id"
+   ],
+   "requires_session_key": true
+  },
+  {
+   "method": "POST",
+   "path": "/v2/sessions",
+   "path_params": [],
+   "required_query": [],
+   "required_body": [
+    "name"
+   ],
+   "requires_session_key": false
+  },
+  {
+   "method": "POST",
+   "path": "/v2/sessions/{sid}/close",
+   "path_params": [
+    "sid"
+   ],
+   "required_query": [],
+   "required_body": [],
+   "requires_session_key": false
+  },
+  {
+   "method": "POST",
+   "path": "/v2/topology-groups",
+   "path_params": [],
+   "required_query": [],
+   "required_body": [],
+   "requires_session_key": false
+  },
+  {
+   "method": "GET",
+   "path": "/v2/version",
+   "path_params": [],
+   "required_query": [],
+   "required_body": [],
+   "requires_session_key": false
+  },
+  {
+   "method": "POST",
+   "path": "/v2/work/claim",
+   "path_params": [],
+   "required_query": [],
+   "required_body": [
+    "worker_id"
+   ],
+   "requires_session_key": true
+  },
+  {
+   "method": "GET",
+   "path": "/v2/work/{work_id}/attestation",
+   "path_params": [
+    "work_id"
+   ],
+   "required_query": [],
+   "required_body": [],
+   "requires_session_key": true
+  },
+  {
+   "method": "POST",
+   "path": "/v2/work/{work_id}/complete",
+   "path_params": [
+    "work_id"
+   ],
+   "required_query": [],
+   "required_body": [
+    "worker_id",
+    "claim_id",
+    "result"
+   ],
+   "requires_session_key": true
+  },
+  {
+   "method": "POST",
+   "path": "/v2/work/{work_id}/fail",
+   "path_params": [
+    "work_id"
+   ],
+   "required_query": [],
+   "required_body": [
+    "worker_id",
+    "claim_id",
+    "error"
+   ],
+   "requires_session_key": true
+  },
+  {
+   "method": "POST",
+   "path": "/v2/work/{work_id}/heartbeat",
+   "path_params": [
+    "work_id"
+   ],
+   "required_query": [],
+   "required_body": [
+    "worker_id",
+    "claim_id"
+   ],
+   "requires_session_key": true
+  },
+  {
+   "method": "POST",
+   "path": "/v2/worlds",
+   "path_params": [],
+   "required_query": [],
+   "required_body": [
+    "session_id",
+    "name"
+   ],
+   "requires_session_key": true
+  },
+  {
+   "method": "GET",
+   "path": "/v2/worlds",
+   "path_params": [],
+   "required_query": [],
+   "required_body": [],
+   "requires_session_key": true
+  },
+  {
+   "method": "GET",
+   "path": "/v2/worlds/{wid}",
+   "path_params": [
+    "wid"
+   ],
+   "required_query": [],
+   "required_body": [],
+   "requires_session_key": true
+  },
+  {
+   "method": "POST",
+   "path": "/v2/worlds/{wid}/artifacts",
+   "path_params": [
+    "wid"
+   ],
+   "required_query": [],
+   "required_body": [
+    "kind",
+    "data_b64"
+   ],
+   "requires_session_key": true
+  },
+  {
+   "method": "GET",
+   "path": "/v2/worlds/{wid}/artifacts/{aid}/content",
+   "path_params": [
+    "wid",
+    "aid"
+   ],
+   "required_query": [],
+   "required_body": [],
+   "requires_session_key": true
+  },
+  {
+   "method": "POST",
+   "path": "/v2/worlds/{wid}/budget/consume",
+   "path_params": [
+    "wid"
+   ],
+   "required_query": [],
+   "required_body": [
+    "resource",
+    "amount"
+   ],
+   "requires_session_key": true
+  },
+  {
+   "method": "POST",
+   "path": "/v2/worlds/{wid}/checkpoint",
+   "path_params": [
+    "wid"
+   ],
+   "required_query": [],
+   "required_body": [],
+   "requires_session_key": true
+  },
+  {
+   "method": "GET",
+   "path": "/v2/worlds/{wid}/events",
+   "path_params": [
+    "wid"
+   ],
+   "required_query": [],
+   "required_body": [],
+   "requires_session_key": true
+  },
+  {
+   "method": "POST",
+   "path": "/v2/worlds/{wid}/experiments",
+   "path_params": [
+    "wid"
+   ],
+   "required_query": [],
+   "required_body": [
+    "spec"
+   ],
+   "requires_session_key": true
+  },
+  {
+   "method": "GET",
+   "path": "/v2/worlds/{wid}/experiments",
+   "path_params": [
+    "wid"
+   ],
+   "required_query": [],
+   "required_body": [],
+   "requires_session_key": true
+  },
+  {
+   "method": "GET",
+   "path": "/v2/worlds/{wid}/experiments/{eid}",
+   "path_params": [
+    "wid",
+    "eid"
+   ],
+   "required_query": [],
+   "required_body": [],
+   "requires_session_key": true
+  },
+  {
+   "method": "GET",
+   "path": "/v2/worlds/{wid}/experiments/{eid}/analysis",
+   "path_params": [
+    "wid",
+    "eid"
+   ],
+   "required_query": [],
+   "required_body": [],
+   "requires_session_key": true
+  },
+  {
+   "method": "GET",
+   "path": "/v2/worlds/{wid}/experiments/{eid}/audit-envelope",
+   "path_params": [
+    "wid",
+    "eid"
+   ],
+   "required_query": [],
+   "required_body": [],
+   "requires_session_key": true
+  },
+  {
+   "method": "POST",
+   "path": "/v2/worlds/{wid}/experiments/{eid}/commit",
+   "path_params": [
+    "wid",
+    "eid"
+   ],
+   "required_query": [],
+   "required_body": [],
+   "requires_session_key": true
+  },
+  {
+   "method": "GET",
+   "path": "/v2/worlds/{wid}/failures",
+   "path_params": [
+    "wid"
+   ],
+   "required_query": [],
+   "required_body": [],
+   "requires_session_key": true
+  },
+  {
+   "method": "POST",
+   "path": "/v2/worlds/{wid}/failures",
+   "path_params": [
+    "wid"
+   ],
+   "required_query": [],
+   "required_body": [
+    "failure_type",
+    "falsifier",
+    "violated"
+   ],
+   "requires_session_key": true
+  },
+  {
+   "method": "POST",
+   "path": "/v2/worlds/{wid}/fork",
+   "path_params": [
+    "wid"
+   ],
+   "required_query": [],
+   "required_body": [
+    "checkpoint_id",
+    "children"
+   ],
+   "requires_session_key": true
+  },
+  {
+   "method": "POST",
+   "path": "/v2/worlds/{wid}/hypotheses",
+   "path_params": [
+    "wid"
+   ],
+   "required_query": [],
+   "required_body": [
+    "statement"
+   ],
+   "requires_session_key": true
+  },
+  {
+   "method": "POST",
+   "path": "/v2/worlds/{wid}/import",
+   "path_params": [
+    "wid"
+   ],
+   "required_query": [],
+   "required_body": [
+    "source_world",
+    "source_artifact"
+   ],
+   "requires_session_key": true
+  },
+  {
+   "method": "GET",
+   "path": "/v2/worlds/{wid}/knowledge",
+   "path_params": [
+    "wid"
+   ],
+   "required_query": [],
+   "required_body": [],
+   "requires_session_key": true
+  },
+  {
+   "method": "GET",
+   "path": "/v2/worlds/{wid}/lineage",
+   "path_params": [
+    "wid"
+   ],
+   "required_query": [
+    "kind",
+    "id"
+   ],
+   "required_body": [],
+   "requires_session_key": true
+  },
+  {
+   "method": "POST",
+   "path": "/v2/worlds/{wid}/observations",
+   "path_params": [
+    "wid"
+   ],
+   "required_query": [],
+   "required_body": [
+    "exp_id",
+    "content",
+    "outcome"
+   ],
+   "requires_session_key": true
+  },
+  {
+   "method": "GET",
+   "path": "/v2/worlds/{wid}/observations",
+   "path_params": [
+    "wid"
+   ],
+   "required_query": [],
+   "required_body": [],
+   "requires_session_key": true
+  },
+  {
+   "method": "POST",
+   "path": "/v2/worlds/{wid}/pause",
+   "path_params": [
+    "wid"
+   ],
+   "required_query": [],
+   "required_body": [],
+   "requires_session_key": true
+  },
+  {
+   "method": "POST",
+   "path": "/v2/worlds/{wid}/predictions",
+   "path_params": [
+    "wid"
+   ],
+   "required_query": [],
+   "required_body": [
+    "hyp_id",
+    "content"
+   ],
+   "requires_session_key": true
+  },
+  {
+   "method": "GET",
+   "path": "/v2/worlds/{wid}/resources",
+   "path_params": [
+    "wid"
+   ],
+   "required_query": [],
+   "required_body": [],
+   "requires_session_key": true
+  },
+  {
+   "method": "POST",
+   "path": "/v2/worlds/{wid}/resume",
+   "path_params": [
+    "wid"
+   ],
+   "required_query": [],
+   "required_body": [],
+   "requires_session_key": true
+  },
+  {
+   "method": "POST",
+   "path": "/v2/worlds/{wid}/start",
+   "path_params": [
+    "wid"
+   ],
+   "required_query": [],
+   "required_body": [],
+   "requires_session_key": true
+  },
+  {
+   "method": "GET",
+   "path": "/v2/worlds/{wid}/status",
+   "path_params": [
+    "wid"
+   ],
+   "required_query": [],
+   "required_body": [],
+   "requires_session_key": true
+  },
+  {
+   "method": "POST",
+   "path": "/v2/worlds/{wid}/terminate",
+   "path_params": [
+    "wid"
+   ],
+   "required_query": [],
+   "required_body": [],
+   "requires_session_key": true
+  }
+ ],
+ "route_counts": {
+  "total_get_post": 50,
+  "session_scoped": 44,
+  "exempt": 6
+ },
+ "vocabularies": {
+  "outcome": [
+   "FALSIFIED",
+   "SURVIVED",
+   "INCONCLUSIVE"
+  ],
+  "outcome_note": "there is NO 'CONFIRMED'; anything else is 422",
+  "unit_of_analysis": [
+   "observation",
+   "experiment",
+   "world",
+   "seed_root",
+   "topology_group"
+  ],
+  "family_kind": [
+   "campaign",
+   "analysis",
+   "comparison",
+   "selection"
+  ],
+  "family_role": [
+   "planned",
+   "executed",
+   "abandoned",
+   "selected",
+   "alternative"
+  ],
+  "family_member_kind_ACCEPTED": [
+   "world",
+   "claim",
+   "experiment"
+  ],
+  "family_member_kind_REFUSED": [
+   "family (422)",
+   "observation (422)"
+  ],
+  "claim_status": [
+   "SUPPORTED",
+   "SUCCESSFUL_NEGATIVE",
+   "INCONCLUSIVE",
+   "RETRACTED"
+  ],
+  "replication_booleans": [
+   "resampled_noise",
+   "new_world_draws",
+   "new_landscape",
+   "reimplemented",
+   "rebuilt_player",
+   "independent_team"
+  ],
+  "replication_note": "six INDEPENDENT booleans, never an ordinal. An UNDECLARED dimension is not a false.",
+  "sharing_policy_default": "ISOLATED",
+  "budget_enforcement": [
+   "enforceable",
+   "measured",
+   "estimated",
+   "unavailable"
+  ],
+  "budget_note": "default is 'measured', WHICH ENFORCES NOTHING. Only 'enforceable' caps."
+ },
+ "science_findings": [
+  "FAMILY_EXTENT_DIVERGENCE",
+  "SELECTION_WITHOUT_ALTERNATIVES",
+  "MULTIPLE_SELECTED",
+  "TRANSPORT_OVERREACH",
+  "TRANSPORT_UNCHECKABLE",
+  "NO_REPLICATION_DECLARED",
+  "CLAIM_CITES_NON_ANALYSIS",
+  "NO_EXECUTION_ATTESTATION",
+  "CONFIG_DIVERGENCE",
+  "PARTIALLY_INERT_INTERVENTION",
+  "NO_EFFECTIVE_INTERVENTION",
+  "INTERVENTION_NOT_APPLIED"
+ ],
+ "profiles": {
+  "off": "not computed, not recorded -- a real control arm",
+  "warn": "computed, returned as science.profile_findings, sealed into the event chain, NEVER blocking. M1 runs this.",
+  "strict": "same findings, but one contradicting a declaration you sealed fails the call"
+ }
+}

@@ -15,15 +15,45 @@ Evidence for every claim below lives in `PROTEUS_CLOSURE_PACKET_2026-09-04.txt` 
 **T1 — The measurement surface is degenerate.** OWNER: Harmonia decides, Proteus already supplies.
 The probe transcript resolves 3 distinct classes over 56 segment players with 87.5% in one class,
 and 52/56 players emit nothing at all. That is why A+B differed from both parents in 0/200 pairs.
-The meter vector on the same population resolves 37 classes at 10.7%. Closing this needs **no new
-Proteus code** — `Meter.as_dict()` is already recorded per encounter. It needs the experiment to
+The meter vector on the same population resolves 37 classes at 10.7%. It needs the experiment to
 declare the meter, not the transcript, as its primary observable.
 *Do not close by widening the transcript before checking whether the meter suffices.*
 
-**T2 — No published chance floor for the meter observable.** OWNER: Proteus.
-T1 is only actionable once "37 classes at 10.7%" has a null beside it. Without a floor, a
-compositional effect measured on the meter is uninterpretable in exactly the way the transcript
-result is. This is the direct Proteus prerequisite for T1 and should be done first.
+> **AMENDED 2026-09-05 by T2 — the "no new Proteus code" line above was wrong and is struck.**
+> `Meter.as_dict()` used raw includes `wall_s` and `cpu_s`, which are timings. Measured: the full
+> meter reproduced on **0 of 40** identical re-runs — every player differs from *itself*, so a
+> composition result read off the raw meter would be noise. The observable is
+> `Meter.as_dict()` **minus `wall_s`, `cpu_s`** (and `gpu`, a constant), which reproduces 40/40.
+> Gated by `proteus/tests/test_meter_observable.py`. Harmonia must declare the *projection*, not
+> the meter.
+
+**T2 — Chance floor for the meter observable. CLOSED 2026-09-05.**
+Evidence: `proteus/v0_7/RESULT_METER_FLOOR.json`, `proteus/compose/run_meter_floor.py`.
+Verdict `METER_DISCRIMINATES_BEYOND_SIZE`.
+
+*The 37 is exactly chance, and that is fine.* Random populations of 56 same-shape segment players
+give **median 36 `ops_by_category` classes (range 27–43)**; the observed 37 sits on the null. So
+"37 classes at 10.7%" is **not** evidence about the population and must never be cited as such —
+it is the baseline richness of arbitrary 2-instruction programs under this observable. The
+transcript's 3 classes sit *below* its own null median of 4, which is what degeneracy looks like.
+
+*What makes the meter usable is Part 2, not Part 1.* Discrimination rates over 200 matched pairs:
+
+    identity          0.0000   a player vs itself (sanity)
+    size floor        0.0000   A vs A + inert NOP padding
+    treatment         0.7750   A vs A+B
+    size-matched      0.7750   A + padding vs A+B
+    order             0.4900   A+B vs B+A
+    partner identity  0.7550   A+B vs A+B'
+    independent       0.9900   A vs an unrelated player (ceiling)
+
+**The size confound the directive names is measured and absent**: inert padding moves the meter
+in 0/200 pairs, so the 0.775 treatment rate is attributable to B's content and not its length.
+The meter also resolves **order** (0.49) and **partner identity** (0.755), which are the
+prerequisites for the A→B and conditional-composition questions.
+
+Caveat preserved: NOP padding is inert as instructions but is also data, so the size floor is a
+lower bound. All three NOP aliases were run; **0/200 disagreements**.
 
 ---
 

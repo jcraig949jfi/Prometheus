@@ -1,0 +1,31 @@
+{
+  "template_id": "artificial_curiosity.v0",
+  "kind": "model_building_controller.v0",
+  "param_space": {
+    "hidden_units": {
+      "int_range": null
+    },
+    "delayed_reward_steps": {
+      "choices": null
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Artificial Curiosity",
+    "reference": "Schmidhuber 1991: A possibility for implementing curiosity and boredom in model-building neural controllers",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "Implements a dual-network architecture where a controller network maximizes the prediction error of a model network, simulating heterostatic motivation. The field would run this to study the emergence of dynamic curiosity and boredom as the model learns. A SURVIVED verdict would license the claim that the controller successfully escapes static equilibria by seeking novel inputs, but it would NOT license the claim that this mechanism prevents the agent from being permanently trapped by highly unpredictable white noise.",
+  "_ingest": {
+    "source_report": "05_intrinsic_drives_and_creativity.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'model_building_controller.v0' is not implemented by Vivarium; this template is an expansion request by definition",
+      "REPAIRED: source markers were removed from this block to make it parse. Structure is the report's; any value that a marker had overwritten is null, never guessed."
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

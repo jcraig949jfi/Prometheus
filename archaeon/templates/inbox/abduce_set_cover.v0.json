@@ -1,0 +1,38 @@
+{
+  "template_id": "abduce_set_cover.v0",
+  "kind": "abduce_set_cover_v0",
+  "param_space": {
+    "manifestations_count": {
+      "int_range": null
+    },
+    "hypothesis_space_size": {
+      "int_range": null
+    },
+    "causal_density": {
+      "choices": [
+        "low",
+        "medium",
+        "high"
+      ]
+    }
+  },
+  "origin": {
+    "source": "LITERATURE",
+    "field": "Abductive Reasoning",
+    "reference": "Reggia, Nau, and Wang 1983 Diagnostic expert systems based on a set covering model",
+    "proposed_by": "Herakles"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "This experiment implements the set-covering model for diagnostic abductive reasoning. It measures the ability of the executor to find a parsimonious set of hypotheses that covers a given set of manifestations. A working researcher in abduction would run this to test if an algorithmic variation successfully minimizes the explanation size while maintaining complete coverage of the symptoms. A SURVIVED verdict based on a scalar check of the returned cover size would indicate that the system found an explanation of the target parsimony. However, it would NOT license the inference that the system found the exact true causal set, nor that the generated cover is unique, because the outcome rule can only verify the size of the output set, not its composition or semantic validity against a ground truth.",
+  "_ingest": {
+    "source_report": "11_reasoning_modes.md",
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "flags": [
+      "EXPANSION: kind 'abduce_set_cover_v0' is not implemented by Vivarium; this template is an expansion request by definition",
+      "REPAIRED: source markers were removed from this block to make it parse. Structure is the report's; any value that a marker had overwritten is null, never guessed."
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act."
+  }
+}

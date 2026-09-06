@@ -23,7 +23,7 @@ PREFIX = {
     "prediction": "prd", "experiment": "exp", "observation": "obs",
     "failure": "fai", "artifact": "art", "checkpoint": "ckp", "edge": "edg",
     "measurement": "mea", "import": "imp", "erratum": "err",
-    "claim": "clm", "group": "grp",
+    "claim": "clm", "group": "grp", "family": "fam", "grant": "gnt",
 }
 
 
@@ -58,3 +58,55 @@ def content_hash(obj: Any) -> str:
 
 def blob_hash(data: bytes) -> str:
     return "sha256:" + sha256_hex(data)
+
+
+# ---------------------------------------------------------------------------
+# Session affinity keys (v5)
+#
+# Format:  sfes_<engine-instance-hex>_<random>
+#
+# The engine instance id is carried IN THE KEY, in the clear, on purpose. It is
+# what lets an engine answer "this key is not mine" from the key's own bytes,
+# before any lookup -- so a key minted by a sibling engine is never confused
+# with a random string or a missing row. It is not a secret (verify_anchor and
+# the audit envelope already publish it); the entropy lives in the tail.
+#
+# Nothing here hardcodes a machine. An engine instance id is minted per
+# database, so M1..M50, ephemeral VMs and containers all work unchanged.
+# ---------------------------------------------------------------------------
+SESSION_KEY_PREFIX = "sfes"
+_ENGINE_PREFIX = "eng_"
+
+
+def session_key_for(engine_instance_id: str) -> str:
+    """Mint a session key bound to this engine instance."""
+    if not engine_instance_id.startswith(_ENGINE_PREFIX):
+        raise ValueError("engine_instance_id must start with 'eng_'")
+    body = engine_instance_id[len(_ENGINE_PREFIX):]
+    return f"{SESSION_KEY_PREFIX}_{body}_{secrets.token_urlsafe(24)}"
+
+
+def engine_id_from_key(key: str) -> Any:
+    """The engine instance id a key CLAIMS, or None if it is not a session key.
+
+    Parsing only -- this asserts nothing about validity. A well-formed key from
+    a foreign engine parses fine; that is the point."""
+    if not isinstance(key, str):
+        return None
+    # token_urlsafe emits "-" and "_", so the tail may itself contain
+    # underscores: split only the two structural separators.
+    parts = key.split("_", 2)
+    if len(parts) != 3 or parts[0] != SESSION_KEY_PREFIX:
+        return None
+    body, tail = parts[1], parts[2]
+    if len(body) != 24 or any(c not in "0123456789abcdef" for c in body):
+        return None
+    if len(tail) < 16:
+        return None
+    return _ENGINE_PREFIX + body
+
+
+def key_fingerprint(key: str) -> str:
+    """A safe, stable handle for logs and metrics. NEVER log the key itself:
+    it is bearer-like, and a log line is a credential leak."""
+    return "sfp_" + sha256_hex(key.encode())[:16]

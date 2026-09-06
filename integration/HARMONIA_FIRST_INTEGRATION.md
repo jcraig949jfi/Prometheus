@@ -4,7 +4,7 @@
 against the Serendipity Foundry Engine for the first time.
 **Maintainer:** Daedalus (M1 / SKULLPORT).
 **Written:** 2026-09-03. **Re-verified 2026-09-04** against the restarted
-build `sha256:c358a53b…` (strict artifact decoding). Every claim below was
+build `sha256:6a4f3aee…` (strict artifact decoding). Every claim below was
 checked against the running service on that date.
 
 This document is meant to be sufficient on its own. If you have to ask Daedalus
@@ -30,6 +30,11 @@ how something works, that is a defect in this file — say so.
 > PEW at `http://192.168.1.191:8377` serves M1's one canonical database.
 
 ---
+
+> **Testing M1 right now?** `integration/M1_TEST_SURFACE_FOR_HARMONIA.md`
+> is the current M1-only test surface: what already passes, the three things
+> same-host testing cannot prove, and eight proposed test cases. M2 is down;
+> that document assumes it stays down.
 
 ## 0. The one thing to know first
 
@@ -86,13 +91,13 @@ curl --cacert SerendipityFoundry/SerendipityFoundryClient/config/m1.crt \
      https://192.168.1.202:8811/v2/version
 ```
 
-Expected — an `api` of `v2` and a `schema_version` of **3** or higher:
+Expected — an `api` of `v2` and a `schema_version` of **4** or higher:
 
 ```json
-{"api":"v2","schema_version":3,"runtime":"serendipity-foundry-sfe",
+{"api":"v2","schema_version":4,"runtime":"serendipity-foundry-sfe",
  "registration_open":true,
- "engine_source_hash":"sha256:c358a53b9899fa16acb70c69747c8ec4ca494cdc62bd10fa9a550d574eef8c39",
- "source_commit":"ce79401b1524fe20eba9c051cb8c0d9bf18fc0d9"}
+ "engine_source_hash":"sha256:6a4f3aeec05a3ed9a31364e21f55cd11dc511f8f1d9789b2bcc37ce98f8447cf",
+ "source_commit":"e6146376843da06d7e14366cc5e8c89a006b7cb3"}
 ```
 
 **Connect by IP, never by hostname.** The certificate carries an IP SAN
@@ -108,14 +113,14 @@ python integration/sfe_battery.py \
 
 It runs 23 checks against the live service (24 with `--expect-source-hash`),
 writes `handoff.json`, and **leaves you a RUNNING world**. Expect `23/23 PASS`.
-Verified 24/24 on 2026-09-04 against build `sha256:c358a53b…`.
+Verified 24/24 on 2026-09-05 against build `sha256:6a4f3aee…`.
 
 To pin the exact build you expect (recommended once you are past first contact):
 
 ```bash
 python integration/sfe_battery.py \
     --cacert SerendipityFoundry/SerendipityFoundryClient/config/m1.crt \
-    --expect-source-hash sha256:c358a53b9899fa16acb70c69747c8ec4ca494cdc62bd10fa9a550d574eef8c39
+    --expect-source-hash sha256:6a4f3aeec05a3ed9a31364e21f55cd11dc511f8f1d9789b2bcc37ce98f8447cf
 ```
 
 `handoff.json` contains your `base_url`, `cacert`, `token`, `session_id`,
@@ -133,7 +138,7 @@ That is the whole first integration. Everything below is reference.
 | ID | Check | Why it is here |
 |---|---|---|
 | **S0** | `GET /version` reachable, no auth | Distinguishes "service down" from "you are misconfigured" before anything else can confuse you |
-| **S1** | Engine identity **asserted**: `api=v2`, `schema_version ≥ 3`, runtime name | A green battery must tell you *which* instrument answered, not merely that something did |
+| **S1** | Engine identity **asserted**: `api=v2`, `schema_version ≥ 3`, runtime name (live is 4) | A green battery must tell you *which* instrument answered, not merely that something did |
 | **S1b** | `x-sfe-engine-source-hash` header == `engine_source_hash` in body | Detects split-brain: two responses from different builds |
 | **S1c** | Build matches `--expect-source-hash` | Only when you pass it |
 | **S1d/e** | Client registration (or supplied token), session opens | Identity works |
@@ -161,16 +166,16 @@ impossible, that claim is wrong and this battery disproves it every run.
 
 ---
 
-## 5. Frozen reference identity (as of 2026-09-04)
+## 5. Frozen reference identity (as of 2026-09-05)
 
 | | |
 |---|---|
 | API title / version | `Serendipity Foundry Gen-2` / `2.2.0` |
-| `schema_version` | `3` |
-| Paths / routes | 31 paths, 33 routes |
-| Route-surface digest | `sha256:723b369b81503b9008a4487e8b7dbc2e3d5cd435adb84e066ac6688ecc9b9b68` |
-| `engine_source_hash` | `sha256:c358a53b9899fa16acb70c69747c8ec4ca494cdc62bd10fa9a550d574eef8c39` |
-| `source_commit` | `ce79401b1524fe20eba9c051cb8c0d9bf18fc0d9` — **best-effort git metadata: the HEAD of the checked-out working tree (currently another role's branch), NOT the commit that contains the engine code.** `engine_source_hash` is the authoritative identity. |
+| `schema_version` | `4` |
+| Paths / routes | 34 paths, 38 routes |
+| Route-surface digest | `sha256:461b1dc5f9d9a0a36e85ad6f83e2cea0d3ef7ac86fda48bfae1ad7e953921cad` |
+| `engine_source_hash` | `sha256:6a4f3aeec05a3ed9a31364e21f55cd11dc511f8f1d9789b2bcc37ce98f8447cf` |
+| `source_commit` | `e6146376843da06d7e14366cc5e8c89a006b7cb3` on M1, `0fd24e0f3…` on M2 — **best-effort git metadata: the HEAD of the checked-out working tree (currently another role's branch), NOT the commit that contains the engine code.** `engine_source_hash` is the authoritative identity. |
 | `m1.crt` fingerprint | `sha256:825153dda5608783b605009748bf44aa8d1f109b88f26c7dac685c96fdf64237` |
 | Certificate validity | 2026-08-29 → 2028-12-01, IP SAN `192.168.1.202` |
 
@@ -423,7 +428,7 @@ Be precise about this, because the phrase is doing less work than it sounds
 like it is.
 
 The battery certifies that **this build, right now, does what this document
-says it does** — 24/24 against `sha256:c358a53b…` on 2026-09-03. That is a
+says it does** — 24/24 against `sha256:6a4f3aee…` on 2026-09-03. That is a
 health-and-contract check, and it is genuinely what you need to start.
 
 It is **not** a qualification verdict. The only committed qualification result
@@ -827,7 +832,7 @@ manifest, stop.
 ## 10. FROZEN CONTRACT — `POST /v2/worlds/{world_id}/artifacts`
 
 Everything here was measured against the live Engine on 2026-09-03 (build
-`sha256:c358a53b…`). It is sufficient to construct a request with no other
+`sha256:6a4f3aee…`). It is sufficient to construct a request with no other
 reference and no Proteus import.
 
 **Single source of truth:** the Engine's own request model,
@@ -935,7 +940,7 @@ seam fixture (§11). No normalization, no re-encoding.
 
 - **Use STANDARD base64 (`+` and `/`), with padding.**
 - **URL-safe base64 (`-` and `_`) is REJECTED with a 422** naming
-  `body.data_b64`. Decoding is strict as of build `c358a53b`.
+  `body.data_b64`. Decoding is strict as of build `c358a53b` (superseded by `6a4f3aee`).
 - **Invalid base64 is also a 422**, not a 500.
 
 In Python: `base64.b64encode(...)`. **Never** `base64.urlsafe_b64encode(...)`.
@@ -965,18 +970,28 @@ Two reasons to impose your own cap anyway:
 So: any number you adopt is a **self-imposed client-side courtesy cap, not a
 server-enforced limit.** The Engine will not stop you.
 
-### Lifecycle: terminating a world does NOT seal it
+### Lifecycle: terminating a world DOES seal it (changed 2026-09-04)
 
-Measured. After `POST …/terminate` (state `TERMINATED`):
+**This reversed on 2026-09-04.** Terminal-state writes are now gated. Measured
+on the live parity build after `POST …/terminate` (state `TERMINATED`):
 
 | Operation on a terminated world | Result |
 |---|---|
-| `POST …/artifacts` | **HTTP 200 — still accepted** |
-| `POST …/experiments` (commit) | `409 invalid_transition`, "world must be RUNNING" |
+| `POST …/artifacts` | **409** |
+| `POST …/hypotheses` | **409** |
+| `POST …/budget/consume` | **409** |
+| `POST …/experiments` (commit) | **409** `invalid_transition` |
+| `GET …/events`, `GET …/status` | 200 — reads stay open |
+| `POST …/checkpoint`, `POST …/fork` | 200 — post-run finalisation stays open |
 
-The artifact endpoint has **no lifecycle guard**; the experiment path does. If
-your design treats termination as sealing a world's artifact set, it does not.
-Enforce that yourself, or check `state` before writing.
+So termination now *does* seal the write surface while leaving the record
+readable and forkable. **If you have code written against the old behaviour it
+will start getting 409s** — that is the intended failure, not a regression.
+
+Pre-existing data still reflects the old rule: artifacts written into terminated
+worlds before this change remain, and their `created_seq` can postdate
+`WORLD_TERMINATED`. Do not infer a world's active window from its terminate
+event for historical records (see `integration/SFE_ARCHAEOLOGY_SCHEMA.md`).
 
 ### Authorization — measured
 
@@ -1060,7 +1075,7 @@ common: a required field omitted, or an extra field sent (bodies are
 
 **422 `data_b64 is not valid standard base64` on the artifact endpoint.** Your
 encoder emitted URL-safe base64 (`-`/`_`) or something malformed. Use
-`base64.b64encode`, never `base64.urlsafe_b64encode`. As of build `c358a53b`
+`base64.b64encode`, never `base64.urlsafe_b64encode`. As of build `c358a53b` (superseded by `6a4f3aee`)
 the Engine rejects both rather than guessing; on older builds URL-safe input
 was accepted and **silently truncated**, so treat pre-2026-09-04 artifacts with
 suspicion (§13, R7).
@@ -1115,10 +1130,10 @@ alongside the service and split traffic rather than failing loudly. Worth a
 `var/engine.lock` exclusive-open guard in `serve.py` before `uvicorn.run`.
 
 **R7 — artifact body decoding did not fail closed. FIXED 2026-09-04, live in
-build `c358a53b`.** Found 2026-09-03. Two behaviours on
+build `c358a53b` (superseded by `6a4f3aee`).** Found 2026-09-03. Two behaviours on
 `POST /v2/worlds/{wid}/artifacts`, both now closed:
 
-| | before (≤ `5274ddbe`) | now (`c358a53b`) |
+| | before (≤ `5274ddbe`) | now (`c358a53b` and later) |
 |---|---|---|
 | URL-safe base64 (`-`/`_`) | **200, silently stored different, shorter bytes** (24 in → 15 stored) | **422** naming `body.data_b64` |
 | malformed base64 | **500 `internal_error`** | **422** `validation_error` |

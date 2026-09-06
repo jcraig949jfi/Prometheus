@@ -1,0 +1,109 @@
+{
+ "baseline_d": 0.327584372956877,
+ "baseline_sd": 0.17353744007792365,
+ "block_se": 0.0708463632432874,
+ "perturbations": [
+  {
+   "perturbation": "seed stream (new blocks)",
+   "d": 0.327584372956877,
+   "sd": 0.17353744007792365,
+   "delta_vs_baseline": 0.0,
+   "class": "INERT"
+  },
+  {
+   "perturbation": "scoring scale x100",
+   "d": 0.327584372956877,
+   "sd": 0.17353744007792365,
+   "delta_vs_baseline": 0.0,
+   "class": "INERT"
+  },
+  {
+   "perturbation": "tie-break > instead of >=",
+   "d": 0.327584372956877,
+   "sd": 0.17353744007792365,
+   "delta_vs_baseline": 0.0,
+   "class": "INERT"
+  },
+  {
+   "perturbation": "start state all-zeros",
+   "d": 0.49779039562277955,
+   "sd": 0.11602060475472457,
+   "delta_vs_baseline": 0.17020602266590257,
+   "class": "MAGNITUDE"
+  },
+  {
+   "perturbation": "mutation operator 2-bit",
+   "d": -0.004668700487269628,
+   "sd": 0.2208198983882061,
+   "delta_vs_baseline": -0.3322530734441466,
+   "class": "SIGN"
+  },
+  {
+   "perturbation": "observation noise sd=0.02",
+   "d": -0.8968334860609234,
+   "sd": 0.14996262364826252,
+   "delta_vs_baseline": -1.2244178590178003,
+   "class": "SIGN"
+  },
+  {
+   "perturbation": "encounter budget 20 -> 10",
+   "d": -0.5643844174531548,
+   "sd": 0.16796367228766704,
+   "delta_vs_baseline": -0.8919687904100317,
+   "class": "SIGN"
+  },
+  {
+   "perturbation": "encounter budget 20 -> 40",
+   "d": 2.3474643938153688,
+   "sd": 0.18099513959855576,
+   "delta_vs_baseline": 2.019880020858492,
+   "class": "MAGNITUDE"
+  },
+  {
+   "perturbation": "landscape 64 -> 128 bits",
+   "d": -0.45557888636944116,
+   "sd": 0.2155730075043272,
+   "delta_vs_baseline": -0.7831632593263181,
+   "class": "SIGN"
+  },
+  {
+   "perturbation": "landscape structure -> blocked",
+   "d": -0.8303491874381793,
+   "sd": 0.2689676474008713,
+   "delta_vs_baseline": -1.1579335603950562,
+   "class": "SIGN"
+  }
+ ],
+ "heterogeneous": {
+  "smooth": 0.327584372956877,
+  "blocked": -0.8303491874381793,
+  "mixture": -0.04345164445448912,
+  "mean_of_pures": -0.2513824072406512
+ },
+ "third_class": {
+  "hill - sample | smooth": {
+   "d": 0.327584372956877,
+   "sd": 0.17353744007792365
+  },
+  "hill - sample | blocked": {
+   "d": -0.8303491874381793,
+   "sd": 0.2689676474008713
+  },
+  "anneal - sample | smooth": {
+   "d": -1.2511500121457126,
+   "sd": 0.12721442152374496
+  },
+  "anneal - sample | blocked": {
+   "d": -0.8463894698609438,
+   "sd": 0.1458880393594033
+  },
+  "anneal - hill | smooth": {
+   "d": -1.2978916002052234,
+   "sd": 0.17229953876166568
+  },
+  "anneal - hill | blocked": {
+   "d": -0.009993930363020332,
+   "sd": 0.19201844445722024
+  }
+ }
+}

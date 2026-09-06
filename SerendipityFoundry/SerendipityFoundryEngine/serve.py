@@ -38,6 +38,20 @@ def main() -> int:
     ap.add_argument("--tls-key", default=None)
     ap.add_argument("--insecure", action="store_true",
                     help="allow a non-loopback bind without TLS (tokens in clear)")
+    ap.add_argument("--science-profile", choices=("off", "warn", "strict"),
+                    default="warn",
+                    help="v6 scientific-provenance checks. off = not computed "
+                         "(a true v5 control arm); warn = computed, reported "
+                         "and sealed in the event, never blocking (default); "
+                         "strict = a finding that contradicts a sealed "
+                         "declaration fails the call.")
+    ap.add_argument("--session-enforcement", choices=("advisory", "strict"),
+                    default="advisory",
+                    help="advisory (default): a missing X-SFE-Session is "
+                         "allowed and counted. strict: a missing key on a "
+                         "bound session is 428. A key from ANOTHER engine is "
+                         "421 WRONG_SESSION in both modes -- that is never "
+                         "optional.")
     ap.add_argument("--registration", choices=("open", "closed"),
                     default="open",
                     help="closed = POST /v2/clients is operator-gated (403); "
@@ -58,7 +72,9 @@ def main() -> int:
 
     import uvicorn
     app = create_app(args.db,
-                     registration_open=(args.registration == "open"))
+                     registration_open=(args.registration == "open"),
+                     session_enforcement=args.session_enforcement,
+                     science_profile=args.science_profile)
     scheme = "https" if tls else "http"
     print(f"Serendipity Foundry Engine listening on {scheme}://{args.host}:"
           f"{args.port}  db={args.db}")

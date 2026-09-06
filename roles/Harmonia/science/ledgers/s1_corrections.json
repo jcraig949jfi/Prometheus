@@ -1,0 +1,19 @@
+{
+ "supersedes": "first run of s1_known_null_campaign.py",
+ "S1-2": {
+  "was": "single null grid returned 0 celebrated findings, which contradicted the finding text",
+  "now": "test statistic calibrated (FPR 0.048/0.057/0.055 at n=6/12/24); grid repeated 10x -> 36/750 = 0.048, mean 3.6 false discoveries per 75-comparison sweep, range 1-6",
+  "lesson": "a single sweep is not a measurement of a rate"
+ },
+ "S1-5": {
+  "was": "reported as 'null as expected, luck of the draw'",
+  "now": "THE FALSE DISCOVERY ACTUALLY FIRED on the real record: p=0.0357 per observation for a player against itself; p=0.4991 per world on the SAME fossils",
+  "lesson": "understating a result that fired is the same error class as overstating one that did not"
+ },
+ "S1-3": {
+  "was": "'significance is reachable for d~0.02 purely by extending the run' -- asserted as reliable, but the run showed only 1/40, 2/40, 4/40 significant at 6/60/600 worlds per arm, which does not support 'reliably'",
+  "now": "re-measured at 60/600/3000/12000 worlds per arm with a fixed true delta=0.02: significance rate 0.03/0.03/0.17/0.33 while median |d| converges to the true 0.02 (0.135/0.047/0.027/0.019). The MECHANISM is demonstrated -- effect size flat, p-value moving -- but it needs n in the thousands per arm.",
+  "reclassified": "BLOCKS_LONG_RUN -> SHOULD_FIX_BEFORE_SCALE; at the current fleet scale (470 worlds total) the practical risk is bounded, but the fix must precede any campaign that reaches thousands of worlds per arm",
+  "lesson": "an underpowered demonstration of a real mechanism is still an overstatement if reported as demonstrated"
+ }
+}
