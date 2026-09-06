@@ -1,0 +1,989 @@
+BEGIN_ENTRY
+TEMPLATE_ID: abduce_set_cover.v0
+FIELD: Abductive Reasoning
+KIND: abduce_set_cover_v0
+QUESTION: Given a set of observed symptoms, can a system pick the smallest set
+  of underlying causes that accounts for all of them, and how small can that
+  explanation get before it stops covering everything?
+MECHANISM: Parsimonious covering theory sets up a two-layer causal network. One
+  layer is disorders, the other is manifestations, and a stored relation says
+  which manifestations each disorder can produce. A case presents a set of
+  observed manifestations. The solver then searches the powerset of disorders
+  for subsets whose combined manifestation sets cover every observation, and
+  among those covers it prefers the ones of minimum cardinality or the ones
+  that are irredundant, meaning no member can be dropped without losing
+  coverage. The output is a cover, or a set of competing covers, plus its size.
+CANDIDATE: A candidate explanation, which is a subset of the disorder set. What
+  varies is which disorders are in the subset and how many there are. What is
+  judged is whether the subset covers all observed manifestations and how large
+  the subset is.
+WORLD: A fixed bipartite causal network. The world supplies the disorder
+  inventory, the manifestation inventory, the causal edges between them at some
+  density, and one presenting case, that is one particular manifestation set to
+  be explained.
+WHAT_CHANGES: The number of manifestations presented, the size of the
+  hypothesis space of disorders, and the causal density of the network, which
+  controls how many disorders can explain any given symptom and therefore how
+  ambiguous the case is. Both integer axes arrived null and must be set by the
+  operator.
+MEASURED: The cardinality of the returned cover, an integer bounded below by 1
+  and above by the hypothesis space size, plus a boolean saying whether the
+  cover is complete. On the bench only one of those two can be adjudicated.
+INFORMATIVE_FAILURE: Rich. A failure to find any complete cover is a direct
+  statement about the causal network, namely that at least one presented
+  manifestation has no cause in the hypothesis space, which localises the
+  defect to a specific symptom. A failure to reach the target parsimony while
+  still covering everything yields the achieved size, which is an upper bound on
+  the true minimum and is reusable as the preregistered threshold for the next
+  run. Failures here are bounds, not noise.
+SOURCE_CHECK: VERIFIED. Reggia, Nau and Wang, Diagnostic expert systems based
+  on a set covering model, International Journal of Man-Machine Studies 19,
+  1983, pages 437 to 460, confirmed by search; the set covering model of
+  diagnosis and the notion of parsimonious covers are correctly attributed.
+SHARED_MECHANISM: search_over_candidates
+ROUTES: R-BACKEND, R-EXECUTOR, R-COMPOSE
+BLOCKER: R-BACKEND needs a measurement channel, since no existing result field
+  can carry a cover or its cardinality, and the payload cannot carry a causal
+  network, so an adapter must both feed the network in and pull cover_size out;
+  R-EXECUTOR is the same missing measurement, plus the fact that generating the
+  network from one integer seed is a modelling choice nobody has made yet;
+  R-COMPOSE is blocked on adjudication, because the interesting statement is a
+  comparison of achieved size against a chance baseline, and the outcome rule is
+  a single scalar comparison that cannot aggregate across specs.
+FAITHFUL: A faithful implementation needs a generator that turns one integer
+  seed into a bipartite causal network at a declared density, a declared
+  presenting case drawn from that network, and a solver that returns a
+  minimum-cardinality or irredundant cover. The result must expose at least
+  cover_size and covered_all so the sealed outcome rule has a scalar to compare.
+  Off-the-shelf set cover solvers and ILP packages already do the search, so the
+  bench only has to build the instance, call out, and fossilize.
+REDUCTION: A real one exists, and it is a null rather than a method. Represent a
+  candidate explanation as a bitstring over the hypothesis space, one bit per
+  disorder, and set length equal to the hypothesis space size. Fix bits to a
+  candidate with exactly k ones and run repeats under sha256_index, so every
+  repeat scores that fixed k-sparse explanation against an independently drawn
+  hidden target set. Because the scorer is bit-match fraction, the score
+  distribution for a k-sparse candidate against a uniform target is exactly
+  computable, so a sweep over k at fixed length gives the chance baseline for
+  how well an explanation of a given parsimony matches an unknown truth. NEW
+  DESIGN CHOICE, since the axes are null: hypothesis space size 32, manifestation
+  count 8, k swept over 1, 2, 4, 8, 16. WHAT IT PRESERVES: the fixed candidate
+  judged against a hidden ground truth, the parsimony axis as an explicit
+  independent variable, and the reproducible case identity carried by the seed.
+  WHAT IT LOSES: the covering relation itself, and with it everything that makes
+  this abduction. There are no manifestations, no causal edges, no coverage
+  constraint, and no tradeoff between parsimony and completeness, so the score
+  is set similarity and not explanatory adequacy. WHICH CLAIM IT SUPPORTS: only
+  the eligibility claim, that an explanation of size k over a space of size L
+  reaches similarity s to an unknown truth with probability p by chance. That is
+  the denominator any later abduction result has to beat, and computing it first
+  prevents freezing a parsimony threshold that chance alone would clear.
+END_ENTRY
+
+BEGIN_ENTRY
+TEMPLATE_ID: algorithm_discovery.v0
+FIELD: Algorithm Discovery
+KIND: evaluate_bitstring
+QUESTION: Can a search over encoded sequences of computational primitives find a
+  genome that behaves like a target algorithm, rather than merely resembling it
+  bit for bit?
+MECHANISM: In the PADO line of work, a genome is decoded into an executable
+  program, in that case a graph or tree of primitive operations with indexed
+  memory. The program is then run on a set of input signals, its outputs are
+  read, and fitness is the quality of those outputs on the classification task.
+  Multiple such programs are orchestrated, each contributing a confidence, and
+  the ensemble decides. The essential step is that the genome is INTERPRETED
+  before it is judged; nothing is scored on its syntax.
+CANDIDATE: The bitstring genome. What varies across specs is which bitstring is
+  submitted and, through length, which landscape it faces. What is being judged,
+  on this bench, is the fraction of positions matching a hidden target string.
+WORLD: One integer seed, from which the executor derives a hidden target of the
+  declared length by hashing the string target, the seed and the length. The
+  world supplies nothing else: no inputs, no interpreter, no task.
+WHAT_CHANGES: Across the given param_space only the choice between two
+  structured 16-bit candidates, period-2 alternation and period-4 blocks, plus
+  the length axis, which arrived null. Across specs the seed also varies, which
+  redraws the landscape entirely.
+MEASURED: score, continuous from 0 to 1, equal to the count of matching
+  positions divided by the target length, plus solved, a boolean true only at
+  score 1.0.
+INFORMATIVE_FAILURE: Thin as an algorithm result but sharp as an instrument
+  result. A low score tells you nothing about algorithmic quality because
+  nothing was executed. What a run does leave behind is a sample from the
+  chance distribution of a structured string against a hash-derived target,
+  which accumulates into the bench's own null and is reusable by every later
+  bitstring template. A repeated near-0.5 result across many seeds is the useful
+  finding that the hash target is unbiased with respect to low-complexity
+  strings.
+SOURCE_CHECK: PLAUSIBLE. Astro Teller's PADO is real and was developed with
+  Manuela Veloso at Carnegie Mellon; search returns a 1995 CMU technical report,
+  PADO, learning tree structured algorithms for orchestration into an object
+  recognition system, and related 1995 to 1997 papers on algorithm evolution for
+  signal understanding. The acronym is expanded as Parallel Architecture
+  Discovery and Orchestration in some sources and Parallel Algorithm Discovery
+  and Orchestration in others, and no publication with exactly the cited title
+  and year 1996 was confirmed, so the method is real but this specific
+  attribution is not established.
+SHARED_MECHANISM: score_fixed_candidate
+ROUTES: R-REPAIR, R-COMPOSE, R-EXECUTOR
+BLOCKER: R-REPAIR is blocked only on a missing parameter, the null length axis,
+  which is a specification gap and not a capability gap; R-COMPOSE is blocked on
+  adjudication, because the ensemble statement over many seeds is an aggregation
+  the single scalar outcome rule cannot express and must be read downstream;
+  R-EXECUTOR is blocked on a measurement capability, since nothing on the bench
+  can decode a genome into operations, run it on inputs, and return output
+  quality, and that is the entire method.
+FAITHFUL: A faithful implementation needs a decoder from bits to a program in a
+  declared primitive set, an interpreter with a bounded step budget so
+  non-halting genomes terminate, a set of task inputs supplied by the world, and
+  a scalar output-quality measure. Orchestration of several programs is a second
+  layer and can wait. Without the interpreter the template is a bitstring
+  similarity test wearing an algorithm-discovery label.
+REDUCTION: This template is already executable, and the reduction is to stop
+  pretending it is about algorithms and use it as instrument calibration. Set
+  length to 16, which is a REPAIR and not a design choice, because both supplied
+  candidates are exactly 16 characters long. This matters more than it looks:
+  the scorer divides matches by the TARGET length while comparing only over the
+  overlap, so a 16-character candidate against length 32 has a maximum
+  attainable score of 0.5 and any threshold above that can never fire. Then run
+  both candidates across many seeds under sha256_index or linear_index repeats,
+  never under constant with state reset and count above 1, which the bench flags
+  as degenerate by construction. WHAT IT PRESERVES: fixed candidate scored
+  against a hidden target derived from the world, and the contrast between two
+  candidates of different periodicity. WHAT IT LOSES: interpretation, execution,
+  inputs, outputs and orchestration, that is the whole of PADO. WHICH CLAIM IT
+  SUPPORTS: that the hidden-target hash is unbiased with respect to structured
+  low-complexity bitstrings, tested as an empirical mean against the exact
+  binomial null with mean 0.5 and standard deviation 1 over 2 root L, which for
+  L equal to 16 is 0.125. That is a genuine bench-hygiene result and is
+  available today at near zero cost.
+END_ENTRY
+
+BEGIN_ENTRY
+TEMPLATE_ID: bacon_equation_discovery.v0
+FIELD: Automated Scientific Discovery
+KIND: discover_equation_v0
+QUESTION: Can a small set of general heuristics, applied to a table of
+  measurements, rediscover the empirical law that generated them, without being
+  told the form of the law in advance?
+MECHANISM: BACON reads a table of observed variables. It applies a handful of
+  data-driven heuristics, one at a time. If a quantity is constant, record it as
+  a law. If two quantities increase together, define a new theoretical term
+  equal to their ratio. If one increases as the other decreases, define their
+  product. Each new term becomes a column in the table, and the heuristics run
+  again on the enlarged table. The recursion halts when some derived term comes
+  out constant within tolerance, and that constant term is the discovered law.
+  This is how BACON reaches expressions of the same shape as the ideal gas law
+  and Kepler's third law from raw tables.
+CANDIDATE: A derived theoretical term, that is a composed expression over the
+  observed variables. What varies is which composition the heuristics build.
+  What is judged is whether that term is constant across the rows within
+  tolerance.
+WORLD: A data table produced by some underlying process, plus a noise level.
+  The world supplies the observed variables, their ranges, and the measurement
+  error that sets the tolerance for calling something constant.
+WHAT_CHANGES: The number of variables in the table and the depth to which the
+  heuristics are allowed to recurse before giving up. Both axes arrived null.
+  Noise level is the axis the rationale cares about and it is not in the
+  param_space at all.
+MEASURED: Whether a law was found within the depth budget, the depth at which
+  it was found, and the residual variation of the discovered constant. The
+  natural scalar is the residual, from 0 upward.
+INFORMATIVE_FAILURE: Useful. A failure at a given depth is a lower bound on the
+  compositional complexity of the true law with respect to that heuristic set,
+  which is a real statement about the data and not just about the run. The
+  partial table of derived terms is also kept, and the terms that came closest
+  to constant are directional pointers toward the right composition. Failure
+  here narrows the search space rather than emptying it.
+SOURCE_CHECK: VERIFIED. Pat Langley's BACON is a well established production
+  system for discovering empirical laws, first reported in 1977 and developed
+  through BACON.1 to BACON.5 and the Scientific Discovery volume with Simon,
+  Bradshaw and Zytkow. Confirmation here rests on established literature
+  knowledge rather than a fetch, because the session web search budget was
+  exhausted; the method and the attribution to Langley are not in doubt, the
+  exact 1977 venue was not re-checked.
+SHARED_MECHANISM: fit_model_to_data
+ROUTES: R-BACKEND, R-COMPOSE, R-EXECUTOR
+BLOCKER: R-BACKEND is blocked on a measurement channel, since the world is one
+  integer and cannot supply a data table, and no result field can carry a
+  discovered expression, so an adapter must generate the table from the seed and
+  return residual and depth; R-COMPOSE is blocked on control flow, because the
+  heuristic recursion is output-to-input chaining, each derived term becoming an
+  input column for the next pass, and a sealed spec cannot chain; R-EXECUTOR is
+  the same control-flow blocker moved inside a new kind, where it becomes legal
+  because the chaining is then internal to one execution.
+FAITHFUL: A faithful implementation needs the world to emit a multi-column data
+  table from its seed with a planted law and a declared noise level, an
+  interpreter for the heuristic set that can define and append derived terms,
+  and a tolerance rule for calling a term constant. It must also record the
+  discovered expression itself, because the residual alone cannot distinguish
+  the true law from an accidental invariant.
+REDUCTION: A good one exists and it uses the walk as a data generator rather
+  than the bitstring as a candidate. random_walk_v0 is a genuine stochastic
+  process with a known governing law: each step is uniform on minus step_scale
+  to plus step_scale, so displacement has mean 0 and variance equal to steps
+  times step_scale squared over 3. Run a grid of specs sweeping steps over 10,
+  30, 100, 300, 1000 and step_scale over 0.1, 1.0, 10.0, many seeds each, all
+  under sha256_index so the repeats are independent draws. Then, downstream and
+  outside the outcome rule, apply BACON's own heuristics to the resulting table
+  whose columns are steps, step_scale and squared displacement, and see whether
+  the ratio heuristic recovers a constant, which it should, at the value one
+  third. NEW DESIGN CHOICE: the grid above, and heuristic depth 3, since both
+  axes arrived null. WHAT IT PRESERVES: everything except the identity of the
+  data source. A real generating process, a planted law that is known exactly in
+  advance, genuine measurement noise from finite sampling, term composition by
+  ratio, and a constancy test at a declared tolerance. WHAT IT LOSES: the
+  richness of a multi-variable physical table, so the discoverable law is a
+  single scaling relation and the recursion never goes past depth 2. WHICH
+  CLAIM IT SUPPORTS: that the bench's fossil record is sufficient to recover a
+  planted scaling law and its constant from observations alone. That is a
+  precondition for every discovery template in the inbox and nobody has checked
+  it.
+END_ENTRY
+
+BEGIN_ENTRY
+TEMPLATE_ID: coevolution.parasites.v0
+FIELD: Coevolution
+KIND: coevaluate_populations.v0
+QUESTION: Does making the test cases evolve against the solutions, instead of
+  holding them fixed, keep a search from getting stuck on a local optimum?
+MECHANISM: Two populations are maintained at once. Hosts are candidate
+  solutions, in Hillis's case sorting networks. Parasites are sets of test
+  cases, in that case lists to be sorted. Host fitness is how many of the
+  co-located parasite's cases it handles correctly; parasite fitness is how many
+  it makes the host fail. Both populations reproduce with variation on a spatial
+  grid, so a host that is good only against the currently common cases is
+  immediately punished when the parasites shift. The difficulty of the test set
+  is therefore a moving function of current host competence, which is what
+  prevents the search from converging on a static benchmark it has memorised.
+CANDIDATE: Two candidates at once, and that is the point. The host varies in its
+  solution structure; the parasite varies in which test cases it presents. Each
+  is judged only against the other, so neither has an absolute fitness.
+WORLD: A shared spatial arena holding both populations, with locality so that
+  hosts meet nearby parasites. The world supplies the interaction rule that
+  turns a host-parasite meeting into a pair of fitnesses, and nothing more; there
+  is no external objective.
+WHAT_CHANGES: Host population size and parasite population size, both offered as
+  50, 100 or 200. Implicitly also the generation count and the mutation
+  operators, neither of which is in the param_space.
+MEASURED: Host performance over generations, and in the honest version the
+  quality of the final host against an independent held-out test set rather than
+  against the surviving parasites. The scale is a fraction of test cases passed.
+INFORMATIVE_FAILURE: Genuinely informative, and this method's failures are
+  famous. Disengagement, where parasites become so hard or so easy that fitness
+  carries no gradient, is diagnostic and visible in the fitness variance.
+  Cycling, where hosts and parasites chase each other around a loop forever, is
+  the classic Red Queen failure and leaves a recoverable period. Both failures
+  leave a full trajectory of two coupled populations, which is data about the
+  coupling even when no good host emerges.
+SOURCE_CHECK: VERIFIED. Hillis 1990, Co-evolving parasites improve simulated
+  evolution as an optimization procedure, Physica D volume 42, is a foundational
+  and correctly attributed paper on coevolving sorting networks with test-case
+  parasites. Confirmed from established literature knowledge; the web search
+  budget was exhausted before this template, but the attribution is not in
+  doubt.
+SHARED_MECHANISM: two_population_interaction
+ROUTES: R-WORLD, R-COMPOSE, R-EXECUTOR
+BLOCKER: R-WORLD is blocked on state, specifically the absence of any second
+  organism type and of a population at all, since one spec has one world holding
+  one integer and no notion of an opponent; R-COMPOSE is blocked on adjudication,
+  because relative fitness is inherently a two-field comparison, host score
+  against parasite score, and the outcome rule permits exactly one field and one
+  operator; R-EXECUTOR is blocked on state again, since even a new kind would
+  need to carry two populations across generations, which is output-to-input
+  chaining and therefore really an R-SUBSTRATE request wearing an executor
+  costume.
+FAITHFUL: A faithful implementation needs two typed populations with heredity
+  and variation, an interaction rule that computes both fitnesses from a single
+  meeting, and generational chaining so that the output population of one step
+  is the input population of the next. It also needs an independent held-out
+  evaluation set, because measuring the final host against the final parasites
+  is exactly the control that memory says is drawn from the treatment's own
+  selection relation and is therefore not a control at all.
+REDUCTION: One survives, at the producer layer, and it is more faithful than it
+  first appears. The parasite population becomes the SEED POOL, since the seed
+  is what determines the hidden target and therefore the difficulty. Run two
+  arms across specs with the same candidate-improvement procedure. In the
+  iid arm the producer draws each next seed uniformly. In the adversarial arm
+  the producer picks each next seed from the set on which the current best
+  candidate scored WORST, which is precisely parasite selection: the test is
+  selected for host failure. Measure candidate score improvement per spec in
+  each arm, downstream. WHAT IT PRESERVES: the defining coupling, that test
+  difficulty is a function of current host competence, plus the host and test
+  asymmetry, the arms-race dynamic across generations, and a clean iid control
+  that is not drawn from the adversarial selection relation. WHAT IT LOSES: the
+  parasites have no genotype and no heredity, so they cannot ACCUMULATE
+  structure across generations and cannot invent a new kind of hard case; they
+  can only be filtered from a fixed pool. That makes this adversarial sampling,
+  which is the one-sided half of coevolution, and it cannot exhibit Red Queen
+  cycling because only one side has memory. WHICH CLAIM IT SUPPORTS: that
+  adversarially selected test seeds slow measured candidate improvement relative
+  to iid seeds, and that a candidate tuned on adversarial seeds does or does not
+  transfer to held-out iid seeds. That is a real and testable coevolution claim,
+  and it needs no bench change at all.
+END_ENTRY
+
+BEGIN_ENTRY
+TEMPLATE_ID: curiosity.v0
+FIELD: Curiosity-Driven Exploration
+KIND: pseudo_count_exploration.v0
+QUESTION: In an environment too large to count visits to individual states, can
+  a learned density model stand in for a visit counter well enough to tell an
+  agent which parts of the world it has not really seen?
+MECHANISM: A sequential density model is fit online over observed states. For a
+  state just seen, the model gives a probability before the update and a
+  probability after being trained on that one observation. The increase, called
+  the prediction gain, is large for a state the model finds surprising and small
+  for one it already expects. From those two probabilities a pseudo-count is
+  derived algebraically, and it behaves like an empirical visit count while
+  being defined for states never visited. An exploration bonus proportional to
+  one over the square root of the pseudo-count is added to the reward, and the
+  agent's policy then pursues that bonus, which is what drives it into unvisited
+  regions.
+CANDIDATE: The agent's policy, judged by where it goes. What varies is the
+  density model class and the bonus scale, and downstream of those, the states
+  the agent chooses to visit.
+WORLD: A sequential decision environment with high-dimensional observations,
+  sparse or absent extrinsic reward, and a large enough state space that
+  tabular counting is impossible. The world supplies observations, a transition
+  rule responding to actions, and reward.
+WHAT_CHANGES: The density model, offered as CTS or PixelCNN, and the bonus
+  scale, whose range arrived null.
+MEASURED: State coverage and extrinsic return over training, plus the agreement
+  between pseudo-counts and true counts where true counts happen to be known.
+  Coverage is a count, return is unbounded, agreement is a ratio.
+INFORMATIVE_FAILURE: Mixed. A failed exploration run leaves a visitation
+  histogram, which is directly informative about where the bonus dried up and
+  therefore about which states the density model considered familiar too early.
+  That is concrete and reusable. What it does not leave is any separation
+  between two very different causes, a bad density model and a bad policy
+  optimiser, so a bare failure is not attributable without the estimator being
+  measured separately.
+SOURCE_CHECK: VERIFIED with a caveat. Bellemare, Srinivasan, Ostrovski, Schaul,
+  Saxton and Munos, Unifying Count-Based Exploration and Intrinsic Motivation,
+  NeurIPS 2016, introduces pseudo-counts from a CTS density model and the one
+  over root pseudo-count bonus. The PixelCNN option in the param_space belongs
+  to the 2017 follow-up by Ostrovski and colleagues, count-based exploration
+  with neural density models, not to the cited paper, so one of the two axis
+  values is attributed to the wrong publication. Confirmed from established
+  literature knowledge; the search budget was exhausted before this template.
+SHARED_MECHANISM: accumulate_trajectory
+ROUTES: R-SUBSTRATE, R-COMPOSE, R-BACKEND
+BLOCKER: R-SUBSTRATE is blocked on control flow, and this is the deep one: an
+  exploration bonus is only exploration if it CHANGES THE NEXT ACTION, which
+  requires output-to-input chaining within a run, and the payload of a sealed
+  spec is fixed for the whole spec by construction; R-COMPOSE is blocked on a
+  measurement, since to fit any density model downstream the bench must emit the
+  per-step state trace and random_walk_v0 returns only the final position and
+  displacement, not the intermediate states; R-BACKEND is blocked on the same
+  missing trace, plus the absence of any action space for an external RL library
+  to act in.
+FAITHFUL: A faithful implementation needs an environment with actions and
+  observations, a policy that can be updated during a run, an online density
+  model over observations, and a reward channel the bonus can be added to. The
+  bench would have to allow a run to be a training loop rather than a single
+  measurement, which is a substrate change and not an executor change.
+REDUCTION: A real one exists, and it works by deleting the agent and keeping the
+  estimator. The theoretical core of the paper is that pseudo-counts approximate
+  true visit counts, and that claim can be tested with no policy at all. Run
+  random_walk_v0 with repeat state persist so the repeats form ONE trajectory,
+  sweeping the number of repeats to get streams of increasing length. Bin
+  position onto a fixed grid, which makes true visit counts exactly known.
+  Downstream, fit a sequential density model over the bin sequence, compute the
+  prediction gain and pseudo-count for each observation, and compare pseudo-count
+  against the true running count. NEW DESIGN CHOICE, since bonus_scale arrived
+  null: steps 1, step_scale 1.0, 5000 persisted repeats, bin width 1.0, and the
+  bonus scale is not needed at all because no bonus is consumed. WHAT IT
+  PRESERVES: the density model, the prediction gain, the pseudo-count derivation,
+  and a ground-truth count to check it against, which is exactly the paper's
+  central technical claim. WHAT IT LOSES: the entire agentic half. No actions, no
+  policy, no reward, no bonus feedback, so nothing here is exploration. It also
+  loses the hard part of the problem, because a 1-D binned walk is nearly
+  tabular and the whole motivation was non-tabular state spaces, so success here
+  is necessary and very far from sufficient. WHICH CLAIM IT SUPPORTS: that a
+  given pseudo-count estimator is consistent on a stream with known counts. That
+  is instrument calibration and must not be reported as an exploration result.
+  IMPORTANT PREREQUISITE: even this needs random_walk_v0 to expose the per-step
+  positions, or the walk must be run with steps equal to 1 so that each repeat
+  contributes exactly one observable position, which is the trick that makes the
+  reduction possible today.
+END_ENTRY
+
+BEGIN_ENTRY
+TEMPLATE_ID: equation_discovery_sindy.v0
+FIELD: Equation Discovery
+KIND: sparse_regression_sindy_v0
+QUESTION: Given a measured trajectory of a system, can you recover the small
+  handful of terms that actually govern its motion, out of a large library of
+  terms that might?
+MECHANISM: Measure the state over time and estimate its time derivative
+  numerically. Build a library matrix whose columns are candidate functions of
+  the state, typically polynomials up to some order plus trigonometric terms.
+  The governing equation is then written as derivative equals library times a
+  coefficient vector. Solve that overdetermined system by least squares, then
+  zero every coefficient whose magnitude falls below a sparsity threshold, then
+  refit least squares on the surviving columns only, and iterate. The procedure
+  converges to a sparse coefficient vector whose nonzero entries name the active
+  terms, and that is the discovered equation.
+CANDIDATE: The coefficient vector over the library, that is the model. What
+  varies is which library terms survive thresholding. What is judged is the
+  residual error together with the number of nonzero terms.
+WORLD: A dynamical system that can be observed over time, plus measurement
+  noise and a sampling rate. The world supplies the trajectory, and crucially
+  also the coordinate system, since the same dynamics in poor coordinates is not
+  sparse in any convenient library.
+WHAT_CHANGES: The size of the candidate library and the sparsity threshold. Both
+  arrived null, and the threshold is the parameter the whole method's behaviour
+  hinges on.
+MEASURED: Residual error, from 0 upward, and the count of nonzero coefficients,
+  a small integer. Only one of the two can be the outcome rule's scalar, which
+  is itself a faithful reflection of the method's real difficulty.
+INFORMATIVE_FAILURE: Very informative. A run that returns the empty model at
+  every threshold says the library does not span the dynamics in these
+  coordinates, which is a statement about the coordinate choice and points at
+  the fix. A run whose surviving term set changes wildly with the threshold
+  reveals collinearity in the library, and the coefficient path across
+  thresholds is a durable artifact. The failure mode names its own cause more
+  often than not.
+SOURCE_CHECK: VERIFIED. Brunton, Proctor and Kutz, Discovering governing
+  equations from data by sparse identification of nonlinear dynamics, PNAS 2016,
+  is correctly cited and is the origin of SINDy and of the sequentially
+  thresholded least squares procedure. Confirmed from established literature
+  knowledge; the web search budget was exhausted before this template, but this
+  attribution is not in doubt.
+SHARED_MECHANISM: fit_model_to_data
+ROUTES: R-BACKEND, R-COMPOSE, R-EXECUTOR
+BLOCKER: R-BACKEND is blocked on a measurement channel, since no existing result
+  field carries a time series and none carries a coefficient vector or a
+  residual, so an adapter must both hand a trajectory to an external solver such
+  as an existing sparse-regression package and pull residual and term count
+  back; R-COMPOSE is blocked on the same missing per-step trace, because
+  random_walk_v0 returns only the endpoint and SINDy needs the path; R-EXECUTOR
+  is blocked on adjudication as well as measurement, because the honest verdict
+  is jointly about residual and sparsity and the outcome rule can compare only
+  one of them.
+FAITHFUL: A faithful implementation needs a world that emits a sampled
+  trajectory with a declared noise level and sampling rate, a declared library,
+  a declared threshold, and a result carrying residual, term count and the
+  identity of the surviving terms. The surviving-term identity is not optional,
+  because a low residual with the wrong terms is the exact failure the rationale
+  itself warns about and the residual alone cannot detect it.
+REDUCTION: A strong one exists, and it is a NEGATIVE control, which is more
+  valuable than a positive demonstration. random_walk_v0 is a real dynamical
+  system whose true governing equation has NO deterministic terms at all: the
+  increment is zero-mean uniform noise, so the correct SINDy answer is the empty
+  model with every coefficient zero. That makes it a perfect false-discovery
+  probe. Run a grid of walks, capturing the trajectory by using steps equal to 1
+  with repeat state persist so each repeat yields one sampled position, sweeping
+  trajectory length over 100, 300, 1000, 3000 and step_scale over 0.1, 1.0, 10.0
+  across many seeds. Downstream, run standard SINDy on each trajectory with a
+  polynomial library and measure how often a nonzero term is returned. NEW DESIGN
+  CHOICE, since both axes arrived null: library size 6, that is polynomials up to
+  order 5, and sparsity threshold swept over 0.01, 0.05, 0.1, 0.5. WHAT IT
+  PRESERVES: a genuine trajectory from a genuine stochastic process, real
+  derivative estimation with real numerical error, the full library and
+  thresholding machinery, and an exactly known ground truth. WHAT IT LOSES: any
+  ability to test RECOVERY, because a 1-D driftless walk has no nonlinear
+  dynamics, no coupling and no attractor, so nothing interesting is there to be
+  found. WHICH CLAIM IT SUPPORTS: the false-positive rate of SINDy at threshold
+  lambda as a function of trajectory length on a process known to have no
+  governing terms. That number is the one you need before believing any positive
+  SINDy result, and it pairs directly with the BACON reduction above, which uses
+  the same walk as a POSITIVE control with a known planted scaling law.
+END_ENTRY
+
+BEGIN_ENTRY
+TEMPLATE_ID: hide_and_seek_autocurriculum.v0
+FIELD: Autocurricula
+KIND: multi_agent_competition_v0
+QUESTION: When two teams of agents compete in a physical world with no designed
+  task, do they generate their own escalating sequence of challenges, and do
+  genuinely new strategies appear that nobody put in?
+MECHANISM: Two teams, hiders and seekers, are placed in a physics sandbox
+  containing movable boxes and ramps. The only reward is the hide-and-seek
+  outcome. Both teams are trained by self-play reinforcement learning against
+  each other. Because each team's improvement raises the difficulty facing the
+  other, the task never stabilises, and training passes through a sequence of
+  discrete strategy regimes: seekers chase, hiders build shelters, seekers use
+  ramps to get in, hiders lock the ramps away, and so on. The curriculum is
+  generated by the competition rather than by a designer, which is what makes it
+  an autocurriculum.
+CANDIDATE: Two team policies, each judged only against the current version of
+  the other. What varies is the learned behaviour on each side.
+WORLD: A continuous physics simulation with movable objects, line of sight,
+  and enough affordances that unforeseen strategies are physically possible. The
+  world supplies the physics, the objects, and the visibility rule; the
+  affordance richness is the actual experimental variable even though it is not
+  in the param_space.
+WHAT_CHANGES: The number of hiders and the number of seekers, both of which
+  arrived null.
+MEASURED: The number and timing of distinct strategy regimes over training, and
+  per-regime team performance. Regime count is a small integer, but identifying
+  a regime boundary is a change-point judgement over a long time series.
+INFORMATIVE_FAILURE: Partially informative. A run that never leaves the first
+  regime leaves the full behavioural trace and the object-usage statistics, and
+  those localise the block, most often to insufficient affordances or a reward
+  the agents can satisfy trivially. But the headline failure, that no NEW
+  strategy emerged, is not attributable from the trace alone, because it cannot
+  distinguish a world too poor to permit the strategy from an optimiser too weak
+  to find it. That ambiguity is the method's real weakness.
+SOURCE_CHECK: VERIFIED. Baker, Kanitscheider, Markov, Wu, Powell, McGrew and
+  Mordatch, Emergent Tool Use From Multi-Agent Autocurricula, OpenAI 2019, is
+  correctly cited, and the six-phase emergent strategy sequence including ramp
+  use and ramp locking is as described. Confirmed from established literature
+  knowledge; the search budget was exhausted before this template.
+SHARED_MECHANISM: two_population_interaction
+ROUTES: R-BACKEND, R-WORLD, R-SUBSTRATE
+BLOCKER: R-BACKEND is blocked on a measurement channel plus an adjudication
+  capability, since an external self-play RL run could be orchestrated and
+  fossilized, but the stated measurement, the RATE of strategy shifts compared
+  against a single-agent baseline, is both a trend over time and a two-condition
+  comparison, and the outcome rule permits neither; R-WORLD is blocked on the
+  absence of any environment richer than one integer and of any second organism;
+  R-SUBSTRATE is blocked on control flow, since training is output-to-input
+  chaining over millions of steps and a sealed spec is one fixed payload.
+FAITHFUL: A faithful implementation needs a physics world with manipulable
+  objects, two trainable multi-agent policies, a self-play training loop, and a
+  change-point detector over the behaviour time series to name regime
+  boundaries. The bench does not need to own any of that: it needs to launch it,
+  pin the configuration, and fossilize the trace. The adjudication problem
+  remains even then, because the interesting quantity is a comparison and the
+  rule is a scalar.
+REDUCTION: Split the template, because its two halves reduce very differently.
+  THE CURRICULUM HALF REDUCES, WEAKLY. At the producer layer, fix a candidate
+  bitstring and let the producer choose the next spec's length as a function of
+  the previous score, lengthening when the score clears a bar and shortening
+  when it does not, against a fixed-schedule control arm. What it preserves is
+  the defining property that task difficulty tracks current competence; what it
+  loses is that the difficulty comes from a schedule rather than from an
+  opponent that is itself learning, so it is a curriculum and not an
+  autocurriculum. Be careful with this one: with a fixed candidate the length
+  trajectory is close to a restatement of the schedule rule, so the claim it
+  supports is near-tautological unless the candidate also improves, and it is
+  only worth running as the control arm for the coevolution reduction above.
+  THE EMERGENCE HALF IS NONE, and the reason is structural rather than
+  budgetary. The claim of this paper is that strategies appear which were not in
+  the designer's menu. On this bench the payload is fixed for the whole spec and
+  the candidate menu is fixed by the producer, so no new behaviour can arise
+  inside a spec, and across specs anything new was put there by the producer. A
+  bench whose menu cannot grow cannot exhibit emergence, and any reduction
+  claiming to would be measuring the producer's imagination.
+END_ENTRY
+
+BEGIN_ENTRY
+TEMPLATE_ID: lgp.bloat.v0
+FIELD: Genetic Programming
+KIND: evaluate_lgp.v0
+QUESTION: In a randomly generated linear program, what fraction of the
+  instructions actually affect the output, and how does that fraction depend on
+  how many registers the program has?
+MECHANISM: A linear genetic program is a straight-line sequence of register
+  instructions, each writing a destination register from an operation on source
+  registers. Effective code is found by walking the instruction list BACKWARD
+  from the end. Start with the output register in a live set. For each
+  instruction from last to first, if its destination register is currently live,
+  mark the instruction effective and add its source registers to the live set;
+  otherwise mark it a structural intron, because nothing it writes is ever read
+  on any path to the output. The intron fraction that falls out is a property of
+  the program's structure alone, computed with no execution and no fitness, and
+  it is the baseline against which selection-driven bloat is later measured.
+CANDIDATE: A single randomly drawn program genome, given here directly as a
+  uniform bitstring of the declared length. What varies is the random draw and
+  the register count. What is judged is the structural effectiveness of the
+  decoded instruction sequence.
+WORLD: Almost nothing, and this is the template's great virtue. The world
+  supplies only the random draw of the program bits and the decoding convention
+  from bits to instructions. There is no data, no fitness case, no population
+  and no selection.
+WHAT_CHANGES: Program length at 256, 512 or 1024 bits, and register count at 2,
+  4 or 8. This is the only template in the chunk whose param_space arrived fully
+  specified.
+MEASURED: The fraction of instructions that are effective, continuous from 0 to
+  1, and whether at least one effective path to the output register exists, a
+  boolean. Both are exact, deterministic functions of the seed and the two axes.
+INFORMATIVE_FAILURE: Almost none is possible, and that is a compliment here. The
+  measurement is a total function on every input, so there is no failure state
+  except a decoder bug. The one substantive negative outcome, a program with
+  zero effective instructions, is not a failure but a data point, and its rate is
+  precisely the quantity of interest at low register counts.
+SOURCE_CHECK: PLAUSIBLE. Brameier and Banzhaf, Evolving Teams of Predictors with
+  Linear Genetic Programming, Genetic Programming and Evolvable Machines volume
+  2, pages 381 to 407, 2001, was confirmed by search and is a real paper by these
+  authors in this year. However, that paper is about team evolution and output
+  combination; the backward effective-code marking and the intron analysis this
+  template actually implements are more centrally developed in the same authors'
+  other work on linear GP, including their later book. The method is
+  unambiguously theirs, the specific paper cited is probably not where this
+  procedure is defined.
+SHARED_MECHANISM: interpret_program
+ROUTES: R-EXECUTOR, R-COMPOSE
+BLOCKER: R-EXECUTOR is blocked on a measurement capability only, namely a
+  decoder from bits to instructions and a backward liveness marker returning
+  effective_fraction; there is no state requirement, no chaining, no population
+  and no adjudication problem, so this is the smallest blocker in the chunk;
+  R-COMPOSE is blocked on adjudication, since without the executor the bench can
+  fossilize the program but cannot compare its effectiveness inside the sealed
+  outcome rule, so the number must be read downstream.
+FAITHFUL: A faithful implementation is a pure function: decode the bitstring
+  into instructions under a declared convention giving destination register,
+  operation and two sources, walk backward maintaining a live register set, and
+  return the effective fraction. It needs no state, no world beyond the seed and
+  no external tool. It is on the order of sixty lines and it fits the bench's
+  sealed-spec model perfectly, because effectiveness is a single continuous
+  scalar and the outcome rule is a single scalar comparison.
+REDUCTION: Two, and both are worth doing. FIRST, a specimen-fossilizing move
+  available today with no bench change: submit the program bits as an
+  evaluate_bitstring payload at the declared length, so that the exact random
+  program is pinned to a seed and permanently recorded in the fossil record, and
+  compute the effective fraction offline from the recorded bits. The score field
+  is meaningless for this purpose and should be declared irrelevant in the
+  hypothesis; what is being bought is a reproducible, hashed specimen. SECOND, a
+  preregistration move that costs no execution at all: the effective fraction of
+  a random LGP program is analytically approachable, since with r registers each
+  instruction writes a uniformly chosen destination and the live set grows as the
+  backward walk proceeds, so the expected fraction can be derived as a function
+  of r and program length before any code is written. WHAT IT PRESERVES: the
+  exact specimen, the seed-to-program map, and a preregistered null with a
+  computed attainable range. WHAT IT LOSES: in-spec adjudication, since until the
+  executor exists no outcome rule can see the effectiveness number. WHICH CLAIM
+  IT SUPPORTS: the baseline intron rate as a function of register count, which is
+  the paper's actual quantity, and it supports it with a null fixed in advance
+  rather than after seeing the data.
+END_ENTRY
+
+BEGIN_ENTRY
+TEMPLATE_ID: mil_predicate_invention.v0
+FIELD: Inductive Logic Programming
+KIND: metagol_induce.v0
+QUESTION: From a handful of examples and some background facts, can a system
+  write a logic program that explains them, and can it invent the intermediate
+  concepts it needs but was never given?
+MECHANISM: Meta-interpretive learning runs a Prolog meta-interpreter that tries
+  to prove the positive examples. When it cannot prove a goal from the
+  background knowledge directly, it applies a metarule, which is a
+  higher-order clause template with variables standing for predicate names, such
+  as the chain rule saying P of A and B holds if Q of A and C and R of C and B
+  hold. Proving the goal then requires binding those predicate variables, and
+  the bindings that succeed are recorded as the induced clauses. If no existing
+  predicate can be bound, a fresh predicate symbol is drawn from the signature,
+  and that is predicate invention. The whole search is run under iterative
+  deepening on the number of clauses, so the first hypothesis found is minimal in
+  clause count, and negative examples must not be provable.
+CANDIDATE: A hypothesis, that is a set of logic clauses possibly including
+  invented predicates. What varies is which metarules are available and how many
+  clauses are permitted. What is judged is whether the hypothesis entails all
+  positive and no negative examples.
+WORLD: A background knowledge base of facts and predicates, a set of positive
+  and negative examples, and a metarule set that constitutes the declarative
+  bias. The metarule set is the real environment here, because it determines
+  what is expressible at all.
+WHAT_CHANGES: The maximum clause count, which arrived null, and the metarule
+  set, offered as chain, tailrec or dyadic.
+MEASURED: Whether a consistent hypothesis was found within the clause bound, the
+  clause count of the hypothesis found, the number of predicates invented, and
+  the search time. Clause count is a small integer and is the natural scalar.
+INFORMATIVE_FAILURE: Strongly informative, and unusually so, because the failure
+  is a PROOF. Metagol's search at a given clause bound is complete relative to
+  the metarule set, so failing to find a hypothesis within k clauses is a
+  theorem that no hypothesis of k or fewer clauses exists under that bias. That
+  is a hard lower bound on the target concept's complexity, it is reusable
+  forever, and it is exactly the kind of result the bench's sealed-spec model is
+  built to record. Very few templates in this chunk have failures this good.
+SOURCE_CHECK: VERIFIED. Muggleton, Lin and Tamaddoni-Nezhad, Meta-interpretive
+  learning of higher-order dyadic datalog: predicate invention revisited,
+  Machine Learning volume 100 number 1, pages 49 to 73, 2015, confirmed by
+  search. Metagol is the corresponding implementation, metarules and predicate
+  invention are as described, and the attribution is right.
+SHARED_MECHANISM: search_over_candidates
+ROUTES: R-BACKEND, R-COMPOSE, R-EXECUTOR
+BLOCKER: R-BACKEND is blocked on a measurement channel, since the payload cannot
+  carry background knowledge and examples and no result field can carry a clause
+  count or an induced program, so an adapter must feed a task in and pull
+  clause_count and consistent out; R-COMPOSE is blocked on adjudication rather
+  than capability, because the ladder over clause bounds is expressible across
+  specs but the MINIMALITY conclusion, that k is the smallest surviving bound, is
+  a comparison across specs and cannot live in any one outcome rule; R-EXECUTOR
+  is blocked on the same missing measurement, and would additionally have to
+  bundle a Prolog engine, which is why the backend route dominates it.
+FAITHFUL: A faithful implementation needs a Prolog or datalog engine, a task
+  generator that turns a seed into background knowledge plus labelled examples,
+  the metarule set as a declared payload parameter, and a result carrying
+  consistency, clause count, invented predicate count and the induced program
+  text. Metagol itself is a small public Prolog program, so the bench does not
+  need to reimplement anything, only to call it and fossilize what it returns.
+REDUCTION: The near-bench reduction is NONE, for a concrete reason: a bitstring
+  and a 1-D walk cannot encode a proof, background knowledge or a clause, so
+  there is no honest way to represent an induced logic program with the existing
+  kinds, and any bitstring encoding of a hypothesis would score on syntactic
+  similarity while entailment, the only thing MIL cares about, went unmeasured.
+  However, the ORCHESTRATION reduces beautifully and this is the real finding.
+  Metagol's iterative deepening is a monotone ladder over a single integer, so
+  run one sealed spec per clause bound k equal to 1, 2, 3, 4, 5, 6, each with the
+  same seed, the same metarule set and the outcome rule "found is true". The
+  smallest k that SURVIVES is the minimal hypothesis size, and every larger k is
+  a redundant confirmation while every smaller k that is FALSIFIED is a
+  permanent lower-bound theorem. NEW DESIGN CHOICE, since max_clauses arrived
+  null: the ladder 1 through 6. WHAT IT PRESERVES: essentially all of the
+  method's search semantics, including depth-bounded completeness and
+  minimality-by-deepening, because the deepening loop was always a loop over an
+  integer and hoisting it out of the run changes only efficiency. WHAT IT LOSES:
+  only the reuse of work between bounds, and the ability to state minimality
+  inside any one outcome rule. WHICH CLAIM IT SUPPORTS: the exact clause-count
+  complexity of a target concept under a declared bias. Of the twelve templates
+  in this chunk this is the one whose search structure fits a sealed-spec bench
+  best, and that is worth saying out loud.
+END_ENTRY
+
+BEGIN_ENTRY
+TEMPLATE_ID: pbt.stateful.walk.v0
+FIELD: Property-Based Testing
+KIND: random_walk_v0
+QUESTION: Does a stated invariant survive a randomly generated sequence of
+  state-changing operations, and when it does not, what is the smallest sequence
+  that breaks it?
+MECHANISM: The tester writes a property, a universally quantified claim about
+  the system. A generator produces random inputs from a declared distribution.
+  The property is checked on each. In the stateful form, the generator produces
+  a random SEQUENCE of commands, a model of the system is stepped alongside the
+  real system, and postconditions are checked after each command rather than
+  only at the end. When a counterexample is found, shrinking repeatedly re-runs
+  the property on systematically smaller inputs, keeping any that still fail,
+  until a minimal failing case remains, and it is that minimal case, not the
+  original random one, that is reported.
+CANDIDATE: The generated input, here the sequence of walk increments determined
+  by the derived seed. What varies is the seed and the sequence length. What is
+  judged is whether the invariant holds on the resulting state.
+WORLD: One integer seed, from which the increment sequence is drawn
+  deterministically. The world supplies the generator's randomness and nothing
+  else, which is a genuinely faithful match to what QuickCheck's world is.
+WHAT_CHANGES: The number of steps and the step scale, both of which arrived
+  null, plus the derived seed per repeat, which is the actual generator draw.
+MEASURED: displacement and position, both continuous and unbounded, compared
+  against an invariant bound. The bench also returns start_position, steps and
+  step_scale, so the invariant can be stated in terms of the declared inputs.
+INFORMATIVE_FAILURE: Excellent, and this is the one template where failure is
+  the intended product. A violated invariant plus the derived seed is a complete,
+  replayable counterexample, since the walk is bit-deterministic in the seed,
+  which is exactly QuickCheck's seed-replay discipline. What is missing is the
+  shrink: the counterexample you get is the random one, possibly a thousand
+  steps long, not the minimal one, so debugging effort is not reduced the way the
+  method intends.
+SOURCE_CHECK: VERIFIED with a caveat. Claessen and Hughes, QuickCheck: a
+  lightweight tool for random testing of Haskell programs, ICFP 2000, is
+  correctly cited and is the origin of property-based testing with generators and
+  shrinking. The STATEFUL command-sequence form named in the template's rationale
+  is a later development, in Claessen and Hughes on testing monadic code and in
+  the Erlang QuickCheck line, not in the 2000 paper. Confirmed from established
+  literature knowledge; the search budget was exhausted before this template.
+SHARED_MECHANISM: accumulate_trajectory
+ROUTES: R-REPAIR, R-COMPOSE, R-SUBSTRATE
+BLOCKER: R-REPAIR is blocked only on two missing parameter values, a
+  specification gap and not a capability gap, after which this runs unchanged;
+  R-COMPOSE is blocked on adjudication, since the useful statement is a violation
+  RATE over many draws and the outcome rule adjudicates one repeat at a time with
+  no aggregation; R-SUBSTRATE is blocked on control flow, specifically shrinking,
+  which requires feeding a failing run's input back in reduced form, that is
+  output-to-input chaining, which a sealed fixed payload forbids by construction.
+  A second measurement blocker sits underneath: postconditions after each command
+  need the per-step trace, and the executor returns only the endpoint.
+FAITHFUL: A faithful implementation needs a command generator over more than one
+  command type, a per-step trace so postconditions can be checked after each
+  command, a reference model to compare the system against, and a shrinking loop.
+  The model comparison also needs a two-field verdict, system state against model
+  state, which the one-scalar outcome rule cannot express, so faithful stateful
+  PBT needs both a substrate change and an adjudication change.
+REDUCTION: This is the best fit in the chunk and needs only a repair, but the
+  invariant must be chosen with care. NEW DESIGN CHOICE, since both axes arrived
+  null: steps swept over 10, 100, 1000 and step_scale fixed at 1.0. DO NOT choose
+  the structural invariant that absolute displacement is at most steps times
+  step_scale: it is true by construction of the increment, can never fail, and
+  would be a rule that is ineligible to fire, which is precisely the degenerate
+  preregistration this program keeps producing. Choose instead a probabilistic
+  invariant with a computable violation rate: each increment is uniform on minus
+  s to plus s, so displacement after n steps has mean 0 and standard deviation s
+  times the square root of n over 3, and the invariant that absolute displacement
+  is at most three such standard deviations fails at a small, exactly calculable
+  rate. Run many repeats under sha256_index so each repeat is an independent
+  generator draw, and read the empirical violation rate downstream against the
+  analytic tail. WHAT IT PRESERVES: random input generation from a declared
+  distribution, invariant checking, seed-replayable counterexamples, and a
+  property whose failure rate is known in advance so the test has power. WHAT IT
+  LOSES: shrinking, per-command postconditions, model-based comparison, and the
+  multi-command generator, since only one command type exists. WHICH CLAIM IT
+  SUPPORTS: that random_walk_v0 itself matches its analytic diffusion
+  distribution, which is property-based testing applied to the bench rather than
+  by it, and is a real and unclaimed piece of bench hygiene. ONE HAZARD WORTH
+  REPORTING UPWARD: the degenerate_by_construction flag fires only for a constant
+  seed meeting a STATELESS kind with state reset and count above 1. A
+  random_walk_v0 spec with constant seed derivation, state reset and count above
+  1 is equally degenerate, since every repeat re-derives the same seed and
+  restarts from position 0, giving identical results, yet it escapes the flag
+  because the kind is registered as stateful. That is a live hole in the
+  degeneracy check and this template is the one most likely to walk into it.
+END_ENTRY
+
+BEGIN_ENTRY
+TEMPLATE_ID: rbn.attractor.v0
+FIELD: Artificial Gene Regulatory Networks
+KIND: boolean_network.v0
+QUESTION: If you wire up a network of on-off switches at random and let it
+  update itself, does it settle into a short repeating cycle or wander for a very
+  long time, and what decides which?
+MECHANISM: Build N nodes. Give each node K randomly chosen input nodes and a
+  randomly chosen Boolean function of those K inputs, drawn from the 2 to the
+  power 2 to the K possible functions. Set a random initial state of N bits.
+  Update every node simultaneously from the current state, repeatedly. Because
+  the state space is finite and the update is deterministic, the trajectory must
+  eventually revisit a state, and from then on it repeats. Record the number of
+  steps before the first revisit, the transient, and the length of the repeating
+  cycle, the attractor period. Sweeping K reveals a phase transition: at K equal
+  to 1 the dynamics are frozen, at K equal to 2 they are critical, and at K of 3
+  or more they are chaotic with attractor lengths growing rapidly in N.
+CANDIDATE: One randomly constructed network together with one initial state.
+  What varies is the wiring, the function table, the initial state, the node
+  count and the in-degree. What is judged is the period of the cycle it falls
+  into.
+WORLD: One integer seed and nothing else, which is a rare and exact fit. The
+  seed supplies the wiring, the Boolean functions and the initial state; there is
+  no data, no fitness, no selection and no second organism.
+WHAT_CHANGES: Node count at 16, 32 or 64, in-degree K at 1, 2 or 3, and the
+  update budget from 100 to 1000 steps. Only the update budget is a genuinely
+  free parameter; the other two are the physics of the question.
+MEASURED: Attractor period, a positive integer, transient length, a
+  non-negative integer, and whether a cycle was detected within the budget, a
+  boolean. Period is the natural scalar for the outcome rule.
+INFORMATIVE_FAILURE: Informative but dangerous, and this needs saying. Failing
+  to detect a cycle within the budget is NOT evidence of no cycle: at K of 3 and
+  N of 64 the state space has 2 to the 64 elements and chaotic attractors
+  routinely exceed a thousand steps, so the measurement is RIGHT-CENSORED. What
+  the failure leaves behind is a lower bound on the attractor length, which is
+  genuinely useful, plus the visited-state set. The danger is that a single
+  scalar outcome rule on period will silently map a censored run to FALSIFIED,
+  turning a bound into a false negative. This template needs an explicit
+  INDETERMINATE branch keyed on the cycle-detected boolean.
+SOURCE_CHECK: VERIFIED. Kauffman, Metabolic stability and epigenesis in randomly
+  constructed genetic nets, Journal of Theoretical Biology, 1969, is correctly
+  cited and is the origin of random Boolean networks, the K-dependent ordered to
+  chaotic transition, and the study of attractors as cell types. Confirmed from
+  established literature knowledge; the search budget was exhausted before this
+  template, but this attribution is not in doubt.
+SHARED_MECHANISM: accumulate_trajectory
+ROUTES: R-EXECUTOR, R-COMPOSE
+BLOCKER: R-EXECUTOR is blocked on a measurement capability plus a small piece of
+  state, namely an iterated deterministic map on a finite state space with cycle
+  detection, which nothing on the bench provides, since the only iterating kind
+  walks on an unbounded continuous line where recurrence never happens; there is
+  no population, no chaining and no external dependency, so this is a cheap
+  expansion; R-COMPOSE is blocked on adjudication, because the phase transition
+  claim is a comparison of period distributions across K values and no single
+  outcome rule can hold it.
+FAITHFUL: A faithful implementation is a pure function of the seed: derive
+  wiring, function tables and initial state, iterate synchronously while hashing
+  each state into a seen-set, and return period, transient and a cycle-detected
+  boolean. It must return the boolean separately from the period so that the
+  outcome rule can be written on a field that distinguishes a censored run from a
+  short one, and the update budget must be recorded because the censoring point
+  is part of the measurement.
+REDUCTION: The near-bench reduction is weak and the honest answer is mostly to
+  build the executor, but two genuinely useful moves exist first. FIRST, an
+  analytic preregistration at K equal to 1, which costs no execution: a K equal
+  to 1 network's wiring is a random functional graph on N nodes, so its dynamics
+  decompose into independent cycles and the attractor period is the least common
+  multiple of the cycle lengths under the sign pattern of the node functions.
+  That distribution is derivable in closed form for N equal to 16, which gives a
+  preregistered attainable range and an eligible threshold BEFORE any code is
+  written, and it also tells you immediately what fraction of runs will be
+  censored at 100 steps. SECOND, specimen fossilization available today: submit
+  the N-bit initial state as an evaluate_bitstring payload at length N so the
+  initial condition is pinned to a seed and permanently recorded, and compute the
+  dynamics offline against that record. WHAT IT PRESERVES: the exact specimen,
+  and a null with a computed attainable range and an explicit censoring rate.
+  WHAT IT LOSES: the dynamics themselves, since nothing on the bench iterates a
+  finite-state map, so no attractor can be observed in-spec. WHICH CLAIM IT
+  SUPPORTS: the K equal to 1 attractor-period distribution as a preregistered
+  baseline, and the eligibility of any threshold chosen for the K equal to 2 and
+  K equal to 3 arms. That is the pass that stops a degenerate rule being frozen,
+  and it is worth doing even though the real answer here is that this executor is
+  small and should just be written.
+END_ENTRY
+
+BEGIN_ENTRY
+TEMPLATE_ID: symbolic_regression_gp.v0
+FIELD: Symbolic Regression
+KIND: evaluate_symbolic_tree_v0
+QUESTION: Can an evolving population of mathematical expressions find a formula
+  that fits a dataset, and does the evolution actually do better than drawing
+  the same number of random formulas?
+MECHANISM: Represent each candidate as a tree over a declared function set and
+  terminal set. Evaluate each tree on a set of fitness cases, that is
+  input-output pairs, and take fitness to be the total error. Select parents in
+  proportion to fitness, typically by tournament. Produce children by subtree
+  crossover, which swaps a randomly chosen subtree between two parents, and by
+  mutation, which replaces a subtree with a fresh random one. Replace the
+  population and repeat for a number of generations, stopping when a tree's
+  error falls below a hit criterion. Depth limits bound the trees and are the
+  usual defence against bloat.
+CANDIDATE: An expression tree. What varies is the tree's structure and its
+  constants. What is judged is prediction error on the fitness cases.
+WORLD: A dataset of input-output pairs generated by some target function, plus
+  the function set and terminal set that define what expressions are reachable
+  at all. The world supplies the fitness cases and the primitive vocabulary.
+WHAT_CHANGES: Maximum tree depth and population size, both of which arrived
+  null. Generation count, function set and the target function are the other real
+  axes and none of them are in the param_space.
+MEASURED: Best-of-run error, continuous and non-negative, the generation at
+  which the hit occurred, and the size of the winning tree. Error is the natural
+  scalar and is already bounded to 0 to 1 if normalised.
+INFORMATIVE_FAILURE: Moderately informative. A failed run leaves the best
+  expression found and the fitness trajectory, and a flat trajectory after early
+  generations is the recognisable signature of premature convergence, which
+  points at selection pressure or population diversity rather than at the
+  problem. What it does not resolve is whether the target was unreachable from
+  the chosen function set at the chosen depth, and that is often the actual
+  cause, so a failure is not attributable without a separate reachability check.
+SOURCE_CHECK: VERIFIED. Koza, Genetic Programming: On the Programming of
+  Computers by Means of Natural Selection, MIT Press 1992, is correctly cited and
+  is the canonical source for tree-based GP, subtree crossover and the symbolic
+  regression benchmark. Confirmed from established literature knowledge; the
+  search budget was exhausted before this template, but this attribution is not
+  in doubt.
+SHARED_MECHANISM: search_over_candidates
+ROUTES: R-EXECUTOR, R-COMPOSE, R-SUBSTRATE
+BLOCKER: R-EXECUTOR is blocked on a measurement capability, namely the absence of
+  any structured payload that could carry an expression and of any result field
+  carrying prediction error, and this half is genuinely small; R-COMPOSE is
+  blocked on adjudication, because selection and recombination between
+  generations are downstream analysis the outcome rule cannot express, though the
+  producer may legitimately perform them; R-SUBSTRATE is blocked on state, since
+  a population carried across generations is output-to-input chaining and one
+  spec holds one candidate against one world by construction.
+FAITHFUL: A faithful implementation needs a world that emits fitness cases from
+  its seed with a planted target function, a declared function and terminal set,
+  an evaluator for a serialised expression returning normalised error, and, for
+  the search half, a producer that treats one generation as a batch of specs and
+  performs selection and variation between batches. The evaluation half is a
+  clean fit for a sealed spec; the search half is not, and should not be forced
+  into one.
+REDUCTION: Two, one immediate and one small. THE IMMEDIATE ONE, running today
+  with no bench change, is to build the CONTROL that Koza's central claim is
+  measured against. The claim of interest is that evolutionary search beats
+  random search at equal budget, and the random-search arm can be measured
+  exactly now: fix a candidate, run many independent landscapes under
+  sha256_index repeats, and record the distribution of best-of-n score as a
+  function of n. Because the scorer is bit-match fraction against a uniform hash
+  target, the null is exactly binomial with mean 0.5 and standard deviation 1
+  over 2 root L, so the random-search reference curve can be both measured and
+  derived, and any disagreement between the two is itself a bench defect worth
+  finding. WHAT IT PRESERVES: the comparator, at full fidelity. WHAT IT LOSES:
+  the whole evolutionary mechanism, since no tree, no crossover and no
+  generation is involved. WHICH CLAIM IT SUPPORTS: the denominator of every later
+  GP claim, built before the treatment rather than after, which is the discipline
+  this program keeps having to relearn. THE SMALL ONE is to split the executor
+  request in half and ask only for the evaluation kind: payload of a serialised
+  expression plus a data seed, returning normalised error from 0 to 1, no
+  population and no generations. That kind has exactly the shape of
+  evaluate_bitstring, is adjudicable by a single scalar comparison, and lets the
+  producer run Koza's algorithm with the population loop hoisted outside the
+  spec, which has the side benefit that every individual evaluation becomes a
+  separately fossilized, seed-replayable record rather than a line in a log.
+END_ENTRY
