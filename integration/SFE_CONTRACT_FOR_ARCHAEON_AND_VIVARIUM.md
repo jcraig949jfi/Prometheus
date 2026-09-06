@@ -4,7 +4,10 @@
 **Engine:** `https://192.168.1.202:8811`, schema 6, `--cacert deploy/m1.crt`
 (IP-SAN only — use the IP, never a hostname).
 **Written:** 2026-09-06 by Daedalus, from the live service and your code, not
-from the design.
+from the design. **Corrected the same day** — five statements below were wrong
+and are marked; see the change note at the end. Harmonia has also issued you a
+machine-readable contract (`roles/Harmonia/contracts/`); the two are
+complementary and where they overlap I have said which is authoritative.
 
 You are two halves of one protocol: Archaeon **declares**, Vivarium
 **executes**. The engine's job is to make the seam between you auditable. This
@@ -20,7 +23,9 @@ This page is only the part that is *yours*.
 
 1. **One stable client identity per tool. Not one per run.** This is the
    biggest thing on the page — see §1.
-2. **Never read `var/engine.db` off disk.** Go through the API — see §2.
+2. **Scope your corpus, or ask me for a route.** The API is right for your own
+   data; it cannot show you another tenant's, and Archaeon owns none of the
+   corpus it needs — see §2, which was wrong in its first cut.
 3. **Heartbeat any lease you hold.** See §4.
 4. **Attest what you ran.** All four hashes, not just the config — see §5.
 5. **Declare a budget with `enforcement: "enforceable"`.** The default caps
@@ -28,11 +33,53 @@ This page is only the part that is *yours*.
 6. **Send an `Idempotency-Key` on every creating write.** You are a machine
    that retries — see §6.
 
-Under `science_profile=warn`, which is what M1 runs, **nothing you send can be
-refused by a v6 check.** Findings come back in `science.profile_findings` and
-are sealed into the event chain. That means the engine will never stop you from
-recording bad provenance; it will only make it visible. Reading the findings is
-your job.
+**CORRECTED.** An earlier cut of this page said *"under warn nothing you send
+can be refused by a v6 check"*. That is false, and two automated callers would
+have written no 422 path because of it. The accurate rule has two parts:
+
+**1. Shape and vocabulary reject in EVERY profile, `off` included.** These are
+structural coherence, not science, so the profile does not grade them. Measured
+against `science_profile=off`:
+
+| Rejected in every profile | |
+|---|---|
+| `SUCCESSFUL_NEGATIVE` without `relevance_floor` | the claim *is* about the bound |
+| `source_set` without `unit_of_analysis` | and the reverse |
+| `enqueue` without `commit` | nothing executes before its spec is sealed |
+| an unknown `replication` dimension | closed set, on purpose |
+| `status: "RETRACTED"` at creation | retraction is a transition |
+| any unknown family kind / member kind / role / claim status / unit | closed vocabularies |
+
+**2. A v6 FINDING blocks under `warn` in exactly one case:** when it
+contradicts a declaration you sealed *in the same request*. Today that is a
+fork child asserting `intervention_effective: true` while the engine's own
+arithmetic says the intervention was inert or never applied. Everything else is
+advisory under `warn`.
+
+So: **treat 422 from `/experiments`, `/claims` and `/fork` as a normal,
+non-transient outcome.** Log the finding codes and stop; do not retry. Findings
+come back in `science.profile_findings` and are sealed into the event chain —
+the engine will not stop you recording bad provenance, only make it visible,
+and reading it is your job.
+
+### The complete finding vocabulary — thirteen codes
+
+Neither contract listed all of them: mine omitted `PARTIALLY_INERT_INTERVENTION`
+and Harmonia's predates `CLAIM_CITES_UNVERIFIED_ANALYSIS`. A headless tool
+holding a short list will escalate on a normal engine output, so here is the
+whole set, generated from the source:
+
+| On work completion | On fork | On a family read | On a claim |
+|---|---|---|---|
+| `CONFIG_DIVERGENCE` | `NO_EFFECTIVE_INTERVENTION` | `FAMILY_EXTENT_DIVERGENCE` | `CLAIM_CITES_NON_ANALYSIS` |
+| `NO_EXECUTION_ATTESTATION` | `INTERVENTION_NOT_APPLIED` | `MULTIPLE_SELECTED` | `CLAIM_CITES_UNVERIFIED_ANALYSIS` |
+| | `PARTIALLY_INERT_INTERVENTION` | `SELECTION_WITHOUT_ALTERNATIVES` | `TRANSPORT_OVERREACH` |
+| | | | `TRANSPORT_UNCHECKABLE` |
+| | | | `NO_REPLICATION_DECLARED` |
+
+A fork can now return **more than one** finding — the declared-before/after
+test and the engine-visible test are independent evidence and both always run.
+Read `profile_findings` as a list, never as an optional single value.
 
 ---
 
@@ -77,10 +124,10 @@ request. `sfclient` does this for you after `create_session()`.
 
 ---
 
-## 2. Archaeon: do not read `engine.db` directly
+## 2. Archaeon: the corpus problem
 
-Archaeon currently opens the live SQLite file and queries it. Stop, for four
-reasons that are not style:
+Archaeon opens the live SQLite file and queries it. Four things a raw read
+loses, none of them style:
 
 1. **No tenancy filter.** A direct read pools every client's worlds into one
    population — Harmonia's, Vivarium's, my test harnesses', the 106 legacy
@@ -98,9 +145,35 @@ reasons that are not style:
    than its code (`store.py:471`). A raw reader has no such protection and will
    happily misread a v7 database as v6.
 
-Use `GET /v2/worlds`, `GET /v2/worlds/{wid}/observations`,
-`GET /v2/worlds/{wid}/events` and `GET /v2/worlds/{wid}/knowledge`. If a read
-you need does not exist, tell me — §9 lists the ones I already know are missing.
+**CORRECTED — and this section and §1 are jointly fatal as first written.**
+Every read route is hard-scoped to the calling client (`_authorize`:
+*"a client may only touch its own worlds"*). Of the 2,993 engine-attested
+observations on M1, **2,937 belong to `harmonia-m2` and Archaeon owns none**.
+So "use the API instead" plus "separate stable clients" together leave Archaeon
+able to see **zero** executed experiments. Both rules are individually right and
+following both blinds you.
+
+**That is my problem, not yours to work around.** Until it is resolved:
+
+* **Keep the read-only file read** (`mode=ro`), but add in SQL the two filters
+  the API would have applied: a **declared `client_id` set** and
+  `evidence_class = 'ENGINE_WORK_RESULT'`. Then record the corpus tenancy as a
+  field in every survey. That converts an unstated pooling into a declared
+  population, which is the part that actually matters scientifically.
+* Points 3 and 4 above still bite even with filters — a multi-statement read of
+  a live WAL database is not one observation of one state, and a raw reader has
+  no schema guard. Prefer a single transaction, and check
+  `meta.schema_version` yourself before trusting a row shape.
+* **The real fix is mine:** a deliberate read-grant that crosses tenancy on
+  purpose, preserving `evidence_class` and world grouping, rather than leaving
+  it to a file read that carries no contract at all. `create_topology_group`
+  already mints exactly this shape of unguessable, server-issued sharing
+  capability — it is simply not wired into reads. Awaiting the operator's
+  decision; say if you need it and how wide.
+
+For your **own** corpus the API is strictly better today: `GET /v2/worlds`,
+`GET /v2/worlds/{wid}/observations`, `GET /v2/worlds/{wid}/events`,
+`GET /v2/worlds/{wid}/knowledge`. §9 lists the reads I know are missing.
 
 ---
 
@@ -130,9 +203,12 @@ Put in `spec` everything a reader would need to judge the result, because
   parameters**, which is where estimator identity lives; the engine has no
   separate field for it, and a trimmed mean standardised by a winsorised sd
   overstates a heavy-tailed effect threefold with no selection in play;
-* `tested_domain` — the domain you actually vary. A later claim's
-  `transport_domain` is checked for containment against it, and without it you
-  get `TRANSPORT_UNCHECKABLE` rather than silence;
+* `tested_domain` — **CORRECTED: this belongs on the ANALYSIS experiment, not
+  on the executed one.** `create_claim` reads it from the spec of whatever you
+  pass as `analysis_exp_id`, so putting it on the run that produced the data has
+  no effect. Put it on the `kind="analysis"` experiment you later cite. A
+  claim's `transport_domain` is checked for containment against it; without it
+  you get `TRANSPORT_UNCHECKABLE` rather than silence;
 * the source set, if this is an analysis and you want it recoverable — the
   engine stores only its **hash**;
 * what is held FIXED, not only what varies.
@@ -142,12 +218,16 @@ A prediction is prospective iff `pred.created_seq < exp.committed_seq`. Register
 predictions *before* you commit. `enqueue` requires `commit`, so nothing can be
 executed before its spec is sealed.
 
-**Note for the Archaeon↔Vivarium seam:** Vivarium's validator takes a closed
-top-level key set (`spec_version`, `world`, `hypothesis`, `prediction`, `work`,
-`outcome_rule`, `pew`) and expects your probe parameters inside `work.payload`.
-Archaeon currently emits those parameters at the top level, so every proposal is
-rejected downstream. That is your seam, not the engine's — the engine accepts
-either shape — but it means nothing Archaeon proposes executes today.
+**Note for the Archaeon↔Vivarium seam — CORRECTED, and it was already fixed
+before I wrote it.** Vivarium's validator takes a closed top-level key set
+(`spec_version`, `world`, `hypothesis`, `prediction`, `work`, `outcome_rule`,
+`pew`) and expects probe parameters inside `work.payload`. The older
+`propose.py` / `explore.py` builders emit those parameters at the top level and
+are rejected downstream — but `archaeon/producer/specbuild.py` now emits the
+correct shape. My earlier claim that *"nothing Archaeon proposes executes
+today"* was true of the old path only and was stale when written. The engine
+accepts either shape; this seam is yours, and the producer path is on the right
+side of it.
 
 ---
 
@@ -333,3 +413,31 @@ because nobody needed them, not because they are refused.
 - [x] Claim findings readable on GET
 - [x] `require_attestation`, `audit_envelope()`, `verify_anchor()` in the client
 - [ ] The routes in §9 you tell me you need
+
+---
+
+## Change note — 2026-09-06
+
+This page was audited against the engine and both live services after it was
+first written, and five statements did not survive. Recorded here rather than
+quietly overwritten, because you are automating against it.
+
+1. **"Under warn nothing you send can be refused by a v6 check"** — false.
+   Seven shape and vocabulary rules reject in every profile, and one finding
+   blocks under warn. Rule 0 now states the real rule.
+2. **The finding vocabulary was incomplete** — thirteen codes exist; this page
+   listed twelve and Harmonia's contract lists a different twelve. The full set
+   is now in §0.
+3. **"Nothing Archaeon proposes executes today"** — stale when written;
+   `archaeon/producer/specbuild.py` already emitted the correct shape.
+4. **`tested_domain` placement** — it is read from the ANALYSIS experiment's
+   spec, not the executed experiment's. The checklist said the wrong one.
+5. **§2 and §1 were jointly fatal for Archaeon** — "use the API" plus
+   "separate clients" leaves it seeing nothing, because every read route is
+   owner-scoped and it owns none of the corpus. §2 now says so and carries an
+   interim that does not require it to be blind.
+
+Also fixed in the engine the same day, and relevant to §8: declaring
+`intervention_effect` used to make `INTERVENTION_NOT_APPLIED` unreachable, so
+the caller who disclosed more was checked less. Both intervention tests now
+always run and a fork can return more than one finding.

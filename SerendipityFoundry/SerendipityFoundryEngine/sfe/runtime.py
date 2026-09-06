@@ -268,8 +268,8 @@ def _normalize_attestation(att) -> dict:
     return out
 
 
-def _intervention_finding(parent_row, child_spec, child_values):
-    """NO_EFFECTIVE_INTERVENTION: the cheapest honest check in the release.
+def _intervention_findings(parent_row, child_spec, child_values) -> list:
+    """Everything the engine can say about whether an intervention did anything.
 
     Interventions were recorded VERBATIM in WORLD_FORKED and nowhere else, so a
     perturbation that changed nothing was indistinguishable from one that
@@ -277,44 +277,82 @@ def _intervention_finding(parent_row, child_spec, child_values):
     deterministic tests, no statistics:
 
       1. a DECLARED before/after pair whose content hashes are equal;
-      2. every engine-visible field the intervention names already holding the
-         parent's value in the child.
+      2. every engine-visible field the intervention names either already
+         holding the parent's value in the child, or not carrying the value the
+         intervention declared at all.
+
+    THE TWO ARE INDEPENDENT EVIDENCE AND BOTH ALWAYS RUN. Until 2026-09-06 this
+    function returned at most ONE finding, and the declared-before/after branch
+    returned early: a differing pair meant the engine-visible checks were never
+    reached. So a fork declaring `interventions: {"seed_root": 99}` together
+    with any non-identical before/after pair produced NO finding at all, even
+    though the child's seed_root was still the parent's.
+
+    The incentive that created was exactly backwards. Supplying
+    intervention_effect is the more informative, more conscientious thing to
+    do, and doing it silently disarmed the stronger check -- the careless
+    caller who omitted it got INTERVENTION_NOT_APPLIED, the careful one got
+    silence. A check that punishes disclosure is worse than no check.
+
+    A DIFFERING before/after pair is NOT evidence that the intervention was
+    applied. It is the claimant's own account of two states; the engine-visible
+    comparison is the engine's. They can disagree, and when they do that
+    disagreement is the finding worth having.
 
     Where an intervention names something the engine cannot see, the engine
-    returns nothing rather than a reassurance it has not earned."""
+    still returns nothing rather than a reassurance it has not earned."""
     iv = child_spec.get("interventions") or {}
     if not isinstance(iv, dict) or not iv:
-        return None
+        return []
+    out = []
+
+    # (1) the claimant's declared account of the effect
     eff = child_spec.get("intervention_effect")
     if isinstance(eff, dict) and "before" in eff and "after" in eff:
         bh, ah = content_hash(eff["before"]), content_hash(eff["after"])
         if bh == ah:
-            return {"code": "NO_EFFECTIVE_INTERVENTION",
-                    "basis": "declared_before_after",
-                    "before_hash": bh, "after_hash": ah,
-                    "message": "the declared before/after states are "
-                               "byte-identical: this intervention changed "
-                               "nothing"}
-        return None
+            out.append({"code": "NO_EFFECTIVE_INTERVENTION",
+                        "basis": "declared_before_after",
+                        "before_hash": bh, "after_hash": ah,
+                        "message": "the declared before/after states are "
+                                   "byte-identical: this intervention changed "
+                                   "nothing"})
+        # a DIFFERING pair proves nothing about the fields below -- fall through
+
+    # (2) what the engine can see for itself, ALWAYS
     visible = [k for k in _ENGINE_VISIBLE_INTERVENTIONS if k in iv]
     if not visible:
-        return None
+        return out
     not_applied = [k for k in visible if child_values.get(k) != iv[k]]
     if not_applied:
-        return {"code": "INTERVENTION_NOT_APPLIED", "fields": not_applied,
-                "message": "the intervention declares a value the forked "
-                           "child does not actually carry"}
+        out.append({"code": "INTERVENTION_NOT_APPLIED", "fields": not_applied,
+                    "message": "the intervention declares a value the forked "
+                               "child does not actually carry"})
+        return out
     inert = [k for k in visible if child_values.get(k) == parent_row[k]]
     if inert and len(visible) == len(iv):
         if len(inert) == len(visible):
-            return {"code": "NO_EFFECTIVE_INTERVENTION",
-                    "basis": "engine_visible_fields", "fields": inert,
-                    "message": "every field this intervention names already "
-                               "holds the parent's value in the child"}
-        return {"code": "PARTIALLY_INERT_INTERVENTION", "fields": inert,
-                "message": "some fields this intervention names already hold "
-                           "the parent's value in the child"}
-    return None
+            out.append({"code": "NO_EFFECTIVE_INTERVENTION",
+                        "basis": "engine_visible_fields", "fields": inert,
+                        "message": "every field this intervention names "
+                                   "already holds the parent's value in the "
+                                   "child"})
+        else:
+            out.append({"code": "PARTIALLY_INERT_INTERVENTION",
+                        "fields": inert,
+                        "message": "some fields this intervention names "
+                                   "already hold the parent's value in the "
+                                   "child"})
+    return out
+
+
+# Findings that CONTRADICT a declaration the forking caller sealed in the same
+# request. Both fail the call under strict, and under any profile when the
+# child asserts intervention_effective. PARTIALLY_INERT_INTERVENTION is
+# deliberately NOT here: a partly-inert intervention is informative, not
+# self-contradictory.
+_FORK_CONTRADICTIONS = frozenset({"NO_EFFECTIVE_INTERVENTION",
+                                  "INTERVENTION_NOT_APPLIED"})
 
 
 class Foundry:
@@ -2368,15 +2406,17 @@ class Foundry:
                            (cwid, plimits["limits"], json.dumps({}), now()))
                 # v6 NO_EFFECTIVE_INTERVENTION. Computed BEFORE the event so
                 # the finding is sealed in the chain, not merely returned.
-                finding = None
+                findings = []
                 if self.science_profile != "off":
-                    finding = _intervention_finding(
+                    findings = _intervention_findings(
                         parent, spec,
                         {"seed_root": int(sroot), "sharing_policy": pol,
                          "topology_group": spec.get(
                              "topology_group", parent["topology_group"])})
+                    contradictions = [f for f in findings
+                                      if f["code"] in _FORK_CONTRADICTIONS]
+                    finding = contradictions[0] if contradictions else None
                     if finding is not None \
-                            and finding["code"] == "NO_EFFECTIVE_INTERVENTION" \
                             and (spec.get("intervention_effective") is True
                                  or self.science_profile == "strict"):
                         # Warn by default; REJECT when the fork's own manifest
@@ -2393,8 +2433,13 @@ class Foundry:
                 fpayload = {"fork_point": fork_point,
                             "parent_head": fork_head,
                             "interventions": spec.get("interventions", {})}
-                if finding is not None:
-                    fpayload["finding"] = finding
+                if findings:
+                    # `findings` is canonical. `finding` is kept as the first
+                    # entry because two WORLD_FORKED events were sealed with
+                    # that key before this became a list, and a sealed ledger
+                    # is not rewritten to tidy a shape.
+                    fpayload["findings"] = findings
+                    fpayload["finding"] = findings[0]
                 # the child's FIRST event chains onto the parent's fork head
                 events.append(cx, cwid, "WORLD_FORKED", actor=parent["client_id"],
                               refs={"parent_world": world_id,
@@ -2403,8 +2448,7 @@ class Foundry:
                               payload=fpayload)
                 child = self.get_world(cwid, parent["client_id"])
                 if self.science_profile != "off":
-                    child["science"] = {"profile_findings":
-                                        [] if finding is None else [finding]}
+                    child["science"] = {"profile_findings": findings}
                 out.append(child)
         return out
 

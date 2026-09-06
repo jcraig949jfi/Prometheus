@@ -1308,3 +1308,134 @@ def test_off_still_returns_no_science_block_on_a_claim_read():
                   headers=h).json()
     assert "science" not in c.get("/v2/claims/%s" % made["claim_id"],
                                   headers=h).json()
+
+
+# ===========================================================================
+# K. SFE-INTERVENTION-EARLY-RETURN (2026-09-06)
+#
+# The declared-before/after branch returned early, so a DIFFERING pair meant
+# the engine-visible checks were never reached. A fork declaring
+# interventions={"seed_root": 99} with any non-identical before/after produced
+# NO finding at all, even though the child still carried the parent's seed.
+#
+# The incentive was exactly backwards: supplying intervention_effect is the
+# more informative thing to do, and doing it silently disarmed the stronger
+# check. A check that punishes disclosure is worse than no check.
+# ===========================================================================
+def _parent(c, h, sid, seed=1234):
+    wid = _world(c, h, sid, "parent", seed_root=seed)
+    ck = c.post("/v2/worlds/%s/checkpoint" % wid, json={}, headers=h).json()
+    return wid, ck["checkpoint_id"]
+
+
+def test_declaring_an_effect_does_not_disarm_the_engine_visible_check():
+    """THE REGRESSION. Identical intervention, identical child; the only
+    difference is whether the caller disclosed a before/after pair. Both must
+    be caught, and before the fix the second was silent."""
+    c, h, sid = _engine()
+    wid, ck = _parent(c, h, sid)
+
+    careless = _fork(c, h, wid, ck, {
+        "name": "careless", "interventions": {"seed_root": 99}})
+    conscientious = _fork(c, h, wid, ck, {
+        "name": "conscientious", "interventions": {"seed_root": 99},
+        "intervention_effect": {"before": {"seed": 1234},
+                                "after": {"seed": 99}}})
+    assert careless.status_code == 200 and conscientious.status_code == 200
+    a = _codes(careless.json()["children"][0])
+    b = _codes(conscientious.json()["children"][0])
+    assert "INTERVENTION_NOT_APPLIED" in a, a
+    assert "INTERVENTION_NOT_APPLIED" in b, (
+        "disclosing intervention_effect disarmed the engine-visible check: %r"
+        % b)
+    assert a == b, ("the two callers differ only in disclosure, so the engine "
+                    "must reach the same verdict: %r vs %r" % (a, b))
+
+
+def test_both_bases_report_when_they_CONCUR():
+    """When the claimant's own declaration AND the engine's observation both
+    say nothing changed, both are reported. Collapsing them would hide that
+    declaration and measurement agreed, which is the useful part."""
+    c, h, sid = _engine()
+    wid, ck = _parent(c, h, sid)
+    r = _fork(c, h, wid, ck, {
+        "name": "inert", "interventions": {"seed_root": 1234},
+        "intervention_effect": {"before": {"x": 1}, "after": {"x": 1}}})
+    fs = r.json()["children"][0]["science"]["profile_findings"]
+    bases = sorted(f.get("basis") for f in fs
+                   if f["code"] == "NO_EFFECTIVE_INTERVENTION")
+    assert bases == ["declared_before_after", "engine_visible_fields"], fs
+
+
+def test_an_applied_intervention_with_a_real_effect_stays_clean():
+    """PAIRED with the regression: the honest case must not become noisy."""
+    c, h, sid = _engine()
+    wid, ck = _parent(c, h, sid)
+    r = _fork(c, h, wid, ck, {
+        "name": "honest", "seed_root": 99, "interventions": {"seed_root": 99},
+        "intervention_effect": {"before": {"seed": 1234},
+                                "after": {"seed": 99}}})
+    assert r.status_code == 200
+    assert _codes(r.json()["children"][0]) == set()
+
+
+def test_an_opaque_intervention_is_still_silent_even_with_a_declared_effect():
+    """THE BOUNDARY, re-asserted on the new path. A noise parameter inside a
+    player is not engine-visible; disclosing a before/after pair about it does
+    not license the engine to say anything about fields it cannot see."""
+    c, h, sid = _engine()
+    wid, ck = _parent(c, h, sid)
+    r = _fork(c, h, wid, ck, {
+        "name": "opaque", "interventions": {"noise": 0.02},
+        "intervention_effect": {"before": {"n": 0.0}, "after": {"n": 0.02}}})
+    assert r.status_code == 200
+    assert _codes(r.json()["children"][0]) == set(), \
+        "the engine must not claim to have checked what it cannot see"
+
+
+def test_declaring_effective_while_NOT_applying_is_fatal():
+    """intervention_effective asserts the perturbation worked. An unapplied
+    intervention contradicts that as squarely as an inert one, and used to be
+    unreachable behind the early return."""
+    c, h, sid = _engine()
+    wid, ck = _parent(c, h, sid)
+    r = _fork(c, h, wid, ck, {
+        "name": "liar", "interventions": {"seed_root": 99},
+        "intervention_effective": True,
+        "intervention_effect": {"before": {"seed": 1234},
+                                "after": {"seed": 99}}})
+    assert r.status_code == 422, r.text
+
+
+def test_strict_refuses_an_unapplied_intervention():
+    c, h, sid = _engine("strict")
+    wid, ck = _parent(c, h, sid)
+    r = _fork(c, h, wid, ck, {
+        "name": "unapplied", "interventions": {"seed_root": 99},
+        "intervention_effect": {"before": {"a": 1}, "after": {"a": 2}}})
+    assert r.status_code == 422, r.text
+
+
+def test_partially_inert_is_reported_but_never_fatal():
+    """PARTIALLY_INERT_INTERVENTION is informative, not self-contradictory, so
+    it is deliberately absent from the fork contradiction set."""
+    c, h, sid = _engine("strict")
+    wid, ck = _parent(c, h, sid)
+    r = _fork(c, h, wid, ck, {
+        "name": "partial", "seed_root": 99, "topology_group": None,
+        "interventions": {"seed_root": 99, "sharing_policy": "ISOLATED"}})
+    assert r.status_code == 200, r.text
+
+
+def test_the_full_finding_list_is_sealed_not_only_the_first():
+    c, h, sid = _engine()
+    wid, ck = _parent(c, h, sid)
+    child = _fork(c, h, wid, ck, {
+        "name": "inert", "interventions": {"seed_root": 1234},
+        "intervention_effect": {"before": {"x": 1}, "after": {"x": 1}}}
+    ).json()["children"][0]["world_id"]
+    ev = c.get("/v2/worlds/%s/events?limit=10" % child, headers=h).json()
+    forked = [x for x in ev["events"] if x["event_type"] == "WORLD_FORKED"][0]
+    assert len(forked["payload"]["findings"]) == 2, forked["payload"]
+    # the pre-2026-09-06 key is kept: a sealed ledger is not rewritten
+    assert forked["payload"]["finding"] == forked["payload"]["findings"][0]

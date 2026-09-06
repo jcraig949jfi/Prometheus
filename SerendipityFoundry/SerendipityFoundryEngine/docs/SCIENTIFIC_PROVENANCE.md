@@ -296,7 +296,7 @@ strict does not turn a missing declaration into a mandate.
 
 Interventions were recorded verbatim in `WORLD_FORKED` and nowhere else, so a
 perturbation that changed nothing was indistinguishable from one that worked.
-Two deterministic tests, no statistics:
+Two deterministic tests, no statistics, and **both always run**:
 
 1. **Declared before/after.** Send `intervention_effect: {"before": …,
    "after": …}` on a fork child. If the two content-hash identically, the
@@ -307,6 +307,16 @@ Two deterministic tests, no statistics:
    `NO_EFFECTIVE_INTERVENTION` when the child simply inherited, and
    `INTERVENTION_NOT_APPLIED` when the fork does not actually carry what the
    intervention declared.
+
+**They are independent evidence, so a fork can return more than one finding —
+read `profile_findings` as a list.** Test 1 is the claimant's own account of two
+states; test 2 is the engine's own observation. A *differing* before/after pair
+is not evidence that the intervention reached the fields the engine can see, and
+until 2026-09-06 it was treated as though it were: declaring
+`intervention_effect` returned early and made `INTERVENTION_NOT_APPLIED`
+unreachable. The incentive that created was exactly backwards — disclosing more
+bought *less* checking, so the careless caller was caught and the conscientious
+one was not. A check that punishes disclosure is worse than no check.
 
 **Where an intervention names something the engine cannot see — a noise
 parameter inside a player, a changed reward shaping — the engine returns
@@ -319,7 +329,7 @@ Warning by default. It becomes **fatal** when the fork's own manifest declares
 `intervention_effective: true` and the arithmetic disagrees — the engine is not
 overruling a scientist, it is refusing to record a fork whose declaration
 contradicts itself. Under `strict`, an inert intervention is refused even
-undeclared. A fork with no interventions at all is never flagged: a plain
+undeclared, and so is one the engine can see was never applied. A fork with no interventions at all is never flagged: a plain
 replicate is not a failed intervention.
 
 ---

@@ -6,14 +6,14 @@
   "pinned_by": "Daedalus",
   "schema_version": 6,
   "release": "v6 scientific provenance",
-  "source_commit_containing_build": "e307d6e5f9d1b1ecb3f809381743662458cc53a7",
+  "source_commit_containing_build": "8e52c50ab12cbb6da29de24d0c942e397502c7e9",
   "release_commits": [
     "869df1fa1",
     "50ef81ba1",
     "dfc2ac701",
     "088591ab3"
   ],
-  "engine_source_hash": "sha256:4f54681121a1267183b4c0e54c4f745a85d52a15d6d732f89df68e9b71db118d",
+  "engine_source_hash": "sha256:2f42e87f28f32065e8aa1c7cf4e0777c523e474ea4d1aa2ad4aa9a626143fe68",
   "_engine_source_hash_definition": "sha256 over sorted sfe/*.py, each contributing name + NUL + LF-normalized bytes + NUL. Computed at import by sfe/release.py; LF-normalized so a checkout's line-ending convention cannot change build identity. This is the AUTHORITATIVE build id. source_commit on /v2/version is best-effort git metadata from the deployment tree and may name a commit that cannot reproduce the build.",
   "expected_runtime_config": {
     "session_enforcement": "advisory",
@@ -24,7 +24,7 @@
   "rollback_behaviour_measured_2026-09-06": "A pre-v6 engine opened against the live schema-6 ledger REFUSES to start: RuntimeError 'db schema version 6 is NEWER than this engine's 5; refusing to run (would misread state)' (sfe/store.py:471-474). Verified by running the 35758f9d0 source against a VACUUM INTO copy of the live ledger. So a source revert produces a LOUD OUTAGE, not a silent downgrade -- the service dies rather than quietly serving pre-v6 semantics over v6 data. That is the correct failure direction, and it is why this pin is a recovery aid rather than a safety interlock.",
   "restore": {
     "verify": "python deploy/verify_deploy.py",
-    "restore_source": "git -C <a checkout you own> fetch origin && git checkout e307d6e5f9d1b1ecb3f809381743662458cc53a7 -- SerendipityFoundry/  # then copy into the deployment tree",
+    "restore_source": "git -C <a checkout you own> fetch origin && git checkout 8e52c50ab12cbb6da29de24d0c942e397502c7e9 -- SerendipityFoundry/  # then copy into the deployment tree",
     "do_not": "Do NOT 'git checkout -- .' or 'git clean' in F:/Prometheus to fix this: that tree carries uncommitted work belonging to ergon, evidence_wiki/PEW and other roles."
   },
   "files": {
@@ -61,8 +61,8 @@
       "bytes_lf": 1717
     },
     "SerendipityFoundry/SerendipityFoundryEngine/sfe/runtime.py": {
-      "sha256_lf": "560f36e3a8d6045bd68396fe5fd36a15a482bee9b9e103690b13a1cc134c56a8",
-      "bytes_lf": 180171
+      "sha256_lf": "ea70f9a9d3ab83e9561dab47e703e2e4cc7154a5c0fceac36d94d692b71f0e24",
+      "bytes_lf": 184664
     },
     "SerendipityFoundry/SerendipityFoundryEngine/sfe/store.py": {
       "sha256_lf": "9c03e590850f1cfe419f80cd656156cc3ad2fe3ca9b44776b35909c9cd2f8b2b",
@@ -73,8 +73,8 @@
       "bytes_lf": 3782
     },
     "SerendipityFoundry/SerendipityFoundryClient/sfclient/client.py": {
-      "sha256_lf": "b99e5fee63c9ca1a4864282d5a58f74b96838ef5d8fe9b8b3db46c9afeb013e8",
-      "bytes_lf": 24224
+      "sha256_lf": "e7f6ae1ad681bb69c73e56310af3cf97d3e29a09b53d2eaa62e086dbb18c9c40",
+      "bytes_lf": 25604
     }
   }
 }
