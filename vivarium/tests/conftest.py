@@ -22,6 +22,21 @@ if str(VIVARIUM) not in sys.path:
 TEST_SCHEMA = "viv_test_" + uuid.uuid4().hex[:8]
 os.environ.setdefault("VIV_SCHEMA", TEST_SCHEMA)
 
+# TESTS MUST NOT REACH PRODUCTION. Two separate registers to keep out of:
+#
+#   the QUEUE  -- VIV_SCHEMA points every connection at a throwaway schema
+#                 carrying the identical DDL. Archaeon's suite wrote 245 rows
+#                 into the production register on 2026-09-06 for want of
+#                 exactly this.
+#   PEW        -- vivarium/config.json now defaults pew_namespace to `prod`,
+#                 because that is what the autonomous consumer must write and
+#                 what ew/fossil.py filters on. A test run inheriting that
+#                 default would put fixtures into the scientific record, so the
+#                 namespace is forced here. Note `=` and not `setdefault`: an
+#                 operator exporting VIV_PEW_NAMESPACE=prod in their shell must
+#                 not be able to aim the suite at production by accident.
+os.environ["VIV_PEW_NAMESPACE"] = "test"
+
 from viv import db as _db          # noqa: E402
 from viv import queue as _q        # noqa: E402
 

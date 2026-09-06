@@ -142,9 +142,13 @@ class Daemon:
             return
         try:
             h = client.health()
-            self.log("[viv] pew=OK %s schema_version=%s contract=%s"
-                     % (h.get("status"), h.get("schema_version"),
-                        h.get("fossil_contract")))
+            # The NAMESPACE is the operationally dangerous half: a consumer
+            # quietly writing to `test` produces fossils that ew/fossil.py
+            # filters out of every scientific query, so the loop looks healthy
+            # and the record stays empty. It is stated at startup.
+            self.log("[viv] pew=OK %s namespace=%s schema_version=%s contract=%s"
+                     % (h.get("status"), client.namespace,
+                        h.get("schema_version"), h.get("fossil_contract")))
         except Exception as exc:                    # noqa: BLE001
             self.log("[viv] WARNING pew=UNREACHABLE %s" % exc)
 

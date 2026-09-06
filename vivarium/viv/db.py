@@ -3,7 +3,9 @@ prometheus_fire, the shared PostgreSQL instance hosted on M1).
 
 CREDENTIALS ARE NEVER COMMITTED HERE. Precedence, highest first:
 
-    1. environment      VIV_DB_HOST / VIV_DB_NAME / VIV_DB_USER / VIV_DB_PASSWORD
+    1. environment      VIV_DB_HOST / VIV_DB_NAME / VIV_DB_USER /
+                        VIV_DB_PASSWORD / VIV_SCHEMA / VIV_SFE_TOKEN /
+                        VIV_PEW_TOKEN / VIV_PEW_NAMESPACE
     2. vivarium/config.local.json          (gitignored -- see repo .gitignore)
     3. evidence_wiki's existing loader     (the established shared-Postgres
                                             credential mechanism; reused rather
@@ -76,7 +78,13 @@ def load_config() -> dict:
     for key, env in (("db_host", "VIV_DB_HOST"), ("db_name", "VIV_DB_NAME"),
                      ("db_user", "VIV_DB_USER"),
                      ("db_password", "VIV_DB_PASSWORD"),
-                     ("schema", "VIV_SCHEMA")):
+                     ("schema", "VIV_SCHEMA"),
+                     ("sfe_token", "VIV_SFE_TOKEN"),
+                     ("pew_token", "VIV_PEW_TOKEN"),
+                     # VIV_PEW_NAMESPACE exists so a test run can force `test`
+                     # even when the committed default is `prod`. See
+                     # tests/conftest.py, which sets it unconditionally.
+                     ("pew_namespace", "VIV_PEW_NAMESPACE")):
         if os.environ.get(env):
             cfg[key] = os.environ[env]
     return cfg

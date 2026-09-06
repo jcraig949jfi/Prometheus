@@ -360,3 +360,38 @@ def test_tick_counters_and_health_are_readable(conn, schema):
     assert h["counters"]["ticks"] == 2
     assert h["last_tick"]["outcome"] == IDLE
     assert h["worker_id"] == "test-worker"
+
+
+# --------------------------------------------------- production isolation
+
+def test_tests_cannot_reach_the_production_queue(schema):
+    """VIV_SCHEMA redirects every connection; `viv` must be unreachable."""
+    from viv import db as _db
+    assert schema.startswith("viv_test_")
+    assert _db.schema() == schema != "viv"
+    assert _db.load_config()["schema"] == schema
+
+
+def test_tests_cannot_reach_the_production_pew_namespace():
+    """config.json defaults to `prod` for the autonomous consumer. A test run
+    must never inherit that: conftest forces `test`, and this asserts both
+    halves so a change to either one is a failure here."""
+    import json
+    import os
+    from pathlib import Path
+    from viv import db as _db
+    from viv.loop import Vivarium
+
+    committed = json.loads(
+        (Path(_db.__file__).resolve().parent.parent / "config.json")
+        .read_text(encoding="utf-8"))
+    assert committed["pew_namespace"] == "prod", \
+        "the autonomous consumer must default to the production namespace"
+
+    assert os.environ["VIV_PEW_NAMESPACE"] == "test"
+    assert _db.load_config()["pew_namespace"] == "test"
+
+    client = Vivarium(worker_id="ns-check", log=lambda *_a: None).pew()
+    if client is not None:            # a credential is configured on this host
+        assert client.namespace == "test", \
+            "a test built a PEW client aimed at the production namespace"

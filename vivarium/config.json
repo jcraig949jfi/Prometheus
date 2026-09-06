@@ -11,5 +11,6 @@
   "agent": "vivarium",
   "poll_interval_s": 5.0,
   "heartbeat_interval_s": 15.0,
-  "note": "Non-secret defaults ONLY. db_password, sfe_token and pew_token come from the environment (VIV_DB_PASSWORD / VIV_SFE_TOKEN / VIV_PEW_TOKEN) or from the gitignored vivarium/config.local.json. See viv/db.py for the precedence order."
+  "note": "Non-secret defaults ONLY. db_password, sfe_token and pew_token come from the environment (VIV_DB_PASSWORD / VIV_SFE_TOKEN / VIV_PEW_TOKEN) or from the gitignored vivarium/config.local.json. See viv/db.py for the precedence order. pew_namespace is 'prod' because that is what the autonomous consumer writes; ew/fossil.py filters namespace='prod' for scientific queries, so anything else is invisible to them. tests/conftest.py forces VIV_PEW_NAMESPACE=test so a test run can never reach it.",
+  "pew_namespace": "prod"
 }

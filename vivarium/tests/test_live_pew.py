@@ -37,8 +37,11 @@ def _reachable(url, **kw) -> bool:
 pytestmark = [
     pytest.mark.skipif(os.environ.get("VIV_LIVE_PEW") != "1",
                        reason="set VIV_LIVE_PEW=1 to write to the live PEW"),
-    pytest.mark.skipif(not os.environ.get("VIV_PEW_TOKEN"),
-                       reason="no PEW credential in the environment"),
+    # The credential now lives in the gitignored config.local.json, not only
+    # in the environment, so gate on the RESOLVED config -- otherwise this test
+    # silently never runs on the very host that is configured for PEW.
+    pytest.mark.skipif(not CFG.get("pew_token"),
+                       reason="no PEW credential resolvable on this host"),
     pytest.mark.skipif(
         not _reachable(CFG["sfe_base_url"] + "/v2/version",
                        context=ssl.create_default_context(cafile=str(CACERT))),
@@ -71,6 +74,9 @@ def test_the_queue_item_is_traceable_all_the_way_into_pew(conn, schema):
     assert row["pew_reference"].startswith("pew:encounter/enc_viv_test_")
 
     client = v.pew()
+    # ISOLATION: conftest forces VIV_PEW_NAMESPACE=test, so even a live PEW
+    # test cannot deposit a fixture into the scientific record.
+    assert client.namespace == "test",         "a test wrote to the %r namespace" % client.namespace
     status, body = client._req(                      # noqa: SLF001
         "GET", "/fossil/encounters/%s" % spec["pew"]["encounter_id"])
     assert status == 200 and body["n_runs"] == 1

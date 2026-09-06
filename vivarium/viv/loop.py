@@ -145,13 +145,13 @@ class Vivarium:
         never a silent one: the skip is written to the event log."""
         if not self._pew_resolved:
             self._pew_resolved = True
-            token = os.environ.get("VIV_PEW_TOKEN") or self.cfg.get("pew_token")
+            token = self.cfg.get("pew_token")
             if token and self.cfg.get("pew_base_url"):
                 self._pew = _pew.PewClient(
                     self.cfg["pew_base_url"], token,
                     machine=self.cfg.get("machine", "M1"),
                     agent=self.cfg.get("agent", "vivarium"),
-                    namespace=self.cfg.get("pew_namespace", "test"))
+                    namespace=self.cfg["pew_namespace"])
         return self._pew
 
     # =====================================================================
