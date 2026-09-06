@@ -1,0 +1,232 @@
+{
+ "manifest": {
+  "experiment": "S18 / #11",
+  "question": "does fossil-directed experiment selection discover claim failures more efficiently than uninformed selection under an identical budget?",
+  "candidate_universe": "every (claim, perturbation dimension) pair; dimensions are exactly S17's five, unchanged",
+  "n_claims_per_population": 200,
+  "budget_experiments": 100,
+  "exhaustive_size": 1000,
+  "budget_fraction_of_exhaustive": 0.1,
+  "primary_endpoint": "failures discovered per experiment executed (fragile pairs found / budget spent)",
+  "secondary_endpoint": "fraction of the oracle ceiling attained",
+  "stopping_rule": "spend the whole budget; no early stop, no interim look that could change a policy",
+  "policies": {
+   "A_random": "uniform over unexecuted pairs",
+   "B_simple_fossil": "rank all pairs by the claim's CI width, the uncertainty proxy already present in any record. This is the strongest SIMPLE fossil baseline S17 measured.",
+   "C_frozen_S17": "within each dimension, rank claims by that dimension's frozen S17 rule; round-robin across dimensions. No cross-dimension score is formed.",
+   "D_oracle": "evaluated only afterwards; establishes the ceiling"
+  },
+  "prohibited": "any calibration, threshold or feature fitted on this population; any repair of S17's withdrawn cross-dimension ranking; any inference from the ABSENCE of a fossil"
+ },
+ "manifest_hash": "129355c74fdece4730e0f61eb9ad5793f0d04b03d9b2efd7ab758eb822fe9f22",
+ "rows": [
+  {
+   "policy": "A_random",
+   "executed": 100,
+   "found": 32,
+   "rate": 0.32,
+   "population": 0,
+   "base_rate": 0.321
+  },
+  {
+   "policy": "B_ci_width",
+   "executed": 100,
+   "found": 41,
+   "rate": 0.41,
+   "population": 0,
+   "base_rate": 0.321
+  },
+  {
+   "policy": "C_frozen_S17",
+   "executed": 100,
+   "found": 44,
+   "rate": 0.44,
+   "population": 0,
+   "base_rate": 0.321
+  },
+  {
+   "policy": "D_oracle",
+   "executed": 100,
+   "found": 100,
+   "rate": 1.0,
+   "population": 0,
+   "base_rate": 0.321
+  },
+  {
+   "policy": "A_random",
+   "executed": 100,
+   "found": 36,
+   "rate": 0.36,
+   "population": 1,
+   "base_rate": 0.331
+  },
+  {
+   "policy": "B_ci_width",
+   "executed": 100,
+   "found": 38,
+   "rate": 0.38,
+   "population": 1,
+   "base_rate": 0.331
+  },
+  {
+   "policy": "C_frozen_S17",
+   "executed": 100,
+   "found": 45,
+   "rate": 0.45,
+   "population": 1,
+   "base_rate": 0.331
+  },
+  {
+   "policy": "D_oracle",
+   "executed": 100,
+   "found": 100,
+   "rate": 1.0,
+   "population": 1,
+   "base_rate": 0.331
+  },
+  {
+   "policy": "A_random",
+   "executed": 100,
+   "found": 28,
+   "rate": 0.28,
+   "population": 2,
+   "base_rate": 0.324
+  },
+  {
+   "policy": "B_ci_width",
+   "executed": 100,
+   "found": 38,
+   "rate": 0.38,
+   "population": 2,
+   "base_rate": 0.324
+  },
+  {
+   "policy": "C_frozen_S17",
+   "executed": 100,
+   "found": 48,
+   "rate": 0.48,
+   "population": 2,
+   "base_rate": 0.324
+  },
+  {
+   "policy": "D_oracle",
+   "executed": 100,
+   "found": 100,
+   "rate": 1.0,
+   "population": 2,
+   "base_rate": 0.324
+  },
+  {
+   "policy": "A_random",
+   "executed": 100,
+   "found": 20,
+   "rate": 0.2,
+   "population": 3,
+   "base_rate": 0.339
+  },
+  {
+   "policy": "B_ci_width",
+   "executed": 100,
+   "found": 38,
+   "rate": 0.38,
+   "population": 3,
+   "base_rate": 0.339
+  },
+  {
+   "policy": "C_frozen_S17",
+   "executed": 100,
+   "found": 48,
+   "rate": 0.48,
+   "population": 3,
+   "base_rate": 0.339
+  },
+  {
+   "policy": "D_oracle",
+   "executed": 100,
+   "found": 100,
+   "rate": 1.0,
+   "population": 3,
+   "base_rate": 0.339
+  },
+  {
+   "policy": "A_random",
+   "executed": 100,
+   "found": 28,
+   "rate": 0.28,
+   "population": 4,
+   "base_rate": 0.323
+  },
+  {
+   "policy": "B_ci_width",
+   "executed": 100,
+   "found": 41,
+   "rate": 0.41,
+   "population": 4,
+   "base_rate": 0.323
+  },
+  {
+   "policy": "C_frozen_S17",
+   "executed": 100,
+   "found": 46,
+   "rate": 0.46,
+   "population": 4,
+   "base_rate": 0.323
+  },
+  {
+   "policy": "D_oracle",
+   "executed": 100,
+   "found": 100,
+   "rate": 1.0,
+   "population": 4,
+   "base_rate": 0.323
+  }
+ ],
+ "summary": {
+  "A_random": {
+   "mean_rate": 0.288,
+   "sd": 0.05306599664568639,
+   "rates": [
+    0.32,
+    0.36,
+    0.28,
+    0.2,
+    0.28
+   ]
+  },
+  "B_ci_width": {
+   "mean_rate": 0.392,
+   "sd": 0.014696938456699055,
+   "rates": [
+    0.41,
+    0.38,
+    0.38,
+    0.38,
+    0.41
+   ]
+  },
+  "C_frozen_S17": {
+   "mean_rate": 0.462,
+   "sd": 0.01599999999999999,
+   "rates": [
+    0.44,
+    0.45,
+    0.48,
+    0.48,
+    0.46
+   ]
+  },
+  "D_oracle": {
+   "mean_rate": 1.0,
+   "sd": 0.0,
+   "rates": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ]
+  }
+ },
+ "verdict": "FOSSIL-DIRECTED SELECTION BEATS UNINFORMED",
+ "populations_C_beat_A": 5
+}

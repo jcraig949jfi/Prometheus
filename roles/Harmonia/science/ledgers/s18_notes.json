@@ -1,0 +1,11 @@
+{
+ "s18_ceiling_caveat": {
+  "note": "the oracle rate is 1.000 in every population because fragile pairs (321-339) exceed the budget (100). The ceiling is therefore TRIVIALLY 1.0 and 'fraction of oracle' equals the raw rate. The informative comparisons are C vs A and C vs B; distance-from-oracle here measures budget scarcity, not policy quality.",
+  "implication": "a harder and more informative version would set the budget above the number of fragile pairs, or use a rarer failure mode, so the oracle is not saturated. Not run; recorded as the design note for any repeat."
+ },
+ "s18_round_robin_handicap": {
+  "note": "policy C round-robins evenly across five dimensions, but the frozen S17 predictor has NO rule for noise. So 20 of C's 100 experiments are spent at random on a dimension whose base rate is 0.025.",
+  "measured": "C restricted to its four ruled dimensions scores 0.573 failures/experiment against the 0.462 it is credited with. The advantage over random is achieved WHILE handicapping itself on a fifth of the budget.",
+  "not_claimed": "0.573 is NOT the headline. Reallocating the budget away from noise would be a policy change fitted after seeing outcomes, which the pre-registration prohibits. The endpoint stands at 0.462."
+ }
+}
