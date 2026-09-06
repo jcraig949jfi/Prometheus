@@ -1,0 +1,1106 @@
+CHUNK 2 -- expansion pass entries. 12 templates.
+
+Analyst note on ground truth used below. Section 1 of the brief was taken as
+given. Two facts about the existing bench were additionally confirmed by
+reading source, because five of the reductions turn on them, and both are
+recorded here so that no entry has to assert them from memory:
+  1. vivarium/viv/executors.py delegates evaluate_bitstring to the engine's
+     reference executor, and SerendipityFoundry/SerendipityFoundryEngine/
+     sfe/executors.py computes score as the fraction of positions matching a
+     hidden target, described in its own docstring as an onemax-style
+     landscape. The target is sha256 of the string target:<seed_root>:<length>
+     truncated to length. The landscape is therefore SINGLE-PEAKED, additive
+     and noiseless.
+  2. The kind contract in vivarium/viv/kinds.py declares params exactly bits
+     and length, and does NOT require that the length of bits equals length.
+     The scorer counts matches over the shorter of the two lengths but divides
+     by the target length.
+Where a reduction depends on either fact, it says so.
+
+
+BEGIN_ENTRY
+TEMPLATE_ID: ada_thin_film.v0
+FIELD: Automated Experimentation
+KIND: synthesize_thin_film_v0
+QUESTION: Which combination of dopant concentration and annealing time gives a
+  thin film the highest charge-carrier mobility, and can a machine find it by
+  choosing its own next experiment rather than following a human's plan?
+MECHANISM: A robot runs a closed loop. Each iteration mixes an ink from a
+  hole-transport material, a dopant and an additive at a chosen ratio; spin
+  coats it onto a substrate; anneals it on a hotplate for a chosen time;
+  photographs the film; takes an optical spectrum; and measures a
+  current-voltage curve. A pseudomobility is computed from the conductivity and
+  the film thickness. A model-based optimiser fits a surrogate to every
+  measurement made so far and picks the next ratio and time. The loop repeats
+  until the budget of physical experiments is spent.
+CANDIDATE: A processing recipe, that is, one point in a two-dimensional
+  continuous space of dopant ratio and annealing time. It is judged by the
+  measured pseudomobility of the film it produces.
+WORLD: A physical laboratory. It supplies the chemistry, the spin coater, the
+  hotplate, the camera, the spectrometer and the probe station, and it also
+  supplies the noise floor of each of those instruments. The response surface is
+  unknown in advance and is only ever sampled, never revealed.
+WHAT_CHANGES: The two recipe parameters from iteration to iteration, and,
+  underneath that, genuine run-to-run physical variation between nominally
+  identical recipes.
+MEASURED: Pseudomobility, a positive continuous quantity, one value per film,
+  plus the count of physical experiments consumed, an integer.
+INFORMATIVE_FAILURE: A failed campaign still leaves the sampled response
+  surface, which is the expensive part. Even with no recipe over threshold you
+  keep every measured point, the instrument repeatability at replicated points,
+  and the location of the best region reached. The most useful failure is a
+  campaign where replicates disagree by more than the surface varies across the
+  whole region: that says the measurement, not the chemistry, is the
+  bottleneck, and it hands you the number that says so.
+SOURCE_CHECK: VERIFIED. MacLeod et al., Science Advances 6, eaaz8867 (2020),
+  the Ada self-driving laboratory, maximised hole mobility of organic hole
+  transport materials by iterating ink mixing, spin coating, thermal annealing
+  for variable time, imaging, spectroscopy and current-voltage measurement.
+  Dopant ratio and annealing time are the paper's own axes and pseudomobility
+  is its own reported quantity.
+SHARED_MECHANISM: search_over_candidates
+ROUTES: R-BACKEND, R-COMPOSE, R-EXECUTOR
+BLOCKER: R-BACKEND is missing an execution-backend capability, namely an
+  adapter that hands a recipe to an instrument stack or a physics simulator and
+  records its reading as a spec result, together with a provenance record,
+  because a physical reading is not reproducible from seed_root and the fossil
+  must record the observation rather than a recipe for recomputing it;
+  R-COMPOSE is missing an adjudication capability, because the campaign-level
+  question, did the optimiser cross threshold in fewer experiments than random
+  sampling, compares two campaigns while the outcome rule is one field, one
+  operator, one value; R-EXECUTOR is missing a measurement capability, because
+  no existing payload can even express a pair of real-valued parameters, let
+  alone return a continuous response.
+FAITHFUL: A faithful version needs an external backend the engine calls, either
+  a real instrument stack or a physics-based film model, and a provenance record
+  binding each reading to the recipe, the instrument state and the operator. The
+  bench would keep the loop, the budget and the fossil, and would have to accept
+  results that are recorded rather than recomputable. Nothing about the
+  sealed-spec architecture is wrong for this method; only the backend is absent,
+  which is why this is cheap rather than deep.
+REDUCTION: Encode a recipe as a single bitstring of length 16, eight bits of
+  dopant ratio and eight bits of annealing time, in GRAY CODE (NEW DESIGN
+  CHOICE). The Gray code is load-bearing rather than decorative: bench score is
+  the fraction of matching positions, so Hamming-adjacent words are
+  score-adjacent, and plain binary would place 0111 and 1000 far apart in the
+  quantity the proposer sees while they are adjacent in the parameter they mean.
+  Fix one world seed so every iteration faces one landscape, and run a
+  producer-side closed loop of 24 single-repeat specs (NEW DESIGN CHOICE),
+  proposing a word, reading the score, proposing the next. Pre-register the
+  threshold at score at least 0.8125, which is 13 of 16, so it lies on the
+  attainable 1/16 grid rather than between two reachable values.
+  WHAT IT PRESERVES: the closed loop itself, a hard experiment budget, one
+  hidden response surface learnable only by sampling, and per-experiment
+  fossilisation of the exact recipe and the exact reading.
+  WHAT IT LOSES: all physics; all instrument noise, because the bench score is
+  bit-deterministic, so replicates are exactly equal and the single most
+  important real failure mode, irreproducible measurement, cannot occur at all;
+  and the surrogate's real advantage, because the hidden target is a
+  single-peaked additive landscape rather than a materials response surface.
+  WHICH CLAIM: only that the orchestration is sound, that is, that a budgeted
+  closed loop can be driven, fossilised and adjudicated end to end and that a
+  proposer reaches a pre-registered attainable threshold within budget. Because
+  the landscape is unimodal and noiseless this doubles as a CEILING check: a
+  proposer that fails here is broken. It licenses nothing whatever about
+  materials and must not be reported as an optimisation result.
+END_ENTRY
+
+
+BEGIN_ENTRY
+TEMPLATE_ID: alife.tierra.soup.v0
+FIELD: ALife-Inspired AI
+KIND: tierra_soup_v0
+QUESTION: If you put one hand-written self-copying program into a block of
+  computer memory and let copying make occasional mistakes, does an ecology
+  appear on its own, including creatures that live off other creatures?
+MECHANISM: A region of virtual memory, the soup, is seeded with a single
+  ancestor written in a purpose-built machine code, roughly eighty instructions
+  long, whose whole job is to measure itself, allocate space and copy itself
+  into it. A scheduler gives each running creature slices of CPU time. Errors
+  are injected in two places, as background bit flips in the soup and as
+  mistakes during copying. When memory fills, a reaper queue kills the oldest
+  and the most error-prone creatures to make room. Nothing selects for anything
+  in particular: the only currencies are memory space and CPU time, so whatever
+  copies itself faster in the space available takes over. What is observed is
+  that shorter creatures appear which have lost the copy loop and instead
+  execute a neighbour's copy code, that is, parasites; then hosts that resist
+  them; then hyper-parasites; then creatures that cheat cooperative
+  arrangements.
+CANDIDATE: A creature, that is, a contiguous block of executable instructions
+  with its own instruction pointer. What varies is its length and its exact
+  instruction sequence. It is judged by nothing external: it is judged by
+  whether copies of it are still in memory later.
+WORLD: A shared, mutable memory arena with a CPU scheduler and a reaper. The
+  world supplies exactly two scarce resources, space and time, and one
+  genotype-phenotype map, the instruction set, which decides what a mutated
+  instruction sequence actually does.
+WHAT_CHANGES: Soup size and mutation rate across runs; within a run, the
+  contents of memory, the length distribution of creatures and the lineage
+  tree, all of which change continuously.
+MEASURED: A time series rather than a scalar: the histogram of creature lengths
+  over time, the number of distinct genotypes, the lineage tree, and the
+  appearance time of the first creature that cannot replicate in isolation,
+  which is the operational definition of a parasite.
+INFORMATIVE_FAILURE: A run in which nothing but the ancestor ever persists is a
+  measurement of the INSTRUCTION SET rather than of evolution: it says the
+  ancestor sits in a mutational neighbourhood that is almost entirely lethal,
+  and the run hands you the lethal fraction, the neutral fraction, and the
+  specific instructions whose mutation kills. That is a reusable property of the
+  substrate and it is arguably the more valuable of the two outcomes, because it
+  is the number that predicts whether any related design will work.
+SOURCE_CHECK: VERIFIED. Ray, T. S., An Approach to the Synthesis of Life, in
+  Artificial Life II, Addison-Wesley, 1991, is the correct and canonical
+  reference for Tierra, the memory soup, the roughly eighty-instruction
+  ancestor, the reaper, and the emergence of parasites and hyper-parasites. This
+  one was not re-checked online because the session's web-search budget was
+  exhausted; the attribution is standard and unambiguous in the ALife
+  literature.
+SHARED_MECHANISM: evolve_population
+ROUTES: R-BACKEND, R-SUBSTRATE, R-WORLD
+BLOCKER: R-BACKEND is missing an execution-backend capability, an adapter that
+  runs an external simulator binary under a declared seed and captures its
+  output stream as a fossilised result; this is the cheap route and it is not
+  hypothetical, since the repository already carries an ergon/avida2003 tree and
+  previously recovered mid-1990s digital-evolution genomes verified by
+  execution. R-SUBSTRATE is missing a state capability, specifically a shared
+  mutable arena persisting across a whole run and, harder, inter-candidate
+  access, since one creature must be able to execute another's memory. R-WORLD
+  is missing a world capability: one integer seed_root is the entire world, and
+  there is no population, no arena, no scheduler and no reaper.
+FAITHFUL: A faithful version needs a persistent memory arena, a time-slicing
+  scheduler over many concurrently executing programs, an instruction set with a
+  real genotype-phenotype map, mutation applied both to stored memory and to
+  copy operations, and a reaper. The observation is a time series and a lineage
+  tree rather than one number, so the outcome rule would have to adjudicate a
+  derived scalar computed downstream, for instance the appearance time of the
+  first non-self-sufficient replicator.
+REDUCTION: NONE, and the reason is specific rather than general. Tierra's whole
+  content lives in the genotype-phenotype map: a bit flip changes an
+  instruction, which changes what a program DOES, which is why mutations can be
+  lethal, neutral or parasitic. The bench's only landscape has no
+  genotype-phenotype map at all, because score is the fraction of positions
+  matching a hidden target, so every position contributes independently and
+  additively. Consequently the obvious reduction, submit an ancestor word plus
+  all of its single-bit mutants and profile the neighbourhood, measures a
+  constant that is known before the run: exactly L minus m of the L flips
+  improve the score by 1/L and m of them worsen it by 1/L, where m is the count
+  of already-matching positions, and the neutral fraction is identically zero.
+  It cannot detect lethality, neutrality, robustness or evolvability, because
+  none of those exist on an additive landscape. Separately, no reduction on this
+  bench can produce a parasite at all, because a parasite is one candidate
+  executing another candidate's code and a spec contains exactly one candidate
+  with no means of referring to a second.
+  WHAT SURVIVES SHORT OF THE METHOD, and it is worth building: the bench is the
+  correct NULL ARM for an external run. If Tierra or Avida is run under
+  R-BACKEND, the matching-fraction landscape answers the question what does
+  mutation plus selection achieve when the genotype-phenotype map is the
+  identity, which is the baseline any claim of emergent complexity has to beat.
+  That is a control for this template, not an instance of it, and it must be
+  labelled as such.
+END_ENTRY
+
+
+BEGIN_ENTRY
+TEMPLATE_ID: bayesian_utility.v0
+FIELD: Bayesian Experimental Design
+KIND: bayesian_utility_v0
+QUESTION: Before collecting any data at all, how much would a planned study of a
+  given size be expected to teach us, and is that enough to be worth doing?
+MECHANISM: Write down what you already believe as a prior distribution over the
+  unknown parameters, and write down how data would be generated from those
+  parameters as a likelihood. For a candidate design, such as a sample size or a
+  set of measurement points, imagine every dataset the design could produce,
+  weighted by how likely each is under your current beliefs. For each imagined
+  dataset compute the posterior you would end up with and measure how far it has
+  moved from the prior, in the Shannon sense. Average that movement over all
+  imagined datasets. The average is the expected information gain, which is the
+  design's utility. Under a conjugate normal model this integral is closed form;
+  otherwise it is estimated by nested Monte Carlo. No data is ever collected.
+CANDIDATE: A proposed design, here parameterised by sample size, judged by its
+  expected utility. Nothing is fitted and nothing is observed.
+WORLD: An assumed statistical model. It supplies the prior, the prior variance,
+  the likelihood and the measurement noise level. The world here is entirely
+  stipulated, which is at once the method's strength and its exposure.
+WHAT_CHANGES: Sample size and prior variance across runs.
+MEASURED: Expected information gain, a non-negative continuous quantity in nats
+  or bits, one number per design.
+INFORMATIVE_FAILURE: If utility stays under threshold across the whole grid of
+  sample sizes, the failure is diagnostic and not merely negative: it says the
+  design family cannot be rescued by spending more, because the bottleneck is
+  the model or the noise rather than the budget. What is left behind is the
+  utility-versus-sample-size curve, which can be inverted to give the smallest n
+  that would ever suffice, or to prove that no n does.
+SOURCE_CHECK: VERIFIED. Chaloner and Verdinelli, Bayesian Experimental Design: A
+  Review, Statistical Science 10(3), 1995, is the standard review and it covers
+  Shannon-information utility and the normal-model closed forms in which prior
+  variance and sample size are the natural axes. The template's axes match the
+  source's own framing.
+SHARED_MECHANISM: compute_closed_form_criterion
+ROUTES: R-EXECUTOR, R-BACKEND, R-COMPOSE
+BLOCKER: R-EXECUTOR is missing a measurement capability and nothing else: no
+  executor accepts a model description and returns a scalar, and no payload
+  schema can carry a prior and a likelihood. Note what is NOT blocking: no
+  state, no control flow, no population, no chaining, and the outcome rule
+  already fits, since expected information gain at least some threshold is
+  exactly one field, one operator, one value. This is among the cheapest
+  templates in the chunk. R-BACKEND is missing an execution-backend capability,
+  an adapter to an existing estimator library. R-COMPOSE is missing an
+  adjudication capability, but only for the robustness question, since comparing
+  utility across several priors is an aggregation across specs.
+FAITHFUL: A faithful version needs a payload that can carry a model, that is, a
+  prior with its hyperparameters, a likelihood family and a design, and an
+  executor returning expected information gain either in closed form for the
+  conjugate case or by nested Monte Carlo otherwise, with the estimator's own
+  bias reported beside the estimate. It is stateless and single-scalar, so it
+  requires no substrate change at all.
+REDUCTION: A real information-gain measurement is available today with no new
+  executor, because the bench already contains a hidden quantity and a query
+  that partially reveals it. The hidden target is exactly L bits of unknown
+  information under a uniform prior. Treat the DESIGN as the pair of query
+  length L and query count R. Fix one candidate bitstring, set repeat count to R
+  with seed_derivation sha256_index so that every repeat faces an independently
+  drawn target, and record the score distribution. Under this design the number
+  of matching positions is Binomial with parameters L and one half, so the
+  mutual information between one observed score and the hidden target is
+  computable directly from the observed distribution and can be compared against
+  its analytic value, which is the entropy of that binomial, of order one half
+  the logarithm of L, against a prior entropy of L bits. Sweep L over 8, 16, 32
+  and 64 with R equal to 200 (NEW DESIGN CHOICES).
+  WHAT IT PRESERVES: information gain as the utility; a design, namely query
+  length and query count, as the object judged; and the method's central
+  distinction between the pre-experimental expectation, computed analytically,
+  and the realised distribution, measured. It also preserves the saturation
+  phenomenon, since information per query grows only logarithmically in L while
+  the unknown grows linearly in L.
+  WHAT IT LOSES: the prior is not user-supplied but fixed by construction to
+  uniform over two-to-the-L targets; the likelihood is noiseless and therefore
+  degenerate; and there is no way to misspecify the prior, so the robustness
+  question, which is exactly the one the template already disclaims, remains
+  untouchable.
+  WHICH CLAIM: expected information gain per query for this one design family,
+  and its saturation with L. It supports a calibration of the bench's own
+  information geometry and a check that analytic and measured utility agree,
+  which is a genuine instrument test. It supports no claim about any real study
+  design.
+END_ENTRY
+
+
+BEGIN_ENTRY
+TEMPLATE_ID: comp_phil_sci.echo.v0
+FIELD: Computational Philosophy of Science
+KIND: echo_coherence_network.v0
+QUESTION: When two scientific theories compete over the same body of evidence,
+  can the choice between them be reproduced by a simple mechanical process that
+  only balances which theory explains more and contradicts less?
+MECHANISM: Every proposition, whether hypothesis or evidence, becomes a unit in
+  a network. If one hypothesis, possibly together with others, explains a
+  proposition, symmetric excitatory links are created among all of them, with
+  the weight divided among co-hypotheses so that explaining something with fewer
+  assumptions pays better. If two propositions contradict, an inhibitory link is
+  created. Evidence units also receive an excitatory link from a special
+  always-on data unit, which is how observation gets its privileged pull.
+  Activation is then updated in parallel over many cycles by a standard
+  connectionist rule until activations stop changing. Units settling positive
+  are accepted, units settling negative are rejected. The whole thing is
+  parallel constraint satisfaction with no search and no explicit inference
+  rules.
+CANDIDATE: A hypothesis unit. What varies is its final activation, and what is
+  judged is whether it is accepted, which depends on the whole network rather
+  than on the unit alone.
+WORLD: A hand-encoded corpus of propositions and explanatory relations, for
+  example Lavoisier's oxygen case against phlogiston, or Darwin against special
+  creation. The world supplies the network topology, and it is worth stating
+  plainly that the encoding is the analyst's, which is where most of the
+  method's leverage and most of its criticism both live.
+WHAT_CHANGES: The number of hypothesis units, the number of evidence units and
+  the number of update cycles allowed.
+MEASURED: A settled activation per unit, continuous and bounded between minus
+  one and one, plus whether the network settled at all within the cycle budget.
+INFORMATIVE_FAILURE: A network that does not settle, or that accepts both ends
+  of an inhibitory link, is a concrete artefact: you keep the exact link
+  structure that produced the degeneracy and it becomes a permanent hard case
+  for any future coherence model. Better still, a run whose accepted set FLIPS
+  when the cycle budget is raised proves the reported result was never a fixed
+  point, which falsifies that run's use as an adjudicator without any
+  philosophical argument at all.
+SOURCE_CHECK: VERIFIED. Thagard, Explanatory Coherence, Behavioral and Brain
+  Sciences 12 (1989), pages 435 to 467, presents the seven principles and the
+  connectionist implementation named ECHO, encoding coherence and incoherence as
+  excitatory and inhibitory links and treating hypothesis evaluation as
+  constraint satisfaction, applied to Lavoisier and to Darwin. The template's
+  three axes, hypotheses, evidence and cycles, correspond to real dimensions of
+  the model.
+SHARED_MECHANISM: relax_constraint_network
+ROUTES: R-EXECUTOR, R-BACKEND, R-COMPOSE
+BLOCKER: R-EXECUTOR is missing both a measurement capability and a control-flow
+  capability: the payload schema cannot carry a graph, and there is no
+  fixed-point iteration anywhere in the bench, the only loop being the fixed
+  step count of the random walk, which has no attractor. R-COMPOSE is missing an
+  adjudication capability, because the interesting verdict is an ORDERING over
+  hypothesis activations and the outcome rule forbids any ordering or two-field
+  test. R-BACKEND is missing an execution-backend capability, though the
+  executor here is small enough that the backend route is probably the wrong
+  one.
+FAITHFUL: A faithful version is a small executor, on the order of a hundred
+  lines, taking a proposition list and a relation list as payload, building the
+  weight matrix, running the update rule to convergence or to a declared cycle
+  cap, and returning per-unit activations plus a settled flag. It needs no
+  persistent state and no population. What it does need that the bench lacks is
+  a payload able to carry structured input, and an outcome rule able to compare
+  two activations, since accepted-over-its-rival is intrinsically a two-field
+  question.
+REDUCTION: Marginal, and it must be labelled a control rather than an instance.
+  The one component of ECHO the current bench can genuinely exercise is the
+  BUDGET-TRUNCATION HAZARD, the risk of reading a verdict off an iterative
+  process that has not converged. Use random_walk_v0 with repeat state persist
+  and seed_derivation linear_index, and run the same configuration at a small
+  cycle budget and a large one, for instance steps of 50 against steps of 5000
+  at fixed step_scale, over 5 seeds (NEW DESIGN CHOICES; 5 seeds because a
+  single seed cannot support a variance claim). Apply the same displacement
+  threshold at both budgets and record how often the two budgets disagree.
+  WHAT IT PRESERVES: only that a verdict read from an unconverged iterative
+  process is a function of the budget, and that the fossil must therefore record
+  the budget beside the verdict.
+  WHAT IT LOSES: coherence, explanation, inhibition, competition between rival
+  hypotheses, and, decisively, convergence itself, since ECHO settles to a fixed
+  point whereas a random walk is a martingale that never settles. The reduction
+  therefore yields an UPPER BOUND on truncation instability, not a model of
+  ECHO.
+  WHICH CLAIM: a methodological one only, that verdicts read at cycle budget C
+  are budget-sensitive and here is the magnitude for a maximally unstable
+  process. It supports nothing in philosophy of science. Anyone wanting the
+  actual template should write the hundred-line executor instead; this reduction
+  is honest but thin, and calling it an ECHO experiment would be a gesture.
+END_ENTRY
+
+
+BEGIN_ENTRY
+TEMPLATE_ID: d_optimal_design.v0
+FIELD: Optimal Experimental Design
+KIND: d_optimal_design_v0
+QUESTION: Given that you can only afford a fixed number of measurements, where
+  should you put them so that the model you intend to fit comes out as sharply
+  determined as possible?
+MECHANISM: Fix a model, for example a polynomial of a chosen degree, and fix the
+  region over which measurements may be taken. A design is a specific list of
+  measurement locations. Build the model matrix whose rows are the model's basis
+  functions evaluated at those locations, and form the information matrix as its
+  transpose times itself. The volume of the resulting confidence ellipsoid for
+  the fitted coefficients shrinks as the determinant of that matrix grows, so
+  the determinant, usually scaled by the number of parameters and expressed as
+  an efficiency between zero and one, is the design's score. Exchange algorithms
+  improve a design by repeatedly swapping one measurement location for another
+  and keeping the swap if the determinant rises.
+CANDIDATE: An exact design, that is, a particular set of n measurement
+  locations. It is judged by the determinant of its information matrix, or
+  equivalently by its D-efficiency relative to the theoretical continuous
+  optimum.
+WORLD: The assumed model and the design region. The world supplies the
+  regression basis and the boundaries within which measurements may be placed.
+  No data is generated and no responses are observed; the criterion depends only
+  on where you would measure, not on what you would find.
+WHAT_CHANGES: The number of design points and the polynomial degree.
+MEASURED: The determinant of the information matrix, or the D-efficiency in the
+  range zero to one; a single continuous number per design.
+INFORMATIVE_FAILURE: A design whose determinant is zero is not a null result, it
+  is a proof: the design is singular and at least one model coefficient is not
+  estimable from it at all. The failure leaves the rank deficiency and hence
+  exactly which parameter combination is inestimable and why, whether because
+  there are fewer support points than parameters or because support points
+  coincide. That is reusable and it also protects downstream work, since fitting
+  a model on a singular design produces confident nonsense.
+SOURCE_CHECK: VERIFIED. Atkinson and Donev, Optimum Experimental Designs,
+  Clarendon Press, Oxford, 1992, Oxford Statistical Science Series volume 8, is
+  the standard monograph; it contains chapters on D-optimum designs and on
+  algorithms for constructing exact D-optimum designs, and design size and
+  polynomial degree are its own working axes.
+SHARED_MECHANISM: compute_closed_form_criterion
+ROUTES: R-EXECUTOR, R-BACKEND
+BLOCKER: R-EXECUTOR is missing a measurement capability and nothing else: no
+  executor accepts a list of design points and a model degree as payload, and
+  none returns a determinant. There is no state gap, no control-flow gap and no
+  adjudication gap whatever, because d_efficiency at least 0.95 is already
+  precisely one field, one operator, one value. This is the single cheapest
+  template in the chunk, blocked by one missing measurement. R-BACKEND is
+  missing an execution-backend capability, an adapter to an existing optimal
+  design library, but the calculation is small enough that the adapter would
+  cost more than the executor.
+FAITHFUL: A faithful version is roughly thirty lines: accept a point list and a
+  degree, build the model matrix, compute the scaled determinant, return
+  d_efficiency together with the matrix rank so that the singular case is
+  reported rather than silently returning zero. Because the criterion is purely
+  deterministic and depends on no observed response, the sealed-spec model fits
+  it exactly, and repeat count above one under a constant seed would be
+  correctly flagged as degenerate by construction.
+REDUCTION: NONE for the criterion itself, with a precise reason. A design over a
+  discretised region can indeed be written as an indicator bitstring, one bit
+  per candidate support point, which is how exchange algorithms are commonly
+  coded, so the ENCODING reduces cleanly. What does not reduce is the SCORE.
+  evaluate_bitstring returns the fraction of positions matching a hash-derived
+  target, which is a fixed additive function of the bits; D-efficiency is a
+  determinant of a matrix built from the selected points, which is
+  irreducibly non-additive because it is precisely a measure of how far the
+  chosen points are from being collinear. No choice of seed or length makes an
+  additive function equal a determinant, and the seed cannot be steered because
+  the target is a hash. The nearest useful thing is not a bitstring caricature
+  but the thirty-line executor named above.
+  WHAT DOES SURVIVE, and it is worth running: the bench can supply the NULL for
+  a design search. Run a producer-side exchange search over indicator bitstrings
+  on the matching-fraction landscape at the same budget the real exchange
+  algorithm would use, and record the best-of-n distribution. That is the
+  correct null for the claim that an exchange algorithm exploited structure
+  rather than merely sampling a lot, and because the bench landscape is additive
+  and single-peaked it gives the strongest possible version of that null, in the
+  sense that any search doing worse than it is doing worse than a search on a
+  landscape with no interaction terms at all.
+  WHICH CLAIM: the surviving fragment supports only a statement about the search
+  procedure's budget efficiency, never about optimality of any design.
+END_ENTRY
+
+
+BEGIN_ENTRY
+TEMPLATE_ID: evo_epistemology.bvsr.v0
+FIELD: Evolutionary Epistemology
+KIND: cumulative_bitstring.v0
+QUESTION: Can new knowledge be produced by a process that generates its guesses
+  blindly, with no foresight about which will work, provided that the successful
+  guesses are kept and built on?
+MECHANISM: The claim being tested is that all genuine increases in knowledge
+  require three things and only those three: variation that is blind, meaning
+  uncorrelated with which variant will turn out to succeed; a selection step
+  that culls variants against a criterion the variant-generator cannot see; and
+  retention, so that surviving variants become the starting point for the next
+  round of variation rather than being discarded. Foresight, if it exists, is
+  then explained as the compressed residue of earlier rounds of the same
+  process, not as an extra ingredient. Operationally the model is run by
+  perturbing a current best guess, testing it, keeping the perturbation only if
+  the test improved, and repeating under a fixed budget; the comparison of
+  interest is against the same process with retention switched off.
+CANDIDATE: A candidate idea, encoded as a bitstring. What varies is its bits and
+  what is judged is its score against a criterion the generator has no access
+  to.
+WORLD: The selection criterion, that is, the environment that decides which
+  guesses survive. It supplies exactly one thing, a verdict on a candidate, and
+  crucially it never supplies a gradient or a hint about the next guess.
+WHAT_CHANGES: The mutation rate and the string length across runs, and, as the
+  central manipulated variable, whether retention is switched on, giving
+  cumulative selection, or off, giving independent resampling.
+MEASURED: Best score reached at a fixed evaluation budget, continuous between
+  zero and one, or equivalently the number of evaluations to first reach the
+  target.
+INFORMATIVE_FAILURE: A run that never reaches the target still leaves the
+  best-so-far curve against evaluation count, which localises exactly where
+  blind variation stalls. Sweeping the mutation rate leaves the more valuable
+  artefact: the rate above which cumulative selection stops beating independent
+  resampling, which is an error threshold and a real property of the coupled
+  landscape and operator. A failure of the whole comparison, meaning that
+  retention confers no advantage, would be a strong negative result about the
+  landscape rather than about the theory, and it would be visible immediately in
+  the curve.
+SOURCE_CHECK: PLAUSIBLE. Campbell's blind-variation-and-selective-retention
+  account of creative thought, published in Psychological Review in 1960, is
+  real and correctly attributed, and it is the standard citation in evolutionary
+  epistemology. What is not Campbell's is the bitstring operationalisation: he
+  gave a conceptual account with no algorithm, so the template's mechanism is a
+  later modelling convention laid over a correctly attributed idea. Marked
+  PLAUSIBLE for that reason rather than for any doubt about the reference.
+SHARED_MECHANISM: search_over_candidates
+ROUTES: R-COMPOSE, R-SUBSTRATE, R-EXECUTOR
+BLOCKER: R-COMPOSE is missing an adjudication capability inside the bench, since
+  best-so-far after N repeats is an aggregation across repeats and the outcome
+  rule forbids aggregation; the retention decision itself must therefore live in
+  the producer, which the brief explicitly permits. R-SUBSTRATE is missing a
+  state capability, namely output-to-input chaining, because repeat N plus one
+  cannot use repeat N's bits. R-EXECUTOR is missing a measurement and
+  control-flow capability bundled together, a cumulative_bitstring kind that
+  runs the whole inner loop and returns one scalar.
+FAITHFUL: A faithful version needs either a producer that carries the incumbent
+  between specs, which exists today as a role, or an executor performing the
+  variation-selection-retention loop internally and returning best score. It
+  also needs the retention-off arm run at matched evaluation budget, because the
+  claim is comparative and a cumulative arm without its matched blind arm
+  establishes nothing.
+REDUCTION: This one reduces essentially without loss, and it is the strongest
+  reduction in the chunk. Because bench score is the fraction of positions
+  matching a hidden target, the bench landscape IS the landscape this model has
+  always been run on. Fix one world seed so that all specs face one target, and
+  set length to 64 (NEW DESIGN CHOICE). Arm B, cumulative: run K equal to 200
+  single-repeat specs (NEW DESIGN CHOICE), where spec i plus one submits the
+  incumbent with m positions flipped if spec i improved, and the previous
+  incumbent otherwise. Arm A, blind with no retention: run K independent random
+  words of the same length against the same seed. Sweep the mutation rate m over
+  1, 2, 4, 8 and 32 of 64, and repeat the whole design over 5 world seeds.
+  Compare the best score at budget K downstream. Two bench-specific cautions:
+  each rung must be its own spec with repeat count 1, because a constant seed
+  meeting a stateless kind with state reset and count above one is flagged
+  degenerate by construction; and the blind arm must vary the BITS across specs
+  under one constant seed, never vary the seed under fixed bits, since the
+  latter changes the landscape rather than the candidate and is a different
+  experiment entirely.
+  WHAT IT PRESERVES: blindness of variation in an unusually strict form, since
+  the producer physically cannot consult the target, which is hidden by
+  construction and only ever revealed through a scalar; retention; the
+  cumulative-versus-single-step contrast; a matched evaluation budget; and
+  per-step fossilisation of every candidate and every score.
+  WHAT IT LOSES: population and recombination, since there is one lineage; the
+  multi-dimensional and partly opaque criteria of real epistemic selection; and
+  any within-spec learning.
+  WHICH CLAIM: that at a fixed evaluation budget, retaining improvements
+  strictly outperforms independent resampling on this landscape, and that the
+  advantage collapses above some mutation rate which the sweep locates. That is
+  a genuine, falsifiable instance of the model rather than a gesture. What it
+  still cannot license is the template's own overreach, that BVSR is sufficient
+  for knowledge in general, because the criterion here is a fixed target and
+  real epistemic criteria move.
+END_ENTRY
+
+
+BEGIN_ENTRY
+TEMPLATE_ID: illumination.grid.v0
+FIELD: Illumination Algorithms
+KIND: illuminate_space.v0
+QUESTION: Instead of asking what is the single best solution, can a search
+  return a whole map showing the best solution of every distinct kind, and how
+  much of that map can it actually fill?
+MECHANISM: Choose a small number of descriptive features that characterise how a
+  solution behaves rather than how well it scores, and cut that behaviour space
+  into a grid of bins. Keep an archive holding at most one solution per bin, the
+  best found so far for that bin. Repeat: draw a solution at random from the
+  archive, mutate it, evaluate it to get both a performance score and a
+  behaviour descriptor, find the bin the descriptor falls in, and place the new
+  solution there if the bin is empty or if it beats the incumbent. The output is
+  the entire archive, summarised as coverage, the fraction of bins filled, and
+  as a quality-diversity score summing performance over filled bins. Because
+  elites in one bin are the parents of solutions in other bins, an archive acts
+  as a set of stepping stones and can reach places that direct optimisation
+  cannot.
+CANDIDATE: A genome. It is judged on two channels at once, a scalar performance
+  and a behaviour descriptor vector, and the second channel decides where it is
+  allowed to compete.
+WORLD: A domain rich enough to supply both channels, classically a walking robot
+  where performance is distance travelled and behaviour is the fraction of time
+  each foot spends on the ground. The world must supply a behaviour
+  characterisation that is not simply a function of performance, or the grid
+  collapses.
+WHAT_CHANGES: Grid resolution, at 10, 20 or 50 bins per axis, and the evaluation
+  budget between 1000 and 10000. Note that these two values are present and real
+  in this template rather than lost to source markers.
+MEASURED: Coverage, the fraction of bins filled, between zero and one; the
+  quality-diversity score; and the maximum performance found. Coverage is the
+  one the outcome rule would use.
+INFORMATIVE_FAILURE: Coverage that saturates well below one is not a failed run,
+  it is the result. The empty bins localise which combinations of behaviour are
+  never realised, and the follow-up question, whether they are structurally
+  impossible or merely unfound, is exactly the distinction that matters. A run
+  at two resolutions separates the two: bins empty at coarse resolution are
+  candidates for impossibility, whereas bins empty only at fine resolution are
+  candidates for budget starvation. This maps directly onto the standing
+  Prometheus posture that a gate must be shown reachable before a null is read.
+SOURCE_CHECK: VERIFIED. Mouret and Clune, Illuminating Search Spaces by Mapping
+  Elites, 2015, introduces MAP-Elites with exactly this archive, binning,
+  coverage and quality-diversity structure, and grid resolution and evaluation
+  budget are its own axes.
+SHARED_MECHANISM: maintain_archive
+ROUTES: R-COMPOSE, R-SUBSTRATE, R-EXECUTOR
+BLOCKER: R-COMPOSE is missing an adjudication capability, because coverage is an
+  aggregation over many specs and the outcome rule permits no aggregation.
+  R-SUBSTRATE is missing a state capability, an archive persisting across specs
+  and readable by the next spec's proposer. R-EXECUTOR is missing a measurement
+  capability, namely a second output channel: evaluate_bitstring returns
+  performance only, and with no behaviour descriptor no bin can be assigned.
+FAITHFUL: A faithful version needs an executor that returns a behaviour
+  descriptor alongside a performance scalar, an archive that survives between
+  specs, and a proposer that can read the archive to choose a parent. The
+  outcome rule would then adjudicate a downstream-computed coverage. The
+  behaviour descriptor is the hard part, because it must be a property of the
+  candidate's behaviour that is not recoverable from its score.
+REDUCTION: A surprisingly faithful reduction exists, because the missing second
+  channel does not actually have to come from the executor. The producer can
+  compute a descriptor from the payload it is about to submit. Fix length 32 and
+  one world seed, and define the descriptor as the pair of population count of
+  ones, binned into 10 bins, and longest run of identical bits, binned into 10
+  bins, giving a hundred-bin archive (NEW DESIGN CHOICES). Run producer-side
+  MAP-Elites with one spec per evaluation at budgets of 1000 and 10000, drawing
+  parents from the archive, mutating, submitting, and filing the result by its
+  producer-computed descriptor. Coverage and quality-diversity are computed
+  downstream. Run a matched-budget hill climber as the control.
+  WHAT IT PRESERVES: the whole algorithm, archive, elite selection, mutation,
+  binning, coverage, quality-diversity, and the illumination-versus-optimisation
+  contrast, at both grid resolutions the template names.
+  WHAT IT LOSES: the descriptors are genotypic, computed from the candidate
+  itself, rather than behavioural, emerging from a rollout, so the reduction
+  never tests the part of MAP-Elites that is genuinely hard, namely descriptors
+  that are unpredictable functions of the genome. It also loses stepping-stone
+  dynamics in their interesting form, because the matching-fraction landscape is
+  single-peaked and additive, so every improving move is locally visible and
+  elites in one bin confer no non-obvious advantage elsewhere.
+  WHICH CLAIM: coverage as a function of budget and resolution on a known
+  landscape, plus a calibration null, that on a single-peaked additive landscape
+  illumination should buy coverage but should NOT buy fitness over a plain hill
+  climber at equal budget. That null is worth having before any illumination
+  result on a real landscape is believed. A practical caution: 10000 specs is a
+  large campaign by this bench's standards and the throughput cost should be
+  checked before the design is frozen.
+END_ENTRY
+
+
+BEGIN_ENTRY
+TEMPLATE_ID: lm_guided_proof.v0
+FIELD: Proof Search
+KIND: formal_prover.v0
+QUESTION: Can a language model trained on mathematical proofs suggest the next
+  step well enough that a machine, checking every suggestion against a strict
+  logical kernel, closes proofs it could not close by guessing?
+MECHANISM: A formal proof assistant holds a goal and a library of previously
+  proved statements, and can check whether a proposed step is legal. A
+  transformer, trained on a corpus of formal proofs, is shown an open goal and
+  samples candidate next steps. A best-first search keeps a frontier of open
+  goals, repeatedly picks the most promising one according to a learned value
+  estimate, samples proposals for it, submits each to the kernel, discards the
+  illegal ones and adds the resulting subgoals to the frontier. The search stops
+  when the goal is closed or when a fixed number of node expansions is spent.
+  Sampling temperature controls how varied the proposals are. The kernel is
+  never trusted to the model: nothing the model says is accepted without a
+  check, which is why a wrong model wastes budget but cannot produce a wrong
+  proof.
+CANDIDATE: A proof attempt, that is, the tree of tactic applications built
+  during the search. It is judged on one thing, whether the kernel accepts a
+  complete proof within the expansion budget.
+WORLD: The formal library and its kernel. The world supplies the goal, the set
+  of legal moves, and, decisively, an incorruptible verdict on every proposed
+  step.
+WHAT_CHANGES: The node expansion budget and the sampling strategy, here three
+  temperature settings.
+MEASURED: Closed or not closed, a binary fact, plus the number of expansions
+  consumed and the length of the resulting proof, both integers.
+INFORMATIVE_FAILURE: A failed proof leaves the entire search tree, which is the
+  valuable artefact. Every expanded goal is a labelled example, every rejected
+  step is a labelled negative, and together they map where the model's
+  proposals are illegal versus legal-but-useless, which are different diseases
+  needing different fixes. The frontier of goals still open at exhaustion often
+  names the missing lemma directly, and that is a concrete, actionable output of
+  a run that proved nothing.
+SOURCE_CHECK: VERIFIED. Polu and Sutskever, Generative Language Modeling for
+  Automated Theorem Proving, 2020, the GPT-f system, uses a transformer to
+  propose proof steps inside a formal environment under a best-first search with
+  an expansion budget and a sampling temperature, so the template's two axes are
+  the paper's own. The specific strategy labels in the template's choices list
+  are the miner's naming convention, not the paper's.
+SHARED_MECHANISM: search_over_tree
+ROUTES: R-BACKEND, R-SUBSTRATE, R-EXECUTOR
+BLOCKER: R-BACKEND is missing an execution-backend capability, an adapter that
+  invokes an external prover and an external model, captures structured output,
+  and fossilises it; and it additionally needs a provenance capability, because
+  at temperature above zero the run is not reproducible from seed_root alone, so
+  the fossil must record the sampled outputs rather than a recipe for
+  regenerating them. R-SUBSTRATE is missing a state capability, since best-first
+  search is output-to-input chaining over a persistent frontier. R-EXECUTOR is
+  missing a measurement capability, since no payload schema can carry a formal
+  goal or a library reference.
+FAITHFUL: A faithful version orchestrates two external services, a proof
+  assistant and a model endpoint, records every proposal and every kernel
+  verdict, and reports closed-or-not with expansions consumed. The bench's
+  sealed-spec architecture is not wrong here at all, but its determinism
+  assumption is: the fossil contract has to be able to say this observation was
+  recorded and cannot be recomputed, which is the same requirement the physical
+  laboratory template raises.
+REDUCTION: A real but strictly limited reduction exists, and its honest label is
+  harness validation. The transferable kernel is a budgeted search against a
+  verifier that cannot be fooled, and the bench has exactly that: the target is
+  hidden by construction and the score cannot be gamed. Set the goal to be
+  reaching solved, meaning score at least 1.0, at length 24 under a fixed seed,
+  let one expansion be one spec, cap the budget at 200 specs, and run two arms,
+  a model-guided proposer that sees the score history and proposes the next
+  word, and a uniform proposer that does not (NEW DESIGN CHOICES).
+  WHAT IT PRESERVES: budgeted search against a sound and independent verifier,
+  the guided-versus-unguided contrast at matched budget, per-expansion
+  fossilisation, and the exact success metric, closed within budget. It also
+  preserves the property that makes the method safe, that a wrong proposal costs
+  budget and nothing else.
+  WHAT IT LOSES: everything formal. There is no goal structure, no library, no
+  lemma reuse, no compositional subgoals, so there is nothing to be
+  mathematically competent about. Worse for the comparison, the landscape is
+  single-peaked and additive, so any proposer with access to score feedback can
+  solve it by hill climbing in at most 24 improving moves; the guided arm would
+  win for a reason that has nothing to do with proof guidance, and reporting
+  that win as evidence about theorem proving would be a claim inflation of
+  exactly the kind this bench is supposed to catch.
+  WHICH CLAIM: only that the bench can drive, fossilise and adjudicate a
+  budgeted proposer-verifier loop, and that it detects a guidance advantage
+  where one exists. It licenses nothing about mathematics or about language
+  models. The honest route for this template is R-BACKEND, which is cheap, and
+  the reduction should be run only as a harness test before that backend is
+  wired.
+END_ENTRY
+
+
+BEGIN_ENTRY
+TEMPLATE_ID: mt.relation.eval.v0
+FIELD: Metamorphic Testing
+KIND: evaluate_metamorphic_v0
+QUESTION: How do you test a program when nobody knows what the right answer is,
+  and you therefore have nothing to compare its output against?
+MECHANISM: Give up on knowing the correct output and instead state a relation
+  that must hold between the outputs of two related runs. Pick an input, run the
+  program, then transform the input in a way whose effect on the output is known
+  by construction, run the program again, and check the relation. Classic
+  examples are that the sine of an angle equals the sine of its supplement, or
+  that adding a constant to every element of a dataset must shift the reported
+  mean by exactly that constant, or that shuffling the input rows of a
+  classifier's training set should leave a deterministic classifier's output
+  unchanged. The relation is asserted between two executions; neither execution
+  is ever independently checked. When the relation is violated, the pair of
+  inputs is a failing witness with no ambiguity about whether a bug exists.
+CANDIDATE: The pair of inputs, an original and its transform. What is being
+  judged is not the pair but the PROGRAM, through its consistency across the
+  pair. This inversion is the method's distinguishing feature.
+WORLD: The program under test together with the chosen relation. The world
+  supplies the transformation and the semantics that make the relation
+  necessary; it supplies no ground truth at all, which is the whole point.
+WHAT_CHANGES: The base input, here one of two eight-bit words, and the mutation
+  mask deciding which single position is flipped.
+MEASURED: Whether the relation held, a binary fact, and usually also the
+  magnitude of the violation, which is continuous and is what tells you whether
+  you have found a rounding artefact or a real defect.
+INFORMATIVE_FAILURE: This template has the strongest informative-failure story
+  in the chunk, because the failure IS the product. A violated relation hands
+  you a minimal failing witness, a concrete input pair, that can be pinned as a
+  permanent regression test and that localises the defect without any oracle
+  ever being constructed. A run in which the relation always holds leaves much
+  less, and, per the standing posture that an invariance null is one-sided, it
+  proves only equivariance under that transformation and never correctness.
+SOURCE_CHECK: VERIFIED. Chen, T. Y., Cheung, S. C. and Yiu, S. M., Metamorphic
+  Testing: A New Approach for Generating Next Test Cases, Technical Report
+  HKUST-CS98-01, Department of Computer Science, Hong Kong University of Science
+  and Technology, 1998. The attribution and the oracle-problem framing are
+  correct; note only that the source is a technical report rather than a
+  conference paper, which is how it is usually cited.
+SHARED_MECHANISM: compare_paired_outputs
+ROUTES: R-COMPOSE, R-EXECUTOR
+BLOCKER: R-COMPOSE is missing an adjudication capability and only that. Both
+  halves of the experiment run today on evaluate_bitstring; what cannot happen
+  inside the bench is the comparison, because the relation is a function of two
+  result fields drawn from two different specs while the outcome rule is one
+  field, one operator, one value. R-EXECUTOR is missing a measurement
+  capability, in the narrow sense that an evaluate_metamorphic kind performing
+  both evaluations internally and returning a single scalar relation_violation
+  would make the existing one-scalar outcome rule legal again; that is a small
+  wrapper rather than new machinery.
+FAITHFUL: A faithful version needs either a two-run executor returning a
+  violation magnitude, or a downstream comparator over paired fossils, plus a
+  registry of pre-registered relations so that the relation is fixed before the
+  data is seen. It needs no state, no population and no new world. The
+  discipline that matters is not technical: the relation must be committed
+  before the runs, or the method degenerates into hunting for whatever happens
+  to hold.
+REDUCTION: This template barely needs a reduction, because the method can be
+  applied AS ITSELF, today, against a real program: the bench's own
+  evaluate_bitstring. That makes it the closest thing in the chunk to R-NOW.
+  Since the target is the hidden word and the score is the fraction of matching
+  positions, the following relations are necessary and can be pre-registered
+  before any run. First, SINGLE FLIP: for two specs with the same seed and the
+  same length whose bits differ in exactly one position, the absolute score
+  difference must equal exactly 1/length. Second, COMPLEMENT: complementing
+  every position must give score_B equal to 1 minus score_A. Third,
+  DETERMINISM: identical bits, length and derived seed must give bit-identical
+  scores across specs. Fourth, and this one is a genuine defect hunt rather than
+  a formality, LENGTH MISMATCH: the kind contract declares params exactly bits
+  and length and does not require the two to agree, while the engine's scorer
+  counts matches over the shorter of the candidate and the target but divides by
+  the target length. Two relations follow that a correct implementation should
+  satisfy and that a careless one will not: appending a position to bits can
+  never decrease the score, and a candidate shorter than length can never reach
+  solved, since its score is capped at its own length over the target length.
+  Run these over 64 sampled pairs at lengths 8, 16 and 24, over 5 seeds, and
+  compare downstream (NEW DESIGN CHOICES).
+  WHAT IT PRESERVES: the entire method, oracle-free testing, a relation over an
+  input pair, a minimal failing witness, and a real program under test. This is
+  an instance, not a caricature.
+  WHAT IT LOSES: only generality. The relations available are bit-level rather
+  than semantic, and metamorphic testing draws most of its power from rich
+  transformations of structured inputs, which this program has none of.
+  WHICH CLAIM: that evaluate_bitstring satisfies, or does not satisfy, the four
+  pre-registered relations, and specifically whether the unconstrained bits and
+  length pairing is a live contract gap. That is a useful and immediately
+  actionable quality result about the bench's own instrument. Consistent with
+  the one-sided-null posture, passing licenses only equivariance under these
+  transformations; failing is a proof of defect.
+END_ENTRY
+
+
+BEGIN_ENTRY
+TEMPLATE_ID: pbt_hyperparam_schedule.v0
+FIELD: Population-Based Training
+KIND: pbt_optimize_v0
+QUESTION: Instead of choosing one learning rate and living with it, can a group
+  of models being trained side by side discover, on the fly, a whole SCHEDULE of
+  settings that changes as training proceeds?
+MECHANISM: Train a population of models in parallel, each with its own
+  hyperparameters. Every fixed number of steps, evaluate all of them. In the
+  exploit step, a poorly performing worker abandons its own run and copies both
+  the weights and the hyperparameters of a well-performing worker. In the
+  explore step it then perturbs the copied hyperparameters. Training resumes
+  from the copied weights, not from scratch, which is what makes the method
+  cheap and what makes its product a schedule: following one surviving worker's
+  ancestry backwards yields a sequence of hyperparameter values indexed by
+  training step, and that sequence typically beats any constant setting. Total
+  compute is the same as running the population independently.
+CANDIDATE: A worker, that is, the pair of a weight vector and a hyperparameter
+  vector. It is judged by its validation performance at each checkpoint, and a
+  poor judgement causes it to be overwritten rather than merely down-weighted.
+WORLD: A training task with a dataset, a loss and a validation metric, plus a
+  compute budget shared across the whole population. The world must be
+  expensive enough for the copy-weights trick to matter, which is why the method
+  exists at all.
+WHAT_CHANGES: Population size, the interval between exploit and explore rounds,
+  and the perturbation applied to hyperparameters; within a run, the
+  hyperparameter values themselves change over time, which is the object of
+  interest.
+MEASURED: Best validation metric against step or wall-clock budget, continuous,
+  and the discovered schedule, which is a time series rather than a number.
+INFORMATIVE_FAILURE: If the population fails to beat random search at matched
+  total compute, the fossilised lineage tree says why, and this is a genuinely
+  useful residue: counting distinct surviving ancestors over time shows whether
+  the exploit step destroyed diversity, which is the standard failure mode. A
+  collapse to a single ancestor early in training is a concrete, dated event
+  that identifies the exploit threshold as the thing to change, rather than
+  leaving you with an undifferentiated negative result.
+SOURCE_CHECK: VERIFIED. Jaderberg et al., Population Based Training of Neural
+  Networks, 2017, introduces exactly this exploit-and-explore population scheme
+  producing hyperparameter schedules, and compares against random search and
+  hand tuning; population size and the exploit-explore interval are the paper's
+  own axes.
+SHARED_MECHANISM: evolve_population
+ROUTES: R-SUBSTRATE, R-WORLD, R-BACKEND, R-COMPOSE
+BLOCKER: R-SUBSTRATE is missing a state capability, and specifically a stronger
+  one than persistence: it needs inter-run state COPY, since exploit means one
+  worker adopting another worker's carried state, and nothing in the bench lets
+  one execution read another's. R-WORLD is missing a world capability, since one
+  spec has one integer world and no population. R-BACKEND is missing an
+  execution-backend capability, an adapter to a real trainer. R-COMPOSE is
+  missing an adjudication capability, since faster than random search compares
+  two campaigns.
+  A precise secondary blocker is worth recording, because it is the reason the
+  reduction below is limited. The only stateful kind is random_walk_v0, whose
+  payload is exactly steps and step_scale. Within one spec, step_scale is fixed
+  for every repeat, so no schedule can be expressed inside a spec. Across specs,
+  start_position is a RETURNED field and not a payload parameter, so a walk
+  cannot be resumed from where another walk ended. A hyperparameter schedule is
+  therefore inexpressible in both directions at once, and that is a control-flow
+  and state gap rather than a measurement gap.
+FAITHFUL: A faithful version needs a population inside one world, per-worker
+  persistent state, a copy operation between workers, periodic evaluation, and a
+  fossil that records the lineage tree so that the discovered schedule can be
+  read off it. The verdict can still be a single scalar computed downstream, so
+  the outcome rule is not the obstacle; the substrate is.
+REDUCTION: A partial reduction exists, and it is honest only if described as
+  testing PBT's PREMISE rather than PBT. The premise is that no single constant
+  hyperparameter value is best at every stage of training; if that is false there
+  is nothing for a schedule to exploit. That premise is testable now. Run a grid
+  of random_walk_v0 specs over step budgets of 50, 200, 1000 and 5000 crossed
+  with step_scale values of 0.01, 0.1, 1.0 and 10.0, with seed_derivation
+  linear_index and repeat count 20, and for each step budget find the step_scale
+  that most often crosses a fixed absolute-displacement threshold (NEW DESIGN
+  CHOICES). If the winning step_scale moves as the budget grows, the precondition
+  for a schedule holds in this world; if it does not, a schedule has nothing to
+  find here.
+  One thing must be pinned before freezing, per the standing rule that a
+  preregistered threshold needs its attainable range computed first: whether a
+  persisted walk under a constant seed redraws the same increments each repeat.
+  The design above sidesteps it by using linear_index, but the ambiguity should
+  be resolved in the spec rather than left to the reader.
+  WHAT IT PRESERVES: the question of whether a time-varying setting can beat the
+  best constant one; budget accounting; and the discipline of comparing against
+  the best constant baseline rather than against a bad one.
+  WHAT IT LOSES: the population, the exploit-and-copy operation, the weights,
+  and the schedule itself, which is to say the entire PBT mechanism. It tests
+  whether PBT would have anything to do, not whether PBT does it.
+  WHICH CLAIM: only that the best constant step_scale for crossing displacement
+  threshold D depends on the step budget. That is a precondition result, and
+  labelling it a PBT result would be exactly the sort of claim inflation that
+  earns a retraction.
+END_ENTRY
+
+
+BEGIN_ENTRY
+TEMPLATE_ID: sbse.hillclimb.search.v0
+FIELD: Search-Based Software Engineering
+KIND: sbse_hill_climb_v0
+QUESTION: If you can write down what makes one version of a piece of software
+  better than another as a single number, can a dumb local search find a good
+  version for you?
+MECHANISM: Reformulate a software engineering problem as optimisation. Encode
+  the artefact as a string, for example one bit per test case included in a
+  suite, or per module assigned to a cluster, or per requirement selected for a
+  release. Define a fitness function from measurable properties such as coverage
+  achieved, coupling reduced or cost incurred. Start from some candidate.
+  Repeatedly evaluate the neighbours reachable by a single small change,
+  typically all single-position flips; move to the best improving neighbour;
+  stop when no neighbour improves, which certifies a local optimum; restart from
+  a new starting point and repeat until the evaluation budget is exhausted. The
+  method's real content is that the fitness function encodes a genuine
+  engineering objective, and the search is deliberately unsophisticated.
+CANDIDATE: A bitstring encoding of a software artefact, judged by the fitness
+  function. What varies is the bits, and, across restarts, the starting point.
+WORLD: The program or requirement set being optimised, together with whatever
+  machinery evaluates fitness, which is often an actual test run. The world
+  supplies the evaluation and, importantly, its cost, since fitness evaluations
+  in this field are usually expensive.
+WHAT_CHANGES: The initial candidate, here all-zeros or all-ones, and the maximum
+  number of evaluations.
+MEASURED: Best fitness found, continuous, and the evaluations consumed, an
+  integer; across restarts, also the number of distinct local optima certified.
+INFORMATIVE_FAILURE: A hill climb that stalls is not a wasted run: it leaves a
+  certified local optimum together with the fitness of every neighbour that
+  failed to beat it, which is a proof rather than a guess. Accumulated over
+  restarts, the set of certified local optima and their basins is a direct
+  measurement of the landscape's ruggedness, and that measurement is what
+  decides whether a metaheuristic was ever the right tool. A field that reports
+  only best-found values throws this away.
+SOURCE_CHECK: PLAUSIBLE. Harman and Jones, Search-Based Software Engineering,
+  Information and Software Technology 43, 2001, is the correct and standard
+  founding reference for the field, and the bitstring-plus-fitness-function
+  framing is genuinely its own. What that paper is not is a specification of the
+  particular hill-climbing protocol in this template: it is an agenda and survey
+  paper, so the attribution is to the field rather than to a named procedure.
+  Marked PLAUSIBLE on that distinction, not on any doubt about the citation. The
+  citation could not be re-checked online because the session's search budget
+  was exhausted.
+SHARED_MECHANISM: search_over_candidates
+ROUTES: R-COMPOSE, R-REPAIR, R-SUBSTRATE, R-EXECUTOR
+BLOCKER: R-COMPOSE is missing a state capability in the bench and an
+  adjudication capability at the verdict: the accept-or-reject move is
+  output-to-input chaining that must live in the producer, and best-over-the-run
+  is an aggregation across specs that the one-scalar outcome rule forbids.
+  R-REPAIR is listed because the template is also damaged, with max_evaluations
+  null and no length declared while initial_candidate_bits is eight characters
+  wide; choosing those is necessary but not sufficient, since the named kind
+  still does not exist. R-SUBSTRATE is missing a state capability, since repeat
+  N plus one cannot take repeat N's bits. R-EXECUTOR is missing measurement and
+  control flow bundled, an sbse_hill_climb kind that runs the loop and returns
+  best_score.
+FAITHFUL: A faithful version needs a fitness function computed from a real
+  artefact, which means an external backend running tests or static analysis; a
+  producer or executor carrying the incumbent between evaluations; and a fossil
+  that records every evaluation, not merely the best, because the discarded
+  evaluations are where the ruggedness measurement lives.
+REDUCTION: A reduction exists and runs today, but its honest verdict is that it
+  is TOO EASY, and saying so is the useful finding. Fix one world seed and set
+  length to 32 (NEW DESIGN CHOICE). Take an incumbent, submit all 32
+  single-position flips as 32 single-repeat specs, move to the best improving
+  neighbour or else certify a local optimum, and repeat from both starting
+  points the template prescribes, all-zeros and all-ones, plus 8 random restarts
+  at a budget of 640 evaluations each (NEW DESIGN CHOICES).
+  WHAT IT PRESERVES: exactly steepest-ascent hill climbing, including full
+  neighbourhood enumeration, the local-optimum certificate, restarts, the
+  evaluation budget, and the two prescribed starting points.
+  WHAT IT LOSES: the software artefact entirely, and with it the only thing that
+  made the fitness function interesting. Worse, and this is the point: because
+  the bench score is the fraction of positions matching a hidden target, the
+  landscape is single-peaked and additive, so it has NO local optima other than
+  the global one and steepest ascent reaches the optimum in at most 32 improving
+  moves from any start. The restart machinery has nothing to find, the ruggedness
+  measurement returns a constant, and the informative failure described above
+  cannot occur.
+  WHICH CLAIM: only that the producer-side hill-climb harness is correct, that
+  is, it reaches the known optimum within the theoretical bound; a run that
+  takes longer indicates a broken neighbourhood enumerator. That is worth having
+  as a harness test and nothing more. To get real search-based content the bench
+  needs a rugged landscape, which means either an NK-landscape or similar
+  executor under R-EXECUTOR, or a real artefact under R-BACKEND. This is also a
+  chunk-wide warning: several templates here, including ada_thin_film,
+  illumination.grid and lm_guided_proof, would all appear to succeed on this
+  landscape for the same reason, and success on a single-peaked additive
+  landscape is a shared confound that must be disclosed wherever it applies.
+END_ENTRY
+
+
+BEGIN_ENTRY
+TEMPLATE_ID: universal_darwinism.weasel.v0
+FIELD: Universal Darwinism
+KIND: cumulative_bitstring.v0
+QUESTION: Is the difference between something being astronomically improbable
+  and being easy just the difference between guessing it all at once and
+  building it up in small steps that are each kept?
+MECHANISM: Fix a target string. Start from a random string of the same length.
+  Each generation, make a number of copies of the current string, mutate each
+  copy at some per-position rate, score every copy by how many positions match
+  the target, and keep the single best copy as the parent of the next
+  generation. Repeat. The comparison the demonstration exists to make is against
+  single-step selection, where the whole string is redrawn at random each time
+  and nothing is retained: single-step selection needs on the order of the size
+  of the whole space, while cumulative selection needs on the order of tens of
+  generations. The gap between the two numbers, not the absolute time, is the
+  entire result.
+CANDIDATE: A string. What varies is its positions; it is judged by the count of
+  positions matching the target.
+WORLD: The target string plus the scoring rule. The world supplies one number
+  per candidate and nothing else, in particular no indication of which positions
+  are the matching ones.
+WHAT_CHANGES: String length and per-position mutation rate across runs, and, as
+  the manipulated variable of the demonstration, whether the best copy is
+  retained between generations.
+MEASURED: Generations to reach the target, an integer, or best match fraction at
+  a fixed budget, continuous between zero and one.
+INFORMATIVE_FAILURE: If cumulative selection also fails to reach the target, the
+  run leaves the mutation rate at which it began failing, which is an error
+  threshold: too high a rate destroys retained matches faster than selection
+  restores them. That number is a real property of the length-and-rate pair and
+  is reusable. The failure of the single-step arm, by contrast, leaves almost
+  nothing beyond confirming a combinatorial count that could have been computed
+  on paper, and it is worth saying that plainly, since half of this experiment
+  has a genuinely uninformative failure mode.
+SOURCE_CHECK: VERIFIED. The weasel program appears in Richard Dawkins, The Blind
+  Watchmaker, 1986, in the chapter contrasting single-step with cumulative
+  selection, with the target phrase drawn from Hamlet, exactly the mechanism
+  described. Not re-checked online because the session's search budget was
+  exhausted; the attribution is unambiguous and universally cited.
+SHARED_MECHANISM: search_over_candidates
+ROUTES: R-COMPOSE, R-SUBSTRATE, R-EXECUTOR
+BLOCKER: R-COMPOSE is missing a state capability in the bench, since retention
+  between generations is output-to-input chaining that must be carried by the
+  producer, and an adjudication capability at the verdict, since generations to
+  target is an aggregation over specs. R-SUBSTRATE is missing a state
+  capability, output-to-input chaining inside one spec. R-EXECUTOR is missing
+  measurement and control flow bundled, a cumulative_bitstring kind that runs
+  generations internally and returns generations_to_target.
+FAITHFUL: A faithful version needs either a producer carrying the incumbent
+  between specs, which exists today, or an executor running the generational
+  loop and returning one scalar. It also needs both arms at matched evaluation
+  budget, since the result is a ratio between two arms and a cumulative arm
+  reported alone demonstrates nothing.
+REDUCTION: This is the most faithfully reducible template in the chunk, and the
+  reason is worth stating precisely: the bench's landscape IS the weasel
+  landscape. The engine scores a candidate by the fraction of positions matching
+  a fixed hidden target, which is exactly the weasel scoring rule, so no
+  encoding, surrogate or analogy is required at all. Fix one world seed, set
+  length to 64 and run two arms at a matched budget of 200 evaluations (NEW
+  DESIGN CHOICES). Cumulative arm: a chain of single-repeat specs where each
+  spec submits the incumbent with a per-position mutation applied, and the
+  producer retains the new word only if the score improved. Single-step arm: 200
+  independent random words against the same seed. Sweep the per-position
+  mutation rate over 1/64, 2/64, 4/64 and 8/64 and repeat over 5 seeds. Compare
+  best score at budget, and generations to solved where reached.
+  A bench-specific caution applies: each rung must be its own spec with repeat
+  count 1, because a constant seed meeting a stateless kind with state reset and
+  count above one is flagged degenerate by construction, and the single-step arm
+  must vary the BITS under one fixed seed rather than varying the seed, since
+  varying the seed changes the target and would silently convert a search
+  experiment into a landscape-sampling experiment.
+  WHAT IT PRESERVES: the mechanism in full, cumulative retention against
+  single-step resampling, matched budget, the mutation-rate sweep, and the exact
+  scoring rule.
+  WHAT IT LOSES: the population within a generation, since only one candidate
+  per spec exists, so the reduction runs a one-plus-one variant rather than a
+  one-plus-N variant; that changes the constant in front of the generation count
+  but not the qualitative gap the demonstration exists to show. It also loses
+  nothing else of consequence.
+  WHICH CLAIM: that cumulative selection reaches the target in a number of
+  evaluations that is small in the string length while single-step selection
+  does not, on a real hidden target. Notably the reduction is STRICTER than the
+  original in one respect: Dawkins' experimenter knows the target, which is the
+  standard criticism of the demonstration, whereas here the target is hidden by
+  construction and the producer can only ever see a scalar. That removes the
+  smuggled-answer objection rather than inheriting it, which makes this reduction
+  worth running on its own merits and not only as an illustration.
+END_ENTRY

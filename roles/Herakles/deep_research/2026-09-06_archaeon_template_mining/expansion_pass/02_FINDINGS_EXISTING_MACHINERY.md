@@ -1,4 +1,4 @@
-# Five defects in existing machinery, found by feeding it proposed templates
+# Six findings about existing machinery, found by feeding it proposed templates
 
 **Date:** 2026-09-06. **Seat:** Herakles. **Branch:** `vivarium/v0-2026-09-05`
 at `7a91054ad`. Reviewed source pinned in `01_STARTING_POINT.md`.
@@ -257,6 +257,63 @@ The four that still fail at draw are the walk templates whose `steps` and
 `step_scale` were destroyed. Nothing in the repository declares a range for
 either, so there is no bench-native value to recover and they stay null. That
 is the correct outcome, not an omission.
+
+---
+
+## F-6. `bits` is not a discriminating axis, and two templates rest on it
+
+**Lane: a design rule for the registry, not a code defect. Predicted
+analytically in `01_STARTING_POINT.md` section 4; surfaced independently by an
+analyst on chunk 4; confirmed here by execution.**
+
+The hidden target is a hash, so it is uniform and independent of the candidate.
+Every position matches with probability one half regardless of what was
+submitted. So the score distribution for a FIXED bitstring across seeds is the
+same distribution for every bitstring. The candidate is exchangeable.
+
+Measured, length 16, 4000 hash-derived targets per pattern:
+
+    pattern           mean     stdev    P(score >= 0.75)
+    --------------   ------   -------   ----------------
+    blocky           0.5036   0.1248             0.0418
+    alternating      0.5015   0.1277             0.0437
+    all ones         0.5004   0.1242             0.0365
+    all zeros        0.4996   0.1242             0.0352
+    arbitrary        0.4999   0.1248             0.0343
+
+    analytic prediction: mean 0.5, stdev sqrt(1/(4L)) = 0.1250
+
+Agreement is exact to sampling error, and the differences between patterns are
+noise.
+
+**The consequence is a rule.** A template whose arms differ ONLY in the
+bitstring is comparing exchangeable arms. It cannot separate them at any
+threshold, at any sample size, for any choice of literals. This is knowable
+before anything runs, which makes it the `feedback_gate_must_be_shown_reachable`
+case in its purest form: the contrast has no attainable difference.
+
+Two templates in the inbox are built exactly this way:
+
+    template                    field                   literal candidates
+    ------------------------    --------------------    ------------------
+    algorithm_discovery.v0      Algorithm Discovery                      2
+    discovery_informatics.v0    Discovery Informatics                    3
+
+Both should be marked degenerate rather than admitted. Neither is salvageable
+by choosing better literals, because the defect is in the axis, not the values.
+
+**The same fact is a gift, used the other way round.** Because the distribution
+is known in closed form and is independent of the candidate, a bits-varying
+template is a FREE NEGATIVE CONTROL for the whole bitstring family: it must
+show no effect, and any effect it does show is an instrument defect. That is
+worth admitting deliberately, labelled as a null, and it costs nothing to run.
+
+**What IS discriminating**, and this is where a bitstring template should put
+its contrast: `length`, which changes the variance as 1/(4L) and changes the
+landscape entirely; the seed, which changes the target; `seed_derivation`,
+which decides whether repeats share a target; and the RELATIONSHIP between a
+candidate and a target, which the bench cannot currently express at all and is
+the missing relatedness axis recorded in `03_LEADING_DESIGN_VERSION_SPACE.md`.
 
 ---
 

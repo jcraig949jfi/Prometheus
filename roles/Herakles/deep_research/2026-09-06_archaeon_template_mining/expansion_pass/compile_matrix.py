@@ -82,8 +82,12 @@ def main():
     # ---- the counts the directive asks for, kept separate
     mech = Counter(e.get("SHARED_MECHANISM", "?").strip().lower()
                    for e in entries)
-    src = Counter(e.get("SOURCE_CHECK", "?").split()[0].strip().upper()
-                  if e.get("SOURCE_CHECK") else "?" for e in entries)
+    def _grade(e):
+        raw = (e.get("SOURCE_CHECK") or "").split()
+        if not raw:
+            return "?"
+        return re.sub("[^A-Za-z]", "", raw[0]).upper() or "?"
+    src = Counter(_grade(e) for e in entries)
     routes = Counter()
     first_route = Counter()
     for e in entries:
