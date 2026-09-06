@@ -1,0 +1,52 @@
+{
+  "_ingest": {
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "design_choices": [
+      "world.seed_root added, range copied verbatim from the ADMITTED frozen baseline bitstring.uniform.v0. The mined template declared no world because the mining deck wrongly told it to declare payload parameters only."
+    ],
+    "design_choices_note": "Values introduced by Herakles on 2026-09-06 during the registry-shape migration. These are NEW DESIGN CHOICES, not recovered data, and each names its justification.",
+    "flags": [
+      "EXPANSION: kind 'bayesian_utility_v0' is not implemented by Vivarium; this template is an expansion request by definition",
+      "REPAIRED: source markers were removed from this block to make it parse. Structure is the report's; any value that a marker had overwritten is null, never guessed.",
+      "INCOMPLETE: axes ['prior_variance', 'sample_size'] lost their values to source markers in the returned report. The axis names are real; the numbers are NOT reconstructed and must be set by the operator before admission."
+    ],
+    "migrated_from": "flat param_space (ROADMAP illustrative schema)",
+    "migration_notes": [
+      "payload.sample_size left NULL: its value was destroyed in the source report and no bench-native value exists to justify a fill",
+      "payload.prior_variance left NULL: its value was destroyed in the source report and no bench-native value exists to justify a fill"
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act.",
+    "source_report": "07_experimental_design_and_falsification.md"
+  },
+  "admitted_at": null,
+  "admitted_by": null,
+  "kind": "bayesian_utility_v0",
+  "origin": {
+    "field": "Bayesian Experimental Design",
+    "proposed_by": "Herakles",
+    "reference": "Bayesian Experimental Design: A Review (Chaloner and Verdinelli 1995)",
+    "source": "LITERATURE"
+  },
+  "param_space": {
+    "payload": {
+      "prior_variance": {
+        "choices": null
+      },
+      "sample_size": {
+        "int_range": null
+      }
+    },
+    "world": {
+      "seed_root": {
+        "int_range": [
+          100000,
+          999999
+        ]
+      }
+    }
+  },
+  "rationale": "This experiment evaluates the expected Shannon information gain of a specific sample size under a defined prior variance. Bayesian Experimental Design would run this to determine if a proposed study provides sufficient expected utility to justify experimental costs before actual data collection. A SURVIVED verdict would indicate that the expected utility exceeds a minimal acceptable threshold for this single prior configuration. It would NOT license the inference that the design is robust to prior misspecification, nor would it license any claim about the empirical variance of the posterior distribution once real data is observed, since this measures only the pre-experimental expectation.",
+  "registry_version": "archaeon.template.v0",
+  "status": "PROPOSED",
+  "template_id": "bayesian_utility.v0"
+}

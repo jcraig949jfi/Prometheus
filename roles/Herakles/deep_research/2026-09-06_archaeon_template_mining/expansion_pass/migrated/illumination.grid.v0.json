@@ -1,0 +1,53 @@
+{
+  "_ingest": {
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "design_choices": [
+      "world.seed_root added, range copied verbatim from the ADMITTED frozen baseline bitstring.uniform.v0. The mined template declared no world because the mining deck wrongly told it to declare payload parameters only."
+    ],
+    "design_choices_note": "Values introduced by Herakles on 2026-09-06 during the registry-shape migration. These are NEW DESIGN CHOICES, not recovered data, and each names its justification.",
+    "flags": [
+      "EXPANSION: kind 'illuminate_space.v0' is not implemented by Vivarium; this template is an expansion request by definition"
+    ],
+    "migrated_from": "flat param_space (ROADMAP illustrative schema)",
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act.",
+    "source_report": "02_diversity_and_illumination.md"
+  },
+  "admitted_at": null,
+  "admitted_by": null,
+  "kind": "illuminate_space.v0",
+  "origin": {
+    "field": "Illumination Algorithms",
+    "proposed_by": "Herakles",
+    "reference": "Mouret and Clune 2015 Illuminating search spaces by mapping elites",
+    "source": "LITERATURE"
+  },
+  "param_space": {
+    "payload": {
+      "evaluations": {
+        "int_range": [
+          1000,
+          10000
+        ]
+      },
+      "grid_resolution": {
+        "choices": [
+          10,
+          20,
+          50
+        ]
+      }
+    },
+    "world": {
+      "seed_root": {
+        "int_range": [
+          100000,
+          999999
+        ]
+      }
+    }
+  },
+  "rationale": "Illumination algorithms return a holistic map of high-performing solutions rather than a single optimum. This template tests the ability to fill a discretized behavioral grid of a given resolution. A SURVIVED verdict showing the number of filled bins exceeds a target indicates the landscape is successfully illuminated, but would NOT license the claim that the highest performing individual in the grid is the global optimum, as illumination distributes evaluation budget across niches.",
+  "registry_version": "archaeon.template.v0",
+  "status": "PROPOSED",
+  "template_id": "illumination.grid.v0"
+}

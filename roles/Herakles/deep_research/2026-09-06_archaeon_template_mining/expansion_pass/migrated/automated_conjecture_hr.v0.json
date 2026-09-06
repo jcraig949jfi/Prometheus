@@ -1,0 +1,58 @@
+{
+  "_ingest": {
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "design_choices": [
+      "world.seed_root added, range copied verbatim from the ADMITTED frozen baseline bitstring.uniform.v0. The mined template declared no world because the mining deck wrongly told it to declare payload parameters only."
+    ],
+    "design_choices_note": "Values introduced by Herakles on 2026-09-06 during the registry-shape migration. These are NEW DESIGN CHOICES, not recovered data, and each names its justification.",
+    "flags": [
+      "EXPANSION: kind 'automated_conjecture_hr_v0' is not implemented by Vivarium; this template is an expansion request by definition",
+      "REPAIRED: source markers were removed from this block to make it parse. Structure is the report's; any value that a marker had overwritten is null, never guessed.",
+      "INCOMPLETE: axes ['initial_axioms', 'search_steps'] lost their values to source markers in the returned report. The axis names are real; the numbers are NOT reconstructed and must be set by the operator before admission."
+    ],
+    "migrated_from": "flat param_space (ROADMAP illustrative schema)",
+    "migration_notes": [
+      "payload.initial_axioms left NULL: its value was destroyed in the source report and no bench-native value exists to justify a fill",
+      "payload.search_steps left NULL: its value was destroyed in the source report and no bench-native value exists to justify a fill"
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act.",
+    "source_report": "11_reasoning_modes.md"
+  },
+  "admitted_at": null,
+  "admitted_by": null,
+  "kind": "automated_conjecture_hr_v0",
+  "origin": {
+    "field": "Automated Conjecture Generation",
+    "proposed_by": "Herakles",
+    "reference": "Colton 2002 Automated Theory Formation in Pure Mathematics",
+    "source": "LITERATURE"
+  },
+  "param_space": {
+    "payload": {
+      "initial_axioms": {
+        "int_range": null
+      },
+      "production_rules": {
+        "choices": [
+          "all",
+          "restrictive"
+        ]
+      },
+      "search_steps": {
+        "int_range": null
+      }
+    },
+    "world": {
+      "seed_root": {
+        "int_range": [
+          100000,
+          999999
+        ]
+      }
+    }
+  },
+  "rationale": "This experiment models the HR system's theory formation loop, where novel mathematical concepts are invented and empirically evaluated to form conjectures. It measures the raw yield of non-trivial conjectures generated within a fixed number of search steps. A SURVIVED verdict based on generating a threshold number of conjectures would license the claim that the production rules are sufficiently productive over the given axioms. However, it would NOT license the inference that any of these conjectures are mathematically true, nor that they are interesting to a human, because the bench lacks an integrated automated theorem prover to verify the statements, and the scalar outcome rule cannot express the logical structure or novelty of the individual conjectures.",
+  "registry_version": "archaeon.template.v0",
+  "status": "PROPOSED",
+  "template_id": "automated_conjecture_hr.v0"
+}

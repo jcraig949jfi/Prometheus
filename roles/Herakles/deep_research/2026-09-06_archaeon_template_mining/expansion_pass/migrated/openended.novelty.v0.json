@@ -1,0 +1,58 @@
+{
+  "_ingest": {
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "design_choices": [
+      "world.seed_root added, range copied verbatim from the ADMITTED frozen baseline bitstring.uniform.v0. The mined template declared no world because the mining deck wrongly told it to declare payload parameters only."
+    ],
+    "design_choices_note": "Values introduced by Herakles on 2026-09-06 during the registry-shape migration. These are NEW DESIGN CHOICES, not recovered data, and each names its justification.",
+    "flags": [
+      "EXPANSION: kind 'novelty_maze_v0' is not implemented by Vivarium; this template is an expansion request by definition"
+    ],
+    "migrated_from": "flat param_space (ROADMAP illustrative schema)",
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act.",
+    "source_report": "01_evolutionary_substrates.md"
+  },
+  "admitted_at": null,
+  "admitted_by": null,
+  "kind": "novelty_maze_v0",
+  "origin": {
+    "field": "Open-Ended Evolution",
+    "proposed_by": "Herakles",
+    "reference": "Lehman and Stanley 2011, Abandoning Objectives: Evolution Through the Search for Novelty Alone",
+    "source": "LITERATURE"
+  },
+  "param_space": {
+    "payload": {
+      "eval_steps": {
+        "int_range": [
+          100,
+          400
+        ]
+      },
+      "maze_config": {
+        "choices": [
+          "hard_maze",
+          "medium_maze"
+        ]
+      },
+      "neural_weights": {
+        "float_range": [
+          -2.0,
+          2.0
+        ]
+      }
+    },
+    "world": {
+      "seed_root": {
+        "int_range": [
+          100000,
+          999999
+        ]
+      }
+    }
+  },
+  "rationale": "This measures the behavioral endpoint of a single agent in a maze, providing the raw coordinates needed to compute novelty without a fitness target. The field would run this to verify the behavioral characterization function operates correctly. A SURVIVED verdict indicating completion of the steps would not license the inference that the agent solved the maze, nor that its behavior is historically novel compared to a population.",
+  "registry_version": "archaeon.template.v0",
+  "status": "PROPOSED",
+  "template_id": "openended.novelty.v0"
+}

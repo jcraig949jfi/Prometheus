@@ -1,0 +1,52 @@
+{
+  "_ingest": {
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "design_choices": [
+      "world.seed_root added, range copied verbatim from the ADMITTED frozen baseline bitstring.uniform.v0. The mined template declared no world because the mining deck wrongly told it to declare payload parameters only."
+    ],
+    "design_choices_note": "Values introduced by Herakles on 2026-09-06 during the registry-shape migration. These are NEW DESIGN CHOICES, not recovered data, and each names its justification.",
+    "flags": [
+      "EXPANSION: kind 'aixi_ctw_eval_v0' is not implemented by Vivarium; this template is an expansion request by definition",
+      "REPAIRED: source markers were removed from this block to make it parse. Structure is the report's; any value that a marker had overwritten is null, never guessed.",
+      "INCOMPLETE: axes ['context_tree_depth', 'horizon_depth'] lost their values to source markers in the returned report. The axis names are real; the numbers are NOT reconstructed and must be set by the operator before admission."
+    ],
+    "migrated_from": "flat param_space (ROADMAP illustrative schema)",
+    "migration_notes": [
+      "payload.horizon_depth left NULL: its value was destroyed in the source report and no bench-native value exists to justify a fill",
+      "payload.context_tree_depth left NULL: its value was destroyed in the source report and no bench-native value exists to justify a fill"
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act.",
+    "source_report": "13_learning_to_search_and_machine_minds.md"
+  },
+  "admitted_at": null,
+  "admitted_by": null,
+  "kind": "aixi_ctw_eval_v0",
+  "origin": {
+    "field": "Artificial General Intelligence (AGI)",
+    "proposed_by": "Herakles",
+    "reference": "Veness, Ng, Hutter, Uther, and Silver (2011) A Monte-Carlo AIXI Approximation.",
+    "source": "LITERATURE"
+  },
+  "param_space": {
+    "payload": {
+      "context_tree_depth": {
+        "choices": null
+      },
+      "horizon_depth": {
+        "int_range": null
+      }
+    },
+    "world": {
+      "seed_root": {
+        "int_range": [
+          100000,
+          999999
+        ]
+      }
+    }
+  },
+  "rationale": "This field studies agents that can achieve goals in wide ranges of unknown environments using theoretical models like Solomonoff induction. The characteristic experiment evaluates the computationally feasible MC-AIXI-CTW agent in a small partially observable Markov decision process, compressing interaction histories using Context Tree Weighting and planning via Monte Carlo Tree Search. A SURVIVED verdict shows the agent can learn and exploit short-term environmental dependencies to maximize reward, but it would NOT license claims that the agent is capable of human-level generalization or scaling to environments with massive state spaces.",
+  "registry_version": "archaeon.template.v0",
+  "status": "PROPOSED",
+  "template_id": "agi.mc.aixi.ctw.v0"
+}
