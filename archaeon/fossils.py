@@ -148,6 +148,17 @@ def _num(v: Any) -> Optional[float]:
     return None
 
 
+def _metric(content: Any, chart) -> Optional[float]:
+    """The observable, from the chart's declared path or its declared
+    alternates, in order. No searching: only paths the chart names."""
+    for path in (chart.metric_field,) + tuple(
+            getattr(chart, "metric_alt_fields", ()) or ()):
+        v = _num(_dig({"content": content}, path))
+        if v is not None:
+            return v
+    return None
+
+
 def _loads(s: Any) -> Any:
     if isinstance(s, (dict, list)):
         return s
@@ -204,7 +215,7 @@ def read_sfe(db_path: Optional[str] = None,
         spec = _loads(r["spec"])
         if not isinstance(content, dict):
             continue
-        metric = _num(_dig({"content": content}, chart.metric_field))
+        metric = _metric(content, chart)
         if metric is None:
             continue
         coords: Dict[str, float] = {}

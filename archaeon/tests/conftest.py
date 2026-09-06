@@ -36,3 +36,22 @@ def _viv_test_schema():
         _vdb.drop_schema(conn, TEST_SCHEMA)
     finally:
         conn.close()
+
+
+def executable_source(mod) -> str:
+    """A module's EXECUTABLE code, docstrings blanked.
+
+    Several tests assert "this module does not touch X" by scanning its source.
+    A raw scan fails on the module's own prose explaining that it does not
+    touch X -- which has now caught three tests in this suite. Prose that names
+    a thing is not a use of it, so the docstrings come out before the scan.
+    """
+    import ast
+    import inspect
+
+    tree = ast.parse(inspect.getsource(mod))
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Expr) and isinstance(node.value, ast.Constant) \
+                and isinstance(node.value.value, str):
+            node.value.value = ""
+    return ast.unparse(tree)

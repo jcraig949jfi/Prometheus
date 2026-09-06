@@ -102,24 +102,33 @@ class QueueContractMissing(Exception):
 
 
 def assert_queue_ready(conn) -> None:
-    """Fail loudly rather than diverge silently."""
+    """Fail loudly rather than diverge silently.
+
+    Resolves the schema the way every other statement here does. Pinning 'viv'
+    would let this check pass against PRODUCTION while the writer wrote to a
+    test schema: a precondition that verifies the wrong database object is
+    worse than none at all, because it reports healthy.
+    """
+    sch = _schema()
     cur = conn.cursor()
     cur.execute("SELECT column_name FROM information_schema.columns "
-                "WHERE table_schema='viv' "
-                "  AND table_name='research_experiment_queue'")
+                "WHERE table_schema=%s "
+                "  AND table_name='research_experiment_queue'", (sch,))
     have = {r[0] for r in cur.fetchall()}
     if not have:
         raise QueueContractMissing(
-            "viv.research_experiment_queue does not exist. Apply Vivarium's "
-            "migrations; Archaeon does not create Vivarium's table.")
+            "{}.research_experiment_queue does not exist. Apply Vivarium's "
+            "migrations; Archaeon does not create Vivarium's table."
+            .format(sch))
     missing = [c for c in REQUIRED_COLUMNS if c not in have]
     if missing:
         raise QueueContractMissing(
-            "viv.research_experiment_queue is missing {}. Apply "
+            "{}.research_experiment_queue is missing {}. Apply "
             "vivarium/migrations/002_relations_cadence_idempotency.sql. "
             "Archaeon will not create these columns itself: the table is "
             "Vivarium's, and a consumer that ALTERs a producer's schema is how "
-            "one contract becomes two divergent definitions.".format(missing))
+            "one contract becomes two divergent definitions."
+            .format(sch, missing))
 
 
 class RelationContractViolation(Exception):
@@ -291,8 +300,10 @@ def submit(conn, *, candidates: Sequence[Dict[str, Any]],
     selection" would become a claim rather than a property.
     """
     config = config or cfg.DEFAULT
-    if source_reason not in ("weak_signal", "exploration", "human"):
-        raise ValueError("source_reason must be weak_signal|exploration|human")
+    if source_reason not in ("weak_signal", "exploration",
+                             "calibration", "human"):
+        raise ValueError("source_reason must be weak_signal|"
+                         "exploration|calibration|human")
     if not candidates:
         raise ValueError("candidate set is empty")
     if not (0 <= selected_index < len(candidates)):

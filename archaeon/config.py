@@ -35,6 +35,13 @@ class CoordinateChart:
     player_field: Optional[str]       # player identity; None = absent in corpus
     metric_field: str                 # the numeric observable
     coord_fields: Tuple[str, ...]     # numeric parameter coordinates
+    #: Additional metric paths, tried IN ORDER after metric_field. Declared in
+    #: the chart rather than guessed in the reader: two producers may record
+    #: the same observable at different paths, and a reader that silently
+    #: searched for "something called score" would be inventing the mapping.
+    #: Vivarium records `content.result.score`; the historical corpus records
+    #: `content.score`. Both are the same quantity, and the chart says so.
+    metric_alt_fields: Tuple[str, ...] = ()
 
 
 # The chart matching today's SFE engine.db: experiments.spec carries a numeric
@@ -50,6 +57,7 @@ SFE_SCORE_CHART = CoordinateChart(
     family_field="world_family",
     player_field=None,
     metric_field="content.score",
+    metric_alt_fields=("content.result.score",),
     coord_fields=("spec.candidate",),
 )
 
