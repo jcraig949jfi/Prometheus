@@ -1,0 +1,139 @@
+{
+ "rows": [
+  {
+   "check": "FAMILY_EXTENT_DIVERGENCE",
+   "boundary": "the family's declared extent",
+   "supplied_by": "claimant",
+   "minimal_evasion": "open one family per batch, each declaring exactly what it will contain",
+   "silence_achieved": true,
+   "class": "PRE-COMMITTABLE",
+   "note": "derivable only up to T-B's limits; a manifest frozen before world 1 and bound to a spec_hash group would make it falsifiable"
+  },
+  {
+   "check": "SELECTION_WITHOUT_ALTERNATIVES",
+   "boundary": "which losers are recorded",
+   "supplied_by": "claimant",
+   "minimal_evasion": "record ONE token alternative; the other eleven are simply not added",
+   "silence_achieved": true,
+   "class": "PRE-COMMITTABLE",
+   "note": "S11 4b. selection_visible reports TRUE on a decorative record"
+  },
+  {
+   "check": "MULTIPLE_SELECTED",
+   "boundary": "the family's membership",
+   "supplied_by": "claimant",
+   "minimal_evasion": "one selected member per family, many families",
+   "silence_achieved": true,
+   "class": "PRE-COMMITTABLE",
+   "note": "structurally the same evasion as 4a"
+  },
+  {
+   "check": "TRANSPORT_OVERREACH",
+   "boundary": "the analysis spec's tested_domain",
+   "supplied_by": "claimant",
+   "minimal_evasion": "declare a WIDE tested_domain in the freeform spec; any later transport_domain is then contained in it",
+   "silence_achieved": true,
+   "class": "PRE-COMMITTABLE",
+   "note": "the check compares two fields the SAME actor writes, so containment is trivially satisfiable. NOT derivable -- the engine cannot know which landscapes were actually exercised."
+  },
+  {
+   "check": "TRANSPORT_UNCHECKABLE",
+   "boundary": "whether a tested_domain exists at all",
+   "supplied_by": "claimant",
+   "minimal_evasion": "write any tested_domain, however inflated",
+   "silence_achieved": true,
+   "class": "PRE-COMMITTABLE",
+   "note": "silenced by the same move"
+  },
+  {
+   "check": "NO_REPLICATION_DECLARED",
+   "boundary": "the six replication booleans",
+   "supplied_by": "claimant",
+   "minimal_evasion": "declare the single cheapest true boolean, resampled_noise, and the check is satisfied",
+   "silence_achieved": true,
+   "class": "PRE-COMMITTABLE",
+   "note": "the booleans are honest -- an undeclared dimension is not a false -- but ONE true dimension silences the check entirely"
+  },
+  {
+   "check": "CLAIM_CITES_NON_ANALYSIS",
+   "boundary": "which analysis the claim cites",
+   "supplied_by": "claimant",
+   "minimal_evasion": "cite a real analysis, just not the one over the full evidence set",
+   "silence_achieved": true,
+   "class": "DERIVABLE",
+   "note": "PEW CAN derive the candidate source universe for a cited analysis via T-B's spec_hash rule and compare it to the declared source_set. This is the strongest fixable item in the inventory."
+  },
+  {
+   "check": "NO_EXECUTION_ATTESTATION",
+   "boundary": "whether an attestation is sent",
+   "supplied_by": "executor",
+   "minimal_evasion": "send a hash-only attestation",
+   "silence_achieved": true,
+   "class": "PRE-COMMITTABLE",
+   "note": "S11 4d. An executor that ran nothing passes by echoing the sealed spec_hash. Attestation CLASSES would separate the two silences."
+  },
+  {
+   "check": "CONFIG_DIVERGENCE",
+   "boundary": "the executed config the executor reports",
+   "supplied_by": "executor",
+   "minimal_evasion": "echo the requested hash rather than supplying a config",
+   "silence_achieved": true,
+   "class": "PRE-COMMITTABLE",
+   "note": "fires correctly when a CONFIG is supplied and differs; the gap is the hash-only path"
+  },
+  {
+   "check": "NO_EFFECTIVE_INTERVENTION",
+   "boundary": "the before/after the claimant supplies",
+   "supplied_by": "claimant",
+   "minimal_evasion": "supply a before/after pair that differs in a field the engine cannot see",
+   "silence_achieved": true,
+   "class": "INTRINSIC",
+   "note": "the engine checks hash inequality of what it is GIVEN. A cosmetic difference silences it; a real difference in an unseen field is indistinguishable from a fabricated one."
+  },
+  {
+   "check": "INTERVENTION_NOT_APPLIED",
+   "boundary": "the three world fields the engine can see",
+   "supplied_by": "engine (seed_root, sharing_policy, topology_group)",
+   "minimal_evasion": "name an intervention over something the engine never observes -- noise inside a player, reward shaping",
+   "silence_achieved": true,
+   "class": "INTRINSIC",
+   "note": "DERIVED where it applies, which is the exception in this table; but its scope is three fields and the claimant chooses whether the intervention lives inside them"
+  },
+  {
+   "check": "PARTIALLY_INERT_INTERVENTION",
+   "boundary": "the declared parts of a composite",
+   "supplied_by": "claimant",
+   "minimal_evasion": "declare a single-part intervention; there are then no parts to be partially inert",
+   "silence_achieved": true,
+   "class": "PRE-COMMITTABLE",
+   "note": "the check is over a decomposition the claimant chooses to expose"
+  }
+ ],
+ "by_class": {
+  "PRE-COMMITTABLE": [
+   "FAMILY_EXTENT_DIVERGENCE",
+   "SELECTION_WITHOUT_ALTERNATIVES",
+   "MULTIPLE_SELECTED",
+   "TRANSPORT_OVERREACH",
+   "TRANSPORT_UNCHECKABLE",
+   "NO_REPLICATION_DECLARED",
+   "NO_EXECUTION_ATTESTATION",
+   "CONFIG_DIVERGENCE",
+   "PARTIALLY_INERT_INTERVENTION"
+  ],
+  "DERIVABLE": [
+   "CLAIM_CITES_NON_ANALYSIS"
+  ],
+  "INTRINSIC": [
+   "NO_EFFECTIVE_INTERVENTION",
+   "INTERVENTION_NOT_APPLIED"
+  ]
+ },
+ "suppliers": {
+  "claimant": 9,
+  "executor": 2,
+  "engine (seed_root, sharing_policy, topology_group)": 1
+ },
+ "silenced": 12,
+ "total": 12
+}
