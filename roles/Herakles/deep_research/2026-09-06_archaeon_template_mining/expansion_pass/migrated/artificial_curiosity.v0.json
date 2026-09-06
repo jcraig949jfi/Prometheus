@@ -1,0 +1,52 @@
+{
+  "_ingest": {
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "design_choices": [
+      "world.seed_root added, range copied verbatim from the ADMITTED frozen baseline bitstring.uniform.v0. The mined template declared no world because the mining deck wrongly told it to declare payload parameters only."
+    ],
+    "design_choices_note": "Values introduced by Herakles on 2026-09-06 during the registry-shape migration. These are NEW DESIGN CHOICES, not recovered data, and each names its justification.",
+    "flags": [
+      "EXPANSION: kind 'model_building_controller.v0' is not implemented by Vivarium; this template is an expansion request by definition",
+      "REPAIRED: source markers were removed from this block to make it parse. Structure is the report's; any value that a marker had overwritten is null, never guessed.",
+      "INCOMPLETE: axes ['delayed_reward_steps', 'hidden_units'] lost their values to source markers in the returned report. The axis names are real; the numbers are NOT reconstructed and must be set by the operator before admission."
+    ],
+    "migrated_from": "flat param_space (ROADMAP illustrative schema)",
+    "migration_notes": [
+      "payload.hidden_units left NULL: its value was destroyed in the source report and no bench-native value exists to justify a fill",
+      "payload.delayed_reward_steps left NULL: its value was destroyed in the source report and no bench-native value exists to justify a fill"
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act.",
+    "source_report": "05_intrinsic_drives_and_creativity.md"
+  },
+  "admitted_at": null,
+  "admitted_by": null,
+  "kind": "model_building_controller.v0",
+  "origin": {
+    "field": "Artificial Curiosity",
+    "proposed_by": "Herakles",
+    "reference": "Schmidhuber 1991: A possibility for implementing curiosity and boredom in model-building neural controllers",
+    "source": "LITERATURE"
+  },
+  "param_space": {
+    "payload": {
+      "delayed_reward_steps": {
+        "choices": null
+      },
+      "hidden_units": {
+        "int_range": null
+      }
+    },
+    "world": {
+      "seed_root": {
+        "int_range": [
+          100000,
+          999999
+        ]
+      }
+    }
+  },
+  "rationale": "Implements a dual-network architecture where a controller network maximizes the prediction error of a model network, simulating heterostatic motivation. The field would run this to study the emergence of dynamic curiosity and boredom as the model learns. A SURVIVED verdict would license the claim that the controller successfully escapes static equilibria by seeking novel inputs, but it would NOT license the claim that this mechanism prevents the agent from being permanently trapped by highly unpredictable white noise.",
+  "registry_version": "archaeon.template.v0",
+  "status": "PROPOSED",
+  "template_id": "artificial_curiosity.v0"
+}

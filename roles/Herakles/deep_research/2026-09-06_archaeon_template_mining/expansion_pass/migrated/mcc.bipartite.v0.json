@@ -1,0 +1,54 @@
+{
+  "_ingest": {
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "design_choices": [
+      "world.seed_root added, range copied verbatim from the ADMITTED frozen baseline bitstring.uniform.v0. The mined template declared no world because the mining deck wrongly told it to declare payload parameters only."
+    ],
+    "design_choices_note": "Values introduced by Herakles on 2026-09-06 during the registry-shape migration. These are NEW DESIGN CHOICES, not recovered data, and each names its justification.",
+    "flags": [
+      "EXPANSION: kind 'mcc_step.v0' is not implemented by Vivarium; this template is an expansion request by definition"
+    ],
+    "migrated_from": "flat param_space (ROADMAP illustrative schema)",
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act.",
+    "source_report": "02_diversity_and_illumination.md"
+  },
+  "admitted_at": null,
+  "admitted_by": null,
+  "kind": "mcc_step.v0",
+  "origin": {
+    "field": "Minimal-Criterion Coevolution",
+    "proposed_by": "Herakles",
+    "reference": "Brant and Stanley 2017 Minimal Criterion Coevolution: A New Approach to Open-Ended Search",
+    "source": "LITERATURE"
+  },
+  "param_space": {
+    "payload": {
+      "environments": {
+        "choices": [
+          50,
+          100,
+          250
+        ]
+      },
+      "solvers": {
+        "choices": [
+          50,
+          100,
+          250
+        ]
+      }
+    },
+    "world": {
+      "seed_root": {
+        "int_range": [
+          100000,
+          999999
+        ]
+      }
+    }
+  },
+  "rationale": "Minimal-Criterion Coevolution replaces absolute fitness with a strict survival threshold: a solver must solve at least one environment, and an environment must be solved by at least one solver. This tests whether open-ended divergence can be sustained without objective gradients. A SURVIVED verdict showing sustained population sizes over many repeats would indicate successful open-ended generation, but would NOT license the assumption that the solvers are increasing in general capability, only that they satisfy their specific coupled niches.",
+  "registry_version": "archaeon.template.v0",
+  "status": "PROPOSED",
+  "template_id": "mcc.bipartite.v0"
+}

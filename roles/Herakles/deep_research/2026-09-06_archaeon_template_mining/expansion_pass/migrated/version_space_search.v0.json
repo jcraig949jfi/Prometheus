@@ -1,0 +1,52 @@
+{
+  "_ingest": {
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "design_choices": [
+      "world.seed_root added, range copied verbatim from the ADMITTED frozen baseline bitstring.uniform.v0. The mined template declared no world because the mining deck wrongly told it to declare payload parameters only."
+    ],
+    "design_choices_note": "Values introduced by Herakles on 2026-09-06 during the registry-shape migration. These are NEW DESIGN CHOICES, not recovered data, and each names its justification.",
+    "flags": [
+      "EXPANSION: kind 'version_space_search_v0' is not implemented by Vivarium; this template is an expansion request by definition",
+      "REPAIRED: source markers were removed from this block to make it parse. Structure is the report's; any value that a marker had overwritten is null, never guessed.",
+      "INCOMPLETE: axes ['concept_attributes', 'training_examples'] lost their values to source markers in the returned report. The axis names are real; the numbers are NOT reconstructed and must be set by the operator before admission."
+    ],
+    "migrated_from": "flat param_space (ROADMAP illustrative schema)",
+    "migration_notes": [
+      "payload.concept_attributes left NULL: its value was destroyed in the source report and no bench-native value exists to justify a fill",
+      "payload.training_examples left NULL: its value was destroyed in the source report and no bench-native value exists to justify a fill"
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act.",
+    "source_report": "11_reasoning_modes.md"
+  },
+  "admitted_at": null,
+  "admitted_by": null,
+  "kind": "version_space_search_v0",
+  "origin": {
+    "field": "Inductive Reasoning",
+    "proposed_by": "Herakles",
+    "reference": "Mitchell 1977 Version Spaces: A Candidate Elimination Approach to Rule Learning",
+    "source": "LITERATURE"
+  },
+  "param_space": {
+    "payload": {
+      "concept_attributes": {
+        "int_range": null
+      },
+      "training_examples": {
+        "int_range": null
+      }
+    },
+    "world": {
+      "seed_root": {
+        "int_range": [
+          100000,
+          999999
+        ]
+      }
+    }
+  },
+  "rationale": "This experiment tests the Candidate Elimination algorithm within a predefined hypothesis space, characteristic of foundational work on concept learning. It measures the number of surviving hypotheses in the version space after processing a sequence of positive and negative training examples. A SURVIVED verdict, triggered by the version space size dropping to exactly one, would license the claim that the algorithm successfully converged on a single consistent hypothesis. However, it would NOT license the inference that the learned hypothesis generalizes correctly to unseen data, nor would it confirm which specific boundaries shifted during the training, because the bench can only record the final scalar size of the version space rather than the structural trajectory of the hypothesis boundaries.",
+  "registry_version": "archaeon.template.v0",
+  "status": "PROPOSED",
+  "template_id": "version_space_search.v0"
+}

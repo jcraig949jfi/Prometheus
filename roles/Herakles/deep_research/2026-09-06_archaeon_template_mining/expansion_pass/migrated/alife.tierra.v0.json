@@ -1,0 +1,58 @@
+{
+  "_ingest": {
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "design_choices": [
+      "world.seed_root added, range copied verbatim from the ADMITTED frozen baseline bitstring.uniform.v0. The mined template declared no world because the mining deck wrongly told it to declare payload parameters only."
+    ],
+    "design_choices_note": "Values introduced by Herakles on 2026-09-06 during the registry-shape migration. These are NEW DESIGN CHOICES, not recovered data, and each names its justification.",
+    "flags": [
+      "EXPANSION: kind 'tierra_core_v0' is not implemented by Vivarium; this template is an expansion request by definition"
+    ],
+    "migrated_from": "flat param_space (ROADMAP illustrative schema)",
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act.",
+    "source_report": "01_evolutionary_substrates.md"
+  },
+  "admitted_at": null,
+  "admitted_by": null,
+  "kind": "tierra_core_v0",
+  "origin": {
+    "field": "Artificial Life (ALife)",
+    "proposed_by": "Herakles",
+    "reference": "Thomas S. Ray 1991, An Approach to the Synthesis of Life",
+    "source": "LITERATURE"
+  },
+  "param_space": {
+    "payload": {
+      "ancestor_instructions": {
+        "choices": [
+          "80_tierran_opcodes",
+          "82_tierran_opcodes"
+        ]
+      },
+      "cycles": {
+        "int_range": [
+          1000000,
+          5000000
+        ]
+      },
+      "soup_size": {
+        "int_range": [
+          10000,
+          50000
+        ]
+      }
+    },
+    "world": {
+      "seed_root": {
+        "int_range": [
+          100000,
+          999999
+        ]
+      }
+    }
+  },
+  "rationale": "This measures whether a handwritten ancestor program can execute and successfully replicate its instructions within a simulated memory block. The field of ALife would run this to establish the baseline viability of a digital substrate before introducing mutation. A SURVIVED verdict confirming replication would not license the inference that the system is capable of open-ended evolution, nor that the resulting programs are ecologically stable or resistant to parasites.",
+  "registry_version": "archaeon.template.v0",
+  "status": "PROPOSED",
+  "template_id": "alife.tierra.v0"
+}

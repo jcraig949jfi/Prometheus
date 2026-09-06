@@ -1,0 +1,54 @@
+{
+  "_ingest": {
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "design_choices": [
+      "world.seed_root added, range copied verbatim from the ADMITTED frozen baseline bitstring.uniform.v0. The mined template declared no world because the mining deck wrongly told it to declare payload parameters only."
+    ],
+    "design_choices_note": "Values introduced by Herakles on 2026-09-06 during the registry-shape migration. These are NEW DESIGN CHOICES, not recovered data, and each names its justification.",
+    "flags": [
+      "EXPANSION: kind 'coevaluate_populations.v0' is not implemented by Vivarium; this template is an expansion request by definition"
+    ],
+    "migrated_from": "flat param_space (ROADMAP illustrative schema)",
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act.",
+    "source_report": "02_diversity_and_illumination.md"
+  },
+  "admitted_at": null,
+  "admitted_by": null,
+  "kind": "coevaluate_populations.v0",
+  "origin": {
+    "field": "Coevolution",
+    "proposed_by": "Herakles",
+    "reference": "Hillis 1990 Co-evolving parasites improve simulated evolution as an optimization procedure",
+    "source": "LITERATURE"
+  },
+  "param_space": {
+    "payload": {
+      "host_pop_size": {
+        "choices": [
+          50,
+          100,
+          200
+        ]
+      },
+      "parasite_pop_size": {
+        "choices": [
+          50,
+          100,
+          200
+        ]
+      }
+    },
+    "world": {
+      "seed_root": {
+        "int_range": [
+          100000,
+          999999
+        ]
+      }
+    }
+  },
+  "rationale": "Competitive coevolution pits a population of candidate solutions against a population of test cases, where fitness depends on defeating the opposing population. This measures whether an arms race prevents premature convergence on static benchmarks. A SURVIVED verdict showing host improvement over time would indicate a productive arms race, but would NOT license the claim that the final host is robust against all possible tests, only against the final surviving parasites.",
+  "registry_version": "archaeon.template.v0",
+  "status": "PROPOSED",
+  "template_id": "coevolution.parasites.v0"
+}

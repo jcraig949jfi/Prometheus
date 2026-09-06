@@ -1,0 +1,52 @@
+{
+  "_ingest": {
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "design_choices": [
+      "world.seed_root added, range copied verbatim from the ADMITTED frozen baseline bitstring.uniform.v0. The mined template declared no world because the mining deck wrongly told it to declare payload parameters only."
+    ],
+    "design_choices_note": "Values introduced by Herakles on 2026-09-06 during the registry-shape migration. These are NEW DESIGN CHOICES, not recovered data, and each names its justification.",
+    "flags": [
+      "EXPANSION: kind 'sparse_regression_sindy_v0' is not implemented by Vivarium; this template is an expansion request by definition",
+      "REPAIRED: source markers were removed from this block to make it parse. Structure is the report's; any value that a marker had overwritten is null, never guessed.",
+      "INCOMPLETE: axes ['library_size', 'sparsity_threshold'] lost their values to source markers in the returned report. The axis names are real; the numbers are NOT reconstructed and must be set by the operator before admission."
+    ],
+    "migrated_from": "flat param_space (ROADMAP illustrative schema)",
+    "migration_notes": [
+      "payload.library_size left NULL: its value was destroyed in the source report and no bench-native value exists to justify a fill",
+      "payload.sparsity_threshold left NULL: its value was destroyed in the source report and no bench-native value exists to justify a fill"
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act.",
+    "source_report": "10_model_and_law_discovery.md"
+  },
+  "admitted_at": null,
+  "admitted_by": null,
+  "kind": "sparse_regression_sindy_v0",
+  "origin": {
+    "field": "Equation Discovery",
+    "proposed_by": "Herakles",
+    "reference": "Brunton, S.L., Proctor, J.L., and Kutz, J.N., 2016. Discovering governing equations from data by sparse identification of nonlinear dynamics. PNAS.",
+    "source": "LITERATURE"
+  },
+  "param_space": {
+    "payload": {
+      "library_size": {
+        "int_range": null
+      },
+      "sparsity_threshold": {
+        "choices": null
+      }
+    },
+    "world": {
+      "seed_root": {
+        "int_range": [
+          100000,
+          999999
+        ]
+      }
+    }
+  },
+  "rationale": "This experiment tests the ability of sparse regression to isolate active terms from a candidate library to represent dynamic constraints. The field runs this to identify parsimonious governing models without overfitting. A SURVIVED verdict indicates that a sparse subset successfully minimized the residual error below the bench's outcome threshold, but it would NOT license the claim that these specific terms are the true underlying physics, as correlated library terms or improper coordinates can yield mathematically equivalent but physically spurious sparse representations.",
+  "registry_version": "archaeon.template.v0",
+  "status": "PROPOSED",
+  "template_id": "equation_discovery_sindy.v0"
+}

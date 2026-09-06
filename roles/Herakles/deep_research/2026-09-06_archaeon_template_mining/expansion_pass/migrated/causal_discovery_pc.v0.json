@@ -1,0 +1,52 @@
+{
+  "_ingest": {
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "design_choices": [
+      "world.seed_root added, range copied verbatim from the ADMITTED frozen baseline bitstring.uniform.v0. The mined template declared no world because the mining deck wrongly told it to declare payload parameters only."
+    ],
+    "design_choices_note": "Values introduced by Herakles on 2026-09-06 during the registry-shape migration. These are NEW DESIGN CHOICES, not recovered data, and each names its justification.",
+    "flags": [
+      "EXPANSION: kind 'pc_algorithm_skeleton_v0' is not implemented by Vivarium; this template is an expansion request by definition",
+      "REPAIRED: source markers were removed from this block to make it parse. Structure is the report's; any value that a marker had overwritten is null, never guessed.",
+      "INCOMPLETE: axes ['alpha_significance', 'max_conditioning_set'] lost their values to source markers in the returned report. The axis names are real; the numbers are NOT reconstructed and must be set by the operator before admission."
+    ],
+    "migrated_from": "flat param_space (ROADMAP illustrative schema)",
+    "migration_notes": [
+      "payload.max_conditioning_set left NULL: its value was destroyed in the source report and no bench-native value exists to justify a fill",
+      "payload.alpha_significance left NULL: its value was destroyed in the source report and no bench-native value exists to justify a fill"
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act.",
+    "source_report": "10_model_and_law_discovery.md"
+  },
+  "admitted_at": null,
+  "admitted_by": null,
+  "kind": "pc_algorithm_skeleton_v0",
+  "origin": {
+    "field": "Causal Discovery",
+    "proposed_by": "Herakles",
+    "reference": "Spirtes, P., Glymour, C., and Scheines, R. 2000. Causation, Prediction, and Search. MIT Press.",
+    "source": "LITERATURE"
+  },
+  "param_space": {
+    "payload": {
+      "alpha_significance": {
+        "choices": null
+      },
+      "max_conditioning_set": {
+        "int_range": null
+      }
+    },
+    "world": {
+      "seed_root": {
+        "int_range": [
+          100000,
+          999999
+        ]
+      }
+    }
+  },
+  "rationale": "This experiment performs the adjacency pruning phase of the PC algorithm to build an undirected skeleton of conditional dependencies. The field runs this to narrow the hypothesis space of causal DAGs using observational constraints. A SURVIVED verdict demonstrates that the resulting skeleton's density falls within the target scalar range, but it would NOT license the conclusion of a definite causal direction between any two nodes, nor does it guarantee the absence of latent confounders, as it relies strictly on the assumption of Causal Sufficiency.",
+  "registry_version": "archaeon.template.v0",
+  "status": "PROPOSED",
+  "template_id": "causal_discovery_pc.v0"
+}
