@@ -124,6 +124,7 @@ class EngineClient:
 
     # -- worlds ------------------------------------------------------------
     def create_world(self, session_id: str, name: str, *,
+                     require_attestation: bool = False,
                      sharing_policy: str = "ISOLATED",
                      topology_group: Optional[str] = None,
                      budget: Optional[dict] = None,
@@ -131,7 +132,8 @@ class EngineClient:
         return self._req("POST", "/v2/worlds", {
             "session_id": session_id, "name": name,
             "sharing_policy": sharing_policy, "topology_group": topology_group,
-            "budget": budget or {}, "seed_root": seed_root})
+            "budget": budget or {}, "seed_root": seed_root,
+            "require_attestation": require_attestation})
 
     def list_worlds(self) -> list:
         return self._req("GET", "/v2/worlds")["worlds"]
@@ -326,6 +328,29 @@ class EngineClient:
         return self._req("POST", f"/v2/work/{work_id}/complete",
                          {"worker_id": worker_id, "claim_id": claim_id,
                           "result": result, "attestation": attestation})
+
+    def audit_envelope(self, wid, exp_id: str) -> dict:
+        """The whole sealed record of one experiment as a single hash-sealed
+        object, for export to a third party who holds no SFE credential.
+
+        A first-class method because consumers were reaching it through the
+        private transport (`client._req`), which turns a path or response-shape
+        change into a silent break rather than an API-boundary one."""
+        return self._req(
+            "GET", f"/v2/worlds/{wid}/experiments/{exp_id}/audit-envelope")
+
+    def verify_anchor(self, world_id: str, event_id: str, entry_hash: str, *,
+                      exp_id: Optional[str] = None,
+                      obs_id: Optional[str] = None) -> dict:
+        """Verify a causal anchor. CREDENTIAL-FREE and cross-engine by design:
+        a third party can check an anchor it did not produce.
+
+        ALWAYS pass exp_id/obs_id. Without them the call proves only that an
+        event EXISTS, so a wrong-but-real event passes; with them the engine
+        checks BINDING and rejects a mismatch."""
+        return self._req("POST", "/v2/audit/verify-anchor", {
+            "world_id": world_id, "event_id": event_id,
+            "entry_hash": entry_hash, "exp_id": exp_id, "obs_id": obs_id})
 
     def attestation(self, work_id: str) -> dict:
         """What the executor said it ran, beside what the engine sealed."""

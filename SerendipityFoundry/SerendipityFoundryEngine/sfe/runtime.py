@@ -129,6 +129,7 @@ ATTESTATION_FIELDS = ("executed_config_hash", "entry_state_hash",
 # is reported in every non-off profile and blocks in none: a finding blocks
 # only when it contradicts a declaration the caller itself sealed.
 _STRICT_BLOCKING_CLAIM = frozenset({"CLAIM_CITES_NON_ANALYSIS",
+                                    "CLAIM_CITES_UNVERIFIED_ANALYSIS",
                                     "TRANSPORT_OVERREACH"})
 
 # World fields the engine can actually SEE change across a fork. An
@@ -192,6 +193,47 @@ def _transport_findings(transport_domain, analysis_spec) -> list:
         return [{"code": "TRANSPORT_OVERREACH", "excess": excess,
                  "message": "the claimed transport domain includes values the "
                             "cited analysis never tested"}]
+    return []
+
+
+def _analysis_verification_findings(cx, world_id, exp_id) -> list:
+    """Did the cited analysis actually resolve its own sources?
+
+    Reads the SEALED ANALYSIS_REGISTERED payload rather than recomputing, for
+    the same reason analysis_report does: the verification is a fact recorded
+    at registration inside the world's hash chain, not a number regenerated
+    later from state that may have moved underneath it."""
+    row = cx.execute(
+        "SELECT payload FROM events WHERE world_id=? AND "
+        "event_type='ANALYSIS_REGISTERED' AND refs LIKE ? "
+        "ORDER BY world_index DESC LIMIT 1",
+        (world_id, '%"' + exp_id + '"%')).fetchone()
+    if row is None:
+        return []                    # registered while the profile was off
+    try:
+        v = json.loads(row["payload"])
+    except (TypeError, ValueError):
+        return []
+    if "verified_n" not in v:        # sealed while the profile was off
+        return []
+    if v.get("verified_n") == 0 and v.get("sources_submitted"):
+        return [{
+            "code": "CLAIM_CITES_UNVERIFIED_ANALYSIS",
+            "analysis_exp_id": exp_id, "verified_n": 0,
+            "sources_submitted": v.get("sources_submitted"),
+            "sources_unresolved": v.get("sources_unresolved"),
+            "message": "the cited analysis resolved NONE of its sources, so "
+                       "this claim rests on an evidentiary base the engine "
+                       "recorded as empty"}]
+    if v.get("unit_mismatch"):
+        return [{
+            "code": "CLAIM_CITES_UNVERIFIED_ANALYSIS",
+            "analysis_exp_id": exp_id,
+            "declared_n": v.get("declared_n"),
+            "verified_n": v.get("verified_n"),
+            "sources_unresolved": v.get("sources_unresolved"),
+            "message": "the cited analysis declared an n the engine's own "
+                       "count contradicts"}]
     return []
 
 
@@ -2705,6 +2747,24 @@ class Foundry:
                             "message": "the cited experiment declares no "
                                        "source set, so the claim's evidentiary "
                                        "base is not recorded"})
+                    else:
+                        # D-CLAIM-2 (2026-09-06). Having a source set is not
+                        # the same as having a source set the engine could
+                        # RESOLVE. An analysis whose sealed verification
+                        # recorded verified_n=0, or a declared_n the engine's
+                        # own count contradicts, used to produce a perfectly
+                        # clean claim -- the strongest-looking output in the
+                        # system resting on evidence the engine had already
+                        # written down as unresolvable.
+                        #
+                        # Comparing two sealed integers is counting, not
+                        # statistics, and it closes the path a PROGRAMMATIC
+                        # producer walks by default: sources drawn from another
+                        # client's worlds resolve to `unresolved` (the
+                        # anti-oracle rule in _verify_units), so a cross-tenant
+                        # analysis silently counts nothing at all.
+                        findings.extend(_analysis_verification_findings(
+                            cx, a["world_id"], analysis_exp_id))
                     findings.extend(_transport_findings(
                         transport_domain, json.loads(a["spec"])))
             if self._sci() != "off" and status == "SUPPORTED" and not rep:
@@ -2755,14 +2815,40 @@ class Foundry:
 
     def get_claim(self, claim_id: str, *,
                   client_id: Optional[str] = None) -> dict:
-        r = self.store.read().execute("SELECT * FROM claims WHERE claim_id=?",
-                                      (claim_id,)).fetchone()
+        """D-CLAIM-3 (2026-09-06): the findings are READABLE, not write-once.
+
+        Under science_profile=warn nothing blocks, so the findings ARE the
+        product of recording a claim. They were sealed into CLAIM_RECORDED and
+        returned once from the POST -- and no route read them back, so a
+        programmatic producer that did not parse and persist the creation
+        response lost them permanently. Families recompute their science block
+        on read and analyses read their sealed verification back; claims were
+        the odd one out."""
+        cx = self.store.read()
+        r = cx.execute("SELECT * FROM claims WHERE claim_id=?",
+                       (claim_id,)).fetchone()
         if r is None:
             raise NotFound("unknown claim", claim_id=claim_id)
         if client_id is not None and r["client_id"] != client_id:
             raise AccessDenied("claim belongs to another client",
                                claim_id=claim_id)
-        return _claim_dict(r)
+        out = _claim_dict(r)
+        if self._sci() != "off":
+            ev = cx.execute(
+                "SELECT payload FROM foundry_events WHERE event_type="
+                "'CLAIM_RECORDED' AND scope_kind='claim' AND scope_id=? "
+                "ORDER BY seq DESC LIMIT 1", (claim_id,)).fetchone()
+            sealed = {}
+            if ev is not None:
+                try:
+                    sealed = json.loads(ev["payload"])
+                except (TypeError, ValueError):
+                    sealed = {}
+            out["science"] = {
+                "profile_findings": sealed.get("findings", []),
+                "sealed_at_creation": ev is not None,
+                "engine_source_hash": sealed.get("engine_source_hash")}
+        return out
 
     def list_claims(self, *, client_id: Optional[str] = None,
                     family_id: Optional[str] = None,

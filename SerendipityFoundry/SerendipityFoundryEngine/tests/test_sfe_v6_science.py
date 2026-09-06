@@ -1179,3 +1179,132 @@ def test_a_foreign_session_key_is_refused_by_every_v6_route():
             "%s %s answered %d to a foreign key" % (method, url, r.status_code)
         if r.status_code == 421:
             assert r.json()["detail"]["error"] == "WRONG_SESSION"
+
+
+# ===========================================================================
+# J. claims for a PROGRAMMATIC producer (D-CLAIM-2 / D-CLAIM-3, 2026-09-06)
+#
+# Found while onboarding Archaeon as an automated producer. Both defects are
+# invisible to a careful human who reads the POST response and obvious to a
+# machine that does not.
+# ===========================================================================
+def test_a_claim_citing_an_UNRESOLVABLE_analysis_is_flagged(tmp_path):
+    """PAIRED. Having a source set is not the same as having one the engine
+    could RESOLVE. A cross-tenant analysis counts nothing at all -- sources it
+    does not own resolve to `unresolved` by the anti-oracle rule -- and used to
+    yield a perfectly clean claim resting on an empty evidentiary base."""
+    f = Foundry(str(tmp_path / "c.db"), science_profile="warn")
+    a = f.create_client("a")
+    b = f.create_client("b")
+    sa, sb = f.create_session(a, "sa"), f.create_session(b, "sb")
+
+    wb = f.create_world(sb, "theirs")["world_id"]
+    f.start_world(wb, b)
+    eb = f.create_experiment(wb, {"x": 1}, client_id=b)["exp_id"]
+    theirs = f.record_observation(wb, eb, {"v": 1}, "SURVIVED",
+                                  client_id=b)["obs_id"]
+
+    wa = f.create_world(sa, "mine")["world_id"]
+    f.start_world(wa, a)
+    mine = f.record_observation(
+        wa, f.create_experiment(wa, {"x": 1}, client_id=a)["exp_id"],
+        {"v": 1}, "SURVIVED", client_id=a)["obs_id"]
+
+    # an analysis over sources it cannot resolve at all
+    empty = f.create_experiment(wa, {"p": "pooled"}, client_id=a,
+                                unit_of_analysis="observation", declared_n=1,
+                                source_set=[theirs])
+    assert empty["analysis"]["verified_n"] == 0
+    bad = f.create_claim(client_id=a, estimand="d", status="SUPPORTED",
+                         analysis_exp_id=empty["exp_id"])
+    codes = {x["code"] for x in bad["science"]["profile_findings"]}
+    assert "CLAIM_CITES_UNVERIFIED_ANALYSIS" in codes, bad["science"]
+
+    # PAIRED: an analysis whose sources DO resolve is clean
+    good = f.create_experiment(wa, {"p": "pooled"}, client_id=a,
+                               unit_of_analysis="observation", declared_n=1,
+                               source_set=[mine])
+    assert good["analysis"]["verified_n"] == 1
+    ok = f.create_claim(client_id=a, estimand="d", status="SUPPORTED",
+                        analysis_exp_id=good["exp_id"])
+    assert "CLAIM_CITES_UNVERIFIED_ANALYSIS" not in \
+        {x["code"] for x in ok["science"]["profile_findings"]}
+    f.close()
+
+
+def test_a_claim_citing_a_MISCOUNTED_analysis_is_flagged(tmp_path):
+    f = Foundry(str(tmp_path / "m.db"), science_profile="warn")
+    c = f.create_client("a")
+    s = f.create_session(c, "s")
+    w = f.create_world(s, "w")["world_id"]
+    f.start_world(w, c)
+    o = f.record_observation(
+        w, f.create_experiment(w, {"x": 1}, client_id=c)["exp_id"],
+        {"v": 1}, "SURVIVED", client_id=c)["obs_id"]
+    ana = f.create_experiment(w, {"p": 1}, client_id=c,
+                              unit_of_analysis="observation", declared_n=99,
+                              source_set=[o])
+    assert ana["analysis"]["unit_mismatch"] is True
+    clm = f.create_claim(client_id=c, estimand="d", status="SUPPORTED",
+                         analysis_exp_id=ana["exp_id"])
+    hit = [x for x in clm["science"]["profile_findings"]
+           if x["code"] == "CLAIM_CITES_UNVERIFIED_ANALYSIS"]
+    assert hit and hit[0]["declared_n"] == 99 and hit[0]["verified_n"] == 1
+    f.close()
+
+
+def test_strict_refuses_a_claim_on_an_unverified_analysis(tmp_path):
+    f = Foundry(str(tmp_path / "s.db"), science_profile="strict")
+    c = f.create_client("a")
+    s = f.create_session(c, "s")
+    w = f.create_world(s, "w")["world_id"]
+    f.start_world(w, c)
+    o = f.record_observation(
+        w, f.create_experiment(w, {"x": 1}, client_id=c)["exp_id"],
+        {"v": 1}, "SURVIVED", client_id=c)["obs_id"]
+    # declared_n matches, so registration succeeds under strict
+    ana = f.create_experiment(w, {"p": 1}, client_id=c,
+                              unit_of_analysis="observation", declared_n=1,
+                              source_set=[o])
+    # ... but an analysis over an id that resolves to nothing does not
+    with pytest.raises(Exception):
+        f.create_experiment(w, {"p": 2}, client_id=c,
+                            unit_of_analysis="observation", declared_n=1,
+                            source_set=["obs_doesnotexist"])
+    ok = f.create_claim(client_id=c, estimand="d", status="SUPPORTED",
+                        analysis_exp_id=ana["exp_id"])
+    assert ok["status"] == "SUPPORTED"
+    f.close()
+
+
+def test_claim_findings_survive_the_POST_response():
+    """D-CLAIM-3. Under warn nothing blocks, so the findings ARE the product.
+    A programmatic producer that does not parse the creation response used to
+    lose them permanently -- families recompute theirs on read and analyses
+    read their sealed verification back; claims were the odd one out."""
+    c, h, sid = _engine()
+    _w, aid = _analysis_world(c, h, sid, tested=["landscapeA"])
+    made = c.post("/v2/claims",
+                  json={"estimand": "holds everywhere", "status": "SUPPORTED",
+                        "analysis_exp_id": aid,
+                        "transport_domain": ["landscapeA", "landscapeZ"]},
+                  headers=h).json()
+    at_creation = _codes(made)
+    assert "TRANSPORT_OVERREACH" in at_creation
+
+    got = c.get("/v2/claims/%s" % made["claim_id"], headers=h).json()
+    assert "science" in got, "GET dropped the findings entirely"
+    assert got["science"]["sealed_at_creation"] is True
+    assert _codes(got) == at_creation, (
+        "a re-read must return exactly the findings sealed at creation: "
+        "%r vs %r" % (_codes(got), at_creation))
+    assert got["science"]["engine_source_hash"], \
+        "the findings must carry the build that computed them"
+
+
+def test_off_still_returns_no_science_block_on_a_claim_read():
+    c, h, _ = _engine("off")
+    made = c.post("/v2/claims", json={"estimand": "d", "status": "SUPPORTED"},
+                  headers=h).json()
+    assert "science" not in c.get("/v2/claims/%s" % made["claim_id"],
+                                  headers=h).json()
