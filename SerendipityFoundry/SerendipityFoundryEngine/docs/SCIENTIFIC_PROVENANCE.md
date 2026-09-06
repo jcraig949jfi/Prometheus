@@ -393,9 +393,12 @@ silently replaced.
 **Cross-seat reads.** Every read route is owner-scoped, which made an
 archaeologist impossible: its only recourse was to open the SQLite file, a read
 with no tenancy filter, no evidence-class filter and no schema guard. A read
-grant is scoped to a **topology group** — already an unguessable server-issued
-capability — grantable only by that group's creator, **read only**, revocable
-with the revocation recorded. It lives on a separate `/v2/read/*` surface and
+grant is scoped to a **read scope**: a curated set of the owner's own worlds,
+existing only to be granted. Deliberately NOT a topology group — `_may_cross`
+keys on that field, so granting over a group would confer artifact-import
+eligibility as a side effect, and the corpus that needs granting is worlds that
+already exist and must not be mutated. Grantable only by the scope's owner,
+**read only**, revocable with the revocation recorded. It lives on a separate `/v2/read/*` surface and
 does **not** widen the owner-scoped routes, so an ordinary read can never
 quietly begin returning another tenant's rows. An ungranted group returns empty
 rather than 403, for the same anti-oracle reason a foreign family member is 404.
@@ -403,7 +406,15 @@ rather than 403, for the same anti-oracle reason a foreign family member is 404.
 truncation — beside the rows, because an archaeologist's first obligation is to
 say what population it drew from.
 
-**Family and arm survive fossilization.** The audit envelope is the only thing
+**Family and arm survive fossilization, and the arm is part of the DESIGN.**
+Execution parameters are sealed by `spec_hash`; family and arm assignment are
+sealed separately, in the append-only member record and its event. Keeping the
+arm out of the execution spec is what lets two arms carry an *identical*
+execution hash — what was run and what role it played are different facts.
+Reassignment after commitment is a 409; the manifest may seal the arm
+vocabulary; an arm smuggled into the execution spec that disagrees with the
+sealed assignment is reported as a conflict.
+ The audit envelope is the only thing
 that leaves the engine as one verifiable object, and family membership stayed
 behind in a table the fossil's reader has no credential for — so best-of-N went
 invisible exactly when the record left the building. The envelope now carries a
@@ -411,11 +422,7 @@ invisible exactly when the record left the building. The envelope now carries a
 and `selection_visible`. It is inside `envelope_hash`, so a fossil cannot be
 re-attributed to a different family after export without breaking its own seal.
 
-The **arm label is read from the sealed spec**, at a key the family's manifest
-declares (`arm_key`, default `arm`). Two consequences, both deliberate: the
-engine never guesses which key means arm, and a world member resolves to
-`unresolved` rather than a count — worlds have no spec, and a label that can be
-reassigned after the results are in is the thing this prevents.
+A member with no arm is `unassigned`, never guessed.
 
 ---
 

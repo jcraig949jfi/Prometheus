@@ -27,7 +27,8 @@ from fastapi.testclient import TestClient
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from sfe.api import create_app                                    # noqa: E402
-from sfe.errors import AccessDenied, NotFound, ValidationError    # noqa: E402
+from sfe.errors import (AccessDenied, ConflictError, NotFound,
+                        ValidationError)    # noqa: E402
 from sfe.ids import content_hash                                  # noqa: E402
 from sfe.runtime import (Foundry, MEASUREMENT_DIRECTIONS,          # noqa: E402
                          measurement_identity)
@@ -224,11 +225,15 @@ def test_measured_value_is_still_owner_scoped(f):
 # C. the cross-seat read contract
 # ===========================================================================
 def _two_seats_one_group(f):
+    """A corpus owner with an EXISTING world, later curated into a read scope.
+    The world is created with NO group and never mutated -- that is the point:
+    the corpus that needs granting already exists."""
     grp_owner = f.create_client("vivarium")
-    gid = f.create_topology_group(grp_owner, note="executed corpus")
     s = f.create_session(grp_owner, "viv")
-    w = f.create_world(s, "run-1", topology_group=gid)["world_id"]
+    w = f.create_world(s, "run-1")["world_id"]
     f.start_world(w, grp_owner)
+    gid = f.create_read_scope(grp_owner, name="executed corpus")["scope_id"]
+    f.add_scope_worlds(gid, [w], client_id=grp_owner)
     e = f.create_experiment(w, {"x": 1}, client_id=grp_owner)["exp_id"]
     o = f.record_observation(w, e, {"score": 1}, "SURVIVED",
                              client_id=grp_owner)["obs_id"]
@@ -255,10 +260,10 @@ def test_an_ungranted_group_is_EMPTY_not_forbidden(f):
     foreign family member 404 rather than 403."""
     owner, gid, _w, _o, arch = _two_seats_one_group(f)
     out = f.read_worlds(arch, group_id=gid)
-    assert out["worlds"] == [] and out["groups"] == []
+    assert out["worlds"] == [] and out["scopes"] == []
 
 
-def test_only_the_groups_creator_may_grant(f):
+def test_only_the_scope_owner_may_grant(f):
     owner, gid, _w, _o, arch = _two_seats_one_group(f)
     with pytest.raises(NotFound):
         f.grant_read(gid, grantee_client_id=arch, granted_by=arch)
@@ -272,7 +277,7 @@ def test_a_grant_never_returns_your_OWN_worlds(f):
     exists to record."""
     owner, gid, w, _o, arch = _two_seats_one_group(f)
     s = f.create_session(arch, "arch")
-    mine = f.create_world(s, "mine", topology_group=gid)["world_id"]
+    mine = f.create_world(s, "mine")["world_id"]
     f.start_world(mine, arch)
     f.grant_read(gid, grantee_client_id=arch, granted_by=owner)
     ids = [x["world_id"] for x in f.read_worlds(arch)["worlds"]]
@@ -354,107 +359,173 @@ def test_observations_arrive_WITH_their_corpus_census(f):
 
 
 # ===========================================================================
-# D. family and arm survive fossilization
+# D. family and arm survive fossilization  (ARM RULING, 2026-09-06)
+#
+#   execution parameters    -> sealed execution spec (spec_hash)
+#   family + arm assignment -> separately sealed experimental design
+#   execution <-> design    -> audit envelope, preserved in PEW
+#
+# The acceptance test the ruling names is the load-bearing one: the SAME
+# execution hash must be able to appear under labels A and B. That is only
+# possible because the arm lives in the design, not in the spec -- folding the
+# label into the spec would make identical executions hash differently and
+# destroy the comparison the design exists to support.
 # ===========================================================================
-def _campaign(f, arm_key="arm"):
+def _campaign(f, arms=("A", "A", "B", "B"), declared=None):
     c = f.create_client("archaeon")
     s = f.create_session(c, "camp")
-    fam = f.create_family(client_id=c, kind="comparison",
-                          manifest={"planned_members": 4, "arm_key": arm_key})
+    manifest = {"planned_members": len(arms)}
+    if declared is not None:
+        manifest["arms"] = declared
+    fam = f.create_family(client_id=c, kind="comparison", manifest=manifest)
     exps = []
-    for i in range(4):
+    for i, arm in enumerate(arms):
         w = f.create_world(s, "w%d" % i)["world_id"]
         f.start_world(w, c)
-        e = f.create_experiment(w, {"arm": "A" if i < 2 else "B", "i": i},
+        # IDENTICAL execution spec in every arm -- the point of the ruling
+        e = f.create_experiment(w, {"procedure": "bitstring", "length": 24},
                                 client_id=c)["exp_id"]
         f.record_observation(w, e, {"score": i}, "SURVIVED", client_id=c)
         f.add_family_member(fam["family_id"], member_kind="experiment",
                             member_id=e,
                             role="selected" if i == 0 else "alternative",
-                            client_id=c)
+                            arm=arm, client_id=c)
         exps.append((w, e))
     return c, fam["family_id"], exps
 
 
-def test_arms_are_counted_from_SEALED_specs(f):
-    """An arm label must be un-reassignable once results are in, so the engine
-    reads it from the spec -- frozen by spec_hash at commit -- not from a
-    mutable field."""
-    c, fid, _e = _campaign(f)
+def test_ACCEPTANCE_the_same_execution_hash_under_labels_A_and_B(f):
+    """THE RULING'S ACCEPTANCE TEST. Members with a byte-identical execution
+    spec -- and therefore an identical spec_hash -- sit in different arms. If
+    the arm lived in the spec this would be impossible."""
+    c, fid, exps = _campaign(f)
+    by_id = {e: (w, e) for w, e in exps}
+    hashes = {f.get_experiment(w, e, client_id=c)["spec_hash"]
+              for w, e in exps}
+    assert len(hashes) == 1, "the executions must be identical: %r" % hashes
+
+    fam = f.get_family(fid, client_id=c)
+    assert fam["arms"]["counts"] == {"A": 2, "B": 2}
+    assert fam["arms"]["distinct_arms"] == 2
+    assert fam["arms"]["balanced"] is True
+    assert fam["arms"]["unassigned"] == 0
+
+    by_arm = {}
+    for m in fam["members"]:
+        by_arm.setdefault(m["arm"], []).append(m["member_id"])
+    wa, ea = by_id[by_arm["A"][0]]
+    wb, eb = by_id[by_arm["B"][0]]
+    assert f.get_experiment(wa, ea, client_id=c)["spec_hash"] == \
+        f.get_experiment(wb, eb, client_id=c)["spec_hash"]
+
+
+def test_ACCEPTANCE_reassignment_after_commitment_is_refused(f):
+    """A member whose arm can move once the results are in is the whole
+    failure this binding exists to prevent."""
+    c, fid, exps = _campaign(f)
+    _w, e = exps[0]
+    again = f.add_family_member(fid, member_kind="experiment", member_id=e,
+                                role="selected", arm="A", client_id=c)
+    assert again["already_member"] is True
+    with pytest.raises(ConflictError) as ei:
+        f.add_family_member(fid, member_kind="experiment", member_id=e,
+                            role="selected", arm="B", client_id=c)
+    assert "append-only" in str(ei.value)
+
+
+def test_the_manifest_can_SEAL_the_arm_vocabulary(f):
+    """PAIRED. An arm outside the design the manifest sealed was never part of
+    that design, so it is refused at membership rather than counted."""
+    c, fid, _e = _campaign(f, arms=("A", "B"), declared=["A", "B"])
+    s = f.create_session(c, "x")
+    w = f.create_world(s, "extra")["world_id"]
+    f.start_world(w, c)
+    e = f.create_experiment(w, {"procedure": "bitstring"},
+                            client_id=c)["exp_id"]
+    with pytest.raises(ValidationError) as ei:
+        f.add_family_member(fid, member_kind="experiment", member_id=e,
+                            role="executed", arm="C", client_id=c)
+    assert "sealed manifest" in str(ei.value)
+    ok = f.add_family_member(fid, member_kind="experiment", member_id=e,
+                             role="executed", arm="B", client_id=c)
+    assert ok["arm"] == "B"
+
+
+def test_an_unbalanced_design_says_so(f):
+    c, fid, _e = _campaign(f, arms=("A", "A", "A", "B"))
     arms = f.get_family(fid, client_id=c)["arms"]
-    assert arms["arm_key"] == "arm"
-    assert arms["counts"] == {"A": 2, "B": 2}
-    assert arms["distinct_arms"] == 2 and arms["unresolved"] == 0
-    assert arms["balanced"] is True
-
-
-def test_an_unbalanced_family_says_so(f):
-    """PAIRED with the balanced case."""
-    c = f.create_client("a")
-    s = f.create_session(c, "s")
-    fam = f.create_family(client_id=c, kind="comparison", manifest={})
-    for i, arm in enumerate(["A", "A", "A", "B"]):
-        w = f.create_world(s, "w%d" % i)["world_id"]
-        f.start_world(w, c)
-        e = f.create_experiment(w, {"arm": arm}, client_id=c)["exp_id"]
-        f.add_family_member(fam["family_id"], member_kind="experiment",
-                            member_id=e, role="executed", client_id=c)
-    arms = f.get_family(fam["family_id"], client_id=c)["arms"]
     assert arms["counts"] == {"A": 3, "B": 1} and arms["balanced"] is False
 
 
-def test_the_manifest_declares_WHERE_the_arm_label_lives(f):
-    """The engine never guesses which key means arm."""
-    c, fid, _e = _campaign(f, arm_key="condition")
-    arms = f.get_family(fid, client_id=c)["arms"]
-    assert arms["arm_key"] == "condition"
-    assert arms["counts"] == {} and arms["unresolved"] == 4
-
-
-def test_a_world_member_is_unresolved_not_guessed(f):
-    """Worlds have no spec. A label attached to a world could be changed after
-    the results are in, which is the thing this prevents."""
+def test_an_arm_smuggled_into_the_EXECUTION_spec_is_a_conflict(f):
+    """Design inside the execution spec is exactly what the ruling separates.
+    If a spec carries the manifest's arm_key and disagrees with the sealed
+    assignment, the engine reports the disagreement -- comparing two declared
+    strings, not interpreting either."""
     c = f.create_client("a")
     s = f.create_session(c, "s")
     fam = f.create_family(client_id=c, kind="comparison", manifest={})
     w = f.create_world(s, "w")["world_id"]
     f.start_world(w, c)
+    e = f.create_experiment(w, {"arm": "B", "length": 24},
+                            client_id=c)["exp_id"]
+    f.add_family_member(fam["family_id"], member_kind="experiment",
+                        member_id=e, role="executed", arm="A", client_id=c)
+    arms = f.get_family(fam["family_id"], client_id=c)["arms"]
+    assert arms["counts"] == {"A": 1}
+    assert arms["spec_conflicts"] == [
+        {"member_id": e, "sealed_arm": "A", "spec_says": "B"}]
+
+    w2 = f.create_world(s, "w2")["world_id"]
+    f.start_world(w2, c)
+    e2 = f.create_experiment(w2, {"length": 24}, client_id=c)["exp_id"]
+    f.add_family_member(fam["family_id"], member_kind="experiment",
+                        member_id=e2, role="executed", arm="A", client_id=c)
+    assert len(f.get_family(fam["family_id"],
+                            client_id=c)["arms"]["spec_conflicts"]) == 1
+
+
+def test_a_member_with_no_arm_is_unassigned_not_guessed(f):
+    c = f.create_client("a")
+    s = f.create_session(c, "s")
+    fam = f.create_family(client_id=c, kind="campaign", manifest={})
+    w = f.create_world(s, "w")["world_id"]
+    f.start_world(w, c)
     f.add_family_member(fam["family_id"], member_kind="world", member_id=w,
                         role="executed", client_id=c)
     arms = f.get_family(fam["family_id"], client_id=c)["arms"]
-    assert arms["counts"] == {} and arms["unresolved"] == 1
+    assert arms["counts"] == {} and arms["unassigned"] == 1
 
 
 def test_the_fossil_carries_family_arm_and_selection_visibility(f):
-    """THE POINT OF THE RELEASE. A third party holding the exported envelope
-    has no SFE credential and cannot resolve a family_id, so membership must
-    travel BY VALUE or best-of-N goes invisible the moment the record leaves."""
+    """THE EXECUTION <-> DESIGN LINK the ruling requires PEW to preserve. A
+    third party holding the exported envelope has no SFE credential and cannot
+    resolve a family_id, so membership must travel BY VALUE."""
     c, fid, exps = _campaign(f)
     w, e = exps[0]
     env = f.audit_envelope(w, e, client_id=c)
-    fams = env["families"]
-    assert len(fams) == 1
-    m = fams[0]
+    assert len(env["families"]) == 1
+    m = env["families"][0]
     assert m["family_id"] == fid and m["family_kind"] == "comparison"
     assert m["role"] == "selected" and m["arm"] == "A"
-    assert m["arm_key"] == "arm"
     assert m["family_member_count"] == 4
     assert m["selected"] == 1 and m["alternatives"] == 3
     assert m["selection_visible"] is True
-    assert m["manifest_hash"] == content_hash({"planned_members": 4,
-                                               "arm_key": "arm"})
+    assert m["manifest_hash"] == content_hash({"planned_members": 4})
+    assert env["experiment"]["spec_hash"] == env["spec_hash_recomputed"]
 
 
 def test_the_envelope_hash_seals_the_family_block(f):
     """Membership is inside envelope_hash, so a fossil cannot be re-attributed
-    to a different family after export without breaking its own seal."""
+    to a different family -- or a different ARM -- after export without
+    breaking its own seal."""
     c, fid, exps = _campaign(f)
     w, e = exps[0]
     env = f.audit_envelope(w, e, client_id=c)
     body = {k: v for k, v in env.items() if k != "envelope_hash"}
     assert content_hash(body) == env["envelope_hash"]
     tampered = dict(body)
-    tampered["families"] = []
+    tampered["families"] = [dict(env["families"][0], arm="B")]
     assert content_hash(tampered) != env["envelope_hash"]
 
 
@@ -465,6 +536,69 @@ def test_an_experiment_in_no_family_carries_an_empty_list(f):
     e = f.create_experiment(w, {"x": 1}, client_id=c)["exp_id"]
     env = f.audit_envelope(w, e, client_id=c)
     assert env["families"] == []
+
+
+def test_ordered_replication_for_a_2x2x2x4_design(f):
+    """The ruling's 2x2x2x4: eight cells, four ordered repeats each, 32
+    observations. Repeats 2-4 in every cell must be typed as REPLICATION and
+    must never re-adjudicate the original -- and the recorded order has to
+    survive."""
+    c = f.create_client("a")
+    s = f.create_session(c, "s")
+    total, cells = 0, []
+    for i in range(8):                                   # 2 x 2 x 2
+        w = f.create_world(s, "cell%d" % i)["world_id"]
+        f.start_world(w, c)
+        h = f.propose_hypothesis(w, "cell %d" % i, client_id=c)
+        hid = h["hyp_id"] if isinstance(h, dict) else h
+        p = f.register_prediction(w, hid, {"expect": i}, client_id=c)
+        pid = p["pred_id"] if isinstance(p, dict) else p
+        e = f.create_experiment(w, {"cell": i}, client_id=c, hyp_id=hid,
+                                pred_id=pid)["exp_id"]
+        ids = []
+        for rep in range(4):                             # x 4 ordered repeats
+            o = f.record_observation(
+                w, e, {"repeat_index": rep, "score": rep / 4.0}, "SURVIVED",
+                client_id=c, pred_id=pid, replication=(rep > 0))
+            ids.append(o["obs_id"] if isinstance(o, dict) else o)
+            total += 1
+        cells.append((w, e, ids))
+
+    assert total == 32
+    for w, e, ids in cells:
+        obs = f.list_observations(w, client_id=c)
+        assert len(obs) == 4
+        assert [o["obs_id"] for o in obs] == ids           # ORDER preserved
+        assert [o["content"]["repeat_index"] for o in obs] == [0, 1, 2, 3]
+        roles = [o["evidence_role"] for o in obs]
+        assert roles[0] == "ORIGINAL", roles
+        assert set(roles[1:]) == {"REPLICATION"}, roles
+        # ALL FOUR are pred_prospective, and that is correct rather than a
+        # bug: prospectivity is a fact about the PREDICTION's ordering
+        # (registered before the commit), so it holds for every observation
+        # binding it. What separates the original adjudication from its
+        # retests is evidence_role, asserted above -- not this flag. Recorded
+        # explicitly so nobody later "fixes" the engine to make it 1.
+        assert all(o["pred_prospective"] for o in obs)
+
+
+def test_an_unmarked_repeat_is_refused(f):
+    """PAIRED with the ordered design: replication is TYPED, never inferred
+    from a duplicate."""
+    c = f.create_client("a")
+    s = f.create_session(c, "s")
+    w = f.create_world(s, "w")["world_id"]
+    f.start_world(w, c)
+    h = f.propose_hypothesis(w, "h", client_id=c)
+    hid = h["hyp_id"] if isinstance(h, dict) else h
+    p = f.register_prediction(w, hid, {"e": 1}, client_id=c)
+    pid = p["pred_id"] if isinstance(p, dict) else p
+    e = f.create_experiment(w, {"x": 1}, client_id=c, hyp_id=hid,
+                            pred_id=pid)["exp_id"]
+    f.record_observation(w, e, {"i": 0}, "SURVIVED", client_id=c, pred_id=pid)
+    with pytest.raises(ConflictError):
+        f.record_observation(w, e, {"i": 1}, "SURVIVED", client_id=c,
+                             pred_id=pid)
 
 
 # ===========================================================================
@@ -487,10 +621,10 @@ def test_the_v7_surface_is_live_and_session_gated(tmp_path):
     assert c.get("/v2/measurements/%s" % mid, headers=h).status_code == 200
     assert c.get("/v2/measurements", headers=h).json()["measurements"]
 
-    gid = c.post("/v2/topology-groups", json={"note": "corpus"},
-                 headers=h).json()["group_id"]
+    gid = c.post("/v2/read/scopes", json={"name": "corpus"},
+                 headers=h).json()["scope_id"]
     other = c.post("/v2/clients", json={"name": "arch"}).json()
-    g = c.post("/v2/topology-groups/%s/grants" % gid,
+    g = c.post("/v2/read/scopes/%s/grants" % gid,
                json={"grantee_client_id": other["client_id"]}, headers=h)
     assert g.status_code == 200, g.text
 
@@ -526,7 +660,9 @@ def test_a_foreign_session_key_is_refused_by_every_v7_route(tmp_path):
             ("GET", "/v2/read/worlds"), ("GET", "/v2/read/observations"),
             ("GET", "/v2/read/grants"),
             ("POST", "/v2/read/grants/gnt_x/revoke"),
-            ("POST", "/v2/topology-groups/grp_x/grants"),
+            ("POST", "/v2/read/scopes/scp_x/grants"),
+            ("POST", "/v2/read/scopes"), ("GET", "/v2/read/scopes"),
+            ("POST", "/v2/read/scopes/scp_x/worlds"),
             ("GET", "/v2/worlds/wld_x/observations/obs_x/measured/mea_x")]:
         r = a.request(method, path, json={}, headers=foreign)
         assert r.status_code in (421, 422), \

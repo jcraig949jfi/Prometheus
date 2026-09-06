@@ -267,6 +267,11 @@ class FamilyMemberAdd(_Body):
     member_id: str
     role: Optional[str] = None      # planned | executed | abandoned |
                                     # selected | alternative
+    # ARM RULING (v7). The arm is part of the sealed DESIGN, not of the
+    # execution spec, so two members in different arms may carry an IDENTICAL
+    # execution spec_hash. Append-only: reassignment after commitment is 409.
+    # If the family manifest declares `arms`, an arm outside it is refused.
+    arm: Optional[str] = None
 
 
 class ClaimCreate(_Body):
@@ -332,10 +337,23 @@ class MeasurementCreate(_Body):
 
 
 class ReadGrantCreate(_Body):
-    """v7 cross-seat read contract. READ ONLY, scoped to a topology group,
-    revocable. Only the group's creator may grant."""
+    """v7 cross-seat read contract. READ ONLY, scoped to a READ SCOPE,
+    revocable. Only the scope's owner may grant."""
     grantee_client_id: str
     note: Optional[str] = None
+
+
+class ReadScopeCreate(_Body):
+    """A curated set of your OWN worlds, existing only to be granted for
+    reading. Deliberately not a topology group: that field gates _may_cross,
+    so granting read over one would confer artifact-import eligibility as a
+    side effect, and it would require mutating worlds that already exist."""
+    name: str
+    note: Optional[str] = None
+
+
+class ReadScopeWorlds(_Body):
+    world_ids: list[str]
 
 
 class WorkComplete(_Body):
@@ -1002,7 +1020,7 @@ def create_app(db_path: str, *, registration_open: bool = True,
                           f: Foundry = Depends(get_foundry)):
         return f.add_family_member(fid, member_kind=body.member_kind,
                                    member_id=body.member_id, role=body.role,
-                                   client_id=cid)
+                                   arm=body.arm, client_id=cid)
 
     @app.post("/v2/families/{fid}/close")
     def close_family(fid: str, _sess: dict = Depends(session_ctx),
@@ -1084,12 +1102,34 @@ def create_app(db_path: str, *, registration_open: bool = True,
         return f.read_measured_value(wid, obs_id, mid, client_id=cid)
 
     # -- v7 cross-seat read contract ---------------------------------------
-    @app.post("/v2/topology-groups/{gid}/grants")
-    def grant_read(gid: str, body: ReadGrantCreate,
+    @app.post("/v2/read/scopes")
+    def create_read_scope(body: ReadScopeCreate,
+                          _sess: dict = Depends(session_ctx),
+                          cid: str = Depends(auth),
+                          f: Foundry = Depends(get_foundry)):
+        return f.create_read_scope(cid, name=body.name, note=body.note)
+
+    @app.get("/v2/read/scopes")
+    def list_read_scopes(_sess: dict = Depends(session_ctx),
+                         cid: str = Depends(auth),
+                         f: Foundry = Depends(get_foundry)):
+        return {"scopes": f.list_read_scopes(cid)}
+
+    @app.post("/v2/read/scopes/{sid}/worlds")
+    def add_scope_worlds(sid: str, body: ReadScopeWorlds,
+                         _sess: dict = Depends(session_ctx),
+                         cid: str = Depends(auth),
+                         f: Foundry = Depends(get_foundry)):
+        """Add worlds you OWN. Nothing is written on the world itself, so this
+        cannot alter what may cross between worlds."""
+        return f.add_scope_worlds(sid, body.world_ids, client_id=cid)
+
+    @app.post("/v2/read/scopes/{sid}/grants")
+    def grant_read(sid: str, body: ReadGrantCreate,
                    _sess: dict = Depends(session_ctx),
                    cid: str = Depends(auth),
                    f: Foundry = Depends(get_foundry)):
-        return f.grant_read(gid, grantee_client_id=body.grantee_client_id,
+        return f.grant_read(sid, grantee_client_id=body.grantee_client_id,
                             granted_by=cid, note=body.note)
 
     @app.post("/v2/read/grants/{grant_id}/revoke")
@@ -1105,7 +1145,7 @@ def create_app(db_path: str, *, registration_open: bool = True,
         return f.list_read_grants(cid)
 
     @app.get("/v2/read/worlds")
-    def read_worlds(group: Optional[str] = None, limit: int = 500,
+    def read_worlds(scope: Optional[str] = None, limit: int = 500,
                     _sess: dict = Depends(session_ctx),
                     cid: str = Depends(auth),
                     f: Foundry = Depends(get_foundry)):
@@ -1115,10 +1155,10 @@ def create_app(db_path: str, *, registration_open: bool = True,
         owner-scoped routes would make an ordinary read quietly start returning
         another seat's rows, and no caller would see the change. Here the
         cross-tenancy is in the URL."""
-        return f.read_worlds(cid, group_id=group, limit=limit)
+        return f.read_worlds(cid, group_id=scope, limit=limit)
 
     @app.get("/v2/read/observations")
-    def read_observations(group: Optional[str] = None,
+    def read_observations(scope: Optional[str] = None,
                           world_id: Optional[str] = None,
                           evidence_class: Optional[str] = None,
                           limit: int = 1000,
@@ -1129,7 +1169,7 @@ def create_app(db_path: str, *, registration_open: bool = True,
         them. An archaeologist's first obligation is to say what population it
         drew from; the engine cannot stop a bad analysis but it can refuse to
         hand over rows without their provenance."""
-        return f.read_observations(cid, group_id=group, world_id=world_id,
+        return f.read_observations(cid, group_id=scope, world_id=world_id,
                                    evidence_class=evidence_class, limit=limit)
 
     @app.post("/v2/claims/{clm}/retract")
