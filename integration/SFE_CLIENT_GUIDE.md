@@ -339,6 +339,7 @@ readable?
 
 | | |
 |---|---|
+| **Automated producer / executor contract (Archaeon, Vivarium)** | `integration/SFE_CONTRACT_FOR_ARCHAEON_AND_VIVARIUM.md` |
 | Scientific provenance: families, claims, analysis, attestation (v6) | `SerendipityFoundry/SerendipityFoundryEngine/docs/SCIENTIFIC_PROVENANCE.md` |
 | Full REST reference, per-route examples | `SerendipityFoundry/SerendipityFoundryClient/docs/API.md` |
 | Connection/TLS/token detail | `SerendipityFoundry/SerendipityFoundryClient/docs/CONNECTING.md` |
