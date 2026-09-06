@@ -34,9 +34,9 @@ def test_enqueue_seals_the_hash_and_records_an_event(conn, schema):
 
 def test_claim_order_is_priority_then_created_at(conn, schema):
     low = _add(conn, schema, priority=200,
-               experiment_spec=make_spec(name="low"))
+               experiment_spec=make_spec(hypothesis="probe low"))
     high = _add(conn, schema, priority=10,
-                experiment_spec=make_spec(name="high"))
+                experiment_spec=make_spec(hypothesis="probe high"))
     got = _q.claim_next(conn, "w1", schema=schema)
     conn.commit()
     assert str(got["experiment_id"]) == high
@@ -50,9 +50,9 @@ def test_claim_order_is_priority_then_created_at(conn, schema):
 def test_not_before_is_respected(conn, schema):
     future = dt.datetime.now(dt.timezone.utc) + dt.timedelta(hours=1)
     _add(conn, schema, not_before=future, priority=1,
-         experiment_spec=make_spec(name="later"))
+         experiment_spec=make_spec(hypothesis="probe later"))
     now_id = _add(conn, schema, priority=100,
-                  experiment_spec=make_spec(name="now"))
+                  experiment_spec=make_spec(hypothesis="probe now"))
     assert str(_q.next_eligible(conn, schema=schema)["experiment_id"]) == now_id
     got = _q.claim_next(conn, "w1", schema=schema)
     conn.commit()
@@ -64,8 +64,8 @@ def test_not_before_is_respected(conn, schema):
 
 
 def test_only_one_experiment_may_be_active_globally(conn, schema):
-    _add(conn, schema, experiment_spec=make_spec(name="a"))
-    _add(conn, schema, experiment_spec=make_spec(name="b"))
+    _add(conn, schema, experiment_spec=make_spec(hypothesis="probe a"))
+    _add(conn, schema, experiment_spec=make_spec(hypothesis="probe b"))
     first = _q.claim_next(conn, "w1", schema=schema)
     conn.commit()
     assert first is not None
@@ -77,7 +77,7 @@ def test_only_one_experiment_may_be_active_globally(conn, schema):
 def test_concurrent_claim_attempts_do_not_double_run(conn, schema):
     """Two independent connections race for one item. Exactly one wins, and
     the loser is refused by the database, not by a timing accident."""
-    eid = _add(conn, schema, experiment_spec=make_spec(name="contested"))
+    eid = _add(conn, schema, experiment_spec=make_spec(hypothesis="probe contested"))
     a, b = _db.connect(), _db.connect()
     try:
         got_a = _q.claim_next(a, "worker-a", schema=schema)

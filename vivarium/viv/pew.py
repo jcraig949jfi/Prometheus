@@ -61,9 +61,24 @@ class PewClient:
 
 
 def write_encounter(client: PewClient, *, spec: dict, run, engine: dict,
-                    producer_version: str) -> dict:
+                    producer_version: str, relation: dict = None) -> dict:
     """Write the world anchor and the fossil encounter. Returns a record with
     `pew_reference` when the encounter was persisted.
+
+    HANDLES FAILURES AS WELL AS RESULTS. A run that crossed the execution
+    boundary and then failed is fossilized too: the endpoint that matters to a
+    selection experiment is "failures discovered per experiment EXECUTED", and
+    that requires `executed` to be countable from the fossil record rather than
+    only from the queue. Such a fossil carries `failure_class` and NO invented
+    outcome -- absence of a result is recorded as absence, and the anchor is
+    EXPERIMENT_COMMITTED, which attests that execution was attempted and
+    nothing about a measurement that never happened.
+
+    `relation` is the PROVENANCE half -- experiment_id, request_key, family,
+    arm, replication_of, candidate set. It travels in the producer block, which
+    is what lets an archaeologist get from a fossil back to the request and
+    hence to the policy that proposed it. It reaches PEW and never the
+    executor.
 
     HTTP 200 is not treated as persistence: the encounter is read back and the
     reference is only issued if the read-back succeeds."""
@@ -72,13 +87,16 @@ def write_encounter(client: PewClient, *, spec: dict, run, engine: dict,
     if not anchor.get("resolved"):
         raise PewError("refusing to write a fossil with an unresolved SFE "
                        "anchor: %s" % anchor.get("reason"))
+    failed = run.failure_class is not None
 
     # The requester may ADD producer fields; it may not overwrite the identity
     # of what actually produced the record. Vivarium's own keys go last.
     producer = {**dict(pew.get("producer") or {}),
                 "component": "vivarium.runner", "version": producer_version,
                 "engine_source_hash": engine.get("engine_source_hash"),
-                "spec_hash": run.summary.get("spec_hash")}
+                "spec_hash": run.summary.get("spec_hash") or run.spec_hash_hint,
+                "queue": {k: v for k, v in (relation or {}).items()
+                          if v is not None}}
 
     envelope = run.summary.get("audit_envelope") or {}
     head_hash = envelope.get("ledger_head_hash")
@@ -109,10 +127,21 @@ def write_encounter(client: PewClient, *, spec: dict, run, engine: dict,
         "sfe_world_id": run.world_id, "world_id": run.world_id,
         "players": list(pew["players"]),
         "seed": str(spec["world"]["seed_root"]),
-        "outcome": run.outcome,
-        "resources_used": {"work_id": run.work_id, "obs_id": run.obs_id},
+        "resources_used": {"work_id": run.work_id, "obs_id": run.obs_id,
+                           "attempted": True},
         "namespace": client.namespace,
         "producer": producer}
+    if failed:
+        # No outcome. The pew.fossil.v2 contract permits outcome to be the work
+        # item's TERMINAL STATUS, which is an observed fact -- but only when one
+        # was observed. Where nothing was, the field is omitted rather than
+        # filled, because "absence of a result" and "a result of failure" are
+        # different claims and only the first one is true.
+        enc_body["failure_class"] = run.failure_class
+        if run.work_id is not None:
+            enc_body["outcome"] = "FAILED"
+    else:
+        enc_body["outcome"] = run.outcome
     for key, value in (("sfe_engine_instance_id",
                         engine.get("engine_instance_id")),
                        ("sfe_ledger_head_hash", head_hash),
@@ -132,6 +161,7 @@ def write_encounter(client: PewClient, *, spec: dict, run, engine: dict,
 
     return {"pew_reference": "pew:encounter/%s:%s"
                              % (pew["encounter_id"], run.run_id),
+            "failure_class": run.failure_class,
             "world_anchor": world_anchor,
             "encounter": {"http": status, "body": body},
             "read_back": {"http": read_status}}

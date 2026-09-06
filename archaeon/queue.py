@@ -77,16 +77,37 @@ def proposal_id(spec_hash: str, corpus_hash: str, mode: str) -> str:
     return "AX-" + hashlib.sha256(blob).hexdigest()[:12]
 
 
+class QueueRetired(Exception):
+    """archaeon.experiment_queue is retired; there is one register now."""
+
+
 def enqueue(conn, *, spec: Dict[str, Any], source_reason: str,
             source_evidence: Dict[str, Any],
             created_by: str = "archaeon",
             config: Optional[cfg.ArchaeonConfig] = None,
             ) -> Tuple[str, cad.CadenceDecision]:
-    """Write one proposal. Returns (proposal_id, decision).
+    """RETIRED 2026-09-06. Refuses to write.
 
-    Raises ``cad.CadenceRefused`` when the cadence layer declines -- which is a
-    scheduling outcome, not a scientific one.
+    Two live queues meant Archaeon's proposals went nowhere. The single
+    canonical pre-execution register is now viv.research_experiment_queue;
+    write to it with ``archaeon.vivqueue.submit``, which preserves cadence,
+    declares the experimental relation in COLUMNS rather than in the sealed
+    spec, and registers a candidate set atomically.
+
+    This function is left in place, refusing, rather than deleted: a deleted
+    function is a silent behaviour change for any caller that still imports it,
+    and this raises with the replacement named.
     """
+    raise QueueRetired(
+        "archaeon.experiment_queue is retired and this writer refuses. Use "
+        "archaeon.vivqueue.submit(conn, candidates=[...], selected_index=..., "
+        "source_reason=...) which writes to viv.research_experiment_queue, "
+        "the single canonical pre-execution register.")
+
+
+def _enqueue_retired_body(conn, *, spec, source_reason, source_evidence,
+                          created_by="archaeon", config=None):
+    """The original body, kept for reference only. Never called."""
     config = config or cfg.DEFAULT
     if source_reason not in ("weak_signal", "exploration", "human"):
         raise ValueError("source_reason must be weak_signal|exploration|human")

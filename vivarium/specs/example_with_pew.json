@@ -1,8 +1,6 @@
 {
-  "spec_version": 1,
-  "experiment_kind": "onemax_probe",
+  "spec_version": 2,
   "world": {
-    "name": "vivarium-pew-bringup",
     "seed_root": 424242
   },
   "hypothesis": "the all-zeros candidate does not solve the seed-424242 onemax landscape",
@@ -22,18 +20,15 @@
     "op": "==",
     "value": false,
     "if_true": "SURVIVED",
-    "if_false": "FALSIFIED"
+    "if_false": "FALSIFIED",
+    "if_indeterminate": "INCONCLUSIVE"
   },
-  "notes": "PEW bring-up probe. namespace=test. The encounter_id and player id are SYNTHETIC bring-up identities, not Proteus lineage.",
   "pew": {
     "encounter_id": "enc_viv_bringup_849a5b7710721bfa",
     "players": [
       "org_viv_bringup_c485973d37634c9b"
     ],
     "world_binding_id": "vivarium-pew-bringup",
-    "required": true,
-    "producer": {
-      "component": "vivarium.bringup"
-    }
+    "required": true
   }
 }

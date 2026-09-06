@@ -36,6 +36,27 @@ import hashlib
 import json
 from typing import Any, Dict, List, Optional
 
+
+# ---------------------------------------------------------------------------
+# THE SEALED SPEC CONTAINS EXACTLY THE EXECUTION INPUTS.
+# PROVENANCE LIVES OUTSIDE THE HASH.  (2026-09-06, Vivarium Tier 1)
+#
+# `archaeon` metadata (which detector fired, the intent, the chart) and the
+# spec's own hash used to sit INSIDE the spec. Both are now split out:
+#
+#   * the detector is the POLICY that proposed the experiment. Inside the
+#     sealed spec it changes spec_hash without changing what is executed, so a
+#     fossil-directed row and a random-control row running identical science
+#     would get different hashes and any spec_hash-derived universe would split
+#     along the arm boundary -- the exact confound that would make "policy C
+#     beat policy A" unattributable to selection (Harmonia S14/S18).
+#   * a hash may not live inside the object it hashes: with spec_hash embedded,
+#     Archaeon's value could never equal the content_hash SFE seals at commit.
+#
+# The metadata is returned separately and belongs in source_evidence, which is
+# a queue column: immutable, recorded, archaeologically readable, unhashed.
+# ---------------------------------------------------------------------------
+
 from .detectors.base import Signal
 from .rank import Candidate
 
@@ -91,22 +112,24 @@ def build_spec(cand: Candidate, corpus) -> Dict[str, Any]:
         "players": list(sig.players),
         "target": raw_target,
         "hold_fixed": held,
-        # ---- Archaeon's own metadata ------------------------------------
-        "archaeon": {
-            "detector": sig.detector,
+    }
+
+    # `controls` is ALWAYS present, [] when there are none: a probe with no
+    # controls and a probe whose controls were forgotten are different
+    # experiments, and only an explicit empty list says which was requested.
+    spec["controls"] = _controls(sig, corpus, scales)
+    return spec
+
+
+def probe_provenance(cand: Candidate, corpus) -> Dict[str, Any]:
+    """Which policy proposed this probe. PROVENANCE -- a queue column, never
+    inside the sealed spec. See the note at the top of this module."""
+    sig = cand.primary
+    return {"detector": sig.detector,
             "detector_version": sig.detector_version,
             "intent": sig.intent,
             "chart": corpus.chart.name,
-            "co_firing_detectors": cand.detectors,
-        },
-    }
-
-    controls = _controls(sig, corpus, scales)
-    if controls:
-        spec["controls"] = controls
-
-    spec["spec_hash"] = _hash(spec)
-    return spec
+            "co_firing_detectors": cand.detectors}
 
 
 def _controls(sig: Signal, corpus, scales) -> List[Dict[str, Any]]:

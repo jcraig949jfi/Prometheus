@@ -1,10 +1,27 @@
 {
-  "spec_version": 1,
-  "experiment_kind": "onemax_probe",
-  "world": {"name": "vivarium-example-onemax", "seed_root": 424242},
+  "spec_version": 2,
+  "world": {
+    "seed_root": 424242
+  },
   "hypothesis": "the all-zeros candidate does not solve the seed-424242 onemax landscape",
-  "prediction": {"solved": false, "basis": "24 independent bit positions, target derived from the seed"},
-  "work": {"kind": "evaluate_bitstring", "payload": {"bits": "000000000000000000000000", "length": 24}},
-  "outcome_rule": {"field": "solved", "op": "==", "value": false, "if_true": "SURVIVED", "if_false": "FALSIFIED"},
-  "notes": "Reference spec. Archaeon authors these; Vivarium only runs them."
+  "prediction": {
+    "solved": false,
+    "basis": "24 independent bit positions, target derived from the seed"
+  },
+  "work": {
+    "kind": "evaluate_bitstring",
+    "payload": {
+      "bits": "000000000000000000000000",
+      "length": 24
+    }
+  },
+  "outcome_rule": {
+    "field": "solved",
+    "op": "==",
+    "value": false,
+    "if_true": "SURVIVED",
+    "if_false": "FALSIFIED",
+    "if_indeterminate": "INCONCLUSIVE"
+  },
+  "pew": null
 }

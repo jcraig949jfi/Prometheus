@@ -23,7 +23,8 @@ import sys
 from typing import Any, Dict, Optional
 
 from . import config as cfg
-from . import detectors, explore, fossils, propose, provenance, queue, rank
+from . import (detectors, explore, fossils, propose, provenance,
+               queue, rank, vivqueue)
 from .cadence import CadenceRefused
 from .clock import iso, utc_day_str
 
@@ -47,11 +48,13 @@ def plan(corpus, config: Optional[cfg.ArchaeonConfig] = None,
     if candidates:
         chosen = candidates[0]
         spec = propose.build_spec(chosen, corpus)
+        policy_prov = propose.probe_provenance(chosen, corpus)
         ev = provenance.signal_provenance(
             corpus=corpus, config=config, chosen=chosen,
             all_candidates=candidates, census=census)
         return {"mode": "weak_signal", "source_reason": "weak_signal",
                 "spec": spec, "source_evidence": ev,
+                "policy_provenance": policy_prov,
                 "n_signals": len(signals), "n_candidates": len(candidates),
                 "census": census, "day": day, "planned_at": iso()}
 
@@ -63,10 +66,12 @@ def plan(corpus, config: Optional[cfg.ArchaeonConfig] = None,
                 "census": census, "day": day, "planned_at": iso()}
 
     spec = explore.build_spec(selection, corpus)
+    policy_prov = explore.exploration_policy_provenance(selection, corpus)
     ev = provenance.exploration_provenance(
         corpus=corpus, config=config, selection=selection, census=census)
     return {"mode": "exploration", "source_reason": "exploration",
             "spec": spec, "source_evidence": ev,
+            "policy_provenance": policy_prov,
             "n_signals": 0, "n_candidates": 0,
             "census": census, "day": day, "planned_at": iso()}
 
@@ -83,16 +88,25 @@ def cycle(conn, corpus=None, config: Optional[cfg.ArchaeonConfig] = None
         return {"enqueued": False, "reason": "no legal experiment constructible",
                 "plan": p}
 
+    # Writes to viv.research_experiment_queue, the single canonical
+    # pre-execution register. archaeon.experiment_queue is retired and
+    # queue.enqueue now refuses. The policy metadata that used to sit INSIDE
+    # the spec rides in source_evidence, which is a column and is never hashed.
+    evidence = dict(p["source_evidence"] or {})
+    if p.get("policy_provenance"):
+        evidence["policy_provenance"] = p["policy_provenance"]
+    cand = vivqueue.make_candidate(p["spec"], source_evidence=evidence)
     try:
-        pid, decision = queue.enqueue(
-            conn, spec=p["spec"], source_reason=p["source_reason"],
-            source_evidence=p["source_evidence"], config=config)
+        out = vivqueue.submit(conn, candidates=[cand], selected_index=0,
+                              source_reason=p["source_reason"], config=config)
     except CadenceRefused as exc:
         return {"enqueued": False, "reason": "cadence",
                 "decision": exc.decision.to_json(), "plan": p}
 
-    return {"enqueued": True, "proposal_id": pid,
-            "decision": decision.to_json(), "plan": p}
+    return {"enqueued": True,
+            "experiment_id": out["selected_experiment_id"],
+            "candidate_set_id": out["candidate_set_id"],
+            "decision": out["decision"], "plan": p}
 
 
 def _connect():

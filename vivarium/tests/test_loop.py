@@ -23,13 +23,15 @@ class FakeRunner:
         self.engine_identity = {"engine_source_hash": "sha256:fake",
                                 "source_commit": "0" * 40}
 
-    def run(self, row, *, on_running=None, **_kw):
-        eid = str(row["experiment_id"])
+    def run(self, request, *, on_running=None, **_kw):
+        from viv.request import ExecutionRequest
+        assert isinstance(request, ExecutionRequest),             "the loop must hand the runner an ExecutionRequest, never a row"
+        eid = request.experiment_id
         self.runs.append(eid)
         exp_id = "exp_%s" % eid[:12].replace("-", "")
         if on_running is not None:
             on_running(exp_id, {"world_id": "wld_fake"})
-        if row["experiment_spec"]["world"]["name"] in self.fail_on:
+        if request.spec["hypothesis"] in self.fail_on:
             raise RuntimeError("world refused to start")
         return RunResult(
             world_id="wld_fake", sfe_experiment_id=exp_id,
@@ -39,7 +41,9 @@ class FakeRunner:
                     "sfe_entry_hash": "sha256:" + "a" * 64,
                     "sfe_event_seq": 1},
             work_result={"ok": True},
-            summary={"exp_id": exp_id, "outcome": "INCONCLUSIVE"})
+            spec_hash_hint=request.spec_hash, crossed_boundary=True,
+            summary={"exp_id": exp_id, "outcome": "INCONCLUSIVE",
+                     "spec_hash": request.spec_hash})
 
 
 def _viv(schema, runner):
@@ -49,7 +53,7 @@ def _viv(schema, runner):
 
 def _add(conn, schema, name, **kw):
     eid = _q.enqueue(conn, created_by="archaeon-test", source_reason="loop test",
-                     experiment_spec=make_spec(name=name), schema=schema, **kw)
+                     experiment_spec=make_spec(hypothesis="probe %s" % (name,)), schema=schema, **kw)
     conn.commit()
     return eid
 
@@ -93,7 +97,7 @@ def test_two_queued_experiments_execute_serially(conn, schema):
 def test_a_failure_is_preserved_and_the_queue_moves_on(conn, schema):
     bad = _add(conn, schema, "explodes", priority=10)
     good = _add(conn, schema, "fine", priority=20)
-    runner = FakeRunner(fail_on={"explodes"})
+    runner = FakeRunner(fail_on={"probe explodes"})
     v = _viv(schema, runner)
 
     assert v.cycle(conn) == bad
@@ -178,7 +182,7 @@ def test_pew_is_written_when_declared(conn, schema):
                 return 200, {"encounter_id": "enc_1"}
             return 200, {"status": "inserted"}
 
-    spec = make_spec(name="pew-world")
+    spec = make_spec(hypothesis="probe pew-world")
     spec["pew"] = {"encounter_id": "enc_1", "players": ["org_1"]}
     eid = _q.enqueue(conn, created_by="archaeon-test", source_reason="pew",
                      experiment_spec=spec, schema=schema)
@@ -208,7 +212,7 @@ def test_pew_failure_is_not_fatal_unless_the_spec_says_so(conn, schema):
             return 500, {"detail": "pew is down"}
 
     for required, expected in ((False, "completed"), (True, "failed")):
-        spec = make_spec(name="pew-%s" % required)
+        spec = make_spec(hypothesis="probe %s" % ("pew-%s" % required,))
         spec["pew"] = {"encounter_id": "enc_%s" % required,
                        "players": ["org_1"], "required": required}
         eid = _q.enqueue(conn, created_by="t", source_reason="t",

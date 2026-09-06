@@ -49,7 +49,42 @@ from . import config as cfg
 from .queue import (NegativeAuthorityViolation,  # re-exported: same guard
                     assert_no_negative_authority)
 
-QUEUE = "viv.research_experiment_queue"
+def _schema() -> str:
+    """The queue schema, resolved through Vivarium's own resolver.
+
+    Corrected 2026-09-06 (Vivarium). This was the constant string "viv", so
+    Archaeon's writer had NO way to target a test schema -- and its test suite
+    therefore wrote into the PRODUCTION canonical register. 245 rows arrived
+    there in one run, and a live Vivarium cycle picked one up and tried to
+    execute it. It failed validation and nothing was harmed, but a
+    well-formed test row would have executed against the real engine and
+    written a real PEW fossil. A register that a test suite can inject into is
+    not a register. Honouring VIV_SCHEMA closes it, and Archaeon's conftest
+    now sets one."""
+    import sys
+    from pathlib import Path
+    vivdir = str(Path(__file__).resolve().parent.parent / "vivarium")
+    if vivdir not in sys.path:
+        sys.path.insert(0, vivdir)
+    from viv import db as _vdb              # noqa: PLC0415
+    return _vdb.schema()
+
+
+def _queue() -> str:
+    return _schema() + ".research_experiment_queue"
+
+
+class _Q:
+    """`QUEUE` kept as a name for readability; it now resolves per call."""
+
+    def __str__(self):
+        return _queue()
+
+    def format(self, **kw):                 # for '...{q}...'.format(q=QUEUE)
+        return str(self)
+
+
+QUEUE = _Q()
 AUTONOMOUS_REASONS = cad.AUTONOMOUS_REASONS
 
 # Columns Vivarium's migration 002 must have created. Archaeon NEVER creates
@@ -126,9 +161,23 @@ def assert_spec_is_execution_only(spec: Dict[str, Any]) -> None:
 
 # --------------------------------------------------------------------------
 def _spec_hash(spec: Dict[str, Any]) -> str:
-    blob = json.dumps(spec, sort_keys=True, separators=(",", ":"),
-                      default=str)
-    return "sha256:" + hashlib.sha256(blob.encode("utf-8")).hexdigest()
+    """The canonicalization VIVARIUM and SFE use, imported rather than copied.
+
+    Corrected 2026-09-06 (Vivarium). The local copy omitted
+    ``ensure_ascii=False``, so Python escaped every non-ASCII character and
+    Archaeon's hash diverged from the one SFE seals at commit for any spec
+    containing one -- a hypothesis with an accent was enough. The queue and
+    the ledger would then have been talking about different objects, silently
+    and only sometimes. There is now ONE implementation of the
+    canonicalization in the repo, and vivarium/tests/test_spec.py asserts it
+    against sfe.ids.content_hash."""
+    import sys
+    from pathlib import Path
+    vivdir = str(Path(__file__).resolve().parent.parent / "vivarium")
+    if vivdir not in sys.path:
+        sys.path.insert(0, vivdir)
+    from viv.spec import spec_hash as _canonical      # noqa: PLC0415
+    return _canonical(spec)
 
 
 def make_candidate(spec: Dict[str, Any], *,
@@ -180,7 +229,7 @@ def _evaluate_cadence(cur, ccfg: cfg.CadenceConfig) -> cad.CadenceDecision:
     last_any, since_any = cur.fetchone()
 
     detail: Dict[str, Any] = {
-        "lane": lane, "queue": QUEUE,
+        "lane": lane, "queue": str(QUEUE),
         "db_now": str(db_now), "db_utc_day": str(db_day),
         "autonomous_today": n_today,
         "max_per_utc_day": ccfg.max_per_utc_day,
@@ -274,7 +323,7 @@ def submit(conn, *, candidates: Sequence[Dict[str, Any]],
             decision = cad.CadenceDecision(
                 True, "ADMITTED", None,
                 {"note": "human row; autonomous quota does not apply",
-                 "created_by": created_by, "queue": QUEUE})
+                 "created_by": created_by, "queue": str(QUEUE)})
             ordinal = None
 
         ids: List[str] = []
@@ -312,7 +361,7 @@ def candidate_set(conn, candidate_set_id: str) -> Optional[Dict[str, Any]]:
     cur = conn.cursor()
     cur.execute("SELECT candidate_set_id, registered, cancelled, retained, "
                 "       registered_at, last_registered_at, registrars "
-                "  FROM viv.candidate_sets WHERE candidate_set_id = %s",
+                "  FROM " + _schema() + ".candidate_sets WHERE candidate_set_id = %s",
                 (candidate_set_id,))
     r = cur.fetchone()
     if not r:

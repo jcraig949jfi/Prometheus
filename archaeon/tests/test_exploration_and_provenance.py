@@ -159,7 +159,11 @@ def test_plan_is_deterministic():
     c = synth.variance_anomaly(seed=14)
     a = run.plan(c, cfg.DEFAULT, day="2026-09-05")
     b = run.plan(c, cfg.DEFAULT, day="2026-09-05")
-    assert a["spec"]["spec_hash"] == b["spec"]["spec_hash"]
+    # spec_hash is no longer embedded IN the spec (a hash may not live inside
+    # the object it hashes, and Archaeon's value could then never equal the
+    # content_hash SFE seals). It is computed by the register.
+    from archaeon import vivqueue as vq
+    assert vq._spec_hash(a["spec"]) == vq._spec_hash(b["spec"])
 
 
 # --------------------------------------------------------------------------

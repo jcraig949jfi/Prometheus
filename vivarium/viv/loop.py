@@ -1,30 +1,42 @@
-"""The Vivarium service loop.
+"""The Vivarium service loop -- the lab notebook around a blinded apparatus.
 
 One cycle:
 
     heartbeat
     -> is anything claimed or running?   yes: do nothing (v0 permits ONE)
     -> claim the next eligible item      (priority, created_at; SKIP LOCKED)
-    -> validate spec + verify sealed hash
-    -> execute through SFE, crossing into `running` at the real boundary
-    -> record: completed (+ sfe_experiment_id, pew_reference, summary)
-               or failed (+ error, preserved, never retried)
+    -> project it into an ExecutionRequest  <- provenance stops HERE
+    -> execute, crossing into `running` at the real boundary
+    -> fossilize what happened, result OR failure
+    -> record: completed / failed. Never retried.
     -> repeat
 
-There is no scheduling intelligence and no interpretation of results. The loop
-cannot decide that an experiment deserves a rerun, cannot reorder the queue on
-what it learned, and cannot look at an outcome at all except to write it down.
+THE DIVISION OF LABOUR IS THE POINT. The RUNNER is the apparatus and is blind:
+it receives (experiment_id, spec, spec_hash) and cannot reach created_by,
+source_reason, source_evidence, family_id, arm_id or candidate_set_id. This
+MODULE is the notebook: it may read all of that, and writes it into the PEW
+producer block so an archaeologist can get from a fossil back to the request
+and hence to the policy that proposed it. Provenance is recorded everywhere
+except where it could change the science.
+
+NO SCHEDULING INTELLIGENCE, NO INTERPRETATION. The loop cannot decide an
+experiment deserves a rerun, cannot reorder the queue on what it learned, and
+never reads an outcome except to write it down.
+
+NO RETRY. Harmonia S15 found retry is the ONLY class-A selection mechanism of
+the eight tested -- it leaves six worlds and six event chains where an honest
+single shot leaves one. A silent retry here would not merely be selection; it
+would be selection the substrate records as several experiments. A failure is
+terminal and preserved.
 
 CRASH SEMANTICS ARE EXPLICIT. A worker that dies mid-run leaves its row in
-`claimed` or `running`. The loop does NOT adopt, reset, or retry such a row --
+`claimed` or `running`. The loop does NOT adopt, reset or retry such a row:
 guessing that a stranded run did not happen is exactly the guess that runs an
 experiment twice. It refuses to start, names the row, and waits for
-`vivarium release`. The database's unique partial index enforces this even if
-this code were wrong.
+`vivarium release`.
 """
 from __future__ import annotations
 
-import json
 import os
 import socket
 import time
@@ -35,7 +47,8 @@ from . import db as _db
 from . import pew as _pew
 from . import queue as _q
 from . import spec as _spec
-from .runner import RunResult, SfeRunner, SpecIntegrityError
+from .request import ExecutionRequest, SpecIntegrityError
+from .runner import ExecutionFailure, RunResult, SfeRunner
 
 __all__ = ["Vivarium", "default_worker_id"]
 
@@ -73,8 +86,8 @@ class Vivarium:
         return self._runner
 
     def pew(self):
-        """None when no PEW credential is configured. That is a reported
-        condition, not a silent one: the skip is written to the event log."""
+        """None when no PEW credential is configured. A reported condition,
+        never a silent one: the skip is written to the event log."""
         if not self._pew_resolved:
             self._pew_resolved = True
             token = os.environ.get("VIV_PEW_TOKEN") or self.cfg.get("pew_token")
@@ -93,6 +106,20 @@ class Vivarium:
                      build={"version": __import__("viv").__version__},
                      schema=self.schema)
         conn.commit()
+
+    @staticmethod
+    def _relation(row) -> dict:
+        """The provenance block that travels to PEW. Read from the queue row by
+        the NOTEBOOK, never by the apparatus."""
+        return {"experiment_id": str(row["experiment_id"]),
+                "request_key": row["request_key"],
+                "family_id": row["family_id"],
+                "arm_id": row["arm_id"],
+                "candidate_set_id": row["candidate_set_id"],
+                "replication_of": str(row["replication_of"])
+                                  if row["replication_of"] else None,
+                "created_by": row["created_by"],
+                "source_reason": row["source_reason"]}
 
     # -- one cycle ---------------------------------------------------------
     def cycle(self, conn) -> Optional[str]:
@@ -129,22 +156,21 @@ class Vivarium:
     # -- execution ---------------------------------------------------------
     def _execute(self, conn, row) -> None:
         eid = str(row["experiment_id"])
-        spec = row["experiment_spec"]
 
-        # Validation happens while still CLAIMED, so a malformed request fails
-        # without ever having been `running` -- the distinction between "never
-        # executed" and "executed and failed" is the whole point of the state.
+        # THE BOUNDARY. Everything past this line sees three fields.
+        # Construction re-verifies the spec against its sealed hash, and
+        # validation runs while the row is still CLAIMED -- so a malformed or
+        # corrupted request fails without ever having been `running`, and
+        # "never executed" stays distinguishable from "executed and failed".
         try:
-            _spec.validate(spec)
-            recomputed = _spec.spec_hash(spec)
-            if recomputed != row["spec_hash"]:
-                raise SpecIntegrityError(
-                    "stored spec hashes to %s, sealed hash is %s"
-                    % (recomputed, row["spec_hash"]))
+            request = ExecutionRequest.from_queue_row(row)
+            _spec.validate(request.spec)
         except Exception as exc:                    # noqa: BLE001
             self._fail(conn, eid, "specification rejected: %s" % exc,
                        kind="spec_rejected")
             return
+
+        spec = request.spec
 
         def on_running(sfe_exp_id, detail):
             _q.mark_running(conn, eid, worker_id=self.worker_id,
@@ -154,15 +180,17 @@ class Vivarium:
             self.log("[viv] running %s -> %s" % (eid, sfe_exp_id))
 
         try:
-            result = self.runner().run(row, on_running=on_running)
+            result = self.runner().run(request, on_running=on_running)
+        except ExecutionFailure as exc:
+            self._fail_after_execution(conn, row, spec, exc)
+            return
         except Exception as exc:                    # noqa: BLE001
             self._fail(conn, eid, "execution failed: %s\n%s"
                        % (exc, traceback.format_exc()[-4000:]),
                        kind="execution_failed")
             return
 
-        result.summary["spec_hash"] = row["spec_hash"]
-        pew_ref, pew_detail = self._record_pew(conn, eid, spec, result)
+        pew_ref, pew_detail = self._record_pew(conn, row, spec, result)
         if pew_detail.get("fatal"):
             self._fail(conn, eid,
                        "PEW write required by spec but failed: %s"
@@ -185,16 +213,67 @@ class Vivarium:
         self.log("[viv] completed %s -> exp=%s outcome=%s pew=%s"
                  % (eid, result.sfe_experiment_id, result.outcome, pew_ref))
 
-    def _record_pew(self, conn, eid, spec, result: RunResult):
-        """Returns (pew_reference or None, detail). A PEW write failure is
-        fatal only when the spec declared `pew.required`; otherwise the run is
-        complete and the missing link is recorded, because SFE already holds
-        the authoritative execution record."""
+    def _fail_after_execution(self, conn, row, spec, exc: ExecutionFailure):
+        """A run that crossed the execution boundary and then failed.
+
+        It is fossilized BEFORE the queue row is closed, because the endpoint a
+        selection experiment cares about is failures per experiment EXECUTED,
+        and that needs `executed` countable from the fossil record. The fossil
+        carries failure_class and no outcome: nothing was measured, and an
+        absent result is recorded as absent."""
+        eid = str(row["experiment_id"])
+        partial = exc.partial
+        pew_ref = None
+        if partial.crossed_boundary:
+            pew_ref, pew_detail = self._record_pew(conn, row, spec, partial,
+                                                   failed=True)
+            self.log("[viv] fossilized failed execution %s: %s"
+                     % (eid, pew_detail.get("reason") or pew_detail.get("written")))
+        summary = {"failure_class": exc.failure_class,
+                   "crossed_execution_boundary": partial.crossed_boundary,
+                   "world_id": partial.world_id,
+                   "exp_id": partial.sfe_experiment_id,
+                   "work_id": partial.work_id,
+                   "run_id": partial.run_id,
+                   "anchor": partial.anchor,
+                   "outcome": None,
+                   "note": "no outcome was measured; absence of a result is "
+                           "not a result"}
+        conn.rollback()
+        cur_row = _q.get(conn, eid, schema=self.schema)
+        if cur_row is None or cur_row["status"] not in _q.ACTIVE:
+            self.log("[viv] cannot record failure for %s" % eid)
+            return
+        _q.record_event(conn, eid, actor=self.worker_id,
+                        event_type="execution_failed",
+                        payload={"failure_class": exc.failure_class,
+                                 "error": str(exc)[:4000],
+                                 "pew_reference": pew_ref}, schema=self.schema)
+        _q.mark_failed(conn, eid, worker_id=self.worker_id,
+                       error="%s: %s" % (exc.failure_class, exc),
+                       result_summary=summary,
+                       sfe_experiment_id=partial.sfe_experiment_id,
+                       pew_reference=pew_ref, schema=self.schema)
+        conn.commit()
+        self.log("[viv] FAILED %s (%s) exp=%s pew=%s"
+                 % (eid, exc.failure_class, partial.sfe_experiment_id, pew_ref))
+
+    def _record_pew(self, conn, row, spec, result: RunResult,
+                    failed: bool = False):
+        """Fossilize. Returns (pew_reference or None, detail).
+
+        A PEW write failure is fatal only when the spec declared
+        `pew.required`; otherwise the run is recorded and the missing link is
+        stated, because SFE already holds the authoritative execution record.
+        A spec that declares `pew: null` is fossilized nowhere and says so --
+        making PEW mandatory for every execution is Tier 2 and deferred."""
+        eid = str(row["experiment_id"])
         declared = spec.get("pew")
         if declared is None:
             _q.record_event(conn, eid, actor=self.worker_id,
                             event_type="pew_write_skipped",
-                            payload={"reason": "spec declares no pew block"},
+                            payload={"reason": "spec declares pew: null",
+                                     "failed_execution": failed},
                             schema=self.schema)
             conn.commit()
             return None, {"written": False, "reason": "not_declared"}
@@ -203,7 +282,7 @@ class Vivarium:
         required = bool(declared.get("required"))
         if client is None:
             detail = {"written": False, "reason": "no_pew_credential",
-                      "fatal": required,
+                      "fatal": required and not failed,
                       "error": "no PEW token configured (VIV_PEW_TOKEN)"}
             _q.record_event(conn, eid, actor=self.worker_id,
                             event_type="pew_write_skipped", payload=detail,
@@ -215,10 +294,14 @@ class Vivarium:
             out = _pew.write_encounter(
                 client, spec=spec, run=result,
                 engine=self.runner().engine_identity,
-                producer_version=__import__("viv").__version__)
+                producer_version=__import__("viv").__version__,
+                relation=self._relation(row))
         except Exception as exc:                    # noqa: BLE001
             detail = {"written": False, "reason": "write_failed",
-                      "fatal": required, "error": str(exc)[:2000]}
+                      # A failed run is already failing; a PEW problem must not
+                      # overwrite the real failure_class with its own.
+                      "fatal": required and not failed,
+                      "error": str(exc)[:2000]}
             _q.record_event(conn, eid, actor=self.worker_id,
                             event_type="pew_write_failed", payload=detail,
                             schema=self.schema)
@@ -226,8 +309,9 @@ class Vivarium:
             return None, detail
 
         _q.record_event(conn, eid, actor=self.worker_id,
-                        event_type="pew_written", payload=out,
-                        schema=self.schema)
+                        event_type="pew_written_failure" if failed
+                                   else "pew_written",
+                        payload=out, schema=self.schema)
         conn.commit()
         return out["pew_reference"], {"written": True, **out}
 
@@ -250,13 +334,10 @@ class Vivarium:
 
     # -- lifecycle ---------------------------------------------------------
     def preflight(self, conn) -> list:
-        """Refuse to run while this worker has a stranded row.
-
-        Returns the blocking rows. An empty list means it is safe to start."""
-        mine = [r for r in _q.stranded(conn, stale_after_s=0.0,
+        """Refuse to run while this worker has a stranded row."""
+        return [r for r in _q.stranded(conn, stale_after_s=0.0,
                                        schema=self.schema)
                 if r["claimed_by"] == self.worker_id]
-        return mine
 
     def serve(self, *, interval_s: Optional[float] = None,
               max_cycles: Optional[int] = None) -> int:

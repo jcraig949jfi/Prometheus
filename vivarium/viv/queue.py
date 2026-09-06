@@ -37,7 +37,14 @@ TERMINAL = ("completed", "failed", "cancelled")
 COLUMNS = ("experiment_id, created_at, created_by, source_reason, "
            "source_evidence, experiment_spec, spec_hash, status, priority, "
            "not_before, claimed_by, claimed_at, started_at, finished_at, "
-           "sfe_experiment_id, pew_reference, result_summary, error")
+           "sfe_experiment_id, pew_reference, result_summary, error, "
+           "family_id, arm_id, replication_of, candidate_set_id, request_key, "
+           "cadence_lane, cadence_day_ordinal")
+
+#: The experimental-relation declaration. PROVENANCE: frozen by the BEFORE
+#: UPDATE trigger, never hashed, and never projected into an ExecutionRequest.
+RELATION_COLUMNS = ("family_id", "arm_id", "replication_of",
+                    "candidate_set_id", "request_key")
 
 #: The same list qualified for statements that join (claim_next uses a CTE, so
 #: an unqualified experiment_id in RETURNING is ambiguous).
@@ -46,6 +53,25 @@ Q_COLUMNS = ", ".join("q." + c.strip() for c in COLUMNS.split(","))
 
 class QueueBusy(RuntimeError):
     """Another experiment already holds the single v0 execution slot."""
+
+
+class DuplicateRequest(RuntimeError):
+    """This request_key is already in the register.
+
+    The same key is the same REQUEST, so a resubmission is refused and the
+    existing row is named. A deliberate replication is a different request: it
+    supplies a new key and sets replication_of, which is how "run it again on
+    purpose" is told apart from "the submitter retried after a timeout"."""
+
+    def __init__(self, request_key: str, experiment_id: str, status: str):
+        self.request_key = request_key
+        self.experiment_id = experiment_id
+        self.status = status
+        super().__init__(
+            "request_key %r is already registered as %s (status=%s). A "
+            "resubmission is refused; a deliberate replication supplies a NEW "
+            "request_key and sets replication_of."
+            % (request_key, experiment_id, status))
 
 
 def _q(schema: str) -> str:
@@ -75,30 +101,111 @@ def record_event(conn, experiment_id, *, actor: str, event_type: str,
 # Admission
 # ---------------------------------------------------------------------------
 
+def by_request_key(conn, request_key: str, *, schema=None):
+    s = schema or _db.schema()
+    with _db.dict_cur(conn) as cur:
+        cur.execute("SELECT " + COLUMNS + " FROM " + _q(s) +
+                    " WHERE request_key = %s", (request_key,))
+        return cur.fetchone()
+
+
 def enqueue(conn, *, created_by: str, source_reason: str,
-            experiment_spec: dict, source_evidence: Optional[dict] = None,
+            experiment_spec: dict, source_evidence=None,
             priority: int = 100, not_before=None,
-            schema: Optional[str] = None) -> str:
-    """Admit one experiment. The spec is validated BEFORE it is stored and is
-    stored EXACTLY as supplied -- Vivarium never normalises a caller's spec,
-    because a normalised spec is a different experiment with the same name."""
+            request_key=None, replication_of=None,
+            family_id=None, arm_id=None, candidate_set_id=None,
+            cadence_lane=None, cadence_day_ordinal=None,
+            status: str = "queued",
+            schema=None) -> str:
+    """Admit one experiment into the register.
+
+    The spec is validated BEFORE it is stored and is stored EXACTLY as
+    supplied. Everything after `not_before` is PROVENANCE or a DESIGN RELATION:
+    it is written to columns, frozen by the trigger, and never enters
+    spec_hash -- so two arms of one comparison can carry byte-identical specs,
+    which is what makes the comparison a comparison.
+
+    `status="cancelled"` admits a row that is registered and immediately
+    unchosen. That is how a candidate set is written: the whole set is
+    registered before selection and the unchosen are cancelled, never deleted.
+    """
     s = schema or _db.schema()
     _spec.validate(experiment_spec)
     h = _spec.spec_hash(experiment_spec)
+    if status not in ("queued", "cancelled"):
+        raise ValueError("a row may be admitted only as queued or cancelled")
+    if arm_id is not None and family_id is None:
+        raise ValueError("arm_id without family_id is a label with nothing to "
+                         "compare against")
+
+    if request_key is not None:
+        prior = by_request_key(conn, request_key, schema=s)
+        if prior is not None:
+            raise DuplicateRequest(request_key, str(prior["experiment_id"]),
+                                   prior["status"])
+    if replication_of is not None:
+        target = get(conn, replication_of, schema=s)
+        if target is None:
+            raise ValueError("replication_of names no row in this register: %s"
+                             % (replication_of,))
+
     with conn.cursor() as cur:
-        cur.execute(
-            "INSERT INTO " + _q(s) + " (created_by, source_reason, "
-            "source_evidence, experiment_spec, spec_hash, priority, "
-            "not_before) VALUES (%s,%s,%s,%s,%s,%s,%s) RETURNING experiment_id",
-            (created_by, source_reason, _json(source_evidence or {}),
-             _json(experiment_spec), h, priority, not_before))
+        try:
+            cur.execute(
+                "INSERT INTO " + _q(s) + " (created_by, source_reason, "
+                "source_evidence, experiment_spec, spec_hash, priority, "
+                "not_before, request_key, replication_of, family_id, arm_id, "
+                "candidate_set_id, cadence_lane, cadence_day_ordinal, status) "
+                "VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) "
+                "RETURNING experiment_id",
+                (created_by, source_reason, _json(source_evidence or {}),
+                 _json(experiment_spec), h, priority, not_before,
+                 request_key, replication_of, family_id, arm_id,
+                 candidate_set_id, cadence_lane, cadence_day_ordinal, status))
+        except psycopg2.errors.UniqueViolation as exc:
+            # Lost the race to another writer with the same key: the
+            # idempotency contract WORKING, reported as such.
+            conn.rollback()
+            if request_key is not None:
+                prior = by_request_key(conn, request_key, schema=s)
+                if prior is not None:
+                    raise DuplicateRequest(
+                        request_key, str(prior["experiment_id"]),
+                        prior["status"]) from exc
+            raise
         eid = cur.fetchone()[0]
-    record_event(conn, eid, actor=created_by, event_type="enqueued",
+    record_event(conn, eid, actor=created_by,
+                 event_type="registered_cancelled" if status == "cancelled"
+                            else "enqueued",
                  payload={"spec_hash": h, "priority": priority,
                           "not_before": not_before.isoformat()
                           if not_before is not None else None,
-                          "source_reason": source_reason}, schema=s)
+                          "source_reason": source_reason,
+                          "request_key": request_key,
+                          "replication_of": str(replication_of)
+                          if replication_of else None,
+                          "family_id": family_id, "arm_id": arm_id,
+                          "candidate_set_id": candidate_set_id}, schema=s)
     return str(eid)
+
+
+def candidate_set(conn, candidate_set_id: str, *, schema=None):
+    """What Vivarium OBSERVED about a candidate set: rows it holds.
+
+    Never a claimant's assertion about candidates that never crossed the
+    boundary. Harmonia S15 classifies those as information-theoretically
+    absent, and a count of them would be an assertion wearing an
+    observation's clothes."""
+    s = schema or _db.schema()
+    with _db.dict_cur(conn) as cur:
+        cur.execute("SELECT * FROM " + s + ".candidate_sets "
+                    "WHERE candidate_set_id = %s", (candidate_set_id,))
+        row = cur.fetchone()
+    if row is None:
+        return None
+    out = dict(row)
+    out["count_source"] = "DERIVED from the register, never attested"
+    return out
 
 
 # ---------------------------------------------------------------------------
@@ -163,6 +270,20 @@ def events(conn, experiment_id, *, schema: Optional[str] = None):
         cur.execute("SELECT event_id, occurred_at, actor, event_type, payload "
                     "FROM " + _e(s) + " WHERE experiment_id = %s "
                     "ORDER BY event_id", (str(experiment_id),))
+        return cur.fetchall()
+
+
+def family(conn, family_id: str, *, schema: Optional[str] = None):
+    """Every row of a prospectively declared comparison family, by arm.
+
+    The grouping is read off DECLARED columns, never inferred from world names
+    or spec similarity -- S14 burned a result on trusting an author-supplied
+    name, and this is the surface that makes that unnecessary."""
+    s = schema or _db.schema()
+    with _db.dict_cur(conn) as cur:
+        cur.execute("SELECT " + COLUMNS + " FROM " + _q(s) +
+                    " WHERE family_id = %s ORDER BY arm_id, created_at",
+                    (family_id,))
         return cur.fetchall()
 
 
@@ -289,6 +410,7 @@ def mark_completed(conn, experiment_id, *, worker_id: str,
 def mark_failed(conn, experiment_id, *, worker_id: str, error: str,
                 result_summary: Optional[dict] = None,
                 sfe_experiment_id: Optional[str] = None,
+                pew_reference: Optional[str] = None,
                 schema: Optional[str] = None):
     """Preserve the failure. There is no automatic retry: a failed row stays
     failed and stays visible until a human decides otherwise."""
@@ -297,18 +419,20 @@ def mark_failed(conn, experiment_id, *, worker_id: str, error: str,
         cur.execute(
             "UPDATE " + _q(s) + " SET status='failed', finished_at=now(), "
             "error=%s, result_summary = COALESCE(%s, result_summary), "
-            "sfe_experiment_id = COALESCE(%s, sfe_experiment_id) "
+            "sfe_experiment_id = COALESCE(%s, sfe_experiment_id), "
+            "pew_reference = COALESCE(%s, pew_reference) "
             "WHERE experiment_id = %s AND status IN ('claimed','running') "
             "  AND claimed_by = %s RETURNING " + COLUMNS,
             (error[:20000], _json(result_summary) if result_summary else None,
-             sfe_experiment_id, str(experiment_id), worker_id))
+             sfe_experiment_id, pew_reference, str(experiment_id), worker_id))
         row = cur.fetchone()
     if row is None:
         raise RuntimeError("cannot fail: %s is not active under %s"
                            % (experiment_id, worker_id))
     record_event(conn, experiment_id, actor=worker_id, event_type="failed",
                  payload={"error": error[:4000],
-                          "sfe_experiment_id": row["sfe_experiment_id"]},
+                          "sfe_experiment_id": row["sfe_experiment_id"],
+                          "pew_reference": row["pew_reference"]},
                  schema=s)
     return row
 

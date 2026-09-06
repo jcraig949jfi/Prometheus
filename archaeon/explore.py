@@ -176,15 +176,16 @@ def build_spec(selection: Dict[str, Any], corpus) -> Dict[str, Any]:
         "players": ([] if cell["player"] == "<noplayer>" else [cell["player"]]),
         "target": {},
         "hold_fixed": "region+player",
-        "archaeon": {
-            "detector": None,
-            "intent": "COVERAGE",
-            "chart": corpus.chart.name,
-            "policy": selection["policy"],
-            "seed": selection["seed"],
-            "candidate_set_hash": selection["candidate_set_hash"],
-        },
+        "controls": [],
     }
-    from .propose import _hash
-    spec["spec_hash"] = _hash(spec)
     return spec
+
+
+def exploration_policy_provenance(selection, corpus):
+    """Which policy chose this cell. PROVENANCE -- a queue column, never inside
+    the sealed spec: it is the SELECTOR's identity, and an arm label inside
+    spec_hash splits the derived universe along the arm boundary."""
+    return {"detector": None, "intent": "COVERAGE",
+            "chart": corpus.chart.name,
+            "policy": selection["policy"], "seed": selection["seed"],
+            "candidate_set_hash": selection["candidate_set_hash"]}

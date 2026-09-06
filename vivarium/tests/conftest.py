@@ -54,18 +54,36 @@ def conn(schema):
         c.close()
 
 
-def make_spec(bits: str = "0" * 24, *, name: str = "t-world",
-              seed_root: int = 424242, kind: str = "noop_v0",
-              outcome_rule=None, extra=None) -> dict:
+DEFAULT_RULE = {"field": "executed", "op": "==", "value": True,
+                "if_true": "SURVIVED", "if_false": "FALSIFIED",
+                "if_indeterminate": "INCONCLUSIVE"}
+
+BITSTRING_RULE = {"field": "solved", "op": "==", "value": True,
+                  "if_true": "SURVIVED", "if_false": "FALSIFIED",
+                  "if_indeterminate": "INCONCLUSIVE"}
+
+
+def make_spec(bits: str = "0" * 24, *, seed_root: int = 424242,
+              kind: str = "noop_v0", outcome_rule=None, prediction=None,
+              pew=None, hypothesis=None, extra=None) -> dict:
+    """A valid spec v2. NOTE the shape: no name, no notes, no experiment_kind
+    -- the sealed spec is exactly the execution inputs."""
+    if kind == "noop_v0":
+        payload = {}
+        rule = outcome_rule or DEFAULT_RULE
+    else:
+        payload = {"bits": bits, "length": len(bits)}
+        rule = outcome_rule or BITSTRING_RULE
     spec = {
-        "spec_version": 1,
-        "experiment_kind": "vivarium_selftest",
-        "world": {"name": name, "seed_root": seed_root},
-        "hypothesis": "a mechanical loop runs what it is given, once",
-        "work": {"kind": kind, "payload": {"bits": bits, "length": len(bits)}},
+        "spec_version": 2,
+        "world": {"seed_root": seed_root},
+        "hypothesis": hypothesis or
+                      "a mechanical loop runs what it is given, once",
+        "prediction": prediction,
+        "work": {"kind": kind, "payload": payload},
+        "outcome_rule": rule,
+        "pew": pew,
     }
-    if outcome_rule is not None:
-        spec["outcome_rule"] = outcome_rule
     if extra:
         spec.update(extra)
     return spec

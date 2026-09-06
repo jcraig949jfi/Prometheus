@@ -51,39 +51,66 @@ python -m viv.cli run --once                   # or: run  (long-running)
 python -m viv.cli status
 python -m viv.cli trace                        # queue -> SFE -> PEW
 python -m viv.cli show <experiment_id>
+python -m viv.cli kinds                        # the per-kind contracts
+python -m viv.cli family <family_id>           # a comparison, by arm
+python -m viv.cli candidates <candidate_set_id># OBSERVED set extent
 ```
 
 `status` exits non-zero when anything is stranded, so it works as a check.
 
-## The specification
+## The sealed specification (v2)
 
-Archaeon authors these. Vivarium validates strictly (unknown key = rejected)
-and stores the object **byte-for-byte as supplied** — a normalised spec is a
-different experiment with the same name.
+> **The sealed spec contains exactly the execution inputs.
+> Provenance lives outside the hash.**
+
+`spec_hash` is the substrate's grouping surface, so anything hashed that does
+not change what is executed is a channel by which the selecting policy leaks
+into the sealed record. Every key below is an execution input; everything about
+*who asked and why* is a queue column.
 
 ```json
 {
-  "spec_version": 1,
-  "experiment_kind": "onemax_probe",
-  "world": {"name": "...", "seed_root": 424242},
+  "spec_version": 2,
+  "world": {"seed_root": 424242},
   "hypothesis": "...",
-  "prediction": {"...": "optional; registered BEFORE commit"},
-  "work": {"kind": "evaluate_bitstring", "payload": {"bits": "0...", "length": 24}},
+  "prediction": null,
+  "work": {"kind": "evaluate_bitstring",
+           "payload": {"bits": "0...", "length": 24}},
   "outcome_rule": {"field": "solved", "op": "==", "value": false,
-                   "if_true": "SURVIVED", "if_false": "FALSIFIED"},
-  "pew": {"encounter_id": "...", "players": ["..."], "required": false},
-  "notes": "optional"
+                   "if_true": "SURVIVED", "if_false": "FALSIFIED",
+                   "if_indeterminate": "INCONCLUSIVE"},
+  "pew": {"encounter_id": "...", "players": [], "required": false}
 }
 ```
 
-`outcome_rule` is the requester's **pre-registered** decision procedure.
-Vivarium evaluates it mechanically and records the provenance of the
-evaluation. No rule, or a field the result does not carry, yields
-`INCONCLUSIVE` — a missing measurement is not a negative one.
+* **No `notes`, no `experiment_kind`, no `world.name`.** All three were
+  measured to change `spec_hash` without changing what is executed. The world
+  name is derived: `viv-<spec_hash[7:23]>`.
+* **Explicit `null`, never omission** for `prediction`, `outcome_rule`, `pew`.
+  An omitted field and a declared absence are different experiments.
+* **`work.payload` must match its kind's contract exactly** — every parameter
+  present, none extra, no executor default anywhere. `vivarium kinds` prints
+  the contracts.
+* **`outcome_rule.if_indeterminate` is required.** The branch taken when the
+  rule cannot be evaluated is the requester's declaration, not Vivarium's.
+* **`pew`** is the only place scientific identity enters. Vivarium mints no
+  `encounter_id` and no `player_id`.
 
-`pew` is the only place scientific identity enters. Vivarium mints no
-`encounter_id` and no `player_id`; it supplies only the execution half it
-witnessed.
+## Provenance and experimental relations (queue columns, never hashed)
+
+| column | meaning |
+|---|---|
+| `created_by`, `source_reason`, `source_evidence` | who asked and why |
+| `family_id`, `arm_id` | a comparison declared BEFORE execution |
+| `replication_of` | a deliberate repeat, declared as one |
+| `candidate_set_id` | membership of a set registered before selection |
+| `request_key` | idempotency: the same key is the same request |
+| `cadence_lane`, `cadence_day_ordinal` | Archaeon's autonomous quota |
+
+All are frozen by the BEFORE UPDATE trigger, so a comparison cannot be re-drawn
+after its outcomes are visible. None of them reaches the executor: the runner
+receives an `ExecutionRequest` of exactly `(experiment_id, spec_json,
+spec_hash)`, and `tests/test_blinding.py` asserts that it cannot.
 
 ## The state machine
 

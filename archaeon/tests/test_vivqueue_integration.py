@@ -11,7 +11,17 @@ import json
 import threading
 import uuid
 
+import os as _os
+
 import pytest
+
+# The schema conftest.py chose. Before 2026-09-06 these tests wrote into the
+# PRODUCTION register -- 245 rows in one run, one of which a live Vivarium
+# cycle claimed and tried to execute. VIV_SCHEMA now redirects both this suite
+# and archaeon.vivqueue to a throwaway schema carrying the identical DDL.
+_S = _os.environ.get("VIV_SCHEMA", "viv")
+VIVQ = _S + ".research_experiment_queue"
+VIVC = _S + ".candidate_sets"
 
 from archaeon import cadence as cad
 from archaeon import config as cfg
@@ -47,7 +57,7 @@ def lane(conn):
     yield name
     cur = conn.cursor()
     cur.execute("DELETE FROM archaeon.cadence_log WHERE lane = %s", (name,))
-    cur.execute("DELETE FROM viv.research_experiment_queue "
+    cur.execute("DELETE FROM " + VIVQ + " "
                 "WHERE cadence_lane = %s OR created_by = %s",
                 (name, "archaeon-test-" + name))
     cur.execute("DELETE FROM archaeon.cadence_gate WHERE lane = %s", (name,))
@@ -106,7 +116,7 @@ def test_candidate_set_is_registered_and_unchosen_are_cancelled(conn, lane):
     assert len(r["cancelled_experiment_ids"]) == 4
     cur = conn.cursor()
     cur.execute("SELECT status, cadence_day_ordinal FROM "
-                "viv.research_experiment_queue WHERE candidate_set_id = %s "
+                "" + VIVQ + " WHERE candidate_set_id = %s "
                 "ORDER BY status", (r["candidate_set_id"],))
     rows = cur.fetchall()
     assert sum(1 for s, _ in rows if s == "cancelled") == 4
@@ -120,7 +130,7 @@ def test_cancelled_candidates_are_retained_not_deleted(conn, lane):
     r = vq.submit(conn, candidates=_cands(4), selected_index=0,
                   source_reason="exploration", config=_cfg(lane))
     cur = conn.cursor()
-    cur.execute("SELECT count(*) FROM viv.research_experiment_queue "
+    cur.execute("SELECT count(*) FROM " + VIVQ + " "
                 "WHERE candidate_set_id = %s", (r["candidate_set_id"],))
     assert int(cur.fetchone()[0]) == 4
 
@@ -169,7 +179,7 @@ def test_family_and_arm_are_recorded(conn, lane):
                   selected_index=0, source_reason="exploration",
                   config=_cfg(lane))
     cur = conn.cursor()
-    cur.execute("SELECT family_id, arm_id FROM viv.research_experiment_queue "
+    cur.execute("SELECT family_id, arm_id FROM " + VIVQ + " "
                 "WHERE candidate_set_id = %s", (r["candidate_set_id"],))
     rows = cur.fetchall()
     assert all(f == "fam-x" for f, _ in rows)
@@ -183,7 +193,7 @@ def test_relation_is_immutable_after_acceptance(conn, lane):
                   config=_cfg(lane))
     cur = conn.cursor()
     with pytest.raises(psycopg2.Error):
-        cur.execute("UPDATE viv.research_experiment_queue SET family_id='other' "
+        cur.execute("UPDATE " + VIVQ + " SET family_id='other' "
                     "WHERE experiment_id = %s", (r["selected_experiment_id"],))
     conn.rollback()
 
@@ -192,7 +202,7 @@ def test_arm_without_family_is_refused(conn, lane):
     cur = conn.cursor()
     with pytest.raises(psycopg2.Error):
         cur.execute(
-            "INSERT INTO viv.research_experiment_queue "
+            "INSERT INTO " + VIVQ + " "
             "(created_by, source_reason, experiment_spec, spec_hash, arm_id) "
             "VALUES ('t','exploration','{}'::jsonb, %s, 'a')",
             ("sha256:" + "0" * 64,))
@@ -218,7 +228,7 @@ def test_replication_must_declare_itself(conn, lane):
     r2 = vq.submit(conn, candidates=[rep], selected_index=0,
                    source_reason="human", config=_cfg(lane))
     cur = conn.cursor()
-    cur.execute("SELECT replication_of FROM viv.research_experiment_queue "
+    cur.execute("SELECT replication_of FROM " + VIVQ + " "
                 "WHERE experiment_id = %s", (r2["selected_experiment_id"],))
     assert str(cur.fetchone()[0]) == r["selected_experiment_id"]
 
@@ -245,7 +255,7 @@ def test_registering_many_candidates_does_not_consume_the_daily_cap(conn, lane):
     r = vq.submit(conn, candidates=_cands(20), selected_index=7,
                   source_reason="exploration", config=_cfg(lane))
     cur = conn.cursor()
-    cur.execute("SELECT count(*) FROM viv.research_experiment_queue "
+    cur.execute("SELECT count(*) FROM " + VIVQ + " "
                 "WHERE cadence_lane = %s AND cadence_day_ordinal IS NOT NULL",
                 (lane,))
     assert int(cur.fetchone()[0]) == 1
@@ -257,7 +267,7 @@ def test_database_caps_the_day_at_six(conn, lane):
     cur = conn.cursor()
     for i in range(6):
         cur.execute(
-            "INSERT INTO viv.research_experiment_queue "
+            "INSERT INTO " + VIVQ + " "
             "(created_by, source_reason, experiment_spec, spec_hash, "
             " cadence_lane, cadence_day_ordinal) "
             "VALUES ('archaeon','exploration','{}'::jsonb,%s,%s,%s)",
@@ -265,7 +275,7 @@ def test_database_caps_the_day_at_six(conn, lane):
     conn.commit()
     with pytest.raises(psycopg2.Error):        # ordinal 6 violates the CHECK
         cur.execute(
-            "INSERT INTO viv.research_experiment_queue "
+            "INSERT INTO " + VIVQ + " "
             "(created_by, source_reason, experiment_spec, spec_hash, "
             " cadence_lane, cadence_day_ordinal) "
             "VALUES ('archaeon','exploration','{}'::jsonb,%s,%s,6)",
@@ -276,7 +286,7 @@ def test_database_caps_the_day_at_six(conn, lane):
 def test_duplicate_ordinal_is_refused(conn, lane):
     cur = conn.cursor()
     cur.execute(
-        "INSERT INTO viv.research_experiment_queue "
+        "INSERT INTO " + VIVQ + " "
         "(created_by, source_reason, experiment_spec, spec_hash, "
         " cadence_lane, cadence_day_ordinal) "
         "VALUES ('archaeon','exploration','{}'::jsonb,%s,%s,0)",
@@ -284,7 +294,7 @@ def test_duplicate_ordinal_is_refused(conn, lane):
     conn.commit()
     with pytest.raises(psycopg2.Error):
         cur.execute(
-            "INSERT INTO viv.research_experiment_queue "
+            "INSERT INTO " + VIVQ + " "
             "(created_by, source_reason, experiment_spec, spec_hash, "
             " cadence_lane, cadence_day_ordinal) "
             "VALUES ('archaeon','exploration','{}'::jsonb,%s,%s,0)",
@@ -325,7 +335,7 @@ def test_concurrent_instances_cannot_exceed_the_quota(lane):
     c = _connect()
     cur = c.cursor()
     cur.execute("DELETE FROM archaeon.cadence_log WHERE lane = %s", (lane,))
-    cur.execute("DELETE FROM viv.research_experiment_queue "
+    cur.execute("DELETE FROM " + VIVQ + " "
                 "WHERE cadence_lane = %s", (lane,))
     cur.execute("DELETE FROM archaeon.cadence_gate WHERE lane = %s", (lane,))
     c.commit()
@@ -360,7 +370,7 @@ def test_archaeon_no_longer_writes_to_its_own_queue():
             node.value.value = ""
     code = ast.unparse(tree)
     assert "archaeon.experiment_queue" not in code,         "Archaeon still writes to the retired register"
-    assert "viv.research_experiment_queue" in code
+    assert "research_experiment_queue" in code
 
 
 # --------------------------------------------------------------------------

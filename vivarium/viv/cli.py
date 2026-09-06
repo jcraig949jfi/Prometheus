@@ -23,6 +23,7 @@ import sys
 from datetime import datetime, timezone
 
 from . import db as _db
+from . import kinds as _kinds
 from . import loop as _loop
 from . import queue as _q
 from . import spec as _spec
@@ -37,11 +38,19 @@ def _j(obj) -> str:
 
 
 def _short(row) -> str:
-    return ("%s  %-9s p%-4s %s  spec=%s  sfe=%s  pew=%s"
+    rel = ""
+    if row.get("family_id"):
+        rel = "  fam=%s/%s" % (row["family_id"], row.get("arm_id") or "-")
+    if row.get("candidate_set_id"):
+        rel += "  cs=%s" % row["candidate_set_id"]
+    if row.get("replication_of"):
+        rel += "  repl_of=%s" % str(row["replication_of"])[:8]
+    return ("%s  %-9s p%-4s %s  spec=%s  sfe=%s  pew=%s%s"
             % (row["experiment_id"], row["status"], row["priority"],
                row["created_at"].strftime("%Y-%m-%d %H:%M:%S"),
                row["spec_hash"][7:19],
-               row["sfe_experiment_id"] or "-", row["pew_reference"] or "-"))
+               row["sfe_experiment_id"] or "-", row["pew_reference"] or "-",
+               rel))
 
 
 def cmd_migrate(args, conn) -> int:
@@ -131,12 +140,65 @@ def cmd_enqueue(args, conn) -> int:
     evidence = json.loads(args.source_evidence) if args.source_evidence else {}
     not_before = (datetime.fromisoformat(args.not_before)
                   if args.not_before else None)
-    eid = _q.enqueue(conn, created_by=args.by, source_reason=args.reason,
-                     experiment_spec=spec, source_evidence=evidence,
-                     priority=args.priority, not_before=not_before,
-                     schema=args.schema)
+    try:
+        eid = _q.enqueue(conn, created_by=args.by, source_reason=args.reason,
+                         experiment_spec=spec, source_evidence=evidence,
+                         priority=args.priority, not_before=not_before,
+                         request_key=args.request_key,
+                         replication_of=args.replication_of,
+                         family_id=args.family, arm_id=args.arm,
+                         candidate_set_id=args.candidate_set,
+                         schema=args.schema)
+    except _q.DuplicateRequest as exc:
+        conn.rollback()
+        print(str(exc), file=sys.stderr)
+        return 3
     conn.commit()
-    print("%s  spec_hash=%s" % (eid, _spec.spec_hash(spec)))
+    h = _spec.spec_hash(spec)
+    print("%s  spec_hash=%s  world=%s" % (eid, h, _spec.world_name(h)))
+    return 0
+
+
+def cmd_kinds(args, _conn) -> int:
+    """The execution-kind contracts. What a spec of each kind must declare."""
+    for name in _kinds.known():
+        k = _kinds.get(name)
+        print("%-22s %-13s owner=%-9s params=%s%s"
+              % (name, "IMPLEMENTED" if k.implemented else "external",
+                 k.owner, sorted(k.params) or "(none)",
+                 "  [PROVISIONAL]" if k.provisional else ""))
+    return 0
+
+
+def cmd_family(args, conn) -> int:
+    """A prospectively declared comparison family, by arm."""
+    rows = _q.family(conn, args.family_id, schema=args.schema)
+    if not rows:
+        print("no rows declare family_id=%s" % args.family_id)
+        return 1
+    by_arm = {}
+    for r in rows:
+        by_arm.setdefault(r["arm_id"] or "(no arm)", []).append(r)
+    print("family %s: %d rows in %d arms" % (args.family_id, len(rows),
+                                             len(by_arm)))
+    hashes = {}
+    for arm, rs in sorted(by_arm.items()):
+        print("  arm %s: %d" % (arm, len(rs)))
+        for r in rs:
+            hashes.setdefault(r["spec_hash"], []).append(arm)
+            print("    " + _short(r))
+    shared = {h: a for h, a in hashes.items() if len(set(a)) > 1}
+    print("specs shared across arms: %d  (identical science, different arm -- "
+          "the sealed spec is not contaminated by the arm label)" % len(shared))
+    return 0
+
+
+def cmd_candidates(args, conn) -> int:
+    out = _q.candidate_set(conn, args.candidate_set_id, schema=args.schema)
+    if out is None:
+        print("no such candidate set")
+        return 1
+    print(_j(out))
     return 0
 
 
@@ -229,7 +291,25 @@ def build_parser() -> argparse.ArgumentParser:
                    help="JSON object recording WHY this was queued")
     s.add_argument("--priority", type=int, default=100)
     s.add_argument("--not-before", default=None, help="ISO-8601 timestamp")
+    s.add_argument("--request-key", default=None,
+                   help="idempotency key; a resubmission is refused")
+    s.add_argument("--replication-of", default=None,
+                   help="experiment_id this deliberately repeats")
+    s.add_argument("--family", default=None, help="comparison family id")
+    s.add_argument("--arm", default=None, help="arm within the family")
+    s.add_argument("--candidate-set", default=None,
+                   help="candidate-set id this row belongs to")
     s.set_defaults(fn=cmd_enqueue)
+
+    sub.add_parser("kinds").set_defaults(fn=cmd_kinds)
+
+    s = sub.add_parser("family")
+    s.add_argument("family_id")
+    s.set_defaults(fn=cmd_family)
+
+    s = sub.add_parser("candidates")
+    s.add_argument("candidate_set_id")
+    s.set_defaults(fn=cmd_candidates)
 
     s = sub.add_parser("hash")
     s.add_argument("file")

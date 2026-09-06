@@ -1,21 +1,24 @@
-"""Local executors. Deliberately tiny.
+"""Local executors. Deliberately tiny, and deliberately without defaults.
 
-An executor is a pure function of the work payload. It MEASURES; it does not
-hypothesize, does not choose the next experiment, and does not decide whether
-its own number is interesting -- that boundary is SFE's section 26 and Vivarium
-inherits it unchanged.
+An executor is a pure function of its declared parameters. It MEASURES; it does
+not hypothesize, does not choose the next experiment, and does not decide
+whether its own number is interesting -- SFE's section 26 boundary, inherited
+unchanged.
 
-`evaluate_bitstring` delegates to the engine's own reference executor when the
-engine source is importable, so the landscape a Vivarium run scores is the same
-object the canary scores. On a host without the engine source, that kind is
-simply unavailable and the experiment fails visibly rather than being scored
-against a second, look-alike implementation.
+NO DEFAULTS. Not one `.get(key, fallback)` for anything a result depends on.
+`_evaluate_bitstring` used to default `length` to 24, and since the engine
+derives the hidden target from sha256("target:<seed_root>:<length>"), an
+under-specified spec was silently scored against a Vivarium-chosen landscape.
+Every parameter now comes from the spec or the run does not happen. The
+contract is re-checked here as well as at validation, because an executor that
+trusts its caller is one refactor away from defaulting again.
 """
 from __future__ import annotations
 
 import sys
 from pathlib import Path
-from typing import Any, Callable
+
+from . import kinds as _kinds
 
 REPO = Path(__file__).resolve().parent.parent.parent
 _ENGINE = REPO / "SerendipityFoundry" / "SerendipityFoundryEngine"
@@ -25,23 +28,35 @@ class ExecutorUnavailable(RuntimeError):
     """The requested kind cannot be run faithfully on this host."""
 
 
-def _work_payload(payload: dict) -> dict:
-    """The engine hands the executor `{exp_id, **spec}`; the executor's own
-    arguments live at spec.work.payload."""
-    work = payload.get("work") or {}
-    return work.get("payload") or {}
+class ExecutorNotImplemented(RuntimeError):
+    """A registered kind whose executor does not live here.
+
+    Not an error in the request: such a kind is admissible to the register on
+    purpose. It is an error to have reached execution."""
 
 
-def _noop_v0(payload: dict) -> dict:
-    """Echo the declared payload with a deterministic marker. Exists so the
-    whole queue -> SFE -> PEW loop is exercisable on any host, including one
-    with no scientific executor installed."""
-    inner = _work_payload(payload)
-    return {"echo": inner, "executor": "noop_v0",
+def _params(kind_name: str, spec: dict) -> dict:
+    """The declared parameters, contract-checked. Never widened, never filled."""
+    work = spec.get("work") or {}
+    payload = work.get("payload")
+    kind = _kinds.get(kind_name)
+    if kind is None:
+        raise ExecutorUnavailable("no contract for kind %r" % kind_name)
+    reasons = kind.check(payload)
+    if reasons:
+        raise ExecutorUnavailable("; ".join(reasons))
+    return payload
+
+
+def _noop_v0(spec: dict) -> dict:
+    """Exercises the loop with no science in it. Takes no parameters, so there
+    is nothing it could default."""
+    _params("noop_v0", spec)
+    return {"executed": True, "executor": "noop_v0",
             "reproducibility": "BIT_DETERMINISTIC"}
 
 
-def _evaluate_bitstring(payload: dict, *, seed_root: int) -> dict:
+def _evaluate_bitstring(spec: dict) -> dict:
     if str(_ENGINE) not in sys.path:
         sys.path.insert(0, str(_ENGINE))
     try:
@@ -51,10 +66,15 @@ def _evaluate_bitstring(payload: dict, *, seed_root: int) -> dict:
             "evaluate_bitstring needs the engine reference executor "
             "(sfe.executors); refusing to score against a look-alike "
             "reimplementation: %s" % exc) from exc
-    inner = _work_payload(payload)
-    ex = BitStringExecutor(length=int(inner.get("length", 24)))
+    p = _params("evaluate_bitstring", spec)
+    seed_root = spec["world"]["seed_root"]
+    length = p["length"]
+    if not isinstance(length, int) or isinstance(length, bool) or length <= 0:
+        raise ExecutorUnavailable("length must be a positive integer, got %r"
+                                  % (length,))
+    ex = BitStringExecutor(length=length)
     wp = WorkPackage(work_id="viv", world_id="viv", kind=ex.kind,
-                     payload=inner, seed_root=seed_root)
+                     payload={"bits": p["bits"]}, seed_root=seed_root)
     r = ex.execute(wp)
     if r.status != "COMPLETED":
         raise RuntimeError("executor failed: %s" % (r.error or "unspecified"))
@@ -62,9 +82,24 @@ def _evaluate_bitstring(payload: dict, *, seed_root: int) -> dict:
             "reproducibility": r.reproducibility}
 
 
-def run(kind: str, payload: dict, *, seed_root: int) -> dict:
-    if kind == "noop_v0":
-        return _noop_v0(payload)
-    if kind == "evaluate_bitstring":
-        return _evaluate_bitstring(payload, seed_root=seed_root)
-    raise ExecutorUnavailable("no executor for kind %r" % kind)
+_IMPL = {"noop_v0": _noop_v0, "evaluate_bitstring": _evaluate_bitstring}
+
+
+def run(spec: dict) -> dict:
+    """Execute the spec's declared kind against its declared parameters.
+
+    Takes the SPEC, not a queue row and not an engine payload: everything an
+    executor is entitled to see is in the sealed spec by construction.
+    """
+    kind_name = (spec.get("work") or {}).get("kind")
+    kind = _kinds.get(kind_name)
+    if kind is None:
+        raise ExecutorUnavailable("no executor contract for kind %r"
+                                  % (kind_name,))
+    if not kind.implemented:
+        raise ExecutorNotImplemented(
+            "EXECUTOR_NOT_IMPLEMENTED: kind %r is registered (owner=%s) so it "
+            "may be REGISTERED in the queue, but no executor for it lives "
+            "here. This row was admitted as a candidate, not as a runnable "
+            "experiment." % (kind_name, kind.owner))
+    return _IMPL[kind_name](spec)

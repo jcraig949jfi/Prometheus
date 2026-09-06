@@ -18,6 +18,7 @@ import pytest
 
 from conftest import make_spec
 from viv import db as _db
+from viv import spec as _spec_mod
 from viv import queue as _q
 from viv.loop import Vivarium
 
@@ -42,10 +43,11 @@ pytestmark = pytest.mark.skipif(
 
 def test_a_real_experiment_runs_once_and_is_traceable(conn, schema):
     spec = make_spec(
-        bits="0" * 24, name="vivarium-live-%s" % os.getpid(),
+        bits="0" * 24, hypothesis="live probe %s" % os.getpid(),
         kind="evaluate_bitstring",
         outcome_rule={"field": "solved", "op": "==", "value": True,
-                      "if_true": "SURVIVED", "if_false": "FALSIFIED"})
+                      "if_true": "SURVIVED", "if_false": "FALSIFIED",
+                      "if_indeterminate": "INCONCLUSIVE"})
     eid = _q.enqueue(conn, created_by="vivarium-selftest",
                      source_reason="live end-to-end proof",
                      source_evidence={"suite": "test_live_sfe"},
@@ -67,6 +69,7 @@ def test_a_real_experiment_runs_once_and_is_traceable(conn, schema):
     assert s["anchor"]["resolved"] is True
     assert s["anchor"]["sfe_entry_hash"].startswith("sha256:")
     assert s["anchor"]["event_type"] == "OBSERVATION_RECORDED"
+    assert s["world_name"] == _spec_mod.world_name(sealed)
     assert s["audit_envelope"]["work_status"] == "COMPLETED"
 
     # The ledger, read back independently, holds the hash the queue sealed.

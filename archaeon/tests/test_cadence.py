@@ -16,11 +16,18 @@ import os
 import threading
 import uuid
 
+import os as _os
+
 import pytest
+
+_S = _os.environ.get("VIV_SCHEMA", "viv")
+VIVQ = _S + ".research_experiment_queue"
+VIVE = _S + ".research_experiment_events"
 
 from archaeon import cadence as cad
 from archaeon import config as cfg
 from archaeon import queue as q
+from archaeon import vivqueue as vq
 
 psycopg2 = pytest.importorskip("psycopg2")
 
@@ -58,8 +65,30 @@ def _cleanup(conn, lane):
     cur = conn.cursor()
     cur.execute("DELETE FROM archaeon.cadence_log WHERE lane = %s", (lane,))
     cur.execute("DELETE FROM archaeon.experiment_queue WHERE lane = %s", (lane,))
+    # the CANONICAL register: cadence counts rows HERE now (Vivarium 002)
+    cur.execute("DELETE FROM " + VIVE + " e USING " + VIVQ + " q "
+                "WHERE e.experiment_id = q.experiment_id "
+                "  AND q.cadence_lane = %s", (lane,))
+    cur.execute("DELETE FROM " + VIVQ + " WHERE cadence_lane = %s", (lane,))
     cur.execute("DELETE FROM archaeon.cadence_gate WHERE lane = %s", (lane,))
     conn.commit()
+
+
+def _insert_viv(conn, lane, ordinal, offset_hours=0.0):
+    """An autonomous-shaped row in the CANONICAL register, at a controlled
+    time. Cadence counts rows there now, not in the retired table."""
+    cur = conn.cursor()
+    cur.execute(
+        "INSERT INTO " + VIVQ + " (created_at, created_by, source_reason, "
+        "source_evidence, experiment_spec, spec_hash, status, cadence_lane, "
+        "cadence_day_ordinal) VALUES "
+        "(now() - (%s || ' hours')::interval, 'archaeon', "
+        " 'exploration', '{}'::jsonb, '{}'::jsonb, %s, 'queued', "
+        " %s, %s) RETURNING experiment_id",
+        (str(offset_hours), "sha256:" + uuid.uuid4().hex * 2, lane, ordinal))
+    out = cur.fetchone()[0]
+    conn.commit()
+    return out
 
 
 def _insert(conn, lane, ordinal, offset_hours=0.0, pid=None,
@@ -281,12 +310,15 @@ def test_concurrent_instances_cannot_exceed_the_quota(lane):
                   "corpus": {"hash": "corpus:test"},
                   "rules": {"config_fingerprint": "cfg:test"}}
             try:
-                pid, _ = q.enqueue(c, spec=spec, source_reason="exploration",
-                                   source_evidence=ev,
-                                   config=cfg.ArchaeonConfig(
-                                       cadence=_ccfg(lane)))
+                out = vq.submit(
+                    c, candidates=[vq.make_candidate(
+                        {k: v for k, v in spec.items() if k != "spec_hash"},
+                        source_evidence=ev)],
+                    selected_index=0, source_reason="exploration",
+                    config=cfg.ArchaeonConfig(cadence=_ccfg(lane)))
                 with lock:
-                    results.append(("ADMITTED", pid))
+                    results.append(("ADMITTED",
+                                    out["selected_experiment_id"]))
             except cad.CadenceRefused as exc:
                 with lock:
                     results.append(("REFUSED", exc.decision.decision))
@@ -318,7 +350,7 @@ def test_concurrent_instances_cannot_exceed_the_quota(lane):
 def test_refusals_are_logged(conn, lane):
     """A refusal that leaves no trace is indistinguishable from a cycle that
     never ran."""
-    _insert(conn, lane, 0, offset_hours=0.5)
+    _insert_viv(conn, lane, 0, offset_hours=0.5)
     spec = {"procedure": "archaeon.explore.v0", "spec_hash": "sha256:y",
             "worlds": ["w0"], "players": []}
     ev = {"schema": "archaeon.provenance.v0", "mode": "exploration",
@@ -326,8 +358,10 @@ def test_refusals_are_logged(conn, lane):
           "rules": {"config_fingerprint": "cfg:test"}}
     before = _log_count(conn)
     with pytest.raises(cad.CadenceRefused):
-        q.enqueue(conn, spec=spec, source_reason="exploration",
-                  source_evidence=ev,
+        vq.submit(conn, candidates=[vq.make_candidate(
+                      {k: v for k, v in spec.items() if k != "spec_hash"},
+                      source_evidence=ev)],
+                  selected_index=0, source_reason="exploration",
                   config=cfg.ArchaeonConfig(cadence=_ccfg(lane)))
     assert _log_count(conn) > before
 
@@ -370,10 +404,23 @@ def test_negative_authority_blocks_the_write(conn, lane):
           "corpus": {"hash": "corpus:test"},
           "rules": {"config_fingerprint": "cfg:test"}}
     with pytest.raises(q.NegativeAuthorityViolation):
-        q.enqueue(conn, spec=spec, source_reason="exploration",
-                  source_evidence=ev,
+        vq.submit(conn, candidates=[vq.make_candidate(
+                      {k: v for k, v in spec.items() if k != "spec_hash"},
+                      source_evidence=ev)],
+                  selected_index=0, source_reason="exploration",
                   config=cfg.ArchaeonConfig(cadence=_ccfg(lane)))
+    conn.rollback()
     cur = conn.cursor()
-    cur.execute("SELECT count(*) FROM archaeon.experiment_queue "
-                "WHERE lane = %s", (lane,))
+    cur.execute("SELECT count(*) FROM " + VIVQ + " WHERE cadence_lane = %s",
+                (lane,))
     assert int(cur.fetchone()[0]) == 0, "a forbidden record reached the queue"
+
+
+def test_the_retired_writer_refuses(conn, lane):
+    """archaeon.experiment_queue is retired. The old writer must not remain a
+    second live path into a second table -- that seam is what made Archaeon's
+    proposals go nowhere."""
+    with pytest.raises(q.QueueRetired) as exc:
+        q.enqueue(conn, spec={"procedure": "x"}, source_reason="exploration",
+                  source_evidence={})
+    assert "vivqueue.submit" in str(exc.value)

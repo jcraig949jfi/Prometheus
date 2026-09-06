@@ -22,7 +22,7 @@ def test_status_answers_the_operational_questions(conn, schema, capsys, tmp_path
         assert line in out
 
     path = tmp_path / "spec.json"
-    path.write_text(json.dumps(make_spec(name="cli-world")), encoding="utf-8")
+    path.write_text(json.dumps(make_spec(hypothesis="probe cli-world")), encoding="utf-8")
     code, out = _run(capsys, "--schema", schema, "enqueue", str(path),
                      "--by", "operator", "--reason", "cli smoke")
     assert code == 0
@@ -57,7 +57,7 @@ def test_enqueue_reports_every_reason_a_spec_was_rejected(capsys, schema,
 
 def test_status_exits_nonzero_when_something_is_stranded(conn, schema, capsys):
     eid = _q.enqueue(conn, created_by="t", source_reason="t",
-                     experiment_spec=make_spec(name="strand"), schema=schema)
+                     experiment_spec=make_spec(hypothesis="probe strand"), schema=schema)
     _q.claim_next(conn, "ghost-worker", schema=schema)
     conn.commit()
     code, out = _run(capsys, "--schema", schema, "status", "--stale-after", "0")
