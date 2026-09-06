@@ -1,0 +1,395 @@
+================================================================================
+RESEARCH REPORT -- DISCIPLINE MINING FOR THE ARCHAEON TEMPLATE REGISTRY
+69 fields asked what they would run on our bench, and what it lacks
+================================================================================
+Prepared:        2026-09-06   complete for this round, 11 clusters to re-fire
+Seat:            Herakles (literature mining), for Archaeon (registry owner)
+Mandate:         archaeon/docs/ROADMAP.md, Challenge 2, sequence item 4
+Location:        roles/Herakles/deep_research/
+                 2026-09-06_archaeon_template_mining
+Output:          archaeon/templates/inbox/  (69 PROPOSED templates + README)
+Handoff:         roles/Archaeon/INBOX_HERAKLES_TEMPLATE_MINING_2026-09-06.md
+On main at:      fed189cfb
+Headline:        Of 69 disciplines, ONE proposes an experiment the bench can
+                 run today. The menu is not a small sample of the space of
+                 experiments; it is very nearly disjoint from it.
+
+--------------------------------------------------------------------------------
+1. WHAT WAS ASKED, AND WHAT WAS DELIVERED
+--------------------------------------------------------------------------------
+The roadmap delegates literature mining to a seat with Deep Research and fixes
+the question, deliberately small and identical for every field:
+
+    what is the smallest experiment this field would run on our bench today,
+    and what is the smallest thing the bench lacks?
+
+The first answer is a PROPOSED template into the inbox. The second is an
+expansion request. Output is templates, not prose.
+
+Delivered:
+
+    69 PROPOSED templates ................. one per field, all 69 covered
+    60 distinct executor kinds proposed ... across those 69 templates
+    41 expansion requests ................. consolidated register
+     1 template runnable on the bench ..... evolcomp.fitness.v0
+    50 templates with a damaged axis ...... flagged, see section 8
+
+Nothing is admitted. Admission is the operator's act and nothing in the inbox
+is drawn from.
+
+--------------------------------------------------------------------------------
+2. METHOD
+--------------------------------------------------------------------------------
+The 69 fields were grouped into 14 clusters of about five. Every prompt carried
+an IDENTICAL description of the bench and an identical output contract; only
+the field list changed. That was deliberate. The answers have to be comparable
+across fields, and the bench description is the part most likely to drift if
+written fourteen times.
+
+The bench description was taken from source, never from recall:
+
+    vivarium/viv/kinds.py          the executor kinds and their exact params
+    vivarium/viv/executors.py      what each executor actually returns
+    vivarium/tests/conftest.py     the spec v3 shape, outcome_rule, repeat
+    archaeon/docs/ROADMAP.md:94    the template schema
+
+Returned blocks are validated against Vivarium's LIVE kind registry, imported
+rather than transcribed. A template whose param_space does not match its kind
+is rejected, because it would be admitted and then fail at execution. A
+template naming a kind that does not exist is NOT rejected: per the roadmap
+that template IS an expansion request, so it is kept and flagged.
+
+--------------------------------------------------------------------------------
+3. THE BENCH AS IT ACTUALLY IS
+--------------------------------------------------------------------------------
+This is the ground truth every prompt carried, and it is the reason the
+headline came out as it did.
+
+Three executor kinds exist. Each declares an EXACT parameter set: a missing
+parameter is a rejected spec, and so is an extra one. No executor is permitted
+a default, because a default would mean the bench silently choosing a
+scientific value on the experimenter's behalf.
+
+    kind                 payload params        returns
+    -----------------    ------------------    ------------------------------
+    noop_v0              none                  executed
+    evaluate_bitstring   bits, length          bits, score, solved
+    random_walk_v0       steps, step_scale     position, start_position,
+                                               displacement, steps, step_scale
+
+random_walk_v0 is the only STATEFUL kind, so it is the only one that may
+declare repeat.state = persist. A fourth kind, archaeon.probe.v0, was retired
+on 2026-09-06 and cannot be admitted again.
+
+THE OUTCOME RULE IS A SINGLE SCALAR COMPARISON. One field, one operator, one
+value, mapped onto SURVIVED / FALSIFIED / INCONCLUSIVE. No conjunction, no
+disjunction, no expression over two fields, no aggregation across repeats, no
+ordering or trend test.
+
+ONE WORLD PER SPEC. The world is a single integer seed root. There is no
+declared population, generation, archive, niche grid, tournament, opponent, or
+second world to compare against.
+
+--------------------------------------------------------------------------------
+4. PRIMARY RESULT
+--------------------------------------------------------------------------------
+    Disciplines asked ......................................... 69
+    Templates returned ........................................ 69
+    Distinct executor kinds those templates name ............... 60
+    Templates runnable on the bench as it stands ............... 1
+    Templates that are therefore expansion requests ............ 68
+
+The single runnable one is evolcomp.fitness.v0: one bitstring scored against
+the hidden target, attributed to Holland 1975, which is the bench's existing
+evaluator with a citation attached. Every other field named an executor that
+does not exist.
+
+This is a measurement, not a failed harvest. Read plainly: asked what they
+would characteristically do, 68 of 69 research communities answered with
+something this bench cannot express.
+
+One caveat on the count, disclosed rather than smoothed over. The deck told the
+miner to declare exactly the payload parameters of the kind. The live generator
+also draws world.seed_root as a first-class axis, and the roadmap's own
+canonical template declares it. So returned templates omit a seed_root axis
+they should carry. That is an admission-time fix, and my instruction was the
+thing that was wrong.
+
+--------------------------------------------------------------------------------
+5. THE FORTY-ONE REQUESTS COLLAPSE TO SEVEN GAPS
+--------------------------------------------------------------------------------
+The grouping is my judgement. The register holds each request in the field's
+own words with its evidence and a concrete smallest form.
+
+    1. THE OUTCOME RULE. Nine fields, the largest cluster by a wide margin.
+       Two-arm comparison, aggregation across repeats, a trend test over a
+       series, string-valued comparison, set membership. Raised independently
+       by Neural Architecture Search, Meta-Science, Metamorphic Testing,
+       Active Learning, Computational Creativity, Automated Scientific
+       Discovery, AI Scientist systems, Abductive Reasoning, Open-Ended
+       Evolution.
+
+    2. PERSISTENT STRUCTURED STATE ACROSS REPEATS. Population memory, a
+       behavioural archive with feature descriptors, graph state, dual
+       populations. Quality-Diversity, Coevolution, POET, Evolutionary
+       Computation, ALife-Inspired AI, Universal Darwinism.
+
+    3. OUTPUT-TO-INPUT CHAINING. Distinct from 2: not merely retained state
+       but a declared dependency, where repeat N+1's payload is a function of
+       repeat N's result. Falsification-Based Search,
+       Counterexample-Guided Verification, Robot Scientists.
+
+    4. AN INTERPRETER FOR A STRUCTURED CANDIDATE. A program, a logic clause, a
+       proof state, a constraint system. Genetic Programming, Program
+       Synthesis, Inductive Logic Programming, Automated Theorem Proving,
+       Formal Methods.
+
+    5. DATA NOT DERIVED FROM THE WORLD SEED. A dataset, a case base, a second
+       set to intersect. Causal Discovery, Case-Based Reasoning, Knowledge
+       Discovery.
+
+    6. A WORLD RICHER THAN ONE INTEGER. A spatial grid, a boolean network, a
+       relational graph of entities and predicates, a distribution of tasks.
+       Artificial Life, Artificial Gene Regulatory Networks, Analogical
+       Reasoning, Science of Science, Meta-Learning.
+
+    7. DIFFERENTIABILITY. Scientific Machine Learning, Learning-to-Optimize.
+
+--------------------------------------------------------------------------------
+6. A QUALIFICATION ON GAP 1 THAT CHANGES ITS PRIORITY
+--------------------------------------------------------------------------------
+I want to argue against my own headline finding here, because I think the
+outcome-rule gap is smaller than the count suggests.
+
+The single-scalar outcome rule constrains the VERDICT a spec can pronounce on
+itself. It does not constrain what is MEASURED. A spec with repeat.count = N
+produces N observations, all fossilized with their inputs and seeds, and
+Archaeon's detectors already read across fossils. An experiment that needs a
+mean, a trend, or a two-arm contrast can therefore be RUN today; what it cannot
+do is state its own verdict.
+
+If that is right, then several of the nine fields in gap 1 are not blocked from
+running, only from self-adjudicating, and the expansion is cheaper and less
+urgent than a raw count of blocked fields implies. It also means the real
+question for those fields is which seat owns the verdict, which is a Harmonia
+question about nulls and controls, not a Vivarium question about executors.
+
+I have NOT verified this against how a family or arm reaches the fossil record,
+and Archaeon's own notes flag that path as unresolved. Treat this section as a
+hypothesis with a named test, not as a finding.
+
+--------------------------------------------------------------------------------
+7. WHAT THIS COST, AND A TOOL DEFECT WORTH KNOWING
+--------------------------------------------------------------------------------
+Three runs, twenty reports, exactly one day's allocation.
+
+    run   prompts   template blocks usable      outcome
+    ---   -------   ----------------------      -------------------------
+    1           3   1 of 15                     stopped mid-flight
+    2          14   2 of 69                     salvaged, see section 8
+    3           3   15 of 15                    clean, encoding proven
+
+ROOT CAUSE. The research service rewrites a report AFTER the model writes it,
+replacing bracketed spans with source markers. It cannot distinguish a citation
+bracket from a JSON array, so every array of numbers was overwritten and its
+contents destroyed. A choice list of three integers came back as a source
+marker with the integers gone.
+
+Instructing the model not to do it DOES NOT WORK. Run 2 was fired with a prompt
+that described the failure explicitly and forbade it, and lost 67 of 69 blocks.
+The substitution happens after generation. This is a property of the tool.
+
+THE FIX is to remove brackets from the format. Ranges and choice lists are now
+quoted strings, decoded on arrival:
+
+    "length":    {"choices": "16, 24, 32"}
+    "seed_root": {"int_range": "100000 to 999999"}
+
+Run 3 parsed 15 of 15 with no repair. The finding is recorded in
+roles/Herakles/CAPABILITY_DEEP_RESEARCH.md and in memory, with the standing
+rule to probe with ONE prompt before spending a batch.
+
+--------------------------------------------------------------------------------
+8. DATA QUALITY: WHAT IN THE INBOX IS NOT TRUSTWORTHY
+--------------------------------------------------------------------------------
+    Templates from the clean run (clusters 1 to 3) ............. 19
+    Templates salvaged from the corrupted run ................. 50
+    Salvaged templates carrying a destroyed axis value ........ 50
+
+For the salvaged 50, the kind, the axis NAMES, the origin and the rationale are
+the miner's own. Any axis whose numbers a source marker destroyed is null,
+flagged INCOMPLETE in _ingest.flags with the axis named, and was DELIBERATELY
+NOT RECONSTRUCTED. Inventing those numbers would be the same defect as an
+executor defaulting a scientific parameter, which is the one thing this bench
+exists not to do.
+
+ORIGIN.REFERENCE IS UNVERIFIED throughout. The references are plausible and
+mostly recognisable, but they were produced by an automated research agent and
+have not been checked against primary sources. They are leads to check at
+admission, not established citations.
+
+--------------------------------------------------------------------------------
+9. DEFECTS FOUND IN MY OWN INSTRUMENTS
+--------------------------------------------------------------------------------
+Four, all found and fixed during this pass. Recording them because three of the
+four are the same shape: a rule of mine narrower than the legitimate data.
+
+    a. param_space validated against payload parameters alone, which would have
+       REJECTED the roadmap's own canonical template, because that template
+       varies world.seed_root and the seed is not a payload parameter. A gate
+       that cannot pass its founding case is not a gate. Now a fixture.
+
+    b. The template id rule allowed underscores only after the first dot, so it
+       rejected version_space_search.v0 and eleven siblings. Underscores are
+       normal; the kinds themselves are named random_walk_v0.
+
+    c. The INCOMPLETE flag scanned for surviving source markers, but the repair
+       pass had already replaced them with null. It reported ZERO damaged
+       templates while fifty were damaged. A report claiming nothing is broken
+       while fifty rows are broken is worse than no report.
+
+    d. The deck instructed exactly-payload-parameters, which is narrower than
+       the roadmap's schema. See section 4. Disclosed, not silently patched.
+
+--------------------------------------------------------------------------------
+10. ADDITIONAL RESEARCH ROUNDS WORTH RUNNING
+--------------------------------------------------------------------------------
+Yes, and the most valuable one is cheap. The question asked this round was
+FIELD-FIRST: what would your field characteristically do? That reliably
+produces field-characteristic experiments, and those need new executors. The
+inverse question has not been asked.
+
+R1. THE BENCH-FIRST INVERSION.  HIGHEST VALUE, RUN THIS NEXT.
+    Ask: given EXACTLY these result fields (bits, score, solved; position,
+    displacement) and a single-scalar outcome rule, name experiments from your
+    field that are expressible NOW, without any new executor.
+    Expected yield: templates that are admissible today rather than expansion
+    requests. This round produced 1; a bench-first round should produce many.
+    Cost: 5 to 8 prompts.
+
+R2. FITNESS-LANDSCAPE AND QUERY-COMPLEXITY DEPTH ON evaluate_bitstring.
+    The evaluator returns a CONTINUOUS score, not just a solved flag, and the
+    executor accepts any positive length (the 16/24/32 restriction is
+    Archaeon's declared space, not the executor's limit). That makes a real
+    literature reachable today: black-box and query complexity, Hamming-oracle
+    search, needle-in-haystack landscapes, random-search baselines, and the
+    length-scaling of hit probability. None of it needs a new kind.
+    Cost: 3 to 4 prompts.
+
+R3. STOCHASTIC-PROCESS DEPTH ON random_walk_v0.
+    The walk is stateful and repeat.state may be reset or persist. The
+    executor's own docstring says that contrast is what a lag-1 within-world
+    autocorrelation reads. That is a genuine two-condition experiment the bench
+    can express TODAY. Reachable: diffusion scaling of displacement against
+    steps, variance scaling in step_scale, first-passage, time-average versus
+    ensemble-average.
+    Cost: 3 to 4 prompts.
+
+R4. THE ONE-CAPABILITY-CONDITIONAL ROUND.
+    Ask: if the outcome rule gained two-arm comparison and nothing else, what
+    becomes expressible? Repeat for persistent state, and for output-to-input
+    chaining. This PRICES each expansion in templates-unlocked before anyone
+    builds it, which is the measurement Challenge 3 wants and does not yet
+    have.
+    Cost: 3 prompts, one per candidate capability.
+
+R5. NULLS AND CONTROLS.  Delegated to Harmonia by the roadmap, but a research
+    round would seed it: for each admitted template, what null and what control
+    make its outcome interpretable? Without this a template produces fossils
+    nobody can read.
+
+R6. REFERENCE VERIFICATION.  Not a Deep Research round. A pass that checks
+    origin.reference against primary sources before admission. Cheap, and it is
+    the difference between a citation and a decoration.
+
+Not a research round but worth naming: the CHAOS mutation operator in the
+roadmap can generate new PROPOSED templates from admitted ones with no
+literature at all. It should not wait on mining.
+
+--------------------------------------------------------------------------------
+11. RECOMMENDED NEXT STEPS, IN ORDER
+--------------------------------------------------------------------------------
+    1. OPERATOR TRIAGE of the inbox. Only one template is drawable today, so
+       this is quick. Admitting it, with a seed_root axis added, gets the
+       registry from zero admitted to one.
+    2. RE-FIRE the 11 salvaged clusters with the proven encoding, replacing the
+       50 null-bearing templates with valued ones. One day's allocation.
+    3. RUN R1, the bench-first inversion. This is the round most likely to move
+       the admitted count, and it costs less than half a day's allocation.
+    4. SETTLE THE SECTION 6 QUESTION before treating the outcome rule as the
+       top expansion. If aggregation is available at analysis time, gap 1 is a
+       verdict-ownership question for Harmonia, not an executor request for
+       Vivarium.
+    5. THEN take the priced expansions to Vivarium, using R4's numbers rather
+       than a raw count of blocked fields.
+
+--------------------------------------------------------------------------------
+12. AN OBSERVATION OUTSIDE THIS MANDATE
+--------------------------------------------------------------------------------
+Archaeon's roadmap and its own production log both record that the weak-signal
+path does not change the emitted spec: detectors fire, and the experiment is
+still drawn at random. One tick logged 28 signals beside a random draw.
+
+Consequence for this work: whatever is admitted from the inbox will be drawn
+uniformly until that changes. The menu-growth metric and the signal campaign
+are coupled more tightly than the roadmap's separation of Challenge 1 and
+Challenge 2 suggests. Growing the menu will raise the variety of what runs; it
+will not, on its own, make what runs responsive to what was found.
+
+--------------------------------------------------------------------------------
+13. REPRODUCTION
+--------------------------------------------------------------------------------
+Preflight, prints no secret:
+
+    python -c "import sys,warnings; warnings.filterwarnings('ignore');
+    sys.path.insert(0,'.'); from keys import get_key; from google import genai;
+    k=get_key('GEMINI'); print('key resolves:', bool(k));
+    c=genai.Client(api_key=k);
+    print([m.name for m in c.models.list() if 'deep-research' in m.name])"
+
+Rebuild the deck, fire, ingest:
+
+    cd roles/Herakles/deep_research/2026-09-06_archaeon_template_mining
+    python build_deck.py
+    python ../../../../aporia/scripts/gemini_deep_research_dispatch.py \
+        --deck deck.md --out . --batch-size 3 --resume
+    python ingest.py --reports v2_citation_corrupted . --dry-run
+
+Spot checks a reviewer can run in a minute:
+
+    grep -c "\[" deck.md                     expect 0, the bracket rule
+    python ingest.py --reports . --dry-run    expect 0 rejected
+    ls archaeon/templates/inbox/*.json | wc   expect 69
+
+--------------------------------------------------------------------------------
+14. LIMITATIONS
+--------------------------------------------------------------------------------
+    - 50 of 69 templates carry at least one destroyed axis value. They are
+      structurally sound and scientifically incomplete.
+    - Every origin.reference is unverified against primary sources.
+    - The seven-gap grouping in section 5 is my judgement, not a measurement.
+      The 41 underlying requests are the evidence.
+    - Section 6 is an argument, not a result, and it cuts against the headline.
+    - The count "1 of 69 runnable" is sensitive to the question asked. A
+      bench-first question would give a different and probably larger number,
+      which is exactly why R1 is recommended first.
+    - No template has a null or control attached, so nothing admitted from this
+      inbox is yet interpretable on its own.
+
+--------------------------------------------------------------------------------
+15. VERDICT
+--------------------------------------------------------------------------------
+    MINING PRODUCED ADMISSIBLE TEMPLATES ............... 1 of 69
+    MINING PRODUCED EXPANSION EVIDENCE ................. YES, 41 requests
+    THE MENU AND THE DISCIPLINES ARE NEARLY DISJOINT ... YES
+    FURTHER ROUNDS WOULD YIELD RUNNABLE EXPERIMENTS .... YES, see R1 to R3
+    THE ROUND SHOULD BE REPEATED AS ASKED .............. NO, invert it first
+
+Reviewer's bottom line, the crux to confirm or contest: is the single-scalar
+outcome rule a limit on what can be MEASURED, or only on what a spec can
+CONCLUDE about itself? If it is only the latter, the largest gap this round
+found is not an executor problem at all, and the build order in section 11
+changes.
+================================================================================
+END OF PACKET
+================================================================================
