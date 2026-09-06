@@ -1,4 +1,4 @@
-# Four defects in existing machinery, found by feeding it proposed templates
+# Five defects in existing machinery, found by feeding it proposed templates
 
 **Date:** 2026-09-06. **Seat:** Herakles. **Branch:** `vivarium/v0-2026-09-05`
 at `7a91054ad`. Reviewed source pinned in `01_STARTING_POINT.md`.
@@ -164,7 +164,7 @@ zero-variance arm is the same failure family as F-1.
 
 ## What this says about the pass itself
 
-The four defects share a shape. Each layer validates the thing it owns and
+The first four share a shape. Each layer validates the thing it owns and
 assumes the neighbouring layer validated the rest. Names are checked but not
 values; values are checked but not their relationships; relationships are
 assumed but never asserted. Nothing here is careless work. It is the ordinary
@@ -184,6 +184,50 @@ executor availability with parameter completeness, and this reaches it by
 following a template all the way to a valid observation. The reasoning that
 produced the earlier number was still wrong, and section 2 of
 `01_STARTING_POINT.md` records why.
+
+## F-5. `step_scale` is a pure rescaling, not an independent axis
+
+**Lane: Vivarium and Archaeon jointly. Surfaced by an analyst on chunk 6;
+verified here by execution.**
+
+`random_walk_v0` draws each increment as `step_scale * (uniform(0,1)*2 - 1)`
+from the repeat's seed. The scale multiplies every increment identically, so at
+a FIXED seed the whole trajectory is the same walk rescaled.
+
+Measured, seed 999, steps 100:
+
+    step_scale   displacement    displacement / step_scale
+    ----------   -------------   -------------------------
+           0.1     +0.26428096          +2.6428095958
+           0.5     +1.32140480          +2.6428095958
+           1.0     +2.64280960          +2.6428095958
+           2.0     +5.28561919          +2.6428095958
+           7.3    +19.29251005          +2.6428095958
+
+Identical to ten decimal places across a 73-fold range. The walk therefore has
+ONE informative payload axis, `steps`, plus the seed. Its declared 2-D
+parameter space is one dimension and a scale factor.
+
+**Why this is more than a curiosity.** A template that sweeps `step_scale`
+within a seed manufactures observations that are PERFECTLY correlated by
+construction. Fed to a variance-based detector, a set of exactly proportional
+displacements is not noise and not signal; it is an artifact of the sweep. D3
+reads a variance ratio against neighbouring regions and D6 reads a jump against
+a pooled SD, and both are exposed to a family of observations whose spread is a
+deterministic multiple of a swept parameter.
+
+This is the same hazard the programme already names in
+`feedback_scale_vs_shape`: test mean-spacing normalisation FIRST on any gap
+comparison. Here the normalisation is exact and free, because dividing by
+`step_scale` removes the axis entirely.
+
+**Smallest fix, and it is a template rule rather than a code change:** a walk
+template should sweep `steps` and the seed, and hold `step_scale` fixed, unless
+the experiment is specifically about the scale-invariance itself. If a sweep is
+wanted anyway, the analysis must divide by `step_scale` before anything else.
+Worth stating in the registry README so it is not rediscovered per template.
+
+---
 
 ## A limitation on this pass, declared
 
