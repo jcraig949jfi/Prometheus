@@ -90,10 +90,12 @@ body is never parsed as JSON: `422 model_attributes_type`.
 
 ---
 
-## 3. All 49 routes
+## 3. All 50 routes
 
-Generated from the live `openapi.json`. "Body required" lists required fields;
-`?x&y` means required query parameters.
+Counted from the live `openapi.json` on 2026-09-06: **44 distinct paths, 50
+method+path pairs**. (An earlier cut of this guide said 49 and its table was
+missing six live routes; both are corrected below.) "Body required" lists
+required fields; `?x&y` means required query parameters.
 
 ### Identity
 
@@ -102,6 +104,7 @@ Generated from the live `openapi.json`. "Body required" lists required fields;
 | `GET /v2/version` | — (no auth) |
 | `POST /v2/clients` | `name` (no auth) |
 | `POST /v2/sessions` | `name` |
+| `POST /v2/sessions/{sid}/close` | — (gated on OWNERSHIP, not on the session key) |
 | `POST /v2/topology-groups` | — |
 
 ### Worlds — lifecycle
@@ -128,6 +131,9 @@ Generated from the live `openapi.json`. "Body required" lists required fields;
 | `GET /v2/worlds/{wid}/resources` | — |
 | `GET /v2/worlds/{wid}/failures` | — |
 | `GET /v2/worlds/{wid}/lineage` | `?kind&id` |
+| `GET /v2/worlds/{wid}/experiments` | — (`?state`) |
+| `GET /v2/worlds/{wid}/experiments/{eid}` | — (returns the FROZEN spec, so a run is replayable without the repo) |
+| `GET /v2/worlds/{wid}/observations` | — |
 
 ### Artifacts
 
@@ -146,6 +152,7 @@ Generated from the live `openapi.json`. "Body required" lists required fields;
 | `POST /v2/worlds/{wid}/experiments` | `spec` |
 | `POST /v2/worlds/{wid}/experiments/{eid}/commit` | — |
 | `GET /v2/worlds/{wid}/experiments/{eid}/analysis` | — |
+| `GET /v2/worlds/{wid}/experiments/{eid}/audit-envelope` | — (the whole sealed record as one hash-sealed object, for export) |
 | `POST /v2/worlds/{wid}/observations` | `exp_id`, `content`, `outcome` |
 | `POST /v2/worlds/{wid}/failures` | `failure_type`, `falsifier`, `violated` |
 | `POST /v2/worlds/{wid}/budget/consume` | `resource`, `amount` |
@@ -159,6 +166,17 @@ Generated from the live `openapi.json`. "Body required" lists required fields;
 | `POST /v2/work/{work_id}/complete` | `worker_id`, `claim_id`, `result` |
 | `POST /v2/work/{work_id}/fail` | `worker_id`, `claim_id`, `error` |
 | `GET /v2/work/{work_id}/attestation` | — |
+
+### Audit (credential-free, cross-engine by design)
+
+| Route | Body required |
+|---|---|
+| `POST /v2/audit/verify-anchor` | `world_id`, `event_id`, `entry_hash` |
+
+Send `exp_id`/`obs_id` too. Without them the call proves only that an event
+EXISTS, and a wrong-but-real event passes; with them the engine checks BINDING
+and rejects a mismatch. This route takes no bearer token and no session key on
+purpose, so a third party can verify an anchor it did not produce.
 
 ### Scientific provenance (v6, 2026-09-05)
 

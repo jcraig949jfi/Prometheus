@@ -1,782 +1,631 @@
 # Daedalus — Open Work
 
 **Owner:** Daedalus (maintainer, Serendipity Foundry Engine)
-**Last updated:** 2026-09-05, after shipping schema v6 (scientific provenance). Session affinity v5 remains ACCEPT ON ONE HOST.
+**Last updated:** 2026-09-06, after a full audit of this file against the code
+and both live services. Every item below was re-verified; 25 were rewritten and
+9 deleted as closed.
 **Pointer from:** `roles/Daedalus/RESPONSIBILITIES.md`
 
-This is the standing list of what is NOT done. Items are closed by deleting
-them and citing the commit in the sprint packet, never by marking them done
-here and leaving them.
+This is the standing list of what is NOT done. Items are closed by **deleting**
+them and citing the commit, never by marking them done here and leaving them.
+Section D-numbers are kept stable across rewrites because other roles cite them.
 
-Status vocabulary is the same four states the closure pass established, because
-collapsing any two of them is how "the fix is in" becomes a false statement:
+Status vocabulary, because collapsing any two of these is how "the fix is in"
+becomes a false statement:
 
     CODE_FIXED != SERVICE_DEPLOYED != LIVE_VERIFIED != QUALIFIED
 
+**A note on this pass.** Between 2026-09-05 and 2026-09-06 this file drifted
+badly: schema v6 shipped and closed much of D7/D8/D9, and I added D10 describing
+what shipped while leaving the superseded items standing underneath it — exactly
+what the rule above forbids. The audit also caught two claims of mine that were
+simply false (M2 "down"; a doc-reading gap filed as a control-instrument
+disagreement). Where an item's premise was wrong, the correction is recorded in
+the item rather than quietly overwritten.
+
 ---
 
-## D0 — CLOSED 2026-09-04 19:45
+## STATE OF THE TWO ENGINES (measured 2026-09-06, not asserted)
 
-### D0-1  Deploy the repaired engine to M2 — **DONE**
-Deployed 19:45:35. PID 24324, `source_commit 0d3a52249` (contains `67c28acee`),
-schema 4, 32 paths / 36 routes, correct M2 datastore and TLS identity. No race,
-no second daemon, M1 and PEW untouched.
-**Rollback point is now `var/engine.db.predeploy-20260904T194451.bak`** — the
-earlier `pre-schema4-20260904T180254.bak` is SUPERSEDED and would discard
-Harmonia's Round 1 work. The v3-cannot-open-v4 rule is unchanged and now live:
-the database IS v4, so a code-only rollback leaves the service dead.
+| | M1 / SKULLPORT | M2 |
+|---|---|---|
+| endpoint | `https://192.168.1.202:8811` | `https://192.168.1.191:8811` |
+| reachable | yes | **yes** — own trust anchor validates, no `-k` |
+| schema | **6** | **4** |
+| `engine_source_hash` | `sha256:7b46e2b5…` | `sha256:6a4f3aee…` |
+| `source_commit` | `4d315bafe` (stale until restart — see D11) | `0fd24e0f3` |
+| `engine_instance_id` | `eng_8a37a5d305969034d488c43e` | *absent — predates the field* |
+| `session_enforcement` | `advisory` | *absent — no affinity layer* |
+| `science_profile` | `warn` | *absent — pre-v6* |
+| `/v2/families`, `/v2/claims` | 401 (present) | **404 (absent)** |
+| ledger | 500 worlds, 403 RUNNING, 182 created 2026-09-05 | separate ledger |
 
-### D0-2  Pre-registered live bar — **DONE, one criterion corrected**
-preflight exit 0; 119 tests; harness 12/12; isolation 7/7; live repair bar 8/8.
-L-5 as I wrote it was mis-specified: four of six rows flipped, and the two that
-did not are exercising the deliberate DEFAULT path (un-keyed creation; unattested
-observation in a default world). Their opt-in counterparts are proven by live bar
-H1/H2. The frozen probe was deliberately NOT edited — that would destroy
-before/after comparability. Full reasoning: `sprint_20260904/M2_DEPLOYMENT_PACKET_2026-09-04.txt` §11.
+Live surface: **44 distinct paths, 50 method+path pairs**; 40 session-scoped, 6
+unscoped. Test suite: **237 green**. Battery: **23/23** without
+`--expect-source-hash`, 24 with it.
 
-### D0-3  M1 deployment decision — **STILL OPEN, NOT MINE**
-M1 remains on `ce79401b` / schema 3, deliberately untouched. James's call.
+---
+
+## D11 — Deployment integrity: the engine's own checkout (NEW, PARTLY REPAIRED)
+
+**Repaired 2026-09-06 in `d269c6c7a`; the structural half is still open.**
+
+The deployment tree `F:/Prometheus` — the path `deploy/sfengine.cmd` launches
+from — is a **shared checkout other roles switch branches in**. On 2026-09-06 it
+sat on `vivarium/v0-2026-09-05` (HEAD `ecfef4d87`) with the entire v6 engine
+present only as uncommitted modifications plus untracked files;
+`869df1fa1..088591ab3` are ancestors of neither that HEAD nor local `main`.
+
+**Severity, corrected by measurement.** I first called this a silent-downgrade
+hazard. It is not silent. Running the pre-v6 source (`35758f9d0`) against a
+`VACUUM INTO` copy of the live ledger:
+
+    RuntimeError: db schema version 6 is NEWER than this engine's 5;
+                  refusing to run (would misread state)      store.py:471-474
+
+So a revert produces a **loud outage** — the service dies — rather than quietly
+serving pre-v6 semantics over v6 data. Correct failure direction; lower severity
+than I claimed; still an outage on a live experimental service.
+
+**Done:** `deploy/DEPLOYED_BUILD.json` pins the build independently of that
+tree's branch state (commit, authoritative `engine_source_hash`, per-file
+LF-normalized digests for all 12 source files, expected runtime config, measured
+rollback behaviour, restore path touching only SFE paths).
+`deploy/verify_deploy.py` checks the pin against both tree and live service —
+**8/8 today**. Proof recorded: the committed `sfe/*.py` at `465853b69` recompute
+to `sha256:7b46e2b5…`, byte-for-byte what M1 serves.
+
+**Still open — the structural fix:** give the engine a checkout **no other role
+writes to**, and point `sfengine.cmd` at it. That is what actually removes the
+hazard; the pin only makes it detectable and recoverable. It needs a restart, so
+it belongs in a deployment window, not a cleanup pass. See the M2 readiness
+report — do both at once.
+
+**Deliberately not done:** reconciling that checkout. Moving its HEAD to
+`origin/main`, or committing onto `vivarium/v0-2026-09-05`, touches another
+role's active branch; staging into the shared index is worse, since their next
+`git commit` would sweep my files onto their branch. The tree also carries
+uncommitted work from **ergon** (7 files) and **evidence_wiki/PEW**
+(`lineage_results.json`), plus untracked scratch from several roles. All left
+exactly as found.
 
 ---
 
 ## D1 — Engine work, justified but not urgent
 
-### D1-1  Document the events() call-style asymmetry
-The only residual defect from the REFUTED `I-EVENTS-SHAPE` finding. Raw HTTP
-returns `{"events": [...]}`; `sfclient.events()` returns the unwrapped list.
-Nothing tells a caller this. Belongs in `SerendipityFoundryClient/docs/API.md`
-and the client guide. **Doc fix, not a code fix — do not "fix" the endpoint.**
+### D1-1  Document the client's unwrapping asymmetry — WIDER THAN FILED
+Raw HTTP returns `{"events": [...]}`; `sfclient.events()` returns the bare list
+(`api.py:674` vs `client.py:160`). Confirmed still present. **The item
+understated it: five client methods unwrap** — `events`, `failures`, `lineage`,
+and now `list_families` / `list_claims`. `SerendipityFoundryClient/docs/API.md`
+is dated 2026-09-02, documents none of it, and covers **zero v6 routes**.
+**Doc fix, not a code fix — do not "fix" the endpoints.** Blocked on nobody.
 
 ### D1-2  Dry-run / preflight validation for frozen specs
-Requested by Harmonia's freeze process. Blocked on **R-7** (her choice of shape).
-My lean: (a) spec_hash prediction plus seed_root/enforcement TYPE validation —
-cheap, purely functional, no shelf life. Not (b) full budget/window
-admissibility, because that answer can go stale between preflight and execution
-and **a stale PASS is worse than no PASS**.
-Hard constraint: a dry run must append no event, debit no budget, mint no id,
-and consume no idempotency key. A preflight that is itself a side effect leaves
-the freeze dirtier than before it was checked.
+Blocked on **R-7** (Harmonia's choice of shape; no answer recorded anywhere in
+the repo). My lean is unchanged: spec_hash prediction plus seed_root/enforcement
+TYPE validation — not full budget/window admissibility, because that answer can
+go stale between preflight and execution and **a stale PASS is worse than no
+PASS**. Hard constraint: a dry run must append no event, debit no budget, mint
+no id, and consume no idempotency key.
 
-### D1-3  Engine half of the measurement contract
-`observations.content` is freeform and the SFE `measurements` table is empty, so
-the engine cannot say WHAT was measured. This is the MEASUREMENT coordinate gap
-and it is also Mnemosyne's standing ask (`roles/Daedalus/todo_20260902.md`,
-`evidence_wiki/docs/PHENOTYPE_CONSUMER_REQUIREMENT.md`: 9 recoverable items;
-only 2 of 6,006 candidate artifacts carry phenotype scores).
-Blocked on **R-3** — which of the nine items are the ENGINE's versus the
-experimenter's. Do not guess; guessing here produces a schema nobody consumes.
+### D1-3  The measurement substrate is UNREACHABLE, not merely unused
+Two separable facts; the second is the one I had never stated.
+
+**(a) The contract is not being used.** `measurements` holds **0 rows** on the
+live v6 ledger. `observations.content` is still freeform `TEXT NOT NULL`
+(`store.py:219`) with no `measurement_id` column. Only 2 of 6,006 candidate
+artifacts carry phenotype scores (`evidence_wiki/docs/
+PHENOTYPE_CONSUMER_REQUIREMENT.md:32-33`).
+
+**(b) It is EMPTY BECAUSE NOTHING CAN FILL IT.** The schema exists
+(`store.py:419-434`) and the runtime has `register_measurement`
+(`runtime.py:2930`) and `get_measurement` (`runtime.py:2963`) — but **no route
+exposes either**. There is no `/v2/measurements` among the 44 live paths. The
+only `measurement_id` on the wire is the failures POST body (`api.py:154`),
+pointing at `failures.measurement_id` (`store.py:269`) — and with
+`PRAGMA foreign_keys=ON` (`store.py:451`) that FK **can never resolve, because
+nothing can create the row**. Live count of failures citing one: 0.
+
+**v6 did not close this.** `work_items.measurement_identity_hash` is an
+**opaque executor-asserted hash** with no name, version, params or domain. It
+lets the engine detect that the scorer *changed*; it still cannot say *what was
+measured*. Populated on 2 of 3,212 work items.
+
+**Split the blocking correctly:** the *schema question* — which of the nine
+phenotype items are the engine's — is blocked on **R-3** (Mnemosyne, still
+unanswered; her `todo_20260904.md:25-27` carries it as A3, "Daedalus did not
+touch it"). The *no-route-exists* half is **blocked on nobody** and is mine.
+Shipping create/read routes for a table the schema already carries is not a
+guess about the nine items.
 
 ### D1-4  arena.run — bounded implementation
-Engine-facing contract is CLOSED (closure packet §7). Five of six prerequisites
-are met on the engine side. Blocked on **R-1** (fossil completeness) and **R-4**
-(organism content id).
-**Standing rule: the wrapper must make invalid states harder to express. It must
-not automate the current 14-step hazard with the defects still underneath.**
+Engine-facing contract CLOSED. Blocked on **R-1** (fossil completeness) and
+**R-4** (organism content id). **Standing rule: the wrapper must make invalid
+states harder to express. It must not automate the current 14-step hazard with
+the defects still underneath.**
 
 ---
 
 ## D2 — Deferred, with the trigger that revives each
 
-### D2-1  Same-world concurrency qualification (Q-2) — DEFER
-UNMEASURED and NOT ASSUMED SAFE. The code reads correct (claims run under
-`BEGIN IMMEDIATE`, `UNIQUE(world_id, world_index)` backstop, server-issued
-fencing `claim_id`) — **but that is a code reading, not a measurement, and I
-decline to certify it as one.** Prefer campaigns designed not to need it.
-*Revive:* a campaign that genuinely requires two workers in one world.
+### D2-1  Same-world concurrency qualification (Q-2) — DEFER, trigger NOT fired
+No world has ever had two distinct workers: across 3,212 work items and 40
+worker ids, `COUNT(DISTINCT claimed_by) > 1` per world returns **0 rows**. Code
+reading still correct (`BEGIN IMMEDIATE` `store.py:616`; `UNIQUE(world_id,
+world_index)` `store.py:117`; server-issued fencing `claim_id`
+`runtime.py:828`, mandatory at `:884`/`:913`).
+**Correction to the old wording:** it is not "UNMEASURED" —
+`tests/test_sfe_invariants.py:205` runs 8 threads claiming in ONE world and
+asserts each of 20 items is claimed exactly once. That is an in-process
+measurement against a temp SQLite file, so under this file's own rule it is
+CODE_FIXED, not QUALIFIED. *Revive:* a campaign that genuinely needs two workers
+in one world.
 
-### D2-2  Duplicate work completion (Q-3) — before a parallel campaign
-Complete the same `work_id` twice; complete with a stale `claim_id` after lease
-expiry. Assert the second is REFUSED, not silently accepted.
+### D2-2  Duplicate work completion (Q-3) — CRITERION CORRECTED
+The old acceptance criterion ("assert the second is REFUSED") is **wrong for one
+of its two cases** as of v6's C3e fix. Correct criterion:
+* an **identical** replay must be IDEMPOTENT — 200 twice, same `result_hash`
+  (`test_sfe_strict_and_completion.py:130`);
+* only a **materially different** completion is REFUSED — 409 carrying both
+  `stored_result_hash` and `submitted_result_hash` (`:142`).
+Both named probes have pytest coverage (`test_sfe_invariants.py:191`;
+`test_sfe_requalification.py:218`/`:229`). Still open as an **unrun
+qualification** against the deployed service.
 
-### D2-3  N-isolated-world qualification (Q-1) — before a parallel campaign
-N in {4, 16, 64}, one worker each. Success: zero errors, every world's ledger
-verifies.
+### D2-3  N-isolated-world qualification (Q-1) — GATE ALREADY VIOLATED
+**Recording this as it happened, not as it should have happened: the "before a
+parallel campaign" gate fired unnoticed and the campaign ran anyway.** Bucketing
+`work_items.updated_ts` into 60-second windows gives **37 buckets with more than
+one active worker, peaking at 4** (A-worker, B-worker, harness-worker,
+integration-probe) — parallel work in distinct worlds, already live on M1,
+without Q-1 ever being run.
+In-process coverage exists at small N and nowhere near the specified N:
+`test_sfe_invariants.py:74` is the Q-1 shape at N=6 (covers the N=4 rung);
+`:513` runs 20 worlds / 10 workers; `:57` builds 27 worlds single-threaded.
+**N=64 has never been run anywhere, by anyone.** Re-gate on N>=16 concurrent
+workers, or simply run the N in {4,16,64} bar now.
 
-### D2-4  Restart durability under load (Q-4) — DEFER
-Involves killing a live service under write load. Not to be run against an
-engine holding anyone's campaign. Operator authorization required.
+### D2-4  Restart durability under load (Q-4) — DEFER, reason STRONGER
+No test kills a service under write load; every "restart" in the suite is a
+clean in-process reopen (`test_sfe_invariants.py:158`, `test_sfe_gen21.py:266`,
+`test_sfe_session_affinity.py:244`); grep for kill/SIGKILL/taskkill across
+`tests/` returns nothing. The reason to defer has strengthened: M1 now holds
+**500 worlds, 403 RUNNING**, newest 2026-09-05 18:19:37, with
+`vivarium@skullport` active. "Not to be run against an engine holding anyone's
+campaign" now **excludes M1 outright**. Operator authorization still unobtained.
 
 ### D2-5  Throughput ceiling (Q-5) — DEFER
-No number exists. Deliberate: the goal is trustworthy experimentation, not
-maximum throughput. Measuring a ceiling we have no plan to approach buys
-nothing.
+Deferral reasoning intact. Precision fix: it is not that "no number exists" —
+`test_sfe_invariants.py:513` computes and prints a throughput figure, asserts
+nothing about it, and retains it nowhere. **No RECORDED number exists.**
 
-### D2-6  Test-world GC / reaper — DEFER
-M2 held 63 worlds at deploy time and the qualification run added more. Enumeration is now filterable, so cleanup candidates are identifiable
-even though nothing reaps them. **Deleting worlds destroys ledgers** — that
-waits for a stated retention policy, not a maintainer's judgement.
-*Revive:* ~500 worlds, or disk pressure.
+### D2-6  Test-world GC / reaper — TRIGGER FIRED, AND DELETION STAYS BLOCKED
+**The count trigger has fired: exactly 500 worlds** (37 CREATED, 403 RUNNING, 60
+TERMINATED), 182 created 2026-09-05 — a large share from my own v6 smoke and
+battery runs. All 500 created within the last 7 days. Nothing reaps: grep for
+reap/gc/retention/purge/prune across `sfe/*.py` finds only prose, and
+`api.py:484` says outright "an orphan at birth, in a system with no GC".
 
-### D2-7  Universal constraint registry / predicate DSL — REJECTED for now
-At seven constraints, a table of named tests IS the registry, and it executes on
-every commit instead of drifting from the code it guards.
-*Revive:* a constraint appears that a pytest cannot express.
+**Do NOT revive deletion on the count alone.** The disk trigger has *not* fired
+(F: is 3.7T with 2.2T free; `var/` totals 314M). **Deleting worlds destroys
+ledgers**, so this waits on a stated retention policy, not a maintainer's
+judgement and not a threshold. What the count changes is that this is now *live
+work to decide*, not deferred work to ignore. Enumeration is filterable
+(`runtime.py:717`, `api.py:617`), so cleanup candidates are already
+identifiable.
+
+### D2-7  Constraint registry / predicate DSL — REJECTED, still right
+The rejection stands. Minor staleness: "at seven constraints" understates the
+current table. *Revive:* a constraint appears that a pytest cannot express.
 
 ---
 
 ## D3 — Blocked on other components (track, do not implement)
 
-**To Mnemosyne / PEW**  (R-SFE-1 and R-SFE-2 are CLOSED on my side, live on
-M2 at `0fd24e0f3` -- the ball is in PEW's court)
-- **R-M-1 (new)** consume the SFE audit envelope. `GET /v2/worlds/{wid}/
-  experiments/{eid}/audit-envelope` returns the whole sealed record as one
-  hash-sealed object the PRODUCER exports. Store it immutably (the packet
-  surface looks right) and serve it to third parties, so an investigator never
-  needs an SFE credential. That is the half of R2-1 I cannot do.
-- **R-M-2 (new)** wire `POST /v2/audit/verify-anchor` into fossil validation so
-  `sfe_anchor_verified` can stop being pinned false. Send `exp_id`/`obs_id`
-  along with the pair -- WITHOUT them the call only proves EXISTENCE, and a
-  wrong-but-real event passes, which is the exact D1 hazard. With them the
-  engine checks BINDING and rejects it.
-- **R-M-3 (new)** record `engine_instance_id` from the verify response, not
-  just `engine_source_hash`. The build hash was byte-identical on M1 and M2;
-  the instance id is what disambiguates which engine minted an anchor.
-
-- **R-1** typed fossil fields (action, input, output_digest, full world_config,
-  registry_id, producer/schema versions) — 9 of 16 identities MISSING or
-  AMBIGUOUS. Blocks a *preserved* result, not a one-off run.
-- **R-2** anchor validation beyond shape + existence. The engine now RETURNS the
-  exact anchor (D-ANCHOR-1); PEW should require the anchoring event to be the
-  run's `OBSERVATION_RECORDED`, not merely an event that exists.
-- **R-3** which of the nine phenotype items are the engine's (see D1-3).
+**To Mnemosyne / PEW**
+- **R-M-1** consume + serve the SFE audit envelope
+  (`GET /v2/worlds/{wid}/experiments/{eid}/audit-envelope`). Nothing in
+  `evidence_wiki` calls it yet. Still the half I cannot do.
+- **R-1** typed fossil fields. **The "9 of 16" count is stale — recount it.**
+  `registry_id`/`registry_identity` still return zero hits in `sfe/`; there is
+  no `output_digest`, no typed action/input, no full `world_config` export. Two
+  things moved: the engine-identity ambiguity is resolved and consumed (see the
+  closure record), and v6 added four identity slots that overlap this list.
+  **Say explicitly that `executed_config_hash` / `player_identity_hash` /
+  `measurement_identity_hash` are ATTESTED, not minted, so they do not
+  discharge R-1.**
+- **R-2  — substantially met; the residual is narrower than filed.** PEW now
+  requires BOTH bindings and refuses the unbound form
+  (`ew/closure.py:147-148`, `:176-181`); the wrong-but-real case is gated live.
+  **Residual:** neither side ever asserts `event_type == 'OBSERVATION_RECORDED'`,
+  though the engine returns `event_type` on every verify
+  (`runtime.py:1227`). Either PEW requires it, or I make `exp_id` mandatory on
+  the bound form.
+- **R-3** which of the nine phenotype items are the engine's (see D1-3(b) —
+  this now blocks only the schema half, not the route half).
 
 **To Proteus**
-- **R-4** the authoritative organism content id and where it is minted. The
-  engine now ENFORCES an assertion; it does not MINT one.
+- **R-4** the authoritative organism content id and where it is minted.
 - **R-5** `registry_id` for the fossil's registry_identity field.
 
 **To Harmonia / James**
 - **R-6** contract decision on a typed `components` field. The engine cannot see
   inside `spec`, so nothing mechanically checks that a run labelled A+B was
-  actually A and B. **This is the likeliest route by which the programme
-  produces a wrong interaction claim.** ~100 LOC once decided. It changes the
-  meaning of `spec`, so it is not mine to decide.
+  actually A and B. **Still the likeliest route by which the programme produces
+  a wrong interaction claim.** It changes the meaning of `spec`, so not mine.
 - **R-7** dry-run shape (see D1-2).
 
+**New, engine-side, arising from PEW's delivery:**
+- **D3-N1** PEW is already coded to consume a `binds_session` check that the
+  engine never returns. Either return it or tell them it is not coming.
+
 ---
 
-## D4 — Session affinity v5: open items after Harmonia's qualification
+## D4 — Session affinity v5: what qualification did NOT close
 
-Her packet closed with ACCEPT ON ONE HOST and four defects found and fixed
-inside the review cycle (D-2, D-3, D-4/D-5, D-6/D-7 in her numbering). What
-follows is what she did NOT close. **Nothing here is being fixed now** — logged
-at James's instruction while she pushes on science.
+### D4-1  Cross-machine affinity — PREMISE CORRECTED: M2 is UP
+**The old blocker was false and I never checked it.** M2 answers at
+`192.168.1.191:8811` with its own trust anchor validating (no `-k`). So **L1
+(off-host reachability) and a first cut of L2 (foreign trust-anchor validation)
+are demonstrable today.**
 
-Her closing question was "is a one-host pass being read anywhere as a fleet
-pass?" **Checked, 2026-09-05: no.** No live doc makes a fleet claim;
-`integration/M1_TEST_SURFACE_FOR_HARMONIA.md` explicitly warns against that
-reading, and both engine packets say CLOSURE MET ON M1 / FLEET NOT CLOSED. The
-real exposure is not the repo, it is packet drift in conversation — which is
-exactly how the build-identity defect got written down in the first place.
+**L3 — cross-machine affinity, the property the feature exists for — still
+cannot be run at all**, because M2 runs schema 4 / `0fd24e0f3`, which predates
+session affinity entirely: no `session_enforcement`, no `engine_instance_id`,
+and a schema-4 engine has no session keys to mismatch.
 
-### D4-1  Cross-machine affinity is unqualified BY ANYONE — the headline gap
-The feature exists to stop an experiment wandering between MACHINES. Every
-result to date comes from two processes on one box, where the path is
-loopback-routed and **bypasses the host firewall entirely**. L1 (off-host
-reachability), L2 (trust-anchor validation by a foreign client) and L3
-(cross-machine affinity) are untouched by both seats.
-**Trigger:** M2 back up. **Blocked on:** M2 down; also still on schema 4 with
-no affinity layer, so deploy `b35046a60` or later there FIRST.
+Every cross-engine result to date is **two processes on one box**, loopback-
+routed, bypassing the host firewall
+(`test_sfe_session_affinity.py:316` and the v6 twin tests). **There is no
+cross-machine qualification and nothing should be read as one.**
+
+**Blocked on: deploying current v6 to M2** — work of mine, not a wait.
+**Deploy target is `d269c6c7a` (current tip, carries the build pin).** The old
+target `b35046a60` is now many releases stale and deploying it would land M2 on
+a build M1 no longer runs — re-opening the build-parity gate that exists to stop
+exactly that. Readiness report first (§ M2 READINESS below).
 
 ### D4-2  Legacy drain is not moving; the cutover will be date-driven
-106 LEGACY sessions, all still OPEN, unchanged all day. `close_session` now
-exists and is verified, but **nothing auto-closes and nothing should**: closing
-a session to move a metric is gaming it unless the session is genuinely
-finished. On current behaviour the cutover is date-driven (2026-10-01), not
-drain-driven. **Decide before then:** drain deliberately, move the date, or
-accept a date-driven cutover and say so.
+106 LEGACY sessions, all still OPEN. `close_session` exists and is verified, but
+**nothing auto-closes and nothing should** — closing a session to move a metric
+is gaming it unless the session is genuinely finished. On current behaviour the
+cutover is date-driven (2026-10-01). **Decide before then:** drain deliberately,
+move the date, or accept a date-driven cutover and say so. Blocked on James;
+nothing technical blocks it.
 
-### D4-3  Work-route claim scoping is HALF addressed (was R-E)
-Strict now requires a session key on the four `/v2/work` routes, but a claim is
-still bound only by `worker_id` — not to the session's own worlds. The unbound
-half is untested by anyone.
+### D4-3  Work-route claim scoping is still unbound to the session's worlds
+Untouched by v6, verified in code not text: `claim_work` (`runtime.py:795`)
+filters on work status, world state, `client_id` (tenant isolation, I5) and
+optionally `world_id`. **There is no session predicate anywhere in it** — a
+claim is scoped by client and worker, never to the session's own worlds.
+Two wording fixes: it is now **five** `/v2/work` routes, not four
+(`GET /v2/work/{work_id}/attestation` was added by v6 and is **missing from the
+strict-gate parametrization** in `test_sfe_strict_and_completion.py` — add it);
+and the addressed half is advisory-only on M1, so it is CODE_FIXED and DEPLOYED
+but **not LIVE-EXERCISED**.
 
-### D4-4  Ablation is expressible but NOT enforced
-T6 measured it both ways: four arms fork from one checkpoint with the world held
-fixed structurally, specs re-hash identically on replay — but a child declaring
-intervention A whose executor applied nothing was accepted end to end.
-`interventions` are recorded verbatim and never interpreted BY DESIGN, so the
-engine cannot check a declaration against an execution.
-**This is not an engine fix.** Both the declaration and the executed spec are
-independently recoverable, so the disagreement is DETECTABLE by an auditor
-though not PREVENTED. Closing it needs an executor attestation binding the
-applied component to the work result. Belongs to whoever runs the ablation.
+### D4-4  Ablation — v6 shipped the primitive, NOT the enforcement
+The old text said closing this needs "an executor attestation binding the
+applied component to the work result." **That attestation now exists**
+(`executed_config_hash` vs sealed `spec_hash`), and `NO_EFFECTIVE_INTERVENTION`
+/ `INTERVENTION_NOT_APPLIED` catch the inert case over the three engine-visible
+fork fields. **It is still not enforcement:** M1 runs `warn`, so a contradicted
+ablation is a non-blocking finding on one response. Closing it needs the
+operator to move M1 to `--science-profile strict`, executors to actually send
+the field, and a qualification run. Until then this is a *detectable*
+disagreement, not a *prevented* one.
 
-### D4-5  Untested, and honestly recorded as such
-- **Restart durability under load** (T5): needs an operator restart, and the
-  restart procedure is itself hazardous — a stop can orphan the process tree
-  while the OLD build keeps serving. Has happened twice.
-- **Terminal-state sweep** across all 33 session-scoped routes (T7).
-- Clone hazard, key TTL/rotation, singleton guard: read and accepted, never
-  independently tested.
+### D4-5  Untested — and the surface GREW
+* **Terminal-state sweep:** "33 session-scoped routes" is wrong. There are now
+  **46 `/v2` routes, 40 carrying `Depends(session_ctx)`**, 6 unscoped. v6 added
+  7 to the unswept surface, so **this item got bigger, not smaller.**
+* **Restart durability under load** — needs an operator window; the restart
+  procedure is itself hazardous (a stop can orphan the process tree while the
+  OLD build keeps serving; has happened twice).
+* **Session key TTL / rotation:** stated accurately — **keys have no expiry and
+  no rotation path at all.** That is a design gap, not merely an untested one.
+* Clone hazard is covered by `test_K`; drop it from this list.
 
-### D4-6  Battery count discrepancy — 23 vs 24, uninvestigated
-I report `sfe_battery.py` at 23/23; she measures 24/24 on the same live engine.
-Neither of us chased it. Harmless today, but it means one of us has a wrong
-expectation of a control instrument, and a control whose expected value is
-disputed is a poor control. **Cheap to settle; do it before it is load-bearing.**
+### D4-6 — **DELETED 2026-09-06.** See the closure record.
 
-### D4-7  C3e is a behaviour change in ADVISORY mode, not just strict
+### D4-7  C3e is a behaviour change in ADVISORY mode
 A completion replayed with a DIFFERENT result now returns 409 where it returned
-200. Any instrument written against the old behaviour — including her T2 —
-needs its expectation updated. Flagged so a future run does not read the fix as
-a regression.
+200 — and v6 added a second unconditional 409 for a replay carrying a different
+**attestation**. Any instrument written against the old behaviour, including
+Harmonia's T2, needs its expectation updated. Engine side is CODE_FIXED and
+DEPLOYED; blocked on Harmonia confirming T2.
 
 ---
 
-## D5 — Harmonia's scientific boundary campaign (S1/S2): what is ENGINE work
+## D5 — Harmonia's boundary campaign: what is ENGINE work
 
-Her packet found the pipeline manufacturing a false discovery on the real
-record: **p=0.0357 between a player and itself**, and p=0.4991 on the same data
-when counted at the world unit. Five ranked blockers, three with ZERO
-detectability after the fact. Logged, not fixed.
+### D5-1  Pre-registration is sealable — and v6 made it first-class
+Verified pre-v6 and still true: a manifest in the spec is sealed by `spec_hash`,
+recovers byte-identical, recomputes locally, and is order-proved by
+`committed_seq`. **Correction to the old wording "no engine change":** v6 shipped
+a first-class sealed manifest of the same shape — `families.manifest_hash`,
+sealed at creation and immutable (`store.py:335-346`, `runtime.py:2429-2470`).
+**Honest limit unchanged: the engine SEALS the declaration and does NOT check
+that the analysis obeyed it.** Detectable by audit, not prevented.
 
-**Most of her five blockers are NOT engine work, and saying so precisely
-matters more than volunteering to build things.**
+### D5-2  The blob_hash player-identity habit — NEVER RELAYED
+A player placed as an artifact is content-addressed; `blob_hash` is
+world-independent, so two arms that are the same policy under two names carry an
+IDENTICAL hash — the duplicate that produced p=0.036 against itself is catchable
+today with no engine change. **It says "worth telling her before SE-1" and I
+never told her.** The v6 packet mentions `player_identity_hash` but not this.
+Open, trivial, entirely mine.
 
-### D5-1  Pre-registration is already sealable — VERIFIED, no engine change
-Her C-3/C-4/C-5 (declare unit of analysis, comparison family, effect floor
-before the data is seen) do not need an engine feature. Measured on a scratch
-instance of the qualified build:
+### D5-3  Executor attestation (C-1) — BUILT AND SHIPPED
+**The old instruction "Do not build it unasked; the client-side form is
+available now" is now false and would mislead the next reader.** It was built.
 
-    spec = {unit_of_analysis, n_per_arm, comparison_family_size,
-            smallest_effect_worth_believing, arms}   -> committed
-    spec recovered byte-identical .................... True
-    spec_hash sealed in the ledger ................... yes
-    recomputes locally to the same hash .............. True
-    EXPERIMENT_COMMITTED carries spec_hash + prospective_rule
-                                    + engine_source_hash
+Typed first-class fields: `ATTESTATION_FIELDS` (`runtime.py:125-126`), columns
+(`store.py:160-163`), `_normalize_attestation` accepting `executed_config` OR
+`executed_config_hash` and never both (`runtime.py:198-226`). The engine does
+what the old item called merely "nicer": it emits `NO_EXECUTION_ATTESTATION` /
+`CONFIG_DIVERGENCE` (`runtime.py:970-994`) and under `strict` **refuses** a
+completion that omits or contradicts the attestation. Read-back at
+`GET /v2/work/{work_id}/attestation`; client at `client.py:312-332`.
 
-So the declaration is **tamper-evident and order-provable**, not merely
-disciplined: `committed_seq` fixes it in ledger order exactly as the DFX-1
-prospective window fixes a prediction. Her §9 says these three are
-"unreconstructible after the fact" — correct, which is precisely why sealing
-them at commit is the whole fix, and it is available today.
+**Residue, and it is the whole residue:** M1 reports `science_profile=warn`, so
+**the refusal branch is CODE_FIXED only and has never run on the live service**,
+and nobody outside me has qualified it.
 
-**Honest limit, same shape as ablation: the engine SEALS the declaration and
-does NOT check that the analysis obeyed it.** Detectable by audit, not
-prevented. An engine that adjudicated analyses would be computing outcomes,
-which it deliberately does not do.
+### D5-4  Undeclared co-intervention (S2 case 6) — still unclosable
+Declared A, ran A plus an undeclared C: the record is BYTE-IDENTICAL to the
+honest run. v6 does not touch this and could not. **This is a missing
+MEASUREMENT, not a missing check** — the engine cannot know what it was never
+told. Recorded so nobody files it as an engine bug.
 
-### D5-2  Blocker 3 (player identity is a name) — the mechanism already exists
-A player placed into a world as an artifact is content-addressed: `blob_hash`
-is `sha256(bytes)` and is **world-independent**. Two arms that are the same
-policy under two names would carry an IDENTICAL `blob_hash` — mechanically
-detectable, no engine change. The duplicate-under-a-new-name that produced
-p=0.036 against itself is catchable by comparing the hash the engine already
-returns. Her C-2 ("different requires the hashes to differ") is satisfiable
-today for any player that is placed as an artifact.
-**Worth telling her before SE-1**, since it converts blocker 3 from a build
-into a habit.
+### D5-5  Split: engine half SHIPPED, the rest is theirs
+The old blanket "not mine" is stale — three of four now have a shipped engine
+half, warn-only on M1 and unqualified:
+* **unit-of-analysis** — declared *and verified by counting* (`runtime.py:1559`,
+  read at `GET …/experiments/{eid}/analysis`);
+* **comparison family** — first-class container with
+  `FAMILY_EXTENT_DIVERGENCE` / `MULTIPLE_SELECTED` /
+  `SELECTION_WITHOUT_ALTERNATIVES` (`runtime.py:2591-2619`);
+* **effect floors** — `relevance_floor` stored on the claim (`store.py:376`).
 
-### D5-3  Executor attestation (C-1) — engine half is optional, not required
-The executor's config hash can travel in the work `result`, which the engine
-already seals into `result_hash`. No engine change is needed to make it
-tamper-evident. A first-class typed field would be nicer to query and would let
-the engine refuse a completion that omits it — **that is the only genuinely
-engine-side option in her packet**, and it is a design choice, not a defect.
-Do not build it unasked; the client-side form is available now.
-
-### D5-4  The one thing no engine rule can close
-Her S2 case 6 — declared A, ran A plus an undeclared co-intervention C — leaves
-a record BYTE-IDENTICAL to the honest run. Five of six dishonest executions are
-detectable from fossils; this one is a missing MEASUREMENT, not a missing
-check. The engine cannot know what it was never told, and no engine-side rule
-closes it. Correctly classified in her packet; recorded here so nobody later
-files it as an engine bug.
-
-### D5-5  Not mine, tracked only
-Unit-of-analysis enforcement in ANALYSIS, comparison-family correction, effect
-floors, and player-class breadth (her directive item 12, unaddressed: only
-stochastic scalar-emitting policies exercised, nothing stateful or learning).
-These belong to whoever runs the campaign.
+**Still wholly theirs:** multiplicity correction, power and equivalence-test
+validity, and player-class breadth (only stochastic scalar-emitting policies
+have ever been exercised — nothing stateful, nothing learning).
 
 ---
 
-## D6 — "What else fails in the direction of looking good?" (Harmonia S3)
+## D6 — "What else fails in the direction of looking good?"
 
-Her S3 closing question, answered by MEASUREMENT on a scratch instance of the
-qualified build rather than by listing suspicions. Four engine signals that
-return GREEN where a careful reader would reasonably take them to mean
-something they do not mean. Logged, not fixed.
+**v6 fixed none of these.** Two had text that v6 made actively wrong, in the
+direction of *understating* the engine — corrected below.
 
-### D6-1  EVERY epistemic signal stays green on a contradicted execution
-The sharpest one, and it extends her S2 case 6 from ablation to the whole
-epistemic surface. Spec declared `arm-A`; the executor completed reporting
-`actually_ran: arm-NOT-A`; the observation bound that work_id. Result:
+### D6-1  Every epistemic signal stays green on a contradicted execution
+**Reproduced 2026-09-06 at live config** (warn/advisory), on code byte-identical
+to the deployed build: spec `{"arm":"arm-A"}`, executor completes attesting
+`{"arm":"arm-NOT-A"}` → HTTP 200, findings `['CONFIG_DIVERGENCE']`, status
+COMPLETED; the observation binds that `work_id` → `evidence_class =
+ENGINE_WORK_RESULT`; and
 
-    observations_engine_attested         1
+    observations_engine_attested          1
     observations_prospectively_predicted  1
     claims_surviving                      1
 
-ENGINE-ATTESTED means the engine ran and sealed the work. It does NOT mean the
-executor did what the spec declared — the engine never reads the spec against
-the result, by design. PROSPECTIVE means ORDERING ONLY: the prediction preceded
-the commit. It is not evidence the predictor lacked foreknowledge; on a
-deterministic substrate it cannot be.
-**A reader who takes "engine-attested + prospective + surviving" as a quality
-stamp is reading three ordering facts as a correctness claim.**
+`world_status` returns **no key** containing science/finding/divergence.
+
+**Delete the old clause "the engine never reads the spec against the result, by
+design" — that is no longer true.** v6 *does* compare `executed_config_hash`
+against `spec_hash` (`runtime.py:967-994`) and
+`GET /v2/work/{id}/attestation` returns `config_match: false`. But
+`evidence_class` is set from (same world, COMPLETED, enqueued for this
+experiment) **only** (`runtime.py:1745`) and never reads the attestation;
+`epistemic_accounting` (`runtime.py:3018-3025`) counts those columns verbatim
+and is unchanged by v6.
+
+**So the failure is intact and now has a sharper shape: the engine knows the run
+was contradicted and every epistemic counter still says it was fine.**
+*Closes only when* either M1 runs `--science-profile strict` (LIVE_VERIFIED), or
+the three counters and `world_status` are made divergence-aware. This stays an
+open **scientific** failure, not a closed implementation item.
 
 ### D6-2  `ledger_integrity_ok: true` on deliberate garbage
-A world containing only meaningless bytes reports integrity TRUE. It verifies
-the HASH CHAIN, never the CONTENTS. "Integrity OK" is the phrase most likely to
-be quoted as assurance in a packet, and it assures only that nothing was
-tampered with after the fact.
+Unchanged. It verifies the HASH CHAIN, never the CONTENTS. The phrase most
+likely to be quoted as assurance in a packet, and it assures only that nothing
+was tampered with after the fact.
 
 ### D6-3  A budget that is REPORTED, looks tracked, and caps nothing
-Declared `limit 2, enforcement measured`; attempted 6; **accepted 6**;
-`resources` reports `consumed: {experiments: 6}` and `exhausted: false`. The
-presence of budget instrumentation in the output reads as control. `measured`
-is the DEFAULT, so this is the path of least resistance.
+Unchanged. `limit 2, enforcement measured`; attempted 6; **accepted 6**;
+`resources` reports `consumed: {experiments: 6}`, `exhausted: false`.
+`measured` is the DEFAULT, so this is the path of least resistance.
 
-### D6-4  Event count is NOT a count of distinct things — my hypothesis was wrong
-I predicted idempotent reposts would return 200 while creating nothing, so a
-loop counting successes would overcount. **Measured: the opposite shape.** 20
-identical reposts produced 20 HTTP 200s AND 20 `ARTIFACT_CREATED` events, while
-the knowledge frontier correctly reports **1** distinct artifact.
-
-So the inflation is in the LEDGER, not the response: an analyst who counts
-`ARTIFACT_CREATED` events as n gets 20x the distinct artifacts. This is
-Harmonia's unit-of-analysis defect one layer down — event rows are not
-independent units any more than observations within a world are. Her C-3
-(declare the unit) covers it only if "event count" is explicitly excluded as a
-unit.
+### D6-4  Event count is not a count of distinct things
+Unchanged and still measured: 20 identical reposts → 20 HTTP 200s **and 20
+`ARTIFACT_CREATED` events**, while the knowledge frontier correctly reports
+**1** distinct artifact. The inflation is in the LEDGER, not the response. An
+analyst counting `ARTIFACT_CREATED` as n gets 20x. This is the unit-of-analysis
+defect one layer down; v6's unit counting does **not** cover event rows.
 
 ### D6-5  Advisory enforcement is itself a looks-good failure
-A campaign running with no session key sees 200s everywhere and looks entirely
-healthy while the affinity protection silently does not apply. The mode is the
-DEFAULT and the live engine runs it. Every unkeyed request is counted
-(`SESSION_ABSENT_ALLOWED`) — so the evidence exists, but nothing surfaces it to
-the experimenter.
+**Measured again 2026-09-06 and INTACT IN-BAND.** With the session header
+removed against a world owned by a bound session: `GET …/status` → 200,
+`POST …/hypotheses` → 200. Response headers containing `sess`/`affin`: none.
+Body keys: none. World events mentioning `SESSION_ABSENT_ALLOWED`: **0**.
+The verdict is built at `api.py:467` and every route binds it as `_sess` —
+underscore-prefixed, never read, so it is never echoed.
 
-**Common shape across all five:** the engine reports faithfully on what it
-MEASURES, and every one of these is a reader inferring a property the engine
-never claimed to measure. That is not fixable by adding checks; it is fixable
-by naming, in the claim, which property each green signal actually establishes.
-Which is Harmonia's INVARIANT III arriving from the engine side.
-
----
-
-## D7 — Substrate candidates from Harmonia S1-S5 (RECORDED, NOT ACCEPTED)
-
-Operator-proposed 2026-09-05, with a governing test I am adopting verbatim:
-
-> **Can SFE know the fact deterministically? If yes, expose or enforce it. If
-> knowing it requires statistical or scientific interpretation, leave it to
-> Harmonia and give her the provenance.**
-
-Nothing here is scheduled. Each candidate has been PUT THROUGH that test rather
-than transcribed, because three of eight turn out to be already-done, cheaper
-than proposed, or impossible as stated.
-
-### ALREADY DONE — do not schedule
-**P2 pre-registration manifest hashing.** Verified in D5-1: a manifest carried
-in the experiment spec is sealed by `spec_hash` at commit, recovers
-byte-identical, recomputes locally, and is fixed in ledger order by
-`committed_seq`. "Changes create a new hash rather than silently mutating" is
-already true: the spec is frozen at commit and a later commit is a new
-experiment. Satisfied by existing machinery plus the habit of putting the
-manifest in the spec.
-
-### CHEAPER THAN PROPOSED — expose, do not build
-**P0 experimental-unit provenance.** The engine ALREADY records what separates
-an independent world from a continuation: `parent_world_id`, `fork_point`, the
-originating `checkpoint_id`, `seed_root`, and root-vs-fork-child. Deterministic
-and durable today. The gap is that nothing SURFACES it as an independence
-signal, so an analyst must walk lineage to discover that seven replicates are
-fork children of one parent. Reduces to a derived read, not new state.
-
-### DETERMINISTIC — genuinely buildable
-**P0 replay-strength declaration (L0-L4).** The engine holds full event
-sequences and terminal outcomes, so it can MEASURE achieved replay level
-between two executions of one spec: L0 (sequence identical) and L1 (terminal
-outcome identical) are hash comparisons, not judgements. A claim can declare
-its required level; the engine can report the level achieved. L2-L4
-(distribution, ranking, phenotype) are statistical and stay with Harmonia.
-Buildable for L0/L1 ONLY — say so rather than implying all five.
-
-**P1 claim-to-configuration provenance / experiment family.** Checked whether
-`lineage_edges` already covers it. It has free-text `src_kind`/`dst_kind`/
-`relation`, `add_lineage_edge` accepts arbitrary kinds, and it carries a
-`claimed` flag separating asserted from derived edges. **But it is
-WORLD-SCOPED** — `world_id NOT NULL`, and the only query is
-`GET /v2/worlds/{wid}/lineage`. A claim family spans MANY worlds (the sweep,
-the replication, the moderator arms), so the existing DAG cannot express one.
-Real new work, and the reason is now precise.
-
-**P1 degenerate-replication warning — WITH A CORRECTION I would insist on.**
-The proposal says warn when replicates collapse to sd about 0. Computing sd
-requires knowing WHICH field of a freeform observation is the outcome, which is
-scientific interpretation and belongs to Harmonia. IDENTITY is not: "these
-seven nominal replicates carry byte-identical content_hash" is a hash
-comparison the engine can make deterministically. **Signal on exact
-duplication, never on variance.** That keeps the engine on the correct side of
-its own boundary and still catches the S3 artifact, whose worlds 2-8 were
-identical to six decimals rather than merely low-variance.
-
-**P2 machine-readable warning surface.** The `failures` table plus
-`FAILURE_RECORDED` already gives a typed, queryable attachment point with a
-`failure_type` vocabulary. Mostly a vocabulary decision
-(`NON_INDEPENDENT_UNITS`, `STATE_CONTINUITY`, `REPLAY_L1_ONLY`), not new
-storage.
-
-### BUILDABLE ONLY AS DECLARATION + ATTESTATION — with a stated blind spot
-**P0 replicate/state isolation contract.** The operator is right that this is
-the highest value, and equally right that SFE must not become the statistician.
-The precise limit: **the engine never sees player state and can never know
-whether a reset happened.** What it CAN do is deterministic:
-
-    1. the experiment DECLARES state_scope / independence_required
-    2. the executor ATTESTS an entry-state hash per world
-    3. the engine CHECKS (2) against (1) and emits
-       INDEPENDENCE_CONTRACT_VIOLATED on disagreement
-
-Step 3 is a hash comparison. Steps 1 and 2 are declarations the engine cannot
-validate — it is checking a claim against a claim, which is still worth far
-more than nothing because BOTH become part of the sealed record.
-
-**Harmonia's S3 Q4 blind spot must ship with it or the check will be trusted
-too far: a CONVERGED leaker enters every world from the same fixed point, so
-its entry-state hashes become indistinguishable from an honest reset.** Under a
-declared reset discipline identical entry states are expected; under declared
-carry-over they are a red flag. The same observation means opposite things
-depending on a declaration only the experimenter can make. An engine reporting
-"independence verified" there would manufacture exactly the looks-good failure
-D6 catalogues.
-
-**P1 fixed-vs-factor declaration.** Once declared in the manifest, checking
-that a declared-FIXED value actually stayed constant across a family is
-deterministic — but it needs the cross-world family link to have anything to
-check across. Depends on the family work; not independently useful.
-
-### NOT ENGINE WORK — recorded so nobody re-files it
-Multiplicity correction, null calibration, stopping rules, effect estimators,
-and deciding whether a moderator sweep was sufficient. The S1 p=0.0357 result
-and the S5 winner-curse finding are scientific-instrumentation
-responsibilities. The engine's job is to keep the twelve draws visible as
-twelve related attempts — the family work above — not to judge them.
-
-### THE DEPENDENCY THAT MATTERS
-Four candidates (fixed-vs-factor, claim provenance, cross-family degeneracy,
-and any "show me every experiment run while trying to make claim C survive"
-query) reduce to ONE missing primitive: **a lineage edge that crosses world
-boundaries.** If any of this is scheduled, build that first; the rest are reads
-on top of it.
-
-Not reopening the closed strict-session and completion-replay defects; per
-D4-7 their regression tests are in the suite.
+Two corrections: "nothing surfaces it" is now half-wrong — v6 put
+`session_enforcement` on `/v2/version`, so the **mode** is discoverable in one
+call. And "every unkeyed request is counted" overstates it: it is logged to
+`sfe.affinity` at WARNING — **nothing durable, nothing queryable**.
+**Adding a field to a metadata endpoint is not a warning, let alone a fix.** A
+running campaign still cannot tell that its requests are unprotected.
 
 ---
 
-## D8 — R1-R10 and nine structural changes from Harmonia S1-S7 (NOTES ONLY)
+## D7 — v6 residue: what shipped partially, and what was declined
 
-Operator-relayed 2026-09-05 after her packet 6. **Ingested, not scheduled, not
-implemented; the engine was not restarted.** Same boundary rule as D7, and the
-operator's explicit list of things NOT to hard-code (power >= 0.8, shrinkage as
-universal estimator, mandatory replication, C-7'/C-8' as eternal laws) is
-adopted.
+D7/D8/D9 were three overlapping candidate lists. v6 (`869df1fa1`) closed the
+dependency they shared and much of their content. What survives is consolidated
+here; everything closed is in the closure record with its commit.
 
-Three items were checked against the engine before being written down, and two
-land harder than the packet states.
+### D7-1  Experimental-unit provenance — the aggregate signal exists, unprompted
+`_verify_units` (`runtime.py:2814-2862`) counts distinct units under a declared
+key. **The independence signal is a special case and it works:** a fork inherits
+its parent's `seed_root` (`runtime.py:2307`), so `unit_of_analysis="seed_root"`
+collapses seven fork children of one parent to `verified_n = 1` — exactly the S3
+signal, deterministically, with no statistics.
+**Residue:** it is opt-in. There is no unprompted lineage-independence read; the
+signal only appears if someone declares a `source_set`.
 
-### R8 — the defect has a CONCRETE INSTANCE ALREADY IN THE ENGINE
-`ObservationCreate.replication: bool = False` (`sfe/api.py:119`). The engine
-literally ships the boolean replication claim the packet calls actively
-dangerous.
+### D7-2  Replay-strength declaration (L0-L4) — nothing built
+Zero hits for `replay_level` across `sfe/` and `tests/`; no declared-level field,
+no two-execution comparison route, no achieved-level report. Ingredients all
+present and unassembled: sealed spec recovery (`runtime.py:1320-1343`),
+`result_hash` for L1 terminal outcome, the event chain for L0 sequence.
+**Caveat retained: if only L0/L1 are computable, say so rather than implying all
+five.**
 
-Important nuance before anyone "fixes" it: its real meaning is narrow and
-correct — F3, "this is a SECOND observation bound to a prediction, a retest
-that never re-adjudicates the original". It does **not** mean "independently
-replicated". So the defect is not the mechanism, it is that **the field name
-invites exactly the misreading the packet warns about**, and a typed
-replication level would sit naturally beside it rather than replacing it.
-Small, high value, and it must not silently change F3 semantics.
+### D7-3  Degenerate-replication detection — DECLINED, with the reason
+Moved out of "genuinely buildable". `docs/SCIENTIFIC_PROVENANCE.md` §10 records
+why: a detector firing on identical content hashes catches a **converging** state
+leak and misses a leaker that does not converge — correlated-but-not-identical
+outcomes are visible only to variance or correlation, which is across the
+boundary. **The honest response is to state the detector's domain, not to reach
+for variance.** Re-open only by re-arguing against that reason.
 
-**Caution the packet's own principle implies: the replication taxonomy is still
-moving.** S3 defined L0-L4 (sequence / terminal / distribution / ranking /
-phenotype); packet 6 defines L1-L6 (resampling / world-distribution /
-landscape / implementation / player-build / full independent). Those are not
-the same axis. Encoding either as an enum now risks hard-coding a taxonomy that
-changed once in two loops — the same failure the operator warns about for
-C-7'/C-8'. **Record the level as a declared STRING plus the dimensions
-reinstantiated/held constant; do not enum it yet.**
+### D7-4  Machine-readable warning surface — partly shipped, not queryable
+A typed vocabulary did ship: 11 finding codes, returned as
+`science.profile_findings` and **sealed into the chain** at `runtime.py:1017`
+(work), `:2364` (fork), `:2587` (family), `:2753` (claim).
+**Not done:** `record_failure` (`runtime.py:1853`) still takes free-text
+`failure_type` with no vocabulary constant anywhere, and **findings are not
+queryable** — no route exposes them, so they are recoverable only by scanning
+event payloads.
 
-### SUCCESSFUL_NEGATIVE — confirmed NOT representable today
-Outcome vocabulary is exactly `FALSIFIED | SURVIVED | INCONCLUSIVE`
-(`runtime.py:1370`); hypothesis states are `FALSIFIED | SURVIVED`. "The effect
-is bounded below a declared relevance floor" is a POSITIVE result, and today it
-can only be recorded as SURVIVED (ambiguous with "the hypothesis stood") or
-INCONCLUSIVE (which destroys exactly the information that makes it valuable).
-**The operator is right that this is an epistemic state-machine gap, not
-statistics.** The engine would not be judging whether an equivalence test is
-valid — only storing a conclusion the experimenter reached, which it already
-does for the other three outcomes.
+### D7-5  Replicate / state-isolation contract — 1 of 3 steps shipped
+Step 2 shipped: the executor **attests** an entry-state hash (`store.py:161`,
+`api.py:241-243`, persisted `runtime.py:994-1005`, read at
+`GET /v2/work/{id}/attestation`). Steps 1 and 3 did not: no `state_scope`, no
+`independence_required`, no `INDEPENDENCE_CONTRACT_VIOLATED` anywhere.
 
-### NO_EFFECTIVE_INTERVENTION — cheapest item on the list, and I would rank it
-### HIGHER than its position as structural change #7
-Confirmed: interventions are recorded VERBATIM in `WORLD_FORKED`
-(`runtime.py:2009`) and nothing else. There is no before/after, so a
-perturbation that changed nothing is indistinguishable from one that worked.
+### D7-6  The S3 Q4 rider — binding on D7-5 step 3
+**Must ship with step 3, and step 3 has not shipped.** The engine currently
+returns `entry_state_hash` entirely uninterpreted (`runtime.py:2916`;
+`config_match` is the only derived verdict), which is the *safe* state — the
+blind spot is untriggered rather than handled, and **no route says "independence
+verified"**. When step 3 is built: a CONVERGED leaker enters every world from
+the same fixed point, so its entry hashes are indistinguishable from an honest
+reset. Any check must ship with that limit stated.
 
-Why it is the cheapest: **`before_hash == after_hash` is a hash comparison, not
-a judgement.** It needs no statistical interpretation, no new taxonomy, and no
-cross-world primitive. It is fully inside the deterministic boundary, and it
-came from a real mistake Harmonia made and caught (a seed perturbation that
-initially had no effective change). Warning-only, not fail-closed: a legitimate
-no-op perturbation is conceivable and the engine should say so loudly rather
-than refuse.
+### D7-7  Fixed-vs-factor declaration — dependency now satisfied
+Nothing built: no `declared_fixed` / `fixed_factors` anywhere. The nearest
+machinery is `_intervention_finding` (`runtime.py:229-275`), which is
+parent→child across ONE fork and checks the *opposite* property over only three
+engine-visible fields. **Nothing checks that a declared-FIXED value stayed
+constant across a family.** The old note "depends on the family work" is stale —
+**buildable now against `families`/`family_members`.**
 
-### requested / executed / analysis config hashes — the engine already has 1 of 3
-`spec_hash` at commit IS the requested-config hash, sealed and order-proved
-(D5-1). So the structural change reduces to: obtain `executed_config_hash` by
-executor attestation, obtain `analysis_config_hash` by analyst declaration, and
-**compare three hashes** — which is deterministic. The operator's worked example
-(requested noise 0, executor used 0.02, analyst assumed 0) is caught by
-comparison alone, with the engine understanding nothing about noise.
+### D7-8  R10 measurement-regime detection — recording shipped, DETECTION did not
+The recording half shipped under a different name: `measurement_identity_hash`
+(`api.py:245`, `store.py:163`, written `runtime.py:998`/`:1004`, echoed by
+`work_attestation`). **`measurement_process_hash` has zero hits, and there is no
+comparison anywhere** — nothing detects that two runs with different measurement
+regimes are being compared as identical conditions. That comparison was the
+point of the item; only the field landed. Relates to D1-3: an opaque hash still
+cannot say *what* was measured.
 
-### transport_domain vs tested_variation — deterministic set comparison
-"Does the asserted claim domain exceed the experimentally tested domain?" is a
-containment check over declared values. The engine asserts nothing about
-transport; it compares two declarations. Correctly inside the boundary.
+### D7-9  `ObservationCreate.replication` still ships with a misleading name
+*(merges the former D8-1 and D10-2, which were the same ask filed twice.)*
+`api.py:139` `replication: bool = False`. F3 semantics are correct and untouched
+(`runtime.py:1780-1786`): it means "a SECOND observation bound to a prediction, a
+retest that never re-adjudicates the original". It does **not** mean
+"independently replicated", and the name invites exactly that misreading.
+v6's compositional `ClaimCreate.replication` dict now sits beside it in the same
+module (`api.py:290`), which makes the collision worse, not better.
+**Renaming is a contract change — deliberately deferred, not forgotten.**
+Note the old prescription "a declared STRING plus dimensions" was only half
+shipped: the dimensions landed as six closed booleans, the STRING level did not.
 
-### R10 measurement-process provenance — the auditability half is deterministic
-The engine cannot know a scorer's precision or noise model. It CAN record a
-declared `measurement_process_hash` and then detect that **two runs with
-different measurement regimes are being compared as identical conditions** —
-again a hash comparison. This is the right split, and the 1.8%-noise
-sign-reversal is the motivating evidence rather than a rule to encode.
+### D7-10  Estimator identity — v6 ANSWERED it with `spec_hash`; is that enough?
+`grep -rn estimator sfe/ tests/` returns **exactly one line in the whole
+engine** — `runtime.py:2373`, a boundary comment, not a field. v6 did not
+decline this; it answered it by saying estimator identity belongs inside the
+analysis `spec`, where `spec_hash` seals it.
+**State why that may be insufficient rather than leaving it implied:**
+whole-spec granularity defeats cross-analysis comparison (two analyses differing
+only in estimator produce two unrelated hashes), and the declaration is
+optional. Harmonia's measurement stands: a trimmed mean standardised by a
+winsorised sd overstates a heavy-tailed effect **3x with no selection in play**.
 
-### Still gated on the same missing primitive
-R4 (comparison family), R7 (campaign manifest), the claim-family lineage, and
-"best of twelve remains visible as one selection family" all still reduce to
-**a lineage edge that crosses world boundaries** (D7). `lineage_edges` is
-world-scoped. Nothing in packet 6 changes that; it adds more consumers of it.
+### D7-11  The boundary rule's missing clause — never written
+Agreed and never landed. `docs/SCIENTIFIC_PROVENANCE.md` §1 states only the
+compare/count/contain boundary; grep for the clause returns zero hits anywhere
+except this file. **Trigger is now available:** write it into
+SCIENTIFIC_PROVENANCE §1 — *a scientific rule that has survived only one
+estimator and one outcome distribution is L1 evidence about that rule and must
+not be encoded* — citing the measured instance, instead of leaving it an
+assertion in a TODO.
 
-### First-class claim record
-Would subsume claim_family_id, transport_domain, replication level claimed vs
-observed, measurement_process_hash, and the SUCCESSFUL_NEGATIVE state. Note it
-is the LARGEST item here and depends on the cross-world primitive. Recorded as
-one coherent design, not as nine separate fields to bolt on.
-
-### NOT engine work, restated
-Multiplicity correction, null calibration, stopping rules, estimators, power
-thresholds, whether a sweep was sufficient, and whether an equivalence test is
-valid. Per the operator: expose `relevance_floor`, `design_effect`,
-`target_power`, `estimated_power`, `promotion_rule`, `estimator` as FIELDS;
-enforce none of them.
-
-### If any of this is ever scheduled, the order is
-1. NO_EFFECTIVE_INTERVENTION before/after hashes — deterministic, no
-   dependencies, catches a real mistake already made.
-2. Cross-world lineage edge — unblocks four other items.
-3. executed_config_hash attestation (R2) — the largest provenance hole, and
-   the one that makes R5/R9/R10 checkable rather than declarative.
-4. Typed replication level as a STRING plus dimensions — after the taxonomy
-   stops moving.
-Everything else is a read or a field on top of those.
-
----
-
-## D9 — Estimator identity, and which of D7/D8 is fitted to one toy
-
-Harmonia's S8 amendments, 2026-09-05. Notes only; engine untouched.
-
-### The three amendments, accepted
-1. **`estimator` must be an immutable identity HASH**, same treatment as R3
-   player identity. Her measurement: a trimmed mean standardised by a
-   winsorised sd overstates a heavy-tailed effect **3x with no selection in
-   play**. Estimator choice is a 3x error channel independent of everything
-   else the engine records, so a free-text field is not enough.
-2. **`analysis_config_hash` must include the estimator and its parameters.**
-   Her twin of the operator's worked example is exact: requested Hedges,
-   analysed with a trimmed mean — same class, same invisibility, 3x the error.
-3. **Boundary rule gains a clause:** a scientific rule that has survived only
-   one estimator and one outcome distribution is L1 evidence ABOUT THAT RULE
-   and must not be encoded. Applies to C-8' too, which has survived exactly one
-   organism.
-
-**Engine-side note on (2) that raises its priority:** of the three config
-hashes, `requested` already exists (`spec_hash`, sealed at commit) and
-`executed` is obtainable by executor attestation — but **`analysis` has no home
-in the engine at all.** An analysis is computed outside the substrate from
-events and observations; the engine records nothing about it. So the third hash
-is not the third of three equals — it is the only one with no representation
-whatsoever, and the estimator that carries a 3x error lives inside it.
-
-### WHY C-7 AND C-7' BOTH DIED THE SAME WAY
-Both were stated as laws when they were conjunctions with an unstated term
-doing the work. C-7' says power controls exaggeration; it silently required
-"...given an unbiased estimator". **This is the same shape as my own coverage
-test**, which scoped its probe with the predicate that created the gap it
-missed, and as `engine_attested` reading as correctness when it establishes
-ordering. In all three the claim carried a precondition that was invisible
-precisely because nobody had varied it.
-
-### SELF-CRITICISM: MY D7 CORRECTION IS FITTED TO HER ORGANISM
-In D7 I insisted degenerate-replication should signal on **identical content
-hashes, never on computed variance**, because identity is deterministic and
-variance requires knowing which field is the outcome. I still hold the boundary
-argument. **But the detector is fitted to her toy.**
-
-Her S3 leaked learner CONVERGED, so worlds 2-8 were identical to six decimals
-and a hash comparison catches it. **A leaking organism that does not converge
-produces correlated-but-not-identical outcomes — invisible to hash identity,
-visible only to variance or correlation, which is exactly what the engine must
-not compute.** So my recommendation catches the observed case and not the
-general one, and it was validated against a single organism in which
-convergence made identity the right test.
-
-Recorded rather than fixed: the honest response is not to reach for variance,
-it is to state the detector's domain (converging state leakage only) and let
-the general case remain Harmonia's.
-
-### WHICH OF D7/D8 IS ORGANISM-INDEPENDENT
-Her next move is a second organism to separate facts about experiments from
-facts about this toy. The same question applies to the substrate backlog, and
-the split is knowable now:
-
-**Organism-INDEPENDENT (pure provenance; a second organism cannot refute
-these):** requested/executed/analysis config-hash divergence; estimator
-identity hash; player identity hash; `NO_EFFECTIVE_INTERVENTION`
-(before == after); cross-world lineage edge; SUCCESSFUL_NEGATIVE as a state;
-measurement-process hash. These are facts about records, not about dynamics.
-
-**Organism-DEPENDENT (may be over-fitted, do not build first):**
-degenerate-replication via hash identity (above); the L1-L6 replication
-taxonomy, which Harmonia says she invented and has never seen give a wrong
-answer; order-sensitivity checks, which presuppose stateful players;
-independence-contract checking, whose blind spot is precisely a CONVERGED
-leaker.
-
-**Consequence for scheduling:** the D8 build order still holds, and it happens
-to be organism-independent all the way down — no-effective-intervention hashes,
-then the cross-world edge, then executed-config attestation. Nothing in D7/D8
-gates a second organism, and **the substrate can run one today.**
+### D7-12  The prohibitions HELD — verified, keep them
+No multiplicity correction, no null calibration, no stopping rule, no power
+threshold, no equivalence judgement anywhere in `sfe/`.
+`NO_REPLICATION_DECLARED` is emitted but deliberately **not** in
+`_STRICT_BLOCKING_CLAIM`, so replication is never mandatory in any profile.
+**Residue:** of the six fields the operator asked to be *exposed and not
+enforced*, only `relevance_floor` is a first-class field. `design_effect`,
+`target_power`, `estimated_power`, `promotion_rule` and `estimator` exist only
+inside freeform `spec`.
 
 ---
 
-## D10 — SHIPPED 2026-09-05: schema v6, scientific provenance
+## D10 — v6 shipped 2026-09-05 (`869df1fa1`..`088591ab3`)
 
-The point release. Built from D7/D8/D9 with my stated opinions resolved as
-final decisions. **236 tests green** (171 pre-existing + 65 new), migration
-additive, no contract change that forces any client to adapt.
+Full record: `SerendipityFoundryEngine/docs/SCIENTIFIC_PROVENANCE.md`.
+Residue is tracked as D7-1..D7-12 and D11 above, not duplicated here.
 
-### What shipped, and which recorded item it closes
+**Open after the release, still true:**
+1. `source_commit` names the deployment tree's HEAD at process start and will
+   read `4d315bafe` until the next restart. `engine_source_hash` is
+   authoritative; `deploy/verify_deploy.py` proves the relationship. → D11.
+2. M2 runs a build two schema versions behind → D4-1.
+3. A **second organism** — still none. Vivarium is a second *client*, not a
+   second organism. Everything in v6 is organism-independent (facts about
+   records, not dynamics), so nothing here gates one and the substrate can run
+   one today.
 
-| Shipped | Closes |
-|---|---|
-| `families` / `family_members`, cross-world, `world_id` NULLABLE | D7's single blocking dependency: the lineage edge that crosses world boundaries. `lineage_edges` is world-scoped and could not express a claim family. |
-| `selection_visible`, `SELECTION_WITHOUT_ALTERNATIVES`, append-only roles | D8 R4/R7: best-of-twelve stays visible as one selection family |
-| `claims` + `SUCCESSFUL_NEGATIVE` + compositional `replication` | D8's epistemic state-machine gap and R8 |
-| `executed_config_hash` + 3 sibling attestations, compared to `spec_hash` | D8 R2, "the largest provenance hole", ranked #3 in the build order |
-| `NO_EFFECTIVE_INTERVENTION` / `INTERVENTION_NOT_APPLIED` | D8's structural change #7, which I said I would rank higher than its position. It shipped first, as recorded. |
-| analysis-as-experiment + unit-of-analysis counting | D9's finding that `analysis_config_hash` was the one of three hashes with **no home in the engine at all** |
-| `session_enforcement` + `science_profile` on `/v2/version` | my own finding: two engines could report an identical `engine_source_hash` and behave differently |
+---
 
-### Decisions I made and would defend
+## CLOSURE RECORD — deleted 2026-09-06, with the commit that closed each
 
-**Analysis is an experiment, not a new object.** An analysis has a spec, is
-sealed by a hash, crosses the same irreversible commit boundary, and must not be
-edited once its result is known. A parallel stack would have reimplemented all
-four and then had to be kept in step forever. The durable marker is
-`source_set_hash`, NOT the work item's `kind` -- `kind` only exists after commit
-with enqueue, so a registered-but-uncommitted analysis would have had no
-identity.
+Kept as a list of *names and citations only*, so nobody re-files them. The rule
+is that closed items leave this file; this record is the receipt.
 
-**Replication is compositional, never an ordinal.** D8 already recorded that the
-taxonomy moved once in two loops (L0-L4 on one axis, L1-L6 on another).
-Independent booleans survive that; any ladder is derivable from them. An
-UNDECLARED dimension is not a `false` -- recording it as one would manufacture a
-negative claim nobody made.
-
-**One graded flag, `--science-profile off|warn|strict`, answering the operator's
-"could some of the debated items be flag driven".** `off` is a genuine control
-arm: not computed, not recorded, not reported. That is what makes an off/warn
-A/B measure the FEATURE rather than compare two different engines. `warn` and
-`strict` must agree on every FACT and differ only in CONSEQUENCE, and there is a
-test for exactly that.
-
-**Two rules bind in every profile including `off`**, because they are structural
-coherence and not science: `SUCCESSFUL_NEGATIVE` without a `relevance_floor`,
-and every closed vocabulary.
-
-**Isolation beat diagnosis twice.** A family member or an analysis source owned
-by another client resolves to NOT FOUND / `unresolved`, never to ACCESS DENIED
--- a denial would make either surface an existence oracle. Useful side effect: a
-cross-client analysis silently undercounts, and the declared-vs-verified check
-then makes the undercount visible.
-
-**Paired tests, and I mutation-checked them.** Every detector is exercised once
-on input that should trip it and once on input that should not. Blinding four
-detectors (intervention, unit count, config comparison, relevance floor) turns
-17 tests red. This is the direct consequence of Harmonia's R-G finding that my
-coverage probe was scoped by the predicate that created the gap it missed.
-
-### What I deliberately did NOT build, and why it is not an omission
-
-**Degenerate-replication detection.** D9 recorded that my own D7 correction --
-fire on identical content hashes, never on computed variance -- is FITTED TO HER
-ORGANISM. Her S3 leaker converged, so hash identity catches it; a leaker that
-does not converge produces correlated-but-not-identical outcomes, visible only
-to variance or correlation, which is on the far side of the boundary. The honest
-response is to state the detector's domain and leave the general case to
-Harmonia, so the detector is not in v6. Documented in
-`docs/SCIENTIFIC_PROVENANCE.md` section 10 rather than hidden.
-
-**Silence on opaque interventions.** Where an intervention names something the
-engine cannot see (noise inside a player, reward shaping), the engine returns
-NOTHING -- not "verified", not "probably fine". A reassurance it has not earned
-would manufacture exactly the looks-good failure D6 catalogues. There is a test
-asserting the silence.
-
-**The independence contract still cannot be verified, only compared.** The
-engine never sees player state and can never know whether a reset happened; it
-checks a DECLARED discipline against an ATTESTED `entry_state_hash`, a claim
-against a claim. Harmonia's S3 Q4 blind spot ships beside it in the doc: a
-CONVERGED leaker enters every world from the same fixed point, so its hashes are
-indistinguishable from an honest reset.
-
-**Nothing statistical.** Multiplicity, null calibration, stopping rules,
-estimator choice, power thresholds, sweep sufficiency, equivalence validity.
-Fields exist; none is enforced. `NO_REPLICATION_DECLARED` is reported and never
-enforced in ANY profile -- strict does not turn a missing declaration into a
-mandate.
-
-### Open after this release
-
-1. **`source_commit` still names the working-tree HEAD of a shared detached
-   checkout.** The live M1 tree sits on another role's commit with other roles'
-   files dirty, and moving its HEAD to publish a truthful `source_commit` is out
-   of my lane. `engine_source_hash` is authoritative and is what consumers must
-   compare. The field's limitation is already documented; this is the second
-   release where it bites.
-2. **`ObservationCreate.replication: bool` (api.py) still ships**, still means
-   the narrow and correct F3 thing (a retest that never re-adjudicates), and
-   still has a name that invites the misreading D8 flagged. The v6 compositional
-   `replication` on CLAIMS now sits beside it. Renaming the observation field
-   would be a contract change; deferred deliberately.
-3. **M2 is still down.** Every cross-engine property in v5 and v6 -- 421
-   WRONG_SESSION, families not spanning engines -- is proven only by in-process
-   twin engines, never by two hosts.
-4. **A second organism.** D9's scheduling note holds and is now stronger:
-   everything in v6 is organism-INDEPENDENT (facts about records, not about
-   dynamics), so nothing here gates one, and the substrate can run one today.
+| Item | Closed by | Note |
+|---|---|---|
+| **D0** (M2 deploy, live bar, M1 decision) | superseded | M1 is now on v6/schema 6; D0-3's "M1 remains on `ce79401b`/schema 3" is long dead. |
+| **D4-6** battery 23 vs 24 | *no code change* | **Never a disagreement.** `sfe_battery.py:152` guards S1c behind `--expect-source-hash`: 23 without, 24 with. Documented at `HARMONIA_FIRST_INTEGRATION.md:109`. A docs-reading gap on both sides. **Quote the battery total with its flag state**, or it gets re-litigated. |
+| **R-M-2** verify-anchor in fossil validation | PEW `201106edb` | `sfe_anchor_verified` no longer pinned; `closure_results.json` 19/19, `lineage_results.json` 14/14, gates D/E PASS. |
+| **R-M-3** record `engine_instance_id` | PEW `ec49be22d` | **Attribute correctly: closed by PEW reading the id off the VERIFY RESPONSE (`ew/closure.py:170-174`), NOT by v6 putting it on `/v2/version`** — that was a discovery convenience and is not what R-M-3 asked for. Live gate C PASS. |
+| **D7 pre-registration manifest hashing** | `869df1fa1` | Already true pre-v6; v6 added `families.manifest_hash` of the same shape. Guard now lives in SCIENTIFIC_PROVENANCE §4. |
+| **D7 cross-world primitive** ("the dependency that matters") | `869df1fa1` | Closed by a **membership container with roles** (`families`/`family_members`), *not* the src/dst/relation lineage edge the item named. `lineage_edges` is unchanged and still world-scoped — if a true cross-world *edge* is ever wanted, it is a new item. |
+| **D8 `SUCCESSFUL_NEGATIVE`** | `869df1fa1` | Now a claim status with a CHECK constraint, and a missing `relevance_floor` is rejected in **every** profile. |
+| **D8 config hashes** | partial | 2 of 3 exist (`spec_hash` requested, `executed_config_hash` attested). **`analysis_config_hash` was never implemented** → tracked as D7-10. |
+| **D8 build order** | spent | Steps 1 and 3 shipped in the same release, contradicting the sequencing premise; step 2 was routed around (see the cross-world note above); step 4's precondition was dissolved rather than met. Superseded by the residue list in D7. |
 
 ---
 
 ## Standing discipline for whoever picks this up
 
-- Run the standing battery in `RESPONSIBILITIES.md` after ANY engine change and
-  before ANY onboarding.
-- Attest the daemon before recording any result as evidence about new behaviour:
-  `integration/sfe_preflight.py`. A green suite says nothing about a running
-  process.
-- Validate a gate in BOTH directions — it must fail on the known-bad target AND
-  pass a positive control, or you have not shown it discriminates.
-- A probe returning a status code is not measuring what you think unless you ran
-  the same battery against a control, and checked that a success code
-  corresponds to the effect actually occurring. Four of my own probe results
-  were retracted for exactly this.
-- Refuted findings are superseded, never deleted:
-  `sprint_20260904/issue_disposition.json`, enforced by
-  `sprint_20260904/validate_disposition.py`.
+1. **Measure before writing it down.** Three items in this file asserted a live
+   fact nobody had checked — M2 "down", the battery discrepancy, and "the engine
+   never reads the spec against the result". All three were wrong, and one of
+   them went out in a packet.
+2. **A revival trigger that has fired is not deferred work.** D2-3's gate was
+   violated live and nobody noticed; D2-6's fired and the right answer is still
+   not to delete anything.
+3. **Do not confuse a warning with a fix,** or a field on a metadata endpoint
+   with a signal in band. See D6-1 and D6-5.
+4. **Attribute closures to whoever actually closed them.** R-M-3 was PEW's, not
+   v6's.
+5. **`CODE_FIXED != SERVICE_DEPLOYED != LIVE_VERIFIED != QUALIFIED.`** Most of
+   v6 is DEPLOYED and none of it is QUALIFIED by anyone but me.
