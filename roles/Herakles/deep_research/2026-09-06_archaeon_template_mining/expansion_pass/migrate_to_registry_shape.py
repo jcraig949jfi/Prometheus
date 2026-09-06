@@ -89,6 +89,35 @@ def migrate(t):
         choices.append(WORLD_JUSTIFY)
 
     kind = t.get("kind")
+
+    # COHERENCE FIRST, and this is a correction to an earlier version of this
+    # script. When `bits` is a literal choice list, `length` is NOT free: it is
+    # DETERMINED by the data that survived, and filling it from the producer's
+    # generic ALLOWED_LENGTHS introduces exactly the F-1 silent-ceiling defect
+    # documented in 02_FINDINGS. A 16-character candidate drawn against
+    # length 32 is scored over the overlap and divided by 32, so it is capped
+    # at 0.5 and `solved` becomes unreachable, with no error anywhere.
+    # Recovering the implied length is a REPAIR, not a design choice: the value
+    # is entailed by data the template still carries.
+    if kind == "evaluate_bitstring":
+        bspec = payload.get("bits") or {}
+        lits = bspec.get("choices") if isinstance(bspec, dict) else None
+        if isinstance(lits, list) and lits and all(isinstance(x, str) for x in lits):
+            lens = sorted({len(x) for x in lits})
+            if len(lens) == 1:
+                payload["length"] = {"choices": [lens[0]]}
+                choices.append(
+                    "payload.length: REPAIR, not a design choice. Set to %d "
+                    "because it is entailed by the surviving bits literals; "
+                    "any other value silently caps the score at "
+                    "len(bits)/length (see F-1)." % lens[0])
+            else:
+                notes.append(
+                    "payload.bits carries literals of DIFFERING lengths %s, so "
+                    "no single length is coherent with them. Left for an "
+                    "operator; filling it would guarantee a capped score for "
+                    "at least one draw." % lens)
+
     for axis, spec in list(payload.items()):
         if not isinstance(spec, dict):
             continue

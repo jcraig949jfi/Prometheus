@@ -229,6 +229,37 @@ Worth stating in the registry README so it is not rediscovered per template.
 
 ---
 
+## F-3a. I committed F-3 myself, one commit after documenting it
+
+Worth recording, because it is the cleanest available evidence that F-3 is a
+real trap rather than a theoretical one.
+
+My migration filled a destroyed `length` axis from the producer's generic
+`ALLOWED_LENGTHS` of 16, 24 and 32. But that template's `bits` axis is a
+literal list of 16-character strings. Two of the three drawable lengths
+therefore produce exactly the F-1 silent ceiling: a 16-bit candidate against a
+32-bit target, capped at 0.5, `solved` unreachable, no error.
+
+I wrote the finding and then shipped the bug in the next commit. An analyst
+reading the same template caught it independently and, correctly, called the
+fix a REPAIR rather than a design choice: the length is entailed by data the
+template still carries, so recovering it is not an invention.
+
+The migration now derives `length` from the surviving literals when they exist,
+and refuses to fill when the literals disagree with each other. Verified after
+the fix:
+
+    drawable templates ........ 7
+    draws that succeed ........ 3
+    INCOHERENT payloads ....... 0   (was 2)
+
+The four that still fail at draw are the walk templates whose `steps` and
+`step_scale` were destroyed. Nothing in the repository declares a range for
+either, so there is no bench-native value to recover and they stay null. That
+is the correct outcome, not an omission.
+
+---
+
 ## A limitation on this pass, declared
 
 The session's web-search budget was exhausted during chunk 5, so REFERENCE
