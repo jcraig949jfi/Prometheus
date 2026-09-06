@@ -1,4 +1,4 @@
-# Three defects in existing machinery, found by feeding it proposed templates
+# Four defects in existing machinery, found by feeding it proposed templates
 
 **Date:** 2026-09-06. **Seat:** Herakles. **Branch:** `vivarium/v0-2026-09-05`
 at `7a91054ad`. Reviewed source pinned in `01_STARTING_POINT.md`.
@@ -123,9 +123,48 @@ above is worth having before the general one.
 
 ---
 
+## F-4. The degeneracy guard misses every stateful kind under `state = reset`
+
+**Lane: Vivarium. Surfaced by an analyst on chunk 5; verified here by
+execution.**
+
+`repeat_plan` computes:
+
+    degenerate = (how == "constant" and rep["count"] > 1
+                  and rep["state"] == "reset"
+                  and not (kind.stateful if kind else False))
+
+The last term excludes stateful kinds. But `state = "reset"` ALREADY means no
+state carries between repeats, so a stateful kind under reset behaves exactly
+like a stateless one. The exclusion is wrong in precisely the case the guard
+was built to catch.
+
+Measured. Constant seed derivation, `state = reset`, count 4:
+
+    kind                 flagged degenerate   four displacements
+    ------------------   ------------------   -------------------------
+    evaluate_bitstring   True                 (stateless, correctly caught)
+    random_walk_v0       False                0.473975951 x 4, identical
+
+Within-world variance is exactly zero and the bench reports the spec as
+non-degenerate. The guard's own docstring says degeneracy here is "arithmetic,
+not a judgement". The arithmetic is simply incomplete.
+
+**Smallest fix:** drop the `not kind.stateful` term. `state == "reset"` is
+sufficient on its own; requiring statelessness as well makes the condition
+strictly too narrow. Under `state = "persist"` the term is unnecessary anyway,
+because the state genuinely carries and the repeats genuinely differ.
+
+**Why it matters beyond tidiness.** Both random-walk templates in chunk 5 are
+exposed to it, and this is the guard whose entire purpose is to stop a
+zero-variance experiment being mistaken for a measured null. A silent
+zero-variance arm is the same failure family as F-1.
+
+---
+
 ## What this says about the pass itself
 
-The three defects share a shape. Each layer validates the thing it owns and
+The four defects share a shape. Each layer validates the thing it owns and
 assumes the neighbouring layer validated the rest. Names are checked but not
 values; values are checked but not their relationships; relationships are
 assumed but never asserted. Nothing here is careless work. It is the ordinary
@@ -145,6 +184,17 @@ executor availability with parameter completeness, and this reaches it by
 following a template all the way to a valid observation. The reasoning that
 produced the earlier number was still wrong, and section 2 of
 `01_STARTING_POINT.md` records why.
+
+## A limitation on this pass, declared
+
+The session's web-search budget was exhausted during chunk 5, so REFERENCE
+VERIFICATION could not be completed for most templates. Analysts were
+instructed to mark an attribution UNRESOLVED rather than assert it, and their
+VERIFIED marks after that point rest on established knowledge rather than a
+fresh fetch. One correction did land before the budget ran out: the
+computational-serendipity template names a two-author standards document; the
+actual work is a five-author ICCC 2013 discussion paper proposing chance,
+sagacity and value. Treat every remaining reference as unverified.
 
 ## Reproduction
 
