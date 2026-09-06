@@ -9,11 +9,19 @@ decides what the loop tries next.
     PEW/SFE fossils -> Archaeon -> shared Postgres queue -> Vivarium
       -> Players / executor -> SFE -> PEW -> Archaeon
 
-Archaeon owns one arrow — fossils to queue — and is **fire-and-forget** across
-it. Once a row is written, Vivarium owns the experiment. Archaeon does not
-track, poll, wait, retry, or correlate a later fossil back to "mine". Its only
-persistent feedback channel is PEW, where new fossils are new evidence on a
-later tick, whoever produced them.
+Archaeon owns one arrow — fossils to queue — and is **fire-and-forget across
+execution.** Once a row is written, Vivarium owns the experiment's *lifecycle*:
+Archaeon does not track completion, poll status, wait, or retry, and keeps no
+per-experiment state. Its only persistent feedback channel is PEW, where new
+fossils are new evidence on a later tick, whoever produced them.
+
+That is a statement about *operation*, not about *evaluation*. Enough
+provenance is preserved — in the queue row and, through Vivarium, in the PEW
+producer block — to measure outcomes **by template and by policy version**
+after the fact. Whether fossil information improves experiment selection is a
+question that must eventually be answered against a frozen random baseline,
+and Harmonia adjudicates that comparison. The producer never performs it in
+the tick path; the record makes it possible.
 
 ## What Archaeon is for (the three challenges)
 

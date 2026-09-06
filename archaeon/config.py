@@ -94,9 +94,64 @@ PROTEUS_PLAYER_CHART = CoordinateChart(
     coord_fields=("tape_words", "n_regs", "genome_instructions", "tick_budget"),
 )
 
+# Observation-level player attribution, from the experiment's SEALED spec.
+# Vivarium's spec v2 carries `pew.players` -- the requester's declaration of
+# which player(s) this experiment evaluates -- so the player is a property of
+# the OBSERVATION's experiment, not of the world. That is the attribution D2/D4
+# need: two players can share one region only if the record says, per
+# observation, which player produced it. The Proteus chart could not: it read
+# one player per world from the manifest artifact and excluded worlds with
+# several, so adding worlds or specimens could never make a comparison
+# eligible. Measured 2026-09-06: 21 of 3005 engine-attested experiments carry
+# pew.players, 10 non-empty. Eligibility will be near zero and is reported.
+SFE_SPEC_PLAYERS_CHART = CoordinateChart(
+    name="sfe.spec_players.v0",
+    source="sfe",
+    region_field="world_id",
+    family_field="world_family",
+    player_field="spec.pew.players",      # a LIST; the reader takes a single
+                                          # declared player and leaves multi-
+                                          # player experiments unattributed
+    metric_field="content.result.score",
+    metric_alt_fields=("content.score",),
+    coord_fields=(),
+)
+
 CHARTS = {c.name: c for c in (SFE_SCORE_CHART, PEW_PHENOTYPE_CHART,
-                              PROTEUS_PLAYER_CHART)}
+                              PROTEUS_PLAYER_CHART, SFE_SPEC_PLAYERS_CHART)}
 DEFAULT_CHART = SFE_SCORE_CHART.name
+
+
+# --------------------------------------------------------------------------
+# Corpus tenancy. Daedalus's consumer contract (integration/
+# SFE_CONTRACT_FOR_ARCHAEON_AND_VIVARIUM.md s2): a raw file read pools every
+# client's worlds into one population, mixes engine-attested and client-asserted
+# evidence, takes a fresh snapshot per statement, and bypasses the schema guard.
+# Until a deliberate cross-tenant read grant exists, the reader applies the two
+# filters the API would have, in SQL, and RECORDS the population it read.
+#
+# Measured 2026-09-06 on M1: 2936 of ~2993 ENGINE_WORK_RESULT observations
+# belong to `harmonia-m2`; Archaeon owns none. Vivarium's production clients
+# hold the loop's own output. Everything named *selftest*, *demo*, *crashtest*,
+# *test*, *probe*, *livebar* is another seat's test harness and is NOT science
+# -- pooling it in silently was the exact misreading the contract names.
+# --------------------------------------------------------------------------
+@dataclass(frozen=True)
+class TenancyConfig:
+    # Client NAMES admitted to the scientific corpus. Matched exactly. A name
+    # not listed is excluded and COUNTED in the corpus window, never silently
+    # dropped.
+    include_client_names: Tuple[str, ...] = (
+        "harmonia-m2",            # the bulk of the attested record
+        "vivarium",               # the loop's production consumer
+        "vivarium@m1",
+        "vivarium@skullport",
+    )
+    # Only work-bound, engine-verified observations count as fossils.
+    evidence_classes: Tuple[str, ...] = ("ENGINE_WORK_RESULT",)
+    # The ledger schema this reader understands. A newer database is refused,
+    # exactly as the engine refuses to open one newer than its code.
+    expected_schema_version: int = 6
 
 
 # --------------------------------------------------------------------------
@@ -227,6 +282,7 @@ class ArchaeonConfig:
     # Archaeon reads a deterministic window, never "everything", so two runs
     # against a growing corpus differ for a recorded reason.
     lookback_rows: int = 5000
+    tenancy: TenancyConfig = field(default_factory=TenancyConfig)
     detectors: DetectorConfig = field(default_factory=DetectorConfig)
     cadence: CadenceConfig = field(default_factory=CadenceConfig)
     exploration: ExplorationConfig = field(default_factory=ExplorationConfig)

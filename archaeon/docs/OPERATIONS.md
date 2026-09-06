@@ -6,11 +6,17 @@ canonical queue, and forgets it.
 
     PEW/SFE fossils -> tick() -> viv.research_experiment_queue -> [forget] -> sleep
 
-**Archaeon is fire-and-forget.** Once a row is written, Vivarium owns that
-experiment. Archaeon does not track completion, poll status, wait, retry, or
-correlate a later fossil back to "my experiment". Its only persistent feedback
-channel is PEW, where new fossils are simply new evidence on a later tick,
-whoever produced them.
+**Archaeon is fire-and-forget across execution.** Once a row is written,
+Vivarium owns that experiment's lifecycle: Archaeon does not track completion,
+poll status, wait, or retry, and keeps no per-experiment state. Its only
+persistent feedback channel is PEW, where new fossils are simply new evidence on
+a later tick, whoever produced them.
+
+That is about *operation*, not *evaluation*. Each row carries `policy_version`
+and `template_id` in `source_evidence` (and, once Vivarium carries them
+through, in the PEW producer block) so outcomes can be measured by policy and
+template after the fact — against a frozen random baseline, with Harmonia
+adjudicating. The tick never does that; the record makes it possible.
 
 The two loops are independent and need no synchronous coordination:
 
@@ -208,3 +214,46 @@ queues and two migrations; this makes it loud.
 into the production register and a live Vivarium cycle claimed one and tried to
 execute it. Three tests assert the protection is in force, including that the
 precondition checks the same schema the writer writes to.
+
+## The signal campaign's instrument: the substrate census
+
+Every tick writes one row to `archaeon.substrate_census`: rows, regions,
+attributed players, the declared tenancy, per-detector eligible/total/cause,
+S17 units, and a WISHLIST naming the structure that would flip each blocked
+detector and the lane it belongs to. Its slope over time is the campaign's
+progress measure.
+
+    python -m archaeon.producer.census --lane prod            # the time series
+    python -m archaeon.producer.census --lane prod --wishlist # what would move it next
+
+## Declared tenancy (what the reader counts as the corpus)
+
+Per Daedalus's consumer contract, the reader applies in SQL, inside one
+transaction, after a schema guard: `evidence_class = 'ENGINE_WORK_RESULT'` and
+a declared client-name set (`config.TenancyConfig.include_client_names`).
+Excluded attested observations are counted by client name in every corpus
+window. Change the set in one line of config; never by editing SQL.
+
+## The menu: templates
+
+    archaeon/templates/*.json          ADMITTED -> drawn from
+    archaeon/templates/inbox/*.json    PROPOSED -> never drawn from
+
+`bitstring.uniform.v0` is the frozen random baseline. Admission is a human act:
+set `status`, `admitted_by`, `admitted_at`, and `admitted_content_hash`
+(compute with `templates._content_hash`). An admitted template that later
+changes is refused on load. A template whose kind Vivarium does not implement
+is an expansion request and cannot be on the menu.
+
+    python -c "from archaeon.producer import templates as T; import json; print(json.dumps(T.menu_growth(), indent=2))"
+
+CHAOS proposes perturbed copies into the inbox and never admits:
+
+    python -c "from archaeon.producer import chaos, templates as T; print(chaos.mutate(T.admitted()[:1], 'WIDEN', nonce='1'))"
+
+## Program health / monoculture report
+
+    python -m archaeon.producer.health_report --days 7 --lane prod
+
+Measurements against stated thresholds; flags name a lane and what they would
+unblock. Each fired flag is an entry for `roles/Archaeon/EXPANSIONS.md`.

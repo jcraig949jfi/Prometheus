@@ -197,10 +197,32 @@ def read_corpus(db_path: str) -> Dict[str, Any]:
     evidence class of every observation retained."""
     if not os.path.exists(db_path):
         return {"error": "sfe db not found: {}".format(db_path)}
+    # Same declared population as the producer's reader (consumer contract
+    # s2): one transaction, schema guard, declared client names, engine-
+    # attested evidence only. The GATE LOGIC below is untouched; only the
+    # population it is asked about is now stated rather than pooled.
+    from . import config as _cfg
+    ten = _cfg.DEFAULT.tenancy
     uri = "file:{}?mode=ro".format(db_path.replace("?", "%3f"))
-    conn = sqlite3.connect(uri, uri=True)
+    conn = sqlite3.connect(uri, uri=True, isolation_level=None)
     conn.row_factory = sqlite3.Row
     try:
+        conn.execute("BEGIN")
+        have = conn.execute("SELECT value FROM meta WHERE key='schema_version'"
+                            ).fetchone()
+        have_v = int(have[0]) if have else None
+        if have_v is None or have_v > ten.expected_schema_version:
+            conn.execute("COMMIT")
+            return {"error": "sfe schema_version {} newer than reader ({})"
+                             .format(have_v, ten.expected_schema_version)}
+        clients = conn.execute("SELECT client_id, name FROM clients").fetchall()
+        admitted_ids = [c["client_id"] for c in clients
+                        if c["name"] in ten.include_client_names]
+        tenancy = {"admitted_client_names":
+                       sorted({c["name"] for c in clients
+                               if c["name"] in ten.include_client_names}),
+                   "evidence_classes": list(ten.evidence_classes),
+                   "schema_version": have_v, "snapshot": "single transaction"}
         worlds: Dict[str, List[float]] = collections.defaultdict(list)
         ev_class: Dict[str, collections.Counter] = collections.defaultdict(
             collections.Counter)
@@ -209,7 +231,13 @@ def read_corpus(db_path: str) -> Dict[str, Any]:
         for r in conn.execute(
                 "SELECT o.obs_id, o.world_id, o.content, o.evidence_class, "
                 "       o.exp_id, o.created_seq "
-                "  FROM observations o ORDER BY o.created_seq"):
+                "  FROM observations o JOIN worlds w ON w.world_id = o.world_id "
+                " WHERE o.evidence_class IN ({ev}) AND w.client_id IN ({cl}) "
+                " ORDER BY o.created_seq".format(
+                    ev=",".join("?" * len(ten.evidence_classes)),
+                    cl=",".join("?" * max(len(admitted_ids), 1))),
+                list(ten.evidence_classes)
+                + (admitted_ids or ["<no admitted client>"])):
             n_obs += 1
             try:
                 d = json.loads(r["content"])
@@ -235,7 +263,7 @@ def read_corpus(db_path: str) -> Dict[str, Any]:
         conn.close()
     return {"worlds": dict(worlds), "meta": meta,
             "evidence_class": {k: dict(v) for k, v in ev_class.items()},
-            "anchors": dict(anchors),
+            "anchors": dict(anchors), "tenancy": tenancy,
             "observations_total": n_obs, "observations_scored": n_scored}
 
 
@@ -513,6 +541,7 @@ def survey(db_path: str = DEFAULT_SFE_DB,
             "worlds_usable": len(usable),
             "min_obs_per_world": min_obs,
             "evidence_class_totals": _ev_totals(corpus),
+            "tenancy": corpus.get("tenancy"),
             "epistemic": OBSERVED,
         },
         "arm_rules": {

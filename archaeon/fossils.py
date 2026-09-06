@@ -188,28 +188,77 @@ def read_sfe(db_path: Optional[str] = None,
         return Corpus([], chart, path, {"error": "sfe db not found",
                                         "path": path})
 
+    ten = cfg.DEFAULT.tenancy
     uri = "file:{}?mode=ro".format(path.replace("?", "%3f"))
-    conn = sqlite3.connect(uri, uri=True)
+    conn = sqlite3.connect(uri, uri=True, isolation_level=None)
     conn.row_factory = sqlite3.Row
+    excluded_by_tenant: Dict[str, int] = {}
     try:
+        # ONE transaction for every statement: SQLite WAL gives a consistent
+        # view only within a transaction, and this file is being written by
+        # three consumers. Several separate SELECTs would not be one
+        # observation of one state (consumer contract s2, point 3).
+        conn.execute("BEGIN")
+
+        # Schema guard. The engine refuses to open a ledger newer than its
+        # code; a raw reader has no such protection and would misread a v7
+        # database as v6 (s2, point 4). Refuse, do not guess.
+        have = conn.execute("SELECT value FROM meta WHERE key='schema_version'"
+                            ).fetchone()
+        have_v = int(have[0]) if have else None
+        if have_v is None or have_v > ten.expected_schema_version:
+            conn.execute("COMMIT")
+            return Corpus([], chart, path, {
+                "error": "sfe schema_version {} is newer than this reader "
+                         "understands ({}); refusing to read rather than "
+                         "misread a row shape".format(
+                             have_v, ten.expected_schema_version),
+                "schema_version": have_v})
+
+        # Declared tenancy: client NAMES, resolved to ids inside the same
+        # snapshot. Everything else is counted, never silently dropped.
+        clients = conn.execute("SELECT client_id, name FROM clients").fetchall()
+        admitted_ids = [c["client_id"] for c in clients
+                        if c["name"] in ten.include_client_names]
+        admitted_names = sorted({c["name"] for c in clients
+                                 if c["name"] in ten.include_client_names})
+        for row in conn.execute(
+                "SELECT cl.name, count(*) AS n FROM observations o "
+                "  JOIN worlds w ON w.world_id = o.world_id "
+                "  JOIN clients cl ON cl.client_id = w.client_id "
+                " WHERE o.evidence_class IN ({ev}) "
+                " GROUP BY cl.name".format(
+                    ev=",".join("?" * len(ten.evidence_classes))),
+                list(ten.evidence_classes)):
+            if row["name"] not in ten.include_client_names:
+                excluded_by_tenant[row["name"]] = int(row["n"])
+
         # world family: SFE has no family column, so topology_group is the
         # nearest published grouping. NULL is honest and stays NULL.
         sql = """
             SELECT o.obs_id, o.exp_id, o.world_id, o.content, o.outcome,
                    o.evidence_class, o.work_id, o.created_seq AS obs_seq,
                    e.spec, e.spec_hash, e.committed_seq, e.state,
-                   w.topology_group AS world_family
+                   w.topology_group AS world_family, w.client_id
               FROM observations o
               JOIN experiments  e ON e.exp_id  = o.exp_id
               JOIN worlds       w ON w.world_id = o.world_id
+             WHERE o.evidence_class IN ({ev})
+               AND w.client_id IN ({cl})
              ORDER BY o.created_seq DESC
              LIMIT ?
-        """
-        raw = conn.execute(sql, (int(lookback_rows),)).fetchall()
+        """.format(ev=",".join("?" * len(ten.evidence_classes)),
+                   cl=",".join("?" * max(len(admitted_ids), 1)))
+        params = (list(ten.evidence_classes)
+                  + (admitted_ids or ["<no admitted client>"])
+                  + [int(lookback_rows)])
+        raw = conn.execute(sql, params).fetchall()
+        conn.execute("COMMIT")
     finally:
         conn.close()
 
     rows: List[FossilRow] = []
+    unattributed_multi_player = 0
     for r in raw:
         content = _loads(r["content"])
         spec = _loads(r["spec"])
@@ -227,7 +276,17 @@ def read_sfe(db_path: Optional[str] = None,
         if chart.player_field:
             pv = _dig({"spec": spec if isinstance(spec, dict) else {},
                        "content": content}, chart.player_field)
-            player = str(pv) if pv is not None else None
+            if isinstance(pv, list):
+                # Observation-level attribution from the sealed spec. Exactly
+                # one declared player attributes the observation; several is
+                # AMBIGUOUS and is left unattributed and counted, never
+                # resolved by taking the first.
+                if len(pv) == 1 and pv[0]:
+                    player = str(pv[0])
+                elif len(pv) > 1:
+                    unattributed_multi_player += 1
+            elif pv is not None:
+                player = str(pv)
         rows.append(FossilRow(
             row_id=r["obs_id"],
             source="sfe",
@@ -251,7 +310,21 @@ def read_sfe(db_path: Optional[str] = None,
                   {"lookback_rows": int(lookback_rows),
                    "order": "observations.created_seq DESC",
                    "join": "observations JOIN experiments JOIN worlds",
-                   "returned": len(rows)})
+                   "returned": len(rows),
+                   # The declared population, per the consumer contract.
+                   "tenancy": {"admitted_client_names": admitted_names,
+                               "admitted_client_ids": len(admitted_ids),
+                               "excluded_attested_by_client_name":
+                                   dict(sorted(excluded_by_tenant.items())),
+                               "evidence_classes": list(ten.evidence_classes),
+                               "schema_version": have_v,
+                               "snapshot": "single transaction",
+                               "basis": ("interim raw read with declared "
+                                         "tenancy + evidence filter; a "
+                                         "cross-tenant read grant is "
+                                         "Daedalus's to build")},
+                   "unattributed_multi_player_experiments":
+                       unattributed_multi_player})
 
 
 # --------------------------------------------------------------------------

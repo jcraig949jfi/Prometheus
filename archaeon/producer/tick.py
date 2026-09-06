@@ -35,7 +35,8 @@ from .. import config as cfg
 from .. import detectors, rank
 from .. import vivqueue as vq
 from ..clock import iso, utc_day_str
-from . import contract, randomgen, readers, specbuild
+from . import census as census_mod
+from . import contract, randomgen, readers, specbuild, templates
 
 TICK_VERSION = "archaeon.tick.v0"
 
@@ -128,6 +129,18 @@ def tick(conn, config: Optional[cfg.ArchaeonConfig] = None, *,
                          "any_eligible": census["any_eligible"]}
         out["n_signals"] = len(signals)
 
+        # 4b. the substrate census -- the signal campaign's instrument. One
+        # row per tick; failure to write it is logged, never allowed to stop a
+        # proposal. Written even on dry runs? No: a dry run is not a tick.
+        if not dry_run:
+            try:
+                row = census_mod.build(corpus, results, census, lane=lane)
+                out["census_id"] = census_mod.persist(conn, row)
+                out["wishlist"] = row["wishlist"]
+            except Exception as exc:               # noqa: BLE001
+                conn.rollback()
+                out["census_error"] = "{}: {}".format(type(exc).__name__, exc)
+
         # 5. choose a policy ----------------------------------------------
         # A fired signal names a REGION, not an executable experiment: the
         # probe kind that would have executed it (archaeon.probe.v0) has no
@@ -135,8 +148,23 @@ def tick(conn, config: Optional[cfg.ArchaeonConfig] = None, *,
         # as the REASON and the experiment is still drawn from the declared
         # space. That is stated rather than hidden -- the alternative is
         # emitting a spec nothing can run.
-        drawn = randomgen.draw_unused(
-            lane, day, used, _SpecBuilder(), max_attempts=16)
+        # The draw comes from the TEMPLATE REGISTRY: an admitted template is
+        # chosen (uniformly -- the baseline policy), then parameters are drawn
+        # from its declared space. bitstring.uniform.v0 is the old random
+        # generator ported verbatim and frozen; a better random policy is a
+        # second template, never an edit. Sixteen attempts to find a spec
+        # hash this lane has not already published; then give up honestly.
+        drawn = None
+        builder = _SpecBuilder()
+        for attempt in range(16):
+            d = templates.draw(lane, day, nonce=str(attempt))
+            spec = builder(d["params"])
+            h = builder.spec_hash(spec)
+            if h in used:
+                continue
+            d.update({"attempt": attempt, "spec": spec, "spec_hash": h})
+            drawn = d
+            break
         if drawn is None:
             out["decision"] = NO_WRITE_NO_CANDIDATE
             out["reason"] = ("every draw in 16 attempts produced a spec hash "
@@ -154,9 +182,26 @@ def tick(conn, config: Optional[cfg.ArchaeonConfig] = None, *,
         evidence = {
             "schema": "archaeon.tick.v0",
             "mode": source_reason,
+            # Policy and template identity are what makes outcomes MEASURABLE
+            # by selection policy after the fact -- the comparison against a
+            # frozen random baseline that Harmonia will adjudicate. They ride
+            # here, in a queue column, and Vivarium is asked to carry them into
+            # the PEW producer block. Never in the sealed spec.
             "policy": {"name": drawn["policy"], "seed": drawn["seed"],
                        "seed_inputs": drawn["seed_inputs"],
-                       "space": drawn["space"], "attempt": drawn["attempt"]},
+                       "space": drawn["space"], "attempt": drawn["attempt"],
+                       # The id names the template; the content hash pins the
+                       # exact frozen version it was drawn from. A template
+                       # that is later retired and replaced under a new id
+                       # leaves this row re-derivable.
+                       "template_content_hash":
+                           drawn.get("template_content_hash"),
+                       "menu": drawn.get("menu"),
+                       "menu_size": drawn.get("menu_size")},
+            "policy_version": "{}@{}".format(drawn["policy"], TICK_VERSION),
+            "template_id": drawn.get("template_id", "bitstring.uniform.v0"),
+            "selection_basis": ("weak_signal_recorded_only" if ranked
+                                else "random"),
             "corpus": out["fossils"],
             "eligibility_census": census,
             "weak_signal": ({"detector": ranked[0].primary.detector,

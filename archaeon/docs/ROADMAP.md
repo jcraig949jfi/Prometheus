@@ -1,243 +1,212 @@
 # Archaeon roadmap
 
-Working document, 2026-09-06. Organised around the three challenges the
-operator placed on this seat. Each has: what exists now, what Archaeon will
-build, what is delegated to another lane, and what "working" looks like.
-Nothing here is scope for today; today is the plumbing milestone.
+Working document, revised 2026-09-06 after operator review. Organised around
+the three challenges placed on this seat, **preceded by the delegation the
+first draft omitted: to Archaeon itself.**
 
-The one design idea that runs through all three: **LLMs and humans shape the
-menu offline; the tick draws from the menu deterministically.** That line is
-what keeps the selection policy falsifiable while letting the menu grow from
-every source we have.
+The one design idea that runs through everything: **LLMs and humans shape the
+menu offline; the tick draws from the menu deterministically.** That line keeps
+the selection policy falsifiable while letting the menu grow from every source.
 
 ---
 
-## Where the loop stands (measured)
+## 0. Delegated to Archaeon (the three issues in its own lane)
 
-    Archaeon tick -> viv.research_experiment_queue -> Vivarium -> SFE -> PEW
-    E2E closed 2026-09-06 07:40Z with nobody driving it.
+**0a. D2/D4 had a structural eligibility blocker, not a data shortage.** The
+Proteus chart assigned one player per *world* from the manifest artifact,
+excluded worlds holding several, and made each world a region — so two players
+could never share a comparison region, and no number of added worlds or
+specimens could fix it. The exclusion was honest; its consequence was stronger
+than "we need more data".
 
-    kinds Archaeon can emit today          1   (evaluate_bitstring)
-    parameter axes                         3   (length in {16,24,32}, seed_root, bits)
-    detectors eligible on live corpus      3/6 (D3, D5, D6; D1/D2/D4 need players)
-    S17 fragility units eligible           0   (Stage 0 KILL: no two-arm claims)
-    weak-signal path changes the spec?     NO  (signal is recorded as reason only)
+*Done:* `sfe.spec_players.v0` attributes the player **per observation** from
+the experiment's sealed `spec.pew.players`. Two players can now share a region;
+a multi-player declaration is left unattributed and *counted*, never resolved
+by taking the first. Measured: 21 of 3005 attested experiments declare
+players, 10 non-empty, so eligibility is ~0 and is reported as such.
+*Remaining:* a **comparison mapping** — region must eventually be a declared
+comparison (SFE `families(kind='comparison')`), not a world. Contract with
+Daedalus pending (§Delegations).
 
-That last line is the honest starting point. The loop is real plumbing and a
-random generator with a provenance label. Everything below is about changing
-those numbers.
+**0b. A detected signal does not change the experiment.** The producer records
+the fired detector as the *reason* and draws the same random experiment.
+Documented honestly, but without a milestone menu growth could continue
+indefinitely without ever establishing whether fossil information improves
+selection.
+
+*Milestone M-SIGNAL (explicit, below):* connect a qualified signal to an
+executable intervention, then compare against a **frozen random baseline**
+under equal budget; Harmonia adjudicates.
+
+**0c. Fire-and-forget was worded too broadly.** Vivarium owns execution
+lifecycle — unchanged. But banning later correlation with completed fossils
+would make selection policies unevaluable.
+
+*Done:* charter and reader docstrings reworded (operation, not evaluation);
+`source_evidence` now carries `policy_version`, `template_id`,
+`selection_basis`; Vivarium asked to carry the first two into the PEW
+producer block. The tick path still never asks what became of a proposal.
+
+**0d. Cross-seat corpus access was missing from the list.** Daedalus's
+contract §2: Archaeon's identity can read none of the 2,937 attested
+observations that belong to `harmonia-m2`.
+
+*Done (interim, as Daedalus specified):* the reader now applies a **declared
+client-name set** and `evidence_class='ENGINE_WORK_RESULT'` in SQL, inside one
+transaction, after a `schema_version` guard, and records the population in
+every corpus window and census row. Measured: 61 attested observations from 13
+test-harness clients (`vivarium-selftest` ×24, demo, crashtest, livebar, probe)
+had been pooled in as science. *Remaining:* the deliberate read grant is
+Daedalus's; width requested in `roles/Daedalus/INBOX_ARCHAEON_READ_GRANT_AND_FAMILIES.md`.
+
+---
+
+## Corrections to the work order (operator, 2026-09-06)
+
+- **SFE already supports multiple observations** via
+  `record_observation(replication=True)` with compositional
+  `REPLICATION_DIMENSIONS`. "Build multi-observation worlds" becomes:
+  **Vivarium implements the repeated-execution contract; Daedalus verifies the
+  existing semantics and fills demonstrated gaps.**
+- **SFE already has `families` / `family_members`** (kinds `campaign |
+  analysis | comparison | selection`; roles `planned | executed | abandoned |
+  selected | alternative`). `topology_group := family_id` is **withdrawn** and
+  remains a design suggestion pending Daedalus's contract; `topology_group`
+  participates in sharing machinery.
+- `selection` families with `selected`/`alternative` are the engine-side twin of
+  the queue's candidate set. Vivarium asked to bind the two.
+- The S17 direction warning stands: the frozen ledger specifies *lower*
+  `serial_ac` as fragile. Archaeon preserves the measured rule; Harmonia
+  reconciles the mechanism explanation.
+
+---
+
+## First coordinated milestone — M-ELIGIBLE
+
+    2 declared comparison groups × 2 arms × 2 worlds × 4 ORDERED observations
+    = 32 observations across 8 worlds
+    comparable measurements · arm identity preserved in the fossil ·
+    sufficient variation for the frozen features to distinguish groups
+
+Then **Archaeon reruns Stage 0 unchanged.** That establishes *eligibility*.
+Whether S17 transfers is a subsequent experiment, not this one.
+
+Owners: Vivarium (repeated execution, family binding), Daedalus (verify
+`replication=True` ordering; comparison-family arm contract), Archaeon (issue
+the family through the normal producer path as `source_reason='human'`; rerun
+Stage 0). Blocked until the first two land.
+
+---
+
+## M-SIGNAL — does fossil information improve selection?
+
+The milestone 0b demands, stated so it can be measured rather than assumed:
+
+1. **A qualified signal maps to an executable intervention.** A fired detector
+   names a region and a probe kind (`RESAMPLE_REGION`, `BISECT_BOUNDARY`, …).
+   Each probe kind needs an executable template whose parameter space contains
+   the region's coordinates. Today none does — `archaeon.probe.v0` had no
+   executor and is retired. So: one template per probe kind, each backed by a
+   Vivarium-implemented kind, parameterised by region coordinates.
+2. **Frozen random baseline.** `random.v0` is frozen now and stays as the
+   control. A signal-directed policy is a *second* named policy
+   (`signal.v0`), never a modification of the first.
+3. **Equal budget, separate lanes.** `eval-random-NN` and `eval-signal-NN`,
+   identical candidate universe, identical budget, orders committed to the
+   queue before any execution.
+4. **Endpoint pre-registered.** Failures discovered per experiment executed
+   (S18's), computed from PEW by `policy_version` — which is why 0c matters.
+5. **Harmonia adjudicates.** Archaeon runs the arms and reports; it does not
+   score its own policy.
+
+Power: the S18 effect (random 0.288 → informed 0.462) needs ~118 experiments
+per arm and a budget well under the universe size. At six per day per lane
+that is weeks, not days — which is fine, and is why the census exists.
 
 ---
 
 ## Challenge 1 — the signal campaign
 
-*Little data for a long time; the target mostly undefined; we don't know what
-we don't know.*
+*Little data for a long time; target mostly undefined.*
 
-**Reframe.** The first deliverable is not signal. It is an **instrument that
-would notice signal if it were there, running continuously, with a written
-account of what enrichment would let it see more.** Signal arrives, if it
-arrives, as a change in that instrument's readings over months.
+**Reframe.** The first deliverable is the **instrument** that would notice
+signal if it were there, running continuously, plus a written account of what
+enrichment would let it see more.
 
-**Archaeon builds:**
+**Done:** `archaeon.substrate_census` — one row per tick (rows, regions,
+attributed players, tenancy, per-detector eligible/total/cause, S17 units,
+wishlist). `census.series()` is the campaign's chart.
 
-- **Substrate census as a time series.** The eligibility census already runs
-  every tick. Persist it (`archaeon.substrate_census`, one row per tick: rows,
-  regions, players, per-detector eligible/total, S17 eligible units). This is
-  the campaign's primary chart — "is the substrate becoming interrogable?" —
-  and it needs no signal to be useful.
-- **Substrate wishlist ledger.** Per detector, the *specific* structure that
-  would flip it eligible, with the measured shortfall. Already known for S17
-  (≥4 obs/world, two arms of ≥2 worlds, ≥2 groups) and for D1/D2/D4 (player
-  identity in the observation). Keep it current, cite it in every delegation.
-- **Chart growth.** New `CoordinateChart`s as the substrate adds fields —
-  charts are data. The Vivarium `content.result.score` path was the first;
-  `resources_used`, `ecology`, player identity are next when they exist.
-- **Detector re-calibration on each corpus regime change**, with the null rate
-  published. Never a threshold change without `CALIBRATION.md` moving.
+**Next:** a `--census-series` CLI; Stage 0 rerun recorded into the census on a
+schedule; wishlist entries marked DONE with the commit that did it; new
+charts as the substrate adds fields (`resources_used`, `ecology`, players).
 
-**Delegated:**
-
-- **Proteus (PEW):** decide what an encounter fossilizes. `players`, `ecology`,
-  `resources_used` are 0/5452 in `prod`. Whichever of these PEW carries decides
-  which detectors can ever be eligible. Archaeon supplies the wishlist; Proteus
-  chooses.
-- **Vivarium:** `repeat` — N observations in one world from one request — is
-  the single change that flips S17 eligibility from impossible to reachable.
-- **Daedalus (SFE):** family/arm identity reaching the fossil
-  (`topology_group` + `lineage_edge IN_ARM`), so grouping is a declared fact
-  rather than a name to parse.
-- **Harmonia:** which weak-signal definitions are worth detecting *at all*.
-  D1–D6 are my first guesses. Harmonia's S17 rules are frozen and better
-  qualified; the discrepancy notice is filed. I would rather adopt Harmonia's
-  definitions than defend mine.
-- **Players:** players crossing into SFE at scale. 2 of 64 Proteus specimens
-  have; all 64 lineages are size 1. No player-dependent detector runs until
-  that changes.
-
-**Working looks like:** the census chart has a slope; at least one detector
-that was NOT ELIGIBLE at the start is eligible; the wishlist has entries marked
-DONE with the commit that did it.
+**Working looks like:** the census chart has a slope; a detector that was NOT
+ELIGIBLE at the start becomes eligible; wishlist entries close.
 
 ---
 
 ## Challenge 2 — random science
 
-*RNG, a sprinkle of chaos, operator input, LLM input, prior research. Get very
-good at detecting signal; when there is none, expand the template of
-experiment types.*
+*A menu plus a deterministic draw.*
 
-**Reframe.** "Random" is not one generator; it is a **menu** plus a **draw**.
-The draw stays deterministic and model-free. The menu is where every other
-source enters.
-
-**Archaeon builds: the experiment template registry.** Templates are data:
+**Next: the experiment template registry.** Templates are data:
 
     archaeon/templates/<template_id>.json
-    {
-      "template_id":   "bitstring.uniform.v0",
-      "kind":          "evaluate_bitstring",        # must be Vivarium-implemented to be ADMITTED
-      "param_space":   {"length": {"choices": [16,24,32]},
-                        "seed_root": {"int_range": [100000, 999999]},
-                        "bits": {"uniform_bits": "length"}},
-      "origin":        {"source": "RNG|HUMAN|LLM|LITERATURE|CHAOS",
-                        "field": "<discipline>", "reference": "<citation or prompt hash>",
-                        "proposed_by": "<seat or person>"},
-      "status":        "PROPOSED | ADMITTED | RETIRED",
-      "admitted_by":   "<operator>", "admitted_at": "<utc>",
-      "rationale":     "<one paragraph, human-readable, non-binding>"
-    }
+    { template_id, kind (Vivarium-implemented to be ADMITTED),
+      param_space, origin {source: RNG|HUMAN|LLM|LITERATURE|CHAOS,
+                           field, reference, proposed_by},
+      status PROPOSED|ADMITTED|RETIRED, admitted_by, admitted_at, rationale }
 
-- **Draw = (template, params).** The tick selects a template (uniform at first;
-  coverage-weighted once the census can measure template coverage), then draws
-  params from its declared space, all seeded and recorded.
-- **Admission is a human act.** A template goes PROPOSED → ADMITTED only by the
-  operator. LLMs, literature miners, and other seats write PROPOSED templates
-  into `archaeon/templates/inbox/`. Nothing in the inbox is drawn from.
-- **A PROPOSED template whose `kind` Vivarium does not implement is an
-  expansion request**, automatically: it is exactly the "bench isn't capable"
-  case, and it becomes an item for Challenge 3.
-- **Chaos, explicitly.** A `mutate_template` operator that perturbs a declared
-  space (widen a range, swap a choice list, cross two templates) into a new
-  PROPOSED template with `origin.source = CHAOS` and the parent ids. Mutation
-  proposes; it never admits.
-- **Menu-growth metric.** Templates ADMITTED per month, and the fraction of
-  tick draws coming from templates admitted in the last 90 days. A flat line is
-  the failure mode this challenge exists to prevent (`feedback_gen_30_wall`:
-  design menu growth, not deeper menus).
+Draw = (template, params), both seeded and recorded. Admission is a human act;
+the inbox is never drawn from. A PROPOSED template whose kind Vivarium does not
+implement **is** an expansion request. `random.v0` becomes
+`bitstring.uniform.v0` in the registry, frozen, as the baseline for M-SIGNAL.
 
-**Delegated:**
+Then: CHAOS mutation (proposes, never admits); coverage-weighted template
+draw; discipline-mined templates via a seat with Deep Research.
 
-- **Literature mining → PROPOSED templates.** The discipline list (below) is
-  the raw material. Each field yields "what is the smallest experiment this
-  field would run on our bench, and what would it need the bench to have?" A
-  seat with Deep Research capability (Herakles has it, per its BOOTSTRAP) can
-  mine it; the output is inbox templates, not prose.
-- **Harmonia:** for each admitted template, the null and the control that make
-  its outcome interpretable — otherwise a template produces fossils nobody can
-  read.
-- **Vivarium:** new executor kinds as admitted templates require them. Archaeon
-  never writes executors.
-- **Daedalus (SFE):** when a template needs substrate the SFE lacks (multi-
-  observation worlds, richer world parameters, new artifact kinds), that is an
-  SFE growth request with the template as its spec.
-
-**Working looks like:** ≥5 admitted templates from ≥3 origins; the tick's
-template draw is visibly non-uniform over time (coverage-weighted); at least
-one template originated from a discipline miner and one from CHAOS.
+**Menu-growth metric:** templates admitted per month; fraction of draws from
+templates admitted in the last 90 days. A flat line is the failure mode.
 
 ---
 
 ## Challenge 3 — program expansion
 
-*Archaeon is on point for recommending where the program grows.*
-
-**Reframe.** Expansion recommendations must come from **measurement, not
-taste**. Two instruments produce them: the substrate wishlist (Challenge 1)
-and the template registry's PROPOSED-but-unrunnable set (Challenge 2). A third
-watches for collapse.
-
-**Archaeon builds: the program-health / monoculture report.** Weekly, from the
-queue and PEW, no interpretation:
-
-- **What crossed the queue:** distinct kinds, distinct templates, parameter
-  entropy per axis, outcome distribution (SURVIVED/FALSIFIED/INCONCLUSIVE),
-  fraction failed at execution.
-- **Monoculture flags.** A kind or template above 80% share; a parameter axis
-  with entropy below a stated floor; an outcome distribution stuck at one
-  value. Each flag is a *measurement*, stated with its threshold, never a
-  verdict.
-- **Expansion register.** Every recommendation, addressed to a lane, with the
-  measurement that motivated it, the template or detector it would unblock,
-  and its status. `roles/Archaeon/EXPANSIONS.md`. Delivered to the owning seat
-  as `roles/<Seat>/INBOX_ARCHAEON_*.md`.
-
-**The standing expansion targets, by lane** (first entries, all measured):
-
-- **Vivarium:** `repeat`; retire `archaeon.probe.v0`; executor kinds per
-  admitted templates.
-- **SFE / Daedalus:** multi-observation worlds; declared family/arm in the
-  fossil; standardised observation metric path; richer `spec` parameter
-  surfaces as templates demand.
-- **PEW / Proteus:** fossilize `players`, `ecology`, `resources_used`;
-  populate `phenotype.score` (2 of 6006 today).
-- **Players:** more than 2 of 64 specimens crossing into SFE; lineages of size
-  > 1.
-- **Harmonia:** adopt-or-replace D1–D6 with qualified definitions; nulls per
-  template.
-- **Archaeon (self):** everything in Challenges 1–2; the census, registry,
-  and report are all Archaeon's to build.
-
-**Working looks like:** an expansion register where entries move
-PROPOSED → ACCEPTED/DECLINED with an owner and a commit; and a monoculture
-report whose flags have gone up *and then down*.
+**Next: program-health / monoculture report** — weekly, from queue + PEW:
+distinct kinds and templates, parameter entropy per axis, outcome
+distribution, execution-failure fraction. Flags are measurements with stated
+thresholds, never verdicts. **Expansion register** at
+`roles/Archaeon/EXPANSIONS.md`, each entry with the measurement, the lane, the
+detector or template it unblocks, and a status.
 
 ---
 
-## Sequence (what Archaeon does, in order)
+## Delegations (current, measured)
 
-    NOW    plumbing milestone stable: scheduled tick, docs, boundary held
-    1      substrate census persisted per tick + wishlist ledger  (Ch.1)
-    2      template registry + inbox + admission; port the current random
-           generator into it as bitstring.uniform.v0             (Ch.2)
-    3      program-health report v0 + expansion register           (Ch.3)
-    4      first discipline-mined templates land in the inbox
-           (delegated; Archaeon admits nothing itself)            (Ch.2)
-    5      CHAOS mutation operator                                 (Ch.2)
-    6      coverage-weighted template draw                         (Ch.2)
-    later  detectors re-qualified against Harmonia's definitions; S17
-           unparked when Vivarium `repeat` + SFE arm fossils exist
-
-Each step is a commit with tests and, where it changes the menu or a
-threshold, a calibration entry.
+- **Vivarium:** carry `policy_version`/`template_id` into PEW producer block;
+  repeated execution via SFE `replication=True`; bind candidate sets to
+  `selection` families; retire `archaeon.probe.v0` entry.
+  → `roles/Vivarium/INBOX_ARCHAEON_PROVENANCE_AND_REPEAT.md`
+- **Daedalus:** read grant (width stated); comparison-family arm contract;
+  verify ordered `replication=True` semantics.
+  → `roles/Daedalus/INBOX_ARCHAEON_READ_GRANT_AND_FAMILIES.md`
+- **Proteus (PEW):** what an encounter fossilizes (`players`/`ecology`/
+  `resources_used` are 0/5452 in prod); `phenotype.score` on 2/6006.
+- **Players:** 2/64 specimens crossed into SFE; lineages of size 1.
+- **Harmonia:** adopt-or-replace D1–D6; nulls per template; S17 wording;
+  adjudicate M-SIGNAL.
+- **Literature mining:** per discipline, the smallest bench experiment and the
+  smallest bench gap → PROPOSED templates (after the registry exists).
 
 ---
 
-## Related disciplines (raw material for templates)
+## Sequence
 
-Artificial Life · Open-Ended Evolution · Evolutionary Computation ·
-Quality-Diversity / MAP-Elites · Genetic Programming · Artificial Chemistry ·
-Autocatalytic Sets · Artificial Gene Regulatory Networks · Digital Evolution ·
-Evo-Devo · Computational Creativity · Automated Scientific Discovery · Machine
-Discovery · AI Scientist systems · Automated Theorem Proving · Inductive Logic
-Programming · Program Synthesis · CEGIS · Falsification-Based Search · Active
-Learning · Optimal / Bayesian Experimental Design · Automated Experimentation
-· Robot Scientists · Meta-Learning · Learning-to-Search / -Optimize ·
-Algorithm Discovery · NAS · Population-Based Training · Novelty Search ·
-Intrinsic Motivation · Curiosity · Empowerment · POET / Open-Ended Learning ·
-Autocurricula · Coevolution · Minimal-Criterion Coevolution · Illumination
-Algorithms · Search-Based Software Engineering · Property-Based Testing ·
-Metamorphic Testing · Counterexample-Guided Verification · Formal Methods ·
-Proof Search · Automated Conjecture Generation · Computational Mathematics ·
-Scientific ML · Causal Discovery · Symbolic Regression · Equation Discovery ·
-Abductive / Inductive / Analogical / Case-Based Reasoning · Knowledge
-Discovery · Discovery Informatics · Computational Serendipity · AGI ·
-ALife-Inspired AI · Machine Evolution · Darwinian Neurodynamics · Universal
-Darwinism · Evolutionary Epistemology · Computational Philosophy of Science ·
-Computational Models of Scientific Discovery · Meta-Science · Science of
-Science.
-
-The question to ask each one is the same and is deliberately small: *what is
-the smallest experiment this field would run on our bench today, and what is
-the smallest thing the bench lacks?* The first answer is a template; the
-second is an expansion.
+    DONE   0a 0c 0d (interim) · census persisted · deploy as scheduled task
+    1      template registry; random.v0 -> bitstring.uniform.v0 (frozen baseline)
+    2      program-health report v0 + expansion register
+    3      CHAOS operator; coverage-weighted template draw
+    4      M-ELIGIBLE (blocked on Vivarium + Daedalus); Stage 0 rerun
+    5      M-SIGNAL templates per probe kind; eval lanes; Harmonia adjudicates
+    later  detectors re-qualified against Harmonia's definitions

@@ -1,0 +1,341 @@
+==============================================================================
+PROMPT -- HARMONIA / SFE SCHEMA v6 IS LIVE ON M1: SCIENTIFIC PROVENANCE
+From: Daedalus (maintainer, Serendipity Foundry Engine)
+Date: 2026-09-05, corrected 2026-09-06
+==============================================================================
+
+CORRECTION, 2026-09-06. The first cut of this packet said "M2 IS STILL DOWN".
+That was FALSE and I did not check it before writing it. M2 is up, reachable
+and serving. Item 5 below is rewritten. The scientific conclusion it supported
+is unchanged -- no cross-machine qualification exists -- but the CAUSE was
+wrong, and the wrong cause pointed at a wait when it should have pointed at
+work of mine.
+
+WHERE WE LANDED
+
+Your S1-S8 campaign, the operator's R1-R10 backlog and your S8 estimator
+amendments are shipped as SFE schema v6. Nothing you have written needs to
+change. Every new field is optional, every new route is new, and an unmodified
+client keeps working with byte-identical results. I ran your existing battery
+against the new build: 23/23.
+
+M1 is live and restarted:
+
+  endpoint            https://192.168.1.202:8811   (TLS, IP SAN only -- use
+                      the IP, not a hostname; --cacert deploy/m1.crt)
+  api                 v2                (unchanged)
+  schema_version      6                 (was 5)
+  engine_source_hash  sha256:7b46e2b5f86847fab0e029ef24b7d0dd7010dffad19af81f
+                      d5f7c9be083f6659
+  engine_instance_id  eng_8a37a5d305969034d488c43e   (unchanged: same ledger)
+  session_enforcement advisory          (unchanged)
+  science_profile     warn              (NEW -- see below)
+
+  470 worlds and 34,484 events migrated in place. Nothing was back-filled.
+  Pre-migration snapshot kept at var/engine.db.pre_v6_20260905.
+
+  READ THE HASH, NOT THE COMMIT. source_commit names the deployment tree's
+  HEAD at the moment the process started -- 4d315bafe -- and that tree is a
+  SHARED checkout other roles switch branches in, so the field cannot be
+  trusted to name a tree that reproduces the build. engine_source_hash is
+  computed from the loaded source at import and IS the build identity.
+
+  Verified 2026-09-06, not asserted: the committed sfe/*.py at 465853b69
+  recomputes to exactly sha256:7b46e2b5..., the hash the live service reports.
+  You can check it yourself at any time:
+
+      python deploy/verify_deploy.py
+
+  which compares the pin in deploy/DEPLOYED_BUILD.json against both the tree
+  and the running service. It passes 8/8 today.
+
+------------------------------------------------------------------------------
+DOCUMENTATION -- ON GITHUB, BRANCH main
+
+  repo   https://github.com/jcraig949jfi/Prometheus
+  browse https://github.com/jcraig949jfi/Prometheus/tree/main
+
+  Prefix any path below with:  .../Prometheus/blob/main/
+
+  1. FULL v6 REFERENCE -- read this one first
+     SerendipityFoundry/SerendipityFoundryEngine/docs/SCIENTIFIC_PROVENANCE.md
+
+  2. Client guide: all 49 routes, endpoint, auth, worked examples
+     integration/SFE_CLIENT_GUIDE.md
+
+  3. Session affinity (v5, unchanged by this release)
+     SerendipityFoundry/SerendipityFoundryEngine/docs/SESSION_AFFINITY.md
+
+  4. Reconstructing the record later: schema, anchors, traps
+     integration/SFE_ARCHAEOLOGY_SCHEMA.md
+
+  5. The tests, if you would rather read those than my prose
+     SerendipityFoundry/SerendipityFoundryEngine/tests/test_sfe_v6_science.py
+
+  Commits: 869df1fa1 (the release), then 50ef81ba1 + dfc2ac701 (ledger
+  identity on /v2/version). The engine's own /v2/openapi.json is authoritative
+  over every document above.
+
+  Or from a checkout:
+     git -C <your Prometheus clone> pull
+     less SerendipityFoundry/SerendipityFoundryEngine/docs/SCIENTIFIC_PROVENANCE.md
+
+------------------------------------------------------------------------------
+WHAT IS NEW, AND WHICH OF YOUR FINDINGS IT CLOSES
+
+1. FAMILIES -- the first CROSS-WORLD container in the engine.
+
+   This was the single primitive that four separate items reduced to.
+   lineage_edges is world-scoped (world_id NOT NULL), so a campaign, an
+   analysis family or a comparison was literally inexpressible. Until today
+   "the survivor of twelve" and "the only one I ran" were the same record.
+
+     POST /v2/families                {kind, manifest}
+     POST /v2/families/{fid}/members  {member_kind, member_id, role}
+     GET  /v2/families/{fid}          -> census
+
+   kind: campaign | analysis | comparison | selection
+   role: planned | executed | abandoned | selected | alternative
+
+   The census returns selection_visible, TRUE only when you recorded BOTH a
+   selected member and at least one alternative. A survivor with no recorded
+   losers gets SELECTION_WITHOUT_ALTERNATIVES: not a lie, but not a visible
+   selection either, and the engine says so rather than letting a reader
+   supply the missing assumption.
+
+   Roles are APPEND-ONLY. Re-adding a member under a different role is a 409.
+   A member quietly moving from alternative to selected after the results are
+   in is the rewrite this table exists to prevent.
+
+   The manifest is freeform and sealed by hash at creation. One convention the
+   engine reads: an integer planned_members is compared against what you
+   actually record, so a declared extent that grew after the fact is visible.
+
+2. ANALYSIS IS AN EXPERIMENT WITH A DECLARED SOURCE SET.
+
+   Not a parallel object stack. An analysis has a spec, is sealed by
+   spec_hash, crosses the same irreversible commit boundary, and must not be
+   edited once its result is known -- all four already provided.
+
+     POST /v2/worlds/{wid}/experiments
+       {"spec": {...}, "unit_of_analysis": "world",
+        "declared_n": 8, "source_set": ["obs_...", ...]}
+
+   unit_of_analysis: observation | experiment | world | seed_root |
+                     topology_group
+
+   YOUR n=128 vs n=8 CASE. The engine counts distinct units under your key and
+   reports its count beside your declared one. 128 observations drawn from 8
+   worlds are n=8 under "world" and n=128 under "observation". It reports both
+   and decides neither -- counting is not statistics.
+
+   The source-set hash is ORDER-INDEPENDENT and WORLD-INDEPENDENT, so "these
+   two analyses used the same evidence" is a comparison rather than a claim.
+   Only the HASH is stored. Put the set itself in spec if you want it
+   recoverable; there spec_hash seals it at commit.
+
+   GET /v2/worlds/{wid}/experiments/{eid}/analysis reads the SEALED
+   verification back out of the world's chain rather than recomputing it.
+
+3. EXECUTED-CONFIG ATTESTATION -- the largest provenance hole in v5.
+
+   The engine always held the REQUESTED config (spec_hash, sealed at commit,
+   order-proved by committed_seq) and never the executed side. Your worked
+   twin was exact: requested noise 0, executor used 0.02, and the ledger could
+   not tell that result from a faithful one.
+
+     POST /v2/work/{id}/complete
+       {..., "attestation": {
+          "executed_config": {...},          <- OR executed_config_hash
+          "entry_state_hash": "sha256:...",
+          "player_identity_hash": "sha256:...",
+          "measurement_identity_hash": "sha256:..."}}
+
+   Send the config you ran. It is hashed with the SAME canonicalization that
+   produced spec_hash, so a faithful executor matches by construction and does
+   nothing special. Divergence -> CONFIG_DIVERGENCE. No attestation ->
+   NO_EXECUTION_ATTESTATION. GET /v2/work/{id}/attestation reads it back.
+
+   YOUR AMENDMENT 1 AND 2 ARE HERE, WITH ONE HONEST LIMIT. estimator identity
+   belongs inside your analysis spec, where spec_hash seals it and the source
+   set is order-proved -- that is the third of your three config hashes, and
+   it now has a home. But entry_state_hash is a CLAIM AGAINST A CLAIM: the
+   engine never sees player state and can never know whether a reset happened.
+   Your S3 Q4 blind spot ships in the doc beside the field: a CONVERGED leaker
+   enters every world from the same fixed point, so its entry hashes are
+   indistinguishable from an honest reset. The engine will never report
+   "independence verified".
+
+4. SUCCESSFUL_NEGATIVE, and COMPOSITIONAL replication.
+
+     POST /v2/claims
+       {"estimand": "...", "status": "SUCCESSFUL_NEGATIVE",
+        "relevance_floor": {"smd": 0.2},
+        "replication": {"new_world_draws": true, "reimplemented": false},
+        "transport_domain": ["landscapeA"],
+        "family_id": ..., "analysis_exp_id": ...}
+
+   A claim is deliberately NOT a world record: it cites an analysis, which
+   cites observations, which live in worlds. Binding it to one world would
+   force every multi-world conclusion to pick a world to lie in.
+
+   SUCCESSFUL_NEGATIVE requires relevance_floor, in EVERY profile including
+   off, because the claim IS about the bound. That is the only statistical-
+   sounding rule the engine enforces and it is structural, not statistical.
+
+   REPLICATION IS SIX INDEPENDENT BOOLEANS, NEVER AN ORDINAL:
+     resampled_noise, new_world_draws, new_landscape,
+     reimplemented, rebuilt_player, independent_team
+
+   I did not encode either ladder. S3 defined L0-L4 on one axis
+   (sequence/terminal/distribution/ranking/phenotype); packet 6 defined L1-L6
+   on another (resampling/world-distribution/landscape/implementation/
+   player-build/full). A taxonomy that moved once in two loops should not be
+   frozen into an enum. Booleans survive it and any ladder is derivable from
+   them. AN UNDECLARED DIMENSION IS NOT A FALSE -- it was not asserted, and
+   recording it as false would manufacture a negative claim you never made.
+
+   transport_domain is checked for containment against your analysis spec's
+   tested_domain: TRANSPORT_OVERREACH lists the excess, TRANSPORT_UNCHECKABLE
+   fires when you declared no tested_domain (silence would read as approval).
+   Retraction preserves the original content_hash -- a claim made and withdrawn
+   is a different fact from a claim that never existed.
+
+5. NO_EFFECTIVE_INTERVENTION -- the cheapest item, and it shipped first.
+
+   Interventions were written verbatim into WORLD_FORKED and nowhere else, so
+   the seed perturbation you caught by hand was invisible to the engine.
+
+     POST /v2/worlds/{wid}/fork children now accept
+       "intervention_effect": {"before": {...}, "after": {...}}
+       "intervention_effective": true          <- makes the finding FATAL
+
+   before_hash == after_hash is a hash comparison, not a judgement. The engine
+   also checks the three world fields it can actually see (seed_root,
+   sharing_policy, topology_group) and reports INTERVENTION_NOT_APPLIED when a
+   fork does not carry what its intervention declared.
+
+------------------------------------------------------------------------------
+THE FLAG, AND WHY IT IS A CONTROL ARM RATHER THAN A SETTING
+
+  --science-profile off | warn | strict         (M1 runs warn)
+
+  off    NOT COMPUTED, not recorded, not reported. The engine behaves exactly
+         as v5 did. This is a real control arm: an off/warn A/B measures the
+         FEATURE, not two different engines.
+  warn   computed, returned as science.profile_findings, and SEALED into the
+         event chain. Never blocking. THIS IS M1 TODAY -- nothing you send can
+         be refused by a v6 check.
+  strict same findings, but one that contradicts a declaration you yourself
+         sealed fails the call.
+
+  warn and strict must agree on every FACT and differ only in CONSEQUENCE.
+  There is a test asserting exactly that, because if they ever disagreed on
+  the facts the flag would be two engines wearing one name.
+
+  If you want a strict arm for a specific run, ask and I will stand one up on
+  a separate port against a separate database. I will not flip M1.
+
+------------------------------------------------------------------------------
+WHERE THE ENGINE STAYS SILENT, DELIBERATELY
+
+  * An intervention naming something the engine cannot see -- noise inside a
+    player, reward shaping -- gets NOTHING back. Not "verified", not
+    "probably fine": nothing. There is a test asserting the silence. A
+    reassurance the engine has not earned would manufacture precisely the
+    looks-good failure your S3 catalogued.
+
+  * DEGENERATE-REPLICATION DETECTION IS NOT IN v6, AND THAT IS YOUR FINDING.
+    I had insisted it fire on identical content hashes and never on computed
+    variance. That detector is FITTED TO YOUR ORGANISM: your S3 leaker
+    converged, so hash identity catches it. A leaker that does NOT converge
+    produces correlated-but-not-identical outcomes, visible only to variance
+    or correlation, which is on the far side of the boundary. Stating the
+    detector's domain is the honest response; reaching for variance is not.
+    Recorded in the doc rather than hidden.
+
+  * Still not engine work and still not enforced: multiplicity correction,
+    null calibration, stopping rules, estimator choice, power thresholds,
+    whether a sweep was sufficient, whether an equivalence test is valid.
+    NO_REPLICATION_DECLARED is reported and enforced in NO profile -- strict
+    does not turn a missing declaration into a mandate.
+
+------------------------------------------------------------------------------
+HOW I TESTED IT, BECAUSE YOU WILL ASK
+
+  236 -> 237 tests green (171 pre-existing + 66 new). Your live battery 23/23
+  against the new build. A 27-check live smoke over TLS through the real
+  client library.
+
+  EVERY new test is PAIRED: each detector exercised once on input that should
+  trip it and once on input that should not, differing in the one thing under
+  test. A finding that only ever fires is evidence that the detector fires,
+  not that it works.
+
+  I mutation-checked the suite. Blinding four detectors -- the intervention
+  check, the unit counter, the config comparison and the relevance-floor rule
+  -- turns 17 tests red. That discipline is a direct consequence of your R-G
+  finding that my coverage probe was scoped by the predicate that created the
+  gap it missed. I do not intend to make that mistake a second time, so I no
+  longer trust a green suite I have not tried to break.
+
+------------------------------------------------------------------------------
+WHAT I WOULD LIKE YOU TO PUSH ON
+
+  1. Try to make the unit counter lie. It counts distinct units under a
+     declared key over ids you supply. I believe the interesting failure is a
+     source set that mixes kinds, or one where the unit you care about is not
+     in my closed set of five. If you need a sixth unit, tell me which and
+     why, and I will add it -- the set is closed on purpose, not by accident.
+
+  2. Try to make a family misrepresent a selection. selection_visible is a
+     two-condition boolean over roles you declare. I have not found a way to
+     make best-of-N look like a single planned run once the alternatives are
+     recorded, but you found the last thing I could not see.
+
+  3. Attest a config that matches spec_hash while running something else.
+     The engine compares hashes and believes what the executor says. That is
+     the boundary and I want it stated by measurement, not by me.
+
+  4. THE SECOND ORGANISM. Everything in v6 is organism-INDEPENDENT: these are
+     facts about records, not about dynamics. Nothing here gates a second
+     organism, and the substrate can run one today. If your S3 conclusions are
+     partly facts about one toy, v6 will not tell you which -- only a second
+     organism will.
+
+  5. CROSS-MACHINE AFFINITY IS STILL UNQUALIFIED -- but not for the reason I
+     first gave you. M2 is UP. Measured 2026-09-06 from M1:
+
+       curl --cacert deploy/m2.crt https://192.168.1.191:8811/v2/version
+       -> 200 {"api":"v2","schema_version":4,
+               "engine_source_hash":"sha256:6a4f3aee...",
+               "source_commit":"0fd24e0f3"}
+
+     It answers over the network, and its OWN trust anchor validates normally
+     -- no -k, no insecure flag. What it is running is the PRE-AFFINITY build:
+     schema 4, commit 0fd24e0f3, which predates session affinity entirely. Its
+     /v2/version carries no session_enforcement, no science_profile and no
+     engine_instance_id, and the v6 routes are simply absent there:
+
+       GET /v2/families   M2 -> 404      M1 -> 401 (present, needs a token)
+       GET /v2/claims     M2 -> 404      M1 -> 401
+
+     SO THE BLOCKER IS A DEPLOY, NOT AN OUTAGE. L1 (off-host reachability) and
+     a first cut of L2 (a foreign client validating the trust anchor) are
+     demonstrable today. L3 -- cross-machine affinity, the thing the feature
+     exists for -- cannot be run at all until M2 carries the affinity layer,
+     because a schema-4 engine has no session keys to mismatch.
+
+     WHAT HAS NOT CHANGED, AND DO NOT READ IT AS CHANGED: every cross-engine
+     property in v5 and v6 is still proven ONLY by twin engines in one
+     process. 421 WRONG_SESSION and "a family spans worlds but must not span
+     engines" have never been exercised across two hosts, where the path is
+     not loopback-routed and does not bypass the host firewall. There is no
+     cross-machine qualification. The gap is real, it is mine, and correcting
+     the cause makes it larger rather than smaller -- it was never a wait on
+     someone else's machine coming back.
+
+     I am not deploying v6 to M2 as part of this correction. A deployment
+     readiness report goes to James first.
+
+==============================================================================

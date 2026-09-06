@@ -1,13 +1,19 @@
 """What tick() is allowed to look at.
 
-ARCHAEON IS FIRE-AND-FORGET. Once an experiment is written to the canonical
-queue, Archaeon has no further responsibility for it. It does not track its
-completion, poll its status, wait for Vivarium, correlate the resulting fossil
-back to "my experiment", retry it, or keep any per-experiment lifecycle state.
-Vivarium owns the experiment from claim onward.
+ARCHAEON IS FIRE-AND-FORGET ACROSS EXECUTION. Once an experiment is written to
+the canonical queue, Vivarium owns its LIFECYCLE: Archaeon does not track its
+completion, poll its status, wait, retry, or keep per-experiment state. In the
+tick path nothing ever asks what became of a proposal.
 
 **Archaeon's only persistent feedback channel is PEW.** New fossils are simply
 new evidence on the next tick, regardless of who or what produced them.
+
+This is a statement about OPERATION, not about EVALUATION. The queue row
+carries `policy_version` and `template_id` in `source_evidence`, and Vivarium
+is asked to carry them into the PEW producer block, precisely so that outcomes
+can later be measured BY POLICY and BY TEMPLATE against a frozen random
+baseline. That comparison is Harmonia's to adjudicate and is never performed
+here; the record is what makes it possible.
 
 That leaves exactly two reads, and the boundary between them is the point:
 
