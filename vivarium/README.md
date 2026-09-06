@@ -59,7 +59,23 @@ python -m viv.cli candidates <candidate_set_id># OBSERVED set extent
 python -m viv.cli tick                         # exactly one tick, JSON out
 python -m viv.cli health                       # machine-readable health
 python -m viv.cli errata                       # declared contamination
+python -m viv.cli sfe-identity [--ensure]      # the DURABLE SFE identity
 ```
+
+## SFE integration invariants
+
+* **The work lease is held for the whole execution.** A claim is a lease with a
+  fencing token; an executor that outruns it produces a correct result the
+  engine refuses. `_LeaseKeeper` renews at a third of the lease while the
+  executor runs, and a lost lease fails the run as `LEASE_LOST` rather than as
+  an unexplained 409.
+* **One durable SFE identity per role**, persisted in `config.local.json`:
+  `vivarium` (production) and `vivarium-test` (live tests). Vivarium will NOT
+  register implicitly — a fresh client per run is what turned this seat's SFE
+  history into 44 single-world tenants. Run `sfe-identity --ensure` once.
+* **`science.profile_findings` from `complete()` are recorded, never
+  discarded** — and never adjudicated here. SFE's own science profile decides
+  whether a finding blocks; Vivarium logs it and puts it in `result_summary`.
 
 ## The machine
 

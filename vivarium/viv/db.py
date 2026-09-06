@@ -71,6 +71,7 @@ def load_config() -> dict:
         "db_user": "postgres",
         "db_password": None,
         "schema": "viv",
+        "identity_role": "production",
     }
     cfg.update(_read_json(CONFIG_PATH))
     cfg.update(_evidence_wiki_credentials())
@@ -84,7 +85,8 @@ def load_config() -> dict:
                      # VIV_PEW_NAMESPACE exists so a test run can force `test`
                      # even when the committed default is `prod`. See
                      # tests/conftest.py, which sets it unconditionally.
-                     ("pew_namespace", "VIV_PEW_NAMESPACE")):
+                     ("pew_namespace", "VIV_PEW_NAMESPACE"),
+                     ("identity_role", "VIV_IDENTITY_ROLE")):
         if os.environ.get(env):
             cfg[key] = os.environ[env]
     return cfg

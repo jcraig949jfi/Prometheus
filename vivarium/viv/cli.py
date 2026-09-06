@@ -23,6 +23,7 @@ import sys
 from datetime import datetime, timezone
 
 from . import db as _db
+from . import identity as _identity
 from . import kinds as _kinds
 from . import daemon as _daemon
 from . import loop as _loop
@@ -157,6 +158,46 @@ def cmd_enqueue(args, conn) -> int:
     conn.commit()
     h = _spec.spec_hash(spec)
     print("%s  spec_hash=%s  world=%s" % (eid, h, _spec.world_name(h)))
+    return 0
+
+
+def cmd_sfe_identity(args, _conn) -> int:
+    """The durable SFE identity. Registers ONCE with --ensure."""
+    if args.ensure:
+        import sys as _sys
+        from pathlib import Path as _Path
+        cfg = _db.load_config()
+        cacert = cfg.get("sfe_cacert")
+        if cacert and not _Path(cacert).is_absolute():
+            cacert = str(_db.ROOT.parent / cacert)
+        _sys.path.insert(0, str(_db.ROOT.parent / "SerendipityFoundry"
+                                / "SerendipityFoundryClient"))
+        from sfclient import EngineClient          # noqa: PLC0415
+
+        class _Registrar:
+            """EngineClient.register() returns only the token and drops the
+            client_id, which is the durable identity's actual name in SFE.
+            This keeps it, so `sfe-identity` never needs a manual lookup."""
+
+            def __init__(self, ec):
+                self.ec, self.client_id = ec, None
+
+            def register(self, name):
+                r = self.ec._req("POST", "/v2/clients", {"name": name})  # noqa: SLF001
+                self.ec.token = r["token"]
+                self.client_id = r.get("client_id")
+                return r["token"]
+
+        try:
+            _identity.token_for(
+                args.role, register_if_missing=True,
+                client_factory=lambda: _Registrar(
+                    EngineClient(cfg["sfe_base_url"], cafile=cacert)),
+                log=print)
+        except _identity.IdentityError as exc:
+            print(str(exc), file=sys.stderr)
+            return 1
+    print(_j(_identity.describe()))
     return 0
 
 
@@ -377,6 +418,14 @@ def build_parser() -> argparse.ArgumentParser:
     s.set_defaults(fn=cmd_enqueue)
 
     sub.add_parser("kinds").set_defaults(fn=cmd_kinds)
+
+    s = sub.add_parser("sfe-identity",
+                       help="the DURABLE SFE client identity (one per role)")
+    s.add_argument("--ensure", action="store_true",
+                   help="register once if absent, and persist it")
+    s.add_argument("--role", default=_identity.ROLE_PRODUCTION,
+                   choices=[_identity.ROLE_PRODUCTION, _identity.ROLE_TEST])
+    s.set_defaults(fn=cmd_sfe_identity)
 
     s = sub.add_parser("family")
     s.add_argument("family_id")

@@ -39,6 +39,7 @@ from dataclasses import asdict, dataclass, field
 from typing import Optional
 
 from . import db as _db
+from . import identity as _identity
 from . import pew as _pew
 from . import queue as _q
 from . import spec as _spec
@@ -134,10 +135,15 @@ class Vivarium:
             cacert = self.cfg.get("sfe_cacert")
             if cacert and not os.path.isabs(cacert):
                 cacert = str(_db.ROOT.parent / cacert)
+            # ONE durable identity for the whole seat. worker_id still names
+            # the PROCESS in the queue and in heartbeats; it is no longer a
+            # separate tenant in SFE.
             self._runner = SfeRunner(
                 base_url=self.cfg["sfe_base_url"], cafile=cacert,
-                token=self.cfg.get("sfe_token"), worker_id=self.worker_id,
-                client_name=self.worker_id)
+                token=_identity.token_for(self.cfg.get("identity_role",
+                                                       _identity.ROLE_PRODUCTION)),
+                worker_id=self.worker_id, log=self.log,
+                lease_s=float(self.cfg.get("sfe_lease_s", 120.0)))
         return self._runner
 
     def pew(self):

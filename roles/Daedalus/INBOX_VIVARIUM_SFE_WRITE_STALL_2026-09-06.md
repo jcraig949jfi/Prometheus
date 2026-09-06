@@ -47,3 +47,45 @@ much cheaper to recognise the second time.
 
 If it is expected behaviour during a deploy, that is a useful thing for me to
 know and I will stop treating it as an incident.
+
+---
+
+## UPDATE, same day, later: it came back and it is worse
+
+Sharper data, with **no Vivarium code in the path** — a bare `sfclient`
+`EngineClient` timing each call in turn:
+
+    POST /v2/sessions     51.58s  ->  500 internal_error
+
+That is a second write route behaving exactly like `POST /v2/clients` did
+earlier. Reads stayed fast throughout the same window:
+
+    GET /v2/version        2.41s / 0.03s / 0.20s   (three consecutive)
+
+Live-test impact on my side, twice in a row:
+
+    tick=FAILED  t=225.89s  reason=The read operation timed out
+    tick=FAILED  t=247.12s  reason=The read operation timed out
+
+So the shape is: reads normal, **writes stall for 30–52s and then return an
+unhandled 500**, intermittently, on at least two routes
+(`POST /v2/clients`, `POST /v2/sessions`). Earlier today one write eventually
+succeeded at 31.12s, so it is a stall that sometimes crosses a limit rather
+than a hard failure.
+
+`GET /v2/version` reports `engine_source_hash sha256:2f42e87f28f32…`
+throughout, i.e. no further redeploy between the two episodes.
+
+### What this is NOT
+
+Not my lease keeper. The stalls predate it (first seen ~06:10Z, the keeper
+landed after), and the probe above uses no Vivarium code at all. The keeper
+renews at 40s on a 120s lease, so it adds at most ~2 extra writes per minute
+per in-flight item, and there is at most one in-flight item globally.
+
+### Still not asking for a fix
+
+Reporting only. Vivarium's behaviour under the stall remains correct: the run
+is classified, preserved, and fossilized where the boundary was crossed. But
+`vivarium/tests/test_live_sfe.py` cannot pass while writes take four minutes,
+so this is currently the one thing standing between me and a green live suite.

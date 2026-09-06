@@ -31,6 +31,16 @@ TWO HASH CHECKS bind the queue to the ledger:
      (from the engine's audit envelope, not from the create response) must
      equal it too.
 
+THE LEASE IS HELD FOR THE WHOLE EXECUTION. See _LeaseKeeper: a claim is a
+lease with a fencing token, and an executor that outruns it produces a correct
+result the engine will refuse.
+
+THE ENGINE'S ANSWER TO complete() IS READ, NOT DISCARDED. It can carry
+science.profile_findings (CONFIG_DIVERGENCE, NO_EXECUTION_ATTESTATION). Those
+are recorded and logged; they are never adjudicated here, and they never change
+the outcome -- the engine already decides whether a finding blocks, via its own
+science profile.
+
 REPLICATION IS NOT PASSED TO SFE. The engine's `replication` flag is scoped to
 one world and experiment (`is_repeat` keys on world_id + exp_id), and Vivarium
 always creates a fresh world -- so passing it would be a no-op that reads like
@@ -42,6 +52,7 @@ report.
 from __future__ import annotations
 
 import sys
+import threading
 import time
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -70,6 +81,82 @@ SECONDARY_ANCHOR = "WORK_COMPLETED"
 FAILURE_ANCHOR = "EXPERIMENT_COMMITTED"
 
 
+class LeaseLost(RuntimeError):
+    """The engine took the work back while the executor was still running."""
+
+
+class _LeaseKeeper:
+    """Hold the SFE work lease for as long as the executor runs.
+
+    THE BUG THIS CLOSES. A claim is a lease -- 120s here -- guarded by a
+    fencing token. If the executor outruns the lease, the engine is entitled to
+    assume the worker died, reclaim the work and invalidate the token. The
+    executor then finishes CORRECTLY, Vivarium calls complete(), and the engine
+    refuses it: the scientific computation succeeded and no fossil was ever
+    written. Nothing in the record would say why, because from the ledger's
+    side the work was simply reclaimed.
+
+    Today's executors finish in ~1.5s so this has never fired, which is exactly
+    what makes it dangerous: the first slow executor -- a model, a search, a
+    loaded host, a stalled network (SFE writes hit 31s earlier today) -- meets
+    it in production with a real result in hand.
+
+    A heartbeat that FAILS is not swallowed. The lease is then already gone, so
+    the run is doomed; recording that is the difference between "the result
+    vanished" and "the lease expired at 06:09:03 after 4 successful renewals".
+    """
+
+    #: Renew at a third of the lease. Two renewals may be lost to a stall
+    #: before the lease is actually at risk.
+    RENEW_FRACTION = 3.0
+
+    def __init__(self, client, *, work_id: str, worker_id: str, claim_id: str,
+                 lease_s: float, log=None):
+        self.c = client
+        self.work_id, self.worker_id, self.claim_id = work_id, worker_id, claim_id
+        self.lease_s = lease_s
+        self.log = log
+        self.interval = max(1.0, lease_s / self.RENEW_FRACTION)
+        self.renewals = 0
+        self.error: Optional[str] = None
+        self._stop = threading.Event()
+        self._thread: Optional[threading.Thread] = None
+
+    def _run(self):
+        while not self._stop.wait(self.interval):
+            try:
+                self.c.heartbeat(self.work_id, self.worker_id, self.claim_id,
+                                 lease_s=self.lease_s)
+                self.renewals += 1
+            except Exception as exc:                # noqa: BLE001
+                # The lease is gone. Stop renewing and remember why; the
+                # complete() that follows will fail, and it must fail with a
+                # reason rather than an unexplained 409.
+                self.error = "%s: %s" % (type(exc).__name__, exc)
+                if self.log:
+                    self.log("[viv] LEASE LOST on %s after %d renewal(s): %s"
+                             % (self.work_id, self.renewals, self.error))
+                return
+
+    def __enter__(self):
+        self._thread = threading.Thread(
+            target=self._run, name="viv-lease-%s" % self.work_id[:12],
+            daemon=True)
+        self._thread.start()
+        return self
+
+    def __exit__(self, *exc):
+        self._stop.set()
+        if self._thread is not None:
+            self._thread.join(timeout=5.0)
+        return False
+
+    def status(self) -> dict:
+        return {"renewals": self.renewals, "interval_s": round(self.interval, 1),
+                "lease_s": self.lease_s, "lost": self.error is not None,
+                "error": self.error}
+
+
 @dataclass
 class RunResult:
     world_id: Optional[str] = None
@@ -85,6 +172,11 @@ class RunResult:
     #: became possible. Distinguishes "never attempted" from "attempted".
     crossed_boundary: bool = False
     failure_class: Optional[str] = None
+    #: What the engine said when the result was accepted. May carry
+    #: profile_findings; never discarded, never adjudicated here.
+    science: dict = field(default_factory=dict)
+    #: Lease renewals held during execution, and whether the lease was lost.
+    lease: dict = field(default_factory=dict)
     #: The sealed hash, carried so a FAILED run can still be fossilized with
     #: the identity of the specification that failed.
     spec_hash_hint: Optional[str] = None
@@ -111,13 +203,23 @@ class SfeRunner:
     def __init__(self, *, base_url: str, cafile: Optional[str] = None,
                  token: Optional[str] = None, worker_id: str = "vivarium",
                  client_name: str = "vivarium", timeout: float = 60.0,
-                 insecure: bool = False):
+                 insecure: bool = False, lease_s: float = 120.0,
+                 log=lambda *_a: None):
         from sfclient import EngineClient          # noqa: PLC0415
         self.worker_id = worker_id
+        self.lease_s = lease_s
+        self.log = log
         self.c = EngineClient(base_url, token, cafile=cafile,
                               insecure=insecure, timeout=timeout)
         if not token:
-            self.c.register(client_name)
+            # Registering here is what produced 44 single-world tenants. The
+            # identity is now durable and supplied by the caller; see
+            # viv/identity.py and `viv.cli sfe-identity --ensure`.
+            raise ValueError(
+                "SfeRunner needs a durable SFE token. Vivarium no longer "
+                "registers a fresh client per run -- that is what shredded "
+                "this seat's history in SFE. Run: python -m viv.cli "
+                "sfe-identity --ensure")
         self.version = self.c.version()
         self._session_id: Optional[str] = None
 
@@ -214,7 +316,8 @@ class SfeRunner:
 
         claim = None
         for _ in range(claim_attempts):
-            claim = c.claim(self.worker_id, world_id=wid, lease_s=120.0)
+            claim = c.claim(self.worker_id, world_id=wid,
+                            lease_s=self.lease_s)
             if claim is not None:
                 break
             time.sleep(claim_pause_s)
@@ -227,10 +330,17 @@ class SfeRunner:
         out.work_id = work_id
         out.run_id = "%s:%s" % (exp_id, work_id)
 
+        # HOLD THE LEASE for as long as the executor runs. Without this a slow
+        # executor loses its claim mid-flight and the completed result is
+        # refused by the engine -- a correct computation with no fossil.
+        keeper = _LeaseKeeper(c, work_id=work_id, worker_id=self.worker_id,
+                              claim_id=claim_id, lease_s=self.lease_s,
+                              log=self.log)
         try:
-            # The executor sees the SPEC, never the engine's payload envelope
-            # and never the queue row.
-            result = _ex.run(spec)
+            with keeper:
+                # The executor sees the SPEC, never the engine's payload
+                # envelope and never the queue row.
+                result = _ex.run(spec)
         except Exception as exc:                    # noqa: BLE001
             # Tell the engine before telling the queue: the ledger must not
             # believe a work item is still in flight after Vivarium gave up.
@@ -240,12 +350,35 @@ class SfeRunner:
             except Exception:                       # noqa: BLE001, S110
                 pass
             out.anchor = self._failure_anchor(wid, exp_id)
+            out.lease = keeper.status()
             raise ExecutionFailure("executor raised: %s" % exc, partial=out,
                                    failure_class="EXECUTOR_ERROR") from exc
 
+        out.lease = keeper.status()
         out.work_result = result
-        c.complete(work_id, self.worker_id, claim_id, result,
-                   attestation={"executed_config": spec})
+        if keeper.error is not None:
+            # Say so BEFORE the engine says it. A bare 409 here reads like a
+            # bug in Vivarium; it is a lease that expired under a slow run.
+            out.anchor = self._failure_anchor(wid, exp_id)
+            raise ExecutionFailure(
+                "the work lease expired while the executor was running "
+                "(%d renewal(s) succeeded, then: %s). The computation "
+                "finished; the engine no longer owns it to us."
+                % (keeper.renewals, keeper.error),
+                partial=out, failure_class="LEASE_LOST")
+
+        # science.profile_findings: the engine's answer to complete() is not
+        # an ack. It may carry CONFIG_DIVERGENCE or NO_EXECUTION_ATTESTATION --
+        # "this completed, but something about its configuration disagreed with
+        # what was sealed". Discarding that discards a scientific warning.
+        completed = c.complete(work_id, self.worker_id, claim_id, result,
+                               attestation={"executed_config": spec})
+        out.science = (completed or {}).get("science") or {}
+        findings = out.science.get("profile_findings") or []
+        for f in findings:
+            self.log("[viv] SFE SCIENCE FINDING %s work=%s exp=%s: %s"
+                     % (f.get("code"), work_id, f.get("exp_id"),
+                        f.get("message")))
 
         outcome, provenance = _spec.apply_outcome_rule(spec, result)
         out.outcome = outcome
@@ -272,6 +405,7 @@ class SfeRunner:
             "run_id": out.run_id, "hyp_id": hyp_id, "pred_id": pred_id,
             "outcome": outcome, "outcome_rule_provenance": provenance,
             "result": result, "anchor": out.anchor,
+            "science": out.science, "lease": out.lease,
             "audit_envelope": envelope, "session": self.session_lineage,
             "engine": self.engine_identity, "spec_hash": sealed}
         return out

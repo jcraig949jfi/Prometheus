@@ -37,6 +37,7 @@ class RecordingClient:
 
     def __init__(self):
         self.calls = []
+        self.beats = 0
 
     def _rec(self, _call, **kw):
         self.calls.append((_call, kw))
@@ -72,9 +73,16 @@ class RecordingClient:
         return {"work_id": "wrk_fixed", "claim_id": "clm_fixed",
                 "kind": "noop", "payload": {}}
 
+    def heartbeat(self, work_id, worker_id, claim_id, lease_s=None):
+        # Recorded but NOT part of the compared transcript: renewals depend on
+        # wall-clock, and two identical specs may legitimately differ there.
+        self.beats += 1
+        return {"ok": True}
+
     def complete(self, work_id, worker_id, claim_id, result, attestation=None):
         self._rec("complete", work_id=work_id, worker_id=worker_id,
                   claim_id=claim_id, result=result, attestation=attestation)
+        return {"science": {"profile_findings": []}}
 
     def observation(self, wid, exp_id, content, outcome, pred_id=None,
                     work_id=None):
@@ -101,6 +109,8 @@ def _runner_over(client, sealed):
     r = SfeRunner.__new__(SfeRunner)          # no network in __init__
     r.worker_id = "test-worker"
     r.c = client
+    r.lease_s = 120.0
+    r.log = lambda *_a: None
     client.sealed = sealed
     r.version = {"engine_source_hash": "sha256:fake", "source_commit": "0" * 40,
                  "schema_version": 6, "engine_instance_id": "eng_fake"}

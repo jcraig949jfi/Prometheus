@@ -37,6 +37,13 @@ os.environ.setdefault("VIV_SCHEMA", TEST_SCHEMA)
 #                 not be able to aim the suite at production by accident.
 os.environ["VIV_PEW_NAMESPACE"] = "test"
 
+# SFE has no namespace: a test world is as real as any other. So the split is
+# two DURABLE identities rather than one durable and a shredded tail -- live
+# tests run as `vivarium-test`, the consumer as `vivarium`. Before this,
+# every live-SFE test run minted a fresh `vivarium-selftest` client; 24 of
+# them exist, each holding exactly one world.
+os.environ["VIV_IDENTITY_ROLE"] = "test"
+
 from viv import db as _db          # noqa: E402
 from viv import queue as _q        # noqa: E402
 
