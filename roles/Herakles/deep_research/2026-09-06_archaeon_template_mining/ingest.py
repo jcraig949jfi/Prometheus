@@ -155,18 +155,26 @@ def parse_expansion(block):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--reports", default=HERE,
+                    help="directory holding the NN_*.md reports; defaults to "
+                         "this directory. The v1 run's reports live in a "
+                         "subdirectory because their template blocks were "
+                         "corrupted, but their expansion blocks are intact and "
+                         "worth reading.")
     args = ap.parse_args()
+    reports_dir = os.path.abspath(args.reports)
 
     registry = load_registry()
-    reports = sorted(f for f in os.listdir(HERE)
+    reports = sorted(f for f in os.listdir(reports_dir)
                      if re.match(r"^\d\d_.*\.md$", f))
     if not reports:
-        print("no NN_*.md reports in %s" % HERE)
+        print("no NN_*.md reports in %s" % reports_dir)
         return 1
 
     accepted, rejected, expansions = [], [], []
     for r in reports:
-        text = io.open(os.path.join(HERE, r), encoding="utf-8").read()
+        text = io.open(os.path.join(reports_dir, r),
+                       encoding="utf-8").read()
         for raw in TEMPLATE_RE.findall(text):
             body = strip_fences(raw)
             try:
