@@ -269,9 +269,13 @@ class FamilyClient:
         self.fail_alternatives = fail_alternatives
 
     def family(self, kind, manifest=None, name=None):
+        # The REAL EngineClient.family() returns the whole family dict, not
+        # the id. The fake returned a bare string, so it could not catch the
+        # bug that a live run found immediately.
         self.families.append({"kind": kind, "manifest": manifest,
                               "name": name})
-        return "fam_1"
+        return {"family_id": "fam_1", "kind": kind, "state": "OPEN",
+                "manifest_hash": "sha256:" + "9" * 64}
 
     def family_member(self, fid, member_kind, member_id, role=None):
         self.members.append({"fid": fid, "member_kind": member_kind,
@@ -455,3 +459,31 @@ def test_a_post_commit_transport_failure_is_fossilized(conn, schema):
     enc = bodies["/fossil/encounters"][0]
     assert enc["failure_class"] == "ENGINE_TRANSPORT"
     assert "outcome" not in enc
+
+
+def test_the_family_id_is_taken_from_the_engines_response_shape(conn, schema):
+    """EngineClient.family() returns a DICT. Passing it straight into the
+    members URL is what broke the first live E6 binding."""
+    ids = _candidate_set(conn, schema, n=2, selected=0)
+    members = _q.candidate_set_members(conn, "cs-e6", schema=schema)
+    client = FamilyClient()
+    bound = _selection.bind(client, candidate_set_id="cs-e6", members=members,
+                            selected_row=_q.get(conn, ids[0], schema=schema),
+                            selected_exp_id="exp_sel", world_id="wld_1")
+    assert bound["family_id"] == "fam_1"
+    assert all(isinstance(m["fid"], str) for m in client.members)
+
+
+def test_a_family_response_without_an_id_is_refused(conn, schema):
+    ids = _candidate_set(conn, schema, n=2, selected=0)
+    members = _q.candidate_set_members(conn, "cs-e6", schema=schema)
+
+    class NoId(FamilyClient):
+        def family(self, kind, manifest=None, name=None):
+            return {"kind": kind, "state": "OPEN"}
+
+    with pytest.raises(_selection.SelectionBindError) as exc:
+        _selection.bind(NoId(), candidate_set_id="cs-e6", members=members,
+                        selected_row=_q.get(conn, ids[0], schema=schema),
+                        selected_exp_id="exp_sel", world_id="wld_1")
+    assert "no usable family_id" in str(exc.value)

@@ -85,8 +85,18 @@ def bind(client, *, candidate_set_id: str, members: list, selected_row,
     }
 
     try:
-        family_id = client.family(FAMILY_KIND, manifest=manifest,
-                                 name="cs:" + candidate_set_id)
+        # EngineClient.family() returns the whole family DICT, not the id.
+        # Found live on 2026-09-06: the dict went into the members URL and the
+        # binding failed with "URL can't contain control characters".
+        created = client.family(FAMILY_KIND, manifest=manifest,
+                                name="cs:" + candidate_set_id)
+        family_id = (created.get("family_id")
+                     if isinstance(created, dict) else created)
+        if not isinstance(family_id, str) or not family_id:
+            raise SelectionBindError(
+                "the engine returned no usable family_id: %r" % (created,))
+    except SelectionBindError:
+        raise
     except Exception as exc:                        # noqa: BLE001
         raise SelectionBindError("could not create the selection family: %s"
                                  % exc) from exc
