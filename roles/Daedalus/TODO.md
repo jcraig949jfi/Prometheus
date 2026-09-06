@@ -595,6 +595,77 @@ Residue is tracked as D7-1..D7-12 and D11 above, not duplicated here.
 
 ---
 
+## D12 — Three automated consumers on one engine (NEW, 2026-09-06)
+
+Archaeon (producer) and Vivarium (executor) join Harmonia on M1. Audited both
+against the engine and the live ledger; 61 findings, every high-impact one
+adversarially re-verified. Their side is written up in
+`integration/SFE_CONTRACT_FOR_ARCHAEON_AND_VIVARIUM.md`. What follows is only
+what is MINE.
+
+**Ground truth that reframed the work:** Vivarium is already live and already
+adopted v6 — 14 runs, all binding `work_id`, all attesting
+`executed_config_hash`, one day after it shipped. Archaeon has not connected.
+
+### D12-1  FIXED and deployed — the write lock on every request (`e307d6e5f`)
+`Store.initialize()` took `BEGIN IMMEDIATE` unconditionally, and
+`get_foundry()` builds a Foundry per request, so **every** request — including
+unauthenticated read-only ones — queued behind every writer, to re-read one row
+of `meta`. Measured live: `GET /v2/version` **22.8s and 17.6s** against a 30s
+busy timeout while `GET /v2/openapi.json` (same process, same TLS, no db) held
+18ms. Now 0.019s worst case. WAL's concurrent readers were being thrown away on
+the first line of every request; with three consumers this was heading for the
+timeout, not for slow.
+
+### D12-2  FIXED and deployed — claims usable by a machine (`d0bc13981`)
+`CLAIM_CITES_UNVERIFIED_ANALYSIS`: a claim citing an analysis whose sealed
+verification recorded `verified_n=0`, or a `declared_n` the engine's own count
+contradicts, produced a clean SUPPORTED claim. **This is the default path for a
+programmatic producer**, not an edge case — cross-tenant sources resolve to
+`unresolved` by the anti-oracle rule, so such an analysis counts nothing.
+And claim findings were write-once/read-never; `GET /v2/claims/{id}` now returns
+what was sealed at creation, with the build hash that computed it.
+
+### D12-3  FIXED — client gaps (`d0bc13981`)
+`create_world` could not set `require_attestation`, so the fail-closed evidence
+guard was unreachable from the shipped library. `audit_envelope` and
+`verify_anchor` had no methods at all — Vivarium reaches the envelope through
+the private transport with its own `noqa:SLF001`.
+
+### D12-4  Routes an automated consumer needs and does not have — OPEN
+Measured, not inferred: `GET /v2/sessions` **405** (a restarted producer cannot
+re-discover its sessions; the key is shown once), `GET /v2/work` **404** (a
+restarted executor cannot enumerate its orphaned work), `GET /v2/events`
+**404** (the global ledger has no read path), `/v2/measurements` **404** (see
+D1-3). **Do not build these speculatively** — the contract doc asks both tools
+which they actually need.
+
+### D12-5  Attestation is unreachable outside the work queue — OPEN
+It writes only through `POST /v2/work/{id}/complete`. Any result produced out of
+band — a human run, a GPU batch, an external harness, Archaeon aggregating what
+it did not execute — cannot record its executed side and is fossilized
+`CLIENT_ASSERTED` with no way to say what config produced it. Vivarium uses the
+queue, so this blocks nobody today.
+
+### D12-6  No rate limit, quota or concurrency cap anywhere — OPEN
+Confirmed: nothing in `sfe/*.py` or `serve.py`, and `uvicorn.run` sets no
+`limit_concurrency`. The only bounds are anyio's 40-thread pool and the 30s
+busy timeout, neither per-client. A client's own `enforceable` budget is the
+sole backstop, and the default `measured` caps nothing (D6-3). **D12-1 removed
+the sharpest edge of this** — reads no longer contend — but a runaway automated
+producer is still bounded by nothing.
+
+### D12-7  D6-1 is now load-bearing, not theoretical — OPEN, sharper
+With a human, "the engine knows the run was contradicted and every epistemic
+counter still reads green" was a catalogued oddity. With an automated executor
+**nobody reads the completion response unless the tool is made to**, and
+Vivarium does not check `science.profile_findings` today. The contract doc makes
+that the single most important instruction for them; the engine-side fix is
+still to make `evidence_class` or the counters divergence-aware, or to run M1
+under `strict`.
+
+---
+
 ## CLOSURE RECORD — deleted 2026-09-06, with the commit that closed each
 
 Kept as a list of *names and citations only*, so nobody re-files them. The rule
