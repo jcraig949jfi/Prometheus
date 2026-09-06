@@ -1,0 +1,89 @@
+{
+ "predictor": {
+  "rules": {
+   "estimator": {
+    "feature": "rel_se",
+    "higher_is_fragile": false,
+    "dev_auc": 0.798
+   },
+   "noise": {
+    "feature": null,
+    "higher_is_fragile": true,
+    "dev_auc": null,
+    "note": "no fragile cases on dev; dimension carries no signal to learn from"
+   },
+   "transform": {
+    "feature": "kurtosis",
+    "higher_is_fragile": true,
+    "dev_auc": 0.834
+   },
+   "horizon": {
+    "feature": "within_between",
+    "higher_is_fragile": true,
+    "dev_auc": 0.768
+   },
+   "unit": {
+    "feature": "serial_ac",
+    "higher_is_fragile": false,
+    "dev_auc": 0.869
+   }
+  },
+  "dims": [
+   "estimator",
+   "noise",
+   "transform",
+   "horizon",
+   "unit"
+  ],
+  "fragility_definition": "sign flip, or |delta d| > max(0.20, 0.5*|d_base|). The absolute floor was ADDED ON THE DEVELOPMENT POPULATION, before the freeze, because a purely relative threshold makes every null-effect claim fragile by construction: the dev base rate under the relative-only rule was 0.983.",
+  "note": "one feature per dimension, chosen on DEV only, direction fixed here, nothing tuned afterwards"
+ },
+ "predictor_hash": "0106e035868bbe10ef177c8e88a2dad79bd8364cb5b684844cd018b5f1dada73",
+ "dev_base_rate": 0.9333333333333333,
+ "eval_auc": [
+  {
+   "dim": "estimator",
+   "predictor": 0.8994267847837415,
+   "random": 0.6289734236581553,
+   "base_rate": 0.5,
+   "n": 0.6016154247003648,
+   "ci_width": 0.5867639395518499
+  },
+  {
+   "dim": "noise",
+   "predictor": 0.5,
+   "random": 0.6099137931034483,
+   "base_rate": 0.5,
+   "n": 0.4375,
+   "ci_width": 0.35129310344827586
+  },
+  {
+   "dim": "transform",
+   "predictor": 0.8774928774928775,
+   "random": 0.6410256410256411,
+   "base_rate": 0.5,
+   "n": 0.7549857549857549,
+   "ci_width": 0.18233618233618235
+  },
+  {
+   "dim": "horizon",
+   "predictor": 0.752,
+   "random": 0.576,
+   "base_rate": 0.5,
+   "n": 0.5245,
+   "ci_width": 0.421
+  },
+  {
+   "dim": "unit",
+   "predictor": 0.8447829836159816,
+   "random": 0.49841908594423684,
+   "base_rate": 0.5,
+   "n": 0.5132221902845645,
+   "ci_width": 0.6611095142282265
+  }
+ ],
+ "dimension_top1": 0.08035714285714286,
+ "random_top1": 0.2,
+ "base_rate_top1": 0.9017857142857143,
+ "verdict": "PROSPECTIVE INFORMATION FOUND"
+}

@@ -1,0 +1,14 @@
+{
+ "s17_dimension_ranking_defect": {
+  "was": "predictions were emitted per-dimension AND ranked to name the single most vulnerable dimension",
+  "result": "top-1 dimension accuracy 0.080 against random 0.200 and always-guess-estimator 0.902 -- WORSE THAN RANDOM",
+  "defect": "the per-dimension scores are raw values of DIFFERENT features on DIFFERENT scales (rel_se, kurtosis, within_between, serial_ac). Ranking them against each other to pick a top-1 compares incomparable quantities. The ranking method was invalid; the per-dimension discrimination it was built on was not.",
+  "not_fixed_here": "calibrating the four scores onto a common scale would require fitting on the evaluation population, which is the prohibited move. A corrected ranking needs its own dev/freeze/eval cycle.",
+  "status": "the per-dimension result STANDS and replicates; the DIMENSION IDENTIFICATION claim is withdrawn"
+ },
+ "s17_design_revisions_on_dev": {
+  "revision_1": "fragility threshold gained an absolute floor, max(0.20, 0.5*|d_base|). Under the purely relative rule the dev base rate was 0.983 because any null-effect claim is fragile by construction.",
+  "revision_2": "the noise perturbation was raised from 0.02 to 0.25 of the pooled sd after firing on 0 of 120 dev claims.",
+  "legitimacy": "both were made on the DEVELOPMENT population, before the predictor was frozen and hashed, and are disclosed rather than absorbed. Nothing was changed after the freeze."
+ }
+}
