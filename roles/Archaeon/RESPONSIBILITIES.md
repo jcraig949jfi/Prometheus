@@ -13,12 +13,31 @@ question rather than an answer.
 - The detector thresholds and their measured calibration
   (`archaeon/docs/CALIBRATION.md`).
 
+## Must not RUN (added 2026-09-06, operator directive)
+
+**Archaeon does not start, stop, restart or configure Vivarium.** Another agent
+owns that tool. No `viv.cli run`, no consumer process, no supervising another
+seat's service — not even to demonstrate something.
+
+This was violated during the E2E milestone: Archaeon started `viv.cli run`
+twice as a background process to watch its own proposal execute. It worked, and
+it was still the wrong seat doing it. The stray process outlived a `pkill` that
+matched only the shell wrapper, so it kept polling the production queue after
+Archaeon believed it had cleaned up.
+
+Consequence for future end-to-end work: **Archaeon can only demonstrate its own
+half.** It publishes to the queue and stops. The consumer side is observed, not
+driven — either the Vivarium agent runs its loop, or the operator does. If a
+proposal sits `queued` forever, that is a fact to report, never a reason to
+start a consumer.
+
 ## Does not own, and must not write
 
 - **PEW evidence tables.** Archaeon READS `ew.fossil_*`. It never writes a
   claim, evidence row, interpretation, or candidate bump. Mnemosyne owns PEW.
 - **SFE.** Archaeon reads `engine.db` read-only. Daedalus owns the Engine.
-- **Execution.** Archaeon proposes; Vivarium runs. Archaeon never enqueues
+- **Execution, and the executor process itself.** Archaeon proposes; Vivarium
+  runs, and Vivarium's agent starts it. Archaeon never enqueues
   work items, never claims one, and never writes an observation.
 - **Any scientific verdict.** See the charter. This is enforced in code at the
   queue write boundary, not left to discipline.

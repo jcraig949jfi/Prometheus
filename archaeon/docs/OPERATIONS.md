@@ -17,6 +17,15 @@ The two loops are independent and need no synchronous coordination:
     Archaeon:  PEW -> proposal -> queue
     Vivarium:  queue -> execution -> PEW
 
+## Seat boundary
+
+**Archaeon does not run Vivarium.** Another agent owns that process. Nothing in
+this document asks you to start a consumer, and Archaeon must not start one
+itself — including to demonstrate its own output. Archaeon publishes and stops;
+the consumer side is observed, never driven.
+
+If a proposal sits `queued`, report it. Do not start a consumer to move it.
+
 ## Architecture
 
     archaeon/producer/
@@ -154,7 +163,8 @@ Vivarium never mints scientific identity.
 | every cycle `NO_WRITE_CADENCE` | working as designed; ~23h in 24 | none |
 | `NO_WRITE_ERROR`, `QueueContractMissing` | Vivarium migration 002 not applied | apply `vivarium/migrations/` |
 | `NO_WRITE_NO_CANDIDATE` | 16 draws all already published in this lane | widen `ALLOWED_LENGTHS`, or use a new lane |
-| queue row stuck `failed`, `no PEW token configured` | `VIV_PEW_TOKEN` unset for the **consumer** | set it in Vivarium's environment |
+| queue row stuck `failed`, `no PEW token configured` | `VIV_PEW_TOKEN` unset for the **consumer** | report to the Vivarium agent; not Archaeon's to set |
+| proposal sits `queued` indefinitely | no consumer is running | report it; do NOT start one |
 | loop logs a cycle then backs off | consecutive errors; backoff 30s→600s | check the error, DB reachability |
 | `SpecInvalid` from the validator | Vivarium's spec contract changed | run the contract test; coordinate |
 
