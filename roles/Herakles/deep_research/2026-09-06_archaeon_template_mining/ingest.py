@@ -42,6 +42,10 @@ TEMPLATE_RE = re.compile(r"BEGIN_TEMPLATE\s*(.*?)\s*END_TEMPLATE", re.S)
 EXPANSION_RE = re.compile(r"BEGIN_EXPANSION\s*(.*?)\s*END_EXPANSION", re.S)
 REQUIRED = ("template_id", "kind", "param_space", "origin", "status",
             "rationale")
+#: Axes a template may declare that are NOT payload parameters. `world.seed_root`
+#: is part of the spec but outside `work.payload`, and it is a real axis of the
+#: declared space, so a template that varies it is correct, not malformed.
+WORLD_AXES = frozenset({"seed_root"})
 
 
 def load_registry():
@@ -98,15 +102,26 @@ def validate(tpl, registry):
         if getattr(entry, "retired", False):
             reasons.append("kind %r is RETIRED and cannot be admitted again"
                            % kind)
+        # A template's param_space spans MORE than the payload. `seed_root` is
+        # a world field, not a payload parameter, and the live generator draws
+        # it as a first-class axis alongside length and bits
+        # (archaeon/producer/randomgen.py draw()). The roadmap's own canonical
+        # example, bitstring.uniform.v0, declares exactly {length, seed_root,
+        # bits}. An earlier version of this check compared param_space against
+        # the payload set alone and would have rejected the registry's founding
+        # example, which is the signature of a rule that cannot pass.
         declared = set(entry.params)
         got = set(space)
-        missing, extra = sorted(declared - got), sorted(got - declared)
+        missing = sorted(declared - got)
+        extra = sorted(got - declared - WORLD_AXES)
         if missing:
-            reasons.append("param_space is missing %s, which kind %r requires "
-                           "exactly" % (missing, kind))
+            reasons.append("param_space is missing %s, which kind %r consumes "
+                           "and for which no executor default exists"
+                           % (missing, kind))
         if extra:
-            reasons.append("param_space has extra %s, which kind %r does not "
-                           "accept" % (extra, kind))
+            reasons.append("param_space has extra %s, which is neither a "
+                           "payload parameter of kind %r nor a world axis %s"
+                           % (extra, kind, sorted(WORLD_AXES)))
         if not entry.implemented:
             flags.append("EXPANSION: kind %r has a known contract but no "
                          "executor here" % kind)
