@@ -203,10 +203,19 @@ detector or template it unblocks, and a status.
 
 ## Sequence
 
-    DONE   0a 0c 0d (interim) · census persisted · deploy as scheduled task
-    1      template registry; random.v0 -> bitstring.uniform.v0 (frozen baseline)
-    2      program-health report v0 + expansion register
-    3      CHAOS operator; coverage-weighted template draw
-    4      M-ELIGIBLE (blocked on Vivarium + Daedalus); Stage 0 rerun
-    5      M-SIGNAL templates per probe kind; eval lanes; Harmonia adjudicates
+    DONE   0a 0c 0d (interim) · census · scheduled-task deploy · registry with
+           bitstring.uniform.v0 frozen · health report + expansion register ·
+           CHAOS · coverage draw (named, off) · region-directed template form +
+           bitstring.resample_region.v0 PROPOSED · M-ELIGIBLE requests built and
+           validating against Vivarium v3 · isolated worktree
+    NOW    M-ELIGIBLE: issue on the operator's word once the ARM ruling lands
+           (roles/Daedalus/INBOX_ARCHAEON_ARM_KEY_CONFLICT.md); then rerun
+           Stage 0 UNCHANGED and report eligible units + remaining blockers
+    NEXT   comparison-family reader over SFE families/read grant when the
+           contract and grant land; admit bitstring.resample_region.v0 (operator)
+           so a fired D3/D5 directs; triage Herakles's 69 inbox templates into
+           the expansion register by bench gap
+    THEN   M-SIGNAL: Harmonia qualifies the first directed detector and
+           preregisters endpoint/unit/budget/stopping rule; eval lanes;
+           matched, separately versioned random control if the universe grows
     later  detectors re-qualified against Harmonia's definitions
