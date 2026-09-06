@@ -123,6 +123,33 @@ BEGIN_TEMPLATE
 }
 END_TEMPLATE
 
+HARD FORMAT RULE, AND IT IS THE ONE THAT MATTERS MOST.
+
+The text between BEGIN_TEMPLATE and END_TEMPLATE must be a single JSON object
+and nothing else. It has to parse with a strict JSON parser on the first
+attempt, with no repair.
+
+A previous run of this exact prompt returned fourteen of fifteen template
+blocks UNPARSEABLE, every one for the same reason: bracketed source markers
+were inserted inside the JSON, including in place of the numbers. A field came
+back reading int_range followed by a source marker where the two integers
+should have been. The numbers were gone, so the templates were unusable and the
+work was wasted. Do not repeat that.
+
+Concretely, inside a template block:
+
+- No bracketed source markers anywhere. None. Not beside a value, not inside a
+  string, not after the closing brace.
+- No footnotes, no annotations, no comments, no trailing commas, no ellipses.
+- Every numeric range is two literal integers, written out, for example
+  16 and 32 inside square brackets. Every choice list is literal values.
+- The ONLY place a source may be named is inside the origin.reference string
+  and inside the rationale string, written as ordinary prose within the quotes.
+
+Before you emit each block, read it back and satisfy yourself that a strict
+parser would accept it. A block that does not parse is discarded whole, and the
+field it represents is simply lost.
+
 Rules for the template object, all of which matter:
 
 - The param_space keys must be EXACTLY the payload parameters of the kind you
@@ -292,6 +319,33 @@ BEGIN_TEMPLATE
   "rationale": "<one paragraph: what this measures, why this field would run it, and what a SURVIVED verdict would and would not license>"
 }
 END_TEMPLATE
+
+HARD FORMAT RULE, AND IT IS THE ONE THAT MATTERS MOST.
+
+The text between BEGIN_TEMPLATE and END_TEMPLATE must be a single JSON object
+and nothing else. It has to parse with a strict JSON parser on the first
+attempt, with no repair.
+
+A previous run of this exact prompt returned fourteen of fifteen template
+blocks UNPARSEABLE, every one for the same reason: bracketed source markers
+were inserted inside the JSON, including in place of the numbers. A field came
+back reading int_range followed by a source marker where the two integers
+should have been. The numbers were gone, so the templates were unusable and the
+work was wasted. Do not repeat that.
+
+Concretely, inside a template block:
+
+- No bracketed source markers anywhere. None. Not beside a value, not inside a
+  string, not after the closing brace.
+- No footnotes, no annotations, no comments, no trailing commas, no ellipses.
+- Every numeric range is two literal integers, written out, for example
+  16 and 32 inside square brackets. Every choice list is literal values.
+- The ONLY place a source may be named is inside the origin.reference string
+  and inside the rationale string, written as ordinary prose within the quotes.
+
+Before you emit each block, read it back and satisfy yourself that a strict
+parser would accept it. A block that does not parse is discarded whole, and the
+field it represents is simply lost.
 
 Rules for the template object, all of which matter:
 
@@ -463,6 +517,33 @@ BEGIN_TEMPLATE
 }
 END_TEMPLATE
 
+HARD FORMAT RULE, AND IT IS THE ONE THAT MATTERS MOST.
+
+The text between BEGIN_TEMPLATE and END_TEMPLATE must be a single JSON object
+and nothing else. It has to parse with a strict JSON parser on the first
+attempt, with no repair.
+
+A previous run of this exact prompt returned fourteen of fifteen template
+blocks UNPARSEABLE, every one for the same reason: bracketed source markers
+were inserted inside the JSON, including in place of the numbers. A field came
+back reading int_range followed by a source marker where the two integers
+should have been. The numbers were gone, so the templates were unusable and the
+work was wasted. Do not repeat that.
+
+Concretely, inside a template block:
+
+- No bracketed source markers anywhere. None. Not beside a value, not inside a
+  string, not after the closing brace.
+- No footnotes, no annotations, no comments, no trailing commas, no ellipses.
+- Every numeric range is two literal integers, written out, for example
+  16 and 32 inside square brackets. Every choice list is literal values.
+- The ONLY place a source may be named is inside the origin.reference string
+  and inside the rationale string, written as ordinary prose within the quotes.
+
+Before you emit each block, read it back and satisfy yourself that a strict
+parser would accept it. A block that does not parse is discarded whole, and the
+field it represents is simply lost.
+
 Rules for the template object, all of which matter:
 
 - The param_space keys must be EXACTLY the payload parameters of the kind you
@@ -632,6 +713,33 @@ BEGIN_TEMPLATE
   "rationale": "<one paragraph: what this measures, why this field would run it, and what a SURVIVED verdict would and would not license>"
 }
 END_TEMPLATE
+
+HARD FORMAT RULE, AND IT IS THE ONE THAT MATTERS MOST.
+
+The text between BEGIN_TEMPLATE and END_TEMPLATE must be a single JSON object
+and nothing else. It has to parse with a strict JSON parser on the first
+attempt, with no repair.
+
+A previous run of this exact prompt returned fourteen of fifteen template
+blocks UNPARSEABLE, every one for the same reason: bracketed source markers
+were inserted inside the JSON, including in place of the numbers. A field came
+back reading int_range followed by a source marker where the two integers
+should have been. The numbers were gone, so the templates were unusable and the
+work was wasted. Do not repeat that.
+
+Concretely, inside a template block:
+
+- No bracketed source markers anywhere. None. Not beside a value, not inside a
+  string, not after the closing brace.
+- No footnotes, no annotations, no comments, no trailing commas, no ellipses.
+- Every numeric range is two literal integers, written out, for example
+  16 and 32 inside square brackets. Every choice list is literal values.
+- The ONLY place a source may be named is inside the origin.reference string
+  and inside the rationale string, written as ordinary prose within the quotes.
+
+Before you emit each block, read it back and satisfy yourself that a strict
+parser would accept it. A block that does not parse is discarded whole, and the
+field it represents is simply lost.
 
 Rules for the template object, all of which matter:
 
@@ -803,6 +911,33 @@ BEGIN_TEMPLATE
 }
 END_TEMPLATE
 
+HARD FORMAT RULE, AND IT IS THE ONE THAT MATTERS MOST.
+
+The text between BEGIN_TEMPLATE and END_TEMPLATE must be a single JSON object
+and nothing else. It has to parse with a strict JSON parser on the first
+attempt, with no repair.
+
+A previous run of this exact prompt returned fourteen of fifteen template
+blocks UNPARSEABLE, every one for the same reason: bracketed source markers
+were inserted inside the JSON, including in place of the numbers. A field came
+back reading int_range followed by a source marker where the two integers
+should have been. The numbers were gone, so the templates were unusable and the
+work was wasted. Do not repeat that.
+
+Concretely, inside a template block:
+
+- No bracketed source markers anywhere. None. Not beside a value, not inside a
+  string, not after the closing brace.
+- No footnotes, no annotations, no comments, no trailing commas, no ellipses.
+- Every numeric range is two literal integers, written out, for example
+  16 and 32 inside square brackets. Every choice list is literal values.
+- The ONLY place a source may be named is inside the origin.reference string
+  and inside the rationale string, written as ordinary prose within the quotes.
+
+Before you emit each block, read it back and satisfy yourself that a strict
+parser would accept it. A block that does not parse is discarded whole, and the
+field it represents is simply lost.
+
 Rules for the template object, all of which matter:
 
 - The param_space keys must be EXACTLY the payload parameters of the kind you
@@ -972,6 +1107,33 @@ BEGIN_TEMPLATE
   "rationale": "<one paragraph: what this measures, why this field would run it, and what a SURVIVED verdict would and would not license>"
 }
 END_TEMPLATE
+
+HARD FORMAT RULE, AND IT IS THE ONE THAT MATTERS MOST.
+
+The text between BEGIN_TEMPLATE and END_TEMPLATE must be a single JSON object
+and nothing else. It has to parse with a strict JSON parser on the first
+attempt, with no repair.
+
+A previous run of this exact prompt returned fourteen of fifteen template
+blocks UNPARSEABLE, every one for the same reason: bracketed source markers
+were inserted inside the JSON, including in place of the numbers. A field came
+back reading int_range followed by a source marker where the two integers
+should have been. The numbers were gone, so the templates were unusable and the
+work was wasted. Do not repeat that.
+
+Concretely, inside a template block:
+
+- No bracketed source markers anywhere. None. Not beside a value, not inside a
+  string, not after the closing brace.
+- No footnotes, no annotations, no comments, no trailing commas, no ellipses.
+- Every numeric range is two literal integers, written out, for example
+  16 and 32 inside square brackets. Every choice list is literal values.
+- The ONLY place a source may be named is inside the origin.reference string
+  and inside the rationale string, written as ordinary prose within the quotes.
+
+Before you emit each block, read it back and satisfy yourself that a strict
+parser would accept it. A block that does not parse is discarded whole, and the
+field it represents is simply lost.
 
 Rules for the template object, all of which matter:
 
@@ -1143,6 +1305,33 @@ BEGIN_TEMPLATE
 }
 END_TEMPLATE
 
+HARD FORMAT RULE, AND IT IS THE ONE THAT MATTERS MOST.
+
+The text between BEGIN_TEMPLATE and END_TEMPLATE must be a single JSON object
+and nothing else. It has to parse with a strict JSON parser on the first
+attempt, with no repair.
+
+A previous run of this exact prompt returned fourteen of fifteen template
+blocks UNPARSEABLE, every one for the same reason: bracketed source markers
+were inserted inside the JSON, including in place of the numbers. A field came
+back reading int_range followed by a source marker where the two integers
+should have been. The numbers were gone, so the templates were unusable and the
+work was wasted. Do not repeat that.
+
+Concretely, inside a template block:
+
+- No bracketed source markers anywhere. None. Not beside a value, not inside a
+  string, not after the closing brace.
+- No footnotes, no annotations, no comments, no trailing commas, no ellipses.
+- Every numeric range is two literal integers, written out, for example
+  16 and 32 inside square brackets. Every choice list is literal values.
+- The ONLY place a source may be named is inside the origin.reference string
+  and inside the rationale string, written as ordinary prose within the quotes.
+
+Before you emit each block, read it back and satisfy yourself that a strict
+parser would accept it. A block that does not parse is discarded whole, and the
+field it represents is simply lost.
+
 Rules for the template object, all of which matter:
 
 - The param_space keys must be EXACTLY the payload parameters of the kind you
@@ -1312,6 +1501,33 @@ BEGIN_TEMPLATE
   "rationale": "<one paragraph: what this measures, why this field would run it, and what a SURVIVED verdict would and would not license>"
 }
 END_TEMPLATE
+
+HARD FORMAT RULE, AND IT IS THE ONE THAT MATTERS MOST.
+
+The text between BEGIN_TEMPLATE and END_TEMPLATE must be a single JSON object
+and nothing else. It has to parse with a strict JSON parser on the first
+attempt, with no repair.
+
+A previous run of this exact prompt returned fourteen of fifteen template
+blocks UNPARSEABLE, every one for the same reason: bracketed source markers
+were inserted inside the JSON, including in place of the numbers. A field came
+back reading int_range followed by a source marker where the two integers
+should have been. The numbers were gone, so the templates were unusable and the
+work was wasted. Do not repeat that.
+
+Concretely, inside a template block:
+
+- No bracketed source markers anywhere. None. Not beside a value, not inside a
+  string, not after the closing brace.
+- No footnotes, no annotations, no comments, no trailing commas, no ellipses.
+- Every numeric range is two literal integers, written out, for example
+  16 and 32 inside square brackets. Every choice list is literal values.
+- The ONLY place a source may be named is inside the origin.reference string
+  and inside the rationale string, written as ordinary prose within the quotes.
+
+Before you emit each block, read it back and satisfy yourself that a strict
+parser would accept it. A block that does not parse is discarded whole, and the
+field it represents is simply lost.
 
 Rules for the template object, all of which matter:
 
@@ -1483,6 +1699,33 @@ BEGIN_TEMPLATE
 }
 END_TEMPLATE
 
+HARD FORMAT RULE, AND IT IS THE ONE THAT MATTERS MOST.
+
+The text between BEGIN_TEMPLATE and END_TEMPLATE must be a single JSON object
+and nothing else. It has to parse with a strict JSON parser on the first
+attempt, with no repair.
+
+A previous run of this exact prompt returned fourteen of fifteen template
+blocks UNPARSEABLE, every one for the same reason: bracketed source markers
+were inserted inside the JSON, including in place of the numbers. A field came
+back reading int_range followed by a source marker where the two integers
+should have been. The numbers were gone, so the templates were unusable and the
+work was wasted. Do not repeat that.
+
+Concretely, inside a template block:
+
+- No bracketed source markers anywhere. None. Not beside a value, not inside a
+  string, not after the closing brace.
+- No footnotes, no annotations, no comments, no trailing commas, no ellipses.
+- Every numeric range is two literal integers, written out, for example
+  16 and 32 inside square brackets. Every choice list is literal values.
+- The ONLY place a source may be named is inside the origin.reference string
+  and inside the rationale string, written as ordinary prose within the quotes.
+
+Before you emit each block, read it back and satisfy yourself that a strict
+parser would accept it. A block that does not parse is discarded whole, and the
+field it represents is simply lost.
+
 Rules for the template object, all of which matter:
 
 - The param_space keys must be EXACTLY the payload parameters of the kind you
@@ -1652,6 +1895,33 @@ BEGIN_TEMPLATE
   "rationale": "<one paragraph: what this measures, why this field would run it, and what a SURVIVED verdict would and would not license>"
 }
 END_TEMPLATE
+
+HARD FORMAT RULE, AND IT IS THE ONE THAT MATTERS MOST.
+
+The text between BEGIN_TEMPLATE and END_TEMPLATE must be a single JSON object
+and nothing else. It has to parse with a strict JSON parser on the first
+attempt, with no repair.
+
+A previous run of this exact prompt returned fourteen of fifteen template
+blocks UNPARSEABLE, every one for the same reason: bracketed source markers
+were inserted inside the JSON, including in place of the numbers. A field came
+back reading int_range followed by a source marker where the two integers
+should have been. The numbers were gone, so the templates were unusable and the
+work was wasted. Do not repeat that.
+
+Concretely, inside a template block:
+
+- No bracketed source markers anywhere. None. Not beside a value, not inside a
+  string, not after the closing brace.
+- No footnotes, no annotations, no comments, no trailing commas, no ellipses.
+- Every numeric range is two literal integers, written out, for example
+  16 and 32 inside square brackets. Every choice list is literal values.
+- The ONLY place a source may be named is inside the origin.reference string
+  and inside the rationale string, written as ordinary prose within the quotes.
+
+Before you emit each block, read it back and satisfy yourself that a strict
+parser would accept it. A block that does not parse is discarded whole, and the
+field it represents is simply lost.
 
 Rules for the template object, all of which matter:
 
@@ -1823,6 +2093,33 @@ BEGIN_TEMPLATE
 }
 END_TEMPLATE
 
+HARD FORMAT RULE, AND IT IS THE ONE THAT MATTERS MOST.
+
+The text between BEGIN_TEMPLATE and END_TEMPLATE must be a single JSON object
+and nothing else. It has to parse with a strict JSON parser on the first
+attempt, with no repair.
+
+A previous run of this exact prompt returned fourteen of fifteen template
+blocks UNPARSEABLE, every one for the same reason: bracketed source markers
+were inserted inside the JSON, including in place of the numbers. A field came
+back reading int_range followed by a source marker where the two integers
+should have been. The numbers were gone, so the templates were unusable and the
+work was wasted. Do not repeat that.
+
+Concretely, inside a template block:
+
+- No bracketed source markers anywhere. None. Not beside a value, not inside a
+  string, not after the closing brace.
+- No footnotes, no annotations, no comments, no trailing commas, no ellipses.
+- Every numeric range is two literal integers, written out, for example
+  16 and 32 inside square brackets. Every choice list is literal values.
+- The ONLY place a source may be named is inside the origin.reference string
+  and inside the rationale string, written as ordinary prose within the quotes.
+
+Before you emit each block, read it back and satisfy yourself that a strict
+parser would accept it. A block that does not parse is discarded whole, and the
+field it represents is simply lost.
+
 Rules for the template object, all of which matter:
 
 - The param_space keys must be EXACTLY the payload parameters of the kind you
@@ -1992,6 +2289,33 @@ BEGIN_TEMPLATE
   "rationale": "<one paragraph: what this measures, why this field would run it, and what a SURVIVED verdict would and would not license>"
 }
 END_TEMPLATE
+
+HARD FORMAT RULE, AND IT IS THE ONE THAT MATTERS MOST.
+
+The text between BEGIN_TEMPLATE and END_TEMPLATE must be a single JSON object
+and nothing else. It has to parse with a strict JSON parser on the first
+attempt, with no repair.
+
+A previous run of this exact prompt returned fourteen of fifteen template
+blocks UNPARSEABLE, every one for the same reason: bracketed source markers
+were inserted inside the JSON, including in place of the numbers. A field came
+back reading int_range followed by a source marker where the two integers
+should have been. The numbers were gone, so the templates were unusable and the
+work was wasted. Do not repeat that.
+
+Concretely, inside a template block:
+
+- No bracketed source markers anywhere. None. Not beside a value, not inside a
+  string, not after the closing brace.
+- No footnotes, no annotations, no comments, no trailing commas, no ellipses.
+- Every numeric range is two literal integers, written out, for example
+  16 and 32 inside square brackets. Every choice list is literal values.
+- The ONLY place a source may be named is inside the origin.reference string
+  and inside the rationale string, written as ordinary prose within the quotes.
+
+Before you emit each block, read it back and satisfy yourself that a strict
+parser would accept it. A block that does not parse is discarded whole, and the
+field it represents is simply lost.
 
 Rules for the template object, all of which matter:
 
@@ -2163,6 +2487,33 @@ BEGIN_TEMPLATE
 }
 END_TEMPLATE
 
+HARD FORMAT RULE, AND IT IS THE ONE THAT MATTERS MOST.
+
+The text between BEGIN_TEMPLATE and END_TEMPLATE must be a single JSON object
+and nothing else. It has to parse with a strict JSON parser on the first
+attempt, with no repair.
+
+A previous run of this exact prompt returned fourteen of fifteen template
+blocks UNPARSEABLE, every one for the same reason: bracketed source markers
+were inserted inside the JSON, including in place of the numbers. A field came
+back reading int_range followed by a source marker where the two integers
+should have been. The numbers were gone, so the templates were unusable and the
+work was wasted. Do not repeat that.
+
+Concretely, inside a template block:
+
+- No bracketed source markers anywhere. None. Not beside a value, not inside a
+  string, not after the closing brace.
+- No footnotes, no annotations, no comments, no trailing commas, no ellipses.
+- Every numeric range is two literal integers, written out, for example
+  16 and 32 inside square brackets. Every choice list is literal values.
+- The ONLY place a source may be named is inside the origin.reference string
+  and inside the rationale string, written as ordinary prose within the quotes.
+
+Before you emit each block, read it back and satisfy yourself that a strict
+parser would accept it. A block that does not parse is discarded whole, and the
+field it represents is simply lost.
+
 Rules for the template object, all of which matter:
 
 - The param_space keys must be EXACTLY the payload parameters of the kind you
@@ -2331,6 +2682,33 @@ BEGIN_TEMPLATE
   "rationale": "<one paragraph: what this measures, why this field would run it, and what a SURVIVED verdict would and would not license>"
 }
 END_TEMPLATE
+
+HARD FORMAT RULE, AND IT IS THE ONE THAT MATTERS MOST.
+
+The text between BEGIN_TEMPLATE and END_TEMPLATE must be a single JSON object
+and nothing else. It has to parse with a strict JSON parser on the first
+attempt, with no repair.
+
+A previous run of this exact prompt returned fourteen of fifteen template
+blocks UNPARSEABLE, every one for the same reason: bracketed source markers
+were inserted inside the JSON, including in place of the numbers. A field came
+back reading int_range followed by a source marker where the two integers
+should have been. The numbers were gone, so the templates were unusable and the
+work was wasted. Do not repeat that.
+
+Concretely, inside a template block:
+
+- No bracketed source markers anywhere. None. Not beside a value, not inside a
+  string, not after the closing brace.
+- No footnotes, no annotations, no comments, no trailing commas, no ellipses.
+- Every numeric range is two literal integers, written out, for example
+  16 and 32 inside square brackets. Every choice list is literal values.
+- The ONLY place a source may be named is inside the origin.reference string
+  and inside the rationale string, written as ordinary prose within the quotes.
+
+Before you emit each block, read it back and satisfy yourself that a strict
+parser would accept it. A block that does not parse is discarded whole, and the
+field it represents is simply lost.
 
 Rules for the template object, all of which matter:
 
