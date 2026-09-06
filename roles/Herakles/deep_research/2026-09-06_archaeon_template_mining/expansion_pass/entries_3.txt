@@ -1,0 +1,1229 @@
+ANALYST OUTPUT - chunk_3
+12 templates. Bench ground truth per ANALYST_BRIEF.md section 1.
+Source checks used the session's remaining web-search budget, which was
+exhausted after two queries, so the remaining checks rest on established
+knowledge and are graded conservatively. No citation has been invented.
+
+BEGIN_ENTRY
+TEMPLATE_ID: adam_yeast_growth.v0
+FIELD: Robot Scientists
+KIND: simulate_yeast_knockout_v0
+QUESTION: If you delete one gene from a yeast strain and then add one
+  nutrient back into its food, does the yeast grow again? The answer is
+  meant to hint at what the deleted gene was doing.
+MECHANISM: Take a yeast strain in which exactly one open reading frame has
+  been deleted. Grow it in a chemically defined medium that lacks the
+  nutrient of interest, and in parallel in the same medium with that one
+  nutrient added back. Incubate, and read optical density of the culture
+  over time as the growth readout. A strain that fails to grow without the
+  supplement and grows with it is auxotrophic for that nutrient, which
+  places the deleted gene somewhere upstream in the pathway that makes it.
+  In the real Robot Scientist loop this assay is not the whole method: a
+  logical model of the metabolic pathway proposes which gene-enzyme pairing
+  would predict which growth outcome, the machine picks the assay that best
+  discriminates among live hypotheses, the robot physically runs it, and
+  the outcome kills the hypotheses it contradicts. The growth assay is the
+  single measurement at the bottom of that loop.
+CANDIDATE: The knocked-out strain. What varies is which single gene is
+  absent and which single nutrient is present.
+WORLD: A defined liquid growth medium in a plate well at a set temperature.
+  The environment supplies energy, every nutrient except the ones being
+  withheld, and time. Crucially it supplies the SELECTIVE CONTEXT: the
+  deletion is only visible because the medium refuses to give the cell what
+  the missing gene would have made.
+WHAT_CHANGES: Across runs, the identity of the deleted ORF and the identity
+  of the added supplement. Everything else is held fixed by design, which
+  is the whole point of a defined medium.
+MEASURED: Final or maximum optical density, a continuous positive real, in
+  practice compared against a no-growth control. Richer versions read the
+  whole growth curve and extract lag time and doubling rate.
+INFORMATIVE_FAILURE: Very informative. A knockout that grows anyway when
+  you expected auxotrophy is the single most useful outcome in this method:
+  it says a redundant or alternative route to the nutrient exists, which is
+  a positive structural claim about the pathway. A knockout that fails to
+  grow even WITH the supplement says the gene does something other than, or
+  in addition to, making that nutrient. Both failures narrow the pathway.
+  This is a method whose failures are its product.
+SOURCE_CHECK: VERIFIED - King et al. 2009, The Automation of Science,
+  Science, is real and describes exactly this: yeast deletion mutants,
+  auxotrophic growth experiments, and hypothesis generation over orphan
+  enzymes in the aromatic amino acid biosynthesis pathway. Caveat worth
+  recording: the three ORFs named in param_space are not aromatic amino
+  acid pathway genes as far as I can establish, and the listed supplements
+  uracil, histidine and leucine are the standard laboratory auxotrophic
+  MARKER nutrients rather than Adam's aromatic targets, so the parameter
+  values look like generic yeast-genetics furniture rather than values
+  drawn from the cited work. The method and the attribution are right; the
+  numbers were not checked against the paper by whoever mined this.
+SHARED_MECHANISM: score_fixed_candidate
+ROUTES: R-COMPOSE, R-BACKEND, R-EXECUTOR
+BLOCKER: R-COMPOSE - the scientific content is an INTERACTION between two
+  factors, does the supplement help more when the gene is missing, and the
+  outcome rule is one field, one operator, one value, so the interaction
+  cannot be adjudicated inside a spec. This is an ADJUDICATION blocker and
+  it is the only one on this route, since the four cells can each be their
+  own spec. R-BACKEND - no metabolic simulator is wired in; this is a
+  MISSING MEASUREMENT rather than a substrate limit, because an external
+  flux-balance model takes a gene deletion and a medium and returns a
+  growth rate with no bench internals changed. R-EXECUTOR - if the reduced
+  bitstring version below is wanted with the masking done inside the
+  executor rather than by the producer, evaluate_bitstring would need a
+  mask parameter, and no executor may default a parameter, so it would have
+  to be a new kind. MEASUREMENT capability.
+FAITHFUL: A faithful version needs a genotype that is a structured object
+  with removable parts, an environment that is a set of supplied resources,
+  and a metabolism connecting them, so that removing a part can be
+  compensated by supplying a resource. That is a genome-scale model, not a
+  parameter. It also needs the surrounding hypothesis loop, since a single
+  growth assay in isolation is a measurement and not the Robot Scientist
+  method; the method is the loop that chooses which assay to run next.
+REDUCTION: A real one survives, as a two-by-two factorial run entirely on
+  evaluate_bitstring. Fix one world seed and one length L so that all four
+  cells score against the SAME hidden target. Pick an arbitrary candidate
+  bitstring C. Designate a contiguous block K of positions as the gene and
+  a disjoint block S as the supplement. Run four specs: C intact; C with
+  block K forced to all zeros, the knockout; C with block S forced to a
+  fixed pattern, the supplement alone; and C with both, the rescue cell.
+  Each spec carries an ordinary one-scalar outcome rule on score. The
+  interaction, does setting S recover more score when K is zeroed than when
+  it is not, is computed downstream across the four fossils.
+  WHAT IT PRESERVES: the factorial rescue logic; the requirement that all
+  four cells share one environment, which repeat.seed_derivation = constant
+  enforces literally rather than by assumption; and, unexpectedly, the
+  epistemic caveat in the template's own rationale. Because the target is a
+  hash, a block S that raises the score does so for reasons that are
+  genuinely opaque, so a positive rescue in this toy CANNOT be read as
+  saying S is the direct product of K. That turns the alternative-pathway
+  caveat from rhetoric into structure.
+  WHAT IT LOSES: all biology; the pathway graph; dose response; the growth
+  curve and therefore lag and doubling rate; and the entire hypothesis-
+  selection loop that is the actual contribution of the Robot Scientist.
+  WHICH CLAIM IT SUPPORTS: a methodological one about the bench itself,
+  that a bench restricted to one scalar comparison per spec can still
+  detect a two-factor rescue interaction, but only across specs and only
+  with a downstream adjudicator, and that the resulting verdict cannot
+  distinguish direct from indirect rescue. Worth measuring before any real
+  assay backend is wired in, because it fixes what the fossil must carry.
+END_ENTRY
+
+BEGIN_ENTRY
+TEMPLATE_ID: alife.tierra.v0
+FIELD: Artificial Life (ALife)
+KIND: tierra_core_v0
+QUESTION: Can a hand-written program, running in a shared block of computer
+  memory, copy itself successfully? This is the sanity check you run before
+  turning mutation on and seeing what evolves.
+MECHANISM: Reserve a large block of memory, the soup. Write one ancestor
+  program in a machine language designed so that most random edits still
+  produce something that runs: no numeric operands, and addressing by
+  matching templates of no-operation instructions rather than by absolute
+  address, so the code survives being moved. The ancestor's body is a loop
+  that measures its own length by locating its start and end templates,
+  requests a fresh block of memory from the operating system, copies itself
+  instruction by instruction into that block, and issues a divide
+  instruction that hands the daughter block its own instruction pointer and
+  slice of CPU time. A scheduler round-robins CPU time across all living
+  creatures. A reaper kills creatures when memory fills, preferring the old
+  and the error-prone. That combination, self-copy plus finite memory plus
+  a reaper, is what turns replication rate into a selection pressure. In
+  the full experiment a mutation operator flips bits in the soup and during
+  copying, and parasites appear that lack a copy loop and execute their
+  neighbours' instead.
+CANDIDATE: The ancestor program, a sequence of instructions. What varies is
+  the instruction sequence and the machine language it is written in.
+WORLD: The soup: a finite, addressable, MUTABLE shared memory, plus a
+  scheduler granting execution slices and a reaper removing creatures. The
+  environment supplies memory as the limiting resource, CPU time as the
+  currency, and death. Other creatures are part of the world, which is why
+  the world is also an ecology.
+WHAT_CHANGES: Across runs, the ancestor's instruction set and length, the
+  soup size, and the number of cycles the simulation is allowed to run.
+MEASURED: For the baseline question, a fact: did the ancestor produce at
+  least one viable daughter, and does the population sustain itself. Scalar
+  proxies are population count at cycle N, generations elapsed, or fraction
+  of soup occupied. All are continuous or count-valued and all require the
+  simulation to have run to completion.
+INFORMATIVE_FAILURE: Concretely informative, though it is a debugging
+  signal more than a scientific one. If the ancestor fails to replicate you
+  learn that the instruction set as specified is not closed under the
+  operations the copy loop needs, or that template addressing does not
+  resolve, or that the allocator refuses the daughter. Each points at a
+  specific missing primitive. The stronger informative failure comes later:
+  if replication works but the population collapses, you have learned that
+  the reaper and scheduler parameters, not the genome, set viability, which
+  is a claim about the world rather than the organism.
+SOURCE_CHECK: VERIFIED - Thomas S. Ray, An Approach to the Synthesis of
+  Life, in Artificial Life II, 1991, is the correct primary reference for
+  Tierra and covers the ancestor, the soup, the reaper, template addressing
+  and the emergence of parasites. Caveat on the parameter axis: the choices
+  are named 80_tierran_opcodes and 82_tierran_opcodes, which appears to
+  conflate two different quantities. The canonical ancestor is roughly
+  eighty INSTRUCTIONS LONG, whereas the Tierran instruction SET is far
+  smaller, on the order of thirty-two opcodes. If the axis means ancestor
+  length it is misnamed; if it means opcode-set size the values are wrong.
+  Flag for the operator. I could not re-verify the exact counts against the
+  paper because the search budget was spent.
+SHARED_MECHANISM: interpret_program
+ROUTES: R-BACKEND, R-EXECUTOR, R-SUBSTRATE
+BLOCKER: R-BACKEND - nothing missing in principle; Tierra and its
+  descendants are real, runnable, published programs, and the bench would
+  only have to invoke one, pass the seed and parameters, and fossilize a
+  scalar from its log. MEASUREMENT capability only, and cheap. R-EXECUTOR -
+  for the reduced self-copy version the bench needs a kind that executes an
+  instruction sequence over a writable tape and returns a fidelity scalar.
+  MEASUREMENT capability. R-SUBSTRATE - for the real thing the bench lacks
+  mutable shared memory persisting across creatures, a scheduler, creature
+  birth and death, and a population at all. STATE AND CONTROL-FLOW
+  capability, and this is the substantive blocker: one world is one
+  integer, and there is nowhere to put a soup.
+FAITHFUL: A faithful version needs a mutable addressable memory that
+  outlives any single evaluation, an interpreter that can write into it, a
+  scheduler interleaving many instruction pointers, and a death rule. It
+  needs the world to hold a population rather than a seed, so the world
+  object itself changes type. And it needs long runs, millions of cycles,
+  so the fossil must summarise a trajectory rather than a returned value.
+REDUCTION: Two layers, one honest and small, one a gesture I recommend
+  against.
+  The gesture to avoid: mapping soup occupancy onto random_walk_v0's
+  position and calling the walk a population. Nothing about replication
+  survives that. The walk has no copying, no memory to copy into, and its
+  increments do not depend on its state. It would produce a number that
+  looks like a population curve and means nothing.
+  The reduction that does survive addresses exactly the question this
+  template actually asks, which is pre-mutation viability of one written
+  ancestor, not evolution. Define a tiny copy machine: a fixed-length tape,
+  a read head and a write head, and six opcodes - advance-read,
+  advance-write, copy-byte, jump-if-template, allocate, divide. Supply the
+  instruction sequence as the payload. Run it for a bounded number of
+  cycles against a fresh daughter region and return ONE scalar, the
+  fraction of the daughter tape matching the parent. That is continuous in
+  the range zero to one and drops straight into a single-comparison outcome
+  rule with no change to the rule engine. Under repeat.seed_derivation =
+  sha256_index each repeat can randomise the daughter's start offset, which
+  tests the template-addressing property that is the actual insight of
+  Tierran machine code: whether the copy loop still works when the code is
+  not where it expects to be. That property is what makes the language
+  robust to mutation, and it can be measured with no mutation, no
+  population and no ecology at all.
+  WHAT IT PRESERVES: self-copying as an executed act rather than an
+  asserted one, copy fidelity as a continuous measurement, and position
+  independence, which is the real design claim of the substrate.
+  WHAT IT LOSES: the soup, the reaper, the scheduler, competition for CPU
+  time, mutation, parasites, and open-endedness. Everything ecological.
+  WHICH CLAIM IT SUPPORTS: only that a given instruction set is or is not
+  closed under self-copy and is or is not position independent. That is a
+  substrate-viability claim, and it is the correct first claim, but it must
+  never be reported as an evolution result.
+END_ENTRY
+
+BEGIN_ENTRY
+TEMPLATE_ID: causal_discovery_pc.v0
+FIELD: Causal Discovery
+KIND: pc_algorithm_skeleton_v0
+QUESTION: Given only observational measurements of several variables, and
+  no experiments, which pairs of variables could possibly be directly
+  connected? The method rules connections out rather than establishing
+  them.
+MECHANISM: Start with the complete undirected graph, every pair joined.
+  Then delete edges. For each remaining pair, test whether the two
+  variables are independent given some set of the others, and test with
+  conditioning sets in increasing order of size: first the empty set, which
+  is plain marginal independence, then all single conditioning variables
+  drawn from the neighbours of either endpoint, then all pairs, and so on
+  up to the allowed maximum. The moment a conditioning set is found that
+  makes the pair independent at the chosen significance level, delete that
+  edge and record the separating set. When no more edges can be removed,
+  the surviving graph is the skeleton. Orientation is a separate later
+  phase that uses the recorded separating sets to find colliders and then
+  propagates; this template stops before that. The whole method rests on
+  assumptions the data cannot check: causal sufficiency, meaning no
+  unmeasured common causes, plus faithfulness and the Markov condition.
+CANDIDATE: The edge set, which starts complete and shrinks. What is judged
+  is which edges survive.
+WORLD: A dataset. The environment supplies a finite sample from some joint
+  distribution, and its finiteness is the whole difficulty: every
+  independence decision is a hypothesis test with error in both directions,
+  and errors propagate, because the neighbour sets used for later tests
+  depend on earlier deletions.
+WHAT_CHANGES: The significance level alpha, the maximum conditioning set
+  size, and, in any honest study, the sample and its seed.
+MEASURED: The template asks for skeleton density, edges retained over edges
+  possible, continuous between zero and one. Better statistics exist when a
+  ground truth graph is available: structural Hamming distance to the true
+  skeleton, or precision and recall over edges. All scalar.
+INFORMATIVE_FAILURE: Informative in a specific and slightly awkward way. A
+  skeleton that stays dense tells you the independence tests lacked power,
+  which is a statement about sample size and not about causality. A
+  skeleton that empties out tells you alpha was too permissive, or that
+  many variables are near-deterministic functions of each other, which
+  breaks faithfulness. Either way the failure diagnoses the INSTRUMENT
+  rather than the world, and that is genuinely useful, because it forces
+  the sample-size question to be settled before any causal claim is made.
+  What a failure does not leave behind is any information about direction.
+SOURCE_CHECK: VERIFIED - Spirtes, Glymour and Scheines, Causation,
+  Prediction, and Search, MIT Press, is the standard reference for the PC
+  algorithm and the second edition is 2000. The described adjacency-pruning
+  phase, the increasing conditioning-set order, the separating sets and the
+  causal sufficiency assumption are all as stated.
+SHARED_MECHANISM: prune_hypothesis_space
+ROUTES: R-BACKEND, R-EXECUTOR, R-REPAIR
+BLOCKER: R-BACKEND - mature implementations exist, causal-learn, pcalg and
+  Tetrad among them, and the bench would only have to hand over a seed and
+  parameters and fossilize one returned scalar. MEASUREMENT capability, and
+  cheap. R-EXECUTOR - a self-contained kind that plants a graph, samples
+  from a linear Gaussian structural equation model, runs the pruning phase
+  and returns density or structural Hamming distance. Also MEASUREMENT.
+  R-REPAIR - both parameters are null in param_space, so the template
+  cannot be admitted as it stands on any route; that is a missing
+  specification rather than a capability gap.
+FAITHFUL: A faithful version needs a data object in the world, since PC
+  consumes a sample and not a seed alone, and it needs the conditional
+  independence test to be a real hypothesis test with a stated null. It
+  also needs a planted ground-truth graph if the result is to be scored at
+  all, because skeleton density on its own is uninterpretable without
+  knowing the density of the truth.
+REDUCTION: Plant the graph, run the real algorithm, return one number. Use
+  a small planted directed acyclic graph, six nodes and seven edges as a
+  NEW DESIGN CHOICE since the source values were destroyed, generate n
+  samples from a linear Gaussian structural equation model seeded from the
+  world seed, run the standard PC adjacency phase with Fisher-z tests, and
+  return structural Hamming distance to the true skeleton as the single
+  scalar. Propose alpha in the set 0.01, 0.05, 0.1 and maximum conditioning
+  set size 2, both marked NEW DESIGN CHOICE.
+  The part worth doing even before that executor exists: this template is
+  an unusually good probe of the bench's own repeat semantics, and the
+  design can be settled now. PC on a fixed sample is deterministic.
+  Therefore under repeat.seed_derivation = constant with state = reset and
+  count above one, every repeat is provably the identical computation and
+  the bench should raise degenerate_by_construction. Under sha256_index
+  each repeat is a DIFFERENT planted graph and a different sample, so the
+  repeats measure a population of graphs rather than the sampling
+  variability of one graph. Those are two different scientific questions
+  and the template as written does not say which it wants. What a causal
+  discovery researcher almost certainly wants is the third thing, the
+  sampling distribution with the graph held fixed and only the sample
+  advancing, and the current seed derivation CANNOT express it, because one
+  integer seeds both the graph and the sample. That is a concrete and small
+  substrate finding: the bench needs a way to hold one part of a world
+  fixed while varying another.
+  WHAT IT PRESERVES: the pruning mechanism intact, the alpha-versus-density
+  tradeoff, and the finite-sample dependence that is the real content.
+  WHAT IT LOSES: orientation, the completed partially directed acyclic
+  graph, latent confounders and selection bias, all of which the template's
+  own rationale already disclaims.
+  WHICH CLAIM IT SUPPORTS: that skeleton recovery error is a function of
+  sample size and alpha, measured rather than asserted, on a graph whose
+  truth is known by construction.
+END_ENTRY
+
+BEGIN_ENTRY
+TEMPLATE_ID: comp_sci_discovery.bacon.v0
+FIELD: Computational Models of Scientific Discovery
+KIND: bacon_heuristic_search.v0
+QUESTION: Can a small set of mechanical rules, given nothing but a table of
+  numbers, rediscover a quantitative law of nature such as the relation
+  between a planet's distance from the sun and the time it takes to orbit?
+MECHANISM: The system holds a table of observations with one column per
+  measured variable and applies a very small set of data-driven heuristics
+  in a loop. If a term is constant across the rows within tolerance, record
+  it as a law and stop. If two terms increase together, define a new column
+  that is their ratio. If one increases as the other decreases, define a
+  new column that is their product. Then look again at the enlarged table
+  for a constant term. Applied to distance D and period P, the recursion
+  builds D over P, then that over P again, then a ratio of those, and
+  arrives at D cubed over P squared being constant, which is Kepler's third
+  law. Later versions add symmetry and common-divisor heuristics and
+  intrinsic properties, and handle several independent variables by holding
+  all but one fixed and sweeping. The essential point is that this is a
+  search over DERIVED TERMS, not a fit of a pre-chosen functional form.
+CANDIDATE: A derived term, an expression built from the measured columns.
+  What is judged is whether that term is constant across rows.
+WORLD: A clean data table. In the classical demonstrations the data are
+  noiseless historical measurements and the world supplies exactly the
+  variables the law needs and no distractors. That is the great weakness of
+  the demonstration and everyone in the field knows it.
+WHAT_CHANGES: The number of variables in the table and the noise level
+  added to them. Both are null in this template and must be set.
+MEASURED: Whether a constant term was found; the coefficient of variation
+  of the best term, a continuous non-negative number; and the number of
+  search steps taken to reach it, a count.
+INFORMATIVE_FAILURE: Yes, and this is the most scientifically interesting
+  part of the template. BACON's failure modes are why the field moved on.
+  Under noise the constancy test either never fires, so nothing is found,
+  or fires on a spurious term, so a false law is reported. The
+  false-positive case is the valuable one: it measures how much noise the
+  constancy tolerance will absorb before the method starts manufacturing
+  laws, and that number is a property of the method, transferable to every
+  descendant symbolic-regression system. A failure here leaves behind a
+  calibrated false-discovery rate, which is more useful than one more
+  successful rediscovery of Kepler.
+SOURCE_CHECK: VERIFIED - the BACON series by Pat Langley with Herbert Simon
+  and colleagues, running through the late 1970s and the 1980s and
+  consolidated in Scientific Discovery: Computational Explorations of the
+  Creative Processes, is real, and the rediscovery of Kepler's third law is
+  one of its canonical demonstrations. The stated span 1978 to 1987 is
+  consistent with the BACON.1 through BACON.5 sequence. Caveat on the noise
+  axis: the early BACON systems were notably NOT noise tolerant, and noise
+  handling is a later and partial addition, so an axis that sweeps noise is
+  sweeping the system's known weak point rather than a designed parameter.
+SHARED_MECHANISM: search_over_candidates
+ROUTES: R-COMPOSE, R-EXECUTOR, R-REPAIR
+BLOCKER: R-COMPOSE - the bench forbids search inside a spec and BACON is
+  nothing but search, so the recursion must live in the producer with each
+  spec supplying one data point. CONTROL FLOW, specifically that repeat N
+  plus one cannot depend on the result of repeat N. R-EXECUTOR - a
+  self-contained kind that plants a law, generates a table, runs the
+  heuristic recursion and returns one scalar. MEASUREMENT capability.
+  R-REPAIR - variables and noise are both null and must be set before
+  admission; a specification gap, not a capability gap.
+FAITHFUL: A faithful version needs a data table in the world rather than a
+  seed, a symbolic term representation the executor can extend, and an
+  unbounded inner loop, since the number of recursion steps is not known in
+  advance. It also needs the planted law to be known, so that a discovered
+  term can be scored as right or wrong rather than merely constant.
+REDUCTION: Two, and the second is the one I would actually run.
+  First, the obvious one: a bacon_terms_v0 executor. Plant P equals k times
+  D raised to the power 1.5, generate a table of rows with Gaussian noise
+  at sigma, run the ratio-and-product recursion to a bounded depth, and
+  return the coefficient of variation of the best constant term found. One
+  scalar, one comparison, fits the outcome rule exactly. As NEW DESIGN
+  CHOICES propose two variables and noise sigma in the set 0, 0.01, 0.05.
+  Second, and this needs no new executor at all. evaluate_bitstring exposes
+  a deterministic black-box function from a candidate to a continuous score
+  between zero and one. A producer can run BACON's own recursion ACROSS
+  specs: encode an integer as a bitstring and call that the independent
+  variable, take the returned score as the dependent variable, build the
+  table across many specs, and apply the ratio-product-constancy heuristics
+  downstream. Here is why that is not a toy. The hidden target is derived
+  by hashing, so it is KNOWN BY CONSTRUCTION that no smooth law relates the
+  encoded integer to the score. Running BACON there therefore measures
+  exactly one thing: how often BACON reports a law where none can exist, as
+  a function of table size and constancy tolerance. That is a calibrated
+  false-positive rate for the method, obtained for free, on a null that is
+  not merely shuffled but structurally guaranteed. It answers directly the
+  caveat the template's own rationale raises about what a SURVIVED verdict
+  would and would not license.
+  WHAT IT PRESERVES: the exact search heuristics, the constancy tolerance,
+  and the dependence of discovery on table size.
+  WHAT IT LOSES: the planted law, and therefore any true-positive rate. It
+  is a one-sided measurement, and one-sided is the correct posture here: it
+  can only ever produce evidence that the method over-reports.
+  WHICH CLAIM IT SUPPORTS: a false-discovery-rate claim about heuristic
+  induction, pinned to a landscape where the true answer is provably no
+  law. Pair it later with the planted-law executor to get the other side.
+END_ENTRY
+
+BEGIN_ENTRY
+TEMPLATE_ID: digitevol.avida.v0
+FIELD: Digital Evolution
+KIND: avida_cpu_v0
+QUESTION: Does a particular sequence of machine instructions, run on a
+  small virtual computer, actually compute a specified logic function of
+  its inputs?
+MECHANISM: An Avidian is a circular sequence of instructions executed by a
+  virtual CPU with a handful of registers, two stacks, and instruction
+  pointers called heads. Some instructions do arithmetic and bit
+  operations; others move heads, allocate memory and divide; a set of
+  no-operation instructions act as modifiers that change which register the
+  preceding instruction touches, which is what makes the language robust to
+  point mutation. Input instructions pull numbers from the environment and
+  output instructions push a result back. The environment watches the
+  outputs, and when an output equals a designated logic function of recent
+  inputs, such as NOT of one input or the EQUALS of two, it credits the
+  organism with a merit multiplier, which buys more CPU cycles per update,
+  which lets it replicate faster. That is the entire coupling between
+  computation and fitness. In the 2003 experiment the point was that EQU,
+  which needs five NAND operations to build, only ever appeared in
+  populations where the simpler intermediate functions were also rewarded:
+  the stepping stones were required.
+CANDIDATE: The instruction sequence, the genome. What is judged is the
+  outputs it emits given the inputs the environment supplies.
+WORLD: A grid of cells with a resource and reward schedule. The environment
+  supplies the input numbers, the list of which logic functions are
+  rewarded and by how much, and the CPU cycles that reward buys. The reward
+  schedule is the environment's entire content, and changing it changes
+  what evolves.
+WHAT_CHANGES: The genome sequence and which logic function the environment
+  rewards.
+MEASURED: For the single-genotype question, whether the target function was
+  performed, and on how many input cases it was performed correctly. The
+  natural continuous version is the fraction of input pairs answered
+  correctly, between zero and one.
+INFORMATIVE_FAILURE: Moderately informative and easy to over-read. A genome
+  that fails to emit the target function tells you the sequence lacks a
+  required primitive, or that the heads never reach the output instruction.
+  That is a debugging fact. The genuinely informative failure lives at the
+  population level and this template cannot reach it: the finding that
+  matters is that EQU never appears when the intermediate rewards are
+  switched off, and that is a failure of a POPULATION under a reward
+  schedule, not of a genotype. A single-genotype failure leaves behind
+  almost nothing about evolvability.
+SOURCE_CHECK: VERIFIED - Lenski, Ofria, Pennock and Adami, The Evolutionary
+  Origin of Complex Features, Nature 2003, is the correct reference and it
+  is the EQU experiment with the stepping-stone reward schedule. The two
+  named environmental resources, logic NOT and logic EQU, correspond to the
+  simplest and the hardest of the rewarded functions in that work.
+SHARED_MECHANISM: interpret_program
+ROUTES: R-NOW, R-COMPOSE, R-BACKEND, R-EXECUTOR
+BLOCKER: R-NOW - for the degraded truth-table version below nothing is
+  missing; the constraint is INTERPRETIVE, in that the hidden target is a
+  random Boolean function rather than a named one, so the result is about
+  arbitrary functions and not about EQU. R-COMPOSE - to compare genotypes
+  the producer must run many specs, because no search is allowed inside
+  one. CONTROL FLOW. R-BACKEND - Avida is real, runnable and open, and
+  invoking it and fossilizing one scalar needs no new bench internals.
+  MEASUREMENT. R-EXECUTOR - a small stack-machine kind that runs a supplied
+  opcode sequence over all input pairs and returns the fraction correct.
+  MEASUREMENT.
+FAITHFUL: A faithful version needs an instruction-set interpreter with
+  registers and heads, an environment object holding a reward schedule, and
+  the ability to run one genome against many input cases and aggregate. For
+  the result that made the paper matter it additionally needs a population,
+  mutation, and differential replication rate, none of which the bench has.
+REDUCTION: There is a reduction that runs TODAY with no new code, and it is
+  better than it first looks. Read a bitstring of length two to the power k
+  as the complete truth table of a k-input Boolean function.
+  evaluate_bitstring already returns the fraction of positions matching a
+  hidden target, so it is already computing the agreement of your candidate
+  function with a hidden Boolean function over all inputs. Set length to
+  16, so k is 4, and submit one fixed truth table. Now set
+  repeat.seed_derivation = sha256_index with a high count: each repeat
+  scores the SAME candidate function against a DIFFERENT random target
+  function. What comes out is the null distribution of agreement between an
+  arbitrary function and a random one, measured rather than assumed. That
+  is exactly the baseline any claim of the form this genome computes
+  something must be compared against, and it is currently missing from
+  every such claim on this bench. Note the seed-derivation subtlety
+  explicitly: under constant the same spec is degenerate_by_construction,
+  one target, one candidate, zero variance.
+  Beyond that, an R-EXECUTOR step that is still small: a stack machine with
+  eight opcodes, NAND among them, that executes a supplied sequence over
+  all two to the k input assignments and returns the fraction of cases
+  matching a NAMED function such as EQU. Naming the target is the one thing
+  the bitstring version cannot do, and it is the difference between
+  measuring an arbitrary function and measuring the one the literature
+  cares about.
+  WHAT IT PRESERVES: execution of a supplied program as the source of the
+  measurement, a continuous correctness scale, and the honest scope of the
+  template's own rationale, that mechanical production of an output is not
+  an evolutionary claim.
+  WHAT IT LOSES: the merit economy, replication, the population, mutation,
+  and therefore the stepping-stone result that is the entire scientific
+  content of the cited paper. This must be stated on any fossil produced or
+  the result will be mis-cited.
+  WHICH CLAIM IT SUPPORTS: a null-calibration claim, what agreement looks
+  like by chance, and later a mechanical-correctness claim about one
+  supplied program. Nothing whatever about evolvability.
+END_ENTRY
+
+BEGIN_ENTRY
+TEMPLATE_ID: evodevo.bias.v0
+FIELD: Evolutionary Developmental Systems (Evo-Devo)
+KIND: boolean_network.v0
+QUESTION: When a developmental process turns a genotype into a body plan,
+  are all body plans equally easy to produce, or does the process itself,
+  before any selection happens, make some outcomes far more common than
+  others?
+MECHANISM: Build a network of N nodes, each holding an on or off state.
+  Wire each node to exactly K inputs drawn from the other nodes and give it
+  a Boolean function of those inputs, in the classical construction by
+  drawing the truth table at random. Set an initial state, the genotype.
+  Update every node synchronously according to its function and its inputs'
+  current states. Because the state space is finite and the update
+  deterministic, the trajectory must eventually repeat, so it falls into a
+  cyclic attractor. That attractor is the phenotype. Now the measurement:
+  sample many genotypes, develop each one, and tabulate how often each
+  attractor comes up. The basin sizes are wildly unequal, so a few
+  phenotypes absorb most genotypes. That inequality is developmental bias,
+  and it exists with no selection anywhere in the procedure. At K equal to
+  2 the ensemble sits at the critical boundary between the frozen and
+  chaotic regimes, which is why the template pins K to 2.
+CANDIDATE: The genotype, here the initial state or the wiring; the
+  phenotype is the attractor it reaches. What is judged is the frequency
+  with which each phenotype appears.
+WORLD: There is no environment in the usual sense, and that is the point.
+  The world supplies only the update rule and the topology. No fitness
+  function exists. Any structure in the output comes from the map itself.
+WHAT_CHANGES: Number of nodes, in-degree K, the number of update steps
+  allowed before an attractor is declared, and the sampled genotypes.
+MEASURED: The frequency of the most common phenotype, a proportion between
+  zero and one, or equivalently the entropy of the phenotype distribution.
+  Both are scalars, but both require MANY developmental runs to estimate,
+  which matters for the routes below.
+INFORMATIVE_FAILURE: Yes, and unusually so, because here the null result is
+  the scientifically loaded one. If the phenotype distribution comes out
+  flat you have found a developmental map with no bias, which contradicts
+  the general expectation and is a genuine result about that map. If the
+  network never settles within the allowed update steps you have learned
+  the parameters put you in the chaotic regime, which relocates the
+  boundary rather than wasting the run. Neither failure is empty.
+SOURCE_CHECK: PLAUSIBLE - the cited paper is real and I confirmed it:
+  Psujek and Beer, Developmental bias in evolution: evolutionary
+  accessibility of phenotypes in a model evo-devo system, Evolution and
+  Development, 2008. The mismatch is in the METHOD. That paper's model is a
+  simulation of neural development built on continuous-time recurrent
+  neural networks, and it distinguishes local, genotype-dependent bias from
+  global bias intrinsic to the developmental system. It is not a Boolean
+  network study. The Boolean network with K equal to 2 and random truth
+  tables belongs to the Kauffman NK lineage, a different body of work. So
+  the phenomenon is correctly named and the attribution points at a real
+  and relevant paper, but the executor kind does not implement the cited
+  system. The operator should either change the reference to the Boolean
+  network literature or change the kind. Not graded VERIFIED for that
+  reason.
+SHARED_MECHANISM: sample_genotype_phenotype_map
+ROUTES: R-NOW, R-EXECUTOR, R-COMPOSE
+BLOCKER: R-NOW - for the walk-based analogue below nothing is missing, but
+  the map is linear and its bias is analytically known, so the run is an
+  instrument calibration rather than a discovery. INTERPRETIVE constraint.
+  R-EXECUTOR - a Boolean network kind is genuinely small, perhaps forty
+  lines, but it must return one scalar, so the frequency tabulation over
+  many sampled genotypes has to happen INSIDE the executor. That is the
+  real design point: the outcome rule cannot aggregate across repeats, so
+  aggregation must be internal or downstream. MEASUREMENT capability.
+  R-COMPOSE - if instead each spec develops one genotype, the histogram
+  must be built by the producer across specs. ADJUDICATION capability,
+  since no aggregation across repeats is permitted.
+FAITHFUL: A faithful version needs a developmental map that is nonlinear
+  and many-to-one, a genotype space large enough that exhaustive
+  enumeration is impossible so sampling is required, and a phenotype
+  identity test, here attractor matching, that is exact rather than
+  approximate. It also needs the sampling to be demonstrably unbiased,
+  because a biased sampler over genotypes would manufacture the very
+  inequality the experiment claims to find.
+REDUCTION: A real and slightly surprising one runs today on
+  random_walk_v0. A walk is a developmental map: the seed is the genotype,
+  the deterministic sequence of increments is the developmental process,
+  and the final displacement is the phenotype. Run one spec with fixed
+  steps and step_scale, repeat.seed_derivation = sha256_index and a high
+  count, so each repeat develops a different genotype through the same map.
+  Bin the displacements downstream. The distribution is sharply peaked near
+  zero even though every increment sequence is equally likely: many
+  genotypes, few phenotypes, and the concentration comes entirely from the
+  map with no selection anywhere. That is a genuine minimal instance of the
+  phenomenon the template is about, available with zero new code.
+  Now the honesty. This map is linear and its phenotype distribution is
+  known in advance from the central limit theorem, so the run cannot
+  discover bias. It can only check that the bias statistic you intend to
+  use actually recovers a bias whose true value you already know. That
+  makes it an instrument calibration and it must be reported as one. Its
+  value is that it fixes the statistic, the sample size needed to estimate
+  it, and its standard error BEFORE any nonlinear developmental map is
+  built, so that when the Boolean network executor lands there is already a
+  null and a known-answer control to compare against.
+  WHAT IT PRESERVES: many-to-one mapping, non-uniform phenotype frequency
+  arising from the map rather than from selection, and the whole
+  measurement pipeline including sample size and error bars.
+  WHAT IT LOSES: nonlinearity, attractors, criticality, and the notion of a
+  neighbouring reachable phenotype, and therefore evolutionary
+  accessibility, which is the actual subject of the cited paper.
+  WHICH CLAIM IT SUPPORTS: only that the bias statistic recovers a known
+  bias on a map with an analytically known phenotype distribution. Say so
+  plainly on the fossil.
+END_ENTRY
+
+BEGIN_ENTRY
+TEMPLATE_ID: intrinsic.v0
+FIELD: Intrinsic Motivation
+KIND: iac_exploration.v0
+QUESTION: If a learning agent is given no goal at all, and instead simply
+  chooses whatever activity it is currently getting better at fastest, will
+  it teach itself a sensible sequence of skills, starting easy and moving
+  to hard entirely on its own?
+MECHANISM: The agent acts, and after each action tries to predict what its
+  sensors will read next. It keeps the prediction errors. It carves its
+  sensorimotor space into regions, splitting a region in two whenever the
+  data inside become heterogeneous enough that two child regions predict
+  better than the parent. For each region it keeps a recent history of
+  prediction error and computes LEARNING PROGRESS, the rate at which that
+  error is falling, which is a derivative over time and not the error
+  itself. It then chooses its next action mostly from whichever region has
+  the highest learning progress, with some random exploration mixed in. The
+  consequence is a self-organised curriculum: a region already mastered has
+  near-zero error and therefore near-zero progress, so the agent leaves it;
+  a region that is pure noise has high error but also near-zero progress,
+  because the error never falls, so the agent leaves that too. Using
+  progress rather than error is precisely what stops the agent being
+  captured by unpredictable noise.
+CANDIDATE: The agent's behaviour policy, which changes continuously. What
+  is judged is the sequence of activities the agent chose, not any single
+  action.
+WORLD: A sensorimotor environment offering activities of differing
+  learnability, canonically including at least one that is easy, one that
+  is hard but learnable, and one that is unlearnable noise. That last one
+  is not decoration: without it the experiment cannot show what it exists
+  to show.
+WHAT_CHANGES: The sensor dimension, null in this template, and the learning
+  rate of the prediction model.
+MEASURED: In the real work, the time-ordered sequence of which region the
+  agent selected, compared against the regions' true difficulty. Scalar
+  reductions exist but are lossy: rank correlation between selection time
+  and difficulty, or fraction of a run spent in the unlearnable region.
+INFORMATIVE_FAILURE: Yes, and sharply. If the agent parks itself in the
+  unlearnable region, the failure has isolated the noisy-television
+  pathology and shows the progress estimator's window or smoothing is
+  wrong. If the agent never leaves the easy region, the split criterion is
+  too conservative. Both failures name a specific component. The failure
+  that leaves nothing behind is a run reported only as a final scalar
+  score, because the entire claim of this method is about the ORDER of
+  activities and a final scalar destroys order.
+SOURCE_CHECK: VERIFIED - Oudeyer, Kaplan and Hafner, Intrinsic Motivation
+  Systems for Autonomous Mental Development, IEEE Transactions on
+  Evolutionary Computation, 2007, is the correct reference for Intelligent
+  Adaptive Curiosity, and the region-splitting plus learning-progress
+  mechanism and the developmental-trajectory claim are as described.
+SHARED_MECHANISM: self_directed_curriculum
+ROUTES: R-COMPOSE, R-SUBSTRATE, R-BACKEND
+BLOCKER: R-COMPOSE - for the stripped diagnostic below the pieces can be
+  collected as separate specs and the statistic computed downstream; the
+  blocker is ADJUDICATION, since comparing an error slope across two
+  conditions is a two-field expression and the outcome rule permits one.
+  R-SUBSTRATE - for the method itself the bench lacks the ability for one
+  step to choose the next, which is output-to-input chaining, and lacks any
+  persistent model accumulating across repeats. STATE AND CONTROL-FLOW
+  capability, and it is the fundamental blocker: a sealed spec with a fixed
+  payload cannot, by construction, select its next action. R-BACKEND -
+  existing intrinsic-motivation codebases could be invoked and their
+  trajectory fossilized. MEASUREMENT capability.
+FAITHFUL: A faithful version needs an agent whose action at step t depends
+  on results from steps before t, a model that persists and improves, and a
+  fossil format recording an ordered trajectory rather than a scalar,
+  because the claim is about order. It also needs a world containing an
+  unlearnable region, since without one the central discrimination cannot
+  be tested at all.
+REDUCTION: The agent cannot be reduced, but the SIGNAL it runs on can, and
+  the bench supplies the two required conditions for free through its own
+  repeat semantics. Learning progress exists to separate a learnable region
+  from an unlearnable one, and the bench already has exactly that pair.
+  Take one fixed bitstring and one length. Condition A:
+  repeat.seed_derivation = constant, so every repeat scores against the
+  SAME hidden target. That is a learnable region: a learner watching this
+  stream sees a stable target and its error can fall. Condition B:
+  sha256_index, so every repeat scores against a DIFFERENT target. That is
+  an unlearnable region: the target is redrawn each time and no amount of
+  observation reduces future error. Collect both streams, fit the
+  error-slope statistic you intend to use as learning progress, and check
+  that it separates them, with a standard error.
+  There is a bench-level observation worth recording here. Condition A is
+  exactly the case the bench flags as degenerate_by_construction, and that
+  is correct and is the point: zero within-world variance is what perfect
+  learnability looks like from the outside. The degenerate flag and the
+  maximum-learning-progress condition are the same fact seen from two
+  sides, which suggests the flag is carrying information the bench
+  currently throws away as an error.
+  WHAT IT PRESERVES: the learnable-versus-noise discrimination, the
+  progress statistic itself, its window length, and its standard error,
+  measured on a case where the ground truth is known by construction.
+  WHAT IT LOSES: the agent, action selection, region splitting, the
+  developmental trajectory and the self-organised curriculum. In other
+  words it loses everything that makes Intelligent Adaptive Curiosity a
+  method rather than a statistic.
+  WHICH CLAIM IT SUPPORTS: only that the chosen learning-progress estimator
+  can tell a fixed target from a redrawn one at a given sample size. Label
+  it an instrument test. It is not an intrinsic-motivation result and must
+  never be fossilized as one.
+END_ENTRY
+
+BEGIN_ENTRY
+TEMPLATE_ID: machineevol.neat.v0
+FIELD: Machine Evolution
+KIND: neat_eval_v0
+QUESTION: How well does the simplest possible neural network controller,
+  with almost no structure in it, perform on a control task? This is the
+  starting line against which everything a structure-growing evolutionary
+  method later adds has to be compared.
+MECHANISM: A network is described by two gene lists, one of nodes and one
+  of connections, with each connection gene carrying a source, a target, a
+  weight, an enable flag and a historical marking. To evaluate one network,
+  build it from the genes, then run an episode: at each timestep read the
+  task's state variables into the input nodes, propagate activations
+  through the network, read the output nodes, apply that as the control
+  signal, and step the task's dynamics forward. Continue until the task
+  fails or the time limit is reached. Fitness is a function of the episode,
+  typically how long the system was kept within bounds. The wider method
+  around this evaluation is where NEAT lives: start every network minimal
+  and fully connected input to output with no hidden nodes, mutate weights
+  and occasionally add a node or a connection, use the historical markings
+  to align genomes so that crossover between different topologies is
+  meaningful, and protect new structure inside species so that a mutation
+  that adds a node is not killed before it has time to be optimised. This
+  template deliberately runs only the evaluation and none of the method.
+CANDIDATE: One network genome. What varies is its topology and its
+  connection weights; what is judged is the episode it produces.
+WORLD: A dynamical control task, canonically pole balancing on a cart,
+  including the harder variants with two poles and with velocity
+  information withheld. The environment supplies the state variables, the
+  physics, the failure condition and the time limit.
+WHAT_CHANGES: The topology class and the connection weights.
+MEASURED: Episode length before failure, or a normalised version of it, a
+  continuous scalar. In the non-Markovian variants it is averaged over
+  several starting states, which already requires aggregation.
+INFORMATIVE_FAILURE: Partly informative. A minimal topology that fails
+  establishes that the task genuinely needs structure, which is the premise
+  of the whole complexification argument, and that is worth having as a
+  measured fact rather than an assumption. But if the minimal network fails
+  because the weights were badly chosen rather than because the topology is
+  insufficient, the failure is uninterpretable, and with a single
+  float_range for the weights this template cannot tell those apart. So the
+  failure is informative only if the weight space is sampled properly.
+SOURCE_CHECK: VERIFIED - Stanley and Miikkulainen, Evolving Neural Networks
+  through Augmenting Topologies, Evolutionary Computation, 2002, is the
+  correct reference for NEAT and for the historical markings, speciation
+  and minimal-start-topology design that the rationale invokes. Two
+  problems with param_space, not with the attribution: the choice
+  recurrent_feedforward is a contradiction in terms, a network is one or
+  the other, and weight_genes given as a single float_range implies one
+  weight for a whole network, which cannot be right. Both need repair.
+SHARED_MECHANISM: score_fixed_candidate
+ROUTES: R-NOW, R-EXECUTOR, R-REPAIR, R-COMPOSE
+BLOCKER: R-NOW - for the zero-controller baseline below nothing is missing;
+  the constraint is that the walk has no controller at all, so it gives the
+  null and not the treatment. INTERPRETIVE. R-EXECUTOR - the bench has no
+  way to build and run a network over a dynamical task; that is a
+  MEASUREMENT capability, and a small one for a single fixed topology.
+  R-REPAIR - recurrent_feedforward and the single-float weight axis are
+  incoherent as written and must be fixed before admission; a specification
+  gap. R-COMPOSE - comparing minimal against augmented topologies means
+  several specs and a downstream comparison, because the outcome rule is
+  one comparison. ADJUDICATION.
+FAITHFUL: A faithful version needs a genome representation with separable
+  node and connection genes, a builder that turns genes into a runnable
+  network, and a task with real dynamics that runs many timesteps. For NEAT
+  proper rather than a single evaluation, it further needs a population, a
+  distance metric over genomes, species, and an innovation counter that
+  persists across the whole run, which is population-level state the bench
+  has no place for.
+REDUCTION: Something real runs today, and it is the honest baseline rather
+  than the experiment. random_walk_v0 is already a one-dimensional
+  dynamical system with no controller attached. So ask the question the
+  control literature should always ask first: what fraction of episodes
+  does the ZERO controller survive? Run random_walk_v0 with steps T and
+  step_scale s, with an outcome rule of the form absolute position at or
+  below bound B, under repeat.seed_derivation = sha256_index and a high
+  count, to get the survival rate of doing nothing. Sweep s and B to find
+  the region where the no-controller survival rate is neither zero nor one,
+  because that is the only region where a controller could show a
+  measurable effect. That directly serves the memory rule that a gate must
+  be shown reachable, and it produces a pre-registered, measured baseline
+  before any controller exists to flatter itself against.
+  The next step up is a small executor: a fixed two-input one-output
+  network with weights drawn from the world seed, driving the increment of
+  the same one-dimensional system, returning normalised time within
+  bounds. That is perhaps sixty lines and it makes the comparison against
+  the null above a genuine control experiment.
+  WHAT IT PRESERVES: the episode as the unit of measurement, a continuous
+  survival-time scale, and the requirement that any controller claim be
+  stated relative to a measured no-controller rate rather than to zero.
+  WHAT IT LOSES: the network, topology, weights, historical markings,
+  crossover, speciation and complexification. That is all of NEAT. But note
+  the template itself asked only for the baseline evaluation, so what is
+  lost relative to the TEMPLATE is much less than what is lost relative to
+  the paper.
+  WHICH CLAIM IT SUPPORTS: that the task difficulty has been located in a
+  regime where a controller could matter, and later that a specific fixed
+  controller beats the no-controller null by a stated margin.
+END_ENTRY
+
+BEGIN_ENTRY
+TEMPLATE_ID: nas_bench_evaluation.v0
+FIELD: Neural Architecture Search
+KIND: nas_search_v0
+QUESTION: Given a fixed number of tries, does a smarter search strategy
+  find a better neural network design than simply guessing at random?
+MECHANISM: Training neural networks to compare architectures is
+  prohibitively expensive, so the benchmark pre-computes the answer once.
+  A constrained space of small architectures is enumerated exhaustively,
+  each one is trained several times to fixed epoch budgets, and the
+  resulting accuracies and training times are stored in a table. After
+  that, evaluating an architecture is a table lookup, so a search algorithm
+  can be run thousands of times and its variability measured honestly.
+  The search itself is the object of study. Random search draws
+  architectures uniformly. Regularized evolution keeps a fixed-size
+  population, repeatedly samples a small tournament, mutates the best
+  member of the tournament, adds the child, and removes the OLDEST member
+  rather than the worst, which is the regularization: it prevents a lucky
+  early architecture from dominating forever and keeps the population
+  turning over. Both algorithms are charged the same query budget, and the
+  comparison is between best-found accuracy at equal budget, over many
+  independent repetitions.
+CANDIDATE: An architecture, an encoded cell graph. What is judged is the
+  best accuracy the search found within its budget, not any single
+  architecture.
+WORLD: The pre-computed benchmark table. The environment supplies the
+  accuracy oracle, its noise across training repeats, and the topology of
+  the search space, which is what makes the search problem easy or hard.
+WHAT_CHANGES: The search algorithm and the query budget.
+MEASURED: Best validation accuracy found within budget, continuous, and
+  properly the regret against the table's known global optimum, since the
+  optimum is known by exhaustive enumeration.
+INFORMATIVE_FAILURE: Informative in a way people routinely miss. If the
+  smarter algorithm fails to beat random search, that is the field's single
+  most-cited cautionary result and it is a strong finding, not a null: it
+  says the search space is easy or the budget too small for the algorithm's
+  machinery to pay for itself. What leaves nothing behind is a single run
+  of each algorithm, because the between-run variance of these searches is
+  large enough to swamp the between-algorithm difference; a single-run
+  comparison is a coin flip dressed as a result.
+SOURCE_CHECK: VERIFIED - Ying et al. 2019, NAS-Bench-101: Towards
+  Reproducible Neural Architecture Search, is real and is the tabular
+  benchmark described, and regularized evolution is a real and standard
+  baseline evaluated on it. The query_budget axis is null and must be set.
+SHARED_MECHANISM: search_over_candidates
+ROUTES: R-COMPOSE, R-BACKEND, R-NOW
+BLOCKER: R-COMPOSE - a search cannot run inside a spec, because the payload
+  is fixed for the whole spec and repeat N plus one cannot depend on repeat
+  N, so the search algorithm must live in the producer with one spec per
+  query. CONTROL FLOW, and note this is exactly the division of labour the
+  brief already prescribes, so it is a fit rather than a limitation.
+  R-BACKEND - the benchmark table is a public downloadable artifact and a
+  lookup adapter needs no new bench internals. MEASUREMENT. R-NOW - for the
+  bitstring surrogate below nothing is missing at all; the constraint is
+  that the landscape has the wrong shape, which is INTERPRETIVE.
+FAITHFUL: A faithful version needs the benchmark table itself, an
+  architecture encoding the producer can mutate, strict query accounting so
+  that the budget is enforced rather than reported, and many independent
+  repetitions of each algorithm, since the headline quantity is a
+  distribution over runs and not a number.
+REDUCTION: This one reduces unusually well, because the bench already
+  contains a query-budget benchmark and nobody has called it one.
+  evaluate_bitstring is a deterministic black-box map from a candidate to a
+  continuous score, with the answer hidden and reproducible from a seed:
+  that is functionally a tabular oracle. A producer can therefore run
+  random search against regularized evolution over bitstrings, one spec per
+  query, with a hard budget of queries as a NEW DESIGN CHOICE, propose 100
+  and 500, and repeat the whole comparison over many world seeds. Budget
+  accounting is exact because each query is a fossil.
+  What it preserves is genuinely most of the method: the algorithms
+  unchanged, the equal-budget discipline, the many-repetitions requirement,
+  and total reproducibility.
+  What it loses is the one thing that matters most, and this must be
+  stated loudly on any fossil. The bitstring score is the fraction of
+  positions matching a hidden target, so the landscape is fully separable
+  and unimodal, with a clean Hamming gradient and no local optima and no
+  deception. That is the easiest possible landscape and it systematically
+  flatters hill-climbers and mutation-based methods. NAS-Bench-101's
+  landscape is correlated and partly deceptive. So a ranking of algorithms
+  obtained on the bitstring surrogate is a measurement on the WRONG
+  POPULATION and cannot be quoted as a NAS result.
+  WHICH CLAIM IT SUPPORTS: given that caveat, a real and useful one. Run on
+  the surrogate the comparison becomes a control experiment for the
+  comparison protocol itself: how many independent repetitions are needed
+  before the between-algorithm difference exceeds the between-run standard
+  error at a given budget. Answer that on the cheap landscape first, then
+  spend the expensive backend queries at a repetition count that is already
+  known to be adequate. That is a power analysis, and it is the correct
+  first use of the reduction.
+END_ENTRY
+
+BEGIN_ENTRY
+TEMPLATE_ID: poet_paired_coevolution.v0
+FIELD: POET / Open-Ended Learning
+KIND: poet_loop_v0
+QUESTION: If you let the problems and the problem-solvers improve each
+  other, generating new challenges from ones already solved and letting
+  solutions move between challenges, do you end up solving harder problems
+  than you could by attacking any one of them directly?
+MECHANISM: Keep a population of environment-and-agent pairs. Each
+  environment is described by parameters, canonically the roughness, gaps
+  and obstacles of a two-dimensional terrain; each agent is a neural
+  controller optimised on its own environment by an evolution strategy.
+  Periodically, mutate the parameters of environments already being solved
+  to produce candidate new environments, and admit a candidate only if it
+  passes a minimal criterion: not so easy that current agents already solve
+  it, not so hard that none can make progress. That criterion is what keeps
+  the frontier moving instead of exploding. Periodically also attempt
+  TRANSFER: take every agent in the population, evaluate it on every other
+  environment, and if some other environment's agent does better than the
+  incumbent, replace the incumbent. Transfer is the load-bearing part of
+  the argument, because it means a skill learned on one challenge becomes a
+  stepping stone for a different challenge that direct optimisation could
+  not reach.
+CANDIDATE: Both populations at once. Agents are judged by score on
+  environments; environments are judged by the minimal criterion, which is
+  a judgement about what the current agents can and cannot do.
+WORLD: Not one world but a growing archive of them, each an environment
+  parameterisation, together with the pairing between environments and
+  agents. The archive is the object of the experiment.
+WHAT_CHANGES: The number of environments maintained and how often transfer
+  is attempted. Both are null in this template.
+MEASURED: The claim the template picks out is a comparison: final score
+  with transfer enabled against final score for direct optimisation on the
+  same environment. Both continuous. The open-endedness claim is not a
+  scalar at all and cannot be made one.
+INFORMATIVE_FAILURE: Yes, and it is arguably the most valuable failure in
+  this whole chunk. If transfer never helps, the finding is that these
+  environments are not stepping stones for one another, which is a
+  structural fact about the environment family and it directly limits every
+  open-endedness claim built on top. If the environment population
+  collapses to near-identical members, the minimal criterion is
+  mis-tuned and the diversity was an artifact of the admission test rather
+  than of the generator. Both are concrete and both transfer to other
+  open-ended systems.
+SOURCE_CHECK: VERIFIED - Wang, Lehman, Clune and Stanley, Paired Open-Ended
+  Trailblazer, 2019, is real and describes paired environment and agent
+  populations, the minimal criterion for admitting new environments, and
+  the transfer mechanism as the source of the stepping-stone effect. Both
+  parameter axes are null and must be set before admission.
+SHARED_MECHANISM: two_population_interaction
+ROUTES: R-BACKEND, R-SUBSTRATE, R-COMPOSE
+BLOCKER: R-BACKEND - POET's own implementation and its terrain simulator
+  exist and could be invoked with the bench recording inputs and outputs;
+  MEASUREMENT capability, and the cheapest honest route. R-SUBSTRATE - the
+  bench has one world per spec, a single integer, and no archive that
+  survives between specs, and no way for a new environment to be derived
+  from the result of an earlier one. That is a STATE capability, an
+  archive, plus output-to-input chaining, and it is the real blocker.
+  R-COMPOSE - the engine could run POET as batches of specs with the
+  archive held by the producer between batches; that reduces the substrate
+  requirement to an archive the PRODUCER owns, which may be much cheaper
+  than one the bench owns. ADJUDICATION plus STATE. I deliberately do not
+  route this to R-ARCH: nothing about POET contradicts the assumption that
+  one sealed spec produces recorded observations, it only needs many of
+  them and something outside to hold the archive.
+FAITHFUL: A faithful version needs a parameterised environment FAMILY with
+  a mutation operator, so that a new environment can be a small change to
+  an old one; an archive that persists across generations; and an
+  all-pairs evaluation step, agents by environments, which is inherently a
+  two-population operation. The minimal criterion additionally requires
+  adjudicating an environment against the current capability of the whole
+  agent population, which is a judgement no single-spec outcome rule can
+  express.
+REDUCTION: Strip out generation and open-endedness entirely and keep only
+  the transfer claim, which is the one part that is a scalar comparison.
+  Call a hidden target an environment, and a bitstring a solution. Have the
+  producer optimise a bitstring against target A across specs, then, in one
+  further spec, score that same bitstring against target B. Compare with
+  the best bitstring found for B under the same query budget.
+  Here is the finding, and it arrives before the experiment runs. Targets
+  are derived by hashing the seed with the length, so targets from
+  different seeds share nothing by construction, and targets at different
+  lengths are not even comparable, since a candidate of length L cannot be
+  scored at length L prime. Therefore transfer between any two distinct
+  environments on this bench is EXACTLY zero in expectation, and the
+  measurement would be a confirmation of the hash, not of anything about
+  learning. There is no relatedness axis anywhere in the current world
+  definition.
+  So the reduction that survives is not the transfer experiment but the
+  requirement it exposes, and it is worth stating as a deliverable in its
+  own right: the bench cannot host any transfer, curriculum, stepping-stone
+  or generalisation experiment until it has a family of environments with a
+  DISTANCE between them. The minimal such capability is small and concrete:
+  a target derived as the seed target with d positions flipped, so that
+  environments sit at a controllable Hamming distance d, with d equal to
+  zero recovering the current behaviour. That single parameter would turn
+  this template, and several others in this chunk, from impossible into
+  routine.
+  WHAT IT PRESERVES: nothing of POET as run. WHAT IT LOSES: everything.
+  WHICH CLAIM IT SUPPORTS: a measured zero-transfer baseline, which is
+  worth one cheap spec because it converts an assumption about the bench
+  into a recorded fact, plus a named substrate requirement with a proposed
+  implementation. I would not call this an instance of the method, and it
+  should not be fossilized as one.
+END_ENTRY
+
+BEGIN_ENTRY
+TEMPLATE_ID: science_of_science.v0
+FIELD: Science of Science
+KIND: network_cascade.v0
+QUESTION: Why are citations so unequally distributed, with a few papers
+  collecting enormous numbers and most collecting almost none? Can a simple
+  growth rule, with no notion of quality, reproduce that inequality on its
+  own?
+MECHANISM: Grow a graph one node at a time. Each arriving node attaches a
+  fixed number of edges to nodes already present, choosing each target with
+  probability proportional to how many edges that target already has,
+  usually plus a small constant so that a node with none can still be
+  chosen. That is the entire rule, and it is enough: because attachment
+  probability rises with current degree, early and lucky nodes accumulate
+  advantage, and the degree distribution develops a heavy tail. Richer
+  variants in this literature multiply the degree term by a per-node
+  fitness, so that quality and accumulated advantage compete, and add an
+  ageing term so that old papers stop attracting citations, which together
+  reproduce the observed pattern in which most papers peak and decline
+  while a few remain live for decades. The measurement at the end is a
+  structural statistic over the finished graph.
+CANDIDATE: The graph. What is judged is a summary statistic of its shape,
+  not any individual node.
+WORLD: The graph as it stands at each step. This is the important point:
+  the environment for an arriving node IS the accumulated state, which is
+  why the process cannot be decomposed into independent draws.
+WHAT_CHANGES: Initial node count and attachment rate, both null here, plus
+  in serious work the fitness and ageing terms.
+MEASURED: A structural statistic of the final graph: Gini coefficient of
+  the degree distribution, share of edges held by the top one percent,
+  maximum degree over node count, or a fitted power-law exponent. All
+  scalar, but they differ enormously in how safely they can be gated on.
+INFORMATIVE_FAILURE: Moderately informative. If the generated inequality
+  falls short of the empirical inequality, the failure says pure
+  accumulated advantage is insufficient and some additional term, fitness
+  or ageing or a citation-copying mechanism, is required, which is a
+  positive result about mechanism. The failure that leaves nothing behind
+  is a mismatch reported against a badly estimated power-law exponent,
+  because that is a failure of the fitting procedure and says nothing about
+  the generative model at all.
+SOURCE_CHECK: VERIFIED - Fortunato et al., Science of Science, Science,
+  2018, is real and is a broad review covering citation dynamics and the
+  complex-network perspective, so the description in origin is accurate as
+  a description of that review. One attribution caveat for the operator:
+  the preferential-attachment mechanism itself is not that paper's
+  contribution and belongs to the earlier cumulative-advantage and
+  scale-free network literature. Citing the review for the mechanism is
+  Tier-2 sourcing and should be pinned to a primary source before the
+  template is admitted.
+SHARED_MECHANISM: accumulate_trajectory
+ROUTES: R-EXECUTOR, R-NOW, R-REPAIR
+BLOCKER: R-EXECUTOR - the bench cannot build a graph or compute a
+  structural statistic; that is a MEASUREMENT capability and a genuinely
+  small one, since a preferential-attachment generator returning one scalar
+  is a few dozen lines. R-NOW - the existing walk gives only the
+  state-INDEPENDENT null, not the model; the constraint is INTERPRETIVE.
+  R-REPAIR - both axes are null; a specification gap.
+FAITHFUL: A faithful version needs an accumulating structure whose next
+  step depends on its current state, which means real persistent state
+  inside the run rather than across repeats, and a statistic computed over
+  the whole finished object. It also needs the statistic chosen in advance
+  and defensible under a single-comparison gate, since the outcome rule
+  cannot carry a goodness-of-fit test alongside a fitted exponent.
+REDUCTION: The bench already has half of this, and naming which half is the
+  useful contribution. random_walk_v0 is a stateful accumulation process,
+  which is the same broad mechanism, but its increments do NOT depend on
+  its current state: the step is uniform and fixed-scale, while
+  preferential attachment's step probability is proportional to current
+  degree. So the walk is precisely the state-independent null against which
+  the rich-get-richer model has to be judged. Run it with persist state and
+  sha256_index repeats to obtain, measured rather than assumed, what the
+  chosen inequality statistic looks like under accumulation WITHOUT
+  cumulative advantage. Then a small pref_attach_v0 executor returning the
+  same statistic makes the comparison a real contrast with a real null, and
+  the difference between the two is exactly the contribution of the
+  state-dependence, which is the whole scientific content.
+  One concrete design instruction that follows from the outcome rule. Do
+  NOT gate on a fitted power-law exponent. Estimating a power-law exponent
+  requires a lower cutoff choice and a goodness-of-fit test reported
+  alongside it, and the bench permits one field, one operator, one value,
+  so a gate on an exponent would silently drop the part of the procedure
+  that makes it valid. Gate instead on the Gini coefficient of the degree
+  distribution or the top-one-percent edge share: both are single numbers
+  that are meaningful without an accompanying test, and both have a
+  computable attainable range, so the gate can be shown reachable before
+  it is frozen.
+  WHAT IT PRESERVES: state-dependent accumulation as the mechanism under
+  test, a single defensible inequality statistic, and a measured rather
+  than assumed null.
+  WHAT IT LOSES: fitness, ageing, the distinction between citing and cited,
+  time-resolved citation trajectories, and any contact with real
+  bibliometric data. It is a mechanism-sufficiency study, not a fit to
+  observation.
+  WHICH CLAIM IT SUPPORTS: that state-dependent attachment produces
+  inequality exceeding the state-independent accumulation null by a stated
+  margin. Nothing about real science, and certainly nothing about policy,
+  which the template's own rationale is right to disclaim.
+END_ENTRY
+
+BEGIN_ENTRY
+TEMPLATE_ID: version_space_search.v0
+FIELD: Inductive Reasoning
+KIND: version_space_search_v0
+QUESTION: As you show a learner labelled examples one at a time, how fast
+  does the set of rules still consistent with everything it has seen shrink
+  toward a single answer?
+MECHANISM: Fix a language of hypotheses in advance, classically
+  conjunctions over attributes where each attribute is either pinned to a
+  value, or a wildcard matching anything, or the empty symbol matching
+  nothing. The version space is the set of hypotheses consistent with every
+  example seen so far. Candidate Elimination represents that set implicitly
+  by only its two boundaries: S, the most specific consistent hypotheses,
+  and G, the most general. On a POSITIVE example, drop any member of G that
+  fails to cover it, and minimally generalise each member of S until it
+  covers it. On a NEGATIVE example, drop any member of S that covers it,
+  and minimally specialise each member of G until it no longer does. The
+  version space is everything lying between the two boundaries in the
+  generality ordering, so its size can be huge while S and G stay small.
+  Learning is complete when S and G coincide on a single hypothesis. The
+  method is exact and non-statistical: it never scores a hypothesis, it
+  only eliminates the inconsistent, and one contradictory example collapses
+  the space to empty.
+CANDIDATE: The whole surviving hypothesis set, not any single hypothesis.
+  What varies is which examples arrive and in what order.
+WORLD: A hypothesis language plus a stream of labelled examples. The
+  environment supplies both the language, which is the inductive bias and
+  is chosen not learned, and a target concept that must lie inside that
+  language for convergence to be possible at all.
+WHAT_CHANGES: The number of attributes defining the concept and the number
+  of training examples. Both null here.
+MEASURED: The size of the version space after m examples, a positive
+  integer that falls monotonically, and convergence when it reaches one.
+  Log of the size is the better scale, since it falls roughly linearly with
+  informative examples.
+INFORMATIVE_FAILURE: Strongly informative and cleanly interpretable, which
+  is rare. Failure comes in exactly two shapes and they mean opposite
+  things. A version space that COLLAPSES TO EMPTY proves the target concept
+  is not expressible in the chosen hypothesis language, or that an example
+  was mislabelled: it is a proof about the language, not a shortfall of the
+  learner. A version space that stalls above one after all examples proves
+  the examples were insufficient to discriminate, and the surviving set
+  names exactly which distinctions were never tested, which tells you which
+  example to obtain next. That second case is the seed of active learning
+  and links this template directly to the Robot Scientist and intrinsic
+  motivation templates in this same chunk.
+SOURCE_CHECK: VERIFIED - Tom Mitchell's version spaces and the Candidate
+  Elimination algorithm are real and foundational, introduced in the
+  mid-to-late 1970s and developed in his later work on generalisation as
+  search. The 1977 date and the description of the S and G boundaries are
+  consistent with the standard account. Both parameter axes are null.
+SHARED_MECHANISM: prune_hypothesis_space
+ROUTES: R-COMPOSE, R-EXECUTOR, R-REPAIR
+BLOCKER: R-COMPOSE - each observation must be applied to the state left by
+  the previous one, and the bench cannot chain repeat outputs into repeat
+  inputs, so the elimination must be carried by the producer across specs.
+  CONTROL FLOW, specifically output-to-input chaining. R-EXECUTOR - a
+  self-contained kind that plants a concept, draws m examples and returns
+  the final version space size. MEASUREMENT capability, and the cheapest
+  executor in this chunk. R-REPAIR - both axes null; specification gap.
+FAITHFUL: A faithful version needs a hypothesis language object, a
+  generality partial order over it so that minimal generalisation and
+  specialisation are defined, and the two boundary sets carried across
+  examples. It also needs the example stream to be part of the world,
+  because convergence rate depends on which examples arrive and in what
+  order, so a template that fixes only their COUNT under-specifies the
+  experiment.
+REDUCTION: This is the best reduction in the chunk and it needs no new
+  executor, because evaluate_bitstring is already a version space and
+  nobody has said so. Fix a world seed and a length L, so there is one
+  hidden target T, which is an unknown point in a space of two to the power
+  L possibilities. That set of possibilities IS the initial version space.
+  Submit a candidate bitstring C in one spec. The returned score is the
+  fraction of positions matching, so it tells you exactly how many
+  positions of C agree with T, call it k. The set of targets consistent
+  with that single observation is precisely the set of strings at Hamming
+  distance L minus k from C, whose size is L choose k, computable in closed
+  form. Submit a second candidate in a second spec at the SAME seed and
+  length, and the surviving set is the intersection of two Hamming spheres,
+  again exactly countable. Repeat. The producer maintains the surviving set
+  size and watches it collapse toward one. That is candidate elimination,
+  run for real, with the bench supplying observations and the producer
+  supplying the elimination. It is the game of Mastermind, which is what
+  evaluate_bitstring has been all along.
+  It also makes the active-learning question immediately measurable, at no
+  extra cost: compare the collapse rate under RANDOM candidate choice
+  against candidates chosen to maximise expected information, and you have
+  a real, quantitative result about how much choosing your experiments is
+  worth, on a space where the exact answer is computable rather than
+  estimated. That result is portable to the Robot Scientist template's
+  hypothesis loop and to the intrinsic-motivation template's curriculum,
+  which is a genuine cross-discipline payoff from a single cheap run.
+  WHAT IT PRESERVES: exact elimination rather than scoring, exact
+  computable version space size, monotone collapse, the dependence of
+  convergence on which examples were chosen, and the empty-space failure
+  mode, which appears here if two observations are mutually inconsistent,
+  proving a bug rather than a hard problem.
+  WHAT IT LOSES: the S and G boundary representation, since a Hamming
+  constraint set is not a conjunctive lattice and has no most-specific and
+  most-general pair; the inductive bias question, since the language is
+  fixed and complete rather than chosen; and generalisation to unseen
+  instances, since there are no unseen instances.
+  WHICH CLAIM IT SUPPORTS: a quantitative claim about hypothesis-space
+  collapse rate under random versus chosen queries, with the exact
+  remaining size known at every step. That is a real result and it is
+  available today.
+END_ENTRY
