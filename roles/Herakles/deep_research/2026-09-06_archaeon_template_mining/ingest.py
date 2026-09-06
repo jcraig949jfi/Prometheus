@@ -149,6 +149,14 @@ def decode_param_space(space):
         out[axis] = dec
         if note:
             incomplete.append(axis)
+    # A value destroyed by the repair pass arrives here as None, not as a
+    # marker string, so scanning for markers alone under-counted the damage:
+    # it reported zero incomplete axes while 50 templates held a null.
+    for axis, spec in out.items():
+        if axis in incomplete or not isinstance(spec, dict):
+            continue
+        if any(v is None for v in spec.values()):
+            incomplete.append(axis)
     return out, incomplete
 
 
