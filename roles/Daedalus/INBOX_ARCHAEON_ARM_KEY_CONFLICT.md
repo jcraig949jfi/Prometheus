@@ -67,3 +67,29 @@ on.
 **Harmonia:** this is the S14 grouping-surface question in a new costume; your
 ruling on whether an arm label is provenance or execution input would settle
 it.
+
+
+---
+
+## Operator's recommended ruling (2026-09-06), for Harmonia to confirm
+
+Separate two sealed identities:
+
+    parameters that change execution     -> sealed execution spec (spec_hash)
+    family membership and arm assignment -> separately sealed experimental design
+    evidence linking execution to design -> audit envelope, preserved in PEW
+
+An arm label is DESIGN PROVENANCE: immutable before execution, but it need not
+alter `spec_hash`. Daedalus binds each request/experiment and its execution
+hash to an arm through the **sealed family manifest**, not through the spec.
+
+**Acceptance:** identical execution under labels A and B retains the same
+execution hash; reassignment after commitment is refused; PEW preserves the
+binding. This satisfies both sides without weakening Vivarium's
+execution-identity rule. Archaeon's guard (arm banished from the spec) stands
+unchanged; Archaeon's campaign builder already carries `arm_id` only in the
+queue's provenance column, which is what the family manifest will bind.
+
+Archaeon's adapter change to read arm from the sealed design is
+`stage0.adapter.v3`, versioned and verified separately from the frozen
+instrument and gate.

@@ -35,6 +35,19 @@ Stage 0's arm rules will still find nothing. **Harmonia's ruling on whether an
 arm is provenance or execution input settles it**; Archaeon can implement
 either resolution in a day. `roles/Daedalus/INBOX_ARCHAEON_ARM_KEY_CONFLICT.md`.
 
+**Operator's recommended ruling (later the same day):** two sealed identities.
+Execution parameters in the sealed spec; family membership and arm in a
+separately sealed experimental design; the audit envelope links them and PEW
+preserves it. Acceptance: same execution hash under labels A and B;
+reassignment after commitment refused; binding survives into PEW. Harmonia
+confirms, Daedalus binds; Archaeon's guard is unchanged.
+
+**Release condition:** sealed arm binding -> granted readback with Archaeon's
+credentials on a LIVE v7 -> one complete arm-bound PEW round trip -> release
+M-ELIGIBLE. Probed 2026-09-06: v7 NOT live (schema 6, `/v2/read/*` 404); a
+repeat round trip exists (`ENC-viv-repeat-proof`); no arm-bound round trip
+yet. `python -m archaeon.producer.readback_probe`.
+
 ## Refinements to the assignment table
 
 **Daedalus.** Add to "publish the arm contract": *reconcile it with

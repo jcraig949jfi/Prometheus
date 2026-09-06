@@ -111,17 +111,36 @@ The milestone 0b demands, stated so it can be measured rather than assumed:
 2. **Frozen random baseline.** `random.v0` is frozen now and stays as the
    control. A signal-directed policy is a *second* named policy
    (`signal.v0`), never a modification of the first.
-3. **Equal budget, separate lanes.** `eval-random-NN` and `eval-signal-NN`,
-   identical candidate universe, identical budget, orders committed to the
-   queue before any execution.
+3. **Equal budget, separate lanes, FROZEN CORPUS.** Both policies read the
+   SAME recorded corpus snapshot (`corpus_hash`) and the SAME eligible
+   candidate universe (`universe_hash`), and both FULL orders are committed to
+   the queue as candidate sets before anything executes
+   (`archaeon/producer/universe.py`). Selected and alternative identities are
+   preserved through E6 into SFE `selection` families and the exported
+   evidence. This makes the first campaign a precise test of selection from
+   EXISTING fossil information; adapting to arriving results is a later,
+   different experiment.
 4. **Endpoint pre-registered.** Failures discovered per experiment executed
    (S18's), computed from PEW by `policy_version` — which is why 0c matters.
 5. **Harmonia adjudicates.** Archaeon runs the arms and reports; it does not
    score its own policy.
 
-Power: the S18 effect (random 0.288 → informed 0.462) needs ~118 experiments
-per arm and a budget well under the universe size. At six per day per lane
-that is weeks, not days — which is fine, and is why the census exists.
+**Three levels, named before power.** The minimum fixture is 32 observations,
+8 worlds, 2 comparison families. Harmonia must state which level is
+*selected*, which is *randomized*, and which is *analyzed* before any power
+calculation; S18's 0.288 → 0.462 was at the (claim, dimension) level and does
+not transfer to another unit unexamined. At six per day per lane the campaign
+is weeks, not days — which is fine, and is why the census exists.
+
+**"Stage 0 unchanged"** means the frozen predictor and the gate are unchanged
+(`INSTRUMENT_VERSION`, `GATE_VERSION`). The corpus ADAPTER necessarily changes
+to consume the family contract and is versioned and verified separately
+(`ADAPTER_VERSION`: v1 raw, v2 declared tenancy, v3 pending families/arm).
+
+**Release condition** (operator, 2026-09-06): sealed arm binding → granted
+readback with Archaeon's credentials, LIVE → one complete arm-bound PEW round
+trip → release the remaining M-ELIGIBLE requests.
+`python -m archaeon.producer.readback_probe` reports each.
 
 ---
 

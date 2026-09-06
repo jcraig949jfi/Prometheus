@@ -88,6 +88,17 @@ S17_LEDGER_BLOB = "261b91e6b2830d1c9adda0a8c28ae3292f2d0c74"
 S17_PREDICTOR_HASH = ("0106e035868bbe10ef177c8e88a2dad79bd8364c"
                       "b5b684844cd018b5f1dada73")
 
+# Three separately versioned things. "Stage 0 unchanged" means the first two
+# are unchanged; the third is EXPECTED to change as the substrate's contracts
+# (tenancy, families, arm binding) land, and is verified on its own.
+INSTRUMENT_VERSION = "s17@" + S17_COMMIT[:12]        # the frozen predictor
+GATE_VERSION = "stage0.gate.v0"                      # the kill condition
+ADAPTER_VERSION = "stage0.adapter.v2"                # rows -> claim-units
+# adapter history:
+#   v1  raw file read, topology_group / fork / spec.arm rules
+#   v2  declared tenancy + evidence filter + single txn + schema guard
+#   v3  (pending) comparison families + arm from the sealed design
+
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEFAULT_SFE_DB = os.environ.get(
     "ARCHAEON_SFE_DB",
@@ -518,6 +529,12 @@ def survey(db_path: str = DEFAULT_SFE_DB,
 
     return {
         "stage": "archaeon.stage0.fragility_survey.v0",
+        "versions": {"instrument": INSTRUMENT_VERSION,
+                     "gate": GATE_VERSION,
+                     "adapter": ADAPTER_VERSION,
+                     "note": ("'unchanged' means instrument and gate; the "
+                              "adapter changes with the substrate's contracts "
+                              "and is verified separately")},
         "instrument": prov,
         "positive_control": control,
         "frozen_rules": {k: {"feature": v["feature"],

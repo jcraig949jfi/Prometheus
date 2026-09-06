@@ -102,12 +102,20 @@ def check(rows: Optional[List[Dict[str, Any]]] = None) -> Dict[str, Any]:
              "n": len(out["invalid"])})
     out["blockers"].append(
         {"lane": "daedalus+vivarium",
-         "what": ("arm identity is not legible from the engine's record: "
-                  "Daedalus v7 reads arm from the sealed spec at arm_key, "
-                  "Vivarium's validator banishes `arm` from the spec. Until "
-                  "one ruling lands the family fossilizes observations, not "
-                  "structure, and Stage 0's arm rules find nothing to group."),
+         "what": ("arm identity is not yet legible from the engine's record. "
+                  "Operator's recommended ruling: arm is DESIGN provenance, "
+                  "bound by the sealed family manifest, never in spec_hash "
+                  "(same execution under labels A and B keeps one execution "
+                  "hash; reassignment after commitment refused; PEW preserves "
+                  "the binding). Pending Harmonia's confirmation and "
+                  "Daedalus's binding."),
          "ref": "roles/Daedalus/INBOX_ARCHAEON_ARM_KEY_CONFLICT.md"})
+    out["release_condition"] = (
+        "sealed arm binding -> granted readback (LIVE v7 + Archaeon's own "
+        "credentials returning the intended observations with census and "
+        "family metadata) -> one complete arm-bound PEW round trip -> "
+        "release M-ELIGIBLE. Check with `python -m "
+        "archaeon.producer.readback_probe`.")
     out["ok_to_issue"] = not out["invalid"]
     out["note"] = ("32 rows alone do not guarantee eligibility or establish "
                    "S17 transfer; eligibility is reported by rerunning Stage 0 "
