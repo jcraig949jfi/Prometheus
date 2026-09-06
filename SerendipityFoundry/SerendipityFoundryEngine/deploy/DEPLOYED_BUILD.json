@@ -4,9 +4,9 @@
   "endpoint": "https://192.168.1.202:8811",
   "pinned_at": "2026-09-06",
   "pinned_by": "Daedalus",
-  "schema_version": 6,
-  "release": "v6 scientific provenance",
-  "source_commit_containing_build": "642736763b0ef81cca6ba412d20129f1cee436e3",
+  "schema_version": 7,
+  "release": "schema v7",
+  "source_commit_containing_build": "be65b0efa36d2d5475f1006d2e39c45e0fdfd8fc",
   "release_commits": [
     "869df1fa1",
     "50ef81ba1",
@@ -24,7 +24,7 @@
   "rollback_behaviour_measured_2026-09-06": "A pre-v6 engine opened against the live schema-6 ledger REFUSES to start: RuntimeError 'db schema version 6 is NEWER than this engine's 5; refusing to run (would misread state)' (sfe/store.py:471-474). Verified by running the 35758f9d0 source against a VACUUM INTO copy of the live ledger. So a source revert produces a LOUD OUTAGE, not a silent downgrade -- the service dies rather than quietly serving pre-v6 semantics over v6 data. That is the correct failure direction, and it is why this pin is a recovery aid rather than a safety interlock.",
   "restore": {
     "verify": "python deploy/verify_deploy.py",
-    "restore_source": "git -C <a checkout you own> fetch origin && git checkout 642736763b0ef81cca6ba412d20129f1cee436e3 -- SerendipityFoundry/  # then copy into the deployment tree",
+    "restore_source": "git -C <a checkout you own> fetch origin && git checkout be65b0efa36d2d5475f1006d2e39c45e0fdfd8fc -- SerendipityFoundry/  # then copy into the deployment tree",
     "do_not": "Do NOT 'git checkout -- .' or 'git clean' in F:/Prometheus to fix this: that tree carries uncommitted work belonging to ergon, evidence_wiki/PEW and other roles."
   },
   "files": {
