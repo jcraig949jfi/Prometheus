@@ -64,6 +64,12 @@ APPENDED_AFTER_RE = re.compile(r"^\s*(?:[.,;:!?)—-]|$)", re.M)
 # citation: "stabilization of DNS in 2025 <X> and the commoditization of...".
 CONJUNCTION_AFTER_RE = re.compile(r"^\s+(?:and|or|but|while|which|whereas)\b")
 MD_LINK_RE = re.compile(r"^\(")
+# A destroyed span ALWAYS comes back as a citation marker. So a bracket in a
+# value position whose content is real -- "[-2.0, -0.5]", "[batch_size, 2]" --
+# was not destroyed; it survived, and only sat where a destroyed one would.
+# Report 14 carried six of those. Flagging them as losses conflated a risk
+# position with an actual loss, which are not the same claim.
+CITE_MARKER_RE = re.compile(r"^\[\s*cite[:\s]", re.I)
 ARXIV_RE = re.compile(r"arXiv:\d{4}\.\d{4,5}")
 # The prompt asks for "arXiv OR DOI", so an arXiv count of zero is not a
 # defect. Genetic Programming came back with four DOIs, no arXiv ids, and
@@ -79,18 +85,24 @@ def check(path: Path) -> dict:
     t = path.read_text(encoding="utf-8")
     parts = {int(m.group(1)) for m in PART_RE.finditer(t)}
 
-    appended, value_loss = [], []
+    appended, value_loss, survived = [], [], []
     for m in BRACKET_RE.finditer(t):
         after = t[m.end() : m.end() + 40]
         harmless = (MD_LINK_RE.match(after) or APPENDED_AFTER_RE.match(after)
                     or CONJUNCTION_AFTER_RE.match(after))
-        (appended if harmless else value_loss).append(m)
+        if harmless:
+            appended.append(m)
+        elif CITE_MARKER_RE.match(m.group(0)):
+            value_loss.append(m)          # a marker where a value belonged
+        else:
+            survived.append(m)            # real content, in a risk position
 
     return {
         "name": path.name,
         "chars": len(t),
         "parts_missing": sorted(set(range(1, 9)) - parts),
         "appended": len(appended),
+        "survived": len(survived),
         "value_loss": [
             {
                 "excerpt": t[max(0, m.start() - 90) : m.end() + 30].replace("\n", " "),
@@ -134,20 +146,18 @@ def main(argv: list[str]) -> int:
         print(f"   {r['chars']:>6} chars   arXiv {r['arxiv']:>2}   doi {r['doi']:>2}"
               f"   unk {r['unknown']:>2}   urls {r['urls']:>2}"
               f"   verdicts {r['verdicts']:>2}   {status}")
-        print(f"   brackets: {r['appended']} appended (harmless), "
-              f"{len(r['value_loss'])} SUSPECTED LOSS")
+        print(f"   brackets: {r['appended']} appended, {r['survived']} survived "
+              f"in a risk position, {len(r['value_loss'])} DESTROYED")
         for loss in r["value_loss"]:
             total_loss += 1
-            print(f"      SUSPECT {loss['destroyed_as']}: ...{loss['excerpt']}...")
+            print(f"      LOST {loss['destroyed_as']}: ...{loss['excerpt']}...")
         print()
 
-    print(f"{len(files)} dossiers checked, {total_loss} suspected destroyed values.")
+    print(f"{len(files)} dossiers checked, {total_loss} destroyed values.")
     if total_loss:
-        print("Adjudicate each by eye, then record the real ones in "
-              "bracket_losses.jsonl.")
-        print("The check is over-sensitive by design. On waves 1 and 2 it flagged "
-              "exactly the 2 real losses, both in report 03.")
-        print("Do NOT write a destroyed value back from inference.")
+        print("Record each in bracket_losses.jsonl.")
+        print("Do NOT write a destroyed value back from inference, even when "
+              "the surrounding sentence makes it obvious.")
     return 0
 
 
