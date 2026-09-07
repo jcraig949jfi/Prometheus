@@ -142,3 +142,26 @@ def test_plan_assignments_agree_with_declared_levels():
     a = hashlib.sha256(str([(r["request_key"], r["arm_id"], r["seed_root"]) for r in rows]).encode()).hexdigest()
     b = hashlib.sha256(str([(r["request_key"], r["arm_id"], r["seed_root"]) for r in campaign.plan()]).encode()).hexdigest()
     assert a == b
+
+
+# ---------------------------------------------------------------- 0d-e / 0d-f (third amendment)
+def test_production_tick_imports_no_calibration_code():
+    """Recalibration lives outside the tick: computation in production,
+    qualification and calibration elsewhere."""
+    from archaeon.tests.conftest import executable_source
+    from archaeon.producer import tick as tickmod, loop as loopmod
+    for mod in (tickmod, loopmod):
+        src = executable_source(mod)
+        assert "calibrate" not in src and "reconcile" not in src, mod.__name__
+
+
+def test_signal_carries_the_frozen_estimator_parameters():
+    c = synth.variance_anomaly(seed=3)
+    res = d3.detect(c, D)
+    assert res.signals, "the planted anomaly must fire"
+    s = res.signals[0]
+    assert s.detector_version == "d3.v0"
+    for k in ("d3_high_ratio", "d3_low_ratio", "d3_min_n_region",
+              "d3_min_n_neighborhood", "d3_neighbors_k"):
+        assert k in s.thresholds
+    assert s.values["region_variance"] > 0 and s.values["neighbourhood_variance"] > 0

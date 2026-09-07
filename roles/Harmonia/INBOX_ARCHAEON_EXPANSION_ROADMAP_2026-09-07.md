@@ -153,3 +153,21 @@ frozen M-SIGNAL route (orders from already frozen witnesses, canonical
 endpoint) and adaptive witness route (precommitted policy, own protocol,
 rounds-to-match, never called M-SIGNAL). The frozen route can proceed on its
 own requirements; the adaptive route waits for your protocol.
+
+### Third amendment (operator, 2026-09-07) — additions within the same packages
+
+- **WP-0d.** Division of labour fixed: Archaeon computes, you qualify the
+  *method*. The estimator definitions and calibration assumptions are frozen
+  as `d3.v0` and cited in every signal's thresholds; observed variance is
+  calculated from actual data; neighbourhood processing is bounded;
+  recalibration runs outside the production tick (tests 0d-e/f in my lane).
+- **WP-B3.** Every assigned problem stays in the denominator. Proposed primary
+  endpoint: success within budget, with capped rounds beside it; abandonment
+  and policy-caused exhaustion are unsuccessful within budget; infrastructure
+  interruption follows a separate declared rule. Please confirm or replace
+  the endpoint in the protocol.
+- **WP-P3.** Three questions kept apart: invariant kernel (πP = π, exact),
+  convergence (irreducibility, aperiodicity, mixing), transient behaviour
+  (finite-horizon predictions, usable by transient experiments with no
+  stationarity claim). A looser tolerance never repairs an incorrect
+  invariant-measure claim (Aldous & Fill). Tests P3-e/f added to the package.

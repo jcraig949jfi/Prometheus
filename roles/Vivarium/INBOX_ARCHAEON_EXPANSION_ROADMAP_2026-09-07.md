@@ -118,3 +118,12 @@ scheduler/initialization changes reflected in provenance/identity; P1-e a
 separate neutral-baseline comparison matches P3's demography and
 assumptions — unlimited resources are not neutrality by label. Descriptive
 execution may precede P3; claims depending on neutrality need it.
+
+### Third amendment (operator, 2026-09-07) — additions within the same packages
+
+- **WP-0c cycle.** Commit the design binding before execution; execute;
+  record the terminal observation; complete attestation; then project
+  downstream (PEW producer block, `design_hash`). A delayed projection must
+  neither require its own completed envelope nor trigger another scientific
+  execution (test 0c-e). You are the integrating owner; Daedalus supplies
+  the client contract and a shared fixture; no three-way negotiation per run.

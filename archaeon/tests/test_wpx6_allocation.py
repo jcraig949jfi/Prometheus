@@ -121,3 +121,22 @@ def test_policy_inactive_without_operator_file(tmp_path):
                                      '"reserve_draws_per_day": 1, "young_days": 90, "thin_rows": 24, '
                                      '"established": [], "chosen_by": null, "chosen_on": null}')
     assert A.load_policy(tmp_path / "p.json")["active"] is False
+
+
+# ---------------------------------------------------------------- X6-e (third amendment)
+def test_inactive_policy_continues_established_share_and_never_spends_reserve():
+    """While D-6 is pending, authorized collection continues under the
+    existing policy: every draw is the established share, the reserve is
+    untouched, nothing is admitted, and a frozen snapshot is unchanged by a
+    later activation."""
+    inactive = dict(A.PROPOSED, active=False)
+    ts = [_tmpl("t0", "k0", family="fam.new")]
+    cl = A.classify(A.families(ts), TODAY, {}, inactive)
+    snap_before = A.freeze_snapshot(cl, served={}, policy=inactive, lane="prod", day="2026-09-07")
+    order = A.order_from_snapshot(snap_before, n_slots=6)
+    # the tick's record while inactive
+    from archaeon.producer import tick as tickmod
+    rec = tickmod._allocation_record()
+    assert rec["active"] is False and rec["share"] == "established"
+    # activating later does not rewrite the frozen snapshot's order
+    assert A.order_from_snapshot(snap_before, n_slots=6) == order

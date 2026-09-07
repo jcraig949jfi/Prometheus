@@ -72,8 +72,16 @@ Examples of the shape (each family writes its own):
 (descriptors binned by human-declared edges). Capacity per cell is bounded:
 
     cap per cell            4         (human choice)
+    cap per family          256       (human choice)
+    cap, whole active       2,048 entries and 64 MB of pointers + descriptors
+      archive                         (human choice)
+    descriptor budget       <= 2 s of descriptor computation per tick
     eviction                oldest first, EXCEPT that an *informative failure*
-                            is never evicted by a success
+                            is never evicted by a success; when informative
+                            failures alone exceed a cap, the tie-break is
+                            deterministic (lowest event_seq evicted first)
+    resizing                never dynamic; a new capacity is a new policy
+                            version, replayable from its snapshot
 
 An **informative failure** is a run that (a) fired a detector, (b)
 contradicted its own pre-registered prediction (`FALSIFIED` where `SURVIVED`

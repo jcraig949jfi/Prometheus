@@ -14,6 +14,25 @@ Cost: S under a day, M a few days, L longer. Compute is host CPU.
 Status legend: DONE (commit) · IN LANE (Archaeon, not started) · OWNER (filed
 to its owner) · CONDITIONAL (waits on a named result).
 
+## Operating rules (third amendment, 2026-09-07)
+
+- **One integrating owner per item.** Each package names one owner who
+  integrates; the others supply published contracts and shared fixtures.
+  Routine execution requires no fresh three-way negotiation. Eight
+  responsibility domains are not eight runtime services.
+- **Operator dependency.** While a decision is pending, already-authorized
+  collection continues under its existing policy and budget. A fallback
+  never silently admits a template, never consumes a protected reserve, and
+  never changes a frozen comparison.
+- **Archive bounds are fixed and versioned.** Per cell, per family, and
+  across the whole active archive, including bytes and descriptor-computation
+  budget. Dynamic resizing is itself a declared, replayable policy version.
+- **Adaptive protocols keep every assigned problem in the denominator.**
+- **Design binding precedes execution; projection follows attestation.**
+- **Invariant-kernel checks, convergence, and transient behaviour are three
+  different questions**, and a looser tolerance never repairs a wrong
+  invariant-measure claim.
+
 ---
 
 ## Integrity (local gates; each gates only what depends on it)
@@ -35,14 +54,16 @@ to its owner) · CONDITIONAL (waits on a named result).
 ### WP-0c · One arm value through both seals · **Vivarium** (Daedalus: `sfclient.family_member(arm=)`, read contracts)
 - Dependency: engine revision with `family_members.arm` (live, `642736763`). Gates M-ELIGIBLE's arm legibility only.
 - Tests: 0c-a identical execution inputs under labels A/B keep one execution hash while member bindings record different arms; 0c-b queue arm = sealed member arm = audit envelope = PEW design arm; omitted/conflicting arms fail at the boundary; 0c-c reassignment after commitment refused, identical re-add idempotent; 0c-d design commitment precedes execution/outcome events and is traversable through typed references, not manifest prose.
+- **Arm/envelope cycle (third amendment).** Order: commit the design binding (family member + arm) **before** execution → execute → record the terminal observation → complete attestation → downstream projection (PEW producer block, `design_hash`). A delayed projection must neither require its own completed envelope nor trigger another scientific execution. Tests: 0c-e a projection replayed later from the recorded terminal observation reproduces the same binding without a new execution; a projection attempted before the terminal observation is refused with a status, not executed around.
 - Acceptance: one complete arm-bound round trip with readback and ordering evidence.
 - Claim boundary: same-hash applies only when execution inputs are identical; changing execution parameters still changes identity.
-- Status: OWNER.
+- Status: OWNER (integrating owner Vivarium; Daedalus supplies the client contract and a shared fixture).
 
 ### WP-0d · D3 reconciled; campaign statistics corrected · **Archaeon** (Harmonia: scoped ruling)
 - Dependency: none. Gates claims using D3 (M-SIGNAL false-discovery figures), not family development.
 - Tests: 0d-a exact F-tail + seeded simulation reproduce 0.106; 0d-b denominators, zero-variance neighbourhoods, overlap reported; 0d-c exact enumeration mean ½ var 1/(4L), 1/96 vs 1/112; 0d-d plan assignments = metadata; sealed hashes unchanged.
 - Acceptance: `archaeon/docs/D3_NULL_RECONCILIATION.md` + `d3_null_reconciliation.json`; `campaign.check()["levels"]` v2 (deterministic enumeration at WORLD; mean-null with unequal variances).
+- **Computation vs qualification (third amendment).** Archaeon computes; Harmonia qualifies the *method*. The estimator definitions and calibration assumptions (sample-variance estimator, k-nearest region/neighbourhood construction with the region excluded, eligibility floor, denominators, the band) are frozen as `d3.v0` and cited in every signal's `thresholds`; observed variance is always calculated from actual data, never assumed. Neighbourhood processing is bounded (k nearest, region-excluded; cost linear in regions × k). Recalibration lives in `archaeon.calibrate_d3_null` and runs outside the production tick. Tests: 0d-e the tick and loop import no calibration module (source scan); 0d-f a signal carries the frozen estimator parameters it was computed under.
 - Claim boundary: explains the number; D3 stays admitted for region discrimination on a frozen corpus; a Gaussian null approximates a Binomial one at n = 8.
 - Status: **DONE** (this commit). Reopen: Harmonia's ruling; binomial-null calibration at the family's L under a frozen design.
 
@@ -86,6 +107,7 @@ to its owner) · CONDITIONAL (waits on a named result).
 - Dependency: none to implement; operator values to *activate*.
 - Tests: X6-a 100-template vs 1-template families equal entitlement; X6-b more families than slots → all served within the horizon, or the shortfall stated; X6-c baseline cannot enter the reserve via alias/ambiguity; no eligible family → unspent, reported; X6-d counters once per event; frozen order immune to later counters/timestamps.
 - Acceptance: `archaeon/producer/allocation.py` (family-first deficit round-robin, deterministic replay, snapshot hash); tick records `family` and `allocation` in `source_evidence`; INACTIVE until `archaeon/policies/allocation.reserve.v0.json` carries `chosen_by`/`chosen_on`.
+- **Pending decisions (third amendment).** While D-6 is open, already-authorized collection continues under the existing policy and budget (the established share). The fallback cannot admit a template, cannot spend the protected reserve, and cannot alter a frozen comparison order. Tests: X6-e with the policy inactive every draw is recorded as the established share and no reserve is consumed; a frozen snapshot's order is unchanged by activating a policy later.
 - Claim boundary: 1/6, 90 days, 24 rows, cap 4 are proposals; "24 rows" is not a power or eligibility guarantee; equal reserve fractions alone do not make arms comparable.
 - Status: **DONE** as code (this commit); policy INACTIVE pending D-6.
 
@@ -98,6 +120,7 @@ to its owner) · CONDITIONAL (waits on a named result).
 ### WP-X8 · Retain observable behavioural diversity without score lift · **Archaeon** (Harmonia: claim boundaries; Proteus: identity; Mnemosyne: references)
 - Dependency: WP-0f (result schema) for descriptor fields; PR-ID for cross-family identity.
 - Tests: X8-a equal-score programs/rules with different trajectories occupy the archive with no positive-effect verdict; X8-b a label change or jointly transformed exact symmetry is not new behaviour under a descriptor convention that treats it as equivalent; X8-c failure-first retention bounded when every candidate is informative (deterministic tie-break); eviction touches pointers only; X8-d descriptor versions explicit; missing trace = unknown, not identical; no undeclared model-generated promise score can be consumed.
+- **Bounds (third amendment).** Fixed, versioned capacities at three levels — per cell, per family, and across the entire active archive — counted in entries **and** bytes, plus a descriptor-computation budget per tick. Proposed starting values (operator's, D-6): cell 4, family 256, global 2,048 entries / 64 MB of pointers-and-descriptors, descriptor computation ≤ 2 s per tick. Dynamic resizing is not a remedy: any resize is a new declared, replayable policy version. Equal-score behaviour stays eligible for retention. Tests: X8-e the global cap is enforced and its saturation reported before any per-cell cap is reached; X8-f descriptor computation exceeding its budget is truncated with explicit metadata, never silently skipped; X8-g a capacity change replays only under a new policy version and never rewrites source observations.
 - Acceptance: coverage reports distinguish family execution, descriptor occupancy, observed behaviour, qualification; no cross-family scalar; passive retention usable before any active archive policy.
 - Claim boundary: artifact identity ≠ observable behaviour ≠ performance ≠ causal evidence; execution errors ≠ completed negative outcomes.
 - Status: IN LANE (after 0f).
@@ -147,6 +170,7 @@ to its owner) · CONDITIONAL (waits on a named result).
 ### WP-B3 · Frozen selection vs online witness refinement — two named experiments · **Archaeon** (Harmonia: protocol qualification)
 - Dependency: B2, X1, X7. Named **before** implementation: (i) **frozen M-SIGNAL route** — directed orders from already frozen evidence, both orders and the universe frozen, canonical endpoint; no claim that returned witnesses changed the order; (ii) **adaptive witness route** — precommitted policy code/version, allowed evidence, initial state, seeds, budgets, tie-breaks, stopping/censoring; later programs may depend on returned witnesses; rounds-to-match under its own approved protocol, never called M-SIGNAL.
 - Tests: B3-a a frozen order does not change after new observations; a claimed online dependency is rejected under that protocol; B3-b the adaptive policy reproduces the same next candidate from the same permitted history and seed, and follows a different valid branch when the witness changes; B3-c both arms obey one budget and stopping rule; unsolved runs censored/counted by the preregistered convention, never dropped; B3-d B2's leakage checks hold end to end; an intentionally witness-using toy policy shows the treatment reaches the producer.
+- **Abandonment and denominators (third amendment).** Every assigned problem stays in the denominator. Primary endpoint: **success within budget**; capped rounds reported alongside it. Abandonment and policy-caused budget exhaustion count as unsuccessful within budget; infrastructure interruption follows a separate declared rule (re-run from the recorded state under the same seed, counted once). Tests: B3-e a policy that abandons a problem does not shrink the denominator; an exhausted budget is unsuccessful, not dropped; an infrastructure interruption is classified by the declared rule and never as a policy failure or success.
 - Acceptance: one internally consistent protocol per route and an executable example.
 - Claim boundary: no advantage = no demonstrated advantage for the tested policy/design; it does not prove the policy ignored the witness or that counterexamples are useless. Producer-side use of prior observations is distinct from a running organism reading fossils.
 - Status: CONDITIONAL on B2; route (ii) needs Harmonia's protocol before any online campaign.
@@ -211,6 +235,7 @@ to its owner) · CONDITIONAL (waits on a named result).
 ### WP-P3 · A specified neutral baseline; reversibility separate · **Harmonia** (Proteus/Vivarium implement kernel and dynamics)
 - Dependency: none. Gates **claims needing the neutral baseline**, not execution or descriptive study.
 - Tests: P3-a on a small finite kernel: nonnegative transitions, rows sum to one, declared stationary π satisfies πP = π; P3-b a reversible fixture satisfies πᵢPᵢⱼ = πⱼPⱼᵢ; the three-state lazy clockwise cycle P = 0.5I + 0.5S keeps uniform stationarity while failing detailed balance — classification must distinguish the two; P3-c a deliberately biased mutation fixture is detected against the declared reference measure without being mistaken for a failed implementation of a declared biased treatment; P3-d neutral-drift comparisons match specified demography and fitness assumptions; resource removal that changes them is not silently the same null.
+- **Three separate questions (third amendment).** (1) *Invariant kernel*: does the declared π satisfy πP = π — an exact identity on a finite kernel, tolerance-free up to floating point. (2) *Convergence*: does the chain reach π from the declared initial distribution, and how fast (irreducibility, aperiodicity, a mixing bound) — a different question, not implied by (1). (3) *Transient population behaviour*: finite-horizon predictions from the declared initial state, which a transient experiment may use without any stationarity claim. A looser tolerance can never repair an incorrect invariant-measure claim; stationarity and convergence are different questions (Aldous & Fill, *Reversible Markov Chains and Random Walks on Graphs*). Tests: P3-e a kernel with the right π but a periodic structure passes (1) and fails (2), and the report says which; P3-f a finite-horizon prediction for a transient experiment is accepted with its horizon declared and no stationarity assertion.
 - Acceptance: a tested neutral baseline with explicit scope (reference measure, mutation process, fitness, reproduction/replacement, resource regime, meaning of "neutral") and a separate reversibility statement. Nonreversible kernels can have stationary distributions; declared mutation bias can itself be a treatment.
 - Status: OWNER (earlier "detailed balance before any diversity claim" withdrawn; scoped).
 

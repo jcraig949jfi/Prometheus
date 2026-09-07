@@ -90,3 +90,11 @@ replication. Canonical manifests for programs, rule tables and genomes with
 representation and semantic version; identity separate from evaluation
 environment and from any behaviour-equivalence claim; identity-bearing
 metadata declared; aliases excluded only when semantics permit.
+
+### Third amendment (operator, 2026-09-07) — additions within the same packages
+
+- **WP-X8 identity fixtures.** The archive's fixed capacities (cell, family,
+  global; entries and bytes) are enforced on pointers keyed by `organism_ref`
+  (PR-ID). Equal-score artifacts with different observable behaviour remain
+  eligible; a shared fixture of two such artifacts is requested so X8-a can
+  run against your identity convention.

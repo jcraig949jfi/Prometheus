@@ -67,3 +67,11 @@ in your existing rotation tracker and verify/report only redacted status
 under the authorized credential workflow. No credential material appears in
 the roadmap, fixtures, logs or acceptance packets, and the tracker is not a
 dependency of any new-world research.
+
+### Third amendment (operator, 2026-09-07) — additions within the same packages
+
+- **Delayed projection.** When PEW receives a design projection after the
+  terminal observation and attestation, it records it against the existing
+  run identity; it must not require a fresh envelope of its own and must
+  never cause a re-execution. Idempotent on identical replay, 409 on a
+  differing one, as today.

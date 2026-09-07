@@ -246,6 +246,21 @@ Proteus input channel, which is long and not Archaeon's.
   P0 authorisation and route; D-13 portfolio/admissions; D-14 adaptive
   witness trial after Harmonia's protocol.
 
+**Third amendment (operator, 2026-09-07):** one integrating owner per item
+with published contracts and shared fixtures; archive bounds fixed and
+versioned at cell, family and global level including bytes and descriptor
+computation (dynamic resizing is itself a policy version); authorized
+collection continues under existing policy while decisions are pending and a
+fallback never admits, never spends a protected reserve, never changes a
+frozen comparison; D3 is computed by Archaeon under frozen estimator
+definitions with recalibration outside the tick and Harmonia qualifying the
+method; adaptive protocols keep every assigned problem in the denominator
+with success-within-budget as the primary endpoint; design binding precedes
+execution and delayed projection needs neither its own envelope nor another
+execution; invariant-kernel checks, convergence and transient behaviour are
+three questions and a looser tolerance repairs none of them. Tests attached
+within the existing packages (`expansion/WORK_PACKAGES.md`).
+
 ### D.8 Sequence for this section
 
     NOW    WP-0d (D3 null number) · WP-0e (kind-generic builder) · WP-X6
