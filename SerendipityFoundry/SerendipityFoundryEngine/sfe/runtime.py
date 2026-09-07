@@ -306,7 +306,7 @@ def _measurement_dict(r) -> dict:
 
 
 def _grant_dict(r) -> dict:
-    return {"grant_id": r["grant_id"], "group_id": r["group_id"],
+    return {"grant_id": r["grant_id"], "scope_id": r["scope_id"],
             "grantee_client_id": r["grantee_client_id"],
             "granted_by": r["granted_by"], "note": r["note"],
             "created_ts": r["created_ts"], "revoked_ts": r["revoked_ts"],
@@ -1494,6 +1494,7 @@ class Foundry:
         out = []
         rows = cx.execute(
             "SELECT fm.family_id, fm.member_kind, fm.member_id, fm.role, "
+            "fm.arm AS arm, "
             "f.kind AS family_kind, f.manifest AS manifest, "
             "f.manifest_hash AS manifest_hash, f.state AS state "
             "FROM family_members fm JOIN families f "
@@ -1507,15 +1508,11 @@ class Foundry:
                 manifest = json.loads(r["manifest"])
             except (TypeError, ValueError):
                 manifest = {}
-            arm_key = manifest.get("arm_key", "arm")
-            arm = None
-            if r["member_kind"] in ("experiment", "analysis"):
-                ex = cx.execute("SELECT spec FROM experiments WHERE exp_id=?",
-                                (r["member_id"],)).fetchone()
-                if ex is not None and isinstance(arm_key, str) and arm_key:
-                    found, val = _dig(json.loads(ex["spec"]), arm_key)
-                    if found and isinstance(val, (str, int, float, bool)):
-                        arm = str(val)
+            # ARM RULING: from the sealed DESIGN (the append-only member
+            # record), never from the execution spec -- so two arms may carry
+            # an identical execution hash.
+            arm = r["arm"]
+            declared_arms = manifest.get("arms")
             census = cx.execute(
                 "SELECT COUNT(*) n, SUM(role='selected') sel, "
                 "SUM(role='alternative') alt FROM family_members "
@@ -1525,8 +1522,8 @@ class Foundry:
                 "state": r["state"], "manifest_hash": r["manifest_hash"],
                 "member_kind": r["member_kind"], "member_id": r["member_id"],
                 "role": r["role"],
-                "arm_key": arm_key if isinstance(arm_key, str) else None,
                 "arm": arm,
+                "declared_arms": declared_arms,
                 "family_member_count": census["n"],
                 "selected": census["sel"] or 0,
                 "alternatives": census["alt"] or 0,
@@ -2708,6 +2705,7 @@ class Foundry:
 
     def add_family_member(self, family_id: str, *, member_kind: str,
                           member_id: str, role: Optional[str] = None,
+                          arm: Optional[str] = None,
                           client_id: Optional[str] = None) -> dict:
         """Attach one member. Idempotent on (family, kind, id): re-adding with
         the SAME role is a no-op replay; re-adding with a DIFFERENT role is a
@@ -2727,36 +2725,50 @@ class Foundry:
                 raise InvalidTransition("family is CLOSED; membership is sealed",
                                         family_id=family_id)
             owner = fam["client_id"]
+            # v7 ARM RULING: the manifest may seal the arm VOCABULARY, and an
+            # arm outside it was never part of this design.
+            declared = json.loads(fam["manifest"]).get("arms")
+            if arm is not None and isinstance(declared, list) and declared \
+                    and arm not in declared:
+                raise ValidationError(
+                    "arm is not one the family's sealed manifest declares",
+                    family_id=family_id, arm=arm, declared_arms=declared)
             prior = cx.execute(
-                "SELECT role FROM family_members WHERE family_id=? AND "
+                "SELECT role, arm FROM family_members WHERE family_id=? AND "
                 "member_kind=? AND member_id=?",
                 (family_id, member_kind, member_id)).fetchone()
             if prior is not None:
-                if prior["role"] == role:
+                if prior["role"] == role and prior["arm"] == arm:
                     return {"family_id": family_id, "member_kind": member_kind,
-                            "member_id": member_id, "role": role,
+                            "member_id": member_id, "role": role, "arm": arm,
                             "already_member": True}
+                # REASSIGNMENT AFTER COMMITMENT IS REFUSED. A member whose arm
+                # can move once the results are in is the whole failure this
+                # binding exists to prevent.
                 raise ConflictError(
-                    "member already in this family under a DIFFERENT role; "
-                    "membership roles are append-only",
+                    "member already in this family under a DIFFERENT role or "
+                    "arm; membership is append-only",
                     family_id=family_id, member_id=member_id,
-                    recorded_role=prior["role"], submitted_role=role)
+                    recorded_role=prior["role"], submitted_role=role,
+                    recorded_arm=prior["arm"], submitted_arm=arm)
             wid = self._member_scope(cx, member_kind, member_id, owner)
             if wid is None and member_kind != "claim":
                 raise NotFound(
                     "member not found in this client's substrate",
                     member_kind=member_kind, member_id=member_id)
             cx.execute("INSERT INTO family_members(family_id,member_kind,"
-                       "member_id,world_id,role,created_ts) VALUES(?,?,?,?,?,?)",
-                       (family_id, member_kind, member_id, wid, role, ts))
+                       "member_id,world_id,role,arm,created_ts) "
+                       "VALUES(?,?,?,?,?,?,?)",
+                       (family_id, member_kind, member_id, wid, role, arm, ts))
             events.append_foundry(cx, "FAMILY_MEMBER_ADDED", actor=owner,
                                   scope_kind="family", scope_id=family_id,
                                   payload={"member_kind": member_kind,
                                            "member_id": member_id,
-                                           "world_id": wid, "role": role})
+                                           "world_id": wid, "role": role,
+                                           "arm": arm})
         return {"family_id": family_id, "member_kind": member_kind,
                 "member_id": member_id, "world_id": wid, "role": role,
-                "already_member": False}
+                "arm": arm, "already_member": False}
 
     def close_family(self, family_id: str, *,
                      client_id: Optional[str] = None) -> dict:
@@ -2785,12 +2797,13 @@ class Foundry:
         cx = self.store.read()
         fam = self._family_row(cx, family_id, client_id)
         rows = cx.execute(
-            "SELECT member_kind, member_id, world_id, role, created_ts "
+            "SELECT member_kind, member_id, world_id, role, arm, created_ts "
             "FROM family_members WHERE family_id=? ORDER BY created_ts, "
             "member_id", (family_id,)).fetchall()
         members = [{"member_kind": r["member_kind"], "member_id": r["member_id"],
                     "world_id": r["world_id"], "role": r["role"],
-                    "created_ts": r["created_ts"]} for r in rows]
+                    "arm": r["arm"], "created_ts": r["created_ts"]}
+                   for r in rows]
         by_role: dict = {}
         by_kind: dict = {}
         for m in members:
@@ -2815,43 +2828,50 @@ class Foundry:
 
     @staticmethod
     def _family_arms(cx, manifest: dict, rows) -> dict:
-        """Arm structure, counted from SEALED specs.
+        """Arm structure, from the sealed DESIGN.
 
-        An arm label must be un-reassignable once results are in, so the engine
-        reads it from the experiment's spec -- frozen by spec_hash at commit and
-        order-proved by committed_seq -- and not from a mutable field. The
-        family's manifest declares WHERE to look (`arm_key`, default "arm"), so
-        the engine never guesses which key means arm.
+        ARM RULING (2026-09-06): execution parameters are sealed by spec_hash;
+        family and arm assignment are sealed SEPARATELY, in the append-only
+        member record and its FAMILY_MEMBER_ADDED event. Keeping the arm out of
+        the execution spec is what lets two arms carry an IDENTICAL execution
+        hash -- what was RUN and what ROLE it played are different facts, and
+        folding the label into the spec would make identical executions hash
+        differently and destroy the very comparison the design exists for.
 
-        Worlds have no spec, so a world member contributes to `unresolved`
-        rather than to a count. That is not an oversight: a label attached to a
-        world could be changed after the fact, and an arm that can move after
-        the results are in is the thing this is meant to prevent."""
+        The manifest may seal the arm VOCABULARY (`arms: ["A","B"]`), so an arm
+        outside the declared design is refused at membership.
+
+        `spec_conflicts` is the honest counterpart: if an execution spec ALSO
+        carries the manifest's arm_key with a different value, someone has
+        smuggled design into execution and the two disagree. Comparing two
+        declared strings is comparison, not interpretation."""
+        counts, unassigned, conflicts = {}, 0, []
         key = manifest.get("arm_key", "arm")
-        if not isinstance(key, str) or not key:
-            return {"arm_key": None, "counts": {}, "unresolved": len(rows),
-                    "note": "manifest arm_key is not a usable string"}
-        counts, unresolved = {}, 0
         for r in rows:
-            if r["member_kind"] not in ("experiment", "analysis"):
-                unresolved += 1
-                continue
-            ex = cx.execute("SELECT spec FROM experiments WHERE exp_id=?",
-                            (r["member_id"],)).fetchone()
-            if ex is None:
-                unresolved += 1
-                continue
-            try:
-                found, val = _dig(json.loads(ex["spec"]), key)
-            except (TypeError, ValueError):
-                found, val = False, None
-            if not found or not isinstance(val, (str, int, float, bool)):
-                unresolved += 1
-                continue
-            label = str(val)
-            counts[label] = counts.get(label, 0) + 1
-        return {"arm_key": key, "counts": dict(sorted(counts.items())),
-                "distinct_arms": len(counts), "unresolved": unresolved,
+            arm = r["arm"]
+            if arm is None:
+                unassigned += 1
+            else:
+                counts[arm] = counts.get(arm, 0) + 1
+            if isinstance(key, str) and key and \
+                    r["member_kind"] in ("experiment", "analysis"):
+                ex = cx.execute("SELECT spec FROM experiments WHERE exp_id=?",
+                                (r["member_id"],)).fetchone()
+                if ex is not None:
+                    try:
+                        found, val = _dig(json.loads(ex["spec"]), key)
+                    except (TypeError, ValueError):
+                        found, val = False, None
+                    if found and str(val) != str(arm):
+                        conflicts.append({"member_id": r["member_id"],
+                                          "sealed_arm": arm,
+                                          "spec_says": str(val)})
+        return {"counts": dict(sorted(counts.items())),
+                "distinct_arms": len(counts),
+                "unassigned": unassigned,
+                "declared_arms": manifest.get("arms"),
+                "arm_key_watched": key if isinstance(key, str) else None,
+                "spec_conflicts": conflicts,
                 "balanced": (len(set(counts.values())) == 1
                              if len(counts) > 1 else None)}
 
@@ -3392,18 +3412,89 @@ class Foundry:
     # owner-scoped routes: the cross-seat surface is separate and says so, so
     # an ordinary read can never quietly start returning someone else's rows.
 
-    def grant_read(self, group_id: str, *, grantee_client_id: str,
-                   granted_by: str, note: Optional[str] = None) -> dict:
-        """Grant READ over one topology group. Only the group's creator may
-        grant, so a capability cannot be re-lent by whoever it reaches."""
+    def create_read_scope(self, client_id: str, *, name: str,
+                          note: Optional[str] = None) -> dict:
+        """A curated set of YOUR OWN worlds, existing only to be granted for
+        reading. Separate from topology_group on purpose: that field gates
+        _may_cross, so granting read over a group would confer artifact-import
+        eligibility as a side effect, and the corpus that actually needs
+        granting is worlds that already exist and must not be mutated."""
+        if not isinstance(name, str) or not name.strip():
+            raise ValidationError("a read scope needs a name")
+        sid = new_id("scope")
         with self.store.write() as cx:
-            g = cx.execute("SELECT * FROM topology_groups WHERE group_id=?",
-                           (group_id,)).fetchone()
-            if g is None or g["created_by"] != granted_by:
+            if cx.execute("SELECT 1 FROM clients WHERE client_id=?",
+                          (client_id,)).fetchone() is None:
+                raise NotFound("unknown client", client_id=client_id)
+            cx.execute("INSERT INTO read_scopes(scope_id,owner_client_id,name,"
+                       "note,created_ts) VALUES(?,?,?,?,?)",
+                       (sid, client_id, name, note, now()))
+            events.append_foundry(cx, "READ_SCOPE_CREATED", actor=client_id,
+                                  scope_kind="read_scope", scope_id=sid,
+                                  payload={"name": name, "note": note})
+        return self.get_read_scope(sid, client_id=client_id)
+
+    def add_scope_worlds(self, scope_id: str, world_ids: list, *,
+                         client_id: str) -> dict:
+        """Add worlds you OWN to a scope you OWN. Nothing about the world
+        changes -- no field is written on it -- so adding it here cannot alter
+        what may cross between worlds."""
+        added, skipped = [], []
+        with self.store.write() as cx:
+            sc = cx.execute("SELECT * FROM read_scopes WHERE scope_id=?",
+                            (scope_id,)).fetchone()
+            if sc is None or sc["owner_client_id"] != client_id:
+                raise NotFound("unknown read scope", scope_id=scope_id)
+            for wid in world_ids:
+                w = cx.execute("SELECT client_id FROM worlds WHERE world_id=?",
+                               (wid,)).fetchone()
+                if w is None or w["client_id"] != client_id:
+                    skipped.append(wid)       # not yours: silently not added
+                    continue
+                cx.execute("INSERT OR IGNORE INTO read_scope_worlds(scope_id,"
+                           "world_id,added_ts) VALUES(?,?,?)",
+                           (scope_id, wid, now()))
+                added.append(wid)
+            events.append_foundry(cx, "READ_SCOPE_WORLDS_ADDED",
+                                  actor=client_id, scope_kind="read_scope",
+                                  scope_id=scope_id,
+                                  payload={"added": len(added),
+                                           "skipped": len(skipped)})
+        return {"scope_id": scope_id, "added": added, "not_yours": skipped,
+                "total": self.get_read_scope(scope_id,
+                                             client_id=client_id)["worlds"]}
+
+    def get_read_scope(self, scope_id: str, *, client_id: str) -> dict:
+        cx = self.store.read()
+        sc = cx.execute("SELECT * FROM read_scopes WHERE scope_id=?",
+                        (scope_id,)).fetchone()
+        if sc is None or sc["owner_client_id"] != client_id:
+            raise NotFound("unknown read scope", scope_id=scope_id)
+        n = cx.execute("SELECT COUNT(*) n FROM read_scope_worlds WHERE "
+                       "scope_id=?", (scope_id,)).fetchone()["n"]
+        return {"scope_id": scope_id, "owner_client_id": sc["owner_client_id"],
+                "name": sc["name"], "note": sc["note"], "worlds": n,
+                "created_ts": sc["created_ts"]}
+
+    def list_read_scopes(self, client_id: str) -> list:
+        cx = self.store.read()
+        return [self.get_read_scope(r["scope_id"], client_id=client_id)
+                for r in cx.execute(
+                    "SELECT scope_id FROM read_scopes WHERE owner_client_id=? "
+                    "ORDER BY created_ts", (client_id,)).fetchall()]
+
+    def grant_read(self, scope_id: str, *, grantee_client_id: str,
+                   granted_by: str, note: Optional[str] = None) -> dict:
+        """Grant READ over one scope. Only the scope's owner may grant, so a
+        capability cannot be re-lent by whoever it reaches."""
+        with self.store.write() as cx:
+            g = cx.execute("SELECT * FROM read_scopes WHERE scope_id=?",
+                           (scope_id,)).fetchone()
+            if g is None or g["owner_client_id"] != granted_by:
                 # NOT FOUND rather than FORBIDDEN: a group id is a capability,
                 # and distinguishing "exists but not yours" would make this an
                 # existence oracle for other clients' groups.
-                raise NotFound("unknown topology group", group_id=group_id)
+                raise NotFound("unknown read scope", scope_id=scope_id)
             if cx.execute("SELECT 1 FROM clients WHERE client_id=?",
                           (grantee_client_id,)).fetchone() is None:
                 raise NotFound("unknown grantee", client_id=grantee_client_id)
@@ -3412,8 +3503,8 @@ class Foundry:
                     "a client already reads its own worlds; a grant to "
                     "yourself would only obscure who can see what")
             prior = cx.execute(
-                "SELECT * FROM read_grants WHERE group_id=? AND "
-                "grantee_client_id=?", (group_id, grantee_client_id)).fetchone()
+                "SELECT * FROM read_grants WHERE scope_id=? AND "
+                "grantee_client_id=?", (scope_id, grantee_client_id)).fetchone()
             if prior is not None and prior["revoked_ts"] is None:
                 return _grant_dict(prior)
             gid = new_id("grant")
@@ -3421,12 +3512,12 @@ class Foundry:
                 cx.execute("DELETE FROM read_grants WHERE grant_id=?",
                            (prior["grant_id"],))
             cx.execute(
-                "INSERT INTO read_grants(grant_id,group_id,grantee_client_id,"
+                "INSERT INTO read_grants(grant_id,scope_id,grantee_client_id,"
                 "granted_by,note,created_ts) VALUES(?,?,?,?,?,?)",
-                (gid, group_id, grantee_client_id, granted_by, note, now()))
+                (gid, scope_id, grantee_client_id, granted_by, note, now()))
             events.append_foundry(
-                cx, "READ_GRANTED", actor=granted_by, scope_kind="group",
-                scope_id=group_id,
+                cx, "READ_GRANTED", actor=granted_by, scope_kind="read_scope",
+                scope_id=scope_id,
                 payload={"grant_id": gid, "grantee": grantee_client_id,
                          "note": note, "regrant": prior is not None})
             return _grant_dict(cx.execute(
@@ -3447,8 +3538,8 @@ class Foundry:
             cx.execute("UPDATE read_grants SET revoked_ts=? WHERE grant_id=?",
                        (now(), grant_id))
             events.append_foundry(
-                cx, "READ_REVOKED", actor=client_id, scope_kind="group",
-                scope_id=r["group_id"],
+                cx, "READ_REVOKED", actor=client_id, scope_kind="read_scope",
+                scope_id=r["scope_id"],
                 payload={"grant_id": grant_id,
                          "grantee": r["grantee_client_id"]})
             return _grant_dict(cx.execute(
@@ -3467,9 +3558,9 @@ class Foundry:
             out["granted_to_me"].append(_grant_dict(r))
         return out
 
-    def _granted_groups(self, cx, client_id: str) -> list:
-        return [r["group_id"] for r in cx.execute(
-            "SELECT group_id FROM read_grants WHERE grantee_client_id=? AND "
+    def _granted_scopes(self, cx, client_id: str) -> list:
+        return [r["scope_id"] for r in cx.execute(
+            "SELECT scope_id FROM read_grants WHERE grantee_client_id=? AND "
             "revoked_ts IS NULL", (client_id,)).fetchall()]
 
     def read_worlds(self, client_id: str, *, group_id: Optional[str] = None,
@@ -3482,22 +3573,23 @@ class Foundry:
         another seat's, and that distinction is the whole point of recording
         the corpus tenancy."""
         cx = self.store.read()
-        groups = self._granted_groups(cx, client_id)
+        scopes = self._granted_scopes(cx, client_id)
         if group_id is not None:
-            # an ungranted group yields EMPTY, never 403 -- no existence oracle
-            groups = [g for g in groups if g == group_id]
-        if not groups:
-            return {"worlds": [], "groups": [], "corpus_tenancy": []}
-        qs = ",".join("?" * len(groups))
+            # an ungranted scope yields EMPTY, never 403 -- no existence oracle
+            scopes = [g for g in scopes if g == group_id]
+        if not scopes:
+            return {"worlds": [], "scopes": [], "corpus_tenancy": []}
+        qs = ",".join("?" * len(scopes))
         rows = cx.execute(
-            "SELECT * FROM worlds WHERE topology_group IN (%s) AND "
-            "client_id != ? ORDER BY created_ts DESC LIMIT ?" % qs,
-            (*groups, client_id, int(limit))).fetchall()
+            "SELECT w.* FROM worlds w JOIN read_scope_worlds rw "
+            "ON rw.world_id = w.world_id WHERE rw.scope_id IN (%s) AND "
+            "w.client_id != ? ORDER BY w.created_ts DESC LIMIT ?" % qs,
+            (*scopes, client_id, int(limit))).fetchall()
         tenancy = {}
         for r in rows:
             tenancy[r["client_id"]] = tenancy.get(r["client_id"], 0) + 1
         return {"worlds": [_world_dict(r) for r in rows],
-                "groups": groups,
+                "scopes": scopes,
                 "corpus_tenancy": [{"client_id": k, "worlds": v}
                                    for k, v in sorted(tenancy.items())]}
 
@@ -3505,6 +3597,7 @@ class Foundry:
                           group_id: Optional[str] = None,
                           world_id: Optional[str] = None,
                           evidence_class: Optional[str] = None,
+                          measurement_id: Optional[str] = None,
                           limit: int = 1000) -> dict:
         """The cross-seat read surface for OBSERVATIONS.
 
@@ -3518,17 +3611,18 @@ class Foundry:
                                   evidence_class=evidence_class,
                                   allowed=list(EVIDENCE_CLASSES))
         cx = self.store.read()
-        groups = self._granted_groups(cx, client_id)
+        scopes = self._granted_scopes(cx, client_id)
         if group_id is not None:
-            groups = [g for g in groups if g == group_id]
-        if not groups:
+            scopes = [g for g in scopes if g == group_id]
+        if not scopes:
             return {"observations": [], "corpus": {"worlds": 0, "by_client": [],
                                                    "by_evidence_class": []}}
-        qs = ",".join("?" * len(groups))
+        qs = ",".join("?" * len(scopes))
         q = ("SELECT o.*, w.client_id AS owner FROM observations o "
              "JOIN worlds w ON w.world_id=o.world_id "
-             "WHERE w.topology_group IN (%s) AND w.client_id != ?" % qs)
-        args = [*groups, client_id]
+             "JOIN read_scope_worlds rw ON rw.world_id = w.world_id "
+             "WHERE rw.scope_id IN (%s) AND w.client_id != ?" % qs)
+        args = [*scopes, client_id]
         if world_id is not None:
             q += " AND o.world_id=?"
             args.append(world_id)
@@ -3538,21 +3632,59 @@ class Foundry:
         q += " ORDER BY o.created_seq LIMIT ?"
         args.append(int(limit))
         rows = cx.execute(q, args).fetchall()
+        # Resolve the outcome HERE rather than widening the owner-scoped
+        # per-observation route: a grantee reading another seat's corpus must
+        # not acquire owner-shaped access to it, and "which field is the
+        # outcome" is exactly what the reader needs and must not guess.
+        meas = None
+        if measurement_id is not None:
+            meas = self.get_measurement(measurement_id)
+            if not meas["value_path"]:
+                raise ValidationError(
+                    "this measurement declares no value_path, so the engine "
+                    "cannot say which field of a freeform observation is its "
+                    "value", measurement_id=measurement_id)
         by_client, by_ev, worlds = {}, {}, set()
         for r in rows:
             by_client[r["owner"]] = by_client.get(r["owner"], 0) + 1
             by_ev[r["evidence_class"]] = by_ev.get(r["evidence_class"], 0) + 1
             worlds.add(r["world_id"])
+        out_obs = []
+        for r in rows:
+            d = _observation_dict(r)
+            if meas is not None:
+                found, val = _dig(d["content"], meas["value_path"])
+                m = {"measurement_id": meas["measurement_id"],
+                     "identity_hash": meas["identity_hash"],
+                     "value_path": meas["value_path"], "found": found,
+                     "value": val, "direction": meas["direction"],
+                     "unit": meas["unit"]}
+                if found and isinstance(val, (int, float))                         and not isinstance(val, bool):
+                    lo, hi = meas["range_min"], meas["range_max"]
+                    m["in_declared_range"] = (
+                        (lo is None or val >= lo) and (hi is None or val <= hi))
+                d["measured"] = m
+            out_obs.append(d)
         return {
-            "observations": [_observation_dict(r) for r in rows],
+            "observations": out_obs,
             "corpus": {
                 "worlds": len(worlds),
-                "groups": groups,
+                "scopes": scopes,
                 "by_client": [{"client_id": k, "observations": v}
                               for k, v in sorted(by_client.items())],
                 "by_evidence_class": [{"evidence_class": k, "observations": v}
                                       for k, v in sorted(by_ev.items())],
                 "filtered_evidence_class": evidence_class,
+                "measurement": None if meas is None else {
+                    "measurement_id": meas["measurement_id"],
+                    "name": meas["name"], "version": meas["version"],
+                    "identity_hash": meas["identity_hash"],
+                    "value_path": meas["value_path"],
+                    "direction": meas["direction"],
+                    "resolved": sum(1 for o in out_obs
+                                    if o.get("measured", {}).get("found")),
+                    "unresolved": sum(1 for o in out_obs
+                                      if not o.get("measured", {}).get("found"))},
                 "truncated": len(rows) >= int(limit)},
         }
 

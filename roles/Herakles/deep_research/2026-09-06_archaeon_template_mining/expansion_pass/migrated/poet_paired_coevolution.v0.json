@@ -1,0 +1,52 @@
+{
+  "_ingest": {
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "design_choices": [
+      "world.seed_root added, range copied verbatim from the ADMITTED frozen baseline bitstring.uniform.v0. The mined template declared no world because the mining deck wrongly told it to declare payload parameters only."
+    ],
+    "design_choices_note": "Values introduced by Herakles on 2026-09-06 during the registry-shape migration. These are NEW DESIGN CHOICES, not recovered data, and each names its justification.",
+    "flags": [
+      "EXPANSION: kind 'poet_loop_v0' is not implemented by Vivarium; this template is an expansion request by definition",
+      "REPAIRED: source markers were removed from this block to make it parse. Structure is the report's; any value that a marker had overwritten is null, never guessed.",
+      "INCOMPLETE: axes ['num_environments', 'transfer_interval'] lost their values to source markers in the returned report. The axis names are real; the numbers are NOT reconstructed and must be set by the operator before admission."
+    ],
+    "migrated_from": "flat param_space (ROADMAP illustrative schema)",
+    "migration_notes": [
+      "payload.num_environments left NULL: its value was destroyed in the source report and no bench-native value exists to justify a fill",
+      "payload.transfer_interval left NULL: its value was destroyed in the source report and no bench-native value exists to justify a fill"
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act.",
+    "source_report": "04_open_ended_learning_and_architecture_search.md"
+  },
+  "admitted_at": null,
+  "admitted_by": null,
+  "kind": "poet_loop_v0",
+  "origin": {
+    "field": "POET / Open-Ended Learning",
+    "proposed_by": "Herakles",
+    "reference": "Paired Open-Ended Trailblazer (POET): Endlessly Generating Increasingly Complex and Diverse Learning Environments and Their Solutions (Wang et al. 2019)",
+    "source": "LITERATURE"
+  },
+  "param_space": {
+    "payload": {
+      "num_environments": {
+        "choices": null
+      },
+      "transfer_interval": {
+        "int_range": null
+      }
+    },
+    "world": {
+      "seed_root": {
+        "int_range": [
+          100000,
+          999999
+        ]
+      }
+    }
+  },
+  "rationale": "POET confronts open-endedness by evolving a population of diverse environmental challenges while collectively optimizing neural network agents to solve them, leveraging transfer learning between environments as stepping stones. This template tests if cross-environment transfers yield higher final scores than isolated training. A SURVIVED verdict would prove that paired co-evolution improves optimization on this specific set of environments, but it would not license the claim that the algorithm is capable of endlessly generating complexity without bound, as the bench's bounded evaluation budget cannot prove true open-endedness.",
+  "registry_version": "archaeon.template.v0",
+  "status": "PROPOSED",
+  "template_id": "poet_paired_coevolution.v0"
+}

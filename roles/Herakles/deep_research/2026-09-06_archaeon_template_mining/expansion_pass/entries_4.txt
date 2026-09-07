@@ -1,0 +1,859 @@
+BEGIN_ENTRY
+TEMPLATE_ID: agi.mc.aixi.ctw.v0
+FIELD: Artificial General Intelligence (AGI)
+KIND: aixi_ctw_eval_v0
+QUESTION: Can an agent that knows nothing about the rules of its environment learn
+  to act well in it, purely by compressing its own past stream of actions and
+  observations and then simulating possible futures from that compressed model?
+MECHANISM: The agent runs a closed loop with an environment. At each cycle it emits
+  an action symbol and receives an observation and a reward symbol. The whole
+  history of that stream is fed to a Context Tree Weighting model, which is a
+  Bayesian mixture over all variable order Markov predictors up to a fixed context
+  depth, so the agent does not have to choose a model order. To pick the next
+  action it runs a Monte Carlo tree search, rho-UCT, in which the rollouts are
+  sampled from the CTW mixture itself rather than from a known simulator, out to a
+  finite horizon. It executes the best action, observes what happens, updates the
+  mixture, and repeats for thousands of cycles. Performance is read as average
+  reward per cycle rising over experience, on toy partially observable domains such
+  as a biased coin flip, tiger, a small grid world, tic tac toe and Kuhn poker.
+CANDIDATE: The agent itself, more precisely its policy at a given amount of
+  accumulated experience. What is judged is the reward it collects. What varies
+  between agents is the context tree depth, the search horizon and the simulation
+  budget per move.
+WORLD: A small partially observable environment that consumes action symbols and
+  emits observation and reward symbols. It supplies hidden state, the transition
+  rules, the observation channel and the reward signal. It must also supply, for
+  normalisation, the random policy score and the optimal policy score.
+WHAT_CHANGES: Context tree depth, planning horizon, number of MCTS simulations per
+  move, environment choice and random seed. Critically, experience itself changes
+  within a single run, so the measured quantity is a curve over cycles rather than
+  a value.
+MEASURED: Average reward per cycle, continuous, usually rescaled so that the random
+  policy is 0 and the optimal policy is 1. Secondary numbers are model size and
+  time per decision.
+INFORMATIVE_FAILURE: Genuinely informative. A failure leaves the learning curve and
+  the fitted CTW model. The depth at which the curve plateaus reports the order of
+  temporal dependency the agent could actually capture, and running the same
+  environment at several depths and several simulation budgets separates a modelling
+  failure, context too shallow to represent the dependency, from a planning failure,
+  too few rollouts to exploit a model that was in fact adequate. That two way split
+  is the useful residue and it survives a total failure to reach optimal reward.
+SOURCE_CHECK: VERIFIED. Veness, Ng, Hutter, Uther and Silver, A Monte-Carlo AIXI
+  Approximation, Journal of Artificial Intelligence Research volume 40, 2011. The
+  method combines Context Tree Weighting with a UCT variant on small POMDPs exactly
+  as the template describes, and both named axes, context tree depth and search
+  horizon, are real hyperparameters of that work.
+SHARED_MECHANISM: agent_environment_loop
+ROUTES: R-BACKEND, R-SUBSTRATE
+BLOCKER: R-BACKEND: an execution capability. Reference implementations of MC-AIXI-CTW
+  exist as standalone programs, so the bench would only have to launch one, pass the
+  depth, horizon and environment, and fossilize the reward log. What is missing is
+  any executor kind that may invoke an external process, plus any payload field that
+  can name an environment, plus a fossil format for a per cycle reward trace. This is
+  orchestration, not measurement, and the final normalised average reward is a single
+  scalar so the one comparison outcome rule is untouched.
+  R-SUBSTRATE: a state and control flow capability. If the loop is to live inside the
+  bench, the bench needs output to input chaining, because the agent's action is an
+  input to the world and the world's observation is an input to the agent, thousands
+  of times inside one spec. The only stateful kind is random_walk_v0, which accepts
+  no input at all, so there is no path to a closed loop.
+FAITHFUL: A faithful version needs an environment registry with a step interface, an
+  agent process holding a mutable model across thousands of cycles within one sealed
+  spec, a per cycle reward log, and per environment random and optimal baselines so
+  the reported scalar is normalised rather than raw. The sealed spec and the single
+  scalar comparison both survive, since the verdict is one number, the normalised
+  average reward over the final block of cycles. What does not survive is one world
+  with a fixed payload and no state.
+REDUCTION: A partial reduction exists and it is worth running, but it reaches only
+  one of the two halves of the method. The reachable half is the learning half, the
+  question of whether using history beats not using history. Realise a memoryless
+  agent as a single fixed bitstring evaluated under evaluate_bitstring with
+  seed_derivation sha256_index and count around 200, so every repeat is an
+  independent hidden landscape, that is, an independent environment drawn from a
+  distribution. Its mean score is the no learning baseline and is analytically 0.5.
+  Then have the producer emit a chain of specs against one fixed seed_root, each
+  spec's bits chosen from the fossilized score of the previous spec: that is an agent
+  whose behaviour is a function of its own history, and its score after K specs is
+  the learning curve. Contrast the two at matched evaluation budget K.
+  WHAT IT PRESERVES: the shape of the central claim, that an agent conditioning on
+  its own past outperforms one that does not, on an environment whose rule it was
+  never told; and the budget matched comparison that makes such a claim meaningful.
+  WHAT IT LOSES: partial observability, since the bitstring score is a full and
+  honest report rather than an ambiguous observation; reward per cycle, since there
+  is no cycle; and above all planning, since the scorer has no forward model to roll
+  out, so the horizon_depth axis has no reduction whatsoever and should not be
+  pretended into one. The CTW model class is also gone, so nothing here speaks to
+  compression as induction.
+  WHICH CLAIM: it supports a claim that a history using producer beats a memoryless
+  producer at fixed budget on a hidden target landscape. It does not support any
+  claim about generality, about POMDPs, or about AIXI.
+  NEW DESIGN CHOICE, since both axes are null in the template: context_tree_depth in
+  16, 32, 48 and horizon_depth in 4 through 8 are reasonable operator settings for a
+  faithful backend run, and are proposed here, not recovered from the source.
+END_ENTRY
+
+BEGIN_ENTRY
+TEMPLATE_ID: am_concept_generation.v0
+FIELD: Machine Discovery
+KIND: evaluate_lisp_concept_v0
+QUESTION: Can a program that starts from a handful of elementary set theory ideas and
+  a bag of rules of thumb invent new mathematical concepts that a mathematician would
+  call interesting?
+MECHANISM: AM holds each concept as a frame with slots, a definition, known examples,
+  generalisations, specialisations and a numeric worth. It also holds an agenda of
+  pending tasks, each task being something like fill in examples of this concept,
+  generalise it, specialise it, or look for a regularity among its examples. The
+  agenda is sorted by an interestingness score computed from heuristic rules. The
+  loop is: pop the top task, run it, which usually means executing or rewriting a
+  Lisp definition, create whatever new concepts result, assign them a worth, and push
+  the tasks they suggest back onto the agenda. Run until the step budget is spent.
+  Famously the loop reached the notion of a number with unusually few divisors, that
+  is, primes, and then unique factorisation, from set theoretic starting material.
+  The output is not one number, it is the trace of concepts created and their worth.
+CANDIDATE: A generated concept, that is, a Lisp frame carrying an executable
+  definition. What varies is which concepts get created and what worth the heuristics
+  award them.
+WORLD: An initial concept library, a heuristic rule set, an agenda and a representation
+  language. The environment supplies the starting concepts, the Lisp representation in
+  which mutations of a definition are usually still meaningful, and the worth function
+  that decides what interesting means.
+WHAT_CHANGES: The number of initial concepts, the agenda step budget, which heuristics
+  are enabled or ablated, and tie breaking order.
+MEASURED: The count of concepts generated whose worth exceeds a threshold, on a bounded
+  numeric scale, plus a discrete rediscovery checklist, did it reach primes, did it
+  reach unique factorisation. The second of those is the number anyone actually cares
+  about and it is not continuous.
+INFORMATIVE_FAILURE: Strongly informative, and this is a case where the failure is more
+  valuable than the success. A run that produces nothing interesting still yields the
+  full concept trace, which can be read to see where the generative pressure died. More
+  importantly, an ablation over heuristics answers the question that AM's own author
+  later raised, namely whether the apparent discovery is carried by the heuristics at
+  all or by the fact that in Lisp a syntactic mutation of a definition is very often
+  still a meaningful definition. A failure that isolates the representation as the
+  load bearing part is a real result about machine discovery.
+SOURCE_CHECK: VERIFIED, with a dating note. AM is Lenat's 1976 Stanford doctoral thesis,
+  AM: An Artificial Intelligence Approach to Discovery in Mathematics as Heuristic
+  Search; the item usually cited as Lenat 1977 is the IJCAI-77 paper on automated theory
+  formation in mathematics. The system, the agenda, the heuristics and the frame
+  representation are as described, so the method and attribution are right and only the
+  year is ambiguous between thesis and conference paper.
+SHARED_MECHANISM: variation_selection_loop
+ROUTES: R-SUBSTRATE, R-EXECUTOR, R-BACKEND
+BLOCKER: R-SUBSTRATE: a state capability. AM is an archive that grows and whose contents
+  become the inputs of later steps. The bench fixes the payload for the whole spec, so a
+  spec can never add a concept to its own inputs. Missing: a persistent archive plus
+  output to input chaining within one spec.
+  R-EXECUTOR: a measurement capability. Nothing in the bench can evaluate a symbolic
+  definition, enumerate its examples, or compute a worth score. That needs an interpreter
+  that returns a scalar.
+  R-BACKEND: an execution capability. Existing theory formation systems in the AM lineage
+  could be driven from outside and their concept traces fossilized. What is missing is an
+  external process executor and a fossil format for a concept trace, not a measurement.
+FAITHFUL: A faithful version needs an executable concept representation, an interpreter
+  that can produce examples from a definition, an agenda whose ordering is computed by
+  heuristics that rewrite concepts, and a worth function; and it needs all of that to
+  persist and mutate inside a single experiment. The one scalar outcome rule can survive,
+  since the verdict can be the count of concepts above a worth threshold, but the sealed
+  fixed payload cannot.
+REDUCTION: Two reductions, one runnable now across specs and one small executor away.
+  First, the search dynamics half, runnable on the current bench through the producer.
+  Represent a concept as a fixed length bitstring and worth as its evaluate_bitstring
+  score against one hidden target, holding seed_root and seed_derivation constant across
+  every spec so all arms face the same landscape. The producer keeps an archive of the
+  highest scoring bitstrings seen so far and emits each new spec's bits as a recombination
+  or mutation of two archive members. The control producer emits uniformly random bits at
+  the same spec budget. Agenda steps map onto spec count.
+  WHAT IT PRESERVES: AM's actual search dynamic, that recombining already valued objects
+  finds valued objects faster than sampling fresh ones, together with the budget axis and
+  a real archive.
+  WHAT IT LOSES: everything symbolic. There are no definitions, nothing is executable, and
+  therefore the reduction is blind to precisely the property Lenat later identified as
+  load bearing, namely that mutating a Lisp definition usually yields another meaningful
+  definition. It also loses interestingness, since a hidden target score is a fixed
+  objective and AM's worth function is itself heuristic and revisable.
+  WHICH CLAIM: it supports a claim about archive driven recombination beating blind
+  sampling at fixed budget. It cannot support any claim about concept formation.
+  Second, the representation half, one small executor away and much more faithful. Let the
+  bits encode a tiny expression over a fixed grammar, and let the score be the fraction of
+  a hidden truth table the decoded expression reproduces. Now a mutation of the string is
+  a mutation of a program, and the measurable quantity is what fraction of mutations
+  remain meaningful, which is the actual AM question, stated as a measurement rather than
+  a demonstration. That is R-EXECUTOR and it is small, an interpreter for a grammar of
+  ten or so operators.
+  NEW DESIGN CHOICE, since both axes are null: initial_concepts 8, agenda_steps 200,
+  bitstring length 32. Proposed here, not recovered from the source.
+END_ENTRY
+
+BEGIN_ENTRY
+TEMPLATE_ID: cbr_retrieval_cycle.v0
+FIELD: Case-Based Reasoning
+KIND: cbr_retrieval_cycle_v0
+QUESTION: When a new problem arrives, can a memory of past cases return the genuinely
+  most similar past case, and does the choice of similarity measure change which case
+  comes back?
+MECHANISM: Case-based reasoning runs a four step cycle, retrieve, reuse, revise, retain.
+  This template isolates the first step. A case base holds N past cases, each described
+  by a vector of D features together with the solution that was used. A new problem
+  arrives described in the same features. A similarity function scores every stored case
+  against the query, either as plain geometric closeness, Euclidean or cosine, or with
+  domain knowledge weighting some features more heavily than others. The cases are ranked
+  and the top one is returned with its similarity score. In the full cycle that case's
+  solution would then be adapted, tested and stored back, but none of that happens here.
+CANDIDATE: The query case. What is judged is the retrieval, that is, the similarity score
+  of the top ranked case, and in a stricter design whether the retrieved case's solution
+  was in fact the right one.
+WORLD: A case base of N points in a D dimensional feature space plus a similarity function.
+  The environment supplies the memory, the geometry, and, if accuracy rather than raw
+  similarity is being measured, the ground truth nearest neighbour.
+WHAT_CHANGES: Case base size, feature dimensionality, similarity metric, and the query.
+MEASURED: Top one similarity, continuous on 0 to 1. Optionally retrieval accuracy against
+  a labelled correct neighbour, which is a different and much more meaningful number.
+INFORMATIVE_FAILURE: Informative, but with a trap that has to be named. Top one similarity
+  falls as D rises simply because distances concentrate in high dimension, so a failure at
+  large D is the expected geometry and not a defect of any metric. What the failure leaves
+  is the concentration curve itself, similarity against D at fixed N, which is exactly the
+  useful object. The trap is that a threshold on raw similarity is close to always
+  satisfied at low D and close to never satisfied at high D, so a rule frozen without first
+  computing the attainable range can be degenerate before it runs. A failure of the reuse
+  claim, by contrast, leaves nothing at all, because this template never touches reuse.
+SOURCE_CHECK: VERIFIED. Aamodt and Plaza, Case-Based Reasoning: Foundational Issues,
+  Methodological Variations, and System Approaches, AI Communications volume 7 number 1,
+  1994. That paper is the canonical statement of the retrieve, reuse, revise, retain cycle,
+  and isolating the retrieve phase is a normal thing to do with it.
+SHARED_MECHANISM: retrieve_and_rank_from_corpus
+ROUTES: R-EXECUTOR, R-COMPOSE, R-SUBSTRATE
+BLOCKER: R-EXECUTOR: a measurement capability. No existing kind computes a distance between
+  two vectors. Note what is NOT blocking: the case base needs no persistent state, because
+  it can be derived deterministically from the world seed exactly the way the bitstring
+  target already is, so this is the cheapest kind of new executor, a pure function of seed
+  and parameters.
+  R-COMPOSE: an adjudication capability. Comparing three similarity metrics is a comparison
+  across specs, and the outcome rule is one field, one operator, one value, so no spec can
+  hold the contrast. It has to be computed downstream from three fossils.
+  R-SUBSTRATE: a state capability. Feeding the retrieved case forward into reuse requires
+  output to input chaining, which the bench does not have.
+FAITHFUL: A faithful version needs a seeded case base generator, the three similarity
+  functions implemented separately, and a labelled ground truth neighbour so that retrieval
+  accuracy rather than raw similarity is the reported number. It also needs a second stage
+  that adapts the retrieved solution and scores it, because without that the experiment
+  measures the geometry of a synthetic point cloud and says nothing about reasoning.
+REDUCTION: A surprisingly faithful reduction runs on the bench as it stands, because
+  evaluate_bitstring already is a similarity oracle. Read the hidden target derived from the
+  seed and the length as one stored case, the submitted bits as the query, and the returned
+  score as Hamming similarity between them. Then case base size maps onto repeat count with
+  seed_derivation sha256_index, since each repeat draws an independent hidden case, and the
+  maximum score over the N repeats is precisely the top one retrieval similarity over a
+  random case base. Feature dimensionality maps onto length. The maximum over repeats cannot
+  be the outcome rule, because no aggregation across repeats is permitted, so the retrieval
+  statistic is computed downstream, which makes this R-COMPOSE over specs that each run now.
+  WHAT IT PRESERVES: the retrieval statistic itself, and, more valuable, its calibration.
+  The expected top one Hamming similarity over N random cases of length L is the expectation
+  of the maximum of N binomial draws divided by L, so the whole attainable range of the
+  statistic is known in closed form before any threshold is frozen. It also preserves the
+  concentration effect that makes high dimensional retrieval hard, because the spread of that
+  maximum narrows as L grows.
+  WHAT IT LOSES: the metric axis entirely, since Hamming is the only similarity the scorer
+  can express, so euclidean, cosine and knowledge_guided are all unreachable; structured
+  cases; labels; and the reuse, revise and retain steps that are the rest of the cycle.
+  WHICH CLAIM: it supports a claim that top one similarity in a case base with no structure
+  is a known function of base size and dimension, and therefore that any retrieval threshold
+  chosen without that calibration is uninformative. That is a real methodological result
+  about the field and it is reachable now. It supports no claim about any actual similarity
+  metric.
+  NEW DESIGN CHOICE, since two axes are null: case_base_size in 8, 64, 512 mapped to repeat
+  count, feature_dimensions in 16, 32, 64, 128 mapped to length.
+END_ENTRY
+
+BEGIN_ENTRY
+TEMPLATE_ID: computational_mathematics_walk.v0
+FIELD: Computational Mathematics
+KIND: random_walk_v0
+QUESTION: Over a fixed number of steps, how far does an unbiased one dimensional random
+  walk wander, and does the accumulated displacement stay inside the bounds that theory
+  predicts?
+MECHANISM: Start at the origin. Repeat a fixed number of times: draw a value uniformly
+  from minus one to plus one, multiply by the step scale, add it to the current position.
+  Report the final position and the displacement from the start. Because each increment is
+  independent with mean zero and variance equal to the square of the step scale divided by
+  three, the displacement after n steps is asymptotically normal with mean zero and
+  standard deviation equal to the step scale times the square root of n over three. The
+  characteristic prediction of the model is not any single endpoint but that the spread
+  grows as the square root of the number of steps, which is the diffusive scaling law.
+CANDIDATE: The realised trajectory, judged by its endpoint. Nothing is being optimised.
+WORLD: A single integer seed feeding a pseudorandom generator, plus a step scale. The
+  environment supplies only randomness and a length scale, which is why this is the one
+  template in the chunk whose world is genuinely the bench's world.
+WHAT_CHANGES: Number of steps, step scale, the derived seed per repeat, and whether state
+  is reset or persisted between repeats.
+MEASURED: Position and displacement, continuous and unbounded, in units of the step scale.
+  The executor also returns start position, steps and step scale, so the fossil is
+  self describing.
+INFORMATIVE_FAILURE: Modest but real, and it points inwards rather than outwards. A
+  displacement outside the predicted band is not a statement about diffusion, it is a
+  statement about the bench's own pseudorandom source or about the step distribution, so a
+  failure is a calibration finding on the instrument. Repeated over many seeds it becomes a
+  usable test of uniformity and independence of the generator, which every other stochastic
+  template on the bench silently depends on. A single walk that lands outside the band leaves
+  nothing at all, because one endpoint is one draw from a wide distribution, and that is the
+  main way this template can be run badly.
+SOURCE_CHECK: PLAUSIBLE. The one dimensional discrete random walk with uniform increments is
+  canonical and uncontroversial, and the diffusive scaling result is textbook. The template
+  names no specific text, author or year, only standard discrete stochastic modelling texts,
+  so there is no particular attribution available to confirm or refute. The method is real;
+  there is simply nothing here to verify against.
+SHARED_MECHANISM: accumulate_trajectory
+ROUTES: R-REPAIR, R-NOW, R-COMPOSE
+BLOCKER: R-REPAIR: missing parameters, which is a spec completeness problem rather than a
+  capability gap. Both steps and step_scale are null in the param space, and no executor may
+  default a parameter, so the spec is rejected as written. Choosing numbers makes it R-NOW.
+  R-NOW: nothing, once repaired. This is one of only two templates in the chunk that the
+  bench can execute at all.
+  R-COMPOSE: an adjudication capability. Every claim worth making here, that mean displacement
+  is zero, that the standard deviation matches the step scale times the square root of n over
+  three, that the spread doubles when the step count quadruples, is an aggregate over repeats
+  or over specs. The outcome rule is one scalar comparison with no aggregation and no trend
+  test, so the statistics must be computed downstream from the fossilized per repeat
+  displacements.
+FAITHFUL: A faithful version is an ensemble, not a run. It needs many independent seeds per
+  cell of the step count and step scale grid, downstream estimation of the mean and variance
+  of displacement, and a sweep over step counts so that the square root law is checked rather
+  than assumed. It also needs the increment distribution and the generator to be documented,
+  so that the predicted band is derived in advance rather than fitted after the fact.
+REDUCTION: This template is already at the bench, so the useful work is not shrinking it but
+  making it non vacuous, and there is a good design available.
+  NEW DESIGN CHOICE, since both axes are null: step_scale fixed at 1.0, steps on a geometric
+  ladder of 100, 400, 1600 and 6400 so that the predicted spread should double at each rung,
+  repeat count 200 with seed_derivation sha256_index and state reset. The sha256_index choice
+  is not cosmetic: with constant derivation, a stateless kind and state reset and a count above
+  one, the bench flags degenerate_by_construction, and every repeat would be the identical
+  computation.
+  The per spec outcome rule is a per repeat containment check, absolute displacement no greater
+  than three times the step scale times the square root of steps over three. Its expected
+  violation rate is about three in a thousand, so both the attainable range and the eligible
+  outcome are known before the rule is frozen, which is the whole point of choosing it this
+  way. Downstream, fit the observed spread against the square root of the step count across the
+  four rungs.
+  WHAT IT PRESERVES: diffusive scaling, which is the only real content of the method, and the
+  containment band, which is the only honest single scalar the method can produce.
+  WHAT IT LOSES: any claim about physical Brownian motion, about drift, about first passage
+  times, or about the generator being a good model of anything outside itself.
+  WHICH CLAIM: that the bench's own random source produces diffusive scaling with the predicted
+  constant. That is an instrument calibration result the rest of the bench can lean on, which
+  makes this the highest value per unit effort template in the chunk.
+  Worth adding as a second arm: run the same ladder with state persist, so that a long walk is
+  taken in chunks, and check that the chunked walk composes into a single walk with the same
+  law. That is a direct test of the only stateful path in the substrate, and nothing else in the
+  inbox tests it.
+END_ENTRY
+
+BEGIN_ENTRY
+TEMPLATE_ID: discovery_informatics.v0
+FIELD: Discovery Informatics
+KIND: evaluate_bitstring
+QUESTION: Given a candidate bridging term that connects two unrelated bodies of literature,
+  can a statistical model predict from a few cheap features whether that bridge is a real,
+  relevant connection rather than noise?
+MECHANISM: In an Arrowsmith style two node search, two literatures are retrieved and the terms
+  they share are extracted. There are typically hundreds or thousands of them and almost all
+  are worthless, so the practical problem is ranking. Torvik and Smalheiser computed, for each
+  shared term, a set of cheap features, how often it appears in each literature, how many
+  distinct literatures it occurs in, its indexing category, how cohesive its usage is, and fitted
+  a logistic regression of those features against expert relevance judgements. The fitted model
+  returns a probability of relevance, the terms are sorted by it, and a human curator reads only
+  the top of the list. The method is ordinary supervised ranking; what makes it a discovery
+  method is what the features are computed over.
+CANDIDATE: One shared bridging term, represented as a feature vector, judged by its predicted
+  relevance.
+WORLD: A bibliographic corpus, a chosen pair of literatures, and a gold set of expert relevance
+  judgements. The environment supplies both the feature values and the labels, and the labels are
+  the expensive part.
+WHAT_CHANGES: The feature vector, the number of features, and, in the template as written, the
+  world seed which determines the hidden target the bits are compared against.
+MEASURED: In the real method, a predicted probability in 0 to 1, evaluated in aggregate by area
+  under the curve or precision at k. In the template, evaluate_bitstring's score, which is the
+  fraction of bits agreeing with a hash derived target.
+INFORMATIVE_FAILURE: This has to be answered bluntly, because the template does not implement the
+  method. It replaces a regression fitted against labelled data with agreement against a hash
+  derived random vector, so a FALSIFIED verdict says only that a fixed eight bit pattern happened
+  to disagree with a hash. It leaves nothing about bridging terms. What it does leave, if run with
+  many repeats under sha256_index, is the null distribution of agreement between a fixed pattern
+  and independent random targets, which is a useful bench calibration and has no connection to
+  discovery informatics.
+  There is a second, sharper thing a failure would expose here, and it is a defect in the template
+  as written. The three bits choices, 11110000, 10101010 and 11111111, all have identical score
+  distributions against a uniformly random target, namely a binomial with eight trials and
+  probability one half divided by eight. Two of them have four ones and one has eight, and it makes
+  no difference, because the score depends only on Hamming distance to an unknown uniform target and
+  every fixed pattern is exchangeable under that. The three arms are therefore not separable, and
+  the bits axis is vacuous as long as the target is a fresh hash. That is a real finding about the
+  template and it should be recorded before anything is run.
+SOURCE_CHECK: VERIFIED. Torvik and Smalheiser, A quantitative model for linking two disparate sets
+  of articles in MEDLINE, Bioinformatics, 2007. The paper addresses exactly the problem of ranking
+  the many shared terms produced by the Arrowsmith two node search by fitting a model over
+  computable term features, and the logistic characterisation in the template matches. Attribution
+  and method both check out.
+SHARED_MECHANISM: fit_model_to_data
+ROUTES: R-REPAIR, R-EXECUTOR, R-BACKEND, R-COMPOSE
+BLOCKER: R-REPAIR: a missing parameter, and then a validity problem that repair does not fix. The
+  length axis is null while every bits choice is eight characters long, so length must be set to 8
+  or the spec is inconsistent. Once repaired the spec runs, but it measures bit agreement with a
+  hash, not relevance, so R-REPAIR buys execution and not validity.
+  R-EXECUTOR: a measurement capability. Nothing in the bench applies a coefficient vector to a
+  feature vector and returns a probability.
+  R-BACKEND: an adjudication capability. The labels live entirely outside the bench. There is no way
+  for a spec to be handed a gold standard, so a labelled term set and a fitted model have to be
+  orchestrated externally and fossilized.
+  R-COMPOSE: an adjudication capability. Ranking quality is a property of a list, not of one item,
+  so area under the curve or precision at k cannot be a single spec's outcome.
+FAITHFUL: A faithful version needs a labelled set of bridging terms with the published feature
+  definitions, a model with fixed coefficients, and a held out split, and it would report area under
+  the curve or precision at k. The sealed spec with one scalar comparison can carry that final number.
+  What it cannot carry is the fitting step, because fitting is search over parameters and search
+  inside a spec is forbidden, so the model must be fitted upstream and the spec may only evaluate it.
+  That separation is actually good discipline and would improve the original method's reporting.
+REDUCTION: Two reductions, and the first one is available now.
+  First, invert the reading of the hidden target. Fix length at 8 and treat the hash derived target as
+  the unknown rule rather than as noise. Hold seed_root fixed with constant derivation and count one,
+  since more repeats would be flagged degenerate_by_construction, and emit one spec per candidate
+  hypothesis vector. Across the 256 possible eight bit hypotheses, which is R-COMPOSE over 256 cheap
+  specs, the whole score landscape is recovered and the hidden rule is identified exactly.
+  WHAT IT PRESERVES: the honest cost accounting of rule discovery with no search inside a spec, and
+  the fact that a fixed candidate scorer gives partial credit, which is what makes ranking possible
+  at all.
+  WHAT IT LOSES: the corpus, the labels, the features and the entire biomedical content.
+  WHICH CLAIM: that recovering an eight bit rule with a fixed candidate scorer costs two to the length
+  specs, and therefore that all inference in this architecture is pushed into the producer. That is a
+  claim about the bench, not about discovery informatics, and it should be labelled as such.
+  Second, and much closer to the source, simulate the pipeline symbolically. Draw K bridging terms as
+  feature vectors, plant a linear relevance rule, label the top decile relevant, and ask whether ranking
+  by a fixed weight vector concentrates the relevant terms at the top of the list better than ranking
+  by raw frequency alone. This needs a scoring executor, so R-EXECUTOR, but it is tiny, no corpus, no
+  training, no network, and it preserves the actual claim of the paper, that cheap features carry enough
+  signal to make a curator's reading list short. It loses the corpus, the expert judgements and any
+  claim about MEDLINE.
+  NEW DESIGN CHOICE: length 8 to match the given bits, K equal to 1000 simulated terms, relevant decile.
+END_ENTRY
+
+BEGIN_ENTRY
+TEMPLATE_ID: evolcomp.fitness.v0
+FIELD: Evolutionary Computation
+KIND: evaluate_bitstring
+QUESTION: How good is one particular binary individual on a hidden fitness landscape, and how does
+  that change as the genome gets longer?
+MECHANISM: In a genetic algorithm the inner loop is fitness evaluation. An individual is a bitstring,
+  it is handed to an objective function, and a scalar comes back. Selection then keeps the better
+  scoring individuals, crossover recombines pairs of them, mutation flips occasional bits, and the
+  next generation is evaluated. Holland's framework explains why this works in terms of schemata,
+  short building blocks of bits whose above average fitness is compounded across generations. This
+  template runs only the evaluation step: one uniformly drawn bitstring is scored against a hidden
+  target derived from the seed and the length.
+CANDIDATE: A single bitstring genome, sampled uniformly at random.
+WORLD: The hidden target implied by the pairing of seed and length. That target defines a smooth
+  unimodal landscape with a single optimum and a Hamming gradient leading to it, which is the easiest
+  landscape family that exists.
+WHAT_CHANGES: Genome length, 16, 24 or 32, the sampled bits, and the derived seed per repeat.
+MEASURED: Score, continuous on 0 to 1, equal to the fraction of matching bits, plus a solved flag that
+  fires only at exactly 1.0.
+INFORMATIVE_FAILURE: Informative only as a null, and that is worth stating precisely rather than
+  apologetically. A uniformly random genome of length L scores about 0.5 with a standard deviation of
+  one over twice the square root of L, so failing to clear any threshold much above 0.5 is not a finding,
+  it is the expectation. What a run leaves behind is the calibrated random search baseline at each
+  length, which is the exact quantity every later search claim on this bench has to beat. That is real
+  and useful residue, and it is the only thing this template can produce.
+  The larger honest point is that the template contains no evolutionary content whatsoever. There is no
+  population, no selection, no crossover and no mutation. It is the single part of Holland's loop that
+  the bench can perform, and the bench cannot perform any of the other parts inside a spec.
+SOURCE_CHECK: VERIFIED, with one scope note. Holland, Adaptation in Natural and Artificial Systems,
+  University of Michigan Press, 1975, is correctly cited as the source of the genetic algorithm framework
+  in which fitness evaluation is the inner loop. Holland does not specify this particular hidden target
+  objective, so the attribution is right for the framework and not for the landscape.
+SHARED_MECHANISM: score_fixed_candidate
+ROUTES: R-NOW, R-COMPOSE, R-SUBSTRATE
+BLOCKER: R-NOW: nothing blocks execution. This is the only fully specified template in the chunk. One
+  caveat, not a blocker: the bits axis is written as uniform_bits over length, which is a producer side
+  generator directive, so the sealed spec must carry a concrete bits value materialised before sealing.
+  R-COMPOSE: an adjudication capability. Selection and variation are relations between specs, and no
+  outcome rule can compare two specs, so any evolutionary claim has to be assembled downstream.
+  R-SUBSTRATE: a state capability. A real genetic algorithm needs a population and an archive of scored
+  individuals persisting across evaluations, plus output to input chaining so that generation t plus one
+  is a function of generation t's scores. The bench has none of that.
+FAITHFUL: A faithful version needs a population object, a selection operator that reads fitness, variation
+  operators that write new genomes, and generations, that is, a loop in which the inputs at each step are
+  the outputs of the previous one, all inside one experiment. The single scalar outcome rule survives,
+  since best of run fitness is one number, but one world with a fixed payload does not.
+REDUCTION: The template is already a reduction of its field, so the useful move is to make it earn its
+  place as the bench's null rather than pretend it is evolution.
+  Concrete design: for each length in 16, 24 and 32, one spec with bits fixed at a single uniform draw,
+  repeat count 500 and seed_derivation sha256_index. The derivation choice matters, since constant
+  derivation with a stateless kind and state reset and count above one is flagged
+  degenerate_by_construction and yields zero within world variance by construction. Under sha256_index every
+  repeat is an independent landscape, which is what makes the run a distribution rather than a single point.
+  Outcome rule per repeat: score at least 0.5 plus three over twice the square root of the length, whose
+  expected hit rate is about one in a thousand, so the eligible range is known before the rule is frozen.
+  WHAT IT PRESERVES: the objective function itself and the way blind search scales with genome length. Once
+  this exists, the smallest number of blind draws needed to reach a given score is a closed form quantity,
+  and any producer side search can be scored against it honestly.
+  WHAT IT LOSES: population, selection, crossover, mutation, schemata, diversity maintenance, in short all
+  of Holland. It also loses landscape structure, because the hidden target induces a smooth unimodal Hamming
+  landscape, so nothing here can speak to deception, epistasis or rugged landscapes, which is where the
+  interesting evolutionary computation results live.
+  WHICH CLAIM: that a producer side search at budget K beats blind sampling at budget K on this landscape.
+  That is the only evolutionary claim currently reachable, and it is reachable now, which is more than can
+  be said for anything else in this chunk.
+END_ENTRY
+
+BEGIN_ENTRY
+TEMPLATE_ID: knowledge_discovery.v0
+FIELD: Knowledge Discovery
+KIND: two_node_search.v0
+QUESTION: Do two bodies of medical literature that never cite each other nonetheless share intermediate
+  terms, and can those shared terms point to a real connection that nobody had noticed?
+MECHANISM: Swanson's ABC model. Choose literature A, for instance Raynaud's syndrome, and literature C, for
+  instance dietary fish oil, which have essentially no articles and no citations in common. Extract terms
+  from the titles of each. Intersect them. A term B appearing in both, such as blood viscosity or platelet
+  aggregation, indicates that A to B and B to C are separately known while A to C has never been stated, so
+  A to C becomes a candidate implicit connection. A human then reads the ranked bridging terms and judges
+  which are plausible. The Arrowsmith system automates the retrieval and intersection; the judgement stays
+  human. Swanson's fish oil and Raynaud's proposal, and later his magnesium and migraine proposal, were both
+  subsequently supported by clinical work.
+CANDIDATE: The pair of literatures. What is judged is the set of bridging terms between them, and whether
+  there are more or better of them than two arbitrary disjoint literatures would share by chance.
+WORLD: An indexed bibliographic corpus. It supplies the documents, the title vocabulary, the indexing terms
+  and, crucially, the disjointness of A and C at a particular date.
+WHAT_CHANGES: The choice of A and C. The corpus snapshot date, which matters far more than it looks: after
+  1986 the literature is contaminated, because Swanson's own published hypothesis generated the articles that
+  a later search would find. Also the stopword list, the term extraction rules and the ranking function.
+MEASURED: The number of shared bridging terms and their ranking scores, and, in a well run version, the
+  significance of that count against a null of randomly paired disjoint literatures. Counts and continuous
+  scores.
+INFORMATIVE_FAILURE: Informative, and in two different ways. If the search on a known positive pair fails to
+  surface the historically correct bridging terms, that is a measurement of the extraction pipeline rather
+  than of the hypothesis, and it localises the fault to term extraction, stopwords or corpus snapshot. More
+  valuably, running the pipeline over many random disjoint pairs leaves the distribution of bridging term
+  counts under the null, which is the object the field most often omits and against which every reported
+  discovery should have been read.
+  One warning belongs on the record. The two parameter choices offered, Raynaud's with fish oil and migraine
+  with magnesium, are the field's own founding examples. Retro-testing on them measures fit to the cases that
+  designed the method, not discovery capability, so a SURVIVED verdict on these pairs is a fit statistic and
+  should never be reported as a capability estimate.
+SOURCE_CHECK: VERIFIED. Swanson, Undiscovered Public Knowledge, Library Quarterly, 1986, together with his
+  1986 fish oil and Raynaud's syndrome paper; the migraine and magnesium case is Swanson 1988; the Arrowsmith
+  two node search implementing this is Swanson and Smalheiser's system. Both offered query pairs correspond to
+  the two canonical published cases, so the method, the attribution and the parameter values all check out.
+SHARED_MECHANISM: retrieve_and_rank_from_corpus
+ROUTES: R-BACKEND, R-EXECUTOR, R-COMPOSE
+BLOCKER: R-BACKEND: an execution capability, and this is the cheap route. A bibliographic service is an
+  external tool that already does the retrieval; the bench would only have to issue two queries, intersect the
+  term sets, count and fossilize. What is missing is any executor that may call an external service, any payload
+  field that can carry a query string, and a fossil format for retrieved document sets with a snapshot date.
+  R-EXECUTOR: a measurement capability. Nothing in the bench computes a set intersection or a term count.
+  R-COMPOSE: an adjudication capability. Significance against a null of random pairs is an aggregate over many
+  specs, which the one scalar comparison cannot express.
+FAITHFUL: A faithful version needs a pinned and dated corpus snapshot, pre 1986 for the canonical cases or the
+  discovery leaks into its own evidence, a documented term extraction and stopword pipeline, an explicit check
+  that A and C really are disjoint at that date, and a matched null of randomly paired disjoint literatures.
+  Without the snapshot date and the null it is a retro-fit on the field's two training examples and it will
+  always appear to succeed.
+REDUCTION: The corpus can be replaced by one the bench derives from its own seed, and that turns out to be more
+  rigorous than the original rather than less, because a planted bridge can be ablated and a real one cannot.
+  Design: represent a document as a bit vector of length L, where a set bit means a term is present. Literature A
+  is generated from a hidden A profile of term probabilities and literature C from a hidden C profile. A planted
+  bridge is a small set of term indices given elevated probability in both profiles. The measurement is the count
+  of term indices whose co-occurrence across the two literatures exceeds a threshold, run twice, once with the
+  bridge planted and once with it removed. That is a genuine instance of the method, bridge detection read against
+  a known null, at a scale where the ground truth is owned.
+  On the current bench, only half of that is reachable, and it is worth saying which half. evaluate_bitstring with
+  a fixed candidate under sha256_index repeats gives the distribution of agreement between a fixed vector and
+  independent random vectors, which is exactly the null for how many terms two unrelated literatures share by
+  chance.
+  WHAT IT PRESERVES: the null calibration and the disjointness baseline, which is the half the field skips.
+  WHAT IT LOSES: text, semantics, term extraction, the corpus, the human judgement step and every biomedical claim.
+  It also cannot produce the treatment arm, because the bench cannot plant a bridge in a hash derived target.
+  WHICH CLAIM: that a shared term count is only interpretable against a random pair null, plus that null itself,
+  computed and fossilized. The full synthetic corpus version, which does have a treatment arm, is R-EXECUTOR and is
+  small, one seeded generator plus a counting scorer.
+  NEW DESIGN CHOICE: L equal to 512 terms, 200 documents per literature, bridge of 5 planted terms, co-occurrence
+  threshold set from the ablated arm rather than chosen in advance.
+END_ENTRY
+
+BEGIN_ENTRY
+TEMPLATE_ID: maml_few_shot.v0
+FIELD: Meta-Learning
+KIND: maml_adapt_v0
+QUESTION: Can a model's starting parameters be trained in such a way that a handful of gradient steps on a
+  brand new task is enough to do that task well?
+MECHANISM: Two nested loops. In the inner loop, a task is sampled, a few labelled examples from it are used to
+  take a small number of gradient steps from the current initialisation, producing task specific parameters, and
+  the loss of those parameters is measured on held out examples of the same task. In the outer loop, that post
+  adaptation loss is differentiated with respect to the original initialisation, which involves a second
+  derivative term or a first order approximation of it, and the initialisation is updated. Repeat over many
+  batches of tasks. At meta test time an unseen task is sampled, the same few inner steps are taken from the
+  learned initialisation, and accuracy is reported. The point is that nothing about the model architecture is
+  special; only the initialisation is meta-learned, which is where the model-agnostic name comes from.
+CANDIDATE: The initialisation, judged by post adaptation performance on tasks it has never seen.
+WORLD: A distribution over tasks, each supplying a small support set and a held out query set. Standard choices
+  are sinusoid regression with varying amplitude and phase, and N way K shot image classification. The essential
+  thing the world supplies is shared structure across tasks; without that there is nothing to meta-learn.
+WHAT_CHANGES: Inner learning rate, number of inner gradient steps, shot count, way count, task sample and
+  initialisation seed.
+MEASURED: Post adaptation accuracy or mean squared error on held out query sets, continuous, averaged over many
+  test tasks and reported with a confidence interval because the variance across tasks is large.
+INFORMATIVE_FAILURE: Informative, because the diagnostic controls are standard and cheap. A failure to adapt is
+  read against three baselines, a randomly initialised network given the same inner steps, the meta-learned
+  initialisation evaluated with zero inner steps, and a jointly pretrained network. That triple localises whether
+  the initialisation contributes anything beyond ordinary feature reuse, which is the live controversy in the
+  area. So a failed run leaves a real ablation rather than nothing, provided the baselines were run.
+SOURCE_CHECK: VERIFIED. Finn, Abbeel and Levine, Model-Agnostic Meta-Learning for Fast Adaptation of Deep
+  Networks, ICML 2017. The two named axes, inner gradient steps and inner learning rate, are genuine
+  hyperparameters of that method, and the offered learning rate choices are in the usual range.
+SHARED_MECHANISM: nested_optimization_loop
+ROUTES: R-BACKEND, R-SUBSTRATE, R-COMPOSE
+BLOCKER: R-BACKEND: an execution capability. A training run is exactly the backend shape, fixed hyperparameters
+  in, one scalar out. What is missing is an executor that can invoke a training process, a payload field that can
+  name a task distribution and a dataset, and a fossil format for a training log.
+  R-SUBSTRATE: a state and control flow capability. MAML is a loop whose parameters at each step are a function of
+  the previous step's results, and the bench both fixes the payload for the whole spec and forbids search inside a
+  spec. Meta-training is search by definition, so it can never live inside a sealed spec; that is the sharpest
+  thing to say about this template.
+  R-COMPOSE: an adjudication capability. The meaningful verdict is a contrast against a random initialisation and
+  a zero step baseline, which spans several specs and cannot be a single scalar comparison.
+FAITHFUL: A faithful version needs a task distribution with support and query splits, an autodiff framework that
+  can carry gradients through the inner loop, a meta-training budget, and a meta-test protocol reporting mean
+  accuracy with a confidence interval over many held out tasks. The sealed spec can carry the hyperparameters and
+  receive the final scalar; the entire optimisation belongs in a backend.
+REDUCTION: This is the hardest template in the chunk to reduce honestly, and the honest reduction begins with a
+  negative result that is worth having.
+  Observe that the bench's repeat semantics already are a task distribution. With seed_derivation sha256_index each
+  repeat scores against an independently derived hidden target, that is, an independent task; with constant
+  derivation there is exactly one task. So an initialisation is a fixed bitstring, and its expected score across
+  independent tasks is its task-agnostic quality. Because the targets are hash derived and uniform, that expectation
+  is exactly 0.5 for every possible bitstring, and no initialisation can beat any other. The bench's current task
+  distribution has zero shared structure, and therefore admits no meta-learning gain at all. That is measurable now,
+  in one spec with a few hundred repeats, and it is a useful negative: it says precisely what a world would have to
+  supply, namely correlated tasks, before any meta-learning template on this bench could be non-vacuous.
+  The minimal positive version needs one small executor. Make the task distribution structured by generating targets
+  that share a fixed prefix of m bits across tasks while the remaining bits vary per task. Now an initialisation that
+  gets the shared prefix right scores above 0.5 on every task, adaptation is the producer flipping only the varying
+  suffix bits across successive specs, and inner steps map onto the number of such producer side flips.
+  WHAT IT PRESERVES: the actual shape of the MAML claim, that shared structure across tasks makes few step adaptation
+  cheap, and it preserves the essential control, a random initialisation given the same adaptation budget. The shared
+  prefix length m is a direct dial on how much structure exists, so the effect can be traced from zero to saturation
+  rather than asserted at one point.
+  WHAT IT LOSES: gradients, differentiability, second derivatives, neural networks, and the entire outer loop. In this
+  reduction the good initialisation is chosen by the analyst rather than learned, so it measures the VALUE of a good
+  initialisation and not the ability to LEARN one, which is the paper's actual contribution. That gap cannot be closed
+  without a backend.
+  WHICH CLAIM: that adaptation cost falls with the amount of structure shared across tasks, and that a task distribution
+  with no shared structure admits no meta-learning. Both are real, and the second is available today.
+  NEW DESIGN CHOICE, since inner_gradient_steps is null: length 32, shared prefix m in 0, 8, 16, 24, adaptation steps in
+  0, 1, 2, 4, and 200 tasks per cell.
+END_ENTRY
+
+BEGIN_ENTRY
+TEMPLATE_ID: neurodynamics.attractor.evo.v0
+FIELD: Darwinian Neurodynamics
+KIND: attractor_evolution_v0
+QUESTION: Can a population of small brain-like networks actually run Darwinian evolution, with copying, variation and
+  inheritance, and does doing so find solutions faster than merely trying variants at random?
+MECHANISM: A population of attractor networks of the Hopfield kind. Each network stores patterns as attractors, and
+  those patterns are candidate solutions. A network is relaxed from a noisy starting state and settles into a pattern,
+  which is a variant. The variants produced across the population are scored against a fitness function, the best are
+  selected, and the selected patterns are then used to retrain the networks by a Hebbian rule, which installs them as
+  new attractors. That retraining step is the heredity channel: the offspring network inherits the parents' attractor
+  landscape rather than a copied string. Iterate over generations. The decisive comparison is against a purely
+  selectionist control, which keeps selection but severs the heredity channel, and against random search.
+CANDIDATE: At the lower level a binary pattern generated by relaxation; at the upper level the network itself, judged
+  by the fitness of the patterns it generates.
+WORLD: A fitness landscape over binary patterns, plus the network architecture, the Hebbian learning rule and a noise
+  source for relaxation. The world supplies the problem and the stochasticity that makes variation possible.
+WHAT_CHANGES: Population size, number of retraining iterations, noise level, number of stored attractors per network,
+  selection strength and the landscape.
+MEASURED: Best and mean fitness over generations, and time to reach the target. The reported quantity is a difference
+  between arms over a trajectory, not a point, which matters for how it can be adjudicated.
+INFORMATIVE_FAILURE: Informative in the strongest sense, because failure is the field's own falsification. If the
+  evolutionary arm does not beat the selectionist control, that is a clean negative on the central hypothesis and it
+  leaves behind the attractor landscapes themselves, which can be inspected to see whether heredity actually transmitted
+  anything. If the failure comes from catastrophic interference during Hebbian retraining, the capacity curve, number of
+  stored patterns against recall fidelity, says so directly and separates a substrate limit from an algorithmic one.
+  Nothing here is wasted.
+SOURCE_CHECK: VERIFIED, with a dating note. Szilagyi, Zachar, Fedor, de Vladar and Szathmary, Breeding novel solutions
+  in the brain: a model of Darwinian neurodynamics, F1000Research volume 5, article 2416, first published 2016 with a
+  later revised version; the template's 2017 date corresponds to the revision rather than to first publication. The
+  author list, the model and the population of attractor networks generating and selecting binary patterns are all as
+  described.
+SHARED_MECHANISM: variation_selection_loop
+ROUTES: R-BACKEND, R-SUBSTRATE, R-COMPOSE
+BLOCKER: R-BACKEND: an execution capability. The model is an ordinary simulation and could be run outside the bench and
+  fossilized. What is missing is an external process executor and a fossil format for a per generation fitness trajectory
+  across two arms.
+  R-SUBSTRATE: a state capability. The method needs a population of mutable objects and output to input chaining, since
+  this generation's selected patterns are literally next generation's training data. The bench has one world, one fixed
+  payload and no population, so no part of the loop can be expressed.
+  R-COMPOSE: an adjudication capability. The verdict is a two arm comparison over generations, which is both a conjunction
+  and a trend, and the outcome rule permits neither. The contrast must be computed downstream.
+FAITHFUL: A faithful version needs a population of networks with a Hebbian training rule, noise driven relaxation to read
+  out variants, a selection operator, an explicit heredity channel implemented as retraining on selected patterns, and a
+  matched selectionist control that keeps selection but severs heredity. The control is not an extra, it is the experiment,
+  because without it any improvement over generations is just search. It also needs multiple seeds and full per generation
+  trajectories rather than endpoint values.
+REDUCTION: The severable claim is heredity versus no heredity at equal evaluation budget, and that runs on the bench today
+  through the producer.
+  The no heredity arm is available directly: evaluate_bitstring with seed_derivation constant against one fixed seed_root,
+  count one per spec, and the producer emitting K independent uniformly random candidates. That is the selectionist and
+  random search arm exactly, and its best of K score distribution is analytic, so the arm comes with its own null.
+  The heredity arm is a producer side hill climber against the same seed_root: each new spec's bits are a mutation of the
+  best scoring bits seen so far. Both arms consume K specs, so the budgets match by construction. The contrast, best score
+  after K evaluations with heredity against without, is the paper's headline comparison rendered at bitstring scale.
+  WHAT IT PRESERVES: the load bearing claim, that inheritance of what worked beats independent sampling at matched budget,
+  on a genuine hidden landscape, with an analytic null for the control arm. It also preserves the generation trajectory,
+  since each spec is a generation and the fossils give the whole curve.
+  WHAT IT LOSES: the neural substrate entirely. There are no attractor networks, no Hebbian retraining, no capacity limit
+  and no interference. That matters more than usual here, because the paper's claim is not that evolution works, which is
+  not in doubt, but that a neural substrate can IMPLEMENT the heredity channel through retraining rather than through
+  copying a string. The reduction copies a string, so it is silent on exactly the point of the paper. Say so rather than
+  overselling it.
+  WHICH CLAIM: heredity beats no heredity at matched budget. Not a claim about brains.
+  A cheap next step restores the missing half: an executor kind that takes a set of stored patterns plus a noise seed and
+  returns the score of the relaxed pattern. A 32 unit Hopfield network with three stored patterns is a few lines of code and
+  brings back the capacity and interference behaviour that the bitstring reduction discards.
+  NEW DESIGN CHOICE, since both axes are null: population_size 30, retrain_iterations 5, generations K equal to 100, pattern
+  length 32.
+END_ENTRY
+
+BEGIN_ENTRY
+TEMPLATE_ID: program_synthesis_sketch.v0
+FIELD: Program Synthesis
+KIND: bounded_synthesizer.v0
+QUESTION: If a programmer writes a program with holes in it plus a statement of what the program should do, can a solver
+  fill in the holes so that the result is correct, and how much work does that take?
+MECHANISM: Sketching. The programmer writes a partial program in which unknown constants or expressions are left as holes,
+  and supplies a specification, often a slow reference implementation. The sketch and the spec are compiled into a constraint
+  over the hole values, bounded in input size and loop unrolling so the constraint is finite. Then counterexample guided
+  inductive synthesis runs a loop: a SAT or SMT solver proposes hole values that work on the current finite set of test
+  inputs; a verifier searches for an input on which the candidate and the spec disagree; if it finds one, that counterexample
+  is added to the set and the loop repeats; if it cannot, the completed program is returned. The iteration cap bounds that
+  loop, and sketch size measures how much was left unspecified.
+CANDIDATE: The hole assignment, that is, the completed program. It is judged by whether it satisfies the bounded specification.
+WORLD: The sketch, the reference specification, and the bounds on input size and unrolling. The environment supplies the
+  constraint semantics and the solver.
+WHAT_CHANGES: Number and size of holes, the iteration cap, the bounds, the benchmark, and the solver's own random seed, which
+  matters more than people expect.
+MEASURED: A solved or unsolved boolean, plus iterations consumed and wall clock time. The boolean is the verdict and the time
+  is the continuous statistic; they are different quantities and the template should not conflate them.
+INFORMATIVE_FAILURE: Highly informative and cheap, which is unusual. A timeout leaves the accumulated counterexample set, which
+  is a compact description of what the solver found hard about this sketch, and the number of rounds reached before the cap is
+  itself the difficulty measure. Better still, an unsatisfiable result is not a timeout at all but a proof that the sketch admits
+  no completion, which is a stronger and often more useful outcome than a success, because it says the specification and the
+  sketch are inconsistent. Failure here is productive by construction.
+SOURCE_CHECK: VERIFIED. Solar-Lezama, Program Synthesis by Sketching, doctoral thesis, University of California Berkeley, 2008.
+  The sketch with holes, the bounded compilation to constraints and the counterexample guided loop are all as described, and both
+  named axes correspond to real knobs.
+SHARED_MECHANISM: counterexample_guided_refinement
+ROUTES: R-BACKEND, R-EXECUTOR, R-COMPOSE
+BLOCKER: R-BACKEND: an execution capability, and this is the archetypal cheap case. Solvers and sketch compilers exist as
+  binaries; the bench passes a sketch, a spec and bounds, and receives solved, iterations and time. What is missing is an executor
+  that may spawn an external solver, a payload that may carry program text, and a fossil format for a solver log and its
+  counterexample set. Note the pleasant consequence: counterexample guided synthesis is search, and search inside a spec is
+  forbidden, but the entire search is hidden inside one opaque backend call whose result is a single scalar, so the prohibition
+  costs nothing here. R-BACKEND is precisely the escape hatch for search shaped methods.
+  R-EXECUTOR: a measurement capability. Nothing in the bench evaluates a program against a specification.
+  R-COMPOSE: an adjudication capability. The interesting statement, that iterations scale with hole count, is a trend across specs
+  and the outcome rule admits no ordering or trend test.
+FAITHFUL: A faithful version needs a sketch language, a reference specification, a bounded compiler to constraints, an SMT or SAT
+  backend and a driver for the refinement loop. It must also record the solver version, the bounds, the seed and the timeout in the
+  fossil, because solver results are not portable across versions and an unrecorded version silently invalidates any later
+  comparison. The single scalar outcome rule survives cleanly, either solved, or iterations no greater than the cap.
+REDUCTION: A near bench version keeps the refinement loop's shape and is more faithful than it first appears, because
+  evaluate_bitstring already is a bounded specification.
+  Read the hidden target as the specification, the submitted bits as the hole assignment, and the score as the fraction of the
+  specification satisfied. A sketch with h holes is then a bitstring of length L in which L minus h bits are held fixed at values the
+  analyst supplies, the given part of the sketch, and h bits are the completion. Hold seed_root constant across the whole family so
+  every arm faces the same specification. The producer runs the outer loop: submit a completion, read the score, which functions as
+  the verifier's partial feedback, submit a refined completion, and count how many specs are needed to reach a score of 1.0. Sweep
+  h over 4, 8, 12 and 16 at L equal to 32 to get the cost curve against hole count.
+  WHAT IT PRESERVES: the bounded specification structure, the distinction between the given part of a program and the part being
+  synthesised, the refinement loop and its iteration count as the cost measure, and the scaling of cost with the number of unknowns.
+  It even preserves the fact that the verifier returns partial rather than binary information, since the Hamming score reports how
+  wrong a candidate was.
+  WHAT IT LOSES: everything logical. There is no constraint propagation, no unsatisfiability proof, no solver and no semantics. Worse,
+  the Hamming score gives a smooth gradient where real synthesis has none, and a real solver's whole advantage comes from exploiting
+  the logical structure that the reduction deletes. So the reduction measures the cost of greedy completion under a forgiving oracle,
+  which is close to the easiest possible version of the problem.
+  WHICH CLAIM: it can support a claim about how completion cost scales with the number of unknowns under a partial credit oracle. It
+  cannot support any claim about program synthesis, and it should not be described as doing so.
+  One bench-native observation is worth recording from this exercise: because evaluate_bitstring's score is continuous rather than
+  boolean, the bench can distinguish close from wrong, which a satisfiability oracle cannot. That asymmetry is the crispest available
+  statement about which methods this bench can host and which it cannot.
+  NEW DESIGN CHOICE, since both axes are null: sketch_size expressed as holes h in 4, 8, 12, 16 at L equal to 32, max_iterations 64,
+  and 20 independent seed_roots per cell.
+END_ENTRY
+
+BEGIN_ENTRY
+TEMPLATE_ID: sciml_pinn_residual.v0
+FIELD: Scientific Machine Learning
+KIND: train_physics_informed_nn_v0
+QUESTION: Can a neural network be made to solve a differential equation by being penalised for violating the equation itself, rather
+  than by being shown examples of the solution?
+MECHANISM: The unknown solution is represented directly by a neural network taking the space and time coordinates as inputs. Points
+  are sampled across the domain, called collocation points. At each one the residual of the governing equation is computed by
+  differentiating the network's output with respect to its own inputs using automatic differentiation, so the derivatives in the
+  equation are exact rather than discretised. The training loss is the mean squared residual over the collocation points plus a mean
+  squared error term on the initial and boundary conditions. The network is trained by gradient descent, usually Adam followed by a
+  quasi-Newton refinement. At the end the residual is reported, and where a reference solution exists so is the relative error against
+  it. No solution data is needed in the interior of the domain, which is the whole selling point.
+CANDIDATE: The trained network, that is, its weights, judged by the residual it achieves and by its distance from the true solution.
+WORLD: A differential equation together with a domain, initial conditions and boundary conditions, plus the collocation sampling
+  scheme. The world supplies the differential operator and the constraints, and in evaluation it must also supply a reference solution.
+WHAT_CHANGES: Number of collocation points, training epochs, network width and depth, the weighting between the residual term and the
+  boundary term, the optimiser schedule and the initialisation seed.
+MEASURED: Mean squared residual, continuous and near zero, and relative error against a reference solution, also continuous. These are
+  two different numbers with very different meanings and the difference between them is the entire subject.
+INFORMATIVE_FAILURE: Informative, and specifically so, because the diagnostic pattern is well known. A low residual paired with a high
+  error against the reference is the interesting failure: the network has found something that satisfies the equation but not the
+  conditions, which points at the boundary weighting rather than at the optimiser. A high residual points at the optimiser or the
+  capacity. So the residual and error scatter over seeds is the useful residue.
+  A degeneracy in the template as written deserves recording. The outcome rule proposed is a threshold on residual alone, and residual
+  alone is not an adequacy criterion: for many homogeneous equations the identically zero function has exactly zero residual, so the
+  rule can be satisfied vacuously by a network that has learned nothing. A residual-only verdict is degenerate unless the boundary term
+  is inside the same criterion, and the one field, one operator, one value rule forbids putting it there.
+SOURCE_CHECK: VERIFIED. Raissi, Perdikaris and Karniadakis, Physics-informed neural networks, a deep learning framework for solving
+  forward and inverse problems involving nonlinear partial differential equations, Journal of Computational Physics volume 378, 2019.
+  Collocation points and training epochs are genuine axes of that work and the mechanism is as described.
+SHARED_MECHANISM: fit_model_to_constraint
+ROUTES: R-BACKEND, R-COMPOSE, R-SUBSTRATE
+BLOCKER: R-BACKEND: an execution capability. A training run behind a single returned scalar is the natural backend shape. What is
+  missing is an external process executor, a payload field able to name an equation and a domain, and a fossil format for a training
+  curve.
+  R-COMPOSE: an adjudication capability, and here it is unavoidable rather than incidental. The only non-degenerate verdict is a
+  conjunction, residual low AND error against reference low, and the outcome rule is explicitly one field with one operator and one
+  value. The conjunction therefore has to be assembled downstream from two fossils, which also keeps the two numbers from being
+  silently merged.
+  R-SUBSTRATE: a state and control flow capability. Training is search over parameters, which is forbidden inside a spec.
+FAITHFUL: A faithful version needs automatic differentiation with respect to network inputs, an implementation of the residual operator
+  for the chosen equation, an explicit set of initial and boundary conditions with a stated loss weighting, an optimiser schedule, and a
+  reference solution so that residual can be checked against actual accuracy. It also needs several initialisation seeds per cell,
+  because the loss landscape is non-convex and single seed results are not stable enough to support a threshold verdict.
+REDUCTION: The essence to preserve is scoring a candidate by how much it violates a law, with no target data. The bench's bitstring
+  scorer is the opposite of that, it is distance to a stored answer, so mapping this onto evaluate_bitstring would be a gesture. Two
+  better reductions exist.
+  First, runnable now with random_walk_v0. A discrete random walk is a numerical integrator of a diffusion, and the law it should satisfy
+  is that the variance of displacement after n steps equals n times the square of the step scale over three. Define the residual as the
+  deviation of the realised ensemble variance from that law. Each spec is one walk; the residual is computed downstream across many seeds,
+  so this is R-COMPOSE over specs that each run today.
+  WHAT IT PRESERVES: the constraint based adequacy criterion, that is, judging a generator by a law it should obey rather than by data it
+  should match, and the fact that the residual is evaluated at sampled points rather than against a known closed form solution.
+  WHAT IT LOSES: the network, automatic differentiation, the optimisation, and the inverse problem half of the paper, in which unknown
+  equation coefficients are recovered from data.
+  WHICH CLAIM: that an unfitted generator satisfies a stated physical law to within a measured tolerance. That exercises residual as
+  verdict with no learning at all, which is a clean separation worth having.
+  Second, a small executor away, and this one preserves the learning half. Take a one dimensional ordinary differential equation with a
+  known solution, for instance the derivative of u equals minus u with u at zero equal to one, and a three parameter polynomial function
+  class. Score one FIXED parameter triple by its mean squared residual at seeded collocation points plus a weighted boundary term. Because
+  the payload is fixed, no spec can train; the producer performs the descent across specs, which is exactly the discipline the bench
+  imposes. This is tiny, no network and no autodiff library needed for a polynomial, and it reproduces both traps faithfully, the trivial
+  solution and the boundary weighting, at a scale where the true solution is known in closed form.
+  WHAT IT LOSES: the actual contribution, which is that a neural representation with automatic differentiation does this in dimensions
+  where a fixed small function class cannot. No reduction reaches that, and it needs a backend.
+  NEW DESIGN CHOICE, since both axes are null: 64 collocation points on the unit interval, a three parameter polynomial class, boundary
+  weight 1.0, and 20 seeds per cell.
+END_ENTRY

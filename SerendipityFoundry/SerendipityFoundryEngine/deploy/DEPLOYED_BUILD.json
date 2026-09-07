@@ -4,16 +4,16 @@
   "endpoint": "https://192.168.1.202:8811",
   "pinned_at": "2026-09-06",
   "pinned_by": "Daedalus",
-  "schema_version": 6,
-  "release": "v6 scientific provenance",
-  "source_commit_containing_build": "8e52c50ab12cbb6da29de24d0c942e397502c7e9",
+  "schema_version": 7,
+  "release": "schema v7",
+  "source_commit_containing_build": "be65b0efa36d2d5475f1006d2e39c45e0fdfd8fc",
   "release_commits": [
     "869df1fa1",
     "50ef81ba1",
     "dfc2ac701",
     "088591ab3"
   ],
-  "engine_source_hash": "sha256:2f42e87f28f32065e8aa1c7cf4e0777c523e474ea4d1aa2ad4aa9a626143fe68",
+  "engine_source_hash": "sha256:4d2d4da30a5ed78d0bb322ee35cee88a0cd84a263dc819d501268a4a655e3ab0",
   "_engine_source_hash_definition": "sha256 over sorted sfe/*.py, each contributing name + NUL + LF-normalized bytes + NUL. Computed at import by sfe/release.py; LF-normalized so a checkout's line-ending convention cannot change build identity. This is the AUTHORITATIVE build id. source_commit on /v2/version is best-effort git metadata from the deployment tree and may name a commit that cannot reproduce the build.",
   "expected_runtime_config": {
     "session_enforcement": "advisory",
@@ -24,7 +24,7 @@
   "rollback_behaviour_measured_2026-09-06": "A pre-v6 engine opened against the live schema-6 ledger REFUSES to start: RuntimeError 'db schema version 6 is NEWER than this engine's 5; refusing to run (would misread state)' (sfe/store.py:471-474). Verified by running the 35758f9d0 source against a VACUUM INTO copy of the live ledger. So a source revert produces a LOUD OUTAGE, not a silent downgrade -- the service dies rather than quietly serving pre-v6 semantics over v6 data. That is the correct failure direction, and it is why this pin is a recovery aid rather than a safety interlock.",
   "restore": {
     "verify": "python deploy/verify_deploy.py",
-    "restore_source": "git -C <a checkout you own> fetch origin && git checkout 8e52c50ab12cbb6da29de24d0c942e397502c7e9 -- SerendipityFoundry/  # then copy into the deployment tree",
+    "restore_source": "git -C <a checkout you own> fetch origin && git checkout be65b0efa36d2d5475f1006d2e39c45e0fdfd8fc -- SerendipityFoundry/  # then copy into the deployment tree",
     "do_not": "Do NOT 'git checkout -- .' or 'git clean' in F:/Prometheus to fix this: that tree carries uncommitted work belonging to ergon, evidence_wiki/PEW and other roles."
   },
   "files": {
@@ -33,8 +33,8 @@
       "bytes_lf": 71
     },
     "SerendipityFoundry/SerendipityFoundryEngine/sfe/api.py": {
-      "sha256_lf": "99cc71ce1d72f2a4f4772b90ce5717b4b00928055bcd74ef2e3c1c50cc57fdfa",
-      "bytes_lf": 51991
+      "sha256_lf": "00edc4f35ade04f1b2f2e0c5d7c5135c2e67ba8590f7386fc347ac7b95e46bf1",
+      "bytes_lf": 60941
     },
     "SerendipityFoundry/SerendipityFoundryEngine/sfe/canary.py": {
       "sha256_lf": "88fb02720fdd5b9b8464481db14cd3da8dd509ac4bcd9e2f71203ae06b193238",
@@ -53,20 +53,20 @@
       "bytes_lf": 6386
     },
     "SerendipityFoundry/SerendipityFoundryEngine/sfe/ids.py": {
-      "sha256_lf": "9c11fcf5c61c49bf2044e406fa108bccc25eda30e292a57ae30f99cef6b09e9c",
-      "bytes_lf": 4117
+      "sha256_lf": "095a0ea33015d164bb9a43787aad1524860034fbd3221cfa1009b787a4726f19",
+      "bytes_lf": 4153
     },
     "SerendipityFoundry/SerendipityFoundryEngine/sfe/release.py": {
       "sha256_lf": "7dad4ad6b016714d5e2c30a3756b3131f92cdc352a24a8cb5450d2b6957cd868",
       "bytes_lf": 1717
     },
     "SerendipityFoundry/SerendipityFoundryEngine/sfe/runtime.py": {
-      "sha256_lf": "ea70f9a9d3ab83e9561dab47e703e2e4cc7154a5c0fceac36d94d692b71f0e24",
-      "bytes_lf": 184664
+      "sha256_lf": "b47dc5f199ae6c2cf3ce8ccf8eaba5b2f58860e43a8969071d7477f40185fbb9",
+      "bytes_lf": 219047
     },
     "SerendipityFoundry/SerendipityFoundryEngine/sfe/store.py": {
-      "sha256_lf": "9c03e590850f1cfe419f80cd656156cc3ad2fe3ca9b44776b35909c9cd2f8b2b",
-      "bytes_lf": 32913
+      "sha256_lf": "248dae19ccec72981fbbcce986955f225442c8ddf466e7a2ac5d3ae4b7109bf9",
+      "bytes_lf": 38598
     },
     "SerendipityFoundry/SerendipityFoundryEngine/serve.py": {
       "sha256_lf": "568508fedcc8bcf1f6efad504214429709d5458db49c14a6d2242c7beef477d0",
