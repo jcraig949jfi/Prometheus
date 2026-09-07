@@ -110,6 +110,25 @@ def check(rows: Optional[List[Dict[str, Any]]] = None) -> Dict[str, Any]:
                   "the binding). Pending Harmonia's confirmation and "
                   "Daedalus's binding."),
          "ref": "roles/Daedalus/INBOX_ARCHAEON_ARM_KEY_CONFLICT.md"})
+    # Harmonia's ruling (5759518f0): the DESIGN OWNER must declare the three
+    # levels before any power statement. Declared here, by the design's owner.
+    out["levels"] = {
+        "selected": "8 worlds: the 2 families x 2 arms x 2 worlds grid",
+        "randomized": "WORLD. Each world receives one arm; arms differ by an "
+                      "execution parameter (length 24 vs 28). n = 4 worlds "
+                      "per arm across both families.",
+        "analyzed": "WORLD (never finer). The 4 ordered observations within a "
+                    "world are repeats and are summarised to one value per "
+                    "world before any contrast. Under seed_derivation "
+                    "sha256_index each repeat is scored against a different "
+                    "derived target, so within-world variation is exchangeable "
+                    "(Binomial(L,1/2)/L) and carries no arm information.",
+        "power_note": "Harmonia measured 80% power only at d ~ 3.0 at this "
+                      "n; M-ELIGIBLE establishes ELIGIBILITY of the frozen "
+                      "features, not a contrast. Two families are two "
+                      "conditions, not n = 2.",
+        "declared_by": "archaeon (design owner)", "declared_on": "2026-09-07",
+    }
     out["release_condition"] = (
         "sealed arm binding -> granted readback (LIVE v7 + Archaeon's own "
         "credentials returning the intended observations with census and "

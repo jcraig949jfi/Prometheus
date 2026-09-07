@@ -1,12 +1,222 @@
 # Archaeon roadmap
 
-Working document, revised 2026-09-06 after operator review. Organised around
-the three challenges placed on this seat, **preceded by the delegation the
-first draft omitted: to Archaeon itself.**
+Working document. Revised 2026-09-06 after operator review; **revised
+2026-09-07 with the diversity and expansion section (§D, below) after the
+Herakles mining and expansion passes.** Organised around the three challenges
+placed on this seat, **preceded by the delegation the first draft omitted: to
+Archaeon itself.** History is preserved; nothing below §D was rewritten.
 
 The one design idea that runs through everything: **LLMs and humans shape the
 menu offline; the tick draws from the menu deterministically.** That line keeps
 the selection policy falsifiable while letting the menu grow from every source.
+
+---
+
+## D. Diversity and expansion — what SFE could newly host (2026-09-07)
+
+Supporting evidence and detail: `archaeon/docs/expansion/ANNEX.md` (index),
+with the 69-entry crosswalk, the assets audit, the source inventory, the
+branch designs, the shared-infrastructure design, the selection rules, the
+dependency graph, the work packages, and the decisions register.
+
+### D.0 Starting point, by revision
+
+Engine `sfe/` at `be65b0efa` — **v7 is live on M1** (schema 7 confirmed by
+the probe on 2026-09-07); read scopes replace group grants; the arm is sealed
+on the family member record (`642736763`). Vivarium at `19e13e5b1`, with a
+campaign branch (`621bdfeb9`) carrying E1 `design_hash`, E6 selection
+families and E16 within-run `aggregate`. PEW at `ec49be22d`. Harmonia's
+ruling `5759518f0`: arm ruling confirmed with two conditions (ordering proof;
+a traversable link), three analysis levels named, D3 admitted for region
+discrimination on a frozen corpus with one number Archaeon must explain, and
+an M-SIGNAL skeleton with every number blank until a corpus exists. Archaeon
+at `073091863` merged with main. The 2026-09-06 reports are inputs; every
+claim here was re-checked against these revisions.
+
+**Live release condition today:** v7 live ✓ · granted readback ✗ (the read
+surface answers with zero rows: no scope has been granted to Archaeon's
+client) · arm-bound PEW round trip ✗ (blocked on the grant and on WP-0c).
+The blocker has moved from Daedalus to a grant Harmonia must run, and to
+Vivarium writing one arm value into both seals.
+
+### D.1 Established · inferred · proposed · unresolved
+
+**Established (measured, cited in the annex).**
+- One world is integrated and qualified: the 24-bit seeded onemax. Three
+  kinds exist. Everything else in the repo is at most runnable in isolation.
+- The bitstring bench has an analytic null: against a fresh hashed target,
+  any candidate's score is Binomial(L, ½)/L. Scoped to that sampling design —
+  it says nothing about information against a *fixed* target, where one
+  score is an exact Hamming distance.
+- Of the 69 mined proposals, 7 name an implemented kind, 0 build today; 50
+  carry destroyed values, 5 of which are entailed by surviving text. The
+  matrix's 31 mechanism tags are an implementation index, not scientific
+  equivalence: the crosswalk keeps every entry's question and semantics.
+- The record can already hold witnesses, bounded trajectories and lineage
+  pointers (untyped free JSON in `content`, no cap); typed cross-object links
+  are thin (`fork`; `source_set` on an analysis). PEW is reference-only by
+  doctrine.
+- There is **no runnable Avida or Tierra** in the repo; `ergon/avida2003/` is a
+  dossier plus an unbuilt 2005 tarball of the wrong version, frozen by ruling.
+- The only spatial, stateful substrate with real organisms is the 1993-95
+  EvCA density-classification specimen (rule tables + numpy verifier,
+  verified by execution).
+- 75% of the 64 frozen Proteus specimens are world-blind under the current
+  input channel (Harmonia 09-05); usable population is 7 ordered pairs.
+- No qualified neutral variation operator exists anywhere in the repo.
+
+**Inferred (from the above, by Archaeon).** The common layer is already
+common (sealed spec, budget, provenance outside the hash, observation
+reference, measurement identity, analysis families); no universal organism or
+world type is needed or wanted. Transfer is a property of an organism with
+state, so relatedness (Herakles C-1) waits on one. The cross-observation
+statistic (C-5) needs a home, not a rule, and the home exists.
+
+**Proposed (this roadmap).** Four diversity branches plus a calibration
+class; a first portfolio of three families; eight rules for how diversity
+survives selection; twelve decisions with recommendations; twenty-nine work
+packages with owners and acceptance artifacts.
+
+**Unresolved (named, with owner).** D-2 units for generations/episodes
+(Harmonia, Daedalus); D-4 backend reproducibility grading (Vivarium,
+Harmonia); D-5 analysis-family convention (Harmonia); D-6 the reserve and
+descriptor numbers (operator); D-8 the Proteus input channel (Proteus,
+Harmonia); D-11 the population route (spike first); WP-0d D3's null fire
+rate (Archaeon, before M-SIGNAL).
+
+### D.2 The branches (detail: `expansion/BRANCHES.md`)
+
+- **A. Interacting landscapes** (17 entries) — NK landscape kind
+  `nk_landscape_v0(bits, length, k)`; k = 0 is the built-in mechanism
+  control; permutation of loci is the exchangeability null; the contribution
+  vector is the family's witness. First bounded experiment: fixed-target
+  series at k ∈ {0,2,4}, random queries, D3 eligibility per k against the
+  null. Question not stipulated: whether an epistatic fossil record carries
+  region structure a directed policy can exploit and k = 0 does not.
+- **B. Symbolic execution** (17) — `program_eval_v0` on the Proteus VM
+  (already integrated via the arena, replay-proven), returning outputs,
+  trace digest and the **witness** (the input on which the program is wrong).
+  Opcode-bijection null; witness-withheld control. First experiment:
+  two-arm rounds-to-match with vs without the witness, same deterministic
+  proposal rule — C-2 priced before it is used anywhere else. Organism claims
+  wait on PATH B (D-8).
+- **C. Spatial, stateful** (10) — `ca_density_v0` from the EvCA verifier:
+  local observation, action changes the neighbours' next observation, the
+  lattice is the memory; six historical genomes as fixed organisms; the
+  reflection/complement symmetries are a literature-known null; r = 0 and
+  T = 1 are the remove-interaction and remove-memory controls. First
+  experiment: random rules vs historical genomes, witnesses (misclassified
+  initial conditions) and one space-time digest preserved. A rediscovery of
+  particle strategies would be a calibration anchor, recorded as such.
+- **D. Population ecology** (7) — nothing runnable; begins with a two-day
+  spike (build Avida 2.2 / sketch a replicator soup / compile hct01.c; run
+  each twice under one seed; compare digests) before any route is chosen.
+  Needs `generation` as a unit and a neutral kernel qualified by detailed
+  balance before any diversity claim.
+- **E. Numeric calibration** (13) and **other** (5) — instrument checks with
+  analytic answers, and program-level questions routed to Aporia.
+
+**Organism diversity, plainly:** bitstrings, rule tables, and
+producer-proposed programs are the organisms this roadmap can stand up; the
+64 specimens are a panel of fixed artifacts until the input channel widens;
+replicator genomes wait on a kernel. LLM models or prompt variants are not
+organisms.
+
+### D.3 Smallest shared infrastructure (detail: `expansion/INFRASTRUCTURE.md`)
+
+Common and already existing: sealed inputs, declared budget, provenance
+outside the hash, observation references, reproducibility literal, analysis
+families, arm seal, cross-seat read. Family-specific and never homogenised:
+state model, lifecycle, action/observation semantics — declared by a per-kind
+`result_schema` and registered measurements, nothing else. Raw material
+(witness, bounded trajectory, relatedness, lineage, consumed prior
+observation) fits the record today; two doctrine decisions (D-1, D-2). Eight
+contract changes, all additive except the external-backend contract, which is
+new and scoped to one qualified tool. C-0 and C-6 done; C-3 promoted (it is
+Branch A's entry); C-2 required by B; C-1 deferred behind a stateful
+organism; C-4 legitimate, graded by double-run, not assumed; C-5 closed as a
+home.
+
+### D.4 How diversity survives selection (detail: `expansion/SELECTION_RULES.md`)
+
+R1 a bounded novelty reserve per lane (1 of 6 draws; unspent is recorded, not
+absorbed) · R2 retention by human-declared descriptors with informative
+failures never evicted by successes · R3 comparison only within a task
+family; coverage as counts, never a universal score · R4 distinctness only by
+intervention under matched seeds, after the family's exchangeability null ·
+R5 null + mechanism control + frozen random control as conditions of
+admission to the directed menu · R6 transfer only through declared mappings
+carried by an organism with state · R7 repertoire and co-development held as
+leads · R8 LLMs propose and translate; rejection needs a precise claim and
+derivation; everything else is deferral with a reopening condition.
+
+### D.5 First portfolio (recommendation)
+
+    static structured      A  nk_landscape_v0            Daedalus exec + Vivarium kind
+    symbolic               B  program_eval_v0 (Proteus VM) Proteus lib + Vivarium kind
+    stateful interaction   C  ca_density_v0 (EvCA)        Herakles lib + Vivarium kind
+    population ecology     D  spike WP-P0 first; Avida does NOT make it earlier
+
+Why this composition: A is the cheapest world with the phenomenon and a
+one-parameter control; B reuses the only integrated, replay-proven
+interpreter and prices C-2; C is the only spatial substrate that is runnable
+and verified today, comes with real organisms and a literature anchor, and
+has single-parameter interaction and memory controls. The `ludus/arena`
+worlds are the retained alternative for C (reopen when a test suite exists);
+`genesis` SlotVM for A (reopen if NK cannot separate methods). Each family
+ships its null, its control and its frozen random template before its first
+experiment, and each first experiment is an M-SIGNAL-shaped round on that
+family's own frozen corpus. Demonstrating the capability (replay-identical
+executions, preserved witnesses, a control that removes the mechanism) is
+separated from qualifying any conclusion; no positive effect, transfer, or
+novelty is required to call a family faithfully implemented.
+
+### D.6 Gates preserved
+
+M-ELIGIBLE and M-SIGNAL keep their meanings and order. Integrity repairs
+required by every branch (WP-0a–0f) are separated from branch-only
+dependencies; expansion design and the three family builds proceed while
+calibration continues. S17 predicts fragility and is never a weak-signal
+detector; D1–D6 detect effect presence and are qualified by Harmonia one at a
+time (today: D3, region discrimination only). Conclusions about the bitstring
+bench are scoped to fresh-target sampling; a scalar score against a fixed
+target already supports informative interventions, and the witness changes
+the feedback, not the existence of information. Known-answer calibrations
+qualify instruments and never establish discovery. The design owner has now
+declared the three levels for M-ELIGIBLE (`campaign.check()["levels"]`):
+randomized and analysed at WORLD, n = 4 per arm, eligibility not contrast.
+
+**How fossils influence selection, and how that is evaluated.** Per family:
+a qualified detector fires on a region → the family's directed template takes
+the region (or the witness) as its parameter → the directed order and the
+frozen random order are both committed against the family's frozen corpus
+and universe → equal budget → Harmonia adjudicates the pre-registered
+endpoint. Adding richer worlds alone does not close this loop; WP-X7 closes
+it per family and is a prerequisite of each first experiment.
+
+### D.7 Beyond the current architecture or resources
+
+Closed-loop adaptive runs (policy inside the seal as a deterministic program
+— an executor, but it must be declared as moving the policy inside the
+seal); organisms that read fossils (a program-level doctrine change, not a
+build); continuous non-seeded environments (admissible only under the backend
+contract with per-observation grading, never as a replay-based family);
+perceptual input to organisms (needs an organism-side interface first);
+long open-ended evolution runs (compute; the GPU ceiling is 3–4B parameters
+and irrelevant here, but host CPU-days are real); and the widening of the
+Proteus input channel, which is long and not Archaeon's.
+
+### D.8 Sequence for this section
+
+    NOW    WP-0d (D3 null number) · WP-0e (kind-generic builder) · WP-X6
+           (reserve policy file, numbers from the operator) — Archaeon
+           requests filed: Herakles, Vivarium, Daedalus, Harmonia, Mnemosyne,
+           Proteus (INBOX_ARCHAEON_EXPANSION_ROADMAP_2026-09-07.md)
+    NEXT   WP-C1 and WP-A1 (the two cheapest worlds), WP-0f, WP-X1 ruling;
+           then A2/C2 templates PROPOSED for admission
+    THEN   WP-B1 once Proteus ships the VM as a library; WP-P0 spike
+    THEN   first experiments A3, C3, B3 as M-SIGNAL-shaped rounds
+    later  A4, C4, P1–P3, X2 (only with a tool that passed the double-run)
 
 ---
 
@@ -140,7 +350,9 @@ to consume the family contract and is versioned and verified separately
 **Release condition** (operator, 2026-09-06): sealed arm binding → granted
 readback with Archaeon's credentials, LIVE → one complete arm-bound PEW round
 trip → release the remaining M-ELIGIBLE requests.
-`python -m archaeon.producer.readback_probe` reports each.
+`python -m archaeon.producer.readback_probe` reports each. **Status
+2026-09-07:** v7 live; readback answers with zero rows (no scope granted to
+Archaeon's client yet — Harmonia runs the grant); no arm-bound round trip.
 
 ---
 
@@ -233,9 +445,13 @@ detector or template it unblocks, and a status.
            CHAOS · coverage draw (named, off) · region-directed template form +
            bitstring.resample_region.v0 PROPOSED · M-ELIGIBLE requests built and
            validating against Vivarium v3 · isolated worktree
-    NOW    M-ELIGIBLE: issue on the operator's word once the ARM ruling lands
-           (roles/Daedalus/INBOX_ARCHAEON_ARM_KEY_CONFLICT.md); then rerun
-           Stage 0 UNCHANGED and report eligible units + remaining blockers
+    NOW    M-ELIGIBLE: arm ruling CONFIRMED (Harmonia 5759518f0) and BOUND
+           (Daedalus 642736763, v7 LIVE be65b0efa); levels DECLARED by the
+           design owner (2026-09-07); waiting on the grant instance
+           (Harmonia) and one arm value in both seals (Vivarium, WP-0c);
+           then issue on the operator's word, rerun Stage 0 UNCHANGED and
+           report eligible units + remaining blockers
+    NOW    §D.8 — the diversity sequence runs beside this, not behind it
     NEXT   comparison-family reader over SFE families/read grant when the
            contract and grant land; admit bitstring.resample_region.v0 (operator)
            so a fired D3/D5 directs; triage Herakles's 69 inbox templates into

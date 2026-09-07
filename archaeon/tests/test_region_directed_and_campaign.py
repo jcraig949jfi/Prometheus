@@ -234,3 +234,14 @@ def test_campaign_plan_is_deterministic():
     a = [r["spec"] for r in campaign.plan()]
     b = [r["spec"] for r in campaign.plan()]
     assert a == b
+
+
+def test_design_owner_declares_the_three_levels():
+    """Harmonia (5759518f0): the design owner must name SELECTED / RANDOMIZED /
+    ANALYZED before any power statement; ANALYZED is never finer than
+    RANDOMIZED. The campaign builder is the design owner."""
+    from archaeon.producer import campaign
+    lv = campaign.check()["levels"]
+    assert {"selected", "randomized", "analyzed", "declared_by"} <= set(lv)
+    assert lv["randomized"].startswith("WORLD")
+    assert lv["analyzed"].startswith("WORLD")
