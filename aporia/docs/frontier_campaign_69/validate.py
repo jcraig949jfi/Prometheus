@@ -65,6 +65,12 @@ APPENDED_AFTER_RE = re.compile(r"^\s*(?:[.,;:!?)—-]|$)", re.M)
 CONJUNCTION_AFTER_RE = re.compile(r"^\s+(?:and|or|but|while|which|whereas)\b")
 MD_LINK_RE = re.compile(r"^\(")
 ARXIV_RE = re.compile(r"arXiv:\d{4}\.\d{4,5}")
+# The prompt asks for "arXiv OR DOI", so an arXiv count of zero is not a
+# defect. Genetic Programming came back with four DOIs, no arXiv ids, and
+# four honest IDENTIFIER UNKNOWNs -- a correct report that an arXiv-only
+# check called broken. Identifier coverage is the union.
+DOI_RE = re.compile(r"\b10\.\d{4,9}/\S+")
+UNKNOWN_RE = re.compile(r"IDENTIFIER UNKNOWN")
 URL_RE = re.compile(r"https?://\S+")
 VERDICTS = ("MAINTAINED", "DORMANT", "ABANDONED")
 
@@ -93,6 +99,8 @@ def check(path: Path) -> dict:
             for m in value_loss
         ],
         "arxiv": len(set(ARXIV_RE.findall(t))),
+        "doi": len(set(DOI_RE.findall(t))),
+        "unknown": len(UNKNOWN_RE.findall(t)),
         "urls": len(set(URL_RE.findall(t))),
         "verdicts": sum(t.count(v) for v in VERDICTS),
     }
@@ -118,12 +126,13 @@ def main(argv: list[str]) -> int:
             flags.append(f"MISSING PARTS {r['parts_missing']}")
         if not r["verdicts"]:
             flags.append("NO SOFTWARE VERDICTS")
-        if r["arxiv"] == 0:
-            flags.append("NO ARXIV IDS")
+        if r["arxiv"] + r["doi"] == 0:
+            flags.append("NO IDENTIFIERS")
         status = "  ".join(flags) if flags else "ok"
 
         print(f"{r['name']}")
-        print(f"   {r['chars']:>6} chars   arXiv {r['arxiv']:>2}   urls {r['urls']:>2}"
+        print(f"   {r['chars']:>6} chars   arXiv {r['arxiv']:>2}   doi {r['doi']:>2}"
+              f"   unk {r['unknown']:>2}   urls {r['urls']:>2}"
               f"   verdicts {r['verdicts']:>2}   {status}")
         print(f"   brackets: {r['appended']} appended (harmless), "
               f"{len(r['value_loss'])} SUSPECTED LOSS")
