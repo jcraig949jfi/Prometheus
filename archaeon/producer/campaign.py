@@ -114,20 +114,36 @@ def check(rows: Optional[List[Dict[str, Any]]] = None) -> Dict[str, Any]:
     # levels before any power statement. Declared here, by the design's owner.
     out["levels"] = {
         "selected": "8 worlds: the 2 families x 2 arms x 2 worlds grid",
-        "randomized": "WORLD. Each world receives one arm; arms differ by an "
-                      "execution parameter (length 24 vs 28). n = 4 worlds "
-                      "per arm across both families.",
+        "randomized": "WORLD is the assignment unit. n = 4 worlds per arm "
+                      "across both families.",
         "analyzed": "WORLD (never finer). The 4 ordered observations within a "
                     "world are repeats and are summarised to one value per "
-                    "world before any contrast. Under seed_derivation "
-                    "sha256_index each repeat is scored against a different "
-                    "derived target, so within-world variation is exchangeable "
-                    "(Binomial(L,1/2)/L) and carries no arm information.",
+                    "world before any contrast; four repeats are not four "
+                    "world assignments.",
+        "assignment": {
+            "unit": "world",
+            "method": "deterministic_enumeration",
+            "randomized": False,
+            "note": ("plan() assigns arms by a fixed loop with deterministic "
+                     "seeds (SEED_ROOT_BASE + index). There is NO random "
+                     "allocation. Any change to the allocation or target "
+                     "policy is a new design version needing Harmonia's "
+                     "ruling; an existing seal is never altered."),
+        },
+        "arm_information": (
+            "Under the independent-uniform-target model each observation's "
+            "score is Binomial(L, 1/2)/L: the arms share the MEAN 0.5 but "
+            "differ in VARIANCE, 1/(4L) = 1/96 at L=24 vs 1/112 at L=28. "
+            "The within-world repeats (seed_derivation sha256_index, one "
+            "derived target per repeat) are exchangeable draws from that "
+            "distribution. This is a mean-null comparison, not equality of "
+            "distributions."),
         "power_note": "Harmonia measured 80% power only at d ~ 3.0 at this "
                       "n; M-ELIGIBLE establishes ELIGIBILITY of the frozen "
                       "features, not a contrast. Two families are two "
                       "conditions, not n = 2.",
-        "declared_by": "archaeon (design owner)", "declared_on": "2026-09-07",
+        "declared_by": "archaeon (design owner)",
+        "declared_on": "2026-09-07", "design_metadata_version": "v2",
     }
     out["release_condition"] = (
         "sealed arm binding -> granted readback (LIVE v7 + Archaeon's own "

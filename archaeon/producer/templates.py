@@ -81,6 +81,11 @@ def _content_hash(t: Dict[str, Any]) -> str:
     body = {"template_id": t["template_id"], "kind": t["kind"],
             "param_space": ps,
             "registry_version": t.get("registry_version")}
+    # Declared science beyond the space is hashed too, but only when present,
+    # so every already-admitted template keeps its recorded hash.
+    for k in ("outcome_rule", "repeat", "family", "hypothesis", "prediction"):
+        if t.get(k) is not None:
+            body[k] = t[k]
     blob = json.dumps(body, sort_keys=True, separators=(",", ":"))
     return "sha256:" + hashlib.sha256(blob.encode("utf-8")).hexdigest()
 
@@ -191,19 +196,13 @@ def check(t: Dict[str, Any]) -> Dict[str, Any]:
     base["drawable"] = True
     # ... and (C-6) if the drawn parameters build a spec the kind accepts,
     # which is where cross-axis coherence (len(bits) == length) is enforced.
-    from . import specbuild
-    if t["kind"] != specbuild.KIND:
-        return dict(base, lane="archaeon",
-                    reason="spec builder supports only {!r}; a template on "
-                           "{!r} needs the kind-generic builder with a "
-                           "template-declared outcome_rule (E18)"
-                           .format(specbuild.KIND, t["kind"]))
+    from . import kindspec
     try:
-        specbuild.build_validated(dict(params))
+        kindspec.build_validated(t, dict(params))
     except Exception as exc:
         return dict(base, lane="archaeon",
                     reason="drawn parameters do not build a valid spec: {}"
-                           .format(str(exc)[:200]))
+                           .format(str(exc)[:240]))
     base["buildable"] = True
     return base
 
@@ -302,6 +301,10 @@ def draw_params(t: Dict[str, Any], seed: int,
     return out
 
 
+def _family_of(t: Dict[str, Any]) -> str:
+    return str(t.get("family") or "kind:{}".format(t["kind"]))
+
+
 def derive_seed(lane: str, day: str, template_id: str, nonce: str = "") -> int:
     blob = "|".join([REGISTRY_VERSION, lane, day, template_id, nonce]).encode()
     return int.from_bytes(hashlib.sha256(blob).digest()[:8], "big")
@@ -338,6 +341,8 @@ def draw(lane: str, day: str, nonce: str = "",
         "region": (dict(region) if region is not None else None),
         "template_id": t["template_id"],
         "template_content_hash": t["_content_hash"],
+        "template": t,
+        "family": _family_of(t),
         "kind": t["kind"],
         "seed": seed,
         "seed_inputs": {"lane": lane, "day": day, "nonce": nonce,

@@ -64,3 +64,56 @@ entailed repairs (yours: `algorithm_discovery` length 16; `sbse` and
 `discovery_informatics` length 8; `l2o.meta.optimizer` 10; plus one more),
 your grade unchanged, and a branch. Nothing was filled. The 50 REPAIRED stay
 flagged. Your mechanism tags are carried as an index and not as equivalence.
+
+## AMENDMENT 2026-09-07 (later) — supersedes the lines it names; everything else above stands
+
+Per the operator's amendment order (roadmap §D.7a; tests and acceptance in `archaeon/docs/expansion/WORK_PACKAGES.md`).
+
+
+**H-2 is withdrawn and replaced by H-R1: two continuing workstreams.**
+(1) Region-targeted probes for the supported families A/B/C — given a world
+in the family and a fossil region on it (coordinates in `BRANCHES.md`), what
+would the discipline run next. (2) Faithful scientific requirements and
+expansion opportunities extracted from the existing 69: for each substantial
+limitation, the original phenomenon, essential semantics, smallest faithful
+adaptation, and the question a spike would resolve — including routes
+outside the initial portfolio. Neither waits for A1/C1 to exist; neither is
+another breadth census; mechanism tags find implementation reuse, never
+scientific equivalence. Checks: H-R1a a dynamical/equation-discovery proposal
+stays a lead even when its walk proxy is analytically solved (the crosswalk
+now carries `original_class` and a retained route for all thirteen); H-R1b
+at least one supported-family probe and one unresolved faithful route with
+inputs, observations, alternatives and an owner-ready next step; H-R1c the
+bitstring explanation distinguishes fresh independent targets from
+fixed-target querying — flipping one bit changes a fixed-target score by
+±1/L and is informative.
+
+**Correction 2 above is softened.** Transfer of a source-derived artifact
+needs a declared mapping and matched baselines, not runtime memory; C-1 is
+WP-A4 with Daedalus and Harmonia, not deferred (R6 as amended).
+
+**H-3 becomes H-R2.** Fetch the twelve first; record exact source/version,
+the passage or algorithm, the claim supported, and any mismatch with the
+proposed implementation (evodevo.bias CTRNN/Boolean resolved or visibly kept
+as a gap). Recalled or inaccessible references stay leads. Implementation
+changes must not silently inherit a paper's empirical claim when task,
+distribution or organism changed.
+
+**WP-C1 tests attached** (owner: you; Vivarium wraps): C1-a hand-computed
+tiny states for wraparound, simultaneous update, neighbourhood indexing and
+update count, with a second simple implementation as the independent oracle;
+C1-b golden results for the six genomes on small fixed IC fixtures;
+malformed tables, unsupported radius, invalid density/grid fail explicitly;
+C1-c joint reflection and complement equivariance on normalized trajectories,
+never raw hashes of differently oriented arrays; C1-d seed and configuration
+replay; no filesystem or global-RNG side effects on import or evaluation;
+C1-e a separate historical-reproduction run under the source's conventions
+with a declared IC sample and a prespecified uncertainty/multiplicity rule —
+diagnose discrepancies, never move the tolerance after inspection. Pin: ring
+boundary, bit order, rule encoding, supported radius (do not generalise an
+r=3-only decoder silently), update count, majority/tie convention, accuracy
+definition; bounded witnesses; a declared selected trajectory/digest.
+Acceptance: pure library with semantic and symmetry tests, a thin-wrapper
+parity fixture, an honest historical-validation report. Deterministic
+fidelity is an implementation result; statistical reproduction is a separate
+qualification result.

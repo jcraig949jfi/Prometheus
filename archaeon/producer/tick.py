@@ -180,7 +180,7 @@ def tick(conn, config: Optional[cfg.ArchaeonConfig] = None, *,
         builder = _SpecBuilder()
         for attempt in range(16):
             d = templates.draw(lane, day, nonce=str(attempt), region=region_ctx)
-            spec = builder(d["params"])
+            spec = builder(d["params"], template=d.get("template"))
             h = builder.spec_hash(spec)
             if h in used:
                 continue
@@ -222,6 +222,12 @@ def tick(conn, config: Optional[cfg.ArchaeonConfig] = None, *,
                        "menu_size": drawn.get("menu_size")},
             "policy_version": "{}@{}".format(drawn["policy"], TICK_VERSION),
             "template_id": drawn.get("template_id", "bitstring.uniform.v0"),
+            # WP-X6: family identity and the allocation share this draw was
+            # made under. The reserve policy is INACTIVE until the operator
+            # writes archaeon/policies/allocation.reserve.v0.json; until then
+            # every draw is recorded as the established share.
+            "family": drawn.get("family"),
+            "allocation": _allocation_record(),
             # THREE bases, and the middle one is the honest one: a signal
             # fired but could not direct the experiment, so the reason is
             # recorded and the draw was random anyway.
@@ -288,11 +294,23 @@ def tick(conn, config: Optional[cfg.ArchaeonConfig] = None, *,
         return out
 
 
+def _allocation_record():
+    from . import allocation
+    pol = allocation.load_policy()
+    return {"policy_id": pol.get("policy_id"), "active": bool(pol.get("active")),
+            "share": "established", "note": pol.get("note")}
+
+
 class _SpecBuilder:
     """Adapter so randomgen can build and hash without importing specbuild."""
 
-    def __call__(self, params):
-        return specbuild.build_validated(params)
+    def __call__(self, params, template=None):
+        # WP-0e: build for the drawn template's kind. Without a template (the
+        # legacy adapter path) the bitstring builder applies unchanged.
+        if template is None:
+            return specbuild.build_validated(params)
+        from . import kindspec
+        return kindspec.build_validated(template, params)
 
     @staticmethod
     def spec_hash(spec):

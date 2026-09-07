@@ -43,3 +43,50 @@ results to the arena path.
   says, in writing, that the specimens are not agents in these worlds. If
   you disagree with that framing, the place to contest it is
   `DECISIONS.md` D-8.
+
+## AMENDMENT 2026-09-07 (later) — supersedes the lines it names; everything else above stands
+
+Per the operator's amendment order (roadmap §D.7a; tests and acceptance in `archaeon/docs/expansion/WORK_PACKAGES.md`).
+
+
+**D-8 is scoped.** PATH B gates claims that rely on the affected population
+and channel. It is not a prerequisite for organism diversity in general, for
+producer-proposed programs, for source-artifact transfer, or for the witness
+experiment. The framing "the specimens are not agents in these worlds" is
+kept as a statement about the current channel, bounded to that population.
+
+**WP-B1 tests:** B1-a tiny hand-authored programs verify arithmetic/control
+flow, input consumption, output semantics and the exact first counterexample
+under a declared ordering; B1-b all 64 specimens agree with the arena path on
+the same inputs; world-blindness reported without counting every specimen as
+an independent responsive agent; B1-c zero/minimum/exhausted budgets,
+invalid opcodes, absent outputs, immutable-specification lookup failures have
+defined results — specify whether budget exhaustion can be a counterexample
+or is a distinct status; B1-d replay and semantic opcode relabelling hold;
+trace truncation is explicit and cannot change execution or select a
+different witness. The evaluator reads no registry and no fossils;
+authoritative evidence stays separate from B2's producer-visible views.
+Existing specimens need not solve the new task for the evaluator to be
+complete.
+
+**WP-B4 tests:** B4-a an input-sensitive program changes behaviour when the
+world input changes; a world-blind program is the negative control; B4-b
+alphabet boundaries, sequencing, initialization and entropy agree with the
+declared channel; no hidden fossil access; B4-c legacy fixtures keep old
+behaviour under the old version; the new channel is distinguishable in
+execution identity; B4-d usable-population and pair counts computed from the
+stated criterion with floor/ceiling and uncertainty. Implement as an explicit
+version; preserve the old channel for replay; re-run qualification on the
+appropriate frozen population; do not generalise to every program, genome,
+rule or transfer experiment.
+
+**PR-ID (D-7) tests:** PR-ID-a allowed key ordering/serialization
+differences preserve identity; a semantic instruction, rule bit or
+representation-version change alters it; PR-ID-b the same artifact evaluated
+in different worlds keeps its organism reference while acquiring separate
+observation references; PR-ID-c different representations cannot collide
+through ambiguous encoding; matching identity is not mistaken for independent
+replication. Canonical manifests for programs, rule tables and genomes with
+representation and semantic version; identity separate from evaluation
+environment and from any behaviour-equivalence claim; identity-bearing
+metadata declared; aliases excluded only when semantics permit.

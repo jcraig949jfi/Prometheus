@@ -108,14 +108,16 @@ def test_template_without_seed_root_draws_but_does_not_build(tmp_path):
     assert T.admitted(tmp_path) == []
 
 
-def test_random_walk_template_is_not_buildable_until_e18(tmp_path):
+def test_random_walk_template_without_declared_rule_is_not_buildable(tmp_path):
+    """E18 landed (WP-0e): a walk template now builds, but ONLY with a
+    template-declared outcome_rule; the builder never authors one."""
     t = T.load(_write(tmp_path, "w", _tmpl(
         "walk.v0", "random_walk_v0",
         {"seed_root": {"constant": 1}, "steps": {"constant": 100},
          "step_scale": {"constant": 1}})))
     c = T.check(t)
     assert c["runnable"] and c["drawable"] and not c["buildable"]
-    assert "E18" in c["reason"]
+    assert "declares no outcome_rule" in c["reason"]
 
 
 def test_incoherent_axes_cannot_reach_a_spec(tmp_path):

@@ -123,8 +123,13 @@ claim two organisms (or two templates) are distinct only after:
    varies a label/encoding/seed axis and is declared, in advance, to carry no
    effect (`bitstring.exchangeability_null.v0` is the bitstring family's; each
    family writes its own, e.g. renaming opcodes under a bijection, permuting
-   grid coordinates under a symmetry, relabelling lineages). A detector firing
-   on that template is an instrument defect, not a finding.
+   grid coordinates under a symmetry, relabelling lineages). Two different
+   things can happen on it and must not be confused: an **exact invariant
+   violation** (a jointly transformed pair that should be identical is not)
+   is a defect in the library or the template; a **detector firing** on the
+   known-null template is a *calibrated false alarm* — a null detector may
+   fire at its calibrated rate, one firing is not a defect, and zero observed
+   firings do not prove a zero rate. Neither is a finding.
 2. **The intervention separates.** With seeds matched, removing or altering the
    mechanism (memory off, interaction disabled, rewrite rule changed, K=0 on
    an NK landscape) changes the measured outcome by more than the
@@ -156,25 +161,33 @@ three.
 
 ## R6. Transfer only through declared mappings
 
-**Rule.** Transfer is a property of an **organism that carries state** between
-two worlds, not of two worlds. A transfer claim requires:
+**Rule.** Transfer is a claim about **information carried from a source
+world into a target world**, and the carrier may be a source-derived
+solution, genome, program, rule table or parameter vector — persistent
+runtime memory is **not** required (HA-1). A transfer claim requires:
 
-    an organism with declared state that crosses (Proteus specimens are the
-      only such organisms today; a stateless candidate cannot transfer)
+    a declared carrier (what crosses: a static artifact derived from the
+      source, or an organism with declared runtime state)
     a declared mapping between the two worlds' observation and action spaces
       (`mapping_id`, human-written, versioned; identity mapping allowed and
       must be declared as identity)
-    a comparison family (SFE `families(kind=comparison)`) whose arms are
-      "carried state" vs "reset state", same world pair, same seeds
+    appropriate baselines for the claim: matched fresh, shuffled, or
+      unrelated-source arms sharing the target worlds and budget and
+      differing only in the intended source information
+    a comparison family (SFE `families(kind=comparison)`); the "carried
+      runtime state" vs "reset" contrast is reserved for claims ABOUT
+      carried runtime state
 
 There is no universal genome. A family whose organisms cannot be mapped into
 another's interfaces does not transfer, and that is recorded as *no declared
 mapping*, not as failed transfer.
 
-The flipped-hash relatedness axis (Herakles C-1) is a **world** relation; it
-becomes a transfer experiment only when an organism with state is placed on it.
-Without one, the transfer curve is pinned analytically at both ends and
-measures the hash.
+The flipped-hash relatedness axis (Herakles C-1) is a **world** relation
+whose construction curve is pinned analytically at both ends. A *policy's*
+empirical ability to exploit related worlds with a source-derived artifact is
+a separate, measurable question (WP-A4) and does not wait on runtime memory.
+A known construction curve and an empirical exploitation result are reported
+as different things.
 
 ---
 
@@ -219,3 +232,26 @@ with the reopening condition written beside it.
 
 Not written until the operator sets the numbers; the values above are
 Archaeon's recommendation.
+
+## Amendment 2026-09-07 (later) — per the operator's amendment order
+
+- R4 now distinguishes an exact invariant violation from a calibrated false
+  alarm; "any firing is a defect" is withdrawn.
+- R6 no longer requires runtime memory for transfer; source-derived artifacts
+  transfer through a declared mapping with matched baselines. Carry-vs-reset
+  is reserved for claims about carried runtime state.
+- R5's admission conditions gate admission to the **directed** menu only;
+  collection through the random route never waits for a signal.
+- Reporting distinctions used in every acceptance packet (no engine enums):
+  implemented faithfully (contract + oracle + integration + replay within
+  scope; no lift required) · artifacts/behaviours different (declared
+  identity; observable output/trajectory/response differences after declared
+  symmetries; not different scalars) · mechanism causes a difference
+  (intervention + matched controls + scoped analysis; no universal ranking)
+  · policy improves the declared endpoint (qualified measurements + the
+  applicable protocol; calibration is not discovery) · scientific finding
+  (evidence addressing the original question and alternatives, bounded).
+- Rejection needs a precise claim with applicable evidence or derivation and
+  a bounded conclusion; deferral is recorded as deferral with its reason and
+  reopening condition. An unsuccessful mapping or an underpowered comparison
+  rejects nothing.

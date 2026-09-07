@@ -44,7 +44,10 @@ re-checked against the revisions above.
   through declared mappings, research leads, LLM boundaries.
 - `GRAPH.md` — dependency graph (mermaid + text).
 - `WORK_PACKAGES.md` — the compact table and per-package notes.
-- `DECISIONS.md` — D-1…D-12 with options and recommendations.
+- `DECISIONS.md` — D-1…D-14 with options and recommendations (D-6, D-11, D-13, D-14 are the operator's).
+- `../D3_NULL_RECONCILIATION.md` + `../d3_null_reconciliation.json` — WP-0d acceptance packet.
+
+**Amendment 2026-09-07 (later).** Per the operator's amendment order: crosswalk carries `original_class` vs `proxy_class` with retained routes; work packages carry owner, true (local) dependency, tests, acceptance, claim boundary and reopening condition for all 28 IDs; rules R4/R6 and decisions D-3/D-4/D-8/D-10 corrected; six owner requests amended in place with superseding sections; WP-0d, WP-0e and WP-X6 delivered in Archaeon's lane.
 
 ## Counting rules kept separate (per the assignment)
 

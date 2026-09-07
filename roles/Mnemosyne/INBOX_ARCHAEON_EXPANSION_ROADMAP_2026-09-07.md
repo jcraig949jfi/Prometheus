@@ -36,3 +36,34 @@ that is a doctrine change I am not proposing.
 population to fill `players` (rule tables as organisms under Proteus's
 `organism_id` convention, D-7) — that is a Proteus identity question first,
 then a PEW population, and I have asked Proteus.
+
+## AMENDMENT 2026-09-07 (later) — supersedes the lines it names; everything else above stands
+
+Per the operator's amendment order (roadmap §D.7a; tests and acceptance in `archaeon/docs/expansion/WORK_PACKAGES.md`).
+
+
+**The `witness jsonb` copy is withdrawn.** It conflicted with reference-only.
+WP-X5 now asks for a typed **witness reference / presence index** (source
+observation identity, selector or artifact reference, digest) that satisfies
+the query without duplicating bytes; if bytes are ever duplicated, a specific
+doctrine ruling with ownership/version semantics comes first. Use existing
+edge mechanisms if sufficient; otherwise the append-only, identical-idempotent
+edge-write route for ANCESTOR/MUTATION/TRANSFER with mapping/provenance
+fields. Tests: X5-a program and CA witnesses findable and resolvable to exact
+authoritative content; absent, empty, truncated and unavailable
+distinguishable; X5-b digest/reference mismatch, wrong organism/source
+identity, unauthorized readback fail through the existing access-control
+model; X5-c duplicate identical edge writes idempotent, conflicting
+same-identity writes fail, a lineage/transfer chain mechanically traversable;
+X5-d archive eviction or read-index changes never delete or reinterpret SFE
+history; backfilled records keep original attribution. Acceptance: one
+program-witness and one CA-witness round trip plus a small typed
+lineage/transfer chain, with reference-only satisfied or an approved
+exception recorded.
+
+**Credential note, routed as an administrative item.** The assets audit
+found a record of exposed key prefixes in an archive report. Please track it
+in your existing rotation tracker and verify/report only redacted status
+under the authorized credential workflow. No credential material appears in
+the roadmap, fixtures, logs or acceptance packets, and the tracker is not a
+dependency of any new-world research.

@@ -26,19 +26,23 @@ flowchart LR
   subgraph A[Branch A · interacting landscapes]
     A1[WP-A1 nk_landscape_v0 · Daedalus exec + Vivarium kind · M]
     A2[WP-A2 permutation null + k=0 control templates · Archaeon · S]
-    A3[WP-A3 first NK series · Archaeon issues, Vivarium runs · S]
-    A4[WP-A4 shared-table relatedness C-1 · later]
+    A3a[WP-A3-acq NK corpus acquisition via random route · Archaeon issues, Vivarium runs · S]
+    A3b[WP-A3-cmp frozen NK comparison · needs frozen corpus + protocol + qualified detector]
+    A4[WP-A4 related landscapes + source-artifact transfer · Daedalus, Harmonia · M]
   end
   subgraph B[Branch B · symbolic execution]
     B1[WP-B1 program_eval_v0 on Proteus VM · Proteus lib + Vivarium kind · M]
     B2[WP-B2 opcode-bijection null + witness-withheld control · Archaeon · S]
-    B3[WP-B3 rounds-to-match, two arms · Archaeon, Harmonia · S]
-    B4[WP-B4 PATH B input channel · Proteus+Harmonia · L]
+    B3a[WP-B3 frozen route · frozen evidence, canonical M-SIGNAL endpoint]
+    B3b[WP-B3 adaptive route · precommitted policy, own protocol, never called M-SIGNAL]
+    B4[WP-B4 PATH B input channel · Proteus+Harmonia · L · gates claims on THAT population only]
   end
   subgraph C[Branch C · spatial stateful]
     C1[WP-C1 ca_density_v0 from EvCA verifier · Herakles lib + Vivarium kind · S/M]
     C2[WP-C2 reflection null + r=0 / T=1 controls · Archaeon · S]
-    C3[WP-C3 random rules vs historical genomes · Archaeon, Harmonia · S]
+    C3a[WP-C3-hist historical reproduction · C1-e]
+    C3b[WP-C3-acq random-rule corpus via random route]
+    C3c[WP-C3-cmp frozen selection evaluation]
     C4[WP-C4 IC-distribution vs rule coevolution · later]
   end
   subgraph D[Branch D · population ecology]
@@ -49,22 +53,24 @@ flowchart LR
   end
   WP0e ==> A2 & B2 & C2
   WP0f --> A1 & B1 & C1
-  X1 ==> A3 & B3 & C3
-  X7 ==> A3 & B3 & C3
-  A1 ==> A2 ==> A3
-  B1 ==> B2 ==> B3
-  C1 ==> C2 ==> C3
+  A1 ==> A2 ==> A3a ==> A3b
+  A1 ==> A4
+  B1 ==> B2 ==> B3a
+  B2 ==> B3b
+  C1 ==> C2 ==> C3b ==> C3c
+  C1 ==> C3a
+  X1 ==> A3b & B3a & C3c
+  X7 ==> A3b & B3a & C3c
   P0 ==> P1
-  P2 ==> P1
-  P3 ==> P1
+  P2 -.gates analyses using units.-> P1
+  P3 -.gates neutrality claims.-> P1
   X2 -.~~>.- P1
   X2 -.~~>.- B1
-  B4 -.-> A4
-  A3 <-.later bridge.-> C4
-  C3 <-.later bridge.-> P1
-  X6 --> A3 & B3 & C3
+  A3b <-.later bridge.-> C4
+  C3c <-.later bridge.-> P1
+  X6 --> A3a & B3a & C3b
   X8 --> X7
-  X5 --> B3 & P1
+  X5 --> B3a & P1
 ```
 
 Plain-text form, for terminals and diffs:
@@ -90,24 +96,27 @@ CROSS-CUTTING
   WP-X2 external_backend contract (C-4) ... Vivarium ........ M   ~~> alternative route for B1, P1
   WP-X5 PEW witness column + edge writes .. Mnemosyne ....... S   --> queryable witness, lineage
 
-A  INTERACTING LANDSCAPES      A1 nk_landscape_v0 (M) ==> A2 null+control (S) ==> A3 first series (S)
-                               A4 shared-table relatedness .......... later, behind a stateful organism
-B  SYMBOLIC EXECUTION          B1 program_eval_v0 on Proteus VM (M) ==> B2 (S) ==> B3 two-arm rounds-to-match (S)
-                               B4 PATH B input channel (L) ......... prerequisite for organism/transfer claims
-C  SPATIAL STATEFUL            C1 ca_density_v0 from EvCA verifier (S/M) ==> C2 (S) ==> C3 random vs historical (S)
-                               C4 IC-vs-rule coevolution ........... later bridge to D
-D  POPULATION ECOLOGY          P0 spike (2 days) ==> P1 soup or backend (M); P2 unit vocabulary (S) ==> P1;
-                               P3 neutral kernel by detailed balance (M) ==> any diversity claim
+A  INTERACTING LANDSCAPES      A1 nk_landscape_v0 (M) ==> A2 null+control (S) ==> A3-acq corpus (random route)
+                                                                              ==> A3-cmp frozen comparison (X1, X7, qualified detector)
+                               A1 ==> A4 related landscapes + source-artifact transfer (mapping + baselines; no runtime memory needed)
+B  SYMBOLIC EXECUTION          B1 program_eval_v0 on Proteus VM (M) ==> B2 (S) ==> B3 frozen route (M-SIGNAL) | B3 adaptive route (own protocol)
+                               B4 PATH B input channel (L) ......... gates claims relying on that population/channel ONLY
+C  SPATIAL STATEFUL            C1 ca_density_v0 from EvCA verifier (S/M) ==> C2 (S) ==> C3-acq random-rule corpus ==> C3-cmp frozen evaluation
+                               C1 ==> C3-hist historical reproduction (separate qualification report)
+                               C4 co-development .................. bounded design/spike may precede full C3 qualification
+D  POPULATION ECOLOGY          P0 spike (operator-capped) ==> P1 route (M); P2 units gate ANALYSES using them;
+                               P3 neutral baseline gates CLAIMS needing neutrality; descriptive execution proceeds
 
-Later bridges:  A3 <-> C4 (a landscape the IC distribution co-evolves on)
-                C3 <-> P1 (rule populations under resource competition)
-                B4 --> A4 (a stateful organism makes relatedness a transfer experiment)
+Later bridges:  A3-cmp <-> C4 (a landscape the IC distribution co-evolves on)
+                C3-cmp <-> P1 (rule populations under resource competition)
 ```
 
-**Reading the graph.** Three branches (A, B, C) are independent of each other
-and of D; each is three increments deep to its first bounded experiment; each
-first experiment needs only the integrity packages, the analysis convention,
-and its own directed template. Nothing in A, B, or C waits on the population
-branch, on the external backend, or on relatedness. The population branch is
-the only one that begins with a spike rather than a build, because nothing
-runnable exists for it.
+**Reading the graph (amended).** Three branches (A, B, C) are independent of
+each other and of D. Each first **corpus acquisition** needs only its
+library/kind, the generic builder, local integrity checks, the admitted
+random route and its null/control semantics. Each **frozen comparison** needs
+a frozen corpus/universe, the approved protocol, correct provenance/units and
+the qualification of the detector used. No pure-library test waits on B4, P3
+or D3. Dependencies are local: 0a gates affected candidates, 0d gates D3
+claims, P2 gates analyses using its units. The population branch begins with
+a spike because nothing runnable exists for it.

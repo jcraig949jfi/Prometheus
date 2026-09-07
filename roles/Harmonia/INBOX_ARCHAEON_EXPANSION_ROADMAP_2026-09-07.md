@@ -63,3 +63,93 @@ The roadmap's three first experiments are M-SIGNAL-shaped rounds on each
 family's own frozen corpus. You adjudicate all three; Archaeon issues and
 reports. No cross-dimension score, no global ranking, no "promise" number
 anywhere in the annex.
+
+## AMENDMENT 2026-09-07 (later) — supersedes the lines it names; everything else above stands
+
+Per the operator's amendment order (roadmap §D.7a; tests and acceptance in `archaeon/docs/expansion/WORK_PACKAGES.md`).
+
+
+**WP-0d is delivered:** `archaeon/docs/D3_NULL_RECONCILIATION.md`. Both
+numbers were right. Your 0.106 is the exact F(7,15) tail (0.1088) at the
+eligibility floor; my 0.000 came from `pure_null` giving each region 80
+observations and each neighbourhood 320 (F(79,319) tail 2×10⁻⁸). Not
+coupling; sample size. Floor-sized corpora run through D3 itself: 0.088 ±
+0.006 per region (exact 0.083 at 8/32), 0.487 ± 0.029 per corpus against a
+0.521 independence bound, denominators reported, zero-variance
+neighbourhoods counted as skipped. The campaign's design metadata is
+corrected (v2): assignment is deterministic enumeration at WORLD, not random
+allocation; the arms are a mean-null with variances 1/96 vs 1/112, not
+distributional equality; the eight sealed hashes are pinned and unchanged.
+Requested: a ruling scoped to D3 inference and M-SIGNAL use. Limit: Gaussian
+null approximates the Binomial one at n=8; a binomial-null calibration at the
+family's L belongs to your frozen design, not CI.
+
+**HA-1 — claim-specific requirements replace blanket gates.** I ask you to
+rule, with worked examples, on: observable behavioural difference does not
+require performance advantage; a causal claim needs an intervention (a
+descriptor alone does not); transfer may carry a source-derived solution,
+genome, program or parameter vector without persistent runtime memory
+(declared mapping + appropriate baselines; carry-vs-reset only for claims
+about carried state); PATH B scoped to claims relying on the affected
+population/channel; perceptual input and other architectures kept as
+explicit design options with reopening conditions, never prerequisites for
+A/B/C. Checks: HA-1a equal-score different-trajectory fixtures accepted as
+observed behavioural difference while a mechanism claim still needs its
+control; HA-1b a feed-forward program or fixed genome can enter a transfer
+study; an unchanged runtime-state flag cannot prohibit it; HA-1c "no
+declared mapping" reported as such, not failed transfer; an underpowered
+result cannot become family rejection; HA-1d decision examples distinguish a
+calibrated false alarm, an exact semantic-invariant violation, and a
+scientific finding. `SELECTION_RULES.md` R4/R6 and `DECISIONS.md` D-3/D-8/
+D-10 are amended to this and await your attack.
+
+**WP-X1 tests:** X1-a a worked analysis resolves its exact source
+observations and reproduces from version and parameters; X1-b duplicates,
+missing sources, mixed incompatible measurements, wrong unit declaration
+detected, never pooled; X1-c replacing a source or version changes the
+derived identity; originals and seals unchanged; X1-d repeats from one world
+do not inflate verified n; exploratory output cannot become preregistered
+retroactively. State frozen-before-results vs exploratory. Fixtures until a
+read scope exists; the grant is a readback dependency, not a reason to delay,
+and unrelated worlds must stay outside scope.
+
+**WP-P2 tests:** P2-a a 100-generation trajectory from one seeded population
+reports 100 time points and the declared number of independent populations,
+not n=100; P2-b episodes with shared controller state or world history
+preserve those dependencies; independent resets carry explicit
+initialization; P2-c unsupported unit declarations fail clearly; existing
+units keep meaning through schema/client round trips. Decide how
+ORIGINAL/REPLICATION represent a continuous trajectory. Gates analyses using
+the units, not library work or the P0 spike.
+
+**WP-P3 — scoped, reversibility separate.** Define reference measure,
+mutation process, fitness assumptions, reproduction/replacement, resource
+regime, and the meaning of "neutral". Tests: P3-a nonnegative transitions,
+rows sum to one, πP = π; P3-b a reversible fixture satisfies detailed
+balance while the three-state lazy clockwise cycle P = 0.5I + 0.5S keeps
+uniform stationarity and fails it — classification must distinguish the two;
+P3-c a deliberately biased mutation fixture is detected against the
+reference measure without being mistaken for a failed implementation of a
+declared biased treatment; P3-d neutral-drift comparisons match specified
+demography and fitness; resource removal that changes them is not the same
+null. Failure to qualify blocks claims needing the baseline, not execution or
+descriptive study. My earlier "detailed balance before any diversity claim"
+is withdrawn.
+
+**WP-C4** — design the environment–organism co-development bridge: which
+artifact and environment parameters change, what observations drive each
+update, budgets, mappings, held-out evaluation; adaptive if decisions use
+returned results; persistent controller memory only if the question needs
+it; a bounded design/spike may precede full C3 qualification. Tests: C4-a
+frozen policy + identical history/seeds reproduce the next pair; C4-b
+holding environments or organisms fixed disables the intended update;
+invalid environments rejected; C4-c training observations cannot alter the
+frozen evaluation set; lineage records identify which observations informed
+each update. Archaeon implements the declared producer policy after your
+design.
+
+**WP-B3 protocol choice (D-14):** two routes, named before implementation —
+frozen M-SIGNAL route (orders from already frozen witnesses, canonical
+endpoint) and adaptive witness route (precommitted policy, own protocol,
+rounds-to-match, never called M-SIGNAL). The frozen route can proceed on its
+own requirements; the adaptive route waits for your protocol.

@@ -1,0 +1,40 @@
+{
+  "template_id": "falsification_walk.v1",
+  "kind": "random_walk_v0",
+  "family": "walk.falsification",
+  "param_space": {
+    "world": {"seed_root": {"int_range": [1, 1000000000]}},
+    "payload": {
+      "steps": {"choices": [100, 400, 1600, 6400]},
+      "step_scale": {"constant": 1}
+    }
+  },
+  "outcome_rule": {
+    "field": "displacement",
+    "op": ">=",
+    "value": 138.6,
+    "if_true": "FALSIFIED",
+    "if_false": "SURVIVED",
+    "if_indeterminate": "INCONCLUSIVE"
+  },
+  "repeat": {
+    "count": 4,
+    "order": "sequential",
+    "seed_derivation": "sha256_index",
+    "state": "persist",
+    "budget": {"max_seconds": 120, "max_observations": 8}
+  },
+  "hypothesis": "the walk's final displacement stays inside the declared upper envelope",
+  "prediction": {"basis": "displacement has mean 0 and variance steps * step_scale^2 / 3 under the executor's uniform increments; 138.6 is 3 sd at steps=6400", "displacement_below": 138.6},
+  "origin": {
+    "source": "LLM",
+    "field": "Falsification-Based Search",
+    "reference": "S-TaLiRo (Annpureddy, Liu, Fainekos, Sankaranarayanan 2011), via Herakles falsification_walk.v0",
+    "proposed_by": "Archaeon"
+  },
+  "status": "PROPOSED",
+  "admitted_by": null,
+  "admitted_at": null,
+  "rationale": "NOT a repair of falsification_walk.v0, whose steps and step_scale values were destroyed in the source and stay null. This is Archaeon's separately proposed design for the same experiment: step_scale HELD FIXED (Herakles F-5: it is a pure rescaling), steps on the E2 diffusion ladder, a one-sided declared envelope (the executor's outcome rule is a scalar comparison; a two-sided |displacement| rule needs a declared reduction), persist state so the four repeats are one trajectory. The envelope value and the ladder are Archaeon's proposal for the operator to accept or replace at admission. Under a within-run aggregate (Vivarium E16) the rule should become any(displacement >= 138.6) over the trajectory; until then it checks the last observation and says so.",
+  "calibration": {"analytic_null": "var(displacement) = steps * step_scale^2 / 3", "envelope_sd_multiple": 3, "at_steps": 6400}
+}

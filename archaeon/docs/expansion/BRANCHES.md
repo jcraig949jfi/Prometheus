@@ -59,10 +59,12 @@ flat. Controls: `k = 0`; the permutation null. What the observations change:
 a fired D3 region on `k > 0` becomes the argument of
 `bitstring.resample_region.v0`'s NK sibling.
 
-**What this branch cannot do.** It has no organism with state, so it cannot
-support a transfer claim (R6). Relatedness between NK worlds (shared
-contribution tables, C-1 re-scoped) is a later increment behind a stateful
-organism.
+**What this branch can and cannot do.** Transfer of a **source-derived
+candidate** into a related NK world through a declared mapping, against
+matched fresh / shuffled / unrelated-source baselines, is available on WP-A4
+alone (R6 as amended). What the branch cannot support is a claim about
+*carried runtime state*, because its organism has none; that contrast is
+reserved for a family whose organism does.
 
 **Reuse evidence.** None runnable for NK itself; `SerendipityFoundry/D7`
 `proof_world` (lock-chain, CERTIFIED_NONLINEAR_WORMHOLE) and
@@ -98,8 +100,9 @@ and self-modifying variants for later.
 
 **Organism.** A program (tape / opcode list). The 64 frozen USE_A specimens
 are the only existing organisms; Harmonia measured that 75% are world-blind
-under the current input channel, so *before any claim about organisms* the
-input channel must be widened (Harmonia's PATH B; decision D-8). Variation:
+under the current input channel, so claims *about that population's
+responsiveness* wait on a wider channel (Harmonia's PATH B; D-8, scoped) —
+producer-proposed programs do not. Variation:
 Proteus's thirteen syntactic descent operators exist but are
 `NOT_QUALIFIED_AUTHORED_NONEQUILIBRIUM_CURRENT`; until a neutral kernel is
 qualified, variation is producer-side (seeded edits declared in the template)
@@ -130,8 +133,10 @@ template (`program.refine_on_witness.v0`), which is the first template whose
 *parameter* is a prior observation's content.
 
 **What this branch cannot do.** It does not make the 64 specimens into
-organisms that observe the world; that is Proteus's and Harmonia's PATH B, a
-prerequisite for any transfer or "organism diversity" claim in this branch.
+organisms that observe the world; that is Proteus's and Harmonia's PATH B
+(WP-B4), which gates **claims relying on that population and channel** —
+not producer-proposed programs, not source-artifact transfer, and not the
+witness experiment (WP-B3).
 
 ---
 
@@ -171,15 +176,20 @@ misclassified). Action: next state. Raw material: a bounded space-time
 diagram for one declared initial condition (149 × T bits, ~6 KB at T = 320)
 — the family's *raster*.
 
-**Exchangeability null.** A rule and its reflection (or complement) have
-identical accuracy under matched initial-condition seeds. Known answer: zero
-effect. This is a literature-known symmetry, so it doubles as a calibration
-anchor.
+**Exchangeability null.** For an exact reflection null, transform the rule
+**and the realised initial condition**; for complement, also the majority
+target and the witnesses. "Same seed" alone is not the symmetry. Trajectories
+are compared after normalisation, not as raw hashes of differently oriented
+arrays. Known answer: identical correctness masks. A literature-known
+symmetry, so it doubles as a calibration anchor (WP-C1/C2).
 
-**Mechanism control.** Radius 0 (each cell decides from itself alone: no
-interaction) and `T = 1` (no temporal integration: no memory). Either makes
-density classification impossible above the density prior. "Remove
-interaction" and "remove memory" are both single-parameter interventions here.
+**Mechanism control.** Radius 0 — an explicit centre-only rule family (or a
+declared projection) with the correct table size, so the control really reads
+only the centre cell: no interaction. `T = 1` — a **shortened-horizon**
+intervention (one declared update); it is not the removal of all state or
+memory, and the report names the horizon change separately from any memory
+claim. Both are single-parameter interventions; both are described for what
+they are (WP-C2).
 
 **First bounded experiment (WP-C3).** Two comparison arms in one family:
 **random rule tables** (the family's frozen random control, seeded) vs the
@@ -240,8 +250,9 @@ seven physics parameters unspecified. Herakles's "route Avida/Tierra to
    competition), zero mutation (no variation), no interaction term.
 2. **External backend** (Avida 2.2 built under the host's MinGW toolchain,
    wrapped under the not-yet-existing `external_backend_v0` contract).
-   Fidelity to Avida 1.6 unknown; reproducibility must be measured by
-   double-run, not assumed either way.
+   Fidelity to Avida 1.6 unknown; repeatability must be measured under
+   tested conditions (WP-P0/X2), not assumed either way, and matching runs
+   are not proof of determinism.
 The Toussaint L-system replicator (`herakles/specimens/spec-toussaint-
 exploration/derived/hct01.c`, RUNNABLE_IN_ISOLATION after compilation) is a
 third: a developmental replicator with real dynamics, in C with its own PRNG.
@@ -249,8 +260,13 @@ third: a developmental replicator with real dynamics, in C with its own PRNG.
 **Organism.** A genome in a population. Variation: copy with mutation — and
 **no qualified neutral mutation operator exists anywhere in the repo**
 (Proteus's kernel carries authored probability current; memory:
-`project_proteus_seat`). Neutrality of the new kernel must be tested by
-detailed balance, not by zero marginal drift, before any diversity claim.
+`project_proteus_seat`). A *specified* neutral baseline (reference measure,
+mutation process, fitness, reproduction/replacement, resource regime) is
+qualified under WP-P3 for the **claims that need it**; reversibility
+(detailed balance) is a separate statement — nonreversible kernels have
+stationary distributions, and a declared mutation bias can itself be a
+treatment. Descriptive execution and study of population dynamics do not
+wait on P3.
 Memory: the population. Observation: resource share, offspring count.
 Action: replicate.
 
@@ -320,3 +336,21 @@ is the artifact, sealed and replayable, not the proposer.
 | interaction | comparison-family arms; later co-evolved pairs | A (k), C (IC vs rule) | not yet |
 | lineage | one observation per generation; PEW lineage fields | D | D: through the population |
 | perceptual (image) | rendered from C for humans/descriptors | C (render only) | no; D-10 |
+
+## Amendment 2026-09-07 (later) — per the operator's amendment order
+
+- Transfer language corrected in A and B (source-derived artifacts transfer
+  without runtime memory; PATH B scoped to its population/channel).
+- C's symmetry and ablation descriptions corrected (joint transformation;
+  r=0 as centre-only family; T=1 as horizon change).
+- D's neutral-baseline and repeatability language scoped (P3, P0/X2).
+- Two continuing research workstreams replace the earlier "bench-first only"
+  instruction (Herakles H-R1): region-targeted probes for A/B/C, and faithful
+  requirements and expansion opportunities extracted from the existing 69,
+  including routes outside the initial portfolio. The thirteen calibration-
+  class proxies keep their original scientific class and a retained route
+  (`CROSSWALK.md`, amended): equation discovery (BACON, SINDy) and
+  physics-informed residuals are dynamical / continuous routes with named
+  spikes, not calibration items.
+- Perceptual input remains an explicit design option with a reopening
+  condition (D-10), not a closed door.

@@ -93,9 +93,9 @@ items leave the critical path entirely.
 | **C-0 fixed seed** | zero cost, unlocks 6 | Done (`constant` form, 073091863). Also the mechanism for *any* fixed-world series, in every family. | all | DONE |
 | **C-6 cross-axis** | safety | Done at check time (dry-draw + dry-build). Executor-side refusal (F-1) still open with Daedalus. | bitstring | DONE / E23 open |
 | **C-2 witness** | small, 5 templates | Correctly priced. On the bitstring bench it changes *feedback* (scalar → positional) and prices itself in rounds-to-proof. In the **symbolic** branch it is not optional: a counterexample *is* the observation. Engine side works today; needs a NEW kind (result field), Daedalus + Vivarium. | symbolic (required); bitstring (feedback) | first increment of the symbolic branch |
-| **C-1 relatedness** | small/medium, "the key edge", 8–12 templates | **Re-scoped.** Transfer is a property of an organism with state, not of two worlds (`SELECTION_RULES.md` R6). Flipped-hash targets give a world relation whose transfer curve is analytically pinned at both ends; with stateless candidates it measures the hash. Valuable only once a stateful organism (Proteus specimen, controller) can cross. As a *landscape* relation it is subsumed by C-3 (NK with shared components). | interacting landscapes (via C-3); transfer (after a stateful organism) | DEFERRED behind a stateful organism; reopen when WP-S3 lands |
+| **C-1 relatedness** | small/medium, "the key edge", 8–12 templates | **Re-scoped, then amended.** Relatedness is a world relation realised as shared NK tables (WP-A4). Transfer of a *source-derived artifact* (candidate, program, parameter vector) through a declared mapping with matched fresh / shuffled / unrelated-source baselines does **not** need runtime memory and can proceed on A4 alone; the flipped-hash construction curve (pinned at both ends) is reported separately from a policy's empirical ability to exploit related worlds. Carry-vs-reset of runtime state is its own later claim. | interacting landscapes; source-artifact transfer | OWNER (Daedalus A4; Harmonia mapping/baselines); not deferred |
 | **C-3 landscape family** | medium, 8 templates | **Promoted.** This *is* the entry to the interacting-landscapes branch: NK with declared K is the smallest world in which components affect each other's usefulness, K=0 is the built-in mechanism control, and the exchangeability null generalises (permute loci under the same K). One new kind, engine-side executor. | interacting landscapes | first increment of the static structured branch |
-| **C-4 external backend** | medium, 22 templates | Legitimate and mis-graded: the boundary does not make a backend non-deterministic. Grade **per tool by double-run at admission, then per observation by sampled re-execution** (D-4). Vivarium forbids process spawning today, so it is a new execution contract with lease sizing, not a kind. Its first honest use is the population branch (Avida) *if* the audit shows a runnable, deterministic build. | population ecology; later symbolic tools | contract first, one tool, qualified |
+| **C-4 external backend** | medium, 22 templates | Legitimate and mis-graded: the boundary does not make a backend non-deterministic, and matching re-executions do not prove it deterministic either. Record tool/build, dependencies, configuration, inputs, seed handling, scheduler assumptions and environment fingerprint; treat matching re-executions as **repeatability evidence in tested conditions**; separate the declared contract, observed checks, sampling coverage and the observation's licensed grade (D-4, WP-X2). Vivarium forbids process spawning today, so it is a new execution contract with lease sizing, not a kind. First honest use: whichever route WP-P0 measures as runnable and repeatable. | population ecology; later symbolic tools | contract first, one tool, scoped qualification |
 | **C-5 statistic home** | small, policy | Closed as analysis families (§3). Remaining work is Harmonia's ruling on `analysis_version` + `source_set` conventions, and Archaeon's first analysis over M-SIGNAL data. | all | policy, Harmonia |
 
 **Dependency shape.** These are not one critical path. The bitstring family
@@ -149,3 +149,16 @@ Recorded so the route survives, with the specific obstruction:
   needs an observation interface on the organism side (Proteus) before any
   world emits one; rendering for humans is a PEW/report concern and is not
   this.
+
+## Amendment 2026-09-07 (later) — per the operator's amendment order
+
+- C-1 is no longer "deferred behind a stateful organism": source-artifact
+  transfer needs a mapping and baselines, not runtime memory (WP-A4, R6).
+- C-4's grading language is corrected: repeatability under tested conditions,
+  never proved determinism (WP-X2).
+- §3's "witness jsonb column" in PEW is withdrawn in favour of a typed
+  witness reference / presence index unless a doctrine ruling permits copying
+  bytes (WP-X5). The 64 KB inline threshold in D-1 is a proposal, not a limit.
+- Contract changes are gated locally: I-2 gates affected candidates; I-3
+  gates degeneracy reporting; I-4 gates analyses using those units; none gates
+  writing or testing a new library.

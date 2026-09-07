@@ -257,7 +257,11 @@
    "branch": "interacting_landscapes",
    "branch_justification": "the scientific content is a genotype-by-environment interaction: the knockout's fitness is defined only relative to which resource the medium withholds, so the landscape is the pair (genotype, medium)",
    "notes": "Herakles caveat: the three ORFs are not aromatic amino acid pathway genes and the supplements are standard auxotrophic MARKER nutrients, so parameter values look like generic yeast-genetics furniture rather than values drawn from King et al. 2009; the method and attribution are right, the numbers were not checked against the paper.",
-   "_part": 2
+   "_part": 2,
+   "proxy_class": "interacting_landscapes",
+   "original_class": "interacting_landscapes",
+   "retained_route": "Orchestrate a genome-scale metabolic model (flux-balance) as an external backend (C-4) that takes a gene deletion and a medium and returns a growth rate, run the four factorial cells as separate specs, and adjudicate the rescue interaction downstream (C-5).",
+   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
   },
   {
    "id": "coevolution.parasites.v0",
@@ -309,7 +313,11 @@
    "adjacent_prometheus_home": "ludus/ (04 doc names it the obvious home for any grid or arena world; not named for this template specifically)",
    "branch": "interacting_landscapes",
    "branch_justification": "Each population IS the other's fitness landscape; the coupling is the phenomenon.",
-   "_part": 1
+   "_part": 1,
+   "proxy_class": "interacting_landscapes",
+   "original_class": "interacting_landscapes",
+   "retained_route": "Two typed populations with heredity and variation, an interaction rule computing both fitnesses per meeting, generational chaining, and an independent held-out evaluation set (R-WORLD; really R-SUBSTRATE for the chaining).",
+   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
   },
   {
    "id": "hide_and_seek_autocurriculum.v0",
@@ -364,7 +372,11 @@
    "adjacent_prometheus_home": "ludus/ (04 doc: arena worlds; not named for this template specifically)",
    "branch": "interacting_landscapes",
    "branch_justification": "Each team's improvement is the other's landscape; also spatial and embodied, but the coupling is the claimed mechanism.",
-   "_part": 1
+   "_part": 1,
+   "proxy_class": "interacting_landscapes",
+   "original_class": "interacting_landscapes",
+   "retained_route": "Orchestrate an external physics world with two trainable multi-agent policies under self-play, pin the configuration, fossilize the behaviour trace, and run a change-point detector downstream; the comparison remains outside the scalar rule.",
+   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
   },
   {
    "id": "maml_few_shot.v0",
@@ -419,7 +431,11 @@
    "branch": "interacting_landscapes",
    "branch_justification": "the whole claim depends on relatedness between task landscapes (shared structure); with unrelated landscapes the experiment is vacuous by construction",
    "notes": "Herakles calls this the hardest template in the chunk to reduce honestly; the honest reduction begins with a measurable negative result available today.",
-   "_part": 2
+   "_part": 2,
+   "proxy_class": "interacting_landscapes",
+   "original_class": "interacting_landscapes",
+   "retained_route": "Meta-train in an autodiff backend (C-4) over a task distribution with support/query splits (EXPANSION_REQUESTS #38 asks for a seed_roots array with a distribution_type), receiving mean post-adaptation accuracy over many held-out tasks as the single scalar, with the random-init and zero-step controls as separate specs adjudicated downstream.",
+   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
   },
   {
    "id": "mcc.bipartite.v0",
@@ -473,7 +489,11 @@
    "branch_justification": "Each population is the other's landscape and the landscape is endogenous; the phenomenon is the coupling itself.",
    "notes": "Memory feedback_preregistered_rules_need_an_eligibility_count applies directly: an uncalibrated tau turns the result into a population-size artifact. The Coevolution expansion request (#36) names MCC as also blocked.",
    "capabilities_basis": "Inferred by the crosswalk author from expansion_pass/04_CAPABILITIES_GRAPH_PORTFOLIO.md, which names capabilities per template CLASS (e.g. C-2 'CEGAR / CEGIS / bounded model checking / learning-to-search', C-3 'quality-diversity, novelty, illumination', C-0 'query-by-committee, active learning', C-1 'POET, MCC, meta-learning', C-4 'all R-BACKEND', C-5 'all R-COMPOSE'). MATRIX.json and MATRIX.md carry NO per-entry C-n link.",
-   "_part": 3
+   "_part": 3,
+   "proxy_class": "interacting_landscapes",
+   "original_class": "interacting_landscapes",
+   "retained_route": "Two mutable populations with their own mutation operators, pairwise or sampled-pairwise evaluation, a per-individual existential survival test and generational replacement on both sides, with an evolvable environment representation whose difficulty can genuinely increase; C-1 (evaluate_bitstring_related_v0) is what makes environment drift gradual.",
+   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
   },
   {
    "id": "poet_paired_coevolution.v0",
@@ -530,7 +550,11 @@
    "branch": "interacting_landscapes",
    "branch_justification": "the landscape each agent faces is generated and admitted by reference to the other population, and the load-bearing claim is transfer between related landscapes",
    "notes": "Herakles deliberately does NOT route to R-ARCH: nothing in POET contradicts sealed-spec-with-recorded-observations, it only needs many of them and an external archive holder.",
-   "_part": 2
+   "_part": 2,
+   "proxy_class": "interacting_landscapes",
+   "original_class": "interacting_landscapes",
+   "retained_route": "Either orchestrate POET's own implementation and terrain simulator as a backend (C-4), or, once evaluate_bitstring_related_v0 with target_offset exists (C-1), run POET as batches of specs with the producer holding the archive and adjudicating transfer downstream (C-5).",
+   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
   },
   {
    "id": "bacon_equation_discovery.v0",
@@ -582,7 +606,11 @@
    "adjacent_prometheus_home": null,
    "branch": "numeric_calibration",
    "branch_justification": "Fit of composed terms to a numeric table with a planted law and declared noise; the walk supplies exactly such a table today.",
-   "_part": 1
+   "_part": 1,
+   "proxy_class": "numeric_calibration",
+   "original_class": "dynamical_systems_equation_discovery",
+   "retained_route": "Equation discovery from measured trajectories (BACON): the faithful route is a symbolic-regression / law-induction executor over a declared dynamical system with noise; the walk proxy calibrates only the instrument.",
+   "next_action": "Bounded research task: specify the smallest dynamical family (1-D linear ODE with declared noise) and the law-recovery oracle; owner Herakles (route), Vivarium (kind). Unresolved: which symbolic search executor (Branch B) hosts it."
   },
   {
    "id": "bayesian_utility.v0",
@@ -629,7 +657,11 @@
    "adjacent_prometheus_home": null,
    "branch": "numeric_calibration",
    "branch_justification": "A closed-form numeric criterion over a stipulated model; no state, population or world dynamics.",
-   "_part": 1
+   "_part": 1,
+   "proxy_class": "numeric_calibration",
+   "original_class": "decision_theoretic_experiment_selection",
+   "retained_route": "Expected-utility experiment selection; needs a prior, a likelihood and a utility.",
+   "next_action": "Same as d_optimal_design: a named producer policy, evaluated under the frozen-corpus protocol. Lead."
   },
   {
    "id": "computational_mathematics_walk.v0",
@@ -680,7 +712,11 @@
    "branch": "numeric_calibration",
    "branch_justification": "an ensemble check of the bench's own random source against an analytic law; no candidate, no world beyond the seed",
    "notes": "Herakles: the highest value per unit effort template in the chunk, and the only exercise of state=persist in the inbox. F-4: the degeneracy guard misses stateful kinds under state=reset (four walk repeats returned identical values and were reported NOT degenerate), so the sha256_index choice is load-bearing. Reference names no specific text, so PLAUSIBLE means nothing to verify against rather than doubt.",
-   "_part": 2
+   "_part": 2,
+   "proxy_class": "numeric_calibration",
+   "original_class": "numeric_calibration",
+   "retained_route": "Reference names no text; the proxy is the experiment. Retained as calibration only.",
+   "next_action": "No faithful route until a reference is supplied (H-R2)."
   },
   {
    "id": "computational_serendipity.v0",
@@ -732,7 +768,11 @@
    "branch_justification": "A 1-D walk whose crossing probability has a closed form (displacement variance = steps*step_scale^2/3); the experiment calibrates a base rate rather than testing a mechanism.",
    "notes": "Names an implemented kind; runnable once the two null parameters are chosen. Per F-5, step_scale is a pure rescaling at fixed seed, so the surface over step_scale is analytically derivable from one setting.",
    "capabilities_basis": "Inferred by the crosswalk author from expansion_pass/04_CAPABILITIES_GRAPH_PORTFOLIO.md, which names capabilities per template CLASS (e.g. C-2 'CEGAR / CEGIS / bounded model checking / learning-to-search', C-3 'quality-diversity, novelty, illumination', C-0 'query-by-committee, active learning', C-1 'POET, MCC, meta-learning', C-4 'all R-BACKEND', C-5 'all R-COMPOSE'). MATRIX.json and MATRIX.md carry NO per-entry C-n link.",
-   "_part": 3
+   "_part": 3,
+   "proxy_class": "numeric_calibration",
+   "original_class": "numeric_calibration",
+   "retained_route": "An agent with standing interests formed before the trigger, a noticing mechanism for events it was not looking for, and a bridge operator connecting the event to an unrelated goal, with a value criterion that can be met by something off the agent's current agenda.",
+   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
   },
   {
    "id": "d_optimal_design.v0",
@@ -779,7 +819,11 @@
    "adjacent_prometheus_home": null,
    "branch": "numeric_calibration",
    "branch_justification": "A deterministic closed-form numeric criterion on a point set; no state, dynamics or population.",
-   "_part": 1
+   "_part": 1,
+   "proxy_class": "numeric_calibration",
+   "original_class": "experimental_design_optimality",
+   "retained_route": "D-optimal design chooses experiments to minimise parameter covariance; requires a parametric model with a design space.",
+   "next_action": "Faithful home: a producer-side policy (an information-based selection rule) compared against random under M-SIGNAL rules on any family with a parametric measurement. Lead for the directed-policy menu, not a kind."
   },
   {
    "id": "discovery_informatics.v0",
@@ -832,7 +876,11 @@
    "branch": "numeric_calibration",
    "branch_justification": "as posed on the bench its only honest reading is the exchangeability null (F-6/E3), which is an instrument calibration; the faithful version would be static_structured (feature vectors ranked by a fixed model)",
    "notes": "Herakles's F-6 verdict: should be marked degenerate rather than admitted; not salvageable by better literals because the defect is in the axis. Same fact used the other way round is a free negative control worth admitting deliberately as a null (E3).",
-   "_part": 2
+   "_part": 2,
+   "proxy_class": "numeric_calibration",
+   "original_class": "numeric_calibration",
+   "retained_route": "Built on the dead bits axis; the honest reading is the exchangeability null (E3).",
+   "next_action": "bitstring.exchangeability_null.v0 PROPOSED; no other route."
   },
   {
    "id": "equation_discovery_sindy.v0",
@@ -885,7 +933,11 @@
    "adjacent_prometheus_home": null,
    "branch": "numeric_calibration",
    "branch_justification": "Regression over a numeric time series against a known ground truth; the walk gives an exact null today.",
-   "_part": 1
+   "_part": 1,
+   "proxy_class": "numeric_calibration",
+   "original_class": "dynamical_systems_equation_discovery",
+   "retained_route": "Sparse identification of nonlinear dynamics needs a real ODE trajectory library and a sparsity oracle; the walk proxy has one trivial law and is analytically solved.",
+   "next_action": "Bounded research task: a declared 2-D nonlinear ODE (e.g. damped oscillator) as a kind emitting a trajectory; SINDy as an analysis (X1), not an executor. Unresolved: trajectory storage bound (D-1)."
   },
   {
    "id": "evolcomp.fitness.v0",
@@ -933,7 +985,11 @@
    "branch": "numeric_calibration",
    "branch_justification": "one uniform draw scored on onemax is a closed-form null; the template contains no evolutionary content and its value is as the bench's calibrated baseline",
    "notes": "Scope note (Herakles): Holland is correctly cited for the GA framework but does not specify this hidden-target objective, so the attribution is right for the framework and not for the landscape. The bits axis is a producer-side generator directive (uniform_bits), so the sealed spec must carry a materialised bits value.",
-   "_part": 2
+   "_part": 2,
+   "proxy_class": "numeric_calibration",
+   "original_class": "numeric_calibration",
+   "retained_route": "Admit it as the bench's null: per length in {16,24,32}, one fixed uniform draw, 500 repeats under sha256_index, per-repeat rule as above; then any producer-side GA (population, selection, variation across specs) is scored against the closed-form blind-draw baseline, and C-3 supplies landscapes where EC methods can differ.",
+   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
   },
   {
    "id": "falsification_walk.v0",
@@ -991,7 +1047,11 @@
    "branch_justification": "On the bench this is a first-passage problem on a 1-D walk with a closed-form crossing probability; the faithful version (hybrid dynamics, temporal logic) has no listed branch and would be 'other'.",
    "notes": "Schema oddity flagged by Herakles: step_scale is typed int_range here while computational_serendipity.v0 types it as choices, and the executor multiplies a float, so the TYPE as well as the value needs an operator decision. This is a type entailment, not a recovered value, so entailed_repair stays null.",
    "capabilities_basis": "Inferred by the crosswalk author from expansion_pass/04_CAPABILITIES_GRAPH_PORTFOLIO.md, which names capabilities per template CLASS (e.g. C-2 'CEGAR / CEGIS / bounded model checking / learning-to-search', C-3 'quality-diversity, novelty, illumination', C-0 'query-by-committee, active learning', C-1 'POET, MCC, meta-learning', C-4 'all R-BACKEND', C-5 'all R-COMPOSE'). MATRIX.json and MATRIX.md carry NO per-entry C-n link.",
-   "_part": 3
+   "_part": 3,
+   "proxy_class": "numeric_calibration",
+   "original_class": "cyber_physical_falsification",
+   "retained_route": "Temporal-logic falsification searches a real system's input space for a spec violation; the walk is a surrogate whose envelope law is analytic.",
+   "next_action": "falsification_walk.v1 (Archaeon-proposed, step_scale fixed) as the instrument check; the faithful route needs a controller/environment family (Branch C) and a temporal-logic spec as outcome rule (needs within-run aggregate, E16)."
   },
   {
    "id": "mt.relation.eval.v0",
@@ -1039,7 +1099,11 @@
    "adjacent_prometheus_home": null,
    "branch": "numeric_calibration",
    "branch_justification": "An instrument test of the bench's own executor via exact relations; the closest entry to R-NOW.",
-   "_part": 1
+   "_part": 1,
+   "proxy_class": "numeric_calibration",
+   "original_class": "numeric_calibration",
+   "retained_route": "A downstream comparator over paired fossils (or a small evaluate_metamorphic wrapper returning relation_violation) plus a registry of relations pre-registered before the runs.",
+   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
   },
   {
    "id": "pbt.stateful.walk.v0",
@@ -1093,7 +1157,11 @@
    "branch": "numeric_calibration",
    "branch_justification": "As specified the system under test is the walk and the invariant is an analytic diffusion tail; faithful stateful PBT would move to symbolic_execution.",
    "hazard_reported_by_herakles": "F-4: a random_walk_v0 spec with constant seed, state=reset, count>1 is degenerate yet escapes the degenerate_by_construction flag because the kind is registered stateful.",
-   "_part": 1
+   "_part": 1,
+   "proxy_class": "numeric_calibration",
+   "original_class": "stateful_property_based_testing",
+   "retained_route": "Property-based testing of stateful systems generates command sequences against a model; the walk proxy has no model to violate.",
+   "next_action": "Faithful route: Branch B program family with a declared model and shrinking (witness, C-2). Keep as a lead."
   },
   {
    "id": "sciml_pinn_residual.v0",
@@ -1147,7 +1215,11 @@
    "branch": "numeric_calibration",
    "branch_justification": "the adequacy criterion is a continuous residual against an analytic law; on the bench the reachable form is a calibration of a generator against that law, and even the faithful form is a numeric constraint fit rather than a population or agent process",
    "notes": "DEGENERACY (Herakles): a residual-only outcome rule is satisfied vacuously by the zero function on many homogeneous equations; the one-field rule forbids putting the boundary term inside the same criterion. Raw report: both axes were blank (not even cite markers).",
-   "_part": 2
+   "_part": 2,
+   "proxy_class": "numeric_calibration",
+   "original_class": "continuous_dynamics_physics_informed",
+   "retained_route": "PINN residual minimisation is a continuous-optimisation experiment over a declared PDE/ODE; the residual-only rule is vacuously satisfiable by the zero function on the bench.",
+   "next_action": "Retained as an explicit unresolved design question: a PDE family with boundary data and a non-vacuous residual endpoint; needs a continuous-parameter organism (none exists). Reopen with Branch A's continuous variant or an external backend (X2)."
   },
   {
    "id": "simulate_study.v0",
@@ -1200,7 +1272,11 @@
    "branch_justification": "Closed-form binomial arithmetic; the experiment calibrates campaign machinery and the ledger's self-audit against a known answer.",
    "notes": "The template carries only two of the model's four parameters (study_power, bias_factor); pre-study odds and significance level are not axes and must be supplied by the producer. EXPANSION_REQUESTS #31 (aggregate over repeats) was raised by this field.",
    "capabilities_basis": "Inferred by the crosswalk author from expansion_pass/04_CAPABILITIES_GRAPH_PORTFOLIO.md, which names capabilities per template CLASS (e.g. C-2 'CEGAR / CEGIS / bounded model checking / learning-to-search', C-3 'quality-diversity, novelty, illumination', C-0 'query-by-committee, active learning', C-1 'POET, MCC, meta-learning', C-4 'all R-BACKEND', C-5 'all R-COMPOSE'). MATRIX.json and MATRIX.md carry NO per-entry C-n link.",
-   "_part": 3
+   "_part": 3,
+   "proxy_class": "numeric_calibration",
+   "original_class": "simulation_based_study_design",
+   "retained_route": "Simulation studies of estimators need a declared estimator and data-generating process.",
+   "next_action": "Route through X1 analyses over existing families; the DGP is the family. Lead."
   },
   {
    "id": "ada_thin_film.v0",
@@ -1256,7 +1332,11 @@
    "adjacent_prometheus_home": null,
    "branch": "other",
    "branch_justification": "A physical or simulated-physics backend with irreproducible readings; no listed branch covers an external laboratory, and the bench keeps only the loop.",
-   "_part": 1
+   "_part": 1,
+   "proxy_class": "other",
+   "original_class": "other",
+   "retained_route": "An external backend (instrument stack or physics-based film model) the engine calls per recipe, with a provenance record per reading; the bench keeps loop, budget and fossil and accepts recorded rather than recomputable results.",
+   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
   },
   {
    "id": "evo_epistemology.bvsr.v0",
@@ -1308,7 +1388,11 @@
    "adjacent_prometheus_home": null,
    "branch": "other",
    "branch_justification": "fixed_landscape_search: single-lineage cumulative search on one static scalar criterion; runs natively on the bench, and needs C-3 (landscape family) only to make the result non-trivial.",
-   "_part": 1
+   "_part": 1,
+   "proxy_class": "other",
+   "original_class": "other",
+   "retained_route": "A producer carrying the incumbent between single-repeat specs (exists today as a role) or an executor running variation-selection-retention internally, with the retention-off arm run at matched budget.",
+   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
   },
   {
    "id": "l2o.meta.optimizer.v0",
@@ -1368,7 +1452,11 @@
    "branch_justification": "Nested continuous optimisation over a family of related landscapes; none of the listed branches names meta-learning. interacting_landscapes would apply only if 'relatedness between training and held-out landscapes' counts as interaction, which it does not.",
    "notes": "EXPANSION_REQUESTS #26 (differentiable objective with forward/backward) was raised by this field.",
    "capabilities_basis": "Inferred by the crosswalk author from expansion_pass/04_CAPABILITIES_GRAPH_PORTFOLIO.md, which names capabilities per template CLASS (e.g. C-2 'CEGAR / CEGIS / bounded model checking / learning-to-search', C-3 'quality-diversity, novelty, illumination', C-0 'query-by-committee, active learning', C-1 'POET, MCC, meta-learning', C-4 'all R-BACKEND', C-5 'all R-COMPOSE'). MATRIX.json and MATRIX.md carry NO per-entry C-n link.",
-   "_part": 3
+   "_part": 3,
+   "proxy_class": "other",
+   "original_class": "other",
+   "retained_route": "Run an automatic-differentiation library as an orchestrated backend: unrolled meta-loss, persistent optimiser weights, a function-family sampler with a held-out family differing in kind, baselines on identical problems and budgets, and the transfer arm pre-registered; the bench calls it and fossilizes the curves.",
+   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
   },
   {
    "id": "sbse.hillclimb.search.v0",
@@ -1423,7 +1511,11 @@
    "adjacent_prometheus_home": null,
    "branch": "other",
    "branch_justification": "fixed_landscape_search: local search over one static scalar landscape whose scientific content is its ruggedness; needs C-3 or a real artefact backend to be non-trivial.",
-   "_part": 1
+   "_part": 1,
+   "proxy_class": "other",
+   "original_class": "other",
+   "retained_route": "A fitness function computed from a real artefact (external backend running tests or static analysis) or an NK-style rugged landscape executor, a producer carrying the incumbent, and every evaluation fossilized.",
+   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
   },
   {
    "id": "universal_darwinism.weasel.v0",
@@ -1476,7 +1568,11 @@
    "adjacent_prometheus_home": null,
    "branch": "other",
    "branch_justification": "fixed_landscape_search: cumulative selection on one static hidden target; native to the bench, non-trivial only once C-3 supplies landscapes other than onemax.",
-   "_part": 1
+   "_part": 1,
+   "proxy_class": "other",
+   "original_class": "other",
+   "retained_route": "A producer carrying the incumbent between single-repeat specs (exists today) or an executor running generations internally and returning generations_to_target, with both arms at matched budget.",
+   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
   },
   {
    "id": "alife.tierra.soup.v0",
@@ -1531,7 +1627,11 @@
    "adjacent_prometheus_home": "ergon/avida2003/",
    "branch": "population_ecology",
    "branch_justification": "A population in a shared resource-limited arena whose phenomenon is ecological (parasitism, resistance, cheating).",
-   "_part": 1
+   "_part": 1,
+   "proxy_class": "population_ecology",
+   "original_class": "population_ecology",
+   "retained_route": "Run an external Tierra/Avida-class simulator binary under a declared seed as an orchestrated backend, fossilizing its output stream, using the ergon/avida2003 tree and previously recovered mid-1990s genomes already in the repository.",
+   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
   },
   {
    "id": "creativity.v0",
@@ -1589,7 +1689,11 @@
    "branch_justification": "Generational population with archive-relative selection; the measurable is population-level coverage and stall.",
    "notes": "Same primary source as novelty.search.v0 (Lehman and Stanley 2008) under a different discipline label; the two templates should be reconciled. EXPANSION_REQUESTS #3 (GREATER_THAN_ARM) was raised by this field.",
    "capabilities_basis": "Inferred by the crosswalk author from expansion_pass/04_CAPABILITIES_GRAPH_PORTFOLIO.md, which names capabilities per template CLASS (e.g. C-2 'CEGAR / CEGIS / bounded model checking / learning-to-search', C-3 'quality-diversity, novelty, illumination', C-0 'query-by-committee, active learning', C-1 'POET, MCC, meta-learning', C-4 'all R-BACKEND', C-5 'all R-COMPOSE'). MATRIX.json and MATRIX.md carry NO per-entry C-n link.",
-   "_part": 3
+   "_part": 3,
+   "proxy_class": "population_ecology",
+   "original_class": "population_ecology",
+   "retained_route": "A behaviour characterisation over a genome, a persistent archive with an explicit insertion policy, k-NN distance over it, and generational selection and variation on a deceptive domain, with a comparative outcome across arms (EXPANSION_REQUESTS #3).",
+   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
   },
   {
    "id": "map.elites.v0",
@@ -1645,7 +1749,11 @@
    "branch_justification": "A niche-structured archive of elites with parents drawn from across the population; the measurable is a population-level map, not a single optimum.",
    "notes": "EXPANSION_REQUESTS #12 (persistent behaviour-coordinate store) was raised by this field. Same C-3 request as novelty.search.v0.",
    "capabilities_basis": "Inferred by the crosswalk author from expansion_pass/04_CAPABILITIES_GRAPH_PORTFOLIO.md, which names capabilities per template CLASS (e.g. C-2 'CEGAR / CEGIS / bounded model checking / learning-to-search', C-3 'quality-diversity, novelty, illumination', C-0 'query-by-committee, active learning', C-1 'POET, MCC, meta-learning', C-4 'all R-BACKEND', C-5 'all R-COMPOSE'). MATRIX.json and MATRIX.md carry NO per-entry C-n link.",
-   "_part": 3
+   "_part": 3,
+   "proxy_class": "population_ecology",
+   "original_class": "population_ecology",
+   "retained_route": "An evaluation returning both fitness and a behaviour descriptor from one call, on a declared landscape family with planted deception or tunable ruggedness (C-3), with the elite archive persisted and read to choose parents, and an objective-only hill climber at identical budget as the control.",
+   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
   },
   {
    "id": "neurodynamics.attractor.evo.v0",
@@ -1701,7 +1809,11 @@
    "branch": "population_ecology",
    "branch_justification": "a population with selection and an explicit heredity channel, adjudicated by a two-arm trajectory; the substrate question (neural heredity) is what distinguishes it from a plain GA",
    "notes": "Dating note (Herakles): F1000Research vol 5 article 2416, first published 2016; the template's 2017 date is the revised version.",
-   "_part": 2
+   "_part": 2,
+   "proxy_class": "population_ecology",
+   "original_class": "population_ecology",
+   "retained_route": "Run the model as an orchestrated backend (C-4) with both arms (heredity vs selection-only) and multiple seeds, fossilizing per-generation trajectories; a cheap intermediate is an executor that takes stored patterns plus a noise seed and returns the score of the relaxed pattern (a 32-unit Hopfield net with three patterns is a few lines), which restores capacity and interference behaviour.",
+   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
   },
   {
    "id": "novelty.search.v0",
@@ -1756,7 +1868,11 @@
    "branch_justification": "Selection over a population relative to an archive of past behaviours; the measurable is archive growth and coverage, a population-level quantity.",
    "notes": "Duplicates the primary source of creativity.v0 (same Lehman and Stanley 2008 paper) under a different discipline label with different parameter axes; EXPANSION_REQUESTS #9 was raised by this field.",
    "capabilities_basis": "Inferred by the crosswalk author from expansion_pass/04_CAPABILITIES_GRAPH_PORTFOLIO.md, which names capabilities per template CLASS (e.g. C-2 'CEGAR / CEGIS / bounded model checking / learning-to-search', C-3 'quality-diversity, novelty, illumination', C-0 'query-by-committee, active learning', C-1 'POET, MCC, meta-learning', C-4 'all R-BACKEND', C-5 'all R-COMPOSE'). MATRIX.json and MATRIX.md carry NO per-entry C-n link.",
-   "_part": 3
+   "_part": 3,
+   "proxy_class": "population_ecology",
+   "original_class": "population_ecology",
+   "retained_route": "An executor returning a behaviour descriptor computed from a RUN rather than from the candidate, on a deceptive domain, with the archive held in the producer (or a substrate archive) and a matched-budget fitness-driven control; this is the same small executor addition map.elites.v0 needs.",
+   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
   },
   {
    "id": "pbt_hyperparam_schedule.v0",
@@ -1811,7 +1927,11 @@
    "adjacent_prometheus_home": null,
    "branch": "population_ecology",
    "branch_justification": "A population with inheritance by copying and periodic culling; the product is a lineage tree. Secondary blocker recorded by Herakles: no schedule is expressible on random_walk_v0 either within a spec (step_scale fixed) or across specs (start_position is returned, not a parameter).",
-   "_part": 1
+   "_part": 1,
+   "proxy_class": "population_ecology",
+   "original_class": "population_ecology",
+   "retained_route": "A substrate with per-worker persistent state and inter-run state COPY plus a lineage-recording fossil, or an orchestrated real trainer as backend; the verdict can be a downstream scalar.",
+   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
   },
   {
    "id": "science_of_science.v0",
@@ -1863,7 +1983,11 @@
    "branch": "population_ecology",
    "branch_justification": "a growing population of nodes whose attachment probability depends on the population's current state (cumulative advantage); the graph is the population and the mechanism is rich-get-richer",
    "notes": "Attribution caveat (Herakles): preferential attachment is not Fortunato et al.'s contribution; citing the review for the mechanism is Tier-2 sourcing and should be pinned to a primary source before admission. Herakles's design instruction: do NOT gate on a fitted power-law exponent because the required cutoff choice and goodness-of-fit test cannot ride inside a one-field outcome rule.",
-   "_part": 2
+   "_part": 2,
+   "proxy_class": "population_ecology",
+   "original_class": "program_level_meta_science",
+   "retained_route": "Mechanism cited to a review; needs a primary source and a program-level population (experiments as units).",
+   "next_action": "Program-health report (Challenge 3) is the nearest instrument; not a world. Route to Aporia's register."
   },
   {
    "id": "agi.mc.aixi.ctw.v0",
@@ -1916,7 +2040,11 @@
    "branch": "spatial_stateful",
    "branch_justification": "an agent-environment loop with persistent memory over hidden state; the trajectory, not a point, is the observation",
    "notes": "Herakles: the sealed spec and the single-scalar rule both survive (normalised reward is one number); what does not survive is one world with a fixed payload and no state.",
-   "_part": 2
+   "_part": 2,
+   "proxy_class": "spatial_stateful",
+   "original_class": "spatial_stateful",
+   "retained_route": "Launch a reference MC-AIXI-CTW implementation as an orchestrated backend (C-4) with an environment registry exposing a step interface (EXPANSION_REQUESTS #29 yield_action hook), fossilizing the per-cycle reward trace and the normalised final-block reward as the single scalar.",
+   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
   },
   {
    "id": "artificial_curiosity.v0",
@@ -1975,7 +2103,11 @@
    "branch_justification": "An agent with persistent learned state acting in a world partitioned into regions; the measurable is occupancy over regions coupled to a learning curve.",
    "notes": "The template's own rationale concedes a SURVIVED verdict would not license the no-noise-trap claim; Herakles's reduction is built to observe exactly that trap.",
    "capabilities_basis": "Inferred by the crosswalk author from expansion_pass/04_CAPABILITIES_GRAPH_PORTFOLIO.md, which names capabilities per template CLASS (e.g. C-2 'CEGAR / CEGIS / bounded model checking / learning-to-search', C-3 'quality-diversity, novelty, illumination', C-0 'query-by-committee, active learning', C-1 'POET, MCC, meta-learning', C-4 'all R-BACKEND', C-5 'all R-COMPOSE'). MATRIX.json and MATRIX.md carry NO per-entry C-n link.",
-   "_part": 3
+   "_part": 3,
+   "proxy_class": "spatial_stateful",
+   "original_class": "spatial_stateful",
+   "retained_route": "A small action-interface environment with a noisy region, two trainable modules with persistent parameters and a reward wire from model error to controller, run through an existing RL library as an orchestrated backend that fossilizes per-step error and occupancy curves.",
+   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
   },
   {
    "id": "curiosity.v0",
@@ -2027,7 +2159,11 @@
    "adjacent_prometheus_home": "ludus/ (04 doc: grid and arena worlds; not named for this template specifically)",
    "branch": "spatial_stateful",
    "branch_justification": "An agent with memory of its own history navigating a state space; state and trajectory are the substance.",
-   "_part": 1
+   "_part": 1,
+   "proxy_class": "spatial_stateful",
+   "original_class": "spatial_stateful",
+   "retained_route": "An environment with actions and observations, a policy updatable during a run, an online density model, and a reward channel; a run must be allowed to be a training loop (substrate change), or an external RL library orchestrated and fossilized.",
+   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
   },
   {
    "id": "empowerment.v0",
@@ -2085,7 +2221,11 @@
    "branch_justification": "The measurable is a landscape over world states reached through actions from a resettable state; the faithful experiment is an agent in a stateful world.",
    "notes": "Memory feedback_mi_bias applies directly: MI on sparse histograms is biased up; Herakles independently requires a random-action-relabelling null.",
    "capabilities_basis": "Inferred by the crosswalk author from expansion_pass/04_CAPABILITIES_GRAPH_PORTFOLIO.md, which names capabilities per template CLASS (e.g. C-2 'CEGAR / CEGIS / bounded model checking / learning-to-search', C-3 'quality-diversity, novelty, illumination', C-0 'query-by-committee, active learning', C-1 'POET, MCC, meta-learning', C-4 'all R-BACKEND', C-5 'all R-COMPOSE'). MATRIX.json and MATRIX.md carry NO per-entry C-n link.",
-   "_part": 3
+   "_part": 3,
+   "proxy_class": "spatial_stateful",
+   "original_class": "spatial_stateful",
+   "retained_route": "A simulator with settable state, discrete actions and repeated reset/re-roll, plus a channel-capacity executor with bias correction and a shuffled-action null, evaluated over many states; most naturally an orchestrated action-interface world rather than a bench executor.",
+   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
   },
   {
    "id": "illumination.grid.v0",
@@ -2137,7 +2277,11 @@
    "adjacent_prometheus_home": null,
    "branch": "spatial_stateful",
    "branch_justification": "The faithful experiment needs a world whose rollouts yield a behaviour descriptor independent of score (a walking robot); the archive is persistent state across specs. The proxy alone would sit under fixed_landscape_search.",
-   "_part": 1
+   "_part": 1,
+   "proxy_class": "spatial_stateful",
+   "original_class": "spatial_stateful",
+   "retained_route": "An executor returning a behaviour descriptor alongside performance, an archive persisting between specs readable by the proposer, and downstream-computed coverage; the descriptor is the hard part.",
+   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
   },
   {
    "id": "intrinsic.v0",
@@ -2191,7 +2335,11 @@
    "branch": "spatial_stateful",
    "branch_justification": "a closed agent-environment loop with persistent memory over a sensorimotor state space; the claim is about a trajectory through that space",
    "notes": "Bench-level observation from Herakles worth carrying: condition A is exactly the degenerate_by_construction case, and zero within-world variance is what perfect learnability looks like from outside, so the degeneracy flag carries information the bench currently discards as an error.",
-   "_part": 2
+   "_part": 2,
+   "proxy_class": "spatial_stateful",
+   "original_class": "spatial_stateful",
+   "retained_route": "A stateful grid_mdp_v0 executor with a step interface (EXPANSION_REQUESTS #21: grid_size, episode_length, returning visited states) hosting three regions of differing learnability, run either in-bench once output-to-input chaining exists or as an orchestrated backend (C-4) that fossilizes the ordered region trajectory.",
+   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
   },
   {
    "id": "l2s.dagger.v0",
@@ -2250,7 +2398,11 @@
    "branch_justification": "An agent following a trajectory through a stateful world; the claim is about the state distribution the agent induces.",
    "notes": "The template's rationale mentions LOLS as the algorithm needed to improve on a suboptimal reference policy; not part of this experiment.",
    "capabilities_basis": "Inferred by the crosswalk author from expansion_pass/04_CAPABILITIES_GRAPH_PORTFOLIO.md, which names capabilities per template CLASS (e.g. C-2 'CEGAR / CEGIS / bounded model checking / learning-to-search', C-3 'quality-diversity, novelty, illumination', C-0 'query-by-committee, active learning', C-1 'POET, MCC, meta-learning', C-4 'all R-BACKEND', C-5 'all R-COMPOSE'). MATRIX.json and MATRIX.md carry NO per-entry C-n link.",
-   "_part": 3
+   "_part": 3,
+   "proxy_class": "spatial_stateful",
+   "original_class": "spatial_stateful",
+   "retained_route": "An environment with observable per-step state, a queryable expert, a trainable policy class, a growing aggregated dataset, rounds with a decaying mixing coefficient, and held-out evaluation on the final policy's own state distribution; any supervised trainer as an orchestrated backend, plus an executor that emits per-step state/action pairs (random_walk_v0 returns endpoint fields only).",
+   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
   },
   {
    "id": "machineevol.neat.v0",
@@ -2302,7 +2454,11 @@
    "branch": "spatial_stateful",
    "branch_justification": "closed-loop control over a stepped dynamical environment with an episode as the unit; the R-NOW walk baseline is numeric_calibration but the experiment itself needs the stateful loop",
    "notes": "PARAM DEFECTS (Herakles): 'recurrent_feedforward' is a contradiction in terms, and weight_genes as a single float_range implies one weight for a whole network; both need repair before admission. Not destroyed values, but incoherent ones.",
-   "_part": 2
+   "_part": 2,
+   "proxy_class": "spatial_stateful",
+   "original_class": "spatial_stateful",
+   "retained_route": "A neat_eval_v0 executor (EXPANSION_REQUESTS #6: topology_genes, weight_genes, pole-balancing physics returning survival_time) evaluating one fixed network per spec; comparison of topologies across specs downstream.",
+   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
   },
   {
    "id": "openended.novelty.v0",
@@ -2357,7 +2513,11 @@
    "branch_justification": "An embodied agent moving through a 2-D world with walls; the descriptor is a spatial endpoint.",
    "notes": "All parameter values survived. The template is the evaluation half of novelty.search.v0 / creativity.v0 and its outcome rule is vacuous as written. EXPANSION_REQUESTS #11 (persistent behavioural archive) was raised by this field.",
    "capabilities_basis": "Inferred by the crosswalk author from expansion_pass/04_CAPABILITIES_GRAPH_PORTFOLIO.md, which names capabilities per template CLASS (e.g. C-2 'CEGAR / CEGIS / bounded model checking / learning-to-search', C-3 'quality-diversity, novelty, illumination', C-0 'query-by-committee, active learning', C-1 'POET, MCC, meta-learning', C-4 'all R-BACKEND', C-5 'all R-COMPOSE'). MATRIX.json and MATRIX.md carry NO per-entry C-n link.",
-   "_part": 3
+   "_part": 3,
+   "proxy_class": "spatial_stateful",
+   "original_class": "spatial_stateful",
+   "retained_route": "A 2-D maze simulator with collision and range sensors, a controller evaluator over a weight vector with per-step integration, a vector-valued payload and a coordinate (preferably whole-path) return; either an orchestrated maze/NEAT backend or a world built in ludus/, which 04 names as the home for grid or arena worlds.",
+   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
   },
   {
    "id": "rbn.attractor.v0",
@@ -2404,7 +2564,11 @@
    "adjacent_prometheus_home": null,
    "branch": "spatial_stateful",
    "branch_justification": "Stateful iterated dynamics on a wired topology; not spatial in the grid sense, but state and trajectory are the phenomenon (closest available branch).",
-   "_part": 1
+   "_part": 1,
+   "proxy_class": "spatial_stateful",
+   "original_class": "spatial_stateful",
+   "retained_route": "A small pure executor of the seed: derive wiring/functions/state, iterate synchronously with a seen-set, return period, transient and cycle_detected, recording the budget; Herakles's verdict is that it should simply be written.",
+   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
   },
   {
    "id": "abduce_set_cover.v0",
@@ -2457,7 +2621,11 @@
    "adjacent_prometheus_home": null,
    "branch": "static_structured",
    "branch_justification": "A fixed bipartite structure evaluated by a combinatorial solve; no state, time or population.",
-   "_part": 1
+   "_part": 1,
+   "proxy_class": "static_structured",
+   "original_class": "static_structured",
+   "retained_route": "Seed -> bipartite network generator at declared density + a presenting case, an external set-cover/ILP solver called and fossilized, result exposing cover_size and covered_all.",
+   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
   },
   {
    "id": "causal_discovery_pc.v0",
@@ -2509,7 +2677,11 @@
    "branch": "static_structured",
    "branch_justification": "the candidate is an edge set over a fixed dataset, pruned by static tests; no dynamics, no population, no interaction between candidates",
    "notes": "Herakles's analyst proposes alpha in {0.01, 0.05, 0.1} and max conditioning set 2 as NEW DESIGN CHOICES, not recovered values. The raw report shows both values overwritten by cite markers ([cite: 15] and [cite: 6, 9, 16]).",
-   "_part": 2
+   "_part": 2,
+   "proxy_class": "static_structured",
+   "original_class": "causal_structure_learning",
+   "retained_route": "PC-algorithm structure learning needs multivariate observational data with a declared generating DAG.",
+   "next_action": "Faithful route: a kind emitting samples from a declared structural causal model (small, seed-derived); PC as an analysis (X1). Bounded research task; owner Herakles (route)."
   },
   {
    "id": "cbr_retrieval_cycle.v0",
@@ -2562,7 +2734,11 @@
    "branch": "static_structured",
    "branch_justification": "ranking a fixed point cloud against a query; no dynamics, no interaction; the case base is a static structured object",
    "notes": "EXPANSION_REQUESTS #10 (raised by CBR, also blocks Inductive Reasoning) asks for seed-independent dataset injection; Herakles's analyst counters that the case base needs no persistent state because it can be derived from the seed like the hidden target.",
-   "_part": 2
+   "_part": 2,
+   "proxy_class": "static_structured",
+   "original_class": "static_structured",
+   "retained_route": "A pure-function executor that derives a seeded case base and a query, computes the three similarity functions, and returns retrieval accuracy against a planted nearest neighbour; the metric contrast across three specs adjudicated downstream (C-5).",
+   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
   },
   {
    "id": "comp_phil_sci.echo.v0",
@@ -2615,7 +2791,11 @@
    "adjacent_prometheus_home": null,
    "branch": "static_structured",
    "branch_justification": "A fixed hand-encoded graph relaxed to a fixed point; the judged object is the settled state of a static structure.",
-   "_part": 1
+   "_part": 1,
+   "proxy_class": "static_structured",
+   "original_class": "static_structured",
+   "retained_route": "A ~100-line executor taking a proposition list and relation list as payload, building the weight matrix, running the update rule to convergence or cycle cap, returning per-unit activations and a settled flag; needs structured payload and, for accepted-over-rival, a two-field comparison.",
+   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
   },
   {
    "id": "evodevo.bias.v0",
@@ -2666,7 +2846,11 @@
    "branch": "static_structured",
    "branch_justification": "the measurement is a static distribution over a fixed genotype-to-attractor map sampled without selection or interaction; the internal iteration is deterministic and closed",
    "notes": "SOURCE CONTRADICTION (Herakles): the cited paper's model is a continuous-time recurrent neural network developmental simulation distinguishing local from global bias, NOT a Boolean network; the K=2 random-truth-table construction belongs to the Kauffman NK/RBN lineage. Either the reference or the kind must change. Graded PLAUSIBLE for that reason.",
-   "_part": 2
+   "_part": 2,
+   "proxy_class": "static_structured",
+   "original_class": "static_structured",
+   "retained_route": "A boolean_network.v0 executor (about forty lines per Herakles; EXPANSION_REQUESTS #18 names num_nodes, connectivity_k, update_steps returning attractor cycle length) that samples many genotypes INSIDE the executor and returns one scalar bias statistic, with the sampler shown unbiased.",
+   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
   },
   {
    "id": "knowledge_discovery.v0",
@@ -2716,7 +2900,11 @@
    "branch": "static_structured",
    "branch_justification": "set intersection over two fixed structured corpora compared against a null of random pairs; no dynamics or interaction",
    "notes": "Herakles warning: the two offered query pairs are the field's own founding examples, so a SURVIVED verdict on them measures fit to the cases that designed the method (memory: feedback_promotion_requires_independent_failure_mode).",
-   "_part": 2
+   "_part": 2,
+   "proxy_class": "static_structured",
+   "original_class": "static_structured",
+   "retained_route": "A small seeded synthetic-corpus executor (generator plus counting scorer) that plants and ablates a bridge between two bit-vector literatures and returns the co-occurrence count above threshold, which is more rigorous than the original because the ground truth is owned; or a dated bibliographic backend (C-4) for the historical pairs.",
+   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
   },
   {
    "id": "nas_bench_evaluation.v0",
@@ -2770,7 +2958,11 @@
    "branch": "static_structured",
    "branch_justification": "a fixed tabular oracle over a structured (graph) candidate space, searched across specs; no world dynamics or interaction, and the population is a producer-side algorithm detail",
    "notes": "EXPANSION_REQUESTS #22 (raised by NAS) asks for an aggregating outcome rule (max over repeats); Herakles's C-5 answers this as a policy (downstream analysis artifact), explicitly NOT an outcome-rule change.",
-   "_part": 2
+   "_part": 2,
+   "proxy_class": "static_structured",
+   "original_class": "static_structured",
+   "retained_route": "A lookup adapter over the downloadable NAS-Bench-101 table as an orchestrated backend (C-4), with the producer running both search algorithms one spec per query under a hard budget, repeated over many seeds, and regret computed downstream (C-5).",
+   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
   },
   {
    "id": "query_by_committee.v0",
@@ -2826,7 +3018,11 @@
    "branch_justification": "A static hidden target behind an exact oracle; the structure is the Hamming-sphere version space; all search happens across specs against one fixed landscape.",
    "notes": "This is Herakles's E1 version-space game / M-SIGNAL rehearsal (expansion_pass/03_LEADING_DESIGN_VERSION_SPACE.md, 04 portfolio). The template's own rationale objects that the bench cannot run a paired control; the reduction answers that the control arm is simply a second series of specs. EXPANSION_REQUESTS #32 was raised by this field.",
    "capabilities_basis": "Inferred by the crosswalk author from expansion_pass/04_CAPABILITIES_GRAPH_PORTFOLIO.md, which names capabilities per template CLASS (e.g. C-2 'CEGAR / CEGIS / bounded model checking / learning-to-search', C-3 'quality-diversity, novelty, illumination', C-0 'query-by-committee, active learning', C-1 'POET, MCC, meta-learning', C-4 'all R-BACKEND', C-5 'all R-COMPOSE'). MATRIX.json and MATRIX.md carry NO per-entry C-n link.",
-   "_part": 3
+   "_part": 3,
+   "proxy_class": "static_structured",
+   "original_class": "static_structured",
+   "retained_route": "A hypothesis class with a samplable version space, a label oracle with noise, a vote-entropy disagreement measure and a held-out test set, with a paired passive arm on the same seed and budget over many seeds; a standard active-learning library as an orchestrated backend if noise is wanted.",
+   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
   },
   {
    "id": "raf.detection.v0",
@@ -2880,7 +3076,11 @@
    "branch_justification": "A static random graph with no dynamics or agents; the measurable is a structural closure threshold over an ensemble.",
    "notes": "Herakles: the publisher returned 403 so volume and pages are unconfirmed, but authors, title, method and year are not in doubt. EXPANSION_REQUESTS #19 was raised by this field.",
    "capabilities_basis": "Inferred by the crosswalk author from expansion_pass/04_CAPABILITIES_GRAPH_PORTFOLIO.md, which names capabilities per template CLASS (e.g. C-2 'CEGAR / CEGIS / bounded model checking / learning-to-search', C-3 'quality-diversity, novelty, illumination', C-0 'query-by-committee, active learning', C-1 'POET, MCC, meta-learning', C-4 'all R-BACKEND', C-5 'all R-COMPOSE'). MATRIX.json and MATRIX.md carry NO per-entry C-n link.",
-   "_part": 3
+   "_part": 3,
+   "proxy_class": "static_structured",
+   "original_class": "static_structured",
+   "retained_route": "Implement the real thing: an adapter or executor taking max_length, catalysis_prob and a seed that generates the polymer reaction network and runs the RAF prune, returning raf_found and raf_size (a few hundred lines, fully fossilizable); sweep and locate the threshold downstream. Herakles: R-BACKEND is so cheap that a reduction is close to wasted effort.",
+   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
   },
   {
    "id": "structure_mapping.v0",
@@ -2939,7 +3139,11 @@
    "branch_justification": "Two static relational structures and a correspondence between them; no dynamics, no population, the measurable is a structural alignment score.",
    "notes": "Herakles's R-REPAIR blocker is more than the two null values: the score must be size-normalised before any threshold can be chosen.",
    "capabilities_basis": "Inferred by the crosswalk author from expansion_pass/04_CAPABILITIES_GRAPH_PORTFOLIO.md, which names capabilities per template CLASS (e.g. C-2 'CEGAR / CEGIS / bounded model checking / learning-to-search', C-3 'quality-diversity, novelty, illumination', C-0 'query-by-committee, active learning', C-1 'POET, MCC, meta-learning', C-4 'all R-BACKEND', C-5 'all R-COMPOSE'). MATRIX.json and MATRIX.md carry NO per-entry C-n link.",
-   "_part": 3
+   "_part": 3,
+   "proxy_class": "static_structured",
+   "original_class": "static_structured",
+   "retained_route": "An SME implementation orchestrated as a backend taking two predicate descriptions and returning the score, the correspondence set and the candidate inferences, with the systematicity weighting switchable and a size normalisation so scores are comparable across the entity-count axis (EXPANSION_REQUESTS #35 asks for a relational_graph world).",
+   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
   },
   {
    "id": "version_space_search.v0",
@@ -2992,7 +3196,11 @@
    "branch": "static_structured",
    "branch_justification": "exact elimination over a fixed finite hypothesis space with a noiseless oracle; no dynamics, no population; the bench already instantiates it",
    "notes": "This is Herakles's strongest cross-chunk convergence: two analysts independently found that evaluate_bitstring is Mastermind. Information-theoretic floor L/log2(L+1) (about 5.2 queries at L=24) lets the gate be shown reachable before freezing. The template's own rationale wrongly says the bench can only record the final scalar size: the producer can record the whole collapse trajectory across specs.",
-   "_part": 2
+   "_part": 2,
+   "proxy_class": "static_structured",
+   "original_class": "static_structured",
+   "retained_route": "Run the bench as an exact version space today (C-0): pin seed_root and length so one hidden target exists, submit candidates one spec at a time, and let the producer maintain the surviving-target count (intersection of Hamming spheres, C(L,k) in closed form), comparing random against expected-information-maximising queries at equal budget (E1).",
+   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
   },
   {
    "id": "ai_scientist_training.v0",
@@ -3051,7 +3259,11 @@
    "branch_justification": "The candidate is a program that must compile and run; the measurement is an execution outcome plus a metric of the executed artifact.",
    "notes": "idea_id choices survived intact and match the paper's own template set (Herakles). The honest outcome is a conjunction (executed AND loss<=target), which the one-scalar outcome rule cannot express.",
    "capabilities_basis": "Inferred by the crosswalk author from expansion_pass/04_CAPABILITIES_GRAPH_PORTFOLIO.md, which names capabilities per template CLASS (e.g. C-2 'CEGAR / CEGIS / bounded model checking / learning-to-search', C-3 'quality-diversity, novelty, illumination', C-0 'query-by-committee, active learning', C-1 'POET, MCC, meta-learning', C-4 'all R-BACKEND', C-5 'all R-COMPOSE'). MATRIX.json and MATRIX.md carry NO per-entry C-n link.",
-   "_part": 3
+   "_part": 3,
+   "proxy_class": "symbolic_execution",
+   "original_class": "symbolic_execution",
+   "retained_route": "Orchestrate a sandboxed subprocess per attempt (real repo, real dataset, model endpoint, accelerator) as an external backend, run the traceback-fed repair loop in the producer, and fossilize diff, environment lockfile, log and metric with a contamination control on the three public templates.",
+   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
   },
   {
    "id": "alchemy.collision.v0",
@@ -3103,7 +3315,11 @@
    "branch_justification": "Candidates are programs (lambda terms) and the measurable is the outcome of executing them to normal form.",
    "notes": "Herakles: the collide-and-beta-reduce operator is more precisely Fontana's earlier algorithmic-chemistry work; the 1994 paper is the canonical statement of organisation levels. All parameter values survived, but the parameter CHOICE is degenerate (R-REPAIR is 'not a capability gap'). EXPANSION_REQUESTS #17 was raised by this field.",
    "capabilities_basis": "Inferred by the crosswalk author from expansion_pass/04_CAPABILITIES_GRAPH_PORTFOLIO.md, which names capabilities per template CLASS (e.g. C-2 'CEGAR / CEGIS / bounded model checking / learning-to-search', C-3 'quality-diversity, novelty, illumination', C-0 'query-by-committee, active learning', C-1 'POET, MCC, meta-learning', C-4 'all R-BACKEND', C-5 'all R-COMPOSE'). MATRIX.json and MATRIX.md carry NO per-entry C-n link.",
-   "_part": 3
+   "_part": 3,
+   "proxy_class": "symbolic_execution",
+   "original_class": "symbolic_execution",
+   "retained_route": "A beta-reduction engine over untyped lambda terms with pluggable reduction order, step counter and normal-form test, returning halted, steps and the normal-form term, with term-valued payload and result fields and a widened alphabet; then, separately, a reactor substrate with reinjection for organisation claims.",
+   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
   },
   {
    "id": "algorithm_discovery.v0",
@@ -3153,7 +3369,11 @@
    "adjacent_prometheus_home": null,
    "branch": "symbolic_execution",
    "branch_justification": "The faithful experiment requires decoding and executing a program; the named kind merely scores bit similarity.",
-   "_part": 1
+   "_part": 1,
+   "proxy_class": "symbolic_execution",
+   "original_class": "symbolic_execution",
+   "retained_route": "New executor: decoder bits -> program over a declared primitive set, bounded-step interpreter, world-supplied task inputs, scalar output-quality result.",
+   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
   },
   {
    "id": "alife.tierra.v0",
@@ -3205,7 +3425,11 @@
    "branch": "symbolic_execution",
    "branch_justification": "the template's own question is single-ancestor self-copy, i.e. interpreting a program over a writable memory; the full Tierra method would be population_ecology, but that is not what this template measures",
    "notes": "Herakles flags the ancestor_instructions axis as conflating two quantities: the canonical ancestor is about 80 instructions LONG whereas the Tierran opcode SET is about 32; if the axis means length it is misnamed, if it means set size the values are wrong. Not re-verified (search budget spent).",
-   "_part": 2
+   "_part": 2,
+   "proxy_class": "symbolic_execution",
+   "original_class": "symbolic_execution",
+   "retained_route": "Invoke a real Tierra descendant as an orchestrated external backend (C-4), passing seed, ancestor, soup size and cycles, and fossilize one scalar (population at cycle N or generations elapsed) per observation with a per-observation reproducibility grade.",
+   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
   },
   {
    "id": "am_concept_generation.v0",
@@ -3259,7 +3483,11 @@
    "branch": "symbolic_execution",
    "branch_justification": "concepts are executable definitions whose value is found by running them; the archive and agenda are state, but the mechanism is symbolic rewriting and execution",
    "notes": "Dating note (Herakles): AM is Lenat's 1976 Stanford thesis; the 1977 item is the IJCAI-77 paper; method and attribution are right, only the year is ambiguous. Raw report: initial_concepts had [cite: 3], agenda_steps was blank.",
-   "_part": 2
+   "_part": 2,
+   "proxy_class": "symbolic_execution",
+   "original_class": "symbolic_execution",
+   "retained_route": "A small R-EXECUTOR interpreter for a ten-operator grammar in which bits encode an expression and the score is the fraction of a hidden truth table reproduced, so that the measurable quantity is what fraction of mutations remain meaningful (the actual AM question), with the agenda/archive held by the producer across specs.",
+   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
   },
   {
    "id": "automated_conjecture_hr.v0",
@@ -3317,7 +3545,11 @@
    "branch_justification": "Concept definitions are evaluated by executing them over an object set; the archive is a theory of symbolic definitions, and conjectures are relations between executed extensions.",
    "notes": "Herakles's informative-failure reading ties directly to memory feedback_gen_30_wall (bounded-menu wall): the concept tree maps where the generator's menu ran out.",
    "capabilities_basis": "Inferred by the crosswalk author from expansion_pass/04_CAPABILITIES_GRAPH_PORTFOLIO.md, which names capabilities per template CLASS (e.g. C-2 'CEGAR / CEGIS / bounded model checking / learning-to-search', C-3 'quality-diversity, novelty, illumination', C-0 'query-by-committee, active learning', C-1 'POET, MCC, meta-learning', C-4 'all R-BACKEND', C-5 'all R-COMPOSE'). MATRIX.json and MATRIX.md carry NO per-entry C-n link.",
-   "_part": 3
+   "_part": 3,
+   "proxy_class": "symbolic_execution",
+   "original_class": "symbolic_execution",
+   "retained_route": "A typed concept datatype closed under a production-rule set, an extension evaluator over a fixed finite object set, a persistent theory store with an interestingness ranking, and a conjecture-emission predicate over pairs of extensions, with list-valued results and the aggregate yield adjudicated outside the sealed spec.",
+   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
   },
   {
    "id": "cegar.abstraction.loop.v0",
@@ -3373,7 +3605,11 @@
    "branch_justification": "The object is a transition system and its abstraction; the loop is a symbolic verification procedure whose observable is a witness trace.",
    "notes": "All parameter values survived ingest. Herakles notes the length-8 bitstrings strongly suggest the miner intended an encoding onto the existing bitstring kind. EXPANSION_REQUESTS #5 (repeat-level feedback_function) was raised by this field.",
    "capabilities_basis": "Inferred by the crosswalk author from expansion_pass/04_CAPABILITIES_GRAPH_PORTFOLIO.md, which names capabilities per template CLASS (e.g. C-2 'CEGAR / CEGIS / bounded model checking / learning-to-search', C-3 'quality-diversity, novelty, illumination', C-0 'query-by-committee, active learning', C-1 'POET, MCC, meta-learning', C-4 'all R-BACKEND', C-5 'all R-COMPOSE'). MATRIX.json and MATRIX.md carry NO per-entry C-n link.",
-   "_part": 3
+   "_part": 3,
+   "proxy_class": "symbolic_execution",
+   "original_class": "symbolic_execution",
+   "retained_route": "Orchestrate an external model checker plus a concrete simulator as a backend, keep the refinement operator in the producer across specs, and fossilize every trace and abstraction; or add a witness-returning (first_mismatch / mask) executor so the loop can be measured natively.",
+   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
   },
   {
    "id": "cegis_boolean.v0",
@@ -3431,7 +3667,11 @@
    "branch_justification": "Candidates are programs verified against a specification; the observable is a witness-bearing verdict from executing or checking the program.",
    "notes": "Herakles notes the CEGIS loop is often traced to the earlier Solar-Lezama et al. sketching paper rather than the 2008 dissertation. Sibling template program_synthesis_sketch.v0 (chunk 4) names the same kind bounded_synthesizer.v0. EXPANSION_REQUESTS #41 covers both.",
    "capabilities_basis": "Inferred by the crosswalk author from expansion_pass/04_CAPABILITIES_GRAPH_PORTFOLIO.md, which names capabilities per template CLASS (e.g. C-2 'CEGAR / CEGIS / bounded model checking / learning-to-search', C-3 'quality-diversity, novelty, illumination', C-0 'query-by-committee, active learning', C-1 'POET, MCC, meta-learning', C-4 'all R-BACKEND', C-5 'all R-COMPOSE'). MATRIX.json and MATRIX.md carry NO per-entry C-n link.",
-   "_part": 3
+   "_part": 3,
+   "proxy_class": "symbolic_execution",
+   "original_class": "symbolic_execution",
+   "retained_route": "A program grammar with typed holes, an inductive synthesizer over a finite example set, and an external SAT/SMT verifier orchestrated as a backend that returns a concrete witness, with the growing example set carried by the producer across specs and iterations-to-success reported.",
+   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
   },
   {
    "id": "comp_sci_discovery.bacon.v0",
@@ -3483,7 +3723,11 @@
    "branch": "symbolic_execution",
    "branch_justification": "candidates are symbolic expressions constructed and evaluated numerically over a table; the mechanism is term construction, not a population or a stateful world",
    "notes": "Herakles: early BACON was NOT noise tolerant, so a noise axis sweeps the system's known weak point rather than a designed parameter. Both axes are null; Herakles proposes 2 variables and sigma in {0, 0.01, 0.05} as NEW DESIGN CHOICES. This template sits in the 14_evolutionary_epistemology report while bacon_equation_discovery.v0 (not in my share) sits in 06; they overlap in method.",
-   "_part": 2
+   "_part": 2,
+   "proxy_class": "symbolic_execution",
+   "original_class": "dynamical_systems_equation_discovery",
+   "retained_route": "Same phenomenon as bacon_equation_discovery; retained separately because its design question (law simplicity vs fit) differs.",
+   "next_action": "Fold into the same dynamical family spike; keep the simplicity-vs-fit endpoint as a distinct preregistered question."
   },
   {
    "id": "digitevol.avida.v0",
@@ -3537,7 +3781,11 @@
    "branch": "symbolic_execution",
    "branch_justification": "the template as posed executes one program on a virtual CPU and checks its outputs; the population/ecology reading belongs to the paper, not this template",
    "notes": "Herakles: the R-NOW truth-table reduction runs today with no new code, but under constant derivation it is degenerate_by_construction; the constraint is interpretive (random Boolean function vs EQU).",
-   "_part": 2
+   "_part": 2,
+   "proxy_class": "symbolic_execution",
+   "original_class": "symbolic_execution",
+   "retained_route": "Run Avida (or the recovered 2003 physics in ergon/avida2003/, which holds the 26-instruction table, the nine-task truth tables and the complete line of descent) as an orchestrated backend (C-4) and fossilize fraction-correct on the named task per genome.",
+   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
   },
   {
    "id": "eprover_superposition.v0",
@@ -3592,7 +3840,11 @@
    "branch_justification": "Saturation over symbolic clauses; the observable is a proof object and its search cost.",
    "notes": "Sibling template lm_guided_proof.v0 (chunk 2) names the same kind formal_prover.v0. EXPANSION_REQUESTS #39 covers both.",
    "capabilities_basis": "Inferred by the crosswalk author from expansion_pass/04_CAPABILITIES_GRAPH_PORTFOLIO.md, which names capabilities per template CLASS (e.g. C-2 'CEGAR / CEGIS / bounded model checking / learning-to-search', C-3 'quality-diversity, novelty, illumination', C-0 'query-by-committee, active learning', C-1 'POET, MCC, meta-learning', C-4 'all R-BACKEND', C-5 'all R-COMPOSE'). MATRIX.json and MATRIX.md carry NO per-entry C-n link.",
-   "_part": 3
+   "_part": 3,
+   "proxy_class": "symbolic_execution",
+   "original_class": "symbolic_execution",
+   "retained_route": "Call a pinned version of E on a real problem library such as TPTP with pinned strategy flags as an orchestrated backend, recording status, generated and processed clause counts and the proof object; inference belongs to the backend, the bench orchestrates and fossilizes.",
+   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
   },
   {
    "id": "fm.bounded.model.check.v0",
@@ -3648,7 +3900,11 @@
    "branch_justification": "The faithful object is a symbolic transition system checked exhaustively; the proxy alone would be numeric_calibration.",
    "notes": "R-REPAIR here is 'not a capability gap': the surviving transition_formula_bits choices are the defect. EXPANSION_REQUESTS #20 was raised by this field.",
    "capabilities_basis": "Inferred by the crosswalk author from expansion_pass/04_CAPABILITIES_GRAPH_PORTFOLIO.md, which names capabilities per template CLASS (e.g. C-2 'CEGAR / CEGIS / bounded model checking / learning-to-search', C-3 'quality-diversity, novelty, illumination', C-0 'query-by-committee, active learning', C-1 'POET, MCC, meta-learning', C-4 'all R-BACKEND', C-5 'all R-COMPOSE'). MATRIX.json and MATRIX.md carry NO per-entry C-n link.",
-   "_part": 3
+   "_part": 3,
+   "proxy_class": "symbolic_execution",
+   "original_class": "symbolic_execution",
+   "retained_route": "A state/transition/property encoder, an unroller emitting CNF at k, a real SAT solver orchestrated as a backend, and a decoder back to a readable trace, plus a k-induction second query; the spec must return a witness and distinguish proved-within-bound from not-found.",
+   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
   },
   {
    "id": "lgp.bloat.v0",
@@ -3695,7 +3951,11 @@
    "adjacent_prometheus_home": null,
    "branch": "symbolic_execution",
    "branch_justification": "The object is a decoded program analysed for data-flow liveness; static analysis of code, no numeric landscape.",
-   "_part": 1
+   "_part": 1,
+   "proxy_class": "symbolic_execution",
+   "original_class": "symbolic_execution",
+   "retained_route": "A pure ~60-line executor: decode bits -> instructions, backward liveness walk, return effective_fraction (and the path boolean); stateless, seed-only world, single-scalar adjudicable.",
+   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
   },
   {
    "id": "lm_guided_proof.v0",
@@ -3751,7 +4011,11 @@
    "adjacent_prometheus_home": null,
    "branch": "symbolic_execution",
    "branch_justification": "Search over formal proof steps checked by a kernel; the world is a symbolic library and verifier.",
-   "_part": 1
+   "_part": 1,
+   "proxy_class": "symbolic_execution",
+   "original_class": "symbolic_execution",
+   "retained_route": "Orchestrate a proof assistant and a model endpoint as backends, record every proposal and kernel verdict, report closed-or-not with expansions consumed; the fossil contract must admit recorded, non-recomputable observations.",
+   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
   },
   {
    "id": "mil_predicate_invention.v0",
@@ -3803,7 +4067,11 @@
    "adjacent_prometheus_home": null,
    "branch": "symbolic_execution",
    "branch_justification": "Proof search in a logic engine; the verdict is entailment, produced by executing a meta-interpreter.",
-   "_part": 1
+   "_part": 1,
+   "proxy_class": "symbolic_execution",
+   "original_class": "symbolic_execution",
+   "retained_route": "Call the public Metagol Prolog program as a backend with a seed-generated task and the metarule set as payload, one sealed spec per clause bound k = 1..6 with rule 'found is true'; the smallest surviving k is the minimal size and every falsified smaller k is a permanent lower bound.",
+   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
   },
   {
    "id": "program_synthesis_sketch.v0",
@@ -3858,7 +4126,11 @@
    "branch": "symbolic_execution",
    "branch_justification": "a program with holes is completed and executed against a symbolic specification; the loop is refinement by counterexample, not population dynamics",
    "notes": "Bench-native observation (Herakles): because evaluate_bitstring's score is continuous the bench can distinguish close from wrong, which a satisfiability oracle cannot; this asymmetry is the crispest statement of which methods the bench can host.",
-   "_part": 2
+   "_part": 2,
+   "proxy_class": "symbolic_execution",
+   "original_class": "symbolic_execution",
+   "retained_route": "Spawn a sketch compiler plus SAT/SMT solver as an orchestrated backend (C-4) with the sketch, spec and bounds as payload, receiving solved, iterations and time, and recording solver version, bounds, seed and timeout in the fossil; the iterations-vs-hole-count trend adjudicated downstream (C-5).",
+   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
   },
   {
    "id": "symbolic_regression_gp.v0",
@@ -3910,7 +4182,12 @@
    "adjacent_prometheus_home": null,
    "branch": "symbolic_execution",
    "branch_justification": "Candidates are executable expression trees judged by evaluating them on data.",
-   "_part": 1
+   "_part": 1,
+   "proxy_class": "symbolic_execution",
+   "original_class": "symbolic_execution",
+   "retained_route": "Split the kind: an evaluation-only executor (serialised expression + data seed -> normalised error) shaped like evaluate_bitstring, with the producer running Koza's population loop across specs so each evaluation is a fossilized record.",
+   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
   }
- ]
+ ],
+ "amendment_2026_09_07": "original_class (the science) is separated from proxy_class (where the current-bench proxy sits, often numeric_calibration). Failure or analytic triviality of a proxy does not reject the original question, mechanism or field."
 }

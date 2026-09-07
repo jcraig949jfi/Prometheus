@@ -74,8 +74,9 @@ statistic (C-5) needs a home, not a rule, and the home exists.
 
 **Proposed (this roadmap).** Four diversity branches plus a calibration
 class; a first portfolio of three families; eight rules for how diversity
-survives selection; twelve decisions with recommendations; twenty-nine work
-packages with owners and acceptance artifacts.
+survives selection; fourteen decisions with recommendations; **28** work
+packages with owners, tests and acceptance artifacts (the first summary said
+29: a miscount, reconciled in `expansion/WORK_PACKAGES.md`).
 
 **Unresolved (named, with owner).** D-2 units for generations/episodes
 (Harmonia, Daedalus); D-4 backend reproducibility grading (Vivarium,
@@ -97,9 +98,12 @@ rate (Archaeon, before M-SIGNAL).
   (already integrated via the arena, replay-proven), returning outputs,
   trace digest and the **witness** (the input on which the program is wrong).
   Opcode-bijection null; witness-withheld control. First experiment:
-  two-arm rounds-to-match with vs without the witness, same deterministic
-  proposal rule — C-2 priced before it is used anywhere else. Organism claims
-  wait on PATH B (D-8).
+  two named experiments, chosen before implementation: a **frozen route**
+  (directed orders from already frozen witnesses, canonical M-SIGNAL
+  endpoint) and an **adaptive route** (precommitted policy, own protocol,
+  never called M-SIGNAL). Claims relying on the 64-specimen population wait
+  on PATH B (D-8, scoped); producer-proposed programs and source-artifact
+  transfer do not.
 - **C. Spatial, stateful** (10) — `ca_density_v0` from the EvCA verifier:
   local observation, action changes the neighbours' next observation, the
   lattice is the memory; six historical genomes as fixed organisms; the
@@ -134,8 +138,10 @@ observation) fits the record today; two doctrine decisions (D-1, D-2). Eight
 contract changes, all additive except the external-backend contract, which is
 new and scoped to one qualified tool. C-0 and C-6 done; C-3 promoted (it is
 Branch A's entry); C-2 required by B; C-1 deferred behind a stateful
-organism; C-4 legitimate, graded by double-run, not assumed; C-5 closed as a
-home.
+organism — **amended:** source-artifact transfer through a declared mapping
+with matched baselines needs no runtime memory (WP-A4); C-4 legitimate,
+its repeatability measured under tested conditions and never assumed or
+"proved" by matching runs; C-5 closed as a home.
 
 ### D.4 How diversity survives selection (detail: `expansion/SELECTION_RULES.md`)
 
@@ -192,7 +198,8 @@ the region (or the witness) as its parameter → the directed order and the
 frozen random order are both committed against the family's frozen corpus
 and universe → equal budget → Harmonia adjudicates the pre-registered
 endpoint. Adding richer worlds alone does not close this loop; WP-X7 closes
-it per family and is a prerequisite of each first experiment.
+it per family. **Amended:** first-corpus acquisition through the admitted
+random route never waits for a signal or for X7; the frozen comparison does.
 
 ### D.7 Beyond the current architecture or resources
 
@@ -206,6 +213,39 @@ long open-ended evolution runs (compute; the GPU ceiling is 3–4B parameters
 and irrelevant here, but host CPU-days are real); and the widening of the
 Proteus input channel, which is long and not Archaeon's.
 
+### D.7a Amendments of 2026-09-07 (later), per the operator's order
+
+- **Research mandate.** Two continuing workstreams replace "bench-first and
+  nothing broader": region-targeted probes for supported families, and
+  faithful scientific requirements / expansion opportunities extracted from
+  the existing 69 (Herakles H-R1). Neither needs another breadth census;
+  neither waits for A1/C1 to exist.
+- **Proxies never reject questions.** `CROSSWALK.md` now separates
+  `original_class` from `proxy_class`; thirteen calibration-class proxies
+  (SINDy, BACON, PINN, falsification, PBT, D-optimal, Bayesian utility,
+  causal discovery, simulation study, …) keep their dynamical / symbolic /
+  design-theoretic routes with a next action each.
+- **Local dependencies replace universal gates.** B4 gates claims on that
+  population only; P3 gates claims needing neutrality; 0d gates D3 claims;
+  0a gates affected candidates. First-corpus acquisition is split from the
+  frozen comparison in A3/B3/C3 (`GRAPH.md`).
+- **Completion ≠ qualification.** A faithful implementation is complete with
+  replay, oracle and integration evidence in scope; qualification decides
+  which conclusions the evidence supports and never erases the capability.
+  Every acceptance packet records item, owner/handoffs, revisions, contract
+  version, commands run, expected/observed, fixture hashes, unresolved limits,
+  next permitted action; tests not run are marked.
+- **Done in this amendment (Archaeon):** WP-0d
+  (`archaeon/docs/D3_NULL_RECONCILIATION.md`: both numbers right, sample
+  size not coupling; campaign design metadata v2: deterministic enumeration
+  at WORLD, mean-null with variances 1/96 vs 1/112; sealed hashes pinned);
+  WP-0e (`kindspec.py`, `falsification_walk.v1` buildable, legacy hashes
+  unchanged); WP-X6 (`allocation.py`, family-first deficit round-robin,
+  INACTIVE until D-6). 240 tests at this revision.
+- **Operator decisions (proposals, nothing approved):** D-6 values; D-11
+  P0 authorisation and route; D-13 portfolio/admissions; D-14 adaptive
+  witness trial after Harmonia's protocol.
+
 ### D.8 Sequence for this section
 
     NOW    WP-0d (D3 null number) · WP-0e (kind-generic builder) · WP-X6
@@ -216,7 +256,9 @@ Proteus input channel, which is long and not Archaeon's.
            then A2/C2 templates PROPOSED for admission
     THEN   WP-B1 once Proteus ships the VM as a library; WP-P0 spike
     THEN   first experiments A3, C3, B3 as M-SIGNAL-shaped rounds
-    later  A4, C4, P1–P3, X2 (only with a tool that passed the double-run)
+    later  A4 (source-artifact transfer; needs no runtime memory), C4, P1
+           (after P0's measured route report), X2 (with a tool whose
+           repeatability was measured under tested conditions)
 
 ---
 
