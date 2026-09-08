@@ -283,6 +283,117 @@ EXTRA = [
         "after a region of the grown pattern is deleted and the rule is left "
         "to run, which measures regeneration rather than growth.",
     ),
+    (
+        77,
+        "World Models and Learned Simulators",
+        # WHY. Referenced by NINE dossiers (03, 10, 27, 28, 34, 36, 62, 71,
+        # 73) -- the most-referenced uncovered topic after self-replication --
+        # and absent from the 69. It also answers a bench problem directly:
+        # if experiments are expensive, a learned surrogate of the
+        # environment is what makes a search affordable, and knowing when
+        # that surrogate can be trusted is exactly what a bench must settle
+        # before using one.
+        "If an agent learns a model of its environment and then trains "
+        "entirely inside that model, when does what it learned survive "
+        "contact with the real environment, and how far into an imagined "
+        "rollout can you go before the model's errors dominate?",
+        "The system learns two things from logged experience. An encoder "
+        "compresses each observation into a low-dimensional latent, and a "
+        "recurrent dynamics model predicts the next latent and the reward "
+        "from the current latent and action. Once trained, the dynamics "
+        "model can be rolled forward without touching the environment at "
+        "all, so a policy can be optimised on imagined trajectories, "
+        "millions of them, at no environment cost. The failure mode is "
+        "compounding error: each predicted step is slightly wrong, the error "
+        "feeds into the next prediction, and a policy optimised on long "
+        "rollouts learns to exploit places where the model is wrong rather "
+        "than places where the environment rewards it. So the rollout "
+        "horizon is a bounded resource, and the methods differ mainly in how "
+        "they detect or penalise leaving the region the model was trained "
+        "on.",
+        "The candidate is the policy, optimised inside the learned model. "
+        "What varies is its parameters. What is judged is its return when it "
+        "is finally executed in the real environment rather than the "
+        "imagined one.",
+        "Real-environment return after training in imagination, on the "
+        "task's own reward scale. Alongside it the model's prediction error "
+        "as a function of rollout length, which determines the usable "
+        "horizon and is the number that transfers between tasks.",
+    ),
+    (
+        78,
+        "Indirect and Generative Encodings",
+        # WHY. This was one of Herakles' OWN mining topics -- his deck
+        # produced 03_generative_and_developmental_representations.md -- and
+        # none of the 69 templates covers it. The only survivor from that
+        # topic is evodevo.bias.v0, which is Boolean networks and a different
+        # question. A mining topic that yielded no template is a gap with a
+        # paper trail, which is the strongest kind available here.
+        "When a small genome is decoded into a much larger structure by a "
+        "generative process rather than listed directly, does the regularity "
+        "that decoding imposes actually help search, and can that be "
+        "separated from the advantage of simply having fewer parameters?",
+        "A direct encoding stores one gene per element of the phenotype, so "
+        "a million-connection network needs a million genes. An indirect "
+        "encoding instead stores a small program or function that is queried "
+        "to produce the phenotype. In the compositional pattern producing "
+        "network approach the genome is a small network of mathematical "
+        "primitives, sine and gaussian and absolute value among them, and "
+        "the phenotype is produced by querying it at each coordinate of a "
+        "geometric layout, so symmetry, repetition, and repetition with "
+        "variation fall out of the primitives used rather than having to be "
+        "discovered independently at every location. The claim is that this "
+        "bias matches the regularity of real problems and therefore helps. "
+        "The confound is that indirect encodings also have far fewer "
+        "parameters, so any advantage must be separated from ordinary "
+        "dimensionality reduction, and the standard test is a task whose "
+        "regularity can be destroyed while its difficulty is held fixed.",
+        "The candidate is the compact genome, meaning the small generating "
+        "network. What varies is its topology and weights. What is judged is "
+        "the performance of the large phenotype it decodes into.",
+        "Task performance of the decoded phenotype on the task's own scale, "
+        "measured against a direct encoding at matched evaluation budget. "
+        "The decisive comparison is the same task with its regularity "
+        "scrambled, where the indirect encoding's advantage should vanish if "
+        "it is exploiting regularity rather than compression.",
+    ),
+    (
+        79,
+        "Morphological Computation and Embodied Intelligence",
+        # WHY. Referenced by six dossiers (10, 25, 26, 28, 46, 60) and
+        # uncovered. It is the same claim as Reservoir Computing at prompt 72
+        # -- that a physical substrate does computational work for free --
+        # applied to bodies rather than networks, and it carries the sharpest
+        # version of the measurement problem: how do you attribute work to a
+        # body rather than to the controller acting through it?
+        "How much of a behaviour is produced by the controller and how much "
+        "by the body, and is there a way to measure that split which does "
+        "not simply relabel one as the other?",
+        "The claim is that the physical structure of a body, the compliance "
+        "of a limb, the damping of a joint, the shape of a foot, performs "
+        "part of the control problem, so that a much simpler controller "
+        "suffices than the same task would need with a rigid body. The "
+        "classic demonstrations are passive dynamic walkers, which walk down "
+        "a shallow slope with no actuation and no controller at all, and "
+        "compliant grippers that conform to an object without sensing its "
+        "shape. In simulation the study is usually done by co-optimising the "
+        "morphology and the controller together and comparing against a "
+        "fixed morphology with the controller optimised alone. The hard part "
+        "is attribution. A body that makes a task easy and a controller that "
+        "solves it are not separable by inspection, and the measures "
+        "proposed for the split, information-theoretic quantities computed "
+        "over sensor and motor channels, depend on where the boundary "
+        "between agent and environment is drawn, which is a modelling choice "
+        "rather than a fact about the system.",
+        "The candidate is a body and controller pair, where both may vary. "
+        "What is judged is task performance, and separately how much the "
+        "controller has to do to achieve it.",
+        "Task performance on its own scale, alongside a controller "
+        "complexity measure such as the number of parameters or the "
+        "information rate between sensors and actuators in bits per step. "
+        "The comparison that carries the claim is performance at matched "
+        "controller complexity across morphologies.",
+    ),
 ]
 
 
