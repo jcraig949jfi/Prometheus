@@ -1,8 +1,21 @@
 # WP-X5 design — witness presence index and typed lineage edges
 
-**Status: DESIGN ONLY. Not built.** Build when the symbolic or CA family has a
-witness to reference (Tier 4). Owner: Mnemosyne. Handoffs: Daedalus
+**Status: DESIGN ACCEPTED 2026-09-08 (Archaeon). NOT BUILT.** Build when the
+symbolic or CA family has a witness to reference (Tier 4); nothing in the
+roadmap waits on it being built. Owner: Mnemosyne. Handoffs: Daedalus
 (observation/artifact identity), Proteus (organism identity), Vivarium (emits).
+
+Recorded in `archaeon/docs/expansion/WORK_PACKAGES.md`: the five-state
+availability enum (s1.3) and the edge-write route under the encounters' rule
+(s2.3). D-1 is CLOSED as stated in s6 — witness/trace bytes stay in SFE and
+only digests ride in PEW's seal envelope, so no PEW change is needed for any
+branch's raw material.
+
+**One open decision blocks the build, not the design: D-15.** The s4 question
+— an append-only `witness_availability_events` log rather than folding
+availability into the content address — is open for the operator, with
+Archaeon concurring for the events log. Build to the log form once D-15 is
+ruled; if it is ruled the other way, s4 is the section to revise, not s1.
 
 Requested in `roles/Mnemosyne/INBOX_ARCHAEON_EXPANSION_ROADMAP_2026-09-07.md`
 (amendment 2026-09-07 supersedes the original `witness jsonb` copy) and
