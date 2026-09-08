@@ -196,3 +196,28 @@ def test_falsification_walk_v1_envelope_is_coherent_with_its_declared_steps():
     k = t["outcome_rule"]["value"] / sd
     assert 2.9 <= k <= 3.1, (steps, sd, k)
     assert T.check(t)["buildable"]
+
+
+def test_builder_defers_to_vivarium_result_schema_shape(monkeypatch):
+    """Vivarium WP-0f (295482d4e) declares result fields as Field objects
+    with a type NAME. The builder must read that shape, not silently skip
+    the type check when the schema is present."""
+    from types import SimpleNamespace
+    from viv import kinds as vk
+    real = K._kind
+    schema = {"score": SimpleNamespace(type="number"), "solved": SimpleNamespace(type="boolean"),
+              "witness": SimpleNamespace(type="vector", element="integer", bounds=(0, 32))}
+    fake = SimpleNamespace(kind="evaluate_bitstring", params=frozenset({"bits", "length"}),
+                           implemented=True, status="ACTIVE", stateful=False, result_schema=schema)
+    monkeypatch.setattr(K, "_kind", lambda name: fake if name == "evaluate_bitstring" else real(name))
+    fields = K.result_fields("evaluate_bitstring")
+    assert fields == {"score": float, "solved": bool, "witness": list}
+    base = {"seed_root": 1, "bits": "0101", "length": 4}
+    good = _t("b", "evaluate_bitstring", {}, outcome_rule={"field": "score", "op": ">=", "value": 0.5,
+              "if_true": "SURVIVED", "if_false": "FALSIFIED", "if_indeterminate": "INCONCLUSIVE"})
+    spec = K.build_from_template(good, base)
+    assert spec["outcome_rule"]["field"] == "score"
+    with pytest.raises(SpecInvalid, match="vector-valued"):
+        K.build_from_template(dict(good, outcome_rule=dict(good["outcome_rule"], field="witness")), base)
+    with pytest.raises(SpecInvalid, match="must be a boolean"):
+        K.build_from_template(dict(good, outcome_rule=dict(good["outcome_rule"], field="solved")), base)

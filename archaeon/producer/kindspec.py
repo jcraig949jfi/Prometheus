@@ -76,13 +76,39 @@ def _kind(name: str):
     return k
 
 
+#: Vivarium WP-0f (295482d4e) declares each result field as a
+#: `result_schema.Field` with a type NAME. Map it to the Python type the rule
+#: checker compares against; a vector maps to `list` so it is refused as an
+#: outcome field until a declared reduction exists.
+_VIV_TYPE = {"number": float, "integer": int, "boolean": bool, "string": str,
+             "vector": list}
+
+
+def _from_viv_schema(rs: Dict[str, Any]) -> Dict[str, type]:
+    out: Dict[str, type] = {}
+    for name, f in rs.items():
+        tname = getattr(f, "type", None)
+        if isinstance(tname, str):
+            if tname not in _VIV_TYPE:
+                raise SpecInvalid("kind result field {!r} has unknown type "
+                                  "{!r}".format(name, tname))
+            out[name] = _VIV_TYPE[tname]
+        elif isinstance(f, type):
+            out[name] = f
+        else:
+            raise SpecInvalid("kind result field {!r} has an unreadable "
+                              "schema entry {!r}".format(name, f))
+    return out
+
+
 def result_fields(kind_name: str) -> Dict[str, type]:
     """Vivarium's declared result schema when it exists (WP-0f), else the
-    local declared copy."""
+    local declared copy. Vivarium's is authoritative the moment it is
+    present and non-empty."""
     k = _kind(kind_name)
     rs = getattr(k, "result_schema", None)
     if rs:
-        return dict(rs)
+        return _from_viv_schema(rs)
     if kind_name not in RESULT_FIELDS:
         raise SpecInvalid("no declared result schema for kind {!r}; Vivarium's "
                           "WP-0f result_schema or a local declaration is "
