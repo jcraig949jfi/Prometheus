@@ -166,6 +166,9 @@ def run(spec: dict, *, seed: int = None, state=None) -> dict:
         out = _evaluate_bitstring(spec, seed=seed)
     elif kind_name == "random_walk_v0":
         out = _random_walk_v0(spec, seed=seed, state=state)
+    elif kind_name == "ca_density_v0":
+        from . import ca_density as _ca               # noqa: PLC0415
+        out = _ca.run(_params("ca_density_v0", spec), seed=seed)
     else:
         raise ExecutorUnavailable("no executor bound for kind %r"
                                   % (kind_name,))

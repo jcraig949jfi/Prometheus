@@ -30,6 +30,14 @@ FIXTURES = [
      "c31ff4d75dc898844fad6b21d4c1767e"),
     ("random_walk_v0", {"steps": 7, "step_scale": 0.25}, 12345,
      "d704de2d9fb0b8ec0f79f22cbb8aa57a"),
+    # C1. The strong parity anchor for this kind is the six golden genomes in
+    # test_c1_ca_density.py; this pins the WRAPPER's whole result object so the
+    # coverage guard below holds for every implemented kind uniformly.
+    ("ca_density_v0",
+     {"rule_hex": "0504058705000f77037755837bffb77f",   # `par`
+      "radius": 3, "n_cells": 21, "steps": 42, "n_ic": 16,
+      "ic_density_set": [None], "success_criterion": "at_T"},
+     20260908, "0902beb4702815f25760bf9766c6ea9d"),
 ]
 
 

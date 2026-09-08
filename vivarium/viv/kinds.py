@@ -209,6 +209,55 @@ register(Kind(
     }))
 
 
+# ------------------------------------------------- Herakles's, wrapped (C1)
+register(Kind(
+    kind="ca_density_v0",
+    params=frozenset({"rule_hex", "radius", "n_cells", "steps", "n_ic",
+                      "ic_density_set", "success_criterion"}),
+    implemented=True,
+    owner="herakles (library) / vivarium (wrapper)",
+    stateful=False,
+    note="A thin wrapper around herakles/evca (WP-C1). Vivarium owns the kind "
+         "contract; Herakles owns the semantics -- the rule encoding, the "
+         "neighbourhood bit order, the periodic boundary and the r=3-only "
+         "refusal all come from core.py and none is decided here. The lattice "
+         "state lives inside ONE execution, so nothing carries between "
+         "repeats and stateful is False. `success_criterion` (at_T | stable) "
+         "chooses which mask `accuracy` is scored under; BOTH are always "
+         "reported, along with the two per-rule fixed-point facts that decide "
+         "whether they can differ at all. `ic_density_set` is ordered, null "
+         "meaning the unbiased ensemble; n_ic is ICs PER density.",
+    result_schema={
+        "accuracy": R("number", finite=True,
+                      note="scored under the declared success_criterion"),
+        "misclassified_ic": R("vector", element="integer",
+                              bounds=(0, 64), reductions=("any", "count"),
+                              note="IC indices, global across density blocks, "
+                                   "ascending, bounded"),
+        "spacetime_digest": R("string",
+                              note="one declared space-time diagram: ic_index "
+                                   "0 of the first block"),
+        "success_criterion": R("string", note="echoed, so a reader cannot "
+                                             "mistake which question was "
+                                             "answered"),
+        "accuracy_at_T": R("number", finite=True),
+        "accuracy_stable": R("number", finite=True),
+        "n_incorrect_at_T": R("integer"),
+        "n_incorrect_stable": R("integer"),
+        "mask_digest_at_T": R("string"),
+        "mask_digest_stable": R("string"),
+        "all_zeros_fixed": R("boolean", note="table entry 0"),
+        "all_ones_fixed": R("boolean", note="table entry 127"),
+        "criteria_agree": R("boolean",
+                            note="whether at_T and stable selected the same "
+                                 "ICs on this run"),
+        "n_ic_total": R("integer", note="n_ic * len(ic_density_set)"),
+        "n_cells": R("integer"),
+        "steps": R("integer"),
+        "witness_truncated": R("boolean"),
+    }))
+
+
 def get(kind: str):
     return REGISTRY.get(kind)
 
