@@ -20,6 +20,8 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 
 **Critique amendment 2026-09-07 (Herakles A-2..A-6, O-3).** Six entries that asserted equivalence on the additive landscape are relabelled PROXY with the dependency inline; five gates carry their attainable range or are marked degenerate; the two CEGIS/CEGAR constructions carry a leak warning for WP-B2-b; `evodevo.bias` is HELD; `retained_route` equals `faithful_route` by construction outside the calibration class, and is stated as such.
 
+**H-R2 (2026-09-08).** The twelve load-bearing references were fetched directly: 7 VERIFIED, 4 PARTIAL, 1 MISMATCH, 0 recalled. `evodevo.bias` is resolved: the source is a discrete gene-regulatory developmental model, neither Boolean network nor CTRNN; the earlier CTRNN note was itself wrong and is replaced. Per-entry fetched grades and correction notes are in `crosswalk.json` (`reference_grade_fetched_2026_09_08`, `reference_note_2026_09_08`).
+
 ## Index
 
 | id | original class | proxy class | proxy status | kind named | route | faithful home |

@@ -1,6 +1,8 @@
 ================================================================================
-DESIGN PACKET v2 -- the two first-family kind contracts, amended after review
-Prepared by Archaeon, 2026-09-08. Supersedes v1 (sha256 c57b6238...) in full.
+DESIGN PACKET v2.1 -- the two first-family kind contracts, amended after review
+and after Herakles's WP-C1 report. Prepared by Archaeon, 2026-09-08.
+Supersedes v1 and v2 in full. v2.1 changes only CA sections 2.3, 2.4, 2.9,
+2.10 to the conventions Herakles EARNED BY TEST in herakles/evca/core.py.
 Baseline: archaeon/v0 at b74f077de; engine be65b0efa; Vivarium 295482d4e
 (campaign branch: result_schema, WP-0b) ; Harmonia ruling c9910be21.
 Reviewer's disposition adopted on every decision; the four stipulated
@@ -247,26 +249,31 @@ facts under their own protocols, never as a generic band.
   Periodic boundary (ring); synchronous update; radius 3 -> 7-cell
   neighbourhood.
 
-2.3 ENCODING (pinned)
-  Neighbourhood value v = sum_{j=-3..3} cell[i+j] * 2^(3-j), i.e. the
-  leftmost cell (i-3) is the MSB and the rightmost (i+3) the LSB, v in 0..127.
-  The 128-bit table T is an integer; the output for neighbourhood v is bit v
-  of T, where bit 0 is the LEAST significant bit. rule_hex is T in 32
-  lowercase hex digits, most significant digit first. So the LAST hex digit's
-  LOW bit is the output for neighbourhood 0000000. Herakles's verifier
-  convention is checked against this by the golden fixtures; if the
-  historical tables use the opposite bit order, the LIBRARY converts at load
-  and says so.
+2.3 ENCODING (pinned by Herakles's library, v2.1; v2's guess was the mirror)
+  Neighbourhood value v = sum_{j=-3..3} cell[i+j] * 2^(3-j): the leftmost
+  cell (i-3) is the MSB, v in 0..127. rule_hex is 32 hex digits = 128 bits;
+  BIT k FROM THE LEFT IS THE OUTPUT FOR NEIGHBOURHOOD INDEX k. So the FIRST
+  hex digit's HIGH bit is the output for neighbourhood 0000000. This is the
+  convention under which maj and GKL, derived from their definitions, match
+  all 32 published hex digits, and under which the mirrored convention is
+  asserted NOT to fit (herakles/evca/tests). Neither source states it; it is
+  re-earned on every test run. The wrapper takes it from the library and
+  makes no convention decision.
 
-2.4 SUCCESS (pinned: STABLE consensus)
-  For an IC with initial density rho != 0.5 (odd n_cells guarantees this
-  under exact_count; under bernoulli a realised density of exactly 0.5 is
-  impossible with odd n_cells), the target is all-1 iff rho > 0.5.
-  correct_consensus: the lattice equals the target at step T AND at step
-  T-1 (stable). wrong_consensus: the lattice is unanimous and stable at the
-  wrong value. no_consensus: everything else. accuracy = fraction
-  correct_consensus. Historical comparisons are evaluated under THEIR
-  protocol's success criterion (C1-e), stated beside each number.
+2.4 SUCCESS (two criteria, both computed; the declared one scores)
+  For an IC with initial density rho != 0.5 (odd n_cells guarantees this),
+  the target is all-1 iff rho > 0.5.
+  Herakles pinned the HISTORICAL criterion: correct iff the lattice equals
+  the target AT step T. He also showed why it can differ from "ever
+  reached": unless both uniform configurations are fixed points of the rule,
+  a lattice can reach the target and leave it. So every result carries, per
+  rule, the two facts `uniform_0_fixed` and `uniform_1_fixed`, and BOTH
+  masks: at_T_mask (historical) and stable_mask (equals the target at T and
+  T-1). The payload declares success_criterion in {"at_T", "stable"};
+  `accuracy` is the fraction correct under the declared criterion;
+  terminal classes (correct_consensus / wrong_consensus / no_consensus) are
+  computed under the stable criterion. C1-e and every historical comparison
+  use at_T, named beside the number; the family's own default is stable.
 
 2.5 CONTROLS (executable)
   centre-only (r=0) control: each of the four two-entry rules
@@ -339,6 +346,19 @@ facts under their own protocols, never as a generic band.
     Q2  Mitchell-Crutchfield-Hraber: randomly chosen rules classify almost
         no ICs correctly; constant-output rules are a distinct trivial
         strategy near 0.5 on balanced samples.
+    Q3  C1-e (Herakles, protocol frozen before the run, 906 s): 17 of 18
+        cells reproduce within the prespecified band; maj reproduces
+        EXACTLY (0 of 16,000 ICs correct at three sizes); the earlier ~2.5 SE
+        flag on exp did not survive a larger sample (0.38 SE). ONE
+        discrepancy: particle2 at N=149, 0.733 vs published 0.755, 4.97 SE,
+        replicated across five independent 10k samples; update count,
+        accuracy definition, IC ensemble and implementation were each
+        eliminated in the prespecified order; TRANSCRIPTION survives as the
+        only suspect and cannot be tested without the source bytes. No
+        search over single-digit variants was made (it would be the
+        multiple-comparisons form of moving the tolerance). particle2 is
+        therefore a HELD anchor: usable as an organism, not as a
+        qualification number, until the source bytes are recovered.
   HYPOTHESES
     H1  under bernoulli [0.5], most random 128-bit rules reach NO consensus
         on most ICs (Q2), so their accuracy is far below 0.5, and the
@@ -362,7 +382,21 @@ facts under their own protocols, never as a generic band.
            same samples
   C3-acq   50 random rule tables, same samples (the frozen random control)
   C3-null  the six genomes under reflect and complement, same samples (G1)
-  Total ~ 70 rules x 4 repeats = 280 observations; ~3 minutes.
+  C3-abl   Herakles's H-R1 probe as a COMPARISON FAMILY, two templates:
+           ca.region_ablation.v0 (ablate the table entries in a declared
+           popcount region; the perturbation happens in the DRAW, the
+           executor stays blind) and ca.region_ablation_control.v0 (ablate a
+           size-matched random region). His pilot (500 ICs, SE ~0.019)
+           showed the control is not optional: the naive reading names the
+           two 35-entry mid-popcount regions; against the size-matched
+           control the load-bearing entries are the two SINGLE-entry regions
+           (all-0 and all-1 neighbourhoods, which make the uniform states
+           absorbing). Recovering that is a literature-known mechanical
+           fact: a calibration anchor under s0, not a finding. The excess
+           over control is centred on zero under the null, which the control
+           arm measures rather than assumes.
+  Total ~ 70 rules x 4 repeats + the ablation family = ~400 observations;
+  minutes.
   A SEPARATE, LABELLED ARM after C3-hist passes (TODO F-2, adopted from the
   review as the next campaign, not this one): C3-mut, single- and few-bit
   mutations around each recovered genome, same samples -- can known

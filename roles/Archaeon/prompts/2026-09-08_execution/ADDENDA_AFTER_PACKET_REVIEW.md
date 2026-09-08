@@ -90,3 +90,16 @@ measure (H3) and adds route (c) -- a variance-ratio test across landscapes
 for NK, and on the packet v2 guarantees/facts/hypotheses split.
 The grant: the harmonia-m2 token is the operator's to supply or Daedalus's
 to reissue against the same client_id; nothing further is yours there.
+
+--------------------------------------------------------------------------------
+VIVARIUM — second addendum (C1 has landed; wrap it)
+--------------------------------------------------------------------------------
+Herakles's library is herakles/evca/ (core.py, genomes.py, 50 tests) on
+vivarium/v0-2026-09-05 at 3466481b9; ask him to land it on main or take it
+from the branch. Wrap it as ca_density_v0 per packet v2.1 §2.1 with these
+two corrections to v2: (1) the table encoding is the library's — bit k from
+the LEFT of the 32-hex string is the output for neighbourhood index k; make
+no convention decision, take it from core.py; (2) compute BOTH success masks
+(at_T and stable), the two per-rule fixed-point facts, and score `accuracy`
+under the payload's declared success_criterion. Parity fixture: the six
+genomes' golden results (golden_c1b.json) reproduce through the wrapper.

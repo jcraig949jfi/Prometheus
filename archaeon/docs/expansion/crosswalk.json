@@ -321,7 +321,9 @@
    "next_action": "WP-A1..A3: first bounded experiment for this entry asks 'Does making the test cases evolve against the solutions, instead of holding them fixed, keep a search from getting stuck on a local optimum?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
    "proxy_status": "PROXY",
    "proxy_relabel_2026_09_07": "PROXY. The entry concedes no Red Queen cycling because only one side has memory; a coevolution claim without cycling is a claim about producer-side test selection on an additive landscape, not about coevolution. Requires both sides stateful and k > 0 to be the named phenomenon.",
-   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged",
+   "reference_grade_fetched_2026_09_08": "PARTIAL",
+   "reference_note_2026_09_08": "Hillis 1990: citation confirmed; defining passages paywalled and NOT read; PARTIAL by choice (H-R2)."
   },
   {
    "id": "hide_and_seek_autocurriculum.v0",
@@ -500,7 +502,8 @@
    "original_class": "interacting_landscapes",
    "retained_route": "Two mutable populations with their own mutation operators, pairwise or sampled-pairwise evaluation, a per-individual existential survival test and generational replacement on both sides, with an evolvable environment representation whose difficulty can genuinely increase; C-1 (evaluate_bitstring_related_v0) is what makes environment drift gradual.",
    "next_action": "WP-A1..A3: first bounded experiment for this entry asks 'Can two coupled populations keep generating new problems and new solutions indefinitely when the only rule for staying alive is solve at least one and be solved by at least one, with nothing ever ranked?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
-   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged",
+   "reference_grade_fetched_2026_09_08": "VERIFIED"
   },
   {
    "id": "poet_paired_coevolution.v0",
@@ -562,7 +565,9 @@
    "original_class": "interacting_landscapes",
    "retained_route": "Either orchestrate POET's own implementation and terrain simulator as a backend (C-4), or, once evaluate_bitstring_related_v0 with target_offset exists (C-1), run POET as batches of specs with the producer holding the archive and adjudicating transfer downstream (C-5).",
    "next_action": "WP-A1..A3: first bounded experiment for this entry asks 'If problems and solvers improve each other, with new environments generated from solved ones and solutions transferred between environments, are harder problems solved than by direct optimisation?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
-   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged",
+   "reference_grade_fetched_2026_09_08": "VERIFIED",
+   "reference_note_2026_09_08": "The cited title does not resolve in a proceedings index (H-R2); citation to be corrected before it carries design weight."
   },
   {
    "id": "bacon_equation_discovery.v0",
@@ -1716,7 +1721,8 @@
    "original_class": "population_ecology",
    "retained_route": "A behaviour characterisation over a genome, a persistent archive with an explicit insertion policy, k-NN distance over it, and generational selection and variation on a deceptive domain, with a comparative outcome across arms (EXPANSION_REQUESTS #3).",
    "next_action": "WP-P0..P1: first bounded experiment for this entry asks 'Can a search driven only by how different a behaviour is from everything already seen keep producing new behaviours indefinitely, with no goal and no fitness function?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
-   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged",
+   "reference_note_2026_09_08": "Cites the same 2008 paper as novelty.search and its rationale claims the opposite of what that abstract argues (H-R2). Held until rewritten."
   },
   {
    "id": "map.elites.v0",
@@ -1777,7 +1783,9 @@
    "original_class": "population_ecology",
    "retained_route": "An evaluation returning both fitness and a behaviour descriptor from one call, on a declared landscape family with planted deception or tunable ruggedness (C-3), with the elite archive persisted and read to choose parents, and an objective-only hill climber at identical budget as the control.",
    "next_action": "WP-P0..P1: first bounded experiment for this entry asks 'Instead of hunting for the single best solution, can a search fill in a map of the best solution of every behavioural kind, and is that map more useful than the single best?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
-   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged",
+   "reference_grade_fetched_2026_09_08": "VERIFIED",
+   "reference_note_2026_09_08": "No peer-reviewed version exists; arXiv v1, comments 'Early draft' (H-R2)."
   },
   {
    "id": "neurodynamics.attractor.evo.v0",
@@ -1898,7 +1906,8 @@
    "original_class": "population_ecology",
    "retained_route": "An executor returning a behaviour descriptor computed from a RUN rather than from the candidate, on a deceptive domain, with the archive held in the producer (or a substrate archive) and a matched-budget fitness-driven control; this is the same small executor addition map.elites.v0 needs.",
    "next_action": "WP-P0..P1: first bounded experiment for this entry asks 'If a search is rewarded only for doing something no previous attempt has done, and is never told the goal, can it still reach goals that defeat a search aimed straight at them?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
-   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged",
+   "reference_grade_fetched_2026_09_08": "VERIFIED"
   },
   {
    "id": "pbt_hyperparam_schedule.v0",
@@ -2605,7 +2614,9 @@
    "original_class": "spatial_stateful",
    "retained_route": "A small pure executor of the seed: derive wiring/functions/state, iterate synchronously with a seen-set, return period, transient and cycle_detected, recording the budget; Herakles's verdict is that it should simply be written.",
    "next_action": "WP-C1..C3: first bounded experiment for this entry asks 'If you wire up a network of on-off switches at random and let it update itself, does it settle into a short repeating cycle or wander for a very long time, and what decides which?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
-   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged",
+   "reference_grade_fetched_2026_09_08": "PARTIAL",
+   "reference_note_2026_09_08": "Kauffman 1969: citation confirmed against four services; defining passages paywalled and NOT read; PARTIAL by choice, not recalled (H-R2)."
   },
   {
    "id": "abduce_set_cover.v0",
@@ -2891,8 +2902,10 @@
    "original_class": "static_structured",
    "retained_route": "A boolean_network.v0 executor (about forty lines per Herakles; EXPANSION_REQUESTS #18 names num_nodes, connectivity_k, update_steps returning attractor cycle length) that samples many genotypes INSIDE the executor and returns one scalar bias statistic, with the sampler shown unbiased.",
    "next_action": "WP-A1..A3: first bounded experiment for this entry asks 'When a developmental process maps genotypes to phenotypes, are all phenotypes equally easy to produce, or does the map itself (before any selection) make some far more common?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
-   "status_2026_09_07": "HELD: known kind/reference mismatch (Psujek & Beer 2008 is a CTRNN developmental model; the template implements a K=2 Boolean network, Kauffman/RBN lineage). Not load-bearing for any branch until Herakles resolves the reference or the kind (H-R2b). If unresolved by the next mining round it is retired to rbn.attractor's family rather than carried under a general disclaimer.",
-   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
+   "status_2026_09_07": "HELD -> RESOLVED 2026-09-08 by H-R2: reference read in full; the kind binding (boolean_network) is retired for this entry; the correct model class is a discrete gene-regulatory / chemoaffinity developmental model. Any future template for this entry is a new proposal against that model, owner Herakles.",
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged",
+   "reference_grade_fetched_2026_09_08": "MISMATCH",
+   "reference_note_2026_09_08": "Psujek & Beer 2008 READ IN FULL (Herakles H-R2, 2026-09-08): the model is NEITHER a Boolean network NOR a CTRNN; it is a discrete gene-regulatory and chemoaffinity developmental model (8-9 genes, two-letter alphabet, phenotype = connectivity matrix of a 3-neuron circuit), with no citation to Kauffman. The boolean_network binding is RETIRED for this entry, and the earlier 'CTRNN' reason recorded here was itself wrong and is replaced by this one, not inherited."
   },
   {
    "id": "knowledge_discovery.v0",
@@ -3069,7 +3082,9 @@
    "next_action": "WP-A1..A3: first bounded experiment for this entry asks 'If labelling data is expensive, does letting the learner choose which examples to label beat labelling at random, and by how much?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
    "proxy_status": "PROXY",
    "proxy_relabel_2026_09_07": "PROXY with a KNOWN ANSWER (same as version_space_search). 'The strongest reduction' is withdrawn as a scientific statement; it is the cheapest plumbing test with a known answer, and its elegance is the property the operator asked not to be fooled by.",
-   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged",
+   "reference_grade_fetched_2026_09_08": "PARTIAL",
+   "reference_note_2026_09_08": "Cites the origin of the NAME while the template implements the 1997 descendant (H-R2). This was Herakles's own leading design and is a plumbing test with a known answer (A-4)."
   },
   {
    "id": "raf.detection.v0",
@@ -3252,7 +3267,8 @@
    "next_action": "WP-A1..A3: first bounded experiment for this entry asks 'As labelled examples arrive one at a time, how fast does the set of hypotheses consistent with everything seen shrink toward a single answer?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
    "proxy_status": "PROXY",
    "proxy_relabel_2026_09_07": "PROXY with a KNOWN ANSWER. On a fixed hashed target the score is an exact Hamming distance, so the version space is exactly computable and disagreement-based querying beats random by construction (noiseless exact oracle: the degenerate case of active learning). Value is NEGATIVE only: a failure of the informed arm reveals broken selection wiring; a success establishes nothing about fossil-directed selection on real regions. Not a positive claim (A-4).",
-   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged",
+   "reference_grade_fetched_2026_09_08": "VERIFIED"
   },
   {
    "id": "ai_scientist_training.v0",
@@ -3670,7 +3686,8 @@
    "retained_route": "Orchestrate an external model checker plus a concrete simulator as a backend, keep the refinement operator in the producer across specs, and fossilize every trace and abstraction; or add a witness-returning (first_mismatch / mask) executor so the loop can be measured natively.",
    "next_action": "WP-B1..B3: first bounded experiment for this entry asks 'Can a property of a system too big to check directly be proven by checking a deliberately blurred over-approximation and sharpening the blur only where a spurious counterexample shows it lied?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
    "leak_warning": "This proxy's recommended construction manufactures or simulates the witness from scores or a side channel (CROSSWALK.md :1536 / :1513 at 4c2d31578). That is exactly the leak WP-B2 test B2-b guards: a witness copied into another producer-visible field. The construction is the NATURAL thing to build, which is why the guard exists; it may be used only in the witness-RETURNED arm, never as a way to give the withheld arm the witness.",
-   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged",
+   "reference_grade_fetched_2026_09_08": "VERIFIED"
   },
   {
    "id": "cegis_boolean.v0",
@@ -3734,7 +3751,9 @@
    "retained_route": "A program grammar with typed holes, an inductive synthesizer over a finite example set, and an external SAT/SMT verifier orchestrated as a backend that returns a concrete witness, with the growing example set carried by the producer across specs and iterations-to-success reported.",
    "next_action": "WP-B1..B3: first bounded experiment for this entry asks 'Can a synthesis loop that repeatedly proposes a program and gets back one concrete failing input find a correct program before it runs out of attempts, and how does that depend on the size of the program space?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
    "leak_warning": "This proxy's recommended construction manufactures or simulates the witness from scores or a side channel (CROSSWALK.md :1536 / :1513 at 4c2d31578). That is exactly the leak WP-B2 test B2-b guards: a witness copied into another producer-visible field. The construction is the NATURAL thing to build, which is why the guard exists; it may be used only in the witness-RETURNED arm, never as a way to give the withheld arm the witness.",
-   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged",
+   "reference_grade_fetched_2026_09_08": "VERIFIED",
+   "reference_note_2026_09_08": "The 2008 dissertation coins CEGIS verbatim with its algorithm figure; an earlier flag against it did not survive (H-R2)."
   },
   {
    "id": "comp_sci_discovery.bacon.v0",
@@ -4142,7 +4161,9 @@
    "original_class": "symbolic_execution",
    "retained_route": "Call the public Metagol Prolog program as a backend with a seed-generated task and the metarule set as payload, one sealed spec per clause bound k = 1..6 with rule 'found is true'; the smallest surviving k is the minimal size and every falsified smaller k is a permanent lower bound.",
    "next_action": "WP-B1..B3: first bounded experiment for this entry asks 'From a handful of examples and some background facts, can a system write a logic program that explains them, and can it invent the intermediate concepts it needs but was never given?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
-   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged",
+   "reference_grade_fetched_2026_09_08": "PARTIAL",
+   "reference_note_2026_09_08": "Names the 2015 extended version, not the IJCAI-13 primary; no system called plain Metagol appears in it (H-R2)."
   },
   {
    "id": "program_synthesis_sketch.v0",
@@ -4270,5 +4291,6 @@
   "A-5": "retained_route is faithful_route by construction for entries outside the calibration class (now stated); the three calibration-class entries with boilerplate got bespoke routes; next_action is per entry",
   "A-6": "leak_warning cites the CEGIS/CEGAR constructions for WP-B2-b",
   "O-3": "evodevo.bias HELD, retire-by condition stated"
- }
+ },
+ "h_r2_2026_09_08": "12 load-bearing references fetched directly (no web search, no recall): 7 VERIFIED, 4 PARTIAL, 1 MISMATCH; per-entry grades in reference_grade_fetched_2026_09_08; source roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/expansion_pass/HR2_REFERENCES.md (Herakles's branch until landed on main)."
 }
