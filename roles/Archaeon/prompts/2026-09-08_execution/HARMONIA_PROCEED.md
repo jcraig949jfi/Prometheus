@@ -6,6 +6,14 @@ closed by option (a): every detector now sees one row per independent
 unit, d3.v0 untouched, reproduced and tested at 5ac8c693d). Read main; it
 is one head with archaeon/v0.
 
+Your be9c22959 is applied too: the repeat fix is closed on your independent
+verification; D3's band is recorded as a phase boundary with your sizing
+rule (inside-band target -> n = 12-16 per region, never 'to budget');
+C3-acq is 120 random rules (assignment is a property of the rule, so
+multinomial, and 120 gives E = 9.2 eligible regions and sits at the
+discrimination optimum); your correction to your own 2d framing is noted
+and route (d) stands on the stronger ground you gave it.
+
 DECISIONS TAKEN, so you can proceed without waiting:
 - Route (d) is adopted for M-ELIGIBLE: M-SIGNAL's endpoint is detector
   discrimination among regions on a frozen corpus; the arm contrast leaves

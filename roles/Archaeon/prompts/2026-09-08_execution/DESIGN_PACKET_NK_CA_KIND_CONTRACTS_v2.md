@@ -165,9 +165,15 @@ instrument; it may still yield a finding with a limited domain (BRANCHES s0).
         Amendment 1 -- the packet had 0.0047)
     H3  D3, comparing a k=4 region against k=0 neighbourhoods at floor
         geometry, fires at ~0.2 per region (ratio ~1.9; Harmonia's table gives
-        0.211 at 2.0) against ~0.08 under the pure null -- i.e. D3 has LOW
-        POWER on the k contrast, and this is measured as a fact about D3, not
-        expected as a success. Any M-SIGNAL round on NK therefore takes
+        0.219 at 2.0, n=8) against ~0.08 under the pure null. Harmonia F-2
+        (be9c22959): D3's band is a PHASE BOUNDARY, not a sensitivity
+        setting -- for a true ratio inside [1/3, 3] the fire rate goes to 0
+        as n grows, for one outside it goes to 1, and at exactly 3.0 to 0.5.
+        The lift over the null for an inside-band ratio has an INTERIOR
+        optimum near n = 12-16 per region and decays past it. So H3 is
+        measured at n = 12-16, never 'as many as the budget allows', and
+        its result is a fact about D3's detectable set {ratio outside the
+        band}, not a success or a failure of the science. Any M-SIGNAL round on NK therefore takes
         Harmonia's route (d) -- region discrimination -- or route (c) -- a
         variance-ratio test across landscapes -- as its endpoint, never
         "recover the k effect with D3".
@@ -390,8 +396,14 @@ facts under their own protocols, never as a generic band.
            qualification report
   C3-base  the two constant-output rules and the four centre-only rules,
            same samples
-  C3-acq   80 random rule tables, same samples (the frozen random control;
-           80 so that a D3 region of the descriptor holds >= 8 independent rules)
+  C3-acq   120 random rule tables, same samples (the frozen random control).
+           Harmonia F-4 (be9c22959): region membership on the rule-table
+           descriptor is a PROPERTY of a randomly drawn rule, not a design
+           assignment, so counts per region are multinomial; at 80 rules
+           about half the 10 regions fall below the floor of 8 (E = 5.5
+           eligible), at 120 E = 9.2 with P(all 10) = 0.39. 120 also sits
+           at n ~ 12 per region, the DISCRIMINATION OPTIMUM for any
+           inside-band target ratio (F-3).
   C3-null  the six genomes under reflect and complement, same samples (G1)
   C3-abl   Herakles's H-R1 probe as a COMPARISON FAMILY, two templates:
            ca.region_ablation.v0 (ablate the table entries in a declared
@@ -406,7 +418,7 @@ facts under their own protocols, never as a generic band.
            fact: a calibration anchor under s0, not a finding. The excess
            over control is centred on zero under the null, which the control
            arm measures rather than assumes.
-  Total ~ 70 rules x 4 repeats + the ablation family = ~400 observations;
+  Total ~ 140 rules x 4 repeats + the ablation family = ~600 observations;
   minutes.
   REPEAT BLOCKER (Harmonia, 2026-09-08; closed in Archaeon's lane): D3
   counted rows, and 4 repeats per rule inflate its false-alarm rate 6.4x
