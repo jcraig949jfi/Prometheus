@@ -91,6 +91,29 @@ writes. Destroyed values are logged in `bracket_losses.jsonl` and are never
 written back from inference, even when the surrounding sentence makes the value
 obvious.
 
+## Budget, as measured rather than as documented
+
+The documented figure is 20 reports/day, use-or-lose. **That does not appear
+to be the operative limit.** Day two fired 24 attempts -- 21 unique prompts
+plus 3 duplicates -- with no refusal, and kept going. This is consistent with
+the compute-based platform change noted in `aporia/doctrine/dr_prompt_discipline.md`,
+which records roughly 30x headroom over the old per-report quota.
+
+Concurrency stays at 3, the documented paid-tier ceiling, deliberately: if a
+failure arrives it should be attributable to quota and not to self-inflicted
+over-concurrency. Observed latency across 44 dispatches: min 274s, median
+365s, max 729s.
+
+**Three reports were double-fired.** Prompts 27, 28 and 29 were dispatched
+twice, and the dispatch log shows both runs completing with distinct
+interaction ids. The cause was chaining a background dispatch with a
+follow-up command in one invocation; the outer command returned in seconds
+and a `ps` check then reported no running dispatcher, which was wrong. The
+first run was alive and finished. Cost: 3 duplicate reports. Do not chain a
+background dispatch with anything, and do not use a process check to decide
+whether a dispatch is alive -- read `_dispatch_summary.jsonl`, which is the
+only record that distinguishes fired from not-fired.
+
 ## Firing order
 
 Ranked by Aporia, not alphabetical. Criteria in weight order:
