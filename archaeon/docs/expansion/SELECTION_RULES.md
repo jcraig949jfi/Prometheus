@@ -239,7 +239,22 @@ with the reopening condition written beside it.
         "chosen_on": "<date>" }
 
 Not written until the operator sets the numbers; the values above are
-Archaeon's recommendation.
+Archaeon's recommendation. **The reason beside each number** (Herakles O-4:
+four integers presented together read as calibrated; they are chosen):
+
+    1 of 6      the smallest non-zero partition of the existing daily quota;
+                any smaller fraction is zero on most days
+    90 days     the roadmap's own "templates admitted in the last 90 days"
+                menu-growth metric, so one clock serves both
+    24 rows     one D3-eligible region (8) in three worlds, or 6 worlds x 4
+                repeats: the smallest corpus on which one detector can be
+                eligible for the family -- an eligibility floor, NOT a power
+                statement
+    cap 4       matches the M-ELIGIBLE repeats-per-world so a cell can hold
+                one world's trajectory; the per-family (256) and global
+                (2,048 / 64 MB) caps are round numbers chosen to be an order
+                of magnitude above any first corpus, to be revised by policy
+                version once a real archive exists
 
 ## Amendment 2026-09-07 (later) — per the operator's amendment order
 

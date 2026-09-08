@@ -261,7 +261,8 @@
    "proxy_class": "interacting_landscapes",
    "original_class": "interacting_landscapes",
    "retained_route": "Orchestrate a genome-scale metabolic model (flux-balance) as an external backend (C-4) that takes a gene deletion and a medium and returns a growth rate, run the four factorial cells as separate specs, and adjudicate the rescue interaction downstream (C-5).",
-   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
+   "next_action": "WP-A1..A3: first bounded experiment for this entry asks 'Does a single-gene yeast knockout regain growth when one nutrient is added back to a defined medium, and what does that rescue say about the deleted gene's place in the pathway?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
   },
   {
    "id": "coevolution.parasites.v0",
@@ -317,7 +318,10 @@
    "proxy_class": "interacting_landscapes",
    "original_class": "interacting_landscapes",
    "retained_route": "Two typed populations with heredity and variation, an interaction rule computing both fitnesses per meeting, generational chaining, and an independent held-out evaluation set (R-WORLD; really R-SUBSTRATE for the chaining).",
-   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
+   "next_action": "WP-A1..A3: first bounded experiment for this entry asks 'Does making the test cases evolve against the solutions, instead of holding them fixed, keep a search from getting stuck on a local optimum?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
+   "proxy_status": "PROXY",
+   "proxy_relabel_2026_09_07": "PROXY. The entry concedes no Red Queen cycling because only one side has memory; a coevolution claim without cycling is a claim about producer-side test selection on an additive landscape, not about coevolution. Requires both sides stateful and k > 0 to be the named phenomenon.",
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
   },
   {
    "id": "hide_and_seek_autocurriculum.v0",
@@ -376,7 +380,8 @@
    "proxy_class": "interacting_landscapes",
    "original_class": "interacting_landscapes",
    "retained_route": "Orchestrate an external physics world with two trainable multi-agent policies under self-play, pin the configuration, fossilize the behaviour trace, and run a change-point detector downstream; the comparison remains outside the scalar rule.",
-   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
+   "next_action": "WP-A1..A3: first bounded experiment for this entry asks 'When two teams of agents compete in a physical world with no designed task, do they generate their own escalating sequence of challenges, and do genuinely new strategies appear that nobody put in?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
   },
   {
    "id": "maml_few_shot.v0",
@@ -435,7 +440,8 @@
    "proxy_class": "interacting_landscapes",
    "original_class": "interacting_landscapes",
    "retained_route": "Meta-train in an autodiff backend (C-4) over a task distribution with support/query splits (EXPANSION_REQUESTS #38 asks for a seed_roots array with a distribution_type), receiving mean post-adaptation accuracy over many held-out tasks as the single scalar, with the random-init and zero-step controls as separate specs adjudicated downstream.",
-   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
+   "next_action": "WP-A1..A3: first bounded experiment for this entry asks 'Can a model's initial parameters be trained so that a handful of gradient steps on a brand-new task suffices to do that task well?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
   },
   {
    "id": "mcc.bipartite.v0",
@@ -493,7 +499,8 @@
    "proxy_class": "interacting_landscapes",
    "original_class": "interacting_landscapes",
    "retained_route": "Two mutable populations with their own mutation operators, pairwise or sampled-pairwise evaluation, a per-individual existential survival test and generational replacement on both sides, with an evolvable environment representation whose difficulty can genuinely increase; C-1 (evaluate_bitstring_related_v0) is what makes environment drift gradual.",
-   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
+   "next_action": "WP-A1..A3: first bounded experiment for this entry asks 'Can two coupled populations keep generating new problems and new solutions indefinitely when the only rule for staying alive is solve at least one and be solved by at least one, with nothing ever ranked?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
   },
   {
    "id": "poet_paired_coevolution.v0",
@@ -554,7 +561,8 @@
    "proxy_class": "interacting_landscapes",
    "original_class": "interacting_landscapes",
    "retained_route": "Either orchestrate POET's own implementation and terrain simulator as a backend (C-4), or, once evaluate_bitstring_related_v0 with target_offset exists (C-1), run POET as batches of specs with the producer holding the archive and adjudicating transfer downstream (C-5).",
-   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
+   "next_action": "WP-A1..A3: first bounded experiment for this entry asks 'If problems and solvers improve each other, with new environments generated from solved ones and solutions transferred between environments, are harder problems solved than by direct optimisation?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
   },
   {
    "id": "bacon_equation_discovery.v0",
@@ -771,8 +779,9 @@
    "_part": 3,
    "proxy_class": "numeric_calibration",
    "original_class": "numeric_calibration",
-   "retained_route": "An agent with standing interests formed before the trigger, a noticing mechanism for events it was not looking for, and a bridge operator connecting the event to an unrelated goal, with a value criterion that can be met by something off the agent's current agenda.",
-   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
+   "retained_route": "The original question is program-level: does an environment engineered for chance encounters (breadth of exposure, delayed evaluation, cross-domain recombination) produce more unplanned findings than a focused one. Faithful home is the program's own selection policy (R1 reserve vs established share) evaluated against the unplanned-finding definition in BRANCHES.md §0; the walk proxy is a calibration of an envelope threshold and carries none of it.",
+   "next_action": "Fold into the unplanned-finding definition (BRANCHES.md §0) and the allocation policy comparison (WP-X6 plus an M-SIGNAL-shaped comparison of reserve fractions); no world of its own.",
+   "gate_attainable_range": "RANGE SUPPLIED LATE: displacement >= 2.0 at steps 200, step_scale 0.1 has closed-form var = 200 * 0.01 / 3 = 0.667, sd 0.816, so P(displacement >= 2.0) ~ 0.007 under the null; the gate is reachable but rare, and that number must sit beside the threshold, not later in the entry."
   },
   {
    "id": "d_optimal_design.v0",
@@ -823,7 +832,8 @@
    "proxy_class": "numeric_calibration",
    "original_class": "experimental_design_optimality",
    "retained_route": "D-optimal design chooses experiments to minimise parameter covariance; requires a parametric model with a design space.",
-   "next_action": "Faithful home: a producer-side policy (an information-based selection rule) compared against random under M-SIGNAL rules on any family with a parametric measurement. Lead for the directed-policy menu, not a kind."
+   "next_action": "Faithful home: a producer-side policy (an information-based selection rule) compared against random under M-SIGNAL rules on any family with a parametric measurement. Lead for the directed-policy menu, not a kind.",
+   "gate_attainable_range": "NO RANGE COMPUTED: D-efficiency >= 0.95 has no attainable range stated for the proxy's design space; compute the attainable D-efficiency distribution under random designs before freezing 0.95."
   },
   {
    "id": "discovery_informatics.v0",
@@ -988,8 +998,8 @@
    "_part": 2,
    "proxy_class": "numeric_calibration",
    "original_class": "numeric_calibration",
-   "retained_route": "Admit it as the bench's null: per length in {16,24,32}, one fixed uniform draw, 500 repeats under sha256_index, per-repeat rule as above; then any producer-side GA (population, selection, variation across specs) is scored against the closed-form blind-draw baseline, and C-3 supplies landscapes where EC methods can differ.",
-   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
+   "retained_route": "The original question is fitness-landscape structure: neutrality, ruggedness, and the fitness-distance correlation of a real problem class. Faithful route: NK at declared k (WP-A1) with the attainable score range computed per (L, k) before any threshold (Herakles's proposed score >= 0.5 + 3/(2 sqrt L) is an additive-landscape number and does not transfer).",
+   "next_action": "WP-A2/A3: compute attainable score distribution per k by exhaustive enumeration at small L before freezing any threshold; report fitness-distance correlation as an analysis (WP-X1), not an outcome rule."
   },
   {
    "id": "falsification_walk.v0",
@@ -1102,8 +1112,10 @@
    "_part": 1,
    "proxy_class": "numeric_calibration",
    "original_class": "numeric_calibration",
-   "retained_route": "A downstream comparator over paired fossils (or a small evaluate_metamorphic wrapper returning relation_violation) plus a registry of relations pre-registered before the runs.",
-   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
+   "retained_route": "The original question is metamorphic testing: whether a declared relation between transformed inputs holds for the system under test. Faithful route: the family-level exchangeability nulls (NK permutation, CA reflection/complement, program opcode bijection) ARE metamorphic relations; this entry is the general form of R4 and lives with each family's null template.",
+   "next_action": "Absorbed into WP-A2, WP-B2, WP-C2 null templates; the additive-bench instance is a calibration of the relation checker only.",
+   "proxy_status": "PROXY",
+   "proxy_relabel_2026_09_07": "PROXY, landscape-dependent. 'An instance, not a caricature' is true only of the evaluation mechanics; the relation being evaluated is the additive one. State the landscape beside any result."
   },
   {
    "id": "pbt.stateful.walk.v0",
@@ -1336,7 +1348,8 @@
    "proxy_class": "other",
    "original_class": "other",
    "retained_route": "An external backend (instrument stack or physics-based film model) the engine calls per recipe, with a provenance record per reading; the bench keeps loop, budget and fossil and accepts recorded rather than recomputable results.",
-   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
+   "next_action": "Aporia register: first bounded experiment for this entry asks 'Which combination of dopant concentration and annealing time gives a thin film the highest charge-carrier mobility, and can a machine find it by choosing its own next experiment rather than following a human's plan?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
   },
   {
    "id": "evo_epistemology.bvsr.v0",
@@ -1392,7 +1405,10 @@
    "proxy_class": "other",
    "original_class": "other",
    "retained_route": "A producer carrying the incumbent between single-repeat specs (exists today as a role) or an executor running variation-selection-retention internally, with the retention-off arm run at matched budget.",
-   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
+   "next_action": "Aporia register: first bounded experiment for this entry asks 'Can new knowledge be produced by a process that generates its guesses blindly, with no foresight about which will work, provided that the successful guesses are kept and built on?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
+   "proxy_status": "PROXY",
+   "proxy_relabel_2026_09_07": "PROXY, landscape-dependent. 'Reduces without loss' holds only on the additive landscape where retaining improvements cannot be wrong; on any k > 0 landscape blind-variation-and-selective-retention can be trapped, which is the actual content of the claim. Re-run on NK (WP-A1) before any statement.",
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
   },
   {
    "id": "l2o.meta.optimizer.v0",
@@ -1456,7 +1472,8 @@
    "proxy_class": "other",
    "original_class": "other",
    "retained_route": "Run an automatic-differentiation library as an orchestrated backend: unrolled meta-loss, persistent optimiser weights, a function-family sampler with a held-out family differing in kind, baselines on identical problems and budgets, and the transfer arm pre-registered; the bench calls it and fossilizes the curves.",
-   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
+   "next_action": "Aporia register: first bounded experiment for this entry asks 'Instead of hand-writing an optimisation algorithm, can you train one, and does the trained rule still work on problems unlike those it was trained on?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
   },
   {
    "id": "sbse.hillclimb.search.v0",
@@ -1515,7 +1532,8 @@
    "proxy_class": "other",
    "original_class": "other",
    "retained_route": "A fitness function computed from a real artefact (external backend running tests or static analysis) or an NK-style rugged landscape executor, a producer carrying the incumbent, and every evaluation fossilized.",
-   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
+   "next_action": "Aporia register: first bounded experiment for this entry asks 'If you can write down what makes one version of a piece of software better than another as a single number, can a dumb local search find a good version for you?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
   },
   {
    "id": "universal_darwinism.weasel.v0",
@@ -1572,7 +1590,10 @@
    "proxy_class": "other",
    "original_class": "other",
    "retained_route": "A producer carrying the incumbent between single-repeat specs (exists today) or an executor running generations internally and returning generations_to_target, with both arms at matched budget.",
-   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
+   "next_action": "Aporia register: first bounded experiment for this entry asks 'Is the difference between something being astronomically improbable and being easy just the difference between guessing it all at once and building it up in small steps that are each kept?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
+   "proxy_status": "PROXY",
+   "proxy_relabel_2026_09_07": "PROXY, landscape-dependent. The entry's own line 'non-trivial only once C-3 supplies landscapes other than onemax' governs: on the additive bench a one-flip climber solves it in L queries (Herakles, 20/20 trials, L 16-48), so 'reduces in full' holds only for the degenerate case. Equivalence is asserted for the weasel landscape, which IS onemax; the scientific question (cumulative vs single-step selection) is answered trivially there.",
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
   },
   {
    "id": "alife.tierra.soup.v0",
@@ -1631,7 +1652,8 @@
    "proxy_class": "population_ecology",
    "original_class": "population_ecology",
    "retained_route": "Run an external Tierra/Avida-class simulator binary under a declared seed as an orchestrated backend, fossilizing its output stream, using the ergon/avida2003 tree and previously recovered mid-1990s genomes already in the repository.",
-   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
+   "next_action": "WP-P0..P1: first bounded experiment for this entry asks 'If you put one hand-written self-copying program into a block of computer memory and let copying make occasional mistakes, does an ecology appear on its own, including creatures that live off other creatures?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
   },
   {
    "id": "creativity.v0",
@@ -1693,7 +1715,8 @@
    "proxy_class": "population_ecology",
    "original_class": "population_ecology",
    "retained_route": "A behaviour characterisation over a genome, a persistent archive with an explicit insertion policy, k-NN distance over it, and generational selection and variation on a deceptive domain, with a comparative outcome across arms (EXPANSION_REQUESTS #3).",
-   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
+   "next_action": "WP-P0..P1: first bounded experiment for this entry asks 'Can a search driven only by how different a behaviour is from everything already seen keep producing new behaviours indefinitely, with no goal and no fitness function?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
   },
   {
    "id": "map.elites.v0",
@@ -1753,7 +1776,8 @@
    "proxy_class": "population_ecology",
    "original_class": "population_ecology",
    "retained_route": "An evaluation returning both fitness and a behaviour descriptor from one call, on a declared landscape family with planted deception or tunable ruggedness (C-3), with the elite archive persisted and read to choose parents, and an objective-only hill climber at identical budget as the control.",
-   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
+   "next_action": "WP-P0..P1: first bounded experiment for this entry asks 'Instead of hunting for the single best solution, can a search fill in a map of the best solution of every behavioural kind, and is that map more useful than the single best?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
   },
   {
    "id": "neurodynamics.attractor.evo.v0",
@@ -1813,7 +1837,8 @@
    "proxy_class": "population_ecology",
    "original_class": "population_ecology",
    "retained_route": "Run the model as an orchestrated backend (C-4) with both arms (heredity vs selection-only) and multiple seeds, fossilizing per-generation trajectories; a cheap intermediate is an executor that takes stored patterns plus a noise seed and returns the score of the relaxed pattern (a 32-unit Hopfield net with three patterns is a few lines), which restores capacity and interference behaviour.",
-   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
+   "next_action": "WP-P0..P1: first bounded experiment for this entry asks 'Can a population of Hopfield-like attractor networks run Darwinian evolution (copying, variation, inheritance via Hebbian retraining) and find solutions faster than selection without heredity or random search?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
   },
   {
    "id": "novelty.search.v0",
@@ -1872,7 +1897,8 @@
    "proxy_class": "population_ecology",
    "original_class": "population_ecology",
    "retained_route": "An executor returning a behaviour descriptor computed from a RUN rather than from the candidate, on a deceptive domain, with the archive held in the producer (or a substrate archive) and a matched-budget fitness-driven control; this is the same small executor addition map.elites.v0 needs.",
-   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
+   "next_action": "WP-P0..P1: first bounded experiment for this entry asks 'If a search is rewarded only for doing something no previous attempt has done, and is never told the goal, can it still reach goals that defeat a search aimed straight at them?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
   },
   {
    "id": "pbt_hyperparam_schedule.v0",
@@ -1931,7 +1957,8 @@
    "proxy_class": "population_ecology",
    "original_class": "population_ecology",
    "retained_route": "A substrate with per-worker persistent state and inter-run state COPY plus a lineage-recording fossil, or an orchestrated real trainer as backend; the verdict can be a downstream scalar.",
-   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
+   "next_action": "WP-P0..P1: first bounded experiment for this entry asks 'Instead of choosing one learning rate and living with it, can a group of models being trained side by side discover, on the fly, a whole SCHEDULE of settings that changes as training proceeds?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
   },
   {
    "id": "science_of_science.v0",
@@ -2044,7 +2071,8 @@
    "proxy_class": "spatial_stateful",
    "original_class": "spatial_stateful",
    "retained_route": "Launch a reference MC-AIXI-CTW implementation as an orchestrated backend (C-4) with an environment registry exposing a step interface (EXPANSION_REQUESTS #29 yield_action hook), fossilizing the per-cycle reward trace and the normalised final-block reward as the single scalar.",
-   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
+   "next_action": "WP-C1..C3: first bounded experiment for this entry asks 'Can an agent that knows nothing about its environment learn to act well purely by compressing its own action-observation history (CTW) and planning by Monte Carlo search over that model?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
   },
   {
    "id": "artificial_curiosity.v0",
@@ -2107,7 +2135,8 @@
    "proxy_class": "spatial_stateful",
    "original_class": "spatial_stateful",
    "retained_route": "A small action-interface environment with a noisy region, two trainable modules with persistent parameters and a reward wire from model error to controller, run through an existing RL library as an orchestrated backend that fossilizes per-step error and occupancy curves.",
-   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
+   "next_action": "WP-C1..C3: first bounded experiment for this entry asks 'If an agent is rewarded for surprising itself (the model network's prediction error), does it seek out the parts of its world it does not yet understand, and does it lose interest (boredom) once it has learned them?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
   },
   {
    "id": "curiosity.v0",
@@ -2163,7 +2192,8 @@
    "proxy_class": "spatial_stateful",
    "original_class": "spatial_stateful",
    "retained_route": "An environment with actions and observations, a policy updatable during a run, an online density model, and a reward channel; a run must be allowed to be a training loop (substrate change), or an external RL library orchestrated and fossilized.",
-   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
+   "next_action": "WP-C1..C3: first bounded experiment for this entry asks 'In an environment too large to count visits to individual states, can a learned density model stand in for a visit counter well enough to tell an agent which parts of the world it has not really seen?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
   },
   {
    "id": "empowerment.v0",
@@ -2225,7 +2255,8 @@
    "proxy_class": "spatial_stateful",
    "original_class": "spatial_stateful",
    "retained_route": "A simulator with settable state, discrete actions and repeated reset/re-roll, plus a channel-capacity executor with bias correction and a shuffled-action null, evaluated over many states; most naturally an orchestrated action-interface world rather than a bench executor.",
-   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
+   "next_action": "WP-C1..C3: first bounded experiment for this entry asks 'Can an agent decide what to do using nothing but a measure of how much control it has over its own future (the channel capacity from its actuators to its future state), with no external goal?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
   },
   {
    "id": "illumination.grid.v0",
@@ -2281,7 +2312,8 @@
    "proxy_class": "spatial_stateful",
    "original_class": "spatial_stateful",
    "retained_route": "An executor returning a behaviour descriptor alongside performance, an archive persisting between specs readable by the proposer, and downstream-computed coverage; the descriptor is the hard part.",
-   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
+   "next_action": "WP-C1..C3: first bounded experiment for this entry asks 'Instead of asking what is the single best solution, can a search return a whole map showing the best solution of every distinct kind, and how much of that map can it actually fill?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
   },
   {
    "id": "intrinsic.v0",
@@ -2339,7 +2371,8 @@
    "proxy_class": "spatial_stateful",
    "original_class": "spatial_stateful",
    "retained_route": "A stateful grid_mdp_v0 executor with a step interface (EXPANSION_REQUESTS #21: grid_size, episode_length, returning visited states) hosting three regions of differing learnability, run either in-bench once output-to-input chaining exists or as an orchestrated backend (C-4) that fossilizes the ordered region trajectory.",
-   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
+   "next_action": "WP-C1..C3: first bounded experiment for this entry asks 'Given no goal, will an agent that always chooses the activity it is improving at fastest self-organise a sensible easy-to-hard curriculum?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
   },
   {
    "id": "l2s.dagger.v0",
@@ -2402,7 +2435,8 @@
    "proxy_class": "spatial_stateful",
    "original_class": "spatial_stateful",
    "retained_route": "An environment with observable per-step state, a queryable expert, a trainable policy class, a growing aggregated dataset, rounds with a decaying mixing coefficient, and held-out evaluation on the final policy's own state distribution; any supervised trainer as an orchestrated backend, plus an executor that emits per-step state/action pairs (random_walk_v0 returns endpoint fields only).",
-   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
+   "next_action": "WP-C1..C3: first bounded experiment for this entry asks 'Can a policy learn to copy an expert well enough that it stays on the expert's path when it is the one driving, rather than only when the expert has been driving all along?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
   },
   {
    "id": "machineevol.neat.v0",
@@ -2458,7 +2492,8 @@
    "proxy_class": "spatial_stateful",
    "original_class": "spatial_stateful",
    "retained_route": "A neat_eval_v0 executor (EXPANSION_REQUESTS #6: topology_genes, weight_genes, pole-balancing physics returning survival_time) evaluating one fixed network per spec; comparison of topologies across specs downstream.",
-   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
+   "next_action": "WP-C1..C3: first bounded experiment for this entry asks 'How well does the simplest possible neural controller, with almost no structure, perform on a control task; the baseline against which structure-growing evolution must be compared?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
   },
   {
    "id": "openended.novelty.v0",
@@ -2517,7 +2552,8 @@
    "proxy_class": "spatial_stateful",
    "original_class": "spatial_stateful",
    "retained_route": "A 2-D maze simulator with collision and range sensors, a controller evaluator over a weight vector with per-step integration, a vector-valued payload and a coordinate (preferably whole-path) return; either an orchestrated maze/NEAT backend or a world built in ludus/, which 04 names as the home for grid or arena worlds.",
-   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
+   "next_action": "WP-C1..C3: first bounded experiment for this entry asks 'Where does a neural-network-controlled agent end up in a maze after a fixed number of steps when nothing in the run tells it where to go? (The evaluation half of novelty search: the genome-to-behaviour map, which must be'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
   },
   {
    "id": "rbn.attractor.v0",
@@ -2568,7 +2604,8 @@
    "proxy_class": "spatial_stateful",
    "original_class": "spatial_stateful",
    "retained_route": "A small pure executor of the seed: derive wiring/functions/state, iterate synchronously with a seen-set, return period, transient and cycle_detected, recording the budget; Herakles's verdict is that it should simply be written.",
-   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
+   "next_action": "WP-C1..C3: first bounded experiment for this entry asks 'If you wire up a network of on-off switches at random and let it update itself, does it settle into a short repeating cycle or wander for a very long time, and what decides which?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
   },
   {
    "id": "abduce_set_cover.v0",
@@ -2625,7 +2662,8 @@
    "proxy_class": "static_structured",
    "original_class": "static_structured",
    "retained_route": "Seed -> bipartite network generator at declared density + a presenting case, an external set-cover/ILP solver called and fossilized, result exposing cover_size and covered_all.",
-   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
+   "next_action": "WP-A1..A3: first bounded experiment for this entry asks 'Given a set of observed symptoms, can a system pick the smallest set of underlying causes that accounts for all of them, and how small can that explanation get before it stops covering everything?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
   },
   {
    "id": "causal_discovery_pc.v0",
@@ -2738,7 +2776,8 @@
    "proxy_class": "static_structured",
    "original_class": "static_structured",
    "retained_route": "A pure-function executor that derives a seeded case base and a query, computes the three similarity functions, and returns retrieval accuracy against a planted nearest neighbour; the metric contrast across three specs adjudicated downstream (C-5).",
-   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
+   "next_action": "WP-A1..A3: first bounded experiment for this entry asks 'Can a memory of past cases return the genuinely most similar case to a new problem, and does the choice of similarity measure change which case comes back?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
   },
   {
    "id": "comp_phil_sci.echo.v0",
@@ -2795,7 +2834,8 @@
    "proxy_class": "static_structured",
    "original_class": "static_structured",
    "retained_route": "A ~100-line executor taking a proposition list and relation list as payload, building the weight matrix, running the update rule to convergence or cycle cap, returning per-unit activations and a settled flag; needs structured payload and, for accepted-over-rival, a two-field comparison.",
-   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
+   "next_action": "WP-A1..A3: first bounded experiment for this entry asks 'When two scientific theories compete over the same body of evidence, can the choice between them be reproduced by a simple mechanical process that only balances which theory explains more and contradicts less?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
   },
   {
    "id": "evodevo.bias.v0",
@@ -2850,7 +2890,9 @@
    "proxy_class": "static_structured",
    "original_class": "static_structured",
    "retained_route": "A boolean_network.v0 executor (about forty lines per Herakles; EXPANSION_REQUESTS #18 names num_nodes, connectivity_k, update_steps returning attractor cycle length) that samples many genotypes INSIDE the executor and returns one scalar bias statistic, with the sampler shown unbiased.",
-   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
+   "next_action": "WP-A1..A3: first bounded experiment for this entry asks 'When a developmental process maps genotypes to phenotypes, are all phenotypes equally easy to produce, or does the map itself (before any selection) make some far more common?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
+   "status_2026_09_07": "HELD: known kind/reference mismatch (Psujek & Beer 2008 is a CTRNN developmental model; the template implements a K=2 Boolean network, Kauffman/RBN lineage). Not load-bearing for any branch until Herakles resolves the reference or the kind (H-R2b). If unresolved by the next mining round it is retired to rbn.attractor's family rather than carried under a general disclaimer.",
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
   },
   {
    "id": "knowledge_discovery.v0",
@@ -2904,7 +2946,8 @@
    "proxy_class": "static_structured",
    "original_class": "static_structured",
    "retained_route": "A small seeded synthetic-corpus executor (generator plus counting scorer) that plants and ablates a bridge between two bit-vector literatures and returns the co-occurrence count above threshold, which is more rigorous than the original because the ground truth is owned; or a dated bibliographic backend (C-4) for the historical pairs.",
-   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
+   "next_action": "WP-A1..A3: first bounded experiment for this entry asks 'Do two bodies of literature that never cite each other share intermediate terms, and can those terms point to a real connection nobody had noticed (Swanson's ABC model)?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
   },
   {
    "id": "nas_bench_evaluation.v0",
@@ -2962,7 +3005,8 @@
    "proxy_class": "static_structured",
    "original_class": "static_structured",
    "retained_route": "A lookup adapter over the downloadable NAS-Bench-101 table as an orchestrated backend (C-4), with the producer running both search algorithms one spec per query under a hard budget, repeated over many seeds, and regret computed downstream (C-5).",
-   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
+   "next_action": "WP-A1..A3: first bounded experiment for this entry asks 'Given a fixed query budget, does regularized evolution find a better architecture than random search on a tabular benchmark?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
   },
   {
    "id": "query_by_committee.v0",
@@ -3022,7 +3066,10 @@
    "proxy_class": "static_structured",
    "original_class": "static_structured",
    "retained_route": "A hypothesis class with a samplable version space, a label oracle with noise, a vote-entropy disagreement measure and a held-out test set, with a paired passive arm on the same seed and budget over many seeds; a standard active-learning library as an orchestrated backend if noise is wanted.",
-   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
+   "next_action": "WP-A1..A3: first bounded experiment for this entry asks 'If labelling data is expensive, does letting the learner choose which examples to label beat labelling at random, and by how much?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
+   "proxy_status": "PROXY",
+   "proxy_relabel_2026_09_07": "PROXY with a KNOWN ANSWER (same as version_space_search). 'The strongest reduction' is withdrawn as a scientific statement; it is the cheapest plumbing test with a known answer, and its elegance is the property the operator asked not to be fooled by.",
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
   },
   {
    "id": "raf.detection.v0",
@@ -3080,7 +3127,8 @@
    "proxy_class": "static_structured",
    "original_class": "static_structured",
    "retained_route": "Implement the real thing: an adapter or executor taking max_length, catalysis_prob and a seed that generates the polymer reaction network and runs the RAF prune, returning raf_found and raf_size (a few hundred lines, fully fossilizable); sweep and locate the threshold downstream. Herakles: R-BACKEND is so cheap that a reduction is close to wasted effort.",
-   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
+   "next_action": "WP-A1..A3: first bounded experiment for this entry asks 'In a randomly generated soup of molecules and reactions, at what level of catalytic connectivity does a self-sustaining, self-catalysing (RAF) subnetwork first appear, and how does that level change as the soup gets bigg'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
   },
   {
    "id": "structure_mapping.v0",
@@ -3143,7 +3191,8 @@
    "proxy_class": "static_structured",
    "original_class": "static_structured",
    "retained_route": "An SME implementation orchestrated as a backend taking two predicate descriptions and returning the score, the correspondence set and the candidate inferences, with the systematicity weighting switchable and a size normalisation so scores are comparable across the entity-count axis (EXPANSION_REQUESTS #35 asks for a relational_graph world).",
-   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
+   "next_action": "WP-A1..A3: first bounded experiment for this entry asks 'Given two described situations, how good is the best correspondence between them built purely from matching relational structure rather than surface features, and does insisting on deep, interconnected structure (systema'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
   },
   {
    "id": "version_space_search.v0",
@@ -3200,7 +3249,10 @@
    "proxy_class": "static_structured",
    "original_class": "static_structured",
    "retained_route": "Run the bench as an exact version space today (C-0): pin seed_root and length so one hidden target exists, submit candidates one spec at a time, and let the producer maintain the surviving-target count (intersection of Hamming spheres, C(L,k) in closed form), comparing random against expected-information-maximising queries at equal budget (E1).",
-   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
+   "next_action": "WP-A1..A3: first bounded experiment for this entry asks 'As labelled examples arrive one at a time, how fast does the set of hypotheses consistent with everything seen shrink toward a single answer?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
+   "proxy_status": "PROXY",
+   "proxy_relabel_2026_09_07": "PROXY with a KNOWN ANSWER. On a fixed hashed target the score is an exact Hamming distance, so the version space is exactly computable and disagreement-based querying beats random by construction (noiseless exact oracle: the degenerate case of active learning). Value is NEGATIVE only: a failure of the informed arm reveals broken selection wiring; a success establishes nothing about fossil-directed selection on real regions. Not a positive claim (A-4).",
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
   },
   {
    "id": "ai_scientist_training.v0",
@@ -3263,7 +3315,8 @@
    "proxy_class": "symbolic_execution",
    "original_class": "symbolic_execution",
    "retained_route": "Orchestrate a sandboxed subprocess per attempt (real repo, real dataset, model endpoint, accelerator) as an external backend, run the traceback-fed repair loop in the producer, and fossilize diff, environment lockfile, log and metric with a contamination control on the three public templates.",
-   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
+   "next_action": "WP-B1..B3: first bounded experiment for this entry asks 'Can a language model take a working ML training script, write a modification, and have that modification actually run and reach a target validation loss?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
   },
   {
    "id": "alchemy.collision.v0",
@@ -3319,7 +3372,8 @@
    "proxy_class": "symbolic_execution",
    "original_class": "symbolic_execution",
    "retained_route": "A beta-reduction engine over untyped lambda terms with pluggable reduction order, step counter and normal-form test, returning halted, steps and the normal-form term, with term-valued payload and result fields and a widened alphabet; then, separately, a reactor substrate with reinjection for organisation claims.",
-   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
+   "next_action": "WP-B1..B3: first bounded experiment for this entry asks 'When two elementary lambda-calculus combinators are applied to one another, does the result settle into a normal form within a bounded number of rewriting steps, or keep rewriting forever?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
   },
   {
    "id": "algorithm_discovery.v0",
@@ -3373,7 +3427,8 @@
    "proxy_class": "symbolic_execution",
    "original_class": "symbolic_execution",
    "retained_route": "New executor: decoder bits -> program over a declared primitive set, bounded-step interpreter, world-supplied task inputs, scalar output-quality result.",
-   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
+   "next_action": "WP-B1..B3: first bounded experiment for this entry asks 'Can a search over encoded sequences of computational primitives find a genome that behaves like a target algorithm, rather than merely resembling it bit for bit?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
   },
   {
    "id": "alife.tierra.v0",
@@ -3429,7 +3484,8 @@
    "proxy_class": "symbolic_execution",
    "original_class": "symbolic_execution",
    "retained_route": "Invoke a real Tierra descendant as an orchestrated external backend (C-4), passing seed, ancestor, soup size and cycles, and fossilize one scalar (population at cycle N or generations elapsed) per observation with a per-observation reproducibility grade.",
-   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
+   "next_action": "WP-B1..B3: first bounded experiment for this entry asks 'Can a hand-written ancestor program, running in a shared block of memory, copy itself successfully; the pre-mutation viability check for a digital substrate?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
   },
   {
    "id": "am_concept_generation.v0",
@@ -3487,7 +3543,8 @@
    "proxy_class": "symbolic_execution",
    "original_class": "symbolic_execution",
    "retained_route": "A small R-EXECUTOR interpreter for a ten-operator grammar in which bits encode an expression and the score is the fraction of a hidden truth table reproduced, so that the measurable quantity is what fraction of mutations remain meaningful (the actual AM question), with the agenda/archive held by the producer across specs.",
-   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
+   "next_action": "WP-B1..B3: first bounded experiment for this entry asks 'Can a program starting from elementary set-theory concepts and a bag of heuristics invent new mathematical concepts a mathematician would call interesting?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
   },
   {
    "id": "automated_conjecture_hr.v0",
@@ -3549,7 +3606,9 @@
    "proxy_class": "symbolic_execution",
    "original_class": "symbolic_execution",
    "retained_route": "A typed concept datatype closed under a production-rule set, an extension evaluator over a fixed finite object set, a persistent theory store with an interestingness ranking, and a conjecture-emission predicate over pairs of extensions, with list-valued results and the aggregate yield adjudicated outside the sealed spec.",
-   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
+   "next_action": "WP-B1..B3: first bounded experiment for this entry asks 'Starting from a few core concepts and a finite pile of example objects, how many non-trivial conjectures does an automated concept-inventing loop produce within a fixed budget, and does narrowing the allowed production r'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
+   "gate_attainable_range": "NO RANGE COMPUTED: 'survive 30 targets' for a mask over L=24 has an exact expected survival under the exchangeable null (each target independent, P(match per position) = 1/2); compute it per mask size before freezing 30.",
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
   },
   {
    "id": "cegar.abstraction.loop.v0",
@@ -3609,7 +3668,9 @@
    "proxy_class": "symbolic_execution",
    "original_class": "symbolic_execution",
    "retained_route": "Orchestrate an external model checker plus a concrete simulator as a backend, keep the refinement operator in the producer across specs, and fossilize every trace and abstraction; or add a witness-returning (first_mismatch / mask) executor so the loop can be measured natively.",
-   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
+   "next_action": "WP-B1..B3: first bounded experiment for this entry asks 'Can a property of a system too big to check directly be proven by checking a deliberately blurred over-approximation and sharpening the blur only where a spurious counterexample shows it lied?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
+   "leak_warning": "This proxy's recommended construction manufactures or simulates the witness from scores or a side channel (CROSSWALK.md :1536 / :1513 at 4c2d31578). That is exactly the leak WP-B2 test B2-b guards: a witness copied into another producer-visible field. The construction is the NATURAL thing to build, which is why the guard exists; it may be used only in the witness-RETURNED arm, never as a way to give the withheld arm the witness.",
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
   },
   {
    "id": "cegis_boolean.v0",
@@ -3671,7 +3732,9 @@
    "proxy_class": "symbolic_execution",
    "original_class": "symbolic_execution",
    "retained_route": "A program grammar with typed holes, an inductive synthesizer over a finite example set, and an external SAT/SMT verifier orchestrated as a backend that returns a concrete witness, with the growing example set carried by the producer across specs and iterations-to-success reported.",
-   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
+   "next_action": "WP-B1..B3: first bounded experiment for this entry asks 'Can a synthesis loop that repeatedly proposes a program and gets back one concrete failing input find a correct program before it runs out of attempts, and how does that depend on the size of the program space?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
+   "leak_warning": "This proxy's recommended construction manufactures or simulates the witness from scores or a side channel (CROSSWALK.md :1536 / :1513 at 4c2d31578). That is exactly the leak WP-B2 test B2-b guards: a witness copied into another producer-visible field. The construction is the NATURAL thing to build, which is why the guard exists; it may be used only in the witness-RETURNED arm, never as a way to give the withheld arm the witness.",
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
   },
   {
    "id": "comp_sci_discovery.bacon.v0",
@@ -3785,7 +3848,8 @@
    "proxy_class": "symbolic_execution",
    "original_class": "symbolic_execution",
    "retained_route": "Run Avida (or the recovered 2003 physics in ergon/avida2003/, which holds the 26-instruction table, the nine-task truth tables and the complete line of descent) as an orchestrated backend (C-4) and fossilize fraction-correct on the named task per genome.",
-   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
+   "next_action": "WP-B1..B3: first bounded experiment for this entry asks 'Does a particular instruction sequence, run on Avida's virtual CPU, actually compute a specified logic function (NOT or EQU) of its inputs?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
   },
   {
    "id": "eprover_superposition.v0",
@@ -3844,7 +3908,8 @@
    "proxy_class": "symbolic_execution",
    "original_class": "symbolic_execution",
    "retained_route": "Call a pinned version of E on a real problem library such as TPTP with pinned strategy flags as an orchestrated backend, recording status, generated and processed clause counts and the proof object; inference belongs to the backend, the bench orchestrates and fossilizes.",
-   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
+   "next_action": "WP-B1..B3: first bounded experiment for this entry asks 'Can a first-order prover derive a contradiction from a clause set within a fixed budget of generated clauses, and does changing the given-clause selection heuristic change whether it gets there?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
   },
   {
    "id": "fm.bounded.model.check.v0",
@@ -3904,7 +3969,9 @@
    "proxy_class": "symbolic_execution",
    "original_class": "symbolic_execution",
    "retained_route": "A state/transition/property encoder, an unroller emitting CNF at k, a real SAT solver orchestrated as a backend, and a decoder back to a readable trace, plus a k-induction second query; the spec must return a witness and distinguish proved-within-bound from not-found.",
-   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
+   "next_action": "WP-B1..B3: first bounded experiment for this entry asks 'Within a fixed number of steps k, can a system reach a state that violates its safety property, and if so what exact sequence of steps gets there?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
+   "gate_attainable_range": "NO RANGE COMPUTED: threshold 12.0 on the walk's position under persist has an analytic distribution (var = steps * step_scale^2 / 3 per repeat, summed); compute the crossing probability per bound_k before freezing 12.0. Also: both surviving encodings are single-variable projections, so bound_k is inert.",
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
   },
   {
    "id": "lgp.bloat.v0",
@@ -3955,7 +4022,8 @@
    "proxy_class": "symbolic_execution",
    "original_class": "symbolic_execution",
    "retained_route": "A pure ~60-line executor: decode bits -> instructions, backward liveness walk, return effective_fraction (and the path boolean); stateless, seed-only world, single-scalar adjudicable.",
-   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
+   "next_action": "WP-B1..B3: first bounded experiment for this entry asks 'In a randomly generated linear program, what fraction of the instructions actually affect the output, and how does that fraction depend on how many registers the program has?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
   },
   {
    "id": "lm_guided_proof.v0",
@@ -4015,7 +4083,9 @@
    "proxy_class": "symbolic_execution",
    "original_class": "symbolic_execution",
    "retained_route": "Orchestrate a proof assistant and a model endpoint as backends, record every proposal and kernel verdict, report closed-or-not with expansions consumed; the fossil contract must admit recorded, non-recomputable observations.",
-   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
+   "next_action": "WP-B1..B3: first bounded experiment for this entry asks 'Can a language model trained on mathematical proofs suggest the next step well enough that a machine, checking every suggestion against a strict logical kernel, closes proofs it could not close by guessing?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
+   "gate_attainable_range": "DEGENERATE AS WRITTEN: goal solved (score >= 1.0) within 200 specs on a 24-move problem is guaranteed to fire; attainable range of the gate is {fires}. A usable gate needs a budget below the hill-climb bound L, or a k > 0 landscape, with the attainable success probability computed first.",
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
   },
   {
    "id": "mil_predicate_invention.v0",
@@ -4071,7 +4141,8 @@
    "proxy_class": "symbolic_execution",
    "original_class": "symbolic_execution",
    "retained_route": "Call the public Metagol Prolog program as a backend with a seed-generated task and the metarule set as payload, one sealed spec per clause bound k = 1..6 with rule 'found is true'; the smallest surviving k is the minimal size and every falsified smaller k is a permanent lower bound.",
-   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
+   "next_action": "WP-B1..B3: first bounded experiment for this entry asks 'From a handful of examples and some background facts, can a system write a logic program that explains them, and can it invent the intermediate concepts it needs but was never given?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
   },
   {
    "id": "program_synthesis_sketch.v0",
@@ -4130,7 +4201,8 @@
    "proxy_class": "symbolic_execution",
    "original_class": "symbolic_execution",
    "retained_route": "Spawn a sketch compiler plus SAT/SMT solver as an orchestrated backend (C-4) with the sketch, spec and bounds as payload, receiving solved, iterations and time, and recording solver version, bounds, seed and timeout in the fossil; the iterations-vs-hole-count trend adjudicated downstream (C-5).",
-   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
+   "next_action": "WP-B1..B3: first bounded experiment for this entry asks 'Given a program with holes plus a specification, can a solver fill the holes so the result is correct, and how much work does that take (CEGIS)?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
   },
   {
    "id": "symbolic_regression_gp.v0",
@@ -4186,8 +4258,17 @@
    "proxy_class": "symbolic_execution",
    "original_class": "symbolic_execution",
    "retained_route": "Split the kind: an evaluation-only executor (serialised expression + data seed -> normalised error) shaped like evaluate_bitstring, with the producer running Koza's population loop across specs so each evaluation is a fossilized record.",
-   "next_action": "see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result"
+   "next_action": "WP-B1..B3: first bounded experiment for this entry asks 'Can an evolving population of mathematical expressions find a formula that fits a dataset, and does the evolution actually do better than drawing the same number of random formulas?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
+   "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged"
   }
  ],
- "amendment_2026_09_07": "original_class (the science) is separated from proxy_class (where the current-bench proxy sits, often numeric_calibration). Failure or analytic triviality of a proxy does not reject the original question, mechanism or field."
+ "amendment_2026_09_07": "original_class (the science) is separated from proxy_class (where the current-bench proxy sits, often numeric_calibration). Failure or analytic triviality of a proxy does not reject the original question, mechanism or field.",
+ "critique_amendment_2026_09_07": {
+  "A-2": "gate_attainable_range added to the five gates Herakles named; rule inherited by BRANCHES/WORK_PACKAGES",
+  "A-3": "six equivalence-asserting entries relabelled PROXY with the landscape dependency inline",
+  "A-4": "version_space_search / query_by_committee demoted to plumbing tests with a known answer",
+  "A-5": "retained_route is faithful_route by construction for entries outside the calibration class (now stated); the three calibration-class entries with boilerplate got bespoke routes; next_action is per entry",
+  "A-6": "leak_warning cites the CEGIS/CEGAR constructions for WP-B2-b",
+  "O-3": "evodevo.bias HELD, retire-by condition stated"
+ }
 }

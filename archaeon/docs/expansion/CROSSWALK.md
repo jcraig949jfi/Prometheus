@@ -18,79 +18,81 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 
 **Amendment 2026-09-07.** `original_class` (the scientific phenomenon) is now separate from `proxy_class` (where the nearest current-bench proxy sits). Thirteen entries have a calibration-class proxy; each keeps its original class, a retained faithful route, and a next action. A proxy's failure or analytic triviality rejects nothing about the original question.
 
+**Critique amendment 2026-09-07 (Herakles A-2..A-6, O-3).** Six entries that asserted equivalence on the additive landscape are relabelled PROXY with the dependency inline; five gates carry their attainable range or are marked degenerate; the two CEGIS/CEGAR constructions carry a leak warning for WP-B2-b; `evodevo.bias` is HELD; `retained_route` equals `faithful_route` by construction outside the calibration class, and is stated as such.
+
 ## Index
 
-| id | original class | proxy class | kind named | route | faithful home |
-|---|---|---|---|---|---|
-| `causal_discovery_pc.v0` | causal_structure_learning | static_structured | `pc_algorithm_skeleton_v0` | R-BACKEND; R-EXECUTOR; R-REPAIR | SFE |
-| `sciml_pinn_residual.v0` | continuous_dynamics_physics_informed | numeric_calibration | `train_physics_informed_nn_v0` | R-BACKEND; R-COMPOSE; R-SUBSTRATE | SFE |
-| `falsification_walk.v0` | cyber_physical_falsification | numeric_calibration | `random_walk_v0` | R-REPAIR; R-COMPOSE; R-EXECUTOR; R-BACKEND | SFE |
-| `bayesian_utility.v0` | decision_theoretic_experiment_selection | numeric_calibration | `bayesian_utility_v0` | R-EXECUTOR; R-BACKEND; R-COMPOSE | SFE |
-| `bacon_equation_discovery.v0` | dynamical_systems_equation_discovery | numeric_calibration | `discover_equation_v0` | R-BACKEND; R-COMPOSE; R-EXECUTOR | SFE |
-| `comp_sci_discovery.bacon.v0` | dynamical_systems_equation_discovery | symbolic_execution | `bacon_heuristic_search.v0` | R-COMPOSE; R-EXECUTOR; R-REPAIR | SFE |
-| `equation_discovery_sindy.v0` | dynamical_systems_equation_discovery | numeric_calibration | `sparse_regression_sindy_v0` | R-BACKEND; R-COMPOSE; R-EXECUTOR | SFE |
-| `d_optimal_design.v0` | experimental_design_optimality | numeric_calibration | `d_optimal_design_v0` | R-EXECUTOR; R-BACKEND | SFE |
-| `adam_yeast_growth.v0` | interacting_landscapes | interacting_landscapes | `simulate_yeast_knockout_v0` | R-COMPOSE; R-BACKEND; R-EXECUTOR | SFE |
-| `coevolution.parasites.v0` | interacting_landscapes | interacting_landscapes | `coevaluate_populations.v0` | R-WORLD; R-COMPOSE; R-EXECUTOR | ludus/ (04 doc names it the obvious hom… |
-| `hide_and_seek_autocurriculum.v0` | interacting_landscapes | interacting_landscapes | `multi_agent_competition_v0` | R-BACKEND; R-WORLD; R-SUBSTRATE | ludus/ (04 doc: arena worlds; not named… |
-| `maml_few_shot.v0` | interacting_landscapes | interacting_landscapes | `maml_adapt_v0` | R-BACKEND; R-SUBSTRATE; R-COMPOSE | Herakles's E4 transfer curve (needs C-1… |
-| `mcc.bipartite.v0` | interacting_landscapes | interacting_landscapes | `mcc_step.v0` | R-COMPOSE; R-WORLD; R-SUBSTRATE | proteus/ (player foundry with a mutatio… |
-| `poet_paired_coevolution.v0` | interacting_landscapes | interacting_landscapes | `poet_loop_v0` | R-BACKEND; R-SUBSTRATE; R-COMPOSE | ludus/atlas_of_worlds and ludus/arena (… |
-| `computational_mathematics_walk.v0` | numeric_calibration | numeric_calibration | `random_walk_v0` | R-REPAIR; R-NOW; R-COMPOSE | SFE |
-| `computational_serendipity.v0` | numeric_calibration | numeric_calibration | `random_walk_v0` | R-REPAIR; R-COMPOSE | SFE |
-| `discovery_informatics.v0` | numeric_calibration | numeric_calibration | `evaluate_bitstring` | R-REPAIR; R-EXECUTOR; R-BACKEND; R-COMPOSE | SFE |
-| `evolcomp.fitness.v0` | numeric_calibration | numeric_calibration | `evaluate_bitstring` | R-NOW; R-COMPOSE; R-SUBSTRATE | proteus/ (Player Foundry: sampled popul… |
-| `mt.relation.eval.v0` | numeric_calibration | numeric_calibration | `evaluate_metamorphic_v0` | R-COMPOSE; R-EXECUTOR | SFE |
-| `ada_thin_film.v0` | other | other | `synthesize_thin_film_v0` | R-BACKEND; R-COMPOSE; R-EXECUTOR | SFE |
-| `evo_epistemology.bvsr.v0` | other | other | `cumulative_bitstring.v0` | R-COMPOSE; R-SUBSTRATE; R-EXECUTOR | SFE |
-| `l2o.meta.optimizer.v0` | other | other | `meta_optimize_quadratic_v0` | R-COMPOSE; R-BACKEND; R-SUBSTRATE; R-EXECUTOR | incubation/ (operator-genesis learner m… |
-| `sbse.hillclimb.search.v0` | other | other | `sbse_hill_climb_v0` | R-COMPOSE; R-REPAIR; R-SUBSTRATE; R-EXECUTOR | SFE |
-| `universal_darwinism.weasel.v0` | other | other | `cumulative_bitstring.v0` | R-COMPOSE; R-SUBSTRATE; R-EXECUTOR | SFE |
-| `alife.tierra.soup.v0` | population_ecology | population_ecology | `tierra_soup_v0` | R-BACKEND; R-SUBSTRATE; R-WORLD | ergon/avida2003/ |
-| `creativity.v0` | population_ecology | population_ecology | `novelty_search.v0` | R-COMPOSE; R-SUBSTRATE; R-REPAIR; R-EXECUTOR | ludus/ (arena worlds) for a deceptive d… |
-| `map.elites.v0` | population_ecology | population_ecology | `evaluate_qd_archive.v0` | R-COMPOSE; R-SUBSTRATE; R-EXECUTOR | Existing MAP-Elites code in the repo, n… |
-| `neurodynamics.attractor.evo.v0` | population_ecology | population_ecology | `attractor_evolution_v0` | R-BACKEND; R-SUBSTRATE; R-COMPOSE | proteus/ (Player Foundry: populations, … |
-| `novelty.search.v0` | population_ecology | population_ecology | `novelty_search_step.v0` | R-COMPOSE; R-SUBSTRATE; R-EXECUTOR | ludus/ (arena worlds) for a run-based, … |
-| `pbt_hyperparam_schedule.v0` | population_ecology | population_ecology | `pbt_optimize_v0` | R-SUBSTRATE; R-WORLD; R-BACKEND; R-COMPOSE | SFE |
-| `science_of_science.v0` | program_level_meta_science | population_ecology | `network_cascade.v0` | R-EXECUTOR; R-NOW; R-REPAIR | SFE |
-| `simulate_study.v0` | simulation_based_study_design | numeric_calibration | `simulate_study_v0` | R-COMPOSE; R-EXECUTOR; R-REPAIR | SFE |
-| `agi.mc.aixi.ctw.v0` | spatial_stateful | spatial_stateful | `aixi_ctw_eval_v0` | R-BACKEND; R-SUBSTRATE | ludus/ (Loom/Weir/Tithe worlds with sol… |
-| `artificial_curiosity.v0` | spatial_stateful | spatial_stateful | `model_building_controller.v0` | R-COMPOSE; R-WORLD; R-SUBSTRATE; R-BACKEND | ludus/arena (players + worlds) is the n… |
-| `curiosity.v0` | spatial_stateful | spatial_stateful | `pseudo_count_exploration.v0` | R-SUBSTRATE; R-COMPOSE; R-BACKEND | ludus/ (04 doc: grid and arena worlds; … |
-| `empowerment.v0` | spatial_stateful | spatial_stateful | `channel_capacity_evaluator.v0` | R-COMPOSE; R-EXECUTOR; R-WORLD | ludus/arena (action-interface worlds) i… |
-| `illumination.grid.v0` | spatial_stateful | spatial_stateful | `illuminate_space.v0` | R-COMPOSE; R-SUBSTRATE; R-EXECUTOR | SFE |
-| `intrinsic.v0` | spatial_stateful | spatial_stateful | `iac_exploration.v0` | R-COMPOSE; R-SUBSTRATE; R-BACKEND | ludus/ (Loom/Weir/Tithe synthetic world… |
-| `l2s.dagger.v0` | spatial_stateful | spatial_stateful | `l2s_dagger_v0` | R-SUBSTRATE; R-COMPOSE; R-BACKEND; R-EXECUTOR | ludus/arena (players + worlds) for a se… |
-| `machineevol.neat.v0` | spatial_stateful | spatial_stateful | `neat_eval_v0` | R-NOW; R-EXECUTOR; R-REPAIR; R-COMPOSE | ludus/ (arena and synthetic worlds) for… |
-| `openended.novelty.v0` | spatial_stateful | spatial_stateful | `novelty_maze_v0` | R-EXECUTOR; R-BACKEND; R-WORLD; R-COMPOSE | ludus/ (arena/, worlds.py, atlas_of_wor… |
-| `rbn.attractor.v0` | spatial_stateful | spatial_stateful | `boolean_network.v0` | R-EXECUTOR; R-COMPOSE | SFE |
-| `pbt.stateful.walk.v0` | stateful_property_based_testing | numeric_calibration | `random_walk_v0` | R-REPAIR; R-COMPOSE; R-SUBSTRATE | SFE |
-| `abduce_set_cover.v0` | static_structured | static_structured | `abduce_set_cover_v0` | R-BACKEND; R-EXECUTOR; R-COMPOSE | SFE |
-| `cbr_retrieval_cycle.v0` | static_structured | static_structured | `cbr_retrieval_cycle_v0` | R-EXECUTOR; R-COMPOSE; R-SUBSTRATE | SFE |
-| `comp_phil_sci.echo.v0` | static_structured | static_structured | `echo_coherence_network.v0` | R-EXECUTOR; R-BACKEND; R-COMPOSE | SFE |
-| `evodevo.bias.v0` | static_structured | static_structured | `boolean_network.v0` | R-NOW; R-EXECUTOR; R-COMPOSE | agent_d3_blind/ (D-3: free validity vs … |
-| `knowledge_discovery.v0` | static_structured | static_structured | `two_node_search.v0` | R-BACKEND; R-EXECUTOR; R-COMPOSE | SFE |
-| `nas_bench_evaluation.v0` | static_structured | static_structured | `nas_search_v0` | R-COMPOSE; R-BACKEND; R-NOW | SFE |
-| `query_by_committee.v0` | static_structured | static_structured | `query_by_committee_v0` | R-COMPOSE; R-BACKEND; R-SUBSTRATE | SFE |
-| `raf.detection.v0` | static_structured | static_structured | `detect_raf.v0` | R-BACKEND; R-EXECUTOR; R-COMPOSE | SFE |
-| `structure_mapping.v0` | static_structured | static_structured | `structure_mapping_v0` | R-BACKEND; R-EXECUTOR; R-COMPOSE; R-REPAIR | SFE |
-| `version_space_search.v0` | static_structured | static_structured | `version_space_search_v0` | R-COMPOSE; R-EXECUTOR; R-REPAIR | expansion_pass/03_LEADING_DESIGN_VERSIO… |
-| `ai_scientist_training.v0` | symbolic_execution | symbolic_execution | `train_llm_idea_v0` | R-BACKEND; R-EXECUTOR; R-SUBSTRATE | SFE |
-| `alchemy.collision.v0` | symbolic_execution | symbolic_execution | `lambda_collision.v0` | R-EXECUTOR; R-REPAIR; R-SUBSTRATE | SFE |
-| `algorithm_discovery.v0` | symbolic_execution | symbolic_execution | `evaluate_bitstring` | R-REPAIR; R-COMPOSE; R-EXECUTOR | SFE |
-| `alife.tierra.v0` | symbolic_execution | symbolic_execution | `tierra_core_v0` | R-BACKEND; R-EXECUTOR; R-SUBSTRATE | ergon/avida2003/ (Herakles routes the T… |
-| `am_concept_generation.v0` | symbolic_execution | symbolic_execution | `evaluate_lisp_concept_v0` | R-SUBSTRATE; R-EXECUTOR; R-BACKEND | incubation/ (executable symbolic learni… |
-| `automated_conjecture_hr.v0` | symbolic_execution | symbolic_execution | `automated_conjecture_hr_v0` | R-COMPOSE; R-SUBSTRATE; R-EXECUTOR; R-REPAIR | SFE |
-| `cegar.abstraction.loop.v0` | symbolic_execution | symbolic_execution | `cegar_loop_v0` | R-COMPOSE; R-EXECUTOR; R-BACKEND; R-SUBSTRATE | SFE |
-| `cegis_boolean.v0` | symbolic_execution | symbolic_execution | `bounded_synthesizer.v0` | R-COMPOSE; R-BACKEND; R-SUBSTRATE; R-EXECUTOR | SFE |
-| `digitevol.avida.v0` | symbolic_execution | symbolic_execution | `avida_cpu_v0` | R-NOW; R-COMPOSE; R-BACKEND; R-EXECUTOR | ergon/avida2003/ERGON_AVIDA2003_HISTORI… |
-| `eprover_superposition.v0` | symbolic_execution | symbolic_execution | `formal_prover.v0` | R-BACKEND; R-COMPOSE; R-EXECUTOR | SFE |
-| `fm.bounded.model.check.v0` | symbolic_execution | symbolic_execution | `bounded_model_check_v0` | R-BACKEND; R-REPAIR; R-COMPOSE | SFE |
-| `lgp.bloat.v0` | symbolic_execution | symbolic_execution | `evaluate_lgp.v0` | R-EXECUTOR; R-COMPOSE | SFE |
-| `lm_guided_proof.v0` | symbolic_execution | symbolic_execution | `formal_prover.v0` | R-BACKEND; R-SUBSTRATE; R-EXECUTOR | SFE |
-| `mil_predicate_invention.v0` | symbolic_execution | symbolic_execution | `metagol_induce.v0` | R-BACKEND; R-COMPOSE; R-EXECUTOR | SFE |
-| `program_synthesis_sketch.v0` | symbolic_execution | symbolic_execution | `bounded_synthesizer.v0` | R-BACKEND; R-EXECUTOR; R-COMPOSE | incubation/solver (iterative-deepening … |
-| `symbolic_regression_gp.v0` | symbolic_execution | symbolic_execution | `evaluate_symbolic_tree_v0` | R-EXECUTOR; R-COMPOSE; R-SUBSTRATE | SFE |
+| id | original class | proxy class | proxy status | kind named | route | faithful home |
+|---|---|---|---|---|---|---|
+| `causal_discovery_pc.v0` | causal_structure_learning | static_structured | proxy | `pc_algorithm_skeleton_v0` | R-BACKEND; R-EXECUTOR; R-REPAIR | SFE |
+| `sciml_pinn_residual.v0` | continuous_dynamics_physics_informed | numeric_calibration | proxy | `train_physics_informed_nn_v0` | R-BACKEND; R-COMPOSE; R-SUBSTRATE | SFE |
+| `falsification_walk.v0` | cyber_physical_falsification | numeric_calibration | proxy | `random_walk_v0` | R-REPAIR; R-COMPOSE; R-EXECUTOR; R-BACKEND | SFE |
+| `bayesian_utility.v0` | decision_theoretic_experiment_selection | numeric_calibration | proxy | `bayesian_utility_v0` | R-EXECUTOR; R-BACKEND; R-COMPOSE | SFE |
+| `bacon_equation_discovery.v0` | dynamical_systems_equation_discovery | numeric_calibration | proxy | `discover_equation_v0` | R-BACKEND; R-COMPOSE; R-EXECUTOR | SFE |
+| `comp_sci_discovery.bacon.v0` | dynamical_systems_equation_discovery | symbolic_execution | proxy | `bacon_heuristic_search.v0` | R-COMPOSE; R-EXECUTOR; R-REPAIR | SFE |
+| `equation_discovery_sindy.v0` | dynamical_systems_equation_discovery | numeric_calibration | proxy | `sparse_regression_sindy_v0` | R-BACKEND; R-COMPOSE; R-EXECUTOR | SFE |
+| `d_optimal_design.v0` | experimental_design_optimality | numeric_calibration | proxy | `d_optimal_design_v0` | R-EXECUTOR; R-BACKEND | SFE |
+| `adam_yeast_growth.v0` | interacting_landscapes | interacting_landscapes | proxy | `simulate_yeast_knockout_v0` | R-COMPOSE; R-BACKEND; R-EXECUTOR | SFE |
+| `coevolution.parasites.v0` | interacting_landscapes | interacting_landscapes | PROXY | `coevaluate_populations.v0` | R-WORLD; R-COMPOSE; R-EXECUTOR | ludus/ (04 doc names it the obvious hom… |
+| `hide_and_seek_autocurriculum.v0` | interacting_landscapes | interacting_landscapes | proxy | `multi_agent_competition_v0` | R-BACKEND; R-WORLD; R-SUBSTRATE | ludus/ (04 doc: arena worlds; not named… |
+| `maml_few_shot.v0` | interacting_landscapes | interacting_landscapes | proxy | `maml_adapt_v0` | R-BACKEND; R-SUBSTRATE; R-COMPOSE | Herakles's E4 transfer curve (needs C-1… |
+| `mcc.bipartite.v0` | interacting_landscapes | interacting_landscapes | proxy | `mcc_step.v0` | R-COMPOSE; R-WORLD; R-SUBSTRATE | proteus/ (player foundry with a mutatio… |
+| `poet_paired_coevolution.v0` | interacting_landscapes | interacting_landscapes | proxy | `poet_loop_v0` | R-BACKEND; R-SUBSTRATE; R-COMPOSE | ludus/atlas_of_worlds and ludus/arena (… |
+| `computational_mathematics_walk.v0` | numeric_calibration | numeric_calibration | proxy | `random_walk_v0` | R-REPAIR; R-NOW; R-COMPOSE | SFE |
+| `computational_serendipity.v0` | numeric_calibration | numeric_calibration | proxy | `random_walk_v0` | R-REPAIR; R-COMPOSE | SFE |
+| `discovery_informatics.v0` | numeric_calibration | numeric_calibration | proxy | `evaluate_bitstring` | R-REPAIR; R-EXECUTOR; R-BACKEND; R-COMPOSE | SFE |
+| `evolcomp.fitness.v0` | numeric_calibration | numeric_calibration | proxy | `evaluate_bitstring` | R-NOW; R-COMPOSE; R-SUBSTRATE | proteus/ (Player Foundry: sampled popul… |
+| `mt.relation.eval.v0` | numeric_calibration | numeric_calibration | PROXY | `evaluate_metamorphic_v0` | R-COMPOSE; R-EXECUTOR | SFE |
+| `ada_thin_film.v0` | other | other | proxy | `synthesize_thin_film_v0` | R-BACKEND; R-COMPOSE; R-EXECUTOR | SFE |
+| `evo_epistemology.bvsr.v0` | other | other | PROXY | `cumulative_bitstring.v0` | R-COMPOSE; R-SUBSTRATE; R-EXECUTOR | SFE |
+| `l2o.meta.optimizer.v0` | other | other | proxy | `meta_optimize_quadratic_v0` | R-COMPOSE; R-BACKEND; R-SUBSTRATE; R-EXECUTOR | incubation/ (operator-genesis learner m… |
+| `sbse.hillclimb.search.v0` | other | other | proxy | `sbse_hill_climb_v0` | R-COMPOSE; R-REPAIR; R-SUBSTRATE; R-EXECUTOR | SFE |
+| `universal_darwinism.weasel.v0` | other | other | PROXY | `cumulative_bitstring.v0` | R-COMPOSE; R-SUBSTRATE; R-EXECUTOR | SFE |
+| `alife.tierra.soup.v0` | population_ecology | population_ecology | proxy | `tierra_soup_v0` | R-BACKEND; R-SUBSTRATE; R-WORLD | ergon/avida2003/ |
+| `creativity.v0` | population_ecology | population_ecology | proxy | `novelty_search.v0` | R-COMPOSE; R-SUBSTRATE; R-REPAIR; R-EXECUTOR | ludus/ (arena worlds) for a deceptive d… |
+| `map.elites.v0` | population_ecology | population_ecology | proxy | `evaluate_qd_archive.v0` | R-COMPOSE; R-SUBSTRATE; R-EXECUTOR | Existing MAP-Elites code in the repo, n… |
+| `neurodynamics.attractor.evo.v0` | population_ecology | population_ecology | proxy | `attractor_evolution_v0` | R-BACKEND; R-SUBSTRATE; R-COMPOSE | proteus/ (Player Foundry: populations, … |
+| `novelty.search.v0` | population_ecology | population_ecology | proxy | `novelty_search_step.v0` | R-COMPOSE; R-SUBSTRATE; R-EXECUTOR | ludus/ (arena worlds) for a run-based, … |
+| `pbt_hyperparam_schedule.v0` | population_ecology | population_ecology | proxy | `pbt_optimize_v0` | R-SUBSTRATE; R-WORLD; R-BACKEND; R-COMPOSE | SFE |
+| `science_of_science.v0` | program_level_meta_science | population_ecology | proxy | `network_cascade.v0` | R-EXECUTOR; R-NOW; R-REPAIR | SFE |
+| `simulate_study.v0` | simulation_based_study_design | numeric_calibration | proxy | `simulate_study_v0` | R-COMPOSE; R-EXECUTOR; R-REPAIR | SFE |
+| `agi.mc.aixi.ctw.v0` | spatial_stateful | spatial_stateful | proxy | `aixi_ctw_eval_v0` | R-BACKEND; R-SUBSTRATE | ludus/ (Loom/Weir/Tithe worlds with sol… |
+| `artificial_curiosity.v0` | spatial_stateful | spatial_stateful | proxy | `model_building_controller.v0` | R-COMPOSE; R-WORLD; R-SUBSTRATE; R-BACKEND | ludus/arena (players + worlds) is the n… |
+| `curiosity.v0` | spatial_stateful | spatial_stateful | proxy | `pseudo_count_exploration.v0` | R-SUBSTRATE; R-COMPOSE; R-BACKEND | ludus/ (04 doc: grid and arena worlds; … |
+| `empowerment.v0` | spatial_stateful | spatial_stateful | proxy | `channel_capacity_evaluator.v0` | R-COMPOSE; R-EXECUTOR; R-WORLD | ludus/arena (action-interface worlds) i… |
+| `illumination.grid.v0` | spatial_stateful | spatial_stateful | proxy | `illuminate_space.v0` | R-COMPOSE; R-SUBSTRATE; R-EXECUTOR | SFE |
+| `intrinsic.v0` | spatial_stateful | spatial_stateful | proxy | `iac_exploration.v0` | R-COMPOSE; R-SUBSTRATE; R-BACKEND | ludus/ (Loom/Weir/Tithe synthetic world… |
+| `l2s.dagger.v0` | spatial_stateful | spatial_stateful | proxy | `l2s_dagger_v0` | R-SUBSTRATE; R-COMPOSE; R-BACKEND; R-EXECUTOR | ludus/arena (players + worlds) for a se… |
+| `machineevol.neat.v0` | spatial_stateful | spatial_stateful | proxy | `neat_eval_v0` | R-NOW; R-EXECUTOR; R-REPAIR; R-COMPOSE | ludus/ (arena and synthetic worlds) for… |
+| `openended.novelty.v0` | spatial_stateful | spatial_stateful | proxy | `novelty_maze_v0` | R-EXECUTOR; R-BACKEND; R-WORLD; R-COMPOSE | ludus/ (arena/, worlds.py, atlas_of_wor… |
+| `rbn.attractor.v0` | spatial_stateful | spatial_stateful | proxy | `boolean_network.v0` | R-EXECUTOR; R-COMPOSE | SFE |
+| `pbt.stateful.walk.v0` | stateful_property_based_testing | numeric_calibration | proxy | `random_walk_v0` | R-REPAIR; R-COMPOSE; R-SUBSTRATE | SFE |
+| `abduce_set_cover.v0` | static_structured | static_structured | proxy | `abduce_set_cover_v0` | R-BACKEND; R-EXECUTOR; R-COMPOSE | SFE |
+| `cbr_retrieval_cycle.v0` | static_structured | static_structured | proxy | `cbr_retrieval_cycle_v0` | R-EXECUTOR; R-COMPOSE; R-SUBSTRATE | SFE |
+| `comp_phil_sci.echo.v0` | static_structured | static_structured | proxy | `echo_coherence_network.v0` | R-EXECUTOR; R-BACKEND; R-COMPOSE | SFE |
+| `evodevo.bias.v0` | static_structured | static_structured | proxy | `boolean_network.v0` | R-NOW; R-EXECUTOR; R-COMPOSE | agent_d3_blind/ (D-3: free validity vs … |
+| `knowledge_discovery.v0` | static_structured | static_structured | proxy | `two_node_search.v0` | R-BACKEND; R-EXECUTOR; R-COMPOSE | SFE |
+| `nas_bench_evaluation.v0` | static_structured | static_structured | proxy | `nas_search_v0` | R-COMPOSE; R-BACKEND; R-NOW | SFE |
+| `query_by_committee.v0` | static_structured | static_structured | PROXY | `query_by_committee_v0` | R-COMPOSE; R-BACKEND; R-SUBSTRATE | SFE |
+| `raf.detection.v0` | static_structured | static_structured | proxy | `detect_raf.v0` | R-BACKEND; R-EXECUTOR; R-COMPOSE | SFE |
+| `structure_mapping.v0` | static_structured | static_structured | proxy | `structure_mapping_v0` | R-BACKEND; R-EXECUTOR; R-COMPOSE; R-REPAIR | SFE |
+| `version_space_search.v0` | static_structured | static_structured | PROXY | `version_space_search_v0` | R-COMPOSE; R-EXECUTOR; R-REPAIR | expansion_pass/03_LEADING_DESIGN_VERSIO… |
+| `ai_scientist_training.v0` | symbolic_execution | symbolic_execution | proxy | `train_llm_idea_v0` | R-BACKEND; R-EXECUTOR; R-SUBSTRATE | SFE |
+| `alchemy.collision.v0` | symbolic_execution | symbolic_execution | proxy | `lambda_collision.v0` | R-EXECUTOR; R-REPAIR; R-SUBSTRATE | SFE |
+| `algorithm_discovery.v0` | symbolic_execution | symbolic_execution | proxy | `evaluate_bitstring` | R-REPAIR; R-COMPOSE; R-EXECUTOR | SFE |
+| `alife.tierra.v0` | symbolic_execution | symbolic_execution | proxy | `tierra_core_v0` | R-BACKEND; R-EXECUTOR; R-SUBSTRATE | ergon/avida2003/ (Herakles routes the T… |
+| `am_concept_generation.v0` | symbolic_execution | symbolic_execution | proxy | `evaluate_lisp_concept_v0` | R-SUBSTRATE; R-EXECUTOR; R-BACKEND | incubation/ (executable symbolic learni… |
+| `automated_conjecture_hr.v0` | symbolic_execution | symbolic_execution | proxy | `automated_conjecture_hr_v0` | R-COMPOSE; R-SUBSTRATE; R-EXECUTOR; R-REPAIR | SFE |
+| `cegar.abstraction.loop.v0` | symbolic_execution | symbolic_execution | proxy | `cegar_loop_v0` | R-COMPOSE; R-EXECUTOR; R-BACKEND; R-SUBSTRATE | SFE |
+| `cegis_boolean.v0` | symbolic_execution | symbolic_execution | proxy | `bounded_synthesizer.v0` | R-COMPOSE; R-BACKEND; R-SUBSTRATE; R-EXECUTOR | SFE |
+| `digitevol.avida.v0` | symbolic_execution | symbolic_execution | proxy | `avida_cpu_v0` | R-NOW; R-COMPOSE; R-BACKEND; R-EXECUTOR | ergon/avida2003/ERGON_AVIDA2003_HISTORI… |
+| `eprover_superposition.v0` | symbolic_execution | symbolic_execution | proxy | `formal_prover.v0` | R-BACKEND; R-COMPOSE; R-EXECUTOR | SFE |
+| `fm.bounded.model.check.v0` | symbolic_execution | symbolic_execution | proxy | `bounded_model_check_v0` | R-BACKEND; R-REPAIR; R-COMPOSE | SFE |
+| `lgp.bloat.v0` | symbolic_execution | symbolic_execution | proxy | `evaluate_lgp.v0` | R-EXECUTOR; R-COMPOSE | SFE |
+| `lm_guided_proof.v0` | symbolic_execution | symbolic_execution | proxy | `formal_prover.v0` | R-BACKEND; R-SUBSTRATE; R-EXECUTOR | SFE |
+| `mil_predicate_invention.v0` | symbolic_execution | symbolic_execution | proxy | `metagol_induce.v0` | R-BACKEND; R-COMPOSE; R-EXECUTOR | SFE |
+| `program_synthesis_sketch.v0` | symbolic_execution | symbolic_execution | proxy | `bounded_synthesizer.v0` | R-BACKEND; R-EXECUTOR; R-COMPOSE | incubation/solver (iterative-deepening … |
+| `symbolic_regression_gp.v0` | symbolic_execution | symbolic_execution | proxy | `evaluate_symbolic_tree_v0` | R-EXECUTOR; R-COMPOSE; R-SUBSTRATE | SFE |
 
 ## Entries
 
@@ -108,15 +110,12 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Can change.** the graph size and density (Herakles proposes 6 nodes / 7 edges as NEW DESIGN CHOICE), the structural equation model (linear Gaussian is the minimum), the test (Fisher-z), alpha and max conditioning size
 - **Faithful route.** Orchestrate causal-learn or pcalg as an external backend (C-4) on data sampled from a planted linear-Gaussian SEM, returning structural Hamming distance to the true skeleton as the single scalar, after the two null axes are set.
 - **Retained route.** PC-algorithm structure learning needs multivariate observational data with a declared generating DAG.
-- **Bench proxy.** —
 - **Proxy would lose.** orientation, the CPDAG, latent confounders, selection bias (all disclaimed by the template's own rationale); the bench cannot hold the graph fixed while varying only the sample because one integer seeds both
 - **Claim difference.** no bench proxy: neither existing kind consumes a dataset or performs a hypothesis test; the useful bench-native finding is about repeat semantics (constant is degenerate_by_construction; sha256_index measures a population of graphs, not the sampling variability of one), which is a substrate finding rather than a proxy experiment
 - **Next action.** Faithful route: a kind emitting samples from a declared structural causal model (small, seed-derived); PC as an analysis (X1). Bounded research task; owner Herakles (route).
 - **Parameters destroyed.** alpha_significance; max_conditioning_set
-- **Entailed repair.** —
 - **Reference.** Spirtes, P., Glymour, C., and Scheines, R. 2000. Causation, Prediction, and Search. MIT Press.
 - **Reference grade (Herakles).** VERIFIED
-- **Adjacent Prometheus home.** —
 - **Representation / dynamics / actions / observations.** the edge set, starting complete and shrinking; axes alpha_significance (null) and max_conditioning_set (null) / a finite sample from a joint distribution; every independence decision is a hypothesis test with two-sided error, and errors propagate because later neighbour sets depend on earlier deletions / for each remaining pair, test conditional independence with conditioning sets of increasing size drawn from the neighbours; delete the edge and record the separating set the moment independence is found / skeleton density (edges retained / edges possible, in 0..1); with a planted truth, structural Hamming distance or precision/recall over edges
 - **Class rationale.** the candidate is an edge set over a fixed dataset, pruned by static tests; no dynamics, no population, no interaction between candidates
 
@@ -139,10 +138,8 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Claim difference.** the proxy supports that an UNFITTED generator satisfies a stated law within a measured tolerance (residual-as-verdict with no learning); the faithful version supports that a learned representation with autodiff achieves low residual and low reference error in dimensions a fixed small function class cannot reach
 - **Next action.** Retained as an explicit unresolved design question: a PDE family with boundary data and a non-vacuous residual endpoint; needs a continuous-parameter organism (none exists). Reopen with Branch A's continuous variant or an external backend (X2).
 - **Parameters destroyed.** collocation_points; epochs
-- **Entailed repair.** —
 - **Reference.** Raissi, M., Perdikaris, P., and Karniadakis, G.E., 2019. Physics-informed neural networks: A deep learning framework... Journal of Computational Physics.
 - **Reference grade (Herakles).** VERIFIED
-- **Adjacent Prometheus home.** —
 - **Representation / dynamics / actions / observations.** the trained network's weights, judged by residual achieved and distance from the true solution; axes collocation_points (null), epochs (null) / a differential equation with domain, initial and boundary conditions and a collocation sampling scheme; in evaluation a reference solution / sample collocation points; compute the PDE residual by automatic differentiation of the network with respect to its inputs; train on mean squared residual plus a weighted boundary term (Adam then quasi-Newton) / mean squared residual (continuous, near zero) and relative error against a reference solution (continuous); two different numbers whose difference is the entire subject
 - **Class rationale.** the adequacy criterion is a continuous residual against an analytic law; on the bench the reachable form is a calibration of a generator against that law, and even the faithful form is a numeric constraint fit rather than a population or agent process
 
@@ -165,10 +162,8 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Claim difference.** The proxy can show that robustness-guided sampling finds a rare terminal-envelope violation in fewer samples than uniform sampling on a walk whose violation probability is known analytically. The faithful claim concerns temporal properties on hybrid systems. Caveat from F-5: within a fixed seed displacement is a pure rescaling by step_scale, so a guided search over step_scale alone is trivial; the guided arm must vary seeds.
 - **Next action.** falsification_walk.v1 (Archaeon-proposed, step_scale fixed) as the instrument check; the faithful route needs a controller/environment family (Branch C) and a temporal-logic spec as outcome rule (needs within-run aggregate, E16).
 - **Parameters destroyed.** steps; step_scale
-- **Entailed repair.** —
 - **Reference.** S-TaLiRo: A Tool for Temporal Logic Falsification for Hybrid Systems (Annpureddy, Liu, Fainekos, and Sankaranarayanan 2011)
 - **Reference grade (Herakles).** VERIFIED
-- **Adjacent Prometheus home.** —
 - **Representation / dynamics / actions / observations.** An input signal and the trajectory it produces; on the bench a 1-D walk trajectory determined by seed, steps and step_scale. / A cyber-physical model with hybrid dynamics producing a full signal over time against a temporal-logic safety envelope; surrogated here by a 1-D walk that returns only its terminal position. / An outer stochastic optimiser (Monte Carlo, simulated annealing, cross-entropy) proposes the next input using the real-valued robustness of the last trace. / Continuous robustness per trace (negative = violated); over a campaign, simulations to first falsification. On the bench: terminal position and displacement only.
 - **Class rationale.** On the bench this is a first-passage problem on a 1-D walk with a closed-form crossing probability; the faithful version (hybrid dynamics, temporal logic) has no listed branch and would be 'other'.
 
@@ -191,10 +186,8 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Claim difference.** Faithful: a planned study's expected utility justifies its cost. Proxy: expected information gain per query for one design family and its logarithmic saturation with L; a calibration of the bench's own information geometry, no claim about any real study design.
 - **Next action.** Same as d_optimal_design: a named producer policy, evaluated under the frozen-corpus protocol. Lead.
 - **Parameters destroyed.** prior_variance; sample_size
-- **Entailed repair.** —
 - **Reference.** Bayesian Experimental Design: A Review (Chaloner and Verdinelli 1995)
 - **Reference grade (Herakles).** VERIFIED
-- **Adjacent Prometheus home.** —
 - **Representation / dynamics / actions / observations.** A proposed design, parameterised by sample size (and measurement points); nothing is fitted or observed. / An entirely stipulated statistical model: prior, prior variance, likelihood, noise level. / Average posterior-vs-prior KL over imagined datasets (closed form under conjugate normal, nested Monte Carlo otherwise). / Expected information gain, one non-negative number in nats or bits per design; utility-vs-n curve on failure.
 - **Class rationale.** A closed-form numeric criterion over a stipulated model; no state, population or world dynamics.
 
@@ -217,10 +210,8 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Claim difference.** Faithful: a heuristic law-discovery system recovers a physical law from noisy data. Proxy: the bench's fossil record suffices to recover a planted scaling law (Var = steps*step_scale^2/3) from observations alone, a precondition for every discovery template, positive-control half of a pair with the SINDy negative control.
 - **Next action.** Bounded research task: specify the smallest dynamical family (1-D linear ODE with declared noise) and the law-recovery oracle; owner Herakles (route), Vivarium (kind). Unresolved: which symbolic search executor (Branch B) hosts it.
 - **Parameters destroyed.** heuristic_depth; max_variables
-- **Entailed repair.** —
 - **Reference.** BACON: A production system that discovers empirical laws (Langley 1977)
 - **Reference grade (Herakles).** VERIFIED
-- **Adjacent Prometheus home.** —
 - **Representation / dynamics / actions / observations.** A derived theoretical term: a composed expression (ratios/products) over observed variables. / A data table produced by an underlying process with a planted law and a noise level; no dynamics beyond the generating process. / Heuristics applied recursively: constant -> law; co-increase -> ratio term; inverse -> product term; new term appended as a column and the pass repeats. / Whether a law was found within the depth budget, the depth, and the residual variation of the discovered constant (scalar: residual >= 0).
 - **Class rationale.** Fit of composed terms to a numeric table with a planted law and declared noise; the walk supplies exactly such a table today.
 
@@ -240,10 +231,8 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Claim difference.** the proxy supports only a false-discovery-rate claim about heuristic induction on a structurally guaranteed null; the faithful version supports a rediscovery (true-positive) claim on a planted law; neither licenses the template rationale's claim about historical scientific discovery
 - **Next action.** Fold into the same dynamical family spike; keep the simplicity-vs-fit endpoint as a distinct preregistered question.
 - **Parameters destroyed.** variables; noise
-- **Entailed repair.** —
 - **Reference.** Pat Langley and Herbert Simon's BACON systems for empirical discovery (1978-1987)
 - **Reference grade (Herakles).** VERIFIED
-- **Adjacent Prometheus home.** —
 - **Representation / dynamics / actions / observations.** a derived term, an expression built from the measured columns by ratio and product heuristics; axes variables (null) and noise (null) / a clean data table; classically noiseless historical data with exactly the variables the law needs and no distractors / if a term is constant within tolerance record it as a law and stop; if two terms rise together define their ratio; if one rises as the other falls define their product; look again / whether a constant term was found; coefficient of variation of the best term (continuous, non-negative); number of search steps (count)
 - **Class rationale.** candidates are symbolic expressions constructed and evaluated numerically over a table; the mechanism is term construction, not a population or a stateful world
 
@@ -263,10 +252,8 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Claim difference.** Faithful: SINDy recovers the governing terms of a system. Proxy: the false-positive rate of SINDy at threshold lambda versus trajectory length on a process known to have no governing terms; pairs with the BACON positive control on the same walk.
 - **Next action.** Bounded research task: a declared 2-D nonlinear ODE (e.g. damped oscillator) as a kind emitting a trajectory; SINDy as an analysis (X1), not an executor. Unresolved: trajectory storage bound (D-1).
 - **Parameters destroyed.** library_size; sparsity_threshold
-- **Entailed repair.** —
 - **Reference.** Brunton, S.L., Proctor, J.L., and Kutz, J.N., 2016. Discovering governing equations from data by sparse identification of nonlinear dynamics. PNAS.
 - **Reference grade (Herakles).** VERIFIED
-- **Adjacent Prometheus home.** —
 - **Representation / dynamics / actions / observations.** A coefficient vector over the library; nonzero entries name the active terms. / A dynamical system observed over time with noise and sampling rate; the coordinate system is supplied by the world and decides sparsity. / Estimate derivatives, build library matrix, least squares, threshold, refit on survivors, iterate. / Residual error (>= 0) and count of nonzero coefficients (small integer); only one can be the outcome scalar.
 - **Class rationale.** Regression over a numeric time series against a known ground truth; the walk gives an exact null today.
 
@@ -277,6 +264,7 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 
 *Optimal Experimental Design* — report `07_experimental_design_and_falsification.md` — kind `d_optimal_design_v0` — mechanism `compute_closed_form_criterion` — route R-EXECUTOR; R-BACKEND — capabilities  — proxy class **numeric_calibration**
 
+- **Gate attainable range.** NO RANGE COMPUTED: D-efficiency >= 0.95 has no attainable range stated for the proxy's design space; compute the attainable D-efficiency distribution under random designs before freezing 0.95.
 - **Question.** Given that you can only afford a fixed number of measurements, where should you put them so that the model you intend to fit comes out as sharply determined as possible?
 - **Competing explanations.** a design reaches D-efficiency >= 0.95 versus falls short; determinant zero: the design is singular and a specific parameter combination is inestimable (a proof, with the rank deficiency naming why); rationale disclaims global optimality and superiority over classical designs (no two-design comparison in the rule)
 - **Dependencies.** continuous; composition; non_additive_criterion
@@ -284,15 +272,12 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Can change.** Design size, polynomial degree, region discretisation, executor versus library adapter.
 - **Faithful route.** A ~30-line stateless executor: accept a point list and a degree, build the model matrix, return d_efficiency and rank; repeat count >1 under a constant seed would be correctly flagged degenerate.
 - **Retained route.** D-optimal design chooses experiments to minimise parameter covariance; requires a parametric model with a design space.
-- **Bench proxy.** —
 - **Proxy would lose.** The score: no choice of seed or length makes the additive matching fraction equal a determinant, and the seed cannot be steered because the target is a hash; only the encoding reduces.
 - **Claim difference.** No proxy for the criterion (Herakles: NONE). What survives is a NULL for a design search: a producer-side exchange search over indicator bitstrings on the matching landscape at the real algorithm's budget gives the strongest best-of-n null for the claim that an exchange algorithm exploited structure rather than sampling a lot; it supports only a budget-efficiency statement, never design optimality.
 - **Next action.** Faithful home: a producer-side policy (an information-based selection rule) compared against random under M-SIGNAL rules on any family with a parametric measurement. Lead for the directed-policy menu, not a kind.
 - **Parameters destroyed.** design_size; polynomial_degree
-- **Entailed repair.** —
 - **Reference.** Optimum Experimental Designs (Atkinson and Donev 1992)
 - **Reference grade (Herakles).** VERIFIED
-- **Adjacent Prometheus home.** —
 - **Representation / dynamics / actions / observations.** An exact design: a set of n measurement locations (indicator bitstring over a discretised region in exchange algorithms). / The assumed regression model (polynomial degree) and the design region; no data generated, no responses observed. / Build the model matrix, form X'X, compute the scaled determinant; exchange algorithms swap points and keep determinant-raising swaps. / Determinant of the information matrix or D-efficiency in [0,1]; matrix rank to expose the singular case.
 - **Class rationale.** A deterministic closed-form numeric criterion on a point set; no state, dynamics or population.
 
@@ -310,15 +295,14 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Can change.** the organism (yeast -> any structured genotype), the readout (OD -> any growth-like scalar), the specific ORFs and supplements; the hypothesis-selection loop can be omitted for the single-assay question
 - **Faithful route.** Orchestrate a genome-scale metabolic model (flux-balance) as an external backend (C-4) that takes a gene deletion and a medium and returns a growth rate, run the four factorial cells as separate specs, and adjudicate the rescue interaction downstream (C-5).
 - **Retained route.** Orchestrate a genome-scale metabolic model (flux-balance) as an external backend (C-4) that takes a gene deletion and a medium and returns a growth rate, run the four factorial cells as separate specs, and adjudicate the rescue interaction downstream (C-5).
+- **Retained-route note.** identical to faithful_route by construction: the route was retained unchanged
 - **Bench proxy.** evaluate_bitstring 2x2 factorial at one fixed seed and length (repeat.seed_derivation=constant): candidate C intact; block K zeroed (knockout); block S set to a fixed pattern (supplement); both; interaction computed downstream across the four fossils
 - **Proxy would lose.** all biology, the pathway graph, dose response, the growth curve, and the hypothesis-selection loop that is the Robot Scientist's actual contribution; the hash target makes any rescue opaque so direct vs indirect rescue cannot be distinguished
 - **Claim difference.** the proxy supports only a methodological claim that a one-scalar-per-spec bench can detect a two-factor rescue interaction across specs with a downstream adjudicator; it says nothing about genes, pathways or auxotrophy, and cannot distinguish direct from indirect rescue
-- **Next action.** see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result
+- **Next action.** WP-A1..A3: first bounded experiment for this entry asks 'Does a single-gene yeast knockout regain growth when one nutrient is added back to a defined medium, and what does that rescue say about the deleted gene's place in the pathway?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.
 - **Parameters destroyed.** 
-- **Entailed repair.** —
 - **Reference.** The Automation of Science / Robot Scientist Adam (King et al. 2009)
 - **Reference grade (Herakles).** VERIFIED
-- **Adjacent Prometheus home.** —
 - **Representation / dynamics / actions / observations.** a yeast strain with exactly one ORF deleted; template axes knockout_orf in {YHR090C, YAL012W, YBR218C}, media_supplement in {none, uracil, histidine, leucine} / defined liquid medium in a plate well at set temperature; growth over incubation time read as optical density; the medium supplies the selective context / none inside the assay; in the full Robot Scientist loop a logical pathway model picks the next discriminating assay / final or maximum optical density (continuous), richer versions read the whole growth curve (lag, doubling rate)
 - **Class rationale.** the scientific content is a genotype-by-environment interaction: the knockout's fitness is defined only relative to which resource the medium withholds, so the landscape is the pair (genotype, medium)
 
@@ -326,6 +310,7 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 
 *Coevolution* — report `02_diversity_and_illumination.md` — kind `coevaluate_populations.v0` — mechanism `two_population_interaction` — route R-WORLD; R-COMPOSE; R-EXECUTOR — capabilities C-1; C-5 — proxy class **interacting_landscapes**
 
+- **Proxy relabel.** PROXY. The entry concedes no Red Queen cycling because only one side has memory; a coevolution claim without cycling is a claim about producer-side test selection on an additive landscape, not about coevolution. Requires both sides stateful and k > 0 to be the named phenomenon.
 - **Question.** Does making the test cases evolve against the solutions, instead of holding them fixed, keep a search from getting stuck on a local optimum?
 - **Competing explanations.** productive arms race: host performance on a HELD-OUT test set improves over generations; disengagement: parasites too hard or too easy, fitness carries no gradient (visible in fitness variance); cycling (Red Queen): hosts and parasites chase around a loop, recoverable period; apparent improvement that is only against the surviving parasites, not against held-out tests (rationale's disclaimer)
 - **Dependencies.** population; interaction; spatial; inheritance; time; relatedness
@@ -333,12 +318,12 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Can change.** Population sizes (50/100/200 each), generation count, mutation operators, whether parasites have heredity.
 - **Faithful route.** Two typed populations with heredity and variation, an interaction rule computing both fitnesses per meeting, generational chaining, and an independent held-out evaluation set (R-WORLD; really R-SUBSTRATE for the chaining).
 - **Retained route.** Two typed populations with heredity and variation, an interaction rule computing both fitnesses per meeting, generational chaining, and an independent held-out evaluation set (R-WORLD; really R-SUBSTRATE for the chaining).
+- **Retained-route note.** identical to faithful_route by construction: the route was retained unchanged
 - **Bench proxy.** evaluate_bitstring at the producer layer: parasite population = the SEED POOL; iid arm draws next seed uniformly, adversarial arm picks the seed on which the current best candidate scored worst; measure candidate score improvement per spec downstream, plus transfer to held-out iid seeds.
 - **Proxy would lose.** Parasites with genotype and heredity: the seed pool can only be filtered, never accumulate structure or invent a new kind of hard case; no Red Queen cycling because only one side has memory (adversarial sampling, the one-sided half of coevolution).
 - **Claim difference.** Faithful: an arms race prevents premature convergence on a static benchmark. Proxy: adversarially selected test seeds slow measured improvement relative to iid seeds, and a candidate tuned on adversarial seeds does or does not transfer to held-out seeds; a real coevolution claim but one-sided.
-- **Next action.** see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result
+- **Next action.** WP-A1..A3: first bounded experiment for this entry asks 'Does making the test cases evolve against the solutions, instead of holding them fixed, keep a search from getting stuck on a local optimum?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.
 - **Parameters destroyed.** 
-- **Entailed repair.** —
 - **Reference.** Hillis 1990 Co-evolving parasites improve simulated evolution as an optimization procedure
 - **Reference grade (Herakles).** VERIFIED
 - **Adjacent Prometheus home.** ludus/ (04 doc names it the obvious home for any grid or arena world; not named for this template specifically)
@@ -356,12 +341,12 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Can change.** Team sizes, physics engine, object set, change-point detector; the bench need only launch, pin and fossilize.
 - **Faithful route.** Orchestrate an external physics world with two trainable multi-agent policies under self-play, pin the configuration, fossilize the behaviour trace, and run a change-point detector downstream; the comparison remains outside the scalar rule.
 - **Retained route.** Orchestrate an external physics world with two trainable multi-agent policies under self-play, pin the configuration, fossilize the behaviour trace, and run a change-point detector downstream; the comparison remains outside the scalar rule.
+- **Retained-route note.** identical to faithful_route by construction: the route was retained unchanged
 - **Bench proxy.** Curriculum half only: evaluate_bitstring with a fixed candidate where the producer lengthens the next spec when score clears a bar and shortens otherwise, against a fixed-schedule control arm; worth running only as the control arm for the coevolution reduction. Emergence half: null.
 - **Proxy would lose.** Curriculum half: difficulty comes from a schedule rather than a learning opponent, and with a fixed candidate the length trajectory nearly restates the schedule rule. Emergence half: NONE, structurally, because the menu is fixed by the producer and any novelty measures the producer's imagination.
 - **Claim difference.** Faithful: competition generates an autocurriculum and emergent, undesigned strategies. Proxy: only that task difficulty can be made to track competence via a schedule; nothing about emergence, which the bench cannot exhibit while its menu cannot grow.
-- **Next action.** see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result
+- **Next action.** WP-A1..A3: first bounded experiment for this entry asks 'When two teams of agents compete in a physical world with no designed task, do they generate their own escalating sequence of challenges, and do genuinely new strategies appear that nobody put in?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.
 - **Parameters destroyed.** num_hiders; num_seekers
-- **Entailed repair.** —
 - **Reference.** Emergent Tool Use From Multi-Agent Autocurricula (Baker et al. 2019)
 - **Reference grade (Herakles).** VERIFIED
 - **Adjacent Prometheus home.** ludus/ (04 doc: arena worlds; not named for this template specifically)
@@ -379,12 +364,12 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Can change.** the model class (a bitstring initialisation with a shared prefix of m bits across tasks is the minimal structured task family; Herakles proposes L=32, m in {0,8,16,24}, steps in {0,1,2,4}, 200 tasks per cell as NEW DESIGN CHOICES), the outer loop (learning the initialisation needs a backend)
 - **Faithful route.** Meta-train in an autodiff backend (C-4) over a task distribution with support/query splits (EXPANSION_REQUESTS #38 asks for a seed_roots array with a distribution_type), receiving mean post-adaptation accuracy over many held-out tasks as the single scalar, with the random-init and zero-step controls as separate specs adjudicated downstream.
 - **Retained route.** Meta-train in an autodiff backend (C-4) over a task distribution with support/query splits (EXPANSION_REQUESTS #38 asks for a seed_roots array with a distribution_type), receiving mean post-adaptation accuracy over many held-out tasks as the single scalar, with the random-init and zero-step controls as separate specs adjudicated downstream.
+- **Retained-route note.** identical to faithful_route by construction: the route was retained unchanged
 - **Bench proxy.** one spec, a fixed bitstring, a few hundred sha256_index repeats: the measured negative that every initialisation scores exactly 0.5 in expectation, i.e. the bench's task distribution has zero shared structure; the positive version needs a shared-prefix target generator (C-1)
 - **Proxy would lose.** gradients, differentiability, second derivatives, neural networks and the entire outer loop: the reduction measures the VALUE of a good initialisation chosen by the analyst, not the ability to LEARN one, which is the paper's contribution
 - **Claim difference.** the bench proxy supports only the negative (no meta-learning gain is possible without correlated tasks); with C-1 it would support that adaptation cost falls with shared structure; the faithful version supports that the initialisation can be LEARNED, which no reduction reaches
-- **Next action.** see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result
+- **Next action.** WP-A1..A3: first bounded experiment for this entry asks 'Can a model's initial parameters be trained so that a handful of gradient steps on a brand-new task suffices to do that task well?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.
 - **Parameters destroyed.** inner_gradient_steps
-- **Entailed repair.** —
 - **Reference.** Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks (Finn et al. 2017)
 - **Reference grade (Herakles).** VERIFIED
 - **Adjacent Prometheus home.** Herakles's E4 transfer curve (needs C-1) is the bench-side precursor; ludus/atlas_of_worlds is the nearest existing family of related worlds
@@ -402,12 +387,12 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Can change.** Population sizes, the environment representation, the mutation operators, the pairwise-versus-sampled evaluation.
 - **Faithful route.** Two mutable populations with their own mutation operators, pairwise or sampled-pairwise evaluation, a per-individual existential survival test and generational replacement on both sides, with an evolvable environment representation whose difficulty can genuinely increase; C-1 (evaluate_bitstring_related_v0) is what makes environment drift gradual.
 - **Retained route.** Two mutable populations with their own mutation operators, pairwise or sampled-pairwise evaluation, a per-individual existential survival test and generational replacement on both sides, with an evolvable environment representation whose difficulty can genuinely increase; C-1 (evaluate_bitstring_related_v0) is what makes environment drift gradual.
+- **Retained-route note.** identical to faithful_route by construction: the route was retained unchanged
 - **Bench proxy.** Environment population = (seed, length) pairs; solver population = bitstrings; one spec per solver-environment pair with score as a graded solve; solver survives if max score over environments >= tau, environment survives if max score any solver achieves >= tau; mutate by flipping m bits / perturbing seed / incrementing length; start at 50x50 (2500 specs per generation; 250x250 is 62500). Defuse the trap first: compute the attainable maximum-score distribution at each population size and set tau per size.
 - **Proxy would lose.** Behaviour (a bitstring solver only matches, never acts), transferable capability, and structural complexity in environments (a hash target has no structure to accumulate). Additionally, perturbing a seed yields an UNRELATED target (no relatedness axis, C-1), so environment drift in the proxy is a jump rather than a gradual frontier.
 - **Claim difference.** The proxy asks whether coupled minimal-criterion survival sustains both populations and whether sustained difficulty rises, on structureless hash targets with jump-drift. The faithful claim is open-ended accumulation of structural complexity and transferable capability.
-- **Next action.** see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result
+- **Next action.** WP-A1..A3: first bounded experiment for this entry asks 'Can two coupled populations keep generating new problems and new solutions indefinitely when the only rule for staying alive is solve at least one and be solved by at least one, with nothing ever ranked?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.
 - **Parameters destroyed.** 
-- **Entailed repair.** —
 - **Reference.** Brant and Stanley 2017 Minimal Criterion Coevolution: A New Approach to Open-Ended Search
 - **Reference grade (Herakles).** VERIFIED
 - **Adjacent Prometheus home.** proteus/ (player foundry with a mutation grammar) for the solver side and ludus/arena for evaluation; incubation/worlds/families.py for environment families. All tentative.
@@ -425,12 +410,12 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Can change.** the environment family (terrain -> any parameterised family with a metric), the agent optimiser, whether the archive is held by the bench or by the producer between batches
 - **Faithful route.** Either orchestrate POET's own implementation and terrain simulator as a backend (C-4), or, once evaluate_bitstring_related_v0 with target_offset exists (C-1), run POET as batches of specs with the producer holding the archive and adjudicating transfer downstream (C-5).
 - **Retained route.** Either orchestrate POET's own implementation and terrain simulator as a backend (C-4), or, once evaluate_bitstring_related_v0 with target_offset exists (C-1), run POET as batches of specs with the producer holding the archive and adjudicating transfer downstream (C-5).
+- **Retained-route note.** identical to faithful_route by construction: the route was retained unchanged
 - **Bench proxy.** one cheap spec family: optimise a bitstring against target A across specs, then score it against target B and compare with the best found for B at equal budget; this measures the zero-transfer baseline, not POET
 - **Proxy would lose.** everything: targets from different seeds share nothing by construction and targets at different lengths are not comparable, so transfer between any two bench worlds is exactly zero in expectation; there is no relatedness axis in the world definition
 - **Claim difference.** the proxy converts an assumption about the bench (zero transfer between hash worlds) into a recorded fact and names the missing substrate requirement; the faithful version supports that paired co-evolution with transfer beats isolated optimisation on a specific environment family (never unbounded open-endedness, per the template's own rationale)
-- **Next action.** see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result
+- **Next action.** WP-A1..A3: first bounded experiment for this entry asks 'If problems and solvers improve each other, with new environments generated from solved ones and solutions transferred between environments, are harder problems solved than by direct optimisation?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.
 - **Parameters destroyed.** num_environments; transfer_interval
-- **Entailed repair.** —
 - **Reference.** Paired Open-Ended Trailblazer (POET): Endlessly Generating Increasingly Complex and Diverse Learning Environments and Their Solutions (Wang et al. 2019)
 - **Reference grade (Herakles).** VERIFIED
 - **Adjacent Prometheus home.** ludus/atlas_of_worlds and ludus/arena (a family of worlds with an arena) is the nearest home for an environment family; Herakles's E4 transfer-curve experiment (needs C-1) is the bench-side precursor
@@ -459,7 +444,6 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Entailed repair.** step_scale: no value is entailed, but F-5 shows it is a pure rescaling (displacement / step_scale identical to ten decimals across a 73-fold range at fixed seed), so any single fixed value is equivalent; Herakles proposes 1.0 as a NEW DESIGN CHOICE, not a recovery
 - **Reference.** Standard discrete stochastic modeling texts (canonical method, matches existing bench capability)
 - **Reference grade (Herakles).** PLAUSIBLE
-- **Adjacent Prometheus home.** —
 - **Representation / dynamics / actions / observations.** the realised trajectory, judged by its endpoint; nothing is optimised; axes steps (null), step_scale (null) / a single integer seed feeding a PRNG plus a step scale; the one template in the chunk whose world is genuinely the bench's world / repeat: draw uniform(-1,1), multiply by step_scale, add to position; report position and displacement / position and displacement (continuous, unbounded, in units of step_scale); the executor also returns start_position, steps and step_scale
 - **Class rationale.** an ensemble check of the bench's own random source against an analytic law; no candidate, no world beyond the seed
 
@@ -467,22 +451,21 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 
 *Computational Serendipity* — report `12_knowledge_discovery_and_serendipity.md` — kind `random_walk_v0` — mechanism `accumulate_trajectory` — route R-REPAIR; R-COMPOSE — capabilities C-5 — proxy class **numeric_calibration**
 
+- **Gate attainable range.** RANGE SUPPLIED LATE: displacement >= 2.0 at steps 200, step_scale 0.1 has closed-form var = 200 * 0.01 / 3 = 0.667, sd 0.816, so P(displacement >= 2.0) ~ 0.007 under the null; the gate is reachable but rare, and that number must sit beside the threshold, not later in the entry.
 - **Question.** How often does an aimless, undirected process stumble into a state that a standing (pre-formed) criterion would call valuable?
 - **Competing explanations.** the base rate of accidental threshold crossing at a given (steps, step_scale) budget (measurable); sagacity: the bridge from an unsought trigger to an unrelated goal (NOT measurable on this bench); a lucky crossing versus a perceptive one cannot be separated here
 - **Dependencies.** time; continuous; stochasticity
 - **Must survive.** An unguided process with no objective (the chance dimension) and a criterion fixed BEFORE the trigger (the prepared mind in its thinnest form). Serendipity proper additionally needs an agent with standing interests, a mechanism that notices an unsought event, and a bridge operator to an unrelated goal.
 - **Can change.** steps, step_scale, the threshold, dimensionality of the walk.
 - **Faithful route.** An agent with standing interests formed before the trigger, a noticing mechanism for events it was not looking for, and a bridge operator connecting the event to an unrelated goal, with a value criterion that can be met by something off the agent's current agenda.
-- **Retained route.** An agent with standing interests formed before the trigger, a noticing mechanism for events it was not looking for, and a bridge operator connecting the event to an unrelated goal, with a value criterion that can be met by something off the agent's current agenda.
+- **Retained route.** The original question is program-level: does an environment engineered for chance encounters (breadth of exposure, delayed evaluation, cross-domain recombination) produce more unplanned findings than a focused one. Faithful home is the program's own selection policy (R1 reserve vs established share) evaluated against the unplanned-finding definition in BRANCHES.md §0; the walk proxy is a calibration of an envelope threshold and carries none of it.
 - **Bench proxy.** random_walk_v0 with steps 200 and step_scale 0.1 (NEW DESIGN CHOICES), outcome rule displacement >= 2.0 -> SURVIVED, repeat count 200 with sha256_index and state reset; sweep steps and step_scale across specs to get the crossing rate as a surface. Avoid constant seed + reset + count>1: the degeneracy guard misses stateful kinds (F-4).
 - **Proxy would lose.** Sagacity and the bridge wholly; and a criterion fixed in advance means the agent was looking for exactly this, which is the negation of serendipity.
 - **Claim difference.** The proxy yields only the base rate of luck at a given budget, the correct denominator for every later serendipity claim; it must never be written up as serendipity.
-- **Next action.** see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result
+- **Next action.** Fold into the unplanned-finding definition (BRANCHES.md §0) and the allocation policy comparison (WP-X6 plus an M-SIGNAL-shaped comparison of reserve fractions); no world of its own.
 - **Parameters destroyed.** steps; step_scale
-- **Entailed repair.** —
 - **Reference.** Pease and Colton (2013) standards for computational serendipity via chance factors
 - **Reference grade (Herakles).** VERIFIED
-- **Adjacent Prometheus home.** —
 - **Representation / dynamics / actions / observations.** A trajectory of an unguided 1-D stochastic walk, judged by whether it reaches a state a preset threshold calls valuable. / A one-dimensional line with a fixed origin and a value threshold at some distance; the world supplies randomness and the threshold, nothing else. / None: the process is unguided by construction; the only decision is the pre-registered criterion. / Signed final position and displacement (continuous), compared once against a threshold.
 - **Class rationale.** A 1-D walk whose crossing probability has a closed form (displacement variance = steps*step_scale^2/3); the experiment calibrates a base rate rather than testing a mechanism.
 
@@ -505,7 +488,6 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Entailed repair.** length = 8: entailed by the surviving bits literals, all eight characters long ('11110000', '10101010', '11111111'); Herakles already applied this in migration as 'REPAIR, not a design choice ... any other value silently caps the score at len(bits)/length (see F-1)'
 - **Reference.** Torvik and Smalheiser (2007) quantitative logistic regression model for predicting B-term relevance
 - **Reference grade (Herakles).** VERIFIED
-- **Adjacent Prometheus home.** —
 - **Representation / dynamics / actions / observations.** one shared bridging term as a feature vector judged by predicted relevance; template axes bits in {11110000, 10101010, 11111111}, length {8} / in the real method a bibliographic corpus, a pair of literatures and a gold set of expert relevance judgements (the labels are the expensive part); on the bench a hash-derived target / none: a fitted logistic model is applied to feature vectors and terms are sorted by predicted probability / predicted relevance probability (0..1) evaluated in aggregate by AUC or precision at k; on the bench, evaluate_bitstring score
 - **Class rationale.** as posed on the bench its only honest reading is the exchangeability null (F-6/E3), which is an instrument calibration; the faithful version would be static_structured (feature vectors ranked by a fixed model)
 
@@ -519,13 +501,12 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Must survive.** the objective function and the way blind search scales with genome length; for the field: a population object, a fitness-reading selection operator, variation operators, and generations in which inputs are the previous outputs
 - **Can change.** length, repeat count, the outcome threshold (Herakles proposes score >= 0.5 + 3/(2 sqrt(L)), expected hit rate about 1 in 1000, so the eligible range is known before freezing)
 - **Faithful route.** Admit it as the bench's null: per length in {16,24,32}, one fixed uniform draw, 500 repeats under sha256_index, per-repeat rule as above; then any producer-side GA (population, selection, variation across specs) is scored against the closed-form blind-draw baseline, and C-3 supplies landscapes where EC methods can differ.
-- **Retained route.** Admit it as the bench's null: per length in {16,24,32}, one fixed uniform draw, 500 repeats under sha256_index, per-repeat rule as above; then any producer-side GA (population, selection, variation across specs) is scored against the closed-form blind-draw baseline, and C-3 supplies landscapes where EC methods can differ.
+- **Retained route.** The original question is fitness-landscape structure: neutrality, ruggedness, and the fitness-distance correlation of a real problem class. Faithful route: NK at declared k (WP-A1) with the attainable score range computed per (L, k) before any threshold (Herakles's proposed score >= 0.5 + 3/(2 sqrt L) is an additive-landscape number and does not transfer).
 - **Bench proxy.** evaluate_bitstring itself: this template is the only fully specified one in chunk 4 and runs today
 - **Proxy would lose.** population, selection, crossover, mutation, schemata, diversity maintenance (all of Holland), and landscape structure: nothing here speaks to deception, epistasis or ruggedness, which is where the interesting EC results live (C-3)
 - **Claim difference.** none between proxy and template: both support only the blind-search baseline and, with a producer-side search, that search at budget K beats blind sampling at budget K on onemax; neither supports any claim about a real GA, diversity, or rugged landscapes
-- **Next action.** see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result
+- **Next action.** WP-A2/A3: compute attainable score distribution per k by exhaustive enumeration at small L before freezing any threshold; report fitness-distance correlation as an analysis (WP-X1), not an outcome rule.
 - **Parameters destroyed.** 
-- **Entailed repair.** —
 - **Reference.** John H. Holland 1975, Adaptation in Natural and Artificial Systems
 - **Reference grade (Herakles).** VERIFIED
 - **Adjacent Prometheus home.** proteus/ (Player Foundry: sampled populations, thirteen syntactic descent operators, frozen interpreter) is the nearest place a real variation-selection loop already exists; roles/Archaeon/EXPANSIONS.md E26 proposes bitstring.exchangeability_null.v0 (analytic mean 0.5, sd sqrt(1/(4L)))
@@ -536,22 +517,21 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 
 *Metamorphic Testing* — report `09_testing_and_verification.md` — kind `evaluate_metamorphic_v0` — mechanism `compare_paired_outputs` — route R-COMPOSE; R-EXECUTOR — capabilities C-5; C-6; C-0 — proxy class **numeric_calibration**
 
+- **Proxy relabel.** PROXY, landscape-dependent. 'An instance, not a caricature' is true only of the evaluation mechanics; the relation being evaluated is the additive one. State the landscape beside any result.
 - **Question.** How do you test a program when nobody knows what the right answer is, and you therefore have nothing to compare its output against?
 - **Competing explanations.** a pre-registered relation holds across the input pair (licenses only equivariance) versus is violated (a proof of defect with a minimal failing witness); specifically for the bench: whether the unconstrained bits/length pairing is a live contract gap (append-never-decreases and short-candidate-never-solved relations); rationale disclaims mathematical correctness of outputs
 - **Dependencies.** counterexample; paired_execution
 - **Must survive.** A relation committed before the runs, two executions of a real program, and a concrete failing witness on violation.
 - **Can change.** Base input, mutation mask, the relation set, whether the comparison is a two-run executor or a downstream comparator over paired fossils.
 - **Faithful route.** A downstream comparator over paired fossils (or a small evaluate_metamorphic wrapper returning relation_violation) plus a registry of relations pre-registered before the runs.
-- **Retained route.** A downstream comparator over paired fossils (or a small evaluate_metamorphic wrapper returning relation_violation) plus a registry of relations pre-registered before the runs.
+- **Retained route.** The original question is metamorphic testing: whether a declared relation between transformed inputs holds for the system under test. Faithful route: the family-level exchangeability nulls (NK permutation, CA reflection/complement, program opcode bijection) ARE metamorphic relations; this entry is the general form of R4 and lives with each family's null template.
 - **Bench proxy.** The method applied AS ITSELF to evaluate_bitstring: relations SINGLE FLIP (\|dscore\| = 1/length), COMPLEMENT (score_B = 1 - score_A), DETERMINISM, and LENGTH MISMATCH (appending never decreases score; a short candidate can never reach solved); 64 sampled pairs at lengths 8, 16, 24 over 5 seeds, compared downstream (Herakles NEW DESIGN CHOICES).
 - **Proxy would lose.** Only generality: relations are bit-level rather than semantic transformations of structured inputs.
 - **Claim difference.** Essentially none: the proxy is an instance, not a caricature. It supports that evaluate_bitstring satisfies or violates the four pre-registered relations; per the one-sided-null posture, passing licenses only equivariance, failing is a proof of defect.
-- **Next action.** see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result
+- **Next action.** Absorbed into WP-A2, WP-B2, WP-C2 null templates; the additive-bench instance is a calibration of the relation checker only.
 - **Parameters destroyed.** 
-- **Entailed repair.** —
 - **Reference.** Chen Cheung and Yiu 1998 Metamorphic testing a new approach for generating next test cases
 - **Reference grade (Herakles).** VERIFIED
-- **Adjacent Prometheus home.** —
 - **Representation / dynamics / actions / observations.** The pair of inputs (original and transform); what is judged is the PROGRAM through its consistency across the pair. / The program under test plus the chosen relation; the world supplies the transformation and the semantics that make the relation necessary, and no ground truth. / Run the program on an input and on its transform; check the relation between the two outputs. / Whether the relation held (binary) and the violation magnitude (continuous).
 - **Class rationale.** An instrument test of the bench's own executor via exact relations; the closest entry to R-NOW.
 
@@ -569,15 +549,14 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Can change.** Real instrument stack versus a physics-based film model; surrogate model class; budget.
 - **Faithful route.** An external backend (instrument stack or physics-based film model) the engine calls per recipe, with a provenance record per reading; the bench keeps loop, budget and fossil and accepts recorded rather than recomputable results.
 - **Retained route.** An external backend (instrument stack or physics-based film model) the engine calls per recipe, with a provenance record per reading; the bench keeps loop, budget and fossil and accepts recorded rather than recomputable results.
+- **Retained-route note.** identical to faithful_route by construction: the route was retained unchanged
 - **Bench proxy.** evaluate_bitstring, length 16, recipe Gray-coded as 8 bits dopant ratio + 8 bits annealing time (Gray code load-bearing so Hamming-adjacent words are score-adjacent), one fixed seed, producer-side closed loop of 24 single-repeat specs, threshold preregistered at 13/16 = 0.8125 on the attainable grid (Herakles NEW DESIGN CHOICES).
 - **Proxy would lose.** All physics; all instrument noise (bench score is bit-deterministic so replicates are identical and irreproducible measurement, the single most important real failure mode, cannot occur); the surrogate's real advantage, because the hidden target is single-peaked and additive rather than a materials response surface.
 - **Claim difference.** Faithful: an autonomous optimiser finds a high-mobility recipe. Proxy: only that a budgeted closed loop can be driven, fossilised and adjudicated end to end and that the proposer reaches a preregistered attainable threshold; because the landscape is unimodal and noiseless it is a CEILING check, licensing nothing about materials.
-- **Next action.** see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result
+- **Next action.** Aporia register: first bounded experiment for this entry asks 'Which combination of dopant concentration and annealing time gives a thin film the highest charge-carrier mobility, and can a machine find it by choosing its own next experiment rather than following a human's plan?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.
 - **Parameters destroyed.** annealing_time_sec; dopant_ratio
-- **Entailed repair.** —
 - **Reference.** Self-driving laboratory for accelerated discovery of thin-film materials (MacLeod et al. 2020)
 - **Reference grade (Herakles).** VERIFIED
-- **Adjacent Prometheus home.** —
 - **Representation / dynamics / actions / observations.** A processing recipe: one point in a 2-D continuous space (dopant ratio, annealing time). / A physical laboratory (ink mixing, spin coating, hotplate annealing, imaging, spectroscopy, I-V probe) with instrument noise floors; the response surface is only ever sampled. / Closed loop: surrogate fitted to all measurements so far picks the next recipe until the physical-experiment budget is spent. / Pseudomobility (positive continuous, one per film) and the count of physical experiments consumed.
 - **Class rationale.** A physical or simulated-physics backend with irreproducible readings; no listed branch covers an external laboratory, and the bench keeps only the loop.
 
@@ -585,6 +564,7 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 
 *Evolutionary Epistemology* — report `14_evolutionary_epistemology.md` — kind `cumulative_bitstring.v0` — mechanism `search_over_candidates` — route R-COMPOSE; R-SUBSTRATE; R-EXECUTOR — capabilities C-5; C-0 — proxy class **other**
 
+- **Proxy relabel.** PROXY, landscape-dependent. 'Reduces without loss' holds only on the additive landscape where retaining improvements cannot be wrong; on any k > 0 landscape blind-variation-and-selective-retention can be trapped, which is the actual content of the claim. Re-run on NK (WP-A1) before any statement.
 - **Question.** Can new knowledge be produced by a process that generates its guesses blindly, with no foresight about which will work, provided that the successful guesses are kept and built on?
 - **Competing explanations.** cumulative selection (retention on) strictly outperforms independent resampling at a fixed evaluation budget versus confers no advantage (a strong negative about the landscape); the advantage collapses above a mutation-rate error threshold located by the sweep; rationale's overreach, that BVSR is sufficient for knowledge in general, is not licensed because the criterion here is a fixed target and real criteria move
 - **Dependencies.** memory; time; inheritance
@@ -592,15 +572,14 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Can change.** String length, mutation rate, whether retention is on (the manipulated variable), producer-carried versus executor-internal loop.
 - **Faithful route.** A producer carrying the incumbent between single-repeat specs (exists today as a role) or an executor running variation-selection-retention internally, with the retention-off arm run at matched budget.
 - **Retained route.** A producer carrying the incumbent between single-repeat specs (exists today as a role) or an executor running variation-selection-retention internally, with the retention-off arm run at matched budget.
+- **Retained-route note.** identical to faithful_route by construction: the route was retained unchanged
 - **Bench proxy.** evaluate_bitstring, one fixed seed, length 64: Arm B chains 200 single-repeat specs, flipping m positions of the incumbent and retaining on improvement; Arm A submits 200 independent random words against the same seed; sweep m in {1,2,4,8,32} over 5 seeds; compare best score at budget downstream (Herakles NEW DESIGN CHOICES). Each rung is its own spec with repeat count 1; the blind arm varies BITS under one constant seed, never the seed.
 - **Proxy would lose.** Population and recombination (one lineage), the multi-dimensional and partly opaque criteria of real epistemic selection, and any within-spec learning.
 - **Claim difference.** Reduces essentially without loss on this landscape: the claim that retaining improvements beats independent resampling at fixed budget and collapses above some mutation rate is a genuine instance; only the general sufficiency-for-knowledge claim is not licensed.
-- **Next action.** see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result
+- **Next action.** Aporia register: first bounded experiment for this entry asks 'Can new knowledge be produced by a process that generates its guesses blindly, with no foresight about which will work, provided that the successful guesses are kept and built on?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.
 - **Parameters destroyed.** length; mutation_rate
-- **Entailed repair.** —
 - **Reference.** Donald T. Campbell's Blind Variation and Selective Retention (BVSR) model of creative thought (1960)
 - **Reference grade (Herakles).** PLAUSIBLE
-- **Adjacent Prometheus home.** —
 - **Representation / dynamics / actions / observations.** A candidate idea encoded as a bitstring; judged against a criterion the generator cannot see. / The selection criterion: one verdict per candidate, never a gradient or hint (the bench's hidden target is exactly this). / Perturb the incumbent, test, keep only if improved, repeat under a fixed budget; compare against the same process with retention switched off. / Best score at a fixed budget in [0,1], or evaluations to first reach the target; best-so-far curve on failure.
 - **Class rationale.** fixed_landscape_search: single-lineage cumulative search on one static scalar criterion; runs natively on the bench, and needs C-3 (landscape family) only to make the result non-trivial.
 
@@ -615,10 +594,11 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Can change.** Dimension, unroll steps, the rule's architecture, the function family, gradient-consuming versus derivative-free rule (at a cost, see below).
 - **Faithful route.** Run an automatic-differentiation library as an orchestrated backend: unrolled meta-loss, persistent optimiser weights, a function-family sampler with a held-out family differing in kind, baselines on identical problems and budgets, and the transfer arm pre-registered; the bench calls it and fossilizes the curves.
 - **Retained route.** Run an automatic-differentiation library as an orchestrated backend: unrolled meta-loss, persistent optimiser weights, a function-family sampler with a held-out family differing in kind, baselines on identical problems and budgets, and the transfer arm pre-registered; the bench calls it and fossilizes the curves.
+- **Retained-route note.** identical to faithful_route by construction: the route was retained unchanged
 - **Bench proxy.** evaluate_bitstring as a family of random objectives: a producer-side update rule from (history of bitstrings, scores) to the next bitstring, parameterised by a few numbers (bits to flip as a function of score and of how recently a flip helped); each inner step is one spec at fixed seed. Fit on seeds 1-100 at length 64, scoring at T=30 steps (NEW DESIGN CHOICES), freeze, test on seeds 101-200 and off-family at length 256; baseline = random-restart hill climbing at identical budget. Instrument check first: scores for a fixed bitstring across seeds are fair-coin (F-6 confirms).
 - **Proxy would lose.** Gradients: the bitstring landscape yields a scalar, so the learned rule is derivative-free and the paper's mechanism (backprop through an unrolled trajectory) is absent; and depth, because every inner step is a sealed spec so the horizon is bounded by orchestration cost.
 - **Claim difference.** The proxy tests whether a learned derivative-free rule generalises within a random-function family and degrades across dimension (the paper's own headline limitation). The faithful claim is about a gradient-consuming learned optimiser on continuous landscapes. All hash landscapes are onemax, so 'off-family' here means dimension only, not landscape structure.
-- **Next action.** see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result
+- **Next action.** Aporia register: first bounded experiment for this entry asks 'Instead of hand-writing an optimisation algorithm, can you train one, and does the trained rule still work on problems unlike those it was trained on?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.
 - **Parameters destroyed.** matrix_dimensions; unroll_steps
 - **Entailed repair.** matrix_dimensions: the value 10 is entailed by surviving template text. Rationale (migrated/l2o.meta.optimizer.v0.json): 'trains a coordinate-wise recurrent network to optimize a random 10-dimensional quadratic function over a set number of unrolled steps'. Herakles WHAT_CHANGES: 'the rationale text preserves the intent of a ten-dimensional quadratic'. unroll_steps: nothing entailed.
 - **Reference.** Andrychowicz et al. (2016) Learning to learn by gradient descent by gradient descent.
@@ -638,15 +618,15 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Can change.** Initial candidate (all-zeros / all-ones), evaluation budget, restart count, where the incumbent lives (producer or executor).
 - **Faithful route.** A fitness function computed from a real artefact (external backend running tests or static analysis) or an NK-style rugged landscape executor, a producer carrying the incumbent, and every evaluation fossilized.
 - **Retained route.** A fitness function computed from a real artefact (external backend running tests or static analysis) or an NK-style rugged landscape executor, a producer carrying the incumbent, and every evaluation fossilized.
+- **Retained-route note.** identical to faithful_route by construction: the route was retained unchanged
 - **Bench proxy.** evaluate_bitstring, one fixed seed, length 32: submit all 32 single-flip neighbours as single-repeat specs, move to the best improvement or certify a local optimum, from all-zeros, all-ones and 8 random restarts at 640 evaluations each (Herakles NEW DESIGN CHOICES).
 - **Proxy would lose.** The software artefact and with it the only interesting fitness; on the single-peaked additive landscape there are no local optima but the global one, restarts find nothing, ruggedness is a constant, and the informative failure cannot occur.
 - **Claim difference.** Faithful: local search finds a good software version and the local-optimum set measures landscape ruggedness. Proxy: only that the producer-side hill-climb harness is correct; Herakles's chunk-wide warning is that success on the single-peaked additive landscape is a shared confound to be disclosed wherever it applies.
-- **Next action.** see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result
+- **Next action.** Aporia register: first bounded experiment for this entry asks 'If you can write down what makes one version of a piece of software better than another as a single number, can a dumb local search find a good version for you?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.
 - **Parameters destroyed.** max_evaluations
 - **Entailed repair.** length is not a declared parameter, but initial_candidate_bits literals are 8 characters ('00000000', '11111111'); Herakles's REPAIR note: 'max_evaluations null and no length declared while initial_candidate_bits is eight characters wide'. An 8-bit length is entailed by the literals if the named kind carries a length; max_evaluations itself is not entailed.
 - **Reference.** Harman and Jones 2001 Search-based software engineering
 - **Reference grade (Herakles).** PLAUSIBLE
-- **Adjacent Prometheus home.** —
 - **Representation / dynamics / actions / observations.** A bitstring encoding a software artefact (test suite inclusion, module clustering, requirement selection), judged by an engineering fitness function. / The program or requirement set plus the machinery that evaluates fitness (often an actual test run), including its cost. / Evaluate all single-flip neighbours, move to the best improving one, certify a local optimum when none improves, restart until the budget is spent. / Best fitness found, evaluations consumed, number of distinct certified local optima across restarts.
 - **Class rationale.** fixed_landscape_search: local search over one static scalar landscape whose scientific content is its ruggedness; needs C-3 or a real artefact backend to be non-trivial.
 
@@ -654,6 +634,7 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 
 *Universal Darwinism* — report `14_evolutionary_epistemology.md` — kind `cumulative_bitstring.v0` — mechanism `search_over_candidates` — route R-COMPOSE; R-SUBSTRATE; R-EXECUTOR — capabilities C-5; C-0 — proxy class **other**
 
+- **Proxy relabel.** PROXY, landscape-dependent. The entry's own line 'non-trivial only once C-3 supplies landscapes other than onemax' governs: on the additive bench a one-flip climber solves it in L queries (Herakles, 20/20 trials, L 16-48), so 'reduces in full' holds only for the degenerate case. Equivalence is asserted for the weasel landscape, which IS onemax; the scientific question (cumulative vs single-step selection) is answered trivially there.
 - **Question.** Is the difference between something being astronomically improbable and being easy just the difference between guessing it all at once and building it up in small steps that are each kept?
 - **Competing explanations.** cumulative selection reaches the target in evaluations small in the string length while single-step selection does not (the gap is the whole result); cumulative selection also fails above an error-threshold mutation rate (a real property of the length-rate pair); the single-step arm's failure confirms only a combinatorial count computable on paper (uninformative half); rationale disclaims that biological evolution has a predefined distant target
 - **Dependencies.** memory; inheritance; population; time
@@ -661,15 +642,14 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Can change.** Length, per-position mutation rate, copies per generation (1+1 versus 1+N changes only the constant), producer-carried versus executor-internal loop.
 - **Faithful route.** A producer carrying the incumbent between single-repeat specs (exists today) or an executor running generations internally and returning generations_to_target, with both arms at matched budget.
 - **Retained route.** A producer carrying the incumbent between single-repeat specs (exists today) or an executor running generations internally and returning generations_to_target, with both arms at matched budget.
+- **Retained-route note.** identical to faithful_route by construction: the route was retained unchanged
 - **Bench proxy.** evaluate_bitstring, one fixed seed, length 64, matched budget 200: cumulative arm chains single-repeat specs with per-position mutation and retains on improvement; single-step arm submits 200 independent random words against the same seed; sweep rate over {1,2,4,8}/64 over 5 seeds; compare best score at budget and generations to solved (Herakles NEW DESIGN CHOICES). Rungs are separate specs with repeat count 1; vary BITS, not the seed.
 - **Proxy would lose.** The population within a generation (one candidate per spec, so a 1+1 variant rather than 1+N), which changes the constant in front of the generation count but not the qualitative gap; nothing else of consequence.
 - **Claim difference.** Reduces in full; the bench landscape IS the weasel landscape. The reduction is STRICTER than Dawkins in one respect: the target is hidden by construction and the producer sees only a scalar, which removes the smuggled-answer objection rather than inheriting it.
-- **Next action.** see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result
+- **Next action.** Aporia register: first bounded experiment for this entry asks 'Is the difference between something being astronomically improbable and being easy just the difference between guessing it all at once and building it up in small steps that are each kept?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.
 - **Parameters destroyed.** length; mutation_rate
-- **Entailed repair.** —
 - **Reference.** Richard Dawkins' Weasel program from The Blind Watchmaker (1986)
 - **Reference grade (Herakles).** VERIFIED
-- **Adjacent Prometheus home.** —
 - **Representation / dynamics / actions / observations.** A string judged by the count of positions matching the target. / The target string plus the scoring rule; one number per candidate and no indication of which positions match (the bench's hidden target is exactly this). / Each generation copy the parent N times, mutate per position, keep the single best copy; the comparison arm redraws the whole string at random with no retention. / Generations to reach the target (integer) or best match fraction at a fixed budget in [0,1].
 - **Class rationale.** fixed_landscape_search: cumulative selection on one static hidden target; native to the bench, non-trivial only once C-3 supplies landscapes other than onemax.
 
@@ -687,12 +667,11 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Can change.** Soup size, mutation rate, instruction set details, the derived scalar adjudicated downstream (e.g. appearance time of the first non-self-sufficient replicator).
 - **Faithful route.** Run an external Tierra/Avida-class simulator binary under a declared seed as an orchestrated backend, fossilizing its output stream, using the ergon/avida2003 tree and previously recovered mid-1990s genomes already in the repository.
 - **Retained route.** Run an external Tierra/Avida-class simulator binary under a declared seed as an orchestrated backend, fossilizing its output stream, using the ergon/avida2003 tree and previously recovered mid-1990s genomes already in the repository.
-- **Bench proxy.** —
+- **Retained-route note.** identical to faithful_route by construction: the route was retained unchanged
 - **Proxy would lose.** Everything: on an additive matching landscape the single-bit neighbourhood profile is a constant known before the run (L-m improving, m worsening, neutral fraction identically zero), so lethality, neutrality, robustness and evolvability do not exist; and no spec can hold a second candidate, so no parasite is possible.
 - **Claim difference.** No proxy is an instance (Herakles: NONE). What survives is a labelled NULL ARM: the matching-fraction landscape answers what mutation plus selection achieves when the genotype-phenotype map is the identity, the baseline any emergent-complexity claim from the backend run must beat.
-- **Next action.** see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result
+- **Next action.** WP-P0..P1: first bounded experiment for this entry asks 'If you put one hand-written self-copying program into a block of computer memory and let copying make occasional mistakes, does an ecology appear on its own, including creatures that live off other creatures?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.
 - **Parameters destroyed.** memory_size; mutation_rate
-- **Entailed repair.** —
 - **Reference.** Ray, T. S. (1991) An approach to the Synthesis of Life. Artificial Life II.
 - **Reference grade (Herakles).** VERIFIED
 - **Adjacent Prometheus home.** ergon/avida2003/
@@ -710,12 +689,12 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Can change.** Descriptor dimension, the domain, batch size, generations, the mutation operator.
 - **Faithful route.** A behaviour characterisation over a genome, a persistent archive with an explicit insertion policy, k-NN distance over it, and generational selection and variation on a deceptive domain, with a comparative outcome across arms (EXPANSION_REQUESTS #3).
 - **Retained route.** A behaviour characterisation over a genome, a persistent archive with an explicit insertion policy, k-NN distance over it, and generational selection and variation on a deceptive domain, with a comparative outcome across arms (EXPANSION_REQUESTS #3).
+- **Retained-route note.** identical to faithful_route by construction: the route was retained unchanged
 - **Bench proxy.** random_walk_v0 already is a behaviour characterisation: genome = (seed_root, steps, step_scale), behaviour = displacement. The producer runs batches of 100 walk specs, holds a bounded archive of 250 with k=15, 40 generations, steps 200 (NEW DESIGN CHOICES), selects top-novelty genomes and mutates by perturbing seed_root and jittering step_scale. To make deception reachable, fold step_scale through a multimodal function of the genome before submitting.
 - **Proxy would lose.** High-dimensional behaviour space and, more seriously, deception: a smooth monotone genome-to-displacement map has no dead ends, so the headline result (beating an objective on a deceptive task) is out of reach.
 - **Claim difference.** The proxy measures how archive_size and k affect coverage rate and stall time of a divergent search in a bounded 1-D descriptor space, and will most likely confirm the null that uniform seed sampling wins. The faithful claim is sustained open-ended novelty and beating objectives on deceptive domains. Caveat from F-5: at a fixed seed displacement is exactly linear in step_scale, so jittering step_scale only rescales a walk; genuine behavioural novelty in the proxy comes from seed_root changes alone.
-- **Next action.** see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result
+- **Next action.** WP-P0..P1: first bounded experiment for this entry asks 'Can a search driven only by how different a behaviour is from everything already seen keep producing new behaviours indefinitely, with no goal and no fitness function?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.
 - **Parameters destroyed.** archive_size; k_nearest
-- **Entailed repair.** —
 - **Reference.** Lehman and Stanley 2008: Exploiting Open-Endedness to Solve Problems Through the Search for Novelty
 - **Reference grade (Herakles).** VERIFIED
 - **Adjacent Prometheus home.** ludus/ (arena worlds) for a deceptive domain and proteus/ (player foundry) for population variation; both tentative.
@@ -733,12 +712,12 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Can change.** behaviour_dimensions, evaluations, grid resolution, candidate representation, mutation operator, whether the archive lives in the producer or a substrate.
 - **Faithful route.** An evaluation returning both fitness and a behaviour descriptor from one call, on a declared landscape family with planted deception or tunable ruggedness (C-3), with the elite archive persisted and read to choose parents, and an objective-only hill climber at identical budget as the control.
 - **Retained route.** An evaluation returning both fitness and a behaviour descriptor from one call, on a declared landscape family with planted deception or tunable ruggedness (C-3), with the elite archive persisted and read to choose parents, and an objective-only hill climber at identical budget as the control.
+- **Retained-route note.** identical to faithful_route by construction: the route was retained unchanged
 - **Bench proxy.** Fix one world seed and length 64 (NEW DESIGN CHOICE); one evaluate_bitstring spec per evaluation (count 1, seed_derivation constant); fitness = score; descriptor computed by the producer from bits alone (fraction of ones, fraction of adjacent differing positions) in a 10x10 grid; 2000 specs under a producer-side MAP-Elites loop; compute coverage and summed elite fitness offline; control = objective-only hill climber, same budget, same seed.
 - **Proxy would lose.** Sealed search (the archive lives in the producer and is fossilized only if committed); and, decisively, deception and ruggedness: a hash-derived Hamming landscape is unimodal, so the comparison is stacked against QD and will most likely be null.
 - **Claim difference.** As written the proxy yields only a coverage-versus-budget curve and a check that the loop is implemented correctly; the QD advantage cannot appear on onemax. The faithful claim, that QD beats objective search on deceptive landscapes, needs the cheap planted-deception scorer this template should be read as requesting.
-- **Next action.** see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result
+- **Next action.** WP-P0..P1: first bounded experiment for this entry asks 'Instead of hunting for the single best solution, can a search fill in a map of the best solution of every behavioural kind, and is that map more useful than the single best?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.
 - **Parameters destroyed.** 
-- **Entailed repair.** —
 - **Reference.** Mouret and Clune 2015 Illuminating search spaces by mapping elites
 - **Reference grade (Herakles).** VERIFIED
 - **Adjacent Prometheus home.** Existing MAP-Elites code in the repo, not bench-integrated: agents/nemesis/src/map_elites.py (10x10 adversarial-task grid) and agents/hephaestus/src/diversity_forge.py (pyribs GridArchive). Reusable code, not a home.
@@ -756,12 +735,12 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Can change.** network size and pattern length (Herakles proposes 32 units, 3 stored patterns), population size, retraining iterations, generations (proposed 30 / 5 / 100 as NEW DESIGN CHOICES), the landscape
 - **Faithful route.** Run the model as an orchestrated backend (C-4) with both arms (heredity vs selection-only) and multiple seeds, fossilizing per-generation trajectories; a cheap intermediate is an executor that takes stored patterns plus a noise seed and returns the score of the relaxed pattern (a 32-unit Hopfield net with three patterns is a few lines), which restores capacity and interference behaviour.
 - **Retained route.** Run the model as an orchestrated backend (C-4) with both arms (heredity vs selection-only) and multiple seeds, fossilizing per-generation trajectories; a cheap intermediate is an executor that takes stored patterns plus a noise seed and returns the score of the relaxed pattern (a 32-unit Hopfield net with three patterns is a few lines), which restores capacity and interference behaviour.
+- **Retained-route note.** identical to faithful_route by construction: the route was retained unchanged
 - **Bench proxy.** no-heredity arm: evaluate_bitstring at constant seed, one candidate per spec, K uniform random candidates (analytic best-of-K null); heredity arm: a producer-side hill climber against the same seed where each spec's bits mutate the best seen; contrast best score after K specs
 - **Proxy would lose.** the neural substrate entirely: no attractor networks, Hebbian retraining, capacity limit or interference; the reduction copies a string, so it is silent on exactly the point of the paper (that retraining can implement heredity)
 - **Claim difference.** the proxy supports that inheritance of what worked beats independent sampling at matched budget on a hidden landscape (not in doubt); the faithful version supports that a neural substrate can IMPLEMENT the heredity channel through retraining; neither supports any physiological claim about brains (the template's own disclaimer)
-- **Next action.** see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result
+- **Next action.** WP-P0..P1: first bounded experiment for this entry asks 'Can a population of Hopfield-like attractor networks run Darwinian evolution (copying, variation, inheritance via Hebbian retraining) and find solutions faster than selection without heredity or random search?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.
 - **Parameters destroyed.** population_size; retrain_iterations
-- **Entailed repair.** —
 - **Reference.** Szilagyi, Zachar, Fedor, de Vladar, Szathmary (2017) Breeding novel solutions in the brain: A model of Darwinian neurodynamics.
 - **Reference grade (Herakles).** VERIFIED
 - **Adjacent Prometheus home.** proteus/ (Player Foundry: populations, descent operators, checkpoints, transcript-based measurement) is the nearest existing population-with-heredity machinery; EXPANSION_REQUESTS #28 names Darwinian Neurodynamics as blocked by population state persistence
@@ -779,12 +758,12 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Can change.** k_nearest, evaluations, the descriptor, the domain, the mutation operator.
 - **Faithful route.** An executor returning a behaviour descriptor computed from a RUN rather than from the candidate, on a deceptive domain, with the archive held in the producer (or a substrate archive) and a matched-budget fitness-driven control; this is the same small executor addition map.elites.v0 needs.
 - **Retained route.** An executor returning a behaviour descriptor computed from a RUN rather than from the candidate, on a deceptive domain, with the archive held in the producer (or a substrate archive) and a matched-budget fitness-driven control; this is the same small executor addition map.elites.v0 needs.
+- **Retained-route note.** identical to faithful_route by construction: the route was retained unchanged
 - **Bench proxy.** Fix one world seed and length 64 (NEW DESIGN CHOICE); each candidate is one evaluate_bitstring spec whose score is RECORDED BUT NOT READ during selection; the producer selects on mean Hamming distance to the 15 nearest archive members (k from the template's own choices), mutates by a single bit flip on a random archive member, runs 2000 specs, then compares recorded scores against a score-driven hill climber at the same budget. evaluate_bitstring rather than noop_v0 because noop cannot carry the candidate into the sealed record.
 - **Proxy would lose.** Deception (Hamming distance to a hash target is unimodal, so novelty search should LOSE) and, worse, the genotype-to-phenotype indirection: on the bench the descriptor IS the genome, so behavioural and genetic novelty collapse into one quantity and the distinction that makes the method work is gone.
 - **Claim difference.** The proxy can show only that objective-blind divergence underperforms objective-driven search on a non-deceptive landscape, a calibrated null in the expected direction. The faithful claim is the reverse on deceptive domains and needs a run-derived descriptor.
-- **Next action.** see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result
+- **Next action.** WP-P0..P1: first bounded experiment for this entry asks 'If a search is rewarded only for doing something no previous attempt has done, and is never told the goal, can it still reach goals that defeat a search aimed straight at them?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.
 - **Parameters destroyed.** 
-- **Entailed repair.** —
 - **Reference.** Lehman and Stanley 2008 Exploiting Open-Endedness to Solve Problems Through the Search for Novelty
 - **Reference grade (Herakles).** VERIFIED
 - **Adjacent Prometheus home.** ludus/ (arena worlds) for a run-based, deceptive behaviour descriptor; proteus/ (player foundry, MUTATION_GRAMMAR.md) for population variation. Both tentative.
@@ -802,15 +781,14 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Can change.** Population size, exploit/explore interval, perturbation rule, the trainer backend.
 - **Faithful route.** A substrate with per-worker persistent state and inter-run state COPY plus a lineage-recording fossil, or an orchestrated real trainer as backend; the verdict can be a downstream scalar.
 - **Retained route.** A substrate with per-worker persistent state and inter-run state COPY plus a lineage-recording fossil, or an orchestrated real trainer as backend; the verdict can be a downstream scalar.
+- **Retained-route note.** identical to faithful_route by construction: the route was retained unchanged
 - **Bench proxy.** random_walk_v0 grid: step budget in {50,200,1000,5000} x step_scale in {0.01,0.1,1,10}, linear_index, repeat count 20; per budget find the step_scale that most often crosses a fixed absolute-displacement threshold and see whether the winner moves with budget (Herakles NEW DESIGN CHOICES).
 - **Proxy would lose.** The population, the exploit-and-copy operation, the weights and the schedule itself, i.e. the entire PBT mechanism; the proxy tests whether PBT would have anything to do.
 - **Claim difference.** Faithful: a population discovers a hyperparameter schedule that beats any constant. Proxy: only that the best constant step_scale for crossing threshold D depends on the step budget, a precondition result; labelling it a PBT result would be claim inflation.
-- **Next action.** see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result
+- **Next action.** WP-P0..P1: first bounded experiment for this entry asks 'Instead of choosing one learning rate and living with it, can a group of models being trained side by side discover, on the fly, a whole SCHEDULE of settings that changes as training proceeds?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.
 - **Parameters destroyed.** exploit_explore_freq; population_size
-- **Entailed repair.** —
 - **Reference.** Population Based Training of Neural Networks (Jaderberg et al. 2017)
 - **Reference grade (Herakles).** VERIFIED
-- **Adjacent Prometheus home.** —
 - **Representation / dynamics / actions / observations.** A worker: the pair of a weight vector and a hyperparameter vector, judged by validation performance at checkpoints. / A training task with dataset, loss, validation metric and a shared compute budget; expensive enough that copying weights matters. / Exploit: a poor worker copies a good worker's weights and hyperparameters; explore: perturb the copied hyperparameters; resume from copied weights. / Best validation metric versus step or wall-clock budget, and the discovered schedule (a time series read off a surviving worker's ancestry).
 - **Class rationale.** A population with inheritance by copying and periodic culling; the product is a lineage tree. Secondary blocker recorded by Herakles: no schedule is expressible on random_walk_v0 either within a spec (step_scale fixed) or across specs (start_position is returned, not a parameter).
 
@@ -833,10 +811,8 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Claim difference.** the proxy yields only the null (accumulation WITHOUT cumulative advantage); the faithful version supports a mechanism-sufficiency claim that state-dependent attachment produces inequality exceeding that null; neither says anything about real science or policy
 - **Next action.** Program-health report (Challenge 3) is the nearest instrument; not a world. Route to Aporia's register.
 - **Parameters destroyed.** initial_nodes; attachment_rate
-- **Entailed repair.** —
 - **Reference.** Fortunato et al. (2018) Science of Science, focusing on citation dynamics and complex network perspectives
 - **Reference grade (Herakles).** VERIFIED
-- **Adjacent Prometheus home.** —
 - **Representation / dynamics / actions / observations.** the graph itself; what is judged is a summary statistic of its shape; axes initial_nodes (null), attachment_rate (null) / the graph as it stands at each step IS the environment for the arriving node; the process cannot be decomposed into independent draws / each arriving node attaches a fixed number of edges to existing nodes with probability proportional to current degree (plus a small constant) / a structural statistic of the final graph: Gini of the degree distribution, top-1% edge share, max degree / node count, or a fitted power-law exponent (which Herakles says must NOT be gated on)
 - **Class rationale.** a growing population of nodes whose attachment probability depends on the population's current state (cumulative advantage); the graph is the population and the mechanism is rich-get-richer
 
@@ -859,10 +835,8 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Claim difference.** Two proxy claims: empirical PPV tracks the closed form under known rates (validates campaign machinery), and a sealed fossil ledger with monotone run indices makes selective reporting detectable (a claim about Prometheus itself). The faithful version is the same arithmetic with a purpose-built executor; neither says anything about a real literature.
 - **Next action.** Route through X1 analyses over existing families; the DGP is the family. Lead.
 - **Parameters destroyed.** study_power; bias_factor
-- **Entailed repair.** —
 - **Reference.** Why Most Published Research Findings Are False (Ioannidis 2005)
 - **Reference grade (Herakles).** VERIFIED
-- **Adjacent Prometheus home.** —
 - **Representation / dynamics / actions / observations.** A single simulated study (Bernoulli draws), judged only on whether its declared positive is true. / A research field characterised by four rates; no data at all, only the reporting process. / None inside a study; the producer draws arm membership from the pre-study odds and may model bias by withholding. / Per study a boolean; for the field a ratio, the PPV, which is the quantity the theory is about.
 - **Class rationale.** Closed-form binomial arithmetic; the experiment calibrates campaign machinery and the ledger's self-audit against a known answer.
 
@@ -880,12 +854,12 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Can change.** the environment (any small POMDP with a step interface), the depths and budgets (Herakles proposes context_tree_depth in {16,32,48}, horizon 4..8 as NEW DESIGN CHOICES), the final scalar (normalised reward over the last block)
 - **Faithful route.** Launch a reference MC-AIXI-CTW implementation as an orchestrated backend (C-4) with an environment registry exposing a step interface (EXPANSION_REQUESTS #29 yield_action hook), fossilizing the per-cycle reward trace and the normalised final-block reward as the single scalar.
 - **Retained route.** Launch a reference MC-AIXI-CTW implementation as an orchestrated backend (C-4) with an environment registry exposing a step interface (EXPANSION_REQUESTS #29 yield_action hook), fossilizing the per-cycle reward trace and the normalised final-block reward as the single scalar.
+- **Retained-route note.** identical to faithful_route by construction: the route was retained unchanged
 - **Bench proxy.** memoryless arm: one fixed bitstring under sha256_index (independent landscapes, analytic mean 0.5); history arm: a producer-emitted chain of specs at one fixed seed_root where each spec's bits are chosen from the previous fossil's score; contrast best score at matched budget K
 - **Proxy would lose.** partial observability (the bitstring score is a full honest report), reward per cycle, and above all planning (no forward model to roll out, so horizon_depth has no reduction at all); the CTW model class and compression-as-induction
 - **Claim difference.** the proxy supports only that a history-using producer beats a memoryless producer at fixed budget on a hidden target landscape; it supports no claim about POMDPs, generality, planning or AIXI
-- **Next action.** see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result
+- **Next action.** WP-C1..C3: first bounded experiment for this entry asks 'Can an agent that knows nothing about its environment learn to act well purely by compressing its own action-observation history (CTW) and planning by Monte Carlo search over that model?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.
 - **Parameters destroyed.** horizon_depth; context_tree_depth
-- **Entailed repair.** —
 - **Reference.** Veness, Ng, Hutter, Uther, and Silver (2011) A Monte-Carlo AIXI Approximation.
 - **Reference grade (Herakles).** VERIFIED
 - **Adjacent Prometheus home.** ludus/ (Loom/Weir/Tithe worlds with solve() and optimal_actions() already supply the optimal-policy baseline a normalised score needs)
@@ -903,12 +877,12 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Can change.** Model capacity (hidden_units), prediction horizon (delayed_reward_steps), the environment, the learning library.
 - **Faithful route.** A small action-interface environment with a noisy region, two trainable modules with persistent parameters and a reward wire from model error to controller, run through an existing RL library as an orchestrated backend that fossilizes per-step error and occupancy curves.
 - **Retained route.** A small action-interface environment with a noisy region, two trainable modules with persistent parameters and a reward wire from model error to controller, run through an existing RL library as an orchestrated backend that fossilizes per-step error and occupancy curves.
+- **Retained-route note.** identical to faithful_route by construction: the route was retained unchanged
 - **Bench proxy.** Drive-only calibration on evaluate_bitstring: treat each world seed as a region and each call as an observation; a producer-side predictor forecasts the next probe's score and curiosity = \|forecast error\|; seed_derivation constant is the learnable arm (error should decay to zero = boredom), sha256_index is the irreducible arm (error floor = score spread = noisy television); 200 probes per arm (NEW DESIGN CHOICE), compare error trajectories offline.
 - **Proxy would lose.** The controller and therefore the closed loop: nothing chooses where to go, so the proxy measures the drive signal, not the agent; and the adversarial coupling, since the predictor has no opponent.
 - **Claim difference.** The proxy calibrates that prediction-error-as-drive separates reducible from irreducible variance, and by how much, on a landscape whose irreducibility is known by construction. It says nothing about an agent allocating its time, which is the behavioural claim.
-- **Next action.** see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result
+- **Next action.** WP-C1..C3: first bounded experiment for this entry asks 'If an agent is rewarded for surprising itself (the model network's prediction error), does it seek out the parts of its world it does not yet understand, and does it lose interest (boredom) once it has learned them?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.
 - **Parameters destroyed.** hidden_units; delayed_reward_steps
-- **Entailed repair.** —
 - **Reference.** Schmidhuber 1991: A possibility for implementing curiosity and boredom in model-building neural controllers
 - **Reference grade (Herakles).** VERIFIED
 - **Adjacent Prometheus home.** ludus/arena (players + worlds) is the nearest existing action-interface machinery in the repo; fit not verified. EXPANSION_REQUESTS #21 (grid_mdp_v0) names Artificial Curiosity and Empowerment as blocked by the same missing MDP loop.
@@ -926,12 +900,12 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Can change.** Density model class, bonus scale, environment identity, state-space dimensionality (though a nearly tabular space loses the motivation).
 - **Faithful route.** An environment with actions and observations, a policy updatable during a run, an online density model, and a reward channel; a run must be allowed to be a training loop (substrate change), or an external RL library orchestrated and fossilized.
 - **Retained route.** An environment with actions and observations, a policy updatable during a run, an online density model, and a reward channel; a run must be allowed to be a training loop (substrate change), or an external RL library orchestrated and fossilized.
+- **Retained-route note.** identical to faithful_route by construction: the route was retained unchanged
 - **Bench proxy.** random_walk_v0 with repeat state=persist, steps=1 per repeat so each repeat exposes one position, step_scale 1.0, 5000 persisted repeats, bin width 1.0 (Herakles NEW DESIGN CHOICE); fit a sequential density model downstream over the bin sequence and compare pseudo-count with the true running count.
 - **Proxy would lose.** The entire agentic half: no actions, policy, reward or bonus feedback, so nothing is exploration; and the hard part, since a 1-D binned walk is nearly tabular.
 - **Claim difference.** Faithful: pseudo-count bonuses drive exploration in non-tabular environments. Proxy: a given pseudo-count estimator is consistent on a stream with known counts; instrument calibration, must not be reported as an exploration result.
-- **Next action.** see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result
+- **Next action.** WP-C1..C3: first bounded experiment for this entry asks 'In an environment too large to count visits to individual states, can a learned density model stand in for a visit counter well enough to tell an agent which parts of the world it has not really seen?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.
 - **Parameters destroyed.** bonus_scale
-- **Entailed repair.** —
 - **Reference.** Bellemare et al. 2016: Unifying Count-Based Exploration and Intrinsic Motivation
 - **Reference grade (Herakles).** VERIFIED
 - **Adjacent Prometheus home.** ludus/ (04 doc: grid and arena worlds; not named for this template specifically)
@@ -949,12 +923,12 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Can change.** The world, the alphabet size, the horizon, the estimator algorithm.
 - **Faithful route.** A simulator with settable state, discrete actions and repeated reset/re-roll, plus a channel-capacity executor with bias correction and a shuffled-action null, evaluated over many states; most naturally an orchestrated action-interface world rather than a bench executor.
 - **Retained route.** A simulator with settable state, discrete actions and repeated reset/re-roll, plus a channel-capacity executor with bias correction and a shuffled-action null, evaluated over many states; most naturally an orchestrated action-interface world rather than a bench executor.
+- **Retained-route note.** identical to faithful_route by construction: the route was retained unchanged
 - **Bench proxy.** Bench diagnostic: fix one world seed; define an action alphabet of eight step_scale values (NEW DESIGN CHOICE) and run one random_walk_v0 spec per action with steps fixed as the horizon; bin final positions and estimate MI(action; outcome) downstream with a shuffled-action permutation null; repeat under sha256_index. Pre-registered prediction: about 3 bits in the fixed-seed arm, about 0 in the redrawn arm.
 - **Proxy would lose.** Agent-centricity (the empowered party is the producer, not anything inside the run); state dependence (one world seed is one state, so no landscape); any notion of climbing the landscape.
 - **Claim difference.** The proxy is an estimator calibration against a known answer plus a diagnostic of how many bits a spec's payload buys under each seed_derivation setting; it is not a test of empowerment as a behavioural drive. Caveat from F-5: at fixed seed displacement is exactly linear in step_scale, so the fixed-seed arm's full 3 bits is guaranteed by construction (a deterministic rescaling), which strengthens the reading as calibration rather than measurement.
-- **Next action.** see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result
+- **Next action.** WP-C1..C3: first bounded experiment for this entry asks 'Can an agent decide what to do using nothing but a measure of how much control it has over its own future (the channel capacity from its actuators to its future state), with no external goal?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.
 - **Parameters destroyed.** lookahead_horizon; actuator_bits
-- **Entailed repair.** —
 - **Reference.** Klyubin, Polani, and Nehaniv 2005: Empowerment: A Universal Agent-Centric Measure of Control
 - **Reference grade (Herakles).** VERIFIED
 - **Adjacent Prometheus home.** ludus/arena (action-interface worlds) is the nearest in-repo candidate for a world with actuators; fit not verified. EXPANSION_REQUESTS #21 names Empowerment as blocked by the missing MDP loop.
@@ -972,15 +946,14 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Can change.** Grid resolution (10/20/50), evaluation budget (1000..10000), where the archive lives (producer), descriptor definition.
 - **Faithful route.** An executor returning a behaviour descriptor alongside performance, an archive persisting between specs readable by the proposer, and downstream-computed coverage; the descriptor is the hard part.
 - **Retained route.** An executor returning a behaviour descriptor alongside performance, an archive persisting between specs readable by the proposer, and downstream-computed coverage; the descriptor is the hard part.
+- **Retained-route note.** identical to faithful_route by construction: the route was retained unchanged
 - **Bench proxy.** evaluate_bitstring, length 32, one fixed seed; producer-computed descriptor = (popcount binned into 10, longest run binned into 10) giving 100 bins; producer-side MAP-Elites at budgets 1000 and 10000, one spec per evaluation, matched-budget hill climber as control (Herakles NEW DESIGN CHOICES); throughput of 10000 specs must be checked before freezing.
 - **Proxy would lose.** Behavioural descriptors (the reduction uses genotypic ones computed from the payload, never testing descriptors that are unpredictable functions of the genome) and interesting stepping-stone dynamics, since on a single-peaked additive landscape every improving move is locally visible.
 - **Claim difference.** Faithful: illumination fills a behaviour map on a real domain. Proxy: coverage vs budget and resolution on a known landscape plus the calibration null that illumination should buy coverage but NOT fitness over a hill climber at equal budget on onemax.
-- **Next action.** see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result
+- **Next action.** WP-C1..C3: first bounded experiment for this entry asks 'Instead of asking what is the single best solution, can a search return a whole map showing the best solution of every distinct kind, and how much of that map can it actually fill?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.
 - **Parameters destroyed.** 
-- **Entailed repair.** —
 - **Reference.** Mouret and Clune 2015 Illuminating search spaces by mapping elites
 - **Reference grade (Herakles).** VERIFIED
-- **Adjacent Prometheus home.** —
 - **Representation / dynamics / actions / observations.** A genome judged on two channels: scalar performance and a behaviour descriptor vector that decides where it competes. / A domain rich enough to supply both channels (classically a walking robot: distance travelled vs foot-contact fractions); the descriptor must not be a function of performance. / Draw an elite from the archive, mutate, evaluate for performance and descriptor, file into the bin if empty or better. / Coverage (fraction of bins filled), quality-diversity score, maximum performance; the archive itself.
 - **Class rationale.** The faithful experiment needs a world whose rollouts yield a behaviour descriptor independent of score (a walking robot); the archive is persistent state across specs. The proxy alone would sit under fixed_landscape_search.
 
@@ -995,12 +968,12 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Can change.** the sensorimotor space (a tiny grid MDP suffices per EXPANSION_REQUESTS #21), the region-splitting rule, the exploration mix, the scalar summary chosen downstream
 - **Faithful route.** A stateful grid_mdp_v0 executor with a step interface (EXPANSION_REQUESTS #21: grid_size, episode_length, returning visited states) hosting three regions of differing learnability, run either in-bench once output-to-input chaining exists or as an orchestrated backend (C-4) that fossilizes the ordered region trajectory.
 - **Retained route.** A stateful grid_mdp_v0 executor with a step interface (EXPANSION_REQUESTS #21: grid_size, episode_length, returning visited states) hosting three regions of differing learnability, run either in-bench once output-to-input chaining exists or as an orchestrated backend (C-4) that fossilizes the ordered region trajectory.
+- **Retained-route note.** identical to faithful_route by construction: the route was retained unchanged
 - **Bench proxy.** evaluate_bitstring, one fixed bitstring and length: condition A seed_derivation=constant (same target every repeat = learnable), condition B sha256_index (target redrawn = unlearnable); fit the learning-progress error-slope statistic to both streams and check it separates them with a standard error
 - **Proxy would lose.** the agent, action selection, region splitting, the developmental trajectory and the self-organised curriculum: everything that makes IAC a method rather than a statistic
 - **Claim difference.** the proxy is an instrument test: it shows only that the chosen learning-progress estimator can tell a fixed target from a redrawn one at a given sample size; the faithful version supports a claim about the ORDER of self-chosen activities, which no scalar can carry
-- **Next action.** see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result
+- **Next action.** WP-C1..C3: first bounded experiment for this entry asks 'Given no goal, will an agent that always chooses the activity it is improving at fastest self-organise a sensible easy-to-hard curriculum?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.
 - **Parameters destroyed.** sensor_dim
-- **Entailed repair.** —
 - **Reference.** Oudeyer, Kaplan, and Hafner 2007: Intrinsic Motivation Systems for Autonomous Mental Development
 - **Reference grade (Herakles).** VERIFIED
 - **Adjacent Prometheus home.** ludus/ (Loom/Weir/Tithe synthetic worlds with solve/optimal_actions/reachable_states; Herakles names ludus/ as the home for any grid or arena world before anyone writes one)
@@ -1018,12 +991,12 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Can change.** Policy class, environment, beta schedule, number of rounds, dimensionality of state.
 - **Faithful route.** An environment with observable per-step state, a queryable expert, a trainable policy class, a growing aggregated dataset, rounds with a decaying mixing coefficient, and held-out evaluation on the final policy's own state distribution; any supervised trainer as an orchestrated backend, plus an executor that emits per-step state/action pairs (random_walk_v0 returns endpoint fields only).
 - **Retained route.** An environment with observable per-step state, a queryable expert, a trainable policy class, a growing aggregated dataset, rounds with a decaying mixing coefficient, and held-out evaluation on the final policy's own state distribution; any supervised trainer as an orchestrated backend, plus an executor that emits per-step state/action pairs (random_walk_v0 returns endpoint fields only).
+- **Retained-route note.** identical to faithful_route by construction: the route was retained unchanged
 - **Bench proxy.** random_walk_v0 with persist: expert = walk with step_scale s*, learner = s-hat, position = state, increment = action. Fix the defect by having the producer set each segment's step_scale as a non-linear (folded) function of the previous segment's returned position (NEW DESIGN CHOICE) so the learner visits states the expert never does. Split each round's chain into segments, run a fraction beta under the expert's rule, query the expert's rule at every visited position, append, refit, decay beta = 0.5^i over 5 rounds; trajectory_length in 8, 16, 32, 64, 128; 50 seeds per cell. Control = behaviour cloning fit only on the expert's own rollout.
 - **Proxy would lose.** A rich policy class, structured prediction and high-dimensional state, so the realizability failure mode is unreachable. A DEFECT must be fixed first: at a fixed seed displacement is exactly linear in step_scale (F-5), so the learner's rollout carries the same information as the expert's and covariate shift vanishes unless the expert's action is made state-dependent.
 - **Claim difference.** The proxy tests whether on-policy label aggregation flattens the horizon scaling of imitation error relative to off-policy cloning in the smallest system in which covariate shift exists at all. The faithful claim is DAgger's no-regret reduction on structured prediction with a real policy class.
-- **Next action.** see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result
+- **Next action.** WP-C1..C3: first bounded experiment for this entry asks 'Can a policy learn to copy an expert well enough that it stays on the expert's path when it is the one driving, rather than only when the expert has been driving all along?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.
 - **Parameters destroyed.** trajectory_length; oracle_probability
-- **Entailed repair.** —
 - **Reference.** Ross, Gordon, and Bagnell (2011) A reduction of imitation learning and structured prediction to no-regret online learning.
 - **Reference grade (Herakles).** VERIFIED
 - **Adjacent Prometheus home.** ludus/arena (players + worlds) for a sequential-decision environment; incubation/ for a learner. Both tentative. EXPANSION_REQUESTS #29 (sequential interaction interface) was raised by this field.
@@ -1041,12 +1014,12 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Can change.** the task (a 1-D system suffices for the first step), the network size, the exact weight sampling; NEAT proper (population, species, innovation counter) is outside the template's own scope
 - **Faithful route.** A neat_eval_v0 executor (EXPANSION_REQUESTS #6: topology_genes, weight_genes, pole-balancing physics returning survival_time) evaluating one fixed network per spec; comparison of topologies across specs downstream.
 - **Retained route.** A neat_eval_v0 executor (EXPANSION_REQUESTS #6: topology_genes, weight_genes, pole-balancing physics returning survival_time) evaluating one fixed network per spec; comparison of topologies across specs downstream.
+- **Retained-route note.** identical to faithful_route by construction: the route was retained unchanged
 - **Bench proxy.** random_walk_v0 as the zero-controller null: outcome rule \|position\| <= B, sha256_index with high count, sweep steps/step_scale and B to find the regime where no-controller survival is neither 0 nor 1 (the only regime where a controller could show an effect)
 - **Proxy would lose.** the network, topology, weights, historical markings, crossover, speciation and complexification (all of NEAT); the walk has no controller so it gives only the null
 - **Claim difference.** the proxy locates the task difficulty regime and gives the pre-registered no-controller baseline; it makes no controller claim at all; the faithful version supports that a specific fixed controller beats that null by a stated margin
-- **Next action.** see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result
+- **Next action.** WP-C1..C3: first bounded experiment for this entry asks 'How well does the simplest possible neural controller, with almost no structure, perform on a control task; the baseline against which structure-growing evolution must be compared?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.
 - **Parameters destroyed.** 
-- **Entailed repair.** —
 - **Reference.** Stanley and Miikkulainen 2002, Evolving Neural Networks through Augmenting Topologies
 - **Reference grade (Herakles).** VERIFIED
 - **Adjacent Prometheus home.** ludus/ (arena and synthetic worlds) for the stepped control environment; no pole-balancing code found in the repo
@@ -1064,12 +1037,12 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Can change.** Maze configuration, controller architecture, step count, whether the whole path is returned.
 - **Faithful route.** A 2-D maze simulator with collision and range sensors, a controller evaluator over a weight vector with per-step integration, a vector-valued payload and a coordinate (preferably whole-path) return; either an orchestrated maze/NEAT backend or a world built in ludus/, which 04 names as the home for grid or arena worlds.
 - **Retained route.** A 2-D maze simulator with collision and range sensors, a controller evaluator over a weight vector with per-step integration, a vector-valued payload and a coordinate (preferably whole-path) return; either an orchestrated maze/NEAT backend or a world built in ludus/, which 04 names as the home for grid or arena worlds.
+- **Retained-route note.** identical to faithful_route by construction: the route was retained unchanged
 - **Bench proxy.** random_walk_v0 as a degenerate maze: a 1-D corridor with no walls, position as the behaviour characterisation, steps as eval_steps, step_scale as the sole controller parameter, seed_root as the genome. Sweep seed_root at fixed steps and step_scale to produce the endpoint cloud; dispersion of displacement is the descriptor-degeneracy diagnostic; steps 100, 200, 400; step_scale 1.0 and 0.01 as positive and negative controls; 500 seeds per cell (NEW DESIGN CHOICES).
 - **Proxy would lose.** Spatial structure, walls and therefore deception, sensors, and the neural controller, so nothing about open-endedness follows.
 - **Claim difference.** The proxy shows the endpoint-dispersion diagnostic can be pre-registered and computed, and how dispersion scales with rollout length (a correctness check on random_walk_v0 against sqrt(steps)). The faithful claim is the reachable behaviour space of a maze for a neural controller. Caveat from F-5: the step_scale 0.01 arm is the 1.0 arm rescaled exactly, so it tests the diagnostic's threshold rather than a distinct degenerate world; dispersion divided by step_scale is identical across the two.
-- **Next action.** see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result
+- **Next action.** WP-C1..C3: first bounded experiment for this entry asks 'Where does a neural-network-controlled agent end up in a maze after a fixed number of steps when nothing in the run tells it where to go? (The evaluation half of novelty search: the genome-to-behaviour map, which must be'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.
 - **Parameters destroyed.** 
-- **Entailed repair.** —
 - **Reference.** Lehman and Stanley 2011, Abandoning Objectives: Evolution Through the Search for Novelty Alone
 - **Reference grade (Herakles).** VERIFIED
 - **Adjacent Prometheus home.** ludus/ (arena/, worlds.py, atlas_of_worlds/), named in expansion_pass/04 as 'the obvious home for any grid or arena world before anyone writes one'.
@@ -1087,15 +1060,14 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Can change.** N (16/32/64), update budget (100..1000), function-table distribution; K values are the physics of the question.
 - **Faithful route.** A small pure executor of the seed: derive wiring/functions/state, iterate synchronously with a seen-set, return period, transient and cycle_detected, recording the budget; Herakles's verdict is that it should simply be written.
 - **Retained route.** A small pure executor of the seed: derive wiring/functions/state, iterate synchronously with a seen-set, return period, transient and cycle_detected, recording the budget; Herakles's verdict is that it should simply be written.
+- **Retained-route note.** identical to faithful_route by construction: the route was retained unchanged
 - **Bench proxy.** evaluate_bitstring with the N-bit initial state as payload at length N to pin the specimen (dynamics computed offline), plus a zero-cost analytic K=1 preregistration (period = lcm of cycle lengths of a random functional graph under the node sign pattern) giving the attainable range and censoring rate at 100 steps.
 - **Proxy would lose.** The dynamics themselves: nothing on the bench iterates a finite-state map, so no attractor can be observed in-spec.
 - **Claim difference.** Faithful: attractor period versus K exhibits the ordered/critical/chaotic transition. Proxy: only the K=1 period distribution as a preregistered baseline and the eligibility of any threshold chosen for the K=2 and K=3 arms.
-- **Next action.** see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result
+- **Next action.** WP-C1..C3: first bounded experiment for this entry asks 'If you wire up a network of on-off switches at random and let it update itself, does it settle into a short repeating cycle or wander for a very long time, and what decides which?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.
 - **Parameters destroyed.** 
-- **Entailed repair.** —
 - **Reference.** Kauffman 1969, Metabolic stability and epigenesis in randomly constructed genetic nets
 - **Reference grade (Herakles).** VERIFIED
-- **Adjacent Prometheus home.** —
 - **Representation / dynamics / actions / observations.** One randomly constructed network (wiring, K-input Boolean functions) with one initial N-bit state. / One seed derives wiring, function tables and initial state; synchronous deterministic update on a finite state space, so recurrence is guaranteed. / Iterate the map, hash each state into a seen-set, detect the first revisit. / attractor period (positive integer), transient length, cycle_detected (boolean), update budget (the censoring point).
 - **Class rationale.** Stateful iterated dynamics on a wired topology; not spatial in the grid sense, but state and trajectory are the phenomenon (closest available branch).
 
@@ -1118,10 +1090,8 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Claim difference.** Faithful: a system under test satisfies an invariant across random command sequences, with a minimal failing case. Proxy: random_walk_v0 itself matches its analytic diffusion distribution, property-based testing applied TO the bench rather than BY it.
 - **Next action.** Faithful route: Branch B program family with a declared model and shrinking (witness, C-2). Keep as a lead.
 - **Parameters destroyed.** step_scale; steps
-- **Entailed repair.** —
 - **Reference.** Claessen and Hughes 2000 QuickCheck a lightweight tool for random testing of Haskell programs
 - **Reference grade (Herakles).** VERIFIED
-- **Adjacent Prometheus home.** —
 - **Representation / dynamics / actions / observations.** The generated input: the increment sequence determined by the derived seed and step count. / One seed drives a deterministic generator; a faithful match to QuickCheck's world. / Random input generation from a declared distribution; invariant checked on the resulting state; faithfully, postconditions after each command and a shrinking loop. / displacement, position, start_position, steps, step_scale (endpoint only; no per-step trace).
 - **Class rationale.** As specified the system under test is the walk and the invariant is an analytic diffusion tail; faithful stateful PBT would move to symbolic_execution.
 
@@ -1139,15 +1109,14 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Can change.** Manifestation count, hypothesis-space size, causal density; solver implementation (off-the-shelf set cover / ILP).
 - **Faithful route.** Seed -> bipartite network generator at declared density + a presenting case, an external set-cover/ILP solver called and fossilized, result exposing cover_size and covered_all.
 - **Retained route.** Seed -> bipartite network generator at declared density + a presenting case, an external set-cover/ILP solver called and fossilized, result exposing cover_size and covered_all.
+- **Retained-route note.** identical to faithful_route by construction: the route was retained unchanged
 - **Bench proxy.** evaluate_bitstring: length = hypothesis space size, bits fixed to a k-sparse candidate, repeats under sha256_index; sweep k (Herakles NEW DESIGN CHOICE: size 32, 8 manifestations, k in 1,2,4,8,16) to get the chance baseline for parsimony k.
 - **Proxy would lose.** The covering relation itself: no manifestations, no causal edges, no coverage constraint, no parsimony/completeness tradeoff; score becomes set similarity, not explanatory adequacy.
 - **Claim difference.** Faithful: an explanation of target parsimony covering all symptoms was found. Proxy: only the eligibility/null claim that a size-k explanation reaches similarity s to an unknown truth by chance with probability p; it is the denominator, not an abduction result.
-- **Next action.** see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result
+- **Next action.** WP-A1..A3: first bounded experiment for this entry asks 'Given a set of observed symptoms, can a system pick the smallest set of underlying causes that accounts for all of them, and how small can that explanation get before it stops covering everything?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.
 - **Parameters destroyed.** hypothesis_space_size; manifestations_count
-- **Entailed repair.** —
 - **Reference.** Reggia, Nau, and Wang 1983 Diagnostic expert systems based on a set covering model
 - **Reference grade (Herakles).** VERIFIED
-- **Adjacent Prometheus home.** —
 - **Representation / dynamics / actions / observations.** A candidate explanation = a subset of the disorder set (one bit per disorder in the reduction). / Fixed bipartite causal network (disorders -> manifestations) at a declared density plus one presenting case; no dynamics, a solve. / Solver searches the powerset of disorders for minimum-cardinality or irredundant covers. / cover_size (integer, 1..hypothesis space size) and covered_all (boolean); only one adjudicable by the outcome rule.
 - **Class rationale.** A fixed bipartite structure evaluated by a combinatorial solve; no state, time or population.
 
@@ -1162,15 +1131,14 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Can change.** the case base generator (derivable from the seed like the hidden target, no persistent state needed), N and D (Herakles proposes N in {8,64,512} -> repeat count, D in {16,32,64,128} -> length as NEW DESIGN CHOICES)
 - **Faithful route.** A pure-function executor that derives a seeded case base and a query, computes the three similarity functions, and returns retrieval accuracy against a planted nearest neighbour; the metric contrast across three specs adjudicated downstream (C-5).
 - **Retained route.** A pure-function executor that derives a seeded case base and a query, computes the three similarity functions, and returns retrieval accuracy against a planted nearest neighbour; the metric contrast across three specs adjudicated downstream (C-5).
+- **Retained-route note.** identical to faithful_route by construction: the route was retained unchanged
 - **Bench proxy.** evaluate_bitstring as a Hamming similarity oracle: each sha256_index repeat draws an independent hidden case, N maps to repeat count, D to length, and the max score over repeats (computed downstream) is top-1 retrieval similarity over a random case base
 - **Proxy would lose.** the metric axis entirely (Hamming is the only similarity the scorer can express; euclidean, cosine, knowledge_guided are unreachable), structured cases, labels, and the reuse/revise/retain steps
 - **Claim difference.** the proxy supports that top-1 similarity in an unstructured case base is a known function of N and D (expected max of N binomial draws / L, closed form), hence that an uncalibrated retrieval threshold is uninformative; it supports no claim about any actual similarity metric or about reasoning
-- **Next action.** see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result
+- **Next action.** WP-A1..A3: first bounded experiment for this entry asks 'Can a memory of past cases return the genuinely most similar case to a new problem, and does the choice of similarity measure change which case comes back?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.
 - **Parameters destroyed.** case_base_size; feature_dimensions
-- **Entailed repair.** —
 - **Reference.** Aamodt and Plaza 1994 Case-Based Reasoning: Foundational Issues, Methodological Variations, and System Approaches
 - **Reference grade (Herakles).** VERIFIED
-- **Adjacent Prometheus home.** —
 - **Representation / dynamics / actions / observations.** the query case as a D-dimensional feature vector; judged by the top-1 similarity of the retrieved case, or (stricter) whether its solution was right; axes case_base_size (null), feature_dimensions (null), similarity_metric in {euclidean, cosine, knowledge_guided} / a case base of N points in D-dimensional feature space plus a similarity function; if accuracy is measured, a ground-truth nearest neighbour / score every stored case against the query, rank, return the top one with its score / top-1 similarity (0..1); optionally retrieval accuracy against a labelled correct neighbour
 - **Class rationale.** ranking a fixed point cloud against a query; no dynamics, no interaction; the case base is a static structured object
 
@@ -1185,15 +1153,14 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Can change.** Hypothesis/evidence counts, cycle cap, the historical case encoded, executor versus backend.
 - **Faithful route.** A ~100-line executor taking a proposition list and relation list as payload, building the weight matrix, running the update rule to convergence or cycle cap, returning per-unit activations and a settled flag; needs structured payload and, for accepted-over-rival, a two-field comparison.
 - **Retained route.** A ~100-line executor taking a proposition list and relation list as payload, building the weight matrix, running the update rule to convergence or cycle cap, returning per-unit activations and a settled flag; needs structured payload and, for accepted-over-rival, a two-field comparison.
+- **Retained-route note.** identical to faithful_route by construction: the route was retained unchanged
 - **Bench proxy.** random_walk_v0 with state=persist and linear_index, same configuration at steps 50 versus 5000 at fixed step_scale over 5 seeds (Herakles NEW DESIGN CHOICES); apply one displacement threshold at both budgets and record how often the verdicts disagree.
 - **Proxy would lose.** Coherence, explanation, inhibition, competition and, decisively, convergence itself (a random walk is a martingale that never settles), so the proxy yields only an upper bound on truncation instability.
 - **Claim difference.** Faithful: explanatory coherence as constraint satisfaction reproduces historical theory choice. Proxy: a methodological claim only, that verdicts read at cycle budget C are budget-sensitive, with a magnitude for a maximally unstable process; labelled a control, not an ECHO experiment.
-- **Next action.** see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result
+- **Next action.** WP-A1..A3: first bounded experiment for this entry asks 'When two scientific theories compete over the same body of evidence, can the choice between them be reproduced by a simple mechanical process that only balances which theory explains more and contradicts less?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.
 - **Parameters destroyed.** cycles; evidence; hypotheses
-- **Entailed repair.** —
 - **Reference.** Paul Thagard's ECHO connectionist model of Explanatory Coherence (1989)
 - **Reference grade (Herakles).** VERIFIED
-- **Adjacent Prometheus home.** —
 - **Representation / dynamics / actions / observations.** A hypothesis unit; judged by its settled activation, which depends on the whole network. / A hand-encoded corpus of propositions and explanatory/contradiction relations (e.g. Lavoisier vs phlogiston, Darwin vs special creation); the encoding is the analyst's. / Parallel connectionist activation updates over cycles until activations stop changing; constraint satisfaction with no search and no inference rules. / Settled activation per unit in [-1, 1] plus whether the network settled within the cycle budget.
 - **Class rationale.** A fixed hand-encoded graph relaxed to a fixed point; the judged object is the settled state of a static structure.
 
@@ -1201,6 +1168,7 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 
 *Evolutionary Developmental Systems (Evo-Devo)* — report `03_generative_and_developmental_representations.md` — kind `boolean_network.v0` — mechanism `sample_genotype_phenotype_map` — route R-NOW; R-EXECUTOR; R-COMPOSE — capabilities C-5 (histogram over repeats built downstream) — proxy class **static_structured**
 
+- **Status.** HELD: known kind/reference mismatch (Psujek & Beer 2008 is a CTRNN developmental model; the template implements a K=2 Boolean network, Kauffman/RBN lineage). Not load-bearing for any branch until Herakles resolves the reference or the kind (H-R2b). If unresolved by the next mining round it is retired to rbn.attractor's family rather than carried under a general disclaimer.
 - **Question.** When a developmental process maps genotypes to phenotypes, are all phenotypes equally easy to produce, or does the map itself (before any selection) make some far more common?
 - **Competing explanations.** strong developmental bias: a few attractors absorb most genotypes; a flat phenotype distribution: a developmental map with no bias (the loaded null); the network never settles within the update budget: the parameters sit in the chaotic regime (relocates the boundary); a biased genotype sampler manufacturing the inequality (must be excluded)
 - **Dependencies.** topology; time; memory; population; many_to_one_map; criticality
@@ -1208,12 +1176,12 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Can change.** N, K, update budget, the sampling count, whether the frequency tabulation is internal to the executor or built downstream
 - **Faithful route.** A boolean_network.v0 executor (about forty lines per Herakles; EXPANSION_REQUESTS #18 names num_nodes, connectivity_k, update_steps returning attractor cycle length) that samples many genotypes INSIDE the executor and returns one scalar bias statistic, with the sampler shown unbiased.
 - **Retained route.** A boolean_network.v0 executor (about forty lines per Herakles; EXPANSION_REQUESTS #18 names num_nodes, connectivity_k, update_steps returning attractor cycle length) that samples many genotypes INSIDE the executor and returns one scalar bias statistic, with the sampler shown unbiased.
+- **Retained-route note.** identical to faithful_route by construction: the route was retained unchanged
 - **Bench proxy.** random_walk_v0 with fixed steps and step_scale under sha256_index, high count: the seed is the genotype, the increment sequence the development, final displacement the phenotype; bin displacements downstream
 - **Proxy would lose.** nonlinearity, attractors, criticality, and the notion of a neighbouring reachable phenotype (evolutionary accessibility, the actual subject of Psujek and Beer 2008); the walk map is linear with a CLT-known phenotype distribution
 - **Claim difference.** the proxy is an instrument calibration: it can only check that the chosen bias statistic recovers a bias whose true value is known from the CLT; the faithful version can discover bias (or its absence) in a nonlinear map with attractors
-- **Next action.** see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result
+- **Next action.** WP-A1..A3: first bounded experiment for this entry asks 'When a developmental process maps genotypes to phenotypes, are all phenotypes equally easy to produce, or does the map itself (before any selection) make some far more common?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.
 - **Parameters destroyed.** 
-- **Entailed repair.** —
 - **Reference.** Psujek and Beer 2008, Developmental bias in evolution: evolutionary accessibility of phenotypes in a model evo-devo system
 - **Reference grade (Herakles).** PLAUSIBLE
 - **Adjacent Prometheus home.** agent_d3_blind/ (D-3: free validity vs navigable viability across substrates) is the nearest genotype-phenotype-map work; no Boolean-network code found outside agents/hephaestus scrap
@@ -1231,15 +1199,14 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Can change.** the corpus (replace with seed-derived bit-vector documents drawn from hidden A and C term profiles with a planted bridge of elevated-probability term indices; Herakles proposes L=512 terms, 200 docs per literature, 5 planted terms, threshold set from the ablated arm)
 - **Faithful route.** A small seeded synthetic-corpus executor (generator plus counting scorer) that plants and ablates a bridge between two bit-vector literatures and returns the co-occurrence count above threshold, which is more rigorous than the original because the ground truth is owned; or a dated bibliographic backend (C-4) for the historical pairs.
 - **Retained route.** A small seeded synthetic-corpus executor (generator plus counting scorer) that plants and ablates a bridge between two bit-vector literatures and returns the co-occurrence count above threshold, which is more rigorous than the original because the ground truth is owned; or a dated bibliographic backend (C-4) for the historical pairs.
+- **Retained-route note.** identical to faithful_route by construction: the route was retained unchanged
 - **Bench proxy.** evaluate_bitstring with a fixed candidate under sha256_index repeats: the distribution of agreement between a fixed vector and independent random vectors, which is the null for how many terms two unrelated literatures share by chance
 - **Proxy would lose.** text, semantics, term extraction, the corpus, the human judgement step and every biomedical claim; the bench cannot produce the treatment arm because it cannot plant a bridge in a hash-derived target
 - **Claim difference.** the proxy supports only the null (a shared-term count is interpretable solely against a random-pair null) and cannot host a treatment arm; the faithful synthetic version supports bridge detection against a known null; neither supports any biological or clinical claim
-- **Next action.** see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result
+- **Next action.** WP-A1..A3: first bounded experiment for this entry asks 'Do two bodies of literature that never cite each other share intermediate terms, and can those terms point to a real connection nobody had noticed (Swanson's ABC model)?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.
 - **Parameters destroyed.** 
-- **Entailed repair.** —
 - **Reference.** Swanson (1986) Undiscovered Public Knowledge and the Arrowsmith system
 - **Reference grade (Herakles).** VERIFIED
-- **Adjacent Prometheus home.** —
 - **Representation / dynamics / actions / observations.** the pair of literatures; what is judged is the set of bridging B-terms between them and whether there are more or better than chance; axes query_a in {raynauds, migraine}, query_c in {fish_oil, magnesium} / an indexed bibliographic corpus supplying documents, title vocabulary, indexing terms and crucially the disjointness of A and C at a particular date (post-1986 the literature is contaminated by Swanson's own hypothesis) / extract terms from the titles of A and C, intersect, rank; a human judges plausibility / number of shared bridging terms and their ranking scores; in a well-run version, significance of that count against a null of randomly paired disjoint literatures
 - **Class rationale.** set intersection over two fixed structured corpora compared against a null of random pairs; no dynamics or interaction
 
@@ -1254,15 +1221,14 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Can change.** the oracle (table lookup vs a declared landscape family), the budget values (Herakles proposes 100 and 500 as NEW DESIGN CHOICES), the architecture encoding the producer mutates
 - **Faithful route.** A lookup adapter over the downloadable NAS-Bench-101 table as an orchestrated backend (C-4), with the producer running both search algorithms one spec per query under a hard budget, repeated over many seeds, and regret computed downstream (C-5).
 - **Retained route.** A lookup adapter over the downloadable NAS-Bench-101 table as an orchestrated backend (C-4), with the producer running both search algorithms one spec per query under a hard budget, repeated over many seeds, and regret computed downstream (C-5).
+- **Retained-route note.** identical to faithful_route by construction: the route was retained unchanged
 - **Bench proxy.** evaluate_bitstring as a tabular oracle: producer runs random search vs regularized evolution over bitstrings, one spec per query, hard budget, repeated over many world seeds; exact budget accounting because each query is a fossil
 - **Proxy would lose.** the landscape shape: the bitstring score is separable, unimodal, with a clean Hamming gradient and no deception, so an algorithm ranking on it is a measurement on the WRONG POPULATION and cannot be quoted as a NAS result
 - **Claim difference.** the proxy is a power analysis for the comparison protocol (how many repetitions before the between-algorithm difference exceeds the between-run SE at a given budget); it cannot rank the algorithms for NAS because the surrogate landscape is the easiest possible one
-- **Next action.** see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result
+- **Next action.** WP-A1..A3: first bounded experiment for this entry asks 'Given a fixed query budget, does regularized evolution find a better architecture than random search on a tabular benchmark?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.
 - **Parameters destroyed.** query_budget
-- **Entailed repair.** —
 - **Reference.** NAS-Bench-101: Towards Reproducible Neural Architecture Search (Ying et al. 2019)
 - **Reference grade (Herakles).** VERIFIED
-- **Adjacent Prometheus home.** —
 - **Representation / dynamics / actions / observations.** an encoded cell graph (architecture); what is judged is the best accuracy found within budget by a search algorithm; axes search_algorithm in {random_search, regularized_evolution}, query_budget (null) / the pre-computed NAS-Bench-101 table: an accuracy oracle with noise across training repeats and a correlated, partly deceptive search-space topology / random search draws uniformly; regularized evolution samples a tournament, mutates the best, adds the child, removes the OLDEST member / best validation accuracy within budget (continuous); properly, regret against the known global optimum
 - **Class rationale.** a fixed tabular oracle over a structured (graph) candidate space, searched across specs; no world dynamics or interaction, and the population is a producer-side algorithm detail
 
@@ -1270,6 +1236,7 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 
 *Active Learning* — report `07_experimental_design_and_falsification.md` — kind `query_by_committee_v0` — mechanism `select_next_observation` — route R-COMPOSE; R-BACKEND; R-SUBSTRATE — capabilities C-0; C-5 — proxy class **static_structured**
 
+- **Proxy relabel.** PROXY with a KNOWN ANSWER (same as version_space_search). 'The strongest reduction' is withdrawn as a scientific statement; it is the cheapest plumbing test with a known answer, and its elegance is the property the operator asked not to be fooled by.
 - **Question.** If labelling data is expensive, does letting the learner choose which examples to label beat labelling at random, and by how much?
 - **Competing explanations.** active selection beats random: generalisation error falls exponentially rather than polynomially in queries; active equals random: the hypothesis class or pool has no exploitable structure (a real, common outcome); active is WORSE than random: the committee chases outliers under label noise (known pathology); no paired passive arm was run, so no number supports any comparative claim
 - **Dependencies.** memory; interaction; continuous; label noise (real setting); exact oracle (bench setting)
@@ -1277,15 +1244,14 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Can change.** committee_size, query_budget, the hypothesis class, the disagreement measure (vote entropy versus score variance), identification versus generalisation error as endpoint.
 - **Faithful route.** A hypothesis class with a samplable version space, a label oracle with noise, a vote-entropy disagreement measure and a held-out test set, with a paired passive arm on the same seed and budget over many seeds; a standard active-learning library as an orchestrated backend if noise is wanted.
 - **Retained route.** A hypothesis class with a samplable version space, a label oracle with noise, a vote-entropy disagreement measure and a held-out test set, with a paired passive arm on the same seed and budget over many seeds; a standard active-learning library as an orchestrated backend if noise is wanted.
+- **Retained-route note.** identical to faithful_route by construction: the route was retained unchanged
 - **Bench proxy.** The strongest reduction in the chunk and it runs today. evaluate_bitstring is an exact Hamming oracle: fix one seed and L=20 (NEW DESIGN CHOICE) so the version space of about a million targets can be held explicitly; each query is one spec (seed_derivation constant, count 1); the producer samples a committee of 10 targets from the version space and submits the candidate bitstring with maximal predicted-score variance; the passive arm submits uniform-random bitstrings; endpoint = queries until solved. Information-theoretic floor about L/log2(L+1), roughly 5 queries at L=20, versus L for a one-bit-at-a-time prober.
 - **Proxy would lose.** Noise, and with it most of the field's difficulty (the oracle is exact, the version space finite and explicit, the outlier pathology cannot appear); generalisation error is replaced by exact identification, so there is no test set and no error curve, only a queries-to-solve count.
 - **Claim difference.** The proxy supports a genuine positive claim: disagreement-based selection reaches exact identification in significantly fewer queries than random at matched budget, calibrated against a computed floor. The faithful claim is an error-versus-queries curve under label noise on a real hypothesis class.
-- **Next action.** see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result
+- **Next action.** WP-A1..A3: first bounded experiment for this entry asks 'If labelling data is expensive, does letting the learner choose which examples to label beat labelling at random, and by how much?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.
 - **Parameters destroyed.** committee_size; query_budget
-- **Entailed repair.** —
 - **Reference.** Query by Committee (Seung, Opper, and Sompolinsky 1992)
 - **Reference grade (Herakles).** VERIFIED
-- **Adjacent Prometheus home.** —
 - **Representation / dynamics / actions / observations.** A query, i.e. the choice of which point to have labelled; the policy samples a committee from the version space and picks the candidate of maximal disagreement. / A hypothesis class with a samplable version space, a pool or stream of unlabelled candidates, and a label oracle answering a bounded number of questions. / Sample committee, score each candidate by disagreement, query the most-disagreed-about candidate, shrink the version space, resample, repeat until the budget is spent. / Generalisation error as a function of queries spent, compared against the same curve for random selection.
 - **Class rationale.** A static hidden target behind an exact oracle; the structure is the Hamming-sphere version space; all search happens across specs against one fixed landscape.
 
@@ -1300,15 +1266,14 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Can change.** Alphabet, max_length, the catalysis model, the food set, the random network family (at a cost to the chemistry).
 - **Faithful route.** Implement the real thing: an adapter or executor taking max_length, catalysis_prob and a seed that generates the polymer reaction network and runs the RAF prune, returning raf_found and raf_size (a few hundred lines, fully fossilizable); sweep and locate the threshold downstream. Herakles: R-BACKEND is so cheap that a reduction is close to wasted effort.
 - **Retained route.** Implement the real thing: an adapter or executor taking max_length, catalysis_prob and a seed that generates the polymer reaction network and runs the RAF prune, returning raf_found and raf_size (a few hundred lines, fully fossilizable); sweep and locate the threshold downstream. Herakles: R-BACKEND is so cheap that a reduction is close to wasted effort.
+- **Retained-route note.** identical to faithful_route by construction: the route was retained unchanged
 - **Bench proxy.** evaluate_bitstring as a reproducible pseudo-random catalysis oracle: molecules = the L positions; a reaction (i, j -> k) is catalysed when the score of the bitstring with exactly bits i, j, k set exceeds theta (one spec per triple); food = a fixed small subset; the producer runs the RAF prune; sweep theta as catalysis density and L as system size, L in 8, 10, 12, 14, theta calibrated per L to target densities 0.001-0.1, 50 seeds per cell (NEW DESIGN CHOICES). Trap: the score of a three-bit string is a near-deterministic function of L, so compute the attainable score range per L before freezing theta.
 - **Proxy would lose.** Chemistry entirely: no ligation or cleavage semantics, so the reaction set is not closed under any real operation, molecules have no compositional structure, and nothing follows about the origin of life.
 - **Claim difference.** The proxy tests whether a sharp closure threshold exists in catalysis density and scales sub-exponentially with network size on a different random-network family; the faithful claim is the same on the binary polymer model with chemical semantics.
-- **Next action.** see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result
+- **Next action.** WP-A1..A3: first bounded experiment for this entry asks 'In a randomly generated soup of molecules and reactions, at what level of catalytic connectivity does a self-sustaining, self-catalysing (RAF) subnetwork first appear, and how does that level change as the soup gets bigg'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.
 - **Parameters destroyed.** 
-- **Entailed repair.** —
 - **Reference.** Hordijk and Steel 2004, Detecting autocatalytic, self-sustaining sets in chemical reaction systems
 - **Reference grade (Herakles).** VERIFIED
-- **Adjacent Prometheus home.** —
 - **Representation / dynamics / actions / observations.** The whole reaction network; what is judged is a subset, the maximal RAF, found by deletion to a fixed point rather than by any search over candidates. / The binary polymer model: molecules are bit strings up to max_length, reactions are ligation and cleavage, the shortest molecules form a freely available food set, each molecule-reaction pair is catalytic with probability catalysis_prob; static, no agent. / None by an agent; the RAF algorithm repeatedly deletes reactions that are uncatalysed by a molecule in the set or whose reactants are not food-generated using the remaining reactions, until nothing more can be deleted. / RAF present or absent (boolean), RAF size (integer or fraction); swept over catalysis_prob a percolation-like curve whose threshold location is the result.
 - **Class rationale.** A static random graph with no dynamics or agents; the measurable is a structural closure threshold over an ensemble.
 
@@ -1323,15 +1288,14 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Can change.** Description size, vocabulary, whether descriptions are predicate calculus or small labelled graphs.
 - **Faithful route.** An SME implementation orchestrated as a backend taking two predicate descriptions and returning the score, the correspondence set and the candidate inferences, with the systematicity weighting switchable and a size normalisation so scores are comparable across the entity-count axis (EXPANSION_REQUESTS #35 asks for a relational_graph world).
 - **Retained route.** An SME implementation orchestrated as a backend taking two predicate descriptions and returning the score, the correspondence set and the candidate inferences, with the systematicity weighting switchable and a size normalisation so scores are comparable across the entity-count axis (EXPANSION_REQUESTS #35 asks for a relational_graph world).
+- **Retained-route note.** identical to faithful_route by construction: the route was retained unchanged
 - **Bench proxy.** Encode base and target as small labelled directed graphs over n=6 entities as L=36-bit adjacency-plus-labels strings; the producer supplies the bijection search by permuting the candidate bitstring under position permutations and submitting each as its own spec; best score over permutations = global interpretation, identity-only score = surface-match baseline; systematicity_bias = free versus block-respecting permutations (6 blocks of 6, so moving a relation moves its arguments); 500 sampled permutations per cell; n swept over 4, 6, 8 to expose the size confound (NEW DESIGN CHOICES).
 - **Proxy would lose.** Predicate calculus, higher-order relations, semantics, and candidate inference generation (arguably SME's most valuable output, with no analogue). On the unmodified hash scorer there is no structure to preserve, so the experiment measures search-space size; planting block structure means replacing the hash target and leaving the current bench.
 - **Claim difference.** As it stands the proxy supports only that constraining correspondence search changes achievable alignment score by an amount fully predicted by search-space size: a calibration of the permutation machinery and a pre-registered null for a planted-structure version. The faithful claim is that systematicity yields deeper analogical mappings and valid candidate inferences.
-- **Next action.** see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result
+- **Next action.** WP-A1..A3: first bounded experiment for this entry asks 'Given two described situations, how good is the best correspondence between them built purely from matching relational structure rather than surface features, and does insisting on deep, interconnected structure (systema'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.
 - **Parameters destroyed.** base_entities; target_entities
-- **Entailed repair.** —
 - **Reference.** Falkenhainer, Forbus, and Gentner 1989 The Structure-Mapping Engine: Algorithm and Examples
 - **Reference grade (Herakles).** VERIFIED
-- **Adjacent Prometheus home.** —
 - **Representation / dynamics / actions / observations.** The mapping, a set of correspondences between base and target items, constrained one-to-one with parallel connectivity and scored by a systematicity-weighted structural evaluation; most syntactically possible mappings are never scored. / Two symbolic predicate-calculus descriptions in a shared vocabulary, sized by base_entities and target_entities; static; with no shared predicates the machinery produces nothing. / Propose local match hypotheses, merge into structurally consistent kernels, merge kernels into maximal global interpretations, score, project unmatched base structure into the target as candidate inferences. / The structural evaluation score of the best interpretation (continuous, unnormalised, not comparable across sizes), the number of correspondences, and the candidate inferences.
 - **Class rationale.** Two static relational structures and a correspondence between them; no dynamics, no population, the measurable is a structural alignment score.
 
@@ -1339,6 +1303,7 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 
 *Inductive Reasoning* — report `11_reasoning_modes.md` — kind `version_space_search_v0` — mechanism `prune_hypothesis_space` — route R-COMPOSE; R-EXECUTOR; R-REPAIR — capabilities C-0 (fixed-seed pattern; 04_CAPABILITIES names version-space search explicitly; portfolio item E1); C-5 (surviving count computed downstream) — proxy class **static_structured**
 
+- **Proxy relabel.** PROXY with a KNOWN ANSWER. On a fixed hashed target the score is an exact Hamming distance, so the version space is exactly computable and disagreement-based querying beats random by construction (noiseless exact oracle: the degenerate case of active learning). Value is NEGATIVE only: a failure of the informed arm reveals broken selection wiring; a success establishes nothing about fossil-directed selection on real regions. Not a positive claim (A-4).
 - **Question.** As labelled examples arrive one at a time, how fast does the set of hypotheses consistent with everything seen shrink toward a single answer?
 - **Competing explanations.** convergence: S and G coincide on one hypothesis after m examples; collapse to EMPTY: the target concept is not expressible in the hypothesis language, or an example was mislabelled (a proof about the language); stall above one: the examples were insufficient to discriminate, and the surviving set names exactly which distinctions were never tested (seed of active learning); random vs information-maximising query choice: how much choosing your experiments is worth, with the exact remaining size known at every step
 - **Dependencies.** symbolic; counterexample; memory; example_order
@@ -1346,12 +1311,12 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Can change.** the hypothesis language (conjunctive lattice -> Hamming spheres), the boundary representation (S/G can be dropped when the surviving set is countable in closed form), the example stream (queries can be chosen rather than given)
 - **Faithful route.** Run the bench as an exact version space today (C-0): pin seed_root and length so one hidden target exists, submit candidates one spec at a time, and let the producer maintain the surviving-target count (intersection of Hamming spheres, C(L,k) in closed form), comparing random against expected-information-maximising queries at equal budget (E1).
 - **Retained route.** Run the bench as an exact version space today (C-0): pin seed_root and length so one hidden target exists, submit candidates one spec at a time, and let the producer maintain the surviving-target count (intersection of Hamming spheres, C(L,k) in closed form), comparing random against expected-information-maximising queries at equal budget (E1).
+- **Retained-route note.** identical to faithful_route by construction: the route was retained unchanged
 - **Bench proxy.** the same thing: evaluate_bitstring at fixed seed and length IS the version space (Mastermind); each score gives the exact Hamming distance, so the surviving set after one query has size C(L,k), and after several is an exactly countable intersection
 - **Proxy would lose.** the S and G boundary representation (a Hamming constraint set is not a conjunctive lattice), the inductive-bias question (the language is fixed and complete), and generalisation to unseen instances (there are none)
 - **Claim difference.** the bench version supports a quantitative claim about hypothesis-space collapse rate under random vs chosen queries with the exact remaining size known at every step; what it cannot support is any claim about conjunctive concept languages, inductive bias, or generalisation to unseen instances
-- **Next action.** see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result
+- **Next action.** WP-A1..A3: first bounded experiment for this entry asks 'As labelled examples arrive one at a time, how fast does the set of hypotheses consistent with everything seen shrink toward a single answer?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.
 - **Parameters destroyed.** concept_attributes; training_examples
-- **Entailed repair.** —
 - **Reference.** Mitchell 1977 Version Spaces: A Candidate Elimination Approach to Rule Learning
 - **Reference grade (Herakles).** VERIFIED
 - **Adjacent Prometheus home.** expansion_pass/03_LEADING_DESIGN_VERSION_SPACE.md (mechanism verified by execution at seed_root 424242, L=24); roles/Archaeon/EXPANSIONS.md E26 proposes bitstring.fixed_target.v0 as the E1 substrate
@@ -1372,15 +1337,14 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Can change.** Which template codebase; the compute budget; the model; the reviewer stage can be dropped; the two-field outcome can be collapsed to one scalar (validation loss with +inf sentinel on crash) if the collapse is stated in the spec.
 - **Faithful route.** Orchestrate a sandboxed subprocess per attempt (real repo, real dataset, model endpoint, accelerator) as an external backend, run the traceback-fed repair loop in the producer, and fossilize diff, environment lockfile, log and metric with a contamination control on the three public templates.
 - **Retained route.** Orchestrate a sandboxed subprocess per attempt (real repo, real dataset, model endpoint, accelerator) as an external backend, run the traceback-fed repair loop in the producer, and fossilize diff, environment lockfile, log and metric with a contamination control on the three public templates.
+- **Retained-route note.** identical to faithful_route by construction: the route was retained unchanged
 - **Bench proxy.** evaluate_bitstring null-world instrument check: freeze one world seed and length 64 (NEW DESIGN CHOICE), tell an LLM the exact hash-derived scoring rule and ask for one bitstring, seal it as the bits payload; run a matched spec with a uniform-random bitstring; repeat across seeds with linear_index and across several lengths.
 - **Proxy would lose.** Everything that makes the method a method: code, compilation, training dynamics, the repair loop, the reviewer; and the fact that real ML landscapes have exploitable structure while a hash target has none.
 - **Claim difference.** The proxy supports only a negative claim: sealed model-authored candidates score at chance on an unmemorisable target, and any deviation is a target leak in the producer pipeline. The faithful claim is that a model can implement an idea that executes and beats a real baseline.
-- **Next action.** see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result
+- **Next action.** WP-B1..B3: first bounded experiment for this entry asks 'Can a language model take a working ML training script, write a modification, and have that modification actually run and reach a target validation loss?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.
 - **Parameters destroyed.** training_steps
-- **Entailed repair.** —
 - **Reference.** The AI Scientist: Towards Fully Automated Open-Ended Scientific Discovery (Lu et al. 2024)
 - **Reference grade (Herakles).** VERIFIED
-- **Adjacent Prometheus home.** —
 - **Representation / dynamics / actions / observations.** A model-authored code diff against one of three template codebases (nanoGPT, grokking, 2D diffusion), and behind it the idea it encodes. / Fixed repository + dataset + known baseline run; training under a wall-clock/GPU budget yields a loss curve; a crash returns its traceback into the loop. / LLM brainstorms an idea, checks prior art, a coding agent edits source, executes, gets a bounded number of traceback-driven repair attempts, then a second LLM scores the write-up. / Boolean execution outcome; continuous validation loss; (ordinal reviewer score in the literature).
 - **Class rationale.** The candidate is a program that must compile and run; the measurement is an execution outcome plus a metric of the executed artifact.
 
@@ -1395,15 +1359,14 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Can change.** The term alphabet (must widen beyond I, K, S), the reduction strategy, the ceiling.
 - **Faithful route.** A beta-reduction engine over untyped lambda terms with pluggable reduction order, step counter and normal-form test, returning halted, steps and the normal-form term, with term-valued payload and result fields and a widened alphabet; then, separately, a reactor substrate with reinjection for organisation claims.
 - **Retained route.** A beta-reduction engine over untyped lambda terms with pluggable reduction order, step counter and normal-form test, returning halted, steps and the normal-form term, with term-valued payload and result fields and a widened alphabet; then, separately, a reactor substrate with reinjection for organisation claims.
+- **Retained-route note.** identical to faithful_route by construction: the route was retained unchanged
 - **Bench proxy.** Iterate the bench's own seed-to-target map: fix L=16, define f(seed) = integer whose binary expansion is the hidden target at that seed (exposed by a trivial evaluate_bitstring spec), chain seed_0, f(seed_0), f(f(seed_0)) one spec per application under a chain budget of 256 playing max_reductions, over 200 seed_0 values (NEW DESIGN CHOICES); measure transient length before a cycle and cycle length.
 - **Proxy would lose.** Lambda calculus entirely, the structure of the product, any notion of a reactor or self-maintaining organisation, and therefore every claim the field cares about.
 - **Claim difference.** The proxy shows that halting-within-budget under iterated self-application of a deterministic operator has a seed-dependent distribution, and by contrast that the template as written does not (I,K,S is inert, and f-chaining on a hash is a near-permutation with short transients). The faithful claim is a reaction table and, above it, self-maintaining organisation in algorithmic chemistry.
-- **Next action.** see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result
+- **Next action.** WP-B1..B3: first bounded experiment for this entry asks 'When two elementary lambda-calculus combinators are applied to one another, does the result settle into a normal form within a bounded number of rewriting steps, or keep rewriting forever?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.
 - **Parameters destroyed.** 
-- **Entailed repair.** —
 - **Reference.** Fontana and Buss 1994, The arrival of the fittest: Toward a theory of biological organization
 - **Reference grade (Herakles).** PLAUSIBLE
-- **Adjacent Prometheus home.** —
 - **Representation / dynamics / actions / observations.** An ordered pair of combinators (left operand, right operand) from {I, K, S} plus a reduction budget; judged on whether the application halts and on what term. / Untyped lambda calculus with a fixed reduction order and a step ceiling; in full AlChemy a well-stirred reactor where products are reinjected, displacing a random term. / Form the application A B, beta-reduce counting steps until normal form or ceiling; in the reactor, reinject the product. / Halting boolean, integer steps consumed, and a term-valued (symbolic) product.
 - **Class rationale.** Candidates are programs (lambda terms) and the measurable is the outcome of executing them to normal form.
 
@@ -1418,15 +1381,15 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Can change.** Primitive set, decoder convention, task inputs, orchestration layer (can wait).
 - **Faithful route.** New executor: decoder bits -> program over a declared primitive set, bounded-step interpreter, world-supplied task inputs, scalar output-quality result.
 - **Retained route.** New executor: decoder bits -> program over a declared primitive set, bounded-step interpreter, world-supplied task inputs, scalar output-quality result.
+- **Retained-route note.** identical to faithful_route by construction: the route was retained unchanged
 - **Bench proxy.** evaluate_bitstring with length repaired to 16 (both literal candidates are 16 chars), both candidates run across many seeds under sha256_index or linear_index (never constant + reset + count>1); read the empirical mean against the binomial null 0.5 +/- 0.125.
 - **Proxy would lose.** Interpretation, execution, inputs, outputs and orchestration, i.e. the whole of PADO.
 - **Claim difference.** Faithful: a genome computes the target algorithm. Proxy: only the bench-hygiene claim that the hidden-target hash is unbiased against period-2 and period-4 strings; it is instrument calibration wearing an algorithm-discovery label.
-- **Next action.** see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result
+- **Next action.** WP-B1..B3: first bounded experiment for this entry asks 'Can a search over encoded sequences of computational primitives find a genome that behaves like a target algorithm, rather than merely resembling it bit for bit?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.
 - **Parameters destroyed.** 
 - **Entailed repair.** length = 16. Evidence: migrated design_choices says 'payload.length: REPAIR, not a design choice. Set to 16 because it is entailed by the surviving bits literals'; both surviving literals '0101010101010101' and '1111000011110000' are 16 characters; any other value caps score at len(bits)/length (F-1).
 - **Reference.** Teller (1996) Parallel Algorithm Discovery and Orchestration and genetic programming search spaces
 - **Reference grade (Herakles).** PLAUSIBLE
-- **Adjacent Prometheus home.** —
 - **Representation / dynamics / actions / observations.** Bitstring genome; faithfully a genome decoded into a program (graph/tree of primitives with indexed memory, PADO). / As named: one seed hashed to a hidden target; supplies no inputs, interpreter or task. Faithfully: a set of task inputs and an interpreter with bounded step budget. / None on the bench (fixed candidate scored). Faithfully: program executed on inputs, ensemble orchestration as a second layer. / score in [0,1] (matching fraction) and solved; faithfully a scalar output-quality measure.
 - **Class rationale.** The faithful experiment requires decoding and executing a program; the named kind merely scores bit similarity.
 
@@ -1441,12 +1404,11 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Can change.** the instruction set and ancestor length, soup size, run length, the summary scalar; for the template's own question (pre-mutation viability) the population, reaper, scheduler and mutation can be dropped
 - **Faithful route.** Invoke a real Tierra descendant as an orchestrated external backend (C-4), passing seed, ancestor, soup size and cycles, and fossilize one scalar (population at cycle N or generations elapsed) per observation with a per-observation reproducibility grade.
 - **Retained route.** Invoke a real Tierra descendant as an orchestrated external backend (C-4), passing seed, ancestor, soup size and cycles, and fossilize one scalar (population at cycle N or generations elapsed) per observation with a per-observation reproducibility grade.
-- **Bench proxy.** —
+- **Retained-route note.** identical to faithful_route by construction: the route was retained unchanged
 - **Proxy would lose.** everything ecological: the soup, reaper, scheduler, competition for CPU time, mutation, parasites, open-endedness; mapping soup occupancy onto random_walk position would be a gesture with nothing of replication surviving
 - **Claim difference.** no bench proxy exists; the smallest honest new executor (a six-opcode copy machine over a tape returning daughter-tape fidelity, with sha256_index randomising the daughter offset) would support only a substrate-viability claim (instruction set closed under self-copy and position independent), never an evolution result
-- **Next action.** see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result
+- **Next action.** WP-B1..B3: first bounded experiment for this entry asks 'Can a hand-written ancestor program, running in a shared block of memory, copy itself successfully; the pre-mutation viability check for a digital substrate?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.
 - **Parameters destroyed.** 
-- **Entailed repair.** —
 - **Reference.** Thomas S. Ray 1991, An Approach to the Synthesis of Life
 - **Reference grade (Herakles).** VERIFIED
 - **Adjacent Prometheus home.** ergon/avida2003/ (Herakles routes the Tierra/Avida family here); herakles/HERAKLES_HISTORICAL_COLLIDER_V0/A_FIELD_MAP.md lists Tierra as fam-011 with source status SRC?
@@ -1464,12 +1426,12 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Can change.** the initial library size and budget (Herakles proposes 8 concepts, 200 steps, length 32 as NEW DESIGN CHOICES), the grammar (a ten-operator grammar suffices for the representation half), the worth threshold
 - **Faithful route.** A small R-EXECUTOR interpreter for a ten-operator grammar in which bits encode an expression and the score is the fraction of a hidden truth table reproduced, so that the measurable quantity is what fraction of mutations remain meaningful (the actual AM question), with the agenda/archive held by the producer across specs.
 - **Retained route.** A small R-EXECUTOR interpreter for a ten-operator grammar in which bits encode an expression and the score is the fraction of a hidden truth table reproduced, so that the measurable quantity is what fraction of mutations remain meaningful (the actual AM question), with the agenda/archive held by the producer across specs.
+- **Retained-route note.** identical to faithful_route by construction: the route was retained unchanged
 - **Bench proxy.** producer-side archive over evaluate_bitstring at constant seed: each new spec's bits recombine or mutate two high-scoring archive members; control producer emits uniform random bits at the same budget; agenda steps map onto spec count
 - **Proxy would lose.** everything symbolic: no definitions, nothing executable, blindness to the representation property Lenat identified as load-bearing; interestingness collapses to a fixed hidden-target objective whereas AM's worth is heuristic and revisable
 - **Claim difference.** the proxy supports a claim that archive-driven recombination beats blind sampling at fixed budget; it cannot support any claim about concept formation, interestingness, or the representation question
-- **Next action.** see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result
+- **Next action.** WP-B1..B3: first bounded experiment for this entry asks 'Can a program starting from elementary set-theory concepts and a bag of heuristics invent new mathematical concepts a mathematician would call interesting?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.
 - **Parameters destroyed.** initial_concepts; agenda_steps
-- **Entailed repair.** —
 - **Reference.** AM: Automated Mathematician (Lenat 1977)
 - **Reference grade (Herakles).** VERIFIED
 - **Adjacent Prometheus home.** incubation/ (executable symbolic learning substrate: concepts admitted only on demonstrated causal utility, incubation/concepts/) is the nearest home for an executable-concept archive
@@ -1480,6 +1442,7 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 
 *Automated Conjecture Generation* — report `11_reasoning_modes.md` — kind `automated_conjecture_hr_v0` — mechanism `maintain_archive` — route R-COMPOSE; R-SUBSTRATE; R-EXECUTOR; R-REPAIR — capabilities C-5; C-4 — proxy class **symbolic_execution**
 
+- **Gate attainable range.** NO RANGE COMPUTED: 'survive 30 targets' for a mask over L=24 has an exact expected survival under the exchangeable null (each target independent, P(match per position) = 1/2); compute it per mask size before freezing 30.
 - **Question.** Starting from a few core concepts and a finite pile of example objects, how many non-trivial conjectures does an automated concept-inventing loop produce within a fixed budget, and does narrowing the allowed production rules change that yield?
 - **Competing explanations.** the full rule set yields more surviving conjectures per unit search than the restrictive set; the restrictive set yields more: a large share of the broad generator's output is duplicate re-derivation (a result about the generator, not mathematics); yield collapses and the concept tree shows where the menu ran out (the bounded-menu question); on a hash substrate almost every discovered equality is explained by mask cardinality alone: no structure for a conjecture generator to find
 - **Dependencies.** memory; interaction; composition; symbolic; population; counterexample
@@ -1487,15 +1450,14 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Can change.** The object domain, the rule set, the interestingness measures, the budget, whether conjectures are ever proved.
 - **Faithful route.** A typed concept datatype closed under a production-rule set, an extension evaluator over a fixed finite object set, a persistent theory store with an interestingness ranking, and a conjecture-emission predicate over pairs of extensions, with list-valued results and the aggregate yield adjudicated outside the sealed spec.
 - **Retained route.** A typed concept datatype closed under a production-rule set, an extension evaluator over a fixed finite object set, a persistent theory store with an interestingness ranking, and a conjecture-emission predicate over pairs of extensions, with list-valued results and the aggregate yield adjudicated outside the sealed spec.
+- **Retained-route note.** identical to faithful_route by construction: the route was retained unchanged
 - **Bench proxy.** Concept = a mask over L=24 positions; its extension = the score returned for the bitstring that is ones on the mask; production rules union, intersection, complement (restrictive = union only); the producer runs the HR loop, one spec per concept, with 30 sha256_index repeats so an equality must survive 30 independent targets to count; 400 concepts per rule set (NEW DESIGN CHOICES). PRE-REGISTERED NULL: under a hash target the score of a mask is essentially a function of mask cardinality, so condition on cardinality first.
 - **Proxy would lose.** Logic, quantification, mathematical objects, interestingness heuristics, and any claim that a conjecture is true rather than merely unfalsified over the sampled landscapes.
 - **Claim difference.** The proxy tests whether production-rule breadth changes the rate of surviving empirical regularities per unit of search (and specifically that a broad generator's yield is mostly duplicates) on a substrate that may carry no structure at all. The faithful claim is yield of mathematical conjectures over real objects.
-- **Next action.** see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result
+- **Next action.** WP-B1..B3: first bounded experiment for this entry asks 'Starting from a few core concepts and a finite pile of example objects, how many non-trivial conjectures does an automated concept-inventing loop produce within a fixed budget, and does narrowing the allowed production r'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.
 - **Parameters destroyed.** initial_axioms; search_steps
-- **Entailed repair.** —
 - **Reference.** Colton 2002 Automated Theory Formation in Pure Mathematics
 - **Reference grade (Herakles).** VERIFIED
-- **Adjacent Prometheus home.** —
 - **Representation / dynamics / actions / observations.** An invented concept, a definition assembled by applying a production rule to concepts already in the theory; judged by its extension over the object set and by interestingness heuristics that decide whether it re-enters the generator. / A finite set of example objects plus initial axioms and core concepts; the world supplies ground-truth extensions, so the loop is empirical rather than deductive. / Apply production rules (exists, match, negate, size, split, compose), compute the new concept's extension, read off equivalence, implication and non-existence conjectures from extension relations, rank, feed back. / A count of emitted conjectures, ideally by class; secondarily the size and shape of the concept tree.
 - **Class rationale.** Concept definitions are evaluated by executing them over an object set; the archive is a theory of symbolic definitions, and conjectures are relations between executed extensions.
 
@@ -1503,6 +1465,7 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 
 *Counterexample-Guided Verification* — report `09_testing_and_verification.md` — kind `cegar_loop_v0` — mechanism `refine_abstraction_from_counterexample` — route R-COMPOSE; R-EXECUTOR; R-BACKEND; R-SUBSTRATE — capabilities C-2; C-4; C-5 — proxy class **symbolic_execution**
 
+- **Leak warning.** This proxy's recommended construction manufactures or simulates the witness from scores or a side channel (CROSSWALK.md :1536 / :1513 at 4c2d31578). That is exactly the leak WP-B2 test B2-b guards: a witness copied into another producer-visible field. The construction is the NATURAL thing to build, which is why the guard exists; it may be used only in the witness-RETURNED arm, never as a way to give the withheld arm the witness.
 - **Question.** Can a property of a system too big to check directly be proven by checking a deliberately blurred over-approximation and sharpening the blur only where a spurious counterexample shows it lied?
 - **Competing explanations.** property holds (proven on the abstraction, hence on the real system); genuine bug (counterexample replays on the concrete system); spurious counterexample: the abstraction discarded a needed distinction; refine and loop; guidance is effective (one spurious distinction removed per round) versus thrashing (unguided); a spurious counterexample that cannot be diagnosed exposes a gap in the replay oracle
 - **Dependencies.** counterexample; interaction; memory; symbolic; termination (fixpoint, not fixed count)
@@ -1510,15 +1473,14 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Can change.** System size, property, initial abstraction, the checker backend, the encoding of the abstraction.
 - **Faithful route.** Orchestrate an external model checker plus a concrete simulator as a backend, keep the refinement operator in the producer across specs, and fossilize every trace and abstraction; or add a witness-returning (first_mismatch / mask) executor so the loop can be measured natively.
 - **Retained route.** Orchestrate an external model checker plus a concrete simulator as a backend, keep the refinement operator in the producer across specs, and fossilize every trace and abstraction; or add a witness-returning (first_mismatch / mask) executor so the loop can be measured natively.
+- **Retained-route note.** identical to faithful_route by construction: the route was retained unchanged
 - **Bench proxy.** evaluate_bitstring at length 8 with the template's own surviving bits: the hidden target is the concrete behaviour, one spec is one refinement round, the producer flips bits toward score 1.0 from each starting abstraction. Arm A: bench as-is (count-only, refine blind). Arm B: producer is separately told which position disagreed (simulated witness). Rounds-to-proof over many seeds; a witness loop should finish in at most L rounds.
 - **Proxy would lose.** Over-approximation asymmetry (a Hamming score is symmetric, so a false alarm and a missed behaviour are indistinguishable and the spurious/genuine adjudication, half of CEGAR, is absent); the witness itself (evaluate_bitstring returns a count, never the mask); scale, which is the method's reason to exist.
 - **Claim difference.** The proxy measures, in rounds, what a counterexample witness is worth relative to a scalar oracle, which prices capability C-2 before it is built. The faithful claim is settling a property on a large system with spurious/genuine adjudication, which the proxy cannot express.
-- **Next action.** see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result
+- **Next action.** WP-B1..B3: first bounded experiment for this entry asks 'Can a property of a system too big to check directly be proven by checking a deliberately blurred over-approximation and sharpening the blur only where a spurious counterexample shows it lied?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.
 - **Parameters destroyed.** 
-- **Entailed repair.** —
 - **Reference.** Clarke et al 2000 Counterexample-guided abstraction refinement
 - **Reference grade (Herakles).** VERIFIED
-- **Adjacent Prometheus home.** —
 - **Representation / dynamics / actions / observations.** The abstraction: which distinctions of the concrete state space it keeps. Encoded in the template as an 8-bit initial_abstraction_bits (11000000 or 11110000) against property_bits 10101010. / A concrete transition system plus a property; a model checker that returns counterexample TRACES (not just yes/no) and a concrete replay oracle that adjudicates spuriousness. / Refinement operator: consume a trace, add back the discarded distinction (strictly splitting the abstract state space), re-check; terminate at fixpoint. / Three-way outcome (proven / real bug / refine again), number of refinement rounds, final abstraction size.
 - **Class rationale.** The object is a transition system and its abstraction; the loop is a symbolic verification procedure whose observable is a witness trace.
 
@@ -1526,6 +1488,7 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 
 *Counterexample-Guided Inductive Synthesis (CEGIS)* — report `08_synthesis_and_logic.md` — kind `bounded_synthesizer.v0` — mechanism `counterexample_feedback_loop` — route R-COMPOSE; R-BACKEND; R-SUBSTRATE; R-EXECUTOR — capabilities C-2; C-4; C-5 — proxy class **symbolic_execution**
 
+- **Leak warning.** This proxy's recommended construction manufactures or simulates the witness from scores or a side channel (CROSSWALK.md :1536 / :1513 at 4c2d31578). That is exactly the leak WP-B2 test B2-b guards: a witness copied into another producer-visible field. The construction is the NATURAL thing to build, which is why the guard exists; it may be used only in the witness-RETURNED arm, never as a way to give the withheld arm the witness.
 - **Question.** Can a synthesis loop that repeatedly proposes a program and gets back one concrete failing input find a correct program before it runs out of attempts, and how does that depend on the size of the program space?
 - **Competing explanations.** solved within budget; iterations grow benignly with sketch size; iterations blow up exponentially with sketch size (the reason CEGIS is interesting); non-termination localises to under-constrained holes that keep changing across iterations; a smarter probe policy beats naive left-to-right probing (proxy-level)
 - **Dependencies.** counterexample; memory; interaction; symbolic; universal quantification (verifier)
@@ -1533,15 +1496,14 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Can change.** The grammar, the verifier backend, the example-set policy, the budget.
 - **Faithful route.** A program grammar with typed holes, an inductive synthesizer over a finite example set, and an external SAT/SMT verifier orchestrated as a backend that returns a concrete witness, with the growing example set carried by the producer across specs and iterations-to-success reported.
 - **Retained route.** A program grammar with typed holes, an inductive synthesizer over a finite example set, and an external SAT/SMT verifier orchestrated as a backend that returns a concrete witness, with the growing example set carried by the producer across specs and iterations-to-success reported.
+- **Retained-route note.** identical to faithful_route by construction: the route was retained unchanged
 - **Bench proxy.** Program = candidate bitstring of length L (holes = bits, sketch_size = L), specification = hidden target. Manufacture a counterexample from scores: submit the candidate, then the candidate with bit i flipped; if the score rises, position i is a concrete witness; fix the confirmed bit and draw the next proposal from the strictly smaller space. Budget = number of specs = max_iterations; L in 8, 16, 32, 64 with max_iterations 4L (NEW DESIGN CHOICES); compare naive left-to-right probing (near L probes, a harness calibration) against a smarter probe policy.
 - **Proxy would lose.** Logic and the SAT query; universal quantification (the spec is a single point, so verification degenerates to equality); the exponential blowup of the inductive step.
 - **Claim difference.** The proxy reproduces CEGIS's control flow without CEGIS's hardness: it supports claims about loop efficiency (iterations versus holes under a one-bit oracle) and about the harness, and no claim at all about synthesis.
-- **Next action.** see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result
+- **Next action.** WP-B1..B3: first bounded experiment for this entry asks 'Can a synthesis loop that repeatedly proposes a program and gets back one concrete failing input find a correct program before it runs out of attempts, and how does that depend on the size of the program space?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.
 - **Parameters destroyed.** max_iterations; sketch_size
-- **Entailed repair.** —
 - **Reference.** Solar-Lezama 2008 Program Synthesis by Sketching
 - **Reference grade (Herakles).** PLAUSIBLE
-- **Adjacent Prometheus home.** —
 - **Representation / dynamics / actions / observations.** The completed program, i.e. the vector of hole values; judged by a verifier that returns a verdict and a witness, not a graded score. / A full specification, a sketch or grammar bounded by sketch_size, a finite input domain, and a verifier (SAT/SMT) that returns a concrete counterexample input on failure. / Solve the inductive query on the current example set, verify the candidate against the full spec, append the counterexample, repeat with a strictly harder inductive query. / Solved boolean, iterations consumed, size and composition of the accumulated counterexample set.
 - **Class rationale.** Candidates are programs verified against a specification; the observable is a witness-bearing verdict from executing or checking the program.
 
@@ -1556,12 +1518,12 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Can change.** the CPU (eight-opcode stack machine with NAND suffices for the single-genotype question), the number of inputs k, the exact genome
 - **Faithful route.** Run Avida (or the recovered 2003 physics in ergon/avida2003/, which holds the 26-instruction table, the nine-task truth tables and the complete line of descent) as an orchestrated backend (C-4) and fossilize fraction-correct on the named task per genome.
 - **Retained route.** Run Avida (or the recovered 2003 physics in ergon/avida2003/, which holds the 26-instruction table, the nine-task truth tables and the complete line of descent) as an orchestrated backend (C-4) and fossilize fraction-correct on the named task per genome.
+- **Retained-route note.** identical to faithful_route by construction: the route was retained unchanged
 - **Bench proxy.** evaluate_bitstring with length 2^k (16 for k=4): the bitstring IS the truth table of a k-input function; under sha256_index with a high count the same candidate function is scored against different random target functions, giving the null distribution of chance agreement
 - **Proxy would lose.** the merit economy, replication, population, mutation, and therefore the stepping-stone result that is the entire scientific content of Lenski et al. 2003; the bitstring version cannot NAME the target function
 - **Claim difference.** the proxy supports a null-calibration claim (what agreement between an arbitrary function and a random one looks like by chance); the faithful single-genotype version supports a mechanical-correctness claim about one program on a named function; neither says anything about evolvability
-- **Next action.** see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result
+- **Next action.** WP-B1..B3: first bounded experiment for this entry asks 'Does a particular instruction sequence, run on Avida's virtual CPU, actually compute a specified logic function (NOT or EQU) of its inputs?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.
 - **Parameters destroyed.** 
-- **Entailed repair.** —
 - **Reference.** Lenski, Ofria, Pennock, and Adami 2003, The Evolutionary Origin of Complex Features
 - **Reference grade (Herakles).** VERIFIED
 - **Adjacent Prometheus home.** ergon/avida2003/ERGON_AVIDA2003_HISTORICAL_DEEP_DIVE_V0/ (primary-source ledger, historical physics spec with the nine rewarded tasks NOT..EQU, matched checkpoint design, SFE translation plan)
@@ -1579,15 +1541,14 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Can change.** Prover version, problem library, budget units, the strategy set.
 - **Faithful route.** Call a pinned version of E on a real problem library such as TPTP with pinned strategy flags as an orchestrated backend, recording status, generated and processed clause counts and the proof object; inference belongs to the backend, the bench orchestrates and fossilizes.
 - **Retained route.** Call a pinned version of E on a real problem library such as TPTP with pinned strategy flags as an orchestrated backend, recording status, generated and processed clause counts and the proof object; inference belongs to the backend, the bench orchestrates and fossilizes.
+- **Retained-route note.** identical to faithful_route by construction: the route was retained unchanged
 - **Bench proxy.** Harness calibration only: fix L=64 and a seed; treat the L bit positions as the clause set and full determination of the hidden target as the refutation goal; a producer-side loop probes positions one spec at a time under a heuristic (left-to-right as the auto analogue, greedy most-informative-next as the discount analogue, a policy fitted on earlier problems as the neural analogue); probe budget 256 as expansion_limit, 200 seeds as the problem library (NEW DESIGN CHOICES).
 - **Proxy would lose.** First-order logic, unification, superposition, subsumption and combinatorial explosion, which is the entire reason heuristics matter; Herakles states plainly that no in-bench reduction preserves what this template is about.
 - **Claim difference.** The proxy supports only the claim that the harness can carry a heuristic-ablation-under-budget experiment across many problems with a correct baseline; it must not be reported as a claim about theorem proving.
-- **Next action.** see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result
+- **Next action.** WP-B1..B3: first bounded experiment for this entry asks 'Can a first-order prover derive a contradiction from a clause set within a fixed budget of generated clauses, and does changing the given-clause selection heuristic change whether it gets there?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.
 - **Parameters destroyed.** expansion_limit
-- **Entailed repair.** —
 - **Reference.** Schulz 2002 E - a brainiac theorem prover
 - **Reference grade (Herakles).** PLAUSIBLE
-- **Adjacent Prometheus home.** —
 - **Representation / dynamics / actions / observations.** The search strategy and its clause-selection heuristic: the order in which the same sound inference rules are applied, not the logic and not the problem. / The clause set (axioms plus negated conjecture) and the inference calculus (superposition, resolution, paramodulation, simplification, subsumption); the world supplies soundness. / Select a given clause from the unprocessed set (where the heuristic lives), compute all inferences against the processed set, simplify and subsume, return survivors; stop at the empty clause or the budget. / Refuted boolean, clauses generated and processed (integers), wall time; comparisons only meaningful at fixed budget.
 - **Class rationale.** Saturation over symbolic clauses; the observable is a proof object and its search cost.
 
@@ -1595,6 +1556,7 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 
 *Formal Methods* — report `09_testing_and_verification.md` — kind `bounded_model_check_v0` — mechanism `bounded_exhaustive_refutation` — route R-BACKEND; R-REPAIR; R-COMPOSE — capabilities C-4; C-2; C-5 — proxy class **symbolic_execution**
 
+- **Gate attainable range.** NO RANGE COMPUTED: threshold 12.0 on the walk's position under persist has an analytic distribution (var = steps * step_scale^2 / 3 per repeat, summed); compute the crossing probability per bound_k before freezing 12.0. Also: both surviving encodings are single-variable projections, so bound_k is inert.
 - **Question.** Within a fixed number of steps k, can a system reach a state that violates its safety property, and if so what exact sequence of steps gets there?
 - **Competing explanations.** satisfiable: a concrete violating trace, a hard falsification and the most reusable artifact in verification; unsatisfiable up to k: a genuine proof within the bound, nothing beyond k without a separate k-induction check; timeout: information about the solver, none about the system; DESIGN FAILURE: both supplied 16-bit transition encodings are single-variable projections (1111000011110000 depends only on the 4-place bit, 0101010101010101 only on the 1-place bit), so reachability is settled at depth one or two and bound_k is inert
 - **Dependencies.** symbolic; time; counterexample; topology; universal quantification over executions
@@ -1602,15 +1564,14 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Can change.** The model (it MUST be replaced), the solver, the property, the k-sweep.
 - **Faithful route.** A state/transition/property encoder, an unroller emitting CNF at k, a real SAT solver orchestrated as a backend, and a decoder back to a readable trace, plus a k-induction second query; the spec must return a witness and distinguish proved-within-bound from not-found.
 - **Retained route.** A state/transition/property encoder, an unroller emitting CNF at k, a real SAT solver orchestrated as a backend, and a decoder back to a readable trace, plus a k-induction second query; the spec must return a witness and distinguish proved-within-bound from not-found.
+- **Retained-route note.** identical to faithful_route by construction: the route was retained unchanged
 - **Bench proxy.** random_walk_v0 with repeat.state = persist as a bounded transition system: position is the state, each repeat is one unrolling step, k = number of persisted repeats, safety = a threshold on \|position\|; step_scale 1.0, threshold 12.0, k in 4, 8, 16, 32, 64, 128, 300 seeds per k (NEW DESIGN CHOICES). One seed is one execution, so the producer sweeps seeds; the counterexample is the seed and the step index of first crossing. Falsification-only, with the vacuous not-found reading committed in advance.
 - **Proxy would lose.** The universal quantifier over executions, which is the entire value of the method: bounded model checking becomes bounded random testing, and the not-found branch becomes vacuous.
 - **Claim difference.** The proxy measures how the probability of finding a counterexample grows with k for a fixed threshold, a first-passage-time curve with a known closed form that doubles as a correctness test of random_walk_v0. The faithful claim is an exhaustive bounded proof or refutation.
-- **Next action.** see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result
+- **Next action.** WP-B1..B3: first bounded experiment for this entry asks 'Within a fixed number of steps k, can a system reach a state that violates its safety property, and if so what exact sequence of steps gets there?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.
 - **Parameters destroyed.** bound_k
-- **Entailed repair.** —
 - **Reference.** Biere et al 1999 Symbolic Model Checking without BDDs
 - **Reference grade (Herakles).** VERIFIED
-- **Adjacent Prometheus home.** —
 - **Representation / dynamics / actions / observations.** A length-k execution trace, found or shown not to exist by the solver rather than proposed by the experimenter; the experimenter chooses the model and the bound. / A transition relation (here a 16-bit truth table of a 4-input function), initial states, a safety property and the bound k; the world supplies the semantics that make the unrolled formula mean something about executions. / Unroll the transition relation k times into one propositional formula, hand it to a SAT solver, decode a satisfying assignment into a trace. / SAT/UNSAT boolean, solver time, formula size, and on SAT the length and content of the counterexample trace.
 - **Class rationale.** The faithful object is a symbolic transition system checked exhaustively; the proxy alone would be numeric_calibration.
 
@@ -1625,15 +1586,14 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Can change.** Program length (256/512/1024), register count (2/4/8), decoding convention, instruction set.
 - **Faithful route.** A pure ~60-line executor: decode bits -> instructions, backward liveness walk, return effective_fraction (and the path boolean); stateless, seed-only world, single-scalar adjudicable.
 - **Retained route.** A pure ~60-line executor: decode bits -> instructions, backward liveness walk, return effective_fraction (and the path boolean); stateless, seed-only world, single-scalar adjudicable.
+- **Retained-route note.** identical to faithful_route by construction: the route was retained unchanged
 - **Bench proxy.** evaluate_bitstring with the program bits as payload at the declared length to pin and fossilize the exact specimen (score declared irrelevant), effective fraction computed offline; plus a zero-cost analytic preregistration of the expected fraction as a function of r and length.
 - **Proxy would lose.** In-spec adjudication: until the executor exists no outcome rule can see the effectiveness number; the score field is meaningless and must be declared irrelevant.
 - **Claim difference.** Faithful and proxy support the same quantity (baseline intron rate versus register count); the proxy differs only in that adjudication is offline and the null is fixed in advance rather than after seeing data.
-- **Next action.** see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result
+- **Next action.** WP-B1..B3: first bounded experiment for this entry asks 'In a randomly generated linear program, what fraction of the instructions actually affect the output, and how does that fraction depend on how many registers the program has?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.
 - **Parameters destroyed.** 
-- **Entailed repair.** —
 - **Reference.** Brameier and Banzhaf 2001, Evolving Teams of Predictors with Linear Genetic Programming
 - **Reference grade (Herakles).** PLAUSIBLE
-- **Adjacent Prometheus home.** —
 - **Representation / dynamics / actions / observations.** A random program genome given as a uniform bitstring of declared length, decoded into register instructions (dest, op, two sources). / Almost nothing: the random draw and the decoding convention; no data, fitness case, population or selection. / Backward liveness walk from the output register marking effective instructions and structural introns; no execution. / effective fraction in [0,1] and a boolean for at least one effective path; exact deterministic functions of seed and axes.
 - **Class rationale.** The object is a decoded program analysed for data-flow liveness; static analysis of code, no numeric landscape.
 
@@ -1641,6 +1601,7 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 
 *Proof Search* — report `08_synthesis_and_logic.md` — kind `formal_prover.v0` — mechanism `search_over_tree` — route R-BACKEND; R-SUBSTRATE; R-EXECUTOR — capabilities C-4; C-0; C-3 — proxy class **symbolic_execution**
 
+- **Gate attainable range.** DEGENERATE AS WRITTEN: goal solved (score >= 1.0) within 200 specs on a 24-move problem is guaranteed to fire; attainable range of the gate is {fires}. A usable gate needs a budget below the hill-climb bound L, or a k > 0 landscape, with the attainable success probability computed first.
 - **Question.** Can a language model trained on mathematical proofs suggest the next step well enough that a machine, checking every suggestion against a strict logical kernel, closes proofs it could not close by guessing?
 - **Competing explanations.** goal closed within the expansion budget versus not; model proposals illegal versus legal-but-useless (different diseases, mapped by the fossilized search tree); the open frontier at exhaustion names a missing lemma; in the reduction: a guided proposer wins for hill-climbing reasons unrelated to proof guidance (claim inflation hazard)
 - **Dependencies.** symbolic; memory; composition; counterexample; resources; stochastic_sampling
@@ -1648,15 +1609,14 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Can change.** Expansion budget, sampling temperature/strategy, model endpoint, prover backend.
 - **Faithful route.** Orchestrate a proof assistant and a model endpoint as backends, record every proposal and kernel verdict, report closed-or-not with expansions consumed; the fossil contract must admit recorded, non-recomputable observations.
 - **Retained route.** Orchestrate a proof assistant and a model endpoint as backends, record every proposal and kernel verdict, report closed-or-not with expansions consumed; the fossil contract must admit recorded, non-recomputable observations.
+- **Retained-route note.** identical to faithful_route by construction: the route was retained unchanged
 - **Bench proxy.** evaluate_bitstring, length 24, fixed seed, goal = solved (score >= 1.0), one expansion = one spec, budget 200 specs, two arms: a proposer that sees the score history versus a uniform proposer (Herakles NEW DESIGN CHOICES); run only as a harness test before the backend is wired.
 - **Proxy would lose.** Everything formal: no goal structure, library, lemma reuse or compositional subgoals; and the landscape is single-peaked and additive so any score-fed proposer solves it by hill climbing in at most 24 moves.
 - **Claim difference.** Faithful: LM guidance closes formal proofs a guess-based search cannot. Proxy: only that the bench can drive, fossilise and adjudicate a budgeted proposer-verifier loop and detect a guidance advantage where one exists; nothing about mathematics or language models.
-- **Next action.** see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result
+- **Next action.** WP-B1..B3: first bounded experiment for this entry asks 'Can a language model trained on mathematical proofs suggest the next step well enough that a machine, checking every suggestion against a strict logical kernel, closes proofs it could not close by guessing?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.
 - **Parameters destroyed.** expansion_limit
-- **Entailed repair.** —
 - **Reference.** Polu and Sutskever 2020 Generative language modeling for automated theorem proving
 - **Reference grade (Herakles).** VERIFIED
-- **Adjacent Prometheus home.** —
 - **Representation / dynamics / actions / observations.** A proof attempt: the tree of tactic applications built during best-first search. / A formal library and kernel supplying the goal, the legal moves and an incorruptible verdict on every step. / Transformer samples candidate steps at a temperature; best-first search expands the most promising open goal, submits proposals to the kernel, discards illegal ones, adds subgoals; stops at closure or budget. / closed (binary), expansions consumed, proof length; the full search tree on failure.
 - **Class rationale.** Search over formal proof steps checked by a kernel; the world is a symbolic library and verifier.
 
@@ -1671,15 +1631,13 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Can change.** Reuse of work between bounds (hoisting the deepening loop out of the run changes only efficiency), task generator, engine.
 - **Faithful route.** Call the public Metagol Prolog program as a backend with a seed-generated task and the metarule set as payload, one sealed spec per clause bound k = 1..6 with rule 'found is true'; the smallest surviving k is the minimal size and every falsified smaller k is a permanent lower bound.
 - **Retained route.** Call the public Metagol Prolog program as a backend with a seed-generated task and the metarule set as payload, one sealed spec per clause bound k = 1..6 with rule 'found is true'; the smallest surviving k is the minimal size and every falsified smaller k is a permanent lower bound.
-- **Bench proxy.** —
+- **Retained-route note.** identical to faithful_route by construction: the route was retained unchanged
 - **Proxy would lose.** Everything: a bitstring or walk cannot encode a proof, background knowledge or a clause; any bitstring encoding scores syntactic similarity while entailment goes unmeasured.
 - **Claim difference.** No near-bench proxy is honest (Herakles: NONE). The orchestration ladder over k preserves essentially all search semantics and supports the exact clause-count complexity of a target concept under a declared bias; it loses only the ability to state minimality inside one outcome rule.
-- **Next action.** see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result
+- **Next action.** WP-B1..B3: first bounded experiment for this entry asks 'From a handful of examples and some background facts, can a system write a logic program that explains them, and can it invent the intermediate concepts it needs but was never given?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.
 - **Parameters destroyed.** max_clauses
-- **Entailed repair.** —
 - **Reference.** Muggleton et al. 2015 Metagol
 - **Reference grade (Herakles).** VERIFIED
-- **Adjacent Prometheus home.** —
 - **Representation / dynamics / actions / observations.** A hypothesis: a set of logic clauses, possibly including invented predicate symbols. / Background knowledge base, positive and negative examples, and the metarule set (the declarative bias, which decides what is expressible). / Prolog meta-interpreter proves positives by binding metarule predicate variables, drawing fresh predicate symbols when needed, under iterative deepening on clause count; negatives must not be provable. / consistent (boolean), clause count (natural scalar), invented predicate count, search time, induced program text.
 - **Class rationale.** Proof search in a logic engine; the verdict is entailment, produced by executing a meta-interpreter.
 
@@ -1694,12 +1652,12 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Can change.** the sketch language and benchmark, the solver, the bounds; Herakles proposes holes h in {4,8,12,16} at L=32, max_iterations 64, 20 seed_roots per cell as NEW DESIGN CHOICES
 - **Faithful route.** Spawn a sketch compiler plus SAT/SMT solver as an orchestrated backend (C-4) with the sketch, spec and bounds as payload, receiving solved, iterations and time, and recording solver version, bounds, seed and timeout in the fossil; the iterations-vs-hole-count trend adjudicated downstream (C-5).
 - **Retained route.** Spawn a sketch compiler plus SAT/SMT solver as an orchestrated backend (C-4) with the sketch, spec and bounds as payload, receiving solved, iterations and time, and recording solver version, bounds, seed and timeout in the fossil; the iterations-vs-hole-count trend adjudicated downstream (C-5).
+- **Retained-route note.** identical to faithful_route by construction: the route was retained unchanged
 - **Bench proxy.** evaluate_bitstring as a bounded specification: L-h bits fixed by the analyst (the given sketch), h bits as the completion, seed_root constant across the family; the producer submits completions, reads the score as the verifier's partial feedback, refines, and counts specs to score 1.0; sweep h
 - **Proxy would lose.** everything logical: no constraint propagation, no unsatisfiability proof, no solver, no semantics; worse, the Hamming score gives a smooth gradient where real synthesis has none, and the solver's whole advantage comes from logical structure the reduction deletes
 - **Claim difference.** the proxy supports a claim about how completion cost scales with the number of unknowns under a partial-credit oracle; it supports no claim about program synthesis; the faithful version supports solver efficiency on bounded correctness tasks and can produce UNSAT proofs the proxy cannot
-- **Next action.** see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result
+- **Next action.** WP-B1..B3: first bounded experiment for this entry asks 'Given a program with holes plus a specification, can a solver fill the holes so the result is correct, and how much work does that take (CEGIS)?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.
 - **Parameters destroyed.** max_iterations; sketch_size
-- **Entailed repair.** —
 - **Reference.** Solar-Lezama 2008 Program Synthesis by Sketching
 - **Reference grade (Herakles).** VERIFIED
 - **Adjacent Prometheus home.** incubation/solver (iterative-deepening search over an action alphabet behind an observation boundary) is the nearest in-repo synthesis-shaped machinery
@@ -1717,14 +1675,13 @@ Reference grades: PLAUSIBLE 9, VERIFIED 60
 - **Can change.** Depth limit, population size, generation count, function set, target function, where the population loop lives (producer).
 - **Faithful route.** Split the kind: an evaluation-only executor (serialised expression + data seed -> normalised error) shaped like evaluate_bitstring, with the producer running Koza's population loop across specs so each evaluation is a fossilized record.
 - **Retained route.** Split the kind: an evaluation-only executor (serialised expression + data seed -> normalised error) shaped like evaluate_bitstring, with the producer running Koza's population loop across specs so each evaluation is a fossilized record.
+- **Retained-route note.** identical to faithful_route by construction: the route was retained unchanged
 - **Bench proxy.** evaluate_bitstring: fix a candidate, many independent landscapes under sha256_index, record best-of-n score versus n; the null is exactly binomial (mean 0.5, sd 1/(2 sqrt L)), so the random-search reference curve is both measured and derived.
 - **Proxy would lose.** The whole evolutionary mechanism: no tree, crossover or generation is involved in the immediate reduction.
 - **Claim difference.** Faithful: GP finds a fitting expression and beats random search. Proxy: only the random-search denominator every later GP claim must beat, built before the treatment; any disagreement between measured and derived curves is a bench defect.
-- **Next action.** see WORK_PACKAGES.md for the branch's first increment; the faithful route stays open regardless of the proxy's result
+- **Next action.** WP-B1..B3: first bounded experiment for this entry asks 'Can an evolving population of mathematical expressions find a formula that fits a dataset, and does the evolution actually do better than drawing the same number of random formulas?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.
 - **Parameters destroyed.** max_tree_depth; population_size
-- **Entailed repair.** —
 - **Reference.** Koza, J.R. 1992. Genetic Programming: On the Programming of Computers by Means of Natural Selection
 - **Reference grade (Herakles).** VERIFIED
-- **Adjacent Prometheus home.** —
 - **Representation / dynamics / actions / observations.** An expression tree over a declared function and terminal set; structure and constants vary. / A dataset of input-output pairs from a planted target function plus the primitive vocabulary; static. / Evaluate trees on fitness cases, tournament selection, subtree crossover and mutation, generational replacement under depth limits. / Best-of-run error (>= 0, normalisable to [0,1]), generation of hit, winning tree size, fitness trajectory.
 - **Class rationale.** Candidates are executable expression trees judged by evaluating them on data.

@@ -261,14 +261,32 @@ execution; invariant-kernel checks, convergence and transient behaviour are
 three questions and a looser tolerance repairs none of them. Tests attached
 within the existing packages (`expansion/WORK_PACKAGES.md`).
 
+**Herakles's critique (2026-09-07), accepted in the main:** Branch A is
+named a **method-evaluation instrument** and Branch C the only substrate
+where an unauthored regularity can appear today; C runs in parallel with A,
+not after it. A one-paragraph definition of an unplanned finding, and how it
+is told from a designed one, is written before any branch runs
+(`expansion/BRANCHES.md` §0; Harmonia adjudicates). Every branch carries a
+kill precondition computed before its first corpus, and every stated gate
+carries its attainable range (the crosswalk already applied that rule entry
+by entry; BRANCHES and WORK_PACKAGES now inherit it). Six crosswalk entries
+that asserted equivalence on the additive landscape are relabelled proxies;
+the version-space/QBC rehearsal is demoted to a plumbing test with a known
+answer whose value is negative only; `evodevo.bias` is HELD with a
+retire-by condition. Run-bearing packages are priced: minutes of compute via
+the human-issued campaign path, weeks via the autonomous cadence. A freeze of
+the 22 off-critical-path packages is **declined** — the operator's order
+keeps gates local and work moving — and replaced by priority tiers.
+
 ### D.8 Sequence for this section
 
     NOW    WP-0d (D3 null number) · WP-0e (kind-generic builder) · WP-X6
            (reserve policy file, numbers from the operator) — Archaeon
            requests filed: Herakles, Vivarium, Daedalus, Harmonia, Mnemosyne,
            Proteus (INBOX_ARCHAEON_EXPANSION_ROADMAP_2026-09-07.md)
-    NEXT   WP-C1 and WP-A1 (the two cheapest worlds), WP-0f, WP-X1 ruling;
-           then A2/C2 templates PROPOSED for admission
+    NEXT   WP-C1 in PARALLEL with WP-A1 (C is where a surprise can live; A
+           evaluates methods), WP-0f, WP-X1 ruling; branch kill tests run
+           before A3-acq and C3-acq; then A2/C2 templates PROPOSED
     THEN   WP-B1 once Proteus ships the VM as a library; WP-P0 spike
     THEN   first experiments A3, C3, B3 as M-SIGNAL-shaped rounds
     later  A4 (source-artifact transfer; needs no runtime memory), C4, P1

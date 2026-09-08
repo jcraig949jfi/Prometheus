@@ -143,7 +143,9 @@ to its owner) · CONDITIONAL (waits on a named result).
 ### WP-A3 · First NK corpus, then a frozen comparison · **Archaeon** issues (Vivarium executes; Harmonia adjudicates)
 - Dependency, **split**: A3-acq (corpus acquisition through the admitted random route) needs A2 + local integrity; A3-cmp (frozen comparison) needs a frozen corpus/universe, approved protocol, correct provenance/units, and the detector's qualification.
 - Tests: A3-a each series holds its landscape fixed while candidates change; queries share declared lineage, never counted as independent landscapes; A3-b corpus and universe hashes precede both orders and execution; source-witness refs round-trip; A3-c permutation control satisfies its exact invariant while detector calibration uses the separately declared stochastic null; A3-d no separation → a report scoped to these coordinates/policy/budget, never "NK is flat".
+- **Kill precondition (Herakles O-1):** before A3-acq, run the one-flip hill-climber test at the chosen (L, k): if it reaches the optimum in ≤ 2L queries on ≥ 90% of 20 seeds, the landscape is not doing the work; move k or stop. Attainable trapped-start fraction computed by enumeration at L ≤ 16 first (A1-e).
 - Acceptance: a preserved, inspectable NK corpus and a correctly staged comparison plan. The proposed k∈{0,2,4} × 3 seeds × 20 queries is a **bounded pilot** until Harmonia sizes the intended claim; the measurement (interaction / region discrimination / selection improvement) is named before the run.
+- **Purpose, named:** method evaluation. A complete success of Branch A tells us how our search and selection methods behave on authored difficulty; it is not progress toward emergence and is not reported as such (BRANCHES §0).
 - Status: CONDITIONAL on A2.
 
 ### WP-A4 · Related landscapes without waiting for runtime memory · **Daedalus** (Harmonia: relation/mapping and transfer comparison; Proteus: identity where needed)
@@ -163,7 +165,7 @@ to its owner) · CONDITIONAL (waits on a named result).
 
 ### WP-B2 · Program templates and information controls · **Archaeon** (Proteus specifies VM and opcode transformation)
 - Dependency: B1, 0e.
-- Tests: B2-a renaming opcode encoding and decoder together preserves outputs/halting/steps; traces compared after decoding; B2-b the two arm views differ only in the declared witness treatment; an adversarial fixture detects a witness copied into another producer-visible field (outputs vector, expected outputs, trace, log, ordering); B2-c restrictions do not remove the authoritative observation from audit storage; the wrong arm cannot retrieve it through the permitted proposal interface.
+- Tests: B2-a renaming opcode encoding and decoder together preserves outputs/halting/steps; traces compared after decoding; B2-b the two arm views differ only in the declared witness treatment; an adversarial fixture detects a witness copied into another producer-visible field (outputs vector, expected outputs, trace, log, ordering) **and specifically the score-difference construction the crosswalk itself recommends for `cegis_boolean` (CROSSWALK.md :1536 at 4c2d31578: flip bit i, if the score rises i is the witness) and the simulated witness for `cegar.abstraction.loop` (:1513) — the natural thing to build is the leak**; B2-c restrictions do not remove the authoritative observation from audit storage; the wrong arm cannot retrieve it through the permitted proposal interface.
 - Acceptance: replayable templates and a precise information-access contract. Where the specification is already public, the claim is an interface/computational saving, not access to unavailable information.
 - Status: CONDITIONAL on B1.
 
@@ -248,3 +250,46 @@ to its owner) · CONDITIONAL (waits on a named result).
 - **C3 → `ca.resample_region.v0` and a directed IC distribution:** a fired region on a declared rule-table descriptor, or a witness IC set, constrains the next draw.
 
 Broad collection through the admitted random route never waits for a signal; the comparison always waits for a frozen corpus.
+
+## Cost and time (Herakles A-7)
+
+Engineering effort is S/M/L per package above. Compute and calendar for the
+run-bearing packages, priced under two routes — the autonomous producer's
+cadence (6 draws per lane per UTC day, never relaxed) and the existing
+**human-issued campaign path** (`campaign.issue()`: `source_reason='human'`,
+no cadence ordinal, operator act), which is how M-ELIGIBLE's eight requests
+are issued:
+
+| Package | Runs | Executor cost (host CPU) | Via autonomous cadence | Via human-issued batch |
+|---|---|---|---|---|
+| A3-acq | 3 k × 3 seeds × 20 = 180 specs | NK scoring ≪ 1 ms each; ~seconds total | 30 lane-days | one operator issue; Vivarium executes in minutes |
+| B3 (either route) | 2 arms × 3 seeds × 20 = 120 specs | VM eval ≤ step budget × inputs; ~ms each | 20 lane-days | minutes |
+| C3-acq + hist | ~56 rows × 4 repeats = 224 obs | 149 × 320 × 100 ICs ≈ 4.8 M cell updates per obs ≈ 0.1–0.5 s in numpy; ~2 min total | ~10 lane-days | minutes |
+| WP-0d recalibration | 300 corpora × D3 | ~10 s | outside the tick | n/a |
+| WP-P0 spike | builds + 2 runs per route | unknown; capped by the operator (proposed 2 days) | n/a | n/a |
+
+Consequence: every first corpus is priced at minutes of compute and one
+operator issue. Left to the autonomous cadence the same corpora take weeks
+per lane; the census exists for that regime. Person-effort per package is
+the S/M/L column; the frozen comparisons cost one Harmonia protocol each.
+
+## Priority tiers (Herakles O-2; a freeze is declined, with the reason)
+
+Herakles asks that the 22 packages off the flatness critical path be frozen
+until A3 reports. The operator's amendment order rules the other way
+(§1 rules 2 and 6: research and implementation move together; gates are
+local; nothing waits on an unrelated result), so a freeze is not adopted.
+What is adopted is an explicit priority order for seats with limited
+capacity, and the statement that owner packages proceed only as their owners
+have capacity — they compete for nothing in Archaeon's lane.
+
+    Tier 1  the two questions the program can answer soonest
+            0a 0e(done) 0f A1 A2 A3-acq  · C1 C2 C3-hist C3-acq   (in parallel)
+    Tier 2  what makes Tier 1's results claimable
+            0c 0d(done) X1 X7 X6(done, inactive)
+    Tier 3  the symbolic branch and the archive
+            B1 B2 B3 X8 PR-ID
+    Tier 4  spikes and later bridges
+            P0 P2 P3 A4 C4 X2 X5 B4 P1
+
+If a seat must choose, it chooses the lowest tier number in its lane.

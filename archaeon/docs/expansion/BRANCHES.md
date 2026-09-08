@@ -13,7 +13,64 @@ bounded experiment, the reuse evidence, and what the branch cannot do.
 
 ---
 
+## 0. What would count as an unplanned finding, and how we would know one
+
+Written before any branch runs, at Herakles's ask (critique 2026-09-07 §6.1).
+This is Archaeon's proposal; Harmonia adjudicates whether any candidate meets
+it. It is deliberately narrow.
+
+**Authored vs unauthored.** For every family we declare, at admission, its
+**authoring inputs**: everything we choose or derive by construction (the NK
+contribution tables and neighbour lists from the seed; the CA rule table,
+lattice size, horizon and IC distribution; the program specification and
+step budget; the replicator's kernel and resource regime). Any property that
+is computable from the authoring inputs *without running the world* is
+**planted** — including the landscape's optima, its local-maxima count, its
+attainable score range, and every symmetry we wrote in. A result about a
+planted property is a result about our construction or about a method's
+behaviour on it, and is reported as such.
+
+**Candidate unplanned finding.** A regularity in the fossil record that
+(1) is a property of trajectories or dynamics, not of the authoring inputs
+— it is not computable from them without running the world, or it is
+computable only by a computation as costly as running it; (2) survives the
+family's exchangeability null and its mechanism control under matched seeds;
+(3) is not on the family's **stipulated-outcomes list** — the enumerated
+competing explanations and predicted outcomes registered before the run —
+and is not a rediscovery of a literature-known result for that substrate
+(a rediscovery is a calibration anchor and is labelled so); (4) is
+reproducible under replay and under a fresh seed of the same authored
+world class. Harmonia then rules whether the candidate is a finding, a
+calibration, or an artefact. A finding is bounded to the authored world
+class it appeared in.
+
+**Consequence for the branches.** On Branch A everything about the
+landscape is authored; what is *not* authored is how a fossil-directed
+selection policy behaves on it, so A can yield at most a finding about
+methods and about whether fossils carry exploitable structure. That is
+worth having and is named as **method evaluation**, not emergence. On
+Branch C the rule is authored but the space-time behaviour is not chosen
+by anyone: particle strategies and domain boundaries doing global
+computation under a local rule are the historical example of a regularity
+satisfying (1)–(4) at the time it appeared. Their reappearance here would
+be a calibration anchor under (3); a *new* strategy class, or structure in
+the random-rule fossil record that predicts accuracy and is not computable
+from the rule table without running it, would be a candidate. Branch C is
+therefore the only substrate in this plan where (1) can be met today, and
+it is sequenced to run **in parallel with A, not after it** (ROADMAP §D.8).
+Branch B's compositional program space can meet (1) once specifications are
+richer than a 4-input truth table; Branch D can meet it once a replicator
+world runs.
+
+**What this definition refuses.** "Looks interesting" (any judge, human or
+model); a detector firing (a reason to look, per charter); a high score; a
+new descriptor cell occupied; anything computable from the seed.
+
+---
+
 ## A. Interacting landscapes (static, structured) — 17 entries
+
+**Purpose, named:** a METHOD-EVALUATION instrument. Its difficulty is a parameter we set and its tables are derived from a seed we choose; nothing in it is unauthored (§0).
 
 *Candidate strings whose components affect one another's usefulness.*
 
@@ -141,6 +198,8 @@ witness experiment (WP-B3).
 ---
 
 ## C. Spatial, stateful environments — 10 entries
+
+**Purpose, named:** the only substrate in this plan where an unauthored regularity can appear today (§0). Runs in parallel with A.
 
 *Controllers with memory, local observations, and actions that change later
 possibilities.*
@@ -354,3 +413,27 @@ is the artifact, sealed and replayable, not the proposer.
   spikes, not calibration items.
 - Perceptual input remains an explicit design option with a reopening
   condition (D-10), not a closed door.
+
+## Branch kill conditions (computed before each branch runs; Herakles O-1)
+
+Each branch names the result that would say it was the wrong bet, as a
+precondition on its first corpus, not a discovery afterwards. A kill here
+ends the branch as a bet on this program; it rejects no field.
+
+| Branch | Kill test (precondition) | Attainable range beside it | If it kills |
+|---|---|---|---|
+| A (NK) | At the chosen k and L, a one-flip hill climber from random starts reaches the global optimum in ≤ c·L queries on ≥ 90% of 20 seeds (c = 2 declared). Herakles measured exactly L on the additive bench, 20/20, L 16–48. | For k = 0 the bound is exactly L; for k > 0 the fraction of starts trapped in a local optimum is computed by exhaustive enumeration at L ≤ 16 before the test (A1-e fixture). | the landscape is not doing the work: move k, or the branch is wrong at this L. Precondition on A3-acq. |
+| B (programs) | The specification space is small enough that exhaustive enumeration of programs within the step budget finds a match in ≤ N proposals (N = the series length); or the witness-using toy policy (B3-d) does not differ from witness-withheld on the toy. | Enumerable program count at the declared opcode set and length; queries-to-match floor L/log₂(L+1) for the bitstring analogue (~5.2 at L = 24). | the task is a plumbing test with a known answer (A-4): enlarge the specification or the program space before any B3 claim. |
+| C (CA) | Under the declared IC distribution, N = 149, T = 320, the six historical genomes and 50 random rules are indistinguishable in accuracy (their distributions overlap within the IC-sampling SE), or the reflection null fails on the historical genomes. | Random rules: accuracy ≈ the density prior (~0.5 at ρ = 0.5 ICs); historical genomes: roughly 0.7–0.8 under the 1994 conventions (literature lead, unfetched; C1-e measures it). Reflection null: exact. | the verifier, the conventions, or the task instance is wrong (C3 diagnosis list) — fix before any random-rule corpus is read. |
+| D (replicators) | WP-P0 finds no route that builds, runs, and repeats under tested conditions within the operator's cap. | n/a (a build/run fact) | DEFERRED with the reason and reopening condition; no route is chosen by preference. |
+
+## Attainable ranges beside every stated gate (Herakles A-2, inherited from the crosswalk)
+
+No threshold in a branch or work package is stated without its attainable
+range computed beside it. Gates named in this file:
+
+- A3: D3 per-region false-alarm rate on a floor-sized null corpus = 0.083 exact F(7,31), 0.088 ± 0.006 measured (D3_NULL_RECONCILIATION); a "fire rate differs by k" claim needs the rate at each k's corpus geometry computed first. Hill-climb bound: exactly L at k = 0.
+- B3: rounds-to-match floor for an exact oracle on a bitstring analogue L/log₂(L+1); for a program space, the enumerable-program count divided by the step budget bounds success within budget from above.
+- C3: accuracy of a random rule under the declared IC distribution ≈ the density prior; the historical anchor is a lead until C1-e measures it; the reflection null's attainable deviation is exactly zero.
+- E3 (bitstring exchangeability): mean 0.5, sd √(1/(4L)); the attainable "effect" is zero by derivation.
+- `falsification_walk.v1`: displacement ≥ 138.6 at steps = 6400, step_scale = 1 is 3 sd (var = steps/3 → sd = 46.2), P ≈ 0.0013 one-sided under the null; at steps = 100 the same threshold is 24 sd (sd = 5.8) and cannot fire — the ladder therefore needs a per-rung threshold or a normalised field, which is recorded as a defect of v1's single-value rule, to be fixed at admission.
