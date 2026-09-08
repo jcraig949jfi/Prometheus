@@ -351,6 +351,14 @@ CREATE TABLE IF NOT EXISTS family_members (
     member_id   TEXT NOT NULL,
     world_id    TEXT,
     role        TEXT,                     -- planned | executed | abandoned
+    -- v7 ARM RULING. The arm is part of the sealed experimental DESIGN, not of
+    -- the execution. It lives here rather than in experiments.spec precisely
+    -- so that two members in different arms can carry an IDENTICAL execution
+    -- spec_hash: what was RUN and what ROLE it played are different facts, and
+    -- folding the label into the spec would make identical executions hash
+    -- differently and destroy the comparison it exists to support.
+    -- Append-only, like role: reassignment after commitment is a 409.
+    arm         TEXT,
     created_ts  REAL NOT NULL,
     PRIMARY KEY (family_id, member_kind, member_id)
 );
@@ -403,15 +411,45 @@ CREATE TABLE IF NOT EXISTS topology_groups (
 --
 -- READ ONLY, and only ever read: a grant confers no write, no claim, no work,
 -- no budget. It is revocable, and revocation is recorded rather than deleted.
+-- A READ SCOPE is a curated set of the owner's OWN worlds that exists only to
+-- be granted for reading.
+--
+-- The first cut scoped grants to a topology_group, and that was wrong. A
+-- topology group is a SHARING capability: _may_cross requires the destination
+-- and source worlds to share one, so granting read over a group would make a
+-- read grant confer artifact-IMPORT eligibility as a side effect. Worse, the
+-- corpus that actually needs granting is 189 already-existing worlds -- 98 of
+-- them in no group at all and the rest scattered over ~40 -- so using groups
+-- would have meant MUTATING topology_group on live worlds, which is the one
+-- field that changes what may cross between them.
+--
+-- A read scope touches none of that. It confers read and nothing else.
+CREATE TABLE IF NOT EXISTS read_scopes (
+    scope_id        TEXT PRIMARY KEY,
+    owner_client_id TEXT NOT NULL REFERENCES clients(client_id),
+    name            TEXT NOT NULL,
+    note            TEXT,
+    created_ts      REAL NOT NULL
+);
+CREATE INDEX IF NOT EXISTS ix_read_scopes_owner
+    ON read_scopes(owner_client_id);
+
+CREATE TABLE IF NOT EXISTS read_scope_worlds (
+    scope_id   TEXT NOT NULL REFERENCES read_scopes(scope_id),
+    world_id   TEXT NOT NULL REFERENCES worlds(world_id),
+    added_ts   REAL NOT NULL,
+    PRIMARY KEY (scope_id, world_id)
+);
+
 CREATE TABLE IF NOT EXISTS read_grants (
     grant_id          TEXT PRIMARY KEY,
-    group_id          TEXT NOT NULL REFERENCES topology_groups(group_id),
+    scope_id          TEXT NOT NULL REFERENCES read_scopes(scope_id),
     grantee_client_id TEXT NOT NULL REFERENCES clients(client_id),
     granted_by        TEXT NOT NULL REFERENCES clients(client_id),
     note              TEXT,
     created_ts        REAL NOT NULL,
     revoked_ts        REAL,
-    UNIQUE (group_id, grantee_client_id)
+    UNIQUE (scope_id, grantee_client_id)
 );
 CREATE INDEX IF NOT EXISTS ix_read_grants_grantee
     ON read_grants(grantee_client_id, revoked_ts);
@@ -643,6 +681,10 @@ class Store:
         path would assert where a value lives on evidence nobody supplied,
         which is the same reasoning that left v5 sessions LEGACY and v6
         attestations NULL."""
+        have = {r["name"] for r in cx.execute(
+            "PRAGMA table_info(family_members)").fetchall()}
+        if "arm" not in have:
+            cx.execute("ALTER TABLE family_members ADD COLUMN arm TEXT")
         have = {r["name"] for r in cx.execute(
             "PRAGMA table_info(measurements)").fetchall()}
         for col, typ in (("value_path", "TEXT"), ("direction", "TEXT"),

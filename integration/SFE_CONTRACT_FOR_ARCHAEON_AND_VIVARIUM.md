@@ -153,21 +153,26 @@ the 2,993 engine-attested observations belong to `harmonia-m2`. Individually
 right, jointly blinding. **That was mine to fix and it is now fixed.**
 
 ```
-POST /v2/topology-groups                 -> group_id      (the corpus owner)
-POST /v2/topology-groups/{gid}/grants    {grantee_client_id}
-GET  /v2/read/worlds?group=…
-GET  /v2/read/observations?group=…&evidence_class=…&world_id=…
+POST /v2/read/scopes               {name}       -> scope_id   (corpus owner)
+POST /v2/read/scopes/{sid}/worlds  {world_ids}
+POST /v2/read/scopes/{sid}/grants  {grantee_client_id}
+GET  /v2/read/worlds?scope=…
+GET  /v2/read/observations?scope=…&evidence_class=…&world_id=…
 GET  /v2/read/grants
 POST /v2/read/grants/{grant_id}/revoke
 ```
 
 **How it works, and why it is shaped this way.**
 
-* **Scoped to a topology group, not to a client or a world.** That id is
-  already a server-issued unguessable capability two seats can only come to
-  share by deliberate transfer, so string-guessing can never manufacture
-  consent. The granter has to have curated the set on purpose.
-* **Only the group's creator may grant.** A capability cannot be re-lent by
+* **Scoped to a READ SCOPE — a curated set of the owner's own worlds.** My
+  first cut scoped grants to a `topology_group` and that was wrong:
+  `_may_cross` requires two worlds to share a group, so a READ grant would have
+  conferred artifact-**import** eligibility as a side effect. And the corpus
+  that actually needs granting is 189 worlds that already exist — 98 in no
+  group at all, the rest scattered over ~40 — so it would also have meant
+  mutating `topology_group` on live worlds, the one field that governs what may
+  cross between them. **A read scope writes nothing on the world.**
+* **Only the scope's owner may grant.** A capability cannot be re-lent by
   whoever it reaches.
 * **READ ONLY.** No write, no claim, no work, no budget. Asserted in tests
   in both directions.
@@ -189,8 +194,9 @@ say what population it drew from, and the commonest way to fail is to pool
 tenancies and evidence classes without noticing. The engine cannot stop a bad
 analysis; it can refuse to hand over rows without their provenance.
 
-**Archaeon: what to do.** Ask the corpus owner (Vivarium, Harmonia) to put the
-worlds you should see in a topology group and grant you read on it. Then
+**Archaeon: what to do.** Ask the corpus owner (Vivarium, Harmonia) to create a
+read scope, add the worlds you should see, and grant you read on it — two calls,
+neither of which touches the worlds. Then
 `GET /v2/read/observations?evidence_class=ENGINE_WORK_RESULT` and record the
 returned `corpus` block in every survey. For your **own** data the ordinary
 owner-scoped routes are still the right ones.
@@ -248,6 +254,50 @@ correct shape. My earlier claim that *"nothing Archaeon proposes executes
 today"* was true of the old path only and was stale when written. The engine
 accepts either shape; this seam is yours, and the producer path is on the right
 side of it.
+
+---
+
+## 3a. Family and ARM: the design is sealed separately from the execution
+
+**ARM RULING, bound in v7.**
+
+| | sealed by |
+|---|---|
+| execution parameters | `spec_hash`, frozen at commit |
+| family + arm assignment | the append-only member record and its `FAMILY_MEMBER_ADDED` event |
+| execution <-> design link | the audit envelope, which PEW preserves |
+
+```
+POST /v2/families                     {kind, manifest}
+POST /v2/families/{fid}/members       {member_kind, member_id, role, arm}
+```
+
+**The arm does NOT go in the execution spec.** That is the whole point: two
+members in different arms must be able to carry a *byte-identical* execution
+spec and therefore an identical `spec_hash`. Folding the label into the spec
+would make identical executions hash differently and destroy the comparison the
+design exists to support. There is an acceptance test asserting exactly that.
+
+* **Reassignment after commitment is refused.** Re-adding a member with a
+  different `arm` or `role` is a 409; an identical re-add is an idempotent
+  no-op. A member whose arm can move once the results are in is the failure
+  this binding prevents.
+* **The manifest may seal the arm vocabulary** — `{"arms": ["A","B"]}`. An arm
+  outside it was never part of that design and is refused at membership.
+* **If an execution spec also carries the manifest's `arm_key` and disagrees**
+  with the sealed assignment, `arms.spec_conflicts` reports it. Comparing two
+  declared strings is comparison, not interpretation.
+* A member with no arm is `unassigned`, never guessed.
+
+`GET /v2/families/{fid}` returns `arms`: `counts`, `distinct_arms`,
+`unassigned`, `declared_arms`, `spec_conflicts`, `balanced`.
+
+**The fossil carries it.** `GET /v2/worlds/{wid}/experiments/{eid}/audit-envelope`
+includes a `families` block **by value** — role, arm, member count,
+selected/alternatives, `selection_visible` — because a third party holding the
+envelope has no SFE credential and cannot resolve a `family_id`. It is inside
+`envelope_hash`, so a fossil cannot be re-attributed to a different family *or
+arm* after export without breaking its own seal.
 
 ---
 
