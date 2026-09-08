@@ -147,15 +147,17 @@ def main(argv: list[str]) -> int:
               f"   unk {r['unknown']:>2}   urls {r['urls']:>2}"
               f"   verdicts {r['verdicts']:>2}   {status}")
         print(f"   brackets: {r['appended']} appended, {r['survived']} survived "
-              f"in a risk position, {len(r['value_loss'])} DESTROYED")
+              f"in a risk position, {len(r['value_loss'])} CANDIDATE LOSS")
         for loss in r["value_loss"]:
             total_loss += 1
-            print(f"      LOST {loss['destroyed_as']}: ...{loss['excerpt']}...")
+            print(f"      CANDIDATE {loss['destroyed_as']}: ...{loss['excerpt']}...")
         print()
 
-    print(f"{len(files)} dossiers checked, {total_loss} destroyed values.")
+    print(f"{len(files)} dossiers checked, {total_loss} CANDIDATE losses -- adjudicate by reading.")
     if total_loss:
-        print("Record each in bracket_losses.jsonl.")
+        print("A candidate is not a loss. Read the sentence: if it is complete
+        without the bracket, the marker was INSERTED and nothing was taken.
+        Record the adjudication either way in bracket_losses.jsonl.")
         print("Do NOT write a destroyed value back from inference, even when "
               "the surrounding sentence makes it obvious.")
     return 0
