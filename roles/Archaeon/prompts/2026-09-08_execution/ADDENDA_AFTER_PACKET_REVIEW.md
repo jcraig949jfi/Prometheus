@@ -103,3 +103,19 @@ no convention decision, take it from core.py; (2) compute BOTH success masks
 (at_T and stable), the two per-rule fixed-point facts, and score `accuracy`
 under the payload's declared success_criterion. Parity fixture: the six
 genomes' golden results (golden_c1b.json) reproduce through the wrapper.
+
+--------------------------------------------------------------------------------
+VIVARIUM — third addendum (B1 has landed; wrap it)
+--------------------------------------------------------------------------------
+Proteus's library is on main under proteus/ (WP-B1: 27 tests; arena parity
+64/64). Wrap it as program_eval_v0(program, spec_id, step_budget,
+budget_policy, trace_limit) -> outputs[], statuses[], steps, trace_digest,
+trace_truncated, witness (index or null), witness_reason. Take these from
+the library, decide nothing: budget exhaustion is a distinct status
+("budget"), not a counterexample, unless the payload declares
+budget_policy = COUNTEREXAMPLE; trace_limit=0 reports trace_truncated=True
+and is legitimate; there is no invalid opcode. Parity fixture: the echo
+spec (1,2,3) against CONST_ONE gives witness index 1 and output [[1]];
+reordering the spec to (3,2,1) moves the witness to 0. Register the result
+schema with the vector bounds Proteus declares (out_cap). Trace bytes go
+to SFE artifacts by digest, never inline to PEW.
