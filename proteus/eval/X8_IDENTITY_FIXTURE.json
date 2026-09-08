@@ -1,0 +1,131 @@
+{
+ "artifacts": {
+  "a": {
+   "evaluation_ref": "sha256:5845343f41b8c0a3186506720e97bd9f04c4b91c3af436883445742a2c9ce5e0",
+   "label": "halts immediately",
+   "manifest": {
+    "code_writable": false,
+    "genome": [
+     1,
+     0,
+     0,
+     0
+    ],
+    "n_regs": 4,
+    "out_cap": 4,
+    "persist": "none",
+    "schema_version": "proteus.player_manifest.v0",
+    "tape_words": 16,
+    "tick_budget": 64
+   },
+   "observed": {
+    "cases_passed": 0,
+    "cases_with_expectation": 3,
+    "has_witness": true,
+    "ops_total": 3,
+    "status_counts": {
+     "halt": 3
+    },
+    "steps_total": 3,
+    "witness_case_index": 0
+   },
+   "organism_ref": "sha256:9cfa1e97ed1ce081c0e63a0222ceee61e742fa368ddb8fbe3f7cd81c215a3681"
+  },
+  "b": {
+   "evaluation_ref": "sha256:7736b12a862586b9df795f0afdd43270e745b4ecfa70d93610056edfee01bc5f",
+   "label": "never halts; exhausts its op budget",
+   "manifest": {
+    "code_writable": false,
+    "genome": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "n_regs": 4,
+    "out_cap": 4,
+    "persist": "none",
+    "schema_version": "proteus.player_manifest.v0",
+    "tape_words": 16,
+    "tick_budget": 64
+   },
+   "observed": {
+    "cases_passed": 0,
+    "cases_with_expectation": 3,
+    "has_witness": false,
+    "ops_total": 768,
+    "status_counts": {
+     "budget": 3
+    },
+    "steps_total": 12,
+    "witness_case_index": null
+   },
+   "organism_ref": "sha256:11e1469127869a664c7d1a6c586d7a66c764f2aeb6967a68093d6d7a3329e84e"
+  }
+ },
+ "behaviour_differs": true,
+ "claim_boundary": "Both artifacts score zero. Neither is called better, interesting or a solution. The fixture demonstrates only that equal score does not imply equal observable behaviour, so retention keyed on score alone would discard a real distinction.",
+ "distinct_identity": true,
+ "environment": {
+  "affordance_hash": "f1607ee8be680acc33288a95c1a25c09ad4c799a47b0975381be8ca02d7638ce",
+  "budget_policy": "budget_status_only",
+  "library_version": "proteus.program_eval.v0",
+  "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
+  "spec_id": "bef57dbcc877a25f38b2914bdfe2a3d2b829d3fa9238533870145f60a8e70bea"
+ },
+ "equal_score": true,
+ "fixture_id": "sha256:e3689ce100a1deadab8a4f8bf308b0540fa18e4fc3123dae0c93dd110857d6eb",
+ "identity_convention": "PR-ID (D-7); see proteus/eval/identity.py",
+ "purpose": "two artifacts that a score-only view cannot tell apart and an execution view trivially can; for WP-X8's retention capacities keyed on organism_ref",
+ "schema_version": "proteus.x8_identity_fixture.v1",
+ "score": 0,
+ "specification": {
+  "cases": [
+   {
+    "expected": [
+     [
+      1
+     ]
+    ],
+    "index": 0,
+    "inputs": [
+     [
+      1
+     ]
+    ]
+   },
+   {
+    "expected": [
+     [
+      2
+     ]
+    ],
+    "index": 1,
+    "inputs": [
+     [
+      2
+     ]
+    ]
+   },
+   {
+    "expected": [
+     [
+      3
+     ]
+    ],
+    "index": 2,
+    "inputs": [
+     [
+      3
+     ]
+    ]
+   }
+  ],
+  "label": "echo",
+  "n_out": 1,
+  "ordering": "case index, ascending; ties impossible",
+  "schema_version": "proteus.evaluation_spec.v0",
+  "spec_id": "bef57dbcc877a25f38b2914bdfe2a3d2b829d3fa9238533870145f60a8e70bea",
+  "ticks": 4
+ }
+}
