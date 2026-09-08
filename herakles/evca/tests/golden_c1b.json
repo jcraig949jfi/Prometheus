@@ -1,0 +1,228 @@
+{
+ "config": {
+  "n_cells": 21,
+  "n_ics": 64,
+  "seed": 20260908,
+  "steps": 42
+ },
+ "generated_reason": "WP-C1 first generation, 2026-09-08",
+ "note": "Regression anchors for herakles.evca on a small fixed configuration. NOT a claim about published performance and NOT a tolerance; the historical comparison is C1-e.",
+ "rules": {
+  "GKL": {
+   "accuracy": 0.921875,
+   "correct_mask_digest": "sha256:3cc3947ef0b3dda37c001335a55f48e3",
+   "hex": "005f005f005f005f005fff5f005fff5f",
+   "n_correct": 59,
+   "n_incorrect": 5,
+   "uniform_fixed_points": {
+    "all_ones_fixed": true,
+    "all_zeros_fixed": true
+   },
+   "witness": [
+    6,
+    15,
+    19,
+    54,
+    55
+   ],
+   "witness_truncated": false
+  },
+  "exp": {
+   "accuracy": 0.609375,
+   "correct_mask_digest": "sha256:f0406904bd42e99996138dc1f94736f5",
+   "hex": "0505408305c90101200b0efb94c7cff7",
+   "n_correct": 39,
+   "n_incorrect": 25,
+   "uniform_fixed_points": {
+    "all_ones_fixed": true,
+    "all_zeros_fixed": true
+   },
+   "witness": [
+    2,
+    4,
+    7,
+    14,
+    17,
+    19,
+    21,
+    22,
+    23,
+    24,
+    26,
+    28,
+    31,
+    33,
+    38,
+    39,
+    44,
+    47,
+    48,
+    49,
+    51,
+    53,
+    57,
+    59,
+    63
+   ],
+   "witness_truncated": false
+  },
+  "maj": {
+   "accuracy": 0.359375,
+   "correct_mask_digest": "sha256:d646ab48caf285891efbcef8ffa03c09",
+   "hex": "000101170117177f0117177f177f7fff",
+   "n_correct": 23,
+   "n_incorrect": 41,
+   "uniform_fixed_points": {
+    "all_ones_fixed": true,
+    "all_zeros_fixed": true
+   },
+   "witness": [
+    0,
+    4,
+    6,
+    7,
+    8,
+    9,
+    11,
+    12,
+    13,
+    14,
+    15,
+    17,
+    19,
+    21,
+    23,
+    25,
+    26,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    35,
+    36,
+    37,
+    38,
+    41,
+    43,
+    45,
+    46,
+    48,
+    49,
+    50,
+    51,
+    54,
+    55,
+    56,
+    57,
+    61,
+    62
+   ],
+   "witness_truncated": false
+  },
+  "par": {
+   "accuracy": 0.890625,
+   "correct_mask_digest": "sha256:4ae49e03565977372d27679d7ef9991f",
+   "hex": "0504058705000f77037755837bffb77f",
+   "n_correct": 57,
+   "n_incorrect": 7,
+   "uniform_fixed_points": {
+    "all_ones_fixed": true,
+    "all_zeros_fixed": true
+   },
+   "witness": [
+    6,
+    8,
+    19,
+    26,
+    38,
+    48,
+    55
+   ],
+   "witness_truncated": false
+  },
+  "particle1": {
+   "accuracy": 0.6875,
+   "correct_mask_digest": "sha256:985217c47a7a71db582067c8a5134dc4",
+   "hex": "1000022441170231155f57dd734bffff",
+   "n_correct": 44,
+   "n_incorrect": 20,
+   "uniform_fixed_points": {
+    "all_ones_fixed": true,
+    "all_zeros_fixed": true
+   },
+   "witness": [
+    8,
+    9,
+    19,
+    23,
+    26,
+    28,
+    31,
+    33,
+    36,
+    38,
+    39,
+    46,
+    48,
+    49,
+    51,
+    53,
+    54,
+    60,
+    61,
+    63
+   ],
+   "witness_truncated": false
+  },
+  "particle2": {
+   "accuracy": 0.6875,
+   "correct_mask_digest": "sha256:32544e5c61ba452d467a373900540b6f",
+   "hex": "031001001fa00013331f9fff5975ffff",
+   "n_correct": 44,
+   "n_incorrect": 20,
+   "uniform_fixed_points": {
+    "all_ones_fixed": true,
+    "all_zeros_fixed": true
+   },
+   "witness": [
+    0,
+    4,
+    7,
+    15,
+    17,
+    19,
+    22,
+    23,
+    25,
+    26,
+    31,
+    33,
+    37,
+    38,
+    39,
+    51,
+    53,
+    57,
+    59,
+    63
+   ],
+   "witness_truncated": false
+  }
+ },
+ "selected_trajectory": {
+  "digest": "sha256:2f57832e2dd4c31e57525a307f50aa0ecb561ddfd38817e273c5e2d8565dd41a",
+  "inputs": {
+   "ic_index": 0,
+   "n_cells": 21,
+   "rule_hex": "0504058705000f77037755837bffb77f",
+   "seed": 20260908,
+   "steps": 42
+  },
+  "shape": [
+   43,
+   21
+  ]
+ }
+}
