@@ -155,9 +155,11 @@ def main(argv: list[str]) -> int:
 
     print(f"{len(files)} dossiers checked, {total_loss} CANDIDATE losses -- adjudicate by reading.")
     if total_loss:
-        print("A candidate is not a loss. Read the sentence: if it is complete
-        without the bracket, the marker was INSERTED and nothing was taken.
-        Record the adjudication either way in bracket_losses.jsonl.")
+        print("A candidate is not a loss. Read the sentence: if it is "
+              "complete without the bracket,")
+        print("the marker was INSERTED and nothing was taken. Record the "
+              "adjudication either way")
+        print("in bracket_losses.jsonl, with its reason, both ways.")
         print("Do NOT write a destroyed value back from inference, even when "
               "the surrounding sentence makes it obvious.")
     return 0
