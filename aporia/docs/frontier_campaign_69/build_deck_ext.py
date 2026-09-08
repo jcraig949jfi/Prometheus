@@ -394,6 +394,129 @@ EXTRA = [
         "The comparison that carries the claim is performance at matched "
         "controller complexity across morphologies.",
     ),
+    (
+        80,
+        "Library Learning and Program Induction",
+        # WHY. The best-grounded entry in the whole extension, because the
+        # grounding is INTERNAL as well as corpus-side. Named by dossiers 36
+        # and 42. And Aporia's own resume records that Q060's T2 demands a
+        # leave-one-out non-redundancy test over an extensional-signature
+        # closure which "DreamCoder, Stitch, babble, LILO and ShapeCoder have
+        # never executed" -- with the P177 measurement that `double` reads
+        # 4.2 percent and is therefore a named composition, while `rotate`
+        # reads 99.2 percent and is a genuine generator. This dossier is a
+        # literature check on a claim this seat has already made.
+        "When a system invents a new primitive and adds it to its library, "
+        "is that primitive a genuine new generator or just a name for a "
+        "composition it could already express, and does anyone test which?",
+        "The system alternates two phases. In the wake phase it searches for "
+        "programs solving a batch of tasks, using its current library of "
+        "primitives and a learned neural policy that proposes which "
+        "primitives to try. In the sleep phase it examines the solutions it "
+        "found, extracts subexpressions that recur across them, and promotes "
+        "those subexpressions to named primitives in the library, so the "
+        "next wake phase searches a space where those patterns cost one "
+        "symbol instead of many. Compression is the promotion criterion: a "
+        "candidate abstraction earns its place if adding it shortens the "
+        "description length of the solution corpus. Later systems replace "
+        "the expensive search over candidate abstractions with an exact "
+        "method over e-graphs, or use a language model to propose and name "
+        "them. The step that is never separately audited is whether a "
+        "promoted primitive extends what the library can express at all, or "
+        "merely shortens something already reachable.",
+        "The candidate is an abstraction proposed for promotion into the "
+        "library: a subexpression recurring across solved tasks. What varies "
+        "is which subexpression. What is judged is the compression it buys "
+        "over the solution corpus, and downstream, whether tasks unsolved "
+        "before become solvable after.",
+        "Description length of the solution corpus before and after "
+        "promotion, in symbols, and the solve rate on held-out tasks at a "
+        "fixed search budget. The measure that is NOT standard, and the one "
+        "this report should hunt for, is a leave-one-out test: remove one "
+        "library primitive, enumerate the closure of what remains more "
+        "deeply, and report what fraction of the lost behaviours never comes "
+        "back.",
+    ),
+    (
+        81,
+        "Swarm Intelligence and Stigmergy",
+        # WHY. Referenced across six dossiers, with particle swarm named
+        # specifically in three (53, 67, 69), and uncovered by the 69. It is
+        # the canonical case of computation with NO central representation --
+        # the structure lives in the environment rather than in any agent --
+        # which is a different mechanism from every one of the 31 the matrix
+        # found.
+        "Can a colony of agents that share no plan and no global view solve "
+        "a problem by modifying their shared environment, and is the "
+        "resulting behaviour better explained by the agents or by the trace "
+        "they leave?",
+        "Each agent follows a simple local rule and deposits a signal into "
+        "the environment -- a pheromone on a graph edge, a marker on a "
+        "grid -- which decays over time and biases the choices of agents that "
+        "arrive later. No agent holds the solution and none communicates "
+        "directly with another. In ant colony optimisation, agents walk a "
+        "graph choosing edges with probability weighted by deposited "
+        "pheromone and by a local heuristic, then reinforce the edges of the "
+        "better tours they found; evaporation is what stops early accidents "
+        "from locking the colony in. The mechanism of interest is stigmergy: "
+        "the coordination is carried entirely by modifications to the shared "
+        "medium, so the environment is doing the remembering. Particle swarm "
+        "optimisation is the continuous relative, where each particle is "
+        "pulled toward its own best position and the swarm's best, and the "
+        "standing critique is that its behaviour is dominated by the "
+        "parameters controlling those two pulls rather than by anything "
+        "swarm-like.",
+        "The candidate is a solution constructed by one agent's walk, for "
+        "instance a tour of a graph. What varies is the path taken, which is "
+        "sampled from the pheromone field rather than chosen by any "
+        "optimiser. What is judged is the cost of that solution, which then "
+        "feeds back as deposit.",
+        "Best and mean solution cost against a known optimum, on the "
+        "problem's own scale, as a function of evaluations. Separately, a "
+        "measure of the pheromone field itself, such as its entropy over "
+        "time, which is what distinguishes a colony that is converging from "
+        "one that has stagnated.",
+    ),
+    (
+        82,
+        "Self-Organised Criticality and the Edge of Chaos",
+        # WHY. Named by dossiers 70 and 72, and it is the claim underneath
+        # BOTH of them: the cellular-automata line says the interesting rules
+        # sit near a phase transition, and reservoir computing says the
+        # reservoir only works near the order-chaos boundary. It is also the
+        # most-abused idea in this space, which makes its negative results
+        # the point of asking.
+        "Do systems that compute well actually sit at a critical point "
+        "between order and chaos, and is that a measured property or a story "
+        "told after the fact?",
+        "A system is tuned by one parameter -- the fraction of ones in a "
+        "cellular automaton rule table, the spectral radius of a reservoir, "
+        "the mean connectivity of a random Boolean network -- and its "
+        "dynamics change character as that parameter is swept. At low values "
+        "perturbations die out and the system freezes; at high values they "
+        "spread and the system is chaotic; between them is a narrow region "
+        "where a perturbation neither dies nor explodes. The claim, made "
+        "repeatedly since the late 1980s, is that this region is where "
+        "systems can store, transmit and combine information, and therefore "
+        "where computation is possible. It is measured by order parameters "
+        "such as the Lyapunov exponent, the size distribution of avalanches, "
+        "or the divergence rate of two initially close configurations. The "
+        "history matters as much as the claim: the original demonstration "
+        "linking a specific rule-table statistic to computational capability "
+        "was challenged on the grounds that the correlation reflected the "
+        "genetic algorithm's search bias rather than a property of the rule "
+        "space, and that dispute is the most instructive thing in the field.",
+        "The candidate is a system instance at a given setting of the "
+        "control parameter: one rule table, one reservoir, one network. What "
+        "varies is the control parameter. What is judged is a dynamical order "
+        "parameter, and separately whether the system can perform a "
+        "computational task.",
+        "A dynamical order parameter on a continuous scale -- Lyapunov "
+        "exponent, avalanche size exponent, or normalised Hamming distance "
+        "growth between perturbed and unperturbed runs -- paired with task "
+        "performance measured independently, so that the correlation between "
+        "them is the result rather than the assumption.",
+    ),
 ]
 
 
