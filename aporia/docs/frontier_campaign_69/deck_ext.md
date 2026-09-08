@@ -177,3 +177,1019 @@ headings given above. Prefer specificity over hedging throughout. Length
 should follow the material; do not pad, and do not compress Part 3, Part 5 or
 Part 7 to save room.
 ```
+
+### Prompt 71: Unsupervised Environment Design
+
+```
+FRONTIER PRACTITIONER DOSSIER
+Field: Unsupervised Environment Design
+
+WHO IS ASKING AND WHY
+
+I am building an in-silico experimental research programme and I want to run
+real experiments in this field, not read about them. Treat me as a competent
+computational scientist who is new to THIS field specifically. I have compute,
+I can write code, and I can build what does not exist. What I do not have is
+the field's tacit knowledge: which papers are load-bearing, which software is
+actually alive, which datasets are the ones everyone uses, which published
+results reproduce and which quietly do not.
+
+The organising question for the whole report is this. If I wanted to become a
+person who runs frontier experiments in this field, starting today in 2026,
+what would I read, install, download, reproduce, and build, in what order, and
+what would I be able to measure at the end of it?
+
+THE SPECIFIC METHOD THIS IS ANCHORED TO
+
+I am anchoring on one concrete method from this field so the report stays
+specific rather than becoming a survey. Do not confine yourself to it, but do
+make sure the report covers it and says where it sits relative to the current
+frontier.
+
+Question the method asks:
+When an agent and the environments it trains on are optimised together, what
+decides which environment to generate next, and does any such rule provably
+keep producing environments the agent can still learn from rather than ones
+it has already mastered or cannot touch?
+
+Mechanism as I currently understand it:
+A generator proposes environment parameters -- a maze layout, a terrain, a
+set of physics constants. A student policy is trained on them. Rather than
+scoring an environment by difficulty, which collapses onto the impossible,
+the generator scores it by REGRET: the gap between what the student achieves
+on that environment and what the best achievable policy would achieve.
+Environments with high regret are ones the student is failing but could
+learn, so the curriculum concentrates there. Regret is not directly
+computable, so the methods differ in what they substitute for it -- the gap
+between the student's return and the maximum return seen across a
+population, or the positive part of the temporal-difference error. The
+generator itself may be a learned adversary, or a random sampler whose
+outputs are merely CURATED by a replay buffer, and the surprising empirical
+result is that curation of random levels often matches or beats a learned
+adversary.
+
+What varies and what is judged:
+The candidate is an environment: a parameter vector the generator emits.
+What varies is the level layout or the physics settings. What is judged is
+the estimated regret the student incurs on it, and downstream, whether
+training on the curriculum transfers to held-out environments the generator
+never produced.
+
+What is measured:
+Estimated regret per environment, on the scale of the return. Downstream,
+zero-shot transfer performance on a fixed held-out set of human-designed
+levels, which is the only number that is not self-referential.
+
+If my description above is wrong, outdated, or misattributed, say so
+explicitly and correct it. A correction is one of the most valuable things
+this report can contain.
+
+WHAT I NEED, IN EIGHT PARTS
+
+Use these eight headings, in this order, as plain text headings.
+
+PART 1. THE FIELD IN 2026, AND ITS FRONTIER
+What this field actually is now, in one or two paragraphs, and then the hard
+part: what is SETTLED, what is CONTESTED, and what is OPEN. Name the specific
+live disagreements and who is on each side. Say what changed in the last three
+years. If the field is dormant or has been absorbed into another field, say
+that plainly, name the absorbing field, and say what was lost in the merge.
+
+PART 2. THE READING LIST THAT ACTUALLY MATTERS
+Between eight and fifteen primary sources. For each one give, on its own
+lines: authors, year, title, venue, and an identifier which must be either an
+arXiv number written as arXiv:2401.01234 or a DOI written as DOI 10.1000/xyz.
+Then one or two sentences on the specific experiment or result the paper
+contains and why a practitioner must know it. Split the list into FOUNDATIONAL
+sources that define the method and CURRENT sources from roughly 2023 onward
+that define where the frontier is. Prefer primary sources over surveys, but
+name the one best survey if a good one exists.
+
+PART 3. SOFTWARE I CAN ACTUALLY RUN
+This part is the most important one and I want it concrete and skeptical. For
+every piece of software you name, give on separate lines: the name, a bare
+URL, the implementation language, the licence, the approximate year of most
+recent activity, and a maturity verdict which must be exactly one of
+MAINTAINED, DORMANT, or ABANDONED. Then say in one or two sentences what
+experiment it can actually run today, and what its known limitations or
+gotchas are. Cover, where they exist: the reference implementation from the
+originating authors, the community standard that most people actually use, any
+benchmark or evaluation harness, and any modern reimplementation that is
+faster or better maintained than the original. Be explicit about software that
+is famous but effectively dead, and about software whose published results
+cannot be reproduced with the current release. If the canonical implementation
+is unbuildable on modern toolchains, say so and say what people do instead.
+
+PART 4. DATA AND BENCHMARKS
+Named datasets, benchmark suites, task collections, precomputed result tables,
+and archived experimental records. For each: name, bare URL or access route,
+approximate size, licence or access restriction, and what it is used to
+measure. Distinguish benchmarks the field treats as authoritative from ones
+that are merely popular. Note any known contamination, saturation, or
+overfitting problem with a benchmark, and any case where a benchmark is known
+to have been solved in a way that does not generalise.
+
+PART 5. THE REPRODUCTION RECIPE
+Pick the single most reproducible and most informative experiment in this
+field and specify it so that I could execute it. I want: the exact software
+and version, the exact dataset or generator, every parameter that has to be
+set and the value the original used, the number of independent replicates and
+the seeding regime, the approximate compute cost in CPU or GPU hours, the
+expected result with the published number to compare against, and the citation
+that number comes from. Then, separately, name the three most common ways
+people get this experiment wrong. If the field has no experiment that meets
+this bar, say so directly and explain what is missing, because that is itself
+a finding I need.
+
+PART 6. WHAT DOES NOT EXIST AND WOULD HAVE TO BE BUILT
+What a serious entrant has to write themselves because no off-the-shelf tool
+provides it. Be specific about the interface: what goes in, what comes out,
+what the hard part is, and roughly how much work it is. Name any case where
+several groups have each rebuilt the same missing component privately, because
+that is the strongest signal of a real gap.
+
+PART 7. NEGATIVE RESULTS, FAILED PROGRAMMES, AND STANDING CRITIQUES
+What has been tried in this field and did not work. Retracted or corrected
+results. Claims that failed to replicate. Methods that looked strong and were
+later shown to be measuring an artefact, a baseline, or the benchmark rather
+than the phenomenon. The standing methodological critiques of the field and
+who made them. Where a critique was answered, say how; where it was never
+answered, say that. This part matters as much as Part 2 and I would rather
+have it long than short.
+
+PART 8. WHERE AN ENTRANT SHOULD ACTUALLY AIM IN 2026
+Given all of the above: what would a well-resourced newcomer do now that has
+not already been done? Name specific experiments, not research directions. For
+each, say what makes it feasible now that was not feasible before, what it
+would measure, and what result would falsify the idea behind it. Rank them.
+Then say which of them you think will NOT work, and why.
+
+RULES ON EVIDENCE AND FORMAT
+
+Separate what you verified from what you inferred. If you could not confirm
+that a repository still exists, or that a paper says what it is cited as
+saying, mark that entry UNCONFIRMED rather than dropping it. An honest
+UNCONFIRMED is more useful to me than a confident guess. Do not invent
+repository URLs, arXiv numbers, DOIs, or version numbers under any
+circumstances; if you do not know an identifier, write IDENTIFIER UNKNOWN.
+
+Format rules, and the first one is a hard constraint that has broken previous
+reports of mine.
+
+Do not use square brackets anywhere in the output, for any purpose. Write
+every identifier bare and unwrapped: arXiv:2401.01234, DOI 10.1000/xyz,
+https://github.com/example/repo. Never wrap a citation, an identifier, a URL,
+a list, or a range in square brackets, and never use markdown link syntax.
+Write ranges and enumerations as plain prose or as quoted strings such as
+"16, 24, 32" or "100000 to 999999".
+
+Otherwise: plain text, no markdown tables, no code fences. Use the eight PART
+headings given above. Prefer specificity over hedging throughout. Length
+should follow the material; do not pad, and do not compress Part 3, Part 5 or
+Part 7 to save room.
+```
+
+### Prompt 72: Reservoir Computing
+
+```
+FRONTIER PRACTITIONER DOSSIER
+Field: Reservoir Computing
+
+WHO IS ASKING AND WHY
+
+I am building an in-silico experimental research programme and I want to run
+real experiments in this field, not read about them. Treat me as a competent
+computational scientist who is new to THIS field specifically. I have compute,
+I can write code, and I can build what does not exist. What I do not have is
+the field's tacit knowledge: which papers are load-bearing, which software is
+actually alive, which datasets are the ones everyone uses, which published
+results reproduce and which quietly do not.
+
+The organising question for the whole report is this. If I wanted to become a
+person who runs frontier experiments in this field, starting today in 2026,
+what would I read, install, download, reproduce, and build, in what order, and
+what would I be able to measure at the end of it?
+
+THE SPECIFIC METHOD THIS IS ANCHORED TO
+
+I am anchoring on one concrete method from this field so the report stays
+specific rather than becoming a survey. Do not confine yourself to it, but do
+make sure the report covers it and says where it sits relative to the current
+frontier.
+
+Question the method asks:
+Can a fixed, randomly wired dynamical system do the computational work, so
+that only a linear readout has to be trained, and what property of the
+system decides whether it can?
+
+Mechanism as I currently understand it:
+A reservoir is a large recurrent network whose internal weights are
+generated at random and then NEVER TRAINED. The input is injected into it
+and the reservoir's state evolves; the high-dimensional trajectory of that
+state is recorded. The only thing fitted is a linear map from reservoir
+states to the desired output, obtained in closed form by ridge regression,
+so there is no backpropagation through time and no gradient anywhere. The
+reservoir works because it projects the input history into a space where the
+task becomes linearly separable, and it does this only if its dynamics sit
+near the boundary between order and chaos -- controlled in practice by the
+spectral radius of the random weight matrix. The same argument has been made
+for physical substrates: buckets of water, photonic systems, memristor
+arrays and random Boolean networks have all been used as reservoirs, on the
+claim that the computation is a property of the dynamics rather than of any
+designed circuit.
+
+What varies and what is judged:
+The candidate is the readout weights, which are the only trained object,
+though what is really under test is the reservoir: its size, spectral
+radius, input scaling and connection density. What is judged is prediction
+error on a held-out continuation of a time series.
+
+What is measured:
+Normalised root-mean-square error on a held-out horizon, or the valid-
+prediction time before the forecast diverges from a chaotic target, measured
+in Lyapunov times so it is comparable across systems.
+
+If my description above is wrong, outdated, or misattributed, say so
+explicitly and correct it. A correction is one of the most valuable things
+this report can contain.
+
+WHAT I NEED, IN EIGHT PARTS
+
+Use these eight headings, in this order, as plain text headings.
+
+PART 1. THE FIELD IN 2026, AND ITS FRONTIER
+What this field actually is now, in one or two paragraphs, and then the hard
+part: what is SETTLED, what is CONTESTED, and what is OPEN. Name the specific
+live disagreements and who is on each side. Say what changed in the last three
+years. If the field is dormant or has been absorbed into another field, say
+that plainly, name the absorbing field, and say what was lost in the merge.
+
+PART 2. THE READING LIST THAT ACTUALLY MATTERS
+Between eight and fifteen primary sources. For each one give, on its own
+lines: authors, year, title, venue, and an identifier which must be either an
+arXiv number written as arXiv:2401.01234 or a DOI written as DOI 10.1000/xyz.
+Then one or two sentences on the specific experiment or result the paper
+contains and why a practitioner must know it. Split the list into FOUNDATIONAL
+sources that define the method and CURRENT sources from roughly 2023 onward
+that define where the frontier is. Prefer primary sources over surveys, but
+name the one best survey if a good one exists.
+
+PART 3. SOFTWARE I CAN ACTUALLY RUN
+This part is the most important one and I want it concrete and skeptical. For
+every piece of software you name, give on separate lines: the name, a bare
+URL, the implementation language, the licence, the approximate year of most
+recent activity, and a maturity verdict which must be exactly one of
+MAINTAINED, DORMANT, or ABANDONED. Then say in one or two sentences what
+experiment it can actually run today, and what its known limitations or
+gotchas are. Cover, where they exist: the reference implementation from the
+originating authors, the community standard that most people actually use, any
+benchmark or evaluation harness, and any modern reimplementation that is
+faster or better maintained than the original. Be explicit about software that
+is famous but effectively dead, and about software whose published results
+cannot be reproduced with the current release. If the canonical implementation
+is unbuildable on modern toolchains, say so and say what people do instead.
+
+PART 4. DATA AND BENCHMARKS
+Named datasets, benchmark suites, task collections, precomputed result tables,
+and archived experimental records. For each: name, bare URL or access route,
+approximate size, licence or access restriction, and what it is used to
+measure. Distinguish benchmarks the field treats as authoritative from ones
+that are merely popular. Note any known contamination, saturation, or
+overfitting problem with a benchmark, and any case where a benchmark is known
+to have been solved in a way that does not generalise.
+
+PART 5. THE REPRODUCTION RECIPE
+Pick the single most reproducible and most informative experiment in this
+field and specify it so that I could execute it. I want: the exact software
+and version, the exact dataset or generator, every parameter that has to be
+set and the value the original used, the number of independent replicates and
+the seeding regime, the approximate compute cost in CPU or GPU hours, the
+expected result with the published number to compare against, and the citation
+that number comes from. Then, separately, name the three most common ways
+people get this experiment wrong. If the field has no experiment that meets
+this bar, say so directly and explain what is missing, because that is itself
+a finding I need.
+
+PART 6. WHAT DOES NOT EXIST AND WOULD HAVE TO BE BUILT
+What a serious entrant has to write themselves because no off-the-shelf tool
+provides it. Be specific about the interface: what goes in, what comes out,
+what the hard part is, and roughly how much work it is. Name any case where
+several groups have each rebuilt the same missing component privately, because
+that is the strongest signal of a real gap.
+
+PART 7. NEGATIVE RESULTS, FAILED PROGRAMMES, AND STANDING CRITIQUES
+What has been tried in this field and did not work. Retracted or corrected
+results. Claims that failed to replicate. Methods that looked strong and were
+later shown to be measuring an artefact, a baseline, or the benchmark rather
+than the phenomenon. The standing methodological critiques of the field and
+who made them. Where a critique was answered, say how; where it was never
+answered, say that. This part matters as much as Part 2 and I would rather
+have it long than short.
+
+PART 8. WHERE AN ENTRANT SHOULD ACTUALLY AIM IN 2026
+Given all of the above: what would a well-resourced newcomer do now that has
+not already been done? Name specific experiments, not research directions. For
+each, say what makes it feasible now that was not feasible before, what it
+would measure, and what result would falsify the idea behind it. Rank them.
+Then say which of them you think will NOT work, and why.
+
+RULES ON EVIDENCE AND FORMAT
+
+Separate what you verified from what you inferred. If you could not confirm
+that a repository still exists, or that a paper says what it is cited as
+saying, mark that entry UNCONFIRMED rather than dropping it. An honest
+UNCONFIRMED is more useful to me than a confident guess. Do not invent
+repository URLs, arXiv numbers, DOIs, or version numbers under any
+circumstances; if you do not know an identifier, write IDENTIFIER UNKNOWN.
+
+Format rules, and the first one is a hard constraint that has broken previous
+reports of mine.
+
+Do not use square brackets anywhere in the output, for any purpose. Write
+every identifier bare and unwrapped: arXiv:2401.01234, DOI 10.1000/xyz,
+https://github.com/example/repo. Never wrap a citation, an identifier, a URL,
+a list, or a range in square brackets, and never use markdown link syntax.
+Write ranges and enumerations as plain prose or as quoted strings such as
+"16, 24, 32" or "100000 to 999999".
+
+Otherwise: plain text, no markdown tables, no code fences. Use the eight PART
+headings given above. Prefer specificity over hedging throughout. Length
+should follow the material; do not pad, and do not compress Part 3, Part 5 or
+Part 7 to save room.
+```
+
+### Prompt 73: Unsupervised Skill Discovery
+
+```
+FRONTIER PRACTITIONER DOSSIER
+Field: Unsupervised Skill Discovery
+
+WHO IS ASKING AND WHY
+
+I am building an in-silico experimental research programme and I want to run
+real experiments in this field, not read about them. Treat me as a competent
+computational scientist who is new to THIS field specifically. I have compute,
+I can write code, and I can build what does not exist. What I do not have is
+the field's tacit knowledge: which papers are load-bearing, which software is
+actually alive, which datasets are the ones everyone uses, which published
+results reproduce and which quietly do not.
+
+The organising question for the whole report is this. If I wanted to become a
+person who runs frontier experiments in this field, starting today in 2026,
+what would I read, install, download, reproduce, and build, in what order, and
+what would I be able to measure at the end of it?
+
+THE SPECIFIC METHOD THIS IS ANCHORED TO
+
+I am anchoring on one concrete method from this field so the report stays
+specific rather than becoming a survey. Do not confine yourself to it, but do
+make sure the report covers it and says where it sits relative to the current
+frontier.
+
+Question the method asks:
+Without any reward, can an agent discover a set of distinct, reusable
+behaviours, and is the number it finds limited by the algorithm or by the
+objective itself?
+
+Mechanism as I currently understand it:
+The agent learns a policy conditioned on a latent skill variable z drawn
+from a fixed distribution. Training maximises the mutual information between
+z and the states the policy visits, which is estimated with a learned
+discriminator that tries to predict which z produced an observed state. The
+policy is rewarded for reaching states that make the discriminator
+confident, so different z values are pushed toward visiting distinguishable
+regions. No task reward is used at any point. The standing objection is that
+mutual information is maximised as soon as the skills are merely
+DISTINGUISHABLE, which a set of policies that each stand still in a slightly
+different spot achieves perfectly, so the objective does not by itself
+demand that skills be far apart, dynamic, or useful. Later methods add an
+explicit distance or Lipschitz constraint to force coverage rather than mere
+separability.
+
+What varies and what is judged:
+The candidate is a skill, meaning the policy obtained by conditioning on one
+value of the latent z. What varies is z. What is judged is how
+distinguishable the resulting state visitation is from that of the other
+skills.
+
+What is measured:
+The discriminator's log-probability of the correct skill, which is a lower
+bound on the mutual information in nats. Separately, state coverage of the
+reachable space, and downstream task return when the discovered skills are
+frozen and used as primitives.
+
+If my description above is wrong, outdated, or misattributed, say so
+explicitly and correct it. A correction is one of the most valuable things
+this report can contain.
+
+WHAT I NEED, IN EIGHT PARTS
+
+Use these eight headings, in this order, as plain text headings.
+
+PART 1. THE FIELD IN 2026, AND ITS FRONTIER
+What this field actually is now, in one or two paragraphs, and then the hard
+part: what is SETTLED, what is CONTESTED, and what is OPEN. Name the specific
+live disagreements and who is on each side. Say what changed in the last three
+years. If the field is dormant or has been absorbed into another field, say
+that plainly, name the absorbing field, and say what was lost in the merge.
+
+PART 2. THE READING LIST THAT ACTUALLY MATTERS
+Between eight and fifteen primary sources. For each one give, on its own
+lines: authors, year, title, venue, and an identifier which must be either an
+arXiv number written as arXiv:2401.01234 or a DOI written as DOI 10.1000/xyz.
+Then one or two sentences on the specific experiment or result the paper
+contains and why a practitioner must know it. Split the list into FOUNDATIONAL
+sources that define the method and CURRENT sources from roughly 2023 onward
+that define where the frontier is. Prefer primary sources over surveys, but
+name the one best survey if a good one exists.
+
+PART 3. SOFTWARE I CAN ACTUALLY RUN
+This part is the most important one and I want it concrete and skeptical. For
+every piece of software you name, give on separate lines: the name, a bare
+URL, the implementation language, the licence, the approximate year of most
+recent activity, and a maturity verdict which must be exactly one of
+MAINTAINED, DORMANT, or ABANDONED. Then say in one or two sentences what
+experiment it can actually run today, and what its known limitations or
+gotchas are. Cover, where they exist: the reference implementation from the
+originating authors, the community standard that most people actually use, any
+benchmark or evaluation harness, and any modern reimplementation that is
+faster or better maintained than the original. Be explicit about software that
+is famous but effectively dead, and about software whose published results
+cannot be reproduced with the current release. If the canonical implementation
+is unbuildable on modern toolchains, say so and say what people do instead.
+
+PART 4. DATA AND BENCHMARKS
+Named datasets, benchmark suites, task collections, precomputed result tables,
+and archived experimental records. For each: name, bare URL or access route,
+approximate size, licence or access restriction, and what it is used to
+measure. Distinguish benchmarks the field treats as authoritative from ones
+that are merely popular. Note any known contamination, saturation, or
+overfitting problem with a benchmark, and any case where a benchmark is known
+to have been solved in a way that does not generalise.
+
+PART 5. THE REPRODUCTION RECIPE
+Pick the single most reproducible and most informative experiment in this
+field and specify it so that I could execute it. I want: the exact software
+and version, the exact dataset or generator, every parameter that has to be
+set and the value the original used, the number of independent replicates and
+the seeding regime, the approximate compute cost in CPU or GPU hours, the
+expected result with the published number to compare against, and the citation
+that number comes from. Then, separately, name the three most common ways
+people get this experiment wrong. If the field has no experiment that meets
+this bar, say so directly and explain what is missing, because that is itself
+a finding I need.
+
+PART 6. WHAT DOES NOT EXIST AND WOULD HAVE TO BE BUILT
+What a serious entrant has to write themselves because no off-the-shelf tool
+provides it. Be specific about the interface: what goes in, what comes out,
+what the hard part is, and roughly how much work it is. Name any case where
+several groups have each rebuilt the same missing component privately, because
+that is the strongest signal of a real gap.
+
+PART 7. NEGATIVE RESULTS, FAILED PROGRAMMES, AND STANDING CRITIQUES
+What has been tried in this field and did not work. Retracted or corrected
+results. Claims that failed to replicate. Methods that looked strong and were
+later shown to be measuring an artefact, a baseline, or the benchmark rather
+than the phenomenon. The standing methodological critiques of the field and
+who made them. Where a critique was answered, say how; where it was never
+answered, say that. This part matters as much as Part 2 and I would rather
+have it long than short.
+
+PART 8. WHERE AN ENTRANT SHOULD ACTUALLY AIM IN 2026
+Given all of the above: what would a well-resourced newcomer do now that has
+not already been done? Name specific experiments, not research directions. For
+each, say what makes it feasible now that was not feasible before, what it
+would measure, and what result would falsify the idea behind it. Rank them.
+Then say which of them you think will NOT work, and why.
+
+RULES ON EVIDENCE AND FORMAT
+
+Separate what you verified from what you inferred. If you could not confirm
+that a repository still exists, or that a paper says what it is cited as
+saying, mark that entry UNCONFIRMED rather than dropping it. An honest
+UNCONFIRMED is more useful to me than a confident guess. Do not invent
+repository URLs, arXiv numbers, DOIs, or version numbers under any
+circumstances; if you do not know an identifier, write IDENTIFIER UNKNOWN.
+
+Format rules, and the first one is a hard constraint that has broken previous
+reports of mine.
+
+Do not use square brackets anywhere in the output, for any purpose. Write
+every identifier bare and unwrapped: arXiv:2401.01234, DOI 10.1000/xyz,
+https://github.com/example/repo. Never wrap a citation, an identifier, a URL,
+a list, or a range in square brackets, and never use markdown link syntax.
+Write ranges and enumerations as plain prose or as quoted strings such as
+"16, 24, 32" or "100000 to 999999".
+
+Otherwise: plain text, no markdown tables, no code fences. Use the eight PART
+headings given above. Prefer specificity over hedging throughout. Length
+should follow the material; do not pad, and do not compress Part 3, Part 5 or
+Part 7 to save room.
+```
+
+### Prompt 74: Emergent Self-Replication in Artificial Systems
+
+```
+FRONTIER PRACTITIONER DOSSIER
+Field: Emergent Self-Replication in Artificial Systems
+
+WHO IS ASKING AND WHY
+
+I am building an in-silico experimental research programme and I want to run
+real experiments in this field, not read about them. Treat me as a competent
+computational scientist who is new to THIS field specifically. I have compute,
+I can write code, and I can build what does not exist. What I do not have is
+the field's tacit knowledge: which papers are load-bearing, which software is
+actually alive, which datasets are the ones everyone uses, which published
+results reproduce and which quietly do not.
+
+The organising question for the whole report is this. If I wanted to become a
+person who runs frontier experiments in this field, starting today in 2026,
+what would I read, install, download, reproduce, and build, in what order, and
+what would I be able to measure at the end of it?
+
+THE SPECIFIC METHOD THIS IS ANCHORED TO
+
+I am anchoring on one concrete method from this field so the report stays
+specific rather than becoming a survey. Do not confine yourself to it, but do
+make sure the report covers it and says where it sits relative to the current
+frontier.
+
+Question the method asks:
+Can a self-replicating program arise from a soup that was never given one,
+and how would you tell an actual replicator from a pattern that merely
+persists?
+
+Mechanism as I currently understand it:
+A population of random instruction sequences is placed in a shared memory
+and executed, usually with no fitness function and no selection imposed from
+outside. Nothing rewards replication. If a sequence happens to copy itself,
+its copies are also executed, so the copying is its own reward and the
+population composition shifts on its own. The historical systems seeded a
+hand-written ancestor and studied what evolution did to it afterwards, which
+assumes away the harder question. The interesting modern claim is that
+replicators arise SPONTANEOUSLY from random initial conditions in
+sufficiently expressive instruction sets, given long enough, and that the
+transition shows up as a sharp change in a measurable quantity such as the
+entropy of the instruction distribution or the length of the longest
+repeated substring in memory. The measurement problem is real: persistence,
+parasitism on another sequence's copy loop, and genuine autonomous self-
+copying all look similar from outside.
+
+What varies and what is judged:
+The candidate is a sequence of instructions occupying a region of shared
+memory. Nothing is selected by an external scorer; what varies is what the
+soup happens to contain after execution. What is judged is whether a
+sequence causes copies of itself to appear.
+
+What is measured:
+The time to first replicator, in executed instructions, which is a count
+with no upper bound and may be censored if none appears. Alongside it a
+continuous order parameter such as the entropy of the instruction
+distribution over time, whose drop is the claimed signature of the
+transition.
+
+If my description above is wrong, outdated, or misattributed, say so
+explicitly and correct it. A correction is one of the most valuable things
+this report can contain.
+
+WHAT I NEED, IN EIGHT PARTS
+
+Use these eight headings, in this order, as plain text headings.
+
+PART 1. THE FIELD IN 2026, AND ITS FRONTIER
+What this field actually is now, in one or two paragraphs, and then the hard
+part: what is SETTLED, what is CONTESTED, and what is OPEN. Name the specific
+live disagreements and who is on each side. Say what changed in the last three
+years. If the field is dormant or has been absorbed into another field, say
+that plainly, name the absorbing field, and say what was lost in the merge.
+
+PART 2. THE READING LIST THAT ACTUALLY MATTERS
+Between eight and fifteen primary sources. For each one give, on its own
+lines: authors, year, title, venue, and an identifier which must be either an
+arXiv number written as arXiv:2401.01234 or a DOI written as DOI 10.1000/xyz.
+Then one or two sentences on the specific experiment or result the paper
+contains and why a practitioner must know it. Split the list into FOUNDATIONAL
+sources that define the method and CURRENT sources from roughly 2023 onward
+that define where the frontier is. Prefer primary sources over surveys, but
+name the one best survey if a good one exists.
+
+PART 3. SOFTWARE I CAN ACTUALLY RUN
+This part is the most important one and I want it concrete and skeptical. For
+every piece of software you name, give on separate lines: the name, a bare
+URL, the implementation language, the licence, the approximate year of most
+recent activity, and a maturity verdict which must be exactly one of
+MAINTAINED, DORMANT, or ABANDONED. Then say in one or two sentences what
+experiment it can actually run today, and what its known limitations or
+gotchas are. Cover, where they exist: the reference implementation from the
+originating authors, the community standard that most people actually use, any
+benchmark or evaluation harness, and any modern reimplementation that is
+faster or better maintained than the original. Be explicit about software that
+is famous but effectively dead, and about software whose published results
+cannot be reproduced with the current release. If the canonical implementation
+is unbuildable on modern toolchains, say so and say what people do instead.
+
+PART 4. DATA AND BENCHMARKS
+Named datasets, benchmark suites, task collections, precomputed result tables,
+and archived experimental records. For each: name, bare URL or access route,
+approximate size, licence or access restriction, and what it is used to
+measure. Distinguish benchmarks the field treats as authoritative from ones
+that are merely popular. Note any known contamination, saturation, or
+overfitting problem with a benchmark, and any case where a benchmark is known
+to have been solved in a way that does not generalise.
+
+PART 5. THE REPRODUCTION RECIPE
+Pick the single most reproducible and most informative experiment in this
+field and specify it so that I could execute it. I want: the exact software
+and version, the exact dataset or generator, every parameter that has to be
+set and the value the original used, the number of independent replicates and
+the seeding regime, the approximate compute cost in CPU or GPU hours, the
+expected result with the published number to compare against, and the citation
+that number comes from. Then, separately, name the three most common ways
+people get this experiment wrong. If the field has no experiment that meets
+this bar, say so directly and explain what is missing, because that is itself
+a finding I need.
+
+PART 6. WHAT DOES NOT EXIST AND WOULD HAVE TO BE BUILT
+What a serious entrant has to write themselves because no off-the-shelf tool
+provides it. Be specific about the interface: what goes in, what comes out,
+what the hard part is, and roughly how much work it is. Name any case where
+several groups have each rebuilt the same missing component privately, because
+that is the strongest signal of a real gap.
+
+PART 7. NEGATIVE RESULTS, FAILED PROGRAMMES, AND STANDING CRITIQUES
+What has been tried in this field and did not work. Retracted or corrected
+results. Claims that failed to replicate. Methods that looked strong and were
+later shown to be measuring an artefact, a baseline, or the benchmark rather
+than the phenomenon. The standing methodological critiques of the field and
+who made them. Where a critique was answered, say how; where it was never
+answered, say that. This part matters as much as Part 2 and I would rather
+have it long than short.
+
+PART 8. WHERE AN ENTRANT SHOULD ACTUALLY AIM IN 2026
+Given all of the above: what would a well-resourced newcomer do now that has
+not already been done? Name specific experiments, not research directions. For
+each, say what makes it feasible now that was not feasible before, what it
+would measure, and what result would falsify the idea behind it. Rank them.
+Then say which of them you think will NOT work, and why.
+
+RULES ON EVIDENCE AND FORMAT
+
+Separate what you verified from what you inferred. If you could not confirm
+that a repository still exists, or that a paper says what it is cited as
+saying, mark that entry UNCONFIRMED rather than dropping it. An honest
+UNCONFIRMED is more useful to me than a confident guess. Do not invent
+repository URLs, arXiv numbers, DOIs, or version numbers under any
+circumstances; if you do not know an identifier, write IDENTIFIER UNKNOWN.
+
+Format rules, and the first one is a hard constraint that has broken previous
+reports of mine.
+
+Do not use square brackets anywhere in the output, for any purpose. Write
+every identifier bare and unwrapped: arXiv:2401.01234, DOI 10.1000/xyz,
+https://github.com/example/repo. Never wrap a citation, an identifier, a URL,
+a list, or a range in square brackets, and never use markdown link syntax.
+Write ranges and enumerations as plain prose or as quoted strings such as
+"16, 24, 32" or "100000 to 999999".
+
+Otherwise: plain text, no markdown tables, no code fences. Use the eight PART
+headings given above. Prefer specificity over hedging throughout. Length
+should follow the material; do not pad, and do not compress Part 3, Part 5 or
+Part 7 to save room.
+```
+
+### Prompt 75: Lenia and Continuous Cellular Automata
+
+```
+FRONTIER PRACTITIONER DOSSIER
+Field: Lenia and Continuous Cellular Automata
+
+WHO IS ASKING AND WHY
+
+I am building an in-silico experimental research programme and I want to run
+real experiments in this field, not read about them. Treat me as a competent
+computational scientist who is new to THIS field specifically. I have compute,
+I can write code, and I can build what does not exist. What I do not have is
+the field's tacit knowledge: which papers are load-bearing, which software is
+actually alive, which datasets are the ones everyone uses, which published
+results reproduce and which quietly do not.
+
+The organising question for the whole report is this. If I wanted to become a
+person who runs frontier experiments in this field, starting today in 2026,
+what would I read, install, download, reproduce, and build, in what order, and
+what would I be able to measure at the end of it?
+
+THE SPECIFIC METHOD THIS IS ANCHORED TO
+
+I am anchoring on one concrete method from this field so the report stays
+specific rather than becoming a survey. Do not confine yourself to it, but do
+make sure the report covers it and says where it sits relative to the current
+frontier.
+
+Question the method asks:
+In a continuous cellular automaton, do coherent self-maintaining patterns
+exist as a matter of the update rule, and can they be searched for rather
+than designed?
+
+Mechanism as I currently understand it:
+Lenia generalises Conway's Life along every axis at once: the state of a
+cell is a real number rather than a bit, the neighbourhood is a smooth
+radial kernel rather than eight cells, and time advances in small continuous
+increments rather than discrete ticks. The update convolves the grid with
+the kernel, passes the result through a smooth growth function, and adds a
+fraction of it back to the current state. Because every operation is
+differentiable, the whole system can be run inside an automatic
+differentiation framework on a GPU. What makes it interesting is what
+appears in it: localised, coherent, self-maintaining patterns that move,
+rotate and sometimes interact, which persist because the rule sustains them
+and were not put there. They are found by searching the space of kernel and
+growth parameters, and the search is the experiment.
+
+What varies and what is judged:
+The candidate is a parameter vector: the kernel shape, the growth function's
+mean and width, and the initial pattern. What varies is those parameters.
+What is judged is whether the resulting pattern stays bounded and coherent
+rather than dying out or filling the grid.
+
+What is measured:
+A survival or persistence measure over a fixed number of steps, plus
+continuous descriptors such as the mass of the pattern, its centre of mass
+displacement, and whether the mass stays within a bounded region, all on
+real scales.
+
+If my description above is wrong, outdated, or misattributed, say so
+explicitly and correct it. A correction is one of the most valuable things
+this report can contain.
+
+WHAT I NEED, IN EIGHT PARTS
+
+Use these eight headings, in this order, as plain text headings.
+
+PART 1. THE FIELD IN 2026, AND ITS FRONTIER
+What this field actually is now, in one or two paragraphs, and then the hard
+part: what is SETTLED, what is CONTESTED, and what is OPEN. Name the specific
+live disagreements and who is on each side. Say what changed in the last three
+years. If the field is dormant or has been absorbed into another field, say
+that plainly, name the absorbing field, and say what was lost in the merge.
+
+PART 2. THE READING LIST THAT ACTUALLY MATTERS
+Between eight and fifteen primary sources. For each one give, on its own
+lines: authors, year, title, venue, and an identifier which must be either an
+arXiv number written as arXiv:2401.01234 or a DOI written as DOI 10.1000/xyz.
+Then one or two sentences on the specific experiment or result the paper
+contains and why a practitioner must know it. Split the list into FOUNDATIONAL
+sources that define the method and CURRENT sources from roughly 2023 onward
+that define where the frontier is. Prefer primary sources over surveys, but
+name the one best survey if a good one exists.
+
+PART 3. SOFTWARE I CAN ACTUALLY RUN
+This part is the most important one and I want it concrete and skeptical. For
+every piece of software you name, give on separate lines: the name, a bare
+URL, the implementation language, the licence, the approximate year of most
+recent activity, and a maturity verdict which must be exactly one of
+MAINTAINED, DORMANT, or ABANDONED. Then say in one or two sentences what
+experiment it can actually run today, and what its known limitations or
+gotchas are. Cover, where they exist: the reference implementation from the
+originating authors, the community standard that most people actually use, any
+benchmark or evaluation harness, and any modern reimplementation that is
+faster or better maintained than the original. Be explicit about software that
+is famous but effectively dead, and about software whose published results
+cannot be reproduced with the current release. If the canonical implementation
+is unbuildable on modern toolchains, say so and say what people do instead.
+
+PART 4. DATA AND BENCHMARKS
+Named datasets, benchmark suites, task collections, precomputed result tables,
+and archived experimental records. For each: name, bare URL or access route,
+approximate size, licence or access restriction, and what it is used to
+measure. Distinguish benchmarks the field treats as authoritative from ones
+that are merely popular. Note any known contamination, saturation, or
+overfitting problem with a benchmark, and any case where a benchmark is known
+to have been solved in a way that does not generalise.
+
+PART 5. THE REPRODUCTION RECIPE
+Pick the single most reproducible and most informative experiment in this
+field and specify it so that I could execute it. I want: the exact software
+and version, the exact dataset or generator, every parameter that has to be
+set and the value the original used, the number of independent replicates and
+the seeding regime, the approximate compute cost in CPU or GPU hours, the
+expected result with the published number to compare against, and the citation
+that number comes from. Then, separately, name the three most common ways
+people get this experiment wrong. If the field has no experiment that meets
+this bar, say so directly and explain what is missing, because that is itself
+a finding I need.
+
+PART 6. WHAT DOES NOT EXIST AND WOULD HAVE TO BE BUILT
+What a serious entrant has to write themselves because no off-the-shelf tool
+provides it. Be specific about the interface: what goes in, what comes out,
+what the hard part is, and roughly how much work it is. Name any case where
+several groups have each rebuilt the same missing component privately, because
+that is the strongest signal of a real gap.
+
+PART 7. NEGATIVE RESULTS, FAILED PROGRAMMES, AND STANDING CRITIQUES
+What has been tried in this field and did not work. Retracted or corrected
+results. Claims that failed to replicate. Methods that looked strong and were
+later shown to be measuring an artefact, a baseline, or the benchmark rather
+than the phenomenon. The standing methodological critiques of the field and
+who made them. Where a critique was answered, say how; where it was never
+answered, say that. This part matters as much as Part 2 and I would rather
+have it long than short.
+
+PART 8. WHERE AN ENTRANT SHOULD ACTUALLY AIM IN 2026
+Given all of the above: what would a well-resourced newcomer do now that has
+not already been done? Name specific experiments, not research directions. For
+each, say what makes it feasible now that was not feasible before, what it
+would measure, and what result would falsify the idea behind it. Rank them.
+Then say which of them you think will NOT work, and why.
+
+RULES ON EVIDENCE AND FORMAT
+
+Separate what you verified from what you inferred. If you could not confirm
+that a repository still exists, or that a paper says what it is cited as
+saying, mark that entry UNCONFIRMED rather than dropping it. An honest
+UNCONFIRMED is more useful to me than a confident guess. Do not invent
+repository URLs, arXiv numbers, DOIs, or version numbers under any
+circumstances; if you do not know an identifier, write IDENTIFIER UNKNOWN.
+
+Format rules, and the first one is a hard constraint that has broken previous
+reports of mine.
+
+Do not use square brackets anywhere in the output, for any purpose. Write
+every identifier bare and unwrapped: arXiv:2401.01234, DOI 10.1000/xyz,
+https://github.com/example/repo. Never wrap a citation, an identifier, a URL,
+a list, or a range in square brackets, and never use markdown link syntax.
+Write ranges and enumerations as plain prose or as quoted strings such as
+"16, 24, 32" or "100000 to 999999".
+
+Otherwise: plain text, no markdown tables, no code fences. Use the eight PART
+headings given above. Prefer specificity over hedging throughout. Length
+should follow the material; do not pad, and do not compress Part 3, Part 5 or
+Part 7 to save room.
+```
+
+### Prompt 76: Neural Cellular Automata and Differentiable Morphogenesis
+
+```
+FRONTIER PRACTITIONER DOSSIER
+Field: Neural Cellular Automata and Differentiable Morphogenesis
+
+WHO IS ASKING AND WHY
+
+I am building an in-silico experimental research programme and I want to run
+real experiments in this field, not read about them. Treat me as a competent
+computational scientist who is new to THIS field specifically. I have compute,
+I can write code, and I can build what does not exist. What I do not have is
+the field's tacit knowledge: which papers are load-bearing, which software is
+actually alive, which datasets are the ones everyone uses, which published
+results reproduce and which quietly do not.
+
+The organising question for the whole report is this. If I wanted to become a
+person who runs frontier experiments in this field, starting today in 2026,
+what would I read, install, download, reproduce, and build, in what order, and
+what would I be able to measure at the end of it?
+
+THE SPECIFIC METHOD THIS IS ANCHORED TO
+
+I am anchoring on one concrete method from this field so the report stays
+specific rather than becoming a survey. Do not confine yourself to it, but do
+make sure the report covers it and says where it sits relative to the current
+frontier.
+
+Question the method asks:
+If every cell runs the same small learned rule and sees only its neighbours,
+can a target global structure be grown reliably, and does the rule that
+grows it also repair it when it is damaged?
+
+Mechanism as I currently understand it:
+Each cell holds a vector of channels, some of which are visible as colour
+and the rest hidden. The update rule is a small neural network, identical in
+every cell, that reads a fixed perception of the cell's neighbourhood --
+typically the cell state together with Sobel gradients of the surrounding
+field -- and outputs an increment to the cell's own state. The same rule is
+applied for many steps and the resulting image is compared to a target; the
+loss is backpropagated through all those steps to train the shared rule. Two
+details do the real work. Updates are applied stochastically per cell, so
+the rule cannot depend on global synchrony. And a pool of partially grown
+states is sampled from during training, with some samples deliberately
+damaged, which is what produces regeneration rather than a rule that only
+works from the exact seed.
+
+What varies and what is judged:
+The candidate is the shared update rule, meaning the weights of the small
+network every cell runs. What varies is those weights, trained by gradient
+descent rather than searched. What is judged is how close the grown pattern
+is to the target, and whether it recovers after damage.
+
+What is measured:
+Pixel-wise loss against the target after a stated number of steps, on a
+continuous scale. Separately, and more informative, the loss after a region
+of the grown pattern is deleted and the rule is left to run, which measures
+regeneration rather than growth.
+
+If my description above is wrong, outdated, or misattributed, say so
+explicitly and correct it. A correction is one of the most valuable things
+this report can contain.
+
+WHAT I NEED, IN EIGHT PARTS
+
+Use these eight headings, in this order, as plain text headings.
+
+PART 1. THE FIELD IN 2026, AND ITS FRONTIER
+What this field actually is now, in one or two paragraphs, and then the hard
+part: what is SETTLED, what is CONTESTED, and what is OPEN. Name the specific
+live disagreements and who is on each side. Say what changed in the last three
+years. If the field is dormant or has been absorbed into another field, say
+that plainly, name the absorbing field, and say what was lost in the merge.
+
+PART 2. THE READING LIST THAT ACTUALLY MATTERS
+Between eight and fifteen primary sources. For each one give, on its own
+lines: authors, year, title, venue, and an identifier which must be either an
+arXiv number written as arXiv:2401.01234 or a DOI written as DOI 10.1000/xyz.
+Then one or two sentences on the specific experiment or result the paper
+contains and why a practitioner must know it. Split the list into FOUNDATIONAL
+sources that define the method and CURRENT sources from roughly 2023 onward
+that define where the frontier is. Prefer primary sources over surveys, but
+name the one best survey if a good one exists.
+
+PART 3. SOFTWARE I CAN ACTUALLY RUN
+This part is the most important one and I want it concrete and skeptical. For
+every piece of software you name, give on separate lines: the name, a bare
+URL, the implementation language, the licence, the approximate year of most
+recent activity, and a maturity verdict which must be exactly one of
+MAINTAINED, DORMANT, or ABANDONED. Then say in one or two sentences what
+experiment it can actually run today, and what its known limitations or
+gotchas are. Cover, where they exist: the reference implementation from the
+originating authors, the community standard that most people actually use, any
+benchmark or evaluation harness, and any modern reimplementation that is
+faster or better maintained than the original. Be explicit about software that
+is famous but effectively dead, and about software whose published results
+cannot be reproduced with the current release. If the canonical implementation
+is unbuildable on modern toolchains, say so and say what people do instead.
+
+PART 4. DATA AND BENCHMARKS
+Named datasets, benchmark suites, task collections, precomputed result tables,
+and archived experimental records. For each: name, bare URL or access route,
+approximate size, licence or access restriction, and what it is used to
+measure. Distinguish benchmarks the field treats as authoritative from ones
+that are merely popular. Note any known contamination, saturation, or
+overfitting problem with a benchmark, and any case where a benchmark is known
+to have been solved in a way that does not generalise.
+
+PART 5. THE REPRODUCTION RECIPE
+Pick the single most reproducible and most informative experiment in this
+field and specify it so that I could execute it. I want: the exact software
+and version, the exact dataset or generator, every parameter that has to be
+set and the value the original used, the number of independent replicates and
+the seeding regime, the approximate compute cost in CPU or GPU hours, the
+expected result with the published number to compare against, and the citation
+that number comes from. Then, separately, name the three most common ways
+people get this experiment wrong. If the field has no experiment that meets
+this bar, say so directly and explain what is missing, because that is itself
+a finding I need.
+
+PART 6. WHAT DOES NOT EXIST AND WOULD HAVE TO BE BUILT
+What a serious entrant has to write themselves because no off-the-shelf tool
+provides it. Be specific about the interface: what goes in, what comes out,
+what the hard part is, and roughly how much work it is. Name any case where
+several groups have each rebuilt the same missing component privately, because
+that is the strongest signal of a real gap.
+
+PART 7. NEGATIVE RESULTS, FAILED PROGRAMMES, AND STANDING CRITIQUES
+What has been tried in this field and did not work. Retracted or corrected
+results. Claims that failed to replicate. Methods that looked strong and were
+later shown to be measuring an artefact, a baseline, or the benchmark rather
+than the phenomenon. The standing methodological critiques of the field and
+who made them. Where a critique was answered, say how; where it was never
+answered, say that. This part matters as much as Part 2 and I would rather
+have it long than short.
+
+PART 8. WHERE AN ENTRANT SHOULD ACTUALLY AIM IN 2026
+Given all of the above: what would a well-resourced newcomer do now that has
+not already been done? Name specific experiments, not research directions. For
+each, say what makes it feasible now that was not feasible before, what it
+would measure, and what result would falsify the idea behind it. Rank them.
+Then say which of them you think will NOT work, and why.
+
+RULES ON EVIDENCE AND FORMAT
+
+Separate what you verified from what you inferred. If you could not confirm
+that a repository still exists, or that a paper says what it is cited as
+saying, mark that entry UNCONFIRMED rather than dropping it. An honest
+UNCONFIRMED is more useful to me than a confident guess. Do not invent
+repository URLs, arXiv numbers, DOIs, or version numbers under any
+circumstances; if you do not know an identifier, write IDENTIFIER UNKNOWN.
+
+Format rules, and the first one is a hard constraint that has broken previous
+reports of mine.
+
+Do not use square brackets anywhere in the output, for any purpose. Write
+every identifier bare and unwrapped: arXiv:2401.01234, DOI 10.1000/xyz,
+https://github.com/example/repo. Never wrap a citation, an identifier, a URL,
+a list, or a range in square brackets, and never use markdown link syntax.
+Write ranges and enumerations as plain prose or as quoted strings such as
+"16, 24, 32" or "100000 to 999999".
+
+Otherwise: plain text, no markdown tables, no code fences. Use the eight PART
+headings given above. Prefer specificity over hedging throughout. Length
+should follow the material; do not pad, and do not compress Part 3, Part 5 or
+Part 7 to save room.
+```
