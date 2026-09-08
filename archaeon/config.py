@@ -151,7 +151,11 @@ class TenancyConfig:
     evidence_classes: Tuple[str, ...] = ("ENGINE_WORK_RESULT",)
     # The ledger schema this reader understands. A newer database is refused,
     # exactly as the engine refuses to open one newer than its code.
-    expected_schema_version: int = 6
+    # v7 (be65b0efa, live on M1 2026-09-06) added read_scopes/read_grants and
+    # family_members.arm; the rows this reader consumes (experiments,
+    # observations, events, clients) are unchanged, so 7 is accepted. A
+    # newer version is still refused rather than misread.
+    expected_schema_version: int = 7
 
 
 # --------------------------------------------------------------------------
