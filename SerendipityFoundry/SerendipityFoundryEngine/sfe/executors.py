@@ -53,7 +53,15 @@ class Executor(abc.ABC):
 def _deterministic_score(bits: str, target: str) -> float:
     """A bounded, fully deterministic scoring problem: fraction of positions
     matching a fixed hidden target (a 'onemax'-style landscape). No wall-clock,
-    no randomness -- BIT_DETERMINISTIC by construction."""
+    no randomness -- BIT_DETERMINISTIC by construction.
+
+    ASSUMES len(bits) == len(target); the CALLER enforces it. This function
+    divides by len(target), so a short candidate would score against the full
+    target and be capped at len(bits)/len(target) -- a silently lowered ceiling
+    with `solved` unreachable (WP-0a / Herakles F-1). The guard lives in
+    BitStringExecutor.execute rather than here, on the established refusal
+    path, because the honest answer to a mismatched candidate is that the
+    result does not exist -- not a number with a caveat attached."""
     n = min(len(bits), len(target))
     if n == 0:
         return 0.0
@@ -61,10 +69,21 @@ def _deterministic_score(bits: str, target: str) -> float:
 
 
 class BitStringExecutor(Executor):
-    """Evaluates a candidate bitstring against a fixed hidden target. The target
-    is derived deterministically from the world's seed so every world shares the
-    SAME landscape iff it shares the seed -- the canary's identical-initial-
-    conditions requirement."""
+    """Evaluates a candidate bitstring against a fixed hidden target.
+
+    The target is derived deterministically from the seed the CALLER supplies
+    as `WorkPackage.seed_root`, and from `length`. Two runs share a landscape
+    iff they pass the same seed and the same length.
+
+    THAT SEED IS NOT NECESSARILY THE WORLD'S (corrected 2026-09-08, WP-0a). An
+    earlier version of this docstring claimed the target came from "the world's
+    seed, so every world shares the SAME landscape iff it shares the seed".
+    Vivarium deliberately passes the REPEAT's derived seed instead, and says so
+    in its own comment; under a `seed_derivation` of `sha256_index` or
+    `linear_index`, repeats of ONE world therefore get DIFFERENT landscapes.
+    Both sides are internally consistent -- it was the shared claim between
+    them that was stale, and designing against the old wording would give you
+    the wrong invariant."""
     kind = "evaluate_bitstring"
 
     def __init__(self, length: int = 24):
@@ -77,7 +96,21 @@ class BitStringExecutor(Executor):
 
     def execute(self, wp: WorkPackage) -> ExecutorResult:
         bits = str(wp.payload.get("bits", ""))
-        if not bits or any(ch not in "01" for ch in bits):
+        # WP-0a (Herakles F-1). A candidate whose length differs from the
+        # declared `length` used to be SCORED: _deterministic_score matches
+        # over the overlap and divides by the target length, so a short
+        # candidate came back COMPLETED with a plausible number whose ceiling
+        # was silently len(bits)/length and whose `solved` could never fire.
+        # An outcome rule keyed on solved cannot trigger, and the observation
+        # reads as weak performance rather than as a broken spec.
+        #
+        # It is refused here, beside the alphabet check and on the same path,
+        # because a length mismatch is not a worse candidate -- it is not a
+        # candidate for THIS landscape at all. Returning the mismatch as a
+        # result field would be worse: it keeps the bad observation in the
+        # record and relies on every downstream reader to notice.
+        if not bits or any(ch not in "01" for ch in bits) \
+                or len(bits) != self.length:
             return ExecutorResult(status="FAILED", error="invalid candidate",
                                   reproducibility="BIT_DETERMINISTIC")
         target = self.target_for(wp.seed_root)
