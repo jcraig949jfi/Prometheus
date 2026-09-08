@@ -40,9 +40,25 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 # The live ledger lives where the ENGINE runs, not where this reader's checkout
 # is. An isolated worktree (operator directive 2026-09-06) has no var/engine.db,
 # so ARCHAEON_SFE_DB names the file; the checkout-relative path is the fallback.
-DEFAULT_SFE_DB = Path(os.environ.get(
-    "ARCHAEON_SFE_DB",
-    str(REPO_ROOT / "SerendipityFoundry" / "SerendipityFoundryEngine" / "var" / "engine.db")))
+def _default_sfe_db() -> Path:
+    """Resolution order: ARCHAEON_SFE_DB env -> archaeon/config.local.json
+    'sfe_db' (gitignored, per-host) -> the in-repo default. No drive letter
+    is hardcoded anywhere; a deployment that keeps the engine ledger outside
+    this checkout says so in its local config."""
+    env = os.environ.get("ARCHAEON_SFE_DB")
+    if env:
+        return Path(env)
+    local = Path(__file__).resolve().parent / "config.local.json"
+    try:
+        cfg_local = json.loads(local.read_text(encoding="utf-8"))
+        if cfg_local.get("sfe_db"):
+            return Path(cfg_local["sfe_db"])
+    except (OSError, ValueError):
+        pass
+    return Path(__file__).resolve().parent.parent / "SerendipityFoundry" /         "SerendipityFoundryEngine" / "var" / "engine.db"
+
+
+DEFAULT_SFE_DB = _default_sfe_db()
 
 
 # --------------------------------------------------------------------------
