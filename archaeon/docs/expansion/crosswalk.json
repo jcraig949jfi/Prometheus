@@ -551,7 +551,7 @@
     "transfer_interval"
    ],
    "entailed_repair": null,
-   "reference": "Paired Open-Ended Trailblazer (POET): Endlessly Generating Increasingly Complex and Diverse Learning Environments and Their Solutions (Wang et al. 2019)",
+   "reference": "Wang, Lehman, Clune, Stanley, 'POET: open-ended coevolution of environments and their optimized solutions', GECCO '19, pp. 142-151, doi:10.1145/3321707.3321799 (the original POET, not Enhanced POET; the arXiv preprint carries a different title).",
    "reference_grade_herakles": "VERIFIED",
    "mechanism_tag_herakles": [
     "two_population_interaction"
@@ -567,7 +567,9 @@
    "next_action": "WP-A1..A3: first bounded experiment for this entry asks 'If problems and solvers improve each other, with new environments generated from solved ones and solutions transferred between environments, are harder problems solved than by direct optimisation?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
    "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged",
    "reference_grade_fetched_2026_09_08": "VERIFIED",
-   "reference_note_2026_09_08": "The cited title does not resolve in a proceedings index (H-R2); citation to be corrected before it carries design weight."
+   "reference_note_2026_09_08": "The cited title does not resolve in a proceedings index (H-R2); citation to be corrected before it carries design weight.",
+   "reference_before_2026_09_08": "Paired Open-Ended Trailblazer (POET): Endlessly Generating Increasingly Complex and Diverse Learning Environments and Their Solutions (Wang et al. 2019)",
+   "reference_correction_herakles_verbatim": "## 3. `poet_paired_coevolution` — right work, but the recorded title will not\nresolve in a proceedings index\n\n**Replace:** the arXiv title string.\n\n**With:**\n\n> Wang, R., Lehman, J., Clune, J. and Stanley, K. O. The original POET, not\n> Enhanced POET: the template carries neither the CPPN encoding nor the\n> novelty measure that distinguish the later paper.\n>\n> Cite the peer-reviewed version: \"POET: open-ended coevolution of\n> environments and their optimized solutions\", GECCO '19, pages 142-151,\n> DOI 10.1145/3321707.3321799. The arXiv preprint carries a LONGER, DIFFERENT\n> title (\"Paired Open-Ended Trailblazer ... Endlessly Generating Increasingly\n> Complex and Diverse Learning Environments and Their Solutions\"), and a\n> reader searching a proceedings index for that title will not find it.\n\n**Why it matters here:** the crosswalk marks references as leads to be\nfollowed. A title that does not resolve makes the lead unfollowable, which is\na worse failure than a wrong year."
   },
   {
    "id": "bacon_equation_discovery.v0",
@@ -3065,7 +3067,7 @@
     "query_budget"
    ],
    "entailed_repair": null,
-   "reference": "Query by Committee (Seung, Opper, and Sompolinsky 1992)",
+   "reference": "Seung, Opper, Sompolinsky, 'Query by Committee', COLT '92, pp. 287-294, doi:10.1145/130385.130417 (the NAME; asymptotic analysis) AND Freund, Seung, Shamir, Tishby, 'Selective Sampling Using the Query by Committee Algorithm', Machine Learning 28(2-3):133-168 (1997) -- the finite-budget algorithm the template implements.",
    "reference_grade_herakles": "VERIFIED",
    "mechanism_tag_herakles": [
     "select_next_observation"
@@ -3084,7 +3086,9 @@
    "proxy_relabel_2026_09_07": "PROXY with a KNOWN ANSWER (same as version_space_search). 'The strongest reduction' is withdrawn as a scientific statement; it is the cheapest plumbing test with a known answer, and its elegance is the property the operator asked not to be fooled by.",
    "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged",
    "reference_grade_fetched_2026_09_08": "PARTIAL",
-   "reference_note_2026_09_08": "Cites the origin of the NAME while the template implements the 1997 descendant (H-R2). This was Herakles's own leading design and is a plumbing test with a known answer (A-4)."
+   "reference_note_2026_09_08": "Cites the origin of the NAME while the template implements the 1997 descendant (H-R2). This was Herakles's own leading design and is a plumbing test with a known answer (A-4).",
+   "reference_before_2026_09_08": "Query by Committee (Seung, Opper, and Sompolinsky 1992)",
+   "reference_correction_herakles_verbatim": "## 2. `query_by_committee` — the citation names the origin of the term; the\ntemplate implements its descendant\n\n**Replace:** \"Query by Committee (Seung, Opper, and Sompolinsky 1992)\"\n\n**With:**\n\n> Seung, H. S., Opper, M. and Sompolinsky, H. \"Query by Committee.\" COLT '92,\n> pages 287-294, DOI 10.1145/130385.130417. This paper introduces the NAME and\n> gives an asymptotic statistical-mechanics analysis of two toy models.\n>\n> The template's mechanism, a swept committee size, a finite query budget and\n> a target-error verdict, is the algorithm of Freund, Y., Seung, H. S.,\n> Shamir, E. and Tishby, N. \"Selective Sampling Using the Query by Committee\n> Algorithm.\" Machine Learning 28(2-3):133-168 (1997). BOTH should be cited,\n> with the 1997 paper named as the one the implementation follows.\n\n**Why it matters here, and I have a stake in it.** This template was the\nconvergence I promoted hardest in my expansion pass, and my addendum already\ndemoted the claim it supports. This correction is the second demotion: the\nfinite-budget algorithm being implemented is not in the paper cited for it.\nThe 1992 result is an asymptotic one and cannot be quoted for a budgeted run."
   },
   {
    "id": "raf.detection.v0",
@@ -4148,7 +4152,7 @@
     "max_clauses"
    ],
    "entailed_repair": null,
-   "reference": "Muggleton et al. 2015 Metagol",
+   "reference": "Muggleton, S. H. and Lin, D. 'Meta-Interpretive Learning of Higher-Order Dyadic Datalog: Predicate Invention Revisited.' IJCAI-13, pp. 1551-1557 (primary; read in full). Extended version: Muggleton, Lin, Tamaddoni-Nezhad, Machine Learning 100(1):49-73 (2015). The predicate-inventing variant is MetagolD; 'Metagol' alone does not identify the search bias.",
    "reference_grade_herakles": "VERIFIED",
    "mechanism_tag_herakles": [
     "search_over_candidates"
@@ -4163,7 +4167,9 @@
    "next_action": "WP-B1..B3: first bounded experiment for this entry asks 'From a handful of examples and some background facts, can a system write a logic program that explains them, and can it invent the intermediate concepts it needs but was never given?'; before any threshold, compute the gate's attainable range on the target landscape (A-2 rule); the proxy result never rejects the question.",
    "retained_route_note": "identical to faithful_route by construction: the route was retained unchanged",
    "reference_grade_fetched_2026_09_08": "PARTIAL",
-   "reference_note_2026_09_08": "Names the 2015 extended version, not the IJCAI-13 primary; no system called plain Metagol appears in it (H-R2)."
+   "reference_note_2026_09_08": "Names the 2015 extended version, not the IJCAI-13 primary; no system called plain Metagol appears in it (H-R2).",
+   "reference_before_2026_09_08": "Muggleton et al. 2015 Metagol",
+   "reference_correction_herakles_verbatim": "## 1. `mil_predicate_invention` — wrong paper in the series, and a system name\nthat does not appear in it\n\n**Replace:** \"Muggleton et al. 2015 Metagol\"\n\n**With:**\n\n> Muggleton, S. H. and Lin, D. \"Meta-Interpretive Learning of Higher-Order\n> Dyadic Datalog: Predicate Invention Revisited.\" IJCAI-13, pages 1551-1557.\n> Two authors. This is the primary source and it was read in full. The\n> Machine Learning 100(1):49-73 (2015) paper by Muggleton, Lin and\n> Tamaddoni-Nezhad is its EXTENDED VERSION, not a separate contribution.\n>\n> There is no system called plain \"Metagol\" in the cited work. A footnote\n> names a family, MetagolR, MetagolCF and MetagolD, and **MetagolD** is the\n> variant that performs predicate invention. A template implementing\n> predicate invention should name MetagolD, because \"Metagol\" alone does not\n> identify which search bias is meant, and the bias is the mechanism.\n\n**Why it matters here:** the template's kind is `metagol_induce.v0`, and the\nthing being implemented is the clause-bounded iterative-deepening search. That\nsearch is MetagolD's. Citing the family name leaves the reader unable to check\nwhether the implementation matches the bias."
   },
   {
    "id": "program_synthesis_sketch.v0",
