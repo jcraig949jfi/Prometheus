@@ -293,3 +293,13 @@ have capacity — they compete for nothing in Archaeon's lane.
             P0 P2 P3 A4 C4 X2 X5 B4 P1
 
 If a seat must choose, it chooses the lowest tier number in its lane.
+
+**Work-in-progress limit (operator, 2026-09-07).** Local gates and a
+concurrency limit are compatible; tiers alone do not keep scarce effort
+concentrated. Proposed: at most **two** packages in flight per seat and at
+most **six** program-wide, counted at the integrating owner; a package
+enters flight only when a slot is free and it is the lowest open tier in
+that lane. Owner packages that no one has capacity for stay OWNER, not in
+flight. Numbers are the operator's to set; they are recorded here as
+proposals beside their reason (two per seat: one to execute, one to prepare;
+six: the Tier 1 chain for A and C plus their two integrity gates).

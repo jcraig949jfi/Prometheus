@@ -278,6 +278,19 @@ the human-issued campaign path, weeks via the autonomous cadence. A freeze of
 the 22 off-critical-path packages is **declined** — the operator's order
 keeps gates local and work moving — and replaced by priority tiers.
 
+**Operator's assessment (2026-09-07), applied small:** §0's "planted" test is
+narrowed — authored, predictable, already known and novel are separate
+properties, and the absence of an analytical shortcut is not a discovery
+requirement; Branch A could yield a real finding with a limited domain, and
+Branch C's substrate does not make its results novel. A failed reflection
+null is an implementation hold, not a verdict on cellular automata, and
+indistinguishability kills only at adequate sensitivity. A work-in-progress
+limit is proposed beside the tiers. `falsification_walk.v1`'s envelope
+defect is fixed (one rung, one coherent 3-sd gate) before admission. The
+next report is results: A and C baselines, actual costs, which controls
+passed, and continue/change/stop decisions — which needs A1 (Daedalus) and
+C1 (Herakles) to land.
+
 ### D.8 Sequence for this section
 
     NOW    WP-0d (D3 null number) · WP-0e (kind-generic builder) · WP-X6

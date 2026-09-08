@@ -182,3 +182,17 @@ def test_local_result_fields_match_executor_source():
     for kind, fields in K.RESULT_FIELDS.items():
         for f in fields:
             assert '"{}"'.format(f) in src or '"{}"'.format(f) in eng, (kind, f)
+
+
+def test_falsification_walk_v1_envelope_is_coherent_with_its_declared_steps():
+    """The envelope is an exact identity of the declared rung: 3 sd where
+    sd = sqrt(steps * step_scale^2 / 3). A single value across a ladder was
+    a defect (3 sd at 6400, 24 sd at 100); v1 now pins one rung."""
+    import math
+    t = T.load(T.INBOX_DIR / "falsification_walk.v1.json")
+    steps = t["param_space"]["payload"]["steps"]["constant"]
+    scale = t["param_space"]["payload"]["step_scale"]["constant"]
+    sd = math.sqrt(steps * scale ** 2 / 3)
+    k = t["outcome_rule"]["value"] / sd
+    assert 2.9 <= k <= 3.1, (steps, sd, k)
+    assert T.check(t)["buildable"]

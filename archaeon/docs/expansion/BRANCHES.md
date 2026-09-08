@@ -19,48 +19,47 @@ Written before any branch runs, at Herakles's ask (critique 2026-09-07 §6.1).
 This is Archaeon's proposal; Harmonia adjudicates whether any candidate meets
 it. It is deliberately narrow.
 
-**Authored vs unauthored.** For every family we declare, at admission, its
-**authoring inputs**: everything we choose or derive by construction (the NK
-contribution tables and neighbour lists from the seed; the CA rule table,
-lattice size, horizon and IC distribution; the program specification and
-step budget; the replicator's kernel and resource regime). Any property that
-is computable from the authoring inputs *without running the world* is
-**planted** — including the landscape's optima, its local-maxima count, its
-attainable score range, and every symmetry we wrote in. A result about a
-planted property is a result about our construction or about a method's
-behaviour on it, and is reported as such.
+**Four separate properties (operator's correction, 2026-09-07).** A result
+can be *authored* (its inputs are ours), *predictable* (derivable from those
+inputs before running), *already known* (in the literature or the record),
+and *scientifically novel* (not previously known, bounded to its domain).
+These are independent. Choosing the rules does not mean knowing their
+consequences; a regularity derived analytically can still be a discovery;
+and a substrate with unauthored dynamics does not make its results novel.
+The absence of an analytical shortcut is therefore **not** a discovery
+requirement. For every family we still declare, at admission, its
+**authoring inputs** (NK tables and neighbour lists from the seed; the CA
+rule table, lattice size, horizon and IC distribution; the program
+specification and step budget; the replicator's kernel and resource regime),
+because the *stipulated-outcomes list* below is written against them, and
+because a result about the construction itself must be reported as one.
 
 **Candidate unplanned finding.** A regularity in the fossil record that
-(1) is a property of trajectories or dynamics, not of the authoring inputs
-— it is not computable from them without running the world, or it is
-computable only by a computation as costly as running it; (2) survives the
-family's exchangeability null and its mechanism control under matched seeds;
-(3) is not on the family's **stipulated-outcomes list** — the enumerated
-competing explanations and predicted outcomes registered before the run —
-and is not a rediscovery of a literature-known result for that substrate
-(a rediscovery is a calibration anchor and is labelled so); (4) is
-reproducible under replay and under a fresh seed of the same authored
-world class. Harmonia then rules whether the candidate is a finding, a
-calibration, or an artefact. A finding is bounded to the authored world
-class it appeared in.
+(1) was **not stipulated**: it is off the family's stipulated-outcomes list
+— the enumerated competing explanations and predicted outcomes registered
+before the run — whether it concerns the dynamics or the landscape itself;
+(2) survives the family's exchangeability null and its mechanism control
+under matched seeds; (3) is **not already known** for that substrate — a
+rediscovery of a literature-known result is a calibration anchor and is
+labelled so; (4) is reproducible under replay and under a fresh seed of the
+same authored world class. Whether it is *predictable* from the authoring
+inputs is recorded as a property of the finding (analytic, numerical, or
+only by running), not used as a bar. Harmonia then rules whether the
+candidate is a finding, a calibration, or an artefact. A finding is bounded
+to the world class it appeared in.
 
-**Consequence for the branches.** On Branch A everything about the
-landscape is authored; what is *not* authored is how a fossil-directed
-selection policy behaves on it, so A can yield at most a finding about
-methods and about whether fossils carry exploitable structure. That is
-worth having and is named as **method evaluation**, not emergence. On
-Branch C the rule is authored but the space-time behaviour is not chosen
-by anyone: particle strategies and domain boundaries doing global
-computation under a local rule are the historical example of a regularity
-satisfying (1)–(4) at the time it appeared. Their reappearance here would
-be a calibration anchor under (3); a *new* strategy class, or structure in
-the random-rule fossil record that predicts accuracy and is not computable
-from the rule table without running it, would be a candidate. Branch C is
-therefore the only substrate in this plan where (1) can be met today, and
-it is sequenced to run **in parallel with A, not after it** (ROADMAP §D.8).
-Branch B's compositional program space can meet (1) once specifications are
-richer than a 4-input truth table; Branch D can meet it once a replicator
-world runs.
+**Consequence for the branches.** Branch A's *purpose* is method
+evaluation, and that is what its first experiments are designed to
+establish. It could nonetheless yield a previously unknown regularity about
+search or landscape structure, which would be a real finding with a limited
+domain, and (1)–(4) apply to it unchanged. Branch C offers the more direct
+route to collective computation — the EvCA literature's achievement was the
+evolution and analysis of strategies expressed through the dynamics of
+authored rules — but its substrate does not make its results novel: a
+reappearance of particle strategies is a calibration anchor under (3); a new
+strategy class, or structure in the random-rule record that predicts
+accuracy, would be a candidate. C runs **in parallel with A** (ROADMAP §D.8)
+because it is the more direct route, not because A cannot surprise.
 
 **What this definition refuses.** "Looks interesting" (any judge, human or
 model); a detector firing (a reason to look, per charter); a high score; a
@@ -424,7 +423,7 @@ ends the branch as a bet on this program; it rejects no field.
 |---|---|---|---|
 | A (NK) | At the chosen k and L, a one-flip hill climber from random starts reaches the global optimum in ≤ c·L queries on ≥ 90% of 20 seeds (c = 2 declared). Herakles measured exactly L on the additive bench, 20/20, L 16–48. | For k = 0 the bound is exactly L; for k > 0 the fraction of starts trapped in a local optimum is computed by exhaustive enumeration at L ≤ 16 before the test (A1-e fixture). | the landscape is not doing the work: move k, or the branch is wrong at this L. Precondition on A3-acq. |
 | B (programs) | The specification space is small enough that exhaustive enumeration of programs within the step budget finds a match in ≤ N proposals (N = the series length); or the witness-using toy policy (B3-d) does not differ from witness-withheld on the toy. | Enumerable program count at the declared opcode set and length; queries-to-match floor L/log₂(L+1) for the bitstring analogue (~5.2 at L = 24). | the task is a plumbing test with a known answer (A-4): enlarge the specification or the program space before any B3 claim. |
-| C (CA) | Under the declared IC distribution, N = 149, T = 320, the six historical genomes and 50 random rules are indistinguishable in accuracy (their distributions overlap within the IC-sampling SE), or the reflection null fails on the historical genomes. | Random rules: accuracy ≈ the density prior (~0.5 at ρ = 0.5 ICs); historical genomes: roughly 0.7–0.8 under the 1994 conventions (literature lead, unfetched; C1-e measures it). Reflection null: exact. | the verifier, the conventions, or the task instance is wrong (C3 diagnosis list) — fix before any random-rule corpus is read. |
+| C (CA) | **Implementation hold, not a branch kill:** a failed reflection null stops use of the implementation while it is investigated and says nothing about cellular automata as a direction. Indistinguishability of the six historical genomes from 50 random rules is a kill only after measurement sensitivity is shown adequate: the IC sample must give an SE small enough that the literature gap (lead: ~0.2–0.3 in accuracy) would be detected at the declared power. | Random rules: accuracy ≈ the density prior (~0.5 at ρ = 0.5 ICs); historical genomes: roughly 0.7–0.8 under the 1994 conventions (literature lead, unfetched; C1-e measures it). Reflection null: exact. Sensitivity: SE ≈ √(p(1−p)/n_ic) ≈ 0.05 at n_ic = 100, 0.016 at 1,000. | null failure → hold and diagnose (C3 list); indistinguishable at adequate sensitivity → the task instance or conventions are wrong, fix before any random-rule corpus is read. |
 | D (replicators) | WP-P0 finds no route that builds, runs, and repeats under tested conditions within the operator's cap. | n/a (a build/run fact) | DEFERRED with the reason and reopening condition; no route is chosen by preference. |
 
 ## Attainable ranges beside every stated gate (Herakles A-2, inherited from the crosswalk)
