@@ -218,6 +218,14 @@ def cmd_kinds(args, _conn) -> int:
                  ("  [" + ", ".join(flags) + "]") if flags else ""))
         if k.retired:
             print("     retired: %s" % k.retired_note[:200])
+        # WP-0f: the SAME contract validation uses, printed. A template author
+        # reading this and a run being validated must not consult two sources.
+        if k.declares_result:
+            for line in k.result_lines():
+                print("     result  %s" % line)
+        else:
+            print("     result  (not declared -- the executor lives "
+                  "elsewhere and its owner declares its result)")
     print("")
     print("admissible for a NEW spec: %s" % _kinds.admissible())
     print("retired (meaning preserved, new admissions refused): %s"

@@ -30,6 +30,10 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Dict, FrozenSet
 
+from .result_schema import Field as R
+from .result_schema import (describe as describe_result,
+                             reduction_supported, validate_result)
+
 
 #: Lifecycle of a kind. RETIRED is not deletion: rows and fossils that named a
 #: retired kind stay readable and keep their meaning, and the entry stays here
@@ -59,10 +63,31 @@ class Kind:
     #: Why it was retired, and what replaced it. Never blank when RETIRED.
     retired_note: str = ""
     retired_at: str = ""
+    #: WP-0f. What the executor RETURNS: field -> result_schema.Field. Empty
+    #: for a kind whose executor does not live here -- an external owner
+    #: declares its own result, and guessing one would be a contract Vivarium
+    #: is not entitled to write.
+    result_schema: Dict[str, R] = field(default_factory=dict)
 
     @property
     def retired(self) -> bool:
         return self.status == RETIRED
+
+    @property
+    def declares_result(self) -> bool:
+        return bool(self.result_schema)
+
+    def check_result(self, result, *, truncation=None) -> dict:
+        """Validate an executor's OUTPUT. Raises ResultSchemaError."""
+        return validate_result(self.kind, self.result_schema, result,
+                               truncation=truncation)
+
+    def supports_reduction(self, field_name: str, reduction: str):
+        """May an outcome rule reduce this output field this way?"""
+        return reduction_supported(self.result_schema, field_name, reduction)
+
+    def result_lines(self) -> list:
+        return describe_result(self.result_schema)
 
     def check(self, payload: dict) -> list:
         """Reasons this payload does not satisfy the contract. Empty = ok."""
@@ -100,7 +125,10 @@ register(Kind(
     implemented=True,
     owner="vivarium",
     note="Exercises the whole queue -> SFE -> PEW loop with no science in it. "
-         "Takes no parameters at all, so there is nothing it could default."))
+         "Takes no parameters at all, so there is nothing it could default.",
+    result_schema={
+        "executed": R("boolean", note="always true; the loop ran"),
+    }))
 
 register(Kind(
     kind="evaluate_bitstring",
@@ -110,7 +138,14 @@ register(Kind(
     note="Delegates to the engine's own reference executor. `length` is a "
          "scientific parameter: the hidden target is derived from "
          "sha256('target:<seed_root>:<length>'), so two lengths are two "
-         "landscapes. It used to default to 24."))
+         "landscapes. It used to default to 24.",
+    result_schema={
+        "bits": R("string", note="the candidate as scored"),
+        "score": R("number", finite=True,
+                   note="fraction of positions matching the hidden target"),
+        "solved": R("boolean", note="score >= 1.0"),
+        "length": R("integer", note="the landscape length actually used"),
+    }))
 
 
 # --------------------------------------------------------------- Archaeon's
@@ -160,7 +195,18 @@ register(Kind(
          "are independent draws, under `persist` they are one trajectory, and "
          "that difference is exactly what within-world serial autocorrelation "
          "reads. Available to templates; ADMITTING a template that uses it is "
-         "the operator's act, never mine."))
+         "the operator's act, never mine.",
+    result_schema={
+        "position": R("number", finite=True, note="position after this repeat"),
+        "start_position": R("number", finite=True,
+                            note="position this repeat began from; equals the "
+                                 "previous position under state=persist"),
+        "displacement": R("number", finite=True,
+                          note="position - start_position"),
+        "steps": R("integer", note="steps taken, echoing the declared param"),
+        "step_scale": R("number", finite=True),
+        "seed": R("integer", note="the REPEAT's derived seed, not the world's"),
+    }))
 
 
 def get(kind: str):

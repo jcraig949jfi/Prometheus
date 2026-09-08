@@ -411,9 +411,16 @@ def repeat_plan(spec: dict) -> dict:
     v2 MEANT -- not a default chosen here.
 
     `degenerate_by_construction` is arithmetic, not a judgement: with a
-    constant seed derivation, a stateless kind and count > 1, every repeat is
+    constant seed derivation, `state=reset` and count > 1, every repeat is
     provably the same computation, so the within-world variance is zero before
     anything runs. Vivarium records that and executes the request as written.
+
+    IT IS STRUCTURAL DEGENERACY, NOT OBSERVED ZERO VARIANCE. It is computed
+    from the declaration alone, before execution, and answers "could these
+    repeats have differed?". A run whose measurements happen to come out equal
+    across genuinely different trajectories is a RESULT, not a structural
+    defect, and this flag stays False for it -- reading it as "the numbers were
+    all the same" would be a different claim with a different meaning.
     """
     seed_root = spec["world"]["seed_root"]
     rep = spec.get("repeat")
@@ -433,17 +440,29 @@ def repeat_plan(spec: dict) -> dict:
         else:                                    # sha256_index
             digest = hashlib.sha256(("%d:%d" % (seed_root, i)).encode()).digest()
             seeds.append(int.from_bytes(digest[:8], "big"))
-    kind = _kinds.get((spec.get("work") or {}).get("kind"))
+    # WP-0b (Herakles F-4). The `not kind.stateful` term is GONE.
+    #
+    # It said: a stateful kind at a constant seed might still differ between
+    # repeats, so do not call it degenerate. That is true under `persist` and
+    # false under `reset` -- and `reset` is the case being tested. Under reset
+    # every repeat is handed a FRESH state object, so nothing carries; a
+    # stateful kind is then in exactly the same position as a stateless one,
+    # and at a constant seed every repeat is provably the same computation.
+    #
+    # The `stateful` flag is a CROSS-EXECUTION property: it says whether state
+    # survives from one repeat to the next. It says nothing about state inside
+    # a single execution, and it was never evidence about the reset case.
     degenerate = (how == "constant" and rep["count"] > 1
-                  and rep["state"] == "reset"
-                  and not (kind.stateful if kind else False))
+                  and rep["state"] == "reset")
     return {**{k: rep[k] for k in ("count", "order", "seed_derivation",
                                    "state", "budget")},
             "seeds": seeds,
             "degenerate_by_construction": degenerate,
-            "note": ("every repeat is the same computation: constant seed, "
-                     "stateless kind, state=reset. Within-world variance is "
-                     "zero by construction." if degenerate else "")}
+            "note": ("every repeat is the same computation: constant seed "
+                     "and state=reset, so nothing carries between repeats and "
+                     "nothing distinguishes them. Within-world variance is "
+                     "zero by construction, before anything runs."
+                     if degenerate else "")}
 
 
 def is_executable(spec: dict) -> bool:

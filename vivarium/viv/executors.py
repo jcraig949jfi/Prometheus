@@ -161,9 +161,18 @@ def run(spec: dict, *, seed: int = None, state=None) -> dict:
     if seed is None:
         seed = spec["world"]["seed_root"]
     if kind_name == "noop_v0":
-        return _noop_v0(spec)
-    if kind_name == "evaluate_bitstring":
-        return _evaluate_bitstring(spec, seed=seed)
-    if kind_name == "random_walk_v0":
-        return _random_walk_v0(spec, seed=seed, state=state)
-    raise ExecutorUnavailable("no executor bound for kind %r" % (kind_name,))
+        out = _noop_v0(spec)
+    elif kind_name == "evaluate_bitstring":
+        out = _evaluate_bitstring(spec, seed=seed)
+    elif kind_name == "random_walk_v0":
+        out = _random_walk_v0(spec, seed=seed, state=state)
+    else:
+        raise ExecutorUnavailable("no executor bound for kind %r"
+                                  % (kind_name,))
+    # WP-0f. The kind declared what it returns; check the OUTPUT against that
+    # declaration here, at the executor boundary, so a wrong shape never
+    # reaches an observation. A result that does not match its own contract is
+    # not a weak measurement -- it is not this kind's measurement at all.
+    if kind.declares_result:
+        kind.check_result(out, truncation=out.pop("_truncated", None))
+    return out
