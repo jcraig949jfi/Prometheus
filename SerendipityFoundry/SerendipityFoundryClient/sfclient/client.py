@@ -376,16 +376,30 @@ class EngineClient:
                           "name": name})
 
     def family_member(self, family_id: str, member_kind: str, member_id: str,
-                      *, role: Optional[str] = None) -> dict:
+                      *, role: Optional[str] = None,
+                      arm: Optional[str] = None) -> dict:
         """member_kind: experiment | analysis | world | claim.
         role: planned | executed | abandoned | selected | alternative.
+        arm: the experimental arm, per the ARM RULING.
 
-        Roles are APPEND-ONLY: re-adding the same member under a different role
-        is a 409. A member quietly moving from `alternative` to `selected`
-        after the fact is the rewrite this table exists to prevent."""
+        THE ARM IS PART OF THE SEALED DESIGN, NOT OF THE EXECUTION SPEC. That
+        is what lets two members in different arms carry a byte-identical
+        execution spec and therefore an IDENTICAL spec_hash -- what was run and
+        what role it played are different facts, and folding the label into the
+        spec would make identical executions hash differently and destroy the
+        comparison the design exists to support.
+
+        Role AND arm are APPEND-ONLY: re-adding the same member with a
+        different role or arm is a 409, while an identical re-add is an
+        idempotent no-op. A member quietly moving from `alternative` to
+        `selected`, or from arm A to arm B, after the results are in is the
+        rewrite this record exists to prevent.
+
+        If the family's manifest declares `arms`, an arm outside that sealed
+        vocabulary is refused at membership (422)."""
         return self._req("POST", f"/v2/families/{family_id}/members",
                          {"member_kind": member_kind, "member_id": member_id,
-                          "role": role})
+                          "role": role, "arm": arm})
 
     def get_family(self, family_id: str) -> dict:
         """The family plus its provenance census, including
@@ -404,6 +418,147 @@ class EngineClient:
         return self._req("POST", f"/v2/families/{family_id}/close")
 
     # ---- v6 claims --------------------------------------------------------
+
+    # ---- v7 measurements: identity, meaning, and where the value lives ----
+
+    def register_measurement(self, name: str, version: str, *,
+                             implementation_hash: str, domain: str,
+                             value_path: Optional[str] = None,
+                             direction: Optional[str] = None,
+                             unit: Optional[str] = None,
+                             range_min: Optional[float] = None,
+                             range_max: Optional[float] = None,
+                             params: Optional[dict] = None,
+                             inputs: Optional[list] = None,
+                             outputs: Optional[list] = None,
+                             provenance: Optional[dict] = None,
+                             validation_status: str = "UNVALIDATED") -> dict:
+        """Register a measurement DEFINITION: what it is, WHERE its value lives
+        and what a value MEANS.
+
+        `observations.content` is freeform by design, so nothing otherwise says
+        which field of it is the outcome. `value_path` is a dotted ADDRESS of
+        plain keys ("result.score"), deliberately not a query language: letting
+        a measurement SELECT its own value would make choosing which of several
+        values counts an act of interpretation, which the engine declines.
+
+        `direction` matters more than it looks -- without it "0.2 vs 0.4" is not
+        even orderable, and an analyst that guesses the sign gets a confident
+        answer with the wrong one.
+
+        `(name, version)` is UNIQUE and never silently replaced: a changed
+        oracle needs a new version, because two runs scored under one name by
+        two definitions are not comparable and nothing downstream could tell.
+        The returned `identity_hash` is derived from the definition -- put it in
+        an executor attestation's `measurement_identity_hash` so the hash
+        resolves to a registered oracle instead of being comparable only with
+        itself."""
+        return self._req("POST", "/v2/measurements", {
+            "name": name, "version": version,
+            "implementation_hash": implementation_hash, "domain": domain,
+            "value_path": value_path, "direction": direction, "unit": unit,
+            "range_min": range_min, "range_max": range_max,
+            "params": params or {}, "inputs": inputs or [],
+            "outputs": outputs or [], "provenance": provenance or {},
+            "validation_status": validation_status})
+
+    def measurements(self, *, name: Optional[str] = None,
+                     domain: Optional[str] = None, limit: int = 100) -> list:
+        q = f"/v2/measurements?limit={limit}"
+        if name:
+            q += f"&name={name}"
+        if domain:
+            q += f"&domain={domain}"
+        return self._req("GET", q)["measurements"]
+
+    def measurement(self, measurement_id: str) -> dict:
+        """Accepts a measurement_id OR an identity_hash, so an executor holding
+        only the hash it attested can resolve what it measured."""
+        return self._req("GET", f"/v2/measurements/{measurement_id}")
+
+    def measured_value(self, wid, obs_id: str, measurement_id: str) -> dict:
+        """Resolve ONE observation's value along the declared path. A lookup:
+        the engine computes nothing across observations and takes no view on
+        what the number means. Owner-scoped -- for another seat's corpus use
+        read_observations(measurement=...)."""
+        return self._req(
+            "GET",
+            f"/v2/worlds/{wid}/observations/{obs_id}/measured/{measurement_id}")
+
+    # ---- v7 cross-seat read contract --------------------------------------
+    #
+    # Every ordinary read route is owner-scoped, which is right and which makes
+    # an ARCHAEOLOGIST impossible without this. A grant is READ ONLY, scoped to
+    # a read scope, revocable, and it never widens the owner-scoped routes: the
+    # cross-tenancy is in the /v2/read/* path so an ordinary read can never
+    # quietly start returning another seat's rows.
+
+    def create_read_scope(self, name: str, *,
+                          note: Optional[str] = None) -> dict:
+        """A curated set of YOUR OWN worlds, existing only to be granted for
+        reading. Deliberately not a topology group: that field gates
+        artifact-crossing, so granting over one would confer import
+        eligibility as a side effect, and it would mean mutating worlds that
+        already exist. A scope writes nothing on the world."""
+        return self._req("POST", "/v2/read/scopes",
+                         {"name": name, "note": note})
+
+    def add_scope_worlds(self, scope_id: str, world_ids: list) -> dict:
+        """Add worlds you OWN. Ids you do not own are reported in `not_yours`
+        rather than raising -- the engine will not tell you whether they
+        exist."""
+        return self._req("POST", f"/v2/read/scopes/{scope_id}/worlds",
+                         {"world_ids": list(world_ids)})
+
+    def read_scopes(self) -> list:
+        return self._req("GET", "/v2/read/scopes")["scopes"]
+
+    def grant_read(self, scope_id: str, grantee_client_id: str, *,
+                   note: Optional[str] = None) -> dict:
+        """Only the scope's owner may grant, so a capability cannot be re-lent
+        by whoever it reaches."""
+        return self._req("POST", f"/v2/read/scopes/{scope_id}/grants",
+                         {"grantee_client_id": grantee_client_id,
+                          "note": note})
+
+    def revoke_read(self, grant_id: str) -> dict:
+        """Immediate. The row survives with `revoked_ts`: a grant that existed
+        and was withdrawn is a different fact from one that never existed."""
+        return self._req("POST", f"/v2/read/grants/{grant_id}/revoke")
+
+    def read_grants(self) -> dict:
+        """-> {granted_by_me: [...], granted_to_me: [...]}"""
+        return self._req("GET", "/v2/read/grants")
+
+    def read_worlds(self, *, scope: Optional[str] = None,
+                    limit: int = 500) -> dict:
+        """Worlds you do NOT own, in scopes you have been granted. Your own are
+        excluded so you cannot lose track of which rows are your evidence and
+        which are another seat's. An ungranted scope returns empty, never 403."""
+        q = f"/v2/read/worlds?limit={limit}" + (f"&scope={scope}" if scope else "")
+        return self._req("GET", q)
+
+    def read_observations(self, *, scope: Optional[str] = None,
+                          world_id: Optional[str] = None,
+                          evidence_class: Optional[str] = None,
+                          measurement: Optional[str] = None,
+                          limit: int = 1000) -> dict:
+        """Observations from granted scopes, WITH the corpus census beside
+        them -- worlds, by_client, by_evidence_class, the filter applied and
+        whether the page truncated. Record that census in every survey: it is
+        the declared population your detectors ran over, and the commonest way
+        to fail is to pool tenancies and evidence classes without noticing.
+
+        Pass `measurement` (an id or identity_hash) to attach a resolved
+        `measured` block per observation, so a reader never guesses which field
+        is the outcome."""
+        q = f"/v2/read/observations?limit={limit}"
+        for k, v in (("scope", scope), ("world_id", world_id),
+                     ("evidence_class", evidence_class),
+                     ("measurement", measurement)):
+            if v:
+                q += f"&{k}={v}"
+        return self._req("GET", q)
 
     def record_claim(self, estimand: str, status: str, *,
                      family_id: Optional[str] = None,
