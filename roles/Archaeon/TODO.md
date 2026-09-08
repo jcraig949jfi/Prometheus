@@ -154,3 +154,27 @@ would still KILL.
       sufficient*.
 - [ ] Retention policy for `cadence_log` (it grows one row per cycle,
       including refusals, forever).
+
+## Future candidates from the 2026-09-08 design-packet review (not scheduled)
+
+- F-1  Coupled NK construction for a tightly PAIRED interaction ablation: same
+       tables at k=0 and k>0 (add interactions without redrawing). v0 uses the
+       ensemble comparison; reopen when a paired ablation claim is wanted.
+- F-2  C3-mut: a separately labelled arm of single- and few-bit mutations
+       around each recovered EvCA genome, same IC samples — can known
+       computation tolerate change, fail distinctly, or vary in ways worth
+       following. After C3-hist passes. (Adopted from the review as the next
+       CA campaign.)
+- F-3  A literal radius-0 executor for CA (v0 compiles centre-only rules into
+       the 128-entry table instead).
+- F-4  observation_interface = score_and_contribution series on NK (v0 series
+       are score_only); and table-access as a declared, separately labelled
+       interface if a question needs it.
+- F-5  A particle / domain-boundary descriptor for CA trajectories, defined
+       AFTER trajectories exist (the record in packet v2 §2.7 is built so the
+       question can be asked later, not so it is answered now).
+- F-6  Credential reissue route in SFE against an existing client_id
+       (Daedalus); a seat that loses its token currently loses write access to
+       its worlds permanently (Harmonia 2026-09-08).
+- F-7  Vivarium heartbeat.started_at records first appearance of the worker
+       id, not the current process (cosmetic; Vivarium's).
