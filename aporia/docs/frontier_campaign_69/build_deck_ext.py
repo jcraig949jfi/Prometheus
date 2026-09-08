@@ -517,6 +517,494 @@ EXTRA = [
         "performance measured independently, so that the correlation between "
         "them is the result rather than the assumption.",
     ),
+    (
+        83,
+        "Open-Endedness Metrics and Evolutionary Activity",
+        # WHY. This is the question Herakles' critique says the Archaeon
+        # roadmap never asks: "what would a serendipitous result look like,
+        # and how would we know one if it happened?" The word novelty appears
+        # in four roadmap documents and in every case means an EXPLORATION
+        # BUDGET, never a definition of a novel finding. Evolutionary activity
+        # statistics are the one existing attempt to MEASURE open-endedness
+        # rather than assert it, and they are named by dossiers 01 and 30.
+        # Nothing in the 82 covers the measurement problem itself.
+        "Is there any measure that can look at a running system and say "
+        "whether it is still producing genuinely new things, as opposed to "
+        "rearranging what it already had, and does that measure survive "
+        "being applied to a system known to be going nowhere?",
+        "Evolutionary activity statistics count, for each component in a "
+        "system, how long it has persisted and how much it has been used, "
+        "then aggregate those counts into a small number of curves: how much "
+        "total activity the system carries, how much of that belongs to "
+        "components that are new, and whether the new-component activity "
+        "keeps arriving or dies away. The decisive move is the SHADOW "
+        "RUN: the same system is re-run with heredity removed, or with "
+        "components drawn at random from the same distribution, so that any "
+        "activity present in the shadow is activity the mechanism did not "
+        "earn. Open-endedness is then claimed only for activity that exceeds "
+        "the shadow. The critiques are as important as the method. The "
+        "statistics depend on what is counted as a component, which is a "
+        "modelling decision; they can be inflated by a system that merely "
+        "accumulates junk that persists; and several published claims of "
+        "unbounded activity were later attributed to the choice of shadow "
+        "rather than to the system under test.",
+        "The candidate is a component of the evolving system -- a gene, a "
+        "rule, an organism type -- whose persistence and usage are counted. "
+        "What varies is what the system produces over time. What is judged "
+        "is whether the component's activity exceeds what the shadow "
+        "produces.",
+        "New-component activity per unit time, on a count scale, plotted "
+        "against the shadow run rather than against zero. The verdict is "
+        "categorical -- bounded, unbounded, or shadow-dominated -- and the "
+        "shadow is what makes it a measurement rather than an assertion.",
+    ),
+    (
+        84,
+        "Fitness Landscape Structure: Epistasis, Neutrality and Ruggedness",
+        # WHY. The most-named uncovered cluster in the corpus: epistasis in
+        # four dossiers (10, 11, 12, 49), neutral networks in two (08, 70).
+        # And it sits directly under the Archaeon roadmap's Branch A, which
+        # proposes an NK landscape with k > 0 to replace a landscape Herakles
+        # measured as flat -- solvable by a one-flip hill climber in exactly L
+        # queries. Branch A has no test that the chosen k actually makes the
+        # landscape hard, which is his objection O-1. This is the literature
+        # that would supply one.
+        "Given a landscape, how do you measure whether it is actually hard, "
+        "how much of its difficulty comes from interaction between loci "
+        "rather than from the number of them, and how much of it can a "
+        "search simply walk around for free?",
+        "A fitness landscape assigns a value to each point in a discrete "
+        "space of genotypes, and its difficulty is a structural property "
+        "that can be measured before any search is run. The NK model makes "
+        "the structure a parameter: each of N loci contributes a value that "
+        "depends on itself and K others, so K = 0 gives a single-peaked "
+        "additive landscape solvable one locus at a time, and increasing K "
+        "raises the number of local optima toward randomness. The measures "
+        "that matter are the number and basin sizes of local optima, the "
+        "autocorrelation of fitness along a random walk, which gives a "
+        "correlation length, and the fraction of neighbouring genotypes with "
+        "equal fitness, which defines neutral networks -- connected plateaus "
+        "a population can drift along at no cost, reaching distant regions "
+        "without ever crossing a valley. Neutrality changes the problem "
+        "qualitatively: a landscape can be rugged by every peak-counting "
+        "measure and still be easy, because the plateaus connect.",
+        "The candidate is a genotype, a point in the space. What varies is "
+        "the landscape's own parameters, N and K and the neutrality "
+        "fraction, rather than any individual solution. What is judged is a "
+        "structural statistic of the landscape itself.",
+        "Number of local optima and their basin sizes, as counts; fitness "
+        "autocorrelation and its correlation length, continuous; neutral "
+        "fraction, between 0 and 1. Crucially, alongside these, the actual "
+        "query count a one-flip hill climber needs, because a landscape "
+        "whose measured ruggedness does not raise that count is not doing "
+        "the work its parameters claim.",
+    ),
+    (
+        85,
+        "Evolvability and the Evolution of Robustness",
+        # WHY. Named by three dossiers (04, 08, 32) and uncovered. It is also
+        # the field that addresses the failure recorded in
+        # feedback_gen_30_wall: self-improving systems hit a bounded-menu
+        # wall, and what is needed is MENU GROWTH rather than deeper search
+        # within a fixed menu. Evolvability is the name that literature gives
+        # to the capacity to generate useful variation, and the question of
+        # whether it can itself be selected for is exactly the question
+        # underneath that wall.
+        "Can a system's capacity to produce useful new variation itself "
+        "increase over time, and is that a real effect or an artefact of "
+        "measuring it on the population that produced it?",
+        "Robustness is the fraction of mutations that leave the phenotype "
+        "unchanged; evolvability is the capacity to produce phenotypes that "
+        "are new and viable. Naively these oppose each other, since a "
+        "genotype insensitive to mutation produces less variation. The "
+        "resolution proposed in the RNA and protein literature is that "
+        "robustness creates neutral networks, a population drifts along one "
+        "while accumulating cryptic genetic variation that is currently "
+        "silent, and that reservoir is released as phenotypic variation when "
+        "the environment or the genetic background changes. So robustness "
+        "and evolvability are in tension at the level of an individual and "
+        "aligned at the level of a population. The measurement problem is "
+        "severe and is the reason to ask: evolvability is usually measured "
+        "as the variance of fitness effects among a genotype's mutational "
+        "neighbours, which is computed over the very population whose "
+        "history produced the genotype, so an apparent increase can be a "
+        "property of where the population has been rather than of what it "
+        "can now do.",
+        "The candidate is a genotype together with its mutational "
+        "neighbourhood. What varies is the genotype and the background it "
+        "sits in. What is judged is how many distinct viable phenotypes its "
+        "neighbourhood contains, and how many of those are new.",
+        "The count of distinct viable phenotypes reachable in one mutational "
+        "step, and the fraction of those not already present in the "
+        "population, both as counts. The comparison that carries the claim "
+        "is against genotypes drawn from a distribution matched in fitness "
+        "but not in history, since matching on fitness alone is what "
+        "separates an evolvability effect from a survivorship effect.",
+    ),
+    # -----------------------------------------------------------------
+    # 86 to 97: the remaining topics named by two or more dossiers.
+    # Five of the seventeen are NOT here because they are already covered
+    # and a duplicate would cost a token for nothing:
+    #     epistasis, neutral networks  -> 84
+    #     evolvability                 -> 85
+    #     evolutionary activity        -> 83
+    #     echo state networks          -> 72, whose anchor IS the reservoir
+    # -----------------------------------------------------------------
+    (
+        86, "Evolutionary Model Merging",
+        # WHY. Four dossiers (03, 05, 07, 29). Uncovered.
+        "Can two trained models be combined into a better one without any "
+        "gradient training, and is the gain a real capability or an "
+        "averaging artefact that a fair baseline would erase?",
+        "Model merging combines the weights of several models fine-tuned "
+        "from a shared base into a single model, arithmetically rather than "
+        "by training. The simplest form averages weights. Task arithmetic "
+        "treats the difference between a fine-tuned model and its base as a "
+        "task vector that can be added, negated to remove a behaviour, or "
+        "combined. Later methods resolve interference between task vectors "
+        "by trimming small components and reconciling sign conflicts. The "
+        "evolutionary version searches the merge coefficients, and "
+        "optionally the layer-wise permutation, with a population method "
+        "against a held-out score, which is what makes it an experiment "
+        "rather than a formula. The whole approach depends on the merged "
+        "models sharing a base, so that their weights sit in the same "
+        "linearly connected basin.",
+        "The candidate is a vector of merge coefficients, one per source "
+        "model or per layer. What varies is those coefficients. What is "
+        "judged is the merged model's score on held-out tasks.",
+        "Held-out task accuracy of the merged model, against each source "
+        "model and against a uniform-average baseline, which is the "
+        "comparison that separates a real gain from arithmetic.",
+    ),
+    (
+        87, "Symbolic Execution and Constraint-Based Test Generation",
+        # WHY. Three dossiers (35, 36, 38). Formal Methods at 38 covers model
+        # checking; this is the path-constraint line and is distinct.
+        "Can a program be explored by treating its inputs as symbols rather "
+        "than values, and what actually stops it -- the number of paths, or "
+        "the solver?",
+        "Instead of running a program on concrete inputs, symbolic execution "
+        "runs it on symbols, building a path condition: a formula recording "
+        "the branch choices taken to reach the current point. At each branch "
+        "the engine asks a constraint solver whether each side is "
+        "satisfiable, and forks where both are. Solving a path condition "
+        "yields a concrete input that drives the program down exactly that "
+        "path, which is how the technique generates tests and finds crashes. "
+        "The obstacle is path explosion, since loops and calls multiply "
+        "paths exponentially, and the practical systems are hybrids: "
+        "concolic execution runs a concrete input alongside the symbolic "
+        "state and flips one branch at a time, which trades completeness for "
+        "reach. The second obstacle is the solver, since path conditions "
+        "with nonlinear arithmetic or string operations can be intractable "
+        "even when few paths remain.",
+        "The candidate is a path condition, a conjunction of branch "
+        "constraints. What varies is which branches were taken. What is "
+        "judged is whether it is satisfiable and what input satisfies it.",
+        "Coverage achieved as a fraction of branches or lines, plus the "
+        "count of distinct crashes found, both against a fixed time budget, "
+        "since every result in this field is budget-relative.",
+    ),
+    (
+        88, "Self-Play and League Training",
+        # WHY. Three dossiers (07, 21, 24). Coevolution at 7 covers
+        # host-parasite; this is the modern competitive-agent line with its
+        # own failure mode.
+        "When an agent trains only against copies of itself, what stops it "
+        "from cycling forever between strategies that each beat the last?",
+        "The agent plays against itself, and the opponent it faces is drawn "
+        "from its own history. Naive self-play faces only the current "
+        "policy, which produces strategic cycling: the policy learns to beat "
+        "its immediate predecessor, forgets what beat the one before, and "
+        "the cycle closes. Fictitious self-play instead plays against the "
+        "average of all past policies. League training generalises this by "
+        "maintaining a population with distinct roles -- main agents, "
+        "exploiters trained specifically to defeat the current main agent, "
+        "and league exploiters trained against everything -- so that a "
+        "weakness is found deliberately rather than waited for. The measure "
+        "that matters is not win rate against the current opponent, which is "
+        "self-referential, but performance against a held-out fixed "
+        "population.",
+        "The candidate is a policy. What varies is its parameters and which "
+        "opponents it was exposed to. What is judged is its performance "
+        "against opponents it did not train against.",
+        "Win rate against a frozen held-out opponent set, and separately a "
+        "measure of cycling such as the rank of the payoff matrix over "
+        "policy history, which reveals a non-transitive game that no single "
+        "score can summarise.",
+    ),
+    (
+        89, "Phenotypic Plasticity and the Baldwin Effect",
+        # WHY. Three dossiers (01, 04, 08). Evo-Devo at 8 is genotype-to-
+        # phenotype maps; this is lifetime learning feeding back into
+        # evolution, a different mechanism.
+        "If individuals can learn during their lifetime, does that speed up "
+        "evolution or slow it down, and can a learned behaviour become "
+        "innate without ever being inherited directly?",
+        "Each individual has a genotype specifying part of its behaviour and "
+        "leaves the rest plastic, to be fixed by learning during its "
+        "lifetime. Fitness is evaluated after learning. Nothing learned is "
+        "written back to the genome, so this is not Lamarckian. The claimed "
+        "effect has two phases. First, learning smooths the fitness "
+        "landscape: genotypes near a good solution can reach it by learning, "
+        "so selection can see a gradient where the raw landscape had none, "
+        "and evolution finds the region faster. Second, once the population "
+        "sits in that region, individuals that need less learning to get "
+        "there are fitter because learning is costly or risky, so the trait "
+        "becomes genetically fixed -- assimilated. The classic demonstration "
+        "used a neural network with some connections fixed by genes and "
+        "others learned, on a target that random search could not find. The "
+        "standing objection is that the effect depends on learning having a "
+        "cost, and that the original demonstration's landscape was a needle "
+        "in a haystack chosen to make the effect visible.",
+        "The candidate is a genotype specifying which traits are fixed and "
+        "which are left plastic. What varies is that allocation. What is "
+        "judged is fitness after a lifetime of learning.",
+        "Generations to reach a fitness threshold, compared against a "
+        "no-learning control on the same landscape, plus the fraction of "
+        "traits genetically fixed over time, which is what shows "
+        "assimilation rather than merely faster search.",
+    ),
+    (
+        90, "Neuromorphic and Spiking Computation",
+        # WHY. Three dossiers (72, 76, 82). Uncovered.
+        "Does computing with discrete events in continuous time buy anything "
+        "that a conventional network cannot, once you control for the "
+        "hardware it runs on?",
+        "A spiking neuron integrates incoming current and emits a discrete "
+        "spike when its membrane potential crosses a threshold, then resets. "
+        "Information is carried by spike timing and rate rather than by "
+        "continuous activations, and because a neuron is silent unless it "
+        "spikes, computation is event-driven and consumes energy only on "
+        "activity. The training problem is that the threshold is not "
+        "differentiable, so gradients do not flow; the standard workaround "
+        "substitutes a smooth surrogate for the derivative during the "
+        "backward pass while keeping the hard threshold forward. The claims "
+        "made for the approach are energy efficiency on event-driven "
+        "hardware and native handling of temporal data. The confound is "
+        "severe and is the reason to ask: an energy comparison between a "
+        "spiking network on neuromorphic hardware and a conventional network "
+        "on a GPU measures two hardware platforms, not two algorithms.",
+        "The candidate is the network's weights and, in some formulations, "
+        "its per-neuron time constants. What varies is those parameters. "
+        "What is judged is task accuracy together with spike count, which is "
+        "the proxy for energy.",
+        "Task accuracy on its own scale, paired with total spike count or "
+        "synaptic operations, so the accuracy-per-operation trade-off is the "
+        "reported result rather than accuracy alone.",
+    ),
+    (
+        91, "Inductive Program Synthesis from Examples",
+        # WHY. Three dossiers (36, 42, 80). Library learning at 80 is
+        # abstraction over solved tasks; this is the prior step, getting a
+        # program from input-output pairs at all.
+        "Given only a handful of input-output pairs, can a program be found "
+        "that produces them, and how do you choose among the many programs "
+        "that fit?",
+        "The system is given examples and searches a space of programs in a "
+        "restricted language for one consistent with all of them. The "
+        "language is deliberately limited -- string transformations, list "
+        "operations, grid manipulations -- because unrestricted search is "
+        "hopeless. Three families do the work. Enumerative search generates "
+        "programs in order of increasing size, with observational "
+        "equivalence pruning: two programs producing identical outputs on "
+        "the examples are interchangeable, so only one need be kept, which "
+        "collapses the space enormously. Constraint-based methods encode the "
+        "whole synthesis problem for a solver. Neural methods learn to "
+        "predict which primitives are likely, and guide the search rather "
+        "than replace it. The deep issue is that many programs fit a few "
+        "examples and they disagree everywhere else, so the ranking prior -- "
+        "usually shortest program, sometimes a learned one -- is doing as "
+        "much work as the search.",
+        "The candidate is a program in the restricted language. What varies "
+        "is its structure. What is judged is consistency with the given "
+        "examples, and then its rank under the prior.",
+        "Fraction of held-out tasks solved within a fixed time and node "
+        "budget, plus generalisation accuracy on inputs not among the "
+        "examples, which is the number that exposes whether the prior is "
+        "picking the right program among those that fit.",
+    ),
+    (
+        92, "Curriculum Learning and Task Ordering",
+        # WHY. Three dossiers (24, 26, 75). UED at 71 generates environments;
+        # this is the narrower question of whether ORDER alone matters.
+        "Does the order in which training examples are presented change what "
+        "is learned, holding the examples themselves fixed?",
+        "The examples are the same and only their sequence differs, usually "
+        "easy to hard by some difficulty measure, so any effect is "
+        "attributable to ordering alone. Self-paced variants make difficulty "
+        "relative to the current model, selecting examples the model finds "
+        "neither trivial nor impossible, which is measured by loss or by "
+        "learning progress -- the rate of change of performance rather than "
+        "performance itself. The evidence is genuinely mixed, and that is "
+        "why this is worth a report rather than a summary: curricula help "
+        "reliably in some settings and are indistinguishable from random "
+        "ordering in others, with the strongest replicated effects appearing "
+        "under noisy labels or limited data, and the weakest appearing "
+        "exactly where large models and abundant data make ordering "
+        "irrelevant.",
+        "The candidate is an ordering, or a policy that produces one. What "
+        "varies is the sequence. What is judged is final performance and "
+        "how quickly it was reached.",
+        "Final held-out accuracy and steps to a fixed accuracy threshold, "
+        "both against a shuffled-order control on identical data, since a "
+        "curriculum result without that control measures the dataset.",
+    ),
+    (
+        93, "Automated Program Repair and Genetic Improvement",
+        # WHY. Two dossiers (35, 45). Uncovered, and it carries one of the
+        # cleanest documented instances of a benchmark measuring the wrong
+        # thing, which is directly useful to this programme.
+        "Can a program be patched automatically so its tests pass, and does "
+        "a patch that passes the tests actually fix the bug?",
+        "A repair system takes a program with a failing test, localises the "
+        "likely faulty statements by correlating them with failing runs, "
+        "generates candidate edits -- by mutation, by templates drawn from "
+        "human patch histories, by constraint solving, or by a language "
+        "model -- and accepts an edit when the whole test suite passes. "
+        "Genetic improvement is the same machinery aimed at a non-functional "
+        "property such as speed or energy, keeping behaviour fixed. The "
+        "central and well-documented problem is overfitting to the test "
+        "suite: a patch that deletes the failing functionality, or "
+        "special-cases the test input, passes. Independent assessment "
+        "found that a large fraction of patches accepted by early systems "
+        "were plausible but incorrect when judged against held-out tests or "
+        "by human review, and the field's response was to separate the "
+        "PLAUSIBLE rate from the CORRECT rate, which is the distinction a "
+        "reader must carry into every number reported here.",
+        "The candidate is a patch, an edit to the source. What varies is the "
+        "edit. What is judged is whether the test suite passes -- which is "
+        "not the same as whether the bug is fixed.",
+        "Number of bugs with a plausible patch and, separately and always, "
+        "the number with a CORRECT patch judged against held-out tests or "
+        "human review. Reporting only the first is the field's known "
+        "failure mode.",
+    ),
+    (
+        94, "In-Context Learning",
+        # WHY. Two dossiers (19, 56). Meta-learning at 19 names it as its own
+        # absorbing field, which makes it a documented successor the deck
+        # does not cover.
+        "When a model improves at a task from examples in its prompt without "
+        "any weight change, is it learning from those examples or "
+        "recognising a task it already knows?",
+        "Examples are placed in the context window and the model's "
+        "performance on a new query improves, with no gradient step taken. "
+        "Two accounts compete. On the learning account the forward pass "
+        "implements something like an optimisation step over the in-context "
+        "examples, and constructions exist showing a transformer CAN encode "
+        "gradient descent on a linear problem in its attention layers. On "
+        "the retrieval account the examples merely identify which "
+        "pre-trained capability to apply, and the evidence for this is "
+        "sharp: replacing the labels in the examples with RANDOM labels "
+        "often barely degrades performance, which a genuine learner should "
+        "not tolerate, though the effect depends heavily on model scale and "
+        "task, and the label-insensitivity itself weakens with larger "
+        "models. Distinguishing the accounts requires tasks the model "
+        "cannot have seen, which is why synthetic function classes rather "
+        "than natural language benchmarks carry the load.",
+        "The candidate is the set of in-context examples: how many, which "
+        "ones, in what order, with what labels. What varies is that set. "
+        "What is judged is accuracy on a held-out query.",
+        "Query accuracy as a function of the number of in-context examples, "
+        "and the same curve with labels randomised, since the gap between "
+        "those two curves is the measurement that separates the two "
+        "accounts.",
+    ),
+    (
+        95, "E-Graphs and Equality Saturation",
+        # WHY. Two dossiers (42, 80). Named inside library learning as the
+        # machinery under Babble, but never examined as a technique.
+        "Can you apply every rewrite rule to a term at once, keeping all "
+        "results, and then pick the best -- avoiding the ordering problem "
+        "that makes rewriting fragile?",
+        "Ordinary term rewriting applies rules in sequence, so an early "
+        "rewrite can destroy the structure a later rule needed, and the "
+        "outcome depends on the order chosen. An e-graph stores a set of "
+        "equivalent terms compactly: nodes are grouped into equivalence "
+        "classes, and a node's children are classes rather than individual "
+        "terms, so one small structure can represent exponentially many "
+        "equivalent expressions. Equality saturation applies every rule "
+        "everywhere repeatedly, adding the results into the e-graph rather "
+        "than replacing anything, until no rule adds new information or a "
+        "budget expires. Only then is a single best term extracted, by a "
+        "cost function over the saturated graph. The technique is "
+        "destructive-rewrite-free, which is the whole point, and its limits "
+        "are that saturation may never terminate and that extraction under "
+        "a non-additive cost function is itself hard.",
+        "The candidate is a term to be extracted from the saturated "
+        "e-graph. What varies is which representative is chosen from each "
+        "equivalence class. What is judged is the cost of the extracted "
+        "term.",
+        "Cost of the extracted term under the stated cost function, against "
+        "the input term's cost, plus whether saturation was reached or the "
+        "budget expired, which must always be reported because an "
+        "unsaturated result is a lower bound on what the rules could find.",
+    ),
+    (
+        96, "Differentiable Simulation",
+        # WHY. Two dossiers (70, 75). Distinct from Neural CA at 76: there
+        # the RULE is learned, here the PHYSICS is differentiated, and the
+        # gradient pathology is specific to contact.
+        "If a physics simulator is written so gradients can flow through it, "
+        "can you optimise a design or a controller directly by gradient "
+        "descent, and where does that break?",
+        "The simulator's timestep is implemented in an automatic "
+        "differentiation framework, so the derivative of a final state with "
+        "respect to initial conditions, material parameters or control "
+        "inputs is available by backpropagating through the whole rollout. "
+        "This turns design into direct optimisation and can be orders of "
+        "magnitude more sample-efficient than a search that only sees "
+        "returns. Two failure modes are structural rather than incidental. "
+        "Contact and collision make the dynamics discontinuous, so the true "
+        "gradient is undefined or wildly wrong at exactly the moments that "
+        "matter, and simulators substitute a smoothed contact model whose "
+        "gradient is well-behaved but describes a different physics. And "
+        "backpropagating through long rollouts produces exploding or "
+        "vanishing gradients for the same reason recurrent networks do, so "
+        "the horizon must be truncated, which biases the gradient.",
+        "The candidate is a parameter vector: a control sequence, a material "
+        "property, or a shape. What varies is those parameters. What is "
+        "judged is a scalar objective computed from the simulated "
+        "trajectory.",
+        "Objective value against wall-clock and against sample count, "
+        "compared with a gradient-free baseline on the same objective, "
+        "because the claim being tested is efficiency rather than "
+        "attainability. Gradient norm over rollout length should be reported "
+        "alongside, since it is what exposes the truncation bias.",
+    ),
+    (
+        97, "Chemical Reaction Networks as Computation",
+        # WHY. Two dossiers (31, 32). Adjacent to Artificial Chemistry at 31
+        # and Autocatalytic Sets at 32, but a distinct formalism: here the
+        # network is a PROGRAMMING MODEL with proved expressiveness results.
+        "What can a well-mixed set of chemical reactions compute, and is the "
+        "answer different when molecule counts are small enough that "
+        "randomness matters?",
+        "A chemical reaction network is a set of species and reactions with "
+        "rate constants. Treated deterministically at high copy number it is "
+        "a system of ordinary differential equations; treated stochastically "
+        "at low copy number it is a Markov chain over integer counts, and "
+        "the two can give qualitatively different answers, which is the "
+        "interesting part. As a programming model the network is the "
+        "program and the molecular counts are the state, and the results are "
+        "genuinely theorems rather than demonstrations: deterministic "
+        "networks compute a characterised class of functions, stochastic "
+        "networks can be Turing universal but only with a nonzero "
+        "probability of error, and that error cannot be driven to zero while "
+        "keeping the speed. DNA strand displacement gives a physical "
+        "implementation, so a designed network can be compiled to real "
+        "molecules, which makes the field one of the few here where the "
+        "in-silico result has a wet-lab counterpart.",
+        "The candidate is a reaction network: the species, the reactions and "
+        "their rate constants. What varies is that network. What is judged "
+        "is whether its dynamics compute the intended function, and under "
+        "which of the two semantics.",
+        "For the deterministic semantics, convergence of the output species "
+        "concentration to the target value. For the stochastic semantics, "
+        "the probability of a correct answer and the expected time to reach "
+        "it, since correctness is probabilistic by construction and a report "
+        "of one without the other is incomplete.",
+    ),
 ]
 
 
