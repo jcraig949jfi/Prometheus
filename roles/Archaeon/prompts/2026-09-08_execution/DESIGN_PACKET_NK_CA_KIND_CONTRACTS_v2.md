@@ -160,8 +160,9 @@ instrument; it may still yield a finding with a limited domain (BRANCHES s0).
         suitable ensembles; depends on the scan's move and tie rules, which
         are fixed above; not guaranteed per landscape)
     H2  within-landscape score variance over random candidates follows
-        (1 - 2^-(k+1)) / (12 N): 0.0026 at k=0, 0.0047 at k=2, 0.0050 at
-        k=4 for N=16 (measured, not assumed)
+        (1 - 2^-(k+1)) / (12 N): 0.0026 at k=0, 0.0046 at k=2, 0.0050 at
+        k=4 for N=16 (measured, not assumed; k=2 corrected per Harmonia's
+        Amendment 1 -- the packet had 0.0047)
     H3  D3, comparing a k=4 region against k=0 neighbourhoods at floor
         geometry, fires at ~0.2 per region (ratio ~1.9; Harmonia's table gives
         0.211 at 2.0) against ~0.08 under the pure null -- i.e. D3 has LOW
@@ -174,14 +175,23 @@ instrument; it may still yield a finding with a limited domain (BRANCHES s0).
   BRANCHES.md s0, for Harmonia.
 
 1.10 FIRST CORPUS (A3-acq; human-issued; minutes)
-  length 16; k in {0, 2, 4}; 3 landscapes (seed_roots) per k, certified
-  optima stored; per landscape TWO series, each a producer-side search
-  trajectory logged as queue rows with series_id and step:
+  length 16; k in {0, 2, 4}; SIX landscapes (seed_roots) per k (Harmonia's
+  Amendment 2: the independent unit for H1 and for route (c) is the
+  LANDSCAPE; at 3 per k the minimum attainable two-sided permutation p is
+  2/C(6,3) = 0.10, so no result could reach 0.05; at 6 per k it can;
+  route (c) requires >= 4 and recommends 6), certified optima stored; per
+  landscape TWO series, each a producer-side search trajectory logged as
+  queue rows with series_id and step:
     random.v0            20 random candidates (the frozen random control)
     coordscan.v0         the specified coordinate scan, budget 1 + 2N = 33
   Both under observation_interface = score_only in v0; a
   score_and_contribution arm is a later, separately labelled series.
-  ~ 9 landscapes x (20 + 33) = 477 specs; seconds of compute.
+  ~ 18 landscapes x (20 + 33) = 954 specs; seconds of compute. Route (c)
+  test stated before issue: two-sample comparison of within-landscape
+  score variance (unbiased sample variance over the 20 random candidates
+  per landscape) between the k=0 and k=4 ensembles, permutation p over
+  the C(12,6) = 924 splits, null = k-ensembles drawn under the same
+  construction; reported as an ENSEMBLE comparison.
   What this supports: convergence to local optima; success against the
   certified optimum; trapped-start fractions; method comparison on identical
   landscapes within k. What it does not support: any claim about D3 power
@@ -380,7 +390,8 @@ facts under their own protocols, never as a generic band.
            qualification report
   C3-base  the two constant-output rules and the four centre-only rules,
            same samples
-  C3-acq   50 random rule tables, same samples (the frozen random control)
+  C3-acq   80 random rule tables, same samples (the frozen random control;
+           80 so that a D3 region of the descriptor holds >= 8 independent rules)
   C3-null  the six genomes under reflect and complement, same samples (G1)
   C3-abl   Herakles's H-R1 probe as a COMPARISON FAMILY, two templates:
            ca.region_ablation.v0 (ablate the table entries in a declared
@@ -397,6 +408,16 @@ facts under their own protocols, never as a generic band.
            arm measures rather than assumes.
   Total ~ 70 rules x 4 repeats + the ablation family = ~400 observations;
   minutes.
+  REPEAT BLOCKER (Harmonia, 2026-09-08; closed in Archaeon's lane): D3
+  counted rows, and 4 repeats per rule inflate its false-alarm rate 6.4x
+  at the floor. Every detector now sees ONE ROW PER INDEPENDENT UNIT (the
+  experiment: fossils.aggregate_repeats, mean over repeats), so a region
+  needs 8 independent RULES to be D3-eligible, not 8 rows. d3.v0 is
+  untouched. Consequence for C3: with 50 random rules over 8 regions of
+  the rule-table descriptor, ~6 rules per region on average -- BELOW the
+  floor. H2 (CA) is therefore evaluable only if C3-acq is issued at
+  >= 80 random rules (10 per region), which is what the corpus now
+  specifies: C3-acq = 80 random rule tables.
   A SEPARATE, LABELLED ARM after C3-hist passes (TODO F-2, adopted from the
   review as the next campaign, not this one): C3-mut, single- and few-bit
   mutations around each recovered genome, same samples -- can known

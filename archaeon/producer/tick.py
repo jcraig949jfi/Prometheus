@@ -121,7 +121,11 @@ def tick(conn, config: Optional[cfg.ArchaeonConfig] = None, *,
             return out
 
         # 4. weak signal, using the existing simple algorithm --------------
-        results = detectors.run_all(corpus, config.detectors)
+        # Harmonia's repeat blocker (2026-09-08): detectors see one row per
+        # independent unit. The raw corpus is kept for Stage 0 and the census.
+        agg_corpus = fossils.aggregate_repeats(corpus)
+        results = detectors.run_all(agg_corpus, config.detectors)
+        out["aggregation"] = agg_corpus.window.get("aggregation")
         census = detectors.eligibility_census(results)
         signals = detectors.all_signals(results)
         ranked = rank.rank(signals, config.rank_weights)

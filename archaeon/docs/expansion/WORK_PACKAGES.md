@@ -65,6 +65,7 @@ to its owner) · CONDITIONAL (waits on a named result).
 - Acceptance: `archaeon/docs/D3_NULL_RECONCILIATION.md` + `d3_null_reconciliation.json`; `campaign.check()["levels"]` v2 (deterministic enumeration at WORLD; mean-null with unequal variances).
 - **Computation vs qualification (third amendment).** Archaeon computes; Harmonia qualifies the *method*. The estimator definitions and calibration assumptions (sample-variance estimator, k-nearest region/neighbourhood construction with the region excluded, eligibility floor, denominators, the band) are frozen as `d3.v0` and cited in every signal's `thresholds`; observed variance is always calculated from actual data, never assumed. Neighbourhood processing is bounded (k nearest, region-excluded; cost linear in regions × k). Recalibration lives in `archaeon.calibrate_d3_null` and runs outside the production tick. Tests: 0d-e the tick and loop import no calibration module (source scan); 0d-f a signal carries the frozen estimator parameters it was computed under.
 - Claim boundary: explains the number; D3 stays admitted for region discrimination on a frozen corpus; a Gaussian null approximates a Binomial one at n = 8.
+- **Repeat blocker (Harmonia 2026-09-08) CLOSED, option (a):** `fossils.aggregate_repeats` gives every detector one row per independent unit (the experiment) before it runs; the tick applies it; Stage 0 keeps the raw rows. Test: 2 rules x 4 repeats per region fire at > 0.3 raw (Harmonia measured 0.56) and are ineligible aggregated; 8 rules x 4 repeats aggregated fire at the calibrated floor rate (exact 0.083) within 4 SE. d3.v0 untouched, admission survives.
 - Status: **DONE** (this commit). Reopen: Harmonia's ruling; binomial-null calibration at the family's L under a frozen design.
 
 ### WP-0e · Kind-generic builder · **Archaeon** (Vivarium: WP-0f result schema supersedes the local copy)
@@ -133,7 +134,7 @@ to its owner) · CONDITIONAL (waits on a named result).
 - Tests: A1-a hand-computed small tables → exact scores and per-locus contributions summing to the score; A1-b k=0 has no cross-locus interaction; a constructed k>0 fixture exhibits one (not left to a random seed); A1-c joint locus/table/candidate permutation satisfies A2's invariant; seed replay regenerates tables; A1-d illegal k, duplicate/self-neighbour violations, length mismatch, malformed table sizes refused; A1-e a tiny exhaustively solved interacting fixture verifies solved/optimum semantics including incompatible local maxima.
 - Acceptance: documented deterministic executor; contribution witness; registered measurements through the authorized path; wrapper parity.
 - Claim boundary: k=0 equals the old onemax only if that construction is explicitly implemented; for k>0 score = 1 is not assumed attainable and a below-maximum locus is not an independent actionable correction.
-- Status: OWNER.
+- Status: **LICENSED by Harmonia 2026-09-08** (`RULING_NK_CA_PACKET_V2_AND_ROUTES`): Daedalus may start on packet v2.1 as written; Part 3 accepted in full; Amendment 1 (H2 k=2 = 0.0046) and Amendment 2 (six landscapes per k) applied to the packet. Routes (d) and (c) accepted, (c) with n >= 4 landscapes per k.
 
 ### WP-A2 · NK null, control and uniform templates · **Archaeon** (Daedalus specifies the symmetry; operator admits)
 - Dependency: A1, 0e.

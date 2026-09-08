@@ -74,6 +74,65 @@ class FossilRow:
                 "player": self.player, "anchors": dict(self.anchors)}
 
 
+def unit_key(row: "FossilRow") -> str:
+    """The INDEPENDENT UNIT a row belongs to.
+
+    Repeats of one experiment (spec v3 `repeat`) share an experiment id and a
+    table/target draw; they are not independent observations. Harmonia
+    (2026-09-08) measured what happens when a detector counts them as if they
+    were: at D3's eligibility floor, 8 rows made of 2 experiments x 4 repeats
+    fire at 0.56 per region against a calibrated 0.088 -- a 6.4x inflation.
+    So the unit is the experiment for SFE rows (anchors["exp_id"]); a row
+    with no experiment anchor is its own unit.
+    """
+    ex = row.anchors.get("exp_id") if row.anchors else None
+    return str(ex) if ex else row.row_id
+
+
+def aggregate_repeats(corpus: "Corpus", how: str = "mean") -> "Corpus":
+    """One row per (region, independent unit), BEFORE any detector sees it.
+
+    Harmonia's option (a): does not touch d3.v0's firing logic, so D3's
+    admission survives; a region now needs d3_min_n_region INDEPENDENT units
+    to be eligible, which is what the floor calibration assumed. The window
+    records rows_before, units_after and the aggregation, so a census can
+    tell an aggregated corpus from a raw one. Stage 0 (S17) is NOT run on the
+    aggregated corpus: its features are within-unit repeat statistics and
+    need the raw rows.
+    """
+    from collections import OrderedDict
+    groups: "OrderedDict[tuple, list]" = OrderedDict()
+    for r in corpus.rows:
+        groups.setdefault((r.region, unit_key(r)), []).append(r)
+    out: List[FossilRow] = []
+    for (region, unit), rs in groups.items():
+        vals = [x.metric for x in rs]
+        if how == "mean":
+            m = sum(vals) / len(vals)
+        elif how == "first":
+            m = sorted(rs, key=lambda x: x.seq)[0].metric
+        else:
+            raise ValueError("unknown aggregation {!r}".format(how))
+        base = sorted(rs, key=lambda x: x.seq)[0]
+        coords: Dict[str, float] = {}
+        for k in set().union(*(x.coords.keys() for x in rs)):
+            cs = [x.coords[k] for x in rs if k in x.coords]
+            coords[k] = sum(cs) / len(cs)
+        out.append(FossilRow(
+            row_id="agg:{}".format(unit) if len(rs) > 1 else base.row_id,
+            source=base.source, seq=base.seq, region=region,
+            family=base.family, player=base.player, metric=m, coords=coords,
+            anchors=dict(base.anchors, aggregated_from=[x.row_id for x in rs],
+                         aggregated_n=len(rs), aggregation=how,
+                         independent_unit="experiment")))
+    window = dict(corpus.window)
+    window["aggregation"] = {"independent_unit": "experiment", "how": how,
+                             "rows_before": len(corpus.rows),
+                             "units_after": len(out),
+                             "max_repeats_in_a_unit": max((len(v) for v in groups.values()), default=0)}
+    return Corpus(rows=out, chart=corpus.chart, source_ref=corpus.source_ref, window=window)
+
+
 @dataclass
 class Corpus:
     """The exact set of rows one Archaeon cycle read."""
