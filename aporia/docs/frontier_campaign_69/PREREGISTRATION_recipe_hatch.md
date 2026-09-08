@@ -167,3 +167,82 @@ At resolution, for each of the 22 Tier 5 dossiers, record one of:
     ON_ANCHOR     PART 5 gives a recipe for the anchored system    neither
 
 Provisional, first three: 48 SUBSTITUTED, 49 SUBSTITUTED, 50 SUBSTITUTED.
+
+---
+
+## RESOLUTION, 2026-09-08, all 22 Tier 5 dossiers returned
+
+Adjudicated by hand over the 22 PART 5 sections, as committed. The regex
+found zero decline phrases across all 22 and would have returned k = 0; it
+was wrong, and this is why the preregistration forbade using it.
+
+### The count
+
+    k  (DECLINED)      1
+    s  (SUBSTITUTED)  10
+       (ON_ANCHOR)    11
+
+**k = 1 falls in the INDETERMINATE band. Nothing is adjudicated.**
+
+### The one decline, report 55, Knowledge Discovery
+
+> The harsh reality of this field is that there is NO single historical
+> experiment that meets the strict bar for a modern, universally informative
+> reproduction. As Erwan Moreau (2023) established, the classic ABC
+> reproduction experiments, like running a graph model to rediscover
+> Swanson's fish-oil connection, are fundamentally flawed due to extreme
+> overfitting and subpar evaluation methodologies.
+
+It then offers a fallback, explicitly qualified. That is the hatch firing
+exactly as written: it states no experiment meets the bar, names the source
+that established this, and gives the reason. The behaviour is available.
+
+### Classification, all 22
+
+    DECLINED     55
+    SUBSTITUTED  48 49 50 51 52 56 57 58 59 61
+    ON_ANCHOR    53 54 60 62 63 64 65 66 67 68 69
+
+### THE PRESCRIBED TIEBREAK IS VOID, AND I AM NOT REPLACING IT
+
+The INDETERMINATE branch said to resolve by hand-reading Adam and Ada,
+"since those two have the strongest a-priori case for declining" — I argued
+their central experiments are physical, so an in-silico recipe should be
+impossible by construction.
+
+**That prediction failed.** Both returned legitimate ON_ANCHOR in-silico
+recipes: Adam via COBRApy flux-balance analysis on yeast-GEM with an expected
+biomass flux, which is the computational half of what Adam actually did, and
+Ada via the Olympus `thin_film` surface, an explicit digital twin built from
+archived robotic data. Digital twins exist precisely to make this possible
+and I did not consider them.
+
+So the tiebreak rests on a claim that is now known to be false, and it cannot
+carry the weight I gave it. Inventing a replacement tiebreak after seeing the
+data is the same move the preregistration exists to forbid. **The verdict
+stays INDETERMINATE.**
+
+### What s = 10 shows, reported beside k and adjudicating nothing
+
+Ten of 22 gave a complete recipe for a system other than the one anchored on.
+BACON became PySR on Feynman. AM became IMO-AG-30. HR became FunSearch.
+Dawkins' Weasel became FunSearch. ECHO became IMEC. Structure-mapping became
+a 2025 stress test of language models.
+
+And the substitutions **concentrate**: FunSearch cap set is the recipe for
+three unrelated fields (51 Automated Conjecture Generation, 61 Universal
+Darwinism, 66 Algorithm Discovery), with a fourth field routed to the
+adjacent IMO-AG-30. A corpus asked for each field's own canonical experiment
+returns the same currently-famous result repeatedly. That is consistent with
+recipes being drawn from a small pool of recent high-profile work rather than
+from each field's own history — but it is an observation, not the verdict,
+and k is what the rule was written on.
+
+### Operational consequence, which holds regardless of the verdict
+
+**PART 5 is usable only when checked against the anchor the prompt named.**
+That check is cheap, it is now known to fail 10 times in 22, and nobody would
+have thought to run it without this measurement. The 11 ON_ANCHOR recipes are
+the ones that can be executed as reproductions; the 10 SUBSTITUTED ones are
+useful experiments that are not reproductions of the field they sit under,
+and must not be labelled as such downstream.
