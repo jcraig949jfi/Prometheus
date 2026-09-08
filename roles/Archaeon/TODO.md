@@ -178,3 +178,5 @@ would still KILL.
        its worlds permanently (Harmonia 2026-09-08).
 - F-7  Vivarium heartbeat.started_at records first appearance of the worker
        id, not the current process (cosmetic; Vivarium's).
+- F-8  Credential rotation (Mnemosyne's tracker, evidence_wiki/docs/CREDENTIAL_ROTATION_TRACKER.md): R-1 PEW credentials in git history (operator; must be simultaneous on M1 and M2), R-3 the archive prefixes (low urgency; local disk only, never committed). Not a research dependency.
+- F-9  `binds_session` still absent from SFE's verify-anchor (Mnemosyne, unchanged): the wrong-session case rests on PEW's splice witness rather than an engine proof. Daedalus's, when scheduled.
