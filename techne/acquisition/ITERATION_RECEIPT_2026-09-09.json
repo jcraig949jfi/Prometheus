@@ -1,0 +1,133 @@
+{
+  "iteration_id": "techne-h0h5-tool-acquisition-2026-09-09",
+  "design_version": "0.1",
+  "work_items": [
+    "TECHNE.md deliverable 1 -- acquisition command in the existing CLI/package structure",
+    "TECHNE.md deliverable 2 -- z3-solver, hypothesis, ribs, stitch_core pinned by exact version and wheel hash on this host; repository tools at an immutable revision with submodules pinned",
+    "TECHNE.md deliverable 3 -- first useful checks, each its own receipt (Z3, Hypothesis, pyribs, Stitch, DreamCoder)",
+    "TECHNE.md deliverable 4 -- a reproduction manifest BEFORE any benchmark claim; the four stages reported separately",
+    "TECHNE.md deliverable 5 -- declarative, independently verified export; no upstream pickle in the engine; licenses kept with the copies; unresolved licensing recorded"
+  ],
+  "backlog_ids": "NOT AVAILABLE -- prometheus-h0-h5-backlog.json is not in the repository (same absence as the acquisition plan JSON). Work items above are quoted from the routed prompt instead.",
+  "baseline_commits": {
+    "repo_head_at_start": "311fc5da9",
+    "branch": "techne/h0h5-tools-2026-09-09",
+    "branched_from": "origin/main",
+    "routing_commit": "0a8198bd98307b3eb253d87918f4a4f8f9d2e1e4",
+    "design_file": "roles/Archaeon/prompts/2026-09-08_h0h5/DESIGN_H0_H5_v0.1.md",
+    "worktree_note": "run from an isolated worktree; the F:\\Prometheus checkout is parked on another seat's branch with that seat's uncommitted work, which was not touched"
+  },
+  "result_commits": [
+    "95daf6e57 -- acquisition command, manifest, budget profiles, host capacity, locks, four INSTALLATION receipts, LICENSE_EVIDENCE, reproduction manifest DECLARED_NOT_RUN",
+    "8a03fdb1a -- five FIRST_USEFUL_CHECK receipts, stitch reproduction result + declarative library export, dreamcoder submodule pinning fix, 17 tests, session report"
+  ],
+  "components_changed": [
+    "techne/acquisition/ (new package: paths, host, budget, pypi, repo, fixtures, manifest_io, receipt, checks/)",
+    "techne/scripts/acquire.py (new CLI)",
+    "techne/scripts/license_audit.py (new CLI)",
+    "techne/scripts/tool_check.py (new CLI)",
+    "techne/tests/test_acquisition.py (new)",
+    "roles/Techne/H0H5_TOOL_ACQUISITION_2026-09-09.md (new)"
+  ],
+  "commands_run": [
+    "python -m techne.acquisition.host --out techne/acquisition/HOST_CAPACITY.json",
+    "python -m techne.scripts.acquire --list",
+    "python -m techne.scripts.acquire --entry z3 --profile light_probe --dry-run",
+    "python -m techne.scripts.acquire --entry z3 --profile light_probe",
+    "python -m techne.scripts.acquire --entry hypothesis --profile light_probe",
+    "python -m techne.scripts.acquire --entry pyribs --profile light_probe",
+    "python -m techne.scripts.acquire --entry stitch --profile light_probe",
+    "python -m techne.scripts.acquire --entry dreamcoder --profile isolated_heavy_build",
+    "python -m techne.scripts.license_audit",
+    "python -m techne.scripts.tool_check --all",
+    "python -m techne.scripts.tool_check --entry z3",
+    "python -m techne.acquisition.checks.dreamcoder_smoke",
+    "python -m pytest techne/tests/test_acquisition.py -q",
+    "python -m pytest techne/tests -q"
+  ],
+  "commands_refused_by_the_tool": [
+    "python -m techne.scripts.acquire --entry poet --profile light_probe -- REFUSED, acquisition_status NOT_ATTEMPTED_NO_CONSUMER",
+    "python -m techne.scripts.acquire --entry native_libraries -- REFUSED, NOT_APPLICABLE_IN_REPO"
+  ],
+  "tests_and_controls": [
+    {"id": "T-ACQ", "what": "techne/tests/test_acquisition.py", "result": "17 passed",
+     "scope": "hash contract, manifest consumer contract, network contract, serialization contract, receipt stage contract, preregistration contract"},
+    {"id": "T-TECHNE-SUITE", "what": "python -m pytest techne/tests -q",
+     "result": "INCOMPLETE -- the suite did not finish inside a 580s ceiling",
+     "detail": "stalls at techne/tests/test_mahler_batch.py::test_authority_mossinghoff_snapshot_178_entries, which is PRE-EXISTING and untouched by either commit (neither commit contains a mahler path). 236 of the suite's tests had passed or skipped with 0 failures when the ceiling hit. This is reported as an unmeasured regression surface, NOT as a pass.",
+     "honest_limit": "I have NOT established that this seat's commits cause no regression in the full techne suite, because I have not seen the full suite finish. What I have established is that the acquisition tests pass and that the stalling test lies outside every path these commits touch."},
+    {"id": "C-Z3-NEG", "what": "the independent counterexample validator is fed two non-distinguishing inputs", "result": "rejected both -- validator can fail"},
+    {"id": "C-STITCH-NEG", "what": "fn_0's abstraction body replaced with (M 1 0 0 0)", "result": "recovery drops 250/250 -> 48/250; the 48 are exactly the programs that never call fn_0"},
+    {"id": "C-STITCH-DET", "what": "two identical compress() invocations", "result": "identical on all four metrics and all 250 rewritten programs"},
+    {"id": "C-PYRIBS-DET", "what": "the identical frozen stream into two fresh archives at both granularities", "result": "identical retained ids"},
+    {"id": "C-HYP-AB", "what": "hypothesis run with and without HYPOTHESIS_STORAGE_DIRECTORY", "result": "without: .hypothesis appears in cwd; with: cwd clean, directory inside the declared work dir"},
+    {"id": "C-FIXTURE-ID", "what": "git blob sha1 computed from the received nuts-bolts bytes vs the GitHub contents-API blob sha at the pinned commit", "result": "85f142ef8c53 both sides, independently"}
+  ],
+  "artifact_and_observation_refs": [
+    "techne/acquisition/MANIFEST.json",
+    "techne/acquisition/BUDGET_PROFILES.json",
+    "techne/acquisition/HOST_CAPACITY.json",
+    "techne/acquisition/LICENSE_EVIDENCE.json",
+    "techne/acquisition/locks/{z3,hypothesis,pyribs,stitch}-cp312-win-amd64.lock.txt",
+    "techne/acquisition/receipts/installation-{z3,hypothesis,pyribs,stitch}-20260909T2144-2147Z.json",
+    "techne/acquisition/receipts/installation-dreamcoder-20260909T{220215,220321}Z.json",
+    "techne/acquisition/receipts/first_useful_check-{z3,hypothesis,pyribs,stitch,dreamcoder}-20260909T2215-2217Z.json",
+    "techne/acquisition/reproduction/stitch_nuts_bolts.manifest.json",
+    "techne/acquisition/reproduction/REPRODUCTION_MANIFEST_SCHEMA.md",
+    "techne/acquisition/exports/stitch_nuts_bolts_library.json",
+    "techne/acquisition/fixtures/hypothesis_minimized.json",
+    "roles/Techne/H0H5_TOOL_ACQUISITION_2026-09-09.md"
+  ],
+  "resource_receipt_refs": [
+    "every receipt carries resource_receipt with wall clock vs ceiling, bytes downloaded vs ceiling, cache delta, OS peak-working-set counter, children spawned, and aborted_on",
+    "ENFORCED: wall clock, bytes downloaded (aborts mid-transfer), network policy, concurrent process count, whole-process-tree termination on timeout",
+    "OBSERVED ONLY: peak RSS (OS counter, parent process only, children excluded, NOT capped -- a job object or cgroup is unimplemented and the receipt says so) and disk (measured before/after, not limited)"
+  ],
+  "source_set_ref": null,
+  "software_stage_changes": [
+    {"tool": "z3-solver", "version": "5.0.0.0", "stage": "INSTALLED_PINNED_AND_HASHED -> FIRST_USEFUL_CHECK PASSED (1 case undecided)", "env": "h0h5_tools isolated venv", "in_live_interpreter": false},
+    {"tool": "hypothesis", "version": "6.165.10", "stage": "INSTALLED_PINNED_AND_HASHED -> FIRST_USEFUL_CHECK PASSED", "env": "h0h5_tools isolated venv", "in_live_interpreter": false},
+    {"tool": "ribs", "version": "0.12.0", "stage": "INSTALLED_PINNED_AND_HASHED -> FIRST_USEFUL_CHECK PASSED", "env": "h0h5_tools isolated venv", "in_live_interpreter": false},
+    {"tool": "stitch_core", "version": "0.1.29", "stage": "INSTALLED_PINNED_AND_HASHED -> FIRST_USEFUL_CHECK PASSED -> PAPER_REPRODUCTION REPRODUCED", "env": "h0h5_tools isolated venv", "in_live_interpreter": false, "gate": "EXPORT BLOCKED on licensing"},
+    {"tool": "dreamcoder", "version": "cb0e63f5c33cd2de360b791038b0f5272750270e", "stage": "SOURCE_AT_PINNED_REVISION, submodules all at recorded commits -> FIRST_USEFUL_CHECK BLOCKED", "env": "dreamcoder_isolated (no interpreter created -- nothing installable)", "in_live_interpreter": false},
+    {"tool": "poet", "version": null, "stage": "NOT_ATTEMPTED_NO_CONSUMER", "env": null, "in_live_interpreter": false}
+  ],
+  "evidence_state_changes": [
+    "stitch_core 0.1.29 licensing: UNRESOLVED_NO_LICENSE_IN_ANY_DISTRIBUTED_ARTIFACT. Redistribution, vendoring and export of anything containing it are BLOCKED; internal use of the installed copy is not.",
+    "z3-solver 5.0.0.0 licensing: DECLARED_AS_FREE_TEXT_NO_SPDX, wheel ships no notice; the sdist's core/LICENSE.txt has been copied into the cache so the notice travels with the copy.",
+    "hypothesis MPL-2.0 and ribs MIT: RESOLVED_FROM_ARTIFACT_SPDX, notices shipped and kept.",
+    "DreamCoder licensing: the repository's only notice file is the AngularJS MIT text ('Copyright (c) 2010-2020 Google LLC. http://angularjs.org'); SPDX left NOT_ATTEMPTED.",
+    "stitch_core 0.1.29 has NO corresponding upstream tag; its source revision is not verifiable from upstream tags and the wheel sha256 is its only pin.",
+    "pyribs retention semantics for H3: exact ties are FIRST-WRITER-WINS (insertion requires strictly greater than the cell threshold; the default threshold is the incumbent's objective).",
+    "hypothesis example-database isolation is PARTIAL by default: database= scopes saved examples only; the storage directory needs HYPOTHESIS_STORAGE_DIRECTORY.",
+    "z3 5.0.0 on this host: no elicitable `unknown` whose reason is other than budget exhaustion, across six candidates at 4s each."
+  ],
+  "scientific_outcomes": [
+    "NONE. No scientific claim is made or supported by this iteration. The reproduction is an UPSTREAM check on a third-party tool's own published numbers; it is not a Prometheus result, and nothing here is evidence that any experiment got a better answer."
+  ],
+  "unrun_or_blocked": [
+    "DreamCoder bounded domain smoke run -- NOT DELIVERED. Four independent measured blockers: BLK-DC-1 python stack (14 of 38 pins have a compatible wheel on either of this host's interpreters, 3.12.10 and 3.11.9; 22 sdist-only), BLK-DC-2 OCaml solver (no opam, no ocaml, no make), BLK-DC-3 Rust compressor (no cargo, no rustc), BLK-DC-4 resource envelope (all 199 official commands are cloud-launcher invocations for n1-megamem-96 / x1.32xlarge class machines with timeouts to 57600s against a 7200s ceiling, and no cloud launcher is authorised).",
+    "ADAPTER_QUALIFICATION for every tool -- not attempted. No Prometheus consumer calls any of these yet, and qualification needs the consumer's typed contract, which belongs to the consuming seat.",
+    "POET acquisition -- refused by the tool, no named consumer until H4's adaptive protocol exists (Harmonia, scheduled after iteration 1).",
+    "Full techne test suite -- did not finish inside a 580s ceiling; the stall is pre-existing and outside every path these commits touch, but that means no full-suite regression statement is available from this iteration.",
+    "Bounded external-backend contract (process-tree cancellation, lease renewal, limits, repeatability, output validation) -- NOT built. The design makes it a prerequisite for any scientific kind calling an external executable; no such kind exists yet, and Vivarium owns that contract.",
+    "UNKNOWN-by-incompleteness for z3 -- undecided after six candidates; retained as a negative result rather than scored."
+  ],
+  "design_deviations": [
+    {"id": "DEV-T1", "what": "the acquisition manifest is reconstructed from design v0.1 section 7 prose", "why": "prometheus-tool-acquisition-plan.json is not in the repository", "consequence": "no operator-observed SHAs; every revision is a candidate resolved by this seat at a recorded timestamp. If the operator's JSON arrives and disagrees, the operator's pins win and both are recorded."},
+    {"id": "DEV-T2", "what": "budget profiles are DERIVED_FROM_HOST, not reconciled", "why": "the proposed light-probe and heavy-build ceilings live in the same absent file, so there was nothing to reconcile against", "consequence": "ceilings are set against MEASURED AVAILABLE RAM (13.2 GiB of 31.6 GiB total) rather than against a proposal"},
+    {"id": "DEV-T3", "what": "an unhashed entry in a resolved closure is refused in the lock", "why": "a --require-hashes lock cannot carry it", "consequence": "the install fails loudly rather than silently installing an unhashed artifact. Did not fire on any of the four tools."},
+    {"id": "DEV-T4", "what": "one DreamCoder submodule (pyccg) declares branch = master", "why": "upstream .gitmodules", "consequence": "submodule update landed on the branch head; the tool now fetches and checks out the superproject's recorded commit explicitly"},
+    {"id": "DEV-T6", "what": "DreamCoder submodule transport rewritten from git@github.com: to HTTPS for pregex and pinn", "why": "SSH URLs need a key and a verified host key; both failed Host key verification", "consequence": "same owner/repo path, different transport"},
+    {"id": "DEV-T7", "what": "no DreamCoder bounded domain smoke run", "why": "four measured blockers above", "consequence": "the precise failing boundary is delivered in its place, not a new architecture proposal"},
+    {"id": "DEV-R1", "what": "stitch threads pinned to 1", "why": "threads>1 could make the search order nondeterministic", "consequence": "expected to be a no-op against the compress() default; declared rather than assumed"},
+    {"id": "DEV-R2", "what": "the nuts-bolts fixture is fetched from the repository at a pinned commit rather than a release artifact", "why": "stitch publishes no release containing it"},
+    {"id": "DEV-R3", "what": "reproduction host is Windows / cp312", "why": "this is the host", "consequence": "the upstream figures carry no platform statement; they matched anyway"},
+    {"id": "DEV-T8", "what": "a full `pip install --dry-run -r requirements.txt` was abandoned for the DreamCoder probe", "why": "it had not terminated after ten minutes of sdist backtracking, so the measurement would have been the resolver's patience rather than the stack's installability", "consequence": "replaced with a decidable per-pin artifact-availability question that terminates; the abandonment is recorded in the check's own docstring"}
+  ],
+  "self_corrections_during_the_iteration": [
+    "A pyribs gate asserting that no ribs.emitters/ribs.schedulers module appears in sys.modules could not pass on any input, because `import ribs.archives` eagerly imports 28 of them. Replaced with an instance-level gate over gc.get_objects(). Same error class as a threshold outside its attainable range, caught before it was committed as a control.",
+    "A hypothesis assertion named 'no default example database leaked into the working directory' was measuring the wrong object: the directory that appeared held a constants cache, not examples. Split into two precise claims -- saved examples are scoped, and the storage side channel holds no saved examples -- plus an A/B measurement of what actually contains the side channel."
+  ],
+  "next_unblocked_action": "Hand the four INSTALLATION receipts and LICENSE_EVIDENCE.json to Archaeon for roles/Archaeon/H0H5_STATUS.md, and put the stitch_core licensing blocker in front of the operator: it gates export and vendoring rather than internal use, and no seat can resolve it alone. The next item this seat can advance without anyone else is an ADAPTER_QUALIFICATION job for pyribs against H3's actual frozen candidate stream, since H3 alpha is Archaeon's and its stream format is the only missing input."
+}
