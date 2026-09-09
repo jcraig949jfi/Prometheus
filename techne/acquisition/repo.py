@@ -95,32 +95,81 @@ def _submodules(budget: Budget, dest: pathlib.Path, fetch: bool) -> dict:
         declared.append(cur)
 
     out = {"declared": declared, "n_declared": len(declared), "fetched": False,
-           "moving_branch_pins": [d for d in declared if d.get("branch")]}
+           "moving_branch_pins": [d for d in declared if d.get("branch")],
+           "ssh_urls": [d for d in declared if str(d.get("url", "")).startswith("git@")],
+           "deviations": []}
     if not fetch:
         out["status"] = "DECLARED_NOT_FETCHED"
         return out
-    r = budget.run(["git", "submodule", "update", "--init", "--recursive",
-                    "--depth", "1", "--filter=blob:none"], cwd=str(dest))
-    st = budget.run(["git", "submodule", "status", "--recursive"], cwd=str(dest))
-    out["fetched"] = r["returncode"] == 0
+
+    # A submodule declared with an SSH URL is unfetchable without a key and a trusted host
+    # key. Rewriting to HTTPS is a DEVIATION from the declared URL -- the same repository by
+    # path, but not the transport the superproject named -- so it is recorded, not silent.
+    rewrite = []
+    if out["ssh_urls"]:
+        rewrite = ["-c", "url.https://github.com/.insteadOf=git@github.com:"]
+        out["deviations"].append(
+            f"transport rewritten to HTTPS for {[d['name'] for d in out['ssh_urls']]}: "
+            f"their .gitmodules URLs are git@github.com: which needs an SSH key and a "
+            f"verified host key. The owner/repo path is unchanged; the transport is not.")
+
+    r = budget.run(["git"] + rewrite + ["submodule", "update", "--init", "--recursive",
+                                        "--filter=blob:none"], cwd=str(dest))
     out["update_returncode"] = r["returncode"]
     out["update_stderr_tail"] = r["stderr"][-3000:]
-    pins = []
-    for line in st["stdout"].splitlines():
-        line = line.rstrip()
-        if not line:
-            continue
-        flag = line[0] if line[0] in " +-U" else " "
-        body = line[1:] if flag != " " or line[0] == " " else line
-        parts = body.split()
-        if len(parts) >= 2:
-            pins.append({"commit": parts[0], "path": parts[1],
-                         "describe": parts[2] if len(parts) > 2 else None,
-                         "state_flag": flag,
-                         "state": {" ": "initialized_at_pin", "+": "DIFFERENT_FROM_PIN",
-                                   "-": "NOT_INITIALIZED", "U": "MERGE_CONFLICT"}.get(flag, "?")})
+
+    def read_status() -> list[dict]:
+        st = budget.run(["git", "submodule", "status", "--recursive"], cwd=str(dest))
+        pins = []
+        for line in st["stdout"].splitlines():
+            line = line.rstrip()
+            if not line:
+                continue
+            flag = line[0] if line[0] in " +-U" else " "
+            parts = line[1:].split()
+            if len(parts) >= 2:
+                pins.append({"commit": parts[0], "path": parts[1],
+                             "describe": parts[2] if len(parts) > 2 else None,
+                             "state_flag": flag,
+                             "state": {" ": "initialized_at_pin", "+": "DIFFERENT_FROM_PIN",
+                                       "-": "NOT_INITIALIZED",
+                                       "U": "MERGE_CONFLICT"}.get(flag, "?")})
+        return pins
+
+    pins = read_status()
+    out["pins_after_update"] = pins
+
+    # `submodule update` on a submodule whose .gitmodules declares `branch = <name>` can land
+    # on that branch's CURRENT head instead of the commit the superproject records. A branch
+    # is not a pin, so any submodule not sitting at its recorded commit is forced to it here.
+    forced = []
+    for p in [x for x in pins if x["state"] == "DIFFERENT_FROM_PIN"]:
+        want = p["commit"].lstrip("+-U")
+        sub = dest / p["path"]
+        f1 = budget.run(["git", "fetch", "--filter=blob:none", "origin", want], cwd=str(sub))
+        f2 = budget.run(["git", "checkout", "--quiet", "--detach", want], cwd=str(sub))
+        got = budget.run(["git", "rev-parse", "HEAD"], cwd=str(sub))
+        forced.append({"path": p["path"], "wanted": want,
+                       "now_at": got["stdout"].strip(),
+                       "ok": got["stdout"].strip() == want,
+                       "fetch_rc": f1["returncode"], "checkout_rc": f2["returncode"],
+                       "why": "superproject records this commit; `branch` in .gitmodules had "
+                              "put the working tree on the branch head instead"})
+    if forced:
+        out["forced_to_recorded_commit"] = forced
+        out["deviations"].append(
+            f"{len(forced)} submodule(s) had to be explicitly checked out at the commit the "
+            f"superproject records, because .gitmodules declares a branch for them")
+
+    pins = read_status()
     out["pins"] = pins
-    out["status"] = "FETCHED_AND_PINNED" if out["fetched"] else "FETCH_FAILED"
+    out["n_at_pin"] = sum(1 for p in pins if p["state"] == "initialized_at_pin")
+    out["n_not_initialized"] = sum(1 for p in pins if p["state"] == "NOT_INITIALIZED")
+    out["n_off_pin"] = sum(1 for p in pins if p["state"] == "DIFFERENT_FROM_PIN")
+    out["fetched"] = out["n_not_initialized"] == 0
+    out["all_at_recorded_commit"] = out["n_at_pin"] == len(pins) and bool(pins)
+    out["status"] = ("FETCHED_AND_PINNED" if out["all_at_recorded_commit"]
+                     else "INCOMPLETE -- see n_not_initialized / n_off_pin")
     return out
 
 

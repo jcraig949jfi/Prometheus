@@ -1,0 +1,180 @@
+{
+  "schema": "techne.acquisition.stitch_library/1",
+  "provenance": {
+    "producer": "stitch_core==0.1.29 (isolated env h0h5_tools)",
+    "invocation": "stitch_core.compress(programs, iterations=3, max_arity=3, threads=1, silent=True)",
+    "input_fixture_sha256": "4e8ea30925b96736cb290f9f704167c4ca13e1a7da87eeaad2d5d0d0e29deb8d",
+    "reproduction_manifest": "REPRO-STITCH-NUTSBOLTS-001"
+  },
+  "export_rule": "DECLARATIVE ONLY. Abstraction bodies are exported as s-expression TEXT plus a parsed typed AST. No stitch object, no Rust handle and no pickle crosses this boundary, so nothing here can execute on import and an admitted interpreter can validate it independently.",
+  "abstractions": [
+    {
+      "name": "fn_0",
+      "arity": 2,
+      "body_sexpr": "(T (repeat (T l (M 1 0 -0.5 (/ 0.5 (tan (/ pi #1))))) #1 (M 1 (/ (* 2 pi) #1) 0 0)) (M #0 0 0 0))",
+      "body_ast": [
+        "T",
+        [
+          "repeat",
+          [
+            "T",
+            "l",
+            [
+              "M",
+              "1",
+              "0",
+              "-0.5",
+              [
+                "/",
+                "0.5",
+                [
+                  "tan",
+                  [
+                    "/",
+                    "pi",
+                    "#1"
+                  ]
+                ]
+              ]
+            ]
+          ],
+          "#1",
+          [
+            "M",
+            "1",
+            [
+              "/",
+              [
+                "*",
+                "2",
+                "pi"
+              ],
+              "#1"
+            ],
+            "0",
+            "0"
+          ]
+        ],
+        [
+          "M",
+          "#0",
+          "0",
+          "0",
+          "0"
+        ]
+      ],
+      "holes": [
+        0,
+        1
+      ],
+      "calls_earlier_abstractions": []
+    },
+    {
+      "name": "fn_1",
+      "arity": 3,
+      "body_sexpr": "(repeat (T (T #2 (M 0.5 0 0 0)) (M 1 0 (* #1 (cos (/ pi 4))) (* #1 (sin (/ pi 4))))) #0 (M 1 (/ (* 2 pi) #0) 0 0))",
+      "body_ast": [
+        "repeat",
+        [
+          "T",
+          [
+            "T",
+            "#2",
+            [
+              "M",
+              "0.5",
+              "0",
+              "0",
+              "0"
+            ]
+          ],
+          [
+            "M",
+            "1",
+            "0",
+            [
+              "*",
+              "#1",
+              [
+                "cos",
+                [
+                  "/",
+                  "pi",
+                  "4"
+                ]
+              ]
+            ],
+            [
+              "*",
+              "#1",
+              [
+                "sin",
+                [
+                  "/",
+                  "pi",
+                  "4"
+                ]
+              ]
+            ]
+          ]
+        ],
+        "#0",
+        [
+          "M",
+          "1",
+          [
+            "/",
+            [
+              "*",
+              "2",
+              "pi"
+            ],
+            "#0"
+          ],
+          "0",
+          "0"
+        ]
+      ],
+      "holes": [
+        0,
+        1,
+        2
+      ],
+      "calls_earlier_abstractions": []
+    },
+    {
+      "name": "fn_2",
+      "arity": 1,
+      "body_sexpr": "(T (T c (M 2 0 0 0)) (M #0 0 0 0))",
+      "body_ast": [
+        "T",
+        [
+          "T",
+          "c",
+          [
+            "M",
+            "2",
+            "0",
+            "0",
+            "0"
+          ]
+        ],
+        [
+          "M",
+          "#0",
+          "0",
+          "0",
+          "0"
+        ]
+      ],
+      "holes": [
+        0
+      ],
+      "calls_earlier_abstractions": []
+    }
+  ],
+  "semantics_preserving_expansion_verified": true,
+  "verification_method": "every rewritten program inlined by an expander written outside stitch and required to be token-identical to the original; negative control corrupts a body and must fail",
+  "NOT_QUALIFIED": "This library is a PROPOSAL. Mechanical evaluation decided it is expansion-correct. Whether it is USEFUL is decided by a held-out controlled experiment that has not been run.",
+  "licensing": "the producing distribution declares NO license in any distributed artifact; see techne/acquisition/LICENSE_EVIDENCE.json. This export contains abstractions learned FROM the Wong et al. 2022 corpus, not stitch code, but the blocker is recorded here so a consumer sees it."
+}
