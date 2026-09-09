@@ -50,18 +50,50 @@
     "python -m techne.scripts.acquire --entry native_libraries -- REFUSED, NOT_APPLICABLE_IN_REPO"
   ],
   "tests_and_controls": [
-    {"id": "T-ACQ", "what": "techne/tests/test_acquisition.py", "result": "17 passed",
-     "scope": "hash contract, manifest consumer contract, network contract, serialization contract, receipt stage contract, preregistration contract"},
-    {"id": "T-TECHNE-SUITE", "what": "python -m pytest techne/tests -q",
-     "result": "INCOMPLETE -- the suite did not finish inside a 580s ceiling",
-     "detail": "stalls at techne/tests/test_mahler_batch.py::test_authority_mossinghoff_snapshot_178_entries, which is PRE-EXISTING and untouched by either commit (neither commit contains a mahler path). 236 of the suite's tests had passed or skipped with 0 failures when the ceiling hit. This is reported as an unmeasured regression surface, NOT as a pass.",
-     "honest_limit": "I have NOT established that this seat's commits cause no regression in the full techne suite, because I have not seen the full suite finish. What I have established is that the acquisition tests pass and that the stalling test lies outside every path these commits touch."},
-    {"id": "C-Z3-NEG", "what": "the independent counterexample validator is fed two non-distinguishing inputs", "result": "rejected both -- validator can fail"},
-    {"id": "C-STITCH-NEG", "what": "fn_0's abstraction body replaced with (M 1 0 0 0)", "result": "recovery drops 250/250 -> 48/250; the 48 are exactly the programs that never call fn_0"},
-    {"id": "C-STITCH-DET", "what": "two identical compress() invocations", "result": "identical on all four metrics and all 250 rewritten programs"},
-    {"id": "C-PYRIBS-DET", "what": "the identical frozen stream into two fresh archives at both granularities", "result": "identical retained ids"},
-    {"id": "C-HYP-AB", "what": "hypothesis run with and without HYPOTHESIS_STORAGE_DIRECTORY", "result": "without: .hypothesis appears in cwd; with: cwd clean, directory inside the declared work dir"},
-    {"id": "C-FIXTURE-ID", "what": "git blob sha1 computed from the received nuts-bolts bytes vs the GitHub contents-API blob sha at the pinned commit", "result": "85f142ef8c53 both sides, independently"}
+    {
+      "id": "T-ACQ",
+      "what": "techne/tests/test_acquisition.py",
+      "result": "17 passed",
+      "scope": "hash contract, manifest consumer contract, network contract, serialization contract, receipt stage contract, preregistration contract"
+    },
+    {
+      "id": "T-TECHNE-SUITE",
+      "what": "python -m pytest techne/tests -q",
+      "result": "INCOMPLETE -- the suite did not finish inside a 580s ceiling",
+      "detail": "CORRECTED after measurement (see errata below). The test the suite sits on for a long time is techne/tests/test_mahler_batch.py::test_authority_mossinghoff_snapshot_178_entries. It is NOT hung: it costs ~310s on this host because it makes TWO full passes over a corpus of 8,625 polynomials (not 178 -- the name is a fossil), 5,152 of them above degree 100, at ~150s per pass. 236 of the suite's tests had passed or skipped with 0 failures when the 580s ceiling hit. Neither of this seat's commits contains a mahler path.",
+      "honest_limit": "I have NOT established that this seat's commits cause no regression in the full techne suite, because I have not seen the full suite finish. What I have established is that the acquisition tests pass and that the stalling test lies outside every path these commits touch.",
+      "errata": "My first reading said 'stalls', which implied a hang. Measured: scalar loop over all 8,625 entries 147.67s; degree-stratified batching 149.14s; one padded batch 150.46s; all three numerically identical (max abs diff 0.00e+00). Slow, not hung. A background run with no ceiling had still not finished after ~35 minutes, so the full suite's wall time remains UNMEASURED and the no-regression statement is still unavailable."
+    },
+    {
+      "id": "C-Z3-NEG",
+      "what": "the independent counterexample validator is fed two non-distinguishing inputs",
+      "result": "rejected both -- validator can fail"
+    },
+    {
+      "id": "C-STITCH-NEG",
+      "what": "fn_0's abstraction body replaced with (M 1 0 0 0)",
+      "result": "recovery drops 250/250 -> 48/250; the 48 are exactly the programs that never call fn_0"
+    },
+    {
+      "id": "C-STITCH-DET",
+      "what": "two identical compress() invocations",
+      "result": "identical on all four metrics and all 250 rewritten programs"
+    },
+    {
+      "id": "C-PYRIBS-DET",
+      "what": "the identical frozen stream into two fresh archives at both granularities",
+      "result": "identical retained ids"
+    },
+    {
+      "id": "C-HYP-AB",
+      "what": "hypothesis run with and without HYPOTHESIS_STORAGE_DIRECTORY",
+      "result": "without: .hypothesis appears in cwd; with: cwd clean, directory inside the declared work dir"
+    },
+    {
+      "id": "C-FIXTURE-ID",
+      "what": "git blob sha1 computed from the received nuts-bolts bytes vs the GitHub contents-API blob sha at the pinned commit",
+      "result": "85f142ef8c53 both sides, independently"
+    }
   ],
   "artifact_and_observation_refs": [
     "techne/acquisition/MANIFEST.json",
@@ -85,12 +117,49 @@
   ],
   "source_set_ref": null,
   "software_stage_changes": [
-    {"tool": "z3-solver", "version": "5.0.0.0", "stage": "INSTALLED_PINNED_AND_HASHED -> FIRST_USEFUL_CHECK PASSED (1 case undecided)", "env": "h0h5_tools isolated venv", "in_live_interpreter": false},
-    {"tool": "hypothesis", "version": "6.165.10", "stage": "INSTALLED_PINNED_AND_HASHED -> FIRST_USEFUL_CHECK PASSED", "env": "h0h5_tools isolated venv", "in_live_interpreter": false},
-    {"tool": "ribs", "version": "0.12.0", "stage": "INSTALLED_PINNED_AND_HASHED -> FIRST_USEFUL_CHECK PASSED", "env": "h0h5_tools isolated venv", "in_live_interpreter": false},
-    {"tool": "stitch_core", "version": "0.1.29", "stage": "INSTALLED_PINNED_AND_HASHED -> FIRST_USEFUL_CHECK PASSED -> PAPER_REPRODUCTION REPRODUCED", "env": "h0h5_tools isolated venv", "in_live_interpreter": false, "gate": "EXPORT BLOCKED on licensing"},
-    {"tool": "dreamcoder", "version": "cb0e63f5c33cd2de360b791038b0f5272750270e", "stage": "SOURCE_AT_PINNED_REVISION, submodules all at recorded commits -> FIRST_USEFUL_CHECK BLOCKED", "env": "dreamcoder_isolated (no interpreter created -- nothing installable)", "in_live_interpreter": false},
-    {"tool": "poet", "version": null, "stage": "NOT_ATTEMPTED_NO_CONSUMER", "env": null, "in_live_interpreter": false}
+    {
+      "tool": "z3-solver",
+      "version": "5.0.0.0",
+      "stage": "INSTALLED_PINNED_AND_HASHED -> FIRST_USEFUL_CHECK PASSED (1 case undecided)",
+      "env": "h0h5_tools isolated venv",
+      "in_live_interpreter": false
+    },
+    {
+      "tool": "hypothesis",
+      "version": "6.165.10",
+      "stage": "INSTALLED_PINNED_AND_HASHED -> FIRST_USEFUL_CHECK PASSED",
+      "env": "h0h5_tools isolated venv",
+      "in_live_interpreter": false
+    },
+    {
+      "tool": "ribs",
+      "version": "0.12.0",
+      "stage": "INSTALLED_PINNED_AND_HASHED -> FIRST_USEFUL_CHECK PASSED",
+      "env": "h0h5_tools isolated venv",
+      "in_live_interpreter": false
+    },
+    {
+      "tool": "stitch_core",
+      "version": "0.1.29",
+      "stage": "INSTALLED_PINNED_AND_HASHED -> FIRST_USEFUL_CHECK PASSED -> PAPER_REPRODUCTION REPRODUCED",
+      "env": "h0h5_tools isolated venv",
+      "in_live_interpreter": false,
+      "gate": "EXPORT BLOCKED on licensing"
+    },
+    {
+      "tool": "dreamcoder",
+      "version": "cb0e63f5c33cd2de360b791038b0f5272750270e",
+      "stage": "SOURCE_AT_PINNED_REVISION, submodules all at recorded commits -> FIRST_USEFUL_CHECK BLOCKED",
+      "env": "dreamcoder_isolated (no interpreter created -- nothing installable)",
+      "in_live_interpreter": false
+    },
+    {
+      "tool": "poet",
+      "version": null,
+      "stage": "NOT_ATTEMPTED_NO_CONSUMER",
+      "env": null,
+      "in_live_interpreter": false
+    }
   ],
   "evidence_state_changes": [
     "stitch_core 0.1.29 licensing: UNRESOLVED_NO_LICENSE_IN_ANY_DISTRIBUTED_ARTIFACT. Redistribution, vendoring and export of anything containing it are BLOCKED; internal use of the installed copy is not.",
@@ -114,20 +183,80 @@
     "UNKNOWN-by-incompleteness for z3 -- undecided after six candidates; retained as a negative result rather than scored."
   ],
   "design_deviations": [
-    {"id": "DEV-T1", "what": "the acquisition manifest is reconstructed from design v0.1 section 7 prose", "why": "prometheus-tool-acquisition-plan.json is not in the repository", "consequence": "no operator-observed SHAs; every revision is a candidate resolved by this seat at a recorded timestamp. If the operator's JSON arrives and disagrees, the operator's pins win and both are recorded."},
-    {"id": "DEV-T2", "what": "budget profiles are DERIVED_FROM_HOST, not reconciled", "why": "the proposed light-probe and heavy-build ceilings live in the same absent file, so there was nothing to reconcile against", "consequence": "ceilings are set against MEASURED AVAILABLE RAM (13.2 GiB of 31.6 GiB total) rather than against a proposal"},
-    {"id": "DEV-T3", "what": "an unhashed entry in a resolved closure is refused in the lock", "why": "a --require-hashes lock cannot carry it", "consequence": "the install fails loudly rather than silently installing an unhashed artifact. Did not fire on any of the four tools."},
-    {"id": "DEV-T4", "what": "one DreamCoder submodule (pyccg) declares branch = master", "why": "upstream .gitmodules", "consequence": "submodule update landed on the branch head; the tool now fetches and checks out the superproject's recorded commit explicitly"},
-    {"id": "DEV-T6", "what": "DreamCoder submodule transport rewritten from git@github.com: to HTTPS for pregex and pinn", "why": "SSH URLs need a key and a verified host key; both failed Host key verification", "consequence": "same owner/repo path, different transport"},
-    {"id": "DEV-T7", "what": "no DreamCoder bounded domain smoke run", "why": "four measured blockers above", "consequence": "the precise failing boundary is delivered in its place, not a new architecture proposal"},
-    {"id": "DEV-R1", "what": "stitch threads pinned to 1", "why": "threads>1 could make the search order nondeterministic", "consequence": "expected to be a no-op against the compress() default; declared rather than assumed"},
-    {"id": "DEV-R2", "what": "the nuts-bolts fixture is fetched from the repository at a pinned commit rather than a release artifact", "why": "stitch publishes no release containing it"},
-    {"id": "DEV-R3", "what": "reproduction host is Windows / cp312", "why": "this is the host", "consequence": "the upstream figures carry no platform statement; they matched anyway"},
-    {"id": "DEV-T8", "what": "a full `pip install --dry-run -r requirements.txt` was abandoned for the DreamCoder probe", "why": "it had not terminated after ten minutes of sdist backtracking, so the measurement would have been the resolver's patience rather than the stack's installability", "consequence": "replaced with a decidable per-pin artifact-availability question that terminates; the abandonment is recorded in the check's own docstring"}
+    {
+      "id": "DEV-T1",
+      "what": "the acquisition manifest is reconstructed from design v0.1 section 7 prose",
+      "why": "prometheus-tool-acquisition-plan.json is not in the repository",
+      "consequence": "no operator-observed SHAs; every revision is a candidate resolved by this seat at a recorded timestamp. If the operator's JSON arrives and disagrees, the operator's pins win and both are recorded."
+    },
+    {
+      "id": "DEV-T2",
+      "what": "budget profiles are DERIVED_FROM_HOST, not reconciled",
+      "why": "the proposed light-probe and heavy-build ceilings live in the same absent file, so there was nothing to reconcile against",
+      "consequence": "ceilings are set against MEASURED AVAILABLE RAM (13.2 GiB of 31.6 GiB total) rather than against a proposal"
+    },
+    {
+      "id": "DEV-T3",
+      "what": "an unhashed entry in a resolved closure is refused in the lock",
+      "why": "a --require-hashes lock cannot carry it",
+      "consequence": "the install fails loudly rather than silently installing an unhashed artifact. Did not fire on any of the four tools."
+    },
+    {
+      "id": "DEV-T4",
+      "what": "one DreamCoder submodule (pyccg) declares branch = master",
+      "why": "upstream .gitmodules",
+      "consequence": "submodule update landed on the branch head; the tool now fetches and checks out the superproject's recorded commit explicitly"
+    },
+    {
+      "id": "DEV-T6",
+      "what": "DreamCoder submodule transport rewritten from git@github.com: to HTTPS for pregex and pinn",
+      "why": "SSH URLs need a key and a verified host key; both failed Host key verification",
+      "consequence": "same owner/repo path, different transport"
+    },
+    {
+      "id": "DEV-T7",
+      "what": "no DreamCoder bounded domain smoke run",
+      "why": "four measured blockers above",
+      "consequence": "the precise failing boundary is delivered in its place, not a new architecture proposal"
+    },
+    {
+      "id": "DEV-R1",
+      "what": "stitch threads pinned to 1",
+      "why": "threads>1 could make the search order nondeterministic",
+      "consequence": "expected to be a no-op against the compress() default; declared rather than assumed"
+    },
+    {
+      "id": "DEV-R2",
+      "what": "the nuts-bolts fixture is fetched from the repository at a pinned commit rather than a release artifact",
+      "why": "stitch publishes no release containing it"
+    },
+    {
+      "id": "DEV-R3",
+      "what": "reproduction host is Windows / cp312",
+      "why": "this is the host",
+      "consequence": "the upstream figures carry no platform statement; they matched anyway"
+    },
+    {
+      "id": "DEV-T8",
+      "what": "a full `pip install --dry-run -r requirements.txt` was abandoned for the DreamCoder probe",
+      "why": "it had not terminated after ten minutes of sdist backtracking, so the measurement would have been the resolver's patience rather than the stack's installability",
+      "consequence": "replaced with a decidable per-pin artifact-availability question that terminates; the abandonment is recorded in the check's own docstring"
+    }
   ],
   "self_corrections_during_the_iteration": [
     "A pyribs gate asserting that no ribs.emitters/ribs.schedulers module appears in sys.modules could not pass on any input, because `import ribs.archives` eagerly imports 28 of them. Replaced with an instance-level gate over gc.get_objects(). Same error class as a threshold outside its attainable range, caught before it was committed as a control.",
     "A hypothesis assertion named 'no default example database leaked into the working directory' was measuring the wrong object: the directory that appeared held a constants cache, not examples. Split into two precise claims -- saved examples are scoped, and the storage side channel holds no saved examples -- plus an A/B measurement of what actually contains the side channel."
   ],
-  "next_unblocked_action": "Hand the four INSTALLATION receipts and LICENSE_EVIDENCE.json to Archaeon for roles/Archaeon/H0H5_STATUS.md, and put the stitch_core licensing blocker in front of the operator: it gates export and vendoring rather than internal use, and no seat can resolve it alone. The next item this seat can advance without anyone else is an ADAPTER_QUALIFICATION job for pyribs against H3's actual frozen candidate stream, since H3 alpha is Archaeon's and its stream format is the only missing input."
+  "next_unblocked_action": "Hand the four INSTALLATION receipts and LICENSE_EVIDENCE.json to Archaeon for roles/Archaeon/H0H5_STATUS.md, and put the stitch_core licensing blocker in front of the operator: it gates export and vendoring rather than internal use, and no seat can resolve it alone. The next item this seat can advance without anyone else is an ADAPTER_QUALIFICATION job for pyribs against H3's actual frozen candidate stream, since H3 alpha is Archaeon's and its stream format is the only missing input.",
+  "findings_outside_the_assignment": [
+    {
+      "id": "FND-MAHLER-1",
+      "where": "techne/lib/mahler_measure.py::mahler_measure_batch (Techne's own lane, NOT part of this assignment)",
+      "measured": "On the 8,625-entry Mossinghoff-derived corpus (degrees 2-180, 5,152 above degree 100) the batch path gives NO speedup over the scalar loop: 149.14s stratified / 150.46s single padded batch vs 147.67s for [mahler_measure(p) for p in polys]. 0.99x. Results identical to 0.00e+00.",
+      "hypothesis_tested_and_KILLED": "I predicted the batch pads every element to the batch's maximum degree, so one degree-180 entry would force all 8,625 through a 180x180 eigenproblem. Degree-stratified batching -- which removes that padding entirely -- came back at 149.14s against 150.46s for the single padded batch. The padding explanation is wrong; the corpus is simply expensive.",
+      "consequence": "A Tier-2 'batch' tool that is named as an optimisation delivers none on this population. Standing Order #4 says profile before promoting; this is that profile, arriving late. Whether the batch path earns its existence is a question for a later pass, with the population stated -- it may well win on a narrow-degree corpus, which is NOT the corpus this authority test uses.",
+      "second_finding": "The test is named ..._178_entries and runs 8,625. The name is a fossil of a smaller snapshot. Same wrong-population shape already on record in this programme: a number measured over one population carried as a property of another.",
+      "NOT_FIXED_HERE": "Out of this assignment's scope. Recorded so the next pass starts from the measurement rather than from my wrong hypothesis."
+    }
+  ]
 }
