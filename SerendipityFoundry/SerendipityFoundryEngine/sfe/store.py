@@ -31,7 +31,7 @@ import time
 from pathlib import Path
 from typing import Any, Iterator, Optional
 
-SCHEMA_VERSION = 7
+SCHEMA_VERSION = 8
 
 # The schema is intentionally explicit and constrained: NOT NULLs, CHECK
 # enumerations on lifecycle columns, and foreign keys, so a bad transition or a
@@ -424,6 +424,69 @@ CREATE TABLE IF NOT EXISTS topology_groups (
 -- field that changes what may cross between them.
 --
 -- A read scope touches none of that. It confers read and nothing else.
+-- v8 BUDGET RESERVATIONS.
+--
+-- "Reserve or debit enforceable logical counters BEFORE performing the
+-- operation. A post-hoc debit alone does not enforce a limit." The engine had
+-- exactly one debit primitive, single-phase, firing inside the caller's write
+-- transaction at the moment of the act -- correct for the commit boundary,
+-- where the act and the debit are the same transaction, and no use at all for
+-- an operation that takes sixty seconds and may die halfway.
+--
+-- This table is ONLY the open obligation. It is not a second ledger: the
+-- amounts still move through _debit_budget, still hit BOTH governing rows
+-- (local and lineage root), and a reservation a fork inherits is still bounded
+-- by the root -- so reserving cannot mint an allowance any more than spending
+-- could.
+--
+-- A reservation is settled EXACTLY ONCE. state carries that; the UNIQUE index
+-- on (world_id, idem_key) is what makes a retried reserve return the original
+-- rather than opening a second obligation.
+CREATE TABLE IF NOT EXISTS budget_reservations (
+    reservation_id  TEXT PRIMARY KEY,
+    world_id        TEXT NOT NULL REFERENCES worlds(world_id),
+    resource        TEXT NOT NULL,
+    amount          REAL NOT NULL,          -- reserved (always > 0)
+    state           TEXT NOT NULL DEFAULT 'OPEN'
+                    CHECK (state IN ('OPEN','SETTLED','RELEASED')),
+    stage           TEXT,
+    attempt_id      TEXT,
+    idem_key        TEXT,
+    cost_event_id   TEXT,                   -- set when settled
+    settled_amount  REAL,                   -- actual; may differ from reserved
+    reserved_seq    INTEGER,                -- event_seq of BUDGET_RESERVED
+    created_ts      REAL NOT NULL,
+    closed_ts       REAL
+);
+CREATE INDEX IF NOT EXISTS ix_reservations_open
+    ON budget_reservations(world_id, state);
+CREATE UNIQUE INDEX IF NOT EXISTS ux_reservations_idem
+    ON budget_reservations(world_id, idem_key)
+    WHERE idem_key IS NOT NULL;
+
+-- v8 COST EVENT LEDGER INDEX.
+--
+-- The AUTHORITATIVE cost record is the sealed COST_EVENT_RECORDED entry in the
+-- world's own hash chain -- that is where a cost event is tamper-evident and
+-- ordered. This table exists so "has this cost_event_id already been billed?"
+-- is a primary-key lookup instead of a scan of the event chain, and so a
+-- repeated charge is refused by the DATABASE rather than by a query that could
+-- race. It stores no amount that the chain does not already carry.
+CREATE TABLE IF NOT EXISTS cost_events (
+    cost_event_id   TEXT PRIMARY KEY,
+    world_id        TEXT NOT NULL REFERENCES worlds(world_id),
+    stage           TEXT NOT NULL,
+    attempt_id      TEXT,
+    reservation_id  TEXT,
+    event_seq       INTEGER NOT NULL,       -- the sealed entry in the chain
+    billed_enforceable INTEGER NOT NULL DEFAULT 0,
+    created_ts      REAL NOT NULL
+);
+CREATE INDEX IF NOT EXISTS ix_cost_events_world
+    ON cost_events(world_id, created_ts);
+CREATE INDEX IF NOT EXISTS ix_cost_events_attempt
+    ON cost_events(attempt_id);
+
 CREATE TABLE IF NOT EXISTS read_scopes (
     scope_id        TEXT PRIMARY KEY,
     owner_client_id TEXT NOT NULL REFERENCES clients(client_id),
@@ -600,6 +663,8 @@ class Store:
                 self._migrate_5_to_6(cx)
             if have <= 6:
                 self._migrate_6_to_7(cx)
+            if have <= 7:
+                self._migrate_7_to_8(cx)
             cx.execute("UPDATE meta SET value=? WHERE key='schema_version'",
                        (str(SCHEMA_VERSION),))
 
@@ -669,6 +734,18 @@ class Store:
                        "INTEGER NOT NULL DEFAULT 0")
         cx.execute("CREATE INDEX IF NOT EXISTS ix_obs_pred "
                    "ON observations(world_id, pred_id)")
+
+    @staticmethod
+    def _migrate_7_to_8(cx) -> None:
+        """v7 -> v8 (2026-09-09): budget reservations and the cost-event index.
+
+        Both tables are created by the schema script, so this migration adds
+        nothing and back-fills nothing. It exists so the version advances
+        explicitly rather than by omission, and so the 3,962 BUDGET_CONSUMED
+        events already sealed in the chain keep meaning exactly what they meant
+        when they were written -- no historical charge is retroactively given a
+        cost_event_id it never had."""
+        return
 
     @staticmethod
     def _migrate_6_to_7(cx) -> None:

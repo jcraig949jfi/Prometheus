@@ -313,6 +313,132 @@ def _grant_dict(r) -> dict:
             "active": r["revoked_ts"] is None}
 
 
+# v8 COST ACCOUNTING VOCABULARY. Closed sets, as all scientific control
+# configuration is (DFX-4).
+
+# The stages the design packet names as paid activities.
+COST_STAGES = frozenset({
+    "generation", "oracle", "verification", "retrieval", "retention",
+    "extraction", "decoder_training", "readout_training", "transfer",
+    "execution", "analysis",
+})
+
+# How a quantity was obtained. Distinct from the ENFORCEMENT class, which is a
+# property of the LIMIT and is never taken from the caller.
+MEASUREMENT_METHODS = frozenset({
+    "counter",        # the engine or executor counted discrete events
+    "clock",          # wall or CPU time from a clock
+    "sampler",        # sampled, e.g. peak RSS
+    "declared",       # asserted by the executor without independent measure
+    "derived",        # computed from other recorded quantities
+})
+
+# Whose ledger the quantity belongs to. A parent roll-up REFERENCES child cost
+# events; it never re-bills them, so a scope says who owns the number.
+ATTRIBUTION_SCOPES = frozenset({"job", "attempt", "campaign", "shared"})
+
+# Resources whose samples must NEVER be summed. Adding two peak-memory readings
+# produces a number that never occurred at any instant.
+PEAK_RESOURCES = frozenset({"peak_memory_bytes", "peak_rss_bytes"})
+
+# The engine's default ceiling on a single artifact. There was none at all
+# before v8: a 32 MiB blob was accepted without comment, and "check the
+# configured total-byte and per-artifact limits" had nothing to check against.
+# Chosen to sit above the design packet's 16 MiB total-input alpha profile so
+# the engine's own guard does not silently become the science limit.
+DEFAULT_MAX_ARTIFACT_BYTES = 16 * 1024 * 1024
+
+
+def _normalize_resource_vector(resources) -> list:
+    """Validate the per-resource vector: {resource, quantity, unit, method,
+    scope}. `quantity` MAY be None, which means UNAVAILABLE -- explicitly not
+    zero, because a zero is a measurement and this is the absence of one."""
+    if not isinstance(resources, list) or not resources:
+        raise ValidationError(
+            "a cost event needs at least one resource entry; a paid activity "
+            "that cost nothing measurable should say so with an unavailable "
+            "quantity, not with an empty vector")
+    out = []
+    for i, e in enumerate(resources):
+        if not isinstance(e, dict):
+            raise ValidationError("resource entry must be an object", index=i)
+        unknown = sorted(set(e) - {"resource", "quantity", "unit", "method",
+                                   "scope"})
+        if unknown:
+            raise ValidationError("unknown resource entry field(s)", index=i,
+                                  unknown=unknown)
+        name = e.get("resource")
+        if not isinstance(name, str) or not name.strip():
+            raise ValidationError("resource name required", index=i)
+        q = e.get("quantity")
+        if q is not None:
+            if isinstance(q, bool) or not isinstance(q, (int, float)):
+                raise ValidationError("quantity must be a number or null "
+                                      "(null = unavailable)", index=i,
+                                      quantity=q)
+            if q < 0:
+                raise ValidationError(
+                    "a cost quantity is never negative; a refund settles a "
+                    "reservation for less rather than billing a credit",
+                    index=i, quantity=q)
+        method = e.get("method")
+        if method is not None and method not in MEASUREMENT_METHODS:
+            raise ValidationError("unknown measurement method", index=i,
+                                  method=method,
+                                  allowed=sorted(MEASUREMENT_METHODS))
+        scope = e.get("scope", "attempt")
+        if scope not in ATTRIBUTION_SCOPES:
+            raise ValidationError("unknown attribution scope", index=i,
+                                  scope=scope,
+                                  allowed=sorted(ATTRIBUTION_SCOPES))
+        if q is None and method is None:
+            method = "declared"
+        out.append({"resource": name, "quantity": None if q is None
+                    else float(q), "unit": e.get("unit"), "method": method,
+                    "scope": scope, "available": q is not None})
+    return out
+
+
+def _normalize_environment(env) -> dict:
+    """Hardware/environment identity. Freeform by design -- the engine cannot
+    verify a hardware claim -- but recorded so a comparison across strata is
+    visible rather than assumed away."""
+    if env is None:
+        return {}
+    if not isinstance(env, dict):
+        raise ValidationError("environment must be an object")
+    return env
+
+
+def _reservation_dict(r, replay: bool = False) -> dict:
+    return {"reservation_id": r["reservation_id"], "world_id": r["world_id"],
+            "resource": r["resource"], "amount": r["amount"],
+            "state": r["state"], "stage": r["stage"],
+            "attempt_id": r["attempt_id"],
+            "cost_event_id": r["cost_event_id"],
+            "settled_amount": r["settled_amount"],
+            "reserved_seq": r["reserved_seq"],
+            "created_ts": r["created_ts"], "closed_ts": r["closed_ts"],
+            "already_reserved": replay}
+
+
+def _normalize_digest(d, field: str) -> str:
+    """Accept 'sha256:<hex>' or a bare 64-hex claim, exactly as the write-side
+    gate does, so the read side cannot be stricter than the write side about
+    the same string."""
+    if not isinstance(d, str) or not d.strip():
+        raise ValidationError("%s must be a non-empty string" % field)
+    v = d.strip().lower()
+    if not v.startswith("sha256:"):
+        v = "sha256:" + v
+    body = v.split(":", 1)[1]
+    if len(body) != 64 or any(c not in "0123456789abcdef" for c in body):
+        raise ValidationError(
+            "%s must be sha256:<64 lowercase hex digits>" % field,
+            **{field: d})
+    return v
+
+
 def _normalize_attestation(att) -> dict:
     """Accept EITHER the executed config itself (the engine hashes it with the
     same canonicalization that produced spec_hash, so a faithful executor
@@ -432,7 +558,8 @@ _FORK_CONTRADICTIONS = frozenset({"NO_EFFECTIVE_INTERVENTION",
 
 
 class Foundry:
-    def __init__(self, db_path: str, *, science_profile: str = "warn"):
+    def __init__(self, db_path: str, *, science_profile: str = "warn",
+                 max_artifact_bytes: Optional[int] = None):
         """science_profile grades the v6 provenance checks: off | warn | strict.
 
         It defaults to "warn" because a check nobody sees is a check nobody
@@ -443,6 +570,14 @@ class Foundry:
             raise ValueError("science_profile must be one of %s"
                              % (SCIENCE_PROFILES,))
         self.science_profile = science_profile
+        # v8: there was NO artifact size limit at all before this -- a 32 MiB
+        # blob was accepted without comment, and the preflight rule "check the
+        # configured per-artifact limit" had nothing to check against.
+        if max_artifact_bytes is not None and max_artifact_bytes <= 0:
+            raise ValueError("max_artifact_bytes must be positive")
+        self.max_artifact_bytes = (DEFAULT_MAX_ARTIFACT_BYTES
+                                   if max_artifact_bytes is None
+                                   else int(max_artifact_bytes))
         self.store = Store(db_path)
         self.store.initialize()
 
@@ -1235,7 +1370,7 @@ class Foundry:
         return root, out
 
     def _debit_budget(self, cx, world_row, resource: str, amount: float,
-                      actor: str):
+                      actor: str, refs: Optional[dict] = None):
         """Debit `resource` on EVERY governing budget row (local safety cap AND
         lineage root) inside the caller's transaction. Returns (blocked, info).
         When any enforceable limit blocks: the exhaustion flag and (on the
@@ -1277,26 +1412,65 @@ class Foundry:
             if scope == "local":
                 total = prospective
                 lim = spec.get("limit") if spec else None
+        # v8: BUDGET_CONSUMED is the existing carrier and its refs slot was
+        # empty on every one of the events already sealed. Populating it going
+        # forward binds a charge to the cost event that caused it; the sealed
+        # history is NOT back-filled, because those charges genuinely had no
+        # cost_event_id when they were written.
         events.append(cx, wid, "BUDGET_CONSUMED", actor=actor,
+                      refs=refs or {},
                       payload={"resource": resource, "amount": amount,
                                "total": total, "budget_root": root})
         return False, {"resource": resource, "consumed": total, "limit": lim}
 
     def consume_budget(self, world_id: str, resource: str, amount: float, *,
-                       client_id: Optional[str] = None) -> dict:
+                       client_id: Optional[str] = None,
+                       idem_key: Optional[str] = None,
+                       request_hash: Optional[str] = None) -> dict:
         """Account resource use and enforce limits at BOTH governing scopes:
         the world's local cap and its lineage root (H3). Exceeding an
         enforceable limit raises BudgetExhausted after durably recording the
         exhaustion (COMMIT-THEN-RAISE: raising inside the write() block would
-        roll the transition back)."""
+        roll the transition back).
+
+        v8, TWO CORRECTIONS.
+
+        NEGATIVE AMOUNTS ARE REFUSED. `amount` was an unconstrained float and
+        _debit_budget only ever tested `prospective > limit`, so a negative
+        amount walked the counter back down and could clear an exhaustion. The
+        live ledger has never contained one, but reconciliation is exactly
+        where a signed adjustment becomes a designed feature -- so a refund is
+        a settlement that references the reservation it unwinds
+        (record_cost_event), never an unaudited credit on this path.
+
+        IDEMPOTENT with an Idempotency-Key. Every other epistemic POST took one
+        and this did not, so a timeout retry double-billed with no way for the
+        caller to prevent it. The key uses the same F5 machinery as the rest of
+        the engine, so a reused key with a materially different body is a
+        conflict rather than a silent second charge."""
+        if isinstance(amount, bool) or not isinstance(amount, (int, float)):
+            raise ValidationError("amount must be a number", amount=amount)
+        if amount < 0:
+            raise ValidationError(
+                "a budget charge is never negative; a refund settles a "
+                "reservation for less (see record_cost_event), it is not a "
+                "credit posted to this path", amount=amount)
         with self.store.write() as cx:
             w = self._authorize_write(cx, world_id, client_id)
-            blocked, info = self._debit_budget(cx, w, resource, amount,
+            replay = self._idem_check(cx, w["client_id"], idem_key,
+                                      request_hash)
+            if replay is not None:
+                return replay
+            blocked, info = self._debit_budget(cx, w, resource, float(amount),
                                                client_id or "foundry")
+            if not blocked:
+                out = {**info, "exhausted": False}
+                self._idem_record(cx, w["client_id"], idem_key, world_id,
+                                  "budget/consume", request_hash, out)
         if blocked:
             raise BudgetExhausted(
                 "world resource budget exhausted", world_id=world_id, **info)
-        return {**info, "exhausted": False}
+        return out
 
     # ================= audit / third-party attestation ===================
     def engine_instance_id(self) -> str:
@@ -2167,6 +2341,13 @@ class Foundry:
             raise ValidationError("unknown info_kind", info_kind=ik,
                                   allowed=sorted(INFO_KINDS))
         raw = data if isinstance(data, bytes) else str(data).encode()
+        if len(raw) > self.max_artifact_bytes:
+            # v8: refuse at the gate rather than storing a blob nothing can
+            # later resolve. Symmetric with the read ceiling on purpose -- a
+            # limit that admits bytes it will not hand back is not a limit.
+            raise ValidationError(
+                "artifact exceeds the configured size limit; nothing was "
+                "stored", bytes=len(raw), limit=self.max_artifact_bytes)
         if expected_blob_hash is not None:
             actual = "sha256:" + hashlib.sha256(raw).hexdigest()
             claimed = expected_blob_hash.strip()
@@ -2211,8 +2392,362 @@ class Foundry:
             raise NotFound("artifact not in this world", artifact_id=artifact_id)
         return _artifact_dict(r)
 
+    # ================= v8 cost events and reservations ===================
+    #
+    # "Reserve or debit enforceable logical counters BEFORE performing the
+    # operation. A post-hoc debit alone does not enforce a limit."
+    #
+    # NOTHING HERE IS A SECOND BUDGET ENGINE. _debit_budget remains the only
+    # primitive that moves a counter, _budget_rows remains the only thing that
+    # decides which counters govern, and both still hit the LOCAL row and the
+    # LINEAGE ROOT together -- so a reservation a fork inherits is bounded by
+    # the root exactly as spending is, and reserving cannot mint an allowance
+    # any more than spending could.
+    #
+    # What is added is the obligation between the two phases, and the record of
+    # what was actually paid for.
+
+    def reserve_budget(self, world_id: str, resource: str, amount: float, *,
+                       stage: str, attempt_id: Optional[str] = None,
+                       idem_key: Optional[str] = None,
+                       client_id: Optional[str] = None) -> dict:
+        """Take the money BEFORE the work. Returns a reservation to settle.
+
+        The reserved amount is debited immediately through the ordinary path,
+        so an enforceable limit stops the operation before it starts rather
+        than discovering afterwards that it should have. Settling reconciles
+        the difference; releasing gives it all back.
+
+        IDEMPOTENT on (world_id, idem_key): a retried reserve returns the
+        ORIGINAL reservation and opens no second obligation. A caller that
+        cannot supply a key gets no protection, which is the honest outcome --
+        the engine cannot tell two identical reserves apart without one."""
+        if not isinstance(amount, (int, float)) or isinstance(amount, bool):
+            raise ValidationError("amount must be a number", amount=amount)
+        if amount <= 0:
+            # A reservation of zero reserves nothing and a negative one is a
+            # credit wearing a reservation's clothes. Reconciliation happens at
+            # settle, where it is attributed and references what it settles.
+            raise ValidationError(
+                "a reservation must be positive; a refund is a settlement for "
+                "less, not a negative reservation", amount=amount)
+        if not isinstance(stage, str) or stage not in COST_STAGES:
+            raise ValidationError("unknown stage", stage=stage,
+                                  allowed=sorted(COST_STAGES))
+        blocked_info = None
+        with self.store.write() as cx:
+            r = self._authorize_write(cx, world_id, client_id)
+            if idem_key is not None:
+                prior = cx.execute(
+                    "SELECT * FROM budget_reservations WHERE world_id=? AND "
+                    "idem_key=?", (world_id, idem_key)).fetchone()
+                if prior is not None:
+                    return _reservation_dict(prior, replay=True)
+            blocked, info = self._debit_budget(cx, r, resource, float(amount),
+                                               r["client_id"])
+            if blocked:
+                blocked_info = info
+            else:
+                rid = new_id("reservation")
+                ev = events.append(
+                    cx, world_id, "BUDGET_RESERVED", actor=r["client_id"],
+                    refs={"reservation_id": rid, "attempt_id": attempt_id},
+                    payload={"resource": resource, "amount": float(amount),
+                             "stage": stage,
+                             "enforcement": self._enforcement_of(
+                                 cx, world_id, resource),
+                             "engine_source_hash": release.ENGINE_SOURCE_HASH})
+                cx.execute(
+                    "INSERT INTO budget_reservations(reservation_id,world_id,"
+                    "resource,amount,state,stage,attempt_id,idem_key,"
+                    "reserved_seq,created_ts) "
+                    "VALUES(?,?,?,?,'OPEN',?,?,?,?,?)",
+                    (rid, world_id, resource, float(amount), stage,
+                     attempt_id, idem_key, ev["event_seq"], now()))
+                out = _reservation_dict(cx.execute(
+                    "SELECT * FROM budget_reservations WHERE reservation_id=?",
+                    (rid,)).fetchone())
+        if blocked_info is not None:
+            # COMMIT-THEN-RAISE, as the commit boundary already does: the
+            # exhaustion record is durable and nothing was reserved.
+            raise BudgetExhausted(
+                "reservation refused: budget exhausted BEFORE the operation",
+                world_id=world_id, **blocked_info)
+        return out
+
+    @staticmethod
+    def _enforcement_of(cx, world_id: str, resource: str) -> str:
+        """The class declared on the LIMIT. A cost event may not name its own:
+        letting a caller declare its spend 'estimated' would be letting it
+        opt out of an enforceable cap it was given."""
+        row = cx.execute("SELECT limits FROM budgets WHERE world_id=?",
+                         (world_id,)).fetchone()
+        if row is None:
+            return "unavailable"
+        try:
+            spec = json.loads(row["limits"]).get(resource)
+        except (TypeError, ValueError):
+            spec = None
+        if not isinstance(spec, dict):
+            return "unavailable"
+        return spec.get("enforcement", "measured")
+
+    def release_budget(self, reservation_id: str, *, reason: str,
+                       client_id: Optional[str] = None) -> dict:
+        """Give the whole reservation back. The operation did not happen.
+
+        Idempotent: releasing an already-closed reservation returns it
+        unchanged rather than crediting the counter a second time."""
+        with self.store.write() as cx:
+            res = cx.execute(
+                "SELECT * FROM budget_reservations WHERE reservation_id=?",
+                (reservation_id,)).fetchone()
+            if res is None:
+                raise NotFound("unknown reservation",
+                               reservation_id=reservation_id)
+            r = self._authorize_write(cx, res["world_id"], client_id)
+            if res["state"] != "OPEN":
+                return _reservation_dict(res, replay=True)
+            self._credit_budget(cx, r, res["resource"], float(res["amount"]))
+            events.append(cx, res["world_id"], "BUDGET_RELEASED",
+                          actor=r["client_id"],
+                          refs={"reservation_id": reservation_id},
+                          payload={"resource": res["resource"],
+                                   "amount": float(res["amount"]),
+                                   "reason": str(reason)[:300]})
+            cx.execute("UPDATE budget_reservations SET state='RELEASED', "
+                       "closed_ts=? WHERE reservation_id=?",
+                       (now(), reservation_id))
+            return _reservation_dict(cx.execute(
+                "SELECT * FROM budget_reservations WHERE reservation_id=?",
+                (reservation_id,)).fetchone())
+
+    def _credit_budget(self, cx, world_row, resource: str,
+                       amount: float) -> None:
+        """The ONLY path that lowers a counter, and it exists solely to unwind
+        a reservation this engine itself took. It is deliberately not reachable
+        from the wire: consume_budget refuses a negative amount, so an
+        unaudited credit cannot be requested -- a refund must reference the
+        reservation it unwinds."""
+        _root, rows = self._budget_rows(cx, world_row)
+        for _scope, row in rows:
+            consumed = json.loads(row["consumed"] or "{}")
+            consumed[resource] = max(0.0,
+                                     consumed.get(resource, 0.0) - amount)
+            cx.execute("UPDATE budgets SET consumed=?, exhausted=0, "
+                       "updated_ts=? WHERE world_id=?",
+                       (json.dumps(consumed), now(), row["world_id"]))
+
+    def record_cost_event(self, world_id: str, *, stage: str,
+                          resources: list,
+                          attempt_id: Optional[str] = None,
+                          reservation_id: Optional[str] = None,
+                          source_artifacts: Optional[list] = None,
+                          output_artifacts: Optional[list] = None,
+                          environment: Optional[dict] = None,
+                          refs: Optional[dict] = None,
+                          client_id: Optional[str] = None) -> dict:
+        """Record what an activity actually cost, and settle its reservation.
+
+        ONE BILLING OWNER, ONCE. cost_events has cost_event_id as its PRIMARY
+        KEY and a reservation may leave OPEN exactly once, so a repeated charge
+        is refused by the database rather than by a check that could race. A
+        parent roll-up REFERENCES child cost_event_ids in `refs`; it does not
+        bill them again.
+
+        THE RESOURCE VECTOR. Each entry is
+        {resource, quantity, unit, method, scope}. The enforcement CLASS is not
+        taken from the caller -- it is resolved from the limit, because letting
+        a caller declare its own spend 'estimated' is letting it opt out of a
+        cap it was given.
+
+        UNAVAILABLE IS NOT ZERO. An entry may carry quantity=None, which is
+        recorded as unavailable and never summed. A resource that was not
+        measured is absent from the totals rather than contributing 0, because
+        a zero is a measurement and this is the absence of one."""
+        if stage not in COST_STAGES:
+            raise ValidationError("unknown stage", stage=stage,
+                                  allowed=sorted(COST_STAGES))
+        vec = _normalize_resource_vector(resources)
+        cid = new_id("cost")
+        with self.store.write() as cx:
+            r = self._authorize_write(cx, world_id, client_id)
+            res = None
+            if reservation_id is not None:
+                res = cx.execute(
+                    "SELECT * FROM budget_reservations WHERE reservation_id=?",
+                    (reservation_id,)).fetchone()
+                if res is None or res["world_id"] != world_id:
+                    raise NotFound("unknown reservation",
+                                   reservation_id=reservation_id)
+                if res["state"] != "OPEN":
+                    # DOUBLE BILLING REFUSED. The obligation is already closed;
+                    # charging again would bill one activity twice.
+                    raise ConflictError(
+                        "this reservation is already %s; a settled reservation "
+                        "is never billed again" % res["state"],
+                        reservation_id=reservation_id, state=res["state"],
+                        cost_event_id=res["cost_event_id"])
+
+            billed = []
+            for e in vec:
+                e["enforcement"] = self._enforcement_of(cx, world_id,
+                                                        e["resource"])
+                if e["quantity"] is None:
+                    continue                       # unavailable: never summed
+                if res is not None and e["resource"] == res["resource"]:
+                    # SETTLEMENT: the reservation already moved `amount`.
+                    delta = float(e["quantity"]) - float(res["amount"])
+                    if delta > 0:
+                        blocked, info = self._debit_budget(
+                            cx, r, e["resource"], delta, r["client_id"],
+                            refs={"cost_event_id": cid,
+                                  "reservation_id": reservation_id})
+                        if blocked:
+                            raise BudgetExhausted(
+                                "settlement exceeds the reservation and the "
+                                "budget cannot cover the difference",
+                                world_id=world_id,
+                                reserved=float(res["amount"]),
+                                actual=float(e["quantity"]), **info)
+                    elif delta < 0:
+                        self._credit_budget(cx, r, e["resource"], -delta)
+                    e["settled_against_reservation"] = reservation_id
+                    billed.append(e["resource"])
+                    continue
+                if e["enforcement"] == "enforceable":
+                    blocked, info = self._debit_budget(
+                        cx, r, e["resource"], float(e["quantity"]),
+                        r["client_id"], refs={"cost_event_id": cid})
+                    if blocked:
+                        raise BudgetExhausted(
+                            "cost event refused: enforceable budget exhausted",
+                            world_id=world_id, **info)
+                    billed.append(e["resource"])
+                else:
+                    # measured / estimated / unavailable still ACCUMULATE, as
+                    # they always have -- the class governs blocking, not
+                    # recording.
+                    self._debit_budget(cx, r, e["resource"],
+                                       float(e["quantity"]), r["client_id"],
+                                       refs={"cost_event_id": cid})
+
+            payload = {"cost_event_id": cid, "stage": stage,
+                       "attempt_id": attempt_id,
+                       "reservation_id": reservation_id,
+                       "resources": vec,
+                       "environment": _normalize_environment(environment),
+                       "engine_source_hash": release.ENGINE_SOURCE_HASH,
+                       "engine_instance_id": self.engine_instance_id()}
+            art = [a for a in (list(source_artifacts or [])
+                               + list(output_artifacts or []))
+                   if isinstance(a, str)]
+            ev = events.append(
+                cx, world_id, "COST_EVENT_RECORDED", actor=r["client_id"],
+                refs={"cost_event_id": cid, "attempt_id": attempt_id,
+                      "reservation_id": reservation_id, **(refs or {})},
+                artifacts=art,
+                causal=[res["reserved_seq"]] if res is not None else None,
+                payload={**payload,
+                         "source_artifacts": list(source_artifacts or []),
+                         "output_artifacts": list(output_artifacts or [])})
+            cx.execute(
+                "INSERT INTO cost_events(cost_event_id,world_id,stage,"
+                "attempt_id,reservation_id,event_seq,billed_enforceable,"
+                "created_ts) VALUES(?,?,?,?,?,?,?,?)",
+                (cid, world_id, stage, attempt_id, reservation_id,
+                 ev["event_seq"], len(billed), now()))
+            if res is not None:
+                cx.execute(
+                    "UPDATE budget_reservations SET state='SETTLED', "
+                    "cost_event_id=?, settled_amount=?, closed_ts=? "
+                    "WHERE reservation_id=?",
+                    (cid, next((e["quantity"] for e in vec
+                                if e["resource"] == res["resource"]), None),
+                     now(), reservation_id))
+            return {"cost_event_id": cid, "world_id": world_id,
+                    "stage": stage, "attempt_id": attempt_id,
+                    "reservation_id": reservation_id,
+                    "event_seq": ev["event_seq"],
+                    "entry_hash": ev["entry_hash"],
+                    "resources": vec, "billed_enforceable": billed}
+
+    def get_cost_event(self, cost_event_id: str, *,
+                       client_id: Optional[str] = None) -> dict:
+        cx = self.store.read()
+        r = cx.execute("SELECT * FROM cost_events WHERE cost_event_id=?",
+                       (cost_event_id,)).fetchone()
+        if r is None:
+            raise NotFound("unknown cost event", cost_event_id=cost_event_id)
+        self._authorize(cx, r["world_id"], client_id)
+        ev = cx.execute("SELECT payload, entry_hash, refs, artifacts FROM "
+                        "events WHERE world_id=? AND event_seq=?",
+                        (r["world_id"], r["event_seq"])).fetchone()
+        out = {"cost_event_id": cost_event_id, "world_id": r["world_id"],
+               "stage": r["stage"], "attempt_id": r["attempt_id"],
+               "reservation_id": r["reservation_id"],
+               "event_seq": r["event_seq"], "created_ts": r["created_ts"]}
+        if ev is not None:
+            out["sealed"] = json.loads(ev["payload"])
+            out["entry_hash"] = ev["entry_hash"]
+            out["artifacts"] = json.loads(ev["artifacts"] or "[]")
+        return out
+
+    def cost_report(self, world_id: str, *,
+                    client_id: Optional[str] = None) -> dict:
+        """Everything charged in this world, with the vector totals.
+
+        Additive quantities are summed. `unavailable` entries are COUNTED and
+        never summed -- reporting them as 0 would be reporting a measurement
+        nobody made. Peak-style resources are reported as a maximum, not a sum,
+        because adding peak samples produces a number that never occurred."""
+        cx = self.store.read()
+        self._authorize(cx, world_id, client_id)
+        rows = cx.execute(
+            "SELECT c.*, e.payload FROM cost_events c LEFT JOIN events e "
+            "ON e.world_id=c.world_id AND e.event_seq=c.event_seq "
+            "WHERE c.world_id=? ORDER BY c.created_ts", (world_id,)).fetchall()
+        totals, unavailable, peaks, by_stage = {}, {}, {}, {}
+        for r in rows:
+            by_stage[r["stage"]] = by_stage.get(r["stage"], 0) + 1
+            try:
+                p = json.loads(r["payload"] or "{}")
+            except (TypeError, ValueError):
+                continue
+            for e in p.get("resources", []):
+                name = e.get("resource")
+                if e.get("quantity") is None:
+                    unavailable[name] = unavailable.get(name, 0) + 1
+                    continue
+                if name in PEAK_RESOURCES:
+                    peaks[name] = max(peaks.get(name, 0.0),
+                                      float(e["quantity"]))
+                else:
+                    totals[name] = totals.get(name, 0.0) + float(e["quantity"])
+        open_res = cx.execute(
+            "SELECT reservation_id, resource, amount, stage FROM "
+            "budget_reservations WHERE world_id=? AND state='OPEN'",
+            (world_id,)).fetchall()
+        return {
+            "world_id": world_id, "cost_events": len(rows),
+            "by_stage": by_stage,
+            "additive_totals": totals,
+            "peaks": peaks,
+            "_peaks_note": "maxima, never sums -- adding peak samples yields a "
+                           "number that never occurred",
+            "unavailable_counts": unavailable,
+            "_unavailable_note": "counted, never summed: an unavailable "
+                                 "measurement is not a zero",
+            "open_reservations": [dict(x) for x in open_res],
+            "budget": self.budget_status(world_id),
+        }
+
+
     def get_artifact_content(self, world_id: str, artifact_id: str, *,
-                             client_id: Optional[str] = None) -> dict:
+                             client_id: Optional[str] = None,
+                             expected_digest: Optional[str] = None,
+                             expected_bytes: Optional[int] = None,
+                             max_bytes: Optional[int] = None) -> dict:
         """F1 -- policy-gated CONTENT retrieval. Succeeds iff the artifact is
         epistemically VISIBLE to the requesting world: a local artifacts row for
         (world_id, artifact_id) exists AND the caller owns the world. Visibility
@@ -2233,7 +2768,49 @@ class Foundry:
         if r is None:
             raise NotFound("artifact not visible to this world",
                            artifact_id=artifact_id)
+        # v8 EXPECTED-DIGEST GATE ON THE READ PATH.
+        #
+        # The write path has had one since D-CIDGATE-1 (expected_blob_hash); the
+        # read path had none, so a preflight told "artifact X must be sealed
+        # digest D" could only fetch and compare in the client -- which is the
+        # client-side re-implementation of an engine guarantee that this repair
+        # exists to remove. Same normalisation and the same fail-closed shape as
+        # the write side, so the two cannot disagree about the same string.
+        #
+        # THE DIGEST NEVER AUTHORIZES. It is checked AFTER _authorize and after
+        # the world-scoped lookup, so a caller who knows a hash and nothing else
+        # still gets NotFound from the line above. A digest asserts WHICH object
+        # you meant; it never asserts that you may have it.
+        if expected_digest is not None:
+            want = _normalize_digest(expected_digest, "expected_digest")
+            if want != r["blob_hash"]:
+                raise ValidationError(
+                    "artifact does not carry the expected digest; nothing was "
+                    "returned", world_id=world_id, artifact_id=artifact_id,
+                    expected_digest=want, actual_digest=r["blob_hash"])
+
         content = self.store.get_blob(r["blob_hash"])   # verifies hash on read
+
+        # v8 SIZE CEILING. There was no limit anywhere before this: a 32 MiB
+        # blob was accepted without comment, and preflight's "check the
+        # configured per-artifact limit" had nothing to check against. The
+        # caller may tighten it for one resolution but never loosen the
+        # engine's own ceiling.
+        ceiling = self.max_artifact_bytes
+        if max_bytes is not None:
+            ceiling = min(ceiling, int(max_bytes))
+        if len(content) > ceiling:
+            raise ValidationError(
+                "artifact exceeds the configured size limit; nothing was "
+                "returned", world_id=world_id, artifact_id=artifact_id,
+                bytes=len(content), limit=ceiling,
+                engine_limit=self.max_artifact_bytes)
+        if expected_bytes is not None and len(content) != int(expected_bytes):
+            raise ValidationError(
+                "artifact size does not match the declared expected_bytes",
+                world_id=world_id, artifact_id=artifact_id,
+                expected_bytes=int(expected_bytes), actual_bytes=len(content))
+
         basis = {"visibility": "NATIVE"}
         if r["origin"] == "IMPORTED":
             imp = cx.execute("SELECT payload FROM events WHERE event_seq=? AND "
@@ -2248,6 +2825,26 @@ class Foundry:
                 "source_hash": r["blob_hash"], "blob_hash": r["blob_hash"],
                 "import_seq": r["import_seq"], "kind": r["kind"],
                 "meta": json.loads(r["meta"]), "visibility_basis": basis,
+                "bytes": len(content),
+                # RESOLUTION RECEIPT. What resolved this, under what authority,
+                # and against which build -- so a preflight load receipt cites
+                # the engine rather than the caller's own account of it.
+                "resolution": {
+                    "engine_instance_id": self.engine_instance_id(),
+                    "engine_source_hash": release.ENGINE_SOURCE_HASH,
+                    "schema_version": SCHEMA_VERSION,
+                    "locator": {"world_id": world_id,
+                                "artifact_id": artifact_id},
+                    "digest_verified": r["blob_hash"],
+                    "digest_asserted_by_caller": expected_digest is not None,
+                    "bytes": len(content),
+                    "size_limit_applied": ceiling,
+                    "authorization": "owner",
+                    "visibility_basis": basis,
+                    "_digest_note": "the digest was verified AFTER "
+                                    "authorization and a world-scoped lookup; "
+                                    "a digest alone never authorizes a read",
+                },
                 "content_b64": base64.b64encode(content).decode()}
 
     def knowledge_set(self, world_id: str, *, seq: Optional[int] = None,

@@ -262,25 +262,76 @@ class EngineClient:
         return self._req("POST", f"/v2/worlds/{wid}/failures", body,
                          idem_key=idem_key)["failure_id"]
 
-    def artifact(self, wid, kind: str, data: bytes, meta: Optional[dict] = None,
-                 *, idem_key: Optional[str] = None):
+    def artifact(self, wid, kind: str, data: bytes, meta=None,
+                 *, idem_key=None, expected_blob_hash=None):
+        """Store bytes. Pass expected_blob_hash to make the ENGINE enforce
+        the content identity: it recomputes the digest and stores NOTHING
+        on a mismatch. The gate has existed engine-side since D-CIDGATE-1
+        and this client could not reach it, so corruption inside a
+        caller's own pipeline was stored as a valid artifact carrying an
+        honest digest of the WRONG bytes."""
         import base64
         return self._req("POST", f"/v2/worlds/{wid}/artifacts", {
             "kind": kind, "data_b64": base64.b64encode(data).decode(),
-            "meta": meta or {}}, idem_key=idem_key)
+            "meta": meta or {},
+            "expected_blob_hash": expected_blob_hash}, idem_key=idem_key)
 
-    def artifact_content(self, wid, artifact_id: str) -> dict:
-        """F1: retrieve an artifact's CONTENT + provenance, iff it is
-        epistemically visible to this world (native here or legally imported
-        here). Returns content_b64 (bytes hash to source_hash) + provenance."""
-        return self._req(
-            "GET", f"/v2/worlds/{wid}/artifacts/{artifact_id}/content")
+    def artifact_content(self, wid, artifact_id: str, *,
+                         expected_digest: Optional[str] = None,
+                         expected_bytes: Optional[int] = None,
+                         max_bytes: Optional[int] = None) -> dict:
+        """AUTHORIZED RESOLUTION of an artifact by (world_id, artifact_id).
 
-    def artifact_bytes(self, wid, artifact_id: str) -> bytes:
-        """Convenience: the decoded content bytes for a visible artifact."""
+        Succeeds iff the artifact is visible to this world -- native here or
+        legally imported here -- and you are authorized for that world. Returns
+        content_b64, the provenance, and a `resolution` receipt naming the
+        engine instance, the build, the verified digest and the authorization
+        basis.
+
+        expected_digest is an ASSERTION about WHICH object you meant. The
+        ENGINE checks it, and only AFTER authorization and the world-scoped
+        lookup -- so a digest never authorizes a read, and a caller who knows
+        only a hash still gets 404. A mismatch returns 422 and no bytes.
+        expected_bytes / max_bytes assert size at that same gate rather than
+        after you have already received the payload."""
+        q = f"/v2/worlds/{wid}/artifacts/{artifact_id}/content"
+        parts = []
+        if expected_digest:
+            parts.append("expected_digest=" + expected_digest)
+        if expected_bytes is not None:
+            parts.append("expected_bytes=%d" % expected_bytes)
+        if max_bytes is not None:
+            parts.append("max_bytes=%d" % max_bytes)
+        if parts:
+            q += "?" + "&".join(parts)
+        return self._req("GET", q)
+
+    def artifact_bytes(self, wid, artifact_id: str, *,
+                       expected_digest: Optional[str] = None,
+                       expected_bytes: Optional[int] = None,
+                       max_bytes: Optional[int] = None) -> bytes:
+        """The decoded bytes, with the engine's gates applied AND a local
+        re-verification of the digest the engine reported.
+
+        The local check is defence in depth, not the guarantee: the engine
+        already re-hashes every byte it serves and refuses a mismatch. This
+        catches corruption between the engine and here, which is the one span
+        the engine cannot see."""
         import base64
-        return base64.b64decode(self.artifact_content(wid, artifact_id)[
-            "content_b64"])
+        import hashlib
+        r = self.artifact_content(wid, artifact_id,
+                                  expected_digest=expected_digest,
+                                  expected_bytes=expected_bytes,
+                                  max_bytes=max_bytes)
+        raw = base64.b64decode(r["content_b64"])
+        got = "sha256:" + hashlib.sha256(raw).hexdigest()
+        if got != r.get("blob_hash"):
+            raise SFEError(0, {"error": "digest_mismatch_in_transit",
+                               "message": "bytes received do not hash to the "
+                                          "digest the engine reported",
+                               "engine_reported": r.get("blob_hash"),
+                               "locally_computed": got})
+        return raw
 
     def knowledge_set(self, wid, seq: Optional[int] = None) -> dict:
         """F10: the information-availability frontier of this world at/<= seq
@@ -293,9 +344,65 @@ class EngineClient:
         return self._req("POST", f"/v2/worlds/{wid}/import", {
             "source_world": source_world, "source_artifact": source_artifact})
 
-    def consume_budget(self, wid, resource: str, amount: float) -> dict:
+    def consume_budget(self, wid, resource: str, amount: float, *,
+                       idem_key: Optional[str] = None) -> dict:
+        """Charge a resource. Pass idem_key so a transport retry does not
+        double-bill: without one the engine cannot tell two identical charges
+        apart, and a timeout retry bills twice."""
         return self._req("POST", f"/v2/worlds/{wid}/budget/consume",
-                         {"resource": resource, "amount": amount})
+                         {"resource": resource, "amount": amount},
+                         idem_key=idem_key)
+
+    # ---- v8 reservations and cost events ----------------------------------
+
+    def reserve_budget(self, wid, resource: str, amount: float, *,
+                       stage: str, attempt_id: Optional[str] = None,
+                       idem_key: Optional[str] = None) -> dict:
+        """Take the money BEFORE the work. An enforceable limit then stops an
+        operation before it starts, instead of discovering afterwards that it
+        should have -- a post-hoc debit is not enforcement. Settle with
+        cost_event(reservation_id=...), or give it back with release_budget."""
+        return self._req("POST", f"/v2/worlds/{wid}/budget/reserve",
+                         {"resource": resource, "amount": amount,
+                          "stage": stage, "attempt_id": attempt_id},
+                         idem_key=idem_key)
+
+    def release_budget(self, reservation_id: str, reason: str) -> dict:
+        """Give the whole reservation back; the operation did not happen."""
+        return self._req("POST",
+                         f"/v2/budget/reservations/{reservation_id}/release",
+                         {"reason": reason})
+
+    def cost_event(self, wid, *, stage: str, resources: list,
+                   attempt_id: Optional[str] = None,
+                   reservation_id: Optional[str] = None,
+                   source_artifacts: Optional[list] = None,
+                   output_artifacts: Optional[list] = None,
+                   environment: Optional[dict] = None,
+                   refs: Optional[dict] = None) -> dict:
+        """Record what an activity actually cost, settling its reservation
+        EXACTLY ONCE -- a settled reservation is never billed again.
+
+        Each resource entry is {resource, quantity, unit, method, scope}.
+        `quantity` may be null, meaning UNAVAILABLE: not zero, and never summed
+        into a total. There is deliberately no enforcement field -- the class
+        belongs to the LIMIT and the engine resolves it, so a caller cannot
+        declare its own spend exempt from a cap it was given."""
+        return self._req("POST", f"/v2/worlds/{wid}/cost-events", {
+            "stage": stage, "resources": resources, "attempt_id": attempt_id,
+            "reservation_id": reservation_id,
+            "source_artifacts": source_artifacts or [],
+            "output_artifacts": output_artifacts or [],
+            "environment": environment or {}, "refs": refs or {}})
+
+    def get_cost_event(self, cost_event_id: str) -> dict:
+        return self._req("GET", f"/v2/cost-events/{cost_event_id}")
+
+    def cost_report(self, wid) -> dict:
+        """Vector totals for a world: additive quantities summed, peaks taken
+        as maxima and never sums, unavailable entries counted and never
+        summed."""
+        return self._req("GET", f"/v2/worlds/{wid}/cost-report")
 
     # -- work queue --------------------------------------------------------
     def claim(self, worker_id: str, *, world_id: Optional[str] = None,

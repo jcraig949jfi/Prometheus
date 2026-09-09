@@ -59,7 +59,7 @@ def _seat(f, name, group=None):
 def test_schema_is_v7_with_read_grants(tmp_path):
     st = Store(str(tmp_path / "s.db"))
     st.initialize()
-    assert SCHEMA_VERSION == 7
+    assert SCHEMA_VERSION >= 7, "the v7 containers must survive later schemas"
     names = {r["name"] for r in st.read().execute(
         "SELECT name FROM sqlite_master WHERE type='table'").fetchall()}
     assert "read_grants" in names

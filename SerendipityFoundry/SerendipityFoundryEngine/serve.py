@@ -38,6 +38,11 @@ def main() -> int:
     ap.add_argument("--tls-key", default=None)
     ap.add_argument("--insecure", action="store_true",
                     help="allow a non-loopback bind without TLS (tokens in clear)")
+    ap.add_argument("--max-artifact-bytes", type=int, default=None,
+                    help="per-artifact size ceiling in bytes (default 16 MiB). "
+                         "There was NO limit at all before v8, so preflight's "
+                         "'check the configured per-artifact limit' had "
+                         "nothing to check against.")
     ap.add_argument("--science-profile", choices=("off", "warn", "strict"),
                     default="warn",
                     help="v6 scientific-provenance checks. off = not computed "
@@ -74,7 +79,8 @@ def main() -> int:
     app = create_app(args.db,
                      registration_open=(args.registration == "open"),
                      session_enforcement=args.session_enforcement,
-                     science_profile=args.science_profile)
+                     science_profile=args.science_profile,
+                     max_artifact_bytes=args.max_artifact_bytes)
     scheme = "https" if tls else "http"
     print(f"Serendipity Foundry Engine listening on {scheme}://{args.host}:"
           f"{args.port}  db={args.db}")
