@@ -135,6 +135,39 @@ def test_export_does_not_claim_usefulness():
         assert "NOT_QUALIFIED" in doc
 
 
+_DESERIALIZERS = re.compile(
+    r"\b(pickle\.loads?|cPickle|torch\.load|joblib\.load|dill\.loads?|marshal\.loads?"
+    r"|yaml\.load\s*\()")
+
+
+def test_engine_deserializes_no_upstream_object_graph():
+    """'Never deserialize upstream pickles in the engine' -- enforced, not stated.
+
+    The acquired DreamCoder copy ships a pickle (tests/resources/kellis_list_exp.pickle).
+    A pickle is arbitrary code at load time, so the guard is that the engine contains no
+    deserialization call at all and no reference to the tool cache. If the engine later
+    gains a legitimate need for one, this test should fail and force the decision to be
+    made deliberately rather than arrive as a diff nobody read.
+    """
+    engine = paths.REPO_ROOT / "SerendipityFoundry" / "SerendipityFoundryEngine"
+    if not engine.exists():
+        pytest.skip("SFE engine not present in this checkout")
+    offenders, cache_refs = [], []
+    for p in list((engine / "sfe").rglob("*.py")) + list(engine.glob("*.py")):
+        text = p.read_text(encoding="utf-8", errors="replace")
+        rel = str(p.relative_to(paths.REPO_ROOT)).replace("\\", "/")
+        for m in _DESERIALIZERS.finditer(text):
+            offenders.append(f"{rel}: {m.group(0)}")
+        for needle in ("techne_tools", "TECHNE_TOOL_CACHE"):
+            if needle in text:
+                cache_refs.append(f"{rel}: {needle}")
+    assert not offenders, (
+        "the engine deserializes an object graph: " + "; ".join(offenders))
+    assert not cache_refs, (
+        "the engine reaches into the tool cache, which holds unvetted upstream bytes: "
+        + "; ".join(cache_refs))
+
+
 # ---------------------------------------------------------------- 5. receipt contract
 def test_receipt_stage_and_does_not_establish_are_disjoint_and_complete():
     rec = receipt.new("INSTALLATION", "x")
