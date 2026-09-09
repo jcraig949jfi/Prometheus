@@ -177,7 +177,9 @@ def submit_evidence(conn, packet_id, source_quote, evidence_type, submitted_by,
                     experiment_id=None, agent=None,
                     creation_method="MODEL_EXTRACTED",
                     write_stage="SUBMITTED", idempotency_key=None,
-                    encounter_id=None, encounter_run_id=None):
+                    encounter_id=None, encounter_run_id=None,
+                    software_stage=None, connection_evidence=None,
+                    scientific_outcome=None, reproduction_state=None):
     payload = dict(packet=packet_id, quote=source_quote[:80])
     with conn.cursor() as cur:
         prior = _idempotency_gate(cur, idempotency_key, "evidence", machine,
@@ -237,14 +239,17 @@ def submit_evidence(conn, packet_id, source_quote, evidence_type, submitted_by,
             "verdict_source, outcome_canonical, metric_text, gate, negative, "
             "substrate, packet_id, source_span, source_quote, experiment_id, "
             "agent_id, creation_method, write_stage, ontology_version, "
-            "submitted_by, machine, revision, encounter_id, encounter_run_id) "
-            "VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) "
+            "submitted_by, machine, revision, encounter_id, encounter_run_id, "
+            "software_stage, connection_evidence, scientific_outcome, "
+            "reproduction_state) "
+            "VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) "
             "ON CONFLICT (evidence_id) DO NOTHING",
             (eid, claim_id, evidence_type, verdict_source, outcome_canonical,
              metric_text, gate, negative, substrate, packet_id, source_span,
              source_quote, experiment_id, agent, creation_method, write_stage,
              ONTOLOGY_VERSION, submitted_by, machine, rev, encounter_id,
-             encounter_run_id))
+             encounter_run_id, software_stage, connection_evidence,
+             scientific_outcome, reproduction_state))
         _log_write(cur, idempotency_key, "evidence", machine, submitted_by,
                    payload, True, result_id=eid)
     conn.commit()

@@ -16,6 +16,7 @@ from pydantic import BaseModel
 from . import FOSSIL_CONTRACT_VERSION, ONTOLOGY_VERSION, SCHEMA_VERSION
 from . import db as ewdb
 from . import closure, compiler, coords, store, wiki
+from . import refs as ewrefs
 
 app = FastAPI(title="Mnemosyne Evidence Wiki", version="0.1")
 CFG = ewdb.load_config()
@@ -334,6 +335,13 @@ class EvidenceIn(BaseModel):
     # There is exactly one binding mechanism; do not add a second.
     encounter_id: str | None = None
     encounter_run_id: str | None = None
+    # Brief s4 C5: four different questions, four fields. A passing test suite
+    # cannot promote connection_evidence, and a 1.0 build may carry a negative
+    # scientific_outcome. Separate columns are what make that inexpressible.
+    software_stage: str | None = None
+    connection_evidence: str | None = None
+    scientific_outcome: str | None = None
+    reproduction_state: str | None = None
     # "test"/"fixture" keep this object OUT of the scientific
     # views (ew.*_prod). Validated against a closed set.
     namespace: str = "prod"
@@ -344,6 +352,9 @@ class EvidenceIn(BaseModel):
 def post_evidence(body: EvidenceIn, request: Request, conn=Depends(get_conn)):
     ident = identity(request, write=True)
     _check_namespace(body.namespace)
+    bad_axis = ewrefs.validate_axes(body.model_dump())
+    if bad_axis:
+        raise HTTPException(422, bad_axis)
     try:
         eid = store.submit_evidence(
             conn, body.packet_id, body.source_quote, body.evidence_type,
@@ -356,7 +367,11 @@ def post_evidence(body: EvidenceIn, request: Request, conn=Depends(get_conn)):
             agent=body.agent, creation_method=body.creation_method,
             write_stage=body.write_stage, idempotency_key=body.idempotency_key,
             encounter_id=body.encounter_id,
-            encounter_run_id=body.encounter_run_id)
+            encounter_run_id=body.encounter_run_id,
+            software_stage=body.software_stage,
+            connection_evidence=body.connection_evidence,
+            scientific_outcome=body.scientific_outcome,
+            reproduction_state=body.reproduction_state)
     except store.RejectedWrite as e:
         raise HTTPException(422, e.reason)
     _classify(conn, "evidence", eid, body.namespace, ident,
@@ -1628,6 +1643,225 @@ def get_encounter_seals(encounter_id: str, request: Request,
     identity(request)
     return {"encounter_id": encounter_id,
             "seals": closure.list_seals_for_encounter(conn, encounter_id, run_id)}
+
+
+# ---- typed reference / presence index + publication (H0-H5 iter 1) --------
+class TypedRefIn(BaseModel):
+    model_config = {"extra": "forbid"}
+    ref_kind: str
+    source_kind: str
+    source_id: str
+    content_digest: str
+    availability: str
+    ref_subkind: str | None = None
+    encounter_id: str | None = None
+    run_id: str | None = None
+    sfe_world_id: str | None = None
+    sfe_observation_id: str | None = None
+    sfe_event_seq: int | None = None
+    sfe_entry_hash: str | None = None
+    sfe_engine_instance_id: str | None = None
+    selector: str | None = None
+    content_bytes: int | None = None
+    availability_note: str | None = None
+    source_scope: str | None = None
+    visibility: str | None = None
+    origin: str | None = None
+    producer: dict | None = None
+    namespace: str = "prod"
+    # publication bookkeeping: the producer asserts what SFE durably recorded;
+    # PEW reports what IT indexed. Different facts, reported separately.
+    recorded_in_sfe: bool | None = None
+    terminal_state: str | None = None
+    idempotency_key: str | None = None
+
+
+def _ref_payload(body):
+    d = body.model_dump()
+    d["run_key"] = body.run_id or ""
+    d.pop("run_id", None)
+    for k in ("recorded_in_sfe", "terminal_state", "idempotency_key"):
+        d.pop(k, None)
+    d["ref_id"] = ewrefs.ref_id_for(d)
+    return d
+
+
+def _outbox(cur, pub_id, intent_digest, d, body, ident, state, err=None,
+            target=None):
+    """One row per publication INTENT (content-addressed), so a retry of the
+    same intent is the same row. recorded_in_sfe is the producer's assertion;
+    indexed_in_pew is ours. A failed publication leaves the observation intact
+    and is retried -- it never re-runs science."""
+    cur.execute(
+        "INSERT INTO ew.publication_outbox(publication_id, intent_digest, "
+        "target_kind, target_id, encounter_id, run_key, recorded_in_sfe, "
+        "indexed_in_pew, state, terminal_state, attempts, last_error, "
+        "submitted_by, machine) VALUES "
+        "(%s,%s,'TYPED_REF',%s,%s,%s,%s,%s,%s,%s,1,%s,%s,%s) "
+        "ON CONFLICT (publication_id) DO UPDATE SET "
+        "attempts = ew.publication_outbox.attempts + 1, updated_at = now(), "
+        "indexed_in_pew = EXCLUDED.indexed_in_pew, state = EXCLUDED.state, "
+        "target_id = COALESCE(EXCLUDED.target_id, ew.publication_outbox.target_id), "
+        "last_error = EXCLUDED.last_error",
+        (pub_id, intent_digest, target, d.get("encounter_id"), d["run_key"],
+         body.recorded_in_sfe, state == "PUBLISHED", state, body.terminal_state,
+         err, ident["agent"], ident["machine"]))
+
+
+@app.post("/api/v1/refs")
+def post_typed_ref(body: TypedRefIn, request: Request, conn=Depends(get_conn)):
+    """Publish ONE typed reference. Idempotent and retryable: an identical
+    re-publication is duplicate_identical and writes no second row; a differing
+    one under the same identity is 409 and writes nothing. Neither erases the
+    durable SFE observation, and neither causes a re-execution."""
+    ident = identity(request, write=True)
+    _check_namespace(body.namespace)
+    d = _ref_payload(body)
+    bad = ewrefs.validate(d)
+    if bad:
+        _reject(conn, "refs.publish", ident, bad, body.idempotency_key,
+                d["ref_id"])
+    pub_id, intent_digest = ewrefs.publication_id_for(d)
+    with ewdb.dict_cur(conn) as cur:
+        cur.execute("SELECT * FROM ew.typed_refs WHERE ref_id=%s",
+                    (d["ref_id"],))
+        status, diff = ewrefs.classify(cur.fetchone(), d)
+        if status == "conflict":
+            _outbox(cur, pub_id, intent_digest, d, body, ident, "FAILED",
+                    err="conflict:" + "; ".join(diff)[:400])
+            conn.commit()
+            _reject(conn, "refs.publish", ident,
+                    "conflict_existing_row_differs:" + "; ".join(diff),
+                    body.idempotency_key, d["ref_id"], code=409)
+        if status == "inserted":
+            ewrefs.insert_ref(cur, d, ident)
+        _outbox(cur, pub_id, intent_digest, d, body, ident, "PUBLISHED",
+                target=d["ref_id"])
+        cur.execute("SELECT attempts FROM ew.publication_outbox WHERE "
+                    "publication_id=%s", (pub_id,))
+        attempts = cur.fetchone()["attempts"]
+    conn.commit()
+    return {"ref_id": d["ref_id"], "status": status,
+            "publication_id": pub_id,
+            "recorded_in_sfe": body.recorded_in_sfe,
+            "indexed_in_pew": True,
+            "terminal_state": body.terminal_state,
+            "attempts": attempts,
+            "read_back": "/api/v1/refs/" + d["ref_id"]}
+
+
+@app.get("/api/v1/refs/index/rebuild")
+def rebuild_ref_index(request: Request, namespace: str | None = None,
+                      conn=Depends(get_conn)):
+    """Rebuild the witness presence index from the authoritative references
+    ALONE. Reads no scientific bytes, touches nothing in SFE, and alters no
+    execution identity: a rebuilt index is a projection, not evidence."""
+    identity(request)
+    idx = ewrefs.rebuild_presence_index(conn, namespace)
+    return {"n_encounters": len(idx),
+            "index_digest": ewrefs.index_digest(idx), "index": idx}
+
+
+@app.get("/api/v1/refs/{ref_id}")
+def get_typed_ref(ref_id: str, request: Request, scope: str | None = None,
+                  conn=Depends(get_conn)):
+    """Read one reference. RETRIEVAL IS SCOPED: a reference published under a
+    source_scope is served only to a caller naming that scope, so a witness is
+    retrievable only from an explicitly authorized source scope."""
+    t0 = time.time()
+    ident = identity(request)
+    with ewdb.dict_cur(conn) as cur:
+        cur.execute("SELECT * FROM ew.typed_refs WHERE ref_id=%s", (ref_id,))
+        row = cur.fetchone()
+        if not row:
+            raise HTTPException(404, "unknown_ref")
+        row = dict(row)
+        if row.get("source_scope") and scope != row["source_scope"]:
+            raise HTTPException(403,
+                "source_scope_required: this reference is published under a "
+                "source scope; name it with ?scope= to retrieve it")
+        row["current_availability"] = ewrefs.current_availability(cur, ref_id)
+    log_read(conn, "refs.get", ident, {"ref_id": ref_id}, 1, t0)
+    return JSONResponse(json.loads(json.dumps(row, default=str)))
+
+
+@app.get("/api/v1/refs")
+def query_typed_refs(request: Request, ref_kind: str | None = None,
+                     encounter_id: str | None = None,
+                     run_id: str | None = None, source_id: str | None = None,
+                     sfe_observation_id: str | None = None,
+                     availability: str | None = None,
+                     namespace: str | None = None, scope: str | None = None,
+                     limit: int = 200, conn=Depends(get_conn)):
+    """Presence query: which encounters carry a reference of a kind, in what
+    state. Scoped references are listed only to a caller naming their scope."""
+    t0 = time.time()
+    ident = identity(request)
+    where, args = [], []
+    for col, val in (("ref_kind", ref_kind), ("encounter_id", encounter_id),
+                     ("run_key", run_id), ("source_id", source_id),
+                     ("sfe_observation_id", sfe_observation_id),
+                     ("availability", availability), ("namespace", namespace)):
+        if val is not None:
+            where.append(col + "=%s")
+            args.append(val)
+    if not where:
+        raise HTTPException(400, "at_least_one_selector_required")
+    where.append("(source_scope IS NULL OR source_scope = %s)")
+    args.append(scope)
+    with ewdb.dict_cur(conn) as cur:
+        cur.execute("SELECT * FROM ew.typed_refs WHERE " + " AND ".join(where) +
+                    " ORDER BY created_at LIMIT %s", args + [min(limit, 1000)])
+        rows = [dict(r) for r in cur.fetchall()]
+    log_read(conn, "refs.query", ident, {"ref_kind": ref_kind}, len(rows), t0)
+    return JSONResponse(json.loads(json.dumps(
+        {"n": len(rows), "refs": rows}, default=str)))
+
+
+class AvailabilityIn(BaseModel):
+    model_config = {"extra": "forbid"}
+    availability: str
+    note: str | None = None
+
+
+@app.post("/api/v1/refs/{ref_id}/availability")
+def post_ref_availability(ref_id: str, body: AvailabilityIn, request: Request,
+                          conn=Depends(get_conn)):
+    """Append an availability observation. The reference row is NEVER
+    rewritten: eviction upstream changes reachability, not history."""
+    ident = identity(request, write=True)
+    if body.availability not in ewrefs.AVAILABILITY:
+        _reject(conn, "refs.availability", ident,
+                "unknown_availability: expected one of " +
+                str(ewrefs.AVAILABILITY), None, ref_id)
+    with ewdb.dict_cur(conn) as cur:
+        cur.execute("SELECT availability FROM ew.typed_refs WHERE ref_id=%s",
+                    (ref_id,))
+        row = cur.fetchone()
+        if row is None:
+            raise HTTPException(404, "unknown_ref")
+        published = row["availability"]
+        cur.execute("INSERT INTO ew.ref_availability_events(ref_id, "
+                    "availability, note, observed_by) VALUES (%s,%s,%s,%s)",
+                    (ref_id, body.availability, body.note, ident["agent"]))
+    conn.commit()
+    return {"ref_id": ref_id, "published_availability": published,
+            "current_availability": body.availability,
+            "note": "the published reference row is unchanged; this is an event"}
+
+
+@app.get("/api/v1/publications/{publication_id}")
+def get_publication(publication_id: str, request: Request,
+                    conn=Depends(get_conn)):
+    identity(request)
+    with ewdb.dict_cur(conn) as cur:
+        cur.execute("SELECT * FROM ew.publication_outbox WHERE "
+                    "publication_id=%s", (publication_id,))
+        row = cur.fetchone()
+    if not row:
+        raise HTTPException(404, "unknown_publication")
+    return JSONResponse(json.loads(json.dumps(dict(row), default=str)))
+
 
 
 # ---------------------------------------------------------------- wiki

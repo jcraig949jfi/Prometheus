@@ -1,5 +1,5 @@
 {
- "ran_at": "2026-09-05T07:02:14",
+ "ran_at": "2026-09-09T03:09:30",
  "n_gates": 16,
  "n_scored": 16,
  "n_pass": 16,
@@ -11,13 +11,13 @@
    "gate": "E0_service_reachable",
    "pass": true,
    "skipped": false,
-   "detail": "200 {'service': 'mnemosyne-evidence-wiki', 'status': 'ok', 'schema_version': 4, 'ontology_version': 2, 'fossil_contract': 'pew.fossil.v2'} in 4ms"
+   "detail": "200 {'service': 'mnemosyne-evidence-wiki', 'status': 'ok', 'schema_version': 4, 'ontology_version': 2, 'fossil_contract': 'pew.fossil.v2'} in 27ms"
   },
   {
    "gate": "E1_version_schema_identity",
    "pass": true,
    "skipped": false,
-   "detail": "schema_version=4 ontology_version=2 fossil_contract=pew.fossil.v2 canonical_revision=17252"
+   "detail": "schema_version=4 ontology_version=2 fossil_contract=pew.fossil.v2 canonical_revision=17384"
   },
   {
    "gate": "S2_server_machine_identity",
@@ -59,7 +59,7 @@
    "gate": "E6_query_by_run_world_player",
    "pass": true,
    "skipped": false,
-   "detail": "run=1 world=7 player=11 unfiltered=400"
+   "detail": "run=1 world=7 player=13 unfiltered=400"
   },
   {
    "gate": "E7_duplicate_and_conflict_semantics",
@@ -83,7 +83,7 @@
    "gate": "E10_no_silent_success",
    "pass": true,
    "skipped": false,
-   "detail": "rejected writes that left rows: none; row count across conflict attempt 1->1; refusals recorded in write_log: 35 kinds"
+   "detail": "rejected writes that left rows: none; row count across conflict attempt 1->1; refusals recorded in write_log: 41 kinds"
   },
   {
    "gate": "E13_batch_idempotent_and_atomic",
@@ -95,15 +95,15 @@
    "gate": "E11_real_run_recorded",
    "pass": true,
    "skipped": false,
-   "detail": "200 duplicate_identical encounter=SFEREAL-exp_35f20bd8c85609afc04581ca run=exp_35f20bd8c85609afc04581ca:wrk_b3b1e5cc46a9d4f8a45dfe7c"
+   "detail": "200 duplicate_identical encounter=SFEREAL-exp_a5af9bd7732cc72fc7ea4bfb run=exp_a5af9bd7732cc72fc7ea4bfb:wrk_e97a1363132466b789e42637"
   },
   {
    "gate": "E12_real_run_reconstructable",
    "pass": true,
    "skipped": false,
-   "detail": "world=wld_18c33644dffc60ac14448b0e player=sfe-work:wrk_b3b1e5cc46a9d4f8a45dfe7c run=exp_35f20bd8c85609afc04581ca:wrk_b3b1e5cc46a9d4f8a45dfe7c outcome=SURVIVED anchor=sha256:0786331ea29ae6e5b..."
+   "detail": "world=wld_eca6b5ad0a2e02a3eaeb478a player=sfe-work:wrk_e97a1363132466b789e42637 run=exp_a5af9bd7732cc72fc7ea4bfb:wrk_e97a1363132466b789e42637 outcome=SURVIVED anchor=sha256:b7d61ab5eda9e7b15..."
   }
  ],
- "real_id": "SFEREAL-exp_35f20bd8c85609afc04581ca",
- "real_run": "exp_35f20bd8c85609afc04581ca:wrk_b3b1e5cc46a9d4f8a45dfe7c"
+ "real_id": "SFEREAL-exp_a5af9bd7732cc72fc7ea4bfb",
+ "real_run": "exp_a5af9bd7732cc72fc7ea4bfb:wrk_e97a1363132466b789e42637"
 }
