@@ -37,7 +37,8 @@ engine. Twenty-four of them.
     "design_packet": "origin/archaeon/v0 roles/Archaeon/prompts/2026-09-08_h0h5",
     "design_sha256": "3b1dbec106cc77cb6885d5bba36a12b40d3aee0677f8b05d46d6887b3b1260b5"
   },
-  "result_commits": ["b07801de8 on worktree-vivarium-campaign-e1-e6-e16 (4167 insertions, 25 files)"],
+  "result_commits": ["959d35043 -- the loader slice (25 files, 4167 insertions), on worktree-vivarium-campaign-e1-e6-e16",
+                     "this line is a FOLLOW-UP commit: a receipt cannot name the commit that contains it, and the first attempt stamped a SHA that an amend then orphaned"],
   "components_changed": [
     "vivarium/viv/artifacts.py       NEW  slot contract, codecs, interfaces, limits, cache",
     "vivarium/viv/preflight.py       NEW  the ten steps, SfeResolver, load receipt",
