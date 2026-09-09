@@ -19,7 +19,8 @@
   },
   "result_commits": [
     "95daf6e57 -- acquisition command, manifest, budget profiles, host capacity, locks, four INSTALLATION receipts, LICENSE_EVIDENCE, reproduction manifest DECLARED_NOT_RUN",
-    "8a03fdb1a -- five FIRST_USEFUL_CHECK receipts, stitch reproduction result + declarative library export, dreamcoder submodule pinning fix, 17 tests, session report"
+    "8a03fdb1a -- five FIRST_USEFUL_CHECK receipts, stitch reproduction result + declarative library export, dreamcoder submodule pinning fix, 17 tests, session report",
+    "3677f382d, 7deab4275, f6acabefb, 8fee63cd0 and this errata -- iteration receipt, engine pickle guard, Archaeon inbox note, and two rounds of correction"
   ],
   "components_changed": [
     "techne/acquisition/ (new package: paths, host, budget, pypi, repo, fixtures, manifest_io, receipt, checks/)",
@@ -59,10 +60,15 @@
     {
       "id": "T-TECHNE-SUITE",
       "what": "python -m pytest techne/tests -q",
-      "result": "INCOMPLETE -- the suite did not finish inside a 580s ceiling",
-      "detail": "CORRECTED after measurement (see errata below). The test the suite sits on for a long time is techne/tests/test_mahler_batch.py::test_authority_mossinghoff_snapshot_178_entries. It is NOT hung: it costs ~310s on this host because it makes TWO full passes over a corpus of 8,625 polynomials (not 178 -- the name is a fossil), 5,152 of them above degree 100, at ~150s per pass. 236 of the suite's tests had passed or skipped with 0 failures when the 580s ceiling hit. Neither of this seat's commits contains a mahler path.",
-      "honest_limit": "I have NOT established that this seat's commits cause no regression in the full techne suite, because I have not seen the full suite finish. What I have established is that the acquisition tests pass and that the stalling test lies outside every path these commits touch.",
-      "errata": "My first reading said 'stalls', which implied a hang. Measured: scalar loop over all 8,625 entries 147.67s; degree-stratified batching 149.14s; one padded batch 150.46s; all three numerically identical (max abs diff 0.00e+00). Slow, not hung. A background run with no ceiling had still not finished after ~35 minutes, so the full suite's wall time remains UNMEASURED and the no-regression statement is still unavailable."
+      "result": "314 passed, 5 skipped, 0 failed in 848.57s (14m08s)",
+      "detail": "RESOLVED. The suite completes; the earlier INCOMPLETE reading was a 580s ceiling, not a defect. Three tests in techne/tests/test_mahler_batch.py account for 811s of the 849s -- 96 percent of the suite's wall time: test_composition_batch_then_filter_below_M_matches_scalar_pipeline 295.01s, test_composition_batch_then_sort_matches_sorted_scalars 276.70s, test_authority_mossinghoff_snapshot_178_entries 239.54s. The next slowest test in the whole suite is 7.56s. Each of the three makes two or more full passes over a corpus of 8,625 polynomials (not 178 -- the name is a fossil of a smaller snapshot), 5,152 of them above degree 100, at ~150s per pass.",
+      "honest_limit": "RESOLVED: 0 failures across 314 tests, so this seat's commits introduce no regression in the techne suite. The earlier entry declined to make that statement because the suite had not been seen to finish, which was the right posture at the time and is now superseded by a measurement rather than by rereading.",
+      "errata": "My first reading said 'stalls', which implied a hang. Measured: scalar loop over all 8,625 entries 147.67s; degree-stratified batching 149.14s; one padded batch 150.46s; all three numerically identical (max abs diff 0.00e+00). Slow, not hung. A background run with no ceiling had still not finished after ~35 minutes, so the full suite's wall time remains UNMEASURED and the no-regression statement is still unavailable.",
+      "errata_trail": [
+        "E1: 'stalls at' implied a hang. It is slow, not hung.",
+        "E2: my explanation for the slowness -- that mahler_measure_batch pads every element to the batch maximum degree -- was TESTED AND KILLED. Degree-stratified batching (which removes the padding) 149.14s vs one padded batch 150.46s vs scalar loop 147.67s, all numerically identical. The corpus is simply expensive.",
+        "E3: the suite completes in 848.57s with 314 passed / 5 skipped / 0 failed, so the no-regression statement withheld in E1 is now available and made."
+      ]
     },
     {
       "id": "C-Z3-NEG",
@@ -254,9 +260,10 @@
       "where": "techne/lib/mahler_measure.py::mahler_measure_batch (Techne's own lane, NOT part of this assignment)",
       "measured": "On the 8,625-entry Mossinghoff-derived corpus (degrees 2-180, 5,152 above degree 100) the batch path gives NO speedup over the scalar loop: 149.14s stratified / 150.46s single padded batch vs 147.67s for [mahler_measure(p) for p in polys]. 0.99x. Results identical to 0.00e+00.",
       "hypothesis_tested_and_KILLED": "I predicted the batch pads every element to the batch's maximum degree, so one degree-180 entry would force all 8,625 through a 180x180 eigenproblem. Degree-stratified batching -- which removes that padding entirely -- came back at 149.14s against 150.46s for the single padded batch. The padding explanation is wrong; the corpus is simply expensive.",
-      "consequence": "A Tier-2 'batch' tool that is named as an optimisation delivers none on this population. Standing Order #4 says profile before promoting; this is that profile, arriving late. Whether the batch path earns its existence is a question for a later pass, with the population stated -- it may well win on a narrow-degree corpus, which is NOT the corpus this authority test uses.",
+      "consequence": "A Tier-2 'batch' tool that is named as an optimisation delivers none on this population (0.99x against the scalar loop), and the three tests exercising it own 96 percent of the suite's wall time. Standing Order #4 says profile before promoting; this is that profile, arriving late. The batch path may still win on a narrow-degree corpus, which is NOT the corpus these authority tests use, so the question is open with the population stated.",
       "second_finding": "The test is named ..._178_entries and runs 8,625. The name is a fossil of a smaller snapshot. Same wrong-population shape already on record in this programme: a number measured over one population carried as a property of another.",
-      "NOT_FIXED_HERE": "Out of this assignment's scope. Recorded so the next pass starts from the measurement rather than from my wrong hypothesis."
+      "NOT_FIXED_HERE": "Out of this assignment's scope. Recorded so the next pass starts from the measurement rather than from my wrong hypothesis.",
+      "scale_of_the_effect": "Three tests, 811s of a 849s suite. The next slowest test anywhere in techne/tests is 7.56s. Any seat wanting a fast regression signal can get one with `-k 'not mahler_batch'` and lose only the Mahler authority anchors."
     }
   ]
 }
