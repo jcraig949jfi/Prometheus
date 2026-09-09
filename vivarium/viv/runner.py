@@ -58,7 +58,10 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Callable, Optional
 
+from . import artifacts as _artifacts
 from . import executors as _ex
+from . import preflight as _preflight
+from . import resources as _res
 from . import spec as _spec
 from .request import ExecutionRequest, SpecIntegrityError
 
@@ -190,6 +193,13 @@ class RunResult:
     #: The sealed hash, carried so a FAILED run can still be fossilized with
     #: the identity of the specification that failed.
     spec_hash_hint: Optional[str] = None
+    #: C1's LOAD RECEIPT, or -- on a refusal -- the rejection receipt. Either
+    #: way it is a document about bytes, not a log line: which digests were
+    #: verified, under whose authorization, from which world, within which
+    #: limits. Empty for a spec that declares no artifact slot.
+    load_receipt: dict = field(default_factory=dict)
+    #: C4's resource vector, every entry carrying its own enforcement class.
+    resources: dict = field(default_factory=dict)
 
 
 class ExecutionFailure(RuntimeError):
@@ -214,10 +224,18 @@ class SfeRunner:
                  token: Optional[str] = None, worker_id: str = "vivarium",
                  client_name: str = "vivarium", timeout: float = 60.0,
                  insecure: bool = False, lease_s: float = 120.0,
+                 client_id: Optional[str] = None,
+                 limits: Optional[_artifacts.Limits] = None,
                  log=lambda *_a: None):
         from sfclient import EngineClient          # noqa: PLC0415
         self.worker_id = worker_id
         self.lease_s = lease_s
+        # The principal an artifact cache entry is authorized FOR. Absent, the
+        # worker id is used -- weaker, and recorded as such in the receipt,
+        # never quietly substituted as if it were the engine's own client id.
+        self.client_id = client_id or ("worker:" + worker_id)
+        self.client_id_is_engine_issued = client_id is not None
+        self.limits = limits or _artifacts.ALPHA
         self.log = log
         self.c = EngineClient(base_url, token, cafile=cafile,
                               insecure=insecure, timeout=timeout)
@@ -286,14 +304,61 @@ class SfeRunner:
                 failure_class="EXECUTOR_NOT_IMPLEMENTED")
 
         out = RunResult(spec_hash_hint=sealed)
+        meter = _res.Meter(label=sealed).start()
         c = self.c
         sid = self.session("vivarium-%s" % self.worker_id)
 
-        world = c.create_world(sid, _spec.world_name(sealed),
-                               seed_root=spec["world"]["seed_root"])
+        # THE WORLD'S SHAPE IS DERIVED FROM THE SEALED SPEC, never supplied.
+        # A spec with no artifact slot creates exactly the world it always did
+        # -- ISOLATED, no budget -- so every old spec keeps its behaviour byte
+        # for byte. A spec WITH slots needs a world that can legally accept an
+        # import and a counter that can refuse one, and both are a function of
+        # the kind's declaration, so two byte-identical specs still produce two
+        # byte-identical worlds.
+        slots = _preflight.slots_of(spec)
+        if slots:
+            world = c.create_world(
+                sid, _spec.world_name(sealed),
+                seed_root=spec["world"]["seed_root"],
+                sharing_policy="EXPLICIT_IMPORT_ONLY",
+                budget={"artifact_bytes": {
+                    "limit": self.limits.total_bytes,
+                    "enforcement": "enforceable"}})
+        else:
+            world = c.create_world(sid, _spec.world_name(sealed),
+                                   seed_root=spec["world"]["seed_root"])
         wid = world["world_id"]
         out.world_id = wid
         c.start(wid)
+
+        # PREFLIGHT BEFORE THE COMMIT. A rejection here is an OPERATIONAL
+        # receipt: no experiment was committed, no work was claimed, nothing
+        # was measured, and so no observation and no fossil are written. C1's
+        # own last line says exactly this, and the PLACEMENT is what makes it
+        # true rather than a promise about what the code does afterwards.
+        inputs: dict = {}
+        if slots:
+            try:
+                inputs, out.load_receipt = self._hydrate(
+                    c, spec, slots, request.artifact_locators, wid, meter)
+            except _artifacts.PreflightRejected as exc:
+                out.load_receipt = exc.as_receipt()
+                out.resources = meter.vector(
+                    artifact_bytes_limit=self.limits.total_bytes)
+                raise ExecutionFailure(
+                    str(exc), partial=out,
+                    failure_class="PREFLIGHT_REJECTED") from exc
+            except _preflight.BudgetExhausted as exc:
+                out.load_receipt = {"rejected": True,
+                                    "rejection_class": "BUDGET_EXHAUSTED",
+                                    "message": str(exc), "detail": exc.detail}
+                out.resources = meter.vector(
+                    artifact_bytes_limit=self.limits.total_bytes)
+                # A DISTINCT status. "We could not afford to look" is not a
+                # finding about the experiment.
+                raise ExecutionFailure(
+                    str(exc), partial=out,
+                    failure_class="BUDGET_EXCEEDED") from exc
 
         hyp_id = c.hypothesis(wid, spec["hypothesis"])
         pred_id = None
@@ -332,7 +397,7 @@ class SfeRunner:
         try:
             return self._execute_after_commit(
                 c, out, spec, sealed, wid, exp_id, hyp_id, pred_id,
-                claim_attempts, claim_pause_s)
+                claim_attempts, claim_pause_s, inputs=inputs, meter=meter)
         except ExecutionFailure:
             raise
         except Exception as exc:                    # noqa: BLE001
@@ -346,8 +411,51 @@ class SfeRunner:
                 % (type(exc).__name__, exc), partial=out,
                 failure_class="ENGINE_TRANSPORT") from exc
 
+    # -- preflight ---------------------------------------------------------
+    def _hydrate(self, c, spec, slots, locators, wid, meter):
+        """Resolve every declared slot in the EXECUTION world, and account for
+        it. Returns (frozen inputs, load receipt)."""
+        def debit(resource: str, amount: float):
+            """The enforceable counter, consulted BEFORE the fetch. The engine
+            blocks and raises; nothing is fetched when it does. A debit taken
+            afterwards would be an accounting entry, not a limit."""
+            from sfclient import EngineError                 # noqa: PLC0415
+            try:
+                c.consume_budget(wid, resource, amount)
+            except EngineError as exc:
+                detail = exc.detail if isinstance(exc.detail, dict) else {}
+                if exc.status == 409:
+                    raise _preflight.BudgetExhausted(
+                        "the execution world's %s budget refused %s bytes "
+                        "BEFORE the fetch: %s"
+                        % (resource, amount, detail.get("message")),
+                        detail={"resource": resource, "amount": amount,
+                                "engine": detail}) from exc
+                raise
+
+        resolver = _preflight.SfeResolver(
+            c, execution_world=wid, client_id=self.client_id, log=self.log)
+        pf = _preflight.Preflight(resolver=resolver, locators=dict(locators),
+                                  limits=self.limits, debit=debit,
+                                  log=self.log)
+        inputs, receipt = pf.hydrate(slots)
+        meter.count("artifact_bytes", receipt["bytes_loaded"])
+        meter.count("artifact_fetches", receipt["engine_fetches"])
+        meter.count("items_loaded",
+                    sum(len(a.all_items()) for a in inputs.values()))
+        receipt["principal"] = {
+            "client_id": self.client_id,
+            "engine_issued": self.client_id_is_engine_issued,
+            "execution_world": wid}
+        self.log("[viv] preflight OK world=%s slots=%s bytes=%d closure=%d "
+                 "manifest=%s" % (wid, sorted(slots), receipt["bytes_loaded"],
+                                  receipt["closure_size"],
+                                  receipt["closure_manifest_hash"][:19]))
+        return inputs, receipt
+
     def _execute_after_commit(self, c, out, spec, sealed, wid, exp_id, hyp_id,
-                              pred_id, claim_attempts, claim_pause_s):
+                              pred_id, claim_attempts, claim_pause_s, *,
+                              inputs=None, meter=None):
         """Everything past the irreversible commit. Split out so a single
         try/except can guarantee that no failure here escapes unclassified."""
         plan = _spec.repeat_plan(spec)
@@ -397,7 +505,8 @@ class SfeRunner:
                     state = (carried if plan["state"] == "persist"
                              else _ex.new_state(spec["work"]["kind"]))
                     r0 = time.perf_counter()
-                    value = _ex.run(spec, seed=seed, state=state)
+                    value = _ex.run(spec, seed=seed, state=state,
+                                    inputs=inputs or None)
                     repeats.append({"repeat_index": index, "seed": seed,
                                     "state_mode": plan["state"],
                                     "seconds": round(time.perf_counter() - r0, 6),
@@ -442,12 +551,25 @@ class SfeRunner:
         # route to enqueue a second work item against one experiment, and
         # citing one work result for a measurement it does not contain would be
         # the dishonest alternative.
+        if meter is not None:
+            meter.count("observations_written", len(repeats))
+            out.resources = meter.vector(
+                artifact_bytes_limit=(self.limits.total_bytes
+                                      if out.load_receipt else None),
+                wall_limit=(plan.get("budget") or {}).get("max_seconds"))
         result = {"repeats": repeats, "repeat_plan":
                   {k: plan[k] for k in ("count", "order", "seed_derivation",
                                         "state", "degenerate_by_construction")},
                   "executor": repeats[0]["result"].get("executor"),
                   "reproducibility":
                       repeats[0]["result"].get("reproducibility", "UNKNOWN")}
+        # The receipt travels WITH the result into the engine's work record,
+        # so the claim "these bytes were consumed" is anchored in the same
+        # ledger entry as the numbers they produced -- not in a file beside it.
+        if out.load_receipt:
+            result["load_receipt"] = out.load_receipt
+        if out.resources:
+            result["resources"] = out.resources
         out.work_result = result
         completed = c.complete(work_id, self.worker_id, claim_id, result,
                                attestation={"executed_config": spec})
@@ -513,6 +635,9 @@ class SfeRunner:
                 "order_check": out.order_check,
                 "elapsed_s": round(time.perf_counter() - started, 4)},
             "result": result, "anchor": out.anchor,
+            "load_receipt": out.load_receipt, "resources": out.resources,
+            "enforcement": _res.enforcement_summary(out.resources)
+                           if out.resources else {},
             "science": out.science, "lease": out.lease,
             "audit_envelope": envelope, "session": self.session_lineage,
             "engine": self.engine_identity, "spec_hash": sealed}

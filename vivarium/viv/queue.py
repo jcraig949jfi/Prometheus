@@ -39,7 +39,7 @@ COLUMNS = ("experiment_id, created_at, created_by, source_reason, "
            "not_before, claimed_by, claimed_at, started_at, finished_at, "
            "sfe_experiment_id, pew_reference, result_summary, error, "
            "family_id, arm_id, replication_of, candidate_set_id, request_key, "
-           "cadence_lane, cadence_day_ordinal")
+           "cadence_lane, cadence_day_ordinal, artifact_locators")
 
 #: The experimental-relation declaration. PROVENANCE: frozen by the BEFORE
 #: UPDATE trigger, never hashed, and never projected into an ExecutionRequest.
@@ -115,6 +115,7 @@ def enqueue(conn, *, created_by: str, source_reason: str,
             request_key=None, replication_of=None,
             family_id=None, arm_id=None, candidate_set_id=None,
             cadence_lane=None, cadence_day_ordinal=None,
+            artifact_locators=None,
             status: str = "queued",
             schema=None) -> str:
     """Admit one experiment into the register.
@@ -128,6 +129,13 @@ def enqueue(conn, *, created_by: str, source_reason: str,
     `status="cancelled"` admits a row that is registered and immediately
     unchosen. That is how a candidate set is written: the whole set is
     registered before selection and the unchosen are cancelled, never deleted.
+
+    `artifact_locators` is ADDRESSING, a third category beside sealed input and
+    provenance: digest -> {source_world, source_artifact}. Every digest in it
+    must be one the spec actually seals, and every slot the kind declares must
+    have an address -- an experiment admitted with no way to reach its own
+    inputs is a row that can only ever fail, and failing at ADMISSION says so
+    at the moment somebody can still fix it. See migrations/004.
     """
     s = schema or _db.schema()
     _spec.validate(experiment_spec)
@@ -137,6 +145,7 @@ def enqueue(conn, *, created_by: str, source_reason: str,
     if arm_id is not None and family_id is None:
         raise ValueError("arm_id without family_id is a label with nothing to "
                          "compare against")
+    locators = _check_locators(experiment_spec, artifact_locators)
 
     if request_key is not None:
         prior = by_request_key(conn, request_key, schema=s)
@@ -155,13 +164,15 @@ def enqueue(conn, *, created_by: str, source_reason: str,
                 "INSERT INTO " + _q(s) + " (created_by, source_reason, "
                 "source_evidence, experiment_spec, spec_hash, priority, "
                 "not_before, request_key, replication_of, family_id, arm_id, "
-                "candidate_set_id, cadence_lane, cadence_day_ordinal, status) "
-                "VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) "
+                "candidate_set_id, cadence_lane, cadence_day_ordinal, "
+                "artifact_locators, status) "
+                "VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) "
                 "RETURNING experiment_id",
                 (created_by, source_reason, _json(source_evidence or {}),
                  _json(experiment_spec), h, priority, not_before,
                  request_key, replication_of, family_id, arm_id,
-                 candidate_set_id, cadence_lane, cadence_day_ordinal, status))
+                 candidate_set_id, cadence_lane, cadence_day_ordinal,
+                 _json(locators), status))
         except psycopg2.errors.UniqueViolation as exc:
             # Lost the race to another writer with the same key: the
             # idempotency contract WORKING, reported as such.
@@ -185,8 +196,56 @@ def enqueue(conn, *, created_by: str, source_reason: str,
                           "replication_of": str(replication_of)
                           if replication_of else None,
                           "family_id": family_id, "arm_id": arm_id,
-                          "candidate_set_id": candidate_set_id}, schema=s)
+                          "candidate_set_id": candidate_set_id,
+                          "artifact_digests": sorted(locators)}, schema=s)
     return str(eid)
+
+
+def _check_locators(experiment_spec: dict, locators) -> dict:
+    """Admission-time check on the address book. Returns the normalised map.
+
+    THREE RULES, and each one closes a way an unrunnable row could be admitted
+    quietly:
+
+      * every digest the spec's artifact slots seal must have an address, or
+        the row is a request nothing can ever satisfy;
+      * every key must be a content digest, so the book cannot become a
+        general-purpose dictionary riding along beside the spec;
+      * each address itself must be a well-formed, immutable locator (no
+        pattern, no moving name, no URL).
+
+    EXTRA ADDRESSES ARE ALLOWED HERE, and not out of laxity: a closure is
+    discoverable only by reading the root artifact's bytes, which cannot happen
+    at admission, so a dependency's address is legitimately a key no slot
+    mentions. The "no unused channel" rule is enforced in PREFLIGHT instead --
+    where the closure IS known, an address the closure never consumed is a
+    rejection with a receipt. Checking it in the only place it is checkable
+    beats checking it in the place it would be convenient.
+    """
+    from . import preflight as _pf                          # noqa: PLC0415
+
+    loc = dict(locators or {})
+    slots = _pf.slots_of(experiment_spec)
+    sealed = {s["digest"] for s in slots.values()}
+    missing = sorted(sealed - set(loc))
+    if missing:
+        raise ValueError(
+            "the spec seals artifact digest(s) %s with no locator; an "
+            "experiment admitted with no way to reach its own inputs can only "
+            "ever fail, and saying so at admission is the moment somebody can "
+            "still fix it" % missing)
+    for digest in sorted(loc):
+        if (not isinstance(digest, str) or not digest.startswith("sha256:")
+                or len(digest) != 71):
+            raise ValueError(
+                "artifact_locators is keyed by content digest; %r is not one, "
+                "and a book that accepts arbitrary keys is a dictionary "
+                "travelling beside the spec" % (digest,))
+    for digest, entry in sorted(loc.items()):
+        reasons = _pf._a.check_locator(digest, entry)        # noqa: SLF001
+        if reasons:
+            raise ValueError("; ".join(reasons))
+    return loc
 
 
 def candidate_set(conn, candidate_set_id: str, *, schema=None):

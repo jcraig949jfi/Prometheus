@@ -86,7 +86,15 @@ def load_config() -> dict:
                      # even when the committed default is `prod`. See
                      # tests/conftest.py, which sets it unconditionally.
                      ("pew_namespace", "VIV_PEW_NAMESPACE"),
-                     ("identity_role", "VIV_IDENTITY_ROLE")):
+                     ("identity_role", "VIV_IDENTITY_ROLE"),
+                     # A DEVELOPMENT engine. The committed default is the
+                     # production URL, so a dev run must say so out loud in the
+                     # environment rather than by editing a tracked file --
+                     # which is also what stops a dev config from being
+                     # committed by accident.
+                     ("sfe_base_url", "VIV_SFE_BASE_URL"),
+                     ("sfe_cacert", "VIV_SFE_CACERT"),
+                     ("sfe_insecure", "VIV_SFE_INSECURE")):
         if os.environ.get(env):
             cfg[key] = os.environ[env]
     return cfg

@@ -16,9 +16,18 @@ import json
 
 import pytest
 
+from artifact_fixtures import LocalResolver, input_set, probe_spec
 from viv import executors as _ex
 from viv import kinds as _kinds
+from viv import preflight as _pf
 from viv import spec as _spec
+
+#: The pinned CA fixture's payload is a plain dict; an artifact-consuming kind's
+#: is not -- its slot's digest depends on bytes, so the fixture has to build the
+#: bytes to know what to pin. Fixed content, fixed digest, fixed result.
+_PROBE_ITEMS = [[0, 0, 1], [1, 1, 0], [1, 0, 1], [0, 1, 1]]
+_PROBE_OBJ, _PROBE_RAW, _PROBE_SLOT = input_set(_PROBE_ITEMS)
+_PROBE_PAYLOAD = {"failure_inputs": _PROBE_SLOT, "reduction": "popcount"}
 
 FIXTURES = [
     ("noop_v0", {}, 1, "2d7c17e7a3c9dfabed97aea8baaef615"),
@@ -38,7 +47,30 @@ FIXTURES = [
       "radius": 3, "n_cells": 21, "steps": 42, "n_ic": 16,
       "ic_density_set": [None], "success_criterion": "at_T"},
      20260908, "0902beb4702815f25760bf9766c6ea9d"),
+    # The loader's own kind. Its parity anchor is the executor's arithmetic
+    # over a FIXED input artifact: the digest below is the digest of those
+    # exact bytes, so a change to the canonical encoding, the interface shape
+    # or the fold all land here. Authorization is NOT what this pins -- that is
+    # the engine's answer and is tested against a real engine in
+    # tests/test_h0h5_slice.py.
+    ("artifact_probe_v1", _PROBE_PAYLOAD, 20260909,
+     "5661273cec71be885e831a8301e5036e"),
 ]
+
+
+def _hydrate_for(kind, payload):
+    """The frozen inputs an artifact-consuming kind needs, or None."""
+    k = _kinds.get(kind)
+    if not k.artifact_slots:
+        return None
+    slot = payload["failure_inputs"]
+    resolver = LocalResolver({slot["digest"]: (_PROBE_RAW, "w-src", "art-1")})
+    pf = _pf.Preflight(
+        resolver=resolver,
+        locators={slot["digest"]: {"source_world": "w-src",
+                                   "source_artifact": "art-1"}})
+    inputs, _receipt = pf.hydrate({"failure_inputs": slot})
+    return inputs
 
 
 def _spec_for(kind, payload, seed):
@@ -66,7 +98,8 @@ def test_0f_b_the_executor_reproduces_its_pinned_fixture(kind, payload, seed,
                                                          expected):
     spec = _spec_for(kind, payload, seed)
     _spec.validate(spec)
-    out = _ex.run(spec, seed=seed, state=_ex.new_state(kind))
+    out = _ex.run(spec, seed=seed, state=_ex.new_state(kind),
+                  inputs=_hydrate_for(kind, payload))
     assert _digest(out) == expected, (
         "%s changed for pinned inputs: %s" % (kind, json.dumps(out,
                                                                sort_keys=True)))
@@ -78,7 +111,8 @@ def test_0f_b_every_fixture_satisfies_the_declared_result_schema(kind, payload,
                                                                  expected):
     """Parity is only meaningful if the shape is the declared one."""
     spec = _spec_for(kind, payload, seed)
-    out = _ex.run(spec, seed=seed, state=_ex.new_state(kind))
+    out = _ex.run(spec, seed=seed, state=_ex.new_state(kind),
+                  inputs=_hydrate_for(kind, payload))
     meta = _kinds.get(kind).check_result(dict(out))
     assert meta["validated"] is True
 
@@ -88,8 +122,10 @@ def test_0f_b_re_execution_is_bit_identical(kind, payload, seed, expected):
     """Repeatability under tested conditions -- not a determinism proof, and
     not recorded as one (WP-X2 wording)."""
     spec = _spec_for(kind, payload, seed)
-    a = _ex.run(spec, seed=seed, state=_ex.new_state(kind))
-    b = _ex.run(spec, seed=seed, state=_ex.new_state(kind))
+    a = _ex.run(spec, seed=seed, state=_ex.new_state(kind),
+                inputs=_hydrate_for(kind, payload))
+    b = _ex.run(spec, seed=seed, state=_ex.new_state(kind),
+                inputs=_hydrate_for(kind, payload))
     assert _digest(a) == _digest(b) == expected
     assert a.get("reproducibility") == "BIT_DETERMINISTIC"
 

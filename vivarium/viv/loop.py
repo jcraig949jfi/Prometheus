@@ -140,10 +140,16 @@ class Vivarium:
             # ONE durable identity for the whole seat. worker_id still names
             # the PROCESS in the queue and in heartbeats; it is no longer a
             # separate tenant in SFE.
+            role = self.cfg.get("identity_role", _identity.ROLE_PRODUCTION)
             self._runner = SfeRunner(
                 base_url=self.cfg["sfe_base_url"], cafile=cacert,
-                token=_identity.token_for(self.cfg.get("identity_role",
-                                                       _identity.ROLE_PRODUCTION)),
+                token=_identity.token_for(role),
+                client_id=_identity.client_id_for(role),
+                # "0"/"false"/"" all mean NO. bool("0") is True, and a flag
+                # that disables certificate verification must not be armed by
+                # someone typing the word for off.
+                insecure=str(self.cfg.get("sfe_insecure", "")).strip().lower()
+                         in ("1", "true", "yes", "on"),
                 worker_id=self.worker_id, log=self.log,
                 lease_s=float(self.cfg.get("sfe_lease_s", 120.0)))
         return self._runner
@@ -262,6 +268,11 @@ class Vivarium:
                 "crossed_execution_boundary": p.crossed_boundary,
                 "world_id": p.world_id, "exp_id": p.sfe_experiment_id,
                 "work_id": p.work_id, "run_id": p.run_id, "anchor": p.anchor,
+                # A refusal is an OPERATIONAL receipt and it is kept: which
+                # rejection class fired, on which slot, over which digest. A
+                # boundary failure that leaves no document behind teaches
+                # nothing the second time it happens.
+                "load_receipt": p.load_receipt, "resources": p.resources,
                 "outcome": None, "error": str(exc)[:4000],
                 "note": "no outcome was measured; absence of a result is not "
                         "a result"}

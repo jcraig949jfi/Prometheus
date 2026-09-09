@@ -135,11 +135,17 @@ def new_state(kind_name: str):
     return None
 
 
-def run(spec: dict, *, seed: int = None, state=None) -> dict:
+def run(spec: dict, *, seed: int = None, state=None, inputs=None) -> dict:
     """Execute the spec's declared kind against its declared parameters.
 
     Takes the SPEC, not a queue row and not an engine payload: everything an
     executor is entitled to see is in the sealed spec by construction.
+
+    `inputs` is the frozen artifact hydration for a kind that declares slots
+    (C1). It is DATA -- read-only mappings and tuples produced by preflight
+    from bytes already verified against the sealed digest. No client, handle,
+    path or socket is in it, and a kind that declares no slot cannot be given
+    one: the argument is refused below rather than ignored.
 
     `seed` is the REPEAT's derived seed. It is passed rather than read from
     the spec because which seed this repeat gets is a declared derivation
@@ -160,6 +166,22 @@ def run(spec: dict, *, seed: int = None, state=None) -> dict:
             "experiment." % (kind_name, kind.owner))
     if seed is None:
         seed = spec["world"]["seed_root"]
+    # C1. Hydration and declaration must agree in BOTH directions. A kind with
+    # slots that arrives with nothing loaded would silently read a payload it
+    # was never given; a kind without slots that arrives WITH inputs is being
+    # handed a channel its contract never declared, and that is the shape of
+    # the defect this seat exists to prevent -- so it is refused, not dropped.
+    if kind.artifact_slots and not inputs:
+        raise ExecutorUnavailable(
+            "kind %r declares artifact slot(s) %s but was called with no "
+            "hydrated inputs. Preflight runs BEFORE execution; reaching here "
+            "without it means the loader was bypassed."
+            % (kind_name, sorted(kind.artifact_slots)))
+    if inputs and not kind.artifact_slots:
+        raise ExecutorUnavailable(
+            "kind %r declares no artifact slots but was handed inputs %s; an "
+            "undeclared input is an undeclared channel"
+            % (kind_name, sorted(inputs)))
     if kind_name == "noop_v0":
         out = _noop_v0(spec)
     elif kind_name == "evaluate_bitstring":
@@ -169,6 +191,10 @@ def run(spec: dict, *, seed: int = None, state=None) -> dict:
     elif kind_name == "ca_density_v0":
         from . import ca_density as _ca               # noqa: PLC0415
         out = _ca.run(_params("ca_density_v0", spec), seed=seed)
+    elif kind_name == "artifact_probe_v1":
+        from . import artifact_probe as _probe        # noqa: PLC0415
+        out = _probe.run(_params("artifact_probe_v1", spec), seed=seed,
+                         inputs=inputs)
     else:
         raise ExecutorUnavailable("no executor bound for kind %r"
                                   % (kind_name,))

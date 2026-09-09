@@ -68,6 +68,13 @@ class Kind:
     #: declares its own result, and guessing one would be a contract Vivarium
     #: is not entitled to write.
     result_schema: Dict[str, R] = field(default_factory=dict)
+    #: C1. Which of `params` are ARTIFACT SLOTS -- payload keys whose value is
+    #: {digest, artifact_type, schema_version, codec, expected_bytes,
+    #: interface_id} and which preflight resolves to bytes before execution.
+    #: Empty for every kind that existed before the loader, so their contracts
+    #: and their identities are untouched: this ADDS an inner exact-key check
+    #: to the new consuming kinds and relaxes nothing anywhere.
+    artifact_slots: FrozenSet[str] = frozenset()
 
     @property
     def retired(self) -> bool:
@@ -107,6 +114,13 @@ class Kind:
                 "work.payload for kind %r carries unknown parameter(s) %s; "
                 "the contract is exact, and an unread parameter in a hashed "
                 "spec is a channel, not a comment" % (self.kind, extra))
+        # C1: the same exactness, one level down. A slot whose keys are wrong,
+        # or whose digest/type/interface cannot be resolved by this build, is
+        # refused at ADMISSION -- "placeholders never enter a queue".
+        for name in sorted(self.artifact_slots):
+            if name in payload:
+                from . import artifacts as _artifacts        # noqa: PLC0415
+                reasons.extend(_artifacts.check_slot(name, payload[name]))
         return reasons
 
 
@@ -255,6 +269,53 @@ register(Kind(
         "n_cells": R("integer"),
         "steps": R("integer"),
         "witness_truncated": R("boolean"),
+    }))
+
+
+# ------------------------------------------------- the loader's own fixture
+register(Kind(
+    kind="artifact_probe_v1",
+    params=frozenset({"failure_inputs", "reduction"}),
+    artifact_slots=frozenset({"failure_inputs"}),
+    implemented=True,
+    owner="vivarium",
+    stateful=False,
+    note="AN INSTRUMENT, NOT AN EXPERIMENT. The first kind that consumes an "
+         "immutable artifact input, and it exists to make the loader path "
+         "observable end to end -- not to measure anything about Boolean "
+         "functions. Its arithmetic is a deterministic fold over the ORDERED "
+         "input rows the artifact carries, chosen because it changes when any "
+         "byte of the input changes and for no other reason; reading a "
+         "scientific meaning into `folded` would be reading one into a "
+         "checksum. H0's design says the same of its hand-built library "
+         "fixtures: they exercise the plumbing and are explicitly instrument "
+         "controls.\n"
+         "The `failure_inputs` slot is an artifact SLOT: the digest is sealed "
+         "in spec_hash, and the locator that finds a copy of those bytes is "
+         "not. `reduction` names which fold, so nothing here has a default.",
+    result_schema={
+        "folded": R("integer",
+                    note="deterministic fold over the ordered rows; an "
+                         "instrument reading, not a measurement of anything"),
+        "reduction": R("string", note="which fold, echoed"),
+        "items_consumed": R("integer",
+                            note="root items plus the whole closure's"),
+        "root_items": R("integer"),
+        "n_bits": R("integer"),
+        "items_digest": R("string",
+                          note="sha256 of the ordered rows AS CONSUMED, so a "
+                               "reordering is visible"),
+        "input_digest": R("string", note="the sealed slot digest, echoed"),
+        "consumed_closure_hash": R("string",
+                                   note="the closure in the order the KIND "
+                                        "consumed it; preflight resolves "
+                                        "depth-first, so this is not the "
+                                        "receipt's manifest hash"),
+        "closure_size": R("integer"),
+        "interface_id": R("string"),
+        "inputs_immutable": R("boolean",
+                              note="the kind tried to mutate its input and "
+                                   "was refused; measured, not asserted"),
     }))
 
 
