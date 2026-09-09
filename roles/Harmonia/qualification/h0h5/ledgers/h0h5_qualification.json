@@ -1,0 +1,225 @@
+{
+  "battery": [
+    {
+      "fixture": "F1_planted_leak",
+      "defect_present": true,
+      "detected": true,
+      "evidence": [
+        "solved_with_zero_oracle_calls n=40",
+        "arm leaky solve fraction 1.000 exceeds attainable ceiling 0.60"
+      ],
+      "pass": true
+    },
+    {
+      "fixture": "F2_wrong_artifact",
+      "defect_present": true,
+      "detected": true,
+      "evidence": [
+        "consumed digest sha256:2fd1b534a77a != sealed digest sha256:f6e794e04971",
+        "consumed 30 bytes, sealed declares 36"
+      ],
+      "pass": true
+    },
+    {
+      "fixture": "F3_invalid_witness",
+      "defect_present": true,
+      "detected": true,
+      "evidence": [
+        "witness 0b11 claimed to falsify but candidate agrees with spec (both 0) -- INVALID_WITNESS",
+        "claim of SOLVED with no witness and no exhaustive check"
+      ],
+      "pass": true
+    },
+    {
+      "fixture": "F4_swapped_labels",
+      "defect_present": true,
+      "detected": true,
+      "evidence": [
+        "positive control recovered with REVERSED sign: point -0.203 CI [-0.218, -0.188], declared sign +1",
+        "positive control failed to read as SUPPORTED (UNSUPPORTED)"
+      ],
+      "pass": true
+    },
+    {
+      "fixture": "F5_exhausted_run",
+      "defect_present": true,
+      "detected": true,
+      "evidence": [
+        "denominator 38 != assigned 50; 12 run(s) dropped",
+        "12 BUDGET_EXHAUSTED run(s) scored as failure and excluded; exhaustion is CENSORED and stays in the denominator",
+        "solve fraction 0.579 on the truncated denominator vs 0.440 on all assigned tasks (+13.9 pp inflation)"
+      ],
+      "pass": true
+    },
+    {
+      "fixture": "F4_control_unswapped",
+      "defect_present": false,
+      "detected": false,
+      "evidence": [],
+      "pass": true
+    }
+  ],
+  "f6_false_support_rate": {
+    "thr=0.00/additive_gain_S11_minus_S00": {
+      "false_support_rate": 0.013875,
+      "binomial_se": 0.0013077884182370633,
+      "mean_se_of_estimate": 0.0159688652813749,
+      "threshold_distance_in_se": 0.0,
+      "expected": 0.0125,
+      "vacuous": false
+    },
+    "thr=0.00/interaction_I": {
+      "false_support_rate": 0.012875,
+      "binomial_se": 0.0012604183023405364,
+      "mean_se_of_estimate": 0.022579850939577213,
+      "threshold_distance_in_se": 0.0,
+      "expected": 0.0125,
+      "vacuous": false
+    },
+    "thr=0.05/additive_gain_S11_minus_S00": {
+      "false_support_rate": 0.0,
+      "binomial_se": 3.5355339059327374e-07,
+      "mean_se_of_estimate": 0.0159688652813749,
+      "threshold_distance_in_se": 3.131092855941174,
+      "expected": null,
+      "vacuous": true
+    },
+    "thr=0.05/interaction_I": {
+      "false_support_rate": 0.0,
+      "binomial_se": 3.5355339059327374e-07,
+      "mean_se_of_estimate": 0.022579850939577213,
+      "threshold_distance_in_se": 2.2143635993788453,
+      "expected": null,
+      "vacuous": true
+    }
+  },
+  "se_ratio_interaction_over_main": {
+    "measured": 1.4612858374700421,
+    "predicted": 1.4142135623730951
+  },
+  "blocks_required": [
+    {
+      "block_sd": 0.05,
+      "true_effect": 0.0,
+      "blocks_main": 9,
+      "blocks_interaction": 14
+    },
+    {
+      "block_sd": 0.05,
+      "true_effect": 0.15,
+      "blocks_main": 6,
+      "blocks_interaction": 6
+    },
+    {
+      "block_sd": 0.1,
+      "true_effect": 0.0,
+      "blocks_main": 23,
+      "blocks_interaction": 43
+    },
+    {
+      "block_sd": 0.1,
+      "true_effect": 0.15,
+      "blocks_main": 9,
+      "blocks_interaction": 14
+    },
+    {
+      "block_sd": 0.15,
+      "true_effect": 0.0,
+      "blocks_main": 48,
+      "blocks_interaction": 93
+    },
+    {
+      "block_sd": 0.15,
+      "true_effect": 0.15,
+      "blocks_main": 14,
+      "blocks_interaction": 26
+    },
+    {
+      "block_sd": 0.2,
+      "true_effect": 0.0,
+      "blocks_main": 83,
+      "blocks_interaction": 161
+    },
+    {
+      "block_sd": 0.2,
+      "true_effect": 0.15,
+      "blocks_main": 23,
+      "blocks_interaction": 43
+    }
+  ],
+  "reference_plan": {
+    "digest": "sha256:c603fd091b79bd9ae10ea24dd8e1578280f6661cdd05f288e21a218198e71a41",
+    "checks": [
+      "unit_is_paired_seed_x_task_block",
+      "denominator_is_all_assigned",
+      "exclusion_and_retry_identical_across_arms",
+      "paired_contrasts",
+      "threshold_status_declared",
+      "pilot_confirmation_disjoint",
+      "multiplicity_handled",
+      "min_attainable_p_0.0000_le_alpha"
+    ]
+  },
+  "refusals": [
+    {
+      "case": "4 blocks",
+      "refused": true,
+      "reason": "INELIGIBLE by HA-1.6: 4 paired blocks give a minimum attainable two-sided p of 0.1250, above alpha 0.050. The gate cannot fire on any data. Resize or declare the lane descriptive."
+    },
+    {
+      "case": "2 primaries, multiplicity NONE",
+      "refused": true,
+      "reason": "2 primary contrasts declared with multiplicity NONE"
+    },
+    {
+      "case": "pilot/confirmation overlap",
+      "refused": true,
+      "reason": "pilot and confirmation task sets must be DISJOINT; overlap = 50"
+    },
+    {
+      "case": "unit = candidate",
+      "refused": true,
+      "reason": "unit_definition must name the paired (seed x task_block) unit; generations/mutations/candidates are never replicates"
+    },
+    {
+      "case": "denominator = completed only",
+      "refused": true,
+      "reason": "denominator_rule must be all_assigned_tasks"
+    }
+  ],
+  "h4_protocol": {
+    "version": "H4-ADAPTIVE-1.0.0",
+    "distinct_from_m_signal": {
+      "m_signal": "FROZEN corpus and FROZEN universe; both the directed and the matched random order committed before any outcome is revealed; endpoint is detector discrimination among regions on that frozen corpus. The policy does not change the universe while it runs.",
+      "h4": "The curriculum policy CHANGES THE TASK DISTRIBUTION while it runs -- that change IS the intervention. There is therefore no common universe during training, and no frozen candidate order to commit in advance.",
+      "consequence": "The two protocols cannot share an endpoint. H4 is not admitted into M-SIGNAL and M-SIGNAL's frozen-universe guarantees do not transfer to it."
+    },
+    "endpoint_surface": {
+      "primary": "frozen final suite, identical for every arm, labels never exposed to training",
+      "secondary": "historical suite, for retention/forgetting, never fed back",
+      "PROHIBITED": "training-task solve rate as an endpoint, in any arm. An adaptive arm generates its own tasks, so training solve rate is confounded by the arm's own task generation: an arm that proposes easier tasks scores higher while learning less. 'Training challenges becoming harder does not establish competence' -- this makes that mechanical."
+    },
+    "precommitted": [
+      "policy_id",
+      "policy_version",
+      "allowed_evidence",
+      "initial_state",
+      "seed_streams",
+      "budgets",
+      "tie_breaks",
+      "stopping_rule",
+      "censoring_rule"
+    ],
+    "evaluator": "fixed and independent of every arm; never updated during the campaign; its own version pinned and hashed",
+    "design": "2x2, fixed/adaptive curriculum x transfer off/on",
+    "reporting": "combined effect and interaction reported SEPARATELY, with simultaneous uncertainty across both; the interaction carries sqrt(2) times the main effect's SE by construction",
+    "denominator": "every ASSIGNED task in the frozen suite, including those never attempted and those censored by budget exhaustion",
+    "censoring": "budget exhaustion is CENSORED, not failure and not success; censored runs stay in the denominator and their count is reported beside the endpoint",
+    "void_conditions": [
+      "any arm evaluated on tasks it generated",
+      "evaluator updated mid-campaign",
+      "historical suite fed back into training without an explicit licence",
+      "confirmation opened before the plan hash was committed"
+    ]
+  }
+}
