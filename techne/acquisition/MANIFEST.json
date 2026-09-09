@@ -1,0 +1,180 @@
+{
+  "schema": "techne.acquisition.manifest/1",
+  "generated_utc": "2026-09-09",
+  "provenance": {
+    "source": "roles/Archaeon/prompts/2026-09-08_h0h5/DESIGN_H0_H5_v0.1.md section 7, table 'Tool acquisition, reproduction and integration', committed verbatim by Archaeon in 0a8198bd98307b3eb253d87918f4a4f8f9d2e1e4",
+    "NOT_THE_OPERATORS_MANIFEST": "prometheus-tool-acquisition-plan.json is NOT in this repository. The design says that file 'records official sources and observed source-head SHAs'. This file therefore carries NO operator-observed SHAs. Every revision below was resolved by this seat from the named official source at resolved_utc, and is an ACQUISITION CANDIDATE, not a qualified release and not the operator's pin. If the operator's JSON arrives and disagrees, the operator's pins win and this file is amended with both recorded.",
+    "design_deviation": "DEV-T1: manifest reconstructed from design prose instead of the absent packet JSON."
+  },
+  "budget_profiles_ref": "techne/acquisition/BUDGET_PROFILES.json",
+  "host_capacity_ref": "techne/acquisition/HOST_CAPACITY.json",
+  "entries": [
+    {
+      "id": "z3",
+      "kind": "python_package",
+      "distribution": "z3-solver",
+      "import_name": "z3",
+      "pinned_version": "5.0.0.0",
+      "env": "h0h5_tools",
+      "first_role": "H1/H0 bounded logical oracle / search option",
+      "integration_path": "pinned binding after exhaustive small-domain parity",
+      "named_consumer": "H1 Boolean substrate (Proteus) oracle cross-check; H0 instrument library construction",
+      "first_useful_check": "SAT / UNSAT / UNKNOWN handled distinctly, resource exhaustion distinct from UNKNOWN-by-incompleteness, and a returned counterexample independently validated outside the solver",
+      "official_source": "https://github.com/Z3Prover/z3",
+      "upstream_revision": {
+        "kind": "tag",
+        "ref": "z3-5.0.0",
+        "commit": "8e3402b215a810a4154eb183a7dfc4e853eb2f52",
+        "resolved_utc": "2026-09-09",
+        "resolver": "GitHub REST /repos/Z3Prover/z3/tags",
+        "note": "Recorded for provenance only. The QUALIFIED artifact is the PyPI wheel pinned by sha256 in the lock; no source build is performed on this host."
+      },
+      "license_claim": "UNRESOLVED_AT_MANIFEST_TIME",
+      "license_resolution_rule": "read License-Expression / License / Classifier from the downloaded wheel METADATA; the GitHub API returns NOASSERTION for this repository and is NOT used"
+    },
+    {
+      "id": "hypothesis",
+      "kind": "python_package",
+      "distribution": "hypothesis",
+      "import_name": "hypothesis",
+      "pinned_version": "6.165.10",
+      "env": "h0h5_tools",
+      "first_role": "adversarial contract testing and reduction",
+      "integration_path": "development / test dependency only; never a scientific-run dependency",
+      "named_consumer": "C1-C6 contract fixtures (Harmonia's qualification cycle) and the SFE boundary-failure tests",
+      "first_useful_check": "minimize a known defect, persist the explicit minimized fixture, and isolate the example database per scope",
+      "official_source": "https://hypothesis.readthedocs.io/",
+      "upstream_revision": {
+        "kind": "tag",
+        "ref": "v6.165.10",
+        "commit": "6384deef469a88c147dab205f093b2d16d652785",
+        "resolved_utc": "2026-09-09",
+        "resolver": "GitHub REST /repos/HypothesisWorks/hypothesis/tags",
+        "note": "Provenance only; qualified artifact is the PyPI wheel."
+      },
+      "license_claim": "UNRESOLVED_AT_MANIFEST_TIME",
+      "license_resolution_rule": "wheel METADATA; GitHub API returns NOASSERTION for this repository"
+    },
+    {
+      "id": "pyribs",
+      "kind": "python_package",
+      "distribution": "ribs",
+      "import_name": "ribs",
+      "pinned_version": "0.12.0",
+      "env": "h0h5_tools",
+      "first_role": "H3 archive comparator",
+      "integration_path": "direct archive insertion from a frozen stream; emitters and schedulers stay OFF in the retention experiment",
+      "named_consumer": "H3 retention-policy replay (Archaeon's H3 alpha): four retention policies replayed offline over one frozen candidate stream",
+      "first_useful_check": "the identical stream inserted directly into archives, no emitters or schedulers, known collision and tie outcomes, identical retained ids under the declared adapter",
+      "official_source": "https://docs.pyribs.org/",
+      "upstream_revision": {
+        "kind": "tag",
+        "ref": "v0.12.0",
+        "commit": "105cf16f27288c189dbf12c7bacdc40448ab1928",
+        "resolved_utc": "2026-09-09",
+        "resolver": "GitHub REST /repos/icaros-usc/pyribs/tags",
+        "note": "Provenance only; qualified artifact is the PyPI wheel. Already pinned at this version in techne/requirements-donors.txt for the Gen-0 donor set."
+      },
+      "license_claim": "UNRESOLVED_AT_MANIFEST_TIME",
+      "license_resolution_rule": "wheel METADATA (GitHub API reports MIT; that is a classifier, not the distributed notice)"
+    },
+    {
+      "id": "stitch",
+      "kind": "python_package",
+      "distribution": "stitch_core",
+      "import_name": "stitch_core",
+      "pinned_version": "0.1.29",
+      "env": "h0h5_tools",
+      "first_role": "H0/H2 library construction",
+      "integration_path": "source-only offline producer, then a typed library artifact; never a live scientific-run dependency until a bounded external-execution contract exists",
+      "named_consumer": "H0 instrument-library construction (2x2 Boolean factorial) -- the library that H0's cells are built with; H2 library reuse",
+      "first_useful_check": "the documented nuts-bolts fixture (compression cost 1919558 -> 316890, three abstractions) as an UPSTREAM CHECK, then semantics-preserving expansion of a learned abstraction verified against an independent evaluator",
+      "official_source": "https://stitch-bindings.readthedocs.io/en/latest/intro/tutorial.html",
+      "upstream_revision": {
+        "kind": "NONE_AVAILABLE",
+        "ref": null,
+        "commit": "350804b7b35807c78bd21c313785ae5152ae2985",
+        "resolved_utc": "2026-09-09",
+        "resolver": "GitHub REST /repos/mlb2251/stitch",
+        "note": "FINDING: mlb2251/stitch publishes exactly ONE tag (v0.1.0). There is NO upstream tag corresponding to stitch_core 0.1.29, so the commit above is the default-branch HEAD at resolved_utc -- a MOVING HEAD, which the design explicitly says is not a qualified release. The qualified artifact is therefore the PyPI wheel pinned by sha256 ALONE, and the source revision that produced it is NOT independently verifiable from upstream tags."
+      },
+      "license_claim": "UNRESOLVED_AT_MANIFEST_TIME",
+      "license_resolution_rule": "wheel METADATA; PyPI JSON reports license=null with NO license classifiers for this distribution, so a guess from the repository API classifier is explicitly refused and an unresolved result is recorded instead",
+      "fixtures": [
+        {
+          "id": "nuts_bolts_cogsci",
+          "purpose": "The documented upstream nuts-bolts example. Used as an UPSTREAM CHECK that stitch_core reproduces its own published compression numbers (1919558 -> 316890, three abstractions), NOT as a Prometheus utility result.",
+          "filename": "nuts-bolts.json",
+          "url": "https://raw.githubusercontent.com/mlb2251/stitch/350804b7b35807c78bd21c313785ae5152ae2985/data/cogsci/nuts-bolts.json",
+          "repo_blob_sha": "85f142ef8c53",
+          "repo_blob_sha_source": "GitHub contents API for data/cogsci/nuts-bolts.json at the pinned commit 350804b7b35807c78bd21c313785ae5152ae2985",
+          "declared_bytes_upstream": 62580,
+          "expected_sha256": "4e8ea30925b96736cb290f9f704167c4ca13e1a7da87eeaad2d5d0d0e29deb8d",
+          "expected_sha256_recorded_by": "first acquisition 2026-09-09 (receipt installation-stitch-20260909T214734Z); git blob id computed from the received bytes matched the upstream contents-API blob sha 85f142ef8c53 independently"
+        }
+      ]
+    },
+    {
+      "id": "dreamcoder",
+      "kind": "repository",
+      "distribution": null,
+      "import_name": null,
+      "pinned_version": null,
+      "env": "dreamcoder_isolated",
+      "first_role": "reference synthesis / library-learning arm",
+      "integration_path": "isolated reproduction environment; frozen-library producer first; offline only",
+      "named_consumer": "H0/H2 reference library-learning arm (comparison only). NOT a scientific-run dependency.",
+      "first_useful_check": "one named bounded domain smoke run in its own environment",
+      "official_source": "https://github.com/ellisk42/ec",
+      "upstream_revision": {
+        "kind": "branch_head",
+        "ref": "master",
+        "commit": "cb0e63f5c33cd2de360b791038b0f5272750270e",
+        "resolved_utc": "2026-09-09",
+        "resolver": "GitHub REST /repos/ellisk42/ec/commits/master",
+        "note": "master has not moved since 2022-03-16; last push 2023-07-01. No release tags. Immutable revision = this commit sha, pinned explicitly rather than by branch name. Submodules must be pinned at this revision."
+      },
+      "license_claim": "UNRESOLVED_AT_MANIFEST_TIME",
+      "license_resolution_rule": "read LICENSE / NOTICE files at the pinned revision from the acquired copy",
+      "absent_recipe_warning": "The README references docs/official_experiments. The design records it as ABSENT from the inspected docs listing. Do NOT claim that recipe was found, and do NOT substitute an invented benchmark number."
+    },
+    {
+      "id": "poet",
+      "kind": "repository",
+      "distribution": null,
+      "import_name": null,
+      "pinned_version": null,
+      "env": "poet_isolated",
+      "first_role": "H4 later reference arm",
+      "integration_path": "dedicated bounded external job; the cloud launcher is NEVER a default",
+      "named_consumer": "DEFERRED -- H4's adaptive protocol does not exist yet (Harmonia owns it, scheduled AFTER iteration 1). No consumer exists today, so acquisition is NOT performed.",
+      "first_useful_check": "pin the intended algorithm branch (original POET vs Enhanced POET) and environment, then compare the selected reference experiment",
+      "official_source": "https://github.com/uber-research/poet",
+      "upstream_revision": {
+        "kind": "branch_head",
+        "ref": "master",
+        "commit": "8669a17e6958f80cd547b2de61c51d4518c833d9",
+        "resolved_utc": "2026-09-09",
+        "resolver": "GitHub REST /repos/uber-research/poet/commits/master",
+        "note": "master unchanged since 2020-04-20. Recorded so a future H4 arm starts from a pin rather than a branch name."
+      },
+      "license_claim": "UNRESOLVED_AT_MANIFEST_TIME",
+      "license_resolution_rule": "read LICENSE / NOTICE files at the pinned revision from the acquired copy",
+      "acquisition_status": "NOT_ATTEMPTED_NO_CONSUMER"
+    },
+    {
+      "id": "native_libraries",
+      "kind": "in_repo",
+      "distribution": null,
+      "import_name": null,
+      "pinned_version": null,
+      "env": null,
+      "first_role": "H1/H2/H5 semantics (existing Proteus and Herakles libraries)",
+      "integration_path": "native pure-library kinds; no acquisition required",
+      "named_consumer": "H1 (Proteus 790fb4803), H2 ca_stream_v1 (Herakles 175b5da08), H5 eca_rule_eval_v1 (Herakles feca5e688)",
+      "first_useful_check": "independent hand-computed oracle and convention fixtures -- ALREADY DONE by the owning seats, not by this seat",
+      "official_source": "this repository",
+      "acquisition_status": "NOT_APPLICABLE_IN_REPO"
+    }
+  ]
+}

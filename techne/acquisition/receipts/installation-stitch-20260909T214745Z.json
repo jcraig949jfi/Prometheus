@@ -1,0 +1,187 @@
+{
+  "schema": "techne.acquisition.receipt/1",
+  "receipt_id": "installation-stitch-20260909T214745Z",
+  "stage": "INSTALLATION",
+  "does_not_establish": [
+    "FIRST_USEFUL_CHECK",
+    "PAPER_REPRODUCTION",
+    "ADAPTER_QUALIFICATION",
+    "LOCAL_SCIENTIFIC_BENEFIT"
+  ],
+  "entry_id": "stitch",
+  "tool": "stitch_core",
+  "design_version": "0.1",
+  "written_utc": "2026-09-09T21:47:45+00:00",
+  "seat": "Techne",
+  "repo": {
+    "commit": "311fc5da9a9d7e25055d044b76e936cef98353b0",
+    "branch": "techne/h0h5-tools-2026-09-09",
+    "dirty": true
+  },
+  "runner": {
+    "python": "3.12.10",
+    "executable": "H:\\Python312\\python.exe",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "tool_cache": "F:\\Prometheus\\vault\\techne_tools",
+    "tool_cache_source": "TECHNE_TOOL_CACHE env",
+    "tool_cache_note": "host-local and gitignored; only its HASHES are tracked"
+  },
+  "commands_run": [],
+  "observations": {
+    "artifact_selection": {
+      "reason": "compatible wheel, narrowest host tag",
+      "host_tag_count": 42,
+      "selected": {
+        "filename": "stitch_core-0.1.29-cp312-cp312-win_amd64.whl",
+        "packagetype": "bdist_wheel",
+        "size": 700713,
+        "sha256_pypi": "dd623f2821cfef2b3acc95d99d4c0ecae8eac81069b8cb5e299d45a81982fc2b",
+        "url": "https://files.pythonhosted.org/packages/c8/60/8ecce3339c20b8130a28f93dbc4c7f8881ba6d6ade8938d1ee4ded3a0032/stitch_core-0.1.29-cp312-cp312-win_amd64.whl",
+        "yanked": false,
+        "requires_python": ">=3.7",
+        "wheel_tags": [
+          "cp312-cp312-win_amd64"
+        ],
+        "host_compatible": true
+      },
+      "n_candidates": 12,
+      "rejected_for_platform": [
+        "stitch_core-0.1.29-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+        "stitch_core-0.1.29-cp311-cp311-macosx_10_12_x86_64.macosx_11_0_arm64.macosx_10_12_universal2.whl",
+        "stitch_core-0.1.29-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+        "stitch_core-0.1.29-cp312-cp312-macosx_10_12_x86_64.macosx_11_0_arm64.macosx_10_12_universal2.whl",
+        "stitch_core-0.1.29-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+        "stitch_core-0.1.29-cp313-cp313-macosx_10_12_x86_64.macosx_11_0_arm64.macosx_10_12_universal2.whl",
+        "stitch_core-0.1.29-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+        "stitch_core-0.1.29-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+        "stitch_core-0.1.29-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+        "stitch_core-0.1.29-pp311-pypy311_pp73-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+      ]
+    },
+    "download": {
+      "path": "F:\\Prometheus\\vault\\techne_tools\\downloads\\stitch_core-0.1.29-cp312-cp312-win_amd64.whl",
+      "bytes": 700713,
+      "sha256_local": "dd623f2821cfef2b3acc95d99d4c0ecae8eac81069b8cb5e299d45a81982fc2b",
+      "digest_matches_pypi": true,
+      "transferred": false,
+      "note": "already in cache, digest re-verified"
+    },
+    "license": {
+      "license_expression": null,
+      "license_field": null,
+      "classifiers": [],
+      "license_files": [],
+      "source": "wheel METADATA",
+      "status": "UNRESOLVED"
+    },
+    "license_rule_applied": "wheel METADATA; PyPI JSON reports license=null with NO license classifiers for this distribution, so a guess from the repository API classifier is explicitly refused and an unresolved result is recorded instead",
+    "requires_dist": [],
+    "isolated_env": {
+      "env_name": "h0h5_tools",
+      "root": "F:\\Prometheus\\vault\\techne_tools\\envs\\h0h5_tools",
+      "python": "F:\\Prometheus\\vault\\techne_tools\\envs\\h0h5_tools\\Scripts\\python.exe",
+      "created_now": false,
+      "python_version": "3.12.10",
+      "is_live_interpreter": false,
+      "pip_version": "pip 25.0.1 from F:\\Prometheus\\vault\\techne_tools\\envs\\h0h5_tools\\Lib\\site-packages\\pip (python 3.12)",
+      "pip_pinned": false,
+      "pip_note": "pip bootstrapped by ensurepip from the base interpreter's bundled wheel; its version is inherited, not pinned by this lock"
+    },
+    "resolution": {
+      "ok": true,
+      "n_resolved": 1,
+      "resolved": [
+        {
+          "name": "stitch_core",
+          "version": "0.1.29",
+          "url": "https://files.pythonhosted.org/packages/c8/60/8ecce3339c20b8130a28f93dbc4c7f8881ba6d6ade8938d1ee4ded3a0032/stitch_core-0.1.29-cp312-cp312-win_amd64.whl",
+          "sha256": "dd623f2821cfef2b3acc95d99d4c0ecae8eac81069b8cb5e299d45a81982fc2b",
+          "requested": true
+        }
+      ],
+      "unhashed": []
+    },
+    "lock": {
+      "path": "techne/acquisition/locks/stitch-cp312-win-amd64.lock.txt",
+      "sha256_of_lock": "2b5bd52a80923cfb165794ad4afabbb20007dee70870b45f3c0d419d0845b8fd"
+    },
+    "install": {
+      "lock": "C:\\Users\\jcrai\\AppData\\Local\\Temp\\claude\\f--Prometheus\\71419ff6-c905-417b-9e8a-6ffb3e2cebd4\\scratchpad\\techne\\techne\\acquisition\\locks\\stitch-cp312-win-amd64.lock.txt",
+      "returncode": 0,
+      "timed_out": false,
+      "wall_seconds": 0.797,
+      "stdout_tail": "Requirement already satisfied: stitch_core==0.1.29 in f:\\prometheus\\vault\\techne_tools\\envs\\h0h5_tools\\lib\\site-packages (from -r C:\\Users\\jcrai\\AppData\\Local\\Temp\\claude\\f--Prometheus\\71419ff6-c905-417b-9e8a-6ffb3e2cebd4\\scratchpad\\techne\\techne\\acquisition\\locks\\stitch-cp312-win-amd64.lock.txt (line 16)) (0.1.29)\n",
+      "stderr_tail": "\n[notice] A new release of pip is available: 25.0.1 -> 26.2.1\n[notice] To update, run: F:\\Prometheus\\vault\\techne_tools\\envs\\h0h5_tools\\Scripts\\python.exe -m pip install --upgrade pip\n"
+    },
+    "fixtures": [
+      {
+        "id": "nuts_bolts_cogsci",
+        "purpose": "The documented upstream nuts-bolts example. Used as an UPSTREAM CHECK that stitch_core reproduces its own published compression numbers (1919558 -> 316890, three abstractions), NOT as a Prometheus utility result.",
+        "url": "https://raw.githubusercontent.com/mlb2251/stitch/350804b7b35807c78bd21c313785ae5152ae2985/data/cogsci/nuts-bolts.json",
+        "filename": "nuts-bolts.json",
+        "repo_blob_sha": "85f142ef8c53",
+        "expected_sha256": "4e8ea30925b96736cb290f9f704167c4ca13e1a7da87eeaad2d5d0d0e29deb8d",
+        "path": "F:\\Prometheus\\vault\\techne_tools\\fixtures\\stitch\\nuts-bolts.json",
+        "transferred": false,
+        "bytes": 62580,
+        "sha256_observed": "4e8ea30925b96736cb290f9f704167c4ca13e1a7da87eeaad2d5d0d0e29deb8d",
+        "git_blob_sha1_computed": "85f142ef8c536463f8b55f2d0d7633d05efd03e7",
+        "verified": true,
+        "status": "VERIFIED",
+        "blob_id_matches_upstream": true
+      }
+    ],
+    "import_verification": {
+      "imported": true,
+      "module_file": "F:\\Prometheus\\vault\\techne_tools\\envs\\h0h5_tools\\Lib\\site-packages\\stitch_core\\__init__.py",
+      "dist_version": "0.1.29"
+    },
+    "version_match": true
+  },
+  "deviations": [],
+  "unrun_or_blocked": [],
+  "status": "INSTALLED_PINNED_AND_HASHED",
+  "manifest_entry": {
+    "id": "stitch",
+    "kind": "python_package",
+    "distribution": "stitch_core",
+    "pinned_version": "0.1.29",
+    "env": "h0h5_tools",
+    "named_consumer": "H0 instrument-library construction (2x2 Boolean factorial) -- the library that H0's cells are built with; H2 library reuse",
+    "integration_path": "source-only offline producer, then a typed library artifact; never a live scientific-run dependency until a bounded external-execution contract exists",
+    "official_source": "https://stitch-bindings.readthedocs.io/en/latest/intro/tutorial.html"
+  },
+  "budget_profile": {
+    "purpose": "resolve, download, hash and import-check a Python distribution. The default for every python_package entry.",
+    "network": "ALLOWED -- this is the explicit acquisition stage",
+    "max_wall_seconds": 900,
+    "max_download_bytes": 536870912,
+    "max_disk_bytes": 2147483648,
+    "max_rss_bytes": 2147483648,
+    "max_processes": 4,
+    "rationale": "512 MiB covers the largest named wheel by ~30x (z3_solver win_amd64 is 16.9 MiB) plus a full transitive closure. 15 minutes covers a cold resolve on a slow link. 2 GiB RSS is 15 percent of available RAM, so two light probes can run beside each other and beside the engine.",
+    "name": "light_probe"
+  },
+  "resource_receipt": {
+    "profile": "light_probe",
+    "network_policy": "ALLOWED -- this is the explicit acquisition stage",
+    "wall_seconds": 2.312,
+    "wall_ceiling": 900,
+    "downloaded_bytes": 13745,
+    "download_ceiling": 536870912,
+    "cache_bytes_before": 534488393,
+    "cache_bytes_after": 0,
+    "cache_delta_bytes": -534488393,
+    "peak_rss_bytes_os_counter": 35463168,
+    "peak_rss_bytes_sampled": 34979840,
+    "rss_method": "GetProcessMemoryInfo",
+    "rss_ceiling": 2147483648,
+    "rss_samples": 9,
+    "rss_ceiling_exceeded_during_sampling": false,
+    "rss_enforcement": "NOT ENFORCED -- no job object / cgroup cap. peak_rss_bytes_os_counter is the OS peak-working-set counter for this process and IS reliable; rss_ceiling_exceeded_during_sampling is sampled and can miss a spike. Neither stops a step.",
+    "rss_excludes_children": "This is THIS process only. pip, git and venv run as children and their RSS is NOT included.",
+    "children_spawned": 5,
+    "process_cap": 4,
+    "aborted_on": null
+  }
+}
