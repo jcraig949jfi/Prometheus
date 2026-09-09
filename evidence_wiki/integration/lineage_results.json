@@ -1,27 +1,29 @@
 {
- "ran_at": "2026-09-05T07:00:01",
- "n_scored": 15,
- "n_pass": 15,
- "skipped": [],
+ "ran_at": "2026-09-09T03:06:44",
+ "n_scored": 14,
+ "n_pass": 14,
+ "skipped": [
+  "P_peer_engine_anchor_not_verified"
+ ],
  "all_pass": true,
  "gates": [
   {
    "gate": "L0_local_run",
    "pass": true,
    "skipped": false,
-   "detail": "engine=eng_8a37a5d305969034d488c43e session=ses_56aa74983297d10e93d78add affinity=STRICT"
+   "detail": "engine=eng_8a37a5d305969034d488c43e session=ses_95016db56c15b23b3a2c5075 affinity=STRICT"
   },
   {
    "gate": "A_correct_lineage_verifies",
    "pass": true,
    "skipped": false,
-   "detail": "write=200 stored_engine=eng_8a37a5d305969034d488c43e stored_session=ses_56aa74983297d10e93d78add affinity=STRICT"
+   "detail": "write=200 stored_engine=eng_8a37a5d305969034d488c43e stored_session=ses_95016db56c15b23b3a2c5075 affinity=STRICT"
   },
   {
    "gate": "F_random_session_lineage_refused",
    "pass": true,
    "skipped": false,
-   "detail": "HTTP 409 cross_session_splice: world wld_8e9a6d3c73d2aaa8ced0d515 on engine eng_8a37a5d305969034d488c43e is already bound to session ses_56aa74983297"
+   "detail": "HTTP 409 cross_session_splice: world wld_ccfbf4d0939c89ab8a7b8ceb on engine eng_8a37a5d305969034d488c43e is already bound to session ses_95016db56c15"
   },
   {
    "gate": "F2_unverifiable_fingerprint_stored_not_promoted",
@@ -75,7 +77,7 @@
    "gate": "SB_split_brain_fork_refused",
    "pass": true,
    "skipped": false,
-   "detail": "HTTP 409 split_brain_ledger_fork: engine eng_8a37a5d305969034d488c43e already recorded a DIFFERENT entry_hash at event_seq 32706 (stored sha256:db4c77b4a2e329c"
+   "detail": "HTTP 409 split_brain_ledger_fork: engine eng_8a37a5d305969034d488c43e already recorded a DIFFERENT entry_hash at event_seq 35635 (stored sha256:1ff1857ae635b47"
   },
   {
    "gate": "SB2_fork_event_recorded",
@@ -87,13 +89,13 @@
    "gate": "B_wrong_session_refused",
    "pass": true,
    "skipped": false,
-   "detail": "HTTP 409 splice_refused=True engine_binds_session=None cross_session_splice: world wld_8e9a6d3c73d2aaa8ced0d515 on engine eng_8a37a5d305969034d488c43e is already bou"
+   "detail": "HTTP 409 splice_refused=True engine_binds_session=None cross_session_splice: world wld_ccfbf4d0939c89ab8a7b8ceb on engine eng_8a37a5d305969034d488c43e is already bou"
   },
   {
    "gate": "P_peer_engine_anchor_not_verified",
-   "pass": true,
-   "skipped": false,
-   "detail": "anchor minted on peer engine eng_906356f7fb1d.. verified by local engine -> verified=False binds_engine_instance=False event_exists=False"
+   "pass": false,
+   "skipped": true,
+   "detail": "no --peer-sfe-url given"
   }
  ],
  "engine": "eng_8a37a5d305969034d488c43e",

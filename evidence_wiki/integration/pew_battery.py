@@ -375,8 +375,13 @@ def main():
 
     # E12 ------------------- reconstruct world / player / run / outcome
     rq = c.get("fossil/encounters", run_id=real["run_id"])
-    rec = rq.json()["encounters"][0] if rq.status_code == 200 and \
-        rq.json()["n"] else {}
+    # Select the row THIS battery wrote. Other producers -- Archaeon now writes
+    # prod encounters -- legitimately record their own encounter against the
+    # same SFE run, so run_id alone no longer identifies a single row, and
+    # taking encounters[0] silently graded someone else's record.
+    rows = rq.json().get("encounters", []) if rq.status_code == 200 else []
+    rec = next((r for r in rows
+                if r.get("encounter_id") == real["encounter_id"]), {})
     have_all = all(rec.get(f) for f in ("world_id", "players", "run_id",
                                         "outcome", "sfe_entry_hash"))
     gate("E12_real_run_reconstructable", have_all,
