@@ -200,6 +200,11 @@ class RunResult:
     load_receipt: dict = field(default_factory=dict)
     #: C4's resource vector, every entry carrying its own enforcement class.
     resources: dict = field(default_factory=dict)
+    #: The queue row's experiment_id: one row is at most one execution attempt
+    #: (a stranded row is released to `failed`, never re-run), so this is an
+    #: attempt id and not merely a row id. It is the key producer and executor
+    #: receipts reconcile on.
+    attempt_id: Optional[str] = None
 
 
 class ExecutionFailure(RuntimeError):
@@ -304,6 +309,12 @@ class SfeRunner:
                 failure_class="EXECUTOR_NOT_IMPLEMENTED")
 
         out = RunResult(spec_hash_hint=sealed)
+        # THE RECONCILIATION KEY. The queue row's experiment_id, which the
+        # PRODUCER already holds (enqueue returned it) and the executor holds
+        # now. Neither seat constructs it, so neither can construct it
+        # differently. Archaeon's producer receipts match executor vectors on
+        # exactly this (archaeon/producer/costs.py::reconcile).
+        out.attempt_id = request.experiment_id
         meter = _res.Meter(label=sealed).start()
         c = self.c
         sid = self.session("vivarium-%s" % self.worker_id)
@@ -344,7 +355,9 @@ class SfeRunner:
             except _artifacts.PreflightRejected as exc:
                 out.load_receipt = exc.as_receipt()
                 out.resources = meter.vector(
-                    artifact_bytes_limit=self.limits.total_bytes)
+                    artifact_bytes_limit=self.limits.total_bytes,
+                    attempt_id=out.attempt_id,
+                    stage=_res.STAGE_RETRIEVAL)
                 raise ExecutionFailure(
                     str(exc), partial=out,
                     failure_class="PREFLIGHT_REJECTED") from exc
@@ -353,7 +366,9 @@ class SfeRunner:
                                     "rejection_class": "BUDGET_EXHAUSTED",
                                     "message": str(exc), "detail": exc.detail}
                 out.resources = meter.vector(
-                    artifact_bytes_limit=self.limits.total_bytes)
+                    artifact_bytes_limit=self.limits.total_bytes,
+                    attempt_id=out.attempt_id,
+                    stage=_res.STAGE_RETRIEVAL)
                 # A DISTINCT status. "We could not afford to look" is not a
                 # finding about the experiment.
                 raise ExecutionFailure(
@@ -553,10 +568,23 @@ class SfeRunner:
         # the dishonest alternative.
         if meter is not None:
             meter.count("observations_written", len(repeats))
+            # The retrieval stage is broken out as a SUBSET, from numbers the
+            # load receipt already measured -- never re-counted into the
+            # parent, which is C4's one-billing-owner rule applied to my own
+            # two stages before it is applied across seats.
+            retrieval = None
+            if out.load_receipt.get("loaded"):
+                retrieval = {
+                    "artifact_bytes": out.load_receipt["bytes_loaded"],
+                    "artifact_fetches": out.load_receipt["engine_fetches"],
+                    "wall_seconds": out.load_receipt["wall_seconds"],
+                    "resolve_seconds": out.load_receipt["resolve_seconds"]}
             out.resources = meter.vector(
                 artifact_bytes_limit=(self.limits.total_bytes
                                       if out.load_receipt else None),
-                wall_limit=(plan.get("budget") or {}).get("max_seconds"))
+                wall_limit=(plan.get("budget") or {}).get("max_seconds"),
+                attempt_id=out.attempt_id, stage=_res.STAGE_EXECUTION,
+                retrieval=retrieval)
         result = {"repeats": repeats, "repeat_plan":
                   {k: plan[k] for k in ("count", "order", "seed_derivation",
                                         "state", "degenerate_by_construction")},
@@ -624,6 +652,7 @@ class SfeRunner:
             "world_id": wid, "world_name": _spec.world_name(sealed),
             "exp_id": exp_id, "work_id": work_id, "obs_id": obs_id,
             "run_id": out.run_id, "hyp_id": hyp_id, "pred_id": pred_id,
+            "attempt_id": out.attempt_id,
             "outcome": outcome, "outcome_rule_provenance": provenance,
             "aggregate": provenance.get("aggregate"),
             "per_repeat_outcomes": provenance.get("per_repeat_outcomes"),

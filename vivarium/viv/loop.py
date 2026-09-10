@@ -265,6 +265,7 @@ class Vivarium:
     def collect_failure(exc: ExecutionFailure) -> dict:
         p = exc.partial
         return {"failure_class": exc.failure_class,
+                "attempt_id": p.attempt_id,
                 "crossed_execution_boundary": p.crossed_boundary,
                 "world_id": p.world_id, "exp_id": p.sfe_experiment_id,
                 "work_id": p.work_id, "run_id": p.run_id, "anchor": p.anchor,

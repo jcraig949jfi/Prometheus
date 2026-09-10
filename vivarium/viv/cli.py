@@ -234,7 +234,7 @@ def cmd_limits(args, _conn) -> int:
     print()
     peak = vector["peak_memory_bytes"]
     print("  peak_memory_bytes: %s (%s)"
-          % (peak["enforcement"], peak["method"]))
+          % (peak["enforcement_class"], peak["method"]))
     print("  Additive quantities (safe to sum across attempts): %s"
           % ", ".join(sorted(_res.ADDITIVE)))
     print("  Everything else must NOT be summed -- peak memory and overlapping")

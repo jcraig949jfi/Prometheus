@@ -216,8 +216,8 @@ def test_the_resource_vector_says_what_was_enforceable(
     summary = _q.get(conn, eid, schema=schema)["result_summary"]
     v = summary["resources"]
     assert v["artifact_bytes"]["quantity"] == len(raw)
-    assert v["artifact_bytes"]["enforcement"] == "enforceable"
-    assert v["gpu_seconds"]["enforcement"] == "unavailable"
+    assert v["artifact_bytes"]["enforcement_class"] == "enforceable"
+    assert v["gpu_seconds"]["enforcement_class"] == "unavailable"
     assert v["gpu_seconds"]["quantity"] is None, "unavailable is not zero"
     enf = summary["enforcement"]
     assert "artifact_bytes" in enf["enforceable"]
@@ -743,3 +743,124 @@ def test_republishing_the_same_run_is_idempotent(conn, schema, engine,
     # The fossil carries the artifact evidence by REFERENCE, not by copy.
     used = second["encounter"]["body"]
     assert used["encounter_id"] == enc
+
+
+# ===========================================================================
+# RECONCILIATION -- against Archaeon's real code, not my idea of it
+# ===========================================================================
+
+def _archaeon_costs():
+    """Import the producer's cost module from the repo, or skip.
+
+    Imported, not reimplemented. A reconciliation test written against my own
+    notion of the counterpart's shape proves that my notion is self-consistent
+    and nothing else -- which is precisely the failure "match on the first
+    try" is meant to avoid.
+    """
+    import importlib.util
+    path = REPO / "archaeon" / "producer" / "costs.py"
+    if not path.exists():
+        pytest.skip("archaeon/producer/costs.py is not on this checkout")
+    import sys as _sys
+    spec = importlib.util.spec_from_file_location("archaeon_costs", path)
+    mod = importlib.util.module_from_spec(spec)
+    # Registered BEFORE exec: @dataclass resolves annotations through
+    # sys.modules[cls.__module__], and an unregistered module makes every
+    # dataclass in the file raise on definition.
+    _sys.modules["archaeon_costs"] = mod
+    spec.loader.exec_module(mod)
+    return mod
+
+
+def test_the_executor_vector_reconciles_with_a_producer_receipt(
+        conn, schema, engine, producer):
+    """(attempt_id, stage) is the key, and it MATCHES.
+
+    The producer's attempt id is the queue row's experiment_id, which it holds
+    because `enqueue` returned it. The executor's is the same string, because
+    it arrived on the request. Neither seat constructs it, so neither can
+    construct it differently -- which is the only reason this is a key and not
+    a convention two seats have to remember.
+    """
+    costs = _archaeon_costs()
+    report, eid, _slot, raw, _aid = _slice(conn, schema, engine, producer)
+    assert report.outcome == EXECUTED
+
+    vector = _q.get(conn, eid, schema=schema)["result_summary"]["resources"]
+    assert vector["attempt_id"] == str(eid)
+    assert vector["stage"] == "execution"
+
+    # A producer receipt for the SAME attempt, built with their own code.
+    with costs.Meter() as m:
+        pass
+    producer_event = costs.CostEvent(
+        stage="generation", attempt_id=str(eid),
+        resources=m.resources([costs.Resource(
+            "output_bytes", float(len(raw)), "bytes",
+            "len(canonical bytes)", "measured")]),
+        output_refs=[_a.digest_of(raw)])
+
+    out = costs.reconcile([producer_event], [vector])
+    assert out["matched"] == [str(eid)], out
+    assert out["producer_only"] == []
+    assert out["executor_only"] == []
+
+
+def test_a_refused_attempt_still_carries_the_reconciliation_key(
+        conn, schema, engine, producer):
+    """A refusal costs real resources and belongs in the ledger. If only
+    successful attempts carried an attempt id, the producer's accounting would
+    silently exclude exactly the runs that failed -- and "assigned" would stop
+    matching "completed", which is the denominator error C6 spends a paragraph
+    on."""
+    costs = _archaeon_costs()
+    _obj, raw, slot = input_set(ITEMS)
+    _publish(engine, producer, raw)
+    eid = _enqueue(conn, schema, probe_spec(slot), {slot["digest"]: {
+        "source_world": producer, "source_artifact": "art_does_not_exist"}})
+    report = _viv(engine, schema).tick(conn)
+    conn.commit()
+    assert report.outcome == FAILED
+
+    summary = _q.get(conn, eid, schema=schema)["result_summary"]
+    assert summary["attempt_id"] == str(eid)
+    vector = summary["resources"]
+    assert vector["attempt_id"] == str(eid)
+    assert vector["stage"] == "retrieval", (
+        "a preflight refusal is a RETRIEVAL cost; the execution stage never "
+        "happened and must not be claimed")
+    assert costs.reconcile([], [vector])["executor_only"] == [str(eid)]
+
+
+def test_the_retrieval_stage_is_a_subset_and_says_so(
+        conn, schema, engine, producer):
+    """C4: a cost event has one billing owner, and a roll-up references its
+    children rather than billing them again. The same rule inside one attempt:
+    the retrieval numbers are a SUBSET of the execution vector, flagged as
+    such, so nobody adds a stage to its own parent."""
+    report, eid, _slot, raw, _aid = _slice(conn, schema, engine, producer)
+    assert report.outcome == EXECUTED
+    vector = _q.get(conn, eid, schema=schema)["result_summary"]["resources"]
+    retrieval = vector["stages"]["retrieval"]
+    assert retrieval["subset_of"] == "execution"
+    assert retrieval["artifact_bytes"] == len(raw)
+    assert vector["artifact_bytes"]["quantity"] == len(raw), (
+        "the parent already counts these bytes; the stage breakdown must not "
+        "be added to it")
+
+
+def test_the_two_seats_agree_on_units_and_the_enforcement_field(
+        conn, schema, engine, producer):
+    """A unit column that disagrees is worse than one that is missing, because
+    it looks comparable. Mine said "B" for bytes; theirs says "bytes"."""
+    costs = _archaeon_costs()
+    from viv import resources as _r
+    for name, unit in sorted(_r.UNITS.items()):
+        if name in costs.UNITS:
+            assert costs.UNITS[name] == unit, name
+    assert set(_r.CLASSES) == set(costs.ENFORCEMENT)
+    assert _r.STAGE_RETRIEVAL in costs.STAGES
+    assert _r.STAGE_EXECUTION in costs.STAGES
+    # And the field name a reader would reach for is the same one.
+    v = _r.Meter().start().vector(attempt_id="x")
+    assert "enforcement_class" in v["cpu_seconds"]

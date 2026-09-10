@@ -616,7 +616,7 @@ def test_the_address_book_is_frozen_after_admission(conn, schema):
 def test_unavailable_is_never_reported_as_zero():
     from viv import resources as _r
     v = _r.Meter().start().vector()
-    assert v["gpu_seconds"]["enforcement"] == _r.UNAVAILABLE
+    assert v["gpu_seconds"]["enforcement_class"] == _r.UNAVAILABLE
     assert v["gpu_seconds"]["quantity"] is None
 
 
@@ -635,7 +635,7 @@ def test_the_enforcement_summary_separates_enforceable_from_measured():
 def test_a_limitless_run_reports_wall_seconds_as_measured_not_enforceable():
     from viv import resources as _r
     v = _r.Meter().start().vector()
-    assert v["wall_seconds"]["enforcement"] == _r.MEASURED
+    assert v["wall_seconds"]["enforcement_class"] == _r.MEASURED
 
 
 def test_peak_memory_is_marked_never_additive_and_bytes_are():
@@ -695,10 +695,10 @@ def test_peak_memory_is_measured_where_the_host_keeps_a_peak_counter():
     v = _r.Meter().start().vector()
     peak = v["peak_memory_bytes"]
     if _os.name == "nt":
-        assert peak["enforcement"] == _r.MEASURED, peak["method"]
+        assert peak["enforcement_class"] == _r.MEASURED, peak["method"]
         assert peak["quantity"] > 0
         assert peak["scope"] == "process"
     else:
-        assert peak["enforcement"] in (_r.MEASURED, _r.UNAVAILABLE)
-        assert (peak["quantity"] is None) == (peak["enforcement"]
+        assert peak["enforcement_class"] in (_r.MEASURED, _r.UNAVAILABLE)
+        assert (peak["quantity"] is None) == (peak["enforcement_class"]
                                               == _r.UNAVAILABLE)

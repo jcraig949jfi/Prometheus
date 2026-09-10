@@ -135,6 +135,22 @@ so the profile in the code and the profile in a document cannot drift.
     measured      cpu_seconds, peak_memory_bytes, artifact_fetches, items_loaded
     unavailable   gpu_seconds        (NOT zero)
 
+The vector carries `attempt_id` and `stage` at the top level, and every entry
+carries `enforcement_class`, a unit from a shared table, and whether it is
+additive. Those names are Archaeon's (`archaeon/producer/costs.py`), adopted
+rather than invented: reconciliation is by `(attempt_id, stage)` and a unit
+column that disagrees is worse than one that is missing, because it looks
+comparable. The attempt id is the QUEUE ROW's `experiment_id` — the one
+identifier the producer holds before execution and the executor holds after,
+which neither seat constructs and so neither can construct differently. One row
+is at most one attempt: a stranded row is released to `failed` and never
+re-run, so a retry is a new row with a new attempt id.
+
+A preflight refusal reports `stage: "retrieval"`, because the execution stage
+did not happen and must not be claimed; it still carries the attempt id, since
+an accounting that dropped failed attempts would stop matching its own
+denominator.
+
 `artifact_bytes` earns *enforceable* because it is debited on the execution
 world before each fetch and the engine blocks; `wall_seconds` because the repeat
 budget is checked before each repeat — it cannot interrupt one already running,

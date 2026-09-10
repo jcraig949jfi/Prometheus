@@ -42,10 +42,13 @@ def _execution_inputs(run) -> dict:
     elif receipt.get("rejected"):
         out["preflight_rejection_class"] = receipt.get("rejection_class")
     vector = getattr(run, "resources", None) or {}
+    out["attempt_id"] = vector.get("attempt_id")
+    out["stage"] = vector.get("stage")
     for name in ("wall_seconds", "cpu_seconds", "artifact_bytes"):
         if name in vector:
             out[name] = vector[name]["quantity"]
-            out[name + "_enforcement"] = vector[name]["enforcement"]
+            out[name + "_enforcement_class"] = \
+                vector[name]["enforcement_class"]
     return out
 
 

@@ -53,18 +53,34 @@ ADDITIVE = frozenset({"artifact_bytes", "artifact_fetches", "items_loaded",
                       "cpu_seconds", "wall_seconds", "sfe_calls",
                       "observations_written"})
 
+#: Stages, from archaeon/producer/costs.py. RECONCILIATION IS BY (attempt_id,
+#: stage), so the words have to be the same words. `retrieval` is preflight --
+#: resolving and verifying the artifacts; `execution` is the kind running.
+STAGE_RETRIEVAL = "retrieval"
+STAGE_EXECUTION = "execution"
+
+#: Units, also theirs (archaeon.costs.UNITS). Mine said "B" for bytes, which
+#: is not wrong and is not the same string -- and a unit column that disagrees
+#: is worse than one that is missing, because it looks comparable.
+UNITS = {"artifact_bytes": "bytes", "peak_memory_bytes": "bytes",
+         "retained_bytes": "bytes", "output_bytes": "bytes",
+         "wall_seconds": "s", "cpu_seconds": "s", "gpu_seconds": "s",
+         "artifact_fetches": "count", "items_loaded": "count",
+         "sfe_calls": "count", "observations_written": "count"}
+
 
 @dataclass(frozen=True)
 class Resource:
     quantity: Any
     unit: str
     method: str
-    enforcement: str
+    enforcement_class: str
     scope: str = "attempt"
 
     def as_dict(self) -> dict:
         return {"quantity": self.quantity, "unit": self.unit,
-                "method": self.method, "enforcement": self.enforcement,
+                "method": self.method,
+                "enforcement_class": self.enforcement_class,
                 "scope": self.scope, "additive": False}
 
 
@@ -152,33 +168,52 @@ class Meter:
 
     def vector(self, *, artifact_bytes_limit: Optional[int] = None,
                wall_limit: Optional[float] = None,
+               attempt_id: Optional[str] = None,
+               stage: str = STAGE_EXECUTION,
+               retrieval: Optional[dict] = None,
                extra: Optional[Dict[str, Resource]] = None) -> dict:
+        """The vector for one attempt.
+
+        `attempt_id` and `stage` are the RECONCILIATION KEY. Archaeon's
+        producer receipts match executor vectors on `v.get("attempt_id")` and
+        report by stage (archaeon/producer/costs.py::reconcile), so both live
+        at the top level under exactly those names. The attempt id is the
+        QUEUE ROW's experiment_id -- the one identifier the producer holds
+        before execution and the executor holds after it, and the only one
+        neither seat has to construct.
+
+        One queue row is at most one execution attempt: a stranded row is
+        released to `failed` and never re-run, so a retry is a NEW row with a
+        NEW attempt id. That is what makes the key a key.
+        """
         wall = time.perf_counter() - self._t0
         cpu = time.process_time() - self._c0
         peak, peak_method = _peak_rss()
 
         v: Dict[str, Resource] = {
             "wall_seconds": Resource(
-                round(wall, 6), "s", "perf_counter around the attempt",
+                round(wall, 6), UNITS["wall_seconds"],
+                "perf_counter around the attempt",
                 ENFORCEABLE if wall_limit is not None else MEASURED),
             "cpu_seconds": Resource(
-                round(cpu, 6), "s",
+                round(cpu, 6), UNITS["cpu_seconds"],
                 "process_time delta (PROCESS-scoped, one attempt at a time)",
                 MEASURED),
             "gpu_seconds": Resource(
-                None, "s", "no GPU accounting exists on this host",
-                UNAVAILABLE),
+                None, UNITS["gpu_seconds"],
+                "no GPU accounting exists on this host", UNAVAILABLE),
         }
         if peak is None:
             v["peak_memory_bytes"] = Resource(
-                None, "B", peak_method, UNAVAILABLE)
+                None, UNITS["peak_memory_bytes"], peak_method, UNAVAILABLE)
         else:
             v["peak_memory_bytes"] = Resource(
-                peak, "B", peak_method + " (PROCESS peak, never summed)",
+                peak, UNITS["peak_memory_bytes"],
+                peak_method + " (PROCESS peak, never summed)",
                 MEASURED, scope="process")
         for name, n in sorted(self.counters.items()):
             v[name] = Resource(
-                n, _UNITS.get(name, "count"), "counted in the loader/runner",
+                n, UNITS.get(name, "count"), "counted in the loader/runner",
                 ENFORCEABLE if (name == "artifact_bytes"
                                 and artifact_bytes_limit is not None)
                 else MEASURED)
@@ -190,6 +225,14 @@ class Meter:
             d = r.as_dict()
             d["additive"] = name in ADDITIVE
             out[name] = d
+        out["attempt_id"] = attempt_id
+        out["stage"] = stage
+        if retrieval is not None:
+            # The retrieval stage, broken out so a producer can reconcile at
+            # stage granularity. It is a SUBSET of the numbers above, not an
+            # addition to them -- double-counting a stage into its own parent
+            # is exactly what C4's one-billing-owner rule forbids.
+            out["stages"] = {STAGE_RETRIEVAL: dict(retrieval, subset_of=stage)}
         out["_limits"] = {
             "artifact_bytes": artifact_bytes_limit,
             "wall_seconds": wall_limit,
@@ -200,17 +243,17 @@ class Meter:
         return out
 
 
-_UNITS = {"artifact_bytes": "B", "artifact_fetches": "count",
-          "items_loaded": "count", "sfe_calls": "count",
-          "observations_written": "count"}
-
-
 def enforcement_summary(vector: dict) -> dict:
     """Which limits were ENFORCEABLE and which only MEASURED -- deliverable 5,
-    read off the vector rather than declared beside it."""
+    read off the vector rather than declared beside it.
+
+    Skips anything that is not a resource entry by SHAPE rather than by name:
+    the vector now also carries `attempt_id`, `stage` and `stages`, and a
+    name-prefix rule would have to be extended every time one is added.
+    """
     out = {c: [] for c in CLASSES}
     for name, r in sorted(vector.items()):
-        if name.startswith("_"):
+        if not isinstance(r, dict) or "enforcement_class" not in r:
             continue
-        out[r["enforcement"]].append(name)
+        out[r["enforcement_class"]].append(name)
     return out
