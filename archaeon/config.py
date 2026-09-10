@@ -226,6 +226,12 @@ class DetectorConfig:
     # pooled_within is the live default from the next tick; v0 remains
     # selectable for side-by-side readouts.
     d3_denominator: str = "pooled_within"     # concatenated (d3.v0) | pooled_within (d3.v1)
+    # Harmonia 2026-09-10 (a1d0ed9c8): both live UPPER fires were TREND artifacts --
+    # rows within a region were a climbing trajectory, not exchangeable draws. v1
+    # gains a REPORTED diagnostic (serial r of metric against committed order,
+    # trend fraction r^2, label EXCHANGEABILITY_SUSPECT). Detrending the statistic
+    # would be d3.v2 and is not admitted.
+    d3_exchangeability_abs_r: float = 0.5       # |r| at or above this labels the signal SUSPECT
 
     # ---- D4 PLAYER_ORDER_REVERSAL ---------------------------------------
     # Same two-part requirement as D2, for the same reason: the v0 build fired

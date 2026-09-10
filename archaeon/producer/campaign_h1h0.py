@@ -466,10 +466,50 @@ def issue(conn, rows: Sequence[Dict[str, Any]], *, locators_by_digest: Optional[
             "cost_event": cost.to_json(), "engine_entries": C.to_engine_entries(cost, scope="campaign")}
 
 
+def source_results_from_queue(conn, candidate_set: str = "cs-h1h0-1-p1", split: Optional[Dict[str, Any]] = None) -> List[Dict[str, Any]]:
+    """Phase-1 results as the queue carries them (result projection on the
+    row), checked against the split's truth tables."""
+    split = split or task_split()
+    by_id = {t["task_id"]: t for t in split["source"]}
+    cur = conn.cursor()
+    cur.execute("SELECT source_evidence->>'task_id', result_summary->'result'->'repeats' FROM viv.research_experiment_queue "
+                "WHERE candidate_set_id=%s AND status='completed'", (candidate_set,))
+    out = []
+    for task_id, reps in cur.fetchall():
+        res = (reps[0].get("result", reps[0]) if reps else {})
+        t = by_id[task_id]
+        if res.get("target_truth_table") != t["tt"]:
+            raise RuntimeError("phase-1 row {} carries table {} but the split says {}".format(task_id, res.get("target_truth_table"), t["tt"]))
+        out.append({"task_id": task_id, "tt": t["tt"], "licensed_metadata": t["licensed_metadata"], "result": res})
+    if len(out) != N_SOURCE:
+        raise RuntimeError("phase 1 has {} completed rows, not {}".format(len(out), N_SOURCE))
+    return out
+
+
+DEGENERACY_SEED_ROOT = 940_004
+
+
+def degeneracy_check_row(split: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+    """Harmonia item 4: the second-seed replicate is a second seed_root ROW
+    per cell, CONDITIONAL on this check -- one (task, cell) at a second
+    seed_root must differ from its first-seed row, else the replicate is
+    bit-identical and measures nothing. One row: target 0, cell S00."""
+    split = split or task_split()
+    t = split["target"][0]
+    spec = spec_for(t["tt"], pack_slot=None, lib_slot=None,
+                    hypothesis="degeneracy check: does a second seed_root change anything in cegis_boolean_v1's result",
+                    encounter_tag="deg")
+    spec["world"] = {"seed_root": DEGENERACY_SEED_ROOT}
+    return {"index": 0, "phase": 2, "family_id": "fam-H0-1", "arm_id": "S00-deg", "task_id": t["task_id"], "tt": t["tt"],
+            "licensed_metadata": t["licensed_metadata"], "pack": None, "library": None, "artifact_digests": [],
+            "request_key": "{}-P2-DEG-001".format(CAMPAIGN_ID), "spec": spec}
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(prog="archaeon.producer.campaign_h1h0")
     ap.add_argument("--split", action="store_true"); ap.add_argument("--phase1", action="store_true")
     ap.add_argument("--check-phase1", action="store_true"); ap.add_argument("--issue-phase1", action="store_true")
+    ap.add_argument("--issue-phase2", action="store_true"); ap.add_argument("--locators", default="archaeon/docs/h0h5/H1H0_PHASE2_LOCATORS_2026-09-10.json")
     a = ap.parse_args(argv)
     if a.split:
         print(json.dumps(task_split(), indent=1)); return 0
@@ -482,6 +522,21 @@ def main(argv=None) -> int:
         conn = ewdb.connect()
         try:
             print(json.dumps(issue(conn, plan_phase1()), indent=2, default=str))
+        finally:
+            conn.close()
+        return 0
+    if a.issue_phase2:
+        from evidence_wiki.ew import db as ewdb
+        loc = json.load(open(a.locators, encoding="utf-8"))["locators"]
+        conn = ewdb.connect()
+        try:
+            split = task_split()
+            p2 = plan_phase2(source_results_from_queue(conn, split=split), split)
+            missing = [d for d in p2["artifacts"] if d not in loc]
+            if missing:
+                raise RuntimeError("locators missing for {}".format(missing))
+            rows = p2["rows"] + [degeneracy_check_row(split)]
+            print(json.dumps(issue(conn, rows, locators_by_digest=loc), indent=2, default=str))
         finally:
             conn.close()
         return 0

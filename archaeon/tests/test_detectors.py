@@ -234,3 +234,38 @@ def test_signal_ids_are_stable_across_runs():
     c2 = synth.order_reversal(seed=9)
     ids2 = sorted(s.signal_id() for s in mod.detect(c2, DCFG).signals)
     assert ids1 == ids2 and ids1
+
+
+def test_d3_v1_labels_a_climbing_region_exchangeability_suspect_without_changing_the_statistic():
+    """Harmonia a1d0ed9c8: both live UPPER fires were trajectories, not samples.
+    The label is reported; the ratio is untouched (detrending would be v2)."""
+    import dataclasses
+    from archaeon import fossils
+    mod = DETECTOR_BY_NAME["LOCAL_VARIANCE_ANOMALY"]
+    c = synth.variance_anomaly(seed=5, ratio=6.0)
+    # make the anomalous region w03 a monotone climb in committed order
+    rows = []
+    k = 0
+    for r in c.rows:
+        if r.region == "w03":
+            k += 1
+            rows.append(dataclasses.replace(r, metric=0.1 + 0.04 * k, seq=k))
+        else:
+            rows.append(r)
+    climbing = fossils.corpus_from_rows(rows, c.chart) if "chart" in fossils.corpus_from_rows.__code__.co_varnames else dataclasses.replace(c, rows=rows)
+    sig = [s for s in mod.detect(climbing, DCFG).signals if s.regions[0] == "w03"]
+    assert sig, "the climbing region must still fire on its variance"
+    v = sig[0].values
+    assert v["exchangeability"] == "EXCHANGEABILITY_SUSPECT" and v["trend_fraction"] > 0.9
+    # the statistic itself is unchanged by the label: same ratio as a shuffled-order copy
+    import random
+    rng = random.Random(1)
+    shuffled = []
+    seqs = [r.seq for r in rows if r.region == "w03"]; rng.shuffle(seqs)
+    it = iter(seqs)
+    for r in rows:
+        shuffled.append(dataclasses.replace(r, seq=next(it)) if r.region == "w03" else r)
+    c2 = fossils.corpus_from_rows(shuffled, c.chart) if "chart" in fossils.corpus_from_rows.__code__.co_varnames else dataclasses.replace(c, rows=shuffled)
+    s2 = [s for s in mod.detect(c2, DCFG).signals if s.regions[0] == "w03"][0]
+    assert abs(s2.values["variance_ratio"] - v["variance_ratio"]) < 1e-12
+    assert s2.values["exchangeability"] != "EXCHANGEABILITY_SUSPECT"

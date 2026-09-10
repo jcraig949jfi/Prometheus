@@ -184,9 +184,14 @@ would still KILL.
 ## Added 2026-09-10 (issue day)
 - [x] F-10 (operator): d3.v1 ADMITTED 2026-09-10 (D-20); pooled_within is the live default from the next tick. 2026-09-10
 - [x] F-11 CLOSED 2026-09-10: Harmonia ruled signature_v0 FAIR and INERT at this scope; RELEVANCE_LICENSED stays False; contrast relabelled transport-only / order-only. 2026-09-10
-- [ ] F-12 (Archaeon): phase 2 of H1/H0 once cs-h1h0-1-p1 completes: build packs from witnesses, publish artifacts (human path needs a producer world), issue arms and cells. 2026-09-10
+- [x] F-12 DONE 2026-09-10 12:40: phase 2 ISSUED (cs-h1h0-1-p2, 73 rows incl. the degeneracy-check row) after Vivarium published the 11 artifacts. 2026-09-10
 - [ ] F-13 (Archaeon): C3-2 readout when cs-c3-2 completes: ICC across the four IC samples, D3 over C3 (one row per rule), exact-symmetry mask identity on the 18 null rows. 2026-09-10
 - [ ] F-14 (operator): D-18 amendment v1 (Herakles); rustup on the host (Techne); the two packet JSONs are on NO machine here (searched Downloads/Desktop/Documents and both checkouts, 2026-09-10) -- the operator must paste their contents to a seat, who commits them, before Techne's reconciler can run. 2026-09-10
 - [ ] F-15 (Archaeon): costs.reconcile joins on the DIGEST when the executor vector carries it (TRACKA-RECON-2). 2026-09-10
 - [x] F-16 (Archaeon): D3 upper-fire dossier for Harmonia (item 5) delivered: archaeon/docs/h0h5/D3_LIVE_DOSSIER_2026-09-10.json. 2026-09-10
 - [ ] F-17 (Harmonia): read the 15 LOWER fires that survive d3.v1 on the live corpus (dossier carries them under fires_v0 / v1 counts). 2026-09-10
+- [ ] F-18 (Archaeon): when cs-h1h0-1-p2 completes: read the degeneracy row against its twin (Harmonia item 4); if they differ, issue the second-seed replicate rows per cell; hand the transport contrast and the four cells to Harmonia. 2026-09-10
+- [ ] F-19 (operator): issue H5-1 (256 rows on eca_rule_eval_v1; plan validates and preflights). 2026-09-10
+- [ ] F-20 (Vivarium): record ic_transformed and majority_target_flipped on the ca_density_v0 result (Herakles's check is INDETERMINATE on the row's own evidence). 2026-09-10
+- [ ] F-21 (Archaeon): re-issue C3-2 random_076 (ENGINE_TRANSPORT timeout) as one row under a new request key after the corpus completes. 2026-09-10
+- [ ] F-22 (Archaeon): C3-3 design under R-C3-1..5 with cellwise_majority_match once Vivarium exposes it as a criterion value. 2026-09-10

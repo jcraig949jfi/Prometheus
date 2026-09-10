@@ -36,6 +36,29 @@ VERSION_BY_DENOMINATOR = {"concatenated": "d3.v0", "pooled_within": "d3.v1"}
 UNIT = "region"
 
 
+def _serial_r(rs) -> Tuple[Optional[float], int]:
+    """Pearson r between committed order and metric within a region: the
+    exchangeability diagnostic (Harmonia 2026-09-10). Order = anchors
+    committed_seq when present, else the row's seq."""
+    def order(r):
+        a = r.anchors or {}
+        v = a.get("committed_seq")
+        try:
+            return float(v) if v is not None else float(r.seq)
+        except (TypeError, ValueError):
+            return float(r.seq)
+    pts = sorted((order(r), r.metric) for r in rs)
+    n = len(pts)
+    if n < 3:
+        return None, n
+    xs = [float(i) for i in range(n)]; ys = [m for _, m in pts]
+    mx, my = sum(xs) / n, sum(ys) / n
+    sxx = sum((x - mx) ** 2 for x in xs); syy = sum((y - my) ** 2 for y in ys)
+    if sxx <= 0 or syy <= 0:
+        return 0.0, n
+    return sum((x - mx) * (y - my) for x, y in zip(xs, ys)) / math.sqrt(sxx * syy), n
+
+
 def _pooled_within(groups: List[List[float]]) -> Tuple[float, int]:
     """df-weighted pooled WITHIN-region variance: sum((n_o - 1) var_o) /
     sum(n_o - 1) over neighbours with n_o >= 2. Between-region mean
@@ -148,6 +171,9 @@ def detect(corpus, dcfg) -> DetectorResult:
                   if ratio > dcfg.d3_high_ratio
                   else math.log(dcfg.d3_low_ratio / max(ratio, 1e-300)))
 
+        r_serial, _ = _serial_r(rs)
+        abs_r_cut = getattr(dcfg, "d3_exchangeability_abs_r", 0.5)
+        suspect = (r_serial is not None and abs(r_serial) >= abs_r_cut)
         signals.append(Signal(
             detector=NAME, detector_version=version,
             intent=INTENT_DISCRIMINATE,
@@ -163,6 +189,10 @@ def detect(corpus, dcfg) -> DetectorResult:
                     "neighbourhood_kind": neighbourhood_kind,
                     "denominator": denominator,
                     "neighbourhood_df": pool_df,
+                    "serial_r": r_serial,
+                    "trend_fraction": (None if r_serial is None else r_serial * r_serial),
+                    "exchangeability": ("EXCHANGEABILITY_SUSPECT" if suspect else
+                                        ("not_assessed" if r_serial is None else "no_trend_flag")),
                     "neighbours": list(nb),
                     "family": fam_of[reg]},
             thresholds={"d3_high_ratio": dcfg.d3_high_ratio,
@@ -170,7 +200,8 @@ def detect(corpus, dcfg) -> DetectorResult:
                         "d3_min_n_region": dcfg.d3_min_n_region,
                         "d3_min_n_neighborhood": dcfg.d3_min_n_neighborhood,
                         "d3_neighbors_k": dcfg.d3_neighbors_k,
-                        "d3_denominator": denominator},
+                        "d3_denominator": denominator,
+                        "d3_exchangeability_abs_r": abs_r_cut},
             support_n=len(vals),
             effect_norm=clamp01(excess / math.log(10.0)),
             target_coords=dict(centroid[reg]),
