@@ -1,0 +1,142 @@
+{
+  "outcome": "EXECUTED",
+  "experiment_id": "e1522c76-9ce6-4c31-9039-6b4e3dbeaf28",
+  "status": "completed",
+  "engine": {
+    "engine_source_hash": "sha256:084f951f866cc50aec73c6403528abc234fd514742b25ffd1aff5515a271feff",
+    "source_commit": "f1e36c0625d012077e662087208f5363ce11f900",
+    "schema_version": 7,
+    "engine_instance_id": "eng_8a37a5d305969034d488c43e"
+  },
+  "allowance_mechanism": "debit (engine returned HTTP 404 for reserve)",
+  "cost_events": null,
+  "cost_events_unavailable": "this engine exposes no reservation or cost-event endpoint (schema 7); the allowance was debited and the executor's own resource vector is the only record of the spend",
+  "digest_gate": "engine+client",
+  "bytes_loaded": 146,
+  "closure_manifest": [
+    "sha256:2c11a308dfe6944bfcc045c9426c3fc58df206e6a6fbfb6818aff0c8a76b62aa"
+  ],
+  "consumed_digest": "sha256:2c11a308dfe6944bfcc045c9426c3fc58df206e6a6fbfb6818aff0c8a76b62aa",
+  "resolution": {
+    "kind": "failure_input_set",
+    "origin": "IMPORTED",
+    "size_gate": "engine (expected_bytes)",
+    "import_seq": 63091,
+    "digest_gate": "engine (expected_blob_hash on the read path)",
+    "served_from": "engine",
+    "imported_now": true,
+    "source_world": "wld_fbf0ae17783b23c52f030c32",
+    "authorized_as": "cli_5680df5896815e185078c9c6",
+    "execution_world": "wld_2e5c14dfd716ce972b3465e5",
+    "source_artifact": "sha256:6e7e200ca62b3e4f50ba7b5dc19396b2b53e35e1cb3670d51652a698aa1b11c0",
+    "engine_blob_hash": "sha256:2c11a308dfe6944bfcc045c9426c3fc58df206e6a6fbfb6818aff0c8a76b62aa",
+    "visibility_basis": {
+      "info_kind": "artifact",
+      "dst_policy": "EXPLICIT_IMPORT_ONLY",
+      "src_policy": "EXPLICIT_IMPORT_ONLY",
+      "visibility": "IMPORTED",
+      "same_client": true,
+      "topology_group": null
+    },
+    "engine_resolution": null,
+    "engine_source_hash": "sha256:2c11a308dfe6944bfcc045c9426c3fc58df206e6a6fbfb6818aff0c8a76b62aa",
+    "execution_artifact_id": "sha256:23b7e9c81dd7922a532ca68331f05656a5e344bccbb1d44ee2f6f0a27f4c806e"
+  },
+  "result": {
+    "folded": 0,
+    "n_bits": 3,
+    "executor": "artifact_probe_v1",
+    "reduction": "xor_positional",
+    "root_items": 4,
+    "closure_size": 1,
+    "input_digest": "sha256:2c11a308dfe6944bfcc045c9426c3fc58df206e6a6fbfb6818aff0c8a76b62aa",
+    "interface_id": "boolean-inputs-v1",
+    "items_digest": "sha256:64414bb6ba1dbd076e763e926d8a0c82f6a86ecd5c86e8c703b40116b97b0d44",
+    "items_consumed": 4,
+    "reproducibility": "BIT_DETERMINISTIC",
+    "inputs_immutable": true,
+    "consumed_closure_hash": "sha256:b7ede8e7405d3ecc21b15d329c2701127aea49317a06989ad97c0dac415c5f61"
+  },
+  "resources": {
+    "stage": "execution",
+    "stages": {
+      "retrieval": {
+        "subset_of": "execution",
+        "wall_seconds": 0.322722,
+        "artifact_bytes": 146,
+        "resolve_seconds": 0.21006,
+        "artifact_fetches": 1
+      }
+    },
+    "_limits": {
+      "note": "an enforceable limit is one that REFUSED the act; a measured one is a number. wall_seconds is checked between repeats and cannot interrupt one already running.",
+      "wall_seconds": 600,
+      "artifact_bytes": 16777216
+    },
+    "attempt_id": "e1522c76-9ce6-4c31-9039-6b4e3dbeaf28",
+    "cpu_seconds": {
+      "unit": "s",
+      "scope": "attempt",
+      "method": "process_time delta (PROCESS-scoped, one attempt at a time)",
+      "additive": true,
+      "quantity": 0.0,
+      "enforcement_class": "measured"
+    },
+    "gpu_seconds": {
+      "unit": "s",
+      "scope": "attempt",
+      "method": "no GPU accounting exists on this host",
+      "additive": false,
+      "quantity": null,
+      "enforcement_class": "unavailable"
+    },
+    "items_loaded": {
+      "unit": "count",
+      "scope": "attempt",
+      "method": "counted in the loader/runner",
+      "additive": true,
+      "quantity": 4,
+      "enforcement_class": "measured"
+    },
+    "wall_seconds": {
+      "unit": "s",
+      "scope": "attempt",
+      "method": "perf_counter around the attempt",
+      "additive": true,
+      "quantity": 1.554511,
+      "enforcement_class": "enforceable"
+    },
+    "artifact_bytes": {
+      "unit": "bytes",
+      "scope": "attempt",
+      "method": "counted in the loader/runner",
+      "additive": true,
+      "quantity": 146,
+      "enforcement_class": "enforceable"
+    },
+    "artifact_fetches": {
+      "unit": "count",
+      "scope": "attempt",
+      "method": "counted in the loader/runner",
+      "additive": true,
+      "quantity": 1,
+      "enforcement_class": "measured"
+    },
+    "peak_memory_bytes": {
+      "unit": "bytes",
+      "scope": "process",
+      "method": "K32GetProcessMemoryInfo (PROCESS peak, never summed)",
+      "additive": false,
+      "quantity": 35475456,
+      "enforcement_class": "measured"
+    },
+    "observations_written": {
+      "unit": "count",
+      "scope": "attempt",
+      "method": "counted in the loader/runner",
+      "additive": true,
+      "quantity": 1,
+      "enforcement_class": "measured"
+    }
+  }
+}
