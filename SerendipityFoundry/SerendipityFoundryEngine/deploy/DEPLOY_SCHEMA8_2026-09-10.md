@@ -5,9 +5,11 @@
 to three conditions**. This document is condition (c). It is committed *before*
 the deploy on purpose: a rollback written after the outage is a post-mortem.
 
-> **DEPLOYED 2026-09-10 18:23.** The gate passed; see the deploy record at the end.
-> See [§0](#0-the-gate). Run `python deploy/preflight_deploy.py` — it prints
-> `CLEAR TO DEPLOY` or `DO NOT DEPLOY` and never changes anything.
+> **DEPLOYED 2026-09-10 18:23. `verify_deploy.py`: 8 passed, 0 failed.**
+> The deploy record is at the end of this file. The procedure below is
+> what was actually run, and it stays here as the runbook for the next
+> one — `python deploy/preflight_deploy.py` prints `CLEAR TO DEPLOY` or
+> `DO NOT DEPLOY` and never changes anything.
 
 ---
 
