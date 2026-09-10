@@ -1,0 +1,199 @@
+{
+  "schema": "techne.acquisition.receipt/1",
+  "receipt_id": "paper_reproduction-stitch_rust_core-20260910T161201Z",
+  "stage": "PAPER_REPRODUCTION",
+  "does_not_establish": [
+    "INSTALLATION",
+    "FIRST_USEFUL_CHECK",
+    "ADAPTER_QUALIFICATION",
+    "LOCAL_SCIENTIFIC_BENEFIT"
+  ],
+  "entry_id": "stitch_rust_core",
+  "tool": "stitch_rust_core",
+  "design_version": "0.1",
+  "written_utc": "2026-09-10T16:12:01+00:00",
+  "seat": "Techne",
+  "repo": {
+    "commit": "e1dfd26ed5451b2d2d28c41d9a0b4571866baf80",
+    "branch": "techne/track-d-2026-09-10",
+    "dirty": true
+  },
+  "runner": {
+    "python": "3.12.10",
+    "executable": "H:\\Python312\\python.exe",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "tool_cache": "F:\\Prometheus\\vault\\techne_tools",
+    "tool_cache_source": "TECHNE_TOOL_CACHE env",
+    "tool_cache_note": "host-local and gitignored; only its HASHES are tracked"
+  },
+  "commands_run": [
+    {
+      "argv": [
+        "F:\\Prometheus\\vault\\techne_tools\\repos\\stitch_rust_core\\target\\release\\compress.exe",
+        "F:\\Prometheus\\vault\\techne_tools\\fixtures\\stitch\\nuts-bolts.json",
+        "--max-arity=3",
+        "--iterations=3",
+        "--threads=1",
+        "--out=F:\\Prometheus\\vault\\techne_tools\\checkwork\\stitch_rust\\out.json"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "wall_seconds": 0.172,
+      "stdout_tail": "st: 503538 | 2.14x | uses: 190 | body: [fn_1 arity=3: (repeat (T (T #2 (M 0.5 0 0 0)) (M 1 0 (* #1 (cos (/ pi 4))) (* #1 (sin (/ pi 4))))) #0 (M 1 (/ (* 2 pi) #0) 0 0))]\n\u001b[38;5;4;1m\n=======Iteration 2=======\u001b[0m\nnum_paths_to_node(): 0ms\nassociate_tasks() and other task stuff: 0ms\nnum unique tasks: 250\nnum unique programs: 250\ncost_of_node structs: 0ms\nget_zippers(): 1ms\n125 zips\narg_of_zid_node size: 125\nTracking setup: 0ms\nran analyses: 0ms\narity 0: 0ms\ngot 6 arity zero inventions\nbuilt SharedData: 0ms\nTOTAL PREP: 3ms\nrunning pattern search...\nTOTAL SEARCH: 3ms\nTOTAL PREP + SEARCH: 6ms\nStats { worklist_steps: 1129, finished: 5, calc_final_utility: 116, calc_unargcap: 6, donelist_push: 5, azero_calc_util: 141, azero_calc_unargcap: 7, upper_bound_fired: 658, free_vars_fired: 0, single_use_fired: 116, single_task_fired: 226, useless_abstract_fired: 492, force_multiuse_fired: 0 }\nCost before: 503538\n0: utility: 185436 | final_cost: 316890 | 1.59x | uses: 168 | body: [fn_2 arity=1: (T (T c (M 2 0 0 0)) (M #0 0 0 0))]\npost processing: 0ms\nChose Invention fn_2: utility: 185436 | final_cost: 316890 | 1.59x | uses: 168 | body: [fn_2 arity=1: (T (T c (M 2 0 0 0)) (M #0 0 0 0))]\n\u001b[38;5;4;1m\n=======Compression Summary=======\u001b[0m\nFound 3 inventions\nCost Improvement: (6.06x better) 1919558 -> 316890\n\u001b[38;5;4mfn_0\u001b[0m (1.78x wrt orig): utility: 837792 | final_cost: 1079238 | 1.78x | uses: 320 | body: [fn_0 arity=2: (T (repeat (T l (M 1 0 -0.5 (/ 0.5 (tan (/ pi #1))))) #1 (M 1 (/ (* 2 pi) #1) 0 0)) (M #0 0 0 0))]\n\u001b[38;5;4mfn_1\u001b[0m (3.81x wrt orig): utility: 572767 | final_cost: 503538 | 2.14x | uses: 190 | body: [fn_1 arity=3: (repeat (T (T #2 (M 0.5 0 0 0)) (M 1 0 (* #1 (cos (/ pi 4))) (* #1 (sin (/ pi 4))))) #0 (M 1 (/ (* 2 pi) #0) 0 0))]\n\u001b[38;5;4mfn_2\u001b[0m (6.06x wrt orig): utility: 185436 | final_cost: 316890 | 1.59x | uses: 168 | body: [fn_2 arity=1: (T (T c (M 2 0 0 0)) (M #0 0 0 0))]\nTime: 70ms\nWrote to \"F:\\\\Prometheus\\\\vault\\\\techne_tools\\\\checkwork\\\\stitch_rust\\\\out.json\"\n",
+      "stderr_tail": ""
+    }
+  ],
+  "observations": {
+    "input_pinned": {
+      "path": "F:\\Prometheus\\vault\\techne_tools\\fixtures\\stitch\\nuts-bolts.json",
+      "sha256": "4e8ea30925b96736cb290f9f704167c4ca13e1a7da87eeaad2d5d0d0e29deb8d",
+      "expected_sha256": "4e8ea30925b96736cb290f9f704167c4ca13e1a7da87eeaad2d5d0d0e29deb8d",
+      "verified": true,
+      "provenance": "mlb2251/stitch@350804b7, recorded in MANIFEST.json fixtures",
+      "why_this_one": "it is the file the Python route consumed, so the comparison holds the input BYTE-identical rather than merely content-identical",
+      "core_in_tree_copy_at_0ef5ec7": {
+        "sha256": "1c73424743e9de69d205fdab40b88756f941d42e817eb585f769684bf893fac6",
+        "used": false,
+        "note": "different bytes, identical content (same 250 programs, same order); NOT used, because a route comparison must not contain a dataset difference"
+      }
+    },
+    "rust_route": {
+      "n_abstractions": 3,
+      "original_cost": 1919558,
+      "final_cost": 316890,
+      "bodies": [
+        "(T (repeat (T l (M 1 0 -0.5 (/ 0.5 (tan (/ pi #1))))) #1 (M 1 (/ (* 2 pi) #1) 0 0)) (M #0 0 0 0))",
+        "(repeat (T (T #2 (M 0.5 0 0 0)) (M 1 0 (* #1 (cos (/ pi 4))) (* #1 (sin (/ pi 4))))) #0 (M 1 (/ (* 2 pi) #0) 0 0))",
+        "(T (T c (M 2 0 0 0)) (M #0 0 0 0))"
+      ],
+      "names": [
+        "fn_0",
+        "fn_1",
+        "fn_2"
+      ],
+      "arities": [
+        2,
+        3,
+        1
+      ],
+      "n_rewritten": 250,
+      "wall_seconds": 0.171,
+      "binary": "F:\\Prometheus\\vault\\techne_tools\\repos\\stitch_rust_core\\target\\release\\compress.exe",
+      "source_revision": "0ef5ec7f17091d22b8fa959fb5705e359d735a47",
+      "licence": "MIT",
+      "invocation": "F:\\Prometheus\\vault\\techne_tools\\repos\\stitch_rust_core\\target\\release\\compress.exe F:\\Prometheus\\vault\\techne_tools\\fixtures\\stitch\\nuts-bolts.json --max-arity=3 --iterations=3 --threads=1 --out=F:\\Prometheus\\vault\\techne_tools\\checkwork\\stitch_rust\\out.json"
+    },
+    "python_route": {
+      "source": "techne/acquisition/reproduction/stitch_nuts_bolts.manifest.json + the FIRST_USEFUL_CHECK receipt of 2026-09-09",
+      "n_abstractions": 3,
+      "original_cost": 1919558,
+      "final_cost": 316890,
+      "bodies": [
+        "(T (repeat (T l (M 1 0 -0.5 (/ 0.5 (tan (/ pi #1))))) #1 (M 1 (/ (* 2 pi) #1) 0 0)) (M #0 0 0 0))",
+        "(repeat (T (T #2 (M 0.5 0 0 0)) (M 1 0 (* #1 (cos (/ pi 4))) (* #1 (sin (/ pi 4))))) #0 (M 1 (/ (* 2 pi) #0) 0 0))",
+        "(T (T c (M 2 0 0 0)) (M #0 0 0 0))"
+      ]
+    },
+    "metrics": [
+      {
+        "metric": "n_abstractions",
+        "python": 3,
+        "rust": 3,
+        "agree": true
+      },
+      {
+        "metric": "original_cost",
+        "python": 1919558,
+        "rust": 1919558,
+        "agree": true
+      },
+      {
+        "metric": "final_cost",
+        "python": 316890,
+        "rust": 316890,
+        "agree": true
+      },
+      {
+        "metric": "abstraction_bodies (whitespace-normalised, as a set)",
+        "python": [
+          "(T (repeat (T l (M 1 0 -0.5 (/ 0.5 (tan (/ pi #1))))) #1 (M 1 (/ (* 2 pi) #1) 0 0)) (M #0 0 0 0))",
+          "(repeat (T (T #2 (M 0.5 0 0 0)) (M 1 0 (* #1 (cos (/ pi 4))) (* #1 (sin (/ pi 4))))) #0 (M 1 (/ (* 2 pi) #0) 0 0))",
+          "(T (T c (M 2 0 0 0)) (M #0 0 0 0))"
+        ],
+        "rust": [
+          "(T (repeat (T l (M 1 0 -0.5 (/ 0.5 (tan (/ pi #1))))) #1 (M 1 (/ (* 2 pi) #1) 0 0)) (M #0 0 0 0))",
+          "(repeat (T (T #2 (M 0.5 0 0 0)) (M 1 0 (* #1 (cos (/ pi 4))) (* #1 (sin (/ pi 4))))) #0 (M 1 (/ (* 2 pi) #0) 0 0))",
+          "(T (T c (M 2 0 0 0)) (M #0 0 0 0))"
+        ],
+        "agree": true
+      }
+    ],
+    "expansion": {
+      "n": 250,
+      "recovered": 250,
+      "errored": 0,
+      "all_recovered": true
+    },
+    "negative_control_recovered": 48,
+    "checks": [
+      {
+        "claim": "the pinned input is byte-identical to the one the Python route consumed",
+        "pass": true
+      },
+      {
+        "claim": "all four metrics agree between the two routes",
+        "pass": true
+      },
+      {
+        "claim": "the Rust route's own output expands back to the originals",
+        "pass": true
+      },
+      {
+        "claim": "negative control: a corrupted body breaks the expansion",
+        "pass": true
+      },
+      {
+        "claim": "the run needed no network under a network-FORBIDDEN profile",
+        "pass": true
+      }
+    ]
+  },
+  "deviations": [],
+  "unrun_or_blocked": [],
+  "status": "ROUTES_AGREE",
+  "check": "rust_core_vs_python_bindings_on_one_pinned_input",
+  "budget_profile": {
+    "purpose": "the ONE bounded core reproduction selected for stitch_core (the documented nuts-bolts fixture). Its own explicit profile, per the design.",
+    "network": "FORBIDDEN",
+    "max_wall_seconds": 1800,
+    "max_download_bytes": 0,
+    "max_disk_bytes": 2147483648,
+    "max_rss_bytes": 6442450944,
+    "max_processes": 2,
+    "rationale": "The design records that the stitch artifact 'documents substantially larger memory requirements for its ablation/hybrid studies than for core claims'. 6 GiB is under measured available RAM and is sized for ONE core claim. The ablation/hybrid studies are explicitly OUT of this profile and have no profile, which means they are not authorised to run.",
+    "name": "stitch_core_reproduction"
+  },
+  "resource_receipt": {
+    "profile": "stitch_core_reproduction",
+    "network_policy": "FORBIDDEN",
+    "wall_seconds": 3.782,
+    "wall_ceiling": 1800,
+    "downloaded_bytes": 0,
+    "download_ceiling": 0,
+    "cache_bytes_before": 2617060030,
+    "cache_bytes_after": 0,
+    "cache_delta_bytes": -2617060030,
+    "peak_rss_bytes_os_counter": 26910720,
+    "peak_rss_bytes_sampled": 26906624,
+    "rss_method": "GetProcessMemoryInfo",
+    "rss_ceiling": 6442450944,
+    "rss_samples": 1,
+    "rss_ceiling_exceeded_during_sampling": false,
+    "rss_enforcement": "NOT ENFORCED -- no job object / cgroup cap. peak_rss_bytes_os_counter is the OS peak-working-set counter for this process and IS reliable; rss_ceiling_exceeded_during_sampling is sampled and can miss a spike. Neither stops a step.",
+    "rss_excludes_children": "This is THIS process only. pip, git and venv run as children and their RSS is NOT included.",
+    "children_spawned": 1,
+    "process_cap": 2,
+    "aborted_on": null
+  },
+  "consequence": "H0/H2 can construct its instrument library through the MIT-licensed Rust core over a documented JSON interface, with the same result the unlicensed Python bindings give. That does NOT clear D-17 -- the bindings' licence is still unresolved and nothing derived through THEM may leave the host -- it means D-17 no longer gates the capability."
+}
