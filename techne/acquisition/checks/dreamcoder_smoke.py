@@ -221,9 +221,30 @@ def probe_python_stack(root: pathlib.Path, b: _budget.Budget) -> dict:
     }
 
 
+# Toolchains this programme installed CONTAINED (not on PATH) or that exist on the host under a
+# name the probe would otherwise miss. A probe that only reads PATH reports a blocker that was
+# cleared, which is worse than reporting nothing.
+_EXTRA_LOCATIONS = {
+    "cargo": [str(paths.tool_cache() / "rust" / "cargo" / "bin" / "cargo.exe")],
+    "rustc": [str(paths.tool_cache() / "rust" / "cargo" / "bin" / "rustc.exe")],
+    "rustup": [str(paths.tool_cache() / "rust" / "cargo" / "bin" / "rustup.exe")],
+    "make": ["C:/Users/jcrai/AppData/Local/Microsoft/WinGet/Packages/"
+             "BrechtSanders.WinLibs.POSIX.UCRT_Microsoft.Winget.Source_8wekyb3d8bbwe/"
+             "mingw64/bin/mingw32-make.exe"],
+}
+
+
 def probe_native_toolchains() -> dict:
     def which(exe):
         p = shutil.which(exe)
+        found_via = "PATH" if p else None
+        if not p:
+            for cand in _EXTRA_LOCATIONS.get(exe, []):
+                if pathlib.Path(cand).exists():
+                    p, found_via = cand, ("contained tool cache"
+                                          if "techne_tools" in cand else
+                                          "on-host, not on PATH (alternate name)")
+                    break
         ver = None
         if p:
             for flag in ("--version", "-version", "version"):
@@ -234,10 +255,10 @@ def probe_native_toolchains() -> dict:
                         break
                 except (OSError, subprocess.SubprocessError):
                     pass
-        return {"present": bool(p), "path": p, "version": ver}
+        return {"present": bool(p), "path": p, "version": ver, "found_via": found_via}
 
     tools = {n: which(n) for n in ("opam", "ocaml", "ocamlfind", "dune", "make",
-                                  "cargo", "rustc", "pkg-config", "singularity")}
+                                  "cargo", "rustc", "rustup", "pkg-config", "singularity")}
     return {
         "tools": tools,
         "ocaml_solver": {
@@ -381,8 +402,10 @@ def main(argv: list[str] | None = None) -> int:
               f"{i['n_sdist_only_would_need_a_source_build']}  version-gone "
               f"{i['n_pinned_version_absent_from_pypi']}")
     t = nt["tools"]
-    print("toolchains      " + ", ".join(f"{k}={'yes' if v['present'] else 'NO'}"
-                                        for k, v in t.items()))
+    print("toolchains      " + ", ".join(
+        f"{k}={'yes' if v['present'] else 'NO'}"
+        + (f"({v['found_via']})" if v.get('found_via') and v['found_via'] != 'PATH' else "")
+        for k, v in t.items()))
     print(f"\nSTATUS          {rec['status']}")
     for blk in blockers:
         print(f"  {blk['id']} [{blk['dimension']}] {blk['measured']}")
