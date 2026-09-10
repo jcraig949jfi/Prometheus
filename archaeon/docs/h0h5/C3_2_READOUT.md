@@ -1,10 +1,10 @@
 # C3-2 readout (cs-c3-2) -- PARTIAL
 
-Written 2026-09-10T14:22:11+00:00. Numbers only; Harmonia rules. Unit for accuracy: the IC sample (four shared samples, one seed_root). Unit for D3: the rule.
+Written 2026-09-10T15:23:14+00:00. Numbers only; Harmonia rules. Unit for accuracy: the IC sample (four shared samples, one seed_root). Unit for D3: the rule.
 
 ## Progress
 
-- C3-acq: 40 completed, 79 queued, 1 running
+- C3-acq: 56 completed, 63 queued, 1 running
 - C3-base: 6 completed
 - C3-hist: 6 completed
 - C3-null: 18 completed
@@ -76,6 +76,22 @@ Fields compared per IC sample: accuracy_stable, n_incorrect_stable, mask_digest_
 - C3-acq random_037: [0.0, 0.0, 0.0, 0.0] mean 0.0
 - C3-acq random_038: [0.0, 0.0, 0.0, 0.0] mean 0.0
 - C3-acq random_039: [0.0, 0.0, 0.0, 0.0] mean 0.0
+- C3-acq random_040: [0.0, 0.0, 0.0, 0.0] mean 0.0
+- C3-acq random_041: [0.0, 0.0, 0.0, 0.0] mean 0.0
+- C3-acq random_042: [0.0, 0.0, 0.0, 0.0] mean 0.0
+- C3-acq random_043: [0.0, 0.0, 0.0, 0.0] mean 0.0
+- C3-acq random_044: [0.0, 0.0, 0.0, 0.0] mean 0.0
+- C3-acq random_045: [0.0, 0.0, 0.0, 0.0] mean 0.0
+- C3-acq random_046: [0.0, 0.0, 0.0, 0.0] mean 0.0
+- C3-acq random_047: [0.0, 0.0, 0.0, 0.0] mean 0.0
+- C3-acq random_048: [0.0, 0.0, 0.0, 0.0] mean 0.0
+- C3-acq random_049: [0.0, 0.0, 0.0, 0.0] mean 0.0
+- C3-acq random_050: [0.0, 0.0, 0.0, 0.0] mean 0.0
+- C3-acq random_051: [0.0, 0.0, 0.0, 0.0] mean 0.0
+- C3-acq random_052: [0.0, 0.0, 0.0, 0.0] mean 0.0
+- C3-acq random_053: [0.0, 0.0, 0.0, 0.0] mean 0.0
+- C3-acq random_054: [0.0, 0.0, 0.0, 0.0] mean 0.0
+- C3-acq random_055: [0.0, 0.0, 0.0, 0.0] mean 0.0
 - C3-base all_one: [0.49, 0.54, 0.48, 0.46] mean 0.492
 - C3-base all_zero: [0.51, 0.46, 0.52, 0.54] mean 0.508
 - C3-base centre_00: [0.51, 0.46, 0.52, 0.54] mean 0.508
@@ -89,11 +105,11 @@ Fields compared per IC sample: accuracy_stable, n_incorrect_stable, mask_digest_
 - C3-hist particle1: [0.69, 0.78, 0.74, 0.67] mean 0.72
 - C3-hist particle2: [0.71, 0.8, 0.74, 0.69] mean 0.735
 
-IC-sample column means (all non-null completed rows): [0.106, 0.1127, 0.1112, 0.1062]
+IC-sample column means (all non-null completed rows): [0.081, 0.0862, 0.085, 0.0812]
 
 ## ICC(1), rule as group, four IC samples as measures
 
-- all rules: {"icc1": 0.9949, "msb": 0.2429, "msw": 0.0003, "k": 4, "groups": 52, "dropped": 0, "grand_mean": 0.109}
+- all rules: {"icc1": 0.9951, "msb": 0.1936, "msw": 0.0002, "k": 4, "groups": 68, "dropped": 0, "grand_mean": 0.0833}
 - excluding structural zeros (rules with 0.0 on every sample under `stable`): {"icc1": 0.9082, "msb": 0.0731, "msw": 0.0018, "k": 4, "groups": 9, "dropped": 0, "grand_mean": 0.6297}
 
 ## D3 over C3
