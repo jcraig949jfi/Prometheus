@@ -1,0 +1,26 @@
+# Archaeon backlog (schema: roles/Archaeon/prompts/2026-09-10_backlog/00_BACKLOG_SCHEMA.md; 2026-09-10)
+
+ARCH-01 | Build C3-3 from Harmonia's next-scale ruling and the cellwise criterion: offline distribution preflight (support size, p_mode, f, granularity), corpus = ceil(120/f), X1 variance-ratio as the H2 instrument, D3 as lead generator only | C3 | beta | M | none (57c259656, 30e97ed94 on main) | archaeon/producer/campaign_c3_3.py + tests + C3_3_PREFLIGHT.json
+ARCH-02 | Issue C3-3 on the operator's word; readout with location AND dispersion primaries, ICC eligible count printed first | C3 | beta | S | operator word | C3_3_READOUT.md COMPLETE
+ARCH-03 | Issue H5-1 (256 rules, eca_rule_eval_v1) on the operator's word; live class map vs published; H5 readout collapsed to classes | H5 | alpha | S | operator decision F-19 | H5_1_READOUT.md with live map agreement
+ARCH-04 | A2 templates on nk_landscape_v0 (route (c)); the N=16 acquisition after A1 | C2 | alpha | M | Vivarium registration of nk_landscape_v0 | archaeon/templates/inbox/nk_*.json validated + preflighted
+ARCH-05 | H1 beta plan at n=5 bits, K=4, measured pool >= 16, per-task ordering seed shared across arms (Harmonia 4a-4c) | H1 | beta | M | Vivarium ordering_seed_policy; Proteus 5-bit table | archaeon/producer/campaign_h1_beta.py + plan receipt with realised pool and pack overlap
+ARCH-06 | Move the H3 harness to the seam contract (structured assay_ref, lineage kind derived) and add a content digest to replay_ref (Techne W2) | H3 | beta | S | none | h3_replay.py change + test + Techne re-run agreement
+ARCH-07 | H3 beta: a GENERATED stream (1,024 candidates from a policy-independent generator) with future queries sealed before generation | H3 | beta | L | Harmonia's H3 beta rule | stream manifest + sealed query manifest + four-policy replay
+ARCH-08 | Producer cost receipts posted to the schema-8 engine for every issued campaign (to_engine_entries with resource-entry refs.artifact_digest = declared artifact id) | C4 | alpha | S | none | ARCHAEON_VECTOR_200 per campaign + reconcile_by_digest join
+ARCH-09 | Tick source_evidence carries the engine-posted cost event id, not only the local receipt | C4 | beta | S | ARCH-08 | tick receipt field + test
+ARCH-10 | H0 beta: replace the instrument library with the source-derived library once stitch abstractions are non-empty (Techne: threshold 3 solutions, phase 1 meets it) | H0 | beta | M | Techne's stitch route on phase-1 solutions | derived library artifact + four cells re-issued
+ARCH-11 | C3-hist expansion from Herakles's widened collider catalogue (RECOVERED organisms only) | C3 | beta | S | Herakles catalogue | campaign_c3 HISTORICAL list + receipt
+ARCH-12 | Synchronisation task campaign (every held organism scores 0.0 there: a second structural-zero target) -- design the acquisition on the cellwise-style criterion Herakles defines for it | C3 | beta | XL | operator decision NEW: is synchronisation a target worth a corpus | campaign_c3_sync plan
+ARCH-13 | C1-e vs C3-2 at T=298: not needed (Herakles: at_T identical to four decimals at T = 298..596); record and close | C3 | alpha | S | none | status line
+ARCH-14 | D3 watch-list: record the three EXCHANGEABLE survivors with geometry and class; no follow-up until an exchangeable-by-design corpus reproduces them | ENGINE | program | S | none | archaeon/docs/h0h5/D3_WATCHLIST.json
+ARCH-15 | Exchangeability diagnostic for D1/D2/D4-D6 (Harmonia's backlog asks; the label, not the statistic) | ENGINE | beta | M | Harmonia's rule per detector | detectors + tests
+ARCH-16 | Template registry: promote kindspec builders for cegis_boolean_v1, eca_rule_eval_v1, nk_landscape_v0 so the tick's menu can draw them (admission is human) | C2 | beta | M | none | archaeon/templates/inbox/*.json + registry check
+ARCH-17 | ROADMAP section D work packages not yet started: one row each, sized (WP-0e..WP-4x), with the branch and the smallest shared infrastructure named | program | program | M | none | ROADMAP annex update
+ARCH-18 | Allocation (family-first deficit RR) activation under D-6 | C2 | beta | XL | operator decision D-6 | allocation.py active + first allocated tick
+ARCH-19 | Archaeon read scope (B1): consume Daedalus's proposal; move readers off the queue projection to the authorized read path | ENGINE | beta | XL | operator decision B1 | readers on the engine API + guard test
+ARCH-20 | H5 beta: encoding_search_v1 consumer design (frozen balanced decoder via C1; T=9 scope fixture) | H5 | beta | L | Vivarium encoding_search_v1 | plan + preflight
+ARCH-21 | Temporal H0 1.1 producer side: sequence packs on the temporal-program interface | H0 | 1.1 | L | Proteus/Vivarium temporal interface | pack builder + tests
+ARCH-22 | Vacuous-reading register entries from Archaeon's side (C3-2: H2; H1 alpha: relevance) with Mnemosyne | EVIDENCE | program | S | none | register rows
+ARCH-23 | Retire the "structural zero" wording where Vivarium showed it was an UNMEASURABLE zero (maj 0.5919 cellwise): status and readout wording audit | C3 | alpha | S | none | status + readout diff
+ARCH-24 | Per-campaign external review packet after each COMPLETE readout (operator's standing ask) | program | program | S | none | REVIEW_PACKET_<date>.md

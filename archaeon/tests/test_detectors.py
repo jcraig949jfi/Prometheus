@@ -256,7 +256,8 @@ def test_d3_v1_labels_a_climbing_region_exchangeability_suspect_without_changing
     sig = [s for s in mod.detect(climbing, DCFG).signals if s.regions[0] == "w03"]
     assert sig, "the climbing region must still fire on its variance"
     v = sig[0].values
-    assert v["exchangeability"] == "EXCHANGEABILITY_SUSPECT" and v["trend_fraction"] > 0.9
+    assert v["exchangeability"] == "EXCHANGEABILITY_VIOLATED" and v["trend_fraction"] > 0.9    # a pure ramp: |r| ~ 1 >= 0.816
+    assert v["trend_inflation_of_ratio"] > 3.0                                              # trend alone crosses the band edge
     # the statistic itself is unchanged by the label: same ratio as a shuffled-order copy
     import random
     rng = random.Random(1)
@@ -268,4 +269,4 @@ def test_d3_v1_labels_a_climbing_region_exchangeability_suspect_without_changing
     c2 = fossils.corpus_from_rows(shuffled, c.chart) if "chart" in fossils.corpus_from_rows.__code__.co_varnames else dataclasses.replace(c, rows=shuffled)
     s2 = [s for s in mod.detect(c2, DCFG).signals if s.regions[0] == "w03"][0]
     assert abs(s2.values["variance_ratio"] - v["variance_ratio"]) < 1e-12
-    assert s2.values["exchangeability"] != "EXCHANGEABILITY_SUSPECT"
+    assert s2.values["exchangeability"] in ("EXCHANGEABLE", "EXCHANGEABILITY_SUSPECT")       # shuffled order: no ramp

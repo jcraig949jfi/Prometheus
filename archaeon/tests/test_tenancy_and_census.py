@@ -126,8 +126,8 @@ def test_client_asserted_is_not_a_fossil(tmp_path):
 
 
 def test_newer_schema_is_refused_not_misread(tmp_path):
-    db = str(tmp_path / "t8.db")
-    _ledger(db, schema_version=8)          # the reader understands 7 (live since 2026-09-06)
+    db = str(tmp_path / "t9.db")
+    _ledger(db, schema_version=9)          # the reader understands 8 (M1 deployed 7 -> 8 on 2026-09-10)
     c = fossils.read_sfe(db)
     assert c.rows == [] and "newer" in c.window["error"]
 

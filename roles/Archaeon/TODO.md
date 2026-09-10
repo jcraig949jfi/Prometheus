@@ -190,9 +190,9 @@ would still KILL.
 - [ ] F-15 (Archaeon): costs.reconcile joins on the DIGEST when the executor vector carries it (TRACKA-RECON-2). 2026-09-10
 - [x] F-16 (Archaeon): D3 upper-fire dossier for Harmonia (item 5) delivered: archaeon/docs/h0h5/D3_LIVE_DOSSIER_2026-09-10.json. 2026-09-10
 - [ ] F-17 (Harmonia): read the 15 LOWER fires that survive d3.v1 on the live corpus (dossier carries them under fires_v0 / v1 counts). 2026-09-10
-- [x] F-18 PARTIAL 2026-09-10 ~14:35: degeneracy row BIT_IDENTICAL to its twin -> second-seed replicate NOT issued; slot-free cells handed to Harmonia; artifact cells wait on F-23. 2026-09-10
+- [x] F-18 DONE 2026-09-10 ~19:30: phase 2 COMPLETE (48 artifact rows under reservation on schema 8); readout with spec-hash dedup handed to Harmonia. 2026-09-10
 - [ ] F-19 (operator): issue H5-1 (256 rows on eca_rule_eval_v1; plan validates and preflights). 2026-09-10
-- [ ] F-20 (Vivarium): record ic_transformed and majority_target_flipped on the ca_density_v0 result (Herakles's check is INDETERMINATE on the row's own evidence). 2026-09-10
+- [x] F-20 DONE by Vivarium 30e97ed94 (flags measured off the arrays). 2026-09-10
 - [x] F-21 DONE 2026-09-10 ~14:00: random_076 re-issued as cs-c3-2-r1. 2026-09-10
-- [ ] F-22 (Archaeon): C3-3 design under R-C3-1..5 with cellwise_majority_match once Vivarium exposes it as a criterion value. 2026-09-10
+- [ ] F-22 (Archaeon) UNBLOCKED 2026-09-10 19:30: C3-3 design under R-C3-1..5 + Harmonia 3e/3f (X1 variance-ratio is the H2 instrument; support size, p_mode, f, corpus ceil(120/f) BEFORE issue) with cellwise_majority_match now exposed. = ARCH-01. 2026-09-10
 - [x] F-23 DONE 2026-09-10 18:30: Vivarium's debit receipt landed (a733f0ad5); the 48 artifact rows re-issued as cs-h1h0-1-p2b. 2026-09-10

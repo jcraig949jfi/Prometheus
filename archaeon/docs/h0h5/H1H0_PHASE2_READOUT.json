@@ -1,5 +1,5 @@
 {
- "artifact_cells_complete": false,
+ "artifact_cells_complete": true,
  "by_set": {
   "cs-h1h0-1-p2": {
    "cancelled": 42,
@@ -8,9 +8,12 @@
   },
   "cs-h1h0-1-p2-r1": {
    "completed": 14
+  },
+  "cs-h1h0-1-p2b": {
+   "completed": 48
   }
  },
- "complete": false,
+ "complete": true,
  "contrasts": "none computed here; G_joint_treatment_S11_minus_S00 and I are Harmonia's (block = target task, n = 12)",
  "counts_per_cell": {
   "S00": {
@@ -28,25 +31,25 @@
    "solved": 0
   },
   "S01": {
-   "completed": 0,
-   "failed": 5,
+   "completed": 12,
+   "failed": 0,
    "queued": 0,
    "running": 0,
-   "solved": 0
+   "solved": 3
   },
   "S10": {
-   "completed": 0,
-   "failed": 5,
+   "completed": 12,
+   "failed": 0,
    "queued": 0,
    "running": 0,
-   "solved": 0
+   "solved": 2
   },
   "S11": {
-   "completed": 0,
-   "failed": 5,
+   "completed": 12,
+   "failed": 0,
    "queued": 0,
    "running": 0,
-   "solved": 0
+   "solved": 3
   },
   "fresh": {
    "completed": 12,
@@ -56,11 +59,11 @@
    "solved": 2
   },
   "random_pack": {
-   "completed": 0,
-   "failed": 5,
+   "completed": 12,
+   "failed": 0,
    "queued": 0,
    "running": 0,
-   "solved": 0
+   "solved": 2
   }
  },
  "degeneracy_check": {
@@ -92,6 +95,11 @@
   "cs-h1h0-1-p2b"
  ],
  "slot_free_complete": true,
+ "spec_hash_dedup": {
+  "distinct_payloads": 73,
+  "labels_sharing_a_hash": [],
+  "refusal": null
+ },
  "table": [
   {
    "S00": {
@@ -115,34 +123,34 @@
     "vm_ops": 6003
    },
    "S01": {
-    "allowance": null,
-    "error": "execution failed: HTTP 404: Not Found\nTraceback (most recent call last):\n  File \"F:\\Prometheus\\.claude\\worktrees\\vivarium-campaign-e1-e6-e16\\vivarium\\viv\\loop.py\", line 477, in _run_claimed\n    result",
-    "kind_status": null,
-    "oracle_calls": null,
-    "set": "cs-h1h0-1-p2",
-    "solved": null,
-    "status": "failed",
-    "vm_ops": null
+    "allowance": "reservation",
+    "error": null,
+    "kind_status": "BUDGET_VM_OPS",
+    "oracle_calls": 12,
+    "set": "cs-h1h0-1-p2b",
+    "solved": false,
+    "status": "completed",
+    "vm_ops": 6006
    },
    "S10": {
-    "allowance": null,
-    "error": "execution failed: HTTP 404: Not Found\nTraceback (most recent call last):\n  File \"F:\\Prometheus\\.claude\\worktrees\\vivarium-campaign-e1-e6-e16\\vivarium\\viv\\loop.py\", line 477, in _run_claimed\n    result",
-    "kind_status": null,
-    "oracle_calls": null,
-    "set": "cs-h1h0-1-p2",
-    "solved": null,
-    "status": "failed",
-    "vm_ops": null
+    "allowance": "reservation",
+    "error": null,
+    "kind_status": "BUDGET_VM_OPS",
+    "oracle_calls": 12,
+    "set": "cs-h1h0-1-p2b",
+    "solved": false,
+    "status": "completed",
+    "vm_ops": 6022
    },
    "S11": {
-    "allowance": null,
-    "error": "execution failed: HTTP 404: Not Found\nTraceback (most recent call last):\n  File \"F:\\Prometheus\\.claude\\worktrees\\vivarium-campaign-e1-e6-e16\\vivarium\\viv\\loop.py\", line 477, in _run_claimed\n    result",
-    "kind_status": null,
-    "oracle_calls": null,
-    "set": "cs-h1h0-1-p2",
-    "solved": null,
-    "status": "failed",
-    "vm_ops": null
+    "allowance": "reservation",
+    "error": null,
+    "kind_status": "BUDGET_VM_OPS",
+    "oracle_calls": 12,
+    "set": "cs-h1h0-1-p2b",
+    "solved": false,
+    "status": "completed",
+    "vm_ops": 6019
    },
    "fresh": {
     "allowance": null,
@@ -155,14 +163,14 @@
     "vm_ops": 6003
    },
    "random_pack": {
-    "allowance": null,
-    "error": "execution failed: HTTP 404: Not Found\nTraceback (most recent call last):\n  File \"F:\\Prometheus\\.claude\\worktrees\\vivarium-campaign-e1-e6-e16\\vivarium\\viv\\loop.py\", line 477, in _run_claimed\n    result",
-    "kind_status": null,
-    "oracle_calls": null,
-    "set": "cs-h1h0-1-p2",
-    "solved": null,
-    "status": "failed",
-    "vm_ops": null
+    "allowance": "reservation",
+    "error": null,
+    "kind_status": "BUDGET_VM_OPS",
+    "oracle_calls": 12,
+    "set": "cs-h1h0-1-p2b",
+    "solved": false,
+    "status": "completed",
+    "vm_ops": 6022
    },
    "task_id": "tgt-00"
   },
@@ -179,34 +187,34 @@
    },
    "S00-deg": null,
    "S01": {
-    "allowance": null,
-    "error": "execution failed: HTTP 404: Not Found\nTraceback (most recent call last):\n  File \"F:\\Prometheus\\.claude\\worktrees\\vivarium-campaign-e1-e6-e16\\vivarium\\viv\\loop.py\", line 477, in _run_claimed\n    result",
-    "kind_status": null,
-    "oracle_calls": null,
-    "set": "cs-h1h0-1-p2",
-    "solved": null,
-    "status": "failed",
-    "vm_ops": null
+    "allowance": "reservation",
+    "error": null,
+    "kind_status": "SOLVED",
+    "oracle_calls": 12,
+    "set": "cs-h1h0-1-p2b",
+    "solved": true,
+    "status": "completed",
+    "vm_ops": 4152
    },
    "S10": {
-    "allowance": null,
-    "error": "execution failed: HTTP 404: Not Found\nTraceback (most recent call last):\n  File \"F:\\Prometheus\\.claude\\worktrees\\vivarium-campaign-e1-e6-e16\\vivarium\\viv\\loop.py\", line 477, in _run_claimed\n    result",
-    "kind_status": null,
-    "oracle_calls": null,
-    "set": "cs-h1h0-1-p2",
-    "solved": null,
-    "status": "failed",
-    "vm_ops": null
+    "allowance": "reservation",
+    "error": null,
+    "kind_status": "SOLVED",
+    "oracle_calls": 12,
+    "set": "cs-h1h0-1-p2b",
+    "solved": true,
+    "status": "completed",
+    "vm_ops": 3562
    },
    "S11": {
-    "allowance": null,
-    "error": "execution failed: HTTP 404: Not Found\nTraceback (most recent call last):\n  File \"F:\\Prometheus\\.claude\\worktrees\\vivarium-campaign-e1-e6-e16\\vivarium\\viv\\loop.py\", line 477, in _run_claimed\n    result",
-    "kind_status": null,
-    "oracle_calls": null,
-    "set": "cs-h1h0-1-p2",
-    "solved": null,
-    "status": "failed",
-    "vm_ops": null
+    "allowance": "reservation",
+    "error": null,
+    "kind_status": "SOLVED",
+    "oracle_calls": 20,
+    "set": "cs-h1h0-1-p2b",
+    "solved": true,
+    "status": "completed",
+    "vm_ops": 4938
    },
    "fresh": {
     "allowance": null,
@@ -219,14 +227,14 @@
     "vm_ops": 3667
    },
    "random_pack": {
-    "allowance": null,
-    "error": "execution failed: HTTP 404: Not Found\nTraceback (most recent call last):\n  File \"F:\\Prometheus\\.claude\\worktrees\\vivarium-campaign-e1-e6-e16\\vivarium\\viv\\loop.py\", line 477, in _run_claimed\n    result",
-    "kind_status": null,
-    "oracle_calls": null,
-    "set": "cs-h1h0-1-p2",
-    "solved": null,
-    "status": "failed",
-    "vm_ops": null
+    "allowance": "reservation",
+    "error": null,
+    "kind_status": "SOLVED",
+    "oracle_calls": 12,
+    "set": "cs-h1h0-1-p2b",
+    "solved": true,
+    "status": "completed",
+    "vm_ops": 3562
    },
    "task_id": "tgt-01"
   },
@@ -243,34 +251,34 @@
    },
    "S00-deg": null,
    "S01": {
-    "allowance": null,
-    "error": "execution failed: HTTP 404: Not Found\nTraceback (most recent call last):\n  File \"F:\\Prometheus\\.claude\\worktrees\\vivarium-campaign-e1-e6-e16\\vivarium\\viv\\loop.py\", line 477, in _run_claimed\n    result",
-    "kind_status": null,
-    "oracle_calls": null,
-    "set": "cs-h1h0-1-p2",
-    "solved": null,
-    "status": "failed",
-    "vm_ops": null
+    "allowance": "reservation",
+    "error": null,
+    "kind_status": "BUDGET_VM_OPS",
+    "oracle_calls": 12,
+    "set": "cs-h1h0-1-p2b",
+    "solved": false,
+    "status": "completed",
+    "vm_ops": 6003
    },
    "S10": {
-    "allowance": null,
-    "error": "execution failed: HTTP 404: Not Found\nTraceback (most recent call last):\n  File \"F:\\Prometheus\\.claude\\worktrees\\vivarium-campaign-e1-e6-e16\\vivarium\\viv\\loop.py\", line 477, in _run_claimed\n    result",
-    "kind_status": null,
-    "oracle_calls": null,
-    "set": "cs-h1h0-1-p2",
-    "solved": null,
-    "status": "failed",
-    "vm_ops": null
+    "allowance": "reservation",
+    "error": null,
+    "kind_status": "BUDGET_VM_OPS",
+    "oracle_calls": 20,
+    "set": "cs-h1h0-1-p2b",
+    "solved": false,
+    "status": "completed",
+    "vm_ops": 6003
    },
    "S11": {
-    "allowance": null,
-    "error": "execution failed: HTTP 404: Not Found\nTraceback (most recent call last):\n  File \"F:\\Prometheus\\.claude\\worktrees\\vivarium-campaign-e1-e6-e16\\vivarium\\viv\\loop.py\", line 477, in _run_claimed\n    result",
-    "kind_status": null,
-    "oracle_calls": null,
-    "set": "cs-h1h0-1-p2",
-    "solved": null,
-    "status": "failed",
-    "vm_ops": null
+    "allowance": "reservation",
+    "error": null,
+    "kind_status": "BUDGET_VM_OPS",
+    "oracle_calls": 20,
+    "set": "cs-h1h0-1-p2b",
+    "solved": false,
+    "status": "completed",
+    "vm_ops": 6027
    },
    "fresh": {
     "allowance": null,
@@ -283,14 +291,14 @@
     "vm_ops": 6014
    },
    "random_pack": {
-    "allowance": null,
-    "error": "execution failed: HTTP 404: Not Found\nTraceback (most recent call last):\n  File \"F:\\Prometheus\\.claude\\worktrees\\vivarium-campaign-e1-e6-e16\\vivarium\\viv\\loop.py\", line 477, in _run_claimed\n    result",
-    "kind_status": null,
-    "oracle_calls": null,
-    "set": "cs-h1h0-1-p2",
-    "solved": null,
-    "status": "failed",
-    "vm_ops": null
+    "allowance": "reservation",
+    "error": null,
+    "kind_status": "BUDGET_VM_OPS",
+    "oracle_calls": 20,
+    "set": "cs-h1h0-1-p2b",
+    "solved": false,
+    "status": "completed",
+    "vm_ops": 6003
    },
    "task_id": "tgt-02"
   },
@@ -307,34 +315,34 @@
    },
    "S00-deg": null,
    "S01": {
-    "allowance": null,
-    "error": "execution failed: HTTP 404: Not Found\nTraceback (most recent call last):\n  File \"F:\\Prometheus\\.claude\\worktrees\\vivarium-campaign-e1-e6-e16\\vivarium\\viv\\loop.py\", line 477, in _run_claimed\n    result",
-    "kind_status": null,
-    "oracle_calls": null,
-    "set": "cs-h1h0-1-p2",
-    "solved": null,
-    "status": "failed",
-    "vm_ops": null
+    "allowance": "reservation",
+    "error": null,
+    "kind_status": "BUDGET_VM_OPS",
+    "oracle_calls": 12,
+    "set": "cs-h1h0-1-p2b",
+    "solved": false,
+    "status": "completed",
+    "vm_ops": 6006
    },
    "S10": {
-    "allowance": null,
-    "error": "execution failed: HTTP 404: Not Found\nTraceback (most recent call last):\n  File \"F:\\Prometheus\\.claude\\worktrees\\vivarium-campaign-e1-e6-e16\\vivarium\\viv\\loop.py\", line 477, in _run_claimed\n    result",
-    "kind_status": null,
-    "oracle_calls": null,
-    "set": "cs-h1h0-1-p2",
-    "solved": null,
-    "status": "failed",
-    "vm_ops": null
+    "allowance": "reservation",
+    "error": null,
+    "kind_status": "BUDGET_VM_OPS",
+    "oracle_calls": 12,
+    "set": "cs-h1h0-1-p2b",
+    "solved": false,
+    "status": "completed",
+    "vm_ops": 6025
    },
    "S11": {
-    "allowance": null,
-    "error": "execution failed: HTTP 404: Not Found\nTraceback (most recent call last):\n  File \"F:\\Prometheus\\.claude\\worktrees\\vivarium-campaign-e1-e6-e16\\vivarium\\viv\\loop.py\", line 477, in _run_claimed\n    result",
-    "kind_status": null,
-    "oracle_calls": null,
-    "set": "cs-h1h0-1-p2",
-    "solved": null,
-    "status": "failed",
-    "vm_ops": null
+    "allowance": "reservation",
+    "error": null,
+    "kind_status": "BUDGET_VM_OPS",
+    "oracle_calls": 12,
+    "set": "cs-h1h0-1-p2b",
+    "solved": false,
+    "status": "completed",
+    "vm_ops": 6006
    },
    "fresh": {
     "allowance": null,
@@ -347,14 +355,14 @@
     "vm_ops": 6003
    },
    "random_pack": {
-    "allowance": null,
-    "error": "execution failed: HTTP 404: Not Found\nTraceback (most recent call last):\n  File \"F:\\Prometheus\\.claude\\worktrees\\vivarium-campaign-e1-e6-e16\\vivarium\\viv\\loop.py\", line 477, in _run_claimed\n    result",
-    "kind_status": null,
-    "oracle_calls": null,
-    "set": "cs-h1h0-1-p2",
-    "solved": null,
-    "status": "failed",
-    "vm_ops": null
+    "allowance": "reservation",
+    "error": null,
+    "kind_status": "BUDGET_VM_OPS",
+    "oracle_calls": 12,
+    "set": "cs-h1h0-1-p2b",
+    "solved": false,
+    "status": "completed",
+    "vm_ops": 6025
    },
    "task_id": "tgt-03"
   },
@@ -371,34 +379,34 @@
    },
    "S00-deg": null,
    "S01": {
-    "allowance": null,
-    "error": "execution failed: HTTP 404: Not Found\nTraceback (most recent call last):\n  File \"F:\\Prometheus\\.claude\\worktrees\\vivarium-campaign-e1-e6-e16\\vivarium\\viv\\loop.py\", line 477, in _run_claimed\n    result",
-    "kind_status": null,
-    "oracle_calls": null,
-    "set": "cs-h1h0-1-p2",
-    "solved": null,
-    "status": "failed",
-    "vm_ops": null
+    "allowance": "reservation",
+    "error": null,
+    "kind_status": "BUDGET_VM_OPS",
+    "oracle_calls": 12,
+    "set": "cs-h1h0-1-p2b",
+    "solved": false,
+    "status": "completed",
+    "vm_ops": 6006
    },
    "S10": {
-    "allowance": null,
-    "error": "execution failed: HTTP 404: Not Found\nTraceback (most recent call last):\n  File \"F:\\Prometheus\\.claude\\worktrees\\vivarium-campaign-e1-e6-e16\\vivarium\\viv\\loop.py\", line 477, in _run_claimed\n    result",
-    "kind_status": null,
-    "oracle_calls": null,
-    "set": "cs-h1h0-1-p2",
-    "solved": null,
-    "status": "failed",
-    "vm_ops": null
+    "allowance": "reservation",
+    "error": null,
+    "kind_status": "BUDGET_VM_OPS",
+    "oracle_calls": 28,
+    "set": "cs-h1h0-1-p2b",
+    "solved": false,
+    "status": "completed",
+    "vm_ops": 6003
    },
    "S11": {
-    "allowance": null,
-    "error": "execution failed: HTTP 404: Not Found\nTraceback (most recent call last):\n  File \"F:\\Prometheus\\.claude\\worktrees\\vivarium-campaign-e1-e6-e16\\vivarium\\viv\\loop.py\", line 477, in _run_claimed\n    result",
-    "kind_status": null,
-    "oracle_calls": null,
-    "set": "cs-h1h0-1-p2",
-    "solved": null,
-    "status": "failed",
-    "vm_ops": null
+    "allowance": "reservation",
+    "error": null,
+    "kind_status": "BUDGET_VM_OPS",
+    "oracle_calls": 12,
+    "set": "cs-h1h0-1-p2b",
+    "solved": false,
+    "status": "completed",
+    "vm_ops": 6009
    },
    "fresh": {
     "allowance": null,
@@ -411,14 +419,14 @@
     "vm_ops": 6003
    },
    "random_pack": {
-    "allowance": null,
-    "error": "execution failed: HTTP 404: Not Found\nTraceback (most recent call last):\n  File \"F:\\Prometheus\\.claude\\worktrees\\vivarium-campaign-e1-e6-e16\\vivarium\\viv\\loop.py\", line 477, in _run_claimed\n    result",
-    "kind_status": null,
-    "oracle_calls": null,
-    "set": "cs-h1h0-1-p2",
-    "solved": null,
-    "status": "failed",
-    "vm_ops": null
+    "allowance": "reservation",
+    "error": null,
+    "kind_status": "BUDGET_VM_OPS",
+    "oracle_calls": 28,
+    "set": "cs-h1h0-1-p2b",
+    "solved": false,
+    "status": "completed",
+    "vm_ops": 6003
    },
    "task_id": "tgt-04"
   },
@@ -434,9 +442,36 @@
     "vm_ops": 6041
    },
    "S00-deg": null,
-   "S01": null,
-   "S10": null,
-   "S11": null,
+   "S01": {
+    "allowance": "reservation",
+    "error": null,
+    "kind_status": "BUDGET_VM_OPS",
+    "oracle_calls": 12,
+    "set": "cs-h1h0-1-p2b",
+    "solved": false,
+    "status": "completed",
+    "vm_ops": 6030
+   },
+   "S10": {
+    "allowance": "reservation",
+    "error": null,
+    "kind_status": "BUDGET_VM_OPS",
+    "oracle_calls": 20,
+    "set": "cs-h1h0-1-p2b",
+    "solved": false,
+    "status": "completed",
+    "vm_ops": 6007
+   },
+   "S11": {
+    "allowance": "reservation",
+    "error": null,
+    "kind_status": "BUDGET_VM_OPS",
+    "oracle_calls": 20,
+    "set": "cs-h1h0-1-p2b",
+    "solved": false,
+    "status": "completed",
+    "vm_ops": 6021
+   },
    "fresh": {
     "allowance": null,
     "error": null,
@@ -447,7 +482,16 @@
     "status": "completed",
     "vm_ops": 6041
    },
-   "random_pack": null,
+   "random_pack": {
+    "allowance": "reservation",
+    "error": null,
+    "kind_status": "BUDGET_VM_OPS",
+    "oracle_calls": 20,
+    "set": "cs-h1h0-1-p2b",
+    "solved": false,
+    "status": "completed",
+    "vm_ops": 6007
+   },
    "task_id": "tgt-05"
   },
   {
@@ -462,9 +506,36 @@
     "vm_ops": 6047
    },
    "S00-deg": null,
-   "S01": null,
-   "S10": null,
-   "S11": null,
+   "S01": {
+    "allowance": "reservation",
+    "error": null,
+    "kind_status": "BUDGET_VM_OPS",
+    "oracle_calls": 12,
+    "set": "cs-h1h0-1-p2b",
+    "solved": false,
+    "status": "completed",
+    "vm_ops": 6003
+   },
+   "S10": {
+    "allowance": "reservation",
+    "error": null,
+    "kind_status": "BUDGET_VM_OPS",
+    "oracle_calls": 20,
+    "set": "cs-h1h0-1-p2b",
+    "solved": false,
+    "status": "completed",
+    "vm_ops": 6009
+   },
+   "S11": {
+    "allowance": "reservation",
+    "error": null,
+    "kind_status": "BUDGET_VM_OPS",
+    "oracle_calls": 20,
+    "set": "cs-h1h0-1-p2b",
+    "solved": false,
+    "status": "completed",
+    "vm_ops": 6017
+   },
    "fresh": {
     "allowance": null,
     "error": null,
@@ -475,7 +546,16 @@
     "status": "completed",
     "vm_ops": 6047
    },
-   "random_pack": null,
+   "random_pack": {
+    "allowance": "reservation",
+    "error": null,
+    "kind_status": "BUDGET_VM_OPS",
+    "oracle_calls": 20,
+    "set": "cs-h1h0-1-p2b",
+    "solved": false,
+    "status": "completed",
+    "vm_ops": 6009
+   },
    "task_id": "tgt-06"
   },
   {
@@ -490,9 +570,36 @@
     "vm_ops": 6016
    },
    "S00-deg": null,
-   "S01": null,
-   "S10": null,
-   "S11": null,
+   "S01": {
+    "allowance": "reservation",
+    "error": null,
+    "kind_status": "BUDGET_VM_OPS",
+    "oracle_calls": 28,
+    "set": "cs-h1h0-1-p2b",
+    "solved": false,
+    "status": "completed",
+    "vm_ops": 6005
+   },
+   "S10": {
+    "allowance": "reservation",
+    "error": null,
+    "kind_status": "BUDGET_VM_OPS",
+    "oracle_calls": 12,
+    "set": "cs-h1h0-1-p2b",
+    "solved": false,
+    "status": "completed",
+    "vm_ops": 6002
+   },
+   "S11": {
+    "allowance": "reservation",
+    "error": null,
+    "kind_status": "BUDGET_VM_OPS",
+    "oracle_calls": 12,
+    "set": "cs-h1h0-1-p2b",
+    "solved": false,
+    "status": "completed",
+    "vm_ops": 6007
+   },
    "fresh": {
     "allowance": null,
     "error": null,
@@ -503,7 +610,16 @@
     "status": "completed",
     "vm_ops": 6016
    },
-   "random_pack": null,
+   "random_pack": {
+    "allowance": "reservation",
+    "error": null,
+    "kind_status": "BUDGET_VM_OPS",
+    "oracle_calls": 12,
+    "set": "cs-h1h0-1-p2b",
+    "solved": false,
+    "status": "completed",
+    "vm_ops": 6002
+   },
    "task_id": "tgt-07"
   },
   {
@@ -518,9 +634,36 @@
     "vm_ops": 6003
    },
    "S00-deg": null,
-   "S01": null,
-   "S10": null,
-   "S11": null,
+   "S01": {
+    "allowance": "reservation",
+    "error": null,
+    "kind_status": "BUDGET_VM_OPS",
+    "oracle_calls": 12,
+    "set": "cs-h1h0-1-p2b",
+    "solved": false,
+    "status": "completed",
+    "vm_ops": 6006
+   },
+   "S10": {
+    "allowance": "reservation",
+    "error": null,
+    "kind_status": "BUDGET_VM_OPS",
+    "oracle_calls": 28,
+    "set": "cs-h1h0-1-p2b",
+    "solved": false,
+    "status": "completed",
+    "vm_ops": 6009
+   },
+   "S11": {
+    "allowance": "reservation",
+    "error": null,
+    "kind_status": "BUDGET_VM_OPS",
+    "oracle_calls": 20,
+    "set": "cs-h1h0-1-p2b",
+    "solved": false,
+    "status": "completed",
+    "vm_ops": 6020
+   },
    "fresh": {
     "allowance": null,
     "error": null,
@@ -531,7 +674,16 @@
     "status": "completed",
     "vm_ops": 6003
    },
-   "random_pack": null,
+   "random_pack": {
+    "allowance": "reservation",
+    "error": null,
+    "kind_status": "BUDGET_VM_OPS",
+    "oracle_calls": 28,
+    "set": "cs-h1h0-1-p2b",
+    "solved": false,
+    "status": "completed",
+    "vm_ops": 6009
+   },
    "task_id": "tgt-08"
   },
   {
@@ -546,9 +698,36 @@
     "vm_ops": 6006
    },
    "S00-deg": null,
-   "S01": null,
-   "S10": null,
-   "S11": null,
+   "S01": {
+    "allowance": "reservation",
+    "error": null,
+    "kind_status": "BUDGET_VM_OPS",
+    "oracle_calls": 28,
+    "set": "cs-h1h0-1-p2b",
+    "solved": false,
+    "status": "completed",
+    "vm_ops": 6007
+   },
+   "S10": {
+    "allowance": "reservation",
+    "error": null,
+    "kind_status": "BUDGET_VM_OPS",
+    "oracle_calls": 12,
+    "set": "cs-h1h0-1-p2b",
+    "solved": false,
+    "status": "completed",
+    "vm_ops": 6002
+   },
+   "S11": {
+    "allowance": "reservation",
+    "error": null,
+    "kind_status": "BUDGET_VM_OPS",
+    "oracle_calls": 12,
+    "set": "cs-h1h0-1-p2b",
+    "solved": false,
+    "status": "completed",
+    "vm_ops": 6006
+   },
    "fresh": {
     "allowance": null,
     "error": null,
@@ -559,7 +738,16 @@
     "status": "completed",
     "vm_ops": 6006
    },
-   "random_pack": null,
+   "random_pack": {
+    "allowance": "reservation",
+    "error": null,
+    "kind_status": "BUDGET_VM_OPS",
+    "oracle_calls": 12,
+    "set": "cs-h1h0-1-p2b",
+    "solved": false,
+    "status": "completed",
+    "vm_ops": 6002
+   },
    "task_id": "tgt-09"
   },
   {
@@ -574,9 +762,36 @@
     "vm_ops": 658
    },
    "S00-deg": null,
-   "S01": null,
-   "S10": null,
-   "S11": null,
+   "S01": {
+    "allowance": "reservation",
+    "error": null,
+    "kind_status": "SOLVED",
+    "oracle_calls": 12,
+    "set": "cs-h1h0-1-p2b",
+    "solved": true,
+    "status": "completed",
+    "vm_ops": 664
+   },
+   "S10": {
+    "allowance": "reservation",
+    "error": null,
+    "kind_status": "SOLVED",
+    "oracle_calls": 12,
+    "set": "cs-h1h0-1-p2b",
+    "solved": true,
+    "status": "completed",
+    "vm_ops": 578
+   },
+   "S11": {
+    "allowance": "reservation",
+    "error": null,
+    "kind_status": "SOLVED",
+    "oracle_calls": 12,
+    "set": "cs-h1h0-1-p2b",
+    "solved": true,
+    "status": "completed",
+    "vm_ops": 672
+   },
    "fresh": {
     "allowance": null,
     "error": null,
@@ -587,7 +802,16 @@
     "status": "completed",
     "vm_ops": 658
    },
-   "random_pack": null,
+   "random_pack": {
+    "allowance": "reservation",
+    "error": null,
+    "kind_status": "SOLVED",
+    "oracle_calls": 12,
+    "set": "cs-h1h0-1-p2b",
+    "solved": true,
+    "status": "completed",
+    "vm_ops": 578
+   },
    "task_id": "tgt-10"
   },
   {
@@ -602,9 +826,36 @@
     "vm_ops": 6022
    },
    "S00-deg": null,
-   "S01": null,
-   "S10": null,
-   "S11": null,
+   "S01": {
+    "allowance": "reservation",
+    "error": null,
+    "kind_status": "SOLVED",
+    "oracle_calls": 36,
+    "set": "cs-h1h0-1-p2b",
+    "solved": true,
+    "status": "completed",
+    "vm_ops": 821
+   },
+   "S10": {
+    "allowance": "reservation",
+    "error": null,
+    "kind_status": "BUDGET_VM_OPS",
+    "oracle_calls": 12,
+    "set": "cs-h1h0-1-p2b",
+    "solved": false,
+    "status": "completed",
+    "vm_ops": 6010
+   },
+   "S11": {
+    "allowance": "reservation",
+    "error": null,
+    "kind_status": "SOLVED",
+    "oracle_calls": 20,
+    "set": "cs-h1h0-1-p2b",
+    "solved": true,
+    "status": "completed",
+    "vm_ops": 503
+   },
    "fresh": {
     "allowance": null,
     "error": null,
@@ -615,9 +866,18 @@
     "status": "completed",
     "vm_ops": 6022
    },
-   "random_pack": null,
+   "random_pack": {
+    "allowance": "reservation",
+    "error": null,
+    "kind_status": "BUDGET_VM_OPS",
+    "oracle_calls": 12,
+    "set": "cs-h1h0-1-p2b",
+    "solved": false,
+    "status": "completed",
+    "vm_ops": 6010
+   },
    "task_id": "tgt-11"
   }
  ],
- "written": "2026-09-10T18:30:24+00:00"
+ "written": "2026-09-10T23:15:24+00:00"
 }
