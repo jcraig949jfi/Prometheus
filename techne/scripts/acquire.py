@@ -159,8 +159,16 @@ def acquire_repository(entry: dict, prof: dict, dry_run: bool) -> dict:
             if sub.get("moving_branch_pins"):
                 rec["deviations"].append(
                     f"DEV-T4[{entry['id']}]: {len(sub['moving_branch_pins'])} submodule(s) "
-                    f"declare a `branch` in .gitmodules. A branch is not a pin; the commit "
-                    f"recorded in `pins` is what was actually fetched.")
+                    f"declare a `branch` in .gitmodules. A branch is not a pin; `pins` "
+                    f"records the commit actually checked out after forcing.")
+            for d in sub.get("deviations", []):
+                rec["deviations"].append(f"DEV-T6[{entry['id']}]: {d}")
+            if sub.get("declared") and not sub.get("all_at_recorded_commit"):
+                rec["status"] = "SOURCE_AT_PINNED_REVISION_SUBMODULES_INCOMPLETE"
+                rec["unrun_or_blocked"].append(
+                    f"{sub.get('n_not_initialized')} submodule(s) not initialised and "
+                    f"{sub.get('n_off_pin')} off their recorded commit; any build or smoke "
+                    f"run depending on them is BLOCKED, not merely degraded")
             if out["licenses"]["status"] == "NO_NOTICE_FILES_FOUND":
                 rec["deviations"].append(
                     f"DEV-T5[{entry['id']}]: no LICENSE/COPYING/NOTICE file found in the "
@@ -254,8 +262,12 @@ def main(argv: list[str] | None = None) -> int:
         c = obs["clone"]
         print(f"path            {c['path']}")
         print(f"pin verified    {c['pin_verified']}  ({c['checked_out_commit']})")
-        print(f"submodules      {c['submodules']['status']} "
-              f"n_declared={c['submodules'].get('n_declared')}")
+        sm = c["submodules"]
+        print(f"submodules      {sm['status']} n_declared={sm.get('n_declared')} "
+              f"at_pin={sm.get('n_at_pin')} uninit={sm.get('n_not_initialized')} "
+              f"off_pin={sm.get('n_off_pin')}")
+        for f in sm.get("forced_to_recorded_commit", []):
+            print(f"  forced        {f['path']} -> {f['wanted'][:12]} ok={f['ok']}")
         print(f"notices         {c['licenses']['status']} "
               f"{[f['path'] for f in c['licenses']['files']]}")
     rr = rec["resource_receipt"]
