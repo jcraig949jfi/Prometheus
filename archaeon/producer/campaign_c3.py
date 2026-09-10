@@ -210,12 +210,48 @@ def issue(conn, rows: Optional[List[Dict[str, Any]]] = None, config=None) -> Dic
     return {"campaign": CAMPAIGN_ID, "candidate_set_id": csid, "experiment_ids": ids, "registered": len(ids)}
 
 
+def reissue(conn, labels: List[str], suffix: str = "R1", config=None) -> Dict[str, Any]:
+    """Re-issue rows that FAILED for transport reasons (never a producer
+    error) under a new request key; the spec and its hash are unchanged, so
+    the row is the same experiment attempted again, and the failed row stays
+    in the queue as its record."""
+    config = config or cfg.DEFAULT
+    rows = [r for r in plan() if r["label"] in labels]
+    if len(rows) != len(labels):
+        raise RuntimeError("labels not in the plan: {}".format(sorted(set(labels) - {r["label"] for r in rows})))
+    csid = "cs-" + CAMPAIGN_ID.lower() + "-" + suffix.lower()
+    ids = []
+    for r in rows:
+        cand = vq.make_candidate(r["spec"], family_id=r["family_id"], arm_id=r["arm_id"],
+                                 request_key="{}-{}".format(r["request_key"], suffix),
+                                 source_evidence={"schema": "archaeon.campaign.v0", "campaign": CAMPAIGN_ID,
+                                                  "mode": "human", "policy_version": "campaign.C3.v0",
+                                                  "template_id": "campaign." + CAMPAIGN_ID, "label": r["label"],
+                                                  "reissue_of_request_key": r["request_key"],
+                                                  "reissue_reason": "ENGINE_TRANSPORT failure on the first attempt; same spec, same hash",
+                                                  "selection_basis": "operator_directed_family",
+                                                  "authority": "re-attempt of a transport-failed row", "upstream_selection_history": "UNKNOWN"})
+        res = vq.submit(conn, candidates=[cand], selected_index=0, source_reason="human",
+                        created_by="archaeon", config=config, candidate_set_id=csid)
+        ids.append(res["selected_experiment_id"])
+    return {"campaign": CAMPAIGN_ID, "candidate_set_id": csid, "experiment_ids": ids, "labels": labels}
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(prog="archaeon.producer.campaign_c3")
     ap.add_argument("--plan", action="store_true"); ap.add_argument("--issue", action="store_true")
+    ap.add_argument("--reissue", nargs="+", metavar="LABEL")
     a = ap.parse_args(argv)
     if a.plan:
         print(json.dumps([{k: v for k, v in r.items() if k != "spec"} for r in plan()], indent=1)); return 0
+    if a.reissue:
+        from evidence_wiki.ew import db as ewdb
+        conn = ewdb.connect()
+        try:
+            print(json.dumps(reissue(conn, a.reissue), indent=2, default=str))
+        finally:
+            conn.close()
+        return 0
     if a.issue:
         from evidence_wiki.ew import db as ewdb
         conn = ewdb.connect()

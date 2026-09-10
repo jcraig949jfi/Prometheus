@@ -2,23 +2,24 @@
  "candidate_set": "cs-c3-2",
  "complete": false,
  "d3_over_c3": {
-  "reason": "acquisition arm incomplete; D3 needs eight independent rules per descriptor region",
-  "status": "PARTIAL"
+  "next": "C3-3 under R-C3-1..5 with a criterion whose attainable range for random tables is not a point (Herakles cellwise_majority_match: random 0.4998 over [0.4939, 0.5099])",
+  "reason": "the acquisition arm is constant zero under `stable` and `at_T` (116 of 116 rules); every D3 region built from random rules has zero within-region variance and is SKIPPED, and this does not change with completion because the value is constant by construction of the criterion, not by sample size (Harmonia a1d0ed9c8). cs-c3-2 answers G1, H1 and Q2; it CANNOT answer H2, and that is a vacuous reading, never evidence against it.",
+  "status": "STRUCTURALLY_VOID_PROVISIONAL"
  },
  "ic_sample_means": [
-  0.058617021276595745,
-  0.0623404255319149,
-  0.06148936170212766,
-  0.05872340425531915
+  0.043046875,
+  0.04578125,
+  0.04515625,
+  0.043125000000000004
  ],
  "icc1_rules_all": {
   "dropped": 0,
-  "grand_mean": 0.060292553191489365,
-  "groups": 94,
-  "icc1": 0.9952585391191143,
+  "grand_mean": 0.04427734375,
+  "groups": 128,
+  "icc1": 0.9953691954609879,
   "k": 4,
-  "msb": 0.14509669698009608,
-  "msw": 0.00017260638297872345
+  "msb": 0.10911068989911417,
+  "msw": 0.00012675781250000003
  },
  "icc1_rules_excluding_structural_zeros": {
   "dropped": 0,
@@ -29,7 +30,7 @@
   "msb": 0.07312777777777776,
   "msw": 0.0018027777777777781
  },
- "n_completed": 112,
+ "n_completed": 146,
  "n_rows": 150,
  "null_identity": {
   "checked": [
@@ -375,9 +376,9 @@
  "schema": "archaeon.c3.readout.v0",
  "status_by_arm": {
   "C3-acq": {
-   "completed": 82,
+   "completed": 116,
    "failed": 1,
-   "queued": 36,
+   "queued": 2,
    "running": 1
   },
   "C3-base": {
@@ -389,6 +390,17 @@
   "C3-null": {
    "completed": 18
   }
+ },
+ "structural_zeros": {
+  "acq_completed": 116,
+  "acq_zero_on_every_sample": 116,
+  "base_zero": [
+   "centre_01",
+   "centre_10"
+  ],
+  "hist_zero": [
+   "maj"
+  ]
  },
  "table": [
   {
@@ -2935,6 +2947,1060 @@
   },
   {
    "accuracy_at_T_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "accuracy_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "arm": "C3-acq",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "random_083",
+   "mean": 0.0,
+   "n_incorrect_by_sample": [
+    100,
+    100,
+    100,
+    100
+   ],
+   "outcome": "FALSIFIED",
+   "sfe_experiment_id": "exp_0431a51bf456a63150a2c24c"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "accuracy_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "arm": "C3-acq",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "random_084",
+   "mean": 0.0,
+   "n_incorrect_by_sample": [
+    100,
+    100,
+    100,
+    100
+   ],
+   "outcome": "FALSIFIED",
+   "sfe_experiment_id": "exp_6a2895cdf327e31f774e7def"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "accuracy_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "arm": "C3-acq",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "random_085",
+   "mean": 0.0,
+   "n_incorrect_by_sample": [
+    100,
+    100,
+    100,
+    100
+   ],
+   "outcome": "FALSIFIED",
+   "sfe_experiment_id": "exp_82361c5bfb5d2b23411fe732"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "accuracy_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "arm": "C3-acq",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "random_086",
+   "mean": 0.0,
+   "n_incorrect_by_sample": [
+    100,
+    100,
+    100,
+    100
+   ],
+   "outcome": "FALSIFIED",
+   "sfe_experiment_id": "exp_e79e27f691741101603dc16b"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "accuracy_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "arm": "C3-acq",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "random_087",
+   "mean": 0.0,
+   "n_incorrect_by_sample": [
+    100,
+    100,
+    100,
+    100
+   ],
+   "outcome": "FALSIFIED",
+   "sfe_experiment_id": "exp_a0746fc8e35add89ddc355a5"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "accuracy_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "arm": "C3-acq",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "random_088",
+   "mean": 0.0,
+   "n_incorrect_by_sample": [
+    100,
+    100,
+    100,
+    100
+   ],
+   "outcome": "FALSIFIED",
+   "sfe_experiment_id": "exp_f942a2403ccea2e4f245313a"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "accuracy_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "arm": "C3-acq",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "random_089",
+   "mean": 0.0,
+   "n_incorrect_by_sample": [
+    100,
+    100,
+    100,
+    100
+   ],
+   "outcome": "FALSIFIED",
+   "sfe_experiment_id": "exp_6d046d7ae3de428847aaf902"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "accuracy_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "arm": "C3-acq",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "random_090",
+   "mean": 0.0,
+   "n_incorrect_by_sample": [
+    100,
+    100,
+    100,
+    100
+   ],
+   "outcome": "FALSIFIED",
+   "sfe_experiment_id": "exp_bad23d2663da83c3914c84e7"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "accuracy_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "arm": "C3-acq",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "random_091",
+   "mean": 0.0,
+   "n_incorrect_by_sample": [
+    100,
+    100,
+    100,
+    100
+   ],
+   "outcome": "FALSIFIED",
+   "sfe_experiment_id": "exp_6c4c04959f66971fdf6abd37"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "accuracy_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "arm": "C3-acq",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "random_092",
+   "mean": 0.0,
+   "n_incorrect_by_sample": [
+    100,
+    100,
+    100,
+    100
+   ],
+   "outcome": "FALSIFIED",
+   "sfe_experiment_id": "exp_87e2ec5247185fd8a6ec8491"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "accuracy_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "arm": "C3-acq",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "random_093",
+   "mean": 0.0,
+   "n_incorrect_by_sample": [
+    100,
+    100,
+    100,
+    100
+   ],
+   "outcome": "FALSIFIED",
+   "sfe_experiment_id": "exp_2fd6ebf4dd6d8e2478f222db"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "accuracy_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "arm": "C3-acq",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "random_094",
+   "mean": 0.0,
+   "n_incorrect_by_sample": [
+    100,
+    100,
+    100,
+    100
+   ],
+   "outcome": "FALSIFIED",
+   "sfe_experiment_id": "exp_fec4abed8be612d4a0416e31"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "accuracy_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "arm": "C3-acq",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "random_095",
+   "mean": 0.0,
+   "n_incorrect_by_sample": [
+    100,
+    100,
+    100,
+    100
+   ],
+   "outcome": "FALSIFIED",
+   "sfe_experiment_id": "exp_cd561456318f732d1001db57"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "accuracy_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "arm": "C3-acq",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "random_096",
+   "mean": 0.0,
+   "n_incorrect_by_sample": [
+    100,
+    100,
+    100,
+    100
+   ],
+   "outcome": "FALSIFIED",
+   "sfe_experiment_id": "exp_0e880b7b196ee6f17bb6f5a0"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "accuracy_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "arm": "C3-acq",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "random_097",
+   "mean": 0.0,
+   "n_incorrect_by_sample": [
+    100,
+    100,
+    100,
+    100
+   ],
+   "outcome": "FALSIFIED",
+   "sfe_experiment_id": "exp_c65ba150b94a443dd918289d"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "accuracy_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "arm": "C3-acq",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "random_098",
+   "mean": 0.0,
+   "n_incorrect_by_sample": [
+    100,
+    100,
+    100,
+    100
+   ],
+   "outcome": "FALSIFIED",
+   "sfe_experiment_id": "exp_defd2c7cda4e9888e63e480d"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "accuracy_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "arm": "C3-acq",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "random_099",
+   "mean": 0.0,
+   "n_incorrect_by_sample": [
+    100,
+    100,
+    100,
+    100
+   ],
+   "outcome": "FALSIFIED",
+   "sfe_experiment_id": "exp_80517ace9f1a64f444a2d6b4"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "accuracy_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "arm": "C3-acq",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "random_100",
+   "mean": 0.0,
+   "n_incorrect_by_sample": [
+    100,
+    100,
+    100,
+    100
+   ],
+   "outcome": "FALSIFIED",
+   "sfe_experiment_id": "exp_1d1668ce47a70d8f5731a685"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "accuracy_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "arm": "C3-acq",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "random_101",
+   "mean": 0.0,
+   "n_incorrect_by_sample": [
+    100,
+    100,
+    100,
+    100
+   ],
+   "outcome": "FALSIFIED",
+   "sfe_experiment_id": "exp_1cb1e67ad0569f0417827af4"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "accuracy_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "arm": "C3-acq",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "random_102",
+   "mean": 0.0,
+   "n_incorrect_by_sample": [
+    100,
+    100,
+    100,
+    100
+   ],
+   "outcome": "FALSIFIED",
+   "sfe_experiment_id": "exp_f04cc6a47098e0de70d95a35"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "accuracy_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "arm": "C3-acq",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "random_103",
+   "mean": 0.0,
+   "n_incorrect_by_sample": [
+    100,
+    100,
+    100,
+    100
+   ],
+   "outcome": "FALSIFIED",
+   "sfe_experiment_id": "exp_7b5a22b4c8ee4e72846c17fb"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "accuracy_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "arm": "C3-acq",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "random_104",
+   "mean": 0.0,
+   "n_incorrect_by_sample": [
+    100,
+    100,
+    100,
+    100
+   ],
+   "outcome": "FALSIFIED",
+   "sfe_experiment_id": "exp_07075ca89437469d2acc30c0"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "accuracy_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "arm": "C3-acq",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "random_105",
+   "mean": 0.0,
+   "n_incorrect_by_sample": [
+    100,
+    100,
+    100,
+    100
+   ],
+   "outcome": "FALSIFIED",
+   "sfe_experiment_id": "exp_69f1d68f8eeb7d61fa023601"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "accuracy_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "arm": "C3-acq",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "random_106",
+   "mean": 0.0,
+   "n_incorrect_by_sample": [
+    100,
+    100,
+    100,
+    100
+   ],
+   "outcome": "FALSIFIED",
+   "sfe_experiment_id": "exp_f7cd4ba0325959589e2fe0a6"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "accuracy_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "arm": "C3-acq",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "random_107",
+   "mean": 0.0,
+   "n_incorrect_by_sample": [
+    100,
+    100,
+    100,
+    100
+   ],
+   "outcome": "FALSIFIED",
+   "sfe_experiment_id": "exp_a4eb8870661f1636688bc3a1"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "accuracy_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "arm": "C3-acq",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "random_108",
+   "mean": 0.0,
+   "n_incorrect_by_sample": [
+    100,
+    100,
+    100,
+    100
+   ],
+   "outcome": "FALSIFIED",
+   "sfe_experiment_id": "exp_843a056e1119758ade7fe825"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "accuracy_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "arm": "C3-acq",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "random_109",
+   "mean": 0.0,
+   "n_incorrect_by_sample": [
+    100,
+    100,
+    100,
+    100
+   ],
+   "outcome": "FALSIFIED",
+   "sfe_experiment_id": "exp_578cc5f966099e765fb6671e"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "accuracy_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "arm": "C3-acq",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "random_110",
+   "mean": 0.0,
+   "n_incorrect_by_sample": [
+    100,
+    100,
+    100,
+    100
+   ],
+   "outcome": "FALSIFIED",
+   "sfe_experiment_id": "exp_d2044f3210ab7d3fc5b733c5"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "accuracy_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "arm": "C3-acq",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "random_111",
+   "mean": 0.0,
+   "n_incorrect_by_sample": [
+    100,
+    100,
+    100,
+    100
+   ],
+   "outcome": "FALSIFIED",
+   "sfe_experiment_id": "exp_60ad08f305aff271d96bd892"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "accuracy_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "arm": "C3-acq",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "random_112",
+   "mean": 0.0,
+   "n_incorrect_by_sample": [
+    100,
+    100,
+    100,
+    100
+   ],
+   "outcome": "FALSIFIED",
+   "sfe_experiment_id": "exp_4f2a4eca1e5da2f1464a3774"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "accuracy_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "arm": "C3-acq",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "random_113",
+   "mean": 0.0,
+   "n_incorrect_by_sample": [
+    100,
+    100,
+    100,
+    100
+   ],
+   "outcome": "FALSIFIED",
+   "sfe_experiment_id": "exp_4787316ef487192963c75414"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "accuracy_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "arm": "C3-acq",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "random_114",
+   "mean": 0.0,
+   "n_incorrect_by_sample": [
+    100,
+    100,
+    100,
+    100
+   ],
+   "outcome": "FALSIFIED",
+   "sfe_experiment_id": "exp_bc24907f3c023fde1bccfa5f"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "accuracy_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "arm": "C3-acq",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "random_115",
+   "mean": 0.0,
+   "n_incorrect_by_sample": [
+    100,
+    100,
+    100,
+    100
+   ],
+   "outcome": "FALSIFIED",
+   "sfe_experiment_id": "exp_7007288db80785b4de8b3b2a"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "accuracy_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "arm": "C3-acq",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "random_116",
+   "mean": 0.0,
+   "n_incorrect_by_sample": [
+    100,
+    100,
+    100,
+    100
+   ],
+   "outcome": "FALSIFIED",
+   "sfe_experiment_id": "exp_492bbb5833555c4ccac7d14d"
+  },
+  {
+   "accuracy_at_T_by_sample": [
     0.49,
     0.54,
     0.48,
@@ -3864,5 +4930,5 @@
    "sfe_experiment_id": "exp_2d9d00cd7ee528bf2748e43a"
   }
  ],
- "written": "2026-09-10T16:24:16+00:00"
+ "written": "2026-09-10T17:37:39+00:00"
 }

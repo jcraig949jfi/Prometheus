@@ -48,9 +48,17 @@ def test_readout_excludes_null_arm_from_icc_and_marks_partial():
     r = R.readout(rows)
     assert r["complete"] is False and r["n_completed"] == 3
     assert r["icc1_rules_all"]["groups"] == 2 and r["icc1_rules_excluding_structural_zeros"]["groups"] == 1
-    assert r["d3_over_c3"]["status"] == "PARTIAL"
+    # every completed acq row is zero -> provisionally VOID (Harmonia a1d0ed9c8), not merely partial
+    assert r["d3_over_c3"]["status"] == "STRUCTURALLY_VOID_PROVISIONAL"
+    assert r["structural_zeros"]["acq_zero_on_every_sample"] == 1
     md = R.to_markdown(r)
-    assert "PARTIAL" in md and "exp:reflect -> IDENTICAL" in md
+    assert "PARTIAL" in md and "exp:reflect -> IDENTICAL" in md and "Structural zeros" in md
+    # a non-zero acq row keeps the arm alive: PARTIAL while incomplete
+    rows2 = rows + [_row("C3-acq", "random_002", [_rep(0.3, 70, "y"), _rep(0.2, 80, "y2")])]
+    assert R.readout(rows2)["d3_over_c3"]["status"] == "PARTIAL"
+    # complete and all-zero -> VOID outright
+    rows3 = [x for x in rows if x["status"] == "completed"]
+    assert R.readout(rows3)["d3_over_c3"]["status"] == "STRUCTURALLY_VOID"
 
 
 def test_harmonia_gate_flags_a_missing_digest_as_indeterminate_and_a_target_flip_by_signature():

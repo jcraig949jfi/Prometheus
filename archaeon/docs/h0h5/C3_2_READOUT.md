@@ -1,10 +1,10 @@
 # C3-2 readout (cs-c3-2) -- PARTIAL
 
-Written 2026-09-10T16:24:16+00:00. Numbers only; Harmonia rules. Unit for accuracy: the IC sample (four shared samples, one seed_root). Unit for D3: the rule.
+Written 2026-09-10T17:37:39+00:00. Numbers only; Harmonia rules. Unit for accuracy: the IC sample (four shared samples, one seed_root). Unit for D3: the rule.
 
 ## Progress
 
-- C3-acq: 82 completed, 1 failed, 36 queued, 1 running
+- C3-acq: 116 completed, 1 failed, 2 queued, 1 running
 - C3-base: 6 completed
 - C3-hist: 6 completed
 - C3-null: 18 completed
@@ -118,6 +118,40 @@ Fields compared per IC sample: accuracy_stable, n_incorrect_stable, mask_digest_
 - C3-acq random_080: [0.0, 0.0, 0.0, 0.0] mean 0.0
 - C3-acq random_081: [0.0, 0.0, 0.0, 0.0] mean 0.0
 - C3-acq random_082: [0.0, 0.0, 0.0, 0.0] mean 0.0
+- C3-acq random_083: [0.0, 0.0, 0.0, 0.0] mean 0.0
+- C3-acq random_084: [0.0, 0.0, 0.0, 0.0] mean 0.0
+- C3-acq random_085: [0.0, 0.0, 0.0, 0.0] mean 0.0
+- C3-acq random_086: [0.0, 0.0, 0.0, 0.0] mean 0.0
+- C3-acq random_087: [0.0, 0.0, 0.0, 0.0] mean 0.0
+- C3-acq random_088: [0.0, 0.0, 0.0, 0.0] mean 0.0
+- C3-acq random_089: [0.0, 0.0, 0.0, 0.0] mean 0.0
+- C3-acq random_090: [0.0, 0.0, 0.0, 0.0] mean 0.0
+- C3-acq random_091: [0.0, 0.0, 0.0, 0.0] mean 0.0
+- C3-acq random_092: [0.0, 0.0, 0.0, 0.0] mean 0.0
+- C3-acq random_093: [0.0, 0.0, 0.0, 0.0] mean 0.0
+- C3-acq random_094: [0.0, 0.0, 0.0, 0.0] mean 0.0
+- C3-acq random_095: [0.0, 0.0, 0.0, 0.0] mean 0.0
+- C3-acq random_096: [0.0, 0.0, 0.0, 0.0] mean 0.0
+- C3-acq random_097: [0.0, 0.0, 0.0, 0.0] mean 0.0
+- C3-acq random_098: [0.0, 0.0, 0.0, 0.0] mean 0.0
+- C3-acq random_099: [0.0, 0.0, 0.0, 0.0] mean 0.0
+- C3-acq random_100: [0.0, 0.0, 0.0, 0.0] mean 0.0
+- C3-acq random_101: [0.0, 0.0, 0.0, 0.0] mean 0.0
+- C3-acq random_102: [0.0, 0.0, 0.0, 0.0] mean 0.0
+- C3-acq random_103: [0.0, 0.0, 0.0, 0.0] mean 0.0
+- C3-acq random_104: [0.0, 0.0, 0.0, 0.0] mean 0.0
+- C3-acq random_105: [0.0, 0.0, 0.0, 0.0] mean 0.0
+- C3-acq random_106: [0.0, 0.0, 0.0, 0.0] mean 0.0
+- C3-acq random_107: [0.0, 0.0, 0.0, 0.0] mean 0.0
+- C3-acq random_108: [0.0, 0.0, 0.0, 0.0] mean 0.0
+- C3-acq random_109: [0.0, 0.0, 0.0, 0.0] mean 0.0
+- C3-acq random_110: [0.0, 0.0, 0.0, 0.0] mean 0.0
+- C3-acq random_111: [0.0, 0.0, 0.0, 0.0] mean 0.0
+- C3-acq random_112: [0.0, 0.0, 0.0, 0.0] mean 0.0
+- C3-acq random_113: [0.0, 0.0, 0.0, 0.0] mean 0.0
+- C3-acq random_114: [0.0, 0.0, 0.0, 0.0] mean 0.0
+- C3-acq random_115: [0.0, 0.0, 0.0, 0.0] mean 0.0
+- C3-acq random_116: [0.0, 0.0, 0.0, 0.0] mean 0.0
 - C3-base all_one: [0.49, 0.54, 0.48, 0.46] mean 0.492
 - C3-base all_zero: [0.51, 0.46, 0.52, 0.54] mean 0.508
 - C3-base centre_00: [0.51, 0.46, 0.52, 0.54] mean 0.508
@@ -131,13 +165,17 @@ Fields compared per IC sample: accuracy_stable, n_incorrect_stable, mask_digest_
 - C3-hist particle1: [0.69, 0.78, 0.74, 0.67] mean 0.72
 - C3-hist particle2: [0.71, 0.8, 0.74, 0.69] mean 0.735
 
-IC-sample column means (all non-null completed rows): [0.0586, 0.0623, 0.0615, 0.0587]
+IC-sample column means (all non-null completed rows): [0.043, 0.0458, 0.0452, 0.0431]
 
 ## ICC(1), rule as group, four IC samples as measures
 
-- all rules: {"icc1": 0.9953, "msb": 0.1451, "msw": 0.0002, "k": 4, "groups": 94, "dropped": 0, "grand_mean": 0.0603}
+- all rules: {"icc1": 0.9954, "msb": 0.1091, "msw": 0.0001, "k": 4, "groups": 128, "dropped": 0, "grand_mean": 0.0443}
 - excluding structural zeros (rules with 0.0 on every sample under `stable`): {"icc1": 0.9082, "msb": 0.0731, "msw": 0.0018, "k": 4, "groups": 9, "dropped": 0, "grand_mean": 0.6297}
+
+## Structural zeros
+
+- {"acq_completed": 116, "acq_zero_on_every_sample": 116, "hist_zero": ["maj"], "base_zero": ["centre_01", "centre_10"]}
 
 ## D3 over C3
 
-- {"status": "PARTIAL", "reason": "acquisition arm incomplete; D3 needs eight independent rules per descriptor region"}
+- {"status": "STRUCTURALLY_VOID_PROVISIONAL", "reason": "the acquisition arm is constant zero under `stable` and `at_T` (116 of 116 rules); every D3 region built from random rules has zero within-region variance and is SKIPPED, and this does not change with completion because the value is constant by construction of the criterion, not by sample size (Harmonia a1d0ed9c8). cs-c3-2 answers G1, H1 and Q2; it CANNOT answer H2, and that is a vacuous reading, never evidence against it.", "next": "C3-3 under R-C3-1..5 with a criterion whose attainable range for random tables is not a point (Herakles cellwise_majority_match: random 0.4998 over [0.4939, 0.5099])"}

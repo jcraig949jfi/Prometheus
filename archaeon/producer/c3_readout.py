@@ -141,7 +141,28 @@ def readout(rows: List[Dict[str, Any]], d3: Optional[Dict[str, Any]] = None) -> 
             "table": table, "ic_sample_means": sample_means,
             "icc1_rules_all": icc1(groups_all), "icc1_rules_excluding_structural_zeros": icc1(groups_nonzero),
             "null_identity": null_identity(rows),
-            "d3_over_c3": d3 or {"status": "PARTIAL", "reason": "acquisition arm incomplete; D3 needs eight independent rules per descriptor region"}}
+            "structural_zeros": {"acq_completed": sum(1 for t in table if t["arm"] == "C3-acq"),
+                                 "acq_zero_on_every_sample": sum(1 for t in table if t["arm"] == "C3-acq" and t["mean"] == 0.0),
+                                 "hist_zero": [t["label"] for t in table if t["arm"] == "C3-hist" and t["mean"] == 0.0],
+                                 "base_zero": [t["label"] for t in table if t["arm"] == "C3-base" and t["mean"] == 0.0]},
+            "d3_over_c3": d3 or _d3_over_c3_status(rows, table)}
+
+
+def _d3_over_c3_status(rows, table):
+    complete = all(r["status"] in ("completed", "failed", "cancelled") for r in rows)
+    acq = [t for t in table if t["arm"] == "C3-acq"]
+    zeros = sum(1 for t in acq if t["mean"] == 0.0)
+    if acq and zeros == len(acq):
+        return {"status": "STRUCTURALLY_VOID" if complete else "STRUCTURALLY_VOID_PROVISIONAL",
+                "reason": "the acquisition arm is constant zero under `stable` and `at_T` ({} of {} rules); every D3 region "
+                          "built from random rules has zero within-region variance and is SKIPPED, and this does not change "
+                          "with completion because the value is constant by construction of the criterion, not by sample size "
+                          "(Harmonia a1d0ed9c8). cs-c3-2 answers G1, H1 and Q2; it CANNOT answer H2, and that is a vacuous "
+                          "reading, never evidence against it.".format(zeros, len(acq)),
+                "next": "C3-3 under R-C3-1..5 with a criterion whose attainable range for random tables is not a point "
+                        "(Herakles cellwise_majority_match: random 0.4998 over [0.4939, 0.5099])"}
+    return {"status": "PARTIAL", "reason": "acquisition arm incomplete; D3 needs eight independent rules per descriptor region"}
+
 
 
 def to_markdown(r: Dict[str, Any]) -> str:
@@ -167,6 +188,7 @@ def to_markdown(r: Dict[str, Any]) -> str:
           "", "## ICC(1), rule as group, four IC samples as measures", "",
           "- all rules: {}".format(json.dumps({k: (round(v, 4) if isinstance(v, float) else v) for k, v in r["icc1_rules_all"].items()})),
           "- excluding structural zeros (rules with 0.0 on every sample under `stable`): {}".format(json.dumps({k: (round(v, 4) if isinstance(v, float) else v) for k, v in r["icc1_rules_excluding_structural_zeros"].items()})),
+          "", "## Structural zeros", "", "- {}".format(json.dumps(r["structural_zeros"])),
           "", "## D3 over C3", "", "- {}".format(json.dumps(r["d3_over_c3"])), ""]
     return "\n".join(L)
 
