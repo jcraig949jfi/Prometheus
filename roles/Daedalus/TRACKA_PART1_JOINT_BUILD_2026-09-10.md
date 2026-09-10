@@ -22,7 +22,7 @@ one build:
 The receipt runs a real engine process over HTTP with the shipped `sfclient`,
 Vivarium's shipped `viv.preflight` loader and `viv.artifact_probe` kind, and
 Archaeon's shipped `archaeon.producer.costs`. Nothing is mocked; every module
-is imported from the tree. `deploy/trackA_joint_receipt.py` contains only the
+is imported from the tree. `SerendipityFoundry/SerendipityFoundryEngine/deploy/trackA_joint_receipt.py` contains only the
 scenario.
 
 ```
@@ -126,9 +126,9 @@ rather than re-run here.
 
 ## Item 4 — the candidate pin
 
-`deploy/CANDIDATE_BUILD.json` refreshed. Six files change against the deployed
+`SerendipityFoundry/SerendipityFoundryEngine/deploy/CANDIDATE_BUILD.json` refreshed. Six files change against the deployed
 pin (`api.py`, `ids.py`, `runtime.py`, `store.py`, `serve.py`, `client.py`).
-`deploy/prepare_deployment.py` now emits the **four identities as distinct
+`SerendipityFoundry/SerendipityFoundryEngine/deploy/prepare_deployment.py` now emits the **four identities as distinct
 things with an explicit mapping**:
 
 - `git_commit` names a **tree**, best-effort — not proof it reproduces the

@@ -16,7 +16,7 @@ missing.
 ## Band A — costs the project is already paying
 
 ### A1. The client abandons a request ~3 s BEFORE the engine gives up — `PARTIAL`
-Measured, `deploy/WRITE_PATH_PROFILE_2026-09-10.json`: the client's socket
+Measured, `SerendipityFoundry/SerendipityFoundryEngine/deploy/WRITE_PATH_PROFILE_2026-09-10.json`: the client's socket
 timeout fires at **30.01 s**; the engine's SQLite lock wait actually runs to
 **33.11 s**, because SQLite's busy handler accumulates *sleep* time and
 overshoots its configured 30 000 ms. Both are "30 s" in configuration and they
@@ -38,7 +38,7 @@ lack one accept it. Pairs with A1 — A1 makes the timeout happen, A2 makes it
 unrecoverable.
 
 ### A3. Producer and engine cannot actually be reconciled yet — `PARTIAL`
-`deploy/COST_RECONCILIATION_2026-09-10.json`, run on the live ledger: producer
+`SerendipityFoundry/SerendipityFoundryEngine/deploy/COST_RECONCILIATION_2026-09-10.json`, run on the live ledger: producer
 entries carrying `refs.artifact_digest` = **0 of 8**; engine entries = **2 of
 68**, and both of those are my own probe. The control proves the join works, so
 the empty answer is a real gap and not a broken join. Two distinct causes:
@@ -58,7 +58,7 @@ is unexplained, not because it is known to be a defect.
 before drawing any conclusion.
 
 ### A5. Rollback stops being an option tonight — `EXISTS`, by design
-`deploy/DEPLOY_SCHEMA8_2026-09-10.md` §4: rollback is code **and** data, and
+`SerendipityFoundry/SerendipityFoundryEngine/deploy/DEPLOY_SCHEMA8_2026-09-10.md` §4: rollback is code **and** data, and
 costs every schema-8 cost event written since the deploy. Vivarium's point is
 sharper than mine was — now that campaign rows are landing, that cost is
 **rising by the minute** rather than fixed.
@@ -90,7 +90,7 @@ artifacts. Today the answer is "raise the flag and hope".
 `/v2/version` reports identity, not health. There is no endpoint that says
 whether the engine is *serving well*: no queue depth, no lock-wait, no last
 error. The runbook's own liveness section says reachability is answered by
-`deploy/sfengine.log` rather than by any API.
+`SerendipityFoundry/SerendipityFoundryEngine/deploy/sfengine.log` rather than by any API.
 **Do:** `/v2/health` with queue depth, oldest open reservation, last-write age,
 lock-wait p99. Blocks: every deploy gate that currently reads the SQLite file
 directly, mine included.
@@ -158,7 +158,7 @@ is urgent enough alone.
 **Do:** index it when it hurts, not before. Cited so the decision is deliberate.
 
 ### C2. No engine-side proof that a ceiling change is safe — `NOTHING`
-`deploy/preflight_deploy.py` gained a gate that catches "an artifact readable
+`SerendipityFoundry/SerendipityFoundryEngine/deploy/preflight_deploy.py` gained a gate that catches "an artifact readable
 today becomes unreadable", but that lives in a deploy script, not the engine.
 **Do:** refuse to *start* with a ceiling below the largest stored blob, or at
 minimum log it loudly. The engine currently starts happily and fails per-read.
@@ -255,7 +255,7 @@ scan; it exists for tests and for whoever runs the kill precondition.
 | D10 | `cost_report` has no time or stage filter | `EXISTS` | returns everything, always |
 | D11 | No way to list a world's cost events without the report | `EXISTS` | `get_cost_event` needs an id you must already have |
 | D12 | Migration rehearsal is manual | `PARTIAL` | I rehearse against a `VACUUM INTO` copy by hand each time |
-| D13 | `deploy/preflight_deploy.py` hardcodes M1 paths | `EXISTS` | fine for one host; wrong the day there are two |
+| D13 | `SerendipityFoundry/SerendipityFoundryEngine/deploy/preflight_deploy.py` hardcodes M1 paths | `EXISTS` | fine for one host; wrong the day there are two |
 | D14 | No structured engine log | `EXISTS` | `sfengine.log` is uvicorn text; the deploy gate reads SQLite instead |
 
 ---
