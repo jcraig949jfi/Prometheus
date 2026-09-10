@@ -43,6 +43,8 @@ for p in (ENG, os.path.join(SF, "SerendipityFoundryClient"),
         sys.path.insert(0, p)
 
 from sfe.release import ENGINE_SOURCE_HASH                          # noqa: E402
+from sfe.runtime import ATTRIBUTION_SCOPES as _ATTRIBUTION_SCOPES   # noqa: E402
+from sfe.runtime import MEASUREMENT_METHODS as _MEASUREMENT_METHODS  # noqa: E402
 from sfe.store import SCHEMA_VERSION                                # noqa: E402
 from sfclient import EngineClient, EngineError                      # noqa: E402
 from viv import artifacts as _a                                     # noqa: E402
@@ -591,6 +593,70 @@ def main():                                                  # noqa: C901
         check("nothing the engine sealed is missing from the reconciliation",
               len(recon["engine_side"]) == len(ek) and ek,
               recon["engine_side"])
+
+        # -- can the producer's vector even be POSTED? ---------------------
+        # The reconciliation above compares two vectors that never met the
+        # engine. Asking whether Archaeon's vector can be RECORDED is a
+        # sharper question, and the answer is no -- three times over, peeled
+        # one rejection at a time against the live service.
+        from dataclasses import asdict as _asdict                # noqa: PLC0415
+
+        with _costs.Meter() as probe_meter:
+            pass
+        arch_vec = [_asdict(r) for r in probe_meter.resources(
+            [_costs.Resource("output_bytes", len(root_raw), "bytes",
+                             "len() of the sealed payload", "measured")])]
+
+        def post(vec):
+            try:
+                exe.cost_event(wx, stage="analysis",
+                               attempt_id="vector-shape-probe", resources=vec)
+                return {"http": 200}
+            except EngineError as exc:
+                d = exc.detail if isinstance(exc.detail, dict) else {}
+                return {"http": exc.status, "message": d.get("message"),
+                        "unknown": d.get("unknown"), "method": d.get("method"),
+                        "scope": d.get("scope")}
+
+        peel = [("as Archaeon emits it", arch_vec)]
+        v = [{k: q for k, q in e.items() if k != "enforcement_class"}
+             for e in arch_vec]
+        peel.append(("minus enforcement_class", v))
+        v = [dict(e, method="clock") for e in v]
+        peel.append(("plus method -> clock", v))
+        v = [dict(e, scope="attempt") for e in v]
+        peel.append(("plus scope -> attempt", v))
+        peeled = [{"vector": label, **post(vec)} for label, vec in peel]
+        R["producer_vector_on_the_wire"] = {
+            "sample_entry": arch_vec[0],
+            "peel": peeled,
+            "engine_measurement_methods": sorted(_MEASUREMENT_METHODS),
+            "engine_attribution_scopes": sorted(_ATTRIBUTION_SCOPES)}
+        check("Archaeon's producer vector is refused by the engine as it "
+              "stands, and accepted only after all three fixes",
+              [p["http"] for p in peeled] == [422, 422, 422, 200], peeled)
+        finding(
+            "TRACKA-VECTOR-1",
+            "A producer resource entry from archaeon/producer/costs.py cannot "
+            "be recorded by the engine as it stands. Posted live to "
+            "/v2/worlds/{id}/cost-events it is refused three times in "
+            "sequence: (1) 'enforcement_class' is an extra key, refused by "
+            "TWO independent layers -- the request model is extra='forbid' "
+            "(sfe/api.py:52-53, ResourceEntry at :347), and the runtime's "
+            "own five-name allowlist would refuse it again; (2) the prose "
+            "('time.perf_counter delta') is not one of "
+            "counter|clock|sampler|declared|derived; (3) scope 'producer' is "
+            "not one of attempt|job|campaign|shared. Only after all three is "
+            "it accepted. NOTE THE FIRST ONE IS A STRIP, NOT A RENAME: the "
+            "engine resolves the enforcement class from the LIMIT and stamps "
+            "it onto the entry itself, precisely so a caller cannot declare "
+            "its own spend exempt from a cap it was given -- so sending the "
+            "field under the engine's spelling would be refused for the same "
+            "reason, and the class should be read back off the response. The "
+            "prose the method strings currently carry (which counter, whose "
+            "process) is real provenance and needs somewhere to live; `refs` "
+            "is the free-form slot on record_cost_event.",
+            owner="Archaeon")
 
         theirs = _costs.reconcile(producer_events, executor_vectors)
         R["reconciliation"]["archaeon_reconcile_verbatim"] = theirs

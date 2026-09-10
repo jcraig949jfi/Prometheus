@@ -14,10 +14,10 @@ one build:
 |---|---|
 | build | `sha256:eb3bbadc083c48d56b5ef8181ee2e627e5b11bce8ab03e751d551a4fe1cbd564` |
 | schema | 8 |
-| tree | `d8a971534`, rebased onto `origin/main` at `5e221f9dc` |
-| dev ledger | `eng_51d0ac54a95bb5325bf538f0` — a development database, not production. It is minted per database, so a fresh run of the receipt mints a fresh one; that the build hash does **not** move with it is the point of keeping the two identities apart. |
+| tree | `07b5b05a7` on `origin/main`; the build files were last touched at `07b5b05a7` |
+| dev ledger | `eng_51b56ae45788ac7c7dbcad9f` — a development database, not production. It is minted per database, so a fresh run of the receipt mints a fresh one; that the build hash does **not** move with it is the point of keeping the two identities apart. |
 | receipt | `SerendipityFoundry/SerendipityFoundryEngine/deploy/TRACKA_JOINT_RECEIPT.json` |
-| result | **PASS**, 28 of 28 checks |
+| result | **PASS**, 29 of 29 checks |
 
 The receipt runs a real engine process over HTTP with the shipped `sfclient`,
 Vivarium's shipped `viv.preflight` loader and `viv.artifact_probe` kind, and
@@ -133,6 +133,10 @@ things with an explicit mapping**:
 
 - `git_commit` names a **tree**, best-effort — not proof it reproduces the
   build, and `/v2/version`'s `source_commit` has named a commit that could not.
+  HEAD is recorded alongside `build_files_commit`, the commit that last touched
+  the pinned files: HEAD goes stale the moment anyone commits anything at all,
+  including work that touches none of this, and a pin whose only commit field
+  drifts for unrelated reasons is the same defect in miniature.
 - `engine_source_hash` names the **build** and is authoritative.
 - `schema_version` names the **shape of the ledger** and moves only forward.
 - `engine_instance_id` names the **ledger itself**; a code deploy does not
@@ -190,6 +194,34 @@ carry the artifact being paid for, so the strongest idempotency key an
 integrator can build is the ordinal of the fetch within the attempt (the
 receipt uses one, and says so). Widening the hook to carry the digest would let
 the reservation be keyed on the act rather than on its position.
+
+**TRACKA-VECTOR-1 — Archaeon.** *The sharpest fact about the reconciliation:
+a producer resource entry cannot be recorded by the engine at all.* Posted live
+to `/v2/worlds/{id}/cost-events`, an entry straight out of `costs.Meter` is
+refused three times in sequence, and the receipt peels them one at a time:
+
+```
+as Archaeon emits it      422   enforcement_class is an extra key
+minus enforcement_class   422   unknown measurement method: 'time.perf_counter delta'
+plus method -> clock      422   unknown attribution scope: 'producer'
+plus scope -> attempt     200
+```
+
+Two of these are vocabulary — `method` must be one of
+`counter|clock|sampler|declared|derived`, `scope` one of
+`attempt|job|campaign|shared`. **The first is not a rename.** The engine
+resolves the enforcement class from the *limit* and stamps it onto the entry
+itself, exactly so a caller cannot declare its own spend exempt from a cap it
+was given; sending the field under the engine's spelling would be refused for
+the same reason. It has to be **stripped on the way in and read back off the
+response** — and it is refused twice over, by the request model
+(`sfe/api.py:52-53`, `extra="forbid"`) and independently by the runtime's
+five-name allowlist.
+
+The prose those `method` strings carry today — *which* counter, *whose*
+process — is real provenance that the five-name set cannot hold. `refs` is the
+free-form slot on `record_cost_event` and is where it should go, rather than
+being dropped in the translation.
 
 **TRACKA-RECON-1 — Archaeon.** `archaeon/producer/costs.py:reconcile()` joins
 on `attempt_id` alone and returns the hardcoded string
