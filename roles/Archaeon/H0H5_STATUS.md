@@ -1,6 +1,6 @@
 # H0–H5 status — compact, from receipts only
 
-Maintained by Archaeon. Updated 2026-09-10 wake 7 (Vivarium 6d5d7406f absorbed). Review packet: `roles/Archaeon/REVIEW_PACKET_2026-09-10.md`. Delegation: `roles/Archaeon/prompts/2026-09-10_tracks/` (Tracks A-E from the operator's Chimera brief; three corrections verified: sqrt(6) counterexample, client_id retention gap, XOR-injection non-conservation). Design v0.1
+Maintained by Archaeon. Updated 2026-09-10 (C3-2 and H1/H0 phase 1 ISSUED). Review packet: `roles/Archaeon/REVIEW_PACKET_2026-09-10.md`. Delegation: `roles/Archaeon/prompts/2026-09-10_tracks/` (Tracks A-E from the operator's Chimera brief; three corrections verified: sqrt(6) counterexample, client_id retention gap, XOR-injection non-conservation). Design v0.1
 (`roles/Archaeon/prompts/2026-09-08_h0h5/DESIGN_H0_H5_v0.1.md`). Every row
 below is derived from a committed receipt; nothing is inferred from a plan.
 Baseline: `archaeon/docs/h0h5/BASELINE_2026-09-09.json`.
@@ -53,6 +53,22 @@ Baseline: `archaeon/docs/h0h5/BASELINE_2026-09-09.json`.
 - Aporia deck (`3b1fb8a0f`, vivarium branch): four of six hypotheses untested in the literature as posed; H2's encoding confound published (Glover et al. 2024); nearest H3 test found no QD advantage (Chen 2026); H4 precedent only vs a tuned baseline.
 - Techne inbox to Archaeon (`f6acabefb`): pyribs GridArchive is first-writer-wins on exact ties; z3 separates timeout from rlimit exhaustion, use rlimit for cross-host repeatability; stitch_core ships NO licence in any artifact (export blocked, internal use continues).
 
+
+
+## ISSUED 2026-09-10 on the operator's word ("Issue phase 1 and C3")
+
+- **C3-1 (cs-c3-1) FAILED at the executor on every row it ran** -- a producer error: `ic_density_set` sent as bare `null` where the wrapper requires `[null]`. 24 rows failed (each wrote a PEW encounter and an engine world before the executor refused), 126 queued rows CANCELLED by Archaeon with the reason on the row. Vivarium's validator checks presence and type only; `check()` in both campaign builders now EXECUTES one row per arm offline through Vivarium's own executor before anything is issued.
+- **C3-2 (cs-c3-2) ISSUED**: 150 rows (6 hist, 6 base, 18 null, 120 acq), 600 observations, 4 shared IC samples, `transform` named on every payload, `success_criterion=stable`. Offline preflight (seed 0/1): GKL 0.85/0.86, par 0.79/0.80, particle1 0.75/0.79, particle2 0.73/0.82, exp 0.64/0.65, **maj 0.00/0.00** -- maj freezes into non-uniform patterns and rarely reaches a uniform fixed point (Herakles's relaxation measurement: 23 of 200 reach uniform), so under `stable` it is a structural zero, not a defect; `at_T` is the historical criterion and stays with the reproduction lane. Receipts: `archaeon/docs/h0h5/ISSUE_RECEIPTS_2026-09-10.*`.
+- **H1/H0 phase 1 (cs-h1h0-1-p1) ISSUED**: 24 source rows on cegis_boolean_v1, both slots null; the consumer began completing them within minutes. Phase 2 (packs from the witnesses; H1 arms and H0 cells) waits on phase-1 results and the artifact publish path.
+- Harmonia's Track B declaration before issue: three units declared; a 4-sample paired permutation has min p 0.125, so U1 is an estimate with an interval, never a test; the ICC across the four samples is the number the corpus supplies.
+
+## Absorbed from seat reports 2026-09-10 (afternoon)
+
+- **Daedalus / Vivarium joint Track A part 1: PASS 29/29** on a DEV engine (schema 8, eng_51b56ae45788ac7c7dbcad9f). Digest gate moved to the ENGINE (422 with no payload; client comparison kept as defence in depth); allowance RESERVED against the act (idem_key names the artifact); an interrupted-and-retried attempt charged once per moved byte; nothing sends an enforcement class. TRACKA-RECON-2 open jointly: Archaeon says `transfer`, executor and engine say `retrieval`; Vivarium proposes joining on the DIGEST -- Archaeon accepts (F-15): the digest is strictly more specific than a stage.
+- **Consumer restarted** (PID 29884, schema viv, pew prod) with ca_density_v0+transform, cegis_boolean_v1, artifact_probe_v1 confirmed by `viv.cli kinds`.
+- **Harmonia** (789ce4fdd, her branch): QR-1.1.0 (c'Sigma c; both contrasts estimated separately on the disjoint pilot; G renamed a joint-treatment contrast); blocks_for_interval_clearance vs blocks_for_power separated; HA-1.6 scoped to confirmatory plans so the two-seed diagnostic alphas proceed; **D3's 30/77 live output is a denominator artifact** -- the concatenated neighbourhood pool carries between-region variance and the campaign authors between-region means, so every ratio is pushed down (28/30 LOWER); a df-weighted pooled-within denominator is immune. **Built as d3.v1** behind `d3_denominator` (v0 stays the live default until v1 is admitted, F-10; the synthetic bias model reproduces the artifact under v0 and not under v1; the 2 UPPER fires stay open).
+- **Herakles**: D-18 amendment v1 PROPOSED, not applied (operator decides; horizon 8 recommended; maj and exp forget the input, so beating baseline there is leakage); Track B transforms confirmed by execution against Vivarium's wrapper, masks identical; **H5 class map published** (256 rules -> 224 terminal-behaviour classes at 8 steps on the 7-ring; 240=15,180,210 and 170=85,154,166 are NOT uniquely identified at this scope) -- wired in as `h5_reference.load_class_map()` with the scope carried beside the number; H5 task sets will be built on class ids.
+- **Techne**: stitch Rust core route viable, blocked on a Rust toolchain (rustup is a host change -- operator's call); POET Apache-2.0, unfetched by design; the packet JSONs are still not on main -- Techne's reconciler is one command away once they are committed.
 
 ## Vivarium 6d5d7406f / 9e6c1ff0c (Track A items 5-6, Track B transform) — absorbed
 

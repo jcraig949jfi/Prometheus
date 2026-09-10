@@ -30,11 +30,11 @@ from .. import config as cfg
 from .. import vivqueue as vq
 from . import specbuild
 
-CAMPAIGN_ID = "C3-1"
+CAMPAIGN_ID = "C3-2"                 # C3-1 (cs-c3-1): 24 failed + 126 cancelled, producer error on ic_density_set; identities differ
 KIND = "ca_density_v0"
 SEED_ROOT = 930_001            # one seed_root -> the same four IC samples for every rule
 N_CELLS, RADIUS, STEPS, N_IC = 149, 3, 320, 100
-IC_DENSITIES = None            # the wrapper's convention: null = the unbiased (Bernoulli 1/2) ensemble; n_ic is per density
+IC_DENSITIES = [None]          # the wrapper's convention: [null] = the unbiased (Bernoulli 1/2) ensemble; n_ic is per density. C3-1 sent bare null and every row failed at the executor (2026-09-10); the validator only checks presence, so check() now EXECUTES one row per arm offline
 INCLUDE_NULL_ARM = True        # Vivarium 6d5d7406f: `transform` in {none, reflect, complement, reflect_complement}, no default; null holds exactly on 6 genomes x 3 symmetries
 SUCCESS = "stable"
 N_RANDOM = 120                  # Harmonia be9c22959 F-4: multinomial region counts; E[eligible] = 9.2 of 10
@@ -107,7 +107,7 @@ def plan() -> List[Dict[str, Any]]:
     def add(arm, label, rule_hex, transform, hyp):
         nonlocal i
         i += 1
-        rows.append({"index": i, "family_id": "fam-C3-1", "arm_id": arm, "label": label,
+        rows.append({"index": i, "family_id": "fam-" + CAMPAIGN_ID, "arm_id": arm, "label": label,
                      "rule_hex": rule_hex, "transform": transform,   # also in the payload (no executor default exists)
                      "request_key": "{}-{:03d}".format(CAMPAIGN_ID, i),
                      "spec": _spec(rule_hex, transform, hyp)})
@@ -159,8 +159,31 @@ def check(rows: Optional[List[Dict[str, Any]]] = None) -> Dict[str, Any]:
             out["invalid"].append({"index": r["index"], "reason": str(exc)[:240]})
     if out["invalid"]:
         out["blockers"].append({"lane": "archaeon", "what": "specs rejected by Vivarium's validator", "n": len(out["invalid"])})
-    out["ok_to_issue"] = not out["invalid"]
+    # The validator checks presence and type, not what the EXECUTOR accepts.
+    # One row per arm is executed offline through Vivarium's own executor
+    # (the same code path the consumer runs); a payload the executor
+    # refuses never reaches the queue again.
+    out["executor_preflight"] = _executor_preflight(rows)
+    if out["executor_preflight"]["refused"]:
+        out["blockers"].append({"lane": "archaeon", "what": "executor refuses a payload",
+                                "detail": out["executor_preflight"]["refused"]})
+    out["ok_to_issue"] = not out["invalid"] and not out["executor_preflight"]["refused"]
     return out
+
+
+def _executor_preflight(rows: List[Dict[str, Any]]) -> Dict[str, Any]:
+    from viv import executors as X
+    first: Dict[str, Dict[str, Any]] = {}
+    for r in rows:
+        first.setdefault(r["arm_id"], r)
+    ran, refused = {}, {}
+    for arm, r in first.items():
+        try:
+            out = X.run(r["spec"], seed=0)
+            ran[arm] = {"label": r["label"], "accuracy": out.get("accuracy"), "transform": out.get("transform")}
+        except Exception as exc:                                 # noqa: BLE001
+            refused[arm] = {"label": r["label"], "error": "{}: {}".format(type(exc).__name__, str(exc)[:200])}
+    return {"ran": ran, "refused": refused, "seed": 0, "note": "offline, one row per arm, Vivarium's executor"}
 
 
 def issue(conn, rows: Optional[List[Dict[str, Any]]] = None, config=None) -> Dict[str, Any]:
@@ -175,7 +198,7 @@ def issue(conn, rows: Optional[List[Dict[str, Any]]] = None, config=None) -> Dic
                                  request_key=r["request_key"],
                                  source_evidence={"schema": "archaeon.campaign.v0", "campaign": CAMPAIGN_ID,
                                                   "mode": "human", "policy_version": "campaign.C3.v0",
-                                                  "template_id": "campaign.C3-1", "label": r["label"],
+                                                  "template_id": "campaign." + CAMPAIGN_ID, "label": r["label"],
                                                   "selection_basis": "operator_directed_family",
                                                   "authority": "first CA corpus: acquisition, baselines, "
                                                                "exact-symmetry nulls, and the frozen random "

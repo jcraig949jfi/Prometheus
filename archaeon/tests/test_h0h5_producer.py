@@ -142,3 +142,14 @@ def test_engine_projection_uses_only_the_engine_vocabulary_and_never_sends_enfor
     with pytest.raises(ValueError):
         C.to_engine_entries(ev, scope="producer")
     assert C.from_engine_response([{"resource": "cpu_seconds", "enforcement_class": "measured"}]) == {"cpu_seconds": "measured"}
+
+
+def test_published_class_map_loads_and_collapses_the_exact_reference():
+    from archaeon.producer import h5_reference as R
+    cm = R.load_class_map()
+    assert cm["n_classes"] == 224 and "8 steps" in cm["scope"] and "7-ring" in cm["scope"]
+    eq = cm["equivalence"]
+    assert eq[240] == eq[15] == eq[180] == eq[210] and eq[170] == eq[85] and eq[204] not in (eq[240], eq[170])
+    direct = R.exact_reference(H.direct)
+    collapsed = R.exact_reference(H.direct, equivalence=eq)
+    assert collapsed["mean_reach"] <= direct["mean_reach"]

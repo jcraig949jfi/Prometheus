@@ -67,3 +67,28 @@ def check_sampled_against_exact(dec, parents: List[int], exact: Dict[str, object
     z = (sample_mean - pop_mean) / probe["se"] if probe["se"] else 0.0
     return {"sample_mean": sample_mean, "population_mean": pop_mean, "se": probe["se"], "z": z,
             "consistent": abs(z) <= 4.0}
+
+
+# --------------------------------------------------------------------------
+# Herakles's published class map (herakles/eca/class_map_fixture.json)
+# --------------------------------------------------------------------------
+CLASS_MAP_PATH = "herakles/eca/class_map_fixture.json"
+CLASS_MAP_SCOPE = "terminal behaviour at 8 steps on the 7-ring"
+
+
+def load_class_map(root=None) -> Dict[str, object]:
+    """256 rules -> 224 TERMINAL-behaviour classes at 8 steps on the 7-ring,
+    class id = smallest member. Task sets built on rule numbers would count
+    synonyms as independent teachers (Herakles, 2026-09-10); collapse with
+    `equivalence` here. The scope travels with the number."""
+    import pathlib
+    root = pathlib.Path(root) if root else pathlib.Path(__file__).resolve().parents[2]
+    d = json.loads((root / CLASS_MAP_PATH).read_text(encoding="utf-8"))
+    m = {int(k): int(v) for k, v in d["rule_to_class"].items()}
+    if len(m) != 256 or len(set(m.values())) != d["n_classes"] or d["n_classes"] != 224:
+        raise ValueError("class map fixture is not the published 256 -> 224 map")
+    if any(cid > r for r, cid in m.items()):
+        raise ValueError("class id must be the smallest member")
+    return {"equivalence": m, "n_classes": d["n_classes"], "scope": CLASS_MAP_SCOPE,
+            "fixture_digest": d["fixture_digest"], "kind": d["kind"],
+            "degenerate": {"240": [15, 180, 210, 240], "170": [85, 154, 166, 170]}}

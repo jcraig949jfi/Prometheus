@@ -32,7 +32,19 @@ from .base import (DetectorResult, Eligibility, Signal, INTENT_DISCRIMINATE,
 
 NAME = "LOCAL_VARIANCE_ANOMALY"
 VERSION = "d3.v0"
+VERSION_BY_DENOMINATOR = {"concatenated": "d3.v0", "pooled_within": "d3.v1"}
 UNIT = "region"
+
+
+def _pooled_within(groups: List[List[float]]) -> Tuple[float, int]:
+    """df-weighted pooled WITHIN-region variance: sum((n_o - 1) var_o) /
+    sum(n_o - 1) over neighbours with n_o >= 2. Between-region mean
+    differences do not enter it (Harmonia, 2026-09-10)."""
+    num = 0.0; df = 0
+    for g in groups:
+        if len(g) >= 2:
+            num += (len(g) - 1) * variance(g); df += len(g) - 1
+    return (num / df if df > 0 else 0.0), df
 
 
 def _dist(a: Dict[str, float], b: Dict[str, float]) -> Optional[float]:
@@ -104,7 +116,14 @@ def detect(corpus, dcfg) -> DetectorResult:
         pool = [x.metric for o in nb for x in by_region[o]]
 
         v_reg = variance(vals)
-        v_nb = variance(pool)
+        denominator = getattr(dcfg, "d3_denominator", "concatenated")
+        if denominator == "pooled_within":
+            v_nb, pool_df = _pooled_within([[x.metric for x in by_region[o]] for o in nb])
+        elif denominator == "concatenated":
+            v_nb, pool_df = variance(pool), len(pool) - 1
+        else:
+            raise ValueError("d3_denominator must be concatenated|pooled_within")
+        version = VERSION_BY_DENOMINATOR[denominator]
         if v_nb <= 0:
             # A neighbourhood with zero dispersion gives no ratio. Reporting
             # "infinitely more variable" from a degenerate denominator would be
@@ -130,7 +149,7 @@ def detect(corpus, dcfg) -> DetectorResult:
                   else math.log(dcfg.d3_low_ratio / max(ratio, 1e-300)))
 
         signals.append(Signal(
-            detector=NAME, detector_version=VERSION,
+            detector=NAME, detector_version=version,
             intent=INTENT_DISCRIMINATE,
             regions=(reg,), players=(),
             values={"region_variance": v_reg,
@@ -142,13 +161,16 @@ def detect(corpus, dcfg) -> DetectorResult:
                     "neighbourhood_n": len(pool),
                     "neighbourhood_sd": stdev(pool),
                     "neighbourhood_kind": neighbourhood_kind,
+                    "denominator": denominator,
+                    "neighbourhood_df": pool_df,
                     "neighbours": list(nb),
                     "family": fam_of[reg]},
             thresholds={"d3_high_ratio": dcfg.d3_high_ratio,
                         "d3_low_ratio": dcfg.d3_low_ratio,
                         "d3_min_n_region": dcfg.d3_min_n_region,
                         "d3_min_n_neighborhood": dcfg.d3_min_n_neighborhood,
-                        "d3_neighbors_k": dcfg.d3_neighbors_k},
+                        "d3_neighbors_k": dcfg.d3_neighbors_k,
+                        "d3_denominator": denominator},
             support_n=len(vals),
             effect_norm=clamp01(excess / math.log(10.0)),
             target_coords=dict(centroid[reg]),
@@ -158,6 +180,7 @@ def detect(corpus, dcfg) -> DetectorResult:
     return DetectorResult(
         Eligibility(NAME, len(eligible), total_units, UNIT,
                     detail={"neighbourhood_kind": neighbourhood_kind,
+                            "denominator": getattr(dcfg, "d3_denominator", "concatenated"),
                             "regions_big_enough": len(big_enough),
                             "skipped_zero_variance_neighbourhood": skipped_zero_var,
                             "region_tests": len(eligible) - skipped_zero_var}),

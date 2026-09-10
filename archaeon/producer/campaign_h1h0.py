@@ -163,6 +163,7 @@ def plan_phase1(split: Optional[Dict[str, Any]] = None) -> List[Dict[str, Any]]:
     for i, t in enumerate(split["source"], 1):
         rows.append({"index": i, "phase": 1, "family_id": "fam-H1H0-src", "arm_id": "source",
                      "task_id": t["task_id"], "tt": t["tt"], "licensed_metadata": t["licensed_metadata"],
+                     "artifact_digests": [],
                      "request_key": "{}-P1-{:03d}".format(CAMPAIGN_ID, i),
                      "spec": spec_for(t["tt"], pack_slot=None, lib_slot=None,
                                       hypothesis="source task {}: fresh bounded CEGIS records its ordered "
@@ -373,45 +374,85 @@ def check(rows: Sequence[Dict[str, Any]]) -> Dict[str, Any]:
             out["invalid"].append({"index": r["index"], "reason": str(exc)[:240]})
     if out["invalid"]:
         out["blockers"].append({"lane": "archaeon", "what": "specs rejected by Vivarium's validator", "n": len(out["invalid"])})
-    out["ok_to_issue"] = not out["invalid"]
+    # Executor preflight (see campaign_c3): rows with artifact slots need
+    # hydrated inputs the producer does not hold offline, so only slot-free
+    # rows are executed here; slot-bearing rows are preflighted by Vivarium.
+    from viv import executors as X
+    ran, refused, skipped = {}, {}, []
+    seen = set()
+    for r in rows:
+        if r["arm_id"] in seen:
+            continue
+        seen.add(r["arm_id"])
+        if r.get("artifact_digests"):
+            skipped.append(r["arm_id"]); continue
+        try:
+            o = X.run(r["spec"], seed=0)
+            ran[r["arm_id"]] = {"status": o.get("status"), "vm_ops": o.get("vm_ops")}
+        except Exception as exc:                                 # noqa: BLE001
+            refused[r["arm_id"]] = "{}: {}".format(type(exc).__name__, str(exc)[:200])
+    out["executor_preflight"] = {"ran": ran, "refused": refused, "skipped_slot_bearing": skipped}
+    if refused:
+        out["blockers"].append({"lane": "archaeon", "what": "executor refuses a payload", "detail": refused})
+    out["ok_to_issue"] = not out["invalid"] and not refused
     return out
 
 
-def issue(conn, rows: Sequence[Dict[str, Any]], *, schema: str, locators_by_digest: Dict[str, Dict[str, str]],
-          created_by: str = "archaeon") -> Dict[str, Any]:
-    """Human path. `locators_by_digest` maps each pack/library digest to
-    {source_world, source_artifact} -- ADDRESSING, outside spec_hash. Every
-    row carries a producer cost receipt in source_evidence."""
+def issue(conn, rows: Sequence[Dict[str, Any]], *, locators_by_digest: Optional[Dict[str, Dict[str, str]]] = None,
+          config=None, created_by: str = "archaeon") -> Dict[str, Any]:
+    """Human path, on the same registered candidate-set route as C3
+    (`archaeon.vivqueue.submit`: execution-only check, negative-authority
+    check, one transaction per row). Rows with artifact digests need
+    `locators_by_digest` -> {source_world, source_artifact}: ADDRESSING,
+    outside spec_hash, carried on Vivarium's enqueue. One producer cost
+    receipt covers the issue and is returned with the receipt."""
+    from .. import config as cfg
+    from .. import vivqueue as vq
+    config = config or cfg.DEFAULT
+    locators_by_digest = locators_by_digest or {}
     c = check(rows)
     if not c.get("ok_to_issue"):
         raise RuntimeError("H1/H0 rows do not validate: {}".format(c["blockers"] or c["invalid"]))
-    from viv import queue as vq
+    phase = {r["phase"] for r in rows}
+    csid = "cs-h1h0-1-p{}".format("".join(str(x) for x in sorted(phase)))
     ids = []
     with C.Meter() as m:
         for r in rows:
-            loc = {d: locators_by_digest[d] for d in r["artifact_digests"]}
-            ev = C.CostEvent("generation", r["request_key"], m.resources() if m.wall is not None else [])
-            eid = vq.enqueue(conn, created_by=created_by, source_reason="human",
-                             source_evidence={"schema": "archaeon.campaign.v0", "campaign": CAMPAIGN_ID,
-                                              "mode": "human", "policy_version": "campaign.H1H0.v0",
-                                              "task_id": r["task_id"], "phase": r["phase"],
-                                              "licensed_metadata": r["licensed_metadata"],
-                                              "pack": r.get("pack"), "library": r.get("library"),
-                                              "cost_event": ev.to_json(),
-                                              "selection_basis": "operator_directed_family",
-                                              "upstream_selection_history": "UNKNOWN"},
-                             experiment_spec=r["spec"], schema=schema, request_key=r["request_key"],
-                             family_id=r["family_id"], arm_id=r["arm_id"],
-                             artifact_locators=loc or None)
+            ev = {"schema": "archaeon.campaign.v0", "campaign": CAMPAIGN_ID, "mode": "human",
+                  "policy_version": "campaign.H1H0.v0", "template_id": "campaign.H1H0-1",
+                  "task_id": r["task_id"], "phase": r["phase"], "label": "{}:{}".format(r["task_id"], r["arm_id"]),
+                  "licensed_metadata": r["licensed_metadata"], "pack": r.get("pack"), "library": r.get("library"),
+                  "selection_basis": "operator_directed_family",
+                  "authority": "H1/H0 alpha on cegis_boolean_v1: phase 1 harvests source witnesses; "
+                               "phase 2 issues the arms and cells; no contrast is computed by the producer",
+                  "upstream_selection_history": "UNKNOWN"}
+            if r["artifact_digests"]:
+                missing = [d for d in r["artifact_digests"] if d not in locators_by_digest]
+                if missing:
+                    raise RuntimeError("row {} needs locators for {}".format(r["request_key"], missing))
+                from viv import queue as vivq
+                eid = vivq.enqueue(conn, created_by=created_by, source_reason="human", source_evidence=ev,
+                                   experiment_spec=r["spec"], schema=vq._schema(), request_key=r["request_key"],
+                                   family_id=r["family_id"], arm_id=r["arm_id"], candidate_set_id=csid,
+                                   artifact_locators={d: locators_by_digest[d] for d in r["artifact_digests"]})
+                conn.commit()
+            else:
+                cand = vq.make_candidate(r["spec"], family_id=r["family_id"], arm_id=r["arm_id"],
+                                         request_key=r["request_key"], source_evidence=ev)
+                res = vq.submit(conn, candidates=[cand], selected_index=0, source_reason="human",
+                                created_by=created_by, config=config, candidate_set_id=csid)
+                eid = res["selected_experiment_id"]
             ids.append(eid)
-        conn.commit()
-    return {"campaign": CAMPAIGN_ID, "experiment_ids": ids, "registered": len(ids)}
+    cost = C.CostEvent("generation", csid, m.resources([C.Resource("items", len(ids), "count", "count", "measured")]),
+                       output_refs=ids)
+    return {"campaign": CAMPAIGN_ID, "candidate_set_id": csid, "experiment_ids": ids, "registered": len(ids),
+            "cost_event": cost.to_json(), "engine_entries": C.to_engine_entries(cost, scope="campaign")}
 
 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(prog="archaeon.producer.campaign_h1h0")
     ap.add_argument("--split", action="store_true"); ap.add_argument("--phase1", action="store_true")
-    ap.add_argument("--check-phase1", action="store_true")
+    ap.add_argument("--check-phase1", action="store_true"); ap.add_argument("--issue-phase1", action="store_true")
     a = ap.parse_args(argv)
     if a.split:
         print(json.dumps(task_split(), indent=1)); return 0
@@ -419,6 +460,14 @@ def main(argv=None) -> int:
         print(json.dumps([{k: v for k, v in r.items() if k != "spec"} for r in plan_phase1()], indent=1)); return 0
     if a.check_phase1:
         print(json.dumps(check(plan_phase1()), indent=2, default=str)); return 0
+    if a.issue_phase1:
+        from evidence_wiki.ew import db as ewdb
+        conn = ewdb.connect()
+        try:
+            print(json.dumps(issue(conn, plan_phase1()), indent=2, default=str))
+        finally:
+            conn.close()
+        return 0
     ap.print_help(); return 1
 
 

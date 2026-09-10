@@ -217,6 +217,12 @@ class DetectorConfig:
     d3_low_ratio: float = 0.3333
     d3_min_n_region: int = 8
     d3_min_n_neighborhood: int = 16
+    # Harmonia 2026-09-10 (items 7-8): with the CONCATENATED neighbourhood
+    # pool the denominator carries between-region variance, so authored
+    # between-region mean differences push every ratio DOWN (28 of 30 live
+    # fires were LOWER). The df-weighted POOLED WITHIN-region variance is
+    # immune. v0 stays the default until d3.v1 is admitted (admission is human).
+    d3_denominator: str = "concatenated"      # concatenated (d3.v0) | pooled_within (d3.v1)
 
     # ---- D4 PLAYER_ORDER_REVERSAL ---------------------------------------
     # Same two-part requirement as D2, for the same reason: the v0 build fired

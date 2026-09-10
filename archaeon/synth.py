@@ -207,6 +207,26 @@ def variance_equal(seed: int = 3, sigma: float = 0.08, n_regions: int = 8,
     return c
 
 
+def variance_equal_shifted_means(seed: int = 3, sigma: float = 0.08, between_sd: float = 0.16,
+                                 n_regions: int = 8, n_per: int = 20) -> Corpus:
+    """Harmonia's bias model (2026-09-10): every region has the SAME within
+    variance, and the regions' MEANS differ (as the live campaign authors
+    them, one deterministic candidate per world). A concatenated
+    neighbourhood pool then carries the between-region variance and every
+    ratio is pushed down; a pooled-within denominator is immune. Pure null
+    with respect to dispersion."""
+    reset()
+    rng = random.Random(seed)
+    rows: List[FossilRow] = []
+    for ri in range(n_regions):
+        reg = "w{:02d}".format(ri)
+        coord = ri / max(n_regions - 1, 1)
+        mu = 0.5 + rng.gauss(0.0, between_sd)
+        for _ in range(n_per):
+            rows.append(_row(reg, "F", "p0", rng.gauss(mu, sigma), coord))
+    return _wrap(rows, "d3_shifted_means_null")
+
+
 # --------------------------------------------------------------------------
 # D4: player order reversal
 # --------------------------------------------------------------------------

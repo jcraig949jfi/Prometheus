@@ -180,3 +180,11 @@ would still KILL.
        id, not the current process (cosmetic; Vivarium's).
 - F-8  Credential rotation (Mnemosyne's tracker, evidence_wiki/docs/CREDENTIAL_ROTATION_TRACKER.md): R-1 PEW credentials in git history (operator; must be simultaneous on M1 and M2), R-3 the archive prefixes (low urgency; local disk only, never committed). Not a research dependency.
 - F-9  `binds_session` still absent from SFE's verify-anchor (Mnemosyne, unchanged): the wrong-session case rests on PEW's splice witness rather than an engine proof. Daedalus's, when scheduled.
+
+## Added 2026-09-10 (issue day)
+- [ ] F-10 (operator): admit d3.v1 (pooled-within denominator) for the live tick; until then v0 runs and its LOWER fires are read as the denominator artifact. 2026-09-10
+- [ ] F-11 (Harmonia -> operator): fairness ruling on signature_v0; then RELEVANCE_LICENSED in campaign_h1h0.py. 2026-09-10
+- [ ] F-12 (Archaeon): phase 2 of H1/H0 once cs-h1h0-1-p1 completes: build packs from witnesses, publish artifacts (human path needs a producer world), issue arms and cells. 2026-09-10
+- [ ] F-13 (Archaeon): C3-2 readout when cs-c3-2 completes: ICC across the four IC samples, D3 over C3 (one row per rule), exact-symmetry mask identity on the 18 null rows. 2026-09-10
+- [ ] F-14 (operator): D-18 amendment v1 (Herakles); rustup on the host (Techne); commit the two packet JSONs (Techne). 2026-09-10
+- [ ] F-15 (Archaeon): costs.reconcile joins on the DIGEST when the executor vector carries it (TRACKA-RECON-2). 2026-09-10

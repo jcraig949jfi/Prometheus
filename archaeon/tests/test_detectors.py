@@ -141,6 +141,39 @@ def test_d3_detects_low_dispersion_too():
     assert found, "D3 never reported LOWER_DISPERSION on a low-variance region"
 
 
+def test_d3_v1_pooled_within_denominator_is_immune_to_between_region_mean_shifts():
+    """Harmonia items 7-8: 28 of 30 live fires were LOWER because the
+    concatenated pool carries between-region variance. v0 must reproduce the
+    artifact on the bias model; v1 must not, and must keep the real
+    detection. v0 remains the default until v1 is admitted."""
+    import dataclasses
+    mod = DETECTOR_BY_NAME["LOCAL_VARIANCE_ANOMALY"]
+    v0 = DCFG
+    v1 = dataclasses.replace(DCFG, d3_denominator="pooled_within")
+    assert v0.d3_denominator == "concatenated"
+
+    def rate(dc, gen, **kw):
+        k = 0
+        for s in range(SEEDS):
+            if mod.detect(gen(seed=40_000 + s, **kw), dc).signals:
+                k += 1
+        return k / SEEDS
+    art_v0 = rate(v0, synth.variance_equal_shifted_means)
+    art_v1 = rate(v1, synth.variance_equal_shifted_means)
+    assert art_v0 >= 0.5, "v0 did not reproduce the artifact ({:.2f})".format(art_v0)
+    assert art_v1 <= 0.10, "v1 still fires on shifted means ({:.2f})".format(art_v1)
+    # the direction of the artifact is LOWER, as observed live
+    dirs = [sig.values["direction"] for s in range(20)
+            for sig in mod.detect(synth.variance_equal_shifted_means(seed=40_000 + s), v0).signals]
+    assert dirs and dirs.count("LOWER_DISPERSION") / len(dirs) >= 0.9
+    # v1 keeps the real detection and its control, and stamps its version
+    assert rate(v1, synth.variance_anomaly) >= 0.80
+    assert rate(v1, synth.variance_equal) <= 0.15
+    sig = mod.detect(synth.variance_anomaly(seed=1), v1).signals[0]
+    assert sig.detector_version == "d3.v1" and sig.values["denominator"] == "pooled_within"
+    assert mod.detect(synth.variance_anomaly(seed=1), v0).signals[0].detector_version == "d3.v0"
+
+
 def test_d4_order_reversal_and_stable_control():
     hit = fire_rate("PLAYER_ORDER_REVERSAL", synth.order_reversal, base=20_000)
     ctl = fire_rate("PLAYER_ORDER_REVERSAL", synth.order_stable, base=30_000)

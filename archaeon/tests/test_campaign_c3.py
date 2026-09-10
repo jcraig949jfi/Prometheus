@@ -61,4 +61,11 @@ def test_check_reports_kind_registration_honestly():
         assert c["blockers"] and c["blockers"][0]["lane"] == "vivarium"
         assert "ok_to_issue" not in c
     else:
-        assert c["ok_to_issue"] is True, c["invalid"][:3]
+        assert c["ok_to_issue"] is True, (c["invalid"][:3], c["executor_preflight"]["refused"])
+        assert set(c["executor_preflight"]["ran"]) == set(c["arms"])       # every arm executed offline once
+
+
+def test_ic_density_set_is_the_wrappers_list_form():
+    # C3-1 failed on every row because this was a bare null (2026-09-10)
+    assert C3.IC_DENSITIES == [None]
+    assert all(r["spec"]["work"]["payload"]["ic_density_set"] == [None] for r in C3.plan())

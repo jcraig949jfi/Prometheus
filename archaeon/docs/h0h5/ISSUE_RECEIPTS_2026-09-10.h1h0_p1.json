@@ -1,0 +1,169 @@
+{
+  "campaign": "H1H0-1",
+  "candidate_set_id": "cs-h1h0-1-p1",
+  "experiment_ids": [
+    "01dab91c-e09f-474c-b680-9b24f4196dd4",
+    "9d971842-2101-46f7-a56c-3059dcb4a12c",
+    "f2bc1572-8d23-452a-ac9e-9ccf7250614e",
+    "72e3304d-2010-4dd2-a30c-198a3c35cbb4",
+    "e1745e52-28d2-4005-874f-807a147f8e10",
+    "4f69c608-bb0c-44e3-8e67-947d8cb65716",
+    "984dfb94-0b3c-46b6-bcb5-1442ad008afe",
+    "47503c28-039a-4543-912f-fd07be9d6d8d",
+    "6ffe2003-32a0-45f0-84a0-0bdda1b9673c",
+    "fbf162cb-ecfe-4845-b8ec-5f986d421e93",
+    "24bb47cb-73d1-4cf0-8d6a-68c58fd1592a",
+    "d298f6c6-801e-478c-9929-95a813f4ba0f",
+    "092226ab-8c9c-4783-9944-581935f67724",
+    "edd1bfc8-92e6-4a1a-ac37-ce19c0beebd1",
+    "96feb5d7-acc5-487f-ae2e-5c1d2dacee15",
+    "44d4fe19-4a7d-42e6-ae51-628a404a22a5",
+    "04db88f3-a088-43d8-9883-037d5317c32e",
+    "7465e756-7e3f-4b8d-a8b9-0b34bf03d1cd",
+    "9dc61be4-e6f6-439f-baea-4cf83e978814",
+    "65e3ac10-4116-4654-8cba-b0e68a2f129e",
+    "48fbe02a-0a89-46e8-b388-635d74c43e40",
+    "fa364727-2314-42b7-82b9-e7ef3d9036c8",
+    "7c3a5366-c5be-45a8-a9ab-84be3373d3cb",
+    "aabef37b-bf8f-4c47-a2cc-1ae8baed1c7a"
+  ],
+  "registered": 24,
+  "cost_event": {
+    "stage": "generation",
+    "attempt_id": "cs-h1h0-1-p1",
+    "resources": [
+      {
+        "resource": "wall_seconds",
+        "quantity": 0.09718680009245872,
+        "unit": "s",
+        "method": "time.perf_counter delta",
+        "enforcement_class": "measured",
+        "scope": "producer"
+      },
+      {
+        "resource": "cpu_seconds",
+        "quantity": 0.046875,
+        "unit": "s",
+        "method": "time.process_time delta (this process)",
+        "enforcement_class": "measured",
+        "scope": "producer"
+      },
+      {
+        "resource": "gpu_seconds",
+        "quantity": null,
+        "unit": "s",
+        "method": "not instrumented on the producer",
+        "enforcement_class": "unavailable",
+        "scope": "producer"
+      },
+      {
+        "resource": "items",
+        "quantity": 24,
+        "unit": "count",
+        "method": "count",
+        "enforcement_class": "measured",
+        "scope": "producer"
+      }
+    ],
+    "source_refs": [],
+    "output_refs": [
+      "01dab91c-e09f-474c-b680-9b24f4196dd4",
+      "9d971842-2101-46f7-a56c-3059dcb4a12c",
+      "f2bc1572-8d23-452a-ac9e-9ccf7250614e",
+      "72e3304d-2010-4dd2-a30c-198a3c35cbb4",
+      "e1745e52-28d2-4005-874f-807a147f8e10",
+      "4f69c608-bb0c-44e3-8e67-947d8cb65716",
+      "984dfb94-0b3c-46b6-bcb5-1442ad008afe",
+      "47503c28-039a-4543-912f-fd07be9d6d8d",
+      "6ffe2003-32a0-45f0-84a0-0bdda1b9673c",
+      "fbf162cb-ecfe-4845-b8ec-5f986d421e93",
+      "24bb47cb-73d1-4cf0-8d6a-68c58fd1592a",
+      "d298f6c6-801e-478c-9929-95a813f4ba0f",
+      "092226ab-8c9c-4783-9944-581935f67724",
+      "edd1bfc8-92e6-4a1a-ac37-ce19c0beebd1",
+      "96feb5d7-acc5-487f-ae2e-5c1d2dacee15",
+      "44d4fe19-4a7d-42e6-ae51-628a404a22a5",
+      "04db88f3-a088-43d8-9883-037d5317c32e",
+      "7465e756-7e3f-4b8d-a8b9-0b34bf03d1cd",
+      "9dc61be4-e6f6-439f-baea-4cf83e978814",
+      "65e3ac10-4116-4654-8cba-b0e68a2f129e",
+      "48fbe02a-0a89-46e8-b388-635d74c43e40",
+      "fa364727-2314-42b7-82b9-e7ef3d9036c8",
+      "7c3a5366-c5be-45a8-a9ab-84be3373d3cb",
+      "aabef37b-bf8f-4c47-a2cc-1ae8baed1c7a"
+    ],
+    "billing_owner": "archaeon",
+    "children": [],
+    "counterfactual": null,
+    "environment": {
+      "host": "SKULLPORT",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "python": "3.12.10",
+      "pid": "12688"
+    },
+    "started_at": 1789041142.4657815,
+    "cost_event_id": "cost:27d60c2e0f21010dfa4c31e3"
+  },
+  "engine_entries": [
+    {
+      "resource": "wall_seconds",
+      "quantity": 0.09718680009245872,
+      "unit": "s",
+      "method": "clock",
+      "scope": "campaign",
+      "refs": {
+        "producer_cost_event_id": "cost:27d60c2e0f21010dfa4c31e3",
+        "producer_stage": "generation",
+        "producer_method": "time.perf_counter delta",
+        "producer_enforcement_class": "measured",
+        "producer_scope": "producer",
+        "children": []
+      }
+    },
+    {
+      "resource": "cpu_seconds",
+      "quantity": 0.046875,
+      "unit": "s",
+      "method": "clock",
+      "scope": "campaign",
+      "refs": {
+        "producer_cost_event_id": "cost:27d60c2e0f21010dfa4c31e3",
+        "producer_stage": "generation",
+        "producer_method": "time.process_time delta (this process)",
+        "producer_enforcement_class": "measured",
+        "producer_scope": "producer",
+        "children": []
+      }
+    },
+    {
+      "resource": "gpu_seconds",
+      "quantity": null,
+      "unit": "s",
+      "method": "declared",
+      "scope": "campaign",
+      "refs": {
+        "producer_cost_event_id": "cost:27d60c2e0f21010dfa4c31e3",
+        "producer_stage": "generation",
+        "producer_method": "not instrumented on the producer",
+        "producer_enforcement_class": "unavailable",
+        "producer_scope": "producer",
+        "children": []
+      }
+    },
+    {
+      "resource": "items",
+      "quantity": 24,
+      "unit": "count",
+      "method": "counter",
+      "scope": "campaign",
+      "refs": {
+        "producer_cost_event_id": "cost:27d60c2e0f21010dfa4c31e3",
+        "producer_stage": "generation",
+        "producer_method": "count",
+        "producer_enforcement_class": "measured",
+        "producer_scope": "producer",
+        "children": []
+      }
+    }
+  ]
+}
