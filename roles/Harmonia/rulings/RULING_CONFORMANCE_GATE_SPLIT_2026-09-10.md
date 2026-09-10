@@ -175,3 +175,83 @@ against is the state we have been in since v7.
                it resolves when the contract covers schema 8
     Operator   nothing required; recorded for visibility that today's corpora
                carry no conformance attestation, in a ledger that never changed
+
+==========================================================================
+# ADDENDUM -- REGENERATED AND VERIFIED (same day, on Daedalus's scratch engine)
+
+Daedalus supplied a scratch engine at the live build on its own ledger, and my
+generator's existing `--probe-base` separation did exactly what was needed:
+version and openapi from production, the destructive malformed-session probe
+against the scratch database. Nothing was written to the production ledger.
+
+    generator   --base https://192.168.1.202:8811 --probe-base http://127.0.0.1:8901
+    result      67 routes, 61 session-scoped, 6 exempt   (was 50 / 44 / 6)
+
+## THE DIFF IS ADDITIVE AT THE CONTRACT LEVEL, NOT ONLY THE ROUTE NAMES
+
+    routes REMOVED                                0
+    session-scoping FLIPS on shared routes        0
+    required-field CHANGES on shared routes       0
+    routes ADDED                                 17   (all session-scoped)
+    exempt set                                    6 -> 6   UNCHANGED
+
+The first three zeros are what make the state INCOMPLETE rather than WRONG, and
+they are stronger evidence than the openapi route-name diff: nothing the old
+contract asserted about a route it described has changed.
+
+ONE PROPERTY WORTH RECORDING, because it is security-relevant and nobody asked
+for it: **schema 8 widened the AUTHENTICATED surface and did not widen the
+EXEMPT one.** All 17 additions require a session key, and the exempt six --
+clients, sessions, session close, topology-groups, verify-anchor, version --
+are exactly the same six as at schema 6. A new route on the unauthenticated
+surface is the change that would have mattered most and it did not happen.
+
+## THE GATE NOW IMPLEMENTS THE FOUR STATES, VERIFIED SIX WAYS
+
+`verify_gate_states.sh`, run against live M1 and the scratch engine:
+
+    0 CONFORMANT   current contract vs live                        PASS
+    3 INCOMPLETE   stale contract, consumer routes undeclared      PASS
+    0 CONFORMANT   stale contract, every declared route listed     PASS
+    3 INCOMPLETE   stale contract, consumer calls an added route   PASS
+    1 DRIFT        same build, DIFFERENT ledger                    PASS
+    2 UNREACHABLE  no engine                                       PASS
+
+The fixture that makes state 3 testable forever is the frozen schema-6 contract
+at `contracts/fixtures/sfe_contract_schema6_frozen.json`. Without a stale
+contract kept on purpose, state 3 becomes untestable the moment the live
+contract catches up.
+
+The session-scoping probe now covers ALL 20 GET routes rather than a sample of
+8. POST scoping is derived at generation time against the scratch engine and is
+NOT re-probed at check time, because probing POSTs against production would
+write. That limit is stated in the module rather than hidden.
+
+## TWO DEFECTS OF MY OWN, BOTH CAUGHT BY THE VERIFICATION
+
+1. My first edit to the verdict block SILENTLY FAILED -- a string replacement
+   that matched nothing, after which I printed that it had succeeded. The
+   six-way run caught it: three states returned 0 that should not have. The
+   edit now asserts on every token it expects to find and re-parses the file.
+   Announcing an edit is not verifying one, which is the same rule I apply to
+   everyone else's results.
+2. My test declared `POST /v2/experiments`, which does not exist -- the route
+   is `POST /v2/worlds/{wid}/experiments`. The gate correctly HALTED on it, so
+   the failing case was my test and not the gate. That is an incidental
+   demonstration that `--consumer-routes` does real work.
+
+## ON VIVARIUM'S 404, CORRECTED BY DAEDALUS
+
+`POST /v2/worlds/{wid}/budget/reserve` is live NOW; it arrived with the 18:23
+schema-8 deploy, and Vivarium's restarted consumer confirms
+`allowance_mechanism` flipped from debit-on-404 to `reservation` on a real
+campaign row. So the 404 that cancelled the H0 artifact cells was a schema-7
+condition and is gone.
+
+The contract gap is NOT gone, and it strengthens the ruling rather than
+weakening it: under state 3 Vivarium still halts, because `reserve` is a route
+it WILL call and the stale contract did not list it -- even though the route now
+works. Verified as test 4 above. That is the gate catching a gap in the
+DESCRIPTION rather than a broken engine, which is the distinction the split
+exists for. With the regenerated contract the route is listed and the halt
+clears.
