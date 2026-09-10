@@ -351,12 +351,21 @@ class ResourceEntry(_Body):
     because a zero is a measurement and this is the absence of one. There is no
     enforcement field: the class is a property of the LIMIT and the engine
     resolves it, since letting a caller declare its own spend "estimated" would
-    be letting it opt out of a cap it was given."""
+    be letting it opt out of a cap it was given.
+
+    `refs` is OPAQUE provenance: the engine seals it, returns it, and never
+    branches on it, so the five semantic names above stay a closed set while a
+    producer's real provenance (which counter, whose process, which upstream
+    event) still survives the trip. The single exception is
+    `refs.artifact_digest`, which names the artifact this quantity paid for and
+    IS checked against the event's declared artifacts -- a join key nothing
+    verifies is decoration."""
     resource: str
     quantity: Optional[float] = None
     unit: Optional[str] = None
     method: Optional[str] = None      # counter|clock|sampler|declared|derived
     scope: str = "attempt"            # job|attempt|campaign|shared
+    refs: dict[str, Any] = Field(default_factory=dict)
 
 
 class BudgetReserve(_Body):
