@@ -430,6 +430,61 @@ register(Kind(
     }))
 
 
+# --------------------------------------------- Herakles's radius-1, wrapped
+register(Kind(
+    kind="eca_rule_eval_v1",
+    params=frozenset({"rule_number", "n_cells", "steps"}),
+    implemented=True,
+    owner="herakles (library) / vivarium (wrapper)",
+    stateful=False,
+    note="A thin wrapper around herakles/eca (radius 1). The library owns the "
+         "rule numbering, the neighbourhood order, the periodic ring and the "
+         "definition of TERMINAL BEHAVIOUR -- the lattice after exactly "
+         "`steps` updates over every one of the 2^n_cells initial "
+         "configurations, not the trajectory.\n"
+         "IT REPORTS THE OBSERVABLE, NOT A SCORE. Two rules with identical "
+         "terminal behaviour are behaviourally indistinguishable and, in the "
+         "library's own words, must not be counted as two tasks -- so the "
+         "result is the behaviour digest and the equivalence class, which is "
+         "what class_map_fixture.json is keyed to. Scoring a rule against a "
+         "target would need a target and a metric, and neither exists in the "
+         "library or in any handed-over spec; inventing them here would be "
+         "Vivarium deciding what H5 measures. A scored variant is a NEW kind "
+         "name, never a flag on this one.\n"
+         "The seed is accepted and unused: the scope is exhaustive, so there "
+         "is nothing to sample.",
+    result_schema={
+        "rule_number": R("integer"),
+        "behaviour_digest": R("string",
+                              note="the library's own observable digest; two "
+                                   "rules agreeing here are one task"),
+        "equivalence_class_members": R("vector", element="integer",
+                                       bounds=(1, 256),
+                                       reductions=("count",),
+                                       note="every rule sharing this "
+                                            "behaviour on THIS scope"),
+        "equivalence_class_size": R("integer"),
+        "is_class_representative": R("boolean",
+                                     note="lowest-numbered member; a stable "
+                                          "choice, not a claim of primacy"),
+        "n_cells": R("integer"),
+        "steps": R("integer"),
+        "n_initial_configurations": R("integer"),
+        "on_fixture_scope": R("boolean",
+                              note="whether this payload's scope is the one "
+                                   "class_map_fixture.json was computed over"),
+        "fixture_class_agrees": R("boolean", required=False,
+                                  note="absent off the fixture scope, where "
+                                       "there is nothing to agree with"),
+        "fixture_class_members": R("vector", element="integer",
+                                   bounds=(1, 256), required=False,
+                                   reductions=("count",)),
+        "radius": R("integer", note="1, from the library"),
+        "scored_against_a_target": R("boolean",
+                                     note="always false; see the note above"),
+    }))
+
+
 def get(kind: str):
     return REGISTRY.get(kind)
 

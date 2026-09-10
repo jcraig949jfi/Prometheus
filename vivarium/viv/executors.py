@@ -197,6 +197,9 @@ def run(spec: dict, *, seed: int = None, state=None, inputs=None) -> dict:
         from . import cegis_boolean as _cegis          # noqa: PLC0415
         out = _cegis.run(_params("cegis_boolean_v1", spec), seed=seed,
                          inputs=inputs or {})
+    elif kind_name == "eca_rule_eval_v1":
+        from . import eca_rule_eval as _eca                  # noqa: PLC0415
+        out = _eca.run(_params("eca_rule_eval_v1", spec), seed=seed)
     elif kind_name == "artifact_probe_v1":
         from . import artifact_probe as _probe        # noqa: PLC0415
         out = _probe.run(_params("artifact_probe_v1", spec), seed=seed,

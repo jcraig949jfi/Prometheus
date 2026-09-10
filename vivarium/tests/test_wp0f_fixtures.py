@@ -83,6 +83,11 @@ FIXTURES = [
     # whose candidate order drifted would silently be a different experiment
     # under the same sealed spec.
     ("cegis_boolean_v1", _CEGIS_PAYLOAD, 20260910, "8a5c17d2add8817758774e42339ee8e5"),
+    # Herakles's radius-1 kind, on the scope class_map_fixture.json covers.
+    # If the neighbourhood order, the rule numbering or the horizon moved, the
+    # class assignment would move and so would this hash.
+    ("eca_rule_eval_v1", {"rule_number": 110, "n_cells": 7, "steps": 8},
+     20260910, "d331bbf693dcf9ee815db483abddc70f"),
 ]
 
 
