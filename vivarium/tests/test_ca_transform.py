@@ -186,3 +186,55 @@ def test_a_transformed_spec_has_its_own_sealed_identity():
                 "pew": None, "repeat": dict(ONE_REPEAT)}
     hashes = {t: _spec.spec_hash(s(t)) for t in _ca.TRANSFORMS}
     assert len(set(hashes.values())) == len(_ca.TRANSFORMS), hashes
+
+
+
+# ===========================================================================
+# F-20: the two flags Herakles's c3_null_check needs and cannot infer
+# ===========================================================================
+
+def test_the_flags_are_measured_not_declared_from_the_transform_name():
+    """A wrapper that answered these from a lookup keyed on the transform name
+    would be asserting it applied the transform correctly -- which is the one
+    thing the null check exists to verify independently. Both are read off the
+    arrays."""
+    base = _ca.run(payload(), seed=20260908)
+    assert base["ic_transformed"] is False
+    assert base["majority_target_flipped"] is False
+
+
+@pytest.mark.parametrize("transform,ic,flip", [
+    ("reflect", True, False),
+    ("complement", True, True),
+    ("reflect_complement", True, True),
+])
+def test_each_symmetry_reports_the_right_pair(transform, ic, flip):
+    """Reflection moves the sample and preserves density, so the target does
+    NOT flip. Complement moves both. Getting this pair wrong is exactly how a
+    null check reports a break that did not happen."""
+    out = _ca.run(payload(transform=transform), seed=20260908)
+    assert out["ic_transformed"] is ic, transform
+    assert out["majority_target_flipped"] is flip, transform
+
+
+def test_herakles_null_check_returns_IDENTICAL_on_our_own_rows():
+    """The end of F-20: his checker, our rows, no fields supplied by hand.
+
+    Recorded as INDETERMINATE 72/72 before the flags existed, because a row
+    that does not say whether the INITIAL CONDITION moved has not run the
+    symmetry test -- rule-only is not the symmetry.
+    """
+    nc = pytest.importorskip("herakles.evca.c3_null_check")
+    fn = None
+    for name in ("check_pair", "compare", "check", "c3_null_check"):
+        fn = getattr(nc, name, None)
+        if callable(fn):
+            break
+    if fn is None:                                   # pragma: no cover
+        pytest.skip("c3_null_check exposes no comparison entry point")
+    base = _ca.run(payload(), seed=20260908)
+    for transform in ("reflect", "complement", "reflect_complement"):
+        moved = _ca.run(payload(transform=transform), seed=20260908)
+        verdict = fn(base, moved)
+        got = verdict.get("verdict") if isinstance(verdict, dict) else verdict
+        assert got == "IDENTICAL", (transform, verdict)

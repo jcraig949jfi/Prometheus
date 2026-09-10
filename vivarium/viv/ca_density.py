@@ -59,8 +59,28 @@ from typing import Optional
 REPO = Path(__file__).resolve().parent.parent.parent
 
 #: Closed. `at_T` and `stable` are the two masks the library's own docstring
-#: distinguishes; no third reading is invented here.
-SUCCESS_CRITERIA = ("at_T", "stable")
+#: distinguishes. `cellwise_majority_match` is Herakles's third, added
+#: 2026-09-10, and it is HIS definition and his analytic expectations -- see
+#: core.cellwise_majority_match. Nothing here invents a reading.
+#:
+#: WHY A THIRD ONE EXISTS. Under both masks, 40 of 40 random tables in cs-c3-2
+#: scored exactly 0.0 with 100/100 ICs incorrect. A criterion whose attainable
+#: range for random rules is a single point cannot rank anything, and cannot
+#: tell a rule that is slightly better than chance from one that is not. The
+#: per-cell measure has an interval around 0.5 instead.
+#:
+#: IT IS NOT A DROP-IN REPLACEMENT AND MUST NOT BE READ AS ONE. It equals at_T
+#: accuracy only for a rule that always reaches a uniform configuration by
+#: `steps`, and Herakles is explicit that the two CONSTANT rules land on the
+#: same mean as a random table and are separated only by dispersion. So a
+#: ranking built on the mean alone inherits that blind spot; the dispersion
+#: travels in the result for exactly that reason.
+SUCCESS_CRITERIA = ("at_T", "stable", "cellwise_majority_match")
+
+#: The two mask criteria. `accuracy` under the third is a MEAN over cells, not
+#: a fraction of ICs, so the mask-shaped fields below do not apply to it and
+#: are reported as what they are rather than coerced.
+MASK_CRITERIA = ("at_T", "stable")
 
 #: The four EXACT symmetries of the density task (Track B, packet v2.1 2.1).
 #: Applied inside the executor to three things together -- the rule table, the
@@ -219,6 +239,16 @@ def run(payload: dict, *, seed: int) -> dict:
     # the sample it describes.
     ics_raw = ics
     table, ics = apply_transform(transform, table, ics, np)
+    # F-20. The two facts Herakles's c3_null_check needs and cannot infer.
+    # Both are MEASURED from the arrays rather than declared from the
+    # transform name: a wrapper that answered these from a lookup table would
+    # be asserting that it applied the transform correctly, which is the very
+    # thing the null check exists to verify independently.
+    ic_transformed = bool(not np.array_equal(ics, ics_raw))
+    target_before = core.majority_target(ics_raw)
+    target_after = core.majority_target(ics)
+    majority_target_flipped = bool(np.array_equal(target_after,
+                                                  1 - target_before))
     transformed_rule_hex = (rule_hex if transform == "none"
                             else core.encode_table(table))
 
@@ -245,7 +275,18 @@ def run(payload: dict, *, seed: int) -> dict:
     correct_stable = correct_at_t & unchanged
 
     fixed = core.fixes_uniform_states(table)
-    chosen = correct_at_t if criterion == "at_T" else correct_stable
+
+    # THE THIRD CRITERION. Its accuracy is a per-cell mean and its "witness"
+    # is not a set of failed ICs -- there is no pass/fail per IC to collect.
+    # Rather than coerce it into a mask shape it does not have, the mask-keyed
+    # fields report the at_T mask (unchanged, still true of the run) and the
+    # result says which reading `accuracy` came from.
+    cellwise = None
+    if criterion == "cellwise_majority_match":
+        cellwise = core.cellwise_majority_match(table, ics, steps)
+
+    chosen = correct_at_t if criterion in ("at_T", "cellwise_majority_match") \
+        else correct_stable
     wrong = np.flatnonzero(~chosen)
     witness = [int(i) for i in wrong[:WITNESS_LIMIT].tolist()]
     truncated = bool(wrong.size > WITNESS_LIMIT)
@@ -263,8 +304,18 @@ def run(payload: dict, *, seed: int) -> dict:
                                     int(seed), ic_index=0)
 
     out = {
-        "accuracy": float(chosen.mean()),
+        "accuracy": (float(cellwise["mean_cell_match"]) if cellwise is not None
+                     else float(chosen.mean())),
         "misclassified_ic": witness,
+        # F-20. The SAME rule `accuracy` already follows, applied to the two
+        # fields a symmetry check actually compares: under the declared
+        # criterion, this is THE mask and THIS is the witness. The per-criterion
+        # names below stay, so nothing is renamed and both readings remain
+        # available -- but a consumer should not have to reconstruct which of
+        # two digests the row was scored under before it can compare anything.
+        "mask_digest": (at_t["correct_mask_digest"] if criterion == "at_T"
+                        else core.mask_digest(correct_stable)),
+        "witness": witness,
         "spacetime_digest": traj["digest"],
         "success_criterion": criterion,
         "accuracy_at_T": float(at_t["accuracy"]),
@@ -280,12 +331,32 @@ def run(payload: dict, *, seed: int) -> dict:
         "n_cells": int(n_cells),
         "steps": int(steps),
         "witness_truncated": truncated,
+        # Present on every row so a reader never has to infer which shape
+        # `accuracy` has from the criterion string.
+        "accuracy_is_per_cell_mean": criterion == "cellwise_majority_match",
         "transform": transform,
         "transformed_rule_hex": transformed_rule_hex,
+        # MEASURED, not declared. Under `reflect` on a palindromic sample
+        # ic_transformed can legitimately be false, and saying so is the
+        # honest reading -- the null check then reports a scope fact rather
+        # than a break, which is what it is for.
+        "ic_transformed": ic_transformed,
+        "majority_target_flipped": majority_target_flipped,
         "spacetime_is_image_of_untransformed": transform == "none",
         "executor": "ca_density_v0",
         "reproducibility": "BIT_DETERMINISTIC",
     }
+    if cellwise is not None:
+        # Herakles's own fields, carried through unchanged and under his names.
+        # The dispersion is NOT optional: he states that the two constant rules
+        # land on the same MEAN as a random table and are told apart only by
+        # it, so a row that reported the mean alone would hide the one thing
+        # that makes the mean usable.
+        for key in ("sd_across_ics", "min_cell_match", "max_cell_match",
+                    "fraction_all_cells_match", "fraction_no_cells_match"):
+            out["cellwise_" + key] = float(cellwise[key])
+        out["cellwise_comparable_to_published_P"] = bool(
+            cellwise["comparable_to_published_P"])
     if truncated:
-        out["_truncated"] = {"misclassified_ic": True}
+        out["_truncated"] = {"misclassified_ic": True, "witness": True}
     return out
