@@ -2768,7 +2768,19 @@ class Foundry:
                     "reservation_id": reservation_id,
                     "event_seq": ev["event_seq"],
                     "entry_hash": ev["entry_hash"],
-                    "resources": vec, "billed_enforceable": billed}
+                    "resources": vec, "billed_enforceable": billed,
+                    # WHAT THE ENGINE ACTUALLY INDEXED. `refs` is accepted at
+                    # BOTH levels and only the ENTRY level feeds by_artifact,
+                    # so a caller that put artifact_digest on the EVENT gets a
+                    # 200, a sealed and echoed record, and no index -- a
+                    # response indistinguishable from success. That cost a seat
+                    # a day. This is derived from the vector, never branched
+                    # on, and it answers "did my join key land?" from the
+                    # response instead of from a second call and a subtle
+                    # comparison of an echo against {}.
+                    "indexed_artifacts": sorted(
+                        {e["refs"][ENTRY_REFS_DIGEST_KEY] for e in vec
+                         if e["refs"].get(ENTRY_REFS_DIGEST_KEY)})}
 
     def get_cost_event(self, cost_event_id: str, *,
                        client_id: Optional[str] = None) -> dict:

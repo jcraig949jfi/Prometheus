@@ -1,23 +1,23 @@
 {
   "_what_this_is": "A CANDIDATE build, for review. Nothing has been deployed and no service was restarted. Applying it means copying these files into the deployment tree and restarting, after which deploy/verify_deploy.py should be re-pinned and re-run.",
-  "candidate_commit": "877d478c6a0fa8e231984f5e70180c53aa302184",
-  "candidate_branch": "daedalus/schema8-deploy",
-  "engine_source_hash": "sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e",
+  "candidate_commit": "af304b0a097244239b31f1ab0d93d84058077a98",
+  "candidate_branch": "daedalus/deploy-schema8",
+  "engine_source_hash": "sha256:62090a6d9b3e360b7c75f0fea6b6cb348845c2da88c644ffc0cdcf45860a8023",
   "schema_version": 8,
-  "deployed_engine_source_hash": "sha256:084f951f866cc50aec73c6403528abc234fd514742b25ffd1aff5515a271feff",
-  "deployed_schema_version": 7,
-  "live_engine_source_hash": "sha256:084f951f866cc50aec73c6403528abc234fd514742b25ffd1aff5515a271feff",
-  "live_schema_version": 7,
+  "deployed_engine_source_hash": "sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e",
+  "deployed_schema_version": 8,
+  "live_engine_source_hash": "sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e",
+  "live_schema_version": 8,
   "identities": {
     "git_commit": {
-      "value": "877d478c6a0fa8e231984f5e70180c53aa302184",
-      "branch": "daedalus/schema8-deploy",
-      "build_files_commit": "877d478c6a0fa8e231984f5e70180c53aa302184",
+      "value": "af304b0a097244239b31f1ab0d93d84058077a98",
+      "branch": "daedalus/deploy-schema8",
+      "build_files_commit": "b91880a2dccf1630d6b1c47cff14a73f46e8ef4a",
       "names": "a TREE in history",
       "authority": "best-effort. It is the tree this candidate was cut from; it is NOT proof that the tree reproduces the build, and /v2/version's source_commit has named a commit that could not. HEAD in particular moves for reasons unrelated to this build, which is why build_files_commit is recorded beside it."
     },
     "engine_source_hash": {
-      "value": "sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e",
+      "value": "sha256:62090a6d9b3e360b7c75f0fea6b6cb348845c2da88c644ffc0cdcf45860a8023",
       "names": "the RUNTIME BUILD",
       "authority": "AUTHORITATIVE. sha256 over sorted sfe/*.py, each contributing name + NUL + LF-normalized bytes + NUL, computed at import by sfe/release.py. LF normalization is why a checkout's line-ending convention cannot change build identity."
     },
@@ -40,7 +40,7 @@
     ]
   },
   "rollback": {
-    "crosses_a_migration": true,
+    "crosses_a_migration": false,
     "code": [
       "Copy the DEPLOYED pin's files back into the deployment tree from a checkout you own -- never `git checkout -- .` or `git clean` in F:/Prometheus, which carries other roles' uncommitted work.",
       "Restart with the documented procedure: stop the scheduled task, tree-kill the venv stub (Stop-ScheduledTask alone orphans the process tree and the orphan keeps the socket while the OLD build serves), confirm the port is free, start, allow ~20s to bind.",
@@ -49,59 +49,29 @@
     "data": [
       "BEFORE deploying: stop the service and take a snapshot with VACUUM INTO. A file copy of a live SQLite database with a WAL is not a snapshot.",
       "The migration runs on first open and is additive; nothing is back-filled. There is no down-migration.",
-      "Reverting the code WITHOUT restoring the snapshot does not work: schema 8 data under a schema 7 engine is refused at startup. That is the correct failure direction, and it is why the snapshot is the rollback and the pin is only a recovery aid."
+      "This candidate does not move the schema, so the ledger is unchanged and a code-only revert is sufficient."
     ],
     "instance_id_invariant": "engine_instance_id must be IDENTICAL before and after, in both directions. If it changes, the service was pointed at a different ledger and the rollback has not restored state -- it has replaced it."
   },
   "conformance_pin": {
     "contract": "roles/Harmonia/contracts/sfe_contract.json",
-    "pinned_engine_source_hash": "sha256:2f42e87f28f32065e8aa1c7cf4e0777c523e474ea4d1aa2ad4aa9a626143fe68",
-    "pinned_schema_version": 6,
+    "pinned_engine_source_hash": "sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e",
+    "pinned_schema_version": 8,
     "pinned_engine_instance_id": "eng_8a37a5d305969034d488c43e",
-    "candidate_engine_source_hash": "sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e",
+    "candidate_engine_source_hash": "sha256:62090a6d9b3e360b7c75f0fea6b6cb348845c2da88c644ffc0cdcf45860a8023",
     "candidate_schema_version": 8,
-    "live_engine_source_hash": "sha256:084f951f866cc50aec73c6403528abc234fd514742b25ffd1aff5515a271feff",
-    "live_schema_version": 7,
+    "live_engine_source_hash": "sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e",
+    "live_schema_version": 8,
     "hash_matches_candidate": false,
-    "hash_matches_live": false,
+    "hash_matches_live": true,
     "note": "conformance_check.py is FAIL-CLOSED and compares engine_source_hash EXACTLY, so it halts the automated seats on any build change -- including one that changes no route. Regenerate the contract (generate_sfe_contract.py) in the SAME window as the deploy, or the seats stop on a build that is otherwise fine. If the pin already disagrees with the LIVE service, it was stale before this candidate and the regeneration is overdue independently of this deploy."
   },
   "receipt": "SerendipityFoundry/SerendipityFoundryEngine/deploy/TRACKA_JOINT_RECEIPT.json",
   "files_changed": [
     {
-      "file": "SerendipityFoundry/SerendipityFoundryEngine/sfe/api.py",
-      "deployed": "00edc4f35ade04f1",
-      "candidate": "7ba1594e077715b3"
-    },
-    {
-      "file": "SerendipityFoundry/SerendipityFoundryEngine/sfe/executors.py",
-      "deployed": "0209d07796a59b84",
-      "candidate": "9f58efd7562a437c"
-    },
-    {
-      "file": "SerendipityFoundry/SerendipityFoundryEngine/sfe/ids.py",
-      "deployed": "095a0ea33015d164",
-      "candidate": "eea82aa6b13a3732"
-    },
-    {
       "file": "SerendipityFoundry/SerendipityFoundryEngine/sfe/runtime.py",
-      "deployed": "b47dc5f199ae6c2c",
-      "candidate": "f301fb51fca90e13"
-    },
-    {
-      "file": "SerendipityFoundry/SerendipityFoundryEngine/sfe/store.py",
-      "deployed": "248dae19ccec7298",
-      "candidate": "cd16b6fda6060e23"
-    },
-    {
-      "file": "SerendipityFoundry/SerendipityFoundryEngine/serve.py",
-      "deployed": "568508fedcc8bcf1",
-      "candidate": "26e4df8de166e102"
-    },
-    {
-      "file": "SerendipityFoundry/SerendipityFoundryClient/sfclient/client.py",
-      "deployed": "ce1cf604be8d4ac6",
-      "candidate": "9592c1270bfcc510"
+      "deployed": "f301fb51fca90e13",
+      "candidate": "d1756fd519faf95d"
     }
   ],
   "files_added": [],
@@ -140,8 +110,8 @@
       "bytes_lf": 1717
     },
     "SerendipityFoundry/SerendipityFoundryEngine/sfe/runtime.py": {
-      "sha256_lf": "f301fb51fca90e1362a5f304722d7b7726d14d722b2a96da3b2112a7687e38d9",
-      "bytes_lf": 257868
+      "sha256_lf": "d1756fd519faf95dfacebb213fc7d95a27e20e3b5efa0b6234cc12f444bd978c",
+      "bytes_lf": 258725
     },
     "SerendipityFoundry/SerendipityFoundryEngine/sfe/store.py": {
       "sha256_lf": "cd16b6fda6060e23f581fcbb50e2074200d67137c89821d1e3d6c678a37715b8",
@@ -157,7 +127,7 @@
     }
   },
   "review_notes": {
-    "schema_change": "7 -> 8 : a MIGRATION runs on first open. Take a VACUUM INTO snapshot with the service stopped first; rollback becomes code+data, because an older engine REFUSES a newer ledger (store.py, 'refusing to run').",
+    "schema_change": null,
     "build_identity_moves": true,
     "conformance_drift": "Harmonia's conformance_check.py pins engine_source_hash exactly and is fail-closed, so any build change stops the automated seats until her contract is regenerated. Batch the regeneration into the same window.",
     "restart_procedure": "Stop-ScheduledTask alone orphans the process tree and the orphan keeps the socket while the OLD build serves. Stop the task, tree-kill the venv stub, confirm the port is free, then start. Allow up to ~20s to bind."

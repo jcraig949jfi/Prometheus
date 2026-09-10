@@ -41,10 +41,15 @@ a run rather than writing to a ledger someone owns.
 from __future__ import annotations
 
 import argparse
+import hashlib
+import io
 import json
 import os
+import shutil
 import subprocess
 import sys
+import tarfile
+import tempfile
 import urllib.request
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -73,6 +78,84 @@ def db_for(port: int) -> str:
     if port == PORT:
         return os.path.join(_VAR, "probe.db")
     return os.path.join(_VAR, "probe-%d.db" % port)
+
+
+def norm(b: bytes) -> bytes:
+    return b.replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+
+
+def hash_of_sfe(sfe_dir: str) -> str:
+    """sfe/release.py's computation, over a directory on disk."""
+    h = hashlib.sha256()
+    for n in sorted(p for p in os.listdir(sfe_dir) if p.endswith(".py")):
+        h.update(n.encode("utf-8"))
+        h.update(b"\x00")
+        h.update(norm(io.open(os.path.join(sfe_dir, n), "rb").read()))
+        h.update(b"\x00")
+    return "sha256:" + h.hexdigest()
+
+
+def deployed_pin():
+    with io.open(os.path.join(HERE, "DEPLOYED_BUILD.json"),
+                 encoding="utf-8") as fh:
+        return json.load(fh)
+
+
+def engine_dir_matching_deployed():
+    """The engine source to SERVE: whatever reproduces the DEPLOYED build.
+
+    THE FIXTURE'S JOB IS TO BE PRODUCTION'S BUILD, not to be HEAD. Those
+    coincide right up until the moment somebody lands the next change, and
+    then a fixture that serves "the current tree" silently stops being a
+    fixture -- --check fails, the harness that depends on it aborts, and the
+    person who broke it is not the person who restarted it.
+
+    So: serve the working tree only while it still reproduces the deployed
+    hash, and otherwise materialise the pinned commit from git. Returns
+    (engine_dir, how, tmpdir_or_None).
+
+    The export is VERIFIED before it is served. A pin naming a commit that
+    cannot reproduce its own build hash is a thing that has actually happened
+    here, and serving it unchecked would hand out a contract-generation engine
+    that is not the engine anyone runs.
+    """
+    pin = deployed_pin()
+    want = pin.get("engine_source_hash")
+    here_hash = hash_of_sfe(os.path.join(ENG, "sfe"))
+    if here_hash == want:
+        return ENG, "the working tree (it reproduces the deployed build)", None
+
+    commit = pin.get("source_commit_containing_build")
+    if not commit:
+        raise SystemExit(
+            "the working tree is %s but the deployed build is %s, and the pin "
+            "names no commit to fall back to." % (here_hash, want))
+    repo = os.path.dirname(os.path.dirname(ENG))
+    tmp = tempfile.mkdtemp(prefix="sfe-deployed-")
+    tar = os.path.join(tmp, "src.tar")
+    rel = "SerendipityFoundry/SerendipityFoundryEngine"
+    r = subprocess.run(
+        ["git", "archive", "--format=tar", "-o", tar, commit,
+         rel + "/sfe", rel + "/serve.py"],
+        cwd=repo, capture_output=True)
+    if r.returncode != 0:
+        shutil.rmtree(tmp, ignore_errors=True)
+        raise SystemExit("could not export %s from git: %s"
+                         % (commit, r.stderr.decode("utf-8", "replace")[:200]))
+    with tarfile.open(tar) as t:
+        t.extractall(tmp)
+    got = os.path.join(tmp, rel.replace("/", os.sep))
+    made = hash_of_sfe(os.path.join(got, "sfe"))
+    if made != want:
+        shutil.rmtree(tmp, ignore_errors=True)
+        raise SystemExit(
+            "commit %s does NOT reproduce the deployed build.\n"
+            "  pin wants  %s\n  commit made %s\n"
+            "The pin names a tree that cannot rebuild what is running; fix the "
+            "pin before generating a contract against anything."
+            % (commit[:12], want, made))
+    return got, "commit %s (the tree has moved past the deployed build)" \
+        % commit[:12], tmp
 
 
 def live(url, cacert=None):
@@ -134,24 +217,37 @@ def main():
     ap.add_argument("--check", action="store_true")
     ap.add_argument("--cacert", default=os.path.join(HERE, "m1.crt"))
     ap.add_argument("--port", type=int, default=PORT)
+    ap.add_argument("--tree", action="store_true",
+                    help="serve the WORKING TREE even if it no longer "
+                         "reproduces the deployed build (for trying a "
+                         "candidate; --check will then fail, correctly)")
     a = ap.parse_args()
     if a.check:
         return check(a.cacert, a.port)
 
     db = db_for(a.port)
     os.makedirs(os.path.dirname(db), exist_ok=True)
+    tmp = None
+    if a.tree:
+        eng, how = ENG, "the WORKING TREE (--tree; --check may fail)"
+    else:
+        eng, how, tmp = engine_dir_matching_deployed()
     print("starting the contract scratch engine on %s" % base_for(a.port))
-    print("  db  : %s   (disposable -- the probe writes garbage here)" % db)
-    print("  log : %s" % LOG)
-    print("  serves the CURRENT tree; verify with --check that it matches "
-          "production's build before generating a contract against it.")
-    with open(LOG, "ab") as log:
-        return subprocess.call(
-            [sys.executable, os.path.join(ENG, "serve.py"),
-             "--db", db, "--host", "127.0.0.1", "--port", str(a.port),
-             "--insecure", "--registration", "open",
-             "--max-artifact-bytes", "33554432"],
-            cwd=ENG, stdout=log, stderr=subprocess.STDOUT)
+    print("  serving: %s" % how)
+    print("  source : %s" % eng)
+    print("  db     : %s   (disposable -- the probe writes garbage here)" % db)
+    print("  log    : %s" % LOG)
+    try:
+        with open(LOG, "ab") as log:
+            return subprocess.call(
+                [sys.executable, os.path.join(eng, "serve.py"),
+                 "--db", db, "--host", "127.0.0.1", "--port", str(a.port),
+                 "--insecure", "--registration", "open",
+                 "--max-artifact-bytes", "33554432"],
+                cwd=eng, stdout=log, stderr=subprocess.STDOUT)
+    finally:
+        if tmp:
+            shutil.rmtree(tmp, ignore_errors=True)
 
 
 if __name__ == "__main__":

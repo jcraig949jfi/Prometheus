@@ -301,3 +301,83 @@ def test_the_api_request_model_accepts_the_same_entries():
     m = CostEventCreate(stage="generation", resources=entries)
     assert [e.refs["producer_method"] for e in m.resources] == [
         e["refs"]["producer_method"] for e in entries]
+
+
+# ===========================================================================
+# C7 -- a 200 that indexed nothing must not look like a 200 that did
+# ===========================================================================
+def test_the_response_says_what_it_indexed(f):
+    c, w = _world(f, "w")
+    _aid, digest = _art(f, w, c, b"the bytes")
+    ce = f.record_cost_event(
+        w, stage="retrieval", source_artifacts=[digest],
+        resources=[{"resource": "artifact_bytes", "quantity": 9,
+                    "unit": "bytes", "method": "counter",
+                    "refs": {ENTRY_REFS_DIGEST_KEY: digest}}],
+        client_id=c)
+    assert ce["indexed_artifacts"] == [digest]
+    # and it agrees with what the report will actually show
+    assert sorted(f.cost_report(w, client_id=c)["by_artifact"]) == [digest]
+
+
+def test_refs_on_the_EVENT_indexes_nothing_and_the_response_says_so(f):
+    """THE EXACT CASE THAT COST A DAY. Event-level refs is legitimate, opaque,
+    sealed and echoed -- and feeds no index. Before this field the only tell
+    was an entry-level refs echoing back as {}, which nobody thinks to compare
+    against a 200."""
+    c, w = _world(f, "w")
+    _aid, digest = _art(f, w, c, b"the bytes")
+    ce = f.record_cost_event(
+        w, stage="retrieval", source_artifacts=[digest],
+        refs={ENTRY_REFS_DIGEST_KEY: digest},        # <- on the EVENT
+        resources=[{"resource": "artifact_bytes", "quantity": 9,
+                    "unit": "bytes", "method": "counter"}],
+        client_id=c)
+    assert ce["indexed_artifacts"] == []             # says so, out loud
+    assert ce["resources"][0]["refs"] == {}
+    assert f.cost_report(w, client_id=c)["by_artifact"] == {}
+
+
+def test_indexed_artifacts_is_deduped_and_ordered(f):
+    """Two lines paying for the same bytes are one indexed artifact, and the
+    order is not the order the caller happened to send."""
+    c, w = _world(f, "w")
+    _a1, d1 = _art(f, w, c, b"one")
+    _a2, d2 = _art(f, w, c, b"two")
+    hi, lo = sorted([d1, d2], reverse=True)
+    ce = f.record_cost_event(
+        w, stage="retrieval", source_artifacts=[d1, d2],
+        resources=[
+            {"resource": "artifact_bytes", "quantity": 3, "unit": "bytes",
+             "method": "counter", "refs": {ENTRY_REFS_DIGEST_KEY: hi}},
+            {"resource": "engine_fetches", "quantity": 1, "unit": "count",
+             "method": "counter", "refs": {ENTRY_REFS_DIGEST_KEY: hi}},
+            {"resource": "artifact_bytes", "quantity": 3, "unit": "bytes",
+             "method": "counter", "refs": {ENTRY_REFS_DIGEST_KEY: lo}},
+        ], client_id=c)
+    assert ce["indexed_artifacts"] == sorted([hi, lo])
+
+
+def test_an_event_with_no_join_key_reports_an_empty_list_not_absence(f):
+    """Most cost lines move no bytes. The field is always present, so a caller
+    can test it without knowing whether to expect it."""
+    c, w = _world(f, "w")
+    ce = f.record_cost_event(w, stage="analysis",
+                             resources=[{"resource": "cpu_s", "quantity": 0.5,
+                                         "unit": "s", "method": "clock"}],
+                             client_id=c)
+    assert ce["indexed_artifacts"] == []
+
+
+def test_the_field_reports_and_does_not_decide(f):
+    """It is DERIVED. It must not become a second place that grants or refuses
+    anything -- the declared-artifact check still governs."""
+    c, w = _world(f, "w")
+    _aid, digest = _art(f, w, c, b"x")
+    with pytest.raises(ValidationError):
+        f.record_cost_event(
+            w, stage="retrieval",           # nothing declared at all
+            resources=[{"resource": "artifact_bytes", "quantity": 1,
+                        "unit": "bytes", "method": "counter",
+                        "refs": {ENTRY_REFS_DIGEST_KEY: digest}}],
+            client_id=c)
