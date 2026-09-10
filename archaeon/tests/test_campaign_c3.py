@@ -22,15 +22,22 @@ def test_plan_shape_pairing_and_arms():
     arms = {}
     for r in rows:
         arms[r["arm_id"]] = arms.get(r["arm_id"], 0) + 1
-    assert arms == {"C3-hist": 6, "C3-base": 6, "C3-null": 18, "C3-acq": 120}
-    assert len(rows) == 150 and len({r["request_key"] for r in rows}) == 150
+    if C3.INCLUDE_NULL_ARM:
+        assert arms == {"C3-hist": 6, "C3-base": 6, "C3-null": 18, "C3-acq": 120}
+        assert len(rows) == 150
+    else:
+        assert arms == {"C3-hist": 6, "C3-base": 6, "C3-acq": 120}
+        assert len(rows) == 132
+    assert len({r["request_key"] for r in rows}) == len(rows)
     # one seed_root -> the same four IC samples for every rule (paired by construction)
     assert {r["spec"]["world"]["seed_root"] for r in rows} == {C3.SEED_ROOT}
     assert all(r["spec"]["repeat"]["count"] == 4 and r["spec"]["repeat"]["state"] == "reset" for r in rows)
-    # transforms only on the null arm, and each historical genome gets all three
-    assert all(r["spec"]["work"]["payload"]["transform"] == "none" for r in rows if r["arm_id"] != "C3-null")
-    nulls = {(r["label"].split(":")[0], r["transform"]) for r in rows if r["arm_id"] == "C3-null"}
-    assert nulls == {(g, t) for g in C3.HISTORICAL for t in C3.TRANSFORMS}
+    # transform is provenance until the kind takes it; never in the payload now
+    assert all("transform" not in r["spec"]["work"]["payload"] for r in rows)
+    assert all(r["spec"]["outcome_rule"]["aggregate"] == "all" for r in rows)
+    if C3.INCLUDE_NULL_ARM:
+        nulls = {(r["label"].split(":")[0], r["transform"]) for r in rows if r["arm_id"] == "C3-null"}
+        assert nulls == {(g, t) for g in C3.HISTORICAL for t in C3.TRANSFORMS}
     # the six genomes come from Herakles's library, not a transcription here
     from herakles.evca import genomes as G
     for r in rows:
@@ -46,7 +53,8 @@ def test_random_rules_are_seeded_and_distinct():
 
 def test_check_reports_kind_registration_honestly():
     c = C3.check()
-    assert c["rows"] == 150 and c["observations_planned"] == 600
+    assert c["rows"] == len(C3.plan()) and c["observations_planned"] == 4 * c["rows"]
+    assert c["null_arm_included"] is C3.INCLUDE_NULL_ARM
     assert "IC sample" in c["independent_unit_for_accuracy"]
     if not c["kind_registered"]:
         assert c["blockers"] and c["blockers"][0]["lane"] == "vivarium"

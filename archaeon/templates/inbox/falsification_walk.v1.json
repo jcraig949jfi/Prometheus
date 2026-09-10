@@ -18,6 +18,7 @@
     "source": "LLM"
   },
   "outcome_rule": {
+    "aggregate": "any",
     "field": "displacement",
     "if_false": "SURVIVED",
     "if_indeterminate": "INCONCLUSIVE",
@@ -47,7 +48,7 @@
     "basis": "displacement has mean 0 and variance steps * step_scale^2 / 3 under the executor's uniform increments; 138.6 is 3 sd at steps=6400",
     "displacement_below": 138.6
   },
-  "rationale": "NOT a repair of falsification_walk.v0, whose steps and step_scale values were destroyed in the source and stay null. This is Archaeon's separately proposed design for the same experiment: step_scale HELD FIXED (Herakles F-5: it is a pure rescaling), steps PINNED to one rung (6400) so the single envelope value is coherent -- a review of the attainable range showed that one value across the E2 ladder is 3 sd at 6400 steps and 24 sd at 100 steps, where it cannot fire; the ladder is therefore four sibling templates, one per rung, each with its own 3-sd envelope, or an analysis over them (X1); a one-sided declared envelope (the executor's outcome rule is a scalar comparison; a two-sided |displacement| rule needs a declared reduction), persist state so the four repeats are one trajectory. The envelope value and the ladder are Archaeon's proposal for the operator to accept or replace at admission. Under a within-run aggregate (Vivarium E16) the rule should become any(displacement >= 138.6) over the trajectory; until then it checks the last observation and says so.",
+  "rationale": "NOT a repair of falsification_walk.v0, whose steps and step_scale values were destroyed in the source and stay null. This is Archaeon's separately proposed design for the same experiment: step_scale HELD FIXED (Herakles F-5: it is a pure rescaling), steps PINNED to one rung (6400) so the single envelope value is coherent -- a review of the attainable range showed that one value across the E2 ladder is 3 sd at 6400 steps and 24 sd at 100 steps, where it cannot fire; the ladder is therefore four sibling templates, one per rung, each with its own 3-sd envelope, or an analysis over them (X1); a one-sided declared envelope (the executor's outcome rule is a scalar comparison; a two-sided |displacement| rule needs a declared reduction), persist state so the four repeats are one trajectory. The envelope value and the ladder are Archaeon's proposal for the operator to accept or replace at admission. The within-run aggregate (Vivarium E16, landed) is declared: any(displacement >= 138.6) over the four-repeat trajectory.",
   "repeat": {
     "budget": {
       "max_observations": 8,

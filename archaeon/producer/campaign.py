@@ -67,6 +67,11 @@ def plan() -> List[Dict[str, Any]]:
                                         "length": length, "seed_root": sr})
                 # spec v3: repeat is REQUIRED and every axis declared
                 spec["spec_version"] = 3
+                # Vivarium E16 (landed 2026-09-10): a repeat spec declares its
+                # reduction. "all": the candidate is unsolved on every one of
+                # the four derived targets. This changed the sealed hashes
+                # BEFORE any row was issued; design metadata v3 records it.
+                spec["outcome_rule"] = dict(spec["outcome_rule"], aggregate="all")
                 spec["repeat"] = {
                     "count": OBSERVATIONS_PER_WORLD,
                     "order": "sequential",
@@ -143,7 +148,7 @@ def check(rows: Optional[List[Dict[str, Any]]] = None) -> Dict[str, Any]:
                       "features, not a contrast. Two families are two "
                       "conditions, not n = 2.",
         "declared_by": "archaeon (design owner)",
-        "declared_on": "2026-09-07", "design_metadata_version": "v2",
+        "declared_on": "2026-09-10", "design_metadata_version": "v3 (aggregate=all declared per Vivarium E16; hashes re-sealed before issue)",
     }
     out["release_condition"] = (
         "sealed arm binding -> granted readback (LIVE v7 + Archaeon's own "

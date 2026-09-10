@@ -34,7 +34,8 @@ CAMPAIGN_ID = "C3-1"
 KIND = "ca_density_v0"
 SEED_ROOT = 930_001            # one seed_root -> the same four IC samples for every rule
 N_CELLS, RADIUS, STEPS, N_IC = 149, 3, 320, 100
-IC_MODE, IC_DENSITIES = "bernoulli", [0.5]
+IC_DENSITIES = None            # the wrapper's convention: null = the unbiased (Bernoulli 1/2) ensemble; n_ic is per density
+INCLUDE_NULL_ARM = False       # the registered contract has no `transform` parameter yet (packet v2.1 s2.1 asks for it); the exact-symmetry arm waits
 SUCCESS = "stable"
 N_RANDOM = 120                  # Harmonia be9c22959 F-4: multinomial region counts; E[eligible] = 9.2 of 10
 REPEAT = {"count": 4, "order": "sequential", "seed_derivation": "sha256_index",
@@ -82,13 +83,15 @@ def _spec(rule_hex: str, transform: str, hypothesis: str) -> Dict[str, Any]:
                        "success_criterion": SUCCESS},
         "work": {"kind": KIND, "payload": {
             "rule_hex": rule_hex, "radius": RADIUS, "n_cells": N_CELLS, "steps": STEPS,
-            "n_ic": N_IC, "ic_mode": IC_MODE, "ic_density_set": IC_DENSITIES,
-            "transform": transform, "success_criterion": SUCCESS}},
+            "n_ic": N_IC, "ic_density_set": IC_DENSITIES,
+            "success_criterion": SUCCESS}},
         # accuracy above the density prior is the only scalar rule that is
         # attainable for every arm; the science is in the ANALYSIS (X1)
+        # v3 requires a within-run aggregate (Vivarium E16): "all" = the
+        # predicate holds on every one of the four IC samples
         "outcome_rule": {"field": "accuracy", "op": ">", "value": 0.5,
                          "if_true": "SURVIVED", "if_false": "FALSIFIED",
-                         "if_indeterminate": "INCONCLUSIVE"},
+                         "if_indeterminate": "INCONCLUSIVE", "aggregate": "all"},
         "pew": {"required": True,
                 "encounter_id": "ENC-archaeon-c3-" + hashlib.sha256(
                     "{}|{}|{}".format(rule_hex, transform, SEED_ROOT).encode()).hexdigest()[:16],
@@ -105,7 +108,7 @@ def plan() -> List[Dict[str, Any]]:
         nonlocal i
         i += 1
         rows.append({"index": i, "family_id": "fam-C3-1", "arm_id": arm, "label": label,
-                     "rule_hex": rule_hex, "transform": transform,
+                     "rule_hex": rule_hex, "transform": transform,   # provenance; not in the payload until the kind takes it
                      "request_key": "{}-{:03d}".format(CAMPAIGN_ID, i),
                      "spec": _spec(rule_hex, transform, hyp)})
 
@@ -114,10 +117,11 @@ def plan() -> List[Dict[str, Any]]:
         add("C3-hist", name, rh, "none", "historical genome {} under the family default protocol".format(name))
     for name, rh in {**CONSTANT_RULES, **CENTRE_RULES}.items():
         add("C3-base", name, rh, "none", "baseline rule {}: constant-output or centre-only".format(name))
-    for name, rh in hist.items():
-        for t in TRANSFORMS:
-            add("C3-null", "{}:{}".format(name, t), rh, t,
-                "G1: {} under {} has an identical correctness mask (exact symmetry)".format(name, t))
+    if INCLUDE_NULL_ARM:
+        for name, rh in hist.items():
+            for t in TRANSFORMS:
+                add("C3-null", "{}:{}".format(name, t), rh, t,
+                    "G1: {} under {} has an identical correctness mask (exact symmetry)".format(name, t))
     for j in range(N_RANDOM):
         add("C3-acq", "random_{:03d}".format(j), random_rule(j), "none",
             "random rule table {} (the frozen random control of the CA family)".format(j))
@@ -130,6 +134,11 @@ def check(rows: Optional[List[Dict[str, Any]]] = None) -> Dict[str, Any]:
     for r in rows:
         arms[r["arm_id"]] = arms.get(r["arm_id"], 0) + 1
     out: Dict[str, Any] = {"campaign": CAMPAIGN_ID, "rows": len(rows), "arms": arms,
+                           "null_arm_included": INCLUDE_NULL_ARM,
+                           "null_arm_blocker": (None if INCLUDE_NULL_ARM else
+                               "ca_density_v0 has no `transform` parameter; the exact-symmetry "
+                               "arm (C3-null) waits for Vivarium to expose reflect / complement / "
+                               "reflect_complement per packet v2.1 s2.1"),
                            "observations_planned": len(rows) * REPEAT["count"],
                            "shared_ic_samples": REPEAT["count"],
                            "independent_unit_for_accuracy": "IC sample (shared across rules); never the rule or the repeat",

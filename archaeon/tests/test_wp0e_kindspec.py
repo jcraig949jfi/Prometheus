@@ -36,7 +36,7 @@ def _load(tmp_path, t):
 
 WALK_RULE = {"field": "displacement", "op": ">=", "value": 10.0,
              "if_true": "FALSIFIED", "if_false": "SURVIVED",
-             "if_indeterminate": "INCONCLUSIVE"}
+             "if_indeterminate": "INCONCLUSIVE", "aggregate": "any"}
 WALK_REPEAT = {"count": 4, "order": "sequential", "seed_derivation": "sha256_index",
                "state": "persist", "budget": {"max_seconds": 60, "max_observations": 8}}
 
@@ -124,6 +124,8 @@ def test_specific_failures_before_queueing(tmp_path):
         K.build_from_template(dict(walk, outcome_rule=None), base)
     with pytest.raises(SpecInvalid, match="stateful"):
         K.build_from_template(dict(walk, repeat=None), base)
+    with pytest.raises(SpecInvalid, match="must declare outcome_rule.aggregate"):
+        K.build_from_template(dict(walk, outcome_rule={k: v for k, v in WALK_RULE.items() if k != "aggregate"}), base)
     with pytest.raises(SpecInvalid, match="quietly not happening"):
         bs = _t("b", "evaluate_bitstring", {}, outcome_rule={"field": "solved", "op": "==",
                 "value": False, "if_true": "SURVIVED", "if_false": "FALSIFIED",
