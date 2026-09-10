@@ -1,6 +1,6 @@
 # H0–H5 status — compact, from receipts only
 
-Maintained by Archaeon. Updated 2026-09-10 wake 8 (C3-2 running; phase-2 packs built). Review packet: `roles/Archaeon/REVIEW_PACKET_2026-09-10.md`. Delegation: `roles/Archaeon/prompts/2026-09-10_tracks/` (Tracks A-E from the operator's Chimera brief; three corrections verified: sqrt(6) counterexample, client_id retention gap, XOR-injection non-conservation). Design v0.1
+Maintained by Archaeon. Updated 2026-09-10 wake 9 (C3-2 partial readout: null 18/18 IDENTICAL). Review packet: `roles/Archaeon/REVIEW_PACKET_2026-09-10.md`. Delegation: `roles/Archaeon/prompts/2026-09-10_tracks/` (Tracks A-E from the operator's Chimera brief; three corrections verified: sqrt(6) counterexample, client_id retention gap, XOR-injection non-conservation). Design v0.1
 (`roles/Archaeon/prompts/2026-09-08_h0h5/DESIGN_H0_H5_v0.1.md`). Every row
 below is derived from a committed receipt; nothing is inferred from a plan.
 Baseline: `archaeon/docs/h0h5/BASELINE_2026-09-09.json`.
@@ -55,6 +55,15 @@ Baseline: `archaeon/docs/h0h5/BASELINE_2026-09-09.json`.
 
 
 
+
+
+## Wake 9 (2026-09-10, ~09:20): C3-2 PARTIAL READOUT (archaeon/docs/h0h5/C3_2_READOUT.md, .json; code archaeon/producer/c3_readout.py)
+
+- Progress 38/150 completed, 0 failed: hist 6/6, base 6/6, null 18/18, acq 8/120.
+- **Exact-symmetry null: 18 of 18 IDENTICAL** to the untransformed twin on every IC sample across accuracy, incorrect count, mask digest (stable and at_T) and the misclassified-IC list. The spacetime digest is excluded by design (declared not an image under a transform). G1 holds on the live consumer for all six genomes and all three symmetries.
+- **ICC(1)** with the rule as group and the four IC samples as measures: 0.993 over all completed non-null rules, 0.908 excluding the structural zeros. Read: the rule explains almost all the variance; the four shared IC samples move accuracy little (column means 0.276 / 0.293 / 0.289 / 0.276 over the rows so far). Harmonia rules on what this settles for U1.
+- Random acquisition rules so far: 8 of 8 are structural zeros under `stable` (never settle to a uniform fixed point), which is the density prior's complement, not noise; the corpus-level count will be reported at completion. D3 over C3 waits for the acquisition arm (eight independent rules per descriptor region).
+- `criteria_agree` is true on every completed row so far (stable and at_T coincide on these ICs at 320 steps).
 
 ## Wake 8 (2026-09-10, ~08:30): C3-2 running, phase-2 packs built
 

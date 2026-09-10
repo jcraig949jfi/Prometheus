@@ -1,0 +1,1573 @@
+{
+ "candidate_set": "cs-c3-2",
+ "complete": false,
+ "d3_over_c3": {
+  "reason": "acquisition arm incomplete; D3 needs eight independent rules per descriptor region",
+  "status": "PARTIAL"
+ },
+ "ic_sample_means": [
+  0.27549999999999997,
+  0.29300000000000004,
+  0.289,
+  0.276
+ ],
+ "icc1_rules_all": {
+  "dropped": 0,
+  "grand_mean": 0.283375,
+  "groups": 20,
+  "icc1": 0.9927318959018409,
+  "k": 4,
+  "msb": 0.44403756578947373,
+  "msw": 0.0008112500000000001
+ },
+ "icc1_rules_excluding_structural_zeros": {
+  "dropped": 0,
+  "grand_mean": 0.6297222222222222,
+  "groups": 9,
+  "icc1": 0.9081809500229902,
+  "k": 4,
+  "msb": 0.07312777777777776,
+  "msw": 0.0018027777777777781
+ },
+ "n_completed": 38,
+ "n_rows": 150,
+ "null_identity": {
+  "checked": [
+   {
+    "diffs": [],
+    "genome": "GKL",
+    "spacetime_is_image_of_untransformed": [
+     false,
+     false,
+     false,
+     false
+    ],
+    "transform": "complement",
+    "twin_accuracy_by_sample": [
+     0.79,
+     0.8,
+     0.85,
+     0.81
+    ],
+    "verdict": "IDENTICAL"
+   },
+   {
+    "diffs": [],
+    "genome": "GKL",
+    "spacetime_is_image_of_untransformed": [
+     false,
+     false,
+     false,
+     false
+    ],
+    "transform": "reflect",
+    "twin_accuracy_by_sample": [
+     0.79,
+     0.8,
+     0.85,
+     0.81
+    ],
+    "verdict": "IDENTICAL"
+   },
+   {
+    "diffs": [],
+    "genome": "GKL",
+    "spacetime_is_image_of_untransformed": [
+     false,
+     false,
+     false,
+     false
+    ],
+    "transform": "reflect_complement",
+    "twin_accuracy_by_sample": [
+     0.79,
+     0.8,
+     0.85,
+     0.81
+    ],
+    "verdict": "IDENTICAL"
+   },
+   {
+    "diffs": [],
+    "genome": "exp",
+    "spacetime_is_image_of_untransformed": [
+     false,
+     false,
+     false,
+     false
+    ],
+    "transform": "complement",
+    "twin_accuracy_by_sample": [
+     0.58,
+     0.69,
+     0.58,
+     0.59
+    ],
+    "verdict": "IDENTICAL"
+   },
+   {
+    "diffs": [],
+    "genome": "exp",
+    "spacetime_is_image_of_untransformed": [
+     false,
+     false,
+     false,
+     false
+    ],
+    "transform": "reflect",
+    "twin_accuracy_by_sample": [
+     0.58,
+     0.69,
+     0.58,
+     0.59
+    ],
+    "verdict": "IDENTICAL"
+   },
+   {
+    "diffs": [],
+    "genome": "exp",
+    "spacetime_is_image_of_untransformed": [
+     false,
+     false,
+     false,
+     false
+    ],
+    "transform": "reflect_complement",
+    "twin_accuracy_by_sample": [
+     0.58,
+     0.69,
+     0.58,
+     0.59
+    ],
+    "verdict": "IDENTICAL"
+   },
+   {
+    "diffs": [],
+    "genome": "maj",
+    "spacetime_is_image_of_untransformed": [
+     false,
+     false,
+     false,
+     false
+    ],
+    "transform": "complement",
+    "twin_accuracy_by_sample": [
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "verdict": "IDENTICAL"
+   },
+   {
+    "diffs": [],
+    "genome": "maj",
+    "spacetime_is_image_of_untransformed": [
+     false,
+     false,
+     false,
+     false
+    ],
+    "transform": "reflect",
+    "twin_accuracy_by_sample": [
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "verdict": "IDENTICAL"
+   },
+   {
+    "diffs": [],
+    "genome": "maj",
+    "spacetime_is_image_of_untransformed": [
+     false,
+     false,
+     false,
+     false
+    ],
+    "transform": "reflect_complement",
+    "twin_accuracy_by_sample": [
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "verdict": "IDENTICAL"
+   },
+   {
+    "diffs": [],
+    "genome": "par",
+    "spacetime_is_image_of_untransformed": [
+     false,
+     false,
+     false,
+     false
+    ],
+    "transform": "complement",
+    "twin_accuracy_by_sample": [
+     0.74,
+     0.79,
+     0.87,
+     0.76
+    ],
+    "verdict": "IDENTICAL"
+   },
+   {
+    "diffs": [],
+    "genome": "par",
+    "spacetime_is_image_of_untransformed": [
+     false,
+     false,
+     false,
+     false
+    ],
+    "transform": "reflect",
+    "twin_accuracy_by_sample": [
+     0.74,
+     0.79,
+     0.87,
+     0.76
+    ],
+    "verdict": "IDENTICAL"
+   },
+   {
+    "diffs": [],
+    "genome": "par",
+    "spacetime_is_image_of_untransformed": [
+     false,
+     false,
+     false,
+     false
+    ],
+    "transform": "reflect_complement",
+    "twin_accuracy_by_sample": [
+     0.74,
+     0.79,
+     0.87,
+     0.76
+    ],
+    "verdict": "IDENTICAL"
+   },
+   {
+    "diffs": [],
+    "genome": "particle1",
+    "spacetime_is_image_of_untransformed": [
+     false,
+     false,
+     false,
+     false
+    ],
+    "transform": "complement",
+    "twin_accuracy_by_sample": [
+     0.69,
+     0.78,
+     0.74,
+     0.67
+    ],
+    "verdict": "IDENTICAL"
+   },
+   {
+    "diffs": [],
+    "genome": "particle1",
+    "spacetime_is_image_of_untransformed": [
+     false,
+     false,
+     false,
+     false
+    ],
+    "transform": "reflect",
+    "twin_accuracy_by_sample": [
+     0.69,
+     0.78,
+     0.74,
+     0.67
+    ],
+    "verdict": "IDENTICAL"
+   },
+   {
+    "diffs": [],
+    "genome": "particle1",
+    "spacetime_is_image_of_untransformed": [
+     false,
+     false,
+     false,
+     false
+    ],
+    "transform": "reflect_complement",
+    "twin_accuracy_by_sample": [
+     0.69,
+     0.78,
+     0.74,
+     0.67
+    ],
+    "verdict": "IDENTICAL"
+   },
+   {
+    "diffs": [],
+    "genome": "particle2",
+    "spacetime_is_image_of_untransformed": [
+     false,
+     false,
+     false,
+     false
+    ],
+    "transform": "complement",
+    "twin_accuracy_by_sample": [
+     0.71,
+     0.8,
+     0.74,
+     0.69
+    ],
+    "verdict": "IDENTICAL"
+   },
+   {
+    "diffs": [],
+    "genome": "particle2",
+    "spacetime_is_image_of_untransformed": [
+     false,
+     false,
+     false,
+     false
+    ],
+    "transform": "reflect",
+    "twin_accuracy_by_sample": [
+     0.71,
+     0.8,
+     0.74,
+     0.69
+    ],
+    "verdict": "IDENTICAL"
+   },
+   {
+    "diffs": [],
+    "genome": "particle2",
+    "spacetime_is_image_of_untransformed": [
+     false,
+     false,
+     false,
+     false
+    ],
+    "transform": "reflect_complement",
+    "twin_accuracy_by_sample": [
+     0.71,
+     0.8,
+     0.74,
+     0.69
+    ],
+    "verdict": "IDENTICAL"
+   }
+  ],
+  "fields": [
+   "accuracy_stable",
+   "n_incorrect_stable",
+   "mask_digest_stable",
+   "accuracy_at_T",
+   "n_incorrect_at_T",
+   "mask_digest_at_T",
+   "misclassified_ic"
+  ],
+  "identical": 18,
+  "indeterminate": 0,
+  "n": 18,
+  "not_identical": 0
+ },
+ "schema": "archaeon.c3.readout.v0",
+ "status_by_arm": {
+  "C3-acq": {
+   "completed": 8,
+   "queued": 111,
+   "running": 1
+  },
+  "C3-base": {
+   "completed": 6
+  },
+  "C3-hist": {
+   "completed": 6
+  },
+  "C3-null": {
+   "completed": 18
+  }
+ },
+ "table": [
+  {
+   "accuracy_at_T_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "accuracy_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "arm": "C3-acq",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "random_000",
+   "mean": 0.0,
+   "n_incorrect_by_sample": [
+    100,
+    100,
+    100,
+    100
+   ],
+   "outcome": "FALSIFIED",
+   "sfe_experiment_id": "exp_aa2e503c8d1ad10f75e63cd5"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "accuracy_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "arm": "C3-acq",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "random_001",
+   "mean": 0.0,
+   "n_incorrect_by_sample": [
+    100,
+    100,
+    100,
+    100
+   ],
+   "outcome": "FALSIFIED",
+   "sfe_experiment_id": "exp_00f793f9e457d76e4f975d29"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "accuracy_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "arm": "C3-acq",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "random_002",
+   "mean": 0.0,
+   "n_incorrect_by_sample": [
+    100,
+    100,
+    100,
+    100
+   ],
+   "outcome": "FALSIFIED",
+   "sfe_experiment_id": "exp_4772c183001b829b202a791a"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "accuracy_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "arm": "C3-acq",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "random_003",
+   "mean": 0.0,
+   "n_incorrect_by_sample": [
+    100,
+    100,
+    100,
+    100
+   ],
+   "outcome": "FALSIFIED",
+   "sfe_experiment_id": "exp_188d9a69067250cf4eebb1ac"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "accuracy_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "arm": "C3-acq",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "random_004",
+   "mean": 0.0,
+   "n_incorrect_by_sample": [
+    100,
+    100,
+    100,
+    100
+   ],
+   "outcome": "FALSIFIED",
+   "sfe_experiment_id": "exp_d0d71634a596e6bacc7beea5"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "accuracy_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "arm": "C3-acq",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "random_005",
+   "mean": 0.0,
+   "n_incorrect_by_sample": [
+    100,
+    100,
+    100,
+    100
+   ],
+   "outcome": "FALSIFIED",
+   "sfe_experiment_id": "exp_905f8cdfad5d4af789342bba"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "accuracy_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "arm": "C3-acq",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "random_006",
+   "mean": 0.0,
+   "n_incorrect_by_sample": [
+    100,
+    100,
+    100,
+    100
+   ],
+   "outcome": "FALSIFIED",
+   "sfe_experiment_id": "exp_648f57b000e4779107ceb7d1"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "accuracy_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "arm": "C3-acq",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "random_007",
+   "mean": 0.0,
+   "n_incorrect_by_sample": [
+    100,
+    100,
+    100,
+    100
+   ],
+   "outcome": "FALSIFIED",
+   "sfe_experiment_id": "exp_30a136151fd8d4155bb70e24"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.49,
+    0.54,
+    0.48,
+    0.46
+   ],
+   "accuracy_by_sample": [
+    0.49,
+    0.54,
+    0.48,
+    0.46
+   ],
+   "arm": "C3-base",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "all_one",
+   "mean": 0.4925,
+   "n_incorrect_by_sample": [
+    51,
+    46,
+    52,
+    54
+   ],
+   "outcome": "FALSIFIED",
+   "sfe_experiment_id": "exp_ed9803e97e6e6e6960c68f51"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.51,
+    0.46,
+    0.52,
+    0.54
+   ],
+   "accuracy_by_sample": [
+    0.51,
+    0.46,
+    0.52,
+    0.54
+   ],
+   "arm": "C3-base",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "all_zero",
+   "mean": 0.5075000000000001,
+   "n_incorrect_by_sample": [
+    49,
+    54,
+    48,
+    46
+   ],
+   "outcome": "FALSIFIED",
+   "sfe_experiment_id": "exp_4bcb01e0cda7f4132eea19a0"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.51,
+    0.46,
+    0.52,
+    0.54
+   ],
+   "accuracy_by_sample": [
+    0.51,
+    0.46,
+    0.52,
+    0.54
+   ],
+   "arm": "C3-base",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "centre_00",
+   "mean": 0.5075000000000001,
+   "n_incorrect_by_sample": [
+    49,
+    54,
+    48,
+    46
+   ],
+   "outcome": "FALSIFIED",
+   "sfe_experiment_id": "exp_098e0dc9a14bdf6ef685818d"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "accuracy_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "arm": "C3-base",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "centre_01",
+   "mean": 0.0,
+   "n_incorrect_by_sample": [
+    100,
+    100,
+    100,
+    100
+   ],
+   "outcome": "FALSIFIED",
+   "sfe_experiment_id": "exp_efb12702e2232eb5cb2cfd66"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "accuracy_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "arm": "C3-base",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "centre_10",
+   "mean": 0.0,
+   "n_incorrect_by_sample": [
+    100,
+    100,
+    100,
+    100
+   ],
+   "outcome": "FALSIFIED",
+   "sfe_experiment_id": "exp_6797e89e43b78e75349a1365"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.49,
+    0.54,
+    0.48,
+    0.46
+   ],
+   "accuracy_by_sample": [
+    0.49,
+    0.54,
+    0.48,
+    0.46
+   ],
+   "arm": "C3-base",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "centre_11",
+   "mean": 0.4925,
+   "n_incorrect_by_sample": [
+    51,
+    46,
+    52,
+    54
+   ],
+   "outcome": "FALSIFIED",
+   "sfe_experiment_id": "exp_99b900b62f5bcf79296148ac"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.58,
+    0.69,
+    0.58,
+    0.59
+   ],
+   "accuracy_by_sample": [
+    0.58,
+    0.69,
+    0.58,
+    0.59
+   ],
+   "arm": "C3-hist",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "exp",
+   "mean": 0.61,
+   "n_incorrect_by_sample": [
+    42,
+    31,
+    42,
+    41
+   ],
+   "outcome": "SURVIVED",
+   "sfe_experiment_id": "exp_ee10a611d33ae02de3eb4921"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.79,
+    0.8,
+    0.85,
+    0.81
+   ],
+   "accuracy_by_sample": [
+    0.79,
+    0.8,
+    0.85,
+    0.81
+   ],
+   "arm": "C3-hist",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "GKL",
+   "mean": 0.8125,
+   "n_incorrect_by_sample": [
+    21,
+    20,
+    15,
+    19
+   ],
+   "outcome": "SURVIVED",
+   "sfe_experiment_id": "exp_7093553930aad674960ac6cc"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "accuracy_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "arm": "C3-hist",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "maj",
+   "mean": 0.0,
+   "n_incorrect_by_sample": [
+    100,
+    100,
+    100,
+    100
+   ],
+   "outcome": "FALSIFIED",
+   "sfe_experiment_id": "exp_8213af7d4a0953258b8b17a5"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.74,
+    0.79,
+    0.87,
+    0.76
+   ],
+   "accuracy_by_sample": [
+    0.74,
+    0.79,
+    0.87,
+    0.76
+   ],
+   "arm": "C3-hist",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "par",
+   "mean": 0.79,
+   "n_incorrect_by_sample": [
+    26,
+    21,
+    13,
+    24
+   ],
+   "outcome": "SURVIVED",
+   "sfe_experiment_id": "exp_98e1a76a24dd7f687015ad46"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.69,
+    0.78,
+    0.74,
+    0.67
+   ],
+   "accuracy_by_sample": [
+    0.69,
+    0.78,
+    0.74,
+    0.67
+   ],
+   "arm": "C3-hist",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "particle1",
+   "mean": 0.72,
+   "n_incorrect_by_sample": [
+    31,
+    22,
+    26,
+    33
+   ],
+   "outcome": "SURVIVED",
+   "sfe_experiment_id": "exp_868e1e711b5bc65b93495041"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.71,
+    0.8,
+    0.74,
+    0.69
+   ],
+   "accuracy_by_sample": [
+    0.71,
+    0.8,
+    0.74,
+    0.69
+   ],
+   "arm": "C3-hist",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "particle2",
+   "mean": 0.735,
+   "n_incorrect_by_sample": [
+    29,
+    20,
+    26,
+    31
+   ],
+   "outcome": "SURVIVED",
+   "sfe_experiment_id": "exp_bfb6b6c4711bad604ba2cd9b"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.58,
+    0.69,
+    0.58,
+    0.59
+   ],
+   "accuracy_by_sample": [
+    0.58,
+    0.69,
+    0.58,
+    0.59
+   ],
+   "arm": "C3-null",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "exp:complement",
+   "mean": 0.61,
+   "n_incorrect_by_sample": [
+    42,
+    31,
+    42,
+    41
+   ],
+   "outcome": "SURVIVED",
+   "sfe_experiment_id": "exp_dc6d55fe4c141495270a62e4"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.58,
+    0.69,
+    0.58,
+    0.59
+   ],
+   "accuracy_by_sample": [
+    0.58,
+    0.69,
+    0.58,
+    0.59
+   ],
+   "arm": "C3-null",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "exp:reflect",
+   "mean": 0.61,
+   "n_incorrect_by_sample": [
+    42,
+    31,
+    42,
+    41
+   ],
+   "outcome": "SURVIVED",
+   "sfe_experiment_id": "exp_062a8799cea180a7fe81a915"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.58,
+    0.69,
+    0.58,
+    0.59
+   ],
+   "accuracy_by_sample": [
+    0.58,
+    0.69,
+    0.58,
+    0.59
+   ],
+   "arm": "C3-null",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "exp:reflect_complement",
+   "mean": 0.61,
+   "n_incorrect_by_sample": [
+    42,
+    31,
+    42,
+    41
+   ],
+   "outcome": "SURVIVED",
+   "sfe_experiment_id": "exp_0ad4892c8665ea3ed2760642"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.79,
+    0.8,
+    0.85,
+    0.81
+   ],
+   "accuracy_by_sample": [
+    0.79,
+    0.8,
+    0.85,
+    0.81
+   ],
+   "arm": "C3-null",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "GKL:complement",
+   "mean": 0.8125,
+   "n_incorrect_by_sample": [
+    21,
+    20,
+    15,
+    19
+   ],
+   "outcome": "SURVIVED",
+   "sfe_experiment_id": "exp_967003eb606334a78876fded"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.79,
+    0.8,
+    0.85,
+    0.81
+   ],
+   "accuracy_by_sample": [
+    0.79,
+    0.8,
+    0.85,
+    0.81
+   ],
+   "arm": "C3-null",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "GKL:reflect",
+   "mean": 0.8125,
+   "n_incorrect_by_sample": [
+    21,
+    20,
+    15,
+    19
+   ],
+   "outcome": "SURVIVED",
+   "sfe_experiment_id": "exp_5501e106259a2b9af836dd30"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.79,
+    0.8,
+    0.85,
+    0.81
+   ],
+   "accuracy_by_sample": [
+    0.79,
+    0.8,
+    0.85,
+    0.81
+   ],
+   "arm": "C3-null",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "GKL:reflect_complement",
+   "mean": 0.8125,
+   "n_incorrect_by_sample": [
+    21,
+    20,
+    15,
+    19
+   ],
+   "outcome": "SURVIVED",
+   "sfe_experiment_id": "exp_f34019845d0a929032b0e499"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "accuracy_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "arm": "C3-null",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "maj:complement",
+   "mean": 0.0,
+   "n_incorrect_by_sample": [
+    100,
+    100,
+    100,
+    100
+   ],
+   "outcome": "FALSIFIED",
+   "sfe_experiment_id": "exp_61890165b1bdda253fa372f1"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "accuracy_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "arm": "C3-null",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "maj:reflect",
+   "mean": 0.0,
+   "n_incorrect_by_sample": [
+    100,
+    100,
+    100,
+    100
+   ],
+   "outcome": "FALSIFIED",
+   "sfe_experiment_id": "exp_05122fe62ef485e1f9512c19"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "accuracy_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "arm": "C3-null",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "maj:reflect_complement",
+   "mean": 0.0,
+   "n_incorrect_by_sample": [
+    100,
+    100,
+    100,
+    100
+   ],
+   "outcome": "FALSIFIED",
+   "sfe_experiment_id": "exp_64f97d1abe860e1d98453d47"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.74,
+    0.79,
+    0.87,
+    0.76
+   ],
+   "accuracy_by_sample": [
+    0.74,
+    0.79,
+    0.87,
+    0.76
+   ],
+   "arm": "C3-null",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "par:complement",
+   "mean": 0.79,
+   "n_incorrect_by_sample": [
+    26,
+    21,
+    13,
+    24
+   ],
+   "outcome": "SURVIVED",
+   "sfe_experiment_id": "exp_cea05e14aab761ffa7b8ca4a"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.74,
+    0.79,
+    0.87,
+    0.76
+   ],
+   "accuracy_by_sample": [
+    0.74,
+    0.79,
+    0.87,
+    0.76
+   ],
+   "arm": "C3-null",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "par:reflect",
+   "mean": 0.79,
+   "n_incorrect_by_sample": [
+    26,
+    21,
+    13,
+    24
+   ],
+   "outcome": "SURVIVED",
+   "sfe_experiment_id": "exp_2c0ef184c4772b6b450a4ac4"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.74,
+    0.79,
+    0.87,
+    0.76
+   ],
+   "accuracy_by_sample": [
+    0.74,
+    0.79,
+    0.87,
+    0.76
+   ],
+   "arm": "C3-null",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "par:reflect_complement",
+   "mean": 0.79,
+   "n_incorrect_by_sample": [
+    26,
+    21,
+    13,
+    24
+   ],
+   "outcome": "SURVIVED",
+   "sfe_experiment_id": "exp_6c20f252a97ce71afeb65386"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.69,
+    0.78,
+    0.74,
+    0.67
+   ],
+   "accuracy_by_sample": [
+    0.69,
+    0.78,
+    0.74,
+    0.67
+   ],
+   "arm": "C3-null",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "particle1:complement",
+   "mean": 0.72,
+   "n_incorrect_by_sample": [
+    31,
+    22,
+    26,
+    33
+   ],
+   "outcome": "SURVIVED",
+   "sfe_experiment_id": "exp_6ef02582b25ab190fcb9d7f6"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.69,
+    0.78,
+    0.74,
+    0.67
+   ],
+   "accuracy_by_sample": [
+    0.69,
+    0.78,
+    0.74,
+    0.67
+   ],
+   "arm": "C3-null",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "particle1:reflect",
+   "mean": 0.72,
+   "n_incorrect_by_sample": [
+    31,
+    22,
+    26,
+    33
+   ],
+   "outcome": "SURVIVED",
+   "sfe_experiment_id": "exp_f362acaa5951c5c9777983fa"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.69,
+    0.78,
+    0.74,
+    0.67
+   ],
+   "accuracy_by_sample": [
+    0.69,
+    0.78,
+    0.74,
+    0.67
+   ],
+   "arm": "C3-null",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "particle1:reflect_complement",
+   "mean": 0.72,
+   "n_incorrect_by_sample": [
+    31,
+    22,
+    26,
+    33
+   ],
+   "outcome": "SURVIVED",
+   "sfe_experiment_id": "exp_a6e501ffa0706eb80bc5c9e2"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.71,
+    0.8,
+    0.74,
+    0.69
+   ],
+   "accuracy_by_sample": [
+    0.71,
+    0.8,
+    0.74,
+    0.69
+   ],
+   "arm": "C3-null",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "particle2:complement",
+   "mean": 0.735,
+   "n_incorrect_by_sample": [
+    29,
+    20,
+    26,
+    31
+   ],
+   "outcome": "SURVIVED",
+   "sfe_experiment_id": "exp_a850ad7ca9fcee1b427b3a70"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.71,
+    0.8,
+    0.74,
+    0.69
+   ],
+   "accuracy_by_sample": [
+    0.71,
+    0.8,
+    0.74,
+    0.69
+   ],
+   "arm": "C3-null",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "particle2:reflect",
+   "mean": 0.735,
+   "n_incorrect_by_sample": [
+    29,
+    20,
+    26,
+    31
+   ],
+   "outcome": "SURVIVED",
+   "sfe_experiment_id": "exp_0ff26c48799b0a2848284ebb"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.71,
+    0.8,
+    0.74,
+    0.69
+   ],
+   "accuracy_by_sample": [
+    0.71,
+    0.8,
+    0.74,
+    0.69
+   ],
+   "arm": "C3-null",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "particle2:reflect_complement",
+   "mean": 0.735,
+   "n_incorrect_by_sample": [
+    29,
+    20,
+    26,
+    31
+   ],
+   "outcome": "SURVIVED",
+   "sfe_experiment_id": "exp_2d9d00cd7ee528bf2748e43a"
+  }
+ ],
+ "written": "2026-09-10T13:20:31+00:00"
+}
