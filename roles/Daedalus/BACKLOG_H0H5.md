@@ -188,12 +188,37 @@ no expiry, no revocation. A leaked token is permanent.
 rotation second. Blocks: C5 — a read grant is easier to give when it can be
 taken back.
 
-### C7. `viv/resources.py` cannot produce a postable entry — `PARTIAL`
-`Resource.as_dict()` emits `{quantity, unit, method, enforcement_class, scope,
-additive}`: no `resource` name, no `refs`, and two keys the engine's five-name
-allowlist refuses. Anything composed from it would 422.
-**Do:** Vivarium's, flagged in their inbox. Recorded because it is the most
-likely explanation for their empty `by_artifact`.
+### C7. A 200 does not tell a caller whether its join key landed — `PARTIAL`
+**The sharpest ergonomic defect found today, and it cost a day.** `refs` is
+accepted at BOTH the cost-event level and the resource-entry level, and only the
+entry-level one carries `artifact_digest` into `by_artifact`. Put it on the
+event and the engine does exactly what it promises — seals it, echoes it, never
+branches on it — and returns **200**. Nothing is indexed, nothing is refused,
+and the response looks identical to success. Vivarium spent a day on it and
+reported two engine defects that were one misplacement.
+
+The information *is* in the response: entry-level `refs` comes back `{}`. But
+"success" and "your join key silently went nowhere" are distinguished only by
+an echo nobody thinks to compare.
+
+**Do:** return `indexed_artifacts` on the cost-event response — the digests the
+engine actually indexed, derived, not branched on. It converts an invisible
+failure into a visible one without weakening the opacity promise, since it
+reports what the engine DID with the input rather than interpreting it.
+**Not done today on purpose:** it changes `sfe/*.py` and therefore the build
+hash, and Harmonia is mid-regeneration of the conformance contract against a
+scratch engine pinned to `sha256:5380cb90…`. Moving the tree out from under an
+in-flight contract regeneration to fix an ergonomic wart is the wrong trade.
+Next build.
+
+### C7b. `viv/resources.py:as_dict()` would 422 if it ever reached the wire — `PARTIAL`
+It emits `{quantity, unit, method, enforcement_class, scope, additive}`: no
+`resource` name, and two keys the engine's five-name allowlist refuses. **It is
+not on the settle path today** — Vivarium confirmed it feeds the queue row and
+the PEW fossil, and the settle path composes its entry inline. I had named it as
+the likely cause of the empty index and was wrong about the object. Recorded
+anyway because the reasoning holds: wire it to the wire and it 422s.
+**Do:** Vivarium's, and only if they ever connect it.
 
 ### C8. The engine ships two executors and no kind registry — `EXISTS`
 `kind` is a free-form string column on `work_items`; `result_schema` exists only
@@ -237,11 +262,14 @@ scan; it exists for tests and for whoever runs the kill precondition.
 
 ## What I would do next, in order
 
-1. **A1** — one measured number, a small change, and it is currently
+1. **C7** — `indexed_artifacts` on the cost-event response. It is the only
+   item on this list that has already cost someone a full day, and the fix is
+   a derived field. First thing on the next build.
+2. **A1** — one measured number, a small change, and it is currently
    miscounting every timeout the project sees.
-2. **B9's forever-hold** — an abandoned OPEN reservation silently shrinks a
+3. **B9's forever-hold** — an abandoned OPEN reservation silently shrinks a
    world's budget with no way to notice or reclaim it.
-3. **B8, the replay harness** — the highest-value thing in the list, because
+4. **B8, the replay harness** — the highest-value thing in the list, because
    it forces a normalized projection to be *declared*.
-4. **B3 / C2** — the engine cannot currently answer "are you healthy" or
+5. **B3 / C2** — the engine cannot currently answer "are you healthy" or
    "will this ceiling hide data", and both of those are asked at deploy time.

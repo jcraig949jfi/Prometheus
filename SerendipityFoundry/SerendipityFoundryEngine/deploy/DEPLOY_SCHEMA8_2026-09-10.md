@@ -94,7 +94,21 @@ python deploy\preflight_deploy.py
 ## 3. Deploy
 
 ```powershell
-# --- STOP -------------------------------------------------------------
+# --- ASK THE CONSUMER TO STOP, FIRST ----------------------------------
+# BEFORE touching the engine. This sets a flag the daemon checks BETWEEN
+# ticks (viv/daemon.py:153 -> _stop_requested_externally): the attempt in
+# flight FINISHES and the worker exits with nothing claimed. It costs no row.
+#
+# The alternative -- waiting for the gate's 300s quiet window and hoping
+# nothing starts -- is what this replaces. Vivarium landed the clean stop
+# after a fix could not reach a running consumer three times in one day
+# without stranding a row; a running interpreter does not pick up a file
+# edit, so "restart the consumer" is a real step, not a formality.
+cd F:\Prometheus\vivarium
+H:\Python312\python.exe -m viv.cli stop --worker-id vivarium@m1
+#   then confirm 0 queued / 0 claimed / 0 running before continuing (section 0)
+
+# --- STOP THE ENGINE --------------------------------------------------
 Stop-ScheduledTask -TaskName SFEngine
 # Stop-ScheduledTask ALONE ORPHANS THE PROCESS TREE. The orphan keeps the
 # socket and the OLD build goes on serving, so the deploy appears to do
