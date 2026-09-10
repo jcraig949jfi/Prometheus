@@ -1,0 +1,218 @@
+{
+  "schema": "techne.acquisition.receipt/1",
+  "receipt_id": "installation-pytest-20260910T072630Z",
+  "stage": "INSTALLATION",
+  "does_not_establish": [
+    "FIRST_USEFUL_CHECK",
+    "PAPER_REPRODUCTION",
+    "ADAPTER_QUALIFICATION",
+    "LOCAL_SCIENTIFIC_BENEFIT"
+  ],
+  "entry_id": "pytest",
+  "tool": "pytest",
+  "design_version": "0.1",
+  "written_utc": "2026-09-10T07:26:30+00:00",
+  "seat": "Techne",
+  "repo": {
+    "commit": "3463f9003b9f4da94b811e939ff8e87de04a9ba1",
+    "branch": "techne/h0h5-tools-2026-09-09",
+    "dirty": false
+  },
+  "runner": {
+    "python": "3.12.10",
+    "executable": "H:\\Python312\\python.exe",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "tool_cache": "F:\\Prometheus\\vault\\techne_tools",
+    "tool_cache_source": "TECHNE_TOOL_CACHE env",
+    "tool_cache_note": "host-local and gitignored; only its HASHES are tracked"
+  },
+  "commands_run": [],
+  "observations": {
+    "artifact_selection": {
+      "reason": "compatible wheel, narrowest host tag",
+      "host_tag_count": 42,
+      "selected": {
+        "filename": "pytest-9.1.1-py3-none-any.whl",
+        "packagetype": "bdist_wheel",
+        "size": 386536,
+        "sha256_pypi": "37a86b45efb9a47a61a36449063e8e18d0cab3161329fc099eb21783169c4f0c",
+        "url": "https://files.pythonhosted.org/packages/24/25/1de2678b631f5a49215c6c96fff41ba892b0a34df68d6d80292b1b48aa7f/pytest-9.1.1-py3-none-any.whl",
+        "yanked": false,
+        "requires_python": ">=3.10",
+        "wheel_tags": [
+          "py3-none-any"
+        ],
+        "host_compatible": true
+      },
+      "n_candidates": 2,
+      "rejected_for_platform": []
+    },
+    "download": {
+      "path": "F:\\Prometheus\\vault\\techne_tools\\downloads\\pytest-9.1.1-py3-none-any.whl",
+      "bytes": 386536,
+      "sha256_local": "37a86b45efb9a47a61a36449063e8e18d0cab3161329fc099eb21783169c4f0c",
+      "digest_matches_pypi": true,
+      "transferred": true
+    },
+    "license": {
+      "license_expression": "MIT",
+      "license_field": null,
+      "classifiers": [],
+      "license_files": [
+        {
+          "name": "LICENSE",
+          "declared": true
+        },
+        {
+          "name": "pytest-9.1.1.dist-info/licenses/LICENSE",
+          "bytes": 1091,
+          "sha256": "ca836a5f9ecca3b2f350230faa20a48fb8b145653b5568d784862df864706b9b",
+          "first_line": "The MIT License (MIT)"
+        }
+      ],
+      "source": "wheel METADATA",
+      "status": "RESOLVED_SPDX_EXPRESSION"
+    },
+    "license_rule_applied": "wheel METADATA",
+    "requires_dist": [
+      "colorama>=0.4; sys_platform == \"win32\"",
+      "exceptiongroup>=1; python_version < \"3.11\"",
+      "iniconfig>=1.0.1",
+      "packaging>=22",
+      "pluggy<2,>=1.5",
+      "pygments>=2.7.2",
+      "tomli>=1; python_version < \"3.11\"",
+      "argcomplete; extra == \"dev\"",
+      "attrs>=19.2; extra == \"dev\"",
+      "hypothesis>=3.56; extra == \"dev\"",
+      "mock; extra == \"dev\"",
+      "requests; extra == \"dev\"",
+      "setuptools; extra == \"dev\"",
+      "xmlschema; extra == \"dev\""
+    ],
+    "isolated_env": {
+      "env_name": "h0h5_tools",
+      "root": "F:\\Prometheus\\vault\\techne_tools\\envs\\h0h5_tools",
+      "python": "F:\\Prometheus\\vault\\techne_tools\\envs\\h0h5_tools\\Scripts\\python.exe",
+      "created_now": false,
+      "python_version": "3.12.10",
+      "is_live_interpreter": false,
+      "pip_version": "pip 25.0.1 from F:\\Prometheus\\vault\\techne_tools\\envs\\h0h5_tools\\Lib\\site-packages\\pip (python 3.12)",
+      "pip_pinned": false,
+      "pip_note": "pip bootstrapped by ensurepip from the base interpreter's bundled wheel; its version is inherited, not pinned by this lock"
+    },
+    "resolution": {
+      "ok": true,
+      "n_resolved": 6,
+      "resolved": [
+        {
+          "name": "pytest",
+          "version": "9.1.1",
+          "url": "https://files.pythonhosted.org/packages/24/25/1de2678b631f5a49215c6c96fff41ba892b0a34df68d6d80292b1b48aa7f/pytest-9.1.1-py3-none-any.whl",
+          "sha256": "37a86b45efb9a47a61a36449063e8e18d0cab3161329fc099eb21783169c4f0c",
+          "requested": true
+        },
+        {
+          "name": "colorama",
+          "version": "0.4.6",
+          "url": "https://files.pythonhosted.org/packages/d1/d6/3965ed04c63042e047cb6a3e6ed1a63a35087b6a609aa3a15ed8ac56c221/colorama-0.4.6-py2.py3-none-any.whl",
+          "sha256": "4f1d9991f5acc0ca119f9d443620b77f9d6b33703e51011c16baf57afb285fc6",
+          "requested": false
+        },
+        {
+          "name": "iniconfig",
+          "version": "2.3.0",
+          "url": "https://files.pythonhosted.org/packages/cb/b1/3846dd7f199d53cb17f49cba7e651e9ce294d8497c8c150530ed11865bb8/iniconfig-2.3.0-py3-none-any.whl",
+          "sha256": "f631c04d2c48c52b84d0d0549c99ff3859c98df65b3101406327ecc7d53fbf12",
+          "requested": false
+        },
+        {
+          "name": "packaging",
+          "version": "26.3",
+          "url": "https://files.pythonhosted.org/packages/63/34/ba1c580383c9eada3711951fef0795c80b829a078d72188184bcab9dd527/packaging-26.3-py3-none-any.whl",
+          "sha256": "d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c",
+          "requested": false
+        },
+        {
+          "name": "pluggy",
+          "version": "1.6.0",
+          "url": "https://files.pythonhosted.org/packages/54/20/4d324d65cc6d9205fabedc306948156824eb9f0ee1633355a8f7ec5c66bf/pluggy-1.6.0-py3-none-any.whl",
+          "sha256": "e920276dd6813095e9377c0bc5566d94c932c33b27a3e3945d8389c374dd4746",
+          "requested": false
+        },
+        {
+          "name": "Pygments",
+          "version": "2.21.0",
+          "url": "https://files.pythonhosted.org/packages/71/46/17f022dd3e953bf20a04a028a21ec746d942f8d2af30fa0f124fa0e6a684/pygments-2.21.0-py3-none-any.whl",
+          "sha256": "2363c69b61c4a97c838da3b130dcd6468f4848992b21a82f2a63ec34377137d9",
+          "requested": false
+        }
+      ],
+      "unhashed": []
+    },
+    "lock": {
+      "path": "techne/acquisition/locks/pytest-cp312-win-amd64.lock.txt",
+      "sha256_of_lock": "5c0ac3843ce88db6c47275cf2e4b8bca60fe5c13c314f00adde11b1c90ef57e2"
+    },
+    "install": {
+      "lock": "C:\\Users\\jcrai\\AppData\\Local\\Temp\\claude\\f--Prometheus\\71419ff6-c905-417b-9e8a-6ffb3e2cebd4\\scratchpad\\techne\\techne\\acquisition\\locks\\pytest-cp312-win-amd64.lock.txt",
+      "returncode": 0,
+      "timed_out": false,
+      "wall_seconds": 12.344,
+      "stdout_tail": "Collecting colorama==0.4.6 (from -r C:\\Users\\jcrai\\AppData\\Local\\Temp\\claude\\f--Prometheus\\71419ff6-c905-417b-9e8a-6ffb3e2cebd4\\scratchpad\\techne\\techne\\acquisition\\locks\\pytest-cp312-win-amd64.lock.txt (line 16))\n  Using cached colorama-0.4.6-py2.py3-none-any.whl (25 kB)\nCollecting iniconfig==2.3.0 (from -r C:\\Users\\jcrai\\AppData\\Local\\Temp\\claude\\f--Prometheus\\71419ff6-c905-417b-9e8a-6ffb3e2cebd4\\scratchpad\\techne\\techne\\acquisition\\locks\\pytest-cp312-win-amd64.lock.txt (line 18))\n  Using cached iniconfig-2.3.0-py3-none-any.whl (7.5 kB)\nCollecting packaging==26.3 (from -r C:\\Users\\jcrai\\AppData\\Local\\Temp\\claude\\f--Prometheus\\71419ff6-c905-417b-9e8a-6ffb3e2cebd4\\scratchpad\\techne\\techne\\acquisition\\locks\\pytest-cp312-win-amd64.lock.txt (line 20))\n  Using cached packaging-26.3-py3-none-any.whl (129 kB)\nCollecting pluggy==1.6.0 (from -r C:\\Users\\jcrai\\AppData\\Local\\Temp\\claude\\f--Prometheus\\71419ff6-c905-417b-9e8a-6ffb3e2cebd4\\scratchpad\\techne\\techne\\acquisition\\locks\\pytest-cp312-win-amd64.lock.txt (line 22))\n  Using cached pluggy-1.6.0-py3-none-any.whl (20 kB)\nCollecting Pygments==2.21.0 (from -r C:\\Users\\jcrai\\AppData\\Local\\Temp\\claude\\f--Prometheus\\71419ff6-c905-417b-9e8a-6ffb3e2cebd4\\scratchpad\\techne\\techne\\acquisition\\locks\\pytest-cp312-win-amd64.lock.txt (line 24))\n  Using cached pygments-2.21.0-py3-none-any.whl (1.3 MB)\nCollecting pytest==9.1.1 (from -r C:\\Users\\jcrai\\AppData\\Local\\Temp\\claude\\f--Prometheus\\71419ff6-c905-417b-9e8a-6ffb3e2cebd4\\scratchpad\\techne\\techne\\acquisition\\locks\\pytest-cp312-win-amd64.lock.txt (line 26))\n  Using cached pytest-9.1.1-py3-none-any.whl (386 kB)\nInstalling collected packages: pytest, Pygments, pluggy, packaging, iniconfig, colorama\nSuccessfully installed Pygments-2.21.0 colorama-0.4.6 iniconfig-2.3.0 packaging-26.3 pluggy-1.6.0 pytest-9.1.1\n",
+      "stderr_tail": "\n[notice] A new release of pip is available: 25.0.1 -> 26.2.1\n[notice] To update, run: F:\\Prometheus\\vault\\techne_tools\\envs\\h0h5_tools\\Scripts\\python.exe -m pip install --upgrade pip\n"
+    },
+    "import_verification": {
+      "imported": true,
+      "module_file": "F:\\Prometheus\\vault\\techne_tools\\envs\\h0h5_tools\\Lib\\site-packages\\pytest\\__init__.py",
+      "dist_version": "9.1.1"
+    },
+    "version_match": true
+  },
+  "deviations": [],
+  "unrun_or_blocked": [],
+  "status": "INSTALLED_PINNED_AND_HASHED",
+  "manifest_entry": {
+    "id": "pytest",
+    "kind": "python_package",
+    "distribution": "pytest",
+    "pinned_version": "9.1.1",
+    "env": "h0h5_tools",
+    "named_consumer": "techne/tests/test_h3_retention.py -- the H3 retention adapter's tests must run against the QUALIFIED ribs in the isolated env, not against the live interpreter's unpinned copy, or they are testing a different environment than the one the adapter was qualified in",
+    "integration_path": "development / test dependency only; never a scientific-run dependency",
+    "official_source": "https://github.com/pytest-dev/pytest"
+  },
+  "budget_profile": {
+    "purpose": "resolve, download, hash and import-check a Python distribution. The default for every python_package entry.",
+    "network": "ALLOWED -- this is the explicit acquisition stage",
+    "max_wall_seconds": 900,
+    "max_download_bytes": 536870912,
+    "max_disk_bytes": 2147483648,
+    "max_rss_bytes": 2147483648,
+    "max_processes": 4,
+    "rationale": "512 MiB covers the largest named wheel by ~30x (z3_solver win_amd64 is 16.9 MiB) plus a full transitive closure. 15 minutes covers a cold resolve on a slow link. 2 GiB RSS is 15 percent of available RAM, so two light probes can run beside each other and beside the engine.",
+    "name": "light_probe"
+  },
+  "resource_receipt": {
+    "profile": "light_probe",
+    "network_policy": "ALLOWED -- this is the explicit acquisition stage",
+    "wall_seconds": 18.86,
+    "wall_ceiling": 900,
+    "downloaded_bytes": 396278,
+    "download_ceiling": 536870912,
+    "cache_bytes_before": 926613645,
+    "cache_bytes_after": 0,
+    "cache_delta_bytes": -926613645,
+    "peak_rss_bytes_os_counter": 36028416,
+    "peak_rss_bytes_sampled": 36028416,
+    "rss_method": "GetProcessMemoryInfo",
+    "rss_ceiling": 2147483648,
+    "rss_samples": 73,
+    "rss_ceiling_exceeded_during_sampling": false,
+    "rss_enforcement": "NOT ENFORCED -- no job object / cgroup cap. peak_rss_bytes_os_counter is the OS peak-working-set counter for this process and IS reliable; rss_ceiling_exceeded_during_sampling is sampled and can miss a spike. Neither stops a step.",
+    "rss_excludes_children": "This is THIS process only. pip, git and venv run as children and their RSS is NOT included.",
+    "children_spawned": 5,
+    "process_cap": 4,
+    "aborted_on": null
+  }
+}

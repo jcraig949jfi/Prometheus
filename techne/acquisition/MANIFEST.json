@@ -175,6 +175,29 @@
       "first_useful_check": "independent hand-computed oracle and convention fixtures -- ALREADY DONE by the owning seats, not by this seat",
       "official_source": "this repository",
       "acquisition_status": "NOT_APPLICABLE_IN_REPO"
+    },
+    {
+      "id": "pytest",
+      "kind": "python_package",
+      "distribution": "pytest",
+      "import_name": "pytest",
+      "pinned_version": "9.1.1",
+      "env": "h0h5_tools",
+      "first_role": "test runner for the isolated environment",
+      "integration_path": "development / test dependency only; never a scientific-run dependency",
+      "named_consumer": "techne/tests/test_h3_retention.py -- the H3 retention adapter's tests must run against the QUALIFIED ribs in the isolated env, not against the live interpreter's unpinned copy, or they are testing a different environment than the one the adapter was qualified in",
+      "first_useful_check": "collects and runs techne/tests/test_h3_retention.py inside the isolated env; no separate check receipt, because the tests ARE the check and a mirrored test of the test runner is not acceptance evidence",
+      "official_source": "https://github.com/pytest-dev/pytest",
+      "upstream_revision": {
+        "kind": "not_resolved",
+        "ref": null,
+        "commit": null,
+        "resolved_utc": "2026-09-10",
+        "resolver": "NONE -- the qualified artifact is the PyPI wheel; no source build is performed and no repository claim is made"
+      },
+      "license_claim": "UNRESOLVED_AT_MANIFEST_TIME",
+      "license_resolution_rule": "wheel METADATA",
+      "pin_rationale": "matches the version already present in the live interpreter, so a test that passes in the isolated env and fails in the live one is a difference in the LIBRARY under test rather than in the runner"
     }
   ]
 }

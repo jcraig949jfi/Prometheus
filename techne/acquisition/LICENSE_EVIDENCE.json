@@ -1,6 +1,6 @@
 {
   "schema": "techne.acquisition.license_evidence/1",
-  "generated_utc": "2026-09-09T21:46:11+00:00",
+  "generated_utc": "2026-09-10T07:28:48+00:00",
   "rule": "licenses read from DISTRIBUTED artifacts only (wheel METADATA, wheel notice files, sdist notice files, sdist PKG-INFO/pyproject/Cargo declarations). A repository API license classifier is NEVER used as the basis of a claim.",
   "notices_stored_under": "F:\\Prometheus\\vault\\techne_tools\\notices",
   "entries": [
@@ -177,23 +177,83 @@
       "spdx_claim": null,
       "status": "UNRESOLVED_NO_LICENSE_IN_ANY_DISTRIBUTED_ARTIFACT",
       "redistribution_note": "BLOCKER for redistributing any copy or derived artifact. The distributed wheel and sdist carry no license declaration and no notice file. Whatever a repository page or API classifier says, the artifact we hold grants nothing in writing. Internal use of the installed copy continues; exporting it, vendoring it, or shipping anything containing it does NOT, until a human records a resolution."
+    },
+    {
+      "entry_id": "pytest",
+      "distribution": "pytest",
+      "version": "9.1.1",
+      "rule_applied": "wheel METADATA",
+      "wheel": {
+        "filename": "pytest-9.1.1-py3-none-any.whl",
+        "sha256": "37a86b45efb9a47a61a36449063e8e18d0cab3161329fc099eb21783169c4f0c",
+        "license_expression": "MIT",
+        "license_field": null,
+        "classifiers": [],
+        "status": "RESOLVED_SPDX_EXPRESSION",
+        "notice_files_in_wheel": [
+          "LICENSE",
+          "pytest-9.1.1.dist-info/licenses/LICENSE"
+        ]
+      },
+      "sdist": {
+        "filename": "pytest-9.1.1.tar.gz",
+        "sha256_pypi": "1088fbde8f2b49d95a549a195707afa7a76a3ce9bcadc26b6d71f0ffda5fe313",
+        "sha256_local": "1088fbde8f2b49d95a549a195707afa7a76a3ce9bcadc26b6d71f0ffda5fe313",
+        "digest_matches_pypi": true,
+        "n_files": 719,
+        "notice_files_in_sdist": [
+          "pytest-9.1.1/LICENSE",
+          "pytest-9.1.1/doc/en/license.rst"
+        ],
+        "declared_license_lines": [
+          {
+            "file": "pytest-9.1.1/PKG-INFO",
+            "line": "License-Expression: MIT"
+          },
+          {
+            "file": "pytest-9.1.1/src/pytest.egg-info/PKG-INFO",
+            "line": "License-Expression: MIT"
+          }
+        ]
+      },
+      "notices_kept": [
+        {
+          "from": "wheel",
+          "stored_as": "pytest-9.1.1.dist-info_licenses_LICENSE",
+          "bytes": 1091,
+          "sha256": "ca836a5f9ecca3b2f350230faa20a48fb8b145653b5568d784862df864706b9b",
+          "source_path_in_artifact": "pytest-9.1.1.dist-info/licenses/LICENSE",
+          "first_line": "The MIT License (MIT)"
+        },
+        {
+          "from": "sdist",
+          "stored_as": "pytest-9.1.1_doc_en_license.rst",
+          "bytes": 1372,
+          "sha256": "45b6addd843b2ed89f9f8f363f61092db2e3c2461e3f178c3c3793648c3c4e07",
+          "source_path_in_artifact": "pytest-9.1.1/doc/en/license.rst",
+          "first_line": ".. _license:"
+        }
+      ],
+      "spdx_claim": "MIT",
+      "status": "RESOLVED_FROM_ARTIFACT_SPDX",
+      "redistribution_note": null
     }
   ],
   "resource_receipt": {
     "profile": "light_probe",
     "network_policy": "ALLOWED -- this is the explicit acquisition stage",
-    "wall_seconds": 1.469,
+    "wall_seconds": 1.891,
     "wall_ceiling": 900,
-    "downloaded_bytes": 6748551,
+    "downloaded_bytes": 8394662,
     "download_ceiling": 536870912,
-    "cache_bytes_before": 534406507,
+    "cache_bytes_before": 941955315,
     "cache_bytes_after": 0,
-    "cache_delta_bytes": -534406507,
-    "peak_rss_bytes_os_counter": 45023232,
-    "peak_rss_bytes_sampled": 43855872,
+    "cache_delta_bytes": -941955315,
+    "peak_rss_bytes_os_counter": 44785664,
+    "peak_rss_bytes_sampled": 41943040,
     "rss_method": "GetProcessMemoryInfo",
     "rss_ceiling": 2147483648,
-    "rss_samples": 6,
+    "rss_samples": 7,
     "rss_ceiling_exceeded_during_sampling": false,
     "rss_enforcement": "NOT ENFORCED -- no job object / cgroup cap. peak_rss_bytes_os_counter is the OS peak-working-set counter for this process and IS reliable; rss_ceiling_exceeded_during_sampling is sampled and can miss a spike. Neither stops a step.",
     "rss_excludes_children": "This is THIS process only. pip, git and venv run as children and their RSS is NOT included.",
