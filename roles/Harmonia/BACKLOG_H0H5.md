@@ -54,7 +54,7 @@ HARM-28 | Add a payload-determinism attestation to the contract-fixture stage, s
 HARM-29 | Add a structural-floor precheck that any corpus must pass before issue: report modal mass, support size and non-degenerate fraction | ENGINE | beta | M | none | `floor_precheck.py` that refuses a corpus with p_mode > 0.50 and reproduces C3-2's f = 0.000
 HARM-30 | Add the shared-arm correlation to `paired_contrast` so contrasts sharing a baseline are not reported as independent | ENGINE | beta | S | HARM-01 | the function returning the induced correlation, with a test on the fresh/S00 case
 
-HARM-35 | Extend the SFE contract to model the RESPONSE surface, so a removed or renamed response field is DRIFT rather than silence | ENGINE | beta | L | Daedalus A0 (b24246097): the engine declares NO response models, so the live spec carries 0 schemas on 67 of 67 200-responses -- there is nothing for the generator to read | contract records per-route response fields; a fixture proving a removed response field reports DRIFT where today it reports CONFORMANT
+HARM-35 | Extend the SFE contract to model the RESPONSE surface, so a removed or renamed response field is DRIFT rather than silence | ENGINE | beta | L | Daedalus A0 (filed b24246097, cross-linked d618c0d22): the engine declares NO response models, so the live spec carries 0 schemas on 67 of 67 200-responses -- there is nothing for the generator to read | contract records per-route response fields; a fixture proving a removed response field reports DRIFT where today it reports CONFORMANT
 
 ## Standing and program
 
