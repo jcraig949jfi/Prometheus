@@ -155,7 +155,7 @@ class TenancyConfig:
     # family_members.arm; the rows this reader consumes (experiments,
     # observations, events, clients) are unchanged, so 7 is accepted. A
     # newer version is still refused rather than misread.
-    expected_schema_version: int = 7
+    expected_schema_version: int = 8      # M1 deployed 7 -> 8 on 2026-09-10 (Daedalus d5be5ec4b, instance eng_8a37a5d3 unchanged)
 
 
 # --------------------------------------------------------------------------
@@ -231,7 +231,11 @@ class DetectorConfig:
     # gains a REPORTED diagnostic (serial r of metric against committed order,
     # trend fraction r^2, label EXCHANGEABILITY_SUSPECT). Detrending the statistic
     # would be d3.v2 and is not admitted.
-    d3_exchangeability_abs_r: float = 0.5       # |r| at or above this labels the signal SUSPECT
+    # Harmonia 57c259656: two thresholds DERIVED from the band. A trend of correlation r
+    # inflates the ratio by 1/(1-r^2): 0.577 -> 1.5 (half the band edge in log terms),
+    # 0.816 -> 3.0 (the band edge itself, where trend ALONE fires).
+    d3_exchangeability_abs_r: float = 0.577     # >= : EXCHANGEABILITY_SUSPECT (rate quotable only with the diagnostic beside it)
+    d3_exchangeability_violated_abs_r: float = 0.816   # >= : EXCHANGEABILITY_VIOLATED (no calibrated rate may be quoted)
 
     # ---- D4 PLAYER_ORDER_REVERSAL ---------------------------------------
     # Same two-part requirement as D2, for the same reason: the v0 build fired

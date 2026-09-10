@@ -172,8 +172,16 @@ def detect(corpus, dcfg) -> DetectorResult:
                   else math.log(dcfg.d3_low_ratio / max(ratio, 1e-300)))
 
         r_serial, _ = _serial_r(rs)
-        abs_r_cut = getattr(dcfg, "d3_exchangeability_abs_r", 0.5)
-        suspect = (r_serial is not None and abs(r_serial) >= abs_r_cut)
+        abs_r_cut = getattr(dcfg, "d3_exchangeability_abs_r", 0.577)
+        abs_r_violated = getattr(dcfg, "d3_exchangeability_violated_abs_r", 0.816)
+        if r_serial is None:
+            exch = "not_assessed"
+        elif abs(r_serial) >= abs_r_violated:
+            exch = "EXCHANGEABILITY_VIOLATED"
+        elif abs(r_serial) >= abs_r_cut:
+            exch = "EXCHANGEABILITY_SUSPECT"
+        else:
+            exch = "EXCHANGEABLE"
         signals.append(Signal(
             detector=NAME, detector_version=version,
             intent=INTENT_DISCRIMINATE,
@@ -191,8 +199,8 @@ def detect(corpus, dcfg) -> DetectorResult:
                     "neighbourhood_df": pool_df,
                     "serial_r": r_serial,
                     "trend_fraction": (None if r_serial is None else r_serial * r_serial),
-                    "exchangeability": ("EXCHANGEABILITY_SUSPECT" if suspect else
-                                        ("not_assessed" if r_serial is None else "no_trend_flag")),
+                    "exchangeability": exch,
+                    "trend_inflation_of_ratio": (None if r_serial is None or abs(r_serial) >= 1 else 1.0 / (1.0 - r_serial * r_serial)),
                     "neighbours": list(nb),
                     "family": fam_of[reg]},
             thresholds={"d3_high_ratio": dcfg.d3_high_ratio,
@@ -201,7 +209,8 @@ def detect(corpus, dcfg) -> DetectorResult:
                         "d3_min_n_neighborhood": dcfg.d3_min_n_neighborhood,
                         "d3_neighbors_k": dcfg.d3_neighbors_k,
                         "d3_denominator": denominator,
-                        "d3_exchangeability_abs_r": abs_r_cut},
+                        "d3_exchangeability_abs_r": abs_r_cut,
+                        "d3_exchangeability_violated_abs_r": abs_r_violated},
             support_n=len(vals),
             effect_norm=clamp01(excess / math.log(10.0)),
             target_coords=dict(centroid[reg]),

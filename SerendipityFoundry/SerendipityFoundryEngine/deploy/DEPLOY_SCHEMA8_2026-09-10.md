@@ -94,7 +94,21 @@ python deploy\preflight_deploy.py
 ## 3. Deploy
 
 ```powershell
-# --- STOP -------------------------------------------------------------
+# --- ASK THE CONSUMER TO STOP, FIRST ----------------------------------
+# BEFORE touching the engine. This sets a flag the daemon checks BETWEEN
+# ticks (viv/daemon.py:153 -> _stop_requested_externally): the attempt in
+# flight FINISHES and the worker exits with nothing claimed. It costs no row.
+#
+# The alternative -- waiting for the gate's 300s quiet window and hoping
+# nothing starts -- is what this replaces. Vivarium landed the clean stop
+# after a fix could not reach a running consumer three times in one day
+# without stranding a row; a running interpreter does not pick up a file
+# edit, so "restart the consumer" is a real step, not a formality.
+cd F:\Prometheus\vivarium
+H:\Python312\python.exe -m viv.cli stop --worker-id vivarium@m1
+#   then confirm 0 queued / 0 claimed / 0 running before continuing (section 0)
+
+# --- STOP THE ENGINE --------------------------------------------------
 Stop-ScheduledTask -TaskName SFEngine
 # Stop-ScheduledTask ALONE ORPHANS THE PROCESS TREE. The orphan keeps the
 # socket and the OLD build goes on serving, so the deploy appears to do
@@ -232,13 +246,53 @@ side that a build change trips.
    (`if have_v is None or have_v > ten.expected_schema_version:`) means
    Archaeon's fossil reader **refuses a schema-8 ledger**. The order says
    Archaeon moves it on this report. *Owner: Archaeon.*
-2. **Harmonia's conformance contract.** `roles/Harmonia/contracts/sfe_contract.json`
-   pins `engine_source_hash` **exactly** and `conformance_check.py` is
-   fail-closed, so any build change halts the automated seats. It is **already
-   stale** — pinned schema 6 / `sha256:2f42e87f…` against a live schema 7 /
-   `sha256:084f951f…`, so it has been stale since the v7 deploy and is overdue
-   independently of this one. Regenerate with
-   `roles/Harmonia/contracts/generate_sfe_contract.py`. *Owner: Harmonia.*
+2. **Harmonia's conformance contract — REGENERATE *AND* CONFIRM IT IS WIRED.**
+   `roles/Harmonia/contracts/sfe_contract.json` pins `engine_source_hash`
+   exactly and `conformance_check.py` is fail-closed. It was stale from the v7
+   deploy through this one — pinned schema 6 against a live 8.
+
+   **It did not go stale under protest. It went stale in silence.** Harmonia
+   established, and I confirmed, that *no consumer has ever called the gate*:
+   `grep -rn conformance --include=*.py archaeon/ vivarium/ roles/Vivarium/
+   roles/Archaeon/` returns nothing. A regenerated contract nobody checks
+   against is exactly the state we have been in, so regeneration alone is not
+   the step. **The step is: regenerate the contract AND confirm the gate
+   returns 0 for every WIRED consumer** — Harmonia's wording, adopted.
+
+   Regeneration needs a scratch engine, and this is Daedalus's part:
+   `generate_sfe_contract.py` derives session scoping by sending malformed
+   session keys to every route, so `--probe-base` must **never** be production
+   — it would write client registrations and garbage into the live ledger.
+   One command, and a check that must pass before a contract is generated
+   against it:
+
+   ```
+   python deploy/scratch_contract_engine.py            # start, port 8901
+   python deploy/scratch_contract_engine.py --check    # same build, DIFFERENT ledger
+   ```
+
+   The check is not ceremony. The first time I started this I bound a port
+   another seat's dev engine already held, and it answered with the SAME build
+   hash -- we run the same code -- so the mistake looked like success; the tell
+   was a runtime flag that had not taken. A scratch engine that does not match
+   production's build silently invalidates the contract generated against it.
+
+   **It is also a committed REGRESSION FIXTURE.** Harmonia's
+   `roles/Harmonia/contracts/verify_gate_states.sh` defaults to
+   `http://127.0.0.1:8901/v2` and its test 5 proves the gate returns state 1
+   (DRIFT) on a same-build/different-ledger engine. Without the fixture that
+   test degrades to state 2 (UNREACHABLE) and stops proving anything. It began
+   as a background process of one session, which made a committed test depend
+   on somebody's terminal staying open; the script above is why it no longer
+   does. *Owners: Daedalus (scratch engine), Harmonia (contract and gate).*
+
+   Her ruling — `roles/Harmonia/rulings/RULING_CONFORMANCE_GATE_SPLIT_2026-09-10.md`
+   — splits the CONSEQUENCE rather than the pin: `0` conformant, `3` INCOMPLETE
+   (build differs, routes added only, none removed — proceed only if every
+   route the consumer will call is listed), `1` DRIFT (any removal, scoping
+   flip, or `engine_instance_id` change — never tolerated), `2` unreachable.
+   This deploy is state 3: 50 contract routes against 67 live, **17 added, 0
+   removed** (verified independently).
 3. **Vivarium restarts the consumer — condition (b).** The consumer holds a
    client and a session against the old build; it must be restarted after the
    engine is up, and the restart confirmed in the deploy report. *Owner:

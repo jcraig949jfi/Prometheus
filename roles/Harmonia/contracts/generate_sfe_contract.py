@@ -109,20 +109,70 @@ def main():
     ap.add_argument("--cacert", default=None)
     ap.add_argument("--outdir", default=".")
     ap.add_argument("--probe-base", required=True,
-                    help="a SCRATCH engine of the same build; session scoping "
-                         "is derived by probing it so the live store is never "
-                         "written")
+                    help="a SCRATCH engine of the same build ON A DIFFERENT "
+                         "LEDGER; session scoping is derived by probing it so "
+                         "the live store is never written")
+    ap.add_argument("--allow-non-loopback-probe", action="store_true",
+                    help="permit a probe base that is not loopback. Refused by "
+                         "default: a LAN address is how you probe somebody "
+                         "else's engine by mistake.")
     a = ap.parse_args()
 
     ver = get(a.base + "/v2/version", a.cacert)
     spec = get(a.base + "/v2/openapi.json", a.cacert)
     comps = spec.get("components", {}).get("schemas", {})
-    pv = get(a.probe_base + "/v2/version")
+    try:
+        pv = get(a.probe_base + "/v2/version")
+    except Exception as e:                                         # noqa: BLE001
+        # A probe base we cannot even read is a probe base we must not write
+        # to. Refuse plainly rather than dying in a traceback -- and note that
+        # the probe path carries no cacert by design, so an https probe base
+        # lands here. Scratch engines are loopback HTTP.
+        print("REFUSING: cannot read %s/v2/version -- %r" % (a.probe_base, e))
+        print("  The probe base must be a reachable scratch engine, normally "
+              "loopback HTTP. Nothing was probed.")
+        return 2
+
+
+    # THE PROBE IS DESTRUCTIVE. It registers a client and fires a malformed
+    # session key at every route, so the ONE thing that must never happen is
+    # aiming it at a ledger somebody cares about.
+    #
+    # A build-hash match alone does NOT establish that. Two engines running the
+    # same code report the SAME engine_source_hash, so "same build" cannot
+    # distinguish a disposable scratch engine from another seat's production
+    # one -- and on 2026-09-10 Daedalus nearly handed me exactly that: a bind
+    # to an already-occupied port answered, reported the identical hash, and
+    # was somebody else's engine. My own IDENTITY_RULE says the hash names the
+    # BUILD; I had been reading it as if it named the INSTANCE. Necessary, not
+    # sufficient.
+    #
+    # So all three must hold, and the instance check is the decisive one.
+    print("  live  %s  %s" % (ver.get("engine_instance_id"),
+                              (ver.get("engine_source_hash") or "")[:22]))
+    print("  probe %s  %s" % (pv.get("engine_instance_id"),
+                              (pv.get("engine_source_hash") or "")[:22]))
+
     if pv.get("engine_source_hash") != ver.get("engine_source_hash"):
         print("REFUSING: probe engine build %s != live build %s"
               % (pv.get("engine_source_hash", "")[:22],
                  ver.get("engine_source_hash", "")[:22]))
         return 2
+
+    if pv.get("engine_instance_id") == ver.get("engine_instance_id"):
+        print("REFUSING: probe and live are the SAME LEDGER (%s)."
+              % pv.get("engine_instance_id"))
+        print("  The probe writes. Point it at a scratch engine on its own "
+              "database.")
+        return 2
+
+    host = (a.probe_base.split("//", 1)[-1].split("/", 1)[0].split(":", 1)[0])
+    if host not in ("127.0.0.1", "localhost", "::1") and             not a.allow_non_loopback_probe:
+        print("REFUSING: probe base %s is not loopback." % host)
+        print("  A LAN address is how you probe somebody else's engine by "
+              "mistake. Pass --allow-non-loopback-probe if you are certain.")
+        return 2
+
     scoping = derive_session_scoping(a.probe_base)
 
     routes = []
@@ -155,6 +205,7 @@ def main():
             "schema_version": ver.get("schema_version"),
             "engine_instance_id": ver.get("engine_instance_id"),
             "engine_source_hash": ver.get("engine_source_hash"),
+            "scoping_derived_against_instance": pv.get("engine_instance_id"),
             "science_profile": ver.get("science_profile"),
             "session_enforcement": ver.get("session_enforcement"),
             "IDENTITY_RULE": "pin engine_source_hash, NEVER source_commit. "

@@ -1,0 +1,188 @@
+{
+  "_what_this_is": "Measured on a throwaway engine. The live ledger was read only for its shape. No tuning is proposed here that is not supported by a number in this file.",
+  "live_shape": {
+    "db_bytes": 123076608,
+    "events": 66042,
+    "experiments": 29707,
+    "observations": 4115,
+    "artifacts": 6251,
+    "work_items": 3572,
+    "busiest_hours": [
+      {
+        "hour": "2026-09-01T23Z",
+        "events": 13104
+      },
+      {
+        "hour": "2026-09-01T22Z",
+        "events": 12165
+      },
+      {
+        "hour": "2026-09-10T12Z",
+        "events": 5630
+      }
+    ],
+    "inter_event_gap_ms_in_busiest_hour": {
+      "p50": 158.524,
+      "p90": 661.88,
+      "p99": 1512.66,
+      "max": 6029.814,
+      "n": 13103
+    }
+  },
+  "operations_ms": {
+    "create_artifact": {
+      "p50": 0.117,
+      "p90": 0.163,
+      "p99": 1.899,
+      "max": 1.899,
+      "n": 60
+    },
+    "hypothesis": {
+      "p50": 0.094,
+      "p90": 0.154,
+      "p99": 0.202,
+      "max": 0.202,
+      "n": 60
+    },
+    "experiment": {
+      "p50": 0.257,
+      "p90": 0.333,
+      "p99": 6.836,
+      "max": 6.836,
+      "n": 60
+    },
+    "observation": {
+      "p50": 0.173,
+      "p90": 0.31,
+      "p99": 6.366,
+      "max": 6.366,
+      "n": 60
+    },
+    "commit_experiment": {
+      "p50": 0.019,
+      "p90": 0.025,
+      "p99": 0.04,
+      "max": 0.04,
+      "n": 60
+    }
+  },
+  "chain_growth_ms": [
+    {
+      "events_before": 0,
+      "p50": 0.612,
+      "p90": 0.718,
+      "p99": 1.214,
+      "max": 1.214,
+      "n": 40
+    },
+    {
+      "events_before": 2000,
+      "p50": 0.584,
+      "p90": 0.644,
+      "p99": 2.124,
+      "max": 2.124,
+      "n": 40
+    },
+    {
+      "events_before": 8000,
+      "p50": 0.576,
+      "p90": 0.723,
+      "p99": 8.516,
+      "max": 8.516,
+      "n": 40
+    },
+    {
+      "events_before": 20000,
+      "p50": 0.774,
+      "p90": 0.889,
+      "p99": 10.447,
+      "max": 10.447,
+      "n": 40
+    }
+  ],
+  "concurrency": [
+    {
+      "writers": 1,
+      "writes": 25,
+      "wall_s": 0.02,
+      "throughput_per_s": 1272.1,
+      "errors": [],
+      "latency": {
+        "p50": 0.774,
+        "p90": 0.862,
+        "p99": 1.017,
+        "max": 1.017,
+        "n": 25
+      }
+    },
+    {
+      "writers": 2,
+      "writes": 50,
+      "wall_s": 0.019,
+      "throughput_per_s": 2597.5,
+      "errors": [
+        "OperationalError",
+        "OperationalError",
+        "OperationalError",
+        "OperationalError",
+        "OperationalError"
+      ],
+      "latency": {
+        "p50": 0.75,
+        "p90": 0.839,
+        "p99": 0.906,
+        "max": 0.906,
+        "n": 25
+      }
+    },
+    {
+      "writers": 4,
+      "writes": 100,
+      "wall_s": 0.02,
+      "throughput_per_s": 4896.9,
+      "errors": [
+        "OperationalError",
+        "OperationalError",
+        "OperationalError",
+        "OperationalError",
+        "OperationalError"
+      ],
+      "latency": {
+        "p50": 0.8,
+        "p90": 0.918,
+        "p99": 1.169,
+        "max": 1.169,
+        "n": 25
+      }
+    },
+    {
+      "writers": 8,
+      "writes": 200,
+      "wall_s": 0.046,
+      "throughput_per_s": 4361.4,
+      "errors": [
+        "OperationalError",
+        "OperationalError",
+        "OperationalError",
+        "OperationalError",
+        "OperationalError"
+      ],
+      "latency": {
+        "p50": 2.619,
+        "p90": 3.505,
+        "p99": 4.209,
+        "max": 4.209,
+        "n": 69
+      }
+    }
+  ],
+  "deadlines": {
+    "client_configured_s": 30.0,
+    "engine_configured_busy_timeout_ms": 30000,
+    "client_gave_up_after_s": 30.01,
+    "client_error": "TimeoutError: timed out",
+    "engine_lock_wait_s": 33.11,
+    "engine_error": "OperationalError",
+    "client_gives_up_first_by_s": 3.1
+  }
+}

@@ -29,13 +29,36 @@ def fetch(conn, sets: Sequence[str] = SETS) -> List[Dict[str, Any]]:
     cur = conn.cursor()
     cur.execute("SELECT candidate_set_id, arm_id, source_evidence->>'task_id', request_key, status, "
                 "result_summary->'result'->'repeats'->0->'result', result_summary->'load_receipt'->>'allowance_mechanism', "
-                "left(error, 200), sfe_experiment_id FROM viv.research_experiment_queue WHERE candidate_set_id = ANY(%s) "
+                "left(error, 200), sfe_experiment_id, spec_hash FROM viv.research_experiment_queue WHERE candidate_set_id = ANY(%s) "
                 "ORDER BY source_evidence->>'task_id', arm_id, request_key", (list(sets),))
     out = []
-    for cs, arm, task, rk, status, res, allow, err, exp in cur.fetchall():
+    for cs, arm, task, rk, status, res, allow, err, exp, spec_hash in cur.fetchall():
         out.append({"set": cs, "arm": arm, "task_id": task, "request_key": rk, "status": status,
-                    "result": res or {}, "allowance_mechanism": allow, "error": err, "sfe_experiment_id": exp})
+                    "result": res or {}, "allowance_mechanism": allow, "error": err, "sfe_experiment_id": exp,
+                    "spec_hash": spec_hash})
     return out
+
+
+def dedup_by_spec_hash(live: Dict[tuple, Dict[str, Any]]) -> Dict[str, Any]:
+    """Harmonia 57c259656 item 1b: dedup by spec hash BEFORE any statistic,
+    with a mechanical refusal when one hash appears under two labels. Here
+    the refusal is a flag on the readout (the readout computes no
+    statistic); the analysis file must not treat the duplicated labels as
+    independent arms."""
+    by_hash: Dict[str, List[str]] = {}
+    for (task, arm), r in live.items():
+        h = r.get("spec_hash")
+        if h:
+            by_hash.setdefault(h, []).append(arm)
+    dup: Dict[tuple, int] = {}
+    for h, arms in by_hash.items():
+        s = tuple(sorted(set(arms)))
+        if len(s) > 1:
+            dup[s] = dup.get(s, 0) + 1
+    labels_sharing = sorted(dup, key=lambda k: -dup[k])
+    return {"distinct_payloads": len(by_hash), "labels_sharing_a_hash": [list(k) for k in labels_sharing],
+            "refusal": ("REFUSE_INDEPENDENT_ARMS: {} label groups share a spec hash; count each payload once".format(len(labels_sharing))
+                        if labels_sharing else None)}
 
 
 def _live(rows: List[Dict[str, Any]]) -> Dict[tuple, Dict[str, Any]]:
@@ -101,6 +124,7 @@ def readout(rows: List[Dict[str, Any]]) -> Dict[str, Any]:
             "complete": bool(tasks) and slot_free_done and artifact_cells_done,
             "slot_free_complete": slot_free_done, "artifact_cells_complete": artifact_cells_done,
             "counts_per_cell": counts, "table": table, "degeneracy_check": degeneracy_check(rows),
+            "spec_hash_dedup": dedup_by_spec_hash(live),
             "contrasts": "none computed here; G_joint_treatment_S11_minus_S00 and I are Harmonia's (block = target task, n = 12)",
             "h1_contrast_label": "transport_only (fresh vs random_pack); relevance inert at this scope (Harmonia 745d9c698)"}
 
@@ -109,7 +133,8 @@ def to_markdown(r: Dict[str, Any]) -> str:
     L = ["# H1/H0 phase-2 readout -- {}".format("COMPLETE" if r["complete"] else "PARTIAL"), "",
          "Written {}. Sets: {}. Numbers only; Harmonia analyses (block = target task, n = {}).".format(r["written"], ", ".join(r["sets"]), r["n_targets"]),
          "", "## Degeneracy check (second seed_root vs first, target 0, S00)", "",
-         "- " + json.dumps(r["degeneracy_check"]), "", "## Counts per cell", ""]
+         "- " + json.dumps(r["degeneracy_check"]), "", "## Spec-hash dedup (Harmonia 1b)", "",
+         "- " + json.dumps(r["spec_hash_dedup"]), "", "## Counts per cell", ""]
     for c in CELLS:
         if c in r["counts_per_cell"]:
             L.append("- {}: {}".format(c, json.dumps(r["counts_per_cell"][c])))
