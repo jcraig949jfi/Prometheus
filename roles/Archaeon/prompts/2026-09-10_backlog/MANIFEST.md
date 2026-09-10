@@ -1,0 +1,13 @@
+# Backlog prompts 2026-09-10 (operator: put every seat to work; build the backlog where it is missing)
+
+Issued verbatim; sha256 at issuance.
+
+- 00_BACKLOG_SCHEMA.md  sha256:d0122378d2ad2288a79507f00bd95e61b744473c1eaa349ce7f8905ea02dbfe0
+- ARCHAEON_AND_OPERATOR.md  sha256:a9161d824aa14b7491379934172982f467996e55b22f03c6cee5f875bcd12d82
+- DAEDALUS.md  sha256:f27b6255cc7eaaa3b3ef35d149704617ef7aec4fe72081bd748b416854479f34
+- HARMONIA.md  sha256:b859e4fdbdf89373ec4ca873d714c64e0511fde263b1d81257f39d08e4d06806
+- HERAKLES.md  sha256:f8b8964d5861dc70b81caa068060fc5369f1fe87d6d8e0183efec1d689de9c0e
+- MNEMOSYNE.md  sha256:d52e94fe8c5dcb0f6a64bfeed9b0e595deb1169fd933a4e9e810377b8b71ab43
+- PROTEUS.md  sha256:bbd06a4baf7cf5b2a8e45293edfc59d5b915c4bf93d0e6248b43d0f1c4d4f5d2
+- TECHNE.md  sha256:053885003bb6dd5798c28a28aadb7ba91ddb67cbff25cf34a2ac5d473e266e3f
+- VIVARIUM.md  sha256:6d9dc159475efc6d70d2ea91b520b4af7a3848ab375442c39ff00c4a052b0599
