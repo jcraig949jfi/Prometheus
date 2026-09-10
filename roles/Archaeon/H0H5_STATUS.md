@@ -1,6 +1,6 @@
 # H0–H5 status — compact, from receipts only
 
-Maintained by Archaeon. Updated 2026-09-11 wake 1. Review packet: `roles/Archaeon/REVIEW_PACKET_2026-09-10.md`. Delegation: `roles/Archaeon/prompts/2026-09-10_tracks/` (Tracks A-E from the operator's Chimera brief; three corrections verified: sqrt(6) counterexample, client_id retention gap, XOR-injection non-conservation). Design v0.1
+Maintained by Archaeon. Updated 2026-09-10 wake 7 (Vivarium 6d5d7406f absorbed). Review packet: `roles/Archaeon/REVIEW_PACKET_2026-09-10.md`. Delegation: `roles/Archaeon/prompts/2026-09-10_tracks/` (Tracks A-E from the operator's Chimera brief; three corrections verified: sqrt(6) counterexample, client_id retention gap, XOR-injection non-conservation). Design v0.1
 (`roles/Archaeon/prompts/2026-09-08_h0h5/DESIGN_H0_H5_v0.1.md`). Every row
 below is derived from a committed receipt; nothing is inferred from a plan.
 Baseline: `archaeon/docs/h0h5/BASELINE_2026-09-09.json`.
@@ -52,6 +52,16 @@ Baseline: `archaeon/docs/h0h5/BASELINE_2026-09-09.json`.
 - Vivarium `e43a6c7f2`: `ca_density_v0` wraps herakles/evca; six genomes reproduce golden exactly; both success masks measured; a period-2 fixture separates at_T from stable. Branch C can run its first corpus once C2 templates are admitted.
 - Aporia deck (`3b1fb8a0f`, vivarium branch): four of six hypotheses untested in the literature as posed; H2's encoding confound published (Glover et al. 2024); nearest H3 test found no QD advantage (Chen 2026); H4 precedent only vs a tuned baseline.
 - Techne inbox to Archaeon (`f6acabefb`): pyribs GridArchive is first-writer-wins on exact ties; z3 separates timeout from rlimit exhaustion, use rlimit for cross-host repeatability; stitch_core ships NO licence in any artifact (export blocked, internal use continues).
+
+
+## Vivarium 6d5d7406f / 9e6c1ff0c (Track A items 5-6, Track B transform) — absorbed
+
+- `cegis_boolean_v1` registered (16 sealed params; both artifact slots optional and null is a value inside spec_hash); H1 three arms + H0 four cells executed end to end on a DEV engine (42 rows, 7 arms, 0 invalid, 0 infra-failure). Vivarium implemented NO relevance policy, by design.
+- Two measured corrections: seeded constraints cut oracle calls everywhere but RAISED VM ops ~47% on a full scan (both directions asserted); the instrument library WON maj3 and LOST xor3 with a per-arm contrast of zero — the per-task matrix is now printed. Worth having before H0's denominator is set.
+- `transform` on ca_density_v0 (none | reflect | complement | reflect_complement), NO default; null holds exactly on 6 genomes x 3 symmetries. **C3 null arm ENABLED**: 150 rows (6 hist, 6 base, 18 null, 120 acq), 600 observations, validates; every payload now names `transform`, so the C3 sealed identities moved before any issue (recorded, not silently). Caveat carried in check(): under a transform the spacetime digest is of the rule actually run, not the image of the untransformed diagram.
+- **H1/H0 plan built** (`archaeon/producer/campaign_h1h0.py`, doc `archaeon/docs/h0h5/H1_H0_ALPHA_PLAN.md`): seeded disjoint split (24 source / 12 target), phase 1 (24 source rows) validates against the kind; phase 2 builds packs from phase-1 witnesses under two frozen policies (random_compatible; signature_v0 on licensed metadata), H0 cells differ in exactly the two slots, relevant arm WITHHELD until Harmonia rules the signature fair and the operator sets RELEVANCE_LICENSED; instrument library labelled on every row; beta's deterministic extractor exists and is labelled `derived`.
+- Not issued: phase 1 waits on the operator's word and a consumer carrying the kind (Vivarium restarts after its push).
+- Still open on Vivarium's list: sfclient.register() client_id (Daedalus fixed it in b1deb4783; Vivarium's load receipt re-verifies after the joint reconciliation).
 
 ## Observed, not acted on
 
