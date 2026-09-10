@@ -129,7 +129,7 @@ def test_specific_failures_before_queueing(tmp_path):
     with pytest.raises(SpecInvalid, match="quietly not happening"):
         bs = _t("b", "evaluate_bitstring", {}, outcome_rule={"field": "solved", "op": "==",
                 "value": False, "if_true": "SURVIVED", "if_false": "FALSIFIED",
-                "if_indeterminate": "INCONCLUSIVE"}, repeat=WALK_REPEAT)
+                "if_indeterminate": "INCONCLUSIVE", "aggregate": "all"}, repeat=WALK_REPEAT)
         K.build_from_template(bs, {"seed_root": 1, "bits": "0101", "length": 4})
 
 
