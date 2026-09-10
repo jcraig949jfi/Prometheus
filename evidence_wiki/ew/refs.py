@@ -13,10 +13,14 @@ import re
 
 from . import db as ewdb
 
+# Extended by migration 012 for the corpus index. The vocabulary is closed:
+# a new kind arrives with a migration, never by a producer inventing one.
 REF_KINDS = ("WITNESS", "COMPONENT", "GENERATED_TASK", "DECODER",
-             "SOURCE_SET", "RECEIPT")
+             "SOURCE_SET", "RECEIPT",
+             "EXPERIMENT", "OBSERVATION", "ENCOUNTER", "ARTIFACT")
 WITNESS_SUBKINDS = ("PROGRAM_INPUT", "CA_INITIAL_STATE", "OTHER")
-SOURCE_KINDS = ("OBSERVATION", "ARTIFACT")
+SOURCE_KINDS = ("OBSERVATION", "ARTIFACT", "EXPERIMENT",
+                "ENCOUNTER", "EVENT")
 
 # Five states, required. NULL cannot separate "there is none" from "I could not
 # look", and X5-a requires that separation.
@@ -45,7 +49,10 @@ _IDENTITY = ("ref_kind", "ref_subkind", "encounter_id", "run_key",
 _COMPARED = _IDENTITY + ("sfe_world_id", "sfe_observation_id", "sfe_event_seq",
                          "sfe_entry_hash", "sfe_engine_instance_id",
                          "content_bytes", "source_scope", "visibility",
-                         "origin", "namespace")
+                         "origin", "namespace", "candidate_set_id",
+                         "producer_experiment_id", "software_stage",
+                         "connection_evidence", "scientific_outcome",
+                         "reproduction_state")
 
 
 def ref_id_for(d: dict) -> str:
@@ -121,7 +128,9 @@ def classify(existing, d):
 def insert_ref(cur, d, ident):
     cur.execute("SELECT nextval('ew.canonical_revision_seq')")
     rev = cur.fetchone()["nextval"]
-    cols = ["ref_id", "ref_kind", "ref_subkind", "encounter_id", "run_key",
+    cols = ["candidate_set_id", "producer_experiment_id", "software_stage",
+            "connection_evidence", "scientific_outcome", "reproduction_state",
+            "ref_id", "ref_kind", "ref_subkind", "encounter_id", "run_key",
             "sfe_world_id", "sfe_observation_id", "sfe_event_seq",
             "sfe_entry_hash", "sfe_engine_instance_id", "source_kind",
             "source_id", "selector", "content_digest", "content_bytes",
@@ -152,7 +161,8 @@ def current_availability(cur, ref_id):
     return dict(r) if r else None
 
 
-def rebuild_presence_index(conn, namespace=None):
+def rebuild_presence_index(conn, namespace=None, candidate_set=None,
+                           ref_kind="WITNESS"):
     """Deliverable 5: rebuild a derived presence index from the authoritative
     references ALONE -- no scientific bytes are read, and nothing in SFE is
     touched. Returns the index; the caller compares it to the previous one.
@@ -160,13 +170,22 @@ def rebuild_presence_index(conn, namespace=None):
     'Which encounters carry a witness, and in what state' is a projection of
     ew.typed_refs plus the availability log. Rebuilding it is not an
     evidentiary act and must not alter execution identity."""
-    where, args = ["ref_kind = 'WITNESS'"], []
+    # ref_kind=None rebuilds ACROSS kinds, which is what a corpus rebuild
+    # needs: a candidate set is indexed as experiment/observation/encounter/
+    # receipt references, and none of them is a witness.
+    where, args = ["true"], []
+    if ref_kind:
+        where.append("ref_kind = %s")
+        args.append(ref_kind)
     if namespace:
         where.append("namespace = %s")
         args.append(namespace)
+    if candidate_set:
+        where.append("candidate_set_id = %s")
+        args.append(candidate_set)
     with ewdb.dict_cur(conn) as cur:
         cur.execute(
-            "SELECT t.encounter_id, t.run_key, t.ref_subkind, t.ref_id, "
+            "SELECT t.encounter_id, t.run_key, t.ref_kind, t.ref_subkind, t.ref_id, "
             "       t.content_digest, t.source_kind, t.source_id, "
             "       COALESCE(e.availability, t.availability) AS availability "
             "FROM ew.typed_refs t "
@@ -181,7 +200,8 @@ def rebuild_presence_index(conn, namespace=None):
     for r in rows:
         key = f"{r['encounter_id']}@{r['run_key']}"
         index.setdefault(key, []).append(
-            {"ref_id": r["ref_id"], "subkind": r["ref_subkind"],
+            {"ref_id": r["ref_id"], "kind": r["ref_kind"],
+             "subkind": r["ref_subkind"],
              "availability": r["availability"], "digest": r["content_digest"],
              "source": f"{r['source_kind']}:{r['source_id']}"})
     return index

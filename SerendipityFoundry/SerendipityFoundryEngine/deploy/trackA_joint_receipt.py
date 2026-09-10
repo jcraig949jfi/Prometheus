@@ -138,19 +138,29 @@ class Attempt:
         self.attempt_id = attempt_id
         self.reservations = []
         self.cost_events = []
+        self.acts = []
+        self.keyed_on_ordinal = False
 
-    def debit(self, resource: str, amount: float):
+    def debit(self, resource: str, amount: float, act: dict = None):
         """Vivarium's preflight calls this BEFORE the fetch it is about to pay
         for. It is wired straight to the engine's reservation, so the
         enforceable counter moves before a byte is resolved.
 
-        THE KEY IS POSITIONAL, and that is a finding rather than a choice: the
-        `debit(resource, amount)` hook does not carry the artifact identity, so
-        the strongest idempotency key available here is the ordinal of the
-        fetch within the attempt. A retry that resolved the closure in a
-        different order would key differently.
+        `act` carries {slot, digest, source_world, source_artifact,
+        fetch_ordinal, declared_bytes} since TRACKA-DEBIT-1 was closed, so the
+        idempotency key is the ACT -- two attempts that fetch the same artifact
+        in a different order are the same spend, and two different artifacts at
+        the same position are not. The positional fallback is kept only so this
+        receipt still runs against an older loader, and it RECORDS that it fell
+        back rather than quietly keying on the ordinal.
         """
-        idem = "%s:%s:%d" % (self.attempt_id, resource, len(self.reservations))
+        if act and act.get("digest"):
+            idem = "%s:%s:%s" % (self.attempt_id, resource, act["digest"])
+            self.acts.append(act)
+        else:
+            self.keyed_on_ordinal = True
+            idem = "%s:%s:%d" % (self.attempt_id, resource,
+                                 len(self.reservations))
         try:
             r = self.exe.reserve_budget(self.wx, resource, amount,
                                         stage="retrieval",
@@ -180,7 +190,17 @@ class Attempt:
         """One cost event per reservation. The bytes really moved, so an
         interrupted attempt still pays for the retrieval it completed --
         releasing here would be claiming the fetch did not happen."""
+        if len(self.acts) != len(self.reservations):
+            raise AssertionError(
+                "every reservation must name the act it paid for (%d acts vs "
+                "%d reservations); attributing a cost without one would be "
+                "guessing which bytes it was for"
+                % (len(self.acts), len(self.reservations)))
         for i, res in enumerate(self.reservations):
+            # TRACKA-RECON-2: the digest travels WITH the line that paid for
+            # it, so a reconciler joins on the artifact rather than on an
+            # attempt id that several stages share.
+            moved = self.acts[i]["digest"]
             ce = self.exe.cost_event(
                 self.wx, stage="retrieval", attempt_id=self.attempt_id,
                 reservation_id=res["reservation_id"],
@@ -188,9 +208,12 @@ class Attempt:
                                   for c in self.load_receipt["closure"]],
                 resources=[
                     {"resource": "artifact_bytes", "quantity": res["amount"],
-                     "unit": "bytes", "method": "counter", "scope": "attempt"},
+                     "unit": "bytes", "method": "counter", "scope": "attempt",
+                     "refs": {"artifact_digest": moved,
+                              "executor": "viv.preflight.SfeResolver"}},
                     {"resource": "engine_fetches", "quantity": 1,
-                     "unit": "count", "method": "counter", "scope": "attempt"},
+                     "unit": "count", "method": "counter", "scope": "attempt",
+                     "refs": {"artifact_digest": moved}},
                     {"resource": "peak_memory_bytes", "quantity": None,
                      "method": "sampler", "unit": "bytes", "scope": "attempt"},
                 ],
@@ -578,6 +601,49 @@ def main():                                                  # noqa: C901
              producer_only=recon["producer_only"],
              executor_only=recon["executor_only"])
 
+        # -- TRACKA-RECON-2: the join that actually works ------------------
+        # (attempt_id, stage) reports nothing matched, and correctly so: the
+        # producer paid for generation and transfer, the executor and engine
+        # for retrieval and execution. Those are different ACTS. What both
+        # sides do have in common is the BYTES, so the accepted resolution is
+        # to join on the digest -- and the digest now travels on the cost line
+        # itself, checked by the engine against the event's own declarations.
+        prod_by_digest = {}
+        for e in producer_events:
+            for d in list(e.source_refs) + list(e.output_refs):
+                prod_by_digest.setdefault(d, []).append(
+                    {"stage": e.stage, "attempt_id": e.attempt_id,
+                     "producer_cost_event_id": e.cost_event_id})
+        eng_by_digest = rep.get("by_artifact") or {}
+        dk_matched = sorted(set(prod_by_digest) & set(eng_by_digest))
+        R["reconciliation"]["by_digest"] = {
+            "join": "artifact_digest",
+            "matched": dk_matched,
+            "producer_only": sorted(set(prod_by_digest) - set(eng_by_digest)),
+            "engine_only": sorted(set(eng_by_digest) - set(prod_by_digest)),
+            "detail": {d: {"producer": prod_by_digest.get(d),
+                           "engine": eng_by_digest.get(d)}
+                       for d in dk_matched},
+            "note": "the engine refused to record a claim on an artifact its "
+                    "event did not declare, so a match here is a fact about "
+                    "the same bytes rather than a coincidence of labels.",
+        }
+        step("reconciliation BY DIGEST", matched=len(dk_matched),
+             producer_only=len(set(prod_by_digest) - set(eng_by_digest)))
+        check("joining on the digest matches what joining on the stage could "
+              "not", len(dk_matched) == 2 and all(
+                  R["reconciliation"]["by_digest"]["detail"][d]["engine"]
+                  for d in dk_matched),
+              R["reconciliation"]["by_digest"])
+        check("every engine cost line that named a digest named one its event "
+              "declared",
+              all(any(row["cost_event_id"] == ce["cost_event_id"]
+                      for rows in eng_by_digest.values() for row in rows)
+                  for ce in (a1.cost_events + a2.cost_events)
+                  if any(e.get("refs", {}).get("artifact_digest")
+                         for e in ce["resources"])),
+              sorted(eng_by_digest))
+
         # The join must be shown CAPABLE of matching, or an empty matched set
         # is indistinguishable from a broken join.
         ctl_p = {key("ctl", "retrieval")}
@@ -637,8 +703,14 @@ def main():                                                  # noqa: C901
               [p["http"] for p in peeled] == [422, 422, 422, 200], peeled)
         finding(
             "TRACKA-VECTOR-1",
-            "A producer resource entry from archaeon/producer/costs.py cannot "
-            "be recorded by the engine as it stands. Posted live to "
+            "CLOSED 2026-09-10 for the projected form: costs.to_engine_entries "
+            "now emits the five-name shape, and the engine accepts a per-entry "
+            "`refs` slot for the provenance that projection would otherwise "
+            "drop (see deploy/ARCHAEON_VECTOR_200_2026-09-10.json for the live "
+            "200 and the classes the engine stamped). WHAT REMAINS TRUE, and "
+            "is what the peel below still measures, is the RAW dataclass "
+            "form: a producer resource entry taken straight from "
+            "asdict(Resource) cannot be recorded. Posted live to "
             "/v2/worlds/{id}/cost-events it is refused three times in "
             "sequence: (1) 'enforcement_class' is an extra key, refused by "
             "TWO independent layers -- the request model is extra='forbid' "
@@ -672,33 +744,58 @@ def main():                                                  # noqa: C901
             % (len(engine_events), theirs["matched"]), owner="Archaeon")
         finding(
             "TRACKA-RECON-2",
-            "The producer names the act 'transfer' where the executor and the "
-            "engine name it 'retrieval'. Both vocabularies are internally "
-            "consistent and neither is wrong, but a (attempt_id, stage) join "
-            "therefore reports one physical byte movement as producer-only AND "
-            "executor-only. One shared stage name, or a declared mapping, is "
-            "needed before a reconciliation can claim agreement.",
-            owner="Archaeon + Vivarium")
-        finding(
-            "TRACKA-PREFLIGHT-1",
-            "viv/preflight.py:SfeResolver.resolve() calls "
-            "artifact_content(world, aid) with no expected_blob_hash, so the "
-            "digest is compared in the CLIENT at preflight.py:341 after the "
-            "bytes have already been served. The engine-side gate is now "
-            "available on the read path (expected_blob_hash, with "
-            "expected_digest as the shipped alias) and returns 422 with no "
-            "bytes. Passing the sealed digest and expected_bytes moves the "
-            "check to the engine; the client-side comparison then becomes "
-            "defence in depth over the one span the engine cannot see.",
-            owner="Vivarium")
-        finding(
-            "TRACKA-DEBIT-1",
-            "Preflight's debit hook is debit(resource, amount) and does not "
-            "carry the artifact being paid for, so the strongest idempotency "
-            "key an integrator can build is the ordinal of the fetch within "
-            "the attempt (this receipt uses one). Widening the hook to carry "
-            "the digest would let the reservation be keyed on the act.",
-            owner="Vivarium")
+            "RESOLUTION IMPLEMENTED, ENGINE SIDE. The producer names the act "
+            "'transfer' where the executor and the engine name it "
+            "'retrieval'; both vocabularies are internally consistent and "
+            "neither is wrong, so a (attempt_id, stage) join reports one "
+            "physical byte movement as producer-only AND executor-only -- "
+            "which is what the empty `matched` above still shows. The accepted "
+            "answer is to join on the BYTES, which all three sides already "
+            "carry. A cost entry may now carry refs.artifact_digest; the "
+            "engine REFUSES a claim on an artifact the event did not declare, "
+            "so a match is a fact rather than a coincidence of labels, and "
+            "cost_report().by_artifact indexes it so the join costs one call "
+            "instead of one per event. See `reconciliation.by_digest` above: "
+            "it matches where the stage join matched nothing. WHAT REMAINS "
+            "FOR ARCHAEON: read by_artifact (or refs.artifact_digest) in "
+            "reconcile() instead of joining on attempt_id.",
+            owner="Archaeon")
+        # THESE TWO ARE RE-DERIVED, NOT ASSERTED. Vivarium's reply to the first
+        # cut of this receipt made the point: findings written as literal text
+        # keep reporting as open on a tree where they are closed, and a
+        # reviewer then has to know which is stale. Both are now read off the
+        # load receipt the loader itself produces -- the fields exist so a
+        # checker need not read anyone's source to answer the question.
+        gate = rec2.get("digest_gate")
+        wide = rec2.get("debit_hook_carries_act")
+        R["vivarium_state"] = {
+            "digest_gate": gate,
+            "debit_hook_carries_act": wide,
+            "observed_on": "the attempt-2 load receipt, this run",
+        }
+        if "engine" not in str(gate):
+            finding(
+                "TRACKA-PREFLIGHT-1",
+                "The loader resolved without the engine's digest gate "
+                "(load receipt digest_gate=%r), so identity is compared in the "
+                "client after the bytes have already been served. Passing the "
+                "sealed digest and expected_bytes on the read moves the check "
+                "to the engine, which returns 422 and no bytes; the "
+                "client-side comparison then becomes defence in depth over the "
+                "one span the engine cannot see." % (gate,), owner="Vivarium")
+        if not wide:
+            finding(
+                "TRACKA-DEBIT-1",
+                "The debit hook did not carry the act (load receipt "
+                "debit_hook_carries_act=%r), so a reservation can only be "
+                "keyed on the ordinal of the fetch within the attempt. Two "
+                "attempts that fetch the same artifact in a different order "
+                "then look like different spends." % (wide,), owner="Vivarium")
+        check("the loader enforces identity AT THE ENGINE (TRACKA-PREFLIGHT-1)",
+              "engine" in str(gate), gate)
+        check("the debit hook carries the act it pays for (TRACKA-DEBIT-1)",
+              wide is True and not a2.keyed_on_ordinal,
+              {"receipt": wide, "fell_back": a2.keyed_on_ordinal})
 
         # -- the engine-decided rejection classes --------------------------
         # Of the fifteen classes in viv/artifacts.py, exactly four are decided

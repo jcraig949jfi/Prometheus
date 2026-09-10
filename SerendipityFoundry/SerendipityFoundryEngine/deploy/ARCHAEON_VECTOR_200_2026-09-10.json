@@ -1,0 +1,271 @@
+{
+  "_what_this_is": "TRACKA-VECTOR-1 closed end to end. The engine_entries of a committed Archaeon producer receipt, posted verbatim to a DEVELOPMENT engine over HTTP and accepted. The enforcement classes below were stamped BY THE ENGINE from the world's declared limits; the producer's own enforcement_class never crossed the wire.",
+  "source_receipt": "archaeon/docs/h0h5/ISSUE_RECEIPTS_2026-09-10.h1h0_p1.json",
+  "producer_cost_event_id": "cost:27d60c2e0f21010dfa4c31e3",
+  "engine": {
+    "engine_source_hash": "sha256:e4033252b45264eacfef73fd0af80fb9f2f6554f4406376af3258c76bac21da2",
+    "schema_version": 8,
+    "engine_instance_id": "eng_059c3255b4ac07f56fd14fe5",
+    "note": "a DEVELOPMENT ledger. Production was not touched."
+  },
+  "world_budget_declared": {
+    "wall_seconds": {
+      "limit": null,
+      "enforcement": "measured"
+    },
+    "cpu_seconds": {
+      "limit": 600,
+      "enforcement": "enforceable"
+    },
+    "items": {
+      "limit": null,
+      "enforcement": "measured"
+    }
+  },
+  "request": {
+    "http_method": "POST",
+    "path": "/v2/worlds/{world_id}/cost-events",
+    "resources": [
+      {
+        "resource": "wall_seconds",
+        "quantity": 0.09718680009245872,
+        "unit": "s",
+        "method": "clock",
+        "scope": "campaign",
+        "refs": {
+          "producer_cost_event_id": "cost:27d60c2e0f21010dfa4c31e3",
+          "producer_stage": "generation",
+          "producer_method": "time.perf_counter delta",
+          "producer_enforcement_class": "measured",
+          "producer_scope": "producer",
+          "children": []
+        }
+      },
+      {
+        "resource": "cpu_seconds",
+        "quantity": 0.046875,
+        "unit": "s",
+        "method": "clock",
+        "scope": "campaign",
+        "refs": {
+          "producer_cost_event_id": "cost:27d60c2e0f21010dfa4c31e3",
+          "producer_stage": "generation",
+          "producer_method": "time.process_time delta (this process)",
+          "producer_enforcement_class": "measured",
+          "producer_scope": "producer",
+          "children": []
+        }
+      },
+      {
+        "resource": "gpu_seconds",
+        "quantity": null,
+        "unit": "s",
+        "method": "declared",
+        "scope": "campaign",
+        "refs": {
+          "producer_cost_event_id": "cost:27d60c2e0f21010dfa4c31e3",
+          "producer_stage": "generation",
+          "producer_method": "not instrumented on the producer",
+          "producer_enforcement_class": "unavailable",
+          "producer_scope": "producer",
+          "children": []
+        }
+      },
+      {
+        "resource": "items",
+        "quantity": 24,
+        "unit": "count",
+        "method": "counter",
+        "scope": "campaign",
+        "refs": {
+          "producer_cost_event_id": "cost:27d60c2e0f21010dfa4c31e3",
+          "producer_stage": "generation",
+          "producer_method": "count",
+          "producer_enforcement_class": "measured",
+          "producer_scope": "producer",
+          "children": []
+        }
+      }
+    ]
+  },
+  "response": {
+    "http": 200,
+    "body": {
+      "cost_event_id": "cost_e15e4c354f83f015becfdb75",
+      "world_id": "wld_4dc192a8a2f17daf7c58a6b6",
+      "stage": "generation",
+      "attempt_id": "cs-h1h0-1-p1",
+      "reservation_id": null,
+      "event_seq": 6,
+      "entry_hash": "sha256:4ecfaa6c1602cb8ecad59a5365f10d0eb7f967938653042b70fcdbc0196cb71f",
+      "resources": [
+        {
+          "resource": "wall_seconds",
+          "quantity": 0.09718680009245872,
+          "unit": "s",
+          "method": "clock",
+          "scope": "campaign",
+          "available": true,
+          "refs": {
+            "producer_cost_event_id": "cost:27d60c2e0f21010dfa4c31e3",
+            "producer_stage": "generation",
+            "producer_method": "time.perf_counter delta",
+            "producer_enforcement_class": "measured",
+            "producer_scope": "producer",
+            "children": []
+          },
+          "enforcement": "measured"
+        },
+        {
+          "resource": "cpu_seconds",
+          "quantity": 0.046875,
+          "unit": "s",
+          "method": "clock",
+          "scope": "campaign",
+          "available": true,
+          "refs": {
+            "producer_cost_event_id": "cost:27d60c2e0f21010dfa4c31e3",
+            "producer_stage": "generation",
+            "producer_method": "time.process_time delta (this process)",
+            "producer_enforcement_class": "measured",
+            "producer_scope": "producer",
+            "children": []
+          },
+          "enforcement": "enforceable"
+        },
+        {
+          "resource": "gpu_seconds",
+          "quantity": null,
+          "unit": "s",
+          "method": "declared",
+          "scope": "campaign",
+          "available": false,
+          "refs": {
+            "producer_cost_event_id": "cost:27d60c2e0f21010dfa4c31e3",
+            "producer_stage": "generation",
+            "producer_method": "not instrumented on the producer",
+            "producer_enforcement_class": "unavailable",
+            "producer_scope": "producer",
+            "children": []
+          },
+          "enforcement": "unavailable"
+        },
+        {
+          "resource": "items",
+          "quantity": 24.0,
+          "unit": "count",
+          "method": "counter",
+          "scope": "campaign",
+          "available": true,
+          "refs": {
+            "producer_cost_event_id": "cost:27d60c2e0f21010dfa4c31e3",
+            "producer_stage": "generation",
+            "producer_method": "count",
+            "producer_enforcement_class": "measured",
+            "producer_scope": "producer",
+            "children": []
+          },
+          "enforcement": "measured"
+        }
+      ],
+      "billed_enforceable": [
+        "cpu_seconds"
+      ]
+    }
+  },
+  "enforcement_stamped_by_the_engine": {
+    "wall_seconds": "measured",
+    "cpu_seconds": "enforceable",
+    "gpu_seconds": "unavailable",
+    "items": "measured"
+  },
+  "from_engine_response": {
+    "wall_seconds": "measured",
+    "cpu_seconds": "enforceable",
+    "gpu_seconds": "unavailable",
+    "items": "measured"
+  },
+  "provenance_survived": true,
+  "sealed_resources": [
+    {
+      "available": true,
+      "enforcement": "measured",
+      "method": "clock",
+      "quantity": 0.09718680009245872,
+      "refs": {
+        "children": [],
+        "producer_cost_event_id": "cost:27d60c2e0f21010dfa4c31e3",
+        "producer_enforcement_class": "measured",
+        "producer_method": "time.perf_counter delta",
+        "producer_scope": "producer",
+        "producer_stage": "generation"
+      },
+      "resource": "wall_seconds",
+      "scope": "campaign",
+      "unit": "s"
+    },
+    {
+      "available": true,
+      "enforcement": "enforceable",
+      "method": "clock",
+      "quantity": 0.046875,
+      "refs": {
+        "children": [],
+        "producer_cost_event_id": "cost:27d60c2e0f21010dfa4c31e3",
+        "producer_enforcement_class": "measured",
+        "producer_method": "time.process_time delta (this process)",
+        "producer_scope": "producer",
+        "producer_stage": "generation"
+      },
+      "resource": "cpu_seconds",
+      "scope": "campaign",
+      "unit": "s"
+    },
+    {
+      "available": false,
+      "enforcement": "unavailable",
+      "method": "declared",
+      "quantity": null,
+      "refs": {
+        "children": [],
+        "producer_cost_event_id": "cost:27d60c2e0f21010dfa4c31e3",
+        "producer_enforcement_class": "unavailable",
+        "producer_method": "not instrumented on the producer",
+        "producer_scope": "producer",
+        "producer_stage": "generation"
+      },
+      "resource": "gpu_seconds",
+      "scope": "campaign",
+      "unit": "s"
+    },
+    {
+      "available": true,
+      "enforcement": "measured",
+      "method": "counter",
+      "quantity": 24.0,
+      "refs": {
+        "children": [],
+        "producer_cost_event_id": "cost:27d60c2e0f21010dfa4c31e3",
+        "producer_enforcement_class": "measured",
+        "producer_method": "count",
+        "producer_scope": "producer",
+        "producer_stage": "generation"
+      },
+      "resource": "items",
+      "scope": "campaign",
+      "unit": "count"
+    }
+  ],
+  "entry_hash": "sha256:4ecfaa6c1602cb8ecad59a5365f10d0eb7f967938653042b70fcdbc0196cb71f",
+  "cost_report": {
+    "additive_totals": {
+      "wall_seconds": 0.09718680009245872,
+      "cpu_seconds": 0.046875,
+      "items": 24.0
+    },
+    "unavailable_counts": {
+      "gpu_seconds": 1
+    },
+    "by_artifact_keys": []
+  }
+}

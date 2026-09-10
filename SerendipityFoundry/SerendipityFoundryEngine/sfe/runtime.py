@@ -349,10 +349,76 @@ PEAK_RESOURCES = frozenset({"peak_memory_bytes", "peak_rss_bytes"})
 DEFAULT_MAX_ARTIFACT_BYTES = 16 * 1024 * 1024
 
 
+#: The most a single entry's `refs` may carry, serialized. Provenance is a
+#: sentence about a measurement, not a place to keep a payload; without a cap
+#: an opaque per-entry dict is an unbounded write channel into the hash chain.
+MAX_ENTRY_REFS_BYTES = 4096
+
+#: The ONE key inside an entry's `refs` that the engine gives meaning to. It
+#: names the artifact whose movement this quantity paid for, and it is checked
+#: against the event's own declared artifacts -- so a reconciler joining on it
+#: is joining on something the engine refused to let the caller invent. Every
+#: other key in `refs` is opaque provenance the engine seals and returns and
+#: never reads.
+ENTRY_REFS_DIGEST_KEY = "artifact_digest"
+
+
+def _normalize_entry_refs(refs, index: int) -> dict:
+    """Opaque per-entry provenance, bounded and JSON-clean.
+
+    THE PROBLEM THIS SOLVES. The entry allowlist is deliberately five names so
+    a caller cannot smuggle semantics -- enforcement above all -- into a vector
+    the engine is supposed to be the authority on. But the producer's real
+    provenance (WHICH counter, WHOSE process, which upstream event) has nowhere
+    to go, and dropping it in translation loses the only thing that makes two
+    ledgers reconcilable afterwards. So there is exactly one opaque slot, and
+    it is opaque in both directions: the engine stores it, seals it, hands it
+    back, and never branches on it. The five names stay closed.
+    """
+    if refs is None:
+        return {}
+    if not isinstance(refs, dict):
+        raise ValidationError(
+            "a resource entry's refs must be an object; provenance is a "
+            "mapping of names to values, not a free string", index=index)
+    try:
+        blob = json.dumps(refs, sort_keys=True, default=None)
+    except (TypeError, ValueError) as exc:
+        raise ValidationError(
+            "a resource entry's refs must be JSON-serializable, because it is "
+            "sealed into the world's hash chain verbatim", index=index,
+            error=str(exc)[:120]) from exc
+    if len(blob.encode("utf-8")) > MAX_ENTRY_REFS_BYTES:
+        raise ValidationError(
+            "resource entry refs exceeds %d bytes; provenance describes a "
+            "measurement and is not a place to store one"
+            % MAX_ENTRY_REFS_BYTES, index=index,
+            bytes=len(blob.encode("utf-8")))
+    out = dict(refs)
+    claimed = out.get(ENTRY_REFS_DIGEST_KEY)
+    if claimed is not None:
+        if not isinstance(claimed, str) or not claimed.strip():
+            raise ValidationError(
+                "refs.%s must be a non-empty string" % ENTRY_REFS_DIGEST_KEY,
+                index=index)
+        # Normalized so the join key has ONE spelling -- but ONLY when it is
+        # digest-shaped. A producer references experiment ids as often as
+        # hashes, and the declared set on the event keeps those verbatim; if
+        # the claim were normalized where the declaration is not, the two would
+        # never match and every id-referencing event would be unrecordable.
+        try:
+            out[ENTRY_REFS_DIGEST_KEY] = _normalize_digest(
+                claimed, "refs.%s" % ENTRY_REFS_DIGEST_KEY)
+        except ValidationError:
+            out[ENTRY_REFS_DIGEST_KEY] = claimed
+    return out
+
+
 def _normalize_resource_vector(resources) -> list:
     """Validate the per-resource vector: {resource, quantity, unit, method,
-    scope}. `quantity` MAY be None, which means UNAVAILABLE -- explicitly not
-    zero, because a zero is a measurement and this is the absence of one."""
+    scope, refs}. `quantity` MAY be None, which means UNAVAILABLE -- explicitly
+    not zero, because a zero is a measurement and this is the absence of one.
+    `refs` is opaque provenance; see _normalize_entry_refs."""
     if not isinstance(resources, list) or not resources:
         raise ValidationError(
             "a cost event needs at least one resource entry; a paid activity "
@@ -363,7 +429,7 @@ def _normalize_resource_vector(resources) -> list:
         if not isinstance(e, dict):
             raise ValidationError("resource entry must be an object", index=i)
         unknown = sorted(set(e) - {"resource", "quantity", "unit", "method",
-                                   "scope"})
+                                   "scope", "refs"})
         if unknown:
             raise ValidationError("unknown resource entry field(s)", index=i,
                                   unknown=unknown)
@@ -395,7 +461,8 @@ def _normalize_resource_vector(resources) -> list:
             method = "declared"
         out.append({"resource": name, "quantity": None if q is None
                     else float(q), "unit": e.get("unit"), "method": method,
-                    "scope": scope, "available": q is not None})
+                    "scope": scope, "available": q is not None,
+                    "refs": _normalize_entry_refs(e.get("refs"), i)})
     return out
 
 
@@ -2569,6 +2636,37 @@ class Foundry:
             raise ValidationError("unknown stage", stage=stage,
                                   allowed=sorted(COST_STAGES))
         vec = _normalize_resource_vector(resources)
+
+        # AN ENTRY MAY NOT CLAIM A DIGEST THE EVENT DID NOT DECLARE.
+        # refs.artifact_digest exists so a reconciler can join a quantity to
+        # the bytes it paid for. A join key nobody checks is decoration: it
+        # would let a cost line name any artifact at all and still reconcile
+        # cleanly. So it is checked against this event's own declared
+        # artifacts, which is the only set the engine can speak to here.
+        # A declared reference is not always a digest -- a producer may name an
+        # experiment id -- so the raw strings are kept AND, where one is
+        # digest-shaped, its normalized form, and a claim matches either. The
+        # alternative, normalizing the whole set, would reject every event
+        # whose references are ids rather than hashes.
+        declared = set()
+        for a in (list(source_artifacts or [])
+                  + list(output_artifacts or [])):
+            if not isinstance(a, str) or not a.strip():
+                continue
+            declared.add(a)
+            try:
+                declared.add(_normalize_digest(a, "artifact"))
+            except ValidationError:
+                pass                       # an id, not a hash. Kept verbatim.
+        for i, e in enumerate(vec):
+            claimed = e["refs"].get(ENTRY_REFS_DIGEST_KEY)
+            if claimed is not None and claimed not in declared:
+                raise ValidationError(
+                    "a resource entry names an artifact this cost event did "
+                    "not declare; add it to source_artifacts or "
+                    "output_artifacts, or drop the claim -- a join key the "
+                    "engine does not check is decoration",
+                    index=i, claimed=claimed, declared=sorted(declared))
         cid = new_id("cost")
         with self.store.write() as cx:
             r = self._authorize_write(cx, world_id, client_id)
@@ -2708,6 +2806,7 @@ class Foundry:
             "ON e.world_id=c.world_id AND e.event_seq=c.event_seq "
             "WHERE c.world_id=? ORDER BY c.created_ts", (world_id,)).fetchall()
         totals, unavailable, peaks, by_stage = {}, {}, {}, {}
+        by_artifact: dict = {}
         for r in rows:
             by_stage[r["stage"]] = by_stage.get(r["stage"], 0) + 1
             try:
@@ -2716,6 +2815,18 @@ class Foundry:
                 continue
             for e in p.get("resources", []):
                 name = e.get("resource")
+                # THE JOIN INDEX. A reconciler asking "what did moving these
+                # bytes cost" otherwise has to fetch every cost event and open
+                # each vector; that is N calls to answer one question, and the
+                # cost of asking is why the question stops being asked.
+                dig = (e.get("refs") or {}).get(ENTRY_REFS_DIGEST_KEY)
+                if dig:
+                    by_artifact.setdefault(dig, []).append({
+                        "cost_event_id": r["cost_event_id"],
+                        "stage": r["stage"], "attempt_id": r["attempt_id"],
+                        "resource": name, "quantity": e.get("quantity"),
+                        "unit": e.get("unit"),
+                        "enforcement": e.get("enforcement")})
                 if e.get("quantity") is None:
                     unavailable[name] = unavailable.get(name, 0) + 1
                     continue
@@ -2738,6 +2849,12 @@ class Foundry:
             "unavailable_counts": unavailable,
             "_unavailable_note": "counted, never summed: an unavailable "
                                  "measurement is not a zero",
+            "by_artifact": by_artifact,
+            "_by_artifact_note": "digest -> the cost lines that named it in "
+                                 "refs.artifact_digest. The engine refused to "
+                                 "record a claim on an artifact the event did "
+                                 "not declare, so this is a join key rather "
+                                 "than an assertion.",
             "open_reservations": [dict(x) for x in open_res],
             "budget": self.budget_status(world_id),
         }

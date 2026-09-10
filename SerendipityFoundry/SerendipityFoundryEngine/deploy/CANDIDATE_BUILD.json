@@ -1,8 +1,8 @@
 {
   "_what_this_is": "A CANDIDATE build, for review. Nothing has been deployed and no service was restarted. Applying it means copying these files into the deployment tree and restarting, after which deploy/verify_deploy.py should be re-pinned and re-run.",
-  "candidate_commit": "07b5b05a7e913763d30512fb9548d45a0ea07b1b",
-  "candidate_branch": "daedalus/trackA-part1",
-  "engine_source_hash": "sha256:eb3bbadc083c48d56b5ef8181ee2e627e5b11bce8ab03e751d551a4fe1cbd564",
+  "candidate_commit": "e1dfd26ed5451b2d2d28c41d9a0b4571866baf80",
+  "candidate_branch": "daedalus/schema8-deploy",
+  "engine_source_hash": "sha256:e4033252b45264eacfef73fd0af80fb9f2f6554f4406376af3258c76bac21da2",
   "schema_version": 8,
   "deployed_engine_source_hash": "sha256:084f951f866cc50aec73c6403528abc234fd514742b25ffd1aff5515a271feff",
   "deployed_schema_version": 7,
@@ -10,14 +10,14 @@
   "live_schema_version": 7,
   "identities": {
     "git_commit": {
-      "value": "07b5b05a7e913763d30512fb9548d45a0ea07b1b",
-      "branch": "daedalus/trackA-part1",
+      "value": "e1dfd26ed5451b2d2d28c41d9a0b4571866baf80",
+      "branch": "daedalus/schema8-deploy",
       "build_files_commit": "07b5b05a7e913763d30512fb9548d45a0ea07b1b",
       "names": "a TREE in history",
       "authority": "best-effort. It is the tree this candidate was cut from; it is NOT proof that the tree reproduces the build, and /v2/version's source_commit has named a commit that could not. HEAD in particular moves for reasons unrelated to this build, which is why build_files_commit is recorded beside it."
     },
     "engine_source_hash": {
-      "value": "sha256:eb3bbadc083c48d56b5ef8181ee2e627e5b11bce8ab03e751d551a4fe1cbd564",
+      "value": "sha256:e4033252b45264eacfef73fd0af80fb9f2f6554f4406376af3258c76bac21da2",
       "names": "the RUNTIME BUILD",
       "authority": "AUTHORITATIVE. sha256 over sorted sfe/*.py, each contributing name + NUL + LF-normalized bytes + NUL, computed at import by sfe/release.py. LF normalization is why a checkout's line-ending convention cannot change build identity."
     },
@@ -28,7 +28,7 @@
     },
     "engine_instance_id": {
       "live_value": "eng_8a37a5d305969034d488c43e",
-      "development_value": "eng_51b56ae45788ac7c7dbcad9f",
+      "development_value": "eng_9a82827a50b16b69033fce64",
       "names": "the LEDGER ITSELF",
       "authority": "authoritative for the DATABASE. Minted once per database and stored in meta; it travels with the substrate, not the path or the host. A code deploy does NOT change it, and a changed value after a deploy means the service was pointed at a different ledger."
     },
@@ -58,7 +58,7 @@
     "pinned_engine_source_hash": "sha256:2f42e87f28f32065e8aa1c7cf4e0777c523e474ea4d1aa2ad4aa9a626143fe68",
     "pinned_schema_version": 6,
     "pinned_engine_instance_id": "eng_8a37a5d305969034d488c43e",
-    "candidate_engine_source_hash": "sha256:eb3bbadc083c48d56b5ef8181ee2e627e5b11bce8ab03e751d551a4fe1cbd564",
+    "candidate_engine_source_hash": "sha256:e4033252b45264eacfef73fd0af80fb9f2f6554f4406376af3258c76bac21da2",
     "candidate_schema_version": 8,
     "live_engine_source_hash": "sha256:084f951f866cc50aec73c6403528abc234fd514742b25ffd1aff5515a271feff",
     "live_schema_version": 7,
@@ -71,7 +71,7 @@
     {
       "file": "SerendipityFoundry/SerendipityFoundryEngine/sfe/api.py",
       "deployed": "00edc4f35ade04f1",
-      "candidate": "bb7d31db7c86084f"
+      "candidate": "7ba1594e077715b3"
     },
     {
       "file": "SerendipityFoundry/SerendipityFoundryEngine/sfe/ids.py",
@@ -81,7 +81,7 @@
     {
       "file": "SerendipityFoundry/SerendipityFoundryEngine/sfe/runtime.py",
       "deployed": "b47dc5f199ae6c2c",
-      "candidate": "037159cac13f2f61"
+      "candidate": "f301fb51fca90e13"
     },
     {
       "file": "SerendipityFoundry/SerendipityFoundryEngine/sfe/store.py",
@@ -107,8 +107,8 @@
       "bytes_lf": 71
     },
     "SerendipityFoundry/SerendipityFoundryEngine/sfe/api.py": {
-      "sha256_lf": "bb7d31db7c86084f04a949f6941fbeb333bb5e5e474a18229e0d51ea7ffcb039",
-      "bytes_lf": 66977
+      "sha256_lf": "7ba1594e077715b3e4146daf8ca76b4d01cc44835c34d3dbbb7672a265f70a89",
+      "bytes_lf": 67509
     },
     "SerendipityFoundry/SerendipityFoundryEngine/sfe/canary.py": {
       "sha256_lf": "88fb02720fdd5b9b8464481db14cd3da8dd509ac4bcd9e2f71203ae06b193238",
@@ -135,8 +135,8 @@
       "bytes_lf": 1717
     },
     "SerendipityFoundry/SerendipityFoundryEngine/sfe/runtime.py": {
-      "sha256_lf": "037159cac13f2f6141a5d78f6b903e35cfba15ccacf740feec6e9af98b44d5ba",
-      "bytes_lf": 251450
+      "sha256_lf": "f301fb51fca90e1362a5f304722d7b7726d14d722b2a96da3b2112a7687e38d9",
+      "bytes_lf": 257868
     },
     "SerendipityFoundry/SerendipityFoundryEngine/sfe/store.py": {
       "sha256_lf": "cd16b6fda6060e23f581fcbb50e2074200d67137c89821d1e3d6c678a37715b8",
