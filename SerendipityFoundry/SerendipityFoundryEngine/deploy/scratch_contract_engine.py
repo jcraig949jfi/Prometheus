@@ -25,8 +25,18 @@ silently invalidates the contract generated against it. Worse, the first time I
 started this I bound a port another seat's dev engine already held, and it
 answered with the SAME build hash -- because we run the same code -- so the
 mistake looked like success. The tell was a runtime flag that had not taken.
---check verifies build hash, schema, a DIFFERENT instance id, and that the
-process serving the port is actually serving THIS database.
+--check verifies build hash, schema, a DIFFERENT `engine_instance_id`, and that
+registration is open.
+
+WHAT --check DOES NOT VERIFY, stated because an earlier draft of this docstring
+claimed it did: it does not confirm that the process on the port is serving
+THIS database. It asks `/v2/version` and believes the answer. That is enough to
+catch the failure it was written for -- production's own ledger answering, or a
+build mismatch -- because `engine_instance_id` distinguishes ledgers even when
+two engines share a build. It is NOT enough to tell one disposable scratch
+engine from another seat's disposable scratch engine, and it does not try to.
+The consequence is bounded: both are disposable, so probing the wrong one wastes
+a run rather than writing to a ledger someone owns.
 """
 from __future__ import annotations
 
@@ -41,10 +51,28 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ENG = os.path.dirname(HERE)
 
 PORT = 8901                    # verify_gate_states.sh defaults to this
-DB = os.path.join(ENG, "var", "scratch_contract", "probe.db")
-LOG = os.path.join(ENG, "var", "scratch_contract", "scratch.log")
-BASE = "http://127.0.0.1:%d" % PORT
+_VAR = os.path.join(ENG, "var", "scratch_contract")
+LOG = os.path.join(_VAR, "scratch.log")
 PROD = "https://192.168.1.202:8811/v2/version"
+
+
+def base_for(port: int) -> str:
+    return "http://127.0.0.1:%d" % port
+
+
+def db_for(port: int) -> str:
+    """One ledger PER PORT.
+
+    The default port keeps the original path so nothing already running moves.
+    Any other port gets its own database, because the only reason to ask for a
+    second port is to have a second LEDGER -- that is exactly what the gate's
+    state-1 test needs -- and two engines sharing one file would report the
+    same engine_instance_id while looking like two engines. A caller who asked
+    for two would get one identity and no error.
+    """
+    if port == PORT:
+        return os.path.join(_VAR, "probe.db")
+    return os.path.join(_VAR, "probe-%d.db" % port)
 
 
 def live(url, cacert=None):
@@ -58,12 +86,14 @@ def live(url, cacert=None):
         return None, repr(e)[:160]
 
 
-def check(cacert):
-    scr, why = live(BASE + "/v2/version")
+def check(cacert, port=PORT):
+    base = base_for(port)
+    scr, why = live(base + "/v2/version")
     if scr is None:
-        print("  [FAIL] scratch engine is NOT running at %s" % BASE)
+        print("  [FAIL] scratch engine is NOT running at %s" % base)
         print("         %s" % why)
-        print("         start it: python deploy/scratch_contract_engine.py")
+        print("         start it: python deploy/scratch_contract_engine.py "
+              "--port %d" % port)
         return 1
     prod, pwhy = live(PROD, cacert)
     ok = True
@@ -75,7 +105,7 @@ def check(cacert):
         print("  [%s] %s" % ("PASS" if passed else "FAIL", name))
         print("         %s" % detail)
 
-    print("CONTRACT SCRATCH ENGINE -- %s" % BASE)
+    print("CONTRACT SCRATCH ENGINE -- %s" % base)
     print("=" * 74)
     if prod is None:
         row("production reachable for comparison", False, pwhy)
@@ -106,18 +136,19 @@ def main():
     ap.add_argument("--port", type=int, default=PORT)
     a = ap.parse_args()
     if a.check:
-        return check(a.cacert)
+        return check(a.cacert, a.port)
 
-    os.makedirs(os.path.dirname(DB), exist_ok=True)
-    print("starting the contract scratch engine on %s" % BASE)
-    print("  db  : %s   (disposable -- the probe writes garbage here)" % DB)
+    db = db_for(a.port)
+    os.makedirs(os.path.dirname(db), exist_ok=True)
+    print("starting the contract scratch engine on %s" % base_for(a.port))
+    print("  db  : %s   (disposable -- the probe writes garbage here)" % db)
     print("  log : %s" % LOG)
     print("  serves the CURRENT tree; verify with --check that it matches "
           "production's build before generating a contract against it.")
     with open(LOG, "ab") as log:
         return subprocess.call(
             [sys.executable, os.path.join(ENG, "serve.py"),
-             "--db", DB, "--host", "127.0.0.1", "--port", str(a.port),
+             "--db", db, "--host", "127.0.0.1", "--port", str(a.port),
              "--insecure", "--registration", "open",
              "--max-artifact-bytes", "33554432"],
             cwd=ENG, stdout=log, stderr=subprocess.STDOUT)
