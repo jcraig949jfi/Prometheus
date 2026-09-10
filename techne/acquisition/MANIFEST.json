@@ -95,15 +95,15 @@
       "first_useful_check": "the documented nuts-bolts fixture (compression cost 1919558 -> 316890, three abstractions) as an UPSTREAM CHECK, then semantics-preserving expansion of a learned abstraction verified against an independent evaluator",
       "official_source": "https://stitch-bindings.readthedocs.io/en/latest/intro/tutorial.html",
       "upstream_revision": {
-        "kind": "NONE_AVAILABLE",
-        "ref": null,
-        "commit": "350804b7b35807c78bd21c313785ae5152ae2985",
-        "resolved_utc": "2026-09-09",
-        "resolver": "GitHub REST /repos/mlb2251/stitch",
-        "note": "FINDING: mlb2251/stitch publishes exactly ONE tag (v0.1.0). There is NO upstream tag corresponding to stitch_core 0.1.29, so the commit above is the default-branch HEAD at resolved_utc -- a MOVING HEAD, which the design explicitly says is not a qualified release. The qualified artifact is therefore the PyPI wheel pinned by sha256 ALONE, and the source revision that produced it is NOT independently verifiable from upstream tags."
+        "kind": "tag",
+        "ref": "v0.1.29",
+        "commit": "8ba2c1c041ab384ccaa11e68226d5654474d161a",
+        "resolved_utc": "2026-09-10",
+        "resolver": "GitHub REST /repos/mlb2251/stitch_bindings/tags",
+        "note": "PROVENANCE RESOLVED, and it reverses my 09-09 finding. I recorded 'no upstream tag matches 0.1.29' after searching mlb2251/stitch, which publishes one tag. mlb2251/stitch_bindings publishes 21, including v0.1.29 exactly, and its Cargo.toml declares version = \"0.1.29\". The tag was never missing; I was looking in the wrong repository."
       },
-      "license_claim": "UNRESOLVED_AT_MANIFEST_TIME",
-      "license_resolution_rule": "wheel METADATA; PyPI JSON reports license=null with NO license classifiers for this distribution, so a guess from the repository API classifier is explicitly refused and an unresolved result is recorded instead",
+      "license_claim": "UNRESOLVED_FOR_THE_DISTRIBUTED_PYTHON_PACKAGE",
+      "license_resolution_rule": "wheel METADATA first; then the sdist; then the licence document in the BINDINGS source tree at the pinned revision. The Rust core's MIT grant is NOT transitive to the bindings layer and must never be substituted for it.",
       "fixtures": [
         {
           "id": "nuts_bolts_cogsci",
@@ -117,8 +117,16 @@
           "expected_sha256_recorded_by": "first acquisition 2026-09-09 (receipt installation-stitch-20260909T214734Z); git blob id computed from the received bytes matched the upstream contents-API blob sha 85f142ef8c53 independently"
         }
       ],
-      "repository_url": "https://github.com/mlb2251/stitch",
-      "repository_url_note": "the design's section 7 table names DOCUMENTATION as the official source for this entry; the source tree lives here, and a licence document can only be read from a source tree"
+      "repository_url": "https://github.com/mlb2251/stitch_bindings",
+      "repository_url_note": "CORRECTED 2026-09-10. This entry previously named mlb2251/stitch -- the RUST CORE -- as its repository. The PyPI distribution stitch_core is built from mlb2251/stitch_bindings, a SEPARATE repository, which the core's MIT grant does not cover. Reading the core's LICENSE and attaching it to this wheel was an error.",
+      "depends_on_source": {
+        "crate": "stitch_core (Rust core)",
+        "repository": "https://github.com/mlb2251/stitch",
+        "revision": "0ef5ec7f17091d22b8fa959fb5705e359d735a47",
+        "pinned_by": "stitch_bindings Cargo.toml: stitch_core = { git = ..., rev = \"0ef5ec7\" }",
+        "license": "MIT (LICENSE present at that revision, Copyright (c) 2021 Matthew Bowers)",
+        "note": "The bindings pin the core at 0ef5ec7, NOT at main's head. My 09-10 pass read the core's LICENSE at 350804b7 -- the wrong revision as well as the wrong repository. The file is byte-identical at both, which is luck, not method."
+      }
     },
     {
       "id": "dreamcoder",
@@ -164,9 +172,10 @@
         "resolver": "GitHub REST /repos/uber-research/poet/commits/master",
         "note": "master unchanged since 2020-04-20. Recorded so a future H4 arm starts from a pin rather than a branch name."
       },
-      "license_claim": "UNRESOLVED_AT_MANIFEST_TIME",
+      "license_claim": "Apache-2.0",
       "license_resolution_rule": "read LICENSE / NOTICE files at the pinned revision from the acquired copy",
-      "acquisition_status": "NOT_ATTEMPTED_NO_CONSUMER"
+      "acquisition_status": "NOT_ATTEMPTED_NO_CONSUMER",
+      "license_evidence": "Operator, 2026-09-10, at the packet's pinned revision. Cost $0 including commercial use subject to its terms. This settles the COST question for POET; it does not change acquisition_status, which is gated on a named consumer, not on licensing."
     },
     {
       "id": "native_libraries",
@@ -206,6 +215,31 @@
       "pin_rationale": "matches the version already present in the live interpreter, so a test that passes in the isolated env and fails in the live one is a difference in the LIBRARY under test rather than in the runner",
       "repository_url": "https://github.com/pytest-dev/pytest",
       "repository_url_note": "the design's section 7 table names DOCUMENTATION as the official source for this entry; the source tree lives here, and a licence document can only be read from a source tree"
+    },
+    {
+      "id": "stitch_rust_core",
+      "kind": "repository",
+      "distribution": null,
+      "import_name": null,
+      "pinned_version": null,
+      "env": "stitch_core_rust",
+      "first_role": "H0/H2 library construction, via the MIT-licensed Rust core instead of the unlicensed Python bindings",
+      "integration_path": "bounded external process over the core's DOCUMENTED JSON interface: a JSON array of program strings in, out/out.json out. The core's own README names this as the route for consumers 'not using the Rust/Python bindings for it', so it is a supported interface rather than a workaround. Offline producer only; no scientific kind calls it until Vivarium's bounded external-execution contract exists.",
+      "named_consumer": "H0 instrument-library construction -- the SAME consumer as the stitch entry, reached by a route whose licence is settled",
+      "first_useful_check": "the documented nuts-bolts run at the pinned revision (--max-arity=3 --iterations=3, expecting 3 abstractions) compared against the already-reproduced Python result, plus semantics-preserving expansion of out/out.json by the independent expander already written for the bindings",
+      "official_source": "https://github.com/mlb2251/stitch",
+      "repository_url": "https://github.com/mlb2251/stitch",
+      "upstream_revision": {
+        "kind": "commit_pinned_by_a_dependent",
+        "ref": "0ef5ec7",
+        "commit": "0ef5ec7f17091d22b8fa959fb5705e359d735a47",
+        "resolved_utc": "2026-09-10",
+        "resolver": "stitch_bindings Cargo.toml at tag v0.1.29",
+        "note": "Deliberately the revision the BINDINGS pin, not main's head. It is the core that actually produced the behaviour already reproduced through the Python wheel, so a comparison between the two routes is a comparison of interfaces rather than of versions."
+      },
+      "license_claim": "MIT",
+      "license_resolution_rule": "LICENSE document read from the source tree at the pinned revision 0ef5ec7 -- 1070 B, 'MIT License', 'Copyright (c) 2021 Matthew Bowers'. Cargo.toml additionally declares license = \"MIT\".",
+      "acquisition_status": "SOURCE_ACQUIRABLE_BUILD_BLOCKED_NO_RUST_TOOLCHAIN"
     }
   ]
 }

@@ -1,0 +1,159 @@
+{
+  "schema": "techne.acquisition.receipt/1",
+  "receipt_id": "installation-stitch_rust_core-20260910T074156Z",
+  "stage": "INSTALLATION",
+  "does_not_establish": [
+    "FIRST_USEFUL_CHECK",
+    "PAPER_REPRODUCTION",
+    "ADAPTER_QUALIFICATION",
+    "LOCAL_SCIENTIFIC_BENEFIT"
+  ],
+  "entry_id": "stitch_rust_core",
+  "tool": "stitch_rust_core",
+  "design_version": "0.1",
+  "written_utc": "2026-09-10T07:41:56+00:00",
+  "seat": "Techne",
+  "repo": {
+    "commit": "07b5b05a7e913763d30512fb9548d45a0ea07b1b",
+    "branch": "techne/h0h5-tools-2026-09-09",
+    "dirty": true
+  },
+  "runner": {
+    "python": "3.12.10",
+    "executable": "H:\\Python312\\python.exe",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "tool_cache": "F:\\Prometheus\\vault\\techne_tools",
+    "tool_cache_source": "TECHNE_TOOL_CACHE env",
+    "tool_cache_note": "host-local and gitignored; only its HASHES are tracked"
+  },
+  "commands_run": [],
+  "observations": {
+    "clone": {
+      "ok": true,
+      "path": "F:\\Prometheus\\vault\\techne_tools\\repos\\stitch_rust_core",
+      "url": "https://github.com/mlb2251/stitch",
+      "requested_commit": "0ef5ec7f17091d22b8fa959fb5705e359d735a47",
+      "checked_out_commit": "0ef5ec7f17091d22b8fa959fb5705e359d735a47",
+      "pin_verified": true,
+      "clone_shape": "blobless partial clone, --depth 1 -- working tree complete at the pinned revision, HISTORY NOT PRESENT (deliberate, download budget)",
+      "steps": [
+        {
+          "argv": [
+            "git",
+            "fetch",
+            "--filter=blob:none",
+            "--depth",
+            "1",
+            "origin",
+            "0ef5ec7f17091d22b8fa959fb5705e359d735a47"
+          ],
+          "returncode": 0,
+          "timed_out": false,
+          "wall_seconds": 0.796,
+          "stdout": "",
+          "stderr": "From https://github.com/mlb2251/stitch\n * branch            0ef5ec7f17091d22b8fa959fb5705e359d735a47 -> FETCH_HEAD\n"
+        },
+        {
+          "argv": [
+            "git",
+            "checkout",
+            "--quiet",
+            "--detach",
+            "FETCH_HEAD"
+          ],
+          "returncode": 0,
+          "timed_out": false,
+          "wall_seconds": 0.203,
+          "stdout": "",
+          "stderr": ""
+        }
+      ],
+      "submodules": {
+        "declared": [],
+        "n_declared": 0,
+        "fetched": true,
+        "moving_branch_pins": [],
+        "ssh_urls": [],
+        "deviations": [],
+        "status": "NONE_DECLARED",
+        "pins": [],
+        "n_at_pin": 0,
+        "n_not_initialized": 0,
+        "n_off_pin": 0,
+        "all_at_recorded_commit": true,
+        "note": ".gitmodules exists (0 bytes) but declares no submodules"
+      },
+      "licenses": {
+        "files": [
+          {
+            "path": "LICENSE",
+            "bytes": 1090,
+            "sha256": "5cf992f4bd218e92da18bf6f5e87005b557297354053c64482263755d6e38219",
+            "first_lines": [
+              "MIT License",
+              "",
+              "Copyright (c) 2021 Matthew Bowers"
+            ]
+          }
+        ],
+        "n_files": 1,
+        "spdx_identification": "NOT_ATTEMPTED -- identifying a license from its body text is a judgement this tool does not make; the notices are hashed and kept with the copy, and the SPDX claim stays UNRESOLVED until a human records it",
+        "status": "NOTICES_PRESENT"
+      }
+    }
+  },
+  "deviations": [],
+  "unrun_or_blocked": [],
+  "status": "SOURCE_AT_PINNED_REVISION",
+  "manifest_entry": {
+    "id": "stitch_rust_core",
+    "kind": "repository",
+    "env": "stitch_core_rust",
+    "named_consumer": "H0 instrument-library construction -- the SAME consumer as the stitch entry, reached by a route whose licence is settled",
+    "integration_path": "bounded external process over the core's DOCUMENTED JSON interface: a JSON array of program strings in, out/out.json out. The core's own README names this as the route for consumers 'not using the Rust/Python bindings for it', so it is a supported interface rather than a workaround. Offline producer only; no scientific kind calls it until Vivarium's bounded external-execution contract exists.",
+    "official_source": "https://github.com/mlb2251/stitch",
+    "absent_recipe_warning": null,
+    "upstream_revision": {
+      "kind": "commit_pinned_by_a_dependent",
+      "ref": "0ef5ec7",
+      "commit": "0ef5ec7f17091d22b8fa959fb5705e359d735a47",
+      "resolved_utc": "2026-09-10",
+      "resolver": "stitch_bindings Cargo.toml at tag v0.1.29",
+      "note": "Deliberately the revision the BINDINGS pin, not main's head. It is the core that actually produced the behaviour already reproduced through the Python wheel, so a comparison between the two routes is a comparison of interfaces rather than of versions."
+    }
+  },
+  "budget_profile": {
+    "purpose": "clone a repository tool at a pinned revision with submodules, and build a native toolchain in its OWN environment. Never the live interpreter.",
+    "network": "ALLOWED -- acquisition stage only",
+    "max_wall_seconds": 7200,
+    "max_download_bytes": 8589934592,
+    "max_disk_bytes": 42949672960,
+    "max_rss_bytes": 8589934592,
+    "max_processes": 8,
+    "rationale": "8 GiB RSS is 60 percent of measured AVAILABLE RAM -- deliberately under it. 8 of 16 logical CPUs leaves the other half for the seats sharing the host. 2 hours is a ceiling, not a target; the design's warning that 'a long README command is never a license for an unbounded run' is enforced by this number, not by the README.",
+    "NOT_A_REPRODUCTION_PROFILE": "A published benchmark gets its own explicit profile. This one only builds.",
+    "name": "isolated_heavy_build"
+  },
+  "resource_receipt": {
+    "profile": "isolated_heavy_build",
+    "network_policy": "ALLOWED -- acquisition stage only",
+    "wall_seconds": 1.281,
+    "wall_ceiling": 7200,
+    "downloaded_bytes": 0,
+    "download_ceiling": 8589934592,
+    "cache_bytes_before": 1038729677,
+    "cache_bytes_after": 0,
+    "cache_delta_bytes": -1038729677,
+    "peak_rss_bytes_os_counter": 30273536,
+    "peak_rss_bytes_sampled": 29818880,
+    "rss_method": "GetProcessMemoryInfo",
+    "rss_ceiling": 8589934592,
+    "rss_samples": 5,
+    "rss_ceiling_exceeded_during_sampling": false,
+    "rss_enforcement": "NOT ENFORCED -- no job object / cgroup cap. peak_rss_bytes_os_counter is the OS peak-working-set counter for this process and IS reliable; rss_ceiling_exceeded_during_sampling is sampled and can miss a spike. Neither stops a step.",
+    "rss_excludes_children": "This is THIS process only. pip, git and venv run as children and their RSS is NOT included.",
+    "children_spawned": 3,
+    "process_cap": 8,
+    "aborted_on": null
+  }
+}

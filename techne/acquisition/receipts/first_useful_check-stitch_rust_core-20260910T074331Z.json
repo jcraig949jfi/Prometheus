@@ -1,0 +1,189 @@
+{
+  "schema": "techne.acquisition.receipt/1",
+  "receipt_id": "first_useful_check-stitch_rust_core-20260910T074331Z",
+  "stage": "FIRST_USEFUL_CHECK",
+  "does_not_establish": [
+    "INSTALLATION",
+    "PAPER_REPRODUCTION",
+    "ADAPTER_QUALIFICATION",
+    "LOCAL_SCIENTIFIC_BENEFIT"
+  ],
+  "entry_id": "stitch_rust_core",
+  "tool": "stitch_rust_core",
+  "design_version": "0.1",
+  "written_utc": "2026-09-10T07:43:31+00:00",
+  "seat": "Techne",
+  "repo": {
+    "commit": "07b5b05a7e913763d30512fb9548d45a0ea07b1b",
+    "branch": "techne/h0h5-tools-2026-09-09",
+    "dirty": true
+  },
+  "runner": {
+    "python": "3.12.10",
+    "executable": "H:\\Python312\\python.exe",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "tool_cache": "F:\\Prometheus\\vault\\techne_tools",
+    "tool_cache_source": "TECHNE_TOOL_CACHE env",
+    "tool_cache_note": "host-local and gitignored; only its HASHES are tracked"
+  },
+  "commands_run": [],
+  "observations": {
+    "source_revision": "0ef5ec7f17091d22b8fa959fb5705e359d735a47",
+    "pin_matches_manifest": true,
+    "pinned_by": "stitch_bindings Cargo.toml at tag v0.1.29",
+    "licence": {
+      "file_present": true,
+      "bytes": 1070,
+      "sha256": "5cf992f4bd218e92da18bf6f5e87005b557297354053c64482263755d6e38219",
+      "first_line": "MIT License",
+      "copyright_line": "Copyright (c) 2021 Matthew Bowers",
+      "cargo_declaration": "license = \"MIT\"",
+      "requires_notice_in_copies": true,
+      "grant_is_explicit": true
+    },
+    "documented_json_interface": {
+      "binaries": [
+        "benchmark_cogsci",
+        "compress",
+        "rewrite",
+        "stats"
+      ],
+      "compress_present": true,
+      "input_format": "JSON array of program strings (--fmt programs-list, the default)",
+      "output_file": "out/out.json",
+      "readme_names_this_route_for_non_binding_consumers": true,
+      "documented_invocation": "cargo run --release --bin=compress -- data/cogsci/nuts-bolts.json --max-arity=3 --iterations=3",
+      "readme_sha256": "38d663ec6c2f566eef000e370c5b976a9788feafcc3a9e9b6b9fff6bd428faa4"
+    },
+    "input_parity": {
+      "in_tree_at_pinned_core_rev": {
+        "sha256": "1c73424743e9de69d205fdab40b88756f941d42e817eb585f769684bf893fac6",
+        "bytes": 62831,
+        "n_programs": 250
+      },
+      "fixture_used_for_the_python_reproduction": {
+        "sha256": "4e8ea30925b96736cb290f9f704167c4ca13e1a7da87eeaad2d5d0d0e29deb8d",
+        "bytes": 62580,
+        "n_programs": 250,
+        "from_revision": "mlb2251/stitch@350804b7 (main head at 2026-09-09)"
+      },
+      "bytes_differ": true,
+      "same_programs_same_order": true,
+      "comparable": true,
+      "finding": "The two files DIFFER BY BYTES but carry the same 250 programs in the same order -- the difference is formatting only. So the Python reproduction's input is content-identical to what the core at the bindings' pinned revision ships, and a Rust-vs-Python comparison is like-for-like on content. It is NOT like-for-like on bytes, and a comparison must fix ONE input file rather than let each route use its own in-tree copy, or the difference between routes would include a dataset difference."
+    },
+    "toolchain": {
+      "cargo": {
+        "present": false,
+        "path": null,
+        "version": null
+      },
+      "rustc": {
+        "present": false,
+        "path": null,
+        "version": null
+      },
+      "rustup": {
+        "present": false,
+        "path": null,
+        "version": null
+      },
+      "cc": {
+        "present": true,
+        "path": "C:\\Users\\jcrai\\AppData\\Local\\Microsoft\\WinGet\\Packages\\MartinStorsjo.LLVM-MinGW.UCRT_Microsoft.Winget.Source_8wekyb3d8bbwe\\llvm-mingw-20251202-ucrt-x86_64\\bin\\cc.EXE",
+        "version": "clang version 21.1.7 (https://github.com/llvm/llvm-project.git 292dc2b86f66e39f4b85ec8b185fd8b60f5213ce)"
+      },
+      "link": {
+        "present": true,
+        "path": "C:\\Program Files\\Git\\usr\\bin\\link.EXE",
+        "version": "link (GNU coreutils) 8.32"
+      },
+      "cl": {
+        "present": false,
+        "path": null,
+        "version": null
+      }
+    },
+    "build_scope": {
+      "edition": "edition = \"2018\"",
+      "declared_dependency_lines": 22,
+      "makefile_targets_present": true,
+      "buildable_here": false
+    },
+    "checks": [
+      {
+        "claim": "source is at the revision the BINDINGS pin, not at main's head",
+        "pass": true
+      },
+      {
+        "claim": "the MIT grant is explicit in the acquired copy: LICENSE file AND Cargo.toml",
+        "pass": true
+      },
+      {
+        "claim": "the grant's one condition is identified, so redistribution terms are known",
+        "pass": true
+      },
+      {
+        "claim": "the JSON interface is DOCUMENTED for exactly this use, not improvised",
+        "pass": true
+      },
+      {
+        "claim": "the input is content-identical to the one the Python reproduction used",
+        "pass": true
+      },
+      {
+        "claim": "a Rust toolchain exists on this host",
+        "pass": false
+      }
+    ]
+  },
+  "deviations": [],
+  "unrun_or_blocked": [
+    "THE BUILD. cargo, rustc and rustup are all absent from this host -- the same measured toolchain gap that blocks DreamCoder (BLK-DC-3). Everything else this route needs is verified above. Installing a Rust toolchain is a host change and is the operator's decision, not this seat's."
+  ],
+  "status": "ROUTE_VIABLE_BUILD_BLOCKED",
+  "check": "stitch_rust_core_route_feasibility",
+  "why": "the Python bindings' licence is unresolved for the distributed package; the Rust core's MIT grant is explicit at the pinned revision, so this asks whether the same capability is reachable through the core's documented JSON interface instead",
+  "budget_profile": {
+    "purpose": "run a first-useful-check or a reproduction fixture against ALREADY acquired bytes.",
+    "network": "FORBIDDEN -- enforced by the check harness, which asserts no acquisition step runs under this profile",
+    "max_wall_seconds": 600,
+    "max_download_bytes": 0,
+    "max_disk_bytes": 1073741824,
+    "max_rss_bytes": 4294967296,
+    "max_processes": 2,
+    "rationale": "Scientific execution uses already-available inputs and dependencies. A check that needs the network is an acquisition step wearing a check's name.",
+    "name": "offline_check"
+  },
+  "resource_receipt": {
+    "profile": "offline_check",
+    "network_policy": "FORBIDDEN -- enforced by the check harness, which asserts no acquisition step runs under this profile",
+    "wall_seconds": 0.578,
+    "wall_ceiling": 600,
+    "downloaded_bytes": 0,
+    "download_ceiling": 0,
+    "cache_bytes_before": 1038730833,
+    "cache_bytes_after": 0,
+    "cache_delta_bytes": -1038730833,
+    "peak_rss_bytes_os_counter": 27004928,
+    "peak_rss_bytes_sampled": 26947584,
+    "rss_method": "GetProcessMemoryInfo",
+    "rss_ceiling": 4294967296,
+    "rss_samples": 2,
+    "rss_ceiling_exceeded_during_sampling": false,
+    "rss_enforcement": "NOT ENFORCED -- no job object / cgroup cap. peak_rss_bytes_os_counter is the OS peak-working-set counter for this process and IS reliable; rss_ceiling_exceeded_during_sampling is sampled and can miss a spike. Neither stops a step.",
+    "rss_excludes_children": "This is THIS process only. pip, git and venv run as children and their RSS is NOT included.",
+    "children_spawned": 1,
+    "process_cap": 2,
+    "aborted_on": null
+  },
+  "decision_point": {
+    "question": "install a Rust toolchain on this host?",
+    "what_it_unblocks": "a pinned build of the MIT-licensed core, its documented nuts-bolts run compared against the already-reproduced Python figures, and semantics-preserving expansion of out/out.json through the independent expander already written -- i.e. an H0/H2 library route whose licence is settled",
+    "cost": "$0 in licence; rustup and the MSVC-target toolchain are free and open",
+    "footprint_NOT_MEASURED": "a rustup toolchain plus a release build of ~22 dependencies is order-1 GiB of disk and minutes of CPU. That is an ESTIMATE from the dependency count and edition, not a measurement, and it is labelled so rather than quoted as a figure.",
+    "also_needed": "a C linker for the MSVC target. cc/link/cl presence is recorded above; MinGW is on PATH (cmake resolved through it earlier), so the gnu target may be the cheaper route. NOT verified.",
+    "reversible": "yes -- rustup self uninstall removes it",
+    "alternative_if_declined": "keep using the Python bindings under D-17's stricter reading: development-only, no export. Nothing currently running depends on lifting that."
+  }
+}

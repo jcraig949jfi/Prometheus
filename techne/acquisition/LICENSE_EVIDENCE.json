@@ -1,6 +1,6 @@
 {
   "schema": "techne.acquisition.license_evidence/1",
-  "generated_utc": "2026-09-10T07:34:50+00:00",
+  "generated_utc": "2026-09-10T07:41:21+00:00",
   "rule": "licenses read from DISTRIBUTED artifacts only (wheel METADATA, wheel notice files, sdist notice files, sdist PKG-INFO/pyproject/Cargo declarations). A repository API license classifier is NEVER used as the basis of a claim.",
   "notices_stored_under": "F:\\Prometheus\\vault\\techne_tools\\notices",
   "entries": [
@@ -232,7 +232,7 @@
       "entry_id": "stitch",
       "distribution": "stitch_core",
       "version": "0.1.29",
-      "rule_applied": "wheel METADATA; PyPI JSON reports license=null with NO license classifiers for this distribution, so a guess from the repository API classifier is explicitly refused and an unresolved result is recorded instead",
+      "rule_applied": "wheel METADATA first; then the sdist; then the licence document in the BINDINGS source tree at the pinned revision. The Rust core's MIT grant is NOT transitive to the bindings layer and must never be substituted for it.",
       "wheel": {
         "filename": "stitch_core-0.1.29-cp312-cp312-win_amd64.whl",
         "sha256": "dd623f2821cfef2b3acc95d99d4c0ecae8eac81069b8cb5e299d45a81982fc2b",
@@ -253,32 +253,16 @@
       },
       "notices_kept": [],
       "spdx_claim": null,
-      "status": "ARTIFACT_CARRIES_NO_NOTICE_BUT_SOURCE_GRANT_EXISTS",
-      "redistribution_note": "NARROWED from 'no licence anywhere'. The repository DOES carry a licence grant at the pinned revision 350804b7b358: 'MIT License', 'Copyright (c) 2021 Matthew Bowers'. What the distributed wheel and sdist omit is the NOTICE and the packaging metadata. If that grant requires the notice to travel with copies -- it does: requires_notice_be_included_in_copies=True -- then redistributing the wheel AS SHIPPED would fail the grant's own condition, while redistributing it WITH the notice attached would satisfy it. The notice has been stored beside the copy for exactly that purpose. RESIDUAL GAP, and it is the one that keeps this open: with no upstream tag matching the installed version, this revision is not provably the revision that built the wheel, so the grant is attached by inference about provenance rather than by the artifact itself. That is why D-17 asks for a pinned SOURCE REVISION as well as a licence.",
+      "status": "UNRESOLVED_NO_LICENSE_IN_ANY_DISTRIBUTED_ARTIFACT",
+      "redistribution_note": "BLOCKER for redistributing any copy or derived artifact. The distributed wheel and sdist carry no license declaration and no notice file, and no licence document was found in the source tree at the pinned revision either. Whatever a repository page or API classifier says, what we hold grants nothing in writing. Internal use of the installed copy continues; exporting it, vendoring it, or shipping anything containing it does NOT, until a human records a resolution.",
       "repository_notice": {
         "consulted": true,
         "reason": null,
         "source_used": "repository_url",
-        "repository": "mlb2251/stitch",
-        "revision": "350804b7b35807c78bd21c313785ae5152ae2985",
-        "notice_files": [
-          {
-            "name": "LICENSE",
-            "bytes": 1070,
-            "sha256": "3ee7701f5298b6899158e984e695829504023242a6f9d3ad8a93413480aa34b7",
-            "first_line": "MIT License",
-            "copyright_line": "Copyright (c) 2021 Matthew Bowers",
-            "requires_notice_be_included_in_copies": true,
-            "stored": {
-              "stored_as": "REPOSITORY_350804b7b358_LICENSE",
-              "bytes": 1070,
-              "sha256": "3ee7701f5298b6899158e984e695829504023242a6f9d3ad8a93413480aa34b7",
-              "source_path_in_artifact": "REPOSITORY@350804b7b358/LICENSE",
-              "first_line": "MIT License"
-            }
-          }
-        ],
-        "found": true,
+        "repository": "mlb2251/stitch_bindings",
+        "revision": "8ba2c1c041ab384ccaa11e68226d5654474d161a",
+        "notice_files": [],
+        "found": false,
         "evidence_grade": "LICENCE DOCUMENT AT A PINNED SOURCE REVISION. Stronger than a repository API classifier, which is a heuristic guess and is never used here. Weaker than the artifact's own metadata, because the revision is not provably the one that built the distributed artifact -- decisively so when the distribution has no matching upstream tag."
       }
     },
@@ -351,18 +335,18 @@
   "resource_receipt": {
     "profile": "light_probe",
     "network_policy": "ALLOWED -- this is the explicit acquisition stage",
-    "wall_seconds": 3.891,
+    "wall_seconds": 5.75,
     "wall_ceiling": 900,
-    "downloaded_bytes": 8472999,
+    "downloaded_bytes": 8472639,
     "download_ceiling": 536870912,
-    "cache_bytes_before": 941958874,
+    "cache_bytes_before": 941961427,
     "cache_bytes_after": 0,
-    "cache_delta_bytes": -941958874,
-    "peak_rss_bytes_os_counter": 44781568,
-    "peak_rss_bytes_sampled": 44781568,
+    "cache_delta_bytes": -941961427,
+    "peak_rss_bytes_os_counter": 44822528,
+    "peak_rss_bytes_sampled": 44756992,
     "rss_method": "GetProcessMemoryInfo",
     "rss_ceiling": 2147483648,
-    "rss_samples": 15,
+    "rss_samples": 10,
     "rss_ceiling_exceeded_during_sampling": false,
     "rss_enforcement": "NOT ENFORCED -- no job object / cgroup cap. peak_rss_bytes_os_counter is the OS peak-working-set counter for this process and IS reliable; rss_ceiling_exceeded_during_sampling is sampled and can miss a spike. Neither stops a step.",
     "rss_excludes_children": "This is THIS process only. pip, git and venv run as children and their RSS is NOT included.",
