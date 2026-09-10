@@ -1,0 +1,64 @@
+{
+  "source": "archaeon/docs/h0h5/C3_2_READOUT.json + archaeon.producer.campaign_c3.plan()",
+  "mapping": "roles/Techne/INBOX_ARCHAEON_C3_2_COMPLETE_2026-09-10.md",
+  "join_key": "label (plan and readout share 150 labels in DIFFERENT order)",
+  "spec_hash_source": "archaeon.producer.specbuild.spec_hash",
+  "rule_table_convention": "bit k from the LEFT of the 32-hex string is the output for neighbourhood index k; the centre cell is bit 3 of k (Archaeon, campaign_c3 module docstring, re-earned by test)",
+  "declared_edges": [
+    [
+      32.0,
+      64.0,
+      96.0
+    ],
+    [
+      16.0,
+      32.0,
+      48.0
+    ]
+  ],
+  "edges_rationale": "fixed at structurally meaningful points of each axis (128-entry table, 64 centre-1 neighbourhoods), NOT at observed quantiles -- quantile edges would be learned from the stream the archive is about to retain from",
+  "n": 150,
+  "n_failed": 0,
+  "per_arm": {
+    "C3-hist": {
+      "n": 6,
+      "zeros": 1,
+      "failed": 0
+    },
+    "C3-base": {
+      "n": 6,
+      "zeros": 2,
+      "failed": 0
+    },
+    "C3-null": {
+      "n": 18,
+      "zeros": 3,
+      "failed": 0
+    },
+    "C3-acq": {
+      "n": 120,
+      "zeros": 120,
+      "failed": 0
+    }
+  },
+  "n_exact_zero": 126,
+  "distinct_nonzero_scores": [
+    0.4925,
+    0.5075000000000001,
+    0.61,
+    0.72,
+    0.735,
+    0.79,
+    0.8125
+  ],
+  "descriptor_ranges_observed": [
+    [
+      0.0,
+      128.0
+    ],
+    [
+      0.0,
+      64.0
+    ]
+  ]
+}
