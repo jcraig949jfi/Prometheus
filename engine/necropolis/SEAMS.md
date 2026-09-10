@@ -62,7 +62,10 @@ document names the intended seams; it does NOT wire automation in the founding p
 - **Organ inventory <- dossiers.** `ORGANS.jsonl` is derived, never authored: `build_organs.py`
   reads every validating dossier's `residue` buckets. An organ exists iff a Necromancer certified
   the residue item (F5). `ORGAN_NOTES.json` (optional, Keeper-owned) overlays annotations by
-  `organ_id` — status changes, constraints, `failures_recorded_against` — and survives regeneration.
+  `organ_id` — status changes, constraints, `failures_recorded_against`, and
+  `executed_by_necromancer` + `execution_evidence` (LAW N17: an organ that was only read is a
+  description; only an executed organ is a fact) — and survives regeneration. Null means unknown,
+  and the validator makes a monster harvesting such an organ carry an `organ_execution_plan`.
 - **Monster -> consumption.** A monster's `consumer.consumption_proof` names the
   `engine/queues/CONSUMPTION.jsonl` row that would prove use. `cleric_gate.status = ALIVE` is
   legal only once that row exists; `RUNNING` is the ceiling for a monster that merely executes.
@@ -74,6 +77,13 @@ document names the intended seams; it does NOT wire automation in the founding p
 - **Monster -> ancestors: NO SEAM.** A monster outcome never writes into an ancestor dossier
   (F2). If a Necromancer believes a living monster changes an ancestral kill boundary, that is a
   new Necromancer pass with its own evidence, filed as a dossier amendment under LAW N11.
+- **Repair -> ancestor: same rule, sharper edge.** A `kind: repair` monster (F7) is the ancestor
+  plus one change, so its outcome is the most tempting thing to write back into the ancestor's
+  `death_axis`. It still goes through the Necromancer: a living repair is evidence for a LAW N11
+  amendment that adds `bug-dead` / `parameter-dead` to `contributing_axes` and updates the
+  `author_error_audit`; a dead repair is evidence that the audited error was not the proximate cause.
+  Frankenstein never writes either. The repair's `counterfactual_repair.record_check` is the seam
+  back into the corpse's evidence: it must cite where the record shows the change was never tried.
 
 ## What Necropolis must never seam into
 

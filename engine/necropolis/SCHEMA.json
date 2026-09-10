@@ -154,7 +154,8 @@
       "required": [
         "kill_boundary",
         "surviving_claims",
-        "failure_classes"
+        "failure_classes",
+        "author_error_audit"
       ],
       "properties": {
         "prior_verdicts": {
@@ -205,6 +206,9 @@
             "measurement-dead",
             "ecosystem-dead",
             "capability-era-dead",
+            "bug-dead",
+            "parameter-dead",
+            "hallucination-dead",
             "undetermined"
           ],
           "description": "CHARTER death-axis vocabulary (LAW N16). Where on the stack the evidence locates the death; orthogonal to disposition.classification. Frankenstein reads this first."
@@ -237,6 +241,160 @@
             "frontier_dependent"
           ],
           "description": "LAW N16: record whether 'too early' is part of the kill, so it can be tested rather than assumed."
+        },
+        "contributing_axes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "premise-dead",
+              "implementation-dead",
+              "measurement-dead",
+              "ecosystem-dead",
+              "capability-era-dead",
+              "bug-dead",
+              "parameter-dead",
+              "hallucination-dead",
+              "undetermined"
+            ]
+          },
+          "description": "Every other axis the evidence supports (LAW N17). A premise-dead verdict reached through a vacuous gate lists the gate as bug-dead here. Frankenstein reads these as repair targets (F7)."
+        },
+        "author_error_audit": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "design_vs_hypothesis",
+            "code_vs_design",
+            "execution_parameters",
+            "hallucination_scan"
+          ],
+          "description": "LAW N17. Did a person or model make a mistake that killed this organism? Four lenses over the corpse AND every prior verdict about it. NOT_EXAMINED is honest; CLEAN requires executed evidence.",
+          "properties": {
+            "design_vs_hypothesis": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "verdict",
+                "finding"
+              ],
+              "properties": {
+                "verdict": {
+                  "type": "string",
+                  "enum": [
+                    "CLEAN",
+                    "ERROR_FOUND",
+                    "NOT_EXAMINED"
+                  ]
+                },
+                "finding": {
+                  "type": "string"
+                },
+                "evidence": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "Paths to the executed evidence (scripts/results) that support the verdict. CLEAN with no evidence is what NOT_EXAMINED is for."
+                }
+              },
+              "description": "Could the experiment as designed have tested the hypothesis as stated?"
+            },
+            "code_vs_design": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "verdict",
+                "finding"
+              ],
+              "properties": {
+                "verdict": {
+                  "type": "string",
+                  "enum": [
+                    "CLEAN",
+                    "ERROR_FOUND",
+                    "NOT_EXAMINED"
+                  ]
+                },
+                "finding": {
+                  "type": "string"
+                },
+                "evidence": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "Paths to the executed evidence (scripts/results) that support the verdict. CLEAN with no evidence is what NOT_EXAMINED is for."
+                }
+              },
+              "description": "Did the code do what the design said (gates, selectors, loaders, skip sets, label construction)?"
+            },
+            "execution_parameters": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "verdict",
+                "finding"
+              ],
+              "properties": {
+                "verdict": {
+                  "type": "string",
+                  "enum": [
+                    "CLEAN",
+                    "ERROR_FOUND",
+                    "NOT_EXAMINED"
+                  ]
+                },
+                "finding": {
+                  "type": "string"
+                },
+                "evidence": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "Paths to the executed evidence (scripts/results) that support the verdict. CLEAN with no evidence is what NOT_EXAMINED is for."
+                }
+              },
+              "description": "N, seeds, thresholds, timeouts, model ids, corpus paths, retry policy, daily caps: did the configuration make the run uninformative?"
+            },
+            "hallucination_scan": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "verdict",
+                "finding"
+              ],
+              "properties": {
+                "verdict": {
+                  "type": "string",
+                  "enum": [
+                    "CLEAN",
+                    "ERROR_FOUND",
+                    "NOT_EXAMINED"
+                  ]
+                },
+                "finding": {
+                  "type": "string"
+                },
+                "evidence": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "Paths to the executed evidence (scripts/results) that support the verdict. CLEAN with no evidence is what NOT_EXAMINED is for."
+                }
+              },
+              "description": "False load-bearing facts: nonexistent APIs, invented numbers, misread outputs, causal labels on correlations, artifacts attributed to the wrong producer — in the agent's artifacts or in prior verdicts about it."
+            },
+            "prior_verdict_errors": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Errors found in previous autopsies/dispositions of this organism (LAW N11), stated with the evidence that overturned them."
+            }
+          }
         }
       }
     },

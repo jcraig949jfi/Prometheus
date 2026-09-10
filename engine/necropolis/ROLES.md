@@ -27,6 +27,28 @@ Necromancer digs -> Cleric authenticates -> Frankenstein recombines -> Cleric ga
 Failure goes straight back into the cemetery. A dead monster gets a ROSTER row (kind `chimera`)
 and a dossier like any other corpse.
 
+## Shared stance: assume the author erred (LAW N17)
+
+All three roles look over the graveyard with the same suspicion, pointed at different things.
+The corpse is not presumed to have died of a null result. It is presumed, until the evidence says
+otherwise, to have died of a **mistake** — in the hypothesis, the design, the code, the execution
+parameters, or the interpretation — or of a **hallucination**: an API that did not exist, a number
+that was invented or misread, a causal label on a correlation, an artifact attributed to the
+wrong producer, a model id that silently fell back. "The experiment produced a monoculture with
+no signal distinguishable from noise" is the explanation of last resort, reached only after the
+four audit lenses (`autopsy.author_error_audit`) have been run and recorded.
+
+The suspicion is symmetric. It applies to the historical agent, to every prior verdict about it,
+to the Necropolis's own dossiers and evidence scripts, to the organ descriptions Frankenstein
+harvests, and to the monster proposals the Cleric gates. An executing lens may report `CLEAN`;
+a reading lens may report only `NOT_EXAMINED`. The order of suspicion is fixed: (1) our own
+instrument (LAW N14), (2) the author's error (LAW N17), (3) the world.
+
+Division of labour: the **Necromancer** finds the error that killed the corpse; the **Cleric**
+finds the error in the story being told about it (including ours); **Doctor Frankenstein** asks
+*had they only done this instead, would this agent have been productive?* — and turns that
+sentence into a repair with a kill condition (F7).
+
 ---
 
 ## NECROMANCER
@@ -49,8 +71,18 @@ boundary + surviving claims + typed residue -> classification with neighbour dis
 - Localize the kill (LAW N4): the strongest proposition the evidence killed, never a stronger
   one. Record the **death axis** (`autopsy.death_axis`: premise / implementation / measurement /
   ecosystem / capability-era / undetermined) — this is what Frankenstein reads first.
+- Run the **author-error audit** (LAW N17) before reaching for a null: could the design test the
+  hypothesis; did the code do what the design said (gates, selectors, loaders, skip sets, label
+  construction); did the execution parameters (N, seeds, thresholds, timeouts, model ids, corpus
+  paths, retry policy, daily caps) leave the run informative; is any load-bearing fact, number,
+  API, attribution, or causal label in the agent's artifacts or in prior verdicts false. Record
+  every other axis the evidence supports in `autopsy.contributing_axes`. A `CLEAN` verdict needs
+  an executed instrument behind it; otherwise write `NOT_EXAMINED`.
 - Enumerate survivors (LAW N5) as *typed* residue (LAW N7): code, data, schemas, operators,
-  tests, representation hints — each with a path. Every residue item is a candidate organ.
+  tests, representation hints — each with a path. Every residue item is a candidate organ. Say
+  which residue items were **executed** during the pass and which were only read; an organ that
+  was only read is a description written by an agent, and descriptions are where hallucinations
+  live.
 - Record any **capability contingency** honestly (`autopsy.capability_contingency`): if the kill
   boundary depended materially on model capability, context length, tool use, inference cost,
   verifier integration, or another moving frontier, say so and name the frontier. Do not compress
@@ -82,6 +114,17 @@ Necropolis into the world.
   `CONSUMPTION.jsonl` seam (SEAMS.md), never asserted in prose.
 - Is the resource budget available now (a live forge, API credit, a Pythia lane), or is the
   proposal RESOURCE-gated?
+- **Hallucination scan of the story itself (LAW N17).** Every path a dossier or monster cites
+  must resolve in the repository or be marked archived/lost (the validator prints the resolution
+  count per file; the Cleric reads it). Every number in a kill boundary must trace to a result
+  file under `dossiers/<agent>_evidence/`. Every evidence script must compute what its docstring
+  says it computes — the Cleric runs at least one and compares. An organ's `contributes` claim
+  must match what the organ's dossier actually executed, not what it described. A `CLEAN` audit
+  verdict with no executed evidence behind it is returned as `NOT_EXAMINED`.
+- For a **repair** monster (F7): has the historical record already run the repaired
+  configuration? If the ancestor's own ledger contains the counterfactual, the repair is
+  dead-on-record and is gated `GATED_REJECTED` with the citation — no experiment is spent on a
+  question history has answered.
 
 **Then implements (only what it gated):** accepted proposal -> implement the minimum descendant
 or monster in `descendants/<id>/` -> wire the named consumer and the consumption-proof mechanism
@@ -151,12 +194,34 @@ name **novel** organs (a modern capability or a new component) but must mark the
 a monster made only of novel organs is not a monster, it is a new project.
 
 **F6 — THE MONSTER GETS NO SPECIAL BURIAL.** A monster that dies is autopsied by a Necromancer
-like any corpse, gets a ROSTER row (kind `chimera`), and its organs return to the inventory with
-the failure recorded against them. Frankenstein does not autopsy its own monster.
+like any corpse, gets a ROSTER row (kind `chimera` or `repair`), and its organs return to the
+inventory with the failure recorded against them. Frankenstein does not autopsy its own monster.
+
+**F7 — THE REPAIR HYPOTHESIS: "had they only done this instead."** Frankenstein's second output,
+beside the chimera, is the **repair**: one ancestor, exactly one change, and the claim that with
+that change the agent would have been productive. The change targets an error the Necromancer
+recorded — a `contributing_axes` entry or an `author_error_audit` `ERROR_FOUND` — and the
+monster names the error class (`counterfactual_repair.error_class`). Rules that keep F7 honest:
+- **One change.** A repair that needs three changes is a chimera wearing the ancestor's name;
+  file it as `kind: chimera`.
+- **Check the record first.** If the ancestor's own history already ran the repaired
+  configuration (Hephaestus with an honest gate from 2026-03-27 is the archetype: the repair was
+  run, and yield fell to chance), the repair is dead-on-record; cite it and do not propose it.
+- **Ancestral comparison is mandatory and must be feasible.** The lightning experiment is the
+  ancestor with and without the one change under the same instrument; nothing else counts.
+- **F2 still applies.** A living repair moves the death axis (the Necromancer may amend the
+  dossier under LAW N11 with the repair's evidence); it does not make the historical agent
+  retroactively productive, because the historical agent did not make the change.
+- **Suspect the organ, not only the corpse.** `certified_by_dossier` means a Necromancer wrote
+  the organ down, not that it works. An organ the Necromancer did not execute
+  (`executed_by_necromancer` false or null in `ORGANS.jsonl`) enters a monster only with an
+  `organ_execution_plan` stating how it will be executed and checked before the experiment reads
+  anything from it.
 
 **May not:** dispatch, implement, or run anything (Cleric gate); cite a monster's plausibility as
 evidence about any ancestor (F2); harvest uncertified organs (F5); propose without a kill
-condition that can fire against itself (F3).
+condition that can fire against itself (F3); propose a repair whose counterfactual is already on
+the historical record (F7).
 
 ---
 
@@ -167,7 +232,9 @@ Keeper records the sign-off; absent it, the descendant stays unimplemented and t
 
 **Monster -> Cleric:** validates against `MONSTER_SCHEMA.json` (every non-novel organ resolves to
 `ORGANS.jsonl`, F2 sentence present verbatim, lightning experiment complete, ancestral comparison
-stated or its infeasibility argued), Cleric adjudication recorded in `cleric_gate`, resource
+stated or its infeasibility argued; a `repair` carries `counterfactual_repair` and a feasible
+ancestral comparison; unexecuted organs carry an `organ_execution_plan`), Cleric adjudication
+recorded in `cleric_gate` including the hallucination scan and the dead-on-record check, resource
 budget confirmed available, James signs off. Status moves `PROPOSED -> CLERIC_REVIEW ->
 GATED_APPROVED | GATED_REJECTED -> RUNNING -> ALIVE | DEAD`. A `DEAD` monster links to its
 Necromancer dossier.

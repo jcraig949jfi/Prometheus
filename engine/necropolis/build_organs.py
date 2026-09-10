@@ -61,7 +61,7 @@ def first_path(text):
 def main():
     notes = {}
     if os.path.exists(here("ORGAN_NOTES.json")):
-        notes = json.load(open(here("ORGAN_NOTES.json"), encoding="utf-8"))
+        notes = {k: v for k, v in json.load(open(here("ORGAN_NOTES.json"), encoding="utf-8")).items() if not k.startswith("_")}
     rows = []
     for f in sorted(glob.glob(here("dossiers", "*.dossier.json"))):
         d = json.load(open(f, encoding="utf-8"))
@@ -84,6 +84,8 @@ def main():
                     "location": first_path(text),
                     "function": text,
                     "status": "certified_by_dossier",
+                    "executed_by_necromancer": None,   # LAW N17: null = only read; ORGAN_NOTES.json sets true/false with evidence
+                    "execution_evidence": "",
                     "failures_recorded_against": [],
                 }
                 row.update(notes.get(oid, {}))
@@ -92,7 +94,10 @@ def main():
         for r in rows: fh.write(json.dumps(r, ensure_ascii=False) + "\n")
     by_type = {}
     for r in rows: by_type[r["organ_type"]] = by_type.get(r["organ_type"], 0) + 1
-    print(f"ORGANS.jsonl: {len(rows)} organs from {len({r['source_agent'] for r in rows})} dossiers")
+    ex = sum(1 for r in rows if r["executed_by_necromancer"] is True)
+    print(f"ORGANS.jsonl: {len(rows)} organs from {len({r['source_agent'] for r in rows})} dossiers; executed_by_necromancer=true for {ex}")
+    unknown = [k for k in notes if k not in {r["organ_id"] for r in rows}]
+    if unknown: print(f"  WARNING: ORGAN_NOTES.json keys with no organ: {unknown}")
     for t in ORGAN_TYPES:
         if by_type.get(t): print(f"  {t:26s} {by_type[t]}")
 

@@ -123,6 +123,49 @@
       ],
       "era_bound_claim": "Not era-bound as killed: the selector was decorative (435/435 ties) and the promotion stage was never built regardless of model quality.",
       "what_would_move_it": "The untested premise (lens disagreement -> compression direction) is model-sensitive; argos-d1 pairs lens-stack vs plain prompts on the same DR model to isolate it."
+    },
+    "contributing_axes": [
+      "bug-dead",
+      "implementation-dead",
+      "parameter-dead"
+    ],
+    "author_error_audit": {
+      "design_vs_hypothesis": {
+        "verdict": "ERROR_FOUND",
+        "finding": "The selector's only discriminating signal (a verdict bonus) originates in a promotion stage that was never built, so the loop was designed to need its own missing consumer before it could become informative. The hypothesis (stance-structured lens selection improves DR output) was never reachable by this design.",
+        "evidence": [
+          "dossiers/argos_evidence/argos_selector_test.py",
+          "dossiers/argos_evidence/argos_selector_result.json"
+        ]
+      },
+      "code_vs_design": {
+        "verdict": "ERROR_FOUND",
+        "finding": "Executed as an instrument with the only history Argos ever had (empty), _score_problem ties 435/435 and _select_problem returns sorted(ids)[0]; the real 20 reports are an alphabetical walk in bursts of exactly dr_daily_cap=3. The anti-greedy policy the June disposition named as salvage IP is a constant.",
+        "evidence": [
+          "dossiers/argos_evidence/argos_selector_test.py",
+          "dossiers/argos_evidence/argos_selector_result.json"
+        ]
+      },
+      "execution_parameters": {
+        "verdict": "ERROR_FOUND",
+        "finding": "Primary corpus path absent at run time, so _parse_problem_corpus fell back to a 1,086-question out-of-mission corpus (ASTRO-* first); 25% astronomy rate vs 0.16% in the mission corpus is sort order over the fallback, not selection. State/artifacts were never committed and were lost with the M2 drives.",
+        "evidence": [
+          "dossiers/argos_evidence/argos_selector_result.json",
+          "dossiers/argos_evidence/argos_settle_test_result.json"
+        ]
+      },
+      "hallucination_scan": {
+        "verdict": "ERROR_FOUND",
+        "finding": "Prior-verdict error: the Aug-2026 autopsy attributed 13 catalog files to Argos as its frozen output; every one was committed 2026-04-22/23, a month before Argos's first commit (2026-05-19). PRODUCER-HALT-WITH-LIVE-CONSUMER is a claim about a different producer.",
+        "evidence": [
+          "dossiers/argos_evidence/argos_catalog_authorship.py",
+          "dossiers/argos_evidence/argos_catalog_authorship_result.json"
+        ]
+      },
+      "prior_verdict_errors": [
+        "AGENT_AUTOPSIES.jsonl P46 PRODUCER-HALT-WITH-LIVE-CONSUMER: output misattribution (catalogs predate Argos)",
+        "pivot 06-24 salvage IP anti-greedy lens-selection policy: measured as a constant under all conditions Argos ran in"
+      ]
     }
   },
   "residue": {
@@ -221,7 +264,8 @@
     ],
     "created": "2026-09-10",
     "_amendments": [
-      "2026-09-10 Keeper: backfilled autopsy.death_axis + capability_contingency (LAW N16) from the dossier's own kill_boundary/surviving_claims text; no new evidence."
+      "2026-09-10 Keeper: backfilled autopsy.death_axis + capability_contingency (LAW N16) from the dossier's own kill_boundary/surviving_claims text; no new evidence.",
+      "2026-09-10 Keeper backfill (LAW N17): author_error_audit + contributing_axes derived from failure_classes OUTPUT-MISATTRIBUTION-IN-AUTOPSY, LOOP-NEVER-CLOSED, DEGENERATE-SELECTOR, INPUT-FALLBACK-SWAMP already in this dossier; no new evidence."
     ]
   }
 }

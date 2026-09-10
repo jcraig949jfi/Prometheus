@@ -13,7 +13,10 @@ Checks (Necropolis founding invariants):
      descendant_candidate.parent == identity.agent_id.
   8. ORGANS.jsonl (if present): parses, organ_ids unique, source_agent in ROSTER, source_dossier exists,
      and the file is byte-identical to what build_organs.py would regenerate (organs come only from residue, F5).
-  9. monsters/FRANK-*.monster.json validate against MONSTER_SCHEMA.json; every non-novel organ_id resolves
+  9. LAW N17: author_error_audit CLEAN verdicts need evidence; every repo path cited by a dossier or monster is
+     resolved and the count printed as a note (the Cleric's hallucination scan); repairs carry counterfactual_repair,
+     one ancestor, a record check and a feasible ancestral comparison; unexecuted organs need an organ_execution_plan.
+ 10. monsters/FRANK-*.monster.json validate against MONSTER_SCHEMA.json; every non-novel organ_id resolves
      to ORGANS.jsonl; at least one organ is non-novel (F5); F2 sentence verbatim (const in schema);
      lightning fields present; a self-test proves a monster without kill_condition is rejected.
 
@@ -25,6 +28,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 def here(*a): return os.path.join(HERE, *a)
 
 errors = []
+notes = []
 def err(where, msg): errors.append(f"[{where}] {msg}")
 
 # ---------------------------------------------------------------- mini schema walker
@@ -124,6 +128,21 @@ try:
 except Exception as e:
     err("QUEUE.jsonl", f"parse error: {e}")
 
+# ---------------------------------------------------------------- path resolution (LAW N17 hallucination scan)
+import re as _re
+REPO = os.path.abspath(os.path.join(HERE, "..", ".."))
+_PATH_RX = _re.compile(r"(?<![\w./-])((?:[A-Za-z0-9_.-]+/)+[A-Za-z0-9_.-]+\.(?:py|jsonl|json|md|txt|csv))(?![\w.])")
+def path_scan(obj, where):
+    """Every repo-relative path cited in a record must resolve (repo root or engine/necropolis) or be flagged.
+    Printed as a note, not an error: archived/lost artifacts are legitimate citations, but the Cleric must see them."""
+    text = json.dumps(obj, ensure_ascii=False)
+    cited = sorted(set(_PATH_RX.findall(text)))
+    bases = (REPO, HERE, here("dossiers"), os.path.join(REPO, "agents", "coeus"))
+    missing = [p for p in cited if not any(os.path.exists(os.path.join(b, p)) for b in bases)]
+    if cited:
+        notes.append(f"{where}: {len(cited) - len(missing)}/{len(cited)} cited paths resolve" + (f"; unresolved: {missing}" if missing else ""))
+    return cited, missing
+
 # ---------------------------------------------------------------- dossiers
 dossier_files = sorted(glob.glob(here("dossiers", "*.json")))
 for f in dossier_files:
@@ -136,13 +155,19 @@ for f in dossier_files:
     validate(d, SCHEMA, name, out)
     for o in out: err(name, o)
     aid = semantic_checks(d, name)
+    if aid and not aid.startswith("PLACEHOLDER"):
+        path_scan(d, name)
+        aea = (d.get("autopsy", {}) or {}).get("author_error_audit", {}) or {}
+        for lens, v in aea.items():
+            if isinstance(v, dict) and v.get("verdict") == "CLEAN" and not v.get("evidence"):
+                err(name, f"author_error_audit.{lens} is CLEAN with no executed evidence (LAW N17: write NOT_EXAMINED)")
     if aid and not aid.startswith("PLACEHOLDER") and aid not in roster_set:
         err(name, f"identity.agent_id {aid!r} does not resolve to a ROSTER agent_id")
 
 # ---------------------------------------------------------------- organs (F5)
 organ_ids = set()
+organ_exec = {}
 organs_fp = None
-notes = []
 organs_path = here("ORGANS.jsonl")
 n_organs = 0
 if os.path.exists(organs_path):
@@ -153,6 +178,7 @@ if os.path.exists(organs_path):
             if not line: continue
             o = json.loads(line); n_organs += 1
             seen.append(o["organ_id"])
+            organ_exec[o["organ_id"]] = o.get("executed_by_necromancer")
             if o.get("source_agent") not in roster_set:
                 err("ORGANS.jsonl", f"{o['organ_id']}: source_agent {o.get('source_agent')!r} not in ROSTER")
             if not os.path.exists(here(o.get("source_dossier", ""))):
@@ -210,6 +236,29 @@ def monster_checks(m, where):
                 err(where, f"novel organ {oid!r} must use the 'novel.' prefix")
         elif oid not in organ_ids:
             err(where, f"organ {oid!r} does not resolve to ORGANS.jsonl (F5: uncertified organ)")
+    # LAW N17 / F7: organs the Necromancer only read need an execution plan before a monster reads from them
+    unexecuted = [o.get("organ_id") for o in organs
+                  if not o.get("novel") and organ_exec.get(o.get("organ_id")) is not True]
+    if unexecuted and not (m.get("organ_execution_plan") or "").strip():
+        err(where, f"organs not executed by the Necromancer {unexecuted} but no organ_execution_plan (F7)")
+    # F7: a repair is one ancestor, one change, feasible ancestral comparison, record checked
+    if m.get("kind") == "repair":
+        cr = m.get("counterfactual_repair")
+        if not cr:
+            err(where, "kind=repair without counterfactual_repair (F7)")
+        else:
+            if cr.get("ancestor") not in roster_set:
+                err(where, f"counterfactual_repair.ancestor {cr.get('ancestor')!r} not in ROSTER")
+            harvested = {o.get("source_agent") for o in organs if not o.get("novel")}
+            if harvested - {cr.get("ancestor")}:
+                err(where, f"repair harvests organs from {sorted(harvested - {cr.get('ancestor')})} but a repair has exactly one ancestor (F7); file as kind=chimera")
+            if not cr.get("record_check"):
+                err(where, "repair without record_check (F7: check the record first)")
+        ac = (m.get("lightning_experiment", {}) or {}).get("ancestral_comparison", {}) or {}
+        if ac.get("feasible") is not True:
+            err(where, "repair with ancestral_comparison.feasible != true (F7: the ancestor with and without the change IS the experiment)")
+    elif m.get("counterfactual_repair"):
+        err(where, "counterfactual_repair present but kind != repair")
     gate = m.get("cleric_gate", {}) or {}
     if gate.get("status") == "DEAD" and not gate.get("dossier_if_dead"):
         err(where, "status DEAD but no dossier_if_dead (F6: the monster gets no special burial)")
@@ -232,6 +281,7 @@ for f in monster_files:
     except Exception as e:
         err(name, f"parse error: {e}"); continue
     monster_checks(m, name)
+    path_scan(m, name)
 
 # self-test: a monster without a kill_condition must be rejected
 _bad_monster = None
@@ -247,6 +297,17 @@ if monster_files:
         err("MONSTER_SELFTEST", "a monster without kill_condition was NOT rejected -- validator is broken")
 else:
     _monster_selftest_caught = None
+# self-test: a repair without counterfactual_repair must be rejected
+_repairs = [f for f in monster_files if json.load(open(f, encoding="utf-8")).get("kind") == "repair"]
+_repair_selftest_caught = None
+if _repairs:
+    _bad_r = json.load(open(_repairs[0], encoding="utf-8")); _bad_r.pop("counterfactual_repair", None)
+    monster_checks(_bad_r, "REPAIR_SELFTEST")
+    _repair_selftest_caught = any("REPAIR_SELFTEST" in e and "counterfactual_repair" in e for e in errors)
+    errors[:] = [e for e in errors if not e.startswith("[REPAIR_SELFTEST]")]
+    notes[:] = [n for n in notes if not n.startswith("REPAIR_SELFTEST")]
+    if not _repair_selftest_caught:
+        err("REPAIR_SELFTEST", "a repair without counterfactual_repair was NOT rejected -- validator is broken")
 
 # ---------------------------------------------------------------- self-test: FAILED rejected
 _bad = {"schema_version":"1.0.0","identity":{"agent_id":"PLACEHOLDER_X","source_paths":["x"],"evidence_baseline":"0000000"},
@@ -267,9 +328,10 @@ print(f"schema:   SCHEMA.json OK")
 print(f"roster:   {len(roster_ids)} agents, {len(dupes)} duplicate ids")
 print(f"dossiers: {len(dossier_files)} files checked")
 print(f"selftest: FAILED-classification rejection {'FIRED (ok)' if _selftest_caught else 'MISSING'}")
-print(f"organs:   {n_organs} organs in ORGANS.jsonl")
+print(f"organs:   {n_organs} organs in ORGANS.jsonl; executed_by_necromancer=true for {sum(1 for v in organ_exec.values() if v is True)}")
 print(f"monsters: {len(monster_files)} files checked; kill_condition-rejection self-test "
-      f"{'FIRED (ok)' if _monster_selftest_caught else ('n/a (no monsters)' if _monster_selftest_caught is None else 'MISSING')}")
+      f"{'FIRED (ok)' if _monster_selftest_caught else ('n/a (no monsters)' if _monster_selftest_caught is None else 'MISSING')}; "
+      f"repair-without-counterfactual self-test {'FIRED (ok)' if _repair_selftest_caught else ('n/a (no repairs)' if _repair_selftest_caught is None else 'MISSING')}")
 for n in notes: print("note:    ", n)
 if errors:
     print(f"\nFAIL — {len(errors)} problem(s):")

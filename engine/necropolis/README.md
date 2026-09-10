@@ -35,10 +35,12 @@ engine/necropolis/
     validate.py        <- dependency-free validator + invariant tests (dossiers, organs, monsters)
     build_organs.py    <- ONLY writer of ORGANS.jsonl; harvests residue from validating dossiers (F5)
     ORGANS.jsonl       <- organ inventory: one row per certified residue item, typed + located
+    ORGAN_NOTES.json   <- Keeper overlay: executed_by_necromancer per organ (read != executed, LAW N17)
     MONSTER_SCHEMA.json<- machine-readable monster (recomposition proposal) schema
     monsters/
         _TEMPLATE.monster.json   <- placeholder-marked exemplar (skipped by the validator)
-        FRANK-000.monster.json   <- first monster: failure-mined forge (PROPOSED, not dispatched)
+        FRANK-000.monster.json   <- kind=chimera: failure-mined forge (PROPOSED, not dispatched)
+        FRANK-001.monster.json   <- kind=repair: Argos with a bootstrapped selector history (PROPOSED)
     dossiers/
         _TEMPLATE.dossier.json   <- placeholder-marked exemplar (proves schema shape)
         acheron.dossier.json     <- a real existing autopsy mapped into the schema (no new claims)
@@ -74,6 +76,25 @@ dossiers/*.residue --build_organs.py--> ORGANS.jsonl
 
 A living monster moves the *conditional viability frontier*; it never vindicates an ancestor (F2).
 A dead monster is a corpse like any other (F6) and its organs carry the failure forward.
+
+Monsters come in two kinds. A **chimera** recombines organs across graves. A **repair** (F7) is
+Frankenstein saying "had they only done this instead": one ancestor, exactly one change, the record
+checked first so a change the ancestor already tried is `GATED_REJECTED` on sight, and an ancestral
+comparison that is *mandatory* because the ancestor without the change is the control. F2 still
+holds: a living repair proves that one repaired configuration lives, not that the ancestor was right.
+
+### Assume the author erred (LAW N17)
+
+"No signal distinguishable from noise" is the *last* explanation any role may reach, not the first.
+Every dossier carries an `author_error_audit` with four lenses (design vs hypothesis, code vs design,
+execution parameters, hallucination scan), each `CLEAN` / `ERROR_FOUND` / `NOT_EXAMINED`; `CLEAN`
+needs executed evidence, and the audit applies to prior verdicts and to our own dossiers as much as to
+the corpse. Three author-error death axes exist (`bug-dead`, `parameter-dead`, `hallucination-dead`)
+and `contributing_axes` lets a corpse be premise-dead *and* bug-dead, which is where all three
+Necromancer passes so far landed. Organs record whether the Necromancer executed them or only read
+them (13 of 39 executed); a monster harvesting an unexecuted organ must carry an `organ_execution_plan`.
+The validator runs the Cleric's hallucination scan mechanically: every repo path cited by a dossier or
+monster is resolved and the count printed (currently 80/80).
 
 ## Ground rules for anyone extending this tree
 

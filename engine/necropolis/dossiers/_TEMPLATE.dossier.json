@@ -4,43 +4,94 @@
   "_README": "PLACEHOLDER EXEMPLAR — every value below is demo data marked with PLACEHOLDER. This file exists only to prove SCHEMA.json is fillable and to show the shape a Necromancer produces. It is NOT a real investigation and agent_id 'PLACEHOLDER_AGENT' does not resolve to ROSTER.jsonl (validate.py skips files whose agent_id starts with PLACEHOLDER).",
   "identity": {
     "agent_id": "PLACEHOLDER_AGENT",
-    "aliases": ["PLACEHOLDER_alias"],
+    "aliases": [
+      "PLACEHOLDER_alias"
+    ],
     "historical_machine": "M2",
     "historical_kind": "tool",
     "historical_operator": "PLACEHOLDER_operator",
-    "source_paths": ["PLACEHOLDER/path/to/agent.py", "PLACEHOLDER/path/to/state/"],
+    "source_paths": [
+      "PLACEHOLDER/path/to/agent.py",
+      "PLACEHOLDER/path/to/state/"
+    ],
     "evidence_baseline": "0000000_PLACEHOLDER_sha"
   },
   "original_organism": {
     "premise": "PLACEHOLDER: if the agent does X, downstream Y improves.",
     "mechanism": "PLACEHOLDER: how it was meant to work.",
-    "producers": ["PLACEHOLDER_upstream"],
-    "inputs": ["PLACEHOLDER_input_stream"],
-    "outputs": ["PLACEHOLDER_output_artifact"],
-    "intended_consumers": ["PLACEHOLDER_consumer"]
+    "producers": [
+      "PLACEHOLDER_upstream"
+    ],
+    "inputs": [
+      "PLACEHOLDER_input_stream"
+    ],
+    "outputs": [
+      "PLACEHOLDER_output_artifact"
+    ],
+    "intended_consumers": [
+      "PLACEHOLDER_consumer"
+    ]
   },
   "observed_history": {
     "run_period": "PLACEHOLDER 2026-0X-0X..2026-0X-0X",
-    "measurements": ["PLACEHOLDER: N artifacts, K facts"],
-    "artifact_counts": {"PLACEHOLDER_artifact_type": 0},
+    "measurements": [
+      "PLACEHOLDER: N artifacts, K facts"
+    ],
+    "artifact_counts": {
+      "PLACEHOLDER_artifact_type": 0
+    },
     "actual_consumers": [],
-    "consumption_evidence": ["PLACEHOLDER: CONSUMPTION.jsonl query showing 0 rows consumed_by anyone"]
+    "consumption_evidence": [
+      "PLACEHOLDER: CONSUMPTION.jsonl query showing 0 rows consumed_by anyone"
+    ]
   },
   "autopsy": {
-    "prior_verdicts": ["PLACEHOLDER: 2026-06 disposition = RETIRE-after-HITL (advisory, cited not trusted)"],
-    "failure_classes": ["PLACEHOLDER-FAILURE-CLASS (should reference an AUTOPSY_TAXONOMY.md cluster)"],
+    "prior_verdicts": [
+      "PLACEHOLDER: 2026-06 disposition = RETIRE-after-HITL (advisory, cited not trusted)"
+    ],
+    "failure_classes": [
+      "PLACEHOLDER-FAILURE-CLASS (should reference an AUTOPSY_TAXONOMY.md cluster)"
+    ],
     "kill_boundary": "PLACEHOLDER: the strongest proposition the evidence killed — e.g. 'X-under-condition-C produces no measurable Y', and NOT the stronger 'X can never produce Y'.",
-    "surviving_claims": ["PLACEHOLDER: mechanism M is still compatible with the evidence"],
-    "uncertainty": ["PLACEHOLDER: what was not measured"],
-    "contradictory_evidence": []
+    "surviving_claims": [
+      "PLACEHOLDER: mechanism M is still compatible with the evidence"
+    ],
+    "uncertainty": [
+      "PLACEHOLDER: what was not measured"
+    ],
+    "contradictory_evidence": [],
+    "author_error_audit": {
+      "design_vs_hypothesis": {
+        "verdict": "NOT_EXAMINED",
+        "finding": "Not examined: this dossier maps an existing autopsy record into the schema and adds no new claims (no Necromancer pass has run)."
+      },
+      "code_vs_design": {
+        "verdict": "NOT_EXAMINED",
+        "finding": "Not examined: this dossier maps an existing autopsy record into the schema and adds no new claims (no Necromancer pass has run)."
+      },
+      "execution_parameters": {
+        "verdict": "NOT_EXAMINED",
+        "finding": "Not examined: this dossier maps an existing autopsy record into the schema and adds no new claims (no Necromancer pass has run)."
+      },
+      "hallucination_scan": {
+        "verdict": "NOT_EXAMINED",
+        "finding": "Not examined: this dossier maps an existing autopsy record into the schema and adds no new claims (no Necromancer pass has run)."
+      }
+    },
+    "death_axis": "undetermined",
+    "contributing_axes": []
   },
   "residue": {
-    "salvageable_code": ["PLACEHOLDER/path/to/reusable_function.py::fn"],
+    "salvageable_code": [
+      "PLACEHOLDER/path/to/reusable_function.py::fn"
+    ],
     "salvageable_data": [],
     "salvageable_schemas": [],
     "salvageable_operators": [],
     "salvageable_tests": [],
-    "representation_hints": ["PLACEHOLDER: emit-on-signal + periodic digest instead of per-tick artifact"]
+    "representation_hints": [
+      "PLACEHOLDER: emit-on-signal + periodic digest instead of per-tick artifact"
+    ]
   },
   "disposition": {
     "classification": "NEEDS_MORE_EVIDENCE",
@@ -52,9 +103,15 @@
     "role": "Necromancer",
     "branch": "necropolis/foundation",
     "baseline_sha": "0000000_PLACEHOLDER_sha",
-    "evidence_paths": ["PLACEHOLDER/path"],
-    "commands_run": ["PLACEHOLDER: git log --oneline -- PLACEHOLDER/path"],
-    "unresolved_questions": ["PLACEHOLDER: what a Cleric would still need before implementing"],
+    "evidence_paths": [
+      "PLACEHOLDER/path"
+    ],
+    "commands_run": [
+      "PLACEHOLDER: git log --oneline -- PLACEHOLDER/path"
+    ],
+    "unresolved_questions": [
+      "PLACEHOLDER: what a Cleric would still need before implementing"
+    ],
     "created": "PLACEHOLDER-DATE"
   }
 }

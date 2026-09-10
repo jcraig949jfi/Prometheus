@@ -107,6 +107,22 @@ that frontier in `autopsy.capability_contingency`. The **conditional viability f
 first-class object: a later success under new capability means the frontier moved, not that the
 original agent succeeded (ROLES.md, F2).
 
+**LAW N17 — Author error before null result.**
+"The experiment produced a monoculture with no signal distinguishable from noise" is the *last*
+explanation a Necromancer may reach, not the first. Historical agents were designed, coded,
+parameterized, and interpreted by people and by models, and each of those steps can be wrong in
+ways that kill an organism while leaving its premise untouched: a hypothesis that the design
+could not test; code that did not do what the design said; execution parameters (N, seeds,
+thresholds, timeouts, model ids, corpus paths, retry policy) that made the run uninformative; and
+**hallucinations** — a nonexistent API, an invented number, a misread output column, a causal
+label on a correlation, an artifact attributed to the wrong producer. Every dossier carries an
+`autopsy.author_error_audit` with four verdicts (design-vs-hypothesis, code-vs-design,
+execution-parameters, hallucination-scan), each `CLEAN`, `ERROR_FOUND`, or `NOT_EXAMINED`.
+`NOT_EXAMINED` is honest; `CLEAN` without executed evidence is not (a lens that cannot execute
+reports NOT_EXAMINED, never CLEAN). The audit applies to the corpse **and to every prior
+verdict about it**, including this project's own dossiers: three of three Necropolis passes so
+far found the proximate cause of death was an author error, not a null result.
+
 ---
 
 ## Classification vocabulary
@@ -130,7 +146,15 @@ idea is untested because the build never expressed it) · `measurement-dead` (th
 judged it carried its own answer, or its outcome variable recorded instrument state) ·
 `ecosystem-dead` (producer, consumer, orchestration, or resource around it died; the organism was
 inert or starved) · `capability-era-dead` (the kill boundary depended materially on a frontier
-that has since moved; LAW N16) · `undetermined`.
+that has since moved; LAW N16) · **the author-error family (LAW N17):** `bug-dead` (the code did
+not do what the design said) · `parameter-dead` (execution configuration made the run
+uninformative) · `hallucination-dead` (a load-bearing fact, number, API, attribution, or causal
+label in the agent's own artifacts was false) · `undetermined`.
+
+`autopsy.contributing_axes` lists every other axis the evidence supports, so that a
+`premise-dead` verdict reached *through* a vacuous gate is recorded as
+`premise-dead` + `[bug-dead, parameter-dead]`, not as a clean null. Doctor Frankenstein reads the
+contributing axes as repair targets (ROLES.md, F7).
 
 The Necromancer establishes which axis the evidence supports. Doctor Frankenstein asks whether
 today's boundary makes a different assembly of the surviving organs worth testing. The Cleric

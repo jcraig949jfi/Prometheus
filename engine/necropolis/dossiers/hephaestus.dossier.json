@@ -128,6 +128,49 @@
       ],
       "era_bound_claim": "2026-03-era model + this forge prompt + this battery + this gate could not produce tools above the 2.4% random-pass floor (0.7-2.2% across 1,803 battery-tested tools).",
       "what_would_move_it": "A frontier coding model behind a position-balanced honest gate with the scrap ledger as failure-mined direction; the dossier itself marks this 'untested here'. This is the archetypal capability-era question and belongs to Doctor Frankenstein (monsters/FRANK-000), not to a descendant of Hephaestus."
+    },
+    "contributing_axes": [
+      "bug-dead",
+      "parameter-dead",
+      "measurement-dead"
+    ],
+    "author_error_audit": {
+      "design_vs_hypothesis": {
+        "verdict": "ERROR_FOUND",
+        "finding": "The certification design compared candidate tools against an NCD baseline without first publishing P(random tool passes). On the 15-trap battery that baseline scores below chance (0.267 acc / 0.133 cal), so the gate could not test the hypothesis it was built to test until the 186-trap battery replaced it on 2026-03-27.",
+        "evidence": [
+          "dossiers/hephaestus_evidence/heph_battery_floor.py",
+          "dossiers/hephaestus_evidence/heph_battery_floor_result.json"
+        ]
+      },
+      "code_vs_design": {
+        "verdict": "ERROR_FOUND",
+        "finding": "forge_one returns status=scrap / reason=api_call_failed after per-item retries and the caller writes every non-forged result as scrap; the daemon skip set is set(ledger.keys()). Net effect: 2,861 combos buried on first API failure, 0 retried. The design said retry-with-backoff; the code retried the item and then buried the key.",
+        "evidence": [
+          "dossiers/hephaestus_evidence/heph_ledger_shape.py",
+          "dossiers/hephaestus_evidence/heph_ledger_shape_result.json"
+        ]
+      },
+      "execution_parameters": {
+        "verdict": "ERROR_FOUND",
+        "finding": "Instrument state (api_call_failed / wall_clock_timeout / test_harness_error) was recorded in the outcome column: 2,553 of ~4,700 post-03-27 rows. Yield changes by <1pp per honest era when they are removed, so this did not cause the death, but it made the ledger unusable as a label set and misled the Coeus scorer downstream.",
+        "evidence": [
+          "dossiers/hephaestus_evidence/heph_ledger_shape_result.json",
+          "dossiers/coeus.dossier.json"
+        ]
+      },
+      "hallucination_scan": {
+        "verdict": "ERROR_FOUND",
+        "finding": "The 06-24 dossier figure (~1,960 tools were ~5 genuine mechanisms) lives inside the vacuous certification layer: 353 of ~385 forged certificates before 03-27 are passes of a gate a random tool passes 92.75% of the time. The number is not false, but the certificate it counts was. Aporia's earlier TOOLS-DISCRIMINATE reading rested on an adapter leak (distractors derived from truth+3i) and was retracted by its own v2.",
+        "evidence": [
+          "dossiers/hephaestus_evidence/heph_battery_floor_result.json",
+          "aporia/docs/PROF_FORGE_COHORT_2026-08-20.md"
+        ]
+      },
+      "prior_verdict_errors": [
+        "pivot/COMPONENT_DOSSIERS_2026-06-24.md advisory REVIVE counted certificates from a gate that random tools pass at 92.75%",
+        "aporia PROF-FORGE-COHORT v1 TOOLS-DISCRIMINATE: adapter leak, retracted by v2 (TOOLS-FLAT-AT-CHANCE)"
+      ]
     }
   },
   "residue": {
@@ -194,7 +237,8 @@
     ],
     "created": "2026-09-10",
     "_amendments": [
-      "2026-09-10 Keeper: backfilled autopsy.death_axis + capability_contingency (LAW N16) from the dossier's own kill_boundary/surviving_claims text; no new evidence."
+      "2026-09-10 Keeper: backfilled autopsy.death_axis + capability_contingency (LAW N16) from the dossier's own kill_boundary/surviving_claims text; no new evidence.",
+      "2026-09-10 Keeper backfill (LAW N17): author_error_audit + contributing_axes derived from failure_classes GATE-CARRIES-ITS-ANSWER, PERMANENT-BURIAL-VIA-SKIP-SET, INSTRUMENT-STATE-RECORDED-AS-OUTCOME already in this dossier; no new evidence."
     ]
   }
 }
