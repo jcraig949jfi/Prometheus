@@ -108,8 +108,12 @@ def main(argv=None) -> int:
 
         # --- Archaeon's four policies, same stream, same caps
         H = _load_archaeon()
+        # Fields prefixed with "_" are report-only carriers added by the stream builder
+        # (label, arm, rule_hex). They are NOT part of Archaeon's record shape, so they are
+        # dropped here rather than forced into its dataclass.
+        _fields = {f for f in H.Candidate.__dataclass_fields__}
         cands = [H.Candidate(**{k: (tuple(v) if k in ("descriptors", "parent_ids") else v)
-                                for k, v in r.items()}) for r in records]
+                                for k, v in r.items() if k in _fields}) for r in records]
         cands.sort(key=lambda c: c.stream_id)
         manifest = H.stream_manifest(cands)
         rec["observations"]["archaeon_stream_manifest"] = manifest

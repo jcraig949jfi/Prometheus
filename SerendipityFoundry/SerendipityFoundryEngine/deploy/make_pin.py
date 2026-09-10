@@ -73,12 +73,12 @@ pin = {
         "recovery record and does not depend on it."),
     "engine": "M1 / SKULLPORT",
     "endpoint": "https://192.168.1.202:8811",
-    "pinned_at": "2026-09-06",
+    "pinned_at": "2026-09-10",
     "pinned_by": "Daedalus",
     "schema_version": _schema_version(),
     "release": _release_note(),
     "source_commit_containing_build": commit,
-    "release_commits": ["869df1fa1", "50ef81ba1", "dfc2ac701", "088591ab3"],
+    "release_commits": ["ef05397f2", "07b5b05a7", "877d478c6", "b91880a2d"],
     "engine_source_hash": engine_hash,
     "_engine_source_hash_definition": (
         "sha256 over sorted sfe/*.py, each contributing name + NUL + "
@@ -96,16 +96,40 @@ pin = {
         "identity of the LEDGER, minted once per database and stored in meta. "
         "It travels with the substrate, not the path, so it must survive any "
         "restore that preserves var/engine.db."),
-    "rollback_behaviour_measured_2026-09-06": (
-        "A pre-v6 engine opened against the live schema-6 ledger REFUSES to "
-        "start: RuntimeError 'db schema version 6 is NEWER than this engine's "
-        "5; refusing to run (would misread state)' (sfe/store.py:471-474). "
-        "Verified by running the 35758f9d0 source against a VACUUM INTO copy "
-        "of the live ledger. So a source revert produces a LOUD OUTAGE, not a "
-        "silent downgrade -- the service dies rather than quietly serving "
-        "pre-v6 semantics over v6 data. That is the correct failure direction, "
-        "and it is why this pin is a recovery aid rather than a safety "
-        "interlock."),
+    "rollback_behaviour": (
+        "An older engine opened against a NEWER ledger REFUSES to start: "
+        "RuntimeError 'db schema version N is NEWER than this engine's M; "
+        "refusing to run (would misread state)' (sfe/store.py). Measured for "
+        "6-over-5 on 2026-09-06 by running the 35758f9d0 source against a "
+        "VACUUM INTO copy of the live ledger. So a source revert produces a "
+        "LOUD OUTAGE, not a silent downgrade -- the service dies rather than "
+        "quietly serving older semantics over newer data. That is the correct "
+        "failure direction, and it is why this pin is a recovery aid rather "
+        "than a safety interlock. It is ALSO why a rollback across 8 -> 7 is "
+        "code AND data: the schema-7 snapshot taken before the deploy is the "
+        "rollback, and everything written under 8 after it is not in that "
+        "snapshot. See deploy/DEPLOY_SCHEMA8_2026-09-10.md section 4."),
+    "deployed_2026-09-10": {
+        "from": {"schema_version": 7,
+                 "engine_source_hash":
+                     "sha256:084f951f866cc50aec73c6403528abc234fd514742b25"
+                     "ffd1aff5515a271feff"},
+        "engine_instance_id_before_and_after":
+            "eng_8a37a5d305969034d488c43e (UNCHANGED -- the ledger is the "
+            "same substrate; a change here would have meant the service was "
+            "pointed at a different database)",
+        "pre_deploy_backup":
+            "var/backup/engine-schema7-20260910-182335.db (109,989,888 bytes; "
+            "VACUUM INTO with the service stopped; verified readable as "
+            "schema 7 with the same instance id and 63101 events)",
+        "migration_was_additive":
+            "events 63101 before and after; experiments 27525 before and "
+            "after; budget_reservations and cost_events created empty",
+        "runtime_flag_required":
+            "--max-artifact-bytes 33554432. v8 adds a per-artifact ceiling "
+            "that applies on READ; one stored artifact is 32 MiB and the "
+            "16 MiB default would have made it unreadable.",
+    },
     "restore": {
         "verify": "python deploy/verify_deploy.py",
         "restore_source": (

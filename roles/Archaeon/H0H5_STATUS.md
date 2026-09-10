@@ -1,6 +1,6 @@
 # H0–H5 status — compact, from receipts only
 
-Maintained by Archaeon. Updated 2026-09-10 ~15:30 (C3-2 readout carries the per-sample historical arm for Herakles). Review packet: `roles/Archaeon/REVIEW_PACKET_2026-09-10.md`. Delegation: `roles/Archaeon/prompts/2026-09-10_tracks/` (Tracks A-E from the operator's Chimera brief; three corrections verified: sqrt(6) counterexample, client_id retention gap, XOR-injection non-conservation). Design v0.1
+Maintained by Archaeon. Updated 2026-09-10 ~18:30 (phase-2 artifact rows RE-ISSUED as cs-h1h0-1-p2b). Review packet: `roles/Archaeon/REVIEW_PACKET_2026-09-10.md`. Delegation: `roles/Archaeon/prompts/2026-09-10_tracks/` (Tracks A-E from the operator's Chimera brief; three corrections verified: sqrt(6) counterexample, client_id retention gap, XOR-injection non-conservation). Design v0.1
 (`roles/Archaeon/prompts/2026-09-08_h0h5/DESIGN_H0_H5_v0.1.md`). Every row
 below is derived from a committed receipt; nothing is inferred from a plan.
 Baseline: `archaeon/docs/h0h5/BASELINE_2026-09-09.json`.
@@ -61,6 +61,13 @@ Baseline: `archaeon/docs/h0h5/BASELINE_2026-09-09.json`.
 
 
 
+
+
+## Wake 19 (2026-09-10, ~18:30): Vivarium answered the 404; the 48 artifact rows are re-issued
+
+- **Vivarium a733f0ad5**: the running consumer (PID 29884, 07:29) PREDATED the fallback (d34b0c894, 12:16); the logic was right (tests exc.status in (404, 405) on sfclient's EngineError, with a test). The "two process sets" were eight stale worker_heartbeat rows from earlier proofs, retired. Consumer restarted 18:23 with the fallback. Evidence: roles/Vivarium/F1_DEBIT_RECEIPT_2026-09-10.json -- one artifact row on the live schema-7 engine consuming a REAL phase-2 pack: EXECUTED, allowance_mechanism = debit (engine 404 for reserve), digest_gate engine+client, cost_events null-with-reason.
+- **Techne 7643022c3, H3 ALPHA RECEIPT** (roles/Techne/H3_ALPHA_RECEIPT_2026-09-10.md): on the real 150-row C3-2 stream, Archaeon's hand-rolled `behavioral` archive and his pyribs GridArchive adapter retain the IDENTICAL eight candidates [0, 2, 5, 6, 7, 10, 31, 37] with identical bytes in all three cap configurations -- the adapter is an implementation of the policy, not a thing that runs. Ties: 126 of 150 at exactly 0.0 (all 120 random, 2 base, 1 hist, 3 null) -- my inbox said 116 + 3, a number copied from the partial readout; his count is the corpus's and stands. In the three tie-only cells FIRST_WRITER_WINS discards nothing; in the one mixed cell the archive kept the best (par 0.79 replaced exp 0.61). No declared cap binds because the corpus occupies 8 of 16 descriptor cells: behavioral is bounded by OCCUPANCY, a finding, not a miss.
+- **cs-h1h0-1-p2b ISSUED**: the 48 artifact rows (random_pack, S10, S01, S11 x 12 targets), request keys suffixed -B, reissue_of_request_key in provenance, same specs and hashes as the cancelled/failed originals. Receipt: ISSUE_RECEIPTS_2026-09-10.h1h0_p2b.json. The H1/H0 readout marks COMPLETE when they finish.
 
 ## Wake 16 (2026-09-10, ~15:30): Herakles's item-5 fields in the readout; nothing new on main
 

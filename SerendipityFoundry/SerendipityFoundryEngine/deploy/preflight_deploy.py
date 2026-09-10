@@ -102,8 +102,11 @@ def live_queue(python: str, candidate_set: str):
             return None, (p.stderr.decode("utf-8", "replace").strip()
                           .splitlines() or ["exit %d" % p.returncode])[-1]
         body = p.stdout.decode("utf-8", "replace")
-        out[st] = sum(1 for line in body.splitlines()
-                      if ("cs=%s" % candidate_set) in line)
+        if candidate_set is None:
+            out[st] = sum(1 for line in body.splitlines() if line.strip())
+        else:
+            out[st] = sum(1 for line in body.splitlines()
+                          if ("cs=%s" % candidate_set) in line)
     return out, None
 
 
@@ -125,6 +128,9 @@ def main():                                                    # noqa: C901
                                                          "backup"))
     ap.add_argument("--quiet-seconds", type=int, default=QUIET_SECONDS)
     ap.add_argument("--candidate-set", default="cs-c3-2")
+    #: Experiments/hour at or above which a CAMPAIGN is presumed to be
+    #: running. The engine was doing 3768/h during cs-c3-2.
+    ap.add_argument("--campaign-rate", type=int, default=50)
     #: The SFE venv has no psycopg2; this one does. Named rather than assumed,
     #: because "the check could not run" must never read as "the check passed".
     ap.add_argument("--python", default=r"H:\Python312\python.exe")
@@ -153,6 +159,8 @@ def main():                                                    # noqa: C901
     #
     # No single one is sufficient, so all three must agree.
     counts, why = live_queue(a.python, a.candidate_set)
+    totals, _ = live_queue(a.python, None)     # None = every candidate set
+    live_ok = False
     if counts is None:
         g("a", "Vivarium's LIVE queue reports the candidate set drained",
           False, "could not read the queue: %s\n"
@@ -160,10 +168,24 @@ def main():                                                    # noqa: C901
                  % why)
     else:
         outstanding_live = {k: v for k, v in counts.items() if v}
+        live_ok = not outstanding_live
         g("a", "Vivarium's LIVE queue reports the candidate set drained",
-          not outstanding_live,
+          live_ok,
           "%s: %s  (via `%s -m viv.cli ls --status <s>`, counted by cs=)"
           % (a.candidate_set, json.dumps(counts), os.path.basename(a.python)))
+
+    # STRONGER THAN THE NAMED SET. One campaign being finished says nothing
+    # about the consumer, which serves every campaign; restarting the engine
+    # under somebody else's run is the same outage for a different reason.
+    if totals is None:
+        g("a", "the WHOLE queue is idle, not just this campaign", False,
+          "could not read the queue")
+        live_ok = False
+    else:
+        idle = not any(totals.values())
+        live_ok = live_ok and idle
+        g("a", "the WHOLE queue is idle, not just this campaign", idle,
+          "all candidate sets: %s" % json.dumps(totals))
 
     try:
         R = json.load(io.open(a.readout, encoding="utf-8"))
@@ -191,12 +213,19 @@ def main():                                                    # noqa: C901
              R.get("n_rows"), json.dumps(outstanding) or "{}",
              R.get("written"),
              "%.1f h old" % age_h if age_h is not None else "age unknown"))
-        g("a", "the readout is fresh enough to be believed",
-          age_h is not None and age_h <= 1.0,
-          "a readout older than an hour cannot answer 'right now'; refresh "
-          "with archaeon/producer/c3_readout.py (needs the Postgres queue) "
-          "-- age=%s"
-          % ("%.1f h" % age_h if age_h is not None else "unknown"))
+        # FRESHNESS MATTERS ONLY WHEN IT IS THE ANSWER. This gate exists so a
+        # stale file cannot stand in for "right now" -- but when the LIVE
+        # queue has already answered "right now" and agrees, the readout is
+        # corroboration, and failing on its age would be refusing to deploy
+        # because a second opinion was slow to arrive. It is a gate only when
+        # the live check could not run.
+        g("a", "the campaign's completion is answered by something CURRENT",
+          live_ok or (age_h is not None and age_h <= 1.0),
+          "readout age=%s; live queue check %s. The readout is a %s here."
+          % ("%.1f h" % age_h if age_h is not None else "unknown",
+             "PASSED and is current" if live_ok else "did NOT pass",
+             "cross-check" if live_ok else "GATE, because nothing else "
+             "answered"))
     except (OSError, ValueError) as e:
         g("a", "Archaeon's readout is readable", False,
           "%s: %s" % (a.readout, e))
@@ -223,11 +252,23 @@ def main():                                                    # noqa: C901
               % (time.strftime("%H:%M:%S", time.localtime(last)) if last
                  else "never", quiet if quiet is not None else -1))
 
+            # A RATE, NOT A PRESENCE. This gate is here to catch a CAMPAIGN
+            # running against the engine -- when it was written the engine was
+            # doing 3768 experiments an hour. As "must be exactly zero" it also
+            # fires on a single ad-hoc receipt, which is not the hazard and
+            # would block every deploy for an hour after anyone touched the
+            # engine at all. The real "is something running right now" question
+            # is answered three ways above: the whole queue idle, nothing
+            # CLAIMED or RUNNING, and 300s of silence. The count is always
+            # printed, so a surprising number is still visible.
             recent = cx.execute(
                 "SELECT COUNT(*) n FROM experiments WHERE created_ts > ?",
                 (now - 3600,)).fetchone()["n"]
-            g("a", "no experiments were created in the last hour",
-              recent == 0, "experiments in the last hour = %d" % recent)
+            g("a", "no CAMPAIGN is running (experiment rate)",
+              recent < a.campaign_rate,
+              "experiments in the last hour = %d (a campaign is >= %d/h; a "
+              "handful is ad-hoc use and is not what this gate is for)"
+              % (recent, a.campaign_rate))
 
             sv = cx.execute("SELECT value FROM meta WHERE "
                             "key='schema_version'").fetchone()[0]

@@ -5,9 +5,11 @@
 to three conditions**. This document is condition (c). It is committed *before*
 the deploy on purpose: a rollback written after the outage is a post-mortem.
 
-> **STATUS AT TIME OF WRITING: NOT DEPLOYED.** Condition (a) is not met.
-> See [§0](#0-the-gate). Run `python deploy/preflight_deploy.py` — it prints
-> `CLEAR TO DEPLOY` or `DO NOT DEPLOY` and never changes anything.
+> **DEPLOYED 2026-09-10 18:23. `verify_deploy.py`: 8 passed, 0 failed.**
+> The deploy record is at the end of this file. The procedure below is
+> what was actually run, and it stays here as the runbook for the next
+> one — `python deploy/preflight_deploy.py` prints `CLEAR TO DEPLOY` or
+> `DO NOT DEPLOY` and never changes anything.
 
 ---
 
@@ -252,13 +254,30 @@ side that a build change trips.
 - Record in this file: the actual `engine_instance_id` before and after, the
   backup filename, and the timestamp of the restart.
 
-### Deploy record
+### Deploy record — **DONE 2026-09-10 18:23**
 
 | | |
 |---|---|
-| deployed at | *not yet deployed* |
+| deployed at | 2026-09-10 18:23:35 → bound 18:24, **1.0 s to bind** |
+| schema_version | **7 → 8** |
+| engine_source_hash | `sha256:084f951f…` → **`sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e`** |
 | instance id before | `eng_8a37a5d305969034d488c43e` |
-| instance id after | — |
-| backup file | — |
-| verify_deploy | — |
-| consumer restarted by Vivarium | — |
+| instance id after | `eng_8a37a5d305969034d488c43e` — **unchanged, as required** |
+| max_artifact_bytes | `33554432` (reported by `/v2/version`) |
+| backup file | `var/backup/engine-schema7-20260910-182335.db`, 109,989,888 B — VACUUM INTO with the service stopped, verified readable as schema 7, same instance id, 63,101 events |
+| migration | **additive, nothing moved**: events 63,101 → 63,101; experiments 27,525 → 27,525; `budget_reservations` and `cost_events` created empty |
+| 32 MiB artifact | row present in `wld_275033f4505ae3ac8a6b69c1`, blob 33,554,432 B on disk, within the configured ceiling |
+| consumer restarted by Vivarium | Vivarium stopped `vivarium@m1` PID 27676 *before* the window and verified nothing in flight; restart requested at 18:25 |
+
+**Two notes worth keeping.**
+
+The stop found **both** processes — the launcher stub `28564` and its child
+`26920`. `Stop-ScheduledTask` alone would have left the child holding the socket
+and the OLD build serving, which is the hazard §3 warns about, and it was real
+on this deploy rather than theoretical.
+
+`/v2/version` now reports `source_commit: afd3548db…`, which is the deployment
+tree's HEAD on `vivarium/v0-2026-09-05` and **cannot reproduce this build**.
+That is exactly the case `_engine_source_hash_definition` describes: the commit
+is best-effort metadata about a shared checkout, the hash is the identity.
+`verify_deploy.py` reports it as a `[note]`, not a failure, and that is right.
