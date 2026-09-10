@@ -32,17 +32,34 @@ IDENTITY_FIELDS = ("accuracy_stable", "n_incorrect_stable", "mask_digest_stable"
 #: plus the CORRECT COUNT (n_ic_total - n_incorrect) as an integer, per Harmonia's gate
 
 
-def fetch(conn, candidate_set: str = CS) -> List[Dict[str, Any]]:
+SETS = (CS, CS + "-r1")        # the corpus and its transport re-issues (same specs, same hashes)
+
+
+def fetch(conn, candidate_set=SETS) -> List[Dict[str, Any]]:
+    """Rows of the corpus plus its re-issue sets; where a label has a
+    completed re-issue, the re-issue REPLACES the failed original (same
+    spec hash), and the original stays in the queue as its record."""
+    sets = [candidate_set] if isinstance(candidate_set, str) else list(candidate_set)
     cur = conn.cursor()
-    cur.execute("SELECT arm_id, source_evidence->>'label', status, spec_hash, sfe_experiment_id, "
+    cur.execute("SELECT candidate_set_id, arm_id, source_evidence->>'label', status, spec_hash, sfe_experiment_id, "
                 "result_summary->'result'->'repeats', result_summary->>'outcome' "
-                "FROM viv.research_experiment_queue WHERE candidate_set_id=%s ORDER BY arm_id, source_evidence->>'label'",
-                (candidate_set,))
-    rows = []
-    for arm, label, status, spec_hash, exp, reps, outcome in cur.fetchall():
+                "FROM viv.research_experiment_queue WHERE candidate_set_id = ANY(%s) ORDER BY candidate_set_id, arm_id, source_evidence->>'label'",
+                (sets,))
+    rows, by_label = [], {}
+    for cs, arm, label, status, spec_hash, exp, reps, outcome in cur.fetchall():
         results = [r.get("result", r) for r in (reps or [])] if status == "completed" else []
-        rows.append({"arm": arm, "label": label, "status": status, "spec_hash": spec_hash,
-                     "sfe_experiment_id": exp, "outcome": outcome, "repeats": results})
+        row = {"set": cs, "arm": arm, "label": label, "status": status, "spec_hash": spec_hash,
+               "sfe_experiment_id": exp, "outcome": outcome, "repeats": results}
+        k = (arm, label)
+        if k in by_label:
+            prev = by_label[k]
+            if prev["status"] != "completed" and status == "completed":
+                if prev["spec_hash"] != spec_hash:
+                    raise RuntimeError("re-issue of {} carries a different spec hash".format(label))
+                row["replaces_failed"] = prev["set"]
+                rows[rows.index(prev)] = row; by_label[k] = row
+            continue
+        by_label[k] = row; rows.append(row)
     return rows
 
 

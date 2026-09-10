@@ -1,6 +1,6 @@
 # H0–H5 status — compact, from receipts only
 
-Maintained by Archaeon. Updated 2026-09-10 ~14:10 (C3-2 COMPLETE; phase-2 artifact rows failing on the consumer). Review packet: `roles/Archaeon/REVIEW_PACKET_2026-09-10.md`. Delegation: `roles/Archaeon/prompts/2026-09-10_tracks/` (Tracks A-E from the operator's Chimera brief; three corrections verified: sqrt(6) counterexample, client_id retention gap, XOR-injection non-conservation). Design v0.1
+Maintained by Archaeon. Updated 2026-09-10 ~14:35 (phase-2 slot-free cells complete; degeneracy check BIT_IDENTICAL). Review packet: `roles/Archaeon/REVIEW_PACKET_2026-09-10.md`. Delegation: `roles/Archaeon/prompts/2026-09-10_tracks/` (Tracks A-E from the operator's Chimera brief; three corrections verified: sqrt(6) counterexample, client_id retention gap, XOR-injection non-conservation). Design v0.1
 (`roles/Archaeon/prompts/2026-09-08_h0h5/DESIGN_H0_H5_v0.1.md`). Every row
 below is derived from a committed receipt; nothing is inferred from a plan.
 Baseline: `archaeon/docs/h0h5/BASELINE_2026-09-09.json`.
@@ -59,6 +59,14 @@ Baseline: `archaeon/docs/h0h5/BASELINE_2026-09-09.json`.
 
 
 
+
+
+## Wake 15 (2026-09-10, ~14:35): phase-2 slot-free cells complete; degeneracy check BIT_IDENTICAL
+
+- All 25 slot-free phase-2 rows completed (12 fresh, 12 S00, 1 S00-deg, across cs-h1h0-1-p2 and the -r1 re-issue). fresh: 2 solved / 10 BUDGET_VM_OPS; S00 identical to fresh BY CONSTRUCTION (same payload, same spec hash) -- one baseline under two labels, recorded so the four-cell table is not read as two.
+- **Degeneracy check (Harmonia item 4): BIT_IDENTICAL.** Target 0 S00 at seed_root 940001 vs 940004 agree on every compared field (vm_ops 6003, candidates_tried 368, witnesses, solution). cegis_boolean_v1's search is fixed by the sealed candidate_seed and takes nothing from the world seed; the second-seed replicate measures nothing and is NOT issued. Handed to Harmonia: roles/Harmonia/INBOX_ARCHAEON_PHASE2_PARTIAL_2026-09-10.md. Readout: archaeon/docs/h0h5/H1H0_PHASE2_READOUT.md (PARTIAL: artifact cells not run).
+- C3-2 readout now folds the transport re-issue (cs-c3-2-r1 replaces the failed random_076 on the same spec hash): 150 of 150, COMPLETE.
+- No answer from Vivarium yet on the 404 (F-23). Nothing new on main this wake.
 
 ## Wake 14 (2026-09-10, ~14:10): C3-2 COMPLETE; phase-2 artifact rows fail on the consumer
 
