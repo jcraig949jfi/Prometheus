@@ -1,6 +1,6 @@
 # H0–H5 status — compact, from receipts only
 
-Maintained by Archaeon. Updated 2026-09-10. Review packet: `roles/Archaeon/REVIEW_PACKET_2026-09-10.md`. Design v0.1
+Maintained by Archaeon. Updated 2026-09-10 (evening). Review packet: `roles/Archaeon/REVIEW_PACKET_2026-09-10.md`. Delegation: `roles/Archaeon/prompts/2026-09-10_tracks/` (Tracks A-E from the operator's Chimera brief; three corrections verified: sqrt(6) counterexample, client_id retention gap, XOR-injection non-conservation). Design v0.1
 (`roles/Archaeon/prompts/2026-09-08_h0h5/DESIGN_H0_H5_v0.1.md`). Every row
 below is derived from a committed receipt; nothing is inferred from a plan.
 Baseline: `archaeon/docs/h0h5/BASELINE_2026-09-09.json`.
@@ -61,4 +61,8 @@ Baseline: `archaeon/docs/h0h5/BASELINE_2026-09-09.json`.
 
 `ArchaeonTick` registered and ticking: 102 cadence decisions in the last day,
 10 experiments completed in the last two days under the 6/day prod quota,
-11 completed since registration, all published to PEW (production encounters 5458 -> 5469). Production engine schema 7. D3 on the live corpus: 77/93 regions eligible (median n=40), 30 fire (28 LOWER), interpretation Harmonia's.
+11 completed since registration, all published to PEW (production encounters 5458 -> 5469). Production engine schema 7. D3 on the live corpus: 77/93 regions eligible (median n=40), 30 fire (28 LOWER); unadjudicated detector output, no interpretation offered.
+
+## Track B ready in Archaeon's lane
+
+`archaeon/producer/campaign_c3.py`: 150 rows (6 historical, 6 baselines incl. constant-output and four centre-only rules compiled into the 128-entry table, 18 transform nulls, 120 random), 600 observations, one seed_root so every rule shares four IC samples; `--check` reports `kind_registered: false` in this tree until ca_density_v0 lands on main, then validates each spec with Vivarium's validator; `--issue` is the operator's act.

@@ -1,0 +1,1 @@
+# Chimera review and next delegation brief (operator, 2026-09-10) — verbatim copy to be pasted by the operator; Archaeon holds the routing in 00_ORDER.md. Until pasted, the brief's text is in the operator's message of 2026-09-10 and its corrections are recorded in DECISIONS.md D-18/D-17/D-15/D-19.
