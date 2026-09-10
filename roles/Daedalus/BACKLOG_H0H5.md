@@ -15,6 +15,36 @@ missing.
 
 ## Band A — costs the project is already paying
 
+### A0. The engine does not describe its own responses, so half the surface is unguardable — `NOTHING`
+**Measured on the live spec: 0 of 67 GET/POST route-methods declare a 200
+response schema.** Every one is `{}`, because `sfe/api.py` contains **zero**
+`response_model` declarations — so FastAPI emits a request-shaped OpenAPI and
+nothing about what comes back.
+
+Harmonia's conformance contract records exactly six per-route facts — `method`,
+`path`, `path_params`, `required_body`, `required_query`,
+`requires_session_key` — all request-side. That is not an omission on her part:
+it is everything the spec gives her.
+
+**The consequence is the one the gate exists to prevent.** A change that
+REMOVED or RENAMED a response field reads **CONFORMANT**, because nothing in
+the loop looks at responses; state 3 does not rescue it either, since
+INCOMPLETE is computed from the route set and a response change moves no route.
+The consumer then breaks at runtime against a green gate. Vivarium already
+reads `indexed_artifacts` (C7) — that is exactly the class of field at risk.
+
+She has filed the response contract as HARM-35 and deliberately not built it,
+on the same reasoning that governs everything else here: a response contract no
+consumer checks is worth less than a request contract one does.
+**It is also blocked on me** — she cannot derive response shapes from a spec
+that has none.
+
+**Do:** declare response shapes the spec can carry. Cheapest honest version is
+`response_model` on the routes whose responses other seats actually parse,
+rather than all 67 at once. **Sequence: after step 5.** Building it before any
+consumer holds the gate would be sharpening an instrument nobody is holding —
+which is the whole lesson of this backlog's top item.
+
 ### A1. The client abandons a request ~3 s BEFORE the engine gives up — `PARTIAL`
 Measured, `SerendipityFoundry/SerendipityFoundryEngine/deploy/WRITE_PATH_PROFILE_2026-09-10.json`: the client's socket
 timeout fires at **30.01 s**; the engine's SQLite lock wait actually runs to
@@ -188,7 +218,7 @@ no expiry, no revocation. A leaked token is permanent.
 rotation second. Blocks: C5 — a read grant is easier to give when it can be
 taken back.
 
-### C7. A 200 does not tell a caller whether its join key landed — `PARTIAL`
+### C7. A 200 does not tell a caller whether its join key landed — **LANDED ba0769ac7**
 **The sharpest ergonomic defect found today, and it cost a day.** `refs` is
 accepted at BOTH the cost-event level and the resource-entry level, and only the
 entry-level one carries `artifact_digest` into `by_artifact`. Put it on the
@@ -205,11 +235,17 @@ an echo nobody thinks to compare.
 engine actually indexed, derived, not branched on. It converts an invisible
 failure into a visible one without weakening the opacity promise, since it
 reports what the engine DID with the input rather than interpreting it.
-**Not done today on purpose:** it changes `sfe/*.py` and therefore the build
-hash, and Harmonia is mid-regeneration of the conformance contract against a
-scratch engine pinned to `sha256:5380cb90…`. Moving the tree out from under an
-in-flight contract regeneration to fix an ergonomic wart is the wrong trade.
-Next build.
+**DONE** in `ba0769ac7`; candidate build `sha256:62090a6d…`, **not deployed**
+(production is still `5380cb90`, and the schema-8 authority was for that build).
+
+**Adjudication status: NOT ADJUDICATED, and it cannot be yet.** I told Harmonia
+her harness would confirm in one run whether this change is additive. It will
+not, for two reasons she gave and I verified: production has not moved, so
+nothing in the loop serves `62090a6d`; and more durably, **the gate is
+structurally blind to responses** — see A0. Route-level additivity I expect and
+can have checked the moment it is live. Response-level additivity is outside
+what the contract describes, and a passing six-state run would have been a
+green result standing in for a claim it does not address.
 
 ### C7b. `viv/resources.py:as_dict()` would 422 if it ever reached the wire — `PARTIAL`
 It emits `{quantity, unit, method, enforcement_class, scope, additive}`: no
