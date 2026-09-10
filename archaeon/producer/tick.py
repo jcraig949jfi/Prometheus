@@ -90,6 +90,8 @@ def tick(conn, config: Optional[cfg.ArchaeonConfig] = None, *,
          lookback_rows: int = 2000,
          dry_run: bool = False) -> Dict[str, Any]:
     """Perform one decision cycle. Returns a JSON-serialisable record."""
+    from . import costs as _costs
+    tick_meter = _costs.Meter(); tick_meter.__enter__()
     config = config or cfg.DEFAULT
     lane = config.cadence.lane
     day = utc_day_str()
@@ -232,6 +234,11 @@ def tick(conn, config: Optional[cfg.ArchaeonConfig] = None, *,
             # every draw is recorded as the established share.
             "family": drawn.get("family"),
             "allocation": _allocation_record(),
+            # WP-X6 / design v0.1 C4: the producer's own cost receipt for this
+            # decision (generation stage). Measured on this process; gpu
+            # unavailable and not zero. Reconciles with the executor's vector
+            # by attempt_id (the spec_hash) and stage.
+            "cost_event": _cost_receipt(drawn["spec_hash"], tick_meter),
             # THREE bases, and the middle one is the honest one: a signal
             # fired but could not direct the experiment, so the reason is
             # recorded and the draw was random anyway.
@@ -296,6 +303,16 @@ def tick(conn, config: Optional[cfg.ArchaeonConfig] = None, *,
         if not dry_run:
             _log_decision(conn, lane, NO_WRITE_ERROR, {"error": out["error"]})
         return out
+
+
+def _cost_receipt(attempt_id, meter):
+    from . import costs
+    try:
+        meter.__exit__(None, None, None)
+        ev = costs.CostEvent("generation", attempt_id, meter.resources())
+        return ev.to_json()
+    except Exception as exc:          # a receipt failure must never block a publication
+        return {"error": "cost receipt unavailable: {}".format(exc)}
 
 
 def _allocation_record():

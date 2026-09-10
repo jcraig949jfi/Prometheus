@@ -102,6 +102,23 @@ two change it least.
    setting it. Preserves lattice mass and cannot be annihilated as easily.
    This is the largest change: it alters what "inject" means.
 
+> **CORRECTION, 2026-09-10, from the operator. Alternative 4 above is wrong
+> as written and the original text is kept above so the error stays visible.**
+>
+> I wrote that XOR injection "preserves lattice mass and cannot be annihilated
+> as easily". It does not preserve mass, and the claim does not survive its
+> own proof. From an all-zero reset, XOR-ing a bit into the port cell gives
+> `0 XOR 1 = 1`, which is exactly one live cell, the same state that overwrite
+> injection produces. Every cell then has a neighbourhood of popcount at most
+> one, all six rules answer 0 there, and the lattice is annihilated in one
+> step. The proof in section 2 applies unchanged.
+>
+> XOR injection is therefore NOT an escape from this obstruction on its own.
+> It only differs from overwrite once the lattice is already live, which makes
+> it a possible companion to alternative 1 and never a substitute for it.
+>
+> Verified below in `test_xor_injection_is_also_annihilated`.
+
 **My recommendation, offered not taken:** alternative 1 first, with the
 relaxation time measured before the horizon is fixed, because it changes one
 already-declared parameter and keeps the injection semantics the brief pinned.
