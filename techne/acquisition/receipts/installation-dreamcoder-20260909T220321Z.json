@@ -1,0 +1,245 @@
+{
+  "schema": "techne.acquisition.receipt/1",
+  "receipt_id": "installation-dreamcoder-20260909T220321Z",
+  "stage": "INSTALLATION",
+  "does_not_establish": [
+    "FIRST_USEFUL_CHECK",
+    "PAPER_REPRODUCTION",
+    "ADAPTER_QUALIFICATION",
+    "LOCAL_SCIENTIFIC_BENEFIT"
+  ],
+  "entry_id": "dreamcoder",
+  "tool": "dreamcoder",
+  "design_version": "0.1",
+  "written_utc": "2026-09-09T22:03:21+00:00",
+  "seat": "Techne",
+  "repo": {
+    "commit": "95daf6e571d278d282e2d4d5ee257bc8b256a5a3",
+    "branch": "techne/h0h5-tools-2026-09-09",
+    "dirty": true
+  },
+  "runner": {
+    "python": "3.12.10",
+    "executable": "H:\\Python312\\python.exe",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "tool_cache": "F:\\Prometheus\\vault\\techne_tools",
+    "tool_cache_source": "TECHNE_TOOL_CACHE env",
+    "tool_cache_note": "host-local and gitignored; only its HASHES are tracked"
+  },
+  "commands_run": [],
+  "observations": {
+    "clone": {
+      "ok": true,
+      "path": "F:\\Prometheus\\vault\\techne_tools\\repos\\dreamcoder",
+      "url": "https://github.com/ellisk42/ec",
+      "requested_commit": "cb0e63f5c33cd2de360b791038b0f5272750270e",
+      "checked_out_commit": "cb0e63f5c33cd2de360b791038b0f5272750270e",
+      "pin_verified": true,
+      "clone_shape": "blobless partial clone, --depth 1 -- working tree complete at the pinned revision, HISTORY NOT PRESENT (deliberate, download budget)",
+      "steps": [
+        {
+          "argv": [
+            "git",
+            "fetch",
+            "--filter=blob:none",
+            "--depth",
+            "1",
+            "origin",
+            "cb0e63f5c33cd2de360b791038b0f5272750270e"
+          ],
+          "returncode": 0,
+          "timed_out": false,
+          "wall_seconds": 0.578,
+          "stdout": "",
+          "stderr": "From https://github.com/ellisk42/ec\n * branch            cb0e63f5c33cd2de360b791038b0f5272750270e -> FETCH_HEAD\n"
+        },
+        {
+          "argv": [
+            "git",
+            "checkout",
+            "--quiet",
+            "--detach",
+            "FETCH_HEAD"
+          ],
+          "returncode": 0,
+          "timed_out": false,
+          "wall_seconds": 0.532,
+          "stdout": "",
+          "stderr": ""
+        }
+      ],
+      "submodules": {
+        "declared": [
+          {
+            "name": "pregex",
+            "path": "pregex",
+            "url": "git@github.com:insperatum/pregex.git"
+          },
+          {
+            "name": "pinn",
+            "path": "pinn",
+            "url": "git@github.com:insperatum/pinn.git"
+          },
+          {
+            "name": "pyccg",
+            "path": "pyccg",
+            "url": "https://github.com/hans/pyccg",
+            "branch": "master"
+          }
+        ],
+        "n_declared": 3,
+        "fetched": true,
+        "moving_branch_pins": [
+          {
+            "name": "pyccg",
+            "path": "pyccg",
+            "url": "https://github.com/hans/pyccg",
+            "branch": "master"
+          }
+        ],
+        "ssh_urls": [
+          {
+            "name": "pregex",
+            "path": "pregex",
+            "url": "git@github.com:insperatum/pregex.git"
+          },
+          {
+            "name": "pinn",
+            "path": "pinn",
+            "url": "git@github.com:insperatum/pinn.git"
+          }
+        ],
+        "deviations": [
+          "transport rewritten to HTTPS for ['pregex', 'pinn']: their .gitmodules URLs are git@github.com: which needs an SSH key and a verified host key. The owner/repo path is unchanged; the transport is not."
+        ],
+        "update_returncode": 0,
+        "update_stderr_tail": "Cloning into 'F:/Prometheus/vault/techne_tools/repos/dreamcoder/pinn'...\nCloning into 'F:/Prometheus/vault/techne_tools/repos/dreamcoder/pregex'...\nFrom https://github.com/hans/pyccg\n * [new tag]         v2.0.0     -> v2.0.0\n * [new tag]         v2.0.1     -> v2.0.1\n * [new tag]         v2.1.0     -> v2.1.0\nFrom https://github.com/hans/pyccg\n * branch            c465a23d208bb829c93f508ffd152bcdf82d367a -> FETCH_HEAD\n",
+        "pins_after_update": [
+          {
+            "commit": "1878ef539a95a22d6a5629177b0063e978afa205",
+            "path": "pinn",
+            "describe": "(1878ef5)",
+            "state_flag": " ",
+            "state": "initialized_at_pin"
+          },
+          {
+            "commit": "b5eab11e4b1176cd0df5adbc10a94f902294ed6b",
+            "path": "pregex",
+            "describe": "(b5eab11)",
+            "state_flag": " ",
+            "state": "initialized_at_pin"
+          },
+          {
+            "commit": "c465a23d208bb829c93f508ffd152bcdf82d367a",
+            "path": "pyccg",
+            "describe": "(v2.1.0-60-gc465a23)",
+            "state_flag": " ",
+            "state": "initialized_at_pin"
+          }
+        ],
+        "pins": [
+          {
+            "commit": "1878ef539a95a22d6a5629177b0063e978afa205",
+            "path": "pinn",
+            "describe": "(1878ef5)",
+            "state_flag": " ",
+            "state": "initialized_at_pin"
+          },
+          {
+            "commit": "b5eab11e4b1176cd0df5adbc10a94f902294ed6b",
+            "path": "pregex",
+            "describe": "(b5eab11)",
+            "state_flag": " ",
+            "state": "initialized_at_pin"
+          },
+          {
+            "commit": "c465a23d208bb829c93f508ffd152bcdf82d367a",
+            "path": "pyccg",
+            "describe": "(v2.1.0-60-gc465a23)",
+            "state_flag": " ",
+            "state": "initialized_at_pin"
+          }
+        ],
+        "n_at_pin": 3,
+        "n_not_initialized": 0,
+        "n_off_pin": 0,
+        "all_at_recorded_commit": true,
+        "status": "FETCHED_AND_PINNED"
+      },
+      "licenses": {
+        "files": [
+          {
+            "path": "LICENSE",
+            "bytes": 1121,
+            "sha256": "44527bdf7a52e8d21796c5e4889e180083776807e69c12ab557f1025a6a1b592",
+            "first_lines": [
+              "The MIT License",
+              "",
+              "Copyright (c) 2010-2020 Google LLC. http://angularjs.org"
+            ]
+          }
+        ],
+        "n_files": 1,
+        "spdx_identification": "NOT_ATTEMPTED -- identifying a license from its body text is a judgement this tool does not make; the notices are hashed and kept with the copy, and the SPDX claim stays UNRESOLVED until a human records it",
+        "status": "NOTICES_PRESENT"
+      }
+    }
+  },
+  "deviations": [
+    "DEV-T4[dreamcoder]: 1 submodule(s) declare a `branch` in .gitmodules. A branch is not a pin; `pins` records the commit actually checked out after forcing.",
+    "DEV-T6[dreamcoder]: transport rewritten to HTTPS for ['pregex', 'pinn']: their .gitmodules URLs are git@github.com: which needs an SSH key and a verified host key. The owner/repo path is unchanged; the transport is not."
+  ],
+  "unrun_or_blocked": [],
+  "status": "SOURCE_AT_PINNED_REVISION",
+  "manifest_entry": {
+    "id": "dreamcoder",
+    "kind": "repository",
+    "env": "dreamcoder_isolated",
+    "named_consumer": "H0/H2 reference library-learning arm (comparison only). NOT a scientific-run dependency.",
+    "integration_path": "isolated reproduction environment; frozen-library producer first; offline only",
+    "official_source": "https://github.com/ellisk42/ec",
+    "absent_recipe_warning": "The README references docs/official_experiments. The design records it as ABSENT from the inspected docs listing. Do NOT claim that recipe was found, and do NOT substitute an invented benchmark number.",
+    "upstream_revision": {
+      "kind": "branch_head",
+      "ref": "master",
+      "commit": "cb0e63f5c33cd2de360b791038b0f5272750270e",
+      "resolved_utc": "2026-09-09",
+      "resolver": "GitHub REST /repos/ellisk42/ec/commits/master",
+      "note": "master has not moved since 2022-03-16; last push 2023-07-01. No release tags. Immutable revision = this commit sha, pinned explicitly rather than by branch name. Submodules must be pinned at this revision."
+    }
+  },
+  "budget_profile": {
+    "purpose": "clone a repository tool at a pinned revision with submodules, and build a native toolchain in its OWN environment. Never the live interpreter.",
+    "network": "ALLOWED -- acquisition stage only",
+    "max_wall_seconds": 7200,
+    "max_download_bytes": 8589934592,
+    "max_disk_bytes": 42949672960,
+    "max_rss_bytes": 8589934592,
+    "max_processes": 8,
+    "rationale": "8 GiB RSS is 60 percent of measured AVAILABLE RAM -- deliberately under it. 8 of 16 logical CPUs leaves the other half for the seats sharing the host. 2 hours is a ceiling, not a target; the design's warning that 'a long README command is never a license for an unbounded run' is enforced by this number, not by the README.",
+    "NOT_A_REPRODUCTION_PROFILE": "A published benchmark gets its own explicit profile. This one only builds.",
+    "name": "isolated_heavy_build"
+  },
+  "resource_receipt": {
+    "profile": "isolated_heavy_build",
+    "network_policy": "ALLOWED -- acquisition stage only",
+    "wall_seconds": 7.438,
+    "wall_ceiling": 7200,
+    "downloaded_bytes": 0,
+    "download_ceiling": 8589934592,
+    "cache_bytes_before": 926071631,
+    "cache_bytes_after": 0,
+    "cache_delta_bytes": -926071631,
+    "peak_rss_bytes_os_counter": 31330304,
+    "peak_rss_bytes_sampled": 30232576,
+    "rss_method": "GetProcessMemoryInfo",
+    "rss_ceiling": 8589934592,
+    "rss_samples": 29,
+    "rss_ceiling_exceeded_during_sampling": false,
+    "rss_enforcement": "NOT ENFORCED -- no job object / cgroup cap. peak_rss_bytes_os_counter is the OS peak-working-set counter for this process and IS reliable; rss_ceiling_exceeded_during_sampling is sampled and can miss a spike. Neither stops a step.",
+    "rss_excludes_children": "This is THIS process only. pip, git and venv run as children and their RSS is NOT included.",
+    "children_spawned": 6,
+    "process_cap": 8,
+    "aborted_on": null
+  }
+}

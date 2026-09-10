@@ -216,3 +216,45 @@ def test_no_radius_3_decoder_symbol_is_reachable():
     """A rule here is a NUMBER; there is no hex table decoder to reuse."""
     assert not hasattr(eca, "decode_table")
     assert not hasattr(eca, "encode_table")
+
+# ---------------------------------------------------------------------------
+# The published class-map fixture. Bound to a fresh derivation so it cannot
+# go stale silently: the point of publishing it is that nobody re-derives it,
+# which only works if a change here fails loudly.
+# ---------------------------------------------------------------------------
+
+def test_class_map_fixture_matches_a_fresh_derivation():
+    import json
+    path = os.path.join(os.path.dirname(__file__), "..",
+                        "class_map_fixture.json")
+    with open(os.path.abspath(path), encoding="utf-8") as fh:
+        fx = json.load(fh)
+    assert fx["scope"]["n_cells"] == 7 and fx["scope"]["steps"] == 8
+    classes = eca.equivalence_classes(7, 8)
+    fresh = {}
+    for members in classes.values():
+        cid = min(members)
+        for r in members:
+            fresh[r] = cid
+    assert len(fresh) == 256
+    assert fx["n_classes"] == len({v for v in fresh.values()}) == 224
+    for rule_str, cid in fx["rule_to_class"].items():
+        assert fresh[int(rule_str)] == cid, rule_str
+
+
+def test_the_two_shift_rules_are_NOT_uniquely_identified_at_this_scope():
+    """A degeneracy that matters for task construction, recorded as a test.
+
+    Terminal behaviour at 8 steps on a 7-ring does not separate the shift
+    rules from three others each. A task set built from rule numbers rather
+    than class ids would count synonyms as independent teachers.
+    """
+    classes = eca.equivalence_classes(7, 8)
+    by_rule = {}
+    for members in classes.values():
+        for r in members:
+            by_rule[r] = sorted(members)
+    assert by_rule[240] == [15, 180, 210, 240]
+    assert by_rule[170] == [85, 154, 166, 170]
+    # identity is not in either, so the earlier separation test still holds
+    assert by_rule[204] != by_rule[240]

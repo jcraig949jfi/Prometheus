@@ -1,0 +1,19 @@
+# techne.acquisition lock -- entry 'hypothesis', isolated env 'h0h5_tools'
+# host interpreter: Python 3.12.10 / win32
+#
+# Install ONLY into the isolated env, and ONLY with hashes required:
+#     <tool_cache>/envs/h0h5_tools/Scripts/python -m pip install --require-hashes --no-deps -r hypothesis-cp312-win-amd64.lock.txt
+#
+# --no-deps is deliberate: the closure below IS the dependency set, resolved once
+# and pinned. Letting pip re-resolve would let a transitive floor move silently.
+#
+# This lock is valid for THIS interpreter and platform only. A different Python
+# minor version or platform needs its own lock; a lock is not portable evidence.
+#
+# named consumer: C1-C6 contract fixtures (Harmonia's qualification cycle) and the SFE boundary-failure tests
+# license status: RESOLVED_SPDX_EXPRESSION
+
+hypothesis==6.165.10 \
+    --hash=sha256:3376f2594763aef14faa519b0fb27cae7ce9eeaab4c69efa07777499110306c9
+sortedcontainers==2.4.0 \
+    --hash=sha256:a163dcaede0f1c021485e957a39245190e74249897e2ae4b2aa38595db237ee0

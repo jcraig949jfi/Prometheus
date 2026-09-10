@@ -1,0 +1,104 @@
+{
+ "forgetting": {
+  "GKL": {
+   "h16": {
+    "frac_divergence_ge_3": 0.505,
+    "frac_input_forgotten": 0.4175,
+    "horizon": 16,
+    "mean": 5.28
+   },
+   "h8": {
+    "frac_divergence_ge_3": 0.5475,
+    "frac_input_forgotten": 0.2425,
+    "horizon": 8,
+    "mean": 4.6725
+   }
+  },
+  "exp": {
+   "h16": {
+    "frac_divergence_ge_3": 0.16,
+    "frac_input_forgotten": 0.8125,
+    "horizon": 16,
+    "mean": 1.4
+   },
+   "h8": {
+    "frac_divergence_ge_3": 0.22,
+    "frac_input_forgotten": 0.6375,
+    "horizon": 8,
+    "mean": 1.6925
+   }
+  },
+  "maj": {
+   "h16": {
+    "frac_divergence_ge_3": 0.2125,
+    "frac_input_forgotten": 0.3725,
+    "horizon": 16,
+    "mean": 1.66
+   },
+   "h8": {
+    "frac_divergence_ge_3": 0.225,
+    "frac_input_forgotten": 0.385,
+    "horizon": 8,
+    "mean": 1.7225
+   }
+  },
+  "par": {
+   "h16": {
+    "frac_divergence_ge_3": 0.5025,
+    "frac_input_forgotten": 0.4325,
+    "horizon": 16,
+    "mean": 5.3425
+   },
+   "h8": {
+    "frac_divergence_ge_3": 0.635,
+    "frac_input_forgotten": 0.23,
+    "horizon": 8,
+    "mean": 5.22
+   }
+  },
+  "particle1": {
+   "h16": {
+    "frac_divergence_ge_3": 0.4425,
+    "frac_input_forgotten": 0.515,
+    "horizon": 16,
+    "mean": 6.965
+   },
+   "h8": {
+    "frac_divergence_ge_3": 0.61,
+    "frac_input_forgotten": 0.2225,
+    "horizon": 8,
+    "mean": 6.2
+   }
+  },
+  "particle2": {
+   "h16": {
+    "frac_divergence_ge_3": 0.575,
+    "frac_input_forgotten": 0.3725,
+    "horizon": 16,
+    "mean": 8.29
+   },
+   "h8": {
+    "frac_divergence_ge_3": 0.825,
+    "frac_input_forgotten": 0.0875,
+    "horizon": 8,
+    "mean": 7.8
+   }
+  }
+ },
+ "leakage": {
+  "GKL": {
+   "accuracy": 0.5234375,
+   "base_rate": 0.5234375,
+   "leaks": false,
+   "n_scored": 384
+  },
+  "par": {
+   "accuracy": 0.5052083333333334,
+   "base_rate": 0.5234375,
+   "leaks": false,
+   "n_scored": 384
+  }
+ },
+ "n_samples": 400,
+ "reset_density": 0.5
+}

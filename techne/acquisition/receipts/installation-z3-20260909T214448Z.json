@@ -1,0 +1,168 @@
+{
+  "schema": "techne.acquisition.receipt/1",
+  "receipt_id": "installation-z3-20260909T214448Z",
+  "stage": "INSTALLATION",
+  "does_not_establish": [
+    "FIRST_USEFUL_CHECK",
+    "PAPER_REPRODUCTION",
+    "ADAPTER_QUALIFICATION",
+    "LOCAL_SCIENTIFIC_BENEFIT"
+  ],
+  "entry_id": "z3",
+  "tool": "z3-solver",
+  "design_version": "0.1",
+  "written_utc": "2026-09-09T21:44:48+00:00",
+  "seat": "Techne",
+  "repo": {
+    "commit": "311fc5da9a9d7e25055d044b76e936cef98353b0",
+    "branch": "techne/h0h5-tools-2026-09-09",
+    "dirty": true
+  },
+  "runner": {
+    "python": "3.12.10",
+    "executable": "H:\\Python312\\python.exe",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "tool_cache": "F:\\Prometheus\\vault\\techne_tools",
+    "tool_cache_source": "TECHNE_TOOL_CACHE env",
+    "tool_cache_note": "host-local and gitignored; only its HASHES are tracked"
+  },
+  "commands_run": [],
+  "observations": {
+    "artifact_selection": {
+      "reason": "compatible wheel, narrowest host tag",
+      "host_tag_count": 42,
+      "selected": {
+        "filename": "z3_solver-5.0.0.0-py3-none-win_amd64.whl",
+        "packagetype": "bdist_wheel",
+        "size": 16918299,
+        "sha256_pypi": "9b0aca98598353ea7eb59a51f909a399f6d0e687a1de3671b60a734cea4bb6bd",
+        "url": "https://files.pythonhosted.org/packages/b3/3c/bc1d7d55e5493e4637ef48c7a3680ce5e00082352f680baa22f491bfee20/z3_solver-5.0.0.0-py3-none-win_amd64.whl",
+        "yanked": false,
+        "requires_python": null,
+        "wheel_tags": [
+          "py3-none-win_amd64"
+        ],
+        "host_compatible": true
+      },
+      "n_candidates": 9,
+      "rejected_for_platform": [
+        "z3_solver-5.0.0.0-py3-none-macosx_13_0_arm64.whl",
+        "z3_solver-5.0.0.0-py3-none-macosx_13_0_x86_64.whl",
+        "z3_solver-5.0.0.0-py3-none-manylinux_2_27_x86_64.whl",
+        "z3_solver-5.0.0.0-py3-none-manylinux_2_38_aarch64.whl",
+        "z3_solver-5.0.0.0-py3-none-manylinux_2_38_riscv64.whl",
+        "z3_solver-5.0.0.0-py3-none-win32.whl",
+        "z3_solver-5.0.0.0-py3-none-win_arm64.whl"
+      ]
+    },
+    "download": {
+      "path": "F:\\Prometheus\\vault\\techne_tools\\downloads\\z3_solver-5.0.0.0-py3-none-win_amd64.whl",
+      "bytes": 16918299,
+      "sha256_local": "9b0aca98598353ea7eb59a51f909a399f6d0e687a1de3671b60a734cea4bb6bd",
+      "digest_matches_pypi": true,
+      "transferred": false,
+      "note": "already in cache, digest re-verified"
+    },
+    "license": {
+      "license_expression": null,
+      "license_field": "MIT License",
+      "classifiers": [],
+      "license_files": [],
+      "source": "wheel METADATA",
+      "status": "RESOLVED_FREE_TEXT_ONLY"
+    },
+    "license_rule_applied": "read License-Expression / License / Classifier from the downloaded wheel METADATA; the GitHub API returns NOASSERTION for this repository and is NOT used",
+    "requires_dist": [
+      "importlib-resources; python_version < \"3.9\""
+    ],
+    "isolated_env": {
+      "env_name": "h0h5_tools",
+      "root": "F:\\Prometheus\\vault\\techne_tools\\envs\\h0h5_tools",
+      "python": "F:\\Prometheus\\vault\\techne_tools\\envs\\h0h5_tools\\Scripts\\python.exe",
+      "created_now": false,
+      "python_version": "3.12.10",
+      "is_live_interpreter": false,
+      "pip_version": "pip 25.0.1 from F:\\Prometheus\\vault\\techne_tools\\envs\\h0h5_tools\\Lib\\site-packages\\pip (python 3.12)",
+      "pip_pinned": false,
+      "pip_note": "pip bootstrapped by ensurepip from the base interpreter's bundled wheel; its version is inherited, not pinned by this lock"
+    },
+    "resolution": {
+      "ok": true,
+      "n_resolved": 1,
+      "resolved": [
+        {
+          "name": "z3-solver",
+          "version": "5.0.0.0",
+          "url": "https://files.pythonhosted.org/packages/b3/3c/bc1d7d55e5493e4637ef48c7a3680ce5e00082352f680baa22f491bfee20/z3_solver-5.0.0.0-py3-none-win_amd64.whl",
+          "sha256": "9b0aca98598353ea7eb59a51f909a399f6d0e687a1de3671b60a734cea4bb6bd",
+          "requested": true
+        }
+      ],
+      "unhashed": []
+    },
+    "lock": {
+      "path": "techne/acquisition/locks/z3-cp312-win-amd64.lock.txt",
+      "sha256_of_lock": "d457eb67ee8cc6feb5d977d80d87763f77e594baef0a6ce099b5b8598b3b90f0"
+    },
+    "install": {
+      "lock": "C:\\Users\\jcrai\\AppData\\Local\\Temp\\claude\\f--Prometheus\\71419ff6-c905-417b-9e8a-6ffb3e2cebd4\\scratchpad\\techne\\techne\\acquisition\\locks\\z3-cp312-win-amd64.lock.txt",
+      "returncode": 0,
+      "timed_out": false,
+      "wall_seconds": 0.813,
+      "stdout_tail": "Requirement already satisfied: z3-solver==5.0.0.0 in f:\\prometheus\\vault\\techne_tools\\envs\\h0h5_tools\\lib\\site-packages (from -r C:\\Users\\jcrai\\AppData\\Local\\Temp\\claude\\f--Prometheus\\71419ff6-c905-417b-9e8a-6ffb3e2cebd4\\scratchpad\\techne\\techne\\acquisition\\locks\\z3-cp312-win-amd64.lock.txt (line 16)) (5.0.0.0)\n",
+      "stderr_tail": "\n[notice] A new release of pip is available: 25.0.1 -> 26.2.1\n[notice] To update, run: F:\\Prometheus\\vault\\techne_tools\\envs\\h0h5_tools\\Scripts\\python.exe -m pip install --upgrade pip\n"
+    },
+    "import_verification": {
+      "imported": true,
+      "module_file": "F:\\Prometheus\\vault\\techne_tools\\envs\\h0h5_tools\\Lib\\site-packages\\z3\\__init__.py",
+      "dist_version": "5.0.0.0"
+    },
+    "version_match": true
+  },
+  "deviations": [],
+  "unrun_or_blocked": [],
+  "status": "INSTALLED_PINNED_AND_HASHED",
+  "manifest_entry": {
+    "id": "z3",
+    "kind": "python_package",
+    "distribution": "z3-solver",
+    "pinned_version": "5.0.0.0",
+    "env": "h0h5_tools",
+    "named_consumer": "H1 Boolean substrate (Proteus) oracle cross-check; H0 instrument library construction",
+    "integration_path": "pinned binding after exhaustive small-domain parity",
+    "official_source": "https://github.com/Z3Prover/z3"
+  },
+  "budget_profile": {
+    "purpose": "resolve, download, hash and import-check a Python distribution. The default for every python_package entry.",
+    "network": "ALLOWED -- this is the explicit acquisition stage",
+    "max_wall_seconds": 900,
+    "max_download_bytes": 536870912,
+    "max_disk_bytes": 2147483648,
+    "max_rss_bytes": 2147483648,
+    "max_processes": 4,
+    "rationale": "512 MiB covers the largest named wheel by ~30x (z3_solver win_amd64 is 16.9 MiB) plus a full transitive closure. 15 minutes covers a cold resolve on a slow link. 2 GiB RSS is 15 percent of available RAM, so two light probes can run beside each other and beside the engine.",
+    "name": "light_probe"
+  },
+  "resource_receipt": {
+    "profile": "light_probe",
+    "network_policy": "ALLOWED -- this is the explicit acquisition stage",
+    "wall_seconds": 2.422,
+    "wall_ceiling": 900,
+    "downloaded_bytes": 9059,
+    "download_ceiling": 536870912,
+    "cache_bytes_before": 534406507,
+    "cache_bytes_after": 0,
+    "cache_delta_bytes": -534406507,
+    "peak_rss_bytes_os_counter": 52015104,
+    "peak_rss_bytes_sampled": 35434496,
+    "rss_method": "GetProcessMemoryInfo",
+    "rss_ceiling": 2147483648,
+    "rss_samples": 9,
+    "rss_ceiling_exceeded_during_sampling": false,
+    "rss_enforcement": "NOT ENFORCED -- no job object / cgroup cap. peak_rss_bytes_os_counter is the OS peak-working-set counter for this process and IS reliable; rss_ceiling_exceeded_during_sampling is sampled and can miss a spike. Neither stops a step.",
+    "rss_excludes_children": "This is THIS process only. pip, git and venv run as children and their RSS is NOT included.",
+    "children_spawned": 5,
+    "process_cap": 4,
+    "aborted_on": null
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "schema": "techne.acquisition.hypothesis_fixture/1",
+  "why": "Explicit minimized counterexamples, replayable WITHOUT Hypothesis. A consumer's regression test should assert on these, not re-search for them.",
+  "cases": [
+    {
+      "defect": "threshold",
+      "input": 128,
+      "expected": "the property under test FAILS on this input"
+    },
+    {
+      "defect": "duplicate",
+      "input": [
+        0,
+        0
+      ],
+      "expected": "the property under test FAILS on this input"
+    }
+  ]
+}

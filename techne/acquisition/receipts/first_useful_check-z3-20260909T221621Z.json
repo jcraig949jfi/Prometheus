@@ -1,0 +1,246 @@
+{
+  "schema": "techne.acquisition.receipt/1",
+  "receipt_id": "first_useful_check-z3-20260909T221621Z",
+  "stage": "FIRST_USEFUL_CHECK",
+  "does_not_establish": [
+    "INSTALLATION",
+    "PAPER_REPRODUCTION",
+    "ADAPTER_QUALIFICATION",
+    "LOCAL_SCIENTIFIC_BENEFIT"
+  ],
+  "entry_id": "z3",
+  "tool": "z3-solver",
+  "design_version": "0.1",
+  "written_utc": "2026-09-09T22:16:21+00:00",
+  "seat": "Techne",
+  "repo": {
+    "commit": "95daf6e571d278d282e2d4d5ee257bc8b256a5a3",
+    "branch": "techne/h0h5-tools-2026-09-09",
+    "dirty": true
+  },
+  "runner": {
+    "python": "3.12.10",
+    "executable": "H:\\Python312\\python.exe",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "tool_cache": "F:\\Prometheus\\vault\\techne_tools",
+    "tool_cache_source": "TECHNE_TOOL_CACHE env",
+    "tool_cache_note": "host-local and gitignored; only its HASHES are tracked"
+  },
+  "commands_run": [
+    {
+      "argv": [
+        "F:\\Prometheus\\vault\\techne_tools\\envs\\h0h5_tools\\Scripts\\python.exe",
+        "C:\\Users\\jcrai\\AppData\\Local\\Temp\\claude\\f--Prometheus\\71419ff6-c905-417b-9e8a-6ffb3e2cebd4\\scratchpad\\techne\\techne\\acquisition\\checks\\z3_first_check.py"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "wall_seconds": 0.25,
+      "stdout_tail": "",
+      "stderr_tail": ""
+    }
+  ],
+  "observations": {
+    "check": "z3_first_useful_check",
+    "tool": "z3-solver",
+    "z3_version": "5.0.0",
+    "python": "3.12.10",
+    "executable": "F:\\Prometheus\\vault\\techne_tools\\envs\\h0h5_tools\\Scripts\\python.exe",
+    "n_vars": 4,
+    "distinct_outcomes_observed": [
+      "sat",
+      "unknown",
+      "unsat"
+    ],
+    "unknown_reasons_observed": [
+      "max. resource limit exceeded",
+      "timeout"
+    ],
+    "cases": [
+      {
+        "case": "NEGATIVE_CONTROL_VALIDATOR_CAN_REJECT",
+        "bogus_witnesses": [
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1,
+            0,
+            0
+          ]
+        ],
+        "validator_rejected_both": true,
+        "pass": true,
+        "why": "A validator that accepts everything makes the SAT case vacuous. This case fires the validator in the failing direction so the passing direction means something."
+      },
+      {
+        "case": "SAT_WITH_INDEPENDENTLY_VALIDATED_COUNTEREXAMPLE",
+        "expected_z3_result": "sat",
+        "observed_z3_result": "sat",
+        "witness": [
+          0,
+          0,
+          1,
+          0
+        ],
+        "independent_validator": {
+          "c1_value_at_witness": 0,
+          "c2_value_at_witness": 1,
+          "witness_really_distinguishes": true,
+          "shares_code_with_z3": false
+        },
+        "exhaustive_cross_check": {
+          "n_inputs": 16,
+          "n_differing_by_enumeration": 6,
+          "witness_in_enumerated_set": true
+        },
+        "pass": true,
+        "seconds": 0.0008
+      },
+      {
+        "case": "UNSAT_EQUIVALENCE",
+        "expected_z3_result": "unsat",
+        "observed_z3_result": "unsat",
+        "exhaustive_cross_check": {
+          "n_inputs": 16,
+          "n_differing_by_enumeration": 0,
+          "agrees_everywhere": true
+        },
+        "pass": true,
+        "seconds": 0.0003
+      },
+      {
+        "case": "UNKNOWN_BY_WALL_CLOCK_EXHAUSTION",
+        "expected_z3_result": "unknown",
+        "observed_z3_result": "unknown",
+        "reason_unknown": "timeout",
+        "limit_set": {
+          "timeout_ms": 50
+        },
+        "distinct_from_incompleteness": true,
+        "pass": true,
+        "seconds": 0.0651,
+        "consumer_rule": "An adapter MUST surface this as a third outcome. Coercing it to unsat would report 'no counterexample exists' when the truth is 'we stopped looking'."
+      },
+      {
+        "case": "UNKNOWN_BY_DETERMINISTIC_RESOURCE_EXHAUSTION",
+        "expected_z3_result": "unknown",
+        "observed_z3_result": "unknown",
+        "reason_unknown": "max. resource limit exceeded",
+        "limit_set": {
+          "rlimit": 2000
+        },
+        "distinct_from_timeout": true,
+        "why_this_matters": "rlimit is deterministic where wall-clock timeout is not. A repeatability check across hosts must use rlimit; a timeout makes the same query answerable on a fast host and unknown on a slow one.",
+        "pass": true,
+        "seconds": 0.0005
+      },
+      {
+        "case": "UNKNOWN_BY_INCOMPLETENESS",
+        "candidates_tried": [
+          {
+            "candidate": "nonlinear_int_satisfiable",
+            "options": {},
+            "result": "sat",
+            "reason_unknown": null,
+            "seconds": 0.0071
+          },
+          {
+            "candidate": "nonlinear_int_nl_disabled",
+            "options": {
+              "smt.arith.nl": false
+            },
+            "result": "sat",
+            "reason_unknown": null,
+            "seconds": 0.0062
+          },
+          {
+            "candidate": "nonlinear_real_quintic",
+            "options": {},
+            "result": "sat",
+            "reason_unknown": null,
+            "seconds": 0.002
+          },
+          {
+            "candidate": "quantified_uf_nonlinear",
+            "options": {},
+            "result": "unsat",
+            "reason_unknown": null,
+            "seconds": 0.0013
+          },
+          {
+            "candidate": "quantified_mbqi_off",
+            "options": {
+              "smt.mbqi": false
+            },
+            "result": "unsat",
+            "reason_unknown": null,
+            "seconds": 0.0009
+          },
+          {
+            "candidate": "forall_exists_square",
+            "options": {},
+            "result": "unsat",
+            "reason_unknown": null,
+            "seconds": 0.0016
+          }
+        ],
+        "observed": false,
+        "pass": null,
+        "verdict": "NOT_OBSERVED_ON_THIS_BUILD",
+        "retained_negative_result": "On z3 5.0.0 none of these six candidates produced an `unknown` whose reason was anything other than a budget being exhausted. This is NOT a claim that z3 is complete; it is a measured statement about what this seat could elicit in four seconds per query. The consumer-facing consequence: on this build an `unknown` seen in practice is most likely a budget failure, and the adapter must still report it as a third outcome rather than interpreting it."
+      }
+    ],
+    "n_cases": 6,
+    "n_decided": 5,
+    "n_passed": 5,
+    "all_decided_passed": true
+  },
+  "deviations": [],
+  "unrun_or_blocked": [],
+  "status": "CHECK_PASSED_WITH_UNDECIDED_CASES",
+  "check_script": "techne/acquisition/checks/z3_first_check.py",
+  "design_requirement": "SAT / UNSAT / UNKNOWN distinct, resource exhaustion distinct, and a returned counterexample independently validated",
+  "manifest_first_useful_check": "SAT / UNSAT / UNKNOWN handled distinctly, resource exhaustion distinct from UNKNOWN-by-incompleteness, and a returned counterexample independently validated outside the solver",
+  "named_consumer": "H1 Boolean substrate (Proteus) oracle cross-check; H0 instrument library construction",
+  "budget_profile": {
+    "purpose": "run a first-useful-check or a reproduction fixture against ALREADY acquired bytes.",
+    "network": "FORBIDDEN -- enforced by the check harness, which asserts no acquisition step runs under this profile",
+    "max_wall_seconds": 600,
+    "max_download_bytes": 0,
+    "max_disk_bytes": 1073741824,
+    "max_rss_bytes": 4294967296,
+    "max_processes": 2,
+    "rationale": "Scientific execution uses already-available inputs and dependencies. A check that needs the network is an acquisition step wearing a check's name.",
+    "name": "offline_check"
+  },
+  "resource_receipt": {
+    "profile": "offline_check",
+    "network_policy": "FORBIDDEN -- enforced by the check harness, which asserts no acquisition step runs under this profile",
+    "wall_seconds": 0.453,
+    "wall_ceiling": 600,
+    "downloaded_bytes": 0,
+    "download_ceiling": 0,
+    "cache_bytes_before": 926613645,
+    "cache_bytes_after": 0,
+    "cache_delta_bytes": -926613645,
+    "peak_rss_bytes_os_counter": 29609984,
+    "peak_rss_bytes_sampled": 29356032,
+    "rss_method": "GetProcessMemoryInfo",
+    "rss_ceiling": 4294967296,
+    "rss_samples": 1,
+    "rss_ceiling_exceeded_during_sampling": false,
+    "rss_enforcement": "NOT ENFORCED -- no job object / cgroup cap. peak_rss_bytes_os_counter is the OS peak-working-set counter for this process and IS reliable; rss_ceiling_exceeded_during_sampling is sampled and can miss a spike. Neither stops a step.",
+    "rss_excludes_children": "This is THIS process only. pip, git and venv run as children and their RSS is NOT included.",
+    "children_spawned": 1,
+    "process_cap": 2,
+    "aborted_on": null
+  },
+  "undecided_cases": [
+    "UNKNOWN_BY_INCOMPLETENESS"
+  ],
+  "check_exit_code": 0
+}

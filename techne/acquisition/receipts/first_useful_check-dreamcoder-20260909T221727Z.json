@@ -1,0 +1,959 @@
+{
+  "schema": "techne.acquisition.receipt/1",
+  "receipt_id": "first_useful_check-dreamcoder-20260909T221727Z",
+  "stage": "FIRST_USEFUL_CHECK",
+  "does_not_establish": [
+    "INSTALLATION",
+    "PAPER_REPRODUCTION",
+    "ADAPTER_QUALIFICATION",
+    "LOCAL_SCIENTIFIC_BENEFIT"
+  ],
+  "entry_id": "dreamcoder",
+  "tool": "dreamcoder",
+  "design_version": "0.1",
+  "written_utc": "2026-09-09T22:17:27+00:00",
+  "seat": "Techne",
+  "repo": {
+    "commit": "95daf6e571d278d282e2d4d5ee257bc8b256a5a3",
+    "branch": "techne/h0h5-tools-2026-09-09",
+    "dirty": true
+  },
+  "runner": {
+    "python": "3.12.10",
+    "executable": "H:\\Python312\\python.exe",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "tool_cache": "F:\\Prometheus\\vault\\techne_tools",
+    "tool_cache_source": "TECHNE_TOOL_CACHE env",
+    "tool_cache_note": "host-local and gitignored; only its HASHES are tracked"
+  },
+  "commands_run": [],
+  "observations": {
+    "source_revision": "cb0e63f5c33cd2de360b791038b0f5272750270e",
+    "pin_matches_manifest": true,
+    "recipe_location": {
+      "readme_references": [
+        {
+          "path_as_written": "docs/official_experiments",
+          "readme_line": 82
+        }
+      ],
+      "readme_linked_path": "docs/official_experiments",
+      "readme_linked_path_exists": false,
+      "files_with_that_basename_anywhere": [
+        {
+          "path": "official_experiments",
+          "is_file": true,
+          "bytes": 82632,
+          "sha256": "acc7b3a64073edf92076e8489a8472fdf92e8bd15c99161e02434820d97f6818"
+        }
+      ],
+      "root_level_file_content_summary": {
+        "n_nonblank_lines": 331,
+        "n_lines_invoking_bin_launch_py": 199,
+        "fraction_via_cloud_launcher": 0.601,
+        "machine_types_requested": [
+          "\"g3.16xlarge\"",
+          "\"p3.16xlarge\"",
+          "c4.8xlarge",
+          "m4.16xlarge",
+          "n1-highmem-64",
+          "n1-megamem-96",
+          "n1-standard-20",
+          "n1-standard-64",
+          "n1-standard-96",
+          "r4.16xlarge",
+          "x1.32xlarge"
+        ],
+        "per_run_timeouts_seconds": [
+          1,
+          60,
+          120,
+          300,
+          720,
+          1440,
+          1800,
+          2160,
+          3600,
+          7200,
+          14400,
+          28800,
+          57600
+        ],
+        "max_timeout_seconds": 57600,
+        "reading": "These are GCP cloud-launcher invocations. bin/launch.py -z <machine> provisions an instance and runs the command there. They are not local recipes, and the design forbids a cloud launcher as a default."
+      },
+      "CLAIM": "The path the README names -- docs/official_experiments -- DOES NOT EXIST at the pinned revision. A file named `official_experiments` exists at the repository ROOT. It is NOT asserted to be the README's intended recipe, and it is NOT a paper supplement: its contents are cloud-launcher commands. No historical replication is claimed from it."
+    },
+    "native_toolchains": {
+      "tools": {
+        "opam": {
+          "present": false,
+          "path": null,
+          "version": null
+        },
+        "ocaml": {
+          "present": false,
+          "path": null,
+          "version": null
+        },
+        "ocamlfind": {
+          "present": false,
+          "path": null,
+          "version": null
+        },
+        "dune": {
+          "present": false,
+          "path": null,
+          "version": null
+        },
+        "make": {
+          "present": false,
+          "path": null,
+          "version": null
+        },
+        "cargo": {
+          "present": false,
+          "path": null,
+          "version": null
+        },
+        "rustc": {
+          "present": false,
+          "path": null,
+          "version": null
+        },
+        "pkg-config": {
+          "present": false,
+          "path": null,
+          "version": null
+        },
+        "singularity": {
+          "present": false,
+          "path": null,
+          "version": null
+        }
+      },
+      "ocaml_solver": {
+        "required": "opam switch 4.06.1+flambda plus ppx_jane, core, re2, yojson, vg, cairo2, camlimages, menhir, ocaml-protoc, zmq",
+        "source": "README 'Build the OCaml solver' section at the pinned revision",
+        "buildable_here": false
+      },
+      "rust_compressor": {
+        "required": "cargo + rustc (make in rust_compressor/)",
+        "buildable_here": false
+      },
+      "singularity_container": {
+        "readme_offers": "sudo singularity build container.img singularity",
+        "available_here": false,
+        "note": "the README's container route also needs sudo and a Linux host; this is Windows"
+      }
+    },
+    "python_stack": {
+      "requirements_file": "requirements.txt",
+      "method": "per-pin artifact availability against each interpreter's sys_tags(); a full resolver run was abandoned as non-terminating and is recorded as such rather than reported as a failure",
+      "n_pins": 38,
+      "notable_pins": [
+        "Box2D-kengz==2.3.3",
+        "cairocffi==1.0.2",
+        "matplotlib==3.1.0",
+        "numpy==1.16.4",
+        "pygame==1.9.6",
+        "scikit-learn==0.21.2",
+        "scipy==1.3.0",
+        "torch==1.1.0",
+        "torchvision==0.3.0"
+      ],
+      "per_interpreter": [
+        {
+          "interpreter": "live-3.12",
+          "version": "3.12.10",
+          "n_pins": 38,
+          "n_with_compatible_wheel": 14,
+          "n_sdist_only_would_need_a_source_build": 22,
+          "sdist_only": [
+            "Box2D-kengz",
+            "Pillow",
+            "cairocffi",
+            "cffi",
+            "dill",
+            "frozendict",
+            "kiwisolver",
+            "matplotlib",
+            "multiprocess",
+            "nltk",
+            "numpy",
+            "pathos",
+            "pox",
+            "ppft",
+            "psutil",
+            "pycparser",
+            "pygame",
+            "pypng",
+            "pyzmq",
+            "scikit-learn",
+            "scipy",
+            "sexpdata"
+          ],
+          "n_pinned_version_absent_from_pypi": 0,
+          "pinned_version_absent": [],
+          "installable_from_wheels_alone": false
+        },
+        {
+          "interpreter": "py-3.11",
+          "version": "3.11.9",
+          "n_pins": 38,
+          "n_with_compatible_wheel": 14,
+          "n_sdist_only_would_need_a_source_build": 22,
+          "sdist_only": [
+            "Box2D-kengz",
+            "Pillow",
+            "cairocffi",
+            "cffi",
+            "dill",
+            "frozendict",
+            "kiwisolver",
+            "matplotlib",
+            "multiprocess",
+            "nltk",
+            "numpy",
+            "pathos",
+            "pox",
+            "ppft",
+            "psutil",
+            "pycparser",
+            "pygame",
+            "pypng",
+            "pyzmq",
+            "scikit-learn",
+            "scipy",
+            "sexpdata"
+          ],
+          "n_pinned_version_absent_from_pypi": 0,
+          "pinned_version_absent": [],
+          "installable_from_wheels_alone": false
+        }
+      ],
+      "per_pin": [
+        {
+          "name": "Box2D-kengz",
+          "version": "2.3.3",
+          "version_exists_on_pypi": true,
+          "n_wheels": 1,
+          "has_sdist": true,
+          "compatible": {
+            "live-3.12": {
+              "n_compatible_wheels": 0,
+              "example": null
+            },
+            "py-3.11": {
+              "n_compatible_wheels": 0,
+              "example": null
+            }
+          }
+        },
+        {
+          "name": "cairocffi",
+          "version": "1.0.2",
+          "version_exists_on_pypi": true,
+          "n_wheels": 0,
+          "has_sdist": true,
+          "compatible": {
+            "live-3.12": {
+              "n_compatible_wheels": 0,
+              "example": null
+            },
+            "py-3.11": {
+              "n_compatible_wheels": 0,
+              "example": null
+            }
+          }
+        },
+        {
+          "name": "certifi",
+          "version": "2019.3.9",
+          "version_exists_on_pypi": true,
+          "n_wheels": 1,
+          "has_sdist": true,
+          "compatible": {
+            "live-3.12": {
+              "n_compatible_wheels": 1,
+              "example": "certifi-2019.3.9-py2.py3-none-any.whl"
+            },
+            "py-3.11": {
+              "n_compatible_wheels": 1,
+              "example": "certifi-2019.3.9-py2.py3-none-any.whl"
+            }
+          }
+        },
+        {
+          "name": "cffi",
+          "version": "1.12.3",
+          "version_exists_on_pypi": true,
+          "n_wheels": 27,
+          "has_sdist": true,
+          "compatible": {
+            "live-3.12": {
+              "n_compatible_wheels": 0,
+              "example": null
+            },
+            "py-3.11": {
+              "n_compatible_wheels": 0,
+              "example": null
+            }
+          }
+        },
+        {
+          "name": "chardet",
+          "version": "3.0.4",
+          "version_exists_on_pypi": true,
+          "n_wheels": 1,
+          "has_sdist": true,
+          "compatible": {
+            "live-3.12": {
+              "n_compatible_wheels": 1,
+              "example": "chardet-3.0.4-py2.py3-none-any.whl"
+            },
+            "py-3.11": {
+              "n_compatible_wheels": 1,
+              "example": "chardet-3.0.4-py2.py3-none-any.whl"
+            }
+          }
+        },
+        {
+          "name": "colorama",
+          "version": "0.4.1",
+          "version_exists_on_pypi": true,
+          "n_wheels": 1,
+          "has_sdist": true,
+          "compatible": {
+            "live-3.12": {
+              "n_compatible_wheels": 1,
+              "example": "colorama-0.4.1-py2.py3-none-any.whl"
+            },
+            "py-3.11": {
+              "n_compatible_wheels": 1,
+              "example": "colorama-0.4.1-py2.py3-none-any.whl"
+            }
+          }
+        },
+        {
+          "name": "cycler",
+          "version": "0.10.0",
+          "version_exists_on_pypi": true,
+          "n_wheels": 1,
+          "has_sdist": true,
+          "compatible": {
+            "live-3.12": {
+              "n_compatible_wheels": 1,
+              "example": "cycler-0.10.0-py2.py3-none-any.whl"
+            },
+            "py-3.11": {
+              "n_compatible_wheels": 1,
+              "example": "cycler-0.10.0-py2.py3-none-any.whl"
+            }
+          }
+        },
+        {
+          "name": "dill",
+          "version": "0.2.9",
+          "version_exists_on_pypi": true,
+          "n_wheels": 0,
+          "has_sdist": true,
+          "compatible": {
+            "live-3.12": {
+              "n_compatible_wheels": 0,
+              "example": null
+            },
+            "py-3.11": {
+              "n_compatible_wheels": 0,
+              "example": null
+            }
+          }
+        },
+        {
+          "name": "frozendict",
+          "version": "1.2",
+          "version_exists_on_pypi": true,
+          "n_wheels": 0,
+          "has_sdist": true,
+          "compatible": {
+            "live-3.12": {
+              "n_compatible_wheels": 0,
+              "example": null
+            },
+            "py-3.11": {
+              "n_compatible_wheels": 0,
+              "example": null
+            }
+          }
+        },
+        {
+          "name": "graphviz",
+          "version": "0.11",
+          "version_exists_on_pypi": true,
+          "n_wheels": 1,
+          "has_sdist": true,
+          "compatible": {
+            "live-3.12": {
+              "n_compatible_wheels": 1,
+              "example": "graphviz-0.11-py2.py3-none-any.whl"
+            },
+            "py-3.11": {
+              "n_compatible_wheels": 1,
+              "example": "graphviz-0.11-py2.py3-none-any.whl"
+            }
+          }
+        },
+        {
+          "name": "idna",
+          "version": "2.8",
+          "version_exists_on_pypi": true,
+          "n_wheels": 1,
+          "has_sdist": true,
+          "compatible": {
+            "live-3.12": {
+              "n_compatible_wheels": 1,
+              "example": "idna-2.8-py2.py3-none-any.whl"
+            },
+            "py-3.11": {
+              "n_compatible_wheels": 1,
+              "example": "idna-2.8-py2.py3-none-any.whl"
+            }
+          }
+        },
+        {
+          "name": "joblib",
+          "version": "0.13.2",
+          "version_exists_on_pypi": true,
+          "n_wheels": 1,
+          "has_sdist": true,
+          "compatible": {
+            "live-3.12": {
+              "n_compatible_wheels": 1,
+              "example": "joblib-0.13.2-py2.py3-none-any.whl"
+            },
+            "py-3.11": {
+              "n_compatible_wheels": 1,
+              "example": "joblib-0.13.2-py2.py3-none-any.whl"
+            }
+          }
+        },
+        {
+          "name": "kiwisolver",
+          "version": "1.1.0",
+          "version_exists_on_pypi": true,
+          "n_wheels": 36,
+          "has_sdist": true,
+          "compatible": {
+            "live-3.12": {
+              "n_compatible_wheels": 0,
+              "example": null
+            },
+            "py-3.11": {
+              "n_compatible_wheels": 0,
+              "example": null
+            }
+          }
+        },
+        {
+          "name": "matplotlib",
+          "version": "3.1.0",
+          "version_exists_on_pypi": true,
+          "n_wheels": 8,
+          "has_sdist": true,
+          "compatible": {
+            "live-3.12": {
+              "n_compatible_wheels": 0,
+              "example": null
+            },
+            "py-3.11": {
+              "n_compatible_wheels": 0,
+              "example": null
+            }
+          }
+        },
+        {
+          "name": "multiprocess",
+          "version": "0.70.7",
+          "version_exists_on_pypi": true,
+          "n_wheels": 8,
+          "has_sdist": true,
+          "compatible": {
+            "live-3.12": {
+              "n_compatible_wheels": 0,
+              "example": null
+            },
+            "py-3.11": {
+              "n_compatible_wheels": 0,
+              "example": null
+            }
+          }
+        },
+        {
+          "name": "nltk",
+          "version": "3.4.1",
+          "version_exists_on_pypi": true,
+          "n_wheels": 0,
+          "has_sdist": true,
+          "compatible": {
+            "live-3.12": {
+              "n_compatible_wheels": 0,
+              "example": null
+            },
+            "py-3.11": {
+              "n_compatible_wheels": 0,
+              "example": null
+            }
+          }
+        },
+        {
+          "name": "numpy",
+          "version": "1.16.4",
+          "version_exists_on_pypi": true,
+          "n_wheels": 22,
+          "has_sdist": true,
+          "compatible": {
+            "live-3.12": {
+              "n_compatible_wheels": 0,
+              "example": null
+            },
+            "py-3.11": {
+              "n_compatible_wheels": 0,
+              "example": null
+            }
+          }
+        },
+        {
+          "name": "pathos",
+          "version": "0.2.3",
+          "version_exists_on_pypi": true,
+          "n_wheels": 0,
+          "has_sdist": true,
+          "compatible": {
+            "live-3.12": {
+              "n_compatible_wheels": 0,
+              "example": null
+            },
+            "py-3.11": {
+              "n_compatible_wheels": 0,
+              "example": null
+            }
+          }
+        },
+        {
+          "name": "Pillow",
+          "version": "6.0.0",
+          "version_exists_on_pypi": true,
+          "n_wheels": 25,
+          "has_sdist": true,
+          "compatible": {
+            "live-3.12": {
+              "n_compatible_wheels": 0,
+              "example": null
+            },
+            "py-3.11": {
+              "n_compatible_wheels": 0,
+              "example": null
+            }
+          }
+        },
+        {
+          "name": "pox",
+          "version": "0.2.5",
+          "version_exists_on_pypi": true,
+          "n_wheels": 0,
+          "has_sdist": true,
+          "compatible": {
+            "live-3.12": {
+              "n_compatible_wheels": 0,
+              "example": null
+            },
+            "py-3.11": {
+              "n_compatible_wheels": 0,
+              "example": null
+            }
+          }
+        },
+        {
+          "name": "ppft",
+          "version": "1.6.4.9",
+          "version_exists_on_pypi": true,
+          "n_wheels": 0,
+          "has_sdist": true,
+          "compatible": {
+            "live-3.12": {
+              "n_compatible_wheels": 0,
+              "example": null
+            },
+            "py-3.11": {
+              "n_compatible_wheels": 0,
+              "example": null
+            }
+          }
+        },
+        {
+          "name": "protobuf",
+          "version": "3.8.0",
+          "version_exists_on_pypi": true,
+          "n_wheels": 17,
+          "has_sdist": true,
+          "compatible": {
+            "live-3.12": {
+              "n_compatible_wheels": 1,
+              "example": "protobuf-3.8.0-py2.py3-none-any.whl"
+            },
+            "py-3.11": {
+              "n_compatible_wheels": 1,
+              "example": "protobuf-3.8.0-py2.py3-none-any.whl"
+            }
+          }
+        },
+        {
+          "name": "psutil",
+          "version": "5.6.2",
+          "version_exists_on_pypi": true,
+          "n_wheels": 8,
+          "has_sdist": true,
+          "compatible": {
+            "live-3.12": {
+              "n_compatible_wheels": 0,
+              "example": null
+            },
+            "py-3.11": {
+              "n_compatible_wheels": 0,
+              "example": null
+            }
+          }
+        },
+        {
+          "name": "pycparser",
+          "version": "2.19",
+          "version_exists_on_pypi": true,
+          "n_wheels": 0,
+          "has_sdist": true,
+          "compatible": {
+            "live-3.12": {
+              "n_compatible_wheels": 0,
+              "example": null
+            },
+            "py-3.11": {
+              "n_compatible_wheels": 0,
+              "example": null
+            }
+          }
+        },
+        {
+          "name": "pygame",
+          "version": "1.9.6",
+          "version_exists_on_pypi": true,
+          "n_wheels": 25,
+          "has_sdist": true,
+          "compatible": {
+            "live-3.12": {
+              "n_compatible_wheels": 0,
+              "example": null
+            },
+            "py-3.11": {
+              "n_compatible_wheels": 0,
+              "example": null
+            }
+          }
+        },
+        {
+          "name": "pyparsing",
+          "version": "2.4.0",
+          "version_exists_on_pypi": true,
+          "n_wheels": 1,
+          "has_sdist": true,
+          "compatible": {
+            "live-3.12": {
+              "n_compatible_wheels": 1,
+              "example": "pyparsing-2.4.0-py2.py3-none-any.whl"
+            },
+            "py-3.11": {
+              "n_compatible_wheels": 1,
+              "example": "pyparsing-2.4.0-py2.py3-none-any.whl"
+            }
+          }
+        },
+        {
+          "name": "pypng",
+          "version": "0.0.19",
+          "version_exists_on_pypi": true,
+          "n_wheels": 0,
+          "has_sdist": true,
+          "compatible": {
+            "live-3.12": {
+              "n_compatible_wheels": 0,
+              "example": null
+            },
+            "py-3.11": {
+              "n_compatible_wheels": 0,
+              "example": null
+            }
+          }
+        },
+        {
+          "name": "python-dateutil",
+          "version": "2.8.0",
+          "version_exists_on_pypi": true,
+          "n_wheels": 1,
+          "has_sdist": true,
+          "compatible": {
+            "live-3.12": {
+              "n_compatible_wheels": 1,
+              "example": "python_dateutil-2.8.0-py2.py3-none-any.whl"
+            },
+            "py-3.11": {
+              "n_compatible_wheels": 1,
+              "example": "python_dateutil-2.8.0-py2.py3-none-any.whl"
+            }
+          }
+        },
+        {
+          "name": "pytz",
+          "version": "2019.1",
+          "version_exists_on_pypi": true,
+          "n_wheels": 1,
+          "has_sdist": true,
+          "compatible": {
+            "live-3.12": {
+              "n_compatible_wheels": 1,
+              "example": "pytz-2019.1-py2.py3-none-any.whl"
+            },
+            "py-3.11": {
+              "n_compatible_wheels": 1,
+              "example": "pytz-2019.1-py2.py3-none-any.whl"
+            }
+          }
+        },
+        {
+          "name": "pyzmq",
+          "version": "18.0.1",
+          "version_exists_on_pypi": true,
+          "n_wheels": 24,
+          "has_sdist": true,
+          "compatible": {
+            "live-3.12": {
+              "n_compatible_wheels": 0,
+              "example": null
+            },
+            "py-3.11": {
+              "n_compatible_wheels": 0,
+              "example": null
+            }
+          }
+        },
+        {
+          "name": "requests",
+          "version": "2.22.0",
+          "version_exists_on_pypi": true,
+          "n_wheels": 1,
+          "has_sdist": true,
+          "compatible": {
+            "live-3.12": {
+              "n_compatible_wheels": 1,
+              "example": "requests-2.22.0-py2.py3-none-any.whl"
+            },
+            "py-3.11": {
+              "n_compatible_wheels": 1,
+              "example": "requests-2.22.0-py2.py3-none-any.whl"
+            }
+          }
+        },
+        {
+          "name": "scikit-learn",
+          "version": "0.21.2",
+          "version_exists_on_pypi": true,
+          "n_wheels": 15,
+          "has_sdist": true,
+          "compatible": {
+            "live-3.12": {
+              "n_compatible_wheels": 0,
+              "example": null
+            },
+            "py-3.11": {
+              "n_compatible_wheels": 0,
+              "example": null
+            }
+          }
+        },
+        {
+          "name": "scipy",
+          "version": "1.3.0",
+          "version_exists_on_pypi": true,
+          "n_wheels": 15,
+          "has_sdist": true,
+          "compatible": {
+            "live-3.12": {
+              "n_compatible_wheels": 0,
+              "example": null
+            },
+            "py-3.11": {
+              "n_compatible_wheels": 0,
+              "example": null
+            }
+          }
+        },
+        {
+          "name": "sexpdata",
+          "version": "0.0.3",
+          "version_exists_on_pypi": true,
+          "n_wheels": 0,
+          "has_sdist": true,
+          "compatible": {
+            "live-3.12": {
+              "n_compatible_wheels": 0,
+              "example": null
+            },
+            "py-3.11": {
+              "n_compatible_wheels": 0,
+              "example": null
+            }
+          }
+        },
+        {
+          "name": "six",
+          "version": "1.12.0",
+          "version_exists_on_pypi": true,
+          "n_wheels": 1,
+          "has_sdist": true,
+          "compatible": {
+            "live-3.12": {
+              "n_compatible_wheels": 1,
+              "example": "six-1.12.0-py2.py3-none-any.whl"
+            },
+            "py-3.11": {
+              "n_compatible_wheels": 1,
+              "example": "six-1.12.0-py2.py3-none-any.whl"
+            }
+          }
+        },
+        {
+          "name": "torch",
+          "version": "1.1.0",
+          "version_exists_on_pypi": true,
+          "n_wheels": 9,
+          "has_sdist": false,
+          "compatible": {
+            "live-3.12": {
+              "n_compatible_wheels": 0,
+              "example": null
+            },
+            "py-3.11": {
+              "n_compatible_wheels": 0,
+              "example": null
+            }
+          }
+        },
+        {
+          "name": "torchvision",
+          "version": "0.3.0",
+          "version_exists_on_pypi": true,
+          "n_wheels": 12,
+          "has_sdist": false,
+          "compatible": {
+            "live-3.12": {
+              "n_compatible_wheels": 0,
+              "example": null
+            },
+            "py-3.11": {
+              "n_compatible_wheels": 0,
+              "example": null
+            }
+          }
+        },
+        {
+          "name": "urllib3",
+          "version": "1.25.3",
+          "version_exists_on_pypi": true,
+          "n_wheels": 1,
+          "has_sdist": true,
+          "compatible": {
+            "live-3.12": {
+              "n_compatible_wheels": 1,
+              "example": "urllib3-1.25.3-py2.py3-none-any.whl"
+            },
+            "py-3.11": {
+              "n_compatible_wheels": 1,
+              "example": "urllib3-1.25.3-py2.py3-none-any.whl"
+            }
+          }
+        }
+      ],
+      "any_interpreter_installable_from_wheels": false
+    },
+    "blockers": [
+      {
+        "id": "BLK-DC-1",
+        "dimension": "python stack",
+        "measured": "requirements.txt pins 38 exact versions (including Box2D-kengz==2.3.3, cairocffi==1.0.2, matplotlib==3.1.0, numpy==1.16.4). No interpreter on this host can install all of them from wheels. live-3.12 (3.12.10): 14/38 pins have a compatible wheel, 22 are sdist-only, 0 pinned versions are gone; py-3.11 (3.11.9): 14/38 pins have a compatible wheel, 22 are sdist-only, 0 pinned versions are gone",
+        "consequence": "the Python half of a domain run cannot be installed from binaries; the remainder would need source builds of 2019 scientific packages against a 2026 toolchain"
+      },
+      {
+        "id": "BLK-DC-2",
+        "dimension": "OCaml solver",
+        "measured": "opam present=False, ocaml present=False",
+        "consequence": "the enumeration solver binaries cannot be built, and every domain script invokes them"
+      },
+      {
+        "id": "BLK-DC-3",
+        "dimension": "Rust compressor",
+        "measured": "cargo present=False",
+        "consequence": "the Rust compression backend cannot be built; the official commands pass --compressor pypy, which is a third backend also absent here"
+      },
+      {
+        "id": "BLK-DC-4",
+        "dimension": "resource envelope",
+        "measured": "every one of the 199 official commands is a cloud-launcher invocation requesting machine types ['\"g3.16xlarge\"', '\"p3.16xlarge\"', 'c4.8xlarge', 'm4.16xlarge', 'n1-highmem-64', 'n1-megamem-96', 'n1-standard-20', 'n1-standard-64', 'n1-standard-96', 'r4.16xlarge', 'x1.32xlarge'] with per-run timeouts up to 57600s",
+        "consequence": "the isolated_heavy_build ceiling is 7200s on 16 logical CPUs, and no cloud launcher is authorised. None of the official commands fits any declared profile, at any tolerance."
+      }
+    ],
+    "what_would_unblock": {
+      "minimum": "a Linux host with opam 4.06.1+flambda, the ten named OCaml packages, a Rust toolchain, and a Python <=3.7 interpreter -- i.e. the singularity container route, on Linux, with sudo",
+      "cheaper_alternative_for_the_consumer": "the H0/H2 reference library-learning arm does not require DreamCoder's solver. stitch_core already produces a verified, expansion-correct library artifact on this host (see techne/acquisition/exports/). If the arm needs a library rather than DreamCoder specifically, it is already unblocked by a different tool.",
+      "NOT_a_recommendation_to_drop_dreamcoder": "DreamCoder's value as a reference arm is a scientific judgement for the consuming seat, not this seat's call."
+    }
+  },
+  "deviations": [
+    "DEV-T7[dreamcoder]: the design asks for 'one named bounded domain smoke run'. It is NOT delivered. What is delivered is the measured reason it cannot be, which is the precise failing boundary the design asks for in place of a new architecture proposal."
+  ],
+  "unrun_or_blocked": [
+    "No DreamCoder domain smoke run was executed. The boundary is measured above, not estimated, and it is four independent blockers rather than one."
+  ],
+  "status": "BLOCKED_SMOKE_RUN_NOT_POSSIBLE",
+  "check": "dreamcoder_bounded_domain_smoke_feasibility",
+  "budget_profile": {
+    "purpose": "clone a repository tool at a pinned revision with submodules, and build a native toolchain in its OWN environment. Never the live interpreter.",
+    "network": "ALLOWED -- acquisition stage only",
+    "max_wall_seconds": 7200,
+    "max_download_bytes": 8589934592,
+    "max_disk_bytes": 42949672960,
+    "max_rss_bytes": 8589934592,
+    "max_processes": 8,
+    "rationale": "8 GiB RSS is 60 percent of measured AVAILABLE RAM -- deliberately under it. 8 of 16 logical CPUs leaves the other half for the seats sharing the host. 2 hours is a ceiling, not a target; the design's warning that 'a long README command is never a license for an unbounded run' is enforced by this number, not by the README.",
+    "NOT_A_REPRODUCTION_PROFILE": "A published benchmark gets its own explicit profile. This one only builds.",
+    "name": "isolated_heavy_build"
+  },
+  "resource_receipt": {
+    "profile": "isolated_heavy_build",
+    "network_policy": "ALLOWED -- acquisition stage only",
+    "wall_seconds": 3.563,
+    "wall_ceiling": 7200,
+    "downloaded_bytes": 880255,
+    "download_ceiling": 8589934592,
+    "cache_bytes_before": 926613645,
+    "cache_bytes_after": 0,
+    "cache_delta_bytes": -926613645,
+    "peak_rss_bytes_os_counter": 35184640,
+    "peak_rss_bytes_sampled": 34701312,
+    "rss_method": "GetProcessMemoryInfo",
+    "rss_ceiling": 8589934592,
+    "rss_samples": 14,
+    "rss_ceiling_exceeded_during_sampling": false,
+    "rss_enforcement": "NOT ENFORCED -- no job object / cgroup cap. peak_rss_bytes_os_counter is the OS peak-working-set counter for this process and IS reliable; rss_ceiling_exceeded_during_sampling is sampled and can miss a spike. Neither stops a step.",
+    "rss_excludes_children": "This is THIS process only. pip, git and venv run as children and their RSS is NOT included.",
+    "children_spawned": 3,
+    "process_cap": 8,
+    "aborted_on": null
+  }
+}

@@ -501,3 +501,55 @@ def test_end_to_end_producer_artifact_resolved_by_reader_and_charged_once(f):
     assert rep["unavailable_counts"]["gpu_s"] == 1
     assert rep["open_reservations"] == []
     assert f.verify_world(w, client_id=c)["ok"] is True
+
+
+# ===========================================================================
+# TRACK A part 1 -- the engine-issued principal, and one name for one field
+# ===========================================================================
+def test_the_read_path_accepts_the_write_paths_name(f):
+    """expected_blob_hash is the write path's name. Having a second name on
+    the read path for the same field is exactly what trips a headless
+    consumer, so the read path takes it too; expected_digest stays as the
+    shipped alias."""
+    c, w = _world(f, "w")
+    art = f.create_artifact(w, "blob", b"payload", client_id=c)
+    for kw in ({"expected_blob_hash": art["blob_hash"]},
+               {"expected_digest": art["blob_hash"]}):
+        got = f.get_artifact_content(w, art["artifact_id"], client_id=c, **kw)
+        assert got["resolution"]["digest_asserted_by_caller"] is True
+    for kw in ({"expected_blob_hash": sha(b"other")},
+               {"expected_digest": sha(b"other")}):
+        with pytest.raises(ValidationError):
+            f.get_artifact_content(w, art["artifact_id"], client_id=c, **kw)
+
+
+def test_the_client_retains_the_engine_issued_principal(tmp_path):
+    """register() returned the token and threw the client_id away, so a caller
+    that needed to be NAMED -- granted read on a scope, attributed in a cost
+    event, reconciled in a receipt -- had nothing to say. There is no
+    /v2/clients/me route, so it is RETAINED, never reconstructed."""
+    import sys as _sys
+    _sys.path.insert(0, os.path.join(
+        os.path.dirname(os.path.dirname(os.path.dirname(
+            os.path.abspath(__file__)))), "SerendipityFoundryClient"))
+    from fastapi.testclient import TestClient
+    from sfclient.client import EngineClient
+    from sfe.api import create_app
+
+    app = TestClient(create_app(str(tmp_path / "p.db")))
+    issued = app.post("/v2/clients", json={"name": "trackA"}).json()
+
+    ec = EngineClient("http://x", token=issued["token"],
+                      client_id=issued["client_id"])
+    assert ec.client_id == issued["client_id"]
+
+    # a client built from a BARE TOKEN knows it does not know who it is, and
+    # says so rather than deriving a substitute principal
+    bare = EngineClient("http://x", token=issued["token"])
+    assert bare.client_id is None
+
+    # and the credential never appears in the object's own repr
+    r = repr(ec)
+    assert issued["token"] not in r
+    assert issued["client_id"] in r
+    assert "authenticated=True" in r

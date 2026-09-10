@@ -1,0 +1,288 @@
+{
+  "schema": "techne.acquisition.receipt/1",
+  "receipt_id": "first_useful_check-stitch-20260909T221558Z",
+  "stage": "FIRST_USEFUL_CHECK",
+  "does_not_establish": [
+    "INSTALLATION",
+    "PAPER_REPRODUCTION",
+    "ADAPTER_QUALIFICATION",
+    "LOCAL_SCIENTIFIC_BENEFIT"
+  ],
+  "entry_id": "stitch",
+  "tool": "stitch_core",
+  "design_version": "0.1",
+  "written_utc": "2026-09-09T22:15:58+00:00",
+  "seat": "Techne",
+  "repo": {
+    "commit": "95daf6e571d278d282e2d4d5ee257bc8b256a5a3",
+    "branch": "techne/h0h5-tools-2026-09-09",
+    "dirty": true
+  },
+  "runner": {
+    "python": "3.12.10",
+    "executable": "H:\\Python312\\python.exe",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "tool_cache": "F:\\Prometheus\\vault\\techne_tools",
+    "tool_cache_source": "TECHNE_TOOL_CACHE env",
+    "tool_cache_note": "host-local and gitignored; only its HASHES are tracked"
+  },
+  "commands_run": [
+    {
+      "argv": [
+        "F:\\Prometheus\\vault\\techne_tools\\envs\\h0h5_tools\\Scripts\\python.exe",
+        "C:\\Users\\jcrai\\AppData\\Local\\Temp\\claude\\f--Prometheus\\71419ff6-c905-417b-9e8a-6ffb3e2cebd4\\scratchpad\\techne\\techne\\acquisition\\checks\\stitch_first_check.py",
+        "--fixture",
+        "F:\\Prometheus\\vault\\techne_tools\\fixtures\\stitch\\nuts-bolts.json",
+        "--manifest",
+        "C:\\Users\\jcrai\\AppData\\Local\\Temp\\claude\\f--Prometheus\\71419ff6-c905-417b-9e8a-6ffb3e2cebd4\\scratchpad\\techne\\techne\\acquisition\\reproduction\\stitch_nuts_bolts.manifest.json",
+        "--library-out",
+        "C:\\Users\\jcrai\\AppData\\Local\\Temp\\claude\\f--Prometheus\\71419ff6-c905-417b-9e8a-6ffb3e2cebd4\\scratchpad\\techne\\techne\\acquisition\\exports\\stitch_nuts_bolts_library.json"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "wall_seconds": 0.266,
+      "stdout_tail": "",
+      "stderr_tail": ""
+    }
+  ],
+  "observations": {
+    "check": "stitch_first_useful_check_and_reproduction",
+    "tool": "stitch_core",
+    "stitch_core_version": "0.1.29",
+    "python": "3.12.10",
+    "executable": "F:\\Prometheus\\vault\\techne_tools\\envs\\h0h5_tools\\Scripts\\python.exe",
+    "reproduction": {
+      "manifest_id": "REPRO-STITCH-NUTSBOLTS-001",
+      "manifest_status_before_run": "DECLARED_NOT_RUN",
+      "comparison_variant": "upstream-reproduction",
+      "metrics": [
+        {
+          "metric_id": "M1_N_ABSTRACTIONS",
+          "metric": "number of abstractions returned by compress()",
+          "expected": 3,
+          "observed": 3,
+          "tolerated_deviation": 0,
+          "verdict_grade": null,
+          "expected_provenance": "S-TUTORIAL (three abstractions listed verbatim) and S-DESIGN",
+          "deviation": 0,
+          "match": true
+        },
+        {
+          "metric_id": "M2_ABSTRACTION_BODIES",
+          "metric": "the set of abstraction body strings, compared as exact strings after whitespace normalisation",
+          "expected": [
+            "(T (repeat (T l (M 1 0 -0.5 (/ 0.5 (tan (/ pi #1))))) #1 (M 1 (/ (* 2 pi) #1) 0 0)) (M #0 0 0 0))",
+            "(repeat (T (T #2 (M 0.5 0 0 0)) (M 1 0 (* #1 (cos (/ pi 4))) (* #1 (sin (/ pi 4))))) #0 (M 1 (/ (* 2 pi) #0) 0 0))",
+            "(T (T c (M 2 0 0 0)) (M #0 0 0 0))"
+          ],
+          "observed": [
+            "(T (repeat (T l (M 1 0 -0.5 (/ 0.5 (tan (/ pi #1))))) #1 (M 1 (/ (* 2 pi) #1) 0 0)) (M #0 0 0 0))",
+            "(repeat (T (T #2 (M 0.5 0 0 0)) (M 1 0 (* #1 (cos (/ pi 4))) (* #1 (sin (/ pi 4))))) #0 (M 1 (/ (* 2 pi) #0) 0 0))",
+            "(T (T c (M 2 0 0 0)) (M #0 0 0 0))"
+          ],
+          "tolerated_deviation": "whitespace only",
+          "verdict_grade": null,
+          "expected_provenance": "S-TUTORIAL, verbatim from the page this seat retrieved and hashed",
+          "match": true,
+          "only_in_observed": [],
+          "only_in_expected": []
+        },
+        {
+          "metric_id": "M3_COST_BEFORE",
+          "metric": "compression cost of the original programs, as reported by stitch's own cost metric",
+          "expected": 1919558,
+          "observed": 1919558,
+          "tolerated_deviation": 0,
+          "verdict_grade": "SECOND_HAND_EXPECTED_VALUE -- a mismatch here is evidence about the design's citation or about a version difference, NOT automatically evidence that stitch_core is broken",
+          "expected_provenance": "S-DESIGN only -- see its PROVENANCE_LIMIT",
+          "deviation": 0,
+          "match": true
+        },
+        {
+          "metric_id": "M4_COST_AFTER",
+          "metric": "compression cost after 3 iterations of rewriting",
+          "expected": 316890,
+          "observed": 316890,
+          "tolerated_deviation": 0,
+          "verdict_grade": "SECOND_HAND_EXPECTED_VALUE",
+          "expected_provenance": "S-DESIGN only -- see its PROVENANCE_LIMIT",
+          "deviation": 0,
+          "match": true
+        }
+      ],
+      "first_hand_all_match": true,
+      "second_hand_all_match": true,
+      "determinism": {
+        "claim": "compress() exposes no seed; with threads=1 the identical invocation must return the identical result, or no reproduction verdict is possible",
+        "n_abstractions_equal": true,
+        "bodies_equal": true,
+        "original_cost_equal": true,
+        "final_cost_equal": true,
+        "rewritten_equal": true,
+        "deterministic": true
+      },
+      "status": "REPRODUCED",
+      "wall_seconds_run1": 0.073,
+      "wall_seconds_run2": 0.07,
+      "backend_args": {
+        "iterations": 3,
+        "abstraction_prefix": "fn_",
+        "previous_abstractions": 0,
+        "shuffle": false,
+        "truncate": null,
+        "no_opt": false,
+        "silent": true,
+        "verbose_rewrite": false,
+        "step": {
+          "max_arity": 3,
+          "threads": 1,
+          "no_stats": false,
+          "batch": 1,
+          "dynamic_batch": false,
+          "eta_long": false,
+          "no_curried_metavars": false,
+          "no_curried_bodies": false,
+          "inv_candidates": 1,
+          "hole_choice": "DepthFirst",
+          "cost": {
+            "cost_lam": 1,
+            "cost_app": 1,
+            "cost_var": 100,
+            "cost_ivar": 100,
+            "cost_prim_default": 100,
+            "cost_prim": "{}"
+          },
+          "no_mismatch_check": false,
+          "follow": null,
+          "follow_types": null,
+          "follow_prune": false,
+          "verbose_worklist": false,
+          "verbose_best": false,
+          "print_stats": 0,
+          "show_rewritten": false,
+          "rewritten_dreamcoder": false,
+          "rewritten_intermediates": false,
+          "inv_arg_cap": false,
+          "allow_single_task": false,
+          "no_opt_single_use": false,
+          "no_opt_upper_bound": false,
+          "no_opt_force_multiuse": false,
+          "no_opt_useless_abstract": false,
+          "no_opt_arity_zero": false,
+          "no_other_util": false,
+          "structure_penalty": 1.0,
+          "rewrite_check": false,
+          "utility_by_rewrite": false,
+          "dreamcoder_comparison": false,
+          "quiet": true,
+          "fused_lambda_tags": {
+            "tags": null
+          },
+          "tdfa": {
+            "tdfa_json_path": null,
+            "tdfa_root": null,
+            "valid_metavars": null,
+            "valid_roots": null,
+            "tdfa_non_eta_long_states": null,
+            "tdfa_split": null
+          },
+          "symvar": {
+            "symvar_prefix": null
+          }
+        }
+      }
+    },
+    "first_useful_check": {
+      "cases": [
+        {
+          "case": "DETERMINISM_UNDER_IDENTICAL_INVOCATION",
+          "claim": "compress() exposes no seed; with threads=1 the identical invocation must return the identical result, or no reproduction verdict is possible",
+          "n_abstractions_equal": true,
+          "bodies_equal": true,
+          "original_cost_equal": true,
+          "final_cost_equal": true,
+          "rewritten_equal": true,
+          "deterministic": true,
+          "pass": true
+        },
+        {
+          "case": "SEMANTICS_PRESERVING_EXPANSION",
+          "n": 250,
+          "n_recovered": 250,
+          "n_mismatched": 0,
+          "n_errored": 0,
+          "all_recovered": true,
+          "mismatches": [],
+          "errors": [],
+          "pass": true
+        },
+        {
+          "case": "NEGATIVE_CONTROL_CORRUPTED_BODY_IS_CAUGHT",
+          "corrupted_abstraction": "fn_0",
+          "n_recovered_with_corrupt_body": 48,
+          "n_total": 250,
+          "pass": true,
+          "why": "If the expander still recovered every original after a body was replaced by (M 1 0 0 0), it would not be reading the body at all and the positive result above would be vacuous."
+        },
+        {
+          "case": "REWRITE_AGREES_WITH_COMPRESS",
+          "claim": "rewrite(originals, abstractions) reproduces compress()'s own rewritten programs exactly",
+          "agrees": true,
+          "pass": true
+        }
+      ],
+      "n_passed": 4,
+      "n_total": 4,
+      "all_passed": true
+    },
+    "library_export": "C:\\Users\\jcrai\\AppData\\Local\\Temp\\claude\\f--Prometheus\\71419ff6-c905-417b-9e8a-6ffb3e2cebd4\\scratchpad\\techne\\techne\\acquisition\\exports\\stitch_nuts_bolts_library.json",
+    "stage_separation": {
+      "INSTALLATION": "done in a separate receipt",
+      "PAPER_REPRODUCTION": "REPRODUCED",
+      "FIRST_USEFUL_CHECK": "PASSED",
+      "ADAPTER_QUALIFICATION": "NOT ATTEMPTED -- no Prometheus consumer calls this yet",
+      "LOCAL_SCIENTIFIC_BENEFIT": "NOT ATTEMPTED -- nothing here shows an experiment got a better answer"
+    }
+  },
+  "deviations": [],
+  "unrun_or_blocked": [],
+  "status": "CHECK_PASSED",
+  "check_script": "techne/acquisition/checks/stitch_first_check.py",
+  "design_requirement": "the documented nuts-bolts fixture as an UPSTREAM check, then semantics-preserving expansion verified independently",
+  "manifest_first_useful_check": "the documented nuts-bolts fixture (compression cost 1919558 -> 316890, three abstractions) as an UPSTREAM CHECK, then semantics-preserving expansion of a learned abstraction verified against an independent evaluator",
+  "named_consumer": "H0 instrument-library construction (2x2 Boolean factorial) -- the library that H0's cells are built with; H2 library reuse",
+  "budget_profile": {
+    "purpose": "run a first-useful-check or a reproduction fixture against ALREADY acquired bytes.",
+    "network": "FORBIDDEN -- enforced by the check harness, which asserts no acquisition step runs under this profile",
+    "max_wall_seconds": 600,
+    "max_download_bytes": 0,
+    "max_disk_bytes": 1073741824,
+    "max_rss_bytes": 4294967296,
+    "max_processes": 2,
+    "rationale": "Scientific execution uses already-available inputs and dependencies. A check that needs the network is an acquisition step wearing a check's name.",
+    "name": "offline_check"
+  },
+  "resource_receipt": {
+    "profile": "offline_check",
+    "network_policy": "FORBIDDEN -- enforced by the check harness, which asserts no acquisition step runs under this profile",
+    "wall_seconds": 0.516,
+    "wall_ceiling": 600,
+    "downloaded_bytes": 0,
+    "download_ceiling": 0,
+    "cache_bytes_before": 926613645,
+    "cache_bytes_after": 0,
+    "cache_delta_bytes": -926613645,
+    "peak_rss_bytes_os_counter": 30314496,
+    "peak_rss_bytes_sampled": 29839360,
+    "rss_method": "GetProcessMemoryInfo",
+    "rss_ceiling": 4294967296,
+    "rss_samples": 2,
+    "rss_ceiling_exceeded_during_sampling": false,
+    "rss_enforcement": "NOT ENFORCED -- no job object / cgroup cap. peak_rss_bytes_os_counter is the OS peak-working-set counter for this process and IS reliable; rss_ceiling_exceeded_during_sampling is sampled and can miss a spike. Neither stops a step.",
+    "rss_excludes_children": "This is THIS process only. pip, git and venv run as children and their RSS is NOT included.",
+    "children_spawned": 1,
+    "process_cap": 2,
+    "aborted_on": null
+  },
+  "check_exit_code": 0
+}

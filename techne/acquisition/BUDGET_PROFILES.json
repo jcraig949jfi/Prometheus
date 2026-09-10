@@ -1,0 +1,63 @@
+{
+  "schema": "techne.acquisition.budget/1",
+  "generated_utc": "2026-09-09",
+  "provenance": {
+    "design_says": "'The acquisition manifest supplies proposed ceilings for a light tool probe and an isolated heavy build. Reconcile them with actual host capacity before starting.'",
+    "design_deviation": "DEV-T2: the proposed ceilings live in the absent prometheus-tool-acquisition-plan.json. There is nothing to reconcile AGAINST, so these ceilings are derived from measured host capacity alone (techne/acquisition/HOST_CAPACITY.json, measured 2026-09-09) and are marked DERIVED_FROM_HOST, not RECONCILED. When the operator's proposed ceilings arrive, the reconciliation is a real step and both numbers get recorded.",
+    "binding_constraint": "RAM AVAILABLE, not RAM total. The host has 31.6 GiB total but 13.2 GiB available at measurement time (other seats and an SFE service share this machine). Every RAM ceiling below is set against AVAILABLE, so a profile cannot succeed by evicting another seat's working set."
+  },
+  "host_measured": {
+    "cpu_logical": 16,
+    "ram_total_gib": 31.6,
+    "ram_available_gib": 13.2,
+    "free_gib_by_volume": {"C:": 99.3, "D:": 464.7, "F:": 2206.6, "H:": 226.0},
+    "note": "The tool cache defaults to <repo>/vault/techne_tools, i.e. the volume holding the checkout. On this host that is F: with 2.2 TiB free, so disk is not a binding constraint for any profile here."
+  },
+  "profiles": {
+    "light_probe": {
+      "purpose": "resolve, download, hash and import-check a Python distribution. The default for every python_package entry.",
+      "network": "ALLOWED -- this is the explicit acquisition stage",
+      "max_wall_seconds": 900,
+      "max_download_bytes": 536870912,
+      "max_disk_bytes": 2147483648,
+      "max_rss_bytes": 2147483648,
+      "max_processes": 4,
+      "rationale": "512 MiB covers the largest named wheel by ~30x (z3_solver win_amd64 is 16.9 MiB) plus a full transitive closure. 15 minutes covers a cold resolve on a slow link. 2 GiB RSS is 15 percent of available RAM, so two light probes can run beside each other and beside the engine."
+    },
+    "isolated_heavy_build": {
+      "purpose": "clone a repository tool at a pinned revision with submodules, and build a native toolchain in its OWN environment. Never the live interpreter.",
+      "network": "ALLOWED -- acquisition stage only",
+      "max_wall_seconds": 7200,
+      "max_download_bytes": 8589934592,
+      "max_disk_bytes": 42949672960,
+      "max_rss_bytes": 8589934592,
+      "max_processes": 8,
+      "rationale": "8 GiB RSS is 60 percent of measured AVAILABLE RAM -- deliberately under it. 8 of 16 logical CPUs leaves the other half for the seats sharing the host. 2 hours is a ceiling, not a target; the design's warning that 'a long README command is never a license for an unbounded run' is enforced by this number, not by the README.",
+      "NOT_A_REPRODUCTION_PROFILE": "A published benchmark gets its own explicit profile. This one only builds."
+    },
+    "offline_check": {
+      "purpose": "run a first-useful-check or a reproduction fixture against ALREADY acquired bytes.",
+      "network": "FORBIDDEN -- enforced by the check harness, which asserts no acquisition step runs under this profile",
+      "max_wall_seconds": 600,
+      "max_download_bytes": 0,
+      "max_disk_bytes": 1073741824,
+      "max_rss_bytes": 4294967296,
+      "max_processes": 2,
+      "rationale": "Scientific execution uses already-available inputs and dependencies. A check that needs the network is an acquisition step wearing a check's name."
+    },
+    "stitch_core_reproduction": {
+      "purpose": "the ONE bounded core reproduction selected for stitch_core (the documented nuts-bolts fixture). Its own explicit profile, per the design.",
+      "network": "FORBIDDEN",
+      "max_wall_seconds": 1800,
+      "max_download_bytes": 0,
+      "max_disk_bytes": 2147483648,
+      "max_rss_bytes": 6442450944,
+      "max_processes": 2,
+      "rationale": "The design records that the stitch artifact 'documents substantially larger memory requirements for its ablation/hybrid studies than for core claims'. 6 GiB is under measured available RAM and is sized for ONE core claim. The ablation/hybrid studies are explicitly OUT of this profile and have no profile, which means they are not authorised to run."
+    }
+  },
+  "enforcement": {
+    "how": "techne/acquisition/budget.py wraps every acquisition and check step: wall clock measured and aborted at the ceiling, bytes downloaded counted and aborted at the ceiling, peak RSS sampled and reported, subprocess count capped, and the whole process tree terminated on abort.",
+    "honest_limit": "RSS is SAMPLED, not capped by the OS. A step that spikes between samples can exceed max_rss_bytes without being stopped. The receipt reports observed peak RSS and whether it exceeded the ceiling; it does not claim the ceiling was enforced by the kernel. A hard cap needs a job object (Windows) or cgroup (Linux) and is recorded here as an UNIMPLEMENTED control, not as a passing one."
+  }
+}

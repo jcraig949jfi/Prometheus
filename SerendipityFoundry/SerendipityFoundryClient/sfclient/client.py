@@ -37,12 +37,23 @@ class EngineError(Exception):
 class EngineClient:
     def __init__(self, base_url: str, token: Optional[str] = None, *,
                  cafile: Optional[str] = None, insecure: bool = False,
-                 timeout: float = 30.0, session_key: Optional[str] = None):
+                 timeout: float = 30.0, session_key: Optional[str] = None,
+                 client_id: Optional[str] = None):
         self._u = urllib.parse.urlsplit(base_url.rstrip("/"))
         if self._u.scheme not in ("http", "https"):
             raise ValueError("base_url must be http(s)")
         self.token = token
         self.timeout = timeout
+        # THE ENGINE-ISSUED PRINCIPAL. register() used to return the token and
+        # throw the client_id away, so a caller that needed to be NAMED -- to
+        # be granted read on someone's scope, to appear in a cost event's
+        # attribution, to reconcile a receipt -- had no way to say who it was
+        # and would have had to derive something. There is no /v2/clients/me
+        # route, so this is RETAINED, never reconstructed: if you built the
+        # client from a bare token this stays None and says so, rather than
+        # inventing a substitute principal that would then be wrong in exactly
+        # the records that matter.
+        self.client_id = client_id
         # Session affinity: set automatically by create_session() and then sent
         # on EVERY subsequent call. A caller never appends it per-endpoint --
         # that was the whole point of choosing one header. Pass it to the
@@ -96,10 +107,24 @@ class EngineClient:
 
     # -- identity ----------------------------------------------------------
     def register(self, name: str) -> str:
-        """Register a client and adopt its token. Returns the token."""
+        """Register a client, adopting BOTH its token and its client_id.
+
+        Returns the token, as it always did -- the id is retained on the
+        instance as `client_id` rather than returned, so no existing caller
+        changes. The token is shown once by the engine and is never logged or
+        repeated by this client; `__repr__` deliberately shows the id and not
+        the token."""
         r = self._req("POST", "/v2/clients", {"name": name})
         self.token = r["token"]
+        self.client_id = r.get("client_id")
         return self.token
+
+    def __repr__(self) -> str:
+        """Names the principal, NEVER the credential. This class now holds an
+        identity as well as a secret, and the moment both are on one object an
+        accidental repr in a log is the obvious way to leak the wrong one."""
+        return "EngineClient(base_url=%r, client_id=%r, authenticated=%s)" % (
+            self._u.geturl(), self.client_id, self.token is not None)
 
     def version(self) -> dict:
         return self._req("GET", "/v2/version")
@@ -277,6 +302,7 @@ class EngineClient:
             "expected_blob_hash": expected_blob_hash}, idem_key=idem_key)
 
     def artifact_content(self, wid, artifact_id: str, *,
+                         expected_blob_hash: Optional[str] = None,
                          expected_digest: Optional[str] = None,
                          expected_bytes: Optional[int] = None,
                          max_bytes: Optional[int] = None) -> dict:
@@ -294,10 +320,21 @@ class EngineClient:
         only a hash still gets 404. A mismatch returns 422 and no bytes.
         expected_bytes / max_bytes assert size at that same gate rather than
         after you have already received the payload."""
+        # expected_blob_hash is the PRIMARY name, matching the write path:
+        # one thing should not have two names across two directions, which is
+        # exactly what trips a headless consumer. expected_digest is kept as an
+        # accepted alias so nothing written against the first cut breaks.
+        want = expected_blob_hash or expected_digest
+        if expected_blob_hash and expected_digest \
+                and expected_blob_hash != expected_digest:
+            raise ValueError(
+                "expected_blob_hash and expected_digest disagree; they are the "
+                "same field under two names, so passing both different is a "
+                "bug rather than a choice")
         q = f"/v2/worlds/{wid}/artifacts/{artifact_id}/content"
         parts = []
-        if expected_digest:
-            parts.append("expected_digest=" + expected_digest)
+        if want:
+            parts.append("expected_blob_hash=" + want)
         if expected_bytes is not None:
             parts.append("expected_bytes=%d" % expected_bytes)
         if max_bytes is not None:
@@ -307,6 +344,7 @@ class EngineClient:
         return self._req("GET", q)
 
     def artifact_bytes(self, wid, artifact_id: str, *,
+                       expected_blob_hash: Optional[str] = None,
                        expected_digest: Optional[str] = None,
                        expected_bytes: Optional[int] = None,
                        max_bytes: Optional[int] = None) -> bytes:
@@ -320,6 +358,7 @@ class EngineClient:
         import base64
         import hashlib
         r = self.artifact_content(wid, artifact_id,
+                                  expected_blob_hash=expected_blob_hash,
                                   expected_digest=expected_digest,
                                   expected_bytes=expected_bytes,
                                   max_bytes=max_bytes)

@@ -1,0 +1,17 @@
+# techne.acquisition lock -- entry 'z3', isolated env 'h0h5_tools'
+# host interpreter: Python 3.12.10 / win32
+#
+# Install ONLY into the isolated env, and ONLY with hashes required:
+#     <tool_cache>/envs/h0h5_tools/Scripts/python -m pip install --require-hashes --no-deps -r z3-cp312-win-amd64.lock.txt
+#
+# --no-deps is deliberate: the closure below IS the dependency set, resolved once
+# and pinned. Letting pip re-resolve would let a transitive floor move silently.
+#
+# This lock is valid for THIS interpreter and platform only. A different Python
+# minor version or platform needs its own lock; a lock is not portable evidence.
+#
+# named consumer: H1 Boolean substrate (Proteus) oracle cross-check; H0 instrument library construction
+# license status: RESOLVED_FREE_TEXT_ONLY
+
+z3-solver==5.0.0.0 \
+    --hash=sha256:9b0aca98598353ea7eb59a51f909a399f6d0e687a1de3671b60a734cea4bb6bd

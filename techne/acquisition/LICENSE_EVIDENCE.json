@@ -1,0 +1,373 @@
+{
+  "schema": "techne.acquisition.license_evidence/1",
+  "generated_utc": "2026-09-10T07:34:50+00:00",
+  "rule": "licenses read from DISTRIBUTED artifacts only (wheel METADATA, wheel notice files, sdist notice files, sdist PKG-INFO/pyproject/Cargo declarations). A repository API license classifier is NEVER used as the basis of a claim.",
+  "notices_stored_under": "F:\\Prometheus\\vault\\techne_tools\\notices",
+  "entries": [
+    {
+      "entry_id": "z3",
+      "distribution": "z3-solver",
+      "version": "5.0.0.0",
+      "rule_applied": "read License-Expression / License / Classifier from the downloaded wheel METADATA; the GitHub API returns NOASSERTION for this repository and is NOT used",
+      "wheel": {
+        "filename": "z3_solver-5.0.0.0-py3-none-win_amd64.whl",
+        "sha256": "9b0aca98598353ea7eb59a51f909a399f6d0e687a1de3671b60a734cea4bb6bd",
+        "license_expression": null,
+        "license_field": "MIT License",
+        "classifiers": [],
+        "status": "RESOLVED_FREE_TEXT_ONLY",
+        "notice_files_in_wheel": []
+      },
+      "sdist": {
+        "filename": "z3_solver-5.0.0.0.tar.gz",
+        "sha256_pypi": "24d4b524c21f48c86c7058a36e83091c1fc08be28b68bf5a0f3cce5305ed8464",
+        "sha256_local": "24d4b524c21f48c86c7058a36e83091c1fc08be28b68bf5a0f3cce5305ed8464",
+        "digest_matches_pypi": true,
+        "n_files": 2638,
+        "notice_files_in_sdist": [
+          "z3_solver-5.0.0.0/core/LICENSE.txt"
+        ],
+        "declared_license_lines": [
+          {
+            "file": "z3_solver-5.0.0.0/PKG-INFO",
+            "line": "License: MIT License"
+          },
+          {
+            "file": "z3_solver-5.0.0.0/z3_solver.egg-info/PKG-INFO",
+            "line": "License: MIT License"
+          }
+        ]
+      },
+      "notices_kept": [
+        {
+          "from": "sdist",
+          "stored_as": "z3_solver-5.0.0.0_core_LICENSE.txt",
+          "bytes": 1096,
+          "sha256": "e617cad2ab9347e3129c2b171e87909332174e17961c5c3412d0799469111337",
+          "source_path_in_artifact": "z3_solver-5.0.0.0/core/LICENSE.txt",
+          "first_line": "Z3"
+        }
+      ],
+      "spdx_claim": null,
+      "status": "DECLARED_AS_FREE_TEXT_NO_SPDX",
+      "redistribution_note": "The WHEEL we installed ships no notice file; the sdist does. The notice has been copied into the tool cache alongside the wheel so the license travels with the copy, which is what the design requires. The wheel alone is an incomplete copy.",
+      "repository_notice": {
+        "consulted": true,
+        "reason": null,
+        "source_used": "official_source",
+        "repository": "Z3Prover/z3",
+        "revision": "8e3402b215a810a4154eb183a7dfc4e853eb2f52",
+        "notice_files": [
+          {
+            "name": "LICENSE.txt",
+            "bytes": 1096,
+            "sha256": "e617cad2ab9347e3129c2b171e87909332174e17961c5c3412d0799469111337",
+            "first_line": "Z3",
+            "copyright_line": "Copyright (c) Microsoft Corporation",
+            "requires_notice_be_included_in_copies": true,
+            "stored": {
+              "stored_as": "REPOSITORY_8e3402b215a8_LICENSE.txt",
+              "bytes": 1096,
+              "sha256": "e617cad2ab9347e3129c2b171e87909332174e17961c5c3412d0799469111337",
+              "source_path_in_artifact": "REPOSITORY@8e3402b215a8/LICENSE.txt",
+              "first_line": "Z3"
+            }
+          }
+        ],
+        "found": true,
+        "evidence_grade": "LICENCE DOCUMENT AT A PINNED SOURCE REVISION. Stronger than a repository API classifier, which is a heuristic guess and is never used here. Weaker than the artifact's own metadata, because the revision is not provably the one that built the distributed artifact -- decisively so when the distribution has no matching upstream tag."
+      }
+    },
+    {
+      "entry_id": "hypothesis",
+      "distribution": "hypothesis",
+      "version": "6.165.10",
+      "rule_applied": "wheel METADATA; GitHub API returns NOASSERTION for this repository",
+      "wheel": {
+        "filename": "hypothesis-6.165.10-cp312-cp312-win_amd64.whl",
+        "sha256": "3376f2594763aef14faa519b0fb27cae7ce9eeaab4c69efa07777499110306c9",
+        "license_expression": "MPL-2.0",
+        "license_field": null,
+        "classifiers": [],
+        "status": "RESOLVED_SPDX_EXPRESSION",
+        "notice_files_in_wheel": [
+          "LICENSE.txt",
+          "hypothesis-6.165.10.dist-info/licenses/LICENSE.txt"
+        ]
+      },
+      "sdist": {
+        "filename": "hypothesis-6.165.10.tar.gz",
+        "sha256_pypi": "68b45e09834cd80523cb1eb274463073c7a9af4e4ef7cff34d9615f355572d32",
+        "sha256_local": "68b45e09834cd80523cb1eb274463073c7a9af4e4ef7cff34d9615f355572d32",
+        "digest_matches_pypi": true,
+        "n_files": 119,
+        "notice_files_in_sdist": [
+          "hypothesis-6.165.10/LICENSE.txt"
+        ],
+        "declared_license_lines": [
+          {
+            "file": "hypothesis-6.165.10/PKG-INFO",
+            "line": "License-Expression: MPL-2.0"
+          }
+        ]
+      },
+      "notices_kept": [
+        {
+          "from": "wheel",
+          "stored_as": "hypothesis-6.165.10.dist-info_licenses_LICENSE.txt",
+          "bytes": 17141,
+          "sha256": "ac89037bac63550644dce8cf32c6765e5fab9dc1a1ce94b89f8a805f341a6750",
+          "source_path_in_artifact": "hypothesis-6.165.10.dist-info/licenses/LICENSE.txt",
+          "first_line": "Copyright (c) 2013, David R. MacIver"
+        }
+      ],
+      "spdx_claim": "MPL-2.0",
+      "status": "RESOLVED_FROM_ARTIFACT_SPDX",
+      "redistribution_note": null,
+      "repository_notice": {
+        "consulted": true,
+        "reason": null,
+        "source_used": "repository_url",
+        "repository": "HypothesisWorks/hypothesis",
+        "revision": "6384deef469a88c147dab205f093b2d16d652785",
+        "notice_files": [
+          {
+            "name": "LICENSE.txt",
+            "bytes": 414,
+            "sha256": "df2ca456f6cda1226620ee99f16bafb6345241040996734d3a46e3afe414c056",
+            "first_line": "Copyright (c) 2013, David R. MacIver",
+            "copyright_line": "Copyright (c) 2013, David R. MacIver",
+            "requires_notice_be_included_in_copies": false,
+            "stored": {
+              "stored_as": "REPOSITORY_6384deef469a_LICENSE.txt",
+              "bytes": 414,
+              "sha256": "df2ca456f6cda1226620ee99f16bafb6345241040996734d3a46e3afe414c056",
+              "source_path_in_artifact": "REPOSITORY@6384deef469a/LICENSE.txt",
+              "first_line": "Copyright (c) 2013, David R. MacIver"
+            }
+          }
+        ],
+        "found": true,
+        "evidence_grade": "LICENCE DOCUMENT AT A PINNED SOURCE REVISION. Stronger than a repository API classifier, which is a heuristic guess and is never used here. Weaker than the artifact's own metadata, because the revision is not provably the one that built the distributed artifact -- decisively so when the distribution has no matching upstream tag."
+      }
+    },
+    {
+      "entry_id": "pyribs",
+      "distribution": "ribs",
+      "version": "0.12.0",
+      "rule_applied": "wheel METADATA (GitHub API reports MIT; that is a classifier, not the distributed notice)",
+      "wheel": {
+        "filename": "ribs-0.12.0-py3-none-any.whl",
+        "sha256": "ed2b7d0aef35b23410ebf9ca57e03173e3e1384ce7344a0b77e978f4f15321e6",
+        "license_expression": "MIT",
+        "license_field": null,
+        "classifiers": [],
+        "status": "RESOLVED_SPDX_EXPRESSION",
+        "notice_files_in_wheel": [
+          "LICENSE",
+          "ribs-0.12.0.dist-info/licenses/LICENSE"
+        ]
+      },
+      "sdist": {
+        "filename": "ribs-0.12.0.tar.gz",
+        "sha256_pypi": "1c25935017d1af0f9b83192f0f3b0c303802ce817d0e9848cc1899657f95cb01",
+        "sha256_local": "1c25935017d1af0f9b83192f0f3b0c303802ce817d0e9848cc1899657f95cb01",
+        "digest_matches_pypi": true,
+        "n_files": 83,
+        "notice_files_in_sdist": [
+          "ribs-0.12.0/LICENSE"
+        ],
+        "declared_license_lines": [
+          {
+            "file": "ribs-0.12.0/PKG-INFO",
+            "line": "License-Expression: MIT"
+          },
+          {
+            "file": "ribs-0.12.0/ribs.egg-info/PKG-INFO",
+            "line": "License-Expression: MIT"
+          }
+        ]
+      },
+      "notices_kept": [
+        {
+          "from": "wheel",
+          "stored_as": "ribs-0.12.0.dist-info_licenses_LICENSE",
+          "bytes": 1069,
+          "sha256": "57c769bb2aaccf87b5bc24cf18f087443585980ee04476290da39159780b716b",
+          "source_path_in_artifact": "ribs-0.12.0.dist-info/licenses/LICENSE",
+          "first_line": "MIT License"
+        }
+      ],
+      "spdx_claim": "MIT",
+      "status": "RESOLVED_FROM_ARTIFACT_SPDX",
+      "redistribution_note": null,
+      "repository_notice": {
+        "consulted": true,
+        "reason": null,
+        "source_used": "repository_url",
+        "repository": "icaros-usc/pyribs",
+        "revision": "105cf16f27288c189dbf12c7bacdc40448ab1928",
+        "notice_files": [
+          {
+            "name": "LICENSE",
+            "bytes": 1069,
+            "sha256": "57c769bb2aaccf87b5bc24cf18f087443585980ee04476290da39159780b716b",
+            "first_line": "MIT License",
+            "copyright_line": "Copyright (c) 2020, ICAROS Lab",
+            "requires_notice_be_included_in_copies": true,
+            "stored": {
+              "stored_as": "REPOSITORY_105cf16f2728_LICENSE",
+              "bytes": 1069,
+              "sha256": "57c769bb2aaccf87b5bc24cf18f087443585980ee04476290da39159780b716b",
+              "source_path_in_artifact": "REPOSITORY@105cf16f2728/LICENSE",
+              "first_line": "MIT License"
+            }
+          }
+        ],
+        "found": true,
+        "evidence_grade": "LICENCE DOCUMENT AT A PINNED SOURCE REVISION. Stronger than a repository API classifier, which is a heuristic guess and is never used here. Weaker than the artifact's own metadata, because the revision is not provably the one that built the distributed artifact -- decisively so when the distribution has no matching upstream tag."
+      }
+    },
+    {
+      "entry_id": "stitch",
+      "distribution": "stitch_core",
+      "version": "0.1.29",
+      "rule_applied": "wheel METADATA; PyPI JSON reports license=null with NO license classifiers for this distribution, so a guess from the repository API classifier is explicitly refused and an unresolved result is recorded instead",
+      "wheel": {
+        "filename": "stitch_core-0.1.29-cp312-cp312-win_amd64.whl",
+        "sha256": "dd623f2821cfef2b3acc95d99d4c0ecae8eac81069b8cb5e299d45a81982fc2b",
+        "license_expression": null,
+        "license_field": null,
+        "classifiers": [],
+        "status": "UNRESOLVED",
+        "notice_files_in_wheel": []
+      },
+      "sdist": {
+        "filename": "stitch_core-0.1.29.tar.gz",
+        "sha256_pypi": "307a72bae661e39cd6fa400ac342d858a289ac67116d7eb5237fdae5642fab9e",
+        "sha256_local": "307a72bae661e39cd6fa400ac342d858a289ac67116d7eb5237fdae5642fab9e",
+        "digest_matches_pypi": true,
+        "n_files": 109,
+        "notice_files_in_sdist": [],
+        "declared_license_lines": []
+      },
+      "notices_kept": [],
+      "spdx_claim": null,
+      "status": "ARTIFACT_CARRIES_NO_NOTICE_BUT_SOURCE_GRANT_EXISTS",
+      "redistribution_note": "NARROWED from 'no licence anywhere'. The repository DOES carry a licence grant at the pinned revision 350804b7b358: 'MIT License', 'Copyright (c) 2021 Matthew Bowers'. What the distributed wheel and sdist omit is the NOTICE and the packaging metadata. If that grant requires the notice to travel with copies -- it does: requires_notice_be_included_in_copies=True -- then redistributing the wheel AS SHIPPED would fail the grant's own condition, while redistributing it WITH the notice attached would satisfy it. The notice has been stored beside the copy for exactly that purpose. RESIDUAL GAP, and it is the one that keeps this open: with no upstream tag matching the installed version, this revision is not provably the revision that built the wheel, so the grant is attached by inference about provenance rather than by the artifact itself. That is why D-17 asks for a pinned SOURCE REVISION as well as a licence.",
+      "repository_notice": {
+        "consulted": true,
+        "reason": null,
+        "source_used": "repository_url",
+        "repository": "mlb2251/stitch",
+        "revision": "350804b7b35807c78bd21c313785ae5152ae2985",
+        "notice_files": [
+          {
+            "name": "LICENSE",
+            "bytes": 1070,
+            "sha256": "3ee7701f5298b6899158e984e695829504023242a6f9d3ad8a93413480aa34b7",
+            "first_line": "MIT License",
+            "copyright_line": "Copyright (c) 2021 Matthew Bowers",
+            "requires_notice_be_included_in_copies": true,
+            "stored": {
+              "stored_as": "REPOSITORY_350804b7b358_LICENSE",
+              "bytes": 1070,
+              "sha256": "3ee7701f5298b6899158e984e695829504023242a6f9d3ad8a93413480aa34b7",
+              "source_path_in_artifact": "REPOSITORY@350804b7b358/LICENSE",
+              "first_line": "MIT License"
+            }
+          }
+        ],
+        "found": true,
+        "evidence_grade": "LICENCE DOCUMENT AT A PINNED SOURCE REVISION. Stronger than a repository API classifier, which is a heuristic guess and is never used here. Weaker than the artifact's own metadata, because the revision is not provably the one that built the distributed artifact -- decisively so when the distribution has no matching upstream tag."
+      }
+    },
+    {
+      "entry_id": "pytest",
+      "distribution": "pytest",
+      "version": "9.1.1",
+      "rule_applied": "wheel METADATA",
+      "wheel": {
+        "filename": "pytest-9.1.1-py3-none-any.whl",
+        "sha256": "37a86b45efb9a47a61a36449063e8e18d0cab3161329fc099eb21783169c4f0c",
+        "license_expression": "MIT",
+        "license_field": null,
+        "classifiers": [],
+        "status": "RESOLVED_SPDX_EXPRESSION",
+        "notice_files_in_wheel": [
+          "LICENSE",
+          "pytest-9.1.1.dist-info/licenses/LICENSE"
+        ]
+      },
+      "sdist": {
+        "filename": "pytest-9.1.1.tar.gz",
+        "sha256_pypi": "1088fbde8f2b49d95a549a195707afa7a76a3ce9bcadc26b6d71f0ffda5fe313",
+        "sha256_local": "1088fbde8f2b49d95a549a195707afa7a76a3ce9bcadc26b6d71f0ffda5fe313",
+        "digest_matches_pypi": true,
+        "n_files": 719,
+        "notice_files_in_sdist": [
+          "pytest-9.1.1/LICENSE",
+          "pytest-9.1.1/doc/en/license.rst"
+        ],
+        "declared_license_lines": [
+          {
+            "file": "pytest-9.1.1/PKG-INFO",
+            "line": "License-Expression: MIT"
+          },
+          {
+            "file": "pytest-9.1.1/src/pytest.egg-info/PKG-INFO",
+            "line": "License-Expression: MIT"
+          }
+        ]
+      },
+      "notices_kept": [
+        {
+          "from": "wheel",
+          "stored_as": "pytest-9.1.1.dist-info_licenses_LICENSE",
+          "bytes": 1091,
+          "sha256": "ca836a5f9ecca3b2f350230faa20a48fb8b145653b5568d784862df864706b9b",
+          "source_path_in_artifact": "pytest-9.1.1.dist-info/licenses/LICENSE",
+          "first_line": "The MIT License (MIT)"
+        },
+        {
+          "from": "sdist",
+          "stored_as": "pytest-9.1.1_doc_en_license.rst",
+          "bytes": 1372,
+          "sha256": "45b6addd843b2ed89f9f8f363f61092db2e3c2461e3f178c3c3793648c3c4e07",
+          "source_path_in_artifact": "pytest-9.1.1/doc/en/license.rst",
+          "first_line": ".. _license:"
+        }
+      ],
+      "spdx_claim": "MIT",
+      "status": "RESOLVED_FROM_ARTIFACT_SPDX",
+      "redistribution_note": null,
+      "repository_notice": {
+        "consulted": false,
+        "reason": "no GitHub source tree ('https://github.com/pytest-dev/pytest') or no pinned revision; a repository notice cannot be read at a revision that was never pinned",
+        "source_used": "repository_url"
+      }
+    }
+  ],
+  "resource_receipt": {
+    "profile": "light_probe",
+    "network_policy": "ALLOWED -- this is the explicit acquisition stage",
+    "wall_seconds": 3.891,
+    "wall_ceiling": 900,
+    "downloaded_bytes": 8472999,
+    "download_ceiling": 536870912,
+    "cache_bytes_before": 941958874,
+    "cache_bytes_after": 0,
+    "cache_delta_bytes": -941958874,
+    "peak_rss_bytes_os_counter": 44781568,
+    "peak_rss_bytes_sampled": 44781568,
+    "rss_method": "GetProcessMemoryInfo",
+    "rss_ceiling": 2147483648,
+    "rss_samples": 15,
+    "rss_ceiling_exceeded_during_sampling": false,
+    "rss_enforcement": "NOT ENFORCED -- no job object / cgroup cap. peak_rss_bytes_os_counter is the OS peak-working-set counter for this process and IS reliable; rss_ceiling_exceeded_during_sampling is sampled and can miss a spike. Neither stops a step.",
+    "rss_excludes_children": "This is THIS process only. pip, git and venv run as children and their RSS is NOT included.",
+    "children_spawned": 0,
+    "process_cap": 4,
+    "aborted_on": null
+  }
+}

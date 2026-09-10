@@ -1,0 +1,126 @@
+{
+  "schema": "techne.acquisition.reproduction_manifest/1",
+  "id": "REPRO-STITCH-NUTSBOLTS-001",
+  "tool": "stitch",
+  "declared_utc": "2026-09-09",
+  "declared_before_run": true,
+  "source": [
+    {
+      "ref_id": "S-TUTORIAL",
+      "kind": "upstream_documentation",
+      "reference": "https://stitch-bindings.readthedocs.io/en/latest/intro/tutorial.html",
+      "retrieved_utc": "2026-09-09",
+      "sha256": "619b42eadab0679b1f80cbf296e90760f1d63e0b7fa5c95242a43050882561cd",
+      "bytes": 50338,
+      "what_it_gives": "the exact invocation -- compress(programs, iterations=3, max_arity=3) on data/cogsci/nuts-bolts.json -- and the verbatim bodies of the three learned abstractions",
+      "note": "latest, not a version-pinned docs URL. The page is hashed so a later change is detectable, but upstream could publish a different page at this URL tomorrow."
+    },
+    {
+      "ref_id": "S-DESIGN",
+      "kind": "design_citation",
+      "reference": "roles/Archaeon/prompts/2026-09-08_h0h5/DESIGN_H0_H5_v0.1.md, section 7: 'Its documented nuts-bolts example reports compression cost 1,919,558 -> 316,890 with three abstractions'",
+      "retrieved_utc": "2026-09-09",
+      "what_it_gives": "the two cost numbers",
+      "PROVENANCE_LIMIT": "SECOND-HAND. The cost figures 1919558 and 316890 appear in the design packet. They do NOT appear on the tutorial page this seat retrieved and hashed (searched for '1919558', '1,919,558', '316890', '316,890' -- all absent). So the expected cost values rest on the design's citation of an artifact this seat has not read, while the three abstraction BODIES rest on upstream documentation this seat did read. These are different evidence grades and are scored separately below."
+    },
+    {
+      "ref_id": "S-DATASET",
+      "kind": "artifact",
+      "reference": "Wong et al. 2022 dataset, as distributed at mlb2251/stitch data/cogsci/nuts-bolts.json",
+      "retrieved_utc": "2026-09-09",
+      "what_it_gives": "the 250 input programs"
+    }
+  ],
+  "claim": "Running stitch abstraction learning on the nuts-bolts corpus for 3 iterations at max arity 3 yields THREE abstractions and reduces the compression cost from 1919558 to 316890.",
+  "metrics": [
+    {
+      "metric_id": "M1_N_ABSTRACTIONS",
+      "metric": "number of abstractions returned by compress()",
+      "units": "count",
+      "expected": 3,
+      "expected_provenance": "S-TUTORIAL (three abstractions listed verbatim) and S-DESIGN",
+      "tolerated_deviation": 0,
+      "tolerance_reason": "A count. There is no measurement error to absorb, and an off-by-one here would mean a different algorithm ran."
+    },
+    {
+      "metric_id": "M2_ABSTRACTION_BODIES",
+      "metric": "the set of abstraction body strings, compared as exact strings after whitespace normalisation",
+      "units": "string set",
+      "expected": [
+        "(T (repeat (T l (M 1 0 -0.5 (/ 0.5 (tan (/ pi #1))))) #1 (M 1 (/ (* 2 pi) #1) 0 0)) (M #0 0 0 0))",
+        "(repeat (T (T #2 (M 0.5 0 0 0)) (M 1 0 (* #1 (cos (/ pi 4))) (* #1 (sin (/ pi 4))))) #0 (M 1 (/ (* 2 pi) #0) 0 0))",
+        "(T (T c (M 2 0 0 0)) (M #0 0 0 0))"
+      ],
+      "expected_provenance": "S-TUTORIAL, verbatim from the page this seat retrieved and hashed",
+      "tolerated_deviation": "whitespace only",
+      "tolerance_reason": "The bodies are the substantive result -- they are what a downstream consumer would actually call. A near-miss body is a different abstraction, not a noisy measurement of the same one."
+    },
+    {
+      "metric_id": "M3_COST_BEFORE",
+      "metric": "compression cost of the original programs, as reported by stitch's own cost metric",
+      "units": "cost (stitch default metric: terminals 100, nonterminals 1)",
+      "expected": 1919558,
+      "expected_provenance": "S-DESIGN only -- see its PROVENANCE_LIMIT",
+      "tolerated_deviation": 0,
+      "tolerance_reason": "A deterministic integer cost over a fixed corpus under a fixed cost metric. Zero tolerance is appropriate BECAUSE it is deterministic; if it comes back different, the difference is a real configuration difference, not noise. The attainable range is the full non-negative integers, so this gate can fire in either direction.",
+      "verdict_grade": "SECOND_HAND_EXPECTED_VALUE -- a mismatch here is evidence about the design's citation or about a version difference, NOT automatically evidence that stitch_core is broken"
+    },
+    {
+      "metric_id": "M4_COST_AFTER",
+      "metric": "compression cost after 3 iterations of rewriting",
+      "units": "cost (same metric)",
+      "expected": 316890,
+      "expected_provenance": "S-DESIGN only -- see its PROVENANCE_LIMIT",
+      "tolerated_deviation": 0,
+      "tolerance_reason": "as M3",
+      "verdict_grade": "SECOND_HAND_EXPECTED_VALUE"
+    }
+  ],
+  "data": [
+    {
+      "filename": "nuts-bolts.json",
+      "bytes": 62580,
+      "sha256": "4e8ea30925b96736cb290f9f704167c4ca13e1a7da87eeaad2d5d0d0e29deb8d",
+      "git_blob_sha1": "85f142ef8c53 (prefix; matched against the GitHub contents API for the pinned revision)",
+      "upstream_path": "data/cogsci/nuts-bolts.json at mlb2251/stitch@350804b7b35807c78bd21c313785ae5152ae2985",
+      "n_programs": 250,
+      "format": "already in stitch format -- a JSON list of 250 program strings, NOT a dreamcoder json, so from_dreamcoder() is not applicable and raises"
+    }
+  ],
+  "invocation": {
+    "call": "stitch_core.compress(programs, iterations=3, max_arity=3, threads=1, silent=True)",
+    "every_parameter_declared": true,
+    "threads": 1,
+    "threads_reason": "threads>1 could make the search order nondeterministic; 1 keeps the run reproducible and is a DEVIATION from an unspecified upstream default, recorded below"
+  },
+  "software": {
+    "distribution": "stitch_core==0.1.29",
+    "wheel_sha256": "dd623f2821cfef2b3acc95d99d4c0ecae8eac81069b8cb5e299d45a81982fc2b",
+    "lock": "techne/acquisition/locks/stitch-cp312-win-amd64.lock.txt",
+    "env": "isolated venv h0h5_tools; NOT the live interpreter",
+    "upstream_source_revision": "NOT VERIFIABLE -- mlb2251/stitch publishes one tag (v0.1.0) and none corresponds to 0.1.29. The source that built this wheel cannot be pinned from upstream tags."
+  },
+  "seed": "NONE_DECLARED_UPSTREAM",
+  "seed_consequence": "compress() exposes no seed parameter. With threads=1 the Rust search is expected to be deterministic, and this is TESTED by running the identical invocation twice and comparing all four metrics. If the two runs disagree, no reproduction verdict is possible at any tolerance and the status becomes BLOCKED.",
+  "compute": {
+    "budget_profile": "stitch_core_reproduction",
+    "max_wall_seconds": 1800,
+    "max_rss_bytes": 6442450944,
+    "network": "FORBIDDEN",
+    "note": "the design records that the stitch artifact needs substantially more memory for its ablation/hybrid studies than for core claims. This manifest covers ONE core claim. The ablation and hybrid studies have no profile and are therefore not authorised."
+  },
+  "comparison_variant": "upstream-reproduction",
+  "deviations": [
+    "DEV-R1: threads pinned to 1. Upstream's tutorial does not state a thread count; the default is 1 per the compress() signature, so this is expected to be a no-op, but it is declared rather than assumed.",
+    "DEV-R2: the dataset is fetched from the repository at a pinned commit rather than from a release artifact, because stitch publishes no release containing it.",
+    "DEV-R3: host is Windows / cp312. The upstream figures carry no platform statement."
+  ],
+  "observed": null,
+  "status": "DECLARED_NOT_RUN",
+  "result_file": "techne/acquisition/reproduction/stitch_nuts_bolts.result.json",
+  "what_this_does_not_show": [
+    "that stitch_core is correctly integrated with any Prometheus consumer (that is ADAPTER_QUALIFICATION)",
+    "that a learned abstraction is semantically safe to use (that is the separate expansion check)",
+    "that library learning helps any Prometheus experiment (that is LOCAL_SCIENTIFIC_BENEFIT, and nothing here speaks to it)"
+  ]
+}

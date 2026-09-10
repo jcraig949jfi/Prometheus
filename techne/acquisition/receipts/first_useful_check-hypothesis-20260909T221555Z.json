@@ -1,0 +1,213 @@
+{
+  "schema": "techne.acquisition.receipt/1",
+  "receipt_id": "first_useful_check-hypothesis-20260909T221555Z",
+  "stage": "FIRST_USEFUL_CHECK",
+  "does_not_establish": [
+    "INSTALLATION",
+    "PAPER_REPRODUCTION",
+    "ADAPTER_QUALIFICATION",
+    "LOCAL_SCIENTIFIC_BENEFIT"
+  ],
+  "entry_id": "hypothesis",
+  "tool": "hypothesis",
+  "design_version": "0.1",
+  "written_utc": "2026-09-09T22:15:55+00:00",
+  "seat": "Techne",
+  "repo": {
+    "commit": "95daf6e571d278d282e2d4d5ee257bc8b256a5a3",
+    "branch": "techne/h0h5-tools-2026-09-09",
+    "dirty": true
+  },
+  "runner": {
+    "python": "3.12.10",
+    "executable": "H:\\Python312\\python.exe",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "tool_cache": "F:\\Prometheus\\vault\\techne_tools",
+    "tool_cache_source": "TECHNE_TOOL_CACHE env",
+    "tool_cache_note": "host-local and gitignored; only its HASHES are tracked"
+  },
+  "commands_run": [
+    {
+      "argv": [
+        "F:\\Prometheus\\vault\\techne_tools\\envs\\h0h5_tools\\Scripts\\python.exe",
+        "C:\\Users\\jcrai\\AppData\\Local\\Temp\\claude\\f--Prometheus\\71419ff6-c905-417b-9e8a-6ffb3e2cebd4\\scratchpad\\techne\\techne\\acquisition\\checks\\hypothesis_first_check.py",
+        "--work",
+        "F:\\Prometheus\\vault\\techne_tools\\checkwork\\hypothesis",
+        "--fixture-out",
+        "C:\\Users\\jcrai\\AppData\\Local\\Temp\\claude\\f--Prometheus\\71419ff6-c905-417b-9e8a-6ffb3e2cebd4\\scratchpad\\techne\\techne\\acquisition\\fixtures\\hypothesis_minimized.json"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "wall_seconds": 0.297,
+      "stdout_tail": "",
+      "stderr_tail": ""
+    }
+  ],
+  "observations": {
+    "check": "hypothesis_first_useful_check",
+    "tool": "hypothesis",
+    "hypothesis_version": "6.165.10",
+    "python": "3.12.10",
+    "executable": "F:\\Prometheus\\vault\\techne_tools\\envs\\h0h5_tools\\Scripts\\python.exe",
+    "defects": [
+      {
+        "defect": "threshold",
+        "property_failed_as_designed": true,
+        "witness_key": "x",
+        "minimized_witness": 128,
+        "expected_minimum": 128,
+        "minimization_reached_known_minimum": true,
+        "raw_assertion_message": "defect at x=128",
+        "example_database_dir": "F:\\Prometheus\\vault\\techne_tools\\checkwork\\hypothesis\\scope_threshold\\examples",
+        "example_database_entries": 5,
+        "example_database_sample": [
+          "181b8d498afa701e",
+          "5db194498c8710ec",
+          "60f1296e33170e27",
+          "82b248f1be50f7cc",
+          "e3084f599b30280c"
+        ],
+        "reproducibility": "explicit @seed(20260909); derandomize is NOT used because it would disable the example database this check exists to verify"
+      },
+      {
+        "defect": "duplicate",
+        "property_failed_as_designed": true,
+        "witness_key": "xs",
+        "minimized_witness": [
+          0,
+          0
+        ],
+        "expected_minimum": [
+          0,
+          0
+        ],
+        "minimization_reached_known_minimum": true,
+        "raw_assertion_message": "defect at xs=[0, 0]",
+        "example_database_dir": "F:\\Prometheus\\vault\\techne_tools\\checkwork\\hypothesis\\scope_duplicate\\examples",
+        "example_database_entries": 8,
+        "example_database_sample": [
+          "29aaf32f856aa9b7",
+          "38fa77d5ec52462b",
+          "4783fbc2ab8710aa",
+          "5e6bd5bab5ba1c09",
+          "d9311dfa4542a243",
+          "e3722901577ddbc9"
+        ],
+        "reproducibility": "explicit @seed(20260909); derandomize is NOT used because it would disable the example database this check exists to verify"
+      }
+    ],
+    "fixture": {
+      "fixture_path": "C:\\Users\\jcrai\\AppData\\Local\\Temp\\claude\\f--Prometheus\\71419ff6-c905-417b-9e8a-6ffb3e2cebd4\\scratchpad\\techne\\techne\\acquisition\\fixtures\\hypothesis_minimized.json",
+      "replay": [
+        {
+          "defect": "threshold",
+          "input": 128,
+          "property_holds": false,
+          "fixture_reproduces_failure": true
+        },
+        {
+          "defect": "duplicate",
+          "input": [
+            0,
+            0
+          ],
+          "property_holds": false,
+          "fixture_reproduces_failure": true
+        }
+      ],
+      "all_fixtures_reproduce": true,
+      "replay_used_hypothesis": false
+    },
+    "isolation": {
+      "scope_a_dir": "F:\\Prometheus\\vault\\techne_tools\\checkwork\\hypothesis\\scope_threshold\\examples",
+      "scope_b_dir": "F:\\Prometheus\\vault\\techne_tools\\checkwork\\hypothesis\\scope_duplicate\\examples",
+      "scope_a_entries": 5,
+      "scope_b_entries": 8,
+      "both_scopes_populated": true,
+      "shared_entry_names": [],
+      "scopes_disjoint": true,
+      "honest_limit": "Entry names are content-addressed by Hypothesis, so two scopes that happened to record the SAME example would legitimately share a name. Here the two defects have different shapes, so disjointness is the expected result and a shared name would indicate a shared database.",
+      "side_channel": {
+        "storage_directory": "F:\\Prometheus\\vault\\techne_tools\\checkwork\\hypothesis\\storage",
+        "HYPOTHESIS_STORAGE_DIRECTORY_set": true,
+        "appeared_in_cwd_during_run": [],
+        "storage_is_inside_declared_work_dir": true,
+        "files": [
+          ".gitignore",
+          "constants/e7d5f8e0dbbf229c"
+        ],
+        "contains_saved_examples": false,
+        "finding": "MEASURED: setting `database=DirectoryBasedExampleDatabase(...)` scopes the saved EXAMPLES and nothing else. Hypothesis additionally creates its storage directory -- a constants cache plus temporary files -- at the path above, which defaults to .hypothesis under the CURRENT WORKING DIRECTORY. Containing it requires the HYPOTHESIS_STORAGE_DIRECTORY environment variable, set before hypothesis is imported. A consumer that scopes only `database=` has scoped half of it."
+      }
+    },
+    "assertions": [
+      {
+        "claim": "threshold defect minimized to its known minimum",
+        "pass": true
+      },
+      {
+        "claim": "duplicate defect minimized to its known minimum",
+        "pass": true
+      },
+      {
+        "claim": "persisted fixtures reproduce the failures without Hypothesis",
+        "pass": true
+      },
+      {
+        "claim": "saved examples are scoped per data scope and the scopes are disjoint",
+        "pass": true
+      },
+      {
+        "claim": "the storage side channel holds no saved examples",
+        "pass": true
+      }
+    ],
+    "n_passed": 5,
+    "n_total": 5,
+    "all_passed": true
+  },
+  "deviations": [],
+  "unrun_or_blocked": [],
+  "status": "CHECK_PASSED",
+  "check_script": "techne/acquisition/checks/hypothesis_first_check.py",
+  "design_requirement": "minimise a known defect, persist the explicit fixture, isolate the example database by scope",
+  "manifest_first_useful_check": "minimize a known defect, persist the explicit minimized fixture, and isolate the example database per scope",
+  "named_consumer": "C1-C6 contract fixtures (Harmonia's qualification cycle) and the SFE boundary-failure tests",
+  "budget_profile": {
+    "purpose": "run a first-useful-check or a reproduction fixture against ALREADY acquired bytes.",
+    "network": "FORBIDDEN -- enforced by the check harness, which asserts no acquisition step runs under this profile",
+    "max_wall_seconds": 600,
+    "max_download_bytes": 0,
+    "max_disk_bytes": 1073741824,
+    "max_rss_bytes": 4294967296,
+    "max_processes": 2,
+    "rationale": "Scientific execution uses already-available inputs and dependencies. A check that needs the network is an acquisition step wearing a check's name.",
+    "name": "offline_check"
+  },
+  "environment_overrides": {
+    "HYPOTHESIS_STORAGE_DIRECTORY": "F:\\Prometheus\\vault\\techne_tools\\checkwork\\hypothesis\\storage"
+  },
+  "resource_receipt": {
+    "profile": "offline_check",
+    "network_policy": "FORBIDDEN -- enforced by the check harness, which asserts no acquisition step runs under this profile",
+    "wall_seconds": 0.5,
+    "wall_ceiling": 600,
+    "downloaded_bytes": 0,
+    "download_ceiling": 0,
+    "cache_bytes_before": 926612221,
+    "cache_bytes_after": 0,
+    "cache_delta_bytes": -926612221,
+    "peak_rss_bytes_os_counter": 29880320,
+    "peak_rss_bytes_sampled": 29880320,
+    "rss_method": "GetProcessMemoryInfo",
+    "rss_ceiling": 4294967296,
+    "rss_samples": 2,
+    "rss_ceiling_exceeded_during_sampling": false,
+    "rss_enforcement": "NOT ENFORCED -- no job object / cgroup cap. peak_rss_bytes_os_counter is the OS peak-working-set counter for this process and IS reliable; rss_ceiling_exceeded_during_sampling is sampled and can miss a spike. Neither stops a step.",
+    "rss_excludes_children": "This is THIS process only. pip, git and venv run as children and their RSS is NOT included.",
+    "children_spawned": 1,
+    "process_cap": 2,
+    "aborted_on": null
+  },
+  "check_exit_code": 0
+}

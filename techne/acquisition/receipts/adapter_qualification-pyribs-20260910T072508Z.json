@@ -1,0 +1,631 @@
+{
+  "schema": "techne.acquisition.receipt/1",
+  "receipt_id": "adapter_qualification-pyribs-20260910T072508Z",
+  "stage": "ADAPTER_QUALIFICATION",
+  "does_not_establish": [
+    "INSTALLATION",
+    "FIRST_USEFUL_CHECK",
+    "PAPER_REPRODUCTION",
+    "LOCAL_SCIENTIFIC_BENEFIT"
+  ],
+  "entry_id": "pyribs",
+  "tool": "ribs",
+  "design_version": "0.1",
+  "written_utc": "2026-09-10T07:25:08+00:00",
+  "seat": "Techne",
+  "repo": {
+    "commit": "3463f9003b9f4da94b811e939ff8e87de04a9ba1",
+    "branch": "techne/h0h5-tools-2026-09-09",
+    "dirty": true
+  },
+  "runner": {
+    "python": "3.12.10",
+    "executable": "F:\\Prometheus\\vault\\techne_tools\\envs\\h0h5_tools\\Scripts\\python.exe",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "tool_cache": "F:\\Prometheus\\vault\\techne_tools",
+    "tool_cache_source": "TECHNE_TOOL_CACHE env",
+    "tool_cache_note": "host-local and gitignored; only its HASHES are tracked"
+  },
+  "commands_run": [],
+  "observations": {
+    "stream": {
+      "schema": "techne.h3.stream/0",
+      "stream_id": "h3_fixture_v0",
+      "n_rows": 10,
+      "properties_checked": [
+        "ordered_ids",
+        "digests",
+        "birth",
+        "fixed_assay",
+        "recoverable",
+        "measures",
+        "caps"
+      ],
+      "result_refs_resolved": true,
+      "recoverability_check": "BYTES AND DIGEST VERIFIED THROUGH THE RESOLVER",
+      "unresolved_result_refs": 0,
+      "duplicate_digests_under_distinct_ids": {
+        "sha256:64c0cdce9f17e3d730b0a11398a4d077a6a03f86a3123a4a6d2c130832a2b499": [
+          "c000",
+          "c009"
+        ]
+      },
+      "n_duplicate_content_groups": 1,
+      "birth_status_counts": {
+        "SEEDED": 3,
+        "MUTATED": 4,
+        "RECOMBINED": 2,
+        "REPLAYED": 1
+      },
+      "stream_digest": "sha256:79670cb06724867c3b4a1b24d208d984b56cd9da703479fe645c636cc25b2b6a"
+    },
+    "stream_required_properties": {
+      "stable_ordered_ids": "seq 0-based contiguous strictly increasing; candidate_id unique",
+      "candidate_digests": "sha256 over canonical payload, recomputed and matched on every row",
+      "birth_status": {
+        "SEEDED": 3,
+        "MUTATED": 4,
+        "RECOMBINED": 2,
+        "REPLAYED": 1
+      },
+      "fixed_assay_references": {
+        "assay_id": "fixture_assay_v0",
+        "assay_version": "0.1.0",
+        "digest": "sha256:3ba4fcf5940fd988f56b3e70c4e1c4f7e731589d2d80dd67e063e48af757e0b5"
+      },
+      "recoverable_results": "BYTES AND DIGEST VERIFIED THROUGH THE RESOLVER"
+    },
+    "R1_tie_policy": {
+      "declared": "FIRST_WRITER_WINS",
+      "meaning": "An EXACTLY equal objective does not displace the incumbent of a cell. One-at-a-time: insertion requires strictly greater than the cell threshold, and the default threshold is the incumbent's own objective. Batch: among solutions tying for the highest objective in a cell, the one appearing FIRST in the batch is inserted.",
+      "sequential": {
+        "challenger_status": 0,
+        "retained_tags": [
+          1
+        ],
+        "first_writer_won": true
+      },
+      "batch": {
+        "retained_tags": [
+          1
+        ],
+        "first_writer_won": true
+      },
+      "verified": true
+    },
+    "R2_loose_caps": {
+      "caps": {
+        "max_retained": 16,
+        "max_bytes": 100000,
+        "retained": 6,
+        "retained_bytes": 4200,
+        "refused_for_count": 0,
+        "refused_for_bytes": 0
+      },
+      "counts": {
+        "RETAINED_NEW_CELL": 6,
+        "RETAINED_IMPROVED_CELL": 2,
+        "REJECTED_BY_ARCHIVE": 2,
+        "CAP_REFUSED_COUNT": 0,
+        "CAP_REFUSED_BYTES": 0
+      },
+      "retained_ids": [
+        "c001",
+        "c002",
+        "c006",
+        "c007",
+        "c008",
+        "c009"
+      ],
+      "retained_bytes": 4200,
+      "grid_cells": 16,
+      "binding_constraint": "NONE",
+      "notes": [
+        "NEITHER declared cap bound on this run. The caps are therefore implemented but NOT exercised, and this run is not evidence that they work. Use techne/h3_retention/fixture/stream_v0_capbind.jsonl or lower the caps."
+      ],
+      "emitter_guard": {
+        "live_emitter_instances": [],
+        "live_scheduler_instances": [],
+        "modules_imported": 28,
+        "gate": "INSTANCE-LEVEL (module presence is unreachable: importing ribs.archives eagerly imports the emitters and schedulers packages)",
+        "pass": true
+      },
+      "log": [
+        {
+          "seq": 0,
+          "candidate_id": "c000",
+          "disposition": "RETAINED_NEW_CELL",
+          "cell_index": 0,
+          "objective": 1.0,
+          "payload_bytes": 1200,
+          "bytes_delta": 1200,
+          "displaced": null,
+          "birth_status": "SEEDED",
+          "parent_ids": [],
+          "result_ref": "fixture://c000",
+          "reason": ""
+        },
+        {
+          "seq": 1,
+          "candidate_id": "c001",
+          "disposition": "RETAINED_NEW_CELL",
+          "cell_index": 4,
+          "objective": 5.0,
+          "payload_bytes": 900,
+          "bytes_delta": 900,
+          "displaced": null,
+          "birth_status": "SEEDED",
+          "parent_ids": [],
+          "result_ref": "fixture://c001",
+          "reason": ""
+        },
+        {
+          "seq": 2,
+          "candidate_id": "c002",
+          "disposition": "RETAINED_IMPROVED_CELL",
+          "cell_index": 0,
+          "objective": 2.0,
+          "payload_bytes": 1500,
+          "bytes_delta": 300,
+          "displaced": "c000",
+          "birth_status": "MUTATED",
+          "parent_ids": [
+            "c000"
+          ],
+          "result_ref": "fixture://c002",
+          "reason": ""
+        },
+        {
+          "seq": 3,
+          "candidate_id": "c003",
+          "disposition": "REJECTED_BY_ARCHIVE",
+          "cell_index": 0,
+          "objective": 0.5,
+          "payload_bytes": 700,
+          "bytes_delta": 0,
+          "displaced": "c002",
+          "birth_status": "MUTATED",
+          "parent_ids": [
+            "c000"
+          ],
+          "result_ref": "fixture://c003",
+          "reason": "did not beat the cell threshold; under FIRST_WRITER_WINS an exactly equal objective lands here"
+        },
+        {
+          "seq": 4,
+          "candidate_id": "c004",
+          "disposition": "REJECTED_BY_ARCHIVE",
+          "cell_index": 4,
+          "objective": 5.0,
+          "payload_bytes": 800,
+          "bytes_delta": 0,
+          "displaced": "c001",
+          "birth_status": "MUTATED",
+          "parent_ids": [
+            "c001"
+          ],
+          "result_ref": "fixture://c004",
+          "reason": "did not beat the cell threshold; under FIRST_WRITER_WINS an exactly equal objective lands here"
+        },
+        {
+          "seq": 5,
+          "candidate_id": "c005",
+          "disposition": "RETAINED_NEW_CELL",
+          "cell_index": 10,
+          "objective": 3.0,
+          "payload_bytes": 2400,
+          "bytes_delta": 2400,
+          "displaced": null,
+          "birth_status": "RECOMBINED",
+          "parent_ids": [
+            "c001",
+            "c002"
+          ],
+          "result_ref": "fixture://c005",
+          "reason": ""
+        },
+        {
+          "seq": 6,
+          "candidate_id": "c006",
+          "disposition": "RETAINED_NEW_CELL",
+          "cell_index": 14,
+          "objective": 3.0,
+          "payload_bytes": 600,
+          "bytes_delta": 600,
+          "displaced": null,
+          "birth_status": "RECOMBINED",
+          "parent_ids": [
+            "c002",
+            "c005"
+          ],
+          "result_ref": "fixture://c006",
+          "reason": ""
+        },
+        {
+          "seq": 7,
+          "candidate_id": "c007",
+          "disposition": "RETAINED_NEW_CELL",
+          "cell_index": 15,
+          "objective": 4.0,
+          "payload_bytes": 500,
+          "bytes_delta": 500,
+          "displaced": null,
+          "birth_status": "REPLAYED",
+          "parent_ids": [
+            "c006"
+          ],
+          "result_ref": "fixture://c007",
+          "reason": ""
+        },
+        {
+          "seq": 8,
+          "candidate_id": "c008",
+          "disposition": "RETAINED_IMPROVED_CELL",
+          "cell_index": 10,
+          "objective": 9.0,
+          "payload_bytes": 300,
+          "bytes_delta": -2100,
+          "displaced": "c005",
+          "birth_status": "MUTATED",
+          "parent_ids": [
+            "c005"
+          ],
+          "result_ref": "fixture://c008",
+          "reason": ""
+        },
+        {
+          "seq": 9,
+          "candidate_id": "c009",
+          "disposition": "RETAINED_NEW_CELL",
+          "cell_index": 3,
+          "objective": 1.0,
+          "payload_bytes": 400,
+          "bytes_delta": 400,
+          "displaced": null,
+          "birth_status": "SEEDED",
+          "parent_ids": [],
+          "result_ref": "fixture://c009",
+          "reason": ""
+        }
+      ]
+    },
+    "R3_binding_caps": {
+      "caps": {
+        "max_retained": 4,
+        "max_bytes": 4000,
+        "retained": 4,
+        "retained_bytes": 3500,
+        "refused_for_count": 2,
+        "refused_for_bytes": 1
+      },
+      "counts": {
+        "RETAINED_NEW_CELL": 4,
+        "RETAINED_IMPROVED_CELL": 1,
+        "REJECTED_BY_ARCHIVE": 2,
+        "CAP_REFUSED_COUNT": 2,
+        "CAP_REFUSED_BYTES": 1
+      },
+      "retained_ids": [
+        "c001",
+        "c002",
+        "c006",
+        "c007"
+      ],
+      "retained_bytes": 3500,
+      "grid_cells": 16,
+      "binding_constraint": "COUNT+BYTES",
+      "notes": [],
+      "emitter_guard": {
+        "live_emitter_instances": [],
+        "live_scheduler_instances": [],
+        "modules_imported": 28,
+        "gate": "INSTANCE-LEVEL (module presence is unreachable: importing ribs.archives eagerly imports the emitters and schedulers packages)",
+        "pass": true
+      },
+      "recoverable": {
+        "logged": 10,
+        "not_retained": 5,
+        "all_non_retained_carry_a_result_ref": true,
+        "rule": "eviction is not deletion -- every disposition keeps its result_ref, so the retained set is derivable from the log and the log is not derivable from the retained set"
+      },
+      "log": [
+        {
+          "seq": 0,
+          "candidate_id": "c000",
+          "disposition": "RETAINED_NEW_CELL",
+          "cell_index": 0,
+          "objective": 1.0,
+          "payload_bytes": 1200,
+          "bytes_delta": 1200,
+          "displaced": null,
+          "birth_status": "SEEDED",
+          "parent_ids": [],
+          "result_ref": "fixture://c000",
+          "reason": ""
+        },
+        {
+          "seq": 1,
+          "candidate_id": "c001",
+          "disposition": "RETAINED_NEW_CELL",
+          "cell_index": 4,
+          "objective": 5.0,
+          "payload_bytes": 900,
+          "bytes_delta": 900,
+          "displaced": null,
+          "birth_status": "SEEDED",
+          "parent_ids": [],
+          "result_ref": "fixture://c001",
+          "reason": ""
+        },
+        {
+          "seq": 2,
+          "candidate_id": "c002",
+          "disposition": "RETAINED_IMPROVED_CELL",
+          "cell_index": 0,
+          "objective": 2.0,
+          "payload_bytes": 1500,
+          "bytes_delta": 300,
+          "displaced": "c000",
+          "birth_status": "MUTATED",
+          "parent_ids": [
+            "c000"
+          ],
+          "result_ref": "fixture://c002",
+          "reason": ""
+        },
+        {
+          "seq": 3,
+          "candidate_id": "c003",
+          "disposition": "REJECTED_BY_ARCHIVE",
+          "cell_index": 0,
+          "objective": 0.5,
+          "payload_bytes": 700,
+          "bytes_delta": 0,
+          "displaced": "c002",
+          "birth_status": "MUTATED",
+          "parent_ids": [
+            "c000"
+          ],
+          "result_ref": "fixture://c003",
+          "reason": "did not beat the cell threshold; under FIRST_WRITER_WINS an exactly equal objective lands here"
+        },
+        {
+          "seq": 4,
+          "candidate_id": "c004",
+          "disposition": "REJECTED_BY_ARCHIVE",
+          "cell_index": 4,
+          "objective": 5.0,
+          "payload_bytes": 800,
+          "bytes_delta": 0,
+          "displaced": "c001",
+          "birth_status": "MUTATED",
+          "parent_ids": [
+            "c001"
+          ],
+          "result_ref": "fixture://c004",
+          "reason": "did not beat the cell threshold; under FIRST_WRITER_WINS an exactly equal objective lands here"
+        },
+        {
+          "seq": 5,
+          "candidate_id": "c005",
+          "disposition": "CAP_REFUSED_BYTES",
+          "cell_index": 10,
+          "objective": 3.0,
+          "payload_bytes": 2400,
+          "bytes_delta": 2400,
+          "displaced": null,
+          "birth_status": "RECOMBINED",
+          "parent_ids": [
+            "c001",
+            "c002"
+          ],
+          "result_ref": "fixture://c005",
+          "reason": "byte delta +2400 on retained=2400 would cross max_bytes=4000"
+        },
+        {
+          "seq": 6,
+          "candidate_id": "c006",
+          "disposition": "RETAINED_NEW_CELL",
+          "cell_index": 14,
+          "objective": 3.0,
+          "payload_bytes": 600,
+          "bytes_delta": 600,
+          "displaced": null,
+          "birth_status": "RECOMBINED",
+          "parent_ids": [
+            "c002",
+            "c005"
+          ],
+          "result_ref": "fixture://c006",
+          "reason": ""
+        },
+        {
+          "seq": 7,
+          "candidate_id": "c007",
+          "disposition": "RETAINED_NEW_CELL",
+          "cell_index": 15,
+          "objective": 4.0,
+          "payload_bytes": 500,
+          "bytes_delta": 500,
+          "displaced": null,
+          "birth_status": "REPLAYED",
+          "parent_ids": [
+            "c006"
+          ],
+          "result_ref": "fixture://c007",
+          "reason": ""
+        },
+        {
+          "seq": 8,
+          "candidate_id": "c008",
+          "disposition": "CAP_REFUSED_COUNT",
+          "cell_index": 10,
+          "objective": 9.0,
+          "payload_bytes": 300,
+          "bytes_delta": 0,
+          "displaced": null,
+          "birth_status": "MUTATED",
+          "parent_ids": [
+            "c005"
+          ],
+          "result_ref": "fixture://c008",
+          "reason": "would occupy a new cell at retained=4 == max_retained=4; logged with its result_ref so it stays recoverable"
+        },
+        {
+          "seq": 9,
+          "candidate_id": "c009",
+          "disposition": "CAP_REFUSED_COUNT",
+          "cell_index": 3,
+          "objective": 1.0,
+          "payload_bytes": 400,
+          "bytes_delta": 0,
+          "displaced": null,
+          "birth_status": "SEEDED",
+          "parent_ids": [],
+          "result_ref": "fixture://c009",
+          "reason": "would occupy a new cell at retained=4 == max_retained=4; logged with its result_ref so it stays recoverable"
+        }
+      ]
+    },
+    "R4_batch_equivalence": {
+      "batch_retained_ids": [
+        "c001",
+        "c002",
+        "c006",
+        "c007",
+        "c008",
+        "c009"
+      ],
+      "one_at_a_time_retained_ids": [
+        "c001",
+        "c002",
+        "c006",
+        "c007",
+        "c008",
+        "c009"
+      ],
+      "identical": true,
+      "caps_bound_on_the_sequential_side": false,
+      "comparison_is_meaningful": true,
+      "scope": "A fact about THIS stream. The two granularities can differ whenever a lower candidate precedes a higher one in the same cell, because the batch path takes the maximum over the batch while the sequential path applies strictly-greater in arrival order. H3 must DECLARE its granularity rather than rely on this agreement.",
+      "caveat_if_caps_bound": null
+    },
+    "R5_cap_coupling": {
+      "finding": "The two caps are coupled THROUGH ARCHIVE OCCUPANCY, so they are not independent knobs and a retention comparison that varies one is not holding the other fixed.",
+      "highest_objective_candidate": "c008",
+      "its_objective": 9.0,
+      "its_disposition_under_binding_caps": "CAP_REFUSED_COUNT",
+      "its_disposition_under_loose_caps": "RETAINED_IMPROVED_CELL",
+      "cell": 10,
+      "earlier_byte_refusal_in_the_same_cell": {
+        "candidate_id": "c005",
+        "seq": 5,
+        "bytes_delta": 2400
+      },
+      "mechanism": "c005 was refused for BYTES at seq 5, which left cell 10 empty. c008 (objective 9.0, the highest in the stream) would have IMPROVED that cell at zero occupancy cost; because the cell was empty it counted as a new occupation instead, and the COUNT cap refused it. A byte refusal early caused the loss of the best candidate later, through the other cap.",
+      "consequence_for_h3": "Report both caps and the disposition log, never a retained set alone. Two policies compared at different caps differ by an amount that includes this coupling, and the coupling is invisible in the retained set.",
+      "fires_on_this_stream": true
+    },
+    "checks": [
+      {
+        "claim": "stream validates against all five declared properties",
+        "pass": true
+      },
+      {
+        "claim": "recoverability verified through a resolver, not assumed",
+        "pass": true
+      },
+      {
+        "claim": "duplicate content under distinct ids is detected and surfaced",
+        "pass": true
+      },
+      {
+        "claim": "tie policy FIRST_WRITER_WINS verified one-at-a-time",
+        "pass": true
+      },
+      {
+        "claim": "tie policy FIRST_WRITER_WINS verified in batch",
+        "pass": true
+      },
+      {
+        "claim": "exact tie is REJECTED_BY_ARCHIVE, incumbent survives",
+        "pass": true
+      },
+      {
+        "claim": "loose caps: NEITHER binds, and the run says so",
+        "pass": true
+      },
+      {
+        "claim": "binding caps: BOTH the count cap and the byte cap fire",
+        "pass": true
+      },
+      {
+        "claim": "no emitter or scheduler instance exists in either replay",
+        "pass": true
+      },
+      {
+        "claim": "every non-retained candidate keeps a resolvable result_ref",
+        "pass": true
+      },
+      {
+        "claim": "byte ledger reconciles with archive occupancy",
+        "pass": true
+      },
+      {
+        "claim": "batch and one-at-a-time agree on this stream when caps do not bind",
+        "pass": true
+      },
+      {
+        "claim": "cap coupling is exercised: an early byte refusal costs the highest-objective candidate later, through the OTHER cap",
+        "pass": true
+      }
+    ],
+    "n_passed": 13,
+    "n_total": 13
+  },
+  "deviations": [
+    "DEV-H3-1: the stream contract is a Techne proposal, not Archaeon's format. Five required properties are implemented as refusals and argued in STREAM_CONTRACT_V0.md; the field names are provisional.",
+    "DEV-H3-2: R4 compares an UNCAPPED batch against a capped-but-not-binding sequential replay, because the batch path cannot be capped without reimplementing the donor's rule. The comparison is therefore only meaningful when the caps do not bind, and the result carries that condition."
+  ],
+  "unrun_or_blocked": [
+    "H3's REAL stream format -- Archaeon hands it over from Track B's C3 corpus or Track E's NK. Until then this adapter is qualified against a fixture, and the fixture is a Techne proposal that will lose to the real format.",
+    "Retention POLICY comparison -- not attempted and not this seat's. The adapter replays one stream under one configuration; comparing policies is H3's experiment.",
+    "Capped BATCH replay -- deliberately unavailable rather than faked. A cap is a per-candidate admission decision and the donor's batch path resolves collisions before returning, so capping a batch would mean reimplementing the donor's tie rule."
+  ],
+  "status": "QUALIFIED_AGAINST_DECLARED_FIXTURE",
+  "consumer": "H3 retention replay (Archaeon). The REAL stream format does not exist yet -- H3 alpha is NOT STARTED -- so this qualifies the adapter against a declared fixture stream, per the operator's instruction of 2026-09-10.",
+  "contract": "techne/h3_retention/STREAM_CONTRACT_V0.md",
+  "budget_profile": {
+    "purpose": "run a first-useful-check or a reproduction fixture against ALREADY acquired bytes.",
+    "network": "FORBIDDEN -- enforced by the check harness, which asserts no acquisition step runs under this profile",
+    "max_wall_seconds": 600,
+    "max_download_bytes": 0,
+    "max_disk_bytes": 1073741824,
+    "max_rss_bytes": 4294967296,
+    "max_processes": 2,
+    "rationale": "Scientific execution uses already-available inputs and dependencies. A check that needs the network is an acquisition step wearing a check's name.",
+    "name": "offline_check"
+  },
+  "resource_receipt": {
+    "profile": "offline_check",
+    "network_policy": "FORBIDDEN -- enforced by the check harness, which asserts no acquisition step runs under this profile",
+    "wall_seconds": 2.219,
+    "wall_ceiling": 600,
+    "downloaded_bytes": 0,
+    "download_ceiling": 0,
+    "cache_bytes_before": 926613645,
+    "cache_bytes_after": 0,
+    "cache_delta_bytes": -926613645,
+    "peak_rss_bytes_os_counter": 231043072,
+    "peak_rss_bytes_sampled": 226885632,
+    "rss_method": "GetProcessMemoryInfo",
+    "rss_ceiling": 4294967296,
+    "rss_samples": 8,
+    "rss_ceiling_exceeded_during_sampling": false,
+    "rss_enforcement": "NOT ENFORCED -- no job object / cgroup cap. peak_rss_bytes_os_counter is the OS peak-working-set counter for this process and IS reliable; rss_ceiling_exceeded_during_sampling is sampled and can miss a spike. Neither stops a step.",
+    "rss_excludes_children": "This is THIS process only. pip, git and venv run as children and their RSS is NOT included.",
+    "children_spawned": 0,
+    "process_cap": 2,
+    "aborted_on": null
+  }
+}
