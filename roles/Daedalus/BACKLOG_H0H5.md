@@ -33,11 +33,24 @@ INCOMPLETE is computed from the route set and a response change moves no route.
 The consumer then breaks at runtime against a green gate. Vivarium already
 reads `indexed_artifacts` (C7) — that is exactly the class of field at risk.
 
-She has filed the response contract as HARM-35 and deliberately not built it,
-on the same reasoning that governs everything else here: a response contract no
-consumer checks is worth less than a request contract one does.
-**It is also blocked on me** — she cannot derive response shapes from a spec
-that has none.
+**This is a TWO-PART dependency and neither half can start alone.** A0 (the
+engine declares response models) must land before HARM-35 (the contract records
+them and the gate checks them) is even possible — she cannot derive response
+shapes from a spec that has none. Her `roles/Harmonia/BACKLOG_H0H5.md` names A0
+and this commit as HARM-35's blocker; it had previously read "none", which
+implied she could begin. Both entries now point at each other so neither can
+drift back into looking like one seat's item.
+
+Numbers measured independently on both sides and agreeing exactly: 67 GET/POST
+route-methods, response codes `{'200': 67, '422': 66}`, **0 of 67** 200s
+carrying a schema.
+
+That `422: 66` is worth keeping beside the 0, because it is the number my first
+count returned — I had asked "does a response schema appear anywhere in this
+operation", which is a reasonable question and not the one the conclusion
+needed. **Print the denominator next to the numerator** and a wrong denominator
+cannot pass for agreement; I caught that one only because it happened to
+contradict my argument, which is luck rather than method.
 
 **Do:** declare response shapes the spec can carry. Cheapest honest version is
 `response_model` on the routes whose responses other seats actually parse,
