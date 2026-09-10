@@ -126,6 +126,14 @@
         "pinned_by": "stitch_bindings Cargo.toml: stitch_core = { git = ..., rev = \"0ef5ec7\" }",
         "license": "MIT (LICENSE present at that revision, Copyright (c) 2021 Matthew Bowers)",
         "note": "The bindings pin the core at 0ef5ec7, NOT at main's head. My 09-10 pass read the core's LICENSE at 350804b7 -- the wrong revision as well as the wrong repository. The file is byte-identical at both, which is luck, not method."
+      },
+      "d17_record": {
+        "decision": "D-17 v1 PROPOSED by Techne 2026-09-10; Archaeon holds DECISIONS.md",
+        "source_correspondence": "ESTABLISHED -- tag v0.1.29 = 8ba2c1c041ab, Cargo.toml version = 0.1.29, exact match with the installed distribution. NOT established by a reproducible build.",
+        "licence": "UNRESOLVED -- full tree at v0.1.29 has 128 entries and ZERO licence-like paths (recursive, untruncated); no license key in Cargo.toml or pyproject.toml; nothing in the wheel or sdist.",
+        "disposition": "development-only. A LICENCE block, not a provenance block.",
+        "supersedes": "the 2026-09-10 reading that pinned 350804b7b358 and called the licence MIT -- wrong repository (that is the Rust core at main HEAD) and wrong direction on both halves.",
+        "evidence": "techne/acquisition/D17_EVIDENCE_2026-09-10.md"
       }
     },
     {
@@ -239,7 +247,13 @@
       },
       "license_claim": "MIT",
       "license_resolution_rule": "LICENSE document read from the source tree at the pinned revision 0ef5ec7 -- 1070 B, 'MIT License', 'Copyright (c) 2021 Matthew Bowers'. Cargo.toml additionally declares license = \"MIT\".",
-      "acquisition_status": "SOURCE_ACQUIRABLE_BUILD_BLOCKED_NO_RUST_TOOLCHAIN"
+      "acquisition_status": "SOURCE_ACQUIRABLE_BUILD_BLOCKED_NO_RUST_TOOLCHAIN",
+      "d17_record": {
+        "source_pin": "0ef5ec7f17091d22b8fa959fb5705e359d735a47 -- the revision the BINDINGS pin, not main's head",
+        "licence": "MIT, Copyright (c) 2021 Matthew Bowers; LICENSE present at the pinned revision and Cargo.toml declares license = \"MIT\"",
+        "disposition": "UNBLOCKED for internal use and for export, notice kept beside the copy",
+        "provenance_claim_available": "yes -- built here and ROUTES_AGREE with the bindings byte for byte on one hash-pinned input; receipt paper_reproduction-stitch_rust_core-20260910T161201Z.json"
+      }
     }
   ]
 }

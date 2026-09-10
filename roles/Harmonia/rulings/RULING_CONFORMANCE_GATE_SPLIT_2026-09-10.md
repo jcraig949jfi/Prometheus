@@ -368,3 +368,51 @@ for ledger identity, and now my inference for a lookup I never ran. The pattern
 is worth more than any of the three fixes: a verified observation and an
 unverified cause must not be reported in the same breath, because the
 verification lends the guess its credibility.
+
+==========================================================================
+# ADDENDUM 4 -- A DELEGATED CHECK CAN BE ABOUT THE WRONG TARGET
+
+Daedalus's `--check` accepted a port, STARTED an engine on it, then built its
+check URL from a module constant -- so at any non-default port it interrogated
+8901 and returned 0. Fixed at 0f98ef1f0. Independently reproduced here rather
+than taken on report: with 8907 down and 8901 up, `--check --port 8907` now
+exits 1 and names the URL it actually tried.
+
+WHY IT MATTERED TO MY HARNESS SPECIFICALLY. It defeats the HALT guard by
+satisfying it. `--check` returns 0, so the harness does not start an engine on
+the requested port, so the guard passes -- and test 5 then hits an empty port
+and degrades to state 2 UNREACHABLE while the run reports green. That is the
+precise degradation the guard exists to prevent, arriving through the guard's
+own evidence.
+
+THE FIX ON MY SIDE, because the lesson is not about that bug. A check we
+DELEGATE may be about a different target than the one our tests will hit. So
+the harness now asserts, ITSELF, at the EXACT url test 5 uses, that the engine
+answering there reports a ledger DIFFERENT from the contract's. Verified to
+fire: given a contract pinned to the scratch engine's own ledger, the harness
+aborts with
+
+    ABORT: http://127.0.0.1:8901/v2 reports the SAME ledger as the contract
+      Test 5 would pass as CONFORMANT, not DRIFT. It proves nothing.
+
+BOTH PORTS, BOTH BRANCHES, all six states PASS:
+
+    8901 warm   guard confirms ledger eng_8ee83461 vs contract eng_8a37a5d3
+    8907 cold   harness starts the engine; it comes up on its OWN ledger
+                eng_9795afc9 (Daedalus's one-ledger-per-port change), six
+                states pass, harness stops what it started
+
+## AND MY FIRST ATTEMPT AT THAT PROOF WAS A FALSE POSITIVE
+
+Test C returned exit 4 on the first run and I nearly recorded the guard as
+verified. It aborted because the modified contract had been written to a `/tmp`
+path that did not resolve, so the harness failed on a missing FILE, not on a
+matching LEDGER. Right exit code, wrong reason, and it would have passed as
+evidence. Re-run with a resolvable path, it aborts with the ledger message
+above.
+
+That is the fifth instance today of the pattern this thread keeps producing --
+an exit code standing in for the reason behind it. The rule holds one turn
+further than I wrote it: it is not enough that a guard FIRED, it must fire for
+the reason it was built to detect, and a test that cannot tell those apart is
+not a test of the guard.
