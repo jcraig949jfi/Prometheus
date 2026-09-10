@@ -1,0 +1,980 @@
+CHUNK 5 ENTRIES
+Analyst pass: 2026-09-06. Source: archaeon/templates/inbox/.
+Note on SOURCE_CHECK: this session's web-search budget was exhausted after one
+query (the Pease/Colton check). All other verdicts rest on established
+literature knowledge, and each line says what is and is not confirmed.
+
+BEGIN_ENTRY
+TEMPLATE_ID: ai_scientist_training.v0
+FIELD: AI Scientist systems
+KIND: train_llm_idea_v0
+QUESTION: Can a language model take a working machine-learning training script,
+  write a modification to it, and have that modification actually run and reach
+  a target validation loss?
+MECHANISM: Start from a small working codebase and its known baseline numbers.
+  A language model brainstorms a research idea against that codebase, checks
+  the idea against a literature search for prior art, then a coding agent edits
+  the source files to implement it. The edited code is executed under a fixed
+  compute budget; if it crashes, the error text is fed back and the agent gets
+  a bounded number of repair attempts. Numbers that survive are collected into
+  plots and a write-up, which a second language model then scores. The loop is
+  generate, edit, execute, observe, repair, report.
+CANDIDATE: The model-authored code diff, and behind it the idea it encodes.
+  What varies is which idea is attempted; what is judged is whether the diff
+  executes at all and what validation loss the modified script reaches.
+WORLD: A concrete template repository plus its dataset, its baseline run, and a
+  wall-clock or GPU budget. The world supplies executability, a loss curve, and
+  a reference baseline to be beaten.
+WHAT_CHANGES: idea_id, which selects one of three template codebases, and
+  training_steps, which sets the compute budget per attempt. The parameter
+  values for training_steps were destroyed in ingest and are unknown.
+MEASURED: Two things in the real method, which is already a problem for this
+  bench: a boolean execution outcome and a continuous validation loss. The
+  literature also reports a reviewer score on an ordinal scale.
+INFORMATIVE_FAILURE: Highly informative. A failed run leaves the exact diff and
+  the exact traceback, which categorize into a real error taxonomy: import and
+  API misuse, shape and dtype errors, silent no-ops where the diff changed
+  nothing on the execution path, and runs that finish but are worse than
+  baseline. That last class is the valuable one, because it separates
+  cannot-implement from implemented-and-useless. A corpus of failing diffs is a
+  reusable artifact even if not one idea ever beats baseline.
+SOURCE_CHECK: VERIFIED. The AI Scientist, Lu, Lu, Lange, Foerster, Clune and Ha,
+  2024, Sakana AI. The three named idea_id choices match the paper's own
+  template set: a nanoGPT language-model template, a grokking template, and a
+  2D diffusion template. Confirmed from established knowledge, not re-fetched
+  this session.
+SHARED_MECHANISM: generate_and_execute_program
+ROUTES: R-BACKEND, R-EXECUTOR, R-SUBSTRATE
+BLOCKER: R-BACKEND, the missing thing is an execution capability, namely a
+  sandboxed subprocess with a model API and accelerator access that the engine
+  calls and whose diff, stdout and metrics it fossilizes; nothing about bench
+  internals has to change for this; R-EXECUTOR, an adjudication capability is
+  missing, because the honest outcome is a conjunction of executed and
+  loss_at_or_below_target, and the outcome rule is one scalar comparison on one
+  field, so any adapter must collapse the pair into a single field, for example
+  validation loss with a sentinel of positive infinity on crash, and that
+  collapse is a design decision that must be stated in the spec; R-SUBSTRATE, a
+  control-flow capability is missing, since the repair loop feeds the executor's
+  own error output back into its next input, which is output-to-input chaining,
+  and no sealed spec can do that.
+FAITHFUL: A faithful implementation needs a real repository, a real dataset, a
+  model endpoint, an isolated writable checkout per attempt, and a bounded
+  repair loop with the traceback as input. It must fossilize the diff, the
+  environment lockfile and the full log alongside the metric, or the run is not
+  reproducible. It also needs a contamination control, because all three named
+  templates are public and a model may have memorized both the code and the
+  known good modifications to it.
+REDUCTION: A reduction exists but it is a null-world instrument check, not a
+  capability test, and it must be labelled as such. Freeze one world seed and
+  one length, say length 64 as a NEW DESIGN CHOICE. Tell a language model the
+  exact scoring rule, including that the target is derived by hashing the seed
+  together with the length, and ask it for one bitstring. Seal that bitstring as
+  the bits payload of an evaluate_bitstring spec. Run a matched spec with a
+  uniformly random bitstring of the same length on the same seed. Repeat across
+  many seeds using linear_index repeats, and across several lengths using
+  separate specs. WHAT IT PRESERVES: the outer discipline of the AI Scientist
+  loop that Prometheus actually cares about, which is propose, seal, execute,
+  score, fossilize, with the proposal committed before the target can be seen;
+  and it supplies the one control the real system lacks, because a hash-derived
+  target cannot appear in any training corpus, so the null is exactly a
+  fair-coin match rate and contamination is impossible by construction. WHAT IT
+  LOSES: everything that makes the method a method, namely code, compilation,
+  training dynamics, the repair loop and the reviewer. It also loses the fact
+  that real machine-learning landscapes have exploitable structure while a hash
+  target has none, so a model that is genuinely good at ideas cannot show it
+  here. WHICH CLAIM: only a negative one, that model-authored sealed candidates
+  score at chance on an unmemorizable target. If they do not, the producer
+  pipeline is leaking the target, and the leak is found before an expensive
+  backend is built on top of it. Worth running first, and honestly all this
+  reduction can support.
+END_ENTRY
+
+BEGIN_ENTRY
+TEMPLATE_ID: artificial_curiosity.v0
+FIELD: Artificial Curiosity
+KIND: model_building_controller.v0
+QUESTION: If an agent is rewarded for surprising itself, does it seek out the
+  parts of its world it does not yet understand, and does it lose interest once
+  it has learned them?
+MECHANISM: Two networks share a world. A model network watches the current state
+  and the action taken and tries to predict the next state; it is trained to
+  reduce its own prediction error. A controller network chooses actions and is
+  rewarded by exactly that prediction error, so it is trained to increase it.
+  The two are in direct opposition. The consequence is a moving target: a region
+  that is initially surprising pulls the controller toward it, the model learns
+  that region, the error falls, and the controller leaves. That departure is
+  boredom, and it falls out of the arithmetic rather than being programmed. The
+  known failure is a region whose unpredictability is irreducible, such as pure
+  noise, where the model can never reduce error and the controller never leaves.
+CANDIDATE: The controller, judged by where in the world it spends its time and
+  whether that allocation tracks the model's residual error.
+WORLD: An environment with observations, an action interface, and temporal
+  structure, so that a next state exists to be predicted. The environment
+  supplies both learnable regularity and, in the interesting version, at least
+  one region of irreducible noise.
+WHAT_CHANGES: hidden_units, which sets model capacity and therefore what counts
+  as learnable, and delayed_reward_steps, which sets how far ahead the
+  prediction reaches. Both parameter value sets were destroyed in ingest.
+MEASURED: Prediction error over time, on a continuous scale, and the
+  controller's occupancy over regions, as a distribution. The claim lives in the
+  coupling between the two, not in either one alone.
+INFORMATIVE_FAILURE: Useful. If the controller parks permanently in the noisy
+  region, that is the noisy-television result and it is a positive finding about
+  the drive rather than a null. If prediction error falls to zero everywhere
+  with no change in occupancy, the environment had no differential structure to
+  find, which indicts the world and not the agent. The one failure that leaves
+  nothing behind is a controller that never learns at all, because then
+  occupancy says nothing about the drive.
+SOURCE_CHECK: VERIFIED. Schmidhuber, A possibility for implementing curiosity and
+  boredom in model-building neural controllers, in the 1991 Simulation of
+  Adaptive Behavior proceedings. The dual-network arrangement, the reward on the
+  model's prediction error, and the explicit treatment of boredom are all in
+  that work. Confirmed from established knowledge.
+SHARED_MECHANISM: two_module_adversarial_learning
+ROUTES: R-COMPOSE, R-WORLD, R-SUBSTRATE, R-BACKEND
+BLOCKER: R-COMPOSE, an adjudication capability is missing for the full claim,
+  because the finding is a relation between an error curve and an occupancy
+  distribution while the outcome rule is one scalar comparison, so any verdict
+  must be computed downstream and the specs can carry only raw observations;
+  R-WORLD, the missing thing is the world itself, specifically an action
+  interface, since neither existing kind lets anything choose what to do next
+  inside a run, and without actions there is no controller; R-SUBSTRATE, a state
+  capability is missing, namely learner weights that persist and update across
+  steps, plus output-to-input chaining so the model's error becomes the
+  controller's reward; R-BACKEND, no capability of substance is missing, an
+  existing reinforcement-learning library could run this and the bench would
+  only have to call it and fossilize the curves.
+FAITHFUL: A faithful implementation needs a small environment with actions and
+  observations, two trainable modules with persistent parameters, and a reward
+  wire from the model's error to the controller. It must contain at least one
+  learnable region and one irreducibly stochastic region, or the boredom claim
+  and the noise-trap claim cannot be separated. Error and occupancy must be
+  logged per step, not only at the end.
+REDUCTION: A good reduction exists, and it turns on a bench property that was
+  not designed for it. Drop the controller and keep the drive signal. Treat each
+  world seed as a region and each evaluate_bitstring call as one observation of
+  that region. Have a producer-side predictor forecast the score of the next
+  probe bitstring in a region, and define the curiosity signal as the absolute
+  error of that forecast. Now use repeat.seed_derivation as the learnability
+  switch, which is the whole trick. Under constant, every repeat scores against
+  the SAME hidden target, the region is a fixed function, and a predictor that
+  has seen enough probes drives its error toward zero, which is boredom observed
+  directly. Under sha256_index, every repeat scores against a DIFFERENT target,
+  the region is redrawn each time, and no predictor can push its error below the
+  spread of the score distribution, which is exactly the noisy television. Run
+  both arms at matched probe counts, say 200 probes per arm as a NEW DESIGN
+  CHOICE, and compare error trajectories offline. WHAT IT PRESERVES: the
+  heterostatic signal itself, the distinction between reducible and irreducible
+  uncertainty, the decay of interest, and the trap, which is precisely the
+  failure mode the template's own rationale says a SURVIVED verdict would not
+  license. WHAT IT LOSES: the controller, and therefore the closed loop. Nothing
+  chooses where to go, so this measures the drive signal and not the agent. It
+  also loses the adversarial coupling, since the predictor has no opponent.
+  WHICH CLAIM: that prediction-error-as-drive separates learnable from
+  irreducible variance, and by how much, on a landscape whose irreducibility is
+  known by construction rather than assumed. That is a genuine calibration of
+  the signal, and it is the precondition for trusting it inside a controller
+  later.
+END_ENTRY
+
+BEGIN_ENTRY
+TEMPLATE_ID: cegar.abstraction.loop.v0
+FIELD: Counterexample-Guided Verification
+KIND: cegar_loop_v0
+QUESTION: Can you prove a property about a system too big to check directly, by
+  checking a deliberately blurred version of it and sharpening the blur only
+  where the blur lies to you?
+MECHANISM: Build a coarse abstraction of the system that keeps every real
+  behaviour and also admits some fake ones, so it over-approximates. Ask a model
+  checker whether the property holds on the abstraction. If yes, it holds on the
+  real system too and you are done. If no, the checker hands back a
+  counterexample trace. Replay that trace on the concrete system. If it
+  reproduces, the bug is real and you are done. If it does not, it was an
+  artifact of the blurring, and the trace tells you WHICH distinction the
+  abstraction discarded; you add that distinction back, refine, and loop. The
+  loop terminates because each refinement strictly splits the abstract state
+  space.
+CANDIDATE: The abstraction. What varies is which distinctions it keeps; what is
+  judged is whether it is precise enough to settle the property.
+WORLD: A concrete transition system plus a property to check. The world supplies
+  a model checker, a concrete replay oracle, and, critically, counterexample
+  traces rather than merely a yes or no.
+WHAT_CHANGES: initial_abstraction_bits, either 11000000 or 11110000, and
+  property_bits, 10101010. These parameter values survived ingest intact and are
+  bitstrings of length eight, which strongly suggests an intended encoding onto
+  the existing bitstring kind.
+MEASURED: In the real method, a three-way outcome, property proven, real bug
+  found, or refine again, together with the number of refinement rounds and the
+  final abstraction size.
+INFORMATIVE_FAILURE: Very informative. A refinement loop that fails to terminate
+  within budget leaves the sequence of abstractions it tried, and that sequence
+  directly measures how much the counterexample guidance is worth: a loop that
+  removes one spurious distinction per round is being guided, a loop that
+  thrashes is not. A spurious counterexample that cannot be diagnosed as
+  spurious leaves a concrete, nameable gap in the replay oracle.
+SOURCE_CHECK: VERIFIED. Clarke, Grumberg, Jha, Lu and Veith,
+  Counterexample-Guided Abstraction Refinement, Computer Aided Verification
+  2000. The Clarke et al 2000 attribution is correct and the loop described is
+  the method. Confirmed from established knowledge.
+SHARED_MECHANISM: refine_abstraction_from_counterexample
+ROUTES: R-COMPOSE, R-EXECUTOR, R-BACKEND, R-SUBSTRATE
+BLOCKER: R-COMPOSE, a measurement capability is missing and it is the decisive
+  one, because evaluate_bitstring returns a SCALAR score and never the WITNESS,
+  so a producer running the loop across specs learns how many positions
+  disagree but never which, and CEGAR without the counterexample is not CEGAR,
+  it is blind generate-and-test; R-EXECUTOR, the fix is small and specific, an
+  executor or adapter that returns the disagreement mask alongside the score,
+  which is a measurement capability; R-BACKEND, no capability is missing, an
+  existing model checker could be invoked and its counterexample fossilized;
+  R-SUBSTRATE, a control-flow capability is missing for any single-spec version,
+  namely a bounded loop with output-to-input chaining, since refinement round
+  N+1 must consume round N's trace and no payload may change inside a spec.
+FAITHFUL: A faithful implementation needs a transition system, a property
+  language, a model checker that emits traces, and a concrete simulator to
+  adjudicate spuriousness. It needs a refinement operator that consumes a trace
+  and returns a strictly finer abstraction, and the loop must be able to run to
+  fixpoint rather than to a fixed count.
+REDUCTION: A real and unusually clean reduction exists, and it yields a
+  quantitative result about the method itself. Take the template's own numbers
+  at face value, length 8, and treat the hidden target as the concrete
+  behaviour. One spec is one refinement round: submit the current abstraction as
+  bits and read score, the fraction of the eight positions on which the
+  abstraction agrees with concrete behaviour. A score below 1.0 means a
+  counterexample exists and the property is unsettled; solved true means it is
+  settled. The producer holds the loop across specs, flipping bits to raise the
+  score, starting from each of the two given abstractions. Now run two arms. Arm
+  A is the bench as it stands, where the producer sees only the count of
+  disagreements and must refine blind. Arm B is an oracle simulation, where the
+  producer is separately told which position disagreed, imitating a real
+  counterexample trace. Both arms run to score 1.0 or to a budget, over many
+  seeds. WHAT IT PRESERVES: the abstraction as a candidate, monotone refinement
+  toward a property, termination as the object of study, and rounds-to-proof as
+  the measurable. WHAT IT LOSES: over-approximation semantics, because a Hamming
+  score is symmetric and cannot distinguish a false alarm from a missed
+  behaviour, so the spurious-versus-genuine adjudication, which is half of
+  CEGAR, is simply absent. It also loses scale, and scale is the method's entire
+  reason to exist. WHICH CLAIM: the gap between arm A and arm B measures, in
+  rounds, what a counterexample witness is worth relative to a scalar oracle.
+  For length L a witness-bearing loop should finish in at most L rounds while a
+  count-only loop pays a real search cost. Measuring that gap on the current
+  bench is a pre-registerable, evidence-backed argument for adding
+  witness-returning executors, and it is the version worth running.
+END_ENTRY
+
+BEGIN_ENTRY
+TEMPLATE_ID: computational_serendipity.v0
+FIELD: Computational Serendipity
+KIND: random_walk_v0
+QUESTION: How often does an aimless, undirected process stumble into something a
+  standing criterion would call valuable?
+MECHANISM: The account this template draws on breaks a serendipitous discovery
+  into four parts. A prepared mind holds standing interests and evaluation
+  criteria. A serendipity trigger occurs, and it is unsought, accidental and
+  independent of what the agent was doing. A bridge is then constructed by the
+  agent, connecting the trigger to something it cares about. A result follows,
+  and the result must have value. The account grades an episode along three
+  dimensions: chance, how unlikely and unsought the trigger was; sagacity, how
+  much insight the bridge took; and value, how good the result is. Only the
+  combination is serendipity.
+CANDIDATE: A trajectory of an unguided stochastic process. What varies is where
+  the wander goes; what is judged is whether it reaches a state a preset
+  criterion calls valuable.
+WORLD: A one-dimensional line with a fixed origin and a value threshold placed
+  at some distance from it. The world supplies randomness and the threshold, and
+  nothing else.
+WHAT_CHANGES: steps and step_scale. Both parameter value sets were destroyed in
+  ingest and are unknown; the axis names are real.
+MEASURED: The signed final position and the displacement from the start, both
+  continuous, compared once against a threshold.
+INFORMATIVE_FAILURE: Moderately informative and in one specific way very much
+  so. A run in which no threshold is ever crossed still supplies the base rate
+  of accidental threshold crossing at a given steps and step_scale, and that
+  base rate is the null that every other discovery claim on this bench should be
+  scored against. What a failure leaves nothing of is the serendipity question
+  itself, because nothing here can tell a lucky crossing apart from a
+  perceptive one.
+SOURCE_CHECK: VERIFIED, with a correction to the description. The work is Pease,
+  Colton, Ramezani, Charnley and Reed, A Discussion on Serendipity in Creative
+  Systems, Proceedings of the Fourth International Conference on Computational
+  Creativity, ICCC 2013, pages 64 to 71. It does define the prepared mind, the
+  serendipity trigger, the bridge and the result, and the three dimensions of
+  chance, sagacity and value. It is a discussion paper proposing those
+  dimensions, not a standards document, and it has five authors rather than the
+  two named. Checked this session.
+SHARED_MECHANISM: accumulate_trajectory
+ROUTES: R-REPAIR, R-COMPOSE
+BLOCKER: R-REPAIR, the missing thing is parameter values, since steps and
+  step_scale both arrived null and no executor may default a parameter, so the
+  spec is rejected until an operator sets them; that is the only thing standing
+  between this template and execution; R-COMPOSE, an adjudication capability is
+  missing for the actual construct, since chance is measurable here but sagacity
+  and the bridge are not, and no downstream analysis of position values can
+  recover them.
+FAITHFUL: A faithful implementation needs an agent with standing interests that
+  were formed before the trigger, a mechanism that can notice an event it was
+  not looking for, and a bridge operator that connects that event to an
+  unrelated goal. It also needs the value criterion to be capable of being met
+  by something not on the agent's current agenda, which is the exact property a
+  pre-registered scalar threshold destroys.
+REDUCTION: A reduction exists, it is nearly free, and its honest scope is
+  narrow. Set steps to 200 and step_scale to 0.1, both NEW DESIGN CHOICES, and
+  set the outcome rule to displacement greater than or equal to 2.0 mapping to
+  SURVIVED. Use repeat count 200 with seed_derivation sha256_index and state
+  reset, so the 200 repeats are independent walks. The crossing frequency is a
+  calibrated base rate of accidental value. Sweep steps and step_scale across
+  specs to get the rate as a surface. One trap must be flagged: the bench's
+  degenerate_by_construction check fires only for a constant seed meeting a
+  STATELESS kind, and random_walk_v0 is stateful, so a constant seed with state
+  reset and count greater than 1 gives 200 byte-identical walks and will NOT be
+  flagged. That configuration must be avoided by hand. WHAT IT PRESERVES: the
+  chance dimension exactly, an unguided process with no objective, and the
+  prepared mind in its thinnest possible form, since a pre-registered outcome
+  rule is literally a criterion fixed before the trigger. WHAT IT LOSES:
+  sagacity and the bridge, wholly. Nothing recognises an unsought result,
+  nothing connects it to an unrelated goal, and a criterion fixed in advance
+  means the agent was in fact looking for exactly this, which is the precise
+  negation of serendipity. WHICH CLAIM: only the base rate of luck at a given
+  budget. That is not serendipity and must never be written up as such, but it
+  is the correct denominator for every serendipity claim the bench later makes,
+  and no other template in this chunk supplies it.
+END_ENTRY
+
+BEGIN_ENTRY
+TEMPLATE_ID: empowerment.v0
+FIELD: Empowerment
+KIND: channel_capacity_evaluator.v0
+QUESTION: Can an agent decide what to do using nothing but a measure of how much
+  control it has over its own future, with no goal given to it from outside?
+MECHANISM: Treat the agent's actuators as the input to a communication channel
+  and the future state of the world as its output. Fix a state and a horizon of
+  h steps. Consider every action sequence of length h. Each sequence induces a
+  distribution over the state h steps later. The channel capacity of that
+  mapping, the maximum over distributions on action sequences of the mutual
+  information between the sequence and the resulting state, is the empowerment
+  of the state, measured in bits. It is computed by an iterative algorithm of
+  the Blahut-Arimoto family. High empowerment means many distinguishable
+  futures are reachable. An agent with no goal can then simply climb the
+  empowerment landscape, and in many worlds this reproduces sensible behaviour
+  such as staying near the centre of a room or keeping a pole balanced.
+CANDIDATE: A state of the world, judged by how many distinguishable futures the
+  agent can steer itself into from there.
+WORLD: A dynamical system with an explicit action interface, a resettable state,
+  and a forward model or simulator that can be rolled out repeatedly from the
+  same state under different action sequences.
+WHAT_CHANGES: lookahead_horizon, the number of steps in the action sequence, and
+  actuator_bits, the size of the action alphabet. Both parameter value sets were
+  destroyed in ingest.
+MEASURED: A single non-negative real number of bits per state, bounded above by
+  the horizon times the actuator bits. In practice a landscape of that number
+  over many states.
+INFORMATIVE_FAILURE: Informative. An empowerment estimate that comes out at the
+  theoretical maximum everywhere says the world is deterministic and fully
+  controllable and therefore has no landscape to climb, which indicts the world.
+  An estimate near zero everywhere says the action channel is being swamped by
+  noise or the horizon is too short, which indicts the parameters. Both are
+  diagnostic and both are cheap. A failure that leaves nothing is one where the
+  estimator itself is biased, and mutual-information estimators on sparse
+  histograms are biased upward, so a random-action-relabelling null must be run
+  alongside or the number means nothing.
+SOURCE_CHECK: VERIFIED. Klyubin, Polani and Nehaniv, Empowerment: A Universal
+  Agent-Centric Measure of Control, IEEE Congress on Evolutionary Computation
+  2005. The definition as the channel capacity from an actuation sequence to a
+  future sensor state is that paper's. Confirmed from established knowledge.
+SHARED_MECHANISM: measure_information_quantity
+ROUTES: R-COMPOSE, R-EXECUTOR, R-WORLD
+BLOCKER: R-COMPOSE, a measurement capability is missing, because mutual
+  information is a functional of a joint DISTRIBUTION and the outcome rule is
+  one scalar comparison on one result field with no aggregation across repeats,
+  so the estimate can only ever be assembled downstream from many fossils;
+  R-EXECUTOR, the missing thing is an estimator, a channel-capacity executor
+  that consumes a joint sample and returns bits, which is a measurement
+  capability; R-WORLD, the missing thing is the world, specifically an action
+  interface, because empowerment is defined over an agent's actuators and no
+  existing kind has actuators at all.
+FAITHFUL: A faithful implementation needs a simulator with settable state,
+  discrete actions, and the ability to be reset and re-rolled from an identical
+  state many times. It needs a mutual-information estimator with a bias
+  correction and a permutation null. It needs empowerment to be evaluated at
+  MANY states, because the entire content of the theory is that the value varies
+  over states and that the variation is what guides behaviour.
+REDUCTION: A reduction exists, and it is more useful to Prometheus than it first
+  looks, because it turns the measure on the bench itself. The bench has no
+  actuators inside a run, but a spec's PAYLOAD is chosen by the producer and is
+  therefore an action. Fix one world seed. Define an action alphabet of eight
+  step_scale values, a NEW DESIGN CHOICE, and run one random_walk_v0 spec per
+  action with steps fixed, so steps plays the role of the horizon h. Record the
+  final position from each. Discretise position into bins and estimate the
+  mutual information between the action and the binned outcome downstream, with
+  a shuffled-action permutation null to correct the sparse-histogram bias. Then
+  repeat the whole sweep under seed_derivation sha256_index so the outcome is
+  redrawn per repeat. The prediction is sharp and pre-registerable: in the fixed
+  seed arm the map from action to outcome is deterministic and the estimated
+  capacity should approach three bits, the full alphabet; in the redrawn arm it
+  should approach zero. WHAT IT PRESERVES: the definition, maximum mutual
+  information between an action channel and a future state; the estimator and
+  its null; the horizon as an explicit parameter; and the qualitative contrast
+  between a controllable and an uncontrollable world. WHAT IT LOSES:
+  agent-centricity, since the empowered party is the producer and not anything
+  inside the run; state dependence, since one world seed is one state and the
+  landscape that the theory is entirely about cannot exist with one seed per
+  spec; and any notion of climbing that landscape. WHICH CLAIM: that the
+  estimator is correctly built and calibrated against a known answer, plus a
+  diagnostic Prometheus genuinely wants, which is how many bits of the result a
+  spec's payload actually buys under each seed_derivation setting. Call it what
+  it is, an instrument calibration plus a bench diagnostic, not a test of
+  empowerment as a behavioural drive.
+END_ENTRY
+
+BEGIN_ENTRY
+TEMPLATE_ID: falsification_walk.v0
+FIELD: Falsification-Based Search
+KIND: random_walk_v0
+QUESTION: If you cannot prove a system safe, can you at least hunt hard for an
+  input that makes it unsafe, and how much hunting does it take to find one?
+MECHANISM: A safety requirement is written in a temporal logic over signals, for
+  example that a value never leaves a band for the whole run. That formula is
+  given a real-valued robustness rather than a yes or no: positive means
+  satisfied with room to spare, near zero means marginal, negative means
+  violated, and the magnitude says by how much. Falsification then becomes
+  minimisation. A stochastic optimiser, Monte Carlo sampling or simulated
+  annealing or cross-entropy, proposes input signals and parameters, simulates
+  the system, computes robustness, and steers toward lower robustness. The first
+  negative value is a counterexample and the search stops. No negative value
+  within budget proves nothing at all; the search is deliberately incomplete.
+CANDIDATE: A trajectory, and behind it the input signal that produced it. What
+  varies is the sampled input; what is judged is the robustness of the resulting
+  trace against the property.
+WORLD: A cyber-physical model with a simulator, here surrogated by a
+  one-dimensional walk, plus a safety envelope. The world supplies a full trace
+  over time, which is what a temporal property is evaluated against.
+WHAT_CHANGES: steps and step_scale. Both parameter value sets were destroyed in
+  ingest. Note also a schema oddity that must be repaired: step_scale is typed
+  as an int_range here while the sibling template types it as choices, and a
+  step scale is naturally a float, so the type as well as the value needs an
+  operator decision.
+MEASURED: In the real method, a continuous robustness value per trace and, over
+  a campaign, the number of simulations to first falsification. On this bench,
+  only the terminal position and displacement.
+INFORMATIVE_FAILURE: Genuinely informative, and this is the rare template where
+  failure is the designed output. Not finding a violation leaves a calibrated
+  falsification rate at a given budget, which is exactly the floor that any
+  smarter search must beat to justify itself. Finding one leaves a concrete
+  counterexample trace, which is the most valuable artifact in the whole field.
+  The asymmetry is the point and it matches the bench's own posture: FALSIFIED
+  is conclusive, SURVIVED is not.
+SOURCE_CHECK: VERIFIED. S-TaLiRo: A Tool for Temporal Logic Falsification for
+  Hybrid Systems, Annpureddy, Liu, Fainekos and Sankaranarayanan, TACAS 2011.
+  The robustness-guided stochastic falsification method and the Monte Carlo
+  baseline are that tool's. Confirmed from established knowledge.
+SHARED_MECHANISM: accumulate_trajectory
+ROUTES: R-REPAIR, R-COMPOSE, R-EXECUTOR, R-BACKEND
+BLOCKER: R-REPAIR, the missing thing is parameter values and one parameter type,
+  since steps and step_scale are null and step_scale is typed as an integer
+  range where a scale wants a float; R-COMPOSE, a control-flow capability is
+  missing for the real method, because S-TaLiRo SEARCHES over inputs guided by
+  robustness and no spec may change its payload between repeats, so the guided
+  outer loop has to live in the producer across specs; R-EXECUTOR, a measurement
+  capability is missing and it is the sharpest blocker here, because
+  random_walk_v0 returns only the TERMINAL position and never the trace, so an
+  always-property such as the value never leaves the band cannot be evaluated at
+  all, and a trajectory may violate the envelope mid-flight and return before
+  the endpoint is read; only a final-time predicate is expressible, which is a
+  strictly weaker property; R-BACKEND, no capability is missing, S-TaLiRo or a
+  comparable tool could be invoked on a real model and its counterexample
+  fossilized.
+FAITHFUL: A faithful implementation needs a simulator that returns the whole
+  signal, a temporal-logic monitor that computes real-valued robustness over
+  that signal, and an outer optimiser that consumes robustness and proposes the
+  next input. It needs the counterexample to be stored as a replayable input,
+  not merely as a verdict, and it needs the budget recorded, because
+  simulations-to-falsification is the metric the field actually compares on.
+REDUCTION: A strong reduction exists and it is close to faithful for the
+  baseline, which is the honest thing to claim. Set steps to 1000 and step_scale
+  to 0.05, both NEW DESIGN CHOICES, and set the outcome rule to displacement
+  greater than or equal to 3.0 mapping to FALSIFIED, with the surviving branch
+  SURVIVED. Use repeat count 500 with seed_derivation sha256_index and state
+  reset, so each repeat is an independent input sample. That is Monte Carlo
+  falsification of a final-time safety predicate, which is precisely the
+  unguided baseline the field measures smarter searches against. Then sweep the
+  envelope threshold and step_scale across specs to build a
+  falsification-rate-versus-budget curve. The guided version is R-COMPOSE: let
+  the producer read displacement, treat 3.0 minus displacement as robustness,
+  and use cross-entropy over step_scale across successive specs, then compare
+  samples-to-first-falsification against the Monte Carlo arm at the same budget.
+  WHAT IT PRESERVES: stochastic falsification, incompleteness, the SURVIVED
+  asymmetry, robustness as a continuous quantity guiding an outer search, and a
+  genuine baseline-versus-guided comparison with a pre-registered budget. WHAT
+  IT LOSES: temporal logic, entirely. Only the final-time predicate survives,
+  so every always, eventually and until operator is out of reach, and a
+  mid-flight excursion is invisible. It also loses the hybrid dynamics, and with
+  them the discrete mode switches that make real falsification hard. WHICH
+  CLAIM: that robustness-guided sampling finds a rare terminal-envelope
+  violation in fewer samples than uniform sampling at matched budget, on a walk
+  whose violation probability is analytically known. Compute the attainable
+  crossing probability from steps and step_scale BEFORE fixing the threshold,
+  or the gate may sit outside the reachable range and the run cannot inform it.
+END_ENTRY
+
+BEGIN_ENTRY
+TEMPLATE_ID: l2o.meta.optimizer.v0
+FIELD: Learning-to-Optimize
+KIND: meta_optimize_quadratic_v0
+QUESTION: Instead of writing an optimisation algorithm by hand, can you train
+  one, and if you can, does it still work on problems unlike the ones it was
+  trained on?
+MECHANISM: There are two nested loops. The inner loop optimises an ordinary
+  function: at each step the current parameters produce a loss and a gradient.
+  Instead of applying a hand-written update such as gradient descent, the
+  gradient is fed into a small recurrent network which outputs the update, and
+  the same network is applied independently to every coordinate so it can scale
+  to any dimension. The outer loop trains that network. It unrolls the inner
+  loop for a fixed number of steps, sums the inner losses along the trajectory
+  to form a meta-loss, and backpropagates through the unrolled trajectory into
+  the network's weights, treating the incoming gradient as a constant input to
+  avoid second derivatives. The smallest characteristic instance trains on
+  random ten-dimensional quadratic objectives and then tests on fresh ones.
+CANDIDATE: The update rule itself. What varies is the learned optimiser's
+  weights; what is judged is the loss it drives its optimisee to within a fixed
+  number of steps.
+WORLD: A family of objective functions drawn from one distribution, each with a
+  gradient oracle. The world supplies both the training family and, for the
+  interesting question, a held-out family that differs structurally.
+WHAT_CHANGES: matrix_dimensions, which sets the size of the quadratic, and
+  unroll_steps, which sets the horizon of the meta-gradient. Both parameter
+  value sets were destroyed in ingest; the rationale text preserves the intent
+  of a ten-dimensional quadratic.
+MEASURED: Final or summed inner loss after a fixed step count, continuous,
+  compared against hand-written baselines such as SGD, momentum, RMSprop and
+  Adam on the same problems.
+INFORMATIVE_FAILURE: Informative in a specific and well-known direction. A
+  learned optimiser that beats baselines on its training family and then
+  diverges on a held-out family leaves the transfer boundary, and that boundary
+  is the actual scientific content of the area. A learned optimiser that fails
+  even in-family usually leaves a diagnosis of the unroll horizon, since short
+  unrolls give myopic rules and long ones give exploding meta-gradients. Little
+  is left behind only if the inner problem was so easy that every method ties.
+SOURCE_CHECK: VERIFIED. Andrychowicz, Denil, Gomez, Hoffman, Pfau, Schaul,
+  Shillingford and de Freitas, Learning to learn by gradient descent by gradient
+  descent, NIPS 2016. The coordinatewise recurrent optimiser, the unrolled
+  meta-loss and the ten-dimensional quadratic experiment are all that paper's.
+  Confirmed from established knowledge.
+SHARED_MECHANISM: nested_optimization_loop
+ROUTES: R-COMPOSE, R-BACKEND, R-SUBSTRATE, R-EXECUTOR
+BLOCKER: R-COMPOSE, a control-flow capability is missing inside any single spec,
+  because the inner loop is a sequence of dependent steps and no spec may change
+  its payload between repeats, so every inner step must become its own spec and
+  the loop must be carried by the producer; R-BACKEND, nothing is missing, an
+  automatic-differentiation library already does all of this and the bench would
+  only have to call it and fossilize the curves; R-SUBSTRATE, a state capability
+  is missing for a native version, namely persistent optimiser parameters and
+  output-to-input chaining from step N to step N+1; R-EXECUTOR, a measurement
+  capability is missing, since no existing kind returns a gradient and the whole
+  method is built on consuming one.
+FAITHFUL: A faithful implementation needs automatic differentiation through an
+  unrolled trajectory, persistent optimiser weights, and a function family
+  sampler with a genuine held-out arm that differs in kind and not merely in
+  seed. It needs baselines run on identical problems and identical budgets, and
+  it needs the transfer arm pre-registered, because the in-family result alone
+  is the part of the claim nobody disputes.
+REDUCTION: A real reduction exists, and it runs today with existing kinds
+  provided the producer does the work. evaluate_bitstring is already a family of
+  random objective functions of common structure: each seed gives a different
+  hidden target of the same length, and score is a smooth Hamming similarity to
+  it. Define an update rule as a producer-side function from a history of
+  submitted bitstrings and their scores to the next bitstring, parameterised by
+  a handful of numbers such as how many bits to flip as a function of current
+  score and of how recently a flip helped. Each inner step is one
+  evaluate_bitstring spec at fixed seed. Fit those parameters by grid or
+  evolutionary search over a training family of seeds 1 to 100 at length 64,
+  scoring by the score reached after T steps with T set to 30, all NEW DESIGN
+  CHOICES. Freeze the rule. Then run two test arms: fresh seeds 101 to 200 at
+  the same length, and the off-family arm, the same rule at length 256, which
+  changes both the target derivation and the dimension. Compare against a fixed
+  hand-written baseline, random restart hill climbing, at identical step budget.
+  WHAT IT PRESERVES: the whole two-level structure, a training family and a
+  held-out family, a frozen learned rule, a matched hand-written baseline, a
+  fixed unroll horizon, and the exact generalisation question the template's own
+  rationale raises. WHAT IT LOSES: gradients. The bitstring landscape yields
+  only a scalar, so the learned rule is derivative-free rather than
+  gradient-consuming, and the paper's specific mechanism, backpropagation
+  through an unrolled trajectory, is absent. It also loses depth, because every
+  inner step costs a full sealed spec, so the horizon is bounded by
+  orchestration cost rather than by memory. WHICH CLAIM: that a learned update
+  rule generalises within a random-function family and degrades across
+  dimension. That is the paper's own headline limitation, and it is testable now
+  with no new bench internals. One instrument check first: confirm that scores
+  for a fixed bitstring across seeds really are distributed as a fair-coin match
+  rate, since the whole family assumption rests on the hash producing uniform
+  targets.
+END_ENTRY
+
+BEGIN_ENTRY
+TEMPLATE_ID: map.elites.v0
+FIELD: Quality-Diversity (MAP-Elites)
+KIND: evaluate_qd_archive.v0
+QUESTION: Instead of hunting for the single best solution, can a search fill in a
+  map of the best solution of every different kind, and does that map turn out
+  to be more useful than the single best?
+MECHANISM: Choose a few features that describe what a solution DOES rather than
+  how good it is, and lay them out as a grid of cells. Evaluate some random
+  solutions, and file each one in the cell its behaviour falls into. Then repeat
+  a simple loop: pick an occupant of the grid at random, mutate it, evaluate the
+  child, work out which cell the child belongs in, and if that cell is empty or
+  its occupant is worse, the child takes the cell. Because parents come from all
+  over the grid rather than from the current best, the search keeps stepping
+  stones that a fitness-only search would throw away. The output is not one
+  solution but the whole filled grid, reported as coverage, how many cells are
+  occupied, and as the summed quality of the occupants.
+CANDIDATE: An individual solution, judged twice over, once on quality and once
+  on where its behaviour puts it in the grid. The grid as a whole is the real
+  product.
+WORLD: A domain with an evaluation function and a behaviour descriptor that is
+  not simply a restatement of fitness. The world supplies the fitness, the
+  descriptor, and a mutation operator.
+WHAT_CHANGES: evaluations, between 1000 and 5000, and behaviour_dimensions,
+  either 2, 3 or 4. Both parameter sets survived ingest intact.
+MEASURED: Coverage, a count or fraction of occupied cells, and the summed
+  fitness of occupants, both aggregates over the whole run, plus the archive
+  itself as a structured artifact.
+INFORMATIVE_FAILURE: Informative. Low coverage with high peak fitness says the
+  behaviour descriptor is collinear with fitness and is not describing behaviour
+  at all, which is the commonest real failure and is diagnosable directly from
+  the archive. High coverage with uniformly poor fitness says the mutation
+  operator produces variety without competence. Cells that stay empty across
+  every seed mark a region that is either unreachable or forbidden, and that map
+  of holes is itself the finding, since an empty cell is a claim about the
+  domain.
+SOURCE_CHECK: VERIFIED. Mouret and Clune, Illuminating search spaces by mapping
+  elites, 2015, arXiv preprint. The grid over behaviour descriptors, the
+  elite-per-cell retention rule, and coverage and quality-diversity score as the
+  reported measures are that work's. Confirmed from established knowledge.
+SHARED_MECHANISM: maintain_archive
+ROUTES: R-COMPOSE, R-SUBSTRATE, R-EXECUTOR
+BLOCKER: R-COMPOSE, an adjudication capability is missing, because coverage and
+  quality-diversity score are AGGREGATES over thousands of evaluations while the
+  outcome rule is one scalar comparison on one result field with no aggregation
+  across repeats, so the verdict must be computed downstream from the fossils;
+  R-SUBSTRATE, a state capability is missing, namely an archive that persists
+  and, decisively, that is READ in order to choose the next candidate, which is
+  output-to-input chaining and is exactly what the no-search-inside-a-spec rule
+  forbids; R-EXECUTOR, a measurement capability is missing, since no existing
+  kind returns a behaviour descriptor alongside a fitness, and the method needs
+  both from one evaluation.
+FAITHFUL: A faithful implementation needs an archive with persistent state, an
+  evaluation that returns both fitness and a behaviour descriptor, a mutation
+  operator over the candidate representation, and the freedom to run thousands
+  of dependent evaluations where the choice of each candidate depends on the
+  archive so far. It also needs a landscape where diversity actually pays,
+  because on a smooth unimodal landscape the method has nothing to illuminate.
+REDUCTION: A reduction exists, and it is the real algorithm rather than a
+  gesture, because the brief already assigns search across specs to the
+  producer. Fix one world seed and one length, 64 as a NEW DESIGN CHOICE. One
+  evaluate_bitstring spec is one evaluation, with repeat count 1 and
+  seed_derivation constant so the landscape is fixed; note that count greater
+  than 1 with constant and a stateless kind would trip the
+  degenerate_by_construction flag, so keep the count at one and get the volume
+  from the number of specs. Fitness is score. The behaviour descriptor is
+  computed by the producer from the bits alone, using features that are not the
+  fitness: the fraction of ones, and the fraction of adjacent positions that
+  differ, each discretised into ten bins, giving a ten by ten grid. Run 2000
+  specs under a producer-side MAP-Elites loop and compute coverage and summed
+  elite fitness offline. Run an objective-only hill climber at the identical
+  budget on the identical seed as the control arm. WHAT IT PRESERVES:
+  everything algorithmic, elite-per-cell retention, illumination, coverage and
+  quality-diversity score, a matched-budget comparison against objective-only
+  search, and a descriptor genuinely independent of fitness. WHAT IT LOSES: two
+  things, and the second is serious. First, the search itself is not sealed; the
+  archive lives in the producer and is only fossilized if the producer commits
+  it, so the run is reproducible only to the extent the producer's own state is
+  recorded. Second, and this decides the value of the experiment, a hash-derived
+  Hamming landscape is unimodal and undeceptive, and MAP-Elites earns its keep
+  precisely on deceptive and rugged landscapes, so this comparison is stacked
+  against quality-diversity and will most likely produce a null. WHICH CLAIM:
+  as written, only a coverage-versus-budget curve and an instrument check that
+  the loop is correctly implemented. The version worth building is a small
+  R-EXECUTOR addition, a bitstring scorer with planted deception, a trap
+  function or a tunable-ruggedness landscape, after which the same producer-side
+  loop tests the actual claim without any further bench change. That executor is
+  cheap and it is the recommendation this template should generate.
+END_ENTRY
+
+BEGIN_ENTRY
+TEMPLATE_ID: novelty.search.v0
+FIELD: Novelty Search
+KIND: novelty_search_step.v0
+QUESTION: If a search is rewarded only for doing something no previous attempt
+  has done, and is never told what the goal is, can it still reach goals that
+  defeat a search aimed straight at them?
+MECHANISM: Throw the objective away. Describe each individual by what it does,
+  as a point in a behaviour space. Keep a growing archive of behaviours seen so
+  far. Score an individual by its average distance to its k nearest neighbours
+  among the current population and the archive; that number is its novelty, and
+  it is the only selection pressure. Individuals novel enough get added to the
+  archive, so the archive densifies the regions already explored and the
+  pressure automatically moves elsewhere. The claim is that on deceptive
+  problems, where the gradient of the objective points away from the solution,
+  divergence reaches the solution while convergence does not, because the
+  solution is simply one of the behaviours a diverging search eventually tries.
+CANDIDATE: An individual, judged not on its own merits at all but on its
+  distance from everything that came before. Novelty is not a property of the
+  candidate; it is a property of the candidate together with the archive.
+WORLD: A domain with a behaviour characterisation, typically the end state of a
+  run rather than the genome, plus a distance metric on that characterisation.
+  Crucially the world supplies an indirect map from genome to behaviour.
+WHAT_CHANGES: evaluations, between 1000 and 5000, and k_nearest, either 15, 20
+  or 25. Both parameter sets survived ingest intact.
+MEASURED: Terminal novelty and archive size, both continuous or count valued,
+  and separately, and only as a post-hoc check, whether the goal was reached and
+  after how many evaluations.
+INFORMATIVE_FAILURE: Informative, and the failures are the interesting part. A
+  novelty search that fails to reach a goal a fitness search reaches is direct
+  evidence the landscape is NOT deceptive, which is a real property of the
+  domain and is worth knowing before any other method is tried on it. An archive
+  that saturates, where novelty collapses because everything reachable has been
+  reached, bounds the size of the behaviour space empirically. The uninformative
+  failure is a behaviour descriptor so fine-grained that everything is novel,
+  since then novelty is constant and the search is a random walk with extra
+  steps; that is detectable from the novelty distribution alone.
+SOURCE_CHECK: VERIFIED. Lehman and Stanley, Exploiting Open-Endedness to Solve
+  Problems Through the Search for Novelty, Artificial Life XI, 2008. The k
+  nearest neighbour novelty metric over a behaviour archive and the abandonment
+  of the objective are that paper's. Confirmed from established knowledge.
+SHARED_MECHANISM: maintain_archive
+ROUTES: R-COMPOSE, R-SUBSTRATE, R-EXECUTOR
+BLOCKER: R-COMPOSE, a measurement capability is missing and it is the exact one,
+  because novelty is defined RELATIVE to other candidates and a sealed spec
+  contains one candidate and one world with no reference to any other candidate,
+  so the bench can never score novelty and only a producer holding the archive
+  can; R-SUBSTRATE, a state capability is missing, an archive that persists and
+  is read to select the next candidate, which is output-to-input chaining;
+  R-EXECUTOR, a measurement capability is missing for a native version, an
+  executor returning a behaviour descriptor rather than a scalar fitness.
+FAITHFUL: A faithful implementation needs a persistent archive, a behaviour
+  descriptor that is a genuinely indirect consequence of the genome, a distance
+  metric on it, and a selection step that consults the archive. It needs a
+  deceptive domain, because on a non-deceptive one the method has no advantage
+  to demonstrate and the experiment cannot fail informatively. It also needs a
+  fitness-driven control at identical budget on the identical domain.
+REDUCTION: A reduction exists and it exploits something unique to this template:
+  novelty search needs no fitness function at all, so it is the one method in
+  this chunk that can run with the scorer switched off. Fix one world seed and
+  length 64, a NEW DESIGN CHOICE. Each candidate is one evaluate_bitstring spec.
+  The returned score is RECORDED BUT NOT CONSUMED during the search; the
+  producer selects purely on novelty, defined as the mean Hamming distance from
+  the candidate's bits to its 15 nearest neighbours in a producer-held archive
+  of previously submitted bitstrings, with k taken from the template's own
+  choices. Mutation is a single bit flip on a randomly chosen archive member.
+  Run 2000 specs. Only afterwards, read the recorded scores and ask how close
+  objective-blind divergence came to the hidden target, and compare against a
+  score-driven hill climber at the same budget on the same seed. Using
+  evaluate_bitstring rather than noop_v0 matters, because noop_v0 takes no
+  parameters and so cannot carry the candidate into the sealed record, whereas
+  the bitstring kind fossilizes the candidate and hands back the post-hoc
+  measurement for free. WHAT IT PRESERVES: objective-blindness in its strongest
+  form, since the score is provably unread during selection; k nearest neighbour
+  novelty; archive growth; and a pre-registered matched-budget comparison against
+  fitness-driven search. WHAT IT LOSES: two things, and the second is the deeper
+  one. First, deception, because Hamming distance to a hash-derived target is
+  unimodal, so the honest prediction is that novelty search LOSES here, and the
+  run is valuable as a negative control showing the instrument can tell a
+  deceptive landscape from a non-deceptive one. Second, and worse, the
+  genotype-to-phenotype indirection: in the real method behaviour is a distant
+  consequence of the genome, whereas here the behaviour descriptor IS the
+  genome, so behavioural novelty and genetic novelty collapse into one quantity
+  and the very distinction that makes the method work is gone. WHICH CLAIM: only
+  that objective-blind divergence underperforms objective-driven search on a
+  non-deceptive landscape, which is the expected direction and is worth having
+  as a calibrated null. Anything stronger needs a descriptor computed from a
+  RUN rather than from the candidate, which is the small executor addition this
+  template should be read as requesting, and it is the same addition
+  map.elites.v0 needs.
+END_ENTRY
+
+BEGIN_ENTRY
+TEMPLATE_ID: query_by_committee.v0
+FIELD: Active Learning
+KIND: query_by_committee_v0
+QUESTION: If labelling data is expensive, does letting the learner choose which
+  examples to have labelled beat labelling examples at random, and by how much?
+MECHANISM: Keep the set of all hypotheses still consistent with the labels seen
+  so far, the version space. Draw a committee of several hypotheses from it at
+  random. Show the committee each unlabelled candidate and see how much they
+  disagree about it. A candidate everyone agrees on teaches nothing, because its
+  label is already determined; a candidate that splits the committee roughly in
+  half is worth the most, because whichever way its label falls, about half the
+  surviving hypotheses are eliminated. Query the label of the
+  most-disagreed-about candidate, add it, shrink the version space, resample the
+  committee, and repeat until the budget is gone. The theoretical result is that
+  because each query carries roughly constant information, generalisation error
+  falls exponentially in the number of queries rather than polynomially.
+CANDIDATE: A query, that is, a choice of which point to have labelled. What
+  varies is the selection policy; what is judged is the error, or here the
+  identification, achieved per unit of label budget.
+WORLD: A hypothesis class, a pool or stream of unlabelled candidates, and a
+  label oracle that answers a bounded number of questions. The world supplies
+  the oracle and the cost.
+WHAT_CHANGES: committee_size and query_budget. Both parameter value sets were
+  destroyed in ingest.
+MEASURED: Generalisation error as a function of the number of queries spent, a
+  continuous curve, compared against the same curve for random selection.
+INFORMATIVE_FAILURE: Informative. Active selection that matches random selection
+  says the hypothesis class or the pool has no exploitable structure, which is a
+  real and frequently reported outcome rather than a bug. Active selection that
+  is WORSE than random is more informative still, because it means the committee
+  is chasing outliers rather than informative points, which is the known
+  pathology of disagreement-based methods under label noise. The failure that
+  leaves nothing is running the active arm with no paired passive arm at all, in
+  which case no number produced can support any comparative claim, and the
+  template's own rationale already says so.
+SOURCE_CHECK: VERIFIED. Seung, Opper and Sompolinsky, Query by Committee,
+  Proceedings of the Fifth Annual Workshop on Computational Learning Theory,
+  COLT 1992. The committee sampled from the version space and selection by
+  maximal disagreement are that paper's. Confirmed from established knowledge.
+SHARED_MECHANISM: select_next_observation
+ROUTES: R-COMPOSE, R-BACKEND, R-SUBSTRATE
+BLOCKER: R-COMPOSE, a control-flow capability is missing inside a spec, because
+  each query depends on the answers to previous queries, which is
+  output-to-input chaining, so the query loop must live in the producer across
+  specs; also an adjudication capability is missing for the comparative claim,
+  since the finding is a difference between two arms and the outcome rule is one
+  scalar comparison on one field within one spec, so the paired comparison must
+  be computed downstream; R-BACKEND, nothing of substance is missing, standard
+  active-learning libraries implement this and the bench would only have to
+  call and fossilize; R-SUBSTRATE, a state capability is missing for a native
+  version, namely a version space and a committee that persist across queries.
+FAITHFUL: A faithful implementation needs a hypothesis class with a samplable
+  version space, a label oracle, a disagreement measure such as vote entropy,
+  and a held-out test set to measure generalisation on. It needs a paired
+  passive arm run on the same seed and the same budget, or the result is
+  uninterpretable. It needs many seeds, because query-by-committee curves are
+  high variance early.
+REDUCTION: The strongest reduction in this chunk, and it runs today with no new
+  bench internals. evaluate_bitstring is already a label oracle over a concept
+  class. The hidden target is L unknown bits; a submitted bitstring is a query;
+  the returned score is the fraction of positions matching the target, which is
+  L minus the Hamming distance, over L. That is an exact, noiseless answer about
+  the target, so the version space is the set of length-L targets consistent
+  with every score seen so far, and it is exactly representable. Fix one seed
+  and set L to 20, a NEW DESIGN CHOICE, keeping the space at about a million
+  hypotheses so the version space can be held explicitly. Each query is one
+  evaluate_bitstring spec, seed_derivation constant, count 1. The producer holds
+  the version space, samples a committee of 10 targets uniformly from it, and
+  for each candidate query bitstring computes the variance of the score the
+  committee members predict; it submits the candidate with maximal predicted
+  disagreement. The passive control arm submits a uniformly random bitstring
+  each time. Both arms run on the same seed, and the measurable is the number of
+  queries until solved is true. WHAT IT PRESERVES: the version space, the
+  committee, selection by maximal disagreement, an explicit query budget, a
+  paired passive control on an identical target, and a sharp quantitative
+  prediction, since the target holds L bits and each score returns at most
+  log2 of L plus 1 bits, giving an information-theoretic floor of about L over
+  log2 of L plus 1 queries, roughly 5 for L equal to 20, against the L queries a
+  naive one-bit-at-a-time prober would need. WHAT IT LOSES: noise, and with it
+  most of the field's real difficulty, since the oracle here is exact, the
+  version space is finite and exactly representable, and the known pathology of
+  disagreement-based selection under label noise cannot appear. It also replaces
+  generalisation error with exact identification, so there is no test set and no
+  error curve, only a queries-to-solve count. WHICH CLAIM: that
+  disagreement-based query selection reaches exact identification in
+  significantly fewer queries than random selection at matched budget, over many
+  seeds, with a computed information-theoretic floor to calibrate against. That
+  is a genuine positive result the bench can support right now, and it directly
+  answers the objection the template's own rationale raises about the missing
+  control arm, because the control arm is simply a second series of specs.
+END_ENTRY
+
+BEGIN_ENTRY
+TEMPLATE_ID: simulate_study.v0
+FIELD: Meta-Science
+KIND: simulate_study_v0
+QUESTION: If you know how well-powered a field's studies are, how often it looks
+  for effects that are not there, and how much fiddling goes on, what fraction
+  of its published positive findings are actually true?
+MECHANISM: Model a field with four numbers. Pre-study odds say how many of the
+  relationships researchers examine are genuinely real. Power says how often a
+  real relationship is detected. The significance level says how often a
+  non-existent relationship is nonetheless declared significant. A bias term
+  says what fraction of results that should have been null get converted into
+  positives by flexible analysis, selective reporting or outright error. Simulate
+  one study by drawing whether the relationship is real, then drawing whether it
+  is declared significant under the appropriate rate, then applying the bias
+  conversion. Aggregate over many studies and the positive predictive value, the
+  fraction of declared positives that are true, falls out. The headline
+  consequence is that with low power, low pre-study odds, and modest bias, that
+  fraction drops below one half.
+CANDIDATE: A single simulated study, judged only on whether its declared
+  positive is true.
+WORLD: A research field, characterised by its power, its significance level, its
+  pre-study odds, and its bias. The world supplies the rates; it supplies no
+  data at all, because nothing is being measured except the reporting process.
+WHAT_CHANGES: study_power and bias_factor. Both parameter value sets were
+  destroyed in ingest.
+MEASURED: For one study, a boolean. For the field, a ratio, the positive
+  predictive value, which is the quantity the theory is actually about.
+INFORMATIVE_FAILURE: Informative in an unusual way, because the object of study
+  is the reporting process itself. A single simulated study returning a false
+  positive is not a failure of the experiment; it is one draw from the
+  distribution the experiment exists to characterise. The real informative
+  failure is at the campaign level: if the empirical positive predictive value
+  over many runs does not match the closed-form prediction from the same
+  parameters, the simulator or the aggregation is wrong, and that discrepancy is
+  a hard, checkable bug rather than a soft null.
+SOURCE_CHECK: VERIFIED. Ioannidis, Why Most Published Research Findings Are
+  False, PLoS Medicine, 2005. The positive predictive value framework over
+  pre-study odds, power, significance level and a bias term is that paper's, and
+  the closed form is given there. Confirmed from established knowledge.
+SHARED_MECHANISM: simulate_generative_process
+ROUTES: R-COMPOSE, R-EXECUTOR, R-REPAIR
+BLOCKER: R-COMPOSE, an adjudication capability is missing, and it is the whole
+  difficulty, because the positive predictive value is a RATIO OVER A POPULATION
+  of studies while a spec is one study and the outcome rule permits no
+  aggregation across repeats, so the quantity of interest can only be assembled
+  downstream from many fossils; R-EXECUTOR, a measurement capability is missing
+  for a native version, namely a kind that draws from a parameterised Bernoulli
+  process, though such an executor would be trivial to write; R-REPAIR,
+  parameter values are missing, since study_power and bias_factor both arrived
+  null and no executor may default a parameter.
+FAITHFUL: A faithful implementation needs a random draw per study governed by
+  named, pre-registered rates, and a campaign large enough that the empirical
+  ratio has a usable standard error, which must be computed before any threshold
+  is chosen. It must keep the four field parameters as explicit, fossilized
+  inputs, and it must compare the empirical ratio to the closed-form prediction,
+  because the closed form is the ground truth here and agreement with it is the
+  only thing that validates the simulator.
+REDUCTION: A reduction exists that needs no new executor at all, and it turns
+  the bench's own fossil discipline into part of the experiment. First, note
+  that evaluate_bitstring with a fixed bits string and seed_derivation
+  sha256_index gives, per repeat, a score distributed as the number of matching
+  positions out of L over L, which for a uniform hash target is a fair-coin
+  count. Thresholding that score in the outcome rule therefore yields SURVIVED
+  with a probability equal to a binomial upper tail, and by choosing L and the
+  threshold together you can hit a target rate closely: with L equal to 20, a
+  threshold of score at or above 0.70 fires with probability about 0.058, close
+  enough to a five percent significance level, and lower thresholds give rates
+  in the range wanted for power. Build two spec families on that basis, a
+  true-relationship arm whose threshold is tuned to the chosen power and a
+  false-relationship arm whose threshold is tuned to the significance level,
+  with L raised if a finer rate grid is needed, all NEW DESIGN CHOICES. Draw arm
+  membership from the pre-study odds in the producer, run several hundred specs
+  per arm under sha256_index, and compute the empirical positive predictive
+  value downstream against the closed form. Then add the part that is specific
+  to this bench and genuinely worth doing: model the bias term by having the
+  producer selectively withhold a fraction of FALSIFIED fossils from the
+  write-up, and check whether the sealed run index makes that withholding
+  visible as a gap. WHAT IT PRESERVES: the exact arithmetic of the model, the
+  four field parameters as pre-registered inputs, the closed form as ground
+  truth, and pre-registration of power and significance before any run, which is
+  the methodological point of the original paper. WHAT IT LOSES: any actual
+  data, any actual effect, and any actual analysis, since only the reporting
+  process is being simulated; and it loses the multi-team dynamics of a real
+  literature, where teams see each other's results. It also depends on an
+  assumption that must be checked first, that scores for a fixed bitstring
+  across seeds really are binomially distributed, which is a one-spec
+  calibration run. WHICH CLAIM: two, and the second is the reason to run it.
+  One, that empirical positive predictive value tracks the closed-form
+  prediction under known rates, which validates the campaign machinery. Two,
+  that a sealed fossil ledger with monotone run indices makes selective
+  reporting detectable, which is a claim about Prometheus itself, testable with
+  a method drawn from meta-science, and is exactly the kind of self-audit this
+  bench should be able to make about its own record.
+END_ENTRY

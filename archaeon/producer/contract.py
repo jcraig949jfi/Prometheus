@@ -39,7 +39,22 @@ there -- that rides in `source_evidence`, a queue column.
 """
 from __future__ import annotations
 
+import sys
+from pathlib import Path
 from typing import Dict, FrozenSet
+
+
+def ensure_viv_importable() -> None:
+    """Put vivarium/ on sys.path so `import viv` resolves from any entry point.
+
+    Tests get this from conftest and the deploy script from PYTHONPATH, which
+    hid that plain CLI use (`python -m archaeon.producer.campaign --check`)
+    could not reach Vivarium's validator at all. Mirrors vivqueue._schema.
+    """
+    vivdir = str(Path(__file__).resolve().parent.parent.parent / "vivarium")
+    if vivdir not in sys.path:
+        sys.path.insert(0, vivdir)
+
 
 #: The kind Archaeon emits. Implemented by Vivarium today.
 KIND = "evaluate_bitstring"
@@ -78,6 +93,7 @@ def check_against_vivarium() -> Dict[str, object]:
     exactly what produced two queues and two migrations already.
     """
     out: Dict[str, object] = {"kind": KIND, "agrees": False}
+    ensure_viv_importable()
     try:
         from viv import kinds as vk
     except Exception as exc:                       # pragma: no cover

@@ -26,7 +26,8 @@ from sfe.errors import (FoundryError, SessionClosed, SessionMalformed,
                         SessionMismatch, SessionRequired, SessionUnknown,
                         WrongSession)
 from sfe.ids import key_fingerprint
-from sfe.runtime import Foundry, SCIENCE_PROFILES
+from sfe.runtime import (DEFAULT_MAX_ARTIFACT_BYTES, Foundry,
+                         SCIENCE_PROFILES)
 
 API_VERSION = "v2"
 
@@ -343,6 +344,45 @@ class ReadGrantCreate(_Body):
     note: Optional[str] = None
 
 
+class ResourceEntry(_Body):
+    """One line of a cost event's resource vector.
+
+    `quantity` may be null, which means UNAVAILABLE -- explicitly not zero,
+    because a zero is a measurement and this is the absence of one. There is no
+    enforcement field: the class is a property of the LIMIT and the engine
+    resolves it, since letting a caller declare its own spend "estimated" would
+    be letting it opt out of a cap it was given."""
+    resource: str
+    quantity: Optional[float] = None
+    unit: Optional[str] = None
+    method: Optional[str] = None      # counter|clock|sampler|declared|derived
+    scope: str = "attempt"            # job|attempt|campaign|shared
+
+
+class BudgetReserve(_Body):
+    """Take the money BEFORE the work. A post-hoc debit is not enforcement."""
+    resource: str
+    amount: float
+    stage: str
+    attempt_id: Optional[str] = None
+
+
+class BudgetRelease(_Body):
+    reason: str
+
+
+class CostEventCreate(_Body):
+    """What an activity actually cost. Settles its reservation exactly once."""
+    stage: str
+    resources: list[ResourceEntry]
+    attempt_id: Optional[str] = None
+    reservation_id: Optional[str] = None
+    source_artifacts: list[str] = Field(default_factory=list)
+    output_artifacts: list[str] = Field(default_factory=list)
+    environment: dict[str, Any] = Field(default_factory=dict)
+    refs: dict[str, Any] = Field(default_factory=dict)
+
+
 class ReadScopeCreate(_Body):
     """A curated set of your OWN worlds, existing only to be granted for
     reading. Deliberately not a topology group: that field gates _may_cross,
@@ -372,7 +412,8 @@ class WorkFail(_Body):
 
 def create_app(db_path: str, *, registration_open: bool = True,
                session_enforcement: str = "advisory",
-               science_profile: str = "warn") -> FastAPI:
+               science_profile: str = "warn",
+               max_artifact_bytes: Optional[int] = None) -> FastAPI:
     """session_enforcement:
       "advisory" (default) -- a MISSING session key is allowed and counted.
       "strict"             -- a missing key on a bound session is 428.
@@ -405,6 +446,8 @@ def create_app(db_path: str, *, registration_open: bool = True,
         raise ValueError("science_profile must be one of %s"
                          % (SCIENCE_PROFILES,))
     app.state.science_profile = science_profile
+    # v8: the per-artifact ceiling. None means the engine default.
+    app.state.max_artifact_bytes = max_artifact_bytes
 
     @app.middleware("http")
     async def _stamp_release(request, call_next):
@@ -432,12 +475,14 @@ def create_app(db_path: str, *, registration_open: bool = True,
         response.headers["X-SFE-Schema-Version"] = str(SCHEMA_VERSION)
         return response
     # one Foundry to run the schema migration + resolve tokens (short-lived use)
-    boot = Foundry(db_path, science_profile=science_profile)
+    boot = Foundry(db_path, science_profile=science_profile,
+                   max_artifact_bytes=max_artifact_bytes)
     boot.close()
 
     def get_foundry():
         f = Foundry(app.state.db_path,
-                    science_profile=app.state.science_profile)
+                    science_profile=app.state.science_profile,
+                    max_artifact_bytes=app.state.max_artifact_bytes)
         try:
             yield f
         finally:
@@ -628,6 +673,10 @@ def create_app(db_path: str, *, registration_open: bool = True,
                 "registration_open": bool(app.state.registration_open),
                 "session_enforcement": app.state.session_enforcement,
                 "science_profile": app.state.science_profile,
+                "max_artifact_bytes": (
+                    app.state.max_artifact_bytes
+                    if app.state.max_artifact_bytes is not None
+                    else DEFAULT_MAX_ARTIFACT_BYTES),
                 # engine_identity() is release.identity() PLUS the instance id.
                 # The instance id is the identity of the LEDGER (minted once per
                 # database, travelling with the substrate rather than the path);
@@ -868,13 +917,71 @@ def create_app(db_path: str, *, registration_open: bool = True,
                                  expected_blob_hash=body.expected_blob_hash,
                                  request_hash=_req_hash("artifacts", wid, body))
 
+    @app.post("/v2/worlds/{wid}/budget/reserve")
+    def reserve_budget(wid: str, body: BudgetReserve,
+                       _sess: dict = Depends(session_ctx),
+                       cid: str = Depends(auth),
+                       f: Foundry = Depends(get_foundry),
+                       idem: Optional[str] = Header(default=None,
+                                                    alias="Idempotency-Key")):
+        return f.reserve_budget(wid, body.resource, body.amount,
+                                stage=body.stage, attempt_id=body.attempt_id,
+                                idem_key=idem, client_id=cid)
+
+    @app.post("/v2/budget/reservations/{rid}/release")
+    def release_budget(rid: str, body: BudgetRelease,
+                       _sess: dict = Depends(session_ctx),
+                       cid: str = Depends(auth),
+                       f: Foundry = Depends(get_foundry)):
+        return f.release_budget(rid, reason=body.reason, client_id=cid)
+
+    @app.post("/v2/worlds/{wid}/cost-events")
+    def create_cost_event(wid: str, body: CostEventCreate,
+                          _sess: dict = Depends(session_ctx),
+                          cid: str = Depends(auth),
+                          f: Foundry = Depends(get_foundry)):
+        return f.record_cost_event(
+            wid, stage=body.stage,
+            resources=[r.model_dump() for r in body.resources],
+            attempt_id=body.attempt_id, reservation_id=body.reservation_id,
+            source_artifacts=body.source_artifacts,
+            output_artifacts=body.output_artifacts,
+            environment=body.environment, refs=body.refs, client_id=cid)
+
+    @app.get("/v2/cost-events/{cost_event_id}")
+    def get_cost_event(cost_event_id: str,
+                       _sess: dict = Depends(session_ctx),
+                       cid: str = Depends(auth),
+                       f: Foundry = Depends(get_foundry)):
+        return f.get_cost_event(cost_event_id, client_id=cid)
+
+    @app.get("/v2/worlds/{wid}/cost-report")
+    def cost_report(wid: str, _sess: dict = Depends(session_ctx),
+                    cid: str = Depends(auth),
+                    f: Foundry = Depends(get_foundry)):
+        return f.cost_report(wid, client_id=cid)
+
     @app.get("/v2/worlds/{wid}/artifacts/{aid}/content")
-    def artifact_content(wid: str, aid: str, _sess: dict = Depends(session_ctx), cid: str = Depends(auth),
+    def artifact_content(wid: str, aid: str,
+                         expected_digest: Optional[str] = None,
+                         expected_bytes: Optional[int] = None,
+                         max_bytes: Optional[int] = None,
+                         _sess: dict = Depends(session_ctx), cid: str = Depends(auth),
                          f: Foundry = Depends(get_foundry)):
+        """AUTHORIZED ARTIFACT RESOLUTION for preflight.
+
+        The locator is (world_id, artifact_id) and always was; a digest is an
+        ASSERTION about which object you meant, never an authorization to have
+        it. `expected_digest` is checked AFTER ownership and the world-scoped
+        lookup, so knowing a hash and nothing else still yields 404. There is
+        deliberately no digest-fetch endpoint and no raw CAS path."""
         # F1: policy-gated content retrieval -- visible iff native here or
         # legally imported here; a miss is deny-by-default (404), disclosing
         # nothing. Content hashes to the recorded source identity.
-        return f.get_artifact_content(wid, aid, client_id=cid)
+        return f.get_artifact_content(wid, aid, client_id=cid,
+                                      expected_digest=expected_digest,
+                                      expected_bytes=expected_bytes,
+                                      max_bytes=max_bytes)
 
     @app.get("/v2/worlds/{wid}/experiments")
     def list_experiments(wid: str, state: Optional[str] = None,
@@ -948,8 +1055,19 @@ def create_app(db_path: str, *, registration_open: bool = True,
 
     @app.post("/v2/worlds/{wid}/budget/consume")
     def consume(wid: str, body: ConsumeBudget, _sess: dict = Depends(session_ctx), cid: str = Depends(auth),
-                f: Foundry = Depends(get_foundry)):
-        return f.consume_budget(wid, body.resource, body.amount, client_id=cid)
+                f: Foundry = Depends(get_foundry),
+                idem: Optional[str] = Header(default=None,
+                                             alias="Idempotency-Key")):
+        """v8: takes an Idempotency-Key like every other epistemic POST.
+
+        It did not, so a timeout retry double-billed with no way for the caller
+        to prevent it. A negative amount is now refused outright -- it used to
+        walk the counter back down and could clear an exhaustion. A refund is a
+        settlement against a reservation, not a credit posted here."""
+        return f.consume_budget(wid, body.resource, body.amount,
+                                client_id=cid, idem_key=idem,
+                                request_hash=_req_hash("budget/consume", wid,
+                                                       body))
 
     # -- work queue --------------------------------------------------------
     @app.post("/v2/work/claim")

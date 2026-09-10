@@ -31,11 +31,13 @@ import traceback
 from typing import Any, Dict, Optional
 
 from .. import cadence as cad
+from .. import fossils
 from .. import config as cfg
 from .. import detectors, rank
 from .. import vivqueue as vq
 from ..clock import iso, utc_day_str
-from . import contract, randomgen, readers, specbuild
+from . import census as census_mod
+from . import contract, randomgen, readers, specbuild, templates
 
 TICK_VERSION = "archaeon.tick.v0"
 
@@ -119,7 +121,11 @@ def tick(conn, config: Optional[cfg.ArchaeonConfig] = None, *,
             return out
 
         # 4. weak signal, using the existing simple algorithm --------------
-        results = detectors.run_all(corpus, config.detectors)
+        # Harmonia's repeat blocker (2026-09-08): detectors see one row per
+        # independent unit. The raw corpus is kept for Stage 0 and the census.
+        agg_corpus = fossils.aggregate_repeats(corpus)
+        results = detectors.run_all(agg_corpus, config.detectors)
+        out["aggregation"] = agg_corpus.window.get("aggregation")
         census = detectors.eligibility_census(results)
         signals = detectors.all_signals(results)
         ranked = rank.rank(signals, config.rank_weights)
@@ -128,6 +134,18 @@ def tick(conn, config: Optional[cfg.ArchaeonConfig] = None, *,
                          "any_eligible": census["any_eligible"]}
         out["n_signals"] = len(signals)
 
+        # 4b. the substrate census -- the signal campaign's instrument. One
+        # row per tick; failure to write it is logged, never allowed to stop a
+        # proposal. Written even on dry runs? No: a dry run is not a tick.
+        if not dry_run:
+            try:
+                row = census_mod.build(corpus, results, census, lane=lane)
+                out["census_id"] = census_mod.persist(conn, row)
+                out["wishlist"] = row["wishlist"]
+            except Exception as exc:               # noqa: BLE001
+                conn.rollback()
+                out["census_error"] = "{}: {}".format(type(exc).__name__, exc)
+
         # 5. choose a policy ----------------------------------------------
         # A fired signal names a REGION, not an executable experiment: the
         # probe kind that would have executed it (archaeon.probe.v0) has no
@@ -135,8 +153,44 @@ def tick(conn, config: Optional[cfg.ArchaeonConfig] = None, *,
         # as the REASON and the experiment is still drawn from the declared
         # space. That is stated rather than hidden -- the alternative is
         # emitting a spec nothing can run.
-        drawn = randomgen.draw_unused(
-            lane, day, used, _SpecBuilder(), max_attempts=16)
+        # The draw comes from the TEMPLATE REGISTRY. Two named policies, never
+        # mixed:
+        #   menu.region_directed.v0 -- when a detector fired AND an admitted
+        #       region-directed template exists AND the fired region's
+        #       landscape parameters are recoverable. The experiment's
+        #       parameters are TAKEN FROM THE REGION: this is the step that
+        #       makes a signal change what runs.
+        #   menu.uniform.v0 -- the frozen random baseline, otherwise.
+        # Sixteen attempts to find a spec hash this lane has not already
+        # published; then give up honestly.
+        region_ctx = None
+        region_note = None
+        if ranked:
+            top = ranked[0].primary
+            rp = fossils.region_params(top.regions[0]) if top.regions else None
+            if rp and "length" in rp and templates.admitted(region_directed=True):
+                region_ctx = {"seed_root": rp["seed_root"],
+                              "length": rp["length"],
+                              "world_id": rp["world_id"]}
+            elif rp is None:
+                region_note = "fired region has no recoverable seed_root"
+            elif "length" not in rp:
+                region_note = ("fired region's landscape length is {}"
+                               .format("ambiguous" if "length_ambiguous" in rp
+                                       else "not recorded on its experiments"))
+            else:
+                region_note = "no region-directed template is ADMITTED"
+        drawn = None
+        builder = _SpecBuilder()
+        for attempt in range(16):
+            d = templates.draw(lane, day, nonce=str(attempt), region=region_ctx)
+            spec = builder(d["params"], template=d.get("template"))
+            h = builder.spec_hash(spec)
+            if h in used:
+                continue
+            d.update({"attempt": attempt, "spec": spec, "spec_hash": h})
+            drawn = d
+            break
         if drawn is None:
             out["decision"] = NO_WRITE_NO_CANDIDATE
             out["reason"] = ("every draw in 16 attempts produced a spec hash "
@@ -154,9 +208,39 @@ def tick(conn, config: Optional[cfg.ArchaeonConfig] = None, *,
         evidence = {
             "schema": "archaeon.tick.v0",
             "mode": source_reason,
+            # Policy and template identity are what makes outcomes MEASURABLE
+            # by selection policy after the fact -- the comparison against a
+            # frozen random baseline that Harmonia will adjudicate. They ride
+            # here, in a queue column, and Vivarium is asked to carry them into
+            # the PEW producer block. Never in the sealed spec.
             "policy": {"name": drawn["policy"], "seed": drawn["seed"],
                        "seed_inputs": drawn["seed_inputs"],
-                       "space": drawn["space"], "attempt": drawn["attempt"]},
+                       "space": drawn["space"], "attempt": drawn["attempt"],
+                       # The id names the template; the content hash pins the
+                       # exact frozen version it was drawn from. A template
+                       # that is later retired and replaced under a new id
+                       # leaves this row re-derivable.
+                       "template_content_hash":
+                           drawn.get("template_content_hash"),
+                       "menu": drawn.get("menu"),
+                       "menu_size": drawn.get("menu_size")},
+            "policy_version": "{}@{}".format(drawn["policy"], TICK_VERSION),
+            "template_id": drawn.get("template_id", "bitstring.uniform.v0"),
+            # WP-X6: family identity and the allocation share this draw was
+            # made under. The reserve policy is INACTIVE until the operator
+            # writes archaeon/policies/allocation.reserve.v0.json; until then
+            # every draw is recorded as the established share.
+            "family": drawn.get("family"),
+            "allocation": _allocation_record(),
+            # THREE bases, and the middle one is the honest one: a signal
+            # fired but could not direct the experiment, so the reason is
+            # recorded and the draw was random anyway.
+            "selection_basis": ("region_directed" if region_ctx is not None
+                                else ("weak_signal_recorded_only" if ranked
+                                      else "random")),
+            "region_direction": ({"region": region_ctx, "note": None}
+                                 if region_ctx is not None
+                                 else {"region": None, "note": region_note}),
             "corpus": out["fossils"],
             "eligibility_census": census,
             "weak_signal": ({"detector": ranked[0].primary.detector,
@@ -214,11 +298,23 @@ def tick(conn, config: Optional[cfg.ArchaeonConfig] = None, *,
         return out
 
 
+def _allocation_record():
+    from . import allocation
+    pol = allocation.load_policy()
+    return {"policy_id": pol.get("policy_id"), "active": bool(pol.get("active")),
+            "share": "established", "note": pol.get("note")}
+
+
 class _SpecBuilder:
     """Adapter so randomgen can build and hash without importing specbuild."""
 
-    def __call__(self, params):
-        return specbuild.build_validated(params)
+    def __call__(self, params, template=None):
+        # WP-0e: build for the drawn template's kind. Without a template (the
+        # legacy adapter path) the bitstring builder applies unchanged.
+        if template is None:
+            return specbuild.build_validated(params)
+        from . import kindspec
+        return kindspec.build_validated(template, params)
 
     @staticmethod
     def spec_hash(spec):

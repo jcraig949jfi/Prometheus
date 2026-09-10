@@ -1,0 +1,55 @@
+{
+  "_ingest": {
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "design_choices": [
+      "world.seed_root added, range copied verbatim from the ADMITTED frozen baseline bitstring.uniform.v0. The mined template declared no world because the mining deck wrongly told it to declare payload parameters only."
+    ],
+    "design_choices_note": "Values introduced by Herakles on 2026-09-06 during the registry-shape migration. These are NEW DESIGN CHOICES, not recovered data, and each names its justification.",
+    "flags": [
+      "EXPANSION: kind 'formal_prover.v0' is not implemented by Vivarium; this template is an expansion request by definition",
+      "REPAIRED: source markers were removed from this block to make it parse. Structure is the report's; any value that a marker had overwritten is null, never guessed.",
+      "INCOMPLETE: axes ['expansion_limit'] lost their values to source markers in the returned report. The axis names are real; the numbers are NOT reconstructed and must be set by the operator before admission."
+    ],
+    "migrated_from": "flat param_space (ROADMAP illustrative schema)",
+    "migration_notes": [
+      "payload.expansion_limit left NULL: its value was destroyed in the source report and no bench-native value exists to justify a fill"
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act.",
+    "source_report": "08_synthesis_and_logic.md"
+  },
+  "admitted_at": null,
+  "admitted_by": null,
+  "kind": "formal_prover.v0",
+  "origin": {
+    "field": "Proof Search",
+    "proposed_by": "Herakles",
+    "reference": "Polu and Sutskever 2020 Generative language modeling for automated theorem proving",
+    "source": "LITERATURE"
+  },
+  "param_space": {
+    "payload": {
+      "expansion_limit": {
+        "int_range": null
+      },
+      "search_strategy": {
+        "choices": [
+          "gpt-f-temp-0.0",
+          "gpt-f-temp-0.5",
+          "gpt-f-temp-0.8"
+        ]
+      }
+    },
+    "world": {
+      "seed_root": {
+        "int_range": [
+          100000,
+          999999
+        ]
+      }
+    }
+  },
+  "rationale": "This measures the capability of a generative language model to guide a mathematical proof search tree by predicting correct formal tactical steps up to a given node expansion budget. Researchers utilize this exact constraint to evaluate the reasoning capabilities of language models acting as provers within interactive formal environments. A SURVIVED verdict establishes that the model successfully closed the specific formal goal within the budget; it would not license claims about the model's capacity to auto-formalize natural language mathematics or generate fundamentally novel conjectures without guidance.",
+  "registry_version": "archaeon.template.v0",
+  "status": "PROPOSED",
+  "template_id": "lm_guided_proof.v0"
+}

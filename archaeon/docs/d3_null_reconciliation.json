@@ -1,0 +1,56 @@
+{
+  "band": [
+    0.3333,
+    3.0
+  ],
+  "harmonia_floor": {
+    "n_region": 8,
+    "n_neighbourhood": 16,
+    "exact": 0.10878990851956229,
+    "sim": {
+      "rate": 0.1083,
+      "se": 0.0021973974378796386,
+      "draws": 20000,
+      "seed": 20260907,
+      "fires": 2166
+    }
+  },
+  "archaeon_pure_null_geometry": {
+    "n_region": 80,
+    "n_neighbourhood": 320,
+    "exact": 2.369592129538774e-08
+  },
+  "floor_synthetic_corpora_through_d3": {
+    "geometry": "floor",
+    "corpora": 300,
+    "regions_per_corpus": 8,
+    "eligible_regions_mean": 8.0,
+    "region_tests": 2400,
+    "region_fires": 211,
+    "per_region_rate": 0.08791666666666667,
+    "per_region_se": 0.005780258298326328,
+    "corpora_fired": 146,
+    "per_corpus_rate": 0.4866666666666667,
+    "per_corpus_se": 0.02885724762933466,
+    "independence_bound_per_corpus": 0.5210654599461952,
+    "zero_variance_neighbourhoods_skipped": 0,
+    "note": "per-corpus rate is MEASURED with overlapping neighbourhoods; the independence bound is reported beside it and is not the rate"
+  },
+  "original_pure_null_through_d3": {
+    "geometry": "original",
+    "corpora": 100,
+    "regions_per_corpus": 8,
+    "eligible_regions_mean": 8.0,
+    "region_tests": 800,
+    "region_fires": 0,
+    "per_region_rate": 0.0,
+    "per_region_se": null,
+    "corpora_fired": 0,
+    "per_corpus_rate": 0.0,
+    "per_corpus_se": null,
+    "independence_bound_per_corpus": 0.0,
+    "zero_variance_neighbourhoods_skipped": 0,
+    "note": "per-corpus rate is MEASURED with overlapping neighbourhoods; the independence bound is reported beside it and is not the rate"
+  },
+  "conclusion": "0.000 and 0.106 are both correct: the calibration null had ~10x the floor's observations per region, where the F-tail outside the band is ~0. At the eligibility floor the per-region false-alarm rate is ~0.109 (exact F(7,15)). Calibration must report rates at the floor geometry with denominators; pure_null's 0.000 is retired as a headline number."
+}

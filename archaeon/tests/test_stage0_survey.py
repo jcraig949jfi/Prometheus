@@ -69,8 +69,16 @@ def _make_db(path, groups=(("grp_synth", 6, 12, 0.08),), n_obs=None,
     if n_worlds is not None:            # convenience for the single-group tests
         groups = (("grp_synth", n_worlds, n_obs or 12, 0.08),)
     cx = sqlite3.connect(path)
+    # The ledger shape the reader now requires: a schema guard row, a client
+    # registry, and a client_id per world. The synthetic client is NAMED as an
+    # admitted tenant so the tenancy filter admits it -- a fixture that bypassed
+    # the filter would be testing a reader nobody runs.
+    cx.execute("CREATE TABLE meta (key TEXT PRIMARY KEY, value TEXT NOT NULL)")
+    cx.execute("INSERT INTO meta VALUES ('schema_version', '6')")
+    cx.execute("CREATE TABLE clients (client_id TEXT PRIMARY KEY, name TEXT)")
+    cx.execute("INSERT INTO clients VALUES ('cli_synth', 'harmonia-m2')")
     cx.execute("CREATE TABLE worlds (world_id TEXT PRIMARY KEY, "
-               "topology_group TEXT, parent_world_id TEXT)")
+               "topology_group TEXT, parent_world_id TEXT, client_id TEXT)")
     cx.execute("CREATE TABLE experiments (exp_id TEXT PRIMARY KEY, "
                "world_id TEXT, spec TEXT)")
     cx.execute("CREATE TABLE observations (obs_id TEXT PRIMARY KEY, "
@@ -81,7 +89,8 @@ def _make_db(path, groups=(("grp_synth", 6, 12, 0.08),), n_obs=None,
     for gi, (group, nw, nobs, sigma) in enumerate(groups):
         for wi in range(nw):
             wid = "wld_{}_{:02d}".format(gi, wi)
-            cx.execute("INSERT INTO worlds VALUES (?,?,?)", (wid, group, None))
+            cx.execute("INSERT INTO worlds VALUES (?,?,?,?)",
+                       (wid, group, None, "cli_synth"))
             # a per-world offset gives real between-world variance, so the
             # within/between ratio and the other features are non-degenerate
             base = 0.3 + 0.1 * wi + 0.5 * gi
@@ -162,10 +171,17 @@ def test_evidence_class_is_reported_and_mixed_is_labelled(tmp_path):
     cx.commit()
     cx.close()
     r = s0.survey(db)
-    assert r["corpus"]["evidence_class_totals"].get("CLIENT_ASSERTED", 0) > 0
-    ec = r["claim_units"][0]["evidence_class"]
-    assert ec.startswith("MIXED("), \
-        "a unit spanning both evidence classes must be labelled MIXED, got {}".format(ec)
+    # Under the declared population (consumer contract s2) CLIENT_ASSERTED is
+    # not a fossil: it is filtered out BEFORE any unit is formed, so a unit can
+    # no longer be MIXED. The world whose observations were downgraded simply
+    # contributes nothing, and the survey records the evidence filter it
+    # applied. (This test previously asserted a MIXED label; that premise
+    # predates the tenancy correction.)
+    assert r["corpus"]["evidence_class_totals"].get("CLIENT_ASSERTED", 0) == 0
+    assert r["corpus"]["tenancy"]["evidence_classes"] == ["ENGINE_WORK_RESULT"]
+    for u in r["claim_units"]:
+        assert u["evidence_class"] == "ENGINE_WORK_RESULT"
+        assert "wld_0_00" not in u["arm_a_worlds"] + u["arm_b_worlds"]
 
 
 # --------------------------------------------------------------------------

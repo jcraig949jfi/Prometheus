@@ -1,0 +1,33 @@
+{
+  "calibration": {
+    "floor_queries_to_target": "L/log2(L+1) ~ 5.2 at L=24",
+    "known_answer": "informed arm beats random by construction; only its failure is informative",
+    "random_arm": "bitstring.uniform.v0 restricted to this seed_root/length"
+  },
+  "kind": "evaluate_bitstring",
+  "origin": {
+    "field": "bench self-calibration",
+    "proposed_by": "Herakles (finding) / Archaeon (template)",
+    "reference": "Herakles, expansion-design pass 2026-09-06 (F-6, C-0, E1, E3)",
+    "source": "LLM"
+  },
+  "param_space": {
+    "payload": {
+      "bits": {
+        "uniform_bits": "length"
+      },
+      "length": {
+        "constant": 24
+      }
+    },
+    "world": {
+      "seed_root": {
+        "constant": 20260906
+      }
+    }
+  },
+  "rationale": "C-0, the fixed-seed pattern. seed_root and length are pinned, so every draw is a new query against the SAME hidden target and a series of specs is one game. One score gives the Hamming distance exactly. DEMOTED 2026-09-07 (Herakles A-4): this is a PLUMBING TEST WITH A KNOWN ANSWER. Against a noiseless exact oracle, disagreement-based querying beats random by construction; the informed arm winning teaches nothing except that the selection wiring works, and the informed arm LOSING is the only informative outcome (a broken selection path). It is never evidence that fossil information helps on real regions. Its place in the plan is as the cheapest negative check on the frozen-order machinery, run once, before M-SIGNAL on any family. Admission is the operator's act.",
+  "registry_version": "archaeon.template.v0",
+  "status": "PROPOSED",
+  "template_id": "bitstring.fixed_target.v0"
+}

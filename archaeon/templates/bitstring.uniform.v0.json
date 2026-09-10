@@ -1,0 +1,39 @@
+{
+  "admitted_at": "2026-09-06T00:00:00+00:00",
+  "admitted_by": "operator (2026-09-06: 'do all items you suggest')",
+  "admitted_content_hash": "sha256:2eec40a543552cc83de47ccb87d885fe3d490cc3bb8318900abbe40f784201bb",
+  "frozen": true,
+  "kind": "evaluate_bitstring",
+  "origin": {
+    "field": null,
+    "proposed_by": "archaeon",
+    "reference": "archaeon/producer/randomgen.py (random.v0), ported verbatim",
+    "source": "RNG"
+  },
+  "param_space": {
+    "payload": {
+      "bits": {
+        "uniform_bits": "length"
+      },
+      "length": {
+        "choices": [
+          16,
+          24,
+          32
+        ]
+      }
+    },
+    "world": {
+      "seed_root": {
+        "int_range": [
+          100000,
+          999999
+        ]
+      }
+    }
+  },
+  "rationale": "The previous random generator as a template. This is the FROZEN RANDOM BASELINE for M-SIGNAL and must never change; a better random policy is a second template.",
+  "registry_version": "archaeon.template.v0",
+  "status": "ADMITTED",
+  "template_id": "bitstring.uniform.v0"
+}

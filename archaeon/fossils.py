@@ -37,7 +37,28 @@ from typing import Any, Dict, Iterable, List, Optional, Sequence
 from . import config as cfg
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-DEFAULT_SFE_DB = REPO_ROOT / "SerendipityFoundry" / "SerendipityFoundryEngine" / "var" / "engine.db"
+# The live ledger lives where the ENGINE runs, not where this reader's checkout
+# is. An isolated worktree (operator directive 2026-09-06) has no var/engine.db,
+# so ARCHAEON_SFE_DB names the file; the checkout-relative path is the fallback.
+def _default_sfe_db() -> Path:
+    """Resolution order: ARCHAEON_SFE_DB env -> archaeon/config.local.json
+    'sfe_db' (gitignored, per-host) -> the in-repo default. No drive letter
+    is hardcoded anywhere; a deployment that keeps the engine ledger outside
+    this checkout says so in its local config."""
+    env = os.environ.get("ARCHAEON_SFE_DB")
+    if env:
+        return Path(env)
+    local = Path(__file__).resolve().parent / "config.local.json"
+    try:
+        cfg_local = json.loads(local.read_text(encoding="utf-8"))
+        if cfg_local.get("sfe_db"):
+            return Path(cfg_local["sfe_db"])
+    except (OSError, ValueError):
+        pass
+    return Path(__file__).resolve().parent.parent / "SerendipityFoundry" /         "SerendipityFoundryEngine" / "var" / "engine.db"
+
+
+DEFAULT_SFE_DB = _default_sfe_db()
 
 
 # --------------------------------------------------------------------------
@@ -67,6 +88,65 @@ class FossilRow:
         return {"row_id": self.row_id, "source": self.source,
                 "seq": self.seq, "region": self.region,
                 "player": self.player, "anchors": dict(self.anchors)}
+
+
+def unit_key(row: "FossilRow") -> str:
+    """The INDEPENDENT UNIT a row belongs to.
+
+    Repeats of one experiment (spec v3 `repeat`) share an experiment id and a
+    table/target draw; they are not independent observations. Harmonia
+    (2026-09-08) measured what happens when a detector counts them as if they
+    were: at D3's eligibility floor, 8 rows made of 2 experiments x 4 repeats
+    fire at 0.56 per region against a calibrated 0.088 -- a 6.4x inflation.
+    So the unit is the experiment for SFE rows (anchors["exp_id"]); a row
+    with no experiment anchor is its own unit.
+    """
+    ex = row.anchors.get("exp_id") if row.anchors else None
+    return str(ex) if ex else row.row_id
+
+
+def aggregate_repeats(corpus: "Corpus", how: str = "mean") -> "Corpus":
+    """One row per (region, independent unit), BEFORE any detector sees it.
+
+    Harmonia's option (a): does not touch d3.v0's firing logic, so D3's
+    admission survives; a region now needs d3_min_n_region INDEPENDENT units
+    to be eligible, which is what the floor calibration assumed. The window
+    records rows_before, units_after and the aggregation, so a census can
+    tell an aggregated corpus from a raw one. Stage 0 (S17) is NOT run on the
+    aggregated corpus: its features are within-unit repeat statistics and
+    need the raw rows.
+    """
+    from collections import OrderedDict
+    groups: "OrderedDict[tuple, list]" = OrderedDict()
+    for r in corpus.rows:
+        groups.setdefault((r.region, unit_key(r)), []).append(r)
+    out: List[FossilRow] = []
+    for (region, unit), rs in groups.items():
+        vals = [x.metric for x in rs]
+        if how == "mean":
+            m = sum(vals) / len(vals)
+        elif how == "first":
+            m = sorted(rs, key=lambda x: x.seq)[0].metric
+        else:
+            raise ValueError("unknown aggregation {!r}".format(how))
+        base = sorted(rs, key=lambda x: x.seq)[0]
+        coords: Dict[str, float] = {}
+        for k in set().union(*(x.coords.keys() for x in rs)):
+            cs = [x.coords[k] for x in rs if k in x.coords]
+            coords[k] = sum(cs) / len(cs)
+        out.append(FossilRow(
+            row_id="agg:{}".format(unit) if len(rs) > 1 else base.row_id,
+            source=base.source, seq=base.seq, region=region,
+            family=base.family, player=base.player, metric=m, coords=coords,
+            anchors=dict(base.anchors, aggregated_from=[x.row_id for x in rs],
+                         aggregated_n=len(rs), aggregation=how,
+                         independent_unit="experiment")))
+    window = dict(corpus.window)
+    window["aggregation"] = {"independent_unit": "experiment", "how": how,
+                             "rows_before": len(corpus.rows),
+                             "units_after": len(out),
+                             "max_repeats_in_a_unit": max((len(v) for v in groups.values()), default=0)}
+    return Corpus(rows=out, chart=corpus.chart, source_ref=corpus.source_ref, window=window)
 
 
 @dataclass
@@ -184,32 +264,87 @@ def read_sfe(db_path: Optional[str] = None,
     """
     chart = chart or cfg.CHARTS[cfg.DEFAULT_CHART]
     path = str(db_path or DEFAULT_SFE_DB)
+    ten = cfg.DEFAULT.tenancy
+    # Declared tenancy is a CONFIG fact and is recorded on every path,
+    # including the ones that read nothing: a census row must say what the
+    # reader would have admitted even when there was nothing to admit.
+    declared = {"admitted_client_names": list(ten.include_client_names),
+                "evidence_classes": list(ten.evidence_classes),
+                "expected_schema_version": ten.expected_schema_version}
     if not os.path.exists(path):
         return Corpus([], chart, path, {"error": "sfe db not found",
-                                        "path": path})
+                                        "path": path, "tenancy": declared})
 
     uri = "file:{}?mode=ro".format(path.replace("?", "%3f"))
-    conn = sqlite3.connect(uri, uri=True)
+    conn = sqlite3.connect(uri, uri=True, isolation_level=None)
     conn.row_factory = sqlite3.Row
+    excluded_by_tenant: Dict[str, int] = {}
     try:
+        # ONE transaction for every statement: SQLite WAL gives a consistent
+        # view only within a transaction, and this file is being written by
+        # three consumers. Several separate SELECTs would not be one
+        # observation of one state (consumer contract s2, point 3).
+        conn.execute("BEGIN")
+
+        # Schema guard. The engine refuses to open a ledger newer than its
+        # code; a raw reader has no such protection and would misread a v7
+        # database as v6 (s2, point 4). Refuse, do not guess.
+        have = conn.execute("SELECT value FROM meta WHERE key='schema_version'"
+                            ).fetchone()
+        have_v = int(have[0]) if have else None
+        if have_v is None or have_v > ten.expected_schema_version:
+            conn.execute("COMMIT")
+            return Corpus([], chart, path, {
+                "error": "sfe schema_version {} is newer than this reader "
+                         "understands ({}); refusing to read rather than "
+                         "misread a row shape".format(
+                             have_v, ten.expected_schema_version),
+                "schema_version": have_v, "tenancy": declared})
+
+        # Declared tenancy: client NAMES, resolved to ids inside the same
+        # snapshot. Everything else is counted, never silently dropped.
+        clients = conn.execute("SELECT client_id, name FROM clients").fetchall()
+        admitted_ids = [c["client_id"] for c in clients
+                        if c["name"] in ten.include_client_names]
+        admitted_names = sorted({c["name"] for c in clients
+                                 if c["name"] in ten.include_client_names})
+        for row in conn.execute(
+                "SELECT cl.name, count(*) AS n FROM observations o "
+                "  JOIN worlds w ON w.world_id = o.world_id "
+                "  JOIN clients cl ON cl.client_id = w.client_id "
+                " WHERE o.evidence_class IN ({ev}) "
+                " GROUP BY cl.name".format(
+                    ev=",".join("?" * len(ten.evidence_classes))),
+                list(ten.evidence_classes)):
+            if row["name"] not in ten.include_client_names:
+                excluded_by_tenant[row["name"]] = int(row["n"])
+
         # world family: SFE has no family column, so topology_group is the
         # nearest published grouping. NULL is honest and stays NULL.
         sql = """
             SELECT o.obs_id, o.exp_id, o.world_id, o.content, o.outcome,
                    o.evidence_class, o.work_id, o.created_seq AS obs_seq,
                    e.spec, e.spec_hash, e.committed_seq, e.state,
-                   w.topology_group AS world_family
+                   w.topology_group AS world_family, w.client_id
               FROM observations o
               JOIN experiments  e ON e.exp_id  = o.exp_id
               JOIN worlds       w ON w.world_id = o.world_id
+             WHERE o.evidence_class IN ({ev})
+               AND w.client_id IN ({cl})
              ORDER BY o.created_seq DESC
              LIMIT ?
-        """
-        raw = conn.execute(sql, (int(lookback_rows),)).fetchall()
+        """.format(ev=",".join("?" * len(ten.evidence_classes)),
+                   cl=",".join("?" * max(len(admitted_ids), 1)))
+        params = (list(ten.evidence_classes)
+                  + (admitted_ids or ["<no admitted client>"])
+                  + [int(lookback_rows)])
+        raw = conn.execute(sql, params).fetchall()
+        conn.execute("COMMIT")
     finally:
         conn.close()
 
     rows: List[FossilRow] = []
+    unattributed_multi_player = 0
     for r in raw:
         content = _loads(r["content"])
         spec = _loads(r["spec"])
@@ -227,7 +362,17 @@ def read_sfe(db_path: Optional[str] = None,
         if chart.player_field:
             pv = _dig({"spec": spec if isinstance(spec, dict) else {},
                        "content": content}, chart.player_field)
-            player = str(pv) if pv is not None else None
+            if isinstance(pv, list):
+                # Observation-level attribution from the sealed spec. Exactly
+                # one declared player attributes the observation; several is
+                # AMBIGUOUS and is left unattributed and counted, never
+                # resolved by taking the first.
+                if len(pv) == 1 and pv[0]:
+                    player = str(pv[0])
+                elif len(pv) > 1:
+                    unattributed_multi_player += 1
+            elif pv is not None:
+                player = str(pv)
         rows.append(FossilRow(
             row_id=r["obs_id"],
             source="sfe",
@@ -251,7 +396,21 @@ def read_sfe(db_path: Optional[str] = None,
                   {"lookback_rows": int(lookback_rows),
                    "order": "observations.created_seq DESC",
                    "join": "observations JOIN experiments JOIN worlds",
-                   "returned": len(rows)})
+                   "returned": len(rows),
+                   # The declared population, per the consumer contract.
+                   "tenancy": {"admitted_client_names": admitted_names,
+                               "admitted_client_ids": len(admitted_ids),
+                               "excluded_attested_by_client_name":
+                                   dict(sorted(excluded_by_tenant.items())),
+                               "evidence_classes": list(ten.evidence_classes),
+                               "schema_version": have_v,
+                               "snapshot": "single transaction",
+                               "basis": ("interim raw read with declared "
+                                         "tenancy + evidence filter; a "
+                                         "cross-tenant read grant is "
+                                         "Daedalus's to build")},
+                   "unattributed_multi_player_experiments":
+                       unattributed_multi_player})
 
 
 # --------------------------------------------------------------------------
@@ -481,3 +640,52 @@ def read_sfe_proteus(db_path: Optional[str] = None,
         "lookback_rows": int(lookback_rows),
         "order": "observations.created_seq DESC",
         "returned": len(rows)})
+
+
+
+# --------------------------------------------------------------------------
+# Region -> executable landscape parameters
+# --------------------------------------------------------------------------
+def region_params(world_id: str, db_path: Optional[str] = None
+                  ) -> Optional[Dict[str, Any]]:
+    """The parameters that would re-create a region's landscape.
+
+    A region is a world. Its landscape is fixed by ``worlds.seed_root`` and,
+    for evaluate_bitstring, by ``work.payload.length`` on its experiments (the
+    hidden target is sha256("target:<seed_root>:<length>")). Both are read from
+    the ledger, never guessed: a world whose experiments carry no length is
+    reported as such and no region-directed draw can target it.
+
+    Measured 2026-09-06: 146/146 attested worlds carry seed_root; 41 carry a
+    recoverable length (the Vivarium-shaped ones).
+    """
+    path = str(db_path or DEFAULT_SFE_DB)
+    if not os.path.exists(path):
+        return None
+    uri = "file:{}?mode=ro".format(path.replace("?", "%3f"))
+    conn = sqlite3.connect(uri, uri=True)
+    conn.row_factory = sqlite3.Row
+    try:
+        w = conn.execute("SELECT seed_root FROM worlds WHERE world_id = ?",
+                         (world_id,)).fetchone()
+        if w is None or w["seed_root"] is None:
+            return None
+        lengths = set()
+        for r in conn.execute("SELECT spec FROM experiments WHERE world_id = ?",
+                              (world_id,)):
+            sp = _loads(r["spec"])
+            if not isinstance(sp, dict):
+                continue
+            L = _num(_dig({"work": sp.get("work") or {}}, "work.payload.length"))
+            if L is not None:
+                lengths.add(int(L))
+    finally:
+        conn.close()
+    out: Dict[str, Any] = {"world_id": world_id, "seed_root": int(w["seed_root"])}
+    if len(lengths) == 1:
+        out["length"] = lengths.pop()
+    elif len(lengths) > 1:
+        # several lengths in one world means several landscapes; the region
+        # is not a single landscape and a directed draw cannot name one
+        out["length_ambiguous"] = sorted(lengths)
+    return out

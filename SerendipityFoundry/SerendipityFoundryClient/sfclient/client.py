@@ -262,25 +262,76 @@ class EngineClient:
         return self._req("POST", f"/v2/worlds/{wid}/failures", body,
                          idem_key=idem_key)["failure_id"]
 
-    def artifact(self, wid, kind: str, data: bytes, meta: Optional[dict] = None,
-                 *, idem_key: Optional[str] = None):
+    def artifact(self, wid, kind: str, data: bytes, meta=None,
+                 *, idem_key=None, expected_blob_hash=None):
+        """Store bytes. Pass expected_blob_hash to make the ENGINE enforce
+        the content identity: it recomputes the digest and stores NOTHING
+        on a mismatch. The gate has existed engine-side since D-CIDGATE-1
+        and this client could not reach it, so corruption inside a
+        caller's own pipeline was stored as a valid artifact carrying an
+        honest digest of the WRONG bytes."""
         import base64
         return self._req("POST", f"/v2/worlds/{wid}/artifacts", {
             "kind": kind, "data_b64": base64.b64encode(data).decode(),
-            "meta": meta or {}}, idem_key=idem_key)
+            "meta": meta or {},
+            "expected_blob_hash": expected_blob_hash}, idem_key=idem_key)
 
-    def artifact_content(self, wid, artifact_id: str) -> dict:
-        """F1: retrieve an artifact's CONTENT + provenance, iff it is
-        epistemically visible to this world (native here or legally imported
-        here). Returns content_b64 (bytes hash to source_hash) + provenance."""
-        return self._req(
-            "GET", f"/v2/worlds/{wid}/artifacts/{artifact_id}/content")
+    def artifact_content(self, wid, artifact_id: str, *,
+                         expected_digest: Optional[str] = None,
+                         expected_bytes: Optional[int] = None,
+                         max_bytes: Optional[int] = None) -> dict:
+        """AUTHORIZED RESOLUTION of an artifact by (world_id, artifact_id).
 
-    def artifact_bytes(self, wid, artifact_id: str) -> bytes:
-        """Convenience: the decoded content bytes for a visible artifact."""
+        Succeeds iff the artifact is visible to this world -- native here or
+        legally imported here -- and you are authorized for that world. Returns
+        content_b64, the provenance, and a `resolution` receipt naming the
+        engine instance, the build, the verified digest and the authorization
+        basis.
+
+        expected_digest is an ASSERTION about WHICH object you meant. The
+        ENGINE checks it, and only AFTER authorization and the world-scoped
+        lookup -- so a digest never authorizes a read, and a caller who knows
+        only a hash still gets 404. A mismatch returns 422 and no bytes.
+        expected_bytes / max_bytes assert size at that same gate rather than
+        after you have already received the payload."""
+        q = f"/v2/worlds/{wid}/artifacts/{artifact_id}/content"
+        parts = []
+        if expected_digest:
+            parts.append("expected_digest=" + expected_digest)
+        if expected_bytes is not None:
+            parts.append("expected_bytes=%d" % expected_bytes)
+        if max_bytes is not None:
+            parts.append("max_bytes=%d" % max_bytes)
+        if parts:
+            q += "?" + "&".join(parts)
+        return self._req("GET", q)
+
+    def artifact_bytes(self, wid, artifact_id: str, *,
+                       expected_digest: Optional[str] = None,
+                       expected_bytes: Optional[int] = None,
+                       max_bytes: Optional[int] = None) -> bytes:
+        """The decoded bytes, with the engine's gates applied AND a local
+        re-verification of the digest the engine reported.
+
+        The local check is defence in depth, not the guarantee: the engine
+        already re-hashes every byte it serves and refuses a mismatch. This
+        catches corruption between the engine and here, which is the one span
+        the engine cannot see."""
         import base64
-        return base64.b64decode(self.artifact_content(wid, artifact_id)[
-            "content_b64"])
+        import hashlib
+        r = self.artifact_content(wid, artifact_id,
+                                  expected_digest=expected_digest,
+                                  expected_bytes=expected_bytes,
+                                  max_bytes=max_bytes)
+        raw = base64.b64decode(r["content_b64"])
+        got = "sha256:" + hashlib.sha256(raw).hexdigest()
+        if got != r.get("blob_hash"):
+            raise SFEError(0, {"error": "digest_mismatch_in_transit",
+                               "message": "bytes received do not hash to the "
+                                          "digest the engine reported",
+                               "engine_reported": r.get("blob_hash"),
+                               "locally_computed": got})
+        return raw
 
     def knowledge_set(self, wid, seq: Optional[int] = None) -> dict:
         """F10: the information-availability frontier of this world at/<= seq
@@ -293,9 +344,65 @@ class EngineClient:
         return self._req("POST", f"/v2/worlds/{wid}/import", {
             "source_world": source_world, "source_artifact": source_artifact})
 
-    def consume_budget(self, wid, resource: str, amount: float) -> dict:
+    def consume_budget(self, wid, resource: str, amount: float, *,
+                       idem_key: Optional[str] = None) -> dict:
+        """Charge a resource. Pass idem_key so a transport retry does not
+        double-bill: without one the engine cannot tell two identical charges
+        apart, and a timeout retry bills twice."""
         return self._req("POST", f"/v2/worlds/{wid}/budget/consume",
-                         {"resource": resource, "amount": amount})
+                         {"resource": resource, "amount": amount},
+                         idem_key=idem_key)
+
+    # ---- v8 reservations and cost events ----------------------------------
+
+    def reserve_budget(self, wid, resource: str, amount: float, *,
+                       stage: str, attempt_id: Optional[str] = None,
+                       idem_key: Optional[str] = None) -> dict:
+        """Take the money BEFORE the work. An enforceable limit then stops an
+        operation before it starts, instead of discovering afterwards that it
+        should have -- a post-hoc debit is not enforcement. Settle with
+        cost_event(reservation_id=...), or give it back with release_budget."""
+        return self._req("POST", f"/v2/worlds/{wid}/budget/reserve",
+                         {"resource": resource, "amount": amount,
+                          "stage": stage, "attempt_id": attempt_id},
+                         idem_key=idem_key)
+
+    def release_budget(self, reservation_id: str, reason: str) -> dict:
+        """Give the whole reservation back; the operation did not happen."""
+        return self._req("POST",
+                         f"/v2/budget/reservations/{reservation_id}/release",
+                         {"reason": reason})
+
+    def cost_event(self, wid, *, stage: str, resources: list,
+                   attempt_id: Optional[str] = None,
+                   reservation_id: Optional[str] = None,
+                   source_artifacts: Optional[list] = None,
+                   output_artifacts: Optional[list] = None,
+                   environment: Optional[dict] = None,
+                   refs: Optional[dict] = None) -> dict:
+        """Record what an activity actually cost, settling its reservation
+        EXACTLY ONCE -- a settled reservation is never billed again.
+
+        Each resource entry is {resource, quantity, unit, method, scope}.
+        `quantity` may be null, meaning UNAVAILABLE: not zero, and never summed
+        into a total. There is deliberately no enforcement field -- the class
+        belongs to the LIMIT and the engine resolves it, so a caller cannot
+        declare its own spend exempt from a cap it was given."""
+        return self._req("POST", f"/v2/worlds/{wid}/cost-events", {
+            "stage": stage, "resources": resources, "attempt_id": attempt_id,
+            "reservation_id": reservation_id,
+            "source_artifacts": source_artifacts or [],
+            "output_artifacts": output_artifacts or [],
+            "environment": environment or {}, "refs": refs or {}})
+
+    def get_cost_event(self, cost_event_id: str) -> dict:
+        return self._req("GET", f"/v2/cost-events/{cost_event_id}")
+
+    def cost_report(self, wid) -> dict:
+        """Vector totals for a world: additive quantities summed, peaks taken
+        as maxima and never sums, unavailable entries counted and never
+        summed."""
+        return self._req("GET", f"/v2/worlds/{wid}/cost-report")
 
     # -- work queue --------------------------------------------------------
     def claim(self, worker_id: str, *, world_id: Optional[str] = None,
@@ -376,16 +483,30 @@ class EngineClient:
                           "name": name})
 
     def family_member(self, family_id: str, member_kind: str, member_id: str,
-                      *, role: Optional[str] = None) -> dict:
+                      *, role: Optional[str] = None,
+                      arm: Optional[str] = None) -> dict:
         """member_kind: experiment | analysis | world | claim.
         role: planned | executed | abandoned | selected | alternative.
+        arm: the experimental arm, per the ARM RULING.
 
-        Roles are APPEND-ONLY: re-adding the same member under a different role
-        is a 409. A member quietly moving from `alternative` to `selected`
-        after the fact is the rewrite this table exists to prevent."""
+        THE ARM IS PART OF THE SEALED DESIGN, NOT OF THE EXECUTION SPEC. That
+        is what lets two members in different arms carry a byte-identical
+        execution spec and therefore an IDENTICAL spec_hash -- what was run and
+        what role it played are different facts, and folding the label into the
+        spec would make identical executions hash differently and destroy the
+        comparison the design exists to support.
+
+        Role AND arm are APPEND-ONLY: re-adding the same member with a
+        different role or arm is a 409, while an identical re-add is an
+        idempotent no-op. A member quietly moving from `alternative` to
+        `selected`, or from arm A to arm B, after the results are in is the
+        rewrite this record exists to prevent.
+
+        If the family's manifest declares `arms`, an arm outside that sealed
+        vocabulary is refused at membership (422)."""
         return self._req("POST", f"/v2/families/{family_id}/members",
                          {"member_kind": member_kind, "member_id": member_id,
-                          "role": role})
+                          "role": role, "arm": arm})
 
     def get_family(self, family_id: str) -> dict:
         """The family plus its provenance census, including
@@ -404,6 +525,147 @@ class EngineClient:
         return self._req("POST", f"/v2/families/{family_id}/close")
 
     # ---- v6 claims --------------------------------------------------------
+
+    # ---- v7 measurements: identity, meaning, and where the value lives ----
+
+    def register_measurement(self, name: str, version: str, *,
+                             implementation_hash: str, domain: str,
+                             value_path: Optional[str] = None,
+                             direction: Optional[str] = None,
+                             unit: Optional[str] = None,
+                             range_min: Optional[float] = None,
+                             range_max: Optional[float] = None,
+                             params: Optional[dict] = None,
+                             inputs: Optional[list] = None,
+                             outputs: Optional[list] = None,
+                             provenance: Optional[dict] = None,
+                             validation_status: str = "UNVALIDATED") -> dict:
+        """Register a measurement DEFINITION: what it is, WHERE its value lives
+        and what a value MEANS.
+
+        `observations.content` is freeform by design, so nothing otherwise says
+        which field of it is the outcome. `value_path` is a dotted ADDRESS of
+        plain keys ("result.score"), deliberately not a query language: letting
+        a measurement SELECT its own value would make choosing which of several
+        values counts an act of interpretation, which the engine declines.
+
+        `direction` matters more than it looks -- without it "0.2 vs 0.4" is not
+        even orderable, and an analyst that guesses the sign gets a confident
+        answer with the wrong one.
+
+        `(name, version)` is UNIQUE and never silently replaced: a changed
+        oracle needs a new version, because two runs scored under one name by
+        two definitions are not comparable and nothing downstream could tell.
+        The returned `identity_hash` is derived from the definition -- put it in
+        an executor attestation's `measurement_identity_hash` so the hash
+        resolves to a registered oracle instead of being comparable only with
+        itself."""
+        return self._req("POST", "/v2/measurements", {
+            "name": name, "version": version,
+            "implementation_hash": implementation_hash, "domain": domain,
+            "value_path": value_path, "direction": direction, "unit": unit,
+            "range_min": range_min, "range_max": range_max,
+            "params": params or {}, "inputs": inputs or [],
+            "outputs": outputs or [], "provenance": provenance or {},
+            "validation_status": validation_status})
+
+    def measurements(self, *, name: Optional[str] = None,
+                     domain: Optional[str] = None, limit: int = 100) -> list:
+        q = f"/v2/measurements?limit={limit}"
+        if name:
+            q += f"&name={name}"
+        if domain:
+            q += f"&domain={domain}"
+        return self._req("GET", q)["measurements"]
+
+    def measurement(self, measurement_id: str) -> dict:
+        """Accepts a measurement_id OR an identity_hash, so an executor holding
+        only the hash it attested can resolve what it measured."""
+        return self._req("GET", f"/v2/measurements/{measurement_id}")
+
+    def measured_value(self, wid, obs_id: str, measurement_id: str) -> dict:
+        """Resolve ONE observation's value along the declared path. A lookup:
+        the engine computes nothing across observations and takes no view on
+        what the number means. Owner-scoped -- for another seat's corpus use
+        read_observations(measurement=...)."""
+        return self._req(
+            "GET",
+            f"/v2/worlds/{wid}/observations/{obs_id}/measured/{measurement_id}")
+
+    # ---- v7 cross-seat read contract --------------------------------------
+    #
+    # Every ordinary read route is owner-scoped, which is right and which makes
+    # an ARCHAEOLOGIST impossible without this. A grant is READ ONLY, scoped to
+    # a read scope, revocable, and it never widens the owner-scoped routes: the
+    # cross-tenancy is in the /v2/read/* path so an ordinary read can never
+    # quietly start returning another seat's rows.
+
+    def create_read_scope(self, name: str, *,
+                          note: Optional[str] = None) -> dict:
+        """A curated set of YOUR OWN worlds, existing only to be granted for
+        reading. Deliberately not a topology group: that field gates
+        artifact-crossing, so granting over one would confer import
+        eligibility as a side effect, and it would mean mutating worlds that
+        already exist. A scope writes nothing on the world."""
+        return self._req("POST", "/v2/read/scopes",
+                         {"name": name, "note": note})
+
+    def add_scope_worlds(self, scope_id: str, world_ids: list) -> dict:
+        """Add worlds you OWN. Ids you do not own are reported in `not_yours`
+        rather than raising -- the engine will not tell you whether they
+        exist."""
+        return self._req("POST", f"/v2/read/scopes/{scope_id}/worlds",
+                         {"world_ids": list(world_ids)})
+
+    def read_scopes(self) -> list:
+        return self._req("GET", "/v2/read/scopes")["scopes"]
+
+    def grant_read(self, scope_id: str, grantee_client_id: str, *,
+                   note: Optional[str] = None) -> dict:
+        """Only the scope's owner may grant, so a capability cannot be re-lent
+        by whoever it reaches."""
+        return self._req("POST", f"/v2/read/scopes/{scope_id}/grants",
+                         {"grantee_client_id": grantee_client_id,
+                          "note": note})
+
+    def revoke_read(self, grant_id: str) -> dict:
+        """Immediate. The row survives with `revoked_ts`: a grant that existed
+        and was withdrawn is a different fact from one that never existed."""
+        return self._req("POST", f"/v2/read/grants/{grant_id}/revoke")
+
+    def read_grants(self) -> dict:
+        """-> {granted_by_me: [...], granted_to_me: [...]}"""
+        return self._req("GET", "/v2/read/grants")
+
+    def read_worlds(self, *, scope: Optional[str] = None,
+                    limit: int = 500) -> dict:
+        """Worlds you do NOT own, in scopes you have been granted. Your own are
+        excluded so you cannot lose track of which rows are your evidence and
+        which are another seat's. An ungranted scope returns empty, never 403."""
+        q = f"/v2/read/worlds?limit={limit}" + (f"&scope={scope}" if scope else "")
+        return self._req("GET", q)
+
+    def read_observations(self, *, scope: Optional[str] = None,
+                          world_id: Optional[str] = None,
+                          evidence_class: Optional[str] = None,
+                          measurement: Optional[str] = None,
+                          limit: int = 1000) -> dict:
+        """Observations from granted scopes, WITH the corpus census beside
+        them -- worlds, by_client, by_evidence_class, the filter applied and
+        whether the page truncated. Record that census in every survey: it is
+        the declared population your detectors ran over, and the commonest way
+        to fail is to pool tenancies and evidence classes without noticing.
+
+        Pass `measurement` (an id or identity_hash) to attach a resolved
+        `measured` block per observation, so a reader never guesses which field
+        is the outcome."""
+        q = f"/v2/read/observations?limit={limit}"
+        for k, v in (("scope", scope), ("world_id", world_id),
+                     ("evidence_class", evidence_class),
+                     ("measurement", measurement)):
+            if v:
+                q += f"&{k}={v}"
+        return self._req("GET", q)
 
     def record_claim(self, estimand: str, status: str, *,
                      family_id: Optional[str] = None,

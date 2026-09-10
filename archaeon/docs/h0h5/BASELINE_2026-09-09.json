@@ -1,0 +1,49 @@
+{
+  "baseline_id": "h0h5-baseline-2026-09-09",
+  "design_version": "0.1",
+  "prepared_by": "archaeon",
+  "note": "A work input, not a completion. present = verified on disk or by a live probe; missing = verified absent; unverified = claimed by a receipt Archaeon did not re-execute.",
+  "revisions": {
+    "archaeon_worktree": {"path": "F:/Prometheus-archaeon", "branch": "archaeon/v0", "head": "311fc5da9", "dirty_files": 0},
+    "origin_main": "311fc5da9",
+    "shared_checkout": {"path": "F:/Prometheus", "branch": "vivarium/v0-2026-09-05", "head": "5362ef6c7", "dirty_files": 108, "note": "another seat's working checkout; Archaeon never commits from it"},
+    "divergent_branches": {"techne/h0h5-tools-2026-09-09": "Techne's tool acquisition; not on main", "worktree-vivarium-campaign-e1-e6-e16": "Vivarium campaign branch (E1/E6/E16, result_schema); rebased on be65b0efa"}
+  },
+  "services": {
+    "sfe_production": {"base_url": "https://192.168.1.202:8811", "schema_version": 7, "source_commit": "f1e36c062", "ledger": "F:/Prometheus/SerendipityFoundry/SerendipityFoundryEngine/var/engine.db", "probe": "python -m archaeon.producer.readback_probe", "read_scope_granted_to_archaeon": false},
+    "sfe_development_v8": {"status": "present in source ef05397f2, NOT deployed", "engine_instance_id": "eng_2e24cebc7e8a0cf1e38a6e99", "review_record": "SerendipityFoundry/SerendipityFoundryEngine/deploy/CANDIDATE_BUILD.json"},
+    "vivarium_queue": {"schema": "viv", "rows_total": 354, "completed_last_2_days": 10, "last_completed": "2026-09-09T19:12:10-04:00", "consumer": "running (worker vivarium@m1, per Vivarium 2026-09-08)"},
+    "pew": {"schema_migration": "011 (typed_refs, ref_availability_events, publication_outbox present)", "contract": "pew.fossil.v2"},
+    "archaeon_producer": {"scheduled_task": "ArchaeonTick every 15 min", "cadence_decisions_last_day": 102, "lane": "prod", "quota_per_day": 6}
+  },
+  "components": {
+    "sfe/runtime.py": {"state": "present", "evidence": "SerendipityFoundry/SerendipityFoundryEngine/sfe/runtime.py; artifact routes get_artifact_content (authorized resolver), store.get_blob (re-hashes on read), write-side expected-hash gate (D-CIDGATE-1), _debit_budget (local + lineage root), import provenance as visibility_basis"},
+    "sfe_client": {"state": "unverified", "evidence": "ef05397f2 claims read-path expected-digest parameter and 16 MiB limit on the dev engine; Archaeon has not exercised it"},
+    "vivarium/viv/kinds.py": {"state": "present", "evidence": "kinds noop_v0, evaluate_bitstring, random_walk_v0 on main; result_schema (WP-0f, 295482d4e) on the campaign branch only"},
+    "vivarium runner/validator": {"state": "present", "evidence": "viv/runner.py, viv/spec.py; loader/artifact slot NOT present (Vivarium iteration 1 not reported)"},
+    "proteus/eval/library.py": {"state": "present", "evidence": "790fb4803: boolean3 interface, compile/evaluate parity, genome_read"},
+    "herakles/evca/core.py": {"state": "present", "evidence": "0641c567b on main; 50 tests; conventions pinned"},
+    "herakles/ca_stream": {"state": "present", "evidence": "175b5da08; OBSTRUCTION.md; 27 tests"},
+    "herakles/eca (eca_rule_eval_v1)": {"state": "present", "evidence": "feca5e688; 25 tests"},
+    "archaeon producer/analysis": {"state": "present", "evidence": "archaeon/producer/*, archaeon/calibrate_d3_null.py, fossils.aggregate_repeats; 251 tests"},
+    "pew publication/index": {"state": "present", "evidence": "dbfb6fe3a migration 011; integration/h0h5_refs_battery.py 16/16"},
+    "techne acquisition": {"state": "present on branch", "evidence": "techne/h0h5-tools-2026-09-09 (b05a6920a): python -m techne.scripts.acquire; receipts per tool"}
+  },
+  "existing_mechanisms": {
+    "cost_classes": {"state": "present (engine)", "evidence": "enforceable | measured | estimated | unavailable per ef05397f2; producer-side receipts MISSING (Archaeon, next)"},
+    "artifact_routes": {"state": "present", "evidence": "create_artifact / get_artifact_content / import_artifact (SOURCES.md A.7); read-path digest gate on dev only"},
+    "client_identity_persistence": {"state": "present with a gap", "evidence": "archaeon/config.local.json (gitignored) holds cli_1029e9255a074157a1b3ba1e; harmonia-m2's token is NOT persisted anywhere reachable and v7 has no reissue route (Harmonia c9910be21)"},
+    "world_visibility": {"state": "present", "evidence": "read scopes + grants (642736763); no scope granted to Archaeon yet"},
+    "observation_identity": {"state": "present", "evidence": "(world_id, observation_id, event_seq, entry_hash); PEW references never copy"},
+    "retry_outbox": {"state": "present (PEW)", "evidence": "ew.publication_outbox keyed by publication intent; Vivarium-side lease/heartbeat present (runner.py:92-161)"}
+  },
+  "host": {"cpu_logical": 16, "ram_total_gib": 31.6, "ram_free_gib": 12.4, "python": "3.12.10", "shared_with": ["SFE service", "Vivarium consumer", "other seats"], "binding_constraint": "available RAM (Techne, 2026-09-09)", "container_runtime": "unverified"},
+  "missing": [
+    "Vivarium loader vertical slice (iteration 1 gate)",
+    "producer-side cost receipts (Archaeon)",
+    "packet JSONs: prometheus-tool-acquisition-plan.json, prometheus-h0-h5-backlog.json",
+    "read scope for Archaeon over harmonia-m2 worlds (credential)",
+    "v8 deployment decision"
+  ],
+  "unverified_by_archaeon": ["Daedalus dev-engine receipts (ef05397f2)", "Techne receipts on the branch", "Herakles ca_stream/eca test counts", "Proteus 198-test suite"]
+}

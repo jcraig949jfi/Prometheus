@@ -24,7 +24,7 @@ PREFIX = {
     "failure": "fai", "artifact": "art", "checkpoint": "ckp", "edge": "edg",
     "measurement": "mea", "import": "imp", "erratum": "err",
     "claim": "clm", "group": "grp", "family": "fam", "grant": "gnt",
-    "scope": "scp",
+    "scope": "scp", "reservation": "rsv", "cost": "cost",
 }
 
 

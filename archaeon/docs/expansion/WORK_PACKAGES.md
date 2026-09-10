@@ -1,0 +1,309 @@
+# Work packages — amended 2026-09-07 (later) per the operator's amendment order
+
+Annex to `archaeon/docs/ROADMAP.md` §D. Graph in `GRAPH.md`. **28 packages**
+(the first delivery summary said 29; the table then and now enumerates 28 —
+0a–0f, X1 X2 X5 X6 X7 X8, A1–A4, B1–B4, C1–C4, P0–P3. The count was a
+miscount, not an omitted package.)
+
+For every ID: primary owner and handoffs; **true dependency** (executable /
+comparison / qualification — never a universal gate); suggested tests
+(failure modes to cover, not a quota); acceptance artifact; **claim
+boundary** (what completion does and does not license); reopening condition.
+Cost: S under a day, M a few days, L longer. Compute is host CPU.
+
+Status legend: DONE (commit) · IN LANE (Archaeon, not started) · OWNER (filed
+to its owner) · CONDITIONAL (waits on a named result).
+
+## Operating rules (third amendment, 2026-09-07)
+
+- **One integrating owner per item.** Each package names one owner who
+  integrates; the others supply published contracts and shared fixtures.
+  Routine execution requires no fresh three-way negotiation. Eight
+  responsibility domains are not eight runtime services.
+- **Operator dependency.** While a decision is pending, already-authorized
+  collection continues under its existing policy and budget. A fallback
+  never silently admits a template, never consumes a protected reserve, and
+  never changes a frozen comparison.
+- **Archive bounds are fixed and versioned.** Per cell, per family, and
+  across the whole active archive, including bytes and descriptor-computation
+  budget. Dynamic resizing is itself a declared, replayable policy version.
+- **Adaptive protocols keep every assigned problem in the denominator.**
+- **Design binding precedes execution; projection follows attestation.**
+- **Invariant-kernel checks, convergence, and transient behaviour are three
+  different questions**, and a looser tolerance never repairs a wrong
+  invariant-measure claim.
+
+---
+
+## Integrity (local gates; each gates only what depends on it)
+
+### WP-0a · Refuse invalid bitstring lengths · **Daedalus**
+- Dependency: none. Gates execution of affected candidates, not library work.
+- Tests: 0a-a shorter/longer refused, exact length scores as before; 0a-b invalid length/type/alphabet fail clearly, no ordinary observation emitted; 0a-c Herakles's F-1 table now exercises refusal; sealed fixtures keep result and identity. Docstring: root vs derived per-repeat seed.
+- Acceptance: regression test + owner-run example closing the silent lowered-ceiling path.
+- Claim boundary: an integrity repair; licenses nothing scientific.
+- Status: OWNER (`roles/Daedalus/INBOX_…EXPANSION_ROADMAP…` amended).
+
+### WP-0b · Degeneracy reporting under reset · **Vivarium**
+- Dependency: none. Gates degeneracy *reporting* for stateful kinds.
+- Tests: 0b-a deterministic stateful walk, reset + constant seed → degenerate-by-construction, identical replay; 0b-b persist / changing seeds follow declared behaviour, never auto-marked constant; 0b-c a constant score across different trajectories is not by itself structural degeneracy.
+- Acceptance: the reported defect reproduced and fixed without flattening internal dynamics or confusing empirical variance with construction guarantees.
+- Claim boundary: a kind's cross-execution `stateful` flag says nothing about state inside one execution (CA lattice, VM tape).
+- Status: OWNER.
+
+### WP-0c · One arm value through both seals · **Vivarium** (Daedalus: `sfclient.family_member(arm=)`, read contracts)
+- Dependency: engine revision with `family_members.arm` (live, `642736763`). Gates M-ELIGIBLE's arm legibility only.
+- Tests: 0c-a identical execution inputs under labels A/B keep one execution hash while member bindings record different arms; 0c-b queue arm = sealed member arm = audit envelope = PEW design arm; omitted/conflicting arms fail at the boundary; 0c-c reassignment after commitment refused, identical re-add idempotent; 0c-d design commitment precedes execution/outcome events and is traversable through typed references, not manifest prose.
+- **Arm/envelope cycle (third amendment).** Order: commit the design binding (family member + arm) **before** execution → execute → record the terminal observation → complete attestation → downstream projection (PEW producer block, `design_hash`). A delayed projection must neither require its own completed envelope nor trigger another scientific execution. Tests: 0c-e a projection replayed later from the recorded terminal observation reproduces the same binding without a new execution; a projection attempted before the terminal observation is refused with a status, not executed around.
+- Acceptance: one complete arm-bound round trip with readback and ordering evidence.
+- Claim boundary: same-hash applies only when execution inputs are identical; changing execution parameters still changes identity.
+- Status: OWNER (integrating owner Vivarium; Daedalus supplies the client contract and a shared fixture).
+
+### WP-0d · D3 reconciled; campaign statistics corrected · **Archaeon** (Harmonia: scoped ruling)
+- Dependency: none. Gates claims using D3 (M-SIGNAL false-discovery figures), not family development.
+- Tests: 0d-a exact F-tail + seeded simulation reproduce 0.106; 0d-b denominators, zero-variance neighbourhoods, overlap reported; 0d-c exact enumeration mean ½ var 1/(4L), 1/96 vs 1/112; 0d-d plan assignments = metadata; sealed hashes unchanged.
+- Acceptance: `archaeon/docs/D3_NULL_RECONCILIATION.md` + `d3_null_reconciliation.json`; `campaign.check()["levels"]` v2 (deterministic enumeration at WORLD; mean-null with unequal variances).
+- **Computation vs qualification (third amendment).** Archaeon computes; Harmonia qualifies the *method*. The estimator definitions and calibration assumptions (sample-variance estimator, k-nearest region/neighbourhood construction with the region excluded, eligibility floor, denominators, the band) are frozen as `d3.v0` and cited in every signal's `thresholds`; observed variance is always calculated from actual data, never assumed. Neighbourhood processing is bounded (k nearest, region-excluded; cost linear in regions × k). Recalibration lives in `archaeon.calibrate_d3_null` and runs outside the production tick. Tests: 0d-e the tick and loop import no calibration module (source scan); 0d-f a signal carries the frozen estimator parameters it was computed under.
+- Claim boundary: explains the number; D3 stays admitted for region discrimination on a frozen corpus; a Gaussian null approximates a Binomial one at n = 8.
+- **Repeat blocker (Harmonia 2026-09-08) CLOSED, option (a):** `fossils.aggregate_repeats` gives every detector one row per independent unit (the experiment) before it runs; the tick applies it; Stage 0 keeps the raw rows. Test: 2 rules x 4 repeats per region fire at > 0.3 raw (Harmonia measured 0.56) and are ineligible aggregated; 8 rules x 4 repeats aggregated fire at the calibrated floor rate (exact 0.083) within 4 SE. d3.v0 untouched, admission survives.
+- **Harmonia be9c22959 (2026-09-08):** repeat fix VERIFIED independently (0.0808 at 1 and at 4 repeats aggregated; exact 0.0833) and CLOSED; the 0.000 reconciliation is closed completely (at ratio 1.0 the rate is 0.000 by n = 32, so 0.000 at n = 80 was forced). **D3's band is a phase boundary:** inside-band ratios fire less with more data, outside-band more; lift over the null for an inside-band ratio peaks near n = 12-16 per region. Sizing rule: hypothesised ratio < 3 → n = 12-16 per region; ≥ 3 → grow to budget. At 1.17x the lift is zero or negative at every size: route (d) was the right call.
+- Status: **DONE** (this commit). Reopen: binomial-null calibration at the family's L under a frozen design.
+
+### WP-0e · Kind-generic builder · **Archaeon** (Vivarium: WP-0f result schema supersedes the local copy)
+- Dependency: none for bitstring/walk (local declared result fields); WP-0f for new kinds' field validation.
+- Tests: 0e-a bitstring and fixed-scale walk build through real contracts; a third fixture kind exercises the generic path; 0e-b missing kind, destroyed value, unsupported sampler, wrong scalar type, vector-valued outcome field → specific failures before queueing; 0e-c incoherent bits/length rejected, unrelated axes independent; 0e-d fixed-seed replay, nothing defaulted, legacy sealed spec keeps its hash.
+- Acceptance: `archaeon/producer/kindspec.py`; `falsification_walk.v1` (Archaeon's separately proposed design, `step_scale` fixed; **not** a repair of v0, whose nulls stay null) is runnable+drawable+buildable; `check()` reports all three; the tick builds through the drawn template.
+- Claim boundary: buildable ≠ admitted ≠ eligible; no scientific conclusion.
+- Status: **DONE** (this commit).
+
+### WP-0f · Result schemas and thin wrappers · **Vivarium** (Daedalus A1, Herakles C1, Proteus B1; Archaeon 0e consumes)
+- Dependency: none. Gates template field validation for new kinds.
+- Tests: 0f-a unknown fields, wrong types, missing required outputs, non-finite scores, unsupported vector reductions → specific diagnostics; 0f-b library and wrapper results match on shared fixtures (errors, seeds, witness ordering, state init); 0f-c declared witness/trace bounds respected with explicit truncation metadata; `cli kinds` exposes the same contract validation uses.
+- Acceptance: `Kind.result_schema`; malformed executor output cannot masquerade as a valid observation.
+- Claim boundary: A/B/C kinds are stateless *across* executions while modelling state *within* one.
+- Status: OWNER.
+
+## Cross-cutting
+
+### WP-X1 · Analysis-family convention · **Harmonia** (Archaeon: first analysis; Daedalus: nothing)
+- Dependency: none for the convention; a read scope for a production analysis (fixtures until then).
+- Tests: X1-a worked analysis resolves exact sources and reproduces; X1-b duplicates, missing sources, mixed measurements, wrong unit detected, never pooled; X1-c replacing a source or version changes the derived identity; originals unchanged; X1-d repeats from one world do not inflate n; exploratory output cannot become preregistered retroactively.
+- Acceptance: written convention (immutable source refs, source-set digest, analysis version, independent unit, measurement identity, declared null, frozen-vs-exploratory flag) + one inspectable analysis.
+- Claim boundary: adjudication outside executors; within-run aggregate keeps its meaning.
+- Status: OWNER. Read-scope grant is a readback dependency only; unrelated worlds must stay outside scope.
+
+### WP-X2 · Backend repeatability within declared scope · **Vivarium** (Harmonia: what grades license; operator: tool admission)
+- Dependency: WP-P0's tool, or any admitted tool. Gates backend observations' licensed grade only.
+- Tests: X2-a deterministic backend repeats; a nondeterministic one records a mismatch rather than a silent downgrade; X2-b matches twice, diverges on the third → no universal guarantee from the admission pair; X2-c build/config/environment change invalidates prior qualification; untested vs sampled-replay observations distinguishable; X2-d canonicalisation removes only declared non-scientific metadata; timeout/crash/partial output keep honest records.
+- Acceptance: versioned contract; bounded seed/config replay matrix; scoped Harmonia ruling. Existing grade enums preserved.
+- Claim boundary: matching re-executions are repeatability evidence in tested conditions, never proof of determinism.
+- Status: OWNER (wording corrected from "double-run proves determinism").
+
+### WP-X5 · Witness presence and typed lineage, reference-only · **Mnemosyne** (Daedalus: observation/artifact identity; Proteus: organism identity; Vivarium: emits)
+- Dependency: none. Gates queryable witnesses and lineage, not execution.
+- Tests: X5-a program and CA witnesses findable and resolvable to authoritative content; absent/empty/truncated/unavailable distinguishable; X5-b digest/reference mismatch, wrong identity, unauthorized readback fail via existing access control; X5-c idempotent identical edge writes, conflicting same-identity writes fail, chains traversable; X5-d eviction/index changes never delete or reinterpret SFE history.
+- Acceptance: one program-witness and one CA-witness round trip + a small typed lineage/transfer chain; reference-only doctrine satisfied or an approved exception recorded (the earlier "witness jsonb copy" is withdrawn in favour of a typed reference/presence index unless a doctrine ruling says otherwise).
+- Status: **DESIGN DONE by Mnemosyne 2026-09-08** (`evidence_wiki/docs/DESIGN_WP_X5_witness_and_lineage.md`; build when a witness exists to index). Reference-only kept: `ew.witness_refs` content-addressed over (encounter, run, kind, source, selector, digest), with a REQUIRED five-state availability enum PRESENT / EMPTY / TRUNCATED / ABSENT / UNAVAILABLE (NULL cannot separate "none" from "could not look"); a truncated witness is not a witness for replay. Edges: existing `fossil_edges` insufficient (no write route; edge_id a naming convention; no mapping/provenance fields) — design adds mapping_id/mapping_digest/producer/evidence_ref, content-addressed edge_id for new writes, `POST /fossil/edges` (+batch) under the encounters' inserted / duplicate_identical / 409 rule, TRANSFER without a declared mapping = 422, bounded `GET /fossil/lineage/{node}`. Delayed projections: no new mechanism; record against the run identity, no envelope, no re-execution, 409 if a sealed slot would change. **Open for the operator (D-15):** availability sits outside the content address, so an availability change cannot be a row rewrite; Mnemosyne prefers an append-only `witness_availability_events` log with state derived from the latest event.
+
+### WP-X6 · Exploration reserve across families first · **Archaeon** (operator: values)
+- Dependency: none to implement; operator values to *activate*.
+- Tests: X6-a 100-template vs 1-template families equal entitlement; X6-b more families than slots → all served within the horizon, or the shortfall stated; X6-c baseline cannot enter the reserve via alias/ambiguity; no eligible family → unspent, reported; X6-d counters once per event; frozen order immune to later counters/timestamps.
+- Acceptance: `archaeon/producer/allocation.py` (family-first deficit round-robin, deterministic replay, snapshot hash); tick records `family` and `allocation` in `source_evidence`; INACTIVE until `archaeon/policies/allocation.reserve.v0.json` carries `chosen_by`/`chosen_on`.
+- **Pending decisions (third amendment).** While D-6 is open, already-authorized collection continues under the existing policy and budget (the established share). The fallback cannot admit a template, cannot spend the protected reserve, and cannot alter a frozen comparison order. Tests: X6-e with the policy inactive every draw is recorded as the established share and no reserve is consumed; a frozen snapshot's order is unchanged by activating a policy later.
+- Claim boundary: 1/6, 90 days, 24 rows, cap 4 are proposals; "24 rows" is not a power or eligibility guarantee; equal reserve fractions alone do not make arms comparable.
+- Status: **DONE** as code (this commit); policy INACTIVE pending D-6.
+
+### WP-X7 · Per-family directed template + matched frozen control · **Archaeon** (operator admits; Harmonia qualifies the detector)
+- Dependency (split, per the order): **collection** needs only the admitted random route; **comparison** needs a frozen corpus/universe, both orders committed, applicable controls, and the qualified detector.
+- Tests: X7-a every directed draw satisfies its region constraints; empty/malformed/wrong-family regions → explicit blocked result; X7-b frozen source refs, detector version, policy version, universe, budget, orders reproduce exactly; X7-c widening the universe invalidates the old pairing and creates a separately versioned matched control; X7-d a non-firing or ineligible detector → scoped status under the allocation policy; never deletes or rejects the family.
+- Acceptance: for each implemented family, one corpus → signal → proposed next experiment → preserved provenance path; frozen comparison available for qualification.
+- Status: IN LANE per family (bitstring: `resample_region.v0` PROPOSED; NK/CA/program after their kinds).
+
+### WP-X8 · Retain observable behavioural diversity without score lift · **Archaeon** (Harmonia: claim boundaries; Proteus: identity; Mnemosyne: references)
+- Dependency: WP-0f (result schema) for descriptor fields; PR-ID for cross-family identity.
+- Tests: X8-a equal-score programs/rules with different trajectories occupy the archive with no positive-effect verdict; X8-b a label change or jointly transformed exact symmetry is not new behaviour under a descriptor convention that treats it as equivalent; X8-c failure-first retention bounded when every candidate is informative (deterministic tie-break); eviction touches pointers only; X8-d descriptor versions explicit; missing trace = unknown, not identical; no undeclared model-generated promise score can be consumed.
+- **Bounds (third amendment).** Fixed, versioned capacities at three levels — per cell, per family, and across the entire active archive — counted in entries **and** bytes, plus a descriptor-computation budget per tick. Proposed starting values (operator's, D-6): cell 4, family 256, global 2,048 entries / 64 MB of pointers-and-descriptors, descriptor computation ≤ 2 s per tick. Dynamic resizing is not a remedy: any resize is a new declared, replayable policy version. Equal-score behaviour stays eligible for retention. Tests: X8-e the global cap is enforced and its saturation reported before any per-cell cap is reached; X8-f descriptor computation exceeding its budget is truncated with explicit metadata, never silently skipped; X8-g a capacity change replays only under a new policy version and never rewrites source observations.
+- **X8-a fixture available (Proteus, 2026-09-08):** `proteus/eval` X8_IDENTITY_FIXTURE.json — two artifacts, equal score 0, one halts in 3 ops and one exhausts budget in 768, distinct `organism_ref`; behaviour_differs=True. The archive's first test case.
+- Acceptance: coverage reports distinguish family execution, descriptor occupancy, observed behaviour, qualification; no cross-family scalar; passive retention usable before any active archive policy.
+- Claim boundary: artifact identity ≠ observable behaviour ≠ performance ≠ causal evidence; execution errors ≠ completed negative outcomes.
+- Status: IN LANE (after 0f).
+
+## Branch A — interacting landscapes
+
+### WP-A1 · NK landscapes with a verifiable witness · **Daedalus** (Vivarium registers kind/schema; Archaeon builds A2)
+- Dependency: none.
+- Tests: A1-a hand-computed small tables → exact scores and per-locus contributions summing to the score; A1-b k=0 has no cross-locus interaction; a constructed k>0 fixture exhibits one (not left to a random seed); A1-c joint locus/table/candidate permutation satisfies A2's invariant; seed replay regenerates tables; A1-d illegal k, duplicate/self-neighbour violations, length mismatch, malformed table sizes refused; A1-e a tiny exhaustively solved interacting fixture verifies solved/optimum semantics including incompatible local maxima.
+- Acceptance: documented deterministic executor; contribution witness; registered measurements through the authorized path; wrapper parity.
+- Claim boundary: k=0 equals the old onemax only if that construction is explicitly implemented; for k>0 score = 1 is not assumed attainable and a below-maximum locus is not an independent actionable correction.
+- Status: **LICENSED by Harmonia 2026-09-08** (`RULING_NK_CA_PACKET_V2_AND_ROUTES`): Daedalus may start on packet v2.1 as written; Part 3 accepted in full; Amendment 1 (H2 k=2 = 0.0046) and Amendment 2 (six landscapes per k) applied to the packet. Routes (d) and (c) accepted, (c) with n >= 4 landscapes per k.
+
+### WP-A2 · NK null, control and uniform templates · **Archaeon** (Daedalus specifies the symmetry; operator admits)
+- Dependency: A1, 0e.
+- Tests: A2-a jointly permuted landscape and candidate preserve score; contribution matches after inverse permutation; A2-b a small asymmetric fixture catches candidate-only permutation; A2-c k=0 and interacting treatments declare construction, seed coupling and what differs; all three templates draw coherent parameters through 0e.
+- Acceptance: three checkable templates with a documented null and control. Admission and qualification stay separate.
+- Status: CONDITIONAL on A1.
+
+### WP-A3 · First NK corpus, then a frozen comparison · **Archaeon** issues (Vivarium executes; Harmonia adjudicates)
+- Dependency, **split**: A3-acq (corpus acquisition through the admitted random route) needs A2 + local integrity; A3-cmp (frozen comparison) needs a frozen corpus/universe, approved protocol, correct provenance/units, and the detector's qualification.
+- Tests: A3-a each series holds its landscape fixed while candidates change; queries share declared lineage, never counted as independent landscapes; A3-b corpus and universe hashes precede both orders and execution; source-witness refs round-trip; A3-c permutation control satisfies its exact invariant while detector calibration uses the separately declared stochastic null; A3-d no separation → a report scoped to these coordinates/policy/budget, never "NK is flat".
+- **Kill precondition (Herakles O-1):** before A3-acq, run the one-flip hill-climber test at the chosen (L, k): if it reaches the optimum in ≤ 2L queries on ≥ 90% of 20 seeds, the landscape is not doing the work; move k or stop. Attainable trapped-start fraction computed by enumeration at L ≤ 16 first (A1-e).
+- Acceptance: a preserved, inspectable NK corpus and a correctly staged comparison plan. The proposed k∈{0,2,4} × 3 seeds × 20 queries is a **bounded pilot** until Harmonia sizes the intended claim; the measurement (interaction / region discrimination / selection improvement) is named before the run.
+- **Purpose, named:** method evaluation. A complete success of Branch A tells us how our search and selection methods behave on authored difficulty; it is not progress toward emergence and is not reported as such (BRANCHES §0).
+- Status: CONDITIONAL on A2.
+
+### WP-A4 · Related landscapes without waiting for runtime memory · **Daedalus** (Harmonia: relation/mapping and transfer comparison; Proteus: identity where needed)
+- Dependency: A1. **Not** B4. Transfer of a source-derived candidate, program or parameter vector needs a declared mapping and baselines, not persistent runtime memory (HA-1).
+- Tests: A4-a identity relation reproduces the source landscape; controlled partial sharing gives the declared overlap, boundaries checked; A4-b execution-affecting table configurations cannot hide behind an unchanged execution identity; mapping refs round-trip separately; A4-c a source-derived static candidate is mapped and evaluated without a persistent-state interface; A4-d baseline arms share target worlds/budgets and differ only in source information; leakage detected.
+- Acceptance: executable related worlds and a valid transfer-comparison design (matched fresh / shuffled / unrelated-source baselines). Design labels never alter a landscape; a changed parameter contract is a new kind/version.
+- Claim boundary: a null transfer result prices that source artifact and policy; it does not undo relatedness. A known construction curve is distinct from a policy's empirical ability to exploit related worlds.
+- Status: OWNER (wording "deferred behind a stateful organism" withdrawn).
+
+## Branch B — symbolic execution
+
+### WP-B1 · VM as a pure semantic library · **Proteus** (Vivarium: thin wrapper)
+- Dependency: none.
+- Tests: B1-a tiny hand-authored programs verify arithmetic/control flow, input consumption, output semantics, exact first counterexample under a declared ordering; B1-b all 64 specimens agree with the arena path; world-blindness reported without counting every specimen as a responsive agent; B1-c zero/min/exhausted budgets, invalid opcodes, absent outputs, missing specification lookups have defined results (budget exhaustion is a declared status, counterexample or not, by contract); B1-d replay and semantic opcode relabelling hold; trace truncation explicit, cannot change execution or select a different witness.
+- Acceptance: side-effect-free library; independent semantic fixtures; wrapper/arena parity. Existing specimens need not solve the new task.
+- Status: **DONE by Proteus 2026-09-08** (`proteus/`, on main; 27 B1 tests, 198 total; 64/64 specimens agree with the arena path over 3 input sets). **Contract decisions recorded:** budget exhaustion is a DISTINCT STATUS and not a counterexample by default (lowering a budget would manufacture witnesses, the quantity Branch B prices); opt-in `BudgetPolicy.COUNTEREXAMPLE` scans the same declared order and can only move the witness earlier; `trace_limit=0` legitimately reports truncation; no invalid opcode exists (every uint32 decodes). **Boundary for WP-B2's opcode-bijection null (narrowed by Proteus 2026-09-08):** opcode-SLOT relabelling (only word indices divisible by 4; offsetting an operand is an edit, not a relabelling — the bug B1-d caught) preserves execution UNLESS the program reads the relabelled words as data. The exposure is reading, not self-modification: `code_writable` is false for most specimens, yet a plain LD against a genome address reads a relabelled word. The invariant is therefore CONDITIONAL and the library reports the comparison rather than asserting invariance. B2 must choose (D-16) between a data-channel disjointness precondition and an explicit exclusion of genome-region reads; Archaeon's choice is recorded in DECISIONS.md. Next: Vivarium wraps as `program_eval_v0`.
+
+### WP-B2 · Program templates and information controls · **Archaeon** (Proteus specifies VM and opcode transformation)
+- Dependency: B1, 0e.
+- **Scope of B2-a (D-16):** the null is split by an EXECUTION fact, not a static one. The library's trace records whether any load touched a genome address (`genome_read`). Class I runs (no genome read on the probes executed) carry the unconditional GUARANTEE: outputs, halting and steps identical under a joint opcode-slot bijection of encoding and decoder. Class II runs (at least one genome read) are REPORTED as a comparison, never asserted invariant, and are excluded from the null's denominator with the exclusion counted. Only opcode slots (word index mod 4 == 0) are ever relabelled. A negative fixture is a program that LDs its own genome and therefore changes under relabelling — the lower-bound structure Proteus names: the check detects a data dependence only when it reaches the observable on the probes run.
+- Tests: B2-a renaming opcode encoding and decoder together preserves outputs/halting/steps; traces compared after decoding; B2-b the two arm views differ only in the declared witness treatment; an adversarial fixture detects a witness copied into another producer-visible field (outputs vector, expected outputs, trace, log, ordering) **and specifically the score-difference construction the crosswalk itself recommends for `cegis_boolean` (CROSSWALK.md :1536 at 4c2d31578: flip bit i, if the score rises i is the witness) and the simulated witness for `cegar.abstraction.loop` (:1513) — the natural thing to build is the leak**; B2-c restrictions do not remove the authoritative observation from audit storage; the wrong arm cannot retrieve it through the permitted proposal interface.
+- Acceptance: replayable templates and a precise information-access contract. Where the specification is already public, the claim is an interface/computational saving, not access to unavailable information.
+- Status: CONDITIONAL on B1.
+
+### WP-B3 · Frozen selection vs online witness refinement — two named experiments · **Archaeon** (Harmonia: protocol qualification)
+- Dependency: B2, X1, X7. Named **before** implementation: (i) **frozen M-SIGNAL route** — directed orders from already frozen evidence, both orders and the universe frozen, canonical endpoint; no claim that returned witnesses changed the order; (ii) **adaptive witness route** — precommitted policy code/version, allowed evidence, initial state, seeds, budgets, tie-breaks, stopping/censoring; later programs may depend on returned witnesses; rounds-to-match under its own approved protocol, never called M-SIGNAL.
+- Tests: B3-a a frozen order does not change after new observations; a claimed online dependency is rejected under that protocol; B3-b the adaptive policy reproduces the same next candidate from the same permitted history and seed, and follows a different valid branch when the witness changes; B3-c both arms obey one budget and stopping rule; unsolved runs censored/counted by the preregistered convention, never dropped; B3-d B2's leakage checks hold end to end; an intentionally witness-using toy policy shows the treatment reaches the producer.
+- **Abandonment and denominators (third amendment).** Every assigned problem stays in the denominator. Primary endpoint: **success within budget**; capped rounds reported alongside it. Abandonment and policy-caused budget exhaustion count as unsuccessful within budget; infrastructure interruption follows a separate declared rule (re-run from the recorded state under the same seed, counted once). Tests: B3-e a policy that abandons a problem does not shrink the denominator; an exhausted budget is unsuccessful, not dropped; an infrastructure interruption is classified by the declared rule and never as a policy failure or success.
+- Acceptance: one internally consistent protocol per route and an executable example.
+- Claim boundary: no advantage = no demonstrated advantage for the tested policy/design; it does not prove the policy ignored the witness or that counterexamples are useless. Producer-side use of prior observations is distinct from a running organism reading fossils.
+- Status: CONDITIONAL on B2; route (ii) needs Harmonia's protocol before any online campaign.
+
+### WP-B4 · Widen the input channel, bounded applicability · **Proteus** (Harmonia: PATH B qualification)
+- Dependency: none. **Gates only claims relying on that channel/population** — not organism diversity or source-artifact transfer generally.
+- Tests: B4-a an input-sensitive program changes behaviour with world input; a world-blind program is the negative control; B4-b alphabet boundaries, sequencing, initialization, entropy agree with the declared channel; no hidden fossil access; B4-c legacy fixtures keep old behaviour under the old version; new channel distinguishable in execution identity; B4-d usable population and pair counts from the stated criterion with floor/ceiling and uncertainty.
+- Acceptance: versioned, tested channel and a scoped PATH B result on the appropriate frozen population, not generalized to every program, genome, rule or transfer experiment.
+- Status: OWNER (wording "prerequisite of any organism claim in B" withdrawn; scoped).
+
+## Branch C — spatial, stateful
+
+### WP-C1 · CA verifier as a pure library · **Herakles** (Vivarium wraps; Archaeon uses the contract in C2/C3)
+- Dependency: none.
+- Tests: C1-a hand-computed tiny states verify wraparound, simultaneous update, neighbourhood indexing, update count; a second simple implementation is the independent oracle; C1-b six recovered genomes have golden results on small fixed IC fixtures; malformed tables, unsupported radius, invalid density/grid fail explicitly; C1-c joint reflection and complement satisfy whole-trajectory equivariance, compared on normalized trajectories not raw hashes; C1-d sampling seed and configuration replay; no filesystem or global-RNG side effects; C1-e a **separate** historical-reproduction run uses the source's conventions, an adequate declared IC sample, and a prespecified uncertainty/multiplicity procedure; discrepancies diagnosed, tolerance never changed after inspection.
+- Acceptance: pure library with semantic and symmetry tests; thin-wrapper parity fixture; honest historical-validation report. Pinned: ring boundary, neighbourhood bit order, rule encoding, supported radius (no silent generalization of an r=3 decoder), update count, majority/tie convention, accuracy definition; bounded witnesses and a declared selected trajectory/digest.
+- Claim boundary: faithful deterministic behaviour is an implementation result; statistical reproduction is a separately reported qualification result.
+- Status: **DONE by Herakles 2026-09-08** (`herakles/evca/`, 50 tests, conventions pinned and re-earned by test; on branch `vivarium/v0-2026-09-05` until landed on main). **C1-e DONE:** 17 of 18 cells reproduce under a protocol frozen before the run; maj exact; particle2 at N=149 is 4.97 SE off with transcription the only surviving suspect — HELD as a qualification number, usable as an organism. **H-R2 DONE:** 7 VERIFIED, 4 PARTIAL, 1 MISMATCH (evodevo.bias resolved; my CTRNN note was wrong and is replaced). **H-R1 DONE:** one Branch C probe, owner-ready as the C3-abl comparison family (packet v2.1 §2.10). Next: Vivarium wraps `herakles/evca` as `ca_density_v0`.
+
+### WP-C2 · CA templates with correct symmetries and scoped ablations · **Archaeon** (Herakles: C1 fixtures; operator admits)
+- Dependency: C1, 0e.
+- Tests: C2-a joint rule/input reflection (and, for complement, also the majority target and witnesses) yields exactly transformed trajectories and identical correctness masks after normalization; odd-size majority tested; if even grids are supported the declared tie rule must transform consistently before complement invariance is claimed; C2-b a fixture detects rule-only same-IC transformation; C2-c radius/table-size mismatch rejected; r=0 really reads only the centre cell (explicit centre-only family or declared projection, correct table size); C2-d T=1 performs the declared single update; report names horizon change separately from memory claims.
+- Acceptance: reflection, radius-zero, one-step and uniform templates with executable semantic checks and accurately described controls.
+- Claim boundary: "same seed" alone is not the symmetry; T=1 is a shortened horizon, not removal of all state; exact symmetry tests do not certify any detector's false-alarm rate.
+- Status: CONDITIONAL on C1.
+
+### WP-C3 · First CA corpus and family-specific qualification · **Archaeon** issues (Herakles: conventions; Vivarium executes; Harmonia adjudicates)
+- Dependency, **split**: historical reproduction (C1-e) · random-rule corpus acquisition (admitted random route) · frozen selection evaluation (frozen corpus, protocol, provenance/units, detector qualification).
+- Tests: C3-a historical and random arms receive the declared paired ICs; rule identities and source revisions retained; C3-b accuracy, failing ICs and the selected trajectory identify the same run and replay from inputs; C3-c shared ICs, repeats, rule reuse do not inflate independent-unit count; Harmonia's clustered/paired analysis followed; C3-d a null or weak result retains observations and a bounded conclusion; never "needle-like" for the family without evidence for that claim.
+- Acceptance: a usable spatial corpus; an explained historical-validation result (a mismatch is diagnosed across conventions, horizon, sampling, transcription, implementation — not presumed a verifier defect); a correctly frozen next comparison. Rediscovery of known strategies labelled as such.
+- Status: CONDITIONAL on C2. Historical qualification may stay unresolved while labelled development data and library work proceed.
+
+### WP-C4 · Environment–organism co-development as a later bridge · **Harmonia** designs (Archaeon implements the declared producer policy)
+- Dependency: validated CA semantics (C1) for executable trials; a bounded design/spike may precede full C3 qualification.
+- Tests: C4-a frozen policy + identical history/seeds reproduce the next environment–artifact pair; C4-b holding environments fixed / organisms fixed each disables the intended update; invalid generated environments rejected; C4-c training observations cannot alter the frozen evaluation set; lineage records identify which observations informed each update.
+- Acceptance: a faithful bounded protocol with explicit alternatives and controls; adaptive if decisions use newly returned results; persistent controller runtime memory only if the chosen question needs it.
+- Claim boundary: co-development can be implemented and tested while its advantage over a fixed curriculum stays unknown.
+- Status: OWNER.
+
+## Branch D — population ecology
+
+### WP-P0 · Bounded population-route spike · **Vivarium** (operator authorizes scope; Ergon consulted on the freeze)
+- Dependency: operator authorization consistent with Ergon's freeze record. Routes compared: available Avida version/build path; minimal in-process soup; recovered `hct01.c` where applicable.
+- Checks: P0-a clean documented build/run succeeds or records the exact blocker per route; P0-b bounded repeated runs preserve inputs, environment, digests, failures, costs; P0-c report distinguishes not attempted / blocked / failed / runnable / repeatable-under-tested-conditions, never upgraded to proved determinism. Avida 2.2 runnability kept separate from fidelity to the 1.6 experiment; the spike is not permission for frozen population generation.
+- Acceptance: evidence-based route comparison within the approved cap (proposed two days); route selected or deferred on explicit cost/fidelity/reproducibility grounds; no ecological claim.
+- Status: OWNER, awaiting authorization.
+
+### WP-P1 · Implement the selected population route · **Vivarium** (P0 selects; P2 units; P3 neutral baseline; X5 lineage refs; X2 only if the route crosses a process boundary)
+- Dependency: P0. Descriptive execution permitted before P3; **claims depending on neutrality** need P3.
+- Tests: P1-a a tiny manually computable population follows the declared reproduction/resource update; P1-b zero mutation → no mutation-generated novelty; disabling a declared interaction removes that dependency with other parameters explicit; P1-c parentage/mutation edges reconstruct the sampled lineage; extinct and surviving lineages traceable; P1-d identical inputs replay within contract; scheduler/initialization changes reflected in provenance/identity; P1-e a separate neutral-baseline comparison matches P3's demography and assumptions; unlimited resources not accepted as neutrality by label.
+- Acceptance: one faithful population world with preserved trajectories, lineage and scoped reproducibility evidence.
+- Claim boundary: neutrality, persistent diversity and adaptive advantage are separately qualified claims.
+- Status: CONDITIONAL on P0.
+
+### WP-P2 · Generations, episodes, statistical independence · **Harmonia** (Daedalus implements vocabulary/validation)
+- Dependency: none. Gates analyses using those units, not library development or the P0 spike.
+- Tests: P2-a a 100-generation trajectory from one seeded population reports 100 time points and the declared number of independent populations, not n=100; P2-b episodes with shared controller state or world history preserve dependencies; independent resets carry explicit initialization; P2-c unsupported unit declarations fail clearly; existing units keep their meaning through schema/client round trips.
+- Acceptance: vocabulary ruling; worked CA/population examples; additive schema conformance; decision on how ORIGINAL/REPLICATION represent a continuous trajectory.
+- Claim boundary: a vocabulary addition cannot make successive generations independent replicates.
+- Status: OWNER.
+
+### WP-P3 · A specified neutral baseline; reversibility separate · **Harmonia** (Proteus/Vivarium implement kernel and dynamics)
+- Dependency: none. Gates **claims needing the neutral baseline**, not execution or descriptive study.
+- Tests: P3-a on a small finite kernel: nonnegative transitions, rows sum to one, declared stationary π satisfies πP = π; P3-b a reversible fixture satisfies πᵢPᵢⱼ = πⱼPⱼᵢ; the three-state lazy clockwise cycle P = 0.5I + 0.5S keeps uniform stationarity while failing detailed balance — classification must distinguish the two; P3-c a deliberately biased mutation fixture is detected against the declared reference measure without being mistaken for a failed implementation of a declared biased treatment; P3-d neutral-drift comparisons match specified demography and fitness assumptions; resource removal that changes them is not silently the same null.
+- **Three separate questions (third amendment).** (1) *Invariant kernel*: does the declared π satisfy πP = π — an exact identity on a finite kernel, tolerance-free up to floating point. (2) *Convergence*: does the chain reach π from the declared initial distribution, and how fast (irreducibility, aperiodicity, a mixing bound) — a different question, not implied by (1). (3) *Transient population behaviour*: finite-horizon predictions from the declared initial state, which a transient experiment may use without any stationarity claim. A looser tolerance can never repair an incorrect invariant-measure claim; stationarity and convergence are different questions (Aldous & Fill, *Reversible Markov Chains and Random Walks on Graphs*). Tests: P3-e a kernel with the right π but a periodic structure passes (1) and fails (2), and the report says which; P3-f a finite-horizon prediction for a transient experiment is accepted with its horizon declared and no stationarity assertion.
+- Acceptance: a tested neutral baseline with explicit scope (reference measure, mutation process, fitness, reproduction/replacement, resource regime, meaning of "neutral") and a separate reversibility statement. Nonreversible kernels can have stationary distributions; declared mutation bias can itself be a treatment.
+- Status: OWNER (earlier "detailed balance before any diversity claim" withdrawn; scoped).
+
+---
+
+## What each first experiment lets the next action depend on
+
+- **A3 → X7(A):** a fired, qualified D3 region on an NK world becomes the argument of `nk.resample_region.v0`, compared against `nk.uniform.v0` on the NK family's own frozen corpus.
+- **B3 (frozen route) → `program.refine_on_witness.v0`:** a witness already in the frozen corpus becomes a parameter of the next program's specification emphasis; **B3 (adaptive route)** uses returned witnesses under its own protocol.
+- **C3 → `ca.resample_region.v0` and a directed IC distribution:** a fired region on a declared rule-table descriptor, or a witness IC set, constrains the next draw.
+
+Broad collection through the admitted random route never waits for a signal; the comparison always waits for a frozen corpus.
+
+## Cost and time (Herakles A-7)
+
+Engineering effort is S/M/L per package above. Compute and calendar for the
+run-bearing packages, priced under two routes — the autonomous producer's
+cadence (6 draws per lane per UTC day, never relaxed) and the existing
+**human-issued campaign path** (`campaign.issue()`: `source_reason='human'`,
+no cadence ordinal, operator act), which is how M-ELIGIBLE's eight requests
+are issued:
+
+| Package | Runs | Executor cost (host CPU) | Via autonomous cadence | Via human-issued batch |
+|---|---|---|---|---|
+| A3-acq | 3 k × 3 seeds × 20 = 180 specs | NK scoring ≪ 1 ms each; ~seconds total | 30 lane-days | one operator issue; Vivarium executes in minutes |
+| B3 (either route) | 2 arms × 3 seeds × 20 = 120 specs | VM eval ≤ step budget × inputs; ~ms each | 20 lane-days | minutes |
+| C3-acq + hist | ~56 rows × 4 repeats = 224 obs | 149 × 320 × 100 ICs ≈ 4.8 M cell updates per obs ≈ 0.1–0.5 s in numpy; ~2 min total | ~10 lane-days | minutes |
+| WP-0d recalibration | 300 corpora × D3 | ~10 s | outside the tick | n/a |
+| WP-P0 spike | builds + 2 runs per route | unknown; capped by the operator (proposed 2 days) | n/a | n/a |
+
+Consequence: every first corpus is priced at minutes of compute and one
+operator issue. Left to the autonomous cadence the same corpora take weeks
+per lane; the census exists for that regime. Person-effort per package is
+the S/M/L column; the frozen comparisons cost one Harmonia protocol each.
+
+## Priority tiers (Herakles O-2; a freeze is declined, with the reason)
+
+Herakles asks that the 22 packages off the flatness critical path be frozen
+until A3 reports. The operator's amendment order rules the other way
+(§1 rules 2 and 6: research and implementation move together; gates are
+local; nothing waits on an unrelated result), so a freeze is not adopted.
+What is adopted is an explicit priority order for seats with limited
+capacity, and the statement that owner packages proceed only as their owners
+have capacity — they compete for nothing in Archaeon's lane.
+
+    Tier 1  the two questions the program can answer soonest
+            0a 0e(done) 0f A1 A2 A3-acq  · C1 C2 C3-hist C3-acq   (in parallel)
+    Tier 2  what makes Tier 1's results claimable
+            0c 0d(done) X1 X7 X6(done, inactive)
+    Tier 3  the symbolic branch and the archive
+            B1 B2 B3 X8 PR-ID
+    Tier 4  spikes and later bridges
+            P0 P2 P3 A4 C4 X2 X5 B4 P1
+
+If a seat must choose, it chooses the lowest tier number in its lane.
+
+**Work-in-progress limit (operator, 2026-09-07).** Local gates and a
+concurrency limit are compatible; tiers alone do not keep scarce effort
+concentrated. Proposed: at most **two** packages in flight per seat and at
+most **six** program-wide, counted at the integrating owner; a package
+enters flight only when a slot is free and it is the lowest open tier in
+that lane. Owner packages that no one has capacity for stay OWNER, not in
+flight. Numbers are the operator's to set; they are recorded here as
+proposals beside their reason (two per seat: one to execute, one to prepare;
+six: the Tier 1 chain for A and C plus their two integrity gates).

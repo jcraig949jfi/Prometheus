@@ -96,6 +96,7 @@ def detect(corpus, dcfg) -> DetectorResult:
                     "neighbourhood_kind": neighbourhood_kind}))
 
     signals: List[Signal] = []
+    skipped_zero_var = 0
     for reg in eligible:
         rs = by_region[reg]
         vals = [r.metric for r in rs]
@@ -107,7 +108,10 @@ def detect(corpus, dcfg) -> DetectorResult:
         if v_nb <= 0:
             # A neighbourhood with zero dispersion gives no ratio. Reporting
             # "infinitely more variable" from a degenerate denominator would be
-            # an artefact of the baseline, not a property of the region.
+            # an artefact of the baseline, not a property of the region. The
+            # region stays in the eligible DENOMINATOR and the skip is counted
+            # (WP-0d: denominators and diagnostics are reported, not hidden).
+            skipped_zero_var += 1
             continue
         ratio = v_reg / v_nb
         if dcfg.d3_low_ratio <= ratio <= dcfg.d3_high_ratio:
@@ -117,9 +121,13 @@ def detect(corpus, dcfg) -> DetectorResult:
             else "LOWER_DISPERSION"
         # Rank magnitude: distance from the band, in log space so that a
         # 4x-under and a 4x-over anomaly rank the same.
+        # A region whose variance is exactly zero against a live neighbourhood
+        # is the strongest LOWER_DISPERSION case there is (ratio 0). The log
+        # would divide by zero; clamp the ratio at a floor so the magnitude
+        # saturates instead of crashing (found by WP-0d's denominator test).
         excess = (math.log(ratio / dcfg.d3_high_ratio)
                   if ratio > dcfg.d3_high_ratio
-                  else math.log(dcfg.d3_low_ratio / ratio))
+                  else math.log(dcfg.d3_low_ratio / max(ratio, 1e-300)))
 
         signals.append(Signal(
             detector=NAME, detector_version=VERSION,
@@ -150,7 +158,9 @@ def detect(corpus, dcfg) -> DetectorResult:
     return DetectorResult(
         Eligibility(NAME, len(eligible), total_units, UNIT,
                     detail={"neighbourhood_kind": neighbourhood_kind,
-                            "regions_big_enough": len(big_enough)}),
+                            "regions_big_enough": len(big_enough),
+                            "skipped_zero_variance_neighbourhood": skipped_zero_var,
+                            "region_tests": len(eligible) - skipped_zero_var}),
         tuple(signals))
 
 

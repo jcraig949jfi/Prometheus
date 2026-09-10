@@ -1,0 +1,52 @@
+{
+  "_ingest": {
+    "deck": "roles/Herakles/deep_research/2026-09-06_archaeon_template_mining/deck.md",
+    "design_choices": [
+      "world.seed_root added, range copied verbatim from the ADMITTED frozen baseline bitstring.uniform.v0. The mined template declared no world because the mining deck wrongly told it to declare payload parameters only."
+    ],
+    "design_choices_note": "Values introduced by Herakles on 2026-09-06 during the registry-shape migration. These are NEW DESIGN CHOICES, not recovered data, and each names its justification.",
+    "flags": [
+      "EXPANSION: kind 'bounded_synthesizer.v0' is not implemented by Vivarium; this template is an expansion request by definition",
+      "REPAIRED: source markers were removed from this block to make it parse. Structure is the report's; any value that a marker had overwritten is null, never guessed.",
+      "INCOMPLETE: axes ['max_iterations', 'sketch_size'] lost their values to source markers in the returned report. The axis names are real; the numbers are NOT reconstructed and must be set by the operator before admission."
+    ],
+    "migrated_from": "flat param_space (ROADMAP illustrative schema)",
+    "migration_notes": [
+      "payload.max_iterations left NULL: its value was destroyed in the source report and no bench-native value exists to justify a fill",
+      "payload.sketch_size left NULL: its value was destroyed in the source report and no bench-native value exists to justify a fill"
+    ],
+    "note": "PROPOSED by a literature miner. Nothing in the inbox is drawn from. Admission is a human act.",
+    "source_report": "08_synthesis_and_logic.md"
+  },
+  "admitted_at": null,
+  "admitted_by": null,
+  "kind": "bounded_synthesizer.v0",
+  "origin": {
+    "field": "Counterexample-Guided Inductive Synthesis (CEGIS)",
+    "proposed_by": "Herakles",
+    "reference": "Solar-Lezama 2008 Program Synthesis by Sketching",
+    "source": "LITERATURE"
+  },
+  "param_space": {
+    "payload": {
+      "max_iterations": {
+        "int_range": null
+      },
+      "sketch_size": {
+        "int_range": null
+      }
+    },
+    "world": {
+      "seed_root": {
+        "int_range": [
+          100000,
+          999999
+        ]
+      }
+    }
+  },
+  "rationale": "This evaluates a CEGIS algorithm's ability to iteratively converge on a correct program by querying a verification oracle for counterexamples up to a hard iteration limit. Measuring iteration bounds is characteristic of CEGIS literature to test the refinement loop's efficiency. A SURVIVED verdict means the synthesis loop successfully found a valid candidate before running out of iterations; it would not license the inference that the counterexamples chosen by the verifier were optimal or that a larger sketch space wouldn't cause exponential timeout.",
+  "registry_version": "archaeon.template.v0",
+  "status": "PROPOSED",
+  "template_id": "cegis_boolean.v0"
+}

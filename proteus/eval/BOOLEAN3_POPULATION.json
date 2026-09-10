@@ -1,0 +1,208 @@
+{
+ "artifact_id": "sha256:23020c85aee099acecd659e8f1462abbb843e7a16c6fdf6e10dea90cd2a65279",
+ "channel_verdict": "The EXISTING input channel expresses the declared Boolean subset. No new player interface was required; a named population and interface version were still created so no old specimen is redefined.",
+ "correctness_scope": {
+  "arity_exhaustively_verified": 3,
+  "assignment_order": "input 0 is most significant; k-th case has bit j = (k >> (n-1-j)) & 1",
+  "assignments_per_task": 8,
+  "declared_opcodes": [
+   1,
+   3,
+   10,
+   11,
+   12,
+   21,
+   23
+  ],
+  "grammar_version": "proteus.boolean_grammar.v0",
+  "interface_version": "proteus.boolean3.v0",
+  "max_temporaries": 11,
+  "not_is_compiled_as": "XOR x, 1 -- the VM's NOT is bitwise complement and leaves {0,1}",
+  "note": "Exhaustive means all 8 assignments for every task tested, not all tasks. The set of expressions checked is stated by the test that checks them.",
+  "primitives": [
+   "const",
+   "input",
+   "not",
+   "and",
+   "or",
+   "xor"
+  ],
+  "verified_beyond_3_inputs": false
+ },
+ "environment": {
+  "affordance_hash": "f1607ee8be680acc33288a95c1a25c09ad4c799a47b0975381be8ca02d7638ce",
+  "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0"
+ },
+ "population": {
+  "channel_contract": {
+   "inputs": "ONE channel carrying exactly 3 values in {0,1}, input 0 first",
+   "n_out": 1,
+   "output": "one value in {0,1} on channel 0",
+   "reads": "IN consumes the channel in order; cursors are tick-scoped"
+  },
+  "claim_boundary": "Controls establish that the CHANNEL can carry three distinguishable bits. They are not evidence that any frozen specimen is an agent, and no specimen from the USE_A registry is a member of this population.",
+  "frozen_registry_untouched": "proteus/integration/PLAYER_REGISTRY.json",
+  "interface_version": "proteus.boolean3.v0",
+  "members": [
+   {
+    "genome_read": {
+     "bound": "lower",
+     "detected": false
+    },
+    "manifest": {
+     "code_writable": false,
+     "genome": [
+      21,
+      0,
+      15,
+      0,
+      21,
+      1,
+      15,
+      0,
+      21,
+      2,
+      15,
+      0,
+      23,
+      0,
+      15,
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "n_regs": 16,
+     "out_cap": 4,
+     "persist": "none",
+     "schema_version": "proteus.player_manifest.v0",
+     "tape_words": 256,
+     "tick_budget": 256
+    },
+    "name": "ID0",
+    "organism_ref": "sha256:403fe0c0045149b3f5b2c3706d3a8aacb9c8057a9b37b60af76966eb42d80170",
+    "role": "positive_control",
+    "sensitive_to_input": 0
+   },
+   {
+    "genome_read": {
+     "bound": "lower",
+     "detected": false
+    },
+    "manifest": {
+     "code_writable": false,
+     "genome": [
+      21,
+      0,
+      15,
+      0,
+      21,
+      1,
+      15,
+      0,
+      21,
+      2,
+      15,
+      0,
+      23,
+      1,
+      15,
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "n_regs": 16,
+     "out_cap": 4,
+     "persist": "none",
+     "schema_version": "proteus.player_manifest.v0",
+     "tape_words": 256,
+     "tick_budget": 256
+    },
+    "name": "ID1",
+    "organism_ref": "sha256:39f5cee313978ffcfb1230a24a59a5c6858c76b6940400eaf93c5c5780c86d82",
+    "role": "positive_control",
+    "sensitive_to_input": 1
+   },
+   {
+    "genome_read": {
+     "bound": "lower",
+     "detected": false
+    },
+    "manifest": {
+     "code_writable": false,
+     "genome": [
+      21,
+      0,
+      15,
+      0,
+      21,
+      1,
+      15,
+      0,
+      21,
+      2,
+      15,
+      0,
+      23,
+      2,
+      15,
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "n_regs": 16,
+     "out_cap": 4,
+     "persist": "none",
+     "schema_version": "proteus.player_manifest.v0",
+     "tape_words": 256,
+     "tick_budget": 256
+    },
+    "name": "ID2",
+    "organism_ref": "sha256:346a1b4b5395ad21a90e192bb0c3bc602a769e4fe45f628e086e84e3a19a0a9a",
+    "role": "positive_control",
+    "sensitive_to_input": 2
+   },
+   {
+    "genome_read": {
+     "bound": "lower",
+     "detected": false
+    },
+    "manifest": {
+     "code_writable": false,
+     "genome": [
+      3,
+      0,
+      1,
+      0,
+      23,
+      0,
+      15,
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "n_regs": 16,
+     "out_cap": 4,
+     "persist": "none",
+     "schema_version": "proteus.player_manifest.v0",
+     "tape_words": 256,
+     "tick_budget": 256
+    },
+    "name": "BLIND",
+    "organism_ref": "sha256:9a967189ca06f342cca40cabf787e1388dea430821e0a400a7afdfcb3ecabcd8",
+    "role": "negative_control",
+    "sensitive_to_input": null
+   }
+  ],
+  "n_inputs": 3,
+  "schema_version": "proteus.boolean3_population.v1"
+ },
+ "schema_version": "proteus.boolean3_interface.v1"
+}
