@@ -1,6 +1,6 @@
 # H0–H5 status — compact, from receipts only
 
-Maintained by Archaeon. Updated 2026-09-09. Design v0.1
+Maintained by Archaeon. Updated 2026-09-10. Review packet: `roles/Archaeon/REVIEW_PACKET_2026-09-10.md`. Design v0.1
 (`roles/Archaeon/prompts/2026-09-08_h0h5/DESIGN_H0_H5_v0.1.md`). Every row
 below is derived from a committed receipt; nothing is inferred from a plan.
 Baseline: `archaeon/docs/h0h5/BASELINE_2026-09-09.json`.
@@ -51,8 +51,14 @@ Baseline: `archaeon/docs/h0h5/BASELINE_2026-09-09.json`.
 - **Harmonia's sizing rule for H0:** the interaction needs twice the blocks;
   the 5 pp threshold is a sizing decision frozen from pilot SD.
 
+## Also on branches (not main)
+
+- Vivarium `e43a6c7f2`: `ca_density_v0` wraps herakles/evca; six genomes reproduce golden exactly; both success masks measured; a period-2 fixture separates at_T from stable. Branch C can run its first corpus once C2 templates are admitted.
+- Aporia deck (`3b1fb8a0f`, vivarium branch): four of six hypotheses untested in the literature as posed; H2's encoding confound published (Glover et al. 2024); nearest H3 test found no QD advantage (Chen 2026); H4 precedent only vs a tuned baseline.
+- Techne inbox to Archaeon (`f6acabefb`): pyribs GridArchive is first-writer-wins on exact ties; z3 separates timeout from rlimit exhaustion, use rlimit for cross-host repeatability; stitch_core ships NO licence in any artifact (export blocked, internal use continues).
+
 ## Live producer
 
 `ArchaeonTick` registered and ticking: 102 cadence decisions in the last day,
 10 experiments completed in the last two days under the 6/day prod quota,
-last completion 2026-09-09 19:12. Production engine schema 7.
+11 completed since registration, all published to PEW (production encounters 5458 -> 5469). Production engine schema 7. D3 on the live corpus: 77/93 regions eligible (median n=40), 30 fire (28 LOWER), interpretation Harmonia's.
