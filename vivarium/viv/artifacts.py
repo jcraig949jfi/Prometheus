@@ -211,15 +211,98 @@ def _check_boolean_inputs_v1(obj: Any, limits: "Limits") -> dict:
     return {"n_bits": n_bits, "item_count": len(items)}
 
 
+def _check_boolean_components_v1(obj: Any, limits: "Limits") -> dict:
+    """boolean-components-v1: frozen closed subexpressions of Proteus's
+    grammar, usable as extra LEAVES by a search.
+
+    THE SEMANTICS ARE PROTEUS'S AND ARE CONSULTED, NOT COPIED. The shape check
+    below is this loader's (names, uniqueness, counts, depth), and then every
+    expression is handed to `proteus.eval.boolean.check`, which is the module
+    that owns what a Boolean expression is. A structural re-implementation here
+    would be a second grammar that agrees with the first until it does not.
+
+    If Proteus is not importable the artifact is REFUSED rather than accepted
+    on the strength of the shape check alone: an interface whose owner is
+    absent has not been validated, and saying so is the honest reading.
+    """
+    if not isinstance(obj, dict):
+        raise PreflightRejected(MALFORMED, "content must be an object")
+    comps = obj.get("components")
+    if not isinstance(comps, list):
+        raise PreflightRejected(MALFORMED, "components must be a list")
+    if len(comps) > limits.max_items:
+        raise PreflightRejected(
+            LIMIT_EXCEEDED, "component count %d exceeds the declared limit %d"
+            % (len(comps), limits.max_items),
+            detail={"limit": "max_items", "observed": len(comps)})
+    try:
+        import sys as _sys                                  # noqa: PLC0415
+        from pathlib import Path as _Path                   # noqa: PLC0415
+        _repo = str(_Path(__file__).resolve().parent.parent.parent)
+        if _repo not in _sys.path:
+            _sys.path.insert(0, _repo)
+        from proteus.eval import boolean as _pb             # noqa: PLC0415
+    except Exception as exc:                                # noqa: BLE001
+        raise PreflightRejected(
+            INCOMPATIBLE_INTERFACE,
+            "boolean-components-v1 is Proteus's interface and Proteus is not "
+            "importable here (%s); the components cannot be validated, so "
+            "they are not accepted" % exc) from exc
+
+    names, depth_max = set(), 0
+    for i, entry in enumerate(comps):
+        if not isinstance(entry, dict) or set(entry) != {"name", "expr"}:
+            raise PreflightRejected(
+                MALFORMED, "component %d must be exactly {name, expr}, got %r"
+                % (i, entry if not isinstance(entry, dict) else sorted(entry)))
+        name = entry["name"]
+        if not isinstance(name, str) or not name:
+            raise PreflightRejected(
+                MALFORMED, "component %d has no usable name" % i)
+        if name in names:
+            raise PreflightRejected(
+                MALFORMED, "component name %r appears twice; a library with "
+                "two entries under one name has no single meaning" % name)
+        names.add(name)
+        try:
+            expr = _as_tuple(entry["expr"])
+            depth_max = max(depth_max, _pb.check(expr))
+        except PreflightRejected:
+            raise
+        except Exception as exc:                            # noqa: BLE001
+            raise PreflightRejected(
+                MALFORMED, "component %r is not a valid expression under "
+                "Proteus's grammar: %s" % (name, exc)) from exc
+    return {"component_count": len(comps), "max_depth": depth_max,
+            "grammar_version": _pb.GRAMMAR_VERSION}
+
+
+def _as_tuple(node, _depth=0):
+    """JSON nested list -> tuple, so Proteus's checker can read it."""
+    if _depth > 32:
+        raise PreflightRejected(MALFORMED, "expression nests deeper than 32")
+    if not isinstance(node, list) or not node:
+        raise PreflightRejected(
+            MALFORMED, "expression must be a non-empty list, got %r" % (node,))
+    if node[0] in ("const", "input"):
+        if len(node) != 2:
+            raise PreflightRejected(
+                MALFORMED, "%s takes exactly one payload" % node[0])
+        return (node[0], node[1])
+    return tuple([node[0]] + [_as_tuple(a, _depth + 1) for a in node[1:]])
+
+
 #: interface_id -> (artifact_type it belongs to, checker). An interface is
 #: owned by exactly one type: "the same bytes under another name" is precisely
 #: the confusion the interface id exists to prevent.
 INTERFACES = {
     "boolean-inputs-v1": ("failure_input_set", _check_boolean_inputs_v1),
+    "boolean-components-v1": ("component_library",
+                              _check_boolean_components_v1),
 }
 
 #: artifact_type -> the schema versions this build can read.
-ARTIFACT_TYPES = {"failure_input_set": {"1"}}
+ARTIFACT_TYPES = {"failure_input_set": {"1"}, "component_library": {"1"}}
 
 
 # ------------------------------------------------------------------- cache

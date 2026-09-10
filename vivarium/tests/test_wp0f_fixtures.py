@@ -29,6 +29,21 @@ _PROBE_ITEMS = [[0, 0, 1], [1, 1, 0], [1, 0, 1], [0, 1, 1]]
 _PROBE_OBJ, _PROBE_RAW, _PROBE_SLOT = input_set(_PROBE_ITEMS)
 _PROBE_PAYLOAD = {"failure_inputs": _PROBE_SLOT, "reduction": "popcount"}
 
+#: cegis_boolean_v1 with BOTH slots declared empty -- H0's S00 cell, and the
+#: cheapest complete run of the search. AND(x0,x1) is reached in 21 candidates,
+#: so this pins the enumeration order, the compilation, the coverage rule and
+#: the accounting without pinning a long run.
+_CEGIS_PAYLOAD = {
+    "target_truth_table": "00000011",
+    "grammar_version": "proteus.boolean_grammar.v0",
+    "candidate_policy": "seeded_enumeration_v1", "candidate_seed": 20260910,
+    "max_expr_size": 5, "max_candidates": 4000, "oracle_call_cap": 100000,
+    "vm_op_cap": 10 ** 9, "trace_bound": 32, "vm_ticks": 2,
+    "case_ordering": "proteus_declared", "termination": "first_solution",
+    "seed_probe_count": 0, "shortfall_rule": "report_and_proceed",
+    "source_pack": None, "component_library": None,
+}
+
 FIXTURES = [
     ("noop_v0", {}, 1, "2d7c17e7a3c9dfabed97aea8baaef615"),
     ("evaluate_bitstring", {"bits": "0" * 24, "length": 24}, 424242,
@@ -42,11 +57,19 @@ FIXTURES = [
     # C1. The strong parity anchor for this kind is the six golden genomes in
     # test_c1_ca_density.py; this pins the WRAPPER's whole result object so the
     # coverage guard below holds for every implemented kind uniformly.
+    # REGENERATED 2026-09-10. `transform` joined the contract (Track B) and
+    # the result gained transform / transformed_rule_hex /
+    # spacetime_is_image_of_untransformed, so the digest of the whole result
+    # object moved. That is a CONTRACT CHANGE and is said out loud here rather
+    # than absorbed: the arithmetic is untouched -- accuracy 0.875 and witness
+    # [6, 8] are the same numbers as before -- and the exact-symmetry tests
+    # prove transform="none" is the run this fixture always pinned.
     ("ca_density_v0",
      {"rule_hex": "0504058705000f77037755837bffb77f",   # `par`
       "radius": 3, "n_cells": 21, "steps": 42, "n_ic": 16,
-      "ic_density_set": [None], "success_criterion": "at_T"},
-     20260908, "0902beb4702815f25760bf9766c6ea9d"),
+      "ic_density_set": [None], "success_criterion": "at_T",
+      "transform": "none"},
+     20260908, "8b5cf6c8d1a9c4a2a3921209a996bc27"),
     # The loader's own kind. Its parity anchor is the executor's arithmetic
     # over a FIXED input artifact: the digest below is the digest of those
     # exact bytes, so a change to the canonical encoding, the interface shape
@@ -55,13 +78,20 @@ FIXTURES = [
     # tests/test_h0h5_slice.py.
     ("artifact_probe_v1", _PROBE_PAYLOAD, 20260909,
      "5661273cec71be885e831a8301e5036e"),
+    # The search. If the enumeration order, the compiler, the coverage rule or
+    # the op accounting move, this hash moves -- which is the point: a search
+    # whose candidate order drifted would silently be a different experiment
+    # under the same sealed spec.
+    ("cegis_boolean_v1", _CEGIS_PAYLOAD, 20260910, "8a5c17d2add8817758774e42339ee8e5"),
 ]
 
 
 def _hydrate_for(kind, payload):
     """The frozen inputs an artifact-consuming kind needs, or None."""
     k = _kinds.get(kind)
-    if not k.artifact_slots:
+    # A slot declared null needs no hydration: that IS the declared input.
+    declared = {n for n in k.artifact_slots if payload.get(n) is not None}
+    if not declared:
         return None
     slot = payload["failure_inputs"]
     resolver = LocalResolver({slot["digest"]: (_PROBE_RAW, "w-src", "art-1")})

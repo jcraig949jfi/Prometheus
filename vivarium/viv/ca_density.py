@@ -62,6 +62,12 @@ REPO = Path(__file__).resolve().parent.parent.parent
 #: distinguishes; no third reading is invented here.
 SUCCESS_CRITERIA = ("at_T", "stable")
 
+#: The four EXACT symmetries of the density task (Track B, packet v2.1 2.1).
+#: Applied inside the executor to three things together -- the rule table, the
+#: REALISED IC sample, and the majority target that follows from it -- because
+#: applying them to fewer than all three is a different experiment.
+TRANSFORMS = ("none", "reflect", "complement", "reflect_complement")
+
 #: Matches core.WITNESS_LIMIT. Declared here too so the result schema's vector
 #: bound and the library's truncation point are the same number.
 WITNESS_LIMIT = 64
@@ -106,6 +112,58 @@ def _require_density_set(value, core):
     return out
 
 
+def _reflect_table(table, np):
+    """T'[k] = T[reverse7(k)]. The spatial mirror of a radius-3 rule.
+
+    WHY THIS IS THE MIRROR AND NOT A GUESS. The library pins the neighbourhood
+    order: offset -3 occupies bit 6 and offset +3 occupies bit 0
+    (`core.neighbourhood_index`). Mirroring the lattice therefore reverses the
+    seven bits of every neighbourhood index, and the rule that reproduces the
+    mirrored dynamics is the one whose entries are permuted by that reversal.
+    Nothing here decides a convention -- the reversal is READ OFF the order
+    core.py already declares, and the test asserts the commutation
+    step(reverse(s), T') == reverse(step(s, T)) over random lattices rather
+    than trusting this paragraph.
+    """
+    width = 7
+    perm = np.empty(table.shape[0], dtype=np.int64)
+    for k in range(table.shape[0]):
+        r = 0
+        for j in range(width):
+            if (k >> j) & 1:
+                r |= 1 << (width - 1 - j)
+        perm[k] = r
+    return table[perm]
+
+
+def _complement_table(table, np):
+    """T'[k] = 1 - T[~k]. Exchanging 0 and 1 everywhere.
+
+    The index complement is 127 - k (all seven bits flipped) and the OUTPUT is
+    complemented too; doing only one of the two would not be a symmetry of
+    anything.
+    """
+    n = table.shape[0]
+    idx = (n - 1) - np.arange(n)
+    return (1 - table[idx]).astype(table.dtype)
+
+
+def apply_transform(name, table, ics, np):
+    """Return (table', ics') under one declared symmetry. The majority target
+    is NOT returned: it is recomputed from ics' by the library, which is the
+    only way it stays consistent with the sample that was actually run."""
+    if name == "none":
+        return table, ics
+    if name == "reflect":
+        return _reflect_table(table, np), ics[:, ::-1].copy()
+    if name == "complement":
+        return _complement_table(table, np), (1 - ics).astype(ics.dtype)
+    if name == "reflect_complement":
+        t, s = _reflect_table(table, np), ics[:, ::-1].copy()
+        return _complement_table(t, np), (1 - s).astype(s.dtype)
+    raise ValueError("unknown transform %r" % (name,))
+
+
 def run(payload: dict, *, seed: int) -> dict:
     """Execute one CA density-classification measurement.
 
@@ -124,6 +182,13 @@ def run(payload: dict, *, seed: int) -> dict:
     steps = payload["steps"]
     n_ic = payload["n_ic"]
     criterion = payload["success_criterion"]
+    transform = payload["transform"]
+    if transform not in TRANSFORMS:
+        raise core.EvcaError(
+            "transform must be one of %s, got %r; these are the four EXACT "
+            "symmetries of the density task, so a transformed arm is a NULL "
+            "arm -- accuracy that moves under one is a defect, not a result"
+            % (list(TRANSFORMS), transform))
     if criterion not in SUCCESS_CRITERIA:
         raise core.EvcaError(
             "success_criterion must be one of %s, got %r; `accuracy` is scored "
@@ -144,6 +209,18 @@ def run(payload: dict, *, seed: int) -> dict:
     blocks = [core.make_ics(n_ic, n_cells, int(seed) + j, density=d)
               for j, d in enumerate(densities)]
     ics = np.concatenate(blocks, axis=0) if len(blocks) > 1 else blocks[0]
+
+    # THE TRANSFORM IS APPLIED TO THE REALISED SAMPLE, not by re-drawing under
+    # a different seed. That is what makes a transformed arm the exact IMAGE of
+    # its untransformed twin rather than an independent run that happens to be
+    # related -- and it is the whole reason the arm can serve as an exact null.
+    # The majority target is recomputed downstream from these ICs by the
+    # library, so it follows the transform automatically and cannot drift from
+    # the sample it describes.
+    ics_raw = ics
+    table, ics = apply_transform(transform, table, ics, np)
+    transformed_rule_hex = (rule_hex if transform == "none"
+                            else core.encode_table(table))
 
     # The library's own measurement: at_T.
     at_t = core.classify(table, ics, steps, witness_limit=WITNESS_LIMIT)
@@ -176,8 +253,14 @@ def run(payload: dict, *, seed: int) -> dict:
     # One fully declared space-time diagram for this rule and lattice: the
     # family's raster and its replay check. ic_index 0 of the FIRST block, so
     # it is a diagram of an initial condition this run actually used.
-    traj = core.selected_trajectory(rule_hex, n_cells, steps, int(seed),
-                                    ic_index=0)
+    # The diagram is of the rule ACTUALLY RUN. Under a transform that is the
+    # transformed rule, on the library's own declared IC draw for this seed --
+    # so it is a faithful diagram of what ran, and it is NOT the image of the
+    # untransformed run's diagram (the library re-draws its own IC and does not
+    # see the transform). `spacetime_is_image_of_untransformed` says so rather
+    # than leaving a reader to assume the two are related.
+    traj = core.selected_trajectory(transformed_rule_hex, n_cells, steps,
+                                    int(seed), ic_index=0)
 
     out = {
         "accuracy": float(chosen.mean()),
@@ -197,6 +280,9 @@ def run(payload: dict, *, seed: int) -> dict:
         "n_cells": int(n_cells),
         "steps": int(steps),
         "witness_truncated": truncated,
+        "transform": transform,
+        "transformed_rule_hex": transformed_rule_hex,
+        "spacetime_is_image_of_untransformed": transform == "none",
         "executor": "ca_density_v0",
         "reproducibility": "BIT_DETERMINISTIC",
     }

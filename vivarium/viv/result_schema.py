@@ -40,6 +40,16 @@ from typing import Dict, Optional, Tuple
 
 TYPES = ("number", "integer", "boolean", "string", "vector")
 
+#: What a vector's ELEMENTS may be. `record` is a JSON object whose INNER
+#: shape this module does NOT validate -- it checks that each element is an
+#: object and nothing further. It exists because an ordered list of
+#: counterexamples is genuinely a list of structured records, and flattening
+#: them to strings to satisfy a type system would make the record less legible
+#: while proving no more about it. `describe()` and the validation result both
+#: say "inner shape not validated" so that `validated: true` is never read as
+#: covering something it did not check.
+ELEMENTS = ("number", "integer", "boolean", "string", "record")
+
 #: E16 reductions. Declared per vector field because a reduction that is
 #: meaningless on a field should be refused at admission, not attempted.
 REDUCTIONS = ("any", "all", "max", "min", "first", "count")
@@ -67,8 +77,10 @@ class Field:
                 raise ValueError(
                     "a vector field must declare bounds; an unbounded witness "
                     "list is an unbounded write into the record")
-            if self.element not in ("number", "integer", "boolean", "string"):
-                raise ValueError("a vector must declare its element type")
+            if self.element not in ELEMENTS:
+                raise ValueError(
+                    "a vector must declare its element type, one of %s"
+                    % (list(ELEMENTS),))
         for r in self.reductions:
             if r not in REDUCTIONS:
                 raise ValueError("unknown reduction %r" % r)
@@ -172,11 +184,22 @@ def validate_result(kind_name: str, schema: Dict[str, Field], result,
                 "%s is exactly at its declared maximum %d and the executor "
                 "declared no truncation; a full vector and a silently cut one "
                 "must not look the same" % (name, hi))
-        elem = Field(f.element)
-        for i, item in enumerate(v):
-            _check_scalar("%s[%d]" % (name, i), elem, item, reasons)
+        if f.element == "record":
+            # Shape only, deliberately: see the note on ELEMENTS. The result
+            # below records inner_shape_validated=False so `validated: true`
+            # is never read as covering what this did not check.
+            for i, item in enumerate(v):
+                if not isinstance(item, dict):
+                    reasons.append("%s[%d] must be an object, got %s"
+                                   % (name, i, type(item).__name__))
+        else:
+            elem = Field(f.element)
+            for i, item in enumerate(v):
+                _check_scalar("%s[%d]" % (name, i), elem, item, reasons)
         vectors[name] = {"length": len(v), "bounds": list(f.bounds),
                          "truncated": bool(truncation.get(name)),
+                         "element": f.element,
+                         "inner_shape_validated": f.element != "record",
                          "reductions": list(f.reductions)}
 
     for name in truncation:

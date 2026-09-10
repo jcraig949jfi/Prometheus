@@ -35,7 +35,12 @@ def golden():
 
 
 def spec_for(rule_hex, *, criterion="at_T", n_cells=21, steps=42, n_ic=64,
-             densities=None, radius=3, seed=20260908):
+             densities=None, radius=3, seed=20260908, transform="none"):
+    # `transform` joined the contract on 2026-09-10 (Track B) and has NO
+    # default in the kind, so every C1 payload names it. "none" is the
+    # untransformed run these parity tests have always described, and the
+    # golden results below are unchanged by its arrival -- which is itself
+    # asserted, in tests/test_ca_transform.py.
     return {"spec_version": 3, "world": {"seed_root": seed},
             "hypothesis": "C1 parity", "prediction": None,
             "work": {"kind": "ca_density_v0",
@@ -44,7 +49,8 @@ def spec_for(rule_hex, *, criterion="at_T", n_cells=21, steps=42, n_ic=64,
                                  "n_ic": n_ic,
                                  "ic_density_set": densities
                                  if densities is not None else [None],
-                                 "success_criterion": criterion}},
+                                 "success_criterion": criterion,
+                                 "transform": transform}},
             "outcome_rule": {"field": "accuracy", "op": ">=", "value": 0.0,
                              "if_true": "SURVIVED", "if_false": "FALSIFIED",
                              "if_indeterminate": "INCONCLUSIVE",

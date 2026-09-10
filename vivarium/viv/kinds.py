@@ -75,6 +75,14 @@ class Kind:
     #: and their identities are untouched: this ADDS an inner exact-key check
     #: to the new consuming kinds and relaxes nothing anywhere.
     artifact_slots: FrozenSet[str] = frozenset()
+    #: Which of `artifact_slots` may be the JSON value `null`, meaning THIS
+    #: EXPERIMENT DECLARES IT CONSUMES NOTHING HERE. The key is still present
+    #: and the payload contract is still exact, so `null` is a value inside
+    #: spec_hash and not an omission -- H0's "off" cell is a declared input
+    #: rather than a hidden alternative library. A slot NOT listed here may
+    #: never be null: `artifact_probe_v1` without its artifact is not a
+    #: control, it is a broken request.
+    optional_artifact_slots: FrozenSet[str] = frozenset()
 
     @property
     def retired(self) -> bool:
@@ -118,9 +126,18 @@ class Kind:
         # or whose digest/type/interface cannot be resolved by this build, is
         # refused at ADMISSION -- "placeholders never enter a queue".
         for name in sorted(self.artifact_slots):
-            if name in payload:
-                from . import artifacts as _artifacts        # noqa: PLC0415
-                reasons.extend(_artifacts.check_slot(name, payload[name]))
+            if name not in payload:
+                continue
+            from . import artifacts as _artifacts            # noqa: PLC0415
+            if payload[name] is None:
+                if name not in self.optional_artifact_slots:
+                    reasons.append(
+                        "artifact slot %r of kind %r may not be null; this "
+                        "kind has no meaning without it, so an absent value "
+                        "here is a broken request and not a control"
+                        % (name, self.kind))
+                continue
+            reasons.extend(_artifacts.check_slot(name, payload[name]))
         return reasons
 
 
@@ -227,7 +244,7 @@ register(Kind(
 register(Kind(
     kind="ca_density_v0",
     params=frozenset({"rule_hex", "radius", "n_cells", "steps", "n_ic",
-                      "ic_density_set", "success_criterion"}),
+                      "ic_density_set", "success_criterion", "transform"}),
     implemented=True,
     owner="herakles (library) / vivarium (wrapper)",
     stateful=False,
@@ -269,6 +286,19 @@ register(Kind(
         "n_cells": R("integer"),
         "steps": R("integer"),
         "witness_truncated": R("boolean"),
+        "transform": R("string",
+                      note="none | reflect | complement | reflect_complement; "
+                           "the four EXACT symmetries, so a transformed arm is "
+                           "a NULL arm and accuracy that moves under one is a "
+                           "defect rather than a result"),
+        "transformed_rule_hex": R("string",
+                                  note="the rule actually run; equal to "
+                                       "rule_hex under transform=none"),
+        "spacetime_is_image_of_untransformed": R("boolean",
+            note="false under a transform: the library re-draws its own IC for "
+                 "the diagram and does not see the transform, so the diagram "
+                 "is faithful to the rule that ran and is NOT the image of the "
+                 "untransformed run's diagram"),
     }))
 
 
@@ -316,6 +346,87 @@ register(Kind(
         "inputs_immutable": R("boolean",
                               note="the kind tried to mutate its input and "
                                    "was refused; measured, not asserted"),
+    }))
+
+
+# ----------------------------------------- H1/H0: the search inside the kind
+register(Kind(
+    kind="cegis_boolean_v1",
+    params=frozenset({
+        "target_truth_table", "grammar_version", "candidate_policy",
+        "candidate_seed", "max_expr_size", "max_candidates",
+        "oracle_call_cap", "vm_op_cap", "trace_bound", "vm_ticks",
+        "case_ordering", "termination", "seed_probe_count", "shortfall_rule",
+        "source_pack", "component_library"}),
+    artifact_slots=frozenset({"source_pack", "component_library"}),
+    optional_artifact_slots=frozenset({"source_pack", "component_library"}),
+    implemented=True,
+    owner="vivarium (kind contract) / proteus (Boolean semantics)",
+    stateful=False,
+    note="A bounded within-task CEGIS loop, SEALED INSIDE THE KIND. Every "
+         "input that governs an adaptive choice is a hashed parameter: the "
+         "candidate policy and its seed, the case ordering, the caps, the "
+         "trace bound, the termination rule, and the two artifact slots. The "
+         "generic runner sees a kind name and a result and never learns that "
+         "a search happened (design C3).\n"
+         "Proteus owns the semantics -- grammar, compiler, VM, independent "
+         "truth-table oracle, ordered first witness. NOT is compiled as "
+         "XOR x, ONE by their compiler; nothing here emits an opcode.\n"
+         "BOTH SLOTS MAY BE null, and null is a DECLARED INPUT inside "
+         "spec_hash rather than an omission. H0's four cells are four "
+         "payloads differing in exactly those two positions, run by one "
+         "solver runtime -- which is what makes them four cells of one "
+         "experiment. A hand-built component library is an INSTRUMENT "
+         "control and must be labelled as one by whoever issues it; this "
+         "kind cannot tell an instrument library from a derived one and does "
+         "not pretend to.\n"
+         "solved requires FULL COVERAGE of all 8 assignments; no-witness is "
+         "never solved; and budget exhaustion has three distinct statuses "
+         "kept apart from EXHAUSTED_CANDIDATES, which means the declared "
+         "space actually ran out.",
+    result_schema={
+        "status": R("string",
+                    note="SOLVED | EXHAUSTED_CANDIDATES | BUDGET_CANDIDATES | "
+                         "BUDGET_VM_OPS | BUDGET_ORACLE_CALLS"),
+        "solved": R("boolean",
+                    note="true only after all 8 assignments were expected AND "
+                         "passed; never inferred from an absent witness"),
+        "solution": R("string", required=False,
+                      note="the solving expression as canonical JSON, or "
+                           "absent"),
+        "solution_size": R("integer", required=False),
+        "candidates_tried": R("integer"),
+        "candidates_invalid": R("integer",
+                                note="compiled-refused; counted, never "
+                                     "silently skipped"),
+        "verifications": R("integer", note="exhaustive checks actually run"),
+        "oracle_calls": R("integer"),
+        "oracle_call_cap": R("integer"),
+        "vm_ops": R("integer",
+                    note="the resource the caps bind on, and the channel "
+                         "through which a better constraint set pays"),
+        "vm_op_cap": R("integer"),
+        "constraints_seeded": R("integer", note="probes actually spent"),
+        "constraints_final": R("integer"),
+        "seed_probe_count": R("integer", note="the ALLOWANCE, echoed"),
+        "seed_probe_shortfall": R("integer",
+                                  note="allowance minus spend; a short pool "
+                                       "is reported, never topped up from "
+                                       "another source"),
+        "seeded_from": R("string", note="source_pack | fresh_probe_allowance"),
+        "source_pack_digest": R("string", required=False),
+        "source_pack_items": R("integer"),
+        "component_library_digest": R("string", required=False),
+        "component_library_size": R("integer"),
+        "coverage_required": R("integer"),
+        "witnesses": R("vector", element="record", bounds=(0, 4096),
+                       reductions=("count",),
+                       note="ordered counterexamples, bounded by trace_bound"),
+        "witness_truncated": R("boolean"),
+        "target_truth_table": R("string"),
+        "grammar_version": R("string"),
+        "interface_version": R("string"),
+        "library_version": R("string"),
     }))
 
 

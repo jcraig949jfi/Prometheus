@@ -503,5 +503,9 @@ def slots_of(spec: dict) -> Dict[str, dict]:
     if kind is None or not kind.artifact_slots:
         return {}
     payload = spec["work"]["payload"]
+    # A slot declared `null` is a DECLARED ABSENCE: nothing to resolve, and
+    # nothing to charge. It is not skipped as if it were missing -- the
+    # admission contract already established that the key is present and that
+    # this kind permits it to be empty.
     return {name: payload[name] for name in sorted(kind.artifact_slots)
-            if name in payload}
+            if payload.get(name) is not None}

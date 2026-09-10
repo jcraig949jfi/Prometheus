@@ -171,12 +171,14 @@ def run(spec: dict, *, seed: int = None, state=None, inputs=None) -> dict:
     # was never given; a kind without slots that arrives WITH inputs is being
     # handed a channel its contract never declared, and that is the shape of
     # the defect this seat exists to prevent -- so it is refused, not dropped.
-    if kind.artifact_slots and not inputs:
+    declared = {n for n in kind.artifact_slots
+                if (spec["work"]["payload"] or {}).get(n) is not None}
+    if declared and not inputs:
         raise ExecutorUnavailable(
             "kind %r declares artifact slot(s) %s but was called with no "
             "hydrated inputs. Preflight runs BEFORE execution; reaching here "
             "without it means the loader was bypassed."
-            % (kind_name, sorted(kind.artifact_slots)))
+            % (kind_name, sorted(declared)))
     if inputs and not kind.artifact_slots:
         raise ExecutorUnavailable(
             "kind %r declares no artifact slots but was handed inputs %s; an "
@@ -191,6 +193,10 @@ def run(spec: dict, *, seed: int = None, state=None, inputs=None) -> dict:
     elif kind_name == "ca_density_v0":
         from . import ca_density as _ca               # noqa: PLC0415
         out = _ca.run(_params("ca_density_v0", spec), seed=seed)
+    elif kind_name == "cegis_boolean_v1":
+        from . import cegis_boolean as _cegis          # noqa: PLC0415
+        out = _cegis.run(_params("cegis_boolean_v1", spec), seed=seed,
+                         inputs=inputs or {})
     elif kind_name == "artifact_probe_v1":
         from . import artifact_probe as _probe        # noqa: PLC0415
         out = _probe.run(_params("artifact_probe_v1", spec), seed=seed,
