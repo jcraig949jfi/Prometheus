@@ -30,6 +30,7 @@ from __future__ import annotations
 import json
 import signal
 import time
+from pathlib import Path as _Path
 from typing import Optional
 
 from . import db as _db
@@ -37,6 +38,10 @@ from .loop import BLOCKED, BUSY, IDLE, TickReport, Vivarium
 
 EXIT_OK = 0
 EXIT_BLOCKED = 2
+
+
+_VAR = _Path(__file__).resolve().parent.parent / "var"
+_VAR.mkdir(exist_ok=True)
 
 
 class Daemon:
@@ -57,6 +62,48 @@ class Daemon:
         self._reports: list = []
 
     # -- lifecycle ---------------------------------------------------------
+    @property
+    def stop_file(self):
+        """The out-of-process stop request for THIS worker.
+
+        WHY A FILE AND NOT A SIGNAL. `_stop` and the signal handlers below
+        have existed since the beginning and neither could be reached from
+        outside the process on this host: Windows delivers SIGINT/SIGTERM to a
+        console process, and `taskkill /F` -- the only stop an operator or
+        another seat actually has -- bypasses handlers entirely. So every stop
+        was a hard kill, and a hard kill mid-attempt strands the row.
+
+        That cost a campaign twice on 2026-09-10. Phase 2's 48 artifact rows
+        ran on an interpreter 4h47m older than the fix they needed, because
+        restarting to pick the fix up would have stranded the row in flight,
+        so I did not restart; and the same afternoon a cost-event fix could
+        not be picked up for the same reason. The file is checked BETWEEN
+        ticks, so a stop always lands on a boundary where nothing is claimed.
+
+        Per WORKER ID, so two consumers on one host cannot stop each other.
+        """
+        import re as _re
+        safe = _re.sub(r"[^A-Za-z0-9_.@-]", "_", self.viv.worker_id)
+        return _VAR / ("stop-%s.flag" % safe)
+
+    def _stop_requested_externally(self) -> bool:
+        try:
+            return self.stop_file.exists()
+        except OSError:                  # pragma: no cover
+            return False
+
+    def _clear_stop_file(self, *, quiet: bool = False) -> None:
+        """A stale flag would stop the next start before its first tick."""
+        try:
+            if self.stop_file.exists():
+                self.stop_file.unlink()
+                if not quiet:
+                    self.log("[viv] cleared a stale stop flag at %s"
+                             % self.stop_file)
+        except OSError as exc:           # pragma: no cover
+            self.log("[viv] could not clear the stop flag (%s); a stop "
+                     "request may fire immediately" % exc)
+
     def request_stop(self, *_a) -> None:
         if not self._stop:
             self.log("[viv] stop requested; finishing the current tick")
@@ -89,12 +136,25 @@ class Daemon:
                 self.log("[viv] " + rec.note)
                 return EXIT_BLOCKED
 
+            self._clear_stop_file()
             self.log("[viv] daemon up worker=%s schema=%s idle_interval=%ss"
                      % (self.viv.worker_id, self.viv.schema,
                         self.idle_interval))
+            self.log("[viv] stop cleanly with: python -m viv.cli stop "
+                     "--worker-id %s   (flag: %s)"
+                     % (self.viv.worker_id, self.stop_file))
             self._preflight_pew()
             n = 0
             while not self._stop and (max_ticks is None or n < max_ticks):
+                # BETWEEN ticks, never during one. A stop that landed mid-
+                # attempt would strand the row, which is the thing this
+                # mechanism exists to avoid -- so it is checked exactly here
+                # and the current tick always finishes.
+                if self._stop_requested_externally():
+                    self.log("[viv] stop flag present at %s; finishing here "
+                             "with nothing claimed" % self.stop_file)
+                    self._clear_stop_file(quiet=True)
+                    return EXIT_OK
                 n += 1
                 try:
                     report = self.viv.tick(conn)
