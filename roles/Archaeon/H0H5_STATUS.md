@@ -5,13 +5,13 @@ Maintained by Archaeon. Updated 2026-09-09. Design v0.1
 below is derived from a committed receipt; nothing is inferred from a plan.
 Baseline: `archaeon/docs/h0h5/BASELINE_2026-09-09.json`.
 
-## Iteration 1 (the gate for H0/H1 and every artifact-consuming kind)
+## Iteration 1 — COMPLETE on every seat (2026-09-09); the H0/H1 gate is open
 
 | Item | Seat | Stage | Receipt | Next runnable action / blocker |
 |---|---|---|---|---|
 | Baseline audit | Archaeon | DONE | `archaeon/docs/h0h5/BASELINE_2026-09-09.json` | — |
 | Authorized artifact resolution + cost events | Daedalus | DONE on a DEV engine (schema v8), NOT deployed; prod is schema 7 at f1e36c062 | `ef05397f2`; `deploy/CANDIDATE_BUILD.json` | deployment review is the operator's; Archaeon's reader guard moves to 8 on deploy |
-| Loader vertical slice (integrating) | Vivarium | NOT REPORTED | — | the gate for H0/H1; needs Daedalus's read-path digest gate (dev) and Mnemosyne's outbox (main) |
+| Loader vertical slice (integrating) | Vivarium | **DONE** on a dev engine (127.0.0.1:8899, schema 7); 364 tests, 24 real boundary executions | `959d35043` + `01376aa87`; `roles/Vivarium/H0H5_ITERATION1_RECEIPT_2026-09-09.md` | GATE OPEN for H0/H1. `artifact_probe_v1` with slot `failure_inputs`; ten ordered preflight rejections; kind called with frozen bytes and no client; consumed digest changes the seal, locator does not; budget exhaustion a distinct status; publish reports write_outcome / recorded_in_sfe / indexed_in_pew separately. Enforceable: artifact_bytes (debited before fetch), wall_seconds; measured: cpu, peak memory, fetches, items; unavailable: gpu. Limits filed: engine-side cost events absent (Daedalus C4-3) so vectors cannot yet reconcile; sfclient cannot pass expected_blob_hash and register() discards the engine-issued client_id (Daedalus). Next: `cegis_boolean_v1` with Proteus. |
 | Typed reference index + idempotent publication | Mnemosyne | DONE (migration 011, 16/16 battery) | `dbfb6fe3a` | build X5 witness index when a witness exists |
 | Executable qualification cycle | Harmonia | DONE (QR-1.0.0, AF-1.0.0 6/6, H4-ADAPTIVE-1.0.0) | `dd38720c0`; `roles/Harmonia/rulings/RULING_H0_H5_QUALIFICATION_2026-09-08.md` | H0 interaction needs 2x the blocks of the main effect (SE(I) = sqrt(2) SE(main), any rho); threshold frozen from the pilot's OBSERVED SD, never first |
 | Producer cost receipts | Archaeon | NOT STARTED | — | next in lane after this status |
@@ -26,7 +26,7 @@ Baseline: `archaeon/docs/h0h5/BASELINE_2026-09-09.json`.
 | H5 alpha (decoders) | Archaeon | NOT STARTED | — | 12-bit genome, 16 per rule, direct/balanced/scrambled, applied in the draw |
 | H3 alpha | Archaeon | NOT STARTED | — | stream manifest + four policies offline; X8 bounds |
 | Tools | Techne | DONE, on branch `techne/h0h5-tools-2026-09-09` | `b05a6920a` and earlier | z3-solver, hypothesis, ribs pinned by wheel hash; stitch_core pinned by wheel hash only (no matching upstream tag: NONE_AVAILABLE); DreamCoder at cb0e63f5c with submodules pinned, smoke BLOCKED with four measured blockers (DEV-T7); Stitch nuts-bolts fixture reproduced at zero tolerance (manifest DECLARED_NOT_RUN before the run); no pickle in the engine is a test; host RAM is the binding ceiling (~13 of 31.6 GiB free). Land on main. |
-| H0 harness, H4 | — | NOT STARTED | — | H0 waits on the loader + cegis kind; H4 alpha loop may be built on synthetic tasks, its campaign waits on H4-ADAPTIVE-1.0.0 |
+| H0 harness, H4 | — | NOT STARTED | — | H0 waits on `cegis_boolean_v1` only (loader done); H4 alpha loop may be built on synthetic tasks, its campaign waits on H4-ADAPTIVE-1.0.0 |
 
 ## Decisions pending (operator)
 
@@ -43,7 +43,11 @@ Baseline: `archaeon/docs/h0h5/BASELINE_2026-09-09.json`.
 - **Packet JSONs** (`prometheus-tool-acquisition-plan.json`,
   `prometheus-h0-h5-backlog.json`): still absent; Techne recorded DEV-T1/T2.
 - **v8 deployment** of Daedalus's candidate build (review record in
-  `deploy/CANDIDATE_BUILD.json`).
+  `deploy/CANDIDATE_BUILD.json`). Vivarium's slice ran against schema 7 on a
+  dev engine; the read-path digest gate it needs in production is in v8.
+- **Daedalus C4-3:** engine-side cost events do not exist yet, so Vivarium's
+  resource vector and Archaeon's producer receipts cannot be reconciled
+  until they do (Vivarium's inbox to Daedalus, 2026-09-09).
 - **Harmonia's sizing rule for H0:** the interaction needs twice the blocks;
   the 5 pp threshold is a sizing decision frozen from pilot SD.
 
