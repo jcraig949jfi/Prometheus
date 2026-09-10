@@ -1,0 +1,139 @@
+{
+  "schema": "techne.capability_gap_fixture/1",
+  "target": "sdp",
+  "roadmap_claim_under_test": "REQ-029 named MOSEK as the upgrade path from SCS for pm.optimization.solve_sdp. This measures whether the free path actually fails on anything of the shape we ask for.",
+  "free_path": {
+    "solvers": [
+      "CLARABEL",
+      "SCS"
+    ],
+    "cvxpy": "1.9.2",
+    "installed_solvers": [
+      "CLARABEL",
+      "SCS",
+      "SCIPY",
+      "HIGHS",
+      "OSQP"
+    ],
+    "licences": "CLARABEL Apache-2.0, SCS Apache-2.0 -- both $0",
+    "note": "CLARABEL is an INTERIOR-POINT solver, the same algorithm class as MOSEK; SCS is first-order. The roadmap treated SCS as the free path and did not account for Clarabel being installed."
+  },
+  "cases": [
+    {
+      "case": "A_authority_theta_C5",
+      "solver": "CLARABEL",
+      "status": "optimal",
+      "value": 2.2360679793419673,
+      "expected": 2.23606797749979,
+      "abs_error": 1.8421775216381775e-09,
+      "ms": 6.7,
+      "failed": false
+    },
+    {
+      "case": "A_authority_theta_C5",
+      "solver": "SCS",
+      "status": "optimal",
+      "value": 2.2360675149686537,
+      "expected": 2.23606797749979,
+      "abs_error": 4.6253113605843055e-07,
+      "ms": 5.0,
+      "failed": false
+    },
+    {
+      "case": "B_scale_n20",
+      "solver": "CLARABEL",
+      "status": "optimal",
+      "value": 8.00000001454184,
+      "ms": 28.0,
+      "failed": false
+    },
+    {
+      "case": "B_scale_n20",
+      "solver": "SCS",
+      "status": "optimal",
+      "value": 8.000005213121966,
+      "ms": 24.0,
+      "failed": false
+    },
+    {
+      "case": "B_scale_n60",
+      "solver": "CLARABEL",
+      "status": "optimal",
+      "value": 12.80482874088234,
+      "ms": 1127.0,
+      "failed": false
+    },
+    {
+      "case": "B_scale_n60",
+      "solver": "SCS",
+      "status": "optimal",
+      "value": 12.804832645188423,
+      "ms": 533.0,
+      "failed": false
+    },
+    {
+      "case": "B_scale_n120",
+      "solver": "CLARABEL",
+      "status": "optimal",
+      "value": 18.751986696696513,
+      "ms": 19276.0,
+      "failed": false
+    },
+    {
+      "case": "B_scale_n120",
+      "solver": "SCS",
+      "status": "optimal",
+      "value": 18.751987628549923,
+      "ms": 2707.0,
+      "failed": false
+    },
+    {
+      "case": "C_illcond_1e4",
+      "solver": "CLARABEL",
+      "status": "optimal",
+      "value": 1.0367178925367533,
+      "a_feasible_point_attains": 1224.9298653638475,
+      "ms": 48.0,
+      "failed": false
+    },
+    {
+      "case": "C_illcond_1e4",
+      "solver": "SCS",
+      "status": "optimal_inaccurate",
+      "value": 1.0505293645246603,
+      "a_feasible_point_attains": 1224.9298653638475,
+      "ms": 17279.0,
+      "failed": true
+    },
+    {
+      "case": "C_illcond_1e10",
+      "solver": "CLARABEL",
+      "status": "infeasible_inaccurate",
+      "value": null,
+      "a_feasible_point_attains": 608311763.9611301,
+      "ms": 22.0,
+      "failed": true
+    },
+    {
+      "case": "C_illcond_1e10",
+      "solver": "SCS",
+      "status": "unbounded",
+      "value": null,
+      "a_feasible_point_attains": 608311763.9611301,
+      "ms": 5.0,
+      "failed": true
+    }
+  ],
+  "n_cases": 12,
+  "n_failed": 3,
+  "regimes_where_EVERY_free_solver_failed": [
+    "C_illcond_1e10"
+  ],
+  "verdict": "CANDIDATE GAP in ['C_illcond_1e10']",
+  "CAVEAT": "These instances are hand-built by this seat and have NOT been adversarially reviewed. A single instance on which both solvers fail is a CANDIDATE gap, not a solver verdict: the instance may be badly posed in a way I did not see. Case C declares a certified-feasible point (X = I/m) so that an 'infeasible' or 'unbounded' status is checkable as wrong rather than taken on trust -- but the fixture still needs review before it is quoted as evidence about a solver.",
+  "what_a_failing_regime_implies": {
+    "scale": "a commercial solver may help; so may a better free one. Measure both before paying.",
+    "conditioning": "a commercial DOUBLE-PRECISION solver may help -- but if the requirement is a verifiable certificate rather than a fast float, no double-precision solver solves it at any price, and the answer is arbitrary-precision (SDPA-GMP, GPL, $0) or rational rounding to an exact certificate.",
+    "accuracy_on_small_well_conditioned": "no purchase is justified; close the request."
+  }
+}

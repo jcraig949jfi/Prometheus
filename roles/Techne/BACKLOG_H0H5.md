@@ -22,7 +22,7 @@ TECHNE-11 | Qualify z3 as an oracle for 4-input Boolean and state where exhausti
 TECHNE-12 | Extend the hypothesis minimiser qualification to structured H1 PROGRAMS rather than assignments | H1 | 1.1 | M | Proteus (a program-space strategy and its validity predicate) | a receipt where every shrunk program is still a counterexample under Proteus's evaluator, with a negative control
 TECHNE-13 | Build the bounded external-backend contract for the stitch Rust binary: process-tree cancellation, lease renewal, limits, repeatability, output validation | ENGINE | 1.0 | L | Vivarium (the contract's shape is theirs; the design makes it a prerequisite for any kind calling an external executable) | a Vivarium-admitted contract document plus my adapter passing its boundary-failure fixtures
 TECHNE-14 | Export the stitch abstractions as a typed library artifact an admitted interpreter can validate, from the MIT route only | H0 | 1.1 | M | TECHNE-13 | a declarative export with a typed AST per abstraction, its expansion verified by the independent expander, and a test that no pickle crosses the boundary
-TECHNE-15 | State the DreamCoder decision: pay the OCaml+python-3.7 cost, use the container route on Linux, or drop it as the H0 1.1 reference arm | H0 | 1.1 | XL | operator decision NEW: is a DreamCoder reference arm worth a Linux host plus an opam 4.06.1+flambda switch, given stitch already produces a verified library here? | a committed decision record and either an acquisition receipt or a closure note citing the two remaining blockers
+TECHNE-15 | Build the DreamCoder smoke environment in WSL2 (docker image on python 3.7 + opam 4.06.1+flambda) and run one bounded domain smoke run | H0 | 1.1 | M | none | a smoke-run receipt from inside WSL, or a new obstruction measured there; the Linux-host blocker is GONE -- WSL2 Ubuntu 24.04.4 is installed and running, docker is present inside it, and opam is one apt away (candidate 2.1.5-1)
 TECHNE-16 | Resolve DreamCoder's licensing or record it permanently unresolved | H0 | 1.1 | S | operator (its only notice is the AngularJS MIT text, "Copyright (c) 2010-2020 Google LLC") | an entry in LICENSE_EVIDENCE.json with either a grant or a permanent UNRESOLVED and the consequence for export
 TECHNE-17 | Acquire POET at its pinned revision once a consumer names it | H4 | 1.1 | S | Harmonia (H4's adaptive protocol does not exist, so POET has no named consumer; licence and cost are settled: Apache-2.0, $0) | an INSTALLATION receipt, and until then the tool's own refusal is the artifact
 TECHNE-18 | Distinguish original POET from Enhanced POET and pin the intended algorithm branch before any comparison | H4 | 1.1 | M | TECHNE-17 | a manifest entry naming the branch, its commit, and the reference experiment selected
@@ -38,36 +38,60 @@ TECHNE-27 | Record the stitch build's own reproducibility: build twice and compa
 TECHNE-28 | Qualify a cost model for the external stitch process so producer receipts can charge it | ENGINE | 1.0 | M | Archaeon (archaeon/producer/costs.py resource-vector shape) | a resource vector per compress invocation with enforcement_class per dimension
 TECHNE-29 | Audit every committed receipt for stage honesty: no receipt claiming a stage it did not test | TOOLS | 1.0 | S | none | a test over techne/acquisition/receipts/ extending the existing one to every stage, not only LOCAL_SCIENTIFIC_BENEFIT
 TECHNE-30 | Write the arsenal capability matrix for the six H0-H5 tools with qualification stage per consumer | TOOLS | 1.0 | S | none | a committed matrix derived FROM the receipts rather than hand-maintained, plus the script that derives it
-TECHNE-31 | Decide whether MOSEK is bought, at $4,300 perpetual, or the SCS path stays | TOOLS | program | XL | operator decision NEW: buy MOSEK PTS+PTON for the SDP upgrade path named in REQ-029, or keep SCS and close the request? | a committed decision record; if bought, an INSTALLATION receipt with the licence file kept beside the copy
+TECHNE-31 | State whether any roadmap SDP actually lives in the one regime where the free path fails, before any MOSEK spend | TOOLS | program | S | Aporia/Harmonia (which roadmap problems are SDPs, and at what conditioning) | a committed list of roadmap SDPs with their conditioning, against GAP_FIXTURE_SDP.json which found a candidate gap ONLY at 1e10 spectral spread
 TECHNE-32 | Check whether any affiliation opens the Simons Foundation route to Magma before anything is paid | TOOLS | program | S | operator (eligibility is a fact about the programme, not about the tool) | a committed yes/no with the evidence, closing or opening the three Magma-dependent roadmap gaps
 TECHNE-33 | Pin pip itself in the isolated environments so the lock's installer is not inherited | TOOLS | 1.1 | S | none | a receipt whose isolated_env.pip_pinned is true, replacing today's explicit false
 TECHNE-34 | Verify every committed lock still installs from hashes on a clean environment | TOOLS | 1.0 | M | none | a from-scratch install receipt per lock with --require-hashes and the wall clock
 TECHNE-35 | State the retirement disposition for the gnullvm Rust target, installed and unused | TOOLS | 1.1 | S | none | either its removal with the footprint delta measured, or a recorded reason to keep it
 TECHNE-36 | Add a check that the engine still deserializes no upstream object graph, run on every tool acquisition | ENGINE | 1.0 | S | none | the existing test wired into the acquisition path so a new tool cannot land without it passing
+TECHNE-37 | Put every paywalled or absent roadmap tool behind a capability-gap fixture, so a purchase or a build is authorised by a failing fixture and never by a roadmap row | TOOLS | 1.0 | M | none | one gap fixture per Tier-7 target in techne/scripts/capability_gap_fixture.py with a committed result per target, starting from the SDP one already landed
+TECHNE-38 | Submit the ill-conditioned SDP fixture for adversarial review before it is quoted as evidence about any solver | TOOLS | 1.0 | S | Harmonia or Elenchus (review) | a review verdict on whether C_illcond_1e10 is a solver failure or a badly posed instance; both free solvers return DIFFERENT wrong answers on a problem with a certified-feasible point
+TECHNE-39 | Wrap arbitrary-precision SDP (SDPA-GMP) as the certificate path no double-precision solver provides at any price | TOOLS | 1.1 | L | TECHNE-38 | a pm.optimization entry point solving the theta(C_5) anchor to a declared precision beyond double, with its GPL obligation recorded
+TECHNE-40 | Measure the Clarabel/SCS crossover and route solve_sdp by problem shape rather than by a fixed default | TOOLS | 1.1 | M | none | a committed crossover curve (measured: Clarabel 19.3 s vs SCS 2.7 s at n=120, Clarabel more accurate below) and a dispatch rule derived from it
+TECHNE-41 | Record the rational-rounding route from a numerical SDP solution to an exact certificate, or record why it does not apply to our problems | TOOLS | program | M | TECHNE-39 | either a worked exact certificate for one roadmap problem, or a committed statement of which step fails
 ```
 
 ## Notes on the ordering
 
-**01–05 are today's next.** 01 and 02 are blocked on one artifact each from another seat and are
-cheap the moment those land — 01 needs three expressions, 02 needs a descriptor declaration, and
-both of my measurements today are what make them worth doing. 03–05 need nobody.
+**01-05 are today's next.** 01 and 02 are blocked on one artifact each from another seat and are
+cheap the moment those land -- 01 needs three expressions, 02 needs a descriptor declaration, and
+both of my measurements today are what make them worth doing. 03-05 need nobody.
 
-**The XL rows are the operator's queue from this seat — exactly two.** TECHNE-15 (DreamCoder:
-worth a Linux host and an opam 4.06.1+flambda switch, given stitch already produces a verified
-library here?) and TECHNE-31 (MOSEK at $4,300 perpetual, or close REQ-029 with SCS?).
+**There are now ZERO XL rows, and that is a change rather than a tidy-up.** Both operator
+decisions I filed this morning dissolved under measurement:
 
-Four more rows are blocked on the operator but are **S, not XL**, because each needs an action or
-a fact rather than a judgement: TECHNE-06 (may this seat open an upstream issue in the
-programme's name), TECHNE-09 (paste the two packet JSONs), TECHNE-16 (DreamCoder's licensing),
-TECHNE-32 (does any affiliation open the Simons route to Magma — a fact about the programme, and
-cheap to answer, so it gates the three Magma roadmap items without being a decision).
+- **TECHNE-15 (DreamCoder)** was "is a Linux host worth it?". The host already exists -- **WSL2
+  Ubuntu 24.04.4 is installed and running** on this machine, `docker` is present inside it, `gcc`
+  and `make` are there, and `opam` is one `apt install` away (candidate 2.1.5-1). There is no
+  hardware decision; there is an M-sized build. It drops to a normal row. Worth separating too:
+  BLK-DC-4 (199 cloud-launcher commands) blocks reproducing THEIR experiments, not a smoke run.
+- **TECHNE-31 (MOSEK)** was "buy at $4,300, or close REQ-029?". `GAP_FIXTURE_SDP.json` answers the
+  half that was missing: the free path is fine on the authority anchor (Clarabel to 1.8e-9 on
+  theta(C_5)), fine to n=120, and fails in exactly **one** regime -- 1e10 spectral spread, where
+  both solvers return *different wrong answers* on a problem with a certified-feasible point. The
+  question is no longer "buy?" but "does any roadmap SDP live at 1e10 conditioning?", which is a
+  fact Aporia and Harmonia hold. It drops to S.
 
-**15 of the 36 rows are blocked**, each naming its blocker. I counted 11 in my first pass and the
-row-level check corrected me; the number is worth stating accurately because a backlog that
-undercounts its own blockage reads as healthier than it is.
+**17 of the 41 rows are blocked**, each naming its blocker. Four remain operator-blocked but are S
+rather than XL, because each needs an action or a fact rather than a judgement: TECHNE-06 (may this
+seat open an upstream issue in the programme's name), TECHNE-09 (paste the two packet JSONs),
+TECHNE-16 (DreamCoder's licensing), TECHNE-32 (Simons eligibility for Magma).
 
-**What I am deliberately not proposing.** No item here asks to widen a tool's use beyond a named
-consumer, and no item proposes acquiring anything that lacks one — POET stays at TECHNE-17,
-behind Harmonia, with its licence and cost already settled so that price can never be the reason
-it waits. The design's rule that each integration names a consumer, a falsifiable purpose, an
-I/O contract and a bounded qualification job is the filter this list was written through.
+**The mechanism, not the three one-offs.** TECHNE-37 is the row that matters most for a roadmap with
+paywalled items on it: every such item goes behind a capability-gap fixture, and a purchase or a
+build is authorised by a *failing fixture*, never by the existence of a roadmap row. Today's SDP
+fixture is the first, and it turned a $4,300 decision into a question for two other seats.
+
+**Where building beats buying, stated once.** TECHNE-39 exists because the regime our mathematics
+most needs -- a *verifiable certificate* rather than a fast double -- is one no commercial
+double-precision solver serves at any price. MOSEK is float64. There, arbitrary precision
+(SDPA-GMP, GPL, $0) is not the cheap substitute for MOSEK; it is the only thing that answers the
+question, and buying would have been the wrong move even with the money.
+
+**The roadmap's premise was also stale.** It treated SCS as the free path. CLARABEL -- an
+interior-point solver, the same algorithm class as MOSEK, Apache-2.0 -- has been installed and
+unmeasured the whole time. Part of closing a gap is checking whether it is still there.
+
+**What I am deliberately not proposing.** No item here widens a tool's use beyond a named consumer,
+and none acquires anything that lacks one -- POET stays at TECHNE-17, behind Harmonia, with its
+licence and cost already settled so that price can never be the reason it waits.
