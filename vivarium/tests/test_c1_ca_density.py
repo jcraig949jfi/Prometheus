@@ -346,4 +346,15 @@ def test_c1_the_witness_is_bounded_and_declares_its_truncation():
 
 
 def test_c1_the_criteria_vocabulary_is_closed():
-    assert SUCCESS_CRITERIA == ("at_T", "stable")
+    """Closed, and WIDENED ONCE on 2026-09-10 -- deliberately, and here rather
+    than by a test that would have kept passing.
+
+    C1's two values are Herakles's two MASKS and they are unchanged. The third
+    is his per-cell measure, added because 40 of 40 random tables scored
+    exactly 0.0 under both masks and a criterion with a single attainable
+    point cannot rank anything. It is a THIRD reading, not a replacement:
+    tests/test_ca_cellwise_criterion.py asserts the two masks still produce
+    the numbers this file pins.
+    """
+    assert SUCCESS_CRITERIA == ("at_T", "stable", "cellwise_majority_match")
+    assert SUCCESS_CRITERIA[:2] == ("at_T", "stable")

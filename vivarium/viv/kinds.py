@@ -275,6 +275,17 @@ register(Kind(
         "accuracy_stable": R("number", finite=True),
         "n_incorrect_at_T": R("integer"),
         "n_incorrect_stable": R("integer"),
+        "mask_digest": R("string",
+                         note="F-20: the mask under the DECLARED criterion -- "
+                              "the same rule `accuracy` follows. The two "
+                              "per-criterion digests below are unchanged and "
+                              "still reported; this is the one a symmetry "
+                              "check compares without having to work out "
+                              "which reading the row used"),
+        "witness": R("vector", element="integer", bounds=(0, 64),
+                     reductions=("any", "count"),
+                     note="F-20: the same list as misclassified_ic, under the "
+                          "name Herakles's c3_null_check reads"),
         "mask_digest_at_T": R("string"),
         "mask_digest_stable": R("string"),
         "all_zeros_fixed": R("boolean", note="table entry 0"),
@@ -291,6 +302,43 @@ register(Kind(
                            "the four EXACT symmetries, so a transformed arm is "
                            "a NULL arm and accuracy that moves under one is a "
                            "defect rather than a result"),
+        "accuracy_is_per_cell_mean": R("boolean",
+            note="ALWAYS present. `accuracy` is a per-cell MEAN under "
+                 "cellwise_majority_match and a fraction of ICs under the two "
+                 "mask criteria; a reader must not have to infer which shape "
+                 "it has from the criterion string"),
+        # Present only under cellwise_majority_match: Herakles's own fields,
+        # under his names. The dispersion is not optional information -- he
+        # states that the two CONSTANT rules land on the same mean as a random
+        # table and are separated only by it, so a row carrying the mean alone
+        # would hide what makes the mean usable.
+        "cellwise_sd_across_ics": R("number", finite=True, required=False,
+            note="IC-to-IC spread WITHIN this table: ~0.50 for a constant "
+                 "rule, ~0.10 for a random one. NOT the spread of the mean "
+                 "across tables, which is far smaller"),
+        "cellwise_min_cell_match": R("number", finite=True, required=False),
+        "cellwise_max_cell_match": R("number", finite=True, required=False),
+        "cellwise_fraction_all_cells_match": R("number", finite=True,
+                                               required=False),
+        "cellwise_fraction_no_cells_match": R("number", finite=True,
+                                              required=False),
+        "cellwise_comparable_to_published_P": R("boolean", required=False,
+            note="false: this is a different measure from the published "
+                 "density-classification P and is not to be compared with it"),
+        "ic_transformed": R("boolean",
+                            note="F-20: whether the REALISED IC sample "
+                                 "actually changed. Measured by comparing the "
+                                 "arrays, never declared from the transform "
+                                 "name -- transforming the rule alone is not "
+                                 "the symmetry, and this is how a reader "
+                                 "establishes which happened"),
+        "majority_target_flipped": R("boolean",
+                                     note="F-20: whether the majority target "
+                                          "is the complement of the "
+                                          "untransformed sample's. Measured. "
+                                          "Complement must flip it; if it did "
+                                          "not, the target was computed from "
+                                          "the wrong sample"),
         "transformed_rule_hex": R("string",
                                   note="the rule actually run; equal to "
                                        "rule_hex under transform=none"),

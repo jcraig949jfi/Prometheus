@@ -57,7 +57,14 @@ FIXTURES = [
     # C1. The strong parity anchor for this kind is the six golden genomes in
     # test_c1_ca_density.py; this pins the WRAPPER's whole result object so the
     # coverage guard below holds for every implemented kind uniformly.
-    # REGENERATED 2026-09-10. `transform` joined the contract (Track B) and
+    # REGENERATED TWICE on 2026-09-10, both stated rather than absorbed:
+    # F-20 added ic_transformed, majority_target_flipped and the
+    # declared-criterion mask_digest/witness aliases, after `transform`
+    # joined the contract earlier. The ARITHMETIC never moved across
+    # either -- accuracy 0.875 and witness [6, 8] throughout -- so what
+    # changed is what the row SAYS about itself, which is exactly the
+    # kind of change a pinned digest exists to make visible.
+    # `transform` joined the contract (Track B) and
     # the result gained transform / transformed_rule_hex /
     # spacetime_is_image_of_untransformed, so the digest of the whole result
     # object moved. That is a CONTRACT CHANGE and is said out loud here rather
@@ -69,7 +76,7 @@ FIXTURES = [
       "radius": 3, "n_cells": 21, "steps": 42, "n_ic": 16,
       "ic_density_set": [None], "success_criterion": "at_T",
       "transform": "none"},
-     20260908, "8b5cf6c8d1a9c4a2a3921209a996bc27"),
+     20260908, "4f211943d5328257fbf8a0d99acd8c74"),
     # The loader's own kind. Its parity anchor is the executor's arithmetic
     # over a FIXED input artifact: the digest below is the digest of those
     # exact bytes, so a change to the canonical encoding, the interface shape

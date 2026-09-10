@@ -591,9 +591,21 @@ class SfeRunner:
                     source_artifacts=[entry["resolution"].get(
                         "execution_artifact_id")],
                     environment=self.engine_identity,
-                    refs={"digest": entry["digest"], "slot": entry["slot"],
-                          "measured_by": "len(bytes served), counted in "
-                                         "viv.preflight"})
+                    refs={
+                        # `artifact_digest` is the engine's join key for
+                        # cost_report().by_artifact, and it names the artifact
+                        # the event DECLARED in source_artifacts -- the same
+                        # string, so the two cannot drift apart.
+                        "artifact_digest": entry["resolution"].get(
+                            "execution_artifact_id"),
+                        # The SEALED digest is a different identity: the bytes,
+                        # not the row that holds them. Both are carried because
+                        # a reader chasing the campaign wants the seal and a
+                        # reader chasing the ledger wants the artifact.
+                        "sealed_digest": entry["digest"],
+                        "slot": entry["slot"],
+                        "measured_by": "len(bytes served), counted in "
+                                       "viv.preflight"})
                 settled.append({"digest": entry["digest"],
                                 "reservation_id": rid,
                                 "cost_event_id": ev.get("cost_event_id"),
