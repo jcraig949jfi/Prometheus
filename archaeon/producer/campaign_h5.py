@@ -120,12 +120,51 @@ def h5_readout(equivalence: Dict[int, int]) -> Dict[str, Any]:
     return out
 
 
+def issue(conn, rows: Optional[Sequence[Dict[str, Any]]] = None, config=None) -> Dict[str, Any]:
+    """Human path on the registered candidate-set route (execution-only
+    check, negative-authority check, one transaction per row). Operator
+    2026-09-10 (F-19): ISSUE NOW."""
+    from .. import config as cfg
+    from .. import vivqueue as vq
+    from . import costs as C
+    rows = list(rows or plan()); config = config or cfg.DEFAULT
+    c = check(rows)
+    if not c.get("ok_to_issue"):
+        raise RuntimeError("H5-1 does not validate: {}".format(c["blockers"] or c["invalid"]))
+    csid = "cs-h5-1"
+    ids = []
+    with C.Meter() as m:
+        for r in rows:
+            cand = vq.make_candidate(r["spec"], family_id=r["family_id"], arm_id=r["arm_id"], request_key=r["request_key"],
+                                     source_evidence={"schema": "archaeon.campaign.v0", "campaign": CAMPAIGN_ID, "mode": "human",
+                                                      "policy_version": "campaign.H5.v0", "template_id": "campaign.H5-1",
+                                                      "label": r["label"], "rule": r["rule"], "scope": SCOPE,
+                                                      "selection_basis": "operator_directed_family",
+                                                      "authority": "H5 alpha: the exhaustive 256-rule map at the fixture scope on the live "
+                                                                   "consumer; every H5 quantity is producer-side arithmetic over it",
+                                                      "upstream_selection_history": "UNKNOWN"})
+            res = vq.submit(conn, candidates=[cand], selected_index=0, source_reason="human",
+                            created_by="archaeon", config=config, candidate_set_id=csid)
+            ids.append(res["selected_experiment_id"])
+    cost = C.CostEvent("generation", csid, m.resources([C.Resource("items", len(ids), "count", "count", "measured")]), output_refs=ids)
+    return {"campaign": CAMPAIGN_ID, "candidate_set_id": csid, "experiment_ids": ids, "registered": len(ids),
+            "cost_event": cost.to_json(), "engine_entries": C.to_engine_entries(cost, scope="campaign")}
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(prog="archaeon.producer.campaign_h5")
-    ap.add_argument("--check", action="store_true")
+    ap.add_argument("--check", action="store_true"); ap.add_argument("--issue", action="store_true")
     a = ap.parse_args(argv)
     if a.check:
         print(json.dumps(check(), indent=1, default=str)); return 0
+    if a.issue:
+        from evidence_wiki.ew import db as ewdb
+        conn = ewdb.connect()
+        try:
+            print(json.dumps(issue(conn), indent=2, default=str))
+        finally:
+            conn.close()
+        return 0
     ap.print_help(); return 1
 
 

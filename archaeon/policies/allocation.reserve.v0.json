@@ -1,0 +1,20 @@
+{
+  "policy_id": "allocation.reserve.v0",
+  "quota_per_day": 6,
+  "reserve_draws_per_day": 1,
+  "young_days": 90,
+  "thin_rows": 24,
+  "fairness": "deficit_round_robin",
+  "horizon_days": 7,
+  "established": ["kind:evaluate_bitstring"],
+  "chosen_by": "operator (James Craig), via Archaeon; D-6 bounded pilot v0",
+  "chosen_on": "2026-09-10",
+  "pilot": {
+    "status": "PILOT_V0",
+    "review_on": "2026-09-24",
+    "review_owner": "operator with Harmonia",
+    "principle": "exploitation may consume most capacity but can never starve exploration families out of existence",
+    "not_canonised": true,
+    "values_are": "Archaeon's recommendation of 2026-09-07, adopted unchanged for the pilot"
+  }
+}

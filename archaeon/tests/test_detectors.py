@@ -270,3 +270,30 @@ def test_d3_v1_labels_a_climbing_region_exchangeability_suspect_without_changing
     s2 = [s for s in mod.detect(c2, DCFG).signals if s.regions[0] == "w03"][0]
     assert abs(s2.values["variance_ratio"] - v["variance_ratio"]) < 1e-12
     assert s2.values["exchangeability"] in ("EXCHANGEABLE", "EXCHANGEABILITY_SUSPECT")       # shuffled order: no ramp
+
+
+def test_d3_v2_detrended_removes_a_pure_ramp_fire_and_is_not_the_default():
+    """D-21: d3.v2 is admitted as a NEW version behind a calibration firewall."""
+    import dataclasses
+    from archaeon import fossils
+    assert DCFG.d3_detrend is False
+    mod = DETECTOR_BY_NAME["LOCAL_VARIANCE_ANOMALY"]
+    import random
+    c = synth.variance_equal(seed=9)
+    rng = random.Random(3)
+    rows, k = [], 0
+    for r in c.rows:
+        if r.region == "w03":
+            k += 1
+            # the SAME residual dispersion as every other region (sigma 0.08) on top of a climb
+            rows.append(dataclasses.replace(r, metric=rng.gauss(0.5, 0.08) + 0.04 * k, seq=k))
+        else:
+            rows.append(r)
+    climbing = fossils.corpus_from_rows(rows, c.chart)
+    v1 = mod.detect(climbing, DCFG).signals
+    v2 = mod.detect(climbing, dataclasses.replace(DCFG, d3_detrend=True)).signals
+    assert any(s.regions[0] == "w03" and s.values["exchangeability"] == "EXCHANGEABILITY_VIOLATED" for s in v1)
+    assert not any(s.regions[0] == "w03" for s in v2), "v2 must not fire on a trend alone"
+    # v2 still detects a real dispersion anomaly and stamps its version
+    s2 = mod.detect(synth.variance_anomaly(seed=2), dataclasses.replace(DCFG, d3_detrend=True)).signals
+    assert s2 and s2[0].detector_version == "d3.v2" and s2[0].thresholds["d3_detrend"] is True

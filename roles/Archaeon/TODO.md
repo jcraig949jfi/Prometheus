@@ -186,13 +186,16 @@ would still KILL.
 - [x] F-11 CLOSED 2026-09-10: Harmonia ruled signature_v0 FAIR and INERT at this scope; RELEVANCE_LICENSED stays False; contrast relabelled transport-only / order-only. 2026-09-10
 - [x] F-12 DONE 2026-09-10 12:40: phase 2 ISSUED (cs-h1h0-1-p2, 73 rows incl. the degeneracy-check row) after Vivarium published the 11 artifacts. 2026-09-10
 - [ ] F-13 (Archaeon): C3-2 readout when cs-c3-2 completes: ICC across the four IC samples, D3 over C3 (one row per rule), exact-symmetry mask identity on the 18 null rows. 2026-09-10
-- [ ] F-14 (operator): D-18 amendment v1 (Herakles); rustup on the host (Techne); the two packet JSONs are on NO machine here (searched Downloads/Desktop/Documents and both checkouts, 2026-09-10) -- the operator must paste their contents to a seat, who commits them, before Techne's reconciler can run. 2026-09-10
+- [x] F-14 mostly DONE 2026-09-10: D-18 v1 APPROVED; rustup done by Techne; packet JSONs STILL the operator's paste. 2026-09-10
 - [ ] F-15 (Archaeon): costs.reconcile joins on the DIGEST when the executor vector carries it (TRACKA-RECON-2). 2026-09-10
 - [x] F-16 (Archaeon): D3 upper-fire dossier for Harmonia (item 5) delivered: archaeon/docs/h0h5/D3_LIVE_DOSSIER_2026-09-10.json. 2026-09-10
 - [ ] F-17 (Harmonia): read the 15 LOWER fires that survive d3.v1 on the live corpus (dossier carries them under fires_v0 / v1 counts). 2026-09-10
 - [x] F-18 DONE 2026-09-10 ~19:30: phase 2 COMPLETE (48 artifact rows under reservation on schema 8); readout with spec-hash dedup handed to Harmonia. 2026-09-10
-- [ ] F-19 (operator): issue H5-1 (256 rows on eca_rule_eval_v1; plan validates and preflights). 2026-09-10
+- [x] F-19 DONE 2026-09-10 ~20:30: operator said ISSUE NOW; cs-h5-1 issued (256 rows). 2026-09-10
 - [x] F-20 DONE by Vivarium 30e97ed94 (flags measured off the arrays). 2026-09-10
 - [x] F-21 DONE 2026-09-10 ~14:00: random_076 re-issued as cs-c3-2-r1. 2026-09-10
 - [ ] F-22 (Archaeon) UNBLOCKED 2026-09-10 19:30: C3-3 design under R-C3-1..5 + Harmonia 3e/3f (X1 variance-ratio is the H2 instrument; support size, p_mode, f, corpus ceil(120/f) BEFORE issue) with cellwise_majority_match now exposed. = ARCH-01. 2026-09-10
 - [x] F-23 DONE 2026-09-10 18:30: Vivarium's debit receipt landed (a733f0ad5); the 48 artifact rows re-issued as cs-h1h0-1-p2b. 2026-09-10
+- [ ] F-24 (Archaeon): H5-1 readout when cs-h5-1 completes: live class map vs published (224 classes), H5 quantities collapsed to live classes (campaign_h5.live_class_map / h5_readout). 2026-09-10
+- [ ] F-25 (Archaeon): after Daedalus issues the B1 grant, move readers to the API path, demonstrate parity with the direct-ledger read, retire the direct read. 2026-09-10
+- [ ] F-26 (Archaeon): D-6 pilot -- first allocated tick receipt; review packet for 2026-09-24 with Harmonia. 2026-09-10

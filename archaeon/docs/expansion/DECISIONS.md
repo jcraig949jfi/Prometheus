@@ -45,3 +45,16 @@ concatenated pool carries between-region variance and the campaign authors
 between-region means, so v0's live LOWER fires (28 of 30) were a denominator
 artifact. v0 stays selectable for side-by-side readouts; the phase boundary
 and v0's admission history are unchanged. The 2 UPPER fires remain open.
+
+## Operator decisions 2026-09-10 (evening), recorded verbatim in effect
+
+- **F-19 H5-1: ISSUE NOW.** "This is exactly what the machine should be doing." Issued as cs-h5-1 (256 rows). Doctrinal note from the operator: this should be among the last bounded, preflighted campaigns needing a personal approval; the admission doctrine should eventually authorise an ENVELOPE of H5 descendants.
+- **D-18: APPROVE v1** (Herakles's amendment: seeded Bernoulli reset at density 0.5, horizon 8 evidence-selected, confirmation partition untouched). Naming rule from the operator: this is an "H2-alpha apparatus repair / amended experimental realization", never "retry H2" -- the corpse was the configuration, not the hypothesis. The re-run is a NEW kind (ca_stream_v2), Vivarium's to register from Herakles's reset_v2.
+- **B1: GRANT, narrowly.** Read-only, declared-tenancy/corpus scope as an enumerated set of worlds (never a topology group), no mutation, no foreign-client escalation, per Daedalus's PROPOSAL_ARCHAEON_READ_SCOPE_2026-09-10.md. Then Archaeon retires the direct-ledger read once parity with the API path is demonstrated.
+- **B2: DEPLOYED (d5be5ec4b), treated as a ONE-WAY migration.** No oscillation 7<->8; v8 is the forward baseline; rollback would sacrifice schema-8 cost events and is not a routine option.
+- **D-6: ACTIVATE as a bounded pilot (v0)** with Archaeon's recommended values, a predetermined review point, not canonised. Principle: exploitation may consume most capacity but can never starve exploration families out of existence. Policy file archaeon/policies/allocation.reserve.v0.json with chosen_by/chosen_on filled.
+- **D-15: CONFIRMED as implemented by migration 011** (five-state availability vocabulary, append-only availability events, publication outbox). Administrative closure; redesign only if reconciliation finds a semantic mismatch.
+- **D-17: PIN the source revision; internal use only.** Record: source pin 350804b7b358; licence MIT at the pinned source; binary/source correspondence UNESTABLISHED. Internal experimental use may proceed if Techne and Harmonia carry that distinction in provenance; any claim that "this exact source produced these exact stitch results" stays blocked until reproducible construction or upstream correspondence exists.
+- **Packet JSONs: PASTE + COMMIT immediately** -- an operator action; the seats are ready.
+- **D-21 d3.v2: ADMIT as a NEW detector version, not a replacement for v1**, behind a calibration firewall. Mechanism landed (config d3_detrend, version stamp d3.v2, not the default); Harmonia calibrates it with its own eligibility count before any live use (HARM-18).
+

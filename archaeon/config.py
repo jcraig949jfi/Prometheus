@@ -236,6 +236,12 @@ class DetectorConfig:
     # 0.816 -> 3.0 (the band edge itself, where trend ALONE fires).
     d3_exchangeability_abs_r: float = 0.577     # >= : EXCHANGEABILITY_SUSPECT (rate quotable only with the diagnostic beside it)
     d3_exchangeability_violated_abs_r: float = 0.816   # >= : EXCHANGEABILITY_VIOLATED (no calibrated rate may be quoted)
+    # D-21 (operator 2026-09-10): d3.v2 = the DETRENDED statistic (each region and each
+    # neighbour group linearly detrended on committed order before variance), ADMITTED
+    # as a NEW detector version behind a calibration firewall: it is selectable, it
+    # stamps d3.v2, and it is NOT the live default until Harmonia calibrates it with
+    # its own eligibility count.
+    d3_detrend: bool = False
 
     # ---- D4 PLAYER_ORDER_REVERSAL ---------------------------------------
     # Same two-part requirement as D2, for the same reason: the v0 build fired

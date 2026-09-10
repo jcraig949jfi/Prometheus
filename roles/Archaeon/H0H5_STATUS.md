@@ -1,6 +1,6 @@
 # H0–H5 status — compact, from receipts only
 
-Maintained by Archaeon. Updated 2026-09-10 ~19:30 (schema 8 live; H1/H0 phase 2 COMPLETE; backlogs landed). Review packet: `roles/Archaeon/REVIEW_PACKET_2026-09-10.md`. Delegation: `roles/Archaeon/prompts/2026-09-10_tracks/` (Tracks A-E from the operator's Chimera brief; three corrections verified: sqrt(6) counterexample, client_id retention gap, XOR-injection non-conservation). Design v0.1
+Maintained by Archaeon. Updated 2026-09-10 ~20:30 (operator decisions applied; H5-1 ISSUED; D-6 pilot ACTIVE). Review packet: `roles/Archaeon/REVIEW_PACKET_2026-09-10.md`. Delegation: `roles/Archaeon/prompts/2026-09-10_tracks/` (Tracks A-E from the operator's Chimera brief; three corrections verified: sqrt(6) counterexample, client_id retention gap, XOR-injection non-conservation). Design v0.1
 (`roles/Archaeon/prompts/2026-09-08_h0h5/DESIGN_H0_H5_v0.1.md`). Every row
 below is derived from a committed receipt; nothing is inferred from a plan.
 Baseline: `archaeon/docs/h0h5/BASELINE_2026-09-09.json`.
@@ -63,6 +63,19 @@ Baseline: `archaeon/docs/h0h5/BASELINE_2026-09-09.json`.
 
 
 
+
+
+## Wake 21 (2026-09-10, ~20:30): the operator's nine decisions, applied
+
+- **F-19: H5-1 ISSUED** (cs-h5-1, 256 rows on eca_rule_eval_v1 at the 7-ring/8-step scope; receipt ISSUE_RECEIPTS_2026-09-10.h5_1.json). The operator's doctrinal note is recorded: bounded, preflighted campaigns of this shape should be admitted as an ENVELOPE, not one by one.
+- **D-18 APPROVED v1** (seeded Bernoulli reset, density 0.5, horizon 8). Naming rule: "H2-alpha apparatus repair", never "retry H2". Vivarium registers ca_stream_v2; Herakles re-runs.
+- **B1 GRANTED narrowly** (enumerated worlds, read-only). Daedalus issues; Archaeon moves readers to the API path and retires the direct-ledger read after parity.
+- **B2: one-way** (already deployed).
+- **D-6 ACTIVATED as pilot v0**: archaeon/policies/allocation.reserve.v0.json with chosen_by/chosen_on; review 2026-09-24. The tick allocates from its next run (family/share per draw).
+- **D-15 CONFIRMED** (migration 011). **D-17 PINNED**: 350804b7b358, MIT at source, wheel<->source correspondence UNESTABLISHED, internal use only. **Packet JSONs**: operator action.
+- **D-21 d3.v2 ADMITTED as a NEW version** behind a calibration firewall: mechanism landed (config d3_detrend; detrends every group on committed order, then pooled-within; stamps d3.v2; not the default; tested: a climbing region with ordinary residual dispersion fires under v1 as VIOLATED and does not fire under v2). Harmonia calibrates before any live use.
+- Broadcast to every seat: roles/Archaeon/DECISIONS_BROADCAST_2026-09-10.md (+ INBOX pointers), with the ACTS per decision.
+- Review of the seats' day: roles/Archaeon/REVIEW_SEATS_2026-09-10.md.
 
 ## Wake 20 (2026-09-10, ~19:30): schema 8 live, phase 2 COMPLETE, five backlogs, Harmonia's rulings applied
 

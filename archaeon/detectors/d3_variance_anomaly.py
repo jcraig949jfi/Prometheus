@@ -33,6 +33,28 @@ from .base import (DetectorResult, Eligibility, Signal, INTENT_DISCRIMINATE,
 NAME = "LOCAL_VARIANCE_ANOMALY"
 VERSION = "d3.v0"
 VERSION_BY_DENOMINATOR = {"concatenated": "d3.v0", "pooled_within": "d3.v1"}
+VERSION_DETRENDED = "d3.v2"          # D-21: pooled-within denominator on DETRENDED rows
+
+
+def _detrended(rs) -> List[float]:
+    """Residuals of metric after a linear fit on committed order (anchors
+    committed_seq, else seq). Fewer than 3 rows: unchanged values."""
+    def order(r):
+        a = r.anchors or {}
+        v = a.get("committed_seq")
+        try:
+            return float(v) if v is not None else float(r.seq)
+        except (TypeError, ValueError):
+            return float(r.seq)
+    pts = sorted((order(r), r.metric) for r in rs)
+    n = len(pts)
+    if n < 3:
+        return [m for _, m in pts]
+    xs = [float(i) for i in range(n)]; ys = [m for _, m in pts]
+    mx, my = sum(xs) / n, sum(ys) / n
+    sxx = sum((x - mx) ** 2 for x in xs)
+    b = (sum((x - mx) * (y - my) for x, y in zip(xs, ys)) / sxx) if sxx > 0 else 0.0
+    return [y - (my + b * (x - mx)) for x, y in zip(xs, ys)]
 UNIT = "region"
 
 
@@ -138,15 +160,22 @@ def detect(corpus, dcfg) -> DetectorResult:
         nb = neighbours_of[reg]
         pool = [x.metric for o in nb for x in by_region[o]]
 
-        v_reg = variance(vals)
         denominator = getattr(dcfg, "d3_denominator", "concatenated")
-        if denominator == "pooled_within":
-            v_nb, pool_df = _pooled_within([[x.metric for x in by_region[o]] for o in nb])
-        elif denominator == "concatenated":
-            v_nb, pool_df = variance(pool), len(pool) - 1
+        detrend = bool(getattr(dcfg, "d3_detrend", False))
+        if detrend:
+            # d3.v2: detrend every group on committed order, then pooled-within
+            v_reg = variance(_detrended(rs))
+            v_nb, pool_df = _pooled_within([_detrended(by_region[o]) for o in nb])
+            version = VERSION_DETRENDED
         else:
-            raise ValueError("d3_denominator must be concatenated|pooled_within")
-        version = VERSION_BY_DENOMINATOR[denominator]
+            v_reg = variance(vals)
+            if denominator == "pooled_within":
+                v_nb, pool_df = _pooled_within([[x.metric for x in by_region[o]] for o in nb])
+            elif denominator == "concatenated":
+                v_nb, pool_df = variance(pool), len(pool) - 1
+            else:
+                raise ValueError("d3_denominator must be concatenated|pooled_within")
+            version = VERSION_BY_DENOMINATOR[denominator]
         if v_nb <= 0:
             # A neighbourhood with zero dispersion gives no ratio. Reporting
             # "infinitely more variable" from a degenerate denominator would be
@@ -210,7 +239,8 @@ def detect(corpus, dcfg) -> DetectorResult:
                         "d3_neighbors_k": dcfg.d3_neighbors_k,
                         "d3_denominator": denominator,
                         "d3_exchangeability_abs_r": abs_r_cut,
-                        "d3_exchangeability_violated_abs_r": abs_r_violated},
+                        "d3_exchangeability_violated_abs_r": abs_r_violated,
+                        "d3_detrend": detrend},
             support_n=len(vals),
             effect_norm=clamp01(excess / math.log(10.0)),
             target_coords=dict(centroid[reg]),

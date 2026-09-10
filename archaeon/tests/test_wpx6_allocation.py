@@ -124,11 +124,13 @@ def test_policy_inactive_without_operator_file(tmp_path):
 
 
 # ---------------------------------------------------------------- X6-e (third amendment)
-def test_inactive_policy_continues_established_share_and_never_spends_reserve():
+def test_inactive_policy_continues_established_share_and_never_spends_reserve(tmp_path, monkeypatch):
     """While D-6 is pending, authorized collection continues under the
     existing policy: every draw is the established share, the reserve is
     untouched, nothing is admitted, and a frozen snapshot is unchanged by a
-    later activation."""
+    later activation. D-6 was ACTIVATED on 2026-09-10 (pilot v0), so this
+    test points the loader at a missing file to exercise the inactive path."""
+    monkeypatch.setattr(A, "POLICY_PATH", tmp_path / "no-policy.json")
     inactive = dict(A.PROPOSED, active=False)
     ts = [_tmpl("t0", "k0", family="fam.new")]
     cl = A.classify(A.families(ts), TODAY, {}, inactive)
@@ -140,3 +142,12 @@ def test_inactive_policy_continues_established_share_and_never_spends_reserve():
     assert rec["active"] is False and rec["share"] == "established"
     # activating later does not rewrite the frozen snapshot's order
     assert A.order_from_snapshot(snap_before, n_slots=6) == order
+
+
+def test_live_policy_is_the_d6_pilot_v0_with_a_review_point():
+    """Operator 2026-09-10: 'ACTIVATE bounded pilot'. The committed policy
+    file is active, carries who chose it and when, and names its review."""
+    pol = A.load_policy()
+    assert pol["active"] is True and pol["chosen_on"] == "2026-09-10" and "operator" in pol["chosen_by"]
+    assert pol["pilot"]["status"] == "PILOT_V0" and pol["pilot"]["review_on"] == "2026-09-24"
+    assert pol["quota_per_day"] == 6 and pol["reserve_draws_per_day"] == 1
