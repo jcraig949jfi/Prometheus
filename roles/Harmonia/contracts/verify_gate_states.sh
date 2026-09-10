@@ -47,6 +47,31 @@ if ! python "$ENGINE" --check --port "$PORT" >/dev/null 2>&1; then
   echo "  Not running the states: test 5 would pass for the wrong reason."
   exit 4
 fi
+
+# DEFENCE IN DEPTH, added 2026-09-10 after Daedalus's --port bug (0f98ef1f0):
+# --check accepted a port, started an engine on it, then built its check URL
+# from a module constant -- so at any non-default port it silently interrogated
+# 8901 and returned 0. The HALT guard above passed for the same reason the bug
+# was invisible, and test 5 then hit an empty port and degraded to state 2.
+#
+# The lesson generalises past that one bug: a check we DELEGATE may be about a
+# different target than the one our tests will hit. So assert it here, at the
+# EXACT url test 5 uses, rather than trusting a report about it.
+python - "$SCRATCH" "$NEW" <<'PYEOF' || exit 4
+import json, sys, urllib.request
+scratch, contract = sys.argv[1], sys.argv[2]
+want = json.load(open(contract, encoding="utf-8"))["engine"]["engine_instance_id"]
+try:
+    live = json.loads(urllib.request.urlopen(scratch + "/version", timeout=10).read())
+except Exception as e:                                             # noqa: BLE001
+    print("ABORT: nothing answering at %s -- %r" % (scratch, e)); sys.exit(4)
+got = live.get("engine_instance_id")
+if got == want:
+    print("ABORT: %s reports the SAME ledger as the contract (%s)." % (scratch, got))
+    print("  Test 5 would pass as CONFORMANT, not DRIFT. It proves nothing.")
+    sys.exit(4)
+print("  test-5 target confirmed at %s: ledger %s, contract %s" % (scratch, got, want))
+PYEOF
 echo "  scratch engine verified on :$PORT (build matches prod, ledger differs)"
 
 run() { timeout 200 python "$@" >/dev/null 2>&1; echo $?; }
