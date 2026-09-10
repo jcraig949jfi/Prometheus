@@ -105,6 +105,19 @@ def token_for(role: str, *, register_if_missing: bool = False,
         return tok
 
 
+def client_id_for(role: str = ROLE_PRODUCTION):
+    """The ENGINE-ISSUED client id for a role, or None.
+
+    None is returned rather than a substitute. The loader caches verified bytes
+    against the principal the engine authorized, and a locally invented stand-in
+    would make that cache key look authoritative when it is not -- so the caller
+    is told there is no engine-issued id and records that fact instead.
+    """
+    if role not in _ROLES:
+        raise IdentityError("unknown identity role %r" % role)
+    return _db.load_config().get(_ROLES[role][1])
+
+
 def configured(role: str = ROLE_PRODUCTION) -> bool:
     tok_key, _, _ = _ROLES[role]
     return bool(_db.load_config().get(tok_key))

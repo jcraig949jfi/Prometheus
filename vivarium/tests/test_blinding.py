@@ -128,10 +128,22 @@ def _normalise(calls):
     byte-identical spec must issue the same calls with the same arguments; they
     are not required to take the same number of microseconds, and asserting
     that would make the blinding test flaky for a reason that has nothing to do
-    with blinding. Everything an arm could influence is still compared."""
+    with blinding. Everything an arm could influence is still compared.
+
+    `resources` (2026-09-09) is the same category and is stripped for the same
+    reason: it is the C4 vector of what the run COST -- wall seconds, CPU
+    seconds, the process peak -- measured after the fact. Note the direction of
+    the risk before accepting that: stripping a field means an arm could in
+    principle differ there unnoticed. It cannot differ there in any way that
+    matters, because a cost measurement is an OUTPUT of execution and is never
+    read back into it; nothing downstream of the executor consults it, and the
+    load receipt -- which IS an input-side document, naming the digests
+    actually consumed -- is deliberately NOT stripped and is still compared in
+    full."""
     def scrub(o):
         if isinstance(o, dict):
-            return {k: scrub(v) for k, v in o.items() if k != "seconds"}
+            return {k: scrub(v) for k, v in o.items()
+                    if k not in ("seconds", "resources")}
         if isinstance(o, list):
             return [scrub(v) for v in o]
         return o
@@ -154,13 +166,24 @@ def _transcript(spec):
 # Half 1: provenance CANNOT cross the boundary
 # ---------------------------------------------------------------------------
 
-def test_the_request_has_exactly_three_fields():
-    """Widening this is a deliberate, visible act, not a drift."""
+def test_the_request_has_exactly_four_fields():
+    """Widening this is a deliberate, visible act, not a drift.
+
+    It was widened once, on 2026-09-09, from three to four: `artifact_locators`
+    joined the projection so the loader could address bytes the spec already
+    seals. The argument that it does not reopen the boundary is not "we checked
+    the executor does not look" -- that is the review that has to be repeated
+    forever. It is that preflight verifies every resolved artifact against the
+    digest INSIDE spec_hash, so a locator can only decide whether an experiment
+    runs, never what it computes. The test immediately below runs that claim
+    rather than restating it.
+    """
     names = tuple(f.name for f in dataclasses.fields(ExecutionRequest))
-    assert names == FIELDS == ("experiment_id", "spec_json", "spec_hash")
+    assert names == FIELDS == ("experiment_id", "spec_json", "spec_hash",
+                               "artifact_locators")
 
 
-def test_from_queue_row_projects_only_those_three(conn, schema):
+def test_from_queue_row_projects_only_those_four(conn, schema):
     """Every other column on the row is unreachable from the request."""
     eid = _q.enqueue(conn, created_by="archaeon:C_frozen_S17",
                      source_reason="weak_signal-lookalike",

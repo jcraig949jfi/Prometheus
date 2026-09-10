@@ -248,6 +248,11 @@ def build_from_template(template: Dict[str, Any], params: Dict[str, Any], *,
         raise SpecInvalid("kind {!r} is stateful; the template must declare "
                           "`repeat` (count, order, seed_derivation, state, "
                           "budget) so state policy is explicit".format(kind_name))
+    if repeat is not None and "aggregate" not in rule:
+        raise SpecInvalid("a repeat spec must declare outcome_rule.aggregate (one of "
+                          "first/any/all/max/min): with repeats 'the outcome' is "
+                          "ambiguous until the requester says which reduction is "
+                          "meant (Vivarium E16); the builder never defaults it")
     if repeat is not None and repeat.get("state") == "persist" and not stateful:
         raise SpecInvalid("repeat.state=persist on a stateless kind would be a "
                           "declared choice quietly not happening")

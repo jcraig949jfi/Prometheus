@@ -112,15 +112,20 @@ def test_campaign_lengths_imply_different_variances_not_no_information():
 
 
 # ---------------------------------------------------------------- 0d-d
+# Design metadata v3 (2026-09-10): Vivarium E16 landed and a v3 spec must
+# declare outcome_rule.aggregate; the plan declares "all". That changed the
+# sealed hashes BEFORE any row was issued. The v2 hashes (67b90150..,
+# 234793d9.., f674add4.., b2216250.., 33e0048b.., 06facc6e.., b9ff0080..,
+# ec8a357e..) are retired with this note, never silently replaced.
 PINNED_HASHES = {
-    "M-ELIGIBLE-1-01": "sha256:67b90150a06b8bf5", "M-ELIGIBLE-1-02": "sha256:234793d903c3582c",
-    "M-ELIGIBLE-1-03": "sha256:f674add4814c195b", "M-ELIGIBLE-1-04": "sha256:b2216250d91e99d3",
-    "M-ELIGIBLE-1-05": "sha256:33e0048b3571c7cd", "M-ELIGIBLE-1-06": "sha256:06facc6eba6173c3",
-    "M-ELIGIBLE-1-07": "sha256:b9ff0080fbc8cf28", "M-ELIGIBLE-1-08": "sha256:ec8a357e76fd866d",
+    "M-ELIGIBLE-1-01": "sha256:80fc1726a872a5d3", "M-ELIGIBLE-1-02": "sha256:16e0704c1cf9087d",
+    "M-ELIGIBLE-1-03": "sha256:0536419248c13f58", "M-ELIGIBLE-1-04": "sha256:4bd9e646416fabad",
+    "M-ELIGIBLE-1-05": "sha256:3e68ebedfc1385c4", "M-ELIGIBLE-1-06": "sha256:93691aeadb7af3bb",
+    "M-ELIGIBLE-1-07": "sha256:75b4ec08c9e0dc90", "M-ELIGIBLE-1-08": "sha256:ff637fadb998d4d6",
 }
 
 
-def test_sealed_plan_hashes_unchanged_by_metadata_correction():
+def test_sealed_plan_hashes_match_design_v3():
     for r in campaign.plan():
         assert specbuild.spec_hash(r["spec"])[:23] == PINNED_HASHES[r["request_key"]]
 

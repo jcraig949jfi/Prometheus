@@ -80,11 +80,11 @@ def conn(schema):
 
 DEFAULT_RULE = {"field": "executed", "op": "==", "value": True,
                 "if_true": "SURVIVED", "if_false": "FALSIFIED",
-                "if_indeterminate": "INCONCLUSIVE"}
+                "if_indeterminate": "INCONCLUSIVE", "aggregate": "first"}
 
 BITSTRING_RULE = {"field": "solved", "op": "==", "value": True,
                   "if_true": "SURVIVED", "if_false": "FALSIFIED",
-                  "if_indeterminate": "INCONCLUSIVE"}
+                  "if_indeterminate": "INCONCLUSIVE", "aggregate": "first"}
 
 
 ONE_REPEAT = {"count": 1, "order": "sequential",
@@ -115,7 +115,10 @@ def make_spec(bits: str = "0" * 24, *, seed_root: int = 424242,
         "outcome_rule": rule,
         "pew": pew,
     }
-    if not legacy:
+    if legacy:
+        spec["outcome_rule"] = {k: v for k, v in rule.items()
+                                if k != "aggregate"}
+    else:
         spec["repeat"] = repeat or dict(ONE_REPEAT)
     if extra:
         spec.update(extra)

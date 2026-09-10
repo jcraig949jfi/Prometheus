@@ -201,6 +201,47 @@ def cmd_sfe_identity(args, _conn) -> int:
     return 0
 
 
+def cmd_limits(args, _conn) -> int:
+    """The alpha resource profile in force, and what each limit IS.
+
+    Deliverable 5 of the H0-H5 loader order. Printed rather than described in a
+    document, because a profile that lives only in prose drifts from the one
+    the code enforces the first time somebody edits either.
+    """
+    from . import artifacts as _artifacts
+    from . import resources as _res
+
+    lim = _artifacts.ALPHA
+    print("ARTIFACT LOADER -- alpha profile (viv/artifacts.py: Limits)")
+    for name, value in sorted(lim.as_dict().items()):
+        unit = "bytes" if name.endswith("bytes") else ""
+        print("  %-22s %12s %s" % (name, value, unit))
+    print()
+    print("ENFORCEMENT, measured on this host by running the meter:")
+    m = _res.Meter().start()
+    m.count("artifact_bytes", 0)
+    m.count("artifact_fetches", 0)
+    vector = m.vector(artifact_bytes_limit=lim.total_bytes, wall_limit=60.0)
+    for cls in _res.CLASSES:
+        names = _res.enforcement_summary(vector)[cls]
+        print("  %-12s %s" % (cls, ", ".join(names) or "(none)"))
+    print()
+    print("  enforceable = the operation is PREVENTED when the budget is gone")
+    print("                (artifact_bytes is debited on the execution world")
+    print("                 BEFORE each fetch; the engine blocks and raises).")
+    print("  measured    = observed by a real instrument on this run.")
+    print("  unavailable = not obtainable here. NOT zero.")
+    print()
+    peak = vector["peak_memory_bytes"]
+    print("  peak_memory_bytes: %s (%s)"
+          % (peak["enforcement_class"], peak["method"]))
+    print("  Additive quantities (safe to sum across attempts): %s"
+          % ", ".join(sorted(_res.ADDITIVE)))
+    print("  Everything else must NOT be summed -- peak memory and overlapping")
+    print("  wall durations especially.")
+    return 0
+
+
 def cmd_kinds(args, _conn) -> int:
     """The execution-kind contracts. What a spec of each kind must declare."""
     for name in _kinds.known():
@@ -218,6 +259,14 @@ def cmd_kinds(args, _conn) -> int:
                  ("  [" + ", ".join(flags) + "]") if flags else ""))
         if k.retired:
             print("     retired: %s" % k.retired_note[:200])
+        # WP-0f: the SAME contract validation uses, printed. A template author
+        # reading this and a run being validated must not consult two sources.
+        if k.declares_result:
+            for line in k.result_lines():
+                print("     result  %s" % line)
+        else:
+            print("     result  (not declared -- the executor lives "
+                  "elsewhere and its owner declares its result)")
     print("")
     print("admissible for a NEW spec: %s" % _kinds.admissible())
     print("retired (meaning preserved, new admissions refused): %s"
@@ -431,6 +480,7 @@ def build_parser() -> argparse.ArgumentParser:
     s.set_defaults(fn=cmd_enqueue)
 
     sub.add_parser("kinds").set_defaults(fn=cmd_kinds)
+    sub.add_parser("limits").set_defaults(fn=cmd_limits)
 
     s = sub.add_parser("sfe-identity",
                        help="the DURABLE SFE client identity (one per role)")

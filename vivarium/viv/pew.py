@@ -26,6 +26,32 @@ class PewError(RuntimeError):
     pass
 
 
+def _execution_inputs(run) -> dict:
+    """The load/resource summary a fossil carries. Reference-sized, not a copy.
+
+    Only what was WITNESSED, and only where a receipt exists: a run with no
+    artifact slot contributes nothing here rather than a row of zeros, because
+    "consumed no artifacts" and "was never asked to" are different facts.
+    """
+    out = {}
+    receipt = getattr(run, "load_receipt", None) or {}
+    if receipt.get("loaded"):
+        out["artifacts_consumed"] = receipt.get("closure_manifest")
+        out["closure_manifest_hash"] = receipt.get("closure_manifest_hash")
+        out["artifact_bytes_loaded"] = receipt.get("bytes_loaded")
+    elif receipt.get("rejected"):
+        out["preflight_rejection_class"] = receipt.get("rejection_class")
+    vector = getattr(run, "resources", None) or {}
+    out["attempt_id"] = vector.get("attempt_id")
+    out["stage"] = vector.get("stage")
+    for name in ("wall_seconds", "cpu_seconds", "artifact_bytes"):
+        if name in vector:
+            out[name] = vector[name]["quantity"]
+            out[name + "_enforcement_class"] = \
+                vector[name]["enforcement_class"]
+    return out
+
+
 class PewClient:
     def __init__(self, base_url: str, token: str, *, machine: str = "M1",
                  agent: str = "vivarium", namespace: str = "test",
@@ -61,7 +87,8 @@ class PewClient:
 
 
 def write_encounter(client: PewClient, *, spec: dict, run, engine: dict,
-                    producer_version: str, relation: dict = None) -> dict:
+                    producer_version: str, relation: dict = None,
+                    producer: dict = None) -> dict:
     """Write the world anchor and the fossil encounter. Returns a record with
     `pew_reference` when the encounter was persisted.
 
@@ -91,12 +118,18 @@ def write_encounter(client: PewClient, *, spec: dict, run, engine: dict,
 
     # The requester may ADD producer fields; it may not overwrite the identity
     # of what actually produced the record. Vivarium's own keys go last.
-    producer = {**dict(pew.get("producer") or {}),
-                "component": "vivarium.runner", "version": producer_version,
+    # `producer` is built by viv/design.py (the separately sealed design, the
+    # E1 policy identity, the queue ids). It is passed in rather than assembled
+    # here so the fossil's provenance half has ONE definition and one test.
+    mine = dict(producer or {})
+    if not mine:
+        mine = {"component": "vivarium.runner", "version": producer_version,
                 "engine_source_hash": engine.get("engine_source_hash"),
-                "spec_hash": run.summary.get("spec_hash") or run.spec_hash_hint,
+                "spec_hash": run.summary.get("spec_hash")
+                             or run.spec_hash_hint,
                 "queue": {k: v for k, v in (relation or {}).items()
                           if v is not None}}
+    producer = {**dict(pew.get("producer") or {}), **mine}
 
     envelope = run.summary.get("audit_envelope") or {}
     head_hash = envelope.get("ledger_head_hash")
@@ -128,7 +161,12 @@ def write_encounter(client: PewClient, *, spec: dict, run, engine: dict,
         "players": list(pew["players"]),
         "seed": str(spec["world"]["seed_root"]),
         "resources_used": {"work_id": run.work_id, "obs_id": run.obs_id,
-                           "attempted": True},
+                           "attempted": True,
+                           # C4's vector and C1's receipt, as OBSERVED. Both
+                           # are summaries here: the complete documents live in
+                           # the SFE work result, which is authoritative, and
+                           # PEW holds a reference and not a copy.
+                           **_execution_inputs(run)},
         "namespace": client.namespace,
         "producer": producer}
     if failed:
@@ -159,9 +197,27 @@ def write_encounter(client: PewClient, *, spec: dict, run, engine: dict,
         raise PewError("encounter not readable back (%s): %s"
                        % (read_status, read_body))
 
+    # C5: recorded_in_sfe and indexed_in_pew are SEPARATE FIELDS, because they
+    # are separate facts and only the first one is authoritative. The engine's
+    # ledger holds the observation; PEW holds a reference to it. An index that
+    # failed to publish has not unmade a measurement, and an index that
+    # published has not made one -- so a single boolean covering both would be
+    # wrong in both directions.
+    #
+    # `write_outcome` is PEW's own word for what happened to the row:
+    # inserted (new), duplicate_identical (already there, byte for byte) or a
+    # 409 conflict, which never reaches here because the client raises. A
+    # RETRY of a completed publication therefore reports duplicate_identical
+    # and is a success -- which is exactly what makes the publish path
+    # retryable without rerunning any science.
+    outcome = (body or {}).get("status")
     return {"pew_reference": "pew:encounter/%s:%s"
                              % (pew["encounter_id"], run.run_id),
             "failure_class": run.failure_class,
             "world_anchor": world_anchor,
             "encounter": {"http": status, "body": body},
-            "read_back": {"http": read_status}}
+            "read_back": {"http": read_status},
+            "write_outcome": outcome,
+            "idempotent_replay": outcome == "duplicate_identical",
+            "recorded_in_sfe": bool(run.obs_id or run.work_id),
+            "indexed_in_pew": read_status == 200}

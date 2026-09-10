@@ -47,7 +47,8 @@ def test_a_real_experiment_runs_once_and_is_traceable(conn, schema):
         kind="evaluate_bitstring",
         outcome_rule={"field": "solved", "op": "==", "value": True,
                       "if_true": "SURVIVED", "if_false": "FALSIFIED",
-                      "if_indeterminate": "INCONCLUSIVE"})
+                      "if_indeterminate": "INCONCLUSIVE",
+                      "aggregate": "first"})
     eid = _q.enqueue(conn, created_by="vivarium-selftest",
                      source_reason="live end-to-end proof",
                      source_evidence={"suite": "test_live_sfe"},

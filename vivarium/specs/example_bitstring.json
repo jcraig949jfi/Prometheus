@@ -1,5 +1,5 @@
 {
-  "spec_version": 2,
+  "spec_version": 3,
   "world": {
     "seed_root": 424242
   },
@@ -21,7 +21,18 @@
     "value": false,
     "if_true": "SURVIVED",
     "if_false": "FALSIFIED",
-    "if_indeterminate": "INCONCLUSIVE"
+    "if_indeterminate": "INCONCLUSIVE",
+    "aggregate": "first"
   },
-  "pew": null
+  "pew": null,
+  "repeat": {
+    "count": 1,
+    "order": "sequential",
+    "seed_derivation": "sha256_index",
+    "state": "reset",
+    "budget": {
+      "max_seconds": 120,
+      "max_observations": 1
+    }
+  }
 }
