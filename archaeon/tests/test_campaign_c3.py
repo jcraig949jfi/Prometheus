@@ -32,8 +32,9 @@ def test_plan_shape_pairing_and_arms():
     # one seed_root -> the same four IC samples for every rule (paired by construction)
     assert {r["spec"]["world"]["seed_root"] for r in rows} == {C3.SEED_ROOT}
     assert all(r["spec"]["repeat"]["count"] == 4 and r["spec"]["repeat"]["state"] == "reset" for r in rows)
-    # transform is provenance until the kind takes it; never in the payload now
-    assert all("transform" not in r["spec"]["work"]["payload"] for r in rows)
+    # transform has no executor default: every payload names it, and it equals the row's provenance
+    assert all(r["spec"]["work"]["payload"]["transform"] == r["transform"] for r in rows)
+    assert all(r["spec"]["work"]["payload"]["transform"] == "none" for r in rows if r["arm_id"] != "C3-null")
     assert all(r["spec"]["outcome_rule"]["aggregate"] == "all" for r in rows)
     if C3.INCLUDE_NULL_ARM:
         nulls = {(r["label"].split(":")[0], r["transform"]) for r in rows if r["arm_id"] == "C3-null"}

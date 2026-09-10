@@ -35,7 +35,7 @@ KIND = "ca_density_v0"
 SEED_ROOT = 930_001            # one seed_root -> the same four IC samples for every rule
 N_CELLS, RADIUS, STEPS, N_IC = 149, 3, 320, 100
 IC_DENSITIES = None            # the wrapper's convention: null = the unbiased (Bernoulli 1/2) ensemble; n_ic is per density
-INCLUDE_NULL_ARM = False       # the registered contract has no `transform` parameter yet (packet v2.1 s2.1 asks for it); the exact-symmetry arm waits
+INCLUDE_NULL_ARM = True        # Vivarium 6d5d7406f: `transform` in {none, reflect, complement, reflect_complement}, no default; null holds exactly on 6 genomes x 3 symmetries
 SUCCESS = "stable"
 N_RANDOM = 120                  # Harmonia be9c22959 F-4: multinomial region counts; E[eligible] = 9.2 of 10
 REPEAT = {"count": 4, "order": "sequential", "seed_derivation": "sha256_index",
@@ -84,7 +84,7 @@ def _spec(rule_hex: str, transform: str, hypothesis: str) -> Dict[str, Any]:
         "work": {"kind": KIND, "payload": {
             "rule_hex": rule_hex, "radius": RADIUS, "n_cells": N_CELLS, "steps": STEPS,
             "n_ic": N_IC, "ic_density_set": IC_DENSITIES,
-            "success_criterion": SUCCESS}},
+            "success_criterion": SUCCESS, "transform": transform}},
         # accuracy above the density prior is the only scalar rule that is
         # attainable for every arm; the science is in the ANALYSIS (X1)
         # v3 requires a within-run aggregate (Vivarium E16): "all" = the
@@ -108,7 +108,7 @@ def plan() -> List[Dict[str, Any]]:
         nonlocal i
         i += 1
         rows.append({"index": i, "family_id": "fam-C3-1", "arm_id": arm, "label": label,
-                     "rule_hex": rule_hex, "transform": transform,   # provenance; not in the payload until the kind takes it
+                     "rule_hex": rule_hex, "transform": transform,   # also in the payload (no executor default exists)
                      "request_key": "{}-{:03d}".format(CAMPAIGN_ID, i),
                      "spec": _spec(rule_hex, transform, hyp)})
 
@@ -135,10 +135,10 @@ def check(rows: Optional[List[Dict[str, Any]]] = None) -> Dict[str, Any]:
         arms[r["arm_id"]] = arms.get(r["arm_id"], 0) + 1
     out: Dict[str, Any] = {"campaign": CAMPAIGN_ID, "rows": len(rows), "arms": arms,
                            "null_arm_included": INCLUDE_NULL_ARM,
-                           "null_arm_blocker": (None if INCLUDE_NULL_ARM else
-                               "ca_density_v0 has no `transform` parameter; the exact-symmetry "
-                               "arm (C3-null) waits for Vivarium to expose reflect / complement / "
-                               "reflect_complement per packet v2.1 s2.1"),
+                           "null_arm_blocker": (None if INCLUDE_NULL_ARM else "INCLUDE_NULL_ARM is off"),
+                           "spacetime_caveat": "under a transform the spacetime digest is of the rule actually run on "
+                                               "the library's own IC draw, not the image of the untransformed diagram "
+                                               "(spacetime_is_image_of_untransformed=false); the correctness mask IS exact",
                            "observations_planned": len(rows) * REPEAT["count"],
                            "shared_ic_samples": REPEAT["count"],
                            "independent_unit_for_accuracy": "IC sample (shared across rules); never the rule or the repeat",
