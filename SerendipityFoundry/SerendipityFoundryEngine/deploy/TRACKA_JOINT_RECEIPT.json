@@ -3,19 +3,19 @@
   "steps": [
     {
       "step": "principals registered",
-      "producer": "cli_bc8ce441260d0f81a15c41d1",
-      "executor": "cli_53be95a667a7b726c173442e"
+      "producer": "cli_92c632ea64411c9c37831817",
+      "executor": "cli_7fde303d9ba7ee169424edfe"
     },
     {
       "step": "worlds created",
-      "source_world": "wld_5da4532154948d74cf045349",
-      "execution_world": "wld_8fb67057c8fba1ceb052f0b4",
-      "topology_group": "grp_9fc647f223ddc63a3c79e60d"
+      "source_world": "wld_674178a269f4e994b8f38609",
+      "execution_world": "wld_d7f29a25990f3ff897f147ed",
+      "topology_group": "grp_1835f870e3bd5115b180ef9c"
     },
     {
       "step": "producer sealed its inputs",
-      "root": "sha256:7bfcb6898d7516432ea07438bd762a6151ee181cfc1d4ab6f6613c8e59a0f5c3",
-      "dependency": "sha256:875effe8dc1bddb16a96622ae12f4d7ded58dcea932dda903bc0bb5658639b33",
+      "root": "sha256:aada5ad32c74faa50366bf0a10dc890fe267d6e98e179b7432da7b776e14f4de",
+      "dependency": "sha256:f714a2e2be1bce9fa2f215dd9fec06b3e99b6e02332ee8ae0e8f10606d3a5d4e",
       "bytes": 521
     },
     {
@@ -23,8 +23,8 @@
       "attempt": "attempt-1",
       "reservations": 2,
       "cost_events": [
-        "cost_5baf1eccc01941567d6cb27d",
-        "cost_ce6e6360c2ddc6d5bc74a8be"
+        "cost_1d1958bb1ff3a250b44f9b1c",
+        "cost_9261533202dc5f4aa21cd5b2"
       ],
       "note": "the bytes moved, so the retrieval it completed is charged; it is not released, because a release would claim the fetch never happened"
     },
@@ -58,7 +58,7 @@
     {
       "check": "register() retained the engine-issued client_id",
       "pass": true,
-      "detail": "{'producer': 'cli_bc8ce441260d0f81a15c41d1', 'executor': 'cli_53be95a667a7b726c173442e'}"
+      "detail": "{'producer': 'cli_92c632ea64411c9c37831817', 'executor': 'cli_7fde303d9ba7ee169424edfe'}"
     },
     {
       "check": "no substitute principal is invented from a bare token",
@@ -68,7 +68,7 @@
     {
       "check": "repr names the principal and never the credential",
       "pass": true,
-      "detail": "EngineClient(base_url='http://127.0.0.1:8877', client_id='cli_53be95a667a7b726c173442e', authenticated=True)"
+      "detail": "EngineClient(base_url='http://127.0.0.1:8877', client_id='cli_7fde303d9ba7ee169424edfe', authenticated=True)"
     },
     {
       "check": "the write-side digest gate sealed both artifacts",
@@ -123,7 +123,7 @@
     {
       "check": "a retried reserve returns the ORIGINAL reservation",
       "pass": true,
-      "detail": "{'reservation_id': 'rsv_1ba2f43da912204490ce93ad', 'world_id': 'wld_8fb67057c8fba1ceb052f0b4', 'resource': 'cpu_s', 'amount': 1.0, 'state': 'SETTLED', 'stage': 'execution', 'attempt_id': 'attempt-2', 'cost_event_id': 'cost_93aa875a898fa7c5d7f498b1', 'settled_amount': 0.0, 'reserved_seq': 29, 'create"
+      "detail": "{'reservation_id': 'rsv_c991eee39d95184a4273e110', 'world_id': 'wld_d7f29a25990f3ff897f147ed', 'resource': 'cpu_s', 'amount': 1.0, 'state': 'SETTLED', 'stage': 'execution', 'attempt_id': 'attempt-2', 'cost_event_id': 'cost_0de5237ef06a46b70609aa44', 'settled_amount': 0.0, 'reserved_seq': 29, 'create"
     },
     {
       "check": "no reservation left open",
@@ -153,17 +153,17 @@
     {
       "check": "publication is idempotent under its key",
       "pass": true,
-      "detail": "({'artifact_id': 'sha256:7bbbe1119bc342665b585c8d787d8e11416946b537f6a37b69eb3ed5fc8176e9', 'blob_hash': 'sha256:bfa11881efdede6e1c6ab047e871e12b32ab9e188fcc1dfa5205b4b948e9b614', 'origin': 'NATIVE'}, {'artifact_id': 'sha256:7bbbe1119bc342665b585c8d787d8e11416946b537f6a37b69eb3ed5fc8176e9', 'blob_ha"
+      "detail": "({'artifact_id': 'sha256:6e2d78d6fdb02c77dc50c6ebc60795738de6977f039ac6044fb933a2526d34bc', 'blob_hash': 'sha256:bfa11881efdede6e1c6ab047e871e12b32ab9e188fcc1dfa5205b4b948e9b614', 'origin': 'NATIVE'}, {'artifact_id': 'sha256:6e2d78d6fdb02c77dc50c6ebc60795738de6977f039ac6044fb933a2526d34bc', 'blob_ha"
     },
     {
       "check": "the shared source is charged once and attributed, not re-billed",
       "pass": true,
-      "detail": "[{'schema': 'archaeon.cost.counterfactual.v0', 'arm': 'uses_shared_source', 'uses_source': True, 'physical_cost_event_id': 'cost:41381050a831d02e4466840e', 'reuse_horizon': 2, 'attributed': {'wall_seconds': 0.025182349956594408, 'cpu_seconds': 0.0078125, 'gpu_seconds': None, 'output_bytes': 260.5, '"
+      "detail": "[{'schema': 'archaeon.cost.counterfactual.v0', 'arm': 'uses_shared_source', 'uses_source': True, 'physical_cost_event_id': 'cost:045dd8b02b00d06d107b829e', 'reuse_horizon': 2, 'attributed': {'wall_seconds': 0.015359550016000867, 'cpu_seconds': 0.0, 'gpu_seconds': None, 'output_bytes': 260.5, 'items'"
     },
     {
       "check": "an unavailable producer quantity stays unavailable in attribution",
       "pass": true,
-      "detail": "{'wall_seconds': 0.025182349956594408, 'cpu_seconds': 0.0078125, 'gpu_seconds': None, 'output_bytes': 260.5, 'items': 2.5}"
+      "detail": "{'wall_seconds': 0.015359550016000867, 'cpu_seconds': 0.0, 'gpu_seconds': None, 'output_bytes': 260.5, 'items': 2.5}"
     },
     {
       "check": "the join is capable of matching (control)",
@@ -174,6 +174,11 @@
       "check": "nothing the engine sealed is missing from the reconciliation",
       "pass": true,
       "detail": "[{'key': 'attempt-1|retrieval', 'on_producer': False, 'on_executor': True}, {'key': 'attempt-2|execution', 'on_producer': False, 'on_executor': True}, {'key': 'attempt-2|retrieval', 'on_producer': False, 'on_executor': True}]"
+    },
+    {
+      "check": "Archaeon's producer vector is refused by the engine as it stands, and accepted only after all three fixes",
+      "pass": true,
+      "detail": "[{'vector': 'as Archaeon emits it', 'http': 422, 'message': None, 'unknown': None, 'method': None, 'scope': None}, {'vector': 'minus enforcement_class', 'http': 422, 'message': 'unknown measurement method', 'unknown': None, 'method': 'time.perf_counter delta', 'scope': None}, {'vector': 'plus method"
     },
     {
       "check": "the four engine-decided rejections still fire",
@@ -192,6 +197,11 @@
     }
   ],
   "findings": [
+    {
+      "code": "TRACKA-VECTOR-1",
+      "owner": "Archaeon",
+      "finding": "A producer resource entry from archaeon/producer/costs.py cannot be recorded by the engine as it stands. Posted live to /v2/worlds/{id}/cost-events it is refused three times in sequence: (1) 'enforcement_class' is an extra key, refused by TWO independent layers -- the request model is extra='forbid' (sfe/api.py:52-53, ResourceEntry at :347), and the runtime's own five-name allowlist would refuse it again; (2) the prose ('time.perf_counter delta') is not one of counter|clock|sampler|declared|derived; (3) scope 'producer' is not one of attempt|job|campaign|shared. Only after all three is it accepted. NOTE THE FIRST ONE IS A STRIP, NOT A RENAME: the engine resolves the enforcement class from the LIMIT and stamps it onto the entry itself, precisely so a caller cannot declare its own spend exempt from a cap it was given -- so sending the field under the engine's spelling would be refused for the same reason, and the class should be read back off the response. The prose the method strings currently carry (which counter, whose process) is real provenance and needs somewhere to live; `refs` is the free-form slot on record_cost_event."
+    },
     {
       "code": "TRACKA-RECON-1",
       "owner": "Archaeon",
@@ -221,7 +231,7 @@
   ],
   "engine": {
     "base_url": "http://127.0.0.1:8877",
-    "engine_instance_id": "eng_51d0ac54a95bb5325bf538f0",
+    "engine_instance_id": "eng_51b56ae45788ac7c7dbcad9f",
     "engine_source_hash": "sha256:eb3bbadc083c48d56b5ef8181ee2e627e5b11bce8ab03e751d551a4fe1cbd564",
     "engine_source_hash_of_this_import": "sha256:eb3bbadc083c48d56b5ef8181ee2e627e5b11bce8ab03e751d551a4fe1cbd564",
     "schema_version": 8,
@@ -229,28 +239,28 @@
     "db": "C:\\Users\\jcrai\\AppData\\Local\\Temp\\trackA_dev\\trackA.db"
   },
   "principals": {
-    "producer_client_id": "cli_bc8ce441260d0f81a15c41d1",
-    "executor_client_id": "cli_53be95a667a7b726c173442e",
-    "outsider_client_id": "cli_d866565196c881dc29a6c459",
+    "producer_client_id": "cli_92c632ea64411c9c37831817",
+    "executor_client_id": "cli_7fde303d9ba7ee169424edfe",
+    "outsider_client_id": "cli_58b53e526b8388eade05c620",
     "engine_issued": true,
     "credential_in_receipt": false
   },
   "artifacts": {
     "root": {
-      "artifact_id": "sha256:7bfcb6898d7516432ea07438bd762a6151ee181cfc1d4ab6f6613c8e59a0f5c3",
+      "artifact_id": "sha256:aada5ad32c74faa50366bf0a10dc890fe267d6e98e179b7432da7b776e14f4de",
       "digest": "sha256:9c8267ee115cc8b266910f775236c3d5ad05de3f47a04c6bc7f55fe1860c3fe1",
       "bytes": 387
     },
     "dependency": {
-      "artifact_id": "sha256:875effe8dc1bddb16a96622ae12f4d7ded58dcea932dda903bc0bb5658639b33",
+      "artifact_id": "sha256:f714a2e2be1bce9fa2f215dd9fec06b3e99b6e02332ee8ae0e8f10606d3a5d4e",
       "digest": "sha256:84cf844c434d4181d9aa353519dcb696593f1323b6944c5752845d03c49329a2",
       "bytes": 134
     },
-    "source_world": "wld_5da4532154948d74cf045349"
+    "source_world": "wld_674178a269f4e994b8f38609"
   },
   "result": "PASS",
   "cost_report": {
-    "world_id": "wld_8fb67057c8fba1ceb052f0b4",
+    "world_id": "wld_d7f29a25990f3ff897f147ed",
     "cost_events": 5,
     "by_stage": {
       "retrieval": 4,
@@ -298,12 +308,12 @@
         "cpu_s": 0.0
       },
       "exhausted": false,
-      "budget_root": "wld_8fb67057c8fba1ceb052f0b4",
+      "budget_root": "wld_d7f29a25990f3ff897f147ed",
       "scope": "LINEAGE_ROOT"
     }
   },
   "publication": {
-    "artifact_id": "sha256:7bbbe1119bc342665b585c8d787d8e11416946b537f6a37b69eb3ed5fc8176e9",
+    "artifact_id": "sha256:6e2d78d6fdb02c77dc50c6ebc60795738de6977f039ac6044fb933a2526d34bc",
     "digest": "sha256:bfa11881efdede6e1c6ab047e871e12b32ab9e188fcc1dfa5205b4b948e9b614",
     "idem_key": "trackA:publish:attempt-2",
     "idempotent_replay": true,
@@ -313,18 +323,18 @@
   "counterfactual": {
     "reuse_horizon": 2,
     "horizon_declared": "before the attempts ran, in this file",
-    "physical_cost_event_id": "cost:41381050a831d02e4466840e",
+    "physical_cost_event_id": "cost:045dd8b02b00d06d107b829e",
     "physical_charged_once": true,
     "arms": [
       {
         "schema": "archaeon.cost.counterfactual.v0",
         "arm": "uses_shared_source",
         "uses_source": true,
-        "physical_cost_event_id": "cost:41381050a831d02e4466840e",
+        "physical_cost_event_id": "cost:045dd8b02b00d06d107b829e",
         "reuse_horizon": 2,
         "attributed": {
-          "wall_seconds": 0.025182349956594408,
-          "cpu_seconds": 0.0078125,
+          "wall_seconds": 0.015359550016000867,
+          "cpu_seconds": 0.0,
           "gpu_seconds": null,
           "output_bytes": 260.5,
           "items": 2.5
@@ -335,7 +345,7 @@
         "schema": "archaeon.cost.counterfactual.v0",
         "arm": "rebuilds_its_own",
         "uses_source": false,
-        "physical_cost_event_id": "cost:41381050a831d02e4466840e",
+        "physical_cost_event_id": "cost:045dd8b02b00d06d107b829e",
         "reuse_horizon": 2,
         "attributed": {
           "wall_seconds": 0.0,
@@ -378,11 +388,11 @@
       }
     ],
     "engine_cost_event_ids": [
-      "cost_5baf1eccc01941567d6cb27d",
-      "cost_ce6e6360c2ddc6d5bc74a8be",
-      "cost_a4a843157424655b6410652d",
-      "cost_2264917cb1d8be2bb0b05694",
-      "cost_93aa875a898fa7c5d7f498b1"
+      "cost_1d1958bb1ff3a250b44f9b1c",
+      "cost_9261533202dc5f4aa21cd5b2",
+      "cost_8ded3037b6b374a3d60c1763",
+      "cost_e4b73c77041f5b52600da257",
+      "cost_0de5237ef06a46b70609aa44"
     ],
     "join_self_test": {
       "matched": [
@@ -405,6 +415,59 @@
       ],
       "engine_side": "absent (Daedalus C4-3)"
     }
+  },
+  "producer_vector_on_the_wire": {
+    "sample_entry": {
+      "resource": "wall_seconds",
+      "quantity": 2.200016751885414e-06,
+      "unit": "s",
+      "method": "time.perf_counter delta",
+      "enforcement_class": "measured",
+      "scope": "producer"
+    },
+    "peel": [
+      {
+        "vector": "as Archaeon emits it",
+        "http": 422,
+        "message": null,
+        "unknown": null,
+        "method": null,
+        "scope": null
+      },
+      {
+        "vector": "minus enforcement_class",
+        "http": 422,
+        "message": "unknown measurement method",
+        "unknown": null,
+        "method": "time.perf_counter delta",
+        "scope": null
+      },
+      {
+        "vector": "plus method -> clock",
+        "http": 422,
+        "message": "unknown attribution scope",
+        "unknown": null,
+        "method": null,
+        "scope": "producer"
+      },
+      {
+        "vector": "plus scope -> attempt",
+        "http": 200
+      }
+    ],
+    "engine_measurement_methods": [
+      "clock",
+      "counter",
+      "declared",
+      "derived",
+      "sampler"
+    ],
+    "engine_attribution_scopes": [
+      "attempt",
+      "campaign",
+      "job",
+      "shared"
+    ]
   },
   "rejections": {
     "engine_decided": {
@@ -438,21 +501,21 @@
     "scope": "Of the 15 rejection classes in viv/artifacts.py, these 4 are decided by the engine; the other 11 are contract, codec, interface, closure and limit checks the client makes without the engine, and integration did not change their guarantee, so they are covered by vivarium/tests/test_h0h5_artifacts.py rather than re-run here."
   },
   "ledger": {
-    "execution_world": "wld_8fb67057c8fba1ceb052f0b4",
-    "head_hash": "sha256:945158a0aac98555067ddc83203b8559cdb0991965f9a1e5ecfdba69847823d1",
-    "source_world": "wld_5da4532154948d74cf045349",
+    "execution_world": "wld_d7f29a25990f3ff897f147ed",
+    "head_hash": "sha256:2096ec6c553842281b789e852b40c459d691c2764a1fbafbc2d1b5c9bda5198c",
+    "source_world": "wld_674178a269f4e994b8f38609",
     "attempts": [
       {
         "attempt_id": "attempt-1",
         "outcome": "INTERRUPTED",
         "stage_reached": "retrieval",
         "reservations": [
-          "rsv_c982d9a89b1fb7db75ca8a36",
-          "rsv_a56c2298aac056d5efa68b8f"
+          "rsv_e76300f785f1f71d21cdbef1",
+          "rsv_54af99c60e0cef19b3bb6545"
         ],
         "cost_events": [
-          "cost_5baf1eccc01941567d6cb27d",
-          "cost_ce6e6360c2ddc6d5bc74a8be"
+          "cost_1d1958bb1ff3a250b44f9b1c",
+          "cost_9261533202dc5f4aa21cd5b2"
         ],
         "load_receipt": {
           "closure_size": 2,
@@ -475,14 +538,14 @@
         "attempt_id": "attempt-2",
         "outcome": "COMPLETED",
         "reservations": [
-          "rsv_a20d78ddfb8126ba047ca2ce",
-          "rsv_4bd1bc3224c7175a4986c698",
-          "rsv_1ba2f43da912204490ce93ad"
+          "rsv_a33ebb1da66676d2bbdb3254",
+          "rsv_9af8123a5c93617e33512ab6",
+          "rsv_c991eee39d95184a4273e110"
         ],
         "cost_events": [
-          "cost_a4a843157424655b6410652d",
-          "cost_2264917cb1d8be2bb0b05694",
-          "cost_93aa875a898fa7c5d7f498b1"
+          "cost_8ded3037b6b374a3d60c1763",
+          "cost_e4b73c77041f5b52600da257",
+          "cost_0de5237ef06a46b70609aa44"
         ],
         "load_receipt": {
           "closure_size": 2,

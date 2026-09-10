@@ -106,11 +106,19 @@ def identities(cand_hash, cand_schema, deployed, live, dev_instance):
         "git_commit": {
             "value": git(["rev-parse", "HEAD"]),
             "branch": git(["rev-parse", "--abbrev-ref", "HEAD"]),
+            # HEAD goes stale the moment anyone commits anything, including
+            # work that touches none of these files. The commit that last
+            # TOUCHED the build files does not, so both are recorded and the
+            # second is the one worth chasing.
+            "build_files_commit": git(["log", "-1", "--format=%H", "--"]
+                                      + FILES),
             "names": "a TREE in history",
             "authority": "best-effort. It is the tree this candidate was cut "
                          "from; it is NOT proof that the tree reproduces the "
                          "build, and /v2/version's source_commit has named a "
-                         "commit that could not.",
+                         "commit that could not. HEAD in particular moves for "
+                         "reasons unrelated to this build, which is why "
+                         "build_files_commit is recorded beside it.",
         },
         "engine_source_hash": {
             "value": cand_hash,
@@ -349,6 +357,8 @@ def main():
     print("    git_commit          %s (%s)  -- names a TREE, best-effort"
           % ((ids["git_commit"]["value"] or "?")[:12],
              ids["git_commit"]["branch"]))
+    print("      build files last touched at %s"
+          % (ids["git_commit"]["build_files_commit"] or "?")[:12])
     print("    engine_source_hash  %s  -- names the BUILD, authoritative"
           % ids["engine_source_hash"]["value"])
     print("    schema_version      %s  -- names the LEDGER'S SHAPE"
