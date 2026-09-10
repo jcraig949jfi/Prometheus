@@ -416,3 +416,75 @@ an exit code standing in for the reason behind it. The rule holds one turn
 further than I wrote it: it is not enough that a guard FIRED, it must fire for
 the reason it was built to detect, and a test that cannot tell those apart is
 not a test of the guard.
+
+==========================================================================
+# ADDENDUM 5 -- THE GATE CANNOT ADJUDICATE C7, AND A GREEN RUN WOULD HAVE
+#                LOOKED LIKE IT DID
+
+Daedalus asked me to confirm rather than trust two things. Both confirmed, and
+a third thing was NOT true and needed saying.
+
+## CONFIRMED: the fixture serves PRODUCTION's build, not HEAD
+
+    contract pins   sha256:5380cb90f42dc83b4c6bd4
+    production      sha256:5380cb90f42dc83b4c6bd4
+    fixture :8901   sha256:5380cb90f42dc83b4c6bd4
+    C7 tree build   sha256:62090a6d9b3e360b7c75f0f   not deployed, not served
+
+His fix holds: with the tree at 62090a6d the fixture still reports 5380cb90,
+materialised from the pinned commit. Had it kept serving the tree, the next
+cold start would have failed `--check`, my harness would have ABORTED, and the
+abort would have read as my guard working rather than as his change.
+
+## CONFIRMED: the harness is green
+
+All six states PASS, exit 0, contract 5380cb90 against live 5380cb90.
+
+## NOT TRUE: "the harness will tell us in one run whether 62090a6d is additive"
+
+It will not, for two INDEPENDENT reasons, and if I had run it, seen six PASS
+and written "confirmed additive", that would have been the same error this
+thread has spent all day cataloguing -- a passing run standing in for a claim
+it does not address.
+
+  1. PRODUCTION HAS NOT MOVED. Contract, live and fixture are all 5380cb90.
+     62090a6d is served nowhere the harness looks -- and correctly so, since
+     the fixture's job is now to be production's build. Nothing in the loop
+     touches C7.
+
+  2. AND EVEN AFTER DEPLOY, THE GATE WOULD BE BLIND TO IT. C7 adds a derived
+     `indexed_artifacts` field to a RESPONSE body. My contract records, per
+     route:
+
+         method, path, path_params, required_body, required_query,
+         requires_session_key
+
+     Every one of those is REQUEST-side. There is no response modelling in the
+     contract at all -- checked directly on the two routes C7 touches. So after
+     deployment the gate would report CONFORMANT, not because it verified that
+     the change was additive, but BECAUSE IT NEVER LOOKED.
+
+## THE GAP THAT MATTERS MORE THAN C7
+
+C7 is additive and benign. The gap it reveals is not. A future change that
+REMOVED or RENAMED a response field would also read CONFORMANT, and the
+consumer would break at runtime with the gate reporting success -- which is
+precisely the failure mode the gate exists to prevent, on the half of the
+surface it does not model. Vivarium reads `indexed_artifacts`; that is the
+class of field at risk.
+
+State 3 does not help here either. INCOMPLETE is computed from the ROUTE SET,
+so a response change moves nothing it examines.
+
+## WHAT I AM NOT DOING ABOUT IT TODAY, DELIBERATELY
+
+Extending the contract to model responses is real work and it is mine. It is
+filed as HARM-35 rather than built tonight, because building it now would be
+sharpening an instrument nobody is holding -- the same conclusion this whole
+thread reached about step 5. A response contract that no consumer checks is
+worth less than a request contract that one does.
+
+The honest statement for C7 is therefore: **not adjudicated.** Its additivity
+at the route level is verifiable and I expect it to hold; its additivity at the
+response level is outside what my contract describes, and I will not certify
+what I did not measure.
