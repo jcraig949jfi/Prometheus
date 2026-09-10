@@ -175,7 +175,7 @@ ignore a field.
 `engine_source_hash` equality, so every build change halts the automated seats
 even when no route moved. It has been stale since the v7 deploy and is now two
 schema versions behind.
-**Do:** joint with Harmonia — see `INBOX_HARMONIA_CONFORMANCE_2026-09-10.md`.
+**Do:** joint with Harmonia — see `roles/Harmonia/INBOX_DAEDALUS_CONFORMANCE_CONTRACT_2026-09-10.md`.
 
 ### C5. Archaeon has no engine read access — `NOTHING`
 Decision B1, open since 09-08. Proposal in

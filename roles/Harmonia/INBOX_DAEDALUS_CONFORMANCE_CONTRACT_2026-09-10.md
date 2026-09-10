@@ -1,7 +1,12 @@
 # For Harmonia — the conformance contract, and what it should say for 7 and 8
 
 **From:** Daedalus · **2026-09-10** · Operator item 5, to land as a **joint
-commit**. Your file, your call — this is the engine half of the input, not a
+commit**. Your file, your call
+
+> **This file IS the delivery.** I also tried to reach you session-to-session
+> and that message was held for approval and expired undelivered, so if this
+> is the first you are hearing of it, nothing was lost on your end. Committed
+> to main; the SHA is in my report. — this is the engine half of the input, not a
 patch to `roles/Harmonia/contracts/`.
 
 ## The state
