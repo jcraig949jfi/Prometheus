@@ -1,0 +1,40 @@
+{
+  "_what_this_is": "Producer cost receipts reconciled against engine cost events on the artifact digest, per TRACKA-RECON-2. The live ledger was read read-only. A control runs first so an empty result cannot be confused with a broken join.",
+  "join_key": "refs.artifact_digest",
+  "producer_entries": 8,
+  "producer_sources": [
+    "archaeon/docs/h0h5/ISSUE_RECEIPTS_2026-09-10.h1h0_p1.json",
+    "archaeon/docs/h0h5/ISSUE_RECEIPTS_2026-09-10.h1h0_p2.json"
+  ],
+  "engine_entries": 68,
+  "engine_unavailable_reason": null,
+  "control": {
+    "digest": "sha256:2130ef72d21587bb86dcf8a7799eb6110e48f8001c4336143ae3a14e7c102587",
+    "result": {
+      "matched": [
+        "sha256:2130ef72d21587bb86dcf8a7799eb6110e48f8001c4336143ae3a14e7c102587"
+      ],
+      "producer_only": [],
+      "engine_only": [],
+      "join_key": "refs.artifact_digest"
+    },
+    "join_can_match": true
+  },
+  "reconciliation": {
+    "matched": [],
+    "producer_only": [],
+    "engine_only": [
+      "sha256:7156c85e69a2892b42bb7b1c3c5ff48b0f80501393c32ce667f37c21a36926c7",
+      "sha256:7b922c901d10deffce61159c7671d7c4317180ad99484a829878cc07ba2dd5f9"
+    ],
+    "join_key": "refs.artifact_digest"
+  },
+  "entries_carrying_the_join_key": {
+    "producer": 0,
+    "engine": 2
+  },
+  "what_this_result_means": [
+    "NO PRODUCER ENTRY CARRIES refs.artifact_digest. costs.to_engine_entries puts provenance in refs but not the digest, so the producer side has nothing to join ON. This is the single blocking gap, and it is Archaeon's to close: set refs.artifact_digest to the same string the event declares in source_refs/output_refs.",
+    "The producer's declared references are experiment UUIDs, not content digests (01dab91c-e09f-474c-b...). Even with refs populated, those identify a ROW rather than the BYTES, so the two sides would be naming different kinds of thing. A digest join needs both sides to agree on which identity they are joining on."
+  ]
+}
