@@ -57,7 +57,14 @@ N_BITS = 3
 N_SOURCE = 24
 N_TARGET = 12
 K_PACK = 4                       # == seed_probe_count: the fresh arm's equal allowance
-RELEVANCE_LICENSED = False       # operator sets on Harmonia's fairness ruling; see docstring
+RELEVANCE_LICENSED = False       # Harmonia 2026-09-10 (745d9c698): signature_v0 is FAIR, and INERT at this scope -- keep False
+#: Harmonia's re-scope condition: packs differ only when |pool| > K, substantially
+#: only at |pool| >= 2K; 3-bit tasks have 8 possible witnesses, so relevance is
+#: not testable at 3 bits with K=4 at any sample size. The H1 contrast at this
+#: scope is TRANSPORT (fresh vs random_pack); any pack-vs-pack comparison is
+#: ORDER-ONLY on identical content and is labelled so.
+RESCOPE_MIN_POOL_OVER_K = 2
+H1_CONTRAST_LABEL = "transport_only; pack-vs-pack would be order_only (identical sets)"
 TRACE_BOUND = 32
 
 #: Declared, not tuned (Vivarium's demonstration showed 6000 spreads the
@@ -350,8 +357,11 @@ def plan_phase2(source_results: Sequence[Dict[str, Any]], split: Optional[Dict[s
         add("fam-H0-1", "S10", t, rp, None, "H0 S10: failures only (random-compatible pack)")
         add("fam-H0-1", "S01", t, None, library, "H0 S01: library only")
         add("fam-H0-1", "S11", t, rp, library, "H0 S11: both")
+    distinct = len({tuple(p["inputs"]) for p in pool})
     return {"rows": rows, "artifacts": artifacts, "withheld": withheld,
-            "relevance_licensed": RELEVANCE_LICENSED, "pool_size": len(pool),
+            "relevance_licensed": RELEVANCE_LICENSED, "pool_size": len(pool), "pool_distinct": distinct,
+            "h1_contrast": H1_CONTRAST_LABEL,
+            "relevance_testable_here": distinct >= RESCOPE_MIN_POOL_OVER_K * K_PACK,
             "library_provenance": library["provenance"]}
 
 

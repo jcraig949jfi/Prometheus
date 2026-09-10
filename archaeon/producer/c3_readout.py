@@ -29,6 +29,7 @@ from typing import Any, Dict, List, Optional
 CS = "cs-c3-2"
 IDENTITY_FIELDS = ("accuracy_stable", "n_incorrect_stable", "mask_digest_stable",
                    "accuracy_at_T", "n_incorrect_at_T", "mask_digest_at_T", "misclassified_ic")
+#: plus the CORRECT COUNT (n_ic_total - n_incorrect) as an integer, per Harmonia's gate
 
 
 def fetch(conn, candidate_set: str = CS) -> List[Dict[str, Any]]:
@@ -57,13 +58,33 @@ def null_identity(rows: List[Dict[str, Any]]) -> Dict[str, Any]:
         if twin is None or len(twin["repeats"]) != len(r["repeats"]) or not r["repeats"]:
             rec["verdict"] = "INDETERMINATE"; rec["reason"] = "twin missing or repeat count differs"
             out["indeterminate"] += 1; out["checked"].append(rec); continue
-        diffs = []
+        diffs, indeterminate, flip_signature = [], [], []
         for i, (a, b) in enumerate(zip(twin["repeats"], r["repeats"])):
+            # Harmonia's gate (RULING_H1H0_FAIRNESS_C3_2_ANALYSIS): all three of
+            # correct count, incorrect count and mask digest, as integers /
+            # exact strings; accuracy-and-count without the digest is
+            # INDETERMINATE (two incorrect sets can share a count); accuracy
+            # == 1 - original is the signature of a target flip not applied.
+            n = a.get("n_ic_total") or b.get("n_ic_total")
+            if not a.get("mask_digest_stable") or not b.get("mask_digest_stable"):
+                indeterminate.append({"repeat": i, "reason": "mask digest absent"})
+                continue
             for f in IDENTITY_FIELDS:
                 if a.get(f) != b.get(f):
                     diffs.append({"repeat": i, "field": f, "twin": str(a.get(f))[:60], "transformed": str(b.get(f))[:60]})
+            if n and a.get("n_incorrect_stable") is not None and b.get("n_incorrect_stable") is not None:
+                ca, cb = n - a["n_incorrect_stable"], n - b["n_incorrect_stable"]
+                if ca != cb:
+                    diffs.append({"repeat": i, "field": "correct_count", "twin": ca, "transformed": cb})
+                if ca + cb == n and ca != cb:
+                    flip_signature.append(i)
+        if indeterminate and not diffs:
+            rec["verdict"] = "INDETERMINATE"; rec["reason"] = indeterminate
+            out["indeterminate"] += 1; rec["diffs"] = []; out["checked"].append(rec); continue
         rec["verdict"] = "IDENTICAL" if not diffs else "NOT_IDENTICAL"
         rec["diffs"] = diffs
+        if flip_signature:
+            rec["target_flip_not_applied_signature"] = flip_signature
         rec["spacetime_is_image_of_untransformed"] = [x.get("spacetime_is_image_of_untransformed") for x in r["repeats"]]
         rec["twin_accuracy_by_sample"] = [x.get("accuracy_stable") for x in twin["repeats"]]
         out["identical" if not diffs else "not_identical"] += 1

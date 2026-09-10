@@ -10,7 +10,7 @@ def _row(arm, label, reps, status="completed"):
 
 
 def _rep(acc, n_inc, digest, mis=(0, 1)):
-    return {"accuracy_stable": acc, "n_incorrect_stable": n_inc, "mask_digest_stable": digest,
+    return {"n_ic_total": 100, "accuracy_stable": acc, "n_incorrect_stable": n_inc, "mask_digest_stable": digest,
             "accuracy_at_T": acc, "n_incorrect_at_T": n_inc, "mask_digest_at_T": digest,
             "misclassified_ic": list(mis), "criteria_agree": True,
             "spacetime_is_image_of_untransformed": False}
@@ -28,7 +28,7 @@ def test_null_identity_compares_masks_not_spacetime_and_reports_all_three_verdic
     assert out["identical"] == 1 and out["not_identical"] == 1 and out["indeterminate"] == 1
     assert "spacetime_digest" not in out["fields"]
     diff_fields = {d["field"] for c in out["checked"] for d in c.get("diffs", [])}
-    assert diff_fields == {"accuracy_stable", "n_incorrect_stable", "mask_digest_stable", "accuracy_at_T", "n_incorrect_at_T", "mask_digest_at_T"}
+    assert diff_fields == {"accuracy_stable", "n_incorrect_stable", "mask_digest_stable", "accuracy_at_T", "n_incorrect_at_T", "mask_digest_at_T", "correct_count"}
 
 
 def test_icc1_known_cases():
@@ -51,3 +51,17 @@ def test_readout_excludes_null_arm_from_icc_and_marks_partial():
     assert r["d3_over_c3"]["status"] == "PARTIAL"
     md = R.to_markdown(r)
     assert "PARTIAL" in md and "exp:reflect -> IDENTICAL" in md
+
+
+def test_harmonia_gate_flags_a_missing_digest_as_indeterminate_and_a_target_flip_by_signature():
+    twin = [_rep(0.58, 42, "sha256:a")]
+    nodig = _rep(0.58, 42, None); nodig["mask_digest_stable"] = None
+    flipped = _rep(0.42, 58, "sha256:z")                       # accuracy = 1 - original
+    rows = [_row("C3-hist", "exp", twin),
+            _row("C3-null", "exp:reflect", [nodig]),
+            _row("C3-null", "exp:complement", [flipped])]
+    out = R.null_identity(rows)
+    v = {c["transform"]: c for c in out["checked"]}
+    assert v["reflect"]["verdict"] == "INDETERMINATE"
+    assert v["complement"]["verdict"] == "NOT_IDENTICAL" and v["complement"]["target_flip_not_applied_signature"] == [0]
+    assert any(d["field"] == "correct_count" for d in v["complement"]["diffs"])

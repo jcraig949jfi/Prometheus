@@ -122,3 +122,11 @@ def test_failure_pool_accepts_the_live_case_shape_and_the_bare_vector():
                                      {"inputs": None, "reason": "no_witness_and_not_full_coverage"}]}}
     pool = H.failure_pool([live])
     assert [p["inputs"] for p in pool] == [[1, 1, 1], [0, 1, 0]]
+
+
+def test_plan_reports_the_order_only_scope_and_the_rescope_condition():
+    split = H.task_split()
+    p2 = H.plan_phase2(_fake_source_results(split), split)
+    assert p2["h1_contrast"].startswith("transport_only") and "pool_distinct" in p2
+    assert p2["relevance_testable_here"] == (p2["pool_distinct"] >= 2 * H.K_PACK)
+    assert H.RELEVANCE_LICENSED is False

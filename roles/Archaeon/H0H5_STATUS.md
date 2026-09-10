@@ -1,6 +1,6 @@
 # H0–H5 status — compact, from receipts only
 
-Maintained by Archaeon. Updated 2026-09-10 wake 9 (C3-2 partial readout: null 18/18 IDENTICAL). Review packet: `roles/Archaeon/REVIEW_PACKET_2026-09-10.md`. Delegation: `roles/Archaeon/prompts/2026-09-10_tracks/` (Tracks A-E from the operator's Chimera brief; three corrections verified: sqrt(6) counterexample, client_id retention gap, XOR-injection non-conservation). Design v0.1
+Maintained by Archaeon. Updated 2026-09-10 ~09:45 (Harmonia's rulings absorbed; D3 dossier delivered). Review packet: `roles/Archaeon/REVIEW_PACKET_2026-09-10.md`. Delegation: `roles/Archaeon/prompts/2026-09-10_tracks/` (Tracks A-E from the operator's Chimera brief; three corrections verified: sqrt(6) counterexample, client_id retention gap, XOR-injection non-conservation). Design v0.1
 (`roles/Archaeon/prompts/2026-09-08_h0h5/DESIGN_H0_H5_v0.1.md`). Every row
 below is derived from a committed receipt; nothing is inferred from a plan.
 Baseline: `archaeon/docs/h0h5/BASELINE_2026-09-09.json`.
@@ -56,6 +56,15 @@ Baseline: `archaeon/docs/h0h5/BASELINE_2026-09-09.json`.
 
 
 
+
+
+## Harmonia's issue-day rulings (745d9c698 and her 789ce4fdd, both on main) -- absorbed ~09:45
+
+- **Correction to my brief**: 789ce4fdd was on main when I wrote "on your branch"; I claimed a gap from a stale fetch. Herakles received the Harmonia prompt by mis-routing, correctly declined the adjudication items as not his to rule, and supplied the transform-semantics inputs instead (roles/Harmonia/INBOX_HERAKLES_SYMMETRY_INPUTS_FOR_C3_2_2026-09-10.md, commit pending on another seat's index.lock, which he is rightly not removing).
+- **signature_v0 is FAIR and INERT.** The pool of distinct witnesses is 4 and K is 4, so every pack is the same set in a different order; relevance is not testable at 3 bits with K=4 at any sample size (packs differ only when |pool| > K, substantially at |pool| >= 2K). Ruling: run as designed, report as a scope finding, relabel the contrast, keep RELEVANCE_LICENSED false. Applied: `H1_CONTRAST_LABEL`, `RESCOPE_MIN_POOL_OVER_K`, and `relevance_testable_here` reported by the plan. Her two conditions hold: licensed_metadata predates the phase-1 receipt in git (07:24 vs 07:58), and the fresh arm's equal allowance (seed_probe_count = 4) is in the payload.
+- **C3-2 gate** (roles/Harmonia/rulings/RULING_H1H0_FAIRNESS_C3_2_ANALYSIS_2026-09-10.md): PASS needs correct count, incorrect count AND mask digest, as integers; count-without-digest is INDETERMINATE; accuracy = 1 - original is the target-flip-not-applied signature. Applied in `c3_readout.null_identity` (tested). The 18 live rows still read IDENTICAL under the stricter gate.
+- **H0 phase 2**: block = target task, n = 12, min attainable p 0.00049, eligible; G_joint and I reported separately with SEs from the pilot Sigma; the two-seed structure is a within-block diagnostic replicate; a diagnostic alpha may never be quoted as evidence for or against H0.
+- **D3 upper fires -- dossier delivered** (`archaeon/producer/d3_dossier.py`, `archaeon/docs/h0h5/D3_LIVE_DOSSIER_2026-09-10.json`), on the corpus as rebuilt by the tick (1,684 rows, 65 regions, no repeats remaining after aggregation). v0 now: 24 fires, 2 UPPER, 22 LOWER. **v1 (admitted): 18 fires, 3 UPPER, 15 LOWER** -- the pooled-within denominator removes part, not all, of the LOWER mass on the live corpus; that residue is Harmonia's to read. Both v0 UPPER fires (wld_2c69424d…, ratio 4.23; wld_e8d5a9a3…, ratio 3.64) are k_nearest, 40 units each, SURVIVE v1, and no single row drives v_reg (leave-one-out variance stays >= 0.84 of v_reg). Player is absent on these rows, so the sub-unit check needs a coordinate axis; the dossier carries every row and neighbour with unit ids and coords for her to split.
 
 ## Wake 9 (2026-09-10, ~09:20): C3-2 PARTIAL READOUT (archaeon/docs/h0h5/C3_2_READOUT.md, .json; code archaeon/producer/c3_readout.py)
 
