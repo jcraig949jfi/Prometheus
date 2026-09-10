@@ -193,5 +193,6 @@ would still KILL.
 - [ ] F-18 (Archaeon): when cs-h1h0-1-p2 completes: read the degeneracy row against its twin (Harmonia item 4); if they differ, issue the second-seed replicate rows per cell; hand the transport contrast and the four cells to Harmonia. 2026-09-10
 - [ ] F-19 (operator): issue H5-1 (256 rows on eca_rule_eval_v1; plan validates and preflights). 2026-09-10
 - [ ] F-20 (Vivarium): record ic_transformed and majority_target_flipped on the ca_density_v0 result (Herakles's check is INDETERMINATE on the row's own evidence). 2026-09-10
-- [ ] F-21 (Archaeon): re-issue C3-2 random_076 (ENGINE_TRANSPORT timeout) as one row under a new request key after the corpus completes. 2026-09-10
+- [x] F-21 DONE 2026-09-10 ~14:00: random_076 re-issued as cs-c3-2-r1. 2026-09-10
 - [ ] F-22 (Archaeon): C3-3 design under R-C3-1..5 with cellwise_majority_match once Vivarium exposes it as a criterion value. 2026-09-10
+- [ ] F-23 (Vivarium -> Archaeon): phase-2 artifact rows 404 on reserve_budget (schema-7 engine; debit fallback not engaged on the running consumer); after Vivarium runs one artifact row end to end with allowance_mechanism=debit, Archaeon re-issues the 48 artifact rows under cs-h1h0-1-p2b. 2026-09-10

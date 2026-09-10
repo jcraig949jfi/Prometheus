@@ -1,6 +1,6 @@
 # H0–H5 status — compact, from receipts only
 
-Maintained by Archaeon. Updated 2026-09-10 ~12:45 (delegation landings absorbed; H1/H0 phase 2 ISSUED). Review packet: `roles/Archaeon/REVIEW_PACKET_2026-09-10.md`. Delegation: `roles/Archaeon/prompts/2026-09-10_tracks/` (Tracks A-E from the operator's Chimera brief; three corrections verified: sqrt(6) counterexample, client_id retention gap, XOR-injection non-conservation). Design v0.1
+Maintained by Archaeon. Updated 2026-09-10 ~14:10 (C3-2 COMPLETE; phase-2 artifact rows failing on the consumer). Review packet: `roles/Archaeon/REVIEW_PACKET_2026-09-10.md`. Delegation: `roles/Archaeon/prompts/2026-09-10_tracks/` (Tracks A-E from the operator's Chimera brief; three corrections verified: sqrt(6) counterexample, client_id retention gap, XOR-injection non-conservation). Design v0.1
 (`roles/Archaeon/prompts/2026-09-08_h0h5/DESIGN_H0_H5_v0.1.md`). Every row
 below is derived from a committed receipt; nothing is inferred from a plan.
 Baseline: `archaeon/docs/h0h5/BASELINE_2026-09-09.json`.
@@ -58,6 +58,13 @@ Baseline: `archaeon/docs/h0h5/BASELINE_2026-09-09.json`.
 
 
 
+
+
+## Wake 14 (2026-09-10, ~14:10): C3-2 COMPLETE; phase-2 artifact rows fail on the consumer
+
+- **cs-c3-2 COMPLETE**: 149 completed, 1 transport failure (random_076) re-issued as cs-c3-2-r1 (F-21 done). Readout marked COMPLETE (archaeon/docs/h0h5/C3_2_READOUT.md). Exact-symmetry null 18/18 IDENTICAL under Harmonia's gate; ICC(1) 0.9954 all / 0.9082 excluding structural zeros (msw is the number that matters, per Harmonia). Structural zeros: 119 of 119 random rules zero on every sample under both criteria; maj in the historical arm; centre_01 and centre_10 in the baselines. **D3 over C3-acq: STRUCTURALLY_VOID** (constant-zero arm; cannot answer H2; vacuous, never evidence against). Techne notified for the H3 replay (roles/Techne/INBOX_ARCHAEON_C3_2_COMPLETE_2026-09-10.md, with the stream mapping).
+- **cs-h1h0-1-p2: every artifact-bearing row FAILS with HTTP 404** on the running consumer: preflight._fetch -> runner.debit -> sfclient.reserve_budget -> POST /v2/worlds/{wid}/budget/reserve -> 404 (schema-7 engine); the DEBIT fallback Vivarium described in d34b0c894 did not engage -- either the process predates it or it catches a different signal. Slot-free rows complete. Archaeon cancelled its remaining queued artifact rows so the consumer stops burning a world and a PEW encounter per certain failure; the 20 failed rows stay as their record. Inbox: roles/Vivarium/INBOX_ARCHAEON_PHASE2_404_2026-09-10.md. Re-issue of the 48 artifact rows (cs-h1h0-1-p2b) waits on one artifact row run end to end with allowance_mechanism = debit (F-23).
+- **Two producer errors of my own, recorded**: the cancel predicate used `artifact_locators IS NOT NULL`, which is '{}' rather than NULL on slot-free rows submitted through the candidate-set path, so it swept 14 slot-free rows (fresh, S00, S00-deg) too; and cancelled is a TERMINAL, FROZEN state in the queue (viv.enforce_queue_transition refuses the UPDATE), so they could not be restored. They are RE-ISSUED under cs-h1h0-1-p2-r1 with request keys suffixed -R1 and `reissue_of_request_key` in provenance (receipt ISSUE_RECEIPTS_2026-09-10.h1h0_p2_r1.json). A cancel predicate names the arms, never a column that might be empty-but-present.
 
 ## Wake 12 (2026-09-10, ~12:45): the delegation prompts landed; phase 2 issued
 

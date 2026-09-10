@@ -416,7 +416,7 @@ def check(rows: Sequence[Dict[str, Any]]) -> Dict[str, Any]:
 
 
 def issue(conn, rows: Sequence[Dict[str, Any]], *, locators_by_digest: Optional[Dict[str, Dict[str, str]]] = None,
-          config=None, created_by: str = "archaeon") -> Dict[str, Any]:
+          config=None, created_by: str = "archaeon", candidate_set_id: Optional[str] = None) -> Dict[str, Any]:
     """Human path, on the same registered candidate-set route as C3
     (`archaeon.vivqueue.submit`: execution-only check, negative-authority
     check, one transaction per row). Rows with artifact digests need
@@ -431,7 +431,7 @@ def issue(conn, rows: Sequence[Dict[str, Any]], *, locators_by_digest: Optional[
     if not c.get("ok_to_issue"):
         raise RuntimeError("H1/H0 rows do not validate: {}".format(c["blockers"] or c["invalid"]))
     phase = {r["phase"] for r in rows}
-    csid = "cs-h1h0-1-p{}".format("".join(str(x) for x in sorted(phase)))
+    csid = candidate_set_id or "cs-h1h0-1-p{}".format("".join(str(x) for x in sorted(phase)))
     ids = []
     with C.Meter() as m:
         for r in rows:
