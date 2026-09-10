@@ -18,6 +18,32 @@ resurrection is a *new descendant* with an explicitly changed design and a prere
 
 ---
 
+## Governing principle
+
+> **NECROPOLIS DOES NOT INHERIT DEATH CERTIFICATES.**
+> Every historical verdict is a claim under review. A grave may contain a falsified hypothesis, a
+> bad design, broken code, a hallucinated assumption, a misconfigured experiment, an inadequate
+> instrument, an incapable historical model, a missing consumer, a mistaken interpretation, or some
+> combination thereof. "No useful signal" is one possible conclusion, not the default explanation.
+> The burden of an autopsy is to distinguish these causes with evidence.
+
+The corpse comes with a death certificate, and the certificate is itself evidence to investigate.
+Necropolis would otherwise inherit the exact epistemic mistake that produced some of the graves:
+taking the historical experiment's framing, implementation and verdict too seriously. The three
+roles therefore share one presumption:
+
+> A historical "failure" is not evidence that the underlying hypothesis failed until the
+> hypothesis, design, implementation, configuration, execution, instrumentation, measurement,
+> interpretation and ecosystem have **each** survived independent scrutiny.
+
+Human and agent error get first-class representation. "Measurement failure" is too lossy if what
+happened was someone wrote the wrong comparator; "design failure" is too lossy if an agent
+hallucinated the meaning of a field. Those findings change what resurrection means. The first
+question of every autopsy is not *why did this experiment fail?* but **what evidence establishes
+that this experiment ever received a fair test?**
+
+---
+
 ## The Laws
 
 **LAW N1 — Experiment death is not hypothesis death.**
@@ -100,62 +126,89 @@ cherry-pick on a shared checkout.
 **LAW N16 — "Too early" is a testable claim, not an excuse.**
 Some experiments implicitly tested *"can an era-E model + this mechanism + this representation +
 this compute budget do X?"* and history compressed the null into *"this mechanism cannot do X."*
-Those are not equivalent. Every dossier records a **death axis** (below) and, where the kill
+Those are not equivalent. Every dossier records a **cause-of-death stack** (LAW N17; `CAPABILITY_CEILING`
+is admissible on DESIGN/IMPLEMENTATION/CONFIGURATION/EXECUTION) and, where the kill
 boundary depended materially on a moving technological frontier (model capability, context
 length, tool use, coding ability, inference cost, verifier integration, model reliability), names
 that frontier in `autopsy.capability_contingency`. The **conditional viability frontier** is a
 first-class object: a later success under new capability means the frontier moved, not that the
 original agent succeeded (ROLES.md, F2).
 
-**LAW N17 — Author error before null result.**
-"The experiment produced a monoculture with no signal distinguishable from noise" is the *last*
-explanation a Necromancer may reach, not the first. Historical agents were designed, coded,
-parameterized, and interpreted by people and by models, and each of those steps can be wrong in
-ways that kill an organism while leaving its premise untouched: a hypothesis that the design
-could not test; code that did not do what the design said; execution parameters (N, seeds,
-thresholds, timeouts, model ids, corpus paths, retry policy) that made the run uninformative; and
-**hallucinations** — a nonexistent API, an invented number, a misread output column, a causal
-label on a correlation, an artifact attributed to the wrong producer. Every dossier carries an
-`autopsy.author_error_audit` with four verdicts (design-vs-hypothesis, code-vs-design,
-execution-parameters, hallucination-scan), each `CLEAN`, `ERROR_FOUND`, or `NOT_EXAMINED`.
-`NOT_EXAMINED` is honest; `CLEAN` without executed evidence is not (a lens that cannot execute
-reports NOT_EXAMINED, never CLEAN). The audit applies to the corpse **and to every prior
-verdict about it**, including this project's own dossiers: three of three Necropolis passes so
-far found the proximate cause of death was an author error, not a null result.
+**LAW N17 — Necropolis does not inherit death certificates (the cause-of-death stack).**
+Every dossier fills a mandatory **cause-of-death stack** before disposition:
 
+```
+HYPOTHESIS -> DESIGN -> IMPLEMENTATION -> CONFIGURATION -> EXECUTION
+           -> INSTRUMENTATION -> MEASUREMENT -> INTERPRETATION -> ECOSYSTEM/CONSUMPTION
+```
+
+At every layer the question is the same: *was this layer actually valid?* — `VALID` (with
+executed evidence), `INVALID` (naming a cause class, and whether the defect was load-bearing), or
+`NOT_EXAMINED` (honest). The stack is filled by the Necromancer, challenged by the Cleric, and read
+by Doctor Frankenstein as a map of repair targets. Beside it sit the historical verdicts
+(`death_certificates`, each `UPHELD` / `PARTIALLY_UPHELD` / `OVERTURNED` / `NOT_REVIEWED` with the
+errors named), the answer to the first question (`fair_test`: `FAIR` / `UNFAIR` / `UNDETERMINED`),
+and the `primary_cause` the stack supports. The strong claims — `HYPOTHESIS_FAILURE`, and above it
+`PREMISE_FAILURE` — are admitted only after a fair test and only after every other cause class has
+been excluded; the validator refuses them otherwise, and refuses `TRUE_CORPSE` without them.
+"The experiment produced a monoculture with no signal distinguishable from noise" is therefore the
+*last* explanation any role may reach. Three of three Necropolis passes so far found an author
+error at the proximate cause, and under this law none of the three was ever fairly tested.
 ---
 
 ## Classification vocabulary
 
 The archaeological state of an examined organism (`disposition.classification`) is exactly one of:
 
-`TRUE_CORPSE` · `PREMISE_ALIVE_IMPLEMENTATION_DEAD` · `PRODUCER_BLOCKED` · `CONSUMER_BLOCKED` ·
-`REPRESENTATION_FAILURE` · `MEASUREMENT_FAILURE` · `ORCHESTRATION_FAILURE` · `RESOURCE_BLOCKED` ·
-`SUPERSEDED_BUT_ORGANS_SALVAGEABLE` · `NO_DESIGN_FAILURE_ESTABLISHED` · `NEEDS_MORE_EVIDENCE`.
+`TRUE_CORPSE` · `CAPABILITY_BOUND` · `NO_FAIR_TEST_ON_RECORD` · `PREMISE_ALIVE_IMPLEMENTATION_DEAD` ·
+`PRODUCER_BLOCKED` · `CONSUMER_BLOCKED` · `REPRESENTATION_FAILURE` · `MEASUREMENT_FAILURE` ·
+`ORCHESTRATION_FAILURE` · `RESOURCE_BLOCKED` · `SUPERSEDED_BUT_ORGANS_SALVAGEABLE` ·
+`NO_DESIGN_FAILURE_ESTABLISHED` · `NEEDS_MORE_EVIDENCE`.
+
+`TRUE_CORPSE` requires a strong primary cause (`HYPOTHESIS_FAILURE` / `PREMISE_FAILURE`) and a
+fair test. `CAPABILITY_BOUND` is a corpse killed at power under an era capability the kill boundary
+names — Frankenstein's lane. `NO_FAIR_TEST_ON_RECORD` is the finding that the historical experiment
+could not have answered its own question; the hypothesis stands untested, and that is a result, not
+a gap (`NEEDS_MORE_EVIDENCE` is for when the *evidence* runs out).
 
 There is deliberately **no generic `FAILED`**. A single undifferentiated failure label is the
 exact conflation Operation Necropolis exists to undo; the validator rejects it.
 
-## Death-axis vocabulary
+## Cause-of-death vocabulary (LAW N17)
 
-Orthogonal to the classification, `autopsy.death_axis` records *where on the stack* the evidence
-locates the death. Exactly one of:
+Orthogonal to the classification, `autopsy.cause_of_death_stack` records *where* the evidence
+locates the death, one verdict per layer, and `autopsy.primary_cause` / `contributing_causes` name
+the cause classes those layers support:
 
-`premise-dead` (the underlying idea was tested at power and failed) · `implementation-dead` (the
-idea is untested because the build never expressed it) · `measurement-dead` (the instrument that
-judged it carried its own answer, or its outcome variable recorded instrument state) ·
-`ecosystem-dead` (producer, consumer, orchestration, or resource around it died; the organism was
-inert or starved) · `capability-era-dead` (the kill boundary depended materially on a frontier
-that has since moved; LAW N16) · **the author-error family (LAW N17):** `bug-dead` (the code did
-not do what the design said) · `parameter-dead` (execution configuration made the run
-uninformative) · `hallucination-dead` (a load-bearing fact, number, API, attribution, or causal
-label in the agent's own artifacts was false) · `undetermined`.
+| Cause class | Meaning | Admissible on layer |
+|---|---|---|
+| `HYPOTHESIS_FAILURE` | the experiment was valid and actually falsified the proposition | HYPOTHESIS (needs `fair_test` FAIR) |
+| `DESIGN_ERROR` | the experiment could not answer the question it purported to answer | DESIGN |
+| `IMPLEMENTATION_ERROR` | the code did something materially different from the intended experiment | IMPLEMENTATION |
+| `CONFIGURATION_ERROR` | bad threshold, comparator, parameter regime, model, dataset, path, cap | CONFIGURATION |
+| `EXECUTION_ERROR` | the intended experiment was not actually executed faithfully | EXECUTION |
+| `INSTRUMENT_ERROR` | the apparatus could not observe the proposed phenomenon | INSTRUMENTATION |
+| `MEASUREMENT_ERROR` | the recorded quantity is not the quantity the design named (instrument state in the outcome column; a metric that carries its own answer) | MEASUREMENT |
+| `INTERPRETATION_ERROR` | the evidence was valid but the historical conclusion did not follow | INTERPRETATION |
+| `IDENTITY_PROVENANCE_ERROR` | the wrong artifact, run or component was attributed to the verdict | INTERPRETATION |
+| `CAPABILITY_CEILING` | the design depended on models/tools/compute that could not perform the required function at the time (LAW N16) | DESIGN / IMPLEMENTATION / CONFIGURATION / EXECUTION |
+| `ECOSYSTEM_FAILURE` | the producer may have worked, but nothing useful consumed what it emitted | ECOSYSTEM |
+| `PREMISE_FAILURE` | **only after the above are excluded**: the idea itself appears dead (needs `premise_exclusion`) | HYPOTHESIS |
 
-`autopsy.contributing_axes` lists every other axis the evidence supports, so that a
-`premise-dead` verdict reached *through* a vacuous gate is recorded as
-`premise-dead` + `[bug-dead, parameter-dead]`, not as a clean null. Doctor Frankenstein reads the
-contributing axes as repair targets (ROLES.md, F7).
+`MEASUREMENT_ERROR` is the Keeper's one addition to James' list, so that every layer has a class
+(the wrong comparator is `CONFIGURATION_ERROR`; instrument state recorded as outcome is
+`MEASUREMENT_ERROR`). An `INVALID` layer says whether its defect was **load-bearing** — whether it
+changed the historical answer — because a layer may be invalid and measured not to matter (the
+Hephaestus outcome column moved yield by under 1pp), and a fair test tolerates the latter but not
+the former.
 
-The Necromancer establishes which axis the evidence supports. Doctor Frankenstein asks whether
-today's boundary makes a different assembly of the surviving organs worth testing. The Cleric
-decides whether it may be tested.
+Over the graveyard the stack yields a dataset the roster of resurrected agents never could:
+`COUNTERFACTUAL_HISTORY.jsonl`, one row per recorded mistake —
+*mistake → apparent symptom → historical verdict → corrected cause → repair → post-repair
+behaviour* — derived by `build_counterfactuals.py` from the dossiers and the repair monsters. It
+tells us not which agents were useful but **why Prometheus killed things incorrectly**: the
+systematic failure modes of the earlier builders, human and model.
+
+The Necromancer establishes which layers the evidence invalidates. Doctor Frankenstein asks which
+one change would have let the assembly live, and writes the test. The Cleric decides whether it
+may be tested.

@@ -94,55 +94,153 @@
       "P50 Elenchus execution result (10,094/10,105 positions change): reproduced here (99.9%) and shown vacuous by the reorder-null (measurement carries its answer).",
       "Stratified-CV in-sample positive (AUC 0.72, +0.05 over composite): real number, wrong reading; explained by forge-calendar leakage."
     ],
-    "death_axis": "measurement-dead",
     "capability_contingency": {
       "frontier_dependent": false,
       "frontiers": [],
       "era_bound_claim": "Not era-bound: a Lasso over concept indicators against a calendar-contaminated outcome would fail identically with any model in the loop.",
       "what_would_move_it": "Nothing on the model frontier; only a clean outcome variable (frozen judge, api-state excluded) re-opens the premise test (coeus-d1)."
     },
-    "contributing_axes": [
-      "parameter-dead",
-      "hallucination-dead"
+    "death_certificates": [
+      {
+        "source": "engine/ledger/AGENT_AUTOPSIES.jsonl (Aporia P47, 2026-08-20; Elenchus upgrade P50)",
+        "claim": "NO-DESIGN-FAILURE-ESTABLISHED: consumption REORDERS the forge queue: 10,094/10,105 positions change",
+        "review": "OVERTURNED",
+        "errors": [
+          "The reorder observable is vacuous: 1e-3 Gaussian noise on the composite reorders 99.7% of positions (min over 200 draws 99.5%); it measures that the composite is continuous, not that Coeus has an effect.",
+          "A design failure IS established: the claim was causal and the method a regression on a label whose variance is dominated by the instrument calendar."
+        ]
+      },
+      {
+        "source": "pivot/COMPONENT_DOSSIERS_2026-06-24.md (### Coeus) + PROCESS_TABLE",
+        "claim": "RETIRE-after-HITL: decorative-causal, open-loop, exhaust",
+        "review": "PARTIALLY_UPHELD",
+        "errors": [
+          "'Decorative-causal' is factually right (a Lasso fallback labelled causal) but was advisory with no executed test, and it is a claim/method mismatch, not evidence that no concept-level signal exists; that question is untested at power."
+        ]
+      }
     ],
-    "author_error_audit": {
-      "design_vs_hypothesis": {
-        "verdict": "ERROR_FOUND",
-        "finding": "The claim was causal (concept structure predicts forge outcome) but the method was a regression on a label whose variance is dominated by the instrument calendar (battery version + API health). The design could not separate concept signal from forge-day signal; only a hold-out by the instrument clock can, and none was built.",
+    "cause_of_death_stack": {
+      "HYPOTHESIS": {
+        "verdict": "VALID",
+        "finding": "Well-posed: does forge outcome under a fixed judge carry concept-level structure? Untested at power: no historical window is clean enough (>=500 rows, >=50 forged, one battery version, no API failures) to decide; coeus-d1 is the first fair test.",
+        "evidence": [
+          "dossiers/coeus_evidence/coeus_attacks.py",
+          "dossiers/coeus_evidence/coeus_attacks_result.json",
+          "dossiers/coeus_evidence/coeus_within_regime.py",
+          "dossiers/coeus_evidence/coeus_within_regime_result.json"
+        ],
+        "cause_classes": []
+      },
+      "DESIGN": {
+        "verdict": "INVALID",
+        "finding": "The claim was causal (concept structure predicts forge outcome) but the method was a regression on a label whose variance is dominated by the instrument calendar (battery version + API health); no holdout by the instrument clock was built, so the design could not separate concept signal from forge-day signal.",
         "evidence": [
           "dossiers/coeus_evidence/coeus_attacks.py",
           "dossiers/coeus_evidence/coeus_attacks_result.json"
-        ]
+        ],
+        "cause_classes": [
+          "DESIGN_ERROR"
+        ],
+        "load_bearing": true
       },
-      "code_vs_design": {
-        "verdict": "CLEAN",
-        "finding": "_encode_dataset, load_all_nous, load_forge_entries and _forge_priority were executed as instruments and do what the design says; the defect is upstream of them (label construction), not in them.",
+      "IMPLEMENTATION": {
+        "verdict": "VALID",
+        "finding": "_encode_dataset, load_all_nous, load_forge_entries, the regression and the consumer seam _forge_priority were executed by the pass and do what the design says; the defect is upstream of them (label construction).",
         "evidence": [
           "dossiers/coeus_evidence/coeus_signal_test.py",
-          "dossiers/coeus_evidence/coeus_within_regime.py"
-        ]
+          "dossiers/coeus_evidence/coeus_signal_result.json",
+          "dossiers/coeus_evidence/coeus_within_regime.py",
+          "dossiers/coeus_evidence/coeus_within_regime_result.json"
+        ],
+        "cause_classes": []
       },
-      "execution_parameters": {
-        "verdict": "ERROR_FOUND",
-        "finding": "y = (ledger status == forged) with api_call_failed rows scored as negatives. 2,553 post-03-27 rows are API failures, so the post-build window on which the shipped forge_boost was evaluated is instrument-dead (AUC 0.487, perm p=0.55: uninformative rather than null).",
+      "CONFIGURATION": {
+        "verdict": "INVALID",
+        "finding": "y = (ledger status == forged) with api_call_failed rows scored as negatives; 2,553 post-03-27 rows are API failures, so the post-build window on which the shipped forge_boost was evaluated is instrument-dead (AUC 0.487, perm p=0.55: uninformative, not null).",
         "evidence": [
+          "dossiers/coeus_evidence/coeus_signal_test.py",
           "dossiers/coeus_evidence/coeus_signal_result.json",
           "dossiers/hephaestus_evidence/heph_ledger_shape_result.json"
-        ]
+        ],
+        "cause_classes": [
+          "CONFIGURATION_ERROR"
+        ],
+        "load_bearing": true
       },
-      "hallucination_scan": {
-        "verdict": "ERROR_FOUND",
-        "finding": "Prior-verdict error, not Coeus's own: the Aug-2026 autopsy observable (consumption REORDERS the forge queue: 10,094/10,105 positions change) is vacuous; 1e-3 Gaussian noise on the composite reorders 99.7% of positions (min over 200 draws 99.5%). A number was read as evidence of effect when it measures only that the composite is continuous.",
+      "EXECUTION": {
+        "verdict": "NOT_EXAMINED",
+        "finding": "Not examined: the pass tested the shipped scores and the apparatus as artifacts; it did not reconstruct the training run that produced the shipped forge_boost, and no run manifest was found in the record.",
+        "evidence": [],
+        "cause_classes": []
+      },
+      "INSTRUMENTATION": {
+        "verdict": "INVALID",
+        "finding": "The judge was not frozen across the label window: the battery changed from 15 to 186 traps on 2026-03-27 and the forge ran in distinct eras (03-24..04-02, 05-16..), so the label mixes instruments. Leave-one-forge-day-out AUC 0.461 (03-26) / 0.338 (03-27), at or below the label-permutation null.",
+        "evidence": [
+          "dossiers/coeus_evidence/coeus_attacks.py",
+          "dossiers/coeus_evidence/coeus_attacks_result.json",
+          "dossiers/coeus_evidence/coeus_within_regime.py",
+          "dossiers/coeus_evidence/coeus_within_regime_result.json"
+        ],
+        "cause_classes": [
+          "INSTRUMENT_ERROR"
+        ],
+        "load_bearing": true
+      },
+      "MEASUREMENT": {
+        "verdict": "INVALID",
+        "finding": "The outcome variable recorded instrument state as outcome; within the largest single forge day (03-26) concepts reach AUC 0.501 vs null 0.493 and the two smaller days (0.62/0.64) are not separable from null-max (0.57/0.61, 20 draws). The measurement carried the calendar, not the concept.",
+        "evidence": [
+          "dossiers/coeus_evidence/coeus_attacks.py",
+          "dossiers/coeus_evidence/coeus_attacks_result.json",
+          "dossiers/coeus_evidence/coeus_within_regime.py",
+          "dossiers/coeus_evidence/coeus_within_regime_result.json"
+        ],
+        "cause_classes": [
+          "MEASUREMENT_ERROR"
+        ],
+        "load_bearing": true
+      },
+      "INTERPRETATION": {
+        "verdict": "INVALID",
+        "finding": "Two certificates misread evidence: P47/P50 took a queue-reorder count that random noise reproduces as proof of effect; 06-24 took a Lasso fallback labelled causal as the design's claim. Neither conclusion followed.",
         "evidence": [
           "dossiers/coeus_evidence/coeus_signal_test.py",
           "dossiers/coeus_evidence/coeus_signal_result.json"
-        ]
+        ],
+        "cause_classes": [
+          "INTERPRETATION_ERROR"
+        ],
+        "load_bearing": true
       },
-      "prior_verdict_errors": [
-        "AGENT_AUTOPSIES.jsonl P47/P50 NO-DESIGN-FAILURE-ESTABLISHED rested on a queue-reorder observable that random noise reproduces",
-        "pivot 06-24 RETIRE-after-HITL (decorative-causal) was advisory with no executed test"
+      "ECOSYSTEM": {
+        "verdict": "VALID",
+        "finding": "The consumer seam (hephaestus._forge_priority reading forge_boost) is real and executes; the wiring the P47/P50 autopsy described is correct. What was never measured is whether the priority changed any forge outcome (SELECTION-DECOUPLED-FROM-SIGNAL) - that is a design/measurement gap, not a missing consumer.",
+        "evidence": [
+          "dossiers/coeus_evidence/coeus_signal_test.py",
+          "dossiers/coeus_evidence/coeus_signal_result.json"
+        ],
+        "cause_classes": []
+      }
+    },
+    "fair_test": {
+      "verdict": "UNFAIR",
+      "scope": "All historical windows (03-24..04-02 and 05-16..); no clean window exists.",
+      "finding": "The experiment could not answer its question: the label it regressed on was dominated by battery version and API health, and no split by the instrument clock was built. The hypothesis stands untested; coeus-d1 (frozen judge, api-state excluded, holdout by forge batch) is the fair test.",
+      "evidence": [
+        "dossiers/coeus_evidence/coeus_attacks.py",
+        "dossiers/coeus_evidence/coeus_attacks_result.json",
+        "dossiers/coeus_evidence/coeus_signal_test.py",
+        "dossiers/coeus_evidence/coeus_signal_result.json"
       ]
-    }
+    },
+    "primary_cause": "MEASUREMENT_ERROR",
+    "contributing_causes": [
+      "DESIGN_ERROR",
+      "CONFIGURATION_ERROR",
+      "INSTRUMENT_ERROR",
+      "INTERPRETATION_ERROR"
+    ]
   },
   "residue": {
     "salvageable_code": [
@@ -231,7 +329,8 @@
     ],
     "_amendments": [
       "2026-09-10 Keeper: backfilled autopsy.death_axis + capability_contingency (LAW N16) from the dossier's own kill_boundary/surviving_claims text; no new evidence.",
-      "2026-09-10 Keeper backfill (LAW N17): author_error_audit + contributing_axes derived from failure_classes CAUSAL-LABEL-ON-REGRESSION and MEASUREMENT-CARRIES-ITS-ANSWER already in this dossier; no new evidence."
+      "2026-09-10 Keeper backfill (LAW N17): author_error_audit + contributing_axes derived from failure_classes CAUSAL-LABEL-ON-REGRESSION and MEASUREMENT-CARRIES-ITS-ANSWER already in this dossier; no new evidence.",
+      "2026-09-10 Keeper migration (doctrinal correction, LAW N17 v2): death_axis/contributing_axes/author_error_audit replaced by death_certificates + cause_of_death_stack + fair_test + primary_cause. Each layer maps a finding already certified in this dossier (kill_boundary, failure_classes, surviving_claims, capability_contingency) to its evidence file; no new evidence, no new claims. Layers the pass did not examine are NOT_EXAMINED."
     ]
   }
 }

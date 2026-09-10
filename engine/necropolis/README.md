@@ -25,9 +25,9 @@ discriminating test (LAW N9). Read `CHARTER.md` first — it is the operating co
 ```
 engine/necropolis/
     README.md          <- this file
-    CHARTER.md         <- the 16 laws + classification vocabulary + death-axis vocabulary
+    CHARTER.md         <- governing principle + 17 laws + classification + cause-of-death vocabulary
     SCHEMA.json        <- machine-readable dossier schema (JSON Schema 2020-12 superset of AGENT_AUTOPSIES.jsonl)
-    ROLES.md           <- Necromancer / Cleric / Doctor Frankenstein role contracts (laws F1-F6)
+    ROLES.md           <- Necromancer / Cleric / Doctor Frankenstein role contracts (laws F1-F7)
     SEAMS.md           <- how Necropolis objects interoperate with existing engine/ machinery
     ROSTER.jsonl       <- 48 canonical agents (intake only; no resurrection decisions)
     QUEUE.jsonl        <- seeded Necromancer investigations (READY, not dispatched)
@@ -36,6 +36,8 @@ engine/necropolis/
     build_organs.py    <- ONLY writer of ORGANS.jsonl; harvests residue from validating dossiers (F5)
     ORGANS.jsonl       <- organ inventory: one row per certified residue item, typed + located
     ORGAN_NOTES.json   <- Keeper overlay: executed_by_necromancer per organ (read != executed, LAW N17)
+    build_counterfactuals.py <- ONLY writer of COUNTERFACTUAL_HISTORY.jsonl (from dossier stacks + repair monsters)
+    COUNTERFACTUAL_HISTORY.jsonl <- mistake -> symptom -> historical verdict -> corrected cause -> repair -> post-repair
     MONSTER_SCHEMA.json<- machine-readable monster (recomposition proposal) schema
     monsters/
         _TEMPLATE.monster.json   <- placeholder-marked exemplar (skipped by the validator)
@@ -83,18 +85,29 @@ checked first so a change the ancestor already tried is `GATED_REJECTED` on sigh
 comparison that is *mandatory* because the ancestor without the change is the control. F2 still
 holds: a living repair proves that one repaired configuration lives, not that the ancestor was right.
 
-### Assume the author erred (LAW N17)
+### Necropolis does not inherit death certificates (LAW N17)
 
-"No signal distinguishable from noise" is the *last* explanation any role may reach, not the first.
-Every dossier carries an `author_error_audit` with four lenses (design vs hypothesis, code vs design,
-execution parameters, hallucination scan), each `CLEAN` / `ERROR_FOUND` / `NOT_EXAMINED`; `CLEAN`
-needs executed evidence, and the audit applies to prior verdicts and to our own dossiers as much as to
-the corpse. Three author-error death axes exist (`bug-dead`, `parameter-dead`, `hallucination-dead`)
-and `contributing_axes` lets a corpse be premise-dead *and* bug-dead, which is where all three
-Necromancer passes so far landed. Organs record whether the Necromancer executed them or only read
-them (13 of 39 executed); a monster harvesting an unexecuted organ must carry an `organ_execution_plan`.
-The validator runs the Cleric's hallucination scan mechanically: every repo path cited by a dossier or
-monster is resolved and the count printed (currently 80/80).
+Every historical verdict is a claim under review. Each dossier records the `death_certificates` it
+inherited and whether each was `UPHELD` / `PARTIALLY_UPHELD` / `OVERTURNED` (errors named), then fills
+the nine-layer `cause_of_death_stack` — HYPOTHESIS, DESIGN, IMPLEMENTATION, CONFIGURATION, EXECUTION,
+INSTRUMENTATION, MEASUREMENT, INTERPRETATION, ECOSYSTEM — asking at each *was this layer actually
+valid?* (`VALID` with executed evidence / `INVALID` with a cause class and a `load_bearing` flag /
+`NOT_EXAMINED`). From the stack follow `fair_test` (did the experiment ever get a fair test — the first
+question of every autopsy) and `primary_cause` among twelve cause classes. "No signal distinguishable
+from noise" (`HYPOTHESIS_FAILURE`, `PREMISE_FAILURE`) is the *last* explanation any role may reach: the
+validator admits it only after a fair test with the alternatives excluded, and admits `TRUE_CORPSE`
+only on it. Two classifications exist for the other outcome: `NO_FAIR_TEST_ON_RECORD` (the hypothesis
+stands untested) and `CAPABILITY_BOUND`. All three Necromancer passes so far are `fair_test: UNFAIR`.
+
+Organs record whether the Necromancer executed them or only read them (13 of 39 executed); a monster
+harvesting an unexecuted organ must carry an `organ_execution_plan`. The validator runs the Cleric's
+hallucination scan mechanically: every repo path cited by a dossier or monster is resolved and the
+count printed (currently 80/80).
+
+Over the graveyard the stacks yield `COUNTERFACTUAL_HISTORY.jsonl`: one row per recorded mistake
+(INVALID layer x cause class), joined to the F7 repair filed against it (if any) and its post-repair
+behaviour. It is derived, byte-checked by the validator, and is the dataset Necropolis is actually
+building — not which agents were useful, but why Prometheus killed things incorrectly.
 
 ## Ground rules for anyone extending this tree
 

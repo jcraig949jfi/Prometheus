@@ -60,26 +60,77 @@
       "PLACEHOLDER: what was not measured"
     ],
     "contradictory_evidence": [],
-    "author_error_audit": {
-      "design_vs_hypothesis": {
+    "death_certificates": [
+      {
+        "source": "PLACEHOLDER_SOURCE (AGENT_AUTOPSIES.jsonl row / pivot section)",
+        "claim": "PLACEHOLDER_CLAIM as written in the historical record",
+        "review": "NOT_REVIEWED",
+        "errors": []
+      }
+    ],
+    "cause_of_death_stack": {
+      "HYPOTHESIS": {
         "verdict": "NOT_EXAMINED",
-        "finding": "Not examined: this dossier maps an existing autopsy record into the schema and adds no new claims (no Necromancer pass has run)."
+        "finding": "PLACEHOLDER: was this layer actually valid? VALID/INVALID need executed evidence; NOT_EXAMINED is honest.",
+        "evidence": [],
+        "cause_classes": []
       },
-      "code_vs_design": {
+      "DESIGN": {
         "verdict": "NOT_EXAMINED",
-        "finding": "Not examined: this dossier maps an existing autopsy record into the schema and adds no new claims (no Necromancer pass has run)."
+        "finding": "PLACEHOLDER: was this layer actually valid? VALID/INVALID need executed evidence; NOT_EXAMINED is honest.",
+        "evidence": [],
+        "cause_classes": []
       },
-      "execution_parameters": {
+      "IMPLEMENTATION": {
         "verdict": "NOT_EXAMINED",
-        "finding": "Not examined: this dossier maps an existing autopsy record into the schema and adds no new claims (no Necromancer pass has run)."
+        "finding": "PLACEHOLDER: was this layer actually valid? VALID/INVALID need executed evidence; NOT_EXAMINED is honest.",
+        "evidence": [],
+        "cause_classes": []
       },
-      "hallucination_scan": {
+      "CONFIGURATION": {
         "verdict": "NOT_EXAMINED",
-        "finding": "Not examined: this dossier maps an existing autopsy record into the schema and adds no new claims (no Necromancer pass has run)."
+        "finding": "PLACEHOLDER: was this layer actually valid? VALID/INVALID need executed evidence; NOT_EXAMINED is honest.",
+        "evidence": [],
+        "cause_classes": []
+      },
+      "EXECUTION": {
+        "verdict": "NOT_EXAMINED",
+        "finding": "PLACEHOLDER: was this layer actually valid? VALID/INVALID need executed evidence; NOT_EXAMINED is honest.",
+        "evidence": [],
+        "cause_classes": []
+      },
+      "INSTRUMENTATION": {
+        "verdict": "NOT_EXAMINED",
+        "finding": "PLACEHOLDER: was this layer actually valid? VALID/INVALID need executed evidence; NOT_EXAMINED is honest.",
+        "evidence": [],
+        "cause_classes": []
+      },
+      "MEASUREMENT": {
+        "verdict": "NOT_EXAMINED",
+        "finding": "PLACEHOLDER: was this layer actually valid? VALID/INVALID need executed evidence; NOT_EXAMINED is honest.",
+        "evidence": [],
+        "cause_classes": []
+      },
+      "INTERPRETATION": {
+        "verdict": "NOT_EXAMINED",
+        "finding": "PLACEHOLDER: was this layer actually valid? VALID/INVALID need executed evidence; NOT_EXAMINED is honest.",
+        "evidence": [],
+        "cause_classes": []
+      },
+      "ECOSYSTEM": {
+        "verdict": "NOT_EXAMINED",
+        "finding": "PLACEHOLDER: was this layer actually valid? VALID/INVALID need executed evidence; NOT_EXAMINED is honest.",
+        "evidence": [],
+        "cause_classes": []
       }
     },
-    "death_axis": "undetermined",
-    "contributing_axes": []
+    "fair_test": {
+      "verdict": "UNDETERMINED",
+      "finding": "PLACEHOLDER: what evidence establishes that this experiment ever received a fair test?",
+      "evidence": []
+    },
+    "primary_cause": "UNDETERMINED",
+    "contributing_causes": []
   },
   "residue": {
     "salvageable_code": [

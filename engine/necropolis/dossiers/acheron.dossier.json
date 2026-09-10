@@ -63,24 +63,83 @@
       "Whether any live consumer remains for its output today (LAW N15 — not verified in this founding pass)."
     ],
     "contradictory_evidence": [],
-    "author_error_audit": {
-      "design_vs_hypothesis": {
-        "verdict": "NOT_EXAMINED",
-        "finding": "Not examined: this dossier maps an existing autopsy record into the schema and adds no new claims (no Necromancer pass has run)."
+    "death_certificates": [
+      {
+        "source": "engine/ledger/AGENT_AUTOPSIES.jsonl (Aporia P46, 2026-08-20)",
+        "claim": "LOW-BITS-PER-VERDICT-EMISSION; the collision detector worked (58 candidates), the one-artifact-per-1-bit-clean-verdict emission design is the defect",
+        "review": "NOT_REVIEWED",
+        "errors": []
       },
-      "code_vs_design": {
-        "verdict": "NOT_EXAMINED",
-        "finding": "Not examined: this dossier maps an existing autopsy record into the schema and adds no new claims (no Necromancer pass has run)."
-      },
-      "execution_parameters": {
-        "verdict": "NOT_EXAMINED",
-        "finding": "Not examined: this dossier maps an existing autopsy record into the schema and adds no new claims (no Necromancer pass has run)."
-      },
-      "hallucination_scan": {
-        "verdict": "NOT_EXAMINED",
-        "finding": "Not examined: this dossier maps an existing autopsy record into the schema and adds no new claims (no Necromancer pass has run)."
+      {
+        "source": "pivot/PROCESS_TABLE_2026-06-24.md",
+        "claim": "RETIRE-after-HITL",
+        "review": "NOT_REVIEWED",
+        "errors": []
       }
-    }
+    ],
+    "cause_of_death_stack": {
+      "HYPOTHESIS": {
+        "verdict": "NOT_EXAMINED",
+        "finding": "Not examined by any Necromancer pass; this dossier transcribes an existing autopsy record and adds no claims.",
+        "evidence": [],
+        "cause_classes": []
+      },
+      "DESIGN": {
+        "verdict": "NOT_EXAMINED",
+        "finding": "Not examined by any Necromancer pass; this dossier transcribes an existing autopsy record and adds no claims.",
+        "evidence": [],
+        "cause_classes": []
+      },
+      "IMPLEMENTATION": {
+        "verdict": "NOT_EXAMINED",
+        "finding": "Not examined by any Necromancer pass; this dossier transcribes an existing autopsy record and adds no claims.",
+        "evidence": [],
+        "cause_classes": []
+      },
+      "CONFIGURATION": {
+        "verdict": "NOT_EXAMINED",
+        "finding": "Not examined by any Necromancer pass; this dossier transcribes an existing autopsy record and adds no claims.",
+        "evidence": [],
+        "cause_classes": []
+      },
+      "EXECUTION": {
+        "verdict": "NOT_EXAMINED",
+        "finding": "Not examined by any Necromancer pass; this dossier transcribes an existing autopsy record and adds no claims.",
+        "evidence": [],
+        "cause_classes": []
+      },
+      "INSTRUMENTATION": {
+        "verdict": "NOT_EXAMINED",
+        "finding": "Not examined by any Necromancer pass; this dossier transcribes an existing autopsy record and adds no claims.",
+        "evidence": [],
+        "cause_classes": []
+      },
+      "MEASUREMENT": {
+        "verdict": "NOT_EXAMINED",
+        "finding": "Not examined by any Necromancer pass; this dossier transcribes an existing autopsy record and adds no claims.",
+        "evidence": [],
+        "cause_classes": []
+      },
+      "INTERPRETATION": {
+        "verdict": "NOT_EXAMINED",
+        "finding": "Not examined by any Necromancer pass; this dossier transcribes an existing autopsy record and adds no claims.",
+        "evidence": [],
+        "cause_classes": []
+      },
+      "ECOSYSTEM": {
+        "verdict": "NOT_EXAMINED",
+        "finding": "Not examined by any Necromancer pass; this dossier transcribes an existing autopsy record and adds no claims.",
+        "evidence": [],
+        "cause_classes": []
+      }
+    },
+    "fair_test": {
+      "verdict": "UNDETERMINED",
+      "finding": "No Necromancer pass has run; the certificate's boundary_localization (detector worked, emission design defective) is transcribed, not reviewed.",
+      "evidence": []
+    },
+    "primary_cause": "UNDETERMINED",
+    "contributing_causes": []
   },
   "residue": {
     "salvageable_code": [],

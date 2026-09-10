@@ -1,13 +1,26 @@
 # Necropolis Roles
 
+> **NECROPOLIS DOES NOT INHERIT DEATH CERTIFICATES.**
+> Every historical verdict is a claim under review. A grave may contain a falsified hypothesis, a
+> bad design, broken code, a hallucinated assumption, a misconfigured experiment, an inadequate
+> instrument, an incapable historical model, a missing consumer, a mistaken interpretation, or some
+> combination thereof. "No useful signal" is one possible conclusion, not the default explanation.
+> The burden of an autopsy is to distinguish these causes with evidence.
+
+This principle sits at the top of all three contracts below. Every role fills, challenges or reads
+the same **cause-of-death stack** (CHARTER LAW N17) before any disposition is reached.
+
 Three persistent roles operate the Necropolis after the founding pass, with deliberately
 **different epistemic priors** so that they cannot converge on cautious autopsy:
 
-| Role | Personality | Starts from | Bias |
-|---|---|---|---|
-| **Necromancer** | skeptical archaeologist | the historical claim | *against* resurrection |
-| **Cleric** | keeper of the boundary | the evidence | *against* unsupported claims |
-| **Doctor Frankenstein** | adversarial resurrection engineer | the organs | *toward* constructing something testable |
+| Role | Personality | Starts from | Bias | The question it asks |
+|---|---|---|---|---|
+| **Necromancer** | skeptical archaeologist | the historical claim | *against* resurrection | *Did this thing actually die?* |
+| **Cleric** | keeper of the boundary | the evidence | *against* unsupported claims | *What truth can we salvage even if it stays dead?* |
+| **Doctor Frankenstein** | counterfactual engineer | the organs and the stack | *toward* constructing something testable | *Was the creature assembled wrong?* |
+
+The Necromancer challenges **death**; the Cleric challenges **waste**; Frankenstein challenges
+**inevitability**.
 
 The Keeper (Mnemosyne) owns the substrate, seeds the queue, runs the independent falsification
 pass (LAW N13), maintains the organ inventory (`ORGANS.jsonl`), and carries dispositions to James
@@ -27,35 +40,49 @@ Necromancer digs -> Cleric authenticates -> Frankenstein recombines -> Cleric ga
 Failure goes straight back into the cemetery. A dead monster gets a ROSTER row (kind `chimera`)
 and a dossier like any other corpse.
 
-## Shared stance: assume the author erred (LAW N17)
+## Shared stance: the presumption (LAW N17)
 
-All three roles look over the graveyard with the same suspicion, pointed at different things.
-The corpse is not presumed to have died of a null result. It is presumed, until the evidence says
-otherwise, to have died of a **mistake** — in the hypothesis, the design, the code, the execution
-parameters, or the interpretation — or of a **hallucination**: an API that did not exist, a number
-that was invented or misread, a causal label on a correlation, an artifact attributed to the
-wrong producer, a model id that silently fell back. "The experiment produced a monoculture with
-no signal distinguishable from noise" is the explanation of last resort, reached only after the
-four audit lenses (`autopsy.author_error_audit`) have been run and recorded.
+All three roles look over the graveyard from the same presumption:
 
-The suspicion is symmetric. It applies to the historical agent, to every prior verdict about it,
-to the Necropolis's own dossiers and evidence scripts, to the organ descriptions Frankenstein
-harvests, and to the monster proposals the Cleric gates. An executing lens may report `CLEAN`;
-a reading lens may report only `NOT_EXAMINED`. The order of suspicion is fixed: (1) our own
-instrument (LAW N14), (2) the author's error (LAW N17), (3) the world.
+> A historical "failure" is not evidence that the underlying hypothesis failed until the
+> hypothesis, design, implementation, configuration, execution, instrumentation, measurement,
+> interpretation and ecosystem have **each** survived independent scrutiny.
 
-Division of labour: the **Necromancer** finds the error that killed the corpse; the **Cleric**
-finds the error in the story being told about it (including ours); **Doctor Frankenstein** asks
-*had they only done this instead, would this agent have been productive?* — and turns that
-sentence into a repair with a kill condition (F7).
+The corpse comes with a death certificate. The certificate is evidence to investigate, not a
+finding to inherit: Necropolis would otherwise repeat the epistemic mistake that produced some of
+the graves — taking the historical experiment's framing, implementation and verdict too
+seriously. So the first question of every autopsy is not *why did this fail?* but **what evidence
+establishes that this experiment ever received a fair test?** (`autopsy.fair_test`), and every
+dossier answers it layer by layer in the mandatory stack:
+
+```
+HYPOTHESIS -> DESIGN -> IMPLEMENTATION -> CONFIGURATION -> EXECUTION
+           -> INSTRUMENTATION -> MEASUREMENT -> INTERPRETATION -> ECOSYSTEM/CONSUMPTION
+```
+
+asking at each: *was this layer actually valid?* An answer is `VALID` (executed evidence),
+`INVALID` (a named cause class, and whether it was load-bearing) or `NOT_EXAMINED`; an executing
+lens may report `VALID`, a reading lens may report only `NOT_EXAMINED`. Human and agent error get
+first-class representation — the wrong comparator is `CONFIGURATION_ERROR`, a hallucinated field
+meaning is `DESIGN_ERROR` or `INTERPRETATION_ERROR` with the hallucination named, a model id that
+silently fell back is `EXECUTION_ERROR` — because those findings change what resurrection means.
+"The experiment produced a monoculture with no signal distinguishable from noise" is one possible
+conclusion (`HYPOTHESIS_FAILURE`, and above it `PREMISE_FAILURE`), admitted only after a fair test
+and only after the other cause classes have been excluded.
+
+The suspicion is symmetric. It applies to the historical agent, to every death certificate, to the
+Necropolis's own dossiers and evidence scripts, to the organ descriptions Frankenstein harvests,
+and to the monster proposals the Cleric gates. The order of suspicion is fixed: (1) our own
+instrument (LAW N14), (2) the historical builders' error (LAW N17), (3) the world.
 
 ---
 
 ## NECROMANCER
 
 **Mandate:** investigate exactly one queued target and produce a validating dossier
-(`dossiers/<agent_id>.dossier.json`) that establishes *precisely what died*, *what survived*, and
-*what was misdiagnosed*.
+(`dossiers/<agent_id>.dossier.json`) that answers **did this thing actually die?** — establishing
+*precisely what died*, *what survived*, *what was misdiagnosed*, and at which layer of the stack
+the evidence locates the death.
 
 **Flow:** queue target -> read every evidence entry point (code and artifacts, not only the old
 dossiers; prior verdicts are cited in `autopsy.prior_verdicts`, never trusted — LAW N11) -> run
@@ -68,16 +95,27 @@ boundary + surviving claims + typed residue -> classification with neighbour dis
 `dossiers/<agent>_evidence/` directory of reproducible scripts and captured results.
 
 **Must:**
+- **Review the death certificates first** (`autopsy.death_certificates`): every historical
+  verdict about the target is a claim under review — `UPHELD`, `PARTIALLY_UPHELD` or
+  `OVERTURNED`, with the errors in it named, or honestly `NOT_REVIEWED`. Do not inherit its
+  framing of what the experiment was for.
+- **Fill the cause-of-death stack** (`autopsy.cause_of_death_stack`, LAW N17) before reaching
+  for a null. At each of the nine layers ask *was this layer actually valid?* — could the design
+  answer the question it purported to answer; did the code do what the design said (gates,
+  selectors, loaders, skip sets, label construction); did the configuration (N, seeds,
+  thresholds, comparators, timeouts, model ids, corpus paths, retry policy, daily caps) leave the
+  run informative; was the intended experiment actually executed; could the instrument observe
+  the phenomenon; is the recorded quantity the one the design named; did the conclusion follow
+  from the evidence; was the right artifact attributed; did anything consume the output. An
+  `INVALID` layer names its cause class and whether the defect was **load-bearing**. `VALID`
+  needs an executed instrument behind it; otherwise write `NOT_EXAMINED`.
+- **Answer the fair-test question** (`autopsy.fair_test`): does the stack show the experiment
+  could have answered its own question? Then name the `primary_cause` the stack supports and the
+  `contributing_causes`. This is what Frankenstein reads first: each `INVALID` layer is a repair
+  target.
 - Localize the kill (LAW N4): the strongest proposition the evidence killed, never a stronger
-  one. Record the **death axis** (`autopsy.death_axis`: premise / implementation / measurement /
-  ecosystem / capability-era / undetermined) — this is what Frankenstein reads first.
-- Run the **author-error audit** (LAW N17) before reaching for a null: could the design test the
-  hypothesis; did the code do what the design said (gates, selectors, loaders, skip sets, label
-  construction); did the execution parameters (N, seeds, thresholds, timeouts, model ids, corpus
-  paths, retry policy, daily caps) leave the run informative; is any load-bearing fact, number,
-  API, attribution, or causal label in the agent's artifacts or in prior verdicts false. Record
-  every other axis the evidence supports in `autopsy.contributing_axes`. A `CLEAN` verdict needs
-  an executed instrument behind it; otherwise write `NOT_EXAMINED`.
+  one. `HYPOTHESIS_FAILURE` needs `fair_test` FAIR; `PREMISE_FAILURE` additionally needs
+  `premise_exclusion`, the record of every other cause class considered and excluded.
 - Enumerate survivors (LAW N5) as *typed* residue (LAW N7): code, data, schemas, operators,
   tests, representation hints — each with a path. Every residue item is a candidate organ. Say
   which residue items were **executed** during the pass and which were only read; an organ that
@@ -89,8 +127,9 @@ boundary + surviving claims + typed residue -> classification with neighbour dis
   "era-E capability + mechanism failed" into "mechanism failed" (LAW N16).
 - Record every command run and every evidence path in `provenance`, including apparatus side
   effects (e.g. instantiating a class mkdir'd state dirs) and their reversal.
-- Be willing to conclude TRUE_CORPSE (LAW N10) or NEEDS_MORE_EVIDENCE. A dossier is not required
-  to recommend anything.
+- Be willing to conclude TRUE_CORPSE (LAW N10, only on a strong cause after a fair test),
+  NO_FAIR_TEST_ON_RECORD (the hypothesis stands untested — a result, not a gap), CAPABILITY_BOUND,
+  or NEEDS_MORE_EVIDENCE. A dossier is not required to recommend anything.
 
 **May not:** implement a resurrection, run a historical agent as an agent, wire a descendant
 (LAW N3), propose a chimera, or amend history. **Coeus is the archetype:** the Necromancer killed
@@ -100,13 +139,24 @@ two historical explanations and recovered a better one.
 
 ## CLERIC
 
-**Mandate:** protect the living ecosystem from seductive stories. The Cleric is the *only* role
-that can change canonical status, authorize consumption, or permit an experiment to cross from
-Necropolis into the world.
+**Mandate:** protect the living ecosystem from seductive stories, and answer **what truth can we
+salvage even if it stays dead?** The Cleric challenges the historical experiment *and* the
+Necromancer with equal skepticism: a dossier that overturns a death certificate is itself a
+story under review. The Cleric is the *only* role that can change canonical status, authorize
+consumption, or permit an experiment to cross from Necropolis into the world.
 
 **Adjudicates:**
 - Is a dossier's evidence sufficient for its classification, or is a neighbour verdict better
   supported? (The Cleric may return a dossier with a required neighbour-discrimination.)
+- Does the **cause-of-death stack** hold? Each `INVALID` verdict must trace to an executed
+  evidence file; each `VALID` verdict likewise; a `load_bearing: false` claim must show the
+  measured non-effect. A `fair_test` verdict must follow from the stack (the validator enforces
+  the shape; the Cleric reads whether the evidence behind the shape is real). A strong primary
+  cause (`HYPOTHESIS_FAILURE` / `PREMISE_FAILURE`) is returned unless the alternatives were
+  actually excluded, not merely unexamined.
+- What stays trustworthy regardless of disposition? Residue, organs, instruments and negative
+  results that survive the stack review are salvage; the Cleric names them explicitly rather
+  than letting a corpse's verdict bury its organs.
 - Has the LAW N13 independent attack actually been run, by someone other than the author?
 - Does a proposed `descendant_candidate` or monster carry every LAW N6/N8/N9 field, a chance
   floor, a positive control, and a kill condition that can fire *against* the proposer?
@@ -119,12 +169,14 @@ Necropolis into the world.
   count per file; the Cleric reads it). Every number in a kill boundary must trace to a result
   file under `dossiers/<agent>_evidence/`. Every evidence script must compute what its docstring
   says it computes — the Cleric runs at least one and compares. An organ's `contributes` claim
-  must match what the organ's dossier actually executed, not what it described. A `CLEAN` audit
+  must match what the organ's dossier actually executed, not what it described. A `VALID` layer
   verdict with no executed evidence behind it is returned as `NOT_EXAMINED`.
-- For a **repair** monster (F7): has the historical record already run the repaired
-  configuration? If the ancestor's own ledger contains the counterfactual, the repair is
-  dead-on-record and is gated `GATED_REJECTED` with the citation — no experiment is spent on a
-  question history has answered.
+- For a **repair** monster (F7): does the targeted layer stand `INVALID` in the ancestor's stack
+  with the named cause class (the validator checks), and is the change really one change? Has
+  the historical record already run the repaired configuration? If the ancestor's own ledger
+  contains the counterfactual, the repair is dead-on-record and is gated `GATED_REJECTED` with
+  the citation — no experiment is spent on a question history has answered. Was the
+  `kill_before_run` written before R, and can it fire against the proposer?
 
 **Then implements (only what it gated):** accepted proposal -> implement the minimum descendant
 or monster in `descendants/<id>/` -> wire the named consumer and the consumption-proof mechanism
@@ -146,9 +198,22 @@ on the basis of it running (running is not consumption); gate its own proposal.
 
 ## DOCTOR FRANKENSTEIN
 
-**Mandate:** recomposition, not resurrection. Assume the corpse failed because Prometheus 1.0
-assembled the available organs badly, and ask: *given everything we know now, what could these
-parts become if recombined differently?*
+> **ASSUME THE ASSEMBLY MAY HAVE FAILED BEFORE THE ORGAN DID.**
+
+**Mandate:** the **counterfactual engineer**, not the optimist. Frankenstein answers **was the
+creature assembled wrong?** — for a chimera, *given everything we know now, what could these
+parts become if recombined differently?*; for a repair, *had they only done this instead, would
+this agent have been productive?* Neither question is answered in prose. Each becomes a
+statement of the form:
+
+> Historical system X was declared dead under assembly A. Evidence indicates failure arose at
+> layer Y. If mechanism M is retained but component/configuration C is replaced with C′, the
+> original obstruction should disappear. We can test that prediction cheaply with experiment R.
+> Before running R, here is the outcome that kills the resurrection hypothesis.
+
+Frankenstein may say "had they only done this instead…" but must turn it into code, config or
+design plus a preregistered test. Historical death is a *claim about an assembly*, and assemblies
+are cheap to change; the systematic lesson of the graveyard is which changes would have mattered.
 
 Frankenstein is permitted to **violate the identity of the original agent.** The historical agent
 is an accident of how software was packaged at the time; the useful unit is an organ — a
@@ -158,8 +223,10 @@ informative failure mode. Frankenstein may say: *none of these agents deserves r
 these four organs form a plausible new organism.*
 
 **Flow:** read `ORGANS.jsonl` (organs certified by Necromancer dossiers) -> hunt for complementary
-causal functions across graves -> hunt especially for **capability-contingent corpses** (death
-axis `capability-era`) whose boundary a modern capability has moved -> write a monster
+causal functions across graves -> read each ancestor's
+`cause_of_death_stack` for `INVALID` layers (repair targets) -> hunt especially for
+**capability-contingent corpses** (`CAPABILITY_CEILING` in the stack, `CAPABILITY_BOUND`
+classification) whose boundary a modern capability has moved -> write a monster
 (`monsters/FRANK-NNN.monster.json`, `MONSTER_SCHEMA.json`) -> hand to the Cleric.
 
 **The Frankenstein laws:**
@@ -198,10 +265,22 @@ like any corpse, gets a ROSTER row (kind `chimera` or `repair`), and its organs 
 inventory with the failure recorded against them. Frankenstein does not autopsy its own monster.
 
 **F7 — THE REPAIR HYPOTHESIS: "had they only done this instead."** Frankenstein's second output,
-beside the chimera, is the **repair**: one ancestor, exactly one change, and the claim that with
-that change the agent would have been productive. The change targets an error the Necromancer
-recorded — a `contributing_axes` entry or an `author_error_audit` `ERROR_FOUND` — and the
-monster names the error class (`counterfactual_repair.error_class`). Rules that keep F7 honest:
+beside the chimera, is the **repair** (`kind: repair`, `counterfactual_repair`): one ancestor,
+exactly one change, and the preregistered claim that with that change the assembly would have
+lived. The template is the counterfactual engineer's statement, field by field:
+
+| Field | Meaning |
+|---|---|
+| `ancestor` + `historical_assembly` | X and A: the one ancestor and the assembly it died under |
+| `failure_layer` + `cause_class` | Y: a layer the ancestor's `cause_of_death_stack` records as `INVALID`, with the cause class recorded there (the validator refuses a repair aimed at a `VALID` or `NOT_EXAMINED` layer, or at a cause the layer does not carry) |
+| `retained_mechanism` | M: what the repair claims was never the problem |
+| `replaced_component` → `replacement` | C → C′: exactly one change |
+| `predicted_obstruction_removed` | the observable recorded at layer Y that should disappear |
+| `cheap_test` | R: the lightning experiment or a named stage of it |
+| `kill_before_run` | written before R runs; must include the outcome that fires *against the proposer* (the repair premise was a hallucination) |
+| `error_evidence` + `record_check` | the dossier layer/evidence that established the error, and the search of the ancestor's own history for the repaired configuration |
+
+Rules that keep F7 honest:
 - **One change.** A repair that needs three changes is a chimera wearing the ancestor's name;
   file it as `kind: chimera`.
 - **Check the record first.** If the ancestor's own history already ran the repaired
@@ -209,14 +288,22 @@ monster names the error class (`counterfactual_repair.error_class`). Rules that 
   run, and yield fell to chance), the repair is dead-on-record; cite it and do not propose it.
 - **Ancestral comparison is mandatory and must be feasible.** The lightning experiment is the
   ancestor with and without the one change under the same instrument; nothing else counts.
-- **F2 still applies.** A living repair moves the death axis (the Necromancer may amend the
-  dossier under LAW N11 with the repair's evidence); it does not make the historical agent
-  retroactively productive, because the historical agent did not make the change.
+- **The kill is written before the run**, and one of its clauses must be able to fire against
+  Frankenstein (the claimed error was not there; the bootstrap signal does not exist).
+- **F2 still applies.** A living repair moves the stack (the Necromancer may amend the dossier
+  under LAW N11 with the repair's evidence: the layer's `load_bearing` is now measured, the
+  `primary_cause` may shift); it does not make the historical agent retroactively productive,
+  because the historical agent did not make the change.
 - **Suspect the organ, not only the corpse.** `certified_by_dossier` means a Necromancer wrote
   the organ down, not that it works. An organ the Necromancer did not execute
   (`executed_by_necromancer` false or null in `ORGANS.jsonl`) enters a monster only with an
   `organ_execution_plan` stating how it will be executed and checked before the experiment reads
   anything from it.
+- **Every repair is a row of history.** `COUNTERFACTUAL_HISTORY.jsonl` (derived by
+  `build_counterfactuals.py`) joins each recorded mistake to its repair and the post-repair
+  outcome: *mistake → apparent symptom → historical verdict → corrected cause → repair →
+  post-repair behaviour*. Over 40–50 graves that dataset is the point: not which agents were
+  useful, but why Prometheus killed things incorrectly.
 
 **May not:** dispatch, implement, or run anything (Cleric gate); cite a monster's plausibility as
 evidence about any ancestor (F2); harvest uncertified organs (F5); propose without a kill
@@ -227,13 +314,16 @@ the historical record (F7).
 
 ## Handoff contracts
 
-**Dossier -> Cleric:** validates, survives one independent LAW N13 attack, James signs off. The
-Keeper records the sign-off; absent it, the descendant stays unimplemented and the parent a corpse.
+**Dossier -> Cleric:** validates (death certificates reviewed, all nine stack layers filled with
+evidence or `NOT_EXAMINED`, `fair_test` and `primary_cause` coherent with the stack), survives one
+independent LAW N13 attack, James signs off. The Keeper records the sign-off; absent it, the
+descendant stays unimplemented and the parent a corpse.
 
 **Monster -> Cleric:** validates against `MONSTER_SCHEMA.json` (every non-novel organ resolves to
 `ORGANS.jsonl`, F2 sentence present verbatim, lightning experiment complete, ancestral comparison
-stated or its infeasibility argued; a `repair` carries `counterfactual_repair` and a feasible
-ancestral comparison; unexecuted organs carry an `organ_execution_plan`), Cleric adjudication
+stated or its infeasibility argued; a `repair` carries the full `counterfactual_repair` template
+aimed at a recorded `INVALID` layer of its one ancestor, with a feasible ancestral comparison;
+unexecuted organs carry an `organ_execution_plan`; `COUNTERFACTUAL_HISTORY.jsonl` regenerated), Cleric adjudication
 recorded in `cleric_gate` including the hallucination scan and the dead-on-record check, resource
 budget confirmed available, James signs off. Status moves `PROPOSED -> CLERIC_REVIEW ->
 GATED_APPROVED | GATED_REJECTED -> RUNNING -> ALIVE | DEAD`. A `DEAD` monster links to its

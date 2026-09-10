@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "prometheus://necropolis/MONSTER_SCHEMA.json",
   "title": "Necropolis monster (Doctor Frankenstein proposal)",
-  "description": "A recomposition proposal: certified organs from ORGANS.jsonl (plus explicitly novel organs) assembled into a new organism with a lightning experiment. Governed by ROLES.md F1-F6. A monster is NOT a resurrection and NOT evidence about any ancestor (F2).",
+  "description": "A recomposition proposal: certified organs from ORGANS.jsonl (plus explicitly novel organs) assembled into a new organism with a lightning experiment. Governed by ROLES.md F1-F7. A monster is NOT a resurrection and NOT evidence about any ancestor (F2).",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -127,40 +127,95 @@
       "additionalProperties": false,
       "required": [
         "ancestor",
-        "the_one_change",
-        "error_class",
+        "historical_assembly",
+        "failure_layer",
+        "cause_class",
+        "retained_mechanism",
+        "replaced_component",
+        "replacement",
+        "predicted_obstruction_removed",
+        "cheap_test",
+        "kill_before_run",
         "error_evidence",
         "record_check"
       ],
       "properties": {
         "ancestor": {
           "type": "string",
-          "description": "ROSTER agent_id of the single ancestor being repaired."
+          "description": "ROSTER agent_id of the single ancestor (A's owner). A repair has exactly one."
         },
-        "the_one_change": {
+        "historical_assembly": {
           "type": "string",
           "minLength": 20,
-          "description": "Exactly one change. If it takes more than one sentence to state, it is probably more than one change."
+          "description": "A: the assembly under which the ancestor was declared dead, in one or two sentences (the organs and how they were wired)."
         },
-        "error_class": {
+        "failure_layer": {
           "type": "string",
           "enum": [
-            "premise-dead",
-            "implementation-dead",
-            "measurement-dead",
-            "ecosystem-dead",
-            "capability-era-dead",
-            "bug-dead",
-            "parameter-dead",
-            "hallucination-dead",
-            "undetermined"
+            "HYPOTHESIS",
+            "DESIGN",
+            "IMPLEMENTATION",
+            "CONFIGURATION",
+            "EXECUTION",
+            "INSTRUMENTATION",
+            "MEASUREMENT",
+            "INTERPRETATION",
+            "ECOSYSTEM"
           ],
-          "description": "Which recorded error the change targets (from the ancestor dossier's contributing_axes / author_error_audit)."
+          "description": "Y: the layer of the ancestor's cause_of_death_stack where the evidence locates the failure. The validator requires that layer to be INVALID in the ancestor's dossier."
+        },
+        "cause_class": {
+          "type": "string",
+          "enum": [
+            "HYPOTHESIS_FAILURE",
+            "DESIGN_ERROR",
+            "IMPLEMENTATION_ERROR",
+            "CONFIGURATION_ERROR",
+            "EXECUTION_ERROR",
+            "INSTRUMENT_ERROR",
+            "MEASUREMENT_ERROR",
+            "INTERPRETATION_ERROR",
+            "IDENTITY_PROVENANCE_ERROR",
+            "CAPABILITY_CEILING",
+            "ECOSYSTEM_FAILURE",
+            "PREMISE_FAILURE"
+          ],
+          "description": "The recorded cause class on layer Y that the change targets. Must appear in that layer's cause_classes."
+        },
+        "retained_mechanism": {
+          "type": "string",
+          "minLength": 20,
+          "description": "M: the mechanism kept unchanged. What the repair claims was never the problem."
+        },
+        "replaced_component": {
+          "type": "string",
+          "minLength": 10,
+          "description": "C: the one component or configuration being replaced."
+        },
+        "replacement": {
+          "type": "string",
+          "minLength": 20,
+          "description": "C-prime: exactly one change. If it takes more than one sentence to state, it is probably more than one change; file a chimera."
+        },
+        "predicted_obstruction_removed": {
+          "type": "string",
+          "minLength": 20,
+          "description": "The prediction: with M retained and C replaced by C-prime, the original obstruction (the recorded symptom on layer Y) should disappear. State the observable that disappears."
+        },
+        "cheap_test": {
+          "type": "string",
+          "minLength": 20,
+          "description": "R: the cheap experiment that tests the prediction; must be the lightning_experiment or a named stage of it."
+        },
+        "kill_before_run": {
+          "type": "string",
+          "minLength": 20,
+          "description": "Written BEFORE R runs: the outcome that kills the resurrection hypothesis, including the outcome that fires against the proposer (e.g. the repair premise turns out to be a hallucination)."
         },
         "error_evidence": {
           "type": "string",
           "minLength": 10,
-          "description": "The dossier field or evidence file that established the error being repaired."
+          "description": "The dossier stack layer and evidence file that established the error being repaired."
         },
         "record_check": {
           "type": "string",
@@ -170,7 +225,8 @@
         "predicted_ancestral_result_if_repaired": {
           "type": "string"
         }
-      }
+      },
+      "description": "F7 -- the counterfactual engineer's statement. Historical system X was declared dead under assembly A. Evidence indicates failure arose at layer Y. If mechanism M is retained but component C is replaced with C-prime, the original obstruction should disappear. We test that cheaply with R. Before running R, here is what kills it."
     },
     "why_combination_changes_boundary": {
       "type": "string",

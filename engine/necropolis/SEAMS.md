@@ -79,11 +79,20 @@ document names the intended seams; it does NOT wire automation in the founding p
   new Necromancer pass with its own evidence, filed as a dossier amendment under LAW N11.
 - **Repair -> ancestor: same rule, sharper edge.** A `kind: repair` monster (F7) is the ancestor
   plus one change, so its outcome is the most tempting thing to write back into the ancestor's
-  `death_axis`. It still goes through the Necromancer: a living repair is evidence for a LAW N11
-  amendment that adds `bug-dead` / `parameter-dead` to `contributing_axes` and updates the
-  `author_error_audit`; a dead repair is evidence that the audited error was not the proximate cause.
-  Frankenstein never writes either. The repair's `counterfactual_repair.record_check` is the seam
-  back into the corpse's evidence: it must cite where the record shows the change was never tried.
+  `cause_of_death_stack`. It still goes through the Necromancer: a living repair is evidence for a
+  LAW N11 amendment that marks the targeted layer's defect as measured load-bearing and may move
+  `primary_cause`; a dead repair is evidence that the recorded error at that layer was not the
+  proximate cause (the layer stays `INVALID`, `load_bearing` becomes false with the repair as
+  evidence). Frankenstein never writes either. The repair reads the ancestor forward through
+  `counterfactual_repair.failure_layer` / `cause_class` (the validator requires that layer to be
+  `INVALID` with that cause in the ancestor's dossier), and back through `record_check`, which must
+  cite where the record shows the change was never tried.
+- **Dossier stacks + repairs -> counterfactual history.** `COUNTERFACTUAL_HISTORY.jsonl` is derived,
+  never authored: `build_counterfactuals.py` emits one row per `INVALID` layer x cause class of every
+  validating dossier and joins the matching repair monster (`ancestor`, `failure_layer`,
+  `cause_class`) and its `cleric_gate` outcome. The validator regenerates and byte-checks it like
+  `ORGANS.jsonl`. Nothing outside Necropolis writes to it; consumers read it (LAW N12 still applies:
+  it seams *out* to analysis, never into H0-H5 machinery).
 
 ## What Necropolis must never seam into
 

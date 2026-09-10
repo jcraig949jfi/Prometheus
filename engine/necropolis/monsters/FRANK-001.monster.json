@@ -6,7 +6,9 @@
   "author_role": "Doctor Frankenstein",
   "kind": "repair",
   "premise_summary": "Argos's selector scores each problem as deficit + verdict_bonus, where the bonus reads history[pid].last_verdict and the deficit reads history[pid].applied_lenses. Argos ran only ever with history = {} so every score was a constant, 435/435 tied, and the pick was alphabetical. But 13 hand-written lens catalogs under harmonia/memory/catalogs/ existed a month before Argos and contain per-lens verdicts in exactly the vocabulary the bonus table keys on (map_of_disagreement / durable / coordinate_invariant / null). The repair is one change: on start, populate history from those catalogs. If the selector's policy has any value, it should show it the moment its inputs stop being constants.",
-  "graves_raided": ["Argos"],
+  "graves_raided": [
+    "Argos"
+  ],
   "organs": [
     {
       "organ_id": "argos.code.3",
@@ -57,9 +59,16 @@
   "organ_execution_plan": "argos.operators.0 and argos.representation_hints.0 have executed_by_necromancer null (the request path was traced through the mining ledger, not exercised; the hint is prose). Before stage 2, one DR request is issued through the path and its fulfilment recorded; if it is not fulfilled within the ancestor's 1-3 day window the stage-2 arm is RESOURCE-blocked and only stage 1 counts. The hint organ is not executed; it is the hypothesis, and stage 1 is its execution.",
   "counterfactual_repair": {
     "ancestor": "Argos",
-    "the_one_change": "At daemon start, populate history[pid] = {applied_lenses, last_verdict} from the per-lens verdict rows of the 13 hand catalogs in harmonia/memory/catalogs/ instead of starting from {}.",
-    "error_class": "implementation-dead",
-    "error_evidence": "dossiers/argos.dossier.json autopsy.author_error_audit.design_vs_hypothesis (loop wired to need its own never-built consumer) and code_vs_design (435/435 tie with empty history); dossiers/argos_evidence/argos_selector_result.json",
+    "historical_assembly": "Daemon loop: _parse_problem_corpus -> _score_problem(deficit + verdict bonus over history[pid]) -> _select_problem -> _build_dr_prompt over the 5-stance scaffold -> Pythia DR request -> draft catalog -> (promotion stage, never built). history[pid] started as {} and stayed {} for the life of the daemon.",
+    "failure_layer": "DESIGN",
+    "cause_class": "DESIGN_ERROR",
+    "retained_mechanism": "The selector itself (_score_problem, _select_problem, the deficit + verdict-bonus rule with _VERDICT_BONUS map_of_disagreement=3 / null=1 / durable=0) and the 5-stance DR prompt builder, unchanged.",
+    "replaced_component": "The empty initial history[pid] = {} that the selector scored over.",
+    "replacement": "At daemon start, populate history[pid] = {applied_lenses, last_verdict} from the per-lens verdict rows of the 13 hand catalogs in harmonia/memory/catalogs/ instead of starting from {}.",
+    "predicted_obstruction_removed": "The recorded symptom on DESIGN is that the selector's only discriminating signal originated in a stage that never ran, so every score tied (435/435) and selection degenerated to sorted(ids)[0]. With history bootstrapped from the catalogs the verdict bonus has something to fire on: ties-at-top drop below 400 and the pick sequence becomes non-monotone in problem id.",
+    "cheap_test": "lightning_experiment stage 1 (deterministic: run the real selector over the real corpus with bootstrapped vs empty history; count ties and check monotonicity) and stage 2 (RESOURCE: 5+5+5 Pythia DR requests; anchor yield of repaired picks vs empty-history picks vs random-catalogued picks).",
+    "kill_before_run": "KILL if the catalog parser recovers verdict rows for fewer than 5 problems (the bootstrap signal Frankenstein claimed exists does not exist in usable form: the repair premise is a hallucination, recorded as such against Frankenstein); or ties-at-top >= 400 under bootstrapped history; or repaired-pick anchor yield <= the random-catalogued arm; or <= the 0.2244 same-era base rate. The first and third fire against the proposer.",
+    "error_evidence": "dossiers/argos.dossier.json autopsy.cause_of_death_stack.DESIGN (DESIGN_ERROR, load_bearing) and .INSTRUMENTATION (INSTRUMENT_ERROR: 435/435 tie with empty history); dossiers/argos_evidence/argos_selector_result.json",
     "record_check": "argos_selector_result.json establishes that under every condition Argos ran in, history was empty (no applied lenses, no verdicts) and state was never persisted (lost with the M2 drives). The catalogs existed (13 files committed 2026-04-22/23, argos_catalog_authorship_result.json) but no code path read them into history. The repaired configuration was therefore never run: not dead-on-record.",
     "predicted_ancestral_result_if_repaired": "Selector ties at top drop from 435 to the number of uncatalogued problems minus the catalogued set's spread; pick sequence becomes non-monotone; first picks are catalogued problems carrying map_of_disagreement verdicts (bonus 3) with the largest lens deficit."
   },
@@ -110,8 +119,12 @@
     "author": "Mnemosyne M2 (Keeper), writing as Doctor Frankenstein",
     "branch": "necropolis/frankenstein",
     "baseline_sha": "52c30c8e6",
-    "organs_inventory_sha": "a9a48fe7ec39fb1507e69384a4d30a6cf3ec1a1ac47c3a5a92881a71df97a1aa",
+    "organs_inventory_sha": "05133570ef59f9c4c7cfc51dc80823ea5acf213d51fef86da646bdd9d42356ae",
     "created_at": "2026-09-10",
-    "amendments": []
+    "amendments": [],
+    "_amendments": [
+      "2026-09-10 Keeper: counterfactual_repair migrated to the counterfactual-engineer template (A / layer Y / M / C -> C-prime / prediction / R / kill-before-run); error_class implementation-dead -> failure_layer DESIGN + cause_class DESIGN_ERROR per the ancestor's migrated stack. Substance of the one change unchanged.",
+      "2026-09-10 Keeper: organs_inventory_sha refreshed after ORGANS.jsonl rows gained source_primary_cause/source_fair_test (organ set and text unchanged: 39 organs)."
+    ]
   }
 }

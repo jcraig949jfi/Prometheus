@@ -69,7 +69,9 @@ def main():
         if aid.startswith("PLACEHOLDER"): continue
         res = d.get("residue", {})
         cls = d.get("disposition", {}).get("classification")
-        axis = d.get("autopsy", {}).get("death_axis", "undetermined")
+        au = d.get("autopsy", {})
+        cause = au.get("primary_cause", "UNDETERMINED")
+        fair = (au.get("fair_test", {}) or {}).get("verdict", "UNDETERMINED")
         for bucket, default_type in BUCKET_TYPE.items():
             for i, text in enumerate(res.get(bucket, [])):
                 oid = f"{aid.lower()}.{bucket.replace('salvageable_','')}.{i}"
@@ -78,7 +80,8 @@ def main():
                     "source_agent": aid,
                     "source_dossier": os.path.relpath(f, HERE).replace("\\", "/"),
                     "source_classification": cls,
-                    "source_death_axis": axis,
+                    "source_primary_cause": cause,
+                    "source_fair_test": fair,
                     "residue_bucket": bucket,
                     "organ_type": refine(text, default_type) if bucket in REFINE_BUCKETS else default_type,
                     "location": first_path(text),

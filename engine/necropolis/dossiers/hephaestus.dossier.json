@@ -118,7 +118,6 @@
       "Nemesis top tools reach 0.64-0.77 accuracy -- but this is at or under the 0.946 first-or-last picker ceiling and those tools score 0.0 on middle-position prompts, so it is a payload reading, not skill.",
       "Aporia PROF v1 read TOOLS-DISCRIMINATE -- retracted by Aporia itself once the adapter leak was removed (v2)."
     ],
-    "death_axis": "premise-dead",
     "capability_contingency": {
       "frontier_dependent": true,
       "frontiers": [
@@ -129,49 +128,160 @@
       "era_bound_claim": "2026-03-era model + this forge prompt + this battery + this gate could not produce tools above the 2.4% random-pass floor (0.7-2.2% across 1,803 battery-tested tools).",
       "what_would_move_it": "A frontier coding model behind a position-balanced honest gate with the scrap ledger as failure-mined direction; the dossier itself marks this 'untested here'. This is the archetypal capability-era question and belongs to Doctor Frankenstein (monsters/FRANK-000), not to a descendant of Hephaestus."
     },
-    "contributing_axes": [
-      "bug-dead",
-      "parameter-dead",
-      "measurement-dead"
+    "death_certificates": [
+      {
+        "source": "pivot/COMPONENT_DOSSIERS_2026-06-24.md (### Hephaestus)",
+        "claim": "advisory REVIVE, state LIMBO: the naive thesis (LLM-generated reasoning tools at scale) was falsified by its own instrumentation: ~1,960 tools were ~5 genuine mechanisms",
+        "review": "PARTIALLY_UPHELD",
+        "errors": [
+          "The ~1,960-tools figure counts certificates from a gate a random tool passes 92.75% of the time (353 of ~385 pre-03-27 forged certificates are vacuous); the count is real, the certificate it counts was not.",
+          "The certificate does not distinguish the vacuous era (before 2026-03-27, when the instrumentation could falsify nothing) from the honest one; its number comes from the vacuous era, and the honest era became readable only with the Necromancer's post hoc chance floor."
+        ]
+      },
+      {
+        "source": "aporia/docs/PROF_FORGE_COHORT_2026-08-20.md (v2)",
+        "claim": "TOOLS-FLAT-AT-CHANCE (independent post-mortem; v1 TOOLS-DISCRIMINATE retracted for an adapter leak)",
+        "review": "UPHELD",
+        "errors": []
+      },
+      {
+        "source": "pivot/COMPONENT_DISPOSITION_PLAN_2026-06-23.md row 2",
+        "claim": "REVIVE-SPINE, BLOCKED->RELOCATE",
+        "review": "NOT_REVIEWED",
+        "errors": []
+      }
     ],
-    "author_error_audit": {
-      "design_vs_hypothesis": {
-        "verdict": "ERROR_FOUND",
-        "finding": "The certification design compared candidate tools against an NCD baseline without first publishing P(random tool passes). On the 15-trap battery that baseline scores below chance (0.267 acc / 0.133 cal), so the gate could not test the hypothesis it was built to test until the 186-trap battery replaced it on 2026-03-27.",
+    "cause_of_death_stack": {
+      "HYPOTHESIS": {
+        "verdict": "VALID",
+        "finding": "Well-posed and reachable once an honest instrument existed (2026-03-27): can LLM-forged tools from this prompt/model/battery pipeline reason above chance on the trap battery? Under the honest battery the 2026-03..05-era models yielded 0.7-2.2% across 1,803 battery-tested tools against a 2.4% random-pass floor. That is an era-bound reading, recorded as CAPABILITY_CEILING on CONFIGURATION, not as HYPOTHESIS_FAILURE: no frontier model was ever run through the honest gate, and the window it was read from is contaminated below (fair_test).",
+        "evidence": [
+          "dossiers/hephaestus_evidence/heph_battery_floor.py",
+          "dossiers/hephaestus_evidence/heph_battery_floor_result.json",
+          "dossiers/hephaestus_evidence/heph_ledger_shape.py",
+          "dossiers/hephaestus_evidence/heph_ledger_shape_result.json"
+        ],
+        "cause_classes": []
+      },
+      "DESIGN": {
+        "verdict": "INVALID",
+        "finding": "The certification design never published P(random tool passes). Without a chance floor the design could not distinguish a tool from noise; on the 15-trap battery the NCD comparator scores below chance (0.267 acc / 0.133 cal), so the gate passed random tools 92.75% of the time until the 186-trap battery replaced it.",
         "evidence": [
           "dossiers/hephaestus_evidence/heph_battery_floor.py",
           "dossiers/hephaestus_evidence/heph_battery_floor_result.json"
-        ]
+        ],
+        "cause_classes": [
+          "DESIGN_ERROR"
+        ],
+        "load_bearing": true
       },
-      "code_vs_design": {
-        "verdict": "ERROR_FOUND",
-        "finding": "forge_one returns status=scrap / reason=api_call_failed after per-item retries and the caller writes every non-forged result as scrap; the daemon skip set is set(ledger.keys()). Net effect: 2,861 combos buried on first API failure, 0 retried. The design said retry-with-backoff; the code retried the item and then buried the key.",
+      "IMPLEMENTATION": {
+        "verdict": "INVALID",
+        "finding": "forge_one returns status=scrap / reason=api_call_failed after per-item retries and the daemon skip set is set(ledger.keys()), so every combo that failed once on the API was buried permanently: 2,861 combos, 0 retried. The design said retry-with-backoff; the code retried the item and then buried the key.",
         "evidence": [
           "dossiers/hephaestus_evidence/heph_ledger_shape.py",
           "dossiers/hephaestus_evidence/heph_ledger_shape_result.json"
-        ]
+        ],
+        "cause_classes": [
+          "IMPLEMENTATION_ERROR"
+        ],
+        "load_bearing": true
       },
-      "execution_parameters": {
-        "verdict": "ERROR_FOUND",
-        "finding": "Instrument state (api_call_failed / wall_clock_timeout / test_harness_error) was recorded in the outcome column: 2,553 of ~4,700 post-03-27 rows. Yield changes by <1pp per honest era when they are removed, so this did not cause the death, but it made the ledger unusable as a label set and misled the Coeus scorer downstream.",
+      "CONFIGURATION": {
+        "verdict": "INVALID",
+        "finding": "Two configuration facts bound the run: (a) the comparator was an NCD baseline over 15 static traps that itself sits below chance (CONFIGURATION_ERROR); (b) the models configured were the 2026-03..05 era (qwen3.5-397b-a17b class), so the only honest window tests that era, not the proposition (CAPABILITY_CEILING; capability_contingency.frontier_dependent=true).",
         "evidence": [
-          "dossiers/hephaestus_evidence/heph_ledger_shape_result.json",
-          "dossiers/coeus.dossier.json"
-        ]
+          "dossiers/hephaestus_evidence/heph_battery_floor.py",
+          "dossiers/hephaestus_evidence/heph_battery_floor_result.json",
+          "dossiers/hephaestus_evidence/heph_ledger_shape.py",
+          "dossiers/hephaestus_evidence/heph_ledger_shape_result.json"
+        ],
+        "cause_classes": [
+          "CONFIGURATION_ERROR",
+          "CAPABILITY_CEILING"
+        ],
+        "load_bearing": true
       },
-      "hallucination_scan": {
-        "verdict": "ERROR_FOUND",
-        "finding": "The 06-24 dossier figure (~1,960 tools were ~5 genuine mechanisms) lives inside the vacuous certification layer: 353 of ~385 forged certificates before 03-27 are passes of a gate a random tool passes 92.75% of the time. The number is not false, but the certificate it counts was. Aporia's earlier TOOLS-DISCRIMINATE reading rested on an adapter leak (distractors derived from truth+3i) and was retracted by its own v2.",
+      "EXECUTION": {
+        "verdict": "INVALID",
+        "finding": "2,553 of ~4,700 post-03-27 ledger rows are api_call_failed / wall_clock_timeout / test_harness_error: the majority of the intended post-03-27 experiment did not execute. Measured non-load-bearing for the yield reading: removing those rows moves per-era yield by <1pp.",
         "evidence": [
+          "dossiers/hephaestus_evidence/heph_ledger_shape.py",
+          "dossiers/hephaestus_evidence/heph_ledger_shape_result.json"
+        ],
+        "cause_classes": [
+          "EXECUTION_ERROR"
+        ],
+        "load_bearing": false
+      },
+      "INSTRUMENTATION": {
+        "verdict": "INVALID",
+        "finding": "Pre-03-27 the pass gate was vacuous (random tool passes 92.75%; 353 of ~385 forged certificates are passes of that gate); forged tools average 0.304 accuracy against a 0.417 chance floor. From 03-27 the 186-trap battery is a discriminative instrument (NCD 0.39 > floor 0.32; random passes 2.4%; hand engines reach 0.39-0.61).",
+        "evidence": [
+          "dossiers/hephaestus_evidence/heph_battery_floor.py",
+          "dossiers/hephaestus_evidence/heph_battery_floor_result.json"
+        ],
+        "cause_classes": [
+          "INSTRUMENT_ERROR"
+        ],
+        "load_bearing": true
+      },
+      "MEASUREMENT": {
+        "verdict": "INVALID",
+        "finding": "Instrument state was recorded in the outcome column (api_call_failed etc. as scrap), which made the ledger unusable as a label set downstream (Coeus). Measured non-load-bearing for the yield reading itself (<1pp per honest era).",
+        "evidence": [
+          "dossiers/hephaestus_evidence/heph_ledger_shape.py",
+          "dossiers/hephaestus_evidence/heph_ledger_shape_result.json"
+        ],
+        "cause_classes": [
+          "MEASUREMENT_ERROR"
+        ],
+        "load_bearing": false
+      },
+      "INTERPRETATION": {
+        "verdict": "INVALID",
+        "finding": "The 06-24 certificate read ~1,960 certified tools as ~5 genuine mechanisms from inside the vacuous layer; Aporia's v1 TOOLS-DISCRIMINATE rested on an adapter leak (distractors derived from truth+3i) and was retracted by its own v2.",
+        "evidence": [
+          "dossiers/hephaestus_evidence/heph_battery_floor.py",
           "dossiers/hephaestus_evidence/heph_battery_floor_result.json",
           "aporia/docs/PROF_FORGE_COHORT_2026-08-20.md"
-        ]
+        ],
+        "cause_classes": [
+          "INTERPRETATION_ERROR"
+        ],
+        "load_bearing": true
       },
-      "prior_verdict_errors": [
-        "pivot/COMPONENT_DOSSIERS_2026-06-24.md advisory REVIVE counted certificates from a gate that random tools pass at 92.75%",
-        "aporia PROF-FORGE-COHORT v1 TOOLS-DISCRIMINATE: adapter leak, retracted by v2 (TOOLS-FLAT-AT-CHANCE)"
+      "ECOSYSTEM": {
+        "verdict": "VALID",
+        "finding": "The consumer (Nemesis adversarial battery) was real and reachable: 140 forged tools evaluated over 92 prompts, mean accuracy 0.3685 against a 0.3696 chance floor. Nothing consumed the tools because they carried nothing, not because the seam was missing.",
+        "evidence": [
+          "dossiers/hephaestus_evidence/heph_nemesis_consumer.py",
+          "dossiers/hephaestus_evidence/heph_nemesis_consumer_result.json"
+        ],
+        "cause_classes": []
+      }
+    },
+    "fair_test": {
+      "verdict": "UNFAIR",
+      "scope": "Whole organism, 2026-03..05. Pre-03-27: no test at all (vacuous gate). Post-03-27: readable only with the Necromancer's post hoc chance floor, over a window in which the majority of rows did not execute and 2,861 combos were buried unretried; the at-floor reading in that window is an era-bound observation, not a fair test of the proposition.",
+      "finding": "The author never gave the proposition a fair test: no chance floor was published, the comparator sat below chance for the first era, and the honest era ran mostly on API failures. The strongest admissible claim is the era-bound one already in kill_boundary; the proposition-level claim needs FRANK-000 (a frontier model behind the honest gate).",
+      "evidence": [
+        "dossiers/hephaestus_evidence/heph_battery_floor.py",
+        "dossiers/hephaestus_evidence/heph_battery_floor_result.json",
+        "dossiers/hephaestus_evidence/heph_ledger_shape.py",
+        "dossiers/hephaestus_evidence/heph_ledger_shape_result.json"
       ]
-    }
+    },
+    "primary_cause": "INSTRUMENT_ERROR",
+    "contributing_causes": [
+      "CAPABILITY_CEILING",
+      "DESIGN_ERROR",
+      "CONFIGURATION_ERROR",
+      "IMPLEMENTATION_ERROR",
+      "INTERPRETATION_ERROR",
+      "EXECUTION_ERROR",
+      "MEASUREMENT_ERROR"
+    ]
   },
   "residue": {
     "salvageable_code": [
@@ -201,8 +311,9 @@
     ]
   },
   "disposition": {
-    "classification": "TRUE_CORPSE",
-    "rationale": "TRUE_CORPSE because the premise -- LLM-forged tools from this pipeline reason above chance -- was tested at power and failed on three independent instruments: the forge's own honest battery (1,803 battery-tested tools, yield <= random pass rate, while hand-written engines pass the same battery), Nemesis (140 tools at chance once the first-or-last payload is controlled), and Aporia (48 tools flat at chance once the adapter leak is removed). Not MEASUREMENT_FAILURE: that class fits Coeus, whose premise never met an adequate instrument; here the March certificates ARE a measurement failure (random passes 93%), but from 03-27 an adequate instrument existed, was applied ~1,803 times, and the population sat at its floor. Not RESOURCE_BLOCKED: 2,861 combos were buried by API death, but the kill does not depend on them -- excluding instrument rows moves yield by <1pp in every honest era. Not SUPERSEDED_BUT_ORGANS_SALVAGEABLE: organs ARE salvageable (residue lists them) but no successor took over the forge's function -- the thing that replaced its output was hand-written engines built from its failures, i.e. a different premise, and this class would misreport the premise as merely displaced rather than falsified. Not PREMISE_ALIVE_IMPLEMENTATION_DEAD: the implementation ran 6,651 attempts as designed; the premise is what did not survive. Not ORCHESTRATION_FAILURE: the skip-set burial is real and is recorded as a failure class, but it is a defect on top of a corpse, not the cause of death. The 2026-06 advisory REVIVE is overturned; the 06-24 dossier's own summary ('falsified by its own instrumentation') was right, its disposition was not."
+    "classification": "NO_FAIR_TEST_ON_RECORD",
+    "rationale": "TRUE_CORPSE because the premise -- LLM-forged tools from this pipeline reason above chance -- was tested at power and failed on three independent instruments: the forge's own honest battery (1,803 battery-tested tools, yield <= random pass rate, while hand-written engines pass the same battery), Nemesis (140 tools at chance once the first-or-last payload is controlled), and Aporia (48 tools flat at chance once the adapter leak is removed). Not MEASUREMENT_FAILURE: that class fits Coeus, whose premise never met an adequate instrument; here the March certificates ARE a measurement failure (random passes 93%), but from 03-27 an adequate instrument existed, was applied ~1,803 times, and the population sat at its floor. Not RESOURCE_BLOCKED: 2,861 combos were buried by API death, but the kill does not depend on them -- excluding instrument rows moves yield by <1pp in every honest era. Not SUPERSEDED_BUT_ORGANS_SALVAGEABLE: organs ARE salvageable (residue lists them) but no successor took over the forge's function -- the thing that replaced its output was hand-written engines built from its failures, i.e. a different premise, and this class would misreport the premise as merely displaced rather than falsified. Not PREMISE_ALIVE_IMPLEMENTATION_DEAD: the implementation ran 6,651 attempts as designed; the premise is what did not survive. Not ORCHESTRATION_FAILURE: the skip-set burial is real and is recorded as a failure class, but it is a defect on top of a corpse, not the cause of death. The 2026-06 advisory REVIVE is overturned; the 06-24 dossier's own summary ('falsified by its own instrumentation') was right, its disposition was not.",
+    "_keeper_note": "2026-09-10: classification changed TRUE_CORPSE -> NO_FAIR_TEST_ON_RECORD by the Keeper under the doctrinal correction (TRUE_CORPSE now requires primary_cause HYPOTHESIS_FAILURE/PREMISE_FAILURE and fair_test FAIR). Derived from this dossier's own kill_boundary ('never had an instrument that could have told it otherwise until 2026-03-27') and capability_contingency (frontier_dependent=true, 'untested here'). The kill_boundary text is unchanged. Pending Necromancer/Cleric ratification; James to sign off."
   },
   "descendant_candidate": null,
   "provenance": {
@@ -238,7 +349,8 @@
     "created": "2026-09-10",
     "_amendments": [
       "2026-09-10 Keeper: backfilled autopsy.death_axis + capability_contingency (LAW N16) from the dossier's own kill_boundary/surviving_claims text; no new evidence.",
-      "2026-09-10 Keeper backfill (LAW N17): author_error_audit + contributing_axes derived from failure_classes GATE-CARRIES-ITS-ANSWER, PERMANENT-BURIAL-VIA-SKIP-SET, INSTRUMENT-STATE-RECORDED-AS-OUTCOME already in this dossier; no new evidence."
+      "2026-09-10 Keeper backfill (LAW N17): author_error_audit + contributing_axes derived from failure_classes GATE-CARRIES-ITS-ANSWER, PERMANENT-BURIAL-VIA-SKIP-SET, INSTRUMENT-STATE-RECORDED-AS-OUTCOME already in this dossier; no new evidence.",
+      "2026-09-10 Keeper migration (doctrinal correction, LAW N17 v2): death_axis/contributing_axes/author_error_audit replaced by death_certificates + cause_of_death_stack + fair_test + primary_cause. Each layer maps a finding already certified in this dossier (kill_boundary, failure_classes, surviving_claims, capability_contingency) to its evidence file; no new evidence, no new claims. Layers the pass did not examine are NOT_EXAMINED. Classification TRUE_CORPSE -> NO_FAIR_TEST_ON_RECORD (see disposition._keeper_note)."
     ]
   }
 }
