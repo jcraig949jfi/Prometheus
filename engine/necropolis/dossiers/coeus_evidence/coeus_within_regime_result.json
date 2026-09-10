@@ -1,0 +1,77 @@
+{
+ "ledger_entry_fields": [
+  "accuracy",
+  "calibration",
+  "concept_names",
+  "key",
+  "margin_accuracy",
+  "margin_calibration",
+  "reason",
+  "status",
+  "timestamp"
+ ],
+ "ledger_status_by_date": {
+  "2026-03-24|forged": 5,
+  "2026-03-24|scrap": 80,
+  "2026-03-25|forged": 129,
+  "2026-03-25|scrap": 105,
+  "2026-03-26|forged": 164,
+  "2026-03-26|scrap": 730,
+  "2026-03-27|forged": 59,
+  "2026-03-27|scrap": 613,
+  "2026-03-28|scrap": 82,
+  "2026-03-31|scrap": 2502,
+  "2026-04-01|scrap": 81,
+  "2026-04-02|forged": 2,
+  "2026-04-02|scrap": 353,
+  "2026-05-16|forged": 2,
+  "2026-05-16|scrap": 282,
+  "2026-05-17|forged": 7,
+  "2026-05-17|scrap": 253,
+  "2026-05-18|forged": 6,
+  "2026-05-18|scrap": 227,
+  "2026-05-19|forged": 6,
+  "2026-05-19|scrap": 289,
+  "2026-05-22|forged": 2,
+  "2026-05-22|scrap": 198,
+  "2026-05-26|forged": 1,
+  "2026-05-26|scrap": 209,
+  "2026-05-27|forged": 2,
+  "2026-05-27|scrap": 225,
+  "2026-05-28|scrap": 37
+ },
+ "pre_0327_regime::n": 3834,
+ "pre_0327_regime::n_forged": 374,
+ "pre_0327_regime::composite_only": {
+  "auc": 0.7509566937652622,
+  "prec_at_10pct": 0.26631853785900783,
+  "base_rate": 0.09754825247782994
+ },
+ "pre_0327_regime::concepts_only": {
+  "auc": 0.7066512627121264,
+  "prec_at_10pct": 0.2454308093994778,
+  "base_rate": 0.09754825247782994
+ },
+ "pre_0327_regime::fields_only": {
+  "auc": 0.6645092114617785,
+  "prec_at_10pct": 0.21148825065274152,
+  "base_rate": 0.09754825247782994
+ },
+ "pre_0327_regime::composite+concepts": {
+  "auc": 0.8005084850545577,
+  "prec_at_10pct": 0.39425587467362927,
+  "base_rate": 0.09754825247782994
+ },
+ "pre_0327_regime::concepts_label_permuted_null": {
+  "mean": 0.4979357670551142,
+  "max": 0.531320515594572
+ },
+ "pre_0327_regime::delta_auc_(comp+concepts)-(comp)": {
+  "mean": 0.047608845167073664,
+  "min": 0.03851890204321362,
+  "max": 0.05516174152267306
+ },
+ "post_0327_regime::n": 1605,
+ "post_0327_regime::n_forged": 9,
+ "post_0327_regime::note": "too few positives for CV"
+}
