@@ -1,0 +1,121 @@
+{
+  "_README": "Exemplar monster (Doctor Frankenstein, 2026-09-10). Built ONLY from organs certified by the coeus/argos/hephaestus dossiers plus one explicitly novel organ. Status PROPOSED; nothing here has been dispatched, implemented, or run. Exists to exercise the schema, the validator, and the Cleric handoff — and because it is the first honest test of whether the Hephaestus corpse was capability-era-dead (LAW N16).",
+  "schema_version": "1.0.0",
+  "monster_id": "FRANK-000",
+  "title": "Failure-mined forge: era-1 battery + ledger failures + stance scaffold, driven by a frontier coding model",
+  "author_role": "Doctor Frankenstein",
+  "premise_summary": "Hephaestus died because (a) its certification gate was vacuous until 2026-03-27 and (b) once the gate was honest, its prompt/model pipeline forged tools at the random pass rate. The corpse is capability-contingent on the frontier: the model that wrote the tools (era-1 API models) and the prompt that asked for them were never varied against the honest battery. This monster keeps the three organs that the autopsy certified as discriminative or informative — the 186-trap battery, the ledger as a failure corpus, the hand-written engines as positive control — replaces the producer with a modern coding model whose prompt is conditioned on mined failure reasons and diversified by the Argos five-stance scaffold, and evaluates with the Coeus instrument-clock holdout so the forge calendar cannot leak into the yield number.",
+  "graves_raided": [
+    "Hephaestus",
+    "Coeus",
+    "Argos"
+  ],
+  "organs": [
+    {
+      "organ_id": "hephaestus.code.0",
+      "source_agent": "Hephaestus",
+      "organ_type": "measurement_instrument",
+      "contributes": "The honest battery: 186 traps / 89 categories (seed 42). Chance floor 0.324, random tool passes 2.4%. This is the instrument under which the ancestor measured 0.7-2.2% yield, so it is the only instrument under which an ancestral comparison is meaningful.",
+      "novel": false,
+      "modification_required": "Split by category into a generation-visible half and a held-out half so the producer cannot overfit the traps it is prompted with; the split seed is preregistered here as 20260910.",
+      "failures_recorded_against": []
+    },
+    {
+      "organ_id": "hephaestus.data.0",
+      "source_agent": "Hephaestus",
+      "organ_type": "failure_corpus",
+      "contributes": "6,651 ledger keys with reason strings and accuracy fractions. Mined for the failure geometry (which trap categories killed which tool shapes) that conditions the producer prompt. Used ONLY as a corpus, never as a label set (the Coeus dossier killed that use).",
+      "novel": false,
+      "modification_required": "Exclude instrument-state rows (api_call_failed / wall_clock_timeout / test_harness_error) before mining; they are facts about the API, not about tools.",
+      "failures_recorded_against": []
+    },
+    {
+      "organ_id": "hephaestus.code.1",
+      "source_agent": "Hephaestus",
+      "organ_type": "producer",
+      "contributes": "Positive control. The nine hand-written engines score R1 0.50 / R3 0.39 / R4 0.61 on the same battery; if the experiment cannot reproduce those numbers the instrument is broken and no forge result counts.",
+      "novel": false,
+      "modification_required": "",
+      "failures_recorded_against": []
+    },
+    {
+      "organ_id": "argos.code.0",
+      "source_agent": "Argos",
+      "organ_type": "representation",
+      "contributes": "Five disciplinary stances as a prompt scaffold for producer diversity: each forge request is issued once per stance so the population is not one prompt sampled 1,000 times. Untested as a signal source in its grave; here it is a diversity operator, and its contribution is ablatable (stance-on vs stance-off arm).",
+      "novel": false,
+      "modification_required": "Retarget the stance text from research-question framing to tool-construction framing; keep the five stance names verbatim so the ablation is traceable.",
+      "failures_recorded_against": []
+    },
+    {
+      "organ_id": "coeus.code.2",
+      "source_agent": "Coeus",
+      "organ_type": "measurement_instrument",
+      "contributes": "Leave-one-forge-day-out / within-day harness. Every yield number in this experiment is computed with the instrument clock held out, so a positive cannot be a battery-version or API-health artefact (the artefact that killed Coeus).",
+      "novel": false,
+      "modification_required": "Generalize the group key from forge-day to (model, prompt_arm, battery_split); the harness already takes an arbitrary group array.",
+      "failures_recorded_against": []
+    },
+    {
+      "organ_id": "novel.frontier_coding_model",
+      "source_agent": "NOVEL",
+      "organ_type": "producer",
+      "contributes": "A 2026-era coding model reached through prometheus_llm (any live provider; the experiment is model-agnostic and records the model id). This is the capability the ancestor lacked; the era_test below is designed so its contribution is separable from the recomposition.",
+      "novel": true,
+      "modification_required": "",
+      "failures_recorded_against": []
+    }
+  ],
+  "why_combination_changes_boundary": "Target boundary: hephaestus.dossier.json kill_boundary layer (2), HONEST-INSTRUMENT LAYER — forge yield among battery-tested tools 0.7-2.2% against a 2.4% random pass rate across 1,803 tools. The autopsy explicitly leaves open whether a different model/prompt could forge above chance (autopsy.capability_contingency.frontier_dependent = true). The ancestor's producer had three defects this assembly removes: it sampled one prompt template (no diversity operator), it never read its own failures (the ledger was written and skipped, never mined), and it evaluated on the same battery it prompted with (no held-out split). Recomposition supplies a diversity operator (argos.code.0), a failure-conditioned prompt (hephaestus.data.0), and a leak-proof evaluator (coeus.code.2 + the battery split). The frontier model supplies capability. The 2x2 era_test separates the two.",
+  "modern_capability_enabling": {
+    "depends_on_frontier": true,
+    "capability": "Frontier coding-model reliability: a 2026 model writing a 50-200 line Python tool from a spec with a failure-conditioned prompt, at a cost that makes >=200 forge attempts per arm affordable.",
+    "era_test": "2x2 design: {ancestral prompt pipeline, recomposed pipeline} x {era-1 model if any is still reachable, frontier model}. If ancestral-prompt + frontier-model already clears the kill condition, the boundary was moved by capability alone and the recomposition contributed nothing (F2 still applies; N16 records capability-era-dead). If recomposed-pipeline + frontier-model clears it and ancestral-prompt + frontier-model does not, recomposition moved the boundary. If no era-1 model is reachable, the design degrades to the prompt-arm contrast on the frontier model only, and that limitation is written into the result."
+  },
+  "consumer": {
+    "name": "Apollo Gen-2 Serendipity Foundry (substrate miner) — forged tools that clear the held-out battery become candidate primitives for the Foundry's mutation source",
+    "reachable_now": false,
+    "consumption_proof": "One engine/queues/CONSUMPTION.jsonl row {object: FRANK-000 forged-tool set sha, consumed_by: Apollo/Foundry, effect: <count> tools admitted to the primitive pool, summary}. Absent that row, the monster is at most RUNNING, never ALIVE. Reachability is RESOURCE-gated: the Foundry service (M1 :8799) must attest a running process (CODE_FIXED != SERVICE_DEPLOYED) and the Apollo seat must accept the admission contract."
+  },
+  "measurable_consequence": "Forge yield among battery-tested tools on the HELD-OUT battery half, computed with the Coeus instrument-clock holdout: the ancestor's number is 0.7-2.2% (random pass rate 2.4%). The consumer reads the same number as the admission rate into its primitive pool.",
+  "strongest_alternative_explanation": "The frontier model has seen the 186-trap categories (or their sources) in pretraining, so it passes the battery by recall rather than by writing tools that reason; or the failure-conditioned prompt leaks held-out trap content through the ledger reason strings. Separated by (a) the held-out battery split with the ledger mined only over the generation-visible half, and (b) a recall probe: the model asked to answer the held-out traps directly, without writing a tool, establishes the recall ceiling; forged-tool accuracy must exceed the model's own direct-answer accuracy on the same traps to count as tool capability rather than model capability.",
+  "lightning_experiment": {
+    "design": "Four arms x N=200 forge attempts: A ancestral prompt + frontier model; B recomposed prompt (failure-mined + 5 stances, 40 per stance) + frontier model; C ancestral prompt + era-1 model if reachable; D recomposed prompt + era-1 model if reachable. Each forged tool is scored on the held-out battery half (93 traps, split seed 20260910). Yield = fraction of attempts whose tool passes the honest gate on the held-out half. Positive control: the nine composer.py engines are scored on the same held-out half before any forge run and must reproduce 0.39-0.61. Chance floor: 2,000 uniformly random tools through the same gate. Recall probe: the frontier model answers the 93 held-out traps directly (5 seeds). All yields recomputed under coeus_attacks.py with group = (arm, run_day).",
+    "expected_if_alive": "Arm B yield exceeds the random pass rate at binomial p < 0.01 AND exceeds arm A by at least 5 percentage points AND the mean held-out accuracy of B's passing tools exceeds the frontier model's direct-answer recall ceiling. Positive control reproduces.",
+    "expected_if_dead": "Arm B yield within the binomial 99% interval of the 2.4% random pass rate, or B - A < 5 pp (capability alone, not recomposition), or passing tools do not beat the recall ceiling (the model, not the tool, is answering).",
+    "kill_condition": "KILL if any of: (1) arm B yield on the held-out half <= 2.4% + the 99% binomial half-width at N=200 (~= 5.2% threshold); (2) arm B - arm A < 5 pp; (3) median held-out accuracy of B's passing tools <= the frontier model's direct-answer accuracy on the same traps. Any one fires the kill. The kill fires against the proposer: (2) and (3) are the outcomes Frankenstein would most like to avoid.",
+    "chance_floor": "2.4% pass rate for a uniformly random tool on the 186-trap honest gate (heph_battery_floor_result.json, 2,000 draws); to be re-derived on the 93-trap held-out half before the run and published with the result.",
+    "positive_control": "composer.py engines (commit 6348c1014) scored on the held-out half must land in 0.39-0.61; failure to reproduce voids the run (uninformative, not a kill).",
+    "resource_budget": {
+      "available_now": false,
+      "needs": [
+        "Model access through prometheus_llm for ~800 forge calls + ~500 scoring calls (OpenRouter free tier is reported live; must be attested at run time, not assumed)",
+        "A working invocation of trap_generator_extended.py and the gate replica (heph_battery_floor.py) — both ran as instruments during the Necromancer pass",
+        "An era-1 model endpoint for arms C/D, or an explicit record that none is reachable",
+        "Cleric adjudication and James sign-off (status PROPOSED -> CLERIC_REVIEW -> GATED_*)"
+      ],
+      "estimated_cost": "~1,300 model calls; one session of Cleric implementation time; no GPU"
+    },
+    "ancestral_comparison": {
+      "feasible": true,
+      "ancestral_assembly": "The 2026-03-27..05-28 Hephaestus forge (eras W2-W5) under the same 186-trap gate: 1,803 battery-tested tools, yield 0.7-2.2%.",
+      "rationale": "The ancestral number already exists under this instrument, so evolutionary movement is measured directly: monster yield on the held-out half versus the ancestor's yield on the full battery, with the caveat (recorded, not hidden) that the ancestor was not scored on a held-out split and so its number is if anything optimistic. Arm A additionally re-runs the ancestral prompt pipeline under the modern model, which is the closest feasible re-execution of the ancestral assembly.",
+      "ancestral_result_on_record": "engine/necropolis/dossiers/hephaestus.dossier.json autopsy.evidence_summary (heph_ledger_shape_result.json): W2 1.28%, W3 6.8% (n=74), W4 2.24%, W5 0.72%; random pass 2.4%."
+    }
+  },
+  "vindication_disclaimer": "A plausible modern reconstruction does not vindicate the historical agent, invalidate its autopsy, or constitute evidence that the original premise was correct. If this monster lives, the conditional viability frontier moved; Prometheus 1.0 did not succeed retroactively.",
+  "cleric_gate": {
+    "status": "PROPOSED",
+    "notes": "Not yet reviewed. Cleric checklist for this file: (i) confirm the held-out split protocol prevents ledger reason strings from leaking held-out trap content; (ii) confirm the recall probe is scored with the same gate as tools; (iii) confirm the consumer admission contract with the Apollo seat before RUNNING; (iv) resource attestation at run time.",
+    "james_signoff": false,
+    "dossier_if_dead": null
+  },
+  "provenance": {
+    "author": "Mnemosyne M2 (Keeper), writing as Doctor Frankenstein",
+    "branch": "necropolis/frankenstein",
+    "baseline_sha": "09a396a60",
+    "organs_inventory_sha": "86edaa6e93c9b1a6dc6fdd81b89ae76a9ed603748d8246b50347dba6602e0ed0",
+    "created_at": "2026-09-10",
+    "amendments": []
+  }
+}

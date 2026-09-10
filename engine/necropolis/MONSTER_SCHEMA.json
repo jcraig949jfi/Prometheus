@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "prometheus://necropolis/MONSTER_SCHEMA.json",
+  "title": "Necropolis monster (Doctor Frankenstein proposal)",
+  "description": "A recomposition proposal: certified organs from ORGANS.jsonl (plus explicitly novel organs) assembled into a new organism with a lightning experiment. Governed by ROLES.md F1-F6. A monster is NOT a resurrection and NOT evidence about any ancestor (F2).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "monster_id", "title", "author_role", "organs", "why_combination_changes_boundary",
+               "modern_capability_enabling", "consumer", "measurable_consequence", "strongest_alternative_explanation",
+               "lightning_experiment", "vindication_disclaimer", "cleric_gate", "provenance"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "monster_id": {"type": "string", "pattern": "^FRANK-[0-9]{3}$"},
+    "title": {"type": "string", "minLength": 8},
+    "author_role": {"const": "Doctor Frankenstein"},
+    "premise_summary": {"type": "string", "description": "One paragraph: what the assembled organism is supposed to DO, stated as a mechanism, not a hope."},
+    "graves_raided": {"type": "array", "items": {"type": "string"}, "description": "Source agents (ROSTER agent_ids) whose organs are harvested. Informational; derived from organs[]."},
+    "organs": {
+      "type": "array", "minItems": 2,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["organ_id", "source_agent", "contributes", "novel"],
+        "properties": {
+          "organ_id": {"type": "string", "minLength": 3, "description": "Must resolve to ORGANS.jsonl unless novel=true. Novel organs use the prefix novel."},
+          "source_agent": {"type": "string", "description": "ROSTER agent_id, or NOVEL for organs not harvested from a grave."},
+          "organ_type": {"type": "string", "enum": ["producer", "representation", "detector", "selector", "verifier", "consumer", "transform", "measurement_instrument", "routing_mechanism", "search_procedure", "interface_contract", "failure_corpus", "informative_failure_mode"]},
+          "contributes": {"type": "string", "minLength": 20, "description": "The causal function this organ supplies to the monster. Not what it was; what it does HERE."},
+          "novel": {"type": "boolean"},
+          "modification_required": {"type": "string", "description": "What must change about the organ before it fits. Empty string = used as-is."},
+          "failures_recorded_against": {"type": "array", "items": {"type": "string"}, "description": "Copied from ORGANS.jsonl at proposal time so the Cleric sees the organ history (F6)."}
+        }
+      }
+    },
+    "why_combination_changes_boundary": {"type": "string", "minLength": 80, "description": "Which historical kill boundary (name the dossier + the boundary) this assembly is claimed to move, and the mechanism by which recombination moves it. Modern-models-are-better is not a mechanism."},
+    "modern_capability_enabling": {
+      "type": "object", "additionalProperties": false,
+      "required": ["depends_on_frontier", "capability"],
+      "properties": {
+        "depends_on_frontier": {"type": "boolean"},
+        "capability": {"type": "string", "description": "The specific modern capability, or: none, this is pure recomposition of era-1 organs."},
+        "era_test": {"type": "string", "description": "How the experiment separates capability-moved-the-boundary from recomposition-moved-the-boundary (LAW N16)."}
+      }
+    },
+    "consumer": {
+      "type": "object", "additionalProperties": false,
+      "required": ["name", "reachable_now", "consumption_proof"],
+      "properties": {
+        "name": {"type": "string", "minLength": 3},
+        "reachable_now": {"type": "boolean"},
+        "consumption_proof": {"type": "string", "minLength": 20, "description": "The CONSUMPTION.jsonl seam entry (SEAMS.md) that would prove the monster output was used, or why no such seam exists yet."}
+      }
+    },
+    "measurable_consequence": {"type": "string", "minLength": 40, "description": "What changes, in a number the consumer already reads, if the monster is alive."},
+    "strongest_alternative_explanation": {"type": "string", "minLength": 40, "description": "The best non-monster explanation for a positive result. The experiment must be able to separate it."},
+    "lightning_experiment": {
+      "type": "object", "additionalProperties": false,
+      "required": ["design", "expected_if_alive", "expected_if_dead", "kill_condition", "chance_floor", "positive_control", "resource_budget", "ancestral_comparison"],
+      "properties": {
+        "design": {"type": "string", "minLength": 80},
+        "expected_if_alive": {"type": "string", "minLength": 20},
+        "expected_if_dead": {"type": "string", "minLength": 20},
+        "kill_condition": {"type": "string", "minLength": 20, "description": "Pre-declared, numeric where possible, and able to fire AGAINST the proposer (LAW N9, F3)."},
+        "chance_floor": {"type": "string", "minLength": 10, "description": "Published P(result | no mechanism), with the null that produces it."},
+        "positive_control": {"type": "string", "minLength": 10, "description": "Something the instrument is known to detect; if it fails to fire, the experiment is uninformative, not a kill."},
+        "resource_budget": {
+          "type": "object", "additionalProperties": false,
+          "required": ["available_now"],
+          "properties": {
+            "available_now": {"type": "boolean"},
+            "needs": {"type": "array", "items": {"type": "string"}},
+            "estimated_cost": {"type": "string"}
+          }
+        },
+        "ancestral_comparison": {
+          "type": "object", "additionalProperties": false,
+          "required": ["feasible", "ancestral_assembly", "rationale"],
+          "properties": {
+            "feasible": {"type": "boolean"},
+            "ancestral_assembly": {"type": "string", "minLength": 10, "description": "The historical assembly run under the SAME instrument (F4), or the closest recoverable proxy."},
+            "rationale": {"type": "string", "minLength": 20, "description": "Why this comparison measures evolutionary movement (or why it is infeasible)."},
+            "ancestral_result_on_record": {"type": "string", "description": "If the ancestral number already exists under this instrument, cite it with its dossier path."}
+          }
+        }
+      }
+    },
+    "vindication_disclaimer": {
+      "const": "A plausible modern reconstruction does not vindicate the historical agent, invalidate its autopsy, or constitute evidence that the original premise was correct. If this monster lives, the conditional viability frontier moved; Prometheus 1.0 did not succeed retroactively."
+    },
+    "cleric_gate": {
+      "type": "object", "additionalProperties": false,
+      "required": ["status"],
+      "properties": {
+        "status": {"type": "string", "enum": ["PROPOSED", "CLERIC_REVIEW", "GATED_APPROVED", "GATED_REJECTED", "RUNNING", "ALIVE", "DEAD"]},
+        "adjudicator": {"type": "string"},
+        "adjudicated_at": {"type": "string"},
+        "notes": {"type": "string"},
+        "james_signoff": {"type": "boolean"},
+        "dossier_if_dead": {"type": ["string", "null"], "description": "dossiers/<monster_id>.dossier.json once a Necromancer has autopsied the corpse (F6)."}
+      }
+    },
+    "provenance": {
+      "type": "object", "additionalProperties": false,
+      "required": ["author", "branch", "baseline_sha", "organs_inventory_sha"],
+      "properties": {
+        "author": {"type": "string"},
+        "branch": {"type": "string"},
+        "baseline_sha": {"type": "string"},
+        "organs_inventory_sha": {"type": "string", "description": "sha256 of ORGANS.jsonl at proposal time, computed over LF-normalized bytes (certificates must fingerprint inputs; line endings must not change the certificate)."},
+        "created_at": {"type": "string"},
+        "amendments": {"type": "array", "items": {"type": "string"}}
+      }
+    }
+  }
+}

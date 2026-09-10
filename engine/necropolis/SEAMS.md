@@ -57,6 +57,24 @@ document names the intended seams; it does NOT wire automation in the founding p
   Necropolis' lifecycle is a rigorous descendant of that flow. These docs are cited as evidence
   (`autopsy.prior_verdicts`) and never edited.
 
+## The monster seams (Doctor Frankenstein -> Cleric -> world)
+
+- **Organ inventory <- dossiers.** `ORGANS.jsonl` is derived, never authored: `build_organs.py`
+  reads every validating dossier's `residue` buckets. An organ exists iff a Necromancer certified
+  the residue item (F5). `ORGAN_NOTES.json` (optional, Keeper-owned) overlays annotations by
+  `organ_id` — status changes, constraints, `failures_recorded_against` — and survives regeneration.
+- **Monster -> consumption.** A monster's `consumer.consumption_proof` names the
+  `engine/queues/CONSUMPTION.jsonl` row that would prove use. `cleric_gate.status = ALIVE` is
+  legal only once that row exists; `RUNNING` is the ceiling for a monster that merely executes.
+- **Dead monster -> cemetery.** On `DEAD`: a ROSTER row (`kind: chimera`, `agent_id: FRANK-NNN`),
+  a Necromancer dossier at `dossiers/FRANK-NNN.dossier.json` linked from
+  `cleric_gate.dossier_if_dead`, and the failure appended to each harvested organ's
+  `failures_recorded_against` via `ORGAN_NOTES.json` (F6). The monster's organs return to the
+  inventory carrying that history; the validator refuses `DEAD` without the dossier link.
+- **Monster -> ancestors: NO SEAM.** A monster outcome never writes into an ancestor dossier
+  (F2). If a Necromancer believes a living monster changes an ancestral kill boundary, that is a
+  new Necromancer pass with its own evidence, filed as a dossier amendment under LAW N11.
+
 ## What Necropolis must never seam into
 
 - H0-H5 machinery, queues, hypotheses, experiment packets, or M1 workflows (LAW N12).

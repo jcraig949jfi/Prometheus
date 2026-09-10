@@ -97,6 +97,16 @@ Before calling any agent idle, unclaimed, or safe to touch, check whether a lane
 merely whether something landed in git. The founding pass itself began beside an in-progress
 cherry-pick on a shared checkout.
 
+**LAW N16 — "Too early" is a testable claim, not an excuse.**
+Some experiments implicitly tested *"can an era-E model + this mechanism + this representation +
+this compute budget do X?"* and history compressed the null into *"this mechanism cannot do X."*
+Those are not equivalent. Every dossier records a **death axis** (below) and, where the kill
+boundary depended materially on a moving technological frontier (model capability, context
+length, tool use, coding ability, inference cost, verifier integration, model reliability), names
+that frontier in `autopsy.capability_contingency`. The **conditional viability frontier** is a
+first-class object: a later success under new capability means the frontier moved, not that the
+original agent succeeded (ROLES.md, F2).
+
 ---
 
 ## Classification vocabulary
@@ -109,3 +119,19 @@ The archaeological state of an examined organism (`disposition.classification`) 
 
 There is deliberately **no generic `FAILED`**. A single undifferentiated failure label is the
 exact conflation Operation Necropolis exists to undo; the validator rejects it.
+
+## Death-axis vocabulary
+
+Orthogonal to the classification, `autopsy.death_axis` records *where on the stack* the evidence
+locates the death. Exactly one of:
+
+`premise-dead` (the underlying idea was tested at power and failed) · `implementation-dead` (the
+idea is untested because the build never expressed it) · `measurement-dead` (the instrument that
+judged it carried its own answer, or its outcome variable recorded instrument state) ·
+`ecosystem-dead` (producer, consumer, orchestration, or resource around it died; the organism was
+inert or starved) · `capability-era-dead` (the kill boundary depended materially on a frontier
+that has since moved; LAW N16) · `undetermined`.
+
+The Necromancer establishes which axis the evidence supports. Doctor Frankenstein asks whether
+today's boundary makes a different assembly of the surviving organs worth testing. The Cleric
+decides whether it may be tested.

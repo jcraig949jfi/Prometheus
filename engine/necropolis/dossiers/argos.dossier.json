@@ -4,7 +4,11 @@
   "_README": "NECROMANCER PASS #2 (Argos). Archaeology only: nothing was resurrected, no historical agent was run as an agent. ArgosAgent was imported and instantiated as an INSTRUMENT (apparatus control = the import/instantiate lines of argos_evidence/argos_selector_result.json); only _parse_problem_corpus/_parse_lens_shelf/_score_problem/_select_problem were called, never run_tick; Redis host pinned to loopback; no DR request enqueued; the two empty state/artifacts dirs the constructor mkdir'd were removed. Every number below is reproducible from engine/necropolis/dossiers/argos_evidence/.",
   "identity": {
     "agent_id": "Argos",
-    "aliases": ["argos", "lens-fingerprint accretion daemon", "Harmonia swarm child (Phylax/Sophia/Iris/Argos/Telos)"],
+    "aliases": [
+      "argos",
+      "lens-fingerprint accretion daemon",
+      "Harmonia swarm child (Phylax/Sophia/Iris/Argos/Telos)"
+    ],
     "historical_machine": "M2",
     "historical_kind": "tool",
     "historical_operator": "Harmonia (harmonia_loop.py rotation), 2026-05-19..~2026-05-24",
@@ -27,10 +31,27 @@
   "original_organism": {
     "premise": "For an open problem, the DISAGREEMENT between several methodological lenses (a 5-stance MPA scaffold + tier-1 toolkit operators) is a fingerprint that reveals the compression direction; accreting one lens per tick per problem, preferring problems whose current verdict is 'map_of_disagreement', will grow a catalog of lens-fingerprinted problems that Harmonia can promote.",
     "mechanism": "Each tick: parse the problem corpus (Aporia gemini_research_queue, else a fallback scan of aporia/*/questions.jsonl, plus the 12 anchor catalogs) and the lens shelf (25 operators from METHODOLOGY_TOOLKIT); score every problem = lens deficit + _VERDICT_BONUS[last_verdict] (map_of_disagreement 3, null 1, coordinate_invariant/durable 0); pick the max (tiebreak: verdict rank, then id); propose the next lenses; render a catalog draft to artifacts/; optionally enqueue a Pythia deep-research request built from the lens stack (dr_daily_cap=3 from 2026-05-19); persist lens_history in state/.",
-    "producers": ["Aporia question corpora (queue.jsonl or aporia/*/questions.jsonl)", "METHODOLOGY_TOOLKIT / MPA lens shelf", "hand catalogs in harmonia/memory/catalogs (verdict source)", "Pythia (fulfils DR requests)"],
-    "inputs": ["problem corpus", "lens shelf", "lens_history state (never committed; June-2026 dossier found state/artifacts dirs ABSENT on the M2 drives)"],
-    "outputs": ["~438 catalog drafts in artifacts/ (never committed, not present in any git tree)", "20 Pythia DR reports (requests 2026-05-21..24, in git)", "heartbeat to Agora Redis"],
-    "intended_consumers": ["Harmonia catalog promotion (draft -> harmonia/memory/catalogs, HITL) which would write back a verdict the selector then reads", "PROBLEM_LENS_CATALOG@v1 / CND_FRAME@v1 anchor consumers (via promoted catalogs)", "Aporia claim-miner over DR reports"]
+    "producers": [
+      "Aporia question corpora (queue.jsonl or aporia/*/questions.jsonl)",
+      "METHODOLOGY_TOOLKIT / MPA lens shelf",
+      "hand catalogs in harmonia/memory/catalogs (verdict source)",
+      "Pythia (fulfils DR requests)"
+    ],
+    "inputs": [
+      "problem corpus",
+      "lens shelf",
+      "lens_history state (never committed; June-2026 dossier found state/artifacts dirs ABSENT on the M2 drives)"
+    ],
+    "outputs": [
+      "~438 catalog drafts in artifacts/ (never committed, not present in any git tree)",
+      "20 Pythia DR reports (requests 2026-05-21..24, in git)",
+      "heartbeat to Agora Redis"
+    ],
+    "intended_consumers": [
+      "Harmonia catalog promotion (draft -> harmonia/memory/catalogs, HITL) which would write back a verdict the selector then reads",
+      "PROBLEM_LENS_CATALOG@v1 / CND_FRAME@v1 anchor consumers (via promoted catalogs)",
+      "Aporia claim-miner over DR reports"
+    ]
   },
   "observed_history": {
     "run_period": "2026-05-19 (cb6bee203 swarm v0.1 MVP; dd899d56a daily DR cap) .. ~2026-05-24 (last DR request 00366); heartbeat dead since May (Aporia P29 staleness sweep); shelved with the Harmonia rotation; Redis host 192.168.1.176 retired",
@@ -46,7 +67,14 @@
       "AA-062 (CRAMER_MODEL_REFUTED_GRANVILLE_CORRECTED): source_report 00363, verified_against_primary=false, grade A2, contains NO lens/stance/disagreement vocabulary; downstream: WORKLOG P25 CAT-MATH-0065 spec -> aporia/catalog_attacks/ATTACK_CAT-MATH-0065_2026-08-21.md (executed, sieve to 1e8) -> BACKLOG AA-VERIFY-AA-062 PARKED",
       "June settle test as an instrument (claim-miner v0.1): hand control batch6 21 reports -> 0 claims (miner keys on '## (a)' sections + arXiv ids; format-sensitive); matched same-era non-Argos Pythia sample 20 -> 7 claims (4 files); Argos 20 -> 1 claim (a table row) (argos_settle_test_result.json)"
     ],
-    "artifact_counts": {"dr_reports_in_git": 20, "catalog_drafts_claimed_june": 438, "catalog_drafts_in_any_git_tree": 0, "catalogs_promoted_from_argos": 0, "anti_anchors_sourced": 1, "backcorpus_rows": 20},
+    "artifact_counts": {
+      "dr_reports_in_git": 20,
+      "catalog_drafts_claimed_june": 438,
+      "catalog_drafts_in_any_git_tree": 0,
+      "catalogs_promoted_from_argos": 0,
+      "anti_anchors_sourced": 1,
+      "backcorpus_rows": 20
+    },
     "actual_consumers": [
       "DR back-corpus mining lane (Aporia, 2026-08-19): consumed all 20 reports three months post-mortem, generically (no lens content used); 1 anchor emitted at a rate consistent with the corpus base rate",
       "NO consumer ever read a catalog draft: the promotion stage (draft -> catalogs -> verdict) never ran; drafts were never committed and are absent from every git tree",
@@ -86,7 +114,16 @@
     "contradictory_evidence": [
       "P46 'catalog count grew 11->13': git shows 13 catalogs by 2026-04-23 (README + 12) with no later additions; the 11->13 growth is not attributable to Argos and its timing was not recorded in the autopsy.",
       "June 'salvage IP: anti-greedy selection policy': the policy text is reasonable; its measured behaviour in Argos's lifetime is a constant. Both are true; the second is what the record shows."
-    ]
+    ],
+    "death_axis": "ecosystem-dead",
+    "capability_contingency": {
+      "frontier_dependent": false,
+      "frontiers": [
+        "deep-research model quality (only if the lens-stack premise is ever tested)"
+      ],
+      "era_bound_claim": "Not era-bound as killed: the selector was decorative (435/435 ties) and the promotion stage was never built regardless of model quality.",
+      "what_would_move_it": "The untested premise (lens disagreement -> compression direction) is model-sensitive; argos-d1 pairs lens-stack vs plain prompts on the same DR model to isolate it."
+    }
   },
   "residue": {
     "salvageable_code": [
@@ -100,8 +137,12 @@
       "20 Argos DR reports (aporia/docs/deep_research_reports/2026-05-2*/) — the only stance-structured Pythia reports in the corpus; a paired-prompt ablation could use them as the 'lens' arm",
       "argos_consumption_trace_result.json: corpus anchor base rate 0.195 (n=616) and same-era 0.224 (n=156) as the published chance floor for any 'this agent's reports produced anchors' claim"
     ],
-    "salvageable_schemas": ["lens_history state shape {problem_id: {applied_lenses[], last_verdict}} is a fine contract IF a promotion stage writes last_verdict"],
-    "salvageable_operators": ["Pythia DR request path (Argos -> Pythia -> deep_research_reports/) works: 20/20 requests were fulfilled within 1-3 days"],
+    "salvageable_schemas": [
+      "lens_history state shape {problem_id: {applied_lenses[], last_verdict}} is a fine contract IF a promotion stage writes last_verdict"
+    ],
+    "salvageable_operators": [
+      "Pythia DR request path (Argos -> Pythia -> deep_research_reports/) works: 20/20 requests were fulfilled within 1-3 days"
+    ],
     "salvageable_tests": [
       "selector-constancy check: score every corpus item under the agent's actual initial state; if >90% tie, the policy is decorative (apply to every 'anti-greedy'/'deficit' picker in AGENT_AUTOPSIES.jsonl)",
       "anchor-yield base-rate null: never cite 'produced an anchor' without the corpus rate and P(>=1 | n)"
@@ -131,7 +172,11 @@
       "Selector removed entirely (its measured behaviour is a constant); problem choice is by the queue's own priority, recorded per artifact with the corpus source",
       "Published chance floor: corpus anchor rate 0.195 and the miner's matched-era 0.35 claims/report; a 200-draw label-permutation null over arm labels"
     ],
-    "preserved_mechanism": ["_build_dr_prompt + DISCIPLINARY_STANCES (5-stance MPA scaffold)", "_toolkit_line_for / _parse_lens_shelf", "Pythia DR request path"],
+    "preserved_mechanism": [
+      "_build_dr_prompt + DISCIPLINARY_STANCES (5-stance MPA scaffold)",
+      "_toolkit_line_for / _parse_lens_shelf",
+      "Pythia DR request path"
+    ],
     "consumer": "DR back-corpus mining lane (engine/queues/BACKCORPUS_MINING.jsonl -> techne/registry/anti_anchors.jsonl) and engine/necropolis (this dossier -> TRUE_CORPSE or PREMISE_ALIVE update)",
     "consumption_proof": "engine/queues/CONSUMPTION.jsonl row {object: argos-d1 paired result, consumed_by: dossiers/argos.dossier.json disposition update}; plus BACKCORPUS_MINING.jsonl rows for all 20 paired reports carrying an 'arm' field",
     "expected_if_alive": "Lens-stack arm produces >= 2x the plain arm's anchor-or-claim yield over 10 pairs AND at least one anchor whose text cites a stance disagreement (lens vocabulary present), with the arm-permutation null below that ratio at the 97.5th percentile",
@@ -174,6 +219,9 @@
       "The fleet_lens_cross_validation consumer tag on 6 Argos reports (DRBC-11/12): did that lane read stance structure, or is it a filename-routed bucket? Its output was not traced here.",
       "Does the same selector-constancy defect exist in the sibling swarm children (Phylax/Sophia/Iris/Telos) that share _base.py and the deficit-scoring idiom?"
     ],
-    "created": "2026-09-10"
+    "created": "2026-09-10",
+    "_amendments": [
+      "2026-09-10 Keeper: backfilled autopsy.death_axis + capability_contingency (LAW N16) from the dossier's own kill_boundary/surviving_claims text; no new evidence."
+    ]
   }
 }

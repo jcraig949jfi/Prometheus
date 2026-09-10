@@ -6,81 +6,290 @@
   "description": "One historical Prometheus agent examined as an experimental organism. A Necromancer fills identity..disposition (and optionally descendant_candidate); a Cleric may later implement the descendant. This schema is a compatible SUPERSET of engine/ledger/AGENT_AUTOPSIES.jsonl (the autopsy layer) joined to a descendant-experiment layer. See CHARTER.md for the laws it enforces.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schema_version", "identity", "autopsy", "disposition", "provenance"],
+  "required": [
+    "schema_version",
+    "identity",
+    "autopsy",
+    "disposition",
+    "provenance"
+  ],
   "properties": {
-    "schema_version": { "const": "1.0.0" },
-    "kind": { "const": "necropolis_dossier" },
-
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "kind": {
+      "const": "necropolis_dossier"
+    },
     "identity": {
-      "type": "object", "additionalProperties": false,
-      "required": ["agent_id", "source_paths", "evidence_baseline"],
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "agent_id",
+        "source_paths",
+        "evidence_baseline"
+      ],
       "properties": {
-        "agent_id": { "type": "string", "minLength": 1, "description": "MUST resolve to a ROSTER.jsonl agent_id." },
-        "aliases": { "type": "array", "items": { "type": "string" } },
-        "historical_machine": { "type": ["string", "null"], "description": "M1..M4 or null/unknown." },
-        "historical_kind": { "type": ["string", "null"], "description": "tool|daemon|operator|pipeline-stage|healthcheck|machineprobe" },
-        "historical_operator": { "type": ["string", "null"] },
-        "source_paths": { "type": "array", "items": { "type": "string" }, "minItems": 1, "description": "Repo paths inspected as evidence (code, state, artifacts)." },
-        "evidence_baseline": { "type": "string", "minLength": 7, "description": "Git SHA at which the evidence was read." }
+        "agent_id": {
+          "type": "string",
+          "minLength": 1,
+          "description": "MUST resolve to a ROSTER.jsonl agent_id."
+        },
+        "aliases": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "historical_machine": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "M1..M4 or null/unknown."
+        },
+        "historical_kind": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "tool|daemon|operator|pipeline-stage|healthcheck|machineprobe"
+        },
+        "historical_operator": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "source_paths": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "description": "Repo paths inspected as evidence (code, state, artifacts)."
+        },
+        "evidence_baseline": {
+          "type": "string",
+          "minLength": 7,
+          "description": "Git SHA at which the evidence was read."
+        }
       }
     },
-
     "original_organism": {
-      "type": "object", "additionalProperties": false,
+      "type": "object",
+      "additionalProperties": false,
       "properties": {
-        "premise": { "type": "string", "description": "The hypothesis the agent embodied: if we do X, Y follows." },
-        "mechanism": { "type": "string", "description": "How it was meant to work." },
-        "producers": { "type": "array", "items": { "type": "string" } },
-        "inputs": { "type": "array", "items": { "type": "string" } },
-        "outputs": { "type": "array", "items": { "type": "string" } },
-        "intended_consumers": { "type": "array", "items": { "type": "string" } }
+        "premise": {
+          "type": "string",
+          "description": "The hypothesis the agent embodied: if we do X, Y follows."
+        },
+        "mechanism": {
+          "type": "string",
+          "description": "How it was meant to work."
+        },
+        "producers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "inputs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "outputs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "intended_consumers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
       }
     },
-
     "observed_history": {
-      "type": "object", "additionalProperties": false,
+      "type": "object",
+      "additionalProperties": false,
       "properties": {
-        "run_period": { "type": ["string", "null"] },
-        "measurements": { "type": "array", "items": { "type": "string" } },
-        "artifact_counts": { "type": "object", "additionalProperties": true },
-        "actual_consumers": { "type": "array", "items": { "type": "string" } },
-        "consumption_evidence": { "type": "array", "items": { "type": "string" }, "description": "Paths/queries proving downstream consumption (or its absence). See CONSUMPTION.jsonl seam in SEAMS.md." }
+        "run_period": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "measurements": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "artifact_counts": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "actual_consumers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "consumption_evidence": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Paths/queries proving downstream consumption (or its absence). See CONSUMPTION.jsonl seam in SEAMS.md."
+        }
       }
     },
-
     "autopsy": {
-      "type": "object", "additionalProperties": false,
-      "required": ["kill_boundary", "surviving_claims", "failure_classes"],
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kill_boundary",
+        "surviving_claims",
+        "failure_classes"
+      ],
       "properties": {
-        "prior_verdicts": { "type": "array", "items": { "type": "string" }, "description": "Earlier dispositions/autopsies (cited, NOT trusted). LAW N11." },
+        "prior_verdicts": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Earlier dispositions/autopsies (cited, NOT trusted). LAW N11."
+        },
         "failure_classes": {
-          "type": "array", "minItems": 1,
-          "items": { "type": "string", "minLength": 2 },
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 2
+          },
           "description": "Mechanistic failure typing. SHOULD reference an AUTOPSY_TAXONOMY.md cluster when applicable (DEAD-GATING, LOW-BITS-EMISSION, BOUNDED-MENU-SATURATION, SELECTION-DECOUPLED-FROM-SIGNAL, SEAM-BROKEN, SEMANTIC-TASK-SYNTACTIC-TOOL) or NO-DESIGN-FAILURE-ESTABLISHED. The generic label FAILED is forbidden here and in disposition.classification."
         },
-        "kill_boundary": { "type": "string", "minLength": 12, "description": "LAW N4: the STRONGEST proposition the evidence legitimately killed, and no stronger. State what is excluded, not merely that it died." },
-        "surviving_claims": { "type": "array", "items": { "type": "string" }, "description": "LAW N5: mechanisms/premises STILL compatible with the evidence. May be empty only for a defended TRUE_CORPSE." },
-        "uncertainty": { "type": "array", "items": { "type": "string" } },
-        "contradictory_evidence": { "type": "array", "items": { "type": "string" } }
+        "kill_boundary": {
+          "type": "string",
+          "minLength": 12,
+          "description": "LAW N4: the STRONGEST proposition the evidence legitimately killed, and no stronger. State what is excluded, not merely that it died."
+        },
+        "surviving_claims": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "LAW N5: mechanisms/premises STILL compatible with the evidence. May be empty only for a defended TRUE_CORPSE."
+        },
+        "uncertainty": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "contradictory_evidence": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "death_axis": {
+          "type": "string",
+          "enum": [
+            "premise-dead",
+            "implementation-dead",
+            "measurement-dead",
+            "ecosystem-dead",
+            "capability-era-dead",
+            "undetermined"
+          ],
+          "description": "CHARTER death-axis vocabulary (LAW N16). Where on the stack the evidence locates the death; orthogonal to disposition.classification. Frankenstein reads this first."
+        },
+        "capability_contingency": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "frontier_dependent": {
+              "type": "boolean",
+              "description": "Did the kill boundary depend materially on a moving technological frontier?"
+            },
+            "frontiers": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Named frontiers: model capability, context length, tool use, coding ability, inference cost, verifier integration, model reliability, ..."
+            },
+            "era_bound_claim": {
+              "type": "string",
+              "description": "The claim as it SHOULD be stated: 'era-E model + mechanism + representation + budget could not do X'."
+            },
+            "what_would_move_it": {
+              "type": "string",
+              "description": "What changed capability would re-open the boundary, if any."
+            }
+          },
+          "required": [
+            "frontier_dependent"
+          ],
+          "description": "LAW N16: record whether 'too early' is part of the kill, so it can be tested rather than assumed."
+        }
       }
     },
-
     "residue": {
-      "type": "object", "additionalProperties": false,
+      "type": "object",
+      "additionalProperties": false,
       "description": "LAW N7: typed salvage, not prose.",
       "properties": {
-        "salvageable_code": { "type": "array", "items": { "type": "string" } },
-        "salvageable_data": { "type": "array", "items": { "type": "string" } },
-        "salvageable_schemas": { "type": "array", "items": { "type": "string" } },
-        "salvageable_operators": { "type": "array", "items": { "type": "string" } },
-        "salvageable_tests": { "type": "array", "items": { "type": "string" } },
-        "representation_hints": { "type": "array", "items": { "type": "string" } }
+        "salvageable_code": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "salvageable_data": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "salvageable_schemas": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "salvageable_operators": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "salvageable_tests": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "representation_hints": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
       }
     },
-
     "disposition": {
-      "type": "object", "additionalProperties": false,
-      "required": ["classification", "rationale"],
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "classification",
+        "rationale"
+      ],
       "properties": {
         "classification": {
           "type": "string",
@@ -99,42 +308,148 @@
           ],
           "description": "The archaeological state. There is deliberately NO generic FAILED value; the validator hard-rejects it."
         },
-        "rationale": { "type": "string", "minLength": 12 }
+        "rationale": {
+          "type": "string",
+          "minLength": 12
+        }
       }
     },
-
     "descendant_candidate": {
-      "type": ["object", "null"], "additionalProperties": false,
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": false,
       "description": "OPTIONAL. Present only when a descendant is PROPOSED. If present the validator enforces LAW N6 (consumer + consumption_proof), N8 (changed_design), N9 (expected_if_alive/dead + kill_condition). A dossier with no proposed descendant sets this to null.",
-      "required": ["id", "parent", "changed_design", "consumer", "consumption_proof", "expected_if_alive", "expected_if_dead", "kill_condition"],
+      "required": [
+        "id",
+        "parent",
+        "changed_design",
+        "consumer",
+        "consumption_proof",
+        "expected_if_alive",
+        "expected_if_dead",
+        "kill_condition"
+      ],
       "properties": {
-        "id": { "type": "string", "minLength": 1 },
-        "parent": { "type": "string", "minLength": 1, "description": "MUST equal identity.agent_id." },
-        "changed_design": { "type": "array", "items": { "type": "string" }, "minItems": 1, "description": "LAW N8: exactly what differs from the historical organism." },
-        "preserved_mechanism": { "type": "array", "items": { "type": "string" } },
-        "consumer": { "type": "string", "minLength": 1, "description": "LAW N6: a concrete named downstream consumer." },
-        "consumption_proof": { "type": "string", "minLength": 1, "description": "LAW N6: the mechanism that will PROVE consumption (e.g. a CONSUMPTION.jsonl row with a measured effect)." },
-        "expected_if_alive": { "type": "string", "minLength": 1 },
-        "expected_if_dead": { "type": "string", "minLength": 1 },
-        "positive_control": { "type": ["string", "null"] },
-        "negative_or_decoy_control": { "type": ["string", "null"] },
-        "kill_condition": { "type": "string", "minLength": 1, "description": "LAW N9: the pre-declared condition that ends the resurrection experiment as a failure." },
-        "resource_budget": { "type": ["string", "null"] }
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parent": {
+          "type": "string",
+          "minLength": 1,
+          "description": "MUST equal identity.agent_id."
+        },
+        "changed_design": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "description": "LAW N8: exactly what differs from the historical organism."
+        },
+        "preserved_mechanism": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "consumer": {
+          "type": "string",
+          "minLength": 1,
+          "description": "LAW N6: a concrete named downstream consumer."
+        },
+        "consumption_proof": {
+          "type": "string",
+          "minLength": 1,
+          "description": "LAW N6: the mechanism that will PROVE consumption (e.g. a CONSUMPTION.jsonl row with a measured effect)."
+        },
+        "expected_if_alive": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expected_if_dead": {
+          "type": "string",
+          "minLength": 1
+        },
+        "positive_control": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "negative_or_decoy_control": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "kill_condition": {
+          "type": "string",
+          "minLength": 1,
+          "description": "LAW N9: the pre-declared condition that ends the resurrection experiment as a failure."
+        },
+        "resource_budget": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
       }
     },
-
     "provenance": {
-      "type": "object", "additionalProperties": false,
-      "required": ["investigator", "branch", "baseline_sha", "commands_run"],
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "investigator",
+        "branch",
+        "baseline_sha",
+        "commands_run"
+      ],
       "properties": {
-        "investigator": { "type": "string", "minLength": 1 },
-        "role": { "type": "string", "enum": ["Necromancer", "Cleric", "Keeper"] },
-        "branch": { "type": "string", "minLength": 1 },
-        "baseline_sha": { "type": "string", "minLength": 7 },
-        "evidence_paths": { "type": "array", "items": { "type": "string" } },
-        "commands_run": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
-        "unresolved_questions": { "type": "array", "items": { "type": "string" } },
-        "created": { "type": "string" }
+        "investigator": {
+          "type": "string",
+          "minLength": 1
+        },
+        "role": {
+          "type": "string",
+          "enum": [
+            "Necromancer",
+            "Cleric",
+            "Keeper"
+          ]
+        },
+        "branch": {
+          "type": "string",
+          "minLength": 1
+        },
+        "baseline_sha": {
+          "type": "string",
+          "minLength": 7
+        },
+        "evidence_paths": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "commands_run": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        "unresolved_questions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "created": {
+          "type": "string"
+        }
       }
     }
   }
