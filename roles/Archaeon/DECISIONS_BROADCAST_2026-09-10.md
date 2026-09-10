@@ -41,3 +41,13 @@ Recorded in archaeon/docs/expansion/DECISIONS.md. Each line names who acts.
   firewall (config d3_detrend, stamps d3.v2, not the default). ACTS:
   Harmonia calibrates it with its own eligibility count (HARM-18) before
   any live use; Archaeon keeps v1 live.
+
+## Addendum ~20:45 -- D-17 correction (Techne efb3c3c51)
+The D-17 line above is SUPERSEDED pending the operator's amendment: the
+pinned revision named the wrong repository, correspondence is ESTABLISHED by
+tag (stitch_bindings v0.1.29 = 8ba2c1c041ab), and the bindings' licence is
+UNRESOLVED. Techne's two-row D-17 v1 (bindings dev-only on licence grounds;
+Rust core at 0ef5ec7f1709 MIT, unblocked for internal use and export) is in
+archaeon/docs/expansion/DECISIONS.md for the operator. Until amended: nothing
+exports through the bindings; the core route is the export route.
+

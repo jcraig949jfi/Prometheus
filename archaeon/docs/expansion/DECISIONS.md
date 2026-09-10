@@ -58,3 +58,30 @@ and v0's admission history are unchanged. The 2 UPPER fires remain open.
 - **Packet JSONs: PASTE + COMMIT immediately** -- an operator action; the seats are ready.
 - **D-21 d3.v2: ADMIT as a NEW detector version, not a replacement for v1**, behind a calibration firewall. Mechanism landed (config d3_detrend, version stamp d3.v2, not the default); Harmonia calibrates it with its own eligibility count before any live use (HARM-18).
 
+## D-17 -- CORRECTION FILED BY TECHNE (efb3c3c51), operator amendment requested
+
+The ruling above ("pin 350804b7b358, MIT at source, correspondence
+UNESTABLISHED") rests on a framing Techne supplied and then corrected; the
+superseded version reached the operator. Measured, exhaustively:
+- 350804b7b358 is mlb2251/stitch (the RUST CORE) at main HEAD, not the
+  repository the wheel is built from; the wheel comes from
+  mlb2251/stitch_bindings, which pins the core at 0ef5ec7f1709.
+- Correspondence is ESTABLISHED, not unestablished: stitch_bindings tag
+  v0.1.29 = 8ba2c1c041ab declares version 0.1.29, an exact match with the
+  installed distribution (by tag and version, not by reproducible build).
+- Licence of the bindings is UNRESOLVED, not MIT: zero licence-like paths in
+  the full tree at v0.1.29, no license key in Cargo.toml or pyproject.toml.
+So the two halves are inverted and the block is a LICENCE block, not a
+provenance block. Techne's proposed D-17 v1, two rows:
+- bindings (PyPI stitch_core 0.1.29): pin stitch_bindings@v0.1.29
+  (8ba2c1c041ab); correspondence ESTABLISHED by tag; licence UNRESOLVED;
+  development-only on licence grounds.
+- Rust core: pin stitch@0ef5ec7f1709 (the revision the bindings pin);
+  licence MIT (Copyright 2021 Matthew Bowers); UNBLOCKED for internal use
+  AND export.
+Capability consequence: the provenance-bearing claim is available TODAY
+through the core (built here from the pinned MIT revision; ROUTES_AGREE with
+the bindings byte for byte on one hash-pinned input); anything leaving the
+host goes through the core. Archaeon records this beside the ruling rather
+than over it; the operator amends D-17 to v1 or not.
+
