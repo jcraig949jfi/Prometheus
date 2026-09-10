@@ -263,11 +263,28 @@ side that a build change trips.
    `generate_sfe_contract.py` derives session scoping by sending malformed
    session keys to every route, so `--probe-base` must **never** be production
    — it would write client registrations and garbage into the live ledger.
-   Stand up `serve.py` at the deployed build hash on its own port and database
-   (`--insecure --registration open`), pass production as `--base` and the
-   scratch as `--probe-base`, and confirm the scratch reports the SAME
-   `engine_source_hash` and a DIFFERENT `engine_instance_id` before handing it
-   over. *Owners: Daedalus (scratch engine), Harmonia (contract and gate).*
+   One command, and a check that must pass before a contract is generated
+   against it:
+
+   ```
+   python deploy/scratch_contract_engine.py            # start, port 8901
+   python deploy/scratch_contract_engine.py --check    # same build, DIFFERENT ledger
+   ```
+
+   The check is not ceremony. The first time I started this I bound a port
+   another seat's dev engine already held, and it answered with the SAME build
+   hash -- we run the same code -- so the mistake looked like success; the tell
+   was a runtime flag that had not taken. A scratch engine that does not match
+   production's build silently invalidates the contract generated against it.
+
+   **It is also a committed REGRESSION FIXTURE.** Harmonia's
+   `roles/Harmonia/contracts/verify_gate_states.sh` defaults to
+   `http://127.0.0.1:8901/v2` and its test 5 proves the gate returns state 1
+   (DRIFT) on a same-build/different-ledger engine. Without the fixture that
+   test degrades to state 2 (UNREACHABLE) and stops proving anything. It began
+   as a background process of one session, which made a committed test depend
+   on somebody's terminal staying open; the script above is why it no longer
+   does. *Owners: Daedalus (scratch engine), Harmonia (contract and gate).*
 
    Her ruling — `roles/Harmonia/rulings/RULING_CONFORMANCE_GATE_SPLIT_2026-09-10.md`
    — splits the CONSEQUENCE rather than the pin: `0` conformant, `3` INCOMPLETE
