@@ -52,10 +52,19 @@ TECHNE-36 | Add a check that the engine still deserializes no upstream object gr
 cheap the moment those land — 01 needs three expressions, 02 needs a descriptor declaration, and
 both of my measurements today are what make them worth doing. 03–05 need nobody.
 
-**The XL rows are the operator's queue from this seat**, three of them: TECHNE-15 (DreamCoder —
-worth a Linux host and an opam switch, given stitch already works here?), TECHNE-31 (MOSEK at
-$4,300, or close REQ-029 with SCS), TECHNE-32's sibling. TECHNE-06 and TECHNE-09 are blocked on
-the operator too but are S, not XL, because they need an action rather than a judgement.
+**The XL rows are the operator's queue from this seat — exactly two.** TECHNE-15 (DreamCoder:
+worth a Linux host and an opam 4.06.1+flambda switch, given stitch already produces a verified
+library here?) and TECHNE-31 (MOSEK at $4,300 perpetual, or close REQ-029 with SCS?).
+
+Four more rows are blocked on the operator but are **S, not XL**, because each needs an action or
+a fact rather than a judgement: TECHNE-06 (may this seat open an upstream issue in the
+programme's name), TECHNE-09 (paste the two packet JSONs), TECHNE-16 (DreamCoder's licensing),
+TECHNE-32 (does any affiliation open the Simons route to Magma — a fact about the programme, and
+cheap to answer, so it gates the three Magma roadmap items without being a decision).
+
+**15 of the 36 rows are blocked**, each naming its blocker. I counted 11 in my first pass and the
+row-level check corrected me; the number is worth stating accurately because a backlog that
+undercounts its own blockage reads as healthier than it is.
 
 **What I am deliberately not proposing.** No item here asks to widen a tool's use beyond a named
 consumer, and no item proposes acquiring anything that lacks one — POET stays at TECHNE-17,
