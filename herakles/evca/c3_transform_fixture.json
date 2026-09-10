@@ -1,0 +1,69 @@
+{
+ "rules": {
+  "GKL": {
+   "accuracy": 0.84,
+   "base_digest": "sha256:e0dea78c72013d257ae29ca0734dc224",
+   "complement_digest": "sha256:e0dea78c72013d257ae29ca0734dc224",
+   "complement_mask_identical": true,
+   "majority_target_flips_under_complement": true,
+   "reflect_digest": "sha256:e0dea78c72013d257ae29ca0734dc224",
+   "reflect_mask_identical": true
+  },
+  "exp": {
+   "accuracy": 0.695,
+   "base_digest": "sha256:c1e2e755f8064748c4c5285db86ad790",
+   "complement_digest": "sha256:c1e2e755f8064748c4c5285db86ad790",
+   "complement_mask_identical": true,
+   "majority_target_flips_under_complement": true,
+   "reflect_digest": "sha256:c1e2e755f8064748c4c5285db86ad790",
+   "reflect_mask_identical": true
+  },
+  "maj": {
+   "accuracy": 0.0,
+   "base_digest": "sha256:6d9c54dee5660c46886f32d80e57e9dd",
+   "complement_digest": "sha256:6d9c54dee5660c46886f32d80e57e9dd",
+   "complement_mask_identical": true,
+   "majority_target_flips_under_complement": true,
+   "reflect_digest": "sha256:6d9c54dee5660c46886f32d80e57e9dd",
+   "reflect_mask_identical": true
+  },
+  "par": {
+   "accuracy": 0.77,
+   "base_digest": "sha256:73404aa02b4fe1a78cb9e62a69168a4b",
+   "complement_digest": "sha256:73404aa02b4fe1a78cb9e62a69168a4b",
+   "complement_mask_identical": true,
+   "majority_target_flips_under_complement": true,
+   "reflect_digest": "sha256:73404aa02b4fe1a78cb9e62a69168a4b",
+   "reflect_mask_identical": true
+  },
+  "particle1": {
+   "accuracy": 0.735,
+   "base_digest": "sha256:607bd88f7fa9754aa4cd1146b61a26b7",
+   "complement_digest": "sha256:607bd88f7fa9754aa4cd1146b61a26b7",
+   "complement_mask_identical": true,
+   "majority_target_flips_under_complement": true,
+   "reflect_digest": "sha256:607bd88f7fa9754aa4cd1146b61a26b7",
+   "reflect_mask_identical": true
+  },
+  "particle2": {
+   "accuracy": 0.745,
+   "base_digest": "sha256:dd302f244a6eac889f05a7b514a0c8e4",
+   "complement_digest": "sha256:dd302f244a6eac889f05a7b514a0c8e4",
+   "complement_mask_identical": true,
+   "majority_target_flips_under_complement": true,
+   "reflect_digest": "sha256:dd302f244a6eac889f05a7b514a0c8e4",
+   "reflect_mask_identical": true
+  }
+ },
+ "scope": {
+  "ic_seed": 20260910,
+  "n_cells": 149,
+  "n_ics": 200,
+  "steps": 298
+ },
+ "semantics": {
+  "comparison": "correctness masks must be IDENTICAL; never compare raw trajectories of differently oriented arrays",
+  "complement": "out[j] = 1 - table[j XOR 127]; complement the IC; the majority target flips with it",
+  "reflect": "reverse the 7 neighbourhood index bits AND reverse the IC on the ring"
+ }
+}

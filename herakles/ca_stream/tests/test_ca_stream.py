@@ -289,3 +289,28 @@ def test_the_dead_substrate_scores_exactly_like_the_null_baseline():
     null = _fit_and_score(cs.FrozenRandom(31, seed=7), "delayed_recall", 2)
     assert ca["accuracy"] == null["accuracy"]
     assert ca["accuracy"] <= ca["base_rate"] + 1e-9
+
+
+def test_xor_injection_is_also_annihilated():
+    """The 2026-09-10 correction to alternative 4, verified.
+
+    XOR into an all-zero lattice gives 0 XOR 1 = 1, exactly one live cell,
+    which is the state overwrite injection produces. The popcount proof
+    applies unchanged, so XOR injection is not an escape on its own.
+    """
+    for name in G.NAMES:
+        t = evca.decode_table(G.rule_hex(name))
+        state = np.zeros((1, 31), dtype=np.uint8)
+        for bit in (1, 1, 0, 1, 1):
+            state[0, 0] ^= bit                 # XOR rather than overwrite
+            assert int(state.sum()) <= 1, name
+            state = evca.step(state, t)
+            assert int(state.sum()) == 0, name
+
+
+def test_the_d18_amendment_is_not_applied_to_the_alpha():
+    """Structural: the alpha must not import the proposed reset path."""
+    import inspect
+    src = inspect.getsource(cs)
+    assert "reset_v2" not in src
+    assert cs.INITIAL_STATE == 0

@@ -1,0 +1,242 @@
+{
+ "amendment": "D-18",
+ "driven_response": {
+  "GKL": {
+   "fraction_of_samples_ever_diverging": 0.99,
+   "horizon": 16,
+   "max_mean_divergence": 5.925,
+   "mean_divergence_by_step": [
+    1.555,
+    2.38,
+    2.895,
+    3.38,
+    3.735,
+    4.11,
+    4.42,
+    4.865,
+    5.18,
+    5.3,
+    5.385,
+    5.6,
+    5.76,
+    5.925,
+    5.91,
+    5.875
+   ],
+   "n_samples": 200,
+   "ports": [
+    0
+   ],
+   "rule_hex": "005f005f005f005f005fff5f005fff5f"
+  },
+  "exp": {
+   "fraction_of_samples_ever_diverging": 0.995,
+   "horizon": 16,
+   "max_mean_divergence": 3.97,
+   "mean_divergence_by_step": [
+    2.705,
+    3.86,
+    3.97,
+    3.415,
+    2.89,
+    2.2,
+    1.9,
+    1.645,
+    1.7,
+    1.63,
+    1.495,
+    1.545,
+    1.505,
+    1.42,
+    1.32,
+    1.365
+   ],
+   "n_samples": 200,
+   "ports": [
+    0
+   ],
+   "rule_hex": "0505408305c90101200b0efb94c7cff7"
+  },
+  "maj": {
+   "fraction_of_samples_ever_diverging": 0.84,
+   "horizon": 16,
+   "max_mean_divergence": 2.11,
+   "mean_divergence_by_step": [
+    2.035,
+    2.11,
+    2.045,
+    1.965,
+    1.845,
+    1.8,
+    1.7,
+    1.7,
+    1.665,
+    1.665,
+    1.65,
+    1.65,
+    1.615,
+    1.63,
+    1.61,
+    1.62
+   ],
+   "n_samples": 200,
+   "ports": [
+    0
+   ],
+   "rule_hex": "000101170117177f0117177f177f7fff"
+  },
+  "par": {
+   "fraction_of_samples_ever_diverging": 0.99,
+   "horizon": 16,
+   "max_mean_divergence": 5.685,
+   "mean_divergence_by_step": [
+    2.625,
+    3.885,
+    4.475,
+    4.805,
+    4.955,
+    5.075,
+    5.155,
+    5.33,
+    5.36,
+    5.55,
+    5.67,
+    5.685,
+    5.62,
+    5.645,
+    5.6,
+    5.645
+   ],
+   "n_samples": 200,
+   "ports": [
+    0
+   ],
+   "rule_hex": "0504058705000f77037755837bffb77f"
+  },
+  "particle1": {
+   "fraction_of_samples_ever_diverging": 1.0,
+   "horizon": 16,
+   "max_mean_divergence": 7.72,
+   "mean_divergence_by_step": [
+    2.555,
+    4.115,
+    4.86,
+    5.475,
+    5.87,
+    6.155,
+    6.45,
+    6.72,
+    6.965,
+    7.13,
+    7.19,
+    7.315,
+    7.375,
+    7.45,
+    7.605,
+    7.72
+   ],
+   "n_samples": 200,
+   "ports": [
+    0
+   ],
+   "rule_hex": "1000022441170231155f57dd734bffff"
+  },
+  "particle2": {
+   "fraction_of_samples_ever_diverging": 1.0,
+   "horizon": 16,
+   "max_mean_divergence": 8.79,
+   "mean_divergence_by_step": [
+    2.37,
+    4.07,
+    5.13,
+    6.05,
+    6.83,
+    7.285,
+    7.765,
+    8.05,
+    8.165,
+    8.37,
+    8.345,
+    8.265,
+    8.425,
+    8.59,
+    8.615,
+    8.79
+   ],
+   "n_samples": 200,
+   "ports": [
+    0
+   ],
+   "rule_hex": "031001001fa00013331f9fff5975ffff"
+  }
+ },
+ "elapsed_s": 5.0,
+ "max_steps": 200,
+ "n_samples": 200,
+ "relaxation": {
+  "GKL": {
+   "max_relaxation": 52,
+   "max_steps": 200,
+   "median_relaxation": 13,
+   "min_relaxation": 2,
+   "n_censored": 0,
+   "n_reached_uniform": 200,
+   "n_samples": 200,
+   "rule_hex": "005f005f005f005f005fff5f005fff5f"
+  },
+  "exp": {
+   "max_relaxation": 19,
+   "max_steps": 200,
+   "median_relaxation": 6,
+   "min_relaxation": 2,
+   "n_censored": 0,
+   "n_reached_uniform": 200,
+   "n_samples": 200,
+   "rule_hex": "0505408305c90101200b0efb94c7cff7"
+  },
+  "maj": {
+   "max_relaxation": 4,
+   "max_steps": 200,
+   "median_relaxation": 2,
+   "min_relaxation": 1,
+   "n_censored": 177,
+   "n_reached_uniform": 23,
+   "n_samples": 200,
+   "rule_hex": "000101170117177f0117177f177f7fff"
+  },
+  "par": {
+   "max_relaxation": 37,
+   "max_steps": 200,
+   "median_relaxation": 14,
+   "min_relaxation": 2,
+   "n_censored": 0,
+   "n_reached_uniform": 200,
+   "n_samples": 200,
+   "rule_hex": "0504058705000f77037755837bffb77f"
+  },
+  "particle1": {
+   "max_relaxation": 35,
+   "max_steps": 200,
+   "median_relaxation": 12,
+   "min_relaxation": 3,
+   "n_censored": 6,
+   "n_reached_uniform": 194,
+   "n_samples": 200,
+   "rule_hex": "1000022441170231155f57dd734bffff"
+  },
+  "particle2": {
+   "max_relaxation": 39,
+   "max_steps": 200,
+   "median_relaxation": 13,
+   "min_relaxation": 2,
+   "n_censored": 5,
+   "n_reached_uniform": 195,
+   "n_samples": 200,
+   "rule_hex": "031001001fa00013331f9fff5975ffff"
+  }
+ },
+ "reset_density": 0.5,
+ "reset_root": 20260910,
+ "status": "PROPOSED",
+ "version": "v1"
+}
