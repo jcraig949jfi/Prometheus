@@ -258,3 +258,39 @@ def test_the_two_shift_rules_are_NOT_uniquely_identified_at_this_scope():
     assert by_rule[170] == [85, 154, 166, 170]
     # identity is not in either, so the earlier separation test still holds
     assert by_rule[204] != by_rule[240]
+
+
+def test_T9_class_map_fixture_matches_a_fresh_derivation():
+    """Same staleness binding as the T=8 map. A new scope, a new fixture."""
+    import json
+    path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..",
+                                        "class_map_fixture_T9.json"))
+    with open(path, encoding="utf-8") as fh:
+        fx = json.load(fh)
+    assert fx["scope"]["n_cells"] == 7 and fx["scope"]["steps"] == 9
+    classes = eca.equivalence_classes(7, 9)
+    fresh = {}
+    for members in classes.values():
+        cid = min(members)
+        for r in members:
+            fresh[r] = cid
+    assert len(fresh) == 256
+    assert fx["n_classes"] == len(set(fresh.values()))
+    for rule_str, cid in fx["rule_to_class"].items():
+        assert fresh[int(rule_str)] == cid, rule_str
+
+
+def test_T9_is_the_rings_ceiling_and_T8_is_below_it():
+    """The claim the T=9 fixture is justified by, asserted not asserted-in-prose."""
+    counts = {T: len(eca.equivalence_classes(7, T)) for T in (7, 8, 9, 11)}
+    assert counts[7] < counts[8] < counts[9]
+    assert counts[9] == counts[11], "T=9 should already be the ceiling"
+
+
+def test_the_published_T8_map_is_untouched_by_the_T9_fixture():
+    import json
+    p8 = os.path.abspath(os.path.join(os.path.dirname(__file__), "..",
+                                      "class_map_fixture.json"))
+    with open(p8, encoding="utf-8") as fh:
+        fx8 = json.load(fh)
+    assert fx8["scope"]["steps"] == 8 and fx8["n_classes"] == 224
