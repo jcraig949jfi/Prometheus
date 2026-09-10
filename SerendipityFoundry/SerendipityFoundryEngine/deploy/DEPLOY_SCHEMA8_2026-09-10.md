@@ -232,13 +232,36 @@ side that a build change trips.
    (`if have_v is None or have_v > ten.expected_schema_version:`) means
    Archaeon's fossil reader **refuses a schema-8 ledger**. The order says
    Archaeon moves it on this report. *Owner: Archaeon.*
-2. **Harmonia's conformance contract.** `roles/Harmonia/contracts/sfe_contract.json`
-   pins `engine_source_hash` **exactly** and `conformance_check.py` is
-   fail-closed, so any build change halts the automated seats. It is **already
-   stale** — pinned schema 6 / `sha256:2f42e87f…` against a live schema 7 /
-   `sha256:084f951f…`, so it has been stale since the v7 deploy and is overdue
-   independently of this one. Regenerate with
-   `roles/Harmonia/contracts/generate_sfe_contract.py`. *Owner: Harmonia.*
+2. **Harmonia's conformance contract — REGENERATE *AND* CONFIRM IT IS WIRED.**
+   `roles/Harmonia/contracts/sfe_contract.json` pins `engine_source_hash`
+   exactly and `conformance_check.py` is fail-closed. It was stale from the v7
+   deploy through this one — pinned schema 6 against a live 8.
+
+   **It did not go stale under protest. It went stale in silence.** Harmonia
+   established, and I confirmed, that *no consumer has ever called the gate*:
+   `grep -rn conformance --include=*.py archaeon/ vivarium/ roles/Vivarium/
+   roles/Archaeon/` returns nothing. A regenerated contract nobody checks
+   against is exactly the state we have been in, so regeneration alone is not
+   the step. **The step is: regenerate the contract AND confirm the gate
+   returns 0 for every WIRED consumer** — Harmonia's wording, adopted.
+
+   Regeneration needs a scratch engine, and this is Daedalus's part:
+   `generate_sfe_contract.py` derives session scoping by sending malformed
+   session keys to every route, so `--probe-base` must **never** be production
+   — it would write client registrations and garbage into the live ledger.
+   Stand up `serve.py` at the deployed build hash on its own port and database
+   (`--insecure --registration open`), pass production as `--base` and the
+   scratch as `--probe-base`, and confirm the scratch reports the SAME
+   `engine_source_hash` and a DIFFERENT `engine_instance_id` before handing it
+   over. *Owners: Daedalus (scratch engine), Harmonia (contract and gate).*
+
+   Her ruling — `roles/Harmonia/rulings/RULING_CONFORMANCE_GATE_SPLIT_2026-09-10.md`
+   — splits the CONSEQUENCE rather than the pin: `0` conformant, `3` INCOMPLETE
+   (build differs, routes added only, none removed — proceed only if every
+   route the consumer will call is listed), `1` DRIFT (any removal, scoping
+   flip, or `engine_instance_id` change — never tolerated), `2` unreachable.
+   This deploy is state 3: 50 contract routes against 67 live, **17 added, 0
+   removed** (verified independently).
 3. **Vivarium restarts the consumer — condition (b).** The consumer holds a
    client and a session against the old build; it must be restarted after the
    engine is up, and the restart confirmed in the deploy report. *Owner:
