@@ -1,4 +1,4 @@
-"""Harmonia qualification rules for the H0-H5 lanes.  QR-1.0.0  2026-09-08.
+"""Harmonia qualification rules for the H0-H5 lanes.  QR-1.1.0  2026-09-10.
 
 Executable rules, not prose. Every gate here is mechanical: no LLM verdict is
 consulted anywhere in this module, and none may be.
@@ -35,7 +35,36 @@ import math
 from dataclasses import dataclass, field, asdict
 from itertools import combinations
 
-RULES_VERSION = "QR-1.0.0"
+RULES_VERSION = "QR-1.1.0"
+
+# QR-1.1.0 amends QR-1.0.0 in three places, after Archaeon reproduced
+# Appendix A (SE(I)/SE(G) = sqrt(6) with equal marginal variances 0.005079)
+# and confirmed sqrt(2) under exchangeable correlation at rho = 0, 0.3, 0.7.
+# Both are right in their own domains. My QR-1.0.0 wording was universal and
+# should not have been.
+#
+#   1. THE sqrt(2) RESULT IS CONDITIONAL, not general. It holds when the four
+#      cells have EQUAL marginal variances AND an EXCHANGEABLE within-block
+#      correlation. For a general four-cell covariance, each contrast has
+#      variance c' Sigma c and the ratio is whatever that gives -- sqrt(6) is
+#      one such case. Estimate the two contrasts SEPARATELY on the pilot.
+#   2. G = S11 - S00 IS A JOINT-TREATMENT CONTRAST, NOT A MARGINAL MAIN
+#      EFFECT. In a 2x2, G = (main 1) + (main 2) + (interaction); it is the
+#      both-on-vs-both-off path, and calling it a main effect misattributes
+#      the interaction into it.
+#   3. required_blocks() COMPUTES INTERVAL CLEARANCE (precision), NOT POWER.
+#      Renamed. A separate function estimates power when a probability of a
+#      conclusive verdict is actually promised.
+#
+# THREE DISTINCT QUANTITIES, never substituted for one another:
+#   MEANINGFUL EFFECT  a scientific / resource decision. Fixable BEFORE a
+#                      pilot and not a function of the observed noise.
+#   PRECISION          interval half-width at a given n. Arithmetic.
+#   POWER              P(conclusive verdict) under an assumed truth. Requires
+#                      the actual contrasts, multiplicity and decision rule.
+# If the budget cannot resolve a fixed meaningful effect, REPORT THE
+# LIMITATION or version a revised question. Never redefine the threshold to
+# match the noise -- that is fitting the gate to the data.
 
 # ---------------------------------------------------------------- decisions
 
@@ -65,6 +94,7 @@ class LanePlan:
     threshold_status: str                    # PROPOSED | FROZEN_FROM_PILOT
     uncertainty_procedure: str               # e.g. paired-block t + Bonferroni
     multiplicity: str                        # NONE | BONFERRONI
+    purpose: str = "CONFIRMATORY"      # CONFIRMATORY | DIAGNOSTIC
     alpha: float = 0.05
     pilot_task_ids: tuple = ()
     confirmation_task_ids: tuple = ()
@@ -121,14 +151,27 @@ def validate_plan(p: LanePlan) -> list:
             % len(p.primary_contrasts))
     ok.append("multiplicity_handled")
 
-    # HA-1.6: a design states the smallest p its own lattice can produce.
+    # HA-1.6, SCOPED IN QR-1.1.0. The eligibility gate governs CONFIRMATORY
+    # inference only. A DIAGNOSTIC run -- a two-seed instrument alpha, a
+    # plumbing check, a contract fixture -- makes no inferential claim, so a
+    # gate about the attainability of a p-value does not apply to it and must
+    # not block it. Diagnostic alphas proceed while confirmation sizing is
+    # being repaired; they simply may not be quoted as evidence for or against
+    # an effect.
     mp = min_attainable_p_paired(p.n_blocks)
-    if mp > p.alpha:
-        raise PlanRefused(
-            "INELIGIBLE by HA-1.6: %d paired blocks give a minimum attainable "
-            "two-sided p of %.4f, above alpha %.3f. The gate cannot fire on any "
-            "data. Resize or declare the lane descriptive." % (p.n_blocks, mp, p.alpha))
-    ok.append("min_attainable_p_%.4f_le_alpha" % mp)
+    if p.purpose == "CONFIRMATORY":
+        if mp > p.alpha:
+            raise PlanRefused(
+                "INELIGIBLE by HA-1.6: %d paired blocks give a minimum "
+                "attainable two-sided p of %.4f, above alpha %.3f. The gate "
+                "cannot fire on any data. Resize or declare the lane "
+                "descriptive." % (p.n_blocks, mp, p.alpha))
+        ok.append("min_attainable_p_%.4f_le_alpha" % mp)
+    elif p.purpose == "DIAGNOSTIC":
+        ok.append("diagnostic_purpose_eligibility_gate_not_applied"
+                  "_min_attainable_p_%.4f" % mp)
+    else:
+        raise PlanRefused("purpose must be CONFIRMATORY or DIAGNOSTIC")
     return ok
 
 
@@ -216,44 +259,152 @@ def paired_contrast(name, per_block_values, alpha=0.05, n_primary=1) -> Estimate
                     min_attainable_p_paired(n))
 
 
+CELLS = ("S11", "S10", "S01", "S00")
+C_G = {"S11": 1.0, "S10": 0.0, "S01": 0.0, "S00": -1.0}   # joint treatment
+C_I = {"S11": 1.0, "S10": -1.0, "S01": -1.0, "S00": 1.0}  # interaction
+C_M1 = {"S11": .5, "S10": .5, "S01": -.5, "S00": -.5}     # marginal main, f1
+C_M2 = {"S11": .5, "S10": -.5, "S01": .5, "S00": -.5}     # marginal main, f2
+
+
+def contrast_variance(c: dict, sigma: dict) -> float:
+    """c' Sigma c. THE general rule. sigma is {(cell_i, cell_j): cov}.
+
+    Every special case -- sqrt(2), sqrt(6), anything else -- is this formula
+    evaluated at a particular Sigma. Do not quote a ratio without the Sigma
+    it was computed under.
+    """
+    tot = 0.0
+    for i in CELLS:
+        for j in CELLS:
+            tot += c.get(i, 0.0) * c.get(j, 0.0) * sigma[(i, j)]
+    return tot
+
+
+def sigma_exchangeable(s2: float, rho: float) -> dict:
+    """The SPECIAL CASE in which SE(I)/SE(G) = sqrt(2): equal marginal
+    variances s2 and a single exchangeable within-block correlation rho.
+    Under it Var(G) = 2 s2 (1-rho) and Var(I) = 4 s2 (1-rho), so rho cancels.
+    Outside it the ratio is not sqrt(2) and must be computed, not assumed."""
+    return {(i, j): (s2 if i == j else s2 * rho) for i in CELLS for j in CELLS}
+
+
+def sigma_from_blocks(blocks) -> dict:
+    """Estimate Sigma EMPIRICALLY from disjoint pilot blocks. This is what a
+    lane must do rather than assume a structure: the two contrasts' variability
+    is estimated SEPARATELY and the ratio is reported as measured."""
+    n = len(blocks)
+    mu = {c: _mean([b[c] for b in blocks]) for c in CELLS}
+    sig = {}
+    for i in CELLS:
+        for j in CELLS:
+            sig[(i, j)] = sum((b[i] - mu[i]) * (b[j] - mu[j])
+                              for b in blocks) / (n - 1)
+    return sig
+
+
+def se_ratio_report(blocks) -> dict:
+    """The honest object: the measured ratio, with the Sigma it came from and
+    the sqrt(2) reference beside it, never instead of it."""
+    sig = sigma_from_blocks(blocks)
+    vG, vI = contrast_variance(C_G, sig), contrast_variance(C_I, sig)
+    return {
+        "var_G_joint_treatment": vG,
+        "var_I_interaction": vI,
+        "se_ratio_measured": math.sqrt(vI / vG) if vG > 0 else float("inf"),
+        "se_ratio_if_exchangeable_equal_var": math.sqrt(2.0),
+        "marginal_variances": {c: sig[(c, c)] for c in CELLS},
+        "equal_marginal_variances": (
+            max(sig[(c, c)] for c in CELLS) - min(sig[(c, c)] for c in CELLS)
+            < 1e-9 * max(1e-12, max(sig[(c, c)] for c in CELLS))),
+        "note": ("sqrt(2) is CONDITIONAL on equal marginal variances and an "
+                 "exchangeable within-block correlation. Report the measured "
+                 "ratio and the Sigma; the reference is context, not a result."),
+    }
+
+
 def h0_estimands(blocks, alpha=0.05):
     """H0's two primary quantities as ANALYSES over paired blocks.
 
     blocks: list of dicts with keys S00, S10, S01, S11 -- each the solve
-    FRACTION for that cell in that block, over all assigned tasks.
+    FRACTION for that cell in that block, over ALL ASSIGNED TASKS.
 
-    Returns (additive_gain, interaction). They are DIFFERENT RESULTS and are
-    reported separately; a supported additive gain never implies synergy.
+    Returns (G, I). They are DIFFERENT RESULTS, reported separately; a
+    supported G never implies synergy.
 
-    EXACT DESIGN FACT, independent of the block correlation. With four cells
-    measured on the same block, coefficients (1,0,0,-1) for the main contrast
-    and (1,-1,-1,1) for the interaction under an exchangeable within-block
-    correlation rho:
-        Var(S11-S00) = 2 s^2 (1-rho)
-        Var(I)       = 4 s^2 (1-rho)
-    so SE(I) = sqrt(2) * SE(main) ALWAYS -- rho cancels. The interaction needs
-    TWICE the blocks of the main effect for equal precision, and H0's stronger
-    claim is the interaction.
+    G = S11 - S00 IS A JOINT-TREATMENT CONTRAST, NOT A MARGINAL MAIN EFFECT.
+    In a 2x2, G = (marginal main 1) + (marginal main 2) + I: it is the
+    both-on-versus-both-off path through the design. Reporting it as a main
+    effect silently attributes the interaction to it. The marginal main
+    effects, if wanted, are C_M1 and C_M2 and are separate analyses.
+
+    The variance of either contrast is c' Sigma c (contrast_variance). The
+    sqrt(2) ratio holds ONLY under sigma_exchangeable; estimate Sigma on the
+    disjoint pilot and report se_ratio_report beside the estimands.
     """
     gain = [b["S11"] - b["S00"] for b in blocks]
     inter = [b["S11"] - b["S10"] - b["S01"] + b["S00"] for b in blocks]
-    return (paired_contrast("additive_gain_S11_minus_S00", gain, alpha, 2),
+    return (paired_contrast("G_joint_treatment_S11_minus_S00", gain, alpha, 2),
             paired_contrast("interaction_I", inter, alpha, 2))
 
 
-def required_blocks(sd_of_block_diff, threshold, alpha=0.05, n_primary=1,
-                    true_effect=0.0, max_n=4000):
-    """Smallest block count at which the operator's decision rule can return a
-    CONCLUSIVE verdict for a given true effect. Needed because 'inconclusive'
-    is this rule's default and silence is not a result."""
+def blocks_for_interval_clearance(sd_of_block_diff, threshold, alpha=0.05,
+                                  n_primary=1, assumed_effect=0.0, max_n=4000):
+    """PRECISION, not power. Renamed in QR-1.1.0.
+
+    Smallest n at which an interval CENTRED ON assumed_effect would clear the
+    threshold. It assumes the point estimate lands exactly on assumed_effect,
+    so it answers "how wide is the interval", not "how often would a real run
+    reach a verdict". A real run's estimate scatters, so at this n roughly half
+    of runs return INCONCLUSIVE. Use blocks_for_power when a probability of a
+    conclusive verdict is promised.
+    """
     for n in range(2, max_n + 1):
         a = alpha / max(1, n_primary)
         tc = t_crit(n - 1, 0.05 if abs(a - 0.05) < 1e-9 else 0.025)
         se = sd_of_block_diff / math.sqrt(n)
-        lo, hi = true_effect - tc * se, true_effect + tc * se
+        lo, hi = assumed_effect - tc * se, assumed_effect + tc * se
         if (lo > threshold or hi < threshold) and min_attainable_p_paired(n) <= alpha:
             return n
     return None
+
+
+# back-compat alias; the old name promised power and delivered precision
+required_blocks = blocks_for_interval_clearance
+
+
+def blocks_for_power(sd_of_block_diff, threshold, true_effect, target_power=0.80,
+                     alpha=0.05, n_primary=1, trials=2000, max_n=2000, seed=7):
+    """POWER: the smallest n at which P(CONCLUSIVE verdict) >= target_power,
+    under the ACTUAL decision rule, multiplicity and contrast.
+
+    Simulated rather than derived, because the decision rule is an interval
+    clearance and not a standard test, so no closed form applies to it.
+    Returns (n, achieved_power) or (None, best).
+    """
+    import random as _r
+    best = 0.0
+    n = 2
+    while n <= max_n:
+        if min_attainable_p_paired(n) > alpha:
+            n += 1
+            continue
+        rng = _r.Random(seed + n)
+        a = alpha / max(1, n_primary)
+        tc = t_crit(n - 1, 0.05 if abs(a - 0.05) < 1e-9 else 0.025)
+        hit = 0
+        for _ in range(trials):
+            d = [rng.gauss(true_effect, sd_of_block_diff) for _ in range(n)]
+            m, s = _mean(d), _sd(d)
+            se = s / math.sqrt(n)
+            lo, hi = m - tc * se, m + tc * se
+            if lo > threshold or hi < threshold:
+                hit += 1
+        p = hit / trials
+        best = max(best, p)
+        if p >= target_power:
+            return n, p
+        n += 1 if n < 40 else 4
+    return None, best
 
 
 # ------------------------------------------------------------- H4 protocol
