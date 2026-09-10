@@ -963,6 +963,7 @@ def create_app(db_path: str, *, registration_open: bool = True,
 
     @app.get("/v2/worlds/{wid}/artifacts/{aid}/content")
     def artifact_content(wid: str, aid: str,
+                         expected_blob_hash: Optional[str] = None,
                          expected_digest: Optional[str] = None,
                          expected_bytes: Optional[int] = None,
                          max_bytes: Optional[int] = None,
@@ -978,8 +979,11 @@ def create_app(db_path: str, *, registration_open: bool = True,
         # F1: policy-gated content retrieval -- visible iff native here or
         # legally imported here; a miss is deny-by-default (404), disclosing
         # nothing. Content hashes to the recorded source identity.
+        # one field, two accepted names: expected_blob_hash matches the
+        # write path and is primary; expected_digest is the shipped alias.
         return f.get_artifact_content(wid, aid, client_id=cid,
-                                      expected_digest=expected_digest,
+                                      expected_digest=(expected_blob_hash
+                                                       or expected_digest),
                                       expected_bytes=expected_bytes,
                                       max_bytes=max_bytes)
 

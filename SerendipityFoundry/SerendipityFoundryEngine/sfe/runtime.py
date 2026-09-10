@@ -2746,6 +2746,7 @@ class Foundry:
     def get_artifact_content(self, world_id: str, artifact_id: str, *,
                              client_id: Optional[str] = None,
                              expected_digest: Optional[str] = None,
+                             expected_blob_hash: Optional[str] = None,
                              expected_bytes: Optional[int] = None,
                              max_bytes: Optional[int] = None) -> dict:
         """F1 -- policy-gated CONTENT retrieval. Succeeds iff the artifact is
@@ -2781,8 +2782,12 @@ class Foundry:
         # the world-scoped lookup, so a caller who knows a hash and nothing else
         # still gets NotFound from the line above. A digest asserts WHICH object
         # you meant; it never asserts that you may have it.
-        if expected_digest is not None:
-            want = _normalize_digest(expected_digest, "expected_digest")
+        # expected_blob_hash is the name the WRITE path uses and is
+        # primary here too; expected_digest is the shipped alias.
+        asserted = (expected_blob_hash if expected_blob_hash is not None
+                    else expected_digest)
+        if asserted is not None:
+            want = _normalize_digest(asserted, "expected_blob_hash")
             if want != r["blob_hash"]:
                 raise ValidationError(
                     "artifact does not carry the expected digest; nothing was "
@@ -2836,7 +2841,7 @@ class Foundry:
                     "locator": {"world_id": world_id,
                                 "artifact_id": artifact_id},
                     "digest_verified": r["blob_hash"],
-                    "digest_asserted_by_caller": expected_digest is not None,
+                    "digest_asserted_by_caller": asserted is not None,
                     "bytes": len(content),
                     "size_limit_applied": ceiling,
                     "authorization": "owner",

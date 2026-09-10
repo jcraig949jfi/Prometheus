@@ -1,0 +1,512 @@
+{
+  "receipt": "trackA.part1.joint.v1",
+  "steps": [
+    {
+      "step": "principals registered",
+      "producer": "cli_bc8ce441260d0f81a15c41d1",
+      "executor": "cli_53be95a667a7b726c173442e"
+    },
+    {
+      "step": "worlds created",
+      "source_world": "wld_5da4532154948d74cf045349",
+      "execution_world": "wld_8fb67057c8fba1ceb052f0b4",
+      "topology_group": "grp_9fc647f223ddc63a3c79e60d"
+    },
+    {
+      "step": "producer sealed its inputs",
+      "root": "sha256:7bfcb6898d7516432ea07438bd762a6151ee181cfc1d4ab6f6613c8e59a0f5c3",
+      "dependency": "sha256:875effe8dc1bddb16a96622ae12f4d7ded58dcea932dda903bc0bb5658639b33",
+      "bytes": 521
+    },
+    {
+      "step": "attempt-1 INTERRUPTED after the load",
+      "attempt": "attempt-1",
+      "reservations": 2,
+      "cost_events": [
+        "cost_5baf1eccc01941567d6cb27d",
+        "cost_ce6e6360c2ddc6d5bc74a8be"
+      ],
+      "note": "the bytes moved, so the retrieval it completed is charged; it is not released, because a release would claim the fetch never happened"
+    },
+    {
+      "step": "attempt-2 executed artifact_probe_v1",
+      "folded": 9,
+      "items": 5,
+      "closure": 2,
+      "immutable": true
+    },
+    {
+      "step": "reconciliation",
+      "matched": [],
+      "producer_only": [
+        "attempt-2|transfer",
+        "source-build|generation"
+      ],
+      "executor_only": [
+        "attempt-1|retrieval",
+        "attempt-2|execution",
+        "attempt-2|retrieval"
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "check": "the served build is the build this receipt imported",
+      "pass": true,
+      "detail": "{'served': 'sha256:eb3bbadc083c48d56b5ef8181ee2e627e5b11bce8ab03e751d551a4fe1cbd564', 'imported': 'sha256:eb3bbadc083c48d56b5ef8181ee2e627e5b11bce8ab03e751d551a4fe1cbd564'}"
+    },
+    {
+      "check": "register() retained the engine-issued client_id",
+      "pass": true,
+      "detail": "{'producer': 'cli_bc8ce441260d0f81a15c41d1', 'executor': 'cli_53be95a667a7b726c173442e'}"
+    },
+    {
+      "check": "no substitute principal is invented from a bare token",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "repr names the principal and never the credential",
+      "pass": true,
+      "detail": "EngineClient(base_url='http://127.0.0.1:8877', client_id='cli_53be95a667a7b726c173442e', authenticated=True)"
+    },
+    {
+      "check": "the write-side digest gate sealed both artifacts",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "the write gate stores nothing when the bytes disagree",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "attempt-1 reserved BEFORE it fetched",
+      "pass": true,
+      "detail": "['OPEN', 'OPEN']"
+    },
+    {
+      "check": "attempt-1 resolved the whole closure through the engine",
+      "pass": true,
+      "detail": "{'loaded': True, 'slots': {'failure_inputs': {'digest': 'sha256:9c8267ee115cc8b266910f775236c3d5ad05de3f47a04c6bc7f55fe1860c3fe1', 'bytes': 387, 'artifact_type': 'failure_input_set', 'schema_version': '1', 'interface_id': 'boolean-inputs-v1', 'shape': {'n_bits': 4, 'item_count': 3}, 'dependency_dige"
+    },
+    {
+      "check": "the retry REVALIDATED rather than reusing attempt-1's trust",
+      "pass": true,
+      "detail": "{'hits': 0, 'misses': 2, 'refused_hits': 0, 'distinct_artifacts': 2}"
+    },
+    {
+      "check": "both attempts agree on the closure manifest",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "the kind consumed the whole ordered closure",
+      "pass": true,
+      "detail": "{'folded': 9, 'reduction': 'xor_positional', 'items_consumed': 5, 'root_items': 3, 'n_bits': 4, 'items_digest': 'sha256:cf385665c6a1704b1c247b3120ef3c7308e2dec9a486df7815d344bdc99a7308', 'input_digest': 'sha256:9c8267ee115cc8b266910f775236c3d5ad05de3f47a04c6bc7f55fe1860c3fe1', 'consumed_closure_hash"
+    },
+    {
+      "check": "the frozen input refused mutation",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "the kind's closure SET equals the loader's",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "a settled reservation is never billed again",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "a retried reserve returns the ORIGINAL reservation",
+      "pass": true,
+      "detail": "{'reservation_id': 'rsv_1ba2f43da912204490ce93ad', 'world_id': 'wld_8fb67057c8fba1ceb052f0b4', 'resource': 'cpu_s', 'amount': 1.0, 'state': 'SETTLED', 'stage': 'execution', 'attempt_id': 'attempt-2', 'cost_event_id': 'cost_93aa875a898fa7c5d7f498b1', 'settled_amount': 0.0, 'reserved_seq': 29, 'create"
+    },
+    {
+      "check": "no reservation left open",
+      "pass": true,
+      "detail": "[]"
+    },
+    {
+      "check": "the retry is NOT free: two attempts, two retrievals each",
+      "pass": true,
+      "detail": "{'artifact_bytes': 1042.0, 'engine_fetches': 4.0, 'cpu_s': 0.0}"
+    },
+    {
+      "check": "artifact_bytes billed exactly what moved",
+      "pass": true,
+      "detail": "{'totals': {'artifact_bytes': 1042.0, 'engine_fetches': 4.0, 'cpu_s': 0.0}, 'expected': 1042}"
+    },
+    {
+      "check": "unavailable is counted, never summed",
+      "pass": true,
+      "detail": "{'totals': {'artifact_bytes': 1042.0, 'engine_fetches': 4.0, 'cpu_s': 0.0}, 'unavailable': {'peak_memory_bytes': 5, 'gpu_s': 1}}"
+    },
+    {
+      "check": "enforcement classes came from the LIMIT, not the caller",
+      "pass": true,
+      "detail": "[{'resource': 'peak_memory_bytes', 'quantity': None, 'unit': 'bytes', 'method': 'sampler', 'scope': 'attempt', 'available': False, 'enforcement': 'measured'}, {'resource': 'peak_memory_bytes', 'quantity': None, 'unit': 'bytes', 'method': 'sampler', 'scope': 'attempt', 'available': False, 'enforcemen"
+    },
+    {
+      "check": "publication is idempotent under its key",
+      "pass": true,
+      "detail": "({'artifact_id': 'sha256:7bbbe1119bc342665b585c8d787d8e11416946b537f6a37b69eb3ed5fc8176e9', 'blob_hash': 'sha256:bfa11881efdede6e1c6ab047e871e12b32ab9e188fcc1dfa5205b4b948e9b614', 'origin': 'NATIVE'}, {'artifact_id': 'sha256:7bbbe1119bc342665b585c8d787d8e11416946b537f6a37b69eb3ed5fc8176e9', 'blob_ha"
+    },
+    {
+      "check": "the shared source is charged once and attributed, not re-billed",
+      "pass": true,
+      "detail": "[{'schema': 'archaeon.cost.counterfactual.v0', 'arm': 'uses_shared_source', 'uses_source': True, 'physical_cost_event_id': 'cost:41381050a831d02e4466840e', 'reuse_horizon': 2, 'attributed': {'wall_seconds': 0.025182349956594408, 'cpu_seconds': 0.0078125, 'gpu_seconds': None, 'output_bytes': 260.5, '"
+    },
+    {
+      "check": "an unavailable producer quantity stays unavailable in attribution",
+      "pass": true,
+      "detail": "{'wall_seconds': 0.025182349956594408, 'cpu_seconds': 0.0078125, 'gpu_seconds': None, 'output_bytes': 260.5, 'items': 2.5}"
+    },
+    {
+      "check": "the join is capable of matching (control)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "nothing the engine sealed is missing from the reconciliation",
+      "pass": true,
+      "detail": "[{'key': 'attempt-1|retrieval', 'on_producer': False, 'on_executor': True}, {'key': 'attempt-2|execution', 'on_producer': False, 'on_executor': True}, {'key': 'attempt-2|retrieval', 'on_producer': False, 'on_executor': True}]"
+    },
+    {
+      "check": "the four engine-decided rejections still fire",
+      "pass": true,
+      "detail": "{'ARTIFACT_ABSENT': {'raised': 'ARTIFACT_ABSENT'}, 'ARTIFACT_UNAUTHORIZED_WORLD': {'raised': 'ARTIFACT_UNAUTHORIZED_WORLD'}, 'ARTIFACT_DIGEST_MISMATCH': {'raised': 'ARTIFACT_DIGEST_MISMATCH'}, 'ARTIFACT_SIZE_MISMATCH': {'raised': 'ARTIFACT_SIZE_MISMATCH'}}"
+    },
+    {
+      "check": "the engine's own read gate refuses a wrong digest and a wrong size, and serves the right one",
+      "pass": true,
+      "detail": "{'wrong_digest': {'http': 422, 'error': 'validation_error'}, 'wrong_size': {'http': 422, 'error': 'validation_error'}, 'right_digest': {'http': 200, 'bytes': 387}}"
+    },
+    {
+      "check": "a correct digest does not authorize a foreign reader",
+      "pass": true,
+      "detail": ""
+    }
+  ],
+  "findings": [
+    {
+      "code": "TRACKA-RECON-1",
+      "owner": "Archaeon",
+      "finding": "archaeon/producer/costs.py:reconcile() joins on attempt_id ALONE and hardcodes engine_side='absent (Daedalus C4-3)'. Engine-side cost events now exist (schema 8, COST_EVENT_RECORDED sealed in the world's own chain); this run produced 5 of them. On this data the attempt-only join reports ['attempt-2'] as matched, which is a coincidence of attempt ids across DIFFERENT stages, not an agreement about any act."
+    },
+    {
+      "code": "TRACKA-RECON-2",
+      "owner": "Archaeon + Vivarium",
+      "finding": "The producer names the act 'transfer' where the executor and the engine name it 'retrieval'. Both vocabularies are internally consistent and neither is wrong, but a (attempt_id, stage) join therefore reports one physical byte movement as producer-only AND executor-only. One shared stage name, or a declared mapping, is needed before a reconciliation can claim agreement."
+    },
+    {
+      "code": "TRACKA-PREFLIGHT-1",
+      "owner": "Vivarium",
+      "finding": "viv/preflight.py:SfeResolver.resolve() calls artifact_content(world, aid) with no expected_blob_hash, so the digest is compared in the CLIENT at preflight.py:341 after the bytes have already been served. The engine-side gate is now available on the read path (expected_blob_hash, with expected_digest as the shipped alias) and returns 422 with no bytes. Passing the sealed digest and expected_bytes moves the check to the engine; the client-side comparison then becomes defence in depth over the one span the engine cannot see."
+    },
+    {
+      "code": "TRACKA-DEBIT-1",
+      "owner": "Vivarium",
+      "finding": "Preflight's debit hook is debit(resource, amount) and does not carry the artifact being paid for, so the strongest idempotency key an integrator can build is the ordinal of the fetch within the attempt (this receipt uses one). Widening the hook to carry the digest would let the reservation be keyed on the act."
+    }
+  ],
+  "not_run": [
+    {
+      "what": "indexed_in_pew",
+      "why": "PEW indexing needs a running PEW service and viv.pew's PewClient, which is Vivarium's component and is not part of this development build. The field is reported as null rather than folded into recorded_in_sfe: an index that did not publish has not unmade a measurement."
+    }
+  ],
+  "engine": {
+    "base_url": "http://127.0.0.1:8877",
+    "engine_instance_id": "eng_51d0ac54a95bb5325bf538f0",
+    "engine_source_hash": "sha256:eb3bbadc083c48d56b5ef8181ee2e627e5b11bce8ab03e751d551a4fe1cbd564",
+    "engine_source_hash_of_this_import": "sha256:eb3bbadc083c48d56b5ef8181ee2e627e5b11bce8ab03e751d551a4fe1cbd564",
+    "schema_version": 8,
+    "schema_version_of_this_import": 8,
+    "db": "C:\\Users\\jcrai\\AppData\\Local\\Temp\\trackA_dev\\trackA.db"
+  },
+  "principals": {
+    "producer_client_id": "cli_bc8ce441260d0f81a15c41d1",
+    "executor_client_id": "cli_53be95a667a7b726c173442e",
+    "outsider_client_id": "cli_d866565196c881dc29a6c459",
+    "engine_issued": true,
+    "credential_in_receipt": false
+  },
+  "artifacts": {
+    "root": {
+      "artifact_id": "sha256:7bfcb6898d7516432ea07438bd762a6151ee181cfc1d4ab6f6613c8e59a0f5c3",
+      "digest": "sha256:9c8267ee115cc8b266910f775236c3d5ad05de3f47a04c6bc7f55fe1860c3fe1",
+      "bytes": 387
+    },
+    "dependency": {
+      "artifact_id": "sha256:875effe8dc1bddb16a96622ae12f4d7ded58dcea932dda903bc0bb5658639b33",
+      "digest": "sha256:84cf844c434d4181d9aa353519dcb696593f1323b6944c5752845d03c49329a2",
+      "bytes": 134
+    },
+    "source_world": "wld_5da4532154948d74cf045349"
+  },
+  "result": "PASS",
+  "cost_report": {
+    "world_id": "wld_8fb67057c8fba1ceb052f0b4",
+    "cost_events": 5,
+    "by_stage": {
+      "retrieval": 4,
+      "execution": 1
+    },
+    "additive_totals": {
+      "artifact_bytes": 1042.0,
+      "engine_fetches": 4.0,
+      "cpu_s": 0.0
+    },
+    "peaks": {},
+    "_peaks_note": "maxima, never sums -- adding peak samples yields a number that never occurred",
+    "unavailable_counts": {
+      "peak_memory_bytes": 5,
+      "gpu_s": 1
+    },
+    "_unavailable_note": "counted, never summed: an unavailable measurement is not a zero",
+    "open_reservations": [],
+    "budget": {
+      "limits": {
+        "artifact_bytes": {
+          "limit": 4096.0,
+          "enforcement": "enforceable"
+        },
+        "cpu_s": {
+          "limit": 30.0,
+          "enforcement": "enforceable"
+        },
+        "engine_fetches": {
+          "limit": 32.0,
+          "enforcement": "enforceable"
+        },
+        "peak_memory_bytes": {
+          "limit": null,
+          "enforcement": "measured"
+        },
+        "gpu_s": {
+          "limit": null,
+          "enforcement": "unavailable"
+        }
+      },
+      "consumed": {
+        "artifact_bytes": 1042.0,
+        "engine_fetches": 4.0,
+        "cpu_s": 0.0
+      },
+      "exhausted": false,
+      "budget_root": "wld_8fb67057c8fba1ceb052f0b4",
+      "scope": "LINEAGE_ROOT"
+    }
+  },
+  "publication": {
+    "artifact_id": "sha256:7bbbe1119bc342665b585c8d787d8e11416946b537f6a37b69eb3ed5fc8176e9",
+    "digest": "sha256:bfa11881efdede6e1c6ab047e871e12b32ab9e188fcc1dfa5205b4b948e9b614",
+    "idem_key": "trackA:publish:attempt-2",
+    "idempotent_replay": true,
+    "recorded_in_sfe": true,
+    "indexed_in_pew": null
+  },
+  "counterfactual": {
+    "reuse_horizon": 2,
+    "horizon_declared": "before the attempts ran, in this file",
+    "physical_cost_event_id": "cost:41381050a831d02e4466840e",
+    "physical_charged_once": true,
+    "arms": [
+      {
+        "schema": "archaeon.cost.counterfactual.v0",
+        "arm": "uses_shared_source",
+        "uses_source": true,
+        "physical_cost_event_id": "cost:41381050a831d02e4466840e",
+        "reuse_horizon": 2,
+        "attributed": {
+          "wall_seconds": 0.025182349956594408,
+          "cpu_seconds": 0.0078125,
+          "gpu_seconds": null,
+          "output_bytes": 260.5,
+          "items": 2.5
+        },
+        "note": "attribution under a frozen reuse horizon; the physical cost is charged once in the ledger"
+      },
+      {
+        "schema": "archaeon.cost.counterfactual.v0",
+        "arm": "rebuilds_its_own",
+        "uses_source": false,
+        "physical_cost_event_id": "cost:41381050a831d02e4466840e",
+        "reuse_horizon": 2,
+        "attributed": {
+          "wall_seconds": 0.0,
+          "cpu_seconds": 0.0,
+          "gpu_seconds": null,
+          "output_bytes": 0.0,
+          "items": 0.0
+        },
+        "note": "attribution under a frozen reuse horizon; the physical cost is charged once in the ledger"
+      }
+    ]
+  },
+  "reconciliation": {
+    "join": "(attempt_id, stage)",
+    "matched": [],
+    "producer_only": [
+      "attempt-2|transfer",
+      "source-build|generation"
+    ],
+    "executor_only": [
+      "attempt-1|retrieval",
+      "attempt-2|execution",
+      "attempt-2|retrieval"
+    ],
+    "engine_side": [
+      {
+        "key": "attempt-1|retrieval",
+        "on_producer": false,
+        "on_executor": true
+      },
+      {
+        "key": "attempt-2|execution",
+        "on_producer": false,
+        "on_executor": true
+      },
+      {
+        "key": "attempt-2|retrieval",
+        "on_producer": false,
+        "on_executor": true
+      }
+    ],
+    "engine_cost_event_ids": [
+      "cost_5baf1eccc01941567d6cb27d",
+      "cost_ce6e6360c2ddc6d5bc74a8be",
+      "cost_a4a843157424655b6410652d",
+      "cost_2264917cb1d8be2bb0b05694",
+      "cost_93aa875a898fa7c5d7f498b1"
+    ],
+    "join_self_test": {
+      "matched": [
+        "ctl|retrieval"
+      ],
+      "executor_only": [
+        "ctl|execution"
+      ],
+      "note": "a control over synthetic keys, not evidence about this run; it establishes only that the join can match."
+    },
+    "archaeon_reconcile_verbatim": {
+      "matched": [
+        "attempt-2"
+      ],
+      "producer_only": [
+        "source-build"
+      ],
+      "executor_only": [
+        "attempt-1"
+      ],
+      "engine_side": "absent (Daedalus C4-3)"
+    }
+  },
+  "rejections": {
+    "engine_decided": {
+      "ARTIFACT_ABSENT": {
+        "raised": "ARTIFACT_ABSENT"
+      },
+      "ARTIFACT_UNAUTHORIZED_WORLD": {
+        "raised": "ARTIFACT_UNAUTHORIZED_WORLD"
+      },
+      "ARTIFACT_DIGEST_MISMATCH": {
+        "raised": "ARTIFACT_DIGEST_MISMATCH"
+      },
+      "ARTIFACT_SIZE_MISMATCH": {
+        "raised": "ARTIFACT_SIZE_MISMATCH"
+      }
+    },
+    "engine_gate_directly": {
+      "wrong_digest": {
+        "http": 422,
+        "error": "validation_error"
+      },
+      "wrong_size": {
+        "http": 422,
+        "error": "validation_error"
+      },
+      "right_digest": {
+        "http": 200,
+        "bytes": 387
+      }
+    },
+    "scope": "Of the 15 rejection classes in viv/artifacts.py, these 4 are decided by the engine; the other 11 are contract, codec, interface, closure and limit checks the client makes without the engine, and integration did not change their guarantee, so they are covered by vivarium/tests/test_h0h5_artifacts.py rather than re-run here."
+  },
+  "ledger": {
+    "execution_world": "wld_8fb67057c8fba1ceb052f0b4",
+    "head_hash": "sha256:945158a0aac98555067ddc83203b8559cdb0991965f9a1e5ecfdba69847823d1",
+    "source_world": "wld_5da4532154948d74cf045349",
+    "attempts": [
+      {
+        "attempt_id": "attempt-1",
+        "outcome": "INTERRUPTED",
+        "stage_reached": "retrieval",
+        "reservations": [
+          "rsv_c982d9a89b1fb7db75ca8a36",
+          "rsv_a56c2298aac056d5efa68b8f"
+        ],
+        "cost_events": [
+          "cost_5baf1eccc01941567d6cb27d",
+          "cost_ce6e6360c2ddc6d5bc74a8be"
+        ],
+        "load_receipt": {
+          "closure_size": 2,
+          "bytes_loaded": 521,
+          "bytes_debited": 521,
+          "engine_fetches": 2,
+          "closure_manifest_hash": "sha256:ed82368cea44c345b959a666700992472c924ac24959cfc8debf418ddf74bcaf",
+          "verified": [
+            "size",
+            "digest",
+            "codec_canonical",
+            "artifact_type",
+            "schema_version",
+            "interface_id",
+            "closure"
+          ]
+        }
+      },
+      {
+        "attempt_id": "attempt-2",
+        "outcome": "COMPLETED",
+        "reservations": [
+          "rsv_a20d78ddfb8126ba047ca2ce",
+          "rsv_4bd1bc3224c7175a4986c698",
+          "rsv_1ba2f43da912204490ce93ad"
+        ],
+        "cost_events": [
+          "cost_a4a843157424655b6410652d",
+          "cost_2264917cb1d8be2bb0b05694",
+          "cost_93aa875a898fa7c5d7f498b1"
+        ],
+        "load_receipt": {
+          "closure_size": 2,
+          "bytes_loaded": 521,
+          "bytes_debited": 521,
+          "engine_fetches": 2,
+          "closure_manifest_hash": "sha256:ed82368cea44c345b959a666700992472c924ac24959cfc8debf418ddf74bcaf",
+          "verified": [
+            "size",
+            "digest",
+            "codec_canonical",
+            "artifact_type",
+            "schema_version",
+            "interface_id",
+            "closure"
+          ]
+        }
+      }
+    ]
+  },
+  "guarantees": {
+    "memory": "peak_memory_bytes is MEASURED, never enforced. The engine samples it, refuses to sum it, and stops nothing on it.",
+    "wall_guard": "the wall-clock guard is checked BETWEEN repeats, so a single repeat that overruns is not interrupted; the bound is on the sequence, not on the step.",
+    "logical_work": "logical work bounds live in the kind, not in the budget: artifact_probe_v1 folds a bounded closure the loader already limited by depth, count and bytes.",
+    "digest_authority": "a digest is checked AFTER authorization and after a world-scoped lookup, so it says WHICH object was meant and never that the caller may have it."
+  }
+}

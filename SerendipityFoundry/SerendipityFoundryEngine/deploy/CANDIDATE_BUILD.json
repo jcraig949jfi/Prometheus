@@ -1,18 +1,76 @@
 {
   "_what_this_is": "A CANDIDATE build, for review. Nothing has been deployed and no service was restarted. Applying it means copying these files into the deployment tree and restarting, after which deploy/verify_deploy.py should be re-pinned and re-run.",
-  "candidate_commit": "46d88eb020e9002bf0d95a41e51593a8cf4c0035",
-  "candidate_branch": "vivarium/v0-2026-09-05",
-  "engine_source_hash": "sha256:3b90ae3ae0b022f4c7ea4fd8d7685dac785dcff28897e78beb13a1e99fe01149",
+  "candidate_commit": "d8a971534b52514a24434e69dfac41912d84e2f0",
+  "candidate_branch": "daedalus/trackA-part1",
+  "engine_source_hash": "sha256:eb3bbadc083c48d56b5ef8181ee2e627e5b11bce8ab03e751d551a4fe1cbd564",
   "schema_version": 8,
   "deployed_engine_source_hash": "sha256:084f951f866cc50aec73c6403528abc234fd514742b25ffd1aff5515a271feff",
   "deployed_schema_version": 7,
   "live_engine_source_hash": "sha256:084f951f866cc50aec73c6403528abc234fd514742b25ffd1aff5515a271feff",
   "live_schema_version": 7,
+  "identities": {
+    "git_commit": {
+      "value": "d8a971534b52514a24434e69dfac41912d84e2f0",
+      "branch": "daedalus/trackA-part1",
+      "names": "a TREE in history",
+      "authority": "best-effort. It is the tree this candidate was cut from; it is NOT proof that the tree reproduces the build, and /v2/version's source_commit has named a commit that could not."
+    },
+    "engine_source_hash": {
+      "value": "sha256:eb3bbadc083c48d56b5ef8181ee2e627e5b11bce8ab03e751d551a4fe1cbd564",
+      "names": "the RUNTIME BUILD",
+      "authority": "AUTHORITATIVE. sha256 over sorted sfe/*.py, each contributing name + NUL + LF-normalized bytes + NUL, computed at import by sfe/release.py. LF normalization is why a checkout's line-ending convention cannot change build identity."
+    },
+    "schema_version": {
+      "value": 8,
+      "names": "the SHAPE OF THE LEDGER",
+      "authority": "authoritative for the DATA. It moves only forward: an older engine opened against a newer ledger REFUSES to start (sfe/store.py, 'refusing to run'), so a code-only rollback across a schema change is a loud outage rather than a silent downgrade."
+    },
+    "engine_instance_id": {
+      "live_value": "eng_8a37a5d305969034d488c43e",
+      "development_value": "eng_51d0ac54a95bb5325bf538f0",
+      "names": "the LEDGER ITSELF",
+      "authority": "authoritative for the DATABASE. Minted once per database and stored in meta; it travels with the substrate, not the path or the host. A code deploy does NOT change it, and a changed value after a deploy means the service was pointed at a different ledger."
+    },
+    "mapping": [
+      "git_commit -> engine_source_hash : MANY-TO-ONE and not guaranteed. Two commits whose sfe/*.py agree produce one build hash; a commit whose tree was never copied into the deployment tree produces none.",
+      "engine_source_hash -> schema_version : ONE-TO-ONE. SCHEMA_VERSION is a constant inside the hashed source, so a build cannot disagree with itself about the schema it writes.",
+      "schema_version -> engine_instance_id : INDEPENDENT. A migration changes the shape of a ledger and never its identity.",
+      "engine_instance_id -> engine_source_hash : INDEPENDENT. One ledger outlives many builds; one build serves many ledgers. The development receipt and production share a build hash and have DIFFERENT instance ids, which is exactly the property that lets a receipt be taken on a development ledger at all."
+    ]
+  },
+  "rollback": {
+    "crosses_a_migration": true,
+    "code": [
+      "Copy the DEPLOYED pin's files back into the deployment tree from a checkout you own -- never `git checkout -- .` or `git clean` in F:/Prometheus, which carries other roles' uncommitted work.",
+      "Restart with the documented procedure: stop the scheduled task, tree-kill the venv stub (Stop-ScheduledTask alone orphans the process tree and the orphan keeps the socket while the OLD build serves), confirm the port is free, start, allow ~20s to bind.",
+      "Re-run deploy/verify_deploy.py against the restored pin."
+    ],
+    "data": [
+      "BEFORE deploying: stop the service and take a snapshot with VACUUM INTO. A file copy of a live SQLite database with a WAL is not a snapshot.",
+      "The migration runs on first open and is additive; nothing is back-filled. There is no down-migration.",
+      "Reverting the code WITHOUT restoring the snapshot does not work: schema 8 data under a schema 7 engine is refused at startup. That is the correct failure direction, and it is why the snapshot is the rollback and the pin is only a recovery aid."
+    ],
+    "instance_id_invariant": "engine_instance_id must be IDENTICAL before and after, in both directions. If it changes, the service was pointed at a different ledger and the rollback has not restored state -- it has replaced it."
+  },
+  "conformance_pin": {
+    "contract": "roles/Harmonia/contracts/sfe_contract.json",
+    "pinned_engine_source_hash": "sha256:2f42e87f28f32065e8aa1c7cf4e0777c523e474ea4d1aa2ad4aa9a626143fe68",
+    "pinned_schema_version": 6,
+    "pinned_engine_instance_id": "eng_8a37a5d305969034d488c43e",
+    "candidate_engine_source_hash": "sha256:eb3bbadc083c48d56b5ef8181ee2e627e5b11bce8ab03e751d551a4fe1cbd564",
+    "candidate_schema_version": 8,
+    "live_engine_source_hash": "sha256:084f951f866cc50aec73c6403528abc234fd514742b25ffd1aff5515a271feff",
+    "live_schema_version": 7,
+    "hash_matches_candidate": false,
+    "hash_matches_live": false,
+    "note": "conformance_check.py is FAIL-CLOSED and compares engine_source_hash EXACTLY, so it halts the automated seats on any build change -- including one that changes no route. Regenerate the contract (generate_sfe_contract.py) in the SAME window as the deploy, or the seats stop on a build that is otherwise fine. If the pin already disagrees with the LIVE service, it was stale before this candidate and the regeneration is overdue independently of this deploy."
+  },
+  "receipt": "SerendipityFoundry/SerendipityFoundryEngine/deploy/TRACKA_JOINT_RECEIPT.json",
   "files_changed": [
     {
       "file": "SerendipityFoundry/SerendipityFoundryEngine/sfe/api.py",
       "deployed": "00edc4f35ade04f1",
-      "candidate": "64afdb7573822a95"
+      "candidate": "bb7d31db7c86084f"
     },
     {
       "file": "SerendipityFoundry/SerendipityFoundryEngine/sfe/ids.py",
@@ -22,7 +80,7 @@
     {
       "file": "SerendipityFoundry/SerendipityFoundryEngine/sfe/runtime.py",
       "deployed": "b47dc5f199ae6c2c",
-      "candidate": "cd711ebed1ac8226"
+      "candidate": "037159cac13f2f61"
     },
     {
       "file": "SerendipityFoundry/SerendipityFoundryEngine/sfe/store.py",
@@ -37,7 +95,7 @@
     {
       "file": "SerendipityFoundry/SerendipityFoundryClient/sfclient/client.py",
       "deployed": "ce1cf604be8d4ac6",
-      "candidate": "6150891435924b8f"
+      "candidate": "9592c1270bfcc510"
     }
   ],
   "files_added": [],
@@ -48,8 +106,8 @@
       "bytes_lf": 71
     },
     "SerendipityFoundry/SerendipityFoundryEngine/sfe/api.py": {
-      "sha256_lf": "64afdb7573822a95041e26f049fae6aa9178532142526a8457d0b7167be08092",
-      "bytes_lf": 66684
+      "sha256_lf": "bb7d31db7c86084f04a949f6941fbeb333bb5e5e474a18229e0d51ea7ffcb039",
+      "bytes_lf": 66977
     },
     "SerendipityFoundry/SerendipityFoundryEngine/sfe/canary.py": {
       "sha256_lf": "88fb02720fdd5b9b8464481db14cd3da8dd509ac4bcd9e2f71203ae06b193238",
@@ -76,8 +134,8 @@
       "bytes_lf": 1717
     },
     "SerendipityFoundry/SerendipityFoundryEngine/sfe/runtime.py": {
-      "sha256_lf": "cd711ebed1ac8226cb628fc46352269ed65340b2a6b17b31f3c989873e75aa6c",
-      "bytes_lf": 251148
+      "sha256_lf": "037159cac13f2f6141a5d78f6b903e35cfba15ccacf740feec6e9af98b44d5ba",
+      "bytes_lf": 251450
     },
     "SerendipityFoundry/SerendipityFoundryEngine/sfe/store.py": {
       "sha256_lf": "cd16b6fda6060e23f581fcbb50e2074200d67137c89821d1e3d6c678a37715b8",
@@ -88,8 +146,8 @@
       "bytes_lf": 4204
     },
     "SerendipityFoundry/SerendipityFoundryClient/sfclient/client.py": {
-      "sha256_lf": "6150891435924b8f4052c37238f12c8adfe3e76c5ede718a5197096d4c827608",
-      "bytes_lf": 39924
+      "sha256_lf": "9592c1270bfcc510dd5bad97371efa941f5441b431d8bebd435e5d5a5ec6b118",
+      "bytes_lf": 42340
     }
   },
   "review_notes": {
