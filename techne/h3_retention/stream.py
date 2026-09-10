@@ -48,7 +48,7 @@ class Row:
     parent_ids: tuple[str, ...]
     assay_ref: dict
     measures: tuple[float, ...]
-    objective: float
+    objective: float | None
     result_ref: dict
     payload_bytes: int
     raw: dict = field(repr=False, default_factory=dict)
@@ -79,12 +79,25 @@ def _require(cond: bool, prop: str, msg: str, seq: int | None = None) -> None:
         raise StreamError(prop, msg, seq=seq)
 
 
-def validate(header: dict, raw_rows: list[dict], *, resolver=None) -> Stream:
+def validate(header: dict, raw_rows: list[dict], *, resolver=None, seam_mode: bool = False) -> Stream:
     """Refuse anything that would make a retention replay ambiguous.
 
     `resolver`, when given, is called as resolver(result_ref) -> bytes and is used to check
     that the declared byte count is the truth rather than the producer's claim. Without one,
     recoverability is checked structurally only, and the validation record says so.
+
+    `seam_mode` is for a stream that arrives from an upstream producer rather than from a
+    fixture this seat built. TWO checks weaken, and they weaken in a NAMED way rather than
+    being switched off:
+
+      * a row with `payload: None` carries its digest instead of proving it. The digest is
+        still an identity -- duplicates are found, tampering is detectable against the stream
+        digest -- but it is upstream's assertion.
+      * a `result_ref` with `digest: None` is checked for resolution and declared length only.
+
+    Neither weakening is inferred from the data: `seam_mode` has to be asked for, and the
+    validation record reports exactly which rows used it. A validator that silently relaxes
+    when it meets data it cannot check is not a validator.
     """
     _require(header.get("schema") == SCHEMA, "header",
              f"schema must be {SCHEMA!r}, got {header.get('schema')!r}")
@@ -103,6 +116,8 @@ def validate(header: dict, raw_rows: list[dict], *, resolver=None) -> Stream:
     seen_ids: dict[str, int] = {}
     seen_digests: dict[str, list[str]] = {}
     unresolved_refs: list[str] = []
+    carried_digests = 0
+    undigested_refs = 0
 
     for i, r in enumerate(raw_rows):
         seq = r.get("seq")
@@ -117,11 +132,16 @@ def validate(header: dict, raw_rows: list[dict], *, resolver=None) -> Stream:
 
         # --- 2. candidate digests
         payload = r.get("payload")
-        _require(isinstance(payload, dict), "digests", "payload must be an object", seq=seq)
-        want = digest(payload)
-        _require(r.get("candidate_digest") == want, "digests",
-                 f"candidate_digest {r.get('candidate_digest')!r} does not match the payload "
-                 f"(recomputed {want})", seq=seq)
+        if payload is None and seam_mode:
+            _require(isinstance(r.get("candidate_digest"), str) and r["candidate_digest"],
+                     "digests", "a carried digest must still be a non-empty string", seq=seq)
+            carried_digests += 1
+        else:
+            _require(isinstance(payload, dict), "digests", "payload must be an object", seq=seq)
+            want = digest(payload)
+            _require(r.get("candidate_digest") == want, "digests",
+                     f"candidate_digest {r.get('candidate_digest')!r} does not match the payload "
+                     f"(recomputed {want})", seq=seq)
 
         # --- 3. birth status
         birth = r.get("birth") or {}
@@ -149,6 +169,12 @@ def validate(header: dict, raw_rows: list[dict], *, resolver=None) -> Stream:
         rref = r.get("result_ref") or {}
         for k in ("kind", "ref", "digest", "bytes"):
             _require(k in rref, "recoverable", f"result_ref is missing {k!r}", seq=seq)
+        _require(bool(rref.get("ref")), "recoverable", "result_ref.ref must be non-empty", seq=seq)
+        if rref.get("digest") is None:
+            _require(seam_mode, "recoverable",
+                     "result_ref carries no content digest; only a seam-mode stream may do that",
+                     seq=seq)
+            undigested_refs += 1
         if resolver is not None:
             blob = resolver(rref)
             _require(blob is not None, "recoverable",
@@ -156,9 +182,10 @@ def validate(header: dict, raw_rows: list[dict], *, resolver=None) -> Stream:
             _require(len(blob) == int(rref["bytes"]), "recoverable",
                      f"result_ref declares {rref['bytes']} bytes, resolver returned {len(blob)}",
                      seq=seq)
-            got = "sha256:" + hashlib.sha256(blob).hexdigest()
-            _require(got == rref["digest"], "recoverable",
-                     f"result_ref digest {rref['digest']} != recomputed {got}", seq=seq)
+            if rref.get("digest") is not None:
+                got = "sha256:" + hashlib.sha256(blob).hexdigest()
+                _require(got == rref["digest"], "recoverable",
+                         f"result_ref digest {rref['digest']} != recomputed {got}", seq=seq)
         else:
             unresolved_refs.append(rref["ref"])
 
@@ -179,7 +206,8 @@ def validate(header: dict, raw_rows: list[dict], *, resolver=None) -> Stream:
         rows.append(Row(
             seq=i, candidate_id=cid, candidate_digest=r["candidate_digest"], payload=payload,
             birth_status=status, parent_ids=parents, assay_ref=r["assay_ref"],
-            measures=tuple(float(x) for x in meas), objective=float(r["objective"]),
+            measures=tuple(float(x) for x in meas),
+            objective=None if r.get("objective") is None else float(r["objective"]),
             result_ref=rref, payload_bytes=pb, raw=r,
         ))
 
@@ -189,12 +217,19 @@ def validate(header: dict, raw_rows: list[dict], *, resolver=None) -> Stream:
 
     validation = {
         "schema": SCHEMA,
+        "seam_mode": seam_mode,
+        "digests_carried_not_recomputed": carried_digests,
+        "result_refs_without_a_content_digest": undigested_refs,
         "stream_id": header["stream_id"],
         "n_rows": len(rows),
         "properties_checked": ["ordered_ids", "digests", "birth", "fixed_assay",
                               "recoverable", "measures", "caps"],
         "result_refs_resolved": resolver is not None,
-        "recoverability_check": ("BYTES AND DIGEST VERIFIED THROUGH THE RESOLVER"
+        "recoverability_check": (("RESOLVED; LENGTH VERIFIED. Content digest NOT verified for "
+                                  f"{undigested_refs} of {len(rows)} rows -- the producer "
+                                  f"carries no result digest (seam W2)")
+                                 if resolver is not None and undigested_refs else
+                                 "BYTES AND DIGEST VERIFIED THROUGH THE RESOLVER"
                                  if resolver is not None else
                                  "STRUCTURAL ONLY -- no resolver supplied, so the declared "
                                  "bytes and digest are the producer's claim, not a "

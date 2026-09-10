@@ -454,3 +454,100 @@ def gkl_rule_table() -> np.ndarray:
             trio = [nb[RADIUS], nb[RADIUS + 1], nb[WIDTH - 1]]
         out[idx] = 1 if sum(trio) >= 2 else 0
     return out
+
+
+# ---------------------------------------------------------------------------
+# A third criterion, added 2026-09-10 under operator instruction.
+#
+# WHY. `stable` and `at_T` are all-or-nothing: the lattice either is in the
+# correct uniform configuration or it is not. Measured on the live cs-c3-2
+# corpus, 40 of 40 random 128-entry tables scored 0.0 under BOTH, and `maj`
+# scored 0.0 under both as well. A criterion whose attainable range for random
+# tables is the single point {0} cannot rank a random table, cannot separate
+# `maj` from noise, and cannot show a gate to be reachable before it is frozen.
+#
+# `cellwise_majority_match` is per-cell rather than per-lattice: the fraction
+# of cells that agree with the IC's majority target after `steps` updates.
+#
+# THIS IS NOT COMPARABLE TO THE PUBLISHED FIGURES. The published P values are
+# the fraction of INITIAL CONDITIONS classified correctly, all-or-nothing,
+# which is `at_T`. Quoting a cell-match number against a published P would be
+# comparing two different quantities. The identity in the next paragraph says
+# exactly when they coincide and it is the only case where they may be
+# compared.
+#
+# EXACT IDENTITY. For a rule that always reaches a uniform configuration by
+# `steps`, every per-IC value is 0 or 1, so the mean cell-match EQUALS the
+# at_T accuracy. `maj` is the counterexample: it reaches uniform in 23 of 200
+# undriven samples, so its per-IC values are strictly interior and its mean is
+# a genuinely different number from its at_T accuracy of 0.0.
+# ---------------------------------------------------------------------------
+
+def cellwise_majority_match(table: np.ndarray, ics: np.ndarray, steps: int
+                            ) -> Dict[str, object]:
+    """Mean fraction of cells matching the IC's majority target at `steps`.
+
+    Returns the mean, the dispersion ACROSS initial conditions, and the mass
+    at the two extremes. The dispersion is not decoration: the mean alone
+    cannot separate a constant rule from a random one, and the dispersion can.
+    See `ATTAINABLE` below.
+
+    ATTAINABLE RANGE. Per initial condition the value lies in [0, 1]. For a
+    RANDOM table the mean is centred on 0.5, because a balanced random rule
+    drives the lattice to density about one half and each cell then agrees
+    with a fixed target with probability about one half. The sampling spread
+    of that mean is approximately sqrt(0.25 / n_cells / n_ics); at n_cells 149
+    and n_ics 100 that is about 0.004. So the attainable range for random
+    tables is an interval around 0.5, not a point, which is the property this
+    function exists to provide.
+
+    ANALYTIC EXPECTATIONS, stated before measurement:
+        random balanced table   mean about 0.500, small dispersion
+        constant-zero rule      mean = P(target = 0) = 0.5 exactly,
+                                dispersion = 0.5 exactly, values only 0 or 1
+        constant-one rule       the same by symmetry
+        perfect classifier      mean 1.0
+        perfect anti-classifier mean 0.0
+
+    TWO DISPERSIONS, AND THEY ANSWER DIFFERENT QUESTIONS. `sd_across_ics` is
+    the IC-to-IC spread WITHIN one table: about 0.50 for a constant rule and
+    about 0.10 for a random one. The spread of the MEAN across many different
+    random tables is a separate and much smaller number, about 0.005 at these
+    sizes, and it is that second one which makes the attainable range narrow.
+    Confusing them is easy; the first version of the test for this function
+    did exactly that.
+
+    The two constants land on the SAME MEAN as a random table and are told
+    apart only by dispersion. Any ranking built on the mean alone inherits
+    that blind spot, and it is stated here rather than discovered later.
+    """
+    t = require_table(table)
+    require_steps(steps)
+    s = np.asarray(ics).astype(np.uint8)
+    if s.ndim != 2:
+        raise EvcaError("ics must be 2-D (n_ics, n_cells), got %r" % (s.shape,))
+    n_cells = require_lattice(s.shape[1])
+    target = majority_target(s)
+    final = evolve(s, t, steps)
+    per_ic = (final == target[:, None]).mean(axis=1)
+    return {
+        "mean_cell_match": float(per_ic.mean()),
+        "sd_across_ics": float(per_ic.std()),
+        "min_cell_match": float(per_ic.min()),
+        "max_cell_match": float(per_ic.max()),
+        "fraction_all_cells_match": float((per_ic == 1.0).mean()),
+        "fraction_no_cells_match": float((per_ic == 0.0).mean()),
+        "n_ics": int(s.shape[0]), "n_cells": n_cells, "steps": int(steps),
+        "criterion": "cellwise_majority_match",
+        "comparable_to_published_P": False,
+        "note": ("equals at_T accuracy ONLY for a rule that always reaches a "
+                 "uniform configuration by `steps`"),
+    }
+
+
+def random_table(seed: int) -> np.ndarray:
+    """A uniformly random 128-entry table. Seeded; no global RNG."""
+    if isinstance(seed, bool) or not isinstance(seed, (int, np.integer)):
+        raise EvcaError("seed must be an integer, got %r" % (seed,))
+    rng = np.random.default_rng(int(seed))
+    return rng.integers(0, 2, size=TABLE_BITS).astype(np.uint8)

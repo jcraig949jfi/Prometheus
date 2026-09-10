@@ -22,6 +22,7 @@ from .core import (  # noqa: F401
     reflect_states, complement_states,
     normalise_trajectory, trajectory_digest, selected_trajectory,
     majority_rule_table, gkl_rule_table,
+    cellwise_majority_match, random_table,
 )
 from .genomes import GENOMES, NAMES, SPECIMEN_JSON, rule_hex  # noqa: F401
 
@@ -38,5 +39,6 @@ __all__ = [
     "reflect_states", "complement_states",
     "normalise_trajectory", "trajectory_digest", "selected_trajectory",
     "majority_rule_table", "gkl_rule_table",
+    "cellwise_majority_match", "random_table",
     "GENOMES", "NAMES", "SPECIMEN_JSON", "rule_hex",
 ]

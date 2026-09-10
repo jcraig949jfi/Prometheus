@@ -157,6 +157,50 @@ def assignments(n_inputs=N_INPUTS):
             for k in range(2 ** n_inputs)]
 
 
+# --------------------------------------------------------------------------- case ordering
+
+#: Declared case orderings. `proteus_declared` is the alpha's and is the identity permutation.
+#: `seeded_permutation_v1` is for BETA only; the running alpha must not switch.
+ORDERING_DECLARED = "proteus_declared"
+ORDERING_SEEDED = "seeded_permutation_v1"
+CASE_ORDERINGS = (ORDERING_DECLARED, ORDERING_SEEDED)
+
+
+def case_order(ordering=ORDERING_DECLARED, seed=0, n_inputs=N_INPUTS):
+    """Return a PERMUTATION of case indices: the order cases are presented and scanned.
+
+    `proteus_declared`      identity -- assignment k at position k, input 0 most significant.
+    `seeded_permutation_v1` a deterministic permutation from SplitMix64(seed). `random` is used
+                            nowhere; this is the same PRNG the rest of Proteus replays on.
+
+    WHY A SEED ARGUMENT AND NOT A CONSTANT ORDER. A fixed alternative order (Gray code, reversal,
+    anything) does NOT widen the witness pool. The kind seeds its first K constraints from the
+    first K cases OF THIS SAME ORDER, so the seeded prefix is exactly the region that can no
+    longer produce a witness, and the reachable witnesses are its complement -- 2^n - K inputs,
+    whatever the order. Only an order that VARIES ACROSS TASKS moves the complement around and
+    lets the pool cover more than 2^n - K distinct inputs in total. Callers wanting that must
+    vary `seed` per task; passing one sealed constant reproduces the alpha's collapse with a
+    different four inputs. Measured in test_case_ordering.py, not asserted here.
+    """
+    if ordering not in CASE_ORDERINGS:
+        raise BooleanError(f"unknown case ordering {ordering!r}; known: {list(CASE_ORDERINGS)}")
+    n = 2 ** n_inputs
+    if ordering == ORDERING_DECLARED:
+        return list(range(n))
+    from proteus.foundry.prng import SplitMix64
+    rng = SplitMix64(seed)
+    idx = list(range(n))
+    for i in range(n - 1, 0, -1):            # Fisher-Yates, deterministic
+        j = rng.randbelow(i + 1)
+        idx[i], idx[j] = idx[j], idx[i]
+    return idx
+
+
+def ordered_assignments(ordering=ORDERING_DECLARED, seed=0, n_inputs=N_INPUTS):
+    a = assignments(n_inputs)
+    return [a[k] for k in case_order(ordering, seed, n_inputs)]
+
+
 # --------------------------------------------------------------------------- compiler
 
 def compile_boolean(expr, n_inputs=N_INPUTS):
@@ -210,14 +254,21 @@ def compile_boolean(expr, n_inputs=N_INPUTS):
 
 # --------------------------------------------------------------------------- task / oracle
 
-def boolean_spec(expr, n_inputs=N_INPUTS, ticks=2):
-    """The exhaustive specification for `expr`: all 2^n assignments, in declared order.
+def boolean_spec(expr, n_inputs=N_INPUTS, ticks=2, ordering=ORDERING_DECLARED,
+                 ordering_seed=0):
+    """The exhaustive specification for `expr`: all 2^n assignments, in the declared order.
 
     Labels come from the INDEPENDENT evaluator, so the specification never depends on the VM.
+    The default is `proteus_declared`, so every existing caller and the running alpha are
+    byte-for-byte unchanged; `ordering` is a BETA facility.
+
+    Coverage is identical under every ordering -- a permutation reorders cases, it never drops
+    one. Only WHICH case is reported as the first witness moves.
     """
     tt = truth_table(expr, n_inputs)
-    cases = [{"inputs": [list(a)], "expected": [[v]]}
-             for a, v in zip(assignments(n_inputs), tt)]
+    a = assignments(n_inputs)
+    cases = [{"inputs": [list(a[k])], "expected": [[tt[k]]]}
+             for k in case_order(ordering, ordering_seed, n_inputs)]
     return make_spec(cases, n_out=1, ticks=ticks, label="boolean3")
 
 

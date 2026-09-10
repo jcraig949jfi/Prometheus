@@ -1,0 +1,127 @@
+{
+ "cellwise_majority_match": {
+  "random_tables_20": {
+   "max": 0.5098657718120805,
+   "mean": 0.49983892617449666,
+   "min": 0.49389261744966445
+  },
+  "rules": {
+   "GKL": {
+    "frac_all_match": 0.79,
+    "frac_none_match": 0.21,
+    "mean": 0.79,
+    "sd_across_ics": 0.40730823708832603
+   },
+   "exp": {
+    "frac_all_match": 0.65,
+    "frac_none_match": 0.35,
+    "mean": 0.65,
+    "sd_across_ics": 0.47696960070847283
+   },
+   "maj": {
+    "frac_all_match": 0.0,
+    "frac_none_match": 0.0,
+    "mean": 0.5735570469798658,
+    "sd_across_ics": 0.06847887510247383
+   },
+   "par": {
+    "frac_all_match": 0.73,
+    "frac_none_match": 0.27,
+    "mean": 0.73,
+    "sd_across_ics": 0.44395945760846234
+   },
+   "particle1": {
+    "frac_all_match": 0.71,
+    "frac_none_match": 0.28,
+    "mean": 0.7134228187919462,
+    "sd_across_ics": 0.4496659320820332
+   },
+   "particle2": {
+    "frac_all_match": 0.73,
+    "frac_none_match": 0.27,
+    "mean": 0.73,
+    "sd_across_ics": 0.4439594576084623
+   }
+  },
+  "scope": {
+   "ic_seed": 20260910,
+   "n_cells": 149,
+   "n_ics": 100,
+   "steps": 298
+  }
+ },
+ "fixture": "maj_structural_zero",
+ "purpose": "maj scores 0.0 under `stable` and under `at_T`, exactly like a random table. This file records WHY, so a C3-2 readout cites a file rather than a chat message, and so nobody reads maj = 0.0 as a failed reproduction.",
+ "relaxation": {
+  "command": "python -c \"from herakles.ca_stream import reset_v2 as r; print(r.relaxation_time(<rule_hex>, 31, 0.5, 20260910, 200, 200))\"",
+  "rows": {
+   "GKL": {
+    "max_relaxation": 52,
+    "max_steps": 200,
+    "median_relaxation": 13,
+    "min_relaxation": 2,
+    "n_censored": 0,
+    "n_reached_uniform": 200,
+    "n_samples": 200,
+    "rule_hex": "005f005f005f005f005fff5f005fff5f"
+   },
+   "exp": {
+    "max_relaxation": 19,
+    "max_steps": 200,
+    "median_relaxation": 6,
+    "min_relaxation": 2,
+    "n_censored": 0,
+    "n_reached_uniform": 200,
+    "n_samples": 200,
+    "rule_hex": "0505408305c90101200b0efb94c7cff7"
+   },
+   "maj": {
+    "max_relaxation": 4,
+    "max_steps": 200,
+    "median_relaxation": 2,
+    "min_relaxation": 1,
+    "n_censored": 177,
+    "n_reached_uniform": 23,
+    "n_samples": 200,
+    "rule_hex": "000101170117177f0117177f177f7fff"
+   },
+   "par": {
+    "max_relaxation": 37,
+    "max_steps": 200,
+    "median_relaxation": 14,
+    "min_relaxation": 2,
+    "n_censored": 0,
+    "n_reached_uniform": 200,
+    "n_samples": 200,
+    "rule_hex": "0504058705000f77037755837bffb77f"
+   },
+   "particle1": {
+    "max_relaxation": 35,
+    "max_steps": 200,
+    "median_relaxation": 12,
+    "min_relaxation": 3,
+    "n_censored": 6,
+    "n_reached_uniform": 194,
+    "n_samples": 200,
+    "rule_hex": "1000022441170231155f57dd734bffff"
+   },
+   "particle2": {
+    "max_relaxation": 39,
+    "max_steps": 200,
+    "median_relaxation": 13,
+    "min_relaxation": 2,
+    "n_censored": 5,
+    "n_reached_uniform": 195,
+    "n_samples": 200,
+    "rule_hex": "031001001fa00013331f9fff5975ffff"
+   }
+  },
+  "scope": {
+   "censor_at_steps": 200,
+   "n_cells": 31,
+   "n_samples": 200,
+   "reset_density": 0.5,
+   "reset_root": 20260910
+  }
+ }
+}
