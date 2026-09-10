@@ -6,9 +6,35 @@ execution cycle. It answers one question:
 
     is the engine I am about to talk to the engine my contract describes?
 
-Exit 0 conform, 1 DRIFT, 2 unreachable. Non-zero must stop the loop. A tool
-that keeps running through drift produces fossils attributed to a build that
-was not the build, which is the failure this whole program has been chasing.
+FOUR EXIT STATES (2026-09-10, after the schema 6 -> 8 drift).
+
+    0  CONFORMANT   build hash matches. Proceed.
+    3  INCOMPLETE   build hash DIFFERS, but routes were only ADDED -- none
+                    removed, no session-scoping flip, no required-field change
+                    on any shared route. The contract's claims still hold on
+                    everything it describes; it just does not describe
+                    everything. A consumer may proceed ONLY if every route it
+                    will call is in the contract (pass --consumer-routes), and
+                    every observation it produces is stamped with BOTH hashes.
+    1  DRIFT        a route REMOVED, a scoping flip, a required-field change,
+                    or an engine_instance_id mismatch. Always halt.
+    2  UNREACHABLE  retry a transient before treating it as a stop.
+
+WHY THE SPLIT. The exact build pin conflates two questions -- "is this the
+build my contract came from" (identity) and "do my contract's claims still
+hold" (validity). Collapsing them costs a halt on every engine change even
+when nothing the contract describes has moved, and a gate that halts for no
+reason is a gate that gets unwired. State 3 separates them WITHOUT using a
+schema number as a proxy for the surface: the surface is compared directly.
+
+engine_instance_id NEVER bends, in any state. It names the LEDGER, not the
+build, and its mismatch is the one failure that corrupts attribution silently
+instead of halting work. That is also what makes state 3 safe: the rows are
+known to be in the right database.
+
+READING THE EXIT CODE: do NOT pipe this program and read $?. That captures the
+pipe's status, not this program's -- a defect that has now bitten this campaign
+twice. Use ${PIPESTATUS[0]}, or do not pipe.
 
 WHY THIS IS NOT OPTIONAL. Twice in this program a live engine's reported
 source_commit named a commit that did not contain the running code, and both
@@ -33,13 +59,18 @@ import sys
 import urllib.error
 import urllib.request
 
-FAIL = []
+FAIL = []        # breaking: forces state 1
+INCOMPLETE = []  # additive: forces state 3 unless a consumer needs a new route
+
+CONFORMANT, DRIFT, UNREACHABLE, INCOMPLETE_STATE = 0, 1, 2, 3
 
 
-def check(name, ok, detail):
-    print("  [%s] %-42s %s" % ("PASS" if ok else "DRIFT", name, detail))
+def check(name, ok, detail, breaking=True):
+    """breaking=False records an ADDITIVE difference (state 3), not DRIFT."""
+    tag = "PASS" if ok else ("DRIFT" if breaking else "ADDED")
+    print("  [%s] %-42s %s" % (tag, name, detail))
     if not ok:
-        FAIL.append({"check": name, "detail": detail})
+        (FAIL if breaking else INCOMPLETE).append({"check": name, "detail": detail})
     return ok
 
 
@@ -68,6 +99,10 @@ def main():
     ap.add_argument("--cacert", default=None)
     ap.add_argument("--base", default=None,
                     help="override; defaults to the contract's base_url")
+    ap.add_argument("--consumer-routes", nargs="*", default=None,
+                    metavar="'GET /v2/x'",
+                    help="routes this consumer will call. Under state 3 the "
+                         "run HALTS if any is absent from the contract.")
     a = ap.parse_args()
     C = json.load(open(a.contract, encoding="utf-8"))
     base = (a.base or C["engine"]["base_url"]).rstrip("/")
@@ -91,14 +126,16 @@ def main():
           live.get("engine_source_hash") == C["engine"]["engine_source_hash"],
           "live %s vs contract %s"
           % ((live.get("engine_source_hash") or "")[:22],
-             (C["engine"]["engine_source_hash"] or "")[:22]))
+             (C["engine"]["engine_source_hash"] or "")[:22]),
+          breaking=False)   # identity, not validity: the route diff decides
     check("engine_instance_id",
           live.get("engine_instance_id") == C["engine"]["engine_instance_id"],
           "live %s" % live.get("engine_instance_id"))
     check("schema_version",
           live.get("schema_version") == C["engine"]["schema_version"],
           "live %s vs contract %s" % (live.get("schema_version"),
-                                      C["engine"]["schema_version"]))
+                                      C["engine"]["schema_version"]),
+          breaking=False)   # a LABEL for the surface; the surface is compared below
     check("science_profile",
           live.get("science_profile") == C["engine"]["science_profile"],
           "live %s vs contract %s" % (live.get("science_profile"),
@@ -114,10 +151,19 @@ def main():
                    for m in ops if m.upper() in ("GET", "POST")}
     con_routes = {(r["method"], r["path"]) for r in C["routes"]}
     added, removed = live_routes - con_routes, con_routes - live_routes
-    check("route_set_identical", not added and not removed,
-          "%d live, %d in contract; added=%s removed=%s"
-          % (len(live_routes), len(con_routes),
-             sorted(added) or "none", sorted(removed) or "none"))
+    # A REMOVAL breaks the contract's claims. An ADDITION only means the
+    # contract is incomplete -- everything it describes is still there.
+    check("no_route_removed", not removed,
+          "%d removed%s" % (len(removed),
+                            (": " + str(sorted(removed))) if removed else ""))
+    check("route_set_complete", not added,
+          "%d live, %d in contract; %d added%s"
+          % (len(live_routes), len(con_routes), len(added),
+             (": " + ", ".join("%s %s" % a for a in sorted(added)))
+             if added else ""),
+          breaking=False)
+    a.consumer_unlisted = sorted(
+        r for r in (a.consumer_routes or []) if tuple(r.split(" ", 1)) not in con_routes)
 
     # semantic drift: does session scoping still behave as recorded?
     st, body = req(root + "/v2/clients", a.cacert, method="POST",
@@ -131,7 +177,11 @@ def main():
                "aid": "sha256:" + "0" * 64, "work_id": "wrk_" + "0" * 24,
                "sid": "ses_" + "0" * 24, "fid": "fam_" + "0" * 24,
                "clm": "clm_" + "0" * 24}
-        sample = [r for r in C["routes"] if r["method"] == "GET"][:8]
+        # ALL GET routes, not a sample. GETs do not mutate, so this is safe
+        # against production; POST scoping is derived at generation time
+        # against a scratch engine and is NOT re-probed here. That limit is
+        # stated rather than hidden.
+        sample = [r for r in C["routes"] if r["method"] == "GET"]
         bad = []
         for r in sample:
             u = r["path"]
@@ -151,14 +201,44 @@ def main():
 
     print("\n" + "=" * 74)
     if FAIL:
-        print("DRIFT DETECTED -- %d check(s) failed. STOP THE LOOP." % len(FAIL))
-        print("The engine is not the engine this contract describes.")
-        print("Regenerate the contract, re-read it, and only then resume.")
+        print("DRIFT -- %d breaking check(s) failed. STOP THE LOOP." % len(FAIL))
+        print("Something the contract DESCRIBES has moved, or the ledger changed.")
         for f in FAIL:
             print("   %s: %s" % (f["check"], f["detail"]))
-        return 1
+        return DRIFT
+
+    if INCOMPLETE:
+        print("INCOMPLETE -- the build moved, but only by ADDITION.")
+        print("Nothing the contract describes was removed or changed.")
+        for f in INCOMPLETE:
+            print("   %s: %s" % (f["check"], f["detail"]))
+        if a.consumer_routes is None:
+            print("")
+            print("   No --consumer-routes declared, so this program cannot tell")
+            print("   whether you are about to call an undescribed route.")
+            print("   HALT is the safe reading. Declare your routes to proceed.")
+            return INCOMPLETE_STATE
+        unlisted = getattr(a, "consumer_unlisted", [])
+        if unlisted:
+            print("")
+            print("   HALT: %d route(s) you will call are NOT in the contract:"
+                  % len(unlisted))
+            for r in unlisted:
+                print("      %s" % r)
+            print("   Regenerate the contract before calling them.")
+            return INCOMPLETE_STATE
+        print("")
+        print("   Every route you declared IS in the contract, so its claims")
+        print("   cover your calls. PROCEED, and stamp every observation with")
+        print("   BOTH hashes:")
+        print("      contract_engine_source_hash = %s"
+              % C["engine"]["engine_source_hash"])
+        print("      live_engine_source_hash     = %s"
+              % live.get("engine_source_hash"))
+        return CONFORMANT
+
     print("CONFORMANT -- safe to proceed")
-    return 0
+    return CONFORMANT
 
 
 if __name__ == "__main__":

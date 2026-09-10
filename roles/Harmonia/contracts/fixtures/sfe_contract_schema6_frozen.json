@@ -4,9 +4,9 @@
  "engine": {
   "base_url": "https://192.168.1.202:8811/v2",
   "api": "v2",
-  "schema_version": 8,
+  "schema_version": 6,
   "engine_instance_id": "eng_8a37a5d305969034d488c43e",
-  "engine_source_hash": "sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e",
+  "engine_source_hash": "sha256:2f42e87f28f32065e8aa1c7cf4e0777c523e474ea4d1aa2ad4aa9a626143fe68",
   "science_profile": "warn",
   "session_enforcement": "advisory",
   "IDENTITY_RULE": "pin engine_source_hash, NEVER source_commit. source_commit is best-effort git metadata and is currently WRONG on M1 -- it names a commit that does not contain the running code. The hash is computed from the loaded source and is the build identity."
@@ -43,18 +43,6 @@
     "entry_hash"
    ],
    "requires_session_key": false
-  },
-  {
-   "method": "POST",
-   "path": "/v2/budget/reservations/{rid}/release",
-   "path_params": [
-    "rid"
-   ],
-   "required_query": [],
-   "required_body": [
-    "reason"
-   ],
-   "requires_session_key": true
   },
   {
    "method": "POST",
@@ -108,16 +96,6 @@
    "requires_session_key": false
   },
   {
-   "method": "GET",
-   "path": "/v2/cost-events/{cost_event_id}",
-   "path_params": [
-    "cost_event_id"
-   ],
-   "required_query": [],
-   "required_body": [],
-   "requires_session_key": true
-  },
-  {
    "method": "POST",
    "path": "/v2/families",
    "path_params": [],
@@ -166,113 +144,6 @@
     "member_kind",
     "member_id"
    ],
-   "requires_session_key": true
-  },
-  {
-   "method": "POST",
-   "path": "/v2/measurements",
-   "path_params": [],
-   "required_query": [],
-   "required_body": [
-    "name",
-    "version",
-    "implementation_hash",
-    "domain"
-   ],
-   "requires_session_key": true
-  },
-  {
-   "method": "GET",
-   "path": "/v2/measurements",
-   "path_params": [],
-   "required_query": [],
-   "required_body": [],
-   "requires_session_key": true
-  },
-  {
-   "method": "GET",
-   "path": "/v2/measurements/{mid}",
-   "path_params": [
-    "mid"
-   ],
-   "required_query": [],
-   "required_body": [],
-   "requires_session_key": true
-  },
-  {
-   "method": "GET",
-   "path": "/v2/read/grants",
-   "path_params": [],
-   "required_query": [],
-   "required_body": [],
-   "requires_session_key": true
-  },
-  {
-   "method": "POST",
-   "path": "/v2/read/grants/{grant_id}/revoke",
-   "path_params": [
-    "grant_id"
-   ],
-   "required_query": [],
-   "required_body": [],
-   "requires_session_key": true
-  },
-  {
-   "method": "GET",
-   "path": "/v2/read/observations",
-   "path_params": [],
-   "required_query": [],
-   "required_body": [],
-   "requires_session_key": true
-  },
-  {
-   "method": "POST",
-   "path": "/v2/read/scopes",
-   "path_params": [],
-   "required_query": [],
-   "required_body": [
-    "name"
-   ],
-   "requires_session_key": true
-  },
-  {
-   "method": "GET",
-   "path": "/v2/read/scopes",
-   "path_params": [],
-   "required_query": [],
-   "required_body": [],
-   "requires_session_key": true
-  },
-  {
-   "method": "POST",
-   "path": "/v2/read/scopes/{sid}/grants",
-   "path_params": [
-    "sid"
-   ],
-   "required_query": [],
-   "required_body": [
-    "grantee_client_id"
-   ],
-   "requires_session_key": true
-  },
-  {
-   "method": "POST",
-   "path": "/v2/read/scopes/{sid}/worlds",
-   "path_params": [
-    "sid"
-   ],
-   "required_query": [],
-   "required_body": [
-    "world_ids"
-   ],
-   "requires_session_key": true
-  },
-  {
-   "method": "GET",
-   "path": "/v2/read/worlds",
-   "path_params": [],
-   "required_query": [],
-   "required_body": [],
    "requires_session_key": true
   },
   {
@@ -440,44 +311,7 @@
   },
   {
    "method": "POST",
-   "path": "/v2/worlds/{wid}/budget/reserve",
-   "path_params": [
-    "wid"
-   ],
-   "required_query": [],
-   "required_body": [
-    "resource",
-    "amount",
-    "stage"
-   ],
-   "requires_session_key": true
-  },
-  {
-   "method": "POST",
    "path": "/v2/worlds/{wid}/checkpoint",
-   "path_params": [
-    "wid"
-   ],
-   "required_query": [],
-   "required_body": [],
-   "requires_session_key": true
-  },
-  {
-   "method": "POST",
-   "path": "/v2/worlds/{wid}/cost-events",
-   "path_params": [
-    "wid"
-   ],
-   "required_query": [],
-   "required_body": [
-    "stage",
-    "resources"
-   ],
-   "requires_session_key": true
-  },
-  {
-   "method": "GET",
-   "path": "/v2/worlds/{wid}/cost-report",
    "path_params": [
     "wid"
    ],
@@ -671,18 +505,6 @@
    "requires_session_key": true
   },
   {
-   "method": "GET",
-   "path": "/v2/worlds/{wid}/observations/{obs_id}/measured/{mid}",
-   "path_params": [
-    "wid",
-    "obs_id",
-    "mid"
-   ],
-   "required_query": [],
-   "required_body": [],
-   "requires_session_key": true
-  },
-  {
    "method": "POST",
    "path": "/v2/worlds/{wid}/pause",
    "path_params": [
@@ -757,8 +579,8 @@
   }
  ],
  "route_counts": {
-  "total_get_post": 67,
-  "session_scoped": 61,
+  "total_get_post": 50,
+  "session_scoped": 44,
   "exempt": 6
  },
  "vocabularies": {

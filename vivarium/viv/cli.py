@@ -17,6 +17,8 @@ Run as:  python -m viv.cli <command>          (from vivarium/)
 """
 from __future__ import annotations
 
+import datetime as _dt
+
 import argparse
 import json
 import sys
@@ -362,6 +364,42 @@ def cmd_run(args, conn) -> int:
                  stop_when_idle=args.stop_when_idle)
 
 
+def cmd_stop(args, conn) -> int:
+    """Ask a running consumer to stop AFTER its current tick.
+
+    The alternative, and the only one that existed before this, is killing the
+    process. A kill mid-attempt strands the row: the queue records it as
+    claimed by a worker that is gone, and nothing may adopt it, because
+    guessing that a stranded run did not happen is the guess that runs one
+    experiment twice. So a restart used to cost either a stranded row or a
+    wait, and on 2026-09-10 it cost a campaign both -- 48 rows executed on an
+    interpreter four hours older than the fix they needed, because restarting
+    to pick it up would have stranded the row in flight.
+
+    This writes a flag the daemon checks BETWEEN ticks. The current attempt
+    always finishes; the stop lands where nothing is claimed.
+    """
+    conn.close()
+    d = _daemon.Daemon(worker_id=args.worker_id, schema=args.schema)
+    path = d.stop_file
+    if args.clear:
+        if path.exists():
+            path.unlink()
+            print("cleared %s" % path)
+        else:
+            print("no stop flag at %s" % path)
+        return 0
+    path.parent.mkdir(exist_ok=True)
+    path.write_text("requested by %s at %s\n"
+                    % (args.by, _dt.datetime.now(_dt.timezone.utc).isoformat()),
+                    encoding="utf-8")
+    print("stop requested for %s\n  flag: %s\n"
+          "The daemon finishes its current tick and exits with nothing "
+          "claimed. It clears the flag on the way out; `--clear` removes it "
+          "by hand if the daemon is not running." % (args.worker_id, path))
+    return 0
+
+
 def cmd_tick(args, conn) -> int:
     """Exactly one tick, reported as JSON. The unit the daemon drives."""
     v = _loop.Vivarium(worker_id=args.worker_id, schema=args.schema,
@@ -481,6 +519,12 @@ def build_parser() -> argparse.ArgumentParser:
 
     sub.add_parser("kinds").set_defaults(fn=cmd_kinds)
     sub.add_parser("limits").set_defaults(fn=cmd_limits)
+    p_stop = sub.add_parser("stop")
+    p_stop.add_argument("--worker-id", default=_loop.default_worker_id())
+    p_stop.add_argument("--by", default="operator")
+    p_stop.add_argument("--clear", action="store_true",
+                        help="remove the flag instead of setting it")
+    p_stop.set_defaults(fn=cmd_stop)
 
     s = sub.add_parser("sfe-identity",
                        help="the DURABLE SFE client identity (one per role)")
