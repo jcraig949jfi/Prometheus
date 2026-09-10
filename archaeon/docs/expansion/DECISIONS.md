@@ -36,3 +36,12 @@ names its owner; Archaeon recommends and does not decide outside its lane.
 | D-15 (to reconcile) | witness availability log | Operator (Mnemosyne reports) | — | migration 011 already ships ref_availability_events (append-only); Mnemosyne to state whether the implementation closes the decision | avoid a duplicated design question |
 | D-19 | H0 sizing (Harmonia QR-1.0.0): SE(I) = sqrt(2) SE(G) holds only under equal marginal variances and exchangeable within-block correlation; a bounded counterexample with equal marginals gives sqrt(6) (reproduced by Archaeon) | Harmonia | (a) keep the universal rule; (b) estimate G and I variability separately on a disjoint pilot and relabel required_blocks() as precision, not power | **(b)** | meaningful effect, precision and power are three quantities; the threshold is a decision, never derived from the noise |
 
+## D-20 (2026-09-10) d3.v1 ADMITTED for the live tick
+
+Operator: "Admit d3.v1 for the live tick." `DetectorConfig.d3_denominator`
+defaults to `pooled_within` (df-weighted pooled within-region variance);
+signals stamp `detector_version d3.v1`. Basis: Harmonia's finding that the
+concatenated pool carries between-region variance and the campaign authors
+between-region means, so v0's live LOWER fires (28 of 30) were a denominator
+artifact. v0 stays selectable for side-by-side readouts; the phase boundary
+and v0's admission history are unchanged. The 2 UPPER fires remain open.

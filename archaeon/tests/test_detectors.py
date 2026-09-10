@@ -148,9 +148,9 @@ def test_d3_v1_pooled_within_denominator_is_immune_to_between_region_mean_shifts
     detection. v0 remains the default until v1 is admitted."""
     import dataclasses
     mod = DETECTOR_BY_NAME["LOCAL_VARIANCE_ANOMALY"]
-    v0 = DCFG
+    v0 = dataclasses.replace(DCFG, d3_denominator="concatenated")
     v1 = dataclasses.replace(DCFG, d3_denominator="pooled_within")
-    assert v0.d3_denominator == "concatenated"
+    assert DCFG.d3_denominator == "pooled_within"        # admitted 2026-09-10
 
     def rate(dc, gen, **kw):
         k = 0

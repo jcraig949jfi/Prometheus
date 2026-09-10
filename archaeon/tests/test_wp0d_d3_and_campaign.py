@@ -165,7 +165,7 @@ def test_signal_carries_the_frozen_estimator_parameters():
     res = d3.detect(c, D)
     assert res.signals, "the planted anomaly must fire"
     s = res.signals[0]
-    assert s.detector_version == "d3.v0"
+    assert s.detector_version == "d3.v1"       # v0 until D-20 (2026-09-10) admitted the pooled-within denominator
     for k in ("d3_high_ratio", "d3_low_ratio", "d3_min_n_region",
               "d3_min_n_neighborhood", "d3_neighbors_k"):
         assert k in s.thresholds

@@ -222,7 +222,10 @@ class DetectorConfig:
     # between-region mean differences push every ratio DOWN (28 of 30 live
     # fires were LOWER). The df-weighted POOLED WITHIN-region variance is
     # immune. v0 stays the default until d3.v1 is admitted (admission is human).
-    d3_denominator: str = "concatenated"      # concatenated (d3.v0) | pooled_within (d3.v1)
+    # ADMITTED by the operator 2026-09-10 ("Admit d3.v1 for the live tick"):
+    # pooled_within is the live default from the next tick; v0 remains
+    # selectable for side-by-side readouts.
+    d3_denominator: str = "pooled_within"     # concatenated (d3.v0) | pooled_within (d3.v1)
 
     # ---- D4 PLAYER_ORDER_REVERSAL ---------------------------------------
     # Same two-part requirement as D2, for the same reason: the v0 build fired
