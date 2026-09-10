@@ -36,10 +36,14 @@ reads `indexed_artifacts` (C7) — that is exactly the class of field at risk.
 **This is a TWO-PART dependency and neither half can start alone.** A0 (the
 engine declares response models) must land before HARM-35 (the contract records
 them and the gate checks them) is even possible — she cannot derive response
-shapes from a spec that has none. Her `roles/Harmonia/BACKLOG_H0H5.md` names A0
-and this commit as HARM-35's blocker; it had previously read "none", which
-implied she could begin. Both entries now point at each other so neither can
-drift back into looking like one seat's item.
+shapes from a spec that has none. The other half is **HARM-35** in
+`roles/Harmonia/BACKLOG_H0H5.md`, cross-linked at **`42ca5030e`**; it had
+previously recorded its blocker as "none", which implied she could begin.
+
+Both entries now carry the other's SHA, so neither can drift back into looking
+like one seat's item — and both name *two* commits rather than one, because a
+pointer to where an item was FILED lands before the cross-link that makes it
+findable. A0 filed `b24246097`, cross-linked `d618c0d22`.
 
 Numbers measured independently on both sides and agreeing exactly: 67 GET/POST
 route-methods, response codes `{'200': 67, '422': 66}`, **0 of 67** 200s
