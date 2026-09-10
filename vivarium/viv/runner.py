@@ -222,6 +222,17 @@ class ExecutionFailure(RuntimeError):
         super().__init__(message)
 
 
+def _raise_if_exhausted(exc, resource, amount, act):
+    """Turn the engine's 409 into the DISTINCT budget status, or return."""
+    detail = exc.detail if isinstance(exc.detail, dict) else {}
+    if exc.status == 409:
+        raise _preflight.BudgetExhausted(
+            "the execution world's %s allowance refused %s bytes BEFORE the "
+            "fetch: %s" % (resource, amount, detail.get("message")),
+            detail={"resource": resource, "amount": amount, "act": act,
+                    "engine": detail}) from exc
+
+
 def _enforcement_of(event) -> object:
     """The class the ENGINE stamped on the entry, read back rather than sent.
 
@@ -257,6 +268,11 @@ class SfeRunner:
         self.client_id_is_engine_issued = client_id is not None
         self.limits = limits or _artifacts.ALPHA
         self.log = log
+        #: None = not yet asked. Set from the ENGINE'S OWN ANSWER on the first
+        #: reservation, never inferred from a version string -- a deployment
+        #: can change under a running worker and the worker would not know.
+        self._reservations_supported = None
+        self._allowance_mechanism = None
         self.c = EngineClient(base_url, token, cafile=cafile,
                               insecure=insecure, timeout=timeout)
         if not token:
@@ -490,19 +506,51 @@ class SfeRunner:
             if act is not None:
                 idem = "viv:%s:%s:%s" % (attempt_id or "no-attempt",
                                          _res.STAGE_RETRIEVAL, act["digest"])
+
+            def _debit_instead(reason):
+                """The schema-7 path: consume, which is all the engine has.
+
+                A DEBIT IS NOT A RESERVATION and the receipt says which one
+                happened. Both stop the fetch when the allowance is gone --
+                that is what makes the limit enforceable either way -- but a
+                reservation is HELD against a named act and settles once,
+                while a debit is simply spent. Reporting a debit as though it
+                were a reservation would make an engine upgrade look like no
+                change at all.
+                """
+                self._allowance_mechanism = "debit (%s)" % reason
+                c.consume_budget(wid, resource, amount)
+                return None
+
+            if self._reservations_supported is False:
+                try:
+                    return _debit_instead("engine has no reservation endpoint")
+                except EngineError as exc:
+                    _raise_if_exhausted(exc, resource, amount, act)
+                    raise
             try:
-                return c.reserve_budget(
+                r = c.reserve_budget(
                     wid, resource, amount, stage=_res.STAGE_RETRIEVAL,
                     attempt_id=attempt_id, idem_key=idem)
+                self._reservations_supported = True
+                self._allowance_mechanism = "reservation"
+                return r
             except EngineError as exc:
-                detail = exc.detail if isinstance(exc.detail, dict) else {}
-                if exc.status == 409:
-                    raise _preflight.BudgetExhausted(
-                        "the execution world's %s allowance refused %s bytes "
-                        "BEFORE the fetch: %s"
-                        % (resource, amount, detail.get("message")),
-                        detail={"resource": resource, "amount": amount,
-                                "act": act, "engine": detail}) from exc
+                if exc.status in (404, 405):
+                    # Schema 7. Detected once, from the engine's own answer,
+                    # and remembered -- not guessed from a version number,
+                    # which a deployment can change under a running worker.
+                    self._reservations_supported = False
+                    self.log("[viv] this engine has no reservation endpoint "
+                             "(HTTP %s); falling back to consume_budget and "
+                             "recording the allowance as a DEBIT" % exc.status)
+                    try:
+                        return _debit_instead(
+                            "engine returned HTTP %s for reserve" % exc.status)
+                    except EngineError as exc2:
+                        _raise_if_exhausted(exc2, resource, amount, act)
+                        raise
+                _raise_if_exhausted(exc, resource, amount, act)
                 raise
 
         resolver = _preflight.SfeResolver(
@@ -518,7 +566,17 @@ class SfeRunner:
         # measured figure is what makes that an OBSERVATION rather than an
         # assumption baked into the ledger.
         settled = []
-        for entry in receipt["closure"]:
+        if self._reservations_supported is False:
+            # Nothing to settle and nothing to pretend. An engine with no
+            # reservations has no cost events either, so an empty list here
+            # would read as "no cost" rather than "no ledger".
+            receipt["cost_events"] = None
+            receipt["cost_events_unavailable"] = (
+                "this engine exposes no reservation or cost-event endpoint "
+                "(schema 7); the allowance was debited and the executor's own "
+                "resource vector is the only record of the spend")
+        for entry in (receipt["closure"]
+                      if self._reservations_supported is not False else ()):
             reservation = entry.get("reservation") or {}
             rid = reservation.get("reservation_id")
             if rid is None:
@@ -549,8 +607,10 @@ class SfeRunner:
                                 "settle_error": str(exc)[:300]})
                 self.log("[viv] cost event NOT settled for %s: %s"
                          % (entry["digest"][:19], exc))
-        receipt["cost_events"] = settled
+        if self._reservations_supported is not False:
+            receipt["cost_events"] = settled
         receipt["attempt_id"] = attempt_id
+        receipt["allowance_mechanism"] = self._allowance_mechanism
 
         meter.count("artifact_bytes", receipt["bytes_loaded"])
         meter.count("artifact_fetches", receipt["engine_fetches"])

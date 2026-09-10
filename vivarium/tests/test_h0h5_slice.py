@@ -984,3 +984,82 @@ def test_a_refused_attempt_releases_the_allowance_it_reserved(
     assert "reservations_released" in receipt
     for r in receipt["reservations_released"]:
         assert r["released"] is True, r
+
+
+def test_an_engine_without_reservations_debits_and_says_so(conn, schema,
+                                                           engine, producer):
+    """THE PRODUCTION ENGINE IS SCHEMA 7 and has no reservation endpoint.
+
+    Found on 2026-09-10 by publishing the phase-2 packs and reading the live
+    version back: reserve_budget 404s there, consume_budget works. Without
+    this fallback every artifact-bearing row would have failed on the
+    production consumer -- the fetch would never have been paid for, so it
+    would never have happened.
+
+    The fallback is detected from the ENGINE'S OWN ANSWER, not from a version
+    number, because a deployment can change under a running worker. And a
+    DEBIT IS NOT A RESERVATION: both stop the fetch when the allowance is
+    gone, which is what makes the limit enforceable either way, but only one
+    is held against a named act and settles once. The receipt says which
+    happened, so an engine upgrade does not look like no change at all.
+    """
+    from sfclient import EngineError
+
+    _obj, raw, slot = input_set(ITEMS)
+    aid = _publish(engine, producer, raw)
+    runner = _runner(engine)
+
+    class _NoReservations:
+        """The schema-7 engine's answer, and nothing else changed."""
+
+        def __init__(self, inner):
+            self._inner = inner
+            self.consumed = []
+
+        def __getattr__(self, name):
+            return getattr(self._inner, name)
+
+        def reserve_budget(self, *a, **k):
+            raise EngineError(404, "Not Found")
+
+        def consume_budget(self, wid, resource, amount):
+            self.consumed.append((resource, amount))
+            return self._inner.consume_budget(wid, resource, amount)
+
+    original = runner._hydrate                      # noqa: SLF001
+    spy = {}
+
+    def with_old_engine(c, spec, slots, locators, wid, meter, **kw):
+        spy["client"] = _NoReservations(c)
+        return original(spy["client"], spec, slots, locators, wid, meter, **kw)
+
+    runner._hydrate = with_old_engine               # noqa: SLF001
+    eid = _enqueue(conn, schema, probe_spec(slot), {slot["digest"]: {
+        "source_world": producer, "source_artifact": aid}})
+    v = Vivarium(worker_id="viv-h0h5", schema=schema, runner=runner,
+                 pew_client=None, log=lambda *a: None)
+    report = v.tick(conn)
+    conn.commit()
+
+    assert report.outcome == EXECUTED, report.detail
+    assert spy["client"].consumed == [("artifact_bytes", len(raw))], (
+        "the allowance was not paid on the only path this engine has")
+
+    receipt = _q.get(conn, eid, schema=schema)["result_summary"]["load_receipt"]
+    assert receipt["allowance_mechanism"].startswith("debit"), receipt
+    # Not an empty list: an engine with no ledger has no cost events, and an
+    # empty list would read as "no cost" rather than "no ledger".
+    assert receipt["cost_events"] is None
+    assert "schema 7" in receipt["cost_events_unavailable"]
+    # ... and the bytes were still verified and still consumed.
+    assert receipt["bytes_loaded"] == len(raw)
+
+
+def test_the_reservation_path_still_reports_itself_as_a_reservation(
+        conn, schema, engine, producer):
+    """The other half of the same distinction, on the schema-8 dev engine."""
+    report, eid, _slot, _raw, _aid = _slice(conn, schema, engine, producer)
+    assert report.outcome == EXECUTED
+    receipt = _q.get(conn, eid, schema=schema)["result_summary"]["load_receipt"]
+    assert receipt["allowance_mechanism"] == "reservation"
+    assert receipt["cost_events"] and receipt["cost_events"][0]["cost_event_id"]
