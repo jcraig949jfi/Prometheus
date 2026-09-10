@@ -153,3 +153,16 @@ def test_published_class_map_loads_and_collapses_the_exact_reference():
     direct = R.exact_reference(H.direct)
     collapsed = R.exact_reference(H.direct, equivalence=eq)
     assert collapsed["mean_reach"] <= direct["mean_reach"]
+
+
+def test_digest_join_key_travels_in_the_opaque_slot_and_reconciles_on_bytes():
+    with C.Meter() as m:
+        pass
+    ev = C.CostEvent("retrieval", "att-y", m.resources())
+    ent = C.to_engine_entries(ev, artifact_digest="sha256:abc")
+    assert all(e["refs"]["artifact_digest"] == "sha256:abc" for e in ent)
+    assert "artifact_digest" not in C.to_engine_entries(ev)[0]["refs"]
+    eng = [{"resource": "retrieved_bytes", "refs": {"artifact_digest": "sha256:abc"}, "stage": "retrieval"},
+           {"resource": "retrieved_bytes", "refs": {"artifact_digest": "sha256:zzz"}}]
+    r = C.reconcile_by_digest(ent, eng)
+    assert r == {"matched": ["sha256:abc"], "producer_only": [], "engine_only": ["sha256:zzz"], "join_key": "refs.artifact_digest"}

@@ -198,7 +198,8 @@ def _engine_method(r: Resource) -> str:
     return "counter"
 
 
-def to_engine_entries(event: CostEvent, scope: str = "attempt") -> List[Dict[str, Any]]:
+def to_engine_entries(event: CostEvent, scope: str = "attempt",
+                      artifact_digest: Optional[str] = None) -> List[Dict[str, Any]]:
     """Project a CostEvent into entries the engine's cost-event request model
     accepts: {resource, quantity, unit, method, scope, refs}. No
     `enforcement_class` key (refused twice by the engine, by design); method
@@ -217,7 +218,29 @@ def to_engine_entries(event: CostEvent, scope: str = "attempt") -> List[Dict[str
                              "producer_enforcement_class": r.enforcement_class,
                              "producer_scope": r.scope,
                              "children": list(event.children)}})
+        # Daedalus 877d478c6: `refs` is the ONE opaque slot (sealed, returned,
+        # never branched on, 4 KiB); the single key inside it that means
+        # something is artifact_digest, the join key for TRACKA-RECON-2 --
+        # the engine refuses a claim on an artifact the event did not declare.
+        if artifact_digest:
+            out[-1]["refs"]["artifact_digest"] = artifact_digest
     return out
+
+
+def reconcile_by_digest(producer_entries: List[Dict[str, Any]], engine_entries: List[Dict[str, Any]]) -> Dict[str, Any]:
+    """Join producer and engine cost entries on the artifact digest (bytes),
+    never on a stage word (TRACKA-RECON-2: Archaeon said `transfer`, the
+    executor and engine said `retrieval`)."""
+    def keyed(es):
+        out: Dict[str, List[Dict[str, Any]]] = {}
+        for e in es:
+            d = (e.get("refs") or {}).get("artifact_digest")
+            if d:
+                out.setdefault(d, []).append(e)
+        return out
+    p, g = keyed(producer_entries), keyed(engine_entries)
+    return {"matched": sorted(set(p) & set(g)), "producer_only": sorted(set(p) - set(g)),
+            "engine_only": sorted(set(g) - set(p)), "join_key": "refs.artifact_digest"}
 
 
 def from_engine_response(entries: List[Dict[str, Any]]) -> Dict[str, str]:
