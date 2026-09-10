@@ -6,7 +6,7 @@ from archaeon.producer import c3_readout as R
 
 def _row(arm, label, reps, status="completed"):
     return {"arm": arm, "label": label, "status": status, "spec_hash": "x", "sfe_experiment_id": "e",
-            "outcome": "SURVIVED", "repeats": reps}
+            "outcome": "SURVIVED", "repeats": reps, "repeat_seeds": [11, 22], "seed_root": "930001", "rule_hex": "ab" * 16}
 
 
 def _rep(acc, n_inc, digest, mis=(0, 1)):
@@ -73,3 +73,16 @@ def test_harmonia_gate_flags_a_missing_digest_as_indeterminate_and_a_target_flip
     assert v["reflect"]["verdict"] == "INDETERMINATE"
     assert v["complement"]["verdict"] == "NOT_IDENTICAL" and v["complement"]["target_flip_not_applied_signature"] == [0]
     assert any(d["field"] == "correct_count" for d in v["complement"]["diffs"])
+
+
+def test_historical_arm_is_per_sample_with_the_criterion_named_and_scope_flags():
+    twin = [dict(_rep(0.58, 42, "sha256:a"), n_cells=149, steps=320, all_zeros_fixed=True, all_ones_fixed=True),
+            dict(_rep(0.69, 31, "sha256:b"), n_cells=149, steps=320, all_zeros_fixed=True, all_ones_fixed=True)]
+    r = R.readout([_row("C3-hist", "exp", twin), _row("C3-acq", "random_000", [_rep(0.0, 100, "z")])])
+    h = r["historical_arm_for_c1e"]
+    assert [e["ic_sample"] for e in h["rows"]] == [0, 1] and all(e["rule"] == "exp" for e in h["rows"])
+    assert h["rows"][0]["ic_seed"] == 11 and h["rows"][0]["accuracy_at_T"] == 0.58 and h["rows"][0]["accuracy_stable"] == 0.58
+    assert h["per_sample_never_pooled"] and h["criterion_named_per_number"]
+    assert any("steps [320]" in f for f in h["comparison_flags"])          # C1-e was 298
+    assert "MAJ_STRUCTURAL_ZERO" in h["maj_structural_zero"]
+    assert "exp s0" in R.to_markdown(r)

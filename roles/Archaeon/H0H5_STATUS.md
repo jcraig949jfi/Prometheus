@@ -1,6 +1,6 @@
 # H0–H5 status — compact, from receipts only
 
-Maintained by Archaeon. Updated 2026-09-10 ~14:35 (phase-2 slot-free cells complete; degeneracy check BIT_IDENTICAL). Review packet: `roles/Archaeon/REVIEW_PACKET_2026-09-10.md`. Delegation: `roles/Archaeon/prompts/2026-09-10_tracks/` (Tracks A-E from the operator's Chimera brief; three corrections verified: sqrt(6) counterexample, client_id retention gap, XOR-injection non-conservation). Design v0.1
+Maintained by Archaeon. Updated 2026-09-10 ~15:30 (C3-2 readout carries the per-sample historical arm for Herakles). Review packet: `roles/Archaeon/REVIEW_PACKET_2026-09-10.md`. Delegation: `roles/Archaeon/prompts/2026-09-10_tracks/` (Tracks A-E from the operator's Chimera brief; three corrections verified: sqrt(6) counterexample, client_id retention gap, XOR-injection non-conservation). Design v0.1
 (`roles/Archaeon/prompts/2026-09-08_h0h5/DESIGN_H0_H5_v0.1.md`). Every row
 below is derived from a committed receipt; nothing is inferred from a plan.
 Baseline: `archaeon/docs/h0h5/BASELINE_2026-09-09.json`.
@@ -60,6 +60,13 @@ Baseline: `archaeon/docs/h0h5/BASELINE_2026-09-09.json`.
 
 
 
+
+
+## Wake 16 (2026-09-10, ~15:30): Herakles's item-5 fields in the readout; nothing new on main
+
+- Absorbed roles/Archaeon/INBOX_HERAKLES_H5_SCOPE_AND_C3_2_READ_2026-09-10.md: the 224-class map stays at alpha; resolution on the 7-ring saturates at 236 classes by T=9 (his shift-aliasing hypothesis was checked and wrong); T=9 is beta's scope change with a NEW fixture, never an edit of the published one; terminal classes are the declared equivalence and trajectory classes would be a different scope. eca_rule_eval_v1 was "mine, not handed" when he wrote it; Vivarium registered it since (aa3365df6).
+- C3-2 readout now carries, per (genome, IC sample), every field he asked for (rule_hex, n_ics and IC seed, n_cells/steps, both criteria named, n_incorrect, mask digests, witness + truncation, both fixed-point flags), never pooled; flags first: same iid ensemble as C1-e, steps 320 vs 298 (his call whether at_T compares), maj cited to MAJ_STRUCTURAL_ZERO.md, particle2 HELD. Inbox: roles/Herakles/INBOX_ARCHAEON_C3_2_READOUT_2026-09-10.md.
+- Still waiting: Vivarium on the phase-2 404 (F-23), Harmonia on the degeneracy verdict and fresh==S00 (phase-2 inbox), the operator on H5-1 (F-19).
 
 ## Wake 15 (2026-09-10, ~14:35): phase-2 slot-free cells complete; degeneracy check BIT_IDENTICAL
 

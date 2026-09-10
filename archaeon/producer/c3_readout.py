@@ -42,14 +42,16 @@ def fetch(conn, candidate_set=SETS) -> List[Dict[str, Any]]:
     sets = [candidate_set] if isinstance(candidate_set, str) else list(candidate_set)
     cur = conn.cursor()
     cur.execute("SELECT candidate_set_id, arm_id, source_evidence->>'label', status, spec_hash, sfe_experiment_id, "
-                "result_summary->'result'->'repeats', result_summary->>'outcome' "
+                "result_summary->'result'->'repeats', result_summary->>'outcome', result_summary->'repeat'->'seeds', "
+                "experiment_spec->'world'->>'seed_root', experiment_spec->'work'->'payload'->>'rule_hex' "
                 "FROM viv.research_experiment_queue WHERE candidate_set_id = ANY(%s) ORDER BY candidate_set_id, arm_id, source_evidence->>'label'",
                 (sets,))
     rows, by_label = [], {}
-    for cs, arm, label, status, spec_hash, exp, reps, outcome in cur.fetchall():
+    for cs, arm, label, status, spec_hash, exp, reps, outcome, seeds, seed_root, rule_hex in cur.fetchall():
         results = [r.get("result", r) for r in (reps or [])] if status == "completed" else []
         row = {"set": cs, "arm": arm, "label": label, "status": status, "spec_hash": spec_hash,
-               "sfe_experiment_id": exp, "outcome": outcome, "repeats": results}
+               "sfe_experiment_id": exp, "outcome": outcome, "repeats": results,
+               "repeat_seeds": seeds, "seed_root": seed_root, "rule_hex": rule_hex}
         k = (arm, label)
         if k in by_label:
             prev = by_label[k]
@@ -127,6 +129,44 @@ def icc1(groups: List[List[float]]) -> Dict[str, Any]:
             "grand_mean": grand}
 
 
+C1E_SCOPE = {"n_cells": 149, "steps": 298, "ic_ensemble": "unbiased iid Bernoulli(1/2)", "criterion": "at_T"}
+
+
+def historical_arm_for_c1e(rows: List[Dict[str, Any]]) -> Dict[str, Any]:
+    """Per (genome, IC sample), the fields Herakles asked for so the C3-2
+    historical arm can be compared with C1-e like-for-like: criterion NAMED
+    per number, never pooled across samples, mask digest and witness
+    carried, both uniform-fixed-point flags, and the scope differences
+    flagged up front."""
+    out, flags = [], []
+    for r in rows:
+        if r["arm"] != "C3-hist" or r["status"] != "completed":
+            continue
+        for i, x in enumerate(r["repeats"]):
+            out.append({"rule": r["label"], "rule_hex": r["rule_hex"], "ic_sample": i,
+                        "ic_seed": (r["repeat_seeds"] or [None] * (i + 1))[i] if r["repeat_seeds"] else None,
+                        "seed_root": r["seed_root"], "n_ics": x.get("n_ic_total"),
+                        "ic_ensemble": "unbiased iid Bernoulli(1/2) (ic_density_set=[null])",
+                        "n_cells": x.get("n_cells"), "steps": x.get("steps"),
+                        "accuracy_at_T": x.get("accuracy_at_T"), "n_incorrect_at_T": x.get("n_incorrect_at_T"),
+                        "mask_digest_at_T": x.get("mask_digest_at_T"),
+                        "accuracy_stable": x.get("accuracy_stable"), "n_incorrect_stable": x.get("n_incorrect_stable"),
+                        "mask_digest_stable": x.get("mask_digest_stable"),
+                        "criteria_agree": x.get("criteria_agree"),
+                        "witness": x.get("misclassified_ic"), "witness_truncated": x.get("witness_truncated"),
+                        "all_zeros_fixed": x.get("all_zeros_fixed"), "all_ones_fixed": x.get("all_ones_fixed")})
+    if out:
+        steps = {e["steps"] for e in out}; cells = {e["n_cells"] for e in out}
+        if steps != {C1E_SCOPE["steps"]}:
+            flags.append("steps {} here vs {} in C1-e: at_T is the state AT T, so the two T differ; compare only if Herakles accepts T=320 as at_T for these genomes".format(sorted(steps), C1E_SCOPE["steps"]))
+        if cells != {C1E_SCOPE["n_cells"]}:
+            flags.append("n_cells {} vs C1-e {}".format(sorted(cells), C1E_SCOPE["n_cells"]))
+    return {"c1e_scope": C1E_SCOPE, "rows": out, "per_sample_never_pooled": True,
+            "criterion_named_per_number": True, "comparison_flags": flags,
+            "maj_structural_zero": "cite herakles/evca/MAJ_STRUCTURAL_ZERO.md",
+            "particle2": "HELD (usable as an organism, not as a reproduction claim)"}
+
+
 def readout(rows: List[Dict[str, Any]], d3: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
     done = [r for r in rows if r["status"] == "completed"]
     by_arm: Dict[str, int] = {}
@@ -161,6 +201,7 @@ def readout(rows: List[Dict[str, Any]], d3: Optional[Dict[str, Any]] = None) -> 
             "table": table, "ic_sample_means": sample_means,
             "icc1_rules_all": icc1(groups_all), "icc1_rules_excluding_structural_zeros": icc1(groups_nonzero),
             "null_identity": null_identity(rows),
+            "historical_arm_for_c1e": historical_arm_for_c1e(rows),
             "structural_zeros": {"acq_completed": sum(1 for t in table if t["arm"] == "C3-acq"),
                                  "acq_zero_on_every_sample": sum(1 for t in table if t["arm"] == "C3-acq" and t["mean"] == 0.0),
                                  "hist_zero": [t["label"] for t in table if t["arm"] == "C3-hist" and t["mean"] == 0.0],
@@ -207,8 +248,19 @@ def to_markdown(r: Dict[str, Any]) -> str:
     L += ["", "IC-sample column means (all non-null completed rows): {}".format([None if m is None else round(m, 4) for m in r["ic_sample_means"]]),
           "", "## ICC(1), rule as group, four IC samples as measures", "",
           "- all rules: {}".format(json.dumps({k: (round(v, 4) if isinstance(v, float) else v) for k, v in r["icc1_rules_all"].items()})),
-          "- excluding structural zeros (rules with 0.0 on every sample under `stable`): {}".format(json.dumps({k: (round(v, 4) if isinstance(v, float) else v) for k, v in r["icc1_rules_excluding_structural_zeros"].items()})),
-          "", "## Structural zeros", "", "- {}".format(json.dumps(r["structural_zeros"])),
+          "- excluding structural zeros (rules with 0.0 on every sample under `stable`): {}".format(json.dumps({k: (round(v, 4) if isinstance(v, float) else v) for k, v in r["icc1_rules_excluding_structural_zeros"].items()}))]
+    h = r["historical_arm_for_c1e"]
+    L += ["", "## Historical arm, per (genome, IC sample), for Herakles's C1-e comparison", "",
+          "C1-e scope: {}. Comparison flags: {}. maj: {}. particle2: {}.".format(
+              json.dumps(h["c1e_scope"]), h["comparison_flags"] or "none", h["maj_structural_zero"], h["particle2"]), ""]
+    for e in h["rows"]:
+        L.append("- {} s{} (hex {}..., n_ics {}, {}x{}): at_T {} ({} incorrect, {}); stable {} ({} incorrect, {}); agree {}; fixed z/o {}/{}; witness{} {}".format(
+            e["rule"], e["ic_sample"], (e["rule_hex"] or "")[:8], e["n_ics"], e["n_cells"], e["steps"],
+            e["accuracy_at_T"], e["n_incorrect_at_T"], (e["mask_digest_at_T"] or "")[:18],
+            e["accuracy_stable"], e["n_incorrect_stable"], (e["mask_digest_stable"] or "")[:18],
+            e["criteria_agree"], e["all_zeros_fixed"], e["all_ones_fixed"],
+            " (TRUNCATED)" if e["witness_truncated"] else "", (e["witness"] or [])[:12]))
+    L += ["", "## Structural zeros", "", "- {}".format(json.dumps(r["structural_zeros"])),
           "", "## D3 over C3", "", "- {}".format(json.dumps(r["d3_over_c3"])), ""]
     return "\n".join(L)
 
