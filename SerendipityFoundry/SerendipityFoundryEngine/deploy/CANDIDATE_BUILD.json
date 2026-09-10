@@ -1,8 +1,8 @@
 {
   "_what_this_is": "A CANDIDATE build, for review. Nothing has been deployed and no service was restarted. Applying it means copying these files into the deployment tree and restarting, after which deploy/verify_deploy.py should be re-pinned and re-run.",
-  "candidate_commit": "e1dfd26ed5451b2d2d28c41d9a0b4571866baf80",
+  "candidate_commit": "877d478c6a0fa8e231984f5e70180c53aa302184",
   "candidate_branch": "daedalus/schema8-deploy",
-  "engine_source_hash": "sha256:e4033252b45264eacfef73fd0af80fb9f2f6554f4406376af3258c76bac21da2",
+  "engine_source_hash": "sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e",
   "schema_version": 8,
   "deployed_engine_source_hash": "sha256:084f951f866cc50aec73c6403528abc234fd514742b25ffd1aff5515a271feff",
   "deployed_schema_version": 7,
@@ -10,14 +10,14 @@
   "live_schema_version": 7,
   "identities": {
     "git_commit": {
-      "value": "e1dfd26ed5451b2d2d28c41d9a0b4571866baf80",
+      "value": "877d478c6a0fa8e231984f5e70180c53aa302184",
       "branch": "daedalus/schema8-deploy",
-      "build_files_commit": "07b5b05a7e913763d30512fb9548d45a0ea07b1b",
+      "build_files_commit": "877d478c6a0fa8e231984f5e70180c53aa302184",
       "names": "a TREE in history",
       "authority": "best-effort. It is the tree this candidate was cut from; it is NOT proof that the tree reproduces the build, and /v2/version's source_commit has named a commit that could not. HEAD in particular moves for reasons unrelated to this build, which is why build_files_commit is recorded beside it."
     },
     "engine_source_hash": {
-      "value": "sha256:e4033252b45264eacfef73fd0af80fb9f2f6554f4406376af3258c76bac21da2",
+      "value": "sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e",
       "names": "the RUNTIME BUILD",
       "authority": "AUTHORITATIVE. sha256 over sorted sfe/*.py, each contributing name + NUL + LF-normalized bytes + NUL, computed at import by sfe/release.py. LF normalization is why a checkout's line-ending convention cannot change build identity."
     },
@@ -28,7 +28,7 @@
     },
     "engine_instance_id": {
       "live_value": "eng_8a37a5d305969034d488c43e",
-      "development_value": "eng_9a82827a50b16b69033fce64",
+      "development_value": "eng_7927865777ccef60724f423e",
       "names": "the LEDGER ITSELF",
       "authority": "authoritative for the DATABASE. Minted once per database and stored in meta; it travels with the substrate, not the path or the host. A code deploy does NOT change it, and a changed value after a deploy means the service was pointed at a different ledger."
     },
@@ -58,7 +58,7 @@
     "pinned_engine_source_hash": "sha256:2f42e87f28f32065e8aa1c7cf4e0777c523e474ea4d1aa2ad4aa9a626143fe68",
     "pinned_schema_version": 6,
     "pinned_engine_instance_id": "eng_8a37a5d305969034d488c43e",
-    "candidate_engine_source_hash": "sha256:e4033252b45264eacfef73fd0af80fb9f2f6554f4406376af3258c76bac21da2",
+    "candidate_engine_source_hash": "sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e",
     "candidate_schema_version": 8,
     "live_engine_source_hash": "sha256:084f951f866cc50aec73c6403528abc234fd514742b25ffd1aff5515a271feff",
     "live_schema_version": 7,
@@ -72,6 +72,11 @@
       "file": "SerendipityFoundry/SerendipityFoundryEngine/sfe/api.py",
       "deployed": "00edc4f35ade04f1",
       "candidate": "7ba1594e077715b3"
+    },
+    {
+      "file": "SerendipityFoundry/SerendipityFoundryEngine/sfe/executors.py",
+      "deployed": "0209d07796a59b84",
+      "candidate": "9f58efd7562a437c"
     },
     {
       "file": "SerendipityFoundry/SerendipityFoundryEngine/sfe/ids.py",
@@ -123,8 +128,8 @@
       "bytes_lf": 9971
     },
     "SerendipityFoundry/SerendipityFoundryEngine/sfe/executors.py": {
-      "sha256_lf": "0209d07796a59b84e865fd6e2da23bf9ae8c13e291ac359c4eec2b63b09a5c66",
-      "bytes_lf": 8512
+      "sha256_lf": "9f58efd7562a437cdc1e3776d8ad21902dc7b68142ae3c9a6beb7204afec8bd5",
+      "bytes_lf": 22008
     },
     "SerendipityFoundry/SerendipityFoundryEngine/sfe/ids.py": {
       "sha256_lf": "eea82aa6b13a3732728f7531cbc52fa92dfc1a03637a0a2804f06c0cf3a7e08c",

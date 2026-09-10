@@ -56,7 +56,7 @@ project has already had.
 | identity | value | names |
 |---|---|---|
 | `engine_source_hash` **before** | `sha256:084f951f866cc50aec73c6403528abc234fd514742b25ffd1aff5515a271feff` | the running BUILD — authoritative |
-| `engine_source_hash` **after** | `sha256:e4033252b45264eacfef73fd0af80fb9f2f6554f4406376af3258c76bac21da2` | the candidate BUILD |
+| `engine_source_hash` **after** | `sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e` | the candidate BUILD |
 | `schema_version` | **7 → 8** | the LEDGER'S SHAPE |
 | `engine_instance_id` **before** | `eng_8a37a5d305969034d488c43e` | the LEDGER |
 | `engine_instance_id` **after** | `eng_8a37a5d305969034d488c43e` — **must be identical** | the LEDGER |
@@ -145,7 +145,7 @@ python deploy\verify_deploy.py
 ```
 
 Expect `schema_version: 8`, `engine_source_hash:
-sha256:e4033252b45264eacfef73fd0af80fb9f2f6554f4406376af3258c76bac21da2`, and
+sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e`, and
 `engine_instance_id: eng_8a37a5d305969034d488c43e` **unchanged**.
 
 ---
