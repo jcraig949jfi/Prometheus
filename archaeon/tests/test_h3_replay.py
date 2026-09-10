@@ -106,3 +106,28 @@ def test_future_queries_are_sealed_and_scored_by_direct_reuse():
         assert v["assigned"] == 5 and 0 <= v["solved"] <= 5
     # top_k retains the best scores, so it cannot solve fewer threshold queries than uniform on this rule
     assert res["top_k"]["solved"] >= res["uniform"]["solved"]
+
+
+def test_stream_refuses_a_changing_assay_and_a_later_parent_and_records_duplicates():
+    s = _stream(20)
+    bad = list(s); bad[5] = H.Candidate(5, "sha256:c00005", "evaluated", "assay:OTHER", 0.1, (0.1, 0.1), 60, "r5")
+    with pytest.raises(ValueError, match="assay_ref changes"):
+        H.stream_manifest(bad)
+    bad2 = list(s); bad2[3] = H.Candidate(3, "sha256:c00003", "evaluated", "assay:fixture.v0", 0.1, (0.1, 0.1), 60, "r3", parent_ids=(7,))
+    with pytest.raises(ValueError, match="does not appear earlier"):
+        H.stream_manifest(bad2)
+    dup = list(s); dup[4] = H.Candidate(4, "sha256:c00002", "evaluated", "assay:fixture.v0", 0.1, (0.1, 0.1), 60, "r4")
+    m = H.stream_manifest(dup)
+    assert m["duplicate_digests"] == {"sha256:c00002": [2, 4]}
+
+
+def test_three_bounds_are_reported_and_a_run_where_none_bound_says_so():
+    s = _stream(30)
+    loose = H.replay_all(s, {"items": 1000, "bytes": 10**9}, EDGES, reserve=4, seed=1, attempt_id="a")
+    tight = H.replay_all(s, {"items": 4, "bytes": 500}, EDGES, reserve=1, seed=1, attempt_id="a")
+    for name in H.POLICIES:
+        b = loose["policies"][name]["bounds"]
+        assert set(b) == {"count_cap", "byte_cap", "grid_cells", "count_bound", "byte_bound", "none_bound"}
+    assert loose["policies"]["top_k"]["bounds"]["none_bound"] is True
+    assert loose["policies"]["behavioral"]["bounds"]["grid_cells"] == 16
+    assert tight["policies"]["top_k"]["bounds"]["none_bound"] is False

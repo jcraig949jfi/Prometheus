@@ -98,6 +98,16 @@ def _submodules(budget: Budget, dest: pathlib.Path, fetch: bool) -> dict:
            "moving_branch_pins": [d for d in declared if d.get("branch")],
            "ssh_urls": [d for d in declared if str(d.get("url", "")).startswith("git@")],
            "deviations": []}
+    if not declared:
+        # An EMPTY .gitmodules is not an incomplete submodule set. stitch's core ships a
+        # zero-byte one, and reporting that as INCOMPLETE would raise an obstruction where
+        # there is nothing to obstruct.
+        out.update({"status": "NONE_DECLARED", "pins": [], "n_at_pin": 0,
+                    "n_not_initialized": 0, "n_off_pin": 0, "fetched": True,
+                    "all_at_recorded_commit": True,
+                    "note": f"{gm.name} exists ({gm.stat().st_size} bytes) but declares no "
+                            f"submodules"})
+        return out
     if not fetch:
         out["status"] = "DECLARED_NOT_FETCHED"
         return out

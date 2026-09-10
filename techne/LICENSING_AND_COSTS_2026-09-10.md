@@ -36,52 +36,59 @@ there is no obligation beyond keeping the notice.
 
 ## 2. Needs an action, costs nothing
 
-### stitch_core 0.1.29 — a packaging omission, not a missing licence. **I had this narrower than the truth yesterday.**
+### stitch — two artifacts, two licences, and I got this wrong twice before getting it right
 
-Yesterday I recorded it as `UNRESOLVED_NO_LICENSE_IN_ANY_DISTRIBUTED_ARTIFACT` on the grounds
-that the wheel and sdist carry nothing and that a GitHub API classifier must never be used as
-evidence. The rule was right; my application of it was incomplete. I checked the API
-classifier and stopped, and never read the repository's own licence *document*.
+Corrected by the operator, 2026-09-10. Recording the whole sequence because both of my
+errors were the same shape — attaching evidence to the wrong object — and the second was
+worse than the first.
 
-There is one, at the pinned revision `350804b7b358`:
+| artifact | licence | where it comes from | cost |
+|---|---|---|---|
+| Rust core, crate `stitch_core` | **MIT**, © 2021 Matthew Bowers | `mlb2251/stitch` @ `0ef5ec7f1709` — `LICENSE` present, `Cargo.toml` declares `license = "MIT"` | **$0**, commercial use included, subject to its terms |
+| Python package `stitch_core` 0.1.29 | **UNRESOLVED for the distributed package** | `mlb2251/stitch_bindings` @ tag `v0.1.29` — no `LICENSE` file, no `license` in `Cargo.toml` or `pyproject.toml`, nothing in the wheel or sdist | **no paid licence exists to buy** |
 
-```
-MIT License
-Copyright (c) 2021 Matthew Bowers
-```
+**Error 1 (09-09).** Recorded "no licence anywhere" having checked only the GitHub API
+classifier. The rule — never infer from a classifier — was right; I stopped one step short of
+the evidence that would have settled it.
 
-The root `Cargo.toml` also declares `license = "MIT"`. So the grant exists and is named. A
-licence document in the source tree is not a classifier — a classifier is GitHub's heuristic
-guess, this is the instrument that grants the rights. The status is now
-`ARTIFACT_CARRIES_NO_NOTICE_BUT_SOURCE_GRANT_EXISTS`, and `license_audit` reads it as a third,
-separately-graded evidence source.
+**Error 2 (09-10).** Over-corrected. Read the `LICENSE` from `mlb2251/stitch` and attached it
+to the Python wheel, then framed the remaining gap as "provenance". Both halves were wrong:
 
-**Where to get it:** nowhere — it is already granted, free, by that file.
+- **Wrong repository.** The wheel is built from `mlb2251/stitch_bindings`, a separate project.
+  A grant covering the Rust core does not extend to a separate bindings package.
+- **Wrong revision.** The bindings pin the core at `0ef5ec7`, not at main's head `350804b7`
+  where I read it. The two files are byte-identical, which is luck rather than method.
+- **And the provenance I called unverifiable is verifiable.** I reported "no upstream tag
+  matches 0.1.29" after searching `mlb2251/stitch`, which publishes one tag.
+  `mlb2251/stitch_bindings` publishes **21**, including `v0.1.29` exactly, with its
+  `Cargo.toml` declaring `version = "0.1.29"`. The tag was never missing; I was looking in the
+  wrong repository.
 
-**Cost:** $0.
+**So D-17's two clauses separate cleanly, and it is the opposite of what I said yesterday.**
+The *source revision* clause is now satisfiable — `stitch_bindings@v0.1.29` →
+`8ba2c1c041ab`, and the core it pins → `0ef5ec7f1709`. The *licence* clause is the one that
+is genuinely open, for the bindings layer only. D-17's stricter reading stands.
 
-**What is actually wrong,** and it matters because MIT has exactly one condition: *"The above
-copyright notice and this permission notice shall be included in all copies or substantial
-portions of the Software."* The wheel we installed contains no such notice. So redistributing
-that wheel **as shipped** would fail the grant's own condition; redistributing it **with the
-notice attached** satisfies it. That is a packaging bug upstream, and our side of it is a
-two-line fix already done: the audit stores the repository notice beside the copy.
+**Where to get it:** ask. `mlb2251/stitch_bindings` has no licence file; maintainer Matthew
+Bowers, `mlbowers@mit.edu` (from the core's `Cargo.toml`). **Cost: $0** — there is no paid
+licence for this and no purchase to make. The work is obtaining permission in writing.
 
-**The residual gap is the one that keeps D-17 open**, and it is not the licence. `mlb2251/stitch`
-publishes exactly one tag (`v0.1.0`) and none corresponds to `stitch_core` 0.1.29, so the
-revision carrying that MIT file is **not provably the revision that built the wheel**. The
-grant is attached by an inference about provenance rather than by the artifact itself. That is
-precisely why D-17 asks for a pinned *source revision* as well as a licence — and on the
-current evidence the source revision, not the licence, is the harder half.
+**The route around it, on the operator's recommendation.** The core is explicitly MIT and
+exposes a *documented* JSON interface — a JSON array of program strings in, `out/out.json`
+out — which the core's own README names as the path for consumers "using stitch as a
+subroutine (if they arent using the Rust/Python bindings for it)". So the same H0/H2 capability
+is reachable without the unlicensed layer.
 
-**Suggested action, operator's call:**
-1. Open an issue on `mlb2251/stitch` asking that `LICENSE` be included in the sdist and wheel
-   and that `license` metadata be set in the Python packaging config. Zero issues currently
-   mention licensing, so we would be first. Maintainer: Matthew Bowers, `mlbowers@mit.edu`,
-   per `Cargo.toml`.
-2. Ask the same issue which commit built 0.1.29, or for a tag. That closes the provenance half.
-3. Until both land, D-17's stricter reading is the right posture and I am not asking to relax
-   it — the change here narrows *why* it is blocked, not *whether*.
+Acquired and checked today: source at `0ef5ec7f1709`, MIT grant present in the copy, the
+`compress` binary present, and the in-tree `nuts-bolts.json` verified **content-identical**
+(same 250 programs, same order) to the input my Python reproduction used — the 251-byte
+difference is formatting. `ROUTE_VIABLE_BUILD_BLOCKED`, 5 of 6 checks pass.
+
+**The one thing in the way is a compiler.** `cargo`, `rustc` and `rustup` are all absent — the
+same measured gap that blocks DreamCoder. `cc` and `link` are present via MinGW, so the gnu
+target is likely the cheaper path. Installing a Rust toolchain is free, reversible
+(`rustup self uninstall`), and a host change, so it is the operator's call rather than mine. I
+have not estimated the disk footprint as a figure because I have not measured it.
 
 ### DreamCoder (`ellisk42/ec`) — licensing genuinely unresolved
 
@@ -168,6 +175,15 @@ One low-priority roadmap gap (ODE classifier). Maplesoft's store did not return 
 fetch; the pricing page routes to the web store for single-user and to a quote form for
 multi-user. <https://www.maplesoft.com/pricing/>.
 
+### POET — Apache-2.0, $0, and cost was never the reason it is unfetched
+
+Operator, 2026-09-10: POET at the packet's pinned revision is **Apache-2.0**, free including
+commercial use subject to its terms. Recorded in the manifest.
+
+This settles the cost question and changes nothing about acquisition. `acquire` refuses the
+entry because it has **no named consumer** — H4's adaptive protocol does not exist yet — and
+that gate is about purpose, not price. POET stays unfetched.
+
 ### Gurobi — not in the arsenal, listed because it is the obvious MIP alternative
 
 We use `highspy` (MIT, free) for MIP. Gurobi is free for academics — a full-year renewable
@@ -180,7 +196,9 @@ not worth opening.
 
 ## What I would actually spend
 
-**Nothing, today.** Every tool the H0–H5 program runs on is permissively licensed and free,
+**Nothing, today.** Every licence question in this programme resolves to $0. Two of them —
+the stitch bindings and DreamCoder — resolve to $0 *and an unanswered email*, which is a
+different kind of blocker from a price. Every tool the H0–H5 program runs on is permissively licensed and free,
 and the one blocker in the way of an export is a $0 packaging fix plus a provenance question.
 
 If a specific experiment later hits a wall, the order I would rank the spends:

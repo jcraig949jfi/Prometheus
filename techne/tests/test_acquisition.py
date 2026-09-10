@@ -232,3 +232,72 @@ def test_live_interpreter_versions_are_recorded_as_unqualified():
         assert info["qualified"] is False, (
             f"{name} in the live interpreter must never be marked qualified: pip retains no "
             f"digest for it, so there is no hash evidence for what is installed")
+
+
+# ---------------------------------------------------------------- packet reconciliation
+# The reconciler has never seen the operator's real files, so what is tested is the part that
+# must hold whatever their schema is: the operator's pin wins on disagreement, a proposal above
+# measured host capacity does NOT get adopted, and nothing is amended as a side effect.
+def _synthetic_plan(agree_sha: str) -> dict:
+    return {
+        "_WARNING": "SYNTHETIC TEST FIXTURE, not the operator's packet",
+        "tools": [
+            {"name": "z3", "official_repository": "https://github.com/Z3Prover/z3",
+             "observed_source_head": agree_sha},
+            {"name": "pyribs", "official_repository": "https://github.com/icaros-usc/pyribs",
+             "observed_source_head": "0" * 40},
+            {"name": "egg", "official_repository": "https://github.com/egraphs-good/egg",
+             "observed_source_head": "1" * 40},
+        ],
+        "resource_profiles": {
+            "isolated_heavy_build": {"max_wall_seconds": 7200, "max_memory_gib": 4096,
+                                     "max_cpu_cores": 9999},
+        },
+    }
+
+
+def test_reconciler_agrees_disagrees_and_finds_both_one_sided_cases():
+    from techne.scripts import reconcile_packet as R
+    man = manifest_io.load()
+    z3 = manifest_io.entry(man, "z3")["upstream_revision"]["commit"]
+    out = R.reconcile_sources(_synthetic_plan(z3), man)
+    by = {r["repository"]: r["verdict"] for r in out["rows"]}
+    assert by["github.com/z3prover/z3"] == "AGREE"
+    assert by["github.com/icaros-usc/pyribs"] == "DISAGREE_OPERATOR_PIN_WINS"
+    assert by["github.com/egraphs-good/egg"] == "PRESENT_ONLY_IN_PACKET"
+    assert by["github.com/ellisk42/ec"] == "PRESENT_ONLY_IN_MINE"
+    assert out["n_agree"] == 1 and out["n_disagree"] == 1
+    assert "HEURISTIC" in out["heuristic_warning"]
+
+
+def test_reconciler_refuses_a_ceiling_above_measured_available_capacity():
+    from techne.scripts import reconcile_packet as R
+    rep = R.reconcile_budgets(_synthetic_plan("a" * 40))
+    flags = rep["conflicts_with_measured_host"]
+    dims = {f["dimension"] for f in flags}
+    assert dims == {"memory", "cpu"}, f"expected both dimensions flagged, got {dims}"
+    for f in flags:
+        assert f["resolution"].startswith("MEASUREMENT STANDS")
+    assert rep["host_measured"]["ram_available_bytes"]
+
+
+def test_reconciler_does_not_amend_the_manifest_or_the_budgets():
+    from techne.scripts import reconcile_packet as R
+    before = [(ACQ / n).read_bytes() for n in ("MANIFEST.json", "BUDGET_PROFILES.json")]
+    R.reconcile_sources(_synthetic_plan("b" * 40), manifest_io.load())
+    R.reconcile_budgets(_synthetic_plan("b" * 40))
+    after = [(ACQ / n).read_bytes() for n in ("MANIFEST.json", "BUDGET_PROFILES.json")]
+    assert before == after, (
+        "the reconciler must report, never amend; an amendment is its own commit with its own "
+        "reasoning, and a tool that rewrites the manifest as a side effect destroys the "
+        "deviation history it exists to preserve")
+
+
+def test_unit_is_not_guessed_for_an_undeclared_memory_number():
+    from techne.scripts import reconcile_packet as R
+    # 4096 read as GiB exceeds any plausible host; read as bytes it does not. The reconciler
+    # must name WHICH readings exceed rather than picking one.
+    rep = R.reconcile_budgets(_synthetic_plan("c" * 40))
+    mem = [f for f in rep["conflicts_with_measured_host"] if f["dimension"] == "memory"][0]
+    assert "GiB" in mem["exceeds_available_under_readings"]
+    assert "bytes" not in mem["exceeds_available_under_readings"]

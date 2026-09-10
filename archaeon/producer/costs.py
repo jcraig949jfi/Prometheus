@@ -171,3 +171,56 @@ def reconcile(producer: List[CostEvent], executor_vectors: List[Dict[str, Any]])
     x = {v.get("attempt_id") for v in executor_vectors}
     return {"matched": sorted(p & x), "producer_only": sorted(p - x),
             "executor_only": sorted(x - p), "engine_side": "absent (Daedalus C4-3)"}
+
+
+# --------------------------------------------------------------------------
+# Engine-postable projection (Daedalus TRACKA-VECTOR-1, b1deb4783)
+# --------------------------------------------------------------------------
+#: The engine's five measurement methods (sfe/runtime.py MEASUREMENT_METHODS)
+#: and four attribution scopes (ATTRIBUTION_SCOPES). The producer's richer
+#: prose ("time.perf_counter delta", "rss", ...) is PROVENANCE and goes into
+#: `refs`; the enforcement class is NEVER sent -- the engine stamps it from
+#: the LIMIT so a caller cannot declare its own spend exempt from a cap.
+ENGINE_METHODS = ("counter", "clock", "sampler", "declared", "derived")
+ENGINE_SCOPES = ("job", "attempt", "campaign", "shared")
+
+
+def _engine_method(r: Resource) -> str:
+    m = r.method.lower()
+    if r.enforcement_class == "unavailable":
+        return "declared"
+    if "sum of" in m or "derived" in m or "attributed" in m:
+        return "derived"                 # a roll-up is derived even when it is seconds
+    if "perf_counter" in m or "process_time" in m or "clock" in m or r.resource.endswith("_seconds"):
+        return "clock"
+    if "rss" in m or "sample" in m or r.resource == "peak_memory_bytes":
+        return "sampler"
+    return "counter"
+
+
+def to_engine_entries(event: CostEvent, scope: str = "attempt") -> List[Dict[str, Any]]:
+    """Project a CostEvent into entries the engine's cost-event request model
+    accepts: {resource, quantity, unit, method, scope, refs}. No
+    `enforcement_class` key (refused twice by the engine, by design); method
+    from the five-name set; scope from the four-name set; the producer's
+    original method string, its own enforcement class and its scope label
+    travel in `refs` as provenance."""
+    if scope not in ENGINE_SCOPES:
+        raise ValueError("scope must be one of {}".format(ENGINE_SCOPES))
+    out = []
+    for r in event.resources:
+        out.append({"resource": r.resource, "quantity": r.quantity, "unit": r.unit,
+                    "method": _engine_method(r), "scope": scope,
+                    "refs": {"producer_cost_event_id": event.cost_event_id,
+                             "producer_stage": event.stage,
+                             "producer_method": r.method,
+                             "producer_enforcement_class": r.enforcement_class,
+                             "producer_scope": r.scope,
+                             "children": list(event.children)}})
+    return out
+
+
+def from_engine_response(entries: List[Dict[str, Any]]) -> Dict[str, str]:
+    """The enforcement class is read BACK off the engine's response, never
+    asserted on the way in."""
+    return {e["resource"]: e.get("enforcement_class", "unavailable") for e in entries}

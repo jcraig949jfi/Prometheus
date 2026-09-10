@@ -117,3 +117,28 @@ def test_reconcile_names_the_missing_engine_side():
     r = C.reconcile(p, [{"attempt_id": "att-1"}, {"attempt_id": "att-9"}])
     assert r == {"matched": ["att-1"], "producer_only": ["att-2"], "executor_only": ["att-9"],
                  "engine_side": "absent (Daedalus C4-3)"}
+
+
+def test_engine_projection_uses_only_the_engine_vocabulary_and_never_sends_enforcement_class():
+    """Daedalus TRACKA-VECTOR-1: as emitted, the vector was refused three
+    times (extra key, unknown method, unknown scope). The projection must be
+    acceptable by construction."""
+    with C.Meter() as m:
+        pass
+    ev = C.CostEvent("generation", "att-x", m.resources(
+        [C.Resource("peak_memory_bytes", 1000, "bytes", "rss", "measured"),
+         C.Resource("items", 3, "count", "count", "measured")]))
+    entries = C.to_engine_entries(ev)
+    assert entries and all("enforcement_class" not in e for e in entries)
+    assert all(e["method"] in C.ENGINE_METHODS and e["scope"] in C.ENGINE_SCOPES for e in entries)
+    by = {e["resource"]: e for e in entries}
+    assert by["cpu_seconds"]["method"] == "clock" and by["peak_memory_bytes"]["method"] == "sampler"
+    assert by["items"]["method"] == "counter" and by["gpu_seconds"]["method"] == "declared"
+    assert by["gpu_seconds"]["quantity"] is None                       # unavailable is not zero
+    assert by["cpu_seconds"]["refs"]["producer_method"].startswith("time.process_time")
+    assert by["cpu_seconds"]["refs"]["producer_enforcement_class"] == "measured"
+    roll = C.rollup("analysis", "att-x", [ev])
+    assert all(e["method"] in ("derived", "declared") for e in C.to_engine_entries(roll))
+    with pytest.raises(ValueError):
+        C.to_engine_entries(ev, scope="producer")
+    assert C.from_engine_response([{"resource": "cpu_seconds", "enforcement_class": "measured"}]) == {"cpu_seconds": "measured"}

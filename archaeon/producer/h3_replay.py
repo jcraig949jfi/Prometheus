@@ -48,6 +48,7 @@ class Candidate:
     descriptors: Tuple[float, ...]
     byte_size: int
     replay_ref: str
+    parent_ids: Tuple[int, ...] = ()       # stream_ids that must appear EARLIER
 
     def __post_init__(self):
         if self.birth_status not in ("evaluated", "failed"):
@@ -62,12 +63,28 @@ def stream_manifest(stream: Sequence[Candidate]) -> Dict[str, Any]:
     ids = [c.stream_id for c in stream]
     if ids != list(range(len(stream))):
         raise ValueError("stream ids must be contiguous from 0; a gap is a missing candidate")
+    # Techne (STREAM_CONTRACT_V0): a fixed assay ref, else the comparison is a
+    # mixture of policy effect and instrument change; parents appear earlier,
+    # else the stream cannot be replayed forward.
+    assays = {c.assay_ref for c in stream}
+    if len(assays) > 1:
+        raise ValueError("assay_ref changes mid-stream ({}); a retention comparison needs one instrument".format(sorted(assays)))
+    for c in stream:
+        for pid in c.parent_ids:
+            if not (0 <= pid < c.stream_id):
+                raise ValueError("candidate {} names parent {} that does not appear earlier".format(c.stream_id, pid))
+    digests = {}
+    for c in stream:
+        digests.setdefault(c.candidate_digest, []).append(c.stream_id)
+    duplicate_digests = {d: ids for d, ids in digests.items() if len(ids) > 1}
     h = hashlib.sha256()
     for c in stream:
         h.update(json.dumps(asdict(c), sort_keys=True).encode())
     return {"schema": "archaeon.h3.stream.v0", "n": len(stream),
             "n_failed": sum(1 for c in stream if c.birth_status == "failed"),
             "stream_digest": "sha256:" + h.hexdigest(),
+            "assay_ref": next(iter(assays)) if assays else None,
+            "duplicate_digests": duplicate_digests,      # detected and recorded, never refused
             "descriptor_dims": len(stream[0].descriptors) if stream else 0}
 
 
@@ -234,10 +251,24 @@ def replay_all(stream: Sequence[Candidate], caps: Dict[str, int], edges, reserve
             [C.Resource("items", len(arch.items), "count", "retained", "measured"),
              C.Resource("retained_bytes", arch.bytes_used, "bytes", "sum of byte_size", "measured")]),
             source_refs=[manifest["stream_digest"]])
+        ec = _counts(arch.events)
+        grid_cells = 1
+        for es in (edges or ()):
+            grid_cells *= (len(es) + 1)
         out["policies"][name] = {"policy_id": arch.policy_id, "retained_n": len(arch.items),
                                  "bytes": arch.bytes_used, "archive_digest": arch.digest(),
                                  "events": len(arch.events),
-                                 "event_counts": _counts(arch.events),
+                                 "event_counts": ec,
+                                 # Techne's finding: the count cap and the byte cap are coupled
+                                 # through occupancy; a byte refusal early can cost the best
+                                 # candidate later through the count cap. Report all THREE
+                                 # bounds and which of them bound, never a retained set alone.
+                                 "bounds": {"count_cap": caps["items"], "byte_cap": caps["bytes"],
+                                            "grid_cells": grid_cells if name in ("behavioral", "hybrid") else None,
+                                            "count_bound": ec.get("refused_full", 0) + ec.get("evicted", 0),
+                                            "byte_bound": ec.get("refused_oversize", 0) + ec.get("refused_bytes_on_replace", 0),
+                                            "none_bound": (ec.get("refused_full", 0) + ec.get("evicted", 0)
+                                                           + ec.get("refused_oversize", 0) + ec.get("refused_bytes_on_replace", 0)) == 0},
                                  "retained_ids": [c.stream_id for c in arch.retained()]}
         out["cost_events"].append(ev.to_json())
     return out
