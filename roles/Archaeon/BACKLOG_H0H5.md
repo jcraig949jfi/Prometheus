@@ -24,3 +24,4 @@ ARCH-21 | Temporal H0 1.1 producer side: sequence packs on the temporal-program 
 ARCH-22 | Vacuous-reading register entries from Archaeon's side (C3-2: H2; H1 alpha: relevance) with Mnemosyne | EVIDENCE | program | S | none | register rows
 ARCH-23 | Retire the "structural zero" wording where Vivarium showed it was an UNMEASURABLE zero (maj 0.5919 cellwise): status and readout wording audit | C3 | alpha | S | none | status + readout diff
 ARCH-24 | Per-campaign external review packet after each COMPLETE readout (operator's standing ask) | program | program | S | none | REVIEW_PACKET_<date>.md
+ARCH-25 | Re-express the tick's fossil window in OBSERVATIONS rather than events (schema 8 interleaves reservation and cost events, shrinking the observation count per 2,000 events from 1,684 to 1,286) | ENGINE | beta | S | none | readers.recent_fossils(observations=N) + test + one tick receipt showing the count
