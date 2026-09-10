@@ -411,3 +411,103 @@ def test_uniform_fixed_points_are_reported_per_rule():
         f = evca.fixes_uniform_states(t)
         assert set(f) == {"all_zeros_fixed", "all_ones_fixed"}
         assert isinstance(f["all_zeros_fixed"], bool)
+
+
+# ---------------------------------------------------------------------------
+# The third criterion (2026-09-10). Its whole purpose is that its attainable
+# range for random tables is an INTERVAL, so these tests check the range, not
+# just that the function runs.
+# ---------------------------------------------------------------------------
+
+CM_N, CM_T, CM_NIC = 149, 298, 100
+
+
+def _cm_ics():
+    return evca.make_ics(CM_NIC, CM_N, seed=20260910)
+
+
+def test_random_tables_do_not_collapse_to_a_point():
+    """The defect this criterion exists to fix, stated as a measurement.
+
+    Under `at_T` every random table scores exactly 0.0, so the attainable
+    range is the single point {0}. Under cell match the twenty tables spread
+    around 0.5 and can be ranked.
+    """
+    ics = _cm_ics()
+    means = [evca.cellwise_majority_match(evca.random_table(1000 + i), ics,
+                                          CM_T)["mean_cell_match"]
+             for i in range(20)]
+    assert len(set(means)) > 1, "the range is still a point"
+    assert 0.45 < min(means) and max(means) < 0.55
+    assert abs(sum(means) / len(means) - 0.5) < 0.02
+
+
+def test_constant_rules_sit_at_the_analytic_half():
+    """Predicted BEFORE measurement: mean 0.5, dispersion 0.5, values 0 or 1."""
+    ics = _cm_ics()
+    for tab in (np.zeros(evca.TABLE_BITS, dtype=np.uint8),
+                np.ones(evca.TABLE_BITS, dtype=np.uint8)):
+        r = evca.cellwise_majority_match(tab, ics, CM_T)
+        assert abs(r["mean_cell_match"] - 0.5) < 0.06
+        assert r["sd_across_ics"] > 0.49
+        assert (r["fraction_all_cells_match"]
+                + r["fraction_no_cells_match"]) == 1.0
+
+
+def test_the_mean_alone_cannot_separate_constants_from_random():
+    """The blind spot, asserted rather than left for someone to discover."""
+    ics = _cm_ics()
+    const = evca.cellwise_majority_match(
+        np.zeros(evca.TABLE_BITS, dtype=np.uint8), ics, CM_T)
+    rand = evca.cellwise_majority_match(evca.random_table(11), ics, CM_T)
+    assert abs(const["mean_cell_match"] - rand["mean_cell_match"]) < 0.06
+    # Dispersion tells them apart. NOTE the two dispersions are different
+    # quantities and an earlier version of this test confused them:
+    #   sd_across_ics   IC-to-IC spread within ONE table  (const 0.50, rand 0.10)
+    #   table-to-table  spread of the MEAN over many tables (rand about 0.005)
+    # The threshold below is on the first. The second is what makes the
+    # attainable RANGE for random tables narrow, and it is checked separately
+    # in test_random_tables_do_not_collapse_to_a_point.
+    assert const["sd_across_ics"] > 0.45
+    assert rand["sd_across_ics"] < 0.20
+    assert const["sd_across_ics"] > 4 * rand["sd_across_ics"]
+
+
+def test_maj_is_separated_from_random_where_at_T_cannot_separate_it():
+    """The live fact that motivated the criterion, closed.
+
+    maj scores 0.0 under at_T, exactly like a random table. Under cell match
+    it sits well above the random band, and its per-IC values are strictly
+    interior because it never reaches a uniform configuration.
+    """
+    ics = _cm_ics()
+    m = evca.cellwise_majority_match(evca.decode_table(G.rule_hex("maj")),
+                                     ics, CM_T)
+    rand = [evca.cellwise_majority_match(evca.random_table(2000 + i), ics,
+                                         CM_T)["mean_cell_match"]
+            for i in range(10)]
+    assert m["mean_cell_match"] > max(rand) + 0.03
+    assert m["fraction_all_cells_match"] == 0.0
+    assert m["fraction_no_cells_match"] == 0.0
+    # and at_T really does give it zero, so the two criteria disagree by design
+    assert evca.classify(evca.decode_table(G.rule_hex("maj")), ics,
+                         CM_T)["accuracy"] == 0.0
+
+
+def test_identity_mean_equals_at_T_for_rules_that_always_reach_uniform():
+    """The only case where the new number may be compared with a published P."""
+    ics = _cm_ics()
+    for name in ("exp", "par", "GKL"):
+        t = evca.decode_table(G.rule_hex(name))
+        cm = evca.cellwise_majority_match(t, ics, CM_T)
+        at_t = evca.classify(t, ics, CM_T)["accuracy"]
+        if (cm["fraction_all_cells_match"]
+                + cm["fraction_no_cells_match"]) == 1.0:
+            assert abs(cm["mean_cell_match"] - at_t) < 1e-12, name
+
+
+def test_random_table_is_seeded_and_replayable():
+    assert (evca.random_table(5) == evca.random_table(5)).all()
+    assert not (evca.random_table(5) == evca.random_table(6)).all()
+    with pytest.raises(evca.EvcaError):
+        evca.random_table("five")
