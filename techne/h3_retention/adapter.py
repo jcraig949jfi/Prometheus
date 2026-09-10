@@ -41,6 +41,7 @@ DISPOSITIONS = (
     "REJECTED_BY_ARCHIVE",      # did not beat the cell threshold (includes exact ties)
     "CAP_REFUSED_COUNT",        # would have occupied a new cell past max_retained
     "CAP_REFUSED_BYTES",        # its byte delta would have crossed max_bytes
+    "SKIPPED_NO_SCORE",         # birth_status failed: no objective, so nothing to rank
 )
 
 
@@ -191,6 +192,18 @@ def replay(stream: Stream, caps: Caps, *, dims: Iterable[int], granularity: str 
 
     def consider(row: Row) -> Disposition:
         nonlocal retained_bytes
+        # A candidate with no objective cannot be ranked, so it cannot enter an
+        # objective-ordered archive. It is LOGGED with its result_ref rather than dropped:
+        # a failed run is evidence about the producer, and a stream that quietly loses its
+        # failures reports a success rate it never measured.
+        if row.objective is None:
+            counts["SKIPPED_NO_SCORE"] += 1
+            return Disposition(
+                row.seq, row.candidate_id, row.candidate_digest, "SKIPPED_NO_SCORE", -1,
+                float("nan"), row.payload_bytes, 0, None, row.result_ref, row.birth_status,
+                row.parent_ids,
+                reason="birth_status reports no completed evaluation, so there is no objective "
+                       "to rank; charged nothing against either cap")
         idx = cell_of(row)
         occupied = idx in incumbent
         displaced_id, displaced_bytes = incumbent.get(idx, (None, 0))

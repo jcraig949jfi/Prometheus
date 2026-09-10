@@ -223,3 +223,86 @@ def test_determinism_same_stream_same_retained_ids():
     b = A.replay(st, A.Caps(4, 4_000), dims=DIMS, verify_ties=False)
     assert a.retained_ids == b.retained_ids
     assert [d.disposition for d in a.log] == [d.disposition for d in b.log]
+
+
+# ---------------------------------------------------------------- the Archaeon seam
+def _arch_record(sid, score=1.0, parents=(), status="evaluated", assay="a@v1"):
+    import hashlib
+    return {"stream_id": sid,
+            "candidate_digest": "sha256:" + hashlib.sha256(str(sid).encode()).hexdigest(),
+            "birth_status": status, "assay_ref": assay, "score": score,
+            "descriptors": [float(sid % 8), float((sid * 3) % 8)],
+            "byte_size": 100 + sid, "replay_ref": f"sfe:w0/obs{sid}@{sid}",
+            "parent_ids": list(parents)}
+
+
+EDGES = [[2.0, 4.0, 6.0], [2.0, 4.0, 6.0]]
+
+
+def test_seam_derives_lineage_kind_from_parent_count():
+    from techne.h3_retention import archaeon_seam as SEAM
+    recs = [_arch_record(0), _arch_record(1, parents=(0,)), _arch_record(2, parents=(0, 1))]
+    st, seam = SEAM.from_candidates(recs, edges=EDGES, stream_id="t")
+    assert seam["lineage_kind_derived_from_parent_ids"] == {
+        "SEEDED": 1, "MUTATED": 1, "RECOMBINED": 1}
+    assert [r.birth_status for r in st.rows] == ["SEEDED", "MUTATED", "RECOMBINED"]
+
+
+def test_seam_structures_the_assay_string_and_keeps_the_parameter_tail():
+    from techne.h3_retention import archaeon_seam as SEAM
+    a = SEAM.structured_assay("ca_density_v0@v3:seed_root=930001:n_ic=100:steps=320")
+    assert a["assay_id"] == "ca_density_v0"
+    # the parameter tail identifies the instrument; dropping it would let two different
+    # measurement configurations share an assay identity
+    assert a["assay_version"] == "v3:seed_root=930001:n_ic=100:steps=320"
+    assert a["version_includes_parameter_tail"]
+    assert a["digest"].startswith("sha256:")
+
+
+def test_seam_refuses_a_stream_whose_assay_changes():
+    from techne.h3_retention import archaeon_seam as SEAM
+    recs = [_arch_record(0, assay="a@v1"), _arch_record(1, assay="a@v2")]
+    with pytest.raises(SEAM.SeamError, match="assay_ref changes"):
+        SEAM.from_candidates(recs, edges=EDGES, stream_id="t")
+
+
+def test_seam_refuses_a_failed_candidate_that_carries_a_score():
+    from techne.h3_retention import archaeon_seam as SEAM
+    with pytest.raises(SEAM.SeamError, match="failed candidate"):
+        SEAM.from_candidates([_arch_record(0, score=0.5, status="failed")],
+                             edges=EDGES, stream_id="t")
+
+
+def test_a_failed_candidate_is_logged_not_inserted_and_charges_nothing():
+    from techne.h3_retention import archaeon_seam as SEAM
+    recs = [_arch_record(0), _arch_record(1, score=None, status="failed"), _arch_record(2)]
+    st, _ = SEAM.from_candidates(recs, edges=EDGES, stream_id="t")
+    res = A.replay(st, A.Caps(16, 100_000), dims=[4, 4], verify_ties=False)
+    d = next(x for x in res.log if x.seq == 1)
+    assert d.disposition == "SKIPPED_NO_SCORE"
+    assert d.bytes_delta == 0 and d.result_ref["ref"]
+    assert "cand-00001" not in res.retained_ids
+    assert res.counts["SKIPPED_NO_SCORE"] == 1
+
+
+def test_seam_mode_names_its_weakenings_rather_than_hiding_them():
+    from techne.h3_retention import archaeon_seam as SEAM
+    st, seam = SEAM.from_candidates([_arch_record(0)], edges=EDGES, stream_id="t")
+    ids = {w["id"] for w in seam["WEAKENED_AT_THE_SEAM"]}
+    assert ids == {"W1", "W2"}
+    assert st.validation["seam_mode"] is True
+    assert st.validation["digests_carried_not_recomputed"] == 1
+    assert st.validation["result_refs_without_a_content_digest"] == 1
+
+
+def test_a_digestless_result_ref_is_refused_outside_seam_mode():
+    rows = [{"seq": 0, "candidate_id": "c0", "candidate_digest": S.digest({"a": 1}),
+             "payload": {"a": 1}, "birth": {"status": "SEEDED", "parent_ids": []},
+             "assay_ref": {"assay_id": "a"}, "measures": [0.5, 0.5], "objective": 1.0,
+             "result_ref": {"kind": "k", "ref": "r", "digest": None, "bytes": 1},
+             "payload_bytes": 1}]
+    header = {"schema": S.SCHEMA, "stream_id": "t", "n_rows": 1, "measure_dim": 2,
+              "measure_ranges": [[0, 1], [0, 1]], "assay_ref": {"assay_id": "a"}}
+    with pytest.raises(S.StreamError, match="seam-mode"):
+        S.validate(header, rows)
+    S.validate(header, rows, seam_mode=True)   # allowed, and recorded

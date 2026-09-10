@@ -1,0 +1,446 @@
+{
+  "schema": "techne.acquisition.receipt/1",
+  "receipt_id": "adapter_qualification-pyribs-20260910T161435Z",
+  "stage": "ADAPTER_QUALIFICATION",
+  "does_not_establish": [
+    "INSTALLATION",
+    "FIRST_USEFUL_CHECK",
+    "PAPER_REPRODUCTION",
+    "LOCAL_SCIENTIFIC_BENEFIT"
+  ],
+  "entry_id": "pyribs",
+  "tool": "ribs",
+  "design_version": "0.1",
+  "written_utc": "2026-09-10T16:14:35+00:00",
+  "seat": "Techne",
+  "repo": {
+    "commit": "2255ba471693bb714e0ba1fdc39c13c50d9388c7",
+    "branch": "techne/track-d-2026-09-10",
+    "dirty": true
+  },
+  "runner": {
+    "python": "3.12.10",
+    "executable": "F:\\Prometheus\\vault\\techne_tools\\envs\\h0h5_tools\\Scripts\\python.exe",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "tool_cache": "F:\\Prometheus\\vault\\techne_tools",
+    "tool_cache_source": "TECHNE_TOOL_CACHE env",
+    "tool_cache_note": "host-local and gitignored; only its HASHES are tracked"
+  },
+  "commands_run": [],
+  "observations": {
+    "seam": {
+      "seam": "archaeon.h3.stream.v0 -> techne.h3.stream/0",
+      "format_doc": "archaeon/docs/h0h5/H3_STREAM_FORMAT.md",
+      "n": 150,
+      "n_failed": 3,
+      "assay_ref_structured": {
+        "assay_id": "ca_density_v0",
+        "assay_version": "v3:seed_root=930001:n_ic=100:steps=320",
+        "digest": "sha256:bb8bc9e762f9b087d373782b04f8422000eaa375b9d9970bd1850cc13d2a2f37",
+        "original": "ca_density_v0@v3:seed_root=930001:n_ic=100:steps=320",
+        "version_includes_parameter_tail": true
+      },
+      "lineage_kind_derived_from_parent_ids": {
+        "SEEDED": 150,
+        "MUTATED": 0,
+        "RECOMBINED": 0
+      },
+      "grid_dims": [
+        4,
+        4
+      ],
+      "measure_ranges": [
+        [
+          -8e-09,
+          8.000000008
+        ],
+        [
+          -8e-09,
+          8.000000008
+        ]
+      ],
+      "descriptors_outside_declared_edges": 139,
+      "objective_degeneracy": {
+        "n_scored": 147,
+        "n_distinct_scores": 28,
+        "modal_score": 0.0,
+        "modal_count": 120,
+        "modal_fraction": 0.8163,
+        "why_it_matters": "exact ties are resolved FIRST_WRITER_WINS, so a stream whose objective is mostly one value makes retention a function of ARRIVAL ORDER rather than of quality, for that mass. That is a property of the stream to report, not a parameter to tune."
+      },
+      "WEAKENED_AT_THE_SEAM": [
+        {
+          "id": "W1",
+          "property": "candidate digests",
+          "fixture": "recomputed from the payload the row carries",
+          "real_stream": "CARRIED ONLY -- the digest is over the sealed spec, which does not travel in the record, so the consumer cannot recompute it",
+          "still_holds": "duplicate detection, and tamper-detection against the stream digest",
+          "lost": "independent verification that the digest matches the candidate"
+        },
+        {
+          "id": "W2",
+          "property": "recoverable results",
+          "fixture": "resolver returns bytes; length AND sha256 both checked",
+          "real_stream": "replay_ref carries no content digest, so with a resolver the check is resolves-and-length-matches, and without one it is structural",
+          "still_holds": "every non-retained candidate keeps a resolvable reference",
+          "lost": "content verification of the resolved result"
+        }
+      ]
+    },
+    "stream_validation": {
+      "schema": "techne.h3.stream/0",
+      "seam_mode": true,
+      "digests_carried_not_recomputed": 150,
+      "result_refs_without_a_content_digest": 150,
+      "stream_id": "synthetic-c3-shaped",
+      "n_rows": 150,
+      "properties_checked": [
+        "ordered_ids",
+        "digests",
+        "birth",
+        "fixed_assay",
+        "recoverable",
+        "measures",
+        "caps"
+      ],
+      "result_refs_resolved": false,
+      "recoverability_check": "STRUCTURAL ONLY -- no resolver supplied, so the declared bytes and digest are the producer's claim, not a verified fact",
+      "unresolved_result_refs": 150,
+      "duplicate_digests_under_distinct_ids": {},
+      "n_duplicate_content_groups": 0,
+      "birth_status_counts": {
+        "SEEDED": 150,
+        "MUTATED": 0,
+        "RECOMBINED": 0,
+        "REPLAYED": 0
+      },
+      "stream_digest": "sha256:a55ed438f44f928d2904e84db28a31510d7b435ce7881ba30ad4103f9f1589da"
+    },
+    "techne_pyribs": {
+      "caps": {
+        "max_retained": 12,
+        "max_bytes": 20000,
+        "retained": 12,
+        "retained_bytes": 15336,
+        "refused_for_count": 9,
+        "refused_for_bytes": 51
+      },
+      "counts": {
+        "RETAINED_NEW_CELL": 12,
+        "RETAINED_IMPROVED_CELL": 10,
+        "REJECTED_BY_ARCHIVE": 65,
+        "CAP_REFUSED_COUNT": 9,
+        "CAP_REFUSED_BYTES": 51,
+        "SKIPPED_NO_SCORE": 3
+      },
+      "binding": "COUNT+BYTES",
+      "grid_cells": 16,
+      "retained_bytes": 15336,
+      "retained_ids": [
+        "cand-00001",
+        "cand-00005",
+        "cand-00015",
+        "cand-00028",
+        "cand-00035",
+        "cand-00080",
+        "cand-00085",
+        "cand-00100",
+        "cand-00106",
+        "cand-00115",
+        "cand-00130",
+        "cand-00140"
+      ],
+      "tie_policy": "FIRST_WRITER_WINS",
+      "tie_verified": true,
+      "emitter_guard": {
+        "live_emitter_instances": [],
+        "live_scheduler_instances": [],
+        "modules_imported": 28,
+        "gate": "INSTANCE-LEVEL (module presence is unreachable: importing ribs.archives eagerly imports the emitters and schedulers packages)",
+        "pass": true
+      },
+      "notes": []
+    },
+    "archaeon_stream_manifest": {
+      "schema": "archaeon.h3.stream.v0",
+      "n": 150,
+      "n_failed": 3,
+      "stream_digest": "sha256:0cfd0afcfbdafc73e1abbec48748daaca61354e2f0d0b86c9c5e30b58a514428",
+      "assay_ref": "ca_density_v0@v3:seed_root=930001:n_ic=100:steps=320",
+      "duplicate_digests": {},
+      "descriptor_dims": 2
+    },
+    "archaeon_policies": {
+      "top_k": {
+        "policy_id": "h3.top_k.v0",
+        "bounds": {
+          "retained_n": 12,
+          "retained_bytes": 19090,
+          "cap_items": 12,
+          "cap_bytes": 20000,
+          "grid_cells": 16,
+          "count_pressure_events": 135,
+          "byte_pressure_events": 0,
+          "at_grid_capacity": false,
+          "binding": "COUNT",
+          "none_bound_note": null,
+          "event_counts": {
+            "evicted": 35,
+            "inserted": 47,
+            "refused_full": 100,
+            "skipped_failed": 3
+          }
+        },
+        "retained_stream_ids": [
+          25,
+          30,
+          35,
+          45,
+          55,
+          60,
+          80,
+          100,
+          115,
+          130,
+          140,
+          145
+        ],
+        "archive_digest": "sha256:f61473f39acca09dbe38f5a82787ee1c469d8bd01f0c13f713f92f3213a97508",
+        "agreement_with_pyribs": {
+          "identical": false,
+          "jaccard": 0.3333,
+          "only_in_policy": [
+            25,
+            30,
+            45,
+            55,
+            60,
+            145
+          ],
+          "only_in_pyribs": [
+            1,
+            5,
+            15,
+            28,
+            85,
+            106
+          ]
+        }
+      },
+      "uniform": {
+        "policy_id": "h3.uniform.v0#20260910",
+        "bounds": {
+          "retained_n": 12,
+          "retained_bytes": 16994,
+          "cap_items": 12,
+          "cap_bytes": 20000,
+          "grid_cells": 16,
+          "count_pressure_events": 26,
+          "byte_pressure_events": 0,
+          "at_grid_capacity": false,
+          "binding": "COUNT",
+          "none_bound_note": null,
+          "event_counts": {
+            "evicted": 18,
+            "inserted": 30,
+            "refused_full": 8,
+            "reservoir_skip": 109,
+            "skipped_failed": 3
+          }
+        },
+        "retained_stream_ids": [
+          6,
+          14,
+          22,
+          26,
+          33,
+          34,
+          38,
+          44,
+          55,
+          62,
+          81,
+          110
+        ],
+        "archive_digest": "sha256:198c16c1a96ef48ecfdf85fde03d0428e5d1a3ac6cd1a3d4b122b38c690b1bff",
+        "agreement_with_pyribs": {
+          "identical": false,
+          "jaccard": 0.0,
+          "only_in_policy": [
+            6,
+            14,
+            22,
+            26,
+            33,
+            34,
+            38,
+            44,
+            55,
+            62,
+            81,
+            110
+          ],
+          "only_in_pyribs": [
+            1,
+            5,
+            15,
+            28,
+            35,
+            80,
+            85,
+            100,
+            106,
+            115,
+            130,
+            140
+          ]
+        }
+      },
+      "behavioral": {
+        "policy_id": "h3.behavioral.v0",
+        "bounds": {
+          "retained_n": 12,
+          "retained_bytes": 15336,
+          "cap_items": 12,
+          "cap_bytes": 20000,
+          "grid_cells": 16,
+          "count_pressure_events": 36,
+          "byte_pressure_events": 3,
+          "at_grid_capacity": false,
+          "binding": "COUNT+BYTES",
+          "none_bound_note": null,
+          "event_counts": {
+            "inserted": 12,
+            "refused_bytes_on_replace": 3,
+            "refused_full": 36,
+            "rejected_incumbent_wins": 86,
+            "replaced": 10,
+            "skipped_failed": 3
+          }
+        },
+        "retained_stream_ids": [
+          1,
+          5,
+          15,
+          28,
+          35,
+          80,
+          85,
+          100,
+          106,
+          115,
+          130,
+          140
+        ],
+        "archive_digest": "sha256:1521beb0e0f8ee64eff6af8b17ad6a3769f8471865219728c41735f4f0e3924e",
+        "agreement_with_pyribs": {
+          "identical": true,
+          "jaccard": 1.0,
+          "only_in_policy": [],
+          "only_in_pyribs": []
+        }
+      },
+      "hybrid": {
+        "policy_id": "h3.hybrid.v0#20260910",
+        "bounds": {
+          "retained_n": 11,
+          "retained_bytes": 15327,
+          "cap_items": 12,
+          "cap_bytes": 20000,
+          "grid_cells": 16,
+          "count_pressure_events": 73,
+          "byte_pressure_events": 1,
+          "at_grid_capacity": false,
+          "binding": "COUNT+BYTES",
+          "none_bound_note": null,
+          "event_counts": {
+            "duplicate_not_double_counted": 1,
+            "evicted": 6,
+            "inserted": 18,
+            "refused_bytes_on_replace": 1,
+            "refused_full": 67,
+            "rejected_incumbent_wins": 66,
+            "replaced": 9,
+            "reservoir_skip": 133,
+            "skipped_failed": 6
+          }
+        },
+        "retained_stream_ids": [
+          1,
+          5,
+          14,
+          15,
+          35,
+          44,
+          80,
+          85,
+          100,
+          115,
+          130
+        ],
+        "archive_digest": "sha256:134dbbdc459d48d16130207aa65f2c755a35190042a10e9d2b6993fb90cb73dc",
+        "agreement_with_pyribs": {
+          "identical": false,
+          "jaccard": 0.6429,
+          "only_in_policy": [
+            14,
+            44
+          ],
+          "only_in_pyribs": [
+            28,
+            106,
+            140
+          ]
+        }
+      }
+    },
+    "degeneracy_reading": {
+      "modal_score": 0.0,
+      "modal_fraction": 0.8163,
+      "what_the_archives_do": "Under FIRST_WRITER_WINS an exactly equal objective never displaces an incumbent. So for the modal mass, retention is decided by ARRIVAL ORDER and by which descriptor cell each candidate lands in -- not by quality, because on that mass there is no quality difference to act on. behavioral and hybrid therefore retain the FIRST candidate to reach each cell; top_k retains the earliest of the tied best; uniform is unaffected because it never reads the objective.",
+      "not_tuned": "no cap, edge or descriptor was adjusted to make this more interesting. The degeneracy is a property of the stream and is reported as one."
+    }
+  },
+  "deviations": [],
+  "unrun_or_blocked": [],
+  "status": "COMPARED",
+  "check": "h3_policy_comparison_on_one_stream",
+  "consumer": "H3 retention replay (Archaeon)",
+  "stream_source": {
+    "candidates": "C:/Users/jcrai/AppData/Local/Temp/claude/F--Prometheus/71419ff6-c905-417b-9e8a-6ffb3e2cebd4/scratchpad/h3/candidates.json",
+    "label": "SYNTHETIC C3-shaped dry run (NOT the real corpus)"
+  },
+  "budget_profile": {
+    "purpose": "run a first-useful-check or a reproduction fixture against ALREADY acquired bytes.",
+    "network": "FORBIDDEN -- enforced by the check harness, which asserts no acquisition step runs under this profile",
+    "max_wall_seconds": 600,
+    "max_download_bytes": 0,
+    "max_disk_bytes": 1073741824,
+    "max_rss_bytes": 4294967296,
+    "max_processes": 2,
+    "rationale": "Scientific execution uses already-available inputs and dependencies. A check that needs the network is an acquisition step wearing a check's name.",
+    "name": "offline_check"
+  },
+  "resource_receipt": {
+    "profile": "offline_check",
+    "network_policy": "FORBIDDEN -- enforced by the check harness, which asserts no acquisition step runs under this profile",
+    "wall_seconds": 10.578,
+    "wall_ceiling": 600,
+    "downloaded_bytes": 0,
+    "download_ceiling": 0,
+    "cache_bytes_before": 2617060042,
+    "cache_bytes_after": 0,
+    "cache_delta_bytes": -2617060042,
+    "peak_rss_bytes_os_counter": 232730624,
+    "peak_rss_bytes_sampled": 228601856,
+    "rss_method": "GetProcessMemoryInfo",
+    "rss_ceiling": 4294967296,
+    "rss_samples": 27,
+    "rss_ceiling_exceeded_during_sampling": false,
+    "rss_enforcement": "NOT ENFORCED -- no job object / cgroup cap. peak_rss_bytes_os_counter is the OS peak-working-set counter for this process and IS reliable; rss_ceiling_exceeded_during_sampling is sampled and can miss a spike. Neither stops a step.",
+    "rss_excludes_children": "This is THIS process only. pip, git and venv run as children and their RSS is NOT included.",
+    "children_spawned": 0,
+    "process_cap": 2,
+    "aborted_on": null
+  }
+}
