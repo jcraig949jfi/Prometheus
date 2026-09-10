@@ -53,7 +53,9 @@
         "note": "Provenance only; qualified artifact is the PyPI wheel."
       },
       "license_claim": "UNRESOLVED_AT_MANIFEST_TIME",
-      "license_resolution_rule": "wheel METADATA; GitHub API returns NOASSERTION for this repository"
+      "license_resolution_rule": "wheel METADATA; GitHub API returns NOASSERTION for this repository",
+      "repository_url": "https://github.com/HypothesisWorks/hypothesis",
+      "repository_url_note": "the design's section 7 table names DOCUMENTATION as the official source for this entry; the source tree lives here, and a licence document can only be read from a source tree"
     },
     {
       "id": "pyribs",
@@ -76,7 +78,9 @@
         "note": "Provenance only; qualified artifact is the PyPI wheel. Already pinned at this version in techne/requirements-donors.txt for the Gen-0 donor set."
       },
       "license_claim": "UNRESOLVED_AT_MANIFEST_TIME",
-      "license_resolution_rule": "wheel METADATA (GitHub API reports MIT; that is a classifier, not the distributed notice)"
+      "license_resolution_rule": "wheel METADATA (GitHub API reports MIT; that is a classifier, not the distributed notice)",
+      "repository_url": "https://github.com/icaros-usc/pyribs",
+      "repository_url_note": "the design's section 7 table names DOCUMENTATION as the official source for this entry; the source tree lives here, and a licence document can only be read from a source tree"
     },
     {
       "id": "stitch",
@@ -112,7 +116,9 @@
           "expected_sha256": "4e8ea30925b96736cb290f9f704167c4ca13e1a7da87eeaad2d5d0d0e29deb8d",
           "expected_sha256_recorded_by": "first acquisition 2026-09-09 (receipt installation-stitch-20260909T214734Z); git blob id computed from the received bytes matched the upstream contents-API blob sha 85f142ef8c53 independently"
         }
-      ]
+      ],
+      "repository_url": "https://github.com/mlb2251/stitch",
+      "repository_url_note": "the design's section 7 table names DOCUMENTATION as the official source for this entry; the source tree lives here, and a licence document can only be read from a source tree"
     },
     {
       "id": "dreamcoder",
@@ -197,7 +203,9 @@
       },
       "license_claim": "UNRESOLVED_AT_MANIFEST_TIME",
       "license_resolution_rule": "wheel METADATA",
-      "pin_rationale": "matches the version already present in the live interpreter, so a test that passes in the isolated env and fails in the live one is a difference in the LIBRARY under test rather than in the runner"
+      "pin_rationale": "matches the version already present in the live interpreter, so a test that passes in the isolated env and fails in the live one is a difference in the LIBRARY under test rather than in the runner",
+      "repository_url": "https://github.com/pytest-dev/pytest",
+      "repository_url_note": "the design's section 7 table names DOCUMENTATION as the official source for this entry; the source tree lives here, and a licence document can only be read from a source tree"
     }
   ]
 }

@@ -1,6 +1,6 @@
 {
   "schema": "techne.acquisition.license_evidence/1",
-  "generated_utc": "2026-09-10T07:28:48+00:00",
+  "generated_utc": "2026-09-10T07:34:50+00:00",
   "rule": "licenses read from DISTRIBUTED artifacts only (wheel METADATA, wheel notice files, sdist notice files, sdist PKG-INFO/pyproject/Cargo declarations). A repository API license classifier is NEVER used as the basis of a claim.",
   "notices_stored_under": "F:\\Prometheus\\vault\\techne_tools\\notices",
   "entries": [
@@ -50,7 +50,33 @@
       ],
       "spdx_claim": null,
       "status": "DECLARED_AS_FREE_TEXT_NO_SPDX",
-      "redistribution_note": "The WHEEL we installed ships no notice file; the sdist does. The notice has been copied into the tool cache alongside the wheel so the license travels with the copy, which is what the design requires. The wheel alone is an incomplete copy."
+      "redistribution_note": "The WHEEL we installed ships no notice file; the sdist does. The notice has been copied into the tool cache alongside the wheel so the license travels with the copy, which is what the design requires. The wheel alone is an incomplete copy.",
+      "repository_notice": {
+        "consulted": true,
+        "reason": null,
+        "source_used": "official_source",
+        "repository": "Z3Prover/z3",
+        "revision": "8e3402b215a810a4154eb183a7dfc4e853eb2f52",
+        "notice_files": [
+          {
+            "name": "LICENSE.txt",
+            "bytes": 1096,
+            "sha256": "e617cad2ab9347e3129c2b171e87909332174e17961c5c3412d0799469111337",
+            "first_line": "Z3",
+            "copyright_line": "Copyright (c) Microsoft Corporation",
+            "requires_notice_be_included_in_copies": true,
+            "stored": {
+              "stored_as": "REPOSITORY_8e3402b215a8_LICENSE.txt",
+              "bytes": 1096,
+              "sha256": "e617cad2ab9347e3129c2b171e87909332174e17961c5c3412d0799469111337",
+              "source_path_in_artifact": "REPOSITORY@8e3402b215a8/LICENSE.txt",
+              "first_line": "Z3"
+            }
+          }
+        ],
+        "found": true,
+        "evidence_grade": "LICENCE DOCUMENT AT A PINNED SOURCE REVISION. Stronger than a repository API classifier, which is a heuristic guess and is never used here. Weaker than the artifact's own metadata, because the revision is not provably the one that built the distributed artifact -- decisively so when the distribution has no matching upstream tag."
+      }
     },
     {
       "entry_id": "hypothesis",
@@ -97,7 +123,33 @@
       ],
       "spdx_claim": "MPL-2.0",
       "status": "RESOLVED_FROM_ARTIFACT_SPDX",
-      "redistribution_note": null
+      "redistribution_note": null,
+      "repository_notice": {
+        "consulted": true,
+        "reason": null,
+        "source_used": "repository_url",
+        "repository": "HypothesisWorks/hypothesis",
+        "revision": "6384deef469a88c147dab205f093b2d16d652785",
+        "notice_files": [
+          {
+            "name": "LICENSE.txt",
+            "bytes": 414,
+            "sha256": "df2ca456f6cda1226620ee99f16bafb6345241040996734d3a46e3afe414c056",
+            "first_line": "Copyright (c) 2013, David R. MacIver",
+            "copyright_line": "Copyright (c) 2013, David R. MacIver",
+            "requires_notice_be_included_in_copies": false,
+            "stored": {
+              "stored_as": "REPOSITORY_6384deef469a_LICENSE.txt",
+              "bytes": 414,
+              "sha256": "df2ca456f6cda1226620ee99f16bafb6345241040996734d3a46e3afe414c056",
+              "source_path_in_artifact": "REPOSITORY@6384deef469a/LICENSE.txt",
+              "first_line": "Copyright (c) 2013, David R. MacIver"
+            }
+          }
+        ],
+        "found": true,
+        "evidence_grade": "LICENCE DOCUMENT AT A PINNED SOURCE REVISION. Stronger than a repository API classifier, which is a heuristic guess and is never used here. Weaker than the artifact's own metadata, because the revision is not provably the one that built the distributed artifact -- decisively so when the distribution has no matching upstream tag."
+      }
     },
     {
       "entry_id": "pyribs",
@@ -148,7 +200,33 @@
       ],
       "spdx_claim": "MIT",
       "status": "RESOLVED_FROM_ARTIFACT_SPDX",
-      "redistribution_note": null
+      "redistribution_note": null,
+      "repository_notice": {
+        "consulted": true,
+        "reason": null,
+        "source_used": "repository_url",
+        "repository": "icaros-usc/pyribs",
+        "revision": "105cf16f27288c189dbf12c7bacdc40448ab1928",
+        "notice_files": [
+          {
+            "name": "LICENSE",
+            "bytes": 1069,
+            "sha256": "57c769bb2aaccf87b5bc24cf18f087443585980ee04476290da39159780b716b",
+            "first_line": "MIT License",
+            "copyright_line": "Copyright (c) 2020, ICAROS Lab",
+            "requires_notice_be_included_in_copies": true,
+            "stored": {
+              "stored_as": "REPOSITORY_105cf16f2728_LICENSE",
+              "bytes": 1069,
+              "sha256": "57c769bb2aaccf87b5bc24cf18f087443585980ee04476290da39159780b716b",
+              "source_path_in_artifact": "REPOSITORY@105cf16f2728/LICENSE",
+              "first_line": "MIT License"
+            }
+          }
+        ],
+        "found": true,
+        "evidence_grade": "LICENCE DOCUMENT AT A PINNED SOURCE REVISION. Stronger than a repository API classifier, which is a heuristic guess and is never used here. Weaker than the artifact's own metadata, because the revision is not provably the one that built the distributed artifact -- decisively so when the distribution has no matching upstream tag."
+      }
     },
     {
       "entry_id": "stitch",
@@ -175,8 +253,34 @@
       },
       "notices_kept": [],
       "spdx_claim": null,
-      "status": "UNRESOLVED_NO_LICENSE_IN_ANY_DISTRIBUTED_ARTIFACT",
-      "redistribution_note": "BLOCKER for redistributing any copy or derived artifact. The distributed wheel and sdist carry no license declaration and no notice file. Whatever a repository page or API classifier says, the artifact we hold grants nothing in writing. Internal use of the installed copy continues; exporting it, vendoring it, or shipping anything containing it does NOT, until a human records a resolution."
+      "status": "ARTIFACT_CARRIES_NO_NOTICE_BUT_SOURCE_GRANT_EXISTS",
+      "redistribution_note": "NARROWED from 'no licence anywhere'. The repository DOES carry a licence grant at the pinned revision 350804b7b358: 'MIT License', 'Copyright (c) 2021 Matthew Bowers'. What the distributed wheel and sdist omit is the NOTICE and the packaging metadata. If that grant requires the notice to travel with copies -- it does: requires_notice_be_included_in_copies=True -- then redistributing the wheel AS SHIPPED would fail the grant's own condition, while redistributing it WITH the notice attached would satisfy it. The notice has been stored beside the copy for exactly that purpose. RESIDUAL GAP, and it is the one that keeps this open: with no upstream tag matching the installed version, this revision is not provably the revision that built the wheel, so the grant is attached by inference about provenance rather than by the artifact itself. That is why D-17 asks for a pinned SOURCE REVISION as well as a licence.",
+      "repository_notice": {
+        "consulted": true,
+        "reason": null,
+        "source_used": "repository_url",
+        "repository": "mlb2251/stitch",
+        "revision": "350804b7b35807c78bd21c313785ae5152ae2985",
+        "notice_files": [
+          {
+            "name": "LICENSE",
+            "bytes": 1070,
+            "sha256": "3ee7701f5298b6899158e984e695829504023242a6f9d3ad8a93413480aa34b7",
+            "first_line": "MIT License",
+            "copyright_line": "Copyright (c) 2021 Matthew Bowers",
+            "requires_notice_be_included_in_copies": true,
+            "stored": {
+              "stored_as": "REPOSITORY_350804b7b358_LICENSE",
+              "bytes": 1070,
+              "sha256": "3ee7701f5298b6899158e984e695829504023242a6f9d3ad8a93413480aa34b7",
+              "source_path_in_artifact": "REPOSITORY@350804b7b358/LICENSE",
+              "first_line": "MIT License"
+            }
+          }
+        ],
+        "found": true,
+        "evidence_grade": "LICENCE DOCUMENT AT A PINNED SOURCE REVISION. Stronger than a repository API classifier, which is a heuristic guess and is never used here. Weaker than the artifact's own metadata, because the revision is not provably the one that built the distributed artifact -- decisively so when the distribution has no matching upstream tag."
+      }
     },
     {
       "entry_id": "pytest",
@@ -236,24 +340,29 @@
       ],
       "spdx_claim": "MIT",
       "status": "RESOLVED_FROM_ARTIFACT_SPDX",
-      "redistribution_note": null
+      "redistribution_note": null,
+      "repository_notice": {
+        "consulted": false,
+        "reason": "no GitHub source tree ('https://github.com/pytest-dev/pytest') or no pinned revision; a repository notice cannot be read at a revision that was never pinned",
+        "source_used": "repository_url"
+      }
     }
   ],
   "resource_receipt": {
     "profile": "light_probe",
     "network_policy": "ALLOWED -- this is the explicit acquisition stage",
-    "wall_seconds": 1.891,
+    "wall_seconds": 3.891,
     "wall_ceiling": 900,
-    "downloaded_bytes": 8394662,
+    "downloaded_bytes": 8472999,
     "download_ceiling": 536870912,
-    "cache_bytes_before": 941955315,
+    "cache_bytes_before": 941958874,
     "cache_bytes_after": 0,
-    "cache_delta_bytes": -941955315,
-    "peak_rss_bytes_os_counter": 44785664,
-    "peak_rss_bytes_sampled": 41943040,
+    "cache_delta_bytes": -941958874,
+    "peak_rss_bytes_os_counter": 44781568,
+    "peak_rss_bytes_sampled": 44781568,
     "rss_method": "GetProcessMemoryInfo",
     "rss_ceiling": 2147483648,
-    "rss_samples": 7,
+    "rss_samples": 15,
     "rss_ceiling_exceeded_during_sampling": false,
     "rss_enforcement": "NOT ENFORCED -- no job object / cgroup cap. peak_rss_bytes_os_counter is the OS peak-working-set counter for this process and IS reliable; rss_ceiling_exceeded_during_sampling is sampled and can miss a spike. Neither stops a step.",
     "rss_excludes_children": "This is THIS process only. pip, git and venv run as children and their RSS is NOT included.",
