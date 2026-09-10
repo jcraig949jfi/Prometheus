@@ -1,0 +1,850 @@
+{
+  "schema": "techne.acquisition.receipt/1",
+  "receipt_id": "adapter_qualification-hypothesis-20260910T222740Z",
+  "stage": "ADAPTER_QUALIFICATION",
+  "does_not_establish": [
+    "INSTALLATION",
+    "FIRST_USEFUL_CHECK",
+    "PAPER_REPRODUCTION",
+    "LOCAL_SCIENTIFIC_BENEFIT"
+  ],
+  "entry_id": "hypothesis",
+  "tool": "hypothesis",
+  "design_version": "0.1",
+  "written_utc": "2026-09-10T22:27:40+00:00",
+  "seat": "Techne",
+  "repo": {
+    "commit": "7643022c3b4612e13740954c8fba943534fdc119",
+    "branch": "techne/track-d-2026-09-10",
+    "dirty": true
+  },
+  "runner": {
+    "python": "3.12.10",
+    "executable": "F:\\Prometheus\\vault\\techne_tools\\envs\\h0h5_tools\\Scripts\\python.exe",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "tool_cache": "F:\\Prometheus\\vault\\techne_tools",
+    "tool_cache_source": "TECHNE_TOOL_CACHE env",
+    "tool_cache_note": "host-local and gitignored; only its HASHES are tracked"
+  },
+  "commands_run": [],
+  "observations": {
+    "schema": "techne.h1.hypothesis_minimiser_fixture/1",
+    "declared_contract": "a shrunk witness must still be a witness under proteus.eval.boolean.truth_table",
+    "declared_order": "fewer ones in the assignment, then lexicographic -- OURS, not Hypothesis's. Hypothesis shrinks toward its own notion of simplicity; this check measures agreement rather than assuming it.",
+    "tool": {
+      "distribution": "hypothesis",
+      "version": "6.165.10",
+      "env": "isolated venv h0h5_tools",
+      "reproducibility": "explicit @seed(20260910); derandomize is NOT used because it would disable the scoped example database"
+    },
+    "oracle": {
+      "module": "proteus.eval.boolean",
+      "function": "truth_table",
+      "interface_version": "proteus.boolean3.v0"
+    },
+    "domain": {
+      "n_inputs": 3,
+      "n_cases": 8,
+      "pair_selection": "declared by rule: (f, f+1) and (f, f+37) on a fixed stride, so the sample is not chosen after seeing which pairs shrink well"
+    },
+    "rows": [
+      {
+        "f": 0,
+        "g": 1,
+        "shrunk": [
+          1,
+          1,
+          1
+        ],
+        "still_a_witness_under_proteus": true,
+        "true_minimum": [
+          1,
+          1,
+          1
+        ],
+        "minimal_under_our_declared_order": true,
+        "n_witnesses_in_domain": 1
+      },
+      {
+        "f": 12,
+        "g": 13,
+        "shrunk": [
+          1,
+          1,
+          1
+        ],
+        "still_a_witness_under_proteus": true,
+        "true_minimum": [
+          1,
+          1,
+          1
+        ],
+        "minimal_under_our_declared_order": true,
+        "n_witnesses_in_domain": 1
+      },
+      {
+        "f": 24,
+        "g": 25,
+        "shrunk": [
+          1,
+          1,
+          1
+        ],
+        "still_a_witness_under_proteus": true,
+        "true_minimum": [
+          1,
+          1,
+          1
+        ],
+        "minimal_under_our_declared_order": true,
+        "n_witnesses_in_domain": 1
+      },
+      {
+        "f": 36,
+        "g": 37,
+        "shrunk": [
+          1,
+          1,
+          1
+        ],
+        "still_a_witness_under_proteus": true,
+        "true_minimum": [
+          1,
+          1,
+          1
+        ],
+        "minimal_under_our_declared_order": true,
+        "n_witnesses_in_domain": 1
+      },
+      {
+        "f": 48,
+        "g": 49,
+        "shrunk": [
+          1,
+          1,
+          1
+        ],
+        "still_a_witness_under_proteus": true,
+        "true_minimum": [
+          1,
+          1,
+          1
+        ],
+        "minimal_under_our_declared_order": true,
+        "n_witnesses_in_domain": 1
+      },
+      {
+        "f": 60,
+        "g": 61,
+        "shrunk": [
+          1,
+          1,
+          1
+        ],
+        "still_a_witness_under_proteus": true,
+        "true_minimum": [
+          1,
+          1,
+          1
+        ],
+        "minimal_under_our_declared_order": true,
+        "n_witnesses_in_domain": 1
+      },
+      {
+        "f": 72,
+        "g": 73,
+        "shrunk": [
+          1,
+          1,
+          1
+        ],
+        "still_a_witness_under_proteus": true,
+        "true_minimum": [
+          1,
+          1,
+          1
+        ],
+        "minimal_under_our_declared_order": true,
+        "n_witnesses_in_domain": 1
+      },
+      {
+        "f": 84,
+        "g": 85,
+        "shrunk": [
+          1,
+          1,
+          1
+        ],
+        "still_a_witness_under_proteus": true,
+        "true_minimum": [
+          1,
+          1,
+          1
+        ],
+        "minimal_under_our_declared_order": true,
+        "n_witnesses_in_domain": 1
+      },
+      {
+        "f": 96,
+        "g": 97,
+        "shrunk": [
+          1,
+          1,
+          1
+        ],
+        "still_a_witness_under_proteus": true,
+        "true_minimum": [
+          1,
+          1,
+          1
+        ],
+        "minimal_under_our_declared_order": true,
+        "n_witnesses_in_domain": 1
+      },
+      {
+        "f": 108,
+        "g": 109,
+        "shrunk": [
+          1,
+          1,
+          1
+        ],
+        "still_a_witness_under_proteus": true,
+        "true_minimum": [
+          1,
+          1,
+          1
+        ],
+        "minimal_under_our_declared_order": true,
+        "n_witnesses_in_domain": 1
+      },
+      {
+        "f": 120,
+        "g": 121,
+        "shrunk": [
+          1,
+          1,
+          1
+        ],
+        "still_a_witness_under_proteus": true,
+        "true_minimum": [
+          1,
+          1,
+          1
+        ],
+        "minimal_under_our_declared_order": true,
+        "n_witnesses_in_domain": 1
+      },
+      {
+        "f": 132,
+        "g": 133,
+        "shrunk": [
+          1,
+          1,
+          1
+        ],
+        "still_a_witness_under_proteus": true,
+        "true_minimum": [
+          1,
+          1,
+          1
+        ],
+        "minimal_under_our_declared_order": true,
+        "n_witnesses_in_domain": 1
+      },
+      {
+        "f": 144,
+        "g": 145,
+        "shrunk": [
+          1,
+          1,
+          1
+        ],
+        "still_a_witness_under_proteus": true,
+        "true_minimum": [
+          1,
+          1,
+          1
+        ],
+        "minimal_under_our_declared_order": true,
+        "n_witnesses_in_domain": 1
+      },
+      {
+        "f": 156,
+        "g": 157,
+        "shrunk": [
+          1,
+          1,
+          1
+        ],
+        "still_a_witness_under_proteus": true,
+        "true_minimum": [
+          1,
+          1,
+          1
+        ],
+        "minimal_under_our_declared_order": true,
+        "n_witnesses_in_domain": 1
+      },
+      {
+        "f": 168,
+        "g": 169,
+        "shrunk": [
+          1,
+          1,
+          1
+        ],
+        "still_a_witness_under_proteus": true,
+        "true_minimum": [
+          1,
+          1,
+          1
+        ],
+        "minimal_under_our_declared_order": true,
+        "n_witnesses_in_domain": 1
+      },
+      {
+        "f": 180,
+        "g": 181,
+        "shrunk": [
+          1,
+          1,
+          1
+        ],
+        "still_a_witness_under_proteus": true,
+        "true_minimum": [
+          1,
+          1,
+          1
+        ],
+        "minimal_under_our_declared_order": true,
+        "n_witnesses_in_domain": 1
+      },
+      {
+        "f": 192,
+        "g": 193,
+        "shrunk": [
+          1,
+          1,
+          1
+        ],
+        "still_a_witness_under_proteus": true,
+        "true_minimum": [
+          1,
+          1,
+          1
+        ],
+        "minimal_under_our_declared_order": true,
+        "n_witnesses_in_domain": 1
+      },
+      {
+        "f": 204,
+        "g": 205,
+        "shrunk": [
+          1,
+          1,
+          1
+        ],
+        "still_a_witness_under_proteus": true,
+        "true_minimum": [
+          1,
+          1,
+          1
+        ],
+        "minimal_under_our_declared_order": true,
+        "n_witnesses_in_domain": 1
+      },
+      {
+        "f": 216,
+        "g": 217,
+        "shrunk": [
+          1,
+          1,
+          1
+        ],
+        "still_a_witness_under_proteus": true,
+        "true_minimum": [
+          1,
+          1,
+          1
+        ],
+        "minimal_under_our_declared_order": true,
+        "n_witnesses_in_domain": 1
+      },
+      {
+        "f": 228,
+        "g": 229,
+        "shrunk": [
+          1,
+          1,
+          1
+        ],
+        "still_a_witness_under_proteus": true,
+        "true_minimum": [
+          1,
+          1,
+          1
+        ],
+        "minimal_under_our_declared_order": true,
+        "n_witnesses_in_domain": 1
+      },
+      {
+        "f": 240,
+        "g": 241,
+        "shrunk": [
+          1,
+          1,
+          1
+        ],
+        "still_a_witness_under_proteus": true,
+        "true_minimum": [
+          1,
+          1,
+          1
+        ],
+        "minimal_under_our_declared_order": true,
+        "n_witnesses_in_domain": 1
+      },
+      {
+        "f": 252,
+        "g": 253,
+        "shrunk": [
+          1,
+          1,
+          1
+        ],
+        "still_a_witness_under_proteus": true,
+        "true_minimum": [
+          1,
+          1,
+          1
+        ],
+        "minimal_under_our_declared_order": true,
+        "n_witnesses_in_domain": 1
+      },
+      {
+        "f": 0,
+        "g": 37,
+        "shrunk": [
+          0,
+          1,
+          0
+        ],
+        "still_a_witness_under_proteus": true,
+        "true_minimum": [
+          0,
+          1,
+          0
+        ],
+        "minimal_under_our_declared_order": true,
+        "n_witnesses_in_domain": 3
+      },
+      {
+        "f": 12,
+        "g": 49,
+        "shrunk": [
+          0,
+          1,
+          0
+        ],
+        "still_a_witness_under_proteus": true,
+        "true_minimum": [
+          0,
+          1,
+          0
+        ],
+        "minimal_under_our_declared_order": true,
+        "n_witnesses_in_domain": 5
+      },
+      {
+        "f": 24,
+        "g": 61,
+        "shrunk": [
+          0,
+          1,
+          0
+        ],
+        "still_a_witness_under_proteus": true,
+        "true_minimum": [
+          0,
+          1,
+          0
+        ],
+        "minimal_under_our_declared_order": true,
+        "n_witnesses_in_domain": 3
+      },
+      {
+        "f": 36,
+        "g": 73,
+        "shrunk": [
+          0,
+          0,
+          1
+        ],
+        "still_a_witness_under_proteus": true,
+        "true_minimum": [
+          0,
+          0,
+          1
+        ],
+        "minimal_under_our_declared_order": true,
+        "n_witnesses_in_domain": 5
+      },
+      {
+        "f": 48,
+        "g": 85,
+        "shrunk": [
+          0,
+          0,
+          1
+        ],
+        "still_a_witness_under_proteus": true,
+        "true_minimum": [
+          0,
+          0,
+          1
+        ],
+        "minimal_under_our_declared_order": true,
+        "n_witnesses_in_domain": 4
+      },
+      {
+        "f": 60,
+        "g": 97,
+        "shrunk": [
+          0,
+          0,
+          1
+        ],
+        "still_a_witness_under_proteus": true,
+        "true_minimum": [
+          0,
+          0,
+          1
+        ],
+        "minimal_under_our_declared_order": true,
+        "n_witnesses_in_domain": 5
+      },
+      {
+        "f": 72,
+        "g": 109,
+        "shrunk": [
+          0,
+          1,
+          0
+        ],
+        "still_a_witness_under_proteus": true,
+        "true_minimum": [
+          0,
+          1,
+          0
+        ],
+        "minimal_under_our_declared_order": true,
+        "n_witnesses_in_domain": 3
+      },
+      {
+        "f": 84,
+        "g": 121,
+        "shrunk": [
+          0,
+          1,
+          0
+        ],
+        "still_a_witness_under_proteus": true,
+        "true_minimum": [
+          0,
+          1,
+          0
+        ],
+        "minimal_under_our_declared_order": true,
+        "n_witnesses_in_domain": 4
+      },
+      {
+        "f": 96,
+        "g": 133,
+        "shrunk": [
+          0,
+          0,
+          0
+        ],
+        "still_a_witness_under_proteus": true,
+        "true_minimum": [
+          0,
+          0,
+          0
+        ],
+        "minimal_under_our_declared_order": true,
+        "n_witnesses_in_domain": 5
+      },
+      {
+        "f": 108,
+        "g": 145,
+        "shrunk": [
+          0,
+          0,
+          0
+        ],
+        "still_a_witness_under_proteus": true,
+        "true_minimum": [
+          0,
+          0,
+          0
+        ],
+        "minimal_under_our_declared_order": true,
+        "n_witnesses_in_domain": 7
+      },
+      {
+        "f": 120,
+        "g": 157,
+        "shrunk": [
+          0,
+          0,
+          0
+        ],
+        "still_a_witness_under_proteus": true,
+        "true_minimum": [
+          0,
+          0,
+          0
+        ],
+        "minimal_under_our_declared_order": true,
+        "n_witnesses_in_domain": 5
+      },
+      {
+        "f": 132,
+        "g": 169,
+        "shrunk": [
+          0,
+          1,
+          0
+        ],
+        "still_a_witness_under_proteus": true,
+        "true_minimum": [
+          0,
+          1,
+          0
+        ],
+        "minimal_under_our_declared_order": true,
+        "n_witnesses_in_domain": 4
+      },
+      {
+        "f": 144,
+        "g": 181,
+        "shrunk": [
+          0,
+          1,
+          0
+        ],
+        "still_a_witness_under_proteus": true,
+        "true_minimum": [
+          0,
+          1,
+          0
+        ],
+        "minimal_under_our_declared_order": true,
+        "n_witnesses_in_domain": 3
+      },
+      {
+        "f": 156,
+        "g": 193,
+        "shrunk": [
+          0,
+          0,
+          1
+        ],
+        "still_a_witness_under_proteus": true,
+        "true_minimum": [
+          0,
+          0,
+          1
+        ],
+        "minimal_under_our_declared_order": true,
+        "n_witnesses_in_domain": 5
+      },
+      {
+        "f": 168,
+        "g": 205,
+        "shrunk": [
+          0,
+          0,
+          1
+        ],
+        "still_a_witness_under_proteus": true,
+        "true_minimum": [
+          0,
+          0,
+          1
+        ],
+        "minimal_under_our_declared_order": true,
+        "n_witnesses_in_domain": 4
+      },
+      {
+        "f": 180,
+        "g": 217,
+        "shrunk": [
+          0,
+          0,
+          1
+        ],
+        "still_a_witness_under_proteus": true,
+        "true_minimum": [
+          0,
+          0,
+          1
+        ],
+        "minimal_under_our_declared_order": true,
+        "n_witnesses_in_domain": 5
+      },
+      {
+        "f": 192,
+        "g": 229,
+        "shrunk": [
+          0,
+          1,
+          0
+        ],
+        "still_a_witness_under_proteus": true,
+        "true_minimum": [
+          0,
+          1,
+          0
+        ],
+        "minimal_under_our_declared_order": true,
+        "n_witnesses_in_domain": 3
+      },
+      {
+        "f": 204,
+        "g": 241,
+        "shrunk": [
+          0,
+          1,
+          0
+        ],
+        "still_a_witness_under_proteus": true,
+        "true_minimum": [
+          0,
+          1,
+          0
+        ],
+        "minimal_under_our_declared_order": true,
+        "n_witnesses_in_domain": 5
+      },
+      {
+        "f": 216,
+        "g": 253,
+        "shrunk": [
+          0,
+          1,
+          0
+        ],
+        "still_a_witness_under_proteus": true,
+        "true_minimum": [
+          0,
+          1,
+          0
+        ],
+        "minimal_under_our_declared_order": true,
+        "n_witnesses_in_domain": 3
+      },
+      {
+        "f": 228,
+        "g": 9,
+        "shrunk": [
+          0,
+          0,
+          0
+        ],
+        "still_a_witness_under_proteus": true,
+        "true_minimum": [
+          0,
+          0,
+          0
+        ],
+        "minimal_under_our_declared_order": true,
+        "n_witnesses_in_domain": 6
+      },
+      {
+        "f": 240,
+        "g": 21,
+        "shrunk": [
+          0,
+          0,
+          0
+        ],
+        "still_a_witness_under_proteus": true,
+        "true_minimum": [
+          0,
+          0,
+          0
+        ],
+        "minimal_under_our_declared_order": true,
+        "n_witnesses_in_domain": 5
+      },
+      {
+        "f": 252,
+        "g": 33,
+        "shrunk": [
+          0,
+          0,
+          0
+        ],
+        "still_a_witness_under_proteus": true,
+        "true_minimum": [
+          0,
+          0,
+          0
+        ],
+        "minimal_under_our_declared_order": true,
+        "n_witnesses_in_domain": 6
+      }
+    ],
+    "post_condition_failures": [],
+    "shrunk_but_not_minimal_under_our_order": [],
+    "n_pairs": 44,
+    "n_minimal": 44,
+    "negative_control": {
+      "pair": [
+        0,
+        1
+      ],
+      "non_witness": [
+        0,
+        0,
+        0
+      ],
+      "checker_rejects_it": true
+    },
+    "checks": [
+      {
+        "claim": "every shrunk witness over 44 pairs is STILL A WITNESS under Proteus",
+        "pass": true
+      },
+      {
+        "claim": "a witness was found for every pair that has one",
+        "pass": true
+      },
+      {
+        "claim": "negative control: the post-condition checker rejects a non-witness",
+        "pass": true
+      },
+      {
+        "claim": "MEASURED, not assumed: whether the shrunk witness is minimal under OUR declared order",
+        "pass": true
+      }
+    ],
+    "all_passed": true,
+    "HONEST_LIMIT": "SOUND here, not USEFUL here. On 3 inputs there are 8 assignments, so exhaustive enumeration finds the true minimum exactly and more cheaply than shrinking -- this check uses that enumeration as the yardstick. The qualification establishes that Hypothesis's shrinking preserves the witness property under Proteus's evaluator. It does NOT establish that a minimiser earns its place in H1 1.0, and it cannot: that needs a domain where enumeration is infeasible.",
+    "what_this_does_NOT_establish": [
+      "that shrinking is minimal under Hypothesis's own ordering -- that is Hypothesis's business, and a different claim from ours",
+      "usefulness at H1 1.0's scale; see HONEST_LIMIT",
+      "anything about shrinking structured H1 programs rather than assignments"
+    ]
+  },
+  "deviations": [],
+  "unrun_or_blocked": [
+    "SOUND here, not USEFUL here. On 3 inputs there are 8 assignments, so exhaustive enumeration finds the true minimum exactly and more cheaply than shrinking -- this check uses that enumeration as the yardstick. The qualification establishes that Hypothesis's shrinking preserves the witness property under Proteus's evaluator. It does NOT establish that a minimiser earns its place in H1 1.0, and it cannot: that needs a domain where enumeration is infeasible."
+  ],
+  "status": "QUALIFIED_SOUND_USEFULNESS_NOT_ESTABLISHED",
+  "check": "hypothesis_shrinking_as_an_h1_witness_minimiser",
+  "consumer": "H1 witness minimisation (Proteus's Boolean substrate)",
+  "fixture": "techne/acquisition/fixtures/hypothesis_h1_minimiser.json"
+}

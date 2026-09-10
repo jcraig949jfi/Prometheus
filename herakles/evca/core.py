@@ -551,3 +551,88 @@ def random_table(seed: int) -> np.ndarray:
         raise EvcaError("seed must be an integer, got %r" % (seed,))
     rng = np.random.default_rng(int(seed))
     return rng.integers(0, 2, size=TABLE_BITS).astype(np.uint8)
+# ---------------------------------------------------------------------------
+# The SYNCHRONISATION task (2026-09-10). A second target for the collider.
+#
+# PUBLISHED CONVENTION. Density classification asks the lattice to settle into
+# the FIXED uniform configuration matching the initial majority. Synchronisation
+# asks something different and incompatible: reach a globally synchronous
+# period-2 oscillation, every cell alternating in phase, all-zeros then
+# all-ones then all-zeros. The task is studied in the same EvCA line
+# (Das, Crutchfield, Mitchell and Hanson 1995; Sipper's and later
+# Jimenez-Morales, Crutchfield and Mitchell 2001 work on synchronisation).
+# Those attributions are RECALLED, not fetched, and are leads.
+#
+# Unlike density there is no per-IC "correct answer" to compute: every initial
+# condition has the same target, a synchronous blink. So the score is the
+# fraction of initial conditions that reach it, and there is no majority and
+# no tie question.
+#
+# ANALYTIC EXPECTATIONS, stated before measurement:
+#   constant-zero rule   lattice becomes all zeros and STAYS. A fixed point is
+#                        not an oscillation, so the score is exactly 0.
+#   constant-one rule    the same, exactly 0.
+#   random table         reaching a globally synchronous blink by chance is
+#                        vanishingly unlikely; expect 0 or near it.
+#   the six genomes      these are DENSITY classifiers. They drive the lattice
+#                        to a FIXED uniform state, which is the opposite of
+#                        oscillating, so expect 0. If any scores above 0 that
+#                        is a finding about that rule, not about the task.
+# ---------------------------------------------------------------------------
+
+def synchronisation_score(table: np.ndarray, ics: np.ndarray, steps: int
+                          ) -> Dict[str, object]:
+    """Fraction of initial conditions reaching a synchronous period-2 blink.
+
+    A run SUCCEEDS if the lattice at `steps` and at `steps + 1` are each
+    uniform AND differ from each other, so the lattice is alternating in
+    phase across the whole ring.
+
+    Checking two consecutive frames is what distinguishes an oscillation from
+    a fixed point. A rule that reaches all-zeros and stays there is uniform at
+    both frames and identical across them, so it correctly scores 0.
+    """
+    t = require_table(table)
+    require_steps(steps)
+    s = np.asarray(ics).astype(np.uint8)
+    if s.ndim != 2:
+        raise EvcaError("ics must be 2-D (n_ics, n_cells), got %r" % (s.shape,))
+    n_cells = require_lattice(s.shape[1])
+    a = evolve(s, t, steps)
+    b = step(a, t)
+    ones_a, ones_b = a.sum(axis=1), b.sum(axis=1)
+    uni_a = (ones_a == 0) | (ones_a == n_cells)
+    uni_b = (ones_b == 0) | (ones_b == n_cells)
+    alternating = uni_a & uni_b & (ones_a != ones_b)
+    frozen = uni_a & uni_b & (ones_a == ones_b)
+    return {
+        "criterion": "synchronisation",
+        "score": float(alternating.mean()),
+        "fraction_frozen_uniform": float(frozen.mean()),
+        "fraction_non_uniform": float((~(uni_a & uni_b)).mean()),
+        "n_ics": int(s.shape[0]), "n_cells": n_cells, "steps": int(steps),
+        "comparable_to_published_P": False,
+        "note": ("a DIFFERENT task from density classification; a density "
+                 "classifier drives to a FIXED uniform state and is expected "
+                 "to score 0 here"),
+    }
+
+
+def blinker_rule_table() -> np.ndarray:
+    """INSTRUMENT-POSITIVE CONTROL for `synchronisation_score`.
+
+    Output = NOT centre. From a UNIFORM initial condition the whole lattice
+    alternates in phase forever, which is exactly the synchronous blink the
+    task asks for, so the detector must return 1.0 on it.
+
+    This is not a rule that SOLVES synchronisation. Solving it means reaching
+    the blink from an ARBITRARY initial condition, and this rule does not: from
+    a non-uniform start it just inverts the same non-uniform pattern. It exists
+    so that a score of 0.0 everywhere else can be read as a hard task rather
+    than a broken measurement.
+    """
+    t = np.zeros(TABLE_BITS, dtype=np.uint8)
+    for idx in range(TABLE_BITS):
+        centre = (idx >> (RADIUS)) & 1
+        t[idx] = 1 - centre
+    return t

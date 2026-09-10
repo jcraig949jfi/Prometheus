@@ -1,0 +1,105 @@
+{
+  "schema": "techne.h1.z3_parity_fixture/1",
+  "for": "Harmonia's ruling. No campaign use of z3 as an H1 oracle until that ruling.",
+  "oracle": {
+    "module": "proteus.eval.boolean",
+    "function": "truth_table",
+    "interface_version": "proteus.boolean3.v0",
+    "grammar_version": "proteus.boolean_grammar.v0",
+    "independence": "evaluates the AST in Python; no solver, no VM"
+  },
+  "solver": {
+    "distribution": "z3-solver",
+    "version": "5.0.0",
+    "wheel_sha256": "9b0aca98598353ea7eb59a51f909a399f6d0e687a1de3671b60a734cea4bb6bd",
+    "env": "isolated venv h0h5_tools"
+  },
+  "domain": {
+    "n_inputs": 3,
+    "n_cases": 8,
+    "n_functions": 256,
+    "exhaustive": true,
+    "assignment_order": "input 0 is most significant; k-th case has bit j = (k >> (n-1-j)) & 1  [Proteus, BOOLEAN3_POPULATION.json correctness_scope]"
+  },
+  "ast_construction": "sum of products over Proteus's own C/I/Not/And/Or/Xor constructors; canonical rather than minimal, because the AST only has to be Proteus's to evaluate",
+  "results": {
+    "parity_pairs_checked": 2048,
+    "parity_mismatches": [],
+    "self_pairs_unsat": 256,
+    "self_failures": [],
+    "distinct_pairs_checked": 32640,
+    "pairs_without_a_witness": [],
+    "witnesses_returned": 32640,
+    "witnesses_rejected_by_the_independent_oracle": [],
+    "unknown_timeout": {
+      "result": "unknown",
+      "reason": "timeout"
+    },
+    "unknown_rlimit": {
+      "result": "unknown",
+      "reason": "max. resource limit exceeded"
+    },
+    "negative_control": {
+      "f": 0,
+      "g": 1,
+      "distinguishing_cases": [
+        7
+      ],
+      "non_distinguishing_cases": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "validator_rejects_a_non_distinguishing_case": true
+    }
+  },
+  "timing_seconds": {
+    "ast_build_and_oracle": 0.01,
+    "parity": 0.97,
+    "pairs": 19.31
+  },
+  "checks": [
+    {
+      "claim": "every one of the 256 ASTs realises its intended table under PROTEUS's evaluator",
+      "pass": true
+    },
+    {
+      "claim": "PARITY: z3 agrees with Proteus on all 2048 (function, assignment) pairs",
+      "pass": true
+    },
+    {
+      "claim": "SAT observed: every distinct pair of functions yields a distinguishing input",
+      "pass": true
+    },
+    {
+      "claim": "UNSAT observed: a function is never distinguishable from itself",
+      "pass": true
+    },
+    {
+      "claim": "every one of the 32640 returned counterexamples is validated INDEPENDENTLY by Proteus's tables",
+      "pass": true
+    },
+    {
+      "claim": "UNKNOWN by wall-clock exhaustion is observed and named 'timeout'",
+      "pass": true
+    },
+    {
+      "claim": "UNKNOWN by deterministic rlimit is observed and named distinctly",
+      "pass": true
+    },
+    {
+      "claim": "negative control: the independent validator rejects a non-distinguishing witness",
+      "pass": true
+    }
+  ],
+  "all_passed": true,
+  "what_this_does_NOT_establish": [
+    "that z3 is a correct oracle outside 3-input Boolean. The domain is exhaustive WITHIN itself and says nothing about 4 inputs or about any other theory.",
+    "that z3 may be used in a campaign. Harmonia rules on this fixture first.",
+    "anything about z3's behaviour on hard instances: on this build every `unknown` I could elicit was a budget failure, which is a fact about what I could elicit."
+  ]
+}

@@ -1,0 +1,422 @@
+{
+  "schema": "techne.acquisition.receipt/1",
+  "receipt_id": "adapter_qualification-stitch_rust_core-20260910T222838Z",
+  "stage": "ADAPTER_QUALIFICATION",
+  "does_not_establish": [
+    "INSTALLATION",
+    "FIRST_USEFUL_CHECK",
+    "PAPER_REPRODUCTION",
+    "LOCAL_SCIENTIFIC_BENEFIT"
+  ],
+  "entry_id": "stitch_rust_core",
+  "tool": "stitch_rust_core",
+  "design_version": "0.1",
+  "written_utc": "2026-09-10T22:28:38+00:00",
+  "seat": "Techne",
+  "repo": {
+    "commit": "7643022c3b4612e13740954c8fba943534fdc119",
+    "branch": "techne/track-d-2026-09-10",
+    "dirty": true
+  },
+  "runner": {
+    "python": "3.12.10",
+    "executable": "H:\\Python312\\python.exe",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "tool_cache": "F:\\Prometheus\\vault\\techne_tools",
+    "tool_cache_source": "TECHNE_TOOL_CACHE env",
+    "tool_cache_note": "host-local and gitignored; only its HASHES are tracked"
+  },
+  "commands_run": [],
+  "observations": {
+    "route": {
+      "binary": "F:\\Prometheus\\vault\\techne_tools\\repos\\stitch_rust_core\\target\\release\\compress.exe",
+      "source_revision": "0ef5ec7f17091d22b8fa959fb5705e359d735a47",
+      "licence": "MIT",
+      "interface": "documented JSON: a JSON array of program strings in, out/out.json out",
+      "why_this_route": "the MIT core, not the Python bindings whose licence is unresolved under D-17, so the threshold is measured through a path that could actually be used"
+    },
+    "corpus": {
+      "source": "proteus.eval.boolean canonical sum-of-products for each of the 256 functions of 3 inputs, in function order",
+      "rendering": "Proteus AST -> s-expression; terminals x0..x2, c0, c1; operators not/and/or/xor",
+      "interface_version": "proteus.boolean3.v0",
+      "example": "(or (or (or (and (and (not x0) (not x1)) (not x2)) (and (and (not x0) x1) x2)) (and (and x0 (not x1)) x2)) (and (and x0 x1) (not x2)))",
+      "n_available": 256
+    },
+    "parameters": {
+      "max_arity": 3,
+      "iterations": 3,
+      "threads": 1
+    },
+    "sweep": [
+      {
+        "n_solutions": 1,
+        "ok": true,
+        "n_abstractions": 0,
+        "original_cost": 100,
+        "final_cost": 100,
+        "uses": [],
+        "bodies": []
+      },
+      {
+        "n_solutions": 2,
+        "ok": true,
+        "n_abstractions": 0,
+        "original_cost": 604,
+        "final_cost": 604,
+        "uses": [],
+        "bodies": []
+      },
+      {
+        "n_solutions": 3,
+        "ok": true,
+        "n_abstractions": 1,
+        "original_cost": 1209,
+        "final_cost": 603,
+        "uses": [
+          2
+        ],
+        "bodies": [
+          "(and (and x0 x1))"
+        ]
+      },
+      {
+        "n_solutions": 4,
+        "ok": true,
+        "n_abstractions": 3,
+        "original_cost": 2420,
+        "final_cost": 602,
+        "uses": [
+          4,
+          2,
+          2
+        ],
+        "bodies": [
+          "(and (and x0 x1))",
+          "(fn_0 (not x2))",
+          "(fn_0 x2)"
+        ]
+      },
+      {
+        "n_solutions": 5,
+        "ok": true,
+        "n_abstractions": 3,
+        "original_cost": 3025,
+        "final_cost": 1207,
+        "uses": [
+          4,
+          2,
+          2
+        ],
+        "bodies": [
+          "(and (and x0 x1))",
+          "(fn_0 (not x2))",
+          "(fn_0 x2)"
+        ]
+      },
+      {
+        "n_solutions": 6,
+        "ok": true,
+        "n_abstractions": 3,
+        "original_cost": 4236,
+        "final_cost": 1408,
+        "uses": [
+          5,
+          2,
+          3
+        ],
+        "bodies": [
+          "(and (and x0 x1))",
+          "(and (and x0 (not x1)) x2)",
+          "(fn_0 x2)"
+        ]
+      },
+      {
+        "n_solutions": 7,
+        "ok": true,
+        "n_abstractions": 3,
+        "original_cost": 5548,
+        "final_cost": 1912,
+        "uses": [
+          9,
+          3,
+          3
+        ],
+        "bodies": [
+          "(and (and x0 #0))",
+          "(fn_0 x1 (not x2))",
+          "(fn_0 (not x1) x2)"
+        ]
+      },
+      {
+        "n_solutions": 8,
+        "ok": true,
+        "n_abstractions": 3,
+        "original_cost": 7466,
+        "final_cost": 2214,
+        "uses": [
+          12,
+          3,
+          2
+        ],
+        "bodies": [
+          "(and (and x0 #0))",
+          "(or (fn_0 (not x1) x2) (fn_0 x1 #0))",
+          "(or (#0 (not x2)) (fn_0 x1 x2))"
+        ]
+      },
+      {
+        "n_solutions": 9,
+        "ok": true,
+        "n_abstractions": 3,
+        "original_cost": 8172,
+        "final_cost": 2718,
+        "uses": [
+          13,
+          3,
+          2
+        ],
+        "bodies": [
+          "(and (and x0 #0))",
+          "(or (fn_0 (not x1) x2) (fn_0 x1 #0))",
+          "(or (#0 (not x2)) (fn_0 x1 x2))"
+        ]
+      },
+      {
+        "n_solutions": 10,
+        "ok": true,
+        "n_abstractions": 3,
+        "original_cost": 9484,
+        "final_cost": 3828,
+        "uses": [
+          15,
+          4,
+          6
+        ],
+        "bodies": [
+          "(and (and x0 #0))",
+          "(or (fn_0 (not x1) #1) (fn_0 x1 #0))",
+          "(not x2)"
+        ]
+      },
+      {
+        "n_solutions": 11,
+        "ok": true,
+        "n_abstractions": 3,
+        "original_cost": 10897,
+        "final_cost": 4029,
+        "uses": [
+          5,
+          5,
+          8
+        ],
+        "bodies": [
+          "(or (and (and x0 (not x1)) #1) (and (and x0 x1) #0))",
+          "(and (and x0 x1))",
+          "(not x2)"
+        ]
+      },
+      {
+        "n_solutions": 12,
+        "ok": true,
+        "n_abstractions": 3,
+        "original_cost": 12916,
+        "final_cost": 4634,
+        "uses": [
+          6,
+          6,
+          10
+        ],
+        "bodies": [
+          "(or (and (and x0 (not x1)) #1) (and (and x0 x1) #0))",
+          "(and (and x0 x1))",
+          "(not x2)"
+        ]
+      },
+      {
+        "n_solutions": 16,
+        "ok": true,
+        "n_abstractions": 3,
+        "original_cost": 21194,
+        "final_cost": 8468,
+        "uses": [
+          10,
+          10,
+          16
+        ],
+        "bodies": [
+          "(or (and (and x0 (not x1)) #2) (and (and x0 #1) #0))",
+          "(and (and x0 x1))",
+          "(not x2)"
+        ]
+      },
+      {
+        "n_solutions": 24,
+        "ok": true,
+        "n_abstractions": 3,
+        "original_cost": 34114,
+        "final_cost": 16035,
+        "uses": [
+          44,
+          7,
+          7
+        ],
+        "bodies": [
+          "(and (and x0 #0))",
+          "(or (and (and (not x0) x1) x2) (fn_0 #1 #0))",
+          "(or (fn_0 (not x1) (not x2)) (fn_0 #1 #0))"
+        ]
+      },
+      {
+        "n_solutions": 32,
+        "ok": true,
+        "n_abstractions": 3,
+        "original_cost": 53498,
+        "final_cost": 23905,
+        "uses": [
+          49,
+          12,
+          10
+        ],
+        "bodies": [
+          "(or #2 (and (and x0 #1) #0))",
+          "(fn_0 #0 (not x1) (and (and (not x0) x1) x2))",
+          "(fn_0 #2 #1 (and (and x0 (not x1)) #0))"
+        ]
+      },
+      {
+        "n_solutions": 64,
+        "ok": true,
+        "n_abstractions": 3,
+        "original_cost": 132650,
+        "final_cost": 57708,
+        "uses": [
+          113,
+          64,
+          27
+        ],
+        "bodies": [
+          "(or #2 (and (and x0 #1) #0))",
+          "(and (and (not x0) x1))",
+          "(fn_0 x2 #1 (fn_0 (not x2) #1 #0))"
+        ]
+      },
+      {
+        "n_solutions": 128,
+        "ok": true,
+        "n_abstractions": 3,
+        "original_cost": 316810,
+        "final_cost": 150867,
+        "uses": [
+          75,
+          160,
+          123
+        ],
+        "bodies": [
+          "(or (or #2 (and (and #1 #0) (not x2))) (and (and #1 #0) x2))",
+          "(and (and (not x0) #0))",
+          "(or #2 (and (and x0 #1) #0))"
+        ]
+      },
+      {
+        "n_solutions": 256,
+        "ok": true,
+        "n_abstractions": 3,
+        "original_cost": 749770,
+        "final_cost": 360819,
+        "uses": [
+          171,
+          256,
+          251
+        ],
+        "bodies": [
+          "(or (or #2 (and (and #1 #0) (not x2))) (and (and #1 #0) x2))",
+          "(and (and (not x0) (not x1)))",
+          "(or #2 (and (and x0 #1) #0))"
+        ]
+      }
+    ],
+    "threshold": {
+      "minimum_solutions_for_a_non_empty_abstraction_set": 3,
+      "largest_N_measured_with_zero_abstractions": 2,
+      "all_N_with_zero": [
+        1,
+        2
+      ],
+      "all_N_with_some": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        16,
+        24,
+        32,
+        64,
+        128,
+        256
+      ],
+      "MEASURED_NOT_GUESSED": true,
+      "scope": "a property of (this corpus, this rendering, max_arity=3, iterations=3), never of 'solutions' in the abstract. stitch abstracts over SYNTAX, so a different rendering -- minimal forms, different operator spellings -- would move this number."
+    },
+    "checks": [
+      {
+        "claim": "the route runs end to end through the MIT core on Proteus's fixtures",
+        "pass": true
+      },
+      {
+        "claim": "the threshold is bracketed by measurement, with a zero-abstraction N below it",
+        "pass": true
+      },
+      {
+        "claim": "abstractions stay non-empty at every larger N measured",
+        "pass": true
+      }
+    ]
+  },
+  "deviations": [],
+  "unrun_or_blocked": [
+    "abstraction over REAL H1 solutions. Phase 1 produced 3, which is below the measured threshold of 3, so there is nothing to abstract yet and this says so with a number instead of a shrug.",
+    "any claim that the abstractions are USEFUL. Mechanical evaluation decides expansion-correctness; a held-out controlled experiment decides usefulness, and none has been run."
+  ],
+  "status": "ROUTE_QUALIFIED_THRESHOLD_MEASURED",
+  "check": "stitch_extraction_route_on_proteus_boolean_fixtures",
+  "consumer": "H0/H2 instrument-library construction. H1 phase 1 produced 3 solutions, so this qualifies the route on Proteus's Boolean fixtures and measures the threshold instead of waiting.",
+  "budget_profile": {
+    "purpose": "the ONE bounded core reproduction selected for stitch_core (the documented nuts-bolts fixture). Its own explicit profile, per the design.",
+    "network": "FORBIDDEN",
+    "max_wall_seconds": 1800,
+    "max_download_bytes": 0,
+    "max_disk_bytes": 2147483648,
+    "max_rss_bytes": 6442450944,
+    "max_processes": 2,
+    "rationale": "The design records that the stitch artifact 'documents substantially larger memory requirements for its ablation/hybrid studies than for core claims'. 6 GiB is under measured available RAM and is sized for ONE core claim. The ablation/hybrid studies are explicitly OUT of this profile and have no profile, which means they are not authorised to run.",
+    "name": "stitch_core_reproduction"
+  },
+  "resource_receipt": {
+    "profile": "stitch_core_reproduction",
+    "network_policy": "FORBIDDEN",
+    "wall_seconds": 1.156,
+    "wall_ceiling": 1800,
+    "downloaded_bytes": 0,
+    "download_ceiling": 0,
+    "cache_bytes_before": 2617062908,
+    "cache_bytes_after": 0,
+    "cache_delta_bytes": -2617062908,
+    "peak_rss_bytes_os_counter": 27648000,
+    "peak_rss_bytes_sampled": 27381760,
+    "rss_method": "GetProcessMemoryInfo",
+    "rss_ceiling": 6442450944,
+    "rss_samples": 4,
+    "rss_ceiling_exceeded_during_sampling": false,
+    "rss_enforcement": "NOT ENFORCED -- no job object / cgroup cap. peak_rss_bytes_os_counter is the OS peak-working-set counter for this process and IS reliable; rss_ceiling_exceeded_during_sampling is sampled and can miss a spike. Neither stops a step.",
+    "rss_excludes_children": "This is THIS process only. pip, git and venv run as children and their RSS is NOT included.",
+    "children_spawned": 18,
+    "process_cap": 2,
+    "aborted_on": null
+  }
+}

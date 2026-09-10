@@ -511,3 +511,55 @@ def test_random_table_is_seeded_and_replayable():
     assert not (evca.random_table(5) == evca.random_table(6)).all()
     with pytest.raises(evca.EvcaError):
         evca.random_table("five")
+
+
+# ---------------------------------------------------------------------------
+# The synchronisation task (2026-09-10). A SECOND target for the collider.
+# ---------------------------------------------------------------------------
+
+def test_synchronisation_instrument_control_fires():
+    """Without this, a score of 0 everywhere cannot be read.
+
+    The blinker rule from a UNIFORM start alternates in phase forever, so the
+    detector must return exactly 1.0. That separates a hard task from a broken
+    measurement.
+    """
+    uni = np.zeros((4, 149), dtype=np.uint8)
+    uni[2:] = 1
+    r = evca.synchronisation_score(evca.blinker_rule_table(), uni, 298)
+    assert r["score"] == 1.0
+    assert r["fraction_frozen_uniform"] == 0.0
+
+
+def test_the_instrument_control_does_not_SOLVE_the_task():
+    """It blinks from uniform starts only, which is why it is a control."""
+    mixed = evca.make_ics(200, 149, seed=5)
+    r = evca.synchronisation_score(evca.blinker_rule_table(), mixed, 298)
+    assert r["score"] == 0.0
+    assert r["fraction_non_uniform"] == 1.0
+
+
+def test_a_fixed_point_is_not_an_oscillation():
+    """The constants reach uniform and STAY, so they must score exactly 0."""
+    ics = evca.make_ics(100, 149, seed=20260910)
+    for tab in (np.zeros(evca.TABLE_BITS, dtype=np.uint8),
+                np.ones(evca.TABLE_BITS, dtype=np.uint8)):
+        r = evca.synchronisation_score(tab, ics, 298)
+        assert r["score"] == 0.0
+        assert r["fraction_frozen_uniform"] == 1.0
+
+
+def test_density_classifiers_score_zero_on_synchronisation():
+    """Predicted before measuring: they drive to a FIXED uniform state."""
+    ics = evca.make_ics(200, 149, seed=20260910)
+    for name in G.NAMES:
+        r = evca.synchronisation_score(evca.decode_table(G.rule_hex(name)),
+                                       ics, 298)
+        assert r["score"] == 0.0, name
+    # and the diagnostic distinguishes WHY maj is zero from why the rest are
+    maj = evca.synchronisation_score(evca.decode_table(G.rule_hex("maj")),
+                                     ics, 298)
+    gkl = evca.synchronisation_score(evca.decode_table(G.rule_hex("GKL")),
+                                     ics, 298)
+    assert maj["fraction_non_uniform"] == 1.0     # never uniform at all
+    assert gkl["fraction_frozen_uniform"] == 1.0  # uniform but frozen
