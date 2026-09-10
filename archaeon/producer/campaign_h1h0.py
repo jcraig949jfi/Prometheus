@@ -184,9 +184,16 @@ def failure_pool(source_results: Sequence[Dict[str, Any]]) -> List[Dict[str, Any
         for w in sr["result"].get("witnesses", []):
             if w.get("inputs") is None:
                 continue
-            pool.append({"inputs": list(w["inputs"]), "source_task_id": sr["task_id"],
-                         "source_tt": sr["tt"], "source_metadata": sr["licensed_metadata"],
-                         "candidate_size": w.get("candidate_size")})
+            # The live kind records a CASE: `inputs` is a list of input
+            # vectors (one per case for Boolean, so [[1,1,1]]); the offline
+            # fixture used a bare vector. Both are one assignment per vector.
+            vectors = w["inputs"]
+            if vectors and not isinstance(vectors[0], (list, tuple)):
+                vectors = [vectors]
+            for vec in vectors:
+                pool.append({"inputs": [int(b) for b in vec], "source_task_id": sr["task_id"],
+                             "source_tt": sr["tt"], "source_metadata": sr["licensed_metadata"],
+                             "candidate_size": w.get("candidate_size")})
     return pool
 
 

@@ -111,3 +111,14 @@ def test_phase1_and_phase2_validate_against_the_kind_when_registered():
     c2 = H.check(p2["rows"])
     assert c2["ok_to_issue"] is True, c2["invalid"][:3]
     assert all(v["slot"] for v in p2["artifacts"].values())
+
+
+def test_failure_pool_accepts_the_live_case_shape_and_the_bare_vector():
+    split = H.task_split()
+    t = split["source"][0]
+    live = {"task_id": t["task_id"], "tt": t["tt"], "licensed_metadata": t["licensed_metadata"],
+            "result": {"witnesses": [{"inputs": [[1, 1, 1]], "expected": [[1]], "observed": [[0]], "candidate_size": 4},
+                                     {"inputs": [0, 1, 0], "candidate_size": 2},
+                                     {"inputs": None, "reason": "no_witness_and_not_full_coverage"}]}}
+    pool = H.failure_pool([live])
+    assert [p["inputs"] for p in pool] == [[1, 1, 1], [0, 1, 0]]

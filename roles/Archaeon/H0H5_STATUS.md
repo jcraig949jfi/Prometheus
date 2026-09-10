@@ -1,6 +1,6 @@
 # H0–H5 status — compact, from receipts only
 
-Maintained by Archaeon. Updated 2026-09-10 (C3-2 and H1/H0 phase 1 ISSUED). Review packet: `roles/Archaeon/REVIEW_PACKET_2026-09-10.md`. Delegation: `roles/Archaeon/prompts/2026-09-10_tracks/` (Tracks A-E from the operator's Chimera brief; three corrections verified: sqrt(6) counterexample, client_id retention gap, XOR-injection non-conservation). Design v0.1
+Maintained by Archaeon. Updated 2026-09-10 wake 8 (C3-2 running; phase-2 packs built). Review packet: `roles/Archaeon/REVIEW_PACKET_2026-09-10.md`. Delegation: `roles/Archaeon/prompts/2026-09-10_tracks/` (Tracks A-E from the operator's Chimera brief; three corrections verified: sqrt(6) counterexample, client_id retention gap, XOR-injection non-conservation). Design v0.1
 (`roles/Archaeon/prompts/2026-09-08_h0h5/DESIGN_H0_H5_v0.1.md`). Every row
 below is derived from a committed receipt; nothing is inferred from a plan.
 Baseline: `archaeon/docs/h0h5/BASELINE_2026-09-09.json`.
@@ -54,6 +54,16 @@ Baseline: `archaeon/docs/h0h5/BASELINE_2026-09-09.json`.
 - Techne inbox to Archaeon (`f6acabefb`): pyribs GridArchive is first-writer-wins on exact ties; z3 separates timeout from rlimit exhaustion, use rlimit for cross-host repeatability; stitch_core ships NO licence in any artifact (export blocked, internal use continues).
 
 
+
+
+## Wake 8 (2026-09-10, ~08:30): C3-2 running, phase-2 packs built
+
+- **C3-2 progress**: 19 of 150 completed, 0 failed, ~1.5 min per row (4 IC samples x 100 ICs x 320 steps), so ~4 h for the corpus. First live facts, per-IC-sample accuracies: GKL [0.79 0.80 0.85 0.81], par [0.74 0.79 0.87 0.76], particle1 [0.69 0.78 0.74 0.67], particle2 [0.71 0.80 0.74 0.69], exp [0.58 0.69 0.58 0.59], maj [0 0 0 0] (structural under `stable`, see above). Baselines: all_zero/centre_00 [0.51 0.46 0.52 0.54] and all_one/centre_11 [0.49 0.54 0.48 0.46] are the density prior and are pairwise identical, as they must be (a centre-only rule with f0=f1 IS the constant rule); centre_01 and centre_10 are 0 under `stable` (they never settle). **The exact-symmetry null holds on the live consumer**: exp under reflect, complement and reflect_complement reproduces [0.58 0.69 0.58 0.59] exactly, par:reflect reproduces par exactly. The mask identity check (F-13) waits for the full 18.
+- **H1/H0 phase 2 packs built** from the 24 phase-1 rows (`archaeon/docs/h0h5/H1H0_PHASE2_PUBLISH_RECEIPT_2026-09-10.json`): 72 rows (24 H1: fresh + random_pack; 48 H0 cells), 11 artifacts (10 packs + the instrument library), relevant arm withheld for 12 targets. **Scope finding, measured, not a reason to retune**: the 35 witnesses collapse to 4 DISTINCT inputs, {100, 101, 110, 111}, all with input 0 = 1, because the ordered first witness under Proteus's declared case order lands on the same early-failing cases for the seeded enumeration. So every pack is the same SET in a policy-dependent ORDER, and on this scope H1's random-vs-relevant contrast is an order contrast over an identical set; the fresh arm's 4 probes against a pool of 4 is exactly the saturation the design predicted for eight inputs. Beta widens the task universe (more input bits or a different case ordering declared up front) only after a disjoint pilot. Both policies report shortfall 0.
+- Beta's derived library from the 3 phase-1 solutions: 0 components (no repeated typed subtree of size >= 3). The alpha uses the instrument control, labelled.
+- The live witness record is a CASE (`inputs` = list of input vectors); `failure_pool` now accepts both that and the bare-vector fixture shape (tested).
+- Publish path for the 11 artifacts is HUMAN (Archaeon has no engine scope): the receipt carries canonical bytes and slot digests; `campaign_h1h0.issue(conn, rows, locators_by_digest=...)` on the operator's word after publication.
+- One transient test failure (291 tests; 1 failed on one run, not reproduced on the next two, name not captured). Recorded, not explained.
 
 ## ISSUED 2026-09-10 on the operator's word ("Issue phase 1 and C3")
 
