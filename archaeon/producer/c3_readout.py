@@ -136,7 +136,10 @@ def readout(rows: List[Dict[str, Any]], d3: Optional[Dict[str, Any]] = None) -> 
     groups_nonzero = [g for g in groups_all if any(v > 0 for v in g)]
     return {"schema": "archaeon.c3.readout.v0", "candidate_set": CS,
             "written": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds"),
-            "complete": all(r["status"] == "completed" for r in rows),
+            # COMPLETE = nothing left to run; a failed row is a recorded outcome, not pending work
+            "complete": all(r["status"] in ("completed", "failed", "cancelled") for r in rows),
+            "n_failed": sum(1 for r in rows if r["status"] == "failed"),
+            "failed_labels": [r["label"] for r in rows if r["status"] == "failed"],
             "status_by_arm": by_arm, "n_rows": len(rows), "n_completed": len(done),
             "table": table, "ic_sample_means": sample_means,
             "icc1_rules_all": icc1(groups_all), "icc1_rules_excluding_structural_zeros": icc1(groups_nonzero),

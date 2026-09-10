@@ -1,25 +1,28 @@
 {
  "candidate_set": "cs-c3-2",
- "complete": false,
+ "complete": true,
  "d3_over_c3": {
   "next": "C3-3 under R-C3-1..5 with a criterion whose attainable range for random tables is not a point (Herakles cellwise_majority_match: random 0.4998 over [0.4939, 0.5099])",
-  "reason": "the acquisition arm is constant zero under `stable` and `at_T` (116 of 116 rules); every D3 region built from random rules has zero within-region variance and is SKIPPED, and this does not change with completion because the value is constant by construction of the criterion, not by sample size (Harmonia a1d0ed9c8). cs-c3-2 answers G1, H1 and Q2; it CANNOT answer H2, and that is a vacuous reading, never evidence against it.",
-  "status": "STRUCTURALLY_VOID_PROVISIONAL"
+  "reason": "the acquisition arm is constant zero under `stable` and `at_T` (119 of 119 rules); every D3 region built from random rules has zero within-region variance and is SKIPPED, and this does not change with completion because the value is constant by construction of the criterion, not by sample size (Harmonia a1d0ed9c8). cs-c3-2 answers G1, H1 and Q2; it CANNOT answer H2, and that is a vacuous reading, never evidence against it.",
+  "status": "STRUCTURALLY_VOID"
  },
+ "failed_labels": [
+  "random_076"
+ ],
  "ic_sample_means": [
-  0.043046875,
-  0.04578125,
-  0.04515625,
-  0.043125000000000004
+  0.04206106870229007,
+  0.044732824427480916,
+  0.04412213740458015,
+  0.04213740458015267
  ],
  "icc1_rules_all": {
   "dropped": 0,
-  "grand_mean": 0.04427734375,
-  "groups": 128,
-  "icc1": 0.9953691954609879,
+  "grand_mean": 0.04326335877862596,
+  "groups": 131,
+  "icc1": 0.9953760072817609,
   "k": 4,
-  "msb": 0.10911068989911417,
-  "msw": 0.00012675781250000003
+  "msb": 0.10676957428068114,
+  "msw": 0.00012385496183206108
  },
  "icc1_rules_excluding_structural_zeros": {
   "dropped": 0,
@@ -30,7 +33,8 @@
   "msb": 0.07312777777777776,
   "msw": 0.0018027777777777781
  },
- "n_completed": 146,
+ "n_completed": 149,
+ "n_failed": 1,
  "n_rows": 150,
  "null_identity": {
   "checked": [
@@ -376,10 +380,8 @@
  "schema": "archaeon.c3.readout.v0",
  "status_by_arm": {
   "C3-acq": {
-   "completed": 116,
-   "failed": 1,
-   "queued": 2,
-   "running": 1
+   "completed": 119,
+   "failed": 1
   },
   "C3-base": {
    "completed": 6
@@ -392,8 +394,8 @@
   }
  },
  "structural_zeros": {
-  "acq_completed": 116,
-  "acq_zero_on_every_sample": 116,
+  "acq_completed": 119,
+  "acq_zero_on_every_sample": 119,
   "base_zero": [
    "centre_01",
    "centre_10"
@@ -4001,6 +4003,99 @@
   },
   {
    "accuracy_at_T_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "accuracy_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "arm": "C3-acq",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "random_117",
+   "mean": 0.0,
+   "n_incorrect_by_sample": [
+    100,
+    100,
+    100,
+    100
+   ],
+   "outcome": "FALSIFIED",
+   "sfe_experiment_id": "exp_f598de4bce568d03db977cc3"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "accuracy_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "arm": "C3-acq",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "random_118",
+   "mean": 0.0,
+   "n_incorrect_by_sample": [
+    100,
+    100,
+    100,
+    100
+   ],
+   "outcome": "FALSIFIED",
+   "sfe_experiment_id": "exp_c19716186e349e67973d4bb4"
+  },
+  {
+   "accuracy_at_T_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "accuracy_by_sample": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "arm": "C3-acq",
+   "criteria_agree": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "label": "random_119",
+   "mean": 0.0,
+   "n_incorrect_by_sample": [
+    100,
+    100,
+    100,
+    100
+   ],
+   "outcome": "FALSIFIED",
+   "sfe_experiment_id": "exp_3abc1a7c085608202e1ed8af"
+  },
+  {
+   "accuracy_at_T_by_sample": [
     0.49,
     0.54,
     0.48,
@@ -4930,5 +5025,5 @@
    "sfe_experiment_id": "exp_2d9d00cd7ee528bf2748e43a"
   }
  ],
- "written": "2026-09-10T17:37:39+00:00"
+ "written": "2026-09-10T17:55:47+00:00"
 }
