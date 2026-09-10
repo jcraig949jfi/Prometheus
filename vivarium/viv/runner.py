@@ -582,33 +582,52 @@ class SfeRunner:
             if rid is None:
                 continue
             try:
+                # `refs` BELONGS TO THE RESOURCE ENTRY, not to the event.
+                # I had it on the event, and the consequence was silent in
+                # both directions: the engine checks and indexes
+                # resources[i].refs.artifact_digest, so an event-level refs is
+                # sealed, echoed and never looked at. It produced a cost event
+                # that was accepted and unindexed, and I read those two
+                # symptoms as two engine defects when they were one mistake of
+                # mine. The echo settles it -- resources[0].refs came back {}.
+                aid = entry["resolution"].get("execution_artifact_id")
                 ev = c.cost_event(
                     wid, stage=_res.STAGE_RETRIEVAL, attempt_id=attempt_id,
                     reservation_id=rid,
-                    resources=[{"resource": "artifact_bytes",
-                                "quantity": entry["bytes"], "unit": "bytes",
-                                "method": "counter", "scope": "attempt"}],
-                    source_artifacts=[entry["resolution"].get(
-                        "execution_artifact_id")],
-                    environment=self.engine_identity,
-                    refs={
-                        # `artifact_digest` is the engine's join key for
-                        # cost_report().by_artifact, and it names the artifact
-                        # the event DECLARED in source_artifacts -- the same
-                        # string, so the two cannot drift apart.
-                        "artifact_digest": entry["resolution"].get(
-                            "execution_artifact_id"),
-                        # The SEALED digest is a different identity: the bytes,
-                        # not the row that holds them. Both are carried because
-                        # a reader chasing the campaign wants the seal and a
-                        # reader chasing the ledger wants the artifact.
-                        "sealed_digest": entry["digest"],
-                        "slot": entry["slot"],
-                        "measured_by": "len(bytes served), counted in "
-                                       "viv.preflight"})
+                    resources=[{
+                        "resource": "artifact_bytes",
+                        "quantity": entry["bytes"], "unit": "bytes",
+                        "method": "counter", "scope": "attempt",
+                        "refs": {
+                            # The engine's join key. It must be the SAME
+                            # string the event declares in source_artifacts --
+                            # a blob hash here is refused with 422, correctly:
+                            # the bytes and the row that holds them are
+                            # different identities and only one of them was
+                            # declared.
+                            "artifact_digest": aid,
+                            # The seal, carried alongside because a campaign
+                            # chases the bytes while the ledger chases the
+                            # artifact. Opaque to the engine.
+                            "sealed_digest": entry["digest"],
+                            "slot": entry["slot"],
+                            "measured_by": "len(bytes served), counted in "
+                                           "viv.preflight"},
+                    }],
+                    source_artifacts=[aid],
+                    environment=self.engine_identity)
+                # The ECHO, kept. It is the only field that distinguishes
+                # "the engine has my provenance" from "the engine accepted an
+                # event whose provenance never arrived", and those looked
+                # identical until today.
+                echoed = ((ev.get("resources") or [{}])[0] or {}).get("refs")
                 settled.append({"digest": entry["digest"],
                                 "reservation_id": rid,
                                 "cost_event_id": ev.get("cost_event_id"),
+                                "artifact_digest": aid,
+                                "refs_echoed": echoed,
+                                "indexed": bool((echoed or {}).get(
+                                    "artifact_digest")),
                                 "enforcement_class": _enforcement_of(ev)})
             except Exception as exc:                        # noqa: BLE001
                 # A settlement that failed is RECORDED, never swallowed: the

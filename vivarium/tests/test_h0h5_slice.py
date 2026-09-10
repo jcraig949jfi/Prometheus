@@ -1063,3 +1063,67 @@ def test_the_reservation_path_still_reports_itself_as_a_reservation(
     receipt = _q.get(conn, eid, schema=schema)["result_summary"]["load_receipt"]
     assert receipt["allowance_mechanism"] == "reservation"
     assert receipt["cost_events"] and receipt["cost_events"][0]["cost_event_id"]
+
+
+def test_the_cost_entry_carries_the_join_key_and_the_engine_echoes_it(
+        conn, schema, engine, producer):
+    """refs BELONGS TO THE RESOURCE ENTRY, not to the event.
+
+    I had it on the event. The engine seals an event-level refs, echoes it and
+    never branches on it, so the mistake was silent in BOTH directions: no
+    refusal (there was no claim to refuse) and no index entry (nothing to
+    index). I read those two symptoms as two engine defects and reported them
+    as such; they were one mistake of mine, and the echo is what settles it.
+
+    So the echo is asserted here, not just the acceptance. An event that is
+    accepted and whose entry refs come back empty is exactly the failure this
+    test exists to catch, and it looks identical to success from the status
+    code alone.
+    """
+    report, eid, _slot, raw, _aid = _slice(conn, schema, engine, producer)
+    assert report.outcome == EXECUTED
+    receipt = _q.get(conn, eid, schema=schema)["result_summary"]["load_receipt"]
+    ev = receipt["cost_events"][0]
+    assert ev.get("settle_error") is None, ev
+    assert ev["indexed"] is True, ev
+    echoed = ev["refs_echoed"]
+    assert echoed["artifact_digest"] == ev["artifact_digest"]
+    # The seal travels alongside and is a DIFFERENT identity: the bytes, not
+    # the row that holds them.
+    assert echoed["sealed_digest"] == ev["digest"]
+    assert echoed["artifact_digest"] != echoed["sealed_digest"]
+
+
+def test_a_join_key_the_event_did_not_declare_is_refused(conn, schema, engine,
+                                                         producer):
+    """The other half: the engine checks the claim. Naming the BLOB hash here
+    instead of the artifact id is the natural mistake -- they are both sha256
+    strings about the same object -- and it is refused, which is why the
+    settle path sends the same string it declares in source_artifacts."""
+    from sfclient import EngineError
+
+    sid = engine.create_session("refs-refusal")
+    w = engine.create_world(sid, "refs-refusal-%s" % uuid.uuid4().hex[:8],
+                            seed_root=1)["world_id"]
+    engine.start(w)
+    raw = b'{"x":1}'
+    import hashlib
+    dg = "sha256:" + hashlib.sha256(raw).hexdigest()
+    art = engine.artifact(w, "failure_input_set", raw, expected_blob_hash=dg)
+    aid = art["artifact_id"]
+
+    def post(artifact_digest):
+        return engine.cost_event(
+            w, stage="retrieval", attempt_id="probe",
+            resources=[{"resource": "artifact_bytes", "quantity": 7.0,
+                        "unit": "bytes", "method": "counter",
+                        "scope": "attempt",
+                        "refs": {"artifact_digest": artifact_digest}}],
+            source_artifacts=[aid])
+
+    ok = post(aid)
+    assert (ok["resources"][0]["refs"]["artifact_digest"]) == aid
+    for wrong in (dg, "sha256:" + "0" * 64):
+        with pytest.raises(EngineError) as e:
+            post(wrong)
+        assert e.value.status == 422
