@@ -1,33 +1,68 @@
 #!/usr/bin/env bash
 # Verify the conformance gate in all four states.  Harmonia 2026-09-10.
 #
-# NEVER pipe the gate and read $? -- that captures the pipe's status, a defect
+# SELF-CONTAINED: starts and verifies its own scratch engine (Daedalus's
+# deploy/scratch_contract_engine.py, c817f2d68) rather than assuming one is
+# running in somebody's terminal. Without it, test 5 -- the ONLY executable
+# proof that a ledger change is caught -- silently degrades to state 2
+# UNREACHABLE: still non-zero, but for the wrong reason, so it stops proving
+# what it was written to prove.
+#
+# NEVER pipe the gate and read $$? -- that captures the pipe's status, a defect
 # that has bitten this campaign twice. Every run below redirects instead.
 #
-#   usage: verify_gate_states.sh <cacert> [scratch_base]
+#   usage: verify_gate_states.sh <cacert> [port]
 set -u
 CA="${1:?cacert path}"
-SCRATCH="${2:-http://127.0.0.1:8901/v2}"
+PORT="${2:-8901}"
+SCRATCH="http://127.0.0.1:${PORT}/v2"
+
 G=roles/Harmonia/contracts/conformance_check.py
 NEW=roles/Harmonia/contracts/sfe_contract.json
 OLD=roles/Harmonia/contracts/fixtures/sfe_contract_schema6_frozen.json
+ENGINE=SerendipityFoundry/SerendipityFoundryEngine/deploy/scratch_contract_engine.py
+
+started=0
+cleanup() { [ "$started" = "1" ] && { echo "  stopping the scratch engine we started"; kill "$PID" 2>/dev/null; }; }
+trap cleanup EXIT
+
+# --- the scratch engine, started if absent and VERIFIED either way ----------
+if [ ! -f "$ENGINE" ]; then
+  echo "ABORT: $ENGINE not found. Test 5 cannot be proved without it."; exit 4
+fi
+if ! python "$ENGINE" --check --port "$PORT" >/dev/null 2>&1; then
+  echo "  scratch engine not up on :$PORT -- starting it"
+  python "$ENGINE" --port "$PORT" >/dev/null 2>&1 &
+  PID=$!; started=1
+  for _ in $(seq 1 30); do
+    python "$ENGINE" --check --port "$PORT" >/dev/null 2>&1 && break; sleep 1
+  done
+fi
+# HALT rather than test against an unverified instrument. --check asserts the
+# build hash MATCHES prod, the schema matches, the ledger DIFFERS, and
+# registration is open. If any fails, test 5 is not testing a ledger change.
+if ! python "$ENGINE" --check --port "$PORT" >/dev/null 2>&1; then
+  echo "ABORT: scratch engine on :$PORT failed its own --check."
+  python "$ENGINE" --check --port "$PORT" 2>&1 | sed 's/^/    /'
+  echo "  Not running the states: test 5 would pass for the wrong reason."
+  exit 4
+fi
+echo "  scratch engine verified on :$PORT (build matches prod, ledger differs)"
 
 run() { timeout 200 python "$@" >/dev/null 2>&1; echo $?; }
 fail=0
-t() { # name expected actual
-  if [ "$2" = "$3" ]; then printf '  [PASS] %-46s %s\n' "$1" "$3"
-  else printf '  [FAIL] %-46s expected %s got %s\n' "$1" "$2" "$3"; fail=1; fi
-}
+t() { if [ "$2" = "$3" ]; then printf '  [PASS] %-46s %s\n' "$1" "$3"
+      else printf '  [FAIL] %-46s expected %s got %s\n' "$1" "$2" "$3"; fail=1; fi; }
 
 echo "conformance gate state verification"
-t "0 CONFORMANT  current contract vs live"      0 "$(run $G --contract $NEW --cacert $CA)"
-t "3 INCOMPLETE  stale contract, routes undeclared" 3 "$(run $G --contract $OLD --cacert $CA)"
-t "0 INCOMPLETE+declared, all routes listed"    0 "$(run $G --contract $OLD --cacert $CA \
+t "0 CONFORMANT  current contract vs live"           0 "$(run $G --contract $NEW --cacert $CA)"
+t "3 INCOMPLETE  stale contract, routes undeclared"  3 "$(run $G --contract $OLD --cacert $CA)"
+t "0 INCOMPLETE+declared, all routes listed"         0 "$(run $G --contract $OLD --cacert $CA \
       --consumer-routes 'GET /v2/version' 'POST /v2/worlds/{wid}/experiments')"
-t "3 INCOMPLETE+declared, calls an added route" 3 "$(run $G --contract $OLD --cacert $CA \
+t "3 INCOMPLETE+declared, calls an added route"      3 "$(run $G --contract $OLD --cacert $CA \
       --consumer-routes 'POST /v2/worlds/{wid}/budget/reserve')"
-t "1 DRIFT       same build, DIFFERENT ledger"  1 "$(run $G --contract $NEW --base $SCRATCH)"
-t "2 UNREACHABLE"                               2 "$(run $G --contract $NEW --base http://127.0.0.1:9999/v2)"
+t "1 DRIFT       same build, DIFFERENT ledger"       1 "$(run $G --contract $NEW --base $SCRATCH)"
+t "2 UNREACHABLE"                                    2 "$(run $G --contract $NEW --base http://127.0.0.1:9999/v2)"
 echo
 [ $fail -eq 0 ] && echo "all six states verified" || echo "VERIFICATION FAILED"
 exit $fail

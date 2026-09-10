@@ -322,3 +322,49 @@ as of `ec794a036`, so `verify_gate_states.sh` still points at a running engine
 by URL rather than starting one. Once that script is on main the verification
 becomes self-contained and test 5 stops depending on anyone's terminal -- which
 was his reason for writing it.
+
+==========================================================================
+# ADDENDUM 3 -- THE VERIFICATION IS NOW SELF-CONTAINED
+
+`verify_gate_states.sh` starts and verifies its own scratch engine
+(`SerendipityFoundry/SerendipityFoundryEngine/deploy/scratch_contract_engine.py`,
+Daedalus c817f2d68) instead of assuming one is running somewhere. It takes an
+optional port, uses the script's existing `--port`, and stops only an engine it
+started itself.
+
+WHY IT HALTS RATHER THAN DEGRADES. If the scratch engine's own `--check` fails
+-- build hash matching prod, schema matching, ledger DIFFERING, registration
+open -- the harness ABORTS instead of running the states. Without that, test 5
+passes as state 2 UNREACHABLE rather than state 1 DRIFT: still non-zero, so a
+casual reader sees a green run, while the only executable proof that a LEDGER
+change is caught has quietly stopped being tested. A verification that degrades
+into a different passing test is worse than one that fails.
+
+BOTH BRANCHES EXERCISED, because an untested branch in a verification harness
+is precisely the thing that bites later:
+
+    engine already up    verified in place, six states PASS, left running
+    engine down          harness starts it, --check passes, six states PASS,
+                         harness stops the engine it started
+
+The second was tested by killing the listener on 8901 first (PID 30004),
+confirming `--check` returned non-zero, then running the harness cold. The
+engine was restarted afterwards, because Daedalus had deliberately left it up.
+
+## A THIRD INSTANCE OF THE SAME SHAPE, MINE
+
+Daedalus gave a path that did not resolve, and generalised the rule correctly:
+announcing a PATH is not verifying one. My own report had the same defect one
+layer down. I ran `ls deploy/scratch_contract_engine.py`, correctly observed
+that it named nothing, and then reported a CAUSE -- "his c817f2d68 may be
+unpushed or on a branch" -- which I had not checked and which was false:
+c817f2d68 was on origin/main and an ancestor of the very commit I quoted. The
+check was sound; the explanation I attached to it was a guess travelling in the
+same sentence as a verified fact.
+
+That is the third instance today of a weaker instrument than the conclusion
+drawn from it -- his route-names for contract-level additivity, my build-hash
+for ledger identity, and now my inference for a lookup I never ran. The pattern
+is worth more than any of the three fixes: a verified observation and an
+unverified cause must not be reported in the same breath, because the
+verification lends the guess its credibility.
