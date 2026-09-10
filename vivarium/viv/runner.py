@@ -222,6 +222,21 @@ class ExecutionFailure(RuntimeError):
         super().__init__(message)
 
 
+def _enforcement_of(event) -> object:
+    """The class the ENGINE stamped on the entry, read back rather than sent.
+
+    Daedalus's cost-event model has deliberately no enforcement field on the
+    way in: the class belongs to the LIMIT and the engine resolves it, so a
+    caller cannot declare its own spend exempt from a cap it was given. That
+    makes the class something to READ, and reading it is how this receipt
+    reports enforcement without asserting it.
+    """
+    for entry in (event or {}).get("resources", ()) or ():
+        if entry.get("resource") == "artifact_bytes":
+            return entry.get("enforcement_class") or entry.get("enforcement")
+    return None
+
+
 class SfeRunner:
     """One SFE client, reused across experiments in a worker process."""
 
@@ -351,9 +366,12 @@ class SfeRunner:
         if slots:
             try:
                 inputs, out.load_receipt = self._hydrate(
-                    c, spec, slots, request.artifact_locators, wid, meter)
+                    c, spec, slots, request.artifact_locators, wid, meter,
+                    attempt_id=out.attempt_id)
             except _artifacts.PreflightRejected as exc:
                 out.load_receipt = exc.as_receipt()
+                out.load_receipt["reservations_released"] = self._release(
+                    c, exc.reservations_open)
                 out.resources = meter.vector(
                     artifact_bytes_limit=self.limits.total_bytes,
                     attempt_id=out.attempt_id,
@@ -427,25 +445,64 @@ class SfeRunner:
                 failure_class="ENGINE_TRANSPORT") from exc
 
     # -- preflight ---------------------------------------------------------
-    def _hydrate(self, c, spec, slots, locators, wid, meter):
+    def _release(self, c, reservations) -> list:
+        """Give back every allowance held for an act that did not happen.
+
+        A refused attempt fetched nothing it reserved for. Holding those would
+        make the world's remaining budget smaller than its real spend, and the
+        next attempt would be refused for a reason that never occurred.
+        """
+        out = []
+        for r in reservations or ():
+            rid = (r or {}).get("reservation_id")
+            if rid is None:
+                continue
+            try:
+                c.release_budget(rid, "preflight refused the attempt; the "
+                                      "reserved fetch did not happen")
+                out.append({"reservation_id": rid, "released": True})
+            except Exception as exc:                        # noqa: BLE001
+                out.append({"reservation_id": rid, "released": False,
+                            "error": str(exc)[:200]})
+        return out
+
+
+    def _hydrate(self, c, spec, slots, locators, wid, meter,
+                 attempt_id=None):
         """Resolve every declared slot in the EXECUTION world, and account for
         it. Returns (frozen inputs, load receipt)."""
-        def debit(resource: str, amount: float):
-            """The enforceable counter, consulted BEFORE the fetch. The engine
-            blocks and raises; nothing is fetched when it does. A debit taken
-            afterwards would be an accounting entry, not a limit."""
+        def debit(resource: str, amount: float, act=None):
+            """RESERVE the allowance before the fetch, and return the
+            reservation so the same act can be settled afterwards.
+
+            A reservation rather than a debit, because the engine now offers
+            one (schema 8) and the two are not the same promise: a debit says
+            the money left, a reservation says it is HELD against a named act
+            and will be settled exactly once. TRACKA-DEBIT-1 supplied the
+            missing half -- the act -- so the idempotency key is the artifact
+            being fetched and not merely its position in the sequence. Two
+            attempts that fetch the same artifact in a different order are now
+            the same spend, and two different artifacts at the same position
+            are not.
+            """
             from sfclient import EngineError                 # noqa: PLC0415
+            idem = None
+            if act is not None:
+                idem = "viv:%s:%s:%s" % (attempt_id or "no-attempt",
+                                         _res.STAGE_RETRIEVAL, act["digest"])
             try:
-                c.consume_budget(wid, resource, amount)
+                return c.reserve_budget(
+                    wid, resource, amount, stage=_res.STAGE_RETRIEVAL,
+                    attempt_id=attempt_id, idem_key=idem)
             except EngineError as exc:
                 detail = exc.detail if isinstance(exc.detail, dict) else {}
                 if exc.status == 409:
                     raise _preflight.BudgetExhausted(
-                        "the execution world's %s budget refused %s bytes "
+                        "the execution world's %s allowance refused %s bytes "
                         "BEFORE the fetch: %s"
                         % (resource, amount, detail.get("message")),
                         detail={"resource": resource, "amount": amount,
-                                "engine": detail}) from exc
+                                "act": act, "engine": detail}) from exc
                 raise
 
         resolver = _preflight.SfeResolver(
@@ -454,6 +511,47 @@ class SfeRunner:
                                   limits=self.limits, debit=debit,
                                   log=self.log)
         inputs, receipt = pf.hydrate(slots)
+
+        # SETTLE EACH RESERVATION EXACTLY ONCE, with what the fetch actually
+        # cost rather than what it was declared to cost. The two are equal
+        # here because a size mismatch is a rejection -- but settling with the
+        # measured figure is what makes that an OBSERVATION rather than an
+        # assumption baked into the ledger.
+        settled = []
+        for entry in receipt["closure"]:
+            reservation = entry.get("reservation") or {}
+            rid = reservation.get("reservation_id")
+            if rid is None:
+                continue
+            try:
+                ev = c.cost_event(
+                    wid, stage=_res.STAGE_RETRIEVAL, attempt_id=attempt_id,
+                    reservation_id=rid,
+                    resources=[{"resource": "artifact_bytes",
+                                "quantity": entry["bytes"], "unit": "bytes",
+                                "method": "counter", "scope": "attempt"}],
+                    source_artifacts=[entry["resolution"].get(
+                        "execution_artifact_id")],
+                    environment=self.engine_identity,
+                    refs={"digest": entry["digest"], "slot": entry["slot"],
+                          "measured_by": "len(bytes served), counted in "
+                                         "viv.preflight"})
+                settled.append({"digest": entry["digest"],
+                                "reservation_id": rid,
+                                "cost_event_id": ev.get("cost_event_id"),
+                                "enforcement_class": _enforcement_of(ev)})
+            except Exception as exc:                        # noqa: BLE001
+                # A settlement that failed is RECORDED, never swallowed: the
+                # bytes were really fetched, so an unsettled reservation is a
+                # real accounting gap and not a tidy zero.
+                settled.append({"digest": entry["digest"],
+                                "reservation_id": rid,
+                                "settle_error": str(exc)[:300]})
+                self.log("[viv] cost event NOT settled for %s: %s"
+                         % (entry["digest"][:19], exc))
+        receipt["cost_events"] = settled
+        receipt["attempt_id"] = attempt_id
+
         meter.count("artifact_bytes", receipt["bytes_loaded"])
         meter.count("artifact_fetches", receipt["engine_fetches"])
         meter.count("items_loaded",

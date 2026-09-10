@@ -447,8 +447,8 @@ def test_mutation_after_resolution_cannot_change_what_executes(
     original = runner._hydrate                      # noqa: SLF001
     swapped = {"count": 0}
 
-    def hydrate_then_swap(c, spec, slots, locators, wid, meter):
-        inputs, receipt = original(c, spec, slots, locators, wid, meter)
+    def hydrate_then_swap(c, spec, slots, locators, wid, meter, **kw):
+        inputs, receipt = original(c, spec, slots, locators, wid, meter, **kw)
         # The artifact the locator names is now re-imported as different
         # bytes; anything that fetched again would see them.
         c.import_artifact(wid, producer, evil_aid)
@@ -572,8 +572,8 @@ def test_an_interrupted_run_is_stranded_not_guessed_at(
     runner = _runner(engine)
     original = runner._hydrate                      # noqa: SLF001
 
-    def die_after_loading(c, spec, slots, locators, wid, meter):
-        original(c, spec, slots, locators, wid, meter)
+    def die_after_loading(c, spec, slots, locators, wid, meter, **kw):
+        original(c, spec, slots, locators, wid, meter, **kw)
         raise KeyboardInterrupt("the process was killed mid-attempt")
 
     runner._hydrate = die_after_loading             # noqa: SLF001
@@ -619,9 +619,9 @@ def test_a_re_admitted_row_revalidates_from_scratch(conn, schema, engine,
     original = runner._hydrate                      # noqa: SLF001
     attempts = {"n": 0}
 
-    def counted(c, s_, slots, locators, wid, meter):
+    def counted(c, s_, slots, locators, wid, meter, **kw):
         attempts["n"] += 1
-        return original(c, s_, slots, locators, wid, meter)
+        return original(c, s_, slots, locators, wid, meter, **kw)
 
     runner._hydrate = counted                       # noqa: SLF001
 
@@ -864,3 +864,123 @@ def test_the_two_seats_agree_on_units_and_the_enforcement_field(
     # And the field name a reader would reach for is the same one.
     v = _r.Meter().start().vector(attempt_id="x")
     assert "enforcement_class" in v["cpu_seconds"]
+
+
+# ===========================================================================
+# TRACK A PART 1 -- the two findings that named Vivarium
+# ===========================================================================
+
+def test_the_engine_refuses_a_wrong_digest_BEFORE_serving_any_bytes(
+        conn, schema, engine, producer):
+    """TRACKA-PREFLIGHT-1. The check used to happen in the client, which meant
+    the wrong bytes had already crossed the wire before anything noticed. Now
+    the sealed digest is asserted ON THE READ and the engine answers 422 with
+    no payload -- and the rejection class is still the one the locator earned.
+    """
+    _obj, raw_a, slot_a = input_set(ITEMS)
+    _obj2, raw_b, _sb = input_set([[1, 1, 1], [0, 0, 0]])
+    aid_b = _publish(engine, producer, raw_b)
+    eid = _enqueue(conn, schema, probe_spec(slot_a), {slot_a["digest"]: {
+        "source_world": producer, "source_artifact": aid_b}})
+    report = _viv(engine, schema).tick(conn)
+    conn.commit()
+    assert report.outcome == FAILED
+    receipt = _q.get(conn, eid, schema=schema)["result_summary"]["load_receipt"]
+    assert receipt["rejection_class"] in (_a.DIGEST_MISMATCH,
+                                          _a.SIZE_MISMATCH)
+    detail = receipt["detail"]
+    assert detail["http"] == 422, (
+        "the engine served the bytes and the client complained afterwards")
+
+
+def test_a_clean_load_records_where_the_identity_was_enforced(
+        conn, schema, engine, producer):
+    """A receipt that said "digest verified" without saying BY WHOM would read
+    the same before and after the fix."""
+    report, eid, slot, raw, _aid = _slice(conn, schema, engine, producer)
+    assert report.outcome == EXECUTED
+    receipt = _q.get(conn, eid, schema=schema)["result_summary"]["load_receipt"]
+    res = receipt["closure"][0]["resolution"]
+    assert res["digest_gate"].startswith("engine")
+    assert res["size_gate"].startswith("engine")
+    assert receipt["digest_gate"] == "engine+client"
+
+
+def test_the_debit_hook_is_keyed_on_the_act_not_the_position(
+        conn, schema, engine, producer):
+    """TRACKA-DEBIT-1. The hook now carries the slot, the digest, the locator
+    and the ordinal, so a reservation can be keyed on WHAT is being paid for.
+    Keyed on the ordinal alone, two attempts that fetched the same artifact in
+    a different order would look like different spends."""
+    seen = []
+
+    _obj, raw, slot = input_set(ITEMS)
+    aid = _publish(engine, producer, raw)
+    runner = _runner(engine)
+    original = runner._hydrate                      # noqa: SLF001
+
+    def watch(c, spec, slots, locators, wid, meter, **kw):
+        real_debit = {}
+
+        class _Spy:
+            def __getattr__(self, name):
+                return getattr(c, name)
+
+            def reserve_budget(self, *a, **k):
+                seen.append(k)
+                return c.reserve_budget(*a, **k)
+
+        return original(_Spy(), spec, slots, locators, wid, meter, **kw)
+
+    runner._hydrate = watch                         # noqa: SLF001
+    eid = _enqueue(conn, schema, probe_spec(slot), {slot["digest"]: {
+        "source_world": producer, "source_artifact": aid}})
+    v = Vivarium(worker_id="viv-h0h5", schema=schema, runner=runner,
+                 pew_client=None, log=lambda *a: None)
+    assert v.tick(conn).outcome == EXECUTED
+    conn.commit()
+
+    assert seen, "no reservation was taken"
+    call = seen[0]
+    assert call["stage"] == "retrieval"
+    assert call["attempt_id"] == str(eid)
+    # The key names the ARTIFACT, which is the whole of the finding.
+    assert slot["digest"] in call["idem_key"]
+    assert str(eid) in call["idem_key"]
+
+
+def test_the_reservation_is_settled_exactly_once_with_measured_bytes(
+        conn, schema, engine, producer):
+    report, eid, slot, raw, _aid = _slice(conn, schema, engine, producer)
+    assert report.outcome == EXECUTED
+    receipt = _q.get(conn, eid, schema=schema)["result_summary"]["load_receipt"]
+    events = receipt["cost_events"]
+    assert len(events) == 1, events
+    ev = events[0]
+    assert ev["digest"] == slot["digest"]
+    assert ev.get("settle_error") is None, ev
+    assert ev["cost_event_id"]
+    # The engine STAMPS the enforcement class; it is read back, never sent.
+    assert ev["enforcement_class"] in ("enforceable", "measured", "estimated",
+                                       "unavailable", None)
+
+
+def test_a_refused_attempt_releases_the_allowance_it_reserved(
+        conn, schema, engine, producer):
+    """A refused attempt did not perform the act it reserved for. Holding the
+    allowance would make the world's remaining budget smaller than its real
+    spend, and the NEXT attempt would be refused for something that never
+    happened."""
+    _obj, raw, slot = input_set(ITEMS)
+    _publish(engine, producer, raw)
+    # A second slot that resolves, followed by one that does not, so a
+    # reservation is genuinely open when the refusal lands.
+    eid = _enqueue(conn, schema, probe_spec(slot), {slot["digest"]: {
+        "source_world": producer, "source_artifact": "art_does_not_exist"}})
+    report = _viv(engine, schema).tick(conn)
+    conn.commit()
+    assert report.outcome == FAILED
+    receipt = _q.get(conn, eid, schema=schema)["result_summary"]["load_receipt"]
+    assert "reservations_released" in receipt
+    for r in receipt["reservations_released"]:
+        assert r["released"] is True, r

@@ -136,7 +136,22 @@ class SfeResolver:
     def principal(self) -> Tuple[str, str]:
         return (self.client_id, self.world)
 
-    def resolve(self, digest: str, locator: dict) -> Tuple[bytes, dict]:
+    def resolve(self, digest: str, locator: dict, *,
+                expected_bytes: Optional[int] = None) -> Tuple[bytes, dict]:
+        """Resolve one locator, asserting WHICH object was meant AT THE ENGINE.
+
+        TRACKA-PREFLIGHT-1. This used to fetch and then compare the digest in
+        the client, which meant the bytes had already been served before
+        anything noticed they were the wrong ones. The engine now takes the
+        assertion on the read path and answers 422 with NO BYTES -- and it
+        checks it only AFTER authorization and the world-scoped lookup, so a
+        caller who knows only a hash still gets 404 and a digest still confers
+        nothing.
+
+        The client-side comparison in `Preflight.load` is KEPT. It is no longer
+        the guarantee; it is defence in depth over the one span the engine
+        cannot see, which is the wire between the engine and this process.
+        """
         import base64
         from sfclient import EngineError                     # noqa: PLC0415
 
@@ -150,7 +165,9 @@ class SfeResolver:
                 self.imports += 1
                 aid = imp["artifact_id"]
                 imported = imp
-            content = self.c.artifact_content(self.world, aid)
+            content = self.c.artifact_content(
+                self.world, aid, expected_blob_hash=digest,
+                expected_bytes=expected_bytes)
         except EngineError as exc:
             raise _engine_error_to_rejection(exc, digest, locator) from exc
 
@@ -168,6 +185,13 @@ class SfeResolver:
             "kind": content.get("kind"),
             "authorized_as": self.client_id,
             "imported_now": bool(imported),
+            # WHERE the identity was enforced, recorded rather than assumed.
+            # A receipt that said "digest verified" without saying by whom
+            # would read the same before and after TRACKA-PREFLIGHT-1.
+            "digest_gate": "engine (expected_blob_hash on the read path)",
+            "size_gate": ("engine (expected_bytes)" if expected_bytes is not None
+                          else "client only"),
+            "engine_resolution": content.get("resolution"),
         }
         return raw, record
 
@@ -194,6 +218,21 @@ def _engine_error_to_rejection(exc, digest: str, locator: dict):
         return BudgetExhausted(
             "the engine's budget refused the resolution: %s"
             % base["engine_message"], detail=base)
+    if exc.status == 422:
+        # The engine's read-path gate. It served NO BYTES, which is the whole
+        # improvement over comparing after the fact -- and the rejection class
+        # is the one the locator earned, not a generic contract failure.
+        message = (base["engine_message"] or "").lower()
+        if "byte" in message or "size" in message:
+            return _a.PreflightRejected(
+                _a.SIZE_MISMATCH,
+                "the engine refused the read: %s" % base["engine_message"],
+                detail=base)
+        return _a.PreflightRejected(
+            _a.DIGEST_MISMATCH,
+            "the engine refused the read before serving any bytes: %s. The "
+            "locator addressed an object; it did not address the one the spec "
+            "sealed." % base["engine_message"], detail=base)
     return _a.PreflightRejected(
         _a.CONTRACT_INVALID,
         "the engine rejected the resolution (HTTP %s %s): %s"
@@ -209,6 +248,17 @@ class Preflight:
     bytes that fetch is declared to cost, because a debit taken afterwards is
     an accounting entry and not a limit. It may raise BudgetExhausted; nothing
     is fetched when it does.
+
+    TRACKA-DEBIT-1. It is called as `debit(resource, amount, act=...)`, where
+    `act` names WHAT is being paid for: the slot, the digest, the locator and
+    the ordinal of the fetch within this attempt. Without it the strongest
+    idempotency key an integrator could build was the ordinal alone, which is
+    a key on the POSITION rather than on the act -- so two attempts that
+    fetched the same artifact in a different order would look like different
+    spends, and two fetches of different artifacts at the same position would
+    look like the same one. A `debit` that accepts only two arguments is still
+    called correctly; the third is passed as a keyword and older hooks are
+    detected rather than crashed into.
     """
     resolver: Any
     locators: Dict[str, dict]
@@ -223,6 +273,12 @@ class Preflight:
     _seen: Dict[str, LoadedArtifact] = field(default_factory=dict)
     _fetches: int = 0
     _seconds: float = 0.0
+    #: True iff the supplied debit hook could not accept the act. Reported.
+    _debit_hook_narrow: bool = False
+    #: digest -> whatever the debit hook returned (a reservation, or None).
+    #: Carried so the caller that RESERVED can settle the same act, rather
+    #: than re-deriving which reservation belonged to which fetch.
+    _reservations: Dict[str, Any] = field(default_factory=dict)
 
     # -- one artifact ------------------------------------------------------
     def _locator_for(self, digest: str, slot: str) -> dict:
@@ -249,7 +305,23 @@ class Preflight:
 
         # BEFORE the fetch. See the class docstring.
         if self.debit is not None:
-            self.debit("artifact_bytes", declared_bytes)
+            act = {"slot": slot, "digest": digest,
+                   "source_world": loc["source_world"],
+                   "source_artifact": loc["source_artifact"],
+                   "fetch_ordinal": self._fetches + 1,
+                   "declared_bytes": declared_bytes}
+            try:
+                self._reservations[digest] = self.debit(
+                    "artifact_bytes", declared_bytes, act=act)
+            except TypeError as exc:
+                # An older two-argument hook. Called correctly rather than
+                # left to fail, and the fallback is NOT silent -- a caller
+                # whose reservation is keyed on the ordinal alone should know
+                # that is what it got.
+                if "act" not in str(exc):
+                    raise
+                self.debit("artifact_bytes", declared_bytes)
+                self._debit_hook_narrow = True
         self._bytes_debited += declared_bytes
 
         principal = self.resolver.principal
@@ -262,7 +334,16 @@ class Preflight:
                             "source_artifact": loc["source_artifact"]}
 
         t0 = time.perf_counter()
-        raw, record = self.resolver.resolve(digest, loc)
+        try:
+            raw, record = self.resolver.resolve(digest, loc,
+                                                expected_bytes=declared_bytes)
+        except TypeError as exc:
+            # A resolver from before the engine took the size assertion. It is
+            # called correctly rather than left to fail, and the receipt says
+            # the size gate was client-only for that fetch.
+            if "expected_bytes" not in str(exc):
+                raise
+            raw, record = self.resolver.resolve(digest, loc)
         self._seconds += time.perf_counter() - t0
         self._fetches += 1
         record["served_from"] = "engine"
@@ -430,6 +511,7 @@ class Preflight:
             "schema_version": slot["schema_version"],
             "interface_id": slot["interface_id"], "codec": slot["codec"],
             "shape": shape, "resolution": record,
+            "reservation": self._reservations.get(digest),
             "dependencies": [d.digest for d in loaded_deps]})
         return art
 
@@ -443,8 +525,13 @@ class Preflight:
         """
         inputs: Dict[str, LoadedArtifact] = {}
         t0 = time.perf_counter()
-        for name in sorted(slots):
-            inputs[name] = self.load(name, slots[name])
+        try:
+            for name in sorted(slots):
+                inputs[name] = self.load(name, slots[name])
+        except _a.PreflightRejected as exc:
+            exc.reservations_open = [r for r in self._reservations.values()
+                                     if r is not None]
+            raise
         wall = time.perf_counter() - t0
 
         # NO UNUSED ADDRESSES. Admission cannot check this -- a closure is
@@ -489,6 +576,8 @@ class Preflight:
             "wall_seconds": round(wall, 6),
             "verified": ["size", "digest", "codec_canonical", "artifact_type",
                          "schema_version", "interface_id", "closure"],
+            "digest_gate": "engine+client",
+            "debit_hook_carries_act": not self._debit_hook_narrow,
         }
         return inputs, receipt
 

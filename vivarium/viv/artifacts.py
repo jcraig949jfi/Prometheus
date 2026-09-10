@@ -98,13 +98,19 @@ class PreflightRejected(RuntimeError):
         self.rejection_class = rejection_class
         self.slot = slot
         self.detail = dict(detail or {})
+        #: Reservations taken before this refusal. A refused attempt did not
+        #: perform the act it reserved for, so leaving them open would hold an
+        #: allowance against something that never happened -- the caller
+        #: releases them, and cannot do that without being told which.
+        self.reservations_open = []
         super().__init__("%s%s: %s"
                          % (rejection_class,
                             " [slot %s]" % slot if slot else "", message))
 
     def as_receipt(self) -> dict:
         return {"rejected": True, "rejection_class": self.rejection_class,
-                "slot": self.slot, "message": str(self), "detail": self.detail}
+                "slot": self.slot, "message": str(self), "detail": self.detail,
+                "reservations_open": list(self.reservations_open)}
 
 
 # ------------------------------------------------------------------ limits

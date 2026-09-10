@@ -81,15 +81,24 @@ class LocalResolver:
     def principal(self):
         return (self.client_id, self.world)
 
-    def resolve(self, digest, locator):
+    def resolve(self, digest, locator, *, expected_bytes=None):
+        # The engine's read-path gate, mirrored: the assertion is checked
+        # BEFORE any bytes are handed back, so a double that served first and
+        # complained afterwards would be testing the wrong order.
         self.calls += 1
-        self.seen.append((digest, dict(locator)))
+        self.seen.append((digest, dict(locator), expected_bytes))
         entry = self.store.get(digest)
         if entry is None:
             raise _a.PreflightRejected(
                 _a.ABSENT, "no such artifact in this store",
                 detail={"digest": digest, "locator": dict(locator)})
         raw, world, aid = entry
+        if expected_bytes is not None and len(raw) != expected_bytes:
+            raise _a.PreflightRejected(
+                _a.SIZE_MISMATCH,
+                "the read gate refused: %d bytes, not the %d asserted"
+                % (len(raw), expected_bytes),
+                detail={"digest": digest, "locator": dict(locator)})
         if world != locator["source_world"] or aid != locator["source_artifact"]:
             raise _a.PreflightRejected(
                 _a.ABSENT, "the locator addresses nothing here",
@@ -101,4 +110,9 @@ class LocalResolver:
                 detail={"digest": digest, "locator": dict(locator)})
         return raw, {"execution_world": self.world, "source_world": world,
                      "source_artifact": aid, "origin": "IMPORTED",
-                     "authorized_as": self.client_id, "served_from": "engine"}
+                     "authorized_as": self.client_id, "served_from": "engine",
+                     "digest_gate": "engine (expected_blob_hash on the read "
+                                    "path)",
+                     "size_gate": ("engine (expected_bytes)"
+                                   if expected_bytes is not None
+                                   else "client only")}
