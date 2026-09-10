@@ -1668,6 +1668,14 @@ class TypedRefIn(BaseModel):
     visibility: str | None = None
     origin: str | None = None
     producer: dict | None = None
+    # corpus membership + the four axes (migration 012). The axes describe what
+    # produced the reference and what was NOT concluded; PEW never adjudicates.
+    candidate_set_id: str | None = None
+    producer_experiment_id: str | None = None
+    software_stage: str | None = None
+    connection_evidence: str | None = None
+    scientific_outcome: str | None = None
+    reproduction_state: str | None = None
     namespace: str = "prod"
     # publication bookkeeping: the producer asserts what SFE durably recorded;
     # PEW reports what IT indexed. Different facts, reported separately.
@@ -1717,7 +1725,7 @@ def post_typed_ref(body: TypedRefIn, request: Request, conn=Depends(get_conn)):
     ident = identity(request, write=True)
     _check_namespace(body.namespace)
     d = _ref_payload(body)
-    bad = ewrefs.validate(d)
+    bad = ewrefs.validate(d) or ewrefs.validate_axes(d)
     if bad:
         _reject(conn, "refs.publish", ident, bad, body.idempotency_key,
                 d["ref_id"])
@@ -1752,13 +1760,17 @@ def post_typed_ref(body: TypedRefIn, request: Request, conn=Depends(get_conn)):
 
 @app.get("/api/v1/refs/index/rebuild")
 def rebuild_ref_index(request: Request, namespace: str | None = None,
+                      candidate_set: str | None = None,
+                      ref_kind: str | None = "WITNESS",
                       conn=Depends(get_conn)):
     """Rebuild the witness presence index from the authoritative references
     ALONE. Reads no scientific bytes, touches nothing in SFE, and alters no
     execution identity: a rebuilt index is a projection, not evidence."""
     identity(request)
-    idx = ewrefs.rebuild_presence_index(conn, namespace)
-    return {"n_encounters": len(idx),
+    idx = ewrefs.rebuild_presence_index(conn, namespace, candidate_set,
+                                        None if ref_kind in ("", "ALL") else ref_kind)
+    return {"n_encounters": len(idx), "n_refs": sum(len(v) for v in idx.values()),
+            "candidate_set": candidate_set, "ref_kind": ref_kind,
             "index_digest": ewrefs.index_digest(idx), "index": idx}
 
 

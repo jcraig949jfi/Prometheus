@@ -1,0 +1,838 @@
+{
+ "candidate_set_id": "cs-h1h0-1-p1",
+ "rebuilt_at": "2026-09-10T12:17:21",
+ "command": "curl -H \"$AUTH\" \"http://127.0.0.1:8377/api/v1/refs/index/rebuild?candidate_set=cs-h1h0-1-p1&ref_kind=ALL&namespace=prod\"",
+ "source": "ew.typed_refs + ew.ref_availability_events ONLY -- no scientific bytes, nothing read from SFE",
+ "n_encounters": 24,
+ "n_refs": 96,
+ "index_digest": "5c7e478afc07d2a8271a7cd170453a396f8c2ca4b52955e84c5536ce23e24522",
+ "deterministic": {
+  "digest_run_1": "5c7e478afc07d2a8271a7cd170453a396f8c2ca4b52955e84c5536ce23e24522",
+  "digest_run_2": "5c7e478afc07d2a8271a7cd170453a396f8c2ca4b52955e84c5536ce23e24522",
+  "stable": true
+ },
+ "kinds_per_encounter": [
+  "ENCOUNTER",
+  "EXPERIMENT",
+  "OBSERVATION",
+  "RECEIPT"
+ ],
+ "index": {
+  "ENC-archaeon-h1h0-019233121309167d@exp_5a3e8244ca446c1efaa8842d:wrk_90f2382c647a42fcecb2e1cd": [
+   {
+    "ref_id": "R-07effc2b060d",
+    "kind": "OBSERVATION",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:0f098bb88ae055d9f5878c47f26428be058acf12af166541f1a1e38bc3b87eb6",
+    "source": "OBSERVATION:obs_b342a347eca5fb15de02c4ba"
+   },
+   {
+    "ref_id": "R-6c621ae5ed3d",
+    "kind": "RECEIPT",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:2026fe8aea2dbc5e1b30a664c5303512a1568d113b6df697b560f829748a8e6b",
+    "source": "EVENT:evt_51f97b6e8a600fba83a30e6c"
+   },
+   {
+    "ref_id": "R-81bad42320d8",
+    "kind": "ENCOUNTER",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:3ca5224b255ae30a51fd8a43e4c78b599d6f1b716f954ba4d534855c11818be7",
+    "source": "ENCOUNTER:ENC-archaeon-h1h0-019233121309167d"
+   },
+   {
+    "ref_id": "R-ccdad69225bd",
+    "kind": "EXPERIMENT",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:1b22eee8be2aa30f409c51b6115ad95fb1f244957348cc15ae81b920c5040b9f",
+    "source": "EXPERIMENT:exp_5a3e8244ca446c1efaa8842d"
+   }
+  ],
+  "ENC-archaeon-h1h0-0773bc61b15bb6f1@exp_f7b1cf8ac77b4edb037f2b69:wrk_141aa22917947a3b5f36e4f2": [
+   {
+    "ref_id": "R-1ac46e07e1d1",
+    "kind": "ENCOUNTER",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:949d45772d11b62209c3ac6576ee1000f25656d20824bf13d9489fddb020de6d",
+    "source": "ENCOUNTER:ENC-archaeon-h1h0-0773bc61b15bb6f1"
+   },
+   {
+    "ref_id": "R-8cd8d2891f2a",
+    "kind": "RECEIPT",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:e100701cef811beca387fe035d0b4c893ed2069a7f25faf7fbaf93857ec386c8",
+    "source": "EVENT:evt_1267d1e0efc560b9acea9bce"
+   },
+   {
+    "ref_id": "R-a780137e1dcc",
+    "kind": "OBSERVATION",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:1c70b0488d20a6d459fcb59b9d2b5a3a1c2bfa0a5b1998e2a78f54afefcc4bd2",
+    "source": "OBSERVATION:obs_6b2595dfee4fac9bacdcd480"
+   },
+   {
+    "ref_id": "R-ddcf9eb12c4c",
+    "kind": "EXPERIMENT",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:9c5ecb96adc5bb74de94d2ce6830990ab54db1865c7d5abce985ffc13f57729b",
+    "source": "EXPERIMENT:exp_f7b1cf8ac77b4edb037f2b69"
+   }
+  ],
+  "ENC-archaeon-h1h0-0c1cfe9539359249@exp_13b5eb7d1542e284c25d9d9c:wrk_c5bfe8e4ab02de485ea14d2c": [
+   {
+    "ref_id": "R-1a67f5f18b5d",
+    "kind": "OBSERVATION",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:2977fc279da4e9cb9f8174d6c1b04551dd4c1fcbc39ee97f3fdd1903a12f9447",
+    "source": "OBSERVATION:obs_cd4fc44eedfd49844c1c4248"
+   },
+   {
+    "ref_id": "R-d1367ac0dcad",
+    "kind": "RECEIPT",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:0a2169ad5814173f82d1bb0928dab018ee6185d12e8a648848e8a61d14356900",
+    "source": "EVENT:evt_0f4aaa76ad9790e3376a5f10"
+   },
+   {
+    "ref_id": "R-da26eeec013d",
+    "kind": "EXPERIMENT",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:5a7ae4857473e1246cc1712ea63da275e6569fa11b3540698e1833b5fade7988",
+    "source": "EXPERIMENT:exp_13b5eb7d1542e284c25d9d9c"
+   },
+   {
+    "ref_id": "R-fa019bff5ce5",
+    "kind": "ENCOUNTER",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:d9bafa57f0634415e1d030d8554bef35f1578964918f6eb577d9751f3a9b55b1",
+    "source": "ENCOUNTER:ENC-archaeon-h1h0-0c1cfe9539359249"
+   }
+  ],
+  "ENC-archaeon-h1h0-21cfe79794ab261d@exp_79492e5787fd4d64c0500b35:wrk_b38b9bf433674857bcdbb686": [
+   {
+    "ref_id": "R-7ace6036eddb",
+    "kind": "OBSERVATION",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:ba4b274b85a99c5b66b5e0865519a7bc6454c9a7af40dfffaf5701ab6916a65a",
+    "source": "OBSERVATION:obs_a3581bdcb1122191a3ca1233"
+   },
+   {
+    "ref_id": "R-7d101fcbfa6b",
+    "kind": "EXPERIMENT",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:6969fb9e3b056390e354e8212f5b9fa91b749c7a50cfbfde191a7c2859723362",
+    "source": "EXPERIMENT:exp_79492e5787fd4d64c0500b35"
+   },
+   {
+    "ref_id": "R-8c362ad800c4",
+    "kind": "ENCOUNTER",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:11dbfde087a78fdbeea55bd6e0059a366900b3e7384a158a803ec97d75724665",
+    "source": "ENCOUNTER:ENC-archaeon-h1h0-21cfe79794ab261d"
+   },
+   {
+    "ref_id": "R-fa60a9f5f3ba",
+    "kind": "RECEIPT",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:b0da76e3a62ec381f92fda55bc4fc4f19cba42d0aae49b41be3e8960f7a47889",
+    "source": "EVENT:evt_21b024e99be55afd456cbb7b"
+   }
+  ],
+  "ENC-archaeon-h1h0-23b9ae9f71aacf67@exp_8e65f78ee4c1def4cb726c07:wrk_22e7ff74c115e17de1aaec08": [
+   {
+    "ref_id": "R-04c5303b3cb7",
+    "kind": "OBSERVATION",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:9fd151f7906550dc3dbd4ad44bc689f261f4b6de522d0862d4eae88f0a781edc",
+    "source": "OBSERVATION:obs_a96794eee6c247d798ff9d18"
+   },
+   {
+    "ref_id": "R-2bf83e033cf3",
+    "kind": "ENCOUNTER",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:16d068b540e2b35c222c20e0066d5ecc0aea6a460b1751dbec3da773403b1f46",
+    "source": "ENCOUNTER:ENC-archaeon-h1h0-23b9ae9f71aacf67"
+   },
+   {
+    "ref_id": "R-89dbc06a8277",
+    "kind": "EXPERIMENT",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:7c34a715480d29be2c91423e17e746fe0266db0d1a4f0717963266adb44a98b1",
+    "source": "EXPERIMENT:exp_8e65f78ee4c1def4cb726c07"
+   },
+   {
+    "ref_id": "R-95d79affd75b",
+    "kind": "RECEIPT",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:7351000e50960d2885821bcd9fe068472b5ecc787e44e7b3be29e3c4174004ac",
+    "source": "EVENT:evt_6f9c5336a2fa819d0c719739"
+   }
+  ],
+  "ENC-archaeon-h1h0-36c7be729c68a5cf@exp_5eba47f58c27b212de95ee59:wrk_8d7632063e9d805a18cbd10e": [
+   {
+    "ref_id": "R-30e61d75097b",
+    "kind": "EXPERIMENT",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:0a21943e4ac6d8b555d54ea2e31a3a5492be34fc47a5d4b9b986efc063ea1953",
+    "source": "EXPERIMENT:exp_5eba47f58c27b212de95ee59"
+   },
+   {
+    "ref_id": "R-8d4374829b1d",
+    "kind": "RECEIPT",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:fb5de0eec1800d534e904315f5e521461af49079b020f0c5a6d91aa71c61ee85",
+    "source": "EVENT:evt_e2ec1a090dc2c438abd1d2c2"
+   },
+   {
+    "ref_id": "R-90274f67e745",
+    "kind": "OBSERVATION",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:ac45e7fb4de965f82a5eed00db1706466c29acf182a156ef60939535a533cec0",
+    "source": "OBSERVATION:obs_acf2b8b75f10d3adda048ba6"
+   },
+   {
+    "ref_id": "R-a14464082d19",
+    "kind": "ENCOUNTER",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:8a65356a37110d9a74509fc0bc4bc3e986d918f5ec9a117228ef3a2e16332b03",
+    "source": "ENCOUNTER:ENC-archaeon-h1h0-36c7be729c68a5cf"
+   }
+  ],
+  "ENC-archaeon-h1h0-3e69abb355d7c4ce@exp_fbdb1b197051e60870b779c6:wrk_9224d5ef588a7695becc990c": [
+   {
+    "ref_id": "R-878916f6cd53",
+    "kind": "EXPERIMENT",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:39898893584115889a1acd00aa9636a520f93660546a8d27e6939fdd79d0ba55",
+    "source": "EXPERIMENT:exp_fbdb1b197051e60870b779c6"
+   },
+   {
+    "ref_id": "R-89c535a9f3c7",
+    "kind": "ENCOUNTER",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:79443aef4d4ff47fec52fe571ea341321eedd94bfe90fc45727ded8b5f8b8d74",
+    "source": "ENCOUNTER:ENC-archaeon-h1h0-3e69abb355d7c4ce"
+   },
+   {
+    "ref_id": "R-daaabc7ce406",
+    "kind": "RECEIPT",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:4dd9cddb90a1e26d4906eb1f9b38981c2fd118ef96d687def44861e3bd2576ea",
+    "source": "EVENT:evt_116104c57994e79610b450c5"
+   },
+   {
+    "ref_id": "R-e47e7fd5bf4d",
+    "kind": "OBSERVATION",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:b368ef3b480ca8f998c16be13e87d2509d351a603f69e1dbd3d393e596361953",
+    "source": "OBSERVATION:obs_09f7d64264be0c92fde8ced1"
+   }
+  ],
+  "ENC-archaeon-h1h0-535b240df3a74bbd@exp_f1021963b4394a1b5216a290:wrk_006c5854cc814a8a375c3cb2": [
+   {
+    "ref_id": "R-081e469aa458",
+    "kind": "EXPERIMENT",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:ad973da9f10a9d44a8a9e6e319f7092ae74d9a3fac040dd41905be67032ded18",
+    "source": "EXPERIMENT:exp_f1021963b4394a1b5216a290"
+   },
+   {
+    "ref_id": "R-17f82cfae596",
+    "kind": "ENCOUNTER",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:cd32d05c2b6c04c4deade3605582df731b5818c3decea01dc9979d205fbe0bfa",
+    "source": "ENCOUNTER:ENC-archaeon-h1h0-535b240df3a74bbd"
+   },
+   {
+    "ref_id": "R-323519bdab66",
+    "kind": "RECEIPT",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:eed236ae7098083cba5c6259c69b35e169190afd3872de9edb4b38af9ae85831",
+    "source": "EVENT:evt_70f2be37fa4360f68ffd4b7f"
+   },
+   {
+    "ref_id": "R-52b10025b930",
+    "kind": "OBSERVATION",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:544a6dd3a37c4a3f9f6a77ebf59ec894c341e0d6d6783a46307bbf32b2edb9be",
+    "source": "OBSERVATION:obs_2ec6562c0bc8f6cf76d50250"
+   }
+  ],
+  "ENC-archaeon-h1h0-6a5a5c12db264431@exp_18b71235befbe25863753a8b:wrk_4c34a297a7b12e0b598d3f13": [
+   {
+    "ref_id": "R-0bf7a2152f47",
+    "kind": "RECEIPT",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:631c9584c7e867602fb77b545ce09281fadf43281fbada975e1b198843b123c8",
+    "source": "EVENT:evt_948f253491596fa938e45c3d"
+   },
+   {
+    "ref_id": "R-68a273551b54",
+    "kind": "ENCOUNTER",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:63158621feba780ba28d415d713a4f74044d811deb8957d664f69b1b7a2a393a",
+    "source": "ENCOUNTER:ENC-archaeon-h1h0-6a5a5c12db264431"
+   },
+   {
+    "ref_id": "R-8179fd1e7f35",
+    "kind": "OBSERVATION",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:ab3757f24024239655de74e89ac8e31b28ca13b7817886d7e1711d83d691aca9",
+    "source": "OBSERVATION:obs_5c1906dfdeff7d3a37bd8bc7"
+   },
+   {
+    "ref_id": "R-a5ba0f5bf381",
+    "kind": "EXPERIMENT",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:8ad866e162493bafd76a43cdd31ffb2ab82e85fecfab2b39165402c2b95117e1",
+    "source": "EXPERIMENT:exp_18b71235befbe25863753a8b"
+   }
+  ],
+  "ENC-archaeon-h1h0-754e8332a8bbe005@exp_1489ff211e927abecd57e247:wrk_2a002729d8384eafe610b7f6": [
+   {
+    "ref_id": "R-31553925dec3",
+    "kind": "OBSERVATION",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:253486e27d81fa242860869cfc96bfb8b088ceffa5aa7bc9e1d63dc7ae6a68c5",
+    "source": "OBSERVATION:obs_b07e5bfe2bddee551decfafe"
+   },
+   {
+    "ref_id": "R-41f4c4565996",
+    "kind": "EXPERIMENT",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:3bc757c3628ea0a238e565c6211e47a6acb4940a829f2942f2f16ee2c59aad7d",
+    "source": "EXPERIMENT:exp_1489ff211e927abecd57e247"
+   },
+   {
+    "ref_id": "R-9d1f79e9ffae",
+    "kind": "RECEIPT",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:30ec311b2ca42a090dfe9e97dba19b8b7de1cb6500ff202a4a6d0c08e11feb02",
+    "source": "EVENT:evt_770a8cbd1ff963b898a05539"
+   },
+   {
+    "ref_id": "R-cfce62f1399d",
+    "kind": "ENCOUNTER",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:119f75389335549d6e6b8cd96550ea8e3f431f67e6eb2a8dab6748c2f5a8cb11",
+    "source": "ENCOUNTER:ENC-archaeon-h1h0-754e8332a8bbe005"
+   }
+  ],
+  "ENC-archaeon-h1h0-75b00729677311d9@exp_71c2275b6da78e4392a585a1:wrk_f6fcedf8e6d011650243bb88": [
+   {
+    "ref_id": "R-2723e83ef06e",
+    "kind": "OBSERVATION",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:cb028d9dbc0acb6a2e3fe39715acb59b5a155998a6cd1cb88a53aa02f4726d84",
+    "source": "OBSERVATION:obs_b0787efdea536555944e7e63"
+   },
+   {
+    "ref_id": "R-36cfe72a3c71",
+    "kind": "ENCOUNTER",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:ea1c418a5bad19b15c4121903c5b2ccd4a275eac129698f329a5b1f8e7ac6654",
+    "source": "ENCOUNTER:ENC-archaeon-h1h0-75b00729677311d9"
+   },
+   {
+    "ref_id": "R-76707e7508be",
+    "kind": "RECEIPT",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:d5f55b87e5940f82948b1f78728e31235213d0957e08eaecf512c018c4c67ba0",
+    "source": "EVENT:evt_f600cb902f79863396e8a35e"
+   },
+   {
+    "ref_id": "R-ef1cea7728f4",
+    "kind": "EXPERIMENT",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:176c3a7b4bf65c8bb4c081ef2c8f6625f9b0f502564eb81ca6b6585569ef4456",
+    "source": "EXPERIMENT:exp_71c2275b6da78e4392a585a1"
+   }
+  ],
+  "ENC-archaeon-h1h0-77ab071539bc32df@exp_09370af2289bfec98c26291b:wrk_7fa01f3dff46669334a3e641": [
+   {
+    "ref_id": "R-04a40fc384ee",
+    "kind": "OBSERVATION",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:c217908089f7a6a4c70b9490c36deca475405762dae2368978394e712d91e243",
+    "source": "OBSERVATION:obs_cb7120733bdf8128331b54a3"
+   },
+   {
+    "ref_id": "R-5c881a6d0a9f",
+    "kind": "RECEIPT",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:5acae36e6c42d679763f10bac77828cd519c26a87709191cd87620fe0768778d",
+    "source": "EVENT:evt_729acd9e9371db0520437717"
+   },
+   {
+    "ref_id": "R-9c819b901af9",
+    "kind": "EXPERIMENT",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:b17223f72013e1e7734d54327057b96b30657b2c1d962ade601fcfd81c3eb308",
+    "source": "EXPERIMENT:exp_09370af2289bfec98c26291b"
+   },
+   {
+    "ref_id": "R-a0be2bf9cb64",
+    "kind": "ENCOUNTER",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:733d4e7ade22c92a6ad7dc77745296c2de9614235ed4e04365fb4041c36271eb",
+    "source": "ENCOUNTER:ENC-archaeon-h1h0-77ab071539bc32df"
+   }
+  ],
+  "ENC-archaeon-h1h0-7ad8c2c36410aa71@exp_55c53d8cf7eb5e31e6e36cb2:wrk_f8b2548cb0bec76643c48a12": [
+   {
+    "ref_id": "R-4dbf64e677e2",
+    "kind": "EXPERIMENT",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:f7cfe7699f20435b90e3d885890c163d6a073cd7c6d5c0d2eb8513d8ca601171",
+    "source": "EXPERIMENT:exp_55c53d8cf7eb5e31e6e36cb2"
+   },
+   {
+    "ref_id": "R-a0f85fae24cb",
+    "kind": "OBSERVATION",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:d47258cedbd0f212f5fbe47fdb34e82af3deed4b15a3ebe53e1b05c9f101f2a7",
+    "source": "OBSERVATION:obs_18df19ab2e20a217591d5495"
+   },
+   {
+    "ref_id": "R-bb70261511eb",
+    "kind": "ENCOUNTER",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:fb1aefb75148b320a346b0d95e220b447a46ebecde8f36b7b50fcefe105b81c7",
+    "source": "ENCOUNTER:ENC-archaeon-h1h0-7ad8c2c36410aa71"
+   },
+   {
+    "ref_id": "R-fb235432451e",
+    "kind": "RECEIPT",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:f3bfd037e71b7839ee38a061879d2cca16b559b23232163690ea577cb0dbf00a",
+    "source": "EVENT:evt_98729cd02094b24bfb69e8b6"
+   }
+  ],
+  "ENC-archaeon-h1h0-7c2301020179a10c@exp_eeea663eea8e24bfc5c62ddb:wrk_cc32703fe94ab7215578aad3": [
+   {
+    "ref_id": "R-09972ae40a9a",
+    "kind": "ENCOUNTER",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:1c7f8e4d1070a4354a6fda94f65713ba79bf56733753bc35b0e2048e63ba8335",
+    "source": "ENCOUNTER:ENC-archaeon-h1h0-7c2301020179a10c"
+   },
+   {
+    "ref_id": "R-468a3a80231c",
+    "kind": "OBSERVATION",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:808b80e218627d16eedfd70ca088561fb6f3690f0c47d6665153ad2b609ed7e2",
+    "source": "OBSERVATION:obs_218247409f0657c0a5810669"
+   },
+   {
+    "ref_id": "R-5ffa6e19d97a",
+    "kind": "RECEIPT",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:1ad4158c929a68937c9b101601763272281325ad4f2e064da541aa668f6f3c50",
+    "source": "EVENT:evt_51f13ee22000b4ffbdb44657"
+   },
+   {
+    "ref_id": "R-918ff2b53179",
+    "kind": "EXPERIMENT",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:ed5bf591d2b55b7a27be4d60acb8406a80b8c3a70e9a38b7da833f939e0d064d",
+    "source": "EXPERIMENT:exp_eeea663eea8e24bfc5c62ddb"
+   }
+  ],
+  "ENC-archaeon-h1h0-8557360e2689919d@exp_c981912e51faa48f1ea13e0e:wrk_7ff0be4c7d021bcdc086c8b9": [
+   {
+    "ref_id": "R-34c4a2053f55",
+    "kind": "OBSERVATION",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:bcbeb7115ba6c223faa5eca831733d5ec3a9f9ef58f99138e86db384439667cc",
+    "source": "OBSERVATION:obs_d8aff3f0ae2cad558d7b513b"
+   },
+   {
+    "ref_id": "R-5574cbd96628",
+    "kind": "ENCOUNTER",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:fd6e5c4e8e51a8055c9bea0723ac9daefe34b62d8890b349bf83a5805e0749ef",
+    "source": "ENCOUNTER:ENC-archaeon-h1h0-8557360e2689919d"
+   },
+   {
+    "ref_id": "R-acef08d3c983",
+    "kind": "EXPERIMENT",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:79380adea33f268d4bc8b59b6377eff1aa0fe699071cdbd693f259c7e57d6c98",
+    "source": "EXPERIMENT:exp_c981912e51faa48f1ea13e0e"
+   },
+   {
+    "ref_id": "R-b0d4b1c0ccaa",
+    "kind": "RECEIPT",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:54849ef58cec9047931ad5b46265519bfd612d271bf9ace4cf2e37c06f12d2c4",
+    "source": "EVENT:evt_888d56806cfcc0b4b1915ff1"
+   }
+  ],
+  "ENC-archaeon-h1h0-8737f3c1cec14dd1@exp_d64b6e0a5f62aea49897832c:wrk_75c92eac1dae2d73381a7c35": [
+   {
+    "ref_id": "R-1d1cfefaad00",
+    "kind": "ENCOUNTER",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:779f5f4267285e5d9dbd690a5f7042b51250dc91212ce132c49ea774e98b317c",
+    "source": "ENCOUNTER:ENC-archaeon-h1h0-8737f3c1cec14dd1"
+   },
+   {
+    "ref_id": "R-6132ea792577",
+    "kind": "EXPERIMENT",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:f91ab2cb2ff197d8e1812eba84910bae364002a27642a07f086256f2b2a81964",
+    "source": "EXPERIMENT:exp_d64b6e0a5f62aea49897832c"
+   },
+   {
+    "ref_id": "R-7e42a368612b",
+    "kind": "OBSERVATION",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:59f7ad20769dd4a75675793a7a5dcc86fbb43003edf01c598a28471893420cc7",
+    "source": "OBSERVATION:obs_922286c74fbe5b13467ca9cb"
+   },
+   {
+    "ref_id": "R-b28749730271",
+    "kind": "RECEIPT",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:8534545da324109c429730eaf9722b106f385944c21f0a69d4cd633222ec1926",
+    "source": "EVENT:evt_f21cc98ed7a5957229d9976c"
+   }
+  ],
+  "ENC-archaeon-h1h0-88584ea3d79f8df5@exp_3fc53fd6278c89ca8ca5165a:wrk_8072b8db2db00fe9f5a7efcf": [
+   {
+    "ref_id": "R-1f8c5b351362",
+    "kind": "OBSERVATION",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:812dd582c54b9dd62de5523f633505fc43495f496d8fdd3191dedac77eabee8c",
+    "source": "OBSERVATION:obs_f448dd2f9f775b425508549b"
+   },
+   {
+    "ref_id": "R-78ccad7acc75",
+    "kind": "ENCOUNTER",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:44590893375e6472e7a79ec5a847f9f91500439f05fd6785f4a1a09d201ed76d",
+    "source": "ENCOUNTER:ENC-archaeon-h1h0-88584ea3d79f8df5"
+   },
+   {
+    "ref_id": "R-80a5cb560e2b",
+    "kind": "RECEIPT",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:801f22ca3e33b9ae87b1766cd57e8942a7c24df61af7c95c172897820c2863bd",
+    "source": "EVENT:evt_c67b6c761e4f1532a83ea3ba"
+   },
+   {
+    "ref_id": "R-cc723970617e",
+    "kind": "EXPERIMENT",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:6f34ec7d1dacbb7380c167b6b47466fe41583deb79de55bc8a59fc5b1f7ec786",
+    "source": "EXPERIMENT:exp_3fc53fd6278c89ca8ca5165a"
+   }
+  ],
+  "ENC-archaeon-h1h0-8e8723c0cedc27ef@exp_6f08da134b2faf3af5d1dfb0:wrk_2377ba49637eb82212a796ab": [
+   {
+    "ref_id": "R-2867c0fdc282",
+    "kind": "ENCOUNTER",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:ac7d1da3879b4a31dbdf8fa18d70c4b3a0ffbccc8e5c5c9417cce10600c67c0a",
+    "source": "ENCOUNTER:ENC-archaeon-h1h0-8e8723c0cedc27ef"
+   },
+   {
+    "ref_id": "R-eafd3240614f",
+    "kind": "OBSERVATION",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:d4f18b0268285f6f8601305dd51b52fbc4909c1fb677cb90657e54aef360c2b8",
+    "source": "OBSERVATION:obs_795c627b94da3ed201f5e278"
+   },
+   {
+    "ref_id": "R-f97a470a9c52",
+    "kind": "RECEIPT",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:60c062d6e8f1fe88a1ddef5ce7b933b8d5ba281628d7dc6d7c910dd7f4382868",
+    "source": "EVENT:evt_0765576e1cacdc6da1ee28da"
+   },
+   {
+    "ref_id": "R-fbd89900fe90",
+    "kind": "EXPERIMENT",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:dc382722273246fa25403a81ceb4422680b33c3ed73952f3effee5aceb946818",
+    "source": "EXPERIMENT:exp_6f08da134b2faf3af5d1dfb0"
+   }
+  ],
+  "ENC-archaeon-h1h0-adf1b72ea7a1bb42@exp_0662ebc703bd97a09b897eea:wrk_fd6d54f67862b13dba8e29d2": [
+   {
+    "ref_id": "R-238f0caaa5c0",
+    "kind": "ENCOUNTER",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:92c0612f00bdb14da94e7ba51d37999b0e94ca55ec23e1a7d099913642e32863",
+    "source": "ENCOUNTER:ENC-archaeon-h1h0-adf1b72ea7a1bb42"
+   },
+   {
+    "ref_id": "R-43b8e3dbff3a",
+    "kind": "RECEIPT",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:0e9f374993a4d09de0ffc7269093e4fa23e0e8a47bfe9cf923d2600d09f51866",
+    "source": "EVENT:evt_784957f6c2b2db7b037cf6a0"
+   },
+   {
+    "ref_id": "R-6400147fe167",
+    "kind": "OBSERVATION",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:2cbf0e34402ce4c462fa3f2e2551439c4307adf19faffcb5912306f044d5704b",
+    "source": "OBSERVATION:obs_f1e29203262e9683bdd53761"
+   },
+   {
+    "ref_id": "R-ec0beb026db9",
+    "kind": "EXPERIMENT",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:33d89d24e3e70b6113e3cb587c62b5b84af08474a461a58a556b9dfbf8b35991",
+    "source": "EXPERIMENT:exp_0662ebc703bd97a09b897eea"
+   }
+  ],
+  "ENC-archaeon-h1h0-b3d5423d93f75191@exp_37688228bc85e50268a7a3ca:wrk_5fa4119ded3554056dd10b75": [
+   {
+    "ref_id": "R-a0f42e8dc34a",
+    "kind": "OBSERVATION",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:707ab0b881cd49a82c76d37a096288fcd211055a2ae96450c441030176d8d638",
+    "source": "OBSERVATION:obs_03e841f7bedeb8db29d0bc84"
+   },
+   {
+    "ref_id": "R-d7418d47cd66",
+    "kind": "EXPERIMENT",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:c8c00d09337d4ba6d4d803525c1b658a39f35f915ffdc09dfe5413a4bda56222",
+    "source": "EXPERIMENT:exp_37688228bc85e50268a7a3ca"
+   },
+   {
+    "ref_id": "R-ddb61f91a660",
+    "kind": "RECEIPT",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:3e99aa72a9ea7528e6e49529bdf20bf056f867f248bdf5b262d211704a62c1d5",
+    "source": "EVENT:evt_433b8dad628742d4e76ff463"
+   },
+   {
+    "ref_id": "R-dfe373a5783c",
+    "kind": "ENCOUNTER",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:91255250cbdee2d13b9f415f2b503da877cda608befb29f793646d300bf6dea9",
+    "source": "ENCOUNTER:ENC-archaeon-h1h0-b3d5423d93f75191"
+   }
+  ],
+  "ENC-archaeon-h1h0-dd99b27cd86ef889@exp_acdc55b3b5fefad8c4f0b2a5:wrk_c4bd22fcd3dd52958e5271ae": [
+   {
+    "ref_id": "R-849fc27a05eb",
+    "kind": "EXPERIMENT",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:8712ae12db2e6481e7b050eaaf63241c6c06cfe3b9ec035a38a233d5692fc0ad",
+    "source": "EXPERIMENT:exp_acdc55b3b5fefad8c4f0b2a5"
+   },
+   {
+    "ref_id": "R-e29ef8ff1682",
+    "kind": "OBSERVATION",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:539891d294aa2f1a148a382b27c976dc34cc7e51fd6b6bdaa2dbb79656cd5b67",
+    "source": "OBSERVATION:obs_c9021f995141e931d6b81bf5"
+   },
+   {
+    "ref_id": "R-e70837c9fca5",
+    "kind": "RECEIPT",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:753777f363043e2bc507d17682d8c96134ab2c34585f603232cccd9b856b906d",
+    "source": "EVENT:evt_a445539b5dd9053462b48805"
+   },
+   {
+    "ref_id": "R-efcc88201e85",
+    "kind": "ENCOUNTER",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:22d5992cde96b00673e7060a26d5821657959190d0f62d1cd28c512aa1aa2b9c",
+    "source": "ENCOUNTER:ENC-archaeon-h1h0-dd99b27cd86ef889"
+   }
+  ],
+  "ENC-archaeon-h1h0-e987504520e70651@exp_71bf2c67474250db77e114ee:wrk_fe02e6143a6ab0bb786d4322": [
+   {
+    "ref_id": "R-2058d259723f",
+    "kind": "EXPERIMENT",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:38365102643c91368f116f9130b31f0115ca35cd4ca388629d3498cca9b10a31",
+    "source": "EXPERIMENT:exp_71bf2c67474250db77e114ee"
+   },
+   {
+    "ref_id": "R-5f4e99efed47",
+    "kind": "RECEIPT",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:77d54bed9ea45a39a90bf164766884021d4a5fa7f77716596f6aba59c2b83c64",
+    "source": "EVENT:evt_ed6ba0f5bca9ce593a9f9fa8"
+   },
+   {
+    "ref_id": "R-c7ab7777cc70",
+    "kind": "OBSERVATION",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:5b380f443f6c9913f37c927ea767591a2e8776697e7695d68cdcb1541bbe42bf",
+    "source": "OBSERVATION:obs_2f0f684ebe729aae596c3b3b"
+   },
+   {
+    "ref_id": "R-f273c500696b",
+    "kind": "ENCOUNTER",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:6624d2e4bf99f395cedfb5859270e536776bb28bd5e6497051b1fec25c06bce2",
+    "source": "ENCOUNTER:ENC-archaeon-h1h0-e987504520e70651"
+   }
+  ],
+  "ENC-archaeon-h1h0-f43df38247b7115c@exp_aaba906f136e392ee9143207:wrk_55917fcbd2ab4a09cddfd485": [
+   {
+    "ref_id": "R-0d0098013be2",
+    "kind": "ENCOUNTER",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:21033a89f1624d48bd332581ccd3cb52d60ff8b8c07eb4ee6e26c41a484a47b3",
+    "source": "ENCOUNTER:ENC-archaeon-h1h0-f43df38247b7115c"
+   },
+   {
+    "ref_id": "R-45a30affffa7",
+    "kind": "OBSERVATION",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:0d21a1cad8a4a076931f12f8c1d4bd8541ab4ed3d26943110513587b8e5d2291",
+    "source": "OBSERVATION:obs_94af98ee7bb0d2a3c0019fb9"
+   },
+   {
+    "ref_id": "R-8af31a900be9",
+    "kind": "RECEIPT",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:b07ba9367b9979171c76b26f72e147e70a7ddae6b80b105c2f112be2e59dc1c6",
+    "source": "EVENT:evt_ef6627cbecf628bbac4bb256"
+   },
+   {
+    "ref_id": "R-995e3805952b",
+    "kind": "EXPERIMENT",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:c552023256bcee57db5fc3125272588302229ac0346a704734455fa67aaab965",
+    "source": "EXPERIMENT:exp_aaba906f136e392ee9143207"
+   }
+  ],
+  "ENC-archaeon-h1h0-fe2f0351dc887ec5@exp_c01ee7167ad9121bba24c46d:wrk_a5273676024a5628380039cb": [
+   {
+    "ref_id": "R-683cbddfc402",
+    "kind": "ENCOUNTER",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:129138a30bb51d6ad8efd7d6fa701062e8cd229aab6d07362f074426cf60bb11",
+    "source": "ENCOUNTER:ENC-archaeon-h1h0-fe2f0351dc887ec5"
+   },
+   {
+    "ref_id": "R-6eef12b8840d",
+    "kind": "OBSERVATION",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:5b4754dc116a98139fc25f2b2ce183a0c0b465db348c5b898fa1734f1bfa3e68",
+    "source": "OBSERVATION:obs_169ecd0f65d5aa123ea33662"
+   },
+   {
+    "ref_id": "R-964418bc675e",
+    "kind": "EXPERIMENT",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:d82f8bc9c7376d8fd5e19fa44ff05dd852cc1beeef927d7b4013b744f56d98e5",
+    "source": "EXPERIMENT:exp_c01ee7167ad9121bba24c46d"
+   },
+   {
+    "ref_id": "R-9d7f6814a751",
+    "kind": "RECEIPT",
+    "subkind": null,
+    "availability": "PRESENT",
+    "digest": "sha256:1d5996061716bf9ee66596bd4f20cda1880ec4a117f7d58c2360b8c2c1c867cf",
+    "source": "EVENT:evt_4373a5fc98f2d34705c3de2f"
+   }
+  ]
+ }
+}

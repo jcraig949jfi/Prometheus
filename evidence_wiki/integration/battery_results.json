@@ -1,5 +1,5 @@
 {
- "ran_at": "2026-09-09T03:09:30",
+ "ran_at": "2026-09-10T12:18:37",
  "n_gates": 16,
  "n_scored": 16,
  "n_pass": 16,
@@ -11,13 +11,13 @@
    "gate": "E0_service_reachable",
    "pass": true,
    "skipped": false,
-   "detail": "200 {'service': 'mnemosyne-evidence-wiki', 'status': 'ok', 'schema_version': 4, 'ontology_version': 2, 'fossil_contract': 'pew.fossil.v2'} in 27ms"
+   "detail": "200 {'service': 'mnemosyne-evidence-wiki', 'status': 'ok', 'schema_version': 4, 'ontology_version': 2, 'fossil_contract': 'pew.fossil.v2'} in 10ms"
   },
   {
    "gate": "E1_version_schema_identity",
    "pass": true,
    "skipped": false,
-   "detail": "schema_version=4 ontology_version=2 fossil_contract=pew.fossil.v2 canonical_revision=17384"
+   "detail": "schema_version=4 ontology_version=2 fossil_contract=pew.fossil.v2 canonical_revision=18355"
   },
   {
    "gate": "S2_server_machine_identity",
@@ -95,15 +95,15 @@
    "gate": "E11_real_run_recorded",
    "pass": true,
    "skipped": false,
-   "detail": "200 duplicate_identical encounter=SFEREAL-exp_a5af9bd7732cc72fc7ea4bfb run=exp_a5af9bd7732cc72fc7ea4bfb:wrk_e97a1363132466b789e42637"
+   "detail": "200 inserted encounter=SFEREAL-exp_44df1e9e9ad88650111d4c00 run=exp_44df1e9e9ad88650111d4c00:wrk_227cab9cfe059643730d1a92"
   },
   {
    "gate": "E12_real_run_reconstructable",
    "pass": true,
    "skipped": false,
-   "detail": "world=wld_eca6b5ad0a2e02a3eaeb478a player=sfe-work:wrk_e97a1363132466b789e42637 run=exp_a5af9bd7732cc72fc7ea4bfb:wrk_e97a1363132466b789e42637 outcome=SURVIVED anchor=sha256:b7d61ab5eda9e7b15..."
+   "detail": "world=wld_2ab587314da21f199d6a9bd6 player=sfe-work:wrk_227cab9cfe059643730d1a92 run=exp_44df1e9e9ad88650111d4c00:wrk_227cab9cfe059643730d1a92 outcome=FALSIFIED anchor=sha256:e9077188f22e71d82..."
   }
  ],
- "real_id": "SFEREAL-exp_a5af9bd7732cc72fc7ea4bfb",
- "real_run": "exp_a5af9bd7732cc72fc7ea4bfb:wrk_e97a1363132466b789e42637"
+ "real_id": "SFEREAL-exp_44df1e9e9ad88650111d4c00",
+ "real_run": "exp_44df1e9e9ad88650111d4c00:wrk_227cab9cfe059643730d1a92"
 }
