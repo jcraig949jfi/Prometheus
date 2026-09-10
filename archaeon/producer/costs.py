@@ -189,10 +189,10 @@ def _engine_method(r: Resource) -> str:
     m = r.method.lower()
     if r.enforcement_class == "unavailable":
         return "declared"
+    if "sum of" in m or "derived" in m or "attributed" in m:
+        return "derived"                 # a roll-up is derived even when it is seconds
     if "perf_counter" in m or "process_time" in m or "clock" in m or r.resource.endswith("_seconds"):
         return "clock"
-    if "sum of" in m or "derived" in m or "attributed" in m:
-        return "derived"
     if "rss" in m or "sample" in m or r.resource == "peak_memory_bytes":
         return "sampler"
     return "counter"
