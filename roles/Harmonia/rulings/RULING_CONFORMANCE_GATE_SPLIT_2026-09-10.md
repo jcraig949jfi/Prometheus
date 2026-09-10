@@ -255,3 +255,70 @@ works. Verified as test 4 above. That is the gate catching a gap in the
 DESCRIPTION rather than a broken engine, which is the distinction the split
 exists for. With the regenerated contract the route is listed and the halt
 clears.
+
+==========================================================================
+# ADDENDUM 2 -- A HOLE IN MY OWN GENERATOR, FOUND BY DAEDALUS'S NEAR-MISS
+
+Daedalus reported that his first scratch engine bound an already-occupied port,
+answered, and reported the SAME `engine_source_hash` as production -- because
+it was another seat's engine running the same code. His own process had died
+with errno 10048. The only tell was `max_artifact_bytes` returning the default
+rather than the flag he passed.
+
+THAT IS A DEFECT IN MY GENERATOR, not a story about his. Before this addendum
+`generate_sfe_contract.py` gated the probe on ONE condition:
+
+    if pv["engine_source_hash"] != ver["engine_source_hash"]: REFUSE
+
+Two engines running the same code report the same hash. So the check could not
+distinguish a disposable scratch engine from ANOTHER SEAT'S PRODUCTION ENGINE,
+and had that address been handed to me, my probe would have registered a client
+and fired a malformed session key at all 67 routes of a ledger I do not own.
+
+The irony is exact and I am recording it against myself. My own IDENTITY_RULE
+says `engine_source_hash` names the BUILD and `engine_instance_id` names the
+LEDGER -- and I then used the build hash as though it identified the instance.
+Necessary, not sufficient: the same necessary-vs-sufficient error I have spent
+the week finding in other people's gates, sitting in mine.
+
+## THE FIX: THREE CONDITIONS, AND THE INSTANCE ONE IS DECISIVE
+
+    1  probe build hash MUST MATCH live      (unchanged -- scoping must be
+                                              derived at the right build)
+    2  probe engine_instance_id MUST DIFFER  (new, decisive -- the probe WRITES,
+       from live                              so it must never be a ledger
+                                              anyone cares about)
+    3  probe base MUST be loopback           (new, default; a LAN address is how
+                                              you reach someone else's engine by
+                                              mistake. --allow-non-loopback-probe
+                                              overrides, deliberately verbose)
+
+Both engines' instance ids and build hashes are now PRINTED before any probe
+runs, so the human sees what is about to be written to. And the contract itself
+records `scoping_derived_against_instance`, so if scoping is ever derived
+against the wrong engine it is discoverable after the fact instead of invisible.
+
+VERIFIED:
+
+    probe = the SAME ledger as --base     REFUSING ... SAME LEDGER, exit 2
+    probe = production over https         REFUSING ... cannot read, exit 2
+    probe = loopback scratch, other ledger  proceeds; 67 routes, 61 scoped
+    contract records                      live eng_8a37a5d3...,
+                                          scoping_derived_against eng_192d0c56...
+
+A probe base that cannot even be READ is now refused plainly rather than dying
+in a traceback. The probe path deliberately carries no cacert, so an https
+probe base lands there -- previously that exited 1 on an SSL traceback, which
+was safe (nothing was probed) but looked like a crash rather than a decision.
+
+## THE SIX STATES STILL HOLD AFTER REGENERATION
+
+`verify_gate_states.sh` re-run against the regenerated contract: all six PASS.
+
+## STILL OPEN
+
+`deploy/scratch_contract_engine.py` (Daedalus's c817f2d68) is not on origin/main
+as of `ec794a036`, so `verify_gate_states.sh` still points at a running engine
+by URL rather than starting one. Once that script is on main the verification
+becomes self-contained and test 5 stops depending on anyone's terminal -- which
+was his reason for writing it.
