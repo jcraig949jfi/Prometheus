@@ -4,7 +4,10 @@
   "_README": "NECROMANCER PASS #1 (Coeus). Archaeology only: nothing was resurrected, no historical agent was run as an agent. Coeus's own loaders/encoders were executed as INSTRUMENTS (apparatus control, LAW N14) to test its shipped artifacts against the forge ledger on disk. All numbers below are reproducible from dossiers/coeus_evidence/. This dossier OVERTURNS both prior verdicts: the Aug-2026 autopsy null (NO-DESIGN-FAILURE) rested on a vacuous observable, and the Jun-2026 RETIRE rested on an untested 'decorative-causal' assertion that turns out to be true but for a different reason than stated.",
   "identity": {
     "agent_id": "Coeus",
-    "aliases": ["coeus", "causal intelligence layer"],
+    "aliases": [
+      "coeus",
+      "causal intelligence layer"
+    ],
     "historical_machine": "unknown (registry '?')",
     "historical_kind": "pipeline-stage",
     "historical_operator": "pipeline (Nous -> Coeus -> Hephaestus), 2026-03-25..03-28",
@@ -24,14 +27,22 @@
   "original_organism": {
     "premise": "Which concept triples forge successfully is CAUSED by identifiable concept-level properties; learning those properties from the forge ledger and feeding them back as priority scores will raise forge yield.",
     "mechanism": "Encode each Nous concept triple as 122 concept indicators + 20 field indicators + 4 Nous sub-scores; join to the Hephaestus forge ledger (status forged/scrap); fit per-concept 'forge_effect' and pair 'synergy' (NOTEARS/DAGMA intended; shipped artifact is the Lasso(alpha=0.01) fallback, graph.method='lasso_regression'); publish concept_scores.json; Hephaestus adds sum(forge_effect)+sum(pair_synergy) to the Nous composite when sorting the forge queue.",
-    "producers": ["Nous (concept triples + composite score)", "Hephaestus (forge ledger outcome)"],
-    "inputs": ["agents/nous/runs/*/responses.jsonl", "hephaestus.load_ledger() over agents/hephaestus/forge/*.json"],
+    "producers": [
+      "Nous (concept triples + composite score)",
+      "Hephaestus (forge ledger outcome)"
+    ],
+    "inputs": [
+      "agents/nous/runs/*/responses.jsonl",
+      "hephaestus.load_ledger() over agents/hephaestus/forge/*.json"
+    ],
     "outputs": [
       "graphs/causal_graph.json (95 concept_influence, 50 pair_synergy, 0 confounders, [] dagma_divergences, 85 'interventional')",
       "graphs/concept_scores.json (95 influence, 1009 synergy, 97 adversarial_survival, 30 goodhart_indicators)",
       "enrichments/*.json (4031)"
     ],
-    "intended_consumers": ["Hephaestus _forge_priority() at queue-sort time"]
+    "intended_consumers": [
+      "Hephaestus _forge_priority() at queue-sort time"
+    ]
   },
   "observed_history": {
     "run_period": "graph built 2026-03-27 06:49 -0400 (commit 5573808c7) on 4031 observations / 352 forged; Nous data 2026-03-24..03-28; forge ledger 2026-03-24..05-28",
@@ -42,8 +53,15 @@
       "Forge-day base rates (excl. api failures): 03-25 58%, 03-26 23%, 03-27 10.5%, May 2-3%",
       "Apparatus control: coeus.load_all_nous / causal_graph._encode_dataset / hephaestus.load_ledger all execute today (with an openai stub); X shape (5727,126)"
     ],
-    "artifact_counts": {"enrichments": 4031, "graphs": 3, "concept_influence_entries": 95, "pair_synergy_entries": 1009},
-    "actual_consumers": ["Hephaestus _forge_priority(): wired 2026-03-25 (commit da42cc7e0), executes; NO record of its effect on forge yield exists (ledger stores no priority/rank field; no A/B was run)"],
+    "artifact_counts": {
+      "enrichments": 4031,
+      "graphs": 3,
+      "concept_influence_entries": 95,
+      "pair_synergy_entries": 1009
+    },
+    "actual_consumers": [
+      "Hephaestus _forge_priority(): wired 2026-03-25 (commit da42cc7e0), executes; NO record of its effect on forge yield exists (ledger stores no priority/rank field; no A/B was run)"
+    ],
     "consumption_evidence": [
       "engine/queues/CONSUMPTION.jsonl: 1 row mentioning Coeus (2026-08-20 autopsy batch). The CONSUMER of record is the autopsy ledger, not the forge.",
       "hephaestus.py L1122-1124 sorts filtered results by _forge_priority(r, coeus_scores): behavioural wiring confirmed by both the P47 autopsy and this pass"
@@ -87,9 +105,15 @@
       "The forge-day base-rate series (58%/23%/10.5%/2-3%) as a Hephaestus instrument-drift record",
       "Ledger scrap-reason histogram: api_call_failed is 2553/~4700 post-03-27, a Hephaestus RESOURCE fact, not a Coeus fact"
     ],
-    "salvageable_schemas": ["concept_scores.json shape (concept_influence/pair_synergy/adversarial_survival/goodhart_indicators) is a fine scorer contract if the values were validated"],
-    "salvageable_operators": ["forge-queue priority seam in hephaestus._forge_priority: accepts any scorer dict with the same shape"],
-    "salvageable_tests": ["reorder-null (random-noise position-change baseline): should be applied to every 'consumption reorders X' claim in AGENT_AUTOPSIES.jsonl"],
+    "salvageable_schemas": [
+      "concept_scores.json shape (concept_influence/pair_synergy/adversarial_survival/goodhart_indicators) is a fine scorer contract if the values were validated"
+    ],
+    "salvageable_operators": [
+      "forge-queue priority seam in hephaestus._forge_priority: accepts any scorer dict with the same shape"
+    ],
+    "salvageable_tests": [
+      "reorder-null (random-noise position-change baseline): should be applied to every 'consumption reorders X' claim in AGENT_AUTOPSIES.jsonl"
+    ],
     "representation_hints": [
       "Any Nous->forge scorer must hold out by FORGE TIME (judge version + API health), not by Nous run; filter api_call_failed/validation-runtime rows from y; publish the chance floor and a >=200-draw permutation null.",
       "The forge ledger should record judge/battery version and API status as first-class fields so outcome can be conditioned rather than fingerprinted."
@@ -113,7 +137,10 @@
       "No causal vocabulary: report held-out AUC and precision@10% vs published chance floor with a 500-draw label-permutation null",
       "Positive control: a decoy feature that IS the forge batch id must reach AUC ~1.0 (proves the harness can see batch); negative control: permuted concept labels must sit in the null"
     ],
-    "preserved_mechanism": ["causal_graph._encode_dataset design matrix", "hephaestus._forge_priority seam shape"],
+    "preserved_mechanism": [
+      "causal_graph._encode_dataset design matrix",
+      "hephaestus._forge_priority seam shape"
+    ],
     "consumer": "engine/necropolis (this dossier -> TRUE_CORPSE or PREMISE_ALIVE update) and, only if alive, hephaestus._forge_priority via a validated concept_scores.json",
     "consumption_proof": "engine/queues/CONSUMPTION.jsonl row {object: coeus-d1 result, consumed_by: dossiers/coeus.dossier.json disposition update} plus, if alive, a forge run whose ledger rows carry a priority_source field",
     "expected_if_alive": "Batch-2 held-out concepts-only AUC > 97.5th percentile of the 500-draw null AND precision@10% > 1.5x batch-2 base rate, with the batch-id decoy at ~1.0 and permuted labels in the null",
@@ -147,9 +174,11 @@
     "unresolved_questions": [
       "Independent re-run of coeus_attacks.py by a second lens (LAW N13); the kill is single-investigator.",
       "Separate judge-version from API-health as the forge-day driver (both change 2026-03-27).",
-      "Hephaestus dossier owes: why api_call_failed is a 'scrap' outcome rather than an excluded row; why the ledger stores no priority/rank or battery-version field.",
-      "Apply the reorder-null to every other 'consumption reorders/changes X' claim in AGENT_AUTOPSIES.jsonl (Keeper task, not Coeus-specific)."
+      "Hephaestus dossier owes: why api_call_failed is a 'scrap' outcome rather than an excluded row; why the ledger stores no priority/rank or battery-version field."
     ],
-    "created": "2026-09-10"
+    "created": "2026-09-10",
+    "_discharged": [
+      "2026-09-10 Keeper sweep: reorder-null applies to no other AGENT_AUTOPSIES.jsonl record; regex over evidence+boundary_localization for reorder|positions change|rank hits only Coeus (vacuous) and Telos (pick-distribution collapse onto 2 f-ids: a genuine coverage measurement, not a reorder claim)."
+    ]
   }
 }
