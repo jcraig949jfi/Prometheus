@@ -10,6 +10,8 @@ records the reason it was regenerated.
 """
 from __future__ import annotations
 
+from herakles.workspace import assert_not_canonical
+
 import argparse
 import io
 import json
@@ -56,6 +58,8 @@ def build():
 
 
 def main(argv=None):
+    # D-23: refuse to run from the canonical checkout.
+    _ws = assert_not_canonical("regenerate the golden fixture")
     ap = argparse.ArgumentParser()
     ap.add_argument("--reason", required=True,
                     help="why this fixture is being regenerated")
