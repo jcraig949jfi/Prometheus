@@ -30,7 +30,21 @@ from ew import workspace  # noqa: E402
 workspace.assert_not_canonical("run a PEW battery")
 FIXTURE = json.loads((HERE / "integration" / "fixture_harmonia_v1.json")
                      .read_text(encoding="utf-8"))
-SFE_DB = HERE.parent / "SerendipityFoundry" / "SerendipityFoundryEngine" / "var" / "engine.db"
+def _sfe_db():
+    """The SFE ledger is RUNTIME state, not tree content: it exists only where
+    the engine runs, so a worktree has none (D-23). Reading the canonical
+    checkout is permitted -- the invariant forbids mutating it, not reading it.
+    Override with PEW_SFE_DB."""
+    env = os.environ.get("PEW_SFE_DB")
+    if env:
+        return Path(env)
+    local = HERE.parent / "SerendipityFoundry" / "SerendipityFoundryEngine" / "var" / "engine.db"
+    if local.exists():
+        return local
+    return Path(r"F:\Prometheus") / "SerendipityFoundry" / "SerendipityFoundryEngine" / "var" / "engine.db"
+
+
+SFE_DB = _sfe_db()
 
 R = []          # gate results
 
@@ -365,8 +379,11 @@ def main():
     # E11 --------------------------- one REAL player-run-shaped record
     real = real_sfe_run()
     if real is None:
-        gate("E11_real_run_recorded", False, "no SFE ledger available")
-        gate("E12_real_run_reconstructable", False, "skipped (E11)")
+        gate("E11_real_run_recorded", False,
+             f"SFE ledger not available at {SFE_DB} -- dependency missing, "
+             "mechanism not exercised", skipped=True)
+        gate("E12_real_run_reconstructable", False,
+             "skipped (E11): no ledger to reconstruct from", skipped=True)
         return finish(real_id=None)
     rw = c.post("fossil/encounters", real)
     ok = rw.status_code == 200 and rw.json().get("status") in (
