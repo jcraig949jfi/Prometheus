@@ -27,10 +27,17 @@ SCHEMA_VERSION = "nyx.chop/0"
 
 SCALES = ("SYSTEM", "SUBSYSTEM", "MECHANISM", "PRIMITIVE", "PARAMETERIZATION")
 COST_CLASSES = ("CPU_SCALE", "MODEL_INFERENCE", "MIXED", "unknown")
-# Evidence grades for provenance sources. T1: a committed artifact in this repository
-# (receipt, lock, test, row) or a resolver-verified DOI/commit. T2: a remembered
-# citation not yet resolved. T3: hearsay (a summary of a summary). unknown: none.
-GRADES = ("T1", "T2", "T3", "unknown")
+# Evidence grades for provenance sources (operator ruling NYX-25, 2026-09-11: the grade
+# travels with the artifact; admission to the parts bin is not validation; never upgrade
+# a grade because a descendant later performs well).
+#   T1-LOCAL   locally observed or reproduced: a committed receipt, run, test or row here
+#   T1-SOURCE  verified primary source or code: a resolver-checked DOI, a pinned commit
+#   T1         unsplit (records written before the ruling; MAP-Elites v0); read as
+#              "one of the two above, see the ref text"
+#   T2         literature or history attribution not independently verified
+#   T3         Nyx inference or conjectured decomposition; hearsay
+#   unknown    none
+GRADES = ("T1-LOCAL", "T1-SOURCE", "T1", "T2", "T3", "unknown")
 SPECIMEN_STATES = ("QUEUED", "OPEN", "DELIVERED", "REVISED", "PARKED")
 LINEAGES = (  # charter section I, verbatim classes
     "program synthesis", "theorem proving", "symbolic reasoning", "constraint solving",
