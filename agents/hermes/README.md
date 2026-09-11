@@ -1,3 +1,16 @@
+> HISTORICAL (annotated 2026-09-11 by the Hermes seat, not rewritten).
+> Everything below describes the March-April 2026 digest agent, which was
+> formally DEPRECATED on 2026-05-17 (pivot/hermes_deprecation_2026-05-17.md)
+> in favour of scripts/send_brief_email.py, and whose call was removed from
+> pronoia.py at the same time. It ran 2026-03-23 to 2026-04-01 and produced
+> the 60 digests under digests/, which are retained as residue. Do not
+> follow the Setup or Usage sections: the credential handling they describe
+> is superseded by the base role (never read, print, commit or paste a
+> credential) and by the project's CLAUDE.md, and the Pronoia chain they
+> place this agent in no longer exists. The current seat, its lane and the
+> classification of this agent's old queue are at roles/Hermes/ --
+> RESPONSIBILITIES.md and ARCHAEOLOGY_2026-09-11.md.
+
 # Hermes — The Messenger
 
 > *Hermes, messenger of the gods. He carries word between Olympus and the mortal world.*

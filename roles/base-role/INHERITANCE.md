@@ -25,6 +25,7 @@ Every role below carries the banner on its primary document(s):
 | EvolutionaryArchitectAndReasoningSpeciesEngineer | RESPONSIBILITIES.md (already) |
 | Harmonia | RESPONSIBILITIES.md (already), CHARTER.md (already) |
 | Hephaestus | ROLE.md (already) |
+| Hermes | RESPONSIBILITIES.md (created with the banner, 2026-09-11 adoption pass; the seat had no roles/ directory before, and was deprecated 2026-05-17 before the register existed) |
 | Talos | RESPONSIBILITIES.md (already); agents/talos/CHARTER.md (already) |
 | Nyx | RESPONSIBILITIES.md (already) |
 | Icarus | RESPONSIBILITIES.md (already) |
@@ -74,6 +75,7 @@ BOOTSTRAP.md if the seat has one, else STARTUP.md, RESPONSIBILITIES.md, ROLE.md,
 | EvolutionaryArchitectAndReasoningSpeciesEngineer | RESPONSIBILITIES.md |
 | Harmonia | RESPONSIBILITIES.md |
 | Hephaestus | RESPONSIBILITIES.md |
+| Hermes | RESPONSIBILITIES.md |
 | Talos | RESPONSIBILITIES.md |
 | Nyx | RESPONSIBILITIES.md |
 | Icarus | RESPONSIBILITIES.md |

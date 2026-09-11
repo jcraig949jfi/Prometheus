@@ -1,0 +1,47 @@
+# Hermes backlog (schema: roles/Archaeon/prompts/2026-09-10_backlog/00_BACKLOG_SCHEMA.md)
+
+> Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md (operator, D-23, 2026-09-11); this file adds to them and may not contradict them.
+
+Currency: 2026-09-11, written on the adoption pass. 25 rows, priority
+order. The first five are what this seat starts next pass; nothing on
+this list was started today, by operator instruction. XL rows are the
+operator's queue and are stated with a recommendation, never as an open
+question.
+
+Format:
+  ID | item | lane | milestone | size | blocked_on | evidence of done
+
+HERMES-01 | Write a freshness and payload record for every send: last_input_at, last_success_at, payload sha256, recipient count, no-op reason, to a committed JSON readable without running the mailer | TOOLS | alpha | S | none | roles/Hermes/ops/delivery_ledger.json exists with a schema doc and one row written by a --dry-run send
+HERMES-02 | Add the unchanged-payload and staleness guards to scripts/send_brief_email.py: refuse to send a payload byte-identical to the last send, and state the payload's age on its face when it exceeds its producer's cadence | TOOLS | alpha | S | HERMES-XL-1 | a test that a second --dry-run of the same brief reports NO_OP and exits without SMTP, and a test that a 61-hour-old brief renders an explicit age line
+HERMES-03 | Annotate agents/hermes/README.md as HISTORICAL at its top without rewriting it, pointing at the deprecation note and this seat's archaeology | TOOLS | alpha | S | none | the annotated file committed, diff limited to a prepended block
+HERMES-04 | Build the three controls for the delivery instrument: negative (no producer output, must report NO_INPUT not success), positive (a genuinely new brief, must send), cheat (a brief whose only change is its timestamp, must be reported as a no-op) | TOOLS | alpha | M | HERMES-01 | roles/Hermes/science/test_delivery_controls.py green, with the cheat fixture committed
+HERMES-05 | Add the D-23 startup guard (archaeon.workspace.assert_not_canonical) to every entry point this seat owns | TOOLS | alpha | S | HERMES-XL-1 | scripts/send_brief_email.py refuses to run from the canonical checkout, with a test
+HERMES-06 | Rebuild or remove the References catalog: generate pointers from roles/ and MONITORS.md at run time instead of the 2026-05 AGENT_REFS registry, whose five entries route to stale or missing documents | TOOLS | beta | M | HERMES-XL-1 | a test that every URL the email emits resolves to a path present at the SHA being reported, and the AGENT_REFS literal deleted
+HERMES-07 | Rewrite the TL;DR line from live sources (comms who, MONITORS.md states, git HEAD) instead of the retired Redis heartbeat fields | TOOLS | beta | M | HERMES-06 | a rendered TL;DR committed as a fixture beside the query that produced each fragment
+HERMES-08 | Verify from the sending host whether the mailer is still running, and record the answer with the command that produced it; UNKNOWN is an acceptable committed answer, "active" from a registry label is not | TOOLS | alpha | S | operator (access to M3 / M4) | roles/Hermes/ops/mailer_location_2026-09-NN.md naming host, process, schedule and last send, or the explicit UNLOCATED finding
+HERMES-09 | Publish the seat's delivery contract as a committed document: what a payload must carry to be deliverable, what Hermes refuses, what it never edits | TOOLS | alpha | S | none | roles/Hermes/contracts/delivery_contract_v0.json plus the prose beside it
+HERMES-10 | Keep the MONITORS.md rows this seat owns current at every boot, including the producer row it does not own but depends on | TOOLS | program | S | none | the rows carry a date and a measured freshness value on each pass, visible in the diff
+HERMES-11 | Measure the payload-identity base rate: over the committed history of docs/portfolio_brief.md, how many consecutive versions were substantively identical, so the no-op guard has a published chance floor before it is trusted | EVIDENCE | beta | M | none | roles/Hermes/ledgers/payload_identity_base_rate.json with the command, the eligible count and the INDETERMINATE branch
+HERMES-12 | Preregister, in its own commit, what the delivery instrument would have to show to be called working, before any measurement of it runs | EVIDENCE | alpha | S | none | roles/Hermes/science/PREREG_delivery_v0.md committed ahead of HERMES-04's results
+HERMES-13 | Write the calibration ledger forward: every send-related call this seat gets wrong is appended with the date and the evidence that overturned it | EVIDENCE | program | S | none | calibration/CALIBRATION.md gains rows with dates, never edits old ones
+HERMES-14 | Record the credential inventory by EXISTENCE only (which HERMES_ variables a host must supply, which file supplies them), reading no value, and cite the rule that forbids reading it | TOOLS | alpha | S | none | roles/Hermes/ops/credential_requirements.md listing variable names and the presence check command, zero values
+HERMES-15 | Decide and document what Hermes does when the producer is dead: hold, send with an explicit staleness banner, or send a one-line DEAD notice instead of the payload | TOOLS | beta | S | HERMES-09 | the branch implemented with a test per case and the choice argued in the contract
+HERMES-16 | Give the delivery ledger a dormancy alarm with a named route, so a mailer that stops is visible without anyone opening an inbox | TOOLS | beta | S | HERMES-01 | the alarm predicate committed with its threshold and the route named in MONITORS.md
+HERMES-17 | Archive the 60 March-April digests with an index so the residue is navigable rather than merely present | EVIDENCE | beta | S | none | roles/Hermes/archive/digests_index.md listing date, size and the four sources each digest drew on
+HERMES-18 | Audit whether anything in the current program still reads agora.intelligence_outputs or agora.agent_heartbeats, and record the answer, since the May email depends on both | TOOLS | beta | S | none | roles/Hermes/ops/agora_dependency_audit.md with the grep and the row counts, dated
+HERMES-19 | Post the producer-dormancy finding to the seat that owns the portfolio lineage once the operator names one, through comms, with the measurement attached | TOOLS | alpha | S | HERMES-XL-2 | the comms message id and the committed body file under roles/Hermes/prompts/
+HERMES-20 | Write the seat's own review packet for this adoption pass in the ASCII paste-block form and commit it | EVIDENCE | alpha | S | none | roles/Hermes/REVIEW_PACKET_2026-09-NN.md, pure ASCII, verified with the grep in the base role section 4
+HERMES-21 | Test that the mailer degrades correctly when Postgres is unreachable, since three of its sections query it and the May code paths were never tested without it | TOOLS | beta | S | HERMES-XL-1 | a test with the connection refused, asserting a sent email with the sections omitted and the omission stated
+HERMES-22 | State, with a measurement, whether GitHub Pages is still serving the dashboard the email links to, since its content stopped updating 2026-09-09 | TOOLS | beta | S | none | roles/Hermes/ops/pages_liveness_2026-09-NN.md with the fetch, the status and the served timestamp
+HERMES-23 | Ask, and answer with evidence, whether the operator wants any standing email at all in the current program, or whether the last hop should be the paste block in chat | EVIDENCE | beta | S | HERMES-XL-1 | the question posed in a committed prompt with the seat's recommendation and the operator's answer recorded beside it
+HERMES-24 | Retire this backlog's obsolete rows at each boot rather than carrying them, with the commit that closed each named | TOOLS | program | S | none | the diff shows deletions with dates, per the base role's session-close rule
+
+## XL rows -- the operator's queue
+
+HERMES-XL-1 | Confirm or overrule: seating Hermes on 2026-09-11 gives this seat ownership of scripts/send_brief_email.py and the HERMES_* namespace, as an instrument, not a revival of the March digest agent | TOOLS | alpha | XL | operator decision (NEW: propose as D-nn) | the ruling recorded in archaeon/docs/expansion/DECISIONS.md or in a committed operator reply; recommendation YES, argued in ARCHAEOLOGY section D
+HERMES-XL-2 | Name an owner for scripts/intelligence_loop.py, the producer of docs/portfolio_brief.md, dead since 2026-09-09T02:15Z, or retire it with its residue navigable | TOOLS | alpha | XL | operator decision (NEW: propose as D-nn) | the MONITORS row gains an owner or a retirement annotation; recommendation NOT Hermes, argued in ARCHAEOLOGY section D
+HERMES-XL-3 | Rule on where Hermes is seated, given that the machinery it owns runs on M3 or M4 and this seat booted on M2 | TOOLS | alpha | XL | operator decision (NEW: propose as D-nn) | the host named in STATUS.md with the access route; until then HERMES-08 returns UNLOCATED and every claim about the mailer's state stays UNKNOWN
+
+## Added after the rows above, on the same pass
+
+HERMES-25 | Report to comms' owner that the connection resolver selects a database by NAME: on M2 it resolves prometheus_fire to the local fork, which lacks the comms schema, and `comms init` would mint a silently forked program inbox that passes every name check | TOOLS | alpha | S | Archaeon (comms) and Mnemosyne (substrate) | the committed prompt body under roles/Hermes/prompts/ and its comms message id, plus the fix landing as a capability check (does this connection carry comms.agents) rather than a host default
