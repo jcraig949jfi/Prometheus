@@ -1,8 +1,8 @@
 {
- "candidate_set_id": "cs-c3-2",
- "indexed_at": "2026-09-11T14:54:15",
+ "candidate_set_id": "cs-h1h0-1-p2b",
+ "indexed_at": "2026-09-11T14:55:17",
  "namespace": "prod",
- "command": "python ops/index_candidate_sets.py --candidate-set cs-c3-2 --namespace prod",
+ "command": "python ops/index_candidate_sets.py --candidate-set cs-h1h0-1-p2b --namespace prod",
  "all_statuses": false,
  "workspace": {
   "base_sha": "81ab7c7dc1bd767b05e3e1b528aad47c447de535",
@@ -11,26 +11,26 @@
   "dirty": true
  },
  "counts": {
-  "rows_total": 150,
-  "rows_completed": 149,
-  "rows_skipped": 1,
+  "rows_total": 48,
+  "rows_completed": 48,
+  "rows_skipped": 0,
   "rows_by_status": {
-   "completed": 149,
-   "failed": 1
+   "completed": 48
   },
   "rows_indexed_non_completed": 0,
-  "refs_inserted": 168,
-  "refs_duplicate_identical": 428,
+  "refs_inserted": 60,
+  "refs_duplicate_identical": 192,
   "refs_conflict": 0,
   "refs_rejected": 0
  },
  "refs_by_kind": {
-  "EXPERIMENT": 149,
-  "OBSERVATION": 149,
-  "ENCOUNTER": 149,
-  "RECEIPT": 149
+  "EXPERIMENT": 48,
+  "OBSERVATION": 48,
+  "ENCOUNTER": 48,
+  "RECEIPT": 48,
+  "ARTIFACT": 60
  },
- "artifacts_present": 0,
+ "artifacts_present": 60,
  "rows_with_unresolved_references": [],
  "n_rows_with_unresolved_references": 0,
  "errors": [],
@@ -41,5 +41,5 @@
   "reproduction_state": "benchmark-attempted for a completed executed row"
  },
  "reference_only": "every digest is engine-supplied on the queue row; no scientific bytes were read, copied or recomputed",
- "seconds": 15.8
+ "seconds": 8.3
 }
