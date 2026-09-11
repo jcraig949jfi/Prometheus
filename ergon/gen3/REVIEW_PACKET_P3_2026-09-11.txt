@@ -1,0 +1,243 @@
+================================================================================
+EXTERNAL REVIEW PACKET
+ERGON PROJECT 3 -- IS THE INHERITED MRU RETENTION RULE HARMFUL?
+================================================================================
+Prepared:        2026-09-11   frozen (rows and verdict in one commit)
+Location/Code:   ergon/gen3/ (p3_analyze.py, p3_common.py, p3_run.py,
+                 mde_p3.py, gatefire_p3.py, cheat_control.py,
+                 cheat_control_n100.py); frozen runner ergon/gen1b/gen1_run.py
+Artifacts:       ergon/gen3/p3_results.json (verdict + 100 deltas),
+                 ergon/gen3/p3_results/ (400 row/summary files),
+                 PREREG_P3_MRU_VS_RANDOM.txt (6aa84716a, before any run),
+                 mde_p3.json, gatefire_p3.json, cheat_control.json,
+                 cheat_control_n100.json (727b27f0f, before the prereg)
+Version/Hash:    instrument 727b27f0f -> prereg 6aa84716a -> results TBD
+                 (the SHA of the commit carrying this packet); frozen runner
+                 blob 577125847aabf6a3087d06935e39701cffc751be
+Headline:        RETENTION_POLICY_DOES_NOT_MEASURABLY_MATTER
+                 I3 RANDOM - I0 MRU = +0.55 pp, 95% CI [-0.24, +1.33] pp,
+                 p 0.178, n 100 paired lineages; bounded null both sides
+                 of T = 2.00 pp. Gen-1B's +2.78 pp headline falls.
+
+--------------------------------------------------------------------------------
+1. CLAIM UNDER REVIEW
+--------------------------------------------------------------------------------
+The Tier A gate packet (c3797f865) left one discriminating experiment after
+Project 1 bounded "selection beats churn" to a null: is the inherited MRU
+eviction rule ACTIVELY HARMFUL (any churn beats it), or was Gen-1B's I1 - I0
+= +2.78 pp (n 30) a marginal contrast that would not replicate on either
+leg? The preregistered falsifier of "MRU is harmful": I3 - I0 fails to
+reach T = 2.00 pp with p < 0.05. The preregistered falsifier of "retention
+policy does not matter": the 95% CI leaves (-2.00, +2.00) pp.
+
+Result: the CI [-0.24, +1.33] pp lies inside (-2, +2). MRU is not harmful
+at a strategically meaningful scale, and neither leg of the Gen-1B
+headline survives at n 100.
+
+--------------------------------------------------------------------------------
+2. METHOD / SUBSTRATE
+--------------------------------------------------------------------------------
+Consumer: the D-5 organism (agent_d5_blind/): boolean genotypes over a
+64-element domain, frozen search core m1.m1_rx, frozen admission
+m1.admissions, library cap 64, budget 30,000 evaluations per task, the
+frozen 42 non-control tasks (families F1-F4). No model judgement anywhere
+in the inference path.
+
+Arms (the only treatment is eviction):
+    I0  D5_BASELINE_MRU   evict the oldest resident (inherited D-5 rule)
+    I3  RANDOM            evict a uniformly random resident
+
+Runner: ergon/gen1b/gen1_run.py, UNCHANGED since Gen-1B (blob 5771258...),
+called verbatim through ergon/gen3/p3_common.py; lineages distributed over
+an 8-process pool (each lineage is an independent unit with seeds that are
+pure functions of its index, so the pool changes no number). Pairing:
+lineage L uses nav_base 200000 + 1000 L in both arms. Seed space L in
+300..399, disjoint from Gen-1B (0..29), Project 1 (100..199) and the cheat
+controls (200..299).
+
+--------------------------------------------------------------------------------
+3. GROUND TRUTH / KEY DEFINITIONS
+--------------------------------------------------------------------------------
+Solved: the fast oracle distance reaches 0 and the authoritative oracle
+agrees (asserted in m1._Ctx.d). CFR: fraction of the 42 tasks solved within
+budget, per lineage. T = 2.00 pp: one task in forty-two, inherited from
+PREREG_P1 section 2 so the two bounded nulls are comparable. Verdict labels
+and their consequences: PREREG_P3 section 5, written before the run.
+
+--------------------------------------------------------------------------------
+4. INSTRUMENT SHOWN ABLE TO FIRE, BEFORE THE PREREG (727b27f0f)
+--------------------------------------------------------------------------------
+Check                              Result                          Pass
+--------------------------------   -----------------------------   ----
+MDE under the frozen rule, n 100   sigma 0.0429 (larger of Gen-1B  yes
+                                   I3-I0 SD 0.0363, P1 I1-I3 SD
+                                   0.0429); MDE80 1.22 pp, MDE90
+                                   1.41 pp; expected SE 0.43 pp;
+                                   T is 4.7 SE from zero; power
+                                   at T 0.995
+Gate-fire worlds (constructed      HARMFUL -> MRU_HARMFUL          5/5
+library simulator, exact path)     HARMLESS -> DOES_NOT_MATTER
+                                   MRU_BETTER -> MRU_BETTER
+                                   TIED -> INDETERMINATE
+                                   SHORT n 50 -> INDETERMINATE
+Determinism (I0 vs I0, same seeds) 30/30 pairs tied                yes
+Cheat, two planted witnesses n 30  MRU_HARMFUL +6.67 pp p 0.00002  yes
+Cheat, one planted witness n 30    INDETERMINATE: SE 1.04 pp >     NO
+                                   T/2 = 1.00 pp (mean +3.33 pp,
+                                   p 0.0045, plant 30/30)
+Cheat, one planted witness n 100   MRU_HARMFUL +3.38 pp, SE 0.54   yes
+(criterion fixed before the run)   pp, CI [+2.31, +4.43], p
+                                   0.00002, plant 100/100
+
+The n 30 one-witness check FAILED as preregistered and its file stands
+unchanged. Reading: the rule's SE branch is a function of n, and a single
+planted artifact leaves a footprint on later tasks (per-task net change
+over 30 lineages: +30 on the planted task, +12 net across 15 other tasks of
+both signs), giving a per-lineage SD near 5.7 pp -- larger than the 4.3 pp
+between whole arms. At the experiment's n the same SD gives SE 0.57 pp,
+below T/2. The rule was not changed; the control was re-run at n 100 with
+its criterion fixed in the docstring first.
+
+--------------------------------------------------------------------------------
+5. PROCEDURE / STATISTICS (frozen in PREREG_P3, 6aa84716a)
+--------------------------------------------------------------------------------
+Unit of inference: LINEAGE. Contrast: mean of 100 paired deltas I3 - I0
+(positive = MRU worse than churn). Test: two-sided paired sign-flip
+permutation, 50,000 draws, seed 909093. One contrast, no correction.
+CI: 95% percentile bootstrap over lineages, 20,000 draws. INDETERMINATE is
+checked first: eligible pairs < 100, any interpretability assertion failing
+(library size != 64, task count != 42, nav_base differing across arms), all
+pairs tied, or SE > T/2. Fixed length, no interim look, no extension.
+
+--------------------------------------------------------------------------------
+6. PRIMARY RESULT
+--------------------------------------------------------------------------------
+Arm    Policy            Mean CFR   SD       Min     Max
+----   ---------------   --------   ------   -----   -----
+I0     D5_BASELINE_MRU   0.3029     0.0452   0.190   0.381
+I3     RANDOM            0.3083     0.0491   0.190   0.429
+
+Contrast I3 - I0     Value
+------------------   ----------------------------------------------
+mean                 +0.0055  (+0.55 pp)
+SE                   0.0040   (T = 2.00 pp is 4.9 SE from zero)
+95% CI               [-0.24, +1.33] pp
+p (sign-flip)        0.178
+signs                41 positive, 33 negative, 26 tied of 100
+eligible pairs       100 of 100; validity failures: none
+runtime              200 lineage-runs, 13.9 min wall, 8 workers
+
+VERDICT: RETENTION_POLICY_DOES_NOT_MEASURABLY_MATTER (bounded null: the CI
+lies inside (-2.00, +2.00) pp).
+
+Aporia's pre-registered expectation (DISSENT_LEDGER C-A01, before the run):
+NULL; wrong if the contrast clears twice its own SE. Observed 1.4 SE. Held.
+
+--------------------------------------------------------------------------------
+7. CONSEQUENCES (preregistered in section 5 of the prereg, applied)
+--------------------------------------------------------------------------------
+GEN-1B HEADLINE FALLS ....................... annotated, not rewritten
+    ergon/gen1b/ANNOTATION_2026-09-11_headline_falls.md. P1 bounds
+    I1 - I3 to [-1.12, +0.55]; P3 bounds I3 - I0 to [-0.24, +1.33];
+    conservatively I1 - I0 in about [-1.36, +1.88], excluding +2.78.
+    The Gen-1B hazard structure (usefulness does not decay; 44% never
+    credited; 24% revive) is descriptive and is NOT retracted.
+ERGON-06 (measure a deletion) ............... NEEDS_REPREMISE
+ERGON-07 (admission-rule arm) ............... NEEDS_REPREMISE
+    The comparator for a deletion is now keep-everything-to-cap; the live
+    question moves from retrieval ORDER to whether the CAP matters.
+HONEST POSITION: retention policy does not measurably matter in this
+consumer at cap 64 and budget 30,000.
+
+--------------------------------------------------------------------------------
+8. CONTROLS
+--------------------------------------------------------------------------------
+Negative (no hallucinated signal): I0 vs I0 same seeds, 30/30 tied; the
+HARMLESS constructed world called DOES_NOT_MATTER (+0.19 pp).
+Positive / cheat (channel can see the thing): one planted oracle witness
+detected at n 100 (+3.38 pp, p 0.00002); two witnesses at n 30 (+6.67 pp).
+Both directions: MRU_BETTER world called MRU_BETTER_THAN_RANDOM (-6.86 pp).
+INDETERMINATE branch exercised on TIED, SHORT and the n 30 one-witness
+cheat.
+What the controls do NOT show: that the channel can see a 2 pp effect
+carried by ORDER alone; the planted witness is a CONTENT injection. The
+gate-fire HARMFUL world covers order by construction (FIFO vs random on a
+dependency 100 admissions back), but in a simulator, not the real search.
+
+--------------------------------------------------------------------------------
+9. INDEPENDENT VERIFICATION
+--------------------------------------------------------------------------------
+None yet on this run. The seat that built the rule ran it (conflict
+declared in prereg section 8, both directions). The rows are committed so
+p3_analyze.decide can be re-run on them by anyone; Aporia's pre-registered
+prediction is the only independent prior on record. Charon's C1/C2
+executable checks apply to the successor manifest (S1/S2), not yet wired
+here.
+
+--------------------------------------------------------------------------------
+10. KNOWN LIMITATIONS & CAVEATS
+--------------------------------------------------------------------------------
+- One consumer, one cap (64), one budget (30,000), one battery (42 tasks,
+  4 families). "Does not matter" is scoped to that; a cap of 8 or a budget
+  of 3,000 is a different experiment.
+- The library is small relative to the search: the D-5 whole-library
+  effect was +10.95 pp, and the between-arm SD (about 4.5 pp per lineage)
+  is dominated by search noise, so any order effect under 1.2 pp is below
+  MDE80 by design and would be reported UNDERPOWERED only if the CI
+  crossed T.
+- 26 of 100 pairs tied (P1 had 20). Ties are eligible and contribute zero
+  to the sign-flip null; they are reported, not dropped.
+- The planted-witness footprint (section 4) is a weak signal, not a
+  result: a good resident's descendants helped other tasks by about
+  +0.95 pp net. No claim; logged as residue.
+- The 8-process pool: each lineage is seed-determined and independent;
+  verified by the determinism control, not by a serial re-run of P3.
+- The sign-flip null has exact ties on the k/42 lattice: re-deriving p
+  from the 5-decimal-ROUNDED cfr list in p3_results.json gives 0.1895,
+  not 0.1776. p3_results.json therefore also carries the exact integer
+  solved counts (arm_solved_by_lineage); reproduce from those or from
+  p3_results/ directly. Verdict and CI are unaffected.
+
+--------------------------------------------------------------------------------
+11. REPRODUCTION
+--------------------------------------------------------------------------------
+From a worktree at the results commit (python 3.12, no GPU, no spend):
+
+    python -m ergon.gen3.p3_analyze          # re-derives the verdict from
+                                             # ergon/gen3/p3_results/ in ~1 min
+    python -m ergon.gen3.gatefire_p3         # 5 worlds, ~2 min
+    python -m ergon.gen3.mde_p3              # MDE table, ~3 min
+    python -m ergon.gen3.p3_run --workers 8  # full re-run, ~14 min; existing
+                                             # summaries are skipped, so
+                                             # delete p3_results/ first
+    python -m ergon.gen3.cheat_control_n100 --workers 8
+
+Spot check: json p3_results.json -> mean_pp 0.5476, p 0.1776 (from
+arm_solved_by_lineage / 42, not the rounded cfr list), signs
+{pos 41, neg 33, tied 26}; every summary has 64 final artifacts and 42
+task rows; nav_base equal across arms per lineage.
+
+--------------------------------------------------------------------------------
+12. VERDICT / DECISION
+--------------------------------------------------------------------------------
+INDETERMINATE .................................... no
+MRU_HARMFUL ...................................... no
+MRU_HARMFUL_BELOW_USEFUL_SCALE ................... no
+MRU_BETTER_THAN_RANDOM ........................... no
+RETENTION_POLICY_DOES_NOT_MEASURABLY_MATTER ...... YES
+UNDERPOWERED ..................................... no
+
+What would falsify this packet: a re-run of p3_analyze on the committed
+rows giving a different verdict; or an order-only cheat (a constructed
+dependency in the REAL search, not the simulator) that the channel cannot
+see at 2 pp, which would mean the null is an instrument floor rather than
+a property of the consumer.
+What we should stop: designing retention rules for this consumer at this
+cap. The next question is the CAP itself (ERGON-06 re-premised).
+
+Reviewer's bottom line: is a bounded null on ORDER, with the cheat control
+carried by CONTENT, sufficient to retire retention-rule work here -- or does
+the packet owe an order-only cheat first?
+================================================================================
+END OF PACKET
+================================================================================
