@@ -1,0 +1,153 @@
+====================================================================
+LUDUS -- BASE ROLE ADOPTION RECEIPT
+2026-09-11
+====================================================================
+
+1. WHAT I READ, AND AT WHICH SHA
+
+   base role read at   57533fa76 (origin/main at fetch time, ~14:35 UTC)
+   files read in full  roles/base-role/README.md
+                       roles/base-role/NORTH_STAR.md
+                       roles/base-role/RESPONSIBILITIES.md
+                       roles/base-role/WORKING_CONTRACT.md
+                       roles/base-role/INHERITANCE.md
+                       roles/base-role/MONITORS.md
+                       roles/Archaeon/prompts/2026-09-11_workspace/
+                         MISSIVE_ALL_SEATS.md
+                       roles/Archaeon/prompts/2026-09-10_backlog/
+                         00_BACKLOG_SCHEMA.md
+                       comms/README.md
+   also read           roles/Ludus/{ROLE.md, CHARTER.md,
+                       SESSION_LOG_2026-08-31_to_09-01.md,
+                       REVIEW_PACKET_4_2026-09-01_arena.md s3/s7,
+                       CYCLE_005_verdict_demotion.md,
+                       ATLAS_OF_WORLDS.md s6}; ludus/atlas/BACKLOG.md,
+                       CIRCUIT_MATURITY.md, transfer_matrix.json;
+                       ludus/bench/RULES_AUDIT.md, verify.py;
+                       ludus/arena/verify.py;
+                       roles/Proteus/RESPONSIBILITIES.md,
+                       CONSUMER_SURFACE_V0_6.md, HARMONIA_HANDOFF.md,
+                       proteus/contracts/WORLD_INTERFACE.md;
+                       archaeon/docs/expansion/CROSSWALK.md (the 15
+                       entries naming ludus/); roles/Archaeon/
+                       H0H5_STATUS.md; DECISIONS.md (D-3, D-7, D-23..25
+                       headings); the Apollo, Charon and Kairos
+                       adoption artifacts as templates.
+   NOT read            aporia/doctrine/critical_memories.md in full this
+                       pass (the parts the base role cites were read
+                       through the base role). Listed so it is not
+                       implied.
+
+   MY INHERITANCE ROW
+     | Ludus | ROLE.md (already), CHARTER.md (already) |
+   Both carried the banner at 249bb0f98. This pass adds BOOTSTRAP.md
+   (the entry file; INHERITANCE.md entry-file row updated from
+   ROLE.md) and CHARTER_v3_WORLD_FOUNDRY.md, both stamped.
+
+2. WORKSPACE RECEIPT (WORKING_CONTRACT s4)
+
+   worktree_path   F:\Prometheus-worktrees\ludus-base-role
+   branch          ludus/base-role-adopt-2026-09-11  (task branch)
+   base_sha        57533fa767f1d81c8ea5d2db3b6f04717b3c5431
+   dirty           false at creation (0 status lines)
+   guard           git-dir F:/Prometheus/.git/worktrees/ludus-base-role
+                   != git-common-dir F:/Prometheus/.git  -> not canonical
+   machine         M1 (SKULLPORT)
+   worktree add    39,202 files, completed inside a 600 s budget
+   comms boot      recorded: Ludus | claude-opus-5 (heavy) | 57533fa76 |
+                   capabilities WORLDS,H3,EVIDENCE
+   comms sync      1 new (broadcast #1, program notice), 0 queued
+
+   Ludus footprint before this worktree: 0 worktrees, 1 stale local
+   branch (ludus-worktree-holder at 22e7230b1, fully merged), 0
+   scheduled tasks, 0 processes, 0 modified tracked files of Ludus's
+   in the canonical checkout, 2 untracked side files
+   (ludus/atlas_of_worlds/atlas.db-shm 32 KB, atlas.db-wal 0 bytes,
+   both dated 2026-09-01 18:19; listed in Archaeon's
+   CANONICAL_STATUS_2026-09-11.txt lines 103-104).
+
+3. CLEAN-UP OF THE CANONICAL CHECKOUT (missive items a-e)
+
+   a. claimed: the two SQLite side files. Procedure: no process held
+      the database (Win32_Process scan); atlas.db copied to the
+      scratchpad, opened there: journal_mode=wal, integrity_check ok,
+      1,338 worlds / 206 relations / 984 conditions / 2,864 artifacts /
+      249 reviews (matches the 09-01 session log); the WAL was 0 bytes
+      so it held no pages. Deleted atlas.db-wal and atlas.db-shm from
+      the canonical checkout (the one permitted write). atlas.db sha256
+      648aef048d56ff5a4ddf65f77b6c7bd5642d1939b77493ae97e5577a9a14cea5
+      before and after; `git status --short ludus/` in the canonical
+      checkout is now empty. atlas.db itself is NOT tracked (.gitignore
+      *.db) and was copied byte-identical into this worktree so the
+      seat's data travels with it; its home is an XL decision
+      (LUDUS-30). ludus/atlas_of_worlds/.gitignore added (atlas.db-wal,
+      atlas.db-shm) because store.py sets WAL on every connect and the
+      side files are normal while a connection is open.
+   b. stale worktrees of mine: none. merged branches of mine:
+      ludus-worktree-holder deleted (`git branch -d`, was merged).
+   c. long-running processes: none (the atlas cron was cancelled
+      2026-09-01; verified absent from the scheduler and process list).
+   d. startup refusal on entry points I own: NOT DONE on this pass.
+      Ludus entry points (ludus/bench/run.py, loop.py, verify.py;
+      ludus/arena/verify.py; ludus/atlas_of_worlds/crawl.py, deepen.py)
+      have no guard yet. Listed, not hidden; it rides with the first
+      code commit under LUDUS-03/04 (archaeon.workspace is the
+      reference guard).
+   e. this receipt.
+
+4. SEAT FILES CHECKED AGAINST THE BASE ROLE; CONFLICTS ANNOTATED,
+   NOT REWRITTEN
+
+   ROLE.md (v3 2026-08-26, seat method)
+     SUPERSEDED  s3 A1 LLM in-context meter (no LLM in the tick path)
+     PARKED      s7.4 hourly looping in 48 h blocks (base rule 8: no
+                 loop without input + productivity signal)
+     RESTATED    s8 retirement conditions -> reported observations
+                 (nothing is marked dead prematurely)
+     SUPERSEDED  s10 "Next, in order" -> ARCHAEOLOGY_2026-09-11.md
+     annotated at the head and at s8/s10; nothing else edited.
+   CHARTER.md (v2)
+     SUPERSEDED  s3/s37 founding corpus of 30-50 named games as the
+                 first campaign (north star: reproducing a named
+                 artifact is calibration, not the goal; CHARTER_v3 s3)
+     STANDS      s5, s35, s41, s46; listed in CHARTER_v3 s10.
+   No drive letters in Ludus code paths (checked store.py: HERE-
+   relative). No credential anywhere under ludus/ or roles/Ludus/.
+
+5. DEFECTS FOUND ON THIS PASS (ARCHAEOLOGY_2026-09-11.md s C)
+
+   L-1  17 of 21 transfer-matrix worlds never passed bench verify.py
+        ("NO PER-WORLD INVARIANTS WRITTEN"); the committed fidelity
+        ledger covers 4. r0003's PARTNER_ROBUST block was measured in
+        an unverified FOUNDRY world. (Run on this pass; the written
+        rules_fidelity.json was reverted, not committed, because the
+        invariants do not exist yet.)
+   L-2  three world interfaces in one seat.
+   L-3  the 09-01 arena mandate (W0-W8 level names) was never committed
+        verbatim; CHARTER_v3 s5 restates the ladder.
+   L-4  no Ludus row in MONITORS.md (added: NONE by design).
+   L-5  the 09-01 session worked in the canonical checkout.
+
+6. MONITORS (base rule 7, boot step 8)
+
+   Loops owned or fed: none. Row added to roles/base-role/MONITORS.md
+   stating NONE by design, with the condition under which a loop may
+   be created (LUDUS-29).
+
+7. TESTS ON THE MERGED TREE (WORKING_CONTRACT s5)
+
+   archaeon/tests/test_base_role.py  8 passed (11.8 s) at 57533fa76,
+                                     re-run after the edits (see the
+                                     journal for the second result)
+   ludus/arena/verify.py             ALL CHECKS PASS (20 checks)
+   ludus/arena/test_epistemic.py     25 checks, 25 pass
+   ludus/bench/verify.py             4 VERIFIED-INTERNALLY, 17 FAILED
+                                     (L-1; pre-existing, not introduced)
+
+8. WHAT THIS PASS DID NOT DO (by instruction and by rule)
+
+   No world built, no rule audited, no cheat control run, no matrix
+   cell moved, no instrument changed. Guards on entry points deferred
+   (3d). The Evidence Wiki was not queried (LUDUS-18). The first
+   execution is chosen by the operator from BACKLOG_H0H5.md items
+   01-05 after reading REVIEW_PACKET_5_2026-09-11_adoption.txt.
