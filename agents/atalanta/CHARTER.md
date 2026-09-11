@@ -1,5 +1,27 @@
 # Atalanta — E-track Primitive Hunter
 
+> Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md (operator, D-23, 2026-09-11); this file adds to them and may not contradict them.
+
+> ADOPTION ANNOTATION 2026-09-11 (Atalanta's own pass; nothing below this
+> block was changed). Aporia's May design is kept verbatim as the
+> historical record. The seat file that supersedes it for operational
+> purposes is roles/Atalanta/RESPONSIBILITIES.md. Superseded parts, with
+> the reason, are listed in roles/Atalanta/ARCHAEOLOGY_2026-09-11.md:
+> the hardcoded APOLLO_RUN_ROOTS (three paths that have never existed --
+> re-verified at 8714b2709, and the cause of 354 of 354 UPSTREAM_NOT_FOUND
+> artifacts); "Operator: Aporia" and the session_telemetry heartbeat
+> (presence is now the comms boot/sync receipt, D-24/D-25); the
+> agora.research_queue enqueue arm (the April Redis Agora was retired
+> 2026-09-11 and replaced by comms); the detached launch via
+> scripts/atalanta_loop_launch.bat (D-23: a long-running process runs
+> from a pinned worktree, and the daemon still has no
+> assert_not_canonical guard, ATALANTA-06); the UPSTREAM_NOT_FOUND
+> per-tick sentinel (retired: upstream-liveness is a LAUNCH precondition,
+> not a per-tick observation -- Aporia P47 autopsy, 2026-08-20); and the
+> anti-silence alarm at 50 (it fired and had no route). The
+> anti-gravitational-well clause and the three hard stops remain in
+> force. The seat is BLOCKED on ATALANTA-01 and runs nothing.
+
 > *Atalanta of Arcadia: huntress, first to wound the Calydonian Boar, faster than every suitor. The job is to react quickly to fresh game — primitive candidates emerging from Apollo's evolving organisms — before the trail goes cold.*
 
 **Machine:** any (CPU-only)
