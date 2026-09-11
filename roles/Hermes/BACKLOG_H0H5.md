@@ -2,7 +2,7 @@
 
 > Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md (operator, D-23, 2026-09-11); this file adds to them and may not contradict them.
 
-Currency: 2026-09-11, adoption pass plus two further passes the same day. 35 rows, priority
+Currency: 2026-09-11, adoption pass plus three further passes the same day. 40 rows, priority
 order. The first five are what this seat starts next pass. The adoption
 pass started nothing, by operator instruction; the second pass of the same
 day executed the identity-guard assignment (HERMES-26..30 below) and
@@ -64,3 +64,11 @@ HERMES-32 | Instrument one SILENT failure class so it raises, then re-run the pr
 HERMES-33 | Fix or formally bound N4: an absolute path embedded in a message still fragments the key (test_the_key_does_not_depend_on_the_machine_or_the_path asserts the current failure) | TOOLS | beta | S | none | either the rule extended with a test flipped to equality, or the bound written into signature.py as permanent with its reason
 HERMES-34 | Add a sixth and seventh historical case from classes not yet probed (missing dependency, instrument-green-for-wrong-reason) to test whether the 2-of-5 bound holds or loosens | EVIDENCE | beta | M | none | observations.json grows with provenance for every row and probe_results.json reflects the new verdicts
 HERMES-35 | Ask Archaeon to rule on the incident-file home now that the probe is done, and move the directory plus comms.identity.INCIDENT_DIR in one commit if the answer is comms/ | TOOLS | alpha | S | Archaeon | the directory where Archaeon rules, the placeholder note removed from identity.py
+
+## Fourth pass, 2026-09-11 (operator: HERMES-32, instrument one silent failure)
+
+HERMES-36 | Test bound 1 (SCOPE) on a second specimen: find a silent failure whose rule is scoped differently from every fact an instrument could cheaply expose, and see whether conversion fails as the bound predicts | EVIDENCE | beta | M | none | a second experiment with its own preregistration, or the bound withdrawn
+HERMES-37 | CLOSED as answered by HERMES-32 itself: the claim "signature coverage is downstream of instrument coverage" now has two existence proofs (CASE-A raising, CASE-E discriminable) and one measured condition, not one anecdote. Original row was HERMES-32 | EVIDENCE | beta | S | none | roles/Hermes/science/hermes32/RESULT.md
+HERMES-38 | Route workspace attestation to Archaeon IF they want it: two facts on archaeon/workspace.py's existing receipt, and the ablation says only repo_id is needed | TOOLS | beta | S | Archaeon | the routed prompt with the one-field diff, or a recorded decline
+HERMES-39 | Add per-process caching to any production workspace attestation: 88.5 ms per call is real on a 39k-file tree and neither fact changes while a process keeps its cwd | TOOLS | beta | S | HERMES-38 | a timing before and after, committed with the command
+HERMES-40 | Report to Archaeon that `git status --short` on the canonical checkout exceeded 120 s on a cold index today -- the exact hazard WORKING_CONTRACT s3 names, measured rather than argued | TOOLS | alpha | S | none | a comms report with the command and the timeout, or the row withdrawn if it does not reproduce
