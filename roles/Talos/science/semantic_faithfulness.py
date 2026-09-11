@@ -335,14 +335,35 @@ def locate(row):
 
 
 def run_pytest(node_ids, timeout=900):
+    """One pytest invocation PER FILE (repair 2026-09-11, first run: a node id
+    into a module-level-skipped file is a pytest usage error that aborted the
+    whole batch, leaving 90 tests unreported). A file whose run reports no
+    node marks its rows NOT_COLLECTED with pytest's own reason line."""
     if not node_ids:
         return {}, "no tests"
+    by_file = collections.defaultdict(list)
+    for n in node_ids:
+        by_file[n.split("::")[0]].append(n)
+    out_map, tails = {}, []
+    for f, ids in sorted(by_file.items()):
+        m, tail = _run_pytest_batch(ids, timeout=min(timeout, 600))
+        out_map.update(m)
+        tails.append("## {}\n{}".format(f, tail[-600:]))
+    return out_map, "\n".join(tails)[-6000:]
+
+
+def _run_pytest_batch(node_ids, timeout):
     cmd = [sys.executable, "-m", "pytest", "-q", "-rA", "--tb=no", "-p", "no:cacheprovider", "--continue-on-collection-errors", *node_ids]
     try:
         r = subprocess.run(cmd, cwd=str(REPO), capture_output=True, text=True, timeout=timeout)
         out = r.stdout + "\n" + r.stderr
     except subprocess.TimeoutExpired:
         return {n: "TIMEOUT" for n in node_ids}, "timeout"
+    reason = ""
+    for line in out.splitlines():
+        if line.startswith("SKIPPED [") or "found no collectors" in line or line.startswith("ERROR"):
+            reason = line.strip()[:160]
+            break
     res = {}
     for line in out.splitlines():
         m = re.match(r"^(PASSED|FAILED|ERROR|XFAIL|XPASS|SKIPPED)\s+(\S+)", line.strip())
@@ -362,7 +383,7 @@ def run_pytest(node_ids, timeout=900):
                 if rk.endswith(tail):
                     hit = rv
                     break
-        out_map[n] = hit or "NOT_COLLECTED"
+        out_map[n] = hit or ("NOT_COLLECTED: " + reason if reason else "NOT_COLLECTED")
     return out_map, out[-2000:]
 
 
@@ -450,10 +471,8 @@ def controls():
     rel = f.relative_to(REPO).as_posix()
     res, _ = run_pytest([rel + "::test_pass", rel + "::test_fail"], timeout=300)
     checks["execution_PASS_and_FAIL_parsed"] = (res.get(rel + "::test_pass") == "PASS" and res.get(rel + "::test_fail") == "FAIL")
-    try:
-        f.unlink(); d.rmdir()
-    except Exception:
-        pass
+    import shutil
+    shutil.rmtree(d, ignore_errors=True)    # pytest leaves __pycache__ beside the control file
     return checks
 
 
@@ -506,7 +525,9 @@ def main():
         sem_real = sum(1 for x in recs if x["spec_outcome"] == "FAITHFUL" or x["exec"] == "PASS")
         result["families"][fam] = {
             "population": len(pool), "sampled": len(sample),
-            "located": counts("located"), "spec_outcome": counts("spec_outcome"), "exec": counts("exec"),
+            "located": counts("located"), "spec_outcome": counts("spec_outcome"),
+            "exec": dict(collections.Counter(x["exec"].split(":")[0] for x in recs)),
+            "exec_not_collected_reasons": dict(collections.Counter(x["exec"] for x in recs if x["exec"].startswith("NOT_COLLECTED:"))),
             "claims_by_kind_and_result": {"{}|{}".format(k, v): n for (k, v), n in sorted(claim_counter.items())},
             "residue_tags": dict(collections.Counter(t for x in recs for t in x["residue_tags"])),
             "has_oracle_nontest": sum(1 for x in recs if x["has_oracle"]),
@@ -516,7 +537,7 @@ def main():
             "pytest_tail": exec_tail if node_ids else None,
             "rows": recs,
         }
-        print(fam, "sampled", len(sample), "spec", counts("spec_outcome"), "exec", counts("exec"), "real", sem_real, flush=True)
+        print(fam, "sampled", len(sample), "spec", counts("spec_outcome"), "exec", result["families"][fam]["exec"], "real", sem_real, flush=True)
     result["door_shared_parts"]["prometheus_math_modules"] = shared_parts(fam_rows["prometheus_math_modules"])
     result["door_shared_parts"]["prometheus_math_tests"] = shared_parts(fam_rows["prometheus_math_tests"])
     result["elapsed_s"] = round(time.time() - t0, 1)
