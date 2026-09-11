@@ -117,3 +117,82 @@ is to test the simplest explanation first AND to report what separated
 it, and because the INDETERMINATE branch that survives this correction
 (the restarted process was under two hours old at measurement) is stated
 in the finding rather than buried.
+
+## PRON-CAL-006 | 2026-09-11 | this seat, on the survey, caught by its own instrument
+
+BELIEVED, and printed by roles/Pronoia/science/liveness_survey.py in its
+own summary: that 1 of 36 rows in the heartbeat estate is PRODUCTIVE
+(HealthCheck-M4).
+
+TRUE: 0. The script assumes a one-hour cadence for rows that do not
+declare one. HealthCheck-M4 is a five-minute probe whose heartbeat was 42
+minutes old, which is eight missed cadences. Re-run at 5 min and 15 min
+it reads STALLED both times; only the assumed 1 h makes it productive.
+
+SHAPE: an instrument default that flattered the estate, and therefore
+flattered this seat's framing of it -- "one agent is doing it right"
+is a more comfortable headline than "none can be shown to be". The
+cadence assumption was documented in the module docstring from the start
+and still slipped into the printed summary as an unqualified count.
+
+CAUGHT BY: running the same row through derive_health at three cadences
+before writing the report, because the number looked convenient.
+
+STANDING CORRECTION: the survey's PRODUCTIVE count is meaningless without
+a declared cadence per row. The two cadence-independent verdicts
+(NO_WORK_OBSERVED, INCOHERENT) carry the weight instead, and those are
+the ones quoted in the report's headline.
+
+## PRON-CAL-007 | 2026-09-11 | this seat, nearly shipped a wrong registry correction
+
+BELIEVED, briefly: that MnemosyneEvidenceWikiWatchdogM2's freshness
+source did not exist, because `ls evidence_wiki/derived/watchdog.log`
+returned nothing.
+
+TRUE: it exists. The lookup was done in this seat's fresh WORKTREE, where
+evidence_wiki/derived/ is gitignored and therefore absent. In the
+canonical checkout the file is present with a last line from 2026-09-04.
+
+SHAPE: measured the wrong filesystem and was one keystroke from
+publishing "the registry names a path that resolves to nothing" -- which
+is itself one of the named failure modes in the base role's
+verify-the-property section (Herakles: "a path that resolves to nothing
+from where others read"). The finding that survived is different and
+sharper: the file exists and is SEVEN DAYS stale because the script logs
+only failures, so a healthy watchdog and a dead one are observationally
+identical.
+
+CAUGHT BY: noticing that a gitignored directory cannot be expected in a
+fresh worktree, before writing it down.
+
+## PRON-CAL-008 | 2026-09-11 | this seat, three times in one session, on shell mechanics
+
+BELIEVED: that a quoted heredoc would carry Python and Markdown content
+into a file unharmed.
+
+TRUE: it mangled a backslash in a Python string literal twice
+(SyntaxError: unterminated string literal) and then failed to terminate a
+Markdown append once, costing three retries.
+
+SHAPE: the base role says, in the Claude Code section, "Heredocs with
+quotes are unreliable in this shell: write scripts to a file, then run
+them." The rule was read at boot, quoted in this seat's own
+RESPONSIBILITIES pointer list, and then ignored three times in one
+session. Recorded because a constitution one has read and does not follow
+is worse evidence about the reader than one never read.
+
+## PRON-CAL-009 | 2026-09-11 | the standing conflict, restated now that it has teeth
+
+This seat's first active mission produced: a deletion of its own
+historical artifact, a patch to its own running code, and a survey in
+which its own row is one of the specimens.
+
+Every one of those is a place where a favourable finding would serve the
+seat. The guards actually used, so a reader can check whether they were
+real: the ghost's evidence was committed BEFORE it was deleted
+(630f086df) rather than described afterwards; the patch ships with a
+mutation check showing the tests fail when the fix is removed; the
+survey's headline number was corrected DOWNWARD from 1 to 0 against the
+seat's own framing; and Pronoia's own row still reads no_work_observed in
+the published table, because the patch is not deployed and pretending
+otherwise would have been the easiest thing in this report to fake.

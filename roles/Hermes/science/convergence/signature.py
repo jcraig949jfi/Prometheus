@@ -147,11 +147,36 @@ def s3_normalized_with_missing_input(obs: Dict[str, Any], seats: Optional[Iterab
     return _key(["s3", base, str(mi)]) if mi is not None else _key(["s3", base])
 
 
+def s4_whole_observation(obs: Dict[str, Any], seats: Optional[Iterable[str]] = None) -> str:
+    """Hash the WHOLE observation: every key it carries, sorted, with the same
+    named normalizations applied to every string value.
+
+    Added 2026-09-11 for HERMES-32 and applied uniformly to before, after and
+    ablation. It exists so that adding a field to an observation changes the
+    key by the SAME rule for everyone, and so that no field can be hand-picked
+    after seeing a result -- the objection s2 would otherwise invite, since s2
+    reads three named keys and an instrument adds new ones.
+
+    A field whose value is None is dropped, so removing a field and setting it
+    to None are the same ablation."""
+    parts = []
+    for k in sorted(obs):
+        v = obs[k]
+        if v is None:
+            continue
+        if isinstance(v, str):
+            for r in ("N1", "N2", "N3", "N4"):
+                v = RULES[r](v, seats) if r == "N2" else RULES[r](v)
+        parts.append("{}={}".format(k, v))
+    return _key(["s4"] + parts)
+
+
 STRATEGIES = {
     "s0_raw": s0_raw,
     "s1_type_only": s1_type_only,
     "s2_normalized": s2_normalized,
     "s3_normalized_plus_input": s3_normalized_with_missing_input,
+    "s4_whole_observation": s4_whole_observation,
 }
 
 

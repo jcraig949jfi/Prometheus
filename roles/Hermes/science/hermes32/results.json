@@ -1,0 +1,131 @@
+{
+  "preregistered_at": "8094151be",
+  "canonical": "D:\\Prometheus",
+  "canonical_facts": {
+    "command": "pull",
+    "repo_id": "ffb3639d4beec02b8f2d3276404b836547898762",
+    "workspace_role": "main_worktree"
+  },
+  "negatives": {
+    "CTL-E1 legitimate pull, different repository": {
+      "command": "pull",
+      "exit_code": 0,
+      "stdout_head": "Already up to date.",
+      "exit_state": "success",
+      "message": "Already up to date.",
+      "exception_type": "NoError",
+      "repo_id": "314ec34d2a3bce83014bf8d0e76f6274a721693e",
+      "workspace_role": "main_worktree"
+    },
+    "CTL-E2 permitted fetch in the canonical checkout": {
+      "command": "fetch",
+      "exit_code": 0,
+      "stdout_head": "",
+      "exit_state": "success",
+      "message": "",
+      "exception_type": "NoError",
+      "repo_id": "ffb3639d4beec02b8f2d3276404b836547898762",
+      "workspace_role": "main_worktree"
+    },
+    "CTL-E3 permitted inspection in the canonical checkout": {
+      "command": "status",
+      "exit_code": 0,
+      "stdout_head": "?? evidence_wiki/.gitignore",
+      "exit_state": "success",
+      "message": "?? evidence_wiki/.gitignore",
+      "exception_type": "NoError",
+      "repo_id": "ffb3639d4beec02b8f2d3276404b836547898762",
+      "workspace_role": "main_worktree"
+    },
+    "CTL-E4 permitted worktree management in the canonical checkout": {
+      "command": "worktree",
+      "exit_code": 0,
+      "stdout_head": "D:/Prometheus                                  363120e08 [main]",
+      "exit_state": "success",
+      "message": "D:/Prometheus                                  363120e08 [main]",
+      "exception_type": "NoError",
+      "repo_id": "ffb3639d4beec02b8f2d3276404b836547898762",
+      "workspace_role": "main_worktree"
+    }
+  },
+  "before": {
+    "keys": {
+      "Atalanta": "8029f1c0ec18263a",
+      "Hermes": "8029f1c0ec18263a"
+    },
+    "ctl_e1_key": "8029f1c0ec18263a",
+    "converges": true,
+    "collides": true,
+    "verdict": "UNSIGNABLE"
+  },
+  "after": {
+    "keys": {
+      "Atalanta": "cffc3510c275083c",
+      "Hermes": "cffc3510c275083c"
+    },
+    "negative_keys": {
+      "CTL-E1 legitimate pull, different repository": "ac92332de8819acb",
+      "CTL-E2 permitted fetch in the canonical checkout": "086d125f28484e8d",
+      "CTL-E3 permitted inspection in the canonical checkout": "3ab74075bab4ad3f",
+      "CTL-E4 permitted worktree management in the canonical checkout": "3f932b2edf456dce"
+    },
+    "converges": true,
+    "collisions": [],
+    "verdict": "EXACT"
+  },
+  "ablations": {
+    "remove repo_id": {
+      "converges": true,
+      "collisions": [
+        "CTL-E1 legitimate pull, different repository"
+      ],
+      "verdict": "UNSIGNABLE",
+      "convergence_disappears": true
+    },
+    "remove workspace_role": {
+      "converges": true,
+      "collisions": [],
+      "verdict": "EXACT",
+      "convergence_disappears": false
+    },
+    "remove both": {
+      "converges": true,
+      "collisions": [
+        "CTL-E1 legitimate pull, different repository"
+      ],
+      "verdict": "UNSIGNABLE",
+      "convergence_disappears": true
+    }
+  },
+  "cross_check": {
+    "CASE-A": {
+      "observers": 5,
+      "distinct_keys": 1,
+      "s2_verdict": "NORMALIZABLE"
+    },
+    "CASE-B": {
+      "observers": 6,
+      "distinct_keys": 1,
+      "s2_verdict": "NORMALIZABLE"
+    },
+    "CASE-C": {
+      "observers": 2,
+      "distinct_keys": 2,
+      "s2_verdict": "RELATED-NOT-SAME"
+    },
+    "CASE-D": {
+      "observers": 2,
+      "distinct_keys": 2,
+      "s2_verdict": "RELATED-NOT-SAME"
+    },
+    "CASE-E": {
+      "observers": 2,
+      "distinct_keys": 1,
+      "s2_verdict": "UNSIGNABLE"
+    }
+  },
+  "cost": {
+    "workspace_facts_ms": 88.5,
+    "git_rev_parse_ms": 12.7
+  }
+}
