@@ -46,9 +46,11 @@ from .. import manifest_io, paths, receipt
 
 SOLVED = ("archaeon", "docs", "h0h5", "H1H0_SOLVED_PROGRAMS_2026-09-10.json")
 DECLARED_SHA = "581aed3186281f1b250bfb08ef411a70d21d6581df07d6f7f2c1714943db30d7"
-MINGW_GCC_BIN = ("C:/Users/jcrai/AppData/Local/Microsoft/WinGet/Packages/"
-                 "BrechtSanders.WinLibs.POSIX.UCRT_Microsoft.Winget.Source_8wekyb3d8bbwe/"
-                 "mingw64/bin")
+#: Resolved per host, never hardcoded -- base-role s2, and this seat's own rule.
+#: The gnu Rust target links libgcc and llvm-mingw ships none, so a real GCC has
+#: to be on PATH for the build; paths.gcc_bin() says where, or None.
+def _mingw_gcc_bin() -> str:
+    return paths.gcc_bin_or_empty()
 
 _TOKEN = re.compile(r"\(|\)|[^\s()]+")
 
@@ -111,7 +113,7 @@ def run_compress(binary, cwd, progs, out, *, iterations, max_arity, b):
     inp = out.with_suffix(".in.json")
     inp.write_text(json.dumps(progs), encoding="utf-8")
     import os
-    env = {**os.environ, "PATH": MINGW_GCC_BIN + ";" + os.environ.get("PATH", "")}
+    env = {**os.environ, "PATH": _mingw_gcc_bin() + ";" + os.environ.get("PATH", "")}
     r = b.run([str(binary), str(inp), f"--max-arity={max_arity}", f"--iterations={iterations}",
                "--threads=1", f"--out={out}"], cwd=str(cwd), env=env)
     if r["returncode"] != 0:
