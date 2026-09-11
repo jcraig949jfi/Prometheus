@@ -70,6 +70,14 @@ Baseline: `archaeon/docs/h0h5/BASELINE_2026-09-09.json`.
 
 
 
+## 2026-09-11 ~14:35: H5-1 TERMINAL (232 completed / 24 failed); two engine episodes; Kairos reanimated
+
+- **H5-1 (cs-h5-1) is terminal**: 232 completed, 24 failed. Partial readout committed at archaeon/docs/h0h5/H5_1_READOUT_PARTIAL_2026-09-11.json: 232 rules -> **209 live classes, ZERO disagreements with the published class map** on the completed rules; the H5 quantities are NOT computed on the partial map (wrong-population rule). Missing rules: 143-155 and 245-255.
+- The 24 failures are **two engine-side EPISODES**, not a client-timeout tax: 03:22-03:39 local, rows 143-155 back to back, all read timeouts (engine unresponsive ~17 min); 10:23-10:32 local, rows 245-255 back to back, 7 x HTTP 500 unhandled server error on POST /v2/worlds plus timeouts. The D-6 tick's weak-signal row (bitstring.uniform.v0) failed on the same 500 at 10:33. Escalated to Daedalus + Vivarium as comms 35 (logs for both windows, the unhandled exception, a health signal before dispatch). Reissue path built: `python -m archaeon.producer.campaign_h5 --reissue-transport` (failed_transport_labels / plan_reissue / reissue; same specs, new request keys, cs-h5-1-r1) -- HELD until Daedalus reports the engine healthy.
+- **ENGINE UNREACHABLE at 14:40 UTC** (conformance gate exit 2 on /v2/version): the episode is live; every reissue and the production tick are held by the gate until it clears. **Nyx** (new seat, charter pending), **Talos** (BLOCKED on TALOS-01, an operator decision) and **Icarus** (BLOCKED on ICARUS-XL-1) adopted the base role; INHERITANCE rows are now self-service (ruling #39).
+- **Kairos** adopted the base role (30313d8e7): April queue classified archaeologically (0 STILL_LIVE, 7 NEEDS_REPREMISE, 10 PARKED, 5 SUPERSEDED, 2 RETIRED), every April CONFIRMED/PROBABLE tier withdrawn on doctrine (none declared false), failure-surface v0 schema, claim lint (KairosClaimLint registered DORMANT: no read path; delegations to Daedalus #32, Mnemosyne #33).
+- **Hephaestus**: gauntlet controls ALL_PASS on both boolean specs (negative/positive/cheat, d57a5c80e); Q045 v2 under Z7 fired a kill on v1's shift column (out-of-alphabet inputs), target-level coordinates survive; ARCH-27 LOST fixture delivered at hephaestus/closure_results/q045_lost_fixture_v1.json (HEPH-25 closed).
+
 ## 2026-09-11 ~13:30: loop RESUMED (operator: "Let's resume our science for SFE")
 
 - Between the pause and now: roles/base-role (RESPONSIBILITIES, WORKING_CONTRACT, NORTH_STAR, MONITORS, INHERITANCE), the comms queue (D-24) with the agents table and presence from sync receipts, the reanimation rulings (D-25), and eight adoption passes absorbed. The loop now runs from the seat worktree F:\Prometheus-worktrees\archaeon-loop on branch archaeon/loop-2026-09-11 and syncs comms before and after every wake.

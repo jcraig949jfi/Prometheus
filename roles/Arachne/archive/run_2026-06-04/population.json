@@ -1,0 +1,118 @@
+{
+  "tick": 700,
+  "id_counter": 127,
+  "crawlers": [
+    {
+      "id": "oeis-0-4",
+      "parent": null,
+      "generation": 0,
+      "total_edges": 3396,
+      "alive": true,
+      "ruleset": {
+        "landscape": "oeis",
+        "max_neighbors": 6,
+        "novelty_floor": 0.8,
+        "hop": false,
+        "frontier_mode": "bfs",
+        "reseed_every": 40,
+        "seed": 404
+      }
+    },
+    {
+      "id": "oeis-1-28",
+      "parent": "lmfdb-0-22",
+      "generation": 1,
+      "total_edges": 2934,
+      "alive": true,
+      "ruleset": {
+        "landscape": "oeis",
+        "max_neighbors": 6,
+        "novelty_floor": 0.85,
+        "hop": false,
+        "frontier_mode": "bfs",
+        "reseed_every": 20,
+        "seed": 5003664
+      }
+    },
+    {
+      "id": "groups-6-104",
+      "parent": "groups-5-99",
+      "generation": 6,
+      "total_edges": 582,
+      "alive": true,
+      "ruleset": {
+        "landscape": "groups",
+        "max_neighbors": 6,
+        "novelty_floor": 0.7,
+        "hop": false,
+        "frontier_mode": "random",
+        "reseed_every": 50,
+        "seed": 4711371
+      }
+    },
+    {
+      "id": "lmfdb-4-119",
+      "parent": "mathlib-3-117",
+      "generation": 4,
+      "total_edges": 132,
+      "alive": true,
+      "ruleset": {
+        "landscape": "lmfdb",
+        "max_neighbors": 6,
+        "novelty_floor": 0.9500000000000001,
+        "hop": false,
+        "frontier_mode": "bfs",
+        "reseed_every": 20,
+        "seed": 409603
+      }
+    },
+    {
+      "id": "algolib-2-125",
+      "parent": "algolib-1-123",
+      "generation": 2,
+      "total_edges": 16,
+      "alive": true,
+      "ruleset": {
+        "landscape": "algolib",
+        "max_neighbors": 8,
+        "novelty_floor": 0.77,
+        "hop": false,
+        "frontier_mode": "random",
+        "reseed_every": 40,
+        "seed": 6439361
+      }
+    },
+    {
+      "id": "knots-1-126",
+      "parent": "mathlib-0-124",
+      "generation": 1,
+      "total_edges": 22,
+      "alive": true,
+      "ruleset": {
+        "landscape": "knots",
+        "max_neighbors": 8,
+        "novelty_floor": 0.77,
+        "hop": false,
+        "frontier_mode": "bfs",
+        "reseed_every": 40,
+        "seed": 7341750
+      }
+    },
+    {
+      "id": "mathlib-0-127",
+      "parent": null,
+      "generation": 0,
+      "total_edges": 0,
+      "alive": true,
+      "ruleset": {
+        "landscape": "mathlib",
+        "max_neighbors": 8,
+        "novelty_floor": 0.92,
+        "hop": false,
+        "frontier_mode": "bfs",
+        "reseed_every": 40,
+        "seed": 101
+      }
+    }
+  ]
+}

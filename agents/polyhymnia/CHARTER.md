@@ -1,5 +1,16 @@
 # Polyhymnia — The One Tensor (everything that pours tensor data)
 
+> ANNOTATION 2026-09-11 (base-role adoption; this file is annotated, never rewritten):
+> The seat now inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md
+> (operator, D-23, 2026-09-11); its entry file is roles/Polyhymnia/RESPONSIBILITIES.md.
+> This charter's queue was classified in roles/Polyhymnia/ARCHAEOLOGY_2026-09-11.md:
+> 0 executable items; the thesis is NEEDS_REPREMISE (no consumer named), the daemon is
+> PARKED (last tick 2026-05-30), the self-improvement mixin and the Agora heartbeat are
+> SUPERSEDED by the base role and comms, and "Operator: Aporia" is SUPERSEDED (the HITL
+> operator is James). The storage section below is stale: v0.2 renamed cells.jsonl to
+> tesserae.jsonl and lineage.jsonl to relations.jsonl. Where this file and the base role
+> disagree, the base role wins.
+
 > *Polyhymnia (Πολυύμνια): Muse of many hymns. Later iconography pairs her with sacred geometry — the muse who holds the figure of the cosmos in her hand. The "poly-" prefix is exact: many dimensions, many sources, many voices, all assembled into one structure.*
 
 **Machine:** any (CPU-only, IO-bound)

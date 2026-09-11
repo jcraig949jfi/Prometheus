@@ -1,0 +1,118 @@
+====================================================================
+ARACHNE -- BASE ROLE ADOPTION RECEIPT
+2026-09-11
+====================================================================
+
+1. WHAT I READ, AND AT WHICH SHA
+
+   base role read at   56125e9e4 (origin/main at the fetch that began
+                       this pass; the local main of the canonical
+                       checkout sat 692 commits behind it, on
+                       6d06b4db9, and has no roles/base-role/)
+   verified            git merge-base --is-ancestor 56125e9e4 origin/main
+   files read in full  roles/base-role/README.md
+                       roles/base-role/NORTH_STAR.md
+                       roles/base-role/RESPONSIBILITIES.md
+                       roles/base-role/WORKING_CONTRACT.md
+                       roles/base-role/INHERITANCE.md
+                       roles/base-role/MONITORS.md
+                       roles/Archaeon/prompts/2026-09-10_backlog/
+                         00_BACKLOG_SCHEMA.md
+                       archaeon/docs/expansion/DECISIONS.md D-22..D-25
+   also read           aporia/doctrine/critical_memories.md (HARD-1..3),
+                       roles/Archaeon/H0H5_STATUS.md, the H0-H5 design
+                       v0.1 lane statements, archaeon/tests/
+                       test_base_role.py, comms/README.md,
+                       roles/Kairos/{RESPONSIBILITIES,ARCHAEOLOGY_
+                       2026-09-11,BACKLOG_H0H5}.md and roles/Charon/
+                       {BASE_ROLE_ADOPTION_2026-09-11.txt,STATUS.md}
+                       as the sibling templates; and every file on
+                       origin/main that names Arachne (44 files; the
+                       list is in ARCHAEOLOGY_2026-09-11.md, Sources).
+
+   MY INHERITANCE ROWS (added on this pass; the seat had no roles/
+   directory before today)
+     | Arachne | RESPONSIBILITIES.md (created with the banner) |
+     entry file: RESPONSIBILITIES.md
+
+2. WORKSPACE RECEIPT (WORKING_CONTRACT s4)
+
+   worktree_path   F:\Prometheus-worktrees\arachne-base-role
+   branch          arachne/base-role-adopt-2026-09-11  (task branch)
+   base_sha        56125e9e497df2b7ab9bc3f21416ec116151fdbc
+   dirty           false at creation (0 status lines after checkout)
+   main_worktree   false  (archaeon.workspace.receipt() from this tree;
+                   git-dir F:/Prometheus/.git/worktrees/arachne-base-role
+                   differs from git-common-dir F:/Prometheus/.git)
+   machine         M1
+   checkout        39,195 files, unbounded timeout, completed
+
+   Arachne footprint before this worktree: 0 worktrees, 0 branches,
+   0 processes, 0 comms rows. Runtime residue of the June run at the
+   canonical checkout's agents/arachne/{fabric,state}/ (gitignored):
+   left in place, copied byte-for-byte into
+   roles/Arachne/archive/run_2026-06-04/ with a MANIFEST.
+
+3. THE CANONICAL CHECKOUT
+
+   Untouched. It was on another seat's branch (vivarium/v0-2026-09-05)
+   with that seat's modified files; nothing there was read for state,
+   modified, staged, stashed or cleaned. The one read from it was the
+   copy of Arachne's own gitignored residue (section 2).
+
+4. COMMS (boot step 1 and 7)
+
+   python -m comms boot Arachne ... -> refused before the folder
+   existed ("unknown agent 'Arachne'": the roster is roles/*); rerun
+   after roles/Arachne was created (result in journal/2026-09-11.md).
+   python -m comms sync Arachne -> 1 new (Archaeon 07:31 broadcast:
+   comms live, base role applies), 0 queued. Nothing addressed to
+   Arachne. Status set: blocked (ARACHNE-01).
+
+5. WHAT THE SEAT FILES SAY
+
+   RESPONSIBILITIES.md            entry file; the question the seat is;
+                                  what it owns; its place in the ecology;
+                                  eight constraints; boundaries
+   ARCHAEOLOGY_2026-09-11.md      every operator assignment (A1-A5) with
+                                  provenance grade, classified B1-B11;
+                                  items other seats attached, C1-C6; four
+                                  June findings as calibration rows
+   BACKLOG_H0H5.md                30 items, schema-conformant; two XL
+                                  rows (ARACHNE-01, -24) are the
+                                  operator's decisions
+   CALIBRATION.md                 7 rows of the seat's own wrong or
+                                  unmeasured June calls
+   STATUS.md                      BLOCKED; what is dormant; June facts
+   journal/2026-09-11.md          this pass
+   prompts/2026-09-11_reactivation/  the operator's directive verbatim
+                                  + MANIFEST (LF-normalised sha256)
+   archive/run_2026-06-04/        the June residue + README + MANIFEST
+
+6. CODE CHANGES (own lane only)
+
+   agents/arachne/swarm.py     +4  D-23 guard before Swarm() in main()
+   agents/arachne/traverse.py  +3  D-23 guard on the harvest command
+   Syntax-checked (ast.parse). Not executed beyond that.
+
+7. BASE ROLE REGISTRY CHANGES (additive rows only)
+
+   roles/base-role/MONITORS.md     + ArachneSwarm row, state DORMANT
+   roles/base-role/INHERITANCE.md  + Arachne in both tables
+
+8. WHAT WAS NOT DONE, BY INSTRUCTION
+
+   No swarm tick, no landscape query, no judge, no harvest, no damage
+   coverage run, no Evidence Wiki write, no cross-seat delegation
+   (ARACHNE-19, -22, -23 wait on ARACHNE-01). Review packet: in chat
+   as the ASCII block, committed as
+   roles/Arachne/REVIEW_PACKET_2026-09-11.md.
+
+9. CONSTITUTION DEFECTS FOUND
+
+   comms boot refuses a seat whose roles/ directory does not yet exist,
+   while sync accepts it and creates the row. A seat being born cannot
+   record its boot before its first commit lands; the order the base
+   role prescribes (boot at step 1, files later) is not satisfiable for
+   a NEW seat. Reported to Archaeon in the journal; not a blocker (boot
+   recorded after the folder existed).
