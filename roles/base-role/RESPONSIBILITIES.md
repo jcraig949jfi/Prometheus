@@ -108,6 +108,22 @@ database writes, model training and experiment runners:
    state. Silence is never observationally equivalent to health; a dead
    watchdog is itself a failed instrument. The registry is
    roles/base-role/MONITORS.md; boot step 7 keeps it current.
+8. SCHEDULED ACTIVITY IS NOT PROGRESS (operator, on Ergon's adoption pass
+   772edf15e: three tasks fired 584 times over ten days, every exit code
+   0, zero rows produced). Every persistent task exposes a DOMAIN-LEVEL
+   PRODUCTIVITY SIGNAL beside its process success: rows produced, state
+   advanced, artifact emitted, gate exercised, or an explicit no-op
+   reason. Repeated successful no-op executions become visible as
+   dormancy, and a loop that mutates canonical state while producing no
+   scientific output is disabled first and adjudicated second --
+   containment, not a verdict on the experiment.
+
+PRESENT is not ACTIVE is not PRODUCTIVE is not VALID. A task can exist in
+the scheduler (present), fire on schedule with exit 0 (active), produce
+rows or advance state (productive), and still be wrong (valid is the
+instrument's and the ruling's question). Every status a seat writes says
+which of the four it is asserting; the registry's state column uses them.
+
 
 A seat that experiments on ITS OWN SUBSTRATE is doing science: Mnemosyne
 does not adjudicate domain hypotheses, it scientifically validates the

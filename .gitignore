@@ -87,6 +87,10 @@ reproductions/**/original/
 
 # Archive (large, historical — keep local only)
 archive/
+# ...EXCEPT seat archives under roles/ (base role s2: corrections are annotations; superseded bodies
+# are kept). Found by Ergon 772edf15e; operator ruling 2026-09-11. Tested by test_base_role.py.
+!roles/*/archive/
+!roles/*/archive/**
 
 # Databases (generated, local)
 *.db

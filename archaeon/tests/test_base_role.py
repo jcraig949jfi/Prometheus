@@ -21,7 +21,10 @@ BASE = REPO / "roles" / "base-role"
 BANNER = "> Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md"
 PRIMARY = ("RESPONSIBILITIES.md", "ROLE.md", "BOOTSTRAP.md", "CHARTER.md")
 MANDATORY = ("journal/2026-01-01.md", "INBOX_SOMEONE_TOPIC_2026-01-01.md", "prompts/2026-01-01_topic/PROMPT.md",
-             "BACKLOG_H0H5.md", "STATUS.md")
+             "BACKLOG_H0H5.md", "STATUS.md",
+             # every base-mandated path class, checked mechanically (Ergon 772edf15e found archive/ ignored)
+             "archive/x.md", "superseded/x.md", "ops/x.json", "ledgers/x.json", "calibration/x.md",
+             "D23_COMPLIANCE_2026-01-01.md", "reviews/x.md", "contracts/x.json", "science/x.py")
 
 
 def _roles():
@@ -128,8 +131,8 @@ def test_monitor_registry_rows_carry_every_column():
     assert len(rows) >= 8
     for r in rows:
         cols = [c.strip() for c in r.split(" | ")]
-        assert all(cols[:9]), "empty column in registry row: {}".format(r[:60])
-        assert any(k in cols[8] for k in ("ACTIVE", "DORMANT", "DISABLED", "UNLOCATED")), r[:60]
+        assert len(cols) >= 10 and all(cols[:10]), "registry row needs ten non-empty columns (rule 8 productivity): {}".format(r[:60])
+        assert any(k in cols[8] for k in ("ACTIVE", "DORMANT", "DEAD", "DISABLED", "UNLOCATED")), r[:60]
 
 
 def test_every_enabled_prometheus_scheduled_task_on_this_host_is_registered():
