@@ -21,6 +21,7 @@ Every role below carries the banner on its primary document(s):
 | Harmonia | RESPONSIBILITIES.md (already), CHARTER.md (already) |
 | Hephaestus | ROLE.md (already) |
 | Herakles | RESPONSIBILITIES.md (already), BOOTSTRAP.md (already), CHARTER.md (already) |
+| Icarus | RESPONSIBILITIES.md (created 2026-09-11 on the seat's adoption pass; the seat had no roles/ directory before) |
 | Kairos | RESPONSIBILITIES.md (already) |
 | Koios | RESPONSIBILITIES.md (already) |
 | Lexis | ROLE.md (already) |
@@ -60,6 +61,7 @@ BOOTSTRAP.md if the seat has one, else STARTUP.md, RESPONSIBILITIES.md, ROLE.md,
 | Harmonia | RESPONSIBILITIES.md |
 | Hephaestus | RESPONSIBILITIES.md |
 | Herakles | BOOTSTRAP.md |
+| Icarus | RESPONSIBILITIES.md |
 | Kairos | RESPONSIBILITIES.md |
 | Koios | RESPONSIBILITIES.md |
 | Lexis | ROLE.md |
