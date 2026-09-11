@@ -209,7 +209,13 @@ def main():
               'arm_sd_cfr': {a: round(statistics.stdev(cfr[a]), 5)
                              for a in (ARM_A, ARM_B) if len(cfr[a]) > 1},
               'arm_cfr_by_lineage': {a: [round(v, 5) for v in cfr[a]]
-                                     for a in (ARM_A, ARM_B)}})
+                                     for a in (ARM_A, ARM_B)},
+              # exact integers: the sign-flip null has exact ties on the
+              # k/42 lattice, so the ROUNDED cfr list above does not
+              # reproduce p (0.1895 vs 0.1776 on this run); reproduce from
+              # these counts / 42 or from p3_results/ directly
+              'arm_solved_by_lineage': {a: [S[a][L]['solved'] for L in lins]
+                                        for a in (ARM_A, ARM_B)}})
     json.dump(r, open(os.path.join(HERE, 'p3_results.json'), 'w',
                       encoding='utf-8'), indent=1, sort_keys=True)
     print('\nwrote p3_results.json')

@@ -192,6 +192,11 @@ here.
   +0.95 pp net. No claim; logged as residue.
 - The 8-process pool: each lineage is seed-determined and independent;
   verified by the determinism control, not by a serial re-run of P3.
+- The sign-flip null has exact ties on the k/42 lattice: re-deriving p
+  from the 5-decimal-ROUNDED cfr list in p3_results.json gives 0.1895,
+  not 0.1776. p3_results.json therefore also carries the exact integer
+  solved counts (arm_solved_by_lineage); reproduce from those or from
+  p3_results/ directly. Verdict and CI are unaffected.
 
 --------------------------------------------------------------------------------
 11. REPRODUCTION
@@ -207,7 +212,8 @@ From a worktree at the results commit (python 3.12, no GPU, no spend):
                                              # delete p3_results/ first
     python -m ergon.gen3.cheat_control_n100 --workers 8
 
-Spot check: json p3_results.json -> mean_pp 0.5476, p 0.1776, signs
+Spot check: json p3_results.json -> mean_pp 0.5476, p 0.1776 (from
+arm_solved_by_lineage / 42, not the rounded cfr list), signs
 {pos 41, neg 33, tied 26}; every summary has 64 final artifacts and 42
 task rows; nav_base equal across arms per lineage.
 
