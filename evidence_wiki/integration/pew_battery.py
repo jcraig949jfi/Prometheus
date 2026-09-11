@@ -407,6 +407,26 @@ def main():
          f"world={rec.get('world_id')} player={(rec.get('players') or [None])[0]} "
          f"run={rec.get('run_id')} outcome={rec.get('outcome')} "
          f"anchor={str(rec.get('sfe_entry_hash'))[:24]}...")
+    # E14 ------------- PRODUCTIVE, not merely PRESENT (Apollo #21, 2026-09-11)
+    # /health is liveness on the event loop and answers even when every
+    # worker thread is wedged, so it proves nothing about search. The
+    # property is: health reports the embedding model ready, and one
+    # bounded hybrid search (the path that hung for 60 s x3 on 2026-09-11)
+    # answers inside the budget. Budget 15 s: measured 0.01-0.23 s warm.
+    hj = c.get("health").json()
+    st = hj.get("search") or {}
+    t0 = time.time()
+    try:
+        sr = c.get("search", q="watchdog probe", k=1, mode="hybrid")
+        srch_ok, srch_detail = sr.status_code == 200, f"http={sr.status_code}"
+    except Exception as e:
+        srch_ok, srch_detail = False, f"search raised {type(e).__name__}"
+    dt = time.time() - t0
+    ok = bool(st.get("ready")) and srch_ok and dt < 15
+    gate("E14_productive_not_present", ok,
+         f"search.ready={st.get('ready')} loading={st.get('loading')} "
+         f"error={st.get('error')} load_s={st.get('load_seconds')} "
+         f"hybrid_search {srch_detail} in {round(dt*1000)}ms (budget 15000)")
     return finish(real_id=real["encounter_id"], real_run=real["run_id"])
 
 

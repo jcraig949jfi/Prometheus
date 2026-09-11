@@ -27,6 +27,24 @@ WORKSPACE = workspace.assert_not_canonical("serve PEW")
 app = FastAPI(title="Mnemosyne Evidence Wiki", version="0.1")
 CFG = ewdb.load_config()
 _INDEX = None
+STARTED_AT = time.time()
+
+
+@app.on_event("startup")
+def _warm_search_model():
+    """Load the embedding model in a background thread at startup, so the
+    request path never pays the cold import and the port is bound at once.
+    Health reports search.ready until it is; the watchdog treats a service
+    that never becomes ready as hung (evidence_wiki/scripts/ew_watchdog.ps1)."""
+    import threading
+    from .search import load_model
+
+    def _load():
+        try:
+            load_model()
+        except Exception:
+            pass  # MODEL_STATE carries the error; health publishes it
+    threading.Thread(target=_load, name="ew-model-warmup", daemon=True).start()
 
 
 def get_conn():
@@ -53,22 +71,57 @@ def get_index(conn):
 def identity(request: Request, write: bool = False):
     """V1 auth: per-machine tokens bind the claimed machine identity; the V0
     shared token remains accepted as LEGACY (rotation procedure in
-    docs/OPERATIONS_V1.md) but cannot impersonate a tokened machine."""
+    docs/OPERATIONS_V1.md) but cannot impersonate a tokened machine.
+
+    V1.1 (2026-09-11, KAIROS-02): per-AGENT scoped tokens. The committed
+    config carries `agent_identities`: {agent: {scopes: [...], token_sha256,
+    issued, tracker}}. Only the sha256 is committed; the token value is
+    delivered out of band and never enters the repository. An agent token
+    binds the agent name (a mismatching X-Prometheus-Agent is 401) and its
+    scopes: a write with a read-only identity is 403, so a consumer that
+    was issued read access cannot submit even by accident. Machine tokens
+    and the legacy token keep their existing read+write scope."""
     tok = request.headers.get("authorization", "").removeprefix("Bearer ").strip()
     machine = request.headers.get("x-prometheus-machine")
     agent = request.headers.get("x-prometheus-agent")
     machine_tokens = CFG.get("machine_tokens", {})
     token_owner = next((m for m, t in machine_tokens.items() if t == tok), None)
+    auth, scopes = None, {"read", "write"}
     if token_owner is not None:
         if machine and machine != token_owner:
             raise HTTPException(401, "token does not match claimed machine")
         machine = token_owner
-    elif tok != CFG["auth_token"]:
-        raise HTTPException(401, "bad or missing bearer token")
+        auth = "machine_token"
+    else:
+        agent_owner = _agent_for_token(tok) if tok else None
+        if agent_owner is not None:
+            if agent and agent != agent_owner:
+                raise HTTPException(401, "token does not match claimed agent")
+            agent = agent_owner
+            scopes = set(CFG["agent_identities"][agent_owner].get("scopes") or [])
+            auth = "agent_token"
+            if write and "write" not in scopes:
+                raise HTTPException(
+                    403, f"agent identity {agent_owner} has scopes "
+                         f"{sorted(scopes)}; writes need 'write'")
+        elif tok != CFG["auth_token"]:
+            raise HTTPException(401, "bad or missing bearer token")
+        else:
+            auth = "legacy_shared"
     if write and (not machine or not agent):
         raise HTTPException(400, "writes require X-Prometheus-Machine and X-Prometheus-Agent")
     return {"machine": machine or "unknown", "agent": agent or "unknown",
-            "auth": "machine_token" if token_owner else "legacy_shared"}
+            "auth": auth, "scopes": sorted(scopes)}
+
+
+def _agent_for_token(tok: str):
+    """Resolve a presented token to an agent identity by sha256, or None."""
+    import hashlib
+    h = hashlib.sha256(tok.encode("utf-8")).hexdigest()
+    for name, spec in (CFG.get("agent_identities") or {}).items():
+        if isinstance(spec, dict) and spec.get("token_sha256") == h:
+            return name
+    return None
 
 
 def log_read(conn, endpoint, ident, query, n, t0):
@@ -93,10 +146,19 @@ def revisions(conn):
 
 # ------------------------------------------------------------------ meta
 @app.get("/api/v1/health")
-def health():
+async def health():
+    """Liveness only, and deliberately `async`: it runs on the event loop,
+    not the sync threadpool, so it still answers while every worker thread
+    is busy or wedged. That is why it is NOT a productivity signal: the
+    watchdog follows it with one bounded authenticated search. `search`
+    reports whether the embedding model is loaded; a consumer that needs
+    semantic or hybrid search waits for search.ready."""
+    from .search import MODEL_STATE
     return {"service": CFG["service_name"], "status": "ok",
             "schema_version": SCHEMA_VERSION, "ontology_version": ONTOLOGY_VERSION,
             "fossil_contract": FOSSIL_CONTRACT_VERSION,
+            "uptime_s": round(time.time() - STARTED_AT, 1),
+            "search": dict(MODEL_STATE),
             "workspace": {k: WORKSPACE[k] for k in
                           ("base_sha", "branch", "worktree_path",
                            "dirty", "main_worktree")}}
