@@ -22,6 +22,8 @@
 
 ## The thesis
 
+> [ARCHAEOLOGY ARCHAEOLOGY_2026-09-11: SUPERSEDED 2026-09-11 (operator directive, roles/Polyhymnia/prompts/2026-09-11_reactivation_direction/): Polyhymnia is no longer "the one tensor"; it is the representation scavenger for the 2.0 ecology. Accumulate-before-consumer is ruled against; scavenging itself is not.]
+
 There's one tensor. Everything tensor-shaped — every dataset, equation, algorithm, concept, problem solved, problem open, researcher, paper, formula, library, historical mention, fringe-but-loosely-tensor-related thing — gets jammed into it. The tensor is the sensory organ. A species that can only see the world tensor-first would use this thing as its eyes.
 
 Played-with downstream: knowledge graphs (the lineage axis already turns the cell-set into a graph), training material for the Learner (sample by axis subset, project to canonical form), games (random-walk the tensor, ask "what's the missing cell that would complete this slice"), and as a lens on the rest of the substrate ("show me everything in axis(rank=3, discipline=physics) that appeared after 1990 and has no Prometheus-side citation").
@@ -31,6 +33,8 @@ Not a research tool. A play tool that becomes a research tool because the substr
 ---
 
 ## What "one tensor" actually means here
+
+> [ARCHAEOLOGY ARCHAEOLOGY_2026-09-11: SUPERSEDED 2026-09-11: the archived body occupied 13 coordinate signatures with six of nine axes constant (roles/Polyhymnia/ledgers/tensor_body_2026-09-11/ARCHIVE_MANIFEST.md s3). The design is residue, not the 2.0 substrate.]
 
 A sparse, content-addressable, N-dimensional structure on disk. Cells = populated coordinates. Coordinates = tuples drawn from N axes. Each cell carries a content blob (title, body, equations, code, citations, source). The whole thing is append-only JSONL with optional SQLite mirror for fast slicing.
 
@@ -43,6 +47,8 @@ A sparse, content-addressable, N-dimensional structure on disk. Cells = populate
 ---
 
 ## The axes (current draft — open to expansion)
+
+> [ARCHAEOLOGY ARCHAEOLOGY_2026-09-11: PARKED 2026-09-11: nine axes existed in v0.2 (see agents/polyhymnia/tensor/axes/), not the six listed here; over the whole body only discipline (8 values) and object_kind (2) varied. Retained as residue.]
 
 **Coordinate axes** (each cell has one value per axis):
 
@@ -69,6 +75,8 @@ A cell's coordinate signature is `(time, discipline, object_kind, structural_ran
 ---
 
 ## Storage layout
+
+> [ARCHAEOLOGY ARCHAEOLOGY_2026-09-11: SUPERSEDED 2026-09-11: v0.2 renamed cells.jsonl to tesserae.jsonl and lineage.jsonl to relations.jsonl; the body is archived byte-identical with sha256 at roles/Polyhymnia/ledgers/tensor_body_2026-09-11/.]
 
 ```
 agents/polyhymnia/
@@ -140,6 +148,8 @@ Cell record schema (one JSON object per line in `cells.jsonl`):
 
 ## Per-tick contract
 
+> [ARCHAEOLOGY ARCHAEOLOGY_2026-09-11: PARKED 2026-09-11: the daemon is registered DORMANT in roles/base-role/MONITORS.md and is NOT to be restarted (operator). Steps 2 (session_telemetry heartbeat) and 9 (log_work) are SUPERSEDED by comms (D-24). A daemon earns resurrection only when a consumer exists.]
+
 Default tick interval: **1800s (30 min)**. The daemon's job is to run the next scour in rotation and integrate its output into the tensor.
 
 Every tick:
@@ -159,6 +169,8 @@ Every tick:
 ---
 
 ## The scour interface
+
+> [ARCHAEOLOGY ARCHAEOLOGY_2026-09-11: PARKED 2026-09-11: reusable code (scours/_base.py: timeouts, cache, rate limits, error isolation) if a re-premised producer needs a puller; nothing here runs.]
 
 Each scour subclasses `Scour` and implements:
 
@@ -186,6 +198,8 @@ The base class handles:
 ---
 
 ## Scours we want (priority order)
+
+> [ARCHAEOLOGY ARCHAEOLOGY_2026-09-11: NEEDS_REPREMISE 2026-09-11: only round 1 shipped and it saturated in six days (roles/Polyhymnia/ledgers/scour_saturation_2026-05.md). Rounds 2-4 are not ingest targets any more; they are candidate SOURCES of representation mechanisms, to be pulled only for a named consumer.]
 
 **Round 1 (Phase 0):**
 1. `prometheus_self` — grep this repo for tensor mentions. **SHIPPED** in Phase 0.
@@ -219,6 +233,8 @@ The rule from James: **leave no stone unturned**. Fringe is the point.
 
 ## Lenses
 
+> [ARCHAEOLOGY ARCHAEOLOGY_2026-09-11: NEEDS_REPREMISE 2026-09-11: none was written. A lens is a read path; which one a consumer needs is the consumer's question.]
+
 A lens = a slice + projection + display script. Lives in `lenses/`. Examples to ship in Phase 0.5:
 
 - `lenses/by_decade.py` — group cells by `time // 10`; show count + sample
@@ -230,6 +246,8 @@ A lens = a slice + projection + display script. Lives in `lenses/`. Examples to 
 ---
 
 ## Games
+
+> [ARCHAEOLOGY ARCHAEOLOGY_2026-09-11: NEEDS_REPREMISE 2026-09-11: none was written; their consumer ("the Learner") no longer exists as chartered. The gap-finding idea is retained as a weak signal.]
 
 Live in `games/`. Examples to ship later:
 
@@ -245,6 +263,8 @@ These also become Learner training material: each game = a (prompt, expected res
 
 ## Structured logging
 
+> [ARCHAEOLOGY ARCHAEOLOGY_2026-09-11: SUPERSEDED 2026-09-11: Agora heartbeats and session_telemetry are replaced by comms (D-24) and the MONITORS.md freshness rule (base rule 7); the May logs are archived in roles/Polyhymnia/ledgers/tensor_body_2026-09-11/logs/.]
+
 Same three-stream pattern as Hypatia / Atalanta / Pheme / Talos:
 
 - **Text log** at `agents/polyhymnia/logs/polyhymnia.log`
@@ -257,6 +277,8 @@ Same three-stream pattern as Hypatia / Atalanta / Pheme / Talos:
 ---
 
 ## Operational
+
+> [ARCHAEOLOGY ARCHAEOLOGY_2026-09-11: PARKED 2026-09-11: the single-instance lock file is stale (pid 23960 not alive); scripts/polyhymnia_loop_launch.bat is not to be run. The three hard stops (append-only; no unbased auto-classification; never silently drop content) are STILL_LIVE and carried into roles/Polyhymnia/RESPONSIBILITIES.md s2.]
 
 **Single-instance lock:** `agents/polyhymnia/polyhymnia.pid`.
 
