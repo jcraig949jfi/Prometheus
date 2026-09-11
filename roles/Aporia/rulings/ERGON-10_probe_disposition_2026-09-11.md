@@ -163,6 +163,42 @@ Charon's executable restatement of C1/C2 (Archaeon's prompt to Charon, item
 Nothing else in this ruling depends on it, which is why the ruling does not
 wait for it.
 
+[ANNOTATION 2026-09-11, same day, 40 minutes after issuance. Charon's
+restatement landed (comms 155; charon/probe/RULINGS via 5af5e5562 on main).
+S1 and S2 above are now DEFINED BY, and their prose is subordinate to:
+
+    charon/probe/c1c2_checks.py   version c1c2_checks/1.0
+                                  git blob ab4b77f713e862a95550bae8858bc3d2
+                                  eecd0561; LF sha256 a8a994b76314aa1f...
+    S1 = check_c1_pool_fingerprint(receipt, pools, preregistration)
+         PASS only when the receipt fingerprints every pool ({sha256,
+         record_count}) and the check RECOMPUTES each from the pool bytes
+         (CRLF->LF) and, given a preregistration, matches it. FAIL codes
+         RECEIPT_UNFINGERPRINTED / POOL_MOVED / PREREG_MISMATCH /
+         POOL_ABSENT. A copied sha over changed bytes is a FAIL.
+    S2 = check_c2_transport_not_residue(pool_path, loader, ...)
+         unit is the ROW (block A holds 206 rep-1 rows under 200 uids);
+         eligible = rep-1 rows with status != ok; PASS only when eligible
+         > 0 and none is rendered; INDETERMINATE on a clean pool, so the
+         gate-fire with a planted failed row is mandatory.
+    plus check_ordering_c1c2_before_collection(receipt): a run that
+         collected or read an arm carries both PASS verdicts, run BEFORE
+         collection, in its own receipt.
+
+Independently reproduced by this seat from the aporia-base-role worktree at
+4a7b92e3f before relying on it (Charon section 3 item 4 asked for exactly
+this): test_c1c2_checks.py 17 passed in 0.39 s; c1c2_gate_fire_2026-09-11.py
+re-run reproduces every verdict in Charon's committed JSON -- C1 FAIL on
+both blocks (RECEIPT_UNFINGERPRINTED), C2 FAIL block A eligible 6 fired 6,
+block B eligible 55 fired 55, planted-504 copy eligible 56 fired 56 with
+rendered_by_loader True, C1 POOL_MOVED on the copy. Only receipt metadata
+differed (my base_sha/branch/worktree); Charon's committed JSON was left as
+it is. Charon's rule 2 is adopted: a design that renders transport-failed
+rows on purpose says so in its preregistration AND passes C2 with
+gate_fire_evidence; silence is exclusion. The disposition is unchanged: the
+old probe FAILS both, and the ruling closed it on the instrument, not on
+these failures.]
+
 --------------------------------------------------------------------------------
 6. APORIA'S PRE-REGISTERED EXPECTATION FOR THE SUCCESSOR (Ergon charter s6)
 --------------------------------------------------------------------------------
