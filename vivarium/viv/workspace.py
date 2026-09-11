@@ -40,6 +40,13 @@ REPO = Path(__file__).resolve().parents[2]
 #: Read-only inspection only. Never unlocks `run`.
 OVERRIDE_ENV = "VIV_ALLOW_CANONICAL"
 
+#: Path fragments that mark a SESSION-TEMPORARY directory. Rule 2 forbids a
+#: worktree there for anything that outlives the session, and the danger is
+#: that such a directory is REMOVED rather than corrupted -- so the failure is
+#: a process whose code disappears under it, not a merge conflict.
+_TEMP_MARKERS = ("\\temp\\", "/temp/", "\\tmp\\", "/tmp/",
+                 "scratchpad", "appdata\\local\\temp")
+
 
 class CanonicalCheckoutRefused(RuntimeError):
     """This entry point will not run from the repository's main worktree."""
@@ -73,6 +80,59 @@ def is_main_worktree(path: Optional[Path] = None) -> bool:
         return False
 
 
+def canonical_root(path: Optional[Path] = None) -> Optional[Path]:
+    """The canonical checkout's directory, derived and never hardcoded.
+
+    `--git-common-dir` resolves to <canonical>/.git from ANY worktree, so its
+    parent is the canonical checkout wherever the repository lives. Deriving it
+    is what makes the two checks below survive a clone, another machine, and
+    the day somebody moves it.
+    """
+    cd = _git("rev-parse", "--path-format=absolute", "--git-common-dir",
+              cwd=path or REPO)
+    if not cd:
+        return None
+    try:
+        return Path(cd).resolve().parent
+    except OSError:                                      # pragma: no cover
+        return None
+
+
+def inside_canonical_checkout(path: Optional[Path] = None) -> bool:
+    """A LINKED worktree placed underneath the canonical checkout.
+
+    THE HOLE TECHNE FOUND, and it is the half a copied guard passes. Such a
+    worktree reports `main_worktree` FALSE -- it genuinely is a linked worktree
+    -- so the canonical check clears it every time, while the files sit inside
+    the directory that has twice lost ~11,000 tracked files to a concurrent
+    working-tree rewrite. Rule 2 forbids it; `main_worktree` cannot see it.
+    """
+    root = canonical_root(path)
+    here = Path(path or REPO).resolve()
+    if root is None:
+        return False
+    if here == root:
+        return False                 # that is the canonical checkout itself
+    try:
+        here.relative_to(root)
+        return True
+    except ValueError:
+        return False
+
+
+def session_temporary(path: Optional[Path] = None) -> bool:
+    """A worktree under a temp or agent-scratchpad directory.
+
+    Also Techne's finding, from the other side: their worktree was under a
+    session scratchpad, `main_worktree` was false throughout, and the guard
+    cleared them while the work sat somewhere that gets DELETED. For a
+    long-lived process that is worse than corruption -- the code vanishes
+    underneath a running interpreter holding a claimed row.
+    """
+    here = str(Path(path or REPO).resolve()).lower()
+    return any(m in here for m in _TEMP_MARKERS)
+
+
 def receipt(path: Optional[Path] = None) -> Dict[str, Any]:
     """base_sha, branch, worktree_path, dirty -- what every receipt carries.
 
@@ -90,8 +150,53 @@ def receipt(path: Optional[Path] = None) -> Dict[str, Any]:
         "dirty": bool(_git("status", "--porcelain", "--untracked-files=no",
                            cwd=cwd)),
         "main_worktree": is_main_worktree(cwd),
+        # Rule 2, the two conditions `main_worktree` cannot see. Reported on
+        # EVERY receipt, because a violation that is only checked at one entry
+        # point is invisible in the record of everything else.
+        "inside_canonical_checkout": inside_canonical_checkout(cwd),
+        "session_temporary_worktree": session_temporary(cwd),
+        "durable_worktree": not (is_main_worktree(cwd)
+                                 or inside_canonical_checkout(cwd)
+                                 or session_temporary(cwd)),
         "allow_canonical_override": os.environ.get(OVERRIDE_ENV) == "1",
     }
+
+
+def assert_durable_worktree(purpose: str = "run") -> Dict[str, Any]:
+    """Rule 2 + rule 6: a LONG-LIVED process needs a durable worktree.
+
+    Refuses all three placements, not just the canonical checkout: the main
+    worktree, a linked worktree underneath it, and a session-temporary path.
+    The last two both report `main_worktree: false`, which is exactly why
+    `assert_not_canonical` alone is not enough for a process that outlives the
+    session that started it.
+
+    There is no override. A consumer holding a global execution slot, writing
+    to the durable register, running from a directory that can be rewritten or
+    deleted underneath it is the failure this whole invariant exists to
+    prevent, and an override would be a hole with a polite name.
+    """
+    r = receipt()
+    if r["durable_worktree"]:
+        return r
+    if r["main_worktree"]:
+        why = "this IS the canonical checkout"
+    elif r["inside_canonical_checkout"]:
+        why = ("this is a linked worktree UNDERNEATH the canonical checkout "
+               "(%s). It reports main_worktree false and is still inside the "
+               "directory that has twice lost ~11,000 tracked files"
+               % canonical_root())
+    else:
+        why = ("this is a SESSION-TEMPORARY path. It is removed when the "
+               "session ends, and a long-lived process whose code is deleted "
+               "underneath it leaves a claimed row with no worker")
+    raise CanonicalCheckoutRefused(
+        "D-23 rule 2/6: refusing to %s from %s -- %s.\n"
+        "A long-lived process runs from a PINNED, DETACHED worktree:\n"
+        "  git -C %s worktree add --detach "
+        "F:\\Prometheus-worktrees/vivarium-<process> <sha>\n"
+        "There is no override for this one."
+        % (purpose, r["worktree_path"], why, canonical_root() or REPO))
 
 
 def assert_not_canonical(purpose: str = "work", *,

@@ -26,6 +26,10 @@ import requests
 # in ssl.create_default_context with FileNotFoundError before any gate ran.
 # Both stacks are independent and either machine must be able to self-verify.
 # Precedence: explicit CLI flag > env var > this host's own deploy cert/URL.
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent))
+from ew import workspace  # noqa: E402
+workspace.assert_not_canonical("run a PEW battery")
+
 _HOSTS = {                       # hostname -> (LAN address, cert basename, PEW machine id)
     "SKULLPORT": ("192.168.1.202", "m1.crt", "M1"),
     "SPECTREX5": ("192.168.1.191", "m2.crt", "M2"),
@@ -209,7 +213,11 @@ def main():
     if not run:
         for g in ("C4a_correct_bound_anchor_verified", "C4b_wrong_but_real_rejected",
                   "C4c_forged_hash_rejected", "C4d_unbound_cannot_verify"):
-            gate(g, False, "SFE unreachable; cannot exercise the real mechanism")
+            # An unavailable DEPENDENCY is not a broken mechanism. A skipped
+            # gate is excluded from all_pass and never counted as a pass, so
+            # this reports honestly without claiming the check ran.
+            gate(g, False, "SFE unreachable; dependency unavailable, mechanism "
+                 "NOT exercised", skipped=True)
     else:
         bound = {"exp_id": run["exp_id"], "obs_id": run["obs_id"]}
         st, att = _verified(f"CLOSURE-{tag}-C4A", run["event_id"], run["entry_hash"], bound)

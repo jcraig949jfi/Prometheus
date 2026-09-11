@@ -1,0 +1,260 @@
+{
+  "schema": "techne.acquisition.receipt/1",
+  "receipt_id": "adapter_qualification-techne_budget_wrapper-20260911T071505Z",
+  "stage": "ADAPTER_QUALIFICATION",
+  "does_not_establish": [
+    "INSTALLATION",
+    "FIRST_USEFUL_CHECK",
+    "PAPER_REPRODUCTION",
+    "LOCAL_SCIENTIFIC_BENEFIT"
+  ],
+  "entry_id": "techne_budget_wrapper",
+  "tool": "techne_budget_wrapper",
+  "design_version": "0.1",
+  "written_utc": "2026-09-11T07:15:05+00:00",
+  "seat": "Techne",
+  "repo": {
+    "commit": "6e225dc745a37e85549e5ae8b09e833f34ce9e0a",
+    "branch": "techne/track-d-2026-09-10",
+    "dirty": true
+  },
+  "runner": {
+    "python": "3.12.10",
+    "executable": "F:\\Prometheus\\vault\\techne_tools\\envs\\h0h5_tools\\Scripts\\python.exe",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "tool_cache": "F:\\Prometheus\\vault\\techne_tools",
+    "tool_cache_source": "TECHNE_TOOL_CACHE env",
+    "tool_cache_note": "host-local and gitignored; only its HASHES are tracked"
+  },
+  "commands_run": [],
+  "observations": {
+    "schema": "techne.tools.cancellation_probe/1",
+    "clears": "TECHNE-44",
+    "why": "Vivarium's contract ruled taskkill /T insufficient. budget.py now uses a Windows job object with KILL_ON_JOB_CLOSE. This measures the replacement rather than documenting it.",
+    "workload": "a child that forks a grandchild and then sleeps past the budget",
+    "arms": {
+      "JOB_OBJECT": [
+        {
+          "parent_pid": 7416,
+          "grandchildren_seen": [
+            "6436"
+          ],
+          "parent_alive_after_cancel": false,
+          "survivors": [],
+          "tree_reaped": true,
+          "cancel_seconds": 1.969,
+          "mechanism_used": [
+            "job_object"
+          ],
+          "jobs_failed_to_arm": []
+        },
+        {
+          "parent_pid": 13812,
+          "grandchildren_seen": [
+            "15532"
+          ],
+          "parent_alive_after_cancel": false,
+          "survivors": [],
+          "tree_reaped": true,
+          "cancel_seconds": 2.172,
+          "mechanism_used": [
+            "job_object"
+          ],
+          "jobs_failed_to_arm": []
+        },
+        {
+          "parent_pid": 24680,
+          "grandchildren_seen": [
+            "3952"
+          ],
+          "parent_alive_after_cancel": false,
+          "survivors": [],
+          "tree_reaped": true,
+          "cancel_seconds": 6.796,
+          "mechanism_used": [
+            "job_object"
+          ],
+          "jobs_failed_to_arm": []
+        },
+        {
+          "parent_pid": 7532,
+          "grandchildren_seen": [
+            "22404"
+          ],
+          "parent_alive_after_cancel": false,
+          "survivors": [],
+          "tree_reaped": true,
+          "cancel_seconds": 1.984,
+          "mechanism_used": [
+            "job_object"
+          ],
+          "jobs_failed_to_arm": []
+        },
+        {
+          "parent_pid": 29192,
+          "grandchildren_seen": [
+            "240"
+          ],
+          "parent_alive_after_cancel": false,
+          "survivors": [],
+          "tree_reaped": true,
+          "cancel_seconds": 1.985,
+          "mechanism_used": [
+            "job_object"
+          ],
+          "jobs_failed_to_arm": []
+        }
+      ],
+      "TASKKILL_DEGRADED": [
+        {
+          "parent_pid": 25088,
+          "grandchildren_seen": [
+            "21720"
+          ],
+          "parent_alive_after_cancel": false,
+          "survivors": [],
+          "tree_reaped": true,
+          "cancel_seconds": 2.031,
+          "mechanism_used": [
+            "taskkill_tree_DEGRADED"
+          ],
+          "jobs_failed_to_arm": [
+            {
+              "pid": 25088,
+              "reason": "FORCED for the comparison arm"
+            }
+          ]
+        },
+        {
+          "parent_pid": 16180,
+          "grandchildren_seen": [
+            "26324"
+          ],
+          "parent_alive_after_cancel": false,
+          "survivors": [],
+          "tree_reaped": true,
+          "cancel_seconds": 2.25,
+          "mechanism_used": [
+            "taskkill_tree_DEGRADED"
+          ],
+          "jobs_failed_to_arm": [
+            {
+              "pid": 16180,
+              "reason": "FORCED for the comparison arm"
+            }
+          ]
+        },
+        {
+          "parent_pid": 10272,
+          "grandchildren_seen": [
+            "10364"
+          ],
+          "parent_alive_after_cancel": false,
+          "survivors": [],
+          "tree_reaped": true,
+          "cancel_seconds": 2.188,
+          "mechanism_used": [
+            "taskkill_tree_DEGRADED"
+          ],
+          "jobs_failed_to_arm": [
+            {
+              "pid": 10272,
+              "reason": "FORCED for the comparison arm"
+            }
+          ]
+        },
+        {
+          "parent_pid": 26676,
+          "grandchildren_seen": [
+            "9376"
+          ],
+          "parent_alive_after_cancel": false,
+          "survivors": [],
+          "tree_reaped": true,
+          "cancel_seconds": 2.016,
+          "mechanism_used": [
+            "taskkill_tree_DEGRADED"
+          ],
+          "jobs_failed_to_arm": [
+            {
+              "pid": 26676,
+              "reason": "FORCED for the comparison arm"
+            }
+          ]
+        },
+        {
+          "parent_pid": 28960,
+          "grandchildren_seen": [
+            "5316"
+          ],
+          "parent_alive_after_cancel": false,
+          "survivors": [],
+          "tree_reaped": true,
+          "cancel_seconds": 2.016,
+          "mechanism_used": [
+            "taskkill_tree_DEGRADED"
+          ],
+          "jobs_failed_to_arm": [
+            {
+              "pid": 28960,
+              "reason": "FORCED for the comparison arm"
+            }
+          ]
+        }
+      ]
+    },
+    "summary": {
+      "JOB_OBJECT": {
+        "trials": 5,
+        "grandchildren_observed": 5,
+        "trees_reaped": 5,
+        "survivors_total": 0,
+        "mechanisms": [
+          "job_object"
+        ]
+      },
+      "TASKKILL_DEGRADED": {
+        "trials": 5,
+        "grandchildren_observed": 5,
+        "trees_reaped": 5,
+        "survivors_total": 0,
+        "mechanisms": [
+          "taskkill_tree_DEGRADED"
+        ]
+      }
+    },
+    "reference_probe": {
+      "path": "vivarium/tools/probe_process_tree_kill.py",
+      "result_on_this_host": "TREE REAPED",
+      "note": "Vivarium's own probe, run unmodified. This one differs in that it cancels THROUGH budget.py rather than through a hand-built job."
+    },
+    "what_a_clean_taskkill_arm_would_NOT_mean": "that the contract is wrong. Absence of a survivor on one host at one timing is not a guarantee; taskkill walks a parent/child relation it reads at kill time and the documentation promises nothing about a process that forks between the read and the kill. A SURVIVOR is evidence of the defect; no survivor is the absence of evidence."
+  },
+  "deviations": [],
+  "unrun_or_blocked": [],
+  "status": "INCOMPLETE",
+  "check": "process_tree_cancellation_mechanism",
+  "consumer": "techne.acquisition.budget, which meters preparation-time work (pip, git, cargo, the stitch binary)",
+  "clears": "TECHNE-44",
+  "checks": [
+    {
+      "claim": "the SHIPPING arm reaps every tree it was given, grandchildren included",
+      "pass": true
+    },
+    {
+      "claim": "the shipping arm actually used the job object, never the degraded path",
+      "pass": true
+    },
+    {
+      "claim": "the workload really did fork -- a probe that saw no grandchild would be testing nothing",
+      "pass": true
+    },
+    {
+      "claim": "the degraded arm was genuinely degraded, so the two arms differ in MECHANISM and not in setup",
+      "pass": true
+    }
+  ],
+  "all_passed": true,
+  "verdict": "budget.py cancels through a Windows job object and reaped 5 of 5 forking trees with 0 survivors. The forced taskkill arm reaped 5 of 5 with 0 survivors. taskkill happened to reap them too on this host -- which changes nothing, because the job object is a guarantee and taskkill is an observation.",
+  "scope": "This qualifies a PREPARATION-time metering wrapper. It does not make budget.py an admitted in-run backend: Vivarium's contract admits a backend, not a kill mechanism."
+}

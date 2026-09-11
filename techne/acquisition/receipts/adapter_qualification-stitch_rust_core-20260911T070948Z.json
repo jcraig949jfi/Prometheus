@@ -1,0 +1,314 @@
+{
+  "schema": "techne.acquisition.receipt/1",
+  "receipt_id": "adapter_qualification-stitch_rust_core-20260911T070948Z",
+  "stage": "ADAPTER_QUALIFICATION",
+  "does_not_establish": [
+    "INSTALLATION",
+    "FIRST_USEFUL_CHECK",
+    "PAPER_REPRODUCTION",
+    "LOCAL_SCIENTIFIC_BENEFIT"
+  ],
+  "entry_id": "stitch_rust_core",
+  "tool": "stitch_rust_core",
+  "design_version": "0.1",
+  "written_utc": "2026-09-11T07:09:48+00:00",
+  "seat": "Techne",
+  "repo": {
+    "commit": "eaa89260501bd28d9ea7a43aa1b6155cfd45d9cb",
+    "branch": "techne/track-d-2026-09-10",
+    "dirty": true
+  },
+  "runner": {
+    "python": "3.12.10",
+    "executable": "F:\\Prometheus\\vault\\techne_tools\\envs\\h0h5_tools\\Scripts\\python.exe",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "tool_cache": "F:\\Prometheus\\vault\\techne_tools",
+    "tool_cache_source": "TECHNE_TOOL_CACHE env",
+    "tool_cache_note": "host-local and gitignored; only its HASHES are tracked"
+  },
+  "commands_run": [],
+  "observations": {
+    "schema": "techne.h0.component_library_export/1",
+    "clears": "TECHNE-14",
+    "input": {
+      "path": "archaeon/docs/h0h5/H1H0_SOLVED_PROGRAMS_2026-09-10.json",
+      "declared_sha256": "581aed3186281f1b250bfb08ef411a70d21d6581df07d6f7f2c1714943db30d7",
+      "committed_bytes_sha256": "581aed3186281f1b250bfb08ef411a70d21d6581df07d6f7f2c1714943db30d7",
+      "matches_declared": true
+    },
+    "split": {
+      "owner": "archaeon.producer.campaign_h1h0.task_split",
+      "rule": "SOURCE tasks feed phase 1; TARGET tasks are held out and solved in phase 2",
+      "why_it_decides_this_export": "a library derived from phase-2 solutions and then used on phase-2 targets has been handed its own test set, so ALL_17 is measured and reported but is NOT exportable for use on phase 2 at any quality",
+      "n_phase1": 3,
+      "n_phase2_cells": 14,
+      "n_phase2_distinct": 4
+    },
+    "stitch": {
+      "PHASE1_3": {
+        "ok": true,
+        "derived_from": "PHASE1_3",
+        "n_programs": 3,
+        "n_abstractions": 0,
+        "original_cost": 906,
+        "final_cost": 906,
+        "components": [],
+        "refused_components": [],
+        "every_component_is_a_whole_program": false,
+        "n_components_from_held_out_phase2": 0,
+        "exportable_for_phase2_use": true,
+        "why_not_exportable": null,
+        "artifact": {
+          "slot": {
+            "digest": "sha256:ad7c3c3e0a2ab858720eb6d3fef260ab8a667286255dd28cee1f7d787ccb8790",
+            "artifact_type": "component_library",
+            "schema_version": "1",
+            "codec": "canonical-json-v1",
+            "expected_bytes": 113,
+            "interface_id": "boolean-components-v1"
+          },
+          "slot_blocker": null,
+          "canonical_json": "{\"artifact_type\":\"component_library\",\"components\":[],\"interface_id\":\"boolean-components-v1\",\"schema_version\":\"1\"}"
+        },
+        "loader_accepted": {
+          "component_count": 0,
+          "max_depth": 0,
+          "grammar_version": "proteus.boolean_grammar.v0"
+        },
+        "loader_rejection": null,
+        "no_pickle": {
+          "codec": "canonical-json-v1",
+          "bytes_parse_as_json": true,
+          "claim": "the artifact is canonical JSON produced by the owner's canonical_bytes; nothing in this path pickles, unpickles, or imports an upstream object"
+        }
+      },
+      "ALL_17": {
+        "ok": true,
+        "derived_from": "ALL_17",
+        "n_programs": 17,
+        "n_abstractions": 3,
+        "original_cost": 6548,
+        "final_cost": 2912,
+        "components": [
+          {
+            "stitch_name": "fn_0",
+            "arity": 0,
+            "body": "(or x2 x1)",
+            "uses": 6,
+            "is_whole_program_in_corpus": true,
+            "expr": [
+              "or",
+              [
+                "input",
+                2
+              ],
+              [
+                "input",
+                1
+              ]
+            ],
+            "solves_tasks": [
+              "tgt-10"
+            ],
+            "from_held_out_phase2": true,
+            "truth_table": [
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "stitch_name": "fn_1",
+            "arity": 0,
+            "body": "(or x1 (not x2))",
+            "uses": 4,
+            "is_whole_program_in_corpus": true,
+            "expr": [
+              "or",
+              [
+                "input",
+                1
+              ],
+              [
+                "not",
+                [
+                  "input",
+                  2
+                ]
+              ]
+            ],
+            "solves_tasks": [
+              "tgt-01"
+            ],
+            "from_held_out_phase2": true,
+            "truth_table": [
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1
+            ]
+          },
+          {
+            "stitch_name": "fn_2",
+            "arity": 0,
+            "body": "(and (and x1 x2) (and x0 x2))",
+            "uses": 2,
+            "is_whole_program_in_corpus": true,
+            "expr": [
+              "and",
+              [
+                "and",
+                [
+                  "input",
+                  1
+                ],
+                [
+                  "input",
+                  2
+                ]
+              ],
+              [
+                "and",
+                [
+                  "input",
+                  0
+                ],
+                [
+                  "input",
+                  2
+                ]
+              ]
+            ],
+            "solves_tasks": [
+              "tgt-11"
+            ],
+            "from_held_out_phase2": true,
+            "truth_table": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1
+            ]
+          }
+        ],
+        "refused_components": [],
+        "every_component_is_a_whole_program": true,
+        "n_components_from_held_out_phase2": 3,
+        "exportable_for_phase2_use": false,
+        "why_not_exportable": "3 of 3 components ARE held-out phase-2 solutions; a search given them finds those targets as a size-1 LEAF, which measures the leak and not the library",
+        "artifact": {
+          "slot": {
+            "digest": "sha256:1ce695d3862d36b335463d98fe388b55e92088112354aab162a60dd2a7fe1de1",
+            "artifact_type": "component_library",
+            "schema_version": "1",
+            "codec": "canonical-json-v1",
+            "expected_bytes": 344,
+            "interface_id": "boolean-components-v1"
+          },
+          "slot_blocker": null,
+          "canonical_json": "{\"artifact_type\":\"component_library\",\"components\":[{\"expr\":[\"or\",[\"input\",2],[\"input\",1]],\"name\":\"stitch_fn_0\"},{\"expr\":[\"or\",[\"input\",1],[\"not\",[\"input\",2]]],\"name\":\"stitch_fn_1\"},{\"expr\":[\"and\",[\"and\",[\"input\",1],[\"input\",2]],[\"and\",[\"input\",0],[\"input\",2]]],\"name\":\"stitch_fn_2\"}],\"interface_id\":\"boolean-components-v1\",\"schema_version\":\"1\"}"
+        },
+        "loader_accepted": {
+          "component_count": 3,
+          "max_depth": 2,
+          "grammar_version": "proteus.boolean_grammar.v0"
+        },
+        "loader_rejection": null,
+        "no_pickle": {
+          "codec": "canonical-json-v1",
+          "bytes_parse_as_json": true,
+          "claim": "the artifact is canonical JSON produced by the owner's canonical_bytes; nothing in this path pickles, unpickles, or imports an upstream object"
+        }
+      }
+    },
+    "archaeon_existing_extractor": {
+      "extractor": "archaeon.producer.campaign_h1h0.extract_library",
+      "parameters": {
+        "min_size": 3,
+        "min_count": 2,
+        "max_components": 8
+      },
+      "derived_from": "PHASE1_3",
+      "n_candidate_subtrees": 3,
+      "n_kept": 0,
+      "components": []
+    },
+    "comparison": {
+      "question": "on the only corpus a held-out evaluation permits -- the 3 phase-1 solutions -- does stitch find anything Archaeon's repeated-subtree extractor does not?",
+      "stitch_on_PHASE1_3_n_abstractions": 0,
+      "archaeon_extractor_on_PHASE1_3_n_kept": 0,
+      "archaeon_n_candidate_subtrees": 3,
+      "answer": "NO, AND NEITHER DOES THEIRS. Both return an EMPTY library on the legitimate corpus, and they agree for the same reason: three solutions of 2-4 grammar nodes contain no subexpression repeated across two of them. That is a fact about the corpus, not about either extractor, and no amount of tool quality changes it.",
+      "and_on_ALL_17": {
+        "n_abstractions": 3,
+        "n_from_held_out_phase2": 3,
+        "exportable_for_phase2_use": false
+      }
+    }
+  },
+  "deviations": [],
+  "unrun_or_blocked": [],
+  "status": "INCOMPLETE",
+  "check": "component_library_export_and_comparison_against_archaeons_extractor",
+  "consumer": "viv component_library / boolean-components-v1, which is Proteus's interface and Vivarium's loader",
+  "clears": "TECHNE-14",
+  "resource_receipt": {
+    "profile": "stitch_core_reproduction",
+    "network_policy": "FORBIDDEN",
+    "wall_seconds": 0.391,
+    "wall_ceiling": 1800,
+    "downloaded_bytes": 0,
+    "download_ceiling": 0,
+    "cache_bytes_before": 2618271009,
+    "cache_bytes_after": 0,
+    "cache_delta_bytes": -2618271009,
+    "peak_rss_bytes_os_counter": 27893760,
+    "peak_rss_bytes_sampled": 27824128,
+    "rss_method": "GetProcessMemoryInfo",
+    "rss_ceiling": 6442450944,
+    "rss_samples": 1,
+    "rss_ceiling_exceeded_during_sampling": false,
+    "rss_enforcement": "NOT ENFORCED -- no job object / cgroup cap. peak_rss_bytes_os_counter is the OS peak-working-set counter for this process and IS reliable; rss_ceiling_exceeded_during_sampling is sampled and can miss a spike. Neither stops a step.",
+    "rss_excludes_children": "This is THIS process only. pip, git and venv run as children and their RSS is NOT included.",
+    "children_spawned": 2,
+    "process_cap": 2,
+    "aborted_on": null
+  },
+  "checks": [
+    {
+      "claim": "every exported component carries the AST ARCHAEON published, never one this exporter parsed",
+      "pass": true
+    },
+    {
+      "claim": "the artifact is accepted by VIVARIUM's real loader, or the corpus produced no components to accept",
+      "pass": true
+    },
+    {
+      "claim": "no pickle crosses the boundary: the artifact is canonical JSON from the owner's canonical_bytes",
+      "pass": true
+    },
+    {
+      "claim": "MEASURED, not assumed: whether stitch beats the extractor Archaeon already has, on the corpus a held-out evaluation permits",
+      "pass": true
+    },
+    {
+      "claim": "LEAKAGE IS REPORTED RATHER THAN EXPORTED: any component that is itself a held-out phase-2 solution is counted and its corpus marked not exportable",
+      "pass": true
+    }
+  ],
+  "all_passed": true,
+  "verdict": "stitch's library is EMPTY on the only corpus a held-out evaluation permits (3 phase-1 solutions), and Archaeon's existing extractor is empty on it too. On ALL_17 stitch returns 3 abstractions, of which 3 ARE held-out phase-2 solutions -- so that library is not exportable for phase-2 use. The export path itself works and the loader accepts it; there is nothing on this corpus worth putting through it."
+}

@@ -22,6 +22,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(HERE))
+from ew import workspace  # noqa: E402
 sys.path.insert(0, str(HERE / "ops"))
 
 import psycopg2                                   # noqa: E402
@@ -130,6 +131,9 @@ def samples(conn):
                                "pg_constraint WHERE "
                                "conname='evidence_fossil_encounter_fk'"),
     }
+
+
+WORKSPACE = workspace.assert_not_canonical("verify a PEW restore")
 
 
 def main():

@@ -1,5 +1,7 @@
 # Diomedes — BOOTSTRAP (read this first, after any context reset)
 
+> Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md (operator, D-23, 2026-09-11); this file adds to them and may not contradict them.
+
 > ## SEAT PARKED — 2026-09-02, by James ("We're parking this seat."). Not retired: no dossier, no
 > HITL retirement ruling. Lane N KILL stands; Lane M stays open-and-unretired; the K0 instrument
 > `coordinate_census.py` and the Lean handoff stay offered. Last state: `STATUS_2026-09-01_rebootstrap.md`.

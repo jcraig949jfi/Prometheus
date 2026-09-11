@@ -116,3 +116,40 @@ check for any consumer, from `evidence_wiki/`:
 14 gates (E0-E12 plus an anchor-write gate); `all_pass: true` and exit 0 is
 the only PASS. Results in `integration/battery_results.json`. Run it after any
 service change, and always after a restart on a new machine.
+
+## D-23 workspace invariant (2026-09-11)
+PEW never runs from the canonical checkout `F:\Prometheus`. `ew/workspace.py`
+refuses it at import in the service, the backup/restore jobs, the indexer and
+every battery: in the repository's MAIN worktree `git rev-parse --git-dir`
+equals `--git-common-dir`, and in a linked worktree it does not. The override
+`EW_ALLOW_CANONICAL=1` is for read-only inspection and is recorded in the
+receipt whenever used.
+
+Why PEW in particular: the service is long-running. A mutating git operation
+in the canonical checkout swaps files beneath a live process, which is how
+~11,000 tracked files went missing twice. Durability work is worthless if the
+code can be rewritten mid-write.
+
+    PINNED (long-running)  F:\Prometheus-worktrees\mnemosyne-pew
+                           detached at a recorded SHA; runs the service and
+                           the two scheduled jobs. Advanced only by an
+                           explicit logged command after tests.
+    TASK (short-lived)     F:\Prometheus-worktrees\mnemosyne-<task>
+                           on mnemosyne/<task> from a recorded base SHA;
+                           removed after integration.
+
+`GET /api/v1/health` now reports the serving tree (`workspace.base_sha`,
+`branch`, `worktree_path`, `dirty`, `main_worktree`), so which code is
+serving is answerable from the service rather than inferred.
+
+Advancing the pinned worktree (the only supported way):
+
+    git -C F:\Prometheus fetch origin
+    git -C F:\Prometheus-worktrees\mnemosyne-pew checkout --detach <sha>
+    powershell -File F:\Prometheus-worktrees\mnemosyne-pew\evidence_wiki\scripts\ew_watchdog.ps1
+    python integration/pew_battery.py   # from a TASK worktree, then the rest
+
+The scheduled tasks (`MnemosyneEvidenceWikiWatchdog`, `PEWBackupDaily`,
+`PEWRestoreVerifyWeekly`) point at the pinned worktree. The `.cmd` wrappers
+are path-relative (`%~dp0..`), so moving the pinned worktree needs only the
+task paths updated, never an edit to a committed file.

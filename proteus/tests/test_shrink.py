@@ -133,15 +133,24 @@ def test_strategy_generates_only_valid_compilable_programs():
 
 
 def test_hypothesis_shrink_is_sound_under_our_predicate():
-    """SOUNDNESS is what must always hold: whatever it shrinks to still satisfies the predicate."""
+    """SOUNDNESS is what must always hold: whatever it shrinks to still satisfies the predicate.
+
+    The predicate here is `still_a_counterexample`, NOT `still_solves`, and that is a correction
+    rather than a convenience. An earlier version searched for a SOLVING program and passed only
+    where Hypothesis's example database was already warm: in a fresh worktree the same code
+    raised NoSuchExample, because blind generation almost never lands on an exact solution. A
+    test whose result depends on a cache left by a previous run is not evidence. The fixture
+    already records the honest version of that observation -- solving programs are found by
+    shrinking a KNOWN solution, not by search.
+    """
     pytest.importorskip("hypothesis")
     from hypothesis import find, settings
     from proteus.eval.hypothesis_strategy import programs
 
-    got = find(programs(max_leaves=6), lambda e: S.still_solves(e, XOR3),
-               settings=settings(max_examples=1500, deadline=None))
-    assert S.still_solves(got, XOR3), "the shrunk program stopped satisfying the post-condition"
-    gt = S.minimal_by_enumeration(XOR3, "still_solves", max_size=5)
+    got = find(programs(max_leaves=6), lambda e: S.still_a_counterexample(e, XOR3),
+               settings=settings(max_examples=500, deadline=None, database=None))
+    assert S.still_a_counterexample(got, XOR3),         "the shrunk program stopped satisfying the post-condition"
+    gt = S.minimal_by_enumeration(XOR3, "still_a_counterexample", max_size=2)
     assert S.program_size(got) >= gt["size"], "shrunk below the exhaustive minimum: impossible"
 
 

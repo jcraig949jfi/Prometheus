@@ -1,5 +1,7 @@
 # LUDUS — Role
 
+> Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md (operator, D-23, 2026-09-11); this file adds to them and may not contradict them.
+
 **Role:** the world-supply seat — *before an agent is credited with transferable reasoning, establish
 that the worlds it was measured in could have distinguished reasoning from a four-line heuristic.*
 **Status:** v3, 2026-08-26. **AUTHORISED.** James granted the seat explicitly: independent

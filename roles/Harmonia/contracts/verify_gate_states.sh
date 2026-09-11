@@ -13,6 +13,20 @@
 #
 #   usage: verify_gate_states.sh <cacert> [port]
 set -u
+
+# --- D-23: refuse to run from the canonical checkout -----------------------
+# A linked worktree's git-dir lives under <common>/worktrees/<name>, so these
+# two resolve to the same path ONLY in the main worktree. This starts engines
+# and writes nothing to the tree, but it is an entry point and the missive
+# says every entry point.
+__gd=$(git rev-parse --git-dir 2>/dev/null || true)
+__cd=$(git rev-parse --git-common-dir 2>/dev/null || true)
+if [ -n "$__gd" ] && [ "$__gd" = "$__cd" ] && [ "${HARMONIA_ALLOW_CANONICAL:-}" != "1" ]; then
+  echo "REFUSING: this is the canonical checkout (the repository's main worktree)."
+  echo "  D-23: work from a linked worktree --"
+  echo "  git -C F:/Prometheus worktree add F:/Prometheus-worktrees/<seat>-<task> -b <seat>/<task> origin/main"
+  exit 2
+fi
 CA="${1:?cacert path}"
 PORT="${2:-8901}"
 SCRATCH="http://127.0.0.1:${PORT}/v2"

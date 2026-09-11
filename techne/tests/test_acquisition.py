@@ -301,3 +301,236 @@ def test_unit_is_not_guessed_for_an_undeclared_memory_number():
     mem = [f for f in rep["conflicts_with_measured_host"] if f["dimension"] == "memory"][0]
     assert "GiB" in mem["exceeds_available_under_readings"]
     assert "bytes" not in mem["exceeds_available_under_readings"]
+
+
+# --------------------------------------------------------------------------
+# TECHNE-14: the component-library export. Three concrete risks, no mirroring.
+# --------------------------------------------------------------------------
+def test_export_refuses_to_parse_an_expression_it_was_not_given_an_ast_for():
+    """A stitch body that is not a whole solved program has no published AST.
+    The exporter must REFUSE it, because the alternative is a second parser
+    that agrees with Proteus's grammar until it does not."""
+    from techne.scripts import export_component_library as X
+
+    res = {"ok": True, "n_abstractions": 1, "original_cost": 9, "final_cost": 8,
+           "names": ["fn_0"], "arities": [1], "uses": [2], "bodies": ["(xor x1 x2)"]}
+    out = X._score(res, "SYNTHETIC", ["(not (xor x1 x2))"], by_sexpr={}, held_out=set(),
+                   ar=_StubArchaeon(), pb=None, va=_StubViv())
+    assert out["refused_components"], "a body with no published AST must be refused"
+    assert not out["components"]
+    assert "will not parse an expression itself" in out["refused_components"][0]["refused"]
+
+
+def test_a_component_that_is_a_held_out_solution_marks_the_corpus_unexportable():
+    """The leak that matters: a component which IS a held-out target's solution
+    turns that target into a size-1 leaf, so the library measures the leak."""
+    from techne.scripts import export_component_library as X
+
+    body = "(or x2 x1)"
+    res = {"ok": True, "n_abstractions": 1, "original_cost": 9, "final_cost": 8,
+           "names": ["fn_0"], "arities": [0], "uses": [6], "bodies": [body]}
+    by = {body: {"ast": ["or", ["input", 2], ["input", 1]], "tasks": ["tgt-10"], "phases": {2}}}
+    out = X._score(res, "ALL", [body], by, held_out={body},
+                   ar=_StubArchaeon(), pb=_StubProteus(), va=_StubViv())
+    assert out["n_components_from_held_out_phase2"] == 1
+    assert out["exportable_for_phase2_use"] is False
+    assert "size-1 LEAF" in out["why_not_exportable"]
+
+
+def test_the_exported_artifact_is_json_with_no_pickle():
+    """Deliverable 5 of the acquisition brief, at the one place bytes actually
+    leave this seat for a consumer."""
+    from techne.scripts import export_component_library as X
+
+    body = "(and x0 x2)"
+    res = {"ok": True, "n_abstractions": 1, "original_cost": 9, "final_cost": 8,
+           "names": ["fn_0"], "arities": [0], "uses": [2], "bodies": [body]}
+    by = {body: {"ast": ["and", ["input", 0], ["input", 2]], "tasks": ["src-17"], "phases": {1}}}
+    out = X._score(res, "P1", [body], by, held_out=set(),
+                   ar=_StubArchaeon(), pb=_StubProteus(), va=_StubViv())
+    raw = out["artifact"]["canonical_json"].encode("utf-8")
+    assert out["no_pickle"]["codec"] == "canonical-json-v1"
+    assert json.loads(raw)["interface_id"] == "boolean-components-v1"
+    # pickle protocol 2+ opens with \x80; a JSON document never does.
+    assert not raw.startswith(b"\x80")
+    assert b"__reduce__" not in raw and b"cPickle" not in raw
+
+
+class _StubArchaeon:
+    """Only the envelope call is stubbed, and it is stubbed to the SHAPE the
+    real library_object returns -- the real one is exercised by the run itself."""
+
+    @staticmethod
+    def library_object(components, *, provenance):
+        obj = {"artifact_type": "component_library", "schema_version": "1",
+               "interface_id": "boolean-components-v1", "components": [dict(c) for c in components]}
+        raw = json.dumps(obj, sort_keys=True, separators=(",", ":")).encode("utf-8")
+        return {"object": obj, "raw": raw, "provenance": provenance,
+                "slot": {"digest": "sha256:stub", "expected_bytes": len(raw)}}
+
+
+class _StubProteus:
+    @staticmethod
+    def truth_table(expr):
+        return [0] * 8
+
+
+class _StubViv:
+    @staticmethod
+    def _check_boolean_components_v1(obj, limits):
+        return {"component_count": len(obj["components"])}
+
+
+# --------------------------------------------------------------------------
+# TECHNE-44: cancellation. Two concrete risks, both found by the probe.
+# --------------------------------------------------------------------------
+def test_a_resource_receipt_does_not_keep_changing_after_it_is_taken():
+    """The defect the cancellation probe surfaced: resource_receipt() handed out
+    a reference to the live kill list, so a receipt taken inside the context kept
+    growing during teardown and every reading of it disagreed with the last."""
+    prof = {"name": "t", "network": "FORBIDDEN", "max_wall_seconds": 60,
+            "max_processes": 4, "max_download_bytes": 0}
+    b = budget.Budget(profile=prof)
+    taken = b.resource_receipt()["cancellation"]
+    before = json.dumps(taken, sort_keys=True)
+    b._kills.append({"pid": 1, "mechanism": "job_object"})
+    b._job_failures.append({"pid": 1, "reason": "synthetic"})
+    assert json.dumps(taken, sort_keys=True) == before, (
+        "a receipt is a record of a moment; one that mutates afterwards cannot be "
+        "compared against anything, including itself")
+
+
+def test_cancelling_the_same_child_twice_does_not_invent_a_degraded_kill():
+    """__exit__ sweeps kill_tree() over every child, so a process the caller
+    already cancelled arrives a second time when it is dead and its job is gone.
+    Recording that as 'nothing could be reaped' would manufacture a degraded
+    cancellation out of ordinary teardown."""
+    prof = {"name": "t", "network": "FORBIDDEN", "max_wall_seconds": 60,
+            "max_processes": 4, "max_download_bytes": 0}
+    b = budget.Budget(profile=prof)
+
+    class _Dead:
+        pid = 4242
+
+        @staticmethod
+        def poll():
+            return 0
+
+    p = _Dead()
+    b._kill_one(p)
+    b._kill_one(p)
+    b._kill_one(p)
+    assert len(b._kills) == 1, "one cancellation is one row, however many times it is swept"
+
+
+# --------------------------------------------------------------------------
+# D-23 (operator, 2026-09-11): the workspace invariant, on this seat's entry points.
+# --------------------------------------------------------------------------
+def test_a_linked_worktree_under_the_canonical_checkout_is_refused():
+    """The hole in MY first guard, found by Vivarium within the hour: such a
+    worktree is genuinely linked, so is_main_worktree is false and my original
+    temp-path marker test cleared it, while the files sat inside the directory
+    that has twice lost tracked files. Their derived-root check catches it."""
+    from techne import workspace
+
+    root = workspace.canonical_root()
+    assert root is not None and root.is_dir(), (
+        "the canonical root must be DERIVED from --git-common-dir and must exist")
+
+    # The containment logic, isolated from git: that is the part my first version
+    # got wrong. A path UNDER the root is inside; the root itself is not (that is
+    # the main-worktree case); a sibling is not.
+    real_root = workspace.canonical_root
+    workspace.canonical_root = lambda path=None: root
+    try:
+        assert workspace.inside_canonical_checkout(root) is False
+        assert workspace.inside_canonical_checkout(root / ".claude" / "worktrees" / "w") is True
+        assert workspace.inside_canonical_checkout(root.parent / "Prometheus-worktrees") is False
+    finally:
+        workspace.canonical_root = real_root
+
+    # and a cwd that does not exist must answer, not raise
+    assert workspace._git("rev-parse", "HEAD", cwd=root / "no" / "such" / "dir") ==         "", "a helper documented to return a value must not raise on a bad cwd"
+    # and the guard refuses it with no override available
+    real = workspace.inside_canonical_checkout
+    workspace.inside_canonical_checkout = lambda path=None: True
+    try:
+        with pytest.raises(workspace.CanonicalCheckoutRefused) as exc:
+            workspace.assert_not_canonical("probe")
+        assert "UNDERNEATH" in str(exc.value)
+    finally:
+        workspace.inside_canonical_checkout = real
+
+
+def test_the_canonical_checkout_is_detected_without_a_path_assumption():
+    """Archaeon's test, and the reason it is theirs rather than mine: a
+    path-based check would have to know a drive letter, which is the exact
+    portability defect this seat exists to catch in other people's code."""
+    from techne import workspace
+    # The tests themselves run from a linked worktree, so this is the real answer
+    # for the tree under test, not a stub.
+    assert workspace.is_main_worktree() is False
+    r = workspace.receipt()
+    assert r["base_sha"] and len(r["base_sha"]) == 40
+    assert r["branch"] and r["worktree_path"]
+    assert r["tool_cache_versioned"] is False, (
+        "base_sha pins this seat's CODE and not its installed tools; a receipt "
+        "implying otherwise would claim a reproducibility this seat does not have")
+
+
+def test_a_budgeted_step_refuses_to_run_from_the_canonical_checkout():
+    """Rule 1 and rule d: the refusal is on the ENTRY POINT, and every check in
+    this seat runs inside a Budget -- including ones not yet written."""
+    from techne import workspace
+    real = workspace.is_main_worktree
+    workspace.is_main_worktree = lambda path=None: True
+    try:
+        with pytest.raises(workspace.CanonicalCheckoutRefused) as exc:
+            with budget.Budget(profile={"name": "t", "network": "FORBIDDEN"}):
+                pass
+        assert "canonical checkout" in str(exc.value)
+    finally:
+        workspace.is_main_worktree = real
+
+
+def test_every_receipt_carries_the_four_fields_d23_requires():
+    from techne.acquisition import receipt as R
+    ws = R.new("INSTALLATION", "probe")["workspace"]
+    for field_name in ("base_sha", "branch", "worktree_path", "dirty"):
+        assert field_name in ws, field_name
+
+
+def test_the_semantic_leak_checker_catches_what_my_string_test_cannot():
+    """The gap Vivarium's checker closed: my test is string equality on
+    s-expressions, so the SAME FUNCTION under a different spelling escapes it.
+    This asserts the two disagree on exactly that case, because if they never
+    disagreed there would be no reason to carry both."""
+    from techne.scripts import export_component_library as X
+
+    # (or x1 x2) computes the same function as the solved program (or x2 x1),
+    # and is spelled differently -- invisible to the syntactic test.
+    body = "(or x1 x2)"
+    res = {"ok": True, "n_abstractions": 1, "original_cost": 9, "final_cost": 8,
+           "names": ["fn_0"], "arities": [0], "uses": [3], "bodies": [body]}
+    by = {body: {"ast": ["or", ["input", 1], ["input", 2]], "tasks": ["x"], "phases": {1}}}
+    out = X._score(res, "SYN", [body], by, held_out={"(or x2 x1)"},
+                   ar=_StubArchaeon(), pb=_StubProteus(), va=_StubViv(),
+                   vl=_StubLeak(), target_tts={"tgt-10": "01110111"})
+    assert out["n_components_from_held_out_phase2"] == 0, (
+        "the syntactic test must MISS this -- that is the point of the test")
+    assert out["viv_library_leak"]["verdict"] == "SOLVES_A_TASK"
+    assert out["exportable_for_phase2_use"] is False, (
+        "the semantic verdict must be the one that decides")
+
+
+class _StubLeak:
+    """Stands in for viv.library_leak with its contract, not its implementation:
+    a component whose truth table matches a task's is SOLVES_A_TASK."""
+
+    @staticmethod
+    def check(components, task_truth_tables, *, known_solutions=None):
+        hit = [c["name"] for c in components if task_truth_tables]
+        return {"verdict": "SOLVES_A_TASK" if hit else "CLEAN",
+                "usable_as_a_library_effect": not hit,
+                "n_components": len(components), "n_tasks": len(task_truth_tables),
+                "findings": [{"component": n, "class": "SOLVES_A_TASK"} for n in hit]}

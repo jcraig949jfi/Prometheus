@@ -1,4 +1,6 @@
 # Techne Charter — The Toolsmith
+
+> Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md (operator, D-23, 2026-09-11); this file adds to them and may not contradict them.
 ## Master Craftsman of Mathematical Computation
 ## Date: 2026-04-21
 

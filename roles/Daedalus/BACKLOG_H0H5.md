@@ -62,6 +62,37 @@ rather than all 67 at once. **Sequence: after step 5.** Building it before any
 consumer holds the gate would be sharpening an instrument nobody is holding —
 which is the whole lesson of this backlog's top item.
 
+### A6. The engine cannot record its own unavailability, so a stall reads as data — `NOTHING`
+**Found by Vivarium 2026-09-11, and it is the sharpest consequence of C9.**
+
+When `BEGIN IMMEDIATE` exceeds its 30 s wait, `sqlite3.OperationalError`
+propagates past the `FoundryError` handler (`sfe/api.py:514`, which only catches
+`FoundryError`) as an unhandled 500. The only `except sqlite3.OperationalError`
+in `sfe/` is `store.py:631` — the unrelated `initialize()` fast path.
+
+**Nothing is written to the ledger. By construction it cannot be: recording the
+failure needs the very lock that just failed.** So the hash chain is silent
+exactly when the engine is the thing that broke, and a reader reconstructing
+events from the ledger afterwards sees no trace at all.
+
+**Why that is worse than losing rows.** The 13 rows the engine failed on
+2026-09-11 were `cs-h5-1` arm `map`, rules **143–155 — thirteen CONSECUTIVE**.
+Contiguous because they were consecutive in the producer's issue order and the
+engine stalled for seventeen minutes; nothing about the rules. But the rule
+number is the x-axis of what H5 plots, so a block-shaped hole is the shape most
+likely to be read as a property of rule space. The map completes at 243 of 256,
+and the difference between reporting *"243"* and *"243 with a named contiguous
+gap at 143–155"* is the whole of whether a later reader can tell an instrument
+failure from a finding.
+
+**Do:** the record has to live somewhere the lock cannot block — that is the
+design constraint, not an implementation detail. Options: a structured
+unavailability log outside SQLite; a counter surfaced on `/v2/health` (**B3**)
+so a consumer can ask "were you refusing writes during my window?"; or a
+deliberate second connection reserved for incident records. Anything that writes
+to the same ledger through the same lock is circular.
+Blocks: nobody today, and it silently taxes every campaign that hits a stall.
+
 ### A1. The client abandons a request ~3 s BEFORE the engine gives up — `PARTIAL`
 Measured, `SerendipityFoundry/SerendipityFoundryEngine/deploy/WRITE_PATH_PROFILE_2026-09-10.json`: the client's socket
 timeout fires at **30.01 s**; the engine's SQLite lock wait actually runs to
@@ -103,6 +134,15 @@ an artefact of the harness rather than of the engine. It is listed because it
 is unexplained, not because it is known to be a defect.
 **Do:** re-run with one `Foundry` per thread and with real HTTP concurrency
 before drawing any conclusion.
+**2026-09-11, UNCHANGED AND VINDICATED.** Chasing a production stall I proposed
+that the service shares one `Foundry` across the threadpool — which would have
+made this entry's caveat wrong — and then refuted it: `sfe/api.py:491`
+`get_foundry()` yields a new `Foundry` per request. Re-running the harness with
+a shared `Foundry` reproduces 99 failures in 120 writes
+(`cannot start a transaction within a transaction`), confirming the harness
+artefact this entry described and NOT a service defect. The original framing
+stands; the temptation was to rewrite it the moment a production symptom
+appeared that it would have explained.
 
 ### A5. Rollback stops being an option tonight — `EXISTS`, by design
 `SerendipityFoundry/SerendipityFoundryEngine/deploy/DEPLOY_SCHEMA8_2026-09-10.md` §4: rollback is code **and** data, and
@@ -281,9 +321,36 @@ one Vivarium must register by hand.
 real architectural fork and it is getting more expensive with each kind.
 
 ### C9. No test covers the engine under a real concurrent HTTP load — `NOTHING`
-411 tests, all single-process. The two failure modes that have actually cost us
-time — the write stall and the read timeout — are both concurrency-shaped.
-**Do:** a load fixture that drives the real HTTP surface with N clients.
+**PROMOTED 2026-09-11: this one has now cost production, not just time.** Under
+light concurrent write load the live engine returned `GET /v2/version` in 9.68s,
+then a 45s timeout, then 34.76s, and `POST /v2/clients` failed three times
+(timeout / HTTP 500 / timeout). The 500 was
+`sqlite3.OperationalError: database is locked` on `BEGIN IMMEDIATE` — the
+engine's own 30s lock wait expiring. At rest, minutes later, the same endpoint
+served in 0.00-0.22s with idle CPU and no leak; disk 153 MB/s, a direct sqlite
+read 0.04s, and the write lock acquired externally in 0.00s.
+
+**Cause NOT established**, and recorded that way on purpose. I formed a specific
+hypothesis — one sqlite connection shared across the threadpool — and refuted it
+at `sfe/api.py:491`, where `get_foundry()` builds a NEW Foundry per request.
+
+The reason it is C9's evidence rather than anyone else's is that **nothing in
+`deploy/WRITE_PATH_PROFILE_2026-09-10.json` could have caught it**: every
+measurement there was in-process, on a temp disk, and found sub-millisecond
+writes. None of it went through the HTTP service, which is exactly the gap C9
+names. 416 tests, still all single-process.
+**Do:** a load fixture that drives the real HTTP surface with N concurrent
+clients, asserting latency and error class — and run it before the next deploy.
+
+**Fixture spec, sharpened by Vivarium 2026-09-11 and worth following exactly:**
+the concurrency that matters is *not* N clients hammering one route. It is N
+clients whose writes **interleave across a transaction boundary**, with
+**different transaction rhythms**. Their consumer does ~18 writes per row and
+never stalled on its own load however long it ran — every stall coincided with a
+*second writer*. N identical clients would reproduce throughput and miss the
+bimodality entirely, and bimodality is the tell: `create_session` measured
+23.46 s once and 0.28 s minutes later, with every other call 0.03–0.32 s in both
+passes. A fixture that produces a smooth latency curve has not reproduced this.
 
 ### C10. `NKScanDidNotConverge` has no caller — `EXISTS`
 Added because a mutant *hung* instead of failing. Nothing in the engine runs the

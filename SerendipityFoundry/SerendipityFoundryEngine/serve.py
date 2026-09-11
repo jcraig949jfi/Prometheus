@@ -63,6 +63,28 @@ def main() -> int:
                          "existing tokens keep working. Use after bootstrap.")
     args = ap.parse_args()
 
+    # D-23 (operator 2026-09-11). Refuse to serve from the canonical checkout,
+    # and refuse to serve a LEDGER that lives inside it. The second refusal is
+    # the load-bearing one: `var/` is gitignored, so moving only the code out
+    # leaves the database, the blobs, the rollback snapshot and the TLS key in
+    # a directory the invariant tells people to destroy rather than nurse --
+    # and `git status` there would report clean the whole time.
+    try:
+        from workspace import guard, CanonicalCheckoutRefused, \
+            DataInsideCanonicalCheckout                      # noqa: PLC0415
+    except ImportError:
+        guard = None
+    if guard is not None:
+        try:
+            ws = guard("serve the engine", db_path=args.db)
+            print("workspace: %s @ %s%s"
+                  % (ws["branch"], (ws["base_sha"] or "?")[:12],
+                     "  DIRTY" if ws["dirty"] else ""))
+        except (CanonicalCheckoutRefused,
+                DataInsideCanonicalCheckout) as exc:
+            print("ERROR: %s" % exc, file=sys.stderr)
+            return 2
+
     if _unspecified(args.host):
         print("ERROR: bind a specific address, not all interfaces.",
               file=sys.stderr)

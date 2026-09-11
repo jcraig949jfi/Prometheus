@@ -1,5 +1,7 @@
 # Techne — Responsibilities
 
+> Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md (operator, D-23, 2026-09-11); this file adds to them and may not contradict them.
+
 ## Role: Mathematical Toolsmith + Substrate Owner + Calibration Discipline
 ## Status: Active as of 2026-04-21; substrate mandate extended 2026-05-05
 

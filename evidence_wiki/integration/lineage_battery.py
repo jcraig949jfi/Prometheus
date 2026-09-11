@@ -29,6 +29,8 @@ import requests
 
 HERE = pathlib.Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(HERE))
+from ew import workspace  # noqa: E402
+workspace.assert_not_canonical("run a PEW battery")
 
 _HOSTS = {"SKULLPORT": ("192.168.1.202", "m1.crt", "M1"),
           "SPECTREX5": ("192.168.1.191", "m2.crt", "M2")}

@@ -1,5 +1,7 @@
 # Alethelia — truthful reporter (M4 seat; v0 built on M1)
 
+> Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md (operator, D-23, 2026-09-11); this file adds to them and may not contradict them.
+
 Charter RATIFIED by James 2026-08-17 (aporia/docs/germline_infrastructure_2026-08-17.md
 section 6). Name deliberately distinct from Aletheia (the knowledge-graph component at
 agents/aletheia/) — the near-name keeps the meaning, truth.

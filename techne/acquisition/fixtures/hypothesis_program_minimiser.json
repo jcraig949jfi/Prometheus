@@ -18,76 +18,53 @@
     "interface_version": "proteus.boolean3.v0"
   },
   "results": {
-    "n_targets": 240,
-    "n_scored": 43,
+    "n_targets": 242,
+    "n_scored": 45,
     "n_out_of_enumeration_reach": 197,
     "n_unsound": 0,
     "unsound": [],
-    "n_errored": 16,
-    "errors": [
-      {
-        "target": 1,
-        "error": "Unsatisfiable: Unable to satisfy assumptions of test. 459 of 459 test cases failed a .filter() or assume() condition. Try making your filters or assumes less strict, or rewrite using strategy parameters: st.integers().filter(lambda x: x > 0) fails less often (that is, never) when rewritten as st.integers(min_value=1)."
-      },
-      {
-        "target": 6,
-        "error": "Unsatisfiable: Unable to satisfy assumptions of test. 459 of 459 test cases failed a .filter() or assume() condition. Try making your filters or assumes less strict, or rewrite using strategy parameters: st.integers().filter(lambda x: x > 0) fails less often (that is, never) when rewritten as st.integers(min_value=1)."
-      },
-      {
-        "target": 7,
-        "error": "Unsatisfiable: Unable to satisfy assumptions of test. 459 of 459 test cases failed a .filter() or assume() condition. Try making your filters or assumes less strict, or rewrite using strategy parameters: st.integers().filter(lambda x: x > 0) fails less often (that is, never) when rewritten as st.integers(min_value=1)."
-      },
-      {
-        "target": 18,
-        "error": "Unsatisfiable: Unable to satisfy assumptions of test. 459 of 459 test cases failed a .filter() or assume() condition. Try making your filters or assumes less strict, or rewrite using strategy parameters: st.integers().filter(lambda x: x > 0) fails less often (that is, never) when rewritten as st.integers(min_value=1)."
-      },
-      {
-        "target": 19,
-        "error": "Unsatisfiable: Unable to satisfy assumptions of test. 459 of 459 test cases failed a .filter() or assume() condition. Try making your filters or assumes less strict, or rewrite using strategy parameters: st.integers().filter(lambda x: x > 0) fails less often (that is, never) when rewritten as st.integers(min_value=1)."
-      },
-      {
-        "target": 30,
-        "error": "Unsatisfiable: Unable to satisfy assumptions of test. 459 of 459 test cases failed a .filter() or assume() condition. Try making your filters or assumes less strict, or rewrite using strategy parameters: st.integers().filter(lambda x: x > 0) fails less often (that is, never) when rewritten as st.integers(min_value=1)."
-      },
-      {
-        "target": 31,
-        "error": "Unsatisfiable: Unable to satisfy assumptions of test. 459 of 459 test cases failed a .filter() or assume() condition. Try making your filters or assumes less strict, or rewrite using strategy parameters: st.integers().filter(lambda x: x > 0) fails less often (that is, never) when rewritten as st.integers(min_value=1)."
-      },
-      {
-        "target": 54,
-        "error": "Unsatisfiable: Unable to satisfy assumptions of test. 459 of 459 test cases failed a .filter() or assume() condition. Try making your filters or assumes less strict, or rewrite using strategy parameters: st.integers().filter(lambda x: x > 0) fails less often (that is, never) when rewritten as st.integers(min_value=1)."
-      },
-      {
-        "target": 86,
-        "error": "Unsatisfiable: Unable to satisfy assumptions of test. 459 of 459 test cases failed a .filter() or assume() condition. Try making your filters or assumes less strict, or rewrite using strategy parameters: st.integers().filter(lambda x: x > 0) fails less often (that is, never) when rewritten as st.integers(min_value=1)."
-      },
-      {
-        "target": 87,
-        "error": "Unsatisfiable: Unable to satisfy assumptions of test. 459 of 459 test cases failed a .filter() or assume() condition. Try making your filters or assumes less strict, or rewrite using strategy parameters: st.integers().filter(lambda x: x > 0) fails less often (that is, never) when rewritten as st.integers(min_value=1)."
-      }
+    "n_errored": 0,
+    "errors": [],
+    "n_no_example_found_in_budget": 14,
+    "no_example_targets": [
+      1,
+      6,
+      20,
+      30,
+      31,
+      54,
+      55,
+      86,
+      106,
+      108,
+      111,
+      120,
+      125,
+      127
     ],
+    "no_example_note": "solving_programs generates and FILTERS; where solving programs are rare the filter starves and Hypothesis raises Unsatisfiable. These targets are NOT counted as errors and NOT counted as minimality failures -- the minimiser was never handed a starting point.",
     "excess_nodes_histogram": {
-      "0": 19,
-      "1": 9,
-      "2": 12,
-      "3": 2,
-      "4": 1
+      "0": 21,
+      "1": 8,
+      "2": 10,
+      "3": 3,
+      "4": 3
     },
     "n_not_minimal": 24,
-    "fraction_not_minimal": 0.5581,
+    "fraction_not_minimal": 0.5333,
     "max_excess_nodes": 4,
-    "n_identical_under_declared_order": 15,
-    "n_same_size_and_depth": 19,
+    "n_identical_under_declared_order": 16,
+    "n_same_size_and_depth": 21,
     "worst_cases": [
       {
-        "target": 21,
+        "target": 7,
         "hypothesis": {
-          "program": "(not (not (or (and x0 x2) (and x1 x2))))",
+          "program": "(not (not (or (and x0 x1) (and x0 x2))))",
           "size": 9,
           "depth": 5
         },
         "ground_truth": {
-          "program": "(and (or x0 x1) x2)",
+          "program": "(and (or x1 x2) x0)",
           "size": 5,
           "depth": 3
         },
@@ -98,14 +75,50 @@
         "excess_nodes": 4
       },
       {
-        "target": 12,
+        "target": 19,
         "hypothesis": {
-          "program": "(not (xor x0 (not (and x0 x1))))",
+          "program": "(xor (not x1) (or (not x1) (or x0 x2)))",
+          "size": 9,
+          "depth": 4
+        },
+        "ground_truth": {
+          "program": "(and (or x0 x2) x1)",
+          "size": 5,
+          "depth": 3
+        },
+        "still_solves": true,
+        "same_size": false,
+        "same_size_and_depth": false,
+        "identical_under_declared_order": false,
+        "excess_nodes": 4
+      },
+      {
+        "target": 243,
+        "hypothesis": {
+          "program": "(xor c1 (and (not x1) (and c1 x0)))",
+          "size": 8,
+          "depth": 4
+        },
+        "ground_truth": {
+          "program": "(or (not x0) x1)",
+          "size": 4,
+          "depth": 3
+        },
+        "still_solves": true,
+        "same_size": false,
+        "same_size_and_depth": false,
+        "identical_under_declared_order": false,
+        "excess_nodes": 4
+      },
+      {
+        "target": 10,
+        "hypothesis": {
+          "program": "(not (not (xor x2 (or x0 x2))))",
           "size": 7,
           "depth": 5
         },
         "ground_truth": {
-          "program": "(and (not x1) x0)",
+          "program": "(and (not x2) x0)",
           "size": 4,
           "depth": 3
         },
@@ -116,15 +129,15 @@
         "excess_nodes": 3
       },
       {
-        "target": 48,
+        "target": 18,
         "hypothesis": {
-          "program": "(xor x0 (not (not (or x0 x1))))",
-          "size": 7,
+          "program": "(not (or (not x1) (not (xor x0 x2))))",
+          "size": 8,
           "depth": 5
         },
         "ground_truth": {
-          "program": "(and (not x0) x1)",
-          "size": 4,
+          "program": "(and (xor x0 x2) x1)",
+          "size": 5,
           "depth": 3
         },
         "still_solves": true,
@@ -134,61 +147,25 @@
         "excess_nodes": 3
       },
       {
-        "target": 3,
+        "target": 123,
         "hypothesis": {
-          "program": "(not (not (and x0 x1)))",
-          "size": 5,
-          "depth": 4
+          "program": "(not (and (not x1) (not (xor x0 x2))))",
+          "size": 8,
+          "depth": 5
         },
         "ground_truth": {
-          "program": "(and x0 x1)",
-          "size": 3,
-          "depth": 2
+          "program": "(or (xor x0 x2) x1)",
+          "size": 5,
+          "depth": 3
         },
         "still_solves": true,
         "same_size": false,
         "same_size_and_depth": false,
         "identical_under_declared_order": false,
-        "excess_nodes": 2
-      },
-      {
-        "target": 5,
-        "hypothesis": {
-          "program": "(not (not (and x0 x2)))",
-          "size": 5,
-          "depth": 4
-        },
-        "ground_truth": {
-          "program": "(and x0 x2)",
-          "size": 3,
-          "depth": 2
-        },
-        "still_solves": true,
-        "same_size": false,
-        "same_size_and_depth": false,
-        "identical_under_declared_order": false,
-        "excess_nodes": 2
-      },
-      {
-        "target": 17,
-        "hypothesis": {
-          "program": "(not (not (and x1 x2)))",
-          "size": 5,
-          "depth": 4
-        },
-        "ground_truth": {
-          "program": "(and x1 x2)",
-          "size": 3,
-          "depth": 2
-        },
-        "still_solves": true,
-        "same_size": false,
-        "same_size_and_depth": false,
-        "identical_under_declared_order": false,
-        "excess_nodes": 2
+        "excess_nodes": 3
       }
     ],
-    "wall_seconds": 299.2
+    "wall_seconds": 328.6
   },
   "proteus_known_answers_reproduced": [
     {
@@ -264,9 +241,9 @@
     {
       "target": 3,
       "hypothesis": {
-        "program": "(not (not (and x0 x1)))",
-        "size": 5,
-        "depth": 4
+        "program": "(and x0 x1)",
+        "size": 3,
+        "depth": 2
       },
       "ground_truth": {
         "program": "(and x0 x1)",
@@ -274,10 +251,10 @@
         "depth": 2
       },
       "still_solves": true,
-      "same_size": false,
-      "same_size_and_depth": false,
-      "identical_under_declared_order": false,
-      "excess_nodes": 2
+      "same_size": true,
+      "same_size_and_depth": true,
+      "identical_under_declared_order": true,
+      "excess_nodes": 0
     },
     {
       "target": 4,
@@ -303,6 +280,24 @@
       "excess_nodes": 2
     },
     {
+      "target": 7,
+      "hypothesis": {
+        "program": "(not (not (or (and x0 x1) (and x0 x2))))",
+        "size": 9,
+        "depth": 5
+      },
+      "ground_truth": {
+        "program": "(and (or x1 x2) x0)",
+        "size": 5,
+        "depth": 3
+      },
+      "still_solves": true,
+      "same_size": false,
+      "same_size_and_depth": false,
+      "identical_under_declared_order": false,
+      "excess_nodes": 4
+    },
+    {
       "target": 8,
       "ground_truth": null,
       "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
@@ -315,9 +310,9 @@
     {
       "target": 10,
       "hypothesis": {
-        "program": "(not (or x2 (not x0)))",
-        "size": 5,
-        "depth": 4
+        "program": "(not (not (xor x2 (or x0 x2))))",
+        "size": 7,
+        "depth": 5
       },
       "ground_truth": {
         "program": "(and (not x2) x0)",
@@ -328,7 +323,7 @@
       "same_size": false,
       "same_size_and_depth": false,
       "identical_under_declared_order": false,
-      "excess_nodes": 1
+      "excess_nodes": 3
     },
     {
       "target": 11,
@@ -338,9 +333,9 @@
     {
       "target": 12,
       "hypothesis": {
-        "program": "(not (xor x0 (not (and x0 x1))))",
-        "size": 7,
-        "depth": 5
+        "program": "(and x0 (not x1))",
+        "size": 4,
+        "depth": 3
       },
       "ground_truth": {
         "program": "(and (not x1) x0)",
@@ -348,10 +343,10 @@
         "depth": 3
       },
       "still_solves": true,
-      "same_size": false,
-      "same_size_and_depth": false,
+      "same_size": true,
+      "same_size_and_depth": true,
       "identical_under_declared_order": false,
-      "excess_nodes": 3
+      "excess_nodes": 0
     },
     {
       "target": 13,
@@ -405,32 +400,32 @@
       "excess_nodes": 2
     },
     {
-      "target": 20,
+      "target": 18,
       "hypothesis": {
-        "program": "(and x2 (xor x0 x1))",
-        "size": 5,
-        "depth": 3
+        "program": "(not (or (not x1) (not (xor x0 x2))))",
+        "size": 8,
+        "depth": 5
       },
       "ground_truth": {
-        "program": "(and (xor x0 x1) x2)",
+        "program": "(and (xor x0 x2) x1)",
         "size": 5,
         "depth": 3
       },
       "still_solves": true,
-      "same_size": true,
-      "same_size_and_depth": true,
+      "same_size": false,
+      "same_size_and_depth": false,
       "identical_under_declared_order": false,
-      "excess_nodes": 0
+      "excess_nodes": 3
     },
     {
-      "target": 21,
+      "target": 19,
       "hypothesis": {
-        "program": "(not (not (or (and x0 x2) (and x1 x2))))",
+        "program": "(xor (not x1) (or (not x1) (or x0 x2)))",
         "size": 9,
-        "depth": 5
+        "depth": 4
       },
       "ground_truth": {
-        "program": "(and (or x0 x1) x2)",
+        "program": "(and (or x0 x2) x1)",
         "size": 5,
         "depth": 3
       },
@@ -439,6 +434,24 @@
       "same_size_and_depth": false,
       "identical_under_declared_order": false,
       "excess_nodes": 4
+    },
+    {
+      "target": 21,
+      "hypothesis": {
+        "program": "(and x2 (or x0 x1))",
+        "size": 5,
+        "depth": 3
+      },
+      "ground_truth": {
+        "program": "(and (or x0 x1) x2)",
+        "size": 5,
+        "depth": 3
+      },
+      "still_solves": true,
+      "same_size": true,
+      "same_size_and_depth": true,
+      "identical_under_declared_order": false,
+      "excess_nodes": 0
     },
     {
       "target": 22,
@@ -493,7 +506,7 @@
     {
       "target": 34,
       "hypothesis": {
-        "program": "(not (or x2 (not x1)))",
+        "program": "(not (or (not x1) x2))",
         "size": 5,
         "depth": 4
       },
@@ -576,9 +589,9 @@
     {
       "target": 48,
       "hypothesis": {
-        "program": "(xor x0 (not (not (or x0 x1))))",
-        "size": 7,
-        "depth": 5
+        "program": "(not (or x0 (not x1)))",
+        "size": 5,
+        "depth": 4
       },
       "ground_truth": {
         "program": "(and (not x0) x1)",
@@ -589,7 +602,7 @@
       "same_size": false,
       "same_size_and_depth": false,
       "identical_under_declared_order": false,
-      "excess_nodes": 3
+      "excess_nodes": 1
     },
     {
       "target": 49,
@@ -604,9 +617,9 @@
     {
       "target": 51,
       "hypothesis": {
-        "program": "x1",
-        "size": 1,
-        "depth": 1
+        "program": "(and c1 x1)",
+        "size": 3,
+        "depth": 2
       },
       "ground_truth": {
         "program": "x1",
@@ -614,10 +627,10 @@
         "depth": 1
       },
       "still_solves": true,
-      "same_size": true,
-      "same_size_and_depth": true,
-      "identical_under_declared_order": true,
-      "excess_nodes": 0
+      "same_size": false,
+      "same_size_and_depth": false,
+      "identical_under_declared_order": false,
+      "excess_nodes": 2
     },
     {
       "target": 52,
@@ -628,24 +641,6 @@
       "target": 53,
       "ground_truth": null,
       "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
-    },
-    {
-      "target": 55,
-      "hypothesis": {
-        "program": "(or x1 (and x0 x2))",
-        "size": 5,
-        "depth": 3
-      },
-      "ground_truth": {
-        "program": "(or (and x0 x2) x1)",
-        "size": 5,
-        "depth": 3
-      },
-      "still_solves": true,
-      "same_size": true,
-      "same_size_and_depth": true,
-      "identical_under_declared_order": false,
-      "excess_nodes": 0
     },
     {
       "target": 56,
@@ -670,7 +665,7 @@
     {
       "target": 60,
       "hypothesis": {
-        "program": "(not (not (xor x0 x1)))",
+        "program": "(not (xor x0 (not x1)))",
         "size": 5,
         "depth": 4
       },
@@ -698,9 +693,9 @@
     {
       "target": 63,
       "hypothesis": {
-        "program": "(not (not (or x0 x1)))",
-        "size": 5,
-        "depth": 4
+        "program": "(or x0 x1)",
+        "size": 3,
+        "depth": 2
       },
       "ground_truth": {
         "program": "(or x0 x1)",
@@ -708,10 +703,10 @@
         "depth": 2
       },
       "still_solves": true,
-      "same_size": false,
-      "same_size_and_depth": false,
-      "identical_under_declared_order": false,
-      "excess_nodes": 2
+      "same_size": true,
+      "same_size_and_depth": true,
+      "identical_under_declared_order": true,
+      "excess_nodes": 0
     },
     {
       "target": 64,
@@ -863,6 +858,24 @@
       "excess_nodes": 0
     },
     {
+      "target": 87,
+      "hypothesis": {
+        "program": "(and (or x0 x2) (or x1 x2))",
+        "size": 7,
+        "depth": 3
+      },
+      "ground_truth": {
+        "program": "(or (and x0 x1) x2)",
+        "size": 5,
+        "depth": 3
+      },
+      "still_solves": true,
+      "same_size": false,
+      "same_size_and_depth": false,
+      "identical_under_declared_order": false,
+      "excess_nodes": 2
+    },
+    {
       "target": 88,
       "ground_truth": null,
       "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
@@ -875,9 +888,9 @@
     {
       "target": 90,
       "hypothesis": {
-        "program": "(xor x0 x2)",
-        "size": 3,
-        "depth": 2
+        "program": "(not (not (xor x0 x2)))",
+        "size": 5,
+        "depth": 4
       },
       "ground_truth": {
         "program": "(xor x0 x2)",
@@ -885,10 +898,10 @@
         "depth": 2
       },
       "still_solves": true,
-      "same_size": true,
-      "same_size_and_depth": true,
-      "identical_under_declared_order": true,
-      "excess_nodes": 0
+      "same_size": false,
+      "same_size_and_depth": false,
+      "identical_under_declared_order": false,
+      "excess_nodes": 2
     },
     {
       "target": 91,
@@ -961,9 +974,9 @@
     {
       "target": 102,
       "hypothesis": {
-        "program": "(not (xor x1 (not x2)))",
-        "size": 5,
-        "depth": 4
+        "program": "(xor x1 x2)",
+        "size": 3,
+        "depth": 2
       },
       "ground_truth": {
         "program": "(xor x1 x2)",
@@ -971,10 +984,10 @@
         "depth": 2
       },
       "still_solves": true,
-      "same_size": false,
-      "same_size_and_depth": false,
-      "identical_under_declared_order": false,
-      "excess_nodes": 2
+      "same_size": true,
+      "same_size_and_depth": true,
+      "identical_under_declared_order": true,
+      "excess_nodes": 0
     },
     {
       "target": 103,
@@ -989,9 +1002,9 @@
     {
       "target": 105,
       "hypothesis": {
-        "program": "(xor x0 (xor x1 (and c1 x2)))",
-        "size": 7,
-        "depth": 4
+        "program": "(xor x0 (xor x1 x2))",
+        "size": 5,
+        "depth": 3
       },
       "ground_truth": {
         "program": "(xor (xor x0 x1) x2)",
@@ -999,10 +1012,10 @@
         "depth": 3
       },
       "still_solves": true,
-      "same_size": false,
-      "same_size_and_depth": false,
+      "same_size": true,
+      "same_size_and_depth": true,
       "identical_under_declared_order": false,
-      "excess_nodes": 2
+      "excess_nodes": 0
     },
     {
       "target": 107,
@@ -1057,32 +1070,14 @@
     {
       "target": 119,
       "hypothesis": {
-        "program": "(or x1 x2)",
-        "size": 3,
-        "depth": 2
-      },
-      "ground_truth": {
-        "program": "(or x1 x2)",
-        "size": 3,
-        "depth": 2
-      },
-      "still_solves": true,
-      "same_size": true,
-      "same_size_and_depth": true,
-      "identical_under_declared_order": true,
-      "excess_nodes": 0
-    },
-    {
-      "target": 120,
-      "hypothesis": {
-        "program": "(not (not (xor x0 (or x1 x2))))",
-        "size": 7,
-        "depth": 5
-      },
-      "ground_truth": {
-        "program": "(xor (or x1 x2) x0)",
+        "program": "(not (not (or x1 x2)))",
         "size": 5,
-        "depth": 3
+        "depth": 4
+      },
+      "ground_truth": {
+        "program": "(or x1 x2)",
+        "size": 3,
+        "depth": 2
       },
       "still_solves": true,
       "same_size": false,
@@ -1099,6 +1094,24 @@
       "target": 122,
       "ground_truth": null,
       "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 123,
+      "hypothesis": {
+        "program": "(not (and (not x1) (not (xor x0 x2))))",
+        "size": 8,
+        "depth": 5
+      },
+      "ground_truth": {
+        "program": "(or (xor x0 x2) x1)",
+        "size": 5,
+        "depth": 3
+      },
+      "still_solves": true,
+      "same_size": false,
+      "same_size_and_depth": false,
+      "identical_under_declared_order": false,
+      "excess_nodes": 3
     },
     {
       "target": 124,
@@ -1153,8 +1166,8 @@
     {
       "target": 136,
       "hypothesis": {
-        "program": "(not (or x1 x2))",
-        "size": 4,
+        "program": "(and (not x1) (not x2))",
+        "size": 5,
         "depth": 3
       },
       "ground_truth": {
@@ -1163,10 +1176,10 @@
         "depth": 3
       },
       "still_solves": true,
-      "same_size": true,
-      "same_size_and_depth": true,
-      "identical_under_declared_order": true,
-      "excess_nodes": 0
+      "same_size": false,
+      "same_size_and_depth": false,
+      "identical_under_declared_order": false,
+      "excess_nodes": 1
     },
     {
       "target": 137,
@@ -1251,9 +1264,9 @@
     {
       "target": 153,
       "hypothesis": {
-        "program": "(not (xor x1 x2))",
-        "size": 4,
-        "depth": 3
+        "program": "(not (and c1 (xor x1 x2)))",
+        "size": 6,
+        "depth": 4
       },
       "ground_truth": {
         "program": "(not (xor x1 x2))",
@@ -1261,10 +1274,10 @@
         "depth": 3
       },
       "still_solves": true,
-      "same_size": true,
-      "same_size_and_depth": true,
-      "identical_under_declared_order": true,
-      "excess_nodes": 0
+      "same_size": false,
+      "same_size_and_depth": false,
+      "identical_under_declared_order": false,
+      "excess_nodes": 2
     },
     {
       "target": 154,
@@ -1486,8 +1499,8 @@
     {
       "target": 187,
       "hypothesis": {
-        "program": "(not (xor x1 (or x1 x2)))",
-        "size": 6,
+        "program": "(not (and x2 (not x1)))",
+        "size": 5,
         "depth": 4
       },
       "ground_truth": {
@@ -1499,7 +1512,7 @@
       "same_size": false,
       "same_size_and_depth": false,
       "identical_under_declared_order": false,
-      "excess_nodes": 2
+      "excess_nodes": 1
     },
     {
       "target": 188,
@@ -1524,8 +1537,8 @@
     {
       "target": 192,
       "hypothesis": {
-        "program": "(and (not x0) (not x1))",
-        "size": 5,
+        "program": "(not (or x0 x1))",
+        "size": 4,
         "depth": 3
       },
       "ground_truth": {
@@ -1534,10 +1547,10 @@
         "depth": 3
       },
       "still_solves": true,
-      "same_size": false,
-      "same_size_and_depth": false,
-      "identical_under_declared_order": false,
-      "excess_nodes": 1
+      "same_size": true,
+      "same_size_and_depth": true,
+      "identical_under_declared_order": true,
+      "excess_nodes": 0
     },
     {
       "target": 193,
@@ -1552,8 +1565,8 @@
     {
       "target": 195,
       "hypothesis": {
-        "program": "(xor (not x0) (and c1 x1))",
-        "size": 6,
+        "program": "(not (xor x0 x1))",
+        "size": 4,
         "depth": 3
       },
       "ground_truth": {
@@ -1562,10 +1575,10 @@
         "depth": 3
       },
       "still_solves": true,
-      "same_size": false,
-      "same_size_and_depth": false,
-      "identical_under_declared_order": false,
-      "excess_nodes": 2
+      "same_size": true,
+      "same_size_and_depth": true,
+      "identical_under_declared_order": true,
+      "excess_nodes": 0
     },
     {
       "target": 196,
@@ -1638,9 +1651,9 @@
     {
       "target": 207,
       "hypothesis": {
-        "program": "(or x0 (not x1))",
-        "size": 4,
-        "depth": 3
+        "program": "(not (and x1 (not x0)))",
+        "size": 5,
+        "depth": 4
       },
       "ground_truth": {
         "program": "(or (not x1) x0)",
@@ -1648,10 +1661,10 @@
         "depth": 3
       },
       "still_solves": true,
-      "same_size": true,
-      "same_size_and_depth": true,
+      "same_size": false,
+      "same_size_and_depth": false,
       "identical_under_declared_order": false,
-      "excess_nodes": 0
+      "excess_nodes": 1
     },
     {
       "target": 208,
@@ -1721,9 +1734,9 @@
     {
       "target": 221,
       "hypothesis": {
-        "program": "(not (and x1 (not x2)))",
-        "size": 5,
-        "depth": 4
+        "program": "(or x2 (not x1))",
+        "size": 4,
+        "depth": 3
       },
       "ground_truth": {
         "program": "(or (not x1) x2)",
@@ -1731,10 +1744,10 @@
         "depth": 3
       },
       "still_solves": true,
-      "same_size": false,
-      "same_size_and_depth": false,
+      "same_size": true,
+      "same_size_and_depth": true,
       "identical_under_declared_order": false,
-      "excess_nodes": 1
+      "excess_nodes": 0
     },
     {
       "target": 222,
@@ -1819,9 +1832,9 @@
     {
       "target": 238,
       "hypothesis": {
-        "program": "(or (not x1) (not x2))",
-        "size": 5,
-        "depth": 3
+        "program": "(not (not (not (and x1 x2))))",
+        "size": 6,
+        "depth": 5
       },
       "ground_truth": {
         "program": "(not (and x1 x2))",
@@ -1832,7 +1845,7 @@
       "same_size": false,
       "same_size_and_depth": false,
       "identical_under_declared_order": false,
-      "excess_nodes": 1
+      "excess_nodes": 2
     },
     {
       "target": 239,
@@ -1870,8 +1883,8 @@
     {
       "target": 243,
       "hypothesis": {
-        "program": "(not (and x0 (not x1)))",
-        "size": 5,
+        "program": "(xor c1 (and (not x1) (and c1 x0)))",
+        "size": 8,
         "depth": 4
       },
       "ground_truth": {
@@ -1883,7 +1896,7 @@
       "same_size": false,
       "same_size_and_depth": false,
       "identical_under_declared_order": false,
-      "excess_nodes": 1
+      "excess_nodes": 4
     },
     {
       "target": 244,
@@ -1893,7 +1906,7 @@
     {
       "target": 245,
       "hypothesis": {
-        "program": "(not (and x0 (not x2)))",
+        "program": "(not (and (not x2) x0))",
         "size": 5,
         "depth": 4
       },
@@ -1931,9 +1944,9 @@
     {
       "target": 250,
       "hypothesis": {
-        "program": "(not (not (not (and x0 x2))))",
-        "size": 6,
-        "depth": 5
+        "program": "(not (and x0 x2))",
+        "size": 4,
+        "depth": 3
       },
       "ground_truth": {
         "program": "(not (and x0 x2))",
@@ -1941,10 +1954,10 @@
         "depth": 3
       },
       "still_solves": true,
-      "same_size": false,
-      "same_size_and_depth": false,
-      "identical_under_declared_order": false,
-      "excess_nodes": 2
+      "same_size": true,
+      "same_size_and_depth": true,
+      "identical_under_declared_order": true,
+      "excess_nodes": 0
     },
     {
       "target": 251,
@@ -2004,8 +2017,8 @@
       "pass": true
     },
     {
-      "claim": "no target errored during shrinking",
-      "pass": false
+      "claim": "no target errored during shrinking (Unsatisfiable is classified separately as no-example-found, not as an error)",
+      "pass": true
     },
     {
       "claim": "every scored target has exhaustive ground truth from Proteus's enumeration",
@@ -2013,15 +2026,19 @@
     },
     {
       "claim": "Proteus's two declared known answers reproduce here",
-      "pass": false
+      "pass": true
     },
     {
       "claim": "MEASURED, not asserted: how often and by how much Hypothesis misses the minimum",
       "pass": true
     }
   ],
-  "all_passed": false,
-  "verdict": "SOUND on every scored target, and NOT MINIMAL on 24 of 43 (0.5581), max excess 4 nodes. Extends Proteus's n=2 finding to the whole target space: the non-minimality they saw on and01 is not an outlier.",
+  "all_passed": true,
+  "verdict": "SOUND on every scored target, and NOT MINIMAL on 24 of 45 (0.5333), max excess 4 nodes. Extends Proteus's n=2 finding to the whole target space: the non-minimality they saw on and01 is not an outlier.",
+  "reproducibility": {
+    "derandomize": true,
+    "why": "an UNSEEDED find() gave different answers for the same target across runs -- and01 returned (and x0 x1) at size 3 in one run and (not (not (and x0 x1))) at size 5 in another. So an unseeded non-minimality rate is a property of one DRAW, not of the minimiser. derandomize=True makes the reported rate reproducible; it does not make Hypothesis deterministic in general, and the rate would move under a different seed."
+  },
   "what_this_does_NOT_establish": [
     "that Hypothesis is a good minimiser for this space. Soundness is a post-condition; minimality is a quality measure, and they are reported separately.",
     "anything beyond enumeration reach. Targets with no solving program at size <= 5 carry NO minimality claim rather than a favourable default.",

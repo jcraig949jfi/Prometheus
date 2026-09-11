@@ -11,7 +11,14 @@ ENFORCED (the step is aborted):
     - network          : under a profile with network FORBIDDEN, the acquisition entry
                         points refuse to run at all
     - subprocess count : a cap on concurrently launched children
-    - process tree     : on abort or timeout the ENTIRE tree is terminated
+    - process tree     : on abort or timeout the ENTIRE tree is terminated. On Windows this
+                        is a JOB OBJECT with KILL_ON_JOB_CLOSE, not `taskkill /T`. Vivarium's
+                        EXTERNAL_BACKEND_CONTRACT requires a kernel object and is right that
+                        taskkill is best-effort by documentation: it walks a parent/child
+                        relation it reads at kill time, so a child that forks between the read
+                        and the kill is missed. A job is a kernel object a process cannot
+                        escape, and closing its last handle reaps the tree. Measured on this
+                        host by vivarium/tools/probe_process_tree_kill.py -- TREE REAPED.
 
 OBSERVED ONLY (reported, not capped):
     - peak RSS : sampled. A spike between samples is invisible. A hard cap needs a
@@ -32,6 +39,80 @@ import time
 from dataclasses import dataclass, field
 
 from . import paths
+
+
+#: Windows job objects. Assignment happens immediately after Popen, which leaves a
+#: window in which a child could fork before it is contained -- the same window
+#: Vivarium's reference probe has. Stated rather than papered over: it is far smaller
+#: than taskkill's, because after assignment EVERY descendant is in the job by kernel
+#: rule, where taskkill re-reads a mutable relation at kill time.
+_JOB_KILL_ON_CLOSE = 0x2000
+_JOB_EXTENDED_LIMIT_INFORMATION = 9
+_PROCESS_ALL_ACCESS = 0x1F0FFF
+
+
+def _win_job_for(pid: int):
+    """A job object holding `pid`, or None with the reason. Never raises: a
+    cancellation mechanism that fails to arm must degrade to the weaker one
+    LOUDLY, not take the step down with it."""
+    import ctypes
+    from ctypes import wintypes
+
+    class _BASIC(ctypes.Structure):
+        _fields_ = [("PerProcessUserTimeLimit", ctypes.c_int64),
+                    ("PerJobUserTimeLimit", ctypes.c_int64),
+                    ("LimitFlags", wintypes.DWORD),
+                    ("MinimumWorkingSetSize", ctypes.c_size_t),
+                    ("MaximumWorkingSetSize", ctypes.c_size_t),
+                    ("ActiveProcessLimit", wintypes.DWORD),
+                    ("Affinity", ctypes.POINTER(ctypes.c_ulong)),
+                    ("PriorityClass", wintypes.DWORD),
+                    ("SchedulingClass", wintypes.DWORD)]
+
+    class _IO(ctypes.Structure):
+        _fields_ = [("ReadOperationCount", ctypes.c_uint64),
+                    ("WriteOperationCount", ctypes.c_uint64),
+                    ("OtherOperationCount", ctypes.c_uint64),
+                    ("ReadTransferCount", ctypes.c_uint64),
+                    ("WriteTransferCount", ctypes.c_uint64),
+                    ("OtherTransferCount", ctypes.c_uint64)]
+
+    class _EXT(ctypes.Structure):
+        _fields_ = [("BasicLimitInformation", _BASIC), ("IoInfo", _IO),
+                    ("ProcessMemoryLimit", ctypes.c_size_t),
+                    ("JobMemoryLimit", ctypes.c_size_t),
+                    ("PeakProcessMemoryUsed", ctypes.c_size_t),
+                    ("PeakJobMemoryUsed", ctypes.c_size_t)]
+
+    try:
+        k = ctypes.windll.kernel32
+        k.CreateJobObjectW.restype = wintypes.HANDLE
+        k.CreateJobObjectW.argtypes = [wintypes.LPVOID, wintypes.LPCWSTR]
+        k.OpenProcess.restype = wintypes.HANDLE
+        job = k.CreateJobObjectW(None, None)
+        if not job:
+            return None, "CreateJobObject failed (%d)" % ctypes.GetLastError()
+        info = _EXT()
+        info.BasicLimitInformation.LimitFlags = _JOB_KILL_ON_CLOSE
+        if not k.SetInformationJobObject(job, _JOB_EXTENDED_LIMIT_INFORMATION,
+                                         ctypes.byref(info), ctypes.sizeof(info)):
+            err = ctypes.GetLastError()
+            k.CloseHandle(job)
+            return None, "SetInformationJobObject failed (%d)" % err
+        h = k.OpenProcess(_PROCESS_ALL_ACCESS, False, pid)
+        if not h:
+            err = ctypes.GetLastError()
+            k.CloseHandle(job)
+            return None, "OpenProcess failed (%d)" % err
+        ok = k.AssignProcessToJobObject(job, h)
+        err = ctypes.GetLastError()
+        k.CloseHandle(h)
+        if not ok:
+            k.CloseHandle(job)
+            return None, "AssignProcessToJobObject failed (%d)" % err
+        return job, None
+    except Exception as exc:                                     # noqa: BLE001
+        return None, "%s: %s" % (type(exc).__name__, exc)
 
 
 class BudgetExceeded(RuntimeError):
@@ -136,9 +217,21 @@ class Budget:
     disk_before: int = 0
     disk_after: int = 0
     aborted: str | None = None
+    _jobs: dict = field(default_factory=dict)
+    _cancelled: set = field(default_factory=set)
+    workspace: dict = field(default_factory=dict)
+    _job_failures: list = field(default_factory=list)
+    _kills: list = field(default_factory=list)
 
     # ---- lifecycle -------------------------------------------------------
     def __enter__(self) -> "Budget":
+        # D-23 rule 1 and rule d: the refusal goes on the ENTRY POINT. Every
+        # acquisition step and every check in this seat runs inside a Budget, so
+        # one guard here covers them all -- and it covers a step that has not been
+        # written yet, which a per-script guard would not.
+        from .. import workspace                                 # noqa: PLC0415
+        self.workspace = workspace.assert_not_canonical(
+            "run a budgeted step (%s)" % self.profile.get("name", "?"))
         self.started = time.monotonic()
         self.disk_before = _dir_bytes(paths.tool_cache())
         self._sampler = threading.Thread(target=self._sample_loop, daemon=True)
@@ -207,6 +300,12 @@ class Budget:
             kw.setdefault("start_new_session", True)
         p = subprocess.Popen(argv, **kw)
         self.children.append(p)
+        if sys.platform == "win32":
+            job, why = _win_job_for(p.pid)
+            if job:
+                self._jobs[p.pid] = job
+            else:
+                self._job_failures.append({"pid": p.pid, "reason": why})
         return p
 
     def run(self, argv: list[str], **kw) -> dict:
@@ -238,11 +337,46 @@ class Budget:
         }
 
     def _kill_one(self, p: subprocess.Popen) -> None:
+        if p.pid in self._cancelled:
+            # Already cancelled by this Budget -- __exit__ sweeps kill_tree() over
+            # every child, so a process the caller cancelled explicitly arrives here
+            # a second time. Recording that second visit as "nothing could be
+            # reaped" would manufacture a degraded-cancellation event out of normal
+            # teardown, which is exactly the kind of false row a receipt must not
+            # carry.
+            return
+        self._cancelled.add(p.pid)
         if p.poll() is not None:
+            # THE RECORDED PROCESS IS ALREADY GONE, AND THAT IS NOT THE SAME AS
+            # NOTHING TO DO. A child that forked and exited leaves an ORPHAN which
+            # has been reparented away, so there is no parent/child relation left
+            # for taskkill to walk -- it is handed a dead pid and reaps nothing.
+            # Closing the job still reaps the orphan, because job membership is a
+            # property of the process. Measured, not argued:
+            # checks/probe_budget_cancellation.py, ORPHAN arms, 5 survivors under
+            # taskkill and 0 under the job object.
+            if self._release_job(p.pid):
+                self._kills.append({"pid": p.pid, "mechanism": "job_object",
+                                    "note": "recorded process had already exited; the job "
+                                            "release is what reaps any orphan it left"})
+            else:
+                self._kills.append({"pid": p.pid, "mechanism": "none_NO_JOB_AND_PID_DEAD",
+                                    "note": "no job was armed and the recorded pid has "
+                                            "exited, so nothing could be reaped; any child "
+                                            "it forked survives"})
             return
         if sys.platform == "win32":
+            # Closing the last handle to a KILL_ON_JOB_CLOSE job reaps every process
+            # in it, descendants included, by kernel rule. taskkill remains ONLY as
+            # the degraded path when the job could not be armed, and the receipt
+            # names which one was used -- a backend admitted on one cancellation
+            # mechanism is not admitted on another.
+            if self._release_job(p.pid):
+                self._kills.append({"pid": p.pid, "mechanism": "job_object"})
+                return
             subprocess.run(["taskkill", "/T", "/F", "/PID", str(p.pid)],
                            capture_output=True, text=True)
+            self._kills.append({"pid": p.pid, "mechanism": "taskkill_tree_DEGRADED"})
         else:
             import signal
             try:
@@ -250,9 +384,25 @@ class Budget:
             except (OSError, ProcessLookupError):
                 p.kill()
 
+    def _release_job(self, pid: int) -> bool:
+        """Close this pid's job handle. True if a job existed (and therefore the
+        tree is reaped). Closing the job of an already-exited process is a no-op,
+        which is why __exit__ may call it for every child."""
+        job = self._jobs.pop(pid, None)
+        if job is None:
+            return False
+        try:
+            import ctypes
+            ctypes.windll.kernel32.CloseHandle(job)
+        except Exception:                                        # noqa: BLE001
+            return False
+        return True
+
     def kill_tree(self) -> None:
         for p in self.children:
             self._kill_one(p)
+        for pid in list(self._jobs):
+            self._release_job(pid)
 
     # ---- receipt ---------------------------------------------------------
     def resource_receipt(self) -> dict:
@@ -281,4 +431,27 @@ class Budget:
             "children_spawned": len(self.children),
             "process_cap": self.profile.get("max_processes"),
             "aborted_on": self.aborted,
+            "cancellation": {
+                "mechanism": ("windows_job_object_KILL_ON_JOB_CLOSE"
+                              if sys.platform == "win32" else "posix_process_group_SIGKILL"),
+                "jobs_armed": len(self.children) - len(self._job_failures)
+                              if sys.platform == "win32" else None,
+                # COPIES, not the live lists. resource_receipt() handed out
+                # references to self._kills, so a receipt taken before __exit__ kept
+                # growing as teardown ran -- every reading of it disagreed with every
+                # other, and the probe that caught this saw mechanisms appear in a
+                # record that had already been taken. A receipt is a record of a
+                # moment, and a record that mutates is not one.
+                "jobs_failed_to_arm": [dict(x) for x in self._job_failures],
+                "kills_performed": [dict(x) for x in self._kills],
+                "degraded_kills": [dict(x) for x in self._kills
+                                   if x["mechanism"] != "job_object"],
+                "measured_on_this_host": "vivarium/tools/probe_process_tree_kill.py -> "
+                                         "TREE REAPED (2026-09-11); re-run before admitting a "
+                                         "backend on another host",
+                "scope": "This wrapper meters PREPARATION-time work (pip, git, cargo, the stitch "
+                         "binary). It is not an admitted in-run backend, and arming a job object "
+                         "does not make it one -- Vivarium's contract admits a backend, not a "
+                         "kill mechanism.",
+            },
         }

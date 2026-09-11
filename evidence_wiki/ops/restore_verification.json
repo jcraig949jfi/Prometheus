@@ -1,16 +1,41 @@
 {
- "dump": "F:\\PrometheusBackups\\pew\\prometheus_fire_20260904T061043.dump",
- "scratch_db": "pew_restore_check_20260904061415",
- "started": "2026-09-04T06:14:15",
+ "dump": "F:\\PrometheusBackups\\pew\\prometheus_fire_20260906T033002.dump",
+ "scratch_db": "pew_restore_check_20260906043002",
+ "started": "2026-09-06T04:30:02",
  "pg_restore_rc": 0,
  "pg_restore_stderr_tail": "",
- "restore_seconds": 149.6,
- "tables_live": 27,
- "tables_restored": 27,
+ "restore_seconds": 13293.3,
+ "tables_live": 34,
+ "tables_restored": 34,
  "tables_missing_in_restore": [],
- "tables_with_differing_counts": {},
- "total_rows_live": 23140,
- "total_rows_restored": 23140,
+ "tables_with_differing_counts": {
+  "fossil_encounters": {
+   "live": 12025,
+   "restored": 12013
+  },
+  "fossil_worlds": {
+   "live": 264,
+   "restored": 252
+  },
+  "ledger_observations": {
+   "live": 35,
+   "restored": 23
+  },
+  "read_log": {
+   "live": 470,
+   "restored": 451
+  },
+  "world_session_bindings": {
+   "live": 28,
+   "restored": 18
+  },
+  "write_log": {
+   "live": 3457,
+   "restored": 3433
+  }
+ },
+ "total_rows_live": 23907,
+ "total_rows_restored": 23818,
  "chain_evidence_id": "E-dbe8c504b8cc",
  "chain_live": {
   "found": true,
@@ -143,7 +168,7 @@
   "fossil_by_namespace": [
    {
     "namespace": "prod",
-    "n": 5452
+    "n": 5456
    },
    {
     "namespace": "synthetic",
@@ -151,14 +176,14 @@
    },
    {
     "namespace": "test",
-    "n": 39
+    "n": 137
    }
   ],
   "prod_row": [
    {
-    "encounter_id": "ENC-evt_000fd1bbf0a7fefe25449437",
-    "sfe_entry_hash": "sha256:ab500baeafd5084ff667da7c4bc5b20659c4e00182095b6ed0ec69d0a303c899",
-    "sfe_event_id": "evt_000fd1bbf0a7fefe25449437"
+    "encounter_id": "ENC-archaeon-06971d2afa9d50eb",
+    "sfe_entry_hash": "sha256:c4329f82e1e146bc5d9c5e460d688d03f2462279aa74b8fb1dc6041228ecabed",
+    "sfe_event_id": "evt_048f3bfa26225095e527314a"
    }
   ],
   "test_row": [
@@ -170,7 +195,7 @@
   ],
   "canonical_revision": [
    {
-    "last_value": 17105
+    "last_value": 17320
    }
   ],
   "ontology_registry": [
@@ -181,7 +206,7 @@
   ],
   "vocab_terms": [
    {
-    "n": 72
+    "n": 79
    }
   ],
   "object_namespace": [
@@ -244,7 +269,7 @@
    },
    {
     "namespace": "test",
-    "n": 39
+    "n": 129
    }
   ],
   "prod_row": [
@@ -263,7 +288,7 @@
   ],
   "canonical_revision": [
    {
-    "last_value": 17105
+    "last_value": 17296
    }
   ],
   "ontology_registry": [
@@ -274,7 +299,7 @@
   ],
   "vocab_terms": [
    {
-    "n": 72
+    "n": 79
    }
   ],
   "object_namespace": [
@@ -325,7 +350,7 @@
    }
   ]
  },
- "samples_identical": true,
- "VERDICT": "RESTORE_VERIFIED",
+ "samples_identical": false,
+ "VERDICT": "RESTORE_NOT_VERIFIED",
  "scratch_disposition": "dropped"
 }

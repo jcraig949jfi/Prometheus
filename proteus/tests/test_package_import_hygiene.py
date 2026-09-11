@@ -32,6 +32,15 @@ EXEMPTIONS = {
         "LEGITIMATE. The auditor shells out to git to record repository identity alongside the "
         "audit stamp. It is tooling that inspects the tree; it is not player-facing, is never "
         "imported by vm.py, generate.py or any runtime path, and cannot execute inside a player."),
+    ("proteus/workspace.py", "subprocess"): (
+        "LEGITIMATE and unavoidable. The D-23 guard must ask git whether this checkout is the "
+        "repository's MAIN worktree (`rev-parse --git-dir` vs `--git-common-dir`); only git can "
+        "answer, and a path test would break the moment the clone moved. It is never imported by "
+        "a player, by vm.py, or by any evaluation path -- it runs once at process start."),
+    ("proteus/tests/test_workspace.py", "subprocess"): (
+        "LEGITIMATE, same reason as the module it tests: enumerating entry points uses "
+        "`git ls-files` so the coverage check sees TRACKED files rather than whatever happens to "
+        "be lying in the working tree. Test-only."),
     ("proteus/tests/test_pre_t1_gates.py", "subprocess"): (
         "LEGITIMATE, same class as the auditor above. Gate G4 must distinguish TRACKED files from "
         "files merely present on disk, which only git can answer, and .pyc files regenerate "
