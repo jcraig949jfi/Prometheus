@@ -4,15 +4,15 @@
 
 Currency: 2026-09-11 (seat creation under roles/ and base-role adoption pass).
 
-seat state: ATALANTA-01 was RULED by the operator on 2026-09-11:
-  RETIRE-AND-LIFT-ASSET. ATALANTA-04 was then executed and is complete.
-  Standing state after this pass: RETIREMENT RECOMMENDED, awaiting the
-  operator's word. The daemon is RETIRED by that ruling (not revived, not
-  reconnected to Apollo); the seat itself stays open only long enough to
-  receive a reply on base rule 10 and the handovers in the Archaeon
-  report. No autonomous work follows from the May queue: 0 STILL_LIVE of
-  22 items, and the salvage assessment found nothing uniquely useful
-  remaining (SALVAGE_ASSESSMENT_2026-09-11.md).
+seat state: RETIRED 2026-09-11 by the operator, on this seat's own
+  recommendation and after the resurrection test was RUN rather than
+  assumed (SALVAGE_ASSESSMENT_2026-09-11.md). Clean retirement, no
+  replacement mission. The daemon is not revived, not reconnected to
+  Apollo, and not replaced. Retired is an annotation, never a verdict on a
+  lineage: the residue stays navigable (RETIREMENT_2026-09-11.md).
+  Epitaph, the operator's words: "Atalanta was designed to detect reusable
+  primitives. She detected none. Her reusable primitive was the failure
+  mode of the detector itself."
 what it asserts: PRESENT (booted in comms 2026-09-11), ACTIVE (this pass
   ran), NOT PRODUCTIVE (no domain output; the artifacts are
   roles/Atalanta/, one MONITORS row, two INHERITANCE rows and one charter
@@ -67,10 +67,13 @@ deliverables of this pass: DEAD_GATING_SPECIMEN.md (Q1-Q3),
   SALVAGE_ASSESSMENT_2026-09-11.md, reference/ (120-line implementation
   and 9 controls, 9 passed), ledgers/ (raw rows and the regenerable
   query). Report posted to Archaeon.
-next executable action: none owned by this seat. Three replies are
-  outstanding and none is this seat's to make: Archaeon on base rule 10,
-  Archaeon or the operator on whether the producer-declaration rule opens
-  as its own decision, and an owner for the two machine probes that are
-  failing every five minutes. If the operator accepts the retirement
-  recommendation, the remaining act is the retirement annotation
-  (ATALANTA-20), which keeps the residue navigable.
+next executable action: NONE. The seat is closed. Three handovers were
+  posted and none returns here: Archaeon (base rule 10, and separately the
+  producer-declaration invariant as its own ruling), Rhadamanthus (the
+  agora.intelligence_outputs recovery technique, with the
+  dual-recorded/single-mechanism caveat attached), Daedalus (the two
+  PrometheusMachineProbe failures; if not his lane, Archaeon assigns).
+  Atalanta does not chase any of them.
+open and not closed by the retirement: ATALANTA-02, the M1 filesystem
+  residue, which no seat on this host can reach. Recorded as open rather
+  than tidied away.
