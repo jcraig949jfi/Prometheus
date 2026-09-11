@@ -5,7 +5,7 @@ Built from f727dfb1f in F:\Prometheus-worktrees\aporia-base-role, branch
 aporia/base-role-adopt-2026-09-11 (the path is the host convention; the
 rule is the worktree, not the drive letter).
 
-## What this seat does now (supersedes the 2026-04 scope in RESPONSIBILITIES.md)
+## What this seat does now (RESPONSIBILITIES.md rewritten 2026-09-11, APO-25)
 
     1. The mutable-language-of-thought line (charter 2026-08-26, amendment 1
        2026-08-27). A1, A2, A2b closed; TINYPROG WORLD_ADMISSIBLE; the next
@@ -63,7 +63,8 @@ rule is the worktree, not the drive letter).
     ELENCHUS   7 unanswered reviews (above). Responses owed in the WORKLOG
                review_responses field with the fixed/acknowledged/rebutted
                vocabulary.
-    OPERATOR   XL rows in BACKLOG_H0H5.md: reopen the parked IQ arc or not;
+    OPERATOR   XL rows in BACKLOG_H0H5.md: the copying gap (APO-28, from
+               DISSENT_LEDGER D-A02); reopen the parked IQ arc or not;
                adopt or decline the evolutionary-substrate proposal as a
                programme direction (recommendation: decline as a
                culmination, keep as H1-H3 under their existing names).
