@@ -1,0 +1,352 @@
+[
+  {
+    "ladder": "ladders/run1_POS-1_atalanta.jsonl",
+    "packet": "PKT-ATALANTA",
+    "step_count": 12,
+    "gap_count": 0,
+    "class_histogram": {
+      "R1": 8,
+      "R2": 1,
+      "R3": 1,
+      "R4": 1,
+      "R5": 1
+    },
+    "gates": {
+      "G1": {
+        "pass": true,
+        "lines": 12,
+        "parsed": 12,
+        "failures": []
+      },
+      "G2": {
+        "pass": true,
+        "errors": []
+      },
+      "G3": {
+        "pass": true,
+        "errors": [],
+        "dangling": [],
+        "percent": 100.0
+      },
+      "G4": {
+        "pass": true,
+        "errors": []
+      },
+      "G5": {
+        "pass": false,
+        "indeterminate": true,
+        "unsupported_step_rate": 0.0,
+        "specific_density": 0.4167,
+        "steps_with_specifics": 5,
+        "unsupported": []
+      },
+      "G6": {
+        "pass": true,
+        "clause": null,
+        "terminal_steps": 1,
+        "support_size": 9
+      },
+      "G7": {
+        "pass": true,
+        "errors": []
+      }
+    },
+    "all_gates_pass": false,
+    "expectation": "PASS",
+    "expectation_met": false
+  },
+  {
+    "ladder": "ladders/run1_POS-2_hypatia.jsonl",
+    "packet": "PKT-HYPATIA",
+    "step_count": 14,
+    "gap_count": 0,
+    "class_histogram": {
+      "R1": 10,
+      "R2": 0,
+      "R3": 2,
+      "R4": 1,
+      "R5": 1
+    },
+    "gates": {
+      "G1": {
+        "pass": true,
+        "lines": 14,
+        "parsed": 14,
+        "failures": []
+      },
+      "G2": {
+        "pass": true,
+        "errors": []
+      },
+      "G3": {
+        "pass": true,
+        "errors": [],
+        "dangling": [],
+        "percent": 100.0
+      },
+      "G4": {
+        "pass": true,
+        "errors": []
+      },
+      "G5": {
+        "pass": false,
+        "indeterminate": false,
+        "unsupported_step_rate": 0.0714,
+        "specific_density": 0.6429,
+        "steps_with_specifics": 9,
+        "unsupported": [
+          {
+            "step": 14,
+            "missing": [
+              "LIVENESS-AS-ARTIFACT"
+            ],
+            "claim": "the case is LIVENESS-AS-ARTIFACT: liveness signalling written into the work-artifact stream, 169 of 177 records, while the heartbeat channel"
+          }
+        ]
+      },
+      "G6": {
+        "pass": false,
+        "clause": "(e) terminal rests on inadmissible steps [14]",
+        "terminal_steps": 1,
+        "support_size": 10
+      },
+      "G7": {
+        "pass": true,
+        "errors": []
+      }
+    },
+    "all_gates_pass": false,
+    "expectation": "PASS",
+    "expectation_met": false
+  },
+  {
+    "ladder": "ladders/run1_POS-3_nephele.jsonl",
+    "packet": "PKT-NEPHELE",
+    "step_count": 15,
+    "gap_count": 0,
+    "class_histogram": {
+      "R1": 10,
+      "R2": 1,
+      "R3": 2,
+      "R4": 1,
+      "R5": 1
+    },
+    "gates": {
+      "G1": {
+        "pass": true,
+        "lines": 15,
+        "parsed": 15,
+        "failures": []
+      },
+      "G2": {
+        "pass": true,
+        "errors": []
+      },
+      "G3": {
+        "pass": true,
+        "errors": [],
+        "dangling": [],
+        "percent": 100.0
+      },
+      "G4": {
+        "pass": true,
+        "errors": []
+      },
+      "G5": {
+        "pass": false,
+        "indeterminate": true,
+        "unsupported_step_rate": 0.0667,
+        "specific_density": 0.4667,
+        "steps_with_specifics": 7,
+        "unsupported": [
+          {
+            "step": 15,
+            "missing": [
+              "NO-HARM-IN-WINDOW"
+            ],
+            "claim": "the case is NO-HARM-IN-WINDOW with a LATENT DEAD-GATING: 286/286 skips with the dependency alive, zero harm realized, and a gate observable "
+          }
+        ]
+      },
+      "G6": {
+        "pass": false,
+        "clause": "(e) terminal rests on inadmissible steps [15]",
+        "terminal_steps": 1,
+        "support_size": 11
+      },
+      "G7": {
+        "pass": true,
+        "errors": []
+      }
+    },
+    "all_gates_pass": false,
+    "expectation": "PASS",
+    "expectation_met": false
+  },
+  {
+    "ladder": "ladders/run1_POS-4_iris.jsonl",
+    "packet": "PKT-IRIS",
+    "step_count": 14,
+    "gap_count": 1,
+    "class_histogram": {
+      "R1": 9,
+      "R2": 1,
+      "R3": 2,
+      "R4": 1,
+      "R5": 1
+    },
+    "gates": {
+      "G1": {
+        "pass": true,
+        "lines": 14,
+        "parsed": 14,
+        "failures": []
+      },
+      "G2": {
+        "pass": true,
+        "errors": []
+      },
+      "G3": {
+        "pass": true,
+        "errors": [],
+        "dangling": [],
+        "percent": 100.0
+      },
+      "G4": {
+        "pass": true,
+        "errors": []
+      },
+      "G5": {
+        "pass": true,
+        "indeterminate": false,
+        "unsupported_step_rate": 0.0,
+        "specific_density": 0.5,
+        "steps_with_specifics": 7,
+        "unsupported": []
+      },
+      "G6": {
+        "pass": true,
+        "clause": null,
+        "terminal_steps": 1,
+        "support_size": 11
+      },
+      "G7": {
+        "pass": true,
+        "errors": []
+      }
+    },
+    "all_gates_pass": true,
+    "expectation": "PASS",
+    "expectation_met": true
+  },
+  {
+    "ladder": "ladders/run1_NEG-1_iris_supplied_deadgating.jsonl",
+    "packet": "PKT-NEG-1",
+    "step_count": 8,
+    "gap_count": 3,
+    "class_histogram": {
+      "R1": 7,
+      "R2": 0,
+      "R3": 1,
+      "R4": 0,
+      "R5": 0
+    },
+    "gates": {
+      "G1": {
+        "pass": true,
+        "lines": 8,
+        "parsed": 8,
+        "failures": []
+      },
+      "G2": {
+        "pass": true,
+        "errors": []
+      },
+      "G3": {
+        "pass": true,
+        "errors": [],
+        "dangling": [],
+        "percent": 100.0
+      },
+      "G4": {
+        "pass": true,
+        "errors": []
+      },
+      "G5": {
+        "pass": false,
+        "indeterminate": true,
+        "unsupported_step_rate": 0.0,
+        "specific_density": 0.375,
+        "steps_with_specifics": 3,
+        "unsupported": []
+      },
+      "G6": {
+        "pass": false,
+        "clause": "(a) expected exactly one terminal step, found 0",
+        "terminal_steps": 0
+      },
+      "G7": {
+        "pass": true,
+        "errors": []
+      }
+    },
+    "all_gates_pass": false,
+    "expectation": "REJECT",
+    "expectation_met": true
+  },
+  {
+    "ladder": "ladders/run1_CHEAT-1_atalanta_stripped.jsonl",
+    "packet": "PKT-CHEAT-1",
+    "step_count": 8,
+    "gap_count": 4,
+    "class_histogram": {
+      "R1": 7,
+      "R2": 1,
+      "R3": 0,
+      "R4": 0,
+      "R5": 0
+    },
+    "gates": {
+      "G1": {
+        "pass": true,
+        "lines": 8,
+        "parsed": 8,
+        "failures": []
+      },
+      "G2": {
+        "pass": true,
+        "errors": []
+      },
+      "G3": {
+        "pass": true,
+        "errors": [],
+        "dangling": [],
+        "percent": 100.0
+      },
+      "G4": {
+        "pass": true,
+        "errors": []
+      },
+      "G5": {
+        "pass": false,
+        "indeterminate": true,
+        "unsupported_step_rate": 0.0,
+        "specific_density": 0.125,
+        "steps_with_specifics": 1,
+        "unsupported": []
+      },
+      "G6": {
+        "pass": false,
+        "clause": "(a) expected exactly one terminal step, found 0",
+        "terminal_steps": 0
+      },
+      "G7": {
+        "pass": true,
+        "errors": []
+      }
+    },
+    "all_gates_pass": false,
+    "expectation": "REJECT",
+    "expectation_met": true
+  }
+]
