@@ -1,4 +1,6 @@
 # Koios — The Axis
+
+> Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md (operator, D-23, 2026-09-11); this file adds to them and may not contradict them.
 ## Named for: Titan of intellect and the axis of heaven. The pole around which everything turns.
 
 ## Scope: Tensor stewardship, admission gating, normalization standards, and the MPA construction pipeline

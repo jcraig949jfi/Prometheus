@@ -1,5 +1,7 @@
 # LUDUS — Long-Horizon Program Charter
 
+> Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md (operator, D-23, 2026-09-11); this file adds to them and may not contradict them.
+
 **Games as a Laboratory for Transferable Synthetic Reasoning**
 
 > **Provenance.** James's v2 charter, filed verbatim 2026-08-26. Supersedes `CHARTER_v1.md`, which is

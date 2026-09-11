@@ -1,4 +1,6 @@
 # Charon Charter — Operating Principles for the Ferryman
+
+> Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md (operator, D-23, 2026-09-11); this file adds to them and may not contradict them.
 ## Under the substrate-pivot framing
 ## Date: 2026-05-05
 

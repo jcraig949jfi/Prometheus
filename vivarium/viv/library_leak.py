@@ -24,8 +24,23 @@ it catches a component that computes a target's function however it is spelled.
 It does NOT catch a library that merely makes a target much easier without
 solving it -- that is a matter of degree, it is the effect the experiment is
 trying to measure, and a checker that tried to rule on it would be ruling on
-the hypothesis. `subterm_of_solution` is reported for exactly that reason: it
+the hypothesis. `SUBTERM_OF_SOLUTION` is reported for exactly that reason: it
 is a WARNING with a threshold nobody has agreed, not a verdict.
+
+IT WORKS FROM THE TASKS, NOT FROM THE SOLUTIONS, and that is the difference
+that matters. Techne's own first leak test compared s-expression strings
+against SOLVED programs, which made it blind to two things: the same function
+spelled differently, and any held-out target that was never solved -- 9 of
+Archaeon's 12, since solutions are all such a test knows. Taking the task
+truth tables directly sees all of them, solved or not. Their weaker test
+happened to return the same answer on that corpus, and agreement between a
+weak test and a strong one is a fact about the inputs rather than evidence of
+coverage.
+
+RUN IT ON AN EMPTY LIBRARY TOO. Techne's point, and it is right: a null leak
+field reads as either "not checked" or "nothing to check" and a reader cannot
+tell which, while CLEAN over zero components is a measurement. `check([], ...)`
+is defined and returns CLEAN with `n_components: 0`.
 """
 from __future__ import annotations
 
@@ -36,8 +51,13 @@ from typing import Dict, List, Optional
 REPO = Path(__file__).resolve().parent.parent.parent
 
 SOLVES_A_TASK = "SOLVES_A_TASK"
+COMPOSES_TO_A_TASK = "COMPOSES_TO_A_TASK"
 SUBTERM_OF_SOLUTION = "SUBTERM_OF_SOLUTION"
 CLEAN = "CLEAN"
+
+#: Classes that mean the library already contains its answers. The third does
+#: not: it is a warning whose threshold nobody has agreed.
+DISQUALIFYING = (SOLVES_A_TASK, COMPOSES_TO_A_TASK)
 
 
 def _proteus():
@@ -77,8 +97,11 @@ def check(components: List[dict], task_truth_tables: Dict[str, str], *,
             if st[0] not in ("const", "input"):
                 sub_index.setdefault(_tt(st, _b), []).append(task)
 
+    comps = []
     for c in components:
-        expr = _cb._from_json(c["expr"], None)               # noqa: SLF001
+        comps.append((c["name"], _cb._from_json(c["expr"], None)))  # noqa: SLF001
+
+    for c, (_name, expr) in zip(components, comps):
         _b.check(expr)
         tt = _tt(expr, _b)
         solves = sorted(t for t, v in task_truth_tables.items() if v == tt)
@@ -102,9 +125,67 @@ def check(components: List[dict], task_truth_tables: Dict[str, str], *,
                        "verdict: making a target easier is the effect under "
                        "test, and the threshold is nobody's to set here."})
 
+    # ONE STEP FROM THE LIBRARY. A target reachable by a single operator over
+    # library components is not "easier" -- it is the answer in two pieces, and
+    # SOLVES_A_TASK cannot see it because no single component computes it.
+    #
+    # DEPTH 1 AND NO FURTHER, and the cutoff is principled rather than
+    # convenient: at depth 1 the library has supplied everything but one
+    # operator, which is the answer key split. At depth k for growing k the
+    # question becomes "how much easier", which IS the effect under test, and
+    # there is no non-arbitrary line past the first step.
+    #
+    # AT LEAST ONE OPERAND MUST BE A LIBRARY COMPONENT. Without that rule this
+    # flags any task solvable in one operator over raw inputs -- `and01` is
+    # `and(x0, x1)` whatever library is present -- and the check would report
+    # contamination as a fact about the task set rather than about the library.
+    # Tasks already reported as solved outright add nothing when they also
+    # compose: the finding is the same leak twice, and a report where the new
+    # information is buried under restatements is one nobody reads to the end.
+    already = {t for f in findings if f["class"] == SOLVES_A_TASK
+               for t in f["tasks"]}
+    leaves = list(comps) + [("input%d" % i, _b.I(i)) for i in range(_b.N_INPUTS)]
+    leaves += [("const0", _b.C(0)), ("const1", _b.C(1))]
+    lib_names = {n for n, _ in comps}
+    seen_pairs = set()
+    for op in ("and", "or", "xor"):
+        for na, a in leaves:
+            for nb, b in leaves:
+                if na not in lib_names and nb not in lib_names:
+                    continue
+                key = (op, tuple(sorted((na, nb))))
+                if key in seen_pairs:
+                    continue
+                seen_pairs.add(key)
+                t = _tt((op, a, b), _b)
+                tasks = sorted(k for k, v in task_truth_tables.items()
+                               if v == t and k not in already)
+                if not tasks:
+                    continue
+                worst = SOLVES_A_TASK if worst == SOLVES_A_TASK \
+                    else COMPOSES_TO_A_TASK
+                findings.append({
+                    "component": "%s(%s, %s)" % (op, na, nb),
+                    "class": COMPOSES_TO_A_TASK, "truth_table": t,
+                    "tasks": tasks,
+                    "why": "one operator over library components reaches those "
+                           "tasks. Not 'easier' -- the answer in two pieces."})
+    for nc, c_expr in comps:
+        t = _tt(("not", c_expr), _b)
+        tasks = sorted(k for k, v in task_truth_tables.items()
+                       if v == t and k not in already)
+        if tasks:
+            worst = SOLVES_A_TASK if worst == SOLVES_A_TASK \
+                else COMPOSES_TO_A_TASK
+            findings.append({
+                "component": "not(%s)" % nc, "class": COMPOSES_TO_A_TASK,
+                "truth_table": t, "tasks": tasks,
+                "why": "one operator over a library component reaches those "
+                       "tasks."})
+
     return {
         "verdict": worst,
-        "usable_as_a_library_effect": worst == CLEAN,
+        "usable_as_a_library_effect": worst not in DISQUALIFYING,
         "n_components": len(components),
         "n_tasks": len(task_truth_tables),
         "findings": findings,

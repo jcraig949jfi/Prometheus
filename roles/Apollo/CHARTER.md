@@ -1,3 +1,5 @@
+> Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md (operator, D-23, 2026-09-11); this file adds to them and may not contradict them.
+
 > **GEN-2 REASSIGNMENT (2026-09-01):** Apollo's ACTIVE mission is now
 > `roles/Apollo/CHARTER_GEN2_serendipity_20260901.md` (Serendipity Ecology
 > Substrate Miner). This file below is retained as DURABLE IDENTITY and history --
