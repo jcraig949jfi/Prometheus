@@ -194,8 +194,8 @@ would still KILL.
 - [x] F-19 DONE 2026-09-10 ~20:30: operator said ISSUE NOW; cs-h5-1 issued (256 rows). 2026-09-10
 - [x] F-20 DONE by Vivarium 30e97ed94 (flags measured off the arrays). 2026-09-10
 - [x] F-21 DONE 2026-09-10 ~14:00: random_076 re-issued as cs-c3-2-r1. 2026-09-10
-- [ ] F-22 (Archaeon) UNBLOCKED 2026-09-10 19:30: C3-3 design under R-C3-1..5 + Harmonia 3e/3f (X1 variance-ratio is the H2 instrument; support size, p_mode, f, corpus ceil(120/f) BEFORE issue) with cellwise_majority_match now exposed. = ARCH-01. 2026-09-10
+- [x] F-22 BUILT 2026-09-10 21:15 (ARCH-01): campaign_c3_3.py + preflight + design; waits on Harmonia's 3b amendment and go, then the operator's word to issue (ARCH-02). 2026-09-10
 - [x] F-23 DONE 2026-09-10 18:30: Vivarium's debit receipt landed (a733f0ad5); the 48 artifact rows re-issued as cs-h1h0-1-p2b. 2026-09-10
 - [ ] F-24 (Archaeon): H5-1 readout when cs-h5-1 completes: live class map vs published (224 classes), H5 quantities collapsed to live classes (campaign_h5.live_class_map / h5_readout). 2026-09-10
 - [ ] F-25 (Archaeon): after Daedalus issues the B1 grant, move readers to the API path, demonstrate parity with the direct-ledger read, retire the direct read. 2026-09-10
-- [ ] F-26 (Archaeon): D-6 pilot -- first allocated tick receipt; review packet for 2026-09-24 with Harmonia. 2026-09-10
+- [~] F-26 (Archaeon): D-6 pilot -- first allocated tick CONFIRMED 20:12 (active, established share, evaluate_bitstring); review packet for 2026-09-24 with Harmonia still to write. 2026-09-10
