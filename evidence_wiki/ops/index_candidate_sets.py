@@ -48,7 +48,8 @@ import requests
 
 HERE = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(HERE))
-from ew import db as ewdb                       # noqa: E402
+from ew import db as ewdb
+from ew import workspace                       # noqa: E402
 
 SHA = "sha256:"
 
@@ -145,6 +146,9 @@ def plan_refs(row, cs):
             (loc or {}).get("artifact_id") if isinstance(loc, dict) else str(loc),
             dg, selector=name)
     return out, unresolved
+
+
+WORKSPACE = workspace.assert_not_canonical("index a candidate set")
 
 
 def main():

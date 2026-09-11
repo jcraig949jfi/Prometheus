@@ -160,6 +160,8 @@ def verify():
 
 
 if __name__ == "__main__":
+    from proteus.workspace import assert_not_canonical
+    assert_not_canonical("run golden.py")
     cmd = sys.argv[1] if len(sys.argv) > 1 else "verify"
     if cmd == "emit":
         emit()

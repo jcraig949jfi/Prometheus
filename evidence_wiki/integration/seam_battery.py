@@ -21,6 +21,8 @@ import requests
 
 HERE = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(HERE))
+from ew import workspace  # noqa: E402
+workspace.assert_not_canonical("run a PEW battery")
 FIX = json.loads((HERE / "integration" / "fixture_harmonia_v1.json")
                  .read_text(encoding="utf-8"))
 SFE_DB = (HERE.parent / "SerendipityFoundry" / "SerendipityFoundryEngine" /

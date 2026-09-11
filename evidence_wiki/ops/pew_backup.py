@@ -23,6 +23,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(HERE))
+from ew import workspace  # noqa: E402
 
 PGBIN = Path(os.environ.get("PGBIN", r"C:\Program Files\PostgreSQL\17\bin"))
 DEFAULT_DIR = Path(os.environ.get("PEW_BACKUP_DIR", r"F:\PrometheusBackups\pew"))
@@ -97,6 +98,9 @@ def rotate(dest_dir: Path, keep=KEEP):
 def newest(dest_dir: Path):
     d = sorted(dest_dir.glob("prometheus_fire_*.dump"))
     return d[-1] if d else None
+
+
+WORKSPACE = workspace.assert_not_canonical("back up PEW")
 
 
 def main():
