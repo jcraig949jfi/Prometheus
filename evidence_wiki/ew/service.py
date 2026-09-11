@@ -17,6 +17,12 @@ from . import FOSSIL_CONTRACT_VERSION, ONTOLOGY_VERSION, SCHEMA_VERSION
 from . import db as ewdb
 from . import closure, compiler, coords, store, wiki
 from . import refs as ewrefs
+from . import workspace
+
+# D-23: a long-running service must never run from the canonical
+# checkout -- a mutating git operation there swaps files beneath a
+# live process, which is how ~11,000 tracked files went missing twice.
+WORKSPACE = workspace.assert_not_canonical("serve PEW")
 
 app = FastAPI(title="Mnemosyne Evidence Wiki", version="0.1")
 CFG = ewdb.load_config()
@@ -90,7 +96,10 @@ def revisions(conn):
 def health():
     return {"service": CFG["service_name"], "status": "ok",
             "schema_version": SCHEMA_VERSION, "ontology_version": ONTOLOGY_VERSION,
-            "fossil_contract": FOSSIL_CONTRACT_VERSION}
+            "fossil_contract": FOSSIL_CONTRACT_VERSION,
+            "workspace": {k: WORKSPACE[k] for k in
+                          ("base_sha", "branch", "worktree_path",
+                           "dirty", "main_worktree")}}
 
 
 @app.get("/api/v1/fossil/contract")
