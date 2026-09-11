@@ -343,3 +343,128 @@ D-60 KEEPER COLL Across the three READMEs the same defect recurs under
      slots). The ledger has no dedup key; the Keeper cross-referenced by
      hand. A defects ledger that grows by repetition will read as more
      broken than the doctrine is.
+
+## Cleric-level entries (merged by the Keeper from the Nous and Erebos CLERIC.md
+## section 6 lists; grave-prefixed; the CLERIC.md files are the primary record;
+## cross-references to earlier entries are the Keeper's)
+
+D-61 KEEPER VAL  SCHEMA provenance.role enum is Necromancer|Cleric|Keeper; there
+     is no adjudicator/Judge value, no Cleric-objection field and no
+     adjudication field anywhere in the dossier. Every adjudication in this
+     trial lives as an "ADJUDICATION (...)" paragraph inside
+     disposition.rationale and the investigator string, i.e. as prose the
+     validator cannot see. (Found when validate.py rejected role
+     'Necromancer + Cleric + Judge'.)
+
+D-62 KEEPER AMB  primary_cause has three readings (Erebos DD-2): cause of the
+     organism stopping / cause of the certificates being wrong / cause of the
+     question being unanswerable. The Erebos stack yields ECOSYSTEM_FAILURE /
+     INTERPRETATION_ERROR / MEASUREMENT_ERROR respectively. Keeper RULING for
+     this trial (not doctrine): the third reading, because the charter asks
+     whether Prometheus earned the right to call the grave dead, not why the
+     process stopped. Nous D-1 ("upstream wins" is convention, not rule) is the
+     same gap from the other side. Needs a HITL doctrine ruling; recorded, not
+     resolved. (Same family as D-17, D-26.)
+
+D-63 KEEPER PROV Two different ITERs are labelled "Phase 3.K" on the Erebos
+     record: ITER-66 scale stress (36f46b97f, 05-30) and ITER-83/84 pair-aware
+     null (d7120eb5a, 06-03). A certificate citing "Phase 3.K" is resolved only
+     by matching its numbers. Instance of a general defect: phase labels were
+     reused within one organism's own history.
+
+D-64 NOUS COLL The ECOSYSTEM layer admits one class (ECOSYSTEM_FAILURE =
+     nothing consumed what it emitted). Consumer-instrument failure, operator
+     re-allocation, deliberate shelving, and fleet-wide halts (Erebos DD-1)
+     have no class, so the layer is forced to misuse the one it has or omit
+     the event. Every May-fleet grave will hit the halt case. (Nous D-2, Erebos
+     DD-1; relates to D-54.)
+
+D-65 NOUS DIV  load_bearing has two readings inside one dossier: "carried the
+     historical result" (DESIGN, MEASUREMENT) vs "carried the recorded status"
+     (ECOSYSTEM). validate.py treats them identically and only within
+     DESIGN..MEASUREMENT for UNFAIR. (Nous D-3; relates to D-43, D-52.)
+
+D-66 NOUS AMB  A mid-series prompt change is DESIGN to one reader and
+     CONFIGURATION_ERROR ("parameter regime") to another; no rule decides.
+     (Nous D-4; same as D-51, recorded again because the Cleric hit it
+     independently of the Necromancer.)
+
+D-67 NOUS COLL Record-not-preserved (gitignored logs/runs) has no layer or
+     class: INSTRUMENT_ERROR requires an apparatus that could not observe;
+     here it observed and the record was discarded. (Nous D-5, Nous C-5; the
+     Erebos INSTRUMENTATION layer carries the same fact under INSTRUMENT_ERROR
+     for lack of anywhere else.)
+
+D-68 NOUS VAL  "Executed evidence" (LAW N17) does not require determinism; a
+     hash-order-dependent null passed the Necromancer's own bar (Nous C-1).
+     No rule requires a seed or a replication count on an executed evidence
+     row.
+
+D-69 NOUS AMB  Whether a later consumer's re-run of the organism's keys (the
+     May forge windows re-running March Nous keys) is part of the organism's
+     fair_test scope is undefined. (Nous D-7.)
+
+D-70 NOUS PROV identity.historical_machine takes a ROSTER label with no
+     UNKNOWN value and no evidence requirement, and the label then leaks into
+     findings as fact ("M4" was a 2026-05-13 forward assignment). (Nous D-9;
+     amended in nous.dossier.json to "unknown ...".)
+
+D-71 EREBOS COLL One HYPOTHESIS slot and one DESIGN slot for two hypotheses
+     (H-A, H-B) and two versions of H-B (v1 refuted ITER-56/57, v2 redesigned
+     the same day). The stack cannot express "refuted then repaired before
+     the pre-committed test" without a false VALID or a lossy NOT_EXAMINED;
+     the Keeper chose NOT_EXAMINED with the history in the finding. (Erebos
+     DD-3; extends D-36.)
+
+D-72 EREBOS COLL An underpowered statistic fits MEASUREMENT_ERROR ("recorded
+     quantity is not the quantity named"), INSTRUMENT_ERROR ("apparatus could
+     not observe") and DESIGN "chance floor"; Necromancer and Cleric filed the
+     same evidence on different layers. Keeper ruling for this grave: chance
+     floor -> INSTRUMENTATION; outcome column carrying pipeline state ->
+     MEASUREMENT (SCHEMA's own words). (Erebos DD-4; same family as D-26.)
+
+D-73 EREBOS AMB  Whose DESIGN: the layer describes the organism's design, but
+     the load-bearing test (Phase 3.K) was an adversarial audit designed by
+     the same author weeks later; a defect in the audit's statistic is filed
+     on the organism's stack with no field naming which artefact is meant.
+     (Erebos DD-5.)
+
+D-74 EREBOS PROV LAW N6 "consumer at birth" is cited by SCHEMA and by
+     dossiers but its text is not carried in the dossier; a reader cannot
+     check the rule from the dossier alone. The Keeper quoted it inline in the
+     Erebos DESIGN evidence as a workaround. (Erebos DD-6, second half; the
+     8-vs-13 first half is D-18.)
+
+D-75 EREBOS VAL  Nothing in SCHEMA/validate.py requires a sampled census to be
+     labelled as a sample: "every summary ends enqueued=True" was built on a
+     `limit 3` read and passed as a universal claim. (Erebos DD-7; the
+     Keeper's own instrument.)
+
+D-76 EREBOS AMB  Self-report admissibility: LAW N17 "executed evidence" does
+     not say whether evidence executed BY THE ORGANISM (its own agora rows,
+     tick summaries) counts. The census caveat "DUAL-RECORDED IS NOT
+     INDEPENDENTLY VERIFIED" exists but no rule consumes it. (Erebos DD-8;
+     same as D-27/D-40/D-48/D-55 -- the fifth independent hit.)
+
+D-77 EREBOS DIV  A pre-registered kill test that never ran is EXECUTION_ERROR
+     ("not executed faithfully"), DESIGN (designed but unreachable) or nothing
+     (stopped from outside). Keeper ruling for this grave: EXECUTION_ERROR by
+     SCHEMA EXECUTION's "no partial runs", with the finding that the stop was
+     the author's own (timeline). (Erebos DD-9.)
+
+D-78 EREBOS VAL  Certificate review granularity: a certificate factually right
+     in its count but wrong in one inference can only be PARTIALLY_UPHELD,
+     the same value used for "half wrong". The Cleric's requested
+     "UPHELD-with-one-error" does not exist. (Erebos DD-10; pairs with D-29
+     and D-57 -- the enum now lacks three distinguishable states.)
+
+D-79 EREBOS VAL  Calibration worlds are not fingerprinted against the real
+     ledger's structure: Necromancer synthetic null p95 = 1, historical 2,
+     Cleric concentrated-marginal 7-10. "Instrument at floor" claims need a
+     rule requiring the synthetic floor to bracket the historical one before
+     the conclusion is admitted. (Erebos DD-11.)
+
+D-80 EREBOS TOOL The Necromancer's external_refs counts drifted between the
+     pass and the Cleric re-run (A 3->4, A2 14->19, B 198->207) because the
+     tree moved and OWN_PREFIXES is incomplete; the committed result file is
+     a snapshot without a tree SHA in its own body. (Erebos C-9.)
