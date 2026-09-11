@@ -1,0 +1,25 @@
+{
+  "schema": "nyx.chop/0",
+  "record_kind": "SPECIMEN",
+  "id": "specimen.dreamcoder",
+  "name": "DreamCoder (ellisk42/ec) and its extracted descendant Stitch",
+  "lineage": ["program synthesis", "abstraction and compression", "search"],
+  "status": "OPEN",
+  "opened": "2026-09-11",
+  "famous_names": ["DreamCoder", "Dream Coder", "Stitch", "stitch_core", "wake-sleep", "wake sleep", "library learning", "library-learning", "DSL", "abstraction", "compression", "recognition model"],
+  "chosen_because": "second specimen by operator order (post-cut direction 2026-09-11). Its value to the Chop Shop is unusual: the system CANNOT be run here (Techne: BLOCKED_SMOKE_RUN_NOT_POSSIBLE, four measured blockers) while one of its organs already runs here in 70 ms as a standalone descendant (Stitch's compress.exe) and has been applied to real Prometheus solutions with a measured result (0 abstractions on the legitimate corpus; a leak on the illegitimate one). The blockers are examined as failure substrate: what they say about which parts are transferable operationally and which only in prose.",
+  "provenance": {
+    "sources": [
+      {"ref": "doi:10.1145/3453483.3454080 (Ellis, Wong, Nye, Sable-Meyer, Morales, Hewitt, Cary, Solar-Lezama, Tenenbaum, 'DreamCoder: bootstrapping inductive program synthesis with wake-sleep library learning', PLDI 2021) -- resolved via Crossref 2026-09-11", "grade": "T1-SOURCE"},
+      {"ref": "arXiv:2006.08381 (the 2020 preprint, 'DreamCoder: Growing generalizable, interpretable knowledge with wake-sleep Bayesian program learning') -- resolved via arXiv API 2026-09-11", "grade": "T1-SOURCE"},
+      {"ref": "doi:10.1145/3571234 (Bowers, Olausson, Wong, Grand, Tenenbaum, Ellis, Solar-Lezama, 'Top-Down Synthesis for Library Learning', PACMPL / POPL 2023: the Stitch descendant) -- resolved via Crossref 2026-09-11", "grade": "T1-SOURCE"},
+      {"ref": "github.com/ellisk42/ec at cb0e63f5c33cd2de360b791038b0f5272750270e, submodules pinn 1878ef5 / pregex b5eab11 / pyccg c465a23 (techne/acquisition/receipts/installation-dreamcoder-20260910T071710Z.json, status SOURCE_AT_PINNED_REVISION)", "grade": "T1-LOCAL"},
+      {"ref": "techne/acquisition/receipts/first_useful_check-dreamcoder-20260910T222933Z.json (status BLOCKED_SMOKE_RUN_NOT_POSSIBLE; blockers BLK-DC-1 python stack, BLK-DC-2 OCaml solver, BLK-DC-4 resource envelope; recipe path docs/official_experiments does not exist at the pin; DEV-T7)", "grade": "T1-LOCAL"},
+      {"ref": "techne/acquisition/receipts/paper_reproduction-stitch_rust_core-20260910T161201Z.json (compress.exe on nuts-bolts 250 programs: 3 abstractions, cost 1919558 -> 316890, 6.06x, 70 ms; input sha256 4e8ea309... verified)", "grade": "T1-LOCAL"},
+      {"ref": "techne/acquisition/receipts/adapter_qualification-stitch_rust_core-20260911T094436Z.json (stitch on real H1 solutions: PHASE1_3 -> 0 abstractions, 906 -> 906; ALL_17 -> 3 abstractions 6548 -> 2912 but NOT exportable: all 3 components ARE held-out phase-2 solutions, viv_library_leak SOLVES_A_TASK; Archaeon's own extractor also 0 on PHASE1_3)", "grade": "T1-LOCAL"},
+      {"ref": "techne/acquisition/checks/stitch_on_h1_solutions.py (five declared corpora; 'stitch abstracts over SYNTAX'; run through the MIT Rust core over its JSON interface, not the bindings, D-17)", "grade": "T1-LOCAL"},
+      {"ref": "techne/LICENSING_AND_COSTS_2026-09-10.md s'DreamCoder' (the only LICENSE file is the AngularJS MIT text, 'Copyright (c) 2010-2020 Google LLC'; grant genuinely unresolved)", "grade": "T1-LOCAL"},
+      {"ref": "roles/Archaeon/prompts/2026-09-08_h0h5/DESIGN_H0_H5_v0.1.md lines 357-375, 501-512 (H0 alpha: frozen component library cells; 'count expanded execution cost so macro names do not create free computation'; DreamCoder as reference arm, isolated, frozen-library producer first)", "grade": "T1-LOCAL"}
+    ]
+  }
+}

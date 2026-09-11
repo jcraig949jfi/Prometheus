@@ -1,0 +1,29 @@
+{
+  "schema": "nyx.chop/0",
+  "record_kind": "PRESSURE",
+  "id": "pressure.dreamcoder.budget_below_the_space.v0",
+  "specimen": "dreamcoder",
+  "name": "the per-task budget is far below the solution space, and tasks wear their structure on the outside",
+  "condition": "A world in which each task can only be attempted a small fixed number of times relative to the number of candidate solutions, so that trying candidates in a fixed or random order almost never succeeds, and in which each task exposes observable features (its examples, its shape) that are statistically related to which candidates succeed on it. The relation is never given; it can only be learned from tasks already solved.",
+  "capability_rewarded": "Choosing WHICH candidates to try first for a new task from the task's observable features and from past solved tasks, so that the budget is spent where success is likely.",
+  "world_requirements": [
+    "a candidate space with an evaluator and a way to enumerate or sample candidates in a controllable order",
+    "a budget per task (attempts) that is a small declared fraction of the candidate space; the pilot reports the solve rate of uniform-order search at that budget, which must be low",
+    "tasks with observable features; the ELIGIBILITY COUNT is the mutual information (or any declared dependence statistic) between task features and the productions of the smallest solution, estimated on the pilot; it must be distinguishable from zero or the features carry nothing to learn",
+    "a stream of tasks so that earlier solved tasks are available as training material to later attempts, with the split declared (no target's solution visible before it is attempted)",
+    "a seed and a replay"
+  ],
+  "vacuity_condition": "Vacuous if uniform-order search already solves most tasks at the budget (then ordering is unrewarded); if task features are independent of solution structure (then there is nothing to learn and any advantage is a leak); if the same task recurs (then recall, not conditioning, is rewarded); or if the budget is so small that even a perfect ordering fails (then nothing can fire).",
+  "trivial_shortcuts": [
+    "memorise (task, solution) pairs and replay on recurrence: closed by never repeating a task and by the split",
+    "shrink the candidate space by hand: closed by fixing the space as part of the world, not the organism",
+    "peek at the evaluator's internals: closed by the evaluator being a black box that returns pass/fail only"
+  ],
+  "cheat_control": "An organism handed, for each task, the exact productions of its smallest solution as a bias: it must solve every task within a budget of a few attempts. If it cannot, the ordering does not control the search and the world is not eligible.",
+  "negative_control": "The same world with task features replaced by noise of the same shape: any organism that conditions on features must do no better than uniform order, within the declared SE.",
+  "cost_class": "CPU_SCALE",
+  "organ_refs": ["organ.dreamcoder.recognition_guided_enumeration.v0", "organ.dreamcoder.wake_sleep_alternation.v0"],
+  "expressible_without_organ": true,
+  "forbidden_terms": ["DreamCoder", "Dream Coder", "recognition model", "recogniser", "neural", "enumerat", "type-directed", "best-first", "grammar", "PCFG", "wake-sleep", "wake sleep"],
+  "notes": "Held with hidden_axis: not delivered on this pass. Reason: the cheat and the eligibility count both need a candidate space with a controllable order, and Nyx has not verified that the Proteus boolean substrate exposes one (unknown, recorded in the organ's composability answer). Delivering a pressure whose world requirements Nyx cannot point at is what the operator's 'transferable in prose but not operationally' warning is about, applied to the Chop Shop itself. It is written so it can go the day the requirement is verified. Cost class is CPU_SCALE because the pressure does not require the human organ's neural learner; a table over features would do."
+}

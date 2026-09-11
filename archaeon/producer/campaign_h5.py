@@ -151,12 +151,88 @@ def issue(conn, rows: Optional[Sequence[Dict[str, Any]]] = None, config=None) ->
             "cost_event": cost.to_json(), "engine_entries": C.to_engine_entries(cost, scope="campaign")}
 
 
+TRANSPORT_MARKERS = ("timed out", "ENGINE_TRANSPORT", "HTTP 500", "handshake")
+
+
+def failed_transport_labels(conn, csid: str = "cs-h5-1") -> Dict[str, List[str]]:
+    """Failed rows of the set, split into transport failures (reissuable:
+    the spec never ran or its result never came back) and everything else
+    (a producer or engine-semantics error, never reissued blind)."""
+    cur = conn.cursor()
+    cur.execute("select request_key, error from viv.research_experiment_queue where candidate_set_id=%s and status='failed'", (csid,))
+    by_key = {r["request_key"]: r["label"] for r in plan()}
+    out = {"transport": [], "other": [], "unknown_keys": []}
+    for key, err in cur.fetchall():
+        label = by_key.get(key.split("-R")[0])
+        if label is None:
+            out["unknown_keys"].append(key); continue
+        out["transport" if any(m in (err or "") for m in TRANSPORT_MARKERS) else "other"].append(label)
+    for k in out:
+        out[k] = sorted(set(out[k]))
+    return out
+
+
+def plan_reissue(labels: Sequence[str], suffix: str = "R1") -> List[Dict[str, Any]]:
+    """Pure: the plan rows for `labels` with a suffixed request key and the
+    reissue provenance attached; spec and hash unchanged."""
+    rows = [r for r in plan() if r["label"] in set(labels)]
+    missing = sorted(set(labels) - {r["label"] for r in rows})
+    if missing:
+        raise RuntimeError("labels not in the plan: {}".format(missing))
+    out = []
+    for r in rows:
+        r = dict(r)
+        r["reissue_of_request_key"] = r["request_key"]
+        r["request_key"] = "{}-{}".format(r["request_key"], suffix)
+        out.append(r)
+    return out
+
+
+def reissue(conn, labels: Sequence[str], suffix: str = "R1", config=None) -> Dict[str, Any]:
+    """Re-issue TRANSPORT-failed rows under a new request key and candidate
+    set cs-h5-1-<suffix>; the failed rows stay as their own record (C3
+    precedent, campaign_c3.reissue). Never call on a producer error."""
+    from .. import config as cfg
+    from .. import vivqueue as vq
+    config = config or cfg.DEFAULT
+    rows = plan_reissue(labels, suffix)
+    csid = "cs-h5-1-" + suffix.lower()
+    ids = []
+    for r in rows:
+        cand = vq.make_candidate(r["spec"], family_id=r["family_id"], arm_id=r["arm_id"], request_key=r["request_key"],
+                                 source_evidence={"schema": "archaeon.campaign.v0", "campaign": CAMPAIGN_ID, "mode": "human",
+                                                  "policy_version": "campaign.H5.v0", "template_id": "campaign.H5-1",
+                                                  "label": r["label"], "rule": r["rule"], "scope": SCOPE,
+                                                  "reissue_of_request_key": r["reissue_of_request_key"],
+                                                  "reissue_reason": "ENGINE_TRANSPORT / HTTP 500 failure on the first attempt; same spec, same hash",
+                                                  "selection_basis": "operator_directed_family",
+                                                  "authority": "re-attempt of a transport-failed row of the operator-issued H5-1 (F-19)",
+                                                  "upstream_selection_history": "UNKNOWN"})
+        res = vq.submit(conn, candidates=[cand], selected_index=0, source_reason="human",
+                        created_by="archaeon", config=config, candidate_set_id=csid)
+        ids.append(res["selected_experiment_id"])
+    return {"campaign": CAMPAIGN_ID, "candidate_set_id": csid, "experiment_ids": ids, "labels": list(labels)}
+
+
 def main(argv=None) -> int:
     from .. import workspace as _ws
     _ws.assert_not_canonical("run a campaign CLI")               # D-23
     ap = argparse.ArgumentParser(prog="archaeon.producer.campaign_h5")
     ap.add_argument("--check", action="store_true"); ap.add_argument("--issue", action="store_true")
+    ap.add_argument("--reissue-transport", action="store_true", help="re-issue the transport-failed rows of cs-h5-1 under suffix")
+    ap.add_argument("--suffix", default="R1")
     a = ap.parse_args(argv)
+    if a.reissue_transport:
+        from evidence_wiki.ew import db as ewdb
+        conn = ewdb.connect()
+        try:
+            split = failed_transport_labels(conn)
+            print(json.dumps({"split": split}, indent=1))
+            if split["transport"]:
+                print(json.dumps(reissue(conn, split["transport"], a.suffix), indent=1, default=str))
+        finally:
+            conn.close()
+        return 0
     if a.check:
         print(json.dumps(check(), indent=1, default=str)); return 0
     if a.issue:

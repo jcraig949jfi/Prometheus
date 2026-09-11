@@ -1,44 +1,47 @@
 # Talos status
 
-Currency: 2026-09-11 (old agent reanimated as a seat; base-role adoption pass).
+Currency: 2026-09-11 (second pass: operator ruling on TALOS-01 applied).
 Plain language.
 
-seat state: ACTIVE for the adoption pass only (operator, 2026-09-11).
-  Standing state after this pass: BLOCKED on TALOS-01, an operator
-  decision: the disposition of the May queue (roles/Talos/ARCHAEOLOGY_2026-09-11.md).
-  The seat suggests nothing be executed until that is ruled, and the
-  operator said the same ("Don't execute anything. Just set up.").
-what it asserts: PRESENT (booted in comms 2026-09-11 14:45 UTC, report
-  #38 posted to Archaeon), ACTIVE (this pass ran), NOT PRODUCTIVE (no
-  domain output; the artifacts are roles/Talos/, one MONITORS row and
-  one charter annotation), VALID not applicable.
-what the operator has assigned to this seat: nothing before today. No
-  prompt, INBOX, delegation, comms message or D-nn names Talos; the HITL
-  decision line in pivot/COMPONENT_DOSSIERS_2026-06-24.md (Talos) is
-  blank. Today's directive: adopt the base role, create the folder,
-  report, execute nothing. Done except the report, which is this file
-  and the chat block.
+seat state: ACTIVE (operator ruling 2026-09-11: "Talos is awake"). The
+  question is whether anything Talos manufactures is food for the 2.0
+  ecosystem; that is being asked, not assumed.
+what it asserts: PRESENT (comms boot 14:45 UTC; messages #38, #50, #51
+  posted), ACTIVE (two passes today), PRODUCTIVE on this pass (one
+  preservation ledger, one measured characterization with controls, one
+  consumer-search ledger, one broadcast question), VALID: the
+  characterization's seven controls pass; no usefulness claim is made.
+ruling in force (roles/Talos/prompts/2026-09-11_talos01_ruling/, sha256
+  1bb34f6b...): daemon NOT relaunched; Phase 1 NOT reconstructed; old
+  eval gate NOT meaningful; six May items CONSUMER-CONTINGENT DORMANT;
+  order of work TALOS-02 -> TALOS-10 -> re-premise from demand only ->
+  else characterize, record the negative search, move on.
+done this pass:
+  TALOS-02 DONE: shards copied byte-identical (cmp + sha256 on both
+    sides) to roles/Talos/ledgers/corpus_shards_2026-09-11/, stored
+    `-text`; originals untouched; state.json and events.jsonl beside them.
+    sha256 hephaestus_forge 59f31a41d084cda5..., prometheus_substrate
+    424910a89c8872e6...; 37,194,733 bytes; rows match the May manifest.
+  TALOS-03 + TALOS-11 DONE: roles/Talos/science/characterize_corpus.py
+    (7 controls) -> ledgers/CORPUS_CHARACTERIZATION_2026-09-11.{json,md}.
+    Headline: 0 exact duplicates; 8,216 template repeats; 75% of rows are
+    class methods without their class; 21% closed under builtins; 69% of
+    the corpus is the May forge's one tool template; the only
+    library-implementation family is prometheus_math_modules, 2,841 rows;
+    no row carries an ablation tag (the charter's filter never ran).
+  TALOS-10 OPENED: question #50 to every seat with the five contract
+    fields; protocol and reading survey in ledgers/CONSUMER_SEARCH_2026-09-11.md.
+    Reading survey found no live lane on main that names a code corpus
+    as an input; three candidate fits named for their owners to accept
+    or refuse (H3 development stream; Techne library learning; Hephaestus
+    Gen-1 record). Talos asserts none of them.
 workspace: F:\Prometheus-worktrees\talos-base-role, branch
-  talos/base-role-adopt-2026-09-11, base 56125e9e4 (origin/main at
-  creation; origin/main was 57533fa76 by the time of the commit).
-guard: git-dir F:/Prometheus/.git/worktrees/talos-base-role differs from
-  git-common-dir F:/Prometheus/.git (linked worktree; not canonical).
-  archaeon.workspace.receipt(): dirty False at boot.
-old agent: agents/talos/ (Aporia, 2026-05-23). Daemon DORMANT since
-  2026-05-30: PID 23168 in talos.pid is not running, no scheduled task,
-  170 ticks lifetime of which 160 NULL, corpus 24,847 rows in 2 of 5
-  streams, 0 consumers. Registered in roles/base-role/MONITORS.md.
-  The 37.2 MB of corpus shards are gitignored and exist ONLY in the
-  canonical checkout (TALOS-02 preserves them; not done today).
-monitors owned or fed: TalosCorpusDaemon (DORMANT). Nothing else.
-lane: none until TALOS-01. No code outside agents/talos/ and roles/Talos/
-  is touched by this seat; today's only edit outside them is the one
-  MONITORS.md row.
-blockers: TALOS-01 (operator). Recommendation, so the decision is not
-  deferred to the seat: do NOT relaunch the daemon or start Phase 1;
-  rule the six NEEDS_REPREMISE items PARKED as a block unless a 2.0 seat
-  names itself as a consumer of (spec -> implementation) pairs
-  (TALOS-10 would find out in under a day and costs nothing); preserve
-  the corpus (TALOS-02) regardless, because it is the only copy.
-next executable action (when released): TALOS-02 (preserve the shards
-  with a hashed ledger), then TALOS-03, TALOS-04, TALOS-08, TALOS-10.
+  talos/talos01-ruling-2026-09-11 from 5b9ddd540. Guard passes.
+monitors owned or fed: TalosCorpusDaemon (DORMANT; unchanged).
+blockers: none for the seat's own work. The consumer search waits on
+  other seats' syncs; it is not a blocker (ruling step 4 says what to do
+  if nothing comes back).
+next executable action: TALOS-04 (D-23 guard on daemon.py entry points,
+  so the fossil cannot be run from the canonical checkout by accident),
+  then TALOS-05, TALOS-08, TALOS-16, TALOS-19 while #50 collects
+  answers; TALOS-15 (question to Ergon) is subsumed by #50.
