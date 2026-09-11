@@ -186,4 +186,6 @@ def main(budget: int = 200_000):
 
 
 if __name__ == "__main__":
+    from hephaestus.workspace_guard import refuse_canonical  # D-23
+    refuse_canonical("semantic closure test")
     main(int(sys.argv[1]) if len(sys.argv) > 1 else 200_000)

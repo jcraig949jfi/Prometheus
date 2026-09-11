@@ -209,5 +209,7 @@ def _slim(r):
 
 
 if __name__ == "__main__":
+    from hephaestus.workspace_guard import refuse_canonical  # D-23
+    refuse_canonical("closure gauntlet")
     r = run(sys.argv[1], int(sys.argv[2]) if len(sys.argv) > 2 else 300_000)
     print(json.dumps(_slim(r), indent=1, default=str))

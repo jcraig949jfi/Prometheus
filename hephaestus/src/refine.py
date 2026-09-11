@@ -108,4 +108,6 @@ def main() -> None:
 
 
 if __name__ == "__main__":
+    from hephaestus.workspace_guard import refuse_canonical  # D-23
+    refuse_canonical("refine job")
     main()
