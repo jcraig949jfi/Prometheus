@@ -80,6 +80,14 @@ def test_no_ancestor_is_a_defect():
     assert "NO_ANCESTOR" in _codes(S.validate(rec))
 
 
+def test_split_grades_are_accepted_and_a_made_up_grade_is_not():
+    rec = _load("organ_positive.json")
+    rec["provenance"]["sources"] = [{"ref": "x", "grade": "T1-LOCAL"}, {"ref": "y", "grade": "T1-SOURCE"}]
+    assert S.validate(rec) == []
+    rec["provenance"]["sources"] = [{"ref": "x", "grade": "T0"}]
+    assert "BAD_GRADE" in _codes(S.validate(rec))
+
+
 def test_bad_kind_and_schema():
     assert _codes(S.validate({"record_kind": "SOUP"})) == ["BAD_KIND"]
     rec = _load("organ_positive.json")

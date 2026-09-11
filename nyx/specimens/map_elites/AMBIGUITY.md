@@ -50,6 +50,18 @@ crude keeper. This is testable in the niche_persistence world under the
 MIXED condition and is the pairwise experiment Nyx would propose to
 Archaeon if asked -- not a world she would build.
 
+## Operator ruling 2026-09-11 (post-cut direction), annotation
+
+Cuts A, B and C are EXPERIMENTAL ALTERNATIVES, not to be resolved by
+argument and not to be ranked by resemblance to the conventional
+description of the donor. Conditions in which they can be compared by
+downstream consequences are to be requested or preserved: the MIXED
+condition of pressure.map_elites.niche_persistence.v0 (keeper from one
+lineage, selector from another) is the standing request. hidden_axis
+stays held; the operator notes it may permit worlds where a trait has
+no present score value and becomes consequential after change --
+pressure for preserving optionality without prescribing how.
+
 ## Open ambiguities (unresolved, not to be resolved by tidiness)
 
 1. Is "one incumbent per key" a PRIMITIVE or a PARAMETERIZATION (k per

@@ -1,0 +1,31 @@
+{
+  "schema": "nyx.chop/0",
+  "record_kind": "PRESSURE",
+  "id": "pressure.dreamcoder.recurring_structure.v0",
+  "specimen": "dreamcoder",
+  "name": "recurring structure across a task stream under a fixed per-task budget",
+  "condition": "A world that presents tasks one after another, where later tasks share latent parts of their solutions with earlier ones but are never identical to them, and where every task must be solved within a fixed, small search budget or it pays. An organism may carry something forward between tasks, but what it carries is metered per byte and per step of use, and any carried thing that solves a later task by itself as a single step is detected and charged as if the task had been given away.",
+  "capability_rewarded": "Turning earlier solutions into a cheaper way of reaching later ones: making the later tasks' solutions short under whatever the organism carries, without carrying the later solutions themselves.",
+  "world_requirements": [
+    "a task family with an evaluator and a fixed base representation for solutions (the Proteus boolean substrate with grammar proteus.boolean_grammar.v0 is the live candidate)",
+    "a task ORDER such that later tasks' solutions share parts with earlier tasks' solutions: the ELIGIBILITY COUNT is the number of later tasks whose smallest solution shares a part of size >= k with some earlier task's solution, for a declared k, and it must be > 0 -- on the H1 split as it stands the analogous count is 0 (three phase-1 solutions of 2-4 nodes share no subexpression: Techne, T1-LOCAL), so THIS WORLD DOES NOT EXIST YET on that corpus and the count must be reported before any run",
+    "a per-task search budget small enough that later tasks are NOT solvable from the base representation within it but ARE solvable under a carried re-description -- both halves measured on a pilot before the horizon is frozen",
+    "a carry meter: bytes carried and per-use cost charged, with the expanded cost of any carried name counted (a name must not create free computation)",
+    "a leak detector: a carried item that solves a later task as a single step is charged as a given-away task (Techne's viv_library_leak is an existing implementation of exactly this check)",
+    "a seed and a replay"
+  ],
+  "vacuity_condition": "Vacuous if the eligibility count is 0 (no later task shares a part with an earlier one: then nothing carried can help and the pressure tests memory, not re-description); if the per-task budget already solves later tasks from the base representation (then carrying is unrewarded); if the carry meter does not bind (then carrying whole solutions is free and the leak detector is the only thing stopping a trivial win); or if later tasks are identical to earlier ones (then the capability rewarded is recall).",
+  "trivial_shortcuts": [
+    "carry every solution verbatim and pattern-match later tasks against them: closed by the carry meter and by the leak detector charging single-step solves",
+    "carry a name for a huge expression and call it once: closed by charging expanded cost per use",
+    "solve nothing and pay every task: allowed as the honest floor; the pilot must show the floor is worse than the cheat within the horizon or the world is not eligible",
+    "learn the task family's generator rather than its parts: allowed; it is a legitimate different adaptation, and the read-out must not privilege the shape of the intended solution"
+  ],
+  "cheat_control": "An organism handed, before the stream starts, the exact set of shared parts that the task generator used, as callable names: it must solve every eligible later task within budget and pay only the metered carry cost. If the world cannot give the cheat the ceiling, later tasks are not reachable through the shared parts and the world is not measuring re-description.",
+  "negative_control": "The same task family with the order shuffled so that no later task shares a part with any earlier one (eligibility count 0 by construction): the capability must confer nothing; an organism that carries re-descriptions must score no better than one that carries nothing, within the declared SE.",
+  "cost_class": "CPU_SCALE",
+  "organ_refs": ["organ.dreamcoder.library_compression.v0", "organ.dreamcoder.wake_sleep_alternation.v0"],
+  "expressible_without_organ": true,
+  "forbidden_terms": ["DreamCoder", "Dream Coder", "Stitch", "stitch_core", "wake-sleep", "wake sleep", "library", "DSL", "abstraction", "compression", "compress", "recognition model", "grammar growth"],
+  "notes": "Why this is not the organ restated: nothing above says the carried thing is a named function, a grammar, or a compressed corpus. Re-description could be a rewrite rule, a bias over moves, a cached partial evaluation, or something with no human name. The MINIMAL / HUMAN / MIXED / BROKEN / DECOY conditions (charter XIII): nothing carried / the compression organ carried as a frozen re-description step / compression plus a keeper from the MAP-Elites lineage / compression with the leak (targets included in its input) / a re-description that renames random subtrees. The most important fact in this record is the eligibility count: on Prometheus's only real solved corpus it is zero, which means the H0 'library' cells as designed would be a null with nothing eligible to fire. That is delivered to Archaeon beside this pressure."
+}
