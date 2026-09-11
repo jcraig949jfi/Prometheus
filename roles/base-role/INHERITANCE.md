@@ -42,6 +42,7 @@ Every role below carries the banner on its primary document(s):
 | Polyhymnia | RESPONSIBILITIES.md (already; seat reactivated 2026-09-11, self-service row per Archaeon ruling #39) |
 | Proteus | RESPONSIBILITIES.md (already) |
 | ScienceAdvisor | RESPONSIBILITIES.md (already) |
+| Skopos | RESPONSIBILITIES.md (created 2026-09-11 on the seat's adoption pass; the seat had no roles/ directory before and has never had a charter; agents/skopos/README.md is the March 2026 agent README, annotated by the seat file, not stamped) |
 | StructuralMathematician | RESPONSIBILITIES.md (already) |
 | Techne | RESPONSIBILITIES.md (already), CHARTER.md (already) |
 | Vivarium | RESPONSIBILITIES.md (already), CHARTER.md (already) |
@@ -92,6 +93,7 @@ BOOTSTRAP.md if the seat has one, else STARTUP.md, RESPONSIBILITIES.md, ROLE.md,
 | Polyhymnia | RESPONSIBILITIES.md |
 | Proteus | RESPONSIBILITIES.md |
 | ScienceAdvisor | RESPONSIBILITIES.md |
+| Skopos | RESPONSIBILITIES.md |
 | StructuralMathematician | RESPONSIBILITIES.md |
 | Techne | RESPONSIBILITIES.md |
 | Vivarium | RESPONSIBILITIES.md |
