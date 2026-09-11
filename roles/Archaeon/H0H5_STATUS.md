@@ -69,6 +69,14 @@ Baseline: `archaeon/docs/h0h5/BASELINE_2026-09-09.json`.
 
 
 
+
+## 2026-09-11 ~13:30: loop RESUMED (operator: "Let's resume our science for SFE")
+
+- Between the pause and now: roles/base-role (RESPONSIBILITIES, WORKING_CONTRACT, NORTH_STAR, MONITORS, INHERITANCE), the comms queue (D-24) with the agents table and presence from sync receipts, the reanimation rulings (D-25), and eight adoption passes absorbed. The loop now runs from the seat worktree F:\Prometheus-worktrees\archaeon-loop on branch archaeon/loop-2026-09-11 and syncs comms before and after every wake.
+- **H5-1**: 215 completed, 27 queued, **13 FAILED on the engine read timeout** (client 30 s vs engine busy overshoot ~33 s, Daedalus e4b05ae62) -- transport, not producer; re-issued under new request keys after completion; the fix is delegated to Daedalus and Vivarium through comms (message 29).
+- **C3-3**: still unissued -- Vivarium's half of the conformance gate (F-28) and Harmonia's 3b amendment / go on the preflight have not landed.
+- Apollo's H3 dead-stream control accepted as ARCH-26 (comms 20, claimed).
+
 ## 2026-09-11 ~05:00: LOOP PAUSED at the operator's request; workspace invariant D-23 issued and complied with
 
 - The canonical checkout F:\Prometheus was found on a branch that no longer exists on origin (vivarium/v0-2026-09-05) with 35 modified tracked files and 96 untracked files belonging to at least six seats, and with Vivarium's consumer worktree INSIDE it. Snapshot committed beside the missive.
