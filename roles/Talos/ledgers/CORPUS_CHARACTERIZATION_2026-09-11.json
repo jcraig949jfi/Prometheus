@@ -1,0 +1,3589 @@
+{
+ "generated_from": "roles/Talos/science/characterize_corpus.py",
+ "tree_head": "5b9ddd540",
+ "controls": {
+  "positive_exact_snippet_dups_detected": true,
+  "positive_ws_normalised_dups_detected": true,
+  "cheat_builtin_only_is_closed": true,
+  "cheat_unbound_name_is_open": true,
+  "method_and_test_and_stub_detected": true,
+  "parse_failure_is_a_fact": true,
+  "indented_method_parses_after_dedent_and_is_method": true,
+  "negative_no_dups_on_distinct_rows": true
+ },
+ "families_declared": [
+  [
+   "hephaestus_forge_tools",
+   "agents/hephaestus/forge"
+  ],
+  [
+   "hephaestus_humanreadable",
+   "agents/hephaestus/humanreadable/"
+  ],
+  [
+   "hephaestus_code_from_claude",
+   "agents/hephaestus/code_from_claude/"
+  ],
+  [
+   "hephaestus_other",
+   "agents/hephaestus/"
+  ],
+  [
+   "prometheus_math_tests",
+   "prometheus_math/tests/"
+  ],
+  [
+   "prometheus_math_modules",
+   "prometheus_math/"
+  ],
+  [
+   "charon_diagnostics",
+   "charon/diagnostics/"
+  ],
+  [
+   "theseus_scripts",
+   "theseus/scripts/"
+  ],
+  [
+   "scripts_agora_persist",
+   "scripts/"
+  ]
+ ],
+ "shards": {
+  "hephaestus_forge": {
+   "label": "hephaestus_forge",
+   "rows": 18671,
+   "duplication": {
+    "unique_fingerprints": 18671,
+    "rows_beyond_first_fingerprint": 0,
+    "unique_snippet_text": 18671,
+    "rows_beyond_first_snippet_text": 0,
+    "unique_snippet_ws_normalised": 18624,
+    "rows_beyond_first_ws_normalised": 47,
+    "unique_name_docstring_pairs": 10926,
+    "rows_beyond_first_name_docstring": 7745,
+    "largest_ws_normalised_cluster": 3
+   },
+   "provenance": {
+    "unique_source_files": 2516,
+    "rows_per_file": {
+     "min": 1,
+     "p10": 3,
+     "p50": 7,
+     "p90": 11,
+     "max": 63,
+     "mean": 7.42
+    },
+    "top_files": [
+     [
+      "agents/hephaestus/src/trap_generator_extended.py",
+      63
+     ],
+     [
+      "agents/hephaestus/src/hephaestus.py",
+      57
+     ],
+     [
+      "agents/hephaestus/code_from_claude/trap_generator_expanded.py",
+      36
+     ],
+     [
+      "agents/hephaestus/forge_v7/deep_reasoning_engine.py",
+      35
+     ],
+     [
+      "agents/hephaestus/forge_v7/ensemble_evaluator.py",
+      32
+     ],
+     [
+      "agents/hephaestus/src/trap_generator.py",
+      29
+     ],
+     [
+      "agents/hephaestus/src/trap_generator_tier2.py",
+      29
+     ],
+     [
+      "agents/hephaestus/forge_v7/frame_e_v3_definitive.py",
+      28
+     ]
+    ],
+    "top_dirs_depth3": [
+     [
+      "agents/hephaestus/humanreadable",
+      12638
+     ],
+     [
+      "agents/hephaestus/forge",
+      2554
+     ],
+     [
+      "agents/hephaestus/scrap",
+      1021
+     ],
+     [
+      "agents/hephaestus/forge_v7",
+      648
+     ],
+     [
+      "agents/hephaestus/forge_v3",
+      472
+     ],
+     [
+      "agents/hephaestus/src",
+      422
+     ],
+     [
+      "agents/hephaestus/forge_v2",
+      362
+     ],
+     [
+      "agents/hephaestus/forge_v4",
+      325
+     ],
+     [
+      "agents/hephaestus/forge_v9",
+      82
+     ],
+     [
+      "agents/hephaestus/code_from_claude",
+      46
+     ],
+     [
+      "agents/hephaestus/tier_specialists",
+      38
+     ],
+     [
+      "agents/hephaestus/forge_v8",
+      35
+     ]
+    ],
+    "tree_check": {
+     "files_present_on_tree": 2452,
+     "files_absent_from_tree": 64,
+     "rows_whose_file_is_present": 18128,
+     "rows_whose_file_is_absent": 543
+    }
+   },
+   "representation": {
+    "ast_parses_raw": 628,
+    "indented_extracted_from_class_or_nested_scope": 18043,
+    "ast_parses_after_dedent": 18670,
+    "ast_parse_ratio_after_dedent": 0.9999,
+    "is_function_def": 18670,
+    "is_method_self_or_cls": 17494,
+    "is_test_function": 10,
+    "is_stub_pass_or_empty": 17,
+    "has_value_return": 16607,
+    "has_docstring_flag_true": 11904,
+    "docstring_nonempty": 11904,
+    "body_lines": {
+     "min": 3,
+     "p10": 5,
+     "p50": 19,
+     "p90": 49,
+     "max": 197,
+     "mean": 24.31
+    },
+    "snippet_chars": {
+     "min": 69,
+     "p10": 262,
+     "p50": 844,
+     "p90": 2223,
+     "max": 14092,
+     "mean": 1091.28
+    },
+    "docstring_chars": {
+     "min": 0,
+     "p10": 0,
+     "p50": 45,
+     "p90": 124,
+     "max": 8537,
+     "mean": 50.55
+    },
+    "free_names_per_snippet": {
+     "min": 0,
+     "p10": 0,
+     "p50": 1,
+     "p90": 3,
+     "max": 20,
+     "mean": 1.32
+    },
+    "closed_under_builtins": 4763,
+    "closed_under_builtins_ratio": 0.2551,
+    "top_free_names": [
+     [
+      "re",
+      5090
+     ],
+     [
+      "List",
+      4047
+     ],
+     [
+      "np",
+      3976
+     ],
+     [
+      "Dict",
+      3859
+     ],
+     [
+      "zlib",
+      1480
+     ],
+     [
+      "Tuple",
+      1346
+     ],
+     [
+      "math",
+      692
+     ],
+     [
+      "Any",
+      358
+     ],
+     [
+      "random",
+      232
+     ],
+     [
+      "Optional",
+      213
+     ],
+     [
+      "_h",
+      126
+     ],
+     [
+      "_ns",
+      109
+     ],
+     [
+      "defaultdict",
+      101
+     ],
+     [
+      "Set",
+      100
+     ],
+     [
+      "hashlib",
+      61
+     ]
+    ]
+   },
+   "diversity": {
+    "distinct_docstrings": 9544,
+    "top_docstrings": [
+     [
+      "Normalized Compression Distance using zlib.",
+      435
+     ],
+     [
+      "Normalized Compression Distance.",
+      170
+     ],
+     [
+      "Normalized Compression Distance as a tiebreaker.",
+      104
+     ],
+     [
+      "Return confidence 0-1.",
+      67
+     ],
+     [
+      "Normalized Compression Distance as tiebreaker.",
+      66
+     ],
+     [
+      "Normalized Compression Distance heuristic.",
+      57
+     ],
+     [
+      "Calculate Normalized Compression Distance.",
+      34
+     ],
+     [
+      "Returns confidence 0-1 based on structural alignment.",
+      27
+     ],
+     [
+      "Extract structural features from text.",
+      26
+     ],
+     [
+      "Calculates Normalized Compression Distance.",
+      21
+     ]
+    ],
+    "top10_docstring_share": 0.0539,
+    "distinct_function_names": 3783,
+    "top_function_names": [
+     [
+      "evaluate",
+      2264
+     ],
+     [
+      "confidence",
+      2126
+     ],
+     [
+      "__init__",
+      1858
+     ],
+     [
+      "_meta_confidence",
+      775
+     ],
+     [
+      "_ncd",
+      586
+     ],
+     [
+      "_compute_ncd",
+      367
+     ],
+     [
+      "_extract_features",
+      325
+     ],
+     [
+      "_extract_structure",
+      230
+     ],
+     [
+      "_ncd_score",
+      217
+     ],
+     [
+      "_extract_numbers",
+      203
+     ],
+     [
+      "_structural_score",
+      193
+     ],
+     [
+      "_compute_free_energy",
+      167
+     ],
+     [
+      "_ncd_distance",
+      152
+     ],
+     [
+      "_structural_parse",
+      138
+     ],
+     [
+      "_build_graph",
+      134
+     ]
+    ]
+   },
+   "identity": {
+    "path": "roles/Talos/ledgers/corpus_shards_2026-09-11/hephaestus_forge.jsonl",
+    "bytes": 28811205,
+    "sha256": "59f31a41d084cda5b4b3df51fc8ff79b6b022d4f943feaf359866e24752c3d67",
+    "crlf_rows": 18671,
+    "manifest_2026_05_30_claimed_rows": 18671
+   }
+  },
+  "prometheus_substrate": {
+   "label": "prometheus_substrate",
+   "rows": 6176,
+   "duplication": {
+    "unique_fingerprints": 6176,
+    "rows_beyond_first_fingerprint": 0,
+    "unique_snippet_text": 6176,
+    "rows_beyond_first_snippet_text": 0,
+    "unique_snippet_ws_normalised": 6176,
+    "rows_beyond_first_ws_normalised": 0,
+    "unique_name_docstring_pairs": 5716,
+    "rows_beyond_first_name_docstring": 460,
+    "largest_ws_normalised_cluster": 1
+   },
+   "provenance": {
+    "unique_source_files": 420,
+    "rows_per_file": {
+     "min": 1,
+     "p10": 3,
+     "p50": 12,
+     "p90": 27,
+     "max": 185,
+     "mean": 14.7
+    },
+    "top_files": [
+     [
+      "prometheus_math/tests/test_edge_case_gallery.py",
+      185
+     ],
+     [
+      "prometheus_math/tests/test_edge_cases.py",
+      142
+     ],
+     [
+      "prometheus_math/tests/test_substrate_generation_tier_1.py",
+      118
+     ],
+     [
+      "prometheus_math/tests/test_number_theory_properties.py",
+      104
+     ],
+     [
+      "prometheus_math/tests/test_elliptic_curves_properties.py",
+      80
+     ],
+     [
+      "prometheus_math/tests/test_pivot_bughunt.py",
+      59
+     ],
+     [
+      "prometheus_math/databases/tests/test_atlas.py",
+      54
+     ],
+     [
+      "prometheus_math/databases/tests/test_mahler.py",
+      48
+     ]
+    ],
+    "top_dirs_depth3": [
+     [
+      "prometheus_math/databases/tests",
+      328
+     ],
+     [
+      "prometheus_math/research/tests",
+      213
+     ],
+     [
+      "prometheus_math/tests/test_edge_case_gallery.py",
+      185
+     ],
+     [
+      "prometheus_math/tests/test_edge_cases.py",
+      142
+     ],
+     [
+      "prometheus_math/tests/test_substrate_generation_tier_1.py",
+      118
+     ],
+     [
+      "prometheus_math/tests/test_number_theory_properties.py",
+      104
+     ],
+     [
+      "prometheus_math/tests/test_elliptic_curves_properties.py",
+      80
+     ],
+     [
+      "prometheus_math/recipes/persistent_homology",
+      62
+     ],
+     [
+      "prometheus_math/tests/test_pivot_bughunt.py",
+      59
+     ],
+     [
+      "prometheus_math/viz/tests",
+      54
+     ],
+     [
+      "prometheus_math/statistics_distributions.py",
+      45
+     ],
+     [
+      "prometheus_math/tests/test_composition.py",
+      40
+     ]
+    ],
+    "tree_check": {
+     "files_present_on_tree": 419,
+     "files_absent_from_tree": 1,
+     "rows_whose_file_is_present": 6166,
+     "rows_whose_file_is_absent": 10
+    }
+   },
+   "representation": {
+    "ast_parses_raw": 4849,
+    "indented_extracted_from_class_or_nested_scope": 1327,
+    "ast_parses_after_dedent": 6167,
+    "ast_parse_ratio_after_dedent": 0.9985,
+    "is_function_def": 6167,
+    "is_method_self_or_cls": 1175,
+    "is_test_function": 3488,
+    "is_stub_pass_or_empty": 0,
+    "has_value_return": 2528,
+    "has_docstring_flag_true": 4512,
+    "docstring_nonempty": 4512,
+    "body_lines": {
+     "min": 3,
+     "p10": 4,
+     "p50": 12,
+     "p90": 47,
+     "max": 199,
+     "mean": 20.71
+    },
+    "snippet_chars": {
+     "min": 68,
+     "p10": 187,
+     "p50": 515,
+     "p90": 1739,
+     "max": 9823,
+     "mean": 833.51
+    },
+    "docstring_chars": {
+     "min": 0,
+     "p10": 0,
+     "p50": 70,
+     "p90": 339,
+     "max": 2216,
+     "mean": 142.68
+    },
+    "free_names_per_snippet": {
+     "min": 0,
+     "p10": 1,
+     "p50": 2,
+     "p90": 6,
+     "max": 23,
+     "mean": 2.63
+    },
+    "closed_under_builtins": 533,
+    "closed_under_builtins_ratio": 0.0864,
+    "top_free_names": [
+     [
+      "np",
+      899
+     ],
+     [
+      "pytest",
+      725
+     ],
+     [
+      "Any",
+      598
+     ],
+     [
+      "Dict",
+      551
+     ],
+     [
+      "List",
+      488
+     ],
+     [
+      "Optional",
+      477
+     ],
+     [
+      "math",
+      417
+     ],
+     [
+      "pm",
+      366
+     ],
+     [
+      "Tuple",
+      264
+     ],
+     [
+      "Sequence",
+      257
+     ],
+     [
+      "json",
+      243
+     ],
+     [
+      "Path",
+      181
+     ],
+     [
+      "time",
+      170
+     ],
+     [
+      "REPO",
+      130
+     ],
+     [
+      "mpmath",
+      118
+     ]
+    ]
+   },
+   "diversity": {
+    "distinct_docstrings": 4471,
+    "top_docstrings": [
+     [
+      "An invalid ``split`` value is rejected at construction. Edge: defensive contract.",
+      5
+     ],
+     [
+      "Regression: pre-existing per-env info keys survive Tier 3.",
+      5
+     ],
+     [
+      "Path to the gzipped JSON cache of the corpus.",
+      4
+     ],
+     [
+      "step() must populate ``elapsed_seconds`` (>0) and ``oracle_calls`` (>=1) in the returned i",
+      4
+     ],
+     [
+      "Diagnostics for the in-memory cache.",
+      3
+     ],
+     [
+      "Constructing an env with an empty corpus must raise ValueError. Edge: defensive contract.",
+      3
+     ],
+     [
+      "Predicting a bin outside [0, N_BINS) is rejected. Edge: action-space contract.",
+      3
+     ],
+     [
+      "obstruction_env.ObstructionEnv \u2014 Cat 1 \u2014 regression.",
+      3
+     ],
+     [
+      "Register the env with gymnasium if available; return its id or None.",
+      2
+     ],
+     [
+      "Cherry-pick the fields we want to log per pipeline record.",
+      2
+     ]
+    ],
+    "top10_docstring_share": 0.0055,
+    "distinct_function_names": 5448,
+    "top_function_names": [
+     [
+      "main",
+      87
+     ],
+     [
+      "run",
+      51
+     ],
+     [
+      "__init__",
+      24
+     ],
+     [
+      "test_empty_raises",
+      19
+     ],
+     [
+      "step",
+      18
+     ],
+     [
+      "reset",
+      15
+     ],
+     [
+      "lane_11_canon_fuzz_smoke",
+      14
+     ],
+     [
+      "_obs",
+      13
+     ],
+     [
+      "test_property_determinism_with_fixed_seed",
+      12
+     ],
+     [
+      "to_dict",
+      9
+     ],
+     [
+      "train_reinforce",
+      9
+     ],
+     [
+      "probe",
+      9
+     ],
+     [
+      "train_random",
+      8
+     ],
+     [
+      "train_ppo",
+      8
+     ],
+     [
+      "go",
+      8
+     ]
+    ]
+   },
+   "identity": {
+    "path": "roles/Talos/ledgers/corpus_shards_2026-09-11/prometheus_substrate.jsonl",
+    "bytes": 8383528,
+    "sha256": "424910a89c8872e625f2e41137575e30961b0c62194abc1f291e086dca8ae265",
+    "crlf_rows": 6176,
+    "manifest_2026_05_30_claimed_rows": 6176
+   }
+  }
+ },
+ "families": {
+  "hephaestus_humanreadable": {
+   "label": "hephaestus_humanreadable",
+   "rows": 12638,
+   "duplication": {
+    "unique_fingerprints": 12638,
+    "rows_beyond_first_fingerprint": 0,
+    "unique_snippet_text": 12638,
+    "rows_beyond_first_snippet_text": 0,
+    "unique_snippet_ws_normalised": 12622,
+    "rows_beyond_first_ws_normalised": 16,
+    "unique_name_docstring_pairs": 7742,
+    "rows_beyond_first_name_docstring": 4896,
+    "largest_ws_normalised_cluster": 2
+   },
+   "provenance": {
+    "unique_source_files": 1531,
+    "rows_per_file": {
+     "min": 1,
+     "p10": 6,
+     "p50": 8,
+     "p90": 11,
+     "max": 24,
+     "mean": 8.25
+    },
+    "top_files": [
+     [
+      "agents/hephaestus/humanreadable/Gauge_Theory---Monte_Carlo_Tree_Search---Free_Energy_Principle/tool.py",
+      24
+     ],
+     [
+      "agents/hephaestus/humanreadable/Monte_Carlo_Tree_Search---Falsificationism---Adaptive_Control/tool.py",
+      22
+     ],
+     [
+      "agents/hephaestus/humanreadable/Renormalization---Ecosystem_Dynamics---Nash_Equilibrium/tool.py",
+      21
+     ],
+     [
+      "agents/hephaestus/humanreadable/Compressed_Sensing---Compositionality---Mechanism_Design/tool.py",
+      20
+     ],
+     [
+      "agents/hephaestus/humanreadable/Monte_Carlo_Tree_Search---Falsificationism---Kolmogorov_Complexity/tool.py",
+      20
+     ],
+     [
+      "agents/hephaestus/humanreadable/Monte_Carlo_Tree_Search---Swarm_Intelligence---Mechanism_Design/tool.py",
+      20
+     ],
+     [
+      "agents/hephaestus/humanreadable/Renormalization---Multi-Armed_Bandits---Property-Based_Testing/tool.py",
+      20
+     ],
+     [
+      "agents/hephaestus/humanreadable/Fractal_Geometry---Epigenetics---Kolmogorov_Complexity/tool.py",
+      19
+     ]
+    ],
+    "top_dirs_depth3": [
+     [
+      "agents/hephaestus/humanreadable",
+      12638
+     ]
+    ],
+    "tree_check": {
+     "files_present_on_tree": 1531,
+     "files_absent_from_tree": 0,
+     "rows_whose_file_is_present": 12638,
+     "rows_whose_file_is_absent": 0
+    }
+   },
+   "representation": {
+    "ast_parses_raw": 29,
+    "indented_extracted_from_class_or_nested_scope": 12609,
+    "ast_parses_after_dedent": 12637,
+    "ast_parse_ratio_after_dedent": 0.9999,
+    "is_function_def": 12637,
+    "is_method_self_or_cls": 12436,
+    "is_test_function": 0,
+    "is_stub_pass_or_empty": 10,
+    "has_value_return": 11202,
+    "has_docstring_flag_true": 8627,
+    "docstring_nonempty": 8627,
+    "body_lines": {
+     "min": 3,
+     "p10": 6,
+     "p50": 21,
+     "p90": 49,
+     "max": 153,
+     "mean": 24.88
+    },
+    "snippet_chars": {
+     "min": 71,
+     "p10": 292,
+     "p50": 897,
+     "p90": 2215,
+     "max": 8636,
+     "mean": 1098.4
+    },
+    "docstring_chars": {
+     "min": 0,
+     "p10": 0,
+     "p50": 47,
+     "p90": 119,
+     "max": 8537,
+     "mean": 51.4
+    },
+    "free_names_per_snippet": {
+     "min": 0,
+     "p10": 0,
+     "p50": 1,
+     "p90": 3,
+     "max": 8,
+     "mean": 1.29
+    },
+    "closed_under_builtins": 3086,
+    "closed_under_builtins_ratio": 0.2442,
+    "top_free_names": [
+     [
+      "re",
+      3492
+     ],
+     [
+      "np",
+      3178
+     ],
+     [
+      "List",
+      3119
+     ],
+     [
+      "Dict",
+      2895
+     ],
+     [
+      "Tuple",
+      1134
+     ],
+     [
+      "zlib",
+      931
+     ],
+     [
+      "math",
+      433
+     ],
+     [
+      "Any",
+      283
+     ],
+     [
+      "Optional",
+      134
+     ],
+     [
+      "Set",
+      92
+     ],
+     [
+      "random",
+      74
+     ],
+     [
+      "defaultdict",
+      50
+     ],
+     [
+      "hashlib",
+      31
+     ],
+     [
+      "self",
+      26
+     ],
+     [
+      "nodes",
+      21
+     ]
+    ]
+   },
+   "diversity": {
+    "distinct_docstrings": 6913,
+    "top_docstrings": [
+     [
+      "Normalized Compression Distance using zlib.",
+      265
+     ],
+     [
+      "Normalized Compression Distance.",
+      140
+     ],
+     [
+      "Normalized Compression Distance as a tiebreaker.",
+      75
+     ],
+     [
+      "Normalized Compression Distance as tiebreaker.",
+      56
+     ],
+     [
+      "Return confidence 0-1.",
+      55
+     ],
+     [
+      "Normalized Compression Distance heuristic.",
+      45
+     ],
+     [
+      "Calculate Normalized Compression Distance.",
+      23
+     ],
+     [
+      "Extract structural features from text.",
+      22
+     ],
+     [
+      "Returns confidence 0-1 based on structural alignment.",
+      22
+     ],
+     [
+      "Returns confidence 0-1. Caps based on meta-cognitive analysis of the prompt.",
+      20
+     ]
+    ],
+    "top10_docstring_share": 0.0572,
+    "distinct_function_names": 2493,
+    "top_function_names": [
+     [
+      "evaluate",
+      1515
+     ],
+     [
+      "confidence",
+      1486
+     ],
+     [
+      "__init__",
+      1337
+     ],
+     [
+      "_meta_confidence",
+      607
+     ],
+     [
+      "_ncd",
+      366
+     ],
+     [
+      "_extract_features",
+      251
+     ],
+     [
+      "_compute_ncd",
+      246
+     ],
+     [
+      "_ncd_score",
+      163
+     ],
+     [
+      "_extract_structure",
+      150
+     ],
+     [
+      "_compute_free_energy",
+      128
+     ],
+     [
+      "_build_graph",
+      127
+     ],
+     [
+      "_ncd_distance",
+      121
+     ],
+     [
+      "_extract_numbers",
+      108
+     ],
+     [
+      "_extract_propositions",
+      101
+     ],
+     [
+      "_score_candidate",
+      100
+     ]
+    ]
+   }
+  },
+  "hephaestus_forge_tools": {
+   "label": "hephaestus_forge_tools",
+   "rows": 4503,
+   "duplication": {
+    "unique_fingerprints": 4503,
+    "rows_beyond_first_fingerprint": 0,
+    "unique_snippet_text": 4503,
+    "rows_beyond_first_snippet_text": 0,
+    "unique_snippet_ws_normalised": 4488,
+    "rows_beyond_first_ws_normalised": 15,
+    "unique_name_docstring_pairs": 2336,
+    "rows_beyond_first_name_docstring": 2167,
+    "largest_ws_normalised_cluster": 2
+   },
+   "provenance": {
+    "unique_source_files": 815,
+    "rows_per_file": {
+     "min": 1,
+     "p10": 1,
+     "p50": 6,
+     "p90": 9,
+     "max": 35,
+     "mean": 5.53
+    },
+    "top_files": [
+     [
+      "agents/hephaestus/forge_v7/deep_reasoning_engine.py",
+      35
+     ],
+     [
+      "agents/hephaestus/forge_v7/ensemble_evaluator.py",
+      32
+     ],
+     [
+      "agents/hephaestus/forge_v7/frame_e_v3_definitive.py",
+      28
+     ],
+     [
+      "agents/hephaestus/forge_v7/category_theory_x_phase_transitions_x_theory_of_mind.py",
+      25
+     ],
+     [
+      "agents/hephaestus/forge_v7/phase_transitions_x_criticality_x_neuromodulation.py",
+      23
+     ],
+     [
+      "agents/hephaestus/forge_v3/_caitl_parsers.py",
+      21
+     ],
+     [
+      "agents/hephaestus/forge_v7/frame_e_constructive_reasoner.py",
+      20
+     ],
+     [
+      "agents/hephaestus/forge_v7/bayesian_inference_x_monte_carlo_tree_search_x_evolution.py",
+      19
+     ]
+    ],
+    "top_dirs_depth3": [
+     [
+      "agents/hephaestus/forge",
+      2554
+     ],
+     [
+      "agents/hephaestus/forge_v7",
+      648
+     ],
+     [
+      "agents/hephaestus/forge_v3",
+      472
+     ],
+     [
+      "agents/hephaestus/forge_v2",
+      362
+     ],
+     [
+      "agents/hephaestus/forge_v4",
+      325
+     ],
+     [
+      "agents/hephaestus/forge_v9",
+      82
+     ],
+     [
+      "agents/hephaestus/forge_v8",
+      35
+     ],
+     [
+      "agents/hephaestus/forge_v5",
+      19
+     ],
+     [
+      "agents/hephaestus/forge_v6",
+      6
+     ]
+    ],
+    "tree_check": {
+     "files_present_on_tree": 815,
+     "files_absent_from_tree": 0,
+     "rows_whose_file_is_present": 4503,
+     "rows_whose_file_is_absent": 0
+    }
+   },
+   "representation": {
+    "ast_parses_raw": 222,
+    "indented_extracted_from_class_or_nested_scope": 4281,
+    "ast_parses_after_dedent": 4503,
+    "ast_parse_ratio_after_dedent": 1.0,
+    "is_function_def": 4503,
+    "is_method_self_or_cls": 3924,
+    "is_test_function": 0,
+    "is_stub_pass_or_empty": 7,
+    "has_value_return": 4086,
+    "has_docstring_flag_true": 2090,
+    "docstring_nonempty": 2090,
+    "body_lines": {
+     "min": 3,
+     "p10": 4,
+     "p50": 13,
+     "p90": 46,
+     "max": 197,
+     "mean": 20.8
+    },
+    "snippet_chars": {
+     "min": 69,
+     "p10": 212,
+     "p50": 609,
+     "p90": 2149,
+     "max": 14092,
+     "mean": 1007.37
+    },
+    "docstring_chars": {
+     "min": 0,
+     "p10": 0,
+     "p50": 0,
+     "p90": 123,
+     "max": 735,
+     "mean": 40.53
+    },
+    "free_names_per_snippet": {
+     "min": 0,
+     "p10": 0,
+     "p50": 1,
+     "p90": 3,
+     "max": 20,
+     "mean": 1.33
+    },
+    "closed_under_builtins": 1251,
+    "closed_under_builtins_ratio": 0.2778,
+    "top_free_names": [
+     [
+      "re",
+      1160
+     ],
+     [
+      "Dict",
+      777
+     ],
+     [
+      "np",
+      735
+     ],
+     [
+      "List",
+      712
+     ],
+     [
+      "zlib",
+      440
+     ],
+     [
+      "math",
+      226
+     ],
+     [
+      "Tuple",
+      185
+     ],
+     [
+      "_h",
+      126
+     ],
+     [
+      "_ns",
+      109
+     ],
+     [
+      "Any",
+      68
+     ],
+     [
+      "_NUM",
+      51
+     ],
+     [
+      "_N",
+      44
+     ],
+     [
+      "_struct",
+      38
+     ],
+     [
+      "Optional",
+      37
+     ],
+     [
+      "defaultdict",
+      37
+     ]
+    ]
+   },
+   "diversity": {
+    "distinct_docstrings": 1780,
+    "top_docstrings": [
+     [
+      "Normalized Compression Distance using zlib.",
+      132
+     ],
+     [
+      "Normalized Compression Distance as a tiebreaker.",
+      19
+     ],
+     [
+      "Normalized Compression Distance.",
+      16
+     ],
+     [
+      "Return confidence 0-1.",
+      12
+     ],
+     [
+      "Calculate Normalized Compression Distance.",
+      10
+     ],
+     [
+      "Extract floating point numbers from text.",
+      8
+     ],
+     [
+      "Extract logical features: negations, comparatives, conditionals, numbers.",
+      7
+     ],
+     [
+      "Extract logical constraints: negations, comparatives, numbers.",
+      6
+     ],
+     [
+      "Extracts logical features: negations, comparatives, conditionals, numbers.",
+      6
+     ],
+     [
+      "Extract structural features: negations, comparatives, conditionals, numbers.",
+      6
+     ]
+    ],
+    "top10_docstring_share": 0.0493,
+    "distinct_function_names": 1200,
+    "top_function_names": [
+     [
+      "evaluate",
+      610
+     ],
+     [
+      "confidence",
+      501
+     ],
+     [
+      "__init__",
+      396
+     ],
+     [
+      "_ncd",
+      202
+     ],
+     [
+      "_compute_ncd",
+      95
+     ],
+     [
+      "_secondary",
+      89
+     ],
+     [
+      "_extract_features",
+      67
+     ],
+     [
+      "_extract_structure",
+      65
+     ],
+     [
+      "_extract_numbers",
+      53
+     ],
+     [
+      "_structural_score",
+      49
+     ],
+     [
+      "_score",
+      49
+     ],
+     [
+      "_compute_free_energy",
+      38
+     ],
+     [
+      "_meta_confidence",
+      38
+     ],
+     [
+      "_struct",
+      37
+     ],
+     [
+      "_structural_parse",
+      35
+     ]
+    ]
+   }
+  },
+  "prometheus_math_tests": {
+   "label": "prometheus_math_tests",
+   "rows": 2959,
+   "duplication": {
+    "unique_fingerprints": 2959,
+    "rows_beyond_first_fingerprint": 0,
+    "unique_snippet_text": 2959,
+    "rows_beyond_first_snippet_text": 0,
+    "unique_snippet_ws_normalised": 2959,
+    "rows_beyond_first_ws_normalised": 0,
+    "unique_name_docstring_pairs": 2827,
+    "rows_beyond_first_name_docstring": 132,
+    "largest_ws_normalised_cluster": 1
+   },
+   "provenance": {
+    "unique_source_files": 114,
+    "rows_per_file": {
+     "min": 6,
+     "p10": 13,
+     "p50": 20,
+     "p90": 33,
+     "max": 185,
+     "mean": 25.96
+    },
+    "top_files": [
+     [
+      "prometheus_math/tests/test_edge_case_gallery.py",
+      185
+     ],
+     [
+      "prometheus_math/tests/test_edge_cases.py",
+      142
+     ],
+     [
+      "prometheus_math/tests/test_substrate_generation_tier_1.py",
+      118
+     ],
+     [
+      "prometheus_math/tests/test_number_theory_properties.py",
+      104
+     ],
+     [
+      "prometheus_math/tests/test_elliptic_curves_properties.py",
+      80
+     ],
+     [
+      "prometheus_math/tests/test_pivot_bughunt.py",
+      59
+     ],
+     [
+      "prometheus_math/tests/test_composition.py",
+      40
+     ],
+     [
+      "prometheus_math/tests/test_statistics_distributions.py",
+      38
+     ]
+    ],
+    "top_dirs_depth3": [
+     [
+      "prometheus_math/tests/test_edge_case_gallery.py",
+      185
+     ],
+     [
+      "prometheus_math/tests/test_edge_cases.py",
+      142
+     ],
+     [
+      "prometheus_math/tests/test_substrate_generation_tier_1.py",
+      118
+     ],
+     [
+      "prometheus_math/tests/test_number_theory_properties.py",
+      104
+     ],
+     [
+      "prometheus_math/tests/test_elliptic_curves_properties.py",
+      80
+     ],
+     [
+      "prometheus_math/tests/test_pivot_bughunt.py",
+      59
+     ],
+     [
+      "prometheus_math/tests/test_composition.py",
+      40
+     ],
+     [
+      "prometheus_math/tests/test_statistics_distributions.py",
+      38
+     ],
+     [
+      "prometheus_math/tests/test_topology_properties.py",
+      38
+     ],
+     [
+      "prometheus_math/tests/test_stability_adapters.py",
+      36
+     ],
+     [
+      "prometheus_math/tests/test_partitions.py",
+      34
+     ],
+     [
+      "prometheus_math/tests/test_crypto_primitives.py",
+      33
+     ]
+    ],
+    "tree_check": {
+     "files_present_on_tree": 114,
+     "files_absent_from_tree": 0,
+     "rows_whose_file_is_present": 2959,
+     "rows_whose_file_is_absent": 0
+    }
+   },
+   "representation": {
+    "ast_parses_raw": 2004,
+    "indented_extracted_from_class_or_nested_scope": 955,
+    "ast_parses_after_dedent": 2950,
+    "ast_parse_ratio_after_dedent": 0.997,
+    "is_function_def": 2950,
+    "is_method_self_or_cls": 909,
+    "is_test_function": 2799,
+    "is_stub_pass_or_empty": 0,
+    "has_value_return": 171,
+    "has_docstring_flag_true": 2168,
+    "docstring_nonempty": 2168,
+    "body_lines": {
+     "min": 3,
+     "p10": 4,
+     "p50": 10,
+     "p90": 22,
+     "max": 84,
+     "mean": 11.73
+    },
+    "snippet_chars": {
+     "min": 68,
+     "p10": 173,
+     "p50": 416,
+     "p90": 968,
+     "max": 3349,
+     "mean": 510.86
+    },
+    "docstring_chars": {
+     "min": 0,
+     "p10": 0,
+     "p50": 68,
+     "p90": 255,
+     "max": 1061,
+     "mean": 108.25
+    },
+    "free_names_per_snippet": {
+     "min": 0,
+     "p10": 1,
+     "p50": 2,
+     "p90": 4,
+     "max": 11,
+     "mean": 1.93
+    },
+    "closed_under_builtins": 283,
+    "closed_under_builtins_ratio": 0.0959,
+    "top_free_names": [
+     [
+      "pytest",
+      606
+     ],
+     [
+      "np",
+      362
+     ],
+     [
+      "pm",
+      345
+     ],
+     [
+      "math",
+      198
+     ],
+     [
+      "mpmath",
+      76
+     ],
+     [
+      "x",
+      54
+     ],
+     [
+      "N",
+      54
+     ],
+     [
+      "KillComponent",
+      47
+     ],
+     [
+      "LEHMER_M",
+      44
+     ],
+     [
+      "LEHMER_COEFFS",
+      37
+     ],
+     [
+      "Path",
+      36
+     ],
+     [
+      "KillVector",
+      36
+     ],
+     [
+      "y",
+      35
+     ],
+     [
+      "ARSENAL_REGISTRY",
+      34
+     ],
+     [
+      "DiscoveryEnvV2",
+      31
+     ]
+    ]
+   },
+   "diversity": {
+    "distinct_docstrings": 2143,
+    "top_docstrings": [
+     [
+      "An invalid ``split`` value is rejected at construction. Edge: defensive contract.",
+      5
+     ],
+     [
+      "Regression: pre-existing per-env info keys survive Tier 3.",
+      5
+     ],
+     [
+      "step() must populate ``elapsed_seconds`` (>0) and ``oracle_calls`` (>=1) in the returned i",
+      4
+     ],
+     [
+      "Constructing an env with an empty corpus must raise ValueError. Edge: defensive contract.",
+      3
+     ],
+     [
+      "Predicting a bin outside [0, N_BINS) is rejected. Edge: action-space contract.",
+      3
+     ],
+     [
+      "obstruction_env.ObstructionEnv \u2014 Cat 1 \u2014 regression.",
+      3
+     ],
+     [
+      "prec < 1 raises ValueError.",
+      2
+     ],
+     [
+      "A 200-episode REINFORCE run on the small corpus produces: - a numpy rewards array of lengt",
+      2
+     ],
+     [
+      "``info[\"kill_vector\"]`` is a dict with at least one component.",
+      2
+     ],
+     [
+      "``info[\"evidence_field\"]`` carries the 6 axes of EvidenceField.",
+      2
+     ]
+    ],
+    "top10_docstring_share": 0.0105,
+    "distinct_function_names": 2757,
+    "top_function_names": [
+     [
+      "test_empty_raises",
+      19
+     ],
+     [
+      "test_property_determinism_with_fixed_seed",
+      12
+     ],
+     [
+      "test_edge_action_out_of_range",
+      7
+     ],
+     [
+      "small_corpus",
+      6
+     ],
+     [
+      "test_property_obs_shape_consistent",
+      6
+     ],
+     [
+      "test_edge_empty_corpus_raises_value_error",
+      6
+     ],
+     [
+      "test_edge_unknown_split_raises",
+      6
+     ],
+     [
+      "test_step_info_existing_keys_still_present",
+      6
+     ],
+     [
+      "small_env",
+      5
+     ],
+     [
+      "worker",
+      5
+     ],
+     [
+      "test_singleton_constant",
+      5
+     ],
+     [
+      "test_empty_string_raises",
+      5
+     ],
+     [
+      "test_malformed_p_negative",
+      5
+     ],
+     [
+      "test_malformed_p_composite",
+      5
+     ],
+     [
+      "test_empty_label_raises",
+      5
+     ]
+    ]
+   }
+  },
+  "prometheus_math_modules": {
+   "label": "prometheus_math_modules",
+   "rows": 2841,
+   "duplication": {
+    "unique_fingerprints": 2841,
+    "rows_beyond_first_fingerprint": 0,
+    "unique_snippet_text": 2841,
+    "rows_beyond_first_snippet_text": 0,
+    "unique_snippet_ws_normalised": 2841,
+    "rows_beyond_first_ws_normalised": 0,
+    "unique_name_docstring_pairs": 2632,
+    "rows_beyond_first_name_docstring": 209,
+    "largest_ws_normalised_cluster": 1
+   },
+   "provenance": {
+    "unique_source_files": 216,
+    "rows_per_file": {
+     "min": 1,
+     "p10": 3,
+     "p50": 11,
+     "p90": 26,
+     "max": 54,
+     "mean": 13.15
+    },
+    "top_files": [
+     [
+      "prometheus_math/databases/tests/test_atlas.py",
+      54
+     ],
+     [
+      "prometheus_math/databases/tests/test_mahler.py",
+      48
+     ],
+     [
+      "prometheus_math/statistics_distributions.py",
+      45
+     ],
+     [
+      "prometheus_math/numerics.py",
+      39
+     ],
+     [
+      "prometheus_math/test_evidence_field.py",
+      39
+     ],
+     [
+      "prometheus_math/test_learner_corpus.py",
+      39
+     ],
+     [
+      "prometheus_math/databases/knotinfo.py",
+      34
+     ],
+     [
+      "prometheus_math/databases/oeis.py",
+      34
+     ]
+    ],
+    "top_dirs_depth3": [
+     [
+      "prometheus_math/databases/tests",
+      328
+     ],
+     [
+      "prometheus_math/research/tests",
+      213
+     ],
+     [
+      "prometheus_math/recipes/persistent_homology",
+      62
+     ],
+     [
+      "prometheus_math/viz/tests",
+      54
+     ],
+     [
+      "prometheus_math/statistics_distributions.py",
+      45
+     ],
+     [
+      "prometheus_math/numerics.py",
+      39
+     ],
+     [
+      "prometheus_math/test_evidence_field.py",
+      39
+     ],
+     [
+      "prometheus_math/test_learner_corpus.py",
+      39
+     ],
+     [
+      "prometheus_math/substrate_generation/claim_mining",
+      36
+     ],
+     [
+      "prometheus_math/databases/knotinfo.py",
+      34
+     ],
+     [
+      "prometheus_math/databases/oeis.py",
+      34
+     ],
+     [
+      "prometheus_math/gradient_archaeology.py",
+      33
+     ]
+    ],
+    "tree_check": {
+     "files_present_on_tree": 216,
+     "files_absent_from_tree": 0,
+     "rows_whose_file_is_present": 2841,
+     "rows_whose_file_is_absent": 0
+    }
+   },
+   "representation": {
+    "ast_parses_raw": 2479,
+    "indented_extracted_from_class_or_nested_scope": 362,
+    "ast_parses_after_dedent": 2841,
+    "ast_parse_ratio_after_dedent": 1.0,
+    "is_function_def": 2841,
+    "is_method_self_or_cls": 266,
+    "is_test_function": 689,
+    "is_stub_pass_or_empty": 0,
+    "has_value_return": 2011,
+    "has_docstring_flag_true": 2176,
+    "docstring_nonempty": 2176,
+    "body_lines": {
+     "min": 3,
+     "p10": 5,
+     "p50": 15,
+     "p90": 66,
+     "max": 195,
+     "mean": 26.69
+    },
+    "snippet_chars": {
+     "min": 77,
+     "p10": 205,
+     "p50": 611,
+     "p90": 2462,
+     "max": 8826,
+     "mean": 1022.25
+    },
+    "docstring_chars": {
+     "min": 0,
+     "p10": 0,
+     "p50": 96,
+     "p90": 504,
+     "max": 2216,
+     "mean": 189.74
+    },
+    "free_names_per_snippet": {
+     "min": 0,
+     "p10": 1,
+     "p50": 2,
+     "p90": 7,
+     "max": 21,
+     "mean": 3.12
+    },
+    "closed_under_builtins": 229,
+    "closed_under_builtins_ratio": 0.0806,
+    "top_free_names": [
+     [
+      "np",
+      535
+     ],
+     [
+      "Optional",
+      467
+     ],
+     [
+      "Any",
+      398
+     ],
+     [
+      "List",
+      354
+     ],
+     [
+      "Dict",
+      342
+     ],
+     [
+      "Sequence",
+      257
+     ],
+     [
+      "math",
+      217
+     ],
+     [
+      "Tuple",
+      213
+     ],
+     [
+      "pytest",
+      119
+     ],
+     [
+      "json",
+      105
+     ],
+     [
+      "time",
+      100
+     ],
+     [
+      "Path",
+      97
+     ],
+     [
+      "Iterable",
+      59
+     ],
+     [
+      "Callable",
+      57
+     ],
+     [
+      "atlas",
+      49
+     ]
+    ]
+   },
+   "diversity": {
+    "distinct_docstrings": 2161,
+    "top_docstrings": [
+     [
+      "Path to the gzipped JSON cache of the corpus.",
+      4
+     ],
+     [
+      "Diagnostics for the in-memory cache.",
+      3
+     ],
+     [
+      "Register the env with gymnasium if available; return its id or None.",
+      2
+     ],
+     [
+      "Cherry-pick the fields we want to log per pipeline record.",
+      2
+     ],
+     [
+      "Pure random baseline.",
+      2
+     ],
+     [
+      "Random baseline on held-out test set.",
+      2
+     ],
+     [
+      "Deterministic argmax evaluation of trained REINFORCE policy.",
+      2
+     ],
+     [
+      "Deterministic argmax evaluation of trained PPO policy.",
+      2
+     ],
+     [
+      "Uniform-random bin prediction baseline.",
+      2
+     ],
+     [
+      "Write ``corpus`` to a gzipped JSON file. Returns the path written.",
+      2
+     ]
+    ],
+    "top10_docstring_share": 0.0081,
+    "distinct_function_names": 2470,
+    "top_function_names": [
+     [
+      "main",
+      50
+     ],
+     [
+      "__init__",
+      24
+     ],
+     [
+      "step",
+      18
+     ],
+     [
+      "reset",
+      15
+     ],
+     [
+      "_obs",
+      13
+     ],
+     [
+      "to_dict",
+      9
+     ],
+     [
+      "train_reinforce",
+      9
+     ],
+     [
+      "probe",
+      9
+     ],
+     [
+      "train_random",
+      8
+     ],
+     [
+      "train_ppo",
+      8
+     ],
+     [
+      "go",
+      8
+     ],
+     [
+      "register_with_gymnasium",
+      7
+     ],
+     [
+      "is_available",
+      7
+     ],
+     [
+      "corpus_summary",
+      7
+     ],
+     [
+      "__post_init__",
+      6
+     ]
+    ]
+   }
+  },
+  "hephaestus_other": {
+   "label": "hephaestus_other",
+   "rows": 1484,
+   "duplication": {
+    "unique_fingerprints": 1484,
+    "rows_beyond_first_fingerprint": 0,
+    "unique_snippet_text": 1484,
+    "rows_beyond_first_snippet_text": 0,
+    "unique_snippet_ws_normalised": 1484,
+    "rows_beyond_first_ws_normalised": 0,
+    "unique_name_docstring_pairs": 1081,
+    "rows_beyond_first_name_docstring": 403,
+    "largest_ws_normalised_cluster": 1
+   },
+   "provenance": {
+    "unique_source_files": 168,
+    "rows_per_file": {
+     "min": 1,
+     "p10": 5,
+     "p50": 8,
+     "p90": 11,
+     "max": 63,
+     "mean": 8.83
+    },
+    "top_files": [
+     [
+      "agents/hephaestus/src/trap_generator_extended.py",
+      63
+     ],
+     [
+      "agents/hephaestus/src/hephaestus.py",
+      57
+     ],
+     [
+      "agents/hephaestus/src/trap_generator.py",
+      29
+     ],
+     [
+      "agents/hephaestus/src/trap_generator_tier2.py",
+      29
+     ],
+     [
+      "agents/hephaestus/src/forge_primitives.py",
+      26
+     ],
+     [
+      "agents/hephaestus/src/composer.py",
+      23
+     ],
+     [
+      "agents/hephaestus/src/reasoning_tool.py",
+      17
+     ],
+     [
+      "agents/hephaestus/scrap/symbiosis_x_dialectics_x_metamorphic_testing.py",
+      16
+     ]
+    ],
+    "top_dirs_depth3": [
+     [
+      "agents/hephaestus/scrap",
+      1021
+     ],
+     [
+      "agents/hephaestus/src",
+      422
+     ],
+     [
+      "agents/hephaestus/tier_specialists",
+      38
+     ],
+     [
+      "agents/hephaestus/test_v2_tools.py",
+      3
+     ]
+    ],
+    "tree_check": {
+     "files_present_on_tree": 104,
+     "files_absent_from_tree": 64,
+     "rows_whose_file_is_present": 941,
+     "rows_whose_file_is_absent": 543
+    }
+   },
+   "representation": {
+    "ast_parses_raw": 334,
+    "indented_extracted_from_class_or_nested_scope": 1150,
+    "ast_parses_after_dedent": 1484,
+    "ast_parse_ratio_after_dedent": 1.0,
+    "is_function_def": 1484,
+    "is_method_self_or_cls": 1134,
+    "is_test_function": 9,
+    "is_stub_pass_or_empty": 0,
+    "has_value_return": 1273,
+    "has_docstring_flag_true": 1144,
+    "docstring_nonempty": 1144,
+    "body_lines": {
+     "min": 3,
+     "p10": 7,
+     "p50": 25,
+     "p90": 56,
+     "max": 192,
+     "mean": 29.75
+    },
+    "snippet_chars": {
+     "min": 84,
+     "p10": 319,
+     "p50": 1010,
+     "p90": 2522,
+     "max": 8500,
+     "mean": 1274.19
+    },
+    "docstring_chars": {
+     "min": 0,
+     "p10": 0,
+     "p50": 60,
+     "p90": 148,
+     "max": 648,
+     "mean": 73.38
+    },
+    "free_names_per_snippet": {
+     "min": 0,
+     "p10": 0,
+     "p50": 1,
+     "p90": 3,
+     "max": 20,
+     "mean": 1.44
+    },
+    "closed_under_builtins": 420,
+    "closed_under_builtins_ratio": 0.283,
+    "top_free_names": [
+     [
+      "re",
+      438
+     ],
+     [
+      "List",
+      216
+     ],
+     [
+      "Dict",
+      187
+     ],
+     [
+      "random",
+      125
+     ],
+     [
+      "zlib",
+      109
+     ],
+     [
+      "np",
+      59
+     ],
+     [
+      "json",
+      55
+     ],
+     [
+      "log",
+      55
+     ],
+     [
+      "Optional",
+      42
+     ],
+     [
+      "Path",
+      38
+     ],
+     [
+      "math",
+      32
+     ],
+     [
+      "logger",
+      31
+     ],
+     [
+      "_NAMES",
+      29
+     ],
+     [
+      "Tuple",
+      27
+     ],
+     [
+      "_intro",
+      24
+     ]
+    ]
+   },
+   "diversity": {
+    "distinct_docstrings": 990,
+    "top_docstrings": [
+     [
+      "Normalized Compression Distance using zlib.",
+      38
+     ],
+     [
+      "Normalized Compression Distance.",
+      14
+     ],
+     [
+      "Normalized Compression Distance as a tiebreaker.",
+      10
+     ],
+     [
+      "Normalized Compression Distance heuristic.",
+      10
+     ],
+     [
+      "Returns confidence 0-1. Strictly capped by _meta_confidence for ambiguous prompts.",
+      9
+     ],
+     [
+      "Returns confidence 0-1. Caps at 0.25 if meta-analysis detects ambiguity/traps. Caps at 0.9",
+      6
+     ],
+     [
+      "Evaluates the prompt for epistemic traps. Returns a cap value: 0.25 if ambiguous/trapped, ",
+      6
+     ],
+     [
+      "Extracts floating point numbers from text.",
+      6
+     ],
+     [
+      "Returns confidence 0-1. Strictly enforces epistemic honesty caps.",
+      6
+     ],
+     [
+      "Returns confidence 0-1. Strictly enforces epistemic honesty via _meta_confidence.",
+      6
+     ]
+    ],
+    "top10_docstring_share": 0.0748,
+    "distinct_function_names": 580,
+    "top_function_names": [
+     [
+      "evaluate",
+      139
+     ],
+     [
+      "confidence",
+      139
+     ],
+     [
+      "_meta_confidence",
+      130
+     ],
+     [
+      "__init__",
+      125
+     ],
+     [
+      "_ncd_score",
+      48
+     ],
+     [
+      "_structural_score",
+      46
+     ],
+     [
+      "_extract_numbers",
+      42
+     ],
+     [
+      "_compute_ncd",
+      26
+     ],
+     [
+      "_ncd",
+      18
+     ],
+     [
+      "main",
+      16
+     ],
+     [
+      "_extract_structure",
+      15
+     ],
+     [
+      "_compute_structural_score",
+      14
+     ],
+     [
+      "_parse_structure",
+      13
+     ],
+     [
+      "_compute_answer",
+      12
+     ],
+     [
+      "_structural_parse",
+      12
+     ]
+    ]
+   }
+  },
+  "charon_diagnostics": {
+   "label": "charon_diagnostics",
+   "rows": 254,
+   "duplication": {
+    "unique_fingerprints": 254,
+    "rows_beyond_first_fingerprint": 0,
+    "unique_snippet_text": 254,
+    "rows_beyond_first_snippet_text": 0,
+    "unique_snippet_ws_normalised": 254,
+    "rows_beyond_first_ws_normalised": 0,
+    "unique_name_docstring_pairs": 160,
+    "rows_beyond_first_name_docstring": 94,
+    "largest_ws_normalised_cluster": 1
+   },
+   "provenance": {
+    "unique_source_files": 70,
+    "rows_per_file": {
+     "min": 2,
+     "p10": 3,
+     "p50": 3,
+     "p90": 6,
+     "max": 10,
+     "mean": 3.63
+    },
+    "top_files": [
+     [
+      "charon/diagnostics/compute_surviving_claim_morphology.py",
+      10
+     ],
+     [
+      "charon/diagnostics/compute_substrate_coverage_map.py",
+      9
+     ],
+     [
+      "charon/diagnostics/compute_per_domain_pi0.py",
+      8
+     ],
+     [
+      "charon/diagnostics/compute_cost_to_kill.py",
+      6
+     ],
+     [
+      "charon/diagnostics/substrate_tester_fire_13_harness.py",
+      6
+     ],
+     [
+      "charon/diagnostics/substrate_tester_fire_1_harness.py",
+      6
+     ],
+     [
+      "charon/diagnostics/substrate_tester_fire_32_harness.py",
+      6
+     ],
+     [
+      "charon/diagnostics/substrate_tester_fire_19_harness.py",
+      5
+     ]
+    ],
+    "top_dirs_depth3": [
+     [
+      "charon/diagnostics/compute_surviving_claim_morphology.py",
+      10
+     ],
+     [
+      "charon/diagnostics/compute_substrate_coverage_map.py",
+      9
+     ],
+     [
+      "charon/diagnostics/compute_per_domain_pi0.py",
+      8
+     ],
+     [
+      "charon/diagnostics/compute_cost_to_kill.py",
+      6
+     ],
+     [
+      "charon/diagnostics/substrate_tester_fire_13_harness.py",
+      6
+     ],
+     [
+      "charon/diagnostics/substrate_tester_fire_1_harness.py",
+      6
+     ],
+     [
+      "charon/diagnostics/substrate_tester_fire_32_harness.py",
+      6
+     ],
+     [
+      "charon/diagnostics/substrate_tester_fire_19_harness.py",
+      5
+     ],
+     [
+      "charon/diagnostics/substrate_tester_fire_21_harness.py",
+      5
+     ],
+     [
+      "charon/diagnostics/substrate_tester_fire_9_harness.py",
+      5
+     ],
+     [
+      "charon/diagnostics/substrate_tester_fire_12_harness.py",
+      4
+     ],
+     [
+      "charon/diagnostics/substrate_tester_fire_16_harness.py",
+      4
+     ]
+    ],
+    "tree_check": {
+     "files_present_on_tree": 70,
+     "files_absent_from_tree": 0,
+     "rows_whose_file_is_present": 254,
+     "rows_whose_file_is_absent": 0
+    }
+   },
+   "representation": {
+    "ast_parses_raw": 247,
+    "indented_extracted_from_class_or_nested_scope": 7,
+    "ast_parses_after_dedent": 254,
+    "ast_parse_ratio_after_dedent": 1.0,
+    "is_function_def": 254,
+    "is_method_self_or_cls": 0,
+    "is_test_function": 0,
+    "is_stub_pass_or_empty": 0,
+    "has_value_return": 231,
+    "has_docstring_flag_true": 97,
+    "docstring_nonempty": 97,
+    "body_lines": {
+     "min": 3,
+     "p10": 14,
+     "p50": 32,
+     "p90": 141,
+     "max": 199,
+     "mean": 55.41
+    },
+    "snippet_chars": {
+     "min": 133,
+     "p10": 529,
+     "p50": 1465,
+     "p90": 5778,
+     "max": 9823,
+     "mean": 2366.94
+    },
+    "docstring_chars": {
+     "min": 0,
+     "p10": 0,
+     "p50": 0,
+     "p90": 179,
+     "max": 841,
+     "mean": 53.62
+    },
+    "free_names_per_snippet": {
+     "min": 0,
+     "p10": 2,
+     "p50": 5,
+     "p90": 6,
+     "max": 11,
+     "mean": 4.39
+    },
+    "closed_under_builtins": 10,
+    "closed_under_builtins_ratio": 0.0394,
+    "top_free_names": [
+     [
+      "Any",
+      165
+     ],
+     [
+      "Dict",
+      165
+     ],
+     [
+      "REPO",
+      130
+     ],
+     [
+      "json",
+      82
+     ],
+     [
+      "List",
+      74
+     ],
+     [
+      "time",
+      58
+     ],
+     [
+      "subprocess",
+      57
+     ],
+     [
+      "Counter",
+      50
+     ],
+     [
+      "Tuple",
+      18
+     ],
+     [
+      "random",
+      14
+     ],
+     [
+      "lane_11_canon_fuzz_smoke",
+      14
+     ],
+     [
+      "os",
+      11
+     ],
+     [
+      "Path",
+      10
+     ],
+     [
+      "statistics",
+      6
+     ],
+     [
+      "re",
+      5
+     ]
+    ]
+   },
+   "diversity": {
+    "distinct_docstrings": 96,
+    "top_docstrings": [
+     [
+      "Quick Mahler measure via numpy roots \u2014 for upfront band-routing only.",
+      2
+     ],
+     [
+      "Extract timing telemetry from a pilot file. Returns INCONCLUSIVE if none.",
+      1
+     ],
+     [
+      "Extract per-config elapsed_s from Ergon a149 trial results.",
+      1
+     ],
+     [
+      "Pull theoretical max_seconds / max_oracle_calls from arsenal_meta.",
+      1
+     ],
+     [
+      "Extract tactic head identifiers from a tactic string. Splits on `<;>` (top-level combinato",
+      1
+     ],
+     [
+      "Wilson score interval for a binomial proportion.",
+      1
+     ],
+     [
+      "Posterior mean + central 95% CI for a beta-binomial.",
+      1
+     ],
+     [
+      "Bootstrap a 95% CI for \u03c0\u2080 from per-seed accuracies. Treats each seed's accuracy as the bin",
+      1
+     ],
+     [
+      "Compute \u03c0\u2080 for a binary-reward (HIT=100/MISS=0) rediscovery domain from its pilot file. Us",
+      1
+     ],
+     [
+      "OEIS Sleeping has 3-valued reward (HIT=100, NEAR=25, MISS=0). Mean reward alone gives boun",
+      1
+     ]
+    ],
+    "top10_docstring_share": 0.0433,
+    "distinct_function_names": 147,
+    "top_function_names": [
+     [
+      "run",
+      48
+     ],
+     [
+      "main",
+      21
+     ],
+     [
+      "lane_11_canon_fuzz_smoke",
+      14
+     ],
+     [
+      "submit_probe",
+      4
+     ],
+     [
+      "lane_11_batch_sweep",
+      4
+     ],
+     [
+      "render_md",
+      3
+     ],
+     [
+      "load_corpora",
+      3
+     ],
+     [
+      "sample_probes",
+      3
+     ],
+     [
+      "fast_mahler_numpy",
+      3
+     ],
+     [
+      "lane_1_baseline_passes",
+      3
+     ],
+     [
+      "lane_6_undecidable_canonicalization",
+      2
+     ],
+     [
+      "lane_16_concurrency_stress",
+      2
+     ],
+     [
+      "lane_5_large_scale_enumeration",
+      2
+     ],
+     [
+      "on_progress",
+      2
+     ],
+     [
+      "lane_6_regression",
+      2
+     ]
+    ]
+   }
+  },
+  "theseus_scripts": {
+   "label": "theseus_scripts",
+   "rows": 122,
+   "duplication": {
+    "unique_fingerprints": 122,
+    "rows_beyond_first_fingerprint": 0,
+    "unique_snippet_text": 122,
+    "rows_beyond_first_snippet_text": 0,
+    "unique_snippet_ws_normalised": 122,
+    "rows_beyond_first_ws_normalised": 0,
+    "unique_name_docstring_pairs": 105,
+    "rows_beyond_first_name_docstring": 17,
+    "largest_ws_normalised_cluster": 1
+   },
+   "provenance": {
+    "unique_source_files": 20,
+    "rows_per_file": {
+     "min": 2,
+     "p10": 3,
+     "p50": 5,
+     "p90": 12,
+     "max": 13,
+     "mean": 6.1
+    },
+    "top_files": [
+     [
+      "theseus/scripts/calibration_v0_murasugi.py",
+      13
+     ],
+     [
+      "theseus/scripts/calibration_v1_ec_torsion.py",
+      12
+     ],
+     [
+      "theseus/scripts/scan_synthesis_claims.py",
+      10
+     ],
+     [
+      "theseus/scripts/kill_topography.py",
+      10
+     ],
+     [
+      "theseus/scripts/substrate_audit.py",
+      9
+     ],
+     [
+      "theseus/scripts/build_triage_sample.py",
+      8
+     ],
+     [
+      "theseus/scripts/mathlib_score_and_select.py",
+      7
+     ],
+     [
+      "theseus/scripts/stats_summary.py",
+      7
+     ]
+    ],
+    "top_dirs_depth3": [
+     [
+      "theseus/scripts/calibration_v0_murasugi.py",
+      13
+     ],
+     [
+      "theseus/scripts/calibration_v1_ec_torsion.py",
+      12
+     ],
+     [
+      "theseus/scripts/scan_synthesis_claims.py",
+      10
+     ],
+     [
+      "theseus/scripts/kill_topography.py",
+      10
+     ],
+     [
+      "theseus/scripts/substrate_audit.py",
+      9
+     ],
+     [
+      "theseus/scripts/build_triage_sample.py",
+      8
+     ],
+     [
+      "theseus/scripts/mathlib_score_and_select.py",
+      7
+     ],
+     [
+      "theseus/scripts/stats_summary.py",
+      7
+     ],
+     [
+      "theseus/scripts/symbol_pair_miner.py",
+      6
+     ],
+     [
+      "theseus/scripts/h2_applicability_audit.py",
+      5
+     ],
+     [
+      "theseus/scripts/_backoff.py",
+      5
+     ],
+     [
+      "theseus/scripts/compress_old_logs.py",
+      4
+     ]
+    ],
+    "tree_check": {
+     "files_present_on_tree": 19,
+     "files_absent_from_tree": 1,
+     "rows_whose_file_is_present": 112,
+     "rows_whose_file_is_absent": 10
+    }
+   },
+   "representation": {
+    "ast_parses_raw": 119,
+    "indented_extracted_from_class_or_nested_scope": 3,
+    "ast_parses_after_dedent": 122,
+    "ast_parse_ratio_after_dedent": 1.0,
+    "is_function_def": 122,
+    "is_method_self_or_cls": 0,
+    "is_test_function": 0,
+    "is_stub_pass_or_empty": 0,
+    "has_value_return": 115,
+    "has_docstring_flag_true": 71,
+    "docstring_nonempty": 71,
+    "body_lines": {
+     "min": 3,
+     "p10": 6,
+     "p50": 18,
+     "p90": 59,
+     "max": 156,
+     "mean": 27.3
+    },
+    "snippet_chars": {
+     "min": 98,
+     "p10": 231,
+     "p50": 686,
+     "p90": 2234,
+     "max": 7234,
+     "mean": 1071.6
+    },
+    "docstring_chars": {
+     "min": 0,
+     "p10": 0,
+     "p50": 46,
+     "p90": 180,
+     "max": 633,
+     "mean": 67.43
+    },
+    "free_names_per_snippet": {
+     "min": 0,
+     "p10": 1,
+     "p50": 4,
+     "p90": 8,
+     "max": 23,
+     "mean": 4.64
+    },
+    "closed_under_builtins": 11,
+    "closed_under_builtins_ratio": 0.0902,
+    "top_free_names": [
+     [
+      "Path",
+      38
+     ],
+     [
+      "List",
+      34
+     ],
+     [
+      "Dict",
+      27
+     ],
+     [
+      "json",
+      26
+     ],
+     [
+      "datetime",
+      19
+     ],
+     [
+      "timezone",
+      19
+     ],
+     [
+      "Any",
+      19
+     ],
+     [
+      "TheseusRecord",
+      18
+     ],
+     [
+      "argparse",
+      12
+     ],
+     [
+      "Tuple",
+      10
+     ],
+     [
+      "_get_int",
+      9
+     ],
+     [
+      "build_record",
+      9
+     ],
+     [
+      "Counter",
+      8
+     ],
+     [
+      "CACHE_PATH",
+      6
+     ],
+     [
+      "Optional",
+      6
+     ]
+    ]
+   },
+   "diversity": {
+    "distinct_docstrings": 71,
+    "top_docstrings": [
+     [
+      "Return {gid: prior_score} for gens with lifetime_sat < threshold. Uses the Fire #62 formul",
+      1
+     ],
+     [
+      "Inject priors into bandit history. Returns count of gens patched. `n_copies` controls how ",
+      1
+     ],
+     [
+      "Compress one file in-place. Returns (before_bytes, after_bytes).",
+      1
+     ],
+     [
+      "Yield (path, description) pairs eligible for compression.",
+      1
+     ],
+     [
+      "Compress matching files older than `days` days. Returns summary dict for logging/journalin",
+      1
+     ],
+     [
+      "Human-readable demand report.",
+      1
+     ],
+     [
+      "Markdown report suitable for pivot/ archive.",
+      1
+     ],
+     [
+      "Fetch up to max_results abstracts matching query; append novel ones. Wraps the arxiv clien",
+      1
+     ],
+     [
+      "Pull knowls from the LMFDB postgres mirror; append novel ones.",
+      1
+     ],
+     [
+      "Replicates h2's verdict mapping exactly.",
+      1
+     ]
+    ],
+    "top10_docstring_share": 0.082,
+    "distinct_function_names": 94,
+    "top_function_names": [
+     [
+      "main",
+      16
+     ],
+     [
+      "fetch_and_append",
+      3
+     ],
+     [
+      "render_text",
+      2
+     ],
+     [
+      "render_markdown",
+      2
+     ],
+     [
+      "_existing_ids",
+      2
+     ],
+     [
+      "build_record",
+      2
+     ],
+     [
+      "gen_decoy_parity",
+      2
+     ],
+     [
+      "gen_decoy_codomain",
+      2
+     ],
+     [
+      "gen_stratified_perm",
+      2
+     ],
+     [
+      "gen_random_marginal",
+      2
+     ],
+     [
+      "F2_null_hold_rate",
+      2
+     ],
+     [
+      "_is_self_tautology",
+      2
+     ],
+     [
+      "F2_score_source",
+      2
+     ],
+     [
+      "compute_priors",
+      1
+     ],
+     [
+      "inject",
+      1
+     ]
+    ]
+   }
+  },
+  "hephaestus_code_from_claude": {
+   "label": "hephaestus_code_from_claude",
+   "rows": 46,
+   "duplication": {
+    "unique_fingerprints": 46,
+    "rows_beyond_first_fingerprint": 0,
+    "unique_snippet_text": 46,
+    "rows_beyond_first_snippet_text": 0,
+    "unique_snippet_ws_normalised": 46,
+    "rows_beyond_first_ws_normalised": 0,
+    "unique_name_docstring_pairs": 46,
+    "rows_beyond_first_name_docstring": 0,
+    "largest_ws_normalised_cluster": 1
+   },
+   "provenance": {
+    "unique_source_files": 2,
+    "rows_per_file": {
+     "min": 10,
+     "p10": 10,
+     "p50": 36,
+     "p90": 36,
+     "max": 36,
+     "mean": 23.0
+    },
+    "top_files": [
+     [
+      "agents/hephaestus/code_from_claude/trap_generator_expanded.py",
+      36
+     ],
+     [
+      "agents/hephaestus/code_from_claude/behavioral_fingerprints.py",
+      10
+     ]
+    ],
+    "top_dirs_depth3": [
+     [
+      "agents/hephaestus/code_from_claude",
+      46
+     ]
+    ],
+    "tree_check": {
+     "files_present_on_tree": 2,
+     "files_absent_from_tree": 0,
+     "rows_whose_file_is_present": 46,
+     "rows_whose_file_is_absent": 0
+    }
+   },
+   "representation": {
+    "ast_parses_raw": 43,
+    "indented_extracted_from_class_or_nested_scope": 3,
+    "ast_parses_after_dedent": 46,
+    "ast_parse_ratio_after_dedent": 1.0,
+    "is_function_def": 46,
+    "is_method_self_or_cls": 0,
+    "is_test_function": 1,
+    "is_stub_pass_or_empty": 0,
+    "has_value_return": 46,
+    "has_docstring_flag_true": 43,
+    "docstring_nonempty": 43,
+    "body_lines": {
+     "min": 5,
+     "p10": 9,
+     "p50": 42,
+     "p90": 57,
+     "max": 91,
+     "mean": 37.17
+    },
+    "snippet_chars": {
+     "min": 170,
+     "p10": 381,
+     "p50": 1629,
+     "p90": 2222,
+     "max": 3422,
+     "mean": 1448.2
+    },
+    "docstring_chars": {
+     "min": 0,
+     "p10": 39,
+     "p50": 61,
+     "p90": 81,
+     "max": 181,
+     "mean": 62.11
+    },
+    "free_names_per_snippet": {
+     "min": 0,
+     "p10": 0,
+     "p50": 3,
+     "p90": 4,
+     "max": 6,
+     "mean": 2.59
+    },
+    "closed_under_builtins": 6,
+    "closed_under_builtins_ratio": 0.1304,
+    "top_free_names": [
+     [
+      "random",
+      33
+     ],
+     [
+      "_shuffled_candidates",
+      31
+     ],
+     [
+      "_pick_names",
+      28
+     ],
+     [
+      "np",
+      4
+     ],
+     [
+      "OBJECTS",
+      3
+     ],
+     [
+      "Path",
+      2
+     ],
+     [
+      "importlib",
+      2
+     ],
+     [
+      "TASKS",
+      2
+     ],
+     [
+      "BATTERY_SEED",
+      1
+     ],
+     [
+      "N_PER_CATEGORY",
+      1
+     ],
+     [
+      "os",
+      1
+     ],
+     [
+      "sys",
+      1
+     ],
+     [
+      "CLUSTER_DISTANCE_THRESHOLD",
+      1
+     ],
+     [
+      "HAS_SCIPY",
+      1
+     ],
+     [
+      "fcluster",
+      1
+     ]
+    ]
+   },
+   "diversity": {
+    "distinct_docstrings": 43,
+    "top_docstrings": [
+     [
+      "Dynamically import a tool .py file and return the module.",
+      1
+     ],
+     [
+      "Find the evaluate() function in a tool module.",
+      1
+     ],
+     [
+      "Classify a tool into architecture A, C, D, or F based on heuristics. A: has _cat_score or ",
+      1
+     ],
+     [
+      "Generate the standardized battery. If trap_generator_path is provided, import and use it. ",
+      1
+     ],
+     [
+      "Run a tool's evaluate() on every battery item. Returns a binary vector: 1 = correct, 0 = w",
+      1
+     ],
+     [
+      "Compute pairwise Hamming distance matrix.",
+      1
+     ],
+     [
+      "Cluster tools by behavioral similarity.",
+      1
+     ],
+     [
+      "Find tools that behave nearly identically.",
+      1
+     ],
+     [
+      "Find tool pairs with high disagreement that are both reasonably accurate.",
+      1
+     ],
+     [
+      "Find tools with highest mean distance to all others.",
+      1
+     ]
+    ],
+    "top10_docstring_share": 0.2174,
+    "distinct_function_names": 46,
+    "top_function_names": [
+     [
+      "load_tool_module",
+      1
+     ],
+     [
+      "find_evaluate_fn",
+      1
+     ],
+     [
+      "classify_architecture",
+      1
+     ],
+     [
+      "generate_battery",
+      1
+     ],
+     [
+      "evaluate_tool_on_battery",
+      1
+     ],
+     [
+      "compute_hamming_matrix",
+      1
+     ],
+     [
+      "cluster_tools",
+      1
+     ],
+     [
+      "find_redundant_pairs",
+      1
+     ],
+     [
+      "find_complementary_pairs",
+      1
+     ],
+     [
+      "find_most_unique",
+      1
+     ],
+     [
+      "_shuffled_candidates",
+      1
+     ],
+     [
+      "_temporal_concurrent_events",
+      1
+     ],
+     [
+      "_temporal_frequency_coincidence",
+      1
+     ],
+     [
+      "_temporal_sequence_reconstruction",
+      1
+     ],
+     [
+      "_temporal_duration_across_midnight",
+      1
+     ]
+    ]
+   }
+  }
+ },
+ "overall": {
+  "label": "overall",
+  "rows": 24847,
+  "duplication": {
+   "unique_fingerprints": 24847,
+   "rows_beyond_first_fingerprint": 0,
+   "unique_snippet_text": 24847,
+   "rows_beyond_first_snippet_text": 0,
+   "unique_snippet_ws_normalised": 24800,
+   "rows_beyond_first_ws_normalised": 47,
+   "unique_name_docstring_pairs": 16631,
+   "rows_beyond_first_name_docstring": 8216,
+   "largest_ws_normalised_cluster": 3,
+   "ws_normalised_snippets_in_both_streams": 0
+  },
+  "provenance": {
+   "unique_source_files": 2936,
+   "rows_per_file": {
+    "min": 1,
+    "p10": 3,
+    "p50": 7,
+    "p90": 14,
+    "max": 185,
+    "mean": 8.46
+   },
+   "top_files": [
+    [
+     "prometheus_math/tests/test_edge_case_gallery.py",
+     185
+    ],
+    [
+     "prometheus_math/tests/test_edge_cases.py",
+     142
+    ],
+    [
+     "prometheus_math/tests/test_substrate_generation_tier_1.py",
+     118
+    ],
+    [
+     "prometheus_math/tests/test_number_theory_properties.py",
+     104
+    ],
+    [
+     "prometheus_math/tests/test_elliptic_curves_properties.py",
+     80
+    ],
+    [
+     "agents/hephaestus/src/trap_generator_extended.py",
+     63
+    ],
+    [
+     "prometheus_math/tests/test_pivot_bughunt.py",
+     59
+    ],
+    [
+     "agents/hephaestus/src/hephaestus.py",
+     57
+    ]
+   ],
+   "top_dirs_depth3": [
+    [
+     "agents/hephaestus/humanreadable",
+     12638
+    ],
+    [
+     "agents/hephaestus/forge",
+     2554
+    ],
+    [
+     "agents/hephaestus/scrap",
+     1021
+    ],
+    [
+     "agents/hephaestus/forge_v7",
+     648
+    ],
+    [
+     "agents/hephaestus/forge_v3",
+     472
+    ],
+    [
+     "agents/hephaestus/src",
+     422
+    ],
+    [
+     "agents/hephaestus/forge_v2",
+     362
+    ],
+    [
+     "prometheus_math/databases/tests",
+     328
+    ],
+    [
+     "agents/hephaestus/forge_v4",
+     325
+    ],
+    [
+     "prometheus_math/research/tests",
+     213
+    ],
+    [
+     "prometheus_math/tests/test_edge_case_gallery.py",
+     185
+    ],
+    [
+     "prometheus_math/tests/test_edge_cases.py",
+     142
+    ]
+   ],
+   "tree_check": {
+    "files_present_on_tree": 2871,
+    "files_absent_from_tree": 65,
+    "rows_whose_file_is_present": 24294,
+    "rows_whose_file_is_absent": 553
+   }
+  },
+  "representation": {
+   "ast_parses_raw": 5477,
+   "indented_extracted_from_class_or_nested_scope": 19370,
+   "ast_parses_after_dedent": 24837,
+   "ast_parse_ratio_after_dedent": 0.9996,
+   "is_function_def": 24837,
+   "is_method_self_or_cls": 18669,
+   "is_test_function": 3498,
+   "is_stub_pass_or_empty": 17,
+   "has_value_return": 19135,
+   "has_docstring_flag_true": 16416,
+   "docstring_nonempty": 16416,
+   "body_lines": {
+    "min": 3,
+    "p10": 5,
+    "p50": 17,
+    "p90": 49,
+    "max": 199,
+    "mean": 23.42
+   },
+   "snippet_chars": {
+    "min": 68,
+    "p10": 232,
+    "p50": 735,
+    "p90": 2172,
+    "max": 14092,
+    "mean": 1027.21
+   },
+   "docstring_chars": {
+    "min": 0,
+    "p10": 0,
+    "p50": 50,
+    "p90": 169,
+    "max": 8537,
+    "mean": 73.45
+   },
+   "free_names_per_snippet": {
+    "min": 0,
+    "p10": 0,
+    "p50": 1,
+    "p90": 3,
+    "max": 23,
+    "mean": 1.64
+   },
+   "closed_under_builtins": 5296,
+   "closed_under_builtins_ratio": 0.2132,
+   "top_free_names": [
+    [
+     "re",
+     5111
+    ],
+    [
+     "np",
+     4875
+    ],
+    [
+     "List",
+     4535
+    ],
+    [
+     "Dict",
+     4410
+    ],
+    [
+     "Tuple",
+     1610
+    ],
+    [
+     "zlib",
+     1480
+    ],
+    [
+     "math",
+     1109
+    ],
+    [
+     "Any",
+     956
+    ],
+    [
+     "pytest",
+     725
+    ],
+    [
+     "Optional",
+     690
+    ],
+    [
+     "pm",
+     366
+    ],
+    [
+     "json",
+     298
+    ],
+    [
+     "random",
+     297
+    ],
+    [
+     "Sequence",
+     257
+    ],
+    [
+     "Path",
+     221
+    ]
+   ]
+  },
+  "diversity": {
+   "distinct_docstrings": 14015,
+   "top_docstrings": [
+    [
+     "Normalized Compression Distance using zlib.",
+     435
+    ],
+    [
+     "Normalized Compression Distance.",
+     170
+    ],
+    [
+     "Normalized Compression Distance as a tiebreaker.",
+     104
+    ],
+    [
+     "Return confidence 0-1.",
+     67
+    ],
+    [
+     "Normalized Compression Distance as tiebreaker.",
+     66
+    ],
+    [
+     "Normalized Compression Distance heuristic.",
+     57
+    ],
+    [
+     "Calculate Normalized Compression Distance.",
+     34
+    ],
+    [
+     "Returns confidence 0-1 based on structural alignment.",
+     27
+    ],
+    [
+     "Extract structural features from text.",
+     26
+    ],
+    [
+     "Calculates Normalized Compression Distance.",
+     21
+    ]
+   ],
+   "top10_docstring_share": 0.0405,
+   "distinct_function_names": 9208,
+   "top_function_names": [
+    [
+     "evaluate",
+     2264
+    ],
+    [
+     "confidence",
+     2126
+    ],
+    [
+     "__init__",
+     1882
+    ],
+    [
+     "_meta_confidence",
+     775
+    ],
+    [
+     "_ncd",
+     586
+    ],
+    [
+     "_compute_ncd",
+     367
+    ],
+    [
+     "_extract_features",
+     325
+    ],
+    [
+     "_extract_structure",
+     230
+    ],
+    [
+     "_ncd_score",
+     217
+    ],
+    [
+     "_extract_numbers",
+     203
+    ],
+    [
+     "_structural_score",
+     193
+    ],
+    [
+     "_compute_free_energy",
+     167
+    ],
+    [
+     "_ncd_distance",
+     152
+    ],
+    [
+     "_structural_parse",
+     138
+    ],
+    [
+     "_build_graph",
+     134
+    ]
+   ]
+  }
+ }
+}

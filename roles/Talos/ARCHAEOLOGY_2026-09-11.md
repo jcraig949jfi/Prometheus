@@ -12,7 +12,8 @@ Phase 0 / 0.5 / 1 gates in it, pivot/COMPONENT_DOSSIERS_2026-06-24.md
 (Talos section, future options Q4), roles/Ergon/TRAINING_DATA_SURVEY_2026-06-07.md
 (lines 101-104, 122-137), engine/queues/BACKLOG.jsonl (PROF-Talos).
 
-Measured state of the residue on 2026-09-11 (canonical checkout, read only):
+Measured state of the residue on 2026-09-11 (canonical checkout, read only;
+superseded in detail by ledgers/CORPUS_CHARACTERIZATION_2026-09-11.md, same numbers):
   state.json      first_run 2026-05-23T15:49Z; last_save 2026-05-30T15:54Z;
                   ticks 170, null ticks 160; anti_silence 6; corpus 24,847
   manifest_latest computed 2026-05-30T09:54Z; last growing tick added 33
@@ -28,6 +29,21 @@ Measured state of the residue on 2026-09-11 (canonical checkout, read only):
                   (orphan .pyc only); no GPU owner ever named
   consumers       0 (grep outside agents/talos/ finds readers of the
                   corpus: none; the 06-24 dossier found the same)
+
+## Operator ruling applied (2026-09-11, roles/Talos/prompts/2026-09-11_talos01_ruling/)
+
+The six NEEDS_REPREMISE items (T02, T05, T06, T07, T09; T08 and T10 as
+their dependents) are dispositioned CONSUMER-CONTINGENT DORMANT, not
+failed: "their old premises have no automatic claim on 2.0 resources, but
+their mechanisms and residue remain available if a current seat can name a
+falsifiable use for them." The May daemon is not relaunched; Phase 1 is not
+reconstructed; the old >=10/50 gate is not meaningful until grader,
+baseline, sample size and uncertainty are replaced. The daemon, stream
+definitions, trainer concept and evaluation gate are implementation
+fossils, not requirements. Re-premise only from a consumption contract
+(roles/Talos/ledgers/CONSUMER_SEARCH_2026-09-11.md). The corpus is
+preserved (TALOS-02 DONE) and characterized
+(roles/Talos/ledgers/CORPUS_CHARACTERIZATION_2026-09-11.md).
 
 ## The items
 
