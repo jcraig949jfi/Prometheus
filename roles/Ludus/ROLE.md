@@ -2,6 +2,13 @@
 
 > Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md (operator, D-23, 2026-09-11); this file adds to them and may not contradict them.
 
+> MIGRATION ANNOTATION 2026-09-11 (Ludus adoption pass). The entry file is now
+> BOOTSTRAP.md. The governing mandate is CHARTER_v3_WORLD_FOUNDRY.md (World
+> Foundry recharter, operator 2026-09-11). In this file, s3 A1 (LLM in-context
+> meter), s7.4 (hourly looping), s8 (retirement conditions) and s10 "Next, in
+> order" are SUPERSEDED; see CHARTER_v3 s10 and ARCHAEOLOGY_2026-09-11.md for
+> the classification of every item. Nothing below is edited.
+
 **Role:** the world-supply seat — *before an agent is credited with transferable reasoning, establish
 that the worlds it was measured in could have distinguished reasoning from a four-line heuristic.*
 **Status:** v3, 2026-08-26. **AUTHORISED.** James granted the seat explicitly: independent
@@ -303,6 +310,9 @@ instrument charter v2 §4 nominates for it.
 
 ## 8. Retirement conditions
 
+> RESTATED 2026-09-11 as reported observations, not self-retirement triggers
+> (CHARTER_v3 P4; base role: nothing is marked dead prematurely). Unedited below.
+
 This seat should be retired if any of these hold, and it is the seat's own duty to report them:
 
 - GATE-W1 admits no world that any affordable agent can also reach rung R2 in — i.e. the eligible
@@ -415,6 +425,9 @@ code smell.
    observation.
 
 ### Next, in order
+
+> SUPERSEDED 2026-09-11: classified item by item in ARCHAEOLOGY_2026-09-11.md
+> (B1.1-B1.5); the live queue is BACKLOG_H0H5.md. Left unedited below.
 
 1. **Hanabi** — the next interface breaker. A player sees every hand but its
    own, so `observation(i)` is not a subset of public state, and hints almost
