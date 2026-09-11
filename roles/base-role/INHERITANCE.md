@@ -27,6 +27,7 @@ Every role below carries the banner on its primary document(s):
 | Hephaestus | ROLE.md (already) |
 | Hermes | RESPONSIBILITIES.md (created with the banner, 2026-09-11 adoption pass; the seat had no roles/ directory before, and was deprecated 2026-05-17 before the register existed) |
 | Talos | RESPONSIBILITIES.md (already); agents/talos/CHARTER.md (already) |
+| Nemesis | RESPONSIBILITIES.md (created 2026-09-11 on the seat's adoption pass; the seat had no roles/ directory before; agents/nemesis/README.md is the March 2026 agent README, annotated at its head by the seat, not stamped and not rewritten) |
 | Nyx | RESPONSIBILITIES.md (already) |
 | Icarus | RESPONSIBILITIES.md (already) |
 | Herakles | RESPONSIBILITIES.md (already), BOOTSTRAP.md (already), CHARTER.md (already) |
@@ -77,6 +78,7 @@ BOOTSTRAP.md if the seat has one, else STARTUP.md, RESPONSIBILITIES.md, ROLE.md,
 | Hephaestus | RESPONSIBILITIES.md |
 | Hermes | RESPONSIBILITIES.md |
 | Talos | RESPONSIBILITIES.md |
+| Nemesis | RESPONSIBILITIES.md |
 | Nyx | RESPONSIBILITIES.md |
 | Icarus | RESPONSIBILITIES.md |
 | Herakles | BOOTSTRAP.md |
