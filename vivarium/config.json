@@ -11,6 +11,13 @@
   "agent": "vivarium",
   "poll_interval_s": 5.0,
   "heartbeat_interval_s": 15.0,
-  "note": "Non-secret defaults ONLY. db_password, sfe_token and pew_token come from the environment (VIV_DB_PASSWORD / VIV_SFE_TOKEN / VIV_PEW_TOKEN) or from the gitignored vivarium/config.local.json. See viv/db.py for the precedence order. pew_namespace is 'prod' because that is what the autonomous consumer writes; ew/fossil.py filters namespace='prod' for scientific queries, so anything else is invisible to them. tests/conftest.py forces VIV_PEW_NAMESPACE=test so a test run can never reach it.",
-  "pew_namespace": "prod"
+  "pew_namespace": "prod",
+  "nonproductive_tick_bound": 17280,
+  "accountable_seat": "Archaeon",
+  "halt_on_failure_classes": [
+    "ENGINE_TRANSPORT"
+  ],
+  "halt_accountable_seat": "Daedalus",
+  "rule_10_note": "Base rule 10 (D-27). nonproductive_tick_bound counts CONSECUTIVE ticks that executed, failed or rejected no row (IDLE/BUSY/tick-raised); 17280 ticks is 24 h at the 5 s idle interval, longer than the widest quiet gap between Archaeon's daily slots, so a park means the queue's producer has been silent for a day. On the bound the daemon writes var/park-<worker>.json, posts one comms report to accountable_seat and exits 3; `viv.cli unpark` is the only clearance. halt_on_failure_classes: a FAILED tick in one of these classes parks the same way, addressed to halt_accountable_seat (Daedalus owns ENGINE_TRANSPORT) -- an engine episode halts one row, not eleven. var_dir (optional) is where flags, park records and the consumer log live; production sets it in config.local.json OUTSIDE any worktree (C7).",
+  "note": "Non-secret defaults ONLY. db_password, sfe_token and pew_token come from the environment (VIV_DB_PASSWORD / VIV_SFE_TOKEN / VIV_PEW_TOKEN) or from the gitignored vivarium/config.local.json. See viv/db.py for the precedence order. pew_namespace is 'prod' because that is what the autonomous consumer writes; ew/fossil.py filters namespace='prod' for scientific queries, so anything else is invisible to them. tests/conftest.py forces VIV_PEW_NAMESPACE=test so a test run can never reach it."
 }

@@ -34,6 +34,7 @@ from . import daemon as _daemon
 from . import loop as _loop
 from . import queue as _q
 from . import spec as _spec
+from . import vardir as _vardir
 
 
 def _j(obj) -> str:
@@ -94,11 +95,23 @@ def cmd_status(args, conn) -> int:
                                           for kv in sorted(c.items())) or "-"))
     st = _q.stranded(conn, stale_after_s=args.stale_after, schema=s)
     print("stranded:     %d" % len(st))
+    parked = 0
+    for w in workers:
+        var = _worker_var_dir(w) or _vardir.resolve(_db.load_config(),
+                                                    create=False)
+        park = _daemon.read_park(var, w["worker_id"])
+        if park is not None:
+            parked += 1
+            print("PARKED:       %s  %s since %s -- %s  (accountable: %s)"
+                  % (w["worker_id"], park.get("kind"), park.get("parked_at"),
+                     park.get("reason"), park.get("accountable_seat")))
     for r in st:
         print("   ! %s  %s  claimed_by=%s  last_seen=%s  sfe=%s"
               % (r["experiment_id"], r["status"], r["claimed_by"],
                  r["last_seen"], r["sfe_experiment_id"] or "-"))
-    return 1 if st else 0
+    # Non-zero on a park as well as a strand: a parked consumer is visible
+    # dormancy (base rule 7), and this command is used as a check.
+    return 1 if (st or parked) else 0
 
 
 def cmd_ls(args, conn) -> int:
@@ -382,10 +395,78 @@ def cmd_run(args, conn) -> int:
         print("[viv] NOTE: tracked files are modified in this worktree. The "
               "SHA above does not describe what is running.")
     conn.close()
-    d = _daemon.Daemon(worker_id=args.worker_id, schema=args.schema,
-                       idle_interval_s=args.interval)
-    return d.run(max_ticks=1 if args.once else args.max_ticks,
-                 stop_when_idle=args.stop_when_idle)
+    # The daemon writes its OWN log, flushed per line. The 2026-09-11 consumer
+    # died with a 0-byte stdout file behind it because its output had been
+    # shell-redirected by the launcher, so the cause of death is unrecorded.
+    # Base role s6: never shell-redirect a background job; write from the
+    # program.
+    log = _TeeLog(_vardir.resolve(_db.load_config())
+                  / ("consumer-%s.log" % _daemon._safe(
+                      args.worker_id or _loop.default_worker_id())))
+    log("[viv] log file: %s" % log.path)
+    try:
+        d = _daemon.Daemon(worker_id=args.worker_id, schema=args.schema,
+                           idle_interval_s=args.interval, log=log)
+    except _daemon.BoundNotDeclared as exc:
+        log("[viv] REFUSING TO START: %s" % exc)
+        return _daemon.EXIT_PARKED
+    log("[viv] park record would be: %s" % d.park_file)
+    try:
+        return d.run(max_ticks=1 if args.once else args.max_ticks,
+                     stop_when_idle=args.stop_when_idle)
+    finally:
+        log.close()
+
+
+class _TeeLog:
+    """print() plus an append-only file, flushed on every line."""
+
+    def __init__(self, path: Path):
+        self.path = path
+        path.parent.mkdir(parents=True, exist_ok=True)
+        self._fh = open(path, "a", encoding="utf-8")
+
+    def __call__(self, *parts) -> None:
+        line = " ".join(str(x) for x in parts)
+        print(line)
+        try:
+            sys.stdout.flush()
+        except Exception:                               # noqa: BLE001, S110
+            pass
+        try:
+            self._fh.write("%s %s\n" % (
+                _dt.datetime.now(_dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+                line))
+            self._fh.flush()
+        except Exception:                               # noqa: BLE001, S110
+            pass
+
+    def close(self) -> None:
+        try:
+            self._fh.close()
+        except Exception:                               # noqa: BLE001, S110
+            pass
+
+
+def _worker_row(conn, worker_id, schema):
+    for w in _q.workers(conn, schema=schema):
+        if w["worker_id"] == worker_id:
+            return w
+    return None
+
+
+def _worker_var_dir(row) -> Path | None:
+    """The state directory the RUNNING worker reported, if its build did."""
+    if not row:
+        return None
+    b = row.get("build") or {}
+    if isinstance(b, str):
+        try:
+            b = _json.loads(b)
+        except ValueError:
+            b = {}
+    v = b.get("var_dir")
+    return Path(v) if v else None
 
 
 def cmd_stop(args, conn) -> int:
@@ -403,9 +484,17 @@ def cmd_stop(args, conn) -> int:
     This writes a flag the daemon checks BETWEEN ticks. The current attempt
     always finishes; the stop lands where nothing is claimed.
     """
+    # C7. The flag used to be written beside THIS checkout's package, and
+    # `stop` reported success with the path it had just written -- while the
+    # daemon, running from its pinned worktree, read a different directory.
+    # Now: the flag goes where the RUNNING worker said its state lives (its
+    # heartbeat carries var_dir), and if no live worker can be seen the
+    # command REFUSES rather than writing a flag nothing will read.
+    row = _worker_row(conn, args.worker_id, args.schema)
     conn.close()
-    d = _daemon.Daemon(worker_id=args.worker_id, schema=args.schema)
-    path = d.stop_file
+    local = _vardir.resolve(_db.load_config())
+    var = _worker_var_dir(row) or local
+    path = _daemon.stop_file_for(var, args.worker_id)
     if args.clear:
         if path.exists():
             path.unlink()
@@ -413,14 +502,73 @@ def cmd_stop(args, conn) -> int:
         else:
             print("no stop flag at %s" % path)
         return 0
-    path.parent.mkdir(exist_ok=True)
-    path.write_text("requested by %s at %s\n"
-                    % (args.by, _dt.datetime.now(_dt.timezone.utc).isoformat()),
+    now = _dt.datetime.now(_dt.timezone.utc)
+    age = (now - row["last_seen"]).total_seconds() if row else None
+    if row is None or age > args.stale_after:
+        if not args.force:
+            print("REFUSING: no live heartbeat for worker %s (%s). A flag "
+                  "written now would be read by nothing. If a consumer is "
+                  "running under that id and its heartbeat is merely stale "
+                  "(a long row; backlog C2), re-issue with --force and the "
+                  "flag lands at %s"
+                  % (args.worker_id,
+                     "no heartbeat row" if row is None
+                     else "last seen %.0fs ago, stale after %.0fs"
+                          % (age, args.stale_after), path))
+            return 1
+        print("NOTE: forcing; heartbeat is %s"
+              % ("absent" if row is None else "%.0fs stale" % age))
+    if _worker_var_dir(row) is None and row is not None:
+        print("NOTE: the running worker's build reports no var_dir (a build "
+              "before C7); writing beside this checkout at %s. If the daemon "
+              "runs from another worktree this flag will not be read." % var)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text("requested by %s at %s\n" % (args.by, now.isoformat()),
                     encoding="utf-8")
-    print("stop requested for %s\n  flag: %s\n"
+    print("stop requested for %s (pid %s on %s, heartbeat %.0fs ago)\n"
+          "  flag: %s\n"
           "The daemon finishes its current tick and exits with nothing "
           "claimed. It clears the flag on the way out; `--clear` removes it "
-          "by hand if the daemon is not running." % (args.worker_id, path))
+          "by hand if the daemon is not running."
+          % (args.worker_id, row["pid"] if row else "?",
+             row["host"] if row else "?", age or 0.0, path))
+    return 0
+
+
+def cmd_unpark(args, conn) -> int:
+    """Record the explicit clearance rule 10 requires, then let `run` start.
+
+    The park record is never deleted: it is renamed to
+    park-<worker>.cleared-<utc>.json with the clearance appended, so the
+    history of parks and who cleared them stays readable. A restart without
+    this command is refused by the daemon."""
+    if not (args.reason or "").strip():
+        print("REFUSING: --reason is required; a clearance without a reason "
+              "is a restart with a nicer name")
+        return 1
+    row = _worker_row(conn, args.worker_id, args.schema)
+    conn.close()
+    local = _vardir.resolve(_db.load_config())
+    var = _worker_var_dir(row) or local
+    rec = _daemon.read_park(var, args.worker_id)
+    if rec is None and var != local:
+        var = local
+        rec = _daemon.read_park(var, args.worker_id)
+    path = _daemon.park_file_for(var, args.worker_id)
+    if rec is None:
+        print("no park record for %s at %s (nothing to clear)"
+              % (args.worker_id, path))
+        return 0
+    now = _dt.datetime.now(_dt.timezone.utc)
+    rec["cleared"] = {"by": args.by, "at": now.isoformat(),
+                      "reason": args.reason}
+    dest = path.with_name("%s.cleared-%s.json"
+                          % (path.stem, now.strftime("%Y%m%dT%H%M%SZ")))
+    dest.write_text(_json.dumps(rec, indent=2, default=str), encoding="utf-8")
+    path.unlink()
+    print("unparked %s (%s: %s)\n  clearance recorded at %s\n  by %s: %s"
+          % (args.worker_id, rec.get("kind"), rec.get("reason"), dest,
+             args.by, args.reason))
     return 0
 
 
@@ -452,6 +600,10 @@ def cmd_health(args, conn) -> int:
                      "alive": (now - w["last_seen"]).total_seconds() < 60,
                      "current": str(w["current_experiment"])
                                 if w["current_experiment"] else None,
+                     "parked": _daemon.read_park(
+                         _worker_var_dir(w) or _vardir.resolve(
+                             _db.load_config(), create=False),
+                         w["worker_id"]),
                      "build": w["build"]}
                     for w in workers],
     }
@@ -600,7 +752,18 @@ def build_parser() -> argparse.ArgumentParser:
     p_stop.add_argument("--by", default="operator")
     p_stop.add_argument("--clear", action="store_true",
                         help="remove the flag instead of setting it")
+    p_stop.add_argument("--stale-after", type=float, default=900.0,
+                        help="refuse if the worker's heartbeat is older (s)")
+    p_stop.add_argument("--force", action="store_true",
+                        help="write the flag even with no live heartbeat")
     p_stop.set_defaults(fn=cmd_stop)
+
+    s = sub.add_parser("unpark", help="record the clearance a rule-10 park "
+                                      "needs before `run` will start")
+    s.add_argument("--worker-id", default=_loop.default_worker_id())
+    s.add_argument("--by", required=True)
+    s.add_argument("--reason", required=True)
+    s.set_defaults(fn=cmd_unpark)
 
     s = sub.add_parser("sfe-identity",
                        help="the DURABLE SFE client identity (one per role)")
