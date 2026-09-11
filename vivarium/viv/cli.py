@@ -385,25 +385,25 @@ def cmd_run(args, conn) -> int:
     # main_worktree false, and both are places a long-lived process must not
     # live. Techne found that hole in their own copy of this guard.
     ws = _workspace.assert_durable_worktree("run the consumer")
-    print("[viv] workspace %s" % _json.dumps(ws))
-    if not ws["detached"]:
-        print("[viv] NOTE: rule 6 wants a long-lived process on a DETACHED "
-              "pinned SHA; this worktree is on branch %r. The run proceeds "
-              "and the receipt records the branch, so what actually executed "
-              "is never in doubt." % ws["branch"])
-    if ws["dirty"]:
-        print("[viv] NOTE: tracked files are modified in this worktree. The "
-              "SHA above does not describe what is running.")
     conn.close()
     # The daemon writes its OWN log, flushed per line. The 2026-09-11 consumer
     # died with a 0-byte stdout file behind it because its output had been
     # shell-redirected by the launcher, so the cause of death is unrecorded.
     # Base role s6: never shell-redirect a background job; write from the
-    # program.
+    # program. Opened BEFORE the workspace receipt so the receipt is in it.
     log = _TeeLog(_vardir.resolve(_db.load_config())
                   / ("consumer-%s.log" % _daemon._safe(
                       args.worker_id or _loop.default_worker_id())))
     log("[viv] log file: %s" % log.path)
+    log("[viv] workspace %s" % _json.dumps(ws))
+    if not ws["detached"]:
+        log("[viv] NOTE: rule 6 wants a long-lived process on a DETACHED "
+            "pinned SHA; this worktree is on branch %r. The run proceeds "
+            "and the receipt records the branch, so what actually executed "
+            "is never in doubt." % ws["branch"])
+    if ws["dirty"]:
+        log("[viv] NOTE: tracked files are modified in this worktree. The "
+            "SHA above does not describe what is running.")
     try:
         d = _daemon.Daemon(worker_id=args.worker_id, schema=args.schema,
                            idle_interval_s=args.interval, log=log)
