@@ -1,0 +1,38 @@
+{
+  "schema": "nyx.chop/0",
+  "record_kind": "ORGAN",
+  "id": "organ.map_elites.uniform_parent_selection.v0",
+  "specimen": "map_elites",
+  "name": "uniform parent selection from the archive: the objective steers retention, not reproduction",
+  "scale": "MECHANISM",
+  "cost_class": "CPU_SCALE",
+  "provenance": {
+    "ancestor": "MAP-Elites",
+    "sources": [
+      {"ref": "arXiv:1504.04909 (parents drawn uniformly at random from the archive)", "grade": "T2"},
+      {"ref": "doi:10.1109/TEVC.2017.2704781 (Cully and Demiris, 'Quality and Diversity Optimization: A Unifying Modular Framework', IEEE TEC 2018: selection operators varied independently of the container)", "grade": "T2"},
+      {"ref": "nyx/specimens/map_elites/PROVENANCE.md", "grade": "T1"}
+    ]
+  },
+  "questions": {
+    "ancestry": "The outer loop of MAP-Elites draws parents uniformly from occupied cells (T2). Cully and Demiris (T2) separated 'container' from 'selection operator' and varied them independently, which is the same cut this record makes. Neither local implementation (Archaeon's h3_replay, Techne's adapter) contains this organ: both are RETENTION-only replays of a fixed stream, by design. So this organ has NO T1 source in the repository as of 2026-09-11; it exists here as a T2 claim and a candidate for a soup, not as measured machinery.",
+    "mechanism": "Draw a parent uniformly from the set of occupied keys, ignoring the incumbents' objectives. Mutate, evaluate, offer to the archive. Reproductive opportunity is therefore equal across regions regardless of quality; quality acts only through retention.",
+    "input": "the set of occupied keys (from the cell replacement organ's incumbents()); a random source",
+    "output": "one incumbent's payload_ref to be varied",
+    "state": "none beyond the archive it reads",
+    "assumptions": "the archive is the population (no separate population exists); occupied keys are cheap to enumerate; variation of an incumbent produces offspring whose key is often NEAR the parent's key, so regions get explored from their neighbours -- if variation is key-scrambling, uniform selection has no locality and degenerates to random restart",
+    "interface": "select(occupied_keys, rng) -> key. One function; it does not need objectives.",
+    "fitness_value": "It decouples exploration from the objective: regions that are currently poor keep being varied, so the archive fills where a fitness-proportional selection would starve. In the original this is what 'illumination' meant operationally.",
+    "failure_landscape": "(a) once most keys are occupied, uniform selection spends most evaluations on regions that are already saturated -- later variants (curiosity-based selection, Cully and Demiris, T2) exist because of this; (b) with a key-scrambling variation operator there is no locality and the organ is indistinguishable from random search; (c) if the objective is cheap and the archive small, fitness-proportional selection reaches the top faster and uniform selection loses on any single-objective read-out; (d) it cannot express 'target the empty regions' at all -- that is a different selection organ.",
+    "ablation": "Replace uniform with fitness-proportional selection over incumbents: the expected result (T2) is faster peak objective and lower coverage; replace with selection targeted at empty keys: the expected result is coverage first. Neither has been measured in this repository; there is no local loop that reproduces, only replays.",
+    "decomposability": "Yes: (1) uniform over KEYS vs uniform over INCUMBENTS is identical only when one incumbent per key, so the cardinality prior of cell replacement decides it; (2) 'ignore the objective' is a separate PRIMITIVE from 'draw uniformly' -- one could draw uniformly over keys weighted by age, or by how recently the cell changed. Below that is a random index, trivia.",
+    "composability": "Any archive or container with enumerable members; any variation operator; a curriculum generator (it is one). It could select tasks from a task archive as readily as parents from a population.",
+    "human_prior": "Intrinsic: reproductive opportunity not monopolised by the current best. Human: exactly uniform (rather than any non-degenerate distribution); over the archive (rather than over a lineage tree, a recency window, or a neighbourhood); no adaptive schedule. The uniform choice is the simplest thing that is not fitness-proportional, which is a design convenience, not a property of the capability.",
+    "control": "Positive: over many draws from an archive with N occupied keys, each key is drawn with frequency 1/N within binomial error; a fitness-proportional selector on the same archive is NOT (chi-square distinguishes them at N=16, draws=1600). Negative: with one occupied key, every draw returns it. Cheap.",
+    "cheat": "A selector that has read the objective and secretly draws the worst incumbent: it passes any coverage-only read-out while inverting the mechanism. The uniformity chi-square is the detector; the cheat shows the detector responds to the draw distribution and not to coverage."
+  },
+  "alternative_cuts": [
+    "AMBIGUITY.md cut C: this organ is the whole of MAP-Elites and the archive is merely its state"
+  ],
+  "pressure_refs": ["pressure.map_elites.niche_persistence.v0"]
+}

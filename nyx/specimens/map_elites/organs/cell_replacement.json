@@ -1,0 +1,40 @@
+{
+  "schema": "nyx.chop/0",
+  "record_kind": "ORGAN",
+  "id": "organ.map_elites.cell_replacement.v0",
+  "specimen": "map_elites",
+  "name": "cell replacement: one incumbent per key, displaced only by a strictly better candidate",
+  "scale": "MECHANISM",
+  "cost_class": "CPU_SCALE",
+  "provenance": {
+    "ancestor": "MAP-Elites",
+    "sources": [
+      {"ref": "arXiv:1504.04909 (the archive update rule)", "grade": "T2"},
+      {"ref": "archaeon/producer/h3_replay.py `behavioral` policy (strictly better replaces; first-writer-wins on exact ties)", "grade": "T1"},
+      {"ref": "techne/h3_retention/adapter.py TIE_POLICY FIRST_WRITER_WINS, verified against installed pyribs; DISPOSITIONS vocabulary", "grade": "T1"},
+      {"ref": "nyx/specimens/map_elites/PROVENANCE.md", "grade": "T1"}
+    ]
+  },
+  "questions": {
+    "ancestry": "The archive update of MAP-Elites (Mouret and Clune 2015, T2), re-implemented twice in this repository independently of the donor: Archaeon's h3_replay behavioral policy and Techne's pyribs adapter (both T1). The tie rule was NOT inherited from the donor by either; Techne measured pyribs's rule and declared it.",
+    "mechanism": "Given (key, objective, payload): if no incumbent at key, store; else if objective > incumbent.objective (strictly), replace and record the eviction; else refuse. Every outcome is one of a closed disposition set. Optional caps on total items and total bytes refuse new keys past the cap without touching incumbents.",
+    "input": "a discrete key (any hashable; how it is produced is a separate organ, organ.map_elites.descriptor_binning.v0), a totally ordered objective, an opaque payload, a byte size if a byte cap is in force",
+    "output": "a disposition in {RETAINED_NEW_CELL, RETAINED_IMPROVED_CELL, REJECTED_BY_ARCHIVE, CAP_REFUSED_COUNT, CAP_REFUSED_BYTES, SKIPPED_NO_SCORE} (Techne's vocabulary, T1) plus, on replacement, the evicted payload reference; the archive state after the call",
+    "state": "a map key -> (objective, payload_ref); item count; byte count. Nothing else. No history is required by the mechanism; Archaeon and Techne both ADD a full insertion/eviction log so eviction is not deletion, which is a Prometheus requirement (base role: rows ship with verdicts), not part of the organ.",
+    "assumptions": "objectives are comparable across keys (a single scale); the key function is fixed for the archive's lifetime (changing it invalidates every incumbent); one incumbent per key is the right cardinality (see human_prior); exact ties are rare enough that the tie rule does not dominate (Techne's receipt records objective_degeneracy for exactly this reason)",
+    "interface": "insert(key, objective, payload_ref, nbytes=0) -> disposition; incumbents() -> iterable of (key, objective, payload_ref). Two functions. An organism that can produce a key and a number can use it without knowing where the key came from.",
+    "fitness_value": "In the original environment it kept the best-so-far solution in every region of a hand-chosen behaviour space, so a later process (damage recovery in Cully et al. 2015, T2) could search a small diverse repertoire instead of the whole genome space. The value was realised by a CONSUMER of the archive, after the search ended.",
+    "failure_landscape": "(a) degenerate objectives: with many exact ties the tie rule (first-writer-wins vs last-writer-wins) silently decides the archive's contents -- Techne's adapter refuses to inherit it for this reason (T1); (b) objective not comparable across keys: an easy region's incumbents look better than a hard region's and any consumer that ranks across cells is misled; (c) a key function that maps most candidates to few keys: the archive degenerates to top-1 per popular key (Techne's receipt: 10 of 150 descriptors outside the declared edges, T1); (d) the cap: when count or byte caps bind, later regions are never represented regardless of quality (CAP_REFUSED_* dispositions exist so this is visible, T1); (e) nonstationary objectives: an incumbent evaluated under an old regime is never re-evaluated and blocks better candidates under the new one -- the mechanism has no re-evaluation step at all.",
+    "ablation": "Removing strictness (>= instead of >) makes the archive churn on ties with no quality change: the same exact-tie facts Techne measured (T1) imply this, but no ablation run exists in this repository. Removing the one-per-key rule (k per key) is CVT/multi-elite territory (T2) and untested here. Removing the archive entirely leaves top-K retention, which archaeon/producer/h3_replay.py implements as the `top_k` policy on the same stream: the comparison H3 was designed to run and has NOT yet run on a real stream (roles/Archaeon/H0H5_STATUS.md: waits for the first real compatible stream). Ablation evidence here is therefore: designed, not measured.",
+    "decomposability": "Yes, two further cuts: (1) the comparison rule (strict / non-strict / epsilon) as a PARAMETERIZATION; (2) the cap refusal as a separate PRIMITIVE that could wrap any retention policy (Archaeon's hybrid policy applies the same caps to a reservoir, T1). Below that is a dictionary write, which is trivia.",
+    "composability": "Any producer of (key, objective, payload) triples: a novelty measure feeding the key, a lexicase-style per-case score feeding the objective, a trajectory archive feeding the payload; any consumer that samples incumbents (parent selection, repertoire search, curriculum choice). It does not care what the payload is.",
+    "human_prior": "Intrinsic to the capability: keep the best per region under a fixed partition. Arbitrary and human: (1) exactly one incumbent per key; (2) a strict comparison with a fixed tie rule; (3) no re-evaluation of incumbents; (4) the archive is separate from the population (in the original, the archive IS the population; here it is a retention policy over a stream, which is Archaeon's framing, T1). A soup organism could plausibly hold k per key, re-evaluate incumbents stochastically, or let the key drift.",
+    "control": "Positive: feed a fixture stream with known per-key maxima and assert incumbents() equals the per-key argmax (archaeon/producer/h3_replay.py tests do this for the behavioral policy, T1). Negative: feed a stream whose objective is constant and assert no RETAINED_IMPROVED_CELL disposition ever fires. Cheap: microseconds per insert.",
+    "cheat": "An oracle that is handed the per-key argmax of the whole stream in advance and inserts only those: it must produce an identical incumbents() set with zero REJECTED_BY_ARCHIVE dispositions. If the detector (the per-key argmax comparison) cannot tell the oracle's archive from a correct one, and CAN tell a broken one (last-writer-wins on a degenerate stream) from it, the control measures what it claims."
+  },
+  "alternative_cuts": [
+    "AMBIGUITY.md cut B: partitioned elitism as ONE organ with the key function as a parameter, not two organs",
+    "AMBIGUITY.md cut C: the archive is not the organ at all; the organ is uniform parent selection and the archive is its state"
+  ],
+  "pressure_refs": ["pressure.map_elites.niche_persistence.v0", "pressure.map_elites.hidden_axis.v0"]
+}

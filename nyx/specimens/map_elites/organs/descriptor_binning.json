@@ -1,0 +1,40 @@
+{
+  "schema": "nyx.chop/0",
+  "record_kind": "ORGAN",
+  "id": "organ.map_elites.descriptor_binning.v0",
+  "specimen": "map_elites",
+  "name": "descriptor binning: a behaviour vector becomes a discrete niche key by declared edges",
+  "scale": "PRIMITIVE",
+  "cost_class": "CPU_SCALE",
+  "provenance": {
+    "ancestor": "MAP-Elites",
+    "sources": [
+      {"ref": "arXiv:1504.04909 (the feature-space grid)", "grade": "T2"},
+      {"ref": "doi:10.1109/TEVC.2017.2735550 (CVT: the grid replaced by nearest-centroid because cell count explodes with dimension)", "grade": "T2"},
+      {"ref": "techne/acquisition/receipts/adapter_qualification-pyribs-20260911T064705Z.json observations.seam.measures_are_PRE_BINNED (equal-width vs declared equal-mass edges; binning_function = count of declared edges the value is at or above; 10 of 150 outside declared edges)", "grade": "T1"},
+      {"ref": "archaeon/producer/h3_replay.py `_cell` (declared edges, first-writer-wins)", "grade": "T1"},
+      {"ref": "techne/DONOR_INVENTORY.md line 50 (coverage measures the caller's descriptor choice as much as the search)", "grade": "T1"}
+    ]
+  },
+  "questions": {
+    "ancestry": "The feature-space grid of MAP-Elites (T2); in this repository the binning is Archaeon's `_cell` (count of declared edges the value is at or above) and Techne found that pyribs's GridArchive cannot express those edges, so the adapter PRE-BINS and hands the archive an index (T1). That finding is what cut this organ away from cell replacement: two implementations agreed by coincidence on equal-width edges (v0) and would have disagreed on equal-mass edges (v1).",
+    "mechanism": "For each axis i, key_i = number of declared edges e_{i,1} <= ... <= e_{i,k} that the descriptor value d_i is at or above; the key is the tuple. Values beyond the last edge fall in the last bin (or are flagged outside, which the receipt counts separately).",
+    "input": "a descriptor vector of fixed length; a declared edge list per axis (equal-width, equal-mass from a pilot, or arbitrary)",
+    "output": "an integer tuple (the key); optionally an out-of-range flag per axis",
+    "state": "the edge lists only. Stateless per call.",
+    "assumptions": "the descriptor is computable for every candidate at evaluation time (it is a measurement of behaviour, not of the genome); the edges are fixed for the archive's lifetime; the number of cells (product of bins) is affordable -- this is exactly what fails at high dimension and motivated CVT (T2)",
+    "interface": "bin(descriptor: sequence of floats, edges: sequence of sorted sequences) -> tuple of ints. One pure function.",
+    "fitness_value": "It is what makes 'diverse' operational: without a partition there is no 'best per region'. In the original it let the search be steered by behaviour instead of by the objective alone.",
+    "failure_landscape": "(a) descriptor misspecification: coverage of the key space measures the caller's choice of descriptor at least as much as the search (Techne, T1) -- an archive can look well-illuminated because the edges were drawn where the candidates already were; (b) equal-width edges on a heavy-tailed descriptor put most candidates in one bin (Techne: widths 60.5/4.0/4.0/59.5 after equal-mass correction, T1); (c) descriptors outside the declared range (10 of 150 in the receipt, T1) are either silently clamped or dropped depending on the implementation -- a difference the two local implementations exposed; (d) cell count explodes with dimension (T2); (e) a descriptor that is a function of the objective makes the partition redundant with the objective and the archive collapses to top-K.",
+    "ablation": "Replacing binning with the identity (every distinct descriptor is its own key) turns the archive into an unbounded memory; replacing it with a constant key turns it into top-1. Both are one-line changes to `_cell` and neither has been run as an ablation on a real stream in this repository (the H3 comparison waits for its first real stream). Designed, not measured.",
+    "decomposability": "Yes: (1) the edge choice (equal-width / equal-mass / learned / CVT centroids) is a PARAMETERIZATION with its own failure landscape; (2) the out-of-range policy (clamp / drop / new bin) is a PARAMETERIZATION Techne's receipt shows matters. Below that is a comparison loop, trivia.",
+    "composability": "Anything that produces a fixed-length vector per candidate (a behaviour trace summary, a program's resource profile, an embedding) and anything that consumes a discrete key (the cell replacement organ, a curriculum that targets empty keys, a novelty measure over key occupancy).",
+    "human_prior": "Intrinsic: some partition of behaviour into regions. Human: that the partition is a rectilinear grid with hand-declared edges chosen BEFORE the search; that the descriptor is hand-chosen; that the partition never changes. Techne's donor note (T1) says it directly: coverage is evidence about the caller's descriptor choice, not about discovery. A soup organism has no reason to inherit the grid; it might inherit only 'candidates that differ on some measured axis are kept apart'.",
+    "control": "Positive: bin a descriptor equal to each edge and assert the key increments exactly at the edge (Archaeon's `_cell` verbatim rule). Negative: with a single edge per axis, assert only two keys per axis ever appear. Cheap: nanoseconds.",
+    "cheat": "A binning that ignores the descriptor and returns a key drawn uniformly at random: it maximises apparent coverage while carrying no information. A coverage detector that cannot distinguish the random key from the real one is measuring the key space's size, not illumination; the cheat control for any coverage claim is therefore: run the random-key binning on the same stream and report both coverages."
+  },
+  "alternative_cuts": [
+    "AMBIGUITY.md cut B: binning is a parameter of partitioned elitism, not an organ"
+  ],
+  "pressure_refs": ["pressure.map_elites.hidden_axis.v0"]
+}

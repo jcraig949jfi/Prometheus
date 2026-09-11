@@ -1,0 +1,32 @@
+{
+  "schema": "nyx.chop/0",
+  "record_kind": "ORGAN",
+  "id": "organ.fixture.counter.v0",
+  "specimen": "fixture",
+  "name": "positive control: a complete organ record",
+  "scale": "PRIMITIVE",
+  "cost_class": "CPU_SCALE",
+  "provenance": {
+    "ancestor": "fixture",
+    "sources": [{"ref": "nyx/chop/fixtures/organ_positive.json", "grade": "T1"}]
+  },
+  "questions": {
+    "ancestry": "this fixture",
+    "mechanism": "increments an integer",
+    "input": "an integer",
+    "output": "the integer plus one",
+    "state": "none",
+    "assumptions": "integers are bounded by the host",
+    "interface": "f(n) -> n+1",
+    "fitness_value": "none; it exists to pass validation",
+    "failure_landscape": "overflow at the host bound",
+    "ablation": "unknown",
+    "decomposability": "no",
+    "composability": "anything that consumes an integer",
+    "human_prior": "unknown",
+    "control": "assert f(1) == 2",
+    "cheat": "a constant function returning 2 passes the control on n=1 only"
+  },
+  "alternative_cuts": [],
+  "pressure_refs": []
+}

@@ -1,0 +1,29 @@
+{
+  "schema": "nyx.chop/0",
+  "record_kind": "PRESSURE",
+  "id": "pressure.map_elites.hidden_axis.v0",
+  "specimen": "map_elites",
+  "name": "the axis that matters later is not in the score now",
+  "condition": "A world in which two candidates with equal scores under the current objective differ in a measurable property of their behaviour that the objective ignores, and a later task in the same world pays according to that property. Organisms observe behaviour traces, not the later task.",
+  "capability_rewarded": "Telling apart candidates the objective cannot tell apart, along a behavioural axis, and keeping representatives that differ on that axis rather than duplicates that agree.",
+  "world_requirements": [
+    "a first task with an objective that is invariant under some behavioural property P (many distinct behaviours score identically; the eligibility count is the number of exact-tie classes with more than one member, which must be large)",
+    "a behaviour trace per evaluation from which P is computable but not given (organisms must measure it themselves)",
+    "a second task, revealed after the first ends, whose score depends on P; the organism's stored candidates are the only material it may enter",
+    "a retention cap so duplicates crowd out distinct candidates",
+    "a seed and a replay"
+  ],
+  "vacuity_condition": "Vacuous if P is a function of the first objective (then the objective already separates the candidates); if the second task's score is independent of P (then measuring P bought nothing); if the cap does not bind (duplicates cost nothing); or if the tie classes are small (then there is nothing to tell apart). Report the tie-class census before the run.",
+  "trivial_shortcuts": [
+    "keep one of everything: closed by the cap",
+    "learn the second task during the first: closed by revealing it only after the first ends",
+    "store raw traces and defer measurement: allowed, and it is a legitimate different adaptation; the cap must be in bytes so raw traces cost more than measured summaries"
+  ],
+  "cheat_control": "An organism handed P directly (the property, not the trace) and told to keep one candidate per distinct value of P. It must reach the ceiling on the second task. If it cannot, the second task is not paying for P and the world is not eligible.",
+  "negative_control": "The same world with P also present in the first objective (the tie classes collapse to singletons). The capability must confer no advantage: measuring P from the trace buys nothing the score did not already give.",
+  "cost_class": "CPU_SCALE",
+  "organ_refs": ["organ.map_elites.descriptor_binning.v0", "organ.map_elites.cell_replacement.v0"],
+  "expressible_without_organ": true,
+  "forbidden_terms": ["MAP-Elites", "MAP Elites", "pyribs", "CVT", "quality diversity", "QD archive", "archive", "grid", "cell", "elite", "bin", "descriptor"],
+  "notes": "This is the pressure behind hand-chosen descriptors, inverted: in the donor a human chose the axis in advance and the archive kept one candidate per region of it. Here the axis is not given; whether an organism finds P, finds some other axis, or stores raw traces is the experiment. Techne's donor note (coverage measures the caller's descriptor choice, T1) is the warning that made this pressure separate from niche persistence: a world that hands the organism the axis is testing the keeper, not the measurer."
+}
