@@ -192,7 +192,79 @@ artifact; this is that declared clean-up; section 6 is the report.
 
 ## 6. Deletion receipt
 
-    APPENDED AFTER THE ACT -- see below.
+EXECUTED 2026-09-11, after the evidence in sections 1-4 was committed at
+630f086df ("Pronoia PRON-02: evidence record for the M2 ghost actuator,
+before neutralisation"). The order was deliberate: record, commit, then
+act, so the record cannot be lost with the artifact.
+
+WHAT WAS REMOVED
+
+    one file: pronoia.py, from the M2 canonical checkout root
+    git blob 96f674b29be55c816a923613fe5798dd48304a0a
+    32,165 bytes on disk, mode -rwxr-xr-x, mtime 2026-04-11 11:26:01 -0400
+
+WHY
+
+    It was a runnable actuator whose publish path performs git add,
+    a pathspec-less git commit, and git push to main from the canonical
+    checkout, with every git error swallowed by capture_output=True --
+    a four-way D-23 breach (s1, s2, s5 twice), reachable by
+    double-clicking any of three untracked .bat files on the same host.
+    No process, scheduler, import, tracked launcher or live caller
+    depended on it (section 4). Its content is held by git and was
+    verified recoverable immediately before and immediately after the
+    deletion.
+
+COMMANDS AND THEIR OUTPUT
+
+    git cat-file -p 96f674b29be55c816a923613fe5798dd48304a0a | wc -l
+        -> 872                        (blob readable BEFORE)
+    git hash-object pronoia.py
+        -> 96f674b29be55c816a923613fe5798dd48304a0a
+                                      (identity re-confirmed at the
+                                       moment of deletion, not from an
+                                       earlier reading)
+    rm -v pronoia.py
+        -> removed 'pronoia.py'
+    test -f pronoia.py
+        -> absent: confirmed
+    git status --short                (in the canonical checkout)
+        -> ?? evidence_wiki/.gitignore
+           ?? evidence_wiki/derived/
+                                      (both pre-existing and not this
+                                       seat's; no tracked file changed,
+                                       no index touched)
+    git cat-file -p 96f674b29be55c816a923613fe5798dd48304a0a | head -3
+        -> #!/usr/bin/env python3
+           """
+           Pronoia - The Forethought Orchestrator
+                                      (blob still readable AFTER)
+
+HOW TO UNDO IT COMPLETELY
+
+    git show 3b3c74bc0^:pronoia.py > pronoia.py
+
+    Nothing else is required. No history was rewritten, no tracked file
+    was changed, and the .gitignore entry that hides it is untouched.
+
+WHAT THE TRIGGERS DO NOW
+
+    NOT VERIFIED BY EXECUTION, and deliberately so: running any of them
+    is the thing this disposition exists to prevent. The failure mode is
+    established by inspection instead. Each trigger invokes
+    `python pronoia.py ...`; CPython resolves and opens the script file
+    before executing any of its bytecode, so with the file absent the
+    interpreter exits with "can't open file 'pronoia.py'" before
+    publish_reports, before subprocess, and before any git call. The
+    triggers fail closed. That claim rests on interpreter semantics, not
+    on a test this seat ran.
+
+WHAT DID NOT HAPPEN
+
+    pronoia.py was never executed, on this pass or any other. Its
+    publish path was never exercised against any repository. No .bat
+    file was run, read beyond a grep, modified or deleted. No tracked
+    file was touched. No other host was contacted.
 
 ## 7. What remains open after this disposition
 

@@ -60,6 +60,17 @@ except Exception as _e:
     HAS_PG = False
     agora_persist = None  # type: ignore[assignment]
 
+# Productive-liveness semantics (PRON-03). Pure, tested, no DB:
+# roles/Pronoia/science/test_productive_liveness.py. Fail-soft like the other
+# optional imports above -- a missing module must degrade the health field to
+# None, never take the loop down.
+sys.path.insert(0, str(REPO_ROOT / "roles" / "Pronoia" / "science"))
+try:
+    from productive_liveness import WorkEvidence, derive_health
+    HAS_LIVENESS = True
+except Exception as _e:
+    HAS_LIVENESS = False
+
 # Shared state for the heartbeat thread (mutated at each cycle boundary).
 import threading as _threading
 PRONOIA_STATE = {
@@ -72,8 +83,62 @@ PRONOIA_STATE = {
     "last_cycle_finished_at": None,
     "last_cycle_duration_sec": None,
     "last_cycle_ok": None,
+    # --- work state (PRON-03) -------------------------------------------
+    # These two are the ONLY fields in this dict the heartbeat may use to
+    # claim the loop is working, and neither is ever set by the heartbeat
+    # thread itself. last_work_attempt_at is stamped when a cycle really
+    # starts; last_work_success_at only when a cycle really finished AND
+    # left an observable consequence behind (see _cycle_left_evidence).
+    "last_work_attempt_at": None,
+    "last_work_success_at": None,
+    # The cadence the work is SUPPOSED to happen at, in seconds. Set from
+    # the loop's configuration at startup, never inferred from observed
+    # behaviour -- inferring it would make any loop healthy at whatever
+    # rate it happened to be running.
+    "work_cadence_sec": 3600.0,
 }
 _HEARTBEAT_STOP = _threading.Event()
+
+
+def _parse_iso(s) -> datetime | None:
+    """Parse an ISO timestamp back out of PRONOIA_STATE, or None.
+
+    Returns None rather than raising: a malformed timestamp must read as
+    'no evidence', never as a crash in the heartbeat thread and never as a
+    silently wrong time.
+    """
+    if not s:
+        return None
+    try:
+        dt = datetime.fromisoformat(s)
+        return dt if dt.tzinfo else dt.replace(tzinfo=timezone.utc)
+    except Exception:
+        return None
+
+
+def _cycle_left_evidence(since_wall: datetime) -> bool:
+    """Did this cycle leave an observable consequence on disk?
+
+    A subprocess exit code is the child's own report about itself. This seat
+    exists because such reports were trusted for two incarnations, so the
+    success boundary is not 'exit 0' alone: at least one dashboard artifact
+    must have been written at or after the moment the cycle began.
+
+    Returns False on any error -- an unreadable artifact is not evidence of
+    success, and failing closed here costs a false STALLED, which is the
+    cheap direction to be wrong in.
+    """
+    for rel in DASHBOARD_FILES:
+        try:
+            p = REPO_ROOT / rel
+            if not p.exists():
+                continue
+            mtime = datetime.fromtimestamp(p.stat().st_mtime, tz=timezone.utc)
+            if mtime >= since_wall:
+                return True
+        except Exception:
+            continue
+    return False
 
 
 def _start_pronoia_pg_heartbeat(machine: str, interval_sec: int = 60) -> _threading.Thread | None:
@@ -94,10 +159,39 @@ def _start_pronoia_pg_heartbeat(machine: str, interval_sec: int = 60) -> _thread
             try:
                 started = datetime.fromisoformat(PRONOIA_STATE["started_at"])
                 uptime_sec = (datetime.now(timezone.utc) - started).total_seconds()
+                # Work state, read (never written) by this thread. Parsed
+                # here rather than stored as datetimes so the state dict stays
+                # JSON-serialisable for status_json.
+                attempt_at = _parse_iso(PRONOIA_STATE.get("last_work_attempt_at"))
+                success_at = _parse_iso(PRONOIA_STATE.get("last_work_success_at"))
+
+                # health is DERIVED from timestamps and the clock. It is not
+                # a value the cycle code hands us, which is the whole point:
+                # if the cycle thread dies, `now` keeps advancing and this
+                # value rots from productive to stalled on its own. A
+                # heartbeat that cannot report its own uselessness is the
+                # defect this seat is a two-time specimen of.
+                health = None
+                if HAS_LIVENESS:
+                    try:
+                        health = derive_health(
+                            now=datetime.now(timezone.utc),
+                            evidence=WorkEvidence(
+                                started_at=started,
+                                last_heartbeat_at=datetime.now(timezone.utc),
+                                last_attempt_at=attempt_at,
+                                last_success_at=success_at,
+                            ),
+                            cadence_sec=float(PRONOIA_STATE.get("work_cadence_sec") or 3600.0),
+                        )
+                    except Exception as e:  # never let the instrument stop the beat
+                        log.warning("health derivation failed: %s", e)
+
                 blob = {
                     **PRONOIA_STATE,
                     "uptime_sec": int(uptime_sec),
                     "pid": os.getpid(),
+                    "health": health,
                     "key_metrics": {
                         "cycles_today": PRONOIA_STATE.get("cycles_today", 0),
                         "last_cycle_duration_sec": PRONOIA_STATE.get("last_cycle_duration_sec"),
@@ -107,10 +201,16 @@ def _start_pronoia_pg_heartbeat(machine: str, interval_sec: int = 60) -> _thread
                 agora_persist.write_heartbeat(
                     agent_name="Pronoia",
                     machine=machine,
+                    # `status` remains a claim about the PROCESS only, and it
+                    # is true: this thread is running, so the process is up.
+                    # It is no longer the only thing we say.
                     status="online",
                     status_json=blob,
                     pid=os.getpid(),
                     connected_at=started,
+                    last_work_attempt_at=attempt_at,
+                    last_work_success_at=success_at,
+                    health=health,
                 )
                 consecutive_failures = 0
             except Exception as e:
@@ -280,6 +380,10 @@ def main():
 
     # ── Postgres dual-write heartbeat thread (mirrors Pronoia state to Postgres) ──
     machine = os.environ.get("PROMETHEUS_MACHINE", "M4")
+    # Declare the cadence the work is SUPPOSED to run at, from this loop's own
+    # configuration, before the heartbeat thread starts. Taken from the
+    # configured interval rather than from observed behaviour (PRON-03).
+    PRONOIA_STATE["work_cadence_sec"] = float(args.hourly_min) * 60.0
     pg_heartbeat_thread = _start_pronoia_pg_heartbeat(machine=machine, interval_sec=60)
 
     # ── Agora connection ───────────────────────────────────────────
@@ -318,8 +422,15 @@ def main():
                 cycle_id = new_cycle_id()
                 os.environ["PROMETHEUS_CYCLE_ID"] = cycle_id
                 cycle_start = time.monotonic()
+                # Wall-clock start, kept separately from the monotonic timer:
+                # monotonic is right for durations and useless for comparing
+                # against a file mtime or a database timestamp.
+                cycle_start_wall = datetime.now(timezone.utc)
                 PRONOIA_STATE["current_op"] = f"cycle {cycle_id[:8]} firing"
                 PRONOIA_STATE["last_cycle_id"] = cycle_id
+                # WORK ATTEMPTED -- stamped here, unconditionally, because a
+                # cycle really is starting. This is the only place it is set.
+                PRONOIA_STATE["last_work_attempt_at"] = cycle_start_wall.isoformat()
                 log.info("[hourly] firing portfolio cycle (cycle_id=%s)", cycle_id[:8])
                 emit_event("pronoia_cycle_started",
                            summary=f"Pronoia hourly cycle (interval={args.hourly_min:.0f}min)",
@@ -377,6 +488,27 @@ def main():
                 PRONOIA_STATE["last_cycle_finished_at"] = datetime.now(timezone.utc).isoformat()
                 PRONOIA_STATE["last_cycle_duration_sec"] = round(cycle_dur, 2)
                 PRONOIA_STATE["last_cycle_ok"] = cycle_ok
+
+                # WORK SUCCEEDED -- the narrowest defensible boundary, and the
+                # only place this field is ever set. TWO conditions, not one:
+                #   (1) cycle_ok: monitor, metis and push each exited 0. This
+                #       is the children's own report about themselves.
+                #   (2) an artifact was actually written at or after the
+                #       moment the cycle began. This is the observable
+                #       consequence, and it is what makes (1) more than a
+                #       status string.
+                # "The loop did not throw" is deliberately NOT sufficient:
+                # an exception anywhere above leaves this field untouched, so
+                # the health value decays to stalled by itself.
+                cycle_left_evidence = _cycle_left_evidence(cycle_start_wall)
+                if cycle_ok and cycle_left_evidence:
+                    PRONOIA_STATE["last_work_success_at"] = datetime.now(timezone.utc).isoformat()
+                else:
+                    log.warning(
+                        "[hourly] cycle %s did NOT record work success "
+                        "(cycle_ok=%s, artifact_evidence=%s) -- last_work_success_at "
+                        "left at %s", cycle_id[:8], cycle_ok, cycle_left_evidence,
+                        PRONOIA_STATE.get("last_work_success_at"))
 
                 if agora_client:
                     try:

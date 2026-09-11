@@ -157,3 +157,79 @@ loop, and does not invent work inside another lane. The Era 2 loop on M4
 keeps running and keeps producing nothing; that is now recorded in
 roles/base-role/MONITORS.md where the next seat to look will find it,
 which is the only outcome this pass was authorised to produce.
+
+---
+
+# Addendum, 2026-09-11: first active mission
+
+Built from 213873bc1 on branch pronoia/base-role-adopt-2026-09-11.
+Seat state changed from BLOCKED to ACTIVE for this mission by the
+operator's directive, and returns to BLOCKED on PRON-01 at its close.
+
+## 6. If Pronoia disappeared tomorrow, what would tell Prometheus?
+
+The operator asked, and warned that "the heartbeat would stop" is the
+wrong answer. It is, and for a reason worth stating precisely rather than
+conceding.
+
+THE FAILURE OF THIS SEAT IS SILENT BY CONSTRUCTION. That is not modesty;
+it is the structural property that makes the job dangerous. An auditor of
+productive liveness produces verdicts and corrections. If it stops, no
+verdict becomes wrong -- the existing ones simply stop being renewed, and
+every row it would have corrected keeps asserting exactly what it
+asserted before. Thirty-two rows in agora.agent_heartbeats have said
+'online' for up to 116 days; if this seat vanished, they would go on
+saying it, and nothing anywhere would change state. A dead Pronoia and a
+working Pronoia that found nothing produce the identical observable,
+which is C3 from the survey turned on its author.
+
+So the answer cannot be a signal this seat emits. It has to be a
+consequence in someone else's data:
+
+  1. THE PRIMARY OBSERVATION, and the one this seat has now wired:
+     the count of rows in agora.agent_heartbeats carrying a non-NULL
+     last_work_success_at stops rising. It is 2 of 36 today, both written
+     by untracked M4-local code. If this seat is doing its job that
+     number climbs as writers adopt the patched write_heartbeat; if the
+     seat stops, it freezes. It is a count anyone can take in one query,
+     it lives in a database this seat does not own, and it cannot be
+     faked by this seat writing about itself.
+
+  2. roles/Pronoia/science/ledgers/liveness_survey_*.json stops gaining
+     dated files. Registered in roles/base-role/MONITORS.md with a 30-day
+     threshold, so the ABSENCE of the artifact is the alarm rather than
+     the absence of a heartbeat. This seat is thereby subject to its own
+     instrument, which it should be.
+
+  3. The sharpest one, and the least comfortable: MONITORS.md rows go
+     back to being written by the seats they describe, with nobody
+     checking a row against the freshness source the row itself names.
+     Two of two Pronoia-relevant rows were wrong on 2026-09-11 and two
+     more were wrong or mis-caused in this mission's survey. If nobody is
+     finding a wrong row every pass, either the registry has become
+     correct or nobody is looking -- and those two are distinguishable
+     only by someone taking the measurement.
+
+THE HONEST COROLLARY. All three of those observations require a person or
+a seat to go and look. None of them pages anybody. This seat has not
+solved its own problem; it has made its failure detectable-on-inspection
+rather than invisible, and it is saying so rather than claiming a
+watchdog it does not have. A seat whose own dormancy is only visible to a
+volunteer is exactly the shape base rule 7 names, and the correct fix is
+an external consumer with a reason to care -- which is PRON-05 (name a
+consumer), still unanswered.
+
+## 7. Mission state at close
+
+    PRON-02  CLOSED. Ghost actuator deleted from M2 after its evidence
+             was committed. Content recoverable at
+             git show 3b3c74bc0^:pronoia.py. Three untracked triggers
+             remain and are now inert; reported, not removed.
+    PRON-03  PATCHED AND TESTED, NOT DEPLOYED. 45 tests pass. The loop
+             runs on M4, which this seat cannot reach. Until someone
+             deploys it, Pronoia's own row still reads no_work_observed,
+             and that is the truthful reading.
+    SURVEY   DELIVERED. 36 rows, 7 counterexamples, 0 agents
+             demonstrably productive, 3 architectural patterns and 3
+             local bugs separated.
+    SEAT     Returns to BLOCKED on PRON-01.
