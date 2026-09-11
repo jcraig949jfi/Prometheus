@@ -1,0 +1,199 @@
+================================================================================
+REVIEW PACKET -- rulings applied, gauntlet controls, Q045 v2 (Z7), disposition
+Hephaestus seat, Prometheus, 2026-09-11 (second packet of the day)
+Commits of record: 3fdb32f8a (v2 prereg, alone), 5d784becf (rulings applied,
+freshness, controls script, v2 machinery, ledger), d57a5c80e (controls and
+v2 results, fixture, readouts)
+Author: Hephaestus (Claude Code, Fable 5.1)   Invoked by: the operator,
+"HEPHAESTUS -- CONTINUE FROM YOUR BOOTSTRAP ... Proceed."
+================================================================================
+
+0. WHAT THIS PACKET IS
+
+The operator ruled on the first packet (six rulings + a component-level
+disposition assignment). This packet reports the rulings applied, three
+executable items closed (queue freshness; negative/positive/cheat controls
+on the boolean specs; a preregistered Z7 characterization of Q045), one
+kill that fired inside the characterization and what it found, the
+disposition ledger opened, and the first exchange with Archaeon under
+ruling 6. CONFLICT OF INTEREST: the author wrote every instrument here.
+Nothing is admitted anywhere.
+
+1. CONTEXT (for a reader of the first packet)
+
+Q045 = twenty behaviours certified unreachable without primitive p05 in a
+tiny vector world; the gauntlet said OPERATOR on 18, INCONCLUSIVE(B) on 2,
+SEARCH_ROUTING on 0, and A0 reached all 10 controls. The operator: keep B
+frozen; the result establishes one constructed operator-gap in one regime;
+do not stop; preregister denominators and boundary semantics; keep exact
+equality; route OPERATOR findings to the substrate and Archaeon's ecology,
+not to Apollo; disposition historical machinery component by component;
+falsification governs claims, not machinery.
+
+2. WHAT WAS DONE
+
+2a. Rulings recorded verbatim (sha256 f5d4f75be4b37c67..., manifest
+    verified against the committed blob) and mapped one by one in
+    roles/Hephaestus/RULINGS_2026-09-11.md. HEPH-17 closed by ruling 6.
+2b. HEPH-11 queue freshness: hephaestus/state.py; every job records
+    last_run_at / last_success_at / last_input_at / produced / note.
+    STATE.json after the hand jobs (E3): refine NO-OP "no unresolved
+    packet changed state"; triage NO-OP "every known wall already has a
+    packet"; apprentice NO-OP "no packet in APPRENTICE-TESTING"; rank 4;
+    handoff 1. The queue's dormancy is now readable without running it.
+2c. HEPH-09/10 controls on the boolean specs (expectations fixed in the
+    script before running; depth 3, budget 300,000 per arm; seed 20260911):
+      NEGATIVE  seeded random column: n_mechanism must be 0 in A1/A2/B
+      POSITIVE  a named reachable expression at its true depth
+      CHEAT     the real kernel injected as `decoy_kernel` into A1, and
+                separately into A2 only
+    Result (E3): ALL_PASS on vacuous_truth (154.8 s) and consistency_check
+    (0.8 s). The decisive row: consistency_check baseline A1 has 0
+    witnesses; A1 + decoy has exactly 1, at depth 1, the decoy; the A2-only
+    injection shows the decoy in A2 with A1 unchanged. Every specimen the
+    seat has run now has an executed cheat control (Q045: arm C).
+    Limitation: the random negative target produced 0 coerced aliases, so
+    that control did not exercise the alias column.
+2d. HEPH-24 Q045 v2: a spec-declared `shift_context` hook was added to the
+    gauntlet (default no-op; both boolean specs re-verified identical on
+    every arm and route under it, per-route counts and witness strings).
+    v2 evaluates ONLY the 300 shift points under Z7 instead of Z6; the
+    preregistration (denominator 20 and 10; unit = target; no numeric
+    gate; boundary semantics; four predictions incl. two tooling kills)
+    was committed ALONE at 3fdb32f8a before the run. Run: 1,525.3 s.
+2e. Disposition ledger opened (roles/Hephaestus/DISPOSITION_LEDGER.md):
+    21 component rows, each with the claim it carried, the claim's status,
+    the component's state, the evidence grade and date, and a next step.
+    Two rows written from prose were upgraded to E3 by opening the files
+    (apollo/src/hephaestus_ops.py imports, 9 ops; the 2,757-line legacy
+    loop, function inventory read).
+2f. Ruling 6: the Q045 boundary was offered to Archaeon as a REPORT
+    (candidate world TINYPROG-minus-p05; candidate organ p05; the gauntlet
+    as an experimental boundary detector), comms 30. Archaeon replied
+    (comms 31): ACCEPTED as a world candidate, parked as ARCH-27 until a
+    Vivarium kind exists for typed-primitive vector worlds; asked for one
+    artifact, the 20-target fixture. Delivered:
+    hephaestus/closure_results/q045_lost_fixture_v1.json (program trees
+    regenerated with the set-identical enumerator and ASSERTED equal to
+    the frozen run's target list; probes; 1,290 verify points; 300 shift
+    points; signatures; Z7 shift outputs; v1 class; sha256 of the source
+    rows; workspace receipt; 116,044 bytes).
+
+3. RESULTS OF v2 (rows: closure_results/q045_lost_class_v2_Z7.json)
+
+  prediction  statement                          observed        verdict
+  V2-P1       witnesses, aliases, classes        identical       TRUE
+              identical to v1 (30 x 4 arms)      (asserted)
+  V2-P2       certified-program witnesses        0 lost          TRUE
+              robust under Z7
+  V2-P3       some v1-robust witnesses lose      43 arm-level    TRUE for
+              robustness; each a Z6 identity     decreases, 86   the losses
+                                                 witness losses  inspected
+  V2-P4       robust counts can only go down;    4 GAINS (B arm  KILL FIRED
+              a gain = tooling defect            on 4 CONTROL
+                                                 targets, 1->3)
+
+  The kill's diagnosis (E3, verified on one input): v1 drew shift inputs
+  with entries 0..6 and evaluated them under Z6; 6 is outside Z6; ops that
+  reduce mod 6 fold it to 0, ops that only permute (rotate, reverse) keep
+  it. On x = (6,1,2,3): p00(x) = (1,2,3,6) while emul(econst1(X), rot(X))
+  = (1,2,3,0) under MOD 6 and (1,2,3,6) under MOD 7. So v1's witness-level
+  `robust` flags contain false negatives; the defect is v1's shift column
+  design, not v2. Under the well-posed Z7 column the TARGET-LEVEL
+  coordinates survive unchanged: C robust 20/20 on LOST (the certified
+  program is always among the robust witnesses); A0 robust 10/10 on
+  CONTROL. Every one of the 86 lost witnesses is exhaustive-equal to its
+  target on Z6^4 and differs on the Z7 points; by inspection they fall in
+  two families -- x^3 = x (hence x^4 = x^2) and 6x = 0 -- each verified
+  on two examples by direct evaluation, the assignment of all 86 made by
+  reading, not by a prover.
+
+  Two-coordinate reading, kept apart: v1's CLASSIFICATIONS use
+  mechanism-bearing, not robust, so none is affected; v1's witness-level
+  robust column is superseded for characterization by v2's. v1 is frozen;
+  a dated annotation was appended below its readout (operator ruling).
+
+4. WHAT CHANGED IN THE REPOSITORY
+
+  3fdb32f8a  prereg v2 only.
+  5d784becf  22 files: rulings verbatim + manifest; RULINGS mapping;
+             state.py + record() in 8 modules; gauntlet_controls.py;
+             closure_test.py shift_context hook; closure_q045.py run()
+             parametrized (defaults = v1); closure_q045_v2.py; ledger;
+             backlog (HEPH-24 reframed, 25-28 added); RESPONSIBILITIES
+             prereg checklist; routing report + manifest.
+  d57a5c80e  controls_*.json + console; q045_lost_class_v2_Z7.json +
+             stages; q045_lost_fixture_v1.json; three readouts (v1's by
+             annotation only); CALIBRATION +1; ledger +1; STATUS; backlog
+             (HEPH-09/10/11/24/25/28 closed; 29/30 added); journal.
+  Frozen and untouched: q045_lost_class.json (v1 rows), the boolean specs'
+  committed results, b_ops(), COERCE, A2-GENERIC-v1. No scheduled task;
+  no premium model; CPU only (~1.5 h of one core).
+
+5. WHAT THIS DID NOT ESTABLISH
+
+  - Nothing about the gauntlet beyond: one constructed OPERATOR positive in
+    the vector regime, negative/positive/cheat controls on two boolean
+    specs, and a ring-change characterization. It remains EXPERIMENTAL
+    (ruling 3). The boolean specimens' classifications are unchanged.
+  - The negative control did not exercise the alias column; a planted
+    search-point coincidence is the next control (not built).
+  - The 86-loss family assignment is by inspection.
+  - Nothing was executed from the legacy loop or the Apollo adapter; their
+    ledger rows are E3 for "opened and inventoried", not for behaviour.
+  - No cheap-model call was made (no eligible packet).
+
+6. AUTHOR'S OWN ERRORS AND WHAT THEY COST
+
+  - Designed v1's shift column (2026-09-01) with out-of-alphabet inputs
+    under Z6 and called it a "structural shift"; it was ill-posed. Cost:
+    v1's witness-level robust column is unreliable in both directions;
+    target-level statements survive. The prereg's own kill caught it.
+  - Wrote the v2 prereg's V2-P4 as "a gain = tooling defect in v2"; the
+    defect was in v1. The prereg's wording was right to stop the read; the
+    attribution was wrong until diagnosed.
+  - The controls readout first said "every loss examined" before the
+    inspection scope was stated; corrected in the same pass.
+
+7. WHAT IS OWED, AND BY WHOM
+
+  - Hephaestus: HEPH-29 (forward_chain through the gauntlet as a typed
+    spec, preregistered); HEPH-30 (behavioural NCD lifted from the legacy
+    loop as an instrument with its own controls); a planted-coincidence
+    negative control; HEPH-26 (b_ops_v2, versioned) after HEPH-29.
+  - Archaeon: nothing now; ARCH-27 is parked on a Vivarium kind.
+  - Operator (XL): HEPH-22 (M3 station's fate). HEPH-17 is closed.
+  - Charon or Aporia: independent held-out generator for MINT-0001.
+
+8. QUESTIONS FOR THE EXTERNAL REVIEWER
+
+  1. What would falsify "the gauntlet does not hallucinate mechanism"?
+     Our answer: a mechanism-bearing witness on a seeded random target
+     whose exhaustive domain is disjoint from the search points. None in
+     6 arm-runs. Is a random column a fair null, or should the null be a
+     structured but unreachable target?
+  2. Should the v1 witness-level robust column be marked "superseded" in
+     the frozen JSON itself, or only in the readout annotation (as done)?
+     The operator ruled "do not rewrite"; the annotation route was taken.
+  3. What should we stop? Candidate: the witness-level robust column
+     altogether, reporting only target-level robustness with the certified
+     program as the reference. The case against: v2 showed the column CAN
+     name which identities a witness relied on, which is characterization
+     a future world-builder may want.
+  4. The disposition ledger has NECROPOLIS rows (T2/T3 tiers, MAP-Elites
+     archive, 12-model convergence data) that this seat says it should not
+     adjudicate alone. Who should? Elenchus was named as a candidate.
+  5. Under ruling 6, is the fixture (program trees + verification domains)
+     the right unit to hand a world-builder, or does the ecology want the
+     boundary as a generator (the world minus p05 plus a budget) rather
+     than as 20 fixed targets?
+
+9. HOW TO REPRODUCE
+
+  python -m hephaestus.src.gauntlet_controls          # ~2.6 min; ALL_PASS
+  python -m hephaestus.src.closure_q045_v2 8 30000000 # ~25 min; expect
+     v1_comparison.targets_identical True, mech_identical True, 47 robust
+     changes (43 down, 4 up), summary identical to v1
+  python -c "import json;print(len(json.load(open('hephaestus/closure_results/q045_lost_fixture_v1.json'))['targets']))"  # 30
+  All from a linked worktree; every module refuses the canonical checkout.
+================================================================================
