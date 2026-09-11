@@ -1,33 +1,24 @@
 # Nyx status
 
-Currency: 2026-09-11 15:35 UTC (post-cut direction applied; DreamCoder delivered).
+Currency: 2026-09-11 ~21:40 UTC (production trial pass closed).
 
-seat state: ACTIVE. Charter and post-cut direction both committed
-  verbatim with manifests (roles/Nyx/prompts/2026-09-11_charter/,
-  roles/Nyx/prompts/2026-09-11_post_cut_direction/).
-what it asserts: PRESENT (comms, claude-fable-5-1), ACTIVE (working
-  NYX-06 -> NYX-07), PRODUCTIVE (12 validating records over two
-  specimens; 4 deliveries posted: #44/#52 Vivarium, #45/#53 Archaeon),
-  VALID only where a test says so (nyx/tests 12 passed; every committed
-  record validates). No scientific claim: every ablation "designed, not
-  measured"; every paper content claim T2; identifiers T1-SOURCE.
-chain (PRODUCED -> ... -> METABOLIZED): four deliveries at DELIVERED;
-  zero CONSUMED. Vivarium has never booted in comms, so both pressures
-  are queued unseen; Archaeon has 4 unseen. NYX-23's stop condition
-  (three specimens, zero returns) is one specimen away from being
-  testable.
+seat state: ACTIVE, loop OPEN at WIP cap 1, HELD on the consumer-backlog
+  STOP condition pending an operator ruling or a consumer return.
+what it asserts: PRESENT (comms); ACTIVE (lean_simp CUT-3 done);
+  PRODUCTIVE (3 specimens; 25 validating records; 6 deliveries posted:
+  #44 #52 #175 Vivarium, #45 #53 #176 Archaeon); VALID only where a
+  receipt says so (nyx/tests 15 passed; ablations/RECEIPT_2026-09-11.json
+  exit 0). No scientific claim: no organ shown to work outside its
+  ancestor; every fitness_value field begins with unknown.
+chain (PRODUCED -> ... -> METABOLIZED): six deliveries at DELIVERED;
+  zero CONSUMED. Vivarium has never booted in comms (6 pressures unseen).
 workspace: F:\Prometheus-worktrees\nyx-base-role, branch
-  nyx/base-role-adopt-2026-09-11; merged forward to origin/main by SHA
-  as journaled; last on main: see journal.
-comms: synced 15:30 UTC; queue length 0; Talos broadcast about a
-  TALOS-10 consumer search seen (answered or not: see journal).
-monitors owned or fed: none. Delivery age (oldest unanswered: #44,
-  posted 14:55 UTC) is the seat's dormancy signal once NYX-22 exists.
+  nyx/base-role-adopt-2026-09-11; integration to main per journal.
+comms: synced 20:53Z; queue length 0; no returns.
+monitors owned or fed: none (NYX-22 delivery-age reader still open).
 lane: nyx/ and roles/Nyx/ only.
-blockers: none on the next action. Held by design: hidden_axis
-  (MAP-Elites) and budget_below_the_space (DreamCoder).
-rulings applied today: NYX-25 (grades split), NYX-26 (no Chopper #2
-  yet; self-comparison after Go-Explore), NYX-27 (no convenience seat).
-next executable action: NYX-07 Go-Explore (clean stopping boundary
-  procedure in nyx/README.md applies if Vivarium returns), then NYX-23
-  self-comparison and readiness report for Chopper #2.
+blockers: none on the next executable action; the loop is HELD by a
+  STOP condition, not blocked.
+next executable action: on a return -> NYX-30 (record, recompute cap).
+  On an operator "keep chopping" -> NYX-33 (N1 hypothesis shrinker under
+  K1). Otherwise NYX-32 (c23 residual test, cheap, inside the ancestor).
