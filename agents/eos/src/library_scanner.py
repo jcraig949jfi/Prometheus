@@ -284,6 +284,16 @@ def save_manifest(manifest: Dict, output_path: str = None) -> str:
 
 
 if __name__ == "__main__":
+    # D-23 / EOS-19: this entry point WRITES data/library_manifest.json, so it
+    # is mutating work and refuses to run from the canonical checkout.
+    _repo_root = Path(__file__).resolve().parents[3]
+    if str(_repo_root) not in sys.path:
+        sys.path.insert(0, str(_repo_root))
+    from archaeon.workspace import assert_not_canonical
+    _ws = assert_not_canonical("an Eos library scan", allow_override=False)
+    print("workspace {} [{}] base_sha {} dirty={}".format(
+        _ws["worktree_path"], _ws["branch"], _ws["base_sha"][:9], _ws["dirty"]))
+
     print("=" * 60)
     print("  EOS LIBRARY SCANNER")
     print("  Discovering embeddable mathematical assets")
