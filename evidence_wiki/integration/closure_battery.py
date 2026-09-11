@@ -26,6 +26,10 @@ import requests
 # in ssl.create_default_context with FileNotFoundError before any gate ran.
 # Both stacks are independent and either machine must be able to self-verify.
 # Precedence: explicit CLI flag > env var > this host's own deploy cert/URL.
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent))
+from ew import workspace  # noqa: E402
+workspace.assert_not_canonical("run a PEW battery")
+
 _HOSTS = {                       # hostname -> (LAN address, cert basename, PEW machine id)
     "SKULLPORT": ("192.168.1.202", "m1.crt", "M1"),
     "SPECTREX5": ("192.168.1.191", "m2.crt", "M2"),
