@@ -1,385 +1,424 @@
 {
- "schema_version": "1.0.0",
- "kind": "necropolis_dossier",
- "_README": "Necromancer pass on Pollux (Charon swarm numerical-coincidence scanner, May 2026). Every prior label on this grave was read at zero weight; every VALID/INVALID layer cites a script that was executed on this tree and whose result JSON sits beside it under dossiers/pollux_evidence/. The Keeper's second-channel census (dossiers/_keeper_evidence/) is dual-recorded, single-mechanism evidence and is used only to test mechanism predictions, never to confirm counts.",
- "identity": {
-  "agent_id": "Pollux",
-  "aliases": [
-   "pollux",
-   "numerical-coincidence scanner",
-   "Charon swarm v0.5/v0.6 Pollux"
-  ],
-  "historical_machine": "M2 (pivot/agent_roster_2026-05-28.md line 36)",
-  "historical_kind": "tool (daemon, 28-min tick)",
-  "historical_operator": "Charon swarm (Techne-built), 2026-05-24..05-30",
-  "source_paths": [
-   "charon/agents/pollux/daemon.py (the only source file; 2 commits: 8c619443a v0.5 2026-05-24, 43b094552 v0.6 2026-05-25)",
-   "charon/agents/pollux/__init__.py",
-   "charon/agents/_shared_queues.py (stygian_priority_queue)",
-   "charon/agents/stygian/daemon.py lines 225-243 (POLLUX-<pair> mapping); charon/agents/stygian/executor.py lines 221-236 (short-circuit stub)",
-   "charon/agents/hecate/daemon.py lines 262-352 (cross-generator MI; >=2-generator rule; prefix regex)",
-   "charon/agents/erebos/daemon.py lines 57-58, 153-166 (POLLUX_LEDGER -> SwarmState.pollux_substantive)",
-   "ergon/learner/greedy/sources.py lines 158-202 (pollux_examples; gold=False for every row); ergon/learner/greedy/corpus/manifest_*.json",
-   "prometheus_math/databases/mahler.py (the static dataset; last commit ca6f7e6ab 2026-08-27)"
-  ],
-  "evidence_baseline": "e17934d9a82855b6e0ae1c0bf54c0cce569b7795"
- },
- "original_organism": {
-  "premise": "Pairs of Mahler-measure subsets (by degree, by class: Salem/Pisot, Smyth-extremal, narrow M-bands, Lehmer neighbourhood) may share a spacing profile; a rank correlation that SURVIVES mean-spacing normalization is a numerical coincidence worth a battery test, one that only exists before normalization is a scale artifact. Charter role (daemon.py header, AGENT_AUTOPSIES): be Hecate's second non-Theseus generator so the cross-generator MI can become non-zero.",
-  "mechanism": "Per tick: pick one pair from a rotation (v0.6: 4 SEED_PAIRS + 5 CANDIDATE_POOL, replace a pair after 5 consecutive identical PROMOTED/REJECTED verdicts), load both subsets via _load_subset (7 selectors over mahler.py), truncate the larger to the n smallest values, corr_raw = Spearman(sorted(a)[:n], sorted(b)[:n]), corr_norm = Spearman of the mean-spacing-normalized arrays, _classify by thresholds (CORR_SIGNIFICANT 0.30, CORR_FLIPPED_DELTA 0.20) into 4 kill_patterns -> PROMOTED / REJECTED / UNVERIFIED; write a kill_ledger.jsonl row in Theseus shape, an artifacts/scan_*.md, an agora intelligence_outputs row; PROMOTED pairs appended to the Stygian priority queue.",
-  "producers": [
-   "charon/agents/pollux/daemon.py::PolluxAgent.run_tick"
-  ],
-  "inputs": [
-   "prometheus_math/databases/mahler.py (all_below(2.0): 8625 polynomials; salem_class 8513/112; is_smyth_extremal 16; provenance_tier known180_2022 8431)"
-  ],
-  "outputs": [
-   "charon/agents/pollux/state/kill_ledger.jsonl (ABSENT from this tree)",
-   "charon/agents/pollux/artifacts/scan_*.md (ABSENT)",
-   "charon/agents/pollux/state/{pair_history,settled_pairs,candidate_pool_idx}.json (ABSENT)",
-   "agora.intelligence_outputs rows, stage pollux_tick_complete (PRESENT on M1 Postgres; Keeper census)",
-   "Stygian priority-queue rows source=pollux for PROMOTED pairs"
-  ],
-  "intended_consumers": [
-   "Hecate (cross-generator MI)",
-   "Stygian (v10 battery on POLLUX-* survivors, E9 of the 05-25 plan)",
-   "Erebos (SwarmState composition)",
-   "Aporia DR queue (planned, 05-25 E5; never wired)"
-  ]
- },
- "observed_history": {
-  "run_period": "2026-05-24 03:08 to 2026-05-30 11:55 local (-04:00), 286 ticks; v0.5 code 05-24 03:10 .. 05-25 01:46 (~22.6 h, no settle policy), v0.6 thereafter. Stopped in the fleet halt of 05-30 (15 agents, last rows 11:40..12:25 local), not by its own failure. PROF_TRIAGE 08-20 still lists lifecycle 'active'.",
-  "measurements": [
-   "RE-SCAN TODAY (pollux_rescan_result.json): daemon imports; all 9 pairs load; deterministic on re-run; corr_raw = 1.0 at ledger precision on all 9 pairs (max |dev| 2.2e-16); verdicts: deg10_vs_deg12 REJECTED (norm -0.2235), deg14_vs_deg16 PROMOTED (0.3992), salem_vs_pisot PROMOTED (0.3985), smyth_extremal_vs_rest REJECTED (-0.0786), deg18_vs_deg20 UNVERIFIED (0.0400), even_deg_vs_odd_deg UNVERIFIED (0.0817), small_deg_vs_large_deg PROMOTED (0.4687), narrow_band_1.10_1.20_vs_1.30_1.50 REJECTED (-0.6922), lehmer_witness_neighborhood UNVERIFIED (0.0519).",
-   "REACHABILITY (rescan Q3): with corr_raw fixed at 1.0 the classifier is a threshold on corr_norm alone: attenuates on [-1,-0.7995] and [0,0.30); sign_flips on (-0.7995,0); survives on [0.30,1]. pollux_no_correlation_observed is UNREACHABLE.",
-   "REPLAY (rescan Q4): the v0.6 policy replayed 286 ticks on today's verdicts gives sign_flips 15 / survives 15 / attenuates 256, pool exhausted at tick 47, three pairs never settle (deg18_vs_deg20 87, even_deg_vs_odd_deg 88, lehmer 81). P69's census (86/39/161; 54/56) is NOT reproduced in magnitude; only total 286, the 3 never-settling pairs at near-equal share, and zero no_correlation rows are reproduced.",
-   "INSTRUMENT NULLS (pollux_instrument_null_result.json, seed 20260911, 1000 draws): T1 Spearman(sorted x, sorted y) = 1 for independent random x,y (max dev 2.2e-16); T2 the 08-12 prescription: corr_raw 1.0 on DB order / shuffled / reversed for all 9 pairs; T3 label-permutation null on corr_norm: two-sided p deg10 0.449, deg14 0.093, salem 0.014, smyth 0.834, deg18 0.84, even_odd 0.755, small_large 0.001, narrow_band 0.002, lehmer 0.788; T4 PROMOTED rate under pure independence at the daemon's n: up to 0.332 (n=24/29 exponential), 0.311 (33/39), 0.265 (17/24); T5 truncation sensitivity (random size-n subsample instead of n smallest, 200 draws): verdict stability salem_vs_pisot 0.00, small_deg_vs_large_deg 0.00, deg14_vs_deg16 0.015, deg10 0.865, narrow_band 0.55, smyth 0.22.",
-   "SECOND CHANNEL (dossiers/_keeper_evidence/intelligence_outputs_census_result.json, graves.pollux; dual-recorded by the daemon itself, single mechanism): 286 rows, 286 distinct cycle_id, 9 distinct output_summary, every row stage pollux_tick_complete success=true, first 2026-05-24T03:08:13-04:00, last 2026-05-30T11:55:23-04:00. The three recorded summaries (deg10 REJECTED raw=1.0 norm=-0.2235; deg14 PROMOTED norm=0.3992; salem PROMOTED norm=0.3985) equal today's rescan to 4 dp. Mechanism prediction '9 static pairs -> exactly 9 distinct summaries' holds.",
-   "CONSUMERS (pollux_consumer_trace_result.json, all 16 citations verified on the tree): 4 consumers wired, 0 used the verdict bit."
-  ],
-  "artifact_counts": {
-   "ledger_rows_claimed_by_P69": 286,
-   "intelligence_outputs_rows_second_channel": 286,
-   "distinct_output_summaries_second_channel": 9,
-   "pairs_in_menu": 9,
-   "scan_md_artifacts_claimed": 286,
-   "artifacts_present_on_this_tree": 0,
-   "source_commits": 2,
-   "tests_on_tree": 0
+  "schema_version": "1.0.0",
+  "kind": "necropolis_dossier",
+  "_README": "Necromancer pass on Pollux (Charon swarm numerical-coincidence scanner, May 2026). Every prior label on this grave was read at zero weight; every VALID/INVALID layer cites a script that was executed on this tree and whose result JSON sits beside it under dossiers/pollux_evidence/. The Keeper's second-channel census (dossiers/_keeper_evidence/) is dual-recorded, single-mechanism evidence and is used only to test mechanism predictions, never to confirm counts.",
+  "identity": {
+    "agent_id": "Pollux",
+    "aliases": [
+      "pollux",
+      "numerical-coincidence scanner",
+      "Charon swarm v0.5/v0.6 Pollux"
+    ],
+    "historical_machine": "M2 (pivot/agent_roster_2026-05-28.md line 36)",
+    "historical_kind": "tool (daemon, 28-min tick)",
+    "historical_operator": "Charon swarm (Techne-built), 2026-05-24..05-30",
+    "source_paths": [
+      "charon/agents/pollux/daemon.py (the only source file; 2 commits: 8c619443a v0.5 2026-05-24, 43b094552 v0.6 2026-05-25)",
+      "charon/agents/pollux/__init__.py",
+      "charon/agents/_shared_queues.py (stygian_priority_queue)",
+      "charon/agents/stygian/daemon.py lines 225-243 (POLLUX-<pair> mapping); charon/agents/stygian/executor.py lines 221-236 (short-circuit stub)",
+      "charon/agents/hecate/daemon.py lines 262-352 (cross-generator MI; >=2-generator rule; prefix regex)",
+      "charon/agents/erebos/daemon.py lines 57-58, 153-166 (POLLUX_LEDGER -> SwarmState.pollux_substantive)",
+      "ergon/learner/greedy/sources.py lines 158-202 (pollux_examples; gold=False for every row); ergon/learner/greedy/corpus/manifest_*.json",
+      "prometheus_math/databases/mahler.py (the static dataset; last commit ca6f7e6ab 2026-08-27)"
+    ],
+    "evidence_baseline": "e17934d9a82855b6e0ae1c0bf54c0cce569b7795"
   },
-  "actual_consumers": [
-   "Hecate: read the ledger (LEDGER_CANDIDATES) but its cross-generator MI admits only canonical patterns emitted by >=2 generators; Pollux's four tails are emitted by no other generator on the tree, so Pollux contributed 0 records to that statistic by construction (charon/agents/hecate/daemon.py lines 340-347; consumer trace C1).",
-   "Stygian: mapped queue rows to POLLUX-<pair> with hardness POLLUX_SURVIVOR, then executor.py short-circuited every one (reason pollux_survivor_loader_not_yet_implemented); loaders/pollux_survivor.py never existed (consumer trace C2).",
-   "Erebos: read the ledger as substantive-recent rows for SwarmState and composed ids ending in Pollux pair names (second-channel Erebos summaries); it used pair NAMES, not verdicts (consumer trace C3).",
-   "Ergon greedy Learner (2026-06-07..10): consumed ALL 286 rows into three corpora (manifest_v1: 86 train / 200 gold-eval; e_shown / e_hidden: 286 train) with gold=False hard-coded for every row, PROMOTED rows included (ergon/learner/greedy/sources.py line 189; consumer trace C4)."
-  ],
-  "consumption_evidence": [
-   "dossiers/pollux_evidence/pollux_consumer_trace_result.json",
-   "roles/Ergon/GREEDY_FOLLOWUP_PROGRESS_2026-06-07.md line 50: minus_pollux 0.8092; 'pollux gold claims are all-False templated'; slice 1.0 -> 0.395 when removed",
-   "engine/queues/CONSUMPTION.jsonl 2026-08-21T09:12Z and 09:47Z (consumed as autopsy material, not as data)",
-   "dossiers/_keeper_evidence/intelligence_outputs_census_result.json (Erebos composed ids carry Pollux pair names)"
-  ]
- },
- "autopsy": {
-  "prior_verdicts": [
-   "2026-05-25 pivot/charon_swarm_diminishing_returns_2026-05-25.md:55 'Was 100% deterministic' (primary observation; v0.6 patch was the response)",
-   "2026-06-10 aporia/docs/program_audit_2026-06-10.md:118,192 'real signal: 39 PROMOTED ... 86 scale artifacts correctly REJECTED'",
-   "2026-06-22/23 pivot/REASSESSMENT_2026-06-22_consolidated.md:754 and COMPONENT_DISPOSITION_PLAN_2026-06-23.md:66 REVIVE 'Real signal'",
-   "2026-06-24 pivot/COMPONENT_DOSSIERS_2026-06-24.md:396 tautology / 'ALL 286 ledger rows have corr_raw=1.0' / RETIRE-after-HITL / 'Ergon Learner has ZERO references'",
-   "2026-08-12 charon/CHARON_SESSION_2026-08-12.md:174 prescription (sorted vs shuffled script) - not executed until this pass",
-   "2026-08-20 engine/queues/PROF_TRIAGE.jsonl:34 VACUOUS-NO-SOLVER, lifecycle active",
-   "2026-08-21 engine/ledger/AGENT_AUTOPSIES.jsonl:18 (Aporia P69) LOW-BITS-PER-VERDICT-EMISSION; AUTOPSY_TAXONOMY.md:45 cluster 2 and :83 cluster 4 secondary",
-   "All of the above read at zero weight (charter); each re-derived or contradicted below."
-  ],
-  "failure_classes": [
-   "SELECTION-DECOUPLED-FROM-SIGNAL (primary here, not secondary as in the taxonomy): the PROMOTED/REJECTED selector is a threshold on a statistic with no null, a constant raw leg, and verdicts that flip under an arbitrary truncation choice",
-   "LOW-BITS-EMISSION (form upheld: 9 facts in 286 rows; the taxonomy's causal link to Hecate's MI null is NOT upheld)",
-   "SEAM-BROKEN (three seams: Stygian stub, Hecate vocabulary exclusion, Learner label inversion)",
-   "BOUNDED-MENU-SATURATION (pool exhausted by tick 47 of 286; three never-settling pairs absorb the rest)"
-  ],
-  "kill_boundary": "KILLED: (1) 'raw Spearman before normalization' as a measurement - it is Spearman(sorted, sorted) = 1 identically (T1, T2), so it observes nothing about the data and one of the four kill_patterns is unreachable; (2) the 2026-06-10 / 06-22 / 06-23 'real signal, 39 PROMOTED' reading - the PROMOTED verdicts have a chance floor up to 33% under independence (T4), one of the three PROMOTED pairs does not beat a label-permutation null (deg14 p=0.093), and the other two are 0% stable when the daemon's 'n smallest of the larger subset' truncation is replaced by a random size-n subsample (T5); (3) P69's mechanism claim that Pollux's constant re-emission 'mechanically explains' Hecate's cross-generator MI null - Hecate's >=2-generator rule excludes every Pollux pattern by vocabulary, so bit content was irrelevant; (4) the 06-24 claim that the Ergon Learner never referenced Pollux. NOT KILLED: the hypothesis itself (some Mahler subset pairs share a spacing profile beyond scale) - it was never given a fair test; the normalized statistic is non-degenerate on real data (T3 p ranges 0.001..0.84 across pairs) and two pairs reject the label-permutation null, which is neither confirmation (truncation-unstable) nor refutation. NOT KILLED: P69's 9-facts-in-286-rows census in FORM (second channel: 9 distinct summaries), though its numbers (86/39/161) are unreproducible from the on-tree code and the ledger is lost.",
-  "surviving_claims": [
-   "Per-pair output is deterministic on static data (05-25 primary observation; rescan deterministic_on_rerun true; 9 distinct summaries over 286 ticks).",
-   "The daemon ran for the full swarm window and stopped with the fleet (second channel + fleet_halt_census).",
-   "_mean_spacing_normalize, _spearman and the 7 _load_subset selectors execute correctly today (used unchanged by both evidence scripts).",
-   "The normalized correlation differs between pairs in a way a label-permutation null can sometimes distinguish (salem_vs_pisot p=0.014, small_deg_vs_large_deg p=0.001, narrow_band p=0.002) - a fact about the STATISTIC, not yet a fact about Mahler measures, because those values move to different verdicts under random subsampling."
-  ],
-  "uncertainty": [
-   "P69's ledger census (86 REJECTED / 39 PROMOTED / 161 UNVERIFIED; deg18 x54, even_odd x56) cannot be reproduced or refuted: the ledger is absent from every tree reachable here and the census was 'printed in-pass' (engine/shadow/WORKLOG.jsonl:98). The v0.6-policy replay gives 15/15/256 on today's data. Candidate explanations, all untestable without the ledger: ~22.6 h of v0.5 (no settle policy, rotation over 4 TEST_PAIRS), short-circuit rows, a different tick cadence early on, or data drift in mahler.py before the 2026-08-27 commit (ruled out for the three pairs whose May summaries survive in the second channel).",
-   "Whether the 39 PROMOTED rows ever reached Stygian's queue file is unknown (queue file absent); the executor stub would have discarded them anyway.",
-   "The v0.5 window: TEST_PAIRS (4 pairs, no settle) ran ~22.6 h before v0.6; how many of the 286 rows it produced is unrecorded.",
-   "T4's chance floor depends on the marginal distribution assumed (uniform 0.05-0.13, exponential up to 0.33 at small n); the true marginals of Mahler subsets are neither, so the floor is bracketed, not measured.",
-   "The Ergon Learner corpora were built from the ledger on 2026-06-07..10; those corpus files, if present, would be an independent copy of the 286 rows. Not searched beyond the manifests (out of this pass's write scope and time budget); a Cleric with ergon/learner/greedy/corpus/ access could recover the ledger and settle the census question."
-  ],
-  "contradictory_evidence": [
-   "AGAINST the design-error reading: the statistic Pollux intended (correlation of spacing profiles between two subsets) can be made well-defined - the normalized leg IS defined and non-degenerate (T3) - so a Cleric may argue this is INSTRUMENT_ERROR (one bad leg) plus MEASUREMENT_ERROR (no null), with the design intact. The Necromancer's answer: the design specified no pairing relation between subsets of different size and hard-coded a truncation ('n smallest of the larger') that T5 shows decides the verdict; that is a design fault the instrument fix would not repair. Recorded as portability defect 1.",
-   "AGAINST NO_FAIR_TEST_ON_RECORD and FOR MEASUREMENT_FAILURE: the 06-24 tautology finding, now executed (T1/T2), is exactly a measurement failure; the classification hinges on whether the deepest load-bearing INVALID is DESIGN or INSTRUMENTATION. Both are load-bearing here; the Necromancer ranks DESIGN deeper because a correct raw leg with the same pairing/truncation/no-null design still yields verdicts with a 33% chance floor (T4).",
-   "AGAINST 'zero consumers used the verdict bit': the Ergon Learner did read every row and its ablation moved a score (0.8092 vs 0.9): but Ergon's own reading (GREEDY_FOLLOWUP_PROGRESS line 50) is that it learned the template, not the verdict, and gold=False on PROMOTED rows means the bit was inverted, not consumed.",
-   "AGAINST ECOSYSTEM_FAILURE as a cause of THIS death: Pollux's outputs were unusable before any consumer touched them; the consumer failures would have been fatal for a working Pollux but are not what killed this one. ECOSYSTEM is INVALID on its own evidence, listed as contributing, not primary."
-  ],
-  "capability_contingency": {
-   "frontier_dependent": false,
-   "frontiers": [],
-   "era_bound_claim": "Not era-bound: no model is in the loop. Spearman(sorted, sorted) = 1 and a thresholded statistic without a null fail identically in any era.",
-   "what_would_move_it": "Nothing on the model frontier. A fair test of the premise needs: a defined pairing relation or a two-sample spacing-distribution test (not a rank correlation between unrelated orderings), a matched-marginal null with a published chance floor, seed replication over subsamples, and verdicts recorded with their p-values. Each of those is a Frankenstein design question, not a capability question."
+  "original_organism": {
+    "premise": "Pairs of Mahler-measure subsets (by degree, by class: Salem/Pisot, Smyth-extremal, narrow M-bands, Lehmer neighbourhood) may share a spacing profile; a rank correlation that SURVIVES mean-spacing normalization is a numerical coincidence worth a battery test, one that only exists before normalization is a scale artifact. Charter role (daemon.py header, AGENT_AUTOPSIES): be Hecate's second non-Theseus generator so the cross-generator MI can become non-zero.",
+    "mechanism": "Per tick: pick one pair from a rotation (v0.6: 4 SEED_PAIRS + 5 CANDIDATE_POOL, replace a pair after 5 consecutive identical PROMOTED/REJECTED verdicts), load both subsets via _load_subset (7 selectors over mahler.py), truncate the larger to the n smallest values, corr_raw = Spearman(sorted(a)[:n], sorted(b)[:n]), corr_norm = Spearman of the mean-spacing-normalized arrays, _classify by thresholds (CORR_SIGNIFICANT 0.30, CORR_FLIPPED_DELTA 0.20) into 4 kill_patterns -> PROMOTED / REJECTED / UNVERIFIED; write a kill_ledger.jsonl row in Theseus shape, an artifacts/scan_*.md, an agora intelligence_outputs row; PROMOTED pairs appended to the Stygian priority queue.",
+    "producers": [
+      "charon/agents/pollux/daemon.py::PolluxAgent.run_tick"
+    ],
+    "inputs": [
+      "prometheus_math/databases/mahler.py (all_below(2.0): 8625 polynomials; salem_class 8513/112; is_smyth_extremal 16; provenance_tier known180_2022 8431)"
+    ],
+    "outputs": [
+      "charon/agents/pollux/state/kill_ledger.jsonl (ABSENT from this tree)",
+      "charon/agents/pollux/artifacts/scan_*.md (ABSENT)",
+      "charon/agents/pollux/state/{pair_history,settled_pairs,candidate_pool_idx}.json (ABSENT)",
+      "agora.intelligence_outputs rows, stage pollux_tick_complete (PRESENT on M1 Postgres; Keeper census)",
+      "Stygian priority-queue rows source=pollux for PROMOTED pairs"
+    ],
+    "intended_consumers": [
+      "Hecate (cross-generator MI)",
+      "Stygian (v10 battery on POLLUX-* survivors, E9 of the 05-25 plan)",
+      "Erebos (SwarmState composition)",
+      "Aporia DR queue (planned, 05-25 E5; never wired)"
+    ]
   },
-  "death_certificates": [
-   {
-    "source": "pivot/charon_swarm_diminishing_returns_2026-05-25.md:55",
-    "claim": "Pollux 'was 100% deterministic' per pair; the v0.6 auto-growth patch promotes settled pairs out of the rotation",
-    "review": "UPHELD",
-    "errors": []
-   },
-   {
-    "source": "aporia/docs/program_audit_2026-06-10.md:118,192",
-    "claim": "Pollux produced real signal: 39 PROMOTED correlations surviving mean-spacing normalization; 86 scale artifacts correctly REJECTED",
-    "review": "OVERTURNED",
-    "errors": [
-     "No null was run before calling 39 PROMOTED 'real'; under pure independence at the daemon's n the PROMOTED rate is up to 0.33 (T4).",
-     "'86 scale artifacts correctly REJECTED' presumes the raw leg measured scale; it measured nothing (Spearman of two sorted arrays = 1, T1/T2), so 'scale artifact' was never observed for any pair.",
-     "Two of the three PROMOTED pairs (salem_vs_pisot, small_deg_vs_large_deg) are 0% stable under random subsampling in place of the smallest-n truncation (T5); the third (deg14_vs_deg16) does not beat a label-permutation null (p=0.093, T3)."
+  "observed_history": {
+    "run_period": "2026-05-24 03:08 to 2026-05-30 11:55 local (-04:00), 286 ticks; v0.5 code 05-24 03:10 .. 05-25 01:46 (~22.6 h, no settle policy), v0.6 thereafter. Stopped in the fleet halt of 05-30 (15 agents, last rows 11:40..12:25 local), not by its own failure. PROF_TRIAGE 08-20 still lists lifecycle 'active'.",
+    "measurements": [
+      "RE-SCAN TODAY (pollux_rescan_result.json): daemon imports; all 9 pairs load; deterministic on re-run; corr_raw = 1.0 at ledger precision on all 9 pairs (max |dev| 2.2e-16); verdicts: deg10_vs_deg12 REJECTED (norm -0.2235), deg14_vs_deg16 PROMOTED (0.3992), salem_vs_pisot PROMOTED (0.3985), smyth_extremal_vs_rest REJECTED (-0.0786), deg18_vs_deg20 UNVERIFIED (0.0400), even_deg_vs_odd_deg UNVERIFIED (0.0817), small_deg_vs_large_deg PROMOTED (0.4687), narrow_band_1.10_1.20_vs_1.30_1.50 REJECTED (-0.6922), lehmer_witness_neighborhood UNVERIFIED (0.0519).",
+      "REACHABILITY (rescan Q3): with corr_raw fixed at 1.0 the classifier is a threshold on corr_norm alone: attenuates on [-1,-0.7995] and [0,0.30); sign_flips on (-0.7995,0); survives on [0.30,1]. pollux_no_correlation_observed is UNREACHABLE.",
+      "REPLAY (rescan Q4): the v0.6 policy replayed 286 ticks on today's verdicts gives sign_flips 15 / survives 15 / attenuates 256, pool exhausted at tick 47, three pairs never settle (deg18_vs_deg20 87, even_deg_vs_odd_deg 88, lehmer 81). P69's census (86/39/161; 54/56) is NOT reproduced in magnitude; only total 286, the 3 never-settling pairs at near-equal share, and zero no_correlation rows are reproduced.",
+      "INSTRUMENT NULLS (pollux_instrument_null_result.json, seed 20260911, 1000 draws): T1 Spearman(sorted x, sorted y) = 1 for independent random x,y (max dev 2.2e-16); T2 the 08-12 prescription: corr_raw 1.0 on DB order / shuffled / reversed for all 9 pairs; T3 label-permutation null on corr_norm: two-sided p deg10 0.449, deg14 0.093, salem 0.014, smyth 0.834, deg18 0.84, even_odd 0.755, small_large 0.001, narrow_band 0.002, lehmer 0.788; T4 PROMOTED rate under pure independence at the daemon's n: up to 0.332 (n=24/29 exponential), 0.311 (33/39), 0.265 (17/24); T5 truncation sensitivity (random size-n subsample instead of n smallest, 200 draws): verdict stability salem_vs_pisot 0.00, small_deg_vs_large_deg 0.00, deg14_vs_deg16 0.015, deg10 0.865, narrow_band 0.55, smyth 0.22.",
+      "SECOND CHANNEL (dossiers/_keeper_evidence/intelligence_outputs_census_result.json, graves.pollux; dual-recorded by the daemon itself, single mechanism): 286 rows, 286 distinct cycle_id, 9 distinct output_summary, every row stage pollux_tick_complete success=true, first 2026-05-24T03:08:13-04:00, last 2026-05-30T11:55:23-04:00. The three recorded summaries (deg10 REJECTED raw=1.0 norm=-0.2235; deg14 PROMOTED norm=0.3992; salem PROMOTED norm=0.3985) equal today's rescan to 4 dp. Mechanism prediction '9 static pairs -> exactly 9 distinct summaries' holds.",
+      "CONSUMERS (pollux_consumer_trace_result.json, all 16 citations verified on the tree): 4 consumers wired, 0 used the verdict bit.",
+      "[EXECUTED-BY-CLERIC dossiers/pollux_evidence/cleric_chance_floor_result.json] seed 20260911, 1000 draws per pair. N1 (each pair's OWN marginals sampled independently, daemon statistic): PROMOTED floor salem 0.441, small_large 0.327, deg14 0.13; one-sided p for the observed corr_norm: salem 0.14, small_large 0.042, deg14 0.06 (none survives a 9-pair correction). N2 (two independent samples of ONE density): PROMOTED up to 0.938 (lehmer), 0.874 (salem), 0.76 (narrow_band). D (label permutation, SIGNED, matching the one-sided verdict): salem 0.000, small_large 0.000, deg14 0.023. Re-read by the Keeper 2026-09-11.",
+      "[EXECUTED-BY-CLERIC dossiers/pollux_evidence/cleric_census_fit_result.json] S1 k=0 replay 15/15/256; S2 v0.5-prefix search best k=95 giving 62/63/161 with deg18 54 / even_odd 56 / small_large 5 but seeds 29/29/29/28 and narrow_band 5; S3 0 exact matches over 729 verdict maps x k 0..139; S3b matches only under assignments the second channel excludes. The Cleric's stated prediction: 'if the code produced the ledger, 62/63/161'.",
+      "[EXECUTED-BY-KEEPER dossiers/_keeper_evidence/pollux_settling_query.py -> pollux_settling_query_result.json] read-only GROUP BY output_summary over agora.intelligence_outputs, stage pollux_tick_complete, 286 rows: REJECTED 86 / PROMOTED 39 / UNVERIFIED 161 EXACTLY as the 06-24 reader and P69 report; per pair deg10 17, deg14 17, salem 17, smyth 16, even_odd 56, small_large 5, narrow_band 53, deg18 54, lehmer 51; all nine summaries carry raw=1.0; 90 rows before 05-25 23:30. Tick 47 at 05-25 01:34, tick 48 at 01:45 (an 11-minute gap in a 29.5-minute cadence: the restart), commit 43b094552 at 01:46:55 -- v0.6 was deployed from the working tree within two minutes of its commit, not 22 h later. The Cleric's prediction lost; both readers were right. Caveat unchanged: DUAL-RECORDED IS NOT INDEPENDENTLY VERIFIED (same daemon, same tick as the lost ledger).",
+      "[EXECUTED-BY-KEEPER dossiers/_keeper_evidence/pollux_replay_corrected.py -> pollux_replay_corrected_result.json] both prior replays (Necromancer Q4 k=0; Cleric S2) remove a settled pair from the rotation unconditionally; daemon.py _promote_settled_replace (L330-338) removes it ONLY when CANDIDATE_POOL still has a replacement and otherwise returns None leaving the settled pair in rotation (its own log line says 'active rotation shrunk'; the code does not shrink it). With the daemon's semantics and a v0.5 prefix of k round-robin ticks, exactly one k (47) reproduces every per-pair count of the second channel (86/39/161; settlements at ticks 64 smyth, 65 deg10, 66 salem, 69 deg14, 83 small_large, 91 narrow_band; narrow_band then re-scanned 48 more times). Under unconditional removal no k matches. P69's census is reproduced from the on-tree code in full."
+    ],
+    "artifact_counts": {
+      "ledger_rows_claimed_by_P69": 286,
+      "intelligence_outputs_rows_second_channel": 286,
+      "distinct_output_summaries_second_channel": 9,
+      "pairs_in_menu": 9,
+      "scan_md_artifacts_claimed": 286,
+      "artifacts_present_on_this_tree": 0,
+      "source_commits": 2,
+      "tests_on_tree": 0
+    },
+    "actual_consumers": [
+      "Hecate: read the ledger (LEDGER_CANDIDATES) but its cross-generator MI admits only canonical patterns emitted by >=2 generators; Pollux's four tails are emitted by no other generator on the tree, so Pollux contributed 0 records to that statistic by construction (charon/agents/hecate/daemon.py lines 340-347; consumer trace C1).",
+      "Stygian: mapped queue rows to POLLUX-<pair> with hardness POLLUX_SURVIVOR, then executor.py short-circuited every one (reason pollux_survivor_loader_not_yet_implemented); loaders/pollux_survivor.py never existed (consumer trace C2).",
+      "Erebos: read the ledger as substantive-recent rows for SwarmState and composed ids ending in Pollux pair names (second-channel Erebos summaries); it used pair NAMES, not verdicts (consumer trace C3).",
+      "Ergon greedy Learner (2026-06-07..10): consumed ALL 286 rows into three corpora (manifest_v1: 86 train / 200 gold-eval; e_shown / e_hidden: 286 train) with gold=False hard-coded for every row, PROMOTED rows included (ergon/learner/greedy/sources.py line 189; consumer trace C4)."
+    ],
+    "consumption_evidence": [
+      "dossiers/pollux_evidence/pollux_consumer_trace_result.json",
+      "roles/Ergon/GREEDY_FOLLOWUP_PROGRESS_2026-06-07.md line 50: minus_pollux 0.8092; 'pollux gold claims are all-False templated'; slice 1.0 -> 0.395 when removed",
+      "engine/queues/CONSUMPTION.jsonl 2026-08-21T09:12Z and 09:47Z (consumed as autopsy material, not as data)",
+      "dossiers/_keeper_evidence/intelligence_outputs_census_result.json (Erebos composed ids carry Pollux pair names)"
     ]
-   },
-   {
-    "source": "pivot/COMPONENT_DISPOSITION_PLAN_2026-06-23.md:66 (and REASSESSMENT_2026-06-22_consolidated.md:754)",
-    "claim": "REVIVE: numerical-coincidence scanner, the 2nd non-Theseus operator class in the ledger. Real signal.",
-    "review": "OVERTURNED",
-    "errors": [
-     "Inherits the 06-10 'real signal' without a null; see the 06-10 certificate.",
-     "'2nd non-Theseus operator class in the ledger' was true as a row count and false as information: 9 facts in 286 rows, and none of them entered Hecate's cross-generator statistic (vocabulary exclusion)."
-    ]
-   },
-   {
-    "source": "pivot/COMPONENT_DOSSIERS_2026-06-24.md:391-406 (### Pollux)",
-    "claim": "DECORATIVE-MECHANISM / measurement bug: 'raw Spearman' is a mathematical tautology (ALL 286 rows corr_raw=1.0); no null, no seed replication; RETIRE-after-HITL; 'The Ergon Learner has ZERO references to generator_id=pollux'",
-    "review": "PARTIALLY_UPHELD",
-    "errors": [
-     "'ZERO references' is false on the tree it was written against: ergon/learner/greedy/sources.py (commit 7e38227ee, 2026-06-10, 14 days earlier) reads the Pollux ledger under source='pollux' and the three corpus manifests record 286 yielded rows; the grep was for the literal generator_id=pollux.",
-     "Its suggested settle condition (random-pairing / matched-marginal null on the PROMOTED pairs over >=5 seeds) was never executed by anyone until this pass; the tautology claim stood as an assertion for 79 days. The Necromancer executed it (T2, T3, T5) and it holds."
-    ]
-   },
-   {
-    "source": "engine/queues/PROF_TRIAGE.jsonl:34 (2026-08-20)",
-    "claim": "VACUOUS-NO-SOLVER: orchestrator/poller/reporter; computes statistics or routes work, never answers a given problem; lifecycle active",
-    "review": "PARTIALLY_UPHELD",
-    "errors": [
-     "lifecycle 'active' on 2026-08-20: the last row Pollux wrote is 2026-05-30 11:55 local (second channel); the row was 82 days stale when triaged."
-    ]
-   },
-   {
-    "source": "engine/ledger/AGENT_AUTOPSIES.jsonl:18 (Aporia P69, 2026-08-21) + AUTOPSY_TAXONOMY.md:45,83",
-    "claim": "LOW-BITS-PER-VERDICT-EMISSION (static-rescan form) with YIELD-BLIND-ROTATION: 286 rows = 9 facts (~3 bits); 'mechanically explains the Hecate cross-generator MI null (0.0034 bits)'; 'the wiring itself worked - rows landed, Hecate consumed'; census 86/39/161, deg18 x54, even_odd x56",
-    "review": "PARTIALLY_UPHELD",
-    "errors": [
-     "The MI mechanism is wrong: Hecate's cross-generator set admits only canonical patterns shared by >=2 generators (charon/agents/hecate/daemon.py, consumer trace C1); Pollux's tails are emitted by no other generator, so 286 DISTINCT facts would also have contributed 0 records. 'Hecate consumed' means Hecate read the file and excluded every row.",
-     "It types emission volume while silent on the on-record fact (06-24, 58 days earlier) that the emitted verdicts were produced by a tautological instrument with no null; the 9 'facts' are not facts about Mahler measures.",
-     "The census numbers are unverifiable: computed over a ledger absent from every reachable tree, 'printed in-pass' (WORKLOG.jsonl:98), and the deterministic replay of the on-tree policy yields 15/15/256, not 86/39/161. The Hecate figure is cited to charon/agents/hecate/artifacts/gradient_archaeology_20260530T162054Z.md, absent from the tree.",
-     "'Yield-blind rotation' is upheld in form but the rotation was not the binding problem: the settle policy excludes UNVERIFIED, so three attenuating pairs re-scan forever (replay: 256 of 286 rows) - a policy defect, not a missing novelty gate."
-    ]
-   }
-  ],
-  "cause_of_death_stack": {
-   "HYPOTHESIS": {
-    "verdict": "VALID",
-    "finding": "The question - do two Mahler-measure subsets share a spacing profile beyond what scale explains - is coherent and answerable: the normalized statistic is non-degenerate on real data, varies between pairs (-0.69 to +0.47), and a label-permutation null distinguishes some pairs from chance (T3). It was never fairly tested, so it is neither confirmed nor falsified. Reader-divergence point: a Cleric may prefer NOT_EXAMINED on the ground that no fair instrument ever touched the hypothesis; the Necromancer records VALID as 'well-posed', not 'true'.",
-    "evidence": [
-     "dossiers/pollux_evidence/pollux_instrument_null_result.json (T3_label_permutation)",
-     "dossiers/pollux_evidence/pollux_rescan_result.json (Q2_verdicts)"
-    ],
-    "cause_classes": []
-   },
-   "DESIGN": {
-    "verdict": "INVALID",
-    "finding": "The design compared two subsets of DIFFERENT sizes by rank correlation with no pairing relation between elements, hard-coding 'truncate the larger to its n smallest values' - a choice T5 shows decides the verdict (two of three PROMOTED pairs 0% stable under random size-n subsampling); it thresholded corr_norm at 0.30 with no null, no chance floor and no seed replication (T4: PROMOTED rate under independence up to 0.33); and its settle policy excluded UNVERIFIED so non-settling pairs consumed the run (replay: 256/286 rows on three pairs). The intended 'before vs after normalization' contrast was designed around a statistic (corr_raw) that the design itself made constant by sorting both sides.",
-    "evidence": [
-     "dossiers/pollux_evidence/pollux_instrument_null_result.json (T4_independent_samples_null, T5_truncation_sensitivity)",
-     "dossiers/pollux_evidence/pollux_rescan_result.json (Q4_replay_286_ticks)",
-     "charon/agents/pollux/daemon.py (run_tick pairing/truncation; _classify; _record_verdict_and_check_settle)"
-    ],
-    "cause_classes": [
-     "DESIGN_ERROR"
-    ],
-    "load_bearing": true
-   },
-   "IMPLEMENTATION": {
-    "verdict": "INVALID",
-    "finding": "corr_raw = _spearman(sorted(a_vals)[:n], sorted(b_vals)[:n]) is Spearman of two monotone sequences and equals 1 identically (T1: 1000 independent random draws, max dev 2.2e-16; T2: 1.0 on DB order, shuffled and reversed for all 9 real pairs). The loader also returns values already sorted by M, so even a non-sorting implementation of the same design would have produced 1.0 (T2 non-sorted DB-index pairing). Consequence: pollux_no_correlation_observed is unreachable (rescan Q3) and the four-way classifier is a one-dimensional threshold on corr_norm.",
-    "evidence": [
-     "dossiers/pollux_evidence/pollux_instrument_null_result.json (T1_identity, T2_sorted_vs_shuffled)",
-     "dossiers/pollux_evidence/pollux_rescan_result.json (Q1, Q3)"
-    ],
-    "cause_classes": [
-     "IMPLEMENTATION_ERROR"
-    ],
-    "load_bearing": true
-   },
-   "CONFIGURATION": {
-    "verdict": "VALID",
-    "finding": "The daemon imports on this tree with its dependencies (prometheus_math mahler DB, stygian_priority_queue); all 9 configured pairs load with n >= 10 on both sides; constants (SETTLE_THRESHOLD 5, CORR_SIGNIFICANT 0.30, CORR_FLIPPED_DELTA 0.20) are as the 05-25 patch set them. The 9-pair menu and thresholds are design choices, judged under DESIGN. Historical machine config (cadence, paths) is not recoverable and not needed for the verdicts above.",
-    "evidence": [
-     "dossiers/pollux_evidence/pollux_rescan_result.json (daemon_import, constants, scans[*].n_a/n_b)"
-    ],
-    "cause_classes": []
-   },
-   "EXECUTION": {
-    "verdict": "VALID",
-    "finding": "Pollux executed as written for the whole swarm window: 286 ticks, every one success=true, 2026-05-24 03:08 to 2026-05-30 11:55 local, 286 distinct cycle_id, 9 distinct summaries - the exact count a deterministic 9-pair menu predicts - and the three summaries preserved in the second channel equal today's rescan to 4 dp. It stopped in the fleet halt (15 agents within 45 minutes), not on its own. Caveat: the second channel was written by the daemon itself in the same tick as the ledger row (single mechanism); it confirms that the process ran and what it computed, not that the lost ledger matched P69's census.",
-    "evidence": [
-     "dossiers/_keeper_evidence/intelligence_outputs_census_result.json (graves.pollux)",
-     "dossiers/_keeper_evidence/fleet_halt_census_result.json",
-     "dossiers/pollux_evidence/pollux_rescan_result.json (Q2_verdicts vs first_three_summaries)"
-    ],
-    "cause_classes": []
-   },
-   "INSTRUMENTATION": {
-    "verdict": "INVALID",
-    "finding": "The instrument's first leg (corr_raw) cannot observe the data: its value is fixed at 1.0 by construction for any two inputs (T1, T2). The 'scale artifact' the instrument was built to detect (raw correlation that vanishes after normalization) is therefore undetectable and 'attenuates' / 'sign_flips' / 'survives' are labels for corr_norm intervals, not for a before/after contrast. The kill_ledger rows record corr_raw=1.0 faithfully, which is why the 06-24 reader could see it and the 06-10 reader did not look.",
-    "evidence": [
-     "dossiers/pollux_evidence/pollux_instrument_null_result.json (T1_identity, T2_sorted_vs_shuffled)",
-     "dossiers/pollux_evidence/pollux_rescan_result.json (Q3_reachable_patterns_given_corr_raw_1, Q3_unreachable_patterns)"
-    ],
-    "cause_classes": [
-     "INSTRUMENT_ERROR"
-    ],
-    "load_bearing": true
-   },
-   "MEASUREMENT": {
-    "verdict": "INVALID",
-    "finding": "PROMOTED / REJECTED were emitted as verdicts with no null, no chance floor and no replication: under pure independence at the daemon's sample sizes the PROMOTED rate reaches 0.33 (T4); against a label-permutation null one PROMOTED pair fails (deg14 p=0.093) and the two that pass (salem p=0.014, small_large p=0.001) flip to REJECTED in 100% of random size-n subsamples (T5). The measured quantity was 'which corr_norm interval did the n-smallest truncation land in', not 'does a spacing coincidence survive normalization'.",
-    "evidence": [
-     "dossiers/pollux_evidence/pollux_instrument_null_result.json (T3, T4, T5)"
-    ],
-    "cause_classes": [
-     "MEASUREMENT_ERROR"
-    ],
-    "load_bearing": true
-   },
-   "INTERPRETATION": {
-    "verdict": "INVALID",
-    "finding": "Four readings on record mis-state what the rows meant: 06-10 'real signal' (no null; raw leg not inspected); 06-22/23 REVIVE 'Real signal' (inherited); 06-24 'ZERO Learner references' (false; sources.py landed 06-10); 08-21 P69 'mechanically explains the Hecate MI null' and 'Hecate consumed' (vocabulary exclusion makes bit content irrelevant) while omitting the tautology already on record. The 06-24 tautology reading was correct and was left as an unexecuted assertion for 79 days; the 08-12 prescription for the executing script was never run until this pass.",
-    "evidence": [
-     "dossiers/pollux_evidence/pollux_record_census_result.json (records, contradictions_on_record; all 20 citations verified)",
-     "dossiers/pollux_evidence/pollux_consumer_trace_result.json (C1, C4)"
-    ],
-    "cause_classes": [
-     "INTERPRETATION_ERROR"
-    ],
-    "load_bearing": false
-   },
-   "ECOSYSTEM": {
-    "verdict": "INVALID",
-    "finding": "Every consumer seam was broken independently of Pollux's own faults: Stygian's survivor path was a stub for the entire run (E9 of the 05-25 plan, never built), Hecate's >=2-generator rule excluded Pollux's vocabulary by construction, Erebos used pair names only, and the Ergon Learner - the one consumer that trained on the rows - overwrote every verdict with gold=False. The run ended in the 05-30 fleet halt with the stub still in place. A correct Pollux would have died here too; this Pollux did not get that far.",
-    "evidence": [
-     "dossiers/pollux_evidence/pollux_consumer_trace_result.json",
-     "dossiers/_keeper_evidence/fleet_halt_census_result.json",
-     "roles/Ergon/GREEDY_FOLLOWUP_PROGRESS_2026-06-07.md:32-56"
-    ],
-    "cause_classes": [
-     "ECOSYSTEM_FAILURE"
-    ],
-    "load_bearing": false
-   }
   },
-  "fair_test": {
-   "verdict": "UNFAIR",
-   "scope": "The whole run 2026-05-24..05-30 and every reading of it since; no window is clean because the instrument and design faults are in the code, not in the environment.",
-   "finding": "Pollux never tested its premise. The before/after-normalization contrast it was built on had a constant 'before' leg (T1/T2), the 'after' leg was thresholded without a null (T4) on a truncation that decides the answer (T5), and no consumer could have validated a PROMOTED pair (Stygian stub). The 39 PROMOTED and 86 REJECTED verdicts are not evidence for or against spacing coincidences in Mahler subsets. This is epistemic: the hypothesis remains open, and a fair test is specifiable (matched-marginal or two-sample spacing test with a published chance floor, seed replication, verdicts carrying p-values).",
-   "evidence": [
-    "dossiers/pollux_evidence/pollux_instrument_null_result.json",
-    "dossiers/pollux_evidence/pollux_rescan_result.json",
-    "dossiers/pollux_evidence/pollux_consumer_trace_result.json"
-   ]
+  "autopsy": {
+    "prior_verdicts": [
+      "2026-05-25 pivot/charon_swarm_diminishing_returns_2026-05-25.md:55 'Was 100% deterministic' (primary observation; v0.6 patch was the response)",
+      "2026-06-10 aporia/docs/program_audit_2026-06-10.md:118,192 'real signal: 39 PROMOTED ... 86 scale artifacts correctly REJECTED'",
+      "2026-06-22/23 pivot/REASSESSMENT_2026-06-22_consolidated.md:754 and COMPONENT_DISPOSITION_PLAN_2026-06-23.md:66 REVIVE 'Real signal'",
+      "2026-06-24 pivot/COMPONENT_DOSSIERS_2026-06-24.md:396 tautology / 'ALL 286 ledger rows have corr_raw=1.0' / RETIRE-after-HITL / 'Ergon Learner has ZERO references'",
+      "2026-08-12 charon/CHARON_SESSION_2026-08-12.md:174 prescription (sorted vs shuffled script) - not executed until this pass",
+      "2026-08-20 engine/queues/PROF_TRIAGE.jsonl:34 VACUOUS-NO-SOLVER, lifecycle active",
+      "2026-08-21 engine/ledger/AGENT_AUTOPSIES.jsonl:18 (Aporia P69) LOW-BITS-PER-VERDICT-EMISSION; AUTOPSY_TAXONOMY.md:45 cluster 2 and :83 cluster 4 secondary",
+      "All of the above read at zero weight (charter); each re-derived or contradicted below."
+    ],
+    "failure_classes": [
+      "SELECTION-DECOUPLED-FROM-SIGNAL (primary here, not secondary as in the taxonomy): the PROMOTED/REJECTED selector is a threshold on a statistic with no null, a constant raw leg, and verdicts that flip under an arbitrary truncation choice",
+      "LOW-BITS-EMISSION (form upheld: 9 facts in 286 rows; the taxonomy's causal link to Hecate's MI null is NOT upheld)",
+      "SEAM-BROKEN (three seams: Stygian stub, Hecate vocabulary exclusion, Learner label inversion)",
+      "BOUNDED-MENU-SATURATION (pool exhausted by tick 47 of 286; three never-settling pairs absorb the rest)"
+    ],
+    "kill_boundary": "KILLED: (1) 'raw Spearman before normalization' as a measurement -- it is Spearman(sorted, sorted) = 1 identically (T1, T2) and constant for any implementation of the design (T2 non-sorting variant), so it observes nothing about the data and one of the four kill_patterns is unreachable; (2) the 2026-06-10 / 06-22 / 06-23 'real signal, 39 PROMOTED' reading -- on the real marginals the PROMOTED verdict recurs under independence up to 0.94 (N2) and each PROMOTED pair's own independently sampled marginals reproduce its verdict (N1 p = 0.14 / 0.042 / 0.06; none survives a 9-pair correction); (3) P69's mechanism claim that Pollux's constant re-emission 'mechanically explains' Hecate's cross-generator MI null -- Hecate's >=2-generator rule excludes every Pollux pattern by vocabulary, so bit content was irrelevant; (4) the 06-24 claim that the Ergon Learner never referenced Pollux; (5) this trial's own two claims that P69's census is unreproducible from the code (Necromancer Q4) or that the code predicts 62/63/161 (Cleric S2) -- both were the same modelling error and the settling query reversed both. NOT KILLED: the general hypothesis (some Mahler subset pairs share a spacing profile beyond scale) -- not because evidence favours it but because no test of it was ever defined; its only operationalized form (corr_norm >= 0.30 on n-smallest truncations) is inside its own null, a Necropolis-executed result the doctrine cannot record as a kill (D-85). CONFIRMED, not killed: P69's 9-facts-in-286-rows census in form AND number (86/39/161; per pair 17/17/17/16/56/5/53/54/51), reproduced from the on-tree code; the ledger bytes themselves remain lost.",
+    "surviving_claims": [
+      "Per-pair output is deterministic on static data (05-25 primary observation; rescan deterministic_on_rerun true; 9 distinct summaries over 286 ticks; data file unchanged since 2026-05-03).",
+      "The daemon ran for the full swarm window at a 29.5-minute cadence, restarted once for the v0.6 deploy at 05-25 01:45, and stopped with the fleet (settling query + fleet_halt_census).",
+      "_mean_spacing_normalize, _spearman and the 7 _load_subset selectors execute correctly today (used unchanged by the Necromancer's and the Cleric's evidence scripts).",
+      "The label-permutation null rejects marginal exchangeability for salem_vs_pisot, small_deg_vs_large_deg, narrow_band and (one-sided) deg14_vs_deg16; the pairs' own marginals, sampled independently, reproduce the observed corr_norm (N1 p = 0.14 / 0.042 / 0.06): the statistic reads density shape, not a relation between the sets.",
+      "P69's and the 06-24 reader's census of the lost ledger (86/39/161; deg18 x54, even_odd x56) is exact: the second channel carries it and the on-tree code reproduces it with a 47-tick v0.5 prefix and the daemon's pool-exhaustion semantics."
+    ],
+    "uncertainty": [
+      "The lost kill_ledger's BYTES remain unrecoverable (absent from canonical tree, worktree, charon/agents/pollux/state, stygian state, and ergon/learner/greedy/corpus which holds manifests only); its COUNTS are settled by the second channel and the corrected replay. A reader who rejects same-daemon dual recording as evidence (D-76) is left with two readers and one code replay that agree, and no ledger.",
+      "Whether the 39 PROMOTED rows ever reached Stygian's queue file is unknown (queue file absent); the executor stub would have discarded them anyway.",
+      "The chance floor is now measured on the real marginals (N1 own-marginal, N2 one-density) at one seed and 1000 draws per pair; T4's bracketed floor (0.05..0.33 on assumed marginals) is superseded, not contradicted.",
+      "Whether a Necropolis-executed null that kills an organism's only operationalization (N1/N2) can ever be recorded as anything but prose under the current doctrine (D-85); this dossier records it in HYPOTHESIS as NOT_EXAMINED with the result in the finding.",
+      "Alternative classification a competent reader could reach: MEASUREMENT_FAILURE on the same stack if 'proximate' (SCHEMA) is read as 'nearest the recorded outcome' (D-83); the Keeper's ruling and its reason are in the disposition."
+    ],
+    "contradictory_evidence": [
+      "AGAINST the design-error reading: the statistic Pollux intended (correlation of spacing profiles between two subsets) can be made well-defined - the normalized leg IS defined and non-degenerate (T3) - so a Cleric may argue this is INSTRUMENT_ERROR (one bad leg) plus MEASUREMENT_ERROR (no null), with the design intact. The Necromancer's answer: the design specified no pairing relation between subsets of different size and hard-coded a truncation ('n smallest of the larger') that T5 shows decides the verdict; that is a design fault the instrument fix would not repair. Recorded as portability defect 1.",
+      "AGAINST NO_FAIR_TEST_ON_RECORD and FOR MEASUREMENT_FAILURE: the 06-24 tautology finding, now executed (T1/T2), is exactly a measurement failure, and the charter's MEASUREMENT_ERROR example ('a metric that carries its own answer') describes corr_raw = 1 literally; SCHEMA's 'proximate cause' points at the layer nearest the outcome. The Keeper's answer: the charter defines NO_FAIR_TEST_ON_RECORD as 'the historical experiment could not have answered its own question', which is DESIGN_ERROR's definition, and T2 shows the constant leg is implementation-independent -- a correct raw leg under the same pairing/truncation/no-null design would still emit verdicts inside their own null (N1/N2). The 'deepest load-bearing INVALID' rule the Necromancer cited is not in doctrine and is withdrawn (Cleric C-7; DEFECTS D-83).",
+      "AGAINST 'zero consumers used the verdict bit': the Ergon Learner did read every row and its ablation moved a score (0.8092 vs 0.9): but Ergon's own reading (GREEDY_FOLLOWUP_PROGRESS line 50) is that it learned the template, not the verdict, and gold=False on PROMOTED rows means the bit was inverted, not consumed.",
+      "AGAINST ECOSYSTEM_FAILURE as a cause of THIS death: Pollux's outputs were unusable before any consumer touched them; the consumer failures would have been fatal for a working Pollux but are not what killed this one. ECOSYSTEM is INVALID on its own evidence, listed as contributing, not primary.",
+      "AGAINST the Keeper's EXECUTION VALID: every one of the 286 rows, the two readers' counts and the replay's inputs descend from one daemon; agreement among them shows internal consistency, not that the daemon computed what the code on this tree computes today (the three surviving May summaries matching today's rescan to 4 dp is the only cross-check, and it covers 3 of 9 pairs)."
+    ],
+    "capability_contingency": {
+      "frontier_dependent": false,
+      "frontiers": [],
+      "era_bound_claim": "Not era-bound: no model is in the loop. Spearman(sorted, sorted) = 1 and a thresholded statistic without a null fail identically in any era.",
+      "what_would_move_it": "Nothing on the model frontier. A fair test of the premise needs: a defined pairing relation or a two-sample spacing-distribution test (normalized gap distributions of the two subsets, not a rank correlation between unrelated orderings), a matched-marginal null with a published chance floor, seed replication over subsamples, and verdicts recorded with their p-values, over the same 9 pairs with expected-if-alive / expected-if-dead written before it runs. N1/N2 have already been executed against the corr_norm form and it is inside its own null; the two-sample test is the one artefact that would let the hypothesis die or live fairly. Each of those is a Frankenstein design question, not a capability question."
+    },
+    "death_certificates": [
+      {
+        "source": "pivot/charon_swarm_diminishing_returns_2026-05-25.md:55",
+        "claim": "Pollux 'was 100% deterministic' per pair; the v0.6 auto-growth patch promotes settled pairs out of the rotation",
+        "review": "UPHELD",
+        "errors": []
+      },
+      {
+        "source": "aporia/docs/program_audit_2026-06-10.md:118,192",
+        "claim": "Pollux produced real signal: 39 PROMOTED correlations surviving mean-spacing normalization; 86 scale artifacts correctly REJECTED",
+        "review": "OVERTURNED",
+        "errors": [
+          "No null was run before calling 39 PROMOTED 'real'; on the real Mahler marginals two independent samples of one density PROMOTE up to 0.94 of the time (N2) and each PROMOTED pair's own marginals reproduce its verdict with p = 0.14 / 0.042 / 0.06 (N1).",
+          "'86 scale artifacts correctly REJECTED' presumes the raw leg measured scale; it measured nothing (Spearman of two sorted arrays = 1, T1/T2; all nine channel summaries carry raw=1.0), so 'scale artifact' was never observed for any pair.",
+          "The counts 39 / 86 are exactly right (settling query); the inference from them is not."
+        ]
+      },
+      {
+        "source": "pivot/COMPONENT_DISPOSITION_PLAN_2026-06-23.md:66 (and REASSESSMENT_2026-06-22_consolidated.md:754)",
+        "claim": "REVIVE: numerical-coincidence scanner, the 2nd non-Theseus operator class in the ledger. Real signal.",
+        "review": "OVERTURNED",
+        "errors": [
+          "Inherits the 06-10 'real signal' without a null; see the 06-10 certificate.",
+          "'2nd non-Theseus operator class in the ledger' was true as a row count and false as information: 9 facts in 286 rows, and none of them entered Hecate's cross-generator statistic (vocabulary exclusion)."
+        ]
+      },
+      {
+        "source": "pivot/COMPONENT_DOSSIERS_2026-06-24.md:391-406 (### Pollux)",
+        "claim": "DECORATIVE-MECHANISM / measurement bug: 'raw Spearman' is a mathematical tautology (ALL 286 rows corr_raw=1.0); no null, no seed replication; RETIRE-after-HITL; 'The Ergon Learner has ZERO references to generator_id=pollux'; verdicts REJECTED 86 / PROMOTED 39 / UNVERIFIED 161 (line 404)",
+        "review": "PARTIALLY_UPHELD",
+        "errors": [
+          "'ZERO references' is false on the tree it was written against: ergon/learner/greedy/sources.py (commit 7e38227ee, 2026-06-10, 14 days earlier) reads the Pollux ledger under source='pollux' and the three corpus manifests record 286 yielded rows; the grep was for the literal generator_id=pollux.",
+          "Its suggested settle condition (random-pairing / matched-marginal null on the PROMOTED pairs over >=5 seeds) was never executed by anyone until this pass; the tautology claim stood as an assertion for 79 days. The Necromancer executed it (T2, T3, T5) and it holds.",
+          "Its census 86/39/161 and 'ALL 286 rows corr_raw=1.0' are confirmed exactly by the second channel (settling query) and reproduced by the corrected replay; recorded as a correct count inside a PARTIALLY_UPHELD row because the enum has no 'UPHELD with one error' (D-78)."
+        ]
+      },
+      {
+        "source": "engine/queues/PROF_TRIAGE.jsonl:34 (2026-08-20)",
+        "claim": "VACUOUS-NO-SOLVER: orchestrator/poller/reporter; computes statistics or routes work, never answers a given problem; lifecycle active",
+        "review": "PARTIALLY_UPHELD",
+        "errors": [
+          "lifecycle 'active' on 2026-08-20: the last row Pollux wrote is 2026-05-30 11:55 local (second channel); the row was 82 days stale when triaged."
+        ]
+      },
+      {
+        "source": "engine/ledger/AGENT_AUTOPSIES.jsonl:18 (Aporia P69, 2026-08-21) + AUTOPSY_TAXONOMY.md:45,83",
+        "claim": "LOW-BITS-PER-VERDICT-EMISSION (static-rescan form) with YIELD-BLIND-ROTATION: 286 rows = 9 facts (~3 bits); 'mechanically explains the Hecate cross-generator MI null (0.0034 bits)'; 'the wiring itself worked - rows landed, Hecate consumed'; census 86/39/161, deg18 x54, even_odd x56",
+        "review": "PARTIALLY_UPHELD",
+        "errors": [
+          "The MI mechanism is wrong: Hecate's cross-generator set admits only canonical patterns shared by >=2 generators (charon/agents/hecate/daemon.py, consumer trace C1); Pollux's tails are emitted by no other generator, so 286 DISTINCT facts would also have contributed 0 records. 'Hecate consumed' means Hecate read the file and excluded every row.",
+          "It types emission volume while silent on the on-record fact (06-24, 58 days earlier) that the emitted verdicts were produced by a tautological instrument with no null; the 9 'facts' are not facts about Mahler measures.",
+          "Its census numbers (86/39/161; deg18 x54, even_odd x56) are CONFIRMED: the second channel carries exactly these counts and the on-tree code reproduces them with a 47-tick v0.5 prefix and the daemon's pool-exhaustion semantics (Keeper settling query + corrected replay). The Necromancer's 'unverifiable ... replay yields 15/15/256' is withdrawn. The Hecate figure is still cited to charon/agents/hecate/artifacts/gradient_archaeology_20260530T162054Z.md, absent from the tree.",
+          "'Yield-blind rotation' is upheld in form but the rotation was not the binding problem: the settle policy excludes UNVERIFIED, so three attenuating pairs re-scan forever (161 of 286 rows; second channel), and a settled REJECTED pair stays in rotation once the pool is exhausted (narrow_band, 53 rows) -- policy and code defects, not a missing novelty gate."
+        ]
+      }
+    ],
+    "cause_of_death_stack": {
+      "HYPOTHESIS": {
+        "verdict": "NOT_EXAMINED",
+        "finding": "The proposition 'some Mahler-measure subset pairs share a spacing profile beyond what scale explains' has no defined test on the record: no pairing relation between elements of two subsets of different size and no two-sample spacing test was ever written down, so nothing exists that a fair test could confirm or kill. The only form anyone operationalized -- corr_norm >= 0.30 on the n-smallest truncations -- is reproduced by each PROMOTED pair's own marginals sampled independently (N1 p = 0.14 / 0.042 / 0.06) and two independent samples of one density PROMOTE up to 94% of the time (N2): the statistic reads density shape. That is a Necropolis-executed result about the operationalization, not a historical fair test of the hypothesis, and the doctrine has no class for 'ill-posed' or for a kill executed after death (DEFECTS D-84, D-85); it is recorded here as prose. The Necromancer's VALID ('well-posed, answerable') rested on T3, which is a fact about the statistic, and is withdrawn (Cleric C-2, accepted).",
+        "evidence": [
+          "[EXECUTED-BY-CLERIC dossiers/pollux_evidence/cleric_chance_floor_result.json] seed 20260911, 1000 draws per pair. N1 (each pair's OWN marginals sampled independently, daemon statistic): PROMOTED floor salem 0.441, small_large 0.327, deg14 0.13; one-sided p for the observed corr_norm: salem 0.14, small_large 0.042, deg14 0.06 (none survives a 9-pair correction). N2 (two independent samples of ONE density): PROMOTED up to 0.938 (lehmer), 0.874 (salem), 0.76 (narrow_band). D (label permutation, SIGNED, matching the one-sided verdict): salem 0.000, small_large 0.000, deg14 0.023. Re-read by the Keeper 2026-09-11.",
+          "dossiers/pollux_evidence/pollux_instrument_null_result.json (T3_label_permutation)",
+          "dossiers/pollux_evidence/pollux_rescan_result.json (Q2_verdicts)"
+        ],
+        "cause_classes": []
+      },
+      "DESIGN": {
+        "verdict": "INVALID",
+        "finding": "The design compared two subsets of DIFFERENT sizes by rank correlation with no pairing relation between elements, hard-coding 'truncate the larger to its n smallest values' -- a sub-population choice the design never justified and whose replacement by a random size-n subsample changes the verdict (T5); it thresholded corr_norm at 0.30 with no null, no chance floor and no seed replication -- on the real Mahler marginals two independent samples of one density PROMOTE up to 0.94 of the time (N2) and each PROMOTED pair's own marginals reproduce its verdict 0.44 / 0.33 / 0.13 of the time (N1); and its settle policy excluded UNVERIFIED so three attenuating pairs consumed 161 of 286 rows (second channel; corrected replay). The intended 'before vs after normalization' contrast was designed around a statistic (corr_raw) that is constant by construction for any implementation of the design (T1, T2 incl. the non-sorting variant).",
+        "evidence": [
+          "dossiers/pollux_evidence/pollux_instrument_null_result.json (T4_independent_samples_null, T5_truncation_sensitivity, T1, T2)",
+          "[EXECUTED-BY-CLERIC dossiers/pollux_evidence/cleric_chance_floor_result.json] seed 20260911, 1000 draws per pair. N1 (each pair's OWN marginals sampled independently, daemon statistic): PROMOTED floor salem 0.441, small_large 0.327, deg14 0.13; one-sided p for the observed corr_norm: salem 0.14, small_large 0.042, deg14 0.06 (none survives a 9-pair correction). N2 (two independent samples of ONE density): PROMOTED up to 0.938 (lehmer), 0.874 (salem), 0.76 (narrow_band). D (label permutation, SIGNED, matching the one-sided verdict): salem 0.000, small_large 0.000, deg14 0.023. Re-read by the Keeper 2026-09-11.",
+          "[EXECUTED-BY-KEEPER dossiers/_keeper_evidence/pollux_settling_query.py -> pollux_settling_query_result.json] read-only GROUP BY output_summary over agora.intelligence_outputs, stage pollux_tick_complete, 286 rows: REJECTED 86 / PROMOTED 39 / UNVERIFIED 161 EXACTLY as the 06-24 reader and P69 report; per pair deg10 17, deg14 17, salem 17, smyth 16, even_odd 56, small_large 5, narrow_band 53, deg18 54, lehmer 51; all nine summaries carry raw=1.0; 90 rows before 05-25 23:30. Tick 47 at 05-25 01:34, tick 48 at 01:45 (an 11-minute gap in a 29.5-minute cadence: the restart), commit 43b094552 at 01:46:55 -- v0.6 was deployed from the working tree within two minutes of its commit, not 22 h later. The Cleric's prediction lost; both readers were right. Caveat unchanged: DUAL-RECORDED IS NOT INDEPENDENTLY VERIFIED (same daemon, same tick as the lost ledger).",
+          "[EXECUTED-BY-KEEPER dossiers/_keeper_evidence/pollux_replay_corrected.py -> pollux_replay_corrected_result.json] both prior replays (Necromancer Q4 k=0; Cleric S2) remove a settled pair from the rotation unconditionally; daemon.py _promote_settled_replace (L330-338) removes it ONLY when CANDIDATE_POOL still has a replacement and otherwise returns None leaving the settled pair in rotation (its own log line says 'active rotation shrunk'; the code does not shrink it). With the daemon's semantics and a v0.5 prefix of k round-robin ticks, exactly one k (47) reproduces every per-pair count of the second channel (86/39/161; settlements at ticks 64 smyth, 65 deg10, 66 salem, 69 deg14, 83 small_large, 91 narrow_band; narrow_band then re-scanned 48 more times). Under unconditional removal no k matches. P69's census is reproduced from the on-tree code in full.",
+          "charon/agents/pollux/daemon.py (run_tick pairing/truncation; _classify; _record_verdict_and_check_settle)"
+        ],
+        "cause_classes": [
+          "DESIGN_ERROR"
+        ],
+        "load_bearing": true
+      },
+      "IMPLEMENTATION": {
+        "verdict": "INVALID",
+        "finding": "Two implementation defects, neither load-bearing. (a) corr_raw = _spearman(sorted(a)[:n], sorted(b)[:n]) sorts both legs; but T2 shows the non-sorting implementation of the same design also returns 1.0 on 8 of 9 pairs (0.815 on smyth) because the loader delivers values ordered by M -- the constant leg is the design's, not the sort's, and repairing the sort would change nothing (Cleric C-1, accepted; IMPLEMENTATION_ERROR removed from contributing_causes). (b) Found by the Keeper's corrected replay: _promote_settled_replace returns None on CANDIDATE_POOL exhaustion without removing the settled pair, while its own log line reports 'active rotation shrunk'; the second channel shows narrow_band re-scanned 48 times after settling at 5 consecutive REJECTED. This defect shaped the census (53 vs 5 rows) and no verdict. Consequence of the design, not of either bug: pollux_no_correlation_observed is unreachable (rescan Q3).",
+        "evidence": [
+          "[READ dossiers/pollux_evidence/pollux_instrument_null_result.json T2] daemon corr_raw 1.0 on DB order / shuffled / reversed for all 9 pairs; a NON-sorting implementation pairing by DB index gives 1.0 on 8 of 9 pairs and 0.815 on smyth_extremal_vs_rest, because the loader returns values already ordered by M. Sorting both legs is not what made the raw leg constant (C-1).",
+          "dossiers/pollux_evidence/pollux_instrument_null_result.json (T1_identity)",
+          "dossiers/pollux_evidence/pollux_rescan_result.json (Q1, Q3)",
+          "[EXECUTED-BY-KEEPER dossiers/_keeper_evidence/pollux_replay_corrected.py -> pollux_replay_corrected_result.json] both prior replays (Necromancer Q4 k=0; Cleric S2) remove a settled pair from the rotation unconditionally; daemon.py _promote_settled_replace (L330-338) removes it ONLY when CANDIDATE_POOL still has a replacement and otherwise returns None leaving the settled pair in rotation (its own log line says 'active rotation shrunk'; the code does not shrink it). With the daemon's semantics and a v0.5 prefix of k round-robin ticks, exactly one k (47) reproduces every per-pair count of the second channel (86/39/161; settlements at ticks 64 smyth, 65 deg10, 66 salem, 69 deg14, 83 small_large, 91 narrow_band; narrow_band then re-scanned 48 more times). Under unconditional removal no k matches. P69's census is reproduced from the on-tree code in full.",
+          "[EXECUTED-BY-KEEPER dossiers/_keeper_evidence/pollux_settling_query.py -> pollux_settling_query_result.json] read-only GROUP BY output_summary over agora.intelligence_outputs, stage pollux_tick_complete, 286 rows: REJECTED 86 / PROMOTED 39 / UNVERIFIED 161 EXACTLY as the 06-24 reader and P69 report; per pair deg10 17, deg14 17, salem 17, smyth 16, even_odd 56, small_large 5, narrow_band 53, deg18 54, lehmer 51; all nine summaries carry raw=1.0; 90 rows before 05-25 23:30. Tick 47 at 05-25 01:34, tick 48 at 01:45 (an 11-minute gap in a 29.5-minute cadence: the restart), commit 43b094552 at 01:46:55 -- v0.6 was deployed from the working tree within two minutes of its commit, not 22 h later. The Cleric's prediction lost; both readers were right. Caveat unchanged: DUAL-RECORDED IS NOT INDEPENDENTLY VERIFIED (same daemon, same tick as the lost ledger).",
+          "charon/agents/pollux/daemon.py (_promote_settled_replace L317-340; log text L523-526)"
+        ],
+        "cause_classes": [
+          "IMPLEMENTATION_ERROR"
+        ],
+        "load_bearing": false
+      },
+      "CONFIGURATION": {
+        "verdict": "VALID",
+        "finding": "The daemon imports on this tree with its dependencies (prometheus_math mahler DB, stygian_priority_queue); all 9 configured pairs load with n >= 10 on both sides; constants (SETTLE_THRESHOLD 5, CORR_SIGNIFICANT 0.30, CORR_FLIPPED_DELTA 0.20) are as the 05-25 patch set them. The 9-pair menu and thresholds are design choices, judged under DESIGN. Historical machine config (cadence, paths) is not recoverable and not needed for the verdicts above.",
+        "evidence": [
+          "dossiers/pollux_evidence/pollux_rescan_result.json (daemon_import, constants, scans[*].n_a/n_b)"
+        ],
+        "cause_classes": []
+      },
+      "EXECUTION": {
+        "verdict": "VALID",
+        "finding": "Pollux executed as written for the whole swarm window: 286 ticks, every one success=true, 2026-05-24 03:08 to 2026-05-30 11:55 local, 29.5-minute cadence with one 11-minute restart gap at 05-25 01:34-01:45 that is the v0.6 deploy (commit 43b094552 at 01:46:55 -- deployed from the working tree within two minutes of the commit). The second channel's per-summary census (86/39/161; 17/17/17/16/56/5/53/54/51) matches both readers of the lost ledger exactly and is reproduced in full by the on-tree code with a 47-tick v0.5 prefix and the daemon's own pool-exhaustion semantics; the three May summaries equal today's rescan to 4 dp. It stopped in the fleet halt (15 agents within 45 minutes), not on its own. Narrowed per Cleric C-3: this attests that the process ran and computed what the code computes; kill_ledger.jsonl, pair_history.json, settled_pairs.json, candidate_pool_idx.json and artifacts/ are absent from every reachable tree and the Ergon corpus directory holds manifests only -- record loss AFTER the run is charged to the record-preservation gap (DEFECTS D-67), not to EXECUTION. Caveat: the channel was written by the daemon itself in the same tick as the ledger row (single mechanism, D-76).",
+        "evidence": [
+          "[EXECUTED-BY-KEEPER dossiers/_keeper_evidence/pollux_settling_query.py -> pollux_settling_query_result.json] read-only GROUP BY output_summary over agora.intelligence_outputs, stage pollux_tick_complete, 286 rows: REJECTED 86 / PROMOTED 39 / UNVERIFIED 161 EXACTLY as the 06-24 reader and P69 report; per pair deg10 17, deg14 17, salem 17, smyth 16, even_odd 56, small_large 5, narrow_band 53, deg18 54, lehmer 51; all nine summaries carry raw=1.0; 90 rows before 05-25 23:30. Tick 47 at 05-25 01:34, tick 48 at 01:45 (an 11-minute gap in a 29.5-minute cadence: the restart), commit 43b094552 at 01:46:55 -- v0.6 was deployed from the working tree within two minutes of its commit, not 22 h later. The Cleric's prediction lost; both readers were right. Caveat unchanged: DUAL-RECORDED IS NOT INDEPENDENTLY VERIFIED (same daemon, same tick as the lost ledger).",
+          "[EXECUTED-BY-KEEPER dossiers/_keeper_evidence/pollux_replay_corrected.py -> pollux_replay_corrected_result.json] both prior replays (Necromancer Q4 k=0; Cleric S2) remove a settled pair from the rotation unconditionally; daemon.py _promote_settled_replace (L330-338) removes it ONLY when CANDIDATE_POOL still has a replacement and otherwise returns None leaving the settled pair in rotation (its own log line says 'active rotation shrunk'; the code does not shrink it). With the daemon's semantics and a v0.5 prefix of k round-robin ticks, exactly one k (47) reproduces every per-pair count of the second channel (86/39/161; settlements at ticks 64 smyth, 65 deg10, 66 salem, 69 deg14, 83 small_large, 91 narrow_band; narrow_band then re-scanned 48 more times). Under unconditional removal no k matches. P69's census is reproduced from the on-tree code in full.",
+          "dossiers/_keeper_evidence/intelligence_outputs_census_result.json (graves.pollux)",
+          "dossiers/_keeper_evidence/fleet_halt_census_result.json",
+          "dossiers/pollux_evidence/pollux_rescan_result.json (Q2_verdicts vs first_three_summaries)",
+          "[EXECUTED-BY-CLERIC, re-run by the Keeper: git log -- prometheus_math/databases/_mahler_data.py] last commit 12a76bade 2026-05-03; no data commit during or after the run, so today's subsets are May's subsets."
+        ],
+        "cause_classes": []
+      },
+      "INSTRUMENTATION": {
+        "verdict": "INVALID",
+        "finding": "The instrument's first leg (corr_raw) cannot observe the data: its value is fixed at 1.0 by construction for any two inputs (T1, T2). The 'scale artifact' the instrument was built to detect (raw correlation that vanishes after normalization) is therefore undetectable and 'attenuates' / 'sign_flips' / 'survives' are labels for corr_norm intervals, not for a before/after contrast. The kill_ledger rows record corr_raw=1.0 faithfully, which is why the 06-24 reader could see it and the 06-10 reader did not look.",
+        "evidence": [
+          "dossiers/pollux_evidence/pollux_instrument_null_result.json (T1_identity, T2_sorted_vs_shuffled)",
+          "dossiers/pollux_evidence/pollux_rescan_result.json (Q3_reachable_patterns_given_corr_raw_1, Q3_unreachable_patterns)"
+        ],
+        "cause_classes": [
+          "INSTRUMENT_ERROR"
+        ],
+        "load_bearing": true
+      },
+      "MEASUREMENT": {
+        "verdict": "INVALID",
+        "finding": "PROMOTED / REJECTED were emitted as verdicts with no null, no chance floor and no replication, and corr_raw = 1.0 was recorded as an outcome on every row (all nine channel summaries). On the real marginals the PROMOTED verdict recurs under independence up to 0.94 (N2) and 0.44 / 0.33 / 0.13 for the three PROMOTED pairs' own marginals (N1); against a signed label-permutation null all three PROMOTED pairs reject (p 0.000 / 0.000 / 0.023), which shows the two subsets have different marginal shapes and nothing more (N1 p = 0.14 / 0.042 / 0.06). The measured quantity was 'which corr_norm interval did the n-smallest truncation land in', not 'does a spacing coincidence survive normalization'. (Necromancer's 'deg14 fails p=0.093' was a two-sided p on a one-sided verdict and 'T5 0% stable' is the design's sub-population choice, both moved out per Cleric C-5 / C-6.)",
+        "evidence": [
+          "dossiers/pollux_evidence/pollux_instrument_null_result.json (T3, T4)",
+          "[EXECUTED-BY-CLERIC dossiers/pollux_evidence/cleric_chance_floor_result.json] seed 20260911, 1000 draws per pair. N1 (each pair's OWN marginals sampled independently, daemon statistic): PROMOTED floor salem 0.441, small_large 0.327, deg14 0.13; one-sided p for the observed corr_norm: salem 0.14, small_large 0.042, deg14 0.06 (none survives a 9-pair correction). N2 (two independent samples of ONE density): PROMOTED up to 0.938 (lehmer), 0.874 (salem), 0.76 (narrow_band). D (label permutation, SIGNED, matching the one-sided verdict): salem 0.000, small_large 0.000, deg14 0.023. Re-read by the Keeper 2026-09-11.",
+          "[EXECUTED-BY-KEEPER dossiers/_keeper_evidence/pollux_settling_query.py -> pollux_settling_query_result.json] read-only GROUP BY output_summary over agora.intelligence_outputs, stage pollux_tick_complete, 286 rows: REJECTED 86 / PROMOTED 39 / UNVERIFIED 161 EXACTLY as the 06-24 reader and P69 report; per pair deg10 17, deg14 17, salem 17, smyth 16, even_odd 56, small_large 5, narrow_band 53, deg18 54, lehmer 51; all nine summaries carry raw=1.0; 90 rows before 05-25 23:30. Tick 47 at 05-25 01:34, tick 48 at 01:45 (an 11-minute gap in a 29.5-minute cadence: the restart), commit 43b094552 at 01:46:55 -- v0.6 was deployed from the working tree within two minutes of its commit, not 22 h later. The Cleric's prediction lost; both readers were right. Caveat unchanged: DUAL-RECORDED IS NOT INDEPENDENTLY VERIFIED (same daemon, same tick as the lost ledger)."
+        ],
+        "cause_classes": [
+          "MEASUREMENT_ERROR"
+        ],
+        "load_bearing": true
+      },
+      "INTERPRETATION": {
+        "verdict": "INVALID",
+        "finding": "Four readings on record mis-state what the rows meant: 06-10 'real signal' (no null; raw leg not inspected); 06-22/23 REVIVE 'Real signal' (inherited); 06-24 'ZERO Learner references' (false; sources.py landed 06-10); 08-21 P69 'mechanically explains the Hecate MI null' and 'Hecate consumed' (vocabulary exclusion makes bit content irrelevant) while omitting the tautology already on record. The 06-24 tautology reading was correct and was left as an unexecuted assertion for 79 days; the 08-12 prescription for the executing script was never run until this pass. Correction on this pass: P69's census (86/39/161; deg18 x54, even_odd x56) is exactly right -- confirmed by the second channel and reproduced by the corrected replay; the Necromancer's 'unreproducible' and the Cleric's 'the code cannot produce 86/39' were both modelling errors of the Necropolis, not of the historical readers.",
+        "evidence": [
+          "dossiers/pollux_evidence/pollux_record_census_result.json (records, contradictions_on_record; all 20 citations verified)",
+          "dossiers/pollux_evidence/pollux_consumer_trace_result.json (C1, C4)",
+          "[EXECUTED-BY-KEEPER dossiers/_keeper_evidence/pollux_settling_query.py -> pollux_settling_query_result.json] read-only GROUP BY output_summary over agora.intelligence_outputs, stage pollux_tick_complete, 286 rows: REJECTED 86 / PROMOTED 39 / UNVERIFIED 161 EXACTLY as the 06-24 reader and P69 report; per pair deg10 17, deg14 17, salem 17, smyth 16, even_odd 56, small_large 5, narrow_band 53, deg18 54, lehmer 51; all nine summaries carry raw=1.0; 90 rows before 05-25 23:30. Tick 47 at 05-25 01:34, tick 48 at 01:45 (an 11-minute gap in a 29.5-minute cadence: the restart), commit 43b094552 at 01:46:55 -- v0.6 was deployed from the working tree within two minutes of its commit, not 22 h later. The Cleric's prediction lost; both readers were right. Caveat unchanged: DUAL-RECORDED IS NOT INDEPENDENTLY VERIFIED (same daemon, same tick as the lost ledger).",
+          "[EXECUTED-BY-KEEPER dossiers/_keeper_evidence/pollux_replay_corrected.py -> pollux_replay_corrected_result.json] both prior replays (Necromancer Q4 k=0; Cleric S2) remove a settled pair from the rotation unconditionally; daemon.py _promote_settled_replace (L330-338) removes it ONLY when CANDIDATE_POOL still has a replacement and otherwise returns None leaving the settled pair in rotation (its own log line says 'active rotation shrunk'; the code does not shrink it). With the daemon's semantics and a v0.5 prefix of k round-robin ticks, exactly one k (47) reproduces every per-pair count of the second channel (86/39/161; settlements at ticks 64 smyth, 65 deg10, 66 salem, 69 deg14, 83 small_large, 91 narrow_band; narrow_band then re-scanned 48 more times). Under unconditional removal no k matches. P69's census is reproduced from the on-tree code in full.",
+          "[EXECUTED-BY-CLERIC dossiers/pollux_evidence/cleric_census_fit_result.json] S1 k=0 replay 15/15/256; S2 v0.5-prefix search best k=95 giving 62/63/161 with deg18 54 / even_odd 56 / small_large 5 but seeds 29/29/29/28 and narrow_band 5; S3 0 exact matches over 729 verdict maps x k 0..139; S3b matches only under assignments the second channel excludes. The Cleric's stated prediction: 'if the code produced the ledger, 62/63/161'."
+        ],
+        "cause_classes": [
+          "INTERPRETATION_ERROR"
+        ],
+        "load_bearing": false
+      },
+      "ECOSYSTEM": {
+        "verdict": "INVALID",
+        "finding": "Every consumer seam was broken independently of Pollux's own faults: Stygian's survivor path was a stub for the entire run (E9 of the 05-25 plan, never built), Hecate's >=2-generator rule excluded Pollux's vocabulary by construction, Erebos used pair names only, and the Ergon Learner - the one consumer that trained on the rows - overwrote every verdict with gold=False. The run ended in the 05-30 fleet halt with the stub still in place. A correct Pollux would have died here too; this Pollux did not get that far.",
+        "evidence": [
+          "dossiers/pollux_evidence/pollux_consumer_trace_result.json",
+          "dossiers/_keeper_evidence/fleet_halt_census_result.json",
+          "roles/Ergon/GREEDY_FOLLOWUP_PROGRESS_2026-06-07.md:32-56"
+        ],
+        "cause_classes": [
+          "ECOSYSTEM_FAILURE"
+        ],
+        "load_bearing": false
+      }
+    },
+    "fair_test": {
+      "verdict": "UNFAIR",
+      "scope": "The whole run 2026-05-24..05-30 and every reading of it since; no window is clean because the instrument and design faults are in the code, not in the environment.",
+      "finding": "Pollux never tested its premise. The before/after-normalization contrast it was built on had a constant 'before' leg (T1/T2), the 'after' leg was thresholded without a null on the real marginals (N1/N2: PROMOTED recurs under independence up to 0.94) on a truncation the design never justified (T5), and no consumer could have validated a PROMOTED pair (Stygian stub). The 39 PROMOTED and 86 REJECTED verdicts -- counts now confirmed exactly -- are not evidence for or against spacing coincidences in Mahler subsets. This is epistemic: the general hypothesis has no defined test on the record; its only operationalized form is inside its own null; a fair test is specifiable (two-sample spacing-distribution test with matched-marginal null, published chance floor, seed replication, verdicts carrying p-values).",
+      "evidence": [
+        "dossiers/pollux_evidence/pollux_instrument_null_result.json",
+        "dossiers/pollux_evidence/pollux_rescan_result.json",
+        "dossiers/pollux_evidence/pollux_consumer_trace_result.json",
+        "dossiers/pollux_evidence/cleric_chance_floor_result.json",
+        "dossiers/_keeper_evidence/pollux_settling_query_result.json"
+      ]
+    },
+    "primary_cause": "DESIGN_ERROR",
+    "contributing_causes": [
+      "INSTRUMENT_ERROR",
+      "MEASUREMENT_ERROR",
+      "INTERPRETATION_ERROR",
+      "ECOSYSTEM_FAILURE"
+    ],
+    "premise_exclusion": [
+      "Not claimed. PREMISE_FAILURE / HYPOTHESIS_FAILURE would require a fair test that failed; none exists on the historical record, and a Necropolis-executed null cannot be filed as one (D-85).",
+      "NOT supported: 'Mahler subsets carry no spacing coincidence' -- never measured with a valid instrument; the general proposition has no defined test.",
+      "NOT supported: 'Mahler subsets carry spacing coincidences' -- the PROMOTED pairs' verdicts are reproduced by their own marginals sampled independently (N1) and by two samples of one density (N2).",
+      "NOT supported: 'Pollux's low-bit emission caused Hecate's MI null' -- excluded by Hecate's own admission rule."
+    ]
   },
-  "primary_cause": "DESIGN_ERROR",
-  "contributing_causes": [
-   "IMPLEMENTATION_ERROR",
-   "INSTRUMENT_ERROR",
-   "MEASUREMENT_ERROR",
-   "INTERPRETATION_ERROR",
-   "ECOSYSTEM_FAILURE"
-  ],
-  "premise_exclusion": [
-   "Not claimed. PREMISE_FAILURE / HYPOTHESIS_FAILURE would require a fair test that failed; none exists.",
-   "NOT supported: 'Mahler subsets carry no spacing coincidence' - never measured with a valid instrument.",
-   "NOT supported: 'Mahler subsets carry spacing coincidences' - the two null-rejecting pairs are truncation artifacts at the 0% stability level.",
-   "NOT supported: 'Pollux's low-bit emission caused Hecate's MI null' - excluded by Hecate's own admission rule."
-  ]
- },
- "residue": {
-  "salvageable_code": [
-   "charon/agents/pollux/daemon.py::_mean_spacing_normalize (correct, reusable spacing normalizer)",
-   "charon/agents/pollux/daemon.py::_spearman (correct rank correlation; verified against random independent draws in T1)",
-   "charon/agents/pollux/daemon.py::_load_subset and its 7 selector kinds (mahler_by_degree, mahler_by_degree_parity, mahler_degree_range, mahler_M_range, mahler_by_class, mahler_smyth_extremal, mahler_non_smyth) - a clean subset-selection layer over mahler.py",
-   "dossiers/pollux_evidence/pollux_instrument_null.py T3/T4/T5 harness (label-permutation null, independence chance floor, truncation-sensitivity) - reusable for ANY two-subset correlation scanner",
-   "dossiers/pollux_evidence/pollux_rescan.py::replay_rotation (settle/replace policy simulator)"
-  ],
-  "salvageable_data": [
-   "The 9-pair menu as a catalogue of Mahler-subset contrasts (SEED_PAIRS + CANDIDATE_POOL) with today's corr_norm and null p-values (pollux_instrument_null_result.json T3) - a starting table for a fairly designed scanner",
-   "Second-channel census: 286 ticks / 9 summaries / fleet-halt timing (dossiers/_keeper_evidence/)"
-  ],
-  "salvageable_schemas": [
-   "The kill_ledger row shape (record_id, generator_id, kill_pattern, stats{corr_raw, corr_norm, n_pairs, a_desc, b_desc}, verdict) is a fine contract IF corr_raw is replaced by a real pre-normalization statistic and a p-value field is added",
-   "The POLLUX-<pair> / hardness POLLUX_SURVIVOR queue contract on the Stygian side (daemon.py 225-243) - the consumer half exists; only the loader was never built"
-  ],
-  "salvageable_operators": [
-   "Settle/replace rotation (5 consecutive identical verdicts -> replace from pool) - salvageable only with UNVERIFIED made settle-able or with a novelty gate keyed on (pair, data version, instrument version)"
-  ],
-  "salvageable_tests": [
-   "None on the tree (charon/agents/pollux/tests absent). The three evidence scripts in dossiers/pollux_evidence/ are the first executable tests this organism ever had."
-  ],
-  "representation_hints": [
-   "A scanner that compares two unpaired samples must name its pairing relation or use a two-sample test; 'sort both and correlate' is not a comparison, it is the identity.",
-   "Every verdict field needs a payload-reading null and a published chance floor beside it, in the same row (T4's 0.33 floor would have been visible at design time).",
-   "A verdict that changes under an arbitrary truncation choice is a verdict about the truncation; sensitivity to that choice (T5) should be a gate, not an afterthought.",
-   "Cross-generator information seams (Hecate) should publish their admission rule where generators can see it; Pollux was built to feed a statistic that could not admit its vocabulary."
-  ]
- },
- "disposition": {
-  "classification": "NO_FAIR_TEST_ON_RECORD",
-  "rationale": "Chosen over MEASUREMENT_FAILURE because the deepest load-bearing INVALID is DESIGN: with the tautological raw leg repaired, the same design (no pairing relation, verdict-deciding truncation, thresholds without a null, UNVERIFIED-excluding settle) would still emit verdicts with a chance floor up to 0.33 and 0% truncation stability (T4, T5); the measurement faults are downstream of that. Chosen over TRUE_CORPSE because the premise was never tested at all - the record contains no observation of a Mahler spacing coincidence or its absence. Chosen over CONSUMER_BLOCKED / SEAM-driven classes because the outputs were unusable before any consumer touched them; the stub Stygian path, the Hecate exclusion and the Learner label inversion are recorded as ECOSYSTEM contributing causes and would have killed a working Pollux next. Chosen over NO_DESIGN_FAILURE_ESTABLISHED because two design failures ARE established by executed evidence (pairing/truncation; threshold-without-null). Epistemic, not optimistic: the hypothesis is open, a fair test is specifiable, and nothing here argues it would pass.",
-  "_neighbours_considered": [
-   "MEASUREMENT_FAILURE",
-   "TRUE_CORPSE",
-   "CONSUMER_BLOCKED",
-   "NO_DESIGN_FAILURE_ESTABLISHED"
-  ]
- },
- "descendant_candidate": null,
- "provenance": {
-  "investigator": "Rhadamanthus (Necromancer fork, Pollux pass)",
-  "role": "Necromancer",
-  "branch": "rhadamanthus/native-trial-2026-09-11",
-  "baseline_sha": "e17934d9a82855b6e0ae1c0bf54c0cce569b7795",
-  "evidence_paths": [
-   "engine/necropolis/dossiers/pollux_evidence/README.md",
-   "engine/necropolis/dossiers/pollux_evidence/pollux_rescan.py + pollux_rescan_result.json",
-   "engine/necropolis/dossiers/pollux_evidence/pollux_instrument_null.py + pollux_instrument_null_result.json",
-   "engine/necropolis/dossiers/pollux_evidence/pollux_consumer_trace.py + pollux_consumer_trace_result.json",
-   "engine/necropolis/dossiers/pollux_evidence/pollux_record_census.py + pollux_record_census_result.json",
-   "engine/necropolis/dossiers/_keeper_evidence/intelligence_outputs_census_result.json (Keeper second channel; dual-recorded, single-mechanism)",
-   "engine/necropolis/dossiers/_keeper_evidence/fleet_halt_census_result.json",
-   "charon/agents/pollux/daemon.py",
-   "pivot/COMPONENT_DOSSIERS_2026-06-24.md (### Pollux, lines 391-406)",
-   "engine/ledger/AGENT_AUTOPSIES.jsonl line 18; engine/ledger/AUTOPSY_TAXONOMY.md lines 39-59, 83-93",
-   "roles/Ergon/GREEDY_FOLLOWUP_PROGRESS_2026-06-07.md lines 32-56"
-  ],
-  "commands_run": [
-   "git log --format='%H|%ad|%s' --date=iso-strict -- charon/agents/pollux/daemon.py  (2 commits)",
-   "git show 43b094552 -- charon/agents/pollux/daemon.py  (v0.6 patch: SEED_PAIRS/CANDIDATE_POOL/settle policy/stygian queue)",
-   "git grep -n pollux -- charon/agents/hecate charon/agents/stygian charon/agents/erebos ergon/learner/greedy",
-   "python engine/necropolis/dossiers/pollux_evidence/pollux_rescan.py",
-   "python engine/necropolis/dossiers/pollux_evidence/pollux_instrument_null.py  (seed 20260911, N_NULL 1000, ~24 s)",
-   "python engine/necropolis/dossiers/pollux_evidence/pollux_consumer_trace.py",
-   "python engine/necropolis/dossiers/pollux_evidence/pollux_record_census.py",
-   "python validate.py on a private scratch copy of engine/necropolis (never on the shared tree)"
-  ],
-  "unresolved_questions": [
-   "Where is charon/agents/pollux/state/kill_ledger.jsonl (435 KB on 2026-06-24, 286 rows on 2026-08-21)? Absent from this worktree, the canonical checkout and the local backup; the P69 census cannot be re-derived without it.",
-   "Do the Ergon greedy corpus files (ergon/learner/greedy/corpus/*.jsonl, if present) hold a verbatim copy of the 286 rows? Not searched in this pass; would settle the census question and the v0.5-window row count.",
-   "Did any of the 39 PROMOTED rows reach Stygian's queue file, and did Stygian emit 39 short-circuit rows for them? Its ledger is also absent.",
-   "What did the v0.5 rotation (4 TEST_PAIRS, no settle) produce in its ~22.6 h? Nothing on the tree records it.",
-   "Taxonomy question for the Keeper: is a tautological statistic an IMPLEMENTATION_ERROR (wrong line), an INSTRUMENT_ERROR (leg cannot observe) or a DESIGN_ERROR (contrast defined around a constant)? This dossier marks all three load-bearing and ranks DESIGN deepest; the ranking is a judgement, not a measurement."
-  ],
-  "created": "2026-09-11"
- }
+  "residue": {
+    "salvageable_code": [
+      "charon/agents/pollux/daemon.py::_mean_spacing_normalize (correct, reusable spacing normalizer)",
+      "charon/agents/pollux/daemon.py::_spearman (correct rank correlation; verified against random independent draws in T1)",
+      "charon/agents/pollux/daemon.py::_load_subset and its 7 selector kinds (mahler_by_degree, mahler_by_degree_parity, mahler_degree_range, mahler_M_range, mahler_by_class, mahler_smyth_extremal, mahler_non_smyth) - a clean subset-selection layer over mahler.py",
+      "dossiers/pollux_evidence/pollux_instrument_null.py T3/T4/T5 harness (label-permutation null, independence chance floor, truncation-sensitivity) - reusable for ANY two-subset correlation scanner",
+      "dossiers/pollux_evidence/pollux_rescan.py::replay_rotation (settle/replace policy simulator)",
+      "dossiers/pollux_evidence/cleric_chance_floor.py (own-marginal N1, one-density N2, signed label-permutation D) -- the null battery the daemon lacked",
+      "dossiers/_keeper_evidence/pollux_replay_corrected.py (rotation + settle replay with the daemon's pool-exhaustion semantics; reproduces the run's census exactly)"
+    ],
+    "salvageable_data": [
+      "The 9-pair menu as a catalogue of Mahler-subset contrasts (SEED_PAIRS + CANDIDATE_POOL) with today's corr_norm and null p-values (pollux_instrument_null_result.json T3) - a starting table for a fairly designed scanner",
+      "Second-channel census: 286 ticks / 9 summaries / fleet-halt timing (dossiers/_keeper_evidence/)"
+    ],
+    "salvageable_schemas": [
+      "The kill_ledger row shape (record_id, generator_id, kill_pattern, stats{corr_raw, corr_norm, n_pairs, a_desc, b_desc}, verdict) is a fine contract IF corr_raw is replaced by a real pre-normalization statistic and a p-value field is added",
+      "The POLLUX-<pair> / hardness POLLUX_SURVIVOR queue contract on the Stygian side (daemon.py 225-243) - the consumer half exists; only the loader was never built"
+    ],
+    "salvageable_operators": [
+      "Settle/replace rotation (5 consecutive identical verdicts -> replace from pool) - salvageable only with UNVERIFIED made settle-able or with a novelty gate keyed on (pair, data version, instrument version)"
+    ],
+    "salvageable_tests": [
+      "None on the tree (charon/agents/pollux/tests absent). The three evidence scripts in dossiers/pollux_evidence/ are the first executable tests this organism ever had."
+    ],
+    "representation_hints": [
+      "A scanner that compares two unpaired samples must name its pairing relation or use a two-sample test; 'sort both and correlate' is not a comparison, it is the identity.",
+      "Every verdict field needs a payload-reading null and a published chance floor beside it, in the same row (T4's 0.33 floor would have been visible at design time).",
+      "A verdict that changes under an arbitrary truncation choice is a verdict about the truncation; sensitivity to that choice (T5) should be a gate, not an afterthought.",
+      "Cross-generator information seams (Hecate) should publish their admission rule where generators can see it; Pollux was built to feed a statistic that could not admit its vocabulary.",
+      "A settle/replace policy must state what happens on pool exhaustion and its log line must describe what the code does; the second channel, not the log, revealed the divergence.",
+      "Chance floors must be measured on the organism's OWN marginals (N1) and on one-density resampling (N2), not on assumed families; T4's 0.33 became 0.94 on the real data."
+    ]
+  },
+  "disposition": {
+    "classification": "NO_FAIR_TEST_ON_RECORD",
+    "rationale": "NO_FAIR_TEST_ON_RECORD retained from the Necromancer pass, on corrected grounds. The charter defines the class as 'the historical experiment could not have answered its own question'; the experiment could not because its 'before' leg was constant for ANY implementation of the design (T1, T2 incl. the non-sorting variant), its 'after' leg was thresholded without a null on marginals under which the PROMOTED verdict recurs up to 0.94 of the time (N2) and 0.44 / 0.33 / 0.13 for the pairs it promoted (N1), its truncation named a sub-population it never justified (T5), and its consumer was a stub (Stygian E9). DESIGN_ERROR is primary because those faults are the design's and survive any repair of the instrument; MEASUREMENT_ERROR and INSTRUMENT_ERROR are the same fact seen from the outcome column and are contributing. Chosen over TRUE_CORPSE because the general hypothesis has no defined test on the record and the doctrine cannot record the Necropolis-executed kill of its only operationalization (N1/N2) as a fair test. Chosen over CONSUMER_BLOCKED because the outputs were unusable before any consumer touched them. Chosen over NO_DESIGN_FAILURE_ESTABLISHED because the design failures are established by executed evidence. ADJUDICATION (Rhadamanthus, 2026-09-11, after CLERIC.md C-0..C-9): C-1, C-2, C-4, C-5, C-6, C-7, C-8 accepted after the Keeper re-read the cited result files (T2 per pair; N1/N2/D per pair; S1-S3b) and the daemon source. C-3 RULED BY EXECUTION, against the Cleric: the Keeper ran the settling query the Cleric proposed (one read-only GROUP BY on the second channel) and the channel carries 86/39/161 exactly as both readers reported; the Cleric's pre-registered prediction (62/63/161 if the code wrote the ledger) lost, and so did the Necromancer's 'unreproducible' -- both replays removed a settled pair from the rotation unconditionally where daemon.py removes it only while a replacement exists. A corrected replay reproduces every per-pair count at a unique v0.5 prefix of 47 ticks, and the tick times put the v0.6 deploy within two minutes of its commit. EXECUTION therefore stays VALID with the narrowed finding the Cleric asked for and the record-loss charged to D-67. Rulings: (i) primary_cause is the cause of the question being unanswerable (D-62 ruling carried over), which the charter's own definition puts on DESIGN; the 'deepest INVALID' rule is withdrawn (D-83); (ii) HYPOTHESIS NOT_EXAMINED with the N1/N2 result in the finding, because VALID meant 'well-posed' and the record shows no well-posed form (D-84); (iii) IMPLEMENTATION INVALID non-load-bearing on two real bugs, one found on this pass (pool-exhaustion path), neither contributing; (iv) P69 and the 06-24 dossier stay PARTIALLY_UPHELD with their census recorded as exactly right (D-78: the enum has no 'UPHELD with one error'); (v) the Necromancer fork's and the Cleric fork's shared modelling error is recorded against the Keeper's own lane in calibration/LEDGER.md -- two adversarial passes converged on the same false claim from the same untested assumption, which is the reader-divergence failure the META-TEST exists to catch. Stronger conclusion NOT supported: that the Mahler spacing-coincidence hypothesis is dead (TRUE_CORPSE / HYPOTHESIS_FAILURE). The record supports the narrower statement that its only operationalized form is inside its own null and that the general form has no test. A discriminating Frankenstein counterfactual is warranted (DESIGN ONLY: the two-sample spacing-distribution test in capability_contingency). No Zombie authorised.",
+    "_neighbours_considered": [
+      "MEASUREMENT_FAILURE",
+      "TRUE_CORPSE",
+      "CONSUMER_BLOCKED",
+      "NO_DESIGN_FAILURE_ESTABLISHED"
+    ]
+  },
+  "descendant_candidate": null,
+  "provenance": {
+    "investigator": "Rhadamanthus (Necromancer fork; Cleric fork; adjudicated as Keeper and Judge -- the schema role enum has no adjudicator value, DEFECTS D-61)",
+    "role": "Keeper",
+    "branch": "rhadamanthus/native-trial-2026-09-11",
+    "baseline_sha": "e17934d9a82855b6e0ae1c0bf54c0cce569b7795",
+    "evidence_paths": [
+      "engine/necropolis/dossiers/pollux_evidence/README.md",
+      "engine/necropolis/dossiers/pollux_evidence/pollux_rescan.py + pollux_rescan_result.json",
+      "engine/necropolis/dossiers/pollux_evidence/pollux_instrument_null.py + pollux_instrument_null_result.json",
+      "engine/necropolis/dossiers/pollux_evidence/pollux_consumer_trace.py + pollux_consumer_trace_result.json",
+      "engine/necropolis/dossiers/pollux_evidence/pollux_record_census.py + pollux_record_census_result.json",
+      "engine/necropolis/dossiers/_keeper_evidence/intelligence_outputs_census_result.json (Keeper second channel; dual-recorded, single-mechanism)",
+      "engine/necropolis/dossiers/_keeper_evidence/fleet_halt_census_result.json",
+      "charon/agents/pollux/daemon.py",
+      "pivot/COMPONENT_DOSSIERS_2026-06-24.md (### Pollux, lines 391-406)",
+      "engine/ledger/AGENT_AUTOPSIES.jsonl line 18; engine/ledger/AUTOPSY_TAXONOMY.md lines 39-59, 83-93",
+      "roles/Ergon/GREEDY_FOLLOWUP_PROGRESS_2026-06-07.md lines 32-56",
+      "engine/necropolis/dossiers/pollux_evidence/CLERIC.md",
+      "engine/necropolis/dossiers/pollux_evidence/cleric_chance_floor.py + cleric_chance_floor_result.json",
+      "engine/necropolis/dossiers/pollux_evidence/cleric_census_fit.py + cleric_census_fit_result.json",
+      "engine/necropolis/dossiers/_keeper_evidence/pollux_settling_query.py + pollux_settling_query_result.json (Keeper; read-only)",
+      "engine/necropolis/dossiers/_keeper_evidence/pollux_replay_corrected.py + pollux_replay_corrected_result.json (Keeper)"
+    ],
+    "commands_run": [
+      "git log --format='%H|%ad|%s' --date=iso-strict -- charon/agents/pollux/daemon.py  (2 commits)",
+      "git show 43b094552 -- charon/agents/pollux/daemon.py  (v0.6 patch: SEED_PAIRS/CANDIDATE_POOL/settle policy/stygian queue)",
+      "git grep -n pollux -- charon/agents/hecate charon/agents/stygian charon/agents/erebos ergon/learner/greedy",
+      "python engine/necropolis/dossiers/pollux_evidence/pollux_rescan.py",
+      "python engine/necropolis/dossiers/pollux_evidence/pollux_instrument_null.py  (seed 20260911, N_NULL 1000, ~24 s)",
+      "python engine/necropolis/dossiers/pollux_evidence/pollux_consumer_trace.py",
+      "python engine/necropolis/dossiers/pollux_evidence/pollux_record_census.py",
+      "python validate.py on a private scratch copy of engine/necropolis (never on the shared tree)",
+      "python engine/necropolis/dossiers/pollux_evidence/cleric_chance_floor.py (Cleric)",
+      "python engine/necropolis/dossiers/pollux_evidence/cleric_census_fit.py (Cleric)",
+      "EW_DB_HOST=<M1> python engine/necropolis/dossiers/_keeper_evidence/pollux_settling_query.py --out ... (Keeper; read-only SELECTs)",
+      "python engine/necropolis/dossiers/_keeper_evidence/pollux_replay_corrected.py --out ... (Keeper)",
+      "git log --date=iso -- charon/agents/pollux/ ; git log -1 -- prometheus_math/databases/_mahler_data.py (Keeper)",
+      "ls charon/agents/pollux/state charon/agents/stygian/state ergon/learner/greedy/corpus on canonical tree and worktree (Keeper; ledger bytes absent)",
+      "python engine/necropolis/validate.py (Keeper, in the worktree, twice)"
+    ],
+    "unresolved_questions": [
+      "Where are the kill_ledger.jsonl bytes, if anywhere? Counts are settled; bytes are not on any reachable tree.",
+      "Would a two-sample spacing-distribution test with a matched-marginal null reject for any of the 9 pairs? (The settling artefact for the hypothesis; Frankenstein DESIGN ONLY.)",
+      "Is same-daemon dual recording admissible for EXECUTION VALID under LAW N17? Ruled admissible here because the channel, two independent readers and a code replay agree on every count; recorded as D-76.",
+      "How should doctrine record a Necropolis-executed null that kills an organism's only operationalization when the historical test was UNFAIR (D-85)?",
+      "Which layer owns a code path that diverges from its own log message (pool-exhaustion case): IMPLEMENTATION (ruled here) or INSTRUMENTATION (the log is the instrument the operator read)?"
+    ],
+    "created": "2026-09-11"
+  }
 }

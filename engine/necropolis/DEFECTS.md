@@ -495,3 +495,101 @@ D-82 KEEPER PROV The historical Erebos kill_ledger.jsonl and
      exist. FRANK-003 says so in prose. (Instance of D-67 at the monster
      layer; erebos.representation_hints.1 is the organism-level statement.)
 
+## Pollux Cleric entries (merged by the Keeper from dossiers/pollux_evidence/
+## CLERIC.md section 6, D-1..D-9; plus two Keeper entries from the settling
+## query and the corrected replay; rulings recorded, nothing resolved)
+
+D-83 POLLUX AMB  primary_cause ranking is undefined: SCHEMA says "proximate
+     cause", the Necromancer applied "deepest load-bearing INVALID" (not in
+     any doctrine text), and the charter's MEASUREMENT_ERROR example ("a
+     metric that carries its own answer") describes corr_raw = 1 literally.
+     A reader applying "proximate" lands on MEASUREMENT_FAILURE; the Keeper
+     landed on DESIGN_ERROR by the charter's definition of
+     NO_FAIR_TEST_ON_RECORD ("could not have answered its own question").
+     Keeper RULING for this trial: primary = cause of the question being
+     unanswerable (D-62 carried over); the "deepest INVALID" rule is
+     withdrawn as non-doctrine. The alternative reading is recorded in
+     pollux.dossier.json uncertainty[4]. (Pollux D-1; same family as D-62.)
+
+D-84 POLLUX COLL HYPOTHESIS VALID has two meanings: "well-posed and
+     answerable" (the Necromancer's) and "not refuted" (the natural one).
+     There is no class for an ILL-POSED hypothesis -- one with no defined
+     test on the record -- so the only honest verdict is NOT_EXAMINED, which
+     also means "nobody looked". Pollux is filed NOT_EXAMINED with the
+     N1/N2 result in the finding. (Pollux D-2.)
+
+D-85 POLLUX COLL A Necropolis-executed null that kills an organism's only
+     operationalization (N1/N2: PROMOTED recurs under independence up to
+     0.94) has no place in the stack: HYPOTHESIS_FAILURE requires a FAIR
+     historical test (validate.py line 210), the historical test is UNFAIR,
+     and a kill executed after death is not a death certificate. The result
+     lives as prose in the HYPOTHESIS finding and in kill_boundary. The
+     doctrine forbids optimizing for resurrection rate but gives the
+     opposite result -- a fair post-mortem kill -- nowhere to go.
+     (Pollux D-3; HITL doctrine question.)
+
+D-86 POLLUX VAL  EXECUTION VALID is a conjunction ("ran as written, no
+     partial runs, faithful") with no grade for self-reported evidence. For
+     Pollux every EXECUTION row descends from the daemon's own agora writes.
+     Keeper ruling: admitted because two independent readers and a code
+     replay agree on every count, with the caveat carried in the finding.
+     No field says "VALID on self-report". (Pollux D-4; D-76 sixth hit.)
+
+D-87 POLLUX DIV  load_bearing on post-outcome layers (INTERPRETATION,
+     ECOSYSTEM) has no defined referent: nothing after the outcome can carry
+     the outcome. The Necromancer set both false; validate.py accepts any
+     value. (Pollux D-5; same fact as D-65 from the other side.)
+
+D-88 POLLUX PROV DISCHARGED ON THIS GRAVE, GAP REMAINS. Two readers of a lost
+     ledger agreeing (06-24 dossier, P69: 86/39/161) is one observation
+     copied twice unless a third channel exists. Here the Keeper found one
+     (agora.intelligence_outputs GROUP BY output_summary) and it matched
+     both readers exactly, so the Cleric's C-3 lost by execution. No rule
+     says a dossier must look for a second channel before grading a
+     certificate's count, and nothing marks a count as "single-source".
+     (Pollux D-6.)
+
+D-89 POLLUX PROV DISCHARGED ON THIS GRAVE, GAP REMAINS. Commit time is not
+     deploy time: the Cleric inferred a ~22 h gap between commit 43b094552
+     and the v0.6 behaviour from the readers' counts; the tick sequence
+     shows an 11-minute restart gap ending 2 minutes before the commit, so
+     v0.6 was running from the working tree before it was committed.
+     identity/observed_history has no deploy-time field and no rule asks
+     for one; a grave with no second channel could not have settled this.
+     (Pollux D-7.)
+
+D-90 POLLUX VAL  Null sidedness is not a required field: the Necromancer's
+     T3 reported two-sided p on a one-sided verdict (deg14 "fails" at
+     0.093; signed p 0.023). validate.py checks evidence presence, not that
+     a p-value's alternative matches the verdict it is cited against.
+     (Pollux D-8; Cleric C-5.)
+
+D-91 POLLUX VAL  validate.py line 210 requires fair_test FAIR for a STRONG
+     class only when it is PRIMARY; a STRONG class in contributing_causes
+     under UNFAIR passes. Nothing on this trial exercised the hole, but the
+     negative test does not exist in tests/. (Pollux D-9; belongs to
+     RHAD-30 validator hardening.)
+
+D-92 KEEPER META Reader CONVERGENCE, not divergence, as a META-TEST failure:
+     the Necromancer fork (pollux_rescan.py Q4, "P69's census is
+     unreproducible; replay yields 15/15/256") and the Cleric fork
+     (cleric_census_fit.py S2, "if the code produced the ledger, 62/63/161")
+     reached opposite-sounding but jointly false claims from ONE shared,
+     untested assumption: that a settled pair leaves the rotation
+     unconditionally. daemon.py _promote_settled_replace removes it only
+     while CANDIDATE_POOL still has a replacement. Two adversarial passes
+     agreed on the false premise because both read the daemon's LOG LINE
+     ("active rotation shrunk") instead of its code path. The META-TEST
+     asks whether fresh adjudicators diverge; it has no check for whether
+     they share an unexamined premise. Recorded against the Keeper's lane in
+     roles/Rhadamanthus/calibration/LEDGER.md. Detected only because the
+     Keeper ran the Cleric's proposed settling query rather than ruling on
+     the argument. (Keeper; pollux_replay_corrected_result.json.)
+
+D-93 KEEPER AMB  A code path that diverges from its own log message
+     (pool-exhaustion: log says "rotation shrunk", code leaves the pair in
+     rotation) has no owning layer: IMPLEMENTATION (the code is wrong
+     relative to its comment) or INSTRUMENTATION (the log is the instrument
+     the operator and every later reader consulted, and it lied).
+     Keeper ruling for this grave: IMPLEMENTATION, non-load-bearing, with
+     the question kept open in provenance.unresolved_questions. (Keeper.)

@@ -1,0 +1,336 @@
+{
+ "script": "cleric_census_fit.py",
+ "target_P69": {
+  "sign_flips": 86,
+  "survives": 39,
+  "attenuates": 161,
+  "deg18_vs_deg20": 54,
+  "even_deg_vs_odd_deg": 56,
+  "total": 286
+ },
+ "pinned_by_second_channel": {
+  "deg10_vs_deg12": "pollux_sign_flips_under_normalization",
+  "deg14_vs_deg16": "pollux_correlation_survives_normalization",
+  "salem_vs_pisot": "pollux_correlation_survives_normalization"
+ },
+ "todays_map": {
+  "deg10_vs_deg12": "pollux_sign_flips_under_normalization",
+  "deg14_vs_deg16": "pollux_correlation_survives_normalization",
+  "salem_vs_pisot": "pollux_correlation_survives_normalization",
+  "smyth_extremal_vs_rest": "pollux_sign_flips_under_normalization",
+  "deg18_vs_deg20": "pollux_correlation_attenuates_under_normalization",
+  "even_deg_vs_odd_deg": "pollux_correlation_attenuates_under_normalization",
+  "small_deg_vs_large_deg": "pollux_correlation_survives_normalization",
+  "narrow_band_1.10_1.20_vs_1.30_1.50": "pollux_sign_flips_under_normalization",
+  "lehmer_witness_neighborhood": "pollux_correlation_attenuates_under_normalization"
+ },
+ "free_pairs": [
+  "smyth_extremal_vs_rest",
+  "deg18_vs_deg20",
+  "even_deg_vs_odd_deg",
+  "small_deg_vs_large_deg",
+  "narrow_band_1.10_1.20_vs_1.30_1.50",
+  "lehmer_witness_neighborhood"
+ ],
+ "settle_threshold": 5,
+ "S1_necromancer_replay_k0_todays_map": {
+  "got": {
+   "sign_flips": 15,
+   "survives": 15,
+   "attenuates": 256,
+   "deg18_vs_deg20": 87,
+   "even_deg_vs_odd_deg": 88,
+   "total": 286
+  },
+  "per_pair": {
+   "deg10_vs_deg12": 5,
+   "deg14_vs_deg16": 5,
+   "salem_vs_pisot": 5,
+   "smyth_extremal_vs_rest": 5,
+   "deg18_vs_deg20": 87,
+   "even_deg_vs_odd_deg": 88,
+   "small_deg_vs_large_deg": 5,
+   "narrow_band_1.10_1.20_vs_1.30_1.50": 5,
+   "lehmer_witness_neighborhood": 81
+  },
+  "distance_to_P69": 255
+ },
+ "S2_todays_map_v05_prefix_search": {
+  "k_range": [
+   0,
+   286
+  ],
+  "best_distance": 48,
+  "best_fits": [
+   {
+    "k_v05_ticks": 95,
+    "inherit_idx": true,
+    "got": {
+     "sign_flips": 62,
+     "survives": 63,
+     "attenuates": 161,
+     "deg18_vs_deg20": 54,
+     "even_deg_vs_odd_deg": 56,
+     "total": 286
+    },
+    "per_pair": {
+     "deg10_vs_deg12": 29,
+     "deg14_vs_deg16": 29,
+     "salem_vs_pisot": 29,
+     "smyth_extremal_vs_rest": 28,
+     "even_deg_vs_odd_deg": 56,
+     "small_deg_vs_large_deg": 5,
+     "narrow_band_1.10_1.20_vs_1.30_1.50": 5,
+     "deg18_vs_deg20": 54,
+     "lehmer_witness_neighborhood": 51
+    }
+   },
+   {
+    "k_v05_ticks": 97,
+    "inherit_idx": true,
+    "got": {
+     "sign_flips": 64,
+     "survives": 63,
+     "attenuates": 159,
+     "deg18_vs_deg20": 54,
+     "even_deg_vs_odd_deg": 56,
+     "total": 286
+    },
+    "per_pair": {
+     "deg10_vs_deg12": 30,
+     "deg14_vs_deg16": 29,
+     "salem_vs_pisot": 29,
+     "smyth_extremal_vs_rest": 29,
+     "even_deg_vs_odd_deg": 56,
+     "deg18_vs_deg20": 54,
+     "small_deg_vs_large_deg": 5,
+     "narrow_band_1.10_1.20_vs_1.30_1.50": 5,
+     "lehmer_witness_neighborhood": 49
+    }
+   },
+   {
+    "k_v05_ticks": 94,
+    "inherit_idx": true,
+    "got": {
+     "sign_flips": 62,
+     "survives": 62,
+     "attenuates": 162,
+     "deg18_vs_deg20": 55,
+     "even_deg_vs_odd_deg": 56,
+     "total": 286
+    },
+    "per_pair": {
+     "deg10_vs_deg12": 29,
+     "deg14_vs_deg16": 29,
+     "salem_vs_pisot": 28,
+     "smyth_extremal_vs_rest": 28,
+     "deg18_vs_deg20": 55,
+     "even_deg_vs_odd_deg": 56,
+     "small_deg_vs_large_deg": 5,
+     "narrow_band_1.10_1.20_vs_1.30_1.50": 5,
+     "lehmer_witness_neighborhood": 51
+    }
+   },
+   {
+    "k_v05_ticks": 95,
+    "inherit_idx": false,
+    "got": {
+     "sign_flips": 62,
+     "survives": 63,
+     "attenuates": 161,
+     "deg18_vs_deg20": 55,
+     "even_deg_vs_odd_deg": 56,
+     "total": 286
+    },
+    "per_pair": {
+     "deg10_vs_deg12": 29,
+     "deg14_vs_deg16": 29,
+     "salem_vs_pisot": 29,
+     "smyth_extremal_vs_rest": 28,
+     "deg18_vs_deg20": 55,
+     "even_deg_vs_odd_deg": 56,
+     "small_deg_vs_large_deg": 5,
+     "narrow_band_1.10_1.20_vs_1.30_1.50": 5,
+     "lehmer_witness_neighborhood": 50
+    }
+   },
+   {
+    "k_v05_ticks": 96,
+    "inherit_idx": false,
+    "got": {
+     "sign_flips": 63,
+     "survives": 63,
+     "attenuates": 160,
+     "deg18_vs_deg20": 55,
+     "even_deg_vs_odd_deg": 56,
+     "total": 286
+    },
+    "per_pair": {
+     "deg10_vs_deg12": 29,
+     "deg14_vs_deg16": 29,
+     "salem_vs_pisot": 29,
+     "smyth_extremal_vs_rest": 29,
+     "deg18_vs_deg20": 55,
+     "even_deg_vs_odd_deg": 56,
+     "small_deg_vs_large_deg": 5,
+     "narrow_band_1.10_1.20_vs_1.30_1.50": 5,
+     "lehmer_witness_neighborhood": 49
+    }
+   }
+  ],
+  "exact_match_exists": false,
+  "sign_flips_minus_survives_range": [
+   -3,
+   2
+  ]
+ },
+ "S2_note": "Under today's verdict map sign_flips and survives stay within a few rows of each other for every k because the round-robin gives deg10/smyth and deg14/salem equal ticks and each settling pair contributes exactly SETTLE_THRESHOLD v0.6 ticks. P69's 86 vs 39 cannot come from a v0.5 prefix alone.",
+ "S3_free_may_verdicts_search": {
+  "maps_searched": 729,
+  "k_range": [
+   0,
+   139
+  ],
+  "n_exact_matches": 0,
+  "exact_matches": [],
+  "best_if_no_exact": {
+   "map": {
+    "smyth_extremal_vs_rest": "pollux_sign_flips_under_normalization",
+    "deg18_vs_deg20": "pollux_correlation_attenuates_under_normalization",
+    "even_deg_vs_odd_deg": "pollux_correlation_attenuates_under_normalization",
+    "small_deg_vs_large_deg": "pollux_sign_flips_under_normalization",
+    "narrow_band_1.10_1.20_vs_1.30_1.50": "pollux_sign_flips_under_normalization",
+    "lehmer_witness_neighborhood": "pollux_correlation_attenuates_under_normalization"
+   },
+   "k_v05_ticks": 95,
+   "inherit_idx": true,
+   "got": {
+    "sign_flips": 67,
+    "survives": 58,
+    "attenuates": 161,
+    "deg18_vs_deg20": 54,
+    "even_deg_vs_odd_deg": 56,
+    "total": 286
+   },
+   "per_pair": {
+    "deg10_vs_deg12": 29,
+    "deg14_vs_deg16": 29,
+    "salem_vs_pisot": 29,
+    "smyth_extremal_vs_rest": 28,
+    "even_deg_vs_odd_deg": 56,
+    "small_deg_vs_large_deg": 5,
+    "narrow_band_1.10_1.20_vs_1.30_1.50": 5,
+    "deg18_vs_deg20": 54,
+    "lehmer_witness_neighborhood": 51
+   }
+  }
+ },
+ "S3b_unpinned_search": {
+  "maps_searched": 729,
+  "k_range": [
+   0,
+   139
+  ],
+  "n_exact_matches": 3,
+  "exact_matches": [
+   {
+    "map": {
+     "deg10_vs_deg12": "pollux_sign_flips_under_normalization",
+     "deg14_vs_deg16": "pollux_sign_flips_under_normalization",
+     "salem_vs_pisot": "pollux_correlation_survives_normalization",
+     "smyth_extremal_vs_rest": "pollux_sign_flips_under_normalization",
+     "small_deg_vs_large_deg": "pollux_correlation_survives_normalization",
+     "narrow_band_1.10_1.20_vs_1.30_1.50": "pollux_correlation_survives_normalization"
+    },
+    "k_v05_ticks": 95,
+    "inherit_idx": true,
+    "per_pair": {
+     "deg10_vs_deg12": 29,
+     "deg14_vs_deg16": 29,
+     "salem_vs_pisot": 29,
+     "smyth_extremal_vs_rest": 28,
+     "even_deg_vs_odd_deg": 56,
+     "small_deg_vs_large_deg": 5,
+     "narrow_band_1.10_1.20_vs_1.30_1.50": 5,
+     "deg18_vs_deg20": 54,
+     "lehmer_witness_neighborhood": 51
+    },
+    "conflicts_with_second_channel_first_three_rows": {
+     "deg14_vs_deg16": [
+      "pollux_correlation_survives_normalization",
+      "pollux_sign_flips_under_normalization"
+     ]
+    }
+   },
+   {
+    "map": {
+     "deg10_vs_deg12": "pollux_sign_flips_under_normalization",
+     "deg14_vs_deg16": "pollux_correlation_survives_normalization",
+     "salem_vs_pisot": "pollux_sign_flips_under_normalization",
+     "smyth_extremal_vs_rest": "pollux_sign_flips_under_normalization",
+     "small_deg_vs_large_deg": "pollux_correlation_survives_normalization",
+     "narrow_band_1.10_1.20_vs_1.30_1.50": "pollux_correlation_survives_normalization"
+    },
+    "k_v05_ticks": 95,
+    "inherit_idx": true,
+    "per_pair": {
+     "deg10_vs_deg12": 29,
+     "deg14_vs_deg16": 29,
+     "salem_vs_pisot": 29,
+     "smyth_extremal_vs_rest": 28,
+     "even_deg_vs_odd_deg": 56,
+     "small_deg_vs_large_deg": 5,
+     "narrow_band_1.10_1.20_vs_1.30_1.50": 5,
+     "deg18_vs_deg20": 54,
+     "lehmer_witness_neighborhood": 51
+    },
+    "conflicts_with_second_channel_first_three_rows": {
+     "salem_vs_pisot": [
+      "pollux_correlation_survives_normalization",
+      "pollux_sign_flips_under_normalization"
+     ]
+    }
+   },
+   {
+    "map": {
+     "deg10_vs_deg12": "pollux_correlation_survives_normalization",
+     "deg14_vs_deg16": "pollux_sign_flips_under_normalization",
+     "salem_vs_pisot": "pollux_sign_flips_under_normalization",
+     "smyth_extremal_vs_rest": "pollux_sign_flips_under_normalization",
+     "small_deg_vs_large_deg": "pollux_correlation_survives_normalization",
+     "narrow_band_1.10_1.20_vs_1.30_1.50": "pollux_correlation_survives_normalization"
+    },
+    "k_v05_ticks": 95,
+    "inherit_idx": true,
+    "per_pair": {
+     "deg10_vs_deg12": 29,
+     "deg14_vs_deg16": 29,
+     "salem_vs_pisot": 29,
+     "smyth_extremal_vs_rest": 28,
+     "even_deg_vs_odd_deg": 56,
+     "small_deg_vs_large_deg": 5,
+     "narrow_band_1.10_1.20_vs_1.30_1.50": 5,
+     "deg18_vs_deg20": 54,
+     "lehmer_witness_neighborhood": 51
+    },
+    "conflicts_with_second_channel_first_three_rows": {
+     "deg10_vs_deg12": [
+      "pollux_sign_flips_under_normalization",
+      "pollux_correlation_survives_normalization"
+     ],
+     "deg14_vs_deg16": [
+      "pollux_correlation_survives_normalization",
+      "pollux_sign_flips_under_normalization"
+     ],
+     "salem_vs_pisot": [
+      "pollux_correlation_survives_normalization",
+      "pollux_sign_flips_under_normalization"
+     ]
+    }
+   }
+  ],
+  "reading": "Every exact match needs k=95 v0.5 ticks (per-pair 29/29/29/28/54/56/5/5/51, which reproduces P69's 54 and 56 and its 'n up to 56' exactly) AND three of the four seed pairs at sign_flips. The second channel's first three rows show deg14 and salem PROMOTED, so at most two seed pairs were sign_flips. P69's per-pair census is therefore reproduced by the code plus v0.5; P69's pattern split 86/39 is not reproducible by the code under any May verdict assignment consistent with the second channel. 86 = 29+29+28 and 39 = 29+5+5 are per-pair sums, so the split reads as pairs bucketed under the wrong pattern name, not as a different ledger."
+ },
+ "S4_requirements_of_exact_matches": [],
+ "S5_reading": "If S3 finds no exact match, P69's pattern census is inconsistent with the on-tree code under every May verdict assignment and every v0.5 length: the census, the code, or the assumption of one constant verdict per pair (P69's own 'distinct=1') is wrong, and the lost kill_ledger is the only artifact that can say which. If it finds matches, each names the pair(s) whose May verdict differed from today's and the v0.5 tick count it needs; compare the implied hours to the 22.6 h on record."
+}
