@@ -168,8 +168,16 @@ def report(apply_it):
         row("the service is STOPPED", live is None,
             "it is still answering /v2/version" if live else "not answering")
         q, why = queue_idle()
-        row("the queue is idle", q is not None and not any(q.values()),
-            json.dumps(q) if q else why)
+        # IN FLIGHT, not WAITING. `queued` rows are durable and stall
+        # harmlessly for the length of the window -- gating on them would
+        # refuse every window a busy campaign ever offers. The hazard rule 6
+        # exists for is work a consumer is HOLDING: claimed or running.
+        inflight = None if q is None else (q.get("claimed", 0)
+                                           + q.get("running", 0))
+        row("no work is IN FLIGHT (claimed or running)",
+            inflight == 0,
+            "%s  -> in flight %s; queued rows wait and are not a reason to "
+            "refuse" % (json.dumps(q) if q else why, inflight))
     else:
         print("  [note] service is %s; queue %s"
               % ("RUNNING" if live else "stopped",

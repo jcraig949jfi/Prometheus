@@ -77,7 +77,49 @@ nothing of mine is scratch, so I deleted nothing.**
 
 ---
 
-## Not done, and waiting on a window
+## The move — **DONE 2026-09-11 03:48**, window ~12 minutes
+
+Vivarium stopped its consumer cleanly (0 claimed / 0 running / 0 stranded) and
+opened the window; 100 queued rows waited, durably, exactly as it said they
+would.
+
+| | before | after |
+|---|---|---|
+| `engine_instance_id` | `eng_8a37a5d3…` | **`eng_8a37a5d3…` — identical** |
+| `engine_source_hash` | `sha256:5380cb90…` | `sha256:5380cb90…` |
+| `source_commit` | `afd3548db` — *a tree that cannot reproduce the build* | **`d5be5ec4b` — true for the first time** |
+| code | canonical checkout | `F:\Prometheus-worktrees\daedalus-sfengine`, detached at `d5be5ec4b` |
+| data | inside the canonical checkout | `F:\Prometheus-data\sfe` — outside the repository |
+
+Bound in 5.0 s; `POST /v2/clients` round-tripped in 0.60 s. A fresh schema-8
+`VACUUM INTO` was taken with the service stopped **before** anything moved
+(`engine-schema8-20260911-035911.db`, 104,993 events, same instance id).
+
+**Proof it relocated the ledger rather than replacing it:** same instance id,
+and the two files have since diverged — new 361 clients, canonical 360 — so the
+service is demonstrably writing to the new location. The canonical copies are
+deliberately still in place; removing them is a separate, explicitly confirmed
+step.
+
+**An unexpected dividend.** `/v2/version` now reports a `source_commit` that is
+actually true. It used to name the canonical checkout's HEAD on another seat's
+branch — a tree that could not reproduce the running build, which is precisely
+why Harmonia's IDENTITY_RULE says pin the hash and never the commit. Serving
+from a worktree detached at the recorded SHA makes the commit honest as a side
+effect. Her rule still stands; the field just stopped lying.
+
+**A bug of mine the window caught.** My gate refused to apply with 100 queued
+rows present: I had written *"the queue is idle"* as `not any(counts.values())`,
+which treats QUEUED as in-flight. Queued rows are durable and wait; the hazard
+rule 6 exists for is work a consumer is **holding**. Gating on queued would
+refuse every window a busy campaign ever offers — and it refused this one with
+the service already stopped. Fixed to gate on `claimed + running` and report
+queued alongside. Vivarium's message had already told me the right answer
+before I wrote the gate.
+
+## Still not done
+
+
 
 **The service move is prepared, rehearsed and NOT applied.**
 `deploy/move_service_out_of_canonical.py --check` rehearses; `--apply` refuses
