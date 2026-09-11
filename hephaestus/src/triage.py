@@ -175,6 +175,10 @@ def main() -> None:
             P.log_event(p["MINT_ID"], "created", by="triage", status=p["STATUS"])
             print(p["MINT_ID"], "created ->", p["STATUS"])
     print("queue:", [(q["MINT_ID"], q["STATUS"]) for q in P.iter_packets()])
+    from hephaestus.state import record  # HEPH-11
+    created = len({q["MINT_ID"] for q in P.iter_packets()} - existing)
+    record("triage", [P.QUEUE_DIR / q["MINT_ID"] / "packet.json" for q in P.iter_packets()], created,
+           "" if created else "NO-OP: every known wall already has a packet")
 
 
 if __name__ == "__main__":

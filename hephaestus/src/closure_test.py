@@ -29,6 +29,7 @@ Usage:  PYTHONPATH=. python -m hephaestus.src.closure_test <spec_name> [budget]
 """
 from __future__ import annotations
 
+import contextlib
 import importlib
 import itertools
 import json
@@ -88,7 +89,12 @@ def enumerate_arm(spec, ops: dict, max_depth: int, budget: int, generic: dict | 
     coerce = getattr(spec, "COERCE", None) or _bools
     targets = {k: coerce(tuple(spec.target(k, p) for p in S)) for k in spec.ROUTE_KEYS}
     vtargets = {k: coerce(tuple(spec.target(k, p) for p in V)) for k in spec.ROUTE_KEYS}
-    wtargets = {k: coerce(tuple(spec.target(k, p) for p in W)) for k in spec.ROUTE_KEYS} if W else None
+    # 2026-09-11 (HEPH-24): a spec may declare shift_context(), a context manager in force while the shift
+    # column is computed (targets and candidates alike), e.g. a true ring change. Default: no-op, so
+    # every existing spec's shift column is evaluated exactly as before.
+    shift_ctx = getattr(spec, "shift_context", None) or contextlib.nullcontext
+    with shift_ctx():
+        wtargets = {k: coerce(tuple(spec.target(k, p) for p in W)) for k in spec.ROUTE_KEYS} if W else None
     classes: dict[tuple, dict] = {}          # (type, value-vector) -> {"exprs": [(expr, fn)], "shapes": set()}
     layers: list[list[tuple[str, str, object]]] = []
     evaluated = 0
@@ -151,7 +157,8 @@ def enumerate_arm(spec, ops: dict, max_depth: int, budget: int, generic: dict | 
             for expr, fn, depth in cls["exprs"]:
                 h = {"expr": expr, "depth": depth, "static_type": typ, "typed": typ == spec.TARGET_TYPE}
                 h["verify_exhaustive"] = (coerce(_vec(fn, V)) == vtargets[k])
-                h["verify_shift"] = (coerce(_vec(fn, W)) == wtargets[k]) if W else None
+                with shift_ctx():
+                    h["verify_shift"] = (coerce(_vec(fn, W)) == wtargets[k]) if W else None
                 h["mechanism_bearing"] = bool(h["typed"] and h["verify_exhaustive"])
                 h["robust"] = bool(h["mechanism_bearing"] and (h["verify_shift"] if W else True))
                 hits.append(h)
@@ -209,6 +216,12 @@ def run(spec_name: str, budget: int = 300_000, max_depth: int = 3) -> dict:
     out = ROOT / "hephaestus" / "closure_results" / f"{spec_name}.json"
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(res, indent=2, default=str), encoding="utf-8")
+    try:
+        from hephaestus.state import record  # HEPH-11
+        record(f"closure_test:{spec_name}", [ROOT / "hephaestus" / "src" / "closure_specs" / f"{spec_name}.py"], 1,
+               f"{res['classification']['class']} margin {res['classification']['CLOSURE_MARGIN']}")
+    except Exception as e:  # noqa: BLE001
+        print("state record failed:", repr(e))
     return res
 
 

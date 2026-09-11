@@ -118,7 +118,9 @@ def _bools_eq_vec(x):
     return x
 
 
-def run(deep_size=8, deep_candidates=30_000_000):
+def run(deep_size=8, deep_candidates=30_000_000, spec_cls=None, out_name="q045_lost_class.json",
+        prereg="hephaestus/prereg/PREREG_Q045_specimen3_2026-09-01.md"):
+    spec_cls = spec_cls or Spec   # 2026-09-11: v2 (Z7 shift) passes its own Spec; defaults reproduce v1 exactly
     t0 = time.time()
     full = W.PRIMS
     imp = [p for i, p in enumerate(full) if i != MISSING]
@@ -149,7 +151,7 @@ def run(deep_size=8, deep_candidates=30_000_000):
     rng = random.Random(20260901)
     shift = [tuple(rng.randrange(7) for _ in range(4)) for _ in range(300)]
     arms = {"A0": prim_ops(imp), "A2": {**prim_ops(imp), **A2_GENERIC}, "B": b_ops(), "C": prim_ops(full)}
-    results = {"prereg": "hephaestus/prereg/PREREG_Q045_specimen3_2026-09-01.md", "basis": {"version": BASIS_VERSION, "hash": basis_hash()},
+    results = {"prereg": prereg, "basis": {"version": BASIS_VERSION, "hash": basis_hash()},
                "missing_primitive": full[MISSING]["name"] + " (elementwise vector multiply)", "probes": PROBES,
                "closure_sizes": {"R_full5": len([k for k in R_full5 if k[0] == W.V]), "R_imp5": len([k for k in R_imp5 if k[0] == W.V]),
                                  f"R_imp{deep_used}": len([k for k in R_deep if k[0] == W.V]), "deep_budget_exhausted": exhausted, "deep_size_used": deep_used, "deep_seconds": deep_seconds,
@@ -157,7 +159,7 @@ def run(deep_size=8, deep_candidates=30_000_000):
                "n_lost_targets": len(lost), "n_control_targets": len(control), "depth": DEPTH, "budget": BUDGET, "targets": []}
 
     def eval_target(key, prog, kind):
-        spec = Spec(prog, full, PROBES, verify, shift)
+        spec = spec_cls(prog, full, PROBES, verify, shift)
         rec = {"kind": kind, "certified_full_program": expr_str(prog, full), "full_size": W.size_of(prog), "arms": {}}
         for name, ops in arms.items():
             # the shift domain is Z7: evaluate with MOD=7 while checking shift points
@@ -222,9 +224,15 @@ def run(deep_size=8, deep_candidates=30_000_000):
     # D-23: every result records where it was built (base_sha, branch, worktree_path, dirty).
     from hephaestus.workspace_guard import receipt
     results["workspace"] = receipt()
-    out = ROOT / "hephaestus" / "closure_results" / "q045_lost_class.json"
+    out = ROOT / "hephaestus" / "closure_results" / out_name
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(results, indent=2, default=str), encoding="utf-8")
+    try:
+        from hephaestus.state import record  # HEPH-11
+        record("closure_q045:" + out_name, [ROOT / "aporia" / "lot" / "world3.py"], len(results["targets"]),
+               f"LOST {s['LOST']['OPERATOR']}/{s['LOST']['INCONCLUSIVE']}/{s['LOST']['SEARCH_ROUTING']} CONTROL {s['CONTROL']['SEARCH_ROUTING_A0']}/{s['CONTROL']['n']}")
+    except Exception as e:  # noqa: BLE001
+        print("state record failed:", repr(e))
     return results
 
 

@@ -98,6 +98,9 @@ def main() -> None:
     L.append("LAST SPECIMEN: hephaestus/prereg/READOUT_Q045_specimen3_2026-09-11.md (Q045 OPERATOR positive control: LOST 18 OPERATOR / 2 INCONCLUSIVE(B) / 0 SEARCH_ROUTING; CONTROL 10/10 at A0)")
     (P.HEPH / "HEPHAESTUS_HANDOFF.txt").write_text("\n".join(L) + "\n", encoding="utf-8")
     print("\n".join(L))
+    from hephaestus.state import record  # HEPH-11
+    record("handoff", [P.QUEUE_DIR / p["MINT_ID"] / "packet.json" for p in packets] + [P.HEPH / "TOP_READY_MINTS.json"], 1,
+           f"handoff regenerated; ready {len(ready)}, testing {len(testing)}")
 
 
 if __name__ == "__main__":

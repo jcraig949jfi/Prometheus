@@ -162,9 +162,13 @@ def main(models: list[tuple[str, int]] | None = None) -> None:
     import importlib
     models = models or APPRENTICE_MODELS
     todo = [p for p in P.iter_packets() if p["STATUS"] == "APPRENTICE-TESTING"][:MAX_PACKETS_PER_RUN]
+    from hephaestus.state import record  # HEPH-11
     if not todo:
         print("apprentice: nothing in APPRENTICE-TESTING (a packet reaches it only with ROUTE_CLASS == OPERATOR)")
+        record("apprentice", [P.QUEUE_DIR / q["MINT_ID"] / "packet.json" for q in P.iter_packets()], 0,
+               "NO-OP: no packet in APPRENTICE-TESTING")
         return
+    attempts = 0
     for p in todo:
         wall_id = "vacuous_truth" if p["MINT_ID"] == "MINT-0001" else None
         if not wall_id:
@@ -181,6 +185,8 @@ def main(models: list[tuple[str, int]] | None = None) -> None:
             P.log_event(p["MINT_ID"], "apprentice_attempt", **summarize(rec))
             P.save(p)
             print(p["MINT_ID"], target, "->", rec.get("verdict"), (rec.get("holdout") or {}).get("accuracy_decidable"), rec.get("failure_families"))
+            attempts += 1
+    record("apprentice", [P.QUEUE_DIR / q["MINT_ID"] / "packet.json" for q in todo], attempts, f"{attempts} attempts executed")
 
 
 if __name__ == "__main__":

@@ -38,6 +38,15 @@ mechanics (base rule 1); it says only what is Hephaestus-specific.
   CANDIDATE-PRODUCED; independent machinery (Charon's blind battery,
   Ergon's exact-execution criterion) tests the blade.
 
+## Preregistration checklist for every specimen (operator ruling 4, 2026-09-11)
+
+Before any run, in its own commit: the eligible denominator and unit of
+observation; the attainable range of every gate; interval / uncertainty
+treatment; boundary semantics ("at the line" is named in advance); an
+INDETERMINATE branch; which columns cannot change by construction (a
+change there is a tooling kill). A frozen result is never replaced: a
+rerun is a versioned characterization to a separate file.
+
 ## Entry points and the D-23 guard
 
 Every state-writing module under hephaestus/src (apprentice, refine, rank,
