@@ -1,0 +1,185 @@
+{
+  "schema": "techne.acquisition.receipt/1",
+  "receipt_id": "adapter_qualification-stitch_rust_core-20260911T064035Z",
+  "stage": "ADAPTER_QUALIFICATION",
+  "does_not_establish": [
+    "INSTALLATION",
+    "FIRST_USEFUL_CHECK",
+    "PAPER_REPRODUCTION",
+    "LOCAL_SCIENTIFIC_BENEFIT"
+  ],
+  "entry_id": "stitch_rust_core",
+  "tool": "stitch_rust_core",
+  "design_version": "0.1",
+  "written_utc": "2026-09-11T06:40:35+00:00",
+  "seat": "Techne",
+  "repo": {
+    "commit": "3c98ff7751e8f150b8f66263ea7d31055618f201",
+    "branch": "techne/track-d-2026-09-10",
+    "dirty": true
+  },
+  "runner": {
+    "python": "3.12.10",
+    "executable": "H:\\Python312\\python.exe",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "tool_cache": "F:\\Prometheus\\vault\\techne_tools",
+    "tool_cache_source": "TECHNE_TOOL_CACHE env",
+    "tool_cache_note": "host-local and gitignored; only its HASHES are tracked"
+  },
+  "commands_run": [],
+  "observations": {
+    "backend": {
+      "binary": "F:\\Prometheus\\vault\\techne_tools\\repos\\stitch_rust_core\\target\\release\\compress.exe",
+      "revision": "0ef5ec7f17091d22b8fa959fb5705e359d735a47",
+      "licence": "MIT"
+    },
+    "input": {
+      "path": "F:\\Prometheus\\vault\\techne_tools\\fixtures\\stitch\\nuts-bolts.json",
+      "sha256": "4e8ea30925b96736cb290f9f704167c4ca13e1a7da87eeaad2d5d0d0e29deb8d"
+    },
+    "declared_projection": [
+      "args",
+      "num_abstractions",
+      "original_cost",
+      "final_cost",
+      "compression_ratio",
+      "original",
+      "rewritten",
+      "abstractions"
+    ],
+    "projection_excludes": {
+      "cmd": "it records the invocation INCLUDING the --out path. Varying that path made four thread counts look like four different results on a whole-file hash; the only differing key was cmd. A whole-file hash is therefore not a valid repeatability statistic for this backend, which is a concrete instance of why the contract specifies a projection."
+    },
+    "f15_same_thread_count": {
+      "runs": [
+        {
+          "ok": true,
+          "file_sha256": "63a1b522d83dd0540b114803e1e98bf96ac659ab193b53d648ed8c4715030585",
+          "projection_sha256": "8e86d0b10e4c525ee721432a04b620cab92c24a616c253fbc8e0946235e1ea1a",
+          "num_abstractions": 3,
+          "original_cost": 1919558,
+          "final_cost": 316890
+        },
+        {
+          "ok": true,
+          "file_sha256": "63a1b522d83dd0540b114803e1e98bf96ac659ab193b53d648ed8c4715030585",
+          "projection_sha256": "8e86d0b10e4c525ee721432a04b620cab92c24a616c253fbc8e0946235e1ea1a",
+          "num_abstractions": 3,
+          "original_cost": 1919558,
+          "final_cost": 316890
+        },
+        {
+          "ok": true,
+          "file_sha256": "63a1b522d83dd0540b114803e1e98bf96ac659ab193b53d648ed8c4715030585",
+          "projection_sha256": "8e86d0b10e4c525ee721432a04b620cab92c24a616c253fbc8e0946235e1ea1a",
+          "num_abstractions": 3,
+          "original_cost": 1919558,
+          "final_cost": 316890
+        },
+        {
+          "ok": true,
+          "file_sha256": "63a1b522d83dd0540b114803e1e98bf96ac659ab193b53d648ed8c4715030585",
+          "projection_sha256": "8e86d0b10e4c525ee721432a04b620cab92c24a616c253fbc8e0946235e1ea1a",
+          "num_abstractions": 3,
+          "original_cost": 1919558,
+          "final_cost": 316890
+        },
+        {
+          "ok": true,
+          "file_sha256": "63a1b522d83dd0540b114803e1e98bf96ac659ab193b53d648ed8c4715030585",
+          "projection_sha256": "8e86d0b10e4c525ee721432a04b620cab92c24a616c253fbc8e0946235e1ea1a",
+          "num_abstractions": 3,
+          "original_cost": 1919558,
+          "final_cost": 316890
+        }
+      ],
+      "file_hashes": [
+        "63a1b522d83dd0540b114803e1e98bf96ac659ab193b53d648ed8c4715030585"
+      ],
+      "projection_hashes": [
+        "8e86d0b10e4c525ee721432a04b620cab92c24a616c253fbc8e0946235e1ea1a"
+      ]
+    },
+    "thread_arm": {
+      "file_sha256_by_threads": {
+        "1": "63a1b522d83dd0540b114803e1e98bf96ac659ab193b53d648ed8c4715030585",
+        "2": "63a1b522d83dd0540b114803e1e98bf96ac659ab193b53d648ed8c4715030585",
+        "4": "63a1b522d83dd0540b114803e1e98bf96ac659ab193b53d648ed8c4715030585",
+        "8": "63a1b522d83dd0540b114803e1e98bf96ac659ab193b53d648ed8c4715030585",
+        "16": "63a1b522d83dd0540b114803e1e98bf96ac659ab193b53d648ed8c4715030585"
+      },
+      "projection_sha256_by_threads": {
+        "1": "8e86d0b10e4c525ee721432a04b620cab92c24a616c253fbc8e0946235e1ea1a",
+        "2": "8e86d0b10e4c525ee721432a04b620cab92c24a616c253fbc8e0946235e1ea1a",
+        "4": "8e86d0b10e4c525ee721432a04b620cab92c24a616c253fbc8e0946235e1ea1a",
+        "8": "8e86d0b10e4c525ee721432a04b620cab92c24a616c253fbc8e0946235e1ea1a",
+        "16": "8e86d0b10e4c525ee721432a04b620cab92c24a616c253fbc8e0946235e1ea1a"
+      },
+      "verdict": "INVARIANT across RAYON_NUM_THREADS 1,2,4,8,16 on both the projection and the whole file"
+    },
+    "consequence_for_the_declaration": "thread count does NOT have to be pinned to preserve the result on this backend and this input. It is still worth declaring, because invariance measured on one input is not invariance proved in general -- but nobody optimising it to 8 later will silently change the science on this corpus.",
+    "checks": [
+      {
+        "claim": "F15: five runs at a fixed thread count (N=5, as the contract requires) agree on the declared projection",
+        "pass": true
+      },
+      {
+        "claim": "F15 stronger: those five runs are byte-identical on the WHOLE file too",
+        "pass": true
+      },
+      {
+        "claim": "thread-count invariance on the declared projection (1,2,4,8,16)",
+        "pass": true
+      },
+      {
+        "claim": "thread-count invariance on the whole file as well",
+        "pass": true
+      },
+      {
+        "claim": "the science is unchanged across every run",
+        "pass": true
+      }
+    ]
+  },
+  "deviations": [],
+  "unrun_or_blocked": [
+    "the other eight contract fixtures need a live kill and become required only when something calls the backend DURING a run. At 1.0 Vivarium's ruling says nothing does.",
+    "invariance is measured on ONE input. A second corpus could differ."
+  ],
+  "status": "REPEATABLE_AND_THREAD_INVARIANT",
+  "check": "f15_repeatability_and_thread_count_invariance",
+  "requested_by": "Vivarium, vivarium/docs/EXTERNAL_BACKEND_CONTRACT.md at 739c77e63 (F15) plus their thread-count arm",
+  "budget_profile": {
+    "purpose": "the ONE bounded core reproduction selected for stitch_core (the documented nuts-bolts fixture). Its own explicit profile, per the design.",
+    "network": "FORBIDDEN",
+    "max_wall_seconds": 1800,
+    "max_download_bytes": 0,
+    "max_disk_bytes": 2147483648,
+    "max_rss_bytes": 6442450944,
+    "max_processes": 2,
+    "rationale": "The design records that the stitch artifact 'documents substantially larger memory requirements for its ablation/hybrid studies than for core claims'. 6 GiB is under measured available RAM and is sized for ONE core claim. The ablation/hybrid studies are explicitly OUT of this profile and have no profile, which means they are not authorised to run.",
+    "name": "stitch_core_reproduction"
+  },
+  "resource_receipt": {
+    "profile": "stitch_core_reproduction",
+    "network_policy": "FORBIDDEN",
+    "wall_seconds": 1.688,
+    "wall_ceiling": 1800,
+    "downloaded_bytes": 0,
+    "download_ceiling": 0,
+    "cache_bytes_before": 2618262363,
+    "cache_bytes_after": 0,
+    "cache_delta_bytes": -2618262363,
+    "peak_rss_bytes_os_counter": 27246592,
+    "peak_rss_bytes_sampled": 27242496,
+    "rss_method": "GetProcessMemoryInfo",
+    "rss_ceiling": 6442450944,
+    "rss_samples": 6,
+    "rss_ceiling_exceeded_during_sampling": false,
+    "rss_enforcement": "NOT ENFORCED -- no job object / cgroup cap. peak_rss_bytes_os_counter is the OS peak-working-set counter for this process and IS reliable; rss_ceiling_exceeded_during_sampling is sampled and can miss a spike. Neither stops a step.",
+    "rss_excludes_children": "This is THIS process only. pip, git and venv run as children and their RSS is NOT included.",
+    "children_spawned": 10,
+    "process_cap": 2,
+    "aborted_on": null
+  }
+}
