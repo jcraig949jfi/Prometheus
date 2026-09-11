@@ -429,6 +429,9 @@ scan; it exists for tests and for whoever runs the kill precondition.
 | D12 | Migration rehearsal is manual | `PARTIAL` | I rehearse against a `VACUUM INTO` copy by hand each time |
 | D13 | `SerendipityFoundry/SerendipityFoundryEngine/deploy/preflight_deploy.py` hardcodes M1 paths | `EXISTS` | fine for one host; wrong the day there are two |
 | D14 | No structured engine log | `EXISTS` | `sfengine.log` is uvicorn text; the deploy gate reads SQLite instead |
+| D15 | Derive client timeout from engine lock wait | `CODE_FIXED` 2026-09-11 | supersedes D6; `d96b15fda`, no deploy needed |
+| D-WD-1 | **M1 has no watchdog and no recorded last_success_at** | `NOTHING` | RUNNING_M1_VS_M2.md says it outright: a crashed M1 process stays dead until someone looks, and on 2026-09-11 the only alarm (Vivarium's conformance gate) was silent because the consumer was down. Build the M2 watchdog's 2026-09-11 form (state file + rule-10 bound of 3 ticks + park record) as `SFEngineM1Watchdog`, driving `Start-ScheduledTask SFEngine` rather than the launcher so the running instance stays the supervised one, and mind the orphan-on-port hazard (a held 8811 makes every relaunch fail, which is exactly what the bound parks). Rule 9: its input (the engine) is live now. Registry row to be added WITH bound and seat, never UNDECLARED |
+| D-WD-2 | M2 watchdog script CODE_FIXED, not deployed | `CODE_FIXED` 2026-09-11 | `deploy/sfengine_m2_watchdog.ps1` on main; copying it onto M2 needs a session on M2; the task registration is unchanged |
 
 ---
 

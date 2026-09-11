@@ -1,0 +1,56 @@
+{
+  "schema": "nyx.chop/0",
+  "record_kind": "ORGAN",
+  "id": "organ.lean_simp.ordered_rewriting_guard.cut2",
+  "specimen": "lean_simp",
+  "name": "ordered rewriting guard: a rule detected at ingestion to be a variable permutation is allowed to fire only when the result is smaller under a fixed term order",
+  "scale": "PRIMITIVE",
+  "cost_class": "CPU_SCALE",
+  "provenance": {
+    "ancestor": "Lean 4 simp, SimpTheorems.isPerm + Rewrite.tryTheoremCore perm branch + Meta.acLt",
+    "sources": [
+      {
+        "ref": "Lean v4.30.0 d024af099 src/lean/Lean/Meta/Tactic/Simp/SimpTheorems.lean lines 261-273 (isPerm: structural equality up to metavariable identity) and 365-371 (perm computed once with the keys)",
+        "grade": "T1-LOCAL"
+      },
+      {
+        "ref": "Lean v4.30.0 d024af099 src/lean/Lean/Meta/Tactic/Simp/Rewrite.lean lines 160-168: if thm.perm then unless acLt rhs e .reduceSimpleOnly the rewrite is rejected ('perm rejected')",
+        "grade": "T1-LOCAL"
+      },
+      {
+        "ref": "Lean v4.30.0 src/lean/Lean/Meta/ACLt.lean (the order; NOT read in CUT-1, its properties are unknown here)",
+        "grade": "unknown"
+      },
+      {
+        "ref": "nyx/specimens/lean_simp/PROVENANCE.md",
+        "grade": "T1-LOCAL"
+      }
+    ]
+  },
+  "questions": {
+    "ancestry": "Lean 4 simp. Ordered rewriting for permutative rules is a standard technique in the rewriting literature (T2, not cited to a source here). Found by following the perm field from where it is set (SimpTheorems.lean) to where it is read (Rewrite.lean): the boundary spans two files and coincides with no def.",
+    "mechanism": "At ingestion the rule's lhs and rhs are compared structurally, treating metavariables as equal iff defeq; if they are identical up to which metavariable sits where, the rule is a permutation (a + b = b + a, a * (b * c) = b * (a * c)) and marked perm. At application, after unification succeeds and the rhs is instantiated, the rewrite is refused unless rhs < e under acLt. So permutative rules become one-directional in the term order and cannot loop.",
+    "input": "at ingestion: lhs, rhs Exprs with metavariables; at application: the instantiated rhs and the matched term e",
+    "output": "a Bool perm stored on the rule; at application a rejection ('perm rejected') or the rewrite",
+    "state": "none beyond the rule flag; acLt is pure over the two terms given the reducibility setting .reduceSimpleOnly (the same one used for indexing; comment cites issue #1815 -- so the order's reduction setting is coupled to the index's, a hidden coupling)",
+    "assumptions": "unknown -- the properties of the term order acLt (totality on the instances that arise, well-foundedness, compatibility with the reduction setting .reduceSimpleOnly) are asserted from the call site only; Lean/Meta/ACLt.lean was NOT read. Everything this organ promises rests on that file.",
+    "interface": "isPerm(lhs, rhs) -> Bool; guard(perm: Bool, rhs, e) -> Bool (allowed); the order acLt is a swappable dependency",
+    "fitness_value": "unknown -- claimed: commutativity-class rules can live in the store and impose a canonical argument order. The fraction of perm-flagged rules at the pin is measurable only under a Lean run (the flag is computed at attribute time); not measured.",
+    "failure_landscape": "(a) only PURE variable permutations are detected, so a rule like a + b + c = a + (b + c) is not perm and is guarded only by the fixpoint step cap; (b) the order is fixed and global -- a permutation that the author wanted (put constants right) may be refused if acLt disagrees; (c) two-rule loops (f x = g x, g x = f x) are invisible to it -- that is what maxSteps and LoopProtection are for; (d) the coupling to .reduceSimpleOnly means a change in the index's reduction setting silently changes which rewrites the guard permits.",
+    "ablation": "unknown -- A4 (perm := false on every rule) designed, not run; needs a patched build. The prediction (immediate maxSteps on any store with add_comm) is the most certain in the specimen.",
+    "decomposability": "Into (1) the permutation detector (structural, PRIMITIVE) and (2) the order-decreasing check (needs only a term order). (2) is generic ordered rewriting; (1) is the cheap heuristic for when to apply it.",
+    "composability": "Any rewriting engine over any term language with a total-ish order: pairs with rule_canonicalization (which produces the rules it guards) and with the traversal fixpoint (whose termination it partly secures). Without a rewriting engine downstream in Prometheus, its immediate use is as a CONTROL: a planted commutativity rule is the canonical looping-store fixture.",
+    "human_prior": "That argument order is meaningless and a canonical order should be imposed; that the order used for termination is also acceptable as the normal form the user sees. Both are the rewriting community's conventions, not properties of the mathematics.",
+    "control": "Positive: with the guard, a store {add_comm} on a + b terminates and yields a fixed order. Negative: a non-perm rule is unaffected by the guard (guard never consulted). Cheat: a guard that refuses ALL perm rewrites also terminates and passes the positive test -- so the control must also check that b + a IS rewritten to a + b (one direction fires).",
+    "cheat": "Silently dropping permutative rules from the store passes the termination test; the cheat control counts perm-flagged rules that fired at least once on a fixture where one must."
+  },
+  "alternative_cuts": [
+    "CUTS.md c05: the guard is a branch inside single-rule application and not a separable organ (the shipped code has it as an if inside tryTheoremCore); preserved",
+    "CUT-2 attack passed: two-file span, contract independent of Lean given a term order, independent behaviour (a planted commutativity rule terminates or not), smaller mechanism (a step cap) does NOT reproduce the fitness (no canonical order). The unread order is the remaining hole and is now marked unknown rather than described."
+  ],
+  "pressure_refs": [
+    "pressure.lean_simp.growing_store_must_terminate.cut1"
+  ],
+  "cut": "CUT-2",
+  "derived_from": "organs/ordered_rewriting_guard.cut1.json (preserved; CUT-2 narrows, never replaces)"
+}
