@@ -56,6 +56,8 @@ HARM-30 | Add the shared-arm correlation to `paired_contrast` so contrasts shari
 
 HARM-35 | Extend the SFE contract to model the RESPONSE surface, so a removed or renamed response field is DRIFT rather than silence | ENGINE | beta | L | Daedalus A0 (filed b24246097, cross-linked d618c0d22): the engine declares NO response models, so the live spec carries 0 schemas on 67 of 67 200-responses -- there is nothing for the generator to read | contract records per-route response fields; a fixture proving a removed response field reports DRIFT where today it reports CONFORMANT
 
+HARM-36 | Replace RESPONSIBILITIES.md and CHARTER.md, which are dated 2026-04 and describe the cross-domain cartographer role rather than the SFE/PEW audit seat | program | program | M | none | both files rewritten for the current lane, the 2026-04 material moved to a dated history file, and the currency warning removed because it is no longer true
+
 ## Standing and program
 
 HARM-31 | Write the standing-rules index so HA-1.1-1.6, R-C3-1..6 and the exchangeability cut are findable from one file | program | program | S | none | `roles/Harmonia/STANDING_RULES.md` linking every rule to the ruling that established it
