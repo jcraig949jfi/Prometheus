@@ -73,8 +73,22 @@ block("P-a3_Collection_positive", "Collection.shrink((5,7,9,7,1), contains 7) ==
       lambda c: list(Collection.shrink((5, 7, 9, 7, 1), counting(lambda s: 7 in s, c), ElementShrinker=Integer, min_size=0)))
 block("P-a4_find_integer_positive", "find_integer(k <= 37) == 37 in far fewer than 37 calls",
       lambda c: find_integer(counting(lambda k: k <= 37, c)))
-block("P-a5_Integer_cheat_control_order_strict", "every adopted value strictly smaller: sequence of accepted values is strictly decreasing",
-      lambda c: (lambda seen: (Integer.shrink(1000, counting(lambda n: (seen.append(n) or True) if n > 42 else False, c)), all(b < a for a, b in zip(seen, seen[1:]) if False) or "accepted values recorded: " + str(sorted(set(seen), reverse=True)[:8])))([]))
+def _pa5(c):
+    # cheat control for c01: every ADOPTED value must be strictly smaller than the previous one.
+    # (The first run of this block had a malformed check whose 'true' was vacuous; recorded in CUTS.md.)
+    accepted = []
+
+    def pred(n):
+        ok = n > 42
+        if ok:
+            accepted.append(n)  # the shrinker only calls the predicate on candidates it would adopt
+        return ok
+    result = Integer.shrink(1000, counting(pred, c))
+    strictly_decreasing = all(b < a for a, b in zip(accepted, accepted[1:]))
+    return {"result": result, "accepted_sequence": accepted, "strictly_decreasing": strictly_decreasing}
+
+
+block("P-a5_Integer_cheat_control_order_strict", "every adopted value strictly smaller than the last (c01: adoption is a strict decrease under the order)", _pa5)
 
 # ---------------- engine-level switches (Phase.shrink on/off), K6 null configuration
 BASE = settings(database=None, deadline=None, suppress_health_check=list(HealthCheck), max_examples=500)
@@ -109,20 +123,25 @@ block("N-g_engine_structural_nested_not", "pass_to_descendant positive: a recurs
 
 # ---------------- consumer worst case (P-b): Proteus target 7 with the shrink profiling report captured
 def _proteus_target7(c):
+    # Techne's check realises an integer target as a canonical sum-of-products EXPRESSION
+    # (techne/acquisition/checks/hypothesis_program_minimiser.py::target_expr); reuse it verbatim.
+    sys.path.insert(0, str(ROOT / "techne" / "acquisition" / "checks"))
+    from hypothesis_program_minimiser import target_expr  # noqa: E402
     from proteus.eval.hypothesis_strategy import solving_programs
-    from proteus.eval.shrink import size_key, canonical, minimal_by_enumeration
+    from proteus.eval.shrink import size_key, canonical, minimal_by_enumeration, still_solves
+    tgt = target_expr(7)
     buf = io.StringIO()
     with redirect_stdout(buf), redirect_stderr(buf):
         try:
-            prog = find(solving_programs(7), lambda e: True,
-                        settings=settings(BASE, verbosity=Verbosity.debug, max_examples=2000, phases=[Phase.generate, Phase.shrink]),
-                        random=random.Random(20260911))
-            found = {"program": canonical(prog), "size_key": size_key(prog)}
+            prog = find(solving_programs(tgt), lambda p: still_solves(p, tgt),
+                        settings=settings(BASE, verbosity=Verbosity.debug, max_examples=300, derandomize=True,
+                                          phases=[Phase.generate, Phase.shrink]))
+            found = {"program": canonical(prog), "size_key": list(size_key(prog))}
         except (NoSuchExample, Unsatisfiable) as e:
             found = {"error": type(e).__name__}
     log = buf.getvalue()
-    useful = [ln.strip() for ln in log.splitlines() if ln.strip().startswith("*")]
-    gt = minimal_by_enumeration(7)
+    useful = [ln.strip() for ln in log.splitlines() if ln.strip().startswith("*") or "Shrinking made a total" in ln]
+    gt = minimal_by_enumeration(tgt)
     return {"found": found, "ground_truth": {"program": gt["canonical"], "size_key": list(gt["size_key"])} if gt else None,
             "pass_report_lines": useful[:20], "log_bytes": len(log)}
 
