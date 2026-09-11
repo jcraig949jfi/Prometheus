@@ -35,12 +35,27 @@ def schema() -> str:
     return s
 
 
-def connect():
+def connect(require_schema: bool = True):
+    """The program's ONE comms database. Fails closed when the resolved host
+    holds no comms schema (a seat booting off M1 resolves to localhost by
+    default and would otherwise fork the queue with `comms init`; Atalanta
+    #47 / Eos #55, 2026-09-11). `init` passes require_schema=False."""
     import sys
     if str(REPO) not in sys.path:
         sys.path.insert(0, str(REPO))
     from evidence_wiki.ew import db as ewdb
-    return ewdb.connect()
+    conn = ewdb.connect()
+    if require_schema:
+        cur = conn.cursor()
+        cur.execute("select to_regclass(%s)", (schema() + ".messages",))
+        if cur.fetchone()[0] is None:
+            host = getattr(conn, "info", None) and conn.info.host
+            conn.close()
+            raise RuntimeError(
+                "comms: the database at host {!r} holds no {}.messages table; this is not the program's comms "
+                "database. Set EW_DB_HOST to the host that holds it (M1: 192.168.1.202) instead of running "
+                "`comms init` here -- init on the wrong host forks the queue.".format(host, schema()))
+    return conn
 
 
 def init_schema(conn) -> None:

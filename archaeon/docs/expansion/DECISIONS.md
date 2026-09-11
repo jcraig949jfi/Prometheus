@@ -149,3 +149,22 @@ comms.agents records, per seat: status, last active, last sync, the last message
 - Manifests hash LF-normalised bytes (comms/manifest.py) with a fixture proving LF and CRLF checkouts agree; the 2026-09-11_comms manifest incident (four independent reproductions) is closed by the generator, not by thirteen regenerated hashes.
 - Booting an old seat is an archaeological event: historical queues are classified STILL_LIVE / NEEDS_REPREMISE / PARKED / SUPERSEDED / TRANSFERRED / RETIRED; only STILL_LIVE becomes executable. Alethelia's contaminated canonical copies of stations/REPORT_latest.* are left alone.
 
+## D-26 (operator 2026-09-11, via Talos #51) TALOS-01: Talos is awake; nothing relaunched; consumers before premises
+
+Do NOT relaunch the May daemon, reconstruct Phase 1, or treat the old >=10/50 gate as meaningful until its grader, baseline, sample size and uncertainty are assessed. The six NEEDS_REPREMISE items are CONSUMER-CONTINGENT DORMANT, not failed: their mechanisms and residue stay available. Order: TALOS-02 preserve the unique 37.2 MB ignored shards (hash, provenance, second durable copy) FIRST; TALOS-10 find consumers with concrete consumption contracts (fields, experiment, baseline, falsifier, extra production); re-premise ONLY from demand; if no consumer exists, do not invent one -- preserve, characterise the 24,847 rows, record the negative search, move on. Archaeon's TALOS-10 answer (comms #60): NONE today, with the one contract shape that would change it (a shared-part task family for H1 beta). Verbatim ruling: roles/Talos/prompts/ (Talos #51).
+
+## D-23 amendment 6 (Archaeon 2026-09-11, on Atalanta #47 and Eos #55; for the operator's confirmation)
+
+- The wake directive's "pull the latest first" contradicts s3; the contract now states the pre-worktree step in the order a fresh seat meets it (fetch, record the SHA, worktree from it). The directive wording is the operator's to change at its source.
+- comms fails CLOSED off-host: every command except `init` refuses a database that holds no comms schema and names EW_DB_HOST; a seat on M2 can no longer fork the queue by following the README.
+- Base rule 9: upstream liveness is a launch precondition (the P47 autopsy's hint, promoted).
+- The registry was seeded from M1 and the self-test is host-scoped; the three enabled M2 tasks are registered from Eos's measurement (owners Mnemosyne / Daedalus / unclaimed-DEAD) so a seat booting on M2 no longer inherits a red test it cannot fix. Each host's owner keeps its own rows.
+
+## D-24 amendment 1 (Archaeon 2026-09-11, on Hermes #68) comms gains an identity guard
+
+A structural check ("is there a comms schema here") cannot tell the program's database from a clone that carries the schema; Hermes demonstrated it with a cheat fixture on the M2 cluster. comms adopts an IDENTITY check beside the structural one: connect() requires the observed database to match a registered environment (default `prometheus-canonical`, override PROMETHEUS_ENV), and `init` REFUSES an unregistered environment so creating a schema somewhere new is a deliberate, recorded act. Home: comms/identity.py + comms/environments.json (comms owns the notion; the Evidence Wiki may import it). Hermes moves its module, registry and 14 tests there in one commit (delegation #reply to 68); Archaeon reviews on the next wake.
+
+## D-23 amendment 7 (Archaeon 2026-09-11, on Elenchus 37b8ec8c8 C-07) the worktree-loss observation is not the canonical incident
+
+The contract's "reproduced the loss mechanism" is corrected to "observed the same signature class": different count (39,067 vs ~11,000), different location (a worktree being created), and a rival explanation live in Harmonia's record. The rule stands on the observation; the canonical incident stays open.
+

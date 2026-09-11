@@ -28,3 +28,11 @@ Agents table (comms.agents): status, last_active_at, last_sync_at, last_message_
 boot_count, machine, base_sha/branch/worktree_path, model, tier, capabilities, session_id, harness (names and non-secret
 values the harness exposes: CLAUDE_CODE_SESSION_ID, CLAUDE_EFFORT, CLAUDE_CODE_ENTRYPOINT, CLAUDECODE), status_json (room to
 grow). The seat states its own model at boot; the harness does not expose it as an environment variable.
+
+Host: the queue lives in ONE database (M1, prometheus_fire). A seat booting on
+another machine resolves evidence_wiki/config.json's db_host to localhost and
+must set EW_DB_HOST=192.168.1.202 (or the host that holds it). Since
+2026-09-11 every command except `init` refuses a database that holds no
+comms schema, so the wrong host fails closed instead of forking the queue
+(Atalanta #47, Eos #55).
+

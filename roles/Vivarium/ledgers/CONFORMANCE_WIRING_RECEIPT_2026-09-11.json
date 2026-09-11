@@ -1,0 +1,150 @@
+{
+ "schema": "vivarium.conformance_demo.v1",
+ "at": "2026-09-11T16:07:20+00:00",
+ "live_base": "https://192.168.1.202:8811/v2",
+ "scratch_base": "http://127.0.0.1:8907/v2",
+ "dead_base": "http://127.0.0.1:9/v2",
+ "contract": "roles\\Harmonia\\contracts\\sfe_contract.json",
+ "contract_hash": "sha256:07706e7082e025c2af728042b630ef40bac5962af79ea1a8aaeebaac8b99072f",
+ "declared_routes": 24,
+ "runner": "double -- no science executed against any engine",
+ "cases": [
+  {
+   "case": "conformant_live_engine",
+   "expected": "PROCEED, the row is claimed and reaches dispatch",
+   "gate_state": "CONFORMANT",
+   "halted": false,
+   "reason": "build hash matches the contract",
+   "live_identity": {
+    "engine_source_hash": "sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e",
+    "engine_instance_id": "eng_8a37a5d305969034d488c43e",
+    "schema_version": 8,
+    "science_profile": "warn",
+    "session_enforcement": "advisory"
+   },
+   "contract_identity": "eng_8a37a5d305969034d488c43e",
+   "gate_mode": "full",
+   "gate_exit": 0,
+   "attempts": 1,
+   "tick_outcome": "FAILED",
+   "queue_before": {
+    "queued": 1
+   },
+   "queue_after": {
+    "failed": 1
+   },
+   "queued_unchanged": false,
+   "reached_dispatch": 1,
+   "AS_EXPECTED": true
+  },
+  {
+   "case": "wrong_instance_scratch_engine",
+   "expected": "HALT, nothing claimed",
+   "gate_state": "WRONG_INSTANCE",
+   "halted": true,
+   "reason": "live engine_instance_id eng_2272140c9f52e30df265062f is not the contract's eng_8a37a5d305969034d488c43e",
+   "live_identity": {
+    "engine_source_hash": "sha256:62090a6d9b3e360b7c75f0fea6b6cb348845c2da88c644ffc0cdcf45860a8023",
+    "engine_instance_id": "eng_2272140c9f52e30df265062f",
+    "schema_version": 8,
+    "science_profile": "warn",
+    "session_enforcement": "advisory"
+   },
+   "contract_identity": "eng_8a37a5d305969034d488c43e",
+   "gate_mode": null,
+   "gate_exit": null,
+   "attempts": 1,
+   "tick_outcome": "BLOCKED",
+   "queue_before": {
+    "queued": 1,
+    "failed": 1
+   },
+   "queue_after": {
+    "queued": 1,
+    "failed": 1
+   },
+   "queued_unchanged": true,
+   "reached_dispatch": 0,
+   "AS_EXPECTED": true
+  },
+  {
+   "case": "drift_tampered_contract",
+   "expected": "HALT, nothing claimed",
+   "gate_state": "DRIFT",
+   "halted": true,
+   "reason": "something the contract describes has moved, or the ledger changed",
+   "live_identity": {
+    "engine_source_hash": "sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e",
+    "engine_instance_id": "eng_8a37a5d305969034d488c43e",
+    "schema_version": 8,
+    "science_profile": "warn",
+    "session_enforcement": "advisory"
+   },
+   "contract_identity": "eng_8a37a5d305969034d488c43e",
+   "gate_mode": "full",
+   "gate_exit": 1,
+   "attempts": 1,
+   "tick_outcome": "BLOCKED",
+   "queue_before": {
+    "queued": 2,
+    "failed": 1
+   },
+   "queue_after": {
+    "queued": 2,
+    "failed": 1
+   },
+   "queued_unchanged": true,
+   "reached_dispatch": 0,
+   "AS_EXPECTED": true
+  },
+  {
+   "case": "unreachable_dead_port",
+   "expected": "HALT, nothing claimed",
+   "gate_state": "UNREACHABLE",
+   "halted": true,
+   "reason": "/v2/version unreachable after 3 attempts (0.2 s backoff)",
+   "live_identity": null,
+   "contract_identity": "eng_8a37a5d305969034d488c43e",
+   "gate_mode": null,
+   "gate_exit": null,
+   "attempts": 3,
+   "tick_outcome": "BLOCKED",
+   "queue_before": {
+    "queued": 3,
+    "failed": 1
+   },
+   "queue_after": {
+    "queued": 3,
+    "failed": 1
+   },
+   "queued_unchanged": true,
+   "reached_dispatch": 0,
+   "AS_EXPECTED": true
+  },
+  {
+   "case": "CHEAT_gate_removed_same_wrong_engine",
+   "expected": "PROCEED, the row is claimed and reaches dispatch",
+   "gate_state": "GATE_REMOVED",
+   "halted": false,
+   "reason": "cheat control: the gate is not wired for this case",
+   "live_identity": null,
+   "contract_identity": null,
+   "gate_mode": null,
+   "gate_exit": null,
+   "attempts": 0,
+   "tick_outcome": "FAILED",
+   "queue_before": {
+    "queued": 4,
+    "failed": 1
+   },
+   "queue_after": {
+    "queued": 3,
+    "failed": 2
+   },
+   "queued_unchanged": false,
+   "reached_dispatch": 1,
+   "AS_EXPECTED": true
+  }
+ ],
+ "all_as_expected": true
+}

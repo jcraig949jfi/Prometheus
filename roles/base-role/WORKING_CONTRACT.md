@@ -45,6 +45,14 @@ roles/Archaeon/prompts/2026-09-11_workspace/MISSIVE_ALL_SEATS.md.
 
 ## 3. Never `git pull`
 
+- THE PRE-WORKTREE STEP, in the order a fresh seat meets it: `git fetch
+  origin` in the canonical checkout (read-only for the tree), record
+  `git rev-parse origin/main`, then `git worktree add <path> -b <branch>
+  <that sha>` and do everything else there. A wake directive that says
+  "pull the latest first" MEANS this; a seat that pulls before it has read
+  this contract has violated s1 and s3 without knowing (Atalanta L-09,
+  2026-09-11), so the directive is reworded at its source and this clause
+  exists for the seat that reads in order.
 - Fetch, then merge or rebase EXPLICITLY from a named SHA:
   `git fetch origin && git merge <sha>`. Every state transition is then
   observable and recorded. A `pull` fetches and rewrites the tree in one
@@ -53,9 +61,14 @@ roles/Archaeon/prompts/2026-09-11_workspace/MISSIVE_ALL_SEATS.md.
   `worktree add`, `checkout`, `switch`, `merge` or `restore` of a large
   tree a short timeout: a checkout killed mid-update leaves the index
   intact and thousands of tracked files missing from disk, deletions
-  staged -- the exact signature of the canonical checkout's two losses.
-  Reproduced on 2026-09-11: `timeout 120 git worktree add` on the 39,067-
+  staged -- the same signature CLASS as the canonical checkout's two losses.
+  Observed on 2026-09-11: `timeout 120 git worktree add` on the 39,067-
   file tree was killed at ~80% and left 39,067 files missing with a lock
+  (CORRECTION, Elenchus C-07 2026-09-11: this is a different count and a
+  different location from the canonical losses -- a worktree being created,
+  not an established checkout -- and a rival explanation, a concurrent
+  rewrite, is live in Harmonia's compliance record. The observation is
+  sufficient to justify this rule and insufficient to close the incident.)
   reason "initializing". Budget such operations at 900 s or more, or run
   them unbounded and watch. If a command does time out, do not retry in a
   loop; look at the tree, then act once (rule 7: destroy and recreate).

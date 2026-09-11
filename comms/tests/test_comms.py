@@ -12,7 +12,7 @@ from comms import api
 def conn(monkeypatch):
     name = "comms_test_" + uuid.uuid4().hex[:8]
     monkeypatch.setenv("COMMS_SCHEMA", name)
-    c = api.connect()
+    c = api.connect(require_schema=False)   # the fixture creates the throwaway schema itself
     api.init_schema(c)
     yield c
     cur = c.cursor(); cur.execute("DROP SCHEMA {} CASCADE".format(name)); c.commit(); c.close()
@@ -91,4 +91,17 @@ def test_agents_table_tracks_boot_activity_and_the_last_message_pointer(conn, mo
     api.post(conn, "Vivarium", ["Archaeon"], "report", "re: q", "answer", reply_to=q)
     assert api.message_status(conn, q)["status"] == "ANSWERED"
     api.done(conn, "Vivarium", p2); assert api.message_status(conn, p2)["status"] == "CLOSED"
+
+
+def test_connect_refuses_a_database_without_the_comms_schema(monkeypatch):
+    """Fail closed off-host (Atalanta #47 / Eos #55): a schema that does not
+    exist stands in for a host that holds no comms tables."""
+    import pytest
+    from comms import api
+    monkeypatch.setenv("COMMS_SCHEMA", "comms_does_not_exist_x")
+    with pytest.raises(RuntimeError) as e:
+        api.connect()
+    assert "EW_DB_HOST" in str(e.value)
+    conn = api.connect(require_schema=False)      # the init path still opens
+    conn.close()
 

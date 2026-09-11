@@ -165,9 +165,26 @@ def test_dispatch_refuses_a_queue_row(conn, schema):
 # ------------------------------------------------------------------ collect
 
 def test_collect_copies_the_summary_and_invents_nothing():
+    """`collect` became an instance method when the conformance record began
+    travelling on the row. With no gate record it must still copy the summary
+    and add NOTHING -- the stage's whole promise."""
     r = RunResult(sfe_experiment_id="exp_1", outcome="SURVIVED",
                   summary={"exp_id": "exp_1", "outcome": "SURVIVED"})
-    assert Vivarium.collect(r) == {"exp_id": "exp_1", "outcome": "SURVIVED"}
+    v = Vivarium(worker_id="t", config={}, conformance=False)
+    assert v.collect(r) == {"exp_id": "exp_1", "outcome": "SURVIVED"}
+
+
+def test_collect_carries_the_conformance_record_when_there_is_one():
+    """Conformance is PROVENANCE on the row, not an ephemeral preflight."""
+    r = RunResult(sfe_experiment_id="exp_1", outcome="SURVIVED",
+                  summary={"exp_id": "exp_1"})
+    v = Vivarium(worker_id="t", config={}, conformance=False)
+    v.conformance_record = {"schema": "vivarium.conformance.v1",
+                            "state": "CONFORMANT", "halted": False,
+                            "live": {"engine_instance_id": "eng_x"}}
+    out = v.collect(r)
+    assert out["conformance"]["state"] == "CONFORMANT"
+    assert out["conformance"]["live"]["engine_instance_id"] == "eng_x"
 
 
 def test_collect_failure_records_absence_as_absence():
@@ -176,7 +193,8 @@ def test_collect_failure_records_absence_as_absence():
                            partial=RunResult(sfe_experiment_id="exp_2",
                                              crossed_boundary=True),
                            failure_class="EXECUTOR_ERROR")
-    out = Vivarium.collect_failure(exc)
+    v = Vivarium(worker_id="t", config={}, conformance=False)
+    out = v.collect_failure(exc)
     assert out["outcome"] is None
     assert out["failure_class"] == "EXECUTOR_ERROR"
     assert out["crossed_execution_boundary"] is True
