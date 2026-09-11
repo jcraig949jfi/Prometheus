@@ -1,0 +1,491 @@
++======================================================================+
+|                                                                      |
+|   HARMONIA -- BOUNDARY-DEPTH PACKET 02                               |
+|   Mechanism, gate necessity, known-truth controls, scale, transfer   |
+|                                                                      |
+|   Author:  Harmonia (systems integrator) on M2 / SPECTREX5           |
+|   Date:    2026-09-11                                                |
+|   For:     James (HITL), Proteus, Daedalus, Mnemosyne, reviewers     |
+|   Status:  MEASUREMENT SYSTEM NOW TRUSTWORTHY / POPULATION AND       |
+|            LONG-RUN INFRASTRUCTURE ARE NOT                           |
+|                                                                      |
+|   Self-contained: every load-bearing number is inline.               |
+|                                                                      |
++======================================================================+
+
+----------------------------------------------------------------------
+0. VERDICT, AND THE THREE THINGS THAT CHANGED
+----------------------------------------------------------------------
+
+RECOMMENDATION: MULTIPLE OF THE ABOVE --
+   READY ONLY FOR MECHANISTIC CASE STUDIES
+   + LONG-RUN INFRASTRUCTURE NOT YET SAFE
+   + COMPOSITION SEMANTICS NEED REDESIGN
+
+Three things changed since packet 01, and two of them are corrections to
+packet 01 rather than new discoveries.
+
+  (1) PACKET 01's HEADLINE NUMBER WAS WRONG, BY MY OWN ERROR.
+      "Composition destroys world-coupling, 15/240 (6.2%)" came from
+      measuring coupling one way in L2 (any surface, image included) and
+      a different way in L7 (execution only). Re-measured consistently,
+      146/240 (60.8%) of compositions retain coupling. The claim is
+      RETRACTED, not narrowed.
+
+  (2) PACKET 01's P5 IS DEAD, AND SO IS ACTIVATION.
+      A hand-built known-negative -- component A writes a register that
+      nothing reads -- satisfies P5, satisfies Proteus's
+      activation_evidence, and satisfies order-sensitivity, while having
+      no causal contribution whatsoever. All three retired as criteria.
+
+  (3) A LIVE SIGNIFICANT DEFECT WAS FOUND WHILE PROBING, AND IT IS THE
+      SAME CLASS AS THE ONE I FILED A CONSTRAINT AGAINST IN SEPTEMBER,
+      WITH THE SIGN REVERSED. Details in section 6. Every
+      fossil-encounter read and write on M2 returns HTTP 500 right now.
+
+The measurement system is in much better shape than packet 01 left it:
+there are now organisms whose truth we know, and the instruments recover
+them. The population and the infrastructure are in worse shape than
+packet 01 suggested.
+
+----------------------------------------------------------------------
+1. KNOWN-TRUTH CONTROLS  (the keystone -- everything else rests on this)
+----------------------------------------------------------------------
+
+  Built from the ISA, read out of the interpreter rather than the docs.
+  An instruction is four words [op, a, bw, cw], op = word % 25;
+  op 21 IN, 23 OUT, 3 LOADI, 4 MOV, 0 NOP, 1 HALT. Registers start at 0.
+
+  COUPLING CONTROLS                              self-test 5/5
+    WC_POS         IN r0 ; OUT r0 ; HALT          coupled     -> recovered
+    WC_NEG         LOADI r0=42 ; OUT r0 ; HALT    blind       -> recovered
+    WC_STATE_ONLY  IN r0 ; HALT                   coupled     -> recovered,
+                   and ONLY through the image, confirming with known truth
+                   what packet 01 inferred from the menagerie
+    EMIT_ONLY      LOADI r0=7 ; OUT r0 ; HALT     blind       -> recovered
+    INERT          NOP ; HALT                     blind       -> recovered
+
+  PARTICIPATION CONTROLS -- the pairs that kill the old criteria
+    DEP_DATA    A: IN r0        B: OUT r0    TRUE dependence
+    DEP_CONST   A: LOADI r0=42  B: OUT r0    TRUE dependence, world-blind
+    INDEP_REG   A: LOADI r5     B: OUT r0    NO dependence
+    INDEP_LONG  A: 4x LOADI r5  B: OUT r0    NO dependence, A longer
+    POSITION    A: NOP NOP      B: OUT r0    NO dependence, pure padding
+    RESOURCE    A: 8x NOP       B: OUT loop  budget competition
+
+  SCORES (A's contribution; the A-segments of DEP_DATA/DEP_CONST/INDEP_REG
+  are all ONE instruction, so layout, offsets and op count are identical
+  across them)
+
+    criterion              DEP_DATA  INDEP_REG   verdict
+    ---------------------  --------  ----------  --------------------------
+    activation_evidence    ACTIVATED ACTIVATED   FAILS -- cannot separate
+    P5 moves_execution     True      True        FAILS -- cannot separate
+    order-sensitivity      True      True        FAILS -- cannot separate
+    moves OUTPUT           True      False       SEPARATES
+    cross-contribution     True      False       SEPARATES
+      at constant cost
+
+  ops(A+B) == ops(A+B\A) == 3 for both DEP_DATA and INDEP_REG, so the
+  separation is not a cost artifact.
+
+  THE ANSWER TO "WHAT WOULD CONVINCE US A CAUSALLY CHANGES B":
+    Ablating A changes what B produces, while A's bytes are replaced
+    in place by NOPs so that length, offsets and instruction count are
+    unchanged. Proteus's ablate() rewrites ONLY the opcode word, and a
+    NOP costs exactly one op, so NOP-ablation is RESOURCE-NEUTRAL BY
+    CONSTRUCTION. Measured contrast on the identical pair:
+        NOP-ablation   ops 16, out_writes 4, genome 40 words
+        deletion       ops 16, out_writes 8, genome  8 words
+    Deletion changes what B can do; neutralisation does not. The
+    criterion is valid ONLY under NOP-ablation, and that is now written
+    into the instrument.
+
+  Scored 6/6 on the known cases. This is the minimum bar -- one known
+  positive and one known negative -- not a proof of generality.
+
+----------------------------------------------------------------------
+2. THE P2 COLLAPSE: MECHANISM, NOT OBSERVATION
+----------------------------------------------------------------------
+
+  Re-measured with one consistent definition: of 240 ordered pairs of
+  world-coupled parents, 146 (60.8%) of the COMPOSITIONS are still
+  world-coupled. Packet 01's 15/240 was an artifact of dropping the
+  image surface on composed objects only.
+
+  MECHANISM ATTRIBUTION for the 94 that do lose coupling, by measurement
+  rather than by reading genomes:
+
+    M1 STARVATION          30  (31.9%)  second component never executes
+    M5 RAN BUT UNCOUPLED   18  (19.1%)  both ran; coupling still absent
+    M2 FIRST-HALT          18  (19.1%)  first component halts
+    M3 CURSOR/PATH LOSS    14  (14.9%)  composition reads LESS input than
+                                        the first component does alone
+    M4 BUDGET TRUNCATION   14  (14.9%)  budget exhausted in component one
+
+  No single mechanism dominates. "Composition destroys coupling" was
+  never one thing.
+
+  M3 is specific to this ISA and would be invisible to anyone reasoning
+  about composition abstractly: input read CURSORS ARE TICK-SCOPED and
+  the IN opcode advances them, so an earlier component CONSUMES the
+  world and a later one reads different values or zeros. 14 pairs read
+  strictly less input composed than solo. Zero pairs went all the way to
+  zero reads, so cursor exhaustion attenuates coupling rather than
+  eliminating it.
+
+----------------------------------------------------------------------
+3. GATE NECESSITY TABLE
+----------------------------------------------------------------------
+
+  For each gate: which claim needs it, and can the phenomenon exist
+  without it (counterexample by construction, not by argument)?
+
+  G_activated  both components ran
+    necessary for  any claim about the PAIR rather than about one part
+    fails-but-real no -- if a component never runs it cannot contribute
+    passes-but-absent YES -- INDEP_REG passes and has no dependence
+    CLASS: logically necessary, grossly insufficient
+
+  G_coupled  the composition responds to the world
+    necessary for  "interacts WITH THE WORLD" only
+    fails-but-real YES -- DEP_CONST has a genuine cross-component
+                   dependence and is world-blind BY CONSTRUCTION
+    CLASS: NOT necessary for a dependence claim. Packet 01 used it as a
+           core gate and thereby excluded an entire valid class.
+
+  G_emits  the composition writes an output
+    necessary for  nothing
+    fails-but-real YES -- SILENT_DEP_TRUE (A: LOADI r3=5; B: MOV r4<-r3)
+                   has a real dependence and emits NOTHING; recovered
+                   correctly by the restricted-register surface (sec. 4)
+    CLASS: INSTRUMENTATION CONVENIENCE. Retired as a gate; replacement
+           built and tested.
+
+  G_unsaturated  execution size is free to vary
+    necessary for  nothing; it guards a confound
+    CLASS: empirically useful. Keep as a reporting condition, not a gate.
+
+  G_causal (cross-contribution at constant cost)
+    CLASS: the candidate necessary condition. 6/6 on known truth.
+
+  GATE CORRELATION (Jaccard, over 42 composed pairs of coupled parents)
+    G_activated and G_moves_execution are IDENTICAL sets (J = 1.00).
+    P5 added no information over activation at any point -- it was a
+    redundant gate wearing a different name. G_unsaturated and G_coupled
+    are near-collinear (J = 0.86). G_causal is nearly orthogonal to
+    everything (J <= 0.11 against every other gate).
+
+  So of packet 01's five conjunctive gates, two were the same gate, two
+  more were 86% the same, and the only near-independent one was the one
+  I have since had to replace.
+
+----------------------------------------------------------------------
+4. STRUCTURAL CONTAMINATION MAP  (reusable, now enforced in code)
+----------------------------------------------------------------------
+
+  The runtime copies the genome onto the front of the tape. Therefore:
+
+  observable        contaminated by             safe for
+  ----------------  --------------------------  ----------------------
+  tape image        genome bytes, length        SAME object across
+                                                different worlds
+  final state       tape (above) + regs         same-object comparison
+  meter ops_by_cat  ablation itself (opcode ->  nothing involving
+                    NOP moves category counts)  ablation
+  execution hash    inherits the above          same-object comparison
+  whole-register    the ablated component's     nothing involving
+    digest          OWN writes                  ablation
+  OUTPUT            nothing measured            cross-object comparison
+  registers the     nothing measured            cross-object comparison
+    OTHER component                             INCLUDING non-emitting
+    reads                                       compositions
+
+  MEASURED, not asserted. Ablating A in the six known cases:
+    d_output      fires 3/3 positives, 0/3 negatives   SEPARATES
+    d_regs_all    fires 3/3 positives, 2/3 negatives   CONTAMINATED
+    d_tape        fires 3/3 positives, 2/3 negatives   CONTAMINATED
+    d_execution   fires 3/3 positives, 2/3 negatives   CONTAMINATED
+    d_regs_restricted-to-what-B-reads
+                  6/6 correct, including 2 positives that emit NOTHING
+
+  The restricted-register surface is the packet's main instrumentation
+  gain: it lifts the emission requirement entirely, and it is derived
+  from a static over-approximation of which registers the other
+  component consumes.
+
+----------------------------------------------------------------------
+5. THE CORRECTED FUNNEL, AND WHY IT IS WORSE THAN PACKET 01 SAID
+----------------------------------------------------------------------
+
+  Under one consistent coupling definition with the 3-world ladder used
+  by the instrument, 7 of 64 specimens are solo-coupled -- not 16. The
+  16 in packet 01 included a fourth "empty world" input set. Coupling is
+  therefore NOT a property of an organism; it is a property of the
+  (organism, world-set) pair, and the count moves by more than 2x on the
+  choice of world ladder. That is the single most important
+  conditionality in either packet.
+
+  Funnels over the 42 composed ordered pairs of coupled parents:
+
+    as packet 01 ran it            42 -> 15 -> 0 ...
+      (G_coupled_execution_only passes 0/42 -- the buggy gate was not
+       merely strict, on this population it was empty)
+    corrected, packet 01's shape   42 -> 15 -> 13 -> 10 -> 0
+    for the dependence claim       42 -> 15 -> 1
+      (G_activated then G_causal_any)
+
+  G_causal_any: 1 of 42.  G_causal_both: 1 of 42.
+  Near-misses: 2 pairs fail ONLY G_causal_both; 40 fail two or more.
+
+  SO: packet 01 reported seven usable pairs. Under a criterion that can
+  tell a known interaction from a known non-interaction, the number is
+  ONE, and it is not established that even that one is an interaction --
+  only that it satisfies a necessary condition.
+
+  Packet 01's seven were selected by a conjunction in which two gates
+  were identical, two more were 86% collinear, and the discriminating
+  gate was wrong. The seven are WITHDRAWN as a pre-registered population.
+
+----------------------------------------------------------------------
+6. LIVE SIGNIFICANT DEFECT FOUND WHILE PROBING
+----------------------------------------------------------------------
+
+  BD-1  PEW FOSSIL PATH IS DOWN ON M2. Every fossil-encounter read and
+        write returns HTTP 500 "Internal Server Error", with no detail.
+
+  scope     POST /fossil/encounters      500
+            GET  /fossil/encounters/{id} 500  (including a fixture row
+                                               written on 2026-09-03)
+            POST /fossil/worlds          200
+            POST /constraints            200
+            GET  /health /identity /version /fossil/contract  all 200
+
+  cause     The M2 PEW service auto-redeployed to repo HEAD (f727dfb1f)
+            at 06:25:07 today -- mid-session; it was serving 201106edb
+            when this session began. HEAD's fossil INSERT names 25
+            columns including five added by migration 010
+            (sfe_engine_instance_id, sfe_session_id, sfe_session_key_fp,
+            sfe_affinity_mode, sfe_ledger_head_hash). Migration 010 has
+            NOT been applied to the M2 database, which has 22 columns
+            and none of those five. Verified directly against
+            information_schema; the read-path SELECT succeeds when run
+            by hand, so the fault is the INSERT/model, not the table.
+
+  severity  SIGNIFICANT. The evidence store cannot record or return an
+            encounter. 11,998 existing rows are unreadable through the
+            API.
+  owner     Mnemosyne (+ operator to apply the migration)
+  SILENT?   YES, maximally. The service is HEALTHY. /health never touches
+            ew.fossil_encounters, so every liveness probe in the stack
+            reports green while the single most important table in the
+            evidence store is unusable. A long run would fail on its
+            first fossil write and the watchdog would see nothing wrong.
+
+  I did not apply the migration. Migrating a live canonical store is not
+  a verifier's action to take unilaterally, and the deploy/migrate
+  ordering is the thing under discussion.
+
+  THIS IS THE CT-SFE-1 CLASS WITH THE SIGN REVERSED. On 2026-09-04 the
+  SFE service was too OLD for the repo. Today the PEW service is too NEW
+  for the database. My HARD constraint K-18869f54f091 says "live
+  source_commit must contain the required fix" -- it is DIRECTIONAL and
+  was blind to this. That constraint is NARROWED by this incident.
+
+----------------------------------------------------------------------
+7. EXECUTABLE-CONSTRAINT TRIAL  (the transfer question, answered)
+----------------------------------------------------------------------
+
+  The directive asks for evidence that a discovered failure can become a
+  reusable executable boundary. One full trial, both arms:
+
+  lesson      code and schema must move together; a health check cannot
+              see their disagreement
+  encoded as  integration/pew_preflight.py  (CT-PEW-1), parses the
+              fossil INSERT column list out of the service source and
+              compares it against information_schema
+  SHOULD FIRE HEAD build vs the live M2 database
+              -> FAIL, exit 1, names all five missing columns and the
+                 remedy, and states that reads and writes will 500 while
+                 /health stays 200
+  SHOULD NOT  the 201106edb build vs the SAME database
+              -> PASS, exit 0, "code writes 20 columns ... OK (22)"
+  result      CONSTRAINT TRANSFERS. A real failure became an executable
+              boundary that catches that failure and does not fire on the
+              nearby correct configuration.
+
+  Status of packet 01's three proposed constraints, none of which were
+  proven then:
+    C-A  measure coupling on the COMPOSED object    ENCODED in
+         harmonia_eligibility.eligibility(); not yet trialled
+    C-B  report EXECUTION and IMAGE separately      ENCODED and ENFORCED;
+         this is the rule whose violation caused the retraction in sec. 0
+    C-C  pre-registering a rule does not protect against an inert
+         population                                 UNRESOLVED -- still
+         advisory, still unenforceable
+
+----------------------------------------------------------------------
+8. SCALE MEASUREMENTS  (partial -- the run hit BD-1)
+----------------------------------------------------------------------
+
+  Full encounter path against live M2, latency in ms.
+
+    N     world  experiment  observation  fossil*  total(mean/p50/max)   enc/min
+    5     272    416         156          96       941 /  945 /  1017    63.8
+    20    258    685         435          303     1681 /  857 /  9397    35.7
+    50    428    950         279          177     1833 /  854 / 12815    32.7
+
+  * fossil timings are for FAILED (500) requests -- see BD-1 -- and are
+    NOT success-path latencies. The SFE-side columns are valid.
+
+  TWO NONLINEARITIES, both worth more than the averages:
+    THROUGHPUT HALVES from n=5 to n=50 (63.8 -> 32.7 encounters/min)
+    with no change in the work per encounter.
+    THE TAIL IS SEVERE: at n=50 the mean is 2.1x the median and the max
+    is 15x the median (12.8 SECONDS for a single encounter). Planning
+    from the mean would understate the worst case by an order of
+    magnitude.
+
+  EXTRAPOLATION AT THE MEASURED n=50 RATE (32.7/min), and the reasons
+  not to trust it:
+    1e3 encounters      ~31 minutes
+    1e5 encounters      ~51 hours
+    1e6 encounters      ~21 days
+  ASSUMPTIONS ATTACKED: the rate is already degrading with N over a
+  range of 10x, so extrapolating it 20,000x further is unsound in the
+  direction of optimism; worlds accumulate and are never collected
+  (Daedalus's I-WORLD-GC is deferred and the growth rate is still
+  unmeasured); and every encounter adds one outbound SFE verify-anchor
+  call whose behaviour under concurrency is untested because BD-1 killed
+  the concurrency probe.
+
+  NOT MEASURED, and now explicitly backlog: DB/ledger/disk growth per
+  encounter, orphan accumulation, service restart mid-run, client
+  restart mid-run, PEW-unavailable, network interruption, ordering under
+  concurrent writers, resume-without-changing-the-run.
+
+----------------------------------------------------------------------
+9. RANKED BACKLOG
+----------------------------------------------------------------------
+
+  columns: P(occurrence) x severity-if-late x detectability x cost-now
+  SILENT failures are marked; they are the highest-value targets.
+
+  ID    CLASS                ITEM                          P  SEV DET COST
+  BD-1  SOFTWARE BUG         PEW fossil path 500s; code    1.0 HI  LOW LOW
+        *SILENT*             newer than schema. Blocks all
+                             evidence recording. sec. 6
+  BD-2  SCIENTIFIC VALIDITY  Coupling is a property of the .9 HI  LOW MED
+        *SILENT*             (organism, world-set) pair.
+                             7/64 vs 16/64 on a 3- vs
+                             4-world ladder. Any coupling
+                             number quoted without its
+                             ladder is meaningless.
+  BD-3  COMPOSITION          concat.v0 is sequential       .9 HI  MED HI
+        SEMANTICS            competition, not composition.
+                             Only 1/42 pairs shows any
+                             causal contribution. sec. 5
+  BD-4  MEASUREMENT          Causal contribution is only   .8 MED MED LOW
+                             measurable on OUTPUT or on
+                             restricted registers. Every
+                             other surface is contaminated
+                             by ablation. sec. 4
+  BD-5  SCALE/PERFORMANCE    Throughput halves 5->50 and   .8 MED MED LOW
+                             the tail is 15x the median.
+                             Extrapolation is optimistic.
+  BD-6  DURABILITY/RECOVERY  Restart/resume/concurrency/   .7 HI  LOW MED
+        *SILENT*             unavailability all UNTESTED;
+                             the probe died at BD-1.
+  BD-7  SCALE/PERFORMANCE    World objects accumulate and  .6 MED LOW MED
+                             are never collected; growth
+                             rate still unmeasured.
+  BD-8  REPRESENTATION       Input cursors are tick-scoped .5 MED LOW LOW
+                             so an earlier component eats
+                             the world (M3, 14/94).
+  BD-9  SCIENTIFIC VALIDITY  C-C unresolved: nothing       .5 MED LOW MED
+                             prevents pre-registering an
+                             inert population again.
+
+  KILLED THIS PASS
+    packet 01's "composition destroys world-coupling (6.2%)"  RETRACTED
+    P5 as an interaction criterion                            KILLED
+    activation_evidence as an interaction criterion           KILLED
+    order-sensitivity as an interaction criterion             KILLED
+    G_emits as a necessary gate                               KILLED
+    packet 01's seven pre-registered pairs                    WITHDRAWN
+
+  NARROWED
+    K-18869f54f091 (live commit must contain the fix) -- directional;
+      blind to code-too-new-for-schema. CT-PEW-1 closes that direction.
+    "world-blind" -- now strictly (organism, world-set)-relative.
+
+----------------------------------------------------------------------
+10. THE TWELVE STOP-CONDITION QUESTIONS
+----------------------------------------------------------------------
+
+   1 what is world coupling        ANSWERED, conditionally: a change in
+                                   any observable of ONE object across a
+                                   named world-set. Not organism-intrinsic.
+   2 why does composition remove it PARTIALLY: five mechanisms, none
+                                   dominant, and it removes it far less
+                                   often than packet 01 claimed (39%).
+   3 what is causal participation  ANSWERED: cross-contribution at
+                                   constant cost, 6/6 on known truth.
+   4 interaction vs artifact       ANSWERED for positional, length,
+                                   component-count and resource
+                                   artifacts. NOT answered for
+                                   sequential interference.
+   5 which gates are necessary     ANSWERED, section 3.
+   6 how much selection bias       ANSWERED: two gates identical, two 86%
+                                   collinear, discriminator wrong.
+   7 which observables contaminated ANSWERED, section 4.
+   8 which composition semantics   UNRESOLVED. concat.v0 looks wrong for
+                                   the claim; no alternative operator
+                                   exists to compare against.
+   9 known-positive recovered      YES -- six of them.
+  10 known-negative rejected       YES -- four, including the one that
+                                   killed three criteria.
+  11 what fails first at volume    PARTIALLY: throughput and tail
+                                   degrade by 50 encounters. BD-1 stopped
+                                   the rest.
+  12 which failures became         ONE, fully trialled both arms
+      executable constraints       (CT-PEW-1). Two encoded, not trialled.
+
+  Four of twelve are unanswered or partial. That is backlog, not failure,
+  and it is why the recommendation is not READY.
+
+----------------------------------------------------------------------
+11. RECOMMENDATION
+----------------------------------------------------------------------
+
+  READY ONLY FOR MECHANISTIC CASE STUDIES
+  + LONG-RUN INFRASTRUCTURE NOT YET SAFE
+  + COMPOSITION SEMANTICS NEED REDESIGN
+
+  Nothing should be recorded to PEW until BD-1 is cleared; the evidence
+  store currently cannot accept an encounter.
+
+  The scientific blocker is BD-3. Under a criterion that demonstrably
+  separates a known interaction from a known non-interaction, ONE pair
+  out of 42 shows any causal contribution at all. concat.v0 places
+  components in sequence in one address space with one budget and one
+  instruction pointer, and what that mostly produces is the first
+  component running and the second not mattering. Before a campaign is
+  designed, someone should answer whether that is the composition
+  semantics the scientific claim actually needs. That is a Proteus
+  question and I have not pre-judged it.
+
+  What I would NOT do is enlarge the funnel until seven pairs come back.
+  Packet 01's seven were an artifact of a broken gate, and the honest
+  count under a validated criterion is one.
+
+  "This menagerie plus this glue cannot support the claim" remains a
+  first-class answer and is now better supported than it was in packet 01.
+
++======================================================================+
+|  END OF PACKET 02                                                    |
+|                                                                      |
+|  The most useful reviewer response is not agreement. It is either     |
+|  "your restricted-register surface has a contamination you have not   |
+|  found", or "concat.v0 is fine and your criterion is too strict".     |
++======================================================================+
