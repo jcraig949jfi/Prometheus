@@ -49,8 +49,16 @@ roles/Archaeon/prompts/2026-09-11_workspace/MISSIVE_ALL_SEATS.md.
   `git fetch origin && git merge <sha>`. Every state transition is then
   observable and recorded. A `pull` fetches and rewrites the tree in one
   invisible step; it is forbidden.
-- Wrap git calls in a timeout. If a command times out, do not retry in a
-  loop; look at the tree, then act once.
+- Wrap git calls in a timeout sized to the operation. NEVER give
+  `worktree add`, `checkout`, `switch`, `merge` or `restore` of a large
+  tree a short timeout: a checkout killed mid-update leaves the index
+  intact and thousands of tracked files missing from disk, deletions
+  staged -- the exact signature of the canonical checkout's two losses.
+  Reproduced on 2026-09-11: `timeout 120 git worktree add` on the 39,067-
+  file tree was killed at ~80% and left 39,067 files missing with a lock
+  reason "initializing". Budget such operations at 900 s or more, or run
+  them unbounded and watch. If a command does time out, do not retry in a
+  loop; look at the tree, then act once (rule 7: destroy and recreate).
 - Never remove another seat's lock (`index.lock`, `next-index-*.lock`).
   You may remove a stale lock in YOUR OWN worktree's gitdir only.
 

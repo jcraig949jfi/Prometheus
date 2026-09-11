@@ -177,4 +177,6 @@ def main():
 
 
 if __name__ == "__main__":
+    from ergon.workspace_guard import refuse_canonical  # D-23: never from the canonical checkout
+    refuse_canonical("coldband M30")
     main()

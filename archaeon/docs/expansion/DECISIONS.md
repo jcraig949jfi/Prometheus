@@ -119,3 +119,17 @@ Principle added to the contract (s10): the constitution is falsifiable -- a rule
 - Elenchus: write scope widened to everything that is not the audited object; mandate program-wide on commission with the Aporia shadow as the default standing lane; ELEN-03 proceeds; the dormant shadow loop is a failed instrument until it exposes freshness.
 - The journal collision (four seats, one .gitignore rule) is a confirmed base-role bug, fixed and tested at 2b79c140a; no further operator question.
 
+## D-23 amendment 4 (2026-09-11): feed the watchdogs; the interrupted-checkout mechanism reproduced
+
+- roles/base-role/MONITORS.md is the registry of every standing loop (input, freshness source, dormancy threshold, alarm, state); boot step 7 makes monitor compliance precede task work; the self-test requires every enabled Prometheus scheduled task on the host to have a row.
+- Elenchus's shadow is DORMANT because its INPUT (Aporia's WORKLOG) stopped at P177 on 2026-09-01; feeding it means reviving Aporia's loop or repointing the shadow at a live input under Elenchus's program-wide mandate -- the operator rules which. The mailer the operator still receives is UNLOCATED on M1 (Hermes brief script; no task, cron or process) and must be identified from an email's headers.
+- The mechanism behind the canonical checkout's ~11,000 missing files was reproduced live: `timeout 120 git worktree add` on the 39,067-file tree was killed at ~80% and left every file missing with the index intact and the worktree locked "initializing". Contract s3 now forbids short timeouts on checkout-class operations (budget 900 s or run unbounded).
+
+## D-23 amendment 5 (operator 2026-09-11, on Ergon's adoption pass 772edf15e)
+
+- Base rule 8: scheduled activity is not progress -- every persistent task exposes a domain-level productivity signal beside process success; repeated successful no-ops become visible as dormancy. PRESENT is not ACTIVE is not PRODUCTIVE is not VALID; the registry gains a productivity column and a DEAD state.
+- `archive/` was a second base-role filesystem contradiction (roles/*/archive/ ignored for every seat): fixed centrally, and every base-mandated path class is now checked mechanically against .gitignore in the self-test.
+- PrometheusMachineProbeM1 is registered DEAD (fires every 5 min, 0x80070002 every time, unowned, runs from the canonical checkout); recommendation: disable until claimed.
+- ERGON-10: Ergon's self-recusal accepted; Aporia rules the scientific disposition with Charon's C1/C2 findings as hard preconditions; the operator's leaning is not to resume the old probe -- redesign onto executable artifacts under the corrected guards, or close the lineage with an annotation and open a successor. Disabling the three tasks before adjudication was correct containment, not a verdict.
+- ERGON-03 -> ERGON-02 sequence endorsed: MDE, attainable range, cheat control and gate-fire worlds before MRU vs RANDOM at fixed n; a flat result under an instrument proven able to fire is a finding, a flat result otherwise is nothing.
+

@@ -106,7 +106,24 @@ database writes, model training and experiment runners:
 7. DORMANCY MUST BE VISIBLE. Any standing audit, monitor, shadow,
    validator or qualification loop exposes freshness and last-success
    state. Silence is never observationally equivalent to health; a dead
-   watchdog is itself a failed instrument.
+   watchdog is itself a failed instrument. The registry is
+   roles/base-role/MONITORS.md; boot step 7 keeps it current.
+8. SCHEDULED ACTIVITY IS NOT PROGRESS (operator, on Ergon's adoption pass
+   772edf15e: three tasks fired 584 times over ten days, every exit code
+   0, zero rows produced). Every persistent task exposes a DOMAIN-LEVEL
+   PRODUCTIVITY SIGNAL beside its process success: rows produced, state
+   advanced, artifact emitted, gate exercised, or an explicit no-op
+   reason. Repeated successful no-op executions become visible as
+   dormancy, and a loop that mutates canonical state while producing no
+   scientific output is disabled first and adjudicated second --
+   containment, not a verdict on the experiment.
+
+PRESENT is not ACTIVE is not PRODUCTIVE is not VALID. A task can exist in
+the scheduler (present), fire on schedule with exit 0 (active), produce
+rows or advance state (productive), and still be wrong (valid is the
+instrument's and the ruling's question). Every status a seat writes says
+which of the four it is asserting; the registry's state column uses them.
+
 
 A seat that experiments on ITS OWN SUBSTRATE is doing science: Mnemosyne
 does not adjudicate domain hypotheses, it scientifically validates the
@@ -156,6 +173,16 @@ reads instead of any local memory directory.
    the newest prompt, and the status of the seats you depend on. Then start
    on the first one unless the operator redirects. The seat should always
    be working.
+7. FEED YOUR WATCHDOGS BEFORE YOUR TASKS. Enumerate every standing loop,
+   monitor, shadow, validator or qualification loop you own OR FEED
+   (roles/base-role/MONITORS.md is the registry). For each: does it have
+   a named input with a producer; does it write last_input_at and
+   last_success_at where they can be read without running it; does it
+   have a dormancy threshold with an alarm routed somewhere; is its row
+   current. Fix what you own, declare DORMANT / DISABLED / UNLOCATED what
+   you cannot, and only then proceed to task work. A monitor whose
+   silence would be read as health is a failed instrument you are
+   carrying into every result (base rule 7; operator 2026-09-11).
 
 ## 2. Doctrine every seat carries
 

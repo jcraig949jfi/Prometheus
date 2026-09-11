@@ -1,0 +1,31 @@
+# Standing monitors, watchdogs, shadows and loops -- the registry (base rule 7)
+
+Currency: 2026-09-11 (Archaeon; seeded from the M1 scheduled-task list and the
+loops known on that day; productivity column and DEAD state added the same day on Ergon's pass). A standing loop that is not in this registry is
+UNMANAGED; a registry row whose freshness source cannot be read is DORMANT.
+Silence is never health. Every seat updates its rows at boot (RESPONSIBILITIES.md
+step 7) and the base-role self-test checks that every enabled Prometheus
+scheduled task on the host has a row.
+
+One row per loop. Columns:
+  name | kind | owner seat | host | INPUT it consumes | FRESHNESS source (where last_input_at / last_success_at can be read) | dormancy threshold | alarm route | state | PRODUCTIVITY signal (rows produced, state advanced, artifact emitted, gate exercised, or the no-op reason)
+
+ArchaeonTick | scheduled task, every 15 min | Archaeon | M1 | the SFE ledger (recent fossils) and the queue | archaeon/deploy/archaeon_tick.log (one JSON record per run; `at`, `decision`); queue rows created_by=archaeon | 4 h without a run record | Archaeon's status file; the tick receipt carries `conformance` and `workspace` | ACTIVE (pinned worktree F:\Prometheus-worktrees\archaeon-tick) | queue rows created_by=archaeon per day (quota 6) and the tick receipt's decision; NO_WRITE_CADENCE is an explicit no-op reason
+MnemosyneEvidenceWikiWatchdog | scheduled task, every 5 min | Mnemosyne | M1 | GET http://localhost:8377/api/v1/health | evidence_wiki/derived/watchdog.log | 15 min without a log line | none yet (restarts the service; does not notify) | ACTIVE; NEEDS a last-success line when the service answers, not only when it restarts | restarts performed vs health answers; a health answer must be logged as success, not silence
+PEWBackupDaily | scheduled task, daily | Mnemosyne | M1 | the Evidence Wiki database | the backup artifact's timestamp | 36 h | none yet | ACTIVE | backup artifact bytes and row count
+PEWRestoreVerifyWeekly | scheduled task, weekly | Mnemosyne | M1 | the latest backup | the verify report | 8 d | none yet | ACTIVE | restore verified rows == source rows
+PrometheusBackupWeekly | scheduled task, weekly | operator | M1 | F:\Prometheus (canonical) | scripts/backup log | 8 d | none | ACTIVE; runs from the canonical checkout (read-only use; allowed) | archive bytes and file count
+PrometheusMachineProbeM1 | scheduled task, every 5 min | Daedalus? (unclaimed) | M1 | host metrics | machine_probe output | 15 min | none | DEAD -- fires every 5 min and returns 0x80070002 every time (Ergon 772edf15e); present in the scheduler, not active, not productive; OWNER UNCLAIMED; recommendation: disable until a seat claims it and it runs from a pinned worktree | NONE -- fails with 0x80070002 on every fire (file not found; cwd is the canonical checkout)
+SFEngine | service (Task Scheduler, running) | Daedalus | M1 | the engine ledger | GET /v2/version; deploy/verify_deploy | 5 min without an answer | Vivarium's consumer halts on UNREACHABLE (conformance gate) | ACTIVE, schema 8, instance eng_8a37a5d3 | experiments and observations committed per hour (engine cost_report / ledger counts)
+Vivarium consumer (viv.cli run) | long-running process | Vivarium | M1 | the queue (schema viv) | viv worker_heartbeat rows; `viv.cli status` | 10 min without a heartbeat | stranded-row check; the operator | ACTIVE (harness worktree; pinned worktree pending, F-28) | rows completed / failed per hour; stranded count
+Elenchus shadow loop | review loop over Aporia's passes | Elenchus | any | engine/shadow/WORKLOG.jsonl (Aporia's per-pass log) | engine/shadow/REVIEWS.jsonl last reviewed_at; WORKLOG last pass_id | 48 h without a new Aporia pass | none -- THIS IS THE DORMANT WATCHDOG | DORMANT since 2026-09-01 (P177): its INPUT stopped. Feeding it = Aporia's standing loop running again, or Elenchus repointing the shadow at a live input under its program-wide mandate (ELEN-03 decides; operator rules which) | reviews written per Aporia pass; 0 since P177
+Hermes portfolio brief mailer | cron job running scripts/send_brief_email.py after metis_portfolio.py | Eos/Hermes lineage (legacy); OWNER UNCLAIMED | M3 or M4 (operator, 2026-09-11); not M1 | dashboard/portfolio_brief.md on that host | the email itself (no freshness record on the sending host) | daily | the operator's inbox | ACTIVE, UNOWNED (located: a cron on M3 or M4) -- still sending; needs a seat to claim it, a last-success record on its host, and a decision to keep or stop; until then it is a loop whose input is a legacy portfolio step nobody maintains | emails sent vs briefs regenerated; a brief that did not change is a no-op to report, not to send
+PrometheusCampaign / PrometheusColdbandDrip / PrometheusColdbandM30 / PrometheusRekeyObjectZeros | scheduled tasks | Ergon | M1 | (looping with no work, from the canonical checkout) | task LastRunTime | -- | -- | DISABLED by Ergon 2026-09-11 (772edf15e), correctly: a loop with no input is not a monitor | 0 rows in 584 ticks (Ergon 772edf15e): the case that made rule 8
+
+How to feed a watchdog (the mechanics every row must satisfy):
+  1. an INPUT it consumes, named, with an owner who produces it;
+  2. a FRESHNESS record it writes on every run -- last_input_at and last_success_at -- readable without running it;
+  3. a DORMANCY threshold and an alarm that fires when the input or the success is older than the threshold, routed to a seat or the operator;
+  4. an explicit state here: ACTIVE, DORMANT (input stopped), DEAD (fires and fails), DISABLED (by whom, when), UNLOCATED (runs somewhere nobody has found);
+  5. a PRODUCTIVITY signal (rule 8): PRESENT is not ACTIVE is not PRODUCTIVE is not VALID.
+A loop that only reports when something is wrong is dormant the moment its input stops, and its silence will be read as health. That is the defect base rule 7 exists to name.
