@@ -105,7 +105,7 @@ root, and there is **no override** on it: nothing legitimate needs a worktree un
 checkout.
 
 Measured here: `canonical_root` → `F:\Prometheus`, this worktree
-`F:\Prometheus-worktrees	echne-d23` → `main_worktree` false, `inside_canonical_checkout`
+`F:\Prometheus-worktrees\techne-d23` → `main_worktree` false, `inside_canonical_checkout`
 false, `session_temporary_worktree` false, **`durable_worktree` true**.
 
 Two defects came out of writing the test for it, both mine:
