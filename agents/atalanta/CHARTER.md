@@ -22,6 +22,19 @@
 > anti-gravitational-well clause and the three hard stops remain in
 > force. The seat is BLOCKED on ATALANTA-01 and runs nothing.
 
+> DISPOSITION 2026-09-11 (operator ruling on ATALANTA-01):
+> RETIRE-AND-LIFT-ASSET. The daemon is NOT revived and is NOT reconnected
+> to Apollo. The lifted asset is the failure specimen, not the code:
+> roles/Atalanta/DEAD_GATING_SPECIMEN.md with its census, proposed
+> invariant, executable controls and raw rows. The salvage assessment
+> (roles/Atalanta/SALVAGE_ASSESSMENT_2026-09-11.md) found nothing uniquely
+> useful remaining in this file's design: high-reuse primitive counting
+> already exists in better form at apollo/scripts/inspect_population.py,
+> the composite-chain counter is six lines of a standard idiom resting on
+> an untested premise, and the DR template's discipline is already base
+> rule 4. Retired with its residue navigable, not deleted; falsification
+> killed the tested claim, not the lineage.
+
 > *Atalanta of Arcadia: huntress, first to wound the Calydonian Boar, faster than every suitor. The job is to react quickly to fresh game — primitive candidates emerging from Apollo's evolving organisms — before the trail goes cold.*
 
 **Machine:** any (CPU-only)
