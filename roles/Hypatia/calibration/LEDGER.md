@@ -91,3 +91,47 @@ Conflict of interest declared: the corrected number is more flattering to
 this seat than the published one. It is stated here in the least flattering
 available framing -- 8 dispatches of a structurally impossible task, whose
 output was 79 percent unloadable, into a consumer that did not exist.
+
+## L-08  Three instrument defects in one session, all the same family (season 1)
+
+2026-09-11. Building season 1's tooling produced three defects, each in this
+seat's own instruments, each an instance of verifying a rendered LABEL
+instead of the property underneath (base rule 2):
+
+  1. load_bearing_unit picked a prescription on 3 of 4 packets because
+     prescriptions restate the class vocabulary.
+  2. G5 and G6 were mutually unsatisfiable on the terminal step, for every
+     case. Caught by the gate's own positive control BEFORE any real ladder
+     existed. Amended as A-1 with the timing recorded, which is what made it
+     legitimate.
+  3. The A-1 exemption mis-fired on multi-token class names through
+     asymmetric stopword handling. Found by the DATA, after results were
+     visible. NOT repaired; run as a labelled sensitivity analysis instead.
+
+The generalisable one is 3: the control suite caught 2 and missed 3, because
+3 only manifests on real class names. Synthetic fixtures miss defects that
+live in the shape of real data. A control suite needs at least one fixture
+drawn from the real corpus.
+
+STANDING RULE: when a defect is found by the data rather than by a control,
+and repairing it would move a result in this seat's favour, the repair is a
+labelled sensitivity analysis and never the headline. The operator decides
+whether a corrected re-run is the same season or the next one.
+
+## L-09  The refusals passed on the easiest available clause
+
+2026-09-11, recorded against myself while the result is still fresh and
+favourable. Both refusal controls were correctly rejected, but both landed
+on G6 clause (a), "zero terminal steps" -- abstention, the cheapest possible
+refusal. CHEAT-1 tested whether this seat will invent a link that is ABSENT.
+It did not test whether this seat will accept a plausible-but-wrong link
+that is PRESENT, which requires discriminating rather than abstaining.
+
+CHEAT-1 is also confounded: at 3 evidence units it is the shortest packet in
+the season, so "refused because insufficient" is not separated from "refused
+because short". Length-matched controls were not run.
+
+The positive result favours this seat's lane, which is the class of result
+that propagates furthest and is attacked least. It is written here as
+unfinished rather than banked.
+

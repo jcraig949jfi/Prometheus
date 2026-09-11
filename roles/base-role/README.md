@@ -12,6 +12,8 @@ seat inherits. Adopted by the operator 2026-09-11.
   carry base_sha/branch/worktree_path, fast-forward integration, pinned
   worktrees for long-running processes, destroy-not-nurse, conformance as
   provenance.
+- WAKE_DIRECTIVE.md -- the conformant wake wording the operator pastes
+  (fetch, record the SHA, worktree; never pull).
 - INHERITANCE.md -- the list of roles and the banner each carries.
 - comms/ (repository root) -- the inter-agent inbox, broadcast and task queue every seat syncs before and after each prompt; python -m comms sync <Seat>.
 - MONITORS.md -- the registry of standing loops, watchdogs and shadows: input, freshness source, dormancy threshold, alarm, state.

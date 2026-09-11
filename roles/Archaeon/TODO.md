@@ -203,4 +203,8 @@ would still KILL.
 - [ ] F-28 (Vivarium): wire the gate at the claim/dispatch boundary with the complete route set and the record on the load receipt; demonstrate; C3-3 waits. 2026-09-11
 - [x] F-29 DONE 2026-09-11 05:00: D-23 workspace missive issued; guard + receipt wired; tick moved to a pinned worktree. 2026-09-11
 - [ ] F-30 (every seat): D-23 clean-up reports (claimed/deleted canonical files, pruned worktrees, merged branches deleted, long-lived processes moved). 2026-09-11
-- [ ] F-31 (Archaeon): next task on a task branch archaeon/<task> in F:\Prometheus-worktrees\archaeon-<task>; retire F:\Prometheus-archaeon once its last change lands. 2026-09-11
+- [x] F-31 DONE 2026-09-11 18:04: this pass ran on archaeon/pass-2026-09-11-1804 in Prometheus-worktrees/archaeon-pass-1804; archaeon-loop (merged) and Prometheus-archaeon (archaeon/v0, merged) are removable at close. 2026-09-11
+- [ ] F-32 (Archaeon): ARCH-33 -- the tick's rule-10 park (96 consecutive non-WROTE records), then advance the pinned archaeon-tick worktree by a logged command. 2026-09-11
+- [ ] F-33 (Archaeon): H5 readout on 256 rules once cs-h5-1-r1 completes (F-24 + ARCH-30 first read). 2026-09-11
+- [ ] F-34 (operator): P0-a -- look at the one literal in keys.py that Eos's counts-only scan flagged; if it is not a credential, un-ignore keys.py (D-29). 2026-09-11
+- [ ] F-35 (operator): rule on D-28 (producer-declaration invariant). 2026-09-11

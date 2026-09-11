@@ -247,3 +247,145 @@ HAND_DERIVED: Tuple[Tuple[str, int, object], ...] = (
     ("shift_right", 240, derive_shift_right),
     ("xor_neighbours", 90, derive_xor_neighbours),
 )
+
+# ---------------------------------------------------------------------------
+# Initial conditions and the block-output criterion (Capcarrere, Sipper,
+# Tomassini 1996, PRL 77:4969). Protocol committed first:
+# herakles/specimens/spec-capcarrere-r1-density/PROTOCOL.md
+# ---------------------------------------------------------------------------
+
+def make_ics(n_ics: int, n_cells: int, seed: int,
+             variant: str = "bernoulli") -> np.ndarray:
+    """Seeded initial conditions. No global RNG is touched.
+
+    variant="bernoulli"        each cell iid Bernoulli(0.5). PROTOCOL U1
+                               variant A.
+    variant="uniform_density"  a density drawn uniformly on [0, 1] per IC,
+                               then each cell iid Bernoulli(that density).
+                               PROTOCOL U1 variant B.
+    The paper says only "randomly generated"; the variant is part of every
+    number and is never defaulted silently by a caller that reports one.
+    """
+    if isinstance(n_ics, bool) or not isinstance(n_ics, (int, np.integer))             or int(n_ics) < 1:
+        raise EcaError("n_ics must be a positive integer, got %r" % (n_ics,))
+    n = require_lattice(n_cells)
+    if isinstance(seed, bool) or not isinstance(seed, (int, np.integer)):
+        raise EcaError("seed must be an integer, got %r" % (seed,))
+    rng = np.random.default_rng(int(seed))
+    u = rng.random((int(n_ics), n))
+    if variant == "bernoulli":
+        return (u < 0.5).astype(np.uint8)
+    if variant == "uniform_density":
+        rho = rng.random((int(n_ics), 1))
+        return (u < rho).astype(np.uint8)
+    raise EcaError("unknown IC variant %r" % (variant,))
+
+
+def density(states: np.ndarray) -> np.ndarray:
+    """Exact density of 1s per row, (n,) float64."""
+    s = np.asarray(states)
+    if s.ndim != 2:
+        raise EcaError("states must be 2-D (n_runs, n_cells), got %r"
+                       % (s.shape,))
+    return s.sum(axis=1) / float(s.shape[1])
+
+
+def adjacent_pairs(states: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
+    """(has00, has11) per row, circular: pair (i, i+1 mod N) for every i."""
+    s = np.asarray(states).astype(np.uint8)
+    right = np.roll(s, -1, axis=1)
+    has11 = ((s == 1) & (right == 1)).any(axis=1)
+    has00 = ((s == 0) & (right == 0)).any(axis=1)
+    return has00, has11
+
+
+def block_output_correct(ics: np.ndarray, final: np.ndarray) -> np.ndarray:
+    """The theorem's output convention, per IC. Bool (n,).
+
+    density > 0.5 : a 11 pair exists and no 00 pair
+    density < 0.5 : a 00 pair exists and no 11 pair
+    density = 0.5 : neither (strict alternation)
+    Every IC is eligible; there is no tie exclusion and no odd-N rule.
+    """
+    d = density(ics)
+    has00, has11 = adjacent_pairs(final)
+    above = (d > 0.5) & has11 & ~has00
+    below = (d < 0.5) & has00 & ~has11
+    tie = (d == 0.5) & ~has00 & ~has11
+    return above | below | tie
+
+
+def block_output_score(rule_number: int, ics: np.ndarray,
+                       steps: int) -> Dict[str, object]:
+    """Capcarrere-Sipper-Tomassini block output at horizon `steps`.
+
+    Published-figure horizon is steps = ceil(N/2) (PRL 77:4969, theorem).
+    Comparable ONLY to footnote [13] of that paper and to nothing in the
+    radius-3 fixed-point line; chance floor 0.5 (a constant rule scores
+    the ICs on one side of 0.5), attainable range [0, 1].
+    """
+    r = require_rule(rule_number)
+    s = np.asarray(ics).astype(np.uint8)
+    final = evolve(s, r, steps)
+    correct = block_output_correct(s, final)
+    n = int(s.shape[0])
+    return {"criterion": "block_output", "rule": r, "n_cells": int(s.shape[1]),
+            "steps": int(steps), "n_eligible": n, "n_correct": int(correct.sum()),
+            "score": float(correct.mean()), "correct_mask": correct}
+
+
+def uniform_at_T_correct(ics: np.ndarray, final: np.ndarray) -> np.ndarray:
+    """The fixed-point convention, for the WRONG-CRITERION control only.
+
+    Correct iff the final state is uniform in the majority state of the IC.
+    Ties (density exactly 0.5) are counted incorrect here rather than
+    excluded, so the eligible count stays n; on odd N no tie exists.
+    """
+    d = density(ics)
+    f = np.asarray(final).astype(np.uint8)
+    all1 = (f == 1).all(axis=1)
+    all0 = (f == 0).all(axis=1)
+    return ((d > 0.5) & all1) | ((d < 0.5) & all0)
+
+
+def uniform_at_T_score(rule_number: int, ics: np.ndarray,
+                       steps: int) -> Dict[str, object]:
+    r = require_rule(rule_number)
+    s = np.asarray(ics).astype(np.uint8)
+    correct = uniform_at_T_correct(s, evolve(s, r, steps))
+    return {"criterion": "uniform_at_T", "rule": r, "n_cells": int(s.shape[1]),
+            "steps": int(steps), "n_eligible": int(s.shape[0]),
+            "n_correct": int(correct.sum()), "score": float(correct.mean()),
+            "correct_mask": correct}
+
+
+def planted_block_configuration(n_cells: int, target: str) -> np.ndarray:
+    """The CHEAT control: the answer pattern written directly, no dynamics.
+
+    target "above": one planted 11 block in an otherwise alternating ring;
+           "below": one planted 00 block likewise;
+           "tie":   pure alternation (needs even N).
+    On an odd ring a plain alternation already wraps into exactly one
+    same-state pair; on an even ring the block is written explicitly.
+    """
+    n = require_lattice(n_cells)
+    if target == "tie":
+        if n % 2:
+            raise EcaError("a strict alternation needs even N, got %d" % n)
+        cfg = np.array([i % 2 for i in range(n)], dtype=np.uint8)
+    elif target in ("above", "below"):
+        one = 1 if target == "above" else 0
+        if n % 2:
+            cfg = np.array([(i + one) % 2 for i in range(n)], dtype=np.uint8)
+        else:
+            cfg = np.array([one, one] + [(i + one + 1) % 2
+                                         for i in range(n - 2)],
+                           dtype=np.uint8)
+    else:
+        raise EcaError("unknown target %r" % (target,))
+    has00, has11 = adjacent_pairs(cfg[None, :])
+    want11 = target == "above"
+    want00 = target == "below"
+    if bool(has11[0]) != want11 or bool(has00[0]) != want00:
+        raise EcaError("planted configuration did not come out as intended")
+    return cfg[None, :]
