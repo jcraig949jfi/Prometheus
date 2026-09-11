@@ -35,6 +35,7 @@ Every role below carries the banner on its primary document(s):
 | Koios | RESPONSIBILITIES.md (already) |
 | Lexis | ROLE.md (already) |
 | Ludus | ROLE.md (already), CHARTER.md (already), BOOTSTRAP.md, CHARTER_v3_WORLD_FOUNDRY.md (2026-09-11) |
+| Metis | RESPONSIBILITIES.md (created 2026-09-11 on the seat's seating pass; the seat had no roles/ directory before and has never had an operator charter; agents/metis/README.md is the March 2026 agent README and scripts/metis_portfolio.py the May reporter, both annotated by the seat file, neither stamped) |
 | Mnemosyne | RESPONSIBILITIES.md (already) |
 | Pheme | RESPONSIBILITIES.md (created 2026-09-11 on the seat's adoption pass; the seat had no roles/ directory before; agents/pheme/CHARTER.md is Aporia's May design, annotated by the seat file, not stamped) |
 | MPADatabaseArchitect | RESPONSIBILITIES.md (already) |
@@ -85,6 +86,7 @@ BOOTSTRAP.md if the seat has one, else STARTUP.md, RESPONSIBILITIES.md, ROLE.md,
 | Koios | RESPONSIBILITIES.md |
 | Lexis | ROLE.md |
 | Ludus | BOOTSTRAP.md (from 2026-09-11; was ROLE.md) |
+| Metis | RESPONSIBILITIES.md |
 | Mnemosyne | RESPONSIBILITIES.md |
 | Pheme | RESPONSIBILITIES.md |
 | MPADatabaseArchitect | RESPONSIBILITIES.md |
