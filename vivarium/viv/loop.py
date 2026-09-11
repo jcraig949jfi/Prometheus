@@ -46,6 +46,8 @@ from . import pew as _pew
 from . import queue as _q
 from . import selection as _selection
 from . import spec as _spec
+from . import vardir as _vardir
+from . import workspace as _workspace
 from .request import ExecutionRequest
 from .runner import ExecutionFailure, RunResult, SfeRunner
 
@@ -143,6 +145,17 @@ class Vivarium:
         self.counters = {"ticks": 0, "idle": 0, "busy": 0, "executed": 0,
                          "failed": 0, "rejected": 0, "blocked": 0}
         self.last_tick: Optional[TickReport] = None
+        # C6: the RUNNING code revision, captured once and carried on every
+        # heartbeat. Three times in one week a fix was live on main and
+        # absent from the running process; "is the fix live?" is a field now,
+        # not an inference from a process start time.
+        self.code = self._code_receipt()
+        self.var_dir = str(_vardir.resolve(self.cfg, create=False))
+        # D-24 amendment 3: the comms instance tag, so a second consumer
+        # instance is distinguishable from a stale heartbeat of the first.
+        # The heartbeat row is keyed on worker_id, so without this two
+        # instances overwrite each other indistinguishably.
+        self.instance = self._instance_tag()
 
     # -- lazily built collaborators ---------------------------------------
     def runner(self):
@@ -647,14 +660,52 @@ class Vivarium:
                 "last_tick": self.last_tick.as_dict() if self.last_tick
                              else None}
 
-    def heartbeat(self, conn, current=None) -> None:
+    @staticmethod
+    def _instance_tag() -> dict:
+        """<machine>-<8 of the harness session id>, derived by comms's own
+        function (comms/api.py is import-clean: no connection at import) so
+        the two cannot drift; the same shape by hand if comms is not on the
+        tree this checkout runs from."""
+        sid = os.environ.get("CLAUDE_CODE_SESSION_ID")
+        tag = None
+        try:
+            import sys as _sys
+            root = str(_workspace.REPO)
+            if root not in _sys.path:
+                _sys.path.insert(0, root)
+            from comms.api import instance_tag as _tag       # noqa: PLC0415
+            tag = _tag()
+        except Exception:                           # noqa: BLE001, S110
+            pass
+        if not tag:
+            tag = "%s-%s" % (socket.gethostname().lower(),
+                             sid[:8] if sid else "nosession")
+        return {"tag": tag, "pid": os.getpid(), "session_id": sid}
+
+    @staticmethod
+    def _code_receipt() -> dict:
+        try:
+            r = _workspace.receipt()
+        except Exception as exc:                    # noqa: BLE001
+            return {"error": str(exc)[:200]}
+        return {k: r.get(k) for k in ("base_sha", "branch", "detached",
+                                      "worktree_path", "dirty")}
+
+    def heartbeat(self, conn, current=None, extra: Optional[dict] = None
+                  ) -> None:
+        build = {"version": __import__("viv").__version__,
+                 "counters": dict(self.counters),
+                 "last_outcome": self.last_tick.outcome
+                                 if self.last_tick else None,
+                 "code": self.code,
+                 "instance": self.instance,
+                 "var_dir": self.var_dir,
+                 "started_at": self.started_at}
+        if extra:
+            build.update(extra)
         _q.heartbeat(conn, self.worker_id, host=socket.gethostname(),
                      pid=os.getpid(), current_experiment=current,
-                     build={"version": __import__("viv").__version__,
-                            "counters": dict(self.counters),
-                            "last_outcome": self.last_tick.outcome
-                                            if self.last_tick else None},
-                     schema=self.schema)
+                     build=build, schema=self.schema)
         conn.commit()
 
     # -- back-compatible thin wrapper --------------------------------------
