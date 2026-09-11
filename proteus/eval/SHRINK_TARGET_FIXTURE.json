@@ -1,0 +1,77 @@
+{
+ "declared_size_order": "(node_count, depth, canonical_string). Node count is primary because it is the cost the kind charges and the quantity a component library is claimed to reduce. Depth breaks ties toward flatter programs. The canonical string is ONLY to make the order total; it carries no simplicity claim.",
+ "fixture_id": "sha256:579511c909fd139d42b871fb3924269d968f692ad2e6f6b546e479e76efb1feb",
+ "interface_version": "proteus.boolean3.v0",
+ "known_answers": [
+  {
+   "enumerated_to_size": 5,
+   "ground_truth": {
+    "canonical": "(xor (xor x0 x1) x2)",
+    "depth": 3,
+    "size": 5
+   },
+   "name": "xor3",
+   "predicate": "still_solves",
+   "start_program": "(xor (xor (xor x0 x1) x2) (xor x0 x0))",
+   "start_satisfies_predicate": true,
+   "start_size": 9,
+   "target": "(xor (xor x0 x1) x2)",
+   "target_truth_table": "01101001"
+  },
+  {
+   "enumerated_to_size": 5,
+   "ground_truth": {
+    "canonical": "(and x0 x1)",
+    "depth": 2,
+    "size": 3
+   },
+   "name": "and01",
+   "predicate": "still_solves",
+   "start_program": "(and (and x0 x1) (or x1 x1))",
+   "start_satisfies_predicate": true,
+   "start_size": 7,
+   "target": "(and x0 x1)",
+   "target_truth_table": "00000011"
+  },
+  {
+   "enumerated_to_size": 2,
+   "ground_truth": {
+    "canonical": "c0",
+    "depth": 1,
+    "size": 1
+   },
+   "name": "xor3_counterexample",
+   "predicate": "still_a_counterexample",
+   "start_program": "c0",
+   "start_satisfies_predicate": true,
+   "start_size": 1,
+   "target": "(xor (xor x0 x1) x2)",
+   "target_truth_table": "01101001"
+  }
+ ],
+ "measured_triviality": "still_a_counterexample has minimum node count 1 for ALL 256 three-input targets: the five leaves have five distinct truth tables, so at least four disagree with any target. Enumeration is exact and cheaper. This is the same honest limit Techne found for assignments. still_solves is the non-trivial target.",
+ "observed_hypothesis_behaviour": {
+  "and01": {
+   "agrees_on_expression": false,
+   "agrees_on_size": false,
+   "comment": "true minimum is 3; Hypothesis left a semantically inert double negation, so it did NOT minimise node count",
+   "reached": "(not (not (and x0 x1)))",
+   "size": 5
+  },
+  "note": "RECORDED, NOT ASSERTED. Hypothesis shrinks toward its own notion of simplicity. These are observations from hypothesis 6.165.10 via hypothesis.find; Techne should re-measure rather than treat them as fixed.",
+  "xor3": {
+   "agrees_on_expression": false,
+   "agrees_on_size": true,
+   "comment": "same size and depth as the minimum; a different member of the tie class, separated only by our canonical tie-break",
+   "reached": "(xor x0 (xor x1 x2))",
+   "size": 5
+  }
+ },
+ "post_conditions": {
+  "still_a_counterexample": "a shrunk program must still DISAGREE with the target under Proteus's evaluator; budget exhaustion is a status and NOT a witness, so a starved program does not satisfy this",
+  "still_solves": "a shrunk program must still pass EVERY declared case with full coverage; no-witness alone is never solved"
+ },
+ "schema": "proteus.shrink_target_fixture/1",
+ "shrink_contract": "proteus.program_shrink.v1",
+ "what_this_does_NOT_establish": "That Hypothesis is useful here. It is SOUND under both post-conditions -- whatever it returns still satisfies the predicate -- but on and01 it returned 5 nodes against an exhaustive minimum of 3. Soundness is not minimality, and minimality under Proteus's order is what the experiment charges for."
+}
