@@ -40,6 +40,69 @@ Tracked surface, entire lifetime (git ls-files):
     agents/skopos/src/skopos.py
     + 6 files under agents/skopos/reports/
 
+CORRECTION, 2026-09-11, same day, later pass (Skopos). THE LAST LINE ABOVE
+IS WRONG and is left visible rather than deleted. The six alignment reports
+were NEVER TRACKED. They are not in git history at any commit:
+
+    git ls-files agents/skopos                    -> 4 files, no reports
+    git log --oneline --all -- agents/skopos/reports -> empty
+    git check-ignore -v agents/skopos/reports/2026-04-01_alignment.md
+        -> .gitignore:200:agents/*
+
+The repository ignores the whole agents/ tree by default (`agents/*`) and
+re-includes named subdirectories; agents/skopos/ has no re-include. The
+four files above were force-added in March 2026. The reports never were.
+
+This matters more than a bookkeeping slip, and it makes D6 worse:
+
+  - the ONLY outputs this seat ever produced had NO PROVENANCE IN THE
+    REPOSITORY for 163 days. They existed as untracked files in one
+    working directory on one host.
+  - a downstream consumer read them anyway. agents/metis/src/metis.py:94
+    globs them off disk and feeds them to a model. An artifact with no
+    commit, no hash and no history was load-bearing input to another
+    seat's output.
+  - the base role's rule -- "a verdict whose raw ledger is not committed
+    is an assertion" -- is satisfied here in its strongest form: every
+    number this seat published was an assertion in exactly that sense,
+    and the units error (D1) was therefore unauditable by anyone who did
+    not have this host's disk.
+
+Discovered while executing SKOPOS-07 under the operator's PARK ruling: the
+annotation could not be written "in place" because the place is not in the
+repository. Annotated copies, originals preserved byte-for-byte with their
+sha256, are now committed at roles/Skopos/artifacts/alignment/ -- the first
+time these documents have entered version control. They are deliberately
+NOT written to agents/skopos/reports/: tracked files at those paths would
+collide with the untracked originals still on disk in the canonical
+checkout and could block its next update for every seat.
+
+SECOND IGNORE RULE, found while committing the annotated copies: the path
+was ignored TWICE over. Besides `agents/*` (line 200), .gitignore line 28 is
+
+    **/reports/
+
+which ignores ANY directory named `reports/` ANYWHERE in the repository.
+The annotation directory this seat first created, roles/Skopos/artifacts/
+reports/, was silently ignored for the same reason and had to be renamed to
+roles/Skopos/artifacts/alignment/ before it could be committed. The rule
+caught the same seat twice in one day, 163 days apart in effect.
+
+Measured scope, read-only: 191 tracked files survive under four `reports/`
+directories (apollo/archive/reports, charon/reports, forge/v2/reports,
+ludus/atlas_of_worlds/reports). Those exist because somebody force-added
+them. Any seat that writes to a directory named `reports/` and does not
+think to force-add produces output with no provenance and gets no error.
+This is the defect CLASS Vivarium reported on 2026-09-11 for the mandated
+journal directory, at repository scale. It is NOT this seat's to fix and is
+not filed as a defect report: the seat is parked and holds no mandate. It is
+reported to the operator in the pass receipt and written here so a later
+search reaches it.
+
+Recorded against this seat as CALIBRATION.md L-06: this document asserted a
+tracked surface it had not checked, in the same pass in which it criticised
+the seat for publishing an unverified number.
+
 --------------------------------------------------------------------------
 ## 2. What it actually produced -- the rows
 
