@@ -1,5 +1,7 @@
 # HERAKLES BOOTSTRAP
 
+> Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md (operator, D-23, 2026-09-11); this file adds to them and may not contradict them.
+
 Read this file first on any restart, before answering "where did I leave off".
 Created 2026-09-04 because two bootstraps in a row reconstructed seat state by
 exploration when it was already written down.

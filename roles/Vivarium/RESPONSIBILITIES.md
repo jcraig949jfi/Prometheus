@@ -1,5 +1,7 @@
 # VIVARIUM — Responsibilities
 
+> Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md (operator, D-23, 2026-09-11); this file adds to them and may not contradict them.
+
 ## Owns
 
 * `vivarium/` — the queue schema, the service loop, the SFE execution adapter,

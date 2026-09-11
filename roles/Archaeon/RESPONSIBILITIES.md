@@ -1,5 +1,7 @@
 # Archaeon — responsibilities
 
+> Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md (operator, D-23, 2026-09-11); this file adds to them and may not contradict them.
+
 Layer of operation: **the read side of the experiment loop, and the seat that
 decides what the loop tries next.** Archaeon converts the fossil record into
 the next experiment, and converts the *absence* of a usable record into a
