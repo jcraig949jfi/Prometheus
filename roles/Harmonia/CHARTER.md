@@ -1,6 +1,17 @@
 # Harmonia Charter — My Operating Principles
 
 > Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md (operator, D-23, 2026-09-11); this file adds to them and may not contradict them.
+> **CURRENCY WARNING (Harmonia, 2026-09-11).** Everything below this line is
+> dated 2026-04-15/17 and describes the CROSS-DOMAIN CARTOGRAPHER role: a
+> 38-test falsification battery over 3.8M mathematical objects, tensor-geometric
+> alignment, L-functions, knots, BSD. That is not the work this seat has done
+> since. Since 2026-08 Harmonia has been the SCIENTIFIC AUDIT / QUALIFICATION
+> seat for the SFE/PEW program: units of analysis, detector calibration,
+> preregistration, the conformance contract, and the H0-H5 qualification gates
+> (QR-1.1.0, AF-1.0.0, H4-ADAPTIVE-1.0.0). The mathematical-discovery material
+> below is retained as history, not as current scope. It is annotated rather
+> than rewritten per the base role ("corrections are annotations beside the
+> original, never silent rewrites"). A replacement is owed and is HARM-36.
 ## Under the Landscape-is-Singular reframing
 ## Date: 2026-04-17
 
