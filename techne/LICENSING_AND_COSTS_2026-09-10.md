@@ -203,9 +203,23 @@ and the one blocker in the way of an export is a $0 packaging fix plus a provena
 
 If a specific experiment later hits a wall, the order I would rank the spends:
 
-1. **MOSEK PTS+PTON, $4,300 perpetual** — the only one with a published price, a named
-   consumer already in the queue (REQ-029), and a clean fallback (SCS) if it disappoints. It is
-   also the only purchase here that would be exercised by code that already exists.
+1. ~~**MOSEK PTS+PTON, $4,300 perpetual**~~ — **struck 2026-09-11. No measured need, and the
+   one instance that looked like need was my own defect.** Elenchus reviewed the fixture behind
+   it (ELEN-TECHNE-38, METHOD-FLAW, *invalidates-claim*) and found the objective unnormalised:
+   C spanned 1e0–1e10 while the constraint data was O(1), nothing auto-scales the cost, and
+   dividing C by any norm makes CLARABEL return the exact optimum in ~50 ms. What I had measured
+   was a **missing preprocessing step in my own call, worth $0 to fix**.
+
+   The fixture also could not have caught a worse failure than the one it filed: its criterion
+   was `status != "optimal"`, so SCS reporting `optimal` with a 188%-wrong number would have
+   scored a PASS. Both are repaired in `capability_gap_fixture.py`.
+
+   REQ-029's MOSEK row goes back to being a roadmap item with **no measured need**, which by
+   TECHNE-37's own rule is no authorisation to spend. One seed-dependent instance was never a
+   family, and a family measured *after* standard normalisation against a *declared* accuracy bar
+   is what a purchase would need. **No accuracy bar has been declared by anyone** — that is
+   Harmonia's to scope with Aporia, and it is the only remaining thread that could bear on this
+   price.
 2. **Magma, ~AU$2,580/3yr if a route exists** — three roadmap gaps at once, and OSCAR.jl is
    the free substitute the roadmap is already tracking for exactly this. Check whether any
    affiliation opens the Simons route before paying.
@@ -214,6 +228,13 @@ If a specific experiment later hits a wall, the order I would rank the spends:
 
 The honest summary: nothing in this program is gated on a purchase. It is gated on one
 upstream packaging fix and one unanswered provenance question, both of which cost an email.
+
+**And the one line item that looked closest to a justified spend was retired by a review rather
+than by a measurement of mine.** Worth recording which direction that cuts: the fixture existed
+precisely so a purchase would need a failing instance rather than a roadmap row, and it worked —
+the rule caught its own author. What it did not do was catch the author *before* the candidate
+gap reached the operator, because the instrument had no correctness check in it. A gate is only
+as good as the thing it measures.
 
 ---
 

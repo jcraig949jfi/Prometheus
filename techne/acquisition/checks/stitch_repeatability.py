@@ -26,9 +26,11 @@ import pathlib
 from .. import budget as _budget
 from .. import manifest_io, paths, receipt
 
-MINGW_GCC_BIN = ("C:/Users/jcrai/AppData/Local/Microsoft/WinGet/Packages/"
-                 "BrechtSanders.WinLibs.POSIX.UCRT_Microsoft.Winget.Source_8wekyb3d8bbwe/"
-                 "mingw64/bin")
+#: Resolved per host, never hardcoded -- base-role s2, and this seat's own rule.
+#: The gnu Rust target links libgcc and llvm-mingw ships none, so a real GCC has
+#: to be on PATH for the build; paths.gcc_bin() says where, or None.
+def _mingw_gcc_bin() -> str:
+    return paths.gcc_bin_or_empty()
 
 #: Fields that carry the result. `cmd` is EXCLUDED because it embeds the output path, and `args`
 #: is kept because it is the parsed configuration, which must not drift.
@@ -42,7 +44,7 @@ def project(doc: dict) -> str:
 
 
 def run(binary, cwd, fixture, out, *, threads_env: int | None, b) -> dict:
-    env = {**os.environ, "PATH": MINGW_GCC_BIN + ";" + os.environ.get("PATH", "")}
+    env = {**os.environ, "PATH": _mingw_gcc_bin() + ";" + os.environ.get("PATH", "")}
     if threads_env is not None:
         env["RAYON_NUM_THREADS"] = str(threads_env)
     r = b.run([str(binary), str(fixture), "--max-arity=3", "--iterations=3", f"--out={out}"],

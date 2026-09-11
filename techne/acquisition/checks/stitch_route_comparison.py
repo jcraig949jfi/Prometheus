@@ -29,9 +29,11 @@ import time
 from .. import budget as _budget
 from .. import manifest_io, paths, receipt
 
-MINGW_GCC_BIN = ("C:/Users/jcrai/AppData/Local/Microsoft/WinGet/Packages/"
-                 "BrechtSanders.WinLibs.POSIX.UCRT_Microsoft.Winget.Source_8wekyb3d8bbwe/"
-                 "mingw64/bin")
+#: Resolved per host, never hardcoded -- base-role s2, and this seat's own rule.
+#: The gnu Rust target links libgcc and llvm-mingw ships none, so a real GCC has
+#: to be on PATH for the build; paths.gcc_bin() says where, or None.
+def _mingw_gcc_bin() -> str:
+    return paths.gcc_bin_or_empty()
 
 # The Python route's result, as recorded in its own receipt on 2026-09-09.
 PYTHON_ROUTE = {
@@ -134,7 +136,7 @@ def main(argv=None) -> int:
         # network is FORBIDDEN under this profile; assert the run needs none
         argv_run = [str(binary), str(fixture), "--max-arity=3", "--iterations=3",
                     "--threads=1", f"--out={out_json}"]
-        env_path = MINGW_GCC_BIN + ";" + __import__("os").environ.get("PATH", "")
+        env_path = _mingw_gcc_bin() + ";" + __import__("os").environ.get("PATH", "")
         t0 = time.perf_counter()
         r = b.run(argv_run, cwd=str(root), env={**__import__("os").environ, "PATH": env_path})
         wall = time.perf_counter() - t0
