@@ -83,3 +83,56 @@ and ARCH-26 closes with a reply to Apollo and Nyx; P3' fails while P4'
 holds -> the relation at noise 0.05 is weaker than 3 tasks under 16 slots,
 report the measured delta with its SE and do not move the line; P4' fails
 -> instrument defect, nothing read.
+
+## v2 result (run AFTER the addendum above was committed at d1fda3e55)
+
+Rows: archaeon/docs/h0h5/H3_DEAD_STREAM_CONTROL_v2_2026-09-11.json (five
+seeds, tasks manifest sha256:343ae72b..., 5 bits per task). Stream ceiling
+12/12 on every seed and arm; no cap bound in any arm.
+
+    policy      coverage live/dead   famB live / dead / cheat    live-dead (paired SE)
+    top_k       0.5375 / 0.5625      10.4 / 4.2 / 10.6           +6.20 (1.07)
+    uniform     0.5750 / 0.5750       4.2 / 4.2 /  4.2            0.00 (0.00)
+    behavioral  0.9500 / 0.9500       9.2 / 4.4 / 10.6           +4.80 (1.16)
+    hybrid      0.7625 / 0.7625       9.0 / 4.0 / 10.2           +5.00 (1.18)
+    per seed, top_k:  live 8/11/10/11/12   dead 6/3/3/4/5   cheat 10/9/10/12/12
+
+- P1' HELD: coverage identical between dead and live for behavioral and
+  hybrid on every seed (delta 0.0); top_k within 1/16.
+- P3' HELD on the line and on the ratio: top_k +6.20 (line 3.0; ratio to
+  SE 5.8), behavioral +4.80 and hybrid +5.00 (line 2.0; ratios 4.1 and
+  4.2). The absolute clause "paired SE below 1.0" for top_k MISSED by
+  0.07 (SE 1.07 on five seeds); recorded, not excused. The observed floor
+  (4.2) sits under the predicted 4.8 and the range is 6 tasks as designed.
+- P3b' HELD: top_k on dead 4.2 equals uniform on dead 4.2 (retention by an
+  uninformative score is a random sample).
+- P4' HELD: cheat >= live for top_k (10.6 vs 10.4), behavioral (10.6 vs
+  9.2), hybrid (10.2 vs 9.0); top_k cheat 10.6 >= 9; top_k live 10.4 <=
+  11.5 (off the ceiling).
+- P5' HELD, structurally.
+
+## Verdict (ARCH-26 CLOSED)
+
+On the H3 stream contract, with the four policies as written:
+1. ARCHIVE COVERAGE / CELL OCCUPANCY DOES NOT SEE WHETHER A STREAM CARRIES
+   A RELATION. Identical, to the cell, between a live stream and its
+   score-permuted twin, for every policy, on ten runs. Apollo's S1 ruling
+   ("occupancy and apparent richness are unsafe observables") is now a
+   control on record for H3, and every H3 coverage number is to be
+   reported beside its dead-stream twin from now on.
+2. SCORE-THRESHOLD REUSE MEASURES THE SCORE MARGINAL, not reuse: identical
+   on the threshold queries between live and dead for top_k on every seed.
+3. TASK-LEVEL DIRECT REUSE SEES THE RELATION and has a measured range: a
+   random 16-slot archive solves 4.2 of 12 five-bit tasks, a score-informed
+   one 9 to 10.4, the cheat 10.2 to 10.6, the stream 12. Score-retaining
+   policies (top_k, behavioral, hybrid) are separated from their dead twins
+   by 4.8 to 6.2 tasks at four to six SEs.
+4. What this does NOT say: nothing about a real C3/H1 stream (none exists
+   yet: C3-2's random arm was constant zero and C3-3 is unissued); nothing
+   about which of the three score-retaining policies is better (their
+   differences here are within one SE of each other); nothing about
+   adaptation (direct reuse only, alpha).
+5. Nyx's decoy D4 (random-key binning) is the same instrument seen from the
+   binning side; the dead stream is the score-side twin. Both belong beside
+   any coverage claim. Nyx's cut-C world request is unaffected.
+
