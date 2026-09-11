@@ -5,10 +5,25 @@ $root = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)
 $log = Join-Path $root "derived\watchdog.log"
 function Log($m) { Add-Content -Path $log -Value ("{0}  {1}" -f (Get-Date -Format s), $m) }
 
+# Health probe. 5s was too short: under host load PEW has answered health in
+# 7-15s, and a timed-out probe used to be read as "service is down".
 try {
-    $r = Invoke-WebRequest -Uri "http://localhost:8377/api/v1/health" -TimeoutSec 5 -UseBasicParsing
+    $r = Invoke-WebRequest -Uri "http://localhost:8377/api/v1/health" -TimeoutSec 20 -UseBasicParsing
     if ($r.StatusCode -eq 200) { exit 0 }
 } catch { }
+
+# SINGLETON GUARD (2026-09-11). Without this, a slow health probe started a
+# SECOND service, whose contention made the next probe slower still -- three
+# ew.service processes were live at once after the D-23 migration, fighting
+# for port 8377 and the connection pool. A watchdog that cannot tell "not
+# answering yet" from "not running" manufactures the outage it exists to fix.
+$listening = @(Get-NetTCPConnection -State Listen -LocalPort 8377 -ErrorAction SilentlyContinue)
+$running = @(Get-CimInstance Win32_Process -Filter "Name='python.exe'" -ErrorAction SilentlyContinue |
+             Where-Object { $_.CommandLine -match 'ew\.service' })
+if ($listening.Count -gt 0 -or $running.Count -gt 0) {
+    Log ("health probe failed but a service is already present (listeners={0} processes={1}); NOT starting another" -f $listening.Count, $running.Count)
+    exit 0
+}
 
 # Interpreter resolution (machine-aware, backwards-compatible):
 #   1. $env:EW_PYTHON if set
