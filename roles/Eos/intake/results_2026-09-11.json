@@ -1,8 +1,8 @@
 {
-  "ran_at": "2026-09-11T16:16:02.954477+00:00",
+  "ran_at": "2026-09-11T17:51:50.100778+00:00",
   "workspace": {
-    "base_sha": "b3245156e7848015f804a666a436cbe43e7eab61",
-    "branch": "eos/active-pass-1-2026-09-11",
+    "base_sha": "83478ad3c12a9a833ad0207914b18264459732a8",
+    "branch": "eos/season-2-2026-09-11",
     "worktree_path": "D:\\Prometheus-worktrees\\eos-base-role",
     "dirty": true,
     "main_worktree": false,
@@ -54,17 +54,19 @@
         "ANCHOR": 0,
         "ACQUIRE": 0,
         "RESOURCE": 0,
-        "REFUSED": 28,
+        "REFUSED": 0,
         "PENDING_ADMISSION": 0,
-        "INDETERMINATE": 0
+        "INDETERMINATE": 0,
+        "NOT_EXAMINED": 28
       },
       "POP_B": {
         "ANCHOR": 0,
         "ACQUIRE": 0,
         "RESOURCE": 0,
-        "REFUSED": 18,
+        "REFUSED": 1,
         "PENDING_ADMISSION": 6,
-        "INDETERMINATE": 0
+        "INDETERMINATE": 0,
+        "NOT_EXAMINED": 17
       },
       "POP_C": {
         "ANCHOR": 0,
@@ -72,29 +74,78 @@
         "RESOURCE": 0,
         "REFUSED": 4,
         "PENDING_ADMISSION": 0,
-        "INDETERMINATE": 0
+        "INDETERMINATE": 0,
+        "NOT_EXAMINED": 0
       }
     },
-    "pop_a_survivors": [],
+    "pop_a_survivors": [
+      "popA-2026-03-22-corti_introduces_gim_benchmark_leading_m",
+      "popA-2026-03-22-mechanistic_interpretability_named_mit_s",
+      "popA-2026-03-22-mechanistic_interpretability_10_breakthr",
+      "popA-2026-03-22-mechanistic_interpretability_explained_2",
+      "popA-2026-03-22-mechanistic_interpretability_2026_status",
+      "popA-2026-03-25-vitjuli_mechanistic_interpretability_of",
+      "popA-2026-03-25-humanaiconvention_prism_0_stars",
+      "popA-2026-03-25-safeseek_universal_attribution_of_safety",
+      "popA-2026-03-25-prediction_of_pavement_skid_resistance_b",
+      "popA-2026-03-25-whether_not_which_mechanistic_interpreta",
+      "popA-2026-03-25-grail_center_agora_mi_0_stars",
+      "popA-2026-03-25-jonny_english_circuits_zoom_in_fresh_202",
+      "popA-2026-03-25-sapphire_bridge_aom_mechanism_0_stars",
+      "popA-2026-03-25-hamzamooraj99_tiny_transformer_mech_inte",
+      "popA-2026-03-25-kylian07_mechanistic_interpretability_0",
+      "popA-2026-03-27-mechanistic_interpretability_10_breakthr",
+      "popA-2026-03-27-ai_mechanistic_interpretability_mit_2026",
+      "popA-2026-03-28-damn8daniel_sparse_autoencoder_0_stars",
+      "popA-2026-03-28-yifan1207_pt_it_model_differences_0_star",
+      "popA-2026-03-28-10_breakthrough_technologies_2026",
+      "popA-2026-03-28-new_techniques_are_giving_researchers_a",
+      "popA-2026-03-28-mechanistic_interpretability_named_mit_s",
+      "popA-2026-03-28-ai_mechanistic_interpretability_mit_2026",
+      "popA-2026-03-28-mechanistic_interpretability_2026_status",
+      "popA-2026-03-31-kaushikmastro_mechanistic_interpretibili",
+      "popA-2026-03-31-hieuuum_mech_interp_curriculum_0_stars",
+      "popA-2026-03-31-mechanistic_interpretability_10_breakthr",
+      "popA-2026-04-01-cwru_aism_action_atlas_0_stars"
+    ],
     "pop_b_survivors": [
       "popB-2608.15546v2",
+      "popB-2608.11324v1",
       "popB-2608.05651v1",
+      "popB-2608.05230v1",
       "popB-2608.07544v1",
       "popB-2607.11916v1",
+      "popB-2606.24166v1",
+      "popB-2606.23158v1",
+      "popB-2606.09780v1",
+      "popB-2606.00813v1",
+      "popB-2606.00801v1",
       "popB-2609.09776v1",
-      "popB-2606.11521v1"
+      "popB-2607.27146v1",
+      "popB-2607.17540v1",
+      "popB-2607.04558v1",
+      "popB-2606.28194v1",
+      "popB-2606.14581v5",
+      "popB-2606.11521v1",
+      "popB-2605.24528v2",
+      "popB-2605.21180v1",
+      "popB-2605.16142v2",
+      "popB-2605.12981v3",
+      "popB-2605.09985v1"
     ],
     "pop_c_survivors": [],
-    "resource_measured": "RESOURCE",
-    "resource_measured_reason": "measurement satisfies every check",
+    "resource_measured": "PENDING_ADMISSION",
+    "resource_measured_reason": "every check passed; RESOURCE requires human admission (the gate settles no terminal state but REFUSED)",
     "resource_documented": "REFUSED",
-    "resource_documented_reason": "observation_is_ours: observed_by='provider-documentation'; only 'eos-intake' measurements count, a provider's claim is a label"
+    "resource_documented_reason": "observation_ref_form: RESOURCE needs observation_ref '<probe artifact path>#<record index>'; a self-asserted observation dict is no longer accepted (NEMESIS-01)",
+    "resource_forged_NEMESIS01_replay": "REFUSED",
+    "resource_forged_reason": "observation_ref_form: RESOURCE needs observation_ref '<probe artifact path>#<record index>'; a self-asserted observation dict is no longer accepted (NEMESIS-01)"
   },
   "test4_attack_on_the_gate": {
     "item": "Compressed Coordinate Systems for Cross-Domain Structure Discovery",
     "referent": "roles/base-role/RESPONSIBILITIES.md#No LLM adjudicates",
     "state": "PENDING_ADMISSION",
-    "reason": "every check passed; ANCHOR requires human admission",
+    "reason": "every check passed; ANCHOR requires human admission (the gate settles no terminal state but REFUSED)",
     "checks": [
       {
         "name": "provenance",
@@ -128,9 +179,10 @@
   "totals": {
     "ANCHOR": 0,
     "ACQUIRE": 0,
-    "RESOURCE": 1,
-    "REFUSED": 51,
-    "PENDING_ADMISSION": 6,
-    "INDETERMINATE": 0
+    "RESOURCE": 0,
+    "REFUSED": 7,
+    "PENDING_ADMISSION": 7,
+    "INDETERMINATE": 0,
+    "NOT_EXAMINED": 45
   }
 }

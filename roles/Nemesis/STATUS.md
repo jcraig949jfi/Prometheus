@@ -33,6 +33,22 @@ hours of the next activity.
                and did not fire
     reported   to Eos via comms; not one byte of agents/eos/** modified
 
+## NEM-14 (2026-09-11): the instrument floor census
+
+    scope      53 tier-1 instruments (roles/*/science, roles/*/contracts),
+               enumerated by INDEX TRUTH; 10 seats
+    answer     12 of 37 scoring instruments (32.4%) have a CHANCE floor.
+               Two thirds of the numbers emitted by current instruments are
+               interpreted without knowing what nothing scores.
+    states     F3 18 | F2 6 | F1 11 | F0 2   (NA 16)
+    kinds      CHANCE 12 | CHANNEL 6 | RELEVANCE 5 | ANALYTIC 1 |
+               WITHDRAWN 1 | NONE 12
+    predictions Q1 LOST (35.1% not >=50%), Q2 LOST (70.6% not <60%), Q3 HELD
+    auditor    index 376 vs on-disk 40 -- a filesystem-enumerating auditor
+               here would report 89.4% of instruments as absent
+    NEMESIS-02 selected, NOT run: roles/Harmonia/contracts/conformance_check.py
+    map        roles/Nemesis/science/census/ATTACK_SURFACE.md
+
 ## What is true right now
 
 - The seat has a directory, an entry file, an archaeology of its April
