@@ -1,0 +1,293 @@
+{
+  "schema": "techne.acquisition.receipt/1",
+  "receipt_id": "adapter_qualification-stitch_rust_core-20260911T063529Z",
+  "stage": "ADAPTER_QUALIFICATION",
+  "does_not_establish": [
+    "INSTALLATION",
+    "FIRST_USEFUL_CHECK",
+    "PAPER_REPRODUCTION",
+    "LOCAL_SCIENTIFIC_BENEFIT"
+  ],
+  "entry_id": "stitch_rust_core",
+  "tool": "stitch_rust_core",
+  "design_version": "0.1",
+  "written_utc": "2026-09-11T06:35:29+00:00",
+  "seat": "Techne",
+  "repo": {
+    "commit": "9e9210893eb5f78b965701deb9d4dbf7d294b0c6",
+    "branch": "techne/track-d-2026-09-10",
+    "dirty": true
+  },
+  "runner": {
+    "python": "3.12.10",
+    "executable": "H:\\Python312\\python.exe",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "tool_cache": "F:\\Prometheus\\vault\\techne_tools",
+    "tool_cache_source": "TECHNE_TOOL_CACHE env",
+    "tool_cache_note": "host-local and gitignored; only its HASHES are tracked"
+  },
+  "commands_run": [],
+  "observations": {
+    "input": {
+      "path": "archaeon/docs/h0h5/H1H0_SOLVED_PROGRAMS_2026-09-10.json",
+      "declared_sha256": "581aed3186281f1b250bfb08ef411a70d21d6581df07d6f7f2c1714943db30d7",
+      "committed_bytes_sha256": "581aed3186281f1b250bfb08ef411a70d21d6581df07d6f7f2c1714943db30d7",
+      "matches_declared": true,
+      "worktree_sha256": "917189971d36fca3ea4460f93ea8d765f83ffbb39cda3f490fdb14bffbbc4d8a",
+      "line_ending_note": "this checkout converts LF to CRLF on checkout, so the working-tree hash differs from Archaeon's by line endings alone. The COMMITTED bytes are what match and what is verified; a hash must be taken over those.",
+      "n_programs": 17,
+      "n_distinct_sexpr": 7,
+      "n_phase1": 3,
+      "n_phase2_cells": 14,
+      "n_phase2_distinct": 4,
+      "sexpr_multiplicity": {
+        "(not x2)": 1,
+        "(and x0 x2)": 1,
+        "(not (xor x1 x2))": 1,
+        "(or x1 (not x2))": 4,
+        "(or x2 x1)": 6,
+        "(or (not x2) x1)": 2,
+        "(and (and x1 x2) (and x0 x2))": 2
+      },
+      "solution_size_grammar_nodes": {
+        "min": 2,
+        "max": 4,
+        "mean": 3.35
+      }
+    },
+    "route": {
+      "binary": "F:\\Prometheus\\vault\\techne_tools\\repos\\stitch_rust_core\\target\\release\\compress.exe",
+      "source_revision": "0ef5ec7f17091d22b8fa959fb5705e359d735a47",
+      "licence": "MIT",
+      "why_this_route": "D-17 keeps the Python bindings development-only; a library that cannot leave the host is not a capability"
+    },
+    "parameters": {
+      "max_arity": 3,
+      "iterations": 3,
+      "threads": 1
+    },
+    "corpora": {
+      "ALL_17": {
+        "ok": true,
+        "n_abstractions": 3,
+        "original_cost": 6548,
+        "final_cost": 2912,
+        "names": [
+          "fn_0",
+          "fn_1",
+          "fn_2"
+        ],
+        "arities": [
+          0,
+          0,
+          0
+        ],
+        "uses": [
+          6,
+          4,
+          2
+        ],
+        "expansion": {
+          "applicable": true,
+          "n": 17,
+          "recovered": 17,
+          "errored": 0,
+          "all_recovered": true,
+          "negative_control_recovered": 11,
+          "negative_control_discriminates": true
+        },
+        "n_programs": 17,
+        "n_distinct": 7,
+        "bodies": [
+          "(or x2 x1)",
+          "(or x1 (not x2))",
+          "(and (and x1 x2) (and x0 x2))"
+        ]
+      },
+      "DISTINCT_7": {
+        "ok": true,
+        "n_abstractions": 2,
+        "original_cost": 2720,
+        "final_cost": 2013,
+        "names": [
+          "fn_0",
+          "fn_1"
+        ],
+        "arities": [
+          0,
+          0
+        ],
+        "uses": [
+          3,
+          2
+        ],
+        "expansion": {
+          "applicable": true,
+          "n": 7,
+          "recovered": 7,
+          "errored": 0,
+          "all_recovered": true,
+          "negative_control_recovered": 4,
+          "negative_control_discriminates": true
+        },
+        "n_programs": 7,
+        "n_distinct": 7,
+        "bodies": [
+          "(not x2)",
+          "(and x0 x2)"
+        ]
+      },
+      "PHASE2_14": {
+        "ok": true,
+        "n_abstractions": 3,
+        "original_cost": 5642,
+        "final_cost": 2006,
+        "names": [
+          "fn_0",
+          "fn_1",
+          "fn_2"
+        ],
+        "arities": [
+          0,
+          0,
+          0
+        ],
+        "uses": [
+          6,
+          4,
+          2
+        ],
+        "expansion": {
+          "applicable": true,
+          "n": 14,
+          "recovered": 14,
+          "errored": 0,
+          "all_recovered": true,
+          "negative_control_recovered": 8,
+          "negative_control_discriminates": true
+        },
+        "n_programs": 14,
+        "n_distinct": 4,
+        "bodies": [
+          "(or x2 x1)",
+          "(or x1 (not x2))",
+          "(and (and x1 x2) (and x0 x2))"
+        ]
+      },
+      "PHASE2_DISTINCT_4": {
+        "ok": true,
+        "n_abstractions": 1,
+        "original_cost": 1814,
+        "final_cost": 1612,
+        "names": [
+          "fn_0"
+        ],
+        "arities": [
+          0
+        ],
+        "uses": [
+          2
+        ],
+        "expansion": {
+          "applicable": true,
+          "n": 4,
+          "recovered": 4,
+          "errored": 0,
+          "all_recovered": true,
+          "negative_control_recovered": 2,
+          "negative_control_discriminates": true
+        },
+        "n_programs": 4,
+        "n_distinct": 4,
+        "bodies": [
+          "(not x2)"
+        ]
+      },
+      "PHASE1_3": {
+        "ok": true,
+        "n_abstractions": 0,
+        "original_cost": 906,
+        "final_cost": 906,
+        "names": [],
+        "arities": [],
+        "uses": [],
+        "expansion": {
+          "applicable": false,
+          "reason": "no abstractions to expand"
+        },
+        "n_programs": 3,
+        "n_distinct": 3,
+        "bodies": []
+      }
+    },
+    "threshold_comparison": {
+      "synthetic_threshold": 3,
+      "synthetic_corpus": "canonical sum-of-products over 256 Boolean functions, large programs that shared structure",
+      "real_corpus": "7 distinct programs of 2-4 grammar nodes",
+      "why_the_threshold_does_not_transfer": "the threshold was a property of (corpus, rendering, arity, iterations) and was stated as such. These programs are an order of magnitude smaller, so the question is not whether there are 3 of them but whether an abstraction can pay for itself against programs this size."
+    },
+    "checks": [
+      {
+        "claim": "the declared input hash matches the committed bytes",
+        "pass": true
+      },
+      {
+        "claim": "the route ran on every declared corpus",
+        "pass": true
+      },
+      {
+        "claim": "every corpus that produced abstractions expands back to its originals",
+        "pass": true
+      },
+      {
+        "claim": "negative control discriminates wherever expansion was checked",
+        "pass": true
+      }
+    ],
+    "corpora_with_abstractions": [
+      "ALL_17",
+      "DISTINCT_7",
+      "PHASE2_14",
+      "PHASE2_DISTINCT_4"
+    ]
+  },
+  "deviations": [],
+  "unrun_or_blocked": [],
+  "status": "MEASURED",
+  "check": "stitch_extraction_on_real_h1_solved_programs",
+  "consumer": "H0/H2 instrument-library construction, on H1's actual output",
+  "clears": "TECHNE-01",
+  "budget_profile": {
+    "purpose": "the ONE bounded core reproduction selected for stitch_core (the documented nuts-bolts fixture). Its own explicit profile, per the design.",
+    "network": "FORBIDDEN",
+    "max_wall_seconds": 1800,
+    "max_download_bytes": 0,
+    "max_disk_bytes": 2147483648,
+    "max_rss_bytes": 6442450944,
+    "max_processes": 2,
+    "rationale": "The design records that the stitch artifact 'documents substantially larger memory requirements for its ablation/hybrid studies than for core claims'. 6 GiB is under measured available RAM and is sized for ONE core claim. The ablation/hybrid studies are explicitly OUT of this profile and have no profile, which means they are not authorised to run.",
+    "name": "stitch_core_reproduction"
+  },
+  "resource_receipt": {
+    "profile": "stitch_core_reproduction",
+    "network_policy": "FORBIDDEN",
+    "wall_seconds": 1.578,
+    "wall_ceiling": 1800,
+    "downloaded_bytes": 0,
+    "download_ceiling": 0,
+    "cache_bytes_before": 2617420349,
+    "cache_bytes_after": 0,
+    "cache_delta_bytes": -2617420349,
+    "peak_rss_bytes_os_counter": 26857472,
+    "peak_rss_bytes_sampled": 26615808,
+    "rss_method": "GetProcessMemoryInfo",
+    "rss_ceiling": 6442450944,
+    "rss_samples": 1,
+    "rss_ceiling_exceeded_during_sampling": false,
+    "rss_enforcement": "NOT ENFORCED -- no job object / cgroup cap. peak_rss_bytes_os_counter is the OS peak-working-set counter for this process and IS reliable; rss_ceiling_exceeded_during_sampling is sampled and can miss a spike. Neither stops a step.",
+    "rss_excludes_children": "This is THIS process only. pip, git and venv run as children and their RSS is NOT included.",
+    "children_spawned": 5,
+    "process_cap": 2,
+    "aborted_on": null
+  }
+}
