@@ -73,9 +73,22 @@ def test_agents_table_tracks_boot_activity_and_the_last_message_pointer(conn, mo
     api.sync(conn, "Vivarium")
     rows = {x["agent"]: x for x in api.who(conn)}
     assert rows["Vivarium"]["last_message_id"] == p and rows["Vivarium"]["queued"] == 1 and rows["Vivarium"]["unseen"] == 0
-    assert rows["Archaeon"]["online"] is True                        # posting is activity
+    assert rows["Archaeon"]["online"] is False                       # posting is activity, NOT presence: presence is a sync receipt
+    assert rows["Archaeon"]["last_active_at"] is not None
     assert rows["Techne"]["status"] == "never_booted" and rows["Techne"]["online"] is False
-    api.set_status(conn, "Vivarium", "paused", note="operator pause")
-    api.sync(conn, "Vivarium")                                        # a paused seat stays paused when it syncs
-    assert {x["agent"]: x for x in api.who(conn)}["Vivarium"]["status"] == "paused"
+    api.set_status(conn, "Vivarium", "parked", note="operator parked")
+    api.sync(conn, "Vivarium")                                        # a PARKED seat stays parked when it syncs (routable, not working)
+    v2 = {x["agent"]: x for x in api.who(conn)}["Vivarium"]
+    assert v2["status"] == "parked" and v2["online"] is True and v2["last_sync_sha"]      # presence is the sync receipt
+    with pytest.raises(ValueError):
+        api.set_status(conn, "Vivarium", "paused")                    # only the five states (+ booting/unknown)
+    # message status is derived from the RECEIVING side: POSTED -> SEEN -> CLAIMED -> ANSWERED / CLOSED
+    q = api.post(conn, "Archaeon", ["Vivarium"], "question", "q?", "b")
+    assert api.message_status(conn, q)["status"] == "POSTED"
+    api.sync(conn, "Vivarium"); assert api.message_status(conn, q)["status"] == "SEEN"
+    p2 = api.post(conn, "Archaeon", ["Vivarium"], "prompt", "work", "b"); api.sync(conn, "Vivarium")
+    api.claim(conn, "Vivarium", p2); assert api.message_status(conn, p2)["status"] == "CLAIMED"
+    api.post(conn, "Vivarium", ["Archaeon"], "report", "re: q", "answer", reply_to=q)
+    assert api.message_status(conn, q)["status"] == "ANSWERED"
+    api.done(conn, "Vivarium", p2); assert api.message_status(conn, p2)["status"] == "CLOSED"
 

@@ -33,7 +33,9 @@ def main(argv=None) -> int:
     s = sub.add_parser("boot"); s.add_argument("agent"); s.add_argument("--model"); s.add_argument("--capabilities", default="")
     s.add_argument("--status", default="active"); s.add_argument("--session-id"); s.add_argument("--json", action="store_true")
     s = sub.add_parser("who"); s.add_argument("--minutes", type=int, default=api.ONLINE_MINUTES); s.add_argument("--json", action="store_true")
-    s = sub.add_parser("status"); s.add_argument("agent"); s.add_argument("state", choices=["active", "idle", "paused", "retired"]); s.add_argument("--note")
+    s = sub.add_parser("status"); s.add_argument("agent"); s.add_argument("state", choices=["active", "parked", "dormant", "blocked", "retired"]); s.add_argument("--note")
+    s = sub.add_parser("show"); s.add_argument("message_id", type=int)
+    s = sub.add_parser("claim"); s.add_argument("agent"); s.add_argument("message_id", type=int)
     a = ap.parse_args(argv)
     conn = api.connect()
     try:
@@ -84,14 +86,19 @@ def main(argv=None) -> int:
             rows = api.who(conn, online_minutes=a.minutes)
             if a.json:
                 print(json.dumps(rows, default=str, indent=1)); return 0
-            print("{:<12} {:<7} {:<12} {:<8} {:<18} {:<6} {:<6} {:<20} {}".format("agent", "online", "status", "tier", "model", "queued", "unseen", "last_active", "capabilities"))
+            print("{:<12} {:<7} {:<10} {:<8} {:<18} {:<6} {:<6} {:<17} {:<10} {}".format("agent", "online", "status", "tier", "model", "queued", "unseen", "last_sync", "sync_sha", "capabilities"))
             for r in rows:
-                print("{:<12} {:<7} {:<12} {:<8} {:<18} {:<6} {:<6} {:<20} {}".format(
+                print("{:<12} {:<7} {:<10} {:<8} {:<18} {:<6} {:<6} {:<17} {:<10} {}".format(
                     r["agent"], "yes" if r["online"] else "no", r["status"], r.get("tier") or "?", (r.get("model") or "?")[:18],
-                    r.get("queued") or 0, "?" if r.get("unseen") is None else r["unseen"], str(r.get("last_active_at") or "-")[:19], ",".join(r.get("capabilities") or [])))
+                    r.get("queued") or 0, "?" if r.get("unseen") is None else r["unseen"], str(r.get("last_sync_at") or "-")[:16],
+                    (r.get("last_sync_sha") or "-")[:9], ",".join(r.get("capabilities") or [])))
             return 0
         if a.cmd == "status":
             api.set_status(conn, a.agent, a.state, a.note); print(a.agent, "->", a.state); return 0
+        if a.cmd == "show":
+            print(json.dumps(api.message_status(conn, a.message_id), default=str, indent=1)); return 0
+        if a.cmd == "claim":
+            api.claim(conn, a.agent, a.message_id); print("claimed", a.message_id); return 0
     finally:
         conn.close()
     return 1

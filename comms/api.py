@@ -18,6 +18,12 @@ KINDS = ("prompt", "delegation", "report", "question", "ruling", "ack", "broadca
 TIERS = {"light": ("haiku", "sonnet"), "heavy": ("opus", "fable", "mythos")}
 HARNESS_ENV_KEYS = ("CLAUDE_CODE_SESSION_ID", "CLAUDE_EFFORT", "CLAUDE_CODE_ENTRYPOINT", "CLAUDECODE", "CLAUDE_CODE_CHILD_SESSION")
 ONLINE_MINUTES = 30
+#: Seat states (operator ruling 2026-09-11, Diomedes's omission): PARKED is intentional inactivity
+#: (routable, no autonomous work, state must stay truthful); DORMANT is expected to operate but not;
+#: BLOCKED is waiting on a named blocker; RETIRED is closed with an annotation.
+STATES = ("active", "parked", "dormant", "blocked", "retired", "booting", "unknown")
+#: Message status is DERIVED from receiving-side events; a sender never mutates it.
+MESSAGE_STATES = ("POSTED", "SEEN", "CLAIMED", "ANSWERED", "CLOSED")
 QUEUEABLE = ("prompt", "delegation")
 REPO = Path(__file__).resolve().parents[1]
 
@@ -171,7 +177,9 @@ def harness_metadata() -> Dict[str, Any]:
 def boot(conn, agent: str, *, model: Optional[str] = None, capabilities: Sequence[str] = (), status: str = "active",
          session_id: Optional[str] = None, extra: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
     """Record a bootstrap: workspace receipt (base_sha, branch, worktree_path),
-    machine, model and tier, capabilities, session and harness metadata."""
+    machine, model and tier, capabilities, session and harness metadata. A
+    boot is a presence event (it states revision and worktree), so it also
+    stamps the sync fields."""
     if agent not in roster():
         raise ValueError("unknown agent {!r}".format(agent))
     ws: Dict[str, Any] = {}
@@ -189,10 +197,13 @@ def boot(conn, agent: str, *, model: Optional[str] = None, capabilities: Sequenc
     cur = conn.cursor()
     cur.execute("""
         INSERT INTO {s}.agents (agent, status, last_active_at, last_bootstrap_at, boot_count, machine, base_sha, branch, worktree_path,
-                                model, tier, capabilities, session_id, harness, status_json, updated_at)
-        VALUES (%s, %s, now(), now(), 1, %s, %s, %s, %s, %s, %s, %s, %s, %s::jsonb, %s::jsonb, now())
+                                model, tier, capabilities, session_id, harness, status_json, updated_at,
+                                last_sync_at, last_sync_sha, last_sync_worktree, last_sync_branch)
+        VALUES (%s, %s, now(), now(), 1, %s, %s, %s, %s, %s, %s, %s, %s, %s::jsonb, %s::jsonb, now(), now(), %s, %s, %s)
         ON CONFLICT (agent) DO UPDATE SET
             status = EXCLUDED.status, last_active_at = now(), last_bootstrap_at = now(),
+            last_sync_at = now(), last_sync_sha = EXCLUDED.last_sync_sha, last_sync_worktree = EXCLUDED.last_sync_worktree,
+            last_sync_branch = EXCLUDED.last_sync_branch,
             boot_count = {s}.agents.boot_count + 1, machine = EXCLUDED.machine, base_sha = EXCLUDED.base_sha,
             branch = EXCLUDED.branch, worktree_path = EXCLUDED.worktree_path,
             model = COALESCE(EXCLUDED.model, {s}.agents.model), tier = CASE WHEN EXCLUDED.model IS NULL THEN {s}.agents.tier ELSE EXCLUDED.tier END,
@@ -200,30 +211,53 @@ def boot(conn, agent: str, *, model: Optional[str] = None, capabilities: Sequenc
             session_id = COALESCE(EXCLUDED.session_id, {s}.agents.session_id), harness = EXCLUDED.harness,
             status_json = {s}.agents.status_json || EXCLUDED.status_json, updated_at = now()""".format(s=schema()),
                 (agent, status, platform.node(), ws.get("base_sha"), ws.get("branch"), ws.get("worktree_path"),
-                 model, tier_for(model), list(capabilities), sid, _json.dumps(harness), _json.dumps(extra or {})))
+                 model, tier_for(model), list(capabilities), sid, _json.dumps(harness), _json.dumps(extra or {}),
+                 ws.get("base_sha"), ws.get("worktree_path"), ws.get("branch")))
     conn.commit()
     return dict(agent=agent, status=status, machine=platform.node(), workspace=ws, model=model, tier=tier_for(model),
                 capabilities=list(capabilities), session_id=sid, harness=harness)
 
 
+def _workspace() -> Dict[str, Any]:
+    try:
+        import sys
+        if str(REPO) not in sys.path:
+            sys.path.insert(0, str(REPO))
+        from archaeon import workspace as W
+        return W.receipt()
+    except Exception:                                            # noqa: BLE001
+        return {}
+
+
 def touch(conn, agent: str, *, last_message_id: Optional[int] = None, synced: bool = False) -> None:
-    """Any comms call by a seat marks it active; a sync also advances the
-    last-seen pointer. Seats not yet booted get a minimal row."""
+    """Any comms call marks activity. A SYNC is the presence event: it
+    records "read through message N at SHA X from worktree Y at time Z".
+    A parked, blocked or retired seat keeps its state; nothing here makes a
+    seat active by owning a row."""
+    ws = _workspace() if synced else {}
     cur = conn.cursor()
     cur.execute("""
-        INSERT INTO {s}.agents (agent, status, last_active_at, last_sync_at, last_message_id, machine, updated_at)
-        VALUES (%s, 'active', now(), CASE WHEN %s THEN now() ELSE NULL END, %s, %s, now())
+        INSERT INTO {s}.agents (agent, status, last_active_at, last_sync_at, last_message_id, machine,
+                                last_sync_sha, last_sync_worktree, last_sync_branch, updated_at)
+        VALUES (%s, 'unknown', now(), CASE WHEN %s THEN now() ELSE NULL END, %s, %s, %s, %s, %s, now())
         ON CONFLICT (agent) DO UPDATE SET
             last_active_at = now(),
             last_sync_at = CASE WHEN EXCLUDED.last_sync_at IS NULL THEN {s}.agents.last_sync_at ELSE EXCLUDED.last_sync_at END,
             last_message_id = GREATEST(COALESCE({s}.agents.last_message_id, 0), COALESCE(EXCLUDED.last_message_id, 0)),
-            status = CASE WHEN {s}.agents.status IN ('paused', 'retired') THEN {s}.agents.status ELSE 'active' END,
-            updated_at = now()""".format(s=schema()), (agent, synced, last_message_id, platform.node()))
+            last_sync_sha = COALESCE(EXCLUDED.last_sync_sha, {s}.agents.last_sync_sha),
+            last_sync_worktree = COALESCE(EXCLUDED.last_sync_worktree, {s}.agents.last_sync_worktree),
+            last_sync_branch = COALESCE(EXCLUDED.last_sync_branch, {s}.agents.last_sync_branch),
+            status = CASE WHEN {s}.agents.status IN ('parked', 'blocked', 'retired', 'dormant') THEN {s}.agents.status
+                          WHEN {s}.agents.status = 'unknown' AND %s THEN 'active' ELSE {s}.agents.status END,
+            updated_at = now()""".format(s=schema()),
+                (agent, synced, last_message_id, platform.node(), ws.get("base_sha"), ws.get("worktree_path"), ws.get("branch"), synced))
     conn.commit()
 
 
 def set_status(conn, agent: str, status: str, note: Optional[str] = None) -> None:
     import json as _json
+    if status not in STATES:
+        raise ValueError("status must be one of {}".format(STATES))
     cur = conn.cursor()
     cur.execute("INSERT INTO {s}.agents (agent, status, updated_at, status_json) VALUES (%s, %s, now(), %s::jsonb) "
                 "ON CONFLICT (agent) DO UPDATE SET status = EXCLUDED.status, updated_at = now(), "
@@ -239,13 +273,14 @@ def who(conn, *, online_minutes: int = ONLINE_MINUTES) -> List[Dict[str, Any]]:
     cur.execute("""
         SELECT a.agent, a.status, a.last_active_at, a.last_sync_at, a.last_message_id, a.last_bootstrap_at, a.boot_count,
                a.machine, a.base_sha, a.model, a.tier, a.capabilities,
-               (a.last_active_at IS NOT NULL AND a.last_active_at > now() - make_interval(mins => %s)) AS online,
+               (a.last_sync_at IS NOT NULL AND a.last_sync_at > now() - make_interval(mins => %s)) AS online,
                (SELECT count(*) FROM {s}.task_queue q WHERE q.agent = a.agent AND q.status = 'queued') AS queued,
                (SELECT count(*) FROM {s}.messages m LEFT JOIN {s}.receipts r ON r.message_id = m.id AND r.agent = a.agent
                  WHERE (a.agent = ANY(m.recipients) OR '*' = ANY(m.recipients)) AND m.sender <> a.agent AND r.seen_at IS NULL) AS unseen
-        FROM {s}.agents a ORDER BY online DESC, a.last_active_at DESC NULLS LAST, a.agent""".format(s=schema()), (online_minutes,))
+               , a.last_sync_sha, a.last_sync_worktree
+        FROM {s}.agents a ORDER BY online DESC, a.last_sync_at DESC NULLS LAST, a.agent""".format(s=schema()), (online_minutes,))
     cols = ["agent", "status", "last_active_at", "last_sync_at", "last_message_id", "last_bootstrap_at", "boot_count", "machine",
-            "base_sha", "model", "tier", "capabilities", "online", "queued", "unseen"]
+            "base_sha", "model", "tier", "capabilities", "online", "queued", "unseen", "last_sync_sha", "last_sync_worktree"]
     rows = [dict(zip(cols, r)) for r in cur.fetchall()]
     known = {r["agent"] for r in rows}
     for seat in roster():
@@ -254,3 +289,40 @@ def who(conn, *, online_minutes: int = ONLINE_MINUTES) -> List[Dict[str, Any]]:
                          "capabilities": [], "model": None, "last_active_at": None, "last_sync_at": None, "last_message_id": None,
                          "last_bootstrap_at": None, "boot_count": 0, "machine": None, "base_sha": None})
     return rows
+
+
+def message_status(conn, message_id: int) -> Dict[str, Any]:
+    """POSTED -> SEEN -> CLAIMED -> ANSWERED / CLOSED, derived from
+    receiving-side events only: receipts (seen, done), the task queue
+    (active = claimed) and replies (a message whose reply_to is this one)."""
+    cur = conn.cursor()
+    cur.execute("SELECT id, sender, recipients, kind, subject, created_at FROM {s}.messages WHERE id = %s".format(s=schema()), (message_id,))
+    row = cur.fetchone()
+    if not row:
+        raise ValueError("no message {}".format(message_id))
+    cur.execute("SELECT agent, seen_at, queued_at, done_at, note FROM {s}.receipts WHERE message_id = %s ORDER BY agent".format(s=schema()), (message_id,))
+    receipts = [dict(zip(["agent", "seen_at", "queued_at", "done_at", "note"], r)) for r in cur.fetchall()]
+    cur.execute("SELECT agent, status FROM {s}.task_queue WHERE message_id = %s".format(s=schema()), (message_id,))
+    queue = [dict(zip(["agent", "status"], r)) for r in cur.fetchall()]
+    cur.execute("SELECT id, sender, kind, created_at FROM {s}.messages WHERE reply_to = %s ORDER BY id".format(s=schema()), (message_id,))
+    replies = [dict(zip(["id", "sender", "kind", "created_at"], r)) for r in cur.fetchall()]
+    state = "POSTED"
+    if any(r["seen_at"] for r in receipts):
+        state = "SEEN"
+    if any(q["status"] == "active" for q in queue):
+        state = "CLAIMED"
+    if replies:
+        state = "ANSWERED"
+    if any(r["done_at"] for r in receipts) or any(q["status"] == "done" for q in queue):
+        state = "CLOSED"
+    return {"id": row[0], "sender": row[1], "recipients": row[2], "kind": row[3], "subject": row[4], "created_at": row[5],
+            "status": state, "receipts": receipts, "queue": queue, "replies": replies}
+
+
+def claim(conn, agent: str, message_id: int) -> None:
+    """The receiver marks a queued item active (CLAIMED)."""
+    cur = conn.cursor()
+    cur.execute("UPDATE {s}.task_queue SET status = 'active', updated_at = now() WHERE agent = %s AND message_id = %s AND status = 'queued'".format(s=schema()),
+                (agent, message_id))
+    conn.commit()
+    touch(conn, agent)

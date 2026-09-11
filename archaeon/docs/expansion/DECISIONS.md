@@ -141,3 +141,11 @@ The April Agora (Redis streams, mirrored to agora.messages) is replaced by a Pos
 
 comms.agents records, per seat: status, last active, last sync, the last message pointer, last bootstrap and boot count, machine, workspace receipt, model and tier (light: haiku/sonnet; heavy: opus/fable), capabilities, session id and harness metadata (names and non-secret values only). Every seat records its boot (`python -m comms boot`), every comms call marks activity, and `python -m comms who` is the delegation view. The model is stated by the seat from its own system prompt; the harness exposes the session id and effort level, not the model.
 
+## D-25 (operator 2026-09-11) Reanimation rulings: states, presence, manifests, and how old seats come back
+
+- Seat states are first-class: ACTIVE / PARKED / DORMANT / BLOCKED / RETIRED with distinct obligations; "always be working" applies to ACTIVE only. Diomedes is PARKED (DIOM-02..05 as a bounded excursion, then auto-PARKED unless a decision changes); Alethelia's ALET-04 is APPROVED as an instrument (hourly, pinned worktree, executing SHA on every report, ACTIVE vs PRODUCTIVE stated, no repair authority); Lexis is BLOCKED on Apollo's blind Task 2 with LEX-07 executable; its identity is re-adjudicated after.
+- Presence is derived from sync receipts (read through message N at SHA X from worktree Y at time Z), never from a row or an old heartbeat label; comms.agents carries last_sync_sha/worktree/branch and `who` derives online from last_sync_at.
+- Message status is derived from receiving-side events (POSTED -> SEEN -> CLAIMED -> ANSWERED / CLOSED); a sender cannot mutate it.
+- Manifests hash LF-normalised bytes (comms/manifest.py) with a fixture proving LF and CRLF checkouts agree; the 2026-09-11_comms manifest incident (four independent reproductions) is closed by the generator, not by thirteen regenerated hashes.
+- Booting an old seat is an archaeological event: historical queues are classified STILL_LIVE / NEEDS_REPREMISE / PARKED / SUPERSEDED / TRANSFERRED / RETIRED; only STILL_LIVE becomes executable. Alethelia's contaminated canonical copies of stations/REPORT_latest.* are left alone.
+

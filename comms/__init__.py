@@ -19,6 +19,6 @@ Every seat, before and after each prompt or loop iteration:
 Doctrine: a message is committed text (sha256 recorded); chat is not a
 channel; a prompt delivered here is as binding as one the operator pastes.
 """
-from .api import (boot, broadcast, done, enqueue, inbox, init_schema, mark_seen, post, roster, set_status, sync, tasks, touch, who)
+from .api import (boot, broadcast, claim, done, enqueue, inbox, init_schema, mark_seen, message_status, post, roster, set_status, sync, tasks, touch, who)
 
-__all__ = ["boot", "broadcast", "done", "enqueue", "inbox", "init_schema", "mark_seen", "post", "roster", "set_status", "sync", "tasks", "touch", "who"]
+__all__ = ["boot", "broadcast", "claim", "message_status", "done", "enqueue", "inbox", "init_schema", "mark_seen", "post", "roster", "set_status", "sync", "tasks", "touch", "who"]

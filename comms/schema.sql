@@ -63,3 +63,9 @@ CREATE TABLE IF NOT EXISTS {schema}.agents (
     updated_at          TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
+-- Presence is DERIVED from sync receipts, never from a row's existence (operator ruling 2026-09-11):
+-- "read through message N at SHA X from worktree Y at time Z".
+ALTER TABLE {schema}.agents ADD COLUMN IF NOT EXISTS last_sync_sha TEXT;
+ALTER TABLE {schema}.agents ADD COLUMN IF NOT EXISTS last_sync_worktree TEXT;
+ALTER TABLE {schema}.agents ADD COLUMN IF NOT EXISTS last_sync_branch TEXT;
+

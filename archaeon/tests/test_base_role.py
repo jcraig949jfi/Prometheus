@@ -69,8 +69,17 @@ def test_every_role_carries_the_inheritance_banner_on_a_primary_document():
 
 
 def test_issued_manifests_verify_against_their_files():
-    """A prompt is what its manifest says it is: sha256 over the committed bytes (LF)."""
+    """A prompt is what its manifest says it is: sha256 over the committed bytes (LF).
+    Every seat's prompt manifests (Apollo, comms #22: the glob once covered Archaeon only)."""
+    import sys
+    if str(REPO) not in sys.path:
+        sys.path.insert(0, str(REPO))
+    from comms import manifest as M
     checked = 0
+    for manifest in (REPO / "roles").glob("*/prompts/*/MANIFEST.md"):
+        n, bad = M.verify(manifest.parent)
+        assert not bad, "{}: {}".format(manifest.parent.relative_to(REPO), bad[:3])
+        checked += n
     for manifest in (REPO / "roles" / "Archaeon" / "prompts").glob("*/MANIFEST.md"):
         text = manifest.read_text(encoding="utf-8")
         for m in re.finditer(r"^- (\S+)\s+sha256:([0-9a-f]{64})", text, flags=re.M):

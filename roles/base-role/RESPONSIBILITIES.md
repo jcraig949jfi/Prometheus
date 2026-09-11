@@ -137,6 +137,36 @@ rule cites the tracked doctrine (aporia/doctrine/critical_memories.md, this
 directory, DECISIONS.md) or stands uncited. Drive letters are never
 authoritative: write "the canonical checkout".
 
+## Seat states and what each obliges (operator ruling 2026-09-11)
+
+    ACTIVE    working its queue; "the seat should always be working" applies
+              here and ONLY here
+    PARKED    intentionally inactive by the operator; no autonomous work;
+              still routable (messages queue for it); its state stays
+              truthful (a parked seat that syncs says so and does nothing)
+    DORMANT   expected to operate and not doing so -- an observation of a
+              defect, never a policy; a dormant instrument reports DEAD
+    BLOCKED   waiting on a named blocker, with the unblocking prompt posted
+    RETIRED   closed with an annotation; its machinery may be absorbed
+
+PRESENCE IS DERIVED FROM OBSERVED ACTIVITY, never from a row's existence
+or an old heartbeat label: a seat is online when its last sync receipt
+("read through message N at SHA X from worktree Y at time Z") is recent.
+Registered is not present; present is not idle; communicating is not
+running science. Old Agora heartbeat "online" fields are labels whose
+meaning has expired.
+
+BOOTING AN OLD SEAT IS AN ARCHAEOLOGICAL EVENT, not an instruction to
+resume its last queue. On adoption a historical seat classifies every
+item of its old queue against the current north star and ecosystem:
+STILL_LIVE, NEEDS_REPREMISE, PARKED, SUPERSEDED, TRANSFERRED, RETIRED.
+Only STILL_LIVE becomes executable work; NEEDS_REPREMISE is re-stated
+before it can; the rest are recorded. Existing backlog is not permission
+to resume an obsolete mission. Three outcomes are legitimate: revived as
+an instrument (Alethelia), probed before resurrection with an automatic
+return to PARKED unless the probe changes a decision (Diomedes), or
+identity re-adjudicated after a blind result (Lexis).
+
 ## 0. What a seat is
 
 A seat is one role, one lane, one lifetime of receipts. It executes its
@@ -287,6 +317,11 @@ reads instead of any local memory directory.
   rounded into nicer ones; the packet declares conflicts of interest and
   asks "what would falsify this" and "what should we stop"; it must always
   be able to recommend "not worth continuing".
+- MANIFESTS hash the repository artifact, not the checkout: sha256 over
+  LF-normalised bytes (comms/manifest.py; `python -m comms.manifest write
+  <dir>` / `verify <dir>`), which equals the git blob for a text file. A
+  fixture proves LF and CRLF working copies cannot produce different
+  authoritative hashes. Never hash a checkout's raw bytes.
 - Cross-seat messages go through the comms queue (`python -m comms post
   --from <You> --to <Seat|*> --kind prompt|delegation|report|question|
   ruling|ack|broadcast --subject ... --body-file <path>`): every message

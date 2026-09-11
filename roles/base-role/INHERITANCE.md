@@ -37,3 +37,37 @@ Every role below carries the banner on its primary document(s):
 Roles with no document received a stub RESPONSIBILITIES.md to fill. Stamping is an annotation on line 2; nothing else in any seat file was changed.
 
 RULE (operator 2026-09-11): the banner is the mandatory pointer -- a seat resolves and obeys the current base-role inheritance chain BEFORE its local bootstrap, and does not restate inherited boot mechanics except as a dated migration annotation.
+
+## Entry files (the file a fresh session reads FIRST; Apollo, comms #22)
+
+BOOTSTRAP.md if the seat has one, else STARTUP.md, RESPONSIBILITIES.md, ROLE.md, CHARTER.md in that order. A seat whose entry file is a Gen-1 log creates BOOTSTRAP.md.
+
+| role | entry file |
+|---|---|
+| Agora | RESPONSIBILITIES.md |
+| Alethelia | RESPONSIBILITIES.md |
+| Apollo | BOOTSTRAP.md |
+| Aporia | RESPONSIBILITIES.md |
+| Archaeon | RESPONSIBILITIES.md |
+| Charon | STARTUP.md |
+| CrossDomainCartographer | RESPONSIBILITIES.md |
+| Daedalus | RESPONSIBILITIES.md |
+| Diomedes | BOOTSTRAP.md |
+| Elenchus | RESPONSIBILITIES.md |
+| Ergon | RESPONSIBILITIES.md |
+| EvolutionaryArchitectAndReasoningSpeciesEngineer | RESPONSIBILITIES.md |
+| Harmonia | RESPONSIBILITIES.md |
+| Hephaestus | RESPONSIBILITIES.md |
+| Herakles | BOOTSTRAP.md |
+| Kairos | RESPONSIBILITIES.md |
+| Koios | RESPONSIBILITIES.md |
+| Lexis | ROLE.md |
+| Ludus | ROLE.md |
+| Mnemosyne | RESPONSIBILITIES.md |
+| MPADatabaseArchitect | RESPONSIBILITIES.md |
+| PipelineOrchestrator | RESPONSIBILITIES.md |
+| Proteus | RESPONSIBILITIES.md |
+| ScienceAdvisor | RESPONSIBILITIES.md |
+| StructuralMathematician | RESPONSIBILITIES.md |
+| Techne | RESPONSIBILITIES.md |
+| Vivarium | RESPONSIBILITIES.md |
