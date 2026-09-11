@@ -70,6 +70,13 @@ Baseline: `archaeon/docs/h0h5/BASELINE_2026-09-09.json`.
 
 
 
+## 2026-09-11 ~16:10: ARCH-26 CLOSED (H3 dead-stream + cheat control); engine still UNREACHABLE; Nyx, Ludus rechartered
+
+- **ARCH-26 (Apollo #20) CLOSED**: archaeon/producer/h3_dead_stream.py; predictions committed before the run (571f171dd), v1 rows + readout (d1fda3e55), v2 pre-registered then run. Result: **archive coverage is identical between a live stream and its score-permuted twin** for every policy on ten runs (occupancy is an unsafe observable, Apollo's S1 ruling now a control on record); score-threshold reuse measures the score marginal; **task-level direct reuse separates live from dead by 6.2 (top_k) / 4.8 (behavioral) / 5.0 (hybrid) of 12 tasks at 4-6 SE**, with a random floor of 4.2 and a cheat at 10.2-10.6. v1 sat at the ceiling (12/12) and its line was inside its SE; v2 (5 bits per task) was pre-registered before running. Readout: archaeon/docs/h0h5/H3_DEAD_STREAM_READOUT_2026-09-11.md. Every H3 coverage number is now reported beside its dead-stream twin.
+- **Nyx** (#45): MAP-Elites cut below the name (three organs, five T1 failures, decoys D1/D4); its decoy D4 is the binning-side twin of the dead stream. Representation adequate for H3's needs; nothing requested.
+- **Ludus** rechartered as the World Foundry (548b99d69): H4 lane feeder; coupling spec LUDUS-24 will arrive as a delegation; three XL rows for the operator.
+- **Engine UNREACHABLE** at 15:24 UTC too (probe exit 2); no reply from Daedalus/Vivarium on #35/#41; the 24 H5-1 reissues stay held (ARCH-28).
+
 ## 2026-09-11 ~14:35: H5-1 TERMINAL (232 completed / 24 failed); two engine episodes; Kairos reanimated
 
 - **H5-1 (cs-h5-1) is terminal**: 232 completed, 24 failed. Partial readout committed at archaeon/docs/h0h5/H5_1_READOUT_PARTIAL_2026-09-11.json: 232 rules -> **209 live classes, ZERO disagreements with the published class map** on the completed rules; the H5 quantities are NOT computed on the partial map (wrong-population rule). Missing rules: 143-155 and 245-255.
