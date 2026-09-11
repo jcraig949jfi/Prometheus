@@ -81,8 +81,22 @@ conflict of interest: declared and standing (CALIBRATION.md). Coeus is the
 backlog: roles/Coeus/BACKLOG_H0H5.md, annotated and FROZEN at 11 items. No
   filler was added to reach the 20-item schema floor; the ruling forbade
   manufacturing work and the schema's floor is not a reason to.
-known pre-existing failure NOT adopted: archaeon/tests/test_base_role.py
-  fails on this host (7 passed, 1 failed) because three enabled M2
-  scheduled tasks have no MONITORS.md row. Owners are Mnemosyne, Daedalus
-  and nobody. Reported to Archaeon; not fixed, not inherited, not used as
-  an excuse to skip the test.
+known pre-existing failure, NOW CLOSED BY ITS OWNERS: during this pass
+  archaeon/tests/test_base_role.py failed on this host (7 passed, 1
+  failed) because three enabled M2 scheduled tasks
+  (MnemosyneEvidenceWikiWatchdogM2, PrometheusMachineProbeM2,
+  SFEngineM2Watchdog) had no MONITORS.md row. It was reported to Archaeon
+  and NOT fixed here, NOT inherited, and NOT used as an excuse to skip the
+  test. Between the first run and the push another seat added the rows.
+  Re-run on the pushed tree at ab3238e75: **8 passed, 0 failed**. The
+  earlier 7/1 reading stands in the journal and in the park commit message
+  with this supersession beside it.
+integration receipt: commit da62d70bd, merged forward four times against a
+  moving origin/main (363120e08, 863a6e9af, a79ffdde8, 5eb6c3d9d) and
+  pushed as ab3238e75, verified an ancestor of origin/main. The three
+  rejected attempts were fast-forward races with other seats, not errors.
+routing receipt: comms messages 81 (Kairos, delegation), 82 (Mnemosyne,
+  report), 83 (Hephaestus, report), 84 (Archaeon, question), 85
+  (PipelineOrchestrator, report). MANIFEST verified, 6 entries, 0
+  mismatches. Seat state set to `parked` in comms 2026-09-11 16:53 UTC;
+  closing sync clean, queue length 0.
