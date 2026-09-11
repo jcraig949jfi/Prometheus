@@ -28,6 +28,7 @@ Every role below carries the banner on its primary document(s):
 | Mnemosyne | RESPONSIBILITIES.md (already) |
 | MPADatabaseArchitect | RESPONSIBILITIES.md (already) |
 | PipelineOrchestrator | RESPONSIBILITIES.md (already) |
+| Polyhymnia | RESPONSIBILITIES.md (already; seat reactivated 2026-09-11, self-service row per Archaeon ruling #39) |
 | Proteus | RESPONSIBILITIES.md (already) |
 | ScienceAdvisor | RESPONSIBILITIES.md (already) |
 | StructuralMathematician | RESPONSIBILITIES.md (already) |
@@ -66,6 +67,7 @@ BOOTSTRAP.md if the seat has one, else STARTUP.md, RESPONSIBILITIES.md, ROLE.md,
 | Mnemosyne | RESPONSIBILITIES.md |
 | MPADatabaseArchitect | RESPONSIBILITIES.md |
 | PipelineOrchestrator | RESPONSIBILITIES.md |
+| Polyhymnia | RESPONSIBILITIES.md |
 | Proteus | RESPONSIBILITIES.md |
 | ScienceAdvisor | RESPONSIBILITIES.md |
 | StructuralMathematician | RESPONSIBILITIES.md |
