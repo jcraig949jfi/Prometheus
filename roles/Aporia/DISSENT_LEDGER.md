@@ -6,7 +6,7 @@ show the DISSENT was wrong, and an outcome column filled in later. This is
 the calibration ledger the base role asks for, kept because it will be
 unflattering. An entry with no falsifier is not a dissent; it is a mood.
 
-Scoring so far: 0 resolved, 2 open. No credit is claimed for an open row.
+Scoring so far: 0 resolved, 3 open (D-A01..D-A03), 1 calibration prediction open (C-A01). No credit is claimed for an open row.
 
 --------------------------------------------------------------------------------
 D-A01  2026-09-11  Preregistration and the north star pull apart exactly
@@ -80,5 +80,49 @@ STATUS             OPEN. Owner: the programme; this seat will raise it
 OUTCOME            (blank)
 
 --------------------------------------------------------------------------------
+D-A03  2026-09-11  The metabolization probe could not have answered its
+                   question on prose residue even with clean data
+--------------------------------------------------------------------------------
+FRAMING DISPUTED   ERGON-10 as posed: resume the prose-residue probe once
+                   Charon's C1/C2 (pool pinning, transport-failure guard)
+                   are repaired.
+DISSENT            C1/C2 repair the DATA; the defect is in the INSTRUMENT.
+                   The solver sits below a one-line non-LLM floor (0.4794
+                   vs 0.5225 on fresh tasks), the band was fixed against
+                   chance (0.25) rather than that floor, and the powered
+                   +8pp is within 2x of a sized +4pp topic-conditioning
+                   confound. In the prose form the residue is consumed by
+                   the solver's attention, so any effect conflates "the
+                   residue carries failure-specific information" with
+                   "on-topic text primes the solver". The question is
+                   answerable only where the consumer of the residue is
+                   not the thing being measured (D-5's executable form).
+                   Ruling: roles/Aporia/rulings/ERGON-10_probe_
+                   disposition_2026-09-11.md -- CLOSE WITH ANNOTATION,
+                   successor on executable artifacts under S1-S6.
+WHAT WOULD SHOW THE DISSENT IS WRONG
+                   A prose-residue design whose F-generic arm is decidably
+                   distinct from F-PROM (packet_invariants class) and whose
+                   solver clears the largest cheap-heuristic control by
+                   more than the preregistered MDE, on fresh tasks. One
+                   such run, with rows, reopens the lineage and scores this
+                   row WRONG.
+STATUS             OPEN. Owner: whoever builds the counter-design; this
+                   seat will not build it (conflict: the ruling is mine).
+OUTCOME            (blank)
+
+--------------------------------------------------------------------------------
+CALIBRATION: PREDICTIONS RECORDED BEFORE THE RUN (Ergon charter s6 asks the
+funding seat to record an expected outcome so its interpretation is
+scoreable)
+--------------------------------------------------------------------------------
+C-A01  2026-09-11  ERGON-02 (I0 MRU vs I3 RANDOM, n 100, exact execution):
+                   expected NULL -- retrieval order in a 64-cap library is
+                   second-order to content. Wrong if the preregistered
+                   primary contrast clears twice its own SE in either
+                   direction. Scored when ergon/gen3/p3_results.json lands.
+                   OUTCOME (blank).
+
+--------------------------------------------------------------------------------
 Rows this seat expects to be wrong about, on base rate: at least one of the
-two. The point of the ledger is to find out which.
+three. The point of the ledger is to find out which.
