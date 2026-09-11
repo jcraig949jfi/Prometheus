@@ -1,0 +1,157 @@
+====================================================================
+ICARUS -- BASE ROLE ADOPTION RECEIPT
+2026-09-11
+====================================================================
+
+1. WHAT I READ, AND AT WHICH SHA
+
+   base role read at   56125e9e4 (origin/main at fetch; the worktree
+                       was created from it)
+   files read in full  roles/base-role/README.md
+                       roles/base-role/NORTH_STAR.md
+                       roles/base-role/RESPONSIBILITIES.md
+                       roles/base-role/WORKING_CONTRACT.md
+                       roles/base-role/INHERITANCE.md
+                       roles/base-role/MONITORS.md
+                       roles/Archaeon/prompts/2026-09-11_workspace/
+                         MISSIVE_ALL_SEATS.md
+                       roles/Archaeon/prompts/2026-09-10_backlog/
+                         00_BACKLOG_SCHEMA.md
+                       comms/README.md; DECISIONS.md D-25
+   also read           agents/icarus/README.md, state/*.json,
+                       cycles/_last_run_020.log, wisdom/kill_clusters.md;
+                       pivot/icarus_* (4 files, targeted); the Icarus
+                       whitepaper head; roles/Harmonia/RESUME_20260615_
+                       icarus_ladder.md; POSITION_20260812 (Icarus
+                       lines); reasoning_ladder.md (Icarus lines);
+                       critical_memories.md HARD-1..3; H0H5_STATUS.md;
+                       the Charon, Kairos and Apollo adoption commits.
+
+   INHERITANCE: Icarus had NO row and NO roles/ directory. Both rows
+   added today (register: RESPONSIBILITIES.md; entry file:
+   RESPONSIBILITIES.md). No stub existed to fill.
+
+2. WORKSPACE RECEIPT (WORKING_CONTRACT s4)
+
+   worktree_path   F:\Prometheus-worktrees\icarus-base-role
+   branch          icarus/base-role-adopt-2026-09-11  (task branch)
+   base_sha        56125e9e497df2b7ab9bc3f21416ec116151fdbc
+   dirty           false at creation
+   main_worktree   false (git-dir != git-common-dir)
+   machine         M1 (SKULLPORT)
+   comms boot      2026-09-11 14:41Z, model claude-opus-5[1m], heavy,
+                   capabilities EVIDENCE, status blocked
+
+   Icarus footprint before this worktree: 0 worktrees, 0 local
+   branches, 0 processes, 0 scheduled tasks, 0 untracked files in the
+   canonical checkout.
+
+3. CLEAN-UP OF THE CANONICAL CHECKOUT (missive items a-e)
+
+   a. nothing to claim: no icarus path in CANONICAL_STATUS_2026-09-11
+      or in `git status` of the canonical checkout today.
+   b. stale worktrees / merged branches of mine: none existed.
+   c. long-running processes: none (M1 verified; M2 not inspected,
+      ICARUS-07).
+   d. startup refusal on entry points I own: NOT DONE, by instruction
+      (execute nothing); ICARUS-04, contingent on the seat not being
+      retired.
+   e. this receipt.
+
+4. SEAT FILES CHECKED AGAINST THE BASE ROLE
+
+   agents/icarus/README.md (the only pre-existing seat document)
+     HISTORICAL   whole file, annotated at the top, not rewritten.
+     SUPERSEDED   D:\ paths (D-23, base s2: no drive letters).
+     SUPERSEDED   "How to run" (the daemon is DISABLED; MONITORS row).
+     SUPERSEDED   the mission: climb a predetermined ladder by LLM
+                  redesign of a reasoner (north star 2026-09-11).
+   roles/Icarus/RESPONSIBILITIES.md
+     NEW          entry file; carries the banner on line 2 and the
+                  mandatory inheritance pointer; restates no boot
+                  mechanics.
+
+5. ARCHAEOLOGY (D-25: booting an old seat is an archaeological event)
+
+   12 items classified in roles/Icarus/ARCHAEOLOGY_2026-09-11.md:
+     SUPERSEDED        5  (R6 climb; the standing loop; seeded
+                           primitives; typed operator DAG; ...)
+     NEEDS_REPREMISE   1  (Q20 kill criterion / budget: never decided)
+     PARKED            3  (Q9/Q10/Q12 calibration; 3 open debts;
+                           lens cosmetic debt)
+     TRANSFERRED       1  (Harmonia's zoo / legality threads)
+     STILL_LIVE        2  (residue preservation only: the 22 cycle
+                           dirs on M2; wiki registration of the 8
+                           typed objects and 3 kill clusters)
+     RETIRED as form   1  (the 05-27 whitepaper; HARD-1)
+   Nothing is executed. Nothing is marked dead.
+
+6. THE DECISION (operator's queue; XL rows in the backlog)
+
+   ICARUS-XL-1  what is Icarus in 2.0:
+     (a) retire with the residue made navigable
+     (b) probe before resurrection (Diomedes pattern): one
+         preregistered measurement of whether the kill clusters'
+         regression tests catch the cycles they were mined from AND
+         cycle 20 out of sample; auto-PARKED unless it changes a
+         decision; needs the M2 cycle dirs first
+     (c) re-premise as a lineage under Vivarium (needs an SFE kind,
+         a world, and ICARUS-23)
+   Seat's stand: (b), then (a) unless (b) changes a decision.
+   ICARUS-23  is LLM-driven mutation admissible in the ecology at all
+   ICARUS-24  where the 22 gitignored cycle dirs on M2 live
+
+7. MANDATORY ARTIFACTS CREATED
+
+   roles/Icarus/RESPONSIBILITIES.md              entry file, banner
+   roles/Icarus/STATUS.md                        BLOCKED; dormancy visible
+   roles/Icarus/BACKLOG_H0H5.md                  24 rows, 3 XL
+   roles/Icarus/ARCHAEOLOGY_2026-09-11.md        the classified queue
+   roles/Icarus/calibration/CALIBRATION.md       8 rows from the record
+   roles/Icarus/journal/2026-09-11.md            this pass; what was NOT run
+   roles/Icarus/prompts/2026-09-11_adoption/     OPERATOR_PROMPT.md verbatim
+                                                 sha256 1bc78fb0e0390355ab57
+                                                 3d66a578a2568793c06518f00a
+                                                 d32da64b55abaa2c50; MANIFEST.md
+   roles/base-role/INHERITANCE.md                +2 rows (Icarus)
+   roles/base-role/MONITORS.md                   +1 row (IcarusDaemon, DISABLED)
+   agents/icarus/README.md                       HISTORICAL annotation at top
+
+8. SELF-CHECK RESULTS
+
+   archaeon/tests/test_base_role.py     8 passed in 18.05s (this tree,
+                                        after the files were written)
+   comms.manifest write                 roles/Icarus/prompts/2026-09-11_adoption
+   ASCII check, roles/Icarus/** and     LANG=C.UTF-8 grep -rnP
+   the two base files                   '[^\x00-\x7F]' -> no lines
+   comms sync Icarus                    1 new (broadcast id 1), queue 0
+
+9. WHAT THE OPERATOR HAS ASSIGNED TO ICARUS, FROM THE RECORD
+
+   Current:   the 2026-09-11 adoption prompt (this pass). Nothing else.
+   Historical, none renewed since 2026-06-15:
+     2026-05-25  design mandate v01/v02: climb R0-R12 by
+                 self-improvement; Chimera fallback with the operator
+                 routing improve requests by hand
+     2026-05-28  Q20 NEEDS-JAMES: kill criterion (proposed 200 R5
+                 cycles / 0 promotions) and the budget; never decided
+     2026-05-29  seeded-primitives diagnostic vs "build our own
+                 reasoner from substrate"; never decided
+     2026-06-09  prefer subscription loop inference over the metered
+                 API; implemented 9803d6f96
+   Comms: 36 messages, 0 to Icarus, 0 naming Icarus. Prompts dirs,
+   INBOX files, H0-H5 lanes, backlog and track delegations: none name
+   Icarus. Icarus was absent from the roster and the register until
+   this pass, so this was structural, not a choice.
+
+10. EXECUTED ON THIS PASS
+
+   Nothing: no cycle, no probe, no test under agents/icarus/, no
+   Evidence Wiki call, no ledger write. Set-up writes only.
+
+11. NEXT EXECUTABLE ACTION
+
+   None until ICARUS-XL-1 is decided. The report of this pass is
+   posted to Archaeon (kind: report) after the commit so the base-role
+   rows added today are known to their owner.
+====================================================================
