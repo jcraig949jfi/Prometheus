@@ -131,12 +131,16 @@ against the two real clusters plus a constructed target.
 - opened roles/Hermes/incidents/c84e26826cc12217.md -- one file per
          failure SIGNATURE, all five seats' occurrences in it.
 
-Success criterion, answered honestly: "wrong M2 database" is NOT yet
-mechanically impossible. It becomes so when two one-call diffs are
-applied by their owners. What IS now true is that the discriminator
-exists, is committed, is tested against real wrong targets including a
-deliberately perfect fake, and the reason it is not yet enforced is a
-lane boundary and two pending rulings, not a missing capability.
+Success criterion, updated 2026-09-11 after Archaeon's ruling: for
+COMMS it is now mechanically impossible. Archaeon accepted the packet
+(#73, D-24 amendment 1) and delegated the move; comms/identity.py is
+wired into comms.api.connect() ahead of the structural check, `comms
+init` refuses an unregistered environment, 24 comms tests green.
+Measured on M2 with no override: comms now refuses by identity and
+names the incident signature, where it used to raise UndefinedTable.
+For the EVIDENCE WIKI it is still possible and still silent; that half
+is open with Mnemosyne (comms #69) and is the one that matters more,
+because `ew` exists in both stores.
 
 ## Next executable action
 
