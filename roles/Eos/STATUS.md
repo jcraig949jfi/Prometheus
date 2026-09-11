@@ -1,27 +1,39 @@
 # Eos STATUS
 
-Currency: 2026-09-11 (written at the re-seating pass). Plain language.
+Currency: 2026-09-11, second update (written after the first active
+pass). Plain language.
 
-## Seat state: BLOCKED
+## Seat state: ACTIVE
 
-- Blocker: an operator ruling on roles/Eos/ARCHAEOLOGY_2026-09-11.md and
-  on the proposed re-premise (BACKLOG EOS-01). The operator's
-  instruction on 2026-09-11 was bootstrap and registration only: "Don't
-  do anything other than this bootstrap and registration."
-- Asserting: PRESENT (folder, code, registry, index, archive, registry
-  rows). Not ACTIVE, not PRODUCTIVE. Nothing under agents/eos/ has run
-  since 2026-05-17, and the seat has held no queue since 2026-05-18.
+- EOS-01 was ruled ACTIVE by the operator on 2026-09-11 and the typing
+  rule was adopted: every surfaced item terminates as ANCHOR, ACQUIRE,
+  RESOURCE or REFUSED, with refusals preserved.
+- Asserting: PRESENT and PRODUCTIVE for this pass (a gate built and
+  exercised, 59 items typed, 25 controls passing, four preregistered
+  tests run). NOT asserting VALID: one pass, one seat, a self-labelled
+  sample, and the author reporting on the author's own mechanism.
+- NO DAEMON RUNS. The operator's condition stands: build and exercise
+  the classification mechanism on a bounded sample before automating
+  collection. The hourly loop stays off and is not scheduled.
+- Open blockers are decisions, not work: EOS-02 (registry residue,
+  needs prometheus_llm's answer), EOS-03 (who owns Clio), EOS-04
+  (Phase 0 is thirteen lanes' work, not this seat's).
 
 ## Where the seat is
 
 - workspace: D:\Prometheus-worktrees\eos-base-role (linked worktree; the
   canonical guard passes: git-dir differs from git-common-dir)
-- branch: eos/base-role-adopt-2026-09-11, base_sha 8714b2709
+- branch: eos/active-pass-1-2026-09-11, base_sha 05b1134e6
+  (the adoption branch eos/base-role-adopt-2026-09-11 merged to main at
+  9d87469a0 and is closed)
 - machine: M2 (SPECTREX5). The seat's historical host was M4; its
   runtime output was never collected from there.
-- base role: read at 8714b2709 (origin/main at the fetch), adopted
-- comms: synced (read through message 39 at 8714b2709); 2 broadcasts, 0
-  prompts, queue length 0
+- base role: read at 8714b2709, adopted; base rule 9 (upstream liveness
+  as a launch precondition) read at 05b1134e6 and applied this pass
+- comms: synced (read through message 65 at 05b1134e6); queue length 0.
+  Both defects this seat reported on the adoption pass were fixed by
+  Archaeon the same day (comms #65): comms now fails closed against a
+  database with no comms schema, and the three M2 tasks are registered.
 - long-running processes owned: none running
 - worktrees owned: this one only
 - last recorded execution of the seat's code: 2026-05-17T03:54:44Z
@@ -37,8 +49,9 @@ Currency: 2026-09-11 (written at the re-seating pass). Plain language.
   run was a hand-started hourly loop on M4. No freshness file, no
   productivity signal, no D-23 guard. Registered in
   roles/base-role/MONITORS.md on this pass.
-- The five sources (arXiv, OpenAlex, Semantic Scholar, GitHub, Tavily):
-  UNVERIFIED. None probed on this pass (no execution). Semantic Scholar
+- The five sources: arXiv MEASURED LIVE 2026-09-11 (2 requests, both
+  200, 24 items). OpenAlex, GitHub and Tavily UNVERIFIED, not probed.
+  Semantic Scholar
   is known-rejected: 403 with a present key, Techne 0d76ac34d,
   2026-08-31.
 - api_registry.json: STALE. 15 rows, last touched 2026-04-01T07:21Z. No
@@ -46,8 +59,11 @@ Currency: 2026-09-11 (written at the re-seating pass). Plain language.
   prometheus_llm in August without the registry noticing.
 - paper_index.json: SATURATED at 163 items, last touched
   2026-04-01T07:21Z.
-- agents/eos/.env: PRESENT and LOAD-BEARING for the whole program
-  (keys.py:20-21 plus four call sites). Contents not read. EOS-04.
+- agents/eos/.env: PRESENT and LOAD-BEARING for the whole program.
+  Full trace on this pass: FOURTEEN code call sites across nine lanes,
+  not the four first reported (roles/Eos/EOS04_KEYRING_MIGRATION.md).
+  Contents not read, not printed, not committed. Now protected by
+  agents/eos/.gitignore with two regression tests.
 - Consumers of Eos output: ZERO measured. Three code paths reference Eos
   artifacts; none has a 2026-09 receipt (EOS-06).
 - Hermes portfolio-brief mailer: ACTIVE, UNOWNED, attributed to the
@@ -66,27 +82,44 @@ Currency: 2026-09-11 (written at the re-seating pass). Plain language.
 - The "Deep Analysis" section of the final digest is a 120B model's
   reasoning scratchpad about an artifact it never opened.
 
-## Today (2026-09-11)
+## First active pass (2026-09-11, after the EOS-01 ruling)
 
-- Created roles/Eos with entry file, archaeology, backlog (28 items, 4
-  XL), calibration ledger (7 rows plus one pre-registered prediction),
-  status, journal, the operator prompt verbatim with a manifest, and the
-  March-April digest residue archived byte-for-byte with an LF manifest
-  from the gitignored path where it sat for 163 days.
-- Added the Eos rows to INHERITANCE.md and the EosDaemon row to
-  MONITORS.md.
-- Executed: nothing of the seat's science. Ran: comms sync and boot,
-  two read-only database probes, and hash comparisons over the archived
-  residue.
-- Found and reported: on M2 the Evidence Wiki resolver and therefore
-  comms default to a LOCAL prometheus_fire that has no comms schema; the
-  canonical store is only reached with EW_DB_HOST set to the M1 spine.
-  A seat that ran `python -m comms init` here would have forked the
-  program's inbox. Reported, not fixed (EOS-24).
+- EOS-19 DONE: the D-23 guard is on all three entry points
+  (eos_daemon, library_scanner, probe), tested.
+- Base rule 9 DONE before anything was built on it: bounded upstream
+  probe, 2 requests, both HTTP 200, 431 ms and 244 ms, 24 items, at or
+  under 75 percent of arXiv's documented rate. UPSTREAM LIVENESS: LIVE.
+- EOS-07 DONE: the old scorer failed its own controls. CHEAT 100/100
+  and fires; POSITIVE 8/100 and does NOT fire. Retired, not repaired.
+- The gate is built (agents/eos/src/intake.py) with 25 controls
+  passing, including one that LOCKS IN a known hole so closing it
+  breaks the test loudly.
+- 59 items typed: 51 REFUSED, 7 to human admission, 1 RESOURCE.
+  All 28 distinct items behind the old scorer's 42 ATTENTION slots:
+  REFUSED. All 4 constructed bait items: REFUSED.
+- Test 4 (the attack on the new gate) FAILED as predicted: a bait item
+  with a real-but-unrelated referent passed. Published in advance.
+- Two defects found in the new gate by running it (instrument error
+  banked as evidence; the instrument contaminating its own input,
+  twice), both fixed with tests. One proposer error by this seat, also
+  caught by the gate.
+- EOS-02, EOS-03, EOS-04 answered with measurements; see the three
+  documents in roles/Eos/.
+
+## What is live and what is not
+
+- EosDaemon: still DORMANT and still not scheduled, by the operator's
+  condition. MONITORS row unchanged.
+- The old scorer and the LLM "deep analysis" hop: RETIRED as
+  production machinery, kept as archaeological material.
+- The gate: exercised once, on a bounded sample, by its own author.
+  Not validated.
+- Clio (the substrate miner built 2026-05-18): DORMANT 104 days, no
+  seat, no registry row, heartbeat still labelled "online". Reported,
+  not claimed.
 
 ## Next executable action
 
-None until EOS-01. On a ruling that re-premises the seat: EOS-07 (the
-three scorer controls, against the pre-registered prediction in
-CALIBRATION.md) before EOS-08, and EOS-19 (the D-23 guard) before any
-run at all.
+Await the operator on EOS-02 (registry residue), EOS-03 (Clio's owner)
+and the Phase 0 routing of EOS-04. Nothing restarts collection: that is
+a separate decision the operator reserved.
