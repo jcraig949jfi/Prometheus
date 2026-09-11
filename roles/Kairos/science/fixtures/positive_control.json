@@ -1,0 +1,71 @@
+{
+  "_expected": [
+    "K_ALTERNATIVES_UNDECLARED",
+    "K_CONCLUSION_EXCEEDS_VERIFIED_N",
+    "K_CONTROLS_UNDECLARED",
+    "K_EFFECT_SIZE_NO_SE",
+    "K_GATE_WITHOUT_ATTAINABLE_RANGE",
+    "K_KILL_ON_INSTRUMENT_FINDING",
+    "K_NULL_UNDECLARED",
+    "K_SINGLE_EXPERIMENT_TERMINAL",
+    "K_TRANSPORT_WITHOUT_SURFACE"
+  ],
+  "_fixture": "POSITIVE CONTROL: planted omissions. Expected codes are in _expected.",
+  "analysis": {
+    "analysis": {
+      "declared_n": 8,
+      "sources_submitted": 128,
+      "sources_unresolved": 3,
+      "unit_mismatch": true,
+      "unit_of_analysis": "world",
+      "verified_n": 5
+    },
+    "exp_id": "exp_an_pos",
+    "spec": {
+      "effect_size": {
+        "estimator": "hedges_g",
+        "value": 0.41
+      },
+      "gate": {
+        "eligible_count": 96,
+        "threshold": 0.2
+      },
+      "procedure": "hedges_g",
+      "tested_domain": [
+        "landscapeA"
+      ]
+    }
+  },
+  "claim": {
+    "analysis_exp_id": "exp_an_pos",
+    "claim_id": "clm_pos",
+    "estimand": "x",
+    "family_id": "fam_pos",
+    "relevance_floor": null,
+    "replication": {},
+    "status": "SUPPORTED",
+    "transport_domain": [
+      "landscapeA",
+      "landscapeB"
+    ]
+  },
+  "experiments": [
+    {
+      "engine_findings": [
+        "CONFIG_DIVERGENCE"
+      ],
+      "exp_id": "e_only",
+      "outcome": "FALSIFIED"
+    }
+  ],
+  "family": {
+    "by_role": {
+      "executed": 1
+    },
+    "family_id": "fam_pos",
+    "manifest": {},
+    "member_count": 1,
+    "selection_visible": false,
+    "worlds_spanned": 1
+  }
+}

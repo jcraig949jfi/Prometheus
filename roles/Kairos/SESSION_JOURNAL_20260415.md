@@ -1,3 +1,5 @@
+> HISTORICAL (annotated 2026-09-11, Kairos base-role adoption pass). This April file describes the LMFDB-tensor lane, the Redis Agora and Machine M2, none of which is current. Every item and tier in it is classified in roles/Kairos/ARCHAEOLOGY_2026-09-11.md and none is executable work. The body below is unchanged.
+
 # Kairos Session Journal — 2026-04-15
 
 ## Session Duration

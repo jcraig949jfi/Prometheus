@@ -1,0 +1,108 @@
+{
+  "_expected": [
+    "K_GATE_INSIDE_SE"
+  ],
+  "_fixture": "GATE INSIDE SE: threshold 0.006 from the observation, SE 0.0195. Expected: K_GATE_INSIDE_SE only.",
+  "analysis": {
+    "analysis": {
+      "declared_n": 8,
+      "sources_submitted": 128,
+      "sources_unresolved": 0,
+      "unit_mismatch": false,
+      "unit_of_analysis": "world",
+      "verified_n": 8
+    },
+    "exp_id": "exp_an_gse",
+    "spec": {
+      "alternatives_considered": [
+        "size confound",
+        "seed leakage"
+      ],
+      "controls": {
+        "cheat": "exp_cheat_01",
+        "negative": "exp_neg_01",
+        "positive": "exp_pos_01"
+      },
+      "effect_size": {
+        "estimator": "rate",
+        "se": 0.0195,
+        "value": 0.952
+      },
+      "gate": {
+        "attainable_range": [
+          0.0,
+          1.0
+        ],
+        "eligible_count": 125,
+        "threshold": 0.946
+      },
+      "null": {
+        "family": "permutation",
+        "perturbs": "pairing"
+      },
+      "perturbation_axes": [
+        "density",
+        "null_family",
+        "seed_root"
+      ],
+      "procedure": "hedges_g",
+      "tested_domain": [
+        "landscapeA"
+      ]
+    }
+  },
+  "claim": {
+    "analysis_exp_id": "exp_an_neg",
+    "claim_id": "clm_gse",
+    "estimand": "mean CFR delta under selective retention",
+    "family_id": "fam_neg",
+    "relevance_floor": {
+      "smd": 0.2
+    },
+    "replication": {
+      "new_world_draws": true,
+      "reimplemented": false
+    },
+    "status": "SUPPORTED",
+    "transport_domain": [
+      "landscapeA"
+    ]
+  },
+  "experiments": [
+    {
+      "engine_findings": [],
+      "exp_id": "e1",
+      "outcome": "SURVIVED"
+    },
+    {
+      "engine_findings": [],
+      "exp_id": "e2",
+      "outcome": "SURVIVED"
+    },
+    {
+      "engine_findings": [],
+      "exp_id": "e3",
+      "outcome": "FALSIFIED"
+    },
+    {
+      "engine_findings": [],
+      "exp_id": "e4",
+      "outcome": "SURVIVED"
+    }
+  ],
+  "family": {
+    "by_role": {
+      "executed": 4
+    },
+    "family_id": "fam_neg",
+    "manifest": {
+      "kairos_surface": {
+        "axes": [],
+        "version": "v0"
+      }
+    },
+    "member_count": 4,
+    "selection_visible": false,
+    "worlds_spanned": 4
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "_expected": [
+    "K_ALTERNATIVES_EMPTY",
+    "K_CONTROL_EMPTY_CHEAT",
+    "K_CONTROL_EMPTY_NEGATIVE",
+    "K_CONTROL_EMPTY_POSITIVE",
+    "K_EFFECT_SIZE_NO_VALUE",
+    "K_ELIGIBLE_COUNT_ZERO",
+    "K_GATE_UNREACHABLE",
+    "K_KILL_WITHOUT_AXES",
+    "K_NULL_EMPTY",
+    "K_TRANSPORT_WITHOUT_SURFACE"
+  ],
+  "_fixture": "CHEAT CONTROL: labels without properties. Expected codes are in _expected.",
+  "analysis": {
+    "analysis": {
+      "declared_n": 8,
+      "sources_submitted": 128,
+      "sources_unresolved": 0,
+      "unit_mismatch": false,
+      "unit_of_analysis": "world",
+      "verified_n": 8
+    },
+    "exp_id": "exp_an_cheat",
+    "spec": {
+      "alternatives_considered": [],
+      "controls": {
+        "cheat": "",
+        "negative": "",
+        "positive": ""
+      },
+      "effect_size": {
+        "estimator": "hedges_g"
+      },
+      "gate": {
+        "attainable_range": [
+          0.0,
+          0.14
+        ],
+        "eligible_count": 0,
+        "threshold": 0.5
+      },
+      "null": {},
+      "perturbation_axes": [],
+      "procedure": "hedges_g",
+      "tested_domain": [
+        "landscapeA"
+      ]
+    }
+  },
+  "claim": {
+    "analysis_exp_id": "exp_an_cheat",
+    "claim_id": "clm_cheat",
+    "estimand": "x",
+    "family_id": "fam_cheat",
+    "relevance_floor": {
+      "smd": 0.2
+    },
+    "replication": {
+      "new_world_draws": true
+    },
+    "status": "SUPPORTED",
+    "transport_domain": [
+      "landscapeA"
+    ]
+  },
+  "experiments": [
+    {
+      "engine_findings": [],
+      "exp_id": "c1",
+      "outcome": "SURVIVED"
+    },
+    {
+      "engine_findings": [],
+      "exp_id": "c2",
+      "outcome": "FALSIFIED"
+    },
+    {
+      "engine_findings": [],
+      "exp_id": "c3",
+      "outcome": "FALSIFIED"
+    }
+  ],
+  "family": {
+    "by_role": {
+      "executed": 3
+    },
+    "family_id": "fam_cheat",
+    "manifest": {},
+    "member_count": 3,
+    "selection_visible": false,
+    "worlds_spanned": 3
+  }
+}
