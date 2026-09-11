@@ -3,8 +3,54 @@
 > Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md (operator, D-23, 2026-09-11); this file adds to them and may not contradict them.
 
 Currency: 2026-09-11 (seat created on the base-role adoption pass; the seat
-had no roles/ directory before today). Charter: NONE before today, and this
-file does not invent a mission. Seat state: BLOCKED (section 5).
+had no roles/ directory before today, and was PARKED the same day by
+operator ruling). Charter: LATENT, not active (section 3).
+Seat state: PARKED / INSTRUMENT_SPECIMEN (section 5).
+
+================================================================================
+DISPOSITION: PARKED / INSTRUMENT_SPECIMEN
+Operator ruling, 2026-09-11. This is the first thing to read about this seat.
+
+  The scorer is NOT revived. The Pronoia pipeline is NOT reconnected. The
+  old execution path is NOT repaired. The seven revival preconditions in
+  section 4 are NOT implemented. There is no demonstrated consumer for a
+  revived Skopos, and the resemblance between this seat's historical
+  failure and a current Prometheus selection problem is NOT sufficient
+  evidence for resurrection.
+
+  LATENT CHARTER (preserved, not active):
+
+      Skopos does not decide what is relevant.
+      Skopos measures whether a selector had a fair opportunity to
+      decide, and whether its reported performance survives controls.
+
+  RESURRECTION PREDICATE:
+
+      Skopos may be reconsidered when an active seat that owns a
+      selector explicitly requests selection instrumentation and can
+      name the selection surface to be measured.
+
+  Until that predicate is satisfied by a named seat and a named surface,
+  this seat runs nothing, measures nothing and takes no lane.
+
+THE FINDING THIS SPECIMEN CARRIES
+
+  SELECTION ACCOUNTING MUST DISTINGUISH:
+
+      eligible    observed    judged    accepted    rejected
+
+  "Rejected" and "not observed" are DIFFERENT OUTCOMES. A rejection rate
+  is not evidence about selection quality when the observation
+  denominator is absent.
+
+  The measured March 2026 result was NOT "99% rejection".
+  It was approximately 99.78% NOT LOOKED AT.
+
+  This is RECOVERABLE RESIDUE, not authority for Skopos to implement a
+  new cross-system invariant anywhere in the program (operator, same
+  ruling). It is written down so a later search can reach it. It is not
+  a mandate, and this seat will not carry it to other lanes.
+================================================================================
 
 Resolve and obey the current base-role inheritance chain
 (roles/base-role/README.md and the files it lists, then
@@ -111,10 +157,13 @@ comms. They are not edited here (base role, lane discipline).
   another seat, was never reviewed, and is premised on a scorer that at
   the time had scored one entity. It is residue to be read, not a plan.
 
-## 3. What the seat would be FOR, if it is revived
+## 3. The latent charter -- preserved, ruled on, NOT active
 
-Stated so the operator has something specific to rule on, and marked as a
-proposal, not a mandate.
+RULED 2026-09-11: the re-premise below is PRESERVED AS A LATENT CHARTER and
+is not to be implemented. It was written before the ruling, as a proposal
+for the operator to rule on, and it is left standing unedited so the
+reasoning stays inspectable. Its operative form is the two sentences in the
+DISPOSITION block at the top of this file.
 
 The function Skopos was built to serve -- deciding what deserves attention
 -- did not stop being needed when the March pipeline died; it moved into
@@ -146,7 +195,20 @@ what would have caught this seat's own death on day two.
 
 This seat does not act on that re-premise. It is SKOPOS-XL-01 below.
 
-## 4. If the seat is revived, these are preconditions, not nice-to-haves
+RULING, 2026-09-11: SKOPOS-XL-01 is CLOSED. The answer is PARK. The
+paragraphs above are kept for inspection, and the operator's stated reason
+for rejecting them is the correct one and is recorded here in the operator's
+terms: there is no demonstrated consumer, and a resemblance between this
+seat's failure and a current selection problem is not evidence for
+resurrection. This seat had already argued against its own revival in
+section 5 for a version of that reason; the ruling states it more exactly.
+
+## 4. Preconditions IF the resurrection predicate is ever satisfied -- NOT implemented
+
+RULED 2026-09-11: these are NOT to be implemented. They are preserved as
+the specification a future reconsideration would start from, and nothing
+below is a task on any backlog today. Every corresponding backlog item
+(SKOPOS-09 through SKOPOS-18) is closed as PARKED, not deferred.
 
 Each is falsifiable and each maps to something that actually went wrong.
 
@@ -177,7 +239,15 @@ Each is falsifiable and each maps to something that actually went wrong.
 7. No score gates an automatic artifact. A human or a deterministic
    predicate stands between the model's number and anything downstream.
 
-## 5. Seat state: BLOCKED, and on what
+## 5. Seat state: PARKED / INSTRUMENT_SPECIMEN
+
+RULED AND CLOSED 2026-09-11. The seat is PARKED as an instrument specimen.
+It is routable, its state stays truthful, it runs no autonomous work, it
+holds no standing loop or monitor, and it makes no daemon, scorer or model
+calls. The question it was blocked on, and this seat's own recommendation,
+are preserved below exactly as they were written before the ruling.
+
+------ the blocker as it stood, preserved -----------------------------------
 
 BLOCKED on SKOPOS-XL-01, an operator decision: given that the March mission
 (feed the Eos/Aletheia/Metis/Hermes intelligence pipeline) has no live
@@ -202,6 +272,16 @@ marked dead: (c) is not recommended.
 Until that ruling this seat runs no code, scores nothing, and takes no
 lane. It syncs comms, keeps its status truthful, and answers questions
 about its own history.
+
+------ end of the preserved pre-ruling text ---------------------------------
+
+The ruling adopted PARK and named it INSTRUMENT_SPECIMEN. What that changes
+relative to the text above: the state is settled rather than pending, the
+re-premise is latent rather than proposed, and the resurrection predicate
+(top of this file) replaces "until that ruling" as the condition under
+which anything here becomes live again. What it does not change: the seat
+still runs no code, scores nothing, takes no lane, keeps its status
+truthful, and answers questions about its own history.
 
 ## 6. Conflicts of interest this seat declares
 
