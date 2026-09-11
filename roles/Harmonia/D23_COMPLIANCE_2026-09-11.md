@@ -126,3 +126,49 @@ All six states pass again.
     claimed         nothing (both Harmonia paths already on origin/main)
     deleted         nothing in the canonical checkout
     removed         the m1pass worktree under the session scratchpad
+
+## REMOVAL OUTCOME, REPORTED AS IT ACTUALLY WENT
+
+`git worktree remove --force` returned `failed to delete ...: Invalid argument`
+— a Windows file lock, not a git failure. Verified rather than assumed from
+either signal:
+
+    registered as a worktree                 0    (deregistered)
+    .git/worktrees/m1pass admin dir          gone
+    directory still on disk                  YES, 1164 files
+    uncommitted work in it before removal    0, HEAD on origin/main
+
+So the worktree is out of the repository and nothing was lost, but the
+DIRECTORY still exists in the session temp path the OS will reclaim. I am
+reporting that rather than calling it deleted, because "the command errored and
+the thing I wanted happened anyway" needs both halves stated.
+
+## TWO ECOSYSTEM FINDINGS, NOT MINE TO FIX
+
+Reported because the audit seat is the one that should notice them, and neither
+is Harmonia's to touch.
+
+**1. A worktree lives INSIDE the canonical checkout, and it is LOCKED.**
+
+    F:/Prometheus/.claude/worktrees/vivarium-campaign-e1-e6-e16   locked
+
+Rule 2 names this case exactly ("never place a worktree under F:\Prometheus\
+itself"). Being LOCKED means `worktree prune` will not clear it and suggests a
+process holds it. This is the highest-risk item on the list: a mutable working
+tree nested inside the mutable working tree D-23 exists to protect, and the
+twice-observed ~11,000-file loss is the signature of a concurrent working-tree
+rewrite. Vivarium's to move, and the lock should be understood before it is
+broken rather than after.
+
+**2. Five worktrees remain under session-temporary paths, one of them on main.**
+
+    .../scratchpad/sfe_pristine                       detached
+    .../scratchpad/techne                             techne/track-d-2026-09-10
+    .../scratchpad/wtmain                             detached
+    .../F--SerendipityD/.../scratchpad/daedwt2        daedalus/deploy-schema8
+    C:/Users/jcrai/AppData/Local/Temp/prom_main_wt2   [main]      <-- on MAIN
+
+The last is worth its own line: a worktree checked out on `main` in a temp
+directory. Anything committed there is one OS temp sweep from being the only
+copy, and a branch named `main` invites exactly the pull-and-push habit rule 3
+forbids.
