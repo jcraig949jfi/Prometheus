@@ -69,3 +69,33 @@ ALTER TABLE {schema}.agents ADD COLUMN IF NOT EXISTS last_sync_sha TEXT;
 ALTER TABLE {schema}.agents ADD COLUMN IF NOT EXISTS last_sync_worktree TEXT;
 ALTER TABLE {schema}.agents ADD COLUMN IF NOT EXISTS last_sync_branch TEXT;
 
+
+-- One seat, many instances (Harmonia #154, 2026-09-11; D-24 amendment 3). ADDITIVE: the
+-- seat-level tables above keep their keys so a seat running older code keeps working; an
+-- instance is <machine label>-<8 hex of the harness session id>, derived, never chosen.
+CREATE TABLE IF NOT EXISTS {schema}.agent_instances (
+    agent               TEXT NOT NULL,
+    instance            TEXT NOT NULL,
+    first_boot_at       TIMESTAMPTZ NOT NULL DEFAULT now(),   -- the instance's unseen window starts here
+    last_bootstrap_at   TIMESTAMPTZ,
+    last_active_at      TIMESTAMPTZ,
+    last_sync_at        TIMESTAMPTZ,
+    last_message_id     BIGINT,
+    boot_count          INT NOT NULL DEFAULT 0,
+    machine             TEXT,
+    base_sha            TEXT,
+    branch              TEXT,
+    worktree_path       TEXT,
+    model               TEXT,
+    session_id          TEXT,
+    PRIMARY KEY (agent, instance)
+);
+CREATE TABLE IF NOT EXISTS {schema}.receipt_instances (
+    message_id  BIGINT NOT NULL REFERENCES {schema}.messages(id),
+    agent       TEXT NOT NULL,
+    instance    TEXT NOT NULL,
+    seen_at     TIMESTAMPTZ NOT NULL DEFAULT now(),
+    PRIMARY KEY (message_id, agent, instance)
+);
+ALTER TABLE {schema}.task_queue ADD COLUMN IF NOT EXISTS claimed_by TEXT;      -- the instance that won the claim
+ALTER TABLE {schema}.messages ADD COLUMN IF NOT EXISTS sender_instance TEXT;   -- --from Seat[tag]
