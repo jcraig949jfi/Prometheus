@@ -47,24 +47,31 @@ EDGES_V1 = ((60.5, 64.5, 68.5), (29.5, 32.5, 35.5))      # H3_DESCRIPTORS_v1.jso
 CAPS = {"items": 16, "bytes": 16 * 40}                     # 16 slots; byte cap never binds by construction
 RESERVE = 4
 TASKS_PATH = Path(__file__).resolve().parents[1] / "docs" / "h0h5" / "H3_DEAD_STREAM_TASKS_v1.json"
+# v2 (pre-registered addendum, 2026-09-11): v1 sat at the ceiling (top_k live 12/12 every seed,
+# uniform floor 10.2/12); 5 bits per task puts a random table at 1/32 per task so 16 random
+# tables reach ~4.8/12 and the channel has headroom.
 DEFAULT_SEEDS = (1, 2, 3, 4, 5)
 TASK_SEED = 20260911
+TASKS_V2_PATH = TASKS_PATH.with_name("H3_DEAD_STREAM_TASKS_v2.json")
+V2_BITS_PER_TASK = 5
+V2_TASK_SEED = TASK_SEED + 1
 
 
 # ----------------------------------------------------------------------------
 # hidden target and tasks (sealed)
 # ----------------------------------------------------------------------------
-def make_tasks(seed: int = TASK_SEED) -> Dict[str, Any]:
+def make_tasks(seed: int = TASK_SEED, bits_per_task: int = BITS_PER_TASK) -> Dict[str, Any]:
     rng = random.Random(seed)
     target = [rng.randrange(2) for _ in range(TABLE_BITS)]
-    idx = rng.sample(range(TABLE_BITS), N_TASKS * BITS_PER_TASK)
+    idx = rng.sample(range(TABLE_BITS), N_TASKS * bits_per_task)
     tasks = []
     for j in range(N_TASKS):
-        bits = sorted(idx[j * BITS_PER_TASK:(j + 1) * BITS_PER_TASK])
+        bits = sorted(idx[j * bits_per_task:(j + 1) * bits_per_task])
         tasks.append({"query_id": "task-%02d" % j, "rule": "agrees_on_bits", "bits": bits,
                       "target": [target[b] for b in bits]})
     sealed = H.seal_future_queries(tasks)
     sealed.update({"schema": "archaeon.h3.dead_stream_tasks.v1", "task_seed": seed, "table_bits": TABLE_BITS,
+                   "bits_per_task": bits_per_task, "p_solve_per_random_table": 2.0 ** -bits_per_task,
                    "hidden_target_digest": "sha256:" + hashlib.sha256(bytes(target)).hexdigest()})
     return sealed
 
@@ -172,8 +179,8 @@ def run_one(seed: int, tasks_sealed: Dict[str, Any]) -> Dict[str, Any]:
     return out
 
 
-def run_control(seeds: Sequence[int] = DEFAULT_SEEDS) -> Dict[str, Any]:
-    tasks_sealed = json.loads(TASKS_PATH.read_text(encoding="utf-8"))
+def run_control(seeds: Sequence[int] = DEFAULT_SEEDS, tasks_path: Path = TASKS_PATH) -> Dict[str, Any]:
+    tasks_sealed = json.loads(tasks_path.read_text(encoding="utf-8"))
     per_seed = [run_one(s, tasks_sealed) for s in seeds]
     summary: Dict[str, Any] = {}
     for name in H.POLICIES:
@@ -187,7 +194,8 @@ def run_control(seeds: Sequence[int] = DEFAULT_SEEDS) -> Dict[str, Any]:
         summary[name]["deltas_cheat_minus_live"] = {k: summary[name]["cheat"][k] - summary[name]["live"][k]
                                                     for k in ("family_a_solved", "family_b_solved")}
     return {"schema": "archaeon.h3.dead_stream_control.v1", "generated_at": _dt.datetime.now(_dt.timezone.utc).isoformat(),
-            "tasks_manifest_digest": tasks_sealed["manifest_digest"], "caps": CAPS, "edges": EDGES_V1, "reserve": RESERVE,
+            "tasks_manifest_digest": tasks_sealed["manifest_digest"], "tasks_path": tasks_path.name,
+            "bits_per_task": tasks_sealed.get("bits_per_task", BITS_PER_TASK), "caps": CAPS, "edges": EDGES_V1, "reserve": RESERVE,
             "seeds": list(seeds), "n_per_stream": 200, "family_b_assigned": N_TASKS, "family_a_assigned": len(family_a_queries()),
             "per_seed": per_seed, "summary": summary}
 
@@ -197,15 +205,22 @@ def main(argv=None) -> int:
     _ws.assert_not_canonical("run the H3 dead-stream control")          # D-23
     ap = argparse.ArgumentParser(prog="archaeon.producer.h3_dead_stream")
     ap.add_argument("--seal-tasks", action="store_true", help="write the sealed task manifest (refuses to overwrite)")
+    ap.add_argument("--seal-tasks-v2", action="store_true", help="write the v2 (5 bits per task) sealed manifest (refuses to overwrite)")
     ap.add_argument("--run", metavar="OUT_JSON")
+    ap.add_argument("--tasks", default="v1", choices=("v1", "v2"))
     a = ap.parse_args(argv)
+    if a.seal_tasks_v2:
+        if TASKS_V2_PATH.exists():
+            raise SystemExit("refusing to overwrite the sealed manifest {}".format(TASKS_V2_PATH))
+        TASKS_V2_PATH.write_text(json.dumps(make_tasks(V2_TASK_SEED, V2_BITS_PER_TASK), indent=1) + "\n", encoding="utf-8")
+        print(TASKS_V2_PATH); return 0
     if a.seal_tasks:
         if TASKS_PATH.exists():
             raise SystemExit("refusing to overwrite the sealed manifest {}".format(TASKS_PATH))
         TASKS_PATH.write_text(json.dumps(make_tasks(), indent=1) + "\n", encoding="utf-8")
         print(TASKS_PATH); return 0
     if a.run:
-        res = run_control()
+        res = run_control(tasks_path=TASKS_V2_PATH if a.tasks == "v2" else TASKS_PATH)
         Path(a.run).write_text(json.dumps(res, indent=1) + "\n", encoding="utf-8")
         print(json.dumps(res["summary"], indent=1)); return 0
     ap.print_help(); return 1

@@ -61,3 +61,12 @@ def test_run_one_is_deterministic_and_within_attainable_range():
             assert 0 <= p["family_b_solved"] <= D.N_TASKS and 0 <= p["coverage"] <= 1.0
             assert p["retained_n"] <= D.CAPS["items"]
     assert a["arms"]["live"]["score_multiset_digest"] == a["arms"]["dead"]["score_multiset_digest"]
+
+
+def test_v2_sealed_manifest_matches_its_generator_and_is_harder():
+    if not D.TASKS_V2_PATH.exists():
+        import pytest; pytest.skip("v2 not sealed yet")
+    on_disk = json.loads(D.TASKS_V2_PATH.read_text(encoding="utf-8"))
+    assert on_disk["manifest_digest"] == D.make_tasks(D.V2_TASK_SEED, D.V2_BITS_PER_TASK)["manifest_digest"]
+    assert on_disk["bits_per_task"] == 5 and all(len(q["bits"]) == 5 for q in on_disk["queries"])
+
