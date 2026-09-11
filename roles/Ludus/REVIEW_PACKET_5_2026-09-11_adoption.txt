@@ -1,0 +1,287 @@
+================================================================================
+REVIEW PACKET 5
+LUDUS -- BASE-ROLE ADOPTION AND WORLD FOUNDRY RE-PREMISING
+================================================================================
+Prepared:        2026-09-11   frozen (adoption pass; no world work done)
+Location/Code:   ludus/ (bench, arena, atlas, atlas_of_worlds);
+                 roles/Ludus/ (this pass: BOOTSTRAP.md,
+                 CHARTER_v3_WORLD_FOUNDRY.md, ARCHAEOLOGY_2026-09-11.md,
+                 BACKLOG_H0H5.md, CROSSWALK_INTAKE_2026-09-11.md,
+                 BASE_ROLE_ADOPTION_2026-09-11.txt, STATUS.md,
+                 journal/2026-09-11.md, prompts/2026-09-11_reactivation/)
+Artifacts:       roles/base-role/MONITORS.md (Ludus row),
+                 roles/base-role/INHERITANCE.md (entry file row),
+                 ludus/atlas_of_worlds/.gitignore
+Version/Hash:    base_sha 57533fa76 (origin/main at boot);
+                 adoption commit SHA: see journal/2026-09-11.md close
+                 entry (written after push + ancestor check);
+                 operator prompt sha256 793b3d57e519171e...
+                 (MANIFEST.md beside it)
+Headline:        ADOPTED. Old queue (26 items): 5 STILL_LIVE,
+                 6 NEEDS_REPREMISE, 9 PARKED, 2 SUPERSEDED,
+                 1 TRANSFERRED, 3 RETIRED. W3 = 0 of 30 worlds.
+                 Cheat halves run = 0 of 4 instruments.
+                 Recommended first execution: LUDUS-03 + LUDUS-01.
+
+--------------------------------------------------------------------------------
+1. SUBJECT UNDER REVIEW
+--------------------------------------------------------------------------------
+Ludus is reactivated as the World Foundry (operator directive
+2026-09-11, committed verbatim). This packet delivers the adoption pass
+the directive ordered before any building: worktree + comms boot,
+receipt, archaeological classification of every inherited queue item,
+WAL/SHM residue removed, backlog converted to the H0-H5 schema, charter
+changes proposed, coordination boundaries stated, and 3-5 candidate
+first executions with proving artifacts.
+
+What would show this pass was done wrong: a queue item resumed without
+classification; a number below quoted from recall rather than a run;
+a world or instrument changed.
+
+--------------------------------------------------------------------------------
+2. WORKSPACE AND BOOT (WORKING_CONTRACT s4)
+--------------------------------------------------------------------------------
+worktree_path   F:\Prometheus-worktrees\ludus-base-role
+branch          ludus/base-role-adopt-2026-09-11
+base_sha        57533fa767f1d81c8ea5d2db3b6f04717b3c5431
+dirty           false at creation; guard passes (git-dir != common-dir)
+comms           booted Ludus | claude-opus-5 (heavy) | WORLDS,H3,EVIDENCE
+                sync: 1 new (broadcast #1), 0 queued, queue length 0
+footprint       0 worktrees, 1 merged stale branch (deleted), 0 tasks,
+                0 processes, 0 modified tracked files, 2 untracked
+                side files (claimed and deleted, section 4)
+
+--------------------------------------------------------------------------------
+3. OLD-QUEUE CLASSIFICATION (ARCHAEOLOGY_2026-09-11.md, 26 items)
+--------------------------------------------------------------------------------
+Item                                        Class            Backlog
+------------------------------------------  ---------------  --------
+Hanabi as next interface breaker            NEEDS_REPREMISE  LUDUS-08
+OpenSpiel cross-validation                  NEEDS_REPREMISE  LUDUS-16
+D13 year_created                            PARKED           LUDUS-28
+Join arena to atlas                         SUPERSEDED       (grammar)
+Classifier accuracy audit                   PARKED           --
+FOR SALE (SELECT without STOP)              NEEDS_REPREMISE  LUDUS-22
+COLORETTO interface probe                   TRANSFERRED      (DECAY fam)
+PIRATEN KAPERN                              RETIRED          --
+CAN'T STOP full game                        PARKED           --
+SPLENDOR                                    PARKED           --
+s8 retire: empty band                       NEEDS_REPREMISE  CHARTER P4
+s8 retire: A1 in-context meter              SUPERSEDED       --
+s8 retire: A4 counterparty                  RETIRED          --
+s7.4 hourly loop                            PARKED           LUDUS-29
+RULES_AUDIT priority-1 constants            STILL_LIVE       LUDUS-01
+RULES_AUDIT priority-2 rules                STILL_LIVE       LUDUS-15
+RULES_AUDIT scope cuts                      PARKED           --
+Atlas defects (2 unfixed of 13)             PARKED           --
+Crawler restart on empty cell               NEEDS_REPREMISE  LUDUS-27
+atlas.db residue / home                     STILL_LIVE/XL    LUDUS-30
+Cycle 005: r_i(W) not built                 NEEDS_REPREMISE  CHARTER s4
+Cycle 005: regret primary statistic         STILL_LIVE       LUDUS-11
+Cycle 005: four-arm learning-cost design    PARKED           (H4)
+Multi-language Wikipedia                    RETIRED          --
+BoardGameGeek source                        PARKED           --
+Replay omniscient-log leak                  STILL_LIVE       LUDUS-17
+
+Rule: only STILL_LIVE is executable; NEEDS_REPREMISE items are restated
+in the backlog rows named; nothing is marked dead; residue stays.
+
+--------------------------------------------------------------------------------
+4. RESIDUE REMOVED (operator item 5)
+--------------------------------------------------------------------------------
+atlas.db is NOT tracked (.gitignore *.db); it lived only in the canonical
+checkout. Procedure: no process held it; a copy opened in the scratchpad
+gave journal_mode=wal, integrity_check ok, 1,338 worlds / 206 relations /
+984 conditions / 2,864 artifacts / 249 reviews; the WAL was 0 bytes, so
+it held nothing. Deleted atlas.db-wal and atlas.db-shm from the
+canonical checkout (the one permitted write). atlas.db sha256
+648aef04...a14cea5 identical before and after, and identical for the
+copy placed in this worktree. ludus/atlas_of_worlds/.gitignore now
+ignores the side files (store.py sets WAL on every connect, so they are
+normal while a connection is open). The database's HOME is an operator
+decision (LUDUS-30).
+
+--------------------------------------------------------------------------------
+5. CURRENT WORLD POPULATION AND LADDER (measured on this pass)
+--------------------------------------------------------------------------------
+Family            Worlds  Interface            W3   verify
+----------------  ------  -------------------  ---  -----------------------
+cycle-001         3       solve/optimal_acts   0    GATE-W1 fail 3/3 (k=4)
+bench matrix      21      bench World/compile  0    4 VERIFIED-INTERNALLY,
+                                                    17 no per-world
+                                                    invariants (L-1)
+arena             6       arena (CHANCE/SIM)   0    20/20; epistemic 25/25
+atlas catalogue   1,338   rows, 0 IMPLEMENTED  0    n/a
+----------------  ------
+executable total  30                           0
+
+Ladder as restated in CHARTER_v3 s5 (W0 CATALOGUED .. W8 EXPERIMENT-
+READY; W3 RULE-AUDITED). The 09-01 mandate that named the rungs was
+never committed verbatim (L-3); W1/W2/W4/W7 names are this seat's
+reconstruction and are marked PROPOSED.
+
+Circuits: 10 in the matrix; best rung ABLATION_SUPPORTED (r0003),
+blocked at PARTNER_ROBUST in FOUNDRY, an unverified world (L-1).
+Three circuits carry contamination flags and no registered prediction.
+
+--------------------------------------------------------------------------------
+6. CHEAT-CONTROL STATUS (base rule 3; operator: run the unrun half)
+--------------------------------------------------------------------------------
+Instrument          Can fail  Detects real  Detects injected  New specimen
+------------------  --------  ------------  ----------------  ------------
+depth profile       yes(LOOM) yes(WEIR)     NOT RUN           NOT RUN
+  (GATE-W1)         gap=0     gap fires
+bench verify.py     unknown   yes (4)       NOT RUN           collapsed
+                                                              LOUDLY on 17
+arena verify.py     unknown   yes (20)      NOT RUN           NOT RUN
+epistemic audit     yes       yes           NOT RUN           NOT RUN
+  (differential)    (v1,v2    (leak found)
+                    fired
+                    wrongly)
+
+"unknown" = never shown to fail on a deliberately broken input. Zero of
+four instruments has run its cheat half. LUDUS-03 and LUDUS-17 are the
+runs; they are cheap (S) and precede any new specimen.
+
+--------------------------------------------------------------------------------
+7. CHARTER CHANGES PROPOSED (CHARTER_v3_WORLD_FOUNDRY.md s9-s10)
+--------------------------------------------------------------------------------
+Adopted from the directive verbatim: core role, five generalised
+questions, extended definition of a world, chopping-grammar seed list,
+matrix extension, coordination, standing mandate.
+
+Proposed by the seat (operator may strike any):
+P1  ONE interface: the arena interface survives (it already breaks on
+    chance, simultaneity, private observation); bench compile/solve
+    become optional capabilities. Migration per world with verify.
+P2  Generated families with a declared knob are the preferred unit; a
+    named game is admitted for the cell it opens, never its name.
+P3  Rule audit by two admissible instruments (published rulebook with
+    source per rule, or an independent implementation); the operator's
+    HITL tick becomes a spot check. (XL: LUDUS-31)
+P4  s8 retirement conditions become reported observations with an
+    eligible count; the seat does not retire itself.
+P5  Grammar rule: a primitive enters only with a declared per-world
+    value, an executable perturbation, and a statistic that moves under
+    it; labels without a perturbation are rejected by a test. This is
+    NOT cycle 005's deferred r_i(W) registry (declared + tested, never
+    fitted from circuit scores).
+Superseded: ROLE.md s3 A1, s7.4, s8, s10; CHARTER v2 s3/s37 founding
+corpus. Everything else in v2 stands.
+
+--------------------------------------------------------------------------------
+8. COORDINATION BOUNDARIES (from the sibling seats' committed files)
+--------------------------------------------------------------------------------
+Proteus    organisms, mutation grammar, organism_ref (D-7). Proteus
+           writes NO world binding (WORLD_INTERFACE.md: "a binding
+           written by Proteus would be a firewall breach"). LUDUS
+           WRITES the world-side binding (observation -> channels,
+           channels -> action), versioned and hashed (LUDUS-06).
+Archaeon   composition, backlog, decisions; H4 (adaptive challenges
+           and transfer) is NOT STARTED and is the consumer of world
+           families. Coupling spec is LUDUS-24.
+Vivarium   execution; Ludus never starts/stops it.
+Hephaestus components; a component becomes a primitive or fitness
+           function only after the P5 rules; ARCH-27 is the precedent
+           for routing a world candidate the other way.
+Herakles   external backends (OpenSpiel, POET, RL libraries); Ludus
+           consumes them as audit oracles or world sources.
+Crosswalk  15 templates classified (CROSSWALK_INTAKE_2026-09-11.md):
+           WORLD 2, WORLD GENERATOR 3, FITNESS FUNCTION 5, CURRICULUM
+           OPERATOR 3, WORLD PRIMITIVE 6, QUALIFICATION INSTRUMENT 4,
+           INSPIRATION-only 1 (hide-and-seek at current scale). POET
+           contributes generator + curriculum operator + fitness
+           contrast and is the vertical-slice template. Nothing
+           ingested.
+
+--------------------------------------------------------------------------------
+9. PROPOSED FIRST EXECUTIONS (3-5) WITH PROVING ARTIFACTS
+--------------------------------------------------------------------------------
+LUDUS-03  Cheat half on the three instruments (+ LUDUS-17 epistemic).
+          Size S. Proves: ludus/controls/CONTROLS_2026-09-11.json with
+          negative/positive/cheat rows per instrument; the section-6
+          table with no NOT RUN cell.
+LUDUS-01  First genuine W3: Martian Dice rules fetched, source per
+          rule, RULES_AUDIT.md marked, re-solve if a constant moved
+          (the doubled ray face carries cycle 002's 86% result).
+          Size S. Proves: rules_fidelity.json rules_audited=true for
+          MARTIAN_DICE with source hashes; a re-solve diff or "no
+          constant moved" row. Attacks the ZERO-W3 debt directly.
+LUDUS-02  Chopping grammar v0: declared primitive vector for 30 worlds,
+          one executable perturbation per primitive, a test that each
+          moves a statistic; the REJECTED list. Size M. Proves:
+          ludus/grammar/{primitives.py, vectors.json,
+          test_primitives.py} passing.
+LUDUS-04  Per-world invariants for the 17 unverified matrix worlds;
+          verify 21/21; CIRCUIT_MATURITY annotation on r0003. Size M.
+          Proves: rules_fidelity.json 21/21 verified_internally.
+LUDUS-05  Vertical slice v0: FOUNDRY as a generated family with
+          mutate() + distance(); minimal-criterion admission over the
+          cheap-baseline population; one Proteus registry organism via
+          the Ludus binding (LUDUS-06); matrix rows; deterministic
+          receipt replaying to the same digest. Size L; depends on
+          LUDUS-04 and LUDUS-06. Proves: ludus/foundry/{family.py,
+          admission.py}, matrix rows with world_ref per variant,
+          RECEIPT json with base_sha/branch/worktree.
+
+RECOMMENDED FIRST EXECUTION: LUDUS-03 then LUDUS-01 in one pass, with
+LUDUS-02 started in parallel. Reason: the operator's own rule (an
+instrument frozen after two specimens was degenerate on the third,
+Hephaestus 09-11) says cheat controls precede any new specimen, and
+LUDUS-01 is the cheapest true dent in the W3 = 0 fact. LUDUS-05 is the
+prize but stands on LUDUS-04/06, which stand on LUDUS-03.
+
+--------------------------------------------------------------------------------
+10. KNOWN LIMITATIONS AND CAVEATS
+--------------------------------------------------------------------------------
+- No world, instrument or matrix cell was touched; every number in
+  section 5 is from a run on this pass, every rung claim from the
+  committed ledgers.
+- The W3 ladder names W1/W2/W4/W7 are reconstructed (L-3).
+- Startup refusal guards on Ludus entry points are NOT yet added
+  (receipt 3d); they ride with the first code commit.
+- The Evidence Wiki was not queried on this pass (LUDUS-18).
+- atlas.db is an untracked 11 MB asset now duplicated in two places
+  (canonical checkout and this worktree); until LUDUS-30 is decided
+  the worktree copy is the working one.
+- Conflict of interest: the seat classified its own queue and proposes
+  its own charter amendments; P1 (arena survives) favours the family
+  this seat built most recently.
+- The backlog has 32 rows; the schema asks for 20-60.
+
+--------------------------------------------------------------------------------
+11. REPRODUCTION
+--------------------------------------------------------------------------------
+  git -C F:\Prometheus fetch origin
+  git -C F:\Prometheus worktree add F:\Prometheus-worktrees\ludus-<task> ^
+      -b ludus/<task> origin/main
+  cd F:\Prometheus-worktrees\ludus-<task>
+  python -m comms boot Ludus --model <id> --capabilities WORLDS
+  python -m comms sync Ludus
+  python -m pytest archaeon/tests/test_base_role.py -q      (8 passed)
+  set PYTHONPATH=. && python ludus/bench/verify.py
+      (4 ok / 17 fail, L-1; then revert the written ledger:
+       git checkout -- ludus/atlas/rules_fidelity.json)
+  cd ludus/arena && python verify.py && python test_epistemic.py
+  python -m comms.manifest verify roles/Ludus/prompts/2026-09-11_reactivation
+  sha256sum ludus/atlas_of_worlds/atlas.db   (648aef04...a14cea5)
+
+--------------------------------------------------------------------------------
+12. VERDICT / DECISION
+--------------------------------------------------------------------------------
+WORKTREE FROM ORIGIN/MAIN, BOOTED, SYNCED .............. yes
+ADOPTION RECEIPT COMMITTED ............................. yes
+EVERY OLD QUEUE ITEM CLASSIFIED ........................ yes (26)
+WAL/SHM RESIDUE REMOVED WITHOUT DAMAGE ................. yes (sha equal)
+BACKLOG IN H0-H5 SCHEMA ................................ yes (32 rows)
+BULK WORLD CONSTRUCTION STARTED ........................ NO (by order)
+W3 WORLDS .............................................. 0
+CHEAT HALVES RUN ....................................... 0 of 4
+OPERATOR DECISIONS OPEN (XL) ........................... 3 (30, 31, 32)
+
+Reviewer's bottom line: is LUDUS-03 + LUDUS-01 the right first pass, or
+should the seat go straight to the vertical slice (LUDUS-05) on an
+unverified family and unrun cheat controls?
+================================================================================
+END OF PACKET
+================================================================================

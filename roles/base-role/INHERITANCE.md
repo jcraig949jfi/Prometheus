@@ -24,7 +24,7 @@ Every role below carries the banner on its primary document(s):
 | Kairos | RESPONSIBILITIES.md (already) |
 | Koios | RESPONSIBILITIES.md (already) |
 | Lexis | ROLE.md (already) |
-| Ludus | ROLE.md (already), CHARTER.md (already) |
+| Ludus | ROLE.md (already), CHARTER.md (already), BOOTSTRAP.md, CHARTER_v3_WORLD_FOUNDRY.md (2026-09-11) |
 | Mnemosyne | RESPONSIBILITIES.md (already) |
 | MPADatabaseArchitect | RESPONSIBILITIES.md (already) |
 | PipelineOrchestrator | RESPONSIBILITIES.md (already) |
@@ -62,7 +62,7 @@ BOOTSTRAP.md if the seat has one, else STARTUP.md, RESPONSIBILITIES.md, ROLE.md,
 | Kairos | RESPONSIBILITIES.md |
 | Koios | RESPONSIBILITIES.md |
 | Lexis | ROLE.md |
-| Ludus | ROLE.md |
+| Ludus | BOOTSTRAP.md (from 2026-09-11; was ROLE.md) |
 | Mnemosyne | RESPONSIBILITIES.md |
 | MPADatabaseArchitect | RESPONSIBILITIES.md |
 | PipelineOrchestrator | RESPONSIBILITIES.md |
