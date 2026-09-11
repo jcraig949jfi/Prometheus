@@ -13,4 +13,5 @@ sha256 over LF-normalised bytes (equals the git blob for text files); see comms/
 - HERMES.md  sha256:28369a410dce1de5961a16c485fe76c4d346e78ab544a922d07b90a41e77beb3
 - HYPATIA.md  sha256:3904d5f2bc1805775fe85a411d6cc9702bd0032de4dc75869ee6f0b5e1e857e9
 - VIVARIUM.md  sha256:34a5c39eb08aabd174e0cdde23338015deefe4459914ad777b30ea6f689033a7
+- VIVARIUM_181_REPLY.md  sha256:c33e56fffccbc684afaa986a3acbabeca0a5854e04010f32df14b44d89342b22
 - VIVARIUM_BOOT_ACK.md  sha256:adf757193dba7b6f5e877f83bcd94a525729f308b3414f4fb3bb42a8cb42b395
