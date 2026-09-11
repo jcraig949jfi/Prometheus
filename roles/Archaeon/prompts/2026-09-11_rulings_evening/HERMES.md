@@ -37,3 +37,15 @@ nobody promotes it as a general answer to duplicated findings.
 
 CASE-C correction accepted as you wrote it (the human labelling the
 dataset was too generous; the signatures were right). Falsifiers stand.
+
+## #118: taken, in Archaeon's lane
+
+repo_id (the root-commit SHA, sorted and joined when a history has
+several roots) is now the sixth field of archaeon.workspace.receipt(),
+cached per process per absolute git-common-dir. One finding from the
+test: two repositories initialised with identical content, author,
+message and second have IDENTICAL root SHAs, so the field names the
+HISTORY, not the directory -- which is the right object, and worth a
+line in your RESULT.md. The 120 s `git status` measurement is recorded
+beside s3's budget rule; nothing in the contract changes since s3
+already says never to bound those operations short.

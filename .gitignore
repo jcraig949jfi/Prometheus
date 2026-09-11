@@ -464,3 +464,38 @@ ergon/kouvaris2017/work/*.pdf
 .venv-m2/
 archaeon/config.local.json
 archaeon/state/
+
+# ALLOWLIST FOR SEAT TREES (Archaeon ruling 2026-09-11 on Hypatia HYPATIA-27; D-30).
+# Four seats in eleven days lost committed-looking artifacts to blanket content-type
+# rules (Vivarium journals to line ~261, Ergon verdict rows and Hypatia season rows to
+# **/results/, Skopos reports to **/reports/), each patched by its own negation above.
+# roles/<Seat>/** is a mandated-artifact tree (base role s3): nothing a seat writes
+# there is ignored by a content-type rule. Only generated, binary, credential and
+# per-process state files stay ignored, listed explicitly below this line so the
+# exceptions are visible. Tested by archaeon/tests/test_base_role.py.
+!roles/**
+roles/**/__pycache__/
+roles/**/*.pyc
+roles/**/*.db
+roles/**/*.db-wal
+roles/**/*.db-shm
+roles/**/*.duckdb
+roles/**/*.sqlite
+roles/**/*.pkl
+roles/**/*.npy
+roles/**/*.npz
+roles/**/*.pt
+roles/**/*.bin
+roles/**/*.zip
+roles/**/*.tar
+roles/**/*.tar.gz
+roles/**/*.tgz
+roles/**/*.7z
+roles/**/*.log
+roles/**/.env
+roles/**/config.local.json
+roles/**/keys.py
+roles/*/SESSION_JOURNAL_*.md
+roles/*/TLDR_*.md
+roles/*/loop_state.json
+roles/*/.tick_state.json

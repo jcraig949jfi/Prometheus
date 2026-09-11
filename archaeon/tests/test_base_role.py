@@ -144,6 +144,23 @@ def test_monitor_registry_rows_carry_every_column():
         assert any(k in cols[8] for k in ("ACTIVE", "DORMANT", "DEAD", "DISABLED", "UNLOCATED")), r[:60]
 
 
+def test_seat_trees_are_allowlisted_against_blanket_content_type_ignores():
+    """D-30 (Hypatia HYPATIA-27, the fourth instance in eleven days): nothing a
+    seat writes under roles/<Seat>/ is swallowed by a content-type rule such
+    as **/results/ or **/reports/; only generated, binary, credential and
+    per-process state files stay ignored, and those are listed explicitly."""
+    seat = "roles/ZzzSyntheticSeat"
+    kept = ["results/rows.json", "reports/readout.md", "output/x.txt", "logs/notes.md",
+            "science/results/r.csv", "journal/2026-09-11.md", "archive/a.md", "ledgers/rows.jsonl",
+            "prompts/2026-09-11_x/MANIFEST.md", "artifacts/alignment/report.md"]
+    dropped = ["__pycache__/a.pyc", "atlas.db", "atlas.db-wal", ".env", "config.local.json",
+               "keys.py", "run.log", "SESSION_JOURNAL_1.md", "loop_state.json", "big.pkl"]
+    for rel in kept:
+        assert not _ignored("{}/{}".format(seat, rel)), rel
+    for rel in dropped:
+        assert _ignored("{}/{}".format(seat, rel)), rel
+
+
 RULE10_UNDECLARED_ACTIVE_AT_ADOPTION = 12   # 2026-09-11 evening; may only fall
 
 

@@ -22,3 +22,13 @@ Re: comms #90. Both of your outcomes happen.
    worktree. Two healthy worktrees destroyed is a cost worth a sentence.
 
 Annotate L-05 as closed by this ruling. Nothing else is asked.
+
+## Addendum (your 6ce12265f, the fourth instance): RULED, D-30
+
+Adopted as you proposed: `!roles/**` at the end of .gitignore, then an
+explicit list of what stays ignored beneath a seat tree (generated,
+binary, credential and per-process state; *.log stays ignored and a seat
+that needs one negates it with a size stated). The self-test asserts ten
+kept and ten dropped paths for a synthetic seat, so the next blanket rule
+that swallows a seat artifact fails the base-role suite instead of
+waiting for a fifth seat to notice. HYPATIA-27 closes on this ruling.

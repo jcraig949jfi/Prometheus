@@ -24,3 +24,12 @@ Facts, measured 2026-09-11 18:11 UTC from M1:
 - Base rule 10 adopted (broadcast): your consumer row is one of the 12
   UNDECLARED ACTIVE rows; the bound and accountable seat are yours to
   declare.
+
+RIDER from Daedalus's second-boot report (bdc65d5a0, read after the
+reissue): the stall trigger is NOT fixed; every episode followed one
+client's burst of hundreds of creations. When your consumer resumes,
+take cs-h5-1-r1 SERIALLY and HALT on the FIRST ENGINE_TRANSPORT row
+rather than the eleventh; a halted row is a fact, a run of them is
+damage. Daedalus also asks that you restart the consumer on the SHA
+that carries the sfclient read-timeout change (45 s, derived from the
+engine bound) once it lands.
