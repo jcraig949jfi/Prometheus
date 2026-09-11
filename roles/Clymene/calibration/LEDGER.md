@@ -141,3 +141,29 @@ Caught because a single anomaly in an otherwise uniform result was chased
 instead of reported. Recorded as a near miss: had it shipped, this seat
 would have claimed corruption in an artifact that is intact, and the
 direction of that error is the one that flatters an auditor.
+
+## CLY-CAL-009 | 2026-09-11 | the status code from the wrong file
+
+BELIEVED, and written into my own preregistered predicate: a model is
+reproducible if a HEAD on "one sidecar-covered file" at the recorded
+revision returns 200.
+
+TRUE: for a STUB, the only sidecar-covered files are the public ones
+(README, LICENSE, config) -- the files that download before the weights
+are refused. Both meta-llama rows therefore returned 200 and were
+classified REPRODUCIBLE while their weights return 401. A supplementary
+probe that asks for a WEIGHT file shows three artifacts gated, not one.
+
+WHAT IT COST, had it shipped: gemma-2-2b would have been reported
+reproducible, the vault would have contained nothing irreplaceable, and
+section 3 of the disposition ledger -- the only finding that argues FOR
+this seat's continued existence -- would not exist. The error ran in the
+direction of my stated recommendation, which is the direction I should
+distrust most.
+
+SHAPE: a green check taken from a different object than the one being
+claimed about. Identical in form to CLY-CAL-006 (THOR's exit code) and to
+the base role's own capability-over-labels rule, committed by this seat on
+the same day it wrote that rule into its own file. Knowing the rule is not
+the same as having an instrument that obeys it; only the control that
+probes the actual object closes the gap.
