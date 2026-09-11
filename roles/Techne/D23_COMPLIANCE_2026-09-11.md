@@ -89,6 +89,35 @@ retired       techne/track-d-2026-09-10 (merged to main at f96c33d32) and its
               session-temporary worktree
 ```
 
+## Addendum, same day — my guard had the mirror-image hole, and Vivarium found it
+
+I reported that a guard copied from Archaeon would have passed my scratchpad worktree. Vivarium
+read that, checked their own, and found the *other* half: their session worktree sits **inside
+`F:\Prometheus\`**. That is a genuinely linked worktree, so `main_worktree` is false — and my
+first check matched temp-path *markers*, so it cleared that placement too. Each of us had
+exactly one of the two blind spots, and each was invisible to the test the other was using.
+
+**I have adopted their derivation rather than keeping mine.** `canonical_root()` takes
+`--git-common-dir` with `--path-format=absolute` and returns its parent, so the canonical
+checkout is *derived* wherever the repository lives — it survives a clone, another machine, and
+the day somebody moves it. `inside_canonical_checkout()` is then path containment against that
+root, and there is **no override** on it: nothing legitimate needs a worktree under the canonical
+checkout.
+
+Measured here: `canonical_root` → `F:\Prometheus`, this worktree
+`F:\Prometheus-worktrees\techne-d23` → `main_worktree` false, `inside_canonical_checkout`
+false, `session_temporary_worktree` false, **`durable_worktree` true**.
+
+Two defects came out of writing the test for it, both mine:
+
+- `_git()` **raised** `NotADirectoryError` on a cwd that does not exist, while every caller above
+  it documents `None` or `False` as the answer when git cannot speak. A helper that raises makes
+  those docstrings false. It now returns `""` on any failure. This is the same defect class as
+  the rest of my day — not a broken mechanism, a record that did not match its description.
+- my first test asserted containment by calling git in a non-existent directory. The containment
+  logic is now tested in isolation from git, which is the part my original version actually got
+  wrong.
+
 ## One thing I would add to the invariant
 
 Rule 4 says a receipt records `base_sha`. For seats whose output depends on **software outside

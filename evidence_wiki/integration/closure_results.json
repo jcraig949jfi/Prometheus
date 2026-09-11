@@ -6,12 +6,12 @@
   {
    "gate": "C0_identity_attested",
    "pass": true,
-   "detail": "db_system_id=7628127204585430828 source_commit=afd3548db73b dirty=True"
+   "detail": "db_system_id=7628127204585430828 source_commit=7c36278f2363 dirty=True"
   },
   {
    "gate": "C1_packet_read",
    "pass": true,
-   "detail": "GET packets/SP-3138654647ba=200 (was 405), unknown=404"
+   "detail": "GET packets/SP-f3792e335acf=200 (was 405), unknown=404"
   },
   {
    "gate": "C2_fossil_attested",
@@ -26,7 +26,7 @@
   {
    "gate": "C4a_correct_bound_anchor_verified",
    "pass": true,
-   "detail": "verified=True checks={'valid': True, 'engine': {'source_commit': 'f1e36c0625d012077e662087208f5363ce11f900', 'engine_instance_id': 'eng_8a37a5d305969034d488c43e', 'engine_source_hash': 'sha256:084f951f866cc50aec73c6403528abc234fd514742b25ffd1aff5515a271feff'}, 'binds_exp_id': True, 'binds_obs_id': True, 'event_exists': True, 'binds_session': None, 'entry_hash_matches': True, 'binds_engine_instance': None, 'claimed_engine_instance': None, 'answering_engine_instance': 'eng_8a37a5d305969034d488c43e'}"
+   "detail": "verified=True checks={'valid': True, 'engine': {'source_commit': 'afd3548db73b291f4570201ca83672cc2625971e', 'engine_instance_id': 'eng_8a37a5d305969034d488c43e', 'engine_source_hash': 'sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e'}, 'binds_exp_id': True, 'binds_obs_id': True, 'event_exists': True, 'binds_session': None, 'entry_hash_matches': True, 'binds_engine_instance': None, 'claimed_engine_instance': None, 'answering_engine_instance': 'eng_8a37a5d305969034d488c43e'}"
   },
   {
    "gate": "C4b_wrong_but_real_rejected",
@@ -46,7 +46,7 @@
   {
    "gate": "C5_constraint_kinds",
    "pass": true,
-   "detail": "HARD=K-f2c1232b5335 ADVISORY=K-8de2abc9c791"
+   "detail": "HARD=K-957ab5bb1696 ADVISORY=K-242e32cfb8dd"
   },
   {
    "gate": "C6_scope_mandatory",
@@ -61,7 +61,7 @@
   {
    "gate": "C8_refuted_not_active",
    "pass": true,
-   "detail": "REFUTED K-8de2abc9c791 absent from status=PROPOSED listing (n_proposed=0)"
+   "detail": "REFUTED K-242e32cfb8dd absent from status=PROPOSED listing (n_proposed=0)"
   },
   {
    "gate": "C9_history_recoverable",
@@ -71,22 +71,22 @@
   {
    "gate": "C10_seal_written",
    "pass": true,
-   "detail": "seal=SEAL-2f1be0502c6515665ae5080e inserted=True"
+   "detail": "seal=SEAL-358a33ef79d2c041f0db891d inserted=True"
   },
   {
    "gate": "C11_seal_recoverable_sealed",
    "pass": true,
-   "detail": "seal_valid=True slots_absent=[] bound_fossil=CLOSURE-12869dc1-ENC"
+   "detail": "seal_valid=True slots_absent=[] bound_fossil=CLOSURE-139983d2-ENC"
   },
   {
    "gate": "C12_seal_idempotent",
    "pass": true,
-   "detail": "re-seal id=SEAL-2f1be0502c6515665ae5080e inserted=False"
+   "detail": "re-seal id=SEAL-358a33ef79d2c041f0db891d inserted=False"
   },
   {
    "gate": "C13_content_addressed_tamper_evident",
    "pass": true,
-   "detail": "changed-slot seal=SEAL-c1587d26d08ccede7700ed41 != SEAL-2f1be0502c6515665ae5080e"
+   "detail": "changed-slot seal=SEAL-2fbd7e3ebbf91646a7c5d2fd != SEAL-358a33ef79d2c041f0db891d"
   },
   {
    "gate": "C14_unknown_encounter_refused",

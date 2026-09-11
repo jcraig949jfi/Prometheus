@@ -64,7 +64,8 @@ def _import_owners():
     # makes it importable from an arbitrary entry point. Use theirs.
     ensure_viv_importable()
     from viv import artifacts as _va
-    return _ar, _pb, _va
+    from viv import library_leak as _vl
+    return _ar, _pb, _va, _vl
 
 
 class _Limits:
@@ -82,7 +83,8 @@ def _as_tuple(node):
     return tuple([node[0]] + [_as_tuple(x) for x in node[1:]])
 
 
-def _score(res, name, corpus, by_sexpr, held_out, ar, pb, va):
+def _score(res, name, corpus, by_sexpr, held_out, ar, pb, va, vl=None, target_tts=None,
+           known_solutions=None):
     """One corpus: what stitch learned, whether it is exportable, and what the
     owners' checkers say about it."""
     if not res.get("ok"):
@@ -118,6 +120,32 @@ def _score(res, name, corpus, by_sexpr, held_out, ar, pb, va):
             rejected = type(exc).__name__ + ": " + str(exc)
 
     n_leak = sum(1 for c in comps if c["from_held_out_phase2"])
+
+    # VIVARIUM'S SEMANTIC CHECKER, because mine was weaker than I had noticed.
+    # `from_held_out_phase2` is STRING EQUALITY on s-expressions, so it sees a
+    # component only when it is spelled exactly as some solved program was. Two
+    # things escape that: the same function spelled differently, and -- worse --
+    # a component computing the function of a held-out target that was never
+    # SOLVED, which my test cannot see at all because it only knows solutions.
+    # viv.library_leak.check compares TRUTH TABLES against the whole target set.
+    # Called even when the library is EMPTY. A null leak field would have to be
+    # read as "not checked" or "nothing to check", and a reader cannot tell which
+    # -- the same ambiguity this seat refuses elsewhere. An empty library returns
+    # CLEAN, which is true and is a measurement rather than an absence.
+    leak = None
+    if vl is not None:
+        leak = vl.check([{"name": "stitch_" + c["stitch_name"], "expr": c["expr"]}
+                         for c in comps], target_tts or {},
+                        known_solutions=known_solutions or {})
+        leak["n_target_tasks_my_syntactic_test_could_see"] = len(known_solutions or {})
+        leak["why_agreement_with_the_syntactic_test_is_not_coverage"] = (
+            "my test compares an s-expression against SOLVED programs, so it can only ever "
+            "see the %d targets that have a solution here, never the other %d. Where the two "
+            "agree on this corpus, they agree by coincidence -- the same shape as an "
+            "equal-width grid reproducing equal-mass edges because the edges happened to be "
+            "equal-width." % (len(known_solutions or {}),
+                              len(target_tts or {}) - len(known_solutions or {})))
+
     return {
         "ok": True, "derived_from": name, "n_programs": len(corpus),
         "n_abstractions": res["n_abstractions"],
@@ -125,7 +153,12 @@ def _score(res, name, corpus, by_sexpr, held_out, ar, pb, va):
         "components": comps, "refused_components": refused,
         "every_component_is_a_whole_program": bool(comps) and not refused,
         "n_components_from_held_out_phase2": n_leak,
-        "exportable_for_phase2_use": n_leak == 0,
+        "syntactic_leak_test_is_weaker": (
+            "n_components_from_held_out_phase2 is string equality on s-expressions and is "
+            "kept only so the two tests can be compared. The VERDICT is viv_library_leak."),
+        "viv_library_leak": leak,
+        "exportable_for_phase2_use": (
+            (leak["usable_as_a_library_effect"]) if leak is not None else n_leak == 0),
         "why_not_exportable": (
             None if n_leak == 0 else
             "%d of %d components ARE held-out phase-2 solutions; a search given them finds "
@@ -171,6 +204,8 @@ def _compare(out, theirs):
             "n_abstractions": out.get("ALL_17", {}).get("n_abstractions"),
             "n_from_held_out_phase2":
                 out.get("ALL_17", {}).get("n_components_from_held_out_phase2"),
+            "viv_leak_verdict":
+                (out.get("ALL_17", {}).get("viv_library_leak") or {}).get("verdict"),
             "exportable_for_phase2_use":
                 out.get("ALL_17", {}).get("exportable_for_phase2_use")},
     }
@@ -196,6 +231,9 @@ def _checks(out, theirs):
         ("LEAKAGE IS REPORTED RATHER THAN EXPORTED: any component that is itself a held-out "
          "phase-2 solution is counted and its corpus marked not exportable",
          all17.get("exportable_for_phase2_use") is not None),
+        ("the verdict comes from VIVARIUM'S SEMANTIC checker over the full held-out task set, "
+         "not from my string equality on s-expressions",
+         (all17.get("viv_library_leak") or {}).get("verdict") is not None),
     ]
     checks = [{"claim": k, "pass": bool(v)} for k, v in rows]
     verdict = (
@@ -216,7 +254,7 @@ def main(argv=None) -> int:
     ap.add_argument("--profile", default="stitch_core_reproduction")
     a = ap.parse_args(argv)
 
-    ar, pb, va = _import_owners()
+    ar, pb, va, vl = _import_owners()
 
     man = manifest_io.load()
     manifest_io.entry(man, "stitch_rust_core")
@@ -256,12 +294,20 @@ def main(argv=None) -> int:
     corpora = {"PHASE1_3": [p["solution_sexpr"] for p in p1],
                "ALL_17": [p["solution_sexpr"] for p in programs]}
 
+    # THE FULL HELD-OUT TASK SET, not just the solved ones. Archaeon's split is the
+    # authority on which tasks are held out; a leak test built from SOLUTIONS can
+    # only ever see targets that happen to have been solved.
+    split = ar.task_split()
+    target_tts = {t["task_id"]: t["tt"] for t in split["target"]}
+    known_solutions = {p["task_id"]: p["solution_ast"] for p in p2}
+
     out = {}
     with _budget.Budget(profile=_budget.get_profile(a.profile)) as b:
         for name, corpus in corpora.items():
             res = run_compress(binary, root, corpus, work / (name + ".json"),
                                iterations=a.iterations, max_arity=a.max_arity, b=b)
-            out[name] = _score(res, name, corpus, by_sexpr, held_out_sexprs, ar, pb, va)
+            out[name] = _score(res, name, corpus, by_sexpr, held_out_sexprs, ar, pb, va,
+                               vl=vl, target_tts=target_tts, known_solutions=known_solutions)
         rec["resource_receipt"] = b.resource_receipt()
 
     # ---- Archaeon's extractor on the SAME legitimate corpus ------------------
@@ -291,7 +337,14 @@ def main(argv=None) -> int:
                 "been handed its own test set, so ALL_17 is measured and reported but is NOT "
                 "exportable for use on phase 2 at any quality"),
             "n_phase1": len(p1), "n_phase2_cells": len(p2),
-            "n_phase2_distinct": len(held_out_sexprs)},
+            "n_phase2_distinct": len(held_out_sexprs),
+            "n_target_tasks_in_split": len(target_tts),
+            "n_target_tasks_with_a_known_solution": len(known_solutions),
+            "why_the_full_target_set_matters": (
+                "my own leak test compared against SOLVED PROGRAMS, so a component computing "
+                "the function of a held-out target that was never solved was invisible to it. "
+                "%d targets are in the split and only %d have a solution here."
+                % (len(target_tts), len(known_solutions)))},
         "stitch": out,
         "archaeon_existing_extractor": theirs_summary,
         "comparison": _compare(out, theirs_summary),

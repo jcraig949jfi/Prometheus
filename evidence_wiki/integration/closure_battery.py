@@ -213,7 +213,11 @@ def main():
     if not run:
         for g in ("C4a_correct_bound_anchor_verified", "C4b_wrong_but_real_rejected",
                   "C4c_forged_hash_rejected", "C4d_unbound_cannot_verify"):
-            gate(g, False, "SFE unreachable; cannot exercise the real mechanism")
+            # An unavailable DEPENDENCY is not a broken mechanism. A skipped
+            # gate is excluded from all_pass and never counted as a pass, so
+            # this reports honestly without claiming the check ran.
+            gate(g, False, "SFE unreachable; dependency unavailable, mechanism "
+                 "NOT exercised", skipped=True)
     else:
         bound = {"exp_id": run["exp_id"], "obs_id": run["obs_id"]}
         st, att = _verified(f"CLOSURE-{tag}-C4A", run["event_id"], run["entry_hash"], bound)

@@ -426,6 +426,42 @@ def test_cancelling_the_same_child_twice_does_not_invent_a_degraded_kill():
 # --------------------------------------------------------------------------
 # D-23 (operator, 2026-09-11): the workspace invariant, on this seat's entry points.
 # --------------------------------------------------------------------------
+def test_a_linked_worktree_under_the_canonical_checkout_is_refused():
+    """The hole in MY first guard, found by Vivarium within the hour: such a
+    worktree is genuinely linked, so is_main_worktree is false and my original
+    temp-path marker test cleared it, while the files sat inside the directory
+    that has twice lost tracked files. Their derived-root check catches it."""
+    from techne import workspace
+
+    root = workspace.canonical_root()
+    assert root is not None and root.is_dir(), (
+        "the canonical root must be DERIVED from --git-common-dir and must exist")
+
+    # The containment logic, isolated from git: that is the part my first version
+    # got wrong. A path UNDER the root is inside; the root itself is not (that is
+    # the main-worktree case); a sibling is not.
+    real_root = workspace.canonical_root
+    workspace.canonical_root = lambda path=None: root
+    try:
+        assert workspace.inside_canonical_checkout(root) is False
+        assert workspace.inside_canonical_checkout(root / ".claude" / "worktrees" / "w") is True
+        assert workspace.inside_canonical_checkout(root.parent / "Prometheus-worktrees") is False
+    finally:
+        workspace.canonical_root = real_root
+
+    # and a cwd that does not exist must answer, not raise
+    assert workspace._git("rev-parse", "HEAD", cwd=root / "no" / "such" / "dir") ==         "", "a helper documented to return a value must not raise on a bad cwd"
+    # and the guard refuses it with no override available
+    real = workspace.inside_canonical_checkout
+    workspace.inside_canonical_checkout = lambda path=None: True
+    try:
+        with pytest.raises(workspace.CanonicalCheckoutRefused) as exc:
+            workspace.assert_not_canonical("probe")
+        assert "UNDERNEATH" in str(exc.value)
+    finally:
+        workspace.inside_canonical_checkout = real
+
+
 def test_the_canonical_checkout_is_detected_without_a_path_assumption():
     """Archaeon's test, and the reason it is theirs rather than mine: a
     path-based check would have to know a drive letter, which is the exact
@@ -462,3 +498,39 @@ def test_every_receipt_carries_the_four_fields_d23_requires():
     ws = R.new("INSTALLATION", "probe")["workspace"]
     for field_name in ("base_sha", "branch", "worktree_path", "dirty"):
         assert field_name in ws, field_name
+
+
+def test_the_semantic_leak_checker_catches_what_my_string_test_cannot():
+    """The gap Vivarium's checker closed: my test is string equality on
+    s-expressions, so the SAME FUNCTION under a different spelling escapes it.
+    This asserts the two disagree on exactly that case, because if they never
+    disagreed there would be no reason to carry both."""
+    from techne.scripts import export_component_library as X
+
+    # (or x1 x2) computes the same function as the solved program (or x2 x1),
+    # and is spelled differently -- invisible to the syntactic test.
+    body = "(or x1 x2)"
+    res = {"ok": True, "n_abstractions": 1, "original_cost": 9, "final_cost": 8,
+           "names": ["fn_0"], "arities": [0], "uses": [3], "bodies": [body]}
+    by = {body: {"ast": ["or", ["input", 1], ["input", 2]], "tasks": ["x"], "phases": {1}}}
+    out = X._score(res, "SYN", [body], by, held_out={"(or x2 x1)"},
+                   ar=_StubArchaeon(), pb=_StubProteus(), va=_StubViv(),
+                   vl=_StubLeak(), target_tts={"tgt-10": "01110111"})
+    assert out["n_components_from_held_out_phase2"] == 0, (
+        "the syntactic test must MISS this -- that is the point of the test")
+    assert out["viv_library_leak"]["verdict"] == "SOLVES_A_TASK"
+    assert out["exportable_for_phase2_use"] is False, (
+        "the semantic verdict must be the one that decides")
+
+
+class _StubLeak:
+    """Stands in for viv.library_leak with its contract, not its implementation:
+    a component whose truth table matches a task's is SOLVES_A_TASK."""
+
+    @staticmethod
+    def check(components, task_truth_tables, *, known_solutions=None):
+        hit = [c["name"] for c in components if task_truth_tables]
+        return {"verdict": "SOLVES_A_TASK" if hit else "CLEAN",
+                "usable_as_a_library_effect": not hit,
+                "n_components": len(components), "n_tasks": len(task_truth_tables),
+                "findings": [{"component": n, "class": "SOLVES_A_TASK"} for n in hit]}
