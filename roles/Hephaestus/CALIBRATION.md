@@ -36,3 +36,29 @@ reading of the gauntlet's own output by this seat is a same-author reading.
 - 2026-06-24 to 2026-09-11: ROLE.md carried "running on M3 / GANDALF" as a
   seat property. The seat is host-independent; the host is a receipt
   field (annotation in ROLE.md s1).
+- 2026-09-01 (found 2026-09-11): the closure gauntlet, FROZEN at 1f4c5ca72
+  as "the standard Forge test", hard-wired its coerced comparison to
+  bool(). Correct for the two boolean-valued specimens it had been run
+  on; degenerate for any vector-valued target, where every non-empty
+  output casts to True: every vector program would have matched the
+  target on the six probes AND on the 1,290-point exhaustive domain, so
+  the gauntlet would have reported thousands of "mechanism-bearing"
+  witnesses in A0 for every LOST target and classified all of specimen 3
+  SEARCH_ROUTING. A green instrument for the wrong reason, on the very
+  specimen chosen as the OPERATOR positive control. Caught only because
+  the run was slow enough to read the code before reading a number.
+  Correction: spec-declared COERCE, default unchanged (boolean specs
+  re-checked byte-identical). Lessons: (1) an instrument frozen after two
+  specimens of one value type has not been shown to work on a second
+  value type; freezing is not validation; (2) the positive control must
+  be run BEFORE the instrument is declared standard, not as specimen 3;
+  (3) base rule "verify the property, never the label": "verify_exhaustive
+  = True" was a label.
+- 2026-09-01 (found 2026-09-11): the same enumerator's "at least one
+  argument from the previous layer" test was a linear scan over a list of
+  closures inside a product over pool x pool, uncounted by the budget; on
+  TINYPROG pools one target ran more than 20 minutes (907 s CPU) without
+  finishing. Corrected with a depth tag (O(1), identical enumeration).
+  The "300,000 evaluation budget" bounded evaluations, never runtime; a
+  budget that does not bound the thing you wait for is not the bound you
+  think it is.

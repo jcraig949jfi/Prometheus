@@ -94,7 +94,8 @@ def main() -> None:
     L.append("  - Operator no-touch (2026-08-24) scope unresolved (Lexis decision #4).")
     L.append("  - Cheap endpoints on M3: nvidia NIM free tier + local ollama/phi3 only; gemini/groq/openrouter/deepseek keys dead here.")
     L.append("")
-    L.append("ENV: PYTHONPATH=C:\\prometheus ; keys.py shim at repo root (gitignored) resolves NVIDIA/GITHUB from agents/hephaestus/.env ; python 3.11")
+    L.append("ENV: run from a linked worktree (D-23; every hephaestus/src entry point refuses the canonical checkout) with PYTHONPATH set to that worktree root; keys.py shim at repo root (gitignored) resolves NVIDIA/GITHUB from agents/hephaestus/.env where that file exists (M3; absent on M1 as of 2026-09-11); python 3.11+")
+    L.append("LAST SPECIMEN: hephaestus/prereg/READOUT_Q045_specimen3_2026-09-11.md (Q045 OPERATOR positive control: LOST 18 OPERATOR / 2 INCONCLUSIVE(B) / 0 SEARCH_ROUTING; CONTROL 10/10 at A0)")
     (P.HEPH / "HEPHAESTUS_HANDOFF.txt").write_text("\n".join(L) + "\n", encoding="utf-8")
     print("\n".join(L))
 

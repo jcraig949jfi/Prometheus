@@ -77,9 +77,18 @@ def enumerate_arm(spec, ops: dict, max_depth: int, budget: int, generic: dict | 
     t0 = time.time()
     allops = dict(ops); allops.update(generic or {})
     S = spec.SEARCH_POINTS; V = spec.VERIFY_POINTS; W = getattr(spec, "VERIFY_SHIFT_POINTS", None)
-    targets = {k: tuple(bool(spec.target(k, p)) for p in S) for k in spec.ROUTE_KEYS}
-    vtargets = {k: tuple(bool(spec.target(k, p)) for p in V) for k in spec.ROUTE_KEYS}
-    wtargets = {k: tuple(bool(spec.target(k, p)) for p in W) for k in spec.ROUTE_KEYS} if W else None
+    # 2026-09-11 tooling correction (specimen 3, first execution). The coerced comparison was
+    # hard-wired to `_bools` (every output cast to bool). That is the preregistered definition
+    # ("equal on the six probes") only for boolean-valued routes (specimens 1 and 2). For a
+    # vector-valued route every non-empty vector casts to True, so EVERY vector program matched
+    # the target on the probes AND on the 1,290-point exhaustive domain: the gauntlet would have
+    # called every candidate mechanism-bearing. A spec may now declare COERCE (a function from the
+    # output vector to the compared value); the default is `_bools`, so the boolean specs are
+    # unchanged (equivalence re-checked; journal 2026-09-11). CALIBRATION.md carries the lesson.
+    coerce = getattr(spec, "COERCE", None) or _bools
+    targets = {k: coerce(tuple(spec.target(k, p) for p in S)) for k in spec.ROUTE_KEYS}
+    vtargets = {k: coerce(tuple(spec.target(k, p) for p in V)) for k in spec.ROUTE_KEYS}
+    wtargets = {k: coerce(tuple(spec.target(k, p) for p in W)) for k in spec.ROUTE_KEYS} if W else None
     classes: dict[tuple, dict] = {}          # (type, value-vector) -> {"exprs": [(expr, fn)], "shapes": set()}
     layers: list[list[tuple[str, str, object]]] = []
     evaluated = 0
@@ -90,8 +99,8 @@ def enumerate_arm(spec, ops: dict, max_depth: int, budget: int, generic: dict | 
         key = (typ, tuple(_hashable(x) for x in vec))
         cls = classes.get(key)
         if cls is None:
-            classes[key] = {"exprs": [(expr, fn, depth)], "shapes": {_shape(expr)}, "bools": _bools(vec)}
-            return (expr, typ, fn)
+            classes[key] = {"exprs": [(expr, fn, depth)], "shapes": {_shape(expr)}, "bools": coerce(vec)}
+            return (expr, typ, fn, depth)
         sh = _shape(expr)
         if len(cls["exprs"]) < MAX_EQUIV and sh not in cls["shapes"]:
             cls["exprs"].append((expr, fn, depth)); cls["shapes"].add(sh)
@@ -112,7 +121,14 @@ def enumerate_arm(spec, ops: dict, max_depth: int, budget: int, generic: dict | 
             for args in itertools.product(*cands):
                 if evaluated >= budget:
                     break
-                if not any(a in layers[-1] for a in args):
+                # 2026-09-11 tooling correction (specimen 3, first execution): the original test was
+                # `any(a in layers[-1] for a in args)`, a linear scan over a list of closures for every
+                # pair in the product, and skipped pairs do not count against `budget`; on TINYPROG-sized
+                # pools one target ran >20 min. Each entry carries its depth (4th element), so the same
+                # predicate -- at least one argument was created at the previous depth -- is O(1). The
+                # enumeration order, the budget accounting and every result are unchanged (equivalence
+                # checked against the pre-change enumerator on the vacuous_truth spec; journal 2026-09-11).
+                if not any(a[3] == depth - 1 for a in args):
                     continue
                 fs = [a[2] for a in args]
                 def f(pt, op=op, fs=fs):
@@ -134,8 +150,8 @@ def enumerate_arm(spec, ops: dict, max_depth: int, budget: int, generic: dict | 
                 continue
             for expr, fn, depth in cls["exprs"]:
                 h = {"expr": expr, "depth": depth, "static_type": typ, "typed": typ == spec.TARGET_TYPE}
-                h["verify_exhaustive"] = (_bools(_vec(fn, V)) == vtargets[k])
-                h["verify_shift"] = (_bools(_vec(fn, W)) == wtargets[k]) if W else None
+                h["verify_exhaustive"] = (coerce(_vec(fn, V)) == vtargets[k])
+                h["verify_shift"] = (coerce(_vec(fn, W)) == wtargets[k]) if W else None
                 h["mechanism_bearing"] = bool(h["typed"] and h["verify_exhaustive"])
                 h["robust"] = bool(h["mechanism_bearing"] and (h["verify_shift"] if W else True))
                 hits.append(h)

@@ -17,6 +17,8 @@ gauntlet with a recorded `CLOSURE_MARGIN`.
 | F4 | **Recursive / transitive property** | closure or fixpoint of a relation → set/relation | — (MINT-0004's witness uses the closure but its target is F3) |
 | F5 | **Stateful / temporal property** | a sequence of states or events → bool/value depending on order and history | — |
 | F6 | **Constructive transformation** | input structure → output structure (not a verdict) | — |
+
+> *Annotation 2026-09-11 (specimen 3, Q045 TINYPROG, `hephaestus/prereg/READOUT_Q045_specimen3_2026-09-11.md`): F6 is the first family with an executed OPERATOR positive control -- 18 of 20 LOST targets OPERATOR, 2 INCONCLUSIVE because arm B lacks scalar ops, 0 SEARCH_ROUTING; 10 of 10 CONTROL targets SEARCH_ROUTING at A0. The gauntlet needed a spec-declared `COERCE` (exact equality) to evaluate this family at all; its default bool() coercion is degenerate on non-boolean outputs. Same-author reading; rows in `hephaestus/closure_results/q045_lost_class.json`.*
 | F7 | **New state / memory** | a mapping that cannot be computed from the visible state without an auxiliary store or unbounded recursion | — |
 
 Rules:

@@ -1,6 +1,6 @@
 # Hephaestus status
 
-Currency: 2026-09-11 11:55 UTC (adoption pass). Plain language. Update at
+Currency: 2026-09-11 13:15 UTC (adoption pass + specimen 3 executed). Plain language. Update at
 least every four hours of activity. Each status line says which of
 PRESENT / ACTIVE / PRODUCTIVE / VALID it asserts.
 
@@ -25,31 +25,29 @@ PRESENT / ACTIVE / PRODUCTIVE / VALID it asserts.
 - No scheduled tasks exist for this seat on this host (verified
   2026-09-11 with Get-ScheduledTask); none should (charter Addendum 4).
 
-## Specimen 3 (Q045 unreachable class) -- ACTIVE, result pending
+## Specimen 3 (Q045 unreachable class) -- EXECUTED, VALID as far as this seat can say
 
-- Preregistered 2026-09-01 (hephaestus/prereg/PREREG_Q045_specimen3_2026-09-01.md),
-  runner committed unrun. First execution 2026-09-11 from this worktree.
-- Two tooling corrections on first execution, both before any target was
-  evaluated and neither touching a preregistered rule: (1) the canonical-
-  order sort compared S and V signatures and raised TypeError; now sorts
-  V-typed behaviours only (S were never eligible); (2) stage timing to
-  stderr and `deep_seconds` in the result, so the prereg's 10-minute
-  clause for R_imp8 is measurable.
-- Measured so far (stderr log): R_full5 3,319 signatures (all types) from
-  9,134 candidates; R_imp5 1,546 from 4,406; R_imp8 63,050 from 315,899
-  candidates, budget NOT exhausted, 8.0 s. The 10-minute clause does not
-  fire; depth 8 stands. The per-target gauntlet (30 targets x 4 arms x
-  300,000 budget) is the slow stage: more than 2.5 minutes per target.
-- Result file: hephaestus/closure_results/q045_lost_class.json (written by
-  the program with the workspace receipt). P1-P5 are read only from that
-  file, in the readout, after it exists.
+- Run of record: run 2, 2026-09-11, 1,450.6 s, rows in
+  hephaestus/closure_results/q045_lost_class.json, readout in
+  hephaestus/prereg/READOUT_Q045_specimen3_2026-09-11.md.
+- LOST 18 OPERATOR / 2 INCONCLUSIVE(B did not reach) / 0 SEARCH_ROUTING;
+  A0 and A2 witnesses and aliases 0/20; C witness 20/20, robust 20/20.
+  CONTROL 10/10 SEARCH_ROUTING at A0, robust. P1 TRUE at the line
+  (18/20 = 0.90, n = 20); P2, P3 TRUE; P4 TRUE by the prereg sentence
+  (coded predicate was mis-encoded, both reported); P5 FALSIFIED.
+- Three defects in the committed-unrun runner and two in the frozen
+  gauntlet were found and corrected at first execution, before any
+  verdict was read; one (bool coercion) would have inverted the result.
+  The boolean specimens' committed results are reproduced exactly by the
+  corrected code. CALIBRATION.md and the readout carry the detail.
+- Same-author reading (conflict declared). Not admitted anywhere.
 
 ## The forge's engines -- PRESENT, not re-verified this pass
 
 - +11pp R3 / +32pp R4 last reproduced 2026-08-19 (ABLATION_CARD). Not
   re-run from a worktree yet (HEPH-20).
-- Cheap-model shelf (nvidia NIM, ollama) last verified on M3 2026-09-01;
-  UNVERIFIED on this host (HEPH-04).
+- Cheap-model shelf: NIM credential file ABSENT on this host; ollama LIVE here
+  (12 models). No eligible packet, so no call made (HEPH-04).
 
 ## Blockers
 
@@ -61,6 +59,7 @@ PRESENT / ACTIVE / PRODUCTIVE / VALID it asserts.
 
 ## Next executable action
 
-Read q045_lost_class.json when it lands; write the readout beside the
-prereg (HEPH-06); commit rows + readout together; regenerate handoff/rank
-(HEPH-03); review packet.
+HEPH-11 (freshness file for the queue), then HEPH-09/10 (generalised
+negative and cheat controls for the gauntlet on the boolean specs), then
+HEPH-24 (Z7 ring change as a versioned tooling change) -- in that order,
+unless the operator answers HEPH-17 first.

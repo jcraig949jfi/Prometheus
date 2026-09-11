@@ -50,7 +50,11 @@ def closure_with_programs(prims, max_size, max_candidates):
                         if key not in progs:
                             progs[key] = e; layers[size][spec["ret"]].append(e)
             else:
-                for s1 in range(0, size - 1):
+                # 2026-09-11 tooling correction (run 1 of specimen 3): range(0, size - 1) never paired a
+                # size-(n-1) left argument with the size-0 terminal on the right, so op(p(X), X) orderings
+                # were missed for non-commutative ops: 2,975 full-inventory V-signatures at size <= 5
+                # against world3.build_closure's 3,502 (imp: 1,366 both). Now the closures are set-identical.
+                for s1 in range(0, size):
                     s2 = size - 1 - s1
                     for e1 in layers[s1][spec["args"][0]]:
                         for e2 in layers[s2][spec["args"][1]]:
@@ -95,6 +99,9 @@ class Spec:
     ROUTE_KEYS = ["target"]
     TARGET_TYPE = "vec"
     TERMINALS = {"X": ("vec", lambda pt: pt)}
+    # 2026-09-11: exact equality of outputs on the probes (the prereg's "coerced = equal on the six
+    # probes"); the gauntlet's default bool-coercion is degenerate for vector-valued targets.
+    COERCE = staticmethod(lambda vec: tuple(vec))
 
     def __init__(self, program, prims_full, search, verify, shift):
         self.program, self.prims_full = program, prims_full
@@ -205,7 +212,11 @@ def run(deep_size=8, deep_candidates=30_000_000):
         "P1_lost_operator_ge_90pct": (s["LOST"]["OPERATOR"] / max(1, s["LOST"]["n"])) >= 0.9,
         "P2_control_search_routing_A0_100pct": s["CONTROL"]["SEARCH_ROUTING_A0"] == s["CONTROL"]["n"],
         "P3_A2_leak_zero": s["LOST"]["A2_LEAK"] == 0,
-        "P4_C_witnesses_robust": s["LOST"]["C_robust"] == s["LOST"]["OPERATOR"],
+        # 2026-09-11: encoded as the prereg sentence "every C witness is robust" (targets with a C
+        # witness == targets with a robust C witness); the run-of-record JSON of run 2 carries the
+        # earlier encoding C_robust == OPERATOR, which differs whenever an INCONCLUSIVE row has a C
+        # witness. READOUT_Q045_specimen3_2026-09-11.md section 3c.
+        "P4_C_witnesses_robust": s["LOST"]["C_robust"] == sum(t["arms"]["C"]["n_mech"] > 0 for t in lost_recs),
         "P5_some_A0_aliases_on_lost": s["LOST"]["A0_aliases_present"] > 0,
     }
     # D-23: every result records where it was built (base_sha, branch, worktree_path, dirty).
