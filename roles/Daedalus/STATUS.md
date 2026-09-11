@@ -1,6 +1,6 @@
 # Daedalus -- status
 
-Currency: 2026-09-11 14:30 local (base role s3 requires this file; refreshed at
+Currency: 2026-09-11 17:30 local (base role s3 requires this file; refreshed at
 least every four hours of activity).
 
 ## Where I am working
@@ -9,10 +9,10 @@ least every four hours of activity).
 |---|---|
 | worktree | `F:\Prometheus-worktrees\daedalus-d23` |
 | branch | `daedalus/d23-workspace` |
-| base_sha | `c8d576e41` (origin/main merged explicitly at boot, 14:06) |
+| base_sha | `c8d576e41` at boot; merged forward to `de033f529` |
 | dirty | no (tracked) |
 | base role read at | `2b79c140a`; re-read at `c8d576e41` |
-| comms | booted 14:06; 4 queued (6, 35, 29, 32); reports 41/48/62/99 read |
+| comms | booted 14:06; queue EMPTY at 17:24 (6, 35, 29, 32 done); last sync read through 181 |
 
 ## What is running
 
@@ -35,16 +35,21 @@ The cause is not established. Hypothesis H1 (per-request connection close
 runs a full WAL checkpoint under EXCLUSIVE lock) is written with its
 falsifiers in the journal and in the report to Archaeon; C9 is the test.
 
-## Open, in order
+## Open, in order (operator's reorder of 17:00, relayed review)
 
-1. **A1** client read timeout above the engine busy overshoot (comms 29).
-2. **C9** real-HTTP burst-then-stall fixture on a ledger copy; kills or
-   keeps H1. Fix, if any, batches with A6 + C7 into one deploy window.
-3. **B3** `/v2/health` with the base-rule-8 productivity signal.
-4. **KAIROS-01** claim census (b) first; **B1** read grant once Archaeon
-   names the worlds.
-5. **A6** implemented (designed + acceptance-tested; needs operator read on
-   the four-verdict vocabulary, then deploy authority). **C7** held with it.
+Done today after the reorder: MONITORS repair (`b11c9931b`: SFEngine
+not-a-loop with its real freshness gap; M2 watchdog state file + 3-tick
+bound + park, CODE_FIXED not deployed on M2); B1 readiness (`f2b8b3415`:
+tool for the owner, delegations to Vivarium and Archaeon, grantee principal
+is the gap); KAIROS-01 (`8fc4531f3`: census (b), 8 claims on M1, all mine).
+
+1. **C9** real-HTTP burst-then-quiet fixture on a ledger copy; kills or
+   keeps H1. NEXT.
+2. **H1 fix** only if C9 earns it.
+3. **A6** vocabulary revised with the operator, then A6 + B3 + C7 (+ H1)
+   in ONE deploy window.
+4. Canonical-copy deletion, separately from any engine restart.
+5. D-WD-1: an M1 watchdog with the rule-10 bound (M1 has none today).
 
 ## Blocked on someone else
 
