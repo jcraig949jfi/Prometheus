@@ -2,48 +2,73 @@
 
 > Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md (operator, D-23, 2026-09-11); this file adds to them and may not contradict them.
 
-Currency: 2026-09-11T17:00Z (written on the adoption pass). Next update: on
-the next pass, or within four hours of any activity.
+Currency: 2026-09-11T17:40Z. This file is FINAL for the parked state; it is
+updated again only if the resurrection predicate is satisfied or the
+operator rules otherwise.
 
-    seat state        BLOCKED on SKOPOS-XL-01 (operator decision:
-                      revive re-premised / park / retire)
-    four words        PRESENT (code, data and this directory committed)
-                      not ACTIVE (last run 2026-04-01, 163 days ago)
-                      not PRODUCTIVE (lifetime: 1 entity scored,
-                        5 rows, 0 Titan prompts)
+    disposition       PARKED / INSTRUMENT_SPECIMEN
+                      (operator ruling, 2026-09-11; SKOPOS-XL-01 CLOSED)
+    four words        PRESENT (code, data, seat directory and, since
+                        today, the six historical reports are committed)
+                      not ACTIVE (last run 2026-04-01; will not run)
+                      not PRODUCTIVE (lifetime: 1 entity scored of 448
+                        eligible, 5 rows, 0 Titan prompts)
                       VALID -- not applicable; nothing adjudicated
-    seated            2026-09-11, first time since 2026-04-01
-    machine           M2 (the D: host)
-    worktree          Prometheus-worktrees/skopos-base-role
-    branch            skopos/base-role-adopt-2026-09-11
+    latent charter    Skopos does not decide what is relevant. Skopos
+                      measures whether a selector had a fair opportunity
+                      to decide, and whether its reported performance
+                      survives controls.  NOT ACTIVE.
+    resurrection      an active seat that owns a selector explicitly
+    predicate         requests selection instrumentation AND names the
+                      selection surface to be measured. Until then,
+                      nothing here becomes live.
+    machine           M2 (SPECTREX5)
+    worktree          Prometheus-worktrees/skopos-base-role -- removed at
+                      session close under WORKING_CONTRACT.md s5
     base_sha          363120e08665af062d40810183624fa23ed19698
-    dirty             no tracked changes outside this seat's paths
 
-## What ran on this pass
+## Loops, monitors, watchdogs and scheduled processes owned
 
-Nothing executable of this seat's own. No scorer run, no database write, no
-report generated. Read-only measurement of the historical artifacts, plus
-the seat directory and the two base-role register rows.
+NONE ACTIVE, and none left behind by this pass. The single registry row,
+SkoposScoreCycle in roles/base-role/MONITORS.md, is state PARKED /
+INSTRUMENT_SPECIMEN. No daemon, scorer or model call was made on either
+pass. No recurring process exists.
 
-## Loops this seat owns
+## What was executed under the ruling
 
-One, SkoposScoreCycle, registered in roles/base-role/MONITORS.md on this
-pass. State DORMANT since 2026-04-01. NOT relaunched: its upstream, its
-invoker and its consumer are all dead (base rule 9 -- upstream liveness is
-a launch precondition), and the seat is BLOCKED. It had no freshness record
-and none was added, because adding instrumentation to a loop that must not
-run is decoration.
+    SKOPOS-06   agents/skopos/README.md annotated in place. 116 lines
+                inserted, 0 deleted. Original text, including its
+                non-ASCII characters, unchanged below the block.
+    SKOPOS-07   the six alignment reports annotated, originals preserved
+                byte-for-byte with their sha256, at
+                roles/Skopos/artifacts/alignment/.
 
-## Open blockers
+Everything else on the backlog is closed as PARKED, not deferred.
 
-    SKOPOS-XL-01  operator  revive re-premised / park / retire.
-                  Seat's recommendation: PARK. Reason in
-                  RESPONSIBILITIES.md section 5, and it argues against
-                  this seat's own revival.
+## What was found while executing it
+
+The six reports were NEVER COMMITTED -- .gitignore:200 (`agents/*`), no
+re-include for agents/skopos/. They existed only as untracked files in one
+working directory on one host for 163 days, while a downstream consumer
+(agents/metis/src/metis.py:94-103) read them off disk as model context.
+They entered version control for the first time today. Full note:
+ARCHAEOLOGY section 1 correction; the seat's own error in describing them
+is CALIBRATION.md L-06.
+
+## The finding this specimen carries
+
+    eligible    observed    judged    accepted    rejected
+
+"Rejected" and "not observed" are different outcomes. A rejection rate is
+not evidence about selection quality when the observation denominator is
+absent. The March result was not "99% rejection"; it was approximately
+99.78% NOT LOOKED AT. Recoverable residue, not an invariant this seat is
+authorised to impose.
 
 ## Nearest honest summary
 
 An agent whose job was to notice what matters could not notice that it had
-stopped working, and published a number 5x in its own favour for ten days
-while a health check said OK. That is the finding. The seat has nothing
-else to report and is not asking for work.
+stopped working, published a number 5x in its own favour for ten days while
+a health check said OK, and did it all in files that were never committed.
+The seat is parked with that on the record, its artifacts corrected beside
+their originals, and nothing running.
