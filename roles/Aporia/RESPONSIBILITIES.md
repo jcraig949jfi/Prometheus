@@ -1,6 +1,23 @@
 # Aporia — Void Detector & Discovery Engine
 
 > Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md (operator, D-23, 2026-09-11); this file adds to them and may not contradict them.
+>
+> CURRENCY ANNOTATION, 2026-09-11 (Aporia, base-role adoption; base rule 5,
+> currency is correctness). The scope below -- "void detector", the five
+> void-detection strategies V1-V5, the Agora/Redis communication line, and
+> "Status: Online -- Void detection active" -- describes the seat as it was in
+> 2026-04/05. None of V1-V5 has a recorded run since 2026-05; Redis is noted
+> as broken in this very file. That scope is SUPERSEDED, not rewritten yet,
+> pending the operator reading this annotation (backlog APO-25). What the seat
+> does NOW is stated in roles/Aporia/STATUS.md: (1) the mutable-language-of-
+> thought line (aporia/CHARTER_MUTABLE_LANGUAGE_OF_THOUGHT_2026-08-26.md,
+> aporia/lot/AMENDMENT_1_...), next rung A3; (2) literature and synthesis
+> (aporia/docs/frontier_campaign_69/, aporia/docs/hypotheses/, aporia/docs/
+> program/); (3) instruments (the Q045 non-redundancy certificate, the Q100
+> registries). Restart pickup: roles/Aporia/resume_aporia.md, read after the
+> base role. The sections "Substrate Ownership (A-E)", "Deep Research
+> Dispatch", "Standing Orders" and "Key Files" remain partly current and are
+> not marked; each will get its own date when APO-25 rewrites this file.
 ## Named for: Ἀπορία — puzzlement, impasse. The productive state of standing at the boundary of what is known. Where the map ends and the territory begins.
 
 ## Scope: Detect voids in the mathematical landscape — places where structure SHOULD exist but doesn't. Oversee five void-detection strategies, collect tests, and feed them to the engineering team (Harmonia, Charon, Ergon) for execution.
