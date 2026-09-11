@@ -1,0 +1,65 @@
+{
+  "note": "SAME-MODEL same-session rerun; descriptive only; high agreement is determinism, not correctness",
+  "cases": {
+    "atalanta": {
+      "steps_run1": 12,
+      "steps_run2": 12,
+      "step_count_delta": 0,
+      "matched_pairs": 11,
+      "strong_matches_j>=0.5": 5,
+      "strong_match_fraction": 0.417,
+      "mean_jaccard_all_pairs": 0.485,
+      "mean_jaccard_strong": 0.795,
+      "reasoning_class_agreement_on_strong": 1.0,
+      "kind_agreement_on_strong": 1.0,
+      "dag_depth_run1": 4,
+      "dag_depth_run2": 5,
+      "terminal_claim_jaccard": 0.368
+    },
+    "hypatia": {
+      "steps_run1": 14,
+      "steps_run2": 14,
+      "step_count_delta": 0,
+      "matched_pairs": 13,
+      "strong_matches_j>=0.5": 8,
+      "strong_match_fraction": 0.571,
+      "mean_jaccard_all_pairs": 0.657,
+      "mean_jaccard_strong": 0.955,
+      "reasoning_class_agreement_on_strong": 1.0,
+      "kind_agreement_on_strong": 1.0,
+      "dag_depth_run1": 4,
+      "dag_depth_run2": 4,
+      "terminal_claim_jaccard": 0.7
+    },
+    "nephele": {
+      "steps_run1": 15,
+      "steps_run2": 16,
+      "step_count_delta": 1,
+      "matched_pairs": 15,
+      "strong_matches_j>=0.5": 11,
+      "strong_match_fraction": 0.688,
+      "mean_jaccard_all_pairs": 0.763,
+      "mean_jaccard_strong": 0.936,
+      "reasoning_class_agreement_on_strong": 1.0,
+      "kind_agreement_on_strong": 1.0,
+      "dag_depth_run1": 5,
+      "dag_depth_run2": 5,
+      "terminal_claim_jaccard": 0.95
+    },
+    "iris": {
+      "steps_run1": 14,
+      "steps_run2": 13,
+      "step_count_delta": -1,
+      "matched_pairs": 13,
+      "strong_matches_j>=0.5": 8,
+      "strong_match_fraction": 0.571,
+      "mean_jaccard_all_pairs": 0.587,
+      "mean_jaccard_strong": 0.837,
+      "reasoning_class_agreement_on_strong": 1.0,
+      "kind_agreement_on_strong": 1.0,
+      "dag_depth_run1": 4,
+      "dag_depth_run2": 4,
+      "terminal_claim_jaccard": 0.739
+    }
+  }
+}
