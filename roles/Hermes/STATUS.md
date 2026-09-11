@@ -2,7 +2,8 @@
 
 > Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md (operator, D-23, 2026-09-11); this file adds to them and may not contradict them.
 
-Currency: 2026-09-11T15:30Z, written at the base-role adoption pass.
+Currency: 2026-09-11T16:09Z. Written at the base-role adoption pass,
+updated after the same day's second pass (the identity-guard assignment).
 Plain language. Previous machine-readable status: none -- this seat has
 never had one. The digests under agents/hermes/digests/ are the old
 loop's output, not the seat's status.
@@ -11,21 +12,22 @@ loop's output, not the seat's status.
 
 Asserting PRESENT (roles/Hermes exists on this branch; comms boot
 recorded 2026-09-11T15:26Z). ACTIVE (the seat has a lane, a backlog and
-a first executable action). NOT PRODUCTIVE today: the operator's prompt
-scoped this pass to bootstrap and registration, so nothing was executed
--- no mail, no script, no restart, no producer touched. VALID: not
-applicable; no instrument ran, so nothing claims to have measured
-anything except the freshness facts below, each of which names its
-command.
+a first executable action). PRODUCTIVE as of the second pass: an
+instrument was built, run against real targets and committed (see
+"Second pass" below). The adoption pass executed nothing, by
+instruction. VALID: the guard's own claim -- that it accepts the
+canonical store and refuses wrong-but-plausible ones -- is supported by
+14 tests including a cheat control, and is not yet supported by anything
+outside this seat; that is what the routed packet asks for.
 
 ## Where the seat is
 
 - workspace: D:\Prometheus-worktrees\hermes-base-role (linked worktree;
   git-dir D:/Prometheus/.git/worktrees/hermes-base-role differs from
   git-common-dir D:/Prometheus/.git; the D-23 guard passes)
-- branch: hermes/base-role-adopt-2026-09-11, base_sha 8714b2709
-  (origin/main at fetch; checkout run unbounded per WORKING_CONTRACT s3,
-  39,284 files, clean)
+- branch: hermes/comms-identity-guard, base_sha 05b1134e6 (second pass;
+  the adoption pass ran on hermes/base-role-adopt-2026-09-11 from
+  base_sha 8714b2709, merged to main)
 - machine: M2 (SPECTREX5)
 - base role: read in full at 8714b2709; receipt
   roles/Hermes/BASE_ROLE_ADOPTION_2026-09-11.txt
@@ -102,8 +104,43 @@ command.
 - executed: nothing. No email, no loop started or stopped, no database
   written except the comms boot and sync rows the base role mandates
 
+## Second pass, 2026-09-11 (operator assignment: the wrong database)
+
+Executed this time, and it is the seat's first productive work: an
+identity guard for database connections, with 14 adversarial tests green
+against the two real clusters plus a constructed target.
+
+- built  roles/Hermes/science/db_identity.py, ENVIRONMENTS.json,
+         test_db_identity.py (positive + negative + CHEAT controls)
+- found  the discriminator already existed and was never compared to
+         anything: evidence_wiki/ew/closure.py service_attestation()
+         reads pg_control_system().system_identifier and stamps it on
+         every row. The expectation and the refusal were missing, not
+         the evidence.
+- found  comms was hardened four hours earlier (5f9d8ea7e) with a
+         STRUCTURAL check. It closes the fork-the-queue path and it
+         cannot discriminate identity: a database given the real
+         comms/schema.sql satisfies comms's own predicate (demonstrated
+         with a built-and-dropped fixture).
+- found  the Evidence Wiki path is the open one: `ew` exists in BOTH
+         stores (41 tables on M1, 34 on the M2 fork), so a call resolved
+         to localhost on M2 succeeds with no error at all.
+- routed roles/Hermes/prompts/2026-09-11_comms_identity/ to Archaeon
+         (comms) and Mnemosyne (Evidence Wiki), Harmonia copied as
+         information only. Hermes modified neither lane's code.
+- opened roles/Hermes/incidents/c84e26826cc12217.md -- one file per
+         failure SIGNATURE, all five seats' occurrences in it.
+
+Success criterion, answered honestly: "wrong M2 database" is NOT yet
+mechanically impossible. It becomes so when two one-call diffs are
+applied by their owners. What IS now true is that the discriminator
+exists, is committed, is tested against real wrong targets including a
+deliberately perfect fake, and the reason it is not yet enforced is a
+lane boundary and two pending rulings, not a missing capability.
+
 ## Next executable action
 
+HERMES-26 tracks the packet to a ruling. Independent of it:
 HERMES-01: write the delivery ledger (last_input_at, last_success_at,
 payload sha256, no-op reason) as a committed JSON with its schema, and
 prove it with a --dry-run that writes one row. It does not depend on
