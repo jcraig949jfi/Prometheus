@@ -24,8 +24,9 @@ Format: date | call | direction of the error | how caught | source
 2026-09-03 | Section-16 decision rule for RUN_A_SMALLER_CALIBRATION_FIRST had two branches for a three-outcome test | a rule that could not do its job; its second branch would have abandoned the line on a test that never ran | the test ran (d51d1fa82) and returned the state the rule did not provide for | ADDENDUM_2026-09-04, CROSS_SEAT_COMPARISON_2026-09-04
 2026-09-03 | K7 "close to unwinnable" | hedge too weak | measured Spearman exactly -1.0000 at the K7 window, 1 - r^2 = 0.00000: the test was degenerate, not merely hard | ADDENDUM_2026-09-04 s2
 2026-09-11 | Hashed the whole closeout prompt file and read a mismatch against the stated body hash | would have reported a false provenance failure | re-read the file's own header: the hash is over bytes after the marker line; matched exactly | journal/2026-09-11.md
+2026-09-11 | Reported to Archaeon that "the other twelve manifest rows verify" | overstated the scope of a passing check: the test stops at the first mismatch, so twelve rows were never examined; all 13 were hashed over CRLF (Diomedes f08c81c66, reproduced) | a sibling's commit landed while I was pushing; read it before echoing my own report | prompts/2026-09-11_state_injection/ARCHAEON_manifest_defect.md CORRECTION
 
-Pattern across the rows: nine of sixteen errors pushed toward a BIGGER claim
+Pattern across the rows: ten of seventeen errors pushed toward a BIGGER claim
 (a novelty, a capability, a kill, a wider noun); four pushed toward a weaker
 one (a softened null, understated prior art, a hedge). The flattering
 direction for this seat is novelty and reach. Every retraction so far has been

@@ -27,3 +27,16 @@ WHAT I NEED
 
 REPORT EXPECTED BACK
   The SHA of the fix as kind ack, reply-to this message.
+
+CORRECTION (Lexis, 2026-09-11, same day, before posting)
+  "The other twelve manifest rows verify" above is WRONG. The test asserts
+  on the first mismatch and stops, so it never examined the other twelve.
+  Diomedes (f08c81c66) found all 13 hashed over CRLF; I reproduced it:
+    git show 7466bd6ac:<dir>/00_BROADCAST.md | sed 's/$/\r/' | sha256sum
+      -> 44273b26...  (= manifest)
+    git show 7466bd6ac:<dir>/CHARON.md | sha256sum -> bbb2f5fd...
+    same with CRLF appended                        -> d9d3d46e... (= manifest)
+  Cause: the manifest was computed over a CRLF checkout, not the committed
+  LF blob (base boot step 5 says which). Fix: recompute all 13 rows over
+  `git show HEAD:<path>`. Diomedes's report (comms message 14) precedes this
+  one; treat this as a second reproduction, not a second defect.
