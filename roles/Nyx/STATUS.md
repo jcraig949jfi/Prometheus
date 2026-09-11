@@ -1,28 +1,32 @@
 # Nyx status
 
-Currency: 2026-09-11 (seat creation and base-role adoption pass).
+Currency: 2026-09-11 15:00 UTC (charter day; first specimen delivered).
 
-seat state: ACTIVE for the adoption pass (operator, 2026-09-11); charter
-  PENDING. Standing state after this pass: BLOCKED on the charter, with
-  the blocker named (the operator holds it; no prompt to write, the
-  operator said it follows).
-what it asserts: PRESENT (booted in comms 2026-09-11 14:31 UTC),
-  ACTIVE (this pass ran), NOT PRODUCTIVE (no domain output; artifacts are
-  the roles/Nyx/ directory only), VALID not applicable.
+seat state: ACTIVE. Charter received and committed verbatim
+  (roles/Nyx/prompts/2026-09-11_charter/, sha256 0c73f9a7...).
+what it asserts: PRESENT (booted in comms; boot re-recorded under
+  claude-fable-5-1 after the harness model changed mid-session),
+  ACTIVE (working the backlog), PRODUCTIVE (6 validating records, 2
+  deliveries posted: comms #44 Vivarium, #45 Archaeon), VALID only where
+  a test says so (nyx/tests/test_schema.py 11 passed; every committed
+  specimen record validates). No scientific claim is made: every
+  ablation in the organ records is graded "designed, not measured";
+  literature sources are T2 until NYX-05 resolves them.
 workspace: F:\Prometheus-worktrees\nyx-base-role, branch
-  nyx/base-role-adopt-2026-09-11, base 56125e9e4 (origin/main at
-  creation), dirty: only roles/Nyx/ additions.
-guard: git-dir F:/Prometheus/.git/worktrees/nyx-base-role differs from
-  git-common-dir F:/Prometheus/.git (linked worktree; not canonical).
-comms: booted (host SKULLPORT, model claude-opus-5[1m], tier heavy,
-  capabilities any); synced 2026-09-11 14:31 UTC: 1 new (Archaeon
-  broadcast #1, sha256 402c3445443d1be5), queue length 0.
-monitors owned or fed: none. No row in roles/base-role/MONITORS.md.
-lane: none until the charter lands. No code or document outside
-  roles/Nyx/ is touched by this seat.
-blockers: the charter (operator).
-next executable action: receive the charter; commit it verbatim under
-  roles/Nyx/prompts/2026-09-11_charter/ with a MANIFEST
-  (python -m comms.manifest write <dir>); rewrite RESPONSIBILITIES.md;
-  file a 20-60 item BACKLOG_H0H5.md; register any monitor the charter
-  creates; suggest the first five items and start the first.
+  nyx/base-role-adopt-2026-09-11, base 56125e9e4; merged forward
+  explicitly to origin/main as recorded in the journal.
+comms: synced 14:56 UTC; inbox: #1 broadcast, #39 ruling (INHERITANCE
+  rows self-service; Archaeon added Nyx's this once, d4e23fb81), #43
+  ack. Queue length 0. Posted: #36 report, #44 delegation, #45 report.
+monitors owned or fed: none. No standing loop exists yet; the delivery
+  age (oldest unanswered delivery) becomes this seat's dormancy signal
+  when NYX-22 lands and is then registered (NYX-28).
+lane: nyx/ and roles/Nyx/ only. No other code or document touched.
+blockers: none on Nyx's next action. Vivarium has never booted in
+  comms, so delivery #44 waits for that seat's first sync; the operator
+  is told. Three XL decisions filed for the operator (NYX-25, -26, -27).
+next executable action: NYX-05 (resolve the T2 DOIs), then NYX-06
+  (DreamCoder; Techne's pin cb0e63f5c and the four smoke blockers are
+  the first failure substrate), then NYX-07 (Go-Explore).
+seen, not mine: Archaeon recorded the engine UNREACHABLE at 14:40 UTC
+  (d4e23fb81); Nyx has no engine dependency today.

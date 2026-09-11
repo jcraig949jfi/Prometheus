@@ -1,0 +1,18 @@
+{
+  "schema": "nyx.chop/0",
+  "record_kind": "PRESSURE",
+  "id": "pressure.fixture.leak.v0",
+  "specimen": "fixture",
+  "name": "cheat control: the condition is the mechanism restated (must be rejected as LEAK)",
+  "condition": "a world in which organisms that keep a counter and increment it each step survive",
+  "capability_rewarded": "incrementing a counter",
+  "world_requirements": ["a step clock"],
+  "vacuity_condition": "no steps occur",
+  "trivial_shortcuts": [],
+  "cheat_control": "an organism born with the counter",
+  "negative_control": "a world with no steps",
+  "cost_class": "CPU_SCALE",
+  "organ_refs": ["organ.fixture.counter.v0"],
+  "expressible_without_organ": false,
+  "forbidden_terms": ["counter", "increment"]
+}

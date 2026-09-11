@@ -22,3 +22,18 @@ def test_live_map_from_fake_results_and_readout_collapse():
     ro = H5.h5_readout(live["equivalence"])
     assert ro["direct"]["mean_reach_classes"] <= ro["direct"]["mean_reach_rules"] <= 8.0
     assert ro["balanced_7"]["max_reach_rules"] <= 12
+
+
+def test_plan_reissue_keeps_spec_and_suffixes_key():
+    from archaeon.producer import campaign_h5 as h5
+    base = {r["label"]: r for r in h5.plan()}
+    rows = h5.plan_reissue(["rule_030", "rule_110"], "R1")
+    assert [r["label"] for r in rows] == ["rule_030", "rule_110"]
+    for r in rows:
+        assert r["spec"] == base[r["label"]]["spec"]
+        assert r["request_key"] == base[r["label"]]["request_key"] + "-R1"
+        assert r["reissue_of_request_key"] == base[r["label"]]["request_key"]
+    import pytest
+    with pytest.raises(RuntimeError):
+        h5.plan_reissue(["rule_999"])
+
