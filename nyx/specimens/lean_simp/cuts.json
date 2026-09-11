@@ -1,0 +1,1521 @@
+{
+  "specimen": "specimen.lean_simp",
+  "cuts": [
+    "CUT-1",
+    "CUT-2",
+    "CUT-3"
+  ],
+  "candidates": [
+    {
+      "id": "c01",
+      "name": "rule canonicalization (any Prop -> oriented equations)",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "private def preprocess, SimpTheorems.lean 288-359 (found via the def-name skeleton)",
+      "dispositions": {
+        "CUT-1": "ORGAN",
+        "CUT-2": "ORGAN",
+        "CUT-3": "ORGAN"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        },
+        {
+          "cut": "CUT-2",
+          "relation": "SURVIVED",
+          "from": [
+            "c01"
+          ]
+        },
+        {
+          "cut": "CUT-3",
+          "relation": "SURVIVED",
+          "from": [
+            "c01"
+          ]
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": [],
+        "CUT-2": [
+          "fitness_value",
+          "ablation"
+        ],
+        "CUT-3": [
+          "fitness_value",
+          "ablation"
+        ]
+      },
+      "record_bytes": {
+        "CUT-1": 6185,
+        "CUT-2": 6924,
+        "CUT-3": 6924
+      },
+      "independent_test": "specified",
+      "independent_test_ref": "nyx/specimens/lean_simp/simp_shape_census_2026-09-11.json (text census of the store the organ would ingest: 33.8% non-Eq in n=400; NOT a run of the organ itself -- it measures the input population, so independent_test is 'run' only for the ablation's PREDICTED loss)",
+      "ancestor_free_contract": true,
+      "consumer_returns": [],
+      "organ_record": "rule_canonicalization.cut2.json",
+      "notes": {
+        "CUT-2": "scale MECHANISM -> PRIMITIVE; ablation gained a number",
+        "CUT-3": "positive control RUN inside the ancestor (bare Prop and iff act as rules): behaviour confirmed; independence from the ancestor NOT shown (independent_test stays 'specified')"
+      }
+    },
+    {
+      "id": "c02",
+      "name": "retrieval key abstraction (what the index forgets)",
+      "introduced_in": "CUT-1",
+      "origin": "DISCOVERED",
+      "source_boundary": "none: cuts INSIDE the DiscrTree module, separating ignoreArg/shouldAddAsStar/reduceDT from the trie; found by asking what flows into the keys",
+      "dispositions": {
+        "CUT-1": "ORGAN",
+        "CUT-2": "ORGAN",
+        "CUT-3": "ORGAN"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        },
+        {
+          "cut": "CUT-2",
+          "relation": "SPLIT",
+          "from": [
+            "c02"
+          ]
+        },
+        {
+          "cut": "CUT-3",
+          "relation": "SURVIVED",
+          "from": [
+            "c02"
+          ]
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": [],
+        "CUT-2": [
+          "fitness_value",
+          "ablation"
+        ],
+        "CUT-3": [
+          "fitness_value",
+          "ablation"
+        ]
+      },
+      "record_bytes": {
+        "CUT-1": 7555,
+        "CUT-2": 7134,
+        "CUT-3": 7134
+      },
+      "independent_test": "specified",
+      "independent_test_ref": "Simp.Config.index := false is the source's own perturbation; not executed",
+      "ancestor_free_contract": true,
+      "consumer_returns": [],
+      "organ_record": "retrieval_key_abstraction.cut2.json",
+      "notes": {
+        "CUT-2": "table split out as c25 POLICY; scale -> PRIMITIVE",
+        "CUT-3": "A1 (index := false) RUN: identical result, as predicted -- the flattening is separable from the trie at the behaviour level; the table (c25) still governs the root in the liberal path"
+      }
+    },
+    {
+      "id": "c03",
+      "name": "the discrimination trie as a data structure (insert / getMatch / getMatchWithExtra)",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "module Lean/Meta/DiscrTree",
+      "dispositions": {
+        "CUT-1": "SCAFFOLDING",
+        "CUT-2": "SCAFFOLDING",
+        "CUT-3": "SCAFFOLDING"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        },
+        {
+          "cut": "CUT-2",
+          "relation": "SURVIVED",
+          "from": [
+            "c03"
+          ]
+        },
+        {
+          "cut": "CUT-3",
+          "relation": "SURVIVED",
+          "from": [
+            "c03"
+          ]
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": [],
+        "CUT-2": [],
+        "CUT-3": []
+      },
+      "record_bytes": {
+        "CUT-1": 0,
+        "CUT-2": 0,
+        "CUT-3": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "organ_record": "none"
+    },
+    {
+      "id": "c04",
+      "name": "candidate ordering and first-success application (priority insertion sort, erased set, rfl-only filter)",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "def rewrite? Rewrite.lean 206-274",
+      "dispositions": {
+        "CUT-1": "UNRESOLVED",
+        "CUT-2": "POLICY",
+        "CUT-3": "POLICY"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        },
+        {
+          "cut": "CUT-2",
+          "relation": "DEMOTED",
+          "from": [
+            "c04"
+          ]
+        },
+        {
+          "cut": "CUT-3",
+          "relation": "SURVIVED",
+          "from": [
+            "c04"
+          ]
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": [],
+        "CUT-2": [],
+        "CUT-3": []
+      },
+      "record_bytes": {
+        "CUT-1": 0,
+        "CUT-2": 0,
+        "CUT-3": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "organ_record": "none",
+      "notes": {
+        "CUT-2": "first-applicable-wins by priority is a policy over rule application; no independent behaviour"
+      }
+    },
+    {
+      "id": "c05",
+      "name": "single-rule application (unify lhs, synthesize args, reject no-op, extra args)",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "def tryTheoremCore Rewrite.lean 114-176",
+      "dispositions": {
+        "CUT-1": "UNRESOLVED",
+        "CUT-2": "COUPLED_CLUSTER",
+        "CUT-3": "COUPLED_CLUSTER"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        },
+        {
+          "cut": "CUT-2",
+          "relation": "DEMOTED",
+          "from": [
+            "c05"
+          ]
+        },
+        {
+          "cut": "CUT-3",
+          "relation": "SURVIVED",
+          "from": [
+            "c05"
+          ]
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": [],
+        "CUT-2": [],
+        "CUT-3": []
+      },
+      "record_bytes": {
+        "CUT-1": 0,
+        "CUT-2": 0,
+        "CUT-3": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "organ_record": "none",
+      "notes": {
+        "CUT-2": "unifier (Meta's) + arg synthesis (c07) + no-op rejection; inseparable in source from Meta's isDefEq; shared with rw (Lean/Meta/Tactic/Rewrite.lean) so not simp's; AMBIGUITY cut B keeps it as THE organ -- preserved"
+      }
+    },
+    {
+      "id": "c06",
+      "name": "ordered rewriting guard for permutative rules (isPerm at ingestion + acLt at application)",
+      "introduced_in": "CUT-1",
+      "origin": "DISCOVERED",
+      "source_boundary": "none: spans SimpTheorems.lean 261-273/365-371 and Rewrite.lean 160-168; found by following the perm field",
+      "dispositions": {
+        "CUT-1": "ORGAN",
+        "CUT-2": "ORGAN",
+        "CUT-3": "ORGAN"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        },
+        {
+          "cut": "CUT-2",
+          "relation": "SURVIVED",
+          "from": [
+            "c06"
+          ]
+        },
+        {
+          "cut": "CUT-3",
+          "relation": "SURVIVED",
+          "from": [
+            "c06"
+          ]
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": [],
+        "CUT-2": [
+          "assumptions",
+          "fitness_value",
+          "ablation"
+        ],
+        "CUT-3": [
+          "assumptions",
+          "fitness_value",
+          "ablation"
+        ]
+      },
+      "record_bytes": {
+        "CUT-1": 6078,
+        "CUT-2": 6309,
+        "CUT-3": 6309
+      },
+      "independent_test": "specified",
+      "independent_test_ref": "organ record ablation (perm := false on every rule); not executed",
+      "ancestor_free_contract": true,
+      "consumer_returns": [],
+      "organ_record": "ordered_rewriting_guard.cut2.json",
+      "notes": {
+        "CUT-2": "assumptions field now honestly unknown (ACLt.lean unread)",
+        "CUT-3": "positive control RUN: a store {Nat.add_comm} terminates and orients. The order acLt still unread; assumptions field stays unknown"
+      }
+    },
+    {
+      "id": "c07",
+      "name": "recursive side-condition discharge (simp proves its own guards, depth-capped)",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "defs dischargeDefault? / discharge?' / synthesizeArgs, Rewrite.lean",
+      "dispositions": {
+        "CUT-1": "ORGAN",
+        "CUT-2": "ORGAN",
+        "CUT-3": "ORGAN"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        },
+        {
+          "cut": "CUT-2",
+          "relation": "SPLIT",
+          "from": [
+            "c07"
+          ]
+        },
+        {
+          "cut": "CUT-3",
+          "relation": "SURVIVED",
+          "from": [
+            "c07"
+          ]
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": [],
+        "CUT-2": [
+          "state",
+          "fitness_value",
+          "ablation"
+        ],
+        "CUT-3": [
+          "state",
+          "fitness_value",
+          "ablation"
+        ]
+      },
+      "record_bytes": {
+        "CUT-1": 6956,
+        "CUT-2": 6983,
+        "CUT-3": 6983
+      },
+      "independent_test": "specified",
+      "independent_test_ref": "organ record control field; not executed",
+      "ancestor_free_contract": false,
+      "consumer_returns": [],
+      "organ_record": "recursive_side_condition_discharge.cut2.json",
+      "notes": {
+        "CUT-2": "cache-protection discipline moved to c14; depth cap and success criterion named as policy parameters inside",
+        "CUT-3": "positive RUN (conditional rule fires at depth >= 1) and A6 RUN (maxDischargeDepth := 0 -> no progress), both as predicted. NOTE: the guard `3 = 3` was discharged by the HIDDEN builtin eq_self, so the discharge organ's positive control depends on c29 -- a coupling the control revealed"
+      }
+    },
+    {
+      "id": "c08",
+      "name": "pre/post traversal to fixpoint with memo (simpLoop)",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "def simpLoop Main.lean 677-713",
+      "dispositions": {
+        "CUT-1": "ORGAN",
+        "CUT-2": "POLICY",
+        "CUT-3": "POLICY"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        },
+        {
+          "cut": "CUT-2",
+          "relation": "SPLIT",
+          "from": [
+            "c08"
+          ]
+        },
+        {
+          "cut": "CUT-3",
+          "relation": "SURVIVED",
+          "from": [
+            "c08"
+          ]
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": [],
+        "CUT-2": [],
+        "CUT-3": []
+      },
+      "record_bytes": {
+        "CUT-1": 6359,
+        "CUT-2": 0,
+        "CUT-3": 0
+      },
+      "independent_test": "specified",
+      "independent_test_ref": "Simp.Config.memoize / singlePass are the source's own perturbations; not executed",
+      "ancestor_free_contract": true,
+      "consumer_returns": [],
+      "organ_record": "traversal_fixpoint_with_memo.cut1.json",
+      "notes": {
+        "CUT-2": "'simplifier' wearing a longer name (CUTS.md flagged it). The pre/reduce/descend/post/loop ORDER is a schedule (POLICY); the Step protocol is split out as c24 SCAFFOLDING (an interface); the memo is c14; the fixpoint-under-budget is a generic primitive not simp's. Nothing organ-shaped remains.",
+        "CUT-3": "D3 cheat control FIRED (planted loop -> maximum number of steps exceeded); A3 singlePass and A2 memoize RUN as predicted. The schedule behaves as read; stays POLICY"
+      }
+    },
+    {
+      "id": "c09",
+      "name": "congruence descent (rewrite under applications with synthesised congruence lemmas)",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "defs congr / simpAppUsingCongr / tryAutoCongrTheorem? + file CongrTheorems.lean",
+      "dispositions": {
+        "CUT-1": "ORGAN",
+        "CUT-2": "COUPLED_CLUSTER",
+        "CUT-3": "COUPLED_CLUSTER"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        },
+        {
+          "cut": "CUT-2",
+          "relation": "DEMOTED",
+          "from": [
+            "c09"
+          ]
+        },
+        {
+          "cut": "CUT-3",
+          "relation": "SURVIVED",
+          "from": [
+            "c09"
+          ]
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": [],
+        "CUT-2": [],
+        "CUT-3": []
+      },
+      "record_bytes": {
+        "CUT-1": 6505,
+        "CUT-2": 0,
+        "CUT-3": 0
+      },
+      "independent_test": "specified",
+      "independent_test_ref": "organ record control field; needs a kernel check, i.e. Lean execution",
+      "ancestor_free_contract": false,
+      "consumer_returns": [],
+      "organ_record": "congruence_descent.cut1.json",
+      "notes": {
+        "CUT-2": "contract NOT independent of Lean: argument-kind classification (fixed/eq/cast/heq/subsingleton) exists because of dependent types; in a simply-typed substrate it collapses to structural recursion. Inseparable from the ecosystem; transferable residue ('a per-head table of rewritable positions') is POLICY. AMBIGUITY cut C: belongs to a Meta specimen."
+      }
+    },
+    {
+      "id": "c10",
+      "name": "built-in reduction step between pre and descent (beta/proj/iota/zeta/unfold/natlit, config-gated)",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "def reduceStep Main.lean 213-244",
+      "dispositions": {
+        "CUT-1": "UNRESOLVED",
+        "CUT-2": "SCAFFOLDING",
+        "CUT-3": "SCAFFOLDING"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        },
+        {
+          "cut": "CUT-2",
+          "relation": "DEMOTED",
+          "from": [
+            "c10"
+          ]
+        },
+        {
+          "cut": "CUT-3",
+          "relation": "SURVIVED",
+          "from": [
+            "c10"
+          ]
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": [],
+        "CUT-2": [],
+        "CUT-3": []
+      },
+      "record_bytes": {
+        "CUT-1": 0,
+        "CUT-2": 0,
+        "CUT-3": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "organ_record": "none",
+      "notes": {
+        "CUT-2": "config-gated glue calling Meta's reducers"
+      }
+    },
+    {
+      "id": "c11",
+      "name": "method slot arrangement (preDefault = rewritePre >> simpMatch >> userPre >> decide; postDefault = rewritePost >> userPost >> ground >> arith >> decide)",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "defs preDefault / postDefault Rewrite.lean 525-536; structure Methods Types.lean 421-434",
+      "dispositions": {
+        "CUT-1": "POLICY",
+        "CUT-2": "POLICY",
+        "CUT-3": "POLICY"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        },
+        {
+          "cut": "CUT-2",
+          "relation": "SURVIVED",
+          "from": [
+            "c11"
+          ]
+        },
+        {
+          "cut": "CUT-3",
+          "relation": "SURVIVED",
+          "from": [
+            "c11"
+          ]
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": [],
+        "CUT-2": [],
+        "CUT-3": []
+      },
+      "record_bytes": {
+        "CUT-1": 0,
+        "CUT-2": 0,
+        "CUT-3": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "organ_record": "none"
+    },
+    {
+      "id": "c12",
+      "name": "simproc dispatch (keyed procedures retrieved by the same index, Step protocol)",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "def simprocCore Simproc.lean 216-252",
+      "dispositions": {
+        "CUT-1": "SCAFFOLDING",
+        "CUT-2": "SCAFFOLDING",
+        "CUT-3": "SCAFFOLDING"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        },
+        {
+          "cut": "CUT-2",
+          "relation": "SURVIVED",
+          "from": [
+            "c12"
+          ]
+        },
+        {
+          "cut": "CUT-3",
+          "relation": "SURVIVED",
+          "from": [
+            "c12"
+          ]
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": [],
+        "CUT-2": [],
+        "CUT-3": []
+      },
+      "record_bytes": {
+        "CUT-1": 0,
+        "CUT-2": 0,
+        "CUT-3": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "organ_record": "none"
+    },
+    {
+      "id": "c13",
+      "name": "hypothesis mutual saturation (simp_all)",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "file SimpAll.lean",
+      "dispositions": {
+        "CUT-1": "ORGAN",
+        "CUT-2": "PRESSURE",
+        "CUT-3": "PRESSURE"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        },
+        {
+          "cut": "CUT-2",
+          "relation": "DEMOTED",
+          "from": [
+            "c13"
+          ]
+        },
+        {
+          "cut": "CUT-3",
+          "relation": "SURVIVED",
+          "from": [
+            "c13"
+          ]
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": [],
+        "CUT-2": [],
+        "CUT-3": []
+      },
+      "record_bytes": {
+        "CUT-1": 4420,
+        "CUT-2": 4856,
+        "CUT-3": 4856
+      },
+      "independent_test": "specified",
+      "independent_test_ref": "organ record control field; not executed",
+      "ancestor_free_contract": true,
+      "consumer_returns": [],
+      "organ_record": "hypothesis_mutual_saturation.cut1.json",
+      "notes": {
+        "CUT-2": "became pressures/mutual_normalisation.cut2.json; its distinctive feature was a failure (F7 order dependence), which is what the pressure's cheat control measures; held, not delivered (consumer-first cutoff)"
+      }
+    },
+    {
+      "id": "c14",
+      "name": "memo validity discipline (Result.cache flag, parent?, lctxInitIndices, wellBehavedDischarge, withPreservedCache)",
+      "introduced_in": "CUT-1",
+      "origin": "DISCOVERED",
+      "source_boundary": "none: spans Types.lean fields 36/76-107/114/426-433, Rewrite.lean 41-56, Main.lean 672-675; no def owns it",
+      "dispositions": {
+        "CUT-1": "COUPLED_CLUSTER",
+        "CUT-2": "COUPLED_CLUSTER",
+        "CUT-3": "COUPLED_CLUSTER"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        },
+        {
+          "cut": "CUT-2",
+          "relation": "SURVIVED",
+          "from": [
+            "c14"
+          ]
+        },
+        {
+          "cut": "CUT-3",
+          "relation": "SURVIVED",
+          "from": [
+            "c14"
+          ]
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": [],
+        "CUT-2": [],
+        "CUT-3": []
+      },
+      "record_bytes": {
+        "CUT-1": 0,
+        "CUT-2": 0,
+        "CUT-3": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "organ_record": "none",
+      "notes": {
+        "CUT-2": "grew: absorbed c07's cache protection. Would be a PRESSURE ('reuse of cached work is rewarded; hidden context varies; stale reuse is punished'); NOT written until #175 returns."
+      }
+    },
+    {
+      "id": "c15",
+      "name": "used-theorem accounting and simp? minimisation (UsedSimps, Diagnostics, mkSimpOnly, warnUnusedSimpArgs, thmsWithBadKeys)",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "structures UsedSimps / Diagnostics Types.lean 210-243; Elab/Tactic/Simp.lean 515-643",
+      "dispositions": {
+        "CUT-1": "SCAFFOLDING",
+        "CUT-2": "SCAFFOLDING",
+        "CUT-3": "SCAFFOLDING"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        },
+        {
+          "cut": "CUT-2",
+          "relation": "SURVIVED",
+          "from": [
+            "c15"
+          ]
+        },
+        {
+          "cut": "CUT-3",
+          "relation": "SURVIVED",
+          "from": [
+            "c15"
+          ]
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": [],
+        "CUT-2": [],
+        "CUT-3": []
+      },
+      "record_bytes": {
+        "CUT-1": 0,
+        "CUT-2": 0,
+        "CUT-3": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "organ_record": "none"
+    },
+    {
+      "id": "c16",
+      "name": "loop protection (post-failure RHS re-simplification of user args)",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "file LoopProtection.lean",
+      "dispositions": {
+        "CUT-1": "SCAFFOLDING",
+        "CUT-2": "SCAFFOLDING",
+        "CUT-3": "SCAFFOLDING"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        },
+        {
+          "cut": "CUT-2",
+          "relation": "SURVIVED",
+          "from": [
+            "c16"
+          ]
+        },
+        {
+          "cut": "CUT-3",
+          "relation": "SURVIVED",
+          "from": [
+            "c16"
+          ]
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": [],
+        "CUT-2": [],
+        "CUT-3": []
+      },
+      "record_bytes": {
+        "CUT-1": 0,
+        "CUT-2": 0,
+        "CUT-3": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "organ_record": "none"
+    },
+    {
+      "id": "c17",
+      "name": "rule-set organisation (SimpTheorems: pre/post trees, erased, toUnfold, priorities, extension + attribute)",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "structure SimpTheorems SimpTheorems.lean 527-538 + SimpExtension 648-690",
+      "dispositions": {
+        "CUT-1": "DATA",
+        "CUT-2": "DATA",
+        "CUT-3": "DATA"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        },
+        {
+          "cut": "CUT-2",
+          "relation": "SURVIVED",
+          "from": [
+            "c17"
+          ]
+        },
+        {
+          "cut": "CUT-3",
+          "relation": "SURVIVED",
+          "from": [
+            "c17"
+          ]
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": [],
+        "CUT-2": [],
+        "CUT-3": []
+      },
+      "record_bytes": {
+        "CUT-1": 0,
+        "CUT-2": 0,
+        "CUT-3": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "organ_record": "none"
+    },
+    {
+      "id": "c18",
+      "name": "@[simps] projection-lemma generator (mathlib)",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "file Mathlib/Tactic/Simps/Basic.lean",
+      "dispositions": {
+        "CUT-1": "UNRESOLVED",
+        "CUT-2": "SCAFFOLDING",
+        "CUT-3": "SCAFFOLDING"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        },
+        {
+          "cut": "CUT-2",
+          "relation": "DEMOTED",
+          "from": [
+            "c18"
+          ]
+        },
+        {
+          "cut": "CUT-3",
+          "relation": "SURVIVED",
+          "from": [
+            "c18"
+          ]
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": [],
+        "CUT-2": [],
+        "CUT-3": []
+      },
+      "record_bytes": {
+        "CUT-1": 0,
+        "CUT-2": 0,
+        "CUT-3": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "organ_record": "none",
+      "notes": {
+        "CUT-2": "tooling that produces DATA (rules from projections); not a mechanism of the specimen"
+      }
+    },
+    {
+      "id": "c19",
+      "name": "simp_rw / simp_intro / dsimp% sequencing wrappers (mathlib)",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "files Mathlib/Tactic/SimpRw.lean, SimpIntro.lean, DSimpPercent.lean",
+      "dispositions": {
+        "CUT-1": "SCAFFOLDING",
+        "CUT-2": "SCAFFOLDING",
+        "CUT-3": "SCAFFOLDING"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        },
+        {
+          "cut": "CUT-2",
+          "relation": "SURVIVED",
+          "from": [
+            "c19"
+          ]
+        },
+        {
+          "cut": "CUT-3",
+          "relation": "SURVIVED",
+          "from": [
+            "c19"
+          ]
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": [],
+        "CUT-2": [],
+        "CUT-3": []
+      },
+      "record_bytes": {
+        "CUT-1": 0,
+        "CUT-2": 0,
+        "CUT-3": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "organ_record": "none"
+    },
+    {
+      "id": "c20",
+      "name": "field_simp (mathlib) -- name inherited, mechanism gone: at this pin it is its own normal form (qNF over AtomM.recurse) reusing only Simp.Result as a proof-carrying result type and a discharger",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "file Mathlib/Tactic/FieldSimp.lean (name)",
+      "dispositions": {
+        "CUT-1": "DEAD_CUT",
+        "CUT-2": "DEAD_CUT",
+        "CUT-3": "DEAD_CUT"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        },
+        {
+          "cut": "CUT-2",
+          "relation": "SURVIVED",
+          "from": [
+            "c20"
+          ]
+        },
+        {
+          "cut": "CUT-3",
+          "relation": "SURVIVED",
+          "from": [
+            "c20"
+          ]
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": [],
+        "CUT-2": [],
+        "CUT-3": []
+      },
+      "record_bytes": {
+        "CUT-1": 0,
+        "CUT-2": 0,
+        "CUT-3": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "organ_record": "none"
+    },
+    {
+      "id": "c21",
+      "name": "the lemma set itself (48,076 @[simp]-family attribute sites in mathlib4/Mathlib at the pin; the core set uncounted) and the simp-normal-form convention that orients it",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "attribute sites; the convention lives in documentation and review practice, not in code",
+      "dispositions": {
+        "CUT-1": "DATA",
+        "CUT-2": "DATA",
+        "CUT-3": "DATA"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        },
+        {
+          "cut": "CUT-2",
+          "relation": "SURVIVED",
+          "from": [
+            "c21"
+          ]
+        },
+        {
+          "cut": "CUT-3",
+          "relation": "SURVIVED",
+          "from": [
+            "c21"
+          ]
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": [],
+        "CUT-2": [],
+        "CUT-3": []
+      },
+      "record_bytes": {
+        "CUT-1": 0,
+        "CUT-2": 0,
+        "CUT-3": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "organ_record": "none",
+      "notes": {
+        "CUT-2": "census: 48,082 sites; 33.8% non-Eq in a seeded 400 sample (simp_shape_census_2026-09-11.json)"
+      }
+    },
+    {
+      "id": "c22",
+      "name": "dsimp mode (definitional-only variant: inDSimp, DSimproc, no proof terms)",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "flag Context.inDSimp Types.lean 119; dsimpImpl Main.lean 516-530",
+      "dispositions": {
+        "CUT-1": "POLICY",
+        "CUT-2": "POLICY",
+        "CUT-3": "POLICY"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        },
+        {
+          "cut": "CUT-2",
+          "relation": "SURVIVED",
+          "from": [
+            "c22"
+          ]
+        },
+        {
+          "cut": "CUT-3",
+          "relation": "SURVIVED",
+          "from": [
+            "c22"
+          ]
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": [],
+        "CUT-2": [],
+        "CUT-3": []
+      },
+      "record_bytes": {
+        "CUT-1": 0,
+        "CUT-2": 0,
+        "CUT-3": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "organ_record": "none"
+    },
+    {
+      "id": "c23",
+      "name": "closed-term evaluation (decide / literal folders / arith / seval)",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "defs simpUsingDecide / simpGround / simpArith Rewrite.lean 275-523 + directory BuiltinSimprocs/",
+      "dispositions": {
+        "CUT-1": "ORGAN",
+        "CUT-2": "ORGAN",
+        "CUT-3": "UNRESOLVED"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        },
+        {
+          "cut": "CUT-2",
+          "relation": "SPLIT",
+          "from": [
+            "c23"
+          ]
+        },
+        {
+          "cut": "CUT-3",
+          "relation": "DEMOTED",
+          "from": [
+            "c23"
+          ]
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": [],
+        "CUT-2": [
+          "fitness_value",
+          "ablation"
+        ],
+        "CUT-3": []
+      },
+      "record_bytes": {
+        "CUT-1": 5529,
+        "CUT-2": 5514,
+        "CUT-3": 0
+      },
+      "independent_test": "specified",
+      "independent_test_ref": "organ record control field; needs a kernel check",
+      "ancestor_free_contract": false,
+      "consumer_returns": [],
+      "organ_record": "closed_term_evaluation.cut2.json",
+      "notes": {
+        "CUT-2": "decide route only; literal folders -> c27 DATA; arith -> c28 UNRESOLVED; scale -> PRIMITIVE",
+        "CUT-3": "negative control DID NOT FIRE: 2 + 2 = 4 closes with decide off and folders erased, via c29 (hidden eq_self) + c30 (Nat-literal defeq inside unification). The headline fitness ('closed arithmetic without lemmas') is reproduced by a smaller mechanism OUTSIDE the boundary. What remains for the decide route is Props not closable by defeq (e.g. non-computational Decidable instances) -- untested. Attack question 11 answered YES; disposition UNRESOLVED until the residual is tested"
+      }
+    },
+    {
+      "id": "c24",
+      "name": "the Step protocol {done, visit, continue} between the traversal and its procedures",
+      "introduced_in": "CUT-2",
+      "origin": "DISCOVERED",
+      "source_boundary": "inductive Step, Types.lean 313-334 (a type, not a def; drawn by asking what the loop and a procedure agree on)",
+      "dispositions": {
+        "CUT-2": "SCAFFOLDING",
+        "CUT-3": "SCAFFOLDING"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-2",
+          "relation": "SPLIT",
+          "from": [
+            "c08"
+          ]
+        },
+        {
+          "cut": "CUT-3",
+          "relation": "SURVIVED",
+          "from": [
+            "c24"
+          ]
+        }
+      ],
+      "unknown_fields": {
+        "CUT-2": [],
+        "CUT-3": []
+      },
+      "record_bytes": {
+        "CUT-2": 0,
+        "CUT-3": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": true,
+      "consumer_returns": [],
+      "organ_record": "none"
+    },
+    {
+      "id": "c25",
+      "name": "the retrieval relevance table: proofs, instance args, non-type implicit args and Nat offsets do not discriminate",
+      "introduced_in": "CUT-2",
+      "origin": "DISCOVERED",
+      "source_boundary": "ignoreArg + shouldAddAsStar, DiscrTree/Main.lean 104-115, 198-199 (two private defs; drawn as a table by asking what varies per substrate)",
+      "dispositions": {
+        "CUT-2": "POLICY",
+        "CUT-3": "POLICY"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-2",
+          "relation": "SPLIT",
+          "from": [
+            "c02"
+          ]
+        },
+        {
+          "cut": "CUT-3",
+          "relation": "SURVIVED",
+          "from": [
+            "c25"
+          ]
+        }
+      ],
+      "unknown_fields": {
+        "CUT-2": [],
+        "CUT-3": []
+      },
+      "record_bytes": {
+        "CUT-2": 0,
+        "CUT-3": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": false,
+      "consumer_returns": [],
+      "organ_record": "none",
+      "notes": {
+        "CUT-2": "carries every retrieval prior; is the thing a different substrate rewrites; ancestor-free contract false because it reads Lean binder info",
+        "CUT-3": "A1 shows the liberal (root-only) path still consults the table for the root key; the table is live even with the index off"
+      }
+    },
+    {
+      "id": "c27",
+      "name": "per-type literal folding procedures (BuiltinSimprocs/*)",
+      "introduced_in": "CUT-2",
+      "origin": "INHERITED",
+      "source_boundary": "directory BuiltinSimprocs/",
+      "dispositions": {
+        "CUT-2": "DATA",
+        "CUT-3": "DATA"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-2",
+          "relation": "SPLIT",
+          "from": [
+            "c23"
+          ]
+        },
+        {
+          "cut": "CUT-3",
+          "relation": "SURVIVED",
+          "from": [
+            "c27"
+          ]
+        }
+      ],
+      "unknown_fields": {
+        "CUT-2": [],
+        "CUT-3": []
+      },
+      "record_bytes": {
+        "CUT-2": 0,
+        "CUT-3": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": false,
+      "consumer_returns": [],
+      "organ_record": "none"
+    },
+    {
+      "id": "c28",
+      "name": "linear arithmetic normaliser (Arith/, simpArith)",
+      "introduced_in": "CUT-2",
+      "origin": "INHERITED",
+      "source_boundary": "directory Arith/ + def simpArith Rewrite.lean 292-320",
+      "dispositions": {
+        "CUT-2": "UNRESOLVED",
+        "CUT-3": "UNRESOLVED"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-2",
+          "relation": "SPLIT",
+          "from": [
+            "c23"
+          ]
+        },
+        {
+          "cut": "CUT-3",
+          "relation": "SURVIVED",
+          "from": [
+            "c28"
+          ]
+        }
+      ],
+      "unknown_fields": {
+        "CUT-2": [],
+        "CUT-3": []
+      },
+      "record_bytes": {
+        "CUT-2": 0,
+        "CUT-3": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "organ_record": "none",
+      "notes": {
+        "CUT-2": "not read; a separate algorithm; may be its own specimen"
+      }
+    },
+    {
+      "id": "c29",
+      "name": "hidden default rules under `simp only`: eq_self and iff_self are always in the store (Elab/Tactic/Simp.lean 410, 463)",
+      "introduced_in": "CUT-3",
+      "origin": "PERTURBED",
+      "source_boundary": "def simpOnlyBuiltins (found AFTER the intervention: a negative control failed and the trace named the rule)",
+      "dispositions": {
+        "CUT-3": "POLICY"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-3",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-3": []
+      },
+      "record_bytes": {
+        "CUT-3": 0
+      },
+      "independent_test": "run",
+      "independent_test_ref": "nyx/specimens/lean_simp/ablations/RECEIPT_2026-09-11.json block c23_negative_with_eq_self_erased (erasing it changes the outcome)",
+      "ancestor_free_contract": false,
+      "consumer_returns": [],
+      "organ_record": "none",
+      "notes": {
+        "CUT-3": "a human prior smuggled as a default: 'only' is not only. Affects every `simp only` ablation in this specimen; c07's positive control depended on it."
+      }
+    },
+    {
+      "id": "c30",
+      "name": "literal arithmetic decided by definitional unfolding inside unification (Meta.isDefEq on Nat literals), reachable through any reflexive rule",
+      "introduced_in": "CUT-3",
+      "origin": "PERTURBED",
+      "source_boundary": "none in the specimen: lives in Lean/Meta/ExprDefEq.lean and WHNF (outside the preregistered boundary); found by a failed negative control",
+      "dispositions": {
+        "CUT-3": "COUPLED_CLUSTER"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-3",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-3": []
+      },
+      "record_bytes": {
+        "CUT-3": 0
+      },
+      "independent_test": "run",
+      "independent_test_ref": "nyx/specimens/lean_simp/ablations/RECEIPT_2026-09-11.json blocks c23_negative_* (k + k = 4 with a non-reducible k does NOT close; 2 + 2 = 4 does)",
+      "ancestor_free_contract": false,
+      "consumer_returns": [],
+      "organ_record": "none",
+      "notes": {
+        "CUT-3": "inseparable from the ecosystem: the unifier the specimen calls for matching already evaluates closed Nat arithmetic. c23's headline fitness is this, not c23."
+      }
+    }
+  ],
+  "pressures": {
+    "CUT-1": [
+      "conditional_facts_must_be_paid_for.cut1.json",
+      "growing_store_must_terminate.cut1.json",
+      "orientation_is_a_choice.cut1.json",
+      "retrieval_at_store_scale.cut1.json"
+    ],
+    "CUT-2": [
+      "mutual_normalisation.cut2.json"
+    ],
+    "CUT-3": [
+      "mutual_normalisation.cut2.json"
+    ]
+  },
+  "deliveries": [
+    {
+      "seat": "Vivarium",
+      "msg": 175,
+      "posted": "2026-09-11T20:53Z",
+      "cut": "CUT-1",
+      "first_substantive_return": null,
+      "content": "4 pressures"
+    },
+    {
+      "seat": "Archaeon",
+      "msg": 176,
+      "posted": "2026-09-11T20:53Z",
+      "cut": "CUT-1",
+      "first_substantive_return": null,
+      "content": "8 organs + failures + Techne gap"
+    }
+  ],
+  "cheat_controls": [
+    {
+      "candidate": "c06",
+      "fired": "not_run",
+      "ref": "organs/ordered_rewriting_guard.cut1.json control/cheat fields"
+    },
+    {
+      "candidate": "c02",
+      "fired": "not_run",
+      "ref": "organs/retrieval_key_abstraction.cut1.json control/cheat fields"
+    },
+    {
+      "candidate": "c07",
+      "fired": "not_run",
+      "ref": "organs/recursive_side_condition_discharge.cut1.json control/cheat fields"
+    },
+    {
+      "candidate": "c08",
+      "fired": true,
+      "ref": "nyx/specimens/lean_simp/ablations/RECEIPT_2026-09-11.json block D3_cheat_control_planted_loop_hits_budget"
+    },
+    {
+      "candidate": "c01",
+      "fired": "not_run",
+      "ref": "organs/rule_canonicalization.cut1.json control/cheat fields"
+    },
+    {
+      "candidate": "c09",
+      "fired": "not_run",
+      "ref": "organs/congruence_descent.cut1.json control/cheat fields"
+    },
+    {
+      "candidate": "c13",
+      "fired": "not_run",
+      "ref": "organs/hypothesis_mutual_saturation.cut1.json control/cheat fields"
+    },
+    {
+      "candidate": "c23",
+      "fired": false,
+      "ref": "nyx/specimens/lean_simp/ablations/RECEIPT_2026-09-11.json block c23_negative_decide_off_folders_erased (negative control did not fire; route found)"
+    },
+    {
+      "candidate": "c01",
+      "fired": "not_run",
+      "ref": "simp_shape_census_2026-09-11.json measures the input population, not the cheat (dropped facts); the cheat control itself (rules out vs facts in) is still not run"
+    }
+  ],
+  "note": "CUT-1 snapshot 2026-09-11. Origins were stamped at drawing per PREREG_CUT1.md s2 step 2. Honesty rule applied: a candidate found by reading a def-name skeleton (grep for def/structure) is INHERITED even if Nyx then read the body; DISCOVERED is reserved for boundaries drawn by following a value or a flag across defs/files. Record bytes for non-ORGAN candidates are 0 (they have no record file; their text lives in CUTS.md).",
+  "ablations_run": {
+    "ref": "nyx/specimens/lean_simp/ablations/RECEIPT_2026-09-11.json",
+    "run": [
+      "A1",
+      "A2",
+      "A3",
+      "A6",
+      "D3",
+      "positives c01 c06 c07 c08 c23"
+    ],
+    "not_run": [
+      "A4",
+      "A5",
+      "A7",
+      "A8",
+      "A9",
+      "A10"
+    ]
+  }
+}

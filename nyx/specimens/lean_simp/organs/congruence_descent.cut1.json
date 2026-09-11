@@ -1,0 +1,55 @@
+{
+  "schema": "nyx.chop/0",
+  "record_kind": "ORGAN",
+  "id": "organ.lean_simp.congruence_descent.cut1",
+  "specimen": "lean_simp",
+  "name": "congruence descent: rewriting under an application is done by rewriting arguments independently and assembling the proof from a congruence lemma that is synthesised on demand, with user-supplied congruence lemmas taking precedence",
+  "scale": "MECHANISM",
+  "cost_class": "CPU_SCALE",
+  "provenance": {
+    "ancestor": "Lean 4 simp, Main.congr / Types.simpAppUsingCongr / tryAutoCongrTheorem? / mkCongrSimp? + Meta.CongrTheorems",
+    "sources": [
+      {
+        "ref": "Lean v4.30.0 d024af099 src/lean/Lean/Meta/Tactic/Simp/Main.lean lines 637-655 congr (user @[congr] theorems for the head constant tried first, then congrDefault), 545-550 congrDefault (tryAutoCongrTheorem? then simpAppUsingCongr), 586-635 trySimpCongrTheorem?, 531-543 visitFn (simplify the function position and apply congrFun for each arg)",
+        "grade": "T1-LOCAL"
+      },
+      {
+        "ref": "Lean v4.30.0 d024af099 src/lean/Lean/Meta/Tactic/Simp/Types.lean lines 629-664 congrArgs, 716-748 simpAppUsingCongr, 756-786 mkCongrSimp? (cached per function in State.congrCache), 790-900 tryAutoCongrTheorem? (the fast path when no argument is a dependency: mkCongr/mkCongrArg chains)",
+        "grade": "T1-LOCAL"
+      },
+      {
+        "ref": "Lean v4.30.0 src/lean/Lean/Meta/CongrTheorems.lean (484 lines; synthesises congruence theorems with argument kinds fixed/eq/cast/heq/subsingletonInst; NOT read line by line in CUT-1)",
+        "grade": "unknown"
+      },
+      {
+        "ref": "Lean v4.30.0 d024af099 src/lean/Lean/Meta/Tactic/Simp/SimpCongrTheorems.lean (155 lines: the @[congr] attribute store keyed by head constant; not read line by line)",
+        "grade": "unknown"
+      },
+      {
+        "ref": "nyx/specimens/lean_simp/PROVENANCE.md",
+        "grade": "T1-LOCAL"
+      }
+    ]
+  },
+  "questions": {
+    "ancestry": "Lean 4 simp. Congruence closure for rewriting under binders/applications with dependent types is the specimen's most Lean-specific machinery; ancestry to Lean 3 simp's congr lemmas is T2.",
+    "mechanism": "To rewrite f a1 .. an: if a user congruence lemma is registered for f, try it (its hypotheses tell which arguments may be rewritten and under what extra local hypotheses, 552-585); else if no argument depends on another, rewrite each argument and chain mkCongr/mkCongrArg (fast path); else synthesise a congruence theorem for f from its type (which arguments are fixed, which can be rewritten by Eq, which need a cast because later types depend on them, which are subsingleton instances), cache it, and use it. The function position itself is also simplified (visitFn).",
+    "input": "an application Expr; the congruence store; the function's type for synthesis",
+    "output": "Result for the application with a proof assembled from the sub-results",
+    "state": "State.congrCache (per head function); reads the @[congr] extension; introduces local hypotheses while rewriting under dependent positions (the 'contextual' mode of user congr lemmas)",
+    "assumptions": "dependent type theory: rewriting an argument can change the TYPE of later arguments, hence casts and the fixed/eq/cast classification; that a congruence theorem can be synthesised for any function from its type alone",
+    "interface": "congr(e: Expr) -> SimpM Result; registerable user lemmas by head constant; the auto-synthesis is a pure function of the head's type (memoised)",
+    "fitness_value": "It is what makes 'rewrite anywhere inside the term' sound in a dependently typed setting; without it simp could rewrite only at the root or in non-dependent positions. Claimed from structure; not measured.",
+    "failure_landscape": "(a) an argument classified 'fixed' (because something depends on it) is never rewritten -- a silent completeness hole that user @[congr] lemmas exist to patch; (b) synthesis cost per new head function (cached, but first-hit); (c) Prop arguments and instance arguments are handled by special cases (subsingleton), which is a policy; (d) the interplay with proof-term size: every level of descent adds a congruence application to the proof.",
+    "ablation": "Designed, not measured: disable descent into applications (treat every app as atomic). Prediction: only root rewrites; virtually every mathlib simp call fails. Sharper: disable user @[congr] lemmas only and count which mathlib tests break -- a measurable fraction of the store's value that lives in hand-written congruence lemmas.",
+    "decomposability": "Into (1) the argument-kind classifier (fixed/eq/cast/heq/subsingletonInst -- the dependent-type-specific core), (2) the theorem synthesiser that emits a lemma from a classification, (3) the dispatcher that prefers user lemmas. In a simply-typed substrate (1) collapses to 'everything is eq' and the whole organ degenerates to structural recursion -- which is the honest transfer story.",
+    "composability": "Only substrates with dependent types or with positions that must not be rewritten need this; for Proteus boolean trees it is structural recursion. Its transferable residue is the IDEA of a per-head-symbol table saying which positions are rewritable, which any rule engine can host.",
+    "human_prior": "That equality is the relation rewriting preserves (a generalisation to arbitrary relations is what mathlib's gcongr does elsewhere, out of scope); that instance positions are irrelevant (subsingleton).",
+    "control": "Positive: f (a + 0) rewrites to f a under a rule a + 0 = a for an ordinary f. Negative: a position that later arguments depend on is left alone and the run does not error. Cheat control: an implementation that rewrites dependent positions anyway must be caught by the kernel (type error) -- so the control needs a kernel check of the produced proof, which means executing Lean. None executed in CUT-1.",
+    "cheat": "Rewriting everywhere and letting the kernel reject ill-typed proofs late would pass any test that only compares result terms; the control checks the proof, not the term."
+  },
+  "alternative_cuts": [
+    "CUTS.md c09-alt: congruence descent is not simp's organ at all but Meta's (CongrTheorems.lean is outside the Simp directory and used by other tactics); the specimen boundary at PREREG s1 included it because simp cannot run without it; a second Chopper may exclude it"
+  ],
+  "pressure_refs": []
+}
