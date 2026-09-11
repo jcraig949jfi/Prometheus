@@ -1,11 +1,15 @@
 """Prove a database connection reached the environment it was meant to reach.
 
-Hermes, 2026-09-11. Reference implementation for the fail-closed invariant:
+comms.identity -- built by Hermes 2026-09-11, moved here under Archaeon's
+ruling on Hermes #68 (D-24 amendment 1, comms message 73): comms owns the
+notion of which store is the program's; the Evidence Wiki may import it.
+The fail-closed invariant:
 
     A Prometheus client MUST NOT execute a statement against a resolved
     target until the target has PROVED it is the expected environment.
 
-Motivation, measured (roles/Hermes/journal/2026-09-11b.md):
+Motivation, measured (roles/Hermes/journal/2026-09-11b.md; the incident
+file is roles/Hermes/incidents/c84e26826cc12217.md):
   * evidence_wiki/config.json is git-tracked and ships db_host="localhost",
     db_name="prometheus_fire" to every machine. On M1 that is the canonical
     store. On M2 it is a local fork of it, made 2026-09-04, carrying an `ew`
@@ -55,7 +59,23 @@ from pathlib import Path
 from typing import Any, Dict, Optional
 
 REGISTRY_ENV = "PROMETHEUS_ENVIRONMENTS"
-DEFAULT_REGISTRY = Path(__file__).resolve().parent / "ENVIRONMENTS.json"
+DEFAULT_REGISTRY = Path(__file__).resolve().parent / "environments.json"
+#: The environment a client requires when it does not say. Overridable per
+#: process with PROMETHEUS_ENV so that deliberate work on a fork is a VISIBLE
+#: act rather than a default (Archaeon's constraint: the registry carries no
+#: credentials, only non-secret identity facts).
+DEFAULT_ENVIRONMENT = "prometheus-canonical"
+
+
+#: Where the one-file-per-failure-signature records live. A refusal must point
+#: at a REAL path, so this names where they are TODAY (Hermes's lane), not
+#: where they may end up; the permanent home is an open question the failure
+#: convergence probe answers. Overridable with PROMETHEUS_INCIDENTS.
+INCIDENT_DIR = os.environ.get("PROMETHEUS_INCIDENTS", "roles/Hermes/incidents")
+
+
+def current_environment() -> str:
+    return os.environ.get("PROMETHEUS_ENV") or DEFAULT_ENVIRONMENT
 
 
 class WrongEnvironment(RuntimeError):
@@ -152,8 +172,8 @@ def require(conn, environment: str, *, registry: Optional[Dict[str, Any]] = None
         "REFUSED: connection is not environment {env!r} ({reason}).\n"
         "  expected  db_system_id={ed} db_name={en}  ({desc})\n"
         "  observed  db_system_id={od} db_name={on}{err}\n"
-        "  incident signature {sig} -- if comms/incidents/{sig}.md exists, add a\n"
-        "  line to it; do NOT open a new backlog item for a known failure class.\n"
+        "  incident signature {sig} -- if {inc}/{sig}.md exists, add a\n"
+        "  line to it; do NOT open a new backlog item for a known class.\n"
         "  Identity, not the host name, is the check: db_host is configuration\n"
         "  and two machines ship the same value."
     ).format(env=environment, reason=v["reason"],
@@ -161,6 +181,6 @@ def require(conn, environment: str, *, registry: Optional[Dict[str, Any]] = None
              desc=e.get("description", "no expectation registered"),
              od=o.get("db_system_id"), on=o.get("db_name"),
              err="  read_error=" + str(o["read_error"]) if o.get("read_error") else "",
-             sig=v["signature"])
+             sig=v["signature"], inc=INCIDENT_DIR)
     raise WrongEnvironment(msg, signature=v["signature"], observed=o,
                            expected=e, environment=environment)
