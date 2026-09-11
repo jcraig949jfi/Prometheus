@@ -1,0 +1,310 @@
+{
+  "schema": "techne.acquisition.receipt/1",
+  "receipt_id": "adapter_qualification-hypothesis-20260911T065011Z",
+  "stage": "ADAPTER_QUALIFICATION",
+  "does_not_establish": [
+    "INSTALLATION",
+    "FIRST_USEFUL_CHECK",
+    "PAPER_REPRODUCTION",
+    "LOCAL_SCIENTIFIC_BENEFIT"
+  ],
+  "entry_id": "hypothesis",
+  "tool": "hypothesis",
+  "design_version": "0.1",
+  "written_utc": "2026-09-11T06:50:11+00:00",
+  "seat": "Techne",
+  "repo": {
+    "commit": "2baf0680f59c1c833e42db98369e30ce5857b9bd",
+    "branch": "techne/track-d-2026-09-10",
+    "dirty": true
+  },
+  "runner": {
+    "python": "3.12.10",
+    "executable": "F:\\Prometheus\\vault\\techne_tools\\envs\\h0h5_tools\\Scripts\\python.exe",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "tool_cache": "F:\\Prometheus\\vault\\techne_tools",
+    "tool_cache_source": "TECHNE_TOOL_CACHE env",
+    "tool_cache_note": "host-local and gitignored; only its HASHES are tracked"
+  },
+  "commands_run": [],
+  "observations": {
+    "schema": "techne.h1.hypothesis_program_minimiser/1",
+    "clears": "TECHNE-12",
+    "contract_from": {
+      "seat": "Proteus",
+      "commit": "5eae54618",
+      "strategy": "proteus/eval/hypothesis_strategy.py::solving_programs",
+      "predicate": "proteus/eval/shrink.py::still_solves (FULL coverage; budget exhaustion is not a witness, an uncompilable program is neither)",
+      "declared_order": "(node_count, depth, canonical_string). Node count is primary because it is the cost the kind charges and the quantity a component library is claimed to reduce. Depth breaks ties toward flatter programs. The canonical string is ONLY to make the order total; it carries no simplicity claim.",
+      "ground_truth": "proteus.eval.shrink.minimal_by_enumeration(max_size=5)",
+      "fixture_id": "sha256:579511c909fd139d42b871fb3924269d968f692ad2e6f6b546e479e76efb1feb"
+    },
+    "why_still_solves_and_not_still_a_counterexample": "Proteus measured that still_a_counterexample is trivial: the five leaves have five distinct truth tables, so every one of the 256 targets has a size-1 counterexample and there is nothing to search. Qualifying a minimiser on a predicate that is satisfied at size 1 would measure nothing, so this uses still_solves.",
+    "domain": {
+      "n_inputs": 3,
+      "n_targets": 256,
+      "enumeration_bound": 5,
+      "interface_version": "proteus.boolean3.v0"
+    },
+    "results": {
+      "n_targets": 240,
+      "n_scored": 43,
+      "n_out_of_enumeration_reach": 197,
+      "n_unsound": 0,
+      "unsound": [],
+      "n_errored": 16,
+      "errors": [
+        {
+          "target": 1,
+          "error": "Unsatisfiable: Unable to satisfy assumptions of test. 459 of 459 test cases failed a .filter() or assume() condition. Try making your filters or assumes less strict, or rewrite using strategy parameters: st.integers().filter(lambda x: x > 0) fails less often (that is, never) when rewritten as st.integers(min_value=1)."
+        },
+        {
+          "target": 6,
+          "error": "Unsatisfiable: Unable to satisfy assumptions of test. 459 of 459 test cases failed a .filter() or assume() condition. Try making your filters or assumes less strict, or rewrite using strategy parameters: st.integers().filter(lambda x: x > 0) fails less often (that is, never) when rewritten as st.integers(min_value=1)."
+        },
+        {
+          "target": 7,
+          "error": "Unsatisfiable: Unable to satisfy assumptions of test. 459 of 459 test cases failed a .filter() or assume() condition. Try making your filters or assumes less strict, or rewrite using strategy parameters: st.integers().filter(lambda x: x > 0) fails less often (that is, never) when rewritten as st.integers(min_value=1)."
+        },
+        {
+          "target": 18,
+          "error": "Unsatisfiable: Unable to satisfy assumptions of test. 459 of 459 test cases failed a .filter() or assume() condition. Try making your filters or assumes less strict, or rewrite using strategy parameters: st.integers().filter(lambda x: x > 0) fails less often (that is, never) when rewritten as st.integers(min_value=1)."
+        },
+        {
+          "target": 19,
+          "error": "Unsatisfiable: Unable to satisfy assumptions of test. 459 of 459 test cases failed a .filter() or assume() condition. Try making your filters or assumes less strict, or rewrite using strategy parameters: st.integers().filter(lambda x: x > 0) fails less often (that is, never) when rewritten as st.integers(min_value=1)."
+        },
+        {
+          "target": 30,
+          "error": "Unsatisfiable: Unable to satisfy assumptions of test. 459 of 459 test cases failed a .filter() or assume() condition. Try making your filters or assumes less strict, or rewrite using strategy parameters: st.integers().filter(lambda x: x > 0) fails less often (that is, never) when rewritten as st.integers(min_value=1)."
+        },
+        {
+          "target": 31,
+          "error": "Unsatisfiable: Unable to satisfy assumptions of test. 459 of 459 test cases failed a .filter() or assume() condition. Try making your filters or assumes less strict, or rewrite using strategy parameters: st.integers().filter(lambda x: x > 0) fails less often (that is, never) when rewritten as st.integers(min_value=1)."
+        },
+        {
+          "target": 54,
+          "error": "Unsatisfiable: Unable to satisfy assumptions of test. 459 of 459 test cases failed a .filter() or assume() condition. Try making your filters or assumes less strict, or rewrite using strategy parameters: st.integers().filter(lambda x: x > 0) fails less often (that is, never) when rewritten as st.integers(min_value=1)."
+        },
+        {
+          "target": 86,
+          "error": "Unsatisfiable: Unable to satisfy assumptions of test. 459 of 459 test cases failed a .filter() or assume() condition. Try making your filters or assumes less strict, or rewrite using strategy parameters: st.integers().filter(lambda x: x > 0) fails less often (that is, never) when rewritten as st.integers(min_value=1)."
+        },
+        {
+          "target": 87,
+          "error": "Unsatisfiable: Unable to satisfy assumptions of test. 459 of 459 test cases failed a .filter() or assume() condition. Try making your filters or assumes less strict, or rewrite using strategy parameters: st.integers().filter(lambda x: x > 0) fails less often (that is, never) when rewritten as st.integers(min_value=1)."
+        }
+      ],
+      "excess_nodes_histogram": {
+        "0": 19,
+        "1": 9,
+        "2": 12,
+        "3": 2,
+        "4": 1
+      },
+      "n_not_minimal": 24,
+      "fraction_not_minimal": 0.5581,
+      "max_excess_nodes": 4,
+      "n_identical_under_declared_order": 15,
+      "n_same_size_and_depth": 19,
+      "worst_cases": [
+        {
+          "target": 21,
+          "hypothesis": {
+            "program": "(not (not (or (and x0 x2) (and x1 x2))))",
+            "size": 9,
+            "depth": 5
+          },
+          "ground_truth": {
+            "program": "(and (or x0 x1) x2)",
+            "size": 5,
+            "depth": 3
+          },
+          "still_solves": true,
+          "same_size": false,
+          "same_size_and_depth": false,
+          "identical_under_declared_order": false,
+          "excess_nodes": 4
+        },
+        {
+          "target": 12,
+          "hypothesis": {
+            "program": "(not (xor x0 (not (and x0 x1))))",
+            "size": 7,
+            "depth": 5
+          },
+          "ground_truth": {
+            "program": "(and (not x1) x0)",
+            "size": 4,
+            "depth": 3
+          },
+          "still_solves": true,
+          "same_size": false,
+          "same_size_and_depth": false,
+          "identical_under_declared_order": false,
+          "excess_nodes": 3
+        },
+        {
+          "target": 48,
+          "hypothesis": {
+            "program": "(xor x0 (not (not (or x0 x1))))",
+            "size": 7,
+            "depth": 5
+          },
+          "ground_truth": {
+            "program": "(and (not x0) x1)",
+            "size": 4,
+            "depth": 3
+          },
+          "still_solves": true,
+          "same_size": false,
+          "same_size_and_depth": false,
+          "identical_under_declared_order": false,
+          "excess_nodes": 3
+        },
+        {
+          "target": 3,
+          "hypothesis": {
+            "program": "(not (not (and x0 x1)))",
+            "size": 5,
+            "depth": 4
+          },
+          "ground_truth": {
+            "program": "(and x0 x1)",
+            "size": 3,
+            "depth": 2
+          },
+          "still_solves": true,
+          "same_size": false,
+          "same_size_and_depth": false,
+          "identical_under_declared_order": false,
+          "excess_nodes": 2
+        },
+        {
+          "target": 5,
+          "hypothesis": {
+            "program": "(not (not (and x0 x2)))",
+            "size": 5,
+            "depth": 4
+          },
+          "ground_truth": {
+            "program": "(and x0 x2)",
+            "size": 3,
+            "depth": 2
+          },
+          "still_solves": true,
+          "same_size": false,
+          "same_size_and_depth": false,
+          "identical_under_declared_order": false,
+          "excess_nodes": 2
+        },
+        {
+          "target": 17,
+          "hypothesis": {
+            "program": "(not (not (and x1 x2)))",
+            "size": 5,
+            "depth": 4
+          },
+          "ground_truth": {
+            "program": "(and x1 x2)",
+            "size": 3,
+            "depth": 2
+          },
+          "still_solves": true,
+          "same_size": false,
+          "same_size_and_depth": false,
+          "identical_under_declared_order": false,
+          "excess_nodes": 2
+        }
+      ],
+      "wall_seconds": 299.2
+    },
+    "proteus_known_answers_reproduced": [
+      {
+        "enumerated_to_size": 5,
+        "ground_truth": {
+          "canonical": "(xor (xor x0 x1) x2)",
+          "depth": 3,
+          "size": 5
+        },
+        "name": "xor3",
+        "predicate": "still_solves",
+        "start_program": "(xor (xor (xor x0 x1) x2) (xor x0 x0))",
+        "start_satisfies_predicate": true,
+        "start_size": 9,
+        "target": "(xor (xor x0 x1) x2)",
+        "target_truth_table": "01101001"
+      },
+      {
+        "enumerated_to_size": 5,
+        "ground_truth": {
+          "canonical": "(and x0 x1)",
+          "depth": 2,
+          "size": 3
+        },
+        "name": "and01",
+        "predicate": "still_solves",
+        "start_program": "(and (and x0 x1) (or x1 x1))",
+        "start_satisfies_predicate": true,
+        "start_size": 7,
+        "target": "(and x0 x1)",
+        "target_truth_table": "00000011"
+      },
+      {
+        "enumerated_to_size": 2,
+        "ground_truth": {
+          "canonical": "c0",
+          "depth": 1,
+          "size": 1
+        },
+        "name": "xor3_counterexample",
+        "predicate": "still_a_counterexample",
+        "start_program": "c0",
+        "start_satisfies_predicate": true,
+        "start_size": 1,
+        "target": "(xor (xor x0 x1) x2)",
+        "target_truth_table": "01101001"
+      }
+    ],
+    "checks": [
+      {
+        "claim": "SOUNDNESS: every shrunk program still_solves its target under Proteus's predicate",
+        "pass": true
+      },
+      {
+        "claim": "no target errored during shrinking",
+        "pass": false
+      },
+      {
+        "claim": "every scored target has exhaustive ground truth from Proteus's enumeration",
+        "pass": true
+      },
+      {
+        "claim": "Proteus's two declared known answers reproduce here",
+        "pass": false
+      },
+      {
+        "claim": "MEASURED, not asserted: how often and by how much Hypothesis misses the minimum",
+        "pass": true
+      }
+    ],
+    "all_passed": false,
+    "verdict": "SOUND on every scored target, and NOT MINIMAL on 24 of 43 (0.5581), max excess 4 nodes. Extends Proteus's n=2 finding to the whole target space: the non-minimality they saw on and01 is not an outlier.",
+    "what_this_does_NOT_establish": [
+      "that Hypothesis is a good minimiser for this space. Soundness is a post-condition; minimality is a quality measure, and they are reported separately.",
+      "anything beyond enumeration reach. Targets with no solving program at size <= 5 carry NO minimality claim rather than a favourable default.",
+      "that the declared order is the right one. It is Proteus's, stated, and the canonical-string tie-break carries no simplicity claim -- so a disagreement inside a tie class is a tie-break artefact and is reported as same_size_and_depth."
+    ]
+  },
+  "deviations": [],
+  "unrun_or_blocked": [
+    "that Hypothesis is a good minimiser for this space. Soundness is a post-condition; minimality is a quality measure, and they are reported separately.",
+    "anything beyond enumeration reach. Targets with no solving program at size <= 5 carry NO minimality claim rather than a favourable default.",
+    "that the declared order is the right one. It is Proteus's, stated, and the canonical-string tie-break carries no simplicity claim -- so a disagreement inside a tie class is a tie-break artefact and is reported as same_size_and_depth."
+  ],
+  "status": "FAILED",
+  "check": "hypothesis_shrinking_as_a_program_minimiser_on_still_solves",
+  "consumer": "H1 witness and program minimisation (Proteus's Boolean substrate)",
+  "clears": "TECHNE-12",
+  "fixture": "techne/acquisition/fixtures/hypothesis_program_minimiser.json"
+}

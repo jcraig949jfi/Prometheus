@@ -1,0 +1,2030 @@
+{
+  "schema": "techne.h1.hypothesis_program_minimiser/1",
+  "clears": "TECHNE-12",
+  "contract_from": {
+    "seat": "Proteus",
+    "commit": "5eae54618",
+    "strategy": "proteus/eval/hypothesis_strategy.py::solving_programs",
+    "predicate": "proteus/eval/shrink.py::still_solves (FULL coverage; budget exhaustion is not a witness, an uncompilable program is neither)",
+    "declared_order": "(node_count, depth, canonical_string). Node count is primary because it is the cost the kind charges and the quantity a component library is claimed to reduce. Depth breaks ties toward flatter programs. The canonical string is ONLY to make the order total; it carries no simplicity claim.",
+    "ground_truth": "proteus.eval.shrink.minimal_by_enumeration(max_size=5)",
+    "fixture_id": "sha256:579511c909fd139d42b871fb3924269d968f692ad2e6f6b546e479e76efb1feb"
+  },
+  "why_still_solves_and_not_still_a_counterexample": "Proteus measured that still_a_counterexample is trivial: the five leaves have five distinct truth tables, so every one of the 256 targets has a size-1 counterexample and there is nothing to search. Qualifying a minimiser on a predicate that is satisfied at size 1 would measure nothing, so this uses still_solves.",
+  "domain": {
+    "n_inputs": 3,
+    "n_targets": 256,
+    "enumeration_bound": 5,
+    "interface_version": "proteus.boolean3.v0"
+  },
+  "results": {
+    "n_targets": 240,
+    "n_scored": 43,
+    "n_out_of_enumeration_reach": 197,
+    "n_unsound": 0,
+    "unsound": [],
+    "n_errored": 16,
+    "errors": [
+      {
+        "target": 1,
+        "error": "Unsatisfiable: Unable to satisfy assumptions of test. 459 of 459 test cases failed a .filter() or assume() condition. Try making your filters or assumes less strict, or rewrite using strategy parameters: st.integers().filter(lambda x: x > 0) fails less often (that is, never) when rewritten as st.integers(min_value=1)."
+      },
+      {
+        "target": 6,
+        "error": "Unsatisfiable: Unable to satisfy assumptions of test. 459 of 459 test cases failed a .filter() or assume() condition. Try making your filters or assumes less strict, or rewrite using strategy parameters: st.integers().filter(lambda x: x > 0) fails less often (that is, never) when rewritten as st.integers(min_value=1)."
+      },
+      {
+        "target": 7,
+        "error": "Unsatisfiable: Unable to satisfy assumptions of test. 459 of 459 test cases failed a .filter() or assume() condition. Try making your filters or assumes less strict, or rewrite using strategy parameters: st.integers().filter(lambda x: x > 0) fails less often (that is, never) when rewritten as st.integers(min_value=1)."
+      },
+      {
+        "target": 18,
+        "error": "Unsatisfiable: Unable to satisfy assumptions of test. 459 of 459 test cases failed a .filter() or assume() condition. Try making your filters or assumes less strict, or rewrite using strategy parameters: st.integers().filter(lambda x: x > 0) fails less often (that is, never) when rewritten as st.integers(min_value=1)."
+      },
+      {
+        "target": 19,
+        "error": "Unsatisfiable: Unable to satisfy assumptions of test. 459 of 459 test cases failed a .filter() or assume() condition. Try making your filters or assumes less strict, or rewrite using strategy parameters: st.integers().filter(lambda x: x > 0) fails less often (that is, never) when rewritten as st.integers(min_value=1)."
+      },
+      {
+        "target": 30,
+        "error": "Unsatisfiable: Unable to satisfy assumptions of test. 459 of 459 test cases failed a .filter() or assume() condition. Try making your filters or assumes less strict, or rewrite using strategy parameters: st.integers().filter(lambda x: x > 0) fails less often (that is, never) when rewritten as st.integers(min_value=1)."
+      },
+      {
+        "target": 31,
+        "error": "Unsatisfiable: Unable to satisfy assumptions of test. 459 of 459 test cases failed a .filter() or assume() condition. Try making your filters or assumes less strict, or rewrite using strategy parameters: st.integers().filter(lambda x: x > 0) fails less often (that is, never) when rewritten as st.integers(min_value=1)."
+      },
+      {
+        "target": 54,
+        "error": "Unsatisfiable: Unable to satisfy assumptions of test. 459 of 459 test cases failed a .filter() or assume() condition. Try making your filters or assumes less strict, or rewrite using strategy parameters: st.integers().filter(lambda x: x > 0) fails less often (that is, never) when rewritten as st.integers(min_value=1)."
+      },
+      {
+        "target": 86,
+        "error": "Unsatisfiable: Unable to satisfy assumptions of test. 459 of 459 test cases failed a .filter() or assume() condition. Try making your filters or assumes less strict, or rewrite using strategy parameters: st.integers().filter(lambda x: x > 0) fails less often (that is, never) when rewritten as st.integers(min_value=1)."
+      },
+      {
+        "target": 87,
+        "error": "Unsatisfiable: Unable to satisfy assumptions of test. 459 of 459 test cases failed a .filter() or assume() condition. Try making your filters or assumes less strict, or rewrite using strategy parameters: st.integers().filter(lambda x: x > 0) fails less often (that is, never) when rewritten as st.integers(min_value=1)."
+      }
+    ],
+    "excess_nodes_histogram": {
+      "0": 19,
+      "1": 9,
+      "2": 12,
+      "3": 2,
+      "4": 1
+    },
+    "n_not_minimal": 24,
+    "fraction_not_minimal": 0.5581,
+    "max_excess_nodes": 4,
+    "n_identical_under_declared_order": 15,
+    "n_same_size_and_depth": 19,
+    "worst_cases": [
+      {
+        "target": 21,
+        "hypothesis": {
+          "program": "(not (not (or (and x0 x2) (and x1 x2))))",
+          "size": 9,
+          "depth": 5
+        },
+        "ground_truth": {
+          "program": "(and (or x0 x1) x2)",
+          "size": 5,
+          "depth": 3
+        },
+        "still_solves": true,
+        "same_size": false,
+        "same_size_and_depth": false,
+        "identical_under_declared_order": false,
+        "excess_nodes": 4
+      },
+      {
+        "target": 12,
+        "hypothesis": {
+          "program": "(not (xor x0 (not (and x0 x1))))",
+          "size": 7,
+          "depth": 5
+        },
+        "ground_truth": {
+          "program": "(and (not x1) x0)",
+          "size": 4,
+          "depth": 3
+        },
+        "still_solves": true,
+        "same_size": false,
+        "same_size_and_depth": false,
+        "identical_under_declared_order": false,
+        "excess_nodes": 3
+      },
+      {
+        "target": 48,
+        "hypothesis": {
+          "program": "(xor x0 (not (not (or x0 x1))))",
+          "size": 7,
+          "depth": 5
+        },
+        "ground_truth": {
+          "program": "(and (not x0) x1)",
+          "size": 4,
+          "depth": 3
+        },
+        "still_solves": true,
+        "same_size": false,
+        "same_size_and_depth": false,
+        "identical_under_declared_order": false,
+        "excess_nodes": 3
+      },
+      {
+        "target": 3,
+        "hypothesis": {
+          "program": "(not (not (and x0 x1)))",
+          "size": 5,
+          "depth": 4
+        },
+        "ground_truth": {
+          "program": "(and x0 x1)",
+          "size": 3,
+          "depth": 2
+        },
+        "still_solves": true,
+        "same_size": false,
+        "same_size_and_depth": false,
+        "identical_under_declared_order": false,
+        "excess_nodes": 2
+      },
+      {
+        "target": 5,
+        "hypothesis": {
+          "program": "(not (not (and x0 x2)))",
+          "size": 5,
+          "depth": 4
+        },
+        "ground_truth": {
+          "program": "(and x0 x2)",
+          "size": 3,
+          "depth": 2
+        },
+        "still_solves": true,
+        "same_size": false,
+        "same_size_and_depth": false,
+        "identical_under_declared_order": false,
+        "excess_nodes": 2
+      },
+      {
+        "target": 17,
+        "hypothesis": {
+          "program": "(not (not (and x1 x2)))",
+          "size": 5,
+          "depth": 4
+        },
+        "ground_truth": {
+          "program": "(and x1 x2)",
+          "size": 3,
+          "depth": 2
+        },
+        "still_solves": true,
+        "same_size": false,
+        "same_size_and_depth": false,
+        "identical_under_declared_order": false,
+        "excess_nodes": 2
+      }
+    ],
+    "wall_seconds": 299.2
+  },
+  "proteus_known_answers_reproduced": [
+    {
+      "enumerated_to_size": 5,
+      "ground_truth": {
+        "canonical": "(xor (xor x0 x1) x2)",
+        "depth": 3,
+        "size": 5
+      },
+      "name": "xor3",
+      "predicate": "still_solves",
+      "start_program": "(xor (xor (xor x0 x1) x2) (xor x0 x0))",
+      "start_satisfies_predicate": true,
+      "start_size": 9,
+      "target": "(xor (xor x0 x1) x2)",
+      "target_truth_table": "01101001"
+    },
+    {
+      "enumerated_to_size": 5,
+      "ground_truth": {
+        "canonical": "(and x0 x1)",
+        "depth": 2,
+        "size": 3
+      },
+      "name": "and01",
+      "predicate": "still_solves",
+      "start_program": "(and (and x0 x1) (or x1 x1))",
+      "start_satisfies_predicate": true,
+      "start_size": 7,
+      "target": "(and x0 x1)",
+      "target_truth_table": "00000011"
+    },
+    {
+      "enumerated_to_size": 2,
+      "ground_truth": {
+        "canonical": "c0",
+        "depth": 1,
+        "size": 1
+      },
+      "name": "xor3_counterexample",
+      "predicate": "still_a_counterexample",
+      "start_program": "c0",
+      "start_satisfies_predicate": true,
+      "start_size": 1,
+      "target": "(xor (xor x0 x1) x2)",
+      "target_truth_table": "01101001"
+    }
+  ],
+  "rows": [
+    {
+      "target": 0,
+      "hypothesis": {
+        "program": "c0",
+        "size": 1,
+        "depth": 1
+      },
+      "ground_truth": {
+        "program": "c0",
+        "size": 1,
+        "depth": 1
+      },
+      "still_solves": true,
+      "same_size": true,
+      "same_size_and_depth": true,
+      "identical_under_declared_order": true,
+      "excess_nodes": 0
+    },
+    {
+      "target": 2,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 3,
+      "hypothesis": {
+        "program": "(not (not (and x0 x1)))",
+        "size": 5,
+        "depth": 4
+      },
+      "ground_truth": {
+        "program": "(and x0 x1)",
+        "size": 3,
+        "depth": 2
+      },
+      "still_solves": true,
+      "same_size": false,
+      "same_size_and_depth": false,
+      "identical_under_declared_order": false,
+      "excess_nodes": 2
+    },
+    {
+      "target": 4,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 5,
+      "hypothesis": {
+        "program": "(not (not (and x0 x2)))",
+        "size": 5,
+        "depth": 4
+      },
+      "ground_truth": {
+        "program": "(and x0 x2)",
+        "size": 3,
+        "depth": 2
+      },
+      "still_solves": true,
+      "same_size": false,
+      "same_size_and_depth": false,
+      "identical_under_declared_order": false,
+      "excess_nodes": 2
+    },
+    {
+      "target": 8,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 9,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 10,
+      "hypothesis": {
+        "program": "(not (or x2 (not x0)))",
+        "size": 5,
+        "depth": 4
+      },
+      "ground_truth": {
+        "program": "(and (not x2) x0)",
+        "size": 4,
+        "depth": 3
+      },
+      "still_solves": true,
+      "same_size": false,
+      "same_size_and_depth": false,
+      "identical_under_declared_order": false,
+      "excess_nodes": 1
+    },
+    {
+      "target": 11,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 12,
+      "hypothesis": {
+        "program": "(not (xor x0 (not (and x0 x1))))",
+        "size": 7,
+        "depth": 5
+      },
+      "ground_truth": {
+        "program": "(and (not x1) x0)",
+        "size": 4,
+        "depth": 3
+      },
+      "still_solves": true,
+      "same_size": false,
+      "same_size_and_depth": false,
+      "identical_under_declared_order": false,
+      "excess_nodes": 3
+    },
+    {
+      "target": 13,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 14,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 15,
+      "hypothesis": {
+        "program": "x0",
+        "size": 1,
+        "depth": 1
+      },
+      "ground_truth": {
+        "program": "x0",
+        "size": 1,
+        "depth": 1
+      },
+      "still_solves": true,
+      "same_size": true,
+      "same_size_and_depth": true,
+      "identical_under_declared_order": true,
+      "excess_nodes": 0
+    },
+    {
+      "target": 16,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 17,
+      "hypothesis": {
+        "program": "(not (not (and x1 x2)))",
+        "size": 5,
+        "depth": 4
+      },
+      "ground_truth": {
+        "program": "(and x1 x2)",
+        "size": 3,
+        "depth": 2
+      },
+      "still_solves": true,
+      "same_size": false,
+      "same_size_and_depth": false,
+      "identical_under_declared_order": false,
+      "excess_nodes": 2
+    },
+    {
+      "target": 20,
+      "hypothesis": {
+        "program": "(and x2 (xor x0 x1))",
+        "size": 5,
+        "depth": 3
+      },
+      "ground_truth": {
+        "program": "(and (xor x0 x1) x2)",
+        "size": 5,
+        "depth": 3
+      },
+      "still_solves": true,
+      "same_size": true,
+      "same_size_and_depth": true,
+      "identical_under_declared_order": false,
+      "excess_nodes": 0
+    },
+    {
+      "target": 21,
+      "hypothesis": {
+        "program": "(not (not (or (and x0 x2) (and x1 x2))))",
+        "size": 9,
+        "depth": 5
+      },
+      "ground_truth": {
+        "program": "(and (or x0 x1) x2)",
+        "size": 5,
+        "depth": 3
+      },
+      "still_solves": true,
+      "same_size": false,
+      "same_size_and_depth": false,
+      "identical_under_declared_order": false,
+      "excess_nodes": 4
+    },
+    {
+      "target": 22,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 23,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 24,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 25,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 26,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 27,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 28,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 29,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 32,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 33,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 34,
+      "hypothesis": {
+        "program": "(not (or x2 (not x1)))",
+        "size": 5,
+        "depth": 4
+      },
+      "ground_truth": {
+        "program": "(and (not x2) x1)",
+        "size": 4,
+        "depth": 3
+      },
+      "still_solves": true,
+      "same_size": false,
+      "same_size_and_depth": false,
+      "identical_under_declared_order": false,
+      "excess_nodes": 1
+    },
+    {
+      "target": 35,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 36,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 37,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 38,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 39,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 40,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 41,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 42,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 43,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 44,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 45,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 46,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 47,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 48,
+      "hypothesis": {
+        "program": "(xor x0 (not (not (or x0 x1))))",
+        "size": 7,
+        "depth": 5
+      },
+      "ground_truth": {
+        "program": "(and (not x0) x1)",
+        "size": 4,
+        "depth": 3
+      },
+      "still_solves": true,
+      "same_size": false,
+      "same_size_and_depth": false,
+      "identical_under_declared_order": false,
+      "excess_nodes": 3
+    },
+    {
+      "target": 49,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 50,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 51,
+      "hypothesis": {
+        "program": "x1",
+        "size": 1,
+        "depth": 1
+      },
+      "ground_truth": {
+        "program": "x1",
+        "size": 1,
+        "depth": 1
+      },
+      "still_solves": true,
+      "same_size": true,
+      "same_size_and_depth": true,
+      "identical_under_declared_order": true,
+      "excess_nodes": 0
+    },
+    {
+      "target": 52,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 53,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 55,
+      "hypothesis": {
+        "program": "(or x1 (and x0 x2))",
+        "size": 5,
+        "depth": 3
+      },
+      "ground_truth": {
+        "program": "(or (and x0 x2) x1)",
+        "size": 5,
+        "depth": 3
+      },
+      "still_solves": true,
+      "same_size": true,
+      "same_size_and_depth": true,
+      "identical_under_declared_order": false,
+      "excess_nodes": 0
+    },
+    {
+      "target": 56,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 57,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 58,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 59,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 60,
+      "hypothesis": {
+        "program": "(not (not (xor x0 x1)))",
+        "size": 5,
+        "depth": 4
+      },
+      "ground_truth": {
+        "program": "(xor x0 x1)",
+        "size": 3,
+        "depth": 2
+      },
+      "still_solves": true,
+      "same_size": false,
+      "same_size_and_depth": false,
+      "identical_under_declared_order": false,
+      "excess_nodes": 2
+    },
+    {
+      "target": 61,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 62,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 63,
+      "hypothesis": {
+        "program": "(not (not (or x0 x1)))",
+        "size": 5,
+        "depth": 4
+      },
+      "ground_truth": {
+        "program": "(or x0 x1)",
+        "size": 3,
+        "depth": 2
+      },
+      "still_solves": true,
+      "same_size": false,
+      "same_size_and_depth": false,
+      "identical_under_declared_order": false,
+      "excess_nodes": 2
+    },
+    {
+      "target": 64,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 65,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 66,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 67,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 68,
+      "hypothesis": {
+        "program": "(not (or x1 (not x2)))",
+        "size": 5,
+        "depth": 4
+      },
+      "ground_truth": {
+        "program": "(and (not x1) x2)",
+        "size": 4,
+        "depth": 3
+      },
+      "still_solves": true,
+      "same_size": false,
+      "same_size_and_depth": false,
+      "identical_under_declared_order": false,
+      "excess_nodes": 1
+    },
+    {
+      "target": 69,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 70,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 71,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 72,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 73,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 74,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 75,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 76,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 77,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 78,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 79,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 80,
+      "hypothesis": {
+        "program": "(not (or x0 (not x2)))",
+        "size": 5,
+        "depth": 4
+      },
+      "ground_truth": {
+        "program": "(and (not x0) x2)",
+        "size": 4,
+        "depth": 3
+      },
+      "still_solves": true,
+      "same_size": false,
+      "same_size_and_depth": false,
+      "identical_under_declared_order": false,
+      "excess_nodes": 1
+    },
+    {
+      "target": 81,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 82,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 83,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 84,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 85,
+      "hypothesis": {
+        "program": "x2",
+        "size": 1,
+        "depth": 1
+      },
+      "ground_truth": {
+        "program": "x2",
+        "size": 1,
+        "depth": 1
+      },
+      "still_solves": true,
+      "same_size": true,
+      "same_size_and_depth": true,
+      "identical_under_declared_order": true,
+      "excess_nodes": 0
+    },
+    {
+      "target": 88,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 89,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 90,
+      "hypothesis": {
+        "program": "(xor x0 x2)",
+        "size": 3,
+        "depth": 2
+      },
+      "ground_truth": {
+        "program": "(xor x0 x2)",
+        "size": 3,
+        "depth": 2
+      },
+      "still_solves": true,
+      "same_size": true,
+      "same_size_and_depth": true,
+      "identical_under_declared_order": true,
+      "excess_nodes": 0
+    },
+    {
+      "target": 91,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 92,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 93,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 94,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 95,
+      "hypothesis": {
+        "program": "(not (not (or x0 x2)))",
+        "size": 5,
+        "depth": 4
+      },
+      "ground_truth": {
+        "program": "(or x0 x2)",
+        "size": 3,
+        "depth": 2
+      },
+      "still_solves": true,
+      "same_size": false,
+      "same_size_and_depth": false,
+      "identical_under_declared_order": false,
+      "excess_nodes": 2
+    },
+    {
+      "target": 96,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 97,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 98,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 99,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 100,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 101,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 102,
+      "hypothesis": {
+        "program": "(not (xor x1 (not x2)))",
+        "size": 5,
+        "depth": 4
+      },
+      "ground_truth": {
+        "program": "(xor x1 x2)",
+        "size": 3,
+        "depth": 2
+      },
+      "still_solves": true,
+      "same_size": false,
+      "same_size_and_depth": false,
+      "identical_under_declared_order": false,
+      "excess_nodes": 2
+    },
+    {
+      "target": 103,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 104,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 105,
+      "hypothesis": {
+        "program": "(xor x0 (xor x1 (and c1 x2)))",
+        "size": 7,
+        "depth": 4
+      },
+      "ground_truth": {
+        "program": "(xor (xor x0 x1) x2)",
+        "size": 5,
+        "depth": 3
+      },
+      "still_solves": true,
+      "same_size": false,
+      "same_size_and_depth": false,
+      "identical_under_declared_order": false,
+      "excess_nodes": 2
+    },
+    {
+      "target": 107,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 109,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 110,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 112,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 113,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 114,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 115,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 116,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 117,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 118,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 119,
+      "hypothesis": {
+        "program": "(or x1 x2)",
+        "size": 3,
+        "depth": 2
+      },
+      "ground_truth": {
+        "program": "(or x1 x2)",
+        "size": 3,
+        "depth": 2
+      },
+      "still_solves": true,
+      "same_size": true,
+      "same_size_and_depth": true,
+      "identical_under_declared_order": true,
+      "excess_nodes": 0
+    },
+    {
+      "target": 120,
+      "hypothesis": {
+        "program": "(not (not (xor x0 (or x1 x2))))",
+        "size": 7,
+        "depth": 5
+      },
+      "ground_truth": {
+        "program": "(xor (or x1 x2) x0)",
+        "size": 5,
+        "depth": 3
+      },
+      "still_solves": true,
+      "same_size": false,
+      "same_size_and_depth": false,
+      "identical_under_declared_order": false,
+      "excess_nodes": 2
+    },
+    {
+      "target": 121,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 122,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 124,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 126,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 128,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 129,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 130,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 131,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 132,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 133,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 134,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 135,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 136,
+      "hypothesis": {
+        "program": "(not (or x1 x2))",
+        "size": 4,
+        "depth": 3
+      },
+      "ground_truth": {
+        "program": "(not (or x1 x2))",
+        "size": 4,
+        "depth": 3
+      },
+      "still_solves": true,
+      "same_size": true,
+      "same_size_and_depth": true,
+      "identical_under_declared_order": true,
+      "excess_nodes": 0
+    },
+    {
+      "target": 137,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 138,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 139,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 140,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 141,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 142,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 143,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 144,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 145,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 146,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 147,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 148,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 149,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 150,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 151,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 152,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 153,
+      "hypothesis": {
+        "program": "(not (xor x1 x2))",
+        "size": 4,
+        "depth": 3
+      },
+      "ground_truth": {
+        "program": "(not (xor x1 x2))",
+        "size": 4,
+        "depth": 3
+      },
+      "still_solves": true,
+      "same_size": true,
+      "same_size_and_depth": true,
+      "identical_under_declared_order": true,
+      "excess_nodes": 0
+    },
+    {
+      "target": 154,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 155,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 156,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 157,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 158,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 159,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 160,
+      "hypothesis": {
+        "program": "(not (or x0 x2))",
+        "size": 4,
+        "depth": 3
+      },
+      "ground_truth": {
+        "program": "(not (or x0 x2))",
+        "size": 4,
+        "depth": 3
+      },
+      "still_solves": true,
+      "same_size": true,
+      "same_size_and_depth": true,
+      "identical_under_declared_order": true,
+      "excess_nodes": 0
+    },
+    {
+      "target": 161,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 162,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 163,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 164,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 165,
+      "hypothesis": {
+        "program": "(not (xor x0 x2))",
+        "size": 4,
+        "depth": 3
+      },
+      "ground_truth": {
+        "program": "(not (xor x0 x2))",
+        "size": 4,
+        "depth": 3
+      },
+      "still_solves": true,
+      "same_size": true,
+      "same_size_and_depth": true,
+      "identical_under_declared_order": true,
+      "excess_nodes": 0
+    },
+    {
+      "target": 166,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 167,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 168,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 169,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 170,
+      "hypothesis": {
+        "program": "(not x2)",
+        "size": 2,
+        "depth": 2
+      },
+      "ground_truth": {
+        "program": "(not x2)",
+        "size": 2,
+        "depth": 2
+      },
+      "still_solves": true,
+      "same_size": true,
+      "same_size_and_depth": true,
+      "identical_under_declared_order": true,
+      "excess_nodes": 0
+    },
+    {
+      "target": 171,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 172,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 173,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 174,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 175,
+      "hypothesis": {
+        "program": "(or x0 (not x2))",
+        "size": 4,
+        "depth": 3
+      },
+      "ground_truth": {
+        "program": "(or (not x2) x0)",
+        "size": 4,
+        "depth": 3
+      },
+      "still_solves": true,
+      "same_size": true,
+      "same_size_and_depth": true,
+      "identical_under_declared_order": false,
+      "excess_nodes": 0
+    },
+    {
+      "target": 176,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 177,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 178,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 179,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 180,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 181,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 182,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 183,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 184,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 185,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 186,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 187,
+      "hypothesis": {
+        "program": "(not (xor x1 (or x1 x2)))",
+        "size": 6,
+        "depth": 4
+      },
+      "ground_truth": {
+        "program": "(or (not x2) x1)",
+        "size": 4,
+        "depth": 3
+      },
+      "still_solves": true,
+      "same_size": false,
+      "same_size_and_depth": false,
+      "identical_under_declared_order": false,
+      "excess_nodes": 2
+    },
+    {
+      "target": 188,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 189,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 190,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 191,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 192,
+      "hypothesis": {
+        "program": "(and (not x0) (not x1))",
+        "size": 5,
+        "depth": 3
+      },
+      "ground_truth": {
+        "program": "(not (or x0 x1))",
+        "size": 4,
+        "depth": 3
+      },
+      "still_solves": true,
+      "same_size": false,
+      "same_size_and_depth": false,
+      "identical_under_declared_order": false,
+      "excess_nodes": 1
+    },
+    {
+      "target": 193,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 194,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 195,
+      "hypothesis": {
+        "program": "(xor (not x0) (and c1 x1))",
+        "size": 6,
+        "depth": 3
+      },
+      "ground_truth": {
+        "program": "(not (xor x0 x1))",
+        "size": 4,
+        "depth": 3
+      },
+      "still_solves": true,
+      "same_size": false,
+      "same_size_and_depth": false,
+      "identical_under_declared_order": false,
+      "excess_nodes": 2
+    },
+    {
+      "target": 196,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 197,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 198,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 199,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 200,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 201,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 202,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 203,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 204,
+      "hypothesis": {
+        "program": "(not x1)",
+        "size": 2,
+        "depth": 2
+      },
+      "ground_truth": {
+        "program": "(not x1)",
+        "size": 2,
+        "depth": 2
+      },
+      "still_solves": true,
+      "same_size": true,
+      "same_size_and_depth": true,
+      "identical_under_declared_order": true,
+      "excess_nodes": 0
+    },
+    {
+      "target": 205,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 206,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 207,
+      "hypothesis": {
+        "program": "(or x0 (not x1))",
+        "size": 4,
+        "depth": 3
+      },
+      "ground_truth": {
+        "program": "(or (not x1) x0)",
+        "size": 4,
+        "depth": 3
+      },
+      "still_solves": true,
+      "same_size": true,
+      "same_size_and_depth": true,
+      "identical_under_declared_order": false,
+      "excess_nodes": 0
+    },
+    {
+      "target": 208,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 209,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 210,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 211,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 212,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 213,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 214,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 215,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 216,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 217,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 218,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 219,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 220,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 221,
+      "hypothesis": {
+        "program": "(not (and x1 (not x2)))",
+        "size": 5,
+        "depth": 4
+      },
+      "ground_truth": {
+        "program": "(or (not x1) x2)",
+        "size": 4,
+        "depth": 3
+      },
+      "still_solves": true,
+      "same_size": false,
+      "same_size_and_depth": false,
+      "identical_under_declared_order": false,
+      "excess_nodes": 1
+    },
+    {
+      "target": 222,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 223,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 224,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 225,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 226,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 227,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 228,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 229,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 230,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 231,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 232,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 233,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 234,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 235,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 236,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 237,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 238,
+      "hypothesis": {
+        "program": "(or (not x1) (not x2))",
+        "size": 5,
+        "depth": 3
+      },
+      "ground_truth": {
+        "program": "(not (and x1 x2))",
+        "size": 4,
+        "depth": 3
+      },
+      "still_solves": true,
+      "same_size": false,
+      "same_size_and_depth": false,
+      "identical_under_declared_order": false,
+      "excess_nodes": 1
+    },
+    {
+      "target": 239,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 240,
+      "hypothesis": {
+        "program": "(not x0)",
+        "size": 2,
+        "depth": 2
+      },
+      "ground_truth": {
+        "program": "(not x0)",
+        "size": 2,
+        "depth": 2
+      },
+      "still_solves": true,
+      "same_size": true,
+      "same_size_and_depth": true,
+      "identical_under_declared_order": true,
+      "excess_nodes": 0
+    },
+    {
+      "target": 241,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 242,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 243,
+      "hypothesis": {
+        "program": "(not (and x0 (not x1)))",
+        "size": 5,
+        "depth": 4
+      },
+      "ground_truth": {
+        "program": "(or (not x0) x1)",
+        "size": 4,
+        "depth": 3
+      },
+      "still_solves": true,
+      "same_size": false,
+      "same_size_and_depth": false,
+      "identical_under_declared_order": false,
+      "excess_nodes": 1
+    },
+    {
+      "target": 244,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 245,
+      "hypothesis": {
+        "program": "(not (and x0 (not x2)))",
+        "size": 5,
+        "depth": 4
+      },
+      "ground_truth": {
+        "program": "(or (not x0) x2)",
+        "size": 4,
+        "depth": 3
+      },
+      "still_solves": true,
+      "same_size": false,
+      "same_size_and_depth": false,
+      "identical_under_declared_order": false,
+      "excess_nodes": 1
+    },
+    {
+      "target": 246,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 247,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 248,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 249,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 250,
+      "hypothesis": {
+        "program": "(not (not (not (and x0 x2))))",
+        "size": 6,
+        "depth": 5
+      },
+      "ground_truth": {
+        "program": "(not (and x0 x2))",
+        "size": 4,
+        "depth": 3
+      },
+      "still_solves": true,
+      "same_size": false,
+      "same_size_and_depth": false,
+      "identical_under_declared_order": false,
+      "excess_nodes": 2
+    },
+    {
+      "target": 251,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 252,
+      "hypothesis": {
+        "program": "(not (and x0 x1))",
+        "size": 4,
+        "depth": 3
+      },
+      "ground_truth": {
+        "program": "(not (and x0 x1))",
+        "size": 4,
+        "depth": 3
+      },
+      "still_solves": true,
+      "same_size": true,
+      "same_size_and_depth": true,
+      "identical_under_declared_order": true,
+      "excess_nodes": 0
+    },
+    {
+      "target": 253,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 254,
+      "ground_truth": null,
+      "reason": "no solving program of size <= 5; out of enumeration reach, so no minimality claim is possible"
+    },
+    {
+      "target": 255,
+      "hypothesis": {
+        "program": "c1",
+        "size": 1,
+        "depth": 1
+      },
+      "ground_truth": {
+        "program": "c1",
+        "size": 1,
+        "depth": 1
+      },
+      "still_solves": true,
+      "same_size": true,
+      "same_size_and_depth": true,
+      "identical_under_declared_order": true,
+      "excess_nodes": 0
+    }
+  ],
+  "checks": [
+    {
+      "claim": "SOUNDNESS: every shrunk program still_solves its target under Proteus's predicate",
+      "pass": true
+    },
+    {
+      "claim": "no target errored during shrinking",
+      "pass": false
+    },
+    {
+      "claim": "every scored target has exhaustive ground truth from Proteus's enumeration",
+      "pass": true
+    },
+    {
+      "claim": "Proteus's two declared known answers reproduce here",
+      "pass": false
+    },
+    {
+      "claim": "MEASURED, not asserted: how often and by how much Hypothesis misses the minimum",
+      "pass": true
+    }
+  ],
+  "all_passed": false,
+  "verdict": "SOUND on every scored target, and NOT MINIMAL on 24 of 43 (0.5581), max excess 4 nodes. Extends Proteus's n=2 finding to the whole target space: the non-minimality they saw on and01 is not an outlier.",
+  "what_this_does_NOT_establish": [
+    "that Hypothesis is a good minimiser for this space. Soundness is a post-condition; minimality is a quality measure, and they are reported separately.",
+    "anything beyond enumeration reach. Targets with no solving program at size <= 5 carry NO minimality claim rather than a favourable default.",
+    "that the declared order is the right one. It is Proteus's, stated, and the canonical-string tie-break carries no simplicity claim -- so a disagreement inside a tie class is a tie-break artefact and is reported as same_size_and_depth."
+  ]
+}

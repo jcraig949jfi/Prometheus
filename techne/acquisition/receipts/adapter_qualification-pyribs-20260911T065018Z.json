@@ -1,0 +1,825 @@
+{
+  "schema": "techne.acquisition.receipt/1",
+  "receipt_id": "adapter_qualification-pyribs-20260911T065018Z",
+  "stage": "ADAPTER_QUALIFICATION",
+  "does_not_establish": [
+    "INSTALLATION",
+    "FIRST_USEFUL_CHECK",
+    "PAPER_REPRODUCTION",
+    "LOCAL_SCIENTIFIC_BENEFIT"
+  ],
+  "entry_id": "pyribs",
+  "tool": "ribs",
+  "design_version": "0.1",
+  "written_utc": "2026-09-11T06:50:18+00:00",
+  "seat": "Techne",
+  "repo": {
+    "commit": "2baf0680f59c1c833e42db98369e30ce5857b9bd",
+    "branch": "techne/track-d-2026-09-10",
+    "dirty": true
+  },
+  "runner": {
+    "python": "3.12.10",
+    "executable": "F:\\Prometheus\\vault\\techne_tools\\envs\\h0h5_tools\\Scripts\\python.exe",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "tool_cache": "F:\\Prometheus\\vault\\techne_tools",
+    "tool_cache_source": "TECHNE_TOOL_CACHE env",
+    "tool_cache_note": "host-local and gitignored; only its HASHES are tracked"
+  },
+  "commands_run": [],
+  "observations": {
+    "seam": {
+      "n": 150,
+      "n_failed": 0,
+      "grid_dims": [
+        4,
+        4
+      ],
+      "objective_degeneracy": {
+        "n_scored": 150,
+        "n_distinct_scores": 8,
+        "modal_score": 0.0,
+        "modal_count": 126,
+        "modal_fraction": 0.84,
+        "why_it_matters": "exact ties are resolved FIRST_WRITER_WINS, so a stream whose objective is mostly one value makes retention a function of ARRIVAL ORDER rather than of quality, for that mass. That is a property of the stream to report, not a parameter to tune."
+      }
+    },
+    "caps": {
+      "items": 16,
+      "bytes": 1406830,
+      "reserve": 4
+    },
+    "techne_pyribs": {
+      "n_retained": 15,
+      "answers": [
+        {
+          "query_id": "stable-ge-0",
+          "rule": "score_at_least",
+          "criterion": "stable",
+          "threshold": 0.55,
+          "answer": true,
+          "scorable": true,
+          "n_satisfying_retained": 5,
+          "best_retained_score": 0.8125,
+          "witness": "GKL"
+        },
+        {
+          "query_id": "stable-ge-1",
+          "rule": "score_at_least",
+          "criterion": "stable",
+          "threshold": 0.6,
+          "answer": true,
+          "scorable": true,
+          "n_satisfying_retained": 5,
+          "best_retained_score": 0.8125,
+          "witness": "GKL"
+        },
+        {
+          "query_id": "stable-ge-2",
+          "rule": "score_at_least",
+          "criterion": "stable",
+          "threshold": 0.7,
+          "answer": true,
+          "scorable": true,
+          "n_satisfying_retained": 4,
+          "best_retained_score": 0.8125,
+          "witness": "GKL"
+        },
+        {
+          "query_id": "stable-ge-3",
+          "rule": "score_at_least",
+          "criterion": "stable",
+          "threshold": 0.8,
+          "answer": true,
+          "scorable": true,
+          "n_satisfying_retained": 1,
+          "best_retained_score": 0.8125,
+          "witness": "GKL"
+        },
+        {
+          "query_id": "stable-ge-4",
+          "rule": "score_at_least",
+          "criterion": "stable",
+          "threshold": 0.85,
+          "answer": false,
+          "scorable": true,
+          "n_satisfying_retained": 0,
+          "best_retained_score": 0.8125,
+          "witness": null
+        },
+        {
+          "query_id": "cell-pc0-c0",
+          "rule": "occupies_cell",
+          "criterion": "descriptor",
+          "cell": "pc0-c0",
+          "answer": true,
+          "scorable": true,
+          "n_in_cell": 1,
+          "witness": "all_zero"
+        },
+        {
+          "query_id": "cell-pc3-c3",
+          "rule": "occupies_cell",
+          "criterion": "descriptor",
+          "cell": "pc3-c3",
+          "answer": true,
+          "scorable": true,
+          "n_in_cell": 1,
+          "witness": "all_one"
+        },
+        {
+          "query_id": "cell-pc0-c3",
+          "rule": "occupies_cell",
+          "criterion": "descriptor",
+          "cell": "pc0-c3",
+          "answer": false,
+          "scorable": true,
+          "n_in_cell": 0,
+          "witness": null
+        },
+        {
+          "query_id": "cell-pc3-c0",
+          "rule": "occupies_cell",
+          "criterion": "descriptor",
+          "cell": "pc3-c0",
+          "answer": true,
+          "scorable": true,
+          "n_in_cell": 1,
+          "witness": "random_098"
+        },
+        {
+          "query_id": "cellwise-ge-0",
+          "rule": "score_at_least",
+          "criterion": "cellwise_majority_match",
+          "threshold": 0.52,
+          "answer": null,
+          "scorable": false,
+          "reason": "C3-3's criterion. No cellwise_majority_match score exists in the cs-c3-2 corpus -- the archives were frozen before the criterion existed for them, which is the manifest's own point. Scoring it now would mean inventing the measurement; reporting it false would mean charging the archive for a question nobody asked it."
+        },
+        {
+          "query_id": "cellwise-ge-1",
+          "rule": "score_at_least",
+          "criterion": "cellwise_majority_match",
+          "threshold": 0.55,
+          "answer": null,
+          "scorable": false,
+          "reason": "C3-3's criterion. No cellwise_majority_match score exists in the cs-c3-2 corpus -- the archives were frozen before the criterion existed for them, which is the manifest's own point. Scoring it now would mean inventing the measurement; reporting it false would mean charging the archive for a question nobody asked it."
+        },
+        {
+          "query_id": "cellwise-ge-2",
+          "rule": "score_at_least",
+          "criterion": "cellwise_majority_match",
+          "threshold": 0.6,
+          "answer": null,
+          "scorable": false,
+          "reason": "C3-3's criterion. No cellwise_majority_match score exists in the cs-c3-2 corpus -- the archives were frozen before the criterion existed for them, which is the manifest's own point. Scoring it now would mean inventing the measurement; reporting it false would mean charging the archive for a question nobody asked it."
+        }
+      ],
+      "binding": "NONE"
+    },
+    "archaeon_policies": {
+      "top_k": {
+        "policy_id": "h3.top_k.v0",
+        "n_retained": 16,
+        "archive_digest": "sha256:fd0c87be9359c533fe118f0134d378d96f221b2197be8fce0aa2e140e43dd5a7",
+        "answers": [
+          {
+            "query_id": "stable-ge-0",
+            "rule": "score_at_least",
+            "criterion": "stable",
+            "threshold": 0.55,
+            "answer": true,
+            "scorable": true,
+            "n_satisfying_retained": 16,
+            "best_retained_score": 0.8125,
+            "witness": "GKL"
+          },
+          {
+            "query_id": "stable-ge-1",
+            "rule": "score_at_least",
+            "criterion": "stable",
+            "threshold": 0.6,
+            "answer": true,
+            "scorable": true,
+            "n_satisfying_retained": 16,
+            "best_retained_score": 0.8125,
+            "witness": "GKL"
+          },
+          {
+            "query_id": "stable-ge-2",
+            "rule": "score_at_least",
+            "criterion": "stable",
+            "threshold": 0.7,
+            "answer": true,
+            "scorable": true,
+            "n_satisfying_retained": 16,
+            "best_retained_score": 0.8125,
+            "witness": "GKL"
+          },
+          {
+            "query_id": "stable-ge-3",
+            "rule": "score_at_least",
+            "criterion": "stable",
+            "threshold": 0.8,
+            "answer": true,
+            "scorable": true,
+            "n_satisfying_retained": 4,
+            "best_retained_score": 0.8125,
+            "witness": "GKL"
+          },
+          {
+            "query_id": "stable-ge-4",
+            "rule": "score_at_least",
+            "criterion": "stable",
+            "threshold": 0.85,
+            "answer": false,
+            "scorable": true,
+            "n_satisfying_retained": 0,
+            "best_retained_score": 0.8125,
+            "witness": null
+          },
+          {
+            "query_id": "cell-pc0-c0",
+            "rule": "occupies_cell",
+            "criterion": "descriptor",
+            "cell": "pc0-c0",
+            "answer": false,
+            "scorable": true,
+            "n_in_cell": 0,
+            "witness": null
+          },
+          {
+            "query_id": "cell-pc3-c3",
+            "rule": "occupies_cell",
+            "criterion": "descriptor",
+            "cell": "pc3-c3",
+            "answer": false,
+            "scorable": true,
+            "n_in_cell": 0,
+            "witness": null
+          },
+          {
+            "query_id": "cell-pc0-c3",
+            "rule": "occupies_cell",
+            "criterion": "descriptor",
+            "cell": "pc0-c3",
+            "answer": false,
+            "scorable": true,
+            "n_in_cell": 0,
+            "witness": null
+          },
+          {
+            "query_id": "cell-pc3-c0",
+            "rule": "occupies_cell",
+            "criterion": "descriptor",
+            "cell": "pc3-c0",
+            "answer": false,
+            "scorable": true,
+            "n_in_cell": 0,
+            "witness": null
+          },
+          {
+            "query_id": "cellwise-ge-0",
+            "rule": "score_at_least",
+            "criterion": "cellwise_majority_match",
+            "threshold": 0.52,
+            "answer": null,
+            "scorable": false,
+            "reason": "C3-3's criterion. No cellwise_majority_match score exists in the cs-c3-2 corpus -- the archives were frozen before the criterion existed for them, which is the manifest's own point. Scoring it now would mean inventing the measurement; reporting it false would mean charging the archive for a question nobody asked it."
+          },
+          {
+            "query_id": "cellwise-ge-1",
+            "rule": "score_at_least",
+            "criterion": "cellwise_majority_match",
+            "threshold": 0.55,
+            "answer": null,
+            "scorable": false,
+            "reason": "C3-3's criterion. No cellwise_majority_match score exists in the cs-c3-2 corpus -- the archives were frozen before the criterion existed for them, which is the manifest's own point. Scoring it now would mean inventing the measurement; reporting it false would mean charging the archive for a question nobody asked it."
+          },
+          {
+            "query_id": "cellwise-ge-2",
+            "rule": "score_at_least",
+            "criterion": "cellwise_majority_match",
+            "threshold": 0.6,
+            "answer": null,
+            "scorable": false,
+            "reason": "C3-3's criterion. No cellwise_majority_match score exists in the cs-c3-2 corpus -- the archives were frozen before the criterion existed for them, which is the manifest's own point. Scoring it now would mean inventing the measurement; reporting it false would mean charging the archive for a question nobody asked it."
+          }
+        ],
+        "n_scorable": 9,
+        "n_true": 4,
+        "n_unscorable": 3
+      },
+      "uniform": {
+        "policy_id": "h3.uniform.v0#20260910",
+        "n_retained": 16,
+        "archive_digest": "sha256:d201cc3dc55d329a8dd5c13ffa5b01aba65c27ac07d936efdb226d2cdfff00fe",
+        "answers": [
+          {
+            "query_id": "stable-ge-0",
+            "rule": "score_at_least",
+            "criterion": "stable",
+            "threshold": 0.55,
+            "answer": true,
+            "scorable": true,
+            "n_satisfying_retained": 3,
+            "best_retained_score": 0.735,
+            "witness": "particle2:complement"
+          },
+          {
+            "query_id": "stable-ge-1",
+            "rule": "score_at_least",
+            "criterion": "stable",
+            "threshold": 0.6,
+            "answer": true,
+            "scorable": true,
+            "n_satisfying_retained": 3,
+            "best_retained_score": 0.735,
+            "witness": "particle2:complement"
+          },
+          {
+            "query_id": "stable-ge-2",
+            "rule": "score_at_least",
+            "criterion": "stable",
+            "threshold": 0.7,
+            "answer": true,
+            "scorable": true,
+            "n_satisfying_retained": 2,
+            "best_retained_score": 0.735,
+            "witness": "particle2:complement"
+          },
+          {
+            "query_id": "stable-ge-3",
+            "rule": "score_at_least",
+            "criterion": "stable",
+            "threshold": 0.8,
+            "answer": false,
+            "scorable": true,
+            "n_satisfying_retained": 0,
+            "best_retained_score": 0.735,
+            "witness": null
+          },
+          {
+            "query_id": "stable-ge-4",
+            "rule": "score_at_least",
+            "criterion": "stable",
+            "threshold": 0.85,
+            "answer": false,
+            "scorable": true,
+            "n_satisfying_retained": 0,
+            "best_retained_score": 0.735,
+            "witness": null
+          },
+          {
+            "query_id": "cell-pc0-c0",
+            "rule": "occupies_cell",
+            "criterion": "descriptor",
+            "cell": "pc0-c0",
+            "answer": true,
+            "scorable": true,
+            "n_in_cell": 3,
+            "witness": "all_zero"
+          },
+          {
+            "query_id": "cell-pc3-c3",
+            "rule": "occupies_cell",
+            "criterion": "descriptor",
+            "cell": "pc3-c3",
+            "answer": true,
+            "scorable": true,
+            "n_in_cell": 3,
+            "witness": "random_005"
+          },
+          {
+            "query_id": "cell-pc0-c3",
+            "rule": "occupies_cell",
+            "criterion": "descriptor",
+            "cell": "pc0-c3",
+            "answer": false,
+            "scorable": true,
+            "n_in_cell": 0,
+            "witness": null
+          },
+          {
+            "query_id": "cell-pc3-c0",
+            "rule": "occupies_cell",
+            "criterion": "descriptor",
+            "cell": "pc3-c0",
+            "answer": true,
+            "scorable": true,
+            "n_in_cell": 1,
+            "witness": "random_098"
+          },
+          {
+            "query_id": "cellwise-ge-0",
+            "rule": "score_at_least",
+            "criterion": "cellwise_majority_match",
+            "threshold": 0.52,
+            "answer": null,
+            "scorable": false,
+            "reason": "C3-3's criterion. No cellwise_majority_match score exists in the cs-c3-2 corpus -- the archives were frozen before the criterion existed for them, which is the manifest's own point. Scoring it now would mean inventing the measurement; reporting it false would mean charging the archive for a question nobody asked it."
+          },
+          {
+            "query_id": "cellwise-ge-1",
+            "rule": "score_at_least",
+            "criterion": "cellwise_majority_match",
+            "threshold": 0.55,
+            "answer": null,
+            "scorable": false,
+            "reason": "C3-3's criterion. No cellwise_majority_match score exists in the cs-c3-2 corpus -- the archives were frozen before the criterion existed for them, which is the manifest's own point. Scoring it now would mean inventing the measurement; reporting it false would mean charging the archive for a question nobody asked it."
+          },
+          {
+            "query_id": "cellwise-ge-2",
+            "rule": "score_at_least",
+            "criterion": "cellwise_majority_match",
+            "threshold": 0.6,
+            "answer": null,
+            "scorable": false,
+            "reason": "C3-3's criterion. No cellwise_majority_match score exists in the cs-c3-2 corpus -- the archives were frozen before the criterion existed for them, which is the manifest's own point. Scoring it now would mean inventing the measurement; reporting it false would mean charging the archive for a question nobody asked it."
+          }
+        ],
+        "n_scorable": 9,
+        "n_true": 6,
+        "n_unscorable": 3
+      },
+      "behavioral": {
+        "policy_id": "h3.behavioral.v0",
+        "n_retained": 15,
+        "archive_digest": "sha256:bbdbc647c2541f0e6a836af02fb0864a9cac7454932ae92e77cc8dee63cfd37a",
+        "answers": [
+          {
+            "query_id": "stable-ge-0",
+            "rule": "score_at_least",
+            "criterion": "stable",
+            "threshold": 0.55,
+            "answer": true,
+            "scorable": true,
+            "n_satisfying_retained": 5,
+            "best_retained_score": 0.8125,
+            "witness": "GKL"
+          },
+          {
+            "query_id": "stable-ge-1",
+            "rule": "score_at_least",
+            "criterion": "stable",
+            "threshold": 0.6,
+            "answer": true,
+            "scorable": true,
+            "n_satisfying_retained": 5,
+            "best_retained_score": 0.8125,
+            "witness": "GKL"
+          },
+          {
+            "query_id": "stable-ge-2",
+            "rule": "score_at_least",
+            "criterion": "stable",
+            "threshold": 0.7,
+            "answer": true,
+            "scorable": true,
+            "n_satisfying_retained": 4,
+            "best_retained_score": 0.8125,
+            "witness": "GKL"
+          },
+          {
+            "query_id": "stable-ge-3",
+            "rule": "score_at_least",
+            "criterion": "stable",
+            "threshold": 0.8,
+            "answer": true,
+            "scorable": true,
+            "n_satisfying_retained": 1,
+            "best_retained_score": 0.8125,
+            "witness": "GKL"
+          },
+          {
+            "query_id": "stable-ge-4",
+            "rule": "score_at_least",
+            "criterion": "stable",
+            "threshold": 0.85,
+            "answer": false,
+            "scorable": true,
+            "n_satisfying_retained": 0,
+            "best_retained_score": 0.8125,
+            "witness": null
+          },
+          {
+            "query_id": "cell-pc0-c0",
+            "rule": "occupies_cell",
+            "criterion": "descriptor",
+            "cell": "pc0-c0",
+            "answer": true,
+            "scorable": true,
+            "n_in_cell": 1,
+            "witness": "all_zero"
+          },
+          {
+            "query_id": "cell-pc3-c3",
+            "rule": "occupies_cell",
+            "criterion": "descriptor",
+            "cell": "pc3-c3",
+            "answer": true,
+            "scorable": true,
+            "n_in_cell": 1,
+            "witness": "all_one"
+          },
+          {
+            "query_id": "cell-pc0-c3",
+            "rule": "occupies_cell",
+            "criterion": "descriptor",
+            "cell": "pc0-c3",
+            "answer": false,
+            "scorable": true,
+            "n_in_cell": 0,
+            "witness": null
+          },
+          {
+            "query_id": "cell-pc3-c0",
+            "rule": "occupies_cell",
+            "criterion": "descriptor",
+            "cell": "pc3-c0",
+            "answer": true,
+            "scorable": true,
+            "n_in_cell": 1,
+            "witness": "random_098"
+          },
+          {
+            "query_id": "cellwise-ge-0",
+            "rule": "score_at_least",
+            "criterion": "cellwise_majority_match",
+            "threshold": 0.52,
+            "answer": null,
+            "scorable": false,
+            "reason": "C3-3's criterion. No cellwise_majority_match score exists in the cs-c3-2 corpus -- the archives were frozen before the criterion existed for them, which is the manifest's own point. Scoring it now would mean inventing the measurement; reporting it false would mean charging the archive for a question nobody asked it."
+          },
+          {
+            "query_id": "cellwise-ge-1",
+            "rule": "score_at_least",
+            "criterion": "cellwise_majority_match",
+            "threshold": 0.55,
+            "answer": null,
+            "scorable": false,
+            "reason": "C3-3's criterion. No cellwise_majority_match score exists in the cs-c3-2 corpus -- the archives were frozen before the criterion existed for them, which is the manifest's own point. Scoring it now would mean inventing the measurement; reporting it false would mean charging the archive for a question nobody asked it."
+          },
+          {
+            "query_id": "cellwise-ge-2",
+            "rule": "score_at_least",
+            "criterion": "cellwise_majority_match",
+            "threshold": 0.6,
+            "answer": null,
+            "scorable": false,
+            "reason": "C3-3's criterion. No cellwise_majority_match score exists in the cs-c3-2 corpus -- the archives were frozen before the criterion existed for them, which is the manifest's own point. Scoring it now would mean inventing the measurement; reporting it false would mean charging the archive for a question nobody asked it."
+          }
+        ],
+        "n_scorable": 9,
+        "n_true": 7,
+        "n_unscorable": 3
+      },
+      "hybrid": {
+        "policy_id": "h3.hybrid.v0#20260910",
+        "n_retained": 16,
+        "archive_digest": "sha256:75eaa5a5b1d4c42f45130def79c8a871674575c82b69e098ff8788da6e3ed934",
+        "answers": [
+          {
+            "query_id": "stable-ge-0",
+            "rule": "score_at_least",
+            "criterion": "stable",
+            "threshold": 0.55,
+            "answer": true,
+            "scorable": true,
+            "n_satisfying_retained": 5,
+            "best_retained_score": 0.8125,
+            "witness": "GKL"
+          },
+          {
+            "query_id": "stable-ge-1",
+            "rule": "score_at_least",
+            "criterion": "stable",
+            "threshold": 0.6,
+            "answer": true,
+            "scorable": true,
+            "n_satisfying_retained": 5,
+            "best_retained_score": 0.8125,
+            "witness": "GKL"
+          },
+          {
+            "query_id": "stable-ge-2",
+            "rule": "score_at_least",
+            "criterion": "stable",
+            "threshold": 0.7,
+            "answer": true,
+            "scorable": true,
+            "n_satisfying_retained": 4,
+            "best_retained_score": 0.8125,
+            "witness": "GKL"
+          },
+          {
+            "query_id": "stable-ge-3",
+            "rule": "score_at_least",
+            "criterion": "stable",
+            "threshold": 0.8,
+            "answer": true,
+            "scorable": true,
+            "n_satisfying_retained": 1,
+            "best_retained_score": 0.8125,
+            "witness": "GKL"
+          },
+          {
+            "query_id": "stable-ge-4",
+            "rule": "score_at_least",
+            "criterion": "stable",
+            "threshold": 0.85,
+            "answer": false,
+            "scorable": true,
+            "n_satisfying_retained": 0,
+            "best_retained_score": 0.8125,
+            "witness": null
+          },
+          {
+            "query_id": "cell-pc0-c0",
+            "rule": "occupies_cell",
+            "criterion": "descriptor",
+            "cell": "pc0-c0",
+            "answer": true,
+            "scorable": true,
+            "n_in_cell": 1,
+            "witness": "all_zero"
+          },
+          {
+            "query_id": "cell-pc3-c3",
+            "rule": "occupies_cell",
+            "criterion": "descriptor",
+            "cell": "pc3-c3",
+            "answer": true,
+            "scorable": true,
+            "n_in_cell": 2,
+            "witness": "all_one"
+          },
+          {
+            "query_id": "cell-pc0-c3",
+            "rule": "occupies_cell",
+            "criterion": "descriptor",
+            "cell": "pc0-c3",
+            "answer": false,
+            "scorable": true,
+            "n_in_cell": 0,
+            "witness": null
+          },
+          {
+            "query_id": "cell-pc3-c0",
+            "rule": "occupies_cell",
+            "criterion": "descriptor",
+            "cell": "pc3-c0",
+            "answer": false,
+            "scorable": true,
+            "n_in_cell": 0,
+            "witness": null
+          },
+          {
+            "query_id": "cellwise-ge-0",
+            "rule": "score_at_least",
+            "criterion": "cellwise_majority_match",
+            "threshold": 0.52,
+            "answer": null,
+            "scorable": false,
+            "reason": "C3-3's criterion. No cellwise_majority_match score exists in the cs-c3-2 corpus -- the archives were frozen before the criterion existed for them, which is the manifest's own point. Scoring it now would mean inventing the measurement; reporting it false would mean charging the archive for a question nobody asked it."
+          },
+          {
+            "query_id": "cellwise-ge-1",
+            "rule": "score_at_least",
+            "criterion": "cellwise_majority_match",
+            "threshold": 0.55,
+            "answer": null,
+            "scorable": false,
+            "reason": "C3-3's criterion. No cellwise_majority_match score exists in the cs-c3-2 corpus -- the archives were frozen before the criterion existed for them, which is the manifest's own point. Scoring it now would mean inventing the measurement; reporting it false would mean charging the archive for a question nobody asked it."
+          },
+          {
+            "query_id": "cellwise-ge-2",
+            "rule": "score_at_least",
+            "criterion": "cellwise_majority_match",
+            "threshold": 0.6,
+            "answer": null,
+            "scorable": false,
+            "reason": "C3-3's criterion. No cellwise_majority_match score exists in the cs-c3-2 corpus -- the archives were frozen before the criterion existed for them, which is the manifest's own point. Scoring it now would mean inventing the measurement; reporting it false would mean charging the archive for a question nobody asked it."
+          }
+        ],
+        "n_scorable": 9,
+        "n_true": 6,
+        "n_unscorable": 3
+      }
+    },
+    "attainability": [
+      {
+        "query_id": "stable-ge-0",
+        "threshold": 0.55,
+        "corpus_max": 0.8125,
+        "attainable_on_this_stream": true,
+        "note": null
+      },
+      {
+        "query_id": "stable-ge-1",
+        "threshold": 0.6,
+        "corpus_max": 0.8125,
+        "attainable_on_this_stream": true,
+        "note": null
+      },
+      {
+        "query_id": "stable-ge-2",
+        "threshold": 0.7,
+        "corpus_max": 0.8125,
+        "attainable_on_this_stream": true,
+        "note": null
+      },
+      {
+        "query_id": "stable-ge-3",
+        "threshold": 0.8,
+        "corpus_max": 0.8125,
+        "attainable_on_this_stream": true,
+        "note": null
+      },
+      {
+        "query_id": "stable-ge-4",
+        "threshold": 0.85,
+        "corpus_max": 0.8125,
+        "attainable_on_this_stream": false,
+        "note": "threshold 0.85 EXCEEDS the corpus maximum 0.8125; no retention policy can answer yes, so a 'no' from every archive measures the threshold and not the archives"
+      },
+      {
+        "query_id": "cell-pc0-c0",
+        "cell": "pc0-c0",
+        "attainable_on_this_stream": true,
+        "note": null
+      },
+      {
+        "query_id": "cell-pc3-c3",
+        "cell": "pc3-c3",
+        "attainable_on_this_stream": true,
+        "note": null
+      },
+      {
+        "query_id": "cell-pc0-c3",
+        "cell": "pc0-c3",
+        "attainable_on_this_stream": false,
+        "note": "cell pc0-c3 is EMPTY in the whole 150-row stream; no policy can retain a candidate from it"
+      },
+      {
+        "query_id": "cell-pc3-c0",
+        "cell": "pc3-c0",
+        "attainable_on_this_stream": true,
+        "note": null
+      }
+    ],
+    "unattainable_queries": [
+      "stable-ge-4",
+      "cell-pc0-c3"
+    ],
+    "REFUSAL": "The four policies are NOT ranked. The manifest's own scoring clause says Techne reports the scores without ranking, and which policy serves H3's question is the experiment -- Archaeon issues it, Harmonia scopes it. A tool that volunteered a ranking would supply the finding it was asked to measure the inputs for.",
+    "transfer_queries_unscored": "The three cellwise_majority_match queries are UNSCORABLE today, by the manifest's own instruction: that is C3-3's criterion and no such score exists in the cs-c3-2 corpus. They are reported unscorable with the reason rather than skipped silently or scored false -- a query that cannot be answered is not one the archive failed."
+  },
+  "deviations": [],
+  "unrun_or_blocked": [],
+  "status": "SCORED_WITHOUT_RANKING",
+  "check": "h3_sealed_future_query_scoring",
+  "clears": "TECHNE-24",
+  "budget_profile": {
+    "purpose": "run a first-useful-check or a reproduction fixture against ALREADY acquired bytes.",
+    "network": "FORBIDDEN -- enforced by the check harness, which asserts no acquisition step runs under this profile",
+    "max_wall_seconds": 600,
+    "max_download_bytes": 0,
+    "max_disk_bytes": 1073741824,
+    "max_rss_bytes": 4294967296,
+    "max_processes": 2,
+    "rationale": "Scientific execution uses already-available inputs and dependencies. A check that needs the network is an acquisition step wearing a check's name.",
+    "name": "offline_check"
+  },
+  "manifest": {
+    "path": "archaeon\\docs\\h0h5\\H3_FUTURE_QUERIES_v1.json",
+    "declared_digest": "sha256:de4cae9b5983216c965e2da43861e9dad5046aae1def4dafdf40fc8fb96cc882",
+    "file_sha256_worktree": "091ee48b28f072821bc93f4c1981abf444fa5b716414348ec8f14618a9750fd3",
+    "n_queries": 12,
+    "schema": "archaeon.h3.future_queries.v0",
+    "scoring_clause_quoted": "direct candidate reuse only; no adaptation in the alpha; Techne reports the four policies' scores without ranking",
+    "digest_note": "manifest_digest is a FIELD inside the file, so it is a digest over the queries rather than over the file. The worktree file hash is recorded beside it; on this checkout LF is converted to CRLF, so a file hash must be taken over the committed bytes to compare with anyone else's."
+  },
+  "resource_receipt": {
+    "profile": "offline_check",
+    "network_policy": "FORBIDDEN -- enforced by the check harness, which asserts no acquisition step runs under this profile",
+    "wall_seconds": 1.938,
+    "wall_ceiling": 600,
+    "downloaded_bytes": 0,
+    "download_ceiling": 0,
+    "cache_bytes_before": 2618269835,
+    "cache_bytes_after": 0,
+    "cache_delta_bytes": -2618269835,
+    "peak_rss_bytes_os_counter": 230608896,
+    "peak_rss_bytes_sampled": 226471936,
+    "rss_method": "GetProcessMemoryInfo",
+    "rss_ceiling": 4294967296,
+    "rss_samples": 7,
+    "rss_ceiling_exceeded_during_sampling": false,
+    "rss_enforcement": "NOT ENFORCED -- no job object / cgroup cap. peak_rss_bytes_os_counter is the OS peak-working-set counter for this process and IS reliable; rss_ceiling_exceeded_during_sampling is sampled and can miss a spike. Neither stops a step.",
+    "rss_excludes_children": "This is THIS process only. pip, git and venv run as children and their RSS is NOT included.",
+    "children_spawned": 0,
+    "process_cap": 2,
+    "aborted_on": null
+  }
+}

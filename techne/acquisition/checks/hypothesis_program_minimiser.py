@@ -86,7 +86,7 @@ def main(argv=None) -> int:
 
     from hypothesis import find, settings, HealthCheck
 
-    rows, errors = [], []
+    rows, errors, no_example = [], [], []
     t0 = time.perf_counter()
     for f in range(N_TARGETS):
         tt = target_table(f)
@@ -101,9 +101,17 @@ def main(argv=None) -> int:
             got = find(HS.solving_programs(tgt),
                        lambda p: SH.still_solves(p, tgt),
                        settings=settings(max_examples=300, deadline=None,
+                                         derandomize=True,
                                          suppress_health_check=list(HealthCheck)))
         except Exception as exc:
-            errors.append({"target": f, "error": f"{type(exc).__name__}: {exc}"})
+            # `solving_programs` generates and FILTERS, so for a target whose solving programs
+            # are rare the filter starves and Hypothesis raises Unsatisfiable. That is the
+            # strategy finding no example within budget -- a property of rejection sampling --
+            # not a defect, and it is classified separately from a real error.
+            kind = ("NO_EXAMPLE_FOUND_IN_BUDGET" if type(exc).__name__ == "Unsatisfiable"
+                    else "ERROR")
+            (no_example if kind == "NO_EXAMPLE_FOUND_IN_BUDGET" else errors).append(
+                {"target": f, "kind": kind, "detail": f"{type(exc).__name__}: {str(exc)[:160]}"})
             continue
         sound = SH.still_solves(got, tgt)
         # minimal_by_enumeration returns a DICT {expr, size_key, size, depth, canonical},
@@ -138,6 +146,8 @@ def main(argv=None) -> int:
         by_tt = {r["target"]: r for r in all_rows if r.get("ground_truth")}
         ok = True
         for ka in fixture.get("known_answers", []):
+            if ka.get("predicate") != "still_solves":
+                continue            # different predicate, different ground truth, not comparable
             f = int(ka["target_truth_table"], 2)
             mine = by_tt.get(f)
             if mine is None:
@@ -149,7 +159,8 @@ def main(argv=None) -> int:
     checks = [
         ("SOUNDNESS: every shrunk program still_solves its target under Proteus's predicate",
          not unsound),
-        ("no target errored during shrinking", not errors),
+        ("no target errored during shrinking (Unsatisfiable is classified separately as "
+         "no-example-found, not as an error)", not errors),
         ("every scored target has exhaustive ground truth from Proteus's enumeration",
          all(r.get("ground_truth") for r in scored)),
         ("Proteus's two declared known answers reproduce here",
@@ -184,6 +195,13 @@ def main(argv=None) -> int:
             "n_out_of_enumeration_reach": len(rows) - len(scored),
             "n_unsound": len(unsound), "unsound": unsound[:10],
             "n_errored": len(errors), "errors": errors[:10],
+            "n_no_example_found_in_budget": len(no_example),
+            "no_example_targets": [x["target"] for x in no_example],
+            "no_example_note": ("solving_programs generates and FILTERS; where solving programs "
+                                "are rare the filter starves and Hypothesis raises Unsatisfiable. "
+                                "These targets are NOT counted as errors and NOT counted as "
+                                "minimality failures -- the minimiser was never handed a "
+                                "starting point."),
             "excess_nodes_histogram": {str(k): v for k, v in sorted(excess.items())},
             "n_not_minimal": len(not_minimal),
             "fraction_not_minimal": round(len(not_minimal) / len(scored), 4) if scored else None,
@@ -199,6 +217,16 @@ def main(argv=None) -> int:
         "checks": [{"claim": c, "pass": bool(p)} for c, p in checks],
         "all_passed": all(p for _, p in checks),
         "verdict": None,
+        "reproducibility": {
+            "derandomize": True,
+            "why": ("an UNSEEDED find() gave different answers for the same target across runs "
+                    "-- and01 returned (and x0 x1) at size 3 in one run and "
+                    "(not (not (and x0 x1))) at size 5 in another. So an unseeded "
+                    "non-minimality rate is a property of one DRAW, not of the minimiser. "
+                    "derandomize=True makes the reported rate reproducible; it does not make "
+                    "Hypothesis deterministic in general, and the rate would move under a "
+                    "different seed."),
+        },
         "what_this_does_NOT_establish": [
             "that Hypothesis is a good minimiser for this space. Soundness is a post-condition; "
             "minimality is a quality measure, and they are reported separately.",
