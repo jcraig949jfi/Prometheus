@@ -1,0 +1,36 @@
+{
+  "generated": "2026-09-11",
+  "roster_size": 44,
+  "cases": [
+    {
+      "id": "CASE-A",
+      "class": "configuration / environment",
+      "verdict": "NORMALIZABLE",
+      "scored_observers": 5
+    },
+    {
+      "id": "CASE-B",
+      "class": "broken interface / contract",
+      "verdict": "NORMALIZABLE",
+      "scored_observers": 6
+    },
+    {
+      "id": "CASE-C",
+      "class": "tooling / silent-drop contract",
+      "verdict": "RELATED-NOT-SAME",
+      "scored_observers": 2
+    },
+    {
+      "id": "CASE-D",
+      "class": "stale assumption / upstream liveness",
+      "verdict": "RELATED-NOT-SAME",
+      "scored_observers": 2
+    },
+    {
+      "id": "CASE-E",
+      "class": "process violation with no error signal",
+      "verdict": "UNSIGNABLE",
+      "scored_observers": 2
+    }
+  ]
+}

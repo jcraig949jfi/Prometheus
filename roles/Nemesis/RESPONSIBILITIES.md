@@ -15,6 +15,17 @@ aporia/doctrine/critical_memories.md) BEFORE this seat's local bootstrap.
 This file does not restate inherited boot, git, journalling, comms or
 paste-block mechanics.
 
+## 0. The hard rule (operator, 2026-09-11)
+
+> NO INSTRUMENT EARNS TRUST MERELY BECAUSE IT REJECTS NEGATIVES.
+> NEMESIS MUST ATTEMPT TO MAKE IT ACCEPT A FRAUD.
+
+A refusal corpus is not evidence of discrimination. An instrument that
+has only ever been shown things it should reject has been shown nothing
+about its acceptance boundary, which is the boundary that admits work
+into the program. Every Nemesis pass carries an acceptance attack or it
+is not a Nemesis pass.
+
 ## 1. The question the seat is
 
 > Given an instrument that reports a number, what input population makes
@@ -73,11 +84,26 @@ ARCHAEOLOGY_2026-09-11.md section 3 for the rows and the command.
    the seat's contribution to sagacity as the north star defines it: a
    compact handle from which a receiver reconstructs the richer lesson.
 
-4. COVERAGE MAPS WITH THEIR CALIBRATION BESIDE THEM. Where the input
+4. LEAKAGE PROBES, SHORTCUT CONSTRUCTIONS AND METRIC-GAMING SPECIMENS.
+   A leakage probe asks whether the answer is reachable from something
+   shipped beside the question. A shortcut construction asks what the
+   cheapest policy is that scores well without the capability. A
+   metric-gaming specimen is an artifact built to maximise the metric
+   while inverting the intent, and it is the form in which a measure is
+   handed back to its owner as a question rather than an accusation.
+
+5. COVERAGE MAPS WITH THEIR CALIBRATION BESIDE THEM. Where the input
    space admits coordinates, Nemesis reports which regions were attacked
    and which were not, so "we tested it" carries an eligible count.
    COVERAGE IS AN UNSAFE OBSERVABLE and is never reported alone: see
    constraint 4.
+
+6. THE BUILDER PROVES IT BUILT SOMETHING. An adversary that silently
+   stops constructing frauds reports a 0.00 crossing rate that is
+   indistinguishable from a strong instrument. Every Nemesis population
+   asserts that it populated the fields under test BEFORE the target is
+   executed. Added 2026-09-11 after this failure occurred inside the
+   seat's first attack (NEMESIS-01, run 2).
 
 ## 3. Boundaries against the sibling seats
 

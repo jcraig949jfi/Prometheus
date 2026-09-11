@@ -2,97 +2,113 @@
 
 > Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md (operator, D-23, 2026-09-11); this file adds to them and may not contradict them.
 
-Currency: 2026-09-11, written at the close of the adoption pass.
-Built from 8714b2709ffa3f1a5d55781d476c3eba4c97a898 on branch
-clymene/base-role-adopt-2026-09-11 in
-Prometheus-worktrees/clymene-base-role, host M2 (SPECTREX5), dirty=false
-at boot.
+Currency: 2026-09-11, second update, at the close of the CLY-01 audit pass.
+Built from branch clymene/base-role-adopt-2026-09-11, worktree
+Prometheus-worktrees/clymene-base-role, host M2 (SPECTREX5).
+Supersedes the morning's version; the morning's recommendation is
+SUPERSEDED BY MEASUREMENT and is annotated in section 4 rather than
+deleted.
 
 ## 1. State
 
-    SEAT          BLOCKED -- on an operator decision (CLY-01), not on a
-                  seat. The adoption pass the operator assigned is
-                  complete; there is no second assignment.
-    AGENT CODE    PRESENT, NOT ACTIVE, NOT PRODUCTIVE, VALID n/a.
-                  agents/clymene/src/clymene.py is committed and has not
-                  been run since 2026-03-31 (164 days). It imports
-                  PyYAML, which is not installed on this host; it is not
-                  known to run here and was not run on this pass.
-    HOARD LOOP    DORMANT since 2026-03-31, cause named: its host (the
-                  Pronoia orchestrator, step 5 of the serial pipeline)
-                  is not in the tree at 8714b2709 and its audit logs
-                  stop 2026-04-01. Registered in
-                  roles/base-role/MONITORS.md rather than left
-                  unregistered.
-    VAULT         51 GB present on M2, untouched by this pass. 26
-                  repository trees, 0 of which are git clones; 11 model
-                  directories, 2 of which are 55 KB gated-download
-                  stubs. 0 code consumers found.
+    SEAT          CHARTERED (operator ruling CLY-01, 2026-09-11): archive
+                  integrity and utility. The March hoarding mission is
+                  RETIRED. The bounded pass the ruling ordered is COMPLETE.
+                  Now AWAITING the next operator ruling; no further work
+                  is started without it.
+    AUDIT         DONE. 37 artifacts classified (26 repo snapshots, 11
+                  model directories), 7 of 7 controls PASS, rows and
+                  instruments committed beside the verdict.
+    VAULT         UNTOUCHED. Read-only throughout. Nothing acquired,
+                  refreshed, cloned, downloaded, deleted or moved.
+    AGENT CODE    PRESENT, NOT ACTIVE, NOT PRODUCTIVE. Not run, in any
+                  mode, on either pass.
+    HOARD LOOP    DORMANT since 2026-03-31, registered in
+                  roles/base-role/MONITORS.md, not relaunched.
 
-## 2. What was done on this pass, and what was not
+## 2. The measured result in twelve lines
 
-DONE: worktree created and the canonical-checkout guard verified;
-base-role chain read; agents/clymene archaeology performed from the
-repository, the SQLite registry, the log and the host filesystem;
-roles/Clymene/ created; own rows added to INHERITANCE.md and
-MONITORS.md; comms boot and sync against the canonical queue; journal,
-backlog, calibration ledger, receipt.
+    repositories        26 of 26 REPRODUCIBLE from the record (tested)
+                         0 of 26 CONSUMED by anything in live code
+                        2.46% complete on M2 (258 files of 10,468); every
+                        subdirectory exists and is empty; 0 content
+                        mismatches among the files that are present
+    models              50.58 GiB, 9 payload + 2 stubs
+                        9 of 9 integrity-verified (112 files, 0 failures)
+                        9 of 9 provenance-complete -- from the artifacts'
+                        own HF sidecars, not from Clymene's registry
+                         0 of 11 consumed by vault path
+                         3 of 11 now GATED at the weights
+    the one that counts google/gemma-2-2b downloaded cleanly on
+                        2026-03-23 and returns 401 today. 9.76 GiB,
+                        intact, and the only artifact of 37 that cannot be
+                        reconstructed from its record.
 
-NOT DONE, deliberately: no acquisition, no re-clone, no vault write, no
-vault delete, no scheduled task created, no process started, no claim
-made, no other seat's file touched. The operator's directive was
-bootstrap and registration only.
+Full ledger: roles/Clymene/ledgers/VAULT_DISPOSITION_2026-09-11.md
+Reconciliation: roles/Clymene/ledgers/HISTORICAL_RECONCILIATION_2026-09-11.md
 
-## 3. The recommendation, if the operator wants one
+## 3. Disposition, in one block
 
-The seat's own reading, offered because the base role says take a stand
-and assume you are wrong:
+    MUST PRESERVE       9.76 GiB   google--gemma-2-2b, on uniqueness
+                                   (not on use -- nothing reads it)
+    DELETION-ELIGIBLE  40.83 GiB   8 models (reproducible + unconsumed),
+                                   26 repo snapshots, 2 stubs. 81% of the
+                                   vault. Breaks no measured reference.
+    NOT CLASSIFIED      1.3 MB     vault/evolutionary_agents, in neither
+                                   manifest nor registry
 
-Do NOT revive the March mission. "Archive everything before the window
-closes" optimises bytes on disk, which is a throughput metric that
-satisfies itself, and the program has already named that antipattern in
-this pipeline's siblings.
+Deleting the 8 models costs optionality, not correctness: re-acquiring
+them is ~41 GiB of bandwidth, and the gate can close on any of them, as it
+did on gemma. If the constraint is disk, delete. If it is not, the
+cheapest correct action is to keep the ledger and do nothing.
 
-There is a narrower thing worth one bounded pass, and it needs no
-acquisition and no new bytes: MEASURE WHETHER THE 51 GB IS
-REPRODUCIBLE. Two questions, both cheap, both falsifiable:
+## 4. The morning recommendation, superseded by evidence
 
-  (a) For each of the 26 repository trees, can the exact upstream
-      commit it came from be recovered? The registry records a commit
-      hash per repo from March; the trees on this host have no .git.
-      Either the hash plus the URL reconstructs the tree, or it does
-      not. That is a yes/no per row, 26 rows, and it decides whether
-      the vault is a pinned archive or an unlabelled pile.
-  (b) For each of the 9 real model directories, does anything in the
-      program still depend on it, and by which path? 0 consumers were
-      found by path today; models may instead be reached by Hugging
-      Face id from a cache. That distinction decides whether the vault
-      is load-bearing or orphaned storage on a shared disk.
+This morning this seat recommended not reviving the March thesis, on the
+grounds that "archive everything before the window closes" optimises bytes
+on disk. The consumption half of that held perfectly: 0 of 37 artifacts
+are consumed. The premise half did not. The window measurably closed on
+one artifact in under six months, and the vault holds the only
+integrity-verified copy of it.
 
-If (a) is mostly NO and (b) is entirely NO, the honest outcome is to
-record that, propose the vault's disposition to the operator, and leave
-the seat PARKED. This seat is willing to reach that result; it does not
-need the answer to be favourable.
+Recorded as a supersession, not a deletion, with the interest declared:
+the evidence favours this seat's continued existence, which is the
+direction this seat should be least trusted on. The statistics are honest
+about their own weakness -- 1 in 9 attempted-and-obtained, 95% CI roughly
+2% to 48%, which is a hint with n=1 in the numerator, not a base rate.
 
-What would falsify the recommendation: a named consumer that reads the
-vault today, or an operator need for offline availability that makes
-presence valuable independent of provenance. Neither was found in the
-repository; neither has been ruled out by the operator.
+## 5. Candidate function, offered not assumed
 
-## 4. Conflict of interest
+NOT archiving. Narrow: watch GATE STATE on artifacts the program already
+depends on and report when one closes. One HTTP HEAD per artifact; the
+full 11-model probe ran in under a minute; it emits a dated row whether or
+not anything changed, which satisfies base rule 8. It would have caught
+gemma-2-2b.
 
-Declared: this seat is reporting on the disposition of its own
-historical output, and the outcome it is recommending includes "this
-may be worth nothing". A seat that audits its own archive has an
-obvious incentive to find the archive valuable. The two tests in
-section 3 were chosen because they can return a verdict against this
-seat, and the numbers in RESPONSIBILITIES.md section 0 (0 of 8
-datasets, 14 of 20 models, 0 of 26 trees pinned, 0 consumers) are the
-unflattering ones.
+Whether that earns a seat is the operator's call. Recommended default if
+unsure: PARK, keep the ledger, reopen on the next ungettable artifact.
 
-## 5. Next executable action
+## 6. Conflict of interest
 
-None without an operator decision. CLY-01 in
-roles/Clymene/BACKLOG_H0H5.md states it in one line. If the operator
-says nothing, this seat stays BLOCKED and does not invent work inside
-another lane.
+Unchanged and now sharper. This seat audited its own historical output and
+is reporting a result that argues for its own continuation. Two instrument
+defects were found and corrected during the pass, and BOTH had been
+running in the direction of this seat's stated position -- the second one
+(CLY-CAL-009) would have hidden section 3 entirely and made the vault look
+worthless, which was the morning's recommendation. They are recorded in
+roles/Clymene/calibration/LEDGER.md as CLY-CAL-008 and -009.
+
+The falsifiers are named in the ledger section 5. The most important: the
+consumption census covers TRACKED files at HEAD in this repository only.
+One untracked script, or one consumer on M1, M3 or M4, flips a row.
+
+## 7. Next executable action
+
+None. The ruling says report the measured result and stop, and this seat
+is stopping. The open decisions for the operator are:
+
+    CLY-01b   what happens to the 40.83 GiB of deletion-eligible artifacts
+    CLY-01c   whether gemma-2-2b's preservation should be made durable
+              (it currently exists on one consumer disk with no backup)
+    CLY-01d   whether the gate-watch function of section 5 is worth a seat,
+              or whether Clymene PARKs
