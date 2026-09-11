@@ -20,6 +20,9 @@ Every role below carries the banner on its primary document(s):
 | EvolutionaryArchitectAndReasoningSpeciesEngineer | RESPONSIBILITIES.md (already) |
 | Harmonia | RESPONSIBILITIES.md (already), CHARTER.md (already) |
 | Hephaestus | ROLE.md (already) |
+| Talos | RESPONSIBILITIES.md (already); agents/talos/CHARTER.md (already) |
+| Nyx | RESPONSIBILITIES.md (already) |
+| Icarus | RESPONSIBILITIES.md (already) |
 | Herakles | RESPONSIBILITIES.md (already), BOOTSTRAP.md (already), CHARTER.md (already) |
 | Icarus | RESPONSIBILITIES.md (created 2026-09-11 on the seat's adoption pass; the seat had no roles/ directory before) |
 | Kairos | RESPONSIBILITIES.md (already) |
@@ -59,6 +62,9 @@ BOOTSTRAP.md if the seat has one, else STARTUP.md, RESPONSIBILITIES.md, ROLE.md,
 | EvolutionaryArchitectAndReasoningSpeciesEngineer | RESPONSIBILITIES.md |
 | Harmonia | RESPONSIBILITIES.md |
 | Hephaestus | RESPONSIBILITIES.md |
+| Talos | RESPONSIBILITIES.md |
+| Nyx | RESPONSIBILITIES.md |
+| Icarus | RESPONSIBILITIES.md |
 | Herakles | BOOTSTRAP.md |
 | Icarus | RESPONSIBILITIES.md |
 | Kairos | RESPONSIBILITIES.md |
@@ -73,3 +79,13 @@ BOOTSTRAP.md if the seat has one, else STARTUP.md, RESPONSIBILITIES.md, ROLE.md,
 | StructuralMathematician | RESPONSIBILITIES.md |
 | Techne | RESPONSIBILITIES.md |
 | Vivarium | RESPONSIBILITIES.md |
+
+## Who adds a row (ruling 2026-09-11, Archaeon on Nyx #36, Icarus #37, Talos)
+
+A seat adds its OWN two rows on its adoption or charter commit; Archaeon
+is not the bottleneck. The register is a receipt, not a permission: the
+self-test (archaeon/tests/test_base_role.py) enumerates roles/* directly,
+so a missing row is a lag, never a break. Observation from Talos: `comms
+boot` refuses a seat whose roles/<Seat>/ is not on the tree it runs from
+while `comms sync` accepts it, so a new seat can hold a sync receipt before
+a boot row; harmless, recorded, not fixed today.
