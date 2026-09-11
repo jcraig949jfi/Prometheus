@@ -1,0 +1,94 @@
+{
+ "declared": "2026-09-11T01:28:39+00:00",
+ "manifest_digest": "sha256:de4cae9b5983216c965e2da43861e9dad5046aae1def4dafdf40fc8fb96cc882",
+ "n": 12,
+ "queries": [
+  {
+   "criterion": "stable",
+   "note": "does the archive hold a candidate whose C3-2 score (stable) is at least the threshold",
+   "query_id": "stable-ge-0",
+   "rule": "score_at_least",
+   "threshold": 0.55
+  },
+  {
+   "criterion": "stable",
+   "note": "does the archive hold a candidate whose C3-2 score (stable) is at least the threshold",
+   "query_id": "stable-ge-1",
+   "rule": "score_at_least",
+   "threshold": 0.6
+  },
+  {
+   "criterion": "stable",
+   "note": "does the archive hold a candidate whose C3-2 score (stable) is at least the threshold",
+   "query_id": "stable-ge-2",
+   "rule": "score_at_least",
+   "threshold": 0.7
+  },
+  {
+   "criterion": "stable",
+   "note": "does the archive hold a candidate whose C3-2 score (stable) is at least the threshold",
+   "query_id": "stable-ge-3",
+   "rule": "score_at_least",
+   "threshold": 0.8
+  },
+  {
+   "criterion": "stable",
+   "note": "does the archive hold a candidate whose C3-2 score (stable) is at least the threshold",
+   "query_id": "stable-ge-4",
+   "rule": "score_at_least",
+   "threshold": 0.85
+  },
+  {
+   "cell": "pc0-c0",
+   "criterion": "descriptor",
+   "note": "does the archive hold a candidate in this v1 descriptor cell (corner cells: extreme tables)",
+   "query_id": "cell-pc0-c0",
+   "rule": "occupies_cell"
+  },
+  {
+   "cell": "pc3-c3",
+   "criterion": "descriptor",
+   "note": "does the archive hold a candidate in this v1 descriptor cell (corner cells: extreme tables)",
+   "query_id": "cell-pc3-c3",
+   "rule": "occupies_cell"
+  },
+  {
+   "cell": "pc0-c3",
+   "criterion": "descriptor",
+   "note": "does the archive hold a candidate in this v1 descriptor cell (corner cells: extreme tables)",
+   "query_id": "cell-pc0-c3",
+   "rule": "occupies_cell"
+  },
+  {
+   "cell": "pc3-c0",
+   "criterion": "descriptor",
+   "note": "does the archive hold a candidate in this v1 descriptor cell (corner cells: extreme tables)",
+   "query_id": "cell-pc3-c0",
+   "rule": "occupies_cell"
+  },
+  {
+   "criterion": "cellwise_majority_match",
+   "note": "TRANSFER query: does a retained candidate score at least the threshold under C3-3's criterion, scored when C3-3 runs; the archive was frozen before that criterion existed for it",
+   "query_id": "cellwise-ge-0",
+   "rule": "score_at_least",
+   "threshold": 0.52
+  },
+  {
+   "criterion": "cellwise_majority_match",
+   "note": "TRANSFER query: does a retained candidate score at least the threshold under C3-3's criterion, scored when C3-3 runs; the archive was frozen before that criterion existed for it",
+   "query_id": "cellwise-ge-1",
+   "rule": "score_at_least",
+   "threshold": 0.55
+  },
+  {
+   "criterion": "cellwise_majority_match",
+   "note": "TRANSFER query: does a retained candidate score at least the threshold under C3-3's criterion, scored when C3-3 runs; the archive was frozen before that criterion existed for it",
+   "query_id": "cellwise-ge-2",
+   "rule": "score_at_least",
+   "threshold": 0.6
+  }
+ ],
+ "schema": "archaeon.h3.future_queries.v0",
+ "scoring": "direct candidate reuse only; no adaptation in the alpha; Techne reports the four policies' scores without ranking",
+ "stream": "cs-c3-2 (150 rows; the stream Techne replayed for the H3 alpha receipt)"
+}

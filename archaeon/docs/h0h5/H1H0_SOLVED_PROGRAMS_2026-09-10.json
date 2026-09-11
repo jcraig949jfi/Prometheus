@@ -1,0 +1,463 @@
+{
+ "n_phase1_solved": 3,
+ "n_phase2_solved_cells": 14,
+ "note": "ALL solved cells exported, never de-duplicated: whether the same task solved under different history conditions yields syntactically different programs is Techne's measurement",
+ "programs": [
+  {
+   "candidate_set": "cs-h1h0-1-p1",
+   "cell": "source",
+   "grammar_version": "proteus.boolean_grammar.v0",
+   "request_key": "H1H0-1-P1-013",
+   "sfe_experiment_id": "exp_3fc53fd6278c89ca8ca5165a",
+   "solution_ast": [
+    "not",
+    [
+     "input",
+     2
+    ]
+   ],
+   "solution_sexpr": "(not x2)",
+   "solution_size": 2,
+   "spec_hash": "sha256:6f34ec7d1dacbb7380c167b6b47466fe41583deb79de55bc8a59fc5b1f7ec786",
+   "target_truth_table": "10101010",
+   "task_id": "src-12",
+   "vm_ops": 138
+  },
+  {
+   "candidate_set": "cs-h1h0-1-p1",
+   "cell": "source",
+   "grammar_version": "proteus.boolean_grammar.v0",
+   "request_key": "H1H0-1-P1-018",
+   "sfe_experiment_id": "exp_55c53d8cf7eb5e31e6e36cb2",
+   "solution_ast": [
+    "and",
+    [
+     "input",
+     0
+    ],
+    [
+     "input",
+     2
+    ]
+   ],
+   "solution_sexpr": "(and x0 x2)",
+   "solution_size": 3,
+   "spec_hash": "sha256:f7cfe7699f20435b90e3d885890c163d6a073cd7c6d5c0d2eb8513d8ca601171",
+   "target_truth_table": "00000101",
+   "task_id": "src-17",
+   "vm_ops": 675
+  },
+  {
+   "candidate_set": "cs-h1h0-1-p1",
+   "cell": "source",
+   "grammar_version": "proteus.boolean_grammar.v0",
+   "request_key": "H1H0-1-P1-022",
+   "sfe_experiment_id": "exp_37688228bc85e50268a7a3ca",
+   "solution_ast": [
+    "not",
+    [
+     "xor",
+     [
+      "input",
+      1
+     ],
+     [
+      "input",
+      2
+     ]
+    ]
+   ],
+   "solution_sexpr": "(not (xor x1 x2))",
+   "solution_size": 4,
+   "spec_hash": "sha256:c8c00d09337d4ba6d4d803525c1b658a39f35f915ffdc09dfe5413a4bda56222",
+   "target_truth_table": "10011001",
+   "task_id": "src-21",
+   "vm_ops": 2211
+  },
+  {
+   "candidate_set": "cs-h1h0-1-p2",
+   "cell": "fresh",
+   "grammar_version": "proteus.boolean_grammar.v0",
+   "request_key": "H1H0-1-P2-007",
+   "sfe_experiment_id": "exp_767da58b032647def4a543ef",
+   "solution_ast": [
+    "or",
+    [
+     "input",
+     1
+    ],
+    [
+     "not",
+     [
+      "input",
+      2
+     ]
+    ]
+   ],
+   "solution_sexpr": "(or x1 (not x2))",
+   "solution_size": 4,
+   "spec_hash": "sha256:2d0751b8b9bf9ba3bb5aa9a2db2564eb5a06f5579617ee724e00b0dbe75e4644",
+   "target_truth_table": "10111011",
+   "task_id": "tgt-01",
+   "vm_ops": 3667
+  },
+  {
+   "candidate_set": "cs-h1h0-1-p2",
+   "cell": "S00",
+   "grammar_version": "proteus.boolean_grammar.v0",
+   "request_key": "H1H0-1-P2-009",
+   "sfe_experiment_id": "exp_1590a759d3d6d08a575b9ac1",
+   "solution_ast": [
+    "or",
+    [
+     "input",
+     1
+    ],
+    [
+     "not",
+     [
+      "input",
+      2
+     ]
+    ]
+   ],
+   "solution_sexpr": "(or x1 (not x2))",
+   "solution_size": 4,
+   "spec_hash": "sha256:193cd7bf2aacd480e0772a9d8617eb7e4ab287a9e0a79b37a4fa8d46494f851e",
+   "target_truth_table": "10111011",
+   "task_id": "tgt-01",
+   "vm_ops": 3667
+  },
+  {
+   "candidate_set": "cs-h1h0-1-p2-r1",
+   "cell": "fresh",
+   "grammar_version": "proteus.boolean_grammar.v0",
+   "request_key": "H1H0-1-P2-061-R1",
+   "sfe_experiment_id": "exp_f96ccd06332dd71a7f9f4e46",
+   "solution_ast": [
+    "or",
+    [
+     "input",
+     2
+    ],
+    [
+     "input",
+     1
+    ]
+   ],
+   "solution_sexpr": "(or x2 x1)",
+   "solution_size": 3,
+   "spec_hash": "sha256:24aab5315270e564fce1a727a6d89e18206a87208c067610743b9ec8f971df92",
+   "target_truth_table": "01110111",
+   "task_id": "tgt-10",
+   "vm_ops": 658
+  },
+  {
+   "candidate_set": "cs-h1h0-1-p2-r1",
+   "cell": "S00",
+   "grammar_version": "proteus.boolean_grammar.v0",
+   "request_key": "H1H0-1-P2-063-R1",
+   "sfe_experiment_id": "exp_84956ae13491e616e9cf2a0e",
+   "solution_ast": [
+    "or",
+    [
+     "input",
+     2
+    ],
+    [
+     "input",
+     1
+    ]
+   ],
+   "solution_sexpr": "(or x2 x1)",
+   "solution_size": 3,
+   "spec_hash": "sha256:3b7a95b98cfb3ebac5f72dd38ef56b20fa95e5900105aa3de5ea0dfbdff8fc89",
+   "target_truth_table": "01110111",
+   "task_id": "tgt-10",
+   "vm_ops": 658
+  },
+  {
+   "candidate_set": "cs-h1h0-1-p2b",
+   "cell": "random_pack",
+   "grammar_version": "proteus.boolean_grammar.v0",
+   "request_key": "H1H0-1-P2-008-B",
+   "sfe_experiment_id": "exp_aa44b00295b61adef56ee695",
+   "solution_ast": [
+    "or",
+    [
+     "input",
+     1
+    ],
+    [
+     "not",
+     [
+      "input",
+      2
+     ]
+    ]
+   ],
+   "solution_sexpr": "(or x1 (not x2))",
+   "solution_size": 4,
+   "spec_hash": "sha256:b64d1e7028f854d29004e081a7a483b9f563bfbcbb330fadef695e11ebfb240c",
+   "target_truth_table": "10111011",
+   "task_id": "tgt-01",
+   "vm_ops": 3562
+  },
+  {
+   "candidate_set": "cs-h1h0-1-p2b",
+   "cell": "S01",
+   "grammar_version": "proteus.boolean_grammar.v0",
+   "request_key": "H1H0-1-P2-011-B",
+   "sfe_experiment_id": "exp_fc6b2f3740d2b2b000e2ec7a",
+   "solution_ast": [
+    "or",
+    [
+     "not",
+     [
+      "input",
+      2
+     ]
+    ],
+    [
+     "input",
+     1
+    ]
+   ],
+   "solution_sexpr": "(or (not x2) x1)",
+   "solution_size": 4,
+   "spec_hash": "sha256:9eafb288de0ab634d78309a049281b4ce06656c9f6b3f3688935d2800b7a0ba0",
+   "target_truth_table": "10111011",
+   "task_id": "tgt-01",
+   "vm_ops": 4152
+  },
+  {
+   "candidate_set": "cs-h1h0-1-p2b",
+   "cell": "S10",
+   "grammar_version": "proteus.boolean_grammar.v0",
+   "request_key": "H1H0-1-P2-010-B",
+   "sfe_experiment_id": "exp_6e38ea8fe91984c3fde62e64",
+   "solution_ast": [
+    "or",
+    [
+     "input",
+     1
+    ],
+    [
+     "not",
+     [
+      "input",
+      2
+     ]
+    ]
+   ],
+   "solution_sexpr": "(or x1 (not x2))",
+   "solution_size": 4,
+   "spec_hash": "sha256:9971bce8277663555f73259a240d9bf3bd77e32f4bbe92d6edcf2bfdf871953b",
+   "target_truth_table": "10111011",
+   "task_id": "tgt-01",
+   "vm_ops": 3562
+  },
+  {
+   "candidate_set": "cs-h1h0-1-p2b",
+   "cell": "S11",
+   "grammar_version": "proteus.boolean_grammar.v0",
+   "request_key": "H1H0-1-P2-012-B",
+   "sfe_experiment_id": "exp_96baf38cc07c10a57ebb68e9",
+   "solution_ast": [
+    "or",
+    [
+     "not",
+     [
+      "input",
+      2
+     ]
+    ],
+    [
+     "input",
+     1
+    ]
+   ],
+   "solution_sexpr": "(or (not x2) x1)",
+   "solution_size": 4,
+   "spec_hash": "sha256:9b2de8e4edfd798acf5e956eaac994d22d4a7376af2c23104e5028a3dbb7bbe3",
+   "target_truth_table": "10111011",
+   "task_id": "tgt-01",
+   "vm_ops": 4938
+  },
+  {
+   "candidate_set": "cs-h1h0-1-p2b",
+   "cell": "random_pack",
+   "grammar_version": "proteus.boolean_grammar.v0",
+   "request_key": "H1H0-1-P2-062-B",
+   "sfe_experiment_id": "exp_51da079d0c085c54ccf0bdae",
+   "solution_ast": [
+    "or",
+    [
+     "input",
+     2
+    ],
+    [
+     "input",
+     1
+    ]
+   ],
+   "solution_sexpr": "(or x2 x1)",
+   "solution_size": 3,
+   "spec_hash": "sha256:9351fdd763c42df097e9b0bcd80d0f47935dd8158283407af06d9479d8518a68",
+   "target_truth_table": "01110111",
+   "task_id": "tgt-10",
+   "vm_ops": 578
+  },
+  {
+   "candidate_set": "cs-h1h0-1-p2b",
+   "cell": "S01",
+   "grammar_version": "proteus.boolean_grammar.v0",
+   "request_key": "H1H0-1-P2-065-B",
+   "sfe_experiment_id": "exp_155acd1c7f4e4a4ae4f07c74",
+   "solution_ast": [
+    "or",
+    [
+     "input",
+     2
+    ],
+    [
+     "input",
+     1
+    ]
+   ],
+   "solution_sexpr": "(or x2 x1)",
+   "solution_size": 3,
+   "spec_hash": "sha256:7a18c7a5b9e65238225f72725305a48899975a961b0973b4566fc2e985142d3d",
+   "target_truth_table": "01110111",
+   "task_id": "tgt-10",
+   "vm_ops": 664
+  },
+  {
+   "candidate_set": "cs-h1h0-1-p2b",
+   "cell": "S10",
+   "grammar_version": "proteus.boolean_grammar.v0",
+   "request_key": "H1H0-1-P2-064-B",
+   "sfe_experiment_id": "exp_f4c49b3a321fa53bf616ec87",
+   "solution_ast": [
+    "or",
+    [
+     "input",
+     2
+    ],
+    [
+     "input",
+     1
+    ]
+   ],
+   "solution_sexpr": "(or x2 x1)",
+   "solution_size": 3,
+   "spec_hash": "sha256:4d15b00e98362e78132b11b1eff9eafa670a46e56ef930c6f282186b18f8209f",
+   "target_truth_table": "01110111",
+   "task_id": "tgt-10",
+   "vm_ops": 578
+  },
+  {
+   "candidate_set": "cs-h1h0-1-p2b",
+   "cell": "S11",
+   "grammar_version": "proteus.boolean_grammar.v0",
+   "request_key": "H1H0-1-P2-066-B",
+   "sfe_experiment_id": "exp_b9198c09681215f5a7876d7a",
+   "solution_ast": [
+    "or",
+    [
+     "input",
+     2
+    ],
+    [
+     "input",
+     1
+    ]
+   ],
+   "solution_sexpr": "(or x2 x1)",
+   "solution_size": 3,
+   "spec_hash": "sha256:0b39e7e1297027cee1770db0097ad05deb358e053a6d461ac5c4d0cadefc39a0",
+   "target_truth_table": "01110111",
+   "task_id": "tgt-10",
+   "vm_ops": 672
+  },
+  {
+   "candidate_set": "cs-h1h0-1-p2b",
+   "cell": "S01",
+   "grammar_version": "proteus.boolean_grammar.v0",
+   "request_key": "H1H0-1-P2-071-B",
+   "sfe_experiment_id": "exp_a03b3fd987ae316388cd404b",
+   "solution_ast": [
+    "and",
+    [
+     "and",
+     [
+      "input",
+      1
+     ],
+     [
+      "input",
+      2
+     ]
+    ],
+    [
+     "and",
+     [
+      "input",
+      0
+     ],
+     [
+      "input",
+      2
+     ]
+    ]
+   ],
+   "solution_sexpr": "(and (and x1 x2) (and x0 x2))",
+   "solution_size": 3,
+   "spec_hash": "sha256:98002869664321064ef561ad9ea2357cfdfc6cee262a3e67af9ac888d0a1ba46",
+   "target_truth_table": "00000001",
+   "task_id": "tgt-11",
+   "vm_ops": 821
+  },
+  {
+   "candidate_set": "cs-h1h0-1-p2b",
+   "cell": "S11",
+   "grammar_version": "proteus.boolean_grammar.v0",
+   "request_key": "H1H0-1-P2-072-B",
+   "sfe_experiment_id": "exp_8cc1fb776741d192d28921f3",
+   "solution_ast": [
+    "and",
+    [
+     "and",
+     [
+      "input",
+      1
+     ],
+     [
+      "input",
+      2
+     ]
+    ],
+    [
+     "and",
+     [
+      "input",
+      0
+     ],
+     [
+      "input",
+      2
+     ]
+    ]
+   ],
+   "solution_sexpr": "(and (and x1 x2) (and x0 x2))",
+   "solution_size": 3,
+   "spec_hash": "sha256:2216e6d8f60f6b4769cb52dcb069d3047f21f296068c1ea795c8b4fbccb83845",
+   "target_truth_table": "00000001",
+   "task_id": "tgt-11",
+   "vm_ops": 503
+  }
+ ],
+ "schema": "archaeon.h1h0.solved_programs.v0",
+ "spelling": "terminals x0..x2 (input i), c0/c1; operators not/and/or/xor; NOT is a grammar node here, compiled as XOR x, ONE by Proteus's compiler (the s-expression is the GRAMMAR form, not the VM form)",
+ "written": "2026-09-11T01:28:39+00:00"
+}

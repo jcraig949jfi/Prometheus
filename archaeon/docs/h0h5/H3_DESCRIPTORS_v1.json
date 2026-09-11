@@ -1,0 +1,39 @@
+{
+ "schema": "archaeon.h3.descriptors.v1",
+ "declared": "2026-09-11T01:28:39+00:00",
+ "axes": [
+  {
+   "name": "popcount",
+   "definition": "number of 1 entries in the 128-entry rule table",
+   "range": [
+    0,
+    128
+   ],
+   "edges": [
+    60.5,
+    64.5,
+    68.5
+   ],
+   "basis": "quartiles of Binomial(128, 1/2): equal mass for a uniformly random table"
+  },
+  {
+   "name": "centre1_ones",
+   "definition": "number of 1 outputs among the 64 neighbourhoods whose centre cell is 1",
+   "range": [
+    0,
+    64
+   ],
+   "edges": [
+    29.5,
+    32.5,
+    35.5
+   ],
+   "basis": "quartiles of Binomial(64, 1/2)"
+  }
+ ],
+ "grid": "4 x 4 = 16 cells; a uniformly random table has probability ~1/16 per cell by construction",
+ "purpose": "to separate the ACQUISITION ARM (random tables) into equal-mass cells so every retention policy faces occupancy across the whole grid, not 4 of 16 cells; v0's equal-WIDTH bins put 120 random rules in 4 cells because popcount concentrates at 64 +- 6 (Techne's measurement). This is a descriptor of the TABLE, never of the outcome; historical genomes and constants land where their tables put them (constants at the corners: popcount 0 or 128).",
+ "what_it_does_not_do": "it does not separate rules by behaviour; two tables in one cell may compute very different things. A behavioural descriptor is a different experiment and would need the C3-3 criterion first.",
+ "replaces": "h3_replay v0 edges ((0.25,0.5,0.75),(0.25,0.5,0.75)) on normalised popcount / centre1 counts",
+ "tie_order": "FIRST_WRITER_WINS at both granularities (unchanged)"
+}
