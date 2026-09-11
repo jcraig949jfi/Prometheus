@@ -201,4 +201,6 @@ def main():
 
 
 if __name__ == "__main__":
+    from workspace_guard import refuse_canonical  # D-23: never from the canonical checkout
+    refuse_canonical("s1_campaign")
     raise SystemExit(main())

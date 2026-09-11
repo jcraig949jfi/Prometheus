@@ -56,3 +56,39 @@ def test_unknown_recipient_and_kind_are_refused(conn):
         api.post(conn, "Archaeon", ["NoSuchSeat"], "prompt", "x", "y")
     with pytest.raises(ValueError):
         api.post(conn, "Archaeon", ["Vivarium"], "shout", "x", "y")
+
+
+def test_agents_table_tracks_boot_activity_and_the_last_message_pointer(conn, monkeypatch):
+    monkeypatch.setenv("CLAUDE_CODE_SESSION_ID", "session_test")
+    r = api.boot(conn, "Vivarium", model="claude-sonnet-5", capabilities=["any", "H1"])
+    assert r["tier"] == "light" and r["session_id"] == "session_test" and "CLAUDE_CODE_SESSION_ID" in r["harness"]
+    r2 = api.boot(conn, "Vivarium", model=None)                       # a re-boot without a model keeps the old one
+    rows = {x["agent"]: x for x in api.who(conn)}
+    v = rows["Vivarium"]
+    assert v["online"] is True and v["boot_count"] == 2 and v["model"] == "claude-sonnet-5" and v["tier"] == "light"
+    assert v["capabilities"] == ["any", "H1"] and v["status"] == "active"
+    assert api.tier_for("claude-fable-5-1") == "heavy" and api.tier_for("claude-haiku-4-5") == "light" and api.tier_for(None) == "unknown"
+    # sync advances the last-seen pointer and marks activity; never-booted seats are listed offline
+    p = api.post(conn, "Archaeon", ["Vivarium"], "prompt", "t", "b")
+    api.sync(conn, "Vivarium")
+    rows = {x["agent"]: x for x in api.who(conn)}
+    assert rows["Vivarium"]["last_message_id"] == p and rows["Vivarium"]["queued"] == 1 and rows["Vivarium"]["unseen"] == 0
+    assert rows["Archaeon"]["online"] is False                       # posting is activity, NOT presence: presence is a sync receipt
+    assert rows["Archaeon"]["last_active_at"] is not None
+    assert rows["Techne"]["status"] == "never_booted" and rows["Techne"]["online"] is False
+    api.set_status(conn, "Vivarium", "parked", note="operator parked")
+    api.sync(conn, "Vivarium")                                        # a PARKED seat stays parked when it syncs (routable, not working)
+    v2 = {x["agent"]: x for x in api.who(conn)}["Vivarium"]
+    assert v2["status"] == "parked" and v2["online"] is True and v2["last_sync_sha"]      # presence is the sync receipt
+    with pytest.raises(ValueError):
+        api.set_status(conn, "Vivarium", "paused")                    # only the five states (+ booting/unknown)
+    # message status is derived from the RECEIVING side: POSTED -> SEEN -> CLAIMED -> ANSWERED / CLOSED
+    q = api.post(conn, "Archaeon", ["Vivarium"], "question", "q?", "b")
+    assert api.message_status(conn, q)["status"] == "POSTED"
+    api.sync(conn, "Vivarium"); assert api.message_status(conn, q)["status"] == "SEEN"
+    p2 = api.post(conn, "Archaeon", ["Vivarium"], "prompt", "work", "b"); api.sync(conn, "Vivarium")
+    api.claim(conn, "Vivarium", p2); assert api.message_status(conn, p2)["status"] == "CLAIMED"
+    api.post(conn, "Vivarium", ["Archaeon"], "report", "re: q", "answer", reply_to=q)
+    assert api.message_status(conn, q)["status"] == "ANSWERED"
+    api.done(conn, "Vivarium", p2); assert api.message_status(conn, p2)["status"] == "CLOSED"
+
