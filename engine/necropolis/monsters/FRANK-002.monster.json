@@ -1,0 +1,145 @@
+{
+  "_README": "Repair (F7): one ancestor, one change. Doctor Frankenstein looking at the Nous corpse after the Cleric and the Keeper finished with it: Nous never had a control arm, so nothing on its record can say whether its cross-field sampler put better triples in front of the forge than a uniform draw from the same 95-concept dictionary would have. The one change is the control arm. The frozen forge judge is the instrument requirement (F4: same instrument on both arms), not a second change to the ancestor. Status PROPOSED; DESIGN ONLY; nothing dispatched or run; no LLM call was made in writing this file. Written by the Keeper (Rhadamanthus) in the Frankenstein role because the trial ran with one operator across all Necropolis roles; the schema has no field for that fact (DEFECTS D-61).",
+  "schema_version": "1.0.0",
+  "monster_id": "FRANK-002",
+  "title": "Nous repair: give the forge a control arm so the sampler's contribution becomes measurable",
+  "author_role": "Doctor Frankenstein",
+  "kind": "repair",
+  "premise_summary": "Nous sampled concept triples across fields (generate_combinations, field-balanced, bias 0.8), had an LLM write a hypothesis per triple, and selected 'high_potential' rows by the same model's self-rating composite; selected rows went to the Hephaestus forge, whose forged/scrap outcome is the only external reading on the record (1212 Nous-shaped rows in agents/hephaestus/ledger.jsonl). The mechanism under test is the sampler: does field-balanced cross-field sampling put triples in front of the forge that forge at a higher rate than a uniform draw from the same dictionary under the same prompt and the same judge? The historical assembly could not ask this because every forged row came from the Nous sampler; there was nothing to compare against, and the selection filter (self-rating) sat between sampler and judge. The repair removes the comparison gap, not the filter: the composite is kept and logged as a covariate, arm identity becomes the only manipulated variable, and one frozen judge reads all arms.",
+  "graves_raided": [
+    "Nous"
+  ],
+  "organs": [
+    {
+      "organ_id": "nous.code.2",
+      "source_agent": "Nous",
+      "organ_type": "producer",
+      "contributes": "generate_combinations: the cross-field sampler with weight hook and priority-queue injection. It produces arm (i). Its output under a fixed seed is the thing whose value the experiment measures.",
+      "novel": false,
+      "modification_required": "Seedable; emit the 300 arm-(i) triples to a file with (seed, dictionary_sha, bias) recorded. No change to the sampling rule.",
+      "failures_recorded_against": []
+    },
+    {
+      "organ_id": "nous.code.0",
+      "source_agent": "Nous",
+      "organ_type": "representation",
+      "contributes": "The 95-concept dictionary (concepts.py; 95/20/4 census executed by the Necromancer). Arm (ii) is a uniform draw of triples from exactly this dictionary, so the arms differ only in the sampling rule.",
+      "novel": false,
+      "modification_required": "",
+      "failures_recorded_against": []
+    },
+    {
+      "organ_id": "nous.code.1",
+      "source_agent": "Nous",
+      "organ_type": "transform",
+      "contributes": "parse_ratings / score_response: the self-rating composite, retained but demoted from selection criterion to logged covariate on every row of every arm (5918/5918 deterministic replay executed by the Necromancer).",
+      "novel": false,
+      "modification_required": "Called on every hypothesis but its output does not gate what is sent to the forge.",
+      "failures_recorded_against": []
+    },
+    {
+      "organ_id": "nous.data.1",
+      "source_agent": "Nous",
+      "organ_type": "producer",
+      "contributes": "priority_triples.json (15 gap-targeted triples; 11 in the ledger): the seed set for the positive-control arm (iii), extended to 300 by the same gap-targeting rule over the remaining T1 gap categories.",
+      "novel": false,
+      "modification_required": "Extended from 15 to 300 by the recorded gap-targeting rule; the extension rule is logged.",
+      "failures_recorded_against": []
+    },
+    {
+      "organ_id": "nous.tests.1",
+      "source_agent": "Nous",
+      "organ_type": "measurement_instrument",
+      "contributes": "nous_forge_join.py: forge-day-stratified AUC with permutation null. It is the instrument that established the DESIGN error (implementability AUC 0.4182 within forge day; high_potential 41.8% v1 vs 0.84% v2) and the instrument under which the repair is read (F4: same instrument). The permutation null over arm labels is the chance floor.",
+      "novel": false,
+      "modification_required": "Accept an arm-tag column and compute per-arm forge rate plus the label-permutation null of the arm difference; the AUC path is unchanged.",
+      "failures_recorded_against": []
+    },
+    {
+      "organ_id": "nous.data.2",
+      "source_agent": "Nous",
+      "organ_type": "failure_corpus",
+      "contributes": "The 1212 Nous-shaped rows in agents/hephaestus/ledger.jsonl (frames A-H, outcomes): the ancestral result on record, read by the same join and the same instrument.",
+      "novel": false,
+      "modification_required": "",
+      "failures_recorded_against": []
+    },
+    {
+      "organ_id": "nous.representation_hints.0",
+      "source_agent": "Nous",
+      "organ_type": "informative_failure_mode",
+      "contributes": "The Necromancer's own sentence: a successor must score hypotheses with a criterion that is not the generator's own completion, and must carry (prompt_version, model, judge_version, api_state) on every row. This monster is that sentence with a control arm and a kill condition attached.",
+      "novel": false,
+      "modification_required": "",
+      "failures_recorded_against": []
+    }
+  ],
+  "organ_execution_plan": "ORGANS.jsonl records executed_by_necromancer null for every nous.* organ although the Nous dossier text records nous.code.0, nous.code.1, nous.data.0 and nous.data.2 as EXECUTED (the inventory field was never populated by build_organs.py from the dossier prose; recorded as a defect, not silently fixed here). Before stage 1 reads anything: (a) re-run dossiers/nous_evidence/nous_scorer_replay.py and require 5918/5918; (b) re-run dossiers/nous_evidence/nous_salvage_reproduce.py and require row-for-row equality with techne/registry/concepts_index.jsonl; (c) re-run dossiers/nous_evidence/nous_forge_join.py and require the on-record numbers (1212 joined rows; implementability AUC 0.4182 within forge day; high_potential 41.8% v1 / 0.84% v2) to reproduce to the printed precision; (d) run generate_combinations (nous.code.2, READ only by the Necromancer) with a fixed seed for 300 triples and check the field-balance claim (bias 0.8) against the drawn field composition; (e) load priority_triples.json and require 15 rows with 11 resolving to ledger keys. Any failure in (a)-(e) leaves the monster PROPOSED with the failure recorded in cleric_gate.notes; the hint organ is not executed, it is the hypothesis and stage 2 is its execution.",
+  "counterfactual_repair": {
+    "ancestor": "Nous",
+    "historical_assembly": "Cross-field sampler (generate_combinations, bias 0.8) -> one hypothesis per triple from the LLM under PROMPT_TEMPLATE v1 then v2 (engineer prompt, commit da42cc7e0) -> self-rating composite (score_response) selects high_potential rows -> Hephaestus forge under a judge whose version and api_state were not recorded per row -> forged/scrap outcome in agents/hephaestus/ledger.jsonl. Every forged row came from the Nous sampler; no comparison arm ever existed.",
+    "failure_layer": "DESIGN",
+    "cause_class": "DESIGN_ERROR",
+    "retained_mechanism": "The sampler (generate_combinations with bias 0.8), the v2 prompt, the 95-concept dictionary and the self-rating scorer are all kept exactly as they were; the scorer is still computed on every row. The repair claims none of these was the problem; the problem was that the assembly had no arm to compare against.",
+    "replaced_component": "The single-arm feed into the forge: only sampler-selected, self-rating-filtered triples were ever forged.",
+    "replacement": "Add a control arm: 300 uniformly random triples from the same dictionary under the same prompt are forged alongside 300 sampler triples, under one frozen judge, with the self-rating composite logged rather than used to select.",
+    "predicted_obstruction_removed": "The recorded symptom on DESIGN is that the design could not answer its own question: no external criterion and no control arm, so the '20-30% warrant forging' framing had nothing to be measured against. With an arm to compare against, the sampler's contribution becomes a number with a null: per-arm forge rate under a frozen judge, and the observable that disappears is the unsourced yield claim -- it is replaced by an arm difference with a permutation-null 97.5th percentile.",
+    "cheap_test": "lightning_experiment stage 0 (deterministic, no spend: organ_execution_plan checks plus the pre-registered null computed from the ancestral forge rate) and stage 1 (RESOURCE: 300 + 300 + 300 + 100 hypothesis calls and 1000 forge calls under one frozen judge; arm difference read by nous_forge_join.py).",
+    "kill_before_run": "KILL before any spend if no frozen Hephaestus judge can be attested (single battery version, single code-gen model, judge_version and api_state written on every row) -- fires against the proposer's premise that such an instrument exists; KILL if organ_execution_plan (a)-(e) fails to reproduce the on-record numbers -- fires against the proposer (the dossier numbers the repair is built on would be unreproduced); KILL after the run if arm (iii) forges 0/300 (positive control dead: instrument uninformative, not a kill of the sampler); KILL the resurrection hypothesis if arm (i) minus arm (ii) lies inside the label-permutation null at n=300/arm, or if arm (ii) exceeds arm (i) beyond the null (the sampler was worse than uniform: recorded against Nous, not against the judge); KILL if api_call_failed exceeds 10% of any arm after retry (the arms are no longer comparable).",
+    "error_evidence": "dossiers/nous.dossier.json autopsy.cause_of_death_stack.DESIGN (DESIGN_ERROR, load_bearing: no external criterion, no control arm, mid-series prompt change); dossiers/nous_evidence/nous_forge_join_result.json (high_potential_by_regime, stratified_by_forge_day); dossiers/nous_evidence/cleric_strata_and_orphans_result.json (A2, A5, A6); dossiers/nous_evidence/CLERIC.md C-7.",
+    "record_check": "grep -rIn -i 'control|baseline' agents/nous/src/*.py agents/nous/README.md returns only concept-dictionary entries (Control Theory, feedback control) and no control arm, baseline arm or random-triple comparison; the forge ledger join (nous_forge_join_result.json) contains only Nous-sampled keys, so the forge never received a non-Nous arm during the Nous era; the March forge judge was not frozen (the dossier's forge-day stratification exists precisely because judge and api_state varied by day). The repaired configuration -- two arms under one frozen judge -- was never run: not dead-on-record. Caveat recorded: the May forge windows re-ran Nous keys under later judges (DEFECTS D-69); those re-runs are single-arm too.",
+    "predicted_ancestral_result_if_repaired": "Arm (i) is the ancestral assembly under the frozen judge. If the sampler carries value, arm (i) forge rate exceeds arm (ii) by more than the permutation-null 97.5th percentile at n=300 (at an ancestral forge rate near 0.2 that threshold is roughly 0.064 absolute; the exact value is computed and pre-registered before unblinding). If the sampler carries no value, the two arms forge inside each other's null and the 'high_potential' framing is dead on a fair test for the first time."
+  },
+  "why_combination_changes_boundary": "The Nous dossier kill_boundary records that the selector's yield claim was never measured against anything (DESIGN load-bearing; NO_FAIR_TEST_ON_RECORD). The boundary claimed to move is 'the sampler's contribution is unmeasurable', not 'Nous produced good hypotheses'. A control arm under a single instrument converts an unmeasurable claim into a measurable difference with a published null; that is the whole mechanism, and it is recomposition of era-1 organs (sampler, dictionary, scorer, forge join) plus one arm the ancestor never had. Modern models do not enter: the hypothesis model may be any model provided it is the same for all arms.",
+  "modern_capability_enabling": {
+    "depends_on_frontier": false,
+    "capability": "none: pure recomposition of era-1 organs. The sampler, dictionary, prompt, scorer and forge join all existed by 2026-04-02; the control arm is a draw the ancestor could have made in March.",
+    "era_test": "Not needed for the primary read (no novel organ, no frontier dependency). If the March-era hypothesis model is still reachable, an optional replicate of arms (i) and (ii) under it separates capability-moved-the-boundary from recomposition-moved-the-boundary (LAW N16); if only a current model is reachable, the result is recorded as conditional on that model."
+  },
+  "consumer": {
+    "name": "Hephaestus forge under a frozen judge (agents/hephaestus/ledger.jsonl), the same consumer that read the ancestor's rows",
+    "reachable_now": false,
+    "consumption_proof": "A CONSUMPTION.jsonl row {object: FRANK-002 per-arm forge ledger rows with judge_version and api_state fingerprinted, consumed_by: Hephaestus forge ledger, effect: 900+100 rows appended under arm tags}, verified by re-running nous_forge_join.py restricted to the three arm tags. Not reachable now: no dossier has yet attested that a frozen Hephaestus judge exists (the Hephaestus grave has not been autopsied); until it is, the monster cannot be run and cannot be ALIVE.",
+    "_note": "Stage 0 has no consumer and cannot make the monster ALIVE on its own; it can only kill it."
+  },
+  "measurable_consequence": "Per-arm forge rate (forged / (forged + scrap)) in agents/hephaestus/ledger.jsonl, the number the forge already reads, with the arm-(i) minus arm-(ii) difference reported against its label-permutation null; secondarily the implementability AUC of the self-rating composite within each arm (the ancestral 0.4182 is the on-record comparison).",
+  "strongest_alternative_explanation": "Judge drift or prompt-format capture: the frozen judge forges whatever is phrased like the v2 engineer prompt regardless of triple quality, so arm (i) and arm (ii) both forge at the judge's format rate and any difference is noise; or the judge rewards the field-mix signature of Nous triples for reasons unrelated to hypothesis content. The decoy arm (100 triples with concept names kept and descriptions permuted) separates format capture from content: if the decoy forges at the arm-(i) rate, the judge is reading format, and a positive arm difference is not evidence for the sampler.",
+  "lightning_experiment": {
+    "design": "Stage 0 (no spend): organ_execution_plan (a)-(e); compute and pre-register the label-permutation null of the arm difference from the ancestral forge rate at n=300/arm; attest the frozen judge (single battery version, single code-gen model, judge_version + api_state on every row) or stop. Stage 1 (RESOURCE, HITL spend authorisation required): arm (i) 300 triples from generate_combinations under a fixed seed; arm (ii) 300 uniformly random triples from the same 95-concept dictionary; arm (iii) 300 gap-targeted triples seeded from priority_triples.json (positive control); decoy arm 100 triples with names kept and descriptions permuted. All 1000 get one hypothesis each under PROMPT_TEMPLATE v2 from one model, the self-rating composite logged; all 1000 forged by the frozen judge; api_call_failed rows retried then dropped from all arms alike; arms unblinded only after the null is registered. Read: per-arm forge rate and the arm-(i) minus arm-(ii) difference vs the null (nous_forge_join.py, arm-tag extension).",
+    "expected_if_alive": "Arm (i) forge rate exceeds arm (ii) by more than the permutation-null 97.5th percentile at n=300/arm, the effect survives holding the self-rating composite fixed, and the decoy arm forges below arm (i) (format capture excluded).",
+    "expected_if_dead": "Arms (i) and (ii) forge inside each other's permutation null: the cross-field sampler adds nothing a uniform draw from the same dictionary lacks under a fixed judge. Also dead if arm (ii) beats arm (i) beyond the null.",
+    "kill_condition": "Pre-declared: (1) frozen judge not attestable -> not run (fires against the proposer's premise); (2) organ_execution_plan reproduction fails -> not run (fires against the proposer); (3) arm (iii) forges 0/300 -> void, not a kill; (4) |arm (i) - arm (ii)| <= permutation-null 97.5th percentile at n=300 -> DEAD; (5) arm (ii) > arm (i) beyond the null -> DEAD, recorded as sampler-worse-than-uniform; (6) decoy arm forges within the null of arm (i) -> any positive result is format capture, not sampler value; (7) api_call_failed > 10% of any arm after retry -> void.",
+    "chance_floor": "P(|arm (i) - arm (ii)| exceeds threshold | no mechanism) = 0.05 two-sided by construction of the label-permutation null at n=300/arm (nous_forge_join.py perm_null machinery, 1000 permutations, seed recorded). At an ancestral forge rate near 0.2 the 97.5th percentile of the absolute difference is about 0.064; the exact value is computed from the observed pooled rate and pre-registered before unblinding.",
+    "positive_control": "Arm (iii), gap-targeted seeds from priority_triples.json (11 of 15 already forged in the ancestral ledger), must show a nonzero forge rate under the frozen judge; if it forges 0/300 the judge, not the sampler, is dead and the run is void (uninformative, not a kill).",
+    "resource_budget": {
+      "available_now": false,
+      "needs": [
+        "Stage 0: nothing beyond the repo (dossiers/nous_evidence/*.py, agents/nous/src/, agents/hephaestus/ledger.jsonl)",
+        "Stage 1: 1000 LLM hypothesis calls + 1000 forge code-gen calls; a frozen Hephaestus judge attested by a dossier or by James; one operator-day",
+        "Cleric adjudication (including the dead-on-record check and the judge attestation) and James sign-off before any spend"
+      ],
+      "estimated_cost": "Stage 0: one script, minutes. Stage 1: about 2000 model calls and one operator-day; zero if the judge cannot be attested."
+    },
+    "ancestral_comparison": {
+      "feasible": true,
+      "ancestral_assembly": "Arm (i) IS the ancestral assembly (sampler -> v2 prompt -> scorer logged -> forge) under the frozen judge; the on-record ancestral result is the 1212-row forge ledger join read by the same instrument (nous_forge_join.py).",
+      "rationale": "The repair is one change to one ancestor, so the ancestral comparison is the ancestor with and without the control arm under the identical instrument: arm (i) alone reproduces the ancestor's single-arm read (and its comparison with the on-record 1212 rows measures judge drift), while arm (i) vs arm (ii) is the read the ancestor could never make. Nothing in the comparison depends on a modern capability.",
+      "ancestral_result_on_record": "dossiers/nous_evidence/nous_forge_join_result.json (1212 joined rows; implementability AUC 0.4182 within forge day; high_potential 41.8% v1 / 0.84% v2); dossiers/nous_evidence/cleric_strata_and_orphans_result.json (A2, A5, A6)."
+    }
+  },
+  "vindication_disclaimer": "A plausible modern reconstruction does not vindicate the historical agent, invalidate its autopsy, or constitute evidence that the original premise was correct. If this monster lives, the conditional viability frontier moved; Prometheus 1.0 did not succeed retroactively.",
+  "cleric_gate": {
+    "status": "PROPOSED",
+    "notes": "Not yet reviewed. Cleric checklist: (i) attest or refute the existence of a frozen Hephaestus judge before anything else; if none exists this monster is not runnable and should say so rather than wait; (ii) confirm the record check: no non-Nous arm was ever forged during 2026-03-31..04-02 or in the May re-run windows; (iii) check that 'one change' holds -- the decoy and positive-control arms are instrument controls, not changes to the ancestor; if the Cleric reads them as changes, refile as chimera; (iv) verify the pre-registered null is computed from the pooled rate before unblinding, not after; (v) the Necropolis trial was run by one operator across Necromancer, Cleric, Frankenstein and Keeper; a second reader is the first genuine Cleric this file has had.",
+    "james_signoff": false,
+    "dossier_if_dead": null
+  },
+  "provenance": {
+    "author": "Rhadamanthus (Keeper and Judge), writing as Doctor Frankenstein; DESIGN ONLY, no LLM calls made",
+    "branch": "rhadamanthus/native-trial-2026-09-11",
+    "baseline_sha": "fc85d10e33dcf176f8bc48362fda106ab32b9bb0",
+    "organs_inventory_sha": "461685282e141536dc62c1d7fe74cd10858cb8fc9873dcaaadf0763f14ee53b8",
+    "created_at": "2026-09-11",
+    "amendments": []
+  }
+}

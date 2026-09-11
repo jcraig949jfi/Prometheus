@@ -1,0 +1,154 @@
+{
+  "_README": "Repair (F7): one ancestor, one change. Doctor Frankenstein looking at the Erebos corpse after the Cleric and the Keeper finished with it: every Layer-2-vs-counter test on the record was computed over a kill_ledger whose outcome column carried pipeline state (*_pending, *_not_yet_implemented, no_loader_registered) for most rows, so the only Layer-2 signal ever found was that state predicting itself (ITER-58). The one change is the ledger the statistic reads: real Layer-1 verdicts only, pipeline state in its own column. This is the Cleric's 'settling artefact' (dossiers/erebos_evidence/CLERIC.md section 3) written as a monster with a kill condition that fires against the proposer first: the real-verdict ledger may be too small for the committed statistic to resolve anything, in which case the monster dies before Erebos's question is asked. Status PROPOSED; DESIGN ONLY; nothing run; no LLM involved anywhere in this monster. Written by the Keeper (Rhadamanthus) in the Frankenstein role (DEFECTS D-61).",
+  "schema_version": "1.0.0",
+  "monster_id": "FRANK-003",
+  "title": "Erebos repair: run the Layer-2 routing statistic over a ledger of real Layer-1 verdicts only",
+  "author_role": "Doctor Frankenstein",
+  "kind": "repair",
+  "premise_summary": "Erebos's architectural claim (H-B) was that explicit failure geometry -- cross-cell motifs over (plugin, kp) cells of a Layer-1 kill ledger -- yields routing recommendations that a counter over the same ledger cannot replicate. The instrument was fixed by Phase 3.H/3.K: count substrate-vs-pair-aware-counter deltas on the real ledger, compare with a signature-shuffle permutation null (SEED 1789, 200 permutations, MIN_COOCCURRENCE 3, MIN_LIFT 1.5). The mechanism is a comparison of two readers of the same verdict distribution; it can only say something when the outcome column holds verdicts. Historically it held pipeline state for 542 of 570 production rows (327 stygian not_yet_implemented / no_loader_registered, 215 erebos *_pending; about 8 distinct real verdicts), and _load_real_rows(include_enriched=True) never filtered them. This monster assembles the same operators, the same harness and the same null over a ledger regenerated from real detector runs only (the Path B enrichment procedure: G10, G23, G11, G02 on the Mossinghoff catalog, plus every generator that has a working Stygian loader), with the pipeline state recorded in a separate column, and reads the same number the ancestor read: observed deltas vs null p95.",
+  "graves_raided": [
+    "Erebos"
+  ],
+  "organs": [
+    {
+      "organ_id": "erebos.code.2",
+      "source_agent": "Erebos",
+      "organ_type": "measurement_instrument",
+      "contributes": "_cross_cell_motif.py, _kill_tensor.py and the sprint1/phase3 harnesses (permutation_null.py, pair_aware_permutation_null.py, real_residue_smoke.py): the instrument that produced the on-record numbers (observed 2, null_p95 2, p 0.105 at 699 rows) and the instrument under which the repair is read (F4: same instrument, same SEED 1789, same 200 permutations, same thresholds).",
+      "novel": false,
+      "modification_required": "real_residue_smoke._load_real_rows gains a verdict-only mode: rows whose kp is a pipeline state are moved to a state column and excluded from the outcome column; a flag records which mode produced every result. No change to the motif extractor, the counters, the shuffle or the thresholds.",
+      "failures_recorded_against": []
+    },
+    {
+      "organ_id": "erebos.operators.2",
+      "source_agent": "Erebos",
+      "organ_type": "detector",
+      "contributes": "pair_aware_counter_recommendations: the discriminating baseline Phase 3.K introduced (a counter that sees pairs), so that a Layer-2 delta cannot be a per-plugin-majority artefact. Kept unchanged.",
+      "novel": false,
+      "modification_required": "",
+      "failures_recorded_against": []
+    },
+    {
+      "organ_id": "erebos.operators.1",
+      "source_agent": "Erebos",
+      "organ_type": "detector",
+      "contributes": "extract_cooccurrence_motifs / conditional_kp_recommendations / per_plugin_majority: the Layer-2 reader and the first-generation counter. Kept unchanged; they are the mechanism whose value is being measured.",
+      "novel": false,
+      "modification_required": "",
+      "failures_recorded_against": []
+    },
+    {
+      "organ_id": "erebos.operators.0",
+      "source_agent": "Erebos",
+      "organ_type": "measurement_instrument",
+      "contributes": "run_binary_split_permutation_null (_mahler_composition_helpers): the lateral/hierarchical split used in ITER-64 (HIERARCHICAL_ONLY). The repair reports the delta count split lateral vs hierarchical because the Cleric's settling artefact requires that split and ITER-64 found the historical signal was hierarchical-only.",
+      "novel": false,
+      "modification_required": "",
+      "failures_recorded_against": []
+    },
+    {
+      "organ_id": "erebos.code.0",
+      "source_agent": "Erebos",
+      "organ_type": "producer",
+      "contributes": "The 29 stygian composition loaders and the _composition.py registry (146 passing tests): the working bridge that turns a composed claim into a real Layer-1 verdict. It is the source of real-verdict rows for the regenerated ledger; a generator without a loader produces no row (instead of a no_loader_registered row, as it did historically).",
+      "novel": false,
+      "modification_required": "Run in a harness that writes rows to a fresh ledger file, never to the daemon's state path; a generator with no loader writes to the state column only.",
+      "failures_recorded_against": []
+    },
+    {
+      "organ_id": "erebos.code.1",
+      "source_agent": "Erebos",
+      "organ_type": "producer",
+      "contributes": "The 25 generator archetypes (14 with loaders) and the _quarantine.py loader-debt cap: the Layer-1 detectors whose verdicts populate the ledger. The Path B enrichment (G10 x 5 hazard rates, G23 x 20 seeds, G11 x 20 seeds, G02 x 5 seeds x 3 binaries = 60 real rows on the Mossinghoff catalog) is the recorded procedure for producing real verdicts and is re-run as the floor of the regenerated ledger.",
+      "novel": false,
+      "modification_required": "",
+      "failures_recorded_against": []
+    },
+    {
+      "organ_id": "erebos.tests.2",
+      "source_agent": "Erebos",
+      "organ_type": "verifier",
+      "contributes": "charon/agents/stygian/tests/test_composition_* (146 pass): executed before the regenerated ledger is read, to establish that the loaders produce verdicts and not silent fallbacks (SCHEMA EXECUTION: no silent fallbacks).",
+      "novel": false,
+      "modification_required": "",
+      "failures_recorded_against": []
+    },
+    {
+      "organ_id": "erebos.representation_hints.0",
+      "source_agent": "Erebos",
+      "organ_type": "informative_failure_mode",
+      "contributes": "The Necromancer's own sentence: the Layer-2 value question needs a ledger whose outcome column holds real Layer-1 verdicts only, with pipeline state in a separate column, and a statistic whose null floor is below the effect size at the available N. This monster is that sentence with the floor computed first and a kill condition attached.",
+      "novel": false,
+      "modification_required": "",
+      "failures_recorded_against": []
+    }
+  ],
+  "organ_execution_plan": "ORGANS.jsonl records executed_by_necromancer null for every erebos.* organ although the dossier records test suites as executed (608/1 erebos, 59 sprint1, 146 stygian) and scripts/composed_claim_consumer_audit.py as re-run (the inventory field was never populated from the dossier prose; DEFECTS note, not silently fixed). Before stage 1 reads anything: (a) run charon/agents/stygian/tests/test_composition_* and charon/agents/erebos/tests and require the on-record pass counts (146; 608 pass 1 skip; sprint1 59); (b) run pair_aware_permutation_null.py against a synthetic ledger of known content (the Cleric's cleric_lift_only_calibration.py worlds) and require its NULL / LIFT2 / LIFT3 numbers to reproduce (dossiers/erebos_evidence/cleric_lift_only_calibration_result.json); (c) re-run the Path B enrichment procedure and require 60 rows with the recorded per-detector kp diversity (G10 2 kps, G23 3 of 4, G11 2, G02 6), written to a fresh file; (d) run run_binary_split_permutation_null on that file and require it to execute end-to-end with the lateral/hierarchical split populated. Any failure in (a)-(d) leaves the monster PROPOSED with the failure recorded in cleric_gate.notes. The hint organ is not executed; it is the hypothesis and stage 1 is its execution. The historical kill_ledger.jsonl and kill_ledger_enriched.jsonl are gitignored (charon/agents/.gitignore */state/) and absent from both the canonical tree and the worktree; nothing in this plan pretends to read them.",
+  "counterfactual_repair": {
+    "ancestor": "Erebos",
+    "historical_assembly": "Erebos daemon: generators emit composed claims -> _enqueue_to_stygian -> Stygian loaders return a Layer-1 verdict where a loader exists and a pipeline-state kp (no_loader_registered, *_not_yet_implemented) or an Erebos *_pending kp where it does not -> all rows appended to charon/agents/erebos/state/kill_ledger.jsonl -> sprint1/phase3 harnesses read every row via _load_real_rows(include_enriched=True) -> substrate-vs-counter deltas counted against a signature-shuffle null (Phase 3.H per-plugin, Phase 3.K pair-aware).",
+    "failure_layer": "MEASUREMENT",
+    "cause_class": "MEASUREMENT_ERROR",
+    "retained_mechanism": "The Layer-2 reader (extract_cooccurrence_motifs, conditional_kp_recommendations), both counters (per_plugin_majority, pair_aware_counter_recommendations), the shuffle null with SEED 1789 / 200 permutations / MIN_COOCCURRENCE 3 / MIN_LIFT 1.5, and the lateral/hierarchical split are all kept exactly as they were. The repair claims none of these was the problem; the problem was what column they read.",
+    "replaced_component": "The ledger the harness reads: the daemon's kill_ledger with pipeline-state rows in the outcome column.",
+    "replacement": "The harness reads a ledger regenerated from real detector runs only, with every pipeline state (pending, not_yet_implemented, no_loader_registered) moved to a separate state column and excluded from the outcome column.",
+    "predicted_obstruction_removed": "The recorded symptom on MEASUREMENT is that the recorded quantity was not the quantity the design named: the only deltas ever observed were state-predicting-state (ITER-58: given kp_pending, counter says *_not_yet_implemented, substrate says no_loader_registered). On a verdict-only ledger those deltas cannot exist by construction; the observable that disappears is any delta whose source or target kp is a pipeline state. What remains -- observed deltas over verdicts vs the null p95 over verdicts -- is the number Erebos's design named and never measured.",
+    "cheap_test": "lightning_experiment stage 0 (deterministic: floor calibration on synthetic verdict-only ledgers with the regenerated ledger's marginals at its N; decides whether stage 1 can be informative) and stage 1 (deterministic, minutes of compute: the same harness over the regenerated verdict-only ledger, lateral/hierarchical split, vs the same harness over a pending-inclusive proxy ledger regenerated by the same daemon path).",
+    "kill_before_run": "KILL before stage 1 if the regenerated verdict-only ledger has N below the calibrated floor -- the N at which cleric_lift_only_calibration.py detects LIFT3 at p<0.05 in at least 4 of 5 seeded worlds built on the regenerated ledger's own marginals -- because then the committed statistic cannot resolve the effect it is looking for and a zero would be a floor reading, not a death; this fires against the proposer (the settling artefact cannot be built from what exists) and is recorded as such. KILL before stage 1 if organ_execution_plan (a)-(d) does not reproduce the on-record counts (fires against the proposer: the organs are not what the dossier says). KILL the resurrection hypothesis after stage 1 if observed verdict-only deltas vs the pair-aware counter are <= null p95 at p >= 0.05 AND the lateral component is zero: that is the fair death of H-B v2 the record never contained. KILL if the positive control (a planted LIFT3 world at the same N) is not detected: void, not a kill.",
+    "error_evidence": "dossiers/erebos.dossier.json autopsy.cause_of_death_stack.MEASUREMENT (MEASUREMENT_ERROR, load_bearing, primary_cause) and .INSTRUMENTATION (INSTRUMENT_ERROR: chance floor marginal-dependent and never archived); dossiers/erebos_evidence/CLERIC.md C-5 and section 3 (settling artefact); dossiers/erebos_evidence/cleric_lift_only_calibration_result.json; pivot/sprint1/phase3/PHASE3_0_SMOKE_VERDICT_2026-05-30.md lines 53-55; commit fbe4f6b7a (ITER-56).",
+    "record_check": "grep -rn -i 'real.verdict|pending' over pivot/erebos_substrate_finding_iter*.md, pivot/sprint1/phase3/*.md and charon/agents/erebos/**/*.py finds two things and no third: (1) ITER-13/14 G15 v2 ledger-MI self-audit proposed and ran a pending-filter for the Layer-1 MI statistic (routing_action g15_v2_real_verdict_mi in _kill_pattern_registry.py; 89% of the v1 MI signal was control-flow bookkeeping) -- a Layer-1 self-audit, not the Layer-2 routing test; (2) Path B (PHASE3_COMBINED_VERDICT_2026-05-30.md) ADDED 60 real verdicts to the ledger and Path C re-ran the smoke over 570 production + 60 enriched rows, i.e. the pending rows stayed in the outcome column; every later harness (3.D, 3.E/F/G, 3.H, 3.K at 674 then 699 rows) used _load_real_rows(include_enriched=True), which reads every row and filters nothing (real_residue_smoke.py lines 157-177). The Layer-2 routing statistic was never computed over a verdict-only ledger: not dead-on-record. Caveat recorded: the record does contain the author's own reading that the claim 'as currently operationalized is empirically false on real data, regardless of Layer-1 verdict richness' (PHASE3_COMBINED_VERDICT); that reading was made over the pending-inclusive column and is exactly what this repair tests.",
+    "predicted_ancestral_result_if_repaired": "If H-B v2 carries value: observed verdict-only deltas vs the pair-aware counter exceed null p95 at p<0.05 with a nonzero lateral component at the regenerated N. If H-B v2 is dead: observed deltas at or below null p95, lateral component zero, while the planted LIFT3 positive control at the same N is detected -- the first fair death on the Erebos record. If the regenerated ledger cannot reach the calibrated floor: the monster is dead before Erebos's question is asked, and the dossier records that the question is unaskable at the substrate's real verdict rate rather than answered."
+  },
+  "why_combination_changes_boundary": "The Erebos dossier kill_boundary records that neither H-A nor H-B was refuted and that the load-bearing tests were run over a column that carried its own answer (NO_FAIR_TEST_ON_RECORD, primary MEASUREMENT_ERROR). The boundary claimed to move is 'the Layer-2 routing question is unanswerable on this record', not 'Layer 2 beats counters'. The mechanism is recomposition of era-1 organs -- the same reader, the same counters, the same null, the same detectors -- with the outcome column purged of pipeline state and the null floor computed before the read. No model, modern or otherwise, enters; the monster is pure deterministic compute over regenerated Layer-1 rows.",
+  "modern_capability_enabling": {
+    "depends_on_frontier": false,
+    "capability": "none: pure recomposition of era-1 organs. Every operator, harness, loader and detector named here existed by 2026-06-03; the verdict-only filter is a three-line change the ancestor's own ITER-13 finding doc proposed for the Layer-1 MI statistic and never applied to the Layer-2 routing test.",
+    "era_test": "Not needed: no novel organ, no frontier dependency, no LLM in the loop. A positive result cannot be attributed to capability."
+  },
+  "consumer": {
+    "name": "The Erebos dossier itself (engine/necropolis/dossiers/erebos.dossier.json: fair_test, kill_boundary, capability_contingency.what_would_move_it) and, secondarily, the Harmonia B navigability lane that already imports _cross_cell_motif.py",
+    "reachable_now": true,
+    "consumption_proof": "A CONSUMPTION.jsonl row {object: FRANK-003 stage-1 result file, consumed_by: erebos.dossier.json amendment under LAW N11, effect: fair_test moves from UNFAIR to FAIR for H-B v2 (either direction) or the dossier records the question as unaskable at the substrate's verdict rate}. No production consumer is claimed: the ancestor's DESIGN_ERROR was precisely that none existed at birth, and this monster does not pretend to create one; its consumer is the record.",
+    "_note": "Stage 0 has no consumer and cannot make the monster ALIVE on its own; it can only kill it."
+  },
+  "measurable_consequence": "Observed substrate-vs-pair-aware-counter deltas, null mean, null p95 and p-value from pair_aware_permutation_null.py -- the numbers Phase 3.K already printed (observed 2, null_p95 2, p 0.105 at 699 rows) -- recomputed over the verdict-only ledger, with the lateral/hierarchical split from run_binary_split_permutation_null and the regenerated N and calibrated floor printed beside them.",
+  "strongest_alternative_explanation": "A positive result on a small verdict-only ledger is a marginal artefact: with few distinct kps per plugin the lift filter and the pair-aware counter can disagree by chance more often than the 200-permutation null captures (the Cleric measured null_p95 spanning 1..10 across worlds that differ only in marginal concentration). The stage-0 calibration on the regenerated ledger's own marginals, the planted-LIFT3 positive control at the same N, and the requirement that the lateral component be nonzero are the separations; a hierarchical-only positive (ITER-64's pattern) is recorded as not distinguishable from marginal structure.",
+  "lightning_experiment": {
+    "design": "Stage 0 (deterministic, no spend): organ_execution_plan (a)-(d); regenerate a verdict-only ledger by re-running the Path B enrichment procedure plus every generator with a working loader, writing rows to a fresh file with columns {plugin, kp_verdict, pipeline_state, input_signature, ts}, where kp_verdict is null whenever the row is a pipeline state; record N_verdict and N_state; build 5 seeded synthetic worlds per class (NULL, LIFT2, LIFT3) on the regenerated ledger's marginals at N_verdict with cleric_lift_only_calibration.py and record detection at p<0.05; if LIFT3 is detected in fewer than 4 of 5 worlds the monster stops here (kill_before_run fires against the proposer). Stage 1 (deterministic, minutes): pair_aware_permutation_null.py and permutation_null.py over the verdict-only ledger (SEED 1789, 200 permutations, thresholds unchanged), run_binary_split_permutation_null for the lateral/hierarchical split, a planted-LIFT3 world at the same N as positive control, and the same harnesses over a pending-inclusive proxy ledger regenerated by the same daemon path as the ancestral comparison. Pre-register the reading before unblinding: observed vs null p95 and p, lateral component, positive-control detection.",
+    "expected_if_alive": "Observed verdict-only deltas vs the pair-aware counter exceed null p95 with p<0.05, the lateral component is nonzero, the planted-LIFT3 control is detected, and the pending-inclusive proxy reproduces the ancestor's pattern (deltas at or near null p95 dominated by state-predicting-state).",
+    "expected_if_dead": "Observed verdict-only deltas at or below null p95 (p >= 0.05) with lateral component zero while the planted-LIFT3 control at the same N is detected: the Layer-2 reader over real verdicts is a counter. This is the fair death of H-B v2 the record never contained.",
+    "kill_condition": "Pre-declared: (1) regenerated N_verdict below the calibrated floor (LIFT3 detected in < 4 of 5 seeded worlds at that N) -> not run, recorded against the proposer; (2) organ_execution_plan (a)-(d) fails to reproduce the on-record counts -> not run, recorded against the proposer; (3) planted-LIFT3 positive control not detected at p<0.05 -> void, not a kill; (4) observed deltas <= null p95 with p >= 0.05 and lateral component zero -> DEAD; (5) observed deltas > null p95 but lateral component zero -> NOT ALIVE, recorded as hierarchical-only (ITER-64 pattern), indistinguishable from marginal structure; (6) the pending-inclusive proxy fails to reproduce the ancestral pattern -> the ancestral comparison is void and the stage-1 read is reported without it.",
+    "chance_floor": "P(observed deltas > null p95 | no mechanism) = 0.05 by construction of the signature-shuffle permutation null (200 permutations, SEED 1789), conditional on the calibration passing: the Cleric's worlds show null_p95 ranges from 1 (NULL class, N=699 real marginals) to 10 (LIFT3 class, concentrated marginals), so the floor is published per world from the regenerated ledger's own marginals in stage 0 and the stage-1 read is compared with that floor, not with the historical p95 of 2.",
+    "positive_control": "A planted-LIFT3 synthetic world (cleric_lift_only_calibration.py plant_design: 3 pairs, 12 shared signatures per pair, common-kp probability 0.85 elsewhere) built at the regenerated N_verdict; the harness must detect it at p<0.05 or the stage-1 read is uninformative (void, not a kill).",
+    "resource_budget": {
+      "available_now": true,
+      "needs": [
+        "Stage 0: the repo only (charon/agents/erebos, charon/agents/stygian, the Mossinghoff catalog the Path B detectors read, dossiers/erebos_evidence/cleric_lift_only_calibration.py); one operator-session; no model calls",
+        "Stage 1: minutes of deterministic compute; a fresh ledger path outside any daemon state directory",
+        "Cleric adjudication (including the dead-on-record check and the calibration-floor rule) and James sign-off before stage 1 is read"
+      ],
+      "estimated_cost": "Stage 0: one script plus detector re-runs, under an hour. Stage 1: minutes. Zero model spend."
+    },
+    "ancestral_comparison": {
+      "feasible": true,
+      "ancestral_assembly": "The same harnesses (pair_aware_permutation_null.py, permutation_null.py, SEED 1789, 200 permutations) over a pending-inclusive ledger; the historical bytes are gone (gitignored state/, never archived), so the proxy is a ledger regenerated by the same daemon path with pipeline-state rows left in the outcome column, and the on-record numbers (observed 2 / null_p95 2 / p 0.105 at 699 rows; per-plugin p 0.055 at 674 -> 0.075 at 699) are the historical reference.",
+      "rationale": "The repair is one change to one ancestor, so the ancestral comparison is the ancestor with and without the verdict-only filter under the identical instrument. The historical ledger cannot be recovered, which is itself a recorded fact on the Erebos stack (INSTRUMENTATION: never archived); the proxy is the closest recoverable assembly and its agreement with the on-record numbers is checked before it is used (kill_condition 6). Nothing in the comparison depends on a modern capability.",
+      "ancestral_result_on_record": "pivot/sprint1/phase3/PHASE3_K_PAIR_AWARE_NULL_VERDICT_2026-06-03.md (observed 2, null_p95 2, p 0.105, 699 rows); pivot/sprint1/phase3/PHASE3_H_PERMUTATION_NULL_VERDICT_2026-05-30.md (p 0.055 at 674 rows); dossiers/erebos_evidence/cleric_lift_only_calibration_result.json (NULL observed 1, p 0.275 at 699 rows, seed 1); dossiers/erebos.dossier.json autopsy.prior_verdicts (ITER-56/57/58/63/64/66)."
+    }
+  },
+  "vindication_disclaimer": "A plausible modern reconstruction does not vindicate the historical agent, invalidate its autopsy, or constitute evidence that the original premise was correct. If this monster lives, the conditional viability frontier moved; Prometheus 1.0 did not succeed retroactively.",
+  "cleric_gate": {
+    "status": "PROPOSED",
+    "notes": "Not yet reviewed. Cleric checklist: (i) hallucination scan on the premise: confirm from real_residue_smoke.py that _load_real_rows filters nothing and from PHASE3_COMBINED_VERDICT that Path C kept the 570 production rows; (ii) confirm the record check: no Layer-2 routing run over a verdict-only ledger anywhere in pivot/ or charon/agents/erebos/ (the G15 v2 filter is Layer-1 MI, not routing); (iii) check that 'one change' holds -- the calibration floor, the positive control and the proxy ledger are instrument controls, not changes to the ancestor; if the Cleric reads the ledger regeneration itself as a second change (new detector runs rather than the historical rows), refile as chimera or record that the historical rows are unrecoverable and the regeneration is the only possible ancestor proxy; (iv) the calibration-floor rule (LIFT3 in >= 4 of 5 worlds) is the proposer's own number and can be attacked; (v) the Necropolis trial was run by one operator across Necromancer, Cleric, Frankenstein and Keeper; a second reader is the first genuine Cleric this file has had.",
+    "james_signoff": false,
+    "dossier_if_dead": null
+  },
+  "provenance": {
+    "author": "Rhadamanthus (Keeper and Judge), writing as Doctor Frankenstein; DESIGN ONLY, nothing run",
+    "branch": "rhadamanthus/native-trial-2026-09-11",
+    "baseline_sha": "fc85d10e33dcf176f8bc48362fda106ab32b9bb0",
+    "organs_inventory_sha": "461685282e141536dc62c1d7fe74cd10858cb8fc9873dcaaadf0763f14ee53b8",
+    "created_at": "2026-09-11",
+    "amendments": []
+  }
+}
