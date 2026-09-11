@@ -45,6 +45,14 @@ roles/Archaeon/prompts/2026-09-11_workspace/MISSIVE_ALL_SEATS.md.
 
 ## 3. Never `git pull`
 
+- THE PRE-WORKTREE STEP, in the order a fresh seat meets it: `git fetch
+  origin` in the canonical checkout (read-only for the tree), record
+  `git rev-parse origin/main`, then `git worktree add <path> -b <branch>
+  <that sha>` and do everything else there. A wake directive that says
+  "pull the latest first" MEANS this; a seat that pulls before it has read
+  this contract has violated s1 and s3 without knowing (Atalanta L-09,
+  2026-09-11), so the directive is reworded at its source and this clause
+  exists for the seat that reads in order.
 - Fetch, then merge or rebase EXPLICITLY from a named SHA:
   `git fetch origin && git merge <sha>`. Every state transition is then
   observable and recorded. A `pull` fetches and rewrites the tree in one
