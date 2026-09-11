@@ -149,6 +149,14 @@ authoritative: write "the canonical checkout".
     BLOCKED   waiting on a named blocker, with the unblocking prompt posted
     RETIRED   closed with an annotation; its machinery may be absorbed
 
+NOTHING IS MARKED DEAD PREMATURELY (operator, 2026-09-11). Prometheus 1.0's
+reward was to kill; 2.0's is to metabolise. DORMANT and RETIRED are
+observations and annotations, never verdicts on a lineage: a retired seat
+or lineage keeps its residue, weak signals and gradients navigable, and a
+later search may reach them. The operator manages the waking of old
+seats; a seat does not retire another seat. Falsification kills only the
+tested claim.
+
 PRESENCE IS DERIVED FROM OBSERVED ACTIVITY, never from a row's existence
 or an old heartbeat label: a seat is online when its last sync receipt
 ("read through message N at SHA X from worktree Y at time Z") is recent.
