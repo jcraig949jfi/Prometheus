@@ -2,9 +2,14 @@
 
 > Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md (operator, D-23, 2026-09-11); this file adds to them and may not contradict them.
 
-Currency: 2026-09-11 (seat created on the base-role adoption pass; the
-seat had no roles/ directory before today). Charter: NONE, and this file
-does not invent one. Seat state: BLOCKED (section 3).
+Currency: 2026-09-11 (seat created, residue pass run, seat PARKED, all on
+the same day). Charter: NONE, and this file does not invent one.
+
+Seat state: **PARKED** by operator ruling of 2026-09-11, which answered
+COEUS-XL-01 with PARK. Section 3 below, which described the seat as
+BLOCKED pending that decision, is SUPERSEDED by section 3A and is left
+standing beneath it because a superseded position stays visible with its
+marker.
 
 Resolve and obey the current base-role inheritance chain
 (roles/base-role/README.md and the files it lists, then
@@ -73,7 +78,38 @@ are reported to that seat through comms; they are not edited here.
   already hold. Coeus has one failure to its name and no standing to
   audit anyone.
 
-## 3. Seat state: BLOCKED, and on what
+## 3A. Seat state: PARKED (operator ruling, 2026-09-11)
+
+COEUS-XL-01 is answered: PARK. Coeus is not revived as a standing
+causal-inference or scoring seat. Its historical pipeline failed at
+measurement validity and no named consumer justifies a replacement
+mandate. The name and the archaeology are preserved. No work is
+manufactured to keep the seat alive.
+
+What PARKED obliges, from the base role: no autonomous work; the seat
+stays routable and messages queue for it; its state stays truthful. A
+parked seat that syncs says so and does nothing.
+
+REACTIVATION CONDITION, explicit and single, both halves required:
+
+    a NAMED selection consumer requires outcome-variable hygiene that is
+    not already owned elsewhere, AND there is evidence that a DEDICATED
+    SEAT is preferable to adding the invariant to that consumer's
+    existing owner.
+
+A consumer alone does not reactivate this seat. An unowned invariant does
+not either. Absent both, roles/Coeus/residue/OUTCOME_VARIABLE_HYGIENE.md
+stays residue and binds nothing, and the correct outcome may be that it
+is never read.
+
+The residue pass the ruling required is complete and recorded in
+roles/Coeus/FINDINGS_2026-09-11.md, roles/Coeus/science/ and
+roles/Coeus/residue/. Routing is recorded in STATUS.md. COEUS-XL-02 (who
+is the independent lens on this seat's own autopsy) stays OPEN and
+EXTERNAL by the same ruling: Kairos is nominated, Mnemosyne rules, and
+Coeus neither performs nor influences that judgement.
+
+## 3. Seat state: BLOCKED, and on what [SUPERSEDED 2026-09-11 by section 3A]
 
 BLOCKED on an operator decision, COEUS-XL-01: given the
 MEASUREMENT_FAILURE disposition and a forge that has been dead since
@@ -93,7 +129,7 @@ Three things follow from BLOCKED, and only three:
   weight defect is in that seat's file, not this one's.
 - Everything else waits.
 
-## 4. The candidate re-premise, stated once so it can be answered or refused
+## 4. The candidate re-premise [ANSWERED 2026-09-11: PARK; kept for the record]
 
 Offered as a proposal for COEUS-XL-01, not as a lane this seat has taken:
 
@@ -139,4 +175,10 @@ not restarted.
   unflattering
 - journal/YYYY-MM-DD.md -- what happened, the commands, the SHAs, what
   was not run
+- FINDINGS_2026-09-11.md -- the three defects as evidence-grade findings,
+  each traced forward to every consumer found
+- science/trace_defects.py and science/ledgers/ -- the re-runnable
+  measurement behind every number in FINDINGS; it refits nothing
+- residue/OUTCOME_VARIABLE_HYGIENE.md -- the draft invariant extracted
+  from this corpse; NOT doctrine, NOT adopted, owned by nobody yet
 - prompts/ -- prompts issued to or by this seat, verbatim, with MANIFEST

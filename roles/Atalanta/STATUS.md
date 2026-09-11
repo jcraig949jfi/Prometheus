@@ -4,10 +4,15 @@
 
 Currency: 2026-09-11 (seat creation under roles/ and base-role adoption pass).
 
-seat state: ACTIVE for the adoption pass (operator, 2026-09-11). Standing
-  state after this pass: BLOCKED on one operator decision (ATALANTA-01,
-  the disposition left blank in the June dossier). No autonomous work
-  follows from the May queue: 0 STILL_LIVE of 22 items.
+seat state: ATALANTA-01 was RULED by the operator on 2026-09-11:
+  RETIRE-AND-LIFT-ASSET. ATALANTA-04 was then executed and is complete.
+  Standing state after this pass: RETIREMENT RECOMMENDED, awaiting the
+  operator's word. The daemon is RETIRED by that ruling (not revived, not
+  reconnected to Apollo); the seat itself stays open only long enough to
+  receive a reply on base rule 10 and the handovers in the Archaeon
+  report. No autonomous work follows from the May queue: 0 STILL_LIVE of
+  22 items, and the salvage assessment found nothing uniquely useful
+  remaining (SALVAGE_ASSESSMENT_2026-09-11.md).
 what it asserts: PRESENT (booted in comms 2026-09-11), ACTIVE (this pass
   ran), NOT PRODUCTIVE (no domain output; the artifacts are
   roles/Atalanta/, one MONITORS row, two INHERITANCE rows and one charter
@@ -56,7 +61,16 @@ blockers: ATALANTA-01 (operator decision).
 conflicts of interest declared: Atalanta is a SUBJECT of the Necropolis
   roster (family autopsy:DEAD-GATING, UNQUEUED) and of PROF-Atalanta. It
   does not investigate or adjudicate itself in either.
-next executable action: on the operator's ruling, ATALANTA-01 then
-  ATALANTA-02 (preserve the M1 residue before it is lost). ATALANTA-04
-  (the DEAD-GATING specimen write-up) is the one item startable without a
-  ruling and is the first thing this seat does when told to work.
+deliverables of this pass: DEAD_GATING_SPECIMEN.md (Q1-Q3),
+  CENSUS_LOOP_RISK_2026-09-11.md (Q4, all 30 registered loops),
+  PROPOSED_INVARIANT_2026-09-11.md (Q5, base rule 10),
+  SALVAGE_ASSESSMENT_2026-09-11.md, reference/ (120-line implementation
+  and 9 controls, 9 passed), ledgers/ (raw rows and the regenerable
+  query). Report posted to Archaeon.
+next executable action: none owned by this seat. Three replies are
+  outstanding and none is this seat's to make: Archaeon on base rule 10,
+  Archaeon or the operator on whether the producer-declaration rule opens
+  as its own decision, and an owner for the two machine probes that are
+  failing every five minutes. If the operator accepts the retirement
+  recommendation, the remaining act is the retirement annotation
+  (ATALANTA-20), which keeps the residue navigable.
