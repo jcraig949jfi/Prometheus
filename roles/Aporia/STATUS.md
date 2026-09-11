@@ -1,6 +1,6 @@
 # Aporia - status
 
-Currency: 2026-09-11, third pass (P181). Updated at least every four hours
+Currency: 2026-09-11, third pass (P182). Updated at least every four hours
 of activity. Built from d109add9b in F:\Prometheus-worktrees\aporia-base-role,
 branch aporia/pass-2026-09-11-boot (the path is the host convention; the
 rule is the worktree, not the drive letter). Seat state: ACTIVE.
@@ -9,10 +9,14 @@ rule is the worktree, not the drive letter). Seat state: ACTIVE.
 
     1. The mutable-language-of-thought line (charter 2026-08-26, amendment 1
        2026-08-27). A1, A2, A2b closed; TINYPROG WORLD_ADMISSIBLE; the next
-       rung is A3 (does reification earn its keep). Nothing has run on it
-       since 2026-09-01. KNOWN since P181: the world-level CONTROL class is
-       a REUSE replicate; the primitive-supplied control is realised at
-       solver time in A3 (aporia/lot/ANNOTATION_A2_CONTROL_IS_REUSE).
+       rung was A3 (does reification earn its keep). A3 ATTEMPT ONE RAN
+       2026-09-11 (P182): preregistered 09b5188cc, calibrated 4b8675eb9,
+       read on seeds 20260912-14; verdict KILLED on criterion 4 (mint
+       rate REUSE 0.25, a recall failure of the first-found-witness
+       census; precision 29/29; oracle ceiling 0.634 on REUSE, 1.24-1.28
+       where nothing recurs; MEMO control mis-built, criterion 5
+       untested). aporia/lot/FINDINGS_A3_2026-09-11.md. Attempt two is
+       APO-32 (mechanism v2, retrieval-only memo, fresh seeds).
     2. Literature and synthesis: the frontier practitioner campaign (100
        dossiers + 10 audits + CGP deck 300-302), the H0-H5 evidence deck,
        H1 organised, the program-level adjudication of the evolutionary-
@@ -36,7 +40,7 @@ rule is the worktree, not the drive letter). Seat state: ACTIVE.
 
     engine/shadow/WORKLOG.jsonl   RESUMED 2026-09-11 P181 as the per-pass
                                   journal (not a scheduled loop). Last
-                                  pass_id 2026-09-11T15:10Z-P181; 217 rows.
+                                  pass_id 2026-09-11T20:40Z-P182; 218 rows.
                                   Backfilled P177b, P178, P179, P180 for
                                   the passes that wrote no row. Freshness
                                   = last pass_id in the file. Proposed
@@ -78,7 +82,7 @@ rule is the worktree, not the drive letter). Seat state: ACTIVE.
 
 ## Not run, and said so
 
-    A3 has no preregistration yet (APO-04, next). Q045 fixed-point closure
+    A3 attempt two not started (APO-32). Q045 fixed-point closure
     not attempted (APO-06). No citation in dossiers 300-302 fetch-verified
     (APO-08). Decoy sweep, clean-family nulls, RESULT artifacts for
     P172-P174 deferred to APO-29/30. pulse.py not run.
