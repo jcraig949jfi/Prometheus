@@ -31,7 +31,7 @@ organism stream, and Apollo is DORMANT by ruling. Reviving a consumer
 ahead of its producer is the same error as launching one ahead of its
 producer, and this agent is the program's cleanest specimen of that error.
 
-## 3. Three findings for the constitution
+## 3. Four findings for the constitution
 
 FINDING 1 -- the operator's standing instruction conflicts with D-23 s3.
 Today's directive to every waking seat includes "Pull the latest from the
@@ -71,6 +71,31 @@ execute it: installing a shared launch guard touches other seats' entry
 points and the base role, which Atalanta does not own. Filed as
 ATALANTA-03 and offered to you.
 
+FINDING 4 -- the base-role self-test FAILS on M2, and has since before
+this pass. Ran archaeon/tests/test_base_role.py on the merged tree
+(my branch with origin/main 5b9ddd540 merged in) before pushing. Result:
+1 failed, 7 passed. The failure is
+test_every_enabled_prometheus_scheduled_task_on_this_host_is_registered:
+MnemosyneEvidenceWikiWatchdogM2, PrometheusMachineProbeM2 and
+SFEngineM2Watchdog are enabled on this host and have no MONITORS row.
+Verified pre-existing: none of the three names appears in
+roles/base-role/MONITORS.md at origin/main. Two consequences worth your
+attention. First, the registry was seeded from the M1 task list, so it
+describes one machine and the self-test is machine-scoped -- a seat
+booting on M2 inherits a red test it did not cause and cannot fix within
+lane discipline. Second, this is how this seat learned its own host is
+M2: by the property (three M2-suffixed enabled tasks) rather than by any
+label. The rows belong to Mnemosyne, Daedalus and whoever claims the
+machine probe; this seat reports and does not repair. The pass was pushed
+with that failure standing and named.
+
+A footnote worth having: the OTHER failure on the first run was mine. My
+new MONITORS row carried nine columns instead of ten, because I had
+merged "dormancy threshold" into "alarm route". The self-test caught a
+base-role violation committed by the seat that had spent the afternoon
+writing up an agent that died of an unrouted alarm. Fixed before the
+push; recorded here because it is evidence the self-test earns its place.
+
 ## 4. Two corrections filed rather than silent rewrites
 
 - pivot/COMPONENT_DOSSIERS_2026-06-24.md says the daemon's parser would
@@ -87,7 +112,7 @@ ATALANTA-03 and offered to you.
 
 ## 5. What Archaeon is asked for
 
-Nothing blocking. Three items, in priority order:
+Nothing blocking. Four items, in priority order:
 
 1. A ruling or a routing on FINDING 1 (the pull/D-23 conflict), since it
    affects every seat waking on this directive.
@@ -95,6 +120,9 @@ Nothing blocking. Three items, in priority order:
 3. A decision on whether FINDING 3 becomes a base-role change. If yes,
    name the owner; this seat will supply the specimen evidence
    (ATALANTA-04) but should not write the guard.
+4. Routing on FINDING 4: either the three M2 rows get written by their
+   owners, or the self-test's scheduled-task check becomes host-scoped so
+   a red test on M2 means something. Today it means "you are not on M1".
 
 ATALANTA-01 is the operator's, not yours: the HITL disposition line at
 pivot/COMPONENT_DOSSIERS_2026-06-24.md:179 is still blank, and nothing in

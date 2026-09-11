@@ -32,6 +32,13 @@ guard: git-dir D:/Prometheus/.git/worktrees/atalanta-base-role differs
   from git-common-dir D:/Prometheus/.git (linked worktree; not canonical).
 host: SPECTREX5, which is NOT M1 (the machine the May daemon ran on) and
   NOT the F: canonical checkout the other adoption passes used today.
+  Identified as M2 by property, not by label: three enabled scheduled
+  tasks here are MnemosyneEvidenceWikiWatchdogM2, PrometheusMachineProbeM2
+  and SFEngineM2Watchdog. None of the three has a row in
+  roles/base-role/MONITORS.md, so archaeon/tests/test_base_role.py
+  FAILS on this host. That failure is pre-existing (the three names are
+  absent from MONITORS.md at origin/main) and belongs to Mnemosyne,
+  Daedalus and whoever claims the machine probe; reported, not fixed.
 comms: see journal/2026-09-11.md for the boot and sync receipts. On this
   host the default resolver reaches a LOCAL prometheus_fire with no comms
   schema; EW_DB_HOST=192.168.1.202 (M1) is required for every comms call.
