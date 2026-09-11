@@ -9,17 +9,17 @@ T2 row is a claim about where the mechanism came from, not a fact.
 
 1. Mouret and Clune, "Illuminating search spaces by mapping elites",
    arXiv:1504.04909, 2015. The archive-over-a-behaviour-grid mechanism
-   with uniform parent selection from the archive. T2.
+   with uniform parent selection from the archive. T1 identifier; content claim remembered.
 2. Cully, Clune, Tarapore, Mouret, "Robots that can adapt like animals",
    Nature 2015, doi:10.1038/nature14422. The archive as a repertoire that
    a later process (damage recovery) searches; the reason the archive was
-   useful. T2.
+   useful. T1 identifier; content claim remembered.
 3. Vassiliades, Chatzilygeroudis, Mouret, CVT-MAP-Elites, IEEE TEC 2018,
    doi:10.1109/TEVC.2017.2735550. Replaces the grid with a centroidal
    Voronoi tessellation because the grid's cell count explodes with
-   descriptor dimension: the failure that motivated the variant. T2.
+   descriptor dimension: the failure that motivated the variant. T1 identifier; content claim remembered.
 4. pyribs (Tjanaka et al., GECCO 2023, doi:10.1145/3583131.3590374), the
-   implementation pinned in this repository. T2 for the citation; T1 for
+   implementation pinned in this repository. T1 for the citation (resolved) and for
    the pin: techne/acquisition/locks/pyribs-cp312-win-amd64.lock.txt.
 5. Techne's adapter techne/h3_retention/adapter.py: declares
    TIE_POLICY = FIRST_WRITER_WINS and verifies it against the installed
@@ -42,10 +42,42 @@ T2 row is a claim about where the mechanism came from, not a fact.
    implementations of one mechanism inside the repository is itself
    evidence about which parts are the mechanism and which are pyribs.
 
+## Resolver pass (NYX-05, 2026-09-11 15:00 UTC) -- T2 rows regraded T1
+
+Each identifier was resolved against Crossref (api.crossref.org/works/)
+or the arXiv API (export.arxiv.org/api/query); what came back, verbatim
+fields:
+
+    arXiv:1504.04909            "Illuminating search spaces by mapping
+                                elites"; Mouret, Clune; 2015-04-20
+    10.1038/nature14422         "Robots that can adapt like animals";
+                                Cully, Clune, Tarapore, Mouret; Nature;
+                                2015
+    10.1109/TEVC.2017.2735550   "Using Centroidal Voronoi Tessellations
+                                to Scale Up the Multidimensional Archive
+                                of Phenotypic Elites Algorithm";
+                                Vassiliades, Chatzilygeroudis, Mouret;
+                                IEEE Trans. Evol. Comput.; 2018
+    10.1145/3583131.3590374     "pyribs: A Bare-Bones Python Library for
+                                Quality Diversity Optimization"; Tjanaka,
+                                Fontaine, Lee, Zhang, Balam, Dennler,
+                                Garlanka, Klapsis, Nikolaidis; GECCO
+                                proceedings; 2023
+    10.1109/TEVC.2017.2704781   "Quality and Diversity Optimization: A
+                                Unifying Modular Framework"; Cully,
+                                Demiris; IEEE Trans. Evol. Comput.; 2018
+
+5 of 5 resolved; every remembered attribution (authors, venue, year)
+matched. What the regrade means: the IDENTIFIERS point at the works
+named. What it does not mean: that the works say what rows 1-4 and
+FAILURES.md F6-F7 attribute to them; those content claims were written
+from memory and no paper was read on this pass. They stay marked as
+remembered claims until a reader quotes the passage.
+
 ## What is NOT established by this chain
 
-- That any of the four papers say what row 1-4 attribute to them, until
-  NYX-05 resolves the DOIs (T2 rows).
+- That the four papers say what rows 1-4 attribute to them: the DOIs
+  resolve to the right works (above), but no passage has been quoted.
 - That the local implementations reproduce any published result: the
   receipt says PAPER_REPRODUCTION is not established, and nothing here
   claims otherwise.

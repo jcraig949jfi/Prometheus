@@ -1,8 +1,8 @@
 # MAP-Elites -- failure landscape, ablations, decoys (charter V)
 
 Currency: 2026-09-11. Grades as in PROVENANCE.md. The T1 rows are the
-ones a consumer should lean on; the T2 rows are remembered and await
-NYX-05.
+ones a consumer should lean on. F6-F7 identifiers resolved under NYX-05;
+their content claims are still remembered, not quoted. F8 is T3.
 
 ## Failures observed IN THIS REPOSITORY (T1)
 
@@ -48,7 +48,7 @@ F5  The comparison the mechanism was imported for has not run. H3's
     Failure shape: designed, not measured. Every ablation claim in the
     organ records is downgraded to "expected" for this reason.
 
-## Failures REMEMBERED from the lineage (T2; resolve under NYX-05)
+## Failures REMEMBERED from the lineage (citations resolved T1 under NYX-05, 2026-09-11; the CLAIMS about content remain remembered)
 
 F6  Cell count explodes with descriptor dimension; CVT-MAP-Elites
     (doi:10.1109/TEVC.2017.2735550) replaced the grid with nearest-
