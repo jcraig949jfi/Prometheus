@@ -156,4 +156,6 @@ def main():
 
 
 if __name__ == "__main__":
+    from proteus.workspace import assert_not_canonical
+    assert_not_canonical("run run_archaeology_requirements.py")
     sys.exit(main())
