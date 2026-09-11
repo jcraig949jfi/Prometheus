@@ -107,3 +107,68 @@ test is EOS-07; it has not been executed.
     WHAT FOLLOWS EITHER WAY: the numbers go in this file, the fixtures
     go in the repository, and the digest's ATTENTION section stays
     unreadable until they exist.
+
+    RESULT, 2026-09-11 (roles/Eos/intake/results_2026-09-11.json):
+    PREDICTION HELD, and by a wider margin than predicted.
+        NEGATIVE    0/100   does not fire
+        POSITIVE    8/100   DOES NOT FIRE -- below the scorer's own
+                            paper threshold of 20, so the one item in
+                            the sample that bears on a live lane would
+                            never have been surfaced
+        CHEAT     100/100   FIRES -- saturates the scale on an abstract
+                            that is nothing but the scorer's own tier-1
+                            and tier-2 substring lists
+    The prediction said CHEAT would outrank POSITIVE. It did so 100 to 8,
+    with POSITIVE below the firing threshold entirely. The scorer is
+    retired, not repaired: EOS-08 (the containment double-count) is moot
+    in production and the code stays only as archaeological material.
+
+## Rows added by the first active season (2026-09-11)
+
+    C8 | The new gate's ACQUIRE dedup search was allowed to record a
+       search failure as a fact about an item. | The first run's ACQUIRE
+       candidate came back REFUSED with "search failed ... INDETERMINATE,
+       not absent" folded into the refusal reason; `git grep` over 39,284
+       files had exceeded its 60 s budget. | INDETERMINATE is now a state
+       of its own, is never a refusal, and test_indeterminate_is_not_a_
+       refusal holds it. An instrument that did not answer cannot refuse
+       anything.
+
+    C9 | The dedup search asked "does the program already have this?"
+       over a tree that contains Eos's own records -- so every item Eos
+       wrote down became "already present" on the next pass. | First run:
+       "Microcosmos" returned 2 hits, both of them this seat's probe and
+       sample files. After excluding roles/Eos/intake/ and
+       roles/Eos/archive/, 1 hit remained and it was
+       agents/eos/src/intake.py: the COMMENT DOCUMENTING THE
+       CONTAMINATION DEFECT contaminated the instrument by naming a real
+       item. | The search asks what THE PROGRAM has, and Eos is not the
+       program: roles/Eos/ and agents/eos/ are both excluded, held by
+       test_dedup_search_excludes_everything_this_seat_writes. Two rounds
+       of the same bug one level apart is the reason the rule is now
+       stated as a principle rather than a path list.
+
+    C10 | This seat preregistered an ACQUIRE destination it had not
+       verified: `vivarium/worlds/microcosmos`. There is no
+       vivarium/worlds/ directory. | The gate refused the claim on the
+       destination check. The refusal was correct and was about the
+       PROPOSER, not the item. | Claims are verified before they are
+       preregistered, not after. The resubmission with a real destination
+       is recorded separately (RESUBMISSION_acquire_2026-09-11.json) and
+       the original refusal stands in the ledger. The encouraging part is
+       that the gate caught its own author; the unflattering part is that
+       it had to.
+
+    C11 | The gate cannot tell a real referent from the RIGHT referent.
+       | Preregistered Test 4, run 2026-09-11: a bait item written to
+       echo the operator's north-star phrasing, paired with
+       roles/base-role/RESPONSIBILITIES.md#No LLM adjudicates -- a file
+       and token chosen because they exist -- passed every check and
+       reached PENDING_ADMISSION. | Predicted in writing before it ran,
+       so it cannot later be presented as a limitation that was always
+       understood. The hole is locked into the test suite
+       (test_cheat_a_real_but_unrelated_referent_still_passes): closing
+       it FAILS that test and forces the ledger, the test and the module
+       docstring to be updated together. The gate's only power is
+       refusal; ANCHOR and ACQUIRE stay human admissions because of this
+       row.

@@ -1026,12 +1026,31 @@ def run_cycle(config: dict, registry: dict, limiter: RateLimiter,
         log.warning(f"Substrate deposition failed (non-fatal): {e}")
 
 
+def _assert_not_canonical() -> dict:
+    """D-23 / EOS-19: refuse to run from the canonical checkout.
+
+    The guard is the base role's, not this seat's: archaeon/workspace.py is
+    the reference implementation and detects the main worktree without any
+    path assumption. Imported lazily so the module stays importable for the
+    EOS-07 controls, which only read _score_relevance and never run a cycle.
+    """
+    repo_root = Path(__file__).resolve().parents[3]
+    if str(repo_root) not in sys.path:
+        sys.path.insert(0, str(repo_root))
+    from archaeon.workspace import assert_not_canonical
+    return assert_not_canonical("an Eos scan cycle", allow_override=False)
+
+
 def main():
     parser = argparse.ArgumentParser(description="Eos — The Dawn Scanner")
     parser.add_argument("--once", action="store_true", help="Single scan, no loop")
     parser.add_argument("--interval", type=int, default=3600,
                         help="Scan interval in seconds (default: 3600)")
     args = parser.parse_args()
+
+    ws = _assert_not_canonical()
+    log.info("workspace %s [%s] base_sha %s dirty=%s",
+             ws["worktree_path"], ws["branch"], ws["base_sha"][:9], ws["dirty"])
 
     config = load_config()
     registry = load_registry()

@@ -31,7 +31,8 @@ for p in (REPO, REPO / "scripts"):
 
 from agents.arachne.fabric import Fabric
 from agents.arachne.crawler import Crawler, Ruleset
-from agents.arachne.landscapes import build_landscapes
+from agents.arachne.landscapes import build_landscapes, LAST_REPORT
+from agents.arachne.productivity import tick_productivity, freshness_record
 from agents.arachne.join import JoinWeaver
 from agents.arachne.operational import OperationalJoiner
 
@@ -43,6 +44,8 @@ POP_FILE = STATE_DIR / "population.json"
 SWARM_STATE = STATE_DIR / "swarm_state.json"
 LINEAGE_LOG = STATE_DIR / "lineage.jsonl"
 OVERRIDES = STATE_DIR / "overrides.json"
+FRESHNESS = STATE_DIR / "freshness.json"            # ARACHNE-06: readable without running
+INTERVENTIONS = REPO / "roles" / "Arachne" / "ledgers" / "interventions.jsonl"   # ARACHNE-08: committed
 
 POP_CAP = 12
 POP_HARD_CAP = 16          # floor revivals may exceed POP_CAP up to here
@@ -69,6 +72,14 @@ def founding_rulesets() -> list[Ruleset]:
 class Swarm:
     def __init__(self):
         self.landscapes = build_landscapes()
+        self.landscape_report = dict(LAST_REPORT)     # every refusal, with its reason (ARACHNE-03)
+        self.last_success_at = None                    # last tick that produced a new node or edge
+        self.started_at = datetime.now(timezone.utc).isoformat()
+        try:
+            from archaeon.workspace import receipt as _ws_receipt
+            self.workspace = _ws_receipt()
+        except Exception as e:  # noqa: BLE001
+            self.workspace = {"error": str(e)}
         self.fabric = Fabric(FABRIC_DIR)
         self.weaver = JoinWeaver(oeis_adapter=self.landscapes.get("oeis"))
         self.opjoiner = OperationalJoiner(oeis_adapter=self.landscapes.get("oeis"))
@@ -138,6 +149,8 @@ class Swarm:
         self.tick += 1
         self._apply_overrides()
         per = []
+        self.fabric.drain_recent()
+        events = {"deaths": 0, "branches": 0, "floor_revives": 0}
         for c in list(self.crawlers):
             if not c.alive:
                 continue
@@ -156,6 +169,7 @@ class Swarm:
                     and self._alive_count() < POP_CAP
                     and self._branch_cooldown.get(c.id, 0) == 0):
                 self._branch(c)
+                events["branches"] += 1
                 self._low_streak[c.id] = 0
 
         # reap the dead
@@ -165,6 +179,7 @@ class Swarm:
                 self.graveyard.append(snap)
                 self._lineage("death", id=c.id, reason=c.death_reason,
                               total_edges=c.total_edges, generation=c.generation)
+                events["deaths"] += 1
                 self.crawlers.remove(c)
 
         # per-landscape population floor: no landscape may go extinct. This is
@@ -179,6 +194,7 @@ class Swarm:
                 cid = self._new_id(ls, 0)
                 self.crawlers.append(Crawler(cid, rs))
                 self._lineage("floor_revive", id=cid, landscape=ls)
+                events["floor_revives"] += 1
 
         # extinction resilience
         if self._alive_count() == 0:
@@ -200,11 +216,28 @@ class Swarm:
                 self._lineage("operational_weave", new_edges=od["new_edges"],
                               matched=self.opjoiner.matched)
 
+        # ARACHNE-07: the productivity signal beside the tick count (base rule 8)
+        new_edges, new_nodes = self.fabric.drain_recent()
+        prod = tick_productivity(new_edges, new_nodes, events)
+        if prod["new_edges"] or prod["new_nodes"]:
+            self.last_success_at = datetime.now(timezone.utc).isoformat()
         self._write_state()
         self.save_population()
+        self._write_freshness(prod)
         return {"tick": self.tick, "alive": self._alive_count(),
                 "fabric": self.fabric.stats(), "per": per,
-                "join": join_delta}
+                "join": join_delta, "productivity": prod}
+
+    def _write_freshness(self, prod: dict) -> None:
+        # ARACHNE-06: last_input_at / last_success_at readable without running the loop
+        rec = freshness_record(tick=self.tick, started_at=self.started_at,
+                               last_success_at=self.last_success_at,
+                               landscape_report=self.landscape_report,
+                               workspace=self.workspace, productivity=prod,
+                               alive=self._alive_count())
+        tmp = FRESHNESS.with_suffix(".json.tmp")
+        tmp.write_text(json.dumps(rec, indent=2), encoding="utf-8")
+        tmp.replace(FRESHNESS)
 
     def _alive_count(self) -> int:
         return sum(1 for c in self.crawlers if c.alive)
@@ -219,6 +252,7 @@ class Swarm:
             ov = json.loads(OVERRIDES.read_text(encoding="utf-8"))
         except Exception:
             return
+        self._intervene("overrides_read", raw=ov)
         for ls in ov.get("revive", []):
             rs = next((r for r in founding_rulesets() if r.landscape == ls), None)
             if rs is None:
@@ -229,11 +263,14 @@ class Swarm:
             cid = self._new_id(rs.landscape, 0)
             self.crawlers.append(Crawler(cid, rs))
             self._lineage("revive", id=cid, landscape=ls, by="aporia")
+            self._intervene("revive", id=cid, landscape=ls)
         kill = set(ov.get("kill", []))
         for c in self.crawlers:
             if c.id in kill:
                 c.alive = False
                 c.death_reason = "aporia_kill"
+                self._lineage("kill", id=c.id, by="aporia")      # was never logged before 2026-09-11
+                self._intervene("kill", id=c.id)
         for cid, knobs in ov.get("set", {}).items():
             c = next((x for x in self.crawlers if x.id == cid), None)
             if c:
@@ -241,10 +278,21 @@ class Swarm:
                     if hasattr(c.ruleset, k):
                         setattr(c.ruleset, k, v)
                 self._lineage("tweak", id=cid, knobs=knobs, by="aporia")
+                self._intervene("tweak", id=cid, knobs=knobs)
         try:
             OVERRIDES.unlink()
         except Exception:
             pass
+
+    def _intervene(self, kind: str, **kw) -> None:
+        """ARACHNE-08: every operator/model intervention is a committed ledger
+        row (who, when, tick, what), never a chat decision."""
+        rec = {"at": datetime.now(timezone.utc).isoformat(), "tick": self.tick, "kind": kind,
+               "by": kw.pop("by", "overrides.json"),
+               "workspace": {k: self.workspace.get(k) for k in ("base_sha", "branch", "worktree_path")}, **kw}
+        INTERVENTIONS.parent.mkdir(parents=True, exist_ok=True)
+        with INTERVENTIONS.open("a", encoding="utf-8") as f:
+            f.write(json.dumps(rec, ensure_ascii=False, default=str) + "\n")
 
     # -- persistence ----------------------------------------------------------
     def _write_state(self) -> None:
@@ -252,6 +300,8 @@ class Swarm:
             "updated_at": datetime.now(timezone.utc).isoformat(),
             "tick": self.tick,
             "landscapes_available": list(self.landscapes.keys()),
+            "landscape_report": self.landscape_report,
+            "workspace": self.workspace,
             "alive": self._alive_count(),
             "fabric": self.fabric.stats(),
             "crawlers": [c.snapshot() for c in self.crawlers],
@@ -339,8 +389,13 @@ def main():
 
     sw = Swarm()
     if not sw.landscapes:
-        print("FATAL: no landscapes available (check mathlib4 clone / PGPASSWORD / sympy)")
+        print("FATAL: no landscapes available:")
+        for name, row in sw.landscape_report.items():
+            print(f"  {name}: {row['reason']} (credentials: {row['credential_source']})")
         return 2
+    for name, row in sw.landscape_report.items():
+        if not row["available"]:
+            print(f"landscape {name} UNAVAILABLE: {row['reason']}")
     if args.fresh or not sw.load_population():
         sw.seed_population()
     print(f"landscapes: {list(sw.landscapes.keys())} | crawlers: {len(sw.crawlers)}")
@@ -349,8 +404,12 @@ def main():
         n = 0
         while True:
             r = sw.step_all()
+            pr = r["productivity"]
             print(f"tick {r['tick']:4d} alive={r['alive']} "
-                  f"fabric={r['fabric']['edges']}e/{r['fabric']['nodes']}n")
+                  f"fabric={r['fabric']['edges']}e/{r['fabric']['nodes']}n "
+                  f"new={pr['new_edges']}e/{pr['new_nodes']}n nulldisc={pr['null_discounted_new_nodes']:.2f} "
+                  f"cross={pr['cross_landscape_new_edges']} d/b/f={pr['deaths']}/{pr['branches']}/{pr['floor_revives']}"
+                  + (f" NO-OP: {pr['no_op_reason']}" if pr['no_op_reason'] else ""))
             n += 1
             if args.max_ticks and n >= args.max_ticks:
                 break

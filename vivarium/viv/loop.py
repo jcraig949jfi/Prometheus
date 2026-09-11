@@ -38,6 +38,7 @@ import traceback
 from dataclasses import asdict, dataclass, field
 from typing import Optional
 
+from . import conformance as _conf
 from . import db as _db
 from . import design as _design
 from . import identity as _identity
@@ -118,8 +119,20 @@ class Vivarium:
     def __init__(self, *, worker_id: Optional[str] = None,
                  schema: Optional[str] = None,
                  config: Optional[dict] = None,
-                 runner=None, pew_client=None, log=print):
-        self.cfg = config or _db.load_config()
+                 runner=None, pew_client=None, log=print,
+                 conformance=None):
+        #: The conformance gate's config, or False to disable it. Disabling is
+        #: honoured only outside the production schema -- viv/conformance.py
+        #: ignores it when the schema is `viv`, so a test double can never
+        #: become a way to run the real consumer ungated.
+        self.conformance = conformance
+        self.conformance_record: Optional[dict] = None
+        # `config or load_config()` was a trap: {} is FALSY, so a caller
+        # passing an EMPTY config -- the obvious way to say "no engine, do not
+        # go anywhere" -- silently got the PRODUCTION configuration instead.
+        # A test of mine did exactly that and dispatched a real run against the
+        # production engine while asserting something unrelated.
+        self.cfg = config if config is not None else _db.load_config()
         self.schema = schema or self.cfg.get("schema") or "viv"
         self.worker_id = worker_id or default_worker_id()
         self.log = log
@@ -257,12 +270,18 @@ class Vivarium:
     # =====================================================================
     # STAGE 5 -- COLLECT.  Assemble what was observed. Invent nothing.
     # =====================================================================
-    @staticmethod
-    def collect(result: RunResult) -> dict:
-        return dict(result.summary)
+    def collect(self, result: RunResult) -> dict:
+        s = dict(result.summary)
+        # CONFORMANCE IS PROVENANCE, not a preflight. The row records the
+        # identities it actually ran against -- live and contract engine
+        # source hashes, the instance, the gate's state and mode -- so a
+        # later reader can tell which engine produced the number without
+        # trusting that a gate ran at all.
+        if self.conformance_record:
+            s["conformance"] = _conf.compact(self.conformance_record)
+        return s
 
-    @staticmethod
-    def collect_failure(exc: ExecutionFailure) -> dict:
+    def collect_failure(self, exc: ExecutionFailure) -> dict:
         p = exc.partial
         return {"failure_class": exc.failure_class,
                 "attempt_id": p.attempt_id,
@@ -275,6 +294,8 @@ class Vivarium:
                 # nothing the second time it happens.
                 "load_receipt": p.load_receipt, "resources": p.resources,
                 "outcome": None, "error": str(exc)[:4000],
+                "conformance": (_conf.compact(self.conformance_record)
+                                if self.conformance_record else None),
                 "note": "no outcome was measured; absence of a result is not "
                         "a result"}
 
@@ -432,6 +453,49 @@ class Vivarium:
     # =====================================================================
     # THE TICK.  At most ONE runnable item. No loop, no sleep, no policy.
     # =====================================================================
+    def _conformance(self, conn) -> Optional[dict]:
+        """Run the gate if a row is waiting. Returns a BLOCKED detail on a
+        halt, or None to proceed.
+
+        The record is kept on the instance whether it halted or not, so the
+        row that does run carries the identities it ran against -- which is
+        the whole point of the operator's wording: conformance as PROVENANCE
+        on the corpus, not an ephemeral preflight.
+        """
+        if self.conformance is False:
+            return None
+        try:
+            waiting = _q.counts(conn, schema=self.schema).get("queued", 0)
+        except Exception as exc:                        # noqa: BLE001
+            # Cannot tell whether there is work -> gate anyway. The closed
+            # direction is the one that cannot be wrong.
+            self.log("[viv] conformance: queue count failed (%s); gating" % exc)
+            waiting = 1
+        if not waiting:
+            return None
+        cfg = self.conformance if isinstance(self.conformance,
+                                             _conf.Config) else None
+        try:
+            self.conformance_record = _conf.require(cfg, schema=self.schema)
+        except _conf.ConformanceHalt as exc:
+            self.conformance_record = exc.record
+            self.counters["blocked"] += 1
+            self.log("[viv] stage=conformance HALT state=%s %s"
+                     % (exc.record.get("state"), exc.record.get("reason")))
+            return {"reason": "conformance gate halted: %s"
+                              % exc.record.get("state"),
+                    "conformance": _conf.compact(exc.record)}
+        except Exception as exc:                        # noqa: BLE001
+            # A gate that cannot run is not a gate that passed.
+            self.counters["blocked"] += 1
+            self.log("[viv] stage=conformance ERROR %s" % exc)
+            return {"reason": "conformance gate could not run: %s" % exc,
+                    "conformance": {"state": "GATE_ERROR", "halted": True}}
+        st = self.conformance_record.get("state")
+        if st != "CONFORMANT":
+            self.log("[viv] stage=conformance state=%s (proceeding)" % st)
+        return None
+
     def tick(self, conn) -> TickReport:
         t0 = time.time()
         self.counters["ticks"] += 1
@@ -443,6 +507,22 @@ class Vivarium:
                 detail=rec.as_dict()), conn)
 
         self.heartbeat(conn)
+
+        # --- CONFORMANCE, BEFORE ANYTHING IS CLAIMED ----------------------
+        # Fail-closed, and deliberately on THIS side of the claim: a halt at
+        # dispatch would leave a row CLAIMED, and invariant 6 says a stranded
+        # row is never resolved by inference, so every halt would cost a
+        # human release. Here a halt leaves the queue untouched.
+        #
+        # Only when there is work. An idle tick is not a crossing, and gating
+        # one would make the engine's availability a precondition for
+        # discovering that the queue is empty.
+        gate = self._conformance(conn)
+        if gate is not None:
+            return self._done(TickReport(
+                outcome=BLOCKED, duration_s=time.time() - t0,
+                detail=gate), conn)
+
         row, blocked, detail = self.claim(conn)
         if row is None:
             return self._done(TickReport(outcome=blocked,

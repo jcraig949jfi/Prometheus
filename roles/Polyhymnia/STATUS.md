@@ -1,40 +1,43 @@
 # Polyhymnia status
 
-Currency: 2026-09-11 (reactivation and base-role adoption pass).
+Currency: 2026-09-11 (re-premise pass; PROBE-01 run).
 
-seat state: ACTIVE for the adoption pass (operator, 2026-09-11). Standing
-  state after this pass: BLOCKED on the re-premise (POLY-XL-02: who
-  consumes an Omnitensor row in the 2.0 ecology), held by the operator,
-  who also said "execute nothing". No autonomous work follows this pass.
-what it asserts: PRESENT (booted in comms 2026-09-11 14:46 UTC), ACTIVE
-  (this pass ran), NOT PRODUCTIVE (no domain output; the artifacts are
-  roles/Polyhymnia/, one MONITORS.md row and one charter annotation),
-  VALID not applicable.
+seat state: ACTIVE. Re-premised by the operator 2026-09-11 as the
+  representation scavenger (prompts/2026-09-11_reactivation_direction/).
+  Standing state after this pass: ACTIVE on backlog items that need no
+  reply (POLY-09..13, 18..21), BLOCKED for consumption on POLY-06
+  (Archaeon's five-field answer to the H5 contract question).
+what it asserts: PRESENT (booted in comms 14:46 UTC), ACTIVE (this pass
+  ran), PRODUCTIVE in the narrow sense (one candidate family admitted by
+  a real gate and measured exactly; rows committed), NOT YET CONSUMED
+  (no experiment has taken a lincode member; the contract question is
+  open), VALID for the analytic rows (8/8 controls PASS) and for the
+  measured rows as exact enumeration; no usefulness claim.
 workspace: F:\Prometheus-worktrees\polyhymnia-base-role, branch
-  polyhymnia/base-role-adopt-2026-09-11, base 57533fa76 (origin/main at
-  creation), dirty: roles/Polyhymnia/ additions, one row in
-  roles/base-role/MONITORS.md, an 11-line annotation at the top of
-  agents/polyhymnia/CHARTER.md.
-guard: git-dir F:/Prometheus/.git/worktrees/polyhymnia-base-role differs
-  from git-common-dir F:/Prometheus/.git (linked worktree; not canonical).
-comms: booted (host SKULLPORT, model claude-opus-5[1m], tier heavy,
-  capabilities any); synced 14:43 and 14:46 UTC: 1 message ever received
-  (Archaeon broadcast #1, sha256 402c3445443d1be5), 0 addressed to this
-  seat, queue length 0.
-monitors owned: PolyhymniaDaemon, registered DORMANT since 2026-05-30 in
-  roles/base-role/MONITORS.md (no process, no task, stale pid; not
-  restarted). Fed: none.
-lane: none until the re-premised charter lands.
-assignments from the operator, from the committed record: exactly one,
-  today's directive (adopt, set up, report, execute nothing). No prompt
-  file, no INBOX file, no comms message and no task has ever been
-  addressed to Polyhymnia. The May charter was written by Aporia; its
-  one operator-attributed line ("leave no stone unturned") is second hand.
-blockers: POLY-XL-02 (re-premise) and POLY-XL-01 (fate of the untracked
-  tensor body), both operator decisions; and the standing "execute
-  nothing" instruction.
-next executable action (when the operator lifts "execute nothing"):
-  POLY-01 on receipt of the re-premised charter; failing that, POLY-03
-  (annotate the old charter section by section) and POLY-05 (commit the
-  saturation curve from the untracked event log) are the two items that
-  need no decision.
+  polyhymnia/base-role-adopt-2026-09-11; commits this pass 54221bfdb
+  (archive, POLY-05, POLY-03), e6f0b64fb (preregistration), 8313700c1
+  (probe run); merged origin/main 05b1134e6.
+guard: linked worktree (git-dir differs from git-common-dir).
+comms: synced 15:50 UTC (ack #43 from Archaeon); question to Archaeon
+  (H5 contract) posted this pass, see journal for the id.
+monitors owned: PolyhymniaDaemon, DORMANT, not to be restarted
+  (operator). Fed: none.
+done this pass:
+  POLY-XL-01 DONE: body archived byte-identical (11,529,754 B, sha256
+    020f5a43...), residue not substrate; census 2,415 cells / 13
+    coordinate signatures / 6 of 9 axes constant.
+  POLY-05 DONE: saturation curve; 2,137 of 2,415 tesserae on day one;
+    last new tessera 2026-05-30T10:01Z, then 12 null ticks.
+  POLY-03 DONE: 11 section markers on the old charter, 0 deletions.
+  POLY-01 DONE: consumer = the H5 decoder slot (check_exact gate,
+    exact_reference observable, campaign_h5.h5_readout live dict).
+    PROBE-01: lincode family; hamming mean reach 5.6875 (0..7), mean
+    neutral 2.25 with 256 fully neutral centers; direct 8.0 / 4.0;
+    balanced_7 11.73 / 0.044; classes hamming 5.61 vs direct 7.78.
+    8/8 controls PASS; M1 direction right; M2 direction WRONG (ledgered);
+    P3 derivation wrong, corrected before the run (ledgered).
+blockers: POLY-06 (Archaeon); POLY-XL-03 (operator: may an unlearned
+  structured decoder be a beta arm); POLY-08 (ARCH-28, engine).
+next executable action: POLY-12 (the collision-count check, so the M2
+  error cannot recur), then POLY-10 (Gray family, second candidate
+  through the same gate), while POLY-06 waits.
