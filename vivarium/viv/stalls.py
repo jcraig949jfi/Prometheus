@@ -34,6 +34,7 @@ from __future__ import annotations
 from typing import Any, Dict, List, Optional
 
 from . import db as _db
+from . import queue as _queue
 
 #: Failure text that means the ENGINE did not answer, as distinct from the
 #: science failing. Matched on the recorded error because these rows never
@@ -88,13 +89,21 @@ def _failing_call(error: str) -> Optional[str]:
     for f in reversed(frames):
         if not f.startswith("_"):
             return f
-    if frames:
-        return frames[-1]
-    # Fall back to the last VIVARIUM frame, which names the operation even
-    # when the client call is a private helper.
+    # THE VIV FRAME BEATS A PRIVATE CLIENT HELPER, and this cost a second
+    # wrong answer before it was noticed. The five orphaned h5 runs have
+    # exactly one sfclient frame, `_req`, under `audit_envelope` in
+    # viv/runner.py -- so returning the last client frame named `_req`, which
+    # says only "an HTTP request", when the frame above it says the run had
+    # ALREADY COMMITTED and was reading the envelope back. Same defect as the
+    # http.client one above: a name that is not the name of what happened.
     ours = re.findall(r'File "[^"]*[\\/]viv[\\/](?:\w+)\.py", line \d+, '
                       r'in (\w+)', error or "")
-    return ours[-1] if ours else None
+    for f in reversed(ours):
+        if not f.startswith("_"):
+            return f
+    if ours:
+        return ours[-1]
+    return frames[-1] if frames else None
 
 
 def _contiguous_runs(values: List[int]) -> List[List[int]]:
@@ -226,4 +235,172 @@ def episodes(conn=None, *, since: str = "2026-09-01", schema=None) -> dict:
             "the engine cannot record a lock-wait failure -- writing the "
             "incident needs the lock that failed (Daedalus A6) -- so the "
             "register is the only surviving record of one.",
+    }
+
+
+# ---------------------------------------------------------------------------
+# The verdict Daedalus's scan deliberately withholds
+# ---------------------------------------------------------------------------
+#: States meaning the register will never claim that work again. Imported from
+#: the queue rather than restated, because "terminal" is the queue's word and a
+#: second copy of it here would be a second definition, free to drift.
+_TERMINAL = _queue.TERMINAL
+_LIVE = ("queued",) + _queue.ACTIVE
+
+ABANDONED = "ABANDONED"
+PENDING = "PENDING"
+INCONSISTENT = "INCONSISTENT"
+NOT_OURS = "NOT_FROM_THIS_REGISTER"
+UNREGISTERED = "RUNNER_MADE_UNREGISTERED"
+
+
+def _derived_name(spec_hash: str) -> Optional[str]:
+    """What `viv/spec.py` would have named the world for that sealed hash."""
+    if not (spec_hash or "").startswith("sha256:"):
+        return None
+    return "viv-" + spec_hash[7:23]
+
+
+def classify_orphans(found: List[dict], conn=None, *, schema=None,
+                     world_names: Optional[Dict[str, str]] = None) -> dict:
+    """Decide which committed-but-unobserved SFE experiments are abandoned.
+
+    Daedalus's `deploy/orphaned_commits.py` finds the SCAR a stall leaves -- an
+    experiment committed to the ledger with no observation against it -- and
+    then REFUSES to classify it. Their first cut did classify, on whether the
+    world still held outstanding work, and it returned all five of the runs I
+    had already confirmed abandoned as "pending": every one of those worlds
+    still holds a QUEUED work item, 0.6-0.9h idle, that nobody will ever claim.
+    Holding work is not evidence of progress, and from the ledger alone the two
+    cases are indistinguishable.
+
+    So the verdict came here, and correctly: whether a queued work item will
+    ever be claimed is a fact about this register. The join is `spec_hash`,
+    which their scan reports on every row, and the answer is not a probability
+    -- the queue's BEFORE UPDATE trigger freezes a terminal row whole, so a
+    terminal row CANNOT be claimed again. ABANDONED is a statement about the
+    state machine.
+
+    THE FOURTH VERDICT IS THE HONEST ONE. An orphan whose spec_hash matches no
+    row here was not produced by this register -- a probe, a test, another
+    producer -- and calling it abandoned would be claiming authority over
+    something outside the very boundary this classification exists to respect.
+
+    THE FIFTH IS THE UNCOMFORTABLE ONE, and it only appears if the caller
+    supplies `world_names`. The world name is DERIVED, `viv-<spec_hash[7:23]>`,
+    so the engine records which orphans came out of this runner whether or not
+    a row ever sealed them. On the first real run, 7 of the 86 the register
+    could not name were `viv-` worlds: `evaluate_bitstring` and `noop_v0` runs
+    from 2026-09-06, when v0 was being brought up by calling the runner
+    directly. The register holds 35 rows of those same two kinds and not one of
+    these. So they were executed straight against the engine with no queue row
+    behind them -- which means this seat can write to the ledger in a way that
+    leaves an orphan NOBODY can ever adjudicate, mine or anyone's. Folding that
+    into NOT_FROM_THIS_REGISTER would have filed my own unaccountable writes
+    under "someone else's problem".
+
+    `world_names` maps world_id -> name and is the CALLER'S to supply. This
+    module does not open the engine's ledger: reading another seat's store
+    directly to answer a question about my own register is the coupling that
+    makes both sides unmovable.
+    """
+    s = schema or _db.schema()
+    close = conn is None
+    conn = conn or _db.connect()
+    hashes = sorted({r["spec_hash"] for r in found if r.get("spec_hash")})
+    rows: Dict[str, List[dict]] = {}
+    try:
+        with _db.dict_cur(conn) as cur:
+            cur.execute(
+                "SELECT experiment_id, spec_hash, status, candidate_set_id, "
+                "arm_id, sfe_experiment_id, finished_at, "
+                "result_summary #>> '{failure_class}' AS failure_class "
+                "FROM " + s + ".research_experiment_queue "
+                "WHERE spec_hash = ANY(%s)", (hashes,))
+            for r in cur.fetchall():
+                rows.setdefault(r["spec_hash"], []).append(dict(r))
+    finally:
+        if close:
+            conn.close()
+
+    out: List[dict] = []
+    counts: Dict[str, int] = {}
+    for orphan in found:
+        mine = rows.get(orphan.get("spec_hash")) or []
+        named = [m for m in mine if m["sfe_experiment_id"] == orphan["exp_id"]]
+        if not mine:
+            derived = _derived_name(orphan.get("spec_hash") or "")
+            actual = (world_names or {}).get(orphan.get("world_id"))
+            if actual is not None and derived is not None and actual == derived:
+                verdict = UNREGISTERED
+                why = ("the world carries this runner's DERIVED name (%s), so "
+                       "this seat made it -- but no row seals the spec, so it "
+                       "was executed with no register row behind it. Nobody "
+                       "can adjudicate this orphan, including me." % derived)
+            elif actual is not None:
+                verdict = NOT_OURS
+                why = ("world named %r, not this runner's derived %r. Another "
+                       "producer's -- not this queue's to judge."
+                       % (actual, derived))
+            else:
+                verdict = NOT_OURS
+                why = ("no row in this register seals that spec. Not this "
+                       "queue's to judge -- a probe, a test run, or another "
+                       "producer. NOTE: without world_names this cannot be "
+                       "separated from work THIS runner made outside the "
+                       "queue, which is a different and worse thing.")
+        elif any(m["status"] in _LIVE for m in mine):
+            verdict = PENDING
+            why = ("a row for this spec is still live (%s), so the work may "
+                   "yet be claimed."
+                   % ", ".join(sorted({m["status"] for m in mine
+                                       if m["status"] in _LIVE})))
+        elif any(m["status"] == "completed" for m in named):
+            verdict = INCONSISTENT
+            why = ("a row records THIS experiment as completed while the "
+                   "ledger holds no observation for it. Both records cannot "
+                   "be right and neither is self-evidently wrong.")
+        else:
+            verdict = ABANDONED
+            why = ("every row for this spec is terminal (%s) and a terminal "
+                   "row is frozen whole by the queue's trigger, so nothing "
+                   "will claim that work again."
+                   % ", ".join(sorted({m["status"] for m in mine})))
+            if any(m["status"] == "completed" for m in mine):
+                why += (" A completed row names a DIFFERENT experiment, so "
+                        "this one was abandoned and the spec later re-run.")
+        counts[verdict] = counts.get(verdict, 0) + 1
+        out.append({
+            "exp_id": orphan["exp_id"],
+            "world_id": orphan.get("world_id"),
+            "spec_hash": orphan.get("spec_hash"),
+            "age_hours": orphan.get("age_hours"),
+            "unclaimed_work": orphan.get("unclaimed_work"),
+            "verdict": verdict,
+            "why": why,
+            "named_by_a_row": bool(named),
+            "rows": [{"experiment_id": str(m["experiment_id"]),
+                      "status": m["status"],
+                      "candidate_set_id": m["candidate_set_id"],
+                      "arm_id": m["arm_id"],
+                      "failure_class": m["failure_class"],
+                      "names_this_experiment":
+                          m["sfe_experiment_id"] == orphan["exp_id"]}
+                     for m in mine],
+        })
+    return {
+        "schema": "vivarium.orphan_verdicts.v1",
+        "n": len(out),
+        "counts": counts,
+        "verdicts": out,
+        "world_names_supplied": bool(world_names),
+        "note": "ABANDONED is a statement about the STATE MACHINE and not an "
+                "estimate: a terminal row is frozen whole by the queue's "
+                "BEFORE UPDATE trigger, so its work cannot be claimed again. "
+                "PENDING means a live row still exists. NOT_FROM_THIS_REGISTER "
+                "is not a judgement, it is the boundary -- this seat has no "
+                "standing over an orphan it did not produce. "
+                "RUNNER_MADE_UNREGISTERED needs world_names and is the one to "
+                "read first: work this runner committed with no register row "
+                "behind it, which nobody can adjudicate.",
     }

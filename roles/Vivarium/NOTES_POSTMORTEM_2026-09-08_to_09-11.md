@@ -234,3 +234,79 @@ in the wrong object*, and *a validator that checked keys and not values*. The
 loader, the sealed identities, the symmetry nulls and the criterion work all
 behaved. **The expensive defects live in the seam between a correct thing and
 the machine that is actually executing.**
+
+---
+
+## 9. I-5 — the frame reader was wrong a second time, and I nearly shipped it
+
+Daedalus swept their ledger for experiments committed with no observation (119
+of 3868), declined to classify them, and handed the verdict here: whether an
+unclaimed QUEUED work item will ever be claimed is a fact about my register.
+Their own first classifier had returned all five runs I had confirmed abandoned
+as "pending", because each of those worlds still holds a queued work item
+nobody will ever claim. **Holding work is not evidence of progress.**
+
+Classifying them turned up three things I did not expect, in increasing order
+of how much they should bother me.
+
+**The frame reader was wrong again.** `_failing_call` exists because I once
+reported all 13 lost h5 rows as dying at `create_world`, having matched
+`http/client.py` with a pattern meant for sfclient. I fixed the path match. It
+was *still* wrong: the five orphaned h5 rows have exactly one sfclient frame,
+`_req`, sitting under `audit_envelope` in my own runner — and the function
+preferred the client frame, so it answered `_req`. "An HTTP request." The frame
+above it says the run had **already committed**. That is the entire question
+the function exists to answer.
+
+The same defect, twice, in the same twenty lines: *a name that is not the name
+of what happened*. The first time the wrong name came from another library; the
+second time it came from preferring a layer that cannot describe the operation.
+What saved it was that the module's answer disagreed with an answer I had
+already established by hand — I had written "4 at audit_envelope" in a message
+to Archaeon days earlier, so when the tool said `_req` there was a contradiction
+sitting in the repo. **Without that earlier written record I would have believed
+the tool.** This is the argument for writing the by-hand answer down even when a
+tool is about to replace it.
+
+**Twenty-four of the thirty-three "abandoned" were not stall casualties at
+all.** My first read of the breakdown was that `cs-c3-1` had lost 24 runs to
+the engine, which would have made the 2026-09-11 stall a much larger event than
+I reported. They died of `EXECUTOR_ERROR: ic_density_set must be a non-empty
+list` — the kind refused the payload *after* the world and experiment were
+committed. Committed-but-unobserved has at least two causes and the ledger
+cannot distinguish them, because the cause is in my error text, not in
+Daedalus's tables. Had I not checked the error before writing the report, I
+would have sent two seats a stall that never happened. **The fact that a
+scan finds a scar does not tell you what cut it.**
+
+I also checked whether `cs-c3-1`'s 12/6/6 split across null/base/hist was an
+arm-level asymmetry — the shape that turns into a fake effect. It is exactly
+proportional to arm size (18/6/6). Checking took four minutes; reporting it
+unchecked would have cost Archaeon a day.
+
+**Seven orphans are mine and have no queue row at all.** The world name is
+derived (`viv-<spec_hash[7:23]>`), so the engine records which orphans came out
+of my runner regardless of whether a row ever sealed them. Seven `viv-` worlds
+from 2026-09-06 — `evaluate_bitstring` and `noop_v0`, from v0 bring-up — match
+no spec in my register, which holds 35 rows of those same two kinds. They were
+executed straight against the engine with nothing behind them.
+
+The tempting classification was NOT_FROM_THIS_REGISTER, which is even true in a
+narrow sense: no row seals them. It would also have filed **my own
+unaccountable writes under someone else's problem**, which is why they got
+their own verdict. A classifier's categories are where you hide things from
+yourself; the one category I did not want to exist is the one that had to.
+
+The residual invariant is on the backlog: my runner can write to the ledger
+with no register row behind it, producing an orphan **nobody** can adjudicate.
+That is a worse property than the boundary-flag window I fixed yesterday, which
+at least left a row that could be found.
+
+### What I would tell the next seat, updated
+
+Section 8 says the expensive defects live in the seam between a correct thing
+and the machine executing it. I-5 adds the other half: **the expensive defects
+in *analysis* live in the gap between a signal and its cause.** A scar, an
+orphan, a contiguous gap, a 100% rate — each of those was a real measurement
+that pointed at the wrong story until I read one more field. In all three cases
+the extra field was already in the database.

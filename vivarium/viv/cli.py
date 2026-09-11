@@ -24,6 +24,7 @@ import argparse
 import json
 import sys
 from datetime import datetime, timezone
+from pathlib import Path
 
 from . import db as _db
 from . import workspace as _workspace
@@ -464,6 +465,57 @@ def cmd_health(args, conn) -> int:
     return 0 if out["healthy"] else 1
 
 
+def cmd_stalls(args, conn) -> int:
+    """Engine-stall episodes, reconstructed from the register."""
+    from . import stalls as _stalls
+    print(_j(_stalls.episodes(conn, since=args.since, schema=args.schema)))
+    return 0
+
+
+def cmd_orphans(args, conn) -> int:
+    """Classify Daedalus's committed-but-unobserved scan against this register.
+
+    Their scan finds the scar and refuses to classify it, because whether a
+    queued work item will ever be claimed is a fact about THIS register. Feed
+    it in:
+
+        python deploy/orphaned_commits.py --json > scan.txt
+        python -m viv.cli orphans --scan scan.txt --ledger <engine.db>
+
+    `--ledger` is READ ONLY and supplies world names only. Without it the scan
+    cannot distinguish another producer's orphan from one this runner made with
+    no register row behind it -- which is the worse of the two.
+    """
+    import sqlite3
+    from . import stalls as _stalls
+
+    raw = Path(args.scan).read_text(encoding="utf-8", errors="replace")
+    # THE SCAN PRINTS A HUMAN HEADER BEFORE ITS JSON, so `json.load` on the
+    # whole stream fails. Take the document, not the stream.
+    doc = json.loads(raw[raw.index("{"):])
+    found = doc["found"]
+
+    names = None
+    if args.ledger:
+        ids = [f["world_id"] for f in found]
+        c = sqlite3.connect("file:%s?mode=ro" % Path(args.ledger).as_posix(),
+                            uri=True)
+        try:
+            names = dict(c.execute(
+                "SELECT world_id, name FROM worlds WHERE world_id IN (%s)"
+                % ",".join("?" * len(ids)), ids)) if ids else {}
+        finally:
+            c.close()
+
+    out = _stalls.classify_orphans(found, conn, schema=args.schema,
+                                   world_names=names)
+    out["scan"] = {"committed": doc.get("committed_experiments"),
+                   "unobserved": doc.get("committed_without_observation"),
+                   "db": doc.get("db")}
+    print(_j(out))
+    return 0
+
+
 def cmd_errata(args, conn) -> int:
     """Declared contamination, and the exclusion it implies."""
     with _db.dict_cur(conn) as cur:
@@ -603,6 +655,18 @@ def build_parser() -> argparse.ArgumentParser:
     s = sub.add_parser("health", help="machine-readable health")
     s.add_argument("--stale-after", type=float, default=900.0)
     s.set_defaults(fn=cmd_health)
+
+    s = sub.add_parser("stalls", help="engine-stall episodes from the register")
+    s.add_argument("--since", default="2026-09-01")
+    s.set_defaults(fn=cmd_stalls)
+
+    s = sub.add_parser("orphans",
+                       help="classify a committed-but-unobserved scan")
+    s.add_argument("--scan", required=True,
+                   help="output of deploy/orphaned_commits.py --json")
+    s.add_argument("--ledger", default=None,
+                   help="engine.db, READ ONLY, for world names")
+    s.set_defaults(fn=cmd_orphans)
 
     sub.add_parser("errata",
                    help="declared contamination and the exclusion rule"

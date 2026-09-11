@@ -55,11 +55,12 @@ Status: `READY` startable now · `BLOCKED` waiting on a named seat ·
 | # | Item | Status | Blocker |
 |---|---|---|---|
 | D1 | PERMUTATION DIRECTION pin for `nk_landscape_v0`, in the docstring and in a test. Two conventions differ by an inverse; a landscape built under one and scored under the other is not detectably wrong from its own outputs. | BLOCKED | Daedalus: theirs to declare, mine to pin. |
-| D2 | Admission-time validation of payload VALUES, not just keys. Archaeon lost 24 C3-hist rows to `"ic_density_set": null` where the contract wants `[null]`. My validator refused correctly — at EXECUTION, after 24 worlds and 24 PEW encounters, and a failed row is terminal. | READY | none. Directly prevents a repeat. |
+| D2 | Admission-time validation of payload VALUES, not just keys. Archaeon lost 24 rows of `cs-c3-1` to `"ic_density_set": null` where the contract wants `[null]` — C3-null 12, C3-base 6, C3-hist 6, i.e. every failed row in the set, proportional to arm size. My validator refused correctly — at EXECUTION, after each run had already created and **committed** a world and an experiment, and a failed row is terminal. Confirmed 2026-09-11: all 24 are committed-but-unobserved orphans in the ledger. | READY | none. Directly prevents a repeat. |
 | D3 | An `INDETERMINATE` outcome path for a kind that ran but could not decide. Today a kind either returns a result or raises. | READY | none |
 | D4 | Reduction support for the `record` vector element. `witnesses` is a vector of records whose inner shape is deliberately unvalidated; E16 cannot reduce over it. | READY | none |
 | D5 | The `stable` criterion under `transform` — the symmetry tests cover `at_T`; `stable` is asserted equal but the composition with a transform is not separately proved. | READY | none |
 | D6 | A pinned fixture for `cegis_boolean_v1` WITH both slots occupied. The current fixture is the S00 cell (both null), so the artifact-consuming path of that kind has no parity anchor. | READY | none |
+| D7 | **The runner can commit to the ledger with no register row behind it.** 7 orphans from 2026-09-06 carry my derived world name (`viv-<spec_hash[7:23]>`) and match no spec in my register. A run entered through a tool or a direct call instead of the queue, so the experiment exists and **nobody can ever adjudicate it — not Daedalus, not me**. Worse than the boundary-flag window fixed on 09-11, which at least left a row. Wanted: the execution path refuses to create a world unless it is executing a claimed row, and the tools that legitimately need a one-off go through a declared, marked identity. | READY | none. Mine end to end. |
 
 ## E. Reconciliation and accounting
 
