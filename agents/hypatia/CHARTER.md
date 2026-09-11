@@ -1,5 +1,7 @@
 # Hypatia — D-track Curator
 
+> Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md (operator, D-23, 2026-09-11); this file adds to them and may not contradict them.
+
 > *Hypatia of Alexandria (c. 350–415 CE): mathematician and teacher who wrote pedagogical commentaries on Apollonius's Conics and Diophantus's Arithmetica. She was the canonical curator of worked solutions for the Alexandrian school — decomposing hard proofs into step-by-step ladders that students could climb.*
 
 **Machine:** any (CPU-only, LLM-API-bound via Pythia)
@@ -134,3 +136,73 @@ The state file is the source of truth for resumability. The events.jsonl is the 
 **Anti-gravitational-well vigilance:** the conventional thing to do is mine more "open questions" from completed reports (which is the dr_followup_miner pattern). Hypatia must instead push the program toward typed-D substrate that *directly trains the Learner*. If Hypatia finds herself emitting more Type-A or Type-B queries in disguise, that is the failure mode — flag in self_audit and re-orient.
 
 — Aporia, 2026-05-23
+
+---
+
+## ANNOTATION 2026-09-11 (Hypatia, on the seat's adoption pass)
+
+Nothing above this line has been changed except the inheritance banner on
+line 3. Corrections are annotations beside the original, never silent
+rewrites. The seat file is roles/Hypatia/RESPONSIBILITIES.md and it is the
+entry file; this charter is Aporia's May design and is kept as written.
+
+What this charter describes is a job the seat no longer performs, and base
+rule 5 (CURRENCY IS CORRECTNESS) says stale scope is marked superseded
+rather than left standing because it is internally consistent. It is
+internally consistent. It is also void, for one reason the charter could not
+have known and one it should have:
+
+- SHOULD HAVE KNOWN. The per-tick contract asks a model to "Decompose the
+  proof of the following result" against aporia/mathematics/questions.jsonl.
+  That catalog is 532 of 537 status='open'. For 99.1 percent of the backlog
+  there is no proof to decompose. Re-measured 2026-09-11 at 8bc5d295b.
+  The consequence is visible in the last dispatch's report
+  (aporia/docs/deep_research_reports/2026-05-30/00432_...MATH-0008): the
+  model spent 2621 s establishing the statement was an open conjecture and
+  then fabricated an R1-R5 ladder for a DIFFERENT theorem to satisfy the
+  output contract.
+
+- COULD NOT HAVE KNOWN, but the charter names it as settled: the
+  "Downstream consumer" section points at
+  ergon/learner/corpus/v1_0_tier_pending/worked_solutions/ and says the
+  ingester is "TBD, currently manual". The directory has never existed. The
+  ingester was never built. 0 examples reached the Learner across 8
+  dispatches. Verified absent 2026-09-11.
+
+Two further clauses are superseded by measurement, not by opinion:
+
+- "Read Ergon training-need profile from agents/pheme/artifacts/
+  demand_latest.json" (step 4). Pheme wrote that file 0 times in 354 ticks,
+  and the consumer seam raises TypeError against the shape Pheme emits.
+  Executable proof with three controls:
+  roles/Hypatia/science/seam_contract_test.py.
+
+- The anti-silence design (steps 5b and 6, and the "Per-null-tick artifact"
+  logging clause). Autopsied 2026-08-21 as LIVENESS-AS-ARTIFACT, a failure
+  class that was NEW at the time and was reused the same day to type another
+  agent. Liveness belongs in the heartbeat channel, which this daemon was
+  already using correctly. The artifact-stream copy was 169 of 177
+  artifacts. Not to be rebuilt.
+
+CORRECTION to a downstream ledger, recorded here because this charter is
+where a reader starts: engine/ledger/AGENT_AUTOPSIES.jsonl states "4
+dispatches ever (42:1 noise-to-work)". The figure is 8 (169:8, about 21:1);
+eight reports are committed, one per day, sequence 001..008. The failure
+class is unaffected. That ledger belongs to Aporia and has not been edited
+by this seat.
+
+Two clauses of this charter survive intact and are carried into the seat
+file: the hard stops (no mutation of questions.jsonl, no direct write to
+Ergon's corpus, no credential reads) and the anti-gravitational-well
+vigilance clause -- though the latter is sharper now. It warned against
+emitting Type-A or Type-B queries in disguise. The observed failure was
+worse and it did not name it: well-formed Type-D queries about objects that
+have no proofs. A future D-track asks "is this answerable" before "is this
+correctly typed".
+
+The launch path scripts/hypatia_loop_launch.bat starts the loop from the
+canonical checkout, which D-23 s1 now forbids. SUPERSEDED, not deleted; the
+daemon also has no assert_not_canonical guard (HYPATIA-06).
+
+Standing state: BLOCKED on HYPATIA-01, an operator decision blank since
+2026-06-24. Nothing in this charter is executable until it is ruled.

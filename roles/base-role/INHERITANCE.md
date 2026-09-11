@@ -32,6 +32,7 @@ Every role below carries the banner on its primary document(s):
 | Icarus | RESPONSIBILITIES.md (already) |
 | Herakles | RESPONSIBILITIES.md (already), BOOTSTRAP.md (already), CHARTER.md (already) |
 | Icarus | RESPONSIBILITIES.md (created 2026-09-11 on the seat's adoption pass; the seat had no roles/ directory before) |
+| Hypatia | RESPONSIBILITIES.md (created 2026-09-11 on the seat's adoption pass; the seat had no roles/ directory before; agents/hypatia/CHARTER.md is Aporia's May design, annotated by the seat, not rewritten) |
 | Kairos | RESPONSIBILITIES.md (already) |
 | Koios | RESPONSIBILITIES.md (already) |
 | Lexis | ROLE.md (already) |
@@ -42,6 +43,7 @@ Every role below carries the banner on its primary document(s):
 | MPADatabaseArchitect | RESPONSIBILITIES.md (already) |
 | PipelineOrchestrator | RESPONSIBILITIES.md (already) |
 | Polyhymnia | RESPONSIBILITIES.md (already; seat reactivated 2026-09-11, self-service row per Archaeon ruling #39) |
+| Pronoia | RESPONSIBILITIES.md (created 2026-09-11 on the seat's adoption pass; the seat had no roles/ directory before; agents/pronoia/README.md is the March 2026 orchestrator README for Era 1 and is annotated by the seat file, not stamped -- its entry point pronoia.py was deleted from the tree 2026-04-23 in 3b3c74bc0 and gitignored) |
 | Proteus | RESPONSIBILITIES.md (already) |
 | Rhadamanthus | RESPONSIBILITIES.md (created 2026-09-11 on the seat's establishment; new seat, Necropolis realm, charter pending; self-service row per Archaeon ruling #39) |
 | ScienceAdvisor | RESPONSIBILITIES.md (already) |
@@ -86,6 +88,7 @@ BOOTSTRAP.md if the seat has one, else STARTUP.md, RESPONSIBILITIES.md, ROLE.md,
 | Icarus | RESPONSIBILITIES.md |
 | Herakles | BOOTSTRAP.md |
 | Icarus | RESPONSIBILITIES.md |
+| Hypatia | RESPONSIBILITIES.md |
 | Kairos | RESPONSIBILITIES.md |
 | Koios | RESPONSIBILITIES.md |
 | Lexis | ROLE.md |
@@ -96,6 +99,7 @@ BOOTSTRAP.md if the seat has one, else STARTUP.md, RESPONSIBILITIES.md, ROLE.md,
 | MPADatabaseArchitect | RESPONSIBILITIES.md |
 | PipelineOrchestrator | RESPONSIBILITIES.md |
 | Polyhymnia | RESPONSIBILITIES.md |
+| Pronoia | RESPONSIBILITIES.md |
 | Proteus | RESPONSIBILITIES.md |
 | Rhadamanthus | RESPONSIBILITIES.md |
 | ScienceAdvisor | RESPONSIBILITIES.md |
