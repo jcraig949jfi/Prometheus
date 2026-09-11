@@ -1,32 +1,33 @@
 # Nyx status
 
-Currency: 2026-09-11 15:00 UTC (charter day; first specimen delivered).
+Currency: 2026-09-11 15:35 UTC (post-cut direction applied; DreamCoder delivered).
 
-seat state: ACTIVE. Charter received and committed verbatim
-  (roles/Nyx/prompts/2026-09-11_charter/, sha256 0c73f9a7...).
-what it asserts: PRESENT (booted in comms; boot re-recorded under
-  claude-fable-5-1 after the harness model changed mid-session),
-  ACTIVE (working the backlog), PRODUCTIVE (6 validating records, 2
-  deliveries posted: comms #44 Vivarium, #45 Archaeon), VALID only where
-  a test says so (nyx/tests/test_schema.py 11 passed; every committed
-  specimen record validates). No scientific claim is made: every
-  ablation in the organ records is graded "designed, not measured";
-  literature sources are T2 until NYX-05 resolves them.
+seat state: ACTIVE. Charter and post-cut direction both committed
+  verbatim with manifests (roles/Nyx/prompts/2026-09-11_charter/,
+  roles/Nyx/prompts/2026-09-11_post_cut_direction/).
+what it asserts: PRESENT (comms, claude-fable-5-1), ACTIVE (working
+  NYX-06 -> NYX-07), PRODUCTIVE (12 validating records over two
+  specimens; 4 deliveries posted: #44/#52 Vivarium, #45/#53 Archaeon),
+  VALID only where a test says so (nyx/tests 12 passed; every committed
+  record validates). No scientific claim: every ablation "designed, not
+  measured"; every paper content claim T2; identifiers T1-SOURCE.
+chain (PRODUCED -> ... -> METABOLIZED): four deliveries at DELIVERED;
+  zero CONSUMED. Vivarium has never booted in comms, so both pressures
+  are queued unseen; Archaeon has 4 unseen. NYX-23's stop condition
+  (three specimens, zero returns) is one specimen away from being
+  testable.
 workspace: F:\Prometheus-worktrees\nyx-base-role, branch
-  nyx/base-role-adopt-2026-09-11, base 56125e9e4; merged forward
-  explicitly to origin/main as recorded in the journal.
-comms: synced 14:56 UTC; inbox: #1 broadcast, #39 ruling (INHERITANCE
-  rows self-service; Archaeon added Nyx's this once, d4e23fb81), #43
-  ack. Queue length 0. Posted: #36 report, #44 delegation, #45 report.
-monitors owned or fed: none. No standing loop exists yet; the delivery
-  age (oldest unanswered delivery) becomes this seat's dormancy signal
-  when NYX-22 lands and is then registered (NYX-28).
-lane: nyx/ and roles/Nyx/ only. No other code or document touched.
-blockers: none on Nyx's next action. Vivarium has never booted in
-  comms, so delivery #44 waits for that seat's first sync; the operator
-  is told. Three XL decisions filed for the operator (NYX-25, -26, -27).
-next executable action: NYX-05 (resolve the T2 DOIs), then NYX-06
-  (DreamCoder; Techne's pin cb0e63f5c and the four smoke blockers are
-  the first failure substrate), then NYX-07 (Go-Explore).
-seen, not mine: Archaeon recorded the engine UNREACHABLE at 14:40 UTC
-  (d4e23fb81); Nyx has no engine dependency today.
+  nyx/base-role-adopt-2026-09-11; merged forward to origin/main by SHA
+  as journaled; last on main: see journal.
+comms: synced 15:30 UTC; queue length 0; Talos broadcast about a
+  TALOS-10 consumer search seen (answered or not: see journal).
+monitors owned or fed: none. Delivery age (oldest unanswered: #44,
+  posted 14:55 UTC) is the seat's dormancy signal once NYX-22 exists.
+lane: nyx/ and roles/Nyx/ only.
+blockers: none on the next action. Held by design: hidden_axis
+  (MAP-Elites) and budget_below_the_space (DreamCoder).
+rulings applied today: NYX-25 (grades split), NYX-26 (no Chopper #2
+  yet; self-comparison after Go-Explore), NYX-27 (no convenience seat).
+next executable action: NYX-07 Go-Explore (clean stopping boundary
+  procedure in nyx/README.md applies if Vivarium returns), then NYX-23
+  self-comparison and readiness report for Chopper #2.
