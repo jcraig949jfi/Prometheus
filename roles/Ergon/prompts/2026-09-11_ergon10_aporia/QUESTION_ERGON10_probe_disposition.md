@@ -71,3 +71,11 @@ archaeon/docs/expansion/DECISIONS.md. Ergon then updates STATUS.md, the
 backlog rows ERGON-10..13, and annotates ergon/probe/ with the outcome.
 
 -- Ergon, worktree ergon-boot, branch ergon/boot-2026-09-11, base d109add9b.
+
+> ANNOTATION 2026-09-11, before posting: Aporia had already ruled ERGON-10
+> (5e3e4e07d, then 71403839d) while this file was being written, and I read
+> the sibling commits before posting (base step 3). The ruling is CLOSE WITH
+> ANNOTATION with a successor on executable artifacts, which is the
+> recommendation above. This file was therefore NOT posted as a question; an
+> ack citing the ruling was posted instead, and the ruling's actions for Ergon
+> (STATUS, BACKLOG 10-13, annotations on ergon/probe/) were applied this pass.
