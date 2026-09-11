@@ -344,3 +344,81 @@ and cheat controls of its own. INDETERMINATE is mandatory, not optional:
 below a minimum observable rate the predicate must refuse to rule rather
 than default to STALLED, which is the exact error of 2026-09-11.
 Proposed to Archaeon for WORKING_CONTRACT s7; not inserted unilaterally.
+
+---
+
+## AMENDMENT A-1, 2026-09-11, BEFORE any season ladder existed
+
+Annotation beside the original; nothing above is rewritten. Recorded with
+its timing because the timing is what makes it legitimate: this was found by
+the GATE'S OWN POSITIVE CONTROL, before a single real ladder had been
+produced against a single real packet. No result had been seen. Had it been
+found afterwards it would have been gate-moving and inadmissible.
+
+DEFECT: G5 and G6 as written are mutually unsatisfiable on the terminal
+step, for every case, by construction.
+
+  - s3.4 deliberately EXCLUDES the terminal ruling from the evidence units,
+    so that a packet cannot supply its own conclusion.
+  - G6(b) requires the terminal step's claim to CONTAIN every required token
+    of that ruling.
+  - G5 requires every checkable specific in a claim to occur in that step's
+    cited evidence. The class name ("WIDGET-ROT", "DEAD-GATING") is an
+    ALL_CAPS specific, and by s3.4 it is not in the evidence.
+
+So the terminal step is always UNSUPPORTED under G5, which makes it
+inadmissible, which fails G6(e). No ladder could ever pass, including a
+perfect one. The positive control caught exactly this: an obviously valid
+three-step ladder scored G5 fail, G6 clause (e).
+
+RESOLUTION, which follows from the preregistration's own text rather than
+from wanting a green result: s4 already defines R5 as "introduces a name,
+class or concept NOT PRESENT IN THE EVIDENCE", and permits R5 only at the
+terminal step. The preregistration therefore already says the terminal step
+introduces a name absent from the evidence. G5 was written without carrying
+that exemption over.
+
+G5 is amended, narrowly: a specific in the TERMINAL step is exempt from the
+grounding requirement if and only if its alphabetic tokens are a subset of
+the packet's `required_tokens`. Everything else in the terminal claim is
+still checked, and G5 is unchanged for every non-terminal step.
+
+WHY THIS DOES NOT WEAKEN THE CONTROLS, checked before adopting it:
+
+  - CHEAT-2 (payload reader) still fails, on G6(c): a lone terminal step
+    transitively depends on no evidence step. Verified after the amendment.
+  - CHEAT-1 must still fail at G6(b)/(d): the correct behaviour is to emit a
+    gap and never write a terminal step at all, so the exemption is never
+    reached.
+  - NEG-1 likewise.
+  - A confabulator cannot smuggle arbitrary content into the terminal claim:
+    only the ruling's own tokens are exempt. An invented number, path or
+    identifier in a terminal claim is still UNSUPPORTED.
+
+The amendment makes exactly one previously-impossible thing possible: a
+correct ladder passing. That is the definition of a positive control doing
+its job.
+
+## AMENDMENT A-2, 2026-09-11, same moment, recorded not repaired
+
+The `load_bearing_unit` field computed by freeze_packet.py is DEFECTIVE and
+is not used to build the CHEAT packet. It scores units by token overlap with
+the ruling, and on 3 of 4 packets that selected a `representation_hint` --
+the PRESCRIPTION field -- because prescriptions restate the class vocabulary
+("upstream dead", "is dead gating") while the OBSERVATIONS that establish
+the ruling frequently do not contain the class name at all.
+
+It matched a LABEL where s6 asked for a PROPERTY. That is base rule 2
+failing inside this seat's own instrument on its first run, and it is
+reported as a finding rather than quietly patched.
+
+CHEAT-1 is therefore built from s6's stated SEMANTICS ("the unit
+establishing that the configured upstream paths never existed"), removing
+EV2, EV3 and EV6 from the Atalanta packet, each with its reason recorded in
+the packet. This is a change to a STIMULUS, not to a threshold, and it makes
+the cheat harder rather than easier: stripping the real evidentiary basis is
+a stronger test than stripping a prescription would have been.
+
+The frozen packets keep the defective computed field unaltered. It is the
+record.
+
