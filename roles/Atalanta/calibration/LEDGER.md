@@ -87,3 +87,43 @@ a violation that produced no harm is still the shape that produces harm
 later, and the base role's own rule is that the constitution is
 falsifiable only when the friction is reported (ATALANTA-05 carries the
 related resolver finding).
+
+L-10 | "Polyhymnia's alarm fired about 201 times", derived from its
+MONITORS row ("47 integrating ticks then 250 null ticks") | this seat,
+2026-09-11, while drafting the census | WRONG by a factor of nine. Measured
+value: 23 rows. The derivation assumed the 250 nulls were one consecutive
+run; the counter resets on any productive tick, so they were not. | Nothing
+downstream: the estimate was never published as a number, because the
+measurement was run before the document was written. Recorded because
+deriving a count from another seat's prose and then measuring it is the
+discipline, and the gap between 201 and 23 is the argument for it.
+
+L-11 | "0x80070002 on the machine probes is the Windows Store App
+Execution Alias: the bare `pythonw.exe` resolves to a 0-byte reparse point
+that Task Scheduler cannot launch" | this seat, 2026-09-11, during the
+census | FALSIFIED BY ITS OWN AUTHOR before publication. The alias IS a
+0-byte reparse point (measured) and a real interpreter does exist
+elsewhere (measured), so the hypothesis had two confirming facts. A direct
+CreateProcess on the bare name with UseShellExecute=false and the task's
+working directory then SUCCEEDED, exit 0. | The census reports the probe
+failure as CAUSE UNRESOLVED with two eliminated hypotheses, instead of a
+confident wrong diagnosis handed to another seat. Two confirming
+measurements were not worth one discriminating test.
+
+L-12 | Reading the telemetry timeline from `started_at` | this seat,
+2026-09-11, first query against agora.intelligence_outputs | WRONG.
+`started_at` is a module-global session start (scripts/session_telemetry.py:164,
+`started_at or _SESSION_STARTED_AT`), identical on every row of a session;
+it collapsed a seven-day run into a single instant and min == max on 305
+rows. Only `finished_at` is per-row. | Caught by noticing min == max, not
+by being careful. The caveat now travels with the handover to the
+Necropolis Keeper, because anyone else querying that table will hit it.
+
+L-13 | "The alarm branch has no return, so it must have fired on every
+tick from 50 to 354 inclusive: 305 times" | this seat, 2026-09-11,
+predicted from daemon.py:547-552 BEFORE querying the database | CORRECT.
+Observed: 305 rows, error='anti_silence_threshold_exceeded'. | Recorded
+because a ledger of only errors is not calibration. The prediction was
+cheap, falsifiable, made in the right order, and it is the one piece of
+this pass that establishes the counter never reset -- and therefore that
+all 354 ticks were null -- from a mechanism rather than from a count.

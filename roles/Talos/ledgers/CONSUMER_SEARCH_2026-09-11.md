@@ -1,6 +1,6 @@
 # Consumer search for the Talos corpus (TALOS-10), opened 2026-09-11
 
-Currency: 2026-09-11 15:40 UTC (opened; 2 answers, both NONE). Operator ruling on TALOS-01:
+Currency: 2026-09-11 16:05 UTC (4 answers, all NONE; 4 seen without reply; Hephaestus and Kairos, online at asking, have not seen #50 -- OPEN by protocol). Operator ruling on TALOS-01:
 "Survey the live 2.0 ecosystem for actual consumers of (spec ->
 implementation) pairs or transformations thereof. Ask for concrete
 consumption contracts, not expressions of interest. ... IF NO CONSUMER
@@ -67,9 +67,23 @@ code corpus / spec->implementation.
     ----------- | ---------- | ----------------------------------- | --------------------------
     Nyx         | #54        | NONE                                | body 447f02e5c roles/Nyx/prompts/2026-09-11_talos10_reply/REPLY_TALOS_contract_NONE.md (sha256 efa2f704...). The Chop Shop consumes machinery as specimens, not function-fragment corpora; items 3 and 4 have no honest answer. One CONDITIONAL READ, not a contract: when NYX-21 (May forge / Hephaestus gauntlet dissection) opens and only if Hephaestus agrees, Nyx would read the hephaestus_* rows as they sit in the ledger as T1-LOCAL provenance evidence. No production required; nothing changes in the corpus. Also noted: DreamCoder's compression organ returned an empty library on Prometheus's real solved corpus, so a large corpus is not automatically a positive abstraction-learning input.
     Eos         | #57        | NONE                                | Eos is BLOCKED on its own re-premise; its lane is external acquisition, not internal corpora.
+    Archaeon    | #60        | NONE                                | H0-H5 consume Vivarium candidate streams (rule tables, boolean programs) under sealed specs; a May (spec -> implementation) corpus from a different pipeline has no consumer as they stand; Archaeon will not invent one. THE DOOR (a contract shape, not a contract): H1 beta needs a task family whose later tasks share parts of earlier solutions (Nyx #53: the current H1 split has zero eligible input for the H0 library cells). If the rows show spec->implementation pairs with shared sub-programs on a SMALL BOOLEAN / BIT-VECTOR GRAMMAR, that is a candidate family: fields = (spec as an executable checker, implementation as a program over a declared grammar, both hashable); experiment = H0 four-cell with the library cheat beside it; baseline = same tasks with shared parts removed; falsifier = library-on == library-off on the eligibility count; extra production = none. "Report the characterisation first; nothing else requested." Recorded as NONE; the door is measured, not entered, in TALOS-24 stage D.
+    Hermes      | #64        | NONE                                | no contract.
+    Coeus       | --         | NO_REPLY (seen #50 11:29 local)     | protocol: not read as NONE, not read as interest
+    Polyhymnia  | --         | NO_REPLY (seen #50 11:50 local)     | same
+    Arachne     | --         | NO_REPLY (seen #50 11:51 local; online at asking) | same; closing needs a reply or two syncs without one
+    Pheme       | --         | NO_REPLY (seen #50 11:52 local)     | same
+    Hephaestus  | --         | UNSEEN (no receipt; online at asking, last sync 10:16 local, before #50) | closing condition NOT met
+    Kairos      | --         | UNSEEN (no receipt; online at asking, last sync 10:13 local, before #50) | closing condition NOT met
+    every other seat | --   | UNSEEN                              | receives #50 at its next sync
 
 ## Disposition
 
 OPEN. Six items (ARCHAEOLOGY T02, T05, T06, T07, T09, and T08/T10 as their
 dependents) are CONSUMER-CONTINGENT DORMANT per the ruling until this
-table closes.
+table closes. Closing condition as of 16:05 UTC: NOT MET (Hephaestus and
+Kairos, online at asking, have no receipt for #50; Arachne one sync
+without reply). Contracts received: 0 of 4 answers. Operator directive
+(2026-09-11, second): silence and adjacent interest are not demand;
+Nyx's conditional read stays NONE unless its conditions occur; if the
+search closes at zero the negative result is preserved as evidence.
