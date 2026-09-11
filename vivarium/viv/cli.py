@@ -366,8 +366,11 @@ def cmd_run(args, conn) -> int:
     # "read-only inspection" under which it may run from the canonical
     # checkout. An override that could unlock this would be a hole with a
     # polite name.
-    ws = _workspace.assert_not_canonical("run the consumer",
-                                         allow_override=False)
+    # Rule 2 AND rule 6. assert_not_canonical alone passes a linked worktree
+    # under the canonical checkout and a session-temporary path -- both report
+    # main_worktree false, and both are places a long-lived process must not
+    # live. Techne found that hole in their own copy of this guard.
+    ws = _workspace.assert_durable_worktree("run the consumer")
     print("[viv] workspace %s" % _json.dumps(ws))
     if not ws["detached"]:
         print("[viv] NOTE: rule 6 wants a long-lived process on a DETACHED "

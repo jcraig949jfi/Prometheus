@@ -112,3 +112,79 @@ def test_the_write_entry_points_all_carry_the_guard():
         body = src[i:i + 900]
         assert "assert_not_canonical" in body, fn
         assert "allow_override=False" in body, fn
+
+
+# ===========================================================================
+# Rule 2: the two placements main_worktree cannot see (Techne, 2026-09-11)
+# ===========================================================================
+
+def test_canonical_root_is_derived_not_hardcoded():
+    root = _ws.canonical_root()
+    assert root is not None
+    assert _ws.is_main_worktree(root) is True
+
+
+def test_a_linked_worktree_under_the_canonical_checkout_is_flagged():
+    """THE HOLE. It reports main_worktree FALSE -- it genuinely is a linked
+    worktree -- so a canonical-only check clears it every time while the files
+    sit inside the directory that has twice lost ~11,000 tracked files.
+
+    This suite runs from exactly such a worktree today, which is why the
+    assertion is on the real path rather than a constructed one."""
+    here = _ws.receipt()
+    if not here["inside_canonical_checkout"]:
+        pytest.skip("this suite is not running under the canonical checkout")
+    assert here["main_worktree"] is False, "the hole is that this is False"
+    assert here["durable_worktree"] is False
+
+
+def test_a_session_temporary_path_is_flagged(tmp_path, monkeypatch):
+    """Techne's own violation, from the other side: a worktree under a session
+    scratchpad is REMOVED rather than corrupted, and a long-lived process whose
+    code is deleted underneath it leaves a claimed row with no worker."""
+    assert _ws.session_temporary(tmp_path) is True
+    assert _ws.session_temporary(Path("F:/Prometheus-worktrees/x")) is False
+
+
+def test_the_pinned_consumer_worktree_is_durable_if_it_exists():
+    pinned = Path("F:/Prometheus-worktrees/vivarium-consumer")
+    if not pinned.exists():
+        pytest.skip("the pinned consumer worktree is not on this host")
+    r = _ws.receipt(pinned)
+    assert r["durable_worktree"] is True
+    assert r["detached"] is True, "rule 6 wants a pinned SHA, not a branch"
+
+
+def test_assert_durable_worktree_refuses_all_three_placements(monkeypatch):
+    for flag in ("main_worktree", "inside_canonical_checkout",
+                 "session_temporary_worktree"):
+        base = {"main_worktree": False, "inside_canonical_checkout": False,
+                "session_temporary_worktree": False, "durable_worktree": False,
+                "worktree_path": "X", "branch": "HEAD", "detached": True,
+                "base_sha": "0" * 40, "dirty": False,
+                "allow_canonical_override": False}
+        base[flag] = True
+        monkeypatch.setattr(_ws, "receipt", lambda *a, **k: dict(base))
+        with pytest.raises(_ws.CanonicalCheckoutRefused) as e:
+            _ws.assert_durable_worktree("run the consumer")
+        assert "no override" in str(e.value).lower(), flag
+
+
+def test_assert_durable_worktree_has_no_override(monkeypatch):
+    """A consumer holding a global execution slot, writing to the durable
+    register, from a directory that can be rewritten or deleted underneath it
+    is the failure the whole invariant exists to prevent."""
+    monkeypatch.setattr(_ws, "receipt", lambda *a, **k: {
+        "main_worktree": True, "inside_canonical_checkout": False,
+        "session_temporary_worktree": False, "durable_worktree": False,
+        "worktree_path": "X", "branch": "HEAD", "detached": True,
+        "base_sha": "0" * 40, "dirty": False,
+        "allow_canonical_override": True})
+    with pytest.raises(_ws.CanonicalCheckoutRefused):
+        _ws.assert_durable_worktree("run the consumer")
+
+
+def test_the_consumer_entry_point_uses_the_durable_check():
+    src = (VIVARIUM / "viv" / "cli.py").read_text(encoding="utf-8")
+    i = src.index("def cmd_run(")
+    assert "assert_durable_worktree" in src[i:i + 900]

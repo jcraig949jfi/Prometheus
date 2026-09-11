@@ -71,9 +71,22 @@ TASKS = {
 PACK_A = [[0, 0, 0], [1, 1, 1], [0, 1, 0], [1, 0, 1]]
 PACK_B = [[1, 1, 0], [0, 0, 1], [1, 0, 0], [0, 1, 1]]
 
-#: HAND-BUILT, and therefore an INSTRUMENT CONTROL. These are the subterms of
-#: MAJ3; that they help is arithmetic, not evidence that an extracted library
-#: would. H0's design says the same of its own library fixtures.
+#: HAND-BUILT, and CONTAMINATED -- which is a stronger statement than the
+#: "instrument control" label it carried until 2026-09-11, and the label was
+#: hiding rather than making the point.
+#:
+#: viv.library_leak.check reports SOLVES_A_TASK: `ab` is a complete solution to
+#: task `and01` in this same set, so a search handed it finds that task as a
+#: SIZE-1 LEAF. `ac` and `bc` are the remaining subterms of `maj3`, also in the
+#: set. So the "library solved maj3" line in the per-task matrix below is the
+#: LEAK measuring itself, not a library effect.
+#:
+#: Found by Techne on their own extracted library and checked here immediately
+#: afterwards. Kept deliberately, because the demo's purpose is to show the
+#: machinery executes and a contaminated library exercises the loader exactly
+#: as a clean one would -- and because a leak that is named is worth more than
+#: a library that is quietly replaced. The tool now RUNS the check and prints
+#: the verdict, so nobody reads the matrix as science.
 INSTRUMENT_LIBRARY = [
     {"name": "ab", "expr": ["and", ["input", 0], ["input", 1]]},
     {"name": "ac", "expr": ["and", ["input", 0], ["input", 2]]},
@@ -306,6 +319,20 @@ def main() -> int:                                            # noqa: C901
     blob = json.dumps(receipt, indent=2, default=str)
     if args.out:
         Path(args.out).write_text(blob + "\n", encoding="utf-8")
+
+    # THE LEAK CHECK, printed BEFORE the counts, because a reader who sees the
+    # numbers first has already formed a view of them.
+    from viv import library_leak as _leak
+    leak = _leak.check(INSTRUMENT_LIBRARY, TASKS)
+    receipt["library_leak"] = leak
+    print("LIBRARY LEAK CHECK: %s (usable as a library effect: %s)"
+          % (leak["verdict"], leak["usable_as_a_library_effect"]))
+    for f in leak["findings"]:
+        print("  %-6s %-20s tasks=%s" % (f["component"], f["class"],
+                                          f["tasks"]))
+    if not leak["usable_as_a_library_effect"]:
+        print("  -> the S01/S11 cells below measure the LEAK, not the library.")
+    print()
 
     print("family/arm                          assigned attempted solved "
           "exh_space budget_ops budget_orc budget_cand invalid infra")
