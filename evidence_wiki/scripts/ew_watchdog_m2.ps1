@@ -51,8 +51,17 @@ function Start-Service-Fresh {
     Start-Sleep -Seconds 10
 }
 
-# 1. Down? start it.
-$health = try { (Invoke-WebRequest -Uri "http://localhost:8377/api/v1/health" -TimeoutSec 5 -UseBasicParsing).StatusCode } catch { 0 }
+# 1. Down? start it. Probe 127.0.0.1: "localhost" resolves to ::1 first and
+#    the refused IPv6 attempt cost ~2 s per call on M1 (measured 2026-09-11).
+$sw = [Diagnostics.Stopwatch]::StartNew()
+$health = try { (Invoke-WebRequest -Uri "http://127.0.0.1:8377/api/v1/health" -TimeoutSec 20 -UseBasicParsing).StatusCode } catch { 0 }
+if ($health -eq 200) {
+    # LAST-SUCCESS LINE (Pronoia #121, MONITORS row): a watchdog that logs
+    # only on failure gives a healthy and a dead watchdog the same observable.
+    # Presence only for now; the M1 property probe (authenticated search,
+    # present-but-dead restart) is ported under MNE-35.
+    Log ("ok  health {0}ms  last_success {1}" -f $sw.ElapsedMilliseconds, (Get-Date -Format s))
+}
 if ($health -ne 200) {
     Log "health check failed ($health); starting service"
     Start-Service-Fresh
