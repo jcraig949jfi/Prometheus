@@ -18,6 +18,7 @@ Run as:  python -m viv.cli <command>          (from vivarium/)
 from __future__ import annotations
 
 import datetime as _dt
+import json as _json
 
 import argparse
 import json
@@ -25,6 +26,7 @@ import sys
 from datetime import datetime, timezone
 
 from . import db as _db
+from . import workspace as _workspace
 from . import identity as _identity
 from . import kinds as _kinds
 from . import daemon as _daemon
@@ -133,6 +135,8 @@ def cmd_trace(args, conn) -> int:
 
 
 def cmd_enqueue(args, conn) -> int:
+    """(D-23 guarded: admitting a row is a write to the durable register.)"""
+    _workspace.assert_not_canonical("enqueue", allow_override=False)
     spec = json.loads(open(args.file, encoding="utf-8").read())
     try:
         _spec.validate(spec)
@@ -357,6 +361,22 @@ def cmd_release(args, conn) -> int:
 
 def cmd_run(args, conn) -> int:
     """The daemon entry point. `--once` runs exactly one tick."""
+    # D-23. allow_override=False: the consumer holds a single global execution
+    # slot and writes to the production register, so there is no reading of
+    # "read-only inspection" under which it may run from the canonical
+    # checkout. An override that could unlock this would be a hole with a
+    # polite name.
+    ws = _workspace.assert_not_canonical("run the consumer",
+                                         allow_override=False)
+    print("[viv] workspace %s" % _json.dumps(ws))
+    if not ws["detached"]:
+        print("[viv] NOTE: rule 6 wants a long-lived process on a DETACHED "
+              "pinned SHA; this worktree is on branch %r. The run proceeds "
+              "and the receipt records the branch, so what actually executed "
+              "is never in doubt." % ws["branch"])
+    if ws["dirty"]:
+        print("[viv] NOTE: tracked files are modified in this worktree. The "
+              "SHA above does not describe what is running.")
     conn.close()
     d = _daemon.Daemon(worker_id=args.worker_id, schema=args.schema,
                        idle_interval_s=args.interval)
@@ -402,6 +422,7 @@ def cmd_stop(args, conn) -> int:
 
 def cmd_tick(args, conn) -> int:
     """Exactly one tick, reported as JSON. The unit the daemon drives."""
+    _workspace.assert_not_canonical("execute a tick", allow_override=False)
     v = _loop.Vivarium(worker_id=args.worker_id, schema=args.schema,
                        log=(lambda *a: None) if args.quiet else print)
     report = v.tick(conn)
