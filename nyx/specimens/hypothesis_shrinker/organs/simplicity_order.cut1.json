@@ -1,0 +1,49 @@
+{
+  "schema": "nyx.chop/0",
+  "record_kind": "ORGAN",
+  "id": "organ.hypothesis_shrinker.simplicity_order.cut1",
+  "specimen": "hypothesis_shrinker",
+  "name": "the simplicity order with its inverse: shortlex over per-choice indices (integers zigzag around shrink_towards, collections by size class then alphabet shrink order, floats by lexical encoding), with choice_from_index as the inverse so 'the simplest value' is constructible",
+  "scale": "PRIMITIVE",
+  "cost_class": "CPU_SCALE",
+  "provenance": {
+    "ancestor": "hypothesis shrinker.sort_key + choice.choice_to_index / choice_from_index / zigzag_index / collection_index",
+    "sources": [
+      {
+        "ref": "hypothesis 6.165.10 (Techne lock; shrinker.py sha256 f364cbff...) hypothesis/internal/conjecture/shrinker.py 62-83 (sort_key: (len, tuple of choice_to_index); the three stated reasons)",
+        "grade": "T1-LOCAL"
+      },
+      {
+        "ref": "hypothesis 6.165.10 (Techne lock; shrinker.py sha256 f364cbff...) hypothesis/internal/conjecture/choice.py 305-322 (zigzag), 240-304 (collection_index / collection_value: size class then lexicographic), 323-410 (choice_to_index per type; bounds clamp shrink_towards; the nearer bound decides), 411-505 (choice_from_index: the inverse), 143-172 (ChoiceNode.trivial: value == choice_from_index(0))",
+        "grade": "T1-LOCAL"
+      },
+      {
+        "ref": "nyx/specimens/hypothesis_shrinker/PROVENANCE.md",
+        "grade": "T1-LOCAL"
+      }
+    ]
+  },
+  "questions": {
+    "ancestry": "Two files in the pinned bytes; drawn as one boundary because sort_key is meaningless without choice_to_index and trivial() is defined by the inverse. Historical ancestry (bytestring shrinking in older Hypothesis) is T2 and not claimed.",
+    "mechanism": "Each choice is mapped to a non-negative integer index within its own constraint space: integers by distance from shrink_towards alternating sides (zigzag), clamped so a bounded side runs out and the other continues; booleans 0/1; strings and bytes by (size class, then lexicographic position of each character in the alphabet's declared shrink order); floats by a sign bit and a lexical float encoding. A choice SEQUENCE is ordered first by length, then lexicographically by these indices. The inverse maps index 0 to the simplest value, which is how 'trivial' and 'replace with the simplest' are defined.",
+    "input": "a choice value with its constraints (type, bounds, shrink_towards, alphabet, sizes); or a sequence of choice nodes",
+    "output": "an integer index (or a tuple key); inversely a value",
+    "state": "none; pure functions of value and constraints",
+    "assumptions": "that 'fewer decisions' is simpler than 'smaller decisions' (length before content); that earlier choices matter more (lexicographic); that the alphabet's shrink order (IntervalSet.index_from_char_in_shrink_order) is a good notion of simpler character; that for integers the distance from shrink_towards is the notion of size",
+    "interface": "choice_to_index(value, constraints) -> int; choice_from_index(int, type, constraints) -> value; sort_key(nodes) -> (int, tuple); pure and total on permitted values",
+    "fitness_value": "unknown -- claimed: it makes 'minimal' well-defined and makes 'simplest replacement' constructible, which every pass uses (try_trivial_spans replaces a span by index-0 values). Whether this order agrees with what a user calls simple is the consumer's question: Proteus states in writing that it does NOT agree with the consumer's declared order (node_count, depth, canonical), and Techne measured 24/45 not minimal under the consumer's order. That number is the only measurement and it is of the DISAGREEMENT, not of the fitness.",
+    "failure_landscape": "(a) the order is over the ENCODING (choice sequence), not over the produced value, so two values that are equally simple to the consumer may be far apart, and a structurally simpler value may have a longer or lexicographically larger encoding; (b) length-first means a re-encoding that lengthens the sequence is never accepted even if the value is simpler (widen_to_span notes exactly this rejection); (c) the alphabet shrink order is a table supplied by the strategy (DATA); (d) floats use a custom lex encoding whose properties were not read here.",
+    "ablation": "unknown -- designed: replace sort_key by the CONSUMER's order (size_key on the decoded program) as allow_transition or as the gate. Prediction: fewer 'not minimal' cases on the Proteus fixture. Not run; the engine form does not expose the order as a parameter (allow_transition can veto, not re-rank).",
+    "decomposability": "(1) the per-type index tables (integers, booleans, collections, floats -- four independent encodings), (2) the shortlex composition. (1) is where the priors are; (2) is generic.",
+    "composability": "Any minimiser needs an order; this one is reusable wherever values are drawn from bounded typed choices. The consumer (Proteus) already composes DIFFERENTLY: it keeps its own order and scores the result against enumeration. That is the honest transfer story: the order does not transfer, the need for one does.",
+    "human_prior": "Everything in it. 'Shorter is simpler', 'earlier matters more', 'closer to shrink_towards is simpler', 'this alphabet order is simpler' are all authorial choices, stated as such in the sort_key docstring.",
+    "control": "Positive: choice_to_index(choice_from_index(i, t, c), c) == i for sampled i (round trip). Negative: the order of two integer choices reverses when shrink_towards moves past both (the order is constraint-relative, not absolute). Cheat: an order that is not strict (ties) lets acceptance adopt equal candidates and loop; assert strictness on adoption.",
+    "cheat": "Choosing an order under which the starting example is already minimal makes any minimiser look perfect; the control is the consumer's own order scored by enumeration (Techne's method)."
+  },
+  "alternative_cuts": [
+    "CUTS.md c16: the order is DATA (a table per type) not a mechanism; Nyx kept it as an ORGAN at CUT-1 because the inverse makes it constructive; a second Chopper may call it POLICY/DATA"
+  ],
+  "pressure_refs": [
+    "pressure.hypothesis_shrinker.smallest_witness_not_first.cut1"
+  ]
+}

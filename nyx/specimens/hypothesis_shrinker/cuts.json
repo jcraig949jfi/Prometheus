@@ -3,17 +3,615 @@
   "cuts": [
     "CUT-1"
   ],
-  "candidates": [],
+  "candidates": [
+    {
+      "id": "c01",
+      "name": "order-gated greedy acceptance",
+      "introduced_in": "CUT-1",
+      "origin": "DISCOVERED",
+      "source_boundary": "none: the same flow in shrinker.cached_test_function+incorporate_test_data and shrinking.common.Shrinker.consider",
+      "dispositions": {
+        "CUT-1": "ORGAN"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": [
+          "fitness_value",
+          "ablation"
+        ]
+      },
+      "record_bytes": {
+        "CUT-1": 5707
+      },
+      "independent_test": "specified",
+      "independent_test_ref": "organ record control field; ablations/ to run",
+      "ancestor_free_contract": true,
+      "consumer_returns": [],
+      "boundary_support": "UNTESTED",
+      "boundary_support_ref": "none",
+      "organ_record": "order_gated_acceptance.cut1.json"
+    },
+    {
+      "id": "c02",
+      "name": "the simplicity order with its inverse",
+      "introduced_in": "CUT-1",
+      "origin": "DISCOVERED",
+      "source_boundary": "none: shrinker.sort_key + choice.choice_to_index/choice_from_index (two files)",
+      "dispositions": {
+        "CUT-1": "ORGAN"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": [
+          "fitness_value",
+          "ablation"
+        ]
+      },
+      "record_bytes": {
+        "CUT-1": 6326
+      },
+      "independent_test": "specified",
+      "independent_test_ref": "organ record control field; ablations/ to run",
+      "ancestor_free_contract": true,
+      "consumer_returns": [],
+      "boundary_support": "UNTESTED",
+      "boundary_support_ref": "none",
+      "organ_record": "simplicity_order.cut1.json"
+    },
+    {
+      "id": "c03",
+      "name": "adaptive step search (find_integer)",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "def find_integer, junkdrawer.py",
+      "dispositions": {
+        "CUT-1": "ORGAN"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": [
+          "fitness_value",
+          "ablation"
+        ]
+      },
+      "record_bytes": {
+        "CUT-1": 4217
+      },
+      "independent_test": "specified",
+      "independent_test_ref": "organ record control field; ablations/ to run",
+      "ancestor_free_contract": true,
+      "consumer_returns": [],
+      "boundary_support": "UNTESTED",
+      "boundary_support_ref": "none",
+      "organ_record": "adaptive_step_search.cut1.json"
+    },
+    {
+      "id": "c04",
+      "name": "pass-step enumeration by choice tree",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "module shrinking/choicetree.py",
+      "dispositions": {
+        "CUT-1": "ORGAN"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": [
+          "fitness_value",
+          "ablation"
+        ]
+      },
+      "record_bytes": {
+        "CUT-1": 5505
+      },
+      "independent_test": "specified",
+      "independent_test_ref": "organ record control field; ablations/ to run",
+      "ancestor_free_contract": true,
+      "consumer_returns": [],
+      "boundary_support": "UNTESTED",
+      "boundary_support_ref": "none",
+      "organ_record": "pass_step_enumeration.cut1.json"
+    },
+    {
+      "id": "c05",
+      "name": "fixpoint scheduling of passes (20 failures, random after 10, reorder by deletion, stall padding)",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "def fixate_shrink_passes",
+      "dispositions": {
+        "CUT-1": "POLICY"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "boundary_support": "UNTESTED",
+      "boundary_support_ref": "none",
+      "organ_record": "none"
+    },
+    {
+      "id": "c06",
+      "name": "termination budget (max_stall adaptive + MAX_SHRINKING_SECONDS)",
+      "introduced_in": "CUT-1",
+      "origin": "DISCOVERED",
+      "source_boundary": "none: shrinker.check_calls/update_shrink_target + engine deadline",
+      "dispositions": {
+        "CUT-1": "POLICY"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "boundary_support": "UNTESTED",
+      "boundary_support_ref": "none",
+      "organ_record": "none"
+    },
+    {
+      "id": "c07",
+      "name": "standalone value shrinkers",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "package shrinking/",
+      "dispositions": {
+        "CUT-1": "ORGAN"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": [
+          "fitness_value",
+          "ablation"
+        ]
+      },
+      "record_bytes": {
+        "CUT-1": 6485
+      },
+      "independent_test": "specified",
+      "independent_test_ref": "organ record control field; ablations/ to run",
+      "ancestor_free_contract": true,
+      "consumer_returns": [],
+      "boundary_support": "UNTESTED",
+      "boundary_support_ref": "none",
+      "organ_record": "standalone_value_shrinkers.cut1.json"
+    },
+    {
+      "id": "c08",
+      "name": "span-structured passes",
+      "introduced_in": "CUT-1",
+      "origin": "DISCOVERED",
+      "source_boundary": "none: five defs united by the foreign state (data.Span) they read",
+      "dispositions": {
+        "CUT-1": "ORGAN"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": [
+          "fitness_value",
+          "ablation"
+        ]
+      },
+      "record_bytes": {
+        "CUT-1": 5627
+      },
+      "independent_test": "specified",
+      "independent_test_ref": "organ record control field; ablations/ to run",
+      "ancestor_free_contract": false,
+      "consumer_returns": [],
+      "boundary_support": "UNTESTED",
+      "boundary_support_ref": "none",
+      "organ_record": "span_structured_passes.cut1.json"
+    },
+    {
+      "id": "c09",
+      "name": "coupled-value passes",
+      "introduced_in": "CUT-1",
+      "origin": "DISCOVERED",
+      "source_boundary": "none: five defs united by 'cannot shrink alone'",
+      "dispositions": {
+        "CUT-1": "ORGAN"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": [
+          "fitness_value",
+          "ablation"
+        ]
+      },
+      "record_bytes": {
+        "CUT-1": 4993
+      },
+      "independent_test": "specified",
+      "independent_test_ref": "organ record control field; ablations/ to run",
+      "ancestor_free_contract": true,
+      "consumer_returns": [],
+      "boundary_support": "UNTESTED",
+      "boundary_support_ref": "none",
+      "organ_record": "coupled_value_passes.cut1.json"
+    },
+    {
+      "id": "c10",
+      "name": "shape repair after a size-controlling change",
+      "introduced_in": "CUT-1",
+      "origin": "DISCOVERED",
+      "source_boundary": "none: try_shrinking_nodes repair + try_lower_node_as_alternative + minimize_individual_choices fixup",
+      "dispositions": {
+        "CUT-1": "UNRESOLVED"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "boundary_support": "UNTESTED",
+      "boundary_support_ref": "none",
+      "organ_record": "none"
+    },
+    {
+      "id": "c11",
+      "name": "explain phase (sensitivity analysis over arg spans)",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "def _explain / Phase.explain",
+      "dispositions": {
+        "CUT-1": "UNRESOLVED"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "boundary_support": "UNTESTED",
+      "boundary_support_ref": "none",
+      "organ_record": "none"
+    },
+    {
+      "id": "c12",
+      "name": "engine data cache + DataTree simulation (a candidate answered without running)",
+      "introduced_in": "CUT-1",
+      "origin": "DISCOVERED",
+      "source_boundary": "none in the boundary: engine.cached_test_function + datatree.simulate_test_function (OUT)",
+      "dispositions": {
+        "CUT-1": "COUPLED_CLUSTER"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "boundary_support": "UNTESTED",
+      "boundary_support_ref": "none",
+      "organ_record": "none"
+    },
+    {
+      "id": "c13",
+      "name": "strategy-encoding heuristics (one_of selector guess; ValueHole re-encoding)",
+      "introduced_in": "CUT-1",
+      "origin": "DISCOVERED",
+      "source_boundary": "none: reduce_each_alternative + widen_to_span_with_recorded_value united by the smuggled generator knowledge",
+      "dispositions": {
+        "CUT-1": "POLICY"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "boundary_support": "UNTESTED",
+      "boundary_support_ref": "none",
+      "organ_record": "none"
+    },
+    {
+      "id": "c14",
+      "name": "per-pass statistics and profiling report",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "dataclass ShrinkPass + shrink() report",
+      "dispositions": {
+        "CUT-1": "SCAFFOLDING"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "boundary_support": "UNTESTED",
+      "boundary_support_ref": "none",
+      "organ_record": "none"
+    },
+    {
+      "id": "c15",
+      "name": "choice validity gate",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "def choice_permitted",
+      "dispositions": {
+        "CUT-1": "SCAFFOLDING"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "boundary_support": "UNTESTED",
+      "boundary_support_ref": "none",
+      "organ_record": "none"
+    },
+    {
+      "id": "c16",
+      "name": "per-node constraints (shrink_towards, bounds, alphabet shrink order)",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "TypedDicts in choice.py; supplied by strategies",
+      "dispositions": {
+        "CUT-1": "DATA"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "boundary_support": "UNTESTED",
+      "boundary_support_ref": "none",
+      "organ_record": "none"
+    },
+    {
+      "id": "c17",
+      "name": "what counts as still failing (same interesting_origin; flaky exit)",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "def shrink_interesting_test_cases (engine)",
+      "dispositions": {
+        "CUT-1": "POLICY"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "boundary_support": "UNTESTED",
+      "boundary_support_ref": "none",
+      "organ_record": "none"
+    },
+    {
+      "id": "c18",
+      "name": "node-program mini-DSL with one command",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "def run_node_program",
+      "dispositions": {
+        "CUT-1": "SCAFFOLDING"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "boundary_support": "UNTESTED",
+      "boundary_support_ref": "none",
+      "organ_record": "none"
+    }
+  ],
   "deliveries": [],
-  "cheat_controls": [],
+  "cheat_controls": [
+    {
+      "candidate": "c01",
+      "fired": "not_run",
+      "ref": "organs/order_gated_acceptance.cut1.json control/cheat fields"
+    },
+    {
+      "candidate": "c02",
+      "fired": "not_run",
+      "ref": "organs/simplicity_order.cut1.json control/cheat fields"
+    },
+    {
+      "candidate": "c03",
+      "fired": "not_run",
+      "ref": "organs/adaptive_step_search.cut1.json control/cheat fields"
+    },
+    {
+      "candidate": "c04",
+      "fired": "not_run",
+      "ref": "organs/pass_step_enumeration.cut1.json control/cheat fields"
+    },
+    {
+      "candidate": "c07",
+      "fired": "not_run",
+      "ref": "organs/standalone_value_shrinkers.cut1.json control/cheat fields"
+    },
+    {
+      "candidate": "c08",
+      "fired": "not_run",
+      "ref": "organs/span_structured_passes.cut1.json control/cheat fields"
+    },
+    {
+      "candidate": "c09",
+      "fired": "not_run",
+      "ref": "organs/coupled_value_passes.cut1.json control/cheat fields"
+    }
+  ],
   "knife_application": {
     "K1": {
       "status": "APPLICABLE",
-      "evidence": ""
+      "evidence": "applied: bodies read sequentially in the preregistered order; no def-grep before candidates were drawn; two named callees (find_integer, engine methods) located by grep AFTER the flow named them. Scored FIRED/DID_NOT_FIRE after the CUT-1 numbers are read."
     },
     "K2": {
       "status": "APPLICABLE",
-      "evidence": ""
+      "evidence": "fitness_value and ablation fields begin 'unknown -- ' in all 7 records; counted by the ledger at CUT-1 snapshot"
     },
     "K3": {
       "status": "APPLICABLE",
@@ -36,17 +634,22 @@
       "evidence": "consumer-flow rule; applies only if a pressure is delivered (owner would be Proteus)"
     },
     "K8": {
-      "status": "APPLICABLE",
-      "evidence": ""
+      "status": "FIRED",
+      "evidence": "every candidate row carries origin + source_boundary written at drawing (this script), before any record byte count or metric existed"
     },
     "K9": {
       "status": "APPLICABLE",
-      "evidence": "consumer-flow rule; applies only if a pressure is delivered (owner would be Proteus)"
+      "evidence": "the pressure record names the owner (Proteus) and hosting status before delivery; delivery to Vivarium + Proteus in one message pending"
     },
     "K10": {
       "status": "APPLICABLE",
-      "evidence": "consumer-flow rule; applies only if a pressure is delivered (owner would be Proteus)"
+      "evidence": "the pressure's cheat_control carries the one-sidedness read-out in notes"
     }
   },
-  "note": "empty at preregistration 2026-09-11 ~23:00Z; candidates appended as drawn from the flow log (K1), origin and source boundary stamped at drawing (K8), boundary_support UNTESTED until an intervention or a return"
+  "note": "empty at preregistration 2026-09-11 ~23:00Z; candidates appended as drawn from the flow log (K1), origin and source boundary stamped at drawing (K8), boundary_support UNTESTED until an intervention or a return",
+  "pressures": {
+    "CUT-1": [
+      "smallest_witness_not_first.cut1.json"
+    ]
+  }
 }

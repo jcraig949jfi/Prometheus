@@ -1,0 +1,43 @@
+{
+  "schema": "nyx.chop/0",
+  "record_kind": "ORGAN",
+  "id": "organ.hypothesis_shrinker.coupled_value_passes.cut1",
+  "specimen": "hypothesis_shrinker",
+  "name": "coupled-value passes: when a value cannot be lowered alone because another value depends on it, lower them together -- all duplicates at once, one down and one up, two integers by the same amount, a common offset across the values that changed, duplicated characters across two strings",
+  "scale": "MECHANISM",
+  "cost_class": "CPU_SCALE",
+  "provenance": {
+    "ancestor": "hypothesis Shrinker.minimize_duplicated_choices / redistribute_numeric_pairs / lower_integers_together / lower_duplicated_characters / lower_common_node_offset",
+    "sources": [
+      {
+        "ref": "hypothesis 6.165.10 (Techne lock; shrinker.py sha256 f364cbff...) hypothesis/internal/conjecture/shrinker.py 1376-1395 (minimize_duplicated_choices: nodes grouped by (type, value)), 1396-1450 (redistribute_numeric_pairs: node1 down, node2 up, within 4 nodes), 1451-1480 (lower_integers_together: within 3 nodes), 1481-1530 (lower_duplicated_characters: two strings within 4 nodes, all instances of one char), 1076-1140 (lower_common_node_offset: changed integer nodes share an offset; Integer.shrink on the offset; change-tracking state)",
+        "grade": "T1-LOCAL"
+      },
+      {
+        "ref": "nyx/specimens/hypothesis_shrinker/PROVENANCE.md",
+        "grade": "T1-LOCAL"
+      }
+    ]
+  },
+  "questions": {
+    "ancestry": "Five defs united at drawing by one idea (the docstrings each give the motivating case: y not in ls; m + n > bound; abs(m - n) > 1); DISCOVERED. Each docstring is a stated failure of single-value shrinking that the pass repairs.",
+    "mechanism": "Identify a small set of nodes that plausibly co-vary (same value; numeric and near; both integers and near; both strings sharing a character; or 'changed in the last accepted shrink'), then propose joint edits: the same new value for all, or a transfer of k from one to another, or the same decrement, or the same character replacement, searching k adaptively (find_integer / Integer.shrink). Proposals go through acceptance.",
+    "input": "the current best's nodes; a chooser; for the offset pass the set of nodes that changed since the last acceptance",
+    "output": "candidate sequences",
+    "state": "change tracking (which node indices differ between the last two accepted targets) for lower_common_node_offset; otherwise none",
+    "assumptions": "that coupled values are NEAR each other in the sequence (windows of 3-4 nodes, 'to avoid quadratic behaviour'); that duplicated values are coupled (or harmlessly co-shrinkable); that co-variation is linear (same delta) or conservative (sum preserved)",
+    "interface": "pass(chooser) -> None via consider_new_nodes",
+    "fitness_value": "unknown -- claimed: escapes the zig-zag and the 'cannot lower either alone' fixed points that greedy single-value moves get stuck in (lower_common_node_offset's docstring describes an O(m) zig-zag it turns into O(log m)). Not measured.",
+    "failure_landscape": "(a) coupling farther than 4 nodes apart is invisible; (b) only linear/sum couplings are tried; (c) 'changed nodes' tracking resets whenever the node count or types change, so structural shrinks blind the offset pass; (d) lower_duplicated_characters lowers ALL instances of a character, missing index-specific couplings (its own docstring says so).",
+    "ablation": "unknown -- designed: remove the five passes from the list; prediction: fixtures of the docstring shapes (y not in ls; m + n > bound) stop reaching their minima or take O(m) steps. Cheap given a harness that accepts a pass list; the class has no switch for it; not run at CUT-1.",
+    "decomposability": "Each pass separately; they share only the idea and the acceptance rule. The locality windows are POLICY parameters.",
+    "composability": "Any minimiser over vectors with dependent coordinates; nothing in Prometheus is a vector minimiser today. The IDEA (co-shrink duplicates; transfer between coupled pairs) is the transferable residue.",
+    "human_prior": "Locality (coupled things are near); linearity (same delta); duplication implies coupling. All three are cost-motivated guesses, stated as such.",
+    "control": "Positive: predicate 'ls contains y' with ls=[3], y=3 shrinks to ls=[0], y=0 only when duplicates move together. Negative: with independent values the passes propose nothing that single-value passes would not. Cheat: success on the positive that comes from deletion (ls=[] fails the predicate) rather than joint lowering; control: require len(ls)=1 in the predicate.",
+    "cheat": "Attributing a shrink to coupling when the values were independent and single-value passes would have done it; control: run with these passes removed and compare."
+  },
+  "alternative_cuts": [
+    "CUTS.md c05/cut B: all passes are one organ with the schedule"
+  ],
+  "pressure_refs": []
+}
