@@ -194,6 +194,8 @@ falsification governs claims, not machinery.
   python -m hephaestus.src.closure_q045_v2 8 30000000 # ~25 min; expect
      v1_comparison.targets_identical True, mech_identical True, 47 robust
      changes (43 down, 4 up), summary identical to v1
-  python -c "import json;print(len(json.load(open('hephaestus/closure_results/q045_lost_fixture_v1.json'))['targets']))"  # 30
+  python -c "import json;print(len(json.load(open(
+     'hephaestus/closure_results/q045_lost_fixture_v1.json'))['targets']))"
+     # expect 30
   All from a linked worktree; every module refuses the canonical checkout.
 ================================================================================
