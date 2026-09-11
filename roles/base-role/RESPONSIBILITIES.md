@@ -1,6 +1,6 @@
 # Base role -- responsibilities every Prometheus seat inherits
 
-Currency: 2026-09-11 (Archaeon, for the operator; north star and the operator's rulings on the first five adoption passes -- Vivarium, Techne, Herakles, Harmonia, Proteus, Mnemosyne, Elenchus -- added the same day). Every directory under roles/
+Currency: 2026-09-11 (Archaeon, for the operator; north star, the operator's rulings on the first adoption passes, and the comms queue added the same day). Every directory under roles/
 inherits this file; a seat's own RESPONSIBILITIES/ROLE/CHARTER adds to it and
 may not contradict it. Where they disagree, this file and the operator's
 verbatim directive win, in that order. Repository:
@@ -173,7 +173,15 @@ reads instead of any local memory directory.
    the newest prompt, and the status of the seats you depend on. Then start
    on the first one unless the operator redirects. The seat should always
    be working.
-7. FEED YOUR WATCHDOGS BEFORE YOUR TASKS. Enumerate every standing loop,
+7. SYNC YOUR INBOX. `python -m comms sync <Seat>` prints every unseen
+   message addressed to you or broadcast to all, marks them seen, and
+   appends prompts and delegations to the END of your task queue. Do this
+   BEFORE and AFTER every prompt you are fed and every loop iteration;
+   journal what arrived; take the queue in order (`python -m comms tasks
+   <Seat>`; `python -m comms done <Seat> <id>` when finished). The comms
+   queue lives in Postgres schema `comms` (comms/README.md); it replaced
+   the April Redis Agora on 2026-09-11 and is part of this base role.
+8. FEED YOUR WATCHDOGS BEFORE YOUR TASKS. Enumerate every standing loop,
    monitor, shadow, validator or qualification loop you own OR FEED
    (roles/base-role/MONITORS.md is the registry). For each: does it have
    a named input with a producer; does it write last_input_at and
@@ -274,8 +282,14 @@ reads instead of any local memory directory.
   rounded into nicer ones; the packet declares conflicts of interest and
   asks "what would falsify this" and "what should we stop"; it must always
   be able to recommend "not worth continuing".
-- Cross-seat messages are committed files, never chat:
-  roles/<Seat>/INBOX_<SENDER>_<TOPIC>_<DATE>.md. Prompts to other seats
+- Cross-seat messages go through the comms queue (`python -m comms post
+  --from <You> --to <Seat|*> --kind prompt|delegation|report|question|
+  ruling|ack|broadcast --subject ... --body-file <path>`): every message
+  carries a sha256 over its text, a receipt when seen, and a queue
+  position when it is work. The body is a committed file first (under
+  roles/<You>/prompts/ or as an INBOX file), then posted; chat is never
+  the channel. The file form roles/<Seat>/INBOX_<SENDER>_<TOPIC>_<DATE>.md
+  remains the durable record; the queue is how it reaches the seat. Prompts to other seats
   live under roles/<Sender>/prompts/<date>_<topic>/, committed verbatim
   with a MANIFEST of sha256 at issuance, prepended by a 00_COMMON block
   that states authority and reporting rules. Chat-only claims do not
@@ -285,8 +299,10 @@ reads instead of any local memory directory.
   the seat that owns the blocker, in the paste-block form, with: the
   blocker in one sentence, the artifact you need and where it should
   land, the evidence you already have, and the report you expect back.
-  Commit it under your prompts directory with its hash, and put it in
-  chat for the HITL operator to cut and paste into that seat's session.
+  Commit it under your prompts directory with its hash, and POST it to
+  that seat's inbox (`python -m comms post --kind delegation`); the seat
+  picks it up at its next sync. Put it in chat only if the operator must
+  relay it to a seat that is not running.
   Then do everything that does not depend on the answer. Never end a pass
   with a question; park a real block with a one-paragraph plain-language
   gate for the operator.
@@ -342,7 +358,9 @@ as provenance before any engine work.
 
 ## 7. Session close
 
-Dated journal entry; TODO updated (items closed by deletion with the
+`python -m comms sync <Seat>` once more (anything that arrived while you
+worked joins the end of your queue and is named in your receipt); dated
+journal entry; TODO updated (items closed by deletion with the
 commit that closed them, datestamped, purged after 24 h); commit only
 your paths with a message file; push; verify the SHA is an ancestor of
 origin/main; the one-screen receipt in chat as an ASCII block, ending

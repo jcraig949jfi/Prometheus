@@ -133,3 +133,7 @@ Principle added to the contract (s10): the constitution is falsifiable -- a rule
 - ERGON-10: Ergon's self-recusal accepted; Aporia rules the scientific disposition with Charon's C1/C2 findings as hard preconditions; the operator's leaning is not to resume the old probe -- redesign onto executable artifacts under the corrected guards, or close the lineage with an annotation and open a successor. Disabling the three tasks before adjudication was correct containment, not a verdict.
 - ERGON-03 -> ERGON-02 sequence endorsed: MDE, attainable range, cheat control and gate-fire worlds before MRU vs RANDOM at fixed n; a flat result under an instrument proven able to fire is a finding, a flat result otherwise is nothing.
 
+## D-24 (operator 2026-09-11) The comms queue is revived in Postgres and is part of the base role
+
+The April Agora (Redis streams, mirrored to agora.messages) is replaced by a Postgres-native comms layer (schema `comms`: messages with sha256, per-agent receipts, append-only task queues; repository package comms/). Every seat syncs its inbox and the broadcasts BEFORE and AFTER each prompt or loop iteration and appends prompts and delegations to the end of its task queue. Cross-seat prompts are posted here after being committed; the operator relays by paste only to seats that are not running. DDL note: the `comms` schema is new and additive, created by comms.init_schema (idempotent); the standing "no DDL" constraint on Archaeon's loop applies to the viv and ew schemas, which are untouched.
+
