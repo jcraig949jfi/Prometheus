@@ -3,7 +3,8 @@
 The responsibilities and the repository working contract every Prometheus
 seat inherits. Adopted by the operator 2026-09-11.
 
-- RESPONSIBILITIES.md -- boot sequence, doctrine, journaling, communication
+- NORTH_STAR.md -- the operator's north star, verbatim; read before any charter.
+- RESPONSIBILITIES.md -- north star, boot sequence, doctrine, journaling, communication
   (ASCII paste blocks; write-a-prompt-when-blocked; suggest work at boot),
   Claude Code rules, session close.
 - WORKING_CONTRACT.md -- the git/workspace invariant (D-23): worktree per
