@@ -1,0 +1,214 @@
+{
+ "criterion": "cellwise_majority_match",
+ "dispersion_field": "cellwise_sd_across_ics",
+ "gates_printed_before_any_gate": {
+  "R-C3-1 p_mode <= 0.50": true,
+  "corpus_random_tables": 120,
+  "expected_neighbourhood_size": 108.0,
+  "expected_nondegenerate_per_region": 12.0,
+  "neighbourhood_>=16": true,
+  "regions_with_>=8_nondegenerate_expected": 10
+ },
+ "h2_instrument": "X1 variance-ratio test across descriptor regions (unit = region); D3 is a LEAD GENERATOR only",
+ "location_field": "accuracy",
+ "n_random_preflighted": 60,
+ "named": {
+  "GKL": {
+   "dispersion": 0.3570714214271425,
+   "location": 0.85
+  },
+  "all_one": {
+   "dispersion": 0.4995998398718718,
+   "location": 0.48
+  },
+  "all_zero": {
+   "dispersion": 0.4995998398718718,
+   "location": 0.52
+  },
+  "centre_00": {
+   "dispersion": 0.4995998398718718,
+   "location": 0.52
+  },
+  "centre_01": {
+   "dispersion": 0.027449172145698062,
+   "location": 0.5365771812080538
+  },
+  "centre_10": {
+   "dispersion": 0.027449172145698062,
+   "location": 0.5365771812080538
+  },
+  "centre_11": {
+   "dispersion": 0.4995998398718718,
+   "location": 0.48
+  },
+  "exp": {
+   "dispersion": 0.48,
+   "location": 0.64
+  },
+  "maj": {
+   "dispersion": 0.0784688618560148,
+   "location": 0.5971812080536912
+  },
+  "par": {
+   "dispersion": 0.4073082370883261,
+   "location": 0.79
+  },
+  "particle1": {
+   "dispersion": 0.4330127018922193,
+   "location": 0.75
+  },
+  "particle2": {
+   "dispersion": 0.4439594576084623,
+   "location": 0.73
+  }
+ },
+ "null_under_third_criterion": {
+  "genome": "maj",
+  "transforms": {
+   "complement": {
+    "identical": true,
+    "location": 0.5971812080536912
+   },
+   "reflect": {
+    "identical": true,
+    "location": 0.5971812080536912
+   },
+   "reflect_complement": {
+    "identical": true,
+    "location": 0.5971812080536912
+   }
+  }
+ },
+ "plan": {
+  "arms": {
+   "C3-acq": 120,
+   "C3-base": 6,
+   "C3-hist": 6,
+   "C3-null": 18
+  },
+  "check": {
+   "arms": {
+    "C3-acq": 120,
+    "C3-base": 6,
+    "C3-hist": 6,
+    "C3-null": 18
+   },
+   "blockers": [],
+   "campaign": "C3-3",
+   "executor_preflight": {
+    "ran": {
+     "C3-acq": {
+      "dispersion": 0.07965046269406129,
+      "label": "random_000",
+      "location": 0.5003355704697987,
+      "per_cell_mean": true
+     },
+     "C3-base": {
+      "dispersion": 0.4995998398718718,
+      "label": "all_zero",
+      "location": 0.52,
+      "per_cell_mean": true
+     },
+     "C3-hist": {
+      "dispersion": 0.0784688618560148,
+      "label": "maj",
+      "location": 0.5971812080536912,
+      "per_cell_mean": true
+     },
+     "C3-null": {
+      "dispersion": 0.0784688618560148,
+      "label": "maj:reflect",
+      "location": 0.5971812080536912,
+      "per_cell_mean": true
+     }
+    },
+    "refused": {}
+   },
+   "invalid": [],
+   "kind_registered": true,
+   "ok_to_issue": true
+  },
+  "rows": 150
+ },
+ "primaries": {
+  "constants": "structural BOUNDARY on the dispersion axis: sd_across_ics = 0.5 exactly (the ceiling for a 0/1 per-IC value), random ~0.10; a boundary comparison, labelled (Harmonia 3b says zero; direction filed)",
+  "dispersion": "per-rule cellwise_sd_across_ics (within-rule spread across ICs)",
+  "location": "per-rule mean of accuracy over the four IC samples",
+  "multiplicity": "Bonferroni across the two primaries"
+ },
+ "random": {
+  "dispersion_mean": 0.07155733619621953,
+  "f_nondegenerate": 1.0,
+  "granularity": 6.711409395973154e-05,
+  "granules_in_range": 347.9999999999986,
+  "location_max": 0.5126174496644295,
+  "location_mean": 0.49983557046979865,
+  "location_min": 0.489261744966443,
+  "location_sd": 0.004901464782179442,
+  "p_mode": 0.03333333333333333,
+  "support_size": 58
+ },
+ "regions": {
+  "band": [
+   0.3333,
+   3.0
+  ],
+  "d3_style_ratio_observed": {
+   "pc00": 1.2054294406595605,
+   "pc01": 1.1150165294053276,
+   "pc02": 0.6909743920206948,
+   "pc03": 0.28177155161518147,
+   "pc05": 1.133910547824846,
+   "pc06": 5.338902150969322,
+   "pc07": 0.6544146716987417,
+   "pc08": 1.1370309206293572,
+   "pc09": 1.1663392375551556
+  },
+  "edges_popcount": [
+   57,
+   59,
+   61,
+   63,
+   64,
+   65,
+   67,
+   69,
+   71
+  ],
+  "expected_ratio_inside_band": true,
+  "expected_true_ratio": 1.0,
+  "n_regions": 10,
+  "note": "one generating distribution for every random table => true ratio 1.0; the observed spread at ~6 per region is F noise",
+  "observed_ratios_inside_band": [
+   7,
+   9
+  ],
+  "occupied_in_preflight": {
+   "pc00": 8,
+   "pc01": 4,
+   "pc02": 9,
+   "pc03": 9,
+   "pc04": 1,
+   "pc05": 4,
+   "pc06": 3,
+   "pc07": 10,
+   "pc08": 5,
+   "pc09": 7
+  },
+  "within_variance": {
+   "pc00": 2.2093921123243984e-05,
+   "pc01": 2.088044082098392e-05,
+   "pc02": 1.3706589793252327e-05,
+   "pc03": 6.0028577291313105e-06,
+   "pc04": null,
+   "pc05": 2.1210380913772982e-05,
+   "pc06": 8.578142125730001e-05,
+   "pc07": 1.3158015905189438e-05,
+   "pc08": 2.120715283095312e-05,
+   "pc09": 2.1561877307114216e-05
+  }
+ },
+ "schema": "archaeon.c3_3.preflight.v0",
+ "seed": 0,
+ "written": "2026-09-11T00:24:39+00:00"
+}

@@ -1,6 +1,6 @@
 # H0–H5 status — compact, from receipts only
 
-Maintained by Archaeon. Updated 2026-09-10 ~20:30 (operator decisions applied; H5-1 ISSUED; D-6 pilot ACTIVE). Review packet: `roles/Archaeon/REVIEW_PACKET_2026-09-10.md`. Delegation: `roles/Archaeon/prompts/2026-09-10_tracks/` (Tracks A-E from the operator's Chimera brief; three corrections verified: sqrt(6) counterexample, client_id retention gap, XOR-injection non-conservation). Design v0.1
+Maintained by Archaeon. Updated 2026-09-10 ~21:15 (C3-3 built and preflighted; H5-1 running; D-6 first allocated tick). Review packet: `roles/Archaeon/REVIEW_PACKET_2026-09-10.md`. Delegation: `roles/Archaeon/prompts/2026-09-10_tracks/` (Tracks A-E from the operator's Chimera brief; three corrections verified: sqrt(6) counterexample, client_id retention gap, XOR-injection non-conservation). Design v0.1
 (`roles/Archaeon/prompts/2026-09-08_h0h5/DESIGN_H0_H5_v0.1.md`). Every row
 below is derived from a committed receipt; nothing is inferred from a plan.
 Baseline: `archaeon/docs/h0h5/BASELINE_2026-09-09.json`.
@@ -64,6 +64,17 @@ Baseline: `archaeon/docs/h0h5/BASELINE_2026-09-09.json`.
 
 
 
+
+
+## Wake 22 (2026-09-10, ~21:15): C3-3 built (F-22 / ARCH-01); H5-1 running; D-6 first allocated tick
+
+- **C3-3 built from Harmonia's item 3** (archaeon/producer/campaign_c3_3.py; design archaeon/docs/h0h5/C3_3_DESIGN.md; preflight C3_3_PREFLIGHT.json; NOT issued). Criterion cellwise_majority_match; two primaries (per-rule mean; per-rule sd across ICs) with Bonferroni; C3-2's seed_root and first 120 random tables kept so every organism is paired across criteria; descriptor regions = popcount deciles of Binomial(128, 1/2), declared analytically. **Preflight through Vivarium's executor, 60 random tables**: location 0.4998 over [0.4893, 0.5126] (sd 0.0049), dispersion 0.072, support 58/60, p_mode 0.033 (R-C3-1 holds), f = 1.0, granularity 1/14,900 (348 granules across the range), corpus = 120 tables, 12 expected per region, 10/10 regions >= 8, neighbourhood 108. Per 3e the true between-region ratio is 1.0 by construction (one generating distribution), inside D3's band: **H2's instrument for C3-3 is the X1 variance-ratio test across regions; D3 is a lead generator only**. Null under the third criterion IDENTICAL on maj x three transforms; maj 0.597 (measurable here). Executor preflight one row per arm: ok_to_issue.
+- **Correction filed to Harmonia (3b)**: the constants' dispersion is a structural BOUNDARY at the CEILING (per-IC match is 0 or 1 -> sd_across_ics = 0.5, the maximum), not zero; random tables sit near 0.10. Substance unchanged, direction inverted. roles/Harmonia/INBOX_ARCHAEON_C3_3_PREFLIGHT_2026-09-10.md.
+- **H5-1**: 15 of 256 complete after ~50 min (~3 min per row, engine/PEW round trip dominates a trivial computation); 0 failed. Readout at completion (F-24).
+- **D-6 pilot, first allocated tick (F-26)**: the 20:12 tick's source_evidence carries allocation active=true, share established, family kind:evaluate_bitstring (the only admitted family, so the day's one reserve slot is unspent by rule, not by omission).
+- **Techne e8ee099d1**: two XL rows dissolved by measurement -- WSL2 Ubuntu is already installed and running (DreamCoder drops to M: a docker image on python 3.7 + opam from the pinned revision), and the free SDP path fails in exactly one regime (conditioning 1e10, where BOTH solvers are wrong differently on a certified-feasible problem), so MOSEK is a one-regime question, not a purchase decision today.
+- Daedalus/Harmonia C7 and HARM-35 exchange: the conformance contract models the request surface only (0 response schemas on 67 routes), so a response-field change is invisible to the gate; both sides now say so and point at each other's commit. Infrastructure hygiene; nothing in Archaeon's lane.
+- Proteus and Mnemosyne backlogs: still not on main.
 
 ## Wake 21 (2026-09-10, ~20:30): the operator's nine decisions, applied
 
