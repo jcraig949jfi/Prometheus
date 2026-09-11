@@ -1,0 +1,130 @@
+====================================================================
+HERMES -- BASE ROLE ADOPTION RECEIPT
+2026-09-11
+====================================================================
+
+1. WHAT I READ, AND AT WHICH SHA
+
+   base role read at   8714b2709 (origin/main at fetch; the worktree
+                       was created from it)
+   files read in full  roles/base-role/README.md
+                       roles/base-role/NORTH_STAR.md
+                       roles/base-role/RESPONSIBILITIES.md
+                       roles/base-role/WORKING_CONTRACT.md
+                       roles/base-role/INHERITANCE.md
+                       roles/base-role/MONITORS.md
+                       roles/Archaeon/prompts/2026-09-10_backlog/
+                         00_BACKLOG_SCHEMA.md
+                       comms/README.md
+                       archaeon/tests/test_base_role.py
+                       roles/Icarus/ (RESPONSIBILITIES, STATUS,
+                         adoption receipt) as the model for a seat
+                         whose roles/ directory was created on its own
+                         adoption pass
+   also read           agents/hermes/README.md
+                       pivot/hermes_deprecation_2026-05-17.md
+                       pivot/agent_roster_2026-05-28.md (Hermes rows)
+                       pivot/COMPONENT_DISPOSITION_PLAN_2026-06-23.md
+                         (row 43)
+                       pivot/PROCESS_TABLE_2026-06-24.md (Hermes row)
+                       scripts/send_brief_email.py (source, for the
+                         absent guards and the AGENT_REFS registry)
+                       eleven May commit messages, 74c4c5834..cce4505ed
+                       evidence_wiki/docs/OPERATIONS_V1.md (the
+                         EW_DB_HOST override)
+
+   INHERITANCE: Hermes had NO row and NO roles/ directory. Both rows
+   added on this commit, per Archaeon's ruling (comms message 39,
+   2026-09-11 10:47): a seat adds its own rows; the register is a
+   receipt, not a permission. No stub existed to fill.
+
+2. WORKSPACE RECEIPT (WORKING_CONTRACT s4)
+
+   worktree_path   D:\Prometheus-worktrees\hermes-base-role
+   branch          hermes/base-role-adopt-2026-09-11  (task branch)
+   base_sha        8714b2709ffa3f1a5d55781d476c3eba4c97a898
+   dirty           false at creation (39,284 files, clean)
+   main_worktree   false (git-dir D:/Prometheus/.git/worktrees/
+                   hermes-base-role != git-common-dir D:/Prometheus/.git)
+   machine         M2 (SPECTREX5)
+   comms boot      2026-09-11T15:26Z, model claude-opus-5[1m], heavy,
+                   capabilities TOOLS,any, status active
+   comms sync      2026-09-11T15:27Z, 2 new (messages 1 and 39),
+                   0 queued, queue length 0, nothing addressed to Hermes
+
+   Hermes footprint before this worktree: 0 worktrees, 0 local
+   branches, 0 processes on this host, 0 scheduled tasks on this host,
+   0 untracked files in the canonical checkout.
+
+3. THE ONE CONTRACT VIOLATION ON THIS PASS
+
+   `git pull` was run in the canonical checkout as the session's first
+   command, on the operator's "pull the latest first" instruction and
+   before WORKING_CONTRACT.md had been read. It returned "Already up to
+   date"; no tree change, no merge, no index write. Recorded here and
+   in calibration/CALIBRATION.md row 8 rather than omitted, because a
+   violation that happened to be harmless is still a violation and the
+   contract is only measurable if they are all reported. Every
+   subsequent command ran from the linked worktree; the canonical
+   checkout was afterwards read-only.
+
+4. CLEAN-UP OF THE CANONICAL CHECKOUT
+
+   a. nothing to claim: no hermes path in `git status` of the canonical
+      checkout; the tree was clean at session start.
+   b. stale worktrees / merged branches of mine: none existed.
+   c. long-running processes: none on this host. Verified by
+      Get-ScheduledTask and Win32_Process filtered on intelligence_loop,
+      send_brief_email, portfolio_monitor, metis_portfolio, pronoia --
+      no match. The machinery this seat owns runs on M3 or M4 and is
+      not observable from here; that is HERMES-XL-3 and HERMES-08, and
+      until one of them resolves, every claim about the mailer's
+      running state is UNKNOWN rather than "active".
+   d. startup refusal on entry points I own: NOT DONE, by the
+      operator's scope limit ("nothing other than this bootstrap and
+      registration"). HERMES-05.
+   e. this receipt.
+
+5. WHAT WAS EXECUTED
+
+   Nothing. No email, not even a dry run. No loop started, stopped or
+   restarted. The dormant producer was not revived. No script was
+   modified. No credential file was opened. The only writes outside
+   this seat's own directory are the two registry rows in section 6 and
+   the HISTORICAL annotation prepended to agents/hermes/README.md.
+
+   `python -m comms init` was also NOT run, for a reason that is not
+   the scope limit: on M2 the Evidence Wiki resolver connects to a
+   LOCAL FORK of prometheus_fire that carries only the `public` schema,
+   so `comms boot` failed with UndefinedTable. `init` is idempotent DDL
+   and would have succeeded -- and would have minted a second comms
+   schema on M2 that passes every name check and is a silently forked
+   program inbox. Failed closed; used the documented override
+   EW_DB_HOST=192.168.1.202 instead; filed the resolver defect as
+   HERMES-25 for comms' owner rather than patching another lane's code.
+
+6. REGISTRY ROWS ADDED ON THIS COMMIT
+
+   roles/base-role/INHERITANCE.md
+     Hermes | RESPONSIBILITIES.md (created with the banner, 2026-09-11
+     adoption pass; the seat had no roles/ directory before)
+     and the entry-file row.
+
+   roles/base-role/MONITORS.md
+     Hermes portfolio brief mailer -- the existing UNOWNED row is
+     claimed by this seat (pending HERMES-XL-1) and annotated with what
+     was measured today: no freshness record, no payload hash, no
+     unchanged-payload check; state ACTIVE-UNVERIFIED, not ACTIVE,
+     because its host is not observable from here.
+     Portfolio brief producer (scripts/intelligence_loop.py) -- NEW
+     row: DORMANT since 2026-09-09T02:15:15Z, 61.0 hours at the time of
+     writing, about 15 missed 4-hour cycles; owner UNCLAIMED;
+     freshness source is the auto-commit stream in git.
+
+7. SEAT STATE AFTER THIS PASS
+
+   ACTIVE, not productive today by instruction. Three operator
+   decisions open (HERMES-XL-1, -XL-2, -XL-3), each stated with this
+   seat's recommendation so the operator ratifies or overrules a stand
+   rather than answering an open question. None of the three blocks the
+   next executable action, which is HERMES-01, the delivery ledger.

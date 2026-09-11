@@ -37,7 +37,7 @@ def main(argv=None) -> int:
     s = sub.add_parser("show"); s.add_argument("message_id", type=int)
     s = sub.add_parser("claim"); s.add_argument("agent"); s.add_argument("message_id", type=int)
     a = ap.parse_args(argv)
-    conn = api.connect()
+    conn = api.connect(require_schema=(a.cmd != "init"))
     try:
         if a.cmd == "init":
             api.init_schema(conn); print("comms schema", api.schema(), "ready"); return 0

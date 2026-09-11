@@ -37,6 +37,22 @@ os.environ.setdefault("VIV_SCHEMA", TEST_SCHEMA)
 #                 not be able to aim the suite at production by accident.
 os.environ["VIV_PEW_NAMESPACE"] = "test"
 
+#   CONFORMANCE -- the gate makes REAL calls to the engine named by the
+#                  contract, and the full tier registers a probe client on it.
+#                  A suite that constructs a Vivarium would otherwise reach the
+#                  production engine on every tick, which is the same defect as
+#                  the PEW namespace above wearing a different hat. Forced
+#                  rather than setdefault, for the same reason: an operator
+#                  with the variable exported must not be able to aim the suite
+#                  at production by accident.
+#
+#                  This is NOT a hole in the gate. viv/conformance.py honours
+#                  the override only outside the production schema; when the
+#                  schema is `viv` the variable and the `enabled` flag are both
+#                  ignored, so the real consumer cannot be run ungated by
+#                  setting an environment variable.
+os.environ["VIV_CONFORMANCE_MODE"] = "off"
+
 # SFE has no namespace: a test world is as real as any other. So the split is
 # two DURABLE identities rather than one durable and a shredded tail -- live
 # tests run as `vivarium-test`, the consumer as `vivarium`. Before this,

@@ -1,0 +1,39 @@
+{
+  "schema": "nyx.chop/0",
+  "record_kind": "ORGAN",
+  "id": "organ.dreamcoder.recognition_guided_enumeration.v0",
+  "specimen": "dreamcoder",
+  "name": "recognition-guided enumeration: a task-conditioned distribution over grammar productions orders a best-first enumeration of typed programs",
+  "scale": "MECHANISM",
+  "cost_class": "MODEL_INFERENCE",
+  "provenance": {
+    "ancestor": "DreamCoder (wake phase: recognition model + OCaml enumerator)",
+    "sources": [
+      {"ref": "doi:10.1145/3453483.3454080 (the recognition model and the enumeration solver) -- identifier resolved; content claim remembered", "grade": "T1-SOURCE"},
+      {"ref": "techne/acquisition/receipts/first_useful_check-dreamcoder-20260910T222933Z.json (BLK-DC-2: opam and ocaml absent; the solver needs an opam switch 4.06.1+flambda plus ppx_jane, core, re2, yojson, vg, cairo2, camlimages, menhir, ocaml-protoc, zmq; every domain script invokes it. BLK-DC-1: torch==1.1.0 among 38 pins, 22 sdist-only)", "grade": "T1-LOCAL"},
+      {"ref": "nyx/specimens/dreamcoder/PROVENANCE.md", "grade": "T1-LOCAL"}
+    ]
+  },
+  "questions": {
+    "ancestry": "DreamCoder's wake phase as remembered (T2): a neural recognition model reads a task (examples) and emits a distribution over the grammar's productions (a task-specific weighting of the same grammar); an enumerator, written in OCaml, lists typed programs in order of probability under that weighting and checks each against the task within a budget. The two halves live in different languages and processes (T1-LOCAL) and neither can run here.",
+    "mechanism": "Two coupled computations. RECOGNISE: task -> production weights (a vector over grammar rules, possibly context-dependent). ENUMERATE: best-first expansion of typed program skeletons where each expansion's cost is the negative log weight of the production used, checking complete programs against the task's evaluator, stopping at a budget. The coupling is that the weights are the enumeration order; nothing else passes between them.",
+    "input": "a task (examples or a spec) with an evaluator; a typed grammar with base weights; a budget (time or program count); for RECOGNISE, a trained model for the task's domain encoding",
+    "output": "zero or more programs that pass the evaluator within budget, each with its log probability; the count enumerated (the budget actually spent)",
+    "state": "the recognition model's parameters (trained in dream sleep; fixed during wake); the grammar. The enumerator itself is stateless per task.",
+    "assumptions": "the task has a representation the model can read (per-domain encoders: this is the representation dependency the blockers expose); the grammar is typed so that ill-typed skeletons are never expanded (type-directed enumeration is load-bearing for tractability, T2); the weight vector makes the target program cheap enough to reach within budget -- otherwise the guide is inert and the enumeration is the base grammar's; the OCaml solver's exact enumeration order and pruning are what the published budgets were measured against (T1-LOCAL that the solver is a separate binary; T3 that its order matters to the numbers)",
+    "interface": "recognise(task) -> weights; enumerate(grammar, weights, task, budget) -> [(program, logp)], n_enumerated. Two functions. The second is usable with ANY weight source (uniform, hand-set, learned) and that is the honest cut: the enumerator is a general organ, the recogniser is a representation-bound one.",
+    "fitness_value": "As remembered (T2): the guide made the enumeration of a large grown grammar tractable by putting the likely productions first; without it, library growth would make enumeration slower, not faster. The value is conditional on the library organ: a guide over a fixed small grammar buys little. Not observed here.",
+    "failure_landscape": "(a) OPERATIONALLY WELDED: the enumerator is an OCaml binary requiring a 2018 toolchain (opam 4.06.1+flambda) and the recogniser a 2019 torch; neither builds here (T1-LOCAL). In prose the mechanism is two functions; operationally it is a process tree with a fixed wire protocol (the H0-H5 design line 130 anticipates exactly this: an external solver needs a bounded backend contract with process-tree cancellation). This is the charter XVII.14 case: a mechanism that appears transferable in prose and is not transferable operationally, as pinned; (b) MISCALIBRATED GUIDE: weights that make the target improbable are worse than uniform within a fixed budget (reasoned, T3); (c) REPRESENTATION DEPENDENCY: a new domain needs a new task encoder (T2); (d) BUDGET AS HIDDEN PARAMETER: published solve rates are at published budgets on published machines (T1-LOCAL for the machines; T2 for the rates); at 7200 s on 16 CPUs they are unknown; (e) the type system does the pruning; an untyped representation loses that and the enumeration explodes (T2).",
+    "ablation": "Replace learned weights with uniform: the enumerator still runs (this is the 'no guide' arm any local experiment could build on the Proteus boolean grammar without DreamCoder). Replace the enumerator with a stochastic sampler under the same weights: the guide's value becomes a sampling-efficiency question. Neither has been run here; the pinned system cannot be run here at all.",
+    "decomposability": "Yes, three cuts: (1) RECOGNISE is separable and representation-bound; (2) ENUMERATE is separable and general, and further cuts into type-directed skeleton expansion (PRIMITIVE) and best-first ordering by additive cost (PRIMITIVE); (3) the budget policy is a PARAMETERIZATION. Below skeleton expansion is unification, trivia.",
+    "composability": "ENUMERATE consumes any grammar plus weights: a library from the compression organ, a mutation prior from a population's statistics, a hand-set bias. RECOGNISE could be replaced by anything that maps a task to weights, including a lookup from similar solved tasks (memory and retrieval lineage) or nothing. Consumers: Proteus's boolean substrate has an evaluator and a grammar (T1-LOCAL that they exist; Nyx has not checked whether an enumerator with pluggable weights exists there -- unknown).",
+    "human_prior": "Intrinsic: order the search by something learned from past successes. Human: a neural network is the learner; the ordering is best-first under a product of production weights (a PCFG-shaped prior); enumeration rather than sampling or local search; a hard type system; a separate OCaml process. The blockers make the last two visible as choices rather than necessities: they are what stops the mechanism moving.",
+    "control": "Positive, cheap, no DreamCoder: on the Proteus boolean grammar, hand-set weights that favour the productions of a known target; assert the target is enumerated earlier (fewer programs) than under uniform weights, across 20 targets. Negative: weights favouring the WRONG productions; the target must be enumerated later than under uniform. This isolates 'weights order the search' from 'a network can learn the weights', which is the part that cannot be tested here.",
+    "cheat": "Weights that put probability 1 on exactly the target's productions: the target must be the first program enumerated. If it is not, the enumerator is not ordering by the weights it is given and every guided number is suspect."
+  },
+  "alternative_cuts": [
+    "AMBIGUITY.md cut B: recogniser and enumerator are one organ because the enumeration order IS the recogniser's output and nothing else consumes it",
+    "AMBIGUITY.md cut C: the typed grammar with a prior is the organ; enumeration is just its evaluation order"
+  ],
+  "pressure_refs": ["pressure.dreamcoder.budget_below_the_space.v0"]
+}

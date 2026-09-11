@@ -15,14 +15,17 @@ Every role below carries the banner on its primary document(s):
 | Archaeon | RESPONSIBILITIES.md (already), CHARTER.md (already) |
 | Charon | RESPONSIBILITIES.md (already), CHARTER.md (already) |
 | Clymene | RESPONSIBILITIES.md (created 2026-09-11 on the seat's adoption pass; the seat had no roles/ directory before; agents/clymene/README.md is the March 2026 agent README, annotated by the seat file, not stamped) |
+| Coeus | RESPONSIBILITIES.md (created 2026-09-11 on the seat's adoption pass; the seat had no roles/ directory before and has never had a charter) |
 | CrossDomainCartographer | RESPONSIBILITIES.md (already) |
 | Daedalus | RESPONSIBILITIES.md (already), CHARTER.md (already) |
 | Diomedes | ROLE.md (already), BOOTSTRAP.md (already) |
 | Elenchus | RESPONSIBILITIES.md (already) |
+| Eos | RESPONSIBILITIES.md (created 2026-09-11 on the seat's re-seating pass; the seat had no roles/ directory before; agents/eos/README.md is the March 'Dawn Constitution', annotated by the seat file, not stamped) |
 | Ergon | RESPONSIBILITIES.md (already) |
 | EvolutionaryArchitectAndReasoningSpeciesEngineer | RESPONSIBILITIES.md (already) |
 | Harmonia | RESPONSIBILITIES.md (already), CHARTER.md (already) |
 | Hephaestus | ROLE.md (already) |
+| Hermes | RESPONSIBILITIES.md (created with the banner, 2026-09-11 adoption pass; the seat had no roles/ directory before, and was deprecated 2026-05-17 before the register existed) |
 | Talos | RESPONSIBILITIES.md (already); agents/talos/CHARTER.md (already) |
 | Nyx | RESPONSIBILITIES.md (already) |
 | Icarus | RESPONSIBILITIES.md (already) |
@@ -62,14 +65,17 @@ BOOTSTRAP.md if the seat has one, else STARTUP.md, RESPONSIBILITIES.md, ROLE.md,
 | Archaeon | RESPONSIBILITIES.md |
 | Charon | STARTUP.md |
 | Clymene | RESPONSIBILITIES.md |
+| Coeus | RESPONSIBILITIES.md |
 | CrossDomainCartographer | RESPONSIBILITIES.md |
 | Daedalus | RESPONSIBILITIES.md |
 | Diomedes | BOOTSTRAP.md |
 | Elenchus | RESPONSIBILITIES.md |
+| Eos | RESPONSIBILITIES.md |
 | Ergon | RESPONSIBILITIES.md |
 | EvolutionaryArchitectAndReasoningSpeciesEngineer | RESPONSIBILITIES.md |
 | Harmonia | RESPONSIBILITIES.md |
 | Hephaestus | RESPONSIBILITIES.md |
+| Hermes | RESPONSIBILITIES.md |
 | Talos | RESPONSIBILITIES.md |
 | Nyx | RESPONSIBILITIES.md |
 | Icarus | RESPONSIBILITIES.md |

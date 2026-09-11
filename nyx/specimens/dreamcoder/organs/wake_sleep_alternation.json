@@ -1,0 +1,39 @@
+{
+  "schema": "nyx.chop/0",
+  "record_kind": "ORGAN",
+  "id": "organ.dreamcoder.wake_sleep_alternation.v0",
+  "specimen": "dreamcoder",
+  "name": "wake-sleep alternation: solve under the current library, then rewrite the library from what was solved, then retrain the guide on replays and fantasies",
+  "scale": "SUBSYSTEM",
+  "cost_class": "MIXED",
+  "provenance": {
+    "ancestor": "DreamCoder",
+    "sources": [
+      {"ref": "doi:10.1145/3453483.3454080 (the wake / abstraction sleep / dream sleep cycle) -- identifier resolved; content claim remembered", "grade": "T1-SOURCE"},
+      {"ref": "techne/acquisition/receipts/first_useful_check-dreamcoder-20260910T222933Z.json (every domain script invokes the OCaml solver: BLK-DC-2; the official commands run on cloud machines for up to 57600 s: BLK-DC-4)", "grade": "T1-LOCAL"},
+      {"ref": "nyx/specimens/dreamcoder/PROVENANCE.md", "grade": "T1-LOCAL"}
+    ]
+  },
+  "questions": {
+    "ancestry": "The outer loop of DreamCoder as remembered (T2): WAKE searches for programs solving the current tasks under the current grammar, guided by the recognition model; ABSTRACTION SLEEP compresses the found programs into a grown grammar; DREAM SLEEP trains the recognition model on replayed solutions and on 'fantasy' programs sampled from the grammar. No local implementation exists and the pinned system cannot be built here (T1-LOCAL); this record is a T2 description with a T1-LOCAL boundary around it.",
+    "mechanism": "A schedule that alternates three operations over shared state: (1) bounded search per task under a fixed grammar and guide; (2) rewrite of the grammar from the search's successes (organ.dreamcoder.library_compression.v0); (3) refit of the guide from successes plus samples from the grammar. The information flow is a loop: successes change the grammar, the grammar changes the guide's training data, the guide changes which successes are found. The mechanism is the loop and the fact that each phase consumes only the previous phase's committed outputs.",
+    "input": "a task set with an evaluator; a base grammar; a search budget per task per wake; a guide model architecture and training budget",
+    "output": "per cycle: solved-task set, the grown grammar, the refit guide; the trajectory over cycles",
+    "state": "the grammar (grows), the guide's parameters (refit), the set of solutions found so far (replay buffer). All three persist across cycles and none is reset.",
+    "assumptions": "each phase is safe to run on the previous phase's frozen output (no phase reads the other's in-progress state); the search budget per wake is large enough that some tasks are solved in cycle 1 or nothing ever changes (a cold-start condition); fantasies drawn from the grammar resemble real tasks enough to be useful training data (T2; the strongest human prior in the record); compute is available at the scale the published runs used (BLK-DC-4: 16- to 96-CPU machines, up to 16 h per run, T1-LOCAL)",
+    "interface": "cycle(state, tasks, budgets) -> state'. The honest interface is three separately callable phases sharing a state record: wake(grammar, guide, tasks, budget) -> solutions; sleep_abstract(solutions, grammar) -> grammar'; sleep_dream(solutions, grammar', guide) -> guide'. Each is testable alone; the loop is a schedule over them.",
+    "fitness_value": "As remembered (T2): the loop let a system solve tasks that were out of reach of the base grammar within budget, by making them cheap under the grown grammar, while the guide kept the growing grammar's enumeration tractable. The claimed value is the COMPOUNDING: each phase makes the next cheaper. Not observed here.",
+    "failure_landscape": "(a) COLD START: if wake 1 solves nothing, sleep has nothing to compress and the loop is a fixed point (reasoned, T3; Prometheus's PHASE1_3 corpus is exactly the state where sleep would have nothing to do, T1-LOCAL); (b) COMPUTE ENVELOPE: the published behaviour was produced on cloud fleets with 16 h timeouts (T1-LOCAL: 199 launcher commands, machine types listed); whether the loop compounds at a 7200 s / 16 CPU envelope is unknown and is NOT a property of the algorithm alone; (c) INSEPARABLE INTERFACE: wake is welded to an OCaml solver binary that every domain script invokes (T1-LOCAL); the loop cannot be exercised with a different searcher without rewriting the wake phase; (d) REPRESENTATION DEPENDENCY: dream sleep needs a task encoder per domain (T2) and a 2019 torch (T1-LOCAL); (e) LIBRARY BLOAT / OVERFITTING: abstractions chosen from few solutions can be the solutions themselves (the leak measured on ALL_17, T1-LOCAL) and then the grammar memorises rather than generalises.",
+    "ablation": "Remove dream sleep: the loop degrades to search + compression (a system with no learned guide; whether it still compounds is the question the recognition organ's record leaves unknown). Remove abstraction sleep: the guide learns but the grammar never grows; the H0 design's 'library off' cells are this ablation for the Prometheus side (designed, not run). No ablation has run anywhere in this repository.",
+    "decomposability": "Yes, and the cut is the interface above: three phases plus a schedule. The schedule itself (which phase, how long, when to stop) is a PARAMETERIZATION. Whether wake is further cut into 'enumerate' and 'check' is the recognition organ's question.",
+    "composability": "The schedule shape (act under a model; rewrite the model from what worked; refit the guide from replays and samples) is not specific to programs: any organism with a searchable representation, a compressor for it, and a guide could run it. Consumers: H0's four-cell design is a static two-phase slice of it (source solutions -> frozen library -> target search); a soup organism that carries state between tasks is the dynamic version.",
+    "human_prior": "Intrinsic: alternate exploitation of a representation with revision of it. Human: three phases, in that order, with hard boundaries; the guide is a neural network trained on fantasies; the representation is a typed lambda-calculus grammar; and -- the one the blockers expose -- the assumption that the loop runs at cloud scale. A soup organism might interleave the phases continuously, revise the representation on every success, or have no guide at all.",
+    "control": "Positive (cheap, no DreamCoder needed): construct a task stream whose later tasks reuse a part of earlier solutions; run search + compression + search (no guide) and assert the second search solves a later task within a budget the first search could not. Negative: the same stream with the shared part removed; the second search must gain nothing. This control is buildable on the Proteus boolean substrate today; it has not been built.",
+    "cheat": "Hand the loop the target solutions as its 'wake 1 successes': sleep must then produce a grammar under which every target is a leaf and the second wake solves everything in one step. If the read-out cannot tell that run from an honest one, it measures nothing about compounding. Techne's leak detector on ALL_17 is this cheat's first half already fired (T1-LOCAL)."
+  },
+  "alternative_cuts": [
+    "AMBIGUITY.md cut B: the loop is the only organ; the phases are not separately meaningful because each phase's output format is the next phase's input format and nothing else consumes them",
+    "AMBIGUITY.md cut D (not taken): the replay buffer of solutions is the organ; the phases are ways of spending it"
+  ],
+  "pressure_refs": ["pressure.dreamcoder.recurring_structure.v0", "pressure.dreamcoder.budget_below_the_space.v0"]
+}
