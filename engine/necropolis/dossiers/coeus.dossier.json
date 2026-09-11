@@ -1,0 +1,336 @@
+{
+  "schema_version": "1.0.0",
+  "kind": "necropolis_dossier",
+  "_README": "NECROMANCER PASS #1 (Coeus). Archaeology only: nothing was resurrected, no historical agent was run as an agent. Coeus's own loaders/encoders were executed as INSTRUMENTS (apparatus control, LAW N14) to test its shipped artifacts against the forge ledger on disk. All numbers below are reproducible from dossiers/coeus_evidence/. This dossier OVERTURNS both prior verdicts: the Aug-2026 autopsy null (NO-DESIGN-FAILURE) rested on a vacuous observable, and the Jun-2026 RETIRE rested on an untested 'decorative-causal' assertion that turns out to be true but for a different reason than stated.",
+  "identity": {
+    "agent_id": "Coeus",
+    "aliases": [
+      "coeus",
+      "causal intelligence layer"
+    ],
+    "historical_machine": "unknown (registry '?')",
+    "historical_kind": "pipeline-stage",
+    "historical_operator": "pipeline (Nous -> Coeus -> Hephaestus), 2026-03-25..03-28",
+    "source_paths": [
+      "agents/coeus/src/coeus.py",
+      "agents/coeus/src/causal_graph.py",
+      "agents/coeus/graphs/causal_graph.json",
+      "agents/coeus/graphs/concept_scores.json",
+      "agents/coeus/graphs/adversarial_graph.json",
+      "agents/coeus/enrichments/ (4031 files)",
+      "agents/hephaestus/src/hephaestus.py (_load_coeus_scores L1053, _forge_priority L1065, sort L1122-1124)",
+      "agents/hephaestus/forge/*.json (forge ledger, 6651 entries)",
+      "agents/nous/runs/*/responses.jsonl (5727 entries, 12 runs)"
+    ],
+    "evidence_baseline": "b91880a2dccf1630d6b1c47cff14a73f46e8ef4a"
+  },
+  "original_organism": {
+    "premise": "Which concept triples forge successfully is CAUSED by identifiable concept-level properties; learning those properties from the forge ledger and feeding them back as priority scores will raise forge yield.",
+    "mechanism": "Encode each Nous concept triple as 122 concept indicators + 20 field indicators + 4 Nous sub-scores; join to the Hephaestus forge ledger (status forged/scrap); fit per-concept 'forge_effect' and pair 'synergy' (NOTEARS/DAGMA intended; shipped artifact is the Lasso(alpha=0.01) fallback, graph.method='lasso_regression'); publish concept_scores.json; Hephaestus adds sum(forge_effect)+sum(pair_synergy) to the Nous composite when sorting the forge queue.",
+    "producers": [
+      "Nous (concept triples + composite score)",
+      "Hephaestus (forge ledger outcome)"
+    ],
+    "inputs": [
+      "agents/nous/runs/*/responses.jsonl",
+      "hephaestus.load_ledger() over agents/hephaestus/forge/*.json"
+    ],
+    "outputs": [
+      "graphs/causal_graph.json (95 concept_influence, 50 pair_synergy, 0 confounders, [] dagma_divergences, 85 'interventional')",
+      "graphs/concept_scores.json (95 influence, 1009 synergy, 97 adversarial_survival, 30 goodhart_indicators)",
+      "enrichments/*.json (4031)"
+    ],
+    "intended_consumers": [
+      "Hephaestus _forge_priority() at queue-sort time"
+    ]
+  },
+  "observed_history": {
+    "run_period": "graph built 2026-03-27 06:49 -0400 (commit 5573808c7) on 4031 observations / 352 forged; Nous data 2026-03-24..03-28; forge ledger 2026-03-24..05-28",
+    "measurements": [
+      "Nous entries today: 5727 (unique combo_key 5727); in forge ledger: 5439; forged 383; forge rate among attempted 0.070",
+      "Nous entries dated before graph build: 3834 attempted / 374 forged (0.098); after: 1605 attempted / 9 forged (0.0056)",
+      "Forge ledger scrap reasons AFTER 03-27: api_call_failed 2553 (dominant), trap_battery_failed 129, validation runtime errors ~180. BEFORE: api_call_failed 308 by ledger date, 1415 by Nous date (many pre-build triples were forged on 03-31 during an API outage)",
+      "Forge-day base rates (excl. api failures): 03-25 58%, 03-26 23%, 03-27 10.5%, May 2-3%",
+      "Apparatus control: coeus.load_all_nous / causal_graph._encode_dataset / hephaestus.load_ledger all execute today (with an openai stub); X shape (5727,126)"
+    ],
+    "artifact_counts": {
+      "enrichments": 4031,
+      "graphs": 3,
+      "concept_influence_entries": 95,
+      "pair_synergy_entries": 1009
+    },
+    "actual_consumers": [
+      "Hephaestus _forge_priority(): wired 2026-03-25 (commit da42cc7e0), executes; NO record of its effect on forge yield exists (ledger stores no priority/rank field; no A/B was run)"
+    ],
+    "consumption_evidence": [
+      "engine/queues/CONSUMPTION.jsonl: 1 row mentioning Coeus (2026-08-20 autopsy batch). The CONSUMER of record is the autopsy ledger, not the forge.",
+      "hephaestus.py L1122-1124 sorts filtered results by _forge_priority(r, coeus_scores): behavioural wiring confirmed by both the P47 autopsy and this pass"
+    ]
+  },
+  "autopsy": {
+    "prior_verdicts": [
+      "AGENT_AUTOPSIES.jsonl (Aporia P47, 2026-08-20; Elenchus upgrade P50): NO-DESIGN-FAILURE-ESTABLISHED. 'consumption REORDERS the forge queue: 10,094/10,105 positions change'",
+      "pivot/COMPONENT_DOSSIERS_2026-06-24.md + PROCESS_TABLE: RETIRE-after-HITL. 'decorative-causal, open-loop, exhaust' (advisory, cited not trusted; LAW N11)"
+    ],
+    "failure_classes": [
+      "MEASUREMENT-CARRIES-ITS-ANSWER (outcome variable dominated by instrument state)",
+      "CAUSAL-LABEL-ON-REGRESSION (claim/method mismatch)",
+      "SELECTION-DECOUPLED-FROM-SIGNAL (priority effect never measured)"
+    ],
+    "kill_boundary": "What the evidence KILLS: (1) 'Coeus's shipped concept scores carry forge-outcome signal that transfers across forge configurations.' Leave-one-forge-day-out, api-failures excluded: concept indicators trained on all other days score AUC 0.461 on 2026-03-26 (738 rows/173 forged) and 0.338 on 03-27 (568/60), at or below the label-permutation null; the shipped forge_boost scores AUC 0.487 on the 1605 post-build rows (perm p=0.55, but that window is itself instrument-dead: 2553 api_call_failed). (2) 'Concept identity predicts forge outcome even under a FIXED judge.' Within-single-forge-day 5-fold CV on the largest day (03-26): concepts AUC 0.501 vs null mean 0.493, nothing; the two smaller days give 0.62/0.64 vs null-max 0.57/0.61 (20 draws), not separable. (3) The autopsy's observable: 1e-3 Gaussian noise on the composite changes 99.7% of queue positions (min over 200 draws 99.5%); Coeus changes 99.9%. 'Positions change' is vacuous and cannot support a null verdict. NOT killed: the mechanism runs; the consumer is wired; the weaker proposition 'some concept-level structure exists under a frozen judge with a healthy API' is untested at adequate power because no such clean window exists in the data. WHAT THE POOLED SIGNAL WAS: stratified 5-fold CV over all pre-build rows gives concepts AUC 0.707-0.723 and +0.05..+0.07 over the Nous composite (null max 0.53). This survived api-failure exclusion (0.702) and leave-one-Nous-run-out per-fold (0.64-0.71 on the 3 large runs) but died under leave-one-forge-DAY-out; the run x forge-day crosstab shows every Nous run was forged across 3+ days, so run-holdout still shares forge days with training. The 'signal' Coeus learned is the forge CALENDAR: day base rates 58%->23%->10%->2.5%, driven by trap-battery version (15-trap -> 58-category on 03-27) and API health, fingerprinted through which concept batches were forged when. The Nous composite itself is ~0.53 within-day. The design failure is therefore in MEASUREMENT: Coeus regressed a label that mostly records instrument state (api_call_failed and judge version are recorded as 'scrap' alongside genuine trap failures) and never filtered, stratified, or held out by forge time; then labelled the regression 'causal'/'interventional' (0 confounders, [] DAGMA divergences, method=lasso_regression) and shipped 1009 pair synergies fit on 352 positives (in-sample AUC 0.887, never validated) into a live priority function whose effect on yield was never measured.",
+    "surviving_claims": [
+      "The Coeus apparatus (loaders, encoder, regression) executes today and is reusable as an instrument.",
+      "The consumer seam (hephaestus._forge_priority) is real and executes. The P47/P50 autopsy was right about wiring, wrong about what wiring proves.",
+      "The June 'decorative-causal' assertion is factually correct (Lasso fallback labelled causal), but it is a claim/method mismatch, not evidence that no signal exists.",
+      "Untested, not killed: under a FROZEN judge configuration with a healthy API, concept-level structure in forge outcome may exist; no window in the historical data is clean enough (>=500 rows, >=50 forged, one battery version, no api failures) to decide at power."
+    ],
+    "uncertainty": [
+      "Within-day nulls on 03-25 (255 rows) and 03-27 (568 rows/60 forged) are marginal (0.62/0.64 vs null-max 0.57/0.61 from only 20 permutations); a 500-draw null would sharpen but cannot rescue the transfer kill.",
+      "Forge-day is a proxy for judge-version + API-health; the two were not separated (both change on 03-27).",
+      "The 'regime' split uses Nous timestamps for the shipped-scores OOS test and ledger timestamps for the forge-day attack; the crosstab shows why both are needed.",
+      "LAW N13: the kill was produced and attacked only by this investigator; an independent re-run of coeus_evidence/coeus_attacks.py by another lens is owed before this dossier is cited as settled."
+    ],
+    "contradictory_evidence": [
+      "P50 Elenchus execution result (10,094/10,105 positions change): reproduced here (99.9%) and shown vacuous by the reorder-null (measurement carries its answer).",
+      "Stratified-CV in-sample positive (AUC 0.72, +0.05 over composite): real number, wrong reading; explained by forge-calendar leakage."
+    ],
+    "capability_contingency": {
+      "frontier_dependent": false,
+      "frontiers": [],
+      "era_bound_claim": "Not era-bound: a Lasso over concept indicators against a calendar-contaminated outcome would fail identically with any model in the loop.",
+      "what_would_move_it": "Nothing on the model frontier; only a clean outcome variable (frozen judge, api-state excluded) re-opens the premise test (coeus-d1)."
+    },
+    "death_certificates": [
+      {
+        "source": "engine/ledger/AGENT_AUTOPSIES.jsonl (Aporia P47, 2026-08-20; Elenchus upgrade P50)",
+        "claim": "NO-DESIGN-FAILURE-ESTABLISHED: consumption REORDERS the forge queue: 10,094/10,105 positions change",
+        "review": "OVERTURNED",
+        "errors": [
+          "The reorder observable is vacuous: 1e-3 Gaussian noise on the composite reorders 99.7% of positions (min over 200 draws 99.5%); it measures that the composite is continuous, not that Coeus has an effect.",
+          "A design failure IS established: the claim was causal and the method a regression on a label whose variance is dominated by the instrument calendar."
+        ]
+      },
+      {
+        "source": "pivot/COMPONENT_DOSSIERS_2026-06-24.md (### Coeus) + PROCESS_TABLE",
+        "claim": "RETIRE-after-HITL: decorative-causal, open-loop, exhaust",
+        "review": "PARTIALLY_UPHELD",
+        "errors": [
+          "'Decorative-causal' is factually right (a Lasso fallback labelled causal) but was advisory with no executed test, and it is a claim/method mismatch, not evidence that no concept-level signal exists; that question is untested at power."
+        ]
+      }
+    ],
+    "cause_of_death_stack": {
+      "HYPOTHESIS": {
+        "verdict": "VALID",
+        "finding": "Well-posed: does forge outcome under a fixed judge carry concept-level structure? Untested at power: no historical window is clean enough (>=500 rows, >=50 forged, one battery version, no API failures) to decide; coeus-d1 is the first fair test.",
+        "evidence": [
+          "dossiers/coeus_evidence/coeus_attacks.py",
+          "dossiers/coeus_evidence/coeus_attacks_result.json",
+          "dossiers/coeus_evidence/coeus_within_regime.py",
+          "dossiers/coeus_evidence/coeus_within_regime_result.json"
+        ],
+        "cause_classes": []
+      },
+      "DESIGN": {
+        "verdict": "INVALID",
+        "finding": "The claim was causal (concept structure predicts forge outcome) but the method was a regression on a label whose variance is dominated by the instrument calendar (battery version + API health); no holdout by the instrument clock was built, so the design could not separate concept signal from forge-day signal.",
+        "evidence": [
+          "dossiers/coeus_evidence/coeus_attacks.py",
+          "dossiers/coeus_evidence/coeus_attacks_result.json"
+        ],
+        "cause_classes": [
+          "DESIGN_ERROR"
+        ],
+        "load_bearing": true
+      },
+      "IMPLEMENTATION": {
+        "verdict": "VALID",
+        "finding": "_encode_dataset, load_all_nous, load_forge_entries, the regression and the consumer seam _forge_priority were executed by the pass and do what the design says; the defect is upstream of them (label construction).",
+        "evidence": [
+          "dossiers/coeus_evidence/coeus_signal_test.py",
+          "dossiers/coeus_evidence/coeus_signal_result.json",
+          "dossiers/coeus_evidence/coeus_within_regime.py",
+          "dossiers/coeus_evidence/coeus_within_regime_result.json"
+        ],
+        "cause_classes": []
+      },
+      "CONFIGURATION": {
+        "verdict": "INVALID",
+        "finding": "y = (ledger status == forged) with api_call_failed rows scored as negatives; 2,553 post-03-27 rows are API failures, so the post-build window on which the shipped forge_boost was evaluated is instrument-dead (AUC 0.487, perm p=0.55: uninformative, not null).",
+        "evidence": [
+          "dossiers/coeus_evidence/coeus_signal_test.py",
+          "dossiers/coeus_evidence/coeus_signal_result.json",
+          "dossiers/hephaestus_evidence/heph_ledger_shape_result.json"
+        ],
+        "cause_classes": [
+          "CONFIGURATION_ERROR"
+        ],
+        "load_bearing": true
+      },
+      "EXECUTION": {
+        "verdict": "NOT_EXAMINED",
+        "finding": "Not examined: the pass tested the shipped scores and the apparatus as artifacts; it did not reconstruct the training run that produced the shipped forge_boost, and no run manifest was found in the record.",
+        "evidence": [],
+        "cause_classes": []
+      },
+      "INSTRUMENTATION": {
+        "verdict": "INVALID",
+        "finding": "The judge was not frozen across the label window: the battery changed from 15 to 186 traps on 2026-03-27 and the forge ran in distinct eras (03-24..04-02, 05-16..), so the label mixes instruments. Leave-one-forge-day-out AUC 0.461 (03-26) / 0.338 (03-27), at or below the label-permutation null.",
+        "evidence": [
+          "dossiers/coeus_evidence/coeus_attacks.py",
+          "dossiers/coeus_evidence/coeus_attacks_result.json",
+          "dossiers/coeus_evidence/coeus_within_regime.py",
+          "dossiers/coeus_evidence/coeus_within_regime_result.json"
+        ],
+        "cause_classes": [
+          "INSTRUMENT_ERROR"
+        ],
+        "load_bearing": true
+      },
+      "MEASUREMENT": {
+        "verdict": "INVALID",
+        "finding": "The outcome variable recorded instrument state as outcome; within the largest single forge day (03-26) concepts reach AUC 0.501 vs null 0.493 and the two smaller days (0.62/0.64) are not separable from null-max (0.57/0.61, 20 draws). The measurement carried the calendar, not the concept.",
+        "evidence": [
+          "dossiers/coeus_evidence/coeus_attacks.py",
+          "dossiers/coeus_evidence/coeus_attacks_result.json",
+          "dossiers/coeus_evidence/coeus_within_regime.py",
+          "dossiers/coeus_evidence/coeus_within_regime_result.json"
+        ],
+        "cause_classes": [
+          "MEASUREMENT_ERROR"
+        ],
+        "load_bearing": true
+      },
+      "INTERPRETATION": {
+        "verdict": "INVALID",
+        "finding": "Two certificates misread evidence: P47/P50 took a queue-reorder count that random noise reproduces as proof of effect; 06-24 took a Lasso fallback labelled causal as the design's claim. Neither conclusion followed.",
+        "evidence": [
+          "dossiers/coeus_evidence/coeus_signal_test.py",
+          "dossiers/coeus_evidence/coeus_signal_result.json"
+        ],
+        "cause_classes": [
+          "INTERPRETATION_ERROR"
+        ],
+        "load_bearing": true
+      },
+      "ECOSYSTEM": {
+        "verdict": "VALID",
+        "finding": "The consumer seam (hephaestus._forge_priority reading forge_boost) is real and executes; the wiring the P47/P50 autopsy described is correct. What was never measured is whether the priority changed any forge outcome (SELECTION-DECOUPLED-FROM-SIGNAL) - that is a design/measurement gap, not a missing consumer.",
+        "evidence": [
+          "dossiers/coeus_evidence/coeus_signal_test.py",
+          "dossiers/coeus_evidence/coeus_signal_result.json"
+        ],
+        "cause_classes": []
+      }
+    },
+    "fair_test": {
+      "verdict": "UNFAIR",
+      "scope": "All historical windows (03-24..04-02 and 05-16..); no clean window exists.",
+      "finding": "The experiment could not answer its question: the label it regressed on was dominated by battery version and API health, and no split by the instrument clock was built. The hypothesis stands untested; coeus-d1 (frozen judge, api-state excluded, holdout by forge batch) is the fair test.",
+      "evidence": [
+        "dossiers/coeus_evidence/coeus_attacks.py",
+        "dossiers/coeus_evidence/coeus_attacks_result.json",
+        "dossiers/coeus_evidence/coeus_signal_test.py",
+        "dossiers/coeus_evidence/coeus_signal_result.json"
+      ]
+    },
+    "primary_cause": "MEASUREMENT_ERROR",
+    "contributing_causes": [
+      "DESIGN_ERROR",
+      "CONFIGURATION_ERROR",
+      "INSTRUMENT_ERROR",
+      "INTERPRETATION_ERROR"
+    ]
+  },
+  "residue": {
+    "salvageable_code": [
+      "agents/coeus/src/causal_graph.py::_encode_dataset (clean design-matrix builder over Nous x forge ledger)",
+      "agents/coeus/src/coeus.py::load_all_nous, load_forge_entries",
+      "engine/necropolis/dossiers/coeus_evidence/coeus_attacks.py (leave-one-run-out / leave-one-forge-day-out / within-day harness, reusable for ANY Nous->forge scorer)"
+    ],
+    "salvageable_data": [
+      "The forge-day base-rate series (58%/23%/10.5%/2-3%) as a Hephaestus instrument-drift record",
+      "Ledger scrap-reason histogram: api_call_failed is 2553/~4700 post-03-27, a Hephaestus RESOURCE fact, not a Coeus fact"
+    ],
+    "salvageable_schemas": [
+      "concept_scores.json shape (concept_influence/pair_synergy/adversarial_survival/goodhart_indicators) is a fine scorer contract if the values were validated"
+    ],
+    "salvageable_operators": [
+      "forge-queue priority seam in hephaestus._forge_priority: accepts any scorer dict with the same shape"
+    ],
+    "salvageable_tests": [
+      "reorder-null (random-noise position-change baseline): should be applied to every 'consumption reorders X' claim in AGENT_AUTOPSIES.jsonl"
+    ],
+    "representation_hints": [
+      "Any Nous->forge scorer must hold out by FORGE TIME (judge version + API health), not by Nous run; filter api_call_failed/validation-runtime rows from y; publish the chance floor and a >=200-draw permutation null.",
+      "The forge ledger should record judge/battery version and API status as first-class fields so outcome can be conditioned rather than fingerprinted."
+    ]
+  },
+  "disposition": {
+    "classification": "MEASUREMENT_FAILURE",
+    "rationale": "Chosen over NO_DESIGN_FAILURE_ESTABLISHED because two design failures ARE now established: (a) Coeus regressed an outcome dominated by instrument state (API failures + judge-version base-rate shifts recorded as 'scrap') without time-based holdout or filtering, so what it learned and shipped is the forge calendar, not concept causality, shown by the leave-one-forge-day-out kill (0.461/0.338) and the within-day null on the largest day (0.501); (b) it labelled a Lasso fallback 'causal/interventional' and shipped 1009 unvalidated pair synergies into a live priority function whose effect was never measured. Chosen over TRUE_CORPSE because the premise ('concept-level structure in forge outcome') is untested-at-power under a clean judge, not falsified; no clean window exists in the historical data; TRUE_CORPSE is the leading neighbour if the descendant test returns null. Not PREMISE_ALIVE_IMPLEMENTATION_DEAD (implementation executes; premise is not shown alive). Not CONSUMER_BLOCKED (consumer executes; its EFFECT is unmeasured, which is measurement). Not RESOURCE_BLOCKED, although the post-03-27 API death is a RESOURCE event: it killed the outcome variable of the seam, and belongs in Hephaestus's dossier.",
+    "_neighbour_verdicts_overturned": {
+      "NO-DESIGN-FAILURE-ESTABLISHED (2026-08-20)": "overturned: rested on a vacuous observable (reorder-null)",
+      "RETIRE 'decorative-causal' (2026-06-24)": "conclusion stands, reason was incomplete: the label mismatch is real but the decisive defect is the contaminated outcome variable"
+    }
+  },
+  "descendant_candidate": {
+    "id": "coeus-d1-frozen-judge-structure-test",
+    "parent": "Coeus",
+    "changed_design": [
+      "Falsification experiment, NOT a scorer revival: does forge outcome under a FROZEN judge configuration and a healthy API carry ANY concept-level structure?",
+      "y cleaned: rows with reason api_call_failed / validation:runtime_error / no_code_found are EXCLUDED, not scored 0",
+      "Holdout by forge batch (two independent forge batches >=500 attempted / >=50 forged each, same battery version, recorded api status); train on batch 1, score batch 2; never by Nous run",
+      "No causal vocabulary: report held-out AUC and precision@10% vs published chance floor with a 500-draw label-permutation null",
+      "Positive control: a decoy feature that IS the forge batch id must reach AUC ~1.0 (proves the harness can see batch); negative control: permuted concept labels must sit in the null"
+    ],
+    "preserved_mechanism": [
+      "causal_graph._encode_dataset design matrix",
+      "hephaestus._forge_priority seam shape"
+    ],
+    "consumer": "engine/necropolis (this dossier -> TRUE_CORPSE or PREMISE_ALIVE update) and, only if alive, hephaestus._forge_priority via a validated concept_scores.json",
+    "consumption_proof": "engine/queues/CONSUMPTION.jsonl row {object: coeus-d1 result, consumed_by: dossiers/coeus.dossier.json disposition update} plus, if alive, a forge run whose ledger rows carry a priority_source field",
+    "expected_if_alive": "Batch-2 held-out concepts-only AUC > 97.5th percentile of the 500-draw null AND precision@10% > 1.5x batch-2 base rate, with the batch-id decoy at ~1.0 and permuted labels in the null",
+    "expected_if_dead": "Batch-2 concepts-only AUC inside the null (as on 2026-03-26: 0.501) while the batch-id decoy still reads ~1.0; then the Coeus premise is falsified at power and the dossier moves to TRUE_CORPSE",
+    "kill_condition": "expected_if_dead observed on two independent frozen-judge batch pairs; OR the apparatus cannot produce >=50 forged per batch under a healthy API (then RESOURCE_BLOCKED, not a Coeus fact)",
+    "positive_control": "batch-id decoy feature -> AUC ~1.0",
+    "negative_or_decoy_control": "label-permuted concept indicators -> AUC in null; random score vector -> reorder fraction ~99.7% (reorder-null)",
+    "resource_budget": "Requires a LIVE forge: ~1000+ Hephaestus attempts under one frozen battery with a working LLM API (~2 forge batches). The forge has been dead since 2026-05-28 and API credit status is a known program blocker. This descendant is RESOURCE-gated and must not be dispatched until a Cleric confirms a working forge and James signs off (ROLES.md handoff)."
+  },
+  "provenance": {
+    "investigator": "Mnemosyne M2 (Keeper of the Necropolis), acting as Necromancer",
+    "role": "Necromancer",
+    "branch": "necropolis/coeus",
+    "baseline_sha": "efd26dbb8eac6c894a1f81549543f38423058de2",
+    "evidence_paths": [
+      "engine/necropolis/dossiers/coeus_evidence/ (3 scripts + 3 result JSONs + README)",
+      "engine/ledger/AGENT_AUTOPSIES.jsonl (Coeus record)",
+      "pivot/COMPONENT_DOSSIERS_2026-06-24.md (### Coeus)",
+      "agents/coeus/graphs/causal_graph.json",
+      "agents/coeus/graphs/concept_scores.json",
+      "agents/hephaestus/src/hephaestus.py"
+    ],
+    "commands_run": [
+      "git log --format='%h %ci %s' -- agents/coeus | head -8",
+      "git log -S_forge_priority -- agents/hephaestus/src/hephaestus.py",
+      "grep -ic coeus engine/queues/CONSUMPTION.jsonl",
+      "python engine/necropolis/dossiers/coeus_evidence/coeus_signal_test.py",
+      "python engine/necropolis/dossiers/coeus_evidence/coeus_within_regime.py",
+      "python engine/necropolis/dossiers/coeus_evidence/coeus_attacks.py"
+    ],
+    "unresolved_questions": [
+      "Independent re-run of coeus_attacks.py by a second lens (LAW N13); the kill is single-investigator.",
+      "Separate judge-version from API-health as the forge-day driver (both change 2026-03-27).",
+      "Hephaestus dossier owes: why api_call_failed is a 'scrap' outcome rather than an excluded row; why the ledger stores no priority/rank or battery-version field."
+    ],
+    "created": "2026-09-10",
+    "_discharged": [
+      "2026-09-10 Keeper sweep: reorder-null applies to no other AGENT_AUTOPSIES.jsonl record; regex over evidence+boundary_localization for reorder|positions change|rank hits only Coeus (vacuous) and Telos (pick-distribution collapse onto 2 f-ids: a genuine coverage measurement, not a reorder claim)."
+    ],
+    "_amendments": [
+      "2026-09-10 Keeper: backfilled autopsy.death_axis + capability_contingency (LAW N16) from the dossier's own kill_boundary/surviving_claims text; no new evidence.",
+      "2026-09-10 Keeper backfill (LAW N17): author_error_audit + contributing_axes derived from failure_classes CAUSAL-LABEL-ON-REGRESSION and MEASUREMENT-CARRIES-ITS-ANSWER already in this dossier; no new evidence.",
+      "2026-09-10 Keeper migration (doctrinal correction, LAW N17 v2): death_axis/contributing_axes/author_error_audit replaced by death_certificates + cause_of_death_stack + fair_test + primary_cause. Each layer maps a finding already certified in this dossier (kill_boundary, failure_classes, surviving_claims, capability_contingency) to its evidence file; no new evidence, no new claims. Layers the pass did not examine are NOT_EXAMINED."
+    ]
+  }
+}

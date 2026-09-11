@@ -1,0 +1,180 @@
+{
+  "schema_version": "1.0.0",
+  "kind": "necropolis_dossier",
+  "_README": "EXEMPLAR (real-record mapping). This dossier structurally maps the EXISTING Acheron autopsy from engine/ledger/AGENT_AUTOPSIES.jsonl into SCHEMA.json to prove the schema ingests real records. It makes NO new scientific claims: every autopsy field is transcribed from the source record and disposition is left at NEEDS_MORE_EVIDENCE pending a real Necromancer pass. descendant_candidate is null (proposing one would be a new claim). Acheron is NOT the recommended first Necromancer target.",
+  "identity": {
+    "agent_id": "Acheron",
+    "aliases": [],
+    "historical_machine": "M2",
+    "historical_kind": "tool",
+    "historical_operator": "Charon",
+    "source_paths": [
+      "engine/ledger/AGENT_AUTOPSIES.jsonl",
+      "engine/ledger/AUTOPSY_TAXONOMY.md"
+    ],
+    "evidence_baseline": "b91880a2dccf1630d6b1c47cff14a73f46e8ef4a"
+  },
+  "original_organism": {
+    "premise": "A coordinate-collision detector over Deep-Research reports surfaces registry collisions worth acting on.",
+    "mechanism": "Scan files; for each, emit a verdict artifact (collision_candidate on a hit, clean_scan otherwise).",
+    "producers": [],
+    "inputs": [
+      "aporia deep_research reports"
+    ],
+    "outputs": [
+      "collision_candidate artifacts",
+      "clean_scan artifacts"
+    ],
+    "intended_consumers": [
+      "registry reconciliation (headline collisions AA-031/AA-033)"
+    ]
+  },
+  "observed_history": {
+    "run_period": null,
+    "measurements": [
+      "~569 artifacts total; ~73% of artifact mass is 1-bit clean verdicts"
+    ],
+    "artifact_counts": {
+      "clean_scan_aporia_docs_deep_research_rep": 157,
+      "collision_candidate": 58
+    },
+    "actual_consumers": [
+      "registry reconciliation (collisions AA-031/AA-033 trace through it)"
+    ],
+    "consumption_evidence": [
+      "AGENT_AUTOPSIES.jsonl Acheron.evidence: artifact census by query"
+    ]
+  },
+  "autopsy": {
+    "prior_verdicts": [
+      "AGENT_AUTOPSIES.jsonl (Aporia P46, 2026-08-20): LOW-BITS-PER-VERDICT-EMISSION",
+      "PROCESS_TABLE_2026-06-24.md: RETIRE-after-HITL (advisory, cited not trusted; LAW N11)"
+    ],
+    "failure_classes": [
+      "LOW-BITS-EMISSION"
+    ],
+    "kill_boundary": "Transcribed from the autopsy's boundary_localization: the defect is in the EMISSION layer, not the detector. The autopsy explicitly records that the collision detector WORKED (58 candidates; headline registry collisions AA-031/AA-033 trace through its reconciliation). What the evidence kills is the one-artifact-per-1-bit-clean-verdict emission design, NOT the collision-detection premise.",
+    "surviving_claims": [
+      "The collision-detection mechanism is compatible with the evidence (it produced actionable candidates).",
+      "The representation_hint (emit-on-signal + a single periodic coverage digest) is an untested repair, not a demonstrated one."
+    ],
+    "uncertainty": [
+      "Whether a re-emitted Acheron would find NEW collisions or only re-derive the known AA-031/033 (not tested in this mapping).",
+      "Whether any live consumer remains for its output today (LAW N15 — not verified in this founding pass)."
+    ],
+    "contradictory_evidence": [],
+    "death_certificates": [
+      {
+        "source": "engine/ledger/AGENT_AUTOPSIES.jsonl (Aporia P46, 2026-08-20)",
+        "claim": "LOW-BITS-PER-VERDICT-EMISSION; the collision detector worked (58 candidates), the one-artifact-per-1-bit-clean-verdict emission design is the defect",
+        "review": "NOT_REVIEWED",
+        "errors": []
+      },
+      {
+        "source": "pivot/PROCESS_TABLE_2026-06-24.md",
+        "claim": "RETIRE-after-HITL",
+        "review": "NOT_REVIEWED",
+        "errors": []
+      }
+    ],
+    "cause_of_death_stack": {
+      "HYPOTHESIS": {
+        "verdict": "NOT_EXAMINED",
+        "finding": "Not examined by any Necromancer pass; this dossier transcribes an existing autopsy record and adds no claims.",
+        "evidence": [],
+        "cause_classes": []
+      },
+      "DESIGN": {
+        "verdict": "NOT_EXAMINED",
+        "finding": "Not examined by any Necromancer pass; this dossier transcribes an existing autopsy record and adds no claims.",
+        "evidence": [],
+        "cause_classes": []
+      },
+      "IMPLEMENTATION": {
+        "verdict": "NOT_EXAMINED",
+        "finding": "Not examined by any Necromancer pass; this dossier transcribes an existing autopsy record and adds no claims.",
+        "evidence": [],
+        "cause_classes": []
+      },
+      "CONFIGURATION": {
+        "verdict": "NOT_EXAMINED",
+        "finding": "Not examined by any Necromancer pass; this dossier transcribes an existing autopsy record and adds no claims.",
+        "evidence": [],
+        "cause_classes": []
+      },
+      "EXECUTION": {
+        "verdict": "NOT_EXAMINED",
+        "finding": "Not examined by any Necromancer pass; this dossier transcribes an existing autopsy record and adds no claims.",
+        "evidence": [],
+        "cause_classes": []
+      },
+      "INSTRUMENTATION": {
+        "verdict": "NOT_EXAMINED",
+        "finding": "Not examined by any Necromancer pass; this dossier transcribes an existing autopsy record and adds no claims.",
+        "evidence": [],
+        "cause_classes": []
+      },
+      "MEASUREMENT": {
+        "verdict": "NOT_EXAMINED",
+        "finding": "Not examined by any Necromancer pass; this dossier transcribes an existing autopsy record and adds no claims.",
+        "evidence": [],
+        "cause_classes": []
+      },
+      "INTERPRETATION": {
+        "verdict": "NOT_EXAMINED",
+        "finding": "Not examined by any Necromancer pass; this dossier transcribes an existing autopsy record and adds no claims.",
+        "evidence": [],
+        "cause_classes": []
+      },
+      "ECOSYSTEM": {
+        "verdict": "NOT_EXAMINED",
+        "finding": "Not examined by any Necromancer pass; this dossier transcribes an existing autopsy record and adds no claims.",
+        "evidence": [],
+        "cause_classes": []
+      }
+    },
+    "fair_test": {
+      "verdict": "UNDETERMINED",
+      "finding": "No Necromancer pass has run; the certificate's boundary_localization (detector worked, emission design defective) is transcribed, not reviewed.",
+      "evidence": []
+    },
+    "primary_cause": "UNDETERMINED",
+    "contributing_causes": []
+  },
+  "residue": {
+    "salvageable_code": [],
+    "salvageable_data": [],
+    "salvageable_schemas": [],
+    "salvageable_operators": [
+      "coordinate-collision detector (mechanism the autopsy certifies as working)"
+    ],
+    "salvageable_tests": [],
+    "representation_hints": [
+      "emit only on signal + a single periodic coverage digest carrying the same information as hundreds of clean_scan artifacts (from the autopsy record)"
+    ]
+  },
+  "disposition": {
+    "classification": "NEEDS_MORE_EVIDENCE",
+    "rationale": "Founding-pass schema mapping only. The autopsy localizes a representation/emission-layer defect over a working detector, which POINTS toward REPRESENTATION_FAILURE, but assigning that verdict and checking for a live consumer today is a real Necromancer investigation this exemplar deliberately does not perform."
+  },
+  "descendant_candidate": null,
+  "provenance": {
+    "investigator": "Mnemosyne (Keeper of the Necropolis)",
+    "role": "Keeper",
+    "branch": "necropolis/foundation",
+    "baseline_sha": "b91880a2dccf1630d6b1c47cff14a73f46e8ef4a",
+    "evidence_paths": [
+      "engine/ledger/AGENT_AUTOPSIES.jsonl",
+      "engine/ledger/AUTOPSY_TAXONOMY.md",
+      "pivot/PROCESS_TABLE_2026-06-24.md"
+    ],
+    "commands_run": [
+      "head -1 engine/ledger/AGENT_AUTOPSIES.jsonl | python -m json.tool",
+      "grep -n Acheron engine/ledger/AUTOPSY_TAXONOMY.md"
+    ],
+    "unresolved_questions": [
+      "A real Necromancer pass still owes: does a live consumer exist today, and would a re-emitted detector find novel collisions?"
+    ],
+    "created": "2026-09-10"
+  }
+}

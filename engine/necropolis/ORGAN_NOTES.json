@@ -1,0 +1,19 @@
+{
+  "_README": "Keeper annotations overlaid onto ORGANS.jsonl by build_organs.py, keyed by organ_id. Fields set here survive regeneration. executed_by_necromancer is true ONLY where the named evidence script imported and ran the organ during the pass (LAW N17: an organ that was only read is a description, and descriptions are where hallucinations live). Everything not listed here stays null = unknown, and a monster harvesting it must carry an organ_execution_plan (F7).",
+  "hephaestus.code.0": {"executed_by_necromancer": true, "execution_evidence": "dossiers/hephaestus_evidence/heph_battery_floor.py runs the extended generator (seed 42) and scores random/constant/NCD tools on its 186 traps"},
+  "hephaestus.code.1": {"executed_by_necromancer": false, "execution_evidence": "composer.py engine scores (R1 0.50 / R3 0.39 / R4 0.61) are cited from commit 6348c1014 records; the engines were NOT re-run during the pass"},
+  "hephaestus.code.2": {"executed_by_necromancer": false, "execution_evidence": "forge_primitives.py cited from CYCLE 156-S; not executed during the pass"},
+  "hephaestus.code.4": {"executed_by_necromancer": true, "execution_evidence": "dossiers/hephaestus_evidence/heph_nemesis_consumer.py (Necromancer-authored, executed)"},
+  "hephaestus.tests.0": {"executed_by_necromancer": true, "execution_evidence": "dossiers/hephaestus_evidence/heph_battery_floor.py (Necromancer-authored, executed; 2000 random draws)"},
+  "hephaestus.data.0": {"executed_by_necromancer": true, "execution_evidence": "dossiers/hephaestus_evidence/heph_ledger_shape.py loads agents/hephaestus/ledger.jsonl via hephaestus.load_ledger and computes per-era yield"},
+  "coeus.code.0": {"executed_by_necromancer": true, "execution_evidence": "dossiers/coeus_evidence/coeus_signal_test.py + coeus_attacks.py call causal_graph._encode_dataset to build X"},
+  "coeus.code.1": {"executed_by_necromancer": true, "execution_evidence": "dossiers/coeus_evidence/coeus_signal_test.py calls coeus.load_all_nous and hephaestus.load_ledger"},
+  "coeus.code.2": {"executed_by_necromancer": true, "execution_evidence": "dossiers/coeus_evidence/coeus_attacks.py (Necromancer-authored, executed; LORO/LODO/within-day)"},
+  "coeus.operators.0": {"executed_by_necromancer": true, "execution_evidence": "dossiers/coeus_evidence/coeus_signal_test.py imports and calls hephaestus._forge_priority and _composite (reorder-null)"},
+  "argos.code.0": {"executed_by_necromancer": false, "execution_evidence": "_build_dr_prompt + DISCIPLINARY_STANCES were read, not called; the selector test exercised _score_problem/_select_problem only"},
+  "argos.code.1": {"executed_by_necromancer": true, "execution_evidence": "dossiers/argos_evidence/argos_selector_test.py calls ag._parse_lens_shelf (which uses _toolkit_line_for)"},
+  "argos.code.2": {"executed_by_necromancer": true, "execution_evidence": "dossiers/argos_evidence/argos_selector_test.py calls ag._parse_problem_corpus"},
+  "argos.code.3": {"executed_by_necromancer": true, "execution_evidence": "dossiers/argos_evidence/argos_selector_test.py (Necromancer-authored, executed)"},
+  "argos.code.4": {"executed_by_necromancer": true, "execution_evidence": "dossiers/argos_evidence/argos_consumption_trace.py (Necromancer-authored, executed over BACKCORPUS_MINING.jsonl)"},
+  "argos.data.1": {"executed_by_necromancer": true, "execution_evidence": "produced by argos_consumption_trace.py during the pass"}
+}

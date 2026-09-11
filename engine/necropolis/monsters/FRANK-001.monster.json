@@ -1,0 +1,130 @@
+{
+  "_README": "Repair exemplar (F7): one ancestor, one change. Doctor Frankenstein looking at the Argos corpse and saying: had they only bootstrapped the selector's history from the hand catalogs that already existed, this agent would have been productive. Deliberately in tension with the Necromancer's descendant argos-d1 (which REMOVES the selector); the two are alternative explanations and the record can only support one. Status PROPOSED; nothing dispatched or run.",
+  "schema_version": "1.0.0",
+  "monster_id": "FRANK-001",
+  "title": "Argos repair: bootstrap the selector history from the pre-existing hand catalogs",
+  "author_role": "Doctor Frankenstein",
+  "kind": "repair",
+  "premise_summary": "Argos's selector scores each problem as deficit + verdict_bonus, where the bonus reads history[pid].last_verdict and the deficit reads history[pid].applied_lenses. Argos ran only ever with history = {} so every score was a constant, 435/435 tied, and the pick was alphabetical. But 13 hand-written lens catalogs under harmonia/memory/catalogs/ existed a month before Argos and contain per-lens verdicts in exactly the vocabulary the bonus table keys on (map_of_disagreement / durable / coordinate_invariant / null). The repair is one change: on start, populate history from those catalogs. If the selector's policy has any value, it should show it the moment its inputs stop being constants.",
+  "graves_raided": [
+    "Argos"
+  ],
+  "organs": [
+    {
+      "organ_id": "argos.code.3",
+      "source_agent": "Argos",
+      "organ_type": "measurement_instrument",
+      "contributes": "The selector-degeneracy harness: calls _score_problem / _select_problem with a given history and reports ties-at-top, alphabetical-min identity, and id-sequence monotonicity. It is the instrument that established the error and the instrument under which the repair is measured (F4: same instrument).",
+      "novel": false,
+      "modification_required": "Accept a history argument built from the catalogs instead of the hard-coded {}.",
+      "failures_recorded_against": []
+    },
+    {
+      "organ_id": "argos.code.2",
+      "source_agent": "Argos",
+      "organ_type": "transform",
+      "contributes": "_parse_problem_corpus with the fallback GATED OFF (mission corpus only), so the repaired selector ranks the 435 mission problems rather than the 1,086-question astronomy swamp. The gating is part of the instrument setup, not a second change to the ancestor: the dossier recorded the fallback as parameter-dead and the experiment must not re-import that death.",
+      "novel": false,
+      "modification_required": "Fallback disabled by flag; corpus source recorded in the result.",
+      "failures_recorded_against": []
+    },
+    {
+      "organ_id": "argos.code.4",
+      "source_agent": "Argos",
+      "organ_type": "measurement_instrument",
+      "contributes": "Anchor-yield base-rate null over BACKCORPUS_MINING.jsonl: the downstream consequence measure. Yield of the repaired picks' DR reports is read by the same instrument that read the ancestor's 20 reports (0.15 vs base 0.1948, same-era 0.2244).",
+      "novel": false,
+      "modification_required": "",
+      "failures_recorded_against": []
+    },
+    {
+      "organ_id": "argos.operators.0",
+      "source_agent": "Argos",
+      "organ_type": "consumer",
+      "contributes": "The Pythia DR request path (20/20 fulfilled, 1-3 days). Stage 2 of the experiment issues its paired DR requests through it.",
+      "novel": false,
+      "modification_required": "",
+      "failures_recorded_against": []
+    },
+    {
+      "organ_id": "argos.representation_hints.0",
+      "source_agent": "Argos",
+      "organ_type": "informative_failure_mode",
+      "contributes": "The Necromancer's own sentence: a selector whose only discriminating term is written by its consumer must ship with a bootstrap signal that exists on tick 1. This monster is that sentence with a kill condition attached.",
+      "novel": false,
+      "modification_required": "",
+      "failures_recorded_against": []
+    }
+  ],
+  "organ_execution_plan": "argos.operators.0 and argos.representation_hints.0 have executed_by_necromancer null (the request path was traced through the mining ledger, not exercised; the hint is prose). Before stage 2, one DR request is issued through the path and its fulfilment recorded; if it is not fulfilled within the ancestor's 1-3 day window the stage-2 arm is RESOURCE-blocked and only stage 1 counts. The hint organ is not executed; it is the hypothesis, and stage 1 is its execution.",
+  "counterfactual_repair": {
+    "ancestor": "Argos",
+    "historical_assembly": "Daemon loop: _parse_problem_corpus -> _score_problem(deficit + verdict bonus over history[pid]) -> _select_problem -> _build_dr_prompt over the 5-stance scaffold -> Pythia DR request -> draft catalog -> (promotion stage, never built). history[pid] started as {} and stayed {} for the life of the daemon.",
+    "failure_layer": "DESIGN",
+    "cause_class": "DESIGN_ERROR",
+    "retained_mechanism": "The selector itself (_score_problem, _select_problem, the deficit + verdict-bonus rule with _VERDICT_BONUS map_of_disagreement=3 / null=1 / durable=0) and the 5-stance DR prompt builder, unchanged.",
+    "replaced_component": "The empty initial history[pid] = {} that the selector scored over.",
+    "replacement": "At daemon start, populate history[pid] = {applied_lenses, last_verdict} from the per-lens verdict rows of the 13 hand catalogs in harmonia/memory/catalogs/ instead of starting from {}.",
+    "predicted_obstruction_removed": "The recorded symptom on DESIGN is that the selector's only discriminating signal originated in a stage that never ran, so every score tied (435/435) and selection degenerated to sorted(ids)[0]. With history bootstrapped from the catalogs the verdict bonus has something to fire on: ties-at-top drop below 400 and the pick sequence becomes non-monotone in problem id.",
+    "cheap_test": "lightning_experiment stage 1 (deterministic: run the real selector over the real corpus with bootstrapped vs empty history; count ties and check monotonicity) and stage 2 (RESOURCE: 5+5+5 Pythia DR requests; anchor yield of repaired picks vs empty-history picks vs random-catalogued picks).",
+    "kill_before_run": "KILL if the catalog parser recovers verdict rows for fewer than 5 problems (the bootstrap signal Frankenstein claimed exists does not exist in usable form: the repair premise is a hallucination, recorded as such against Frankenstein); or ties-at-top >= 400 under bootstrapped history; or repaired-pick anchor yield <= the random-catalogued arm; or <= the 0.2244 same-era base rate. The first and third fire against the proposer.",
+    "error_evidence": "dossiers/argos.dossier.json autopsy.cause_of_death_stack.DESIGN (DESIGN_ERROR, load_bearing) and .INSTRUMENTATION (INSTRUMENT_ERROR: 435/435 tie with empty history); dossiers/argos_evidence/argos_selector_result.json",
+    "record_check": "argos_selector_result.json establishes that under every condition Argos ran in, history was empty (no applied lenses, no verdicts) and state was never persisted (lost with the M2 drives). The catalogs existed (13 files committed 2026-04-22/23, argos_catalog_authorship_result.json) but no code path read them into history. The repaired configuration was therefore never run: not dead-on-record.",
+    "predicted_ancestral_result_if_repaired": "Selector ties at top drop from 435 to the number of uncatalogued problems minus the catalogued set's spread; pick sequence becomes non-monotone; first picks are catalogued problems carrying map_of_disagreement verdicts (bonus 3) with the largest lens deficit."
+  },
+  "why_combination_changes_boundary": "Target: dossiers/argos.dossier.json kill boundary item (2): the anti-greedy policy is a constant under the only conditions Argos ever ran in. That boundary is conditional on history = {}. The repair removes the condition rather than the policy, which is the one thing the ancestor's history never tried and the one thing the Necromancer's descendant (argos-d1, selector removed) will never measure. If the policy discriminates once fed, the death axis for Argos moves from ecosystem/implementation toward a narrower bug (missing bootstrap), and if it does not, argos-d1's decision to drop the selector is strengthened with evidence rather than by default.",
+  "modern_capability_enabling": {
+    "depends_on_frontier": false,
+    "capability": "none: pure recomposition of era-1 organs. The catalogs, the selector, and the request path all existed in May 2026.",
+    "era_test": "Not needed: no novel organ and no frontier dependency. A positive result cannot be attributed to capability."
+  },
+  "consumer": {
+    "name": "DR back-corpus mining lane (engine/queues/BACKCORPUS_MINING.jsonl -> techne/registry/anti_anchors.jsonl), the same consumer that read the ancestor's 20 reports",
+    "reachable_now": false,
+    "consumption_proof": "A CONSUMPTION.jsonl row {object: FRANK-001 stage-2 paired reports, consumed_by: BACKCORPUS_MINING lane, effect: anchor rows attributed to repaired-pick reports}. Stage 1 has no consumer and cannot make the monster ALIVE on its own; it can only kill it."
+  },
+  "measurable_consequence": "Stage 1 (free): ties-at-top and id-sequence monotonicity from argos_selector_test under bootstrapped history. Stage 2 (RESOURCE): anchor yield per report for repaired picks versus alphabetical picks under argos_consumption_trace, against the 0.1948 base rate (same-era 0.2244).",
+  "strongest_alternative_explanation": "The bootstrap can only raise scores for problems that already have catalogs, so the repaired selector may simply pick the problems Harmonia had already worked hardest on; any anchor-yield gain would then be catalog maturity, not selection policy. Separated by a third stage-2 arm: catalogued problems in random order. If the policy's ordering beats random order over the same catalogued set, the policy carries information; if only membership matters, the repair is a filter, not a selector, and the file is amended to say so.",
+  "lightning_experiment": {
+    "design": "Stage 1, deterministic, no resources: build history from the 13 catalogs (parser records how many (problem, lens, verdict) rows it recovered and how many problems it touched), run argos_selector_test with fallback gated off, and record ties-at-top, chosen id, and the first 20 picks under the persist-state simulation. Ancestral arm: the same harness with history = {} (on record: 435/435, alphabetical). Stage 2, RESOURCE-gated: the first 5 repaired picks, the first 5 alphabetical picks, and 5 random catalogued problems are each requested once through the Pythia DR path with the ancestor's own prompt builder, interleaved and blinded; anchor yield per report is read by argos_consumption_trace. Chance floor for stage 2 is the base rate 0.1948 with a 200-draw label-permutation null over arm labels.",
+    "expected_if_alive": "Stage 1: ties-at-top < 50 and the first 20 picks are non-monotone in id and include >= 10 catalogued problems. Stage 2: repaired-pick anchor yield exceeds both the alphabetical arm and the random-catalogued arm, and exceeds 0.2244 at permutation p < 0.05.",
+    "expected_if_dead": "Stage 1: the bootstrapped history touches fewer than 5 problems (the catalogs do not carry the vocabulary in a parseable form) or ties-at-top remain >= 400 (the bonus table cannot separate what the catalogs say). Stage 2: repaired-pick yield within the permutation null of the alphabetical arm, or not above the random-catalogued arm.",
+    "kill_condition": "KILL if any of: (1) the catalog parser recovers verdict rows for fewer than 5 problems (the bootstrap signal Frankenstein claimed existed does not exist in usable form: the monster's premise is a hallucination and is recorded as such); (2) stage-1 ties-at-top >= 400 under bootstrapped history; (3) stage-2 repaired-pick anchor yield <= the random-catalogued arm (policy adds nothing over membership); (4) stage-2 repaired-pick yield <= 0.2244 same-era base rate. Conditions (1) and (3) are the ones that fire against the proposer.",
+    "chance_floor": "Stage 1: a selector fed random verdicts (uniform over the bonus table keys) across the same catalogued problems; its ties-at-top and monotonicity are the floor for condition (2). Stage 2: anchor base rate 0.1948 (same-era 0.2244) from argos_consumption_trace_result.json, plus a 200-draw label-permutation null over arm labels.",
+    "positive_control": "Stage 1: a history built from a synthetic catalog that assigns map_of_disagreement to exactly 3 named problems must put those 3 first; if it does not, the harness or the bootstrap parser is broken and the run is void.",
+    "resource_budget": {
+      "available_now": false,
+      "needs": [
+        "Stage 1: nothing beyond the repo (harmonia/memory/catalogs/, argos daemon importable as an instrument; the Necromancer already did this)",
+        "Stage 2: 15 Pythia DR requests over ~1-3 days each, and the BACKCORPUS_MINING lane running to read them",
+        "Cleric adjudication (including the dead-on-record check above) and James sign-off"
+      ],
+      "estimated_cost": "Stage 1: one script, minutes. Stage 2: 15 DR reports, roughly one week of calendar time."
+    },
+    "ancestral_comparison": {
+      "feasible": true,
+      "ancestral_assembly": "The same selector with history = {} under the same harness (argos_selector_test): 435/435 tied, pick = sorted(ids)[0], real 20 reports alphabetical in bursts of 3.",
+      "rationale": "The repair is one change to one ancestor, so the ancestral comparison is the ancestor without the change under the identical instrument; stage 2 extends it to the identical downstream consumer measure. Nothing about the comparison depends on a modern capability.",
+      "ancestral_result_on_record": "dossiers/argos_evidence/argos_selector_result.json (435/435 ties, alphabetical); dossiers/argos_evidence/argos_consumption_trace_result.json (20/20 consumed, anchor yield 0.15 vs base 0.1948, P(>=1 anchor | base) = 0.9869)."
+    }
+  },
+  "vindication_disclaimer": "A plausible modern reconstruction does not vindicate the historical agent, invalidate its autopsy, or constitute evidence that the original premise was correct. If this monster lives, the conditional viability frontier moved; Prometheus 1.0 did not succeed retroactively.",
+  "cleric_gate": {
+    "status": "PROPOSED",
+    "notes": "Not yet reviewed. Cleric checklist: (i) hallucination scan on the premise itself: open harmonia/memory/catalogs/*.md and confirm the verdict rows are per-lens and parseable, not prose mentions; if not, condition (1) fires before any experiment; (ii) confirm no code path in the Argos daemon or its predecessors ever loaded catalog verdicts into history (record check); (iii) reconcile with argos-d1: the two proposals are alternatives, and stage 1 here is cheap enough to run before argos-d1 spends Pythia budget.",
+    "james_signoff": false,
+    "dossier_if_dead": null
+  },
+  "provenance": {
+    "author": "Mnemosyne M2 (Keeper), writing as Doctor Frankenstein",
+    "branch": "necropolis/frankenstein",
+    "baseline_sha": "52c30c8e6",
+    "organs_inventory_sha": "05133570ef59f9c4c7cfc51dc80823ea5acf213d51fef86da646bdd9d42356ae",
+    "created_at": "2026-09-10",
+    "amendments": [],
+    "_amendments": [
+      "2026-09-10 Keeper: counterfactual_repair migrated to the counterfactual-engineer template (A / layer Y / M / C -> C-prime / prediction / R / kill-before-run); error_class implementation-dead -> failure_layer DESIGN + cause_class DESIGN_ERROR per the ancestor's migrated stack. Substance of the one change unchanged.",
+      "2026-09-10 Keeper: organs_inventory_sha refreshed after ORGANS.jsonl rows gained source_primary_cause/source_fair_test (organ set and text unchanged: 39 organs)."
+    ]
+  }
+}
