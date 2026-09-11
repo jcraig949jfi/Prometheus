@@ -3,8 +3,702 @@
   "cuts": [
     "CUT-1"
   ],
-  "candidates": [],
+  "candidates": [
+    {
+      "id": "c01",
+      "name": "rule canonicalization (any Prop -> oriented equations)",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "private def preprocess, SimpTheorems.lean 288-359 (found via the def-name skeleton)",
+      "dispositions": {
+        "CUT-1": "ORGAN"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 6185
+      },
+      "independent_test": "specified",
+      "independent_test_ref": "organ record control field (fixture per Prop shape; not executed)",
+      "ancestor_free_contract": true,
+      "consumer_returns": [],
+      "organ_record": "rule_canonicalization.cut1.json"
+    },
+    {
+      "id": "c02",
+      "name": "retrieval key abstraction (what the index forgets)",
+      "introduced_in": "CUT-1",
+      "origin": "DISCOVERED",
+      "source_boundary": "none: cuts INSIDE the DiscrTree module, separating ignoreArg/shouldAddAsStar/reduceDT from the trie; found by asking what flows into the keys",
+      "dispositions": {
+        "CUT-1": "ORGAN"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 7555
+      },
+      "independent_test": "specified",
+      "independent_test_ref": "Simp.Config.index := false is the source's own perturbation; not executed",
+      "ancestor_free_contract": true,
+      "consumer_returns": [],
+      "organ_record": "retrieval_key_abstraction.cut1.json"
+    },
+    {
+      "id": "c03",
+      "name": "the discrimination trie as a data structure (insert / getMatch / getMatchWithExtra)",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "module Lean/Meta/DiscrTree",
+      "dispositions": {
+        "CUT-1": "SCAFFOLDING"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "organ_record": "none"
+    },
+    {
+      "id": "c04",
+      "name": "candidate ordering and first-success application (priority insertion sort, erased set, rfl-only filter)",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "def rewrite? Rewrite.lean 206-274",
+      "dispositions": {
+        "CUT-1": "UNRESOLVED"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "organ_record": "none"
+    },
+    {
+      "id": "c05",
+      "name": "single-rule application (unify lhs, synthesize args, reject no-op, extra args)",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "def tryTheoremCore Rewrite.lean 114-176",
+      "dispositions": {
+        "CUT-1": "UNRESOLVED"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "organ_record": "none"
+    },
+    {
+      "id": "c06",
+      "name": "ordered rewriting guard for permutative rules (isPerm at ingestion + acLt at application)",
+      "introduced_in": "CUT-1",
+      "origin": "DISCOVERED",
+      "source_boundary": "none: spans SimpTheorems.lean 261-273/365-371 and Rewrite.lean 160-168; found by following the perm field",
+      "dispositions": {
+        "CUT-1": "ORGAN"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 6078
+      },
+      "independent_test": "specified",
+      "independent_test_ref": "organ record ablation (perm := false on every rule); not executed",
+      "ancestor_free_contract": true,
+      "consumer_returns": [],
+      "organ_record": "ordered_rewriting_guard.cut1.json"
+    },
+    {
+      "id": "c07",
+      "name": "recursive side-condition discharge (simp proves its own guards, depth-capped)",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "defs dischargeDefault? / discharge?' / synthesizeArgs, Rewrite.lean",
+      "dispositions": {
+        "CUT-1": "ORGAN"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 6956
+      },
+      "independent_test": "specified",
+      "independent_test_ref": "organ record control field; not executed",
+      "ancestor_free_contract": false,
+      "consumer_returns": [],
+      "organ_record": "recursive_side_condition_discharge.cut1.json"
+    },
+    {
+      "id": "c08",
+      "name": "pre/post traversal to fixpoint with memo (simpLoop)",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "def simpLoop Main.lean 677-713",
+      "dispositions": {
+        "CUT-1": "ORGAN"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 6359
+      },
+      "independent_test": "specified",
+      "independent_test_ref": "Simp.Config.memoize / singlePass are the source's own perturbations; not executed",
+      "ancestor_free_contract": true,
+      "consumer_returns": [],
+      "organ_record": "traversal_fixpoint_with_memo.cut1.json"
+    },
+    {
+      "id": "c09",
+      "name": "congruence descent (rewrite under applications with synthesised congruence lemmas)",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "defs congr / simpAppUsingCongr / tryAutoCongrTheorem? + file CongrTheorems.lean",
+      "dispositions": {
+        "CUT-1": "ORGAN"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 6505
+      },
+      "independent_test": "specified",
+      "independent_test_ref": "organ record control field; needs a kernel check, i.e. Lean execution",
+      "ancestor_free_contract": false,
+      "consumer_returns": [],
+      "organ_record": "congruence_descent.cut1.json"
+    },
+    {
+      "id": "c10",
+      "name": "built-in reduction step between pre and descent (beta/proj/iota/zeta/unfold/natlit, config-gated)",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "def reduceStep Main.lean 213-244",
+      "dispositions": {
+        "CUT-1": "UNRESOLVED"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "organ_record": "none"
+    },
+    {
+      "id": "c11",
+      "name": "method slot arrangement (preDefault = rewritePre >> simpMatch >> userPre >> decide; postDefault = rewritePost >> userPost >> ground >> arith >> decide)",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "defs preDefault / postDefault Rewrite.lean 525-536; structure Methods Types.lean 421-434",
+      "dispositions": {
+        "CUT-1": "POLICY"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "organ_record": "none"
+    },
+    {
+      "id": "c12",
+      "name": "simproc dispatch (keyed procedures retrieved by the same index, Step protocol)",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "def simprocCore Simproc.lean 216-252",
+      "dispositions": {
+        "CUT-1": "SCAFFOLDING"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "organ_record": "none"
+    },
+    {
+      "id": "c13",
+      "name": "hypothesis mutual saturation (simp_all)",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "file SimpAll.lean",
+      "dispositions": {
+        "CUT-1": "ORGAN"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 4420
+      },
+      "independent_test": "specified",
+      "independent_test_ref": "organ record control field; not executed",
+      "ancestor_free_contract": true,
+      "consumer_returns": [],
+      "organ_record": "hypothesis_mutual_saturation.cut1.json"
+    },
+    {
+      "id": "c14",
+      "name": "memo validity discipline (Result.cache flag, parent?, lctxInitIndices, wellBehavedDischarge, withPreservedCache)",
+      "introduced_in": "CUT-1",
+      "origin": "DISCOVERED",
+      "source_boundary": "none: spans Types.lean fields 36/76-107/114/426-433, Rewrite.lean 41-56, Main.lean 672-675; no def owns it",
+      "dispositions": {
+        "CUT-1": "COUPLED_CLUSTER"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "organ_record": "none"
+    },
+    {
+      "id": "c15",
+      "name": "used-theorem accounting and simp? minimisation (UsedSimps, Diagnostics, mkSimpOnly, warnUnusedSimpArgs, thmsWithBadKeys)",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "structures UsedSimps / Diagnostics Types.lean 210-243; Elab/Tactic/Simp.lean 515-643",
+      "dispositions": {
+        "CUT-1": "SCAFFOLDING"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "organ_record": "none"
+    },
+    {
+      "id": "c16",
+      "name": "loop protection (post-failure RHS re-simplification of user args)",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "file LoopProtection.lean",
+      "dispositions": {
+        "CUT-1": "SCAFFOLDING"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "organ_record": "none"
+    },
+    {
+      "id": "c17",
+      "name": "rule-set organisation (SimpTheorems: pre/post trees, erased, toUnfold, priorities, extension + attribute)",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "structure SimpTheorems SimpTheorems.lean 527-538 + SimpExtension 648-690",
+      "dispositions": {
+        "CUT-1": "DATA"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "organ_record": "none"
+    },
+    {
+      "id": "c18",
+      "name": "@[simps] projection-lemma generator (mathlib)",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "file Mathlib/Tactic/Simps/Basic.lean",
+      "dispositions": {
+        "CUT-1": "UNRESOLVED"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "organ_record": "none"
+    },
+    {
+      "id": "c19",
+      "name": "simp_rw / simp_intro / dsimp% sequencing wrappers (mathlib)",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "files Mathlib/Tactic/SimpRw.lean, SimpIntro.lean, DSimpPercent.lean",
+      "dispositions": {
+        "CUT-1": "SCAFFOLDING"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "organ_record": "none"
+    },
+    {
+      "id": "c20",
+      "name": "field_simp (mathlib) -- name inherited, mechanism gone: at this pin it is its own normal form (qNF over AtomM.recurse) reusing only Simp.Result as a proof-carrying result type and a discharger",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "file Mathlib/Tactic/FieldSimp.lean (name)",
+      "dispositions": {
+        "CUT-1": "DEAD_CUT"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "organ_record": "none"
+    },
+    {
+      "id": "c21",
+      "name": "the lemma set itself (48,076 @[simp]-family attribute sites in mathlib4/Mathlib at the pin; the core set uncounted) and the simp-normal-form convention that orients it",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "attribute sites; the convention lives in documentation and review practice, not in code",
+      "dispositions": {
+        "CUT-1": "DATA"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "organ_record": "none"
+    },
+    {
+      "id": "c22",
+      "name": "dsimp mode (definitional-only variant: inDSimp, DSimproc, no proof terms)",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "flag Context.inDSimp Types.lean 119; dsimpImpl Main.lean 516-530",
+      "dispositions": {
+        "CUT-1": "POLICY"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "organ_record": "none"
+    },
+    {
+      "id": "c23",
+      "name": "closed-term evaluation (decide / literal folders / arith / seval)",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "defs simpUsingDecide / simpGround / simpArith Rewrite.lean 275-523 + directory BuiltinSimprocs/",
+      "dispositions": {
+        "CUT-1": "ORGAN"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 5529
+      },
+      "independent_test": "specified",
+      "independent_test_ref": "organ record control field; needs a kernel check",
+      "ancestor_free_contract": false,
+      "consumer_returns": [],
+      "organ_record": "closed_term_evaluation.cut1.json"
+    }
+  ],
+  "pressures": {
+    "CUT-1": [
+      "conditional_facts_must_be_paid_for.cut1.json",
+      "growing_store_must_terminate.cut1.json",
+      "orientation_is_a_choice.cut1.json",
+      "retrieval_at_store_scale.cut1.json"
+    ]
+  },
   "deliveries": [],
-  "cheat_controls": [],
-  "note": "empty at preregistration 2026-09-11; candidates are appended as drawn, each stamped with origin at the moment of drawing (PREREG_CUT1.md s2 step 2)"
+  "cheat_controls": [
+    {
+      "candidate": "c06",
+      "fired": "not_run",
+      "ref": "organs/ordered_rewriting_guard.cut1.json control/cheat fields"
+    },
+    {
+      "candidate": "c02",
+      "fired": "not_run",
+      "ref": "organs/retrieval_key_abstraction.cut1.json control/cheat fields"
+    },
+    {
+      "candidate": "c07",
+      "fired": "not_run",
+      "ref": "organs/recursive_side_condition_discharge.cut1.json control/cheat fields"
+    },
+    {
+      "candidate": "c08",
+      "fired": "not_run",
+      "ref": "organs/traversal_fixpoint_with_memo.cut1.json control/cheat fields"
+    },
+    {
+      "candidate": "c01",
+      "fired": "not_run",
+      "ref": "organs/rule_canonicalization.cut1.json control/cheat fields"
+    },
+    {
+      "candidate": "c09",
+      "fired": "not_run",
+      "ref": "organs/congruence_descent.cut1.json control/cheat fields"
+    },
+    {
+      "candidate": "c13",
+      "fired": "not_run",
+      "ref": "organs/hypothesis_mutual_saturation.cut1.json control/cheat fields"
+    },
+    {
+      "candidate": "c23",
+      "fired": "not_run",
+      "ref": "organs/closed_term_evaluation.cut1.json control/cheat fields"
+    }
+  ],
+  "note": "CUT-1 snapshot 2026-09-11. Origins were stamped at drawing per PREREG_CUT1.md s2 step 2. Honesty rule applied: a candidate found by reading a def-name skeleton (grep for def/structure) is INHERITED even if Nyx then read the body; DISCOVERED is reserved for boundaries drawn by following a value or a flag across defs/files. Record bytes for non-ORGAN candidates are 0 (they have no record file; their text lives in CUTS.md)."
 }
