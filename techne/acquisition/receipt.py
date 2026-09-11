@@ -43,6 +43,17 @@ def _repo_state() -> dict:
     }
 
 
+def _workspace_state() -> dict:
+    """D-23's four fields, from techne.workspace. Never raises: a receipt that
+    cannot be written is worse than one that records why its workspace block is
+    absent."""
+    try:
+        from .. import workspace                                 # noqa: PLC0415
+        return workspace.receipt()
+    except Exception as exc:                                     # noqa: BLE001
+        return {"unavailable": "%s: %s" % (type(exc).__name__, exc)}
+
+
 def new(stage: str, entry_id: str, *, tool: str | None = None) -> dict:
     if stage not in STAGES:
         raise ValueError(f"stage must be one of {STAGES}")
@@ -58,6 +69,10 @@ def new(stage: str, entry_id: str, *, tool: str | None = None) -> dict:
         "written_utc": _dt.datetime.now(_dt.timezone.utc).isoformat(timespec="seconds"),
         "seat": "Techne",
         "repo": _repo_state(),
+        # D-23 (operator, 2026-09-11): EVERY receipt records base_sha, branch,
+        # worktree_path and dirtiness, so "built from <sha> in <worktree>" is
+        # readable off the artifact instead of reconstructed from memory.
+        "workspace": _workspace_state(),
         "runner": {"python": sys.version.split()[0], "executable": sys.executable,
                    "platform": platform.platform(),
                    "tool_cache": str(paths.tool_cache()),
@@ -74,6 +89,12 @@ def new(stage: str, entry_id: str, *, tool: str | None = None) -> dict:
 
 
 def write(rec: dict, out_dir: pathlib.Path | None = None) -> pathlib.Path:
+    # The second entry point worth guarding: a receipt is a file written INTO the
+    # repository, and D-23's whole subject is who may write where. Budget guards
+    # the work; this guards the artifact, so a check that writes a receipt without
+    # running a budgeted step is covered too.
+    from .. import workspace                                     # noqa: PLC0415
+    workspace.assert_not_canonical("write a receipt")
     d = out_dir or paths.receipts()
     d.mkdir(parents=True, exist_ok=True)
     p = d / f"{rec['receipt_id']}.json"

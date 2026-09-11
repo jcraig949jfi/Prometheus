@@ -102,4 +102,6 @@ def main():
 
 
 if __name__ == "__main__":
+    from proteus.workspace import assert_not_canonical
+    assert_not_canonical("run emit_shrink_fixture.py")
     sys.exit(main())
