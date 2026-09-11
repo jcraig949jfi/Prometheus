@@ -125,6 +125,10 @@ modes BEFORE external claims escape upward:
 - Pivot stack pass rate (target: 0 regressions on every commit)
 - Synthetic-null-control firings per cross-domain claim (target: 1+
   per claim BEFORE external publication)
+  > SUPERSEDED TERMINOLOGY, operator ruling 2026-09-11 (no-paper / no-publication doctrine,
+  > aporia/doctrine/critical_memories.md HARD-1). The epistemic gate stands; the framing does not.
+  > Read as: Techne must run the required synthetic null control before promoting or
+  > communicating any cross-domain claim beyond its experimental context.
 - Smoke-catch bug surface rate (smoke catches per K episodes at full
   scale; healthy if smokes catch >0.5% FP rate that full runs would
   amplify)
