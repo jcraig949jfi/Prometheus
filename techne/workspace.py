@@ -47,8 +47,15 @@ class CanonicalCheckoutRefused(RuntimeError):
 
 
 def _git(*args: str, cwd: Optional[Path] = None) -> str:
-    return subprocess.run(["git", *args], cwd=str(cwd or REPO),
-                          capture_output=True, text=True, timeout=30).stdout.strip()
+    """Empty string on any failure, INCLUDING a cwd that does not exist. Every
+    caller below documents None or False as its answer when git cannot speak, and
+    a helper that raises instead would make those docstrings false -- which is the
+    defect class this seat spent the day on."""
+    try:
+        return subprocess.run(["git", *args], cwd=str(cwd or REPO),
+                              capture_output=True, text=True, timeout=30).stdout.strip()
+    except (OSError, subprocess.SubprocessError):
+        return ""
 
 
 def is_main_worktree(path: Optional[Path] = None) -> bool:
@@ -63,10 +70,57 @@ def is_main_worktree(path: Optional[Path] = None) -> bool:
     return Path(cwd, gd).resolve() == Path(cwd, cd).resolve()
 
 
+def canonical_root(path: Optional[Path] = None) -> Optional[Path]:
+    """The canonical checkout's directory, DERIVED and never hardcoded.
+
+    VIVARIUM'S, adopted on 2026-09-11 in place of my own weaker test.
+    `--git-common-dir` resolves to <canonical>/.git from any worktree, so its
+    parent is the canonical checkout wherever the repository lives -- which makes
+    the check survive a clone, another machine, and the day somebody moves it.
+    """
+    cd = _git("rev-parse", "--path-format=absolute", "--git-common-dir",
+              cwd=path or REPO)
+    if not cd:
+        return None
+    try:
+        return Path(cd).resolve().parent
+    except OSError:                                              # pragma: no cover
+        return None
+
+
+def inside_canonical_checkout(path: Optional[Path] = None) -> bool:
+    """A LINKED worktree placed UNDERNEATH the canonical checkout.
+
+    THE HOLE IN MY OWN GUARD, found by Vivarium within an hour of my finding the
+    hole in theirs. Such a worktree is genuinely linked, so `is_main_worktree` is
+    FALSE and the canonical check clears it -- while the files sit inside the
+    directory that has twice lost ~11,000 tracked files to a concurrent rewrite.
+    My first version matched temp-path MARKERS, which catches a scratchpad and
+    misses this entirely. A derived root catches both without knowing a path.
+    """
+    root = canonical_root(path)
+    here = Path(path or REPO).resolve()
+    if root is None or here == root:
+        return False                    # None: unknown. Equal: the canonical checkout itself.
+    try:
+        here.relative_to(root)
+        return True
+    except ValueError:
+        return False
+
+
 def is_session_temporary(path: Optional[Path] = None) -> bool:
     """True iff the worktree sits under a session-scoped temp path. Rule 2."""
     p = str(Path(path or REPO).resolve()).replace("\\", "/").lower()
     return any(m.replace("\\", "/") in p for m in _SESSION_TEMP_MARKERS)
+
+
+def is_durable(path: Optional[Path] = None) -> bool:
+    """Rule 2's conjunction: not the canonical checkout, not underneath it, not
+    session-temporary. All three report differently and only the first is what
+    `is_main_worktree` sees."""
+    return not (is_main_worktree(path) or inside_canonical_checkout(path)
+                or is_session_temporary(path))
 
 
 def receipt(path: Optional[Path] = None) -> Dict[str, Any]:
@@ -84,7 +138,9 @@ def receipt(path: Optional[Path] = None) -> Dict[str, Any]:
         "worktree_path": str(Path(cwd).resolve()),
         "dirty": bool(_git("status", "--porcelain", "--untracked-files=no", cwd=cwd)),
         "main_worktree": is_main_worktree(cwd),
+        "inside_canonical_checkout": inside_canonical_checkout(cwd),
         "session_temporary_worktree": is_session_temporary(cwd),
+        "durable_worktree": is_durable(cwd),
         "allow_canonical_override": os.environ.get("TECHNE_ALLOW_CANONICAL") == "1",
         "tool_cache": cache,
         "tool_cache_versioned": False,
@@ -101,6 +157,14 @@ def assert_not_canonical(purpose: str = "work", *, allow_override: bool = True) 
     running session with no path to commit its work -- and unpushed work is the
     exact loss D-23 exists to prevent."""
     r = receipt()
+    if r["inside_canonical_checkout"]:
+        # No override. A linked worktree under F:\Prometheus\ is rule 2's other
+        # half, it is invisible to main_worktree, and nothing legitimate needs it.
+        raise CanonicalCheckoutRefused(
+            "refusing to %s from %s: a linked worktree UNDERNEATH the canonical checkout %s. "
+            "It reports main_worktree false and is still inside the directory that has twice "
+            "lost tracked files to a concurrent rewrite (D-23 rule 2)."
+            % (purpose, r["worktree_path"], canonical_root()))
     if r["main_worktree"] and not (allow_override and r["allow_canonical_override"]):
         raise CanonicalCheckoutRefused(
             "refusing to %s from the canonical checkout %s (the repository's main worktree). "

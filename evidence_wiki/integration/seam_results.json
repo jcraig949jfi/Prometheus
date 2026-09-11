@@ -1,5 +1,5 @@
 {
- "ran_at": "2026-09-10T12:18:39",
+ "ran_at": "2026-09-11T03:40:02",
  "host": "127.0.0.1",
  "machine": "M1",
  "service": {
@@ -7,16 +7,25 @@
   "status": "ok",
   "schema_version": 4,
   "ontology_version": 2,
-  "fossil_contract": "pew.fossil.v2"
+  "fossil_contract": "pew.fossil.v2",
+  "workspace": {
+   "base_sha": "7c36278f2363b84b8245c24f3ade1d71231c67ad",
+   "branch": "HEAD",
+   "worktree_path": "F:\\Prometheus-worktrees\\mnemosyne-pew\\evidence_wiki",
+   "dirty": true,
+   "main_worktree": false
+  }
  },
- "n_scored": 12,
- "n_pass": 12,
- "skipped": [],
+ "n_scored": 11,
+ "n_pass": 11,
+ "skipped": [
+  "A_hash_semantics"
+ ],
  "all_pass": true,
- "bound_evidence_id": "E-87a3eb776a36",
+ "bound_evidence_id": "E-6f1fd58b5a5a",
  "fixture_encounter": "TESTFIX-HARMONIA-ENC-0002",
  "fixture_run": "TESTFIX-RUN-0002",
- "real_sfe_encounter": "SEAM-evt_4368825fe26ab01617fde410",
+ "real_sfe_encounter": null,
  "gates": [
   {
    "gate": "I_live_migration_state",
@@ -26,21 +35,21 @@
   },
   {
    "gate": "A_hash_semantics",
-   "pass": true,
-   "skipped": false,
-   "detail": "sanctioned event entry_hash+event_id -> 200; wrong-class unpaired {'blob_hash': 422, 'artifact_id': 422, 'world_head_hash': 422}; bad hash shape -> 422; non-evt event_id -> 422"
+   "pass": false,
+   "skipped": true,
+   "detail": "no SFE ledger available"
   },
   {
    "gate": "B_evidence_to_fossil_traversal",
    "pass": true,
    "skipped": false,
-   "detail": "evidence=E-87a3eb776a36 -> {\"encounter_id\": \"TESTFIX-HARMONIA-ENC-0002\", \"run_id\": \"TESTFIX-RUN-0002\", \"world_id\": \"TESTFIX-WORLD-0002\", \"players\": [\"TESTFIX-PLAYER-0002\"], \"sfe_entry_hash\": \"sha256:7c44ef40bee6775773ea1c365f238e056dadb864747f03ab692b831a73067d60\", \"sfe_event_id\": \"evt_d1c585e3133da4f58554cf24\", \"sfe_event_seq\": 1}"
+   "detail": "evidence=E-6f1fd58b5a5a -> {\"encounter_id\": \"TESTFIX-HARMONIA-ENC-0002\", \"run_id\": \"TESTFIX-RUN-0002\", \"world_id\": \"TESTFIX-WORLD-0002\", \"players\": [\"TESTFIX-PLAYER-0002\"], \"sfe_entry_hash\": \"sha256:7c44ef40bee6775773ea1c365f238e056dadb864747f03ab692b831a73067d60\", \"sfe_event_id\": \"evt_d1c585e3133da4f58554cf24\", \"sfe_event_seq\": 1}"
   },
   {
    "gate": "C_reverse_query",
    "pass": true,
    "skipped": false,
-   "detail": "encounter -> 3 evidence row(s); contains E-87a3eb776a36: True"
+   "detail": "encounter -> 4 evidence row(s); contains E-6f1fd58b5a5a: True"
   },
   {
    "gate": "D_unsupported_field_fails_closed",
@@ -70,7 +79,7 @@
    "gate": "G_namespace_firewall",
    "pass": true,
    "skipped": false,
-   "detail": "test/seam rows in prod fossil namespace: 0; prod encounters still 5628; seam evidence rows visible in ew.evidence_prod: 0 (must be 0); classification=['test']"
+   "detail": "test/seam rows in prod fossil namespace: 0; prod encounters still 5887; seam evidence rows visible in ew.evidence_prod: 0 (must be 0); classification=['test']"
   },
   {
    "gate": "G2_unknown_namespace_refused",
@@ -82,7 +91,7 @@
    "gate": "H_independent_read_back",
    "pass": true,
    "skipped": false,
-   "detail": "direct SQL (never through the writing function): [{'evidence_id': 'E-87a3eb776a36', 'encounter_id': 'TESTFIX-HARMONIA-ENC-0002', 'encounter_run_id': 'TESTFIX-RUN-0002', 'encounter_run_key': 'TESTFIX-RUN-0002'}]"
+   "detail": "direct SQL (never through the writing function): [{'evidence_id': 'E-6f1fd58b5a5a', 'encounter_id': 'TESTFIX-HARMONIA-ENC-0002', 'encounter_run_id': 'TESTFIX-RUN-0002', 'encounter_run_key': 'TESTFIX-RUN-0002'}]"
   },
   {
    "gate": "J_contract_is_self_describing",

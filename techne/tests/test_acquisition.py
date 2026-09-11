@@ -426,6 +426,42 @@ def test_cancelling_the_same_child_twice_does_not_invent_a_degraded_kill():
 # --------------------------------------------------------------------------
 # D-23 (operator, 2026-09-11): the workspace invariant, on this seat's entry points.
 # --------------------------------------------------------------------------
+def test_a_linked_worktree_under_the_canonical_checkout_is_refused():
+    """The hole in MY first guard, found by Vivarium within the hour: such a
+    worktree is genuinely linked, so is_main_worktree is false and my original
+    temp-path marker test cleared it, while the files sat inside the directory
+    that has twice lost tracked files. Their derived-root check catches it."""
+    from techne import workspace
+
+    root = workspace.canonical_root()
+    assert root is not None and root.is_dir(), (
+        "the canonical root must be DERIVED from --git-common-dir and must exist")
+
+    # The containment logic, isolated from git: that is the part my first version
+    # got wrong. A path UNDER the root is inside; the root itself is not (that is
+    # the main-worktree case); a sibling is not.
+    real_root = workspace.canonical_root
+    workspace.canonical_root = lambda path=None: root
+    try:
+        assert workspace.inside_canonical_checkout(root) is False
+        assert workspace.inside_canonical_checkout(root / ".claude" / "worktrees" / "w") is True
+        assert workspace.inside_canonical_checkout(root.parent / "Prometheus-worktrees") is False
+    finally:
+        workspace.canonical_root = real_root
+
+    # and a cwd that does not exist must answer, not raise
+    assert workspace._git("rev-parse", "HEAD", cwd=root / "no" / "such" / "dir") ==         "", "a helper documented to return a value must not raise on a bad cwd"
+    # and the guard refuses it with no override available
+    real = workspace.inside_canonical_checkout
+    workspace.inside_canonical_checkout = lambda path=None: True
+    try:
+        with pytest.raises(workspace.CanonicalCheckoutRefused) as exc:
+            workspace.assert_not_canonical("probe")
+        assert "UNDERNEATH" in str(exc.value)
+    finally:
+        workspace.inside_canonical_checkout = real
+
+
 def test_the_canonical_checkout_is_detected_without_a_path_assumption():
     """Archaeon's test, and the reason it is theirs rather than mine: a
     path-based check would have to know a drive letter, which is the exact
