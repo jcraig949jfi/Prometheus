@@ -172,3 +172,58 @@ test is EOS-07; it has not been executed.
        docstring to be updated together. The gate's only power is
        refusal; ANCHOR and ACQUIRE stay human admissions because of this
        row.
+
+## Rows from Season II (2026-09-11) -- all four found by other seats
+
+    C12 | Eos let the gate settle a TERMINAL state, RESOURCE, on
+       evidence that was a string the caller wrote. The docstring said
+       the gate could settle it "because its evidence is a measurement
+       this seat took". | Nemesis, NEMESIS-01: 30 of 30 fabricated
+       observations pointing at https://nemesis-never-called.invalid/v1
+       were settled RESOURCE with the reason "measurement satisfies
+       every check". Nothing was ever called. The check believed
+       observed_by == "eos-intake". | The base role's FIRST rule --
+       verify the property, never the label -- failed inside a gate Eos
+       built to enforce it. The carve-out is removed, not patched: the
+       gate now settles nothing but REFUSED, and a RESOURCE claim must
+       name a committed probe artifact the gate opens itself.
+
+    C13 | Eos's cheat control for RESOURCE tested the HONEST mislabel
+       (observed_by="provider-documentation") and Eos read its passing
+       as evidence the channel was sound. | Nemesis: the forged label
+       was never tested. "Gate blind spots sit where the author's
+       imagination of cheating stopped, and an honest author imagines
+       honest mistakes." | A cheat control must be written by someone
+       trying to get in, or commissioned from someone whose lane is
+       getting in. Eos will commission the cheat control rather than
+       author it, for every instrument it builds from now on.
+
+    C14 | Eos reported 51 first-season refusals as a boundary and wrote
+       "none of the refusals is about topic; they are refused because
+       not one of them can name a place in this repository that would
+       change." | Nemesis, NEMESIS-01b: 49 of the 51 were decided by an
+       auto-generated referent pointing into research/frontier/, a
+       directory that has never existed. The verdicts would have been
+       identical whatever the item said. They were refused because EOS
+       NEVER TRIED to find a place. | The sentence was wrong and is
+       corrected in SEASON_II_2026-09-11.md. NOT_EXAMINED now exists as
+       a state that is not a refusal, and the corpus is 7 rows, not 51.
+       Eos's own self-attack said "close to tautological" and stopped
+       there; naming a suspicion is not measuring it, and the measuring
+       was worth more than the naming.
+
+    C15 | Eos's capability search read the WORKING TREE. | Nemesis: 43
+       of 97 files in a sparse worktree -- 44 per cent of the evidence
+       -- while still reporting "0 hits in the tracked tree". | `git
+       grep --cached`. A search whose coverage depends on what happens
+       to be checked out is not a search over the repository.
+
+    C16 | Eos sent Apollo an interruption about a paper the program had
+       already metabolised. | Its own pair-side duplication check, built
+       the same day: arXiv 2608.15546 is cited at
+       aporia/docs/frontier_campaign_69/hypotheses/206_h3_adversarial_
+       review.md:27. 1 of 6 interruptions was a duplicate. | The
+       already-absorbed check asked only whether the REFERENT FILE cited
+       the item. It must ask the whole program minus Eos -- the same
+       exclusion rule the dedup search learned in Season I, applied one
+       check to the left.
