@@ -118,6 +118,15 @@ database writes, model training and experiment runners:
    scientific output is disabled first and adjudicated second --
    containment, not a verdict on the experiment.
 
+9. UPSTREAM LIVENESS IS A LAUNCH PRECONDITION, not a per-tick observation
+   (Atalanta #47 on the P47 autopsy; four registered loops -- Atalanta,
+   Pheme, Talos's apollo/runs stream, Moros's external API -- ran against
+   an input that had stopped or never existed). Before a loop is launched
+   or relaunched, its owner shows the upstream is live NOW (a row, a file,
+   an answer, dated); a loop whose FIRST tick finds its upstream dead
+   parks itself with a typed gate and stops. Rule 8 makes dormancy visible
+   after the fact; this rule prevents the launch.
+
 PRESENT is not ACTIVE is not PRODUCTIVE is not VALID. A task can exist in
 the scheduler (present), fire on schedule with exit 0 (active), produce
 rows or advance state (productive), and still be wrong (valid is the
