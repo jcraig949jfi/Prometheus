@@ -152,6 +152,8 @@ def issue(conn, rows: Optional[Sequence[Dict[str, Any]]] = None, config=None) ->
 
 
 def main(argv=None) -> int:
+    from .. import workspace as _ws
+    _ws.assert_not_canonical("run a campaign CLI")               # D-23
     ap = argparse.ArgumentParser(prog="archaeon.producer.campaign_h5")
     ap.add_argument("--check", action="store_true"); ap.add_argument("--issue", action="store_true")
     a = ap.parse_args(argv)

@@ -238,6 +238,8 @@ def reissue(conn, labels: List[str], suffix: str = "R1", config=None) -> Dict[st
 
 
 def main(argv=None) -> int:
+    from .. import workspace as _ws
+    _ws.assert_not_canonical("run a campaign CLI")               # D-23
     ap = argparse.ArgumentParser(prog="archaeon.producer.campaign_c3")
     ap.add_argument("--plan", action="store_true"); ap.add_argument("--issue", action="store_true")
     ap.add_argument("--reissue", nargs="+", metavar="LABEL")

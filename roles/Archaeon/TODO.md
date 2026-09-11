@@ -201,3 +201,6 @@ would still KILL.
 - [~] F-26 (Archaeon): D-6 pilot -- first allocated tick CONFIRMED 20:12 (active, established share, evaluate_bitstring); review packet for 2026-09-24 with Harmonia still to write. 2026-09-10
 - [x] F-27 DONE 2026-09-11 04:00 (operator step 5): conformance gate wired fail-closed at submit/tick/enqueue with the record on every row; four-case demonstration receipt; Vivarium's half filed. 2026-09-11
 - [ ] F-28 (Vivarium): wire the gate at the claim/dispatch boundary with the complete route set and the record on the load receipt; demonstrate; C3-3 waits. 2026-09-11
+- [x] F-29 DONE 2026-09-11 05:00: D-23 workspace missive issued; guard + receipt wired; tick moved to a pinned worktree. 2026-09-11
+- [ ] F-30 (every seat): D-23 clean-up reports (claimed/deleted canonical files, pruned worktrees, merged branches deleted, long-lived processes moved). 2026-09-11
+- [ ] F-31 (Archaeon): next task on a task branch archaeon/<task> in F:\Prometheus-worktrees\archaeon-<task>; retire F:\Prometheus-archaeon once its last change lands. 2026-09-11

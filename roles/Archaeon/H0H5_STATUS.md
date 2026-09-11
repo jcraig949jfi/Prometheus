@@ -68,6 +68,14 @@ Baseline: `archaeon/docs/h0h5/BASELINE_2026-09-09.json`.
 
 
 
+
+## 2026-09-11 ~05:00: LOOP PAUSED at the operator's request; workspace invariant D-23 issued and complied with
+
+- The canonical checkout F:\Prometheus was found on a branch that no longer exists on origin (vivarium/v0-2026-09-05) with 35 modified tracked files and 96 untracked files belonging to at least six seats, and with Vivarium's consumer worktree INSIDE it. Snapshot committed beside the missive.
+- Missive to every seat (roles/Archaeon/prompts/2026-09-11_workspace/MISSIVE_ALL_SEATS.md): worktree per seat under F:\Prometheus-worktrees, short-lived task branches from a recorded base SHA, no `git pull`, receipts carry base_sha/branch/worktree_path/dirty, fast-forward integration then remove/delete, pinned worktrees for long-running processes, destroy-not-nurse, startup refusal in the canonical checkout, and a same-day clean-up (claim or delete your own files in the canonical checkout; prune your worktrees; delete merged branches; move long-lived processes).
+- Archaeon's compliance: archaeon/workspace.py (main-worktree detection by git-dir == git-common-dir; `assert_not_canonical` on the loop, every campaign CLI, and the queue writer with no override; `receipt()` on every tick and queue row); the scheduled tick moved to the pinned worktree F:\Prometheus-worktrees\archaeon-tick (detached at the SHA recorded in the task change); archaeon/v0 retires as a long-lived branch -- subsequent work is on task branches.
+- The loop is PAUSED: no wakeup scheduled. Resume on the operator's word ("resume the loop").
+
 ## 2026-09-11 ~04:00: the four-state conformance gate is WIRED into Archaeon, fail-closed, and demonstrated (operator step 5)
 
 - **Where**: archaeon/conformance.py, called at the two boundaries where Archaeon begins work -- `archaeon.vivqueue.submit` (every queue write, human or autonomous; a halt writes nothing) and the first line of `archaeon.producer.tick` (before any fossil is read) -- plus the phase-2 enqueue branch. The record (state, live identity, contract hash and identities, gate mode/exit/time, declared consumer routes) travels on every row's `source_evidence.conformance` and in the tick receipt: conformance is provenance on the corpus, not a preflight.

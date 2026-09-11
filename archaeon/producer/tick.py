@@ -95,7 +95,9 @@ def tick(conn, config: Optional[cfg.ArchaeonConfig] = None, *,
     config = config or cfg.DEFAULT
     lane = config.cadence.lane
     day = utc_day_str()
+    from .. import workspace as _ws
     out: Dict[str, Any] = {"tick_version": TICK_VERSION, "at": iso(),
+                           "workspace": _ws.receipt(),                     # D-23: base_sha, branch, worktree_path, dirty
                            "lane": lane, "utc_day": day, "dry_run": dry_run,
                            "wrote": False, "experiment_id": None}
 

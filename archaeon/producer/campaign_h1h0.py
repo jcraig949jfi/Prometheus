@@ -509,6 +509,8 @@ def degeneracy_check_row(split: Optional[Dict[str, Any]] = None) -> Dict[str, An
 
 
 def main(argv=None) -> int:
+    from .. import workspace as _ws
+    _ws.assert_not_canonical("run a campaign CLI")               # D-23
     ap = argparse.ArgumentParser(prog="archaeon.producer.campaign_h1h0")
     ap.add_argument("--split", action="store_true"); ap.add_argument("--phase1", action="store_true")
     ap.add_argument("--check-phase1", action="store_true"); ap.add_argument("--issue-phase1", action="store_true")

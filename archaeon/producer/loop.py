@@ -149,6 +149,8 @@ def run(interval_s: float = 900.0,
 
 # --------------------------------------------------------------------------
 def main(argv=None) -> int:
+    from .. import workspace as _ws
+    _ws.assert_not_canonical("run the producer loop")          # D-23: never from the canonical checkout
     ap = argparse.ArgumentParser(prog="archaeon.producer.loop")
     ap.add_argument("--interval", type=float, default=900.0,
                     help="seconds between asks (default 900). This is how "

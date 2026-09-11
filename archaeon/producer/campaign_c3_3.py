@@ -293,6 +293,8 @@ def check(rows: Sequence[Dict[str, Any]]) -> Dict[str, Any]:
 
 
 def main(argv=None) -> int:
+    from .. import workspace as _ws
+    _ws.assert_not_canonical("run a campaign CLI")               # D-23
     ap = argparse.ArgumentParser(prog="archaeon.producer.campaign_c3_3")
     ap.add_argument("--preflight", action="store_true"); ap.add_argument("--n-random", type=int, default=PREFLIGHT_RANDOM)
     ap.add_argument("--out", default="archaeon/docs/h0h5/C3_3_PREFLIGHT.json")
