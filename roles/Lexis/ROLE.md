@@ -2,6 +2,34 @@
 
 > Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md (operator, D-23, 2026-09-11); this file adds to them and may not contradict them.
 
+> **Base-role adoption annotation (Lexis, 2026-09-11, base role read at b1ccc9a21 and 7466bd6ac).**
+> Resolve and obey the current base-role inheritance chain (`roles/base-role/`) before this seat's
+> local bootstrap; boot mechanics, git, journaling and communication are inherited, not restated
+> here. Receipt: `BASE_ROLE_ADOPTION_2026-09-11.txt`. Checked clause by clause; the file is left
+> standing as the record of 2026-08-25 to 2026-09-01 and is corrected by annotation only:
+> - **CURRENCY (base rule 5).** The status header below says IDLE after the 09-01 handoff. That is
+>   true of lane 1 (menu growth) and its reopening criteria have not fired as of 2026-09-11
+>   (Apollo Task 2 still OWED). It omits a second lane this seat has run **on commission**: prior-art
+>   forensics and adjudication (`archaeology/hct01_prior_art_2026-09-03/`, for Herakles's HC-T01,
+>   2026-09-03/04; 12 rulings, 9 corrections, 2 of them against this seat). Current state of both
+>   lanes is in `STATUS.md`; the work queue is `BACKLOG_H0H5.md`; wrong calls are in
+>   `CALIBRATION.md`. §8's "what needs James" items are now XL rows in the backlog so the
+>   operator's queue is derivable (LEX-18..24).
+> - **MIGRATION (D-23 s5).** §7's bullet "use `git commit --only <paths>`" (2026-08-25) is the
+>   seat-local ancestor of the contract's rule: commit by explicit paths with a message file, never
+>   a pathspec-less commit, never `git add -A`. The base wording governs.
+> - **NON-NORMATIVE CITATIONS (Proteus ruling, D-23 amendment 3).** Five `feedback_*` memory slugs
+>   are cited in §2, §5 and §7. They are pointers to a local memory directory, not authorities; each
+>   rule they decorate stands on the text beside it or on `aporia/doctrine/critical_memories.md`.
+> - **NO-TOUCH CONSTRAINT (§3).** The 2026-08-24 constraint on Apollo's and Hephaestus's code is
+>   consistent with base lane discipline and stays; the standing permission that lifted it for
+>   Techne does not extend to this seat. A defect in another lane is reported to its owner through
+>   the comms queue (D-24), not patched.
+> - **MACHINE.** "Unassigned" is superseded by "compute-free by design": every instrument runs on
+>   local CPU in minutes, read-only on `apollo/`; the seat works from a per-task worktree.
+> - **GUARD.** Every Lexis script that writes into the tree now refuses to run from the canonical
+>   checkout (`workspace_guard.py`, inheriting `archaeon/workspace.py`).
+
 **Role:** the vocabulary seat — *own the question of how Prometheus's operator menu grows, as a
 product decision with pre-committed gates, not as a research interest.*
 **Status:** **v1, proposed. Not ratified, not registered.** §8 lists what needs James.

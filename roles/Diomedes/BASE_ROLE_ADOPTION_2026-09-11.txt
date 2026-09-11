@@ -1,0 +1,275 @@
+====================================================================
+DIOMEDES -- BASE ROLE ADOPTION RECEIPT
+2026-09-11
+====================================================================
+
+0. STANDING OF THE SEAT WHILE THIS PASS RAN
+
+   The seat is PARKED (operator, 2026-09-02: "We're parking this seat").
+   Not retired: no dossier, no HITL ruling. The operator's directive of
+   2026-09-11 was to bootstrap and adopt the base role the way sibling
+   seats have. This pass is therefore COMPLIANCE work, not lane work:
+   nothing in Lane N (KILL) or Lane M (open, unattached) was resumed,
+   no cycle was run, no claim was made. The one instrument change here
+   (section 5) is mandated by base rule 3 and touches only the seat's
+   own self-test.
+
+1. WHAT I READ, AND AT WHICH SHA
+
+   base role read at   7466bd6ac79b5a247f9ac50e355f2244d79883a8
+   verified            it IS origin/main at the time of reading
+                       (git rev-parse origin/main before worktree add)
+   files read in full  roles/base-role/README.md
+                       roles/base-role/NORTH_STAR.md
+                       roles/base-role/RESPONSIBILITIES.md
+                       roles/base-role/WORKING_CONTRACT.md
+                       roles/base-role/INHERITANCE.md
+                       roles/base-role/MONITORS.md
+                       roles/Archaeon/prompts/2026-09-10_backlog/
+                         00_BACKLOG_SCHEMA.md
+   also read           roles/Diomedes/BOOTSTRAP.md, ROLE.md v3 (S5, S7,
+                       S8, S9.6-9.8, S10), STATUS_2026-09-01_rebootstrap.md
+                       roles/Archaeon/H0H5_STATUS.md (iteration 1, alphas,
+                       pending decisions, the 09-11 pause note)
+                       aporia/doctrine/critical_memories.md (HARD-1..6,
+                       headers; body known from prior passes)
+                       archaeon/workspace.py, archaeon/tests/test_base_role.py
+                       the adoption receipts of Charon (383818522) and the
+                       file lists of Ergon (772edf15e), Aporia (7e2dbe0a9)
+                       git log --oneline -20 origin/main
+   comms               python -m comms sync Diomedes at 11:35:23Z:
+                       1 new (Archaeon broadcast, sha256 402c3445443d1be5,
+                       "comms live; base role applies"), 0 queued, queue
+                       length 0. No prompt addressed to Diomedes exists in
+                       the cadre seeding (the seat was parked when the
+                       twelve seat prompts were issued).
+
+   MY INHERITANCE ROWS ARE NOT STUBS
+     | Diomedes | ROLE.md (already), BOOTSTRAP.md (already) |
+   Both carry the line-2 banner (stamped centrally; I did not add it).
+
+2. WORKSPACE RECEIPT (WORKING_CONTRACT s4)
+
+   worktree_path   F:\Prometheus-worktrees\diomedes-base-role
+   branch          diomedes/base-role-adopt-2026-09-11  (task branch)
+   base_sha        7466bd6ac79b5a247f9ac50e355f2244d79883a8
+   dirty           false at creation
+   main_worktree   false  (archaeon.workspace.receipt() from this tree)
+   machine         M1
+   worktree add    run unbounded (no short timeout, contract s3); 39,092
+                   files updated to 100%, exit 0.
+
+   Diomedes footprint before this worktree: 0 worktrees, 0 local
+   branches, 0 long-running processes, 0 scheduled tasks, 0 UNTRACKED
+   non-ignored files in the canonical checkout. The canonical checkout
+   holds only gitignored Diomedes artifacts: five *_console.log / *.log
+   files, harvest_cache.pkl (rebuildable from harvest_cache.py; the
+   proof JSON is tracked), and __pycache__/. Left in place: ignored by
+   rule, never tracked, and the logs are raw stdout of runs whose result
+   rows ARE tracked (section 6). No deletion performed.
+
+3. SEAT FILES CHECKED AGAINST THE BASE ROLE; CONFLICTS ANNOTATED, NOT
+   REWRITTEN
+
+   BOOTSTRAP.md
+     MIGRATION   S1 "Verify the tree before working: git fetch origin &&
+                 git rev-list ... should read 0 0 ... expect to merge".
+                 Restated boot mechanics, written for the pre-D-23 world
+                 where the seat worked in the canonical checkout.
+                 Superseded by WORKING_CONTRACT s1-s3 (worktree per seat,
+                 named-SHA merge, never pull). Annotated, kept.
+     NO CONFLICT S5 hard constraints, S6 traps, S7 what-not-to-do: all
+                 either now constitutional (firewall, rows-with-verdict,
+                 contamination as the null) or seat-specific.
+   ROLE.md
+     MIGRATION   S9.8 "commit with an explicit pathspec ... verify the
+                 carrier SHA ... do not remove another seat's lock": now
+                 restates WORKING_CONTRACT s3 and s5. Annotated as a
+                 dated migration; kept because it is the seat's own
+                 incident record.
+     SUPERSEDED  S8 "Registration: scripts/portfolio_monitor.py
+                 EXPECTED_AGENTS, heartbeat, git-stash tag". The roster
+                 is now roles/base-role/INHERITANCE.md and liveness is
+                 the comms sync receipt (MONITORS.md, last row).
+     ANNOTATED   S7 fourth bullet "documents instead of CARs => retire
+                 on the ratio". Base-mandated artifacts (STATUS,
+                 journal, backlog, calibration, receipts) are excluded
+                 from that ratio by construction; the clause is about
+                 lane output and still binds there.
+     NO CONFLICT S1 contract, S4 cycle contract, S5 standing offer, S6,
+                 S9, S10. S5 (state the action alphabet and its entropy)
+                 is now base doctrine in section 2 ("compute the
+                 attainable range and the ELIGIBLE COUNT before freezing
+                 any rule") -- the seat's line was adopted program-wide.
+   LOOP_CHARTER.md
+     grep for "git pull", "canonical", "worktree", a drive letter: 0
+     hits. NO CONFLICT found by search; not re-read clause by clause
+     (the loop is closed and the charter is not an entry file).
+   STATUS_2026-09-01_rebootstrap.md
+     HISTORICAL  S3 "did not switch branches ... committing onto
+                 another seat's feature branch is not this seat's call".
+                 The situation it describes (the canonical checkout on
+                 another seat's branch) is exactly what D-23 removed.
+                 Left as the dated record it is; superseded by STATUS.md.
+
+   Drive letters in the seat's code: grep -nE '[A-Z]:\\|[A-Z]:/'
+   roles/Diomedes/*.py -> 0 hits.
+
+4. MANDATORY ARTIFACTS CREATED
+
+   roles/Diomedes/STATUS.md              machine-readable; PARKED state
+                                         and every dormancy visible
+   roles/Diomedes/journal/2026-09-11.md  this pass, what was NOT run
+   roles/Diomedes/BACKLOG_H0H5.md        22 rows in the 09-10 schema,
+                                         3 XL
+   roles/Diomedes/CALIBRATION.md         16 wrong/overstated incident
+                                         rows + 4 right rows seeded from
+                                         ROLE.md S9.6 and BOOTSTRAP.md
+                                         S6 with document refs; the
+                                         source's 11/5 partition is NOT
+                                         claimed reproduced (DIOM-08)
+   this receipt
+
+5. INSTRUMENT SELF-FALSIFICATION (base rule 3) -- THE ONE CODE CHANGE
+
+   roles/Diomedes/coordinate_census.py had a differential self-test
+   (reproduces four committed headroom constants to 1e-9; gate checks
+   against cycle-004/005 numbers). It had a POSITIVE control (h1
+   qualifies) and NEGATIVE controls (b2/b3/b4 disqualify) by accident of
+   the committed populations, and NO CHEAT control: nothing planted a
+   state-conditional signal and checked that the headroom channel could
+   see it. Added _planted_controls(), exact and corpus-independent:
+
+     cheat_planted              headroom 0.5   entropy 1.0000  qualifies=True
+     cheat_absorbed_by_context  headroom 0.0   entropy 1.0000  qualifies=False
+     negative_action_only       headroom 0.0   entropy 1.0000  qualifies=False
+     vacuous_single_action      headroom None  entropy 0.0000  qualifies=False
+
+   The cheat population flips the label with state parity, so both
+   actions have marginal rate exactly 0.5 (ceiling = chance) while the
+   oracle is exactly 1: the channel must read 0.5, and it does.
+   Declaring parity as free context must absorb the whole signal to
+   exactly 0.0, and it does. The vacuous case returns None rather than
+   a number, as the enum discipline requires. Self-test: PASSED, all
+   prior assertions unchanged.
+
+   Not changed: the em-dash in the module's console banner prints as
+   mojibake on a cp1252 console. Cosmetic; DIOM-20.
+
+6. SELF-CHECK RESULTS
+
+   archaeon/tests/test_base_role.py      7 passed, 1 FAILED from this
+                                         worktree: test_issued_manifests
+                                         _verify_against_their_files.
+                                         PRE-EXISTING on origin/main at
+                                         7466bd6ac, not in my paths
+                                         (section 9).
+   coordinate_census.py self-test        PASSED (section 5)
+   rule 4 audit of own rows              all 13 result/row/table JSONs
+                                         for cycles 001-005, the review
+                                         rounds, the recon census and
+                                         the harvest proof are tracked
+                                         on origin/main (git ls-tree)
+   ASCII check on STATUS, BACKLOG,       LANG=C.UTF-8 grep -nP
+   CALIBRATION, journal, this receipt    '[^\x00-\x7F]' -> no lines
+
+7. MONITORS (boot step 8)
+
+   Diomedes owns no standing loop, monitor, shadow, validator or
+   scheduled task, and feeds none. Nothing to add to MONITORS.md. The
+   only liveness signal for this seat is its comms sync receipt, which
+   the registry's last row already covers for every seat. The seat's
+   dormancy IS visible: STATUS.md says PARKED with the date and the
+   ruling that would change it.
+
+8. FINDINGS THAT WERE NOT THE TASK
+
+   - The base role has no vocabulary for a PARKED SEAT. MONITORS.md has
+     states for loops (ACTIVE / DORMANT / DEAD / DISABLED / UNLOCATED);
+     RESPONSIBILITIES s1.6 says "the seat should always be working" and
+     s1.6/s4 say never end a pass with a question. A seat parked by the
+     operator's explicit word can satisfy neither without either
+     resuming a lane the operator parked or asking. Reported to Archaeon
+     as an observation, not a blocker (section 9): a one-line seat-state
+     enum (ACTIVE / PARKED-by-whom-when / RETIRED-by-dossier) in
+     INHERITANCE.md would close it.
+   - Three coordinate-adequacy verdicts by sibling seats still carry no
+     headroom / attainable-range line (Harmonia B E6 98bc0e28, Techne
+     Crucible 3 7e450acf9, Harmonia A Gen3C 2835bfdc). Recorded 09-01,
+     unchanged 09-11. They are DIOM-02/06/07 and each is seconds of
+     arithmetic once the seat is unparked. Not run: the seat has no
+     gate authority and is parked.
+   - Harmonia shipped pew_preflight (6714c3a4d). The K0 check is the
+     natural preflight step for any navigation/transfer claim entering
+     PEW; DIOM-05 proposes the hook by prompt, in Harmonia's lane.
+   - coordinate_census.py still has zero consumers outside
+     roles/Diomedes/ (git grep, tracked files, 09-11). Per ROLE.md S7
+     this counts against the seat; recorded, not argued.
+
+9. BASE-ROLE DEFECTS (WORKING_CONTRACT s10)
+
+   ONE, CENTRAL, BLOCKING FOR BOOT STEP 5 PROGRAM-WIDE. Archaeon's
+   roles/Archaeon/prompts/2026-09-11_comms/MANIFEST.md (13 entries: the
+   broadcast and twelve seat prompts, commit 7466bd6ac) was hashed over
+   the CRLF working copy, not the committed LF blob. Checked every
+   entry: 0 match the LF blob, 13 match sha256(blob with LF->CRLF).
+   Example, 00_BROADCAST.md:
+     manifest  44273b26eb29d897a0707f18dcec18a92cd5f26c1c7044e478d08b583890f8e2
+     LF blob   c1f4b664bf8aef75816ff95f0f37684e4e354cc4eb3a3b63111fc4a73b67fb44
+     disk      44273b26... (core.autocrlf=true on this host)
+   Consequence: every seat that performs RESPONSIBILITIES s1 step 5 as
+   written ("hash the committed LF blob, never a CRLF checkout") will
+   find its 2026-09-11 prompt failing verification, and the base-role
+   self-test is red on origin/main independent of any seat's change.
+   This seat did not touch the manifest (lane discipline) and did not
+   work around the test. Reported to Archaeon: INBOX file
+   roles/Archaeon/INBOX_DIOMEDES_MANIFEST_CRLF_2026-09-11.md, posted by
+   comms as kind=report. Fix is central: re-issue the manifest from
+   `git show origin/main:<path> | sha256sum` for all 13 entries.
+
+   Observation, not a defect: the base role has no PARKED-seat state
+   (section 8, first bullet); included in the same report.
+
+10. WORK ITEMS (base s1.6) -- listed, first one done, the rest gated
+
+   DIOM-01  DONE this pass: planted cheat/negative/vacuous controls on
+            the K0 instrument. artifact coordinate_census.py + journal.
+   DIOM-02  K0 gate-reachable and gate-vs-error checks on Techne
+            Crucible 3's "below random" claim (n=54, majority baseline
+            0.815 with CI [0.692, 0.896], arms ~0.63). artifact a CAR
+            JSON + INBOX to Techne. blocker: seat PARKED.
+   DIOM-03  action-alphabet entropy and conditional headroom of the
+            three H5 decoders on the H5-1 256-row readout, before the
+            human-issued comparison. artifact CAR. blocker: H5-1
+            readout (Archaeon F-24) and seat PARKED.
+   DIOM-04  attainable range + eligible count for C3-3's X1 variance-
+            ratio test across regions, before issue. artifact CAR +
+            INBOX to Archaeon. blocker: seat PARKED.
+   DIOM-05  propose the K0 check as a Harmonia pew_preflight step, by
+            prompt. artifact roles/Diomedes/prompts/2026-09-11_k0_preflight/
+            + comms delegation. blocker: seat PARKED.
+
+   XL rows for the operator's queue: DIOM-16 (route the Lean successor
+   handoff), DIOM-17 (unpark or retire this seat), DIOM-18 (A6
+   attachment for Lane M).
+
+11. THE ONE OPERATOR GATE, IN PLAIN LANGUAGE
+
+   Everything above is done and needs no answer. The only thing this
+   seat cannot decide is whether it is still parked. If it is, STATUS.md
+   is correct as written and the next action is nothing. If the operator
+   unparks it, the next executable action is DIOM-02 from this worktree
+   on a new task branch: seconds of arithmetic on a committed claim, one
+   CAR, and the first decision_this_changes the instrument would have
+   earned outside its own thread. Recommendation: unpark for DIOM-02
+   through DIOM-05 only, and let the retirement question (DIOM-17) be
+   answered by whether any of those four changes a decision.
+
+12. NEXT EXECUTABLE ACTION
+
+   Commit these paths from this worktree with a message file, merge
+   origin/main by named SHA if it moved, run the self-tests on the
+   merged tree, fast-forward to main, verify ancestor, post the report
+   to Archaeon, sync comms once more, journal the close.
+
+====================================================================
