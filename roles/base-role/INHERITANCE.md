@@ -36,6 +36,7 @@ Every role below carries the banner on its primary document(s):
 | Lexis | ROLE.md (already) |
 | Ludus | ROLE.md (already), CHARTER.md (already), BOOTSTRAP.md, CHARTER_v3_WORLD_FOUNDRY.md (2026-09-11) |
 | Mnemosyne | RESPONSIBILITIES.md (already) |
+| Nous | RESPONSIBILITIES.md (created 2026-09-11 on the seat's adoption pass; the seat had no roles/ directory before; agents/nous/README.md is the March 2026 agent README, annotated by the seat file in ARCHAEOLOGY s5 rather than rewritten, and its cited scoring weights are contradicted by the artifact they cite) |
 | Pheme | RESPONSIBILITIES.md (created 2026-09-11 on the seat's adoption pass; the seat had no roles/ directory before; agents/pheme/CHARTER.md is Aporia's May design, annotated by the seat file, not stamped) |
 | MPADatabaseArchitect | RESPONSIBILITIES.md (already) |
 | PipelineOrchestrator | RESPONSIBILITIES.md (already) |
@@ -86,6 +87,7 @@ BOOTSTRAP.md if the seat has one, else STARTUP.md, RESPONSIBILITIES.md, ROLE.md,
 | Lexis | ROLE.md |
 | Ludus | BOOTSTRAP.md (from 2026-09-11; was ROLE.md) |
 | Mnemosyne | RESPONSIBILITIES.md |
+| Nous | RESPONSIBILITIES.md |
 | Pheme | RESPONSIBILITIES.md |
 | MPADatabaseArchitect | RESPONSIBILITIES.md |
 | PipelineOrchestrator | RESPONSIBILITIES.md |
