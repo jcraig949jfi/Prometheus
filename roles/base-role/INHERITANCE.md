@@ -7,6 +7,7 @@ Every role below carries the banner on its primary document(s):
 | role | stamped document(s) |
 |---|---|
 | Agora | RESPONSIBILITIES.md (already) |
+| Atalanta | RESPONSIBILITIES.md (created 2026-09-11 on the seat's adoption pass; the seat had no roles/ directory before; agents/atalanta/CHARTER.md is Aporia's May design, annotated by the seat, not rewritten) |
 | Alethelia | RESPONSIBILITIES.md (already) |
 | Apollo | CHARTER.md (already) |
 | Aporia | RESPONSIBILITIES.md (already) |
@@ -53,6 +54,7 @@ BOOTSTRAP.md if the seat has one, else STARTUP.md, RESPONSIBILITIES.md, ROLE.md,
 | role | entry file |
 |---|---|
 | Agora | RESPONSIBILITIES.md |
+| Atalanta | RESPONSIBILITIES.md |
 | Alethelia | RESPONSIBILITIES.md |
 | Apollo | BOOTSTRAP.md |
 | Aporia | RESPONSIBILITIES.md |
