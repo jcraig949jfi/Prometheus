@@ -1,0 +1,730 @@
+{
+ "inputs": {
+  "n_nous_entries": 5918,
+  "n_ledger_rows": 6661,
+  "n_ledger_keys": 6651,
+  "n_attempted": 5625,
+  "n_attempted_excl_apifail": 3449
+ },
+ "A1_day_strata_pooled_regimes": {
+  "n": 3449,
+  "n_forged": 413,
+  "n_strata": 14,
+  "auc_composite_obs": 0.5194,
+  "null_mean": 0.5001,
+  "null_p025": 0.4647,
+  "null_p975": 0.533,
+  "frac_null_ge_obs": 0.138,
+  "n_perm": 2000,
+  "seed": 7,
+  "per_stratum": {
+   "2026-03-24": {
+    "n": 71,
+    "forged": 6,
+    "auc": 0.5141,
+    "rate_composite_ge7": 0.25,
+    "rate_composite_lt7": 0.0746,
+    "n_ge7": 4
+   },
+   "2026-03-25": {
+    "n": 255,
+    "forged": 148,
+    "auc": 0.4397,
+    "rate_composite_ge7": 0.5808,
+    "rate_composite_lt7": 0.5769,
+    "n_ge7": 229
+   },
+   "2026-03-26": {
+    "n": 738,
+    "forged": 173,
+    "auc": 0.5201,
+    "rate_composite_ge7": 0.2454,
+    "rate_composite_lt7": 0.1852,
+    "n_ge7": 603
+   },
+   "2026-03-27": {
+    "n": 568,
+    "forged": 60,
+    "auc": 0.5659,
+    "rate_composite_ge7": 0.1178,
+    "rate_composite_lt7": 0.0724,
+    "n_ge7": 416
+   },
+   "2026-03-28": {
+    "n": 11,
+    "forged": 0
+   },
+   "2026-03-31": {
+    "n": 24,
+    "forged": 0
+   },
+   "2026-05-16": {
+    "n": 295,
+    "forged": 2,
+    "auc": 0.4104,
+    "rate_composite_ge7": 0.0,
+    "rate_composite_lt7": 0.0069,
+    "n_ge7": 4
+   },
+   "2026-05-17": {
+    "n": 265,
+    "forged": 7,
+    "auc": 0.546,
+    "rate_composite_ge7": null,
+    "rate_composite_lt7": 0.0264,
+    "n_ge7": 0
+   },
+   "2026-05-18": {
+    "n": 234,
+    "forged": 6,
+    "auc": 0.4463,
+    "rate_composite_ge7": null,
+    "rate_composite_lt7": 0.0256,
+    "n_ge7": 0
+   },
+   "2026-05-19": {
+    "n": 300,
+    "forged": 6,
+    "auc": 0.5266,
+    "rate_composite_ge7": null,
+    "rate_composite_lt7": 0.02,
+    "n_ge7": 0
+   },
+   "2026-05-22": {
+    "n": 204,
+    "forged": 2,
+    "auc": 0.3267,
+    "rate_composite_ge7": 0.0,
+    "rate_composite_lt7": 0.0099,
+    "n_ge7": 1
+   },
+   "2026-05-26": {
+    "n": 215,
+    "forged": 1,
+    "auc": 0.3972,
+    "rate_composite_ge7": null,
+    "rate_composite_lt7": 0.0047,
+    "n_ge7": 0
+   },
+   "2026-05-27": {
+    "n": 232,
+    "forged": 2,
+    "auc": 0.5022,
+    "rate_composite_ge7": null,
+    "rate_composite_lt7": 0.0086,
+    "n_ge7": 0
+   },
+   "2026-05-28": {
+    "n": 37,
+    "forged": 0
+   }
+  }
+ },
+ "A2_regime_x_day_strata": {
+  "n": 3449,
+  "n_forged": 413,
+  "n_strata": 28,
+  "auc_composite_obs": 0.4577,
+  "null_mean": 0.4994,
+  "null_p025": 0.4649,
+  "null_p975": 0.5348,
+  "frac_null_ge_obs": 0.9905,
+  "n_perm": 2000,
+  "seed": 7,
+  "per_stratum": {
+   "v1|2026-03-24": {
+    "n": 68,
+    "forged": 6,
+    "auc": 0.5309,
+    "rate_composite_ge7": 0.25,
+    "rate_composite_lt7": 0.0781,
+    "n_ge7": 4
+   },
+   "v1|2026-03-25": {
+    "n": 223,
+    "forged": 130,
+    "auc": 0.4182,
+    "rate_composite_ge7": 0.5811,
+    "rate_composite_lt7": 1.0,
+    "n_ge7": 222
+   },
+   "v1|2026-03-26": {
+    "n": 502,
+    "forged": 132,
+    "auc": 0.4555,
+    "rate_composite_ge7": 0.261,
+    "rate_composite_lt7": 0.5,
+    "n_ge7": 498
+   },
+   "v1|2026-03-27": {
+    "n": 220,
+    "forged": 43,
+    "auc": 0.4787,
+    "rate_composite_ge7": 0.1982,
+    "rate_composite_lt7": 0.0,
+    "n_ge7": 217
+   },
+   "v1|2026-03-28": {
+    "n": 1,
+    "forged": 0
+   },
+   "v1|2026-03-31": {
+    "n": 2,
+    "forged": 0
+   },
+   "v1|2026-05-16": {
+    "n": 7,
+    "forged": 0
+   },
+   "v1|2026-05-17": {
+    "n": 6,
+    "forged": 0
+   },
+   "v1|2026-05-18": {
+    "n": 8,
+    "forged": 0
+   },
+   "v1|2026-05-19": {
+    "n": 4,
+    "forged": 1,
+    "auc": 0.3333,
+    "rate_composite_ge7": null,
+    "rate_composite_lt7": 0.25,
+    "n_ge7": 0
+   },
+   "v1|2026-05-22": {
+    "n": 9,
+    "forged": 0
+   },
+   "v1|2026-05-26": {
+    "n": 1,
+    "forged": 0
+   },
+   "v1|2026-05-27": {
+    "n": 1,
+    "forged": 0
+   },
+   "v1|2026-05-28": {
+    "n": 8,
+    "forged": 0
+   },
+   "v2|2026-03-24": {
+    "n": 3,
+    "forged": 0
+   },
+   "v2|2026-03-25": {
+    "n": 32,
+    "forged": 18,
+    "auc": 0.4266,
+    "rate_composite_ge7": 0.5714,
+    "rate_composite_lt7": 0.56,
+    "n_ge7": 7
+   },
+   "v2|2026-03-26": {
+    "n": 236,
+    "forged": 41,
+    "auc": 0.5235,
+    "rate_composite_ge7": 0.1714,
+    "rate_composite_lt7": 0.1756,
+    "n_ge7": 105
+   },
+   "v2|2026-03-27": {
+    "n": 348,
+    "forged": 17,
+    "auc": 0.4054,
+    "rate_composite_ge7": 0.0302,
+    "rate_composite_lt7": 0.0738,
+    "n_ge7": 199
+   },
+   "v2|2026-03-28": {
+    "n": 10,
+    "forged": 0
+   },
+   "v2|2026-03-31": {
+    "n": 22,
+    "forged": 0
+   },
+   "v2|2026-05-16": {
+    "n": 288,
+    "forged": 2,
+    "auc": 0.4091,
+    "rate_composite_ge7": 0.0,
+    "rate_composite_lt7": 0.007,
+    "n_ge7": 4
+   },
+   "v2|2026-05-17": {
+    "n": 259,
+    "forged": 7,
+    "auc": 0.5465,
+    "rate_composite_ge7": null,
+    "rate_composite_lt7": 0.027,
+    "n_ge7": 0
+   },
+   "v2|2026-05-18": {
+    "n": 226,
+    "forged": 6,
+    "auc": 0.4451,
+    "rate_composite_ge7": null,
+    "rate_composite_lt7": 0.0265,
+    "n_ge7": 0
+   },
+   "v2|2026-05-19": {
+    "n": 296,
+    "forged": 5,
+    "auc": 0.5271,
+    "rate_composite_ge7": null,
+    "rate_composite_lt7": 0.0169,
+    "n_ge7": 0
+   },
+   "v2|2026-05-22": {
+    "n": 195,
+    "forged": 2,
+    "auc": 0.3303,
+    "rate_composite_ge7": 0.0,
+    "rate_composite_lt7": 0.0103,
+    "n_ge7": 1
+   },
+   "v2|2026-05-26": {
+    "n": 214,
+    "forged": 1,
+    "auc": 0.3991,
+    "rate_composite_ge7": null,
+    "rate_composite_lt7": 0.0047,
+    "n_ge7": 0
+   },
+   "v2|2026-05-27": {
+    "n": 231,
+    "forged": 2,
+    "auc": 0.5,
+    "rate_composite_ge7": null,
+    "rate_composite_lt7": 0.0087,
+    "n_ge7": 0
+   },
+   "v2|2026-05-28": {
+    "n": 29,
+    "forged": 0
+   }
+  }
+ },
+ "A3_v1_only_day_strata": {
+  "n": 1060,
+  "n_forged": 312,
+  "n_strata": 14,
+  "auc_composite_obs": 0.4519,
+  "null_mean": 0.4997,
+  "null_p025": 0.4601,
+  "null_p975": 0.5412,
+  "frac_null_ge_obs": 0.989,
+  "n_perm": 2000,
+  "seed": 7,
+  "per_stratum": {
+   "2026-03-24": {
+    "n": 68,
+    "forged": 6,
+    "auc": 0.5309,
+    "rate_composite_ge7": 0.25,
+    "rate_composite_lt7": 0.0781,
+    "n_ge7": 4
+   },
+   "2026-03-25": {
+    "n": 223,
+    "forged": 130,
+    "auc": 0.4182,
+    "rate_composite_ge7": 0.5811,
+    "rate_composite_lt7": 1.0,
+    "n_ge7": 222
+   },
+   "2026-03-26": {
+    "n": 502,
+    "forged": 132,
+    "auc": 0.4555,
+    "rate_composite_ge7": 0.261,
+    "rate_composite_lt7": 0.5,
+    "n_ge7": 498
+   },
+   "2026-03-27": {
+    "n": 220,
+    "forged": 43,
+    "auc": 0.4787,
+    "rate_composite_ge7": 0.1982,
+    "rate_composite_lt7": 0.0,
+    "n_ge7": 217
+   },
+   "2026-03-28": {
+    "n": 1,
+    "forged": 0
+   },
+   "2026-03-31": {
+    "n": 2,
+    "forged": 0
+   },
+   "2026-05-16": {
+    "n": 7,
+    "forged": 0
+   },
+   "2026-05-17": {
+    "n": 6,
+    "forged": 0
+   },
+   "2026-05-18": {
+    "n": 8,
+    "forged": 0
+   },
+   "2026-05-19": {
+    "n": 4,
+    "forged": 1,
+    "auc": 0.3333,
+    "rate_composite_ge7": null,
+    "rate_composite_lt7": 0.25,
+    "n_ge7": 0
+   },
+   "2026-05-22": {
+    "n": 9,
+    "forged": 0
+   },
+   "2026-05-26": {
+    "n": 1,
+    "forged": 0
+   },
+   "2026-05-27": {
+    "n": 1,
+    "forged": 0
+   },
+   "2026-05-28": {
+    "n": 8,
+    "forged": 0
+   }
+  }
+ },
+ "A4_v2_only_day_strata": {
+  "n": 2389,
+  "n_forged": 101,
+  "n_strata": 14,
+  "auc_composite_obs": 0.4774,
+  "null_mean": 0.5,
+  "null_p025": 0.4405,
+  "null_p975": 0.5585,
+  "frac_null_ge_obs": 0.7605,
+  "n_perm": 2000,
+  "seed": 7,
+  "per_stratum": {
+   "2026-03-24": {
+    "n": 3,
+    "forged": 0
+   },
+   "2026-03-25": {
+    "n": 32,
+    "forged": 18,
+    "auc": 0.4266,
+    "rate_composite_ge7": 0.5714,
+    "rate_composite_lt7": 0.56,
+    "n_ge7": 7
+   },
+   "2026-03-26": {
+    "n": 236,
+    "forged": 41,
+    "auc": 0.5235,
+    "rate_composite_ge7": 0.1714,
+    "rate_composite_lt7": 0.1756,
+    "n_ge7": 105
+   },
+   "2026-03-27": {
+    "n": 348,
+    "forged": 17,
+    "auc": 0.4054,
+    "rate_composite_ge7": 0.0302,
+    "rate_composite_lt7": 0.0738,
+    "n_ge7": 199
+   },
+   "2026-03-28": {
+    "n": 10,
+    "forged": 0
+   },
+   "2026-03-31": {
+    "n": 22,
+    "forged": 0
+   },
+   "2026-05-16": {
+    "n": 288,
+    "forged": 2,
+    "auc": 0.4091,
+    "rate_composite_ge7": 0.0,
+    "rate_composite_lt7": 0.007,
+    "n_ge7": 4
+   },
+   "2026-05-17": {
+    "n": 259,
+    "forged": 7,
+    "auc": 0.5465,
+    "rate_composite_ge7": null,
+    "rate_composite_lt7": 0.027,
+    "n_ge7": 0
+   },
+   "2026-05-18": {
+    "n": 226,
+    "forged": 6,
+    "auc": 0.4451,
+    "rate_composite_ge7": null,
+    "rate_composite_lt7": 0.0265,
+    "n_ge7": 0
+   },
+   "2026-05-19": {
+    "n": 296,
+    "forged": 5,
+    "auc": 0.5271,
+    "rate_composite_ge7": null,
+    "rate_composite_lt7": 0.0169,
+    "n_ge7": 0
+   },
+   "2026-05-22": {
+    "n": 195,
+    "forged": 2,
+    "auc": 0.3303,
+    "rate_composite_ge7": 0.0,
+    "rate_composite_lt7": 0.0103,
+    "n_ge7": 1
+   },
+   "2026-05-26": {
+    "n": 214,
+    "forged": 1,
+    "auc": 0.3991,
+    "rate_composite_ge7": null,
+    "rate_composite_lt7": 0.0047,
+    "n_ge7": 0
+   },
+   "2026-05-27": {
+    "n": 231,
+    "forged": 2,
+    "auc": 0.5,
+    "rate_composite_ge7": null,
+    "rate_composite_lt7": 0.0087,
+    "n_ge7": 0
+   },
+   "2026-05-28": {
+    "n": 29,
+    "forged": 0
+   }
+  }
+ },
+ "A5_v1_unstratified": {
+  "n": 1060,
+  "n_forged": 312,
+  "auc_composite_obs": 0.5757,
+  "null_p975": 0.5372,
+  "frac_null_ge_obs": 0.0
+ },
+ "A5_v2_unstratified": {
+  "n": 2389,
+  "n_forged": 101,
+  "auc_composite_obs": 0.6527,
+  "null_p975": 0.554,
+  "frac_null_ge_obs": 0.0
+ },
+ "A6_composite_and_forge_rate_by_regime_day": {
+  "v1|2026-03-24": {
+   "n": 68,
+   "mean_composite": 0.485,
+   "forge_rate": 0.0882
+  },
+  "v1|2026-03-25": {
+   "n": 223,
+   "mean_composite": 7.535,
+   "forge_rate": 0.583
+  },
+  "v1|2026-03-26": {
+   "n": 502,
+   "mean_composite": 7.283,
+   "forge_rate": 0.2629
+  },
+  "v1|2026-03-27": {
+   "n": 220,
+   "mean_composite": 7.118,
+   "forge_rate": 0.1955
+  },
+  "v1|2026-03-28": {
+   "n": 1,
+   "mean_composite": 7.0,
+   "forge_rate": 0.0
+  },
+  "v1|2026-03-31": {
+   "n": 2,
+   "mean_composite": 7.165,
+   "forge_rate": 0.0
+  },
+  "v1|2026-05-16": {
+   "n": 7,
+   "mean_composite": 6.239,
+   "forge_rate": 0.0
+  },
+  "v1|2026-05-17": {
+   "n": 6,
+   "mean_composite": 6.22,
+   "forge_rate": 0.0
+  },
+  "v1|2026-05-18": {
+   "n": 8,
+   "mean_composite": 6.082,
+   "forge_rate": 0.0
+  },
+  "v1|2026-05-19": {
+   "n": 4,
+   "mean_composite": 6.082,
+   "forge_rate": 0.25
+  },
+  "v1|2026-05-22": {
+   "n": 9,
+   "mean_composite": 6.0,
+   "forge_rate": 0.0
+  },
+  "v1|2026-05-26": {
+   "n": 1,
+   "mean_composite": 6.0,
+   "forge_rate": 0.0
+  },
+  "v1|2026-05-27": {
+   "n": 1,
+   "mean_composite": 5.0,
+   "forge_rate": 0.0
+  },
+  "v1|2026-05-28": {
+   "n": 8,
+   "mean_composite": 0.625,
+   "forge_rate": 0.0
+  },
+  "v2|2026-03-24": {
+   "n": 3,
+   "mean_composite": 5.887,
+   "forge_rate": 0.0
+  },
+  "v2|2026-03-25": {
+   "n": 32,
+   "mean_composite": 6.3,
+   "forge_rate": 0.5625
+  },
+  "v2|2026-03-26": {
+   "n": 236,
+   "mean_composite": 6.556,
+   "forge_rate": 0.1737
+  },
+  "v2|2026-03-27": {
+   "n": 348,
+   "mean_composite": 6.687,
+   "forge_rate": 0.0489
+  },
+  "v2|2026-03-28": {
+   "n": 10,
+   "mean_composite": 6.833,
+   "forge_rate": 0.0
+  },
+  "v2|2026-03-31": {
+   "n": 22,
+   "mean_composite": 6.453,
+   "forge_rate": 0.0
+  },
+  "v2|2026-05-16": {
+   "n": 288,
+   "mean_composite": 6.214,
+   "forge_rate": 0.0069
+  },
+  "v2|2026-05-17": {
+   "n": 259,
+   "mean_composite": 6.179,
+   "forge_rate": 0.027
+  },
+  "v2|2026-05-18": {
+   "n": 226,
+   "mean_composite": 6.08,
+   "forge_rate": 0.0265
+  },
+  "v2|2026-05-19": {
+   "n": 296,
+   "mean_composite": 5.936,
+   "forge_rate": 0.0169
+  },
+  "v2|2026-05-22": {
+   "n": 195,
+   "mean_composite": 5.893,
+   "forge_rate": 0.0103
+  },
+  "v2|2026-05-26": {
+   "n": 214,
+   "mean_composite": 5.471,
+   "forge_rate": 0.0047
+  },
+  "v2|2026-05-27": {
+   "n": 231,
+   "mean_composite": 5.337,
+   "forge_rate": 0.0087
+  },
+  "v2|2026-05-28": {
+   "n": 29,
+   "mean_composite": 4.333,
+   "forge_rate": 0.0
+  }
+ },
+ "B1_orphans": {
+  "n_orphan_keys": 1212,
+  "n_orphan_rows": 1212,
+  "n_dictionary_concepts": 95,
+  "ts_min": "2026-03-31T10:53:24.616529",
+  "ts_max": "2026-04-02T12:43:47.821167",
+  "rows_by_day": {
+   "2026-03-31": 776,
+   "2026-04-01": 81,
+   "2026-04-02": 355
+  },
+  "concepts_per_key": {
+   "3": 1212
+  },
+  "keys_all_concepts_in_nous_dictionary": 1212,
+  "status_by_key": {
+   "scrap": 1210,
+   "forged": 2
+  },
+  "frame_by_row": {
+   "E": 292,
+   "A": 65,
+   "C": 191,
+   "B": 226,
+   "F": 123,
+   "D": 166,
+   "G": 105,
+   "H": 44
+  },
+  "reason_head_by_row": {
+   "api_call_failed": 739,
+   "trap_battery_failed": 292,
+   "validation": 148,
+   "scrap": 31,
+   "forged": 2
+  }
+ },
+ "B2_ledger_rows_by_day": {
+  "rows_by_day": {
+   "2026-03-24": 85,
+   "2026-03-25": 234,
+   "2026-03-26": 894,
+   "2026-03-27": 672,
+   "2026-03-28": 82,
+   "2026-03-31": 2502,
+   "2026-04-01": 81,
+   "2026-04-02": 355,
+   "2026-05-16": 284,
+   "2026-05-17": 260,
+   "2026-05-18": 233,
+   "2026-05-19": 295,
+   "2026-05-22": 200,
+   "2026-05-26": 220,
+   "2026-05-27": 227,
+   "2026-05-28": 37
+  },
+  "last_committed_nous_entry_timestamp": "2026-03-28T04:00:32.236956",
+  "first_orphan_row_timestamp": "2026-03-31T10:53:24.616529"
+ },
+ "B3_matched_rows_inside_orphan_window": {
+  "n": 1726,
+  "by_day": {
+   "2026-03-31": 1726
+  }
+ }
+}
