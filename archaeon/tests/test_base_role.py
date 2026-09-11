@@ -144,6 +144,39 @@ def test_monitor_registry_rows_carry_every_column():
         assert any(k in cols[8] for k in ("ACTIVE", "DORMANT", "DEAD", "DISABLED", "UNLOCATED")), r[:60]
 
 
+RULE10_UNDECLARED_ACTIVE_AT_ADOPTION = 12   # 2026-09-11 evening; may only fall
+
+
+def _registry_rows():
+    text = (BASE / "MONITORS.md").read_text(encoding="utf-8")
+    return [[c.strip() for c in l.split(" | ")] for l in text.splitlines()
+            if l.count(" | ") >= 8 and not l.startswith("  name")]
+
+
+def test_rule_10_columns_are_present_and_well_formed():
+    """Base rule 10 (D-27): every registry row carries a BOUND and an
+    ACCOUNTABLE SEAT; a bound is an integer with a unit, a declared
+    not-a-loop reason, or the literal UNDECLARED (owner migration pending)."""
+    rows = _registry_rows()
+    assert rows and all(len(r) == 12 for r in rows), [r[0] for r in rows if len(r) != 12]
+    for r in rows:
+        bound, seat = r[10], r[11]
+        assert bound and seat, r[0]
+        ok = bound == "UNDECLARED" or bound.startswith("not a loop") or re.match(r"^[0-9]+ ", bound)
+        assert ok, "bound must be '<int> <unit> ...', 'not a loop: ...' or UNDECLARED: {} -> {}".format(r[0][:40], bound[:60])
+        if bound != "UNDECLARED":
+            assert seat != "UNDECLARED" and seat in {r.name for r in _roles()}, "bound without a registered accountable seat: {} -> {}".format(r[0][:40], seat)
+
+
+def test_rule_10_undeclared_active_loops_only_ratchet_down():
+    """A loop running at adoption may stay UNDECLARED while its owner
+    migrates; the count can only fall. A NEW loop (a row added later) must
+    declare both, so this number never rises."""
+    rows = _registry_rows()
+    und = [r[0] for r in rows if r[10] == "UNDECLARED" and "ACTIVE" in r[8]]
+    assert len(und) <= RULE10_UNDECLARED_ACTIVE_AT_ADOPTION, und
+
+
 def test_every_enabled_prometheus_scheduled_task_on_this_host_is_registered():
     """Base rule 7: an unregistered standing loop is unmanaged. Windows only."""
     import shutil
