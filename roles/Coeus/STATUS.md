@@ -34,6 +34,13 @@ comms defect found on this pass (reported, not fixed): on this host the
   Also measured: M1 Postgres 5432 IS reachable from this host, which
   contradicts evidence_wiki/config.json's note "DB is never exposed to the
   LAN; only the service port is". Both go to Archaeon and Mnemosyne.
+base-role self-test on the merged tree: 7 passed, 1 failed. The failure
+  is pre-existing and not this seat's: three enabled M2 scheduled tasks
+  (MnemosyneEvidenceWikiWatchdogM2, PrometheusMachineProbeM2,
+  SFEngineM2Watchdog) have no row in roles/base-role/MONITORS.md, so
+  test_every_enabled_prometheus_scheduled_task_on_this_host_is_registered
+  fails for every seat running on this host. Owners are Mnemosyne,
+  Daedalus and (for the probe) nobody. Reported, not fixed.
 monitors owned: CoeusRebuildTrigger, registered DORMANT in
   roles/base-role/MONITORS.md (an in-process call from
   hephaestus.py:_trigger_coeus every 50 forges; never a task or service;
