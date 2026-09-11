@@ -1,6 +1,6 @@
 # Talos status
 
-Currency: 2026-09-11 (second pass: operator ruling on TALOS-01 applied).
+Currency: 2026-09-11 16:50 UTC (third pass: TALOS-04/05/24 done; intersection provisional).
 Plain language.
 
 seat state: ACTIVE (operator ruling 2026-09-11: "Talos is awake"). The
@@ -41,7 +41,16 @@ monitors owned or fed: TalosCorpusDaemon (DORMANT; unchanged).
 blockers: none for the seat's own work. The consumer search waits on
   other seats' syncs; it is not a blocker (ruling step 4 says what to do
   if nothing comes back).
-next executable action: TALOS-04 (D-23 guard on daemon.py entry points,
-  so the fossil cannot be run from the canonical checkout by accident),
-  then TALOS-05, TALOS-08, TALOS-16, TALOS-19 while #50 collects
-  answers; TALOS-15 (question to Ergon) is subsumed by #50.
+third pass (operator directive, roles/Talos/prompts/2026-09-11_talos04_24_directive/):
+  TALOS-04 DONE: daemon fails closed (canonical checkout refused on file
+    repo and process cwd; tick/lock refuse without a committed unpark
+    record; launcher exits 3). Six behaviours demonstrated, journal pass 3.
+  TALOS-24 DONE: pre-registered, 746 rows, six controls. Semantically real
+    (declared count): tests 86/100, modules 43/100, theseus 18, charon 15,
+    hephaestus 3/346. Instrument fault caught and repaired (C-05).
+  TALOS-22 OPEN by protocol (Hephaestus, Kairos unseen). Answers 4, all
+    NONE (Nyx, Eos, Hermes, Archaeon). Archaeon's door measured: checkers
+    present, shared parts present, declared small grammar ABSENT.
+  INTERSECTION (provisional): EMPTY. Nothing earns a re-premise.
+next executable action: TALOS-22 when the protocol's condition is met
+  (then TALOS-25); meanwhile TALOS-08, TALOS-16, TALOS-19, TALOS-26.

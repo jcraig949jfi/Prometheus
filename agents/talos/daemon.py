@@ -53,6 +53,91 @@ except Exception:
     get_structured_logger = None  # type: ignore
     HAS_STRUCTLOG = False
 
+# ---------------------------------------------------------------------------
+# Fail-closed gates (Talos, 2026-09-11; operator ruling on TALOS-01 and
+# TALOS-04; WORKING_CONTRACT.md s1, D-23). Two independent refusals:
+#   1. WORKSPACE: never run from the canonical checkout (the repository's
+#      MAIN worktree: `git rev-parse --git-dir` == `--git-common-dir`),
+#      checked on BOTH the repository this file lives in and the process
+#      cwd (the retired launcher's pattern was cwd = canonical). No
+#      override unlocks a tick or the lock; the read-only commands honour
+#      ARCHAEON_ALLOW_CANONICAL=1 like archaeon.workspace does.
+#   2. DORMANCY: the daemon is PARKED by ruling. run_tick refuses unless a
+#      committed unpark record exists (roles/Talos/ledgers/DAEMON_UNPARKED.json
+#      naming the decision that lifted it). An environment variable cannot
+#      lift it; a commit by the operator's decision can.
+# ---------------------------------------------------------------------------
+import subprocess
+
+UNPARK_RECORD = REPO_ROOT / "roles" / "Talos" / "ledgers" / "DAEMON_UNPARKED.json"
+
+
+class CanonicalCheckoutRefused(RuntimeError):
+    pass
+
+
+class DaemonParkedRefused(RuntimeError):
+    pass
+
+
+def _git_out(*args: str, cwd: Path) -> str:
+    try:
+        return subprocess.run(["git", *args], cwd=str(cwd), capture_output=True, text=True, timeout=30).stdout.strip()
+    except Exception:
+        return ""
+
+
+def _is_main_worktree(path: Path) -> Optional[bool]:
+    """True iff `path` is inside the repository's MAIN worktree; None if
+    `path` is not inside any git repository (then it is not evidence of
+    isolation either, and the caller refuses)."""
+    gd = _git_out("rev-parse", "--git-dir", cwd=path)
+    cd = _git_out("rev-parse", "--git-common-dir", cwd=path)
+    if not gd or not cd:
+        return None
+    return Path(path, gd).resolve() == Path(path, cd).resolve()
+
+
+def assert_not_canonical_checkout(purpose: str, *, allow_override: bool = False) -> dict:
+    """Refuse `purpose` if this file's repository OR the process cwd is the
+    canonical checkout. Returns the workspace receipt when allowed."""
+    override = allow_override and os.environ.get("ARCHAEON_ALLOW_CANONICAL") == "1"
+    checks = {"file_repo": (REPO_ROOT, _is_main_worktree(REPO_ROOT)),
+              "process_cwd": (Path.cwd(), _is_main_worktree(Path.cwd()))}
+    for label, (where, is_main) in checks.items():
+        if is_main is None and label == "file_repo":
+            raise CanonicalCheckoutRefused(
+                "refusing to {}: {} is not inside a git repository, so isolation cannot be shown (D-23)".format(purpose, where))
+        if is_main and not override:
+            raise CanonicalCheckoutRefused(
+                "refusing to {} from the canonical checkout ({} = {}; the repository's main worktree). "
+                "Work from a linked worktree: git -C <canonical> worktree add <path> -b talos/<task> origin/main "
+                "(WORKING_CONTRACT.md s1, D-23, 2026-09-11).".format(purpose, label, where))
+    return {"base_sha": _git_out("rev-parse", "HEAD", cwd=REPO_ROOT),
+            "branch": _git_out("rev-parse", "--abbrev-ref", "HEAD", cwd=REPO_ROOT),
+            "worktree_path": str(REPO_ROOT), "process_cwd": str(Path.cwd()),
+            "dirty": bool(_git_out("status", "--porcelain", "--untracked-files=no", cwd=REPO_ROOT)),
+            "allow_canonical_override": override}
+
+
+def assert_daemon_unparked(purpose: str) -> dict:
+    """Refuse `purpose` unless roles/Talos/ledgers/DAEMON_UNPARKED.json exists
+    and names a decision. PARKED by the operator's ruling on TALOS-01
+    (2026-09-11): no relaunch of the May daemon."""
+    if not UNPARK_RECORD.exists():
+        raise DaemonParkedRefused(
+            "refusing to {}: the Talos daemon is PARKED by the operator's ruling on TALOS-01 (2026-09-11). "
+            "It runs again only when {} exists on main naming the decision that lifted the park.".format(
+                purpose, UNPARK_RECORD.relative_to(REPO_ROOT).as_posix()))
+    try:
+        rec = json.loads(UNPARK_RECORD.read_text(encoding="utf-8"))
+    except Exception as e:
+        raise DaemonParkedRefused("refusing to {}: unpark record unreadable ({})".format(purpose, e))
+    if not rec.get("decision") or not rec.get("lifted_at"):
+        raise DaemonParkedRefused("refusing to {}: unpark record lacks 'decision' or 'lifted_at'".format(purpose))
+    return rec
+
+
 # Local paths
 STATE_DIR = AGENT_DIR / "state"
 ARTIFACT_DIR = AGENT_DIR / "artifacts"
@@ -159,6 +244,8 @@ def _is_pid_alive(pid: int) -> bool:
 
 
 def acquire_lock() -> bool:
+    assert_not_canonical_checkout("acquire the Talos lock")      # no override: a lock is a write
+    assert_daemon_unparked("acquire the Talos lock")
     AGENT_DIR.mkdir(parents=True, exist_ok=True)
     if PID_FILE.exists():
         try:
@@ -479,6 +566,11 @@ def emit_log_work(stage: str, summary: str, output_path: Optional[str] = None,
 # ---------------------------------------------------------------------------
 
 def run_tick(dry_run: bool = False) -> dict:
+    # Fail closed even when imported and called directly: a tick mutates
+    # state/, corpus/ and artifacts/ regardless of dry_run's name.
+    workspace = assert_not_canonical_checkout("run a Talos tick")
+    unpark = assert_daemon_unparked("run a Talos tick")
+    _emit_event("gates_passed", workspace=workspace, unpark=unpark)
     tick_started = datetime.now(timezone.utc)
     stats = {"tick_started_at": tick_started.isoformat(), "action": None,
              "examples_added": 0, "null_tick": False, "errors": 0,
@@ -668,6 +760,18 @@ def main():
     ap.add_argument("--interval", type=int, default=DEFAULT_INTERVAL_SEC)
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
+
+    # Every entry point refuses the canonical checkout first (D-23). The two
+    # read-only commands honour the read-only override; nothing else does.
+    try:
+        if args.cmd in ("status", "manifest"):
+            assert_not_canonical_checkout("read Talos {}".format(args.cmd), allow_override=True)
+        else:
+            assert_not_canonical_checkout("start the Talos daemon")
+            assert_daemon_unparked("start the Talos daemon")
+    except (CanonicalCheckoutRefused, DaemonParkedRefused) as e:
+        sys.stderr.write("TALOS REFUSED: {}\n".format(e))
+        return 3
 
     if args.cmd == "status":
         print_status()
