@@ -2,28 +2,42 @@
 
 > Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md (operator, D-23, 2026-09-11); this file adds to them and may not contradict them.
 
-Currency: 2026-09-11T13:0xZ (adoption pass). Next update due within four
+Currency: 2026-09-11, after NEMESIS-01. Next update due within four
 hours of the next activity.
 
-    seat state        ACTIVE (bootstrap and registration only, by operator
-                      instruction; no science executed, no loop started)
+    seat state        ACTIVE -- first season open; NEMESIS-01 delivered
+                      2026-09-11 (attack on the Eos intake gate)
     lane              adversarial input construction against INSTRUMENTS:
                       cheat controls, chance floors, metamorphic
                       perturbation sets, minimal failing inputs
     entry file        roles/Nemesis/RESPONSIBILITIES.md
     worktree          D:\Prometheus-worktrees\nemesis-adopt
-    branch            nemesis/base-role-adopt-2026-09-11
-    base_sha          363120e08
-    dirty             no (at the measurements in ARCHAEOLOGY)
+    branch            nemesis/eos-scorer-attack-2026-09-11
+    base_sha          742a6c8b3
+    dirty             no (at the measurements reported here)
     comms             registered this pass; see the boot receipt
     monitors owned    one row, NemesisAdversarialCycle, state DEAD
                       (not relaunched; base rules 8 and 9)
 
+## NEMESIS-01 (2026-09-11): the Eos intake gate
+
+    verdict    BOUNDED STATEMENT with one scoped DEATH CERTIFICATE
+    rows       roles/Nemesis/attacks/2026-09-11_eos_intake_gate/rows.jsonl
+    predictions 6 of 6 held; preregistered in their own commit 73e6f46c1
+    controls   both positive controls fired (POP-NULL 0/30, POP-B_POS 0/3)
+    crossings  ANCHOR 200/200, ACQUIRE 8/8, RESOURCE 30/30
+    cheapest   22 characters plus a borrowed path
+    the kill   RESOURCE is terminal and self-settled, and its authenticity
+               evidence is the self-asserted string observed_by="eos-intake";
+               the falsifier that would have scoped this away was tested
+               and did not fire
+    reported   to Eos via comms; not one byte of agents/eos/** modified
+
 ## What is true right now
 
 - The seat has a directory, an entry file, an archaeology of its April
-  queue, a backlog and a calibration ledger. That is the whole of what
-  this pass was authorised to do.
+  queue, a backlog, a calibration ledger, a working instrument
+  (roles/Nemesis/science/cheatlib.py) and one delivered attack.
 - The seat's own April instrument FAILS the seat's own question: on the
   only committed evaluation ledger, a constant string scores 0.674 and
   292 of 294 tools score below it. ARCHAEOLOGY_2026-09-11.md section 3.
@@ -36,12 +50,14 @@ hours of the next activity.
 
 ## What is NOT true, stated so silence is not read as health
 
-- No Nemesis instrument is calibrated today. The metamorphic relation
-  table is inherited UNVERIFIED; the shrinker is inherited UNVERIFIED;
-  the training-path provenance gate is inherited UNVERIFIED.
-- No cheat control has been built or fired yet. Until one has, this seat
-  has produced nothing a consumer can use.
-- Nemesis has no consumer. NEM-01 through NEM-04 exist to earn one.
+- The APRIL metamorphic relation table and shrinker are still inherited
+  UNVERIFIED (NEM-04 is not done). cheatlib is new code with its own 12
+  self-controls and is not the April code.
+- cheatlib has been fired once, against one target. One specimen is not a
+  calibrated instrument. NEM-14 (the floor census) is what would turn it
+  into one.
+- POP-B ran at n=8 because each member costs a 19 s git grep, and it has
+  not been re-run in a full (non-sparse) worktree.
 
 ## Blockers
 
