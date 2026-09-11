@@ -1,0 +1,110 @@
+====================================================================
+APORIA -- BASE ROLE ADOPTION RECEIPT
+2026-09-11
+====================================================================
+
+1. WHAT I READ, AND AT WHICH SHA
+
+   base role read at   f727dfb1f  (origin/main at boot; contains
+                       633f6989b, the seven constitutional rules)
+   files read          roles/base-role/README.md, NORTH_STAR.md,
+                       RESPONSIBILITIES.md, WORKING_CONTRACT.md,
+                       INHERITANCE.md; aporia/doctrine/critical_memories.md;
+                       roles/Archaeon/prompts/2026-09-11_workspace/
+                       MISSIVE_ALL_SEATS.md and CANONICAL_STATUS;
+                       roles/Archaeon/prompts/2026-09-10_backlog/
+                       00_BACKLOG_SCHEMA.md; the one prompt addressed to
+                       me (roles/Techne/prompts/2026-09-10_unblock/
+                       APORIA.md) and the TECHNE-46 prompt that copies me;
+                       Harmonia's RULING_TECHNE_17_31_H4_AND_SDP; the
+                       adoption commits of Proteus, Mnemosyne, Elenchus,
+                       Techne, Harmonia, Herakles, Vivarium, Daedalus
+                       (git log -25 origin/main).
+   my inheritance row  | Aporia | RESPONSIBILITIES.md (already) |
+                       so I owe no stub; the line-2 banner was already on
+                       my seat file (the +2 lines origin/main carried over
+                       my last commit).
+   seat-local entry    roles/Aporia/resume_aporia.md (2026-09-01, P177),
+                       read in full; roles/Aporia/work queue.md (operator
+                       ranking of ten projects); loop_state.json is a
+                       2026-04 Agora artefact and is dead.
+
+2. WORKSPACE RECEIPT (WORKING_CONTRACT s4)
+
+   worktree_path   F:\Prometheus-worktrees\aporia-base-role
+   branch          aporia/base-role-adopt-2026-09-11  (task branch)
+   base_sha        f727dfb1f3928c0269510d508dc732a992e7fb50
+   dirty           false at creation; this pass's files only since
+   main_worktree   false  (git rev-parse --git-dir !=
+                          --git-common-dir, checked)
+
+   Aporia footprint before this pass: 0 worktrees, 0 local branches,
+   0 remote branches (my old commits reached main via Vivarium's
+   carry-over 575fae2d4 / aa3365df6 from the retired vivarium branch),
+   3 MODIFIED tracked files + 5 UNTRACKED files in the canonical
+   checkout, all under aporia/docs/frontier_campaign_69/.
+
+3. CLEAN-UP IN THE CANONICAL CHECKOUT (missive item a)
+
+   UNTRACKED, mine, work: build_deck_cgp.py, deck_cgp.md, dossiers
+   300/301/302 -- committed from the worktree at caa171e06, verified
+   byte-identical modulo autocrlf (LF-normalised sha256 equal on all
+   five), then DELETED from the canonical checkout. The one permitted
+   write, done once, reported here.
+   MODIFIED tracked, mine: build_index.py, validate.py,
+   _dispatch_summary.jsonl -- the diff is carried in caa171e06. The
+   canonical copies are left as they are: `git restore` there is a
+   forbidden mutating operation. They will show as modified against
+   whatever branch the canonical checkout sits on until Archaeon or the
+   operator resets it. Nothing of mine is lost if they are discarded.
+   Worktrees created by me: none before today. Branches merged into
+   origin/main to delete: none.
+
+4. CONFLICTS BETWEEN MY SEAT FILES AND THE BASE ROLE, annotated not rewritten
+
+   C1  resume_aporia.md PART 0 "Git" and PART 2.6 "Git, hard-won":
+       `git pull --rebase --autostash`, `git merge origin/main` with no
+       named SHA, "race for the lock in a retry loop", work in the
+       canonical checkout. All contradict D-23 s1-s3. Marked SUPERSEDED
+       with a dated annotation at the top and inline; text kept as the
+       record of how the seat used to work.
+   C2  RESPONSIBILITIES.md scope ("void detector", V1-V5, Agora/Redis,
+       "Status: Online -- Void detection active") describes 2026-04/05.
+       Rule 5 (currency is correctness) makes that a defect. Annotated
+       with what the seat does now and a pointer to STATUS.md; the
+       rewrite is APO-25, after the operator has read the annotation.
+   C3  Rule 7 (dormancy must be visible): engine/shadow/WORKLOG.jsonl
+       stopped at P177 (2026-09-01) while three campaign passes ran
+       2026-09-07..09; seven Elenchus reviews are unanswered; pulse.py
+       has not run. STATUS.md now says so. Repair is APO-07.
+   C4  Rule "cross-seat messages are committed files": my 2026-09-09
+       program-level adjudication was delivered as files (fine), but
+       the Techne prompt of 2026-09-10 sat unanswered for a day because
+       nothing in my boot read roles/*/prompts/. Fixed by the base boot
+       sequence itself; answered this pass.
+   NO conflict found with: the no-LLM-adjudication rule (the seat's own
+   PART 4 says the same), preregistration in its own commit (practised
+   since 2026-08-25), cheat controls (A2b's fixtures have them; A3's
+   prereg will name them explicitly), ASCII paste blocks (practised).
+
+5. WORK ITEMS SUGGESTED AT BOOT (base s1.6), first five of the backlog
+
+   started and done this pass
+     APO-01  name the solve_sdp consumers for TECHNE-46 -> Harmonia inbox
+     APO-02  claim and commit the CGP deck, delete the scratch
+     APO-03  this adoption: STATUS, journal, backlog, annotations
+   next, in order, unblocked
+     APO-04  preregister A3 (reification earns its keep) in its own commit
+     APO-07  answer the seven Elenchus reviews; WORKLOG rows for the
+             three campaign passes
+   then
+     APO-06  Q045 fixed-point closure oracle (kill if depth-dependent)
+     APO-08  fetch-verify the CGP deck's four load-bearing citations
+
+6. NOT DONE, AND SAID SO
+
+   No refusal guard added to my entry points yet (APO-26; the scripts
+   under aporia/docs/frontier_campaign_69 and aporia/lot run from
+   wherever they are invoked). No A3 preregistration. No Elenchus
+   responses. Self-check archaeon/tests/test_base_role.py not run from
+   this worktree.

@@ -1,5 +1,20 @@
 # resume_aporia.md — single restart pickup point
 
+> Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md (operator, D-23, 2026-09-11); this file adds to them and may not contradict them.
+>
+> SUPERSESSION ANNOTATION, 2026-09-11 (Aporia, base-role adoption). Every git
+> instruction in this file that says `git pull --rebase --autostash`,
+> `git merge origin/main` without a named SHA, "race for the lock in a retry
+> loop", or that assumes work happens in the canonical checkout, is SUPERSEDED
+> by roles/base-role/WORKING_CONTRACT.md (D-23): a worktree per seat, a task
+> branch from a recorded base SHA, never `git pull`, merge from a named SHA,
+> on a timeout look and act once, never a retry loop. The text below is kept
+> as a dated record of how the seat used to work, not as instructions.
+> Everything else in this file (charter, ladder, A1-A2b state, Q045
+> certificate, standing corrections) is current as of 2026-09-01 and is not
+> restated here.
+
+
 **Written 2026-08-25 immediately before a context reset. If you are a fresh Aporia instance, this is
 the only file you need to start from. Read it fully before acting.**
 
@@ -184,7 +199,7 @@ documents above are the distillate.
 
 ### Operational facts you will otherwise rediscover the hard way
 
-**Git.** `git pull --rebase --autostash` fails intermittently because other agents hold Windows locks
+**Git. [SUPERSEDED 2026-09-11 by D-23, see the annotation at the top of this file.]** `git pull --rebase --autostash` fails intermittently because other agents hold Windows locks
 on `ergon/probe/ledgers/` — and it has **already stashed your work** when it fails. **Never verify
 with `git diff HEAD`** (empty means committed *or* stashed). Verify positively:
 `git show :engine/shadow/WORKLOG.jsonl | grep -c '\-P1XX"'` for staged,
@@ -396,7 +411,7 @@ IQ-PORT-1 sit at 0.1366 on 410 generated tasks. Treat every 5-task reading accor
 **PULSE has been missed several passes.** `pulse.py` shells out to git at `:19` and `:46` and
 hangs under multi-agent lock contention. Retry it; do not skip it silently.
 
-**Git, hard-won this session.** Other agents hold `.git/index.lock` and push concurrently.
+**Git, hard-won this session. [SUPERSEDED 2026-09-11 by D-23: no retry loops, no work in the canonical checkout.]** Other agents hold `.git/index.lock` and push concurrently.
 **Race for the lock in a retry loop — never check-then-act**, which loses the gap and cost me
 several failed attempts. **Never delete the lock**; check `.git/MERGE_HEAD` and
 `.git/rebase-merge` to confirm nothing is wedged. **Never force-push**: a background pusher of
