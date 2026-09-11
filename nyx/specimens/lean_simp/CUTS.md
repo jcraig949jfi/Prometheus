@@ -104,3 +104,81 @@ O6. The specimen ships its own perturbations: Simp.Config.index,
 O7. "unknown"-graded sources: ACLt.lean, CongrTheorems.lean,
     SimpCongrTheorems.lean. c06 and c09 depend on them. Their contracts
     are asserted from call sites only.
+
+## CUT-2 (2026-09-11, same day; the twelve attack questions applied on paper)
+
+Records: organs/*.cut2.json for c01, c02, c06, c07, c23 (narrowed copies;
+the .cut1 files are untouched); pressures/mutual_normalisation.cut2.json
+(c13 demoted to a pressure). Ledger vocabulary change: "unknown" is now a
+PREFIX convention in organ fields ("unknown -- <what would make it known>")
+because CUT-1 had zero literal unknowns while hedging in prose (O2).
+
+    id  CUT-1 -> CUT-2       relation   reason
+    c01 ORGAN -> ORGAN       SURVIVED   scale MECHANISM -> PRIMITIVE; the census gives A9 a number (33.8% non-Eq)
+    c02 ORGAN -> ORGAN       SPLIT      relevance table out as c25 POLICY; flattening + root-reduction stays
+    c04 UNRES -> POLICY      DEMOTED    first-applicable-wins by priority has no independent behaviour
+    c05 UNRES -> COUPLED     DEMOTED    unifier is Meta's and shared with rw; cut B preserved
+    c06 ORGAN -> ORGAN       SURVIVED   passes all twelve; assumptions honestly unknown (ACLt unread)
+    c07 ORGAN -> ORGAN       SPLIT      cache protection -> c14; depth cap + success criterion named as policy
+    c08 ORGAN -> POLICY      SPLIT      "simplifier" wearing a longer name; Step protocol out as c24
+    c09 ORGAN -> COUPLED     DEMOTED    contract NOT independent of Lean (dependent types); cut C
+    c10 UNRES -> SCAFF       DEMOTED    glue over Meta reducers
+    c13 ORGAN -> PRESSURE    DEMOTED    its distinctive feature is a failure (F7); the condition transfers
+    c14 COUPLED -> COUPLED   SURVIVED   grew (absorbed the discharge cache discipline); pressure candidate, held
+    c18 UNRES -> SCAFF       DEMOTED    DATA tooling
+    c23 ORGAN -> ORGAN       SPLIT      decide route only; folders -> c27 DATA; arith -> c28 UNRESOLVED
+    c24 NEW    SCAFFOLDING   from c08   the Step protocol (an interface)                       origin DISCOVERED
+    c25 NEW    POLICY        from c02   the relevance table (every retrieval prior)             origin DISCOVERED
+    c27 NEW    DATA          from c23   per-type literal folders                                origin INHERITED
+    c28 NEW    UNRESOLVED    from c23   arithmetic normaliser, unread                           origin INHERITED
+    others unchanged.
+
+CUT-2 numbers: candidates 27; ORGAN 8 -> 5; POLICY 2 -> 5; COUPLED 1 -> 3;
+kind changes 7; split products 8; materially revised 15; record bytes
+49,587 -> 37,720 (-24%); VERBOSITY_FAILURE false; literal-unknown fields
+0 -> 12; inherited rate among the 4 new candidates 2/4.
+P5 ("fewer than half of CUT-1 ORGANs survive as ORGAN at CUT-2"): 5/8
+survived. FALSIFIED. Nyx predicted a harsher knife than she used.
+
+## CUT-3 (2026-09-11; from completed ablations, no consumer return yet)
+
+The pinned v4.30.0 toolchain was executed read-only on a core-only file
+(ablations/cut3_ablations.lean; RECEIPT_2026-09-11.json; exit 0 with every
+#guard_msgs matching the observed message). PREREG s2 said no Lean for
+CUT-1; the stopping rule allowed CUT-3 on "a completed ablation".
+
+Run: A1 index off, A2 memoize off, A3 singlePass, A6 discharge depth 0,
+D3 planted loop, positives for c01 c06 c07 c08 c23. Not run: A4 A5 A7 A8
+A9 A10 (need a patched build or source edits).
+
+Results that did NOT change the cut: A1, A2, A3, A6 as predicted; D3 FIRED
+(the planted two-rule loop hits "maximum number of steps exceeded", not
+"no progress"); c01 c06 c07 c08 positives pass.
+
+The result that changed the cut: the c23 NEGATIVE control did not fire.
+2 + 2 = 4 closes with decide := false and the Nat folders erased. The
+trace names eq_self. Two things Nyx had not enumerated:
+  c29 `simp only` is not only: eq_self and iff_self are always loaded
+      (Elab/Tactic/Simp.lean 410, 463). POLICY; origin PERTURBED.
+  c30 unification decides 2 + 2 =?= 4 by definitional Nat-literal
+      evaluation (Meta.isDefEq / WHNF, OUTSIDE the boundary), so any
+      reflexive rule closes closed arithmetic. COUPLED_CLUSTER; origin
+      PERTURBED. Confirmed both ways: erase eq_self -> no progress; make
+      the literal non-reducible (k + k = 4) -> no progress.
+  c23 ORGAN -> UNRESOLVED (DEMOTED): its headline fitness value belongs
+      to c30. Attack question "could a much smaller mechanism reproduce
+      the claimed fitness value?" answered YES by experiment. The
+      residual (Props not closable by defeq) is untested.
+  The c07 positive control was discharged BY c29 (the guard 3 = 3 closed
+      via eq_self): the discharge demonstration leans on a hidden
+      default. Recorded on c07; disposition unchanged.
+
+CUT-3 numbers: candidates 29; ORGAN 4 (c01 c02 c06 c07); UNRESOLVED 2
+(c23 c28); COUPLED 4; POLICY 6; kind changes 1; new 2; materially revised
+1 (+2 PERTURBED discoveries); bytes 37,720 -> 32,206 (-15%);
+VERBOSITY_FAILURE false; cheat controls fired 1 (D3), did not fire 1
+(c23), not run 7. Independent-of-ancestor tests run: 0 -- every run above
+is INSIDE the ancestor and the ledger says so.
+Inherited-boundary rate by cut of introduction: CUT-1 20/23 = 0.87;
+CUT-2 2/4 = 0.50; CUT-3 0/2 = 0.00 (both PERTURBED). The knife found
+boundaries by intervention only after it was allowed to run something.

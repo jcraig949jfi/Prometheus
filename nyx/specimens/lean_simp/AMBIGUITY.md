@@ -52,3 +52,13 @@ cut as the leading alternative and wrote the pressure accordingly.
 - c02's forgetting table and c09's argument-kind classifier both read
   binder information from the same ParamInfo; a shared human prior
   (binder discipline = relevance) sits under both. Observation only.
+
+## Added at CUT-3
+
+Cut C gained evidence: c30 (literal arithmetic inside unification) is a
+Meta mechanism that the specimen merely reaches through a reflexive rule.
+The specimen boundary preregistered in PREREG s1 excluded ExprDefEq.lean
+"except where simp calls into it with a simp-specific configuration";
+the ablation shows the call is load-bearing for a whole class of goals.
+A second Chopper who draws the boundary around Meta would own c30 and c09
+and leave this specimen with c01 c02 c06 c07 and a schedule.

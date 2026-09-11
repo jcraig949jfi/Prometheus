@@ -72,3 +72,17 @@ D4  field_simp at this pin: a NAME decoy for the whole specimen (c20)
 - The specimen's own diagnostics (Diagnostics.usedThmCounter,
   triedThmCounter, thmsWithBadKeys) are a free instrument for "which
   rules earned their keep" on any corpus, if a Lean toolchain is run.
+
+## Added at CUT-3 (2026-09-11, from execution; RECEIPT in ablations/)
+
+F12 `simp only` is not only: eq_self and iff_self are always added
+    (Elab/Tactic/Simp.lean 410 simpOnlyBuiltins, 463). Every "only"
+    ablation silently includes them; the c07 positive control passed
+    because of them.
+F13 closed Nat arithmetic is decided by the UNIFIER, not by any simp
+    route: 2 + 2 = 4 closes through eq_self because isDefEq evaluates
+    literals definitionally (outside the boundary). The decide route and
+    the literal folders are redundant for this class; k + k = 4 with a
+    non-reducible k does not close, which locates the mechanism.
+Run status: A1 A2 A3 A6 RUN as predicted; D3 FIRED; c23 negative DID NOT
+FIRE (F13); A4 A5 A7 A8 A9 A10 NOT RUN.

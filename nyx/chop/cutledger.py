@@ -32,7 +32,10 @@ cuts.json shape (one per specimen directory):
         "lineage": [{"cut": "CUT-2", "relation": "SPLIT", "from": ["c01"]}],
             # relation: NEW SURVIVED SPLIT MERGED DEMOTED PROMOTED KILLED
         "unknown_fields": {"CUT-1": ["state", "ablation"], "CUT-2": [...]},
-            # the charter-IV questions marked "unknown" in the organ record at that cut;
+            # the charter-IV questions whose value BEGINS with "unknown" in the organ record
+            # at that cut (prefix convention adopted at lean_simp CUT-2, 2026-09-11, after
+            # CUT-1 produced zero literal unknowns while hedging in prose -- CUTS.md O2;
+            # the schema validator still treats only the bare word as unknown for HOLLOW);
             # empty list when the candidate is not an ORGAN at that cut
         "record_bytes": {"CUT-1": 4321, ...},   # size of the record file(s) at that cut
         "independent_test": "none" | "specified" | "run",
