@@ -42,6 +42,11 @@ U1. The distribution of "randomly generated" initial configurations.
     0.5; the hardest case for an imperfect rule).
     Variant B: density drawn uniformly on [0, 1], then the configuration
     drawn at that density (the EvCA-line convention, evca.make_ics).
+    > CORRECTION 2026-09-11, after the run (REPORT.md): the parenthetical
+    > is wrong. evca.make_ics(density=None) is i.i.d. Bernoulli(0.5), i.e.
+    > variant A, and the EvCA line's published PERFORMANCE figures use that
+    > unbiased ensemble; its GA TRAINING ensemble is uniform-density. The
+    > two variant definitions are unchanged and were run as written.
     Both are run. Footnote [13]'s 60% figure for rules 57/99 is the only
     number that can discriminate them; see P2 and the INDETERMINATE branch.
 U2. Whether the 1000 configurations were shared across rules or redrawn
