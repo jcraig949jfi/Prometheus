@@ -1,5 +1,21 @@
 # Icarus -- experimental self-improving reasoning-ladder climber
 
+> **HISTORICAL from here to the end of the file (annotated 2026-09-11 on the seat's
+> base-role adoption pass; nothing below is rewritten).** The seat's entry file is now
+> `roles/Icarus/RESPONSIBILITIES.md`, which inherits `roles/base-role/`. Three things
+> below are SUPERSEDED: (1) the `D:\Prometheus\...` paths (no drive letters; the
+> canonical checkout is read-mostly and no seat runs from it, D-23); (2) the "How to run"
+> instructions -- the daemon is DISABLED since 2026-06-15, registered as such in
+> `roles/base-role/MONITORS.md`, and is not started until the operator decides
+> ICARUS-XL-1 (`roles/Icarus/ARCHAEOLOGY_2026-09-11.md` section D); (3) the mission
+> itself -- climbing a predetermined ladder by having an LLM redesign a reasoner -- is in
+> tension with the north star of 2026-09-11 (`roles/base-role/NORTH_STAR.md`: "not a
+> predetermined reasoning architecture or ladder"; "do not build the reasoner"). The
+> machinery described below (typed failure residue, kill clusters, the co-evolving
+> Falsifier, the tier-calibration matrix, the debt ledger) is the seat's residue and is
+> classified, not resumed, in the archaeology file. Last state: 22 cycles on M2,
+> R5 cleared at cycle 18, cycle 20 PARKED (tdd_failed), target R6.
+
 **Status:** Phase 0 scaffold (2026-05-25). Experimental, not foundational. Expect breakage.
 
 ## What this is
