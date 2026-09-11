@@ -179,6 +179,12 @@ agents/nemesis/grid/grid.json
 stoa/
 agora/
 kairos/
+# ...but the SEAT directories roles/Agora and roles/Kairos are constitutional artifacts
+# (found by archaeon/tests/test_base_role.py on its first run, 2026-09-11):
+!roles/Agora/
+!roles/Agora/**
+!roles/Kairos/
+!roles/Kairos/**
 # anchored 2026-09-01: bare "mnemosyne/" case-insensitively swallowed roles/Mnemosyne/ too
 /mnemosyne/
 aethon/
@@ -257,6 +263,11 @@ papers/
 
 # Journals — PRIVATE (engineer/agent working notes)
 journal/
+# ...EXCEPT the seat journals the base role mandates (roles/base-role/RESPONSIBILITIES.md s3):
+# a mandatory artifact that git silently ignores violates "nothing lives only in chat"
+# (Vivarium aee89ff8b; operator ruling 2026-09-11). Tested by archaeon/tests/test_base_role.py.
+!roles/*/journal/
+!roles/*/journal/**
 /audit/
 roles/*/journal_*.md
 

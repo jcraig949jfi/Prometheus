@@ -29,9 +29,16 @@ roles/Archaeon/prompts/2026-09-11_workspace/MISSIVE_ALL_SEATS.md.
     git -C F:\Prometheus worktree add F:\Prometheus-worktrees\<seat>-<task> ^
         -b <seat>/<task> origin/main
 
-- Work only in that worktree. Never place a worktree under the canonical
-  checkout's own directory, and never under a session-temporary
-  scratchpad for anything that must outlive the session.
+- Work only in that worktree. Never CREATE a worktree by hand beneath the
+  canonical checkout's own directory, and never under a session-temporary
+  scratchpad for anything that must outlive the session. The invariant is
+  ISOLATION -- never mutate the canonical working tree, never let task
+  state share its index -- not the path. A harness-managed linked worktree
+  that happens to live under the canonical path (the Claude Code harness
+  assigns .claude/worktrees/<name>) is permitted PROVIDED the guard passes
+  (git-dir differs from git-common-dir) and the receipt records the path.
+  (Operator ruling 2026-09-11 on Vivarium's adoption pass; the earlier
+  wording declared the execution environment itself nonconformant.)
 - Record the base SHA the branch was created from. It goes in every
   receipt (section 4).
 - Long-lived seat branches are retired; task branches replace them.
@@ -108,3 +115,25 @@ roles/Archaeon/prompts/2026-09-11_workspace/MISSIVE_ALL_SEATS.md.
   repository-relative or configuration-driven. The worktree layout above
   is the operator's host convention and is referenced, not assumed, by
   code.
+
+## 10. The constitution is falsifiable
+
+- A base-role rule that cannot be followed, cannot be observed, or
+  contradicts repository mechanics is a defect in the CONSTITUTION, not in
+  the seat. The seat that finds one reports it as a blocker with evidence
+  (Vivarium's adoption pass of 2026-09-11 is the first example: the
+  mandated journal directory was gitignored for every seat).
+- The base role tests its own claims: archaeon/tests/test_base_role.py
+  checks that every mandatory artifact path is not ignored, every
+  inherited file exists and is pure ASCII, every role carries the banner,
+  every issued manifest's hashes match, and every executable invariant can
+  be satisfied by the supported harness (a linked worktree under the
+  canonical path passes the guard). A failing self-check is fixed
+  centrally, immediately, and never worked around seat by seat.
+- "Do not ask the operator what you could decide" never authorises
+  inventing a fact. Whether an ambiguous write executed is an EPISTEMIC
+  question: when the system cannot tell "commit happened but the
+  acknowledgement was lost" from "commit never occurred", fail closed,
+  preserve the row, produce the evidence and the prompt, and continue
+  elsewhere.
+

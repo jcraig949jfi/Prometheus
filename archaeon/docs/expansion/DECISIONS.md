@@ -93,3 +93,11 @@ Harmonia's four-state gate is called at every boundary where a consumer begins w
 
 F:\Prometheus is the canonical clone (fetch, inspection, worktree management only). Every seat works in its own worktree on a short-lived branch created from a recorded base SHA; never `git pull` (fetch + explicit merge from a SHA); every receipt records base_sha, branch, worktree_path, dirty; integrate by fast-forwarding origin/main after tests, then remove the worktree and delete the branch; long-running processes run from a PINNED detached worktree advanced only by an explicit logged command; a dirty or corrupt worktree is destroyed and recreated, never nursed; every entry point refuses to run from the canonical checkout (main-worktree detection: git-dir == git-common-dir). Missive: roles/Archaeon/prompts/2026-09-11_workspace/MISSIVE_ALL_SEATS.md. Archaeon complied first (archaeon/workspace.py; tick moved to F:\Prometheus-worktrees\archaeon-tick).
 
+## D-23 amendment (operator 2026-09-11, on Vivarium's adoption pass aee89ff8b)
+
+1. The mandated journal directory was gitignored for every seat (.gitignore `journal/`): a base-role defect, fixed centrally (`!roles/*/journal/`, `!roles/*/journal/**`) and guarded by a check-ignore test; force-adding seat by seat is only an escape hatch.
+2. Harness-managed linked worktrees under the canonical path are PERMITTED provided the canonical guard passes; the invariant is isolation of index and working tree, not the path. Creating worktrees there by hand stays prohibited.
+3. Stranded rows and "do not ask the operator" are compatible: the second is about autonomy, not facts; an ambiguous write is an epistemic question -- fail closed, preserve, evidence, prompt, continue elsewhere.
+4. The two-control rule stands with the cheat control defined as qualitatively distinct from a negative control.
+Principle added to the contract (s10): the constitution is falsifiable -- a rule that cannot be followed, observed or reconciled with repository mechanics is a defect in the constitution, not the seat; the base role tests its own claims (archaeon/tests/test_base_role.py).
+
