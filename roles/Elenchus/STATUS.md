@@ -6,8 +6,9 @@ Currency: 2026-09-11. Updated at least every four hours of activity.
 
 WORKSPACE
   worktree   F:/Prometheus-worktrees/elenchus-baserole   (operator host convention)
-  branch     elenchus/base-role-2026-09-11
-  base_sha   0da63fa1783f5b6fc4901118d2c1f577d091b4e7
+  branch     elenchus/epistemic-debt-2026-09-11
+  base_sha   05b1134e622195619930a1cc6bc2d33489f30834
+  prior      elenchus/base-role-2026-09-11 (base 0da63fa17) integrated 177db60e7
   dirty      no tracked changes at base
   canonical checkout refused: git-dir and git-common-dir differ, checked at boot
   previous task branch elenchus/review-2026-09-11 (base ad94bf2eb) integrated at
@@ -25,7 +26,10 @@ THE LOOP THIS SEAT SHADOWS IS DORMANT
   this is not a stale-checkout artifact, it was checked against origin/main
   directly. Aporia's agora heartbeat last fired 2026-05-18. The aporia/ tree has
   had activity in that window (the frontier campaign), so the seat is not idle --
-  only the shadow worklog is. Nobody has recorded the dormancy until now.
+  only the shadow worklog is. SUPERSEDED IN PART 2026-09-11: "nobody has
+  recorded the dormancy" was true when written and is no longer -- D-23
+  amendment 4 records it, and LEDGER.md C-08 shows the dormancy is LIVE rather
+  than historical.
   This is a reporting claim with a date: true as of 2026-09-11, and it decays.
 
 VERIFIER STATE
@@ -66,6 +70,23 @@ WORK COMMISSIONED FROM OUTSIDE THE APORIA LANE
   is not a capability gap; a purchase may not cite it. Integrated at 96a22e736.
   Whether this seat's mandate extends beyond Aporia is unruled: ELEN-20.
 
+EPISTEMIC DEBT HUNT, 2026-09-11 (operator-commissioned, program-wide mandate)
+  roles/Elenchus/investigations/2026-09-11_epistemic_debt/ -- 10 claim chains,
+  MANIFEST.md (4 entries, verified), 3 verification scripts.
+  5 chains broken, 3 attacks failed against the evidence, 1 confirmed and
+  worsened, 1 provisional. Three errors of my own, caught before filing and
+  logged in CALIBRATION.md.
+
+THE DORMANCY IS LIVE, NOT HISTORICAL
+  Aporia booted 2026-09-11, adopted the base role, read D-23 amendment 4 which
+  names this dormancy, did substantial work and committed it, wrote its prose
+  journal -- and appended no WORKLOG row. The worklog stands at 212 lines,
+  last pass 2026-09-01T00:00Z-P177 ("SAVE BEFORE RESET"). The obligation was
+  never dropped in writing: roles/Aporia/resume_aporia.md line 486 still says
+  "Append a full WORKLOG record every pass". Diagnosis in LEDGER.md C-08.
+
 NEXT EXECUTABLE ACTION
-  ELEN-03: commit the dormancy prompt to Aporia under roles/Elenchus/prompts/
-  with its sha256, and put the block in chat for the operator to relay.
+  Operator ruling owed (D-23 amendment 4): revive Aporia's worklog, or repoint
+  the shadow at a live input under the program-wide mandate. Until then
+  ELEN-04 (the overdue ELEN-SELF-3 calibration) proceeds, since it needs no
+  input from a dormant producer.
