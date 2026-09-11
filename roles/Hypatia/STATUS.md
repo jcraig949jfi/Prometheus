@@ -2,15 +2,22 @@
 
 > Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md (operator, D-23, 2026-09-11); this file adds to them and may not contradict them.
 
-Currency: 2026-09-11T17:00Z (adoption pass). Updated at least every four
+Currency: 2026-09-11T18:30Z (season 1 executed). Updated at least every four
 hours of activity. Plain language, no dramatic words.
 
-    seat_state          BLOCKED (on HYPATIA-01, an operator decision)
+    seat_state          BLOCKED (season 1 delivered; awaiting the
+                        operator's call on a season 2. This seat does
+                        not self-authorize it.)
     seat_present        yes   (booted in comms 2026-09-11)
     seat_active         this adoption pass only
-    seat_productive     two instruments and one ledger correction; no
-                        domain output, and none is authorised
-    seat_valid          not applicable (nothing measured about the world)
+    seat_productive     yes: season 1 executed end to end. 4 packets
+                        frozen, 10 ladders, 6 gated, 2 refusal controls +
+                        1 instrumental control, rows committed.
+                        Season verdict INDETERMINATE (preregistered).
+    seat_valid          partially. The behavioural result (0.000
+                        unsupported-step rate, CHEAT-1 refused) is measured.
+                        The instrument that would license it did not resolve:
+                        G5 abstains on half this corpus.
 
     daemon_present      yes   (agents/hypatia/daemon.py, tracked)
     daemon_active       no    (no process, no scheduled task, no pid file
@@ -56,3 +63,21 @@ that file, not here.
   HYP-2026-05-23-001 cannot be re-read. The dispatch count of 8 does not
   depend on it (three independent repository sources, RESPONSIBILITIES.md
   section 2).
+
+## Season 1 (2026-09-11), one screen
+
+    preregistration   PREREGISTRATION.md, committed 2e990fcb8 before any
+                      packet existed; two amendments, both dated, A-1 made
+                      before any result was visible
+    verdict           INDETERMINATE (results/summary.json)
+    positives passed  1/4      controls rejected 2/2      CHEAT-2 4/4
+    parseability      100 percent (71/71 lines)
+    provenance        100 percent, 0 dangling
+    unsupported rate  0.000 on every ladder
+    blocker           specific density 0.42-0.64 against a 0.50 floor:
+                      autopsy prose cannot be mechanically grounded
+    report            REPORT.md, with the recommendation and what would
+                      falsify it
+
+Next: nothing, until the operator rules on season 2. No daemon, no schedule,
+no ingester, no corpus growth, in any branch of that decision.

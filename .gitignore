@@ -33,6 +33,16 @@ ignis/results/*/checkpoints/
 !agent_d5_blind/results/
 !agent_d5_blind/results/**
 
+# EXCEPTION 2026-09-11 (Hypatia): the base role requires that "rows ship in the
+# same commit as the verdict they support" (RESPONSIBILITIES s2). A seat's
+# science rows under roles/<Seat>/science/**/results/ ARE those rows, and the
+# blanket **/results/ rule above silently excluded them -- the same defect
+# Ergon hit on 2026-09-01, two rules up. Third occurrence of one blanket rule
+# hiding exactly the mandated artifact; reported to Archaeon as a constitution
+# defect (base role s10) rather than only patched here.
+!roles/*/science/**/results/
+!roles/*/science/**/results/**
+
 # Logs
 *.log
 rhea/runs/*/evolution_*.csv
