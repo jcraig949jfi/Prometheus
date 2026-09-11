@@ -61,6 +61,37 @@ L-05  2026-04-03  ELABORATED THE DOCUMENTATION OF A DEAD INSTRUMENT
     Standing rule: documentation of a capability cites the artifact
              that capability produced, or says "never executed".
 
+L-06  2026-09-11  ASSERTED A TRACKED SURFACE I HAD NOT CHECKED, IN THE PASS
+                  WHERE I CRITICISED THIS SEAT FOR PUBLISHING AN UNVERIFIED
+                  NUMBER
+
+    Claimed: roles/Skopos/ARCHAEOLOGY_2026-09-11.md section 1 listed the
+             six alignment reports as part of the seat's tracked surface,
+             under the heading "(git ls-files)".
+    True:    they were never tracked, at any commit.
+             .gitignore:200 is `agents/*`; agents/skopos/ has no
+             re-include. The four other files were force-added in March.
+    Cause:   I ran `git ls-files | grep -i skopos` early in the pass, READ
+             the four-file result, and then wrote "+ 6 files under
+             reports/" from what I had seen on disk, without noticing the
+             grep had already told me otherwise. The evidence that
+             falsified the claim was in my own transcript before I made
+             the claim.
+    Detected: hours later, by the annotation step failing -- the reports
+             directory did not exist in the worktree. Not by re-reading.
+    Direction: it made this seat's historical hygiene look BETTER than it
+             was, which is the same direction as L-01.
+    Correction: annotated beside the original, not deleted
+             (ARCHAEOLOGY section 1).
+    What it cost: nothing downstream; it was caught before the ruling was
+             discharged. What it shows is worse than what it cost -- the
+             same failure mode I had just documented in this seat (assert
+             a count, skip the check, publish) reproduced by the seat's
+             own auditor, on the same day, in the audit document.
+    Standing rule that follows: a claim about repository state cites the
+             command AND its output, in the file, at the point of the
+             claim. "(git ls-files)" as a parenthetical is decoration.
+
 --------------------------------------------------------------------------
 ## Conflicts of interest, standing
 

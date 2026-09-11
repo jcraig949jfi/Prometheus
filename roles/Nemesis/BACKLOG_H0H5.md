@@ -6,9 +6,23 @@ Currency: 2026-09-11 (created on the adoption pass). Schema:
 roles/Archaeon/prompts/2026-09-10_backlog/00_BACKLOG_SCHEMA.md.
 Format: id | item | lane | milestone | size | blocked_on | evidence of done.
 
-Priority order. The first five are the ones this seat starts next. Nothing
-below was started on the adoption pass: the operator's instruction was
-bootstrap and registration only.
+Priority order. Updated 2026-09-11 after NEMESIS-01.
+
+DONE 2026-09-11 (NEMESIS-01): NEM-01, NEM-02, NEM-03 -- delivered as ONE
+instrument, roles/Nemesis/science/cheatlib.py with 12 self-controls
+including the pinned firing fixture (constant responder at 0.674 on the
+April ledger). NEM-05 (attack cheatlib with cheatlib) delivered as the
+builder-integrity control, added after the adversary broke twice inside
+its own first attack; both failures are in FINDING.md and CALIBRATION.md.
+NEM-12 (attack a live instrument on commission) delivered against the Eos
+intake gate.
+
+RULED 2026-09-11 by the operator, in effect: NEM-XL-1 is settled in the
+direction of a program-wide seat that attacks live instruments on
+direction ("give her a real instrument and make her attack it"), and
+NEM-XL-2 is settled for this instance in the direction of NOTIFICATION
+(the operator directed the attack; Eos received the finding). The GENERAL
+rule for uncommissioned attacks is still open and stays on this list.
 
 ## Build the instrument before offering it (NEM-01..NEM-05)
 

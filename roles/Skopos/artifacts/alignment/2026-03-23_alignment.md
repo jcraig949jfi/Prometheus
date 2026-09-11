@@ -1,0 +1,85 @@
+<!--
+================================================================================
+ANNOTATION -- Skopos, 2026-09-11. CORRECTION BESIDE THE ORIGINAL.
+The original document follows this block VERBATIM and is not edited.
+Operator ruling 2026-09-11: PARK AS INSTRUMENT SPECIMEN; annotate, do not
+rewrite or sanitize.
+================================================================================
+
+PROVENANCE OF THIS FILE
+
+  This report was NEVER COMMITTED. It was written by
+  agents/skopos/src/skopos.py to agents/skopos/reports/, a path covered by
+  .gitignore:200 (`agents/*`) with no re-include for agents/skopos/. It
+  existed only as an untracked file in one checkout, on one host, for 163
+  days. This copy, under the seat's own directory, is the first time the
+  document has entered the repository.
+
+  It is NOT written back to agents/skopos/reports/ deliberately: tracked
+  files at those exact paths would collide with the untracked originals
+  still on disk in the canonical checkout and could block its next update
+  for every seat. The originals on disk are left untouched.
+
+  Text preserved character-for-character. The only change is CRLF to LF
+  line endings, the repository's convention, which does not alter the text.
+
+  original bytes (CRLF, as found)   : 538
+  sha256 of the original bytes       : 5d6ae8e0e73f8cc394d07f4c76929de21326d0ea8a78b86dbc7170b1ff1cb9ae
+
+WHAT THIS DOCUMENT CLAIMS, AND WHAT WAS TRUE
+
+  claims, in bold on the page   : "5 scored entities | 2 relevant (3+)"
+  measured true value           : 1 entity, of 448 eligible (0.22%)
+  what the 5 actually counts    : entity-thread ROWS, not entities.
+                                  skopos.py:510 runs COUNT(*) over a table
+                                  whose grain is (entity, thread) and
+                                  prints the result as "scored entities".
+                                  One entity x five threads = 5. A 5x
+                                  inflation, in the instrument's favour.
+  the "2 relevant"              : the same single entity, counted twice
+  the one entity                : tools id 19, "Circuits Zoom-In", scored
+                                  2026-03-23T21:21:11Z, the only scoring
+                                  write in the seat's entire life
+  high-priority (4+)            : 0, correctly. No entity ever scored 4,
+                                  so the GENERATE stage never executed and
+                                  docs/titan_prompts/ was never created.
+
+  this page specifically        : header and body AGREE with each other and both are wrong
+                                  the body's per-thread counts (1 entity each) are correct; the header's 5 is the units error
+
+WHAT THE WORD "STARVING" MEANS HERE, AND DOES NOT
+
+  A thread marked STARVING was not starved of relevant material. It was
+  not looked at. The scorer's eligibility rule -- a 24-hour window on
+  papers, intersected with a dedup key that skipped any entity already
+  scored against ANY thread -- made the reachable set approximately empty
+  after day one. No eligible count appears anywhere on this page, so a
+  reader cannot tell "nothing fired" from "nothing could have fired".
+
+  SELECTION ACCOUNTING MUST DISTINGUISH:
+      eligible    observed    judged    accepted    rejected
+  "Rejected" and "not observed" are different outcomes. A rejection rate
+  is not evidence about selection quality when the observation
+  denominator is absent. The measured March result was not "99%
+  rejection". It was approximately 99.78% NOT LOOKED AT.
+
+  Recoverable residue, not an invariant Skopos is authorised to impose
+  (operator ruling, 2026-09-11).
+
+FULL AUTOPSY: roles/Skopos/ARCHAEOLOGY_2026-09-11.md
+DISPOSITION : PARKED / INSTRUMENT_SPECIMEN (roles/Skopos/STATUS.md)
+================================================================================
+-->
+
+# Skopos Alignment Report -- 2026-03-23
+*Generated: 2026-03-24 03:29 UTC*
+
+**5 scored entities | 2 relevant (3+) | 0 high-priority (4+)**
+
+## Thread Status
+
+- **Anti-CoT Geometric Pathway** [LOW]: 1 entities, max=2, avg=2.0
+- **Reasoning Precipitation Signatures** [ACTIVE]: 1 entities, max=3, avg=3.0
+- **Tensor Methods for Activation Geometry** [LOW]: 1 entities, max=2, avg=2.0
+- **SAE Feature Decomposition** [ACTIVE]: 1 entities, max=3, avg=3.0
+- **Scale-Dependent Reasoning Emergence** [LOW]: 1 entities, max=2, avg=2.0

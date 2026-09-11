@@ -2,9 +2,37 @@
 
 > Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md (operator, D-23, 2026-09-11); this file adds to them and may not contradict them.
 
-Currency: 2026-09-11. Seat state BLOCKED on SKOPOS-XL-01. Items 06 and
-below are NOT startable until that decision lands; they are listed with the
-blocker named rather than hidden, per the schema's rule.
+Currency: 2026-09-11, revised the same day after the operator's ruling.
+Seat state: PARKED / INSTRUMENT_SPECIMEN. SKOPOS-XL-01 is CLOSED: PARK.
+
+RULING 2026-09-11 -- WHAT IS NOW TRUE OF THIS LIST:
+
+  SKOPOS-01..05  DONE on the adoption pass.
+  SKOPOS-06      DONE under the ruling. agents/skopos/README.md annotated
+                 in place, 116 lines inserted, 0 deleted.
+  SKOPOS-07      DONE under the ruling, with a deviation the operator
+                 should see: the six reports were never tracked
+                 (.gitignore:200 `agents/*`), so 'in place' did not exist
+                 in the repository. Annotated copies with the originals
+                 preserved byte-for-byte and hashed are committed at
+                 roles/Skopos/artifacts/alignment/. They are NOT written to
+                 agents/skopos/reports/ because tracked files at those
+                 paths would collide with the untracked originals still on
+                 disk in the canonical checkout and could block its next
+                 update for every seat.
+  SKOPOS-08      PARKED. No independent audit is commissioned; the seat is
+                 not active and has no claim on another seat's attention.
+  SKOPOS-09..18  PARKED, NOT DEFERRED. These are the seven revival
+                 preconditions and their tests. The ruling is explicit
+                 that they are not to be implemented. They remain readable
+                 as the specification a future reconsideration would start
+                 from, and they are on nobody's queue.
+  SKOPOS-19..23  PARKED. Each requires running something, measuring
+                 something, or auditing another lane. None is authorised.
+  SKOPOS-24      CLOSED. The ruling is PARK / INSTRUMENT_SPECIMEN.
+
+The list below is preserved unedited so the reasoning stays inspectable.
+Nothing in it is startable. Read it as a specification, not a queue.
 
 Format: ID | item | lane | milestone | size | blocked_on | evidence of done
 
@@ -39,3 +67,9 @@ SKOPOS-XL-01 (SKOPOS-24) -- revive re-premised, park, or retire. Seat's
 recommendation: PARK, argued against its own interest in
 roles/Skopos/RESPONSIBILITIES.md section 5. Nothing here recommends RETIRE;
 the base role is explicit that nothing is marked dead prematurely.
+
+CLOSED 2026-09-11: SKOPOS-XL-01 was ruled PARK / INSTRUMENT_SPECIMEN.
+This seat now holds NO open operator decisions. The only condition under
+which it returns to the operator's queue is the resurrection predicate in
+roles/Skopos/RESPONSIBILITIES.md, and that is triggered by another seat,
+not by this one.
