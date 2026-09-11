@@ -5,6 +5,7 @@
 .env
 .env.*
 *.key
+*.pem
 *secret*
 *credential*
 reports/
@@ -12,3 +13,15 @@ __pycache__/
 *.pyc
 *.pid
 state/
+
+# ...but the INSTRUMENTS THAT ENFORCE THE ABOVE ARE SOURCE CODE.
+# Found 2026-09-11: the `*credential*` line silently excluded
+# src/credential_census.py and tests/test_credential_boundary.py -- the
+# census that finds credential leaks and the test that holds the boundary.
+# A pattern written to exclude secrets BY NAME also excludes the tooling
+# named after them, and git drops it without a word. Same family as the
+# Season I bug where the comment documenting a contamination defect
+# triggered the defect. Source is re-included explicitly; the credential
+# patterns above still bind every non-.py path.
+!src/*.py
+!tests/*.py

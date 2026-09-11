@@ -2,14 +2,7 @@
   "_meta": {
     "description": "Living registry of free/low-cost API resources. Updated by Eos.",
     "last_updated": "2026-04-01T07:21:55.352603+00:00",
-    "schema_version": 1,
-    "SUPERSEDED": {
-      "on": "2026-09-11",
-      "by": "roles/Eos/sources/SOURCES.json",
-      "ruling": "operator, Season II Mission 6: shrink, do not federate. No second general registry.",
-      "what_happened": "8 model-provider rows retired (4 duplicated prometheus_llm and never noticed being superseded in August; 4 offered once to prometheus_llm and not kept here). 4 local-model weights rows retired, unchecked since April. 7 non-model SOURCE rows preserved and retyped.",
-      "do_not_read_the_rows_below": "Every free_tier and rate_limit value here was copied from a provider's page and NONE was ever measured. They are labels. The byte-preserved copy is roles/Eos/archive/api_registry_2026-04-01.json."
-    }
+    "schema_version": 1
   },
   "apis": {
     "github_models": {
@@ -82,7 +75,7 @@
       ],
       "status": "active",
       "priority": "HIGH",
-      "notes": "VERIFIED 2026-03-22 from dashboard. Qwen 3-235B FREE is extraordinary \u2014 largest free model in our registry. 65K context. Sub-minute rate limiting enforced (1 req/2sec). Pay-as-you-go optional for higher limits."
+      "notes": "VERIFIED 2026-03-22 from dashboard. Qwen 3-235B FREE is extraordinary — largest free model in our registry. 65K context. Sub-minute rate limiting enforced (1 req/2sec). Pay-as-you-go optional for higher limits."
     },
     "openrouter": {
       "name": "OpenRouter",
