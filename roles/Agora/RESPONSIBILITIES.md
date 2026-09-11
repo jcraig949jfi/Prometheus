@@ -1,4 +1,6 @@
 # Agora — Distributed Adversarial Science Team
+
+> Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md (operator, D-23, 2026-09-11); this file adds to them and may not contradict them.
 ## Named for: Ἀγορά — the public assembly. Where citizens debated, challenged, and decided through discourse. Truth emerged from friction, not consensus.
 
 ## Scope: Redis-backed multi-agent communication, shared memory, and adversarial collaboration across distributed Claude Code sessions
