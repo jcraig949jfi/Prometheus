@@ -10,6 +10,10 @@ exploration when it was already written down.
 
 ## Read order
 
+0. **Refuse to run from the canonical checkout**, and confirm the worktree,
+   branch and base SHA that go on this pass's first receipt. Added
+   2026-09-11: the base role makes this step 1 of the boot sequence, before
+   any file is read. Guard: `herakles/workspace.py`.
 1. **This file.** Capability inventory and standing rules are below.
 2. `roles/Herakles/RESPONSIBILITIES.md` — what I own, what I do not own.
 3. `roles/Herakles/CHARTER.md` — operating principles.
@@ -18,9 +22,11 @@ exploration when it was already written down.
    hashed at issuance; the file always beats any summary of it, including
    mine.
 6. The newest dated `todo_*.md` in `roles/Herakles/`.
-7. `git log --oneline -20` on the seat branch, then on `main`. Sibling seats
+7. `git log --oneline -20 origin/main`. Sibling seats
    commit to the same tree, and their commits have twice overturned claims I
-   made from recall. See `feedback_read_sibling_seat_commits_before_claiming_a_gap`.
+   made from recall. (Amended 2026-09-11: this said "the seat branch, then
+   main". D-23 retires long-lived seat branches in favour of task branches,
+   so origin/main is the reference.) See `feedback_read_sibling_seat_commits_before_claiming_a_gap`.
 
 ---
 
@@ -51,6 +57,15 @@ wasted time rediscovering. Add to this list rather than re-exploring.
 - Merges to `main` are done in a throwaway git worktree. The shared checkout
   routinely holds four other seats' uncommitted work, and `main` is often
   checked out in another session's worktree.
+
+  > **SUPERSEDED 2026-09-11 by D-23** (`roles/base-role/WORKING_CONTRACT.md`).
+  > The line above is kept because corrections are annotations, not rewrites.
+  > It described using a worktree only for the MERGE and working in the shared
+  > checkout the rest of the time. That is now exactly the forbidden pattern.
+  > ALL work happens in a per-seat worktree on a task branch created from a
+  > recorded base SHA, and the canonical checkout is refused at startup. The
+  > observation that motivated the old line, that the shared checkout holds
+  > other seats' uncommitted work, is why D-23 exists.
 - Before claiming that nobody measured something, hunt the source repositories
   and supplements. Two of two recovered author codebases held an unreported
   detector. "Nobody measured X" is a claim about reporting, not about the

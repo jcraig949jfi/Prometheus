@@ -15,6 +15,60 @@ missing.
 
 ## Band A — costs the project is already paying
 
+### A6. **TOP OF THE BACKLOG.** The engine cannot record its own unavailability, so a stall reads as data — `DESIGNED, not implemented`
+**Found by Vivarium 2026-09-11, and it is the sharpest consequence of C9.**
+
+When `BEGIN IMMEDIATE` exceeds its 30 s wait, `sqlite3.OperationalError`
+propagates past the `FoundryError` handler (`sfe/api.py:514`, which only catches
+`FoundryError`) as an unhandled 500. The only `except sqlite3.OperationalError`
+in `sfe/` is `store.py:631` — the unrelated `initialize()` fast path.
+
+**Nothing is written to the ledger. By construction it cannot be: recording the
+failure needs the very lock that just failed.** So the hash chain is silent
+exactly when the engine is the thing that broke, and a reader reconstructing
+events from the ledger afterwards sees no trace at all.
+
+**Why that is worse than losing rows.** The 13 rows the engine failed on
+2026-09-11 were `cs-h5-1` arm `map`, rules **143–155 — thirteen CONSECUTIVE**.
+Contiguous because they were consecutive in the producer's issue order and the
+engine stalled for seventeen minutes; nothing about the rules. But the rule
+number is the x-axis of what H5 plots, so a block-shaped hole is the shape most
+likely to be read as a property of rule space. The map completes at 243 of 256,
+and the difference between reporting *"243"* and *"243 with a named contiguous
+gap at 143–155"* is the whole of whether a later reader can tell an instrument
+failure from a finding.
+
+**Do:** the record has to live somewhere the lock cannot block — that is the
+design constraint, not an implementation detail. Options: a structured
+unavailability log outside SQLite; a counter surfaced on `/v2/health` (**B3**)
+so a consumer can ask "were you refusing writes during my window?"; or a
+deliberate second connection reserved for incident records. Anything that writes
+to the same ledger through the same lock is circular.
+Blocks: nobody today, and it silently taxes every campaign that hits a stall.
+
+**PROMOTED to the top by the operator, 2026-09-11.** Design and acceptance test
+committed ahead of any implementation:
+
+* `roles/Daedalus/DESIGN_A6_ATTESTATION_2026-09-11.md` — durable pre-attempt
+  intent, reconciled against the ledger afterwards, with nine explicit failure
+  modes and a stated scope boundary.
+* `SerendipityFoundry/SerendipityFoundryEngine/tests/test_sfe_a6_attestation.py`
+  — **4 passing** as live evidence the gap is real, **15 `xfail(strict=True)`**
+  as the acceptance criteria, one per row of the incident.
+
+**Why intent and not an incident log.** An incident channel records refusals,
+which covers the 8 that died at `create_world` — and is silent for rule 146,
+where nothing was refused and the caller still could not tell what happened.
+Intent is written *before* the outcome is known, so the record exists whatever
+the outcome turns out to be. It covers all 13; an incident channel is a strict
+subset of it.
+
+**The residual limit, stated rather than mitigated:** a request that never
+reaches the engine is invisible to an engine-side journal. The producer's
+register is the only witness there, which is why this corroborates the
+register's failure classes and does not replace them.
+
+
 ### A0. The engine does not describe its own responses, so half the surface is unguardable — `NOTHING`
 **Measured on the live spec: 0 of 67 GET/POST route-methods declare a 200
 response schema.** Every one is `{}`, because `sfe/api.py` contains **zero**
@@ -62,36 +116,6 @@ rather than all 67 at once. **Sequence: after step 5.** Building it before any
 consumer holds the gate would be sharpening an instrument nobody is holding —
 which is the whole lesson of this backlog's top item.
 
-### A6. The engine cannot record its own unavailability, so a stall reads as data — `NOTHING`
-**Found by Vivarium 2026-09-11, and it is the sharpest consequence of C9.**
-
-When `BEGIN IMMEDIATE` exceeds its 30 s wait, `sqlite3.OperationalError`
-propagates past the `FoundryError` handler (`sfe/api.py:514`, which only catches
-`FoundryError`) as an unhandled 500. The only `except sqlite3.OperationalError`
-in `sfe/` is `store.py:631` — the unrelated `initialize()` fast path.
-
-**Nothing is written to the ledger. By construction it cannot be: recording the
-failure needs the very lock that just failed.** So the hash chain is silent
-exactly when the engine is the thing that broke, and a reader reconstructing
-events from the ledger afterwards sees no trace at all.
-
-**Why that is worse than losing rows.** The 13 rows the engine failed on
-2026-09-11 were `cs-h5-1` arm `map`, rules **143–155 — thirteen CONSECUTIVE**.
-Contiguous because they were consecutive in the producer's issue order and the
-engine stalled for seventeen minutes; nothing about the rules. But the rule
-number is the x-axis of what H5 plots, so a block-shaped hole is the shape most
-likely to be read as a property of rule space. The map completes at 243 of 256,
-and the difference between reporting *"243"* and *"243 with a named contiguous
-gap at 143–155"* is the whole of whether a later reader can tell an instrument
-failure from a finding.
-
-**Do:** the record has to live somewhere the lock cannot block — that is the
-design constraint, not an implementation detail. Options: a structured
-unavailability log outside SQLite; a counter surfaced on `/v2/health` (**B3**)
-so a consumer can ask "were you refusing writes during my window?"; or a
-deliberate second connection reserved for incident records. Anything that writes
-to the same ledger through the same lock is circular.
-Blocks: nobody today, and it silently taxes every campaign that hits a stall.
 
 ### A1. The client abandons a request ~3 s BEFORE the engine gives up — `PARTIAL`
 Measured, `SerendipityFoundry/SerendipityFoundryEngine/deploy/WRITE_PATH_PROFILE_2026-09-10.json`: the client's socket
@@ -114,6 +138,16 @@ non-idempotent route cannot retry without risking a duplicate, and cannot
 **Do:** audit every mutating route for an idempotency key; make the ones that
 lack one accept it. Pairs with A1 — A1 makes the timeout happen, A2 makes it
 unrecoverable.
+
+**THE CANONICAL CASE IS RULE 146** (2026-09-11): the client timed out **on the
+commit call itself**, and the commit **had landed**. The rule that follows, and
+that any retry logic anywhere must obey:
+
+> A timeout means the outcome is **UNKNOWN**. Reconcile before retry. Never
+> assume the write failed.
+
+Vivarium's policy of never requeueing a stranded row is the correct reading of
+this, and it is stricter than anything the engine currently enforces.
 
 ### A3. Producer and engine cannot actually be reconciled yet — `PARTIAL`
 `SerendipityFoundry/SerendipityFoundryEngine/deploy/COST_RECONCILIATION_2026-09-10.json`, run on the live ledger: producer
@@ -382,14 +416,16 @@ scan; it exists for tests and for whoever runs the kill precondition.
 
 ## What I would do next, in order
 
-1. **C7** — `indexed_artifacts` on the cost-event response. It is the only
-   item on this list that has already cost someone a full day, and the fix is
-   a derived field. First thing on the next build.
-2. **A1** — one measured number, a small change, and it is currently
+1. **A6** — top of the list by the operator's instruction, and it is the only
+   item here where *two* systems failed to record the same incident. Designed
+   and acceptance-tested; implementation needs its own deploy authority.
+2. **C7** — landed but held, deliberately, until A6 resolves or the operator
+   batches the decision. Two builds' worth of change in one deploy beats two.
+3. **A1** — one measured number, a small change, and it is currently
    miscounting every timeout the project sees.
-3. **B9's forever-hold** — an abandoned OPEN reservation silently shrinks a
+4. **B9's forever-hold** — an abandoned OPEN reservation silently shrinks a
    world's budget with no way to notice or reclaim it.
-4. **B8, the replay harness** — the highest-value thing in the list, because
+5. **B8, the replay harness** — the highest-value thing in the list, because
    it forces a normalized projection to be *declared*.
-5. **B3 / C2** — the engine cannot currently answer "are you healthy" or
+6. **B3 / C2** — the engine cannot currently answer "are you healthy" or
    "will this ceiling hide data", and both of those are asked at deploy time.

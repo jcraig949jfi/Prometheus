@@ -1,0 +1,187 @@
+====================================================================
+PROTEUS -- BASE ROLE ADOPTION RECEIPT
+2026-09-11
+====================================================================
+
+1. WHAT I READ, AND AT WHICH SHA
+
+   base role read at   2cfc66aed
+   verified            git merge-base --is-ancestor 2cfc66aed origin/main
+                       -> REACHABLE
+   files read, in the order the missive gave
+     roles/base-role/RESPONSIBILITIES.md    (boot, doctrine, journaling,
+                                             communication, Claude Code
+                                             rules, session close)
+     roles/base-role/WORKING_CONTRACT.md    (D-23; already adopted in
+                                             full on 2026-09-11, see s5)
+     roles/base-role/INHERITANCE.md         (the register)
+
+   MY INHERITANCE ROW IS NOT A STUB
+     line 31: | Proteus | RESPONSIBILITIES.md (already) |
+   so I owe no lane section. My seat file already carries the line-2
+   banner.
+
+2. WORKSPACE RECEIPT (WORKING_CONTRACT s4)
+
+   worktree_path   F:\Prometheus-worktrees\proteus-base-role
+   branch          proteus/base-role-adopt   (short-lived, task branch)
+   base_sha        c13867fcc615c55e154817479c3891af7018db39
+   dirty           false
+   main_worktree   false   (refusal guard self-checked from here)
+
+   Proteus footprint before this worktree was zero: 0 worktrees,
+   0 local branches, 0 remote branches, 0 files in the canonical
+   checkout. D-23 compliance landed earlier today at
+   a4b1cb4cae15022c277fc14a920aa9b5ca01c764.
+
+3. FIRST THREE WORK ITEMS
+
+   Each names the artifact that proves it done and its blocker. All
+   three are unblocked; two further items that ARE blocked follow.
+
+   ITEM 1 (starting here)  T3 -- Retention V0 is a contract, not code
+     what      proteus/contracts/RETENTION_AND_MEASUREMENT_V0.md defines
+               a reservoir, an EvaluationRecord shape, an archive, three
+               guards and a deterministic eviction order. NONE of it is
+               implemented. There is no reservoir, no record store and
+               no eviction path. Nothing may cite it as a running
+               mechanism, and the R=0.000001 retention plan depends on
+               it.
+     artifact  proteus/retention/ implementing reservoir, record store
+               and deterministic eviction, with tests including a
+               positive control (an entry that must be evicted) and a
+               cheat control (eviction that touches a pointer it should
+               not); the contract document amended to say IMPLEMENTED
+               with the commit that did it.
+     blocker   NONE. Entirely inside my lane.
+
+   ITEM 2  the backlog file the base role expects does not exist
+     what      base RESPONSIBILITIES s1.6 draws suggested work from
+               roles/<Seat>/BACKLOG_H0H5.md in the schema at
+               roles/Archaeon/prompts/2026-09-10_backlog/
+               00_BACKLOG_SCHEMA.md. Proteus has TODO.md but NO
+               BACKLOG_H0H5.md, so my boot cannot follow s1.6 as
+               written. The schema exists; the file is simply missing.
+     artifact  roles/Proteus/BACKLOG_H0H5.md in that schema, carrying
+               T3-T9 and WP-B4 as rows, and the open operator decisions
+               as XL rows so the operator's queue is derivable
+               (base s4).
+     blocker   NONE.
+
+   ITEM 3  T6 -- the ablation bound is a lower bound of unmeasured width
+     what      ablation_report's EXACT verdict is ensemble-relative: it
+               detects a data-channel dependence only if that dependence
+               reaches the transcript on the probes actually run. 1 of
+               343 class knockouts came back CONFOUNDED. Today the bound
+               is neither widened nor explicitly accepted at its current
+               width, which is the worst of the two.
+     artifact  proteus/v0_7/RESULT_ALIAS_BOUND_WIDTH.json: the
+               confounded rate over a widened probe ensemble, with
+               either a narrowed bound or a stated acceptance of the
+               current width and the reason.
+     blocker   NONE.
+
+   BLOCKED, NOT STARTED, AND ON WHOM
+
+   ITEM 4  T4 -- roster registration, overdue by this seat's own rule
+     what      RESPONSIBILITIES s8 committed to registering Proteus in
+               scripts/portfolio_monitor.py EXPECTED_AGENTS "when the
+               first proteus/ code lands". Code landed 2026-09-02;
+               verified absent on 2026-09-04 and still absent.
+     blocker   LANE. scripts/portfolio_monitor.py is fleet
+               infrastructure, not Proteus's file, and base s2 says
+               change only your own code. Under the new habit I will
+               write the prompt to its owner rather than edit it. I do
+               not yet know which seat owns that script; establishing
+               that is part of the item.
+
+   ITEM 5  T5 -- the PEW export contract has never been exercised
+     what      proteus/contracts/PEW_EXPORT.md was written against a
+               documented API while the client was on an unmerged
+               branch. PEW is now on main and serving. The contract
+               should be RUN against the live service rather than
+               continue to be a specification.
+     blocker   MNEMOSYNE. PEW is theirs by the operator's ruling of
+               2026-09-04; I need a namespace and a token to write
+               proteus.organism and proteus.descent rows and read them
+               back. Prompt to follow under roles/Proteus/prompts/.
+
+4. LINES IN MY SEAT FILE I BELIEVE CONFLICT WITH THE BASE
+
+   Two, both quoted for the operator to rule on. I have changed
+   nothing; the base wins by its own terms, but a silent edit would
+   hide the conflict.
+
+   CONFLICT A -- my file cites a LOCAL MEMORY DIRECTORY as authority,
+   which the base supersedes.
+
+     base RESPONSIBILITIES s0:
+       "Doctrine across machines lives in
+        aporia/doctrine/critical_memories.md, which every seat reads
+        instead of any local memory directory."
+
+     roles/Proteus/RESPONSIBILITIES.md line 218:
+       "- **Prompts:** every significant brief is committed verbatim
+        with its sha256 in the commit message and carries an ASCII
+        review packet delivered as one paste block
+        (`feedback_significant_prompts_get_committed_and_packeted`)."
+
+     line 219:
+       "- **Rows ship with verdicts** in the same commit
+        (`feedback_verdict_without_rows_is_an_assertion`)."
+
+     line 231:
+       "- **Namespace:** Greek per `reference_agent_names`; ..."
+
+     line 34:
+       "Per `feedback_agent_differentiation`, a seat exists at a layer
+        nobody else occupies:"
+
+     Those four backticked slugs are entries in a local, per-machine
+     memory directory, not tracked files. The RULES they state are
+     good and match the base; the CITATION is to an authority the base
+     has replaced. My proposed fix, on the operator's word: keep the
+     rules, repoint each citation at aporia/doctrine/critical_memories.md
+     (or delete the citation and leave the rule), as an annotation
+     beside the original rather than a silent rewrite.
+
+   CONFLICT B -- a drive letter in my seat file.
+
+     base RESPONSIBILITIES s2:
+       "Never hardcode a drive letter: paths are repository-relative or
+        configuration-driven."
+
+     roles/Proteus/RESPONSIBILITIES.md line 212:
+       "- **Git:** work from a worktree on `origin/main` (the F: checkout
+        is routinely parked on another seat's branch -- Elenchus
+        precedent)."
+
+     This is prose about the canonical checkout, not a path in code, so
+     it may be tolerable. I raise it because the base states the rule
+     absolutely and has already used it to supersede a line in
+     roles/Apollo/CHARTER.md, so the same reasoning appears to reach
+     this line. Proposed fix: "the canonical checkout".
+
+   NOT A CONFLICT, RECORDED SO IT IS NOT RE-LITIGATED
+
+     My s8 Git bullet is INCOMPLETE relative to WORKING_CONTRACT -- it
+     does not mention never-git-pull, task branches from a recorded base
+     SHA, receipts carrying base_sha/branch/worktree_path, pinned
+     worktrees, or destroy-not-nurse. Incompleteness is not
+     contradiction and the base says my file ADDS to it, so I am not
+     treating this as a conflict. I follow the base.
+
+     My s3 journaling uses dated STATUS_<date>_<topic>.md files rather
+     than roles/Proteus/journal/YYYY-MM-DD.md. Base s3 allows "the
+     seat's existing WORKLOG/STATUS file if it already plays that role",
+     which mine does.
+
+5. NEXT EXECUTABLE ACTION
+
+   Start ITEM 1 (T3, Retention V0) in this worktree, and write the
+   ITEM 5 prompt to Mnemosyne under roles/Proteus/prompts/ so it is
+   moving while T3 is built. Neither waits on the operator; the two
+   conflicts above are the only things I am holding for a ruling, and
+   they do not block any of the three items.
+
+====================================================================
