@@ -14,6 +14,7 @@ second copy of the leak.
 | R-1 | PEW `machine_tokens`, `auth_token`, `db_password` committed in `evidence_wiki/config.json` | present in git history; every host holding the repo can authenticate as any machine | operator | OPEN |
 | R-2 | `config.local.json` (documented credential override) was not gitignored until 2026-09-05 | closed preventively at the tracked repo root; any secret placed in that filename **before** 2026-09-05 was committable and should be treated as exposed | Mnemosyne (rule) / operator (any pre-date secret) | PREVENTED, residual unknown |
 | R-3 | key-shaped strings in an untracked archive report (Archaeon assets audit §13) | see below | operator | OPEN, low urgency |
+| R-4 | per-agent READ-ONLY identity `Kairos` (KAIROS-02, comms #33): token issued 2026-09-11 on M1, value held outside every repository on the issuing host; the committed `config.json` `agent_identities` carries only its sha256 and scopes `[read]` | issued; not in git; not in the queue | Mnemosyne (issuer) / Kairos (holder) | ISSUED 2026-09-11 |
 
 ---
 
@@ -83,3 +84,18 @@ this tracker now carries the verified resolving path (above). Both sides agree
 and both resolve; nothing further is owed on the citation.
 
 **Not a dependency** of any research item, per the routing order.
+
+## R-4 — first per-agent scoped identity (Kairos, read-only)
+
+Issued 2026-09-11 for KAIROS-02. Mechanism: `identity()` in `ew/service.py`
+resolves a presented bearer by sha256 against `config.json`
+`agent_identities`; the value itself never enters the repository, a commit,
+or the comms queue. Delivery is host-local: the issuing host keeps
+`~/.prometheus/ew_agent_tokens.json` (`{agent: token}`, outside every
+checkout), which `ew/client.py` reads for the named agent (env
+`EW_AGENT_TOKEN`/`EW_AUTH_TOKEN` override). A holder on another host needs a
+second out-of-band delivery; none has been made.
+
+Scope enforcement: a write with a read-only identity is 403 at the service.
+Revocation: delete the registry entry and the host file; rotation: reissue
+and replace the sha256. Tests: `tests/test_agent_identity.py`.
