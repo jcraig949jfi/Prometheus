@@ -310,3 +310,72 @@ in *analysis* live in the gap between a signal and its cause.** A scar, an
 orphan, a contiguous gap, a 100% rate — each of those was a real measurement
 that pointed at the wrong story until I read one more field. In all three cases
 the extra field was already in the database.
+
+---
+
+## 10. I-6 — "a fix that was not running", for the third time
+
+While checking whether the consumer needed a restart for the orphan work, I
+compared the pinned worktree's HEAD against the commit carrying yesterday's
+runner fix:
+
+    git merge-base --is-ancestor 2e444f372 ad94bf2eb   ->  NO
+
+The consumer had been running since 04:03 **from a pin that predates the fix**.
+So the thirteen-line window between the commit and the boundary flag — the one
+whose closure I described to Archaeon in writing as *"a future stall in that
+window will produce a row that names its orphan"* — was closed on main and open
+in the only process that could hit it. Every stall since would have produced
+exactly the unnamed orphans I said were no longer possible.
+
+The statement I made was true of the code and false of the system. I do not
+think the sentence was dishonest; I think **"fixed" is a word about a
+repository and the reader hears it as a word about behaviour**, and the gap
+between those is where this class of defect lives.
+
+This is the third instance of one shape:
+
+* **I-1** — 48 phase-2 rows lost to a schema-7 fallback that existed in the
+  file and not in the 4h47m-old interpreter.
+* **I-5** — the frame reader corrected in the repo while the answer I had
+  already given two seats stayed wrong.
+* **I-6** — a runner fix on main, absent from the pinned build actually
+  executing.
+
+Three times, the artifact was right and the running thing was not. The backlog
+already carries the fix for this — **C6, the running SHA in the heartbeat** —
+filed after I-1 as a convenience for diagnosing a 404. It is not a convenience.
+It is the only field that turns *"is the fix live?"* from an inference across a
+pin, a process start time and a merge-base into a value you read. I have
+promoted it and said why.
+
+Two more defects surfaced from the restart itself, both operational and both
+mine:
+
+**The stop flag is per-checkout and `stop` reports success regardless.** `_VAR`
+is derived from the module's own path, so my first stop wrote a flag into this
+worktree that nothing would ever read — and printed "stop requested" with the
+path. Under D-23 the daemon runs from a pinned worktree while every seat works
+in another, so *addressing the wrong directory is now the default case, not the
+error case*. A control that silently no-ops from the ordinary working position
+is worse than no control, because it is indistinguishable from a control that
+worked. Filed C7. The stop landed when re-issued from the daemon's own
+checkout.
+
+**The heartbeat still does not beat during a row.** `health` reported the
+consumer `alive: false` at 158s stale while it was 190s into a *healthy*
+`eca_rule_eval_v1` row whose peers run 160–620s. That is C1/C2, already filed —
+but this is the first time I have caught it with the row's true state known
+independently, so it is now a reproduction rather than a hypothesis. It is also
+how I nearly misread a working consumer as dead for the second time in four
+days (I-4).
+
+### The thread running through I-1, I-5 and I-6
+
+Section 8 said the expensive defects live in the seam between a correct thing
+and the machine executing it. Section 9 added the gap between a signal and its
+cause. I-6 is the sharpest form: **I keep verifying the artifact and reporting
+on the system.** Every one of these would have been caught by one question
+asked before the word "fixed" leaves the seat — *what is actually running, and
+how would I know?* — and in every case the answer was available in one command
+I did not run.
