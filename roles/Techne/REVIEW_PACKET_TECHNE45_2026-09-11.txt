@@ -1,0 +1,191 @@
+================================================================================
+EXTERNAL REVIEW PACKET
+TECHNE-45: THE SDP CAPABILITY-GAP FIXTURE SCORES CORRECTNESS, NOT STATUS
+================================================================================
+Prepared:        2026-09-11   frozen (prereg 6ea534b58, executed 99628d759)
+Location/Code:   techne/scripts/capability_gap_fixture.py
+                 techne/tests/test_capability_gap_fixture.py (17 controls)
+Artifacts:       techne/acquisition/GAP_FIXTURE_SDP.json (schema /2)
+                 roles/Techne/journal/2026-09-11.md (prereg + receipt)
+Version/Hash:    99628d759 on origin/main (verified ancestor); merged tree
+                 pushed as ebcd6d624; base d109add9b
+Headline:        0 of 26 A/B rows change class under correctness scoring;
+                 the fixture can now SAY so. Verdict unchanged: NO GAP.
+
+--------------------------------------------------------------------------------
+1. CLAIM / SUBJECT UNDER REVIEW
+--------------------------------------------------------------------------------
+Before this pass the fixture's arm A (authority anchor, theta(C_5)) recorded
+abs_error and then wrote failed:False unconditionally; arm B (scale, random
+G(n,0.3)) wrote failed = (status != "optimal") with no ground truth at all.
+ELEN-TECHNE-38 had shown, in arm C, that this criterion scores a 188%-wrong
+SCS answer as a PASS. The claim under review: arms A and B now score every
+row against a ground truth the solver did not supply, and applying that
+criterion changes NO existing classification.
+
+Pre-registered falsifiers (journal, committed before the run):
+  - any A/B row whose old and new class differ (prediction: none);
+  - a certificate on a closed-form graph that fails to bracket the
+    literature theta (would void every certificate-scored row);
+  - a cheat value (1.5x truth, status optimal) scored as a pass.
+
+--------------------------------------------------------------------------------
+2. METHOD / SETUP / SUBSTRATE
+--------------------------------------------------------------------------------
+Free path: cvxpy 1.9.2, CLARABEL (interior point) and SCS (first order),
+both Apache-2.0. Problem: Lovasz theta SDP, max sum(X) s.t. X PSD, tr X = 1,
+X_ij = 0 on edges. Edge constraints are now one vectorised equality so the
+dual is one vector aligned with the edge list (values bit-identical to the
+per-edge form on all 8 previously committed rows).
+
+--------------------------------------------------------------------------------
+3. GROUND TRUTH / CERTIFICATION / KEY DEFINITIONS
+--------------------------------------------------------------------------------
+Closed forms (solver never sees them):
+  odd cycle C_n     theta = n cos(pi/n) / (1 + cos(pi/n))    n = 5, 21, 61, 121
+  Paley P_p         theta = sqrt(p)                            p = 29, 61, 113
+  Kneser K(m,k)     theta = C(m-1, k-1)                       (7,2) (9,3) (10,3)
+Checked at n=5 (sqrt 5) and Petersen K(5,2) = 4 before use.
+
+Certificate for graphs with no closed form, computed by numpy from what the
+solver RETURNED, never from what it REPORTED:
+  lb   returned X, edges zeroed, |lambda_min| * I added if lambda_min < 0,
+       trace rescaled to 1 -> feasible by construction, so sum(X') <= theta
+  ub   Lovasz theta_3: for ANY symmetric Y on the edge set,
+       theta <= lambda_max(J + Y); Y direction = solver's edge duals, scalar
+       chosen by 1-D minimisation (valid at every scalar, tight at the best)
+
+Classes, one bar for every arm (SILENTLY_WRONG_REL = 1e-2; a reporting
+threshold, NOT an accuracy requirement -- none exists, TECHNE-46):
+  closed form   CORRECT rel <= bar | SILENTLY_WRONG rel > bar (status optimal)
+                | DECLARED_FAILURE | RAISED
+  certificate   CERTIFIED  max(|v-lb|,|v-ub|)/ub <= bar
+                SILENTLY_WRONG  value leaves [lb,ub] by more than bar
+                INDETERMINATE / UNCERTIFIED  instrument branches, never a pass
+
+--------------------------------------------------------------------------------
+4. INPUTS / DATA / CONDITIONS / BASELINES
+--------------------------------------------------------------------------------
+13 cases x 2 solvers = 26 eligible rows: 1 authority, 3 random (n 20/60/120,
+p 0.3, seed 0; the roadmap's shape), 9 closed-form (n 21..121, edges
+21..3164). Baseline = the pre-TECHNE-45 status rule, recomputed on every row
+as old_criterion_failed. Arm C (conditioning) untouched.
+
+--------------------------------------------------------------------------------
+5. PRIMARY RESULT
+--------------------------------------------------------------------------------
+Eligible A/B rows ........................ 26
+Old vs new criteria DISAGREE ............. 0   (prediction held)
+Classes .................................. CORRECT 20, CERTIFIED 6
+Values vs previous committed JSON ........ 8 compared, max rel change 0.0
+Certificate brackets literature theta .... 20 of 20 closed-form rows, 0 FAIL
+Certificate width (ub-lb)/ub ............. 2.3e-12 .. 6.7e-04
+Fixture verdict .......................... NO GAP MEASURED (unchanged)
+
+Case                       Solver    Value          Digits  Cert width  ms
+-------------------------  --------  -------------  ------  ----------  ------
+A_authority_theta_C5       CLARABEL  2.236067979    9.08    1.0e-09     9
+A_authority_theta_C5       SCS       2.236067515    6.68    2.2e-07     7
+B_scale_n20                CLARABEL  8.000000015    cert    1.3e-08     53
+B_scale_n20                SCS       8.000005213    cert    5.3e-06     24
+B_scale_n60                CLARABEL  12.804828741   cert    5.9e-08     1392
+B_scale_n60                SCS       12.804832645   cert    1.3e-04     498
+B_scale_n120               CLARABEL  18.751986697   cert    1.4e-08     24204
+B_scale_n120               SCS       18.751987629   cert    6.7e-04     1310
+B_closed_odd_cycle_21      CLARABEL  10.441032600   8.17    2.0e-08     16
+B_closed_odd_cycle_21      SCS       10.441038293   6.26    4.3e-06     63
+B_closed_odd_cycle_61      CLARABEL  30.479766465   9.57    2.7e-09     861
+B_closed_odd_cycle_61      SCS       30.479706902   5.71    4.7e-04     623
+B_closed_odd_cycle_121     CLARABEL  60.489803763   7.89    7.3e-08     17521
+B_closed_odd_cycle_121     SCS       60.489801197   7.53    4.4e-08     3363
+B_closed_paley_29          CLARABEL  5.385164808    9.84    2.3e-12     45
+B_closed_paley_29          SCS       5.385164279    7.01    1.0e-07     65
+B_closed_paley_61          CLARABEL  7.810249678    9.54    9.4e-12     789
+B_closed_paley_61          SCS       7.810258203    5.96    6.0e-10     230
+B_closed_paley_113         CLARABEL  10.630145818   9.28    8.4e-12     10949
+B_closed_paley_113         SCS       10.630145617   7.74    1.9e-08     891
+B_closed_kneser_7c2        CLARABEL  6.000000078    7.89    5.9e-09     17
+B_closed_kneser_7c2        SCS       5.999994040    6.00    1.0e-06     30
+B_closed_kneser_9c3        CLARABEL  28.000000002   10.21   3.1e-10     2978
+B_closed_kneser_9c3        SCS       28.000024448   6.06    2.0e-06     449
+B_closed_kneser_10c3       CLARABEL  36.000000003   10.15   3.1e-10     13996
+B_closed_kneser_10c3       SCS       35.999998431   7.36    3.4e-05     773
+
+--------------------------------------------------------------------------------
+6. WHAT THE INSTRUMENT FOUND THAT A STATUS STRING COULD NOT
+--------------------------------------------------------------------------------
+(a) The bound control caught MY OWN lower bound being infeasible. Version 1
+    eigen-clipped and reconstructed; the reconstruction put nonzeros back on
+    the edges, and on Petersen with SCS the "lb" was 4.000018 > 4. Fixed by
+    an identity shift; the failing test is kept as the regression.
+(b) On 18 of 26 rows the solver's reported objective exceeds the certified
+    upper bound, i.e. is a value no feasible X attains: CLARABEL by
+    3.5e-11 .. 1.1e-08 rel, SCS by 3e-10 .. 1.09e-06 rel. All sub-bar; no
+    class changes; recorded per row as reported_value_outside_certificate_rel.
+    A reader needing an attained value should read the certificate's lb.
+
+--------------------------------------------------------------------------------
+7. CONTROLS / ABLATIONS / STRESS TESTS
+--------------------------------------------------------------------------------
+positive ..... C_5, Petersen, a 14-vertex random graph: CORRECT / CERTIFIED
+cheat ........ 1.5x truth with status optimal -> SILENTLY_WRONG (both rules)
+negative ..... the old status rule PASSES that same cheat row (asserted)
+bound ........ ub >= lb on every case; closed forms checked against
+               literature at n=5 and K(5,2); garbage X still yields lb <= theta
+All 17 pass on the merged tree; techne/tests 357 passed / 5 skipped
+(mahler_batch deselected); archaeon/tests/test_base_role.py 10/11, the one
+failure being the pre-existing Mnemosyne banner (not this seat's).
+
+--------------------------------------------------------------------------------
+8. KNOWN LIMITATIONS & CAVEATS
+--------------------------------------------------------------------------------
+- GATE MOVED AFTER DATA, DECLARED: the preregistered certificate rule used a
+  1e-6 "inside" tolerance while closed-form rows used the 1e-2 bar -- two
+  standards in one preregistration. A unit-test control (SCS, 14 vertices,
+  1.05e-5 above ub) exposed it before the fixture ran; the rule was amended
+  to worst-case error at the one bar. Both classes are recorded on every
+  row; the preregistered function is kept verbatim. On the real run they
+  differ on ONE row (B_closed_paley_61 / SCS), which the closed form scores
+  CORRECT at 5.96 digits. The amended rule fails the cheat controls
+  identically. A reviewer may still reject the amendment; the prereg class
+  is on every row to make that possible.
+- No accuracy requirement exists (TECHNE-46, Harmonia). 6.7e-04 certified
+  width for SCS at n=120 is a number, not a verdict.
+- The scale arm stops at n=120 (CLARABEL 24 s). The roadmap's report_185
+  asks for 601-1191 vertices; the certificate makes such a run self-scoring
+  but none has been queued.
+- Arm C is scored against its closed form, not a certificate (already an
+  independent truth); untouched here.
+- Single host (SKULLPORT), single seed for the random graphs (seed 0, as
+  committed on 2026-09-10).
+
+--------------------------------------------------------------------------------
+9. REPRODUCTION
+--------------------------------------------------------------------------------
+  git -C <canonical> fetch origin && git worktree add <wt> ebcd6d624
+  cd <wt>
+  python -m pytest techne/tests/test_capability_gap_fixture.py -q    # ~1 s
+  python -m techne.scripts.capability_gap_fixture --target sdp \
+      --out <scratch>/GAP_FIXTURE_SDP.json                            # ~6 min
+Spot checks: techne45.n_disagree == 0; techne45.certificate_validation_on
+_closed_forms.n_bracket_FAIL == 0; every A_/B_ row has class, failed,
+old_criterion_failed, certificate, certificate_class_prereg.
+
+--------------------------------------------------------------------------------
+10. VERDICT / DECISION
+--------------------------------------------------------------------------------
+STATUS-ONLY CRITERION REMAINS ANYWHERE IN THE FIXTURE ..... no
+ANY A/B CLASSIFICATION CHANGED ............................ no (0 of 26)
+CERTIFICATE VALIDATED AGAINST LITERATURE .................. yes (20 of 20)
+CANDIDATE GAP / PURCHASE AUTHORISED ....................... no
+CONTINUE THIS LINE ......................................... only if a
+   consumer queues an instance at roadmap size or declares an accuracy bar;
+   otherwise TECHNE-45 is closed and nothing here justifies more solver work.
+
+Reviewer's bottom line: is the post-control amendment of the certificate
+rule (worst-case error at the one bar, replacing a 1e-6 inside-tolerance)
+a legitimate restoration of the preregistration's own principle, or a gate
+moved after data that should be reverted with Paley-61/SCS re-scored?
+================================================================================
+END OF PACKET
+================================================================================
