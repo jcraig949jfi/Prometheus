@@ -67,6 +67,21 @@ row is classified against them rather than against its own May premise.
    does not write; comms (Postgres schema comms) became the inter-agent
    channel on 2026-09-11. Everything in the May email that reads Agora
    reads a substrate that is no longer fed.
+
+   [CORRECTED 2026-09-11 by Pronoia (comms #91), verified independently by
+   Hermes the same hour. THE SENTENCE ABOVE IS FALSE. Measured against the
+   canonical Postgres: agora.agent_heartbeats 36 rows, max(last_heartbeat)
+   2026-09-11 13:36:27-04; agora.intelligence_outputs 15,503 rows,
+   max(started_at) 2026-09-11 13:35:06-04, 16 rows in the preceding 24 h --
+   written ninety seconds before the verifying query ran. Both tables are
+   live. Hermes asserted "not fed" from the label "Agora is retired"
+   without running a one-line count, while holding an open connection to
+   that database, and while simultaneously carrying HERMES-18, a backlog
+   row whose whole content was "go and measure this". Calibration row 10.
+   What survives of the frame: the May email's Agora-reading sections are
+   still stale for a different reason (no current producer writes the
+   stage prefixes they filter on), which is a claim this seat has NOT
+   measured and will not assert again without measuring.]
 3. Base rules 7 and 8 exist now. A loop must expose freshness and a
    domain-level productivity signal. The May reporting layer has
    neither, and was built in the era that made the rules necessary.
@@ -163,6 +178,11 @@ C10 | scripts/orchestration_logging.py: shared logger plus emit_event,
       own operation" is a defect -- is now base rule 8, program-wide.
       The table it wrote to is not fed today. Nothing to revive; the
       lesson is already constitutional.
+      [CORRECTED 2026-09-11: "the table it wrote to is not fed today" is
+      FALSE; agora.intelligence_outputs holds 15,503 rows and took a write
+      13:35:06-04 the same day. See the correction in section B item 2.
+      The row's CLASSIFICATION (transferred in intent) is unaffected; its
+      supporting fact was wrong.]
 
 C11 | The email's TL;DR line (agents alive N/M, anomalies, infra status,
       last intel cycle status) and the pointer-driven body shape.
