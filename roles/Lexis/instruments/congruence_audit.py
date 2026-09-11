@@ -450,4 +450,8 @@ def main():
 
 
 if __name__ == "__main__":
+    import pathlib as _pl, sys as _sys
+    _sys.path.insert(0, str(_pl.Path(__file__).resolve().parents[1]))
+    from workspace_guard import refuse_canonical  # roles/Lexis/workspace_guard.py, D-23
+    refuse_canonical(_pl.Path(__file__).name)
     raise SystemExit(main())
