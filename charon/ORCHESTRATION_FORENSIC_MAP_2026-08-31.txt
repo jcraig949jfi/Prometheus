@@ -1,0 +1,415 @@
+===================================
+CHARON - ORCHESTRATION FORENSIC MAP
+===================================
+
+Date: 2026-08-31
+Author: Charon (forensic assignment; NOT adopted as charter)
+Scope: Static checkout at F:\Prometheus. No live DB/Redis reached. No production state mutated.
+Method: 6 read-only subagents (Postgres, Redis, backlog, spec/review, worker/heartbeat, Pythia/DR/cron) + direct reads of the number-producing spine. Every load-bearing claim is grounded in file:line.
+
+---
+
+
+1. EXECUTIVE SUMMARY - why the organism is idle despite abundant queued work
+============================================================================
+
+Prometheus is not deadlocked on a lock or a crash. It is idle because the only process anything keeps alive is the reporter, and the reporter executes no science. The apparatus that would drain the backlog was always human-launched Claude Code sessions plus hand-started persona daemons; those stopped around 2026-05-28 and nothing restarts them. The backlog kept growing from committed source files; nothing consumes it.
+
+Six mechanical facts, each verified:
+
+1. There is a reporting engine, not an execution engine. One Windows Task Scheduler job (PrometheusIntelligenceWatchdog, every 30 min) restarts scripts/intelligence_loop.py, which every 4h regenerates a status brief and emails it (intelligence_watchdog.ps1:23,40; intelligence_loop.py:328-364). The actual work executor, engine/driver/run.py, is not scheduled by anything, and even if run it processes only WORK.jsonl items whose cmd is a placeholder echo - real execution is delegated to a reasoning session via ask() -> claude -p (run.py:49-57,76-85), and no session loop runs.
+
+2. The "queue" is a report, not a work engine. engine/queues/BACKLOG.jsonl is regenerated idempotently from on-disk sources by backlog_gen.py. It has no dependency edges - blockers are free-text gate strings (backlog_gen.py:58-63). There is no runtime unparker: a thread leaves PARKED only when backlog_gen.py is re-run AND the upstream source it was gated on has changed (backlog_gen.py:248-281). Nothing autonomously changes those sources.
+
+3. The largest blocker (492 test_spec) has no worker at all. "SPEC-AUTHOR-BATCH lane / batches of 10" is documentary fiction - there is no spec-authoring program. Specs are authored by hand-editing aporia/mathematics/triage.jsonl, a file rewritten wholesale (triage_classifier.py:497). 490 catalog problems classified in May with empty specs sit permanently PARKED.
+
+4. An advisory review became a hard gate (self-inflicted). Elenchus/shadow review is documented "never a gate; no finding halts the loop" (roles/Elenchus/RESPONSIBILITIES.md:9,40-42), yet backlog_gen.py:82-83 hard-gates AUTHORED-AWAITING-ELENCHUS-REVIEW. The 9 authored specs that exist are blocked on a reviewer seat that went dark 08-21; "the loop's research capacity is gated on its reviewer seat" (aporia/.../ALLOCATION_P137_2026-08-22.md:36).
+
+5. Human gates fan out and the human disengaged. 29 profiling threads and the R12 shot park behind one $0-budget decision; 15 retry batches behind one Charon co-sign session; 2 explicit HITL decisions (ratify PROMETHEUS-0; budget envelope). The documented death mode is exactly this: the fleet "died of exhausting its operator's willingness to keep pushing it" (liveness.py:1-8).
+
+6. "1 ALIVE" is a red herring. It is a 300-second process-uptime cutoff (agora/config.py:46) applied to a fleet that was never meant to hold processes open. Personas are Claude Code sessions, not daemons (portfolio_monitor.py:98-110; roles/Lexis/ROLE.md:6). No code binds a ticket to a named agent (run.py:96-104) - a generic worker can execute any ticket. The organism's own real liveness metric (consumed commits, liveness.py) says ALIVE but warns consumed/emitted = 0.02 - "production outpacing consumption... stop producing."
+
+One-sentence answer: Work enters by regenerating a backlog file from sources; it parks on free-text gates; the parties who were supposed to unpark it (Claude Code sessions and hand-launched daemons) are gone and nothing reschedules them; the only surviving cron just describes the stall in an email.
+
+---
+
+
+2. CURRENT ARCHITECTURE - components and data flow
+==================================================
+
+The operator's stated substrate ("PostgreSQL, Redis, agent queues") is only partly the real load-bearing substrate. The real one is git-tracked JSONL files plus a Postgres heartbeat/bus/queue database, with Redis replaced by a Postgres shim since 2026-06-24.
+
+
+  SOURCES (git-tracked, on disk)
+   aporia/mathematics/questions.jsonl (537)   triage.jsonl
+   retry_queue, DR back-corpus, fleet profiling (docs/state.json)
+        |
+        |  backlog_gen.py  (idempotent regenerate; stable ids)
+        v
+  engine/queues/BACKLOG.jsonl  (644 PARKED / 138 DONE)   <-- a REPORT, no edges
+        |
+        |  pulse.py "promotes top-priority unblocked to WORK" (design intent)
+        v
+  engine/queues/WORK.jsonl  (7 items; cmds are echo placeholders)
+        |
+        |  run.py  (while-loop executor; kind=shell|ask; ask -> claude -p)
+        v   [NOT SCHEDULED - no watchdog; real work needs a reasoning session]
+  (execution) ----> commits ----> liveness.py measures "consumed" state changes
+
+  REPORTING (the only thing actually running):
+   Task Scheduler: PrometheusIntelligenceWatchdog (30 min)
+        -> intelligence_watchdog.ps1 -> intelligence_loop.py (4h, Pronoia)
+             -> portfolio_monitor.py --once  (reads Postgres heartbeats)
+             -> metis_portfolio.py (_deterministic_brief) -> docs/portfolio_brief.md
+             -> send_brief_email.py (Gmail SMTP)
+             -> git add docs/state.json docs/portfolio_brief.md ; push
+        -> pulse.py (separate) -> engine/PULSE.md
+        -> alethelia.py (M1 manual second seat) -> stations/REPORT_latest.json
+
+  POSTGRES (192.168.1.202 / M1):  prometheus_fire
+   agora.agent_heartbeats  (liveness, no work claims)
+   agora.research_queue    (REAL work queue: status/priority/FOR UPDATE lease) - Pythia only
+   agora.gpu_reservations  (REAL TTL lease/lock table) - GPU sweeps
+   agora.intelligence_outputs, machine_probes, clio_*
+   bus.* (PgRedis shim: streams/hashes/kv - comms, not work)
+
+
+The decisive structural gap: producers (backlog_gen, findings, reports) run or are trivially runnable; the consumer/executor (run.py + a reasoning session) is unscheduled and placeholder-only. The system emits and describes; it does not metabolize.
+
+---
+
+
+3. POSTGRES MAP
+===============
+
+Host 192.168.1.202 (M1, "skullport"); .176 is documented-stale since 2026-06-24 (agora_persist.py:14,33). DDL is CREATE TABLE IF NOT EXISTS on startup - no migration tool (agora_persist.py:52-257). All reads are fail-soft (try/except -> []/None/False, e.g. agora_persist.py:307-309,333-335; orchestration_logging.py:48-55).
+
+- agora.agent_heartbeats - cols: agent_name PK, machine, status, last_heartbeat, status_json, pid. Producer: write_heartbeat() agora_persist.py:268-309 (called by daemons; harmonia/agents/_base.py, charon/agents/_base.py, intelligence_loop.py Pronoia thread). Consumer: read_all_agents() :312, portfolio_monitor.py, agent_roster.py. Pure liveness; no work claims.
+- agora.research_queue - THE real work queue (Gemini DR dispatch, not agent graph). cols: status in {pending,dispatched,in_progress,complete,failed,abandoned}, priority, dispatch_attempt_count, dispatched_at, completed_at, interaction_id; FOR UPDATE lease :963-966; timeout-requeue :940-1023. Producer: enqueue_research() :794, pythia_seed_200.py. Consumer: pythia_daemon.py:497,545,598,605.
+- agora.gpu_reservations - real lease/lock. TTL expires_at, holder, partial-unique active index :249; acquire/renew/release/sweep :1035-1217. Consumer gpu_reservation.py.
+- agora.intelligence_outputs - cycle_id UUID, stage, agent, success, timestamps. Producer log_intelligence_stage :362; consumer send_brief_email.py:502. Pipeline-event log only.
+- agora.machine_probes - resource time-series (:404 write, :464 read).
+- agora.clio_papers / clio_claim_extractions / clio_quality_snapshots - paper mining; only FK in agora is clio_claim_extractions.paper_id -> clio_papers(id) :150.
+- bus.* (pg_redis.py) - Postgres-backed Redis clone (streams/hashes/zsets/kv). Comms bus, not a work graph.
+- charon_duckdb.* (charon/src/schema.py:33-205) - objects/elliptic_curves/known_bridges/graph_edges/hypothesis_queue. A real graph (source_id/target_id FKs) but a mathematical object graph (Langlands bridges), read-only, not agent work.
+
+Does Postgres store a real dependency graph? NO. The backlog/threads live in JSONL, not Postgres. The only relational graphs are charon_duckdb.graph_edges (math) and the aspirational germline.edges parent-child schema (aporia/docs/germline_infrastructure_2026-08-17.md:63) which has zero .py references -> vestigial/doc-only. Agent dependencies are free-text gate/bottleneck strings.
+
+---
+
+
+4. REDIS MAP
+============
+
+Redis is not load-bearing, and the real server is dead. Since 2026-06-24 the "Redis" surface is a Postgres shim PgRedis (roles/Ergon/REDIS_TO_POSTGRES_2026-06-24.md).
+
+- thesauros/prometheus_data/pool.py:115 get_redis() returns Postgres-backed PgRedis by default; real redis.Redis only if PROMETHEUS_USE_REDIS=1 (:131); None if PG down.
+- pg_redis.py:1-22 docstring: "NOT a full Redis: no consumer groups (xreadgroup/xack), no pub/sub, no clustering. Nothing in the codebase uses those." Backed by prometheus_fire.bus (stream_entries/hashes/zsets/sets/kv/lists).
+- Streams agora:main|tasks|discoveries|challenges - producers post_delegation_ready.py:54, session_telemetry.py:237 (xadd); consumers harmonia_conductor.py:119 (xread block=5000), sync_handshake.py:109. No ack, no TTL, no lease, no dead-letter; in-memory cursor only. These carry agent chatter/status, not claimable work.
+- grading_oracle REQ_STREAM/RES_STREAM (harmonia/services/grading_oracle.py:206-254) - request/reply, single consumer, cursor starts at tail -> a request posted before the daemon starts is never graded (requester times out at 120s).
+- Heartbeats superseded: now write to Postgres agora.agent_heartbeats, not agent:{Name} hash.
+- The launchers still export AGORA_REDIS_HOST=192.168.1.176 (the dead host), e.g. charon_loop_launch.bat:25, start_intelligence_loop.bat:7 - harmless only because the shim ignores it unless PROMETHEUS_USE_REDIS=1.
+- No Redis lease. The only real lock in the codebase is a file PID lock (agents/talos/daemon.py:161) and the single-instance lock in charon_loop.py:77.
+
+Verdict: Redis is status/comms plumbing. Nothing is claimed-and-executed through it, so there is no "claimed forever after death" risk *via Redis* - the risk lives elsewhere (WORK.jsonl has no claim at all; see 9).
+
+---
+
+
+5. M4 REPORTING LOOP
+====================
+
+- Trigger: one Task Scheduler job PrometheusIntelligenceWatchdog (register_intelligence_watchdog.ps1:17,32-33), first run +1 min, then every 30 min for 10 years. Runs intelligence_watchdog.ps1, which checks for a live intelligence_loop.py by command-line match (:40) and restarts it with --hourly-min 240 --email-every-cycle (:23) if absent. Host hardcoded C:\Prometheus = M4 (start_intelligence_loop.bat:9 sets PROMETHEUS_MACHINE=M4). Kill switch: scripts/.intelligence_loop.disabled (:35). Lock = process scan only, no file lock.
+- Body: intelligence_loop.py (Pronoia) every 4h: portfolio_monitor.py --once -> metis_portfolio.py -> send_brief_email.py -> push (:328-364). A daemon thread writes Pronoia's heartbeat every 60s (:79-125) - this is why Pronoia is the lone "ALIVE".
+- git-update behavior: it does NOT git pull/fetch/reset before running. It only pushes, path-scoped to docs/state.json + docs/portfolio_brief.md (intelligence_loop.py:132,172-181), with a single pull --rebase --autostash retry on push rejection (:200-206). The 11 dirty working-tree files do not break it. Network failure / unresolved conflict -> logged, return False, non-fatal (:211). Consequence: M4 may be running stale code (no pull), and any commit from another seat that it doesn't fast-forward past is invisible to it until a push conflict forces a rebase.
+- alethelia is NOT deployed on M4. Grep of all .bat/.ps1/.sh for alethelia/REPORT_latest = zero hits. The generator string "alethelia v0 (M1 build; M4 deployment pending DECISION)" (agents/alethelia/alethelia.py:186) is literal truth. The deployed M4 reporter is metis_portfolio.py (deterministic mode, METIS_LLM defaults 0). Alethelia is a manual M1 second seat that itself found the report had not run for 7 days (roles/Alethelia/notes/BOOTSTRAP_M1_2026-08-27.md). Two parallel reporters exist and disagree (see 6).
+
+---
+
+
+6. THREE END-TO-END THREAD TRACES
+=================================
+
+A. A test_spec thread (one of ~492) - e.g. CAT-MATH-0070
+--------------------------------------------------------
+- Origin: aporia/mathematics/questions.jsonl row (537 catalog problems), joined to triage.jsonl in backlog_gen.py:66-86.
+- Queue insertion: add("CAT-{qid}", ...) :84. Gate computed at :76-79: spec_missing = len(test_spec) < 30 or "See specific test" in spec or "Requires data extension" in data_source -> gate = "needs authored test_spec (SPEC-AUTHOR-BATCH lane)". status = PARKED (:61).
+- Blocker assignment: free-text gate string; no edge to any other ticket.
+- Expected unblocker: a spec-authoring lane writes a real recipe into triage.jsonl, then re-running backlog_gen.py recomputes spec_missing=False and flips the thread to QUEUED (:265-273).
+- Actual code that should perform unblock: none exists. There is no spec-author script. triage_classifier.py is a one-shot manual classifier that stamped empty specs in May (:355-473).
+- Reason it has not happened: authoring is a manual inference task; no session/daemon runs it; the "batches of 10" cadence is documentary only.
+- Downstream unlocked if cleared: the catalog-attack thread becomes runnable -> a CAT-MATH attack executes -> trace-vector corpus + kill ledger. ~490 such threads share the identical mechanism.
+
+B. A charon-cosign thread (one of 15) - RETRY-RL-00
+---------------------------------------------------
+- Origin: synthesized by backlog_gen.py:89-92 - a loop for b in range(15): add("RETRY-RL-{b:02d}", ..., gate="charon-cosign (DESIGN_W001)").
+- Status: PARKED, priority 80.
+- Expected unblocker: one Charon session co-signs pivot/DESIGN_W001_retry_queue_2026-08-18.md and plants decoys, per the design's section 7 (WORK.jsonl W-001 result).
+- Actual code: the gate is advisory text; clearing it means a human/session edits the design status and re-runs backlog_gen.py. engine/decoys/inject.py is the decoy machinery Charon would use.
+- Reason not done: no Charon session has run; the co-sign is a genuine adversarial scientific gate, not automatable.
+- Downstream unlocked: all 15 batches -> re-test of 725 resolution_limit kills (effect-stability rescore, B-005). 1 session -> 15 threads -> 725 rescores (highest leverage/cost ratio in the system).
+
+C. An authored-spec-awaiting-review thread (one of 9) - CAT-MATH-0193
+---------------------------------------------------------------------
+- Origin: same catalog lane, but the spec was authored, so triage.jsonl carries provenance.spec_status = "AUTHORED-AWAITING-ELENCHUS-REVIEW".
+- Blocker assignment: backlog_gen.py:82-83 overrides the gate to "authored spec awaiting shadow review (Elenchus)". This is the self-inflicted gate.
+- Expected unblocker: Elenchus reviews the pass; spec_status becomes ELENCHUS-SOUND/ELENCHUS-CORRECTED; regen flips to QUEUED.
+- Actual code: Elenchus review is advisory by charter (RESPONSIBILITIES.md:9) but here it is wired as a hard birth-gate. The reviewer seat went dark 2026-08-21 (portfolio_brief.md:45); 188 worklog passes await review (metis_portfolio.py:716-718).
+- Reason not done: the reviewer is an episodic session that stopped; meanwhile the code refuses to let the attack consume a self-authored spec (self-grading mitigation, :80-81).
+- Downstream unlocked: 9 execution-ready specs, and the whole spec pipeline stops being gated on one dark seat.
+
+---
+
+
+7. DEADLOCK TAXONOMY (classified against the 644 PARKED)
+========================================================
+
+Reproduced directly from committed BACKLOG.jsonl (histogram verified):
+
+- SPEC_MISSING - 492 (needs authored test_spec). No worker exists. *Root: missing producer, not a lock.*
+- ROLLING (freshness) - 55 (verified 2026-08-19 <30d 45 + verified 2026-08-18 10). Auto-clears on age-out or a re-verify run. *NEEDS_CODE/time.*
+- API_BUDGET - 29 (probe profiling = API spend) + 1 (R12 live shot) + 1 (API budget). *NEEDS_MONEY or repoint to free tools.*
+- SCIENTIFIC_GATE (cosign) - 15 (charon-cosign DESIGN_W001). *NEEDS a Charon session (keep serial).* 
+- STRUCTURAL_ZERO - 12 (typed structural zero: agent has no reasoning interface). *Genuinely DEAD without building an interface; do not schedule.*
+- GPU_WAIT - 11 (GPU slot + strategy-group harness check). *NEEDS_GPU; lease table already exists.*
+- REVIEW_BACKLOG (backlog side) - 9 (authored spec awaiting shadow review). *Self-inflicted advisory-as-hard gate.*
+- Long tail - ~13 singletons/small groups: germline children (theoretical, no children exist), heredity first-cycle, data-absent (Artin L-function), Z-drive not mounted, RL batches complete first (a genuine textual dependency), CI-on-germline-tables, translator build.
+- Separately, REVIEW_BACKLOG (worklog side) - 188 passes awaiting Elenchus review (not in the 644; a different ledger, engine/shadow/WORKLOG.jsonl).
+
+Mapping to the requested taxonomy: NO_WORK=no (backlog full); UPSTREAM_QUEUE_DRY=yes for DR (empty research_queue); FIXED_ROLE_OFFLINE=effectively (personas are gone) but NOT enforced in code; STALE_LEASE=n/a (no leases on WORK); DEPENDENCY_CYCLE=none found; SUPERSEDED/DUPLICATE=unmeasured; HUMAN_DECISION=2 explicit + budget; SCIENTIFIC_GATE=cosign(15); STRUCTURAL_ZERO=12.
+
+---
+
+
+8. BLOCKER FAN-OUT TABLE (top nodes by downstream unlock)
+=========================================================
+
+Cost is ordinal and grounded. "Unlock/cost" is the leverage signal a scheduler should invert on.
+
+1. needs authored test_spec - blocked: 492 - clear-one: author 1 spec (data-existence + pass/fail recipe) - batchable: YES (disjoint qid) - unlocks: 1 thread each, whole lane = ~490 - needs: inference (Claude Code session; no paid API) - stand-up cost: MED, per-spec: LOW-MED - leverage: HIGHEST absolute.
+2. charon-cosign (DESIGN_W001) - blocked: 15 (-> 725 rescores) - clear-one: 1 Charon adversarial session - batchable: NO (one design) - needs: inference session (no paid API) - cost: MED - leverage: HIGHEST ratio (1 action -> 15 -> 725).
+3. probe profiling = API spend - blocked: 29 (+R12) - clear-one: 1 HITL budget decision OR repoint to free local reasoning-tools (already partly pivoted, portfolio_brief.md:26) - cost: LOW (decision) / MED (repoint) - needs: HITL or money.
+4. rolling verification - blocked: 55 - clear-one: age-out (time) or run re-verify job - batchable: YES - cost: LOW - needs: a scheduled verifier (code).
+5. authored spec awaiting shadow review - blocked: 9 (+ unclogs spec pipeline) - clear-one: policy split (advisory != hard gate) or deterministic L0 - cost: LOW - risk: preserve self-grading mitigation.
+6. GPU slot + harness - blocked: 11 - clear-one: free GPU + harness check - uses existing agora.gpu_reservations lease - cost: LOW-MED - needs: GPU.
+7. worklog review backlog - blocked: 188 passes - clear-one: L0 triage via validate_shadow.py + batch L1 - cost: MED.
+8. typed structural zero - blocked: 12 - clear-one: build a reasoning interface - cost: HIGH - leverage: near-zero (these are dead, not blocked).
+9. DR queue dry - blocked: DR pipeline - clear-one: launch pythia daemon + seed research_queue - cost: LOW-MED - needs: daemon + human seed.
+10. long-tail singletons - blocked: ~13 - heterogeneous; low leverage each (data mounts, germline preconditions).
+
+Scheduler inversion rule: rank by downstream-unlock and by unlock/cost. The top three by ratio are cosign (1->15->725), the Elenchus gate split (policy->9 + pipeline), and the spec-author lane (MED->492).
+
+---
+
+
+9. SINGLE-THREADED CHOKE POINTS (ranked)
+========================================
+
+1. No execution scheduler at all. run.py is unscheduled; only the reporter has a watchdog. Serializes: everything (0 executors). Type: ORGANIZATIONAL (accidental). run.py, intelligence_watchdog.ps1.
+2. triage.jsonl wholesale rewrite. triage_classifier.py:497 opens 'w' and rewrites the entire file; the spec-author "lane" mutates one file. Serializes: all spec authoring; makes parallel authoring unsafe (last-writer-wins clobber). Type: ORGANIZATIONAL.
+3. Elenchus advisory-as-hard gate. backlog_gen.py:82-83 blocks execution on a single reviewer seat. Serializes: the entire authored-spec pipeline behind one dark session. Type: ORGANIZATIONAL (a scientific *value* mis-wired as an execution *gate*).
+4. Charon co-sign as sole unblocker of 15+725. One session gates 725 rescores. Type: SCIENTIFIC (this serialization is *correct* - independent adversary must sign before controls), but its *absence* (nobody runs it) is the accidental part.
+5. WORK.jsonl has no claim/lease. run.py:98 pops pending[0]; two concurrent runners both take it -> duplicate execution under the same id. Serializes safe parallelism to 1 worker. Type: ORGANIZATIONAL.
+6. Single reporting queue owned by one loop. intelligence_loop.py is single-instance by process scan; if it wedges, no report. Type: ORGANIZATIONAL (low impact - it is the one thing that *does* run).
+7. Pythia daemon unguarded. No watchdog restarts it; DR dies on reboot. Type: ORGANIZATIONAL.
+
+---
+
+
+10. REVIEW GRIDLOCK
+===================
+
+- Shadow / Elenchus - ADVISORY by charter, HARD by wiring. Charter: "never a gate... No finding, however severe, halts the loop" (RESPONSIBILITIES.md:9,40-42). Reality: backlog_gen.py:82-83 hard-gates authored specs on Elenchus review. This contradiction is the review gridlock. Batchable: yes (one record/pass). L0/L1 split already exists in code: validate_shadow.py is the deterministic L0 (schema, verdict enum, duplicate ids, citation-mechanics, disposition echo, :48-130); L1 is the inference core (REVIEW_AGENT_PROMPT.md:27-44, re-derive >=1 number, WebFetch a citation, weakness-completeness).
+- Charon co-sign - REQUIRED-FOR-PROMOTION and correctly serial. Kill authority / prereg signatory (charon/.../COSIGN_CHARON_2026-08-16.md). It has *leaked* into routine execution (15 RETRY-RL parked on it), but the gate itself is legitimate and must stay adversarial/serial. Not deterministically batchable.
+- Aporia self-review - REQUIRED-MERELY-TO-PROCEED (the found pathology). ALLOCATION_P137_2026-08-22.md:17-42: an execution-ready instrument with 9 authored specs is blocked because the advisory reviewer has not run in ~50 passes and Aporia refuses to override its own gate. "The loop's research capacity is gated on its reviewer seat" (:36).
+
+Deterministic-triage potential: MED. L0 (validate_shadow.py) can clear structural findings (schema, citation-mechanics, insufficient-log - the seed review itself was INSUFFICIENT-LOG, REVIEWS.jsonl:1) with zero reasoning. The charter's core (claim-vs-evidence re-derivation, weakness-completeness) is irreducibly inference. So L0 can pre-filter and unblock the *structural* fraction, but cannot substitute the adversarial verdict.
+
+---
+
+
+11. SPEC-AUTHOR GRIDLOCK
+========================
+
+- How candidates enter: questions.jsonl (537) x triage.jsonl, materialized as CAT-{qid} in backlog_gen.py:66-86.
+- Why ~492 lack specs: classified in May by triage_classifier.py with empty/placeholder test_spec for buckets B/C (:355-473); the gate at backlog_gen.py:76-79 treats len(spec)<30 (or "Requires data extension") as missing.
+- Spec schema: {bucket, data_source, test_spec, falsification_criterion, published_bound, notes} (triage_classifier.py:29-37); authored specs add provenance.spec_status.
+- Batch size 10: documentary only (portfolio_brief.md:22); there is no batch=10 literal. It is limited because authoring is a manual hand-edit.
+- Data-existence checks: partial-automatic (gate treats "Requires data extension" as missing). Executability validation: none - no code runs a spec; validity is asserted then reviewed by a human/session.
+- Concurrency today: single, sequential, file-based; no lock/lease/claim; triage.jsonl rewritten wholesale.
+- Role-bound? By convention only (Aporia owns triage.jsonl); no code enforces it.
+- Could 5 Claude Code workers author specs in parallel safely? Yes, with partitioning. Collisions are: (1) concurrent whole-file rewrites of triage.jsonl (last-writer-wins) and (2) git conflicts on that single JSONL - NOT the id space (ids are deterministic per qid). Fix: each worker owns a disjoint MATH-####/qid range and appends to per-worker shards (or strict append-only, one record per line). Then 5 workers scale cleanly. The pass/fail *judgment* is the inference core (needs a session, not paid API); the mechanical parts (data_source binding, falsification templating) are deterministic.
+
+---
+
+
+12. API-SPEND DEPENDENCIES
+==========================
+
+Under defaults, idle-time circulation requires zero paid inference.
+
+- Metis brief (metis_portfolio.py:455, METIS_LLM default 0) -> _deterministic_brief, no LLM. -> already REPLACEABLE_WITH_LOCAL_TOOL.
+- llm_cascade (scripts/llm_cascade.py:60-93) - Cerebras/Groq/GitHub-Models/NVIDIA are free tiers; only DeepSeek-V4-Flash is paid last-resort (:88), reached only if METIS_LLM=1. -> OPTIONAL_ENRICHMENT.
+- Pythia / Gemini Deep Research - paid AI-Pro; the report *content* is genuinely external (NECESSARY_REASONING), but the dispatch/orchestration around it is REPLACEABLE_WITH_CLAUDE_CODE_SESSION.
+- Probe campaign (ergon/probe/*: OpenRouter/DeepSeek/OpenAI/NVIDIA, 11 files) - experiment execution / model-zoo profiling, NECESSARY_REASONING but not idle-time circulation (it is the science, gated behind budget by design).
+- Email / pulse / alethelia / portfolio_monitor - Gmail SMTP + git + Postgres + files only. Free.
+
+Where API is unnecessary plumbing: spec authoring, shadow-review L0, backlog/pulse/report generation, heartbeat/state generation - all can run on a Claude Code session or local tools. The only unavoidable steady-state paid spend is Pythia/Gemini DR, and it is doubly gated on human action (manual daemon launch + human queue seed), not on budget code.
+
+---
+
+
+13. PERSONA-vs-WORKER ANALYSIS (hypothesis CONFIRMED)
+=====================================================
+
+- Personas are Claude Code sessions, not daemons. portfolio_monitor.EXPECTED_AGENTS heads the persona block "Operators / Personas (Claude Code sessions; PG registration optional)" for Aporia/Ergon/Charon/Techne/Lexis (:98-110); roles/Lexis/ROLE.md:6 "Agent: Claude Code (Opus 5)"; Charon/Harmonia marked lifecycle: shelved, session ended ~2026-05-24.
+- The persona daemons that exist are rotation/heartbeat shells, not executors. charon_loop.py = _pick_next_agent rotation + _emit_loop_heartbeat (:135,149,169); it does not read BACKLOG.jsonl or execute science. So even when alive they did not drain the backlog.
+- No code binds a ticket to a named agent. WORK.jsonl/BACKLOG.jsonl carry consumer (a data-lane/artifact string) and gate (may *name* an approver), but run.py:96-104 pops by priority with zero owner/role check; run_item() dispatches on kind only. A gate merely sets status:PARKED - an advisory block any session can clear. A generic Claude Code worker can execute any Charon/Lexis/Ludus ticket.
+- Dead agents do not hold locks (none are issued), so there is nothing to reassign and no takeover needed. The only way a dead persona stalls work is indirect: threads parked on a <agent>-cosign gate wait for a session to clear the advisory flag.
+- "1 ALIVE" reconciled: two liveness definitions over one table. Strict cutoff age < 150s (HEARTBEAT_TIMEOUT_SEC=300, portfolio_monitor.py:232-250, agora/config.py:46) - only Pronoia's 60s pinger thread passes. The coarse status="online" column is a stale literal never auto-flipped to DEAD. The email thresholds on the 300s numeric rule -> "1 ALIVE". The organism's *own* real metric (liveness.py, consumed commits) says ALIVE - and recent commits from "dead" agents (Techne, Lens) prove work lands from sessions the heartbeat table calls dead.
+
+Conclusion: the persona namespace is organizational; execution capacity is decoupled from it in code. A pool of generic Claude Code workers is *already* legal against the existing queue - the missing pieces are a runnable-work query and an atomic claim, not a permission model.
+
+---
+
+
+14. EXISTING HOOK POINTS (for an active scheduler, no substrate replacement)
+============================================================================
+
+- A. Runnable-work query - existing: BACKLOG.jsonl (status/gate/priority) + pulse.py:92-98 promotion logic. Need: a read-only next_runnable() = status==QUEUED and gate is None, sorted -priority. Risk: none. Backward-compatible.
+- B. Blocker inversion - existing: metis_portfolio.py:677-694 already groups PARKED by gate. Need: sort groups by size and by unlock/cost. Risk: none. Read-only.
+- C. Worker claim (atomic lease) - existing patterns to COPY: agora.research_queue FOR UPDATE lease (agora_persist.py:963-966) and agora.gpu_reservations TTL lease (:1035-1217). Need: add optional claimed_by/lease_expires to WORK.jsonl items, or promote WORK into a Postgres table using the research_queue pattern. Risk: MED (correctness of atomic claim). Backward-compatible if fields are optional.
+- D. Work completion - existing: run.py:109-116 already writes status:DONE|FAILED, finished, result. Hook exists.
+- E. Blocked return - existing: run.py writes free-text result. Need: a structured {blocker_class, reason} on non-completion. Low risk.
+- F. Review request - existing: engine/shadow/WORKLOG.jsonl + validate_shadow.py (L0) + REVIEW_AGENT_PROMPT.md (L1). Hook exists; route survivors here.
+- G. Requeue / stale lease - existing: research_queue timeout-requeue sweep (agora_persist.py:940-1023) and gpu sweep (:1200+) - copy the sweep. Risk: LOW once C exists.
+- H. Status report - existing: metis_portfolio.py + pulse.py already consume the same JSONL. Backward-compatible by construction; the new scheduler writes the same files.
+
+---
+
+
+15. TOP QUICK WINS (ranked; effort / backlog unlocked / scientific risk)
+========================================================================
+
+1. Blocker-fan-out + runnable-ticket read-only queries - effort LOW, unlocks 0 directly but directs all other effort, risk NONE. *Do first.*
+2. Split the Elenchus advisory gate from the hard execution gate (backlog_gen.py:82-83) - effort LOW, unlocks 9 + unclogs the spec pipeline, risk MED (must preserve the self-grading mitigation - allow execution but mark results *provisional-until-reviewed*, or clear via validate_shadow.py L0).
+3. One Charon co-sign session on DESIGN_W001 - effort MED (one session), unlocks 15 -> 725 rescores, risk LOW (this is the intended gate).
+4. Make triage.jsonl append-only/shardable, then run spec authoring as a partitioned Claude Code job - effort MED, unlocks ~492, risk LOW (independent problems; downstream self-grading gate still applies).
+5. Repoint the 29 profiling threads to the free local reasoning-tools path (already pivoted per portfolio_brief.md:26) - effort LOW, unlocks 29 without money, risk LOW.
+6. Add an atomic claim/lease to WORK.jsonl (copy research_queue pattern) + stale-lease sweep - effort MED, enables a 10-worker pool without duplicate execution, risk MED.
+7. Generic-worker "claim next" + "return result/blocker" commands - effort MED, enables the pool operationally, risk LOW once C/E/G exist.
+8. Surface the 2 HITL decisions as the true rate-limiters (budget envelope, PROMETHEUS-0) - effort LOW (already in the brief), unlocks the budget-gated lanes on one human action, risk NONE.
+
+---
+
+
+16. SCIENTIFIC RISKS OF PARALLELIZATION
+=======================================
+
+Safe to parallelize (independent, no shared frozen state):
+- Spec authoring for disjoint qid ranges (append-only shards).
+- Independent Elenchus/shadow reviews of different passes.
+- Independent catalog attacks (CAT-MATH-*), independent question generation.
+- GPU sweeps (already serialized correctly by agora.gpu_reservations lease).
+- Rolling re-verification of independent anchors.
+
+Potentially unsafe - must stay serial or guarded:
+- Concurrent writes to triage.jsonl (wholesale rewrite -> clobber). Guard: shard or append-only.
+- Two run.py instances popping the same WORK item -> duplicate execution under one id. Guard: atomic claim (hook C).
+- Concurrent writes to one lineage-scoped memory / registry.
+- Changing a ruler/instrument during an active canonical run (freeze-during-run).
+- Charon co-sign is a scientific gate - do NOT parallelize it away. Its serialization is correct; only its *non-execution* is the problem.
+- Anything that would let an attack consume a self-authored, unreviewed spec (self-grading) - keep the provisional-until-reviewed guard.
+
+Do not confuse experimental isolation with fleet serialization: the frozen-experiment gates (cosign, ruler-freeze, self-grading) are scientific and stay serial; the queue/claim/spec-author/report serializations are accidental and should be parallelized.
+
+---
+
+
+17. PROPOSED PHASE-1 RECOVERY PLAN (sequence only; NO CODE YET)
+===============================================================
+
+1. Instrument, read-only. Ship next_runnable() and blocker_fanout() queries over the existing JSONL. Zero risk; establishes leverage order. (Hooks A, B.)
+2. Unclog the cheapest scientific gate. Run one Charon co-sign session on DESIGN_W001 (unblocks 15 -> 725). Human/session action, no build.
+3. Fix the self-inflicted gate. Change backlog_gen.py:82-83 so authored specs are *runnable-with-provisional-flag* or cleared by validate_shadow.py L0, instead of hard-blocked on a dark reviewer (unblocks 9; unclogs the pipeline). Preserve the self-grading mitigation as a result flag.
+4. Make spec authoring parallel-safe, then run it. Convert triage.jsonl to append-only/sharded; run a partitioned Claude Code spec-author job over disjoint qid ranges (unblocks ~492; no paid API).
+5. Route the money/HITL gates to James. Present budget envelope + PROMETHEUS-0 as the true rate-limiters; repoint profiling to free tools (unblocks 29).
+6. Only then, add execution capacity. Add an atomic claim/lease to WORK (copy the research_queue FOR UPDATE pattern) + a stale-lease sweep, so a 10-worker Claude Code pool can run without duplicate execution. (Hooks C, E, G.)
+7. Re-point liveness. Stop treating the 300s heartbeat cutoff as "alive"; adopt liveness.py consumed-commits as the health signal, and watchdog the *executor*, not just the reporter.
+
+Order rationale: read-only first (safe), then the two highest unlock/cost actions that need no build (cosign, gate-split), then the big absolute unlock (specs), then infrastructure (claim/lease) once there is work worth protecting from duplication.
+
+---
+
+
+18. QUESTIONS / FACTS THAT REQUIRE CHECKING ON M4 (and M1/M2)
+=============================================================
+
+Not verifiable from this checkout (machine-local state):
+- Is PrometheusIntelligenceWatchdog actually registered/enabled? Get-ScheduledTask -TaskName PrometheusIntelligenceWatchdog.
+- Does the kill switch C:\Prometheus\scripts\.intelligence_loop.disabled exist?
+- Is METIS_LLM=1 set in M4's environment (would re-enable paid DeepSeek last-resort)?
+- Is any pythia_loop_launch.bat / persona daemon actually alive on M1/M2? Nothing auto-restarts them.
+- Live contents/counts of agora.agent_heartbeats, agora.research_queue, agora.gpu_reservations on 192.168.1.202.
+- Is Postgres reachable from M4? Are agents/eos/.env + Gemini/Gmail keys present on each host?
+- Is docs/state.json's generated_at actually advancing (i.e., is M4 pushing)? Note the loop does not pull, so M4 may run stale code.
+- Confirm no scheduled task does git pull (only push observed) - a real risk that M4 executes an old checkout.
+
+---
+
+
+19. CLAIM CEILING - what could and could not be verified
+========================================================
+
+Verified from this static checkout:
+- The code paths, schemas, gate logic, scheduling wrappers, and fail-soft behavior above (every file:line).
+- The parked histogram 492/45/29/15/12/11/10/9 - reproduced directly from committed BACKLOG.jsonl.
+- That the backlog has no dependency edges; that no code binds a ticket to a named agent; that run.py is the sole executor and is unscheduled; that Redis is a Postgres shim; that the M4 loop does not pull.
+
+NOT verified (machine-local / live state):
+- Live Postgres/Redis row contents on M1/M2/M4 - no DB reached from here.
+- Whether any daemon is currently running (process state is not in the repo).
+- Task Scheduler registration, kill-switch presence, env vars - all M4-local (see 18).
+
+Caveats on the numbers:
+- stations/REPORT_latest.json heartbeats are dated 2026-08-27; portfolio_brief.md is 2026-08-31. Counts are time- and generator-dependent.
+- The two reporters disagree: alethelia (REPORT_latest.json) reports shadow reviews:23, unanswered:[]; Metis (portfolio_brief.md) reports reviewed:26, awaiting:188. They compute different definitions of the same thing. Treat any single number as generator-scoped, not ground truth.
+- All counts are over committed JSONL, which may lag live state on the running host.
+
+---
+
+
+20. PRIMARY CODE / STATE INDEX
+==============================
+
+Executor / driver
+- engine/driver/run.py - the only executor; while-loop over WORK.jsonl; ask() -> claude -p; no owner check; unscheduled.
+- engine/driver/backlog_gen.py - regenerates BACKLOG.jsonl from sources; gate logic :76-95; Elenchus hard-gate :82-83; auto-unpark :248-281.
+- engine/driver/pulse.py - regenerates PULSE.md; BACKLOG->WORK promotion :92-98.
+- engine/driver/liveness.py - real liveness = consumed commits over a window.
+- engine/driver/closure_gate.py - reads BACKLOG PARKED+QUEUED as proposals (a gate, not an executor).
+
+Queues / state (git-tracked JSONL)
+- engine/queues/BACKLOG.jsonl (644 PARKED / 138 DONE), WORK.jsonl (7), BOTTLENECKS.jsonl, MOVES.jsonl, DECISIONS.jsonl, GATE_ELI5.jsonl.
+- engine/shadow/WORKLOG.jsonl, REVIEWS.jsonl, validate_shadow.py (L0), REVIEW_AGENT_PROMPT.md (L1).
+
+Reporting
+- scripts/intelligence_loop.py (Pronoia, the only scheduled loop), scripts/intelligence_watchdog.ps1, scripts/register_intelligence_watchdog.ps1, scripts/metis_portfolio.py (_deterministic_brief, blocker histogram :677-694, ALIVE :753), scripts/send_brief_email.py, scripts/portfolio_monitor.py (liveness() :232-250, EXPECTED_AGENTS :98-110).
+- agents/alethelia/alethelia.py (M1 second seat, not on M4), stations/REPORT_latest.json.
+
+Postgres
+- scripts/agora_persist.py - all agora DDL/access; agent_heartbeats :52-64,268-312; research_queue lease :794,940-1023,963-966; gpu_reservations :1035-1217.
+- thesauros/prometheus_data/pool.py, pg_redis.py (PgRedis shim), config.py (host 192.168.1.202).
+
+Spec / review / cosign
+- aporia/scripts/triage_classifier.py (one-shot manual classifier; wholesale rewrite :497), aporia/mathematics/{questions,triage}.jsonl, aporia/.../ALLOCATION_P137_2026-08-22.md.
+- roles/Elenchus/RESPONSIBILITIES.md, charon/.../COSIGN_CHARON_2026-08-16.md, pivot/DESIGN_W001_retry_queue_2026-08-18.md, engine/decoys/inject.py.
+
+Pythia / DR
+- scripts/pythia_daemon.py (dispatch, MAX_CONCURRENT=3, no budget gate), scripts/pythia_loop_launch.bat (unguarded), engine/ledger/DR_EVENTS.jsonl (0 bytes).
+
+Persona daemons (rotation/heartbeat shells, hand-launched, all stopped ~05-28)
+- scripts/{charon,harmonia,pythia,clio,talos,...}_loop_launch.bat, scripts/charon_loop.py.
+
+---
+*End of forensic map. Recovery is deliberately NOT implemented here - the circulation is mapped; the cut comes after review.*

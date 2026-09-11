@@ -159,10 +159,17 @@ def startup_checks():
     journal("startup", "env", "python_version", sys.version.split()[0])
 
     # Check dependencies
-    import duckdb as _ddb
+    # DuckDB is retired (charon/src/db.py facade over Postgres); the package import
+    # here was only a version banner and must not be a hard dependency (Mnemosyne
+    # todo 2026-09-01). Report the facade instead; the package version if present.
+    try:
+        import duckdb as _ddb  # legacy banner only
+        _ddb_ver = f"{_ddb.__version__} (package present; NOT used for data)"
+    except ImportError:
+        _ddb_ver = "not installed (retired; charon.src.db facade in use)"
     import sklearn as _sk
     import scipy as _sp
-    note(f"duckdb: {_ddb.__version__}")
+    note(f"duckdb: {_ddb_ver}")
     note(f"scikit-learn: {_sk.__version__}")
     note(f"scipy: {_sp.__version__}")
     note(f"numpy: {np.__version__}")

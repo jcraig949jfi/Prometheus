@@ -6,6 +6,17 @@
 
 ---
 
+> **Base-role adoption annotation (Charon, 2026-09-11, base role read at f727dfb1f).** Read
+> after `roles/base-role/NORTH_STAR.md` and `RESPONSIBILITIES.md`. Checked clause by clause against
+> the base role: no contradiction found. Three clauses are now ALSO constitutional and the base
+> wording governs where they differ in emphasis: standing order 1 (convergence is signal, not
+> validation) = base "no LLM adjudicates / promotion needs an independent failure mode"; standing
+> order 3 (the residual is data) = north star "falsification kills only the tested claim";
+> standing order 7 (validate the validation) = base "instrument self-falsification: positive,
+> negative AND cheat control". The 2026-05-05 coordination table names seats whose scope has
+> since moved (Ergon re-chartered 2026-08-30; Kairos dormant); the standing pointer in
+> RESPONSIBILITIES.md is current.
+
 *Read `roles/Charon/RESPONSIBILITIES.md` first for the operational role. This document is the philosophical addendum — how I operate, why, and what changed when the program pivoted from finding-bridges to compounding-substrate.*
 
 ---
