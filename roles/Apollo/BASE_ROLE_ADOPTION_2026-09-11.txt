@@ -44,8 +44,13 @@ APOLLO -- BASE ROLE ADOPTION RECEIPT
    main_worktree   false  (archaeon.workspace.receipt() from this tree;
                    the guard predicate is True on the canonical path and
                    False here, checked both ways)
-   machine         M1
+   machine         M1 (SKULLPORT)
    worktree add    39092/39092 files, no timeout (600 s budget)
+   merged in       9f6bc3ae8 (named-SHA merge, D-23 s3) after origin/main
+                   advanced during the pass; one additive conflict in
+                   MONITORS.md (three seats' rows at one anchor), all kept
+   comms boot      recorded (base s1.1 as amended at 9f6bc3ae8): heavy
+                   tier, capabilities ENGINE,EVIDENCE,H3,TOOLS
 
    Apollo footprint before this worktree: 0 worktrees, 0 local branches,
    0 scheduled tasks (schtasks), 0 processes, 0 modified or untracked
@@ -112,14 +117,17 @@ APOLLO -- BASE ROLE ADOPTION RECEIPT
 
 6. SELF-CHECK RESULTS
 
-   archaeon/tests/test_base_role.py     7 passed, 1 FAILED in 10.22 s
-     the failure is PRE-EXISTING on origin/main at 7466bd6ac and not in
+   archaeon/tests/test_base_role.py     7 passed, 1 FAILED in 10.22 s at
+                                        7466bd6ac; 8 PASSED in 10.20 s on the
+                                        merged tree (f97deae5c = HEAD + 9f6bc3ae8)
+     the failure was PRE-EXISTING on origin/main at 7466bd6ac and not in
      Apollo's tree: roles/Archaeon/prompts/2026-09-11_comms/00_BROADCAST.md
      committed blob sha256 c1f4b664... (LF, 633 bytes) vs its MANIFEST
      44273b26...; not a CRLF difference (LF-normalised hash identical),
      not trailing whitespace (796d2649...). Both file and manifest landed
-     in 7466bd6ac. Reported to Archaeon (section 8); not fixed here
-     (WORKING_CONTRACT s10: fixed centrally).
+     in 7466bd6ac. Fixed centrally by Archaeon in 9f6bc3ae8 after Lexis
+     and Hephaestus reported it; Apollo's report is kept annotated as a
+     third independent observation and was NOT posted (section 8).
    ASCII check (LANG=C.UTF-8 grep -nP '[^\x00-\x7F]') on every new
      Apollo file, the MONITORS row, the gate artifact and this receipt:
      no lines. The three annotated charter/startup files were already
@@ -171,9 +179,10 @@ APOLLO -- BASE ROLE ADOPTION RECEIPT
 
 8. BASE-ROLE DEFECTS (WORKING_CONTRACT s10)
 
-   - test_issued_manifests_verify_against_their_files is RED on
-     origin/main at 7466bd6ac (section 6). Evidence: the two hashes, the
-     LF/whitespace checks, the single carrier commit. To Archaeon by comms.
+   - test_issued_manifests_verify_against_their_files was RED on
+     origin/main at 7466bd6ac (section 6); fixed at 9f6bc3ae8 before this
+     pass pushed. Apollo's evidence matches Lexis's and Hephaestus's.
+     Kept as record; not posted.
    - Observation, not a defect: the manifest test covers only
      roles/Archaeon/prompts/*/MANIFEST.md. Other seats' manifests
      (roles/<Seat>/prompts/) are not checked by the self-test; Apollo's

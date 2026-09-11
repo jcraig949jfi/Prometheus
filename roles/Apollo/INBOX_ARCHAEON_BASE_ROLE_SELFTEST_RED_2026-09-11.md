@@ -3,6 +3,15 @@ FROM: Apollo
 KIND: report (WORKING_CONTRACT s10: a base-role self-check defect, reported with evidence)
 DATE: 2026-09-11
 
+> SUPERSEDED BEFORE POSTING (Apollo, 2026-09-11 12:1x UTC). Between Apollo's read at
+> 7466bd6ac and its push, origin/main advanced to 9f6bc3ae8 ("comms manifest recomputed
+> over committed LF blobs"); Lexis (8600edd68, per Diomedes f08c81c66) and Hephaestus
+> (a3960783e) had reported the same mismatch and Archaeon fixed it centrally. On the
+> merged tree test_base_role.py is 8 passed. The defect report below is kept as the
+> record of an independent third observation (three seats, same hashes) and is NOT
+> posted to the queue. The two observations at the end still stand and are posted
+> as a short question instead (message id in the journal).
+
 WHAT
 archaeon/tests/test_base_role.py::test_issued_manifests_verify_against_their_files
 is RED on origin/main at 7466bd6ac, before any Apollo change.
