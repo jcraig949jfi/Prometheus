@@ -49,6 +49,12 @@ REPO = Path(__file__).resolve().parents[3]
 #: The four terminal states the operator ruled, plus the waiting room.
 TERMINALS = ("ANCHOR", "ACQUIRE", "RESOURCE", "REFUSED")
 PENDING = "PENDING_ADMISSION"
+#: Not a terminal state and not a refusal: the gate could not decide because
+#: one of its own instruments did not answer. Kept separate so instrument
+#: error is never banked as a fact about the world (the program's standing
+#: rule; the first season produced one of these and it would otherwise have
+#: been reported as a refusal on evidence).
+INDETERMINATE = "INDETERMINATE"
 
 #: A RESOURCE observation older than this is not evidence of capacity, it is
 #: a claim about a day in the past (charter constraint 7, decay windows).
@@ -111,6 +117,11 @@ class Check:
     name: str
     passed: bool
     detail: str = ""
+    #: True when the check DID NOT ANSWER (the instrument failed, timed out,
+    #: or had nothing to read). An indeterminate check is not a failed check:
+    #: it must never be recorded as evidence about the item. "Nothing fired"
+    #: and "nothing could have fired" are different facts (base s2).
+    indeterminate: bool = False
 
 
 @dataclass
@@ -229,9 +240,32 @@ def check_falsifier(claim: Claim) -> Check:
     return Check("falsifier", True, "{} chars".format(len(f)))
 
 
-def _git_grep_count(marker: str, timeout: int = 60) -> int:
+#: Paths the dedup search MUST NOT read. Eos's own intake artifacts quote
+#: every item they record, so a search over the whole tree finds an item in
+#: Eos's own ledger and concludes the program already has it. Measured on the
+#: first season: "Microcosmos" returned 2 hits, both of them this seat's probe
+#: and sample files. An instrument whose output contaminates its next input is
+#: not measuring the program, it is measuring itself.
+#: Found again on the re-run, one level deeper: after excluding this seat's
+#: records the search STILL reported a hit, and the hit was this module --
+#: the comment above documents the defect by naming a real item, so the
+#: documentation of the contamination contaminated the instrument. The rule
+#: that survives both rounds is simpler than either patch: the dedup search
+#: asks what THE PROGRAM has, and Eos is not the program. Everything this
+#: seat writes -- its records, its archive AND its own source -- is excluded.
+SELF_PATHS = (":(exclude)roles/Eos/", ":(exclude)agents/eos/")
+
+#: git grep over this tree is slow (measured 2026-09-11: >120 s for one
+#: literal over 39,284 files). The budget is generous and a timeout is
+#: reported as INDETERMINATE, never as absence.
+GREP_TIMEOUT_S = 240
+
+
+def _git_grep_count(marker: str, timeout: int = GREP_TIMEOUT_S) -> int:
+    """Files in the TRACKED tree containing `marker`, excluding this seat's own
+    intake artifacts. Returns -1 for INDETERMINATE (the search did not answer)."""
     try:
-        r = subprocess.run(["git", "grep", "-l", "-F", "--", marker],
+        r = subprocess.run(["git", "grep", "-l", "-F", "--", marker, *SELF_PATHS],
                            cwd=str(REPO), capture_output=True, text=True, timeout=timeout)
     except (OSError, subprocess.TimeoutExpired):
         return -1
@@ -242,13 +276,18 @@ def _git_grep_count(marker: str, timeout: int = 60) -> int:
 
 def check_capability_absent(claim: Claim) -> Check:
     """ACQUIRE: the program must not already have the thing. Every marker is
-    searched over the TRACKED tree; one hit is enough to refuse."""
+    searched over the TRACKED tree minus this seat's own records; one hit is
+    enough to refuse.
+
+    A search that does not answer yields INDETERMINATE, which is NOT absence
+    and NOT presence. "Nothing was found" and "nothing could have been found"
+    are different facts (base s2) and this check never merges them.
+    """
     markers = [m for m in (claim.capability_markers or []) if m and m.strip()]
     if not markers:
         return Check("capability_absent", False,
                      "no capability markers given; absence cannot be established")
-    present = []
-    unknown = []
+    present, unknown = [], []
     for m in markers:
         n = _git_grep_count(m)
         if n < 0:
@@ -257,12 +296,15 @@ def check_capability_absent(claim: Claim) -> Check:
             present.append("{} ({} files)".format(m, n))
     if unknown:
         return Check("capability_absent", False,
-                     "search failed for: {} -- INDETERMINATE, not absent".format(", ".join(unknown)))
+                     "INSTRUMENT: search did not answer for {} within {} s -- "
+                     "INDETERMINATE, not absent".format(", ".join(unknown), GREP_TIMEOUT_S),
+                     indeterminate=True)
     if present:
         return Check("capability_absent", False,
                      "the program already has: {}".format("; ".join(present)))
     return Check("capability_absent", True,
-                 "{} markers, 0 hits in the tracked tree".format(len(markers)))
+                 "{} markers, 0 hits in the tracked tree (excluding this seat's own records)"
+                 .format(len(markers)))
 
 
 def check_destination(claim: Claim) -> Check:
@@ -360,6 +402,14 @@ def classify(item: Item, claim: Claim, now: Optional[datetime] = None) -> Verdic
         "observation": lambda: check_observation(claim, now),
     }
     checks = [runners[name]() for name in CHECKS_BY_TYPE[sought]]
+    undecided = [c for c in checks if c.indeterminate]
+    if undecided:
+        # An instrument that did not answer cannot refuse anything. The item
+        # goes back in the queue with the instrument named, and the seat owes
+        # a fix -- not a verdict.
+        return Verdict(item.id, INDETERMINATE,
+                       "; ".join("{}: {}".format(c.name, c.detail) for c in undecided),
+                       sought, checks, claim)
     failed = [c for c in checks if not c.passed]
     if failed:
         return Verdict(item.id, "REFUSED",
@@ -377,7 +427,7 @@ def season(pairs: Sequence[Any], now: Optional[datetime] = None) -> List[Verdict
 
 
 def summarise(verdicts: Sequence[Verdict]) -> Dict[str, int]:
-    out = {k: 0 for k in ("ANCHOR", "ACQUIRE", "RESOURCE", "REFUSED", PENDING)}
+    out = {k: 0 for k in ("ANCHOR", "ACQUIRE", "RESOURCE", "REFUSED", PENDING, INDETERMINATE)}
     for v in verdicts:
         out[v.state] = out.get(v.state, 0) + 1
     return out
