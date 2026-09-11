@@ -175,3 +175,16 @@ Outputs carry: decoder_id, table_sha256, reference_digest (raw and
 collapsed), class_map fixture_digest, the histogram, and the P/M table
 with PASS / FAIL / MEASURED per row. The rows ship in the same commit
 as the readout.
+
+## 7. Corrections (annotations beside the original; the text above is unchanged)
+
+- 2026-09-11, before the probe run, on the first test run: P3 is WRONG as
+  derived. The three weight-2 satellites c+e_a+e_b are each adjacent to
+  the two surface points c+e_a and c+e_b (either flip lands in a weight-1
+  coset that decodes back to c), so a rule's 16 preimages under hamming
+  form ONE connected component, not 13+1+1+1. Verified exactly for all
+  256 rules: internal-degree multiset per rule {12:1, 3:2, 2:5, 1:8}
+  (hamming) versus {4:16} (direct). P3 is restated as: "hamming: one
+  connected component of 16 with a center adjacent to 12 siblings;
+  direct: one 4-regular cube of 16". P1, P2, P4, P5 stand as written.
+  Recorded in calibration/LEDGER.md.
