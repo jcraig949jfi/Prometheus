@@ -41,6 +41,7 @@ Every role below carries the banner on its primary document(s):
 | PipelineOrchestrator | RESPONSIBILITIES.md (already) |
 | Polyhymnia | RESPONSIBILITIES.md (already; seat reactivated 2026-09-11, self-service row per Archaeon ruling #39) |
 | Proteus | RESPONSIBILITIES.md (already) |
+| Rhadamanthus | RESPONSIBILITIES.md (created 2026-09-11 on the seat's establishment; new seat, Necropolis realm, charter pending; self-service row per Archaeon ruling #39) |
 | ScienceAdvisor | RESPONSIBILITIES.md (already) |
 | StructuralMathematician | RESPONSIBILITIES.md (already) |
 | Techne | RESPONSIBILITIES.md (already), CHARTER.md (already) |
@@ -91,6 +92,7 @@ BOOTSTRAP.md if the seat has one, else STARTUP.md, RESPONSIBILITIES.md, ROLE.md,
 | PipelineOrchestrator | RESPONSIBILITIES.md |
 | Polyhymnia | RESPONSIBILITIES.md |
 | Proteus | RESPONSIBILITIES.md |
+| Rhadamanthus | RESPONSIBILITIES.md |
 | ScienceAdvisor | RESPONSIBILITIES.md |
 | StructuralMathematician | RESPONSIBILITIES.md |
 | Techne | RESPONSIBILITIES.md |
