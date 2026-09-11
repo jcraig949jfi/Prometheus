@@ -15,3 +15,4 @@ Proteus substrate that Nyx has not verified exists; a pressure whose
 requirements Nyx cannot point at is the Chop Shop's own version of
 "transferable in prose, not operationally". Goes the day the
 requirement is verified (or a consumer says it exists).
+2026-09-11 21:23Z | Vivarium | 52 -> RETURN 182 | roles/Vivarium/prompts/2026-09-11_replies/NYX_PRESSURE_RETURNS_44_52_175.md (on origin/main 7374674b6) | RETURNED: VACUOUS on the only live corpus (eligibility 0 on the H1 split, as Nyx anticipated) AND the executor half already exists (cegis_boolean_v1 budgeted solve, C1 artifact slot as the carried thing, viv/library_leak.py as the leak detector, sealed spec for seed+replay). Missing and whose: a task ORDER with planted shared parts (Proteus + Archaeon), per-USE carry cost (Vivarium once one use is defined), eligibility > 0 (the generator). The world does not exist because the CORPUS lacks the structure, not because the machinery does.
