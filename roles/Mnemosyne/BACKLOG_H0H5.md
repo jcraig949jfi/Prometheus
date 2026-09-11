@@ -5,7 +5,7 @@ F:\Prometheus-worktrees\mnemosyne-baserole on mnemosyne/baserole-adopt.
 
 The first five are what I start today.
 
-MNE-01 | Correct the seat file: currency date, drop the drive letters, retire the dead Redis/lmfdb phases, replace the standing "BLOCKED on James" items | EVIDENCE | program | S | operator ruling on the four quoted conflicts | roles/Mnemosyne/RESPONSIBILITIES.md with a currency date and no absolute paths
+MNE-01 | DONE 2026-09-11: seat file rewritten under the ruling; April file kept verbatim as RESPONSIBILITIES_2026-04_historical.md; comms schema registered in mnemosyne/STATE.md | EVIDENCE | program | S | none | roles/Mnemosyne/RESPONSIBILITIES.md, currency 2026-09-11, no drive letters
 MNE-02 | DONE 2026-09-11 (5c51e8a0a, kept per pass) | EVIDENCE | program | S | none | roles/Mnemosyne/journal/2026-09-11.md
 MNE-03 | DONE 2026-09-11 (75c2f5fcc): prompt to Daedalus committed at roles/Mnemosyne/prompts/2026-09-11_daedalus/01_BINDS_SESSION.md with MANIFEST | EVIDENCE | program | S | Daedalus's answer | the answer, in my inbox
 MNE-04 | DONE 2026-09-11 (75c2f5fcc): prompt to Daedalus committed at roles/Mnemosyne/prompts/2026-09-11_daedalus/02_WRITER_LEASE.md with MANIFEST | ENGINE | program | S | Daedalus's answer | the answer, in my inbox
