@@ -1,3 +1,48 @@
+<!-- ANNOTATION 2026-09-11 -- do not delete; the body below is preserved verbatim -->
+
+> **HISTORICAL (March-April 2026). ANNOTATED 2026-09-11 on the Nemesis
+> adoption pass; NOT REWRITTEN.** The current seat file is
+> `roles/Nemesis/RESPONSIBILITIES.md`. The April queue is classified, not
+> resumed: `roles/Nemesis/ARCHAEOLOGY_2026-09-11.md`.
+>
+> **The "First Results" table below is RETRACTED as not reconstructable.**
+> Measured 2026-09-11 against the only committed evaluation ledger
+> (`agents/nemesis/adversarial/adversarial_results.jsonl`, 92 records,
+> 294 tools, 12,713 evaluations):
+>
+> * `ibai_v2` is 0.283 in the ledger, not the 46% below.
+> * `efme_v2` is 0.543 in the ledger, not the 51% below.
+> * `info_theory_x_criticality_x_pragmatics` -- the tool the table calls
+>   "the surprise" and "the most important signal in the pipeline" --
+>   **does not appear among the 294 tools in the ledger at all.**
+> * The "Static Accuracy" column has no committed source anywhere in
+>   the tree.
+>
+> Whether the table came from an uncommitted run or was never measured
+> cannot be determined from the repository; that gap is failed closed,
+> not resolved by inference.
+>
+> **The engine also fails the question it was built to ask.** On that same
+> ledger, 62 of 92 tasks have the same correct answer ("Not enough
+> information"), so a constant responder scores **0.674** -- and **292 of
+> the 294 tools score below it**. 88 of the 294 tools are constant
+> responders; 74 of those return exactly that majority class. The cell
+> quantity the grid maximises ("disagreement") spans 0.0127 to 0.0410
+> across all 92 cells.
+>
+> **The loop's activity was not progress.** 3,013 cycles over 8 days;
+> 2,931 of them (97.3%) placed zero tasks; `blind_spots=0` on 3,013 of
+> 3,013; 3,014 report files written -- one per cycle, so the no-op was
+> invisible in a directory listing. Registered in
+> `roles/base-role/MONITORS.md` as **DEAD**, not relaunched (base rules 8
+> and 9: the upstream forge library has been frozen since 2026-04-03).
+>
+> Everything below this line is the March 2026 text as written. Nothing
+> in it is current except where `roles/Nemesis/RESPONSIBILITIES.md`
+> restates it. `src/` is inherited UNVERIFIED.
+
+---
+
 # Nemesis — Adversarial Co-Evolution Engine
 
 *Goddess of retribution. Ensures no evaluator escapes deserved consequences.*

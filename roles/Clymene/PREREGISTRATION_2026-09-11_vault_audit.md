@@ -229,3 +229,29 @@ change.
 - vault/evolutionary_agents (1.3 MB): enumerated and reported as
   unaccounted-for, not classified, because it is in neither the
   manifest nor the registry and no predicate above covers it.
+
+---
+
+## ANNOTATION 2026-09-11, after the repository run, before the write-up
+
+The completeness predicate in section 1 did not model GIT LFS. Upstream,
+an LFS-tracked file's blob is a ~130-byte pointer; on disk it is the
+smudged content. The comparator therefore reported one content mismatch
+(autogen-landing.jpg) that is not a mismatch: the file's sha256 equals the
+pointer's own oid (149a1ab7bec4917c445992c0bff2d4402cb194207a03d4bec573d74d52aac5e8),
+verified by hand.
+
+The predicate is amended, with the reason, in the only direction the
+preregistration allows -- toward more accuracy, and AGAINST this seat's
+interest, since it removes the one piece of evidence that the vault holds
+a damaged file:
+
+  A path whose upstream blob parses as a Git LFS pointer is compared by
+  the pointer's sha256 oid against the file on disk, not by blob sha1.
+
+Effect on the result: content mismatches across all 26 snapshots go from
+1 to 0. The completeness headline (2.5%) is unchanged; the amendment
+touches one file. Recorded as calibration row CLY-CAL-008.
+
+No other predicate, threshold, population or bucket has been changed, and
+none will be now that results are being read.
