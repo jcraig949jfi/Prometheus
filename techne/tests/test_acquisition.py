@@ -379,3 +379,45 @@ class _StubViv:
     @staticmethod
     def _check_boolean_components_v1(obj, limits):
         return {"component_count": len(obj["components"])}
+
+
+# --------------------------------------------------------------------------
+# TECHNE-44: cancellation. Two concrete risks, both found by the probe.
+# --------------------------------------------------------------------------
+def test_a_resource_receipt_does_not_keep_changing_after_it_is_taken():
+    """The defect the cancellation probe surfaced: resource_receipt() handed out
+    a reference to the live kill list, so a receipt taken inside the context kept
+    growing during teardown and every reading of it disagreed with the last."""
+    prof = {"name": "t", "network": "FORBIDDEN", "max_wall_seconds": 60,
+            "max_processes": 4, "max_download_bytes": 0}
+    b = budget.Budget(profile=prof)
+    taken = b.resource_receipt()["cancellation"]
+    before = json.dumps(taken, sort_keys=True)
+    b._kills.append({"pid": 1, "mechanism": "job_object"})
+    b._job_failures.append({"pid": 1, "reason": "synthetic"})
+    assert json.dumps(taken, sort_keys=True) == before, (
+        "a receipt is a record of a moment; one that mutates afterwards cannot be "
+        "compared against anything, including itself")
+
+
+def test_cancelling_the_same_child_twice_does_not_invent_a_degraded_kill():
+    """__exit__ sweeps kill_tree() over every child, so a process the caller
+    already cancelled arrives a second time when it is dead and its job is gone.
+    Recording that as 'nothing could be reaped' would manufacture a degraded
+    cancellation out of ordinary teardown."""
+    prof = {"name": "t", "network": "FORBIDDEN", "max_wall_seconds": 60,
+            "max_processes": 4, "max_download_bytes": 0}
+    b = budget.Budget(profile=prof)
+
+    class _Dead:
+        pid = 4242
+
+        @staticmethod
+        def poll():
+            return 0
+
+    p = _Dead()
+    b._kill_one(p)
+    b._kill_one(p)
+    b._kill_one(p)
+    assert len(b._kills) == 1, "one cancellation is one row, however many times it is swept"
