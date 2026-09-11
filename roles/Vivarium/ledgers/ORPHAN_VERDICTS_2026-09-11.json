@@ -1,0 +1,1640 @@
+{
+  "schema": "vivarium.orphan_verdicts.v1",
+  "n": 119,
+  "counts": {
+    "ABANDONED": 33,
+    "NOT_FROM_THIS_REGISTER": 79,
+    "RUNNER_MADE_UNREGISTERED": 7
+  },
+  "verdicts": [
+    {
+      "exp_id": "exp_2ae955361ed975161f8c4287",
+      "world_id": "wld_a2b82bc9156216d375ebb5bb",
+      "spec_hash": "sha256:b9b155c3a3dc11dd184dc036b1f07a95d68118de941ce315fb4812e22814b77a",
+      "age_hours": 0.6,
+      "unclaimed_work": 1,
+      "verdict": "ABANDONED",
+      "why": "every row for this spec is terminal (failed) and a terminal row is frozen whole by the queue's trigger, so nothing will claim that work again.",
+      "named_by_a_row": false,
+      "rows": [
+        {
+          "experiment_id": "662a7f4f-0fe3-4f36-b5d8-4fede6b21450",
+          "status": "failed",
+          "candidate_set_id": "cs-h5-1",
+          "arm_id": "map",
+          "failure_class": null,
+          "names_this_experiment": false
+        }
+      ]
+    },
+    {
+      "exp_id": "exp_0d6463f40164a39b158c45b4",
+      "world_id": "wld_4eb9f05fd5498b1a135eab96",
+      "spec_hash": "sha256:8cdd0df7116a33b761ef0ff79741514babfd0b38ecab20e641bde87e8d5e1c1c",
+      "age_hours": 0.8,
+      "unclaimed_work": 1,
+      "verdict": "ABANDONED",
+      "why": "every row for this spec is terminal (failed) and a terminal row is frozen whole by the queue's trigger, so nothing will claim that work again.",
+      "named_by_a_row": false,
+      "rows": [
+        {
+          "experiment_id": "0128c603-6730-46b7-9168-801b96e12007",
+          "status": "failed",
+          "candidate_set_id": "cs-h5-1",
+          "arm_id": "map",
+          "failure_class": null,
+          "names_this_experiment": false
+        }
+      ]
+    },
+    {
+      "exp_id": "exp_7e3b4873ccb79708cd147e6f",
+      "world_id": "wld_5aacea217005188a74d66ccd",
+      "spec_hash": "sha256:4925507d2ec7bcd1693827fd5955108a8110a387c16b810c45526e4ba36b2b24",
+      "age_hours": 0.9,
+      "unclaimed_work": 1,
+      "verdict": "ABANDONED",
+      "why": "every row for this spec is terminal (failed) and a terminal row is frozen whole by the queue's trigger, so nothing will claim that work again.",
+      "named_by_a_row": false,
+      "rows": [
+        {
+          "experiment_id": "86759935-a98b-4748-8ff4-44885a1e33b4",
+          "status": "failed",
+          "candidate_set_id": "cs-h5-1",
+          "arm_id": "map",
+          "failure_class": null,
+          "names_this_experiment": false
+        }
+      ]
+    },
+    {
+      "exp_id": "exp_be571ff8179fdf5ef0f5428b",
+      "world_id": "wld_dacfd8ae01a5212552b58aa3",
+      "spec_hash": "sha256:136d7b6bde9d9ef58bbc5ecc6d7387fef346b5acb9d8467c21d3be857aaaac85",
+      "age_hours": 0.9,
+      "unclaimed_work": 1,
+      "verdict": "ABANDONED",
+      "why": "every row for this spec is terminal (failed) and a terminal row is frozen whole by the queue's trigger, so nothing will claim that work again.",
+      "named_by_a_row": false,
+      "rows": [
+        {
+          "experiment_id": "e4828928-08a0-4652-af47-f0e376b1b029",
+          "status": "failed",
+          "candidate_set_id": "cs-h5-1",
+          "arm_id": "map",
+          "failure_class": null,
+          "names_this_experiment": false
+        }
+      ]
+    },
+    {
+      "exp_id": "exp_763811428c7859a3a5f2fb17",
+      "world_id": "wld_baa7a5994784e89f79dd9a50",
+      "spec_hash": "sha256:3112fd3881ed51028b0f2df6d940c93688695719c9e56a09aad34eb16f611f02",
+      "age_hours": 0.9,
+      "unclaimed_work": 1,
+      "verdict": "ABANDONED",
+      "why": "every row for this spec is terminal (failed) and a terminal row is frozen whole by the queue's trigger, so nothing will claim that work again.",
+      "named_by_a_row": false,
+      "rows": [
+        {
+          "experiment_id": "d4e09a45-440c-4922-90f8-254697957e18",
+          "status": "failed",
+          "candidate_set_id": "cs-h5-1",
+          "arm_id": "map",
+          "failure_class": null,
+          "names_this_experiment": false
+        }
+      ]
+    },
+    {
+      "exp_id": "exp_151e5dcec8f2dca220409a71",
+      "world_id": "wld_d40479b740b2c50e8fb242a9",
+      "spec_hash": "sha256:b85c3b12d070a74cfec4601a6bfe6994bc2b035ad2336583104b06584e3d8dc4",
+      "age_hours": 12.1,
+      "unclaimed_work": 1,
+      "verdict": "ABANDONED",
+      "why": "every row for this spec is terminal (completed, failed) and a terminal row is frozen whole by the queue's trigger, so nothing will claim that work again. A completed row names a DIFFERENT experiment, so this one was abandoned and the spec later re-run.",
+      "named_by_a_row": false,
+      "rows": [
+        {
+          "experiment_id": "2f80b293-f522-4619-a881-5aa5ecd765a9",
+          "status": "completed",
+          "candidate_set_id": "cs-15353e5de7e44ec0",
+          "arm_id": null,
+          "failure_class": null,
+          "names_this_experiment": false
+        },
+        {
+          "experiment_id": "46d61290-82a4-4987-a102-e9c37c7d4850",
+          "status": "failed",
+          "candidate_set_id": "cs-268e869bcd8e42fb",
+          "arm_id": null,
+          "failure_class": null,
+          "names_this_experiment": false
+        }
+      ]
+    },
+    {
+      "exp_id": "exp_8354e05bc0c232e1fdb20a86",
+      "world_id": "wld_0b337b23a9c3fd7ed0ad0c2d",
+      "spec_hash": "sha256:96f10a330580bb22532e3bd28f0557578e5ca6033de83dacbf1eaf7009342a59",
+      "age_hours": 16.1,
+      "unclaimed_work": 0,
+      "verdict": "ABANDONED",
+      "why": "every row for this spec is terminal (completed, failed) and a terminal row is frozen whole by the queue's trigger, so nothing will claim that work again. A completed row names a DIFFERENT experiment, so this one was abandoned and the spec later re-run.",
+      "named_by_a_row": true,
+      "rows": [
+        {
+          "experiment_id": "53545dfc-5c23-44f3-95c9-8b33b55f0b3a",
+          "status": "failed",
+          "candidate_set_id": "cs-c3-2",
+          "arm_id": "C3-acq",
+          "failure_class": "ENGINE_TRANSPORT",
+          "names_this_experiment": true
+        },
+        {
+          "experiment_id": "72c37179-7823-4440-9993-a12b4a62cb1a",
+          "status": "completed",
+          "candidate_set_id": "cs-c3-2-r1",
+          "arm_id": "C3-acq",
+          "failure_class": null,
+          "names_this_experiment": false
+        }
+      ]
+    },
+    {
+      "exp_id": "exp_040a2332fb32c11f883c154a",
+      "world_id": "wld_27f5d79d18163a3030d4dc95",
+      "spec_hash": "sha256:af2d8ecdd5592e02395bcee24458168f92c747c1406dd94a72e28fab2bd46a4a",
+      "age_hours": 16.1,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'viv-probe2-1789056511', not this runner's derived 'viv-af2d8ecdd5592e02'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_6be9eac8551ebc5821c7ef88",
+      "world_id": "wld_89fb3ba78bc8c7bc9c5fe782",
+      "spec_hash": "sha256:5648e052bdb9e00c3bcde7360ce22b8e1317e59d2aabd9670a10fb76a25755c7",
+      "age_hours": 20.4,
+      "unclaimed_work": 0,
+      "verdict": "ABANDONED",
+      "why": "every row for this spec is terminal (failed) and a terminal row is frozen whole by the queue's trigger, so nothing will claim that work again.",
+      "named_by_a_row": true,
+      "rows": [
+        {
+          "experiment_id": "6df65f44-13c1-457e-8bae-d2e93c6c01ad",
+          "status": "failed",
+          "candidate_set_id": "cs-c3-1",
+          "arm_id": "C3-null",
+          "failure_class": "EXECUTOR_ERROR",
+          "names_this_experiment": true
+        }
+      ]
+    },
+    {
+      "exp_id": "exp_a2b7ac2bf920f9d2715d963c",
+      "world_id": "wld_dc2ea5771885b2094f47c52d",
+      "spec_hash": "sha256:4bbff8f8c03594c80972bb556787e0099684489f3705f4844338a0c8c3685ead",
+      "age_hours": 20.4,
+      "unclaimed_work": 0,
+      "verdict": "ABANDONED",
+      "why": "every row for this spec is terminal (failed) and a terminal row is frozen whole by the queue's trigger, so nothing will claim that work again.",
+      "named_by_a_row": true,
+      "rows": [
+        {
+          "experiment_id": "54d35909-544d-464d-a76a-68fe688844cc",
+          "status": "failed",
+          "candidate_set_id": "cs-c3-1",
+          "arm_id": "C3-null",
+          "failure_class": "EXECUTOR_ERROR",
+          "names_this_experiment": true
+        }
+      ]
+    },
+    {
+      "exp_id": "exp_3e2404145bb06a9a25605ad1",
+      "world_id": "wld_8b8bc41f27d0d7f781a9be2f",
+      "spec_hash": "sha256:d9e2777c7b60d5e1f3add76ded02f5f3b11af9a84aab4009294cd8ee3cd7dafb",
+      "age_hours": 20.4,
+      "unclaimed_work": 0,
+      "verdict": "ABANDONED",
+      "why": "every row for this spec is terminal (failed) and a terminal row is frozen whole by the queue's trigger, so nothing will claim that work again.",
+      "named_by_a_row": true,
+      "rows": [
+        {
+          "experiment_id": "8b05ade0-4751-42d0-a48b-b0c32a18411c",
+          "status": "failed",
+          "candidate_set_id": "cs-c3-1",
+          "arm_id": "C3-null",
+          "failure_class": "EXECUTOR_ERROR",
+          "names_this_experiment": true
+        }
+      ]
+    },
+    {
+      "exp_id": "exp_3707831fd457c732255b98ac",
+      "world_id": "wld_192b18f4790e7d72d17a9aea",
+      "spec_hash": "sha256:a00d50505962c84320356720dd316f933fbec44bc34620897667a9049e40f34d",
+      "age_hours": 20.4,
+      "unclaimed_work": 0,
+      "verdict": "ABANDONED",
+      "why": "every row for this spec is terminal (failed) and a terminal row is frozen whole by the queue's trigger, so nothing will claim that work again.",
+      "named_by_a_row": true,
+      "rows": [
+        {
+          "experiment_id": "8c335a46-fe97-407c-86e6-7e893352a7d4",
+          "status": "failed",
+          "candidate_set_id": "cs-c3-1",
+          "arm_id": "C3-null",
+          "failure_class": "EXECUTOR_ERROR",
+          "names_this_experiment": true
+        }
+      ]
+    },
+    {
+      "exp_id": "exp_fcdb4f77822337027f48824c",
+      "world_id": "wld_21496e2b0d8aafa9d59e6655",
+      "spec_hash": "sha256:522af4431d01b4b423a579f3453668fee0f3f383a3586667441f18518dbf6203",
+      "age_hours": 20.4,
+      "unclaimed_work": 0,
+      "verdict": "ABANDONED",
+      "why": "every row for this spec is terminal (failed) and a terminal row is frozen whole by the queue's trigger, so nothing will claim that work again.",
+      "named_by_a_row": true,
+      "rows": [
+        {
+          "experiment_id": "50370578-37ef-4a58-9a78-9a0dff833614",
+          "status": "failed",
+          "candidate_set_id": "cs-c3-1",
+          "arm_id": "C3-null",
+          "failure_class": "EXECUTOR_ERROR",
+          "names_this_experiment": true
+        }
+      ]
+    },
+    {
+      "exp_id": "exp_03ab23a65052c22d245f5c7e",
+      "world_id": "wld_3280dfd5c2e41bd0bf9674ce",
+      "spec_hash": "sha256:a2b044df8befdaf7262429f88723dd5142e7723cefa4698da05f7bc7c67db0b5",
+      "age_hours": 20.4,
+      "unclaimed_work": 0,
+      "verdict": "ABANDONED",
+      "why": "every row for this spec is terminal (failed) and a terminal row is frozen whole by the queue's trigger, so nothing will claim that work again.",
+      "named_by_a_row": true,
+      "rows": [
+        {
+          "experiment_id": "ea097ade-7925-426f-a34b-6a7d28f818f1",
+          "status": "failed",
+          "candidate_set_id": "cs-c3-1",
+          "arm_id": "C3-null",
+          "failure_class": "EXECUTOR_ERROR",
+          "names_this_experiment": true
+        }
+      ]
+    },
+    {
+      "exp_id": "exp_e534bb4604f38ccfe9240dda",
+      "world_id": "wld_6ad27dee36ca6fba65858b8b",
+      "spec_hash": "sha256:e6f0dde461e9e5b32275a7d9e7f5fa08cd73075441a54dd6370314f776143c47",
+      "age_hours": 20.4,
+      "unclaimed_work": 0,
+      "verdict": "ABANDONED",
+      "why": "every row for this spec is terminal (failed) and a terminal row is frozen whole by the queue's trigger, so nothing will claim that work again.",
+      "named_by_a_row": true,
+      "rows": [
+        {
+          "experiment_id": "c42d112d-4b26-4ce5-9873-702b3f312fbd",
+          "status": "failed",
+          "candidate_set_id": "cs-c3-1",
+          "arm_id": "C3-null",
+          "failure_class": "EXECUTOR_ERROR",
+          "names_this_experiment": true
+        }
+      ]
+    },
+    {
+      "exp_id": "exp_00a0d335b075c404e165ee61",
+      "world_id": "wld_dd7be56de1c6a5a8158803a5",
+      "spec_hash": "sha256:f6a77acef8a989509302b58df5e90c70c5a8c7e0426a93ea6700f069350f159f",
+      "age_hours": 20.4,
+      "unclaimed_work": 0,
+      "verdict": "ABANDONED",
+      "why": "every row for this spec is terminal (failed) and a terminal row is frozen whole by the queue's trigger, so nothing will claim that work again.",
+      "named_by_a_row": true,
+      "rows": [
+        {
+          "experiment_id": "4f3516a5-470e-4ed5-8588-19442c47ac73",
+          "status": "failed",
+          "candidate_set_id": "cs-c3-1",
+          "arm_id": "C3-null",
+          "failure_class": "EXECUTOR_ERROR",
+          "names_this_experiment": true
+        }
+      ]
+    },
+    {
+      "exp_id": "exp_ede2bc8e555ae8194ea27418",
+      "world_id": "wld_759bd5e48a5fe35a079aca2f",
+      "spec_hash": "sha256:163e0bed37d67c12783d3a1ca17355ffa621dad504d8bf49559b565724032f71",
+      "age_hours": 20.4,
+      "unclaimed_work": 0,
+      "verdict": "ABANDONED",
+      "why": "every row for this spec is terminal (failed) and a terminal row is frozen whole by the queue's trigger, so nothing will claim that work again.",
+      "named_by_a_row": true,
+      "rows": [
+        {
+          "experiment_id": "37479618-f96f-4d49-957e-2a93042dfc6d",
+          "status": "failed",
+          "candidate_set_id": "cs-c3-1",
+          "arm_id": "C3-null",
+          "failure_class": "EXECUTOR_ERROR",
+          "names_this_experiment": true
+        }
+      ]
+    },
+    {
+      "exp_id": "exp_a4c90ae9452a4e0595b4da27",
+      "world_id": "wld_63e38913c51d00cadb40d778",
+      "spec_hash": "sha256:d691d047df7a73aa653a91874947fe273d64b6addd0faa1d4928ddf9b33dc34d",
+      "age_hours": 20.4,
+      "unclaimed_work": 0,
+      "verdict": "ABANDONED",
+      "why": "every row for this spec is terminal (failed) and a terminal row is frozen whole by the queue's trigger, so nothing will claim that work again.",
+      "named_by_a_row": true,
+      "rows": [
+        {
+          "experiment_id": "4aa1f2d0-b6d4-4642-aeeb-f6837ad01d47",
+          "status": "failed",
+          "candidate_set_id": "cs-c3-1",
+          "arm_id": "C3-null",
+          "failure_class": "EXECUTOR_ERROR",
+          "names_this_experiment": true
+        }
+      ]
+    },
+    {
+      "exp_id": "exp_dabb0923a25d5634ea318597",
+      "world_id": "wld_87331752d8d6639b043d4b50",
+      "spec_hash": "sha256:a0b14c8502731c839f6d7a12abd4bcd7deca35820a64a04cae58dc8ff8689dc4",
+      "age_hours": 20.4,
+      "unclaimed_work": 0,
+      "verdict": "ABANDONED",
+      "why": "every row for this spec is terminal (failed) and a terminal row is frozen whole by the queue's trigger, so nothing will claim that work again.",
+      "named_by_a_row": true,
+      "rows": [
+        {
+          "experiment_id": "c7efea81-b2b9-4dc5-968b-7e857402a197",
+          "status": "failed",
+          "candidate_set_id": "cs-c3-1",
+          "arm_id": "C3-null",
+          "failure_class": "EXECUTOR_ERROR",
+          "names_this_experiment": true
+        }
+      ]
+    },
+    {
+      "exp_id": "exp_a4aac18b937772bbafd8c027",
+      "world_id": "wld_11d15073ab33050fa590397b",
+      "spec_hash": "sha256:e3d893a3af4e2cd4441baf347167112167695d067b486796c588b796a94373d1",
+      "age_hours": 20.4,
+      "unclaimed_work": 0,
+      "verdict": "ABANDONED",
+      "why": "every row for this spec is terminal (failed) and a terminal row is frozen whole by the queue's trigger, so nothing will claim that work again.",
+      "named_by_a_row": true,
+      "rows": [
+        {
+          "experiment_id": "c3e9b486-d74e-45ca-b919-25d4a5f23e59",
+          "status": "failed",
+          "candidate_set_id": "cs-c3-1",
+          "arm_id": "C3-null",
+          "failure_class": "EXECUTOR_ERROR",
+          "names_this_experiment": true
+        }
+      ]
+    },
+    {
+      "exp_id": "exp_2a93e45d1e1399fc3a1f0b32",
+      "world_id": "wld_7465a1a1dc9116602a3f1f4c",
+      "spec_hash": "sha256:3302c4deabdf1b956826488eded4cdda5415942e41f0ed5533c0cd3e089ebeec",
+      "age_hours": 20.4,
+      "unclaimed_work": 0,
+      "verdict": "ABANDONED",
+      "why": "every row for this spec is terminal (failed) and a terminal row is frozen whole by the queue's trigger, so nothing will claim that work again.",
+      "named_by_a_row": true,
+      "rows": [
+        {
+          "experiment_id": "ab6655ef-a20a-4715-8083-016e972bbd7c",
+          "status": "failed",
+          "candidate_set_id": "cs-c3-1",
+          "arm_id": "C3-base",
+          "failure_class": "EXECUTOR_ERROR",
+          "names_this_experiment": true
+        }
+      ]
+    },
+    {
+      "exp_id": "exp_2a31abb47ccf26588b714c8c",
+      "world_id": "wld_6ee286ae05986594f10d71c6",
+      "spec_hash": "sha256:21ce76384bf976589f1bd05346bf572ab7ba7e5efe5be7884f2d023d29f5ea45",
+      "age_hours": 20.4,
+      "unclaimed_work": 0,
+      "verdict": "ABANDONED",
+      "why": "every row for this spec is terminal (failed) and a terminal row is frozen whole by the queue's trigger, so nothing will claim that work again.",
+      "named_by_a_row": true,
+      "rows": [
+        {
+          "experiment_id": "c42a740b-f5ed-4e33-a40c-f36c3a7eb426",
+          "status": "failed",
+          "candidate_set_id": "cs-c3-1",
+          "arm_id": "C3-base",
+          "failure_class": "EXECUTOR_ERROR",
+          "names_this_experiment": true
+        }
+      ]
+    },
+    {
+      "exp_id": "exp_a07d93cd2ffb2a8613742109",
+      "world_id": "wld_2e900683789f8063bba24ac1",
+      "spec_hash": "sha256:544129fe0cb2eb2d3bfca41773e6f79533d0e747acc2c94d6e739bd8da18b825",
+      "age_hours": 20.4,
+      "unclaimed_work": 0,
+      "verdict": "ABANDONED",
+      "why": "every row for this spec is terminal (failed) and a terminal row is frozen whole by the queue's trigger, so nothing will claim that work again.",
+      "named_by_a_row": true,
+      "rows": [
+        {
+          "experiment_id": "27c3c9d9-cf51-4b74-89c0-a1e6b36ba8d9",
+          "status": "failed",
+          "candidate_set_id": "cs-c3-1",
+          "arm_id": "C3-base",
+          "failure_class": "EXECUTOR_ERROR",
+          "names_this_experiment": true
+        }
+      ]
+    },
+    {
+      "exp_id": "exp_fc57e932785f9f46752f4284",
+      "world_id": "wld_a02ce4f44dd268a1bab9409a",
+      "spec_hash": "sha256:33f6ff17b3ee0005174bfa3606892cbc32b967cdee5a07d326335e2f7e34961e",
+      "age_hours": 20.4,
+      "unclaimed_work": 0,
+      "verdict": "ABANDONED",
+      "why": "every row for this spec is terminal (failed) and a terminal row is frozen whole by the queue's trigger, so nothing will claim that work again.",
+      "named_by_a_row": true,
+      "rows": [
+        {
+          "experiment_id": "4d9599ff-ecff-4630-b0eb-abbb2b4dbb73",
+          "status": "failed",
+          "candidate_set_id": "cs-c3-1",
+          "arm_id": "C3-base",
+          "failure_class": "EXECUTOR_ERROR",
+          "names_this_experiment": true
+        }
+      ]
+    },
+    {
+      "exp_id": "exp_11cdc60a95d7d32bb65efdf3",
+      "world_id": "wld_955477a6e5c9a5eb6ef48104",
+      "spec_hash": "sha256:0c81dd38431bb5d4607db97e32a0802c848af940b8d3af0fa065f606cca7a852",
+      "age_hours": 20.4,
+      "unclaimed_work": 0,
+      "verdict": "ABANDONED",
+      "why": "every row for this spec is terminal (failed) and a terminal row is frozen whole by the queue's trigger, so nothing will claim that work again.",
+      "named_by_a_row": true,
+      "rows": [
+        {
+          "experiment_id": "dceadfea-2d69-44c0-9e42-4808e3565d6a",
+          "status": "failed",
+          "candidate_set_id": "cs-c3-1",
+          "arm_id": "C3-base",
+          "failure_class": "EXECUTOR_ERROR",
+          "names_this_experiment": true
+        }
+      ]
+    },
+    {
+      "exp_id": "exp_2402083dda9c32f9f8e014c9",
+      "world_id": "wld_f45a73e7612617479d60f078",
+      "spec_hash": "sha256:2da4e3cc83c7e7dc84f4f5ba181fedb1f9a0cfa8dd472d84933249108dd22ecb",
+      "age_hours": 20.4,
+      "unclaimed_work": 0,
+      "verdict": "ABANDONED",
+      "why": "every row for this spec is terminal (failed) and a terminal row is frozen whole by the queue's trigger, so nothing will claim that work again.",
+      "named_by_a_row": true,
+      "rows": [
+        {
+          "experiment_id": "b0b75302-5be6-4db6-af99-09df9b83febe",
+          "status": "failed",
+          "candidate_set_id": "cs-c3-1",
+          "arm_id": "C3-base",
+          "failure_class": "EXECUTOR_ERROR",
+          "names_this_experiment": true
+        }
+      ]
+    },
+    {
+      "exp_id": "exp_b488b75dfc0dda3de5f8b5f0",
+      "world_id": "wld_0733f0cfbbf759d76c5972ac",
+      "spec_hash": "sha256:a9baa12c6c30692be8b92e2c4fc6160b1461a66bcfcbf2499d0daee3cd809afa",
+      "age_hours": 20.4,
+      "unclaimed_work": 0,
+      "verdict": "ABANDONED",
+      "why": "every row for this spec is terminal (failed) and a terminal row is frozen whole by the queue's trigger, so nothing will claim that work again.",
+      "named_by_a_row": true,
+      "rows": [
+        {
+          "experiment_id": "5df0bf19-e1b7-4d27-9a0f-8a09b0977a05",
+          "status": "failed",
+          "candidate_set_id": "cs-c3-1",
+          "arm_id": "C3-hist",
+          "failure_class": "EXECUTOR_ERROR",
+          "names_this_experiment": true
+        }
+      ]
+    },
+    {
+      "exp_id": "exp_c6e0c3c263b425ec612e974b",
+      "world_id": "wld_c3f8dd0f5b0ace7d2a2377e4",
+      "spec_hash": "sha256:8c2f085bbe4d386d2f9c11872e0163fd7a274f75e5186e99b62f475a15c9b450",
+      "age_hours": 20.4,
+      "unclaimed_work": 0,
+      "verdict": "ABANDONED",
+      "why": "every row for this spec is terminal (failed) and a terminal row is frozen whole by the queue's trigger, so nothing will claim that work again.",
+      "named_by_a_row": true,
+      "rows": [
+        {
+          "experiment_id": "215ac126-21f4-4da7-aba7-674ff8474a55",
+          "status": "failed",
+          "candidate_set_id": "cs-c3-1",
+          "arm_id": "C3-hist",
+          "failure_class": "EXECUTOR_ERROR",
+          "names_this_experiment": true
+        }
+      ]
+    },
+    {
+      "exp_id": "exp_76c66a1d5ddc88f819fcef4c",
+      "world_id": "wld_4849cf9d04abb0a8402f017c",
+      "spec_hash": "sha256:a787d960bde6e5f9e32d42a6bd84023cbe45509108b4cbe5014b28e4872e2435",
+      "age_hours": 20.4,
+      "unclaimed_work": 0,
+      "verdict": "ABANDONED",
+      "why": "every row for this spec is terminal (failed) and a terminal row is frozen whole by the queue's trigger, so nothing will claim that work again.",
+      "named_by_a_row": true,
+      "rows": [
+        {
+          "experiment_id": "4b88a2e4-a331-46e5-aaa1-d3af3a97d7ab",
+          "status": "failed",
+          "candidate_set_id": "cs-c3-1",
+          "arm_id": "C3-hist",
+          "failure_class": "EXECUTOR_ERROR",
+          "names_this_experiment": true
+        }
+      ]
+    },
+    {
+      "exp_id": "exp_ff7a3cde7e9df2ead4698751",
+      "world_id": "wld_6207de3565c4b3250cc77947",
+      "spec_hash": "sha256:10f85c25f0bd299e3077f99d63c208442cde6303cf1bba0bb6f75ae323e7ca32",
+      "age_hours": 20.4,
+      "unclaimed_work": 0,
+      "verdict": "ABANDONED",
+      "why": "every row for this spec is terminal (failed) and a terminal row is frozen whole by the queue's trigger, so nothing will claim that work again.",
+      "named_by_a_row": true,
+      "rows": [
+        {
+          "experiment_id": "7aaf3d5f-daab-4d6f-8dba-d23009fab98a",
+          "status": "failed",
+          "candidate_set_id": "cs-c3-1",
+          "arm_id": "C3-hist",
+          "failure_class": "EXECUTOR_ERROR",
+          "names_this_experiment": true
+        }
+      ]
+    },
+    {
+      "exp_id": "exp_1b492498da043eea690b6865",
+      "world_id": "wld_a2ae3d7dce864aba73ee2583",
+      "spec_hash": "sha256:ebc03a3398f59c95ea9b4fbee5958d84cbff82a22ff60bd6ce6d85f251c31d9c",
+      "age_hours": 20.4,
+      "unclaimed_work": 0,
+      "verdict": "ABANDONED",
+      "why": "every row for this spec is terminal (failed) and a terminal row is frozen whole by the queue's trigger, so nothing will claim that work again.",
+      "named_by_a_row": true,
+      "rows": [
+        {
+          "experiment_id": "bd0652a4-99a6-475d-8a8f-27635b187043",
+          "status": "failed",
+          "candidate_set_id": "cs-c3-1",
+          "arm_id": "C3-hist",
+          "failure_class": "EXECUTOR_ERROR",
+          "names_this_experiment": true
+        }
+      ]
+    },
+    {
+      "exp_id": "exp_dbdf0c69fbf1064da75deb14",
+      "world_id": "wld_798832c57286016fb24a9b80",
+      "spec_hash": "sha256:0cbdb25ed32f71b7d58be3e9e392c6fbffa20d71e365d93da24f24cfdd23a771",
+      "age_hours": 20.4,
+      "unclaimed_work": 0,
+      "verdict": "ABANDONED",
+      "why": "every row for this spec is terminal (failed) and a terminal row is frozen whole by the queue's trigger, so nothing will claim that work again.",
+      "named_by_a_row": true,
+      "rows": [
+        {
+          "experiment_id": "48e01135-4ac9-4698-a410-0d36145af70b",
+          "status": "failed",
+          "candidate_set_id": "cs-c3-1",
+          "arm_id": "C3-hist",
+          "failure_class": "EXECUTOR_ERROR",
+          "names_this_experiment": true
+        }
+      ]
+    },
+    {
+      "exp_id": "exp_917d2c7258b0753eb2b54dfb",
+      "world_id": "wld_09d57ad89bb0a5417354957c",
+      "spec_hash": "sha256:d3e78364864c16b3bb6910e37563f02bce7c0e7db92fe12846be31ae7c08fda9",
+      "age_hours": 73.0,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'wp0c-C', not this runner's derived 'viv-d3e78364864c16b3'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_3d2bcbbada3e0f0331bc50dd",
+      "world_id": "wld_894ab013722681d12ff277da",
+      "spec_hash": "sha256:d3e78364864c16b3bb6910e37563f02bce7c0e7db92fe12846be31ae7c08fda9",
+      "age_hours": 73.0,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'wp0c-B', not this runner's derived 'viv-d3e78364864c16b3'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_aeab6dd7a4f4aecdc78fa677",
+      "world_id": "wld_3588b1198b19574ed3ee20cd",
+      "spec_hash": "sha256:d3e78364864c16b3bb6910e37563f02bce7c0e7db92fe12846be31ae7c08fda9",
+      "age_hours": 73.0,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'wp0c-A', not this runner's derived 'viv-d3e78364864c16b3'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_96465af15c08004b0ff96a2b",
+      "world_id": "wld_4889521dd39841b3c351c816",
+      "spec_hash": "sha256:d3e78364864c16b3bb6910e37563f02bce7c0e7db92fe12846be31ae7c08fda9",
+      "age_hours": 73.0,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'wp0c-C', not this runner's derived 'viv-d3e78364864c16b3'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_38ce16055d97c55a4691c84f",
+      "world_id": "wld_a37c912b1660cb98deb9e784",
+      "spec_hash": "sha256:d3e78364864c16b3bb6910e37563f02bce7c0e7db92fe12846be31ae7c08fda9",
+      "age_hours": 73.0,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'wp0c-B', not this runner's derived 'viv-d3e78364864c16b3'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_da3f95d759deab79f064f20c",
+      "world_id": "wld_82481f890947517d8e19fb4f",
+      "spec_hash": "sha256:d3e78364864c16b3bb6910e37563f02bce7c0e7db92fe12846be31ae7c08fda9",
+      "age_hours": 73.0,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'wp0c-A', not this runner's derived 'viv-d3e78364864c16b3'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_e27a2356c8f0f082e6c36085",
+      "world_id": "wld_c69b5e3b9784d294d5de74a6",
+      "spec_hash": "sha256:2ef90b87410feb032e74c61191bd4cf408d46509b09a6759be8d0db995f81e26",
+      "age_hours": 117.6,
+      "unclaimed_work": 1,
+      "verdict": "RUNNER_MADE_UNREGISTERED",
+      "why": "the world carries this runner's DERIVED name (viv-2ef90b87410feb03), so this seat made it -- but no row seals the spec, so it was executed with no register row behind it. Nobody can adjudicate this orphan, including me.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_c59588d0b34f7811f6cc6ca6",
+      "world_id": "wld_a03bcc07584428564749e4bc",
+      "spec_hash": "sha256:e94f85d6b6f115c0dfe8e3284c1d4c49a1bf8c0eda324b6128a0beece0df0d15",
+      "age_hours": 117.8,
+      "unclaimed_work": 0,
+      "verdict": "RUNNER_MADE_UNREGISTERED",
+      "why": "the world carries this runner's DERIVED name (viv-e94f85d6b6f115c0), so this seat made it -- but no row seals the spec, so it was executed with no register row behind it. Nobody can adjudicate this orphan, including me.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_524a42435daf9c4b0168d0ec",
+      "world_id": "wld_4f28e5fede16c7463b83de49",
+      "spec_hash": "sha256:3f54738d1a7c58702a1548dad8c62f1e0c083da1721814923bd9e80543076e40",
+      "age_hours": 117.9,
+      "unclaimed_work": 0,
+      "verdict": "RUNNER_MADE_UNREGISTERED",
+      "why": "the world carries this runner's DERIVED name (viv-3f54738d1a7c5870), so this seat made it -- but no row seals the spec, so it was executed with no register row behind it. Nobody can adjudicate this orphan, including me.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_fbdd1e26118af1ba0aa365de",
+      "world_id": "wld_ef9c090963abf1a936f2879f",
+      "spec_hash": "sha256:984b0609d4ca7f299982d987a2f122f90a451fb400881575cb4c7750e6131ed8",
+      "age_hours": 119.9,
+      "unclaimed_work": 0,
+      "verdict": "ABANDONED",
+      "why": "every row for this spec is terminal (failed) and a terminal row is frozen whole by the queue's trigger, so nothing will claim that work again.",
+      "named_by_a_row": true,
+      "rows": [
+        {
+          "experiment_id": "f5bd5de8-f378-47f1-a713-79acb2dcb9d0",
+          "status": "failed",
+          "candidate_set_id": "cs-98030d952f084963",
+          "arm_id": null,
+          "failure_class": "EXECUTOR_ERROR",
+          "names_this_experiment": true
+        }
+      ]
+    },
+    {
+      "exp_id": "exp_2098023621653c948aabaeba",
+      "world_id": "wld_58865f2d7ac6dbcab7e6c1a2",
+      "spec_hash": "sha256:b42f85521639c1a9b279f11bf91a6d5d7913a0bdb1a763753df16d774cc5de30",
+      "age_hours": 120.1,
+      "unclaimed_work": 0,
+      "verdict": "RUNNER_MADE_UNREGISTERED",
+      "why": "the world carries this runner's DERIVED name (viv-b42f85521639c1a9), so this seat made it -- but no row seals the spec, so it was executed with no register row behind it. Nobody can adjudicate this orphan, including me.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_d2feebef9ca9a85b995c1948",
+      "world_id": "wld_25a341a2f864c0abe7ad41cc",
+      "spec_hash": "sha256:b5e308b6a2e6086d6028385de5f257690d126304a84e3eaf9da1d79fbd70621f",
+      "age_hours": 120.1,
+      "unclaimed_work": 1,
+      "verdict": "RUNNER_MADE_UNREGISTERED",
+      "why": "the world carries this runner's DERIVED name (viv-b5e308b6a2e6086d), so this seat made it -- but no row seals the spec, so it was executed with no register row behind it. Nobody can adjudicate this orphan, including me.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_f1aff2d8c4d042edffded1f0",
+      "world_id": "wld_f7b5cd9e05dc3db0a598fc76",
+      "spec_hash": "sha256:fb634b53875469893915af6f945f588b88b83561fb8640d3d43db546f0a858d6",
+      "age_hours": 120.5,
+      "unclaimed_work": 1,
+      "verdict": "RUNNER_MADE_UNREGISTERED",
+      "why": "the world carries this runner's DERIVED name (viv-fb634b5387546989), so this seat made it -- but no row seals the spec, so it was executed with no register row behind it. Nobody can adjudicate this orphan, including me.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_121c57beab05b16d8cb3af91",
+      "world_id": "wld_e0cc9165b30bddb5d102bcdb",
+      "spec_hash": "sha256:2a416c61aac2a29243cdead6e5604c0646c8600f722dee43c76843e423a82330",
+      "age_hours": 120.6,
+      "unclaimed_work": 0,
+      "verdict": "ABANDONED",
+      "why": "every row for this spec is terminal (failed) and a terminal row is frozen whole by the queue's trigger, so nothing will claim that work again.",
+      "named_by_a_row": true,
+      "rows": [
+        {
+          "experiment_id": "80aeb85d-e6a5-4b0b-9760-ced6b9eb0e2e",
+          "status": "failed",
+          "candidate_set_id": "cs-c10ff5d94ea14bf8",
+          "arm_id": null,
+          "failure_class": "EXECUTOR_ERROR",
+          "names_this_experiment": true
+        }
+      ]
+    },
+    {
+      "exp_id": "exp_a08d8d86ab0ba40400572769",
+      "world_id": "wld_2d54a0d5b1071e5041b815be",
+      "spec_hash": "sha256:4675dae6592f94c9b9f1fafc2a5efc9ec90f96d7a9ebf27a6c0da5ef990805f8",
+      "age_hours": 120.8,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'armA-w1', not this runner's derived 'viv-4675dae6592f94c9'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_4dbaa3ba2622083cbbe6da07",
+      "world_id": "wld_a1f838f0332a539254ccf5a5",
+      "spec_hash": "sha256:e854844016fbb8f3a5b707585e7e9ffbdad209dc80b2f407210ca17858a8a822",
+      "age_hours": 120.8,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'f9w', not this runner's derived 'viv-e854844016fbb8f3'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_cd14a962aae4a54891a842d6",
+      "world_id": "wld_a1f838f0332a539254ccf5a5",
+      "spec_hash": "sha256:e854844016fbb8f3a5b707585e7e9ffbdad209dc80b2f407210ca17858a8a822",
+      "age_hours": 120.9,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'f9w', not this runner's derived 'viv-e854844016fbb8f3'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_086acc7f21ce1eccd4252256",
+      "world_id": "wld_56a294f2b6f9e5fc6e075e17",
+      "spec_hash": "sha256:508b694d221b26a784217ca0561d4e9ad65a82f47a8ee4019d3cc8d5a8d2751e",
+      "age_hours": 120.9,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'f2-DIVERGENT (control)-f76886', not this runner's derived 'viv-508b694d221b26a7'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_8705601eddc27f5858af423e",
+      "world_id": "wld_f02f4ccea480c62189fcad40",
+      "spec_hash": "sha256:508b694d221b26a784217ca0561d4e9ad65a82f47a8ee4019d3cc8d5a8d2751e",
+      "age_hours": 120.9,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'f2-ECHO (what Vivarium sends)-7aedec', not this runner's derived 'viv-508b694d221b26a7'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_b5e53c3ea0d4e59d5ffc9407",
+      "world_id": "wld_99631b784b0525851016ce99",
+      "spec_hash": "sha256:c54c3b8f6e7c1cb2ba1d05a85ddddf8f6f0f3bc1e6ecb6aa389264677d965209",
+      "age_hours": 121.0,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'probe-w1', not this runner's derived 'viv-c54c3b8f6e7c1cb2'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_182732e96251c7ed0b1727d6",
+      "world_id": "wld_e566675a4cacf77b8daef2bf",
+      "spec_hash": "sha256:6dd90948d7c56fe6e0fdcaab38c488fb8d7a1d5b0c893020223fdfd5c4e26786",
+      "age_hours": 121.0,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'probe-w2', not this runner's derived 'viv-6dd90948d7c56fe6'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_6ab0a0fd6a3c6302dd1a9545",
+      "world_id": "wld_abd137a7ffe0e8fa8138fce9",
+      "spec_hash": "sha256:a8ac39bccec15dd6c04d23995389a70d323e9ea532278eb1801cfd729f5522aa",
+      "age_hours": 121.0,
+      "unclaimed_work": 1,
+      "verdict": "RUNNER_MADE_UNREGISTERED",
+      "why": "the world carries this runner's DERIVED name (viv-a8ac39bccec15dd6), so this seat made it -- but no row seals the spec, so it was executed with no register row behind it. Nobody can adjudicate this orphan, including me.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_85d871b01cf306dd3724e9f7",
+      "world_id": "wld_7e428d0561d2b240f58a0a7e",
+      "spec_hash": "sha256:0aa664f8ee34d5fa99cc1825b29115161d95d2e3e352a376effd2f5d408a1960",
+      "age_hours": 132.6,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'v6live-0', not this runner's derived 'viv-0aa664f8ee34d5fa'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_d3811087771b76b7c66ecfc6",
+      "world_id": "wld_7e428d0561d2b240f58a0a7e",
+      "spec_hash": "sha256:0aa664f8ee34d5fa99cc1825b29115161d95d2e3e352a376effd2f5d408a1960",
+      "age_hours": 132.6,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'v6live-0', not this runner's derived 'viv-0aa664f8ee34d5fa'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_c583811b1db6e0f0d010e060",
+      "world_id": "wld_7e428d0561d2b240f58a0a7e",
+      "spec_hash": "sha256:8a5a66dc0e0d4b38e78e7aa711a1e8e3545c043601c3f1d2d8a7d9779ad2ce59",
+      "age_hours": 132.6,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'v6live-0', not this runner's derived 'viv-8a5a66dc0e0d4b38'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_abd78684680675833a3a20e0",
+      "world_id": "wld_7e428d0561d2b240f58a0a7e",
+      "spec_hash": "sha256:a9df77403214769a00d7145ecec7622bb9347a213e5204c034052a9eaa23b55f",
+      "age_hours": 132.6,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'v6live-0', not this runner's derived 'viv-a9df77403214769a'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_5a35e45738b063110faffc7f",
+      "world_id": "wld_7e428d0561d2b240f58a0a7e",
+      "spec_hash": "sha256:311b7a6344e031e5bef641b4bef6292b5df0576bec799ef0b109a6030f1a7a45",
+      "age_hours": 132.6,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'v6live-0', not this runner's derived 'viv-311b7a6344e031e5'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_4b2e153208d11193b642324b",
+      "world_id": "wld_7e428d0561d2b240f58a0a7e",
+      "spec_hash": "sha256:311b7a6344e031e5bef641b4bef6292b5df0576bec799ef0b109a6030f1a7a45",
+      "age_hours": 132.6,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'v6live-0', not this runner's derived 'viv-311b7a6344e031e5'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_d503734b3b9a0ee79dbe62bd",
+      "world_id": "wld_a49cece3b075d5273b2878b0",
+      "spec_hash": "sha256:0aa664f8ee34d5fa99cc1825b29115161d95d2e3e352a376effd2f5d408a1960",
+      "age_hours": 132.6,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'v6live-0', not this runner's derived 'viv-0aa664f8ee34d5fa'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_b4c25ff5e4c68fe76b5be8e8",
+      "world_id": "wld_a49cece3b075d5273b2878b0",
+      "spec_hash": "sha256:0aa664f8ee34d5fa99cc1825b29115161d95d2e3e352a376effd2f5d408a1960",
+      "age_hours": 132.6,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'v6live-0', not this runner's derived 'viv-0aa664f8ee34d5fa'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_4b9ae83e3c599cc54b4e4a9e",
+      "world_id": "wld_a49cece3b075d5273b2878b0",
+      "spec_hash": "sha256:8a5a66dc0e0d4b38e78e7aa711a1e8e3545c043601c3f1d2d8a7d9779ad2ce59",
+      "age_hours": 132.6,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'v6live-0', not this runner's derived 'viv-8a5a66dc0e0d4b38'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_869cdf0d70d6d47a64788cfc",
+      "world_id": "wld_a49cece3b075d5273b2878b0",
+      "spec_hash": "sha256:a9df77403214769a00d7145ecec7622bb9347a213e5204c034052a9eaa23b55f",
+      "age_hours": 132.6,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'v6live-0', not this runner's derived 'viv-a9df77403214769a'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_b56d31faf38295ac3e688800",
+      "world_id": "wld_a49cece3b075d5273b2878b0",
+      "spec_hash": "sha256:311b7a6344e031e5bef641b4bef6292b5df0576bec799ef0b109a6030f1a7a45",
+      "age_hours": 132.6,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'v6live-0', not this runner's derived 'viv-311b7a6344e031e5'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_abbf2e478ff0ed59ac71279d",
+      "world_id": "wld_a49cece3b075d5273b2878b0",
+      "spec_hash": "sha256:311b7a6344e031e5bef641b4bef6292b5df0576bec799ef0b109a6030f1a7a45",
+      "age_hours": 132.6,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'v6live-0', not this runner's derived 'viv-311b7a6344e031e5'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_653a0ec6d2174294824a0fda",
+      "world_id": "wld_3d98ac5564bb0ed9674ff89c",
+      "spec_hash": "sha256:311b7a6344e031e5bef641b4bef6292b5df0576bec799ef0b109a6030f1a7a45",
+      "age_hours": 132.6,
+      "unclaimed_work": 1,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'v6live-0', not this runner's derived 'viv-311b7a6344e031e5'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_67e9c8586006e194903b73ce",
+      "world_id": "wld_32cb2b5a8d4221577422f8d1",
+      "spec_hash": "sha256:5d025174866b2a10016384954010c2bf303323cd1b5fb2b64a3f7b1c7cf87872",
+      "age_hours": 136.4,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'primary', not this runner's derived 'viv-5d025174866b2a10'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_772c8bd8f5d1977177561653",
+      "world_id": "wld_02b4502eb35a8238deb9b300",
+      "spec_hash": "sha256:bebf4be4c2e73e77009a5084811a9368ffc06517f589ed97a1bd490c8425e02d",
+      "age_hours": 136.5,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 't1-A', not this runner's derived 'viv-bebf4be4c2e73e77'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_8dba9e736bc5d339ba571ce6",
+      "world_id": "wld_37b5dad5fee72c3267222631",
+      "spec_hash": "sha256:5d025174866b2a10016384954010c2bf303323cd1b5fb2b64a3f7b1c7cf87872",
+      "age_hours": 136.9,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'primary', not this runner's derived 'viv-5d025174866b2a10'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_a9009937a9b8f3499113d3c4",
+      "world_id": "wld_36b63debe4e22315fc7cfe47",
+      "spec_hash": "sha256:24c4089488e1aaea9bf22978de6feadc93740036f9300551aef61ad8d1d1bada",
+      "age_hours": 136.9,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'replay', not this runner's derived 'viv-24c4089488e1aaea'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_4836e8884c657690757dc4e7",
+      "world_id": "wld_e2c0ab48195e75b8baea6a22",
+      "spec_hash": "sha256:608edb68c066ac50800a9e8039bf70ef2e8bac227b3c083bfdab4b4bbacb1902",
+      "age_hours": 136.9,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'attest', not this runner's derived 'viv-608edb68c066ac50'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_f7fd3b610ed3e308172f3873",
+      "world_id": "wld_e2c0ab48195e75b8baea6a22",
+      "spec_hash": "sha256:1aa3fcaa140a9ff20462c086d284d4afcadc4d1ddaf901da62ca02b414fd842f",
+      "age_hours": 136.9,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'attest', not this runner's derived 'viv-1aa3fcaa140a9ff2'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_b58a7ea13e03ec71c15b923b",
+      "world_id": "wld_72ad4d45a38f6bdfdfa950fd",
+      "spec_hash": "sha256:bebf4be4c2e73e77009a5084811a9368ffc06517f589ed97a1bd490c8425e02d",
+      "age_hours": 137.9,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 't1-A', not this runner's derived 'viv-bebf4be4c2e73e77'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_e74f053810fdbf29dbc518b8",
+      "world_id": "wld_86fdb04705b89370f965d4a3",
+      "spec_hash": "sha256:bebf4be4c2e73e77009a5084811a9368ffc06517f589ed97a1bd490c8425e02d",
+      "age_hours": 137.9,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 't1-A', not this runner's derived 'viv-bebf4be4c2e73e77'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_fc2cfa5372a29dd626708c6a",
+      "world_id": "wld_aa948d315516c95da78fa7d1",
+      "spec_hash": "sha256:5d025174866b2a10016384954010c2bf303323cd1b5fb2b64a3f7b1c7cf87872",
+      "age_hours": 137.9,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'primary', not this runner's derived 'viv-5d025174866b2a10'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_07b09c6c57cfc1c2158c52df",
+      "world_id": "wld_c083fd184ba84bdeabac05c4",
+      "spec_hash": "sha256:5d025174866b2a10016384954010c2bf303323cd1b5fb2b64a3f7b1c7cf87872",
+      "age_hours": 141.2,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'primary', not this runner's derived 'viv-5d025174866b2a10'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_e5560622e375f2c09ea82927",
+      "world_id": "wld_da0d683b4cb8aac23e3d1b5e",
+      "spec_hash": "sha256:24c4089488e1aaea9bf22978de6feadc93740036f9300551aef61ad8d1d1bada",
+      "age_hours": 141.2,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'replay', not this runner's derived 'viv-24c4089488e1aaea'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_6ec3d912f1a0b9749a7efe89",
+      "world_id": "wld_4d446dbdda90914be746d471",
+      "spec_hash": "sha256:608edb68c066ac50800a9e8039bf70ef2e8bac227b3c083bfdab4b4bbacb1902",
+      "age_hours": 141.2,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'attest', not this runner's derived 'viv-608edb68c066ac50'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_7a44a300a5f5f1df7e097d7b",
+      "world_id": "wld_4d446dbdda90914be746d471",
+      "spec_hash": "sha256:1aa3fcaa140a9ff20462c086d284d4afcadc4d1ddaf901da62ca02b414fd842f",
+      "age_hours": 141.2,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'attest', not this runner's derived 'viv-1aa3fcaa140a9ff2'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_04f7356091aa692f5904e695",
+      "world_id": "wld_1efe4d2a3987678094d8715b",
+      "spec_hash": "sha256:5d025174866b2a10016384954010c2bf303323cd1b5fb2b64a3f7b1c7cf87872",
+      "age_hours": 141.4,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'primary', not this runner's derived 'viv-5d025174866b2a10'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_5a8646e63c37308ac03d46e6",
+      "world_id": "wld_a50c98cd5045fa936dfbc610",
+      "spec_hash": "sha256:24c4089488e1aaea9bf22978de6feadc93740036f9300551aef61ad8d1d1bada",
+      "age_hours": 141.4,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'replay', not this runner's derived 'viv-24c4089488e1aaea'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_728b1fe77060b9f60320b9e2",
+      "world_id": "wld_ed067494712295b57210a50a",
+      "spec_hash": "sha256:608edb68c066ac50800a9e8039bf70ef2e8bac227b3c083bfdab4b4bbacb1902",
+      "age_hours": 141.4,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'attest', not this runner's derived 'viv-608edb68c066ac50'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_a3ffa3e4df2c72ff6868cdd5",
+      "world_id": "wld_ed067494712295b57210a50a",
+      "spec_hash": "sha256:1aa3fcaa140a9ff20462c086d284d4afcadc4d1ddaf901da62ca02b414fd842f",
+      "age_hours": 141.4,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'attest', not this runner's derived 'viv-1aa3fcaa140a9ff2'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_ec43c06c39be5c763765ebb1",
+      "world_id": "wld_7363d9b563b5fd4877dc1a44",
+      "spec_hash": "sha256:5d025174866b2a10016384954010c2bf303323cd1b5fb2b64a3f7b1c7cf87872",
+      "age_hours": 141.9,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'primary', not this runner's derived 'viv-5d025174866b2a10'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_58701a45327ae3877ee83d0a",
+      "world_id": "wld_c1e0d0cc7a9af771e4dfac93",
+      "spec_hash": "sha256:24c4089488e1aaea9bf22978de6feadc93740036f9300551aef61ad8d1d1bada",
+      "age_hours": 141.9,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'replay', not this runner's derived 'viv-24c4089488e1aaea'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_5deffa424959f85ea70e64e8",
+      "world_id": "wld_bdf26714f2480addb9274c45",
+      "spec_hash": "sha256:608edb68c066ac50800a9e8039bf70ef2e8bac227b3c083bfdab4b4bbacb1902",
+      "age_hours": 141.9,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'attest', not this runner's derived 'viv-608edb68c066ac50'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_8d66eafbf67ba47d0846efc6",
+      "world_id": "wld_bdf26714f2480addb9274c45",
+      "spec_hash": "sha256:1aa3fcaa140a9ff20462c086d284d4afcadc4d1ddaf901da62ca02b414fd842f",
+      "age_hours": 141.9,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'attest', not this runner's derived 'viv-1aa3fcaa140a9ff2'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_e1eeb3814e72b61950e921e0",
+      "world_id": "wld_573affe6381e19093e585507",
+      "spec_hash": "sha256:2bfd14f43d17fc7cea24e0917a8879b4b2f880b8baeec1b9d90fbaad655e71bd",
+      "age_hours": 164.9,
+      "unclaimed_work": 1,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'I1b', not this runner's derived 'viv-2bfd14f43d17fc7c'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_fc42a553047358ab40dceff6",
+      "world_id": "wld_e764879adbf860aca37e4f95",
+      "spec_hash": "sha256:2bfd14f43d17fc7cea24e0917a8879b4b2f880b8baeec1b9d90fbaad655e71bd",
+      "age_hours": 164.9,
+      "unclaimed_work": 1,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'I1a', not this runner's derived 'viv-2bfd14f43d17fc7c'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_92ccc6ccfc23627c6cac36f1",
+      "world_id": "wld_b441f13eeee6ff0566b33b21",
+      "spec_hash": "sha256:2bfd14f43d17fc7cea24e0917a8879b4b2f880b8baeec1b9d90fbaad655e71bd",
+      "age_hours": 164.9,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'C2', not this runner's derived 'viv-2bfd14f43d17fc7c'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_1357bb08401f20f713cd1cd1",
+      "world_id": "wld_394ab25d5f8efc07dc22142d",
+      "spec_hash": "sha256:2bfd14f43d17fc7cea24e0917a8879b4b2f880b8baeec1b9d90fbaad655e71bd",
+      "age_hours": 164.9,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'C2', not this runner's derived 'viv-2bfd14f43d17fc7c'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_4feadc811e865e4d56af192c",
+      "world_id": "wld_de0a76a55e291314b789290c",
+      "spec_hash": "sha256:5041bf1f713df204784353e82f6a4a535931cb64f1f4b4a5aeaffcb720918b22",
+      "age_hours": 180.4,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'WT', not this runner's derived 'viv-5041bf1f713df204'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_3b97ce4fd5c022fbf01e84f0",
+      "world_id": "wld_ce70f4124e8da74002f87964",
+      "spec_hash": "sha256:5041bf1f713df204784353e82f6a4a535931cb64f1f4b4a5aeaffcb720918b22",
+      "age_hours": 180.4,
+      "unclaimed_work": 1,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'WT', not this runner's derived 'viv-5041bf1f713df204'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_2b2dcfd7cf962789a6a63e24",
+      "world_id": "wld_84f08c229f519b650e512803",
+      "spec_hash": "sha256:dc0d0d8448640bf197099a887496fe9ba112249aefd15781e319bad560161574",
+      "age_hours": 180.5,
+      "unclaimed_work": 1,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'HARMONIA-INTEGRATION-W0', not this runner's derived 'viv-dc0d0d8448640bf1'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_6ea6daf30c2325248425ae62",
+      "world_id": "wld_2c295788b5071eaaf64db705",
+      "spec_hash": "sha256:9d80fd5b8b1e66e0eb1a8f15644749bbdcb6304691b9d3de20aa4010cdac2bc1",
+      "age_hours": 214.9,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'p0-f5', not this runner's derived 'viv-9d80fd5b8b1e66e0'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_89f4b32da385f8cae33fac3c",
+      "world_id": "wld_fe3a9c751106ff273a767722",
+      "spec_hash": "sha256:540b7d8ff6bba4941f8bc6314ed935d87d56abb48f8cc0b582f4ab1226f5a199",
+      "age_hours": 214.9,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'p0-core', not this runner's derived 'viv-540b7d8ff6bba494'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_b783e7ed1b73282f5023ca87",
+      "world_id": "wld_35c68c54003e57a80f26f852",
+      "spec_hash": "sha256:9d80fd5b8b1e66e0eb1a8f15644749bbdcb6304691b9d3de20aa4010cdac2bc1",
+      "age_hours": 214.9,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'p0-f5', not this runner's derived 'viv-9d80fd5b8b1e66e0'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_a062eb6d69378e92d9ab8de1",
+      "world_id": "wld_09ee55389dc364ae00833843",
+      "spec_hash": "sha256:540b7d8ff6bba4941f8bc6314ed935d87d56abb48f8cc0b582f4ab1226f5a199",
+      "age_hours": 214.9,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'p0-core', not this runner's derived 'viv-540b7d8ff6bba494'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_c3b539e262fc49b995184538",
+      "world_id": "wld_7d579153d9c3c238a25c82ec",
+      "spec_hash": "sha256:9d80fd5b8b1e66e0eb1a8f15644749bbdcb6304691b9d3de20aa4010cdac2bc1",
+      "age_hours": 214.9,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'p0-f5', not this runner's derived 'viv-9d80fd5b8b1e66e0'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_cff3bf687945a0977cd7736a",
+      "world_id": "wld_1bda1347d80f6b986d02292b",
+      "spec_hash": "sha256:540b7d8ff6bba4941f8bc6314ed935d87d56abb48f8cc0b582f4ab1226f5a199",
+      "age_hours": 214.9,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'p0-core', not this runner's derived 'viv-540b7d8ff6bba494'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_a18532e0e0b26f090e2480ee",
+      "world_id": "wld_c1d7020b8962ce7bc65b86a1",
+      "spec_hash": "sha256:540b7d8ff6bba4941f8bc6314ed935d87d56abb48f8cc0b582f4ab1226f5a199",
+      "age_hours": 214.9,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'p0-core', not this runner's derived 'viv-540b7d8ff6bba494'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_7fbbdf845851d29f904a34e2",
+      "world_id": "wld_d9db75aadcc47451f75892ff",
+      "spec_hash": "sha256:540b7d8ff6bba4941f8bc6314ed935d87d56abb48f8cc0b582f4ab1226f5a199",
+      "age_hours": 214.9,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'p0-core', not this runner's derived 'viv-540b7d8ff6bba494'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_54b930481962cdeffaf98fe4",
+      "world_id": "wld_c705b21664b118e5be1b50ab",
+      "spec_hash": "sha256:5d025174866b2a10016384954010c2bf303323cd1b5fb2b64a3f7b1c7cf87872",
+      "age_hours": 219.5,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'primary', not this runner's derived 'viv-5d025174866b2a10'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_011500b7f3dc7dca07dd7930",
+      "world_id": "wld_b6db562db25869582428fad2",
+      "spec_hash": "sha256:5d025174866b2a10016384954010c2bf303323cd1b5fb2b64a3f7b1c7cf87872",
+      "age_hours": 219.6,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'primary', not this runner's derived 'viv-5d025174866b2a10'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_4f436f99578de29cb773f433",
+      "world_id": "wld_d17a970c03739ef62a921ce9",
+      "spec_hash": "sha256:df0a70382e01e4706a8ee160c72fc3763b46e35d628d839e7d491135701cd7ce",
+      "age_hours": 220.1,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 't2-A1-K0-i0-k0', not this runner's derived 'viv-df0a70382e01e470'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_053fffc292daf74a615aff08",
+      "world_id": "wld_581e3794cc5f650da6545385",
+      "spec_hash": "sha256:a9ad3ae7b7e36f66af88347c1bd06c0cb02eff3a6f30d963399242a2d14a35eb",
+      "age_hours": 220.1,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 't2-meta', not this runner's derived 'viv-a9ad3ae7b7e36f66'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_9cd6ff31add0df9467b1d2bb",
+      "world_id": "wld_c02e6702bd9a68e94a005c31",
+      "spec_hash": "sha256:17d68084a2ffd9de7c4e6ac2771eec77bf00d0794ad6fb714ec45b9af94f2fe0",
+      "age_hours": 226.0,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'dryrun-meta', not this runner's derived 'viv-17d68084a2ffd9de'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_963d2b33e06b252a2ea361a1",
+      "world_id": "wld_0740a07bfd6a0717574282be",
+      "spec_hash": "sha256:51b0d93db36ac0e75ea565b80fd09ee5a547d4e51f1de08e346c3a768b5ef49e",
+      "age_hours": 226.0,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'dr-A1-s22-k0', not this runner's derived 'viv-51b0d93db36ac0e7'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_9ae7f9723eb593fd761206ae",
+      "world_id": "wld_bb959186e38153f62e4f9997",
+      "spec_hash": "sha256:df0a70382e01e4706a8ee160c72fc3763b46e35d628d839e7d491135701cd7ce",
+      "age_hours": 226.1,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'dr-A1-s11-k0', not this runner's derived 'viv-df0a70382e01e470'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_803c8be5caaa8020e7cc1da4",
+      "world_id": "wld_d7ace91afefd93e980149341",
+      "spec_hash": "sha256:17d68084a2ffd9de7c4e6ac2771eec77bf00d0794ad6fb714ec45b9af94f2fe0",
+      "age_hours": 226.1,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'dryrun-meta', not this runner's derived 'viv-17d68084a2ffd9de'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_3b85900b6143dc70612f97bf",
+      "world_id": "wld_247c20c81b45cd40c262086f",
+      "spec_hash": "sha256:1391f4fedb101c4e1113d1595d0fb09ca48300a3f0111aaf0df1f80b24b7bace",
+      "age_hours": 226.2,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'requal-w1', not this runner's derived 'viv-1391f4fedb101c4e'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_d9c9f0c651b7044eebfb2573",
+      "world_id": "wld_fad86dfd970db7972eb0a259",
+      "spec_hash": "sha256:4835f96cb95414c1b3dd5816bcabc7ae1405283accdbdf990de0f35f07075abb",
+      "age_hours": 226.4,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'w', not this runner's derived 'viv-4835f96cb95414c1'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_bedb8826f6cd8924a1768202",
+      "world_id": "wld_a14fb5d5d29f5b0276579af4",
+      "spec_hash": "sha256:38f38fbef725fffb9fa39683d9e50f05ca8c61130c2da2322f9e9021007a2abf",
+      "age_hours": 226.4,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'w', not this runner's derived 'viv-38f38fbef725fffb'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_c22902208b9031ea64fd8f55",
+      "world_id": "wld_a14fb5d5d29f5b0276579af4",
+      "spec_hash": "sha256:0b549edd218c251f511934cc2f3bc5c7f4780e27af6b8ab4ae8d92cd94121b4a",
+      "age_hours": 226.4,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'w', not this runner's derived 'viv-0b549edd218c251f'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_678ab9c9a3d8b583ae2f438b",
+      "world_id": "wld_4aaa1193ba5956a293252e12",
+      "spec_hash": "sha256:8349c6aeffef43d49c07cdd629403e1450c9122e48cd1badfbc0cb3e3020dae7",
+      "age_hours": 226.4,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'w', not this runner's derived 'viv-8349c6aeffef43d4'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_6ba7bffea343ee1e6b48a817",
+      "world_id": "wld_b78d1f5f4b71218f1dfcb3ba",
+      "spec_hash": "sha256:8349c6aeffef43d49c07cdd629403e1450c9122e48cd1badfbc0cb3e3020dae7",
+      "age_hours": 226.4,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'w', not this runner's derived 'viv-8349c6aeffef43d4'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_a1bf51f7cdf742ded13929ee",
+      "world_id": "wld_411d6ee330ed2988c3b8807b",
+      "spec_hash": "sha256:5d025174866b2a10016384954010c2bf303323cd1b5fb2b64a3f7b1c7cf87872",
+      "age_hours": 226.4,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'primary', not this runner's derived 'viv-5d025174866b2a10'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    },
+    {
+      "exp_id": "exp_49cf657c775f83d5c12f51e8",
+      "world_id": "wld_ff97e5c5d11144396f40a84d",
+      "spec_hash": "sha256:5d025174866b2a10016384954010c2bf303323cd1b5fb2b64a3f7b1c7cf87872",
+      "age_hours": 226.4,
+      "unclaimed_work": 0,
+      "verdict": "NOT_FROM_THIS_REGISTER",
+      "why": "world named 'primary', not this runner's derived 'viv-5d025174866b2a10'. Another producer's -- not this queue's to judge.",
+      "named_by_a_row": false,
+      "rows": []
+    }
+  ],
+  "world_names_supplied": true,
+  "note": "ABANDONED is a statement about the STATE MACHINE and not an estimate: a terminal row is frozen whole by the queue's BEFORE UPDATE trigger, so its work cannot be claimed again. PENDING means a live row still exists. NOT_FROM_THIS_REGISTER is not a judgement, it is the boundary -- this seat has no standing over an orphan it did not produce. RUNNER_MADE_UNREGISTERED needs world_names and is the one to read first: work this runner committed with no register row behind it, which nobody can adjudicate.",
+  "scan": {
+    "committed": 3868,
+    "unobserved": 119,
+    "db": "F:\\Prometheus-data\\sfe\\engine.db"
+  }
+}
