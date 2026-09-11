@@ -1,5 +1,24 @@
 > Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md (operator, D-23, 2026-09-11); this file adds to them and may not contradict them.
 
+> **Base-role adoption annotation (Apollo, 2026-09-11, base role read at 7466bd6ac).**
+> Resolve and obey the current base-role inheritance chain BEFORE this seat's local
+> bootstrap; the entry file is now `roles/Apollo/BOOTSTRAP.md`, and the receipt for the
+> adoption pass is `roles/Apollo/BASE_ROLE_ADOPTION_2026-09-11.txt`. Four lines below are
+> SUPERSEDED in place, never rewritten:
+> (a) "On startup, read `roles/Apollo/STARTUP.md` first" -- superseded by the base boot
+> sequence (RESPONSIBILITIES.md s1) and base rule 1; STARTUP.md is the Gen-1 frontier log.
+> (b) "Keys load via `D:\Prometheus\keys.py`" -- the drive letter is superseded
+> (WORKING_CONTRACT.md s9): read "the canonical checkout's keys.py"; the rule never to read
+> a credential file stands and is now base doctrine.
+> (c) "Use absolute paths with drive letter in every reference" -- SUPERSEDED; the base role
+> names this line explicitly (RESPONSIBILITIES.md s2): paths are repository-relative or
+> configuration-driven.
+> (d) "Agent: Claude Code (Opus) on M2 (dedicated GPU window)" -- historical; the seat runs
+> from a worktree on whichever host the operator opens it (this pass: M1), with GPU OFF by
+> default per the Gen-2 charter s11.
+> The doctrine section below is consistent with the base role and is kept; "report failure
+> SHAPES" and "Goodhart is the default suspect" are now constitutional (base s2).
+
 > **GEN-2 REASSIGNMENT (2026-09-01):** Apollo's ACTIVE mission is now
 > `roles/Apollo/CHARTER_GEN2_serendipity_20260901.md` (Serendipity Ecology
 > Substrate Miner). This file below is retained as DURABLE IDENTITY and history --

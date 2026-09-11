@@ -1,49 +1,68 @@
-APOLLO SERENDIPITY STATUS  (ASCII; charter S10)
-timestamp                 : 2026-09-01T07:42Z (Gen-2 first boot + vertical slice)
+APOLLO STATUS  (ASCII; Gen-2 charter s10; the seat's equivalent of STATUS.md)
+timestamp                 : 2026-09-11T12:05Z (base-role adoption pass)
+currency                  : this file is current as of the timestamp; older sections below it
+                            are dated and stay as record
+workspace                 : F:\Prometheus-worktrees\apollo-base-role (host convention, not a rule)
+branch / base_sha         : apollo/base-role-adopt-2026-09-11 / 7466bd6ac
+entry file                : roles/Apollo/BOOTSTRAP.md (base role first, then Gen-2 charter s0a)
+disposition               : SCHEDULED MINING SUSPENDED (HITL 2026-09-01). Zero routine search
+                            compute. No campaign, no endpoint pivot, no budget rescue.
+authorized_action         : ONE Source Viability Gate probe vs the next Foundry release.
+gate_eligibility (NEW)    : INDETERMINATE -- no eligible input (measured 2026-09-11):
+                            /v0 Foundry :8799 = release 50b5c232, PID 23276 since 2026-08-30,
+                            UNCHANGED since the FAIL; SFE :8811 /v2 schema 8 (5380cb90) has
+                            NO search/evaluate routes and none of stackvm/push/treegp.
+                            apollo/cycles/S1_archive_value/gate/GATE_ELIGIBILITY_2026-09-11.json
+                            Nothing fired; nothing could have fired.
+operator_decision_needed  : APOLLO-04 retire scheduled mining now (the ruling's own branch for
+                            gate FAIL / Q4 unmet) OR re-scope the gate to a future search-capable
+                            engine. Recommendation: retire now; infra stays dormant on-demand.
+                            APOLLO-22 seat disposition after retirement.
+what_is_PRESENT           : adapter/replay/fossil/gate code under apollo/serendipity/ (tracked)
+what_is_ACTIVE            : nothing. No scheduled task, no process, no lock, no worktree before
+                            this pass (schtasks, ps, git worktree list: verified).
+what_is_PRODUCTIVE        : this pass: 1 eligibility artifact, 1 delegation (Archaeon, H3
+                            dead-stream control), 1 defect report (Mnemosyne, EW timeouts).
+what_is_VALID             : the S1 FAIL on 50b5c232 is sound on G1 only; its non-abs pop_mass
+                            values are INVALID (pre-fix). See CALIBRATION.md CAL-09.
+credentials_this_host     : preflight NOT READY (kit_present false, token_present false,
+                            cert_present false at the configured kit path). The cert exists
+                            elsewhere on this host; the Apollo token's location on M1 is
+                            unknown to this seat. Backlog APOLLO-05. No credential was read.
+foundry_v0_transport      : TLS default negotiation fails intermittently from this client
+                            (000 x4 then 401 x2 over 6 tries); TLS 1.2 pinned answers 3/3.
+                            The service is UP. A transport failure is never a service state.
+evidence_wiki             : search_evidence read-timeout 60 s x3 from M1 at 11:4x UTC while
+                            /health answered empty. Reported to Mnemosyne (APOLLO-06).
+                            APOLLO-07/08 (wiki submissions) wait on it.
+legacy_cleanup            : Task 1 E9 scorer DONE (0.0476 raw / 0.0667 mix on Charon's blind
+                            battery, 5097b0c8f). Task 2 state injection OWED, not authorised
+                            under s0a (APOLLO-10, XL-adjacent: needs the operator's word).
+program_lesson (standing) : archive coverage and diversity are UNSAFE observables: on a dead
+                            world MAP-Elites coverage was 0.1875 (12/64), IDENTICAL to the live
+                            affine world, and QD score 0.83 vs 0.08 (noise fills cells).
+                            Offered to H3 as a negative control (APOLLO-02).
+backlog                   : roles/Apollo/BACKLOG_H0H5.md (22 rows, 2 XL). First five: 01-05.
+calibration               : roles/Apollo/CALIBRATION.md (11 rows; CAL-11 is from today).
+journal                   : roles/Apollo/journal/2026-09-11.md
+receipt                   : roles/Apollo/BASE_ROLE_ADOPTION_2026-09-11.txt
+errors                    : none in this pass beyond CAL-11 (caught before any file).
+
+--------------------------------------------------------------------------------
+PRIOR STATUS (2026-09-01T07:42Z, Gen-2 first boot + vertical slice) -- kept as record
 foundry_version           : 50b5c2327c64bf11 (git 71b29593, 211 files) LIVE, auth OK
 apollo_version            : gen2-slice-v0
-charter                   : roles/Apollo/CHARTER_GEN2_serendipity_20260901.md
-active_namespace_count    : 1 (client_id=apollo, campaign=slice_pilot)
 worlds_seen               : 3 engines (stackvm-v1, push-pyshgp, treegp-deap)
 worlds_explored           : 1 Apollo-authored task (f(x)=3x+1, stackvm-v1)
 micro_runs                : 2 bursts (random, map_elites) @ budget 300
-organisms_evaluated       : 1 create_random + 2 search bursts
 new_archive_cells         : map_elites 11/64 cells, coverage 0.172, qd 0.40
-new_boundary_pairs        : 0
-new_failure_classes       : 0
-new_transfer_events       : 0
-new_recurring_motifs      : 0
 new_fossils               : 1 (serendipity_slice/slice-20260901T073947Z_d94a88cb5130.json)
 replay_success_rate       : 1/1 (event 93757, match=True, no engine drift)
-representation_survival   : n/a (lane B not yet exercised)
-lane_d_compute_fraction   : 0.00
-lane_d_novel_events       : 0
-queue_depth               : 0
---
-VERTICAL SLICE            : VERIFIED end-to-end (charter S19):
-                            world -> burst(random|map_elites) -> create_random organism ->
-                            evaluate -> genotype+lineage capture -> replay(match=True) -> fossil.
+VERTICAL SLICE            : VERIFIED end-to-end (charter S19)
 SCIENCE (honest null)     : at budget 300 NEITHER map_elites NOR random solved f(x)=3x+1
-                            (both best_fitness 0.1). map_elites' only differentiation was a QD
-                            archive (coverage 0.172); no solve advantage over random at this budget.
-                            Do not read activity as progress -- this is a plumbing milestone, not
-                            a capability result.
-adapter_boundary          : foundry_creds / world_adapter / eval_adapter / fossil all live and
-                            proven. ProvenanceAdapter = fossil.provenance_hash. Thin by design.
-legacy_cleanup            : Task1 E9-scorer DONE (repro 0.0667). Task2 state-injection OWED.
-ecology_peers             : D-12/D-13 (ZeusE), Harmonia A (genesis/harmonia_a/d14). No collisions.
-blockers                  : /v0/search is synchronous+slow (~60-75s per 300-eval burst); size
-                            budgets modestly on the shared host. New Foundry release expected
-                            ~2026-09-02 -> revise FOUNDRY_API_NOTES.md + PIN then.
-last_job                  : Source Viability Gate build + validation run (stackvm)
+                            (both best_fitness 0.1). Plumbing milestone, not a capability result.
 S1_status                 : BLOCKED / UNSCORED -- 'NO NONTRIVIAL SOURCE POPULATION AT
                             FEASIBLE COST' (HITL ruling 2026-09-01).
-apollo_mining             : SUSPENDED. Zero routine search compute on current substrate.
-                            No new campaign / no behavioural pivot / NO budget rescue.
 gate                      : source_viability_gate.py built + machine-enforced in s1_campaign
-                            (scored run REFUSED without a PASS artifact for engine+release).
-authorized_next           : ONE Source Viability Gate probe vs the next Foundry release.
-                            Gate FAIL or Q4 unmet -> RETIRE scheduled mining; keep infra dormant.
-ruling                    : apollo/cycles/S1_archive_value/RULING_2026-09-01.md (decision tree)
-program_lesson            : diversity/archive-coverage are UNSAFE observables (dead world = 19% cov)
+ruling                    : apollo/cycles/S1_archive_value/RULING_2026-09-01.md
 errors                    : treegp-deap suspected mis-wired for integer-induction tasks (0.000)

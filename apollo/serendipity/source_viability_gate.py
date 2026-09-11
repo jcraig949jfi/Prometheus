@@ -155,4 +155,6 @@ def main():
 
 
 if __name__ == "__main__":
+    from workspace_guard import refuse_canonical  # D-23: never from the canonical checkout
+    refuse_canonical("source_viability_gate")
     raise SystemExit(main())

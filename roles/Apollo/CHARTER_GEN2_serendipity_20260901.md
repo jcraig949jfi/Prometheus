@@ -1,3 +1,31 @@
+> Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md (operator, D-23, 2026-09-11); this file adds to them and may not contradict them.
+
+> **Base-role adoption annotation (Apollo, 2026-09-11, base role read at 7466bd6ac).**
+> Resolve and obey the current base-role inheritance chain BEFORE this charter. Entry file:
+> `roles/Apollo/BOOTSTRAP.md`. Receipt: `roles/Apollo/BASE_ROLE_ADOPTION_2026-09-11.txt`.
+> The banner above was added in this pass: the inheritance register stamped only
+> `CHARTER.md`, and this file is the ACTIVE mission document. Annotations, in place:
+> (a) s0a's premise "the next Foundry release" was MEASURED on 2026-09-11 and does not hold in
+> the specified form: the /v0 Foundry the gate is pinned to is still release 50b5c232 (same
+> process, PID 23276, started 2026-08-30), and the successor service (SFE /v2, schema 8) exposes
+> no search or evaluate surface and none of the three engines. The gate's INDETERMINATE branch
+> is recorded at `apollo/cycles/S1_archive_value/gate/GATE_ELIGIBILITY_2026-09-11.json`; the
+> operator decision this creates is backlog APOLLO-04. Nothing in s0a is weakened by this:
+> mining stays SUSPENDED.
+> (b) "canonical `remote.py` lives at `D:\ZeusE\d12\client\remote.py`" -- the drive-letter
+> path is superseded (WORKING_CONTRACT.md s9); the tracked copy `apollo/serendipity/remote.py`
+> is what runs, and a newer upstream is integrated by copying it there with its release pin.
+> (c) s8-9 jobs A-L: NEVER INSTALLED in the scheduler (verified 2026-09-11: no Apollo task in
+> `schtasks`); DORMANT by ruling; registered as such in `roles/base-role/MONITORS.md` (base
+> rule 7, dormancy must be visible). No immortal process exists either.
+> (d) s10 `roles/Apollo/STATUS.txt` is this seat's equivalent of the base role's STATUS.md
+> (RESPONSIBILITIES.md s3 allows the seat's existing file); it stays ASCII.
+> (e) s10a review packets restate base s4 (proactive packets, three ways); kept as the dated
+> record of the standing order.
+> (f) Every Foundry entry point (`s1_campaign.py`, `slice_pilot.py`, `source_viability_gate.py`)
+> now refuses to run from the canonical checkout (`apollo/serendipity/workspace_guard.py`,
+> D-23) and stamps the workspace receipt on its artifact.
+
 # APOLLO CHARTER -- GEN-2: SERENDIPITY ECOLOGY SUBSTRATE MINER
 
 **Effective:** September 2026 (installed 2026-09-01)
