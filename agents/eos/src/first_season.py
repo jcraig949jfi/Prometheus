@@ -89,9 +89,13 @@ def _claim_for(row: Dict[str, Any]) -> Claim:
                      consumer="roles/Vivarium/CHARTER.md",
                      proposed_by="eos-intake/first-season")
     rationale = BAIT_RATIONALE if row.get("provenance") == "constructed-bait" else CLEAN_RATIONALE
+    # NEMESIS-01b: this constructor generates a referent from the item's own
+    # id, inside a directory that has never existed. Every claim it makes
+    # fails identically whatever the item says. It is marked AUTO so the gate
+    # returns NOT_EXAMINED instead of banking 49 non-decisions as refusals.
     return Claim(sought="ANCHOR", rationale=rationale,
                  referent=_plausible_missing_referent(row), falsifier=FALSIFIER,
-                 proposed_by="eos-intake/first-season")
+                 proposed_by="eos-intake/auto-constructor")
 
 
 # ---------------------------------------------------------------------------
@@ -187,10 +191,7 @@ def test3_intake(sample: Dict[str, Any]) -> Tuple[Dict[str, Any], List[Any]]:
                            rationale=("A source this seat called today: 2 requests, both HTTP 200, "
                                       "24 items, 431 ms and 244 ms, budget at or under 75 percent of "
                                       "the documented 1-request-per-3-seconds."),
-                           observation={"endpoint": rec["endpoint"], "observed_at": rec["observed_at"],
-                                        "status": rec["status"], "latency_ms": rec["latency_ms"],
-                                        "observed_by": rec["observed_by"],
-                                        "observed_limit": rec.get("documented_limit")},
+                           observation_ref="roles/Eos/intake/probe_arxiv.json#0",
                            proposed_by="eos-intake/first-season")
     documented = Item(id="resource-documented", title="A provider free tier, from its pricing page",
                       source="api_registry.json", url="", fetched_at="2026-04-01T07:21:55+00:00",
@@ -201,16 +202,28 @@ def test3_intake(sample: Dict[str, Any]) -> Tuple[Dict[str, Any], List[Any]]:
                                           "observed_at": "2026-04-01T07:21:55+00:00",
                                           "observed_by": "provider-documentation"},
                              proposed_by="eos-intake/first-season")
+    forged_claim = Claim(sought="RESOURCE",
+                         rationale="A fabricated observation carrying the correct observer label.",
+                         observation={"endpoint": "https://nemesis-never-called.invalid/v1",
+                                      "status": 200, "latency_ms": 12, "bytes": 4096,
+                                      "observed_at": datetime.now(timezone.utc).isoformat(),
+                                      "observed_by": "eos-intake"},
+                         proposed_by="eos-intake/nemesis-forgery-replay")
     vm = classify(measured, measured_claim)
     vd = classify(documented, documented_claim)
-    verdicts.extend([vm, vd])
+    forged = Item(id="resource-forged", title="A fabricated observation (NEMESIS-01 replay)",
+                  source="nemesis", url="", fetched_at="2026-09-11T00:00:00+00:00",
+                  provenance="NEMESIS-01 forgery, replayed against the repaired gate")
+    vf = classify(forged, forged_claim)
+    verdicts.extend([vm, vd, vf])
 
     return {"per_population": per_pop,
             "pop_a_survivors": [v.item_id for v in verdicts if v.item_id.startswith("popA-") and not v.refused],
             "pop_b_survivors": [v.item_id for v in verdicts if v.item_id.startswith("popB-") and not v.refused],
             "pop_c_survivors": [v.item_id for v in verdicts if v.item_id.startswith("bait-") and not v.refused],
             "resource_measured": vm.state, "resource_measured_reason": vm.reason,
-            "resource_documented": vd.state, "resource_documented_reason": vd.reason}, verdicts
+            "resource_documented": vd.state, "resource_documented_reason": vd.reason,
+            "resource_forged_NEMESIS01_replay": vf.state, "resource_forged_reason": vf.reason}, verdicts
 
 
 def test4_attack(sample: Dict[str, Any]) -> Dict[str, Any]:
@@ -268,7 +281,8 @@ def main() -> int:
     print("T3 per population:", json.dumps(t3["per_population"]))
     print("T3 survivors: A={} B={} C={}".format(
         len(t3["pop_a_survivors"]), len(t3["pop_b_survivors"]), len(t3["pop_c_survivors"])))
-    print("T3 resource: measured={} documented={}".format(t3["resource_measured"], t3["resource_documented"]))
+    print("T3 resource: measured={} documented={} forged={}".format(
+        t3["resource_measured"], t3["resource_documented"], t3["resource_forged_NEMESIS01_replay"]))
     return 0
 
 
