@@ -1,0 +1,349 @@
+{
+ "n_nous_entries": 5918,
+ "n_ledger_keys": 6651,
+ "ledger_status_counts": {
+  "scrap": 6266,
+  "forged": 385
+ },
+ "ledger_keys_not_in_any_nous_run": 1212,
+ "attempted": {
+  "n_attempted": 5625,
+  "frac_attempted": 0.9505,
+  "n_api_call_failed": 2176,
+  "n_unproductive_never_attempted": 289,
+  "n_unproductive_attempted": 10
+ },
+ "attempted_by_run": {
+  "20260324_112138": {
+   "n": 3,
+   "attempted": 3,
+   "api_failed": 0,
+   "forged": 0,
+   "hp": 0
+  },
+  "20260324_115258": {
+   "n": 87,
+   "attempted": 85,
+   "api_failed": 20,
+   "forged": 5,
+   "hp": 2
+  },
+  "20260324_131206": {
+   "n": 696,
+   "attempted": 669,
+   "api_failed": 223,
+   "forged": 130,
+   "hp": 306
+  },
+  "20260324_214225": {
+   "n": 664,
+   "attempted": 629,
+   "api_failed": 192,
+   "forged": 144,
+   "hp": 307
+  },
+  "20260325_062155": {
+   "n": 184,
+   "attempted": 178,
+   "api_failed": 69,
+   "forged": 33,
+   "hp": 68
+  },
+  "20260325_085453": {
+   "n": 77,
+   "attempted": 71,
+   "api_failed": 17,
+   "forged": 5,
+   "hp": 0
+  },
+  "20260325_132552": {
+   "n": 3030,
+   "attempted": 2864,
+   "api_failed": 1142,
+   "forged": 87,
+   "hp": 23
+  },
+  "20260327_043111": {
+   "n": 88,
+   "attempted": 87,
+   "api_failed": 31,
+   "forged": 2,
+   "hp": 0
+  },
+  "20260327_070604": {
+   "n": 34,
+   "attempted": 33,
+   "api_failed": 10,
+   "forged": 0,
+   "hp": 0
+  },
+  "20260327_075209": {
+   "n": 145,
+   "attempted": 135,
+   "api_failed": 48,
+   "forged": 3,
+   "hp": 1
+  },
+  "20260327_143330": {
+   "n": 305,
+   "attempted": 295,
+   "api_failed": 132,
+   "forged": 1,
+   "hp": 5
+  },
+  "20260327_203534": {
+   "n": 605,
+   "attempted": 576,
+   "api_failed": 292,
+   "forged": 3,
+   "hp": 7
+  }
+ },
+ "ALL_attempted": {
+  "n": 5625,
+  "n_forged": 413,
+  "forge_rate": 0.0734,
+  "auc_composite": 0.7551,
+  "auc_composite_null": {
+   "mean": 0.4998,
+   "p975": 0.5324,
+   "p025": 0.4769
+  },
+  "auc_implementability": 0.2564,
+  "n_high_potential": 686,
+  "forge_rate_high_potential": 0.2595,
+  "forge_rate_not_high_potential": 0.0476,
+  "forge_rate_composite_ge7": 0.1384,
+  "forge_rate_composite_lt7": 0.0254
+ },
+ "ALL_attempted_excl_apifail": {
+  "n": 3449,
+  "n_forged": 413,
+  "forge_rate": 0.1197,
+  "auc_composite": 0.7784,
+  "auc_composite_null": {
+   "mean": 0.4998,
+   "p975": 0.5314,
+   "p025": 0.4687
+  },
+  "auc_implementability": 0.2683,
+  "n_high_potential": 542,
+  "forge_rate_high_potential": 0.3284,
+  "forge_rate_not_high_potential": 0.0808,
+  "forge_rate_composite_ge7": 0.2598,
+  "forge_rate_composite_lt7": 0.0377
+ },
+ "v1_attempted_excl_apifail": {
+  "n": 1060,
+  "n_forged": 312,
+  "forge_rate": 0.2943,
+  "auc_composite": 0.5757,
+  "auc_composite_null": {
+   "mean": 0.5011,
+   "p975": 0.5377,
+   "p025": 0.4632
+  },
+  "auc_implementability": 0.5405,
+  "n_high_potential": 521,
+  "forge_rate_high_potential": 0.3378,
+  "forge_rate_not_high_potential": 0.2523,
+  "forge_rate_composite_ge7": 0.321,
+  "forge_rate_composite_lt7": 0.0776
+ },
+ "v2_attempted_excl_apifail": {
+  "n": 2389,
+  "n_forged": 101,
+  "forge_rate": 0.0423,
+  "auc_composite": 0.6527,
+  "auc_composite_null": {
+   "mean": 0.4983,
+   "p975": 0.5529,
+   "p025": 0.4442
+  },
+  "auc_implementability": 0.5711,
+  "n_high_potential": 21,
+  "forge_rate_high_potential": 0.0952,
+  "forge_rate_not_high_potential": 0.0418,
+  "forge_rate_composite_ge7": 0.0848,
+  "forge_rate_composite_lt7": 0.0355
+ },
+ "by_forge_day": {
+  "2026-03-24": {
+   "n": 71,
+   "forged": 6,
+   "rate": 0.0845,
+   "n_v1": 68,
+   "n_v2": 3,
+   "auc_composite": 0.5141,
+   "auc_impl": 0.541,
+   "rate_hp": null,
+   "rate_not_hp": 0.0845
+  },
+  "2026-03-25": {
+   "n": 255,
+   "forged": 148,
+   "rate": 0.5804,
+   "n_v1": 223,
+   "n_v2": 32,
+   "auc_composite": 0.4397,
+   "auc_impl": 0.4856,
+   "rate_hp": 0.5655,
+   "rate_not_hp": 0.6092
+  },
+  "2026-03-26": {
+   "n": 738,
+   "forged": 173,
+   "rate": 0.2344,
+   "n_v1": 502,
+   "n_v2": 236,
+   "auc_composite": 0.5201,
+   "auc_impl": 0.4408,
+   "rate_hp": 0.2431,
+   "rate_not_hp": 0.2289
+  },
+  "2026-03-27": {
+   "n": 568,
+   "forged": 60,
+   "rate": 0.1056,
+   "n_v1": 220,
+   "n_v2": 348,
+   "auc_composite": 0.5659,
+   "auc_impl": 0.2945,
+   "rate_hp": 0.1529,
+   "rate_not_hp": 0.0973
+  },
+  "2026-03-28": {
+   "n": 11,
+   "forged": 0,
+   "rate": 0.0,
+   "n_v1": 1,
+   "n_v2": 10
+  },
+  "2026-03-31": {
+   "n": 24,
+   "forged": 0,
+   "rate": 0.0,
+   "n_v1": 2,
+   "n_v2": 22
+  },
+  "2026-05-16": {
+   "n": 295,
+   "forged": 2,
+   "rate": 0.0068,
+   "n_v1": 7,
+   "n_v2": 288,
+   "auc_composite": 0.4104,
+   "auc_impl": 0.4027,
+   "rate_hp": null,
+   "rate_not_hp": 0.0068
+  },
+  "2026-05-17": {
+   "n": 265,
+   "forged": 7,
+   "rate": 0.0264,
+   "n_v1": 6,
+   "n_v2": 259,
+   "auc_composite": 0.546,
+   "auc_impl": 0.5219,
+   "rate_hp": null,
+   "rate_not_hp": 0.0264
+  },
+  "2026-05-18": {
+   "n": 234,
+   "forged": 6,
+   "rate": 0.0256,
+   "n_v1": 8,
+   "n_v2": 226,
+   "auc_composite": 0.4463,
+   "auc_impl": 0.4342,
+   "rate_hp": null,
+   "rate_not_hp": 0.0256
+  },
+  "2026-05-19": {
+   "n": 300,
+   "forged": 6,
+   "rate": 0.02,
+   "n_v1": 4,
+   "n_v2": 296,
+   "auc_composite": 0.5266,
+   "auc_impl": 0.4651,
+   "rate_hp": null,
+   "rate_not_hp": 0.02
+  },
+  "2026-05-22": {
+   "n": 204,
+   "forged": 2,
+   "rate": 0.0098,
+   "n_v1": 9,
+   "n_v2": 195,
+   "auc_composite": 0.3267,
+   "auc_impl": 0.6894,
+   "rate_hp": null,
+   "rate_not_hp": 0.0098
+  },
+  "2026-05-26": {
+   "n": 215,
+   "forged": 1,
+   "rate": 0.0047,
+   "n_v1": 1,
+   "n_v2": 214,
+   "auc_composite": 0.3972,
+   "auc_impl": 0.8411,
+   "rate_hp": null,
+   "rate_not_hp": 0.0047
+  },
+  "2026-05-27": {
+   "n": 232,
+   "forged": 2,
+   "rate": 0.0086,
+   "n_v1": 1,
+   "n_v2": 231,
+   "auc_composite": 0.5022,
+   "auc_impl": 0.35,
+   "rate_hp": null,
+   "rate_not_hp": 0.0086
+  },
+  "2026-05-28": {
+   "n": 37,
+   "forged": 0,
+   "rate": 0.0,
+   "n_v1": 8,
+   "n_v2": 29
+  }
+ },
+ "stratified_by_forge_day": {
+  "auc_composite_obs": 0.5194,
+  "null_mean": 0.4994,
+  "null_p025": 0.4638,
+  "null_p975": 0.5345,
+  "frac_null_ge_obs": 0.12,
+  "auc_implementability_obs": 0.4182
+ },
+ "reason_by_regime_v1": {
+  "trap_battery_failed": 605,
+  "api_call_failed": 504,
+  "forged": 312,
+  "validation": 97,
+  "scrap": 46
+ },
+ "reason_by_regime_v2": {
+  "api_call_failed": 1672,
+  "trap_battery_failed": 1670,
+  "validation": 592,
+  "forged": 101,
+  "wall_clock_timeout": 19,
+  "scrap": 7
+ },
+ "high_potential_by_regime": {
+  "v1": {
+   "n": 1634,
+   "hp": 683,
+   "frac": 0.418
+  },
+  "v2": {
+   "n": 4284,
+   "hp": 36,
+   "frac": 0.0084
+  }
+ }
+}

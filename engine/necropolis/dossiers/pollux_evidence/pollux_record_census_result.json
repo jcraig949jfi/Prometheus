@@ -1,0 +1,228 @@
+{
+ "script": "pollux_record_census.py",
+ "records": [
+  {
+   "date": "2026-05-25",
+   "path": "pivot/charon_swarm_diminishing_returns_2026-05-25.md",
+   "line": 55,
+   "found": true,
+   "needle": "Was 100% deterministic; auto-growth patch (today)",
+   "asserts": "PRIMARY OBSERVATION during the run: per-pair output is deterministic; v0.6 settle/replace patch is the response",
+   "kind": "primary_observation"
+  },
+  {
+   "date": "2026-05-25",
+   "path": "pivot/charon_swarm_diminishing_returns_2026-05-25.md",
+   "line": 185,
+   "found": true,
+   "needle": "POLLUX-* short-circuits with `stygian_pollux_survivor_loader_pending`",
+   "asserts": "PRIMARY OBSERVATION: the Stygian survivor path is a stub (E9, ~120 LOC, never built)",
+   "kind": "primary_observation"
+  },
+  {
+   "date": "2026-05-27",
+   "path": "pivot/charon_swarm_2026-05-27.md",
+   "line": 70,
+   "found": true,
+   "needle": "pair=narrow_band_1.10_1.20_vs_1.30_1.50 kp=pollux_sign_flips_under_normalization",
+   "asserts": "PRIMARY OBSERVATION: 21 ticks, last summary; a verdict string identical to today's rescan",
+   "kind": "primary_observation"
+  },
+  {
+   "date": "2026-05-28",
+   "path": "pivot/agent_roster_2026-05-28.md",
+   "line": 36,
+   "found": true,
+   "needle": "| Pollux | M2 | tool | active | 28m | 43 ev |",
+   "asserts": "PRIMARY OBSERVATION: 28-min cadence, 43 events by 05-28",
+   "kind": "primary_observation"
+  },
+  {
+   "date": "2026-06-07",
+   "path": "roles/Ergon/GREEDY_FOLLOWUP_PROGRESS_2026-06-07.md",
+   "line": 50,
+   "found": true,
+   "needle": "pollux gold claims are all-False templated",
+   "asserts": "PRIMARY OBSERVATION by the only training consumer: every Pollux row labelled False; slice 1.0 -> 0.395 without it",
+   "kind": "primary_observation"
+  },
+  {
+   "date": "2026-06-10",
+   "path": "aporia/docs/program_audit_2026-06-10.md",
+   "line": 118,
+   "found": true,
+   "needle": "Pollux produced real signal: 39 PROMOTED correlations surviving mean-spacing",
+   "asserts": "CERTIFICATE: 'real signal' (39 PROMOTED / 86 REJECTED) with no null and no check of the raw leg",
+   "kind": "interpretation"
+  },
+  {
+   "date": "2026-06-10",
+   "path": "aporia/docs/program_audit_2026-06-10.md",
+   "line": 192,
+   "found": true,
+   "needle": "39 PROMOTED pairs (real, scale-artifact-controlled)",
+   "asserts": "CERTIFICATE repeated as a program-level result",
+   "kind": "interpretation"
+  },
+  {
+   "date": "2026-06-22",
+   "path": "pivot/REASSESSMENT_2026-06-22_consolidated.md",
+   "line": 754,
+   "found": true,
+   "needle": "keep Hecate+Pollux+Moros; Pollux = real signal",
+   "asserts": "CERTIFICATE: LIVE (reduced), 'real signal'",
+   "kind": "interpretation"
+  },
+  {
+   "date": "2026-06-23",
+   "path": "pivot/COMPONENT_DISPOSITION_PLAN_2026-06-23.md",
+   "line": 66,
+   "found": true,
+   "needle": "| 34 | **Pollux** | M2 | REVIVE |",
+   "asserts": "CERTIFICATE: REVIVE, 'Real signal'",
+   "kind": "interpretation"
+  },
+  {
+   "date": "2026-06-24",
+   "path": "pivot/COMPONENT_DOSSIERS_2026-06-24.md",
+   "line": 396,
+   "found": true,
+   "needle": "ALL 286 ledger rows have corr_raw=1.0",
+   "asserts": "PRIMARY OBSERVATION (from the ledger, then present): the raw leg is constant; typed as tautology; RETIRE-after-HITL",
+   "kind": "primary_observation"
+  },
+  {
+   "date": "2026-06-24",
+   "path": "pivot/COMPONENT_DOSSIERS_2026-06-24.md",
+   "line": 396,
+   "found": true,
+   "needle": "The Ergon Learner has ZERO references to generator_id=pollux",
+   "asserts": "CERTIFICATE, FALSE on its own tree: ergon/learner/greedy/sources.py source='pollux' landed 7e38227ee 2026-06-10",
+   "kind": "interpretation"
+  },
+  {
+   "date": "2026-06-24",
+   "path": "pivot/PORTFOLIO_FUTURE_OPTIONS_2026-06-24.md",
+   "line": 47,
+   "found": true,
+   "needle": "correlates two *sorted* arrays",
+   "asserts": "CERTIFICATE: measurement bug; overturns the 06-22 keep",
+   "kind": "interpretation"
+  },
+  {
+   "date": "2026-08-12",
+   "path": "charon/CHARON_SESSION_2026-08-12.md",
+   "line": 174,
+   "found": true,
+   "needle": "computes Pollux's statistic on sorted and on shuffled inputs and print both",
+   "asserts": "PRESCRIPTION for the tautology-verification script; not executed until pollux_instrument_null.py (this dossier)",
+   "kind": "prescription"
+  },
+  {
+   "date": "2026-08-12",
+   "path": "aporia/docs/frontier_leverage_reassessment_2026-08-12.md",
+   "line": 70,
+   "found": true,
+   "needle": "tautology-verification pass** on Hecate / Pollux / Moros /",
+   "asserts": "PRESCRIPTION repeated as the immediate target",
+   "kind": "prescription"
+  },
+  {
+   "date": "2026-08-20",
+   "path": "engine/queues/PROF_TRIAGE.jsonl",
+   "line": 34,
+   "found": true,
+   "needle": "\"agent\": \"Pollux\", \"kind\": \"tool\", \"lifecycle\": \"active\", \"binding\": \"VACUOUS-NO-SOLVER\"",
+   "asserts": "CERTIFICATE: not a solver (profiling triage); lifecycle still 'active' 82 days after the fleet halt",
+   "kind": "interpretation"
+  },
+  {
+   "date": "2026-08-21",
+   "path": "engine/ledger/AGENT_AUTOPSIES.jsonl",
+   "line": 18,
+   "found": true,
+   "needle": "\"agent_id\": \"Pollux\", \"autopsied\": \"2026-08-21\", \"by\": \"Aporia P69\"",
+   "asserts": "CERTIFICATE (typed autopsy): LOW-BITS-PER-VERDICT-EMISSION; census 86/39/161; 'mechanically explains the Hecate MI null'; never mentions the corr_raw tautology already on record since 06-24",
+   "kind": "interpretation"
+  },
+  {
+   "date": "2026-08-21",
+   "path": "engine/shadow/WORKLOG.jsonl",
+   "line": 98,
+   "found": true,
+   "needle": "Pollux kill_ledger per-pair distinct-outcome census printed in-pass",
+   "asserts": "PROVENANCE GAP: the P69 census was printed, not saved; the ledger it was computed over is absent from this tree",
+   "kind": "provenance"
+  },
+  {
+   "date": "2026-08-21",
+   "path": "engine/shadow/WORKLOG.jsonl",
+   "line": 90,
+   "found": true,
+   "needle": "charon/agents/hecate/artifacts/gradient_archaeology_20260530T162054Z.md",
+   "asserts": "PROVENANCE GAP: P69's Hecate figure (0.0034 bits) is cited to an artifact path absent from this tree",
+   "kind": "provenance"
+  },
+  {
+   "date": "2026-08-21",
+   "path": "engine/ledger/AUTOPSY_TAXONOMY.md",
+   "line": 45,
+   "found": true,
+   "needle": "each = 9 facts, emitted as 286 ledger rows + 286 artifacts",
+   "asserts": "CERTIFICATE (taxonomy cluster 2 LOW-BITS-EMISSION) built on P69",
+   "kind": "interpretation"
+  },
+  {
+   "date": "2026-08-22",
+   "path": "engine/queues/BACKLOG.jsonl",
+   "line": 106,
+   "found": true,
+   "needle": "\"id\": \"AUTOPSY-POLLUX\"",
+   "asserts": "QUEUE: AUTOPSY-POLLUX DONE (P69 result copied into the queue row)",
+   "kind": "queue"
+  }
+ ],
+ "all_citations_found": true,
+ "citations_not_found": [],
+ "counts_by_kind": {
+  "primary_observation": 6,
+  "interpretation": 9,
+  "prescription": 2,
+  "provenance": 2,
+  "queue": 1
+ },
+ "daemon_commits": [
+  {
+   "sha": "43b094552462de5be62501c2fdd973590b9b90ae",
+   "date": "2026-05-25T01:46:55-04:00",
+   "subject": "Charon swarm v0.6: 4-patch tuning (Moros + Pollux + Hecate + Stygian)"
+  },
+  {
+   "sha": "8c619443a7939186d3317f1d5c47ded14dcb1d67",
+   "date": "2026-05-24T03:10:34-04:00",
+   "subject": "Charon swarm v0.5: Moros multi-provider + Nephele (Clio fallback) + Pollux"
+  }
+ ],
+ "pollux_dir_listing": [
+  "__init__.py",
+  "__pycache__",
+  "daemon.py"
+ ],
+ "absent_from_this_tree": {
+  "charon/agents/pollux/state/kill_ledger.jsonl": false,
+  "charon/agents/pollux/state/pair_history.json": false,
+  "charon/agents/pollux/state/settled_pairs.json": false,
+  "charon/agents/pollux/state/candidate_pool_idx.json": false,
+  "charon/agents/pollux/artifacts": false,
+  "charon/agents/hecate/artifacts/gradient_archaeology_20260530T162054Z.md": false,
+  "charon/agents/stygian/loaders/pollux_survivor.py": false,
+  "charon/agents/pollux/tests": false
+ },
+ "contradictions_on_record": [
+  "06-10/06-22/06-23 'real signal' + REVIVE  vs  06-24 'measurement bug' + RETIRE: same ledger, no new data between them; the difference is that 06-24 looked at the raw leg.",
+  "06-24 'Ergon Learner has ZERO references to generator_id=pollux'  vs  ergon/learner/greedy/sources.py (2026-06-10) and roles/Ergon/GREEDY_FOLLOWUP_PROGRESS_2026-06-07.md: the Learner trained on all 286 rows.",
+  "08-21 P69 types the grave as LOW-BITS-EMISSION and says the wiring 'worked - rows landed, Hecate consumed'  vs  Hecate's >=2-generator rule, under which no Pollux row can enter the cross-generator set regardless of how many bits it carries.",
+  "08-21 P69 census 86/39/161 (54/56 per pair)  vs  deterministic replay of the v0.6 policy on today's data (15/15/256, 87/88): the on-tree code alone does not produce P69's numbers; ~22.6 h of v0.5 (no settle policy) and any short-circuit rows are unrecorded.",
+  "08-20 PROF_TRIAGE lifecycle 'active'  vs  second-channel last row 2026-05-30 11:55 local."
+ ]
+}

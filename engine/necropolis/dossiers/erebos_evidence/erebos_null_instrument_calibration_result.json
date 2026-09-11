@@ -1,0 +1,156 @@
+{
+  "harness": "charon/agents/erebos/sprint1/phase3/pair_aware_permutation_null.py",
+  "harness_constants": {
+    "MIN_COOCCURRENCE": 3,
+    "MIN_LIFT": 1.5,
+    "N_PERMUTATIONS": 200,
+    "SEED": 1789
+  },
+  "historical_quote_phase3K": {
+    "null_p95": 2,
+    "observed_deltas_vs_pair": 2,
+    "p_value": 0.105,
+    "source": "pivot/sprint1/phase3/PHASE3_K_PAIR_AWARE_NULL_VERDICT_2026-06-03.md"
+  },
+  "question": "erebos_null_instrument_calibration.py -- ONE question:",
+  "runs": [
+    {
+      "elapsed_s": 0.5,
+      "headline": "STATISTICALLY UNDERDETERMINED: observed 0 substrate-vs-pair-aware deltas; null mean=0.32, p95=1; p-value=1.0000 >= 0.05. The lift filter's divergence from the pair-aware counter is NOT distinguishable from chance lift-vs-count disagreement. The ROBUST PASS / 'lift filter is load-bearing' claim (Phase 3.E, the architecture's strongest real-data validation) is downgraded.",
+      "min_observed_to_clear_p05": 2,
+      "n_null_ge_observed": 200,
+      "n_rows": 699,
+      "null_max": 2,
+      "null_mean": 0.32,
+      "null_p95": 1,
+      "null_std": 0.5546,
+      "observed_deltas_vs_pair": 0,
+      "observed_deltas_vs_plugin": 29,
+      "p_value": 1.0,
+      "seed": 11,
+      "verdict": "STATISTICALLY_UNDERDETERMINED",
+      "world": "NULL",
+      "z_score": -0.577
+    },
+    {
+      "elapsed_s": 0.5,
+      "headline": "STATISTICALLY UNDERDETERMINED: observed 0 substrate-vs-pair-aware deltas; null mean=0.23, p95=1; p-value=1.0000 >= 0.05. The lift filter's divergence from the pair-aware counter is NOT distinguishable from chance lift-vs-count disagreement. The ROBUST PASS / 'lift filter is load-bearing' claim (Phase 3.E, the architecture's strongest real-data validation) is downgraded.",
+      "min_observed_to_clear_p05": 2,
+      "n_null_ge_observed": 200,
+      "n_rows": 699,
+      "null_max": 2,
+      "null_mean": 0.23,
+      "null_p95": 1,
+      "null_std": 0.4551,
+      "observed_deltas_vs_pair": 0,
+      "observed_deltas_vs_plugin": 19,
+      "p_value": 1.0,
+      "seed": 23,
+      "verdict": "STATISTICALLY_UNDERDETERMINED",
+      "world": "NULL",
+      "z_score": -0.5054
+    },
+    {
+      "elapsed_s": 0.5,
+      "headline": "STATISTICALLY UNDERDETERMINED: observed 0 substrate-vs-pair-aware deltas; null mean=0.26, p95=1; p-value=1.0000 >= 0.05. The lift filter's divergence from the pair-aware counter is NOT distinguishable from chance lift-vs-count disagreement. The ROBUST PASS / 'lift filter is load-bearing' claim (Phase 3.E, the architecture's strongest real-data validation) is downgraded.",
+      "min_observed_to_clear_p05": 2,
+      "n_null_ge_observed": 200,
+      "n_rows": 699,
+      "null_max": 3,
+      "null_mean": 0.26,
+      "null_p95": 1,
+      "null_std": 0.4923,
+      "observed_deltas_vs_pair": 0,
+      "observed_deltas_vs_plugin": 10,
+      "p_value": 1.0,
+      "seed": 37,
+      "verdict": "STATISTICALLY_UNDERDETERMINED",
+      "world": "NULL",
+      "z_score": -0.5281
+    },
+    {
+      "elapsed_s": 0.5,
+      "headline": "STATISTICALLY UNDERDETERMINED: observed 0 substrate-vs-pair-aware deltas; null mean=0.29, p95=1; p-value=1.0000 >= 0.05. The lift filter's divergence from the pair-aware counter is NOT distinguishable from chance lift-vs-count disagreement. The ROBUST PASS / 'lift filter is load-bearing' claim (Phase 3.E, the architecture's strongest real-data validation) is downgraded.",
+      "min_observed_to_clear_p05": 2,
+      "n_null_ge_observed": 200,
+      "n_rows": 699,
+      "null_max": 2,
+      "null_mean": 0.29,
+      "null_p95": 1,
+      "null_std": 0.5347,
+      "observed_deltas_vs_pair": 0,
+      "observed_deltas_vs_plugin": 29,
+      "p_value": 1.0,
+      "seed": 11,
+      "verdict": "STATISTICALLY_UNDERDETERMINED",
+      "world": "PLANTED",
+      "z_score": -0.5424
+    },
+    {
+      "elapsed_s": 0.5,
+      "headline": "STATISTICALLY UNDERDETERMINED: observed 1 substrate-vs-pair-aware deltas; null mean=0.39, p95=1; p-value=0.3450 >= 0.05. The lift filter's divergence from the pair-aware counter is NOT distinguishable from chance lift-vs-count disagreement. The ROBUST PASS / 'lift filter is load-bearing' claim (Phase 3.E, the architecture's strongest real-data validation) is downgraded.",
+      "min_observed_to_clear_p05": 2,
+      "n_null_ge_observed": 69,
+      "n_rows": 699,
+      "null_max": 3,
+      "null_mean": 0.39,
+      "null_p95": 1,
+      "null_std": 0.5813,
+      "observed_deltas_vs_pair": 1,
+      "observed_deltas_vs_plugin": 17,
+      "p_value": 0.345,
+      "seed": 23,
+      "verdict": "STATISTICALLY_UNDERDETERMINED",
+      "world": "PLANTED",
+      "z_score": 1.0494
+    },
+    {
+      "elapsed_s": 0.5,
+      "headline": "STATISTICALLY UNDERDETERMINED: observed 0 substrate-vs-pair-aware deltas; null mean=0.39, p95=2; p-value=1.0000 >= 0.05. The lift filter's divergence from the pair-aware counter is NOT distinguishable from chance lift-vs-count disagreement. The ROBUST PASS / 'lift filter is load-bearing' claim (Phase 3.E, the architecture's strongest real-data validation) is downgraded.",
+      "min_observed_to_clear_p05": 3,
+      "n_null_ge_observed": 200,
+      "n_rows": 699,
+      "null_max": 3,
+      "null_mean": 0.385,
+      "null_p95": 2,
+      "null_std": 0.6138,
+      "observed_deltas_vs_pair": 0,
+      "observed_deltas_vs_plugin": 11,
+      "p_value": 1.0,
+      "seed": 37,
+      "verdict": "STATISTICALLY_UNDERDETERMINED",
+      "world": "PLANTED",
+      "z_score": -0.6272
+    }
+  ],
+  "summary": {
+    "NULL_false_positive_at_p05": 0,
+    "NULL_null_p95": [
+      1,
+      1,
+      1
+    ],
+    "NULL_observed": [
+      0,
+      0,
+      0
+    ],
+    "NULL_p_values": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "PLANTED_detected_at_p05": 0,
+    "PLANTED_observed": [
+      0,
+      1,
+      0
+    ],
+    "PLANTED_p_values": [
+      1.0,
+      0.345,
+      1.0
+    ],
+    "reading": "If NULL worlds give null_p95 close to the historical 2, then an observed count of 2 sits AT the instrument floor on 699-row ledgers regardless of the data; PLANTED shows whether strong linkage is detectable at all."
+  }
+}

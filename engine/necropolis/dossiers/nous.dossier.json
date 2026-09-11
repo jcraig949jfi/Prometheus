@@ -1,0 +1,447 @@
+{
+  "schema_version": "1.0.0",
+  "kind": "necropolis_dossier",
+  "_note": "Necromancer pass by the Rhadamanthus fork, 2026-09-11. Every number below comes from an executed script under dossiers/nous_evidence/ (result JSON named) or is a quoted historical number labelled as such. Queue calibration_role, ROSTER labels, pivot dossiers and the resume doc were read as evidence to inspect, not as premises.",
+  "identity": {
+    "agent_id": "Nous",
+    "aliases": [
+      "nous",
+      "Combinatorial Hypothesis Engine",
+      "agents/nous"
+    ],
+    "historical_machine": "M4 (ROSTER label; the only machine evidence in the tree is the resume doc's 'M4 daemon' and Redis 192.168.1.176 note -- unverified by this pass)",
+    "historical_kind": "daemon (unlimited=true runs) feeding a paired Hephaestus forge launch",
+    "historical_operator": "James Craig (all 11 commits touching agents/nous, 2026-03-24..05-13); Pipeline Orchestrator role launched the Nous+forge pairs (6 forge run dirs start 4-5 s after a Nous run dir)",
+    "source_paths": [
+      "agents/nous/README.md",
+      "agents/nous/configs/manifest.yaml",
+      "agents/nous/src/nous.py (737 lines)",
+      "agents/nous/src/scorer.py (192 lines)",
+      "agents/nous/src/concepts.py (95 concepts / 20 fields / 4 mechanism types)",
+      "agents/nous/src/rescore.py",
+      "agents/nous/data/priority_triples.json (15 triples)",
+      "agents/nous/runs/ (13 dirs, 12 with responses.jsonl, 5918 entries)",
+      "agents/hephaestus/src/hephaestus.py (_load_nous L1594, load_all_nous_results, filter_results, combo_key L620)",
+      "agents/hephaestus/ledger.jsonl (6661 lines, 6651 keys)",
+      "agents/hephaestus/runs/ (22 forge run dirs, meta.nous_run)",
+      "forge/v2/nous_t2/ and forge/v3/nous_t3/ (descendants, 2026-04-02..04-04)",
+      "pivot/agents_nous_resume_2026-05-13.md",
+      "pivot/COMPONENT_DISPOSITION_PLAN_2026-06-23.md (row 4)",
+      "pivot/COMPONENT_THOUGHTWORK_REVIEW_2026-06-24.md (Dossier 01)",
+      "pivot/COMPONENT_DOSSIERS_2026-06-24.md (### Nous)",
+      "engine/queues/CONSUMPTION.jsonl (SALVAGE-NOUS row 2026-08-20)",
+      "techne/registry/build_concepts_index.py + concepts_index.jsonl (prior salvage, commit fbd94b997)",
+      "engine/necropolis/dossiers/_keeper_evidence/intelligence_outputs_census_result.json (Keeper capture of agora.intelligence_outputs, M1 canonical store; cited, not re-queried)"
+    ],
+    "evidence_baseline": "e17934d9a82855b6e0ae1c0bf54c0cce569b7795"
+  },
+  "original_organism": {
+    "premise": "Cross-domain collisions of three named concepts (95-concept dictionary, cross-field bias 0.8) prompted to an LLM yield hypotheses for new computable reasoning criteria at a useful rate, and the LLM's own 1-10 self-ratings (reasoning, metacognition, hypothesis generation) identify which hypotheses 'warrant forging' (README: 'roughly 20-30%').",
+    "mechanism": "generate_combinations() samples concept triples (Coeus-weighted when agents/coeus/graphs/concept_scores.json exists; priority_triples.json injected at queue front from 2026-03-28); one chat completion per triple (PROMPT_TEMPLATE, temperature 0.7, max_tokens 2048); scorer.parse_ratings regex-extracts four rating lines from the same completion; composite = mean of the three core self-ratings (implementability excluded); high_potential = all three >= 7; novelty by keyword; responses.jsonl + rankings.md + checkpoint per run.",
+    "producers": [
+      "concepts.CONCEPTS (hand-written dictionary)",
+      "Coeus concept_scores.json (sampling weights, from 2026-03-25 10:46)",
+      "overnight_gap_closing.py step 2 -> data/priority_triples.json (2026-03-27)"
+    ],
+    "inputs": [
+      "NVIDIA_API_KEY (sys.exit(1) when absent)",
+      "manifest.yaml: provider nvidia, default_model qwen/qwen3.5-397b-a17b, n_combos 500"
+    ],
+    "outputs": [
+      "agents/nous/runs/<ts>/responses.jsonl (entry: triple, concept_names, concept_fields, response_text, score{ratings,novelty,is_unproductive,composite_score,high_potential}, model, timestamp)",
+      "rankings.md, checkpoint.json, meta.json per run",
+      "STATUS.json + Agora telemetry (added 2026-05-13, after the last run; never exercised)"
+    ],
+    "intended_consumers": [
+      "Hephaestus forge (_load_nous: --nous-run file, else resume meta, else load_all_nous_results over agents/nous/runs/*)",
+      "Coeus (learns concept weights from forge outcomes and feeds them back as sampling weights)"
+    ]
+  },
+  "observed_history": {
+    "run_period": "committed: 2026-03-24 11:23 .. 2026-03-28 04:00 (12 runs with data); uncommitted but evidenced: forge ledger holds 1212 Nous-shaped keys attempted 2026-03-31 10:53 .. 2026-04-02 12:43 with no committed Nous record (9 of the 15 priority triples wired on 03-28 are among them); descendants nous_t2/nous_t3 ran 2026-04-02 .. 04-04.",
+    "measurements": [
+      "nous_run_census_result.json: 13 run dirs, 12 with responses; 5918 entries, 5727 unique combo keys (191 cross-run duplicates); models: nemotron-3-super-120b-a12b 5915, qwen3.5-397b-a17b 3; 95/95 concepts used, frequency ratio max/min 10.19; 4.1% of the C(95,3)=138415 triple space.",
+      "nous_run_census_result.json: ratings unparseable 91/5918 (1.5%), 79 of them in the 87-entry run 20260324_115258 (the 800-max_tokens run; its .bak shows 87/87 unparseable before rescore.py); composite entropy 2.60 bits over 17 values; composite >= 7: 42.5%; high_potential 719 (12.2%); is_unproductive 299 (5.1%).",
+      "nous_forge_join_result.json: high_potential by prompt regime: v1 (theorist prompt, runs before 20260325_085453) 683/1634 = 41.8%; v2 (engineer prompt, commit da42cc7e0) 36/4284 = 0.84%. Same model in both.",
+      "nous_forge_join_result.json: 5625/5918 entries (95.1%) appear in the forge ledger; 2176 of those are api_call_failed (forge instrument, not a Nous outcome); 413 entries / 385 unique keys forged; 289 of 299 is_unproductive entries were never attempted (filter_results drops them).",
+      "nous_forge_join_result.json: pooled AUC of the Nous composite vs forged = 0.755 (perm null 0.50 [0.477,0.532]); excluding api_call_failed 0.778. Stratified by forge day (same instrument state): 0.519, null [0.464,0.535], frac_null >= obs 0.12 -- not separable from chance. Implementability rating AUC 0.418 stratified.",
+      "nous_forge_join_result.json by_forge_day: 03-24 71 rows/6 forged (8.5%); 03-25 255/148 (58.0%, high_potential 56.6% vs not 60.9%); 03-26 738/173 (23.4%, hp 24.3% vs 22.9%); 03-27 568/60 (10.6%, hp 15.3% vs 9.7%); 05-16..05-28 1782 rows/26 forged (<= 2.6%/day).",
+      "nous_scorer_replay_result.json: re-running scorer.score_response on every stored response_text reproduces composite, high_potential, novelty and is_unproductive for 5918/5918 entries.",
+      "nous_gate_trace_result.json: hephaestus.py has one input loader path (_load_nous) and 0 references to failure_mining / failure_cluster / Learner as inputs; 6 forge run dirs start 4-5 s after a Nous run dir; ledger orphans 1212 (all 95-dict concepts, frames A-H, 1210 scrap / 2 forged, 0 scrap/forge JSON on disk); Coeus weight file exists (95 influence, 21 boosted, 2 suppressed); per-run share of slots from boosted concepts 0.21-0.37 vs 0.22 uniform, present already in the 03-24 runs so not attributable to the weights.",
+      "Cost: nous.py logs no token usage; no cost record exists anywhere in the tree (grep usage|tokens|cost in nous.py: only max_tokens=2048).",
+      "nous_salvage_reproduce_result.json: techne/registry/build_concepts_index.main() re-executed into scratch returns 0, emits 95 rows across 20 fields with mechanisms structure 28 / dynamics 38 / constraint 15 / measure 14, row-for-row equal to the committed concepts_index.jsonl and to an independent census of concepts.py (95/20/4). The build script docstring still says '18-field'.",
+      "nous_salvage_reproduce_result.json (citing the Keeper capture): agora.intelligence_outputs on the M1 canonical store, 15502 rows, holds 0 rows with stage/agent matching nous% and no Nous heartbeat (Pollux 286, Erebos 213). nous.py mentions agora/heartbeat only in the 2026-05-13 instrumentation commit, which post-dates every run; the runs/ directories and the forge ledger are the only execution record."
+    ],
+    "artifact_counts": {
+      "nous_run_dirs": 13,
+      "nous_entries": 5918,
+      "unique_combo_keys": 5727,
+      "forge_ledger_keys": 6651,
+      "nous_keys_in_ledger": 5625,
+      "nous_keys_forged": 385,
+      "ledger_keys_with_no_committed_nous_record": 1212,
+      "priority_triples": 15,
+      "priority_triples_in_ledger_without_nous_record": 9,
+      "descendant_nous_t2_runs": 33,
+      "descendant_nous_t2_entries": 1515,
+      "descendant_nous_t3_entries": 10
+    },
+    "actual_consumers": [
+      "Hephaestus main forge (95.1% of entries attempted; 22 run dirs, 9 pinned to run 20260324_115258, 13 to all_runs)",
+      "Coeus (graph built 2026-03-27 06:49 on the Nous+ledger join, per the Coeus dossier)",
+      "replay_multiframe.py (re-forged saved Nous responses under frames B-H)",
+      "forge/v2/nous_t2 (reads the forge ledger + forge dirs, not Nous runs; inherits the LENSES subset of the dictionary)",
+      "techne/registry/concepts_index.jsonl (CONSUMPTION.jsonl SALVAGE-NOUS 2026-08-20; REPRODUCED by this pass: build script re-run into scratch equals the committed index row-for-row, 95/20/4)"
+    ],
+    "consumption_evidence": [
+      "nous_forge_join_result.json attempted_by_run (per-run attempted/api_failed/forged)",
+      "nous_gate_trace_result.json launch_coupling, hephaestus_input_loaders, consumption_seam",
+      "agents/hephaestus/runs/*/meta.json nous_run field",
+      "nous_salvage_reproduce_result.json salvage_reproduction"
+    ]
+  },
+  "autopsy": {
+    "prior_verdicts": [
+      "pivot/COMPONENT_DISPOSITION_PLAN_2026-06-23.md row 4: DELETE, 'the zombie gate stranding Hephaestus'; amended 2026-06-24 by James to PENDING-REVIEW ('The dossier process already overturned the Nous delete')",
+      "pivot/COMPONENT_THOUGHTWORK_REVIEW_2026-06-24.md Dossier 01: realized 0 / latent MEDIUM / health BLOCKED; 'claim-space exhaust'; 'starvation architecture'; 'as forge seed: SUPERSEDED'",
+      "pivot/COMPONENT_DOSSIERS_2026-06-24.md ### Nous: PENDING-REVIEW, state LIMBO, evidence = hand dossier + resume doc, code NOT read",
+      "pivot/agents_nous_resume_2026-05-13.md: last activity 2026-03-27 20:35, COLD 47 days, 'why it stopped -- UNKNOWN'",
+      "engine/necropolis/QUEUE.jsonl: '5 of 5 -- complicated generator, missing consequence path' (calibration framing; zero weight)",
+      "engine/ledger/AGENT_AUTOPSIES.jsonl: no Nous row",
+      "engine/queues/CONSUMPTION.jsonl 2026-08-20 SALVAGE-NOUS (commit fbd94b997): 'DICT-LOADABLE as pre-stated; 95/20/4-mechanism census by execution; 18-vs-20 corrected' -- treated as a certificate under review, reproduced by nous_salvage_reproduce.py"
+    ],
+    "failure_classes": [
+      "MEASUREMENT-CARRIES-ITS-ANSWER (selection score is the generator's self-rating; only external criterion is an instrument-dominated forge outcome)",
+      "NO-CONTROL-ARM (no random-triple or non-Nous input was ever forged under the same judge)",
+      "PROMPT-REGIME-DRIFT-UNRECORDED (README claim computed under prompt v1, shipped code is prompt v2; the claim never updated)",
+      "UNCOMMITTED-EXECUTION (1212 forge-attempted Nous-shaped keys and 9 priority triples with no Nous record in the tree)",
+      "SUPERSESSION-RECORDED-AS-DEATH (nous_t2/nous_t3 forked within 6 days; the pivot record reads the lineage gap as a stall)"
+    ],
+    "kill_boundary": "What the evidence KILLS: (1) 'The Nous composite / high_potential flag ranks forge survivors above chance.' Pooled AUC 0.755 collapses to 0.519 when stratified by forge day (null [0.464,0.535], p=0.12); on the 03-25 day high_potential entries forged at 56.6% vs 60.9% for the rest; the pooled number is the forge calendar (58%->23%->10%->2.5%) crossed with the prompt-regime switch, not Nous signal. (2) 'Roughly 20-30% score high enough to warrant forging' as a property of the shipped agent: 41.8% under the March-24 theorist prompt, 0.84% under the engineer prompt that ships in nous.py; the same model. (3) 'Nous is a zombie gate that stranded Hephaestus / a producer that was blocked.' 95.1% of Nous entries were forged-attempted; the forge ran 1212 further Nous-shaped keys after the last committed run; Nous output exceeded what any recorded consumer could use. (4) 'Last activity 2026-03-27; stopped for unknown reasons.' The ledger and forge/v2 show Nous-lineage activity through 2026-04-04, ending in supersession by nous_t2 (tool-combination miner). NOT killed: 'cross-field concept triples produce forge-worthy hypotheses above a random-triple baseline' -- never tested, no control arm exists; and NOT killed: 'the hypotheses were claim-space exhaust' -- same missing control.",
+    "surviving_claims": [
+      "Nous executed as built: 5918 committed completions over 4 days plus uncommitted output through at least 2026-04-02; the scorer is deterministic and reproduces 5918/5918 from stored text.",
+      "Hephaestus's only coded input path is Nous-shaped responses (input dependency, real); the 4-5 s launch pairing is orchestration, not a capability gate.",
+      "385 forge-ledger 'forged' keys trace to Nous triples; whether those tools have value is a Hephaestus question (its dossier), not evidence for or against Nous's selection.",
+      "The 95-concept / 20-field / 4-mechanism dictionary is loadable and was consumed by execution (techne, 2026-08-20).",
+      "The generator's cross-field sampler and priority-queue injection are exercised code paths (priority triples appear in the ledger 03-31)."
+    ],
+    "uncertainty": [
+      "No run log, STATUS.json, or cost record exists; API spend is unrecoverable.",
+      "The 1212 orphan keys are inferred to be uncommitted M4 Nous output (all concepts in the dictionary, priority triples among them, forge-only record); a second producer of Nous-shaped triples is not excluded by the tree.",
+      "Why the M4 daemon stopped is still not directly evidenced; supersession by nous_t2 on 04-02 is the strongest dated event.",
+      "The per-forge-day strata mix v1 and v2 entries unevenly (03-26: 502 v1 / 236 v2); a regime x day interaction cannot be excluded at these counts.",
+      "agora.intelligence_outputs (Keeper capture) has no Nous rows: the only execution records are agents/nous/runs/ and the forge ledger; no independent channel corroborates the M4 daemon."
+    ],
+    "contradictory_evidence": [
+      "The forge attempted 1212 keys that no committed Nous run produced -- contradicts 'last activity 03-27' and 'producer blocked'.",
+      "forge/v2/nous_t2 (33 runs, 1515 entries, 04-02..04-04) contradicts 'stopped, reason unknown': the design was re-targeted, not abandoned.",
+      "CONSUMPTION.jsonl SALVAGE-NOUS 2026-08-20 contradicts 'realized: none'."
+    ],
+    "death_certificates": [
+      {
+        "source": "pivot/COMPONENT_DISPOSITION_PLAN_2026-06-23.md row 4 (Nous) and row 2 (Hephaestus: 'Bypass the Nous gate')",
+        "claim": "DELETE -- 'the zombie gate stranding Hephaestus. Deleting/bypassing it unblocks the spine -- forge reads Learner failure clusters directly.'",
+        "review": "OVERTURNED",
+        "errors": [
+          "hephaestus.py has no Learner / failure-cluster input path (0 references); the 'direct' alternative did not exist to bypass to.",
+          "The forge was not stranded by Nous: 5625/5918 entries attempted, plus 1212 Nous-shaped keys attempted after the last committed run; the consumer outran the committed producer record, not the reverse.",
+          "The gate is a launch pairing (forge run dirs start 4-5 s after Nous runs) and an input format dependency; nothing in the forge checks a Nous quality bar (filter_results min_score default 0.0)."
+        ]
+      },
+      {
+        "source": "pivot/COMPONENT_THOUGHTWORK_REVIEW_2026-06-24.md Dossier 01 (Aporia)",
+        "claim": "Realized 0 / latent MEDIUM / health BLOCKED; 'combinatorial concept triples are claim-space generation ... exhaust'; 'starvation architecture'; 'as the primary forge seed: SUPERSEDED. Do not revive in that role.'",
+        "review": "PARTIALLY_UPHELD",
+        "errors": [
+          "'Exhaust' is asserted without a control: no random-triple or non-Nous baseline was ever forged under the same judge, so the quality of the hypotheses is untested in either direction.",
+          "'Starvation' points the wrong way: Nous produced 5918 committed + >=1212 uncommitted candidates; the forge's per-day capacity, not Nous supply, bounded throughput.",
+          "'Realized 0' ignores 385 forged keys and the 2026-08-20 dictionary lift; the dossier itself records that the code was not read.",
+          "Supersession is upheld: forge/v2/nous_t2 (2026-04-02) re-targeted the design to tool combinations."
+        ]
+      },
+      {
+        "source": "pivot/agents_nous_resume_2026-05-13.md (Aletheia)",
+        "claim": "Last activity 2026-03-27 20:35; COLD 47 days; 'Why it stopped -- UNKNOWN'; Hephaestus depends on Nous; blocked on NVIDIA_API_KEY.",
+        "review": "PARTIALLY_UPHELD",
+        "errors": [
+          "'Last activity' is a lower bound from committed run dirs; the forge ledger records Nous-shaped input through 2026-04-02 12:43 and the lineage ran to 2026-04-04 as nous_t2.",
+          "'Unknown' omits the dated supersession event that the tree contains (commit b674a9976, 2026-04-03).",
+          "Input dependency and key blocker are upheld (sys.exit(1) on missing NVIDIA_API_KEY; no keys.py usage; no .env present in the tree)."
+        ]
+      },
+      {
+        "source": "agents/nous/README.md (self-description)",
+        "claim": "'NVIDIA API 397B model'; 'Out of 1,500+ evaluated combinations, roughly 20-30% score high enough to warrant forging'; '95 concepts x 18 fields'.",
+        "review": "OVERTURNED",
+        "errors": [
+          "5915/5918 committed entries were produced by nvidia/nemotron-3-super-120b-a12b; the 397B default was used for 3 entries.",
+          "The 20-30% figure is a prompt-v1 artifact (41.8% high_potential under the theorist prompt, 0.84% under the engineer prompt that ships); the shipped agent never warranted forging at that rate, and 'warrant' was never validated against forge outcome (stratified AUC 0.519).",
+          "concepts.py has 20 fields (measured; also corrected by the 2026-08-20 techne lift)."
+        ]
+      },
+      {
+        "source": "engine/necropolis/QUEUE.jsonl (Nous row calibration_role / expected_investigation_type)",
+        "claim": "'complicated generator, missing consequence path'; investigate whether the generator is sound but its consumer gated.",
+        "review": "OVERTURNED",
+        "errors": [
+          "The consequence path exists and was exercised end to end: Nous -> forge ledger (5625 attempted, 385 forged keys) -> Coeus weights -> Nous sampling -> priority triples -> forge (03-31).",
+          "The missing element is not a consumer but a control arm and an external criterion; 'producer blocked' vs 'consumer blocked' is the wrong axis for this grave."
+        ]
+      },
+      {
+        "source": "engine/queues/CONSUMPTION.jsonl 2026-08-20 SALVAGE-NOUS concept-dictionary lift (commit fbd94b997, techne/registry/build_concepts_index.py)",
+        "claim": "DICT-LOADABLE; 95 concepts / 20 fields / 4 mechanisms by execution; the resume doc's 18 fields corrected to 20.",
+        "review": "PARTIALLY_UPHELD",
+        "errors": [
+          "The 95/20/4 census and row-for-row index reproduce exactly on re-execution (nous_salvage_reproduce_result.json), so the substantive claim stands; but the salvage's own build script docstring still reads '95-concept x 18-field', i.e. the certificate that corrected 18-vs-20 carries the uncorrected number in its own source."
+        ]
+      },
+      {
+        "source": "engine/ledger/AGENT_AUTOPSIES.jsonl",
+        "claim": "(no Nous row exists)",
+        "review": "NOT_REVIEWED",
+        "errors": []
+      }
+    ],
+    "cause_of_death_stack": {
+      "HYPOTHESIS": {
+        "verdict": "NOT_EXAMINED",
+        "finding": "'Cross-field concept collisions yield computable reasoning criteria at a rate above a random-triple baseline' was never put to a controlled test: no non-Nous or random-triple input was ever forged under a fixed judge, and the only external outcome (forge status) is dominated by the forge calendar. Neither the hypothesis nor its negation ('exhaust') is supported by the record.",
+        "evidence": [],
+        "cause_classes": []
+      },
+      "DESIGN": {
+        "verdict": "INVALID",
+        "finding": "The design cannot answer its own question: (a) the selection score is the generating model's self-rating of its own completion, averaged over the three dimensions the README itself reports as non-predictive of forge (weight 0.000) while excluding the one it reports as predictive (implementability); (b) no control arm; (c) the prompt was changed mid-series (theorist -> engineer, commit da42cc7e0) and the shipped README kept the v1-regime yield claim. Load-bearing: the '20-30% warrant forging' and 'high-potential' framing that later dossiers inherited comes from (a)+(c).",
+        "evidence": [
+          "dossiers/nous_evidence/nous_forge_join_result.json (high_potential_by_regime, stratified_by_forge_day, by_forge_day)",
+          "dossiers/nous_evidence/nous_scorer_replay_result.json (composite_definition)",
+          "agents/nous/src/scorer.py score_response",
+          "agents/nous/README.md scoring table"
+        ],
+        "cause_classes": [
+          "DESIGN_ERROR"
+        ],
+        "load_bearing": true
+      },
+      "IMPLEMENTATION": {
+        "verdict": "VALID",
+        "finding": "The code does what the design says: scorer replay reproduces 5918/5918 stored scores from stored text; rating parse failures are 1.5% overall and concentrated in the 800-max_tokens run (79/87), fixed by max_tokens 2048 and rescore.py; the Coeus-weight loader, cross-field sampler, checkpointing and priority-triple injection are exercised paths (priority triples appear in the forge ledger on 03-31).",
+        "evidence": [
+          "dossiers/nous_evidence/nous_scorer_replay_result.json",
+          "dossiers/nous_evidence/nous_run_census_result.json (ratings_all_missing per run, bak comparison)",
+          "dossiers/nous_evidence/nous_gate_trace_result.json (priority_triples, coeus_weights)"
+        ],
+        "cause_classes": []
+      },
+      "CONFIGURATION": {
+        "verdict": "INVALID",
+        "finding": "manifest.yaml default_model is qwen/qwen3.5-397b-a17b and the README advertises a 397B model, but 5915/5918 entries were produced by nemotron-3-super-120b-a12b (unlimited=true runs); Nous reads its key from agents/nous/.env or the environment (no keys.py), and the resume doc records the key as the revival blocker. Not load-bearing: the model/README mismatch does not change any historical verdict (no verdict was ever conditioned on the model), and the key blocker post-dates the last run.",
+        "evidence": [
+          "dossiers/nous_evidence/nous_run_census_result.json (totals.models_overall, runs.*.meta)",
+          "dossiers/nous_evidence/nous_gate_trace_result.json (env_presence_listing_only)",
+          "agents/nous/configs/manifest.yaml"
+        ],
+        "cause_classes": [
+          "CONFIGURATION_ERROR"
+        ],
+        "load_bearing": false
+      },
+      "EXECUTION": {
+        "verdict": "VALID",
+        "finding": "Nous ran: 12 runs with data over 2026-03-24..03-28 (5918 entries; runs of 0.1-53.6 h), plus evidenced uncommitted output through 2026-04-02 (1212 ledger orphans incl. 9 priority triples) and descendants to 04-04. One run dir (20260325_132516) has meta only, started 36 s before 20260325_132552 -- an aborted start, not a failure of the capability. Second channel: the Keeper's capture of agora.intelligence_outputs (M1 canonical store, 15502 rows) holds 0 Nous rows and no Nous heartbeat; consistent with Nous never running on an Agora-instrumented template (its Agora/heartbeat surface was added 2026-05-13, after the last run) rather than with non-execution.",
+        "evidence": [
+          "dossiers/nous_evidence/nous_run_census_result.json (runs)",
+          "dossiers/nous_evidence/nous_gate_trace_result.json (ledger_orphans_no_nous_record, descendants_under_forge)",
+          "dossiers/nous_evidence/nous_scorer_replay_result.json (priority_triples_trace)",
+          "dossiers/nous_evidence/nous_salvage_reproduce_result.json (keeper_intelligence_outputs_census, nous_agora_surface)"
+        ],
+        "cause_classes": []
+      },
+      "INSTRUMENTATION": {
+        "verdict": "INVALID",
+        "finding": "No run log, no token/cost accounting, no STATUS/Agora emission until 2026-05-13 (after the last run; never exercised -- 0 Nous rows in agora.intelligence_outputs per the Keeper capture), and the 03-31..04-02 output was never committed, so the record of what ran is the forge's ledger rather than Nous's own. The 800-token truncation made 87/87 ratings unparseable in run 115258 before rescore. Not load-bearing: the historical verdicts were not derived from these gaps (they were derived from the resume doc's lower-bound date and unread code).",
+        "evidence": [
+          "dossiers/nous_evidence/nous_run_census_result.json (runs.20260324_115258.bak)",
+          "dossiers/nous_evidence/nous_gate_trace_result.json (agora_instrumentation, ledger_orphans_no_nous_record)",
+          "agents/nous/src/nous.py (no usage/cost logging)",
+          "dossiers/nous_evidence/nous_salvage_reproduce_result.json (keeper_intelligence_outputs_census)"
+        ],
+        "cause_classes": [
+          "INSTRUMENT_ERROR"
+        ],
+        "load_bearing": false
+      },
+      "MEASUREMENT": {
+        "verdict": "INVALID",
+        "finding": "The measurement carries its answer: the composite is the LLM's self-rating; its apparent forge signal (pooled AUC 0.755) is the forge calendar crossed with the prompt switch, and vanishes within forge day (0.519, p=0.12; 03-25: high_potential 56.6% vs 60.9% for the rest). The score distribution moved from 41.8% high_potential to 0.84% when the prompt changed with the model held fixed: the score measures the prompt. Load-bearing: every downstream reading of Nous 'quality' (README yield claim, Coeus weights, forge priority) rests on this score.",
+        "evidence": [
+          "dossiers/nous_evidence/nous_forge_join_result.json (ALL_attempted, stratified_by_forge_day, by_forge_day, high_potential_by_regime)",
+          "dossiers/nous_evidence/nous_run_census_result.json (composite_hist, composite_entropy_bits)"
+        ],
+        "cause_classes": [
+          "MEASUREMENT_ERROR"
+        ],
+        "load_bearing": true
+      },
+      "INTERPRETATION": {
+        "verdict": "INVALID",
+        "finding": "Later readers turned an input dependency and a launch pairing into a 'zombie gate', a lower-bound date into 'stopped', an unread generator into 'exhaust', and a superseded lineage into a stall; the README turned a v1-prompt yield into a standing claim; the 2026-06 dossiers state that the code was not read. Provenance: no autopsy row, no run log, uncommitted output, README/model/field mismatches.",
+        "evidence": [
+          "dossiers/nous_evidence/nous_gate_trace_result.json (hephaestus_input_loaders, launch_coupling, ledger_orphans_no_nous_record, descendants_under_forge, dictionary)",
+          "dossiers/nous_evidence/nous_forge_join_result.json (attempted, attempted_by_run)",
+          "pivot/COMPONENT_DISPOSITION_PLAN_2026-06-23.md row 4",
+          "pivot/COMPONENT_THOUGHTWORK_REVIEW_2026-06-24.md Dossier 01",
+          "pivot/agents_nous_resume_2026-05-13.md"
+        ],
+        "cause_classes": [
+          "INTERPRETATION_ERROR",
+          "IDENTITY_PROVENANCE_ERROR"
+        ],
+        "load_bearing": true
+      },
+      "ECOSYSTEM": {
+        "verdict": "INVALID",
+        "finding": "Nous had exactly one coded consumer (the forge) and one feedback producer (Coeus, itself found to have learned the forge calendar); within six days the pipeline forked to nous_t2/nous_t3 and the March forge lineage was abandoned, the M4 daemon shelved, and the key later lapsed. The shelving is an ecosystem event: nothing in the record shows Nous failing on its own terms before it was superseded. Load-bearing for the recorded 'shelved/LIMBO' status; not the primary cause of the missing fair test.",
+        "evidence": [
+          "dossiers/nous_evidence/nous_gate_trace_result.json (descendants_under_forge, launch_coupling, consumption_seam)",
+          "forge/STATUS_T1_T2_20260403.md",
+          "engine/queues/CONSUMPTION.jsonl (SALVAGE-NOUS 2026-08-20)"
+        ],
+        "cause_classes": [
+          "ECOSYSTEM_FAILURE"
+        ],
+        "load_bearing": true
+      }
+    },
+    "fair_test": {
+      "verdict": "UNFAIR",
+      "scope": "All committed runs (2026-03-24..03-28) and the forge windows that consumed them (03-24..04-02, 05-16..05-28).",
+      "finding": "The capability 'select concept triples that yield computable reasoning criteria' was never fairly exercised: the selection score is a self-rating with no external criterion (MEASUREMENT, load-bearing), there is no control arm and the prompt changed mid-series with the claim frozen at v1 (DESIGN, load-bearing). The forge outcome cannot serve as the criterion because it is instrument-dominated (58% -> 2.5% by day) and the stratified test is null. A fair test needs a frozen forge judge, api-state excluded, and a random-triple or non-Nous arm.",
+      "evidence": [
+        "dossiers/nous_evidence/nous_forge_join.py",
+        "dossiers/nous_evidence/nous_forge_join_result.json",
+        "dossiers/nous_evidence/nous_run_census.py",
+        "dossiers/nous_evidence/nous_run_census_result.json",
+        "dossiers/nous_evidence/nous_scorer_replay.py",
+        "dossiers/nous_evidence/nous_scorer_replay_result.json",
+        "dossiers/nous_evidence/nous_gate_trace.py",
+        "dossiers/nous_evidence/nous_gate_trace_result.json"
+      ]
+    },
+    "primary_cause": "DESIGN_ERROR",
+    "contributing_causes": [
+      "MEASUREMENT_ERROR",
+      "ECOSYSTEM_FAILURE",
+      "INTERPRETATION_ERROR"
+    ],
+    "capability_contingency": {
+      "frontier_dependent": true,
+      "frontiers": [
+        "LLM hypothesis quality at ~120B open-weight scale (nemotron-3-super-120b); the 397B default was used for 3 entries",
+        "forge judge (trap battery version + API health) as the only external criterion"
+      ],
+      "era_bound_claim": "Any yield figure for Nous is bound to (prompt version, model, forge battery version, forge API state); the record holds no figure that is invariant across those.",
+      "what_would_move_it": "A frozen-judge forge pass over Nous triples vs random triples vs a non-Nous seed, api_call_failed excluded, judged by the same battery, would put the hypothesis on record in either direction."
+    }
+  },
+  "residue": {
+    "salvageable_code": [
+      "agents/nous/src/concepts.py (dictionary; EXECUTED twice: 95/20/4 census in nous_gate_trace.py, and the prior techne salvage build re-run into scratch in nous_salvage_reproduce.py, equal to the committed techne/registry/concepts_index.jsonl row-for-row)",
+      "agents/nous/src/scorer.py parse_ratings/score_response (EXECUTED: 5918/5918 replay; deterministic rating-line parser with unicode-dash normalisation)",
+      "agents/nous/src/nous.py generate_combinations (cross-field sampler with weight hook and priority-queue injection; READ, exercised historically, not re-executed here)",
+      "agents/nous/src/rescore.py (offline rescoring with .bak; READ)"
+    ],
+    "salvageable_data": [
+      "agents/nous/runs/*/responses.jsonl (5918 LLM hypothesis texts keyed by concept triple, joinable to the forge ledger by combo_key; EXECUTED join)",
+      "agents/nous/data/priority_triples.json (15 gap-targeted triples; 11 in ledger)",
+      "agents/hephaestus/ledger.jsonl orphan rows (1212 Nous-shaped keys with frames A-H and outcomes; the only record of the 03-31..04-02 Nous output)"
+    ],
+    "salvageable_schemas": [
+      "responses.jsonl entry schema {triple, concept_names, concept_fields, response_text, score{ratings, novelty, is_unproductive, composite_score, high_potential}, model, timestamp}",
+      "combo_key = ' + '.join(sorted(concept_names)) (shared join key across Nous / forge / Coeus)"
+    ],
+    "salvageable_operators": [
+      "cross-field triple sampler (field-balanced with bias 0.8) as a diversity injector",
+      "priority-queue injection of externally targeted triples (gap closing)"
+    ],
+    "salvageable_tests": [
+      "dossiers/nous_evidence/nous_scorer_replay.py (scorer determinism check)",
+      "dossiers/nous_evidence/nous_forge_join.py (forge-day-stratified AUC with permutation null: the null a Nous-quality claim must beat)",
+      "dossiers/nous_evidence/nous_salvage_reproduce.py (idempotence check of the techne salvage build against the committed index)"
+    ],
+    "representation_hints": [
+      "Any successor must score hypotheses with a criterion that is not the generator's own completion, and must carry (prompt_version, model, judge_version, api_state) on every row.",
+      "Treat forge 'forged/scrap' as an instrument reading, never as a label, until the judge is frozen."
+    ]
+  },
+  "disposition": {
+    "classification": "NO_FAIR_TEST_ON_RECORD",
+    "rationale": "Chosen over MEASUREMENT_FAILURE because the measurement defect is downstream of a design that had no external criterion and no control arm: even a perfect forge judge could not have said whether Nous's triples beat random ones, since no non-Nous arm was ever run. Chosen over ORCHESTRATION_FAILURE / PRODUCER_BLOCKED / CONSUMER_BLOCKED because the pipeline moved: 95.1% of output was consumed and the forge ran 1212 more keys than the tree records. Chosen over SUPERSEDED_BUT_ORGANS_SALVAGEABLE because supersession (nous_t2) explains why it stopped, not whether it worked. Not TRUE_CORPSE: the hypothesis was never tested. Not optimistic: the record also fails to show Nous doing anything a random-triple generator would not have done."
+  },
+  "descendant_candidate": {
+    "id": "nous-d1-control-arm",
+    "parent": "Nous",
+    "changed_design": [
+      "Frankenstein counterfactual, DESIGN ONLY (not authorised to run; this pass ran no LLM calls). A = the March forge stack (Nous -> Hephaestus). Layer Y = DESIGN.",
+      "Mutation M1: add a control arm. Arm (i) 300 Nous triples sampled uniformly from committed v2-prompt runs; arm (ii) 300 uniformly random triples from the same 95-dictionary under the same v2 prompt; arm (iii) 300 triples from a non-Nous seed (the remaining T1 gap categories in forge/STATUS_T1_T2_20260403.md).",
+      "Mutation M2: external criterion. All 900 forged by ONE frozen Hephaestus judge (single battery version, single code-gen model); api_call_failed rows re-run until resolved or dropped from all arms alike; judge_version and api_state fingerprinted on every ledger row.",
+      "C -> C': the self-rating composite stops being the selection criterion and becomes a covariate; arm identity is the only manipulated variable."
+    ],
+    "preserved_mechanism": [
+      "generate_combinations cross-field sampler (bias 0.8)",
+      "PROMPT_TEMPLATE v2 (engineer prompt, commit da42cc7e0)",
+      "scorer.parse_ratings / score_response (kept as covariate only)"
+    ],
+    "consumer": "Hephaestus forge under a frozen judge (the dossier for Hephaestus must first establish that such a judge exists); results returned to this dossier",
+    "consumption_proof": "Per-arm forge ledger rows with judge_version and api_state fingerprinted; the consumption is the ledger append itself, verified by re-running nous_forge_join.py restricted to the three arm tags.",
+    "expected_if_alive": "Arm (i) forge rate exceeds arm (ii) by more than the permutation-null 97.5th percentile at n=300/arm (nous_forge_join.py auc/perm_null machinery), and the effect survives holding the self-rating composite fixed.",
+    "expected_if_dead": "Arms (i) and (ii) forge at rates inside each other's permutation null; the cross-field sampler adds nothing a uniform sampler lacks under a fixed judge.",
+    "positive_control": "Arm (iii) (gap-targeted seeds) must show a nonzero forge rate under the frozen judge, else the judge, not the seeds, is dead and the run is void.",
+    "negative_or_decoy_control": "A 4th arm of 100 triples with shuffled concept descriptions (names kept, descriptions permuted) to detect prompt-format capture by the judge.",
+    "kill_condition": "Kill before run if no frozen forge judge can be attested (Hephaestus dossier) or if api_call_failed exceeds 10% of any arm after retry; kill after run if the positive control forges 0/300.",
+    "resource_budget": "900 + 100 LLM hypothesis calls plus 1000 forge code-gen calls; one operator-day; HITL authorisation required for any spend (this pass ran no LLM calls)."
+  },
+  "provenance": {
+    "investigator": "Rhadamanthus (Necromancer fork)",
+    "role": "Necromancer",
+    "branch": "rhadamanthus/native-trial-2026-09-11",
+    "baseline_sha": "e17934d9a82855b6e0ae1c0bf54c0cce569b7795",
+    "evidence_paths": [
+      "engine/necropolis/dossiers/nous_evidence/README.md",
+      "engine/necropolis/dossiers/nous_evidence/nous_run_census.py + _result.json",
+      "engine/necropolis/dossiers/nous_evidence/nous_forge_join.py + _result.json",
+      "engine/necropolis/dossiers/nous_evidence/nous_gate_trace.py + _result.json",
+      "engine/necropolis/dossiers/nous_evidence/nous_scorer_replay.py + _result.json",
+      "engine/necropolis/dossiers/nous_evidence/nous_salvage_reproduce.py + _result.json"
+    ],
+    "commands_run": [
+      "git log --format='%h %ad %s' --date=iso -- agents/nous (11 commits)",
+      "git log --format='%h %ad %s' --date=iso -- agents/nous/src/nous.py agents/nous/src/scorer.py agents/nous/configs/manifest.yaml",
+      "git show da42cc7e0 -- agents/nous/src/nous.py (prompt v1 -> v2 diff)",
+      "git show 2f3e4eb6f:agents/nous/src/nous.py | grep -n PROMPT_TEMPLATE -A30",
+      "git log --format='%h %ad %an %s' --date=iso -- agents/hephaestus/ledger.jsonl",
+      "git show 9e189d683 --format='%b' -s",
+      "git show b674a9976 --stat | grep -i -E 'overnight|nous|m1|m2'",
+      "git log --format='%h %ad %s' --date=short -- forge/v2/nous_t2 forge/v3/nous_t3",
+      "python engine/necropolis/dossiers/nous_evidence/nous_run_census.py",
+      "python engine/necropolis/dossiers/nous_evidence/nous_forge_join.py",
+      "python engine/necropolis/dossiers/nous_evidence/nous_gate_trace.py",
+      "python engine/necropolis/dossiers/nous_evidence/nous_scorer_replay.py",
+      "python engine/necropolis/dossiers/nous_evidence/nous_salvage_reproduce.py (runs techne/registry/build_concepts_index.main() with OUT redirected to scratch; cites the Keeper census file)",
+      "python validate.py (in a scratch copy of engine/necropolis, never in the worktree)",
+      "LANG=C.UTF-8 grep -nP '[^\\x00-\\x7F]' over nous_evidence/ and nous.dossier.json"
+    ],
+    "unresolved_questions": [
+      "Who produced the 1212 forge-ledger keys dated 2026-03-31..04-02 with no Nous record in the tree: the M4 Nous daemon (uncommitted runs) or another triple producer? The M4 working tree, if it survives, settles this.",
+      "Did the Nous daemon on M4 die (process/host) or was it stopped when nous_t2 took over on 2026-04-02? No log exists; the resume doc's Redis note is the only machine-state clue.",
+      "Does a frozen Hephaestus judge exist for the Frankenstein control-arm design, or is every forge window instrument-dominated (Hephaestus dossier question)?",
+      "Is the 03-26 forge-day stratum (502 v1 / 236 v2 entries) confounded by a regime x day interaction that the counts cannot separate?",
+      "Doctrine: the prompt change (da42cc7e0) is filed under DESIGN here; a second reader could file it under CONFIGURATION. Taxonomy collision recorded, not resolved.",
+      "Doctrine: 'load_bearing' is defined as 'changed the historical answer'; for a grave with no autopsy row and an amended disposition, which 'historical answer' is meant is a reader's choice (this pass used the 2026-06 pivot verdicts).",
+      "Doctrine: NO_FAIR_TEST_ON_RECORD vs MEASUREMENT_FAILURE vs SUPERSEDED_BUT_ORGANS_SALVAGEABLE all fit the validator; the choice is argued in disposition.rationale, not forced by the schema.",
+      "Second-channel absence: 0 Nous rows in agora.intelligence_outputs is compatible with 'never ran on an Agora-instrumented host' (the tree's story) and with 'ran under another name'; the 1212 ledger orphans are the only trace of the March 31 .. April 2 producer, and nothing names it."
+    ],
+    "created": "2026-09-11"
+  }
+}

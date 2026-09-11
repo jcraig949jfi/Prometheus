@@ -1,0 +1,179 @@
+{
+  "control_non_erebos_row_resolves": false,
+  "daemon_queue_row_keys": [
+    "cluster_size",
+    "erebos_composed_id",
+    "erebos_expected_kill_pattern",
+    "erebos_falsification_route",
+    "erebos_ledger_row_id",
+    "erebos_plugin_id",
+    "kill_pattern",
+    "mi_observed",
+    "mi_z",
+    "parent_record_ids",
+    "rationale",
+    "source",
+    "top_generator"
+  ],
+  "elapsed_s": 0.31,
+  "erebos_quarantined_ids": [
+    "g01_intersection",
+    "g05_confound_swap",
+    "g06_null_space",
+    "g07_analogy",
+    "g08_dimensional_lift",
+    "g12_invariant_substitution",
+    "g13_relation_weakening",
+    "g14_relation_strengthening",
+    "g20_instrument_disagreement",
+    "g21_isomorphism_functor",
+    "g22_subgraph_clique"
+  ],
+  "erebos_quarantined_n": 11,
+  "erebos_registry_n": 25,
+  "errors": [],
+  "executor_calls_execute_composition_attack": true,
+  "executor_forced_import_modules_n": 29,
+  "executor_has_EREBOS_branch": true,
+  "executor_short_circuit_kill_patterns": [
+    "stygian_erebos_composed_loader_pending",
+    "stygian_erebos_composition_import_failed"
+  ],
+  "find_loader_note": "A miss here means the synthetic composed_id did not match the loader regex, NOT that no loader exists; see loaders_by_plugin.",
+  "find_loader_synthetic_hits": {
+    "g02_contrast": "g02_lehmer_salem",
+    "g03_failure_neighborhood": "g03_lehmer_neighborhood",
+    "g04_survivor_tightening": "g02_g04_lehmer_tightened",
+    "g09_projection_collapse": "g09_lehmer_ablation",
+    "g10_boundary": "g10_lehmer_threshold_sweep",
+    "g11_exception_miner": "g11_mahler_boolean_cube",
+    "g15_cross_gen_mi": "g15_ledger_mi",
+    "g16_anti_anchor": "g16_lehmer_extremum",
+    "g17_causal_intervention": "g17_lehmer_label_shuffle",
+    "g18_minimal_counterexample": "g18_lehmer_degree_band",
+    "g19_proof_obligation": "g19_ledger_transitivity",
+    "g23_asymptotic_limit": "g23_lehmer_degree_decay",
+    "g24_symmetry_twist": "g24_lehmer_x_flip",
+    "g25_degeneracy": "g25_lehmer_degenerate"
+  },
+  "find_loader_synthetic_hits_n": 14,
+  "loader_import_failures": {},
+  "loader_keys_not_emitted_by_daemon": [],
+  "loader_modules_on_disk_n": 29,
+  "loader_modules_on_disk_not_force_imported": [],
+  "loader_payload_keys_read": {
+    "erebos_composed_id": 57,
+    "erebos_plugin_id": 29,
+    "parent_record_ids": 2,
+    "rationale": 11,
+    "source": 29
+  },
+  "loader_plugin_ids_not_in_registry": [],
+  "loaders_by_plugin": {
+    "g02_contrast": [
+      "g02_lehmer_degree_parity",
+      "g02_lehmer_multi_binary_wy",
+      "g02_lehmer_salem",
+      "g02_lehmer_smyth_extremal"
+    ],
+    "g03_failure_neighborhood": [
+      "g03_lehmer_neighborhood"
+    ],
+    "g04_survivor_tightening": [
+      "g02_g04_lehmer_band_1_30_to_1_50",
+      "g02_g04_lehmer_tightened"
+    ],
+    "g09_projection_collapse": [
+      "g09_lehmer_ablation"
+    ],
+    "g10_boundary": [
+      "g10_lehmer_bocpd_sweep",
+      "g10_lehmer_threshold_sweep"
+    ],
+    "g11_exception_miner": [
+      "g11_mahler_boolean_cube",
+      "g11_v2_lehmer_degree_minima",
+      "g11_v3_direct_min_verification",
+      "g11_v4_palindromic_cube",
+      "g11_v5_mc_gtest"
+    ],
+    "g15_cross_gen_mi": [
+      "g15_ledger_mi",
+      "g15_v2_real_verdict_mi"
+    ],
+    "g16_anti_anchor": [
+      "g16_lehmer_extremum"
+    ],
+    "g17_causal_intervention": [
+      "g17_lehmer_label_shuffle"
+    ],
+    "g18_minimal_counterexample": [
+      "g18_lehmer_degree_band"
+    ],
+    "g19_proof_obligation": [
+      "g19_ledger_transitivity",
+      "g19_v2_recursive_obligations"
+    ],
+    "g23_asymptotic_limit": [
+      "bsd_rank_stratified_regulator_scaling",
+      "g23_lehmer_degree_decay",
+      "g23_lehmer_degree_decay_bootstrap"
+    ],
+    "g24_symmetry_twist": [
+      "g24_lehmer_x_flip",
+      "g24_v2_reciprocal_audit"
+    ],
+    "g25_degeneracy": [
+      "bsd_regulator_rank_consistency",
+      "g25_lehmer_degenerate"
+    ]
+  },
+  "loaders_registered_n": 29,
+  "plugins_with_0_loaders": [
+    "g01_intersection",
+    "g05_confound_swap",
+    "g06_null_space",
+    "g07_analogy",
+    "g08_dimensional_lift",
+    "g12_invariant_substitution",
+    "g13_relation_weakening",
+    "g14_relation_strengthening",
+    "g20_instrument_disagreement",
+    "g21_isomorphism_functor",
+    "g22_subgraph_clique"
+  ],
+  "plugins_with_ge1_loader": [
+    "g02_contrast",
+    "g03_failure_neighborhood",
+    "g04_survivor_tightening",
+    "g09_projection_collapse",
+    "g10_boundary",
+    "g11_exception_miner",
+    "g15_cross_gen_mi",
+    "g16_anti_anchor",
+    "g17_causal_intervention",
+    "g18_minimal_counterexample",
+    "g19_proof_obligation",
+    "g23_asymptotic_limit",
+    "g24_symmetry_twist",
+    "g25_degeneracy"
+  ],
+  "question": "erebos_seam_census.py -- ONE question:",
+  "repo_root": "D:\\Prometheus-worktrees\\rhadamanthus-base-role",
+  "stygian_composition_test_files": [
+    "test_composition_g02_synthetic_split.py",
+    "test_composition_g03_g09_g25_synthetic.py",
+    "test_composition_g10_multi_band_calibration.py",
+    "test_composition_g10_synthetic_smooth_control.py",
+    "test_composition_g11_family.py",
+    "test_composition_g11_v4_g24_v2.py",
+    "test_composition_g15_family.py",
+    "test_composition_g16_synthetic.py",
+    "test_composition_g17_threshold_sweep.py",
+    "test_composition_g18_synthetic_counterexample.py",
+    "test_composition_g19_synthetic_transitivity.py",
+    "test_composition_g19_v2_recursive.py",
+    "test_composition_g23_multi_law_fit.py",
+    "test_composition_g24_synthetic_x_flip.py"
+  ]
+}
