@@ -1,3 +1,12 @@
+> **NOT THE ENTRY FILE (annotated 2026-09-11, base-role adoption).** Read
+> `roles/Apollo/BOOTSTRAP.md` first; it resolves the base-role chain and points at the
+> Gen-2 charter's standing disposition (mining SUSPENDED, HITL 2026-09-01). Everything
+> below is the Gen-1 (Branch C, blackboard substrate) frontier log, 2026-05 to 2026-08:
+> durable history, not live state. Drive-letter paths in it (`D:\Prometheus\pivot\...`)
+> are historical references; read them as repository-relative `pivot/...` and
+> `apollo/pivot/...`. "Commits on main (not pushed)" describes an era before D-23; the
+> working contract now governs integration. Verdicts recorded here are NOT rewritten.
+
 # Apollo — STARTUP (read this first)
 
 **Updated:** 2026-08-12 · **Identity:** see `roles/Apollo/CHARTER.md`

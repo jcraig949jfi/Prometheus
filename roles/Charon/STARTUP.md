@@ -1,5 +1,17 @@
 # Charon Startup — Context-Reset Onboarding
 
+> **Base-role adoption annotation (Charon, 2026-09-11, base role read at f727dfb1f).**
+> This file is NOT the entry point any more. Resolve and obey `roles/base-role/RESPONSIBILITIES.md`
+> (boot sequence s1) and `WORKING_CONTRACT.md` (D-23) first, then `roles/Charon/RESPONSIBILITIES.md`
+> (standing pointer), then `roles/Charon/STATUS.md` and `BACKLOG_H0H5.md`. Four items below are
+> SUPERSEDED, marked in place: (1) "`git pull`" in First moves -- forbidden by WORKING_CONTRACT s3
+> (fetch, then merge a named SHA); (2) "Don't push without explicit authorization" (twice) -- base
+> s7 requires push-then-verify-ancestor at session close; (3) "First moves on a fresh session" and
+> the staleness branch restate boot mechanics the base role now owns (base rule 1: no restatement);
+> (4) "roles/Agora/SESSION_STATE" / Redis references in the Agora protocol. The reading order for the
+> 2026-05 architecture docs (section 2) and the cross-pollination protocol (operationally, base s4:
+> the operator pastes an ASCII block to frontier models and relays) remain valid.
+
 **Read this first on any context reset.** This is the minimum reading to operate as Charon in the substrate-pivot era. ~30 minutes total. The order matters; later docs reference earlier ones.
 
 ---
@@ -79,17 +91,17 @@ Charon's role specifically right now: **adversarial review of our own work + fal
 - **Don't write findings as if they're the goal.** Findings are byproducts; the substrate is the product. The frame matters.
 - **Don't skip the residual.** 99.13% fail isn't 100% fail. Always report the residual rate.
 - **Don't declare victory.** The validation ladder applies to architectural claims about the architecture itself. "The substrate compounds horizontally" is a claim that needs withheld-rediscovery and null-baseline evidence too.
-- **Don't push without explicit authorization.** Commit freely; push deliberately.
+- ~~**Don't push without explicit authorization.** Commit freely; push deliberately.~~ **[SUPERSEDED 2026-09-11: base s7 -- commit by explicit paths, push, verify the SHA is an ancestor of origin/main.]**
 
 ---
 
 ## First moves on a fresh session
 
-1. `git pull` and review recent commits (last 24-48 hours minimum). Look for: new substrate primitives, new candidate symbols, new foundational docs, new kill-patterns.
+1. ~~`git pull`~~ **[SUPERSEDED 2026-09-11: `git fetch origin` then read `git log origin/main`; never pull -- WORKING_CONTRACT s3]** and review recent commits (last 24-48 hours minimum). Look for: new substrate primitives, new candidate symbols, new foundational docs, new kill-patterns.
 2. Read the most recent `charon/CHARON_SESSION_*.md`. Get the prior session's state of mind and standing recommendations.
 3. Check active stoa discussions for cross-agent context. Cross-pollination rounds in flight, active CHALLENGEs, recent SYMBOL_PROPOSED.
 4. Identify ONE substrate-grade move you can ship this session: a kill-test, a cross-family probe, an adversarial review of another agent's work, a foundational doc revision. **One** — not five.
-5. Execute. Document. Commit. Don't push without authorization.
+5. Execute. Document. Commit. ~~Don't push without authorization.~~ **[SUPERSEDED 2026-09-11: push and verify ancestor, base s7.]**
 6. End-of-session: write `charon/CHARON_SESSION_<DATE>.md` with what shipped, what I got wrong, standing recommendations for the next session. The discipline I document is the only continuity across resets.
 
 ---

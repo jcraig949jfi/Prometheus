@@ -279,6 +279,9 @@ def main():
     elif args.cmd == "holdout":
         print(json.dumps(holdout(fabric, rng), indent=2))
     elif args.cmd == "harvest":
+        # D-23 (2026-09-11): harvest writes state/; never from the canonical checkout.
+        from archaeon.workspace import assert_not_canonical
+        assert_not_canonical("write an Arachne harvest", allow_override=False)
         from datetime import datetime, timezone
         out = FABRIC_DIR.parent / "state" / f"harvest_{datetime.now(timezone.utc).strftime('%Y-%m-%d')}.md"
         print(json.dumps(harvest(fabric, out_path=str(out)), indent=2))

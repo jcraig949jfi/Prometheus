@@ -1,0 +1,128 @@
+====================================================================
+LEXIS -- BASE ROLE ADOPTION RECEIPT
+2026-09-11
+====================================================================
+
+1. WHAT I READ, AND AT WHICH SHA
+
+   base role read at   b1ccc9a21 (worktree base), then 7466bd6ac
+                       (origin/main during the pass; merged by named SHA)
+   files read in full  roles/base-role/README.md, NORTH_STAR.md,
+                       RESPONSIBILITIES.md (both versions, diffed),
+                       WORKING_CONTRACT.md, INHERITANCE.md (Lexis row),
+                       archaeon/tests/test_base_role.py, comms/README.md
+                       roles/Archaeon/prompts/2026-09-11_workspace/
+                         MISSIVE_ALL_SEATS.md
+                       roles/Archaeon/prompts/2026-09-10_backlog/
+                         00_BACKLOG_SCHEMA.md
+                       archaeon/docs/expansion/DECISIONS.md (D-23 am. 3-5)
+   also read           roles/Lexis/ROLE.md, SUMMARY.md, handoff/
+                       LEXIS_G7_HANDOFF.md, archaeology/hct01_prior_art_
+                       2026-09-03/ (adjudication, addendum, gaps ledger),
+                       Charon's adoption receipt and CALIBRATION.md,
+                       Elenchus's STATUS.md and BACKLOG_H0H5.md,
+                       roles/Apollo/STATUS.txt, roles/Archaeon/H0H5_STATUS.md
+   not read            aporia/doctrine/critical_memories.md in full this
+                       pass (headers only, HARD-1..6); owed next boot.
+
+   MY INHERITANCE ROW IS NOT A STUB
+     | Lexis | ROLE.md (already) |
+   ROLE.md line 3 carries the banner (stamped by Archaeon at 249bb0f98).
+
+2. WORKSPACE RECEIPT (WORKING_CONTRACT s4)
+
+   worktree_path   <worktrees>/lexis-base-role (operator host convention)
+   branch          lexis/base-role-adopt-2026-09-11  (task branch)
+   base_sha        b1ccc9a2188024ed854f666e5c1652e72d114aa3
+   merged          7466bd6ac (origin/main) by named SHA before any commit
+   dirty           false at creation
+   main_worktree   false (git-dir != git-common-dir, checked at boot)
+   machine         M1
+
+   Lexis footprint before this worktree: 0 worktrees, 0 local branches,
+   1 remote branch (origin/lexis/g7-closeout-2026-09-01, merged; delete
+   pending confirmation it is in `git branch -r --merged origin/main`),
+   0 long-running processes, 0 files in the canonical checkout.
+
+3. CLEAN-UP OF THE CANONICAL CHECKOUT (missive items a-e)
+
+   a. nothing to claim: no Lexis path among the 111 dirty entries.
+   b. stale worktrees of mine: none. Merged remote branch: see 2.
+   c. long-running processes: none. The seat is compute-free.
+   d. startup refusal added to all 13 file-writing scripts through
+      roles/Lexis/workspace_guard.py (inherits archaeon/workspace.py).
+      Controls: positive (verify_handoff.py PASS through the guarded
+      launch path), live (receipt from this worktree, main_worktree
+      False), cheat (injected canonical receipt refused, override
+      ignored). Not shown: a live refusal from the canonical checkout
+      (its branch predates the guard module; mutating it is forbidden).
+   e. this receipt.
+
+4. SEAT FILES CHECKED AGAINST THE BASE ROLE; CONFLICTS ANNOTATED, NOT
+   REWRITTEN
+
+   ROLE.md
+     CURRENCY    header says IDLE since 09-01; true for lane 1, omits the
+                 commissioned HC-T01 forensics lane (09-03/04). Annotated;
+                 STATUS.md carries both lanes.
+     MIGRATION   s7 "git commit --only <paths>" (08-25) -> D-23 s5
+                 explicit paths + message file; base wording governs.
+     NON-NORM.   five feedback_* memory-slug citations marked as
+                 non-authoritative (Proteus ruling); rules stand on text.
+     NO CONFLICT s3 no-touch constraint on Apollo/Hephaestus = base lane
+                 discipline; Techne's permission does not extend here.
+     SUPERSEDED  "Machine: unassigned" -> compute-free by design.
+     s8 open decisions -> XL rows LEX-18..24 in BACKLOG_H0H5.md.
+   SESSION_2026-08-25.md
+     HISTORICAL  line 3 drive letter annotated (D-23 s9), record kept.
+   handoff/, instruments/, library_learning/, archaeology/
+     checked for drive letters (none) and hash claims (all verified,
+     section 5). Content untouched except the two gaps-ledger rows below.
+   L_ARCHAEOLOGY_GAPS.jsonl
+     STALE       AG-05/AG-06 said NOT RUN; RA-1/RA-2 ran at d51d1fa82 per
+                 my own 09-04 addendum. status_2026-09-11 field added;
+                 original status kept.
+
+5. PROPERTY CHECKS THIS BOOT
+
+   PROMPT_CLOSEOUT_2026-09-01.txt  body sha256 91fbd86b... MATCH
+   PROMPT_LEXIS_HCT01_PRIOR_ART    body 10165641... whole caa47e64... MATCH
+   two HC-T01 subprompts           whole-file hashes MATCH
+   verify_handoff.py at HEAD       PASS, exit 0 (every frozen number holds)
+   reopening criteria (handoff s6) NONE FIRED; Apollo Task 2 still OWED
+   apollo/ since 08-25             16 commits; congruence audit NOT re-run
+                                   (LEX-06 next)
+   comms sync Lexis                1 broadcast, 0 queued
+
+6. STANDING LOOPS (base rule 7 / boot step 8)
+
+   Owned: none. Fed: none. Nothing to register in MONITORS.md; the
+   scheduled-task registry test passes on this host.
+
+7. BASE SELF-TEST ON THE MERGED TREE
+
+   python -m pytest archaeon/tests/test_base_role.py -q
+   1 failed, 7 passed.
+   FAILED test_issued_manifests_verify_against_their_files
+     roles/Archaeon/prompts/2026-09-11_comms/00_BROADCAST.md
+     manifest 44273b26...  committed blob c1f4b664...
+   Reproduced on origin/main 7466bd6ac directly; not caused by this
+   pass; reported to Archaeon as a constitution defect (s10):
+   roles/Lexis/prompts/2026-09-11_state_injection/
+     ARCHAEON_manifest_defect.md
+   This pass is pushed with the failure quoted, not withheld.
+
+8. WORK ITEMS SUGGESTED AND STARTED (boot step 6)
+
+   started today: LEX-01..05, LEX-11 (all in this commit or the next)
+   next:          LEX-06 congruence audit at HEAD
+   blocked:       LEX-05 on Apollo (Task 2 OWED); LEX-12 on Herakles;
+                  LEX-26 on Elenchus; LEX-08 on service reachability
+   XL (operator): LEX-18..24, listed in STATUS.md
+
+9. WHAT THIS ENABLES
+
+   Apollo can run Task 2 against a fixture verified to reproduce at
+   today's HEAD, and answer whether the surface layer or the capability
+   layer is the deficit on a blind battery (question Y for consumer X).
+   The operator's queue for this seat is derivable from seven XL rows.

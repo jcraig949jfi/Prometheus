@@ -6,6 +6,10 @@
 > HITL retirement ruling. Lane N KILL stands; Lane M stays open-and-unretired; the K0 instrument
 > `coordinate_census.py` and the Lean handoff stay offered. Last state: `STATUS_2026-09-01_rebootstrap.md`.
 > The session that parked this seat pivoted to **Proteus** (`roles/Proteus/`).
+>
+> **2026-09-11: base role adopted** (`BASE_ROLE_ADOPTION_2026-09-11.txt`, `STATUS.md`,
+> `BACKLOG_H0H5.md`, `CALIBRATION.md`, `journal/`). Resolve and obey the base-role inheritance
+> chain before this file. The seat remains PARKED; the backlog is executable on the operator's word.
 
 > ## THREAD CLOSED — 2026-08-25. DISPOSITION **KILL** (revised from PARK after external review). DO NOT RESUME THE LOOP.
 >
@@ -66,6 +70,11 @@ Five files. Stop when you can answer "what is pending and why."
 **Do not** re-read cycles 001–004 unless a specific number is in dispute. Their conclusions are
 summarised in §3 and their corrections in file 3. The cold-start tax is real; this list is the whole
 tax.
+
+> **MIGRATION ANNOTATION 2026-09-11 (base-role adoption, D-23).** The paragraph below was
+> written for the pre-D-23 world in which this seat worked in the canonical checkout. It is
+> superseded by `roles/base-role/WORKING_CONTRACT.md` s1-s3: a worktree per seat, a task branch
+> from a recorded base SHA, fetch then merge by named SHA, never `git pull`. Kept as the record.
 
 **Verify the tree before working:** `git fetch origin && git rev-list --left-right --count
 HEAD...origin/main` should read `0 0`. Other seats (Techne especially) commit to this repo

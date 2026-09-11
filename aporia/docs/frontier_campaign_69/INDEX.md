@@ -13,13 +13,13 @@ what made the mined templates thin. Eight parts each; three are
 load-bearing: software with liveness verdicts, one reproduction recipe
 with a published number to check against, and negative results.
 
-**97 dossiers. 10 reproducibility audits.**
+**100 dossiers. 10 reproducibility audits.**
 
 ## Cross-cutting results
 
 - **Software inventory: 463 entries** — 298 MAINTAINED, 130 DORMANT, 35 ABANDONED. The dead fraction is 35%, and it held steady from 18 dossiers through the full sweep across five unrelated tiers — a property of the tooling, not of the ordering.
 - **Bracket damage: 9 candidate losses** across the corpus; adjudicated in `bracket_losses.jsonl`, 2 real, the rest inserted markers. Real losses are never repaired from inference.
-- **Honest refusals: 138 IDENTIFIER UNKNOWN** — the no-invention instruction is live, which is what makes a refusal elsewhere meaningful.
+- **Honest refusals: 141 IDENTIFIER UNKNOWN** — the no-invention instruction is live, which is what makes a refusal elsewhere meaningful.
 
 ## Reproducibility audits
 
@@ -140,6 +140,9 @@ length in characters. A short recipe is worth checking by hand.
 - **95 E-Graphs and Equality Saturation** — `95_e_graphs_and_equality_saturation.md` · 19KB · 8 ids · 6 urls · 1 unk · recipe 2320
 - **96 Differentiable Simulation** — `96_differentiable_simulation.md` · 33KB · 8 ids · 43 urls · 0 unk · recipe 3104
 - **97 Chemical Reaction Networks as Computation** — `97_chemical_reaction_networks_as_computation.md` · 33KB · 9 ids · 45 urls · 2 unk · recipe 2291
+- **300 Cartesian Genetic Programming** — `300_cartesian_genetic_programming.md` · 34KB · 8 ids · 41 urls · 1 unk · recipe 2510
+- **301 Neutrality and inactive genes in Cartesian Genetic Programming** — `301_neutrality_and_inactive_genes_in_cartesian_genetic_programmi.md` · 24KB · 8 ids · 6 urls · 0 unk · recipe 2376
+- **302 Module acquisition and subgraph reuse in evolved graphs** — `302_module_acquisition_and_subgraph_reuse_in_evolved_graphs.md` · 32KB · 7 ids · 38 urls · 2 unk · recipe 2717
 
 ## How to use PART 5, and the caveat that must travel with it
 

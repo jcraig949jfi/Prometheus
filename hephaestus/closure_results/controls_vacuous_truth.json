@@ -1,0 +1,314 @@
+{
+  "spec": "vacuous_truth",
+  "depth": 3,
+  "budget": 300000,
+  "seed": 20260911,
+  "basis": {
+    "version": "A2-GENERIC-v1",
+    "hash": "7f2ef69196e7f128"
+  },
+  "generated": "2026-09-11T13:41:43Z",
+  "controls": [
+    {
+      "control": "NEGATIVE",
+      "expect": "n_mechanism == 0 in A1, A2, B (aliases allowed, reported)",
+      "observed": {
+        "A1": {
+          "evaluated": 300000,
+          "n_mechanism": 0,
+          "n_robust": 0,
+          "n_alias": 0,
+          "min_witness_depth": null,
+          "witnesses": [],
+          "aliases": []
+        },
+        "A2": {
+          "evaluated": 300000,
+          "n_mechanism": 0,
+          "n_robust": 0,
+          "n_alias": 0,
+          "min_witness_depth": null,
+          "witnesses": [],
+          "aliases": []
+        },
+        "B": {
+          "evaluated": 107629,
+          "n_mechanism": 0,
+          "n_robust": 0,
+          "n_alias": 0,
+          "min_witness_depth": null,
+          "witnesses": [],
+          "aliases": []
+        }
+      },
+      "PASS": true
+    },
+    {
+      "control": "POSITIVE-A1",
+      "expect": "n_mechanism >= 1 and minimal witness depth == 1 for target pigeonhole_check(d, s)",
+      "observed": {
+        "evaluated": 300000,
+        "n_mechanism": 5,
+        "n_robust": 5,
+        "n_alias": 3167,
+        "min_witness_depth": 1,
+        "witnesses": [
+          "pigeonhole_check(d, s)",
+          "pigeonhole_check(0, all_but_n(s, d))",
+          "pigeonhole_check(all_but_n(d, s), 0)",
+          "pigeonhole_check(all_but_n(d, s), all_but_n(s, d))",
+          "pigeonhole_check(fencepost_count_T(d), fencepost_count_T(s))"
+        ],
+        "aliases": [
+          "all_but_n(d, s)",
+          "all_but_n(s, d)",
+          "all_but_n(0, all_but_n(s, d))",
+          "all_but_n(all_but_n(d, s), 0)",
+          "all_but_n(0, all_but_n(d, s))"
+        ]
+      },
+      "named_expression_present": true,
+      "PASS": true
+    },
+    {
+      "control": "POSITIVE-B",
+      "expect": "n_mechanism >= 1 and minimal witness depth == 1 for target eq(d, s)",
+      "observed": {
+        "evaluated": 107629,
+        "n_mechanism": 5,
+        "n_robust": 5,
+        "n_alias": 0,
+        "min_witness_depth": 1,
+        "witnesses": [
+          "eq(d, s)",
+          "le(d, s)",
+          "ge(s, d)",
+          "eq(0, sub(d, s))",
+          "eq(add(d, d), add(d, s))"
+        ],
+        "aliases": []
+      },
+      "named_expression_present": true,
+      "PASS": true
+    },
+    {
+      "control": "CHEAT",
+      "expect": "decoy witness at depth 1 in A1+decoy on every route; decoy witness present in A2-only injection",
+      "observed": {
+        "universal": {
+          "baseline_A1": {
+            "evaluated": 300000,
+            "n_mechanism": 3,
+            "n_robust": 3,
+            "n_alias": 22,
+            "min_witness_depth": 2,
+            "witnesses": [
+              "pigeonhole_check(s, all_but_n(d, 1))",
+              "pigeonhole_check(fencepost_count_T(s), d)",
+              "pigeonhole_check(all_but_n(s, d), all_but_n(0, 1))"
+            ],
+            "aliases": [
+              "coin_flip_independence(s, d)",
+              "coin_flip_independence(d, all_but_n(s, d))",
+              "coin_flip_independence(0, all_but_n(d, s))",
+              "coin_flip_independence(all_but_n(s, d), 0)",
+              "coin_flip_independence(1, all_but_n(s, d))"
+            ]
+          },
+          "A1_plus_decoy": {
+            "evaluated": 300000,
+            "n_mechanism": 5,
+            "n_robust": 5,
+            "n_alias": 22,
+            "min_witness_depth": 1,
+            "witnesses": [
+              "decoy_kernel(d, s)",
+              "decoy_kernel(all_but_n(d, s), 0)",
+              "pigeonhole_check(s, all_but_n(d, 1))",
+              "pigeonhole_check(fencepost_count_T(s), d)",
+              "pigeonhole_check(all_but_n(s, d), all_but_n(0, 1))"
+            ],
+            "aliases": [
+              "coin_flip_independence(s, d)",
+              "coin_flip_independence(d, all_but_n(s, d))",
+              "coin_flip_independence(0, all_but_n(d, s))",
+              "coin_flip_independence(all_but_n(s, d), 0)",
+              "coin_flip_independence(1, all_but_n(s, d))"
+            ]
+          },
+          "A2only_decoy": {
+            "evaluated": 300000,
+            "n_mechanism": 5,
+            "n_robust": 5,
+            "n_alias": 22,
+            "min_witness_depth": 1,
+            "witnesses": [
+              "eq(d, s)",
+              "le(d, s)",
+              "decoy_kernel(d, s)",
+              "pigeonhole_check(s, all_but_n(d, 1))",
+              "pigeonhole_check(all_but_n(s, d), all_but_n(0, 1))"
+            ],
+            "aliases": [
+              "coin_flip_independence(s, d)",
+              "coin_flip_independence(d, all_but_n(s, d))",
+              "coin_flip_independence(0, all_but_n(d, s))",
+              "coin_flip_independence(all_but_n(s, d), 0)",
+              "coin_flip_independence(1, all_but_n(s, d))"
+            ]
+          },
+          "PASS_A1": true,
+          "PASS_A2": true,
+          "note": "A2-only injection: the frozen arm is unchanged by construction; the leak is visible when the A2 arm carries the decoy witness"
+        },
+        "negative_universal": {
+          "baseline_A1": {
+            "evaluated": 300000,
+            "n_mechanism": 5,
+            "n_robust": 5,
+            "n_alias": 27,
+            "min_witness_depth": 1,
+            "witnesses": [
+              "pigeonhole_check(1, s)",
+              "pigeonhole_check(0, all_but_n(s, 1))",
+              "pigeonhole_check(all_but_n(1, s), s)",
+              "pigeonhole_check(all_but_n(d, s), all_but_n(d, 1))",
+              "pigeonhole_check(all_but_n(1, s), modular_arithmetic(d, d, s))"
+            ],
+            "aliases": [
+              "coin_flip_independence(0, s)",
+              "coin_flip_independence(s, all_but_n(0, s))",
+              "coin_flip_independence(all_but_n(0, s), s)",
+              "coin_flip_independence(d, all_but_n(0, s))",
+              "coin_flip_independence(all_but_n(d, s), d)"
+            ]
+          },
+          "A1_plus_decoy": {
+            "evaluated": 300000,
+            "n_mechanism": 5,
+            "n_robust": 5,
+            "n_alias": 27,
+            "min_witness_depth": 1,
+            "witnesses": [
+              "decoy_kernel(d, s)",
+              "pigeonhole_check(1, s)",
+              "pigeonhole_check(0, all_but_n(s, 1))",
+              "pigeonhole_check(all_but_n(1, s), s)",
+              "pigeonhole_check(all_but_n(d, s), all_but_n(d, 1))"
+            ],
+            "aliases": [
+              "coin_flip_independence(0, s)",
+              "coin_flip_independence(s, all_but_n(0, s))",
+              "coin_flip_independence(all_but_n(0, s), s)",
+              "coin_flip_independence(d, all_but_n(0, s))",
+              "coin_flip_independence(all_but_n(d, s), d)"
+            ]
+          },
+          "A2only_decoy": {
+            "evaluated": 300000,
+            "n_mechanism": 5,
+            "n_robust": 5,
+            "n_alias": 27,
+            "min_witness_depth": 1,
+            "witnesses": [
+              "eq(s, 0)",
+              "lt(s, 1)",
+              "le(s, 0)",
+              "decoy_kernel(d, s)",
+              "pigeonhole_check(1, s)"
+            ],
+            "aliases": [
+              "coin_flip_independence(0, s)",
+              "coin_flip_independence(s, all_but_n(0, s))",
+              "coin_flip_independence(all_but_n(0, s), s)",
+              "coin_flip_independence(d, all_but_n(0, s))",
+              "coin_flip_independence(all_but_n(d, s), d)"
+            ]
+          },
+          "PASS_A1": true,
+          "PASS_A2": true,
+          "note": "A2-only injection: the frozen arm is unchanged by construction; the leak is visible when the A2 arm carries the decoy witness"
+        },
+        "existential": {
+          "baseline_A1": {
+            "evaluated": 300000,
+            "n_mechanism": 5,
+            "n_robust": 5,
+            "n_alias": 8239,
+            "min_witness_depth": 1,
+            "witnesses": [
+              "pigeonhole_check(s, 0)",
+              "pigeonhole_check(d, all_but_n(d, s))",
+              "pigeonhole_check(fencepost_count_T(s), 1)",
+              "pigeonhole_check(s, modular_arithmetic(d, d, s))",
+              "pigeonhole_check(all_but_n(s, d), all_but_n(0, d))"
+            ],
+            "aliases": [
+              "s",
+              "all_but_n(s, 0)",
+              "all_but_n(0, s)",
+              "coin_flip_independence(s, 1)",
+              "all_but_n(d, all_but_n(d, s))"
+            ]
+          },
+          "A1_plus_decoy": {
+            "evaluated": 300000,
+            "n_mechanism": 5,
+            "n_robust": 5,
+            "n_alias": 8239,
+            "min_witness_depth": 1,
+            "witnesses": [
+              "decoy_kernel(d, s)",
+              "pigeonhole_check(s, 0)",
+              "pigeonhole_check(d, all_but_n(d, s))",
+              "pigeonhole_check(s, modular_arithmetic(d, d, s))",
+              "pigeonhole_check(all_but_n(s, d), all_but_n(0, d))"
+            ],
+            "aliases": [
+              "s",
+              "all_but_n(s, 0)",
+              "all_but_n(0, s)",
+              "coin_flip_independence(s, 1)",
+              "all_but_n(d, all_but_n(d, s))"
+            ]
+          },
+          "A2only_decoy": {
+            "evaluated": 300000,
+            "n_mechanism": 5,
+            "n_robust": 5,
+            "n_alias": 8238,
+            "min_witness_depth": 1,
+            "witnesses": [
+              "lt(0, s)",
+              "le(1, s)",
+              "decoy_kernel(d, s)",
+              "pigeonhole_check(s, 0)",
+              "pigeonhole_check(d, all_but_n(d, s))"
+            ],
+            "aliases": [
+              "s",
+              "all_but_n(s, 0)",
+              "all_but_n(0, s)",
+              "coin_flip_independence(s, 1)",
+              "all_but_n(d, all_but_n(d, s))"
+            ]
+          },
+          "PASS_A1": true,
+          "PASS_A2": true,
+          "note": "A2-only injection: the frozen arm is unchanged by construction; the leak is visible when the A2 arm carries the decoy witness"
+        }
+      },
+      "PASS": true
+    }
+  ],
+  "ALL_PASS": true,
+  "seconds": 154.8,
+  "workspace": {
+    "base_sha": "5d784becf94cbdde4b1aba1a88582436182226a5",
+    "branch": "hephaestus/base-role-adopt-2026-09-11",
+    "worktree_path": "F:\\Prometheus-worktrees\\hephaestus-base-role",
+    "dirty": true,
+    "main_worktree": false,
+    "allow_canonical_override": false
+  }
+}

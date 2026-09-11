@@ -42,6 +42,13 @@ forge the missing mechanism → a consumer improves measurably — is the thing 
 
 ## 1. Current operational state (post power-outage recovery)
 
+> **Base-role adoption annotation (Hephaestus, 2026-09-11, base role read at 7466bd6ac; base rule 5,
+> currency is correctness).** This section is a dated snapshot of 2026-06-24 and is HISTORICAL. The
+> host claim ("running on M3 / GANDALF") is not a property of the seat: the seat runs from whichever
+> host the operator launches it on, always from a linked worktree, and the host + worktree go on every
+> receipt (WORKING_CONTRACT.md s4). The 2026-09-11 adoption pass ran on the Postgres host (M1).
+> Current state lives in `roles/Hephaestus/STATUS.md`; boot order in `roles/Hephaestus/RESPONSIBILITIES.md`.
+
 | | |
 |---|---|
 | Machine | **M3 / GANDALF — back online** (CMOS reset + new battery; keyboard flaky, upgrade pending). GPU GTX 1070 8 GB, 8 cores, 25.8 GB RAM, 178 GB free — verified working. |
@@ -188,6 +195,9 @@ R6 ~7. **The gap is parsing (85% structured vs ~35% NL), not the algorithms.**
 | `diversity_forge.py` / `seed_forge.py` / `composer.py` | diversity archive / child evolution / composition research |
 
 Run (legacy T1): `cd C:\prometheus; $env:PYTHONPATH="."; python agents/hephaestus/src/hephaestus.py --poll-interval 300`
+*(Annotation 2026-09-11: the drive-letter path above is SUPERSEDED by the base rule; run from a linked
+worktree with `PYTHONPATH` set to that worktree's root. The legacy T1 loop is not run at all under the
+2026-09-01 charter amendment; the current entry points are `hephaestus/src/` and refuse the canonical checkout.)*
 (NVIDIA Qwen-397B primary + llama/maverick/GitHub fallback; creds in `agents/hephaestus/.env`).
 Repair pile (630 staged): `--repair-scraps --repair-max 200 --repair-min-acc 0.20`.
 Break-glass: Frame H + `forge_primitives.py` (I *am* the API). Adapter: `blackboard_adapter.py --adapt`.
@@ -218,8 +228,12 @@ silently drop rows until it lands.
 
 - **Autonomous (report to James):** activate break-glass; choose gap targets; select frame (H preferred);
   choose tier; write tools to `forge_v{N}/`; run validation battery; run the blackboard adapter.
-- **Ask James:** start/stop pipeline agents (machine load); commit/push; modify agent source; change
+- **Ask James:** start/stop pipeline agents (machine load); ~~commit/push~~; modify agent source; change
   battery categories (shared Sphinx).
+
+*(Annotation 2026-09-11: "commit/push" is SUPERSEDED by WORKING_CONTRACT.md s5: the seat commits its own
+paths with a message file, pushes fast-forward to main after tests on the merged tree, and verifies the SHA is
+an ancestor of origin/main. Premium-model escalation stays operator-only per the 2026-09-01 charter amendment s3.)*
 
 ## 11. Dated PipelineOrchestrator claims now superseded
 

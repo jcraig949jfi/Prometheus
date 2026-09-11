@@ -93,3 +93,70 @@ Harmonia's four-state gate is called at every boundary where a consumer begins w
 
 F:\Prometheus is the canonical clone (fetch, inspection, worktree management only). Every seat works in its own worktree on a short-lived branch created from a recorded base SHA; never `git pull` (fetch + explicit merge from a SHA); every receipt records base_sha, branch, worktree_path, dirty; integrate by fast-forwarding origin/main after tests, then remove the worktree and delete the branch; long-running processes run from a PINNED detached worktree advanced only by an explicit logged command; a dirty or corrupt worktree is destroyed and recreated, never nursed; every entry point refuses to run from the canonical checkout (main-worktree detection: git-dir == git-common-dir). Missive: roles/Archaeon/prompts/2026-09-11_workspace/MISSIVE_ALL_SEATS.md. Archaeon complied first (archaeon/workspace.py; tick moved to F:\Prometheus-worktrees\archaeon-tick).
 
+## D-23 amendment (operator 2026-09-11, on Vivarium's adoption pass aee89ff8b)
+
+1. The mandated journal directory was gitignored for every seat (.gitignore `journal/`): a base-role defect, fixed centrally (`!roles/*/journal/`, `!roles/*/journal/**`) and guarded by a check-ignore test; force-adding seat by seat is only an escape hatch.
+2. Harness-managed linked worktrees under the canonical path are PERMITTED provided the canonical guard passes; the invariant is isolation of index and working tree, not the path. Creating worktrees there by hand stays prohibited.
+3. Stranded rows and "do not ask the operator" are compatible: the second is about autonomy, not facts; an ambiguous write is an epistemic question -- fail closed, preserve, evidence, prompt, continue elsewhere.
+4. The two-control rule stands with the cheat control defined as qualitatively distinct from a negative control.
+Principle added to the contract (s10): the constitution is falsifiable -- a rule that cannot be followed, observed or reconciled with repository mechanics is a defect in the constitution, not the seat; the base role tests its own claims (archaeon/tests/test_base_role.py).
+
+## D-23 amendment 2 (operator 2026-09-11, on Techne's adoption pass ad15ae44e / d3ce43c24)
+
+- The journal defect is confirmed independently by Vivarium and Techne: repaired centrally with the self-conformance test (2b79c140a); Techne's WORKLOG workaround was compliant and may now retire to roles/Techne/journal/.
+- Techne's "BEFORE external publication" clause is SUPERSEDED TERMINOLOGY, not permission: annotated in roles/Techne/RESPONSIBILITIES.md as "run the required synthetic null control before promoting or communicating any cross-domain claim beyond its experimental context".
+- Elevated to the base role beside the north star: Prometheus does not trust labels of state when the property can be measured (Herakles: repository state; Vivarium: process/control state; Techne: solver/tool state); never accept a tool's self-reported success as correctness when an oracle/invariant/residual/certificate/ground truth can be constructed; resolve dependencies by required capability, not by name; acceptance thresholds come from downstream need before seeing what the free route achieves; failure of a configuration is not falsification of the mechanism.
+- TECHNE-45 (fixtures that score status rather than correctness) stays ahead of licensing work: until those instruments are repaired, what their experiments measured is unknown.
+- Techne's accuracy-requirement prompt to Harmonia/Aporia is the model for refusing a hidden experimenter degree of freedom.
+
+## D-23 amendment 3 (operator 2026-09-11, on the Herakles, Harmonia, Proteus, Mnemosyne and Elenchus adoption passes)
+
+- Seven rules added to the base role: inheritance over duplication; capability over labels; instrument self-falsification; evidence before verdict; currency is correctness; auditor independence means no mutation of the audited object; dormancy must be visible.
+- Herakles: inherited boot mechanics are a pointer, not a restatement (migration annotation on BOOTSTRAP.md).
+- Harmonia: "Record features, not verdicts" superseded; rulings are the job; HARM-36 updates the stale cartographer charter.
+- Proteus: both proposed fixes approved -- memory slugs are not authorities (cite tracked doctrine or leave uncited); "F:" becomes "the canonical checkout"; incompleteness is not conflict.
+- Mnemosyne: may experiment on and adjudicate its own substrate, never another lane's claims; "I don't do science" obsolete; PostgreSQL/Redis-era language superseded under MNE-01.
+- Elenchus: write scope widened to everything that is not the audited object; mandate program-wide on commission with the Aporia shadow as the default standing lane; ELEN-03 proceeds; the dormant shadow loop is a failed instrument until it exposes freshness.
+- The journal collision (four seats, one .gitignore rule) is a confirmed base-role bug, fixed and tested at 2b79c140a; no further operator question.
+
+## D-23 amendment 4 (2026-09-11): feed the watchdogs; the interrupted-checkout mechanism reproduced
+
+- roles/base-role/MONITORS.md is the registry of every standing loop (input, freshness source, dormancy threshold, alarm, state); boot step 7 makes monitor compliance precede task work; the self-test requires every enabled Prometheus scheduled task on the host to have a row.
+- Elenchus's shadow is DORMANT because its INPUT (Aporia's WORKLOG) stopped at P177 on 2026-09-01; feeding it means reviving Aporia's loop or repointing the shadow at a live input under Elenchus's program-wide mandate -- the operator rules which. The mailer the operator still receives is UNLOCATED on M1 (Hermes brief script; no task, cron or process) and must be identified from an email's headers.
+- The mechanism behind the canonical checkout's ~11,000 missing files was reproduced live: `timeout 120 git worktree add` on the 39,067-file tree was killed at ~80% and left every file missing with the index intact and the worktree locked "initializing". Contract s3 now forbids short timeouts on checkout-class operations (budget 900 s or run unbounded).
+
+## D-23 amendment 5 (operator 2026-09-11, on Ergon's adoption pass 772edf15e)
+
+- Base rule 8: scheduled activity is not progress -- every persistent task exposes a domain-level productivity signal beside process success; repeated successful no-ops become visible as dormancy. PRESENT is not ACTIVE is not PRODUCTIVE is not VALID; the registry gains a productivity column and a DEAD state.
+- `archive/` was a second base-role filesystem contradiction (roles/*/archive/ ignored for every seat): fixed centrally, and every base-mandated path class is now checked mechanically against .gitignore in the self-test.
+- PrometheusMachineProbeM1 is registered DEAD (fires every 5 min, 0x80070002 every time, unowned, runs from the canonical checkout); recommendation: disable until claimed.
+- ERGON-10: Ergon's self-recusal accepted; Aporia rules the scientific disposition with Charon's C1/C2 findings as hard preconditions; the operator's leaning is not to resume the old probe -- redesign onto executable artifacts under the corrected guards, or close the lineage with an annotation and open a successor. Disabling the three tasks before adjudication was correct containment, not a verdict.
+- ERGON-03 -> ERGON-02 sequence endorsed: MDE, attainable range, cheat control and gate-fire worlds before MRU vs RANDOM at fixed n; a flat result under an instrument proven able to fire is a finding, a flat result otherwise is nothing.
+
+## D-24 (operator 2026-09-11) The comms queue is revived in Postgres and is part of the base role
+
+The April Agora (Redis streams, mirrored to agora.messages) is replaced by a Postgres-native comms layer (schema `comms`: messages with sha256, per-agent receipts, append-only task queues; repository package comms/). Every seat syncs its inbox and the broadcasts BEFORE and AFTER each prompt or loop iteration and appends prompts and delegations to the end of its task queue. Cross-seat prompts are posted here after being committed; the operator relays by paste only to seats that are not running. DDL note: the `comms` schema is new and additive, created by comms.init_schema (idempotent); the standing "no DDL" constraint on Archaeon's loop applies to the viv and ew schemas, which are untouched.
+
+## D-24 amendment (operator 2026-09-11): the agents table
+
+comms.agents records, per seat: status, last active, last sync, the last message pointer, last bootstrap and boot count, machine, workspace receipt, model and tier (light: haiku/sonnet; heavy: opus/fable), capabilities, session id and harness metadata (names and non-secret values only). Every seat records its boot (`python -m comms boot`), every comms call marks activity, and `python -m comms who` is the delegation view. The model is stated by the seat from its own system prompt; the harness exposes the session id and effort level, not the model.
+
+## D-25 (operator 2026-09-11) Reanimation rulings: states, presence, manifests, and how old seats come back
+
+- Seat states are first-class: ACTIVE / PARKED / DORMANT / BLOCKED / RETIRED with distinct obligations; "always be working" applies to ACTIVE only. Diomedes is PARKED (DIOM-02..05 as a bounded excursion, then auto-PARKED unless a decision changes); Alethelia's ALET-04 is APPROVED as an instrument (hourly, pinned worktree, executing SHA on every report, ACTIVE vs PRODUCTIVE stated, no repair authority); Lexis is BLOCKED on Apollo's blind Task 2 with LEX-07 executable; its identity is re-adjudicated after.
+- Presence is derived from sync receipts (read through message N at SHA X from worktree Y at time Z), never from a row or an old heartbeat label; comms.agents carries last_sync_sha/worktree/branch and `who` derives online from last_sync_at.
+- Message status is derived from receiving-side events (POSTED -> SEEN -> CLAIMED -> ANSWERED / CLOSED); a sender cannot mutate it.
+- Manifests hash LF-normalised bytes (comms/manifest.py) with a fixture proving LF and CRLF checkouts agree; the 2026-09-11_comms manifest incident (four independent reproductions) is closed by the generator, not by thirteen regenerated hashes.
+- Booting an old seat is an archaeological event: historical queues are classified STILL_LIVE / NEEDS_REPREMISE / PARKED / SUPERSEDED / TRANSFERRED / RETIRED; only STILL_LIVE becomes executable. Alethelia's contaminated canonical copies of stations/REPORT_latest.* are left alone.
+
+## D-26 (operator 2026-09-11, via Talos #51) TALOS-01: Talos is awake; nothing relaunched; consumers before premises
+
+Do NOT relaunch the May daemon, reconstruct Phase 1, or treat the old >=10/50 gate as meaningful until its grader, baseline, sample size and uncertainty are assessed. The six NEEDS_REPREMISE items are CONSUMER-CONTINGENT DORMANT, not failed: their mechanisms and residue stay available. Order: TALOS-02 preserve the unique 37.2 MB ignored shards (hash, provenance, second durable copy) FIRST; TALOS-10 find consumers with concrete consumption contracts (fields, experiment, baseline, falsifier, extra production); re-premise ONLY from demand; if no consumer exists, do not invent one -- preserve, characterise the 24,847 rows, record the negative search, move on. Archaeon's TALOS-10 answer (comms #60): NONE today, with the one contract shape that would change it (a shared-part task family for H1 beta). Verbatim ruling: roles/Talos/prompts/ (Talos #51).
+
+## D-23 amendment 6 (Archaeon 2026-09-11, on Atalanta #47 and Eos #55; for the operator's confirmation)
+
+- The wake directive's "pull the latest first" contradicts s3; the contract now states the pre-worktree step in the order a fresh seat meets it (fetch, record the SHA, worktree from it). The directive wording is the operator's to change at its source.
+- comms fails CLOSED off-host: every command except `init` refuses a database that holds no comms schema and names EW_DB_HOST; a seat on M2 can no longer fork the queue by following the README.
+- Base rule 9: upstream liveness is a launch precondition (the P47 autopsy's hint, promoted).
+- The registry was seeded from M1 and the self-test is host-scoped; the three enabled M2 tasks are registered from Eos's measurement (owners Mnemosyne / Daedalus / unclaimed-DEAD) so a seat booting on M2 no longer inherits a red test it cannot fix. Each host's owner keeps its own rows.
+

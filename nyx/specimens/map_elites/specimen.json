@@ -1,0 +1,24 @@
+{
+  "schema": "nyx.chop/0",
+  "record_kind": "SPECIMEN",
+  "id": "specimen.map_elites",
+  "name": "MAP-Elites (Multi-dimensional Archive of Phenotypic Elites)",
+  "lineage": ["quality diversity", "evolutionary computation"],
+  "status": "OPEN",
+  "opened": "2026-09-11",
+  "famous_names": ["MAP-Elites", "MAP Elites", "pyribs", "CVT-MAP-Elites", "quality diversity", "QD archive"],
+  "chosen_because": "first specimen by proximity to a living consumer, not by fame: Archaeon's H3 retention replay (archaeon/producer/h3_replay.py, behavioral policy) and Techne's qualified pyribs adapter (techne/h3_retention/adapter.py, 13/13 receipts) already exercise its archive mechanics on a declared stream, so a delivered organ can be attacked this week (charter XV: start ugly, deliver early)",
+  "provenance": {
+    "sources": [
+      {"ref": "arXiv:1504.04909 (Mouret and Clune, 'Illuminating search spaces by mapping elites', 2015)", "grade": "T1"},
+      {"ref": "doi:10.1038/nature14422 (Cully, Clune, Tarapore, Mouret, 'Robots that can adapt like animals', Nature 2015)", "grade": "T1"},
+      {"ref": "doi:10.1109/TEVC.2017.2735550 (Vassiliades, Chatzilygeroudis, Mouret, CVT-MAP-Elites, IEEE TEC 2018)", "grade": "T1"},
+      {"ref": "doi:10.1145/3583131.3590374 (Tjanaka et al., 'pyribs: a bare-bones Python library for quality diversity optimization', GECCO 2023)", "grade": "T1"},
+      {"ref": "techne/acquisition/locks/pyribs-cp312-win-amd64.lock.txt (pinned wheel hashes, isolated env h0h5_tools)", "grade": "T1"},
+      {"ref": "techne/h3_retention/adapter.py (TIE_POLICY FIRST_WRITER_WINS declared and verified against the installed pyribs)", "grade": "T1"},
+      {"ref": "techne/acquisition/receipts/adapter_qualification-pyribs-20260911T064705Z.json (stage ADAPTER_QUALIFICATION; does_not_establish INSTALLATION, FIRST_USEFUL_CHECK, PAPER_REPRODUCTION, LOCAL_SCIENTIFIC_BENEFIT)", "grade": "T1"},
+      {"ref": "archaeon/producer/h3_replay.py (behavioral policy: fixed-descriptor grid, one cell one item, strictly-better replacement, first-writer-wins on exact ties)", "grade": "T1"},
+      {"ref": "techne/DONOR_INVENTORY.md line 50 (pyribs imposes no objective of its own; archive coverage measures the caller's descriptor choice as much as the search)", "grade": "T1"}
+    ]
+  }
+}

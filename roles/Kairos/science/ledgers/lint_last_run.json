@@ -1,0 +1,17 @@
+{
+  "monitor": "KairosClaimLint",
+  "last_input_at": null,
+  "last_success_at": null,
+  "last_run_at": null,
+  "claims_linted": 0,
+  "findings_by_severity": {
+    "ATTACK": 0,
+    "NOTE": 0,
+    "UNDECLARED": 0
+  },
+  "state": "DORMANT",
+  "no_op_reason": "no read path: Kairos holds no SFE read scope over claims (KAIROS-01, Daedalus) and no Evidence Wiki token (KAIROS-02, Mnemosyne)",
+  "instrument_self_test": "python -m pytest roles/Kairos/science/tests -q (negative, positive, cheat fixtures)",
+  "written_at": "2026-09-11",
+  "written_by": "Kairos reactivation pass"
+}

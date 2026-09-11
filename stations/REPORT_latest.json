@@ -1,10 +1,61 @@
 {
- "generated_utc": "2026-08-20T14:52:33+00:00",
- "generator": "alethelia v0 (M1 build; M4 deployment pending DECISION)",
- "constitutional_note": "every field carries its query; UNKNOWN is never narrated over",
+ "generated_utc": "2026-09-11T11:48:26+00:00",
+ "generator": "alethelia v0.1 (M1 build; base role adopted 2026-09-11; M4 deployment pending DECISION)",
+ "constitutional_note": "every field carries its query; UNKNOWN is never narrated over; calm requires zero fired and zero indeterminate rules",
  "degraded": false,
  "unknown_fields": 0,
- "total_fields": 15,
+ "total_fields": 19,
+ "anomalies": {
+  "rules": [
+   {
+    "rule": "stale_heartbeats",
+    "state": "FIRED",
+    "detail": "35 heartbeat rows older than 6h and not DEAD",
+    "query": "len(postgres.stale_over_6h) > 0"
+   },
+   {
+    "rule": "zombie_running",
+    "state": "CLEAR",
+    "detail": null,
+    "query": "len(queues.zombie_running) > 0"
+   },
+   {
+    "rule": "no_unblocked_work",
+    "state": "FIRED",
+    "detail": "no QUEUED+ungated thread in BACKLOG.jsonl",
+    "query": "len(queues.top_unblocked) == 0"
+   },
+   {
+    "rule": "shadow_input_dormant",
+    "state": "FIRED",
+    "detail": "last Aporia pass 2026-09-01T00:00Z-P177 is 10.5 days old (threshold 48h)",
+    "query": "age(shadow.last_pass) > 48h, timestamp parsed from the pass id"
+   },
+   {
+    "rule": "unanswered_reviews",
+    "state": "FIRED",
+    "detail": "7 reviews with no review_response in WORKLOG",
+    "query": "len(shadow.unanswered_reviews) > 0"
+   },
+   {
+    "rule": "unreviewed_passes",
+    "state": "FIRED",
+    "detail": "5 of the last passes have no review targeting them",
+    "query": "len(shadow.unreviewed_passes) > 0"
+   },
+   {
+    "rule": "dormant_on_comms",
+    "state": "CLEAR",
+    "detail": null,
+    "query": "len(comms.dormant_on_comms) > 0; eligible = comms.comms_eligible"
+   }
+  ],
+  "fired": 5,
+  "clear": 2,
+  "indeterminate": 0,
+  "total": 7
+ },
+ "calm": false,
  "sections": {
   "postgres": {
    "heartbeats": {
@@ -13,205 +64,217 @@
       "agent": "Acheron",
       "machine": "M2",
       "status": "online",
-      "age_sec": 7080035
+      "age_sec": 8969788
      },
      {
       "agent": "Apollo",
       "machine": "M2",
       "status": "online",
-      "age_sec": 7624278
+      "age_sec": 9514031
      },
      {
       "agent": "Aporia",
       "machine": "M1",
       "status": "online",
-      "age_sec": 8123811
+      "age_sec": 10013564
      },
      {
       "agent": "Argos",
       "machine": "M2",
       "status": "online",
-      "age_sec": 7624770
+      "age_sec": 9514523
      },
      {
       "agent": "Atalanta",
       "machine": "SKULLPORT",
       "status": "online",
-      "age_sec": 7080104
+      "age_sec": 8969857
      },
      {
       "agent": "Calliope",
       "machine": "M4",
       "status": "online",
-      "age_sec": 8073094
+      "age_sec": 9962847
      },
      {
       "agent": "Charon_Loop",
       "machine": "M2",
       "status": "online",
-      "age_sec": 7079259
+      "age_sec": 8969012
      },
      {
       "agent": "Clio",
       "machine": "M1",
       "status": "online",
-      "age_sec": 7080683
+      "age_sec": 8970436
      },
      {
       "agent": "Clio-test",
       "machine": "M1",
       "status": "online",
-      "age_sec": 8123586
+      "age_sec": 10013339
      },
      {
       "agent": "ConfigProbe-SKULLPORT",
       "machine": "SKULLPORT",
       "status": "probe",
-      "age_sec": 17139
+      "age_sec": 1906892
+     },
+     {
+      "agent": "Elenchus",
+      "machine": "M2",
+      "status": "online",
+      "age_sec": 7195
      },
      {
       "agent": "Erebos",
       "machine": "M2",
       "status": "online",
-      "age_sec": 7080789
+      "age_sec": 8970542
      },
      {
       "agent": "Ergon",
       "machine": "M1",
       "status": "online",
-      "age_sec": 7422312
+      "age_sec": 9312065
      },
      {
       "agent": "Harmonia_Loop",
       "machine": "M2",
       "status": "online",
-      "age_sec": 7624301
+      "age_sec": 9514054
      },
      {
       "agent": "HealthCheck-harry1",
       "machine": "harry1",
       "status": "online",
-      "age_sec": 7631856
+      "age_sec": 9521609
      },
      {
       "agent": "HealthCheck-M4",
       "machine": "M4",
-      "status": "online",
-      "age_sec": 3343
+      "status": "offline",
+      "age_sec": 197480
      },
      {
       "agent": "Hecate",
       "machine": "M2",
       "status": "online",
-      "age_sec": 7079499
+      "age_sec": 8969252
      },
      {
       "agent": "Hephaestus",
       "machine": "M3",
       "status": "online",
-      "age_sec": 7079261
+      "age_sec": 8969014
      },
      {
       "agent": "Hypatia",
       "machine": "SKULLPORT",
       "status": "online",
-      "age_sec": 7081920
+      "age_sec": 8971673
      },
      {
       "agent": "Iris",
       "machine": "M2",
       "status": "online",
-      "age_sec": 7624860
+      "age_sec": 9514613
      },
      {
       "agent": "Lethe",
       "machine": "M2",
       "status": "online",
-      "age_sec": 7080275
+      "age_sec": 8970028
+     },
+     {
+      "agent": "MachineProbe-M4",
+      "machine": "M4",
+      "status": "online",
+      "age_sec": 195522
      },
      {
       "agent": "Moros",
       "machine": "M2",
       "status": "online",
-      "age_sec": 7079740
+      "age_sec": 8969493
      },
      {
       "agent": "Nephele",
       "machine": "M2",
       "status": "online",
-      "age_sec": 7079259
+      "age_sec": 8969012
      },
      {
       "agent": "Penelope",
       "machine": "M2",
       "status": "online",
-      "age_sec": 7396274
+      "age_sec": 9286027
      },
      {
       "agent": "Pheme",
       "machine": "SKULLPORT",
       "status": "online",
-      "age_sec": 7080105
+      "age_sec": 8969858
      },
      {
       "agent": "Phylax",
       "machine": "M2",
       "status": "online",
-      "age_sec": 7624393
+      "age_sec": 9514146
      },
      {
       "agent": "Pollux",
       "machine": "M2",
       "status": "online",
-      "age_sec": 7081029
+      "age_sec": 8970782
      },
      {
       "agent": "Polyhymnia",
       "machine": "SKULLPORT",
       "status": "online",
-      "age_sec": 7080578
+      "age_sec": 8970331
      },
      {
       "agent": "Pronoia",
       "machine": "M4",
       "status": "online",
-      "age_sec": 51
+      "age_sec": 195533
      },
      {
       "agent": "Pythia",
       "machine": "M1",
       "status": "online",
-      "age_sec": 7079271
+      "age_sec": 8969024
      },
      {
       "agent": "Sophia",
       "machine": "M2",
       "status": "online",
-      "age_sec": 7624301
+      "age_sec": 9514054
      },
      {
       "agent": "Stygian",
       "machine": "M2",
       "status": "online",
-      "age_sec": 7080549
+      "age_sec": 8970302
      },
      {
       "agent": "Talos",
       "machine": "SKULLPORT",
       "status": "online",
-      "age_sec": 7081072
+      "age_sec": 8970825
      },
      {
       "agent": "Telos",
       "machine": "M2",
       "status": "online",
-      "age_sec": 7624537
+      "age_sec": 9514290
      },
      {
       "agent": "Theseus",
       "machine": "M1",
       "status": "online",
-      "age_sec": 6580802
+      "age_sec": 8470555
      }
     ],
     "query": "SELECT agent_name, machine, status, extract(epoch from now()-last_heartbeat) FROM agora.agent_heartbeats"
@@ -227,15 +290,18 @@
      "Charon_Loop",
      "Clio",
      "Clio-test",
+     "ConfigProbe-SKULLPORT",
      "Erebos",
      "Ergon",
      "Harmonia_Loop",
      "HealthCheck-harry1",
+     "HealthCheck-M4",
      "Hecate",
      "Hephaestus",
      "Hypatia",
      "Iris",
      "Lethe",
+     "MachineProbe-M4",
      "Moros",
      "Nephele",
      "Penelope",
@@ -243,6 +309,7 @@
      "Phylax",
      "Pollux",
      "Polyhymnia",
+     "Pronoia",
      "Pythia",
      "Sophia",
      "Stygian",
@@ -253,41 +320,236 @@
     "query": "SELECT agent_name, machine, status, extract(epoch from now()-last_heartbeat) FROM agora.agent_heartbeats WHERE age > 6h AND status != DEAD"
    }
   },
+  "comms": {
+   "seat_sync": {
+    "value": [
+     {
+      "seat": "Agora",
+      "last_sync_age_sec": null,
+      "unseen": 1,
+      "oldest_unseen_age_sec": 1006
+     },
+     {
+      "seat": "Alethelia",
+      "last_sync_age_sec": 594,
+      "unseen": 0,
+      "oldest_unseen_age_sec": null
+     },
+     {
+      "seat": "Apollo",
+      "last_sync_age_sec": 664,
+      "unseen": 1,
+      "oldest_unseen_age_sec": 82
+     },
+     {
+      "seat": "Aporia",
+      "last_sync_age_sec": null,
+      "unseen": 2,
+      "oldest_unseen_age_sec": 1006
+     },
+     {
+      "seat": "Archaeon",
+      "last_sync_age_sec": null,
+      "unseen": 2,
+      "oldest_unseen_age_sec": 214
+     },
+     {
+      "seat": "Charon",
+      "last_sync_age_sec": 1005,
+      "unseen": 0,
+      "oldest_unseen_age_sec": null
+     },
+     {
+      "seat": "CrossDomainCartographer",
+      "last_sync_age_sec": null,
+      "unseen": 1,
+      "oldest_unseen_age_sec": 1006
+     },
+     {
+      "seat": "Daedalus",
+      "last_sync_age_sec": null,
+      "unseen": 2,
+      "oldest_unseen_age_sec": 1006
+     },
+     {
+      "seat": "Diomedes",
+      "last_sync_age_sec": 783,
+      "unseen": 0,
+      "oldest_unseen_age_sec": null
+     },
+     {
+      "seat": "Elenchus",
+      "last_sync_age_sec": null,
+      "unseen": 2,
+      "oldest_unseen_age_sec": 1006
+     },
+     {
+      "seat": "Ergon",
+      "last_sync_age_sec": null,
+      "unseen": 2,
+      "oldest_unseen_age_sec": 1006
+     },
+     {
+      "seat": "EvolutionaryArchitectAndReasoningSpeciesEngineer",
+      "last_sync_age_sec": null,
+      "unseen": 1,
+      "oldest_unseen_age_sec": 1006
+     },
+     {
+      "seat": "Harmonia",
+      "last_sync_age_sec": null,
+      "unseen": 2,
+      "oldest_unseen_age_sec": 1006
+     },
+     {
+      "seat": "Hephaestus",
+      "last_sync_age_sec": 716,
+      "unseen": 0,
+      "oldest_unseen_age_sec": null
+     },
+     {
+      "seat": "Herakles",
+      "last_sync_age_sec": null,
+      "unseen": 2,
+      "oldest_unseen_age_sec": 1006
+     },
+     {
+      "seat": "Kairos",
+      "last_sync_age_sec": null,
+      "unseen": 1,
+      "oldest_unseen_age_sec": 1006
+     },
+     {
+      "seat": "Koios",
+      "last_sync_age_sec": null,
+      "unseen": 1,
+      "oldest_unseen_age_sec": 1006
+     },
+     {
+      "seat": "Lexis",
+      "last_sync_age_sec": 537,
+      "unseen": 0,
+      "oldest_unseen_age_sec": null
+     },
+     {
+      "seat": "Ludus",
+      "last_sync_age_sec": null,
+      "unseen": 1,
+      "oldest_unseen_age_sec": 1006
+     },
+     {
+      "seat": "Mnemosyne",
+      "last_sync_age_sec": null,
+      "unseen": 2,
+      "oldest_unseen_age_sec": 1006
+     },
+     {
+      "seat": "MPADatabaseArchitect",
+      "last_sync_age_sec": null,
+      "unseen": 1,
+      "oldest_unseen_age_sec": 1006
+     },
+     {
+      "seat": "PipelineOrchestrator",
+      "last_sync_age_sec": null,
+      "unseen": 1,
+      "oldest_unseen_age_sec": 1006
+     },
+     {
+      "seat": "Proteus",
+      "last_sync_age_sec": null,
+      "unseen": 2,
+      "oldest_unseen_age_sec": 1006
+     },
+     {
+      "seat": "ScienceAdvisor",
+      "last_sync_age_sec": null,
+      "unseen": 1,
+      "oldest_unseen_age_sec": 1006
+     },
+     {
+      "seat": "StructuralMathematician",
+      "last_sync_age_sec": null,
+      "unseen": 1,
+      "oldest_unseen_age_sec": 1006
+     },
+     {
+      "seat": "Techne",
+      "last_sync_age_sec": null,
+      "unseen": 2,
+      "oldest_unseen_age_sec": 1006
+     },
+     {
+      "seat": "Vivarium",
+      "last_sync_age_sec": null,
+      "unseen": 2,
+      "oldest_unseen_age_sec": 1006
+     }
+    ],
+    "query": "per seat in comms.roster(): max(receipts.seen_at); count and oldest created_at of messages addressed to it or '*' with no seen receipt"
+   },
+   "comms_eligible": {
+    "value": [
+     "Agora",
+     "Apollo",
+     "Aporia",
+     "Archaeon",
+     "CrossDomainCartographer",
+     "Daedalus",
+     "Elenchus",
+     "Ergon",
+     "EvolutionaryArchitectAndReasoningSpeciesEngineer",
+     "Harmonia",
+     "Herakles",
+     "Kairos",
+     "Koios",
+     "Ludus",
+     "Mnemosyne",
+     "MPADatabaseArchitect",
+     "PipelineOrchestrator",
+     "Proteus",
+     "ScienceAdvisor",
+     "StructuralMathematician",
+     "Techne",
+     "Vivarium"
+    ],
+    "query": "per seat in comms.roster(): max(receipts.seen_at); count and oldest created_at of messages addressed to it or '*' with no seen receipt WHERE unseen > 0 (seats the dormancy rule could fire on)"
+   },
+   "dormant_on_comms": {
+    "value": [],
+    "query": "per seat in comms.roster(): max(receipts.seen_at); count and oldest created_at of messages addressed to it or '*' with no seen receipt WHERE oldest unseen message age > 24h"
+   }
+  },
   "git": {
    "head": {
-    "value": "2b6fccc3",
+    "value": "8600edd68",
     "query": "git rev-parse --short HEAD"
    },
    "last_commits": {
     "value": [
-     "2b6fccc3 Harmonia-A soak P5: trap 6 CONFIRMED â€” raw join 0 keys, normalized 50,835",
-     "e773576c Aporia P30: decoy law operational â€” plant, miss-as-predicted, grow the sense, re-catch",
-     "5fefb672 Harmonia-A soak P4: mirror trap 1 is LIVE (14/26 cols) â€” and my own zero was vacuous",
-     "756b7cf1 Aporia P29: Alethelia v0 â€” the reporter that cannot fabricate calm",
-     "478b8454 Harmonia-A soak P3: P28 repairs verified adversarially â€” both complete, no regression"
+     "8600edd68 Lexis: same-day correction to the Archaeon manifest report (all 13 rows CRLF-hashed, per Diomedes f08c81c66, reproduced); calibration row; journal",
+     "e09537480 Merge commit 'b2cb7267d73c1c0f86a68c2e923e106cfb315495' into lexis/base-role-adopt-2026-09-11",
+     "4e8e63b41 Lexis adopts roles/base-role: two lanes made current, 13 writing scripts guarded, the frozen handoff re-verified at HEAD, and the prompt that would fire the seat's reopening criterion",
+     "b2cb7267d Diomedes journal close 2026-09-11: commit f08c81c66 on main, comms message 14 to Archaeon, worktree retired",
+     "f08c81c66 Diomedes adopts roles/base-role: parked seat made visible (STATUS, backlog, calibration, journal), the K0 instrument gains planted cheat/negative/vacuous controls, and the 2026-09-11 comms MANIFEST is found hashed over CRLF (13 of 13 entries; base self-test red on main, reported to Archaeon)"
     ],
     "query": "git log --oneline -5"
    },
    "dirty_files": {
-    "value": 3,
+    "value": 12,
     "query": "git status --porcelain -uno | wc -l"
    }
   },
   "queues": {
    "backlog_status_counts": {
     "value": {
-     "DONE": 45,
-     "PARKED": 601,
-     "QUEUED": 136
+     "DONE": 138,
+     "PARKED": 644
     },
     "query": "parse BACKLOG.jsonl, count by status"
    },
    "top_unblocked": {
-    "value": [
-     "INFRA-DR-EVENTS",
-     "INFRA-GATEWAY",
-     "INFRA-PULSE-M4"
-    ],
+    "value": [],
     "query": "parse BACKLOG.jsonl, QUEUED+ungated, top-3 by priority"
    },
    "zombie_running": {
@@ -295,7 +557,7 @@
     "query": "parse BACKLOG.jsonl, RUNNING with generated age > 7d (or unparseable)"
    },
    "open_gates": {
-    "value": 23,
+    "value": 63,
     "query": "count lines in GATE_ELI5.jsonl"
    },
    "dr_events": {
@@ -308,30 +570,50 @@
   },
   "shadow": {
    "worklog_entries": {
-    "value": 22,
+    "value": 212,
     "query": "count WORKLOG.jsonl records"
    },
    "last_pass": {
-    "value": "2026-08-20T14:26Z-HARMA-P5",
+    "value": "2026-09-01T00:00Z-P177",
     "query": "last WORKLOG record pass_id"
    },
    "reviews": {
-    "value": 7,
+    "value": 30,
     "query": "count REVIEWS.jsonl records"
    },
    "unanswered_reviews": {
-    "value": [],
+    "value": [
+     "ELEN-BOOTSTRAP-2026-08-27",
+     "ELEN-2026-08-27T01:00Z-P175",
+     "ELEN-2026-08-26T06:00Z-P174",
+     "ELEN-2026-09-01T00:00Z-P177",
+     "ELEN-2026-08-27T02:00Z-P176",
+     "ELEN-SELF-2",
+     "ELEN-BOOTSTRAP-2026-09-01"
+    ],
     "query": "REVIEWS ids minus review_responses ids across WORKLOG"
    },
    "unreviewed_passes": {
     "value": [
-     "2026-08-20T13:26Z-HARMA-P3",
-     "2026-08-20T13:52Z-HARMA-P4",
-     "2026-08-20T13:52Z-P29",
-     "2026-08-20T14:23Z-P30",
-     "2026-08-20T14:26Z-HARMA-P5"
+     "2026-08-26T05:00Z-P173",
+     "2026-08-26T06:00Z-P174",
+     "2026-08-27T01:00Z-P175",
+     "2026-08-27T02:00Z-P176",
+     "2026-09-01T00:00Z-P177"
     ],
     "query": "last 5 WORKLOG pass_ids absent from REVIEWS target_pass_id"
+   }
+  },
+  "workspace": {
+   "receipt": {
+    "value": {
+     "base_sha": "8600edd6857667052f2ab4db2584d27084cb754e",
+     "branch": "alethelia/base-role-adopt-2026-09-11",
+     "worktree_path": "F:\\Prometheus-worktrees\\alethelia-base-role",
+     "dirty": true,
+     "main_worktree": false
+    },
+    "query": "archaeon.workspace.receipt(): base_sha, branch, worktree_path, dirty, main_worktree"
    }
   }
  }

@@ -1,5 +1,21 @@
 # Talos — Reasoning-Code Specialist (Phase 0: corpus builder)
 
+> Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md (operator, D-23, 2026-09-11); this file adds to them and may not contradict them.
+
+> **Base-role adoption annotation (Talos, 2026-09-11, base read at 56125e9e4).** The seat file is now
+> roles/Talos/RESPONSIBILITIES.md; this charter is HISTORICAL (Aporia, 2026-05-23) and is kept in place, never
+> rewritten. Parts SUPERSEDED on 2026-09-11 (base rule 5), marked here rather than edited below:
+> (a) "Operator: Ergon" and the session_telemetry heartbeat with operator=Ergon -- Ergon re-chartered 2026-08-30;
+> presence is the comms boot/sync receipt (D-24, D-25); the seat answers to the operator. (b) "Detached launch:
+> scripts/talos_loop_launch.bat" from the canonical checkout -- nonconformant with D-23; the daemon has no
+> assert_not_canonical guard yet (TALOS-04) and the launcher is RETIRED in place (TALOS-05). (c) The per-tick
+> contract -- PARKED; the daemon is registered DORMANT in roles/base-role/MONITORS.md (last tick 2026-05-30,
+> 160 of 170 lifetime ticks NULL, 0 consumers). (d) The eval gate (">= 10 absolute points on N=50 per target")
+> -- NOT ELIGIBLE TO FIRE: 5 cases, no grader, no baseline (roles/Talos/calibration/LEDGER.md C-01).
+> The Phase 0 / 0.5 / 1 queue is classified in roles/Talos/ARCHAEOLOGY_2026-09-11.md (0 STILL_LIVE); nothing
+> in it is executable before the operator rules TALOS-01. Hard stops (no auto GPU training; SYNTHETIC_RISK;
+> provenance=synthetic; write only under agents/talos/ and roles/Talos/) remain in force.
+
 > *Talos: the bronze automaton in Greek myth, forged by Hephaestus to guard Crete. The lineage is exact here — Hephaestus produces the substrate (forged reasoning tools); Talos is what gets built from it. A specialized animate machine made of substrate, not of metal.*
 
 **Machine:** any CPU (Phase 0); GPU TBD (Phase 1 training loop)

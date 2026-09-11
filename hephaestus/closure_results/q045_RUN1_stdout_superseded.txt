@@ -1,0 +1,72 @@
+{
+ "closure_sizes": {
+  "R_full5": 2975,
+  "R_imp5": 1366,
+  "R_imp8": 61230,
+  "deep_budget_exhausted": false,
+  "deep_size_used": 8,
+  "deep_seconds": 8.1,
+  "candidates": [
+   9134,
+   4406,
+   315899
+  ]
+ },
+ "n_lost_targets": 20,
+ "n_control_targets": 10,
+ "summary": {
+  "LOST": {
+   "n": 20,
+   "OPERATOR": 19,
+   "OPERATOR_clean": 19,
+   "SEARCH_ROUTING": 0,
+   "INCONCLUSIVE": 1,
+   "A2_LEAK": 0,
+   "C_robust": 20,
+   "A0_aliases_present": 0
+  },
+  "CONTROL": {
+   "n": 10,
+   "SEARCH_ROUTING_A0": 10,
+   "robust_A0": 10
+  },
+  "seconds": 1452.8
+ },
+ "predictions": {
+  "P1_lost_operator_ge_90pct": true,
+  "P2_control_search_routing_A0_100pct": true,
+  "P3_A2_leak_zero": true,
+  "P4_C_witnesses_robust": false,
+  "P5_some_A0_aliases_on_lost": false
+ }
+}
+LOST     OPERATOR                                 margin NONE     full=p05(X, p02(X))               A0 mech/alias 0/0  A2 0/0  B 5  C 5 robust=True  C-witness=['p05(X, p02(X)) (d2)']
+LOST     OPERATOR                                 margin NONE     full=p05(X, p00(X))               A0 mech/alias 0/0  A2 0/0  B 5  C 5 robust=True  C-witness=['p05(X, p00(X)) (d2)']
+LOST     OPERATOR                                 margin NONE     full=p05(X, p03(X))               A0 mech/alias 0/0  A2 0/0  B 5  C 5 robust=True  C-witness=['p03(p05(X, X)) (d2)']
+LOST     OPERATOR                                 margin NONE     full=p05(X, p01(X))               A0 mech/alias 0/0  A2 0/0  B 4  C 4 robust=True  C-witness=['p05(X, p01(X)) (d2)']
+LOST     OPERATOR                                 margin NONE     full=p00(p05(X, p02(X)))          A0 mech/alias 0/0  A2 0/0  B 5  C 5 robust=True  C-witness=['p00(p04(X, p05(X, X))) (d3)']
+LOST     OPERATOR                                 margin NONE     full=p00(p05(X, p00(X)))          A0 mech/alias 0/0  A2 0/0  B 4  C 3 robust=True  C-witness=['p00(p05(X, p00(X))) (d3)']
+LOST     OPERATOR                                 margin NONE     full=p00(p05(X, p01(X)))          A0 mech/alias 0/0  A2 0/0  B 4  C 3 robust=True  C-witness=['p00(p05(X, p01(X))) (d3)']
+LOST     OPERATOR                                 margin NONE     full=p05(X, p01(p00(X)))          A0 mech/alias 0/0  A2 0/0  B 4  C 3 robust=True  C-witness=['p05(X, p01(p00(X))) (d3)']
+LOST     INCONCLUSIVE (B did not reach)           margin NONE     full=p05(X, p08(X, p07(X)))       A0 mech/alias 0/0  A2 0/0  B 0  C 4 robust=True  C-witness=['p05(X, p08(X, p07(X))) (d3)']
+LOST     OPERATOR                                 margin NONE     full=p03(p05(X, p01(X)))          A0 mech/alias 0/0  A2 0/0  B 5  C 5 robust=True  C-witness=['p05(p01(X), p03(X)) (d2)']
+LOST     OPERATOR                                 margin NONE     full=p05(X, p05(X, p00(X)))       A0 mech/alias 0/0  A2 0/0  B 5  C 5 robust=True  C-witness=['p05(p00(X), p05(X, X)) (d2)']
+LOST     OPERATOR                                 margin NONE     full=p00(p05(X, p03(X)))          A0 mech/alias 0/0  A2 0/0  B 5  C 5 robust=True  C-witness=['p00(p03(p05(X, X))) (d3)']
+LOST     OPERATOR                                 margin NONE     full=p01(p05(X, p03(X)))          A0 mech/alias 0/0  A2 0/0  B 5  C 5 robust=True  C-witness=['p01(p03(p05(X, X))) (d3)']
+LOST     OPERATOR                                 margin NONE     full=p05(p00(X), p01(X))          A0 mech/alias 0/0  A2 0/0  B 5  C 5 robust=True  C-witness=['p05(p00(X), p01(X)) (d2)']
+LOST     OPERATOR                                 margin NONE     full=p05(p01(X), p02(X))          A0 mech/alias 0/0  A2 0/0  B 5  C 4 robust=True  C-witness=['p05(p01(X), p02(X)) (d2)']
+LOST     OPERATOR                                 margin NONE     full=p04(X, p05(X, p02(X)))       A0 mech/alias 0/0  A2 0/0  B 4  C 3 robust=True  C-witness=['p04(p03(X), p05(X, X)) (d2)']
+LOST     OPERATOR                                 margin NONE     full=p04(X, p05(X, p00(X)))       A0 mech/alias 0/0  A2 0/0  B 5  C 5 robust=True  C-witness=['p05(X, p00(p02(X))) (d3)']
+LOST     OPERATOR                                 margin NONE     full=p05(X, p00(p00(X)))          A0 mech/alias 0/0  A2 0/0  B 5  C 4 robust=True  C-witness=['p05(X, p00(p00(X))) (d3)']
+LOST     OPERATOR                                 margin NONE     full=p04(X, p05(X, p03(X)))       A0 mech/alias 0/0  A2 0/0  B 4  C 4 robust=True  C-witness=['p04(X, p03(p05(X, X))) (d3)']
+LOST     OPERATOR                                 margin NONE     full=p05(X, p04(X, p00(X)))       A0 mech/alias 0/0  A2 0/0  B 5  C 5 robust=True  C-witness=['p05(X, p04(X, p00(X))) (d3)']
+CONTROL  SEARCH_ROUTING                           margin A0       full=p00(X)                       A0 mech/alias 5/0  A2 5/0  B 5  C 5 robust=True  C-witness=['p00(X) (d1)']
+CONTROL  SEARCH_ROUTING                           margin A0       full=p03(X)                       A0 mech/alias 5/0  A2 5/0  B 5  C 5 robust=True  C-witness=['p03(X) (d1)']
+CONTROL  SEARCH_ROUTING                           margin A0       full=p01(X)                       A0 mech/alias 5/0  A2 5/0  B 5  C 5 robust=True  C-witness=['p01(X) (d1)']
+CONTROL  SEARCH_ROUTING                           margin A0       full=p02(X)                       A0 mech/alias 5/0  A2 5/0  B 5  C 5 robust=True  C-witness=['p02(X) (d1)']
+CONTROL  SEARCH_ROUTING                           margin A0       full=p09(X, p07(X))               A0 mech/alias 1/4  A2 1/4  B 0  C 1 robust=True  C-witness=['p09(X, p07(X)) (d2)']
+CONTROL  SEARCH_ROUTING                           margin A0       full=p08(X, p07(X))               A0 mech/alias 5/0  A2 5/0  B 0  C 5 robust=True  C-witness=['p08(X, p07(X)) (d2)']
+CONTROL  SEARCH_ROUTING                           margin A0       full=p01(p00(X))                  A0 mech/alias 5/0  A2 5/0  B 5  C 5 robust=True  C-witness=['p01(p00(X)) (d2)']
+CONTROL  SEARCH_ROUTING                           margin A0       full=p01(p03(X))                  A0 mech/alias 4/1  A2 4/1  B 5  C 5 robust=True  C-witness=['p01(p03(X)) (d2)']
+CONTROL  SEARCH_ROUTING                           margin A0       full=p04(X, p03(X))               A0 mech/alias 5/0  A2 5/0  B 5  C 5 robust=True  C-witness=['p04(X, p03(X)) (d2)']
+CONTROL  SEARCH_ROUTING                           margin A0       full=p00(p01(X))                  A0 mech/alias 5/0  A2 5/0  B 5  C 5 robust=True  C-witness=['p00(p01(X)) (d2)']

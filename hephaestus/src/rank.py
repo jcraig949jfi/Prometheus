@@ -62,7 +62,12 @@ def main() -> None:
     lines += ["", "Packets: hephaestus/mint_queue/<MINT_ID>/packet.md   Handoff: hephaestus/HEPHAESTUS_HANDOFF.txt"]
     (P.HEPH / "TOP_READY_MINTS.txt").write_text("\n".join(lines) + "\n", encoding="utf-8")
     print("\n".join(lines))
+    from hephaestus.state import record  # HEPH-11
+    record("rank", [P.QUEUE_DIR / r["MINT_ID"] / "packet.json" for r in rows], len(rows),
+           f"ranked {len(rows)} packets; READY-FOR-DEEP-MINT {len(ready)}")
 
 
 if __name__ == "__main__":
+    from hephaestus.workspace_guard import refuse_canonical  # D-23
+    refuse_canonical("rank job")
     main()

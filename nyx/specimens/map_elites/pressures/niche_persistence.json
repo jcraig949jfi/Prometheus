@@ -1,0 +1,31 @@
+{
+  "schema": "nyx.chop/0",
+  "record_kind": "PRESSURE",
+  "id": "pressure.map_elites.niche_persistence.v0",
+  "specimen": "map_elites",
+  "name": "niche persistence under regime shift",
+  "condition": "A world whose scoring regime changes at unannounced times, such that after a shift the candidates that score best are ones that were NOT the best before it, and that live in regions of behaviour the previous regime did not reward. Between shifts the world rewards ordinary improvement. Memory is metered: an organism pays per retained candidate, so it cannot keep everything.",
+  "capability_rewarded": "Keeping, across shifts, a bounded set of candidates that are individually the best in their own region of behaviour, even when they are globally mediocre under the current regime, so that after a shift something usable already exists.",
+  "world_requirements": [
+    "a candidate space with an evaluable objective and at least one measurable behaviour axis that is NOT a function of the objective",
+    "a regime schedule: a sequence of objective functions and shift times; the schedule is hidden from organisms and fixed per seed so runs replay",
+    "the shifted objective must favour a region that the pre-shift objective scored poorly (otherwise a top-K keeper wins and the pressure is vacuous; the eligibility count is: number of shifts at which the post-shift argmax lay outside the pre-shift top-K, which must be > 0)",
+    "a retention meter: per-candidate byte or item cost charged every step, with a cap that binds well below the size of the candidate space",
+    "a read-out taken a fixed short window after each shift (time-to-recover), plus the usual end-of-run objective",
+    "a seed and a replay: the same schedule and the same organism must give the same rows"
+  ],
+  "vacuity_condition": "The pressure is vacuous if (a) the schedule never shifts within the horizon; (b) every post-shift optimum lies inside the pre-shift top-K (then keeping the best K suffices and no behaviour-partitioned memory is rewarded); (c) the retention cap does not bind (then keeping everything is free and the capability is not tested); or (d) the shift is predictable from the objective history (then forecasting, not retention, is what is rewarded). Report the eligibility count from (b) before reading any result.",
+  "trivial_shortcuts": [
+    "keep everything: closed by the retention meter and cap",
+    "re-evaluate the whole candidate space after each shift: closed by an evaluation budget per step that is small relative to the space",
+    "detect the shift and restart search from scratch: allowed, it is the honest baseline; the read-out window must be short enough that a restart cannot reach the new optimum within it, and that window length is declared BEFORE the run from a pilot of restart-from-scratch",
+    "hard-code the schedule: closed by hiding the schedule and rotating seeds"
+  ],
+  "cheat_control": "An organism that is handed the full regime schedule and the identity of each future optimum, and simply stores those candidates in advance. It must score at the ceiling on the post-shift read-out at zero search cost. If the world cannot give the cheat a perfect score, the read-out is not measuring recovery after a shift and the world is not eligible.",
+  "negative_control": "The same world with a constant regime (no shifts). The capability must confer no advantage here: an organism that keeps a behaviour-partitioned set should score no better than one that keeps the top-K, within the declared SE. If it does, the read-out is rewarding something other than persistence across shifts.",
+  "cost_class": "CPU_SCALE",
+  "organ_refs": ["organ.map_elites.cell_replacement.v0", "organ.map_elites.uniform_parent_selection.v0"],
+  "expressible_without_organ": true,
+  "forbidden_terms": ["MAP-Elites", "MAP Elites", "pyribs", "CVT", "quality diversity", "QD archive", "archive", "grid", "cell", "elite", "bin"],
+  "notes": "Why this is a pressure and not the organ restated: nothing above says how the set is kept, partitioned, or replaced. A top-K keeper, a random reservoir, a behaviour-partitioned keeper (the donor organ), a lineage tree, or something with no human name can all be tried in it. The MINIMAL / HUMAN / MIXED / BROKEN / DECOY soup conditions (charter XIII) map onto: no keeper supplied / the cell replacement organ supplied / cell replacement plus a reservoir from another lineage / cell replacement with the tie rule inverted or the comparison removed / a keeper that accepts and evicts at random with the same interface. Archaeon's h3_replay already implements top_k, uniform reservoir, behavioral and hybrid retention over ONE stream under item and byte caps (T1): this pressure is the world in which those four policies would be tested by selection rather than compared by replay."
+}

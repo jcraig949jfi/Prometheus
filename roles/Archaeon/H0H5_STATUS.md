@@ -69,6 +69,31 @@ Baseline: `archaeon/docs/h0h5/BASELINE_2026-09-09.json`.
 
 
 
+
+## 2026-09-11 ~16:10: ARCH-26 CLOSED (H3 dead-stream + cheat control); engine still UNREACHABLE; Nyx, Ludus rechartered
+
+- **ARCH-26 (Apollo #20) CLOSED**: archaeon/producer/h3_dead_stream.py; predictions committed before the run (571f171dd), v1 rows + readout (d1fda3e55), v2 pre-registered then run. Result: **archive coverage is identical between a live stream and its score-permuted twin** for every policy on ten runs (occupancy is an unsafe observable, Apollo's S1 ruling now a control on record); score-threshold reuse measures the score marginal; **task-level direct reuse separates live from dead by 6.2 (top_k) / 4.8 (behavioral) / 5.0 (hybrid) of 12 tasks at 4-6 SE**, with a random floor of 4.2 and a cheat at 10.2-10.6. v1 sat at the ceiling (12/12) and its line was inside its SE; v2 (5 bits per task) was pre-registered before running. Readout: archaeon/docs/h0h5/H3_DEAD_STREAM_READOUT_2026-09-11.md. Every H3 coverage number is now reported beside its dead-stream twin.
+- **Nyx** (#45): MAP-Elites cut below the name (three organs, five T1 failures, decoys D1/D4); its decoy D4 is the binning-side twin of the dead stream. Representation adequate for H3's needs; nothing requested.
+- **Ludus** rechartered as the World Foundry (548b99d69): H4 lane feeder; coupling spec LUDUS-24 will arrive as a delegation; three XL rows for the operator.
+- **H0 eligibility pressure (Nyx #53)**: on the H1 split as it stands the H0 library cells have ZERO eligible input (0 abstractions on the three phase-1 solutions by both Stitch and campaign_h1h0.extract_library; the ALL_17 leak was the cheat control firing correctly). "Nothing fired" and "nothing could have fired" are different facts; on this split it is the second. ARCH-29: the H1 beta task family must be constructed with shared parts and its eligibility count reported before any H0 run.
+- **Constitution, on Atalanta #47 and Eos #55**: pre-worktree step stated in the contract; comms fails closed off-host; base rule 9 (upstream liveness is a launch precondition); the three M2 scheduled tasks registered so the self-test is green on M2 (D-23 amendment 6). **D-26** (TALOS-01) filed; Archaeon's TALOS-10 answer: NONE today with the one contract shape that would change it.
+- **Engine UNREACHABLE** at 15:24 UTC too (probe exit 2); no reply from Daedalus/Vivarium on #35/#41; the 24 H5-1 reissues stay held (ARCH-28).
+
+## 2026-09-11 ~14:35: H5-1 TERMINAL (232 completed / 24 failed); two engine episodes; Kairos reanimated
+
+- **H5-1 (cs-h5-1) is terminal**: 232 completed, 24 failed. Partial readout committed at archaeon/docs/h0h5/H5_1_READOUT_PARTIAL_2026-09-11.json: 232 rules -> **209 live classes, ZERO disagreements with the published class map** on the completed rules; the H5 quantities are NOT computed on the partial map (wrong-population rule). Missing rules: 143-155 and 245-255.
+- The 24 failures are **two engine-side EPISODES**, not a client-timeout tax: 03:22-03:39 local, rows 143-155 back to back, all read timeouts (engine unresponsive ~17 min); 10:23-10:32 local, rows 245-255 back to back, 7 x HTTP 500 unhandled server error on POST /v2/worlds plus timeouts. The D-6 tick's weak-signal row (bitstring.uniform.v0) failed on the same 500 at 10:33. Escalated to Daedalus + Vivarium as comms 35 (logs for both windows, the unhandled exception, a health signal before dispatch). Reissue path built: `python -m archaeon.producer.campaign_h5 --reissue-transport` (failed_transport_labels / plan_reissue / reissue; same specs, new request keys, cs-h5-1-r1) -- HELD until Daedalus reports the engine healthy.
+- **ENGINE UNREACHABLE at 14:40 UTC** (conformance gate exit 2 on /v2/version): the episode is live; every reissue and the production tick are held by the gate until it clears. **Nyx** (new seat, charter pending), **Talos** (BLOCKED on TALOS-01, an operator decision) and **Icarus** (BLOCKED on ICARUS-XL-1) adopted the base role; INHERITANCE rows are now self-service (ruling #39).
+- **Kairos** adopted the base role (30313d8e7): April queue classified archaeologically (0 STILL_LIVE, 7 NEEDS_REPREMISE, 10 PARKED, 5 SUPERSEDED, 2 RETIRED), every April CONFIRMED/PROBABLE tier withdrawn on doctrine (none declared false), failure-surface v0 schema, claim lint (KairosClaimLint registered DORMANT: no read path; delegations to Daedalus #32, Mnemosyne #33).
+- **Hephaestus**: gauntlet controls ALL_PASS on both boolean specs (negative/positive/cheat, d57a5c80e); Q045 v2 under Z7 fired a kill on v1's shift column (out-of-alphabet inputs), target-level coordinates survive; ARCH-27 LOST fixture delivered at hephaestus/closure_results/q045_lost_fixture_v1.json (HEPH-25 closed).
+
+## 2026-09-11 ~13:30: loop RESUMED (operator: "Let's resume our science for SFE")
+
+- Between the pause and now: roles/base-role (RESPONSIBILITIES, WORKING_CONTRACT, NORTH_STAR, MONITORS, INHERITANCE), the comms queue (D-24) with the agents table and presence from sync receipts, the reanimation rulings (D-25), and eight adoption passes absorbed. The loop now runs from the seat worktree F:\Prometheus-worktrees\archaeon-loop on branch archaeon/loop-2026-09-11 and syncs comms before and after every wake.
+- **H5-1**: 215 completed, 27 queued, **13 FAILED on the engine read timeout** (client 30 s vs engine busy overshoot ~33 s, Daedalus e4b05ae62) -- transport, not producer; re-issued under new request keys after completion; the fix is delegated to Daedalus and Vivarium through comms (message 29).
+- **C3-3**: still unissued -- Vivarium's half of the conformance gate (F-28) and Harmonia's 3b amendment / go on the preflight have not landed.
+- Apollo's H3 dead-stream control accepted as ARCH-26 (comms 20, claimed).
+
 ## 2026-09-11 ~05:00: LOOP PAUSED at the operator's request; workspace invariant D-23 issued and complied with
 
 - The canonical checkout F:\Prometheus was found on a branch that no longer exists on origin (vivarium/v0-2026-09-05) with 35 modified tracked files and 96 untracked files belonging to at least six seats, and with Vivarium's consumer worktree INSIDE it. Snapshot committed beside the missive.

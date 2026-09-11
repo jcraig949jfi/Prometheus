@@ -28,7 +28,9 @@ PHASES (dependencies enforced by file existence):
                  the campaign is declared void rather than analysed (HB ruling). A mid-
                  campaign read fires automatically between P3 and P4.
 
-Schedule:  schtasks /create /tn PrometheusCampaign /tr F:\\Prometheus\\ergon\\run_campaign.cmd /sc MINUTE /mo 30
+Schedule:  schtasks /create /tn PrometheusCampaign /tr <pinned-worktree>/ergon/run_campaign.cmd /sc MINUTE /mo 30
+           (D-23: a scheduled task runs from a PINNED worktree, never the canonical checkout;
+           the process refuses to start there. Task DISABLED 2026-09-11, see roles/Ergon/ops/)
 Remove:    schtasks /delete /tn PrometheusCampaign /f
 """
 import json
@@ -924,4 +926,6 @@ def _campaign():
 
 
 if __name__ == "__main__":
+    from ergon.workspace_guard import refuse_canonical  # D-23: never from the canonical checkout
+    refuse_canonical("campaign")
     main()

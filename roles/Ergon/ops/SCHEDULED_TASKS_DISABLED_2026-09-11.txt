@@ -1,0 +1,6 @@
+BEFORE PrometheusCampaign state=Ready exec=F:\Prometheus\ergon\run_campaign.cmd rep=PT30M last=09/11/2026 06:14:01 result=0 next=09/11/2026 06:44:00
+AFTER  PrometheusCampaign state=Disabled at=2026-09-11T06:21:57-04:00
+BEFORE PrometheusColdbandDrip state=Ready exec=F:\Prometheus\ergon\run_coldband_drip.cmd rep=PT3H last=09/11/2026 04:38:01 result=0 next=09/11/2026 07:38:00
+AFTER  PrometheusColdbandDrip state=Disabled at=2026-09-11T06:21:58-04:00
+BEFORE PrometheusColdbandM30 state=Ready exec=F:\Prometheus\ergon\run_coldband_m30.cmd rep=PT30M last=09/11/2026 05:52:01 result=0 next=09/11/2026 06:22:00
+AFTER  PrometheusColdbandM30 state=Disabled at=2026-09-11T06:21:59-04:00

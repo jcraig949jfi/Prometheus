@@ -2,6 +2,33 @@
 
 > Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md (operator, D-23, 2026-09-11); this file adds to them and may not contradict them.
 
+> **Base-role adoption annotation (Alethelia, 2026-09-11, base role read at 7466bd6ac).**
+> Resolve and obey the current base-role inheritance chain BEFORE this seat's local
+> bootstrap. Receipt: `roles/Alethelia/BASE_ROLE_ADOPTION_2026-09-11.txt`. Status, backlog,
+> calibration and journal now live in `STATUS.md`, `BACKLOG_H0H5.md`, `CALIBRATION.md` and
+> `journal/`. Four clauses below are annotated in place, never rewritten:
+> (a) The heading's "M4 seat" is STALE (base rule 5): the seat has only ever run on M1
+> (P29 build 2026-08-20, manual runs 2026-08-27 and 2026-09-11); the M4 deployment is
+> the parked DECISION named under "Deployment status" and has no decision id yet
+> (ALET-04 asks for one). Until it is taken the seat is an on-demand instrument with no
+> host, and `roles/base-role/MONITORS.md` records it as DORMANT.
+> (b) Constraint 1 "no bottleneck filing" is NARROWED, not withdrawn: Alethelia files no
+> BACKLOG threads and does no research, but it DOES post reports and unblock prompts to
+> the seat that owns a defect through the comms queue (base s4, "write the prompt that
+> would unblock you") -- reporting to an owner is reporting, not filing work.
+> (c) Constraint 4's "two-control rule" is now the base's three controls plus the guard
+> (base rule 3): negative, positive, cheat A (dead sources), cheat B (live anomalies must
+> not read calm), the INDETERMINATE branch, and the D-23 canonical-checkout refusal;
+> `agents/alethelia/test_alethelia.py` runs all seven, exit 0 before any commit.
+> (d) "Standard mechanisms": `agora.agent_heartbeats` is the April label table (35 of 36
+> rows stale and still 'online' on 2026-09-11); the liveness PROPERTY is the seat's comms
+> sync receipt (`comms.receipts.seen_at`), which the v0.1 report reads. The heartbeat
+> write is retained as a record of what that table says, not as evidence of life
+> (base rule 2). `scripts/portfolio_monitor.py EXPECTED_AGENTS` registration remains
+> tied to the M4 decision.
+> The reporter writes `stations/REPORT_latest.*` and therefore refuses the canonical
+> checkout (WORKING_CONTRACT.md s1); every report carries the workspace receipt (s4).
+
 Charter RATIFIED by James 2026-08-17 (aporia/docs/germline_infrastructure_2026-08-17.md
 section 6). Name deliberately distinct from Aletheia (the knowledge-graph component at
 agents/aletheia/) — the near-name keeps the meaning, truth.

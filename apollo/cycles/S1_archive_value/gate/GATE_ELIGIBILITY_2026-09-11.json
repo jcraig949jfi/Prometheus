@@ -1,0 +1,87 @@
+{
+ "artifact": "GATE_ELIGIBILITY",
+ "computed_utc": "2026-09-11T11:55:12Z",
+ "question": "Is there an input the Source Viability Gate (RULING_2026-09-01) is eligible to run on: a Foundry release newer than the one it already FAILED on, exposing the search+evaluate surface the gate computes G1-G4 over?",
+ "workspace": {
+  "base_sha": "7466bd6ac79b5a247f9ac50e355f2244d79883a8",
+  "branch": "apollo/base-role-adopt-2026-09-11",
+  "worktree_path": "F:\\Prometheus-worktrees\\apollo-base-role",
+  "dirty": true,
+  "main_worktree": false,
+  "allow_canonical_override": false
+ },
+ "v0_foundry": {
+  "base_url": "https://192.168.1.202:8799",
+  "http_status_no_token_tls12": 401,
+  "body_head": "{\"detail\":{\"error\":\"unauthenticated\",\"message\":\"a valid bearer token is required\",\"schema_version\":\"0.1.0\"}}",
+  "tls_handshake_series": {
+   "default_negotiation_6_tries": [
+    "000",
+    "000",
+    "000",
+    "401",
+    "401",
+    "401"
+   ],
+   "tls1.2_pinned_3_tries": [
+    "401",
+    "401",
+    "401"
+   ],
+   "reading": "000 = no HTTP response (schannel renegotiation failure), 401 = service answered and wants a bearer token; the service is UP, the default handshake is intermittently failing from this client"
+  },
+  "gate_pinned_release": "50b5c2327c64bf112c635ca1487f2b1a8fd64e1b7faade9476d5dfa7215fd492",
+  "prior_gate_artifact": "apollo/cycles/S1_archive_value/gate/gate_stackvm-v1_50b5c2327c64.json (verdict FAIL, G1 sound, 2026-09-01)",
+  "service_start_lines_last3": [
+   "2026-08-29 14:53:28,317 INFO Foundry service starting: https://192.168.1.202:8799 release=ee4cfa877654 match=True grace=30s",
+   "2026-08-29 19:23:04,104 INFO Foundry service starting: https://192.168.1.202:8799 release=ee4cfa877654 match=True grace=30s",
+   "2026-08-30 00:45:20,062 INFO Foundry service starting: https://192.168.1.202:8799 release=50b5c2327c64 match=True grace=30s"
+  ],
+  "listening": [
+   "TCP    192.168.1.202:8799     0.0.0.0:0              LISTENING       23276"
+  ],
+  "serendipityd_last_commit": "ba879da Tue Sep 1 16:20:10 2026 -0400 Remove gen2/: relocated to Prometheus as the Serendipity Foundry Engine",
+  "credential_preflight_this_host": {
+   "base_url": "https://192.168.1.202:8799",
+   "client_id": "apollo",
+   "kit": "C:\\ZeusD-var\\d11\\remote",
+   "kit_present": false,
+   "token_present": false,
+   "cert_present": false
+  }
+ },
+ "v2_sfe": {
+  "http_status": 200,
+  "version": {
+   "api": "v2",
+   "schema_version": 8,
+   "runtime": "serendipity-foundry-sfe",
+   "registration_open": true,
+   "session_enforcement": "advisory",
+   "science_profile": "warn",
+   "max_artifact_bytes": 33554432,
+   "engine_instance_id": "eng_8a37a5d305969034d488c43e",
+   "engine_source_hash": "sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e",
+   "source_commit": "d5be5ec4b86ad4ec70afaaf4fd1e2a88d01c54e8"
+  },
+  "listening": [
+   "TCP    192.168.1.202:8811     0.0.0.0:0              LISTENING       15932"
+  ],
+  "engine_grep_stackvm_pyshgp_treegp_mapelites": {
+   "files_matching": [],
+   "count": 0
+  },
+  "executor_classes": [
+   "Executor",
+   "BitStringExecutor",
+   "NKLandscapeExecutor",
+   "NKScanDidNotConverge",
+   "NondeterministicExecutor"
+  ],
+  "routes_in_client_guide_count": 54,
+  "routes_containing_search_or_evaluate": []
+ },
+ "transport_note": "python urllib (ssl) handshake/read timed out at 15 s against both :8799 and :8811 on this host at 11:50 UTC while curl with schannel answered both within 2 s. The HTTP fields above are from curl. A transport failure is never a service state (CAL-11).",
+ "verdict": "INDETERMINATE: no eligible input. The engine the gate is pinned to has not changed since its FAIL (same release, same process). The successor service exposes no search or evaluate surface and none of the three engines the gate was written for. Nothing fired; nothing could have fired.",
+ "what_would_make_it_eligible": "a service exposing per-engine search bursts and organism evaluation (the /v0 shape) at a release hash != 50b5c232..., OR an operator re-scoping of the gate (APOLLO-04)."
+}

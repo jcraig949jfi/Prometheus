@@ -1,0 +1,126 @@
+{
+  "meta": {
+    "author": "Charon (forensic assignment; not charter)",
+    "date": "2026-08-31",
+    "scope": "static checkout F:/Prometheus; no live DB/Redis reached; no production mutated",
+    "primary_finding": "Only the reporting loop is scheduled/alive; the executor (run.py + a reasoning session) is unscheduled and placeholder-only. The backlog is a regenerated report with no dependency edges and no runtime unparker. Personas are Claude Code sessions, not daemons; no code binds a ticket to a named agent.",
+    "claim_ceiling": "Code paths and the parked histogram verified from committed files. Live DB/Redis contents, running-process state, Task Scheduler registration, and M4 env vars NOT verifiable from this checkout.",
+    "reporter_disagreement": "alethelia REPORT_latest.json (shadow reviews:23, unanswered:[]) vs Metis portfolio_brief.md (reviewed:26, awaiting:188) compute different definitions; numbers are generator- and time-scoped."
+  },
+  "substrate": {
+    "real_load_bearing": ["git-tracked JSONL under engine/queues and engine/shadow", "Postgres prometheus_fire @192.168.1.202 (M1)"],
+    "redis": "replaced by Postgres shim PgRedis since 2026-06-24; status/comms only, not work dispatch",
+    "postgres_host": "192.168.1.202",
+    "postgres_stale_host": "192.168.1.176 (documented dead since 2026-06-24; still exported by launcher .bats)"
+  },
+  "components": [
+    {"name": "backlog_gen", "path": "engine/driver/backlog_gen.py", "role": "regenerate BACKLOG.jsonl from sources (idempotent, no edges)", "state": "engine/queues/BACKLOG.jsonl", "trigger": "manual/unscheduled", "active": false},
+    {"name": "run_driver", "path": "engine/driver/run.py", "role": "sole executor; while-loop over WORK.jsonl; kind=shell|ask; ask->claude -p; no owner check", "state": "engine/queues/WORK.jsonl", "trigger": "NONE (unscheduled)", "active": false, "note": "WORK items have placeholder echo cmds; real execution needs a reasoning session"},
+    {"name": "pulse", "path": "engine/driver/pulse.py", "role": "regenerate PULSE.md; promote BACKLOG->WORK (design intent)", "state": "engine/PULSE.md", "trigger": "engine loop", "active": "unknown"},
+    {"name": "liveness", "path": "engine/driver/liveness.py", "role": "real liveness = consumed commits over window; warns consumed/emitted=0.02", "trigger": "called by pulse", "active": true},
+    {"name": "intelligence_loop", "path": "scripts/intelligence_loop.py", "role": "the ONLY scheduled loop (Pronoia); 4h reporter+email; 60s heartbeat thread", "trigger": "Task Scheduler watchdog every 30m", "active": true, "git_update": "push only, path-scoped to docs/state.json+portfolio_brief.md; NO pull before run"},
+    {"name": "metis_portfolio", "path": "scripts/metis_portfolio.py", "role": "deterministic brief; blocker histogram :677-694; ALIVE cutoff via state", "trigger": "intelligence_loop", "active": true, "paid_inference": false},
+    {"name": "send_brief_email", "path": "scripts/send_brief_email.py", "role": "Gmail SMTP email of brief", "trigger": "intelligence_loop", "active": true},
+    {"name": "alethelia", "path": "agents/alethelia/alethelia.py", "role": "M1 second reporter (REPORT_latest.json); NOT deployed on M4", "trigger": "manual M1", "active": false},
+    {"name": "pythia_daemon", "path": "scripts/pythia_daemon.py", "role": "Gemini Deep Research dispatch; source=agora.research_queue", "trigger": "hand-launched .bat, UNGUARDED", "active": false, "paid_inference": true},
+    {"name": "persona_daemons", "path": "scripts/*_loop_launch.bat + charon_loop.py", "role": "rotation/heartbeat shells; do NOT execute backlog", "trigger": "hand-launched", "active": false, "stopped": "~2026-05-28"},
+    {"name": "shadow_review", "path": "engine/shadow/{validate_shadow.py,WORKLOG.jsonl,REVIEWS.jsonl}", "role": "L0 deterministic checks + L1 inference review (Elenchus)", "active": false}
+  ],
+  "queues": [
+    {"name": "BACKLOG.jsonl", "kind": "jsonl file", "schema": ["id","title","source","consumer","priority","gate","bottleneck","status","parked_reason","meta","generated","result"], "status_enum": ["QUEUED","PARKED","RUNNING","DONE","PARKED-MANUAL"], "counts": {"DONE": 138, "PARKED": 644}, "dependency_edges": false, "unparker": "none at runtime; only backlog_gen.py regen when upstream source changes"},
+    {"name": "WORK.jsonl", "kind": "jsonl file", "consumer": "run.py", "claim_lease": "NONE", "risk": "two runners pop pending[0] -> duplicate execution"},
+    {"name": "agora.research_queue", "kind": "postgres", "lease": "FOR UPDATE + timeout-requeue (agora_persist.py:940-1023,963-966)", "consumer": "pythia_daemon", "note": "REAL work queue; copy this pattern for WORK claims"},
+    {"name": "agora.gpu_reservations", "kind": "postgres", "lease": "TTL expires_at + unique-active index (:249,1035-1217)", "consumer": "gpu_reservation.py", "note": "REAL lease table"},
+    {"name": "bus.* (PgRedis)", "kind": "postgres-shim", "role": "agent comms/status, not work", "ack_lease_dlq": "none"}
+  ],
+  "tables": [
+    {"table": "agora.agent_heartbeats", "role": "liveness only, no claims", "producer": "agora_persist.write_heartbeat:268-309", "consumer": "portfolio_monitor.py, read_all_agents:312"},
+    {"table": "agora.research_queue", "role": "Gemini DR dispatch queue (real lease)", "producer": "enqueue_research:794", "consumer": "pythia_daemon.py"},
+    {"table": "agora.gpu_reservations", "role": "GPU TTL lease/lock", "producer": "gpu acquire :1035", "consumer": "gpu_reservation.py"},
+    {"table": "agora.intelligence_outputs", "role": "pipeline event log", "producer": "log_intelligence_stage:362", "consumer": "send_brief_email.py:502"},
+    {"table": "charon_duckdb.graph_edges", "role": "MATH object graph (not agent work)", "note": "real FKs but scientific data"},
+    {"table": "germline.edges", "role": "aspirational agent parent-child graph", "status": "doc-only, zero .py refs, VESTIGIAL"}
+  ],
+  "blocker_classes": [
+    {"class": "SPEC_MISSING", "gate_text": "needs authored test_spec (SPEC-AUTHOR-BATCH lane)", "count": 492, "taxonomy": "BATCH_UNBLOCKABLE", "worker_exists": false, "needs": "claude_code_session (no paid API)"},
+    {"class": "ROLLING_VERIFY", "gate_text": "verified <30d rolling re-verification", "count": 55, "taxonomy": "NEEDS_CODE", "note": "45 (08-19) + 10 (08-18); auto-clears on age-out or re-verify run"},
+    {"class": "API_BUDGET", "gate_text": "probe profiling = API spend + R12 + API budget", "count": 31, "taxonomy": "NEEDS_MONEY_or_repoint", "note": "repointable to free local tools"},
+    {"class": "SCIENTIFIC_GATE_COSIGN", "gate_text": "charon-cosign (DESIGN_W001)", "count": 15, "downstream": "725 rescores", "taxonomy": "NEEDS_WORKER_ROLE(session)", "keep_serial": true},
+    {"class": "STRUCTURAL_ZERO", "gate_text": "typed structural zero: no reasoning interface", "count": 12, "taxonomy": "DEAD", "note": "not schedulable without building an interface"},
+    {"class": "GPU_WAIT", "gate_text": "GPU slot + strategy-group harness check", "count": 11, "taxonomy": "NEEDS_GPU", "lease_exists": "agora.gpu_reservations"},
+    {"class": "REVIEW_BACKLOG_BACKLOGSIDE", "gate_text": "authored spec awaiting shadow review (Elenchus)", "count": 9, "taxonomy": "BATCH_UNBLOCKABLE(policy)", "note": "advisory review mis-wired as hard gate at backlog_gen.py:82-83"},
+    {"class": "REVIEW_BACKLOG_WORKLOGSIDE", "gate_text": "worklog passes awaiting Elenchus review", "count": 188, "taxonomy": "BATCH_UNBLOCKABLE", "note": "separate ledger engine/shadow/WORKLOG.jsonl"},
+    {"class": "LONG_TAIL", "count": 13, "taxonomy": "MIXED", "note": "germline preconditions, data mounts (Z-drive, Artin L-func), RL-batches-first textual dep"}
+  ],
+  "blocker_fanout": [
+    {"rank": 1, "gate": "needs authored test_spec", "blocked": 492, "unlock_per_clear": 1, "lane_unlock": 490, "cost": "MED_setup_LOWMED_per", "leverage": "highest_absolute"},
+    {"rank": 2, "gate": "charon-cosign (DESIGN_W001)", "blocked": 15, "downstream": 725, "cost": "MED_one_session", "leverage": "highest_ratio"},
+    {"rank": 3, "gate": "probe profiling API spend", "blocked": 29, "cost": "LOW_decision_or_MED_repoint", "needs": "HITL_or_money"},
+    {"rank": 4, "gate": "rolling verification", "blocked": 55, "cost": "LOW", "needs": "scheduled_verifier"},
+    {"rank": 5, "gate": "authored spec awaiting shadow review", "blocked": 9, "cost": "LOW", "risk": "preserve_self_grading_mitigation"},
+    {"rank": 6, "gate": "GPU slot + harness", "blocked": 11, "cost": "LOWMED", "needs": "GPU"},
+    {"rank": 7, "gate": "worklog review backlog", "blocked": 188, "cost": "MED"},
+    {"rank": 8, "gate": "typed structural zero", "blocked": 12, "cost": "HIGH", "leverage": "near_zero_dead"},
+    {"rank": 9, "gate": "DR queue dry", "blocked": "DR pipeline", "cost": "LOWMED", "needs": "launch_daemon+seed_queue"},
+    {"rank": 10, "gate": "long-tail singletons", "blocked": 13, "cost": "heterogeneous", "leverage": "low"}
+  ],
+  "choke_points": [
+    {"name": "no execution scheduler", "path": "run.py unscheduled; only reporter watchdogged", "serializes": "everything (0 executors)", "type": "ORGANIZATIONAL"},
+    {"name": "triage.jsonl wholesale rewrite", "path": "aporia/scripts/triage_classifier.py:497", "serializes": "all spec authoring", "type": "ORGANIZATIONAL"},
+    {"name": "Elenchus advisory-as-hard-gate", "path": "engine/driver/backlog_gen.py:82-83", "serializes": "authored-spec pipeline behind one dark seat", "type": "ORGANIZATIONAL"},
+    {"name": "Charon cosign sole unblocker", "path": "backlog_gen.py:89-92", "serializes": "15 threads + 725 rescores", "type": "SCIENTIFIC(correct)_but_non-execution_is_accidental"},
+    {"name": "WORK.jsonl no claim/lease", "path": "engine/driver/run.py:98", "serializes": "safe parallelism to 1", "type": "ORGANIZATIONAL"},
+    {"name": "single reporting loop", "path": "intelligence_loop.py single-instance", "serializes": "reporting", "type": "ORGANIZATIONAL(low_impact)"},
+    {"name": "pythia daemon unguarded", "path": "pythia_loop_launch.bat", "serializes": "DR pipeline", "type": "ORGANIZATIONAL"}
+  ],
+  "hook_points": [
+    {"id": "A_runnable_query", "existing": "BACKLOG.jsonl + pulse.py:92-98", "need": "next_runnable() status==QUEUED and gate is None, -priority", "risk": "none", "backward_compatible": true},
+    {"id": "B_blocker_inversion", "existing": "metis_portfolio.py:677-694 groups PARKED by gate", "need": "sort by size and unlock/cost", "risk": "none"},
+    {"id": "C_worker_claim", "existing_pattern": "agora.research_queue FOR UPDATE :963-966; gpu_reservations TTL :1035-1217", "need": "atomic claim on WORK (add claimed_by/lease_expires) or promote WORK to Postgres", "risk": "MED", "backward_compatible": "if fields optional"},
+    {"id": "D_completion", "existing": "run.py:109-116 writes status+result", "need": "none", "risk": "none"},
+    {"id": "E_blocked_return", "existing": "run.py free-text result", "need": "structured {blocker_class,reason}", "risk": "low"},
+    {"id": "F_review_request", "existing": "engine/shadow/WORKLOG.jsonl + validate_shadow.py(L0) + REVIEW_AGENT_PROMPT.md(L1)", "need": "route survivors", "risk": "low"},
+    {"id": "G_requeue_stale", "existing_pattern": "research_queue timeout sweep :940-1023", "need": "copy sweep for WORK once C exists", "risk": "low"},
+    {"id": "H_status_report", "existing": "metis_portfolio.py + pulse.py consume same JSONL", "need": "scheduler writes same files", "risk": "none", "backward_compatible": true}
+  ],
+  "quick_wins": [
+    {"rank": 1, "win": "read-only runnable + blocker-fanout queries", "effort": "LOW", "unlocks": 0, "risk": "NONE", "note": "directs all other effort; do first"},
+    {"rank": 2, "win": "split Elenchus advisory gate from hard execution gate (backlog_gen.py:82-83)", "effort": "LOW", "unlocks": 9, "risk": "MED", "guard": "keep self-grading mitigation as provisional-until-reviewed flag or L0 clear"},
+    {"rank": 3, "win": "one Charon co-sign session on DESIGN_W001", "effort": "MED", "unlocks": 15, "downstream": 725, "risk": "LOW"},
+    {"rank": 4, "win": "make triage.jsonl append-only/sharded + partitioned Claude Code spec-author job", "effort": "MED", "unlocks": 492, "risk": "LOW"},
+    {"rank": 5, "win": "repoint 29 profiling threads to free local reasoning-tools", "effort": "LOW", "unlocks": 29, "risk": "LOW"},
+    {"rank": 6, "win": "atomic claim/lease on WORK.jsonl (copy research_queue) + stale-lease sweep", "effort": "MED", "unlocks": "10-worker pool safe", "risk": "MED"},
+    {"rank": 7, "win": "generic-worker claim-next / return-result commands", "effort": "MED", "unlocks": "pool operational", "risk": "LOW"},
+    {"rank": 8, "win": "surface 2 HITL decisions (budget, PROMETHEUS-0) as true rate-limiters", "effort": "LOW", "unlocks": "budget lanes", "risk": "NONE"}
+  ],
+  "parallelization_safety": {
+    "safe": ["spec authoring on disjoint qid ranges (append-only)", "independent shadow/Elenchus reviews", "independent CAT-MATH attacks", "GPU sweeps (already leased)", "rolling re-verification of independent anchors"],
+    "unsafe_needs_guard": [
+      {"item": "concurrent triage.jsonl writes", "guard": "shard or append-only"},
+      {"item": "two run.py instances pop same WORK item", "guard": "atomic claim (hook C)"},
+      {"item": "concurrent writes to lineage memory/registry", "guard": "per-lineage lock"},
+      {"item": "changing ruler during active canonical run", "guard": "freeze-during-run"},
+      {"item": "attack consuming self-authored unreviewed spec", "guard": "provisional-until-reviewed"}
+    ],
+    "keep_serial_scientific": ["charon cosign", "ruler-freeze", "self-grading mitigation"]
+  },
+  "phase1_recovery_sequence": [
+    "1. read-only instrumentation: next_runnable() + blocker_fanout() (hooks A,B)",
+    "2. run one Charon co-sign session on DESIGN_W001 (unblocks 15->725)",
+    "3. fix backlog_gen.py:82-83 so authored specs are runnable-provisional or L0-cleared (unblocks 9)",
+    "4. make triage.jsonl append-only/sharded, run partitioned spec-author job (unblocks ~492)",
+    "5. route budget + PROMETHEUS-0 HITL to James; repoint profiling to free tools (unblocks 29)",
+    "6. add atomic claim/lease to WORK + stale-lease sweep for a 10-worker pool (hooks C,E,G)",
+    "7. re-point liveness to consumed-commits; watchdog the executor, not just the reporter"
+  ],
+  "m4_checks_required": [
+    "Get-ScheduledTask -TaskName PrometheusIntelligenceWatchdog (registered/enabled?)",
+    "Does C:/Prometheus/scripts/.intelligence_loop.disabled exist?",
+    "Is METIS_LLM=1 in M4 env (re-enables paid DeepSeek)?",
+    "Is any pythia/persona daemon alive on M1/M2? (nothing auto-restarts)",
+    "Live agora.agent_heartbeats / research_queue / gpu_reservations contents @192.168.1.202",
+    "Postgres reachable from M4? agents/eos/.env + Gemini/Gmail keys present per host?",
+    "Is docs/state.json generated_at advancing (is M4 pushing)?",
+    "Confirm no scheduled task does git pull (only push observed) -> M4 may run stale code"
+  ]
+}

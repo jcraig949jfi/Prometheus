@@ -50,7 +50,11 @@ def closure_with_programs(prims, max_size, max_candidates):
                         if key not in progs:
                             progs[key] = e; layers[size][spec["ret"]].append(e)
             else:
-                for s1 in range(0, size - 1):
+                # 2026-09-11 tooling correction (run 1 of specimen 3): range(0, size - 1) never paired a
+                # size-(n-1) left argument with the size-0 terminal on the right, so op(p(X), X) orderings
+                # were missed for non-commutative ops: 2,975 full-inventory V-signatures at size <= 5
+                # against world3.build_closure's 3,502 (imp: 1,366 both). Now the closures are set-identical.
+                for s1 in range(0, size):
                     s2 = size - 1 - s1
                     for e1 in layers[s1][spec["args"][0]]:
                         for e2 in layers[s2][spec["args"][1]]:
@@ -95,6 +99,9 @@ class Spec:
     ROUTE_KEYS = ["target"]
     TARGET_TYPE = "vec"
     TERMINALS = {"X": ("vec", lambda pt: pt)}
+    # 2026-09-11: exact equality of outputs on the probes (the prereg's "coerced = equal on the six
+    # probes"); the gauntlet's default bool-coercion is degenerate for vector-valued targets.
+    COERCE = staticmethod(lambda vec: tuple(vec))
 
     def __init__(self, program, prims_full, search, verify, shift):
         self.program, self.prims_full = program, prims_full
@@ -111,17 +118,28 @@ def _bools_eq_vec(x):
     return x
 
 
-def run(deep_size=8, deep_candidates=30_000_000):
+def run(deep_size=8, deep_candidates=30_000_000, spec_cls=None, out_name="q045_lost_class.json",
+        prereg="hephaestus/prereg/PREREG_Q045_specimen3_2026-09-01.md"):
+    spec_cls = spec_cls or Spec   # 2026-09-11: v2 (Z7 shift) passes its own Spec; defaults reproduce v1 exactly
     t0 = time.time()
     full = W.PRIMS
     imp = [p for i, p in enumerate(full) if i != MISSING]
     R_full5, c1, _ = closure_with_programs(full, 5, 6_000_000)
+    print(f"[stage] R_full5 built: {len(R_full5)} sigs, {c1} candidates, {time.time()-t0:.0f}s", file=sys.stderr, flush=True)
     R_imp5, c2, _ = closure_with_programs(imp, 5, 6_000_000)
+    print(f"[stage] R_imp5 built: {len(R_imp5)} sigs, {c2} candidates, {time.time()-t0:.0f}s", file=sys.stderr, flush=True)
+    t_deep = time.time()
     R_deep, c3, exhausted = closure_with_programs(imp, deep_size, deep_candidates)
+    deep_seconds = round(time.time() - t_deep, 1)
+    print(f"[stage] R_imp{deep_size} built: {len(R_deep)} sigs, {c3} candidates, exhausted={exhausted}, {deep_seconds}s", file=sys.stderr, flush=True)
     deep_used = deep_size
     lost, control = [], []
-    for key, prog in sorted(R_full5.items(), key=lambda kv: (W.size_of(kv[1]), kv[0][1])):
-        if key[0] != W.V or W.size_of(prog) > MAX_FULL_SIZE or prog == ("X",):
+    # 2026-09-11 tooling correction (first execution): sort V-typed behaviours only. The committed
+    # comparator sorted S (int signature) and V (tuple signature) together and raised TypeError;
+    # S entries were never eligible, so the preregistered canonical order (size, signature) is unchanged.
+    v_items = [(k, p) for k, p in R_full5.items() if k[0] == W.V]
+    for key, prog in sorted(v_items, key=lambda kv: (W.size_of(kv[1]), kv[0][1])):
+        if W.size_of(prog) > MAX_FULL_SIZE or prog == ("X",):
             continue
         if key not in R_imp5 and key not in R_deep:
             if len(lost) < N_LOST: lost.append((key, prog))
@@ -133,15 +151,15 @@ def run(deep_size=8, deep_candidates=30_000_000):
     rng = random.Random(20260901)
     shift = [tuple(rng.randrange(7) for _ in range(4)) for _ in range(300)]
     arms = {"A0": prim_ops(imp), "A2": {**prim_ops(imp), **A2_GENERIC}, "B": b_ops(), "C": prim_ops(full)}
-    results = {"prereg": "hephaestus/prereg/PREREG_Q045_specimen3_2026-09-01.md", "basis": {"version": BASIS_VERSION, "hash": basis_hash()},
+    results = {"prereg": prereg, "basis": {"version": BASIS_VERSION, "hash": basis_hash()},
                "missing_primitive": full[MISSING]["name"] + " (elementwise vector multiply)", "probes": PROBES,
                "closure_sizes": {"R_full5": len([k for k in R_full5 if k[0] == W.V]), "R_imp5": len([k for k in R_imp5 if k[0] == W.V]),
-                                 f"R_imp{deep_used}": len([k for k in R_deep if k[0] == W.V]), "deep_budget_exhausted": exhausted, "deep_size_used": deep_used,
+                                 f"R_imp{deep_used}": len([k for k in R_deep if k[0] == W.V]), "deep_budget_exhausted": exhausted, "deep_size_used": deep_used, "deep_seconds": deep_seconds,
                                  "candidates": [c1, c2, c3]},
                "n_lost_targets": len(lost), "n_control_targets": len(control), "depth": DEPTH, "budget": BUDGET, "targets": []}
 
     def eval_target(key, prog, kind):
-        spec = Spec(prog, full, PROBES, verify, shift)
+        spec = spec_cls(prog, full, PROBES, verify, shift)
         rec = {"kind": kind, "certified_full_program": expr_str(prog, full), "full_size": W.size_of(prog), "arms": {}}
         for name, ops in arms.items():
             # the shift domain is Z7: evaluate with MOD=7 while checking shift points
@@ -174,8 +192,10 @@ def run(deep_size=8, deep_candidates=30_000_000):
 
     for key, prog in lost:
         results["targets"].append(eval_target(key, prog, "LOST"))
+        print(f"[stage] LOST target {len(results['targets'])}: {results['targets'][-1]['class']} {time.time()-t0:.0f}s", file=sys.stderr, flush=True)
     for key, prog in control:
         results["targets"].append(eval_target(key, prog, "CONTROL"))
+        print(f"[stage] CONTROL target {len(results['targets'])}: {results['targets'][-1]['class']} {time.time()-t0:.0f}s", file=sys.stderr, flush=True)
     # Shift column (prereg s1): out-of-alphabet inputs (entries 0..6) under the world's mod-6
     # arithmetic, evaluated by enumerate_arm in the same call as the other columns. No ring change.
     lost_recs = [t for t in results["targets"] if t["kind"] == "LOST"]; ctrl_recs = [t for t in results["targets"] if t["kind"] == "CONTROL"]
@@ -194,16 +214,31 @@ def run(deep_size=8, deep_candidates=30_000_000):
         "P1_lost_operator_ge_90pct": (s["LOST"]["OPERATOR"] / max(1, s["LOST"]["n"])) >= 0.9,
         "P2_control_search_routing_A0_100pct": s["CONTROL"]["SEARCH_ROUTING_A0"] == s["CONTROL"]["n"],
         "P3_A2_leak_zero": s["LOST"]["A2_LEAK"] == 0,
-        "P4_C_witnesses_robust": s["LOST"]["C_robust"] == s["LOST"]["OPERATOR"],
+        # 2026-09-11: encoded as the prereg sentence "every C witness is robust" (targets with a C
+        # witness == targets with a robust C witness); the run-of-record JSON of run 2 carries the
+        # earlier encoding C_robust == OPERATOR, which differs whenever an INCONCLUSIVE row has a C
+        # witness. READOUT_Q045_specimen3_2026-09-11.md section 3c.
+        "P4_C_witnesses_robust": s["LOST"]["C_robust"] == sum(t["arms"]["C"]["n_mech"] > 0 for t in lost_recs),
         "P5_some_A0_aliases_on_lost": s["LOST"]["A0_aliases_present"] > 0,
     }
-    out = ROOT / "hephaestus" / "closure_results" / "q045_lost_class.json"
+    # D-23: every result records where it was built (base_sha, branch, worktree_path, dirty).
+    from hephaestus.workspace_guard import receipt
+    results["workspace"] = receipt()
+    out = ROOT / "hephaestus" / "closure_results" / out_name
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(results, indent=2, default=str), encoding="utf-8")
+    try:
+        from hephaestus.state import record  # HEPH-11
+        record("closure_q045:" + out_name, [ROOT / "aporia" / "lot" / "world3.py"], len(results["targets"]),
+               f"LOST {s['LOST']['OPERATOR']}/{s['LOST']['INCONCLUSIVE']}/{s['LOST']['SEARCH_ROUTING']} CONTROL {s['CONTROL']['SEARCH_ROUTING_A0']}/{s['CONTROL']['n']}")
+    except Exception as e:  # noqa: BLE001
+        print("state record failed:", repr(e))
     return results
 
 
 if __name__ == "__main__":
+    from hephaestus.workspace_guard import refuse_canonical  # D-23
+    refuse_canonical("specimen 3 (Q045)")
     ds = int(sys.argv[1]) if len(sys.argv) > 1 else 8
     dc = int(sys.argv[2]) if len(sys.argv) > 2 else 30_000_000
     r = run(ds, dc)

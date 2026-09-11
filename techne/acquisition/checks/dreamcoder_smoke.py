@@ -228,9 +228,10 @@ _EXTRA_LOCATIONS = {
     "cargo": [str(paths.tool_cache() / "rust" / "cargo" / "bin" / "cargo.exe")],
     "rustc": [str(paths.tool_cache() / "rust" / "cargo" / "bin" / "rustc.exe")],
     "rustup": [str(paths.tool_cache() / "rust" / "cargo" / "bin" / "rustup.exe")],
-    "make": ["C:/Users/jcrai/AppData/Local/Microsoft/WinGet/Packages/"
-             "BrechtSanders.WinLibs.POSIX.UCRT_Microsoft.Winget.Source_8wekyb3d8bbwe/"
-             "mingw64/bin/mingw32-make.exe"],
+    # Resolved, not hardcoded (base-role s2). mingw32-make is what WinLibs ships
+    # in place of `make`; an empty list here means the host has no GCC bin and the
+    # probe reports make as ABSENT rather than looking somewhere it is not.
+    "make": ([str(paths.gcc_bin() / "mingw32-make.exe")] if paths.gcc_bin() else []),
 }
 
 

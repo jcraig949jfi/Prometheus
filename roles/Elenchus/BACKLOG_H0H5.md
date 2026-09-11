@@ -1,0 +1,29 @@
+BACKLOG -- Elenchus (shadow reviewer, M2)
+
+> Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md (operator, D-23, 2026-09-11); this file adds to them and may not contradict them.
+
+Currency: 2026-09-11. Schema: roles/Archaeon/prompts/2026-09-10_backlog/00_BACKLOG_SCHEMA.md
+Priority order. The first five are the ones started today.
+
+ELEN-01 | Annotate the two seat documents whose git instructions contradict D-23, with dated supersession notes rather than silent rewrites | EVIDENCE | 1.0 | S | none | engine/shadow/REVIEW_AGENT_PROMPT.md and roles/Elenchus/RESPONSIBILITIES.md carrying the notes, committed
+ELEN-02 | File the base-role boot receipt and the seat infrastructure the base requires and this seat never had | EVIDENCE | 1.0 | S | none | roles/Elenchus/journal/2026-09-11.md, roles/Elenchus/STATUS.md and this backlog, committed
+ELEN-03 | Report that the loop this seat exists to shadow has been dormant since 2026-09-01, with the evidence, to Aporia and the operator | EVIDENCE | 1.0 | S | none | roles/Elenchus/prompts/2026-09-11_dormant_loop/APORIA.md with MANIFEST.sha256, plus the dormancy line in STATUS.md
+ELEN-04 | Run ELEN-SELF-3, the overdue self-calibration, by re-deriving a claim previously marked SOUND | EVIDENCE | 1.0 | S | none | an ELEN-SELF-3 record in engine/shadow/REVIEWS.jsonl with verdict SOUND or MISSED
+ELEN-05 | Send Techne the three fixture repairs from ELEN-TECHNE-38 as a committed prompt with the closed-form ground truth spelled out | TOOLS | 1.0 | S | none | roles/Elenchus/prompts/2026-09-11_fixture_repair/TECHNE.md with its sha256 manifest
+ELEN-06 | Commit the sampling frame for the 187 unreviewed Aporia passes before drawing any, so the audit is stratified and not a prefix read | EVIDENCE | 1.0 | M | none | a committed frame naming inventory, strata, draw size, seed and the command that produced the draw
+ELEN-07 | Re-derive at least one number per pass for every headline claim in the P160-P177 block | EVIDENCE | 1.0 | M | ELEN-06 | one ELEN record per drawn pass, each carrying a recomputed number and the command that produced it
+ELEN-08 | Spot-check every external citation in the drawn passes against its landing page and record an evidence tier per citation | EVIDENCE | 1.0 | M | ELEN-06 | a citations ledger committed beside the reviews, one row per citation with tier and reachability
+ELEN-09 | Close the three reviews Aporia never answered (P175, P176, P177, 17 findings) as conceded, contested or abandoned-with-a-date | EVIDENCE | 1.0 | S | Aporia (dormant; see ELEN-03) | a dated disposition line per finding in the next review record
+ELEN-10 | Open a calibration ledger of this seat's own wrong and missed calls, kept because it is unflattering | EVIDENCE | 1.0 | S | none | roles/Elenchus/CALIBRATION.md with the two existing ELEN-SELF misses as its first rows
+ELEN-11 | Add a value-based failure criterion to the review procedure, since ELEN-TECHNE-38 showed status-only scoring is blind to a confident wrong number | TOOLS | 1.0 | S | none | the criterion in REVIEW_AGENT_PROMPT.md and the first review that applies it
+ELEN-12 | Run engine/shadow/validate_shadow.py against REVIEWS.jsonl on the merged tree and record the output every cycle | ENGINE | 1.0 | S | none | the command and its output in the dated journal entry
+ELEN-13 | Publish which of the 31 reviews have never been answered, with the date each was filed, so the unanswered-finding count is derivable and decays visibly | EVIDENCE | 1.0 | S | none | a fixed-width table in STATUS.md regenerated each cycle
+ELEN-14 | Measure whether a commercial solver clears a bar the normalised free path misses, or record that the counterfactual stays untested | TOOLS | 1.1 | XL | operator decision NEW: authorise a time-limited MOSEK trial for one measurement, or rule the counterfactual permanently untested | either a measured MOSEK row beside the CLARABEL rows, or a committed statement of the refusal and its date
+ELEN-15 | Census every other seat's fixture for a status-only pass criterion, the defect class found in Techne's | TOOLS | 1.0 | M | none | a committed census with the grep command, one row per fixture, defect present or absent
+ELEN-16 | Keep a copy of the review-packet skill beside the seat so it survives a machine change | EVIDENCE | 1.0 | S | none | roles/Elenchus/skills/review-packet/ committed
+ELEN-17 | Record that this seat owns no persistent entry point, or add the canonical-checkout refusal guard to one if it acquires one | ENGINE | 1.0 | S | none | either the statement in STATUS.md or the guard plus its test
+ELEN-18 | Date-stamp every decaying claim in the 31 existing reviews, since a reporting claim without a date is untestable later | EVIDENCE | 1.1 | M | none | a committed annotation file keyed by review_id
+ELEN-19 | Declare the standing conflict of interest: this seat reviewed Techne's fixture and will be asked to review its repair | EVIDENCE | 1.0 | S | none | the declaration as a row in CALIBRATION.md
+ELEN-20 | Settle whether Elenchus shadows only Aporia or any seat that commissions it, since it has now reviewed Techne under operator direction | EVIDENCE | program | XL | operator decision NEW: is the Elenchus mandate Aporia-only or program-wide on commission | a ruled scope line in roles/Elenchus/RESPONSIBILITIES.md
+ELEN-21 | Establish what relative accuracy pm.optimization.solve_sdp actually requires, by asking its consumers rather than inferring it | TOOLS | 1.1 | M | Harmonia and Archaeon (consumers) | a committed requirement line with the consumer that stated it
+ELEN-22 | Rule on the shadow-review machinery itself if the Aporia loop has not resumed by 2026-09-25: retire it, re-point it, or record it as dormant-but-live | EVIDENCE | 1.1 | S | ELEN-03 | a dated decision line in RESPONSIBILITIES.md and STATUS.md

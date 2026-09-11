@@ -272,6 +272,42 @@ def car(claim_id, quantity, coordinate_system, headroom, rows_ref,
 # ------------------------------------------------------------------ self-test
 
 
+
+def _planted_controls():
+    """Base-role rule 3 (2026-09-11): an instrument must show it detects real signal (POSITIVE),
+    does not hallucinate it (NEGATIVE), and that its channel can observe deliberately injected
+    success (CHEAT). The committed-population tests above are differential; these are planted,
+    exact, and independent of any corpus file.
+
+    CHEAT   two actions, label flips with state parity -> marginal rate 0.5 for both actions, so the
+            state-independent ceiling is exactly chance and the oracle is exactly 1: headroom 0.5.
+            Declaring parity as free context must absorb the whole signal: headroom exactly 0.
+    NEGATIVE label is a pure function of the action in every state -> ceiling == oracle == 1,
+            headroom 0, does not qualify. A module that finds headroom here hallucinates.
+    VACUOUS one action in the alphabet -> entropy 0 bits; no state carries both classes, so the
+            headroom is None, not a number. The original K0 line, as a control.
+    """
+    out = {}
+    cheat = [{"actions": ["a", "b"], "labels": [1, 0] if i % 2 == 0 else [0, 1]} for i in range(40)]
+    h = conditional_headroom(cheat)
+    assert abs(h["state_independent_ceiling"] - 0.5) < 1e-9 and abs(h["oracle"] - 1.0) < 1e-9, h
+    assert abs(h["conditional_headroom"] - 0.5) < 1e-9 and h["qualifies"] is True, h
+    out["cheat_planted"] = h
+    hc = conditional_headroom(cheat, context=lambda s: s["labels"][0])
+    assert abs(hc["conditional_headroom"] - 0.0) < 1e-9 and hc["qualifies"] is False, hc
+    out["cheat_absorbed_by_context"] = hc
+    neg = [{"actions": ["a", "b"], "labels": [1, 0]} for _ in range(40)]
+    hn = conditional_headroom(neg)
+    assert abs(hn["conditional_headroom"] - 0.0) < 1e-9 and hn["qualifies"] is False, hn
+    out["negative_action_only"] = hn
+    vac = [{"actions": ["a"], "labels": [i % 2]} for i in range(40)]
+    hv = conditional_headroom(vac)
+    assert hv["action_entropy_bits"] == 0.0 and hv["n_states_with_both_classes"] == 0, hv
+    assert hv["conditional_headroom"] is None and hv["qualifies"] is False, hv
+    out["vacuous_single_action"] = hv
+    return out
+
+
 def _selftest():
     """Differential test against populations whose headroom is already committed elsewhere.
 
@@ -332,6 +368,7 @@ def _selftest():
             "rejects b3 as a conditional-structure population")
     assert c["verdict"] == "INADEQUATE", c
     out["car_demo"] = c
+    out["planted_controls"] = _planted_controls()
     return out
 
 
@@ -345,3 +382,7 @@ if __name__ == "__main__":
     print("\n  identifiability demo :", json.dumps(r["identifiability_demo"]))
     print("  cluster bootstrap    :", json.dumps(r["cluster_bootstrap_demo"]))
     print("\n  CAR verdict enum enforced ->", r["car_demo"]["verdict"])
+    print("\n  planted controls (base-role rule 3, 2026-09-11):")
+    for k, v in r["planted_controls"].items():
+        print(f"    {k:26s} headroom {v['conditional_headroom']!s:>6}  entropy {v['action_entropy_bits']:.4f} bits  "
+              f"qualifies={v['qualifies']}")

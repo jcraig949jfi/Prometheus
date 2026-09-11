@@ -98,14 +98,21 @@ def refine_packet(p: dict) -> dict:
 
 
 def main() -> None:
+    from hephaestus.state import record  # HEPH-11: freshness + productivity
+    seen, advanced = [], 0
     for p in P.iter_packets():
+        seen.append(P.QUEUE_DIR / p["MINT_ID"] / "packet.json")
         if p["STATUS"] not in P.UNRESOLVED:
             continue
         before = p["STATUS"]
         p = refine_packet(p)
         P.save(p)
+        advanced += before != p["STATUS"]
         print(p["MINT_ID"], before, "->", p["STATUS"], "| failures:", json.dumps(p["CHEAP_MODEL_FAILURES"]))
+    record("refine", seen, advanced, "" if advanced else "NO-OP: no unresolved packet changed state")
 
 
 if __name__ == "__main__":
+    from hephaestus.workspace_guard import refuse_canonical  # D-23
+    refuse_canonical("refine job")
     main()

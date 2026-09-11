@@ -1,0 +1,2449 @@
+{
+  "prereg": "hephaestus/prereg/PREREG_Q045_v2_Z7_2026-09-11.md",
+  "basis": {
+    "version": "A2-GENERIC-v1",
+    "hash": "7f2ef69196e7f128"
+  },
+  "missing_primitive": "p05 (elementwise vector multiply)",
+  "probes": [
+    [
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      1,
+      2,
+      3,
+      4
+    ],
+    [
+      5,
+      5,
+      5,
+      5
+    ],
+    [
+      4,
+      1,
+      4,
+      4
+    ],
+    [
+      1,
+      3,
+      0,
+      4
+    ],
+    [
+      5,
+      3,
+      0,
+      3
+    ]
+  ],
+  "closure_sizes": {
+    "R_full5": 3502,
+    "R_imp5": 1366,
+    "R_imp8": 61230,
+    "deep_budget_exhausted": false,
+    "deep_size_used": 8,
+    "deep_seconds": 10.4,
+    "candidates": [
+      12716,
+      4771,
+      333667
+    ]
+  },
+  "n_lost_targets": 20,
+  "n_control_targets": 10,
+  "depth": 4,
+  "budget": 300000,
+  "targets": [
+    {
+      "kind": "LOST",
+      "certified_full_program": "p05(X, X)",
+      "full_size": 1,
+      "arms": {
+        "A0": {
+          "evaluated": 300000,
+          "mech": [],
+          "alias": [],
+          "n_mech": 0,
+          "n_robust": 0,
+          "n_alias": 0
+        },
+        "A2": {
+          "evaluated": 300000,
+          "mech": [],
+          "alias": [],
+          "n_mech": 0,
+          "n_robust": 0,
+          "n_alias": 0
+        },
+        "B": {
+          "evaluated": 300000,
+          "mech": [
+            "emul(X, X) (d1)",
+            "emul(emul(X, X), emul(X, X)) (d2, not robust)",
+            "emul(emul(X, X), econst1(X)) (d2)",
+            "emul(econst1(X), emul(X, X)) (d2)",
+            "eadd(eadd(X, eadd(X, X)), emul(eadd(X, X), eadd(X, X))) (d3, not robust)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 3,
+          "n_alias": 0
+        },
+        "C": {
+          "evaluated": 300000,
+          "mech": [
+            "p05(X, X) (d1)",
+            "p05(p05(X, X), p05(X, X)) (d2, not robust)",
+            "p01(p01(p05(X, X))) (d3)",
+            "p04(p03(p03(X)), p04(p03(X), p05(X, X))) (d3, not robust)",
+            "p04(p04(X, p03(X)), p05(p03(X), p03(X))) (d3, not robust)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 2,
+          "n_alias": 0
+        }
+      },
+      "A2_LEAK": false,
+      "class": "OPERATOR",
+      "CLOSURE_MARGIN": "NONE",
+      "C_robust": true
+    },
+    {
+      "kind": "LOST",
+      "certified_full_program": "p04(X, p05(X, X))",
+      "full_size": 2,
+      "arms": {
+        "A0": {
+          "evaluated": 300000,
+          "mech": [],
+          "alias": [],
+          "n_mech": 0,
+          "n_robust": 0,
+          "n_alias": 0
+        },
+        "A2": {
+          "evaluated": 300000,
+          "mech": [],
+          "alias": [],
+          "n_mech": 0,
+          "n_robust": 0,
+          "n_alias": 0
+        },
+        "B": {
+          "evaluated": 300000,
+          "mech": [
+            "emul(X, einc(X)) (d2)",
+            "emul(einc(X), X) (d2)",
+            "eadd(X, emul(X, X)) (d2)",
+            "eadd(emul(X, X), X) (d2)",
+            "emul(emul(X, X), einc(X)) (d2, not robust)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 4,
+          "n_alias": 0
+        },
+        "C": {
+          "evaluated": 300000,
+          "mech": [
+            "p05(X, p02(X)) (d2)",
+            "p05(p02(X), X) (d2)",
+            "p04(X, p05(X, X)) (d2)",
+            "p04(p05(X, X), X) (d2)",
+            "p05(p02(X), p05(X, X)) (d2, not robust)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 4,
+          "n_alias": 0
+        }
+      },
+      "A2_LEAK": false,
+      "class": "OPERATOR",
+      "CLOSURE_MARGIN": "NONE",
+      "C_robust": true
+    },
+    {
+      "kind": "LOST",
+      "certified_full_program": "p05(X, p00(X))",
+      "full_size": 2,
+      "arms": {
+        "A0": {
+          "evaluated": 300000,
+          "mech": [],
+          "alias": [],
+          "n_mech": 0,
+          "n_robust": 0,
+          "n_alias": 0
+        },
+        "A2": {
+          "evaluated": 300000,
+          "mech": [],
+          "alias": [],
+          "n_mech": 0,
+          "n_robust": 0,
+          "n_alias": 0
+        },
+        "B": {
+          "evaluated": 300000,
+          "mech": [
+            "emul(X, rot(X)) (d2)",
+            "emul(rot(X), X) (d2)",
+            "emul(X, emul(emul(X, X), rot(X))) (d3, not robust)",
+            "emul(emul(X, X), emul(X, rot(X))) (d3, not robust)",
+            "emul(econst1(X), emul(X, rot(X))) (d3)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 3,
+          "n_alias": 0
+        },
+        "C": {
+          "evaluated": 300000,
+          "mech": [
+            "p05(X, p00(X)) (d2)",
+            "p05(p00(X), X) (d2)",
+            "p05(X, p05(p00(X), p05(X, X))) (d3, not robust)",
+            "p05(p05(X, X), p05(X, p00(X))) (d3, not robust)",
+            "p05(p00(p05(X, X)), p05(X, p00(X))) (d3, not robust)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 2,
+          "n_alias": 0
+        }
+      },
+      "A2_LEAK": false,
+      "class": "OPERATOR",
+      "CLOSURE_MARGIN": "NONE",
+      "C_robust": true
+    },
+    {
+      "kind": "LOST",
+      "certified_full_program": "p03(p05(X, X))",
+      "full_size": 2,
+      "arms": {
+        "A0": {
+          "evaluated": 300000,
+          "mech": [],
+          "alias": [],
+          "n_mech": 0,
+          "n_robust": 0,
+          "n_alias": 0
+        },
+        "A2": {
+          "evaluated": 300000,
+          "mech": [],
+          "alias": [],
+          "n_mech": 0,
+          "n_robust": 0,
+          "n_alias": 0
+        },
+        "B": {
+          "evaluated": 300000,
+          "mech": [
+            "emul(X, eadd(X, X)) (d2)",
+            "emul(eadd(X, X), X) (d2)",
+            "eadd(emul(X, X), emul(X, X)) (d2)",
+            "eadd(eadd(eadd(X, X), eadd(X, X)), emul(eadd(X, X), einc(X))) (d3, not robust)",
+            "eadd(emul(eadd(X, X), eadd(X, X)), emul(eadd(X, X), eadd(X, X))) (d3, not robust)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 3,
+          "n_alias": 0
+        },
+        "C": {
+          "evaluated": 300000,
+          "mech": [
+            "p03(p05(X, X)) (d2)",
+            "p05(X, p03(X)) (d2)",
+            "p05(p03(X), X) (d2)",
+            "p04(p05(X, X), p05(X, X)) (d2)",
+            "p03(p05(p03(X), p03(X))) (d3, not robust)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 4,
+          "n_alias": 0
+        }
+      },
+      "A2_LEAK": false,
+      "class": "OPERATOR",
+      "CLOSURE_MARGIN": "NONE",
+      "C_robust": true
+    },
+    {
+      "kind": "LOST",
+      "certified_full_program": "p05(X, p01(X))",
+      "full_size": 2,
+      "arms": {
+        "A0": {
+          "evaluated": 300000,
+          "mech": [],
+          "alias": [],
+          "n_mech": 0,
+          "n_robust": 0,
+          "n_alias": 0
+        },
+        "A2": {
+          "evaluated": 300000,
+          "mech": [],
+          "alias": [],
+          "n_mech": 0,
+          "n_robust": 0,
+          "n_alias": 0
+        },
+        "B": {
+          "evaluated": 300000,
+          "mech": [
+            "emul(X, rev(X)) (d2)",
+            "emul(rev(X), X) (d2)",
+            "emul(X, emul(emul(X, X), rev(X))) (d3, not robust)",
+            "emul(emul(X, X), emul(X, rev(X))) (d3, not robust)"
+          ],
+          "alias": [
+            "emul(emul(X, X), emul(rev(X), rev(X))) (d3)"
+          ],
+          "n_mech": 4,
+          "n_robust": 2,
+          "n_alias": 1
+        },
+        "C": {
+          "evaluated": 300000,
+          "mech": [
+            "p05(X, p01(X)) (d2)",
+            "p05(p01(X), X) (d2)",
+            "p01(p05(X, p01(X))) (d3)",
+            "p05(X, p05(p01(X), p05(X, X))) (d3, not robust)"
+          ],
+          "alias": [
+            "p05(p01(X), p05(p01(X), p05(X, X))) (d3)"
+          ],
+          "n_mech": 4,
+          "n_robust": 3,
+          "n_alias": 1
+        }
+      },
+      "A2_LEAK": false,
+      "class": "OPERATOR",
+      "CLOSURE_MARGIN": "NONE",
+      "C_robust": true
+    },
+    {
+      "kind": "LOST",
+      "certified_full_program": "p00(p05(X, X))",
+      "full_size": 2,
+      "arms": {
+        "A0": {
+          "evaluated": 300000,
+          "mech": [],
+          "alias": [],
+          "n_mech": 0,
+          "n_robust": 0,
+          "n_alias": 0
+        },
+        "A2": {
+          "evaluated": 300000,
+          "mech": [],
+          "alias": [],
+          "n_mech": 0,
+          "n_robust": 0,
+          "n_alias": 0
+        },
+        "B": {
+          "evaluated": 300000,
+          "mech": [
+            "rot(emul(X, X)) (d2)",
+            "emul(rot(X), rot(X)) (d2)",
+            "emul(econst1(X), emul(rot(X), rot(X))) (d3)",
+            "emul(emul(rot(X), rot(X)), econst1(X)) (d3)",
+            "emul(emul(rot(X), rot(X)), emul(rot(X), rot(X))) (d3, not robust)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 4,
+          "n_alias": 0
+        },
+        "C": {
+          "evaluated": 300000,
+          "mech": [
+            "p00(p05(X, X)) (d2)",
+            "p05(p00(X), p00(X)) (d2)",
+            "p05(p00(p05(X, X)), p00(p05(X, X))) (d3, not robust)",
+            "p01(p01(p00(p05(X, X)))) (d4)",
+            "p04(p03(X), p04(p00(p05(X, X)), p03(p03(X)))) (d4, not robust)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 3,
+          "n_alias": 0
+        }
+      },
+      "A2_LEAK": false,
+      "class": "OPERATOR",
+      "CLOSURE_MARGIN": "NONE",
+      "C_robust": true
+    },
+    {
+      "kind": "LOST",
+      "certified_full_program": "p01(p05(X, X))",
+      "full_size": 2,
+      "arms": {
+        "A0": {
+          "evaluated": 300000,
+          "mech": [],
+          "alias": [],
+          "n_mech": 0,
+          "n_robust": 0,
+          "n_alias": 0
+        },
+        "A2": {
+          "evaluated": 300000,
+          "mech": [],
+          "alias": [],
+          "n_mech": 0,
+          "n_robust": 0,
+          "n_alias": 0
+        },
+        "B": {
+          "evaluated": 300000,
+          "mech": [
+            "rev(emul(X, X)) (d2)",
+            "emul(rev(X), rev(X)) (d2)",
+            "emul(econst1(X), emul(rev(X), rev(X))) (d3)",
+            "emul(emul(rev(X), rev(X)), econst1(X)) (d3)",
+            "emul(emul(rev(X), rev(X)), emul(rev(X), rev(X))) (d3, not robust)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 4,
+          "n_alias": 0
+        },
+        "C": {
+          "evaluated": 300000,
+          "mech": [
+            "p01(p05(X, X)) (d2)",
+            "p05(p01(X), p01(X)) (d2)",
+            "p05(p01(p05(X, X)), p01(p05(X, X))) (d3, not robust)",
+            "p00(p01(p00(p05(X, X)))) (d4)",
+            "p04(p03(X), p04(p01(p05(X, X)), p03(p03(X)))) (d4, not robust)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 3,
+          "n_alias": 0
+        }
+      },
+      "A2_LEAK": false,
+      "class": "OPERATOR",
+      "CLOSURE_MARGIN": "NONE",
+      "C_robust": true
+    },
+    {
+      "kind": "LOST",
+      "certified_full_program": "p02(p05(X, X))",
+      "full_size": 2,
+      "arms": {
+        "A0": {
+          "evaluated": 300000,
+          "mech": [],
+          "alias": [],
+          "n_mech": 0,
+          "n_robust": 0,
+          "n_alias": 0
+        },
+        "A2": {
+          "evaluated": 300000,
+          "mech": [],
+          "alias": [],
+          "n_mech": 0,
+          "n_robust": 0,
+          "n_alias": 0
+        },
+        "B": {
+          "evaluated": 300000,
+          "mech": [
+            "einc(emul(X, X)) (d2)",
+            "eadd(emul(X, X), econst1(X)) (d2)",
+            "eadd(econst1(X), emul(X, X)) (d2)",
+            "eadd(eadd(eadd(X, X), eadd(X, X)), emul(einc(X), einc(X))) (d3, not robust)",
+            "eadd(eadd(eadd(X, X), einc(X)), emul(eadd(X, X), eadd(X, X))) (d3, not robust)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 3,
+          "n_alias": 0
+        },
+        "C": {
+          "evaluated": 300000,
+          "mech": [
+            "p02(p05(X, X)) (d2)",
+            "p04(p03(p03(X)), p05(p02(X), p02(X))) (d3, not robust)",
+            "p04(p05(p02(X), p02(X)), p03(p03(X))) (d3, not robust)",
+            "p04(p04(p02(X), p03(X)), p05(p03(X), p03(X))) (d3, not robust)",
+            "p04(p05(p03(X), p03(X)), p04(p02(X), p03(X))) (d3, not robust)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 1,
+          "n_alias": 0
+        }
+      },
+      "A2_LEAK": false,
+      "class": "OPERATOR",
+      "CLOSURE_MARGIN": "NONE",
+      "C_robust": true
+    },
+    {
+      "kind": "LOST",
+      "certified_full_program": "p00(p04(X, p05(X, X)))",
+      "full_size": 3,
+      "arms": {
+        "A0": {
+          "evaluated": 300000,
+          "mech": [],
+          "alias": [],
+          "n_mech": 0,
+          "n_robust": 0,
+          "n_alias": 0
+        },
+        "A2": {
+          "evaluated": 300000,
+          "mech": [],
+          "alias": [],
+          "n_mech": 0,
+          "n_robust": 0,
+          "n_alias": 0
+        },
+        "B": {
+          "evaluated": 300000,
+          "mech": [
+            "eadd(rot(X), emul(rot(X), rot(X))) (d3)",
+            "eadd(emul(rot(X), rot(X)), rot(X)) (d3)",
+            "emul(rot(X), eadd(econst1(X), rot(X))) (d3)",
+            "emul(eadd(econst1(X), rot(X)), rot(X)) (d3)",
+            "emul(eadd(econst1(X), rot(X)), emul(rot(X), rot(X))) (d3, not robust)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 4,
+          "n_alias": 0
+        },
+        "C": {
+          "evaluated": 300000,
+          "mech": [
+            "p00(p04(X, p05(X, X))) (d3)",
+            "p05(p00(X), p00(p02(X))) (d3)",
+            "p05(p00(p02(X)), p00(X)) (d3)",
+            "p04(p00(X), p00(p05(X, X))) (d3)",
+            "p04(p00(p05(X, X)), p00(X)) (d3)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 5,
+          "n_alias": 0
+        }
+      },
+      "A2_LEAK": false,
+      "class": "OPERATOR",
+      "CLOSURE_MARGIN": "NONE",
+      "C_robust": true
+    },
+    {
+      "kind": "LOST",
+      "certified_full_program": "p00(p05(X, p00(X)))",
+      "full_size": 3,
+      "arms": {
+        "A0": {
+          "evaluated": 300000,
+          "mech": [],
+          "alias": [],
+          "n_mech": 0,
+          "n_robust": 0,
+          "n_alias": 0
+        },
+        "A2": {
+          "evaluated": 300000,
+          "mech": [],
+          "alias": [],
+          "n_mech": 0,
+          "n_robust": 0,
+          "n_alias": 0
+        },
+        "B": {
+          "evaluated": 300000,
+          "mech": [
+            "rot(emul(X, rot(X))) (d3)",
+            "emul(rot(X), rot(rot(X))) (d3)",
+            "emul(rot(rot(X)), rot(X)) (d3)",
+            "eadd(eadd(eadd(X, X), eadd(eadd(X, X), eadd(X, X))), emul(rot(X), rot(rot(X)))) (d4, not robust)"
+          ],
+          "alias": [],
+          "n_mech": 4,
+          "n_robust": 3,
+          "n_alias": 0
+        },
+        "C": {
+          "evaluated": 300000,
+          "mech": [
+            "p00(p05(X, p00(X))) (d3)",
+            "p05(p00(X), p00(p00(X))) (d3)",
+            "p05(p00(p00(X)), p00(X)) (d3)"
+          ],
+          "alias": [],
+          "n_mech": 3,
+          "n_robust": 3,
+          "n_alias": 0
+        }
+      },
+      "A2_LEAK": false,
+      "class": "OPERATOR",
+      "CLOSURE_MARGIN": "NONE",
+      "C_robust": true
+    },
+    {
+      "kind": "LOST",
+      "certified_full_program": "p00(p05(X, p01(X)))",
+      "full_size": 3,
+      "arms": {
+        "A0": {
+          "evaluated": 300000,
+          "mech": [],
+          "alias": [],
+          "n_mech": 0,
+          "n_robust": 0,
+          "n_alias": 0
+        },
+        "A2": {
+          "evaluated": 300000,
+          "mech": [],
+          "alias": [],
+          "n_mech": 0,
+          "n_robust": 0,
+          "n_alias": 0
+        },
+        "B": {
+          "evaluated": 300000,
+          "mech": [
+            "rot(emul(X, rev(X))) (d3)",
+            "emul(rot(X), rot(rev(X))) (d3)",
+            "emul(rot(rev(X)), rot(X)) (d3)",
+            "eadd(eadd(eadd(X, X), eadd(eadd(X, X), eadd(X, X))), emul(rot(X), rot(rev(X)))) (d4, not robust)"
+          ],
+          "alias": [],
+          "n_mech": 4,
+          "n_robust": 3,
+          "n_alias": 0
+        },
+        "C": {
+          "evaluated": 300000,
+          "mech": [
+            "p00(p05(X, p01(X))) (d3)",
+            "p05(p00(X), p00(p01(X))) (d3)",
+            "p05(p00(p01(X)), p00(X)) (d3)"
+          ],
+          "alias": [],
+          "n_mech": 3,
+          "n_robust": 3,
+          "n_alias": 0
+        }
+      },
+      "A2_LEAK": false,
+      "class": "OPERATOR",
+      "CLOSURE_MARGIN": "NONE",
+      "C_robust": true
+    },
+    {
+      "kind": "LOST",
+      "certified_full_program": "p05(X, p01(p00(X)))",
+      "full_size": 3,
+      "arms": {
+        "A0": {
+          "evaluated": 300000,
+          "mech": [],
+          "alias": [],
+          "n_mech": 0,
+          "n_robust": 0,
+          "n_alias": 0
+        },
+        "A2": {
+          "evaluated": 300000,
+          "mech": [],
+          "alias": [],
+          "n_mech": 0,
+          "n_robust": 0,
+          "n_alias": 0
+        },
+        "B": {
+          "evaluated": 300000,
+          "mech": [
+            "emul(X, rev(rot(X))) (d3)",
+            "emul(rev(rot(X)), X) (d3)",
+            "rev(emul(rot(X), rev(X))) (d3)",
+            "eadd(eadd(eadd(X, X), eadd(eadd(X, X), eadd(X, X))), emul(X, rev(rot(X)))) (d4, not robust)"
+          ],
+          "alias": [],
+          "n_mech": 4,
+          "n_robust": 3,
+          "n_alias": 0
+        },
+        "C": {
+          "evaluated": 300000,
+          "mech": [
+            "p05(X, p01(p00(X))) (d3)",
+            "p05(p01(p00(X)), X) (d3)",
+            "p01(p05(p00(X), p01(X))) (d3)"
+          ],
+          "alias": [],
+          "n_mech": 3,
+          "n_robust": 3,
+          "n_alias": 0
+        }
+      },
+      "A2_LEAK": false,
+      "class": "OPERATOR",
+      "CLOSURE_MARGIN": "NONE",
+      "C_robust": true
+    },
+    {
+      "kind": "LOST",
+      "certified_full_program": "p05(X, p08(X, p07(X)))",
+      "full_size": 3,
+      "arms": {
+        "A0": {
+          "evaluated": 300000,
+          "mech": [],
+          "alias": [],
+          "n_mech": 0,
+          "n_robust": 0,
+          "n_alias": 0
+        },
+        "A2": {
+          "evaluated": 300000,
+          "mech": [],
+          "alias": [],
+          "n_mech": 0,
+          "n_robust": 0,
+          "n_alias": 0
+        },
+        "B": {
+          "evaluated": 300000,
+          "mech": [],
+          "alias": [],
+          "n_mech": 0,
+          "n_robust": 0,
+          "n_alias": 0
+        },
+        "C": {
+          "evaluated": 300000,
+          "mech": [
+            "p05(X, p08(X, p07(X))) (d3)",
+            "p05(p08(X, p07(X)), X) (d3)",
+            "p04(p05(X, X), p09(X, p07(X))) (d3)",
+            "p04(p09(X, p07(X)), p05(X, X)) (d3)"
+          ],
+          "alias": [
+            "p01(p04(p01(p05(X, X)), p09(X, p07(X)))) (d4)"
+          ],
+          "n_mech": 4,
+          "n_robust": 4,
+          "n_alias": 1
+        }
+      },
+      "A2_LEAK": false,
+      "class": "INCONCLUSIVE (B did not reach)",
+      "CLOSURE_MARGIN": "NONE",
+      "C_robust": true
+    },
+    {
+      "kind": "LOST",
+      "certified_full_program": "p01(p00(p05(X, X)))",
+      "full_size": 3,
+      "arms": {
+        "A0": {
+          "evaluated": 300000,
+          "mech": [],
+          "alias": [],
+          "n_mech": 0,
+          "n_robust": 0,
+          "n_alias": 0
+        },
+        "A2": {
+          "evaluated": 300000,
+          "mech": [],
+          "alias": [],
+          "n_mech": 0,
+          "n_robust": 0,
+          "n_alias": 0
+        },
+        "B": {
+          "evaluated": 300000,
+          "mech": [
+            "rev(emul(rot(X), rot(X))) (d3)",
+            "emul(rev(rot(X)), rev(rot(X))) (d3)",
+            "eadd(eadd(eadd(X, X), eadd(eadd(X, X), eadd(X, X))), emul(rev(rot(X)), rev(rot(X)))) (d4, not robust)"
+          ],
+          "alias": [],
+          "n_mech": 3,
+          "n_robust": 2,
+          "n_alias": 0
+        },
+        "C": {
+          "evaluated": 300000,
+          "mech": [
+            "p01(p00(p05(X, X))) (d3)",
+            "p05(p01(p00(X)), p01(p00(X))) (d3)"
+          ],
+          "alias": [],
+          "n_mech": 2,
+          "n_robust": 2,
+          "n_alias": 0
+        }
+      },
+      "A2_LEAK": false,
+      "class": "OPERATOR",
+      "CLOSURE_MARGIN": "NONE",
+      "C_robust": true
+    },
+    {
+      "kind": "LOST",
+      "certified_full_program": "p08(p05(X, X), p07(X))",
+      "full_size": 3,
+      "arms": {
+        "A0": {
+          "evaluated": 300000,
+          "mech": [],
+          "alias": [],
+          "n_mech": 0,
+          "n_robust": 0,
+          "n_alias": 0
+        },
+        "A2": {
+          "evaluated": 300000,
+          "mech": [],
+          "alias": [],
+          "n_mech": 0,
+          "n_robust": 0,
+          "n_alias": 0
+        },
+        "B": {
+          "evaluated": 300000,
+          "mech": [],
+          "alias": [],
+          "n_mech": 0,
+          "n_robust": 0,
+          "n_alias": 0
+        },
+        "C": {
+          "evaluated": 300000,
+          "mech": [
+            "p08(p05(X, X), p07(X)) (d2)",
+            "p04(p05(X, X), p09(p05(X, X), p07(X))) (d3, not robust)",
+            "p04(p09(p05(X, X), p07(X)), p05(X, X)) (d3, not robust)",
+            "p05(p05(X, X), p08(p05(X, X), p07(X))) (d3, not robust)",
+            "p05(p08(p05(X, X), p07(X)), p05(X, X)) (d3, not robust)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 1,
+          "n_alias": 0
+        }
+      },
+      "A2_LEAK": false,
+      "class": "INCONCLUSIVE (B did not reach)",
+      "CLOSURE_MARGIN": "NONE",
+      "C_robust": true
+    },
+    {
+      "kind": "LOST",
+      "certified_full_program": "p03(p05(X, p01(X)))",
+      "full_size": 3,
+      "arms": {
+        "A0": {
+          "evaluated": 300000,
+          "mech": [],
+          "alias": [],
+          "n_mech": 0,
+          "n_robust": 0,
+          "n_alias": 0
+        },
+        "A2": {
+          "evaluated": 300000,
+          "mech": [],
+          "alias": [],
+          "n_mech": 0,
+          "n_robust": 0,
+          "n_alias": 0
+        },
+        "B": {
+          "evaluated": 300000,
+          "mech": [
+            "emul(eadd(X, X), rev(X)) (d2)",
+            "emul(rev(X), eadd(X, X)) (d2)",
+            "emul(X, eadd(rev(X), rev(X))) (d3)",
+            "eadd(emul(X, rev(X)), emul(X, rev(X))) (d3)",
+            "emul(eadd(X, X), emul(emul(X, X), rev(X))) (d3, not robust)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 4,
+          "n_alias": 0
+        },
+        "C": {
+          "evaluated": 300000,
+          "mech": [
+            "p05(p01(X), p03(X)) (d2)",
+            "p05(p03(X), p01(X)) (d2)",
+            "p03(p05(X, p01(X))) (d3)",
+            "p01(p05(p01(X), p03(X))) (d3)",
+            "p04(p05(X, p01(X)), p05(X, p01(X))) (d3)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 5,
+          "n_alias": 0
+        }
+      },
+      "A2_LEAK": false,
+      "class": "OPERATOR",
+      "CLOSURE_MARGIN": "NONE",
+      "C_robust": true
+    },
+    {
+      "kind": "LOST",
+      "certified_full_program": "p05(X, p05(X, p00(X)))",
+      "full_size": 3,
+      "arms": {
+        "A0": {
+          "evaluated": 300000,
+          "mech": [],
+          "alias": [],
+          "n_mech": 0,
+          "n_robust": 0,
+          "n_alias": 0
+        },
+        "A2": {
+          "evaluated": 300000,
+          "mech": [],
+          "alias": [],
+          "n_mech": 0,
+          "n_robust": 0,
+          "n_alias": 0
+        },
+        "B": {
+          "evaluated": 300000,
+          "mech": [
+            "emul(emul(X, X), rot(X)) (d2)",
+            "emul(rot(X), emul(X, X)) (d2)",
+            "emul(X, emul(X, rot(X))) (d3)",
+            "emul(emul(X, X), emul(emul(X, X), rot(X))) (d3, not robust)",
+            "emul(econst1(X), emul(emul(X, X), rot(X))) (d3)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 4,
+          "n_alias": 0
+        },
+        "C": {
+          "evaluated": 300000,
+          "mech": [
+            "p05(p00(X), p05(X, X)) (d2)",
+            "p05(p05(X, X), p00(X)) (d2)",
+            "p05(X, p05(X, p00(X))) (d3)",
+            "p05(p05(X, X), p05(p00(X), p05(X, X))) (d3, not robust)",
+            "p05(p00(p05(X, X)), p05(p00(X), p05(X, X))) (d3, not robust)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 3,
+          "n_alias": 0
+        }
+      },
+      "A2_LEAK": false,
+      "class": "OPERATOR",
+      "CLOSURE_MARGIN": "NONE",
+      "C_robust": true
+    },
+    {
+      "kind": "LOST",
+      "certified_full_program": "p00(p03(p05(X, X)))",
+      "full_size": 3,
+      "arms": {
+        "A0": {
+          "evaluated": 300000,
+          "mech": [],
+          "alias": [],
+          "n_mech": 0,
+          "n_robust": 0,
+          "n_alias": 0
+        },
+        "A2": {
+          "evaluated": 300000,
+          "mech": [],
+          "alias": [],
+          "n_mech": 0,
+          "n_robust": 0,
+          "n_alias": 0
+        },
+        "B": {
+          "evaluated": 300000,
+          "mech": [
+            "emul(rot(X), eadd(rot(X), rot(X))) (d3)",
+            "emul(eadd(rot(X), rot(X)), rot(X)) (d3)",
+            "eadd(emul(rot(X), rot(X)), emul(rot(X), rot(X))) (d3)",
+            "emul(eadd(econst1(X), econst1(X)), emul(rot(X), rot(X))) (d3)",
+            "emul(emul(rot(X), rot(X)), eadd(econst1(X), econst1(X))) (d3)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 5,
+          "n_alias": 0
+        },
+        "C": {
+          "evaluated": 300000,
+          "mech": [
+            "p00(p03(p05(X, X))) (d3)",
+            "p03(p00(p05(X, X))) (d3)",
+            "p05(p00(X), p00(p03(X))) (d3)",
+            "p05(p00(p03(X)), p00(X)) (d3)",
+            "p04(p00(p05(X, X)), p00(p05(X, X))) (d3)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 5,
+          "n_alias": 0
+        }
+      },
+      "A2_LEAK": false,
+      "class": "OPERATOR",
+      "CLOSURE_MARGIN": "NONE",
+      "C_robust": true
+    },
+    {
+      "kind": "LOST",
+      "certified_full_program": "p01(p03(p05(X, X)))",
+      "full_size": 3,
+      "arms": {
+        "A0": {
+          "evaluated": 300000,
+          "mech": [],
+          "alias": [],
+          "n_mech": 0,
+          "n_robust": 0,
+          "n_alias": 0
+        },
+        "A2": {
+          "evaluated": 300000,
+          "mech": [],
+          "alias": [],
+          "n_mech": 0,
+          "n_robust": 0,
+          "n_alias": 0
+        },
+        "B": {
+          "evaluated": 300000,
+          "mech": [
+            "emul(rev(X), eadd(rev(X), rev(X))) (d3)",
+            "emul(eadd(rev(X), rev(X)), rev(X)) (d3)",
+            "eadd(emul(rev(X), rev(X)), emul(rev(X), rev(X))) (d3)",
+            "emul(eadd(econst1(X), econst1(X)), emul(rev(X), rev(X))) (d3)",
+            "emul(emul(rev(X), rev(X)), eadd(econst1(X), econst1(X))) (d3)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 5,
+          "n_alias": 0
+        },
+        "C": {
+          "evaluated": 300000,
+          "mech": [
+            "p01(p03(p05(X, X))) (d3)",
+            "p03(p01(p05(X, X))) (d3)",
+            "p05(p01(X), p01(p03(X))) (d3)",
+            "p05(p01(p03(X)), p01(X)) (d3)",
+            "p04(p01(p05(X, X)), p01(p05(X, X))) (d3)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 5,
+          "n_alias": 0
+        }
+      },
+      "A2_LEAK": false,
+      "class": "OPERATOR",
+      "CLOSURE_MARGIN": "NONE",
+      "C_robust": true
+    },
+    {
+      "kind": "LOST",
+      "certified_full_program": "p05(p00(X), p01(X))",
+      "full_size": 3,
+      "arms": {
+        "A0": {
+          "evaluated": 300000,
+          "mech": [],
+          "alias": [],
+          "n_mech": 0,
+          "n_robust": 0,
+          "n_alias": 0
+        },
+        "A2": {
+          "evaluated": 300000,
+          "mech": [],
+          "alias": [],
+          "n_mech": 0,
+          "n_robust": 0,
+          "n_alias": 0
+        },
+        "B": {
+          "evaluated": 300000,
+          "mech": [
+            "emul(rot(X), rev(X)) (d2)",
+            "emul(rev(X), rot(X)) (d2)",
+            "emul(econst1(X), emul(rot(X), rev(X))) (d3)",
+            "emul(emul(rot(X), rev(X)), econst1(X)) (d3)",
+            "emul(emul(rot(X), rot(X)), emul(rot(X), rev(X))) (d3, not robust)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 4,
+          "n_alias": 0
+        },
+        "C": {
+          "evaluated": 300000,
+          "mech": [
+            "p05(p00(X), p01(X)) (d2)",
+            "p05(p01(X), p00(X)) (d2)",
+            "p05(p00(p05(X, X)), p05(p00(X), p01(X))) (d3, not robust)",
+            "p05(p01(p05(X, X)), p05(p00(X), p01(X))) (d3, not robust)",
+            "p05(p05(p00(X), p01(X)), p00(p05(X, X))) (d3, not robust)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 2,
+          "n_alias": 0
+        }
+      },
+      "A2_LEAK": false,
+      "class": "OPERATOR",
+      "CLOSURE_MARGIN": "NONE",
+      "C_robust": true
+    },
+    {
+      "kind": "CONTROL",
+      "certified_full_program": "p00(X)",
+      "full_size": 1,
+      "arms": {
+        "A0": {
+          "evaluated": 300000,
+          "mech": [
+            "p00(X) (d1)",
+            "p01(p01(p00(X))) (d3)",
+            "p04(p03(p03(X)), p04(p00(X), p03(X))) (d3, not robust)",
+            "p04(p04(p00(X), p03(X)), p03(p03(X))) (d3, not robust)",
+            "p04(X, p04(p03(p03(X)), p04(X, p00(X)))) (d4, not robust)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 2,
+          "n_alias": 0
+        },
+        "A2": {
+          "evaluated": 300000,
+          "mech": [
+            "p00(X) (d1)",
+            "p01(p01(p00(X))) (d3)",
+            "p04(p03(p03(X)), p04(p00(X), p03(X))) (d3, not robust)",
+            "p04(p04(p00(X), p03(X)), p03(p03(X))) (d3, not robust)",
+            "p04(X, p04(p03(p03(X)), p04(X, p00(X)))) (d4, not robust)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 2,
+          "n_alias": 0
+        },
+        "B": {
+          "evaluated": 300000,
+          "mech": [
+            "rot(X) (d1)",
+            "emul(econst1(X), rot(X)) (d2)",
+            "emul(rot(X), econst1(X)) (d2)",
+            "eadd(eadd(eadd(X, X), eadd(X, X)), eadd(eadd(X, X), rot(X))) (d3, not robust)",
+            "eadd(eadd(eadd(X, X), rot(X)), eadd(eadd(X, X), eadd(X, X))) (d3, not robust)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 3,
+          "n_alias": 0
+        },
+        "C": {
+          "evaluated": 300000,
+          "mech": [
+            "p00(X) (d1)",
+            "p01(p01(p00(X))) (d3)",
+            "p05(p00(X), p00(p05(X, X))) (d3, not robust)",
+            "p04(p03(p03(X)), p04(p00(X), p03(X))) (d3, not robust)",
+            "p04(p04(p00(X), p03(X)), p03(p03(X))) (d3, not robust)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 2,
+          "n_alias": 0
+        }
+      },
+      "A2_LEAK": false,
+      "class": "SEARCH_ROUTING",
+      "CLOSURE_MARGIN": "A0",
+      "C_robust": true
+    },
+    {
+      "kind": "CONTROL",
+      "certified_full_program": "p03(X)",
+      "full_size": 1,
+      "arms": {
+        "A0": {
+          "evaluated": 300000,
+          "mech": [
+            "p03(X) (d1)",
+            "p04(X, X) (d1)",
+            "p01(p01(p03(X))) (d3)",
+            "p03(p03(p03(X))) (d3, not robust)",
+            "p04(p03(p03(X)), p03(p03(X))) (d3, not robust)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 3,
+          "n_alias": 0
+        },
+        "A2": {
+          "evaluated": 300000,
+          "mech": [
+            "p03(X) (d1)",
+            "p04(X, X) (d1)",
+            "p01(p01(p03(X))) (d3)",
+            "p03(p03(p03(X))) (d3, not robust)",
+            "p04(p03(p03(X)), p03(p03(X))) (d3, not robust)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 3,
+          "n_alias": 0
+        },
+        "B": {
+          "evaluated": 300000,
+          "mech": [
+            "eadd(X, X) (d1)",
+            "emul(eadd(X, X), emul(X, X)) (d2, not robust)",
+            "emul(eadd(X, X), econst1(X)) (d2)",
+            "emul(emul(X, X), eadd(X, X)) (d2, not robust)",
+            "emul(econst1(X), eadd(X, X)) (d2)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 3,
+          "n_alias": 0
+        },
+        "C": {
+          "evaluated": 300000,
+          "mech": [
+            "p03(X) (d1)",
+            "p04(X, X) (d1)",
+            "p05(p03(X), p05(X, X)) (d2, not robust)",
+            "p05(p05(X, X), p03(X)) (d2, not robust)",
+            "p01(p01(p03(X))) (d3)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 3,
+          "n_alias": 0
+        }
+      },
+      "A2_LEAK": false,
+      "class": "SEARCH_ROUTING",
+      "CLOSURE_MARGIN": "A0",
+      "C_robust": true
+    },
+    {
+      "kind": "CONTROL",
+      "certified_full_program": "p01(X)",
+      "full_size": 1,
+      "arms": {
+        "A0": {
+          "evaluated": 300000,
+          "mech": [
+            "p01(X) (d1)",
+            "p00(p01(p00(X))) (d3)",
+            "p04(p03(p03(X)), p04(p01(X), p03(X))) (d3, not robust)",
+            "p04(p04(p01(X), p03(X)), p03(p03(X))) (d3, not robust)",
+            "p04(X, p04(p03(p03(X)), p04(X, p01(X)))) (d4, not robust)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 2,
+          "n_alias": 0
+        },
+        "A2": {
+          "evaluated": 300000,
+          "mech": [
+            "p01(X) (d1)",
+            "p00(p01(p00(X))) (d3)",
+            "p04(p03(p03(X)), p04(p01(X), p03(X))) (d3, not robust)",
+            "p04(p04(p01(X), p03(X)), p03(p03(X))) (d3, not robust)",
+            "p04(X, p04(p03(p03(X)), p04(X, p01(X)))) (d4, not robust)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 2,
+          "n_alias": 0
+        },
+        "B": {
+          "evaluated": 300000,
+          "mech": [
+            "rev(X) (d1)",
+            "emul(econst1(X), rev(X)) (d2)",
+            "emul(rev(X), econst1(X)) (d2)",
+            "eadd(eadd(eadd(X, X), eadd(X, X)), eadd(eadd(X, X), rev(X))) (d3, not robust)",
+            "eadd(eadd(eadd(X, X), rev(X)), eadd(eadd(X, X), eadd(X, X))) (d3, not robust)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 3,
+          "n_alias": 0
+        },
+        "C": {
+          "evaluated": 300000,
+          "mech": [
+            "p01(X) (d1)",
+            "p00(p01(p00(X))) (d3)",
+            "p05(p01(X), p01(p05(X, X))) (d3, not robust)",
+            "p04(p03(p03(X)), p04(p01(X), p03(X))) (d3, not robust)",
+            "p04(p04(p01(X), p03(X)), p03(p03(X))) (d3, not robust)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 2,
+          "n_alias": 0
+        }
+      },
+      "A2_LEAK": false,
+      "class": "SEARCH_ROUTING",
+      "CLOSURE_MARGIN": "A0",
+      "C_robust": true
+    },
+    {
+      "kind": "CONTROL",
+      "certified_full_program": "p02(X)",
+      "full_size": 1,
+      "arms": {
+        "A0": {
+          "evaluated": 300000,
+          "mech": [
+            "p02(X) (d1)",
+            "p01(p01(p02(X))) (d3)",
+            "p04(p03(p03(X)), p04(p02(X), p03(X))) (d3, not robust)",
+            "p04(p04(p02(X), p03(X)), p03(p03(X))) (d3, not robust)",
+            "p04(X, p04(p02(p03(X)), p03(p03(X)))) (d4, not robust)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 2,
+          "n_alias": 0
+        },
+        "A2": {
+          "evaluated": 300000,
+          "mech": [
+            "p02(X) (d1)",
+            "p01(p01(p02(X))) (d3)",
+            "p04(p03(p03(X)), p04(p02(X), p03(X))) (d3, not robust)",
+            "p04(p04(p02(X), p03(X)), p03(p03(X))) (d3, not robust)",
+            "p04(X, p04(p02(p03(X)), p03(p03(X)))) (d4, not robust)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 2,
+          "n_alias": 0
+        },
+        "B": {
+          "evaluated": 300000,
+          "mech": [
+            "einc(X) (d1)",
+            "eadd(X, econst1(X)) (d2)",
+            "eadd(econst1(X), X) (d2)",
+            "emul(einc(X), econst1(X)) (d2)",
+            "emul(econst1(X), einc(X)) (d2)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 5,
+          "n_alias": 0
+        },
+        "C": {
+          "evaluated": 300000,
+          "mech": [
+            "p02(X) (d1)",
+            "p01(p01(p02(X))) (d3)",
+            "p04(p03(p03(X)), p04(p02(X), p03(X))) (d3, not robust)",
+            "p04(p04(p02(X), p03(X)), p03(p03(X))) (d3, not robust)",
+            "p04(p05(p02(X), p02(X)), p05(p02(X), p03(X))) (d3, not robust)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 2,
+          "n_alias": 0
+        }
+      },
+      "A2_LEAK": false,
+      "class": "SEARCH_ROUTING",
+      "CLOSURE_MARGIN": "A0",
+      "C_robust": true
+    },
+    {
+      "kind": "CONTROL",
+      "certified_full_program": "p09(X, p07(X))",
+      "full_size": 2,
+      "arms": {
+        "A0": {
+          "evaluated": 300000,
+          "mech": [
+            "p09(X, p07(X)) (d2)"
+          ],
+          "alias": [
+            "p09(p00(X), p07(X)) (d2)",
+            "p09(p01(X), p07(X)) (d2)",
+            "p00(p09(X, p07(X))) (d3)",
+            "p01(p09(X, p07(X))) (d3)"
+          ],
+          "n_mech": 1,
+          "n_robust": 1,
+          "n_alias": 4
+        },
+        "A2": {
+          "evaluated": 300000,
+          "mech": [
+            "p09(X, p07(X)) (d2)"
+          ],
+          "alias": [
+            "p09(p00(X), p07(X)) (d2)",
+            "p09(p01(X), p07(X)) (d2)",
+            "p00(p09(X, p07(X))) (d3)",
+            "p01(p09(X, p07(X))) (d3)"
+          ],
+          "n_mech": 1,
+          "n_robust": 1,
+          "n_alias": 4
+        },
+        "B": {
+          "evaluated": 300000,
+          "mech": [],
+          "alias": [],
+          "n_mech": 0,
+          "n_robust": 0,
+          "n_alias": 0
+        },
+        "C": {
+          "evaluated": 300000,
+          "mech": [
+            "p09(X, p07(X)) (d2)"
+          ],
+          "alias": [
+            "p09(p00(X), p07(X)) (d2)",
+            "p09(p01(X), p07(X)) (d2)",
+            "p00(p09(X, p07(X))) (d3)",
+            "p01(p09(X, p07(X))) (d3)"
+          ],
+          "n_mech": 1,
+          "n_robust": 1,
+          "n_alias": 4
+        }
+      },
+      "A2_LEAK": false,
+      "class": "SEARCH_ROUTING",
+      "CLOSURE_MARGIN": "A0",
+      "C_robust": true
+    },
+    {
+      "kind": "CONTROL",
+      "certified_full_program": "p08(X, p07(X))",
+      "full_size": 2,
+      "arms": {
+        "A0": {
+          "evaluated": 300000,
+          "mech": [
+            "p08(X, p07(X)) (d2)",
+            "p01(p08(p01(X), p07(X))) (d3)",
+            "p04(X, p04(p03(p03(X)), p08(p03(X), p07(X)))) (d4, not robust)",
+            "p04(p03(X), p04(p03(p03(X)), p08(X, p07(X)))) (d4, not robust)",
+            "p04(p03(p03(X)), p04(X, p08(p03(X), p07(X)))) (d4, not robust)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 2,
+          "n_alias": 0
+        },
+        "A2": {
+          "evaluated": 300000,
+          "mech": [
+            "p08(X, p07(X)) (d2)",
+            "p01(p08(p01(X), p07(X))) (d3)",
+            "p04(X, p04(p03(p03(X)), p08(p03(X), p07(X)))) (d4, not robust)",
+            "p04(p03(X), p04(p03(p03(X)), p08(X, p07(X)))) (d4, not robust)",
+            "p04(p03(p03(X)), p04(X, p08(p03(X), p07(X)))) (d4, not robust)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 2,
+          "n_alias": 0
+        },
+        "B": {
+          "evaluated": 300000,
+          "mech": [],
+          "alias": [],
+          "n_mech": 0,
+          "n_robust": 0,
+          "n_alias": 0
+        },
+        "C": {
+          "evaluated": 300000,
+          "mech": [
+            "p08(X, p07(X)) (d2)",
+            "p01(p08(p01(X), p07(X))) (d3)",
+            "p04(X, p09(p05(X, X), p07(X))) (d3, not robust)",
+            "p04(p09(p05(X, X), p07(X)), X) (d3, not robust)",
+            "p05(p05(X, X), p08(X, p07(X))) (d3, not robust)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 2,
+          "n_alias": 0
+        }
+      },
+      "A2_LEAK": false,
+      "class": "SEARCH_ROUTING",
+      "CLOSURE_MARGIN": "A0",
+      "C_robust": true
+    },
+    {
+      "kind": "CONTROL",
+      "certified_full_program": "p01(p00(X))",
+      "full_size": 2,
+      "arms": {
+        "A0": {
+          "evaluated": 300000,
+          "mech": [
+            "p01(p00(X)) (d2)",
+            "p00(p00(p00(p01(X)))) (d4)",
+            "p04(p01(p00(X)), p03(p04(X, p03(X)))) (d4, not robust)",
+            "p04(p03(X), p04(p01(p00(X)), p03(p03(X)))) (d4, not robust)",
+            "p04(p03(p03(X)), p04(p03(X), p01(p00(X)))) (d4, not robust)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 2,
+          "n_alias": 0
+        },
+        "A2": {
+          "evaluated": 300000,
+          "mech": [
+            "p01(p00(X)) (d2)",
+            "p00(p00(p00(p01(X)))) (d4)",
+            "p04(p01(p00(X)), p03(p04(X, p03(X)))) (d4, not robust)",
+            "p04(p03(X), p04(p01(p00(X)), p03(p03(X)))) (d4, not robust)",
+            "p04(p03(p03(X)), p04(p03(X), p01(p00(X)))) (d4, not robust)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 2,
+          "n_alias": 0
+        },
+        "B": {
+          "evaluated": 300000,
+          "mech": [
+            "rev(rot(X)) (d2)",
+            "emul(econst1(X), rev(rot(X))) (d3)",
+            "emul(rev(rot(X)), econst1(X)) (d3)",
+            "eadd(eadd(X, X), eadd(eadd(eadd(X, X), eadd(X, X)), rev(rot(X)))) (d4, not robust)",
+            "eadd(eadd(X, eadd(X, X)), eadd(eadd(X, eadd(X, X)), rev(rot(X)))) (d4, not robust)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 3,
+          "n_alias": 0
+        },
+        "C": {
+          "evaluated": 300000,
+          "mech": [
+            "p01(p00(X)) (d2)",
+            "p00(p00(p00(p01(X)))) (d4)",
+            "p04(p01(p00(X)), p03(p04(X, p03(X)))) (d4, not robust)",
+            "p04(p03(X), p04(p01(p00(X)), p03(p03(X)))) (d4, not robust)",
+            "p04(p03(p03(X)), p04(p03(X), p01(p00(X)))) (d4, not robust)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 2,
+          "n_alias": 0
+        }
+      },
+      "A2_LEAK": false,
+      "class": "SEARCH_ROUTING",
+      "CLOSURE_MARGIN": "A0",
+      "C_robust": true
+    },
+    {
+      "kind": "CONTROL",
+      "certified_full_program": "p01(p03(X))",
+      "full_size": 2,
+      "arms": {
+        "A0": {
+          "evaluated": 300000,
+          "mech": [
+            "p01(p03(X)) (d2)",
+            "p03(p01(X)) (d2)",
+            "p04(p01(X), p01(X)) (d2)",
+            "p00(p01(p00(p03(X)))) (d4)"
+          ],
+          "alias": [
+            "p09(p09(p01(X), p06(X)), p06(p03(X))) (d3)"
+          ],
+          "n_mech": 4,
+          "n_robust": 4,
+          "n_alias": 1
+        },
+        "A2": {
+          "evaluated": 300000,
+          "mech": [
+            "p01(p03(X)) (d2)",
+            "p03(p01(X)) (d2)",
+            "p04(p01(X), p01(X)) (d2)",
+            "p00(p01(p00(p03(X)))) (d4)"
+          ],
+          "alias": [
+            "p09(p09(p01(X), p06(X)), p06(p03(X))) (d3)"
+          ],
+          "n_mech": 4,
+          "n_robust": 4,
+          "n_alias": 1
+        },
+        "B": {
+          "evaluated": 300000,
+          "mech": [
+            "rev(eadd(X, X)) (d2)",
+            "eadd(rev(X), rev(X)) (d2)",
+            "emul(econst1(X), eadd(rev(X), rev(X))) (d3)",
+            "emul(rev(X), eadd(econst1(X), econst1(X))) (d3)",
+            "emul(eadd(eadd(X, X), einc(X)), eadd(rev(X), rev(X))) (d3, not robust)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 4,
+          "n_alias": 0
+        },
+        "C": {
+          "evaluated": 300000,
+          "mech": [
+            "p01(p03(X)) (d2)",
+            "p03(p01(X)) (d2)",
+            "p04(p01(X), p01(X)) (d2)",
+            "p05(p01(p03(X)), p01(p05(X, X))) (d3, not robust)",
+            "p05(p01(p03(X)), p04(p02(X), p03(X))) (d3, not robust)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 3,
+          "n_alias": 0
+        }
+      },
+      "A2_LEAK": false,
+      "class": "SEARCH_ROUTING",
+      "CLOSURE_MARGIN": "A0",
+      "C_robust": true
+    },
+    {
+      "kind": "CONTROL",
+      "certified_full_program": "p04(X, p03(X))",
+      "full_size": 2,
+      "arms": {
+        "A0": {
+          "evaluated": 300000,
+          "mech": [
+            "p04(X, p03(X)) (d2)",
+            "p04(p03(X), X) (d2)",
+            "p01(p01(p04(X, p03(X)))) (d4)",
+            "p04(p02(p02(X)), p03(p02(p02(X)))) (d4, not robust)",
+            "p04(p03(p03(X)), p04(X, p03(p03(X)))) (d4, not robust)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 3,
+          "n_alias": 0
+        },
+        "A2": {
+          "evaluated": 300000,
+          "mech": [
+            "p04(X, p03(X)) (d2)",
+            "p04(p03(X), X) (d2)",
+            "p01(p01(p04(X, p03(X)))) (d4)",
+            "p04(p02(p02(X)), p03(p02(p02(X)))) (d4, not robust)",
+            "p04(p03(p03(X)), p04(X, p03(p03(X)))) (d4, not robust)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 3,
+          "n_alias": 0
+        },
+        "B": {
+          "evaluated": 300000,
+          "mech": [
+            "eadd(X, eadd(X, X)) (d2)",
+            "eadd(eadd(X, X), X) (d2)",
+            "emul(X, eadd(X, eadd(X, X))) (d3, not robust)",
+            "eadd(emul(X, X), eadd(emul(X, X), emul(X, X))) (d3, not robust)",
+            "eadd(eadd(emul(X, X), emul(X, X)), emul(X, X)) (d3, not robust)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 2,
+          "n_alias": 0
+        },
+        "C": {
+          "evaluated": 300000,
+          "mech": [
+            "p04(X, p03(X)) (d2)",
+            "p04(p03(X), X) (d2)",
+            "p05(X, p04(X, p03(X))) (d3, not robust)",
+            "p04(p05(X, X), p03(p05(X, X))) (d3, not robust)",
+            "p04(p03(p05(X, X)), p05(X, X)) (d3, not robust)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 2,
+          "n_alias": 0
+        }
+      },
+      "A2_LEAK": false,
+      "class": "SEARCH_ROUTING",
+      "CLOSURE_MARGIN": "A0",
+      "C_robust": true
+    },
+    {
+      "kind": "CONTROL",
+      "certified_full_program": "p00(p01(X))",
+      "full_size": 2,
+      "arms": {
+        "A0": {
+          "evaluated": 300000,
+          "mech": [
+            "p00(p01(X)) (d2)",
+            "p01(p00(p00(p00(X)))) (d4)",
+            "p04(p00(p01(X)), p03(p04(X, p03(X)))) (d4, not robust)",
+            "p04(p03(X), p04(p00(p01(X)), p03(p03(X)))) (d4, not robust)",
+            "p04(p03(p03(X)), p04(p03(X), p00(p01(X)))) (d4, not robust)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 2,
+          "n_alias": 0
+        },
+        "A2": {
+          "evaluated": 300000,
+          "mech": [
+            "p00(p01(X)) (d2)",
+            "p01(p00(p00(p00(X)))) (d4)",
+            "p04(p00(p01(X)), p03(p04(X, p03(X)))) (d4, not robust)",
+            "p04(p03(X), p04(p00(p01(X)), p03(p03(X)))) (d4, not robust)",
+            "p04(p03(p03(X)), p04(p03(X), p00(p01(X)))) (d4, not robust)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 2,
+          "n_alias": 0
+        },
+        "B": {
+          "evaluated": 300000,
+          "mech": [
+            "rot(rev(X)) (d2)",
+            "emul(econst1(X), rot(rev(X))) (d3)",
+            "emul(rot(rev(X)), econst1(X)) (d3)",
+            "eadd(eadd(X, X), eadd(eadd(eadd(X, X), eadd(X, X)), rot(rev(X)))) (d4, not robust)",
+            "eadd(eadd(X, eadd(X, X)), eadd(eadd(X, eadd(X, X)), rot(rev(X)))) (d4, not robust)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 3,
+          "n_alias": 0
+        },
+        "C": {
+          "evaluated": 300000,
+          "mech": [
+            "p00(p01(X)) (d2)",
+            "p01(p00(p00(p00(X)))) (d4)",
+            "p04(p00(p01(X)), p03(p04(X, p03(X)))) (d4, not robust)",
+            "p04(p03(X), p04(p00(p01(X)), p03(p03(X)))) (d4, not robust)",
+            "p04(p03(p03(X)), p04(p03(X), p00(p01(X)))) (d4, not robust)"
+          ],
+          "alias": [],
+          "n_mech": 5,
+          "n_robust": 2,
+          "n_alias": 0
+        }
+      },
+      "A2_LEAK": false,
+      "class": "SEARCH_ROUTING",
+      "CLOSURE_MARGIN": "A0",
+      "C_robust": true
+    }
+  ],
+  "summary": {
+    "LOST": {
+      "n": 20,
+      "OPERATOR": 18,
+      "OPERATOR_clean": 18,
+      "SEARCH_ROUTING": 0,
+      "INCONCLUSIVE": 2,
+      "A2_LEAK": 0,
+      "C_robust": 20,
+      "A0_aliases_present": 0
+    },
+    "CONTROL": {
+      "n": 10,
+      "SEARCH_ROUTING_A0": 10,
+      "robust_A0": 10
+    },
+    "seconds": 1525.3
+  },
+  "predictions": {
+    "P1_lost_operator_ge_90pct": true,
+    "P2_control_search_routing_A0_100pct": true,
+    "P3_A2_leak_zero": true,
+    "P4_C_witnesses_robust": true,
+    "P5_some_A0_aliases_on_lost": false
+  },
+  "workspace": {
+    "base_sha": "5d784becf94cbdde4b1aba1a88582436182226a5",
+    "branch": "hephaestus/base-role-adopt-2026-09-11",
+    "worktree_path": "F:\\Prometheus-worktrees\\hephaestus-base-role",
+    "dirty": true,
+    "main_worktree": false,
+    "allow_canonical_override": false
+  },
+  "v1_comparison": {
+    "v1_file": "hephaestus\\closure_results\\q045_lost_class.json",
+    "targets_identical": true,
+    "mech_identical": true,
+    "robust_changes": [
+      {
+        "target": "p05(X, X)",
+        "arm": "B",
+        "v1_robust": 5,
+        "v2_robust": 3,
+        "v2_witnesses": [
+          "emul(X, X) (d1)",
+          "emul(emul(X, X), emul(X, X)) (d2, not robust)",
+          "emul(emul(X, X), econst1(X)) (d2)",
+          "emul(econst1(X), emul(X, X)) (d2)",
+          "eadd(eadd(X, eadd(X, X)), emul(eadd(X, X), eadd(X, X))) (d3, not robust)"
+        ]
+      },
+      {
+        "target": "p05(X, X)",
+        "arm": "C",
+        "v1_robust": 5,
+        "v2_robust": 2,
+        "v2_witnesses": [
+          "p05(X, X) (d1)",
+          "p05(p05(X, X), p05(X, X)) (d2, not robust)",
+          "p01(p01(p05(X, X))) (d3)",
+          "p04(p03(p03(X)), p04(p03(X), p05(X, X))) (d3, not robust)",
+          "p04(p04(X, p03(X)), p05(p03(X), p03(X))) (d3, not robust)"
+        ]
+      },
+      {
+        "target": "p04(X, p05(X, X))",
+        "arm": "B",
+        "v1_robust": 5,
+        "v2_robust": 4,
+        "v2_witnesses": [
+          "emul(X, einc(X)) (d2)",
+          "emul(einc(X), X) (d2)",
+          "eadd(X, emul(X, X)) (d2)",
+          "eadd(emul(X, X), X) (d2)",
+          "emul(emul(X, X), einc(X)) (d2, not robust)"
+        ]
+      },
+      {
+        "target": "p04(X, p05(X, X))",
+        "arm": "C",
+        "v1_robust": 5,
+        "v2_robust": 4,
+        "v2_witnesses": [
+          "p05(X, p02(X)) (d2)",
+          "p05(p02(X), X) (d2)",
+          "p04(X, p05(X, X)) (d2)",
+          "p04(p05(X, X), X) (d2)",
+          "p05(p02(X), p05(X, X)) (d2, not robust)"
+        ]
+      },
+      {
+        "target": "p05(X, p00(X))",
+        "arm": "B",
+        "v1_robust": 5,
+        "v2_robust": 3,
+        "v2_witnesses": [
+          "emul(X, rot(X)) (d2)",
+          "emul(rot(X), X) (d2)",
+          "emul(X, emul(emul(X, X), rot(X))) (d3, not robust)",
+          "emul(emul(X, X), emul(X, rot(X))) (d3, not robust)",
+          "emul(econst1(X), emul(X, rot(X))) (d3)"
+        ]
+      },
+      {
+        "target": "p05(X, p00(X))",
+        "arm": "C",
+        "v1_robust": 5,
+        "v2_robust": 2,
+        "v2_witnesses": [
+          "p05(X, p00(X)) (d2)",
+          "p05(p00(X), X) (d2)",
+          "p05(X, p05(p00(X), p05(X, X))) (d3, not robust)",
+          "p05(p05(X, X), p05(X, p00(X))) (d3, not robust)",
+          "p05(p00(p05(X, X)), p05(X, p00(X))) (d3, not robust)"
+        ]
+      },
+      {
+        "target": "p03(p05(X, X))",
+        "arm": "B",
+        "v1_robust": 5,
+        "v2_robust": 3,
+        "v2_witnesses": [
+          "emul(X, eadd(X, X)) (d2)",
+          "emul(eadd(X, X), X) (d2)",
+          "eadd(emul(X, X), emul(X, X)) (d2)",
+          "eadd(eadd(eadd(X, X), eadd(X, X)), emul(eadd(X, X), einc(X))) (d3, not robust)",
+          "eadd(emul(eadd(X, X), eadd(X, X)), emul(eadd(X, X), eadd(X, X))) (d3, not robust)"
+        ]
+      },
+      {
+        "target": "p03(p05(X, X))",
+        "arm": "C",
+        "v1_robust": 5,
+        "v2_robust": 4,
+        "v2_witnesses": [
+          "p03(p05(X, X)) (d2)",
+          "p05(X, p03(X)) (d2)",
+          "p05(p03(X), X) (d2)",
+          "p04(p05(X, X), p05(X, X)) (d2)",
+          "p03(p05(p03(X), p03(X))) (d3, not robust)"
+        ]
+      },
+      {
+        "target": "p05(X, p01(X))",
+        "arm": "B",
+        "v1_robust": 4,
+        "v2_robust": 2,
+        "v2_witnesses": [
+          "emul(X, rev(X)) (d2)",
+          "emul(rev(X), X) (d2)",
+          "emul(X, emul(emul(X, X), rev(X))) (d3, not robust)",
+          "emul(emul(X, X), emul(X, rev(X))) (d3, not robust)"
+        ]
+      },
+      {
+        "target": "p05(X, p01(X))",
+        "arm": "C",
+        "v1_robust": 4,
+        "v2_robust": 3,
+        "v2_witnesses": [
+          "p05(X, p01(X)) (d2)",
+          "p05(p01(X), X) (d2)",
+          "p01(p05(X, p01(X))) (d3)",
+          "p05(X, p05(p01(X), p05(X, X))) (d3, not robust)"
+        ]
+      },
+      {
+        "target": "p00(p05(X, X))",
+        "arm": "B",
+        "v1_robust": 5,
+        "v2_robust": 4,
+        "v2_witnesses": [
+          "rot(emul(X, X)) (d2)",
+          "emul(rot(X), rot(X)) (d2)",
+          "emul(econst1(X), emul(rot(X), rot(X))) (d3)",
+          "emul(emul(rot(X), rot(X)), econst1(X)) (d3)",
+          "emul(emul(rot(X), rot(X)), emul(rot(X), rot(X))) (d3, not robust)"
+        ]
+      },
+      {
+        "target": "p00(p05(X, X))",
+        "arm": "C",
+        "v1_robust": 5,
+        "v2_robust": 3,
+        "v2_witnesses": [
+          "p00(p05(X, X)) (d2)",
+          "p05(p00(X), p00(X)) (d2)",
+          "p05(p00(p05(X, X)), p00(p05(X, X))) (d3, not robust)",
+          "p01(p01(p00(p05(X, X)))) (d4)",
+          "p04(p03(X), p04(p00(p05(X, X)), p03(p03(X)))) (d4, not robust)"
+        ]
+      },
+      {
+        "target": "p01(p05(X, X))",
+        "arm": "B",
+        "v1_robust": 5,
+        "v2_robust": 4,
+        "v2_witnesses": [
+          "rev(emul(X, X)) (d2)",
+          "emul(rev(X), rev(X)) (d2)",
+          "emul(econst1(X), emul(rev(X), rev(X))) (d3)",
+          "emul(emul(rev(X), rev(X)), econst1(X)) (d3)",
+          "emul(emul(rev(X), rev(X)), emul(rev(X), rev(X))) (d3, not robust)"
+        ]
+      },
+      {
+        "target": "p01(p05(X, X))",
+        "arm": "C",
+        "v1_robust": 5,
+        "v2_robust": 3,
+        "v2_witnesses": [
+          "p01(p05(X, X)) (d2)",
+          "p05(p01(X), p01(X)) (d2)",
+          "p05(p01(p05(X, X)), p01(p05(X, X))) (d3, not robust)",
+          "p00(p01(p00(p05(X, X)))) (d4)",
+          "p04(p03(X), p04(p01(p05(X, X)), p03(p03(X)))) (d4, not robust)"
+        ]
+      },
+      {
+        "target": "p02(p05(X, X))",
+        "arm": "B",
+        "v1_robust": 5,
+        "v2_robust": 3,
+        "v2_witnesses": [
+          "einc(emul(X, X)) (d2)",
+          "eadd(emul(X, X), econst1(X)) (d2)",
+          "eadd(econst1(X), emul(X, X)) (d2)",
+          "eadd(eadd(eadd(X, X), eadd(X, X)), emul(einc(X), einc(X))) (d3, not robust)",
+          "eadd(eadd(eadd(X, X), einc(X)), emul(eadd(X, X), eadd(X, X))) (d3, not robust)"
+        ]
+      },
+      {
+        "target": "p02(p05(X, X))",
+        "arm": "C",
+        "v1_robust": 5,
+        "v2_robust": 1,
+        "v2_witnesses": [
+          "p02(p05(X, X)) (d2)",
+          "p04(p03(p03(X)), p05(p02(X), p02(X))) (d3, not robust)",
+          "p04(p05(p02(X), p02(X)), p03(p03(X))) (d3, not robust)",
+          "p04(p04(p02(X), p03(X)), p05(p03(X), p03(X))) (d3, not robust)",
+          "p04(p05(p03(X), p03(X)), p04(p02(X), p03(X))) (d3, not robust)"
+        ]
+      },
+      {
+        "target": "p00(p04(X, p05(X, X)))",
+        "arm": "B",
+        "v1_robust": 5,
+        "v2_robust": 4,
+        "v2_witnesses": [
+          "eadd(rot(X), emul(rot(X), rot(X))) (d3)",
+          "eadd(emul(rot(X), rot(X)), rot(X)) (d3)",
+          "emul(rot(X), eadd(econst1(X), rot(X))) (d3)",
+          "emul(eadd(econst1(X), rot(X)), rot(X)) (d3)",
+          "emul(eadd(econst1(X), rot(X)), emul(rot(X), rot(X))) (d3, not robust)"
+        ]
+      },
+      {
+        "target": "p00(p05(X, p00(X)))",
+        "arm": "B",
+        "v1_robust": 4,
+        "v2_robust": 3,
+        "v2_witnesses": [
+          "rot(emul(X, rot(X))) (d3)",
+          "emul(rot(X), rot(rot(X))) (d3)",
+          "emul(rot(rot(X)), rot(X)) (d3)",
+          "eadd(eadd(eadd(X, X), eadd(eadd(X, X), eadd(X, X))), emul(rot(X), rot(rot(X)))) (d4, not robust)"
+        ]
+      },
+      {
+        "target": "p00(p05(X, p01(X)))",
+        "arm": "B",
+        "v1_robust": 4,
+        "v2_robust": 3,
+        "v2_witnesses": [
+          "rot(emul(X, rev(X))) (d3)",
+          "emul(rot(X), rot(rev(X))) (d3)",
+          "emul(rot(rev(X)), rot(X)) (d3)",
+          "eadd(eadd(eadd(X, X), eadd(eadd(X, X), eadd(X, X))), emul(rot(X), rot(rev(X)))) (d4, not robust)"
+        ]
+      },
+      {
+        "target": "p05(X, p01(p00(X)))",
+        "arm": "B",
+        "v1_robust": 4,
+        "v2_robust": 3,
+        "v2_witnesses": [
+          "emul(X, rev(rot(X))) (d3)",
+          "emul(rev(rot(X)), X) (d3)",
+          "rev(emul(rot(X), rev(X))) (d3)",
+          "eadd(eadd(eadd(X, X), eadd(eadd(X, X), eadd(X, X))), emul(X, rev(rot(X)))) (d4, not robust)"
+        ]
+      },
+      {
+        "target": "p01(p00(p05(X, X)))",
+        "arm": "B",
+        "v1_robust": 3,
+        "v2_robust": 2,
+        "v2_witnesses": [
+          "rev(emul(rot(X), rot(X))) (d3)",
+          "emul(rev(rot(X)), rev(rot(X))) (d3)",
+          "eadd(eadd(eadd(X, X), eadd(eadd(X, X), eadd(X, X))), emul(rev(rot(X)), rev(rot(X)))) (d4, not robust)"
+        ]
+      },
+      {
+        "target": "p08(p05(X, X), p07(X))",
+        "arm": "C",
+        "v1_robust": 5,
+        "v2_robust": 1,
+        "v2_witnesses": [
+          "p08(p05(X, X), p07(X)) (d2)",
+          "p04(p05(X, X), p09(p05(X, X), p07(X))) (d3, not robust)",
+          "p04(p09(p05(X, X), p07(X)), p05(X, X)) (d3, not robust)",
+          "p05(p05(X, X), p08(p05(X, X), p07(X))) (d3, not robust)",
+          "p05(p08(p05(X, X), p07(X)), p05(X, X)) (d3, not robust)"
+        ]
+      },
+      {
+        "target": "p03(p05(X, p01(X)))",
+        "arm": "B",
+        "v1_robust": 5,
+        "v2_robust": 4,
+        "v2_witnesses": [
+          "emul(eadd(X, X), rev(X)) (d2)",
+          "emul(rev(X), eadd(X, X)) (d2)",
+          "emul(X, eadd(rev(X), rev(X))) (d3)",
+          "eadd(emul(X, rev(X)), emul(X, rev(X))) (d3)",
+          "emul(eadd(X, X), emul(emul(X, X), rev(X))) (d3, not robust)"
+        ]
+      },
+      {
+        "target": "p05(X, p05(X, p00(X)))",
+        "arm": "B",
+        "v1_robust": 5,
+        "v2_robust": 4,
+        "v2_witnesses": [
+          "emul(emul(X, X), rot(X)) (d2)",
+          "emul(rot(X), emul(X, X)) (d2)",
+          "emul(X, emul(X, rot(X))) (d3)",
+          "emul(emul(X, X), emul(emul(X, X), rot(X))) (d3, not robust)",
+          "emul(econst1(X), emul(emul(X, X), rot(X))) (d3)"
+        ]
+      },
+      {
+        "target": "p05(X, p05(X, p00(X)))",
+        "arm": "C",
+        "v1_robust": 5,
+        "v2_robust": 3,
+        "v2_witnesses": [
+          "p05(p00(X), p05(X, X)) (d2)",
+          "p05(p05(X, X), p00(X)) (d2)",
+          "p05(X, p05(X, p00(X))) (d3)",
+          "p05(p05(X, X), p05(p00(X), p05(X, X))) (d3, not robust)",
+          "p05(p00(p05(X, X)), p05(p00(X), p05(X, X))) (d3, not robust)"
+        ]
+      },
+      {
+        "target": "p05(p00(X), p01(X))",
+        "arm": "B",
+        "v1_robust": 5,
+        "v2_robust": 4,
+        "v2_witnesses": [
+          "emul(rot(X), rev(X)) (d2)",
+          "emul(rev(X), rot(X)) (d2)",
+          "emul(econst1(X), emul(rot(X), rev(X))) (d3)",
+          "emul(emul(rot(X), rev(X)), econst1(X)) (d3)",
+          "emul(emul(rot(X), rot(X)), emul(rot(X), rev(X))) (d3, not robust)"
+        ]
+      },
+      {
+        "target": "p05(p00(X), p01(X))",
+        "arm": "C",
+        "v1_robust": 5,
+        "v2_robust": 2,
+        "v2_witnesses": [
+          "p05(p00(X), p01(X)) (d2)",
+          "p05(p01(X), p00(X)) (d2)",
+          "p05(p00(p05(X, X)), p05(p00(X), p01(X))) (d3, not robust)",
+          "p05(p01(p05(X, X)), p05(p00(X), p01(X))) (d3, not robust)",
+          "p05(p05(p00(X), p01(X)), p00(p05(X, X))) (d3, not robust)"
+        ]
+      },
+      {
+        "target": "p00(X)",
+        "arm": "B",
+        "v1_robust": 1,
+        "v2_robust": 3,
+        "v2_witnesses": [
+          "rot(X) (d1)",
+          "emul(econst1(X), rot(X)) (d2)",
+          "emul(rot(X), econst1(X)) (d2)",
+          "eadd(eadd(eadd(X, X), eadd(X, X)), eadd(eadd(X, X), rot(X))) (d3, not robust)",
+          "eadd(eadd(eadd(X, X), rot(X)), eadd(eadd(X, X), eadd(X, X))) (d3, not robust)"
+        ]
+      },
+      {
+        "target": "p03(X)",
+        "arm": "A0",
+        "v1_robust": 5,
+        "v2_robust": 3,
+        "v2_witnesses": [
+          "p03(X) (d1)",
+          "p04(X, X) (d1)",
+          "p01(p01(p03(X))) (d3)",
+          "p03(p03(p03(X))) (d3, not robust)",
+          "p04(p03(p03(X)), p03(p03(X))) (d3, not robust)"
+        ]
+      },
+      {
+        "target": "p03(X)",
+        "arm": "A2",
+        "v1_robust": 5,
+        "v2_robust": 3,
+        "v2_witnesses": [
+          "p03(X) (d1)",
+          "p04(X, X) (d1)",
+          "p01(p01(p03(X))) (d3)",
+          "p03(p03(p03(X))) (d3, not robust)",
+          "p04(p03(p03(X)), p03(p03(X))) (d3, not robust)"
+        ]
+      },
+      {
+        "target": "p03(X)",
+        "arm": "B",
+        "v1_robust": 5,
+        "v2_robust": 3,
+        "v2_witnesses": [
+          "eadd(X, X) (d1)",
+          "emul(eadd(X, X), emul(X, X)) (d2, not robust)",
+          "emul(eadd(X, X), econst1(X)) (d2)",
+          "emul(emul(X, X), eadd(X, X)) (d2, not robust)",
+          "emul(econst1(X), eadd(X, X)) (d2)"
+        ]
+      },
+      {
+        "target": "p03(X)",
+        "arm": "C",
+        "v1_robust": 5,
+        "v2_robust": 3,
+        "v2_witnesses": [
+          "p03(X) (d1)",
+          "p04(X, X) (d1)",
+          "p05(p03(X), p05(X, X)) (d2, not robust)",
+          "p05(p05(X, X), p03(X)) (d2, not robust)",
+          "p01(p01(p03(X))) (d3)"
+        ]
+      },
+      {
+        "target": "p01(X)",
+        "arm": "B",
+        "v1_robust": 1,
+        "v2_robust": 3,
+        "v2_witnesses": [
+          "rev(X) (d1)",
+          "emul(econst1(X), rev(X)) (d2)",
+          "emul(rev(X), econst1(X)) (d2)",
+          "eadd(eadd(eadd(X, X), eadd(X, X)), eadd(eadd(X, X), rev(X))) (d3, not robust)",
+          "eadd(eadd(eadd(X, X), rev(X)), eadd(eadd(X, X), eadd(X, X))) (d3, not robust)"
+        ]
+      },
+      {
+        "target": "p02(X)",
+        "arm": "A0",
+        "v1_robust": 5,
+        "v2_robust": 2,
+        "v2_witnesses": [
+          "p02(X) (d1)",
+          "p01(p01(p02(X))) (d3)",
+          "p04(p03(p03(X)), p04(p02(X), p03(X))) (d3, not robust)",
+          "p04(p04(p02(X), p03(X)), p03(p03(X))) (d3, not robust)",
+          "p04(X, p04(p02(p03(X)), p03(p03(X)))) (d4, not robust)"
+        ]
+      },
+      {
+        "target": "p02(X)",
+        "arm": "A2",
+        "v1_robust": 5,
+        "v2_robust": 2,
+        "v2_witnesses": [
+          "p02(X) (d1)",
+          "p01(p01(p02(X))) (d3)",
+          "p04(p03(p03(X)), p04(p02(X), p03(X))) (d3, not robust)",
+          "p04(p04(p02(X), p03(X)), p03(p03(X))) (d3, not robust)",
+          "p04(X, p04(p02(p03(X)), p03(p03(X)))) (d4, not robust)"
+        ]
+      },
+      {
+        "target": "p02(X)",
+        "arm": "C",
+        "v1_robust": 5,
+        "v2_robust": 2,
+        "v2_witnesses": [
+          "p02(X) (d1)",
+          "p01(p01(p02(X))) (d3)",
+          "p04(p03(p03(X)), p04(p02(X), p03(X))) (d3, not robust)",
+          "p04(p04(p02(X), p03(X)), p03(p03(X))) (d3, not robust)",
+          "p04(p05(p02(X), p02(X)), p05(p02(X), p03(X))) (d3, not robust)"
+        ]
+      },
+      {
+        "target": "p08(X, p07(X))",
+        "arm": "A0",
+        "v1_robust": 5,
+        "v2_robust": 2,
+        "v2_witnesses": [
+          "p08(X, p07(X)) (d2)",
+          "p01(p08(p01(X), p07(X))) (d3)",
+          "p04(X, p04(p03(p03(X)), p08(p03(X), p07(X)))) (d4, not robust)",
+          "p04(p03(X), p04(p03(p03(X)), p08(X, p07(X)))) (d4, not robust)",
+          "p04(p03(p03(X)), p04(X, p08(p03(X), p07(X)))) (d4, not robust)"
+        ]
+      },
+      {
+        "target": "p08(X, p07(X))",
+        "arm": "A2",
+        "v1_robust": 5,
+        "v2_robust": 2,
+        "v2_witnesses": [
+          "p08(X, p07(X)) (d2)",
+          "p01(p08(p01(X), p07(X))) (d3)",
+          "p04(X, p04(p03(p03(X)), p08(p03(X), p07(X)))) (d4, not robust)",
+          "p04(p03(X), p04(p03(p03(X)), p08(X, p07(X)))) (d4, not robust)",
+          "p04(p03(p03(X)), p04(X, p08(p03(X), p07(X)))) (d4, not robust)"
+        ]
+      },
+      {
+        "target": "p08(X, p07(X))",
+        "arm": "C",
+        "v1_robust": 5,
+        "v2_robust": 2,
+        "v2_witnesses": [
+          "p08(X, p07(X)) (d2)",
+          "p01(p08(p01(X), p07(X))) (d3)",
+          "p04(X, p09(p05(X, X), p07(X))) (d3, not robust)",
+          "p04(p09(p05(X, X), p07(X)), X) (d3, not robust)",
+          "p05(p05(X, X), p08(X, p07(X))) (d3, not robust)"
+        ]
+      },
+      {
+        "target": "p01(p00(X))",
+        "arm": "B",
+        "v1_robust": 1,
+        "v2_robust": 3,
+        "v2_witnesses": [
+          "rev(rot(X)) (d2)",
+          "emul(econst1(X), rev(rot(X))) (d3)",
+          "emul(rev(rot(X)), econst1(X)) (d3)",
+          "eadd(eadd(X, X), eadd(eadd(eadd(X, X), eadd(X, X)), rev(rot(X)))) (d4, not robust)",
+          "eadd(eadd(X, eadd(X, X)), eadd(eadd(X, eadd(X, X)), rev(rot(X)))) (d4, not robust)"
+        ]
+      },
+      {
+        "target": "p01(p03(X))",
+        "arm": "B",
+        "v1_robust": 5,
+        "v2_robust": 4,
+        "v2_witnesses": [
+          "rev(eadd(X, X)) (d2)",
+          "eadd(rev(X), rev(X)) (d2)",
+          "emul(econst1(X), eadd(rev(X), rev(X))) (d3)",
+          "emul(rev(X), eadd(econst1(X), econst1(X))) (d3)",
+          "emul(eadd(eadd(X, X), einc(X)), eadd(rev(X), rev(X))) (d3, not robust)"
+        ]
+      },
+      {
+        "target": "p01(p03(X))",
+        "arm": "C",
+        "v1_robust": 5,
+        "v2_robust": 3,
+        "v2_witnesses": [
+          "p01(p03(X)) (d2)",
+          "p03(p01(X)) (d2)",
+          "p04(p01(X), p01(X)) (d2)",
+          "p05(p01(p03(X)), p01(p05(X, X))) (d3, not robust)",
+          "p05(p01(p03(X)), p04(p02(X), p03(X))) (d3, not robust)"
+        ]
+      },
+      {
+        "target": "p04(X, p03(X))",
+        "arm": "A0",
+        "v1_robust": 5,
+        "v2_robust": 3,
+        "v2_witnesses": [
+          "p04(X, p03(X)) (d2)",
+          "p04(p03(X), X) (d2)",
+          "p01(p01(p04(X, p03(X)))) (d4)",
+          "p04(p02(p02(X)), p03(p02(p02(X)))) (d4, not robust)",
+          "p04(p03(p03(X)), p04(X, p03(p03(X)))) (d4, not robust)"
+        ]
+      },
+      {
+        "target": "p04(X, p03(X))",
+        "arm": "A2",
+        "v1_robust": 5,
+        "v2_robust": 3,
+        "v2_witnesses": [
+          "p04(X, p03(X)) (d2)",
+          "p04(p03(X), X) (d2)",
+          "p01(p01(p04(X, p03(X)))) (d4)",
+          "p04(p02(p02(X)), p03(p02(p02(X)))) (d4, not robust)",
+          "p04(p03(p03(X)), p04(X, p03(p03(X)))) (d4, not robust)"
+        ]
+      },
+      {
+        "target": "p04(X, p03(X))",
+        "arm": "B",
+        "v1_robust": 5,
+        "v2_robust": 2,
+        "v2_witnesses": [
+          "eadd(X, eadd(X, X)) (d2)",
+          "eadd(eadd(X, X), X) (d2)",
+          "emul(X, eadd(X, eadd(X, X))) (d3, not robust)",
+          "eadd(emul(X, X), eadd(emul(X, X), emul(X, X))) (d3, not robust)",
+          "eadd(eadd(emul(X, X), emul(X, X)), emul(X, X)) (d3, not robust)"
+        ]
+      },
+      {
+        "target": "p04(X, p03(X))",
+        "arm": "C",
+        "v1_robust": 5,
+        "v2_robust": 2,
+        "v2_witnesses": [
+          "p04(X, p03(X)) (d2)",
+          "p04(p03(X), X) (d2)",
+          "p05(X, p04(X, p03(X))) (d3, not robust)",
+          "p04(p05(X, X), p03(p05(X, X))) (d3, not robust)",
+          "p04(p03(p05(X, X)), p05(X, X)) (d3, not robust)"
+        ]
+      },
+      {
+        "target": "p00(p01(X))",
+        "arm": "B",
+        "v1_robust": 1,
+        "v2_robust": 3,
+        "v2_witnesses": [
+          "rot(rev(X)) (d2)",
+          "emul(econst1(X), rot(rev(X))) (d3)",
+          "emul(rot(rev(X)), econst1(X)) (d3)",
+          "eadd(eadd(X, X), eadd(eadd(eadd(X, X), eadd(X, X)), rot(rev(X)))) (d4, not robust)",
+          "eadd(eadd(X, eadd(X, X)), eadd(eadd(X, eadd(X, X)), rot(rev(X)))) (d4, not robust)"
+        ]
+      }
+    ]
+  }
+}

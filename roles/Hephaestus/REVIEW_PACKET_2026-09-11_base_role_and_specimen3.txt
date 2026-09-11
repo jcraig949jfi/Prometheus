@@ -1,0 +1,256 @@
+================================================================================
+REVIEW PACKET -- base-role adoption + specimen 3 (Q045) first execution
+Hephaestus seat, Prometheus, 2026-09-11
+Commits of record: a3960783e (adoption, on origin/main via ca300bcfa);
+                   <this commit> (specimen 3 rows + readout + corrections)
+Author: Hephaestus (Claude Code, Opus 5)   Invoked by: the operator,
+"You're @roles/Hephaestus Bootstrap but take note of the base-role concept
+that others are leveraging. You should as well"
+================================================================================
+
+0. WHAT THIS PACKET IS
+
+Two blocks of work in one seat-day: (1) the seat adopted the program's new
+base role (worktree-per-seat, guard against the canonical checkout, journal,
+backlog, monitors registry); (2) the seat executed, for the first time, an
+experiment it had preregistered ten days earlier and committed unrun. The
+second block found three defects in the seat's own frozen instrument BEFORE
+any verdict was read, one of which would have inverted the result.
+
+CONFLICT OF INTEREST, DECLARED: the author wrote the closure gauntlet, the
+frozen generic basis, the preregistration, the runner, and every correction
+described here. Every reading of the gauntlet's output by this seat is a
+same-author reading. Nothing here is admitted anywhere.
+
+1. CONTEXT
+
+Prometheus grows reasoning mechanisms under selection rather than designing
+them. Hephaestus is the forge: it keeps a queue of "walls" (reasoning
+behaviours the frozen primitive set cannot express) and, before any wall may
+be minted, runs a "closure gauntlet": enumerate programs over the frozen
+primitives (arm A0), plus a frozen generic basis (A2), plus a generic small
+language (B), and ask whether any program reproduces the target behaviour.
+Verdicts: SEARCH_ROUTING (the substrate already reaches it), OPERATOR (a
+new primitive is genuinely needed), INCONCLUSIVE. Two boolean-valued walls
+had been through the gauntlet; both came out non-OPERATOR. The obvious
+worry (raised in the charter's Addendum 4): can the gauntlet ever say
+OPERATOR? Specimen 3 is the positive control: a tiny synthetic world
+(TINYPROG: 4-vectors over Z6, ten primitives p00..p09) where removing one
+primitive (p05, elementwise multiply) provably makes a certified class of
+behaviours unreachable. Twenty LOST behaviours and ten CONTROL behaviours
+were selected mechanically; an extra arm C = A0 + p05 asks whether naming
+the missing operator closes the wall.
+
+2. THE QUESTIONS
+
+Q-A. Does the seat now conform to roles/base-role (D-23, D-24)?
+Q-B. Preregistered 2026-09-01, verbatim: P1 ">= 90% of LOST targets
+     classify OPERATOR"; P2 "100% of CONTROL targets classify SEARCH_ROUTING
+     at margin A0, robust"; P3 "A2_LEAK = 0"; P4 "Every C witness is robust
+     under the ring shift"; P5 "Some LOST targets will have coerced aliases
+     in A0 on the six probes that die on the 1,290-point exhaustive check".
+
+3. WHAT WAS DONE
+
+Block 1 (adoption), all E3:
+  - Worktree hephaestus-base-role from origin/main 7466bd6ac; canonical
+    checkout untouched (it was parked on another seat's branch with 35
+    modified files).
+  - hephaestus/workspace_guard.py (inherits archaeon.workspace) inserted
+    in the __main__ of 8 entry points. Verified: passes in the worktree;
+    the canonical checkout is detected as the main worktree.
+  - RESPONSIBILITIES.md (pointer), STATUS.md, BACKLOG_H0H5.md (24 rows,
+    2 XL), CALIBRATION.md, journal/2026-09-11.md; ROLE.md annotated in
+    three places (host claim historical; "ask James to commit/push" and a
+    drive-letter run line superseded). MONITORS.md row for the forge queue
+    (jobs run by hand by design; DORMANT 09-01..09-11; ACTIVE from today).
+  - Base-role self-test: 7 passed, 1 failed. The failure is on untouched
+    origin/main: all 13 files of Archaeon's 2026-09-11_comms prompt set
+    mismatch their MANIFEST because the manifest hashed CRLF checkout
+    bytes (sha256(LF blob with \n->\r\n) == manifest value, verified on
+    00_BROADCAST.md). Reported to Archaeon: comms message 18.
+  - Cheap-model shelf on this host: agents/hephaestus/.env absent (no NIM
+    lane); ollama live, 12 models. Apprentice job NOT run: zero eligible
+    packets, so a run would be a no-op tick (base rule 8).
+
+Block 2 (specimen 3), all E3 unless marked:
+  - Launch 1: TypeError in the runner's target sort (S int signatures vs
+    V tuple signatures). Fixed (V only; S never eligible).
+  - Launch 2/3: one target ran 907 s CPU without finishing. Read the code.
+    DEFECT (e): the gauntlet's "argument from the previous layer" test was
+    a linear scan over closures inside a pool x pool product, uncounted
+    by the 300,000 budget. Fixed with a depth tag; enumeration identical.
+    DEFECT (d): the gauntlet coerced every output with bool(). For vector
+    outputs bool(vec) is always True, so EVERY vector program matched the
+    target on the six probes AND on the 1,290-point exhaustive domain.
+    The gauntlet would have reported thousands of "mechanism-bearing"
+    witnesses in A0 for every LOST target and classified all 20
+    SEARCH_ROUTING. Fixed with a spec-declared equality; the default is
+    unchanged, and the two boolean specimens' outputs are byte-identical
+    under the new code (6 arm/spec pairs re-run: evaluated 300000 /
+    300000 / 107629 and 55 / 908 / 20, all identical).
+  - Run 1 (full protocol): LOST 19 OPERATOR / 1 INCONCLUSIVE / 0
+    SEARCH_ROUTING. Before reading it as a verdict, the runner's closure
+    enumerator was checked against the world's own build_closure on the
+    same probes: full-inventory V-signatures at size <= 5 were 2,975
+    (runner) vs 3,502 (world). DEFECT (b): the binary-op loop never paired
+    a size-(n-1) left argument with the size-0 terminal, so op(p(X), X)
+    orderings and op(X, X) at size 1 were missing. Fixed; now
+    set-identical at depth 5 (3,502 / 1,366) and depth 8 (61,230), minimal
+    sizes agree, candidate counts match the world's (12,716 / 4,771 /
+    333,667). The dossier's published 3,502 / 1,366 / 2,136 reproduce.
+    Run 1 kept as *_RUN1_superseded.json.
+  - Run 2 (run of record, 1,450.6 s, PID 6132, base ca300bcfa dirty):
+    below.
+  - P4's coded predicate (C_robust == OPERATOR) was found to differ from
+    the preregistered sentence; the code is corrected in this commit and
+    the JSON of record carries the old value; both are reported.
+
+4. RESULTS (run 2; rows in hephaestus/closure_results/q045_lost_class.json)
+
+  closure sizes (V-signatures)   R_full5 3,502   R_imp5 1,366   R_imp8 61,230
+  R_imp8 budget                  333,667 of 30,000,000 used; 7.6 s; NOT
+                                 exhausted; the prereg's 10-minute clause
+                                 did not fire; depth 8 stands
+  targets                        20 LOST (sizes 1..3), 10 CONTROL
+  per arm per target             depth <= 4, 300,000 evaluations (all
+                                 arms hit the budget on all targets)
+
+  LOST (n = 20)     OPERATOR 18   INCONCLUSIVE(B did not reach) 2
+                    SEARCH_ROUTING 0   INCONCLUSIVE(C) 0
+                    A0 witnesses 0/20  A0 aliases 0/20  A2 witnesses 0/20
+                    C witness 20/20    C robust under shift 20/20
+  CONTROL (n = 10)  SEARCH_ROUTING at A0 10/10, robust 10/10
+                    first A0 witness at depth 1 (4 targets) / depth 2 (6)
+                    A0 aliases present on 2 CONTROL targets (4 and 1)
+
+  prediction  preregistered gate            observed        verdict
+  P1          >= 90% OPERATOR               18/20 = 0.90    TRUE, AT THE
+                                                            LINE (SE 0.067
+                                                            at n=20; gate
+                                                            not separated
+                                                            from value)
+  P2          100% CONTROL SR@A0 robust     10/10           TRUE
+  P3          A2_LEAK = 0                   0               TRUE
+  P4 (prose)  every C witness robust        20/20           TRUE
+  P4 (coded)  C_robust == OPERATOR          20 vs 18        FALSE (encoding
+                                                            error, 3c)
+  P5          some LOST have A0 aliases     0/20            FALSE
+                                                            (falsified)
+
+  Two-coordinate reading, kept separate from the P1 label: 20/20 LOST
+  targets have no witness and no alias in A0/A2 after 300,000 evaluations
+  each, and 20/20 are reached robustly once p05 is named. The 2 non-
+  OPERATOR rows fail only because arm B (six vector-only generic ops)
+  cannot express a scalar intermediate (p07/p08); two CONTROL targets
+  show the same B = 0 while A0 reaches them. The prereg's section 7
+  names this outcome ("P1 fails because B does not reach ... report").
+
+5. WHAT CHANGED IN THE REPOSITORY
+
+  adoption commit a3960783e: 19 files, +416/-4 (guard, seat files,
+    MONITORS row, delegation to Archaeon with MANIFEST).
+  this commit: hephaestus/src/closure_test.py (COERCE, depth tag);
+    hephaestus/src/closure_q045.py (sort, pairing, P4 encoding, timing,
+    receipt); closure_results/q045_lost_class.json + RUN1 superseded
+    files; prereg/READOUT_Q045_specimen3_2026-09-11.md; counterfeit
+    museum exhibits 008 (bool coercion) and 009 (six-probe aliases);
+    HEPHAESTUS_HANDOFF.txt and TOP_READY_MINTS regenerated (packet
+    _meta.updated stamps only); handoff.py drive-letter line removed;
+    review-packet skill survival copy refreshed; CALIBRATION.md +3 rows;
+    STATUS.md, journal.
+  queue states: unchanged (MINT-0001/0003/0004 DORMANT, MINT-0002
+    SCRAPPED, 0 READY-FOR-DEEP-MINT). No scheduled task created. No
+    premium model invoked. Cost: CPU only (~3 h of one core).
+
+6. WHAT THIS DID NOT ESTABLISH
+
+  - Nothing about Apollo, representation (arrow one), or whether p05 is
+    "the" missing operator beyond the world's construction (prereg s8).
+  - Nothing new about specimens 1 and 2: their outputs are byte-identical
+    under the corrected gauntlet, so their non-OPERATOR readings stand
+    exactly as before -- including that they were never OPERATOR.
+  - P1 at 18/20 is not a discrimination against 90%; the discriminating
+    coordinate is the 20/20 A0-empty / C-reached pair, which was NOT the
+    preregistered gate. It is reported beside the gate, not instead of it.
+  - The cheap-model lane was not exercised from this host (no NIM
+    credential; ollama present but no eligible packet).
+  - The ablation card (+11pp R3 / +32pp R4) was not re-run from a
+    worktree (HEPH-20).
+  - The base-role suite is red on origin/main for a reason outside this
+    seat's lane; this seat integrated with that failure standing.
+
+7. AUTHOR'S OWN ERRORS AND WHAT THEY COST
+
+  - Committed a runner "UNRUN" on 09-01 with three defects (sort, pairing,
+    P4 encoding) that a one-target smoke run would have caught. Cost: two
+    aborted launches and one superseded full run (~1.5 h).
+  - Froze the gauntlet as "the standard Forge test" (Addendum 3/4) after
+    two boolean specimens, with a bool() coercion that is degenerate on
+    any vector-valued target. Had the run been fast, the seat would have
+    read "P1 FALSE: the funnel cannot detect an operator gap" and reported
+    it. The instrument's positive control was on paper only until today.
+  - Wrote P5 expecting Q045's label-leak phenomenon on the LOST set; it
+    appeared on the CONTROL set instead. Falsified prediction, recorded.
+  - Wrote ROLE.md's "running on M3 / GANDALF" as a seat property; it was a
+    host fact. Annotated.
+
+8. WHAT IS OWED, AND BY WHOM
+
+  - Archaeon: regenerate 2026-09-11_comms/MANIFEST.md from git blobs so the
+    base-role suite is green on main (comms message 18).
+  - Hephaestus: HEPH-06/07/23 closed by this commit; HEPH-11 (freshness
+    file for the queue); HEPH-09/10 generalised controls for non-TINYPROG
+    specs; HEPH-24 a true ring change (Z7) as a versioned tooling change.
+  - Operator (XL): HEPH-17 -- when the gauntlet says OPERATOR, does the
+    Mint Packet target the substrate (ENGINE lane) or Apollo? HEPH-22 --
+    the M3 station's fate now that the seat is host-independent.
+  - Charon or Aporia: an independent held-out generator for MINT-0001
+    (unchanged blocker).
+
+9. QUESTIONS FOR THE EXTERNAL REVIEWER
+
+  1. Arm B is the "any small generic program" control and cannot express
+     a scalar intermediate. Should B be widened (adding scalar ops) as a
+     versioned change, or should INCONCLUSIVE(B) simply be reported as it
+     was here? Widening B after seeing it fail is the move the prereg
+     doctrine forbids; not widening leaves B weaker than A0 on typed
+     routes.
+  2. What would falsify "the gauntlet can detect an OPERATOR gap"? Our
+     answer: a LOST target with an A0 witness that survives the exhaustive
+     and shift columns. Zero occurred in 20. Is a positive control in ONE
+     synthetic world sufficient to lift the concern for the boolean
+     specimens, whose value type is different?
+  3. Should we stop? The seat's honest case for stopping the gauntlet
+     programme: three defects in one instrument in one day; every result
+     before today was produced by code that had never met a second value
+     type. The case for continuing: the boolean outputs are byte-identical
+     under the corrected code, and the instrument now has one executed
+     positive, one executed negative, and one executed injected-success
+     (arm C) control.
+  4. The P1 gate (>= 90%) sits exactly on the observed value with n = 20.
+     Should the next specimen preregister an eligibility count and an
+     interval, and treat "at the line" as INDETERMINATE by rule?
+  5. Is exact tuple equality the right COERCE for vector targets, or should
+     the six-probe "coerced" column use a weaker equivalence (e.g. equal
+     up to a fixed permutation) so that P5-type aliases have a chance to
+     appear on LOST targets?
+
+10. HOW TO REPRODUCE
+
+  git -C <canonical> worktree add <path> -b hephaestus/<task> origin/main
+  cd <path>   (set PYTHONPATH to <path>; the module refuses the canonical
+              checkout)
+  python -m hephaestus.src.closure_q045 8 30000000
+     ~25 min on one core. Deterministic: world probes seed 20260827,
+     shift points seed 20260901, enumeration order fixed.
+  Expected: closure_sizes 3502 / 1366 / 61230; summary.LOST 18 / 2 / 0,
+     A2_LEAK 0, C_robust 20, A0_aliases_present 0; summary.CONTROL 10 / 10.
+  Equivalence of the corrected gauntlet on the boolean specs:
+     python -m hephaestus.src.closure_test vacuous_truth 300000  and
+     ... consistency_check 300000  -- compare with
+     hephaestus/closure_results/{vacuous_truth,consistency_check}.json
+     (committed 2026-09-01; unchanged by this commit).
+  Base-role suite: python -m pytest archaeon/tests/test_base_role.py -q
+     (7 passed, 1 failed on origin/main until Archaeon's manifest fix).
+================================================================================

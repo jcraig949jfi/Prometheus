@@ -1,65 +1,68 @@
 ---
 name: review-packet
-description: After any substantial block of work (a build, an experiment, a charter change, a multi-commit session), produce a detailed ASCII review package IN THE CHAT for external review, without being asked. Standing order from James (2026-09-01). Use when work has landed and before ending the turn.
+description: >
+  Produce a detailed external-review packet as one pure-ASCII block. Invoke PROACTIVELY
+  after any substantial chunk of work (a built+run experiment, campaign, pilot,
+  calibration, validated slice, decisive negative, or milestone) WITHOUT being asked, and
+  whenever the user asks for "a review", "review packet", or "write this up for external
+  review". Delivers three ways at once: pasted in chat, written to a file, committed and
+  pushed. Use when work has reached a reportable state (a result, verdict, or a
+  blocked-and-diagnosed stop).
 ---
 
-# Review packet — standing order
+# Review Packet
 
-(Repo copy of `~/.claude/skills/review-packet/SKILL.md`, kept with the seat so it survives a machine
-change. If the two differ, the repo copy is authoritative for Hephaestus.)
+A review packet is a **self-contained, pure-ASCII** document that an external reviewer
+(or a frontier model with no repo access) can read cold and critique. It is the standing
+way substantial work is reported in this program (house style from the Serendipity
+Foundry D-12/D-13 review packets).
 
-**Trigger.** You have just finished a substantial block of work: something was built, measured,
-re-chartered, reclassified, or committed. Do not wait to be asked. Before the closing recap, write
-the packet and put it in the chat as a single fenced ASCII block the operator can cut and paste to an
-external reviewer. (Also apply when the operator says "review packet", "review package", or "write
-this up for external review".)
+## When to produce one (proactively, without being asked)
 
-**Definition of substantial.** Any of: a commit with >100 changed lines or >3 files; an experiment
-that produced a number; a state change in a queue/ledger; a ruling applied; a session with >=3
-distinct phases. When unsure, write it — a short packet is cheap; a missing one is not.
+After a work-unit reaches a **reportable state**: a built-and-run experiment, a campaign,
+a pilot, a calibration, a validated slice, a decisive negative, or a milestone commit
+series. A single bug-fix or file edit is NOT substantial; a campaign / pilot /
+falsification / slice that produced a **result or a decision** IS. When unsure, err
+toward producing it. Also produce one on explicit request ("write me a review", "review
+packet", "for external review").
 
-## Hard rules
+## Deliver three ways at once
 
-- **ASCII only.** No em/en dashes (use `--`), no arrows (`->`), no `≠ Δ ≥ ≤ × ·`, no smart quotes,
-  no box-drawing beyond `-`, `=`, `|`, `+`. Tables as fixed-width text. Width <= 80 columns.
-- **Self-contained.** A reader with no repo access must understand it. File paths appear only as
-  provenance, never as the explanation.
-- **Numbers are quoted exactly** and each carries a provenance grade (E3 executed this session /
-  E1 regenerable / E0 prose). Never round a measured number into a nicer one.
-- **Failures and non-results first-class.** What did NOT happen, what was NOT established, and what
-  the author's own errors cost go in their own sections, not in a footnote.
-- **Conflict of interest declared up front** when the author built what is being reviewed.
-- **Questions for the reviewer** are specific, answerable, and include at least one "what would
-  falsify this" and one "what should we stop".
-- The packet is committed to the repo as well when the work was committed (a `.txt` under
-  `roles/<Seat>/`), so replies can be adjudicated against a fixed text.
+1. **In chat** — the full packet as ONE ASCII block the user can cut and paste.
+2. **In a file** — `<component>/pivot/<NAME>_REVIEW_<DATE>.md` (or the bench's
+   `REVIEW_PACKET_FINAL_<NAME>.txt`), pure ASCII.
+3. **Committed and pushed** — so the packet is citable/pullable on other machines.
 
-## Section skeleton (adapt headings; keep the order)
+## House style (hard rules)
 
-```
-================================================================================
-REVIEW PACKET -- <what> -- <program/seat>, <date>
-Commit(s) of record: <hash(es)>   Author: <seat/model>   Invoked by: <who, quote>
-================================================================================
-0. WHAT THIS PACKET IS (2-4 lines) + conflict of interest, declared
-1. CONTEXT (<= 8 lines for a reader with no prior exposure)
-2. THE QUESTION(S) THE WORK WAS ANSWERING (verbatim where possible)
-3. WHAT WAS DONE, STEP BY STEP (numbers with grades; failure positions, not just scores)
-4. RESULTS (tables; two-coordinate results kept as two coordinates)
-5. WHAT CHANGED IN THE REPOSITORY (files, states, scheduled jobs, cost)
-6. WHAT THIS DID NOT ESTABLISH (explicit non-results, open gates, untested components)
-7. AUTHOR'S OWN ERRORS AND WHAT THEY COST
-8. WHAT IS OWED, AND BY WHOM
-9. QUESTIONS FOR THE EXTERNAL REVIEWER (numbered; falsification + stop questions)
-10. HOW TO REPRODUCE (exact commands, expected outputs, determinism/seed)
-================================================================================
-```
+- **Pure ASCII only.** No unicode. Write `eps`, `<=`, `>=`, `x` (not multiply sign),
+  `->`, `--`. Verify: `LANG=C.UTF-8 grep -nP '[^\x00-\x7F]' <file>` must return nothing.
+- **Box banner** `+===...===+` header with title, author (role + machine), date, "For:"
+  (HITL + external reviewers), Status, and a "self-contained / no repo access needed"
+  line.
+- **Numbered `-----` sections.** A workable spine (adapt to the work):
+  0. Summary / mandate / verdict up front
+  1. What was built (and what was committed before measurement)
+  2. The endpoint/claim and why it matters
+  3-6. Design as executed, pilot/census, results (EXACT numbers, gates with the failing
+     clause), incidents and what they validated
+  7. What this does and does NOT establish (claim ceiling, explicit conditionality)
+  8. The decision / recommendation (HITL's call, with Apollo's lean)
+  9. Questions for the reviewer (written to resist agreement)
+  10. Artifacts (paths + commit SHAs)
+  END banner inviting the reviewer to say "not worth continuing" — that must always
+  remain a first-class answer.
 
-## Process
+## Doctrine the packet must honour
 
-1. Gather the numbers from artifacts, not from memory: re-open the result JSON / logs.
-2. Draft in the skeleton; run an ASCII check (`grep -nP '[^\x00-\x7F]'`) on the text before
-   pasting; fix any non-ASCII.
-3. Paste the block in the chat. Then, if the work was committed, also write it to the repo and
-   commit it (small follow-up commit is fine).
-4. In the closing recap, one line: "Review packet above; also committed at <path>."
+- **Self-contained:** every load-bearing number inline; a reviewer needs no repo access.
+- **Failure SHAPES, not verdict-lines.** Say HOW it failed; preserve the gradient.
+- **Verified-not-trusted:** mark what was measured vs inherited; give artifact paths.
+- **Record defects and process holes plainly** rather than smoothing them over.
+- **Able to return "stop."** A packet that cannot recommend retirement is decorative.
+
+## Exemplars
+
+- `D:\Prometheus\apollo\pivot\APOLLO_S1_REVIEW_2026-09-01.md` (Apollo S1)
+- `D:\Prometheus\genesis\harmonia_a\gen0\REVIEW_PACKET_FINAL_HARMONIA_A_GEN0.txt`
+- Upstream: `D:\ZeusE\d12\reports\REVIEW_PACKET_FINAL_D12.txt` / `..._D13.txt`
