@@ -36,6 +36,12 @@ $head = ""
 if ($git) { $head = (& $git -C $root rev-parse HEAD 2>$null | Out-String).Trim() }
 if ($head) { $env:EW_SOURCE_COMMIT = $head }
 
+# STORE IDENTITY (2026-09-11, Hermes #69 accepted): ew.db now refuses any
+# store whose pg_control_system() identity is not the expected environment.
+# This service DELIBERATELY serves the M2 local fork (operator ruling
+# 2026-09-04), so it names that environment; naming it is the visible act.
+$env:PROMETHEUS_ENV = "m2-local-fork"
+
 function Start-Service-Fresh {
     Log "starting M2-INDEPENDENT service (M2-local Postgres) via $py (commit=$env:EW_SOURCE_COMMIT)"
     Start-Process -FilePath $py -ArgumentList "-m","ew.service" `
@@ -45,8 +51,17 @@ function Start-Service-Fresh {
     Start-Sleep -Seconds 10
 }
 
-# 1. Down? start it.
-$health = try { (Invoke-WebRequest -Uri "http://localhost:8377/api/v1/health" -TimeoutSec 5 -UseBasicParsing).StatusCode } catch { 0 }
+# 1. Down? start it. Probe 127.0.0.1: "localhost" resolves to ::1 first and
+#    the refused IPv6 attempt cost ~2 s per call on M1 (measured 2026-09-11).
+$sw = [Diagnostics.Stopwatch]::StartNew()
+$health = try { (Invoke-WebRequest -Uri "http://127.0.0.1:8377/api/v1/health" -TimeoutSec 20 -UseBasicParsing).StatusCode } catch { 0 }
+if ($health -eq 200) {
+    # LAST-SUCCESS LINE (Pronoia #121, MONITORS row): a watchdog that logs
+    # only on failure gives a healthy and a dead watchdog the same observable.
+    # Presence only for now; the M1 property probe (authenticated search,
+    # present-but-dead restart) is ported under MNE-35.
+    Log ("ok  health {0}ms  last_success {1}" -f $sw.ElapsedMilliseconds, (Get-Date -Format s))
+}
 if ($health -ne 200) {
     Log "health check failed ($health); starting service"
     Start-Service-Fresh

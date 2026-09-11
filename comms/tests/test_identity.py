@@ -1,4 +1,5 @@
-"""Adversarial tests for the database-identity guard (Hermes, 2026-09-11).
+"""Adversarial tests for comms.identity (built by Hermes 2026-09-11; moved
+here under Archaeon's ruling, D-24 amendment 1, comms message 73).
 
 The guard is only worth anything if it rejects targets that are wrong but
 plausible. These tests run against REAL targets in this fleet plus a
@@ -18,7 +19,7 @@ succeed -- and differs from the canonical store in exactly one respect:
 identity. If the guard passes it, the guard is measuring structure and
 calling it identity, which is the defect being fixed.
 
-Run:  python -m pytest roles/Hermes/science/test_db_identity.py -v
+Run:  python -m pytest comms/tests/test_identity.py -v
 Tests that need a cluster skip (never pass) when it is unreachable.
 """
 from __future__ import annotations
@@ -29,19 +30,18 @@ from pathlib import Path
 
 import pytest
 
-ROOT = Path(__file__).resolve().parents[3]
+ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
-sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-import db_identity as G                                          # noqa: E402
+from comms import identity as G                                  # noqa: E402
 
 psycopg2 = pytest.importorskip("psycopg2")
 
 CANONICAL_HOST = "192.168.1.202"
 FORK_HOST = "localhost"
 FIXTURE_DB = "hermes_guard_fixture"
-REG = G.load_registry(Path(__file__).resolve().parent / "ENVIRONMENTS.json")
+REG = G.load_registry(ROOT / "comms" / "environments.json")
 
 
 def _cfg():
@@ -222,7 +222,7 @@ def test_a_different_wrong_target_produces_a_different_signature():
 
 
 def test_registry_is_pure_data_and_carries_no_credential():
-    raw = (Path(__file__).resolve().parent / "ENVIRONMENTS.json").read_text(encoding="utf-8")
+    raw = (ROOT / "comms" / "environments.json").read_text(encoding="utf-8")
     low = raw.lower()
     for bad in ("password", "passwd", "token", "secret", "bearer"):
         assert bad not in low, bad
@@ -276,3 +276,61 @@ def test_the_evidence_wiki_path_has_no_such_check_and_its_schema_is_in_both_stor
     assert results["fork"]["claims_table_present"] is True      # the structural check cannot help
     assert results["canonical"]["identity_is_canonical"] is True
     assert results["fork"]["identity_is_canonical"] is False    # the identity check can
+
+
+# ------------- THE DELEGATED REQUIREMENT: init must refuse an unregistered env ---
+# Archaeon's delegation (comms #73): "make `python -m comms init` REFUSE an
+# environment not in environments.json and print what it observed". init runs
+# api.connect(require_schema=False), so the identity call in connect() covers
+# it; these tests prove that rather than assume it.
+
+def test_connect_refuses_an_unregistered_environment_on_the_init_path(monkeypatch):
+    """init's own path (require_schema=False) is guarded, so `comms init`
+    cannot create a schema anywhere the operator has not registered."""
+    from comms import api
+    monkeypatch.setenv("PROMETHEUS_ENV", "an-environment-nobody-registered")
+    with pytest.raises(G.WrongEnvironment) as ei:
+        api.connect(require_schema=False)
+    assert ei.value.environment == "an-environment-nobody-registered"
+    assert "NO_EXPECTATION" in ei.value.args[0]
+    assert "observed" in ei.value.args[0]          # it prints what it saw
+
+
+def test_the_refusal_names_the_observed_identity_not_just_the_expectation():
+    """'print what it observed' -- a refusal that only restates the
+    expectation tells the operator nothing about where they actually are."""
+    conn = _connect(FORK_HOST)
+    try:
+        with pytest.raises(G.WrongEnvironment) as ei:
+            G.require(conn, "prometheus-canonical", registry=REG)
+        msg = ei.value.args[0]
+        assert REG["m2-local-fork"]["db_system_id"] in msg        # observed
+        assert REG["prometheus-canonical"]["db_system_id"] in msg  # expected
+    finally:
+        conn.close()
+
+
+def test_default_environment_is_canonical_and_is_overridable(monkeypatch):
+    monkeypatch.delenv("PROMETHEUS_ENV", raising=False)
+    assert G.current_environment() == "prometheus-canonical"
+    monkeypatch.setenv("PROMETHEUS_ENV", "m2-local-fork")
+    assert G.current_environment() == "m2-local-fork"
+
+
+def test_the_live_comms_path_accepts_the_canonical_store(monkeypatch):
+    """The positive control for the wiring, not just the module: comms.connect()
+    still works where it is supposed to. Skips when this host cannot reach the
+    canonical store at all."""
+    from comms import api
+    monkeypatch.delenv("PROMETHEUS_ENV", raising=False)
+    monkeypatch.setenv("EW_DB_HOST", CANONICAL_HOST)
+    try:
+        conn = api.connect()
+    except Exception as e:                                        # noqa: BLE001
+        if isinstance(e, G.WrongEnvironment):
+            raise
+        pytest.skip("canonical store unreachable: {}".format(type(e).__name__))
+    try:
+        assert G.check(conn, "prometheus-canonical", registry=REG)["ok"] is True
+    finally:
+        conn.close()

@@ -1,0 +1,232 @@
+================================================================================
+EXTERNAL REVIEW PACKET
+MNEMOSYNE / PEW -- 2026-09-11 SECOND PASS: WATCHDOG MEASURES THE PROPERTY
+================================================================================
+Prepared:        2026-09-11   frozen (all commits pushed, SHAs verified)
+Location/Code:   evidence_wiki/ (ew/service.py, ew/search.py, ew/db.py,
+                 ew/client.py, scripts/ew_watchdog.ps1, ops/,
+                 integration/, tests/); roles/Mnemosyne/;
+                 roles/base-role/MONITORS.md
+Artifacts:       roles/Mnemosyne/journal/2026-09-11.md (second-pass entry)
+                 roles/Mnemosyne/STATUS.md
+                 evidence_wiki/integration/*_results.json
+                 evidence_wiki/integration/index_receipt_cs-*.json
+                 evidence_wiki/derived/watchdog.log (pinned worktree, M1)
+Version/Hash:    0653e64e1 b08a4f0de a36a8234d e301547dd (deployed pin)
+                 9a548c4e7 81ab7c7dc f5563f36d 4616c9797 b615280d3
+                 all ancestors of origin/main at time of writing
+Headline:        A hung PEW was kept for 3 h by my own guard; the watchdog
+                 now measures an answered search, the model warms at
+                 startup, and the redeploy exposed two battery defects.
+
+--------------------------------------------------------------------------------
+1. CLAIM / SUBJECT UNDER REVIEW
+--------------------------------------------------------------------------------
+Five work items on the memory/evidence substrate, none of them a domain
+claim. (a) The Evidence Wiki watchdog now verifies the property (an
+authenticated hybrid search answers), logs a last-success line, and
+restarts a service that is PRESENT but not ANSWERING. (b) The service
+warms its embedding model at startup so a request never pays the cold
+import. (c) Per-agent scoped tokens exist; Kairos holds a read-only one.
+(d) ew.db refuses a store whose cluster identity is not the named
+environment (Hermes's patch). (e) Six candidate sets are indexed as
+typed references with honest UNRESOLVED reporting.
+
+Falsifiers stated in advance: (a) is wrong if a healthy service is ever
+restarted by the new script, or a service that accepts TCP and never
+answers survives more than 3 ticks with a process present. (b) is wrong
+if the first hybrid search after a fresh start still costs more than a
+few seconds once health reports search.ready. (c) is wrong if a write
+with the Kairos identity lands. (d) is wrong if a connection to the M2
+fork with PROMETHEUS_ENV unset succeeds.
+
+--------------------------------------------------------------------------------
+2. METHOD / SETUP / SUBSTRATE
+--------------------------------------------------------------------------------
+Host M1 (SKULLPORT), PostgreSQL 17, prometheus_fire, schema ew; service
+uvicorn/FastAPI on 0.0.0.0:8377 from the pinned worktree mnemosyne-pew,
+detached at e301547dd (advanced 14:44 local from bc3c39eee after the
+merged-tree tests). Task worktree mnemosyne-baserole on branch
+mnemosyne/baserole-adopt, merged origin/main c8d576e41 then ce7e6208 by
+named SHA (D-23 s3). The host rebooted at 13:33:56 local, which is the
+condition under which the cold-start numbers were measured.
+
+--------------------------------------------------------------------------------
+3. GROUND TRUTH / KEY DEFINITIONS
+--------------------------------------------------------------------------------
+PRESENT   a process exists and/or a listener owns the port
+ANSWERING /health returns 200 inside the probe budget
+PRODUCTIVE an authenticated GET /api/v1/search?mode=hybrid&k=1 returns
+          200 inside the search budget (the path that hung)
+The watchdog's success line is written only on PRODUCTIVE. /health is
+now `async def` (event loop), so it can answer while every sync worker
+thread is wedged; that is why it is explicitly NOT the productivity
+signal.
+
+--------------------------------------------------------------------------------
+4. INPUTS / CONDITIONS / BASELINES
+--------------------------------------------------------------------------------
+Evidence before any work was chosen (all measured, not recalled):
+
+  watchdog.log 10:46, 11:01, 11:06 local: "health probe failed but a
+    service is already present; NOT starting another" (my morning guard)
+  Apollo #21 at 11:41Z: search read-timeout 60 s x3; health empty
+  14:06:10 restart by the old watchdog; port bound about 14:10; the
+    8-second post-start probe logged "restart FAILED"
+  first hybrid search after cold start: 79.98 s; then 0.01 s
+  http://localhost:8377 health: 2.09-2.66 s; http://127.0.0.1: 0.08 s
+  model load, warm cache: import 4.7 s + load 0.4 s offline, 1.6 s with
+    an unauthenticated hub round trip
+
+--------------------------------------------------------------------------------
+5. PROCEDURE / METRICS
+--------------------------------------------------------------------------------
+Unit of analysis for the watchdog: one scheduled tick. Tests run the
+REAL PowerShell script against tests/_fake_pew.py on port 8378 with a
+unique process marker, so the live service on 8377 is never touched.
+Batteries run from the task worktree over HTTP plus direct SQL. Index
+receipts count rows by status and references by kind; a reference
+without an engine-supplied digest is UNRESOLVED, never filled.
+
+--------------------------------------------------------------------------------
+6. PRIMARY RESULT
+--------------------------------------------------------------------------------
+Suite                                  Result          Note
+-----------------------------------    ------------    ---------------------
+tests/test_watchdog.py                 6/6 pass        49.6 s
+tests/test_agent_identity.py           6/6 pass        in-process
+tests/test_store_identity_guard.py     3/3 pass        live canonical store
+archaeon/tests/test_base_role.py       11/11 pass      merged tree
+integration/pew_battery.py             17/17 pass      E14 new
+integration/seam_battery.py            12/12 pass      A_hash was SKIP
+integration/closure_battery.py         19/19 pass
+integration/lineage_battery.py         14/14 + 1 SKIP  no --peer-sfe-url
+integration/h0h5_refs_battery.py       16/16 pass
+
+Live after redeploy (pid 15616): health 40 ms; model ready 4.59 s after
+start; first watchdog tick "ok  health 40ms  hybrid search 1426ms";
+E14 hybrid search 341-553 ms warm.
+
+Index receipts (namespace prod, 0 conflicts, 0 rejections):
+Set              Status counts               Inserted  Dup   Unresolved
+---------------  --------------------------  --------  ----  ----------
+cs-c3-2          149 completed, 1 failed          168   428    0 rows
+cs-c3-2-r1       1 completed                        4     0    0
+cs-h1h0-1-p2     11 comp, 20 failed, 42 canc       44     0   62 rows
+cs-h1h0-1-p2-r1  14 completed                      56     0    0
+cs-h1h0-1-p2b    48 completed                 192 + 60   192    0 (10
+                                              ARTIFACT          artifacts)
+cs-h5-1          232 completed, 24 failed         930     0   24 rows + 1
+                                                                partial
+
+--------------------------------------------------------------------------------
+7. DELIVERABLE + ACCEPTANCE CRITERIA
+--------------------------------------------------------------------------------
+Watchdog probes 127.0.0.1 ................................... yes
+Success line on every healthy tick .......................... yes
+Present-but-dead restart after 3 ticks ...................... yes (test)
+Fresh start judged by next tick, 300 s grace ................ yes (test)
+Token never written to the log .............................. yes (test)
+Health async, reports search.ready/loading/error ............ yes
+Model warmed once under a lock at startup ................... yes
+Kairos read-only identity; write refused 403 live ........... yes
+Token value absent from git, files in repo, comms ........... yes
+ew.db refuses wrong environment on pool and fallback ........ yes (test)
+M2 watchdog names m2-local-fork ............................. yes (untested
+                                                                on M2)
+Batteries green on the merged tree before deploy ............ yes
+Pinned worktree advanced by explicit command, clean ......... yes
+Seat file rewritten, April text kept verbatim ............... yes
+Receipts committed beside verdicts .......................... yes
+
+--------------------------------------------------------------------------------
+8. CONTROLS
+--------------------------------------------------------------------------------
+Cheat control (watchdog): a healthy fake is NOT restarted; state shows
+  last_start_pid null. Passed.
+Positive control (watchdog): a fake that accepts TCP and never answers
+  is counted 1/3, 2/3, then stopped and replaced on tick 3; the
+  replacement answers on tick 4. Passed.
+Warm-up control: search.loading inside grace counts nothing. Passed.
+Token control: a wrong bearer yields "search http 401" and a failure,
+  so an "ok" line proves an AUTHENTICATED search answered. Passed.
+Identity: unregistered token 401; wrong agent header 401; read-only
+  write 403; machine and legacy tokens unchanged. Passed.
+Store guard: canonical expectation connects; fork expectation refuses
+  on the pool AND on the direct fallback. Passed.
+Battery E11 before the fix: 409 conflict_existing_row_differs -- the
+  battery anchored on the world's latest event, and read a stale ledger
+  copy. After: 200 inserted. The 409 was PEW refusing correctly.
+
+--------------------------------------------------------------------------------
+9. INDEPENDENT VERIFICATION
+--------------------------------------------------------------------------------
+Apollo #21 reported the hung state from outside my lane before I saw
+it; Pronoia #121 independently found the silent-on-success watchdog log
+from M2; Hermes #69 supplied the store-identity measurement and patch;
+Coeus #82 re-measured the 5432 LAN exposure from M2. None of them has
+yet verified the fixes; their acknowledgements are pending.
+
+--------------------------------------------------------------------------------
+10. KNOWN LIMITATIONS & CAVEATS
+--------------------------------------------------------------------------------
+- The 3-hour hang's mechanism is INFERRED from the reboot-time
+  measurements (80 s model load in a request thread, unlocked, hub
+  consulted), not observed with a stack dump while it was hung. The
+  fix removes the mechanism; it does not prove it was the only one.
+- The watchdog's present-but-dead restart has fired only in the test
+  harness, never on the live service.
+- The M2 watchdog still probes presence only; PROMETHEUS_ENV and the
+  success line deploy on M2 only when M2's checkout fetches these
+  commits. Not verified from M2 (no M2 session this pass).
+- Kairos's token is deliverable only on M1 today (host-local file).
+- The lineage battery's peer-engine gate is SKIP for want of
+  --peer-sfe-url; the closure gate C4 stays pinned (binds_session is
+  Daedalus's, prompt sent this morning).
+- Battery result files are tracked; a run from the pinned worktree
+  dirtied it once today (restored). MNE-37.
+- ew.typed_refs holds 84 rows with candidate_set_id NULL written by
+  another producer; not examined.
+- Archaeon's item 2 is PARTLY done: the evidence-graph edges for C3-2
+  and phase 2, the outbox demo, Aporia's rescued deck and the
+  vacuous-reading register are NOT indexed yet (next actions).
+- 10 distinct phase-2 artifacts were referenced; Archaeon's prompt
+  said 11. The eleventh is not on any completed queue row's locators.
+
+--------------------------------------------------------------------------------
+11. REPRODUCTION
+--------------------------------------------------------------------------------
+From a worktree of origin/main at or after b615280d3, in evidence_wiki/:
+
+  python -m pytest tests/test_watchdog.py tests/test_agent_identity.py \
+      tests/test_store_identity_guard.py -q          (Windows, live DB)
+  python integration/pew_battery.py                 (service on 8377)
+  curl -s http://127.0.0.1:8377/api/v1/health       (search.ready true)
+  tail -3 derived/watchdog.log                      (pinned worktree)
+  python ops/index_candidate_sets.py --candidate-set cs-h1h0-1-p2 \
+      --all-statuses --dry-run                      (62 unresolved rows)
+Spot-check the 403: POST /api/v1/fossil/encounters with the Kairos
+bearer and a well-formed body -> 403 "scopes ['read']".
+
+--------------------------------------------------------------------------------
+12. VERDICT / DECISION
+--------------------------------------------------------------------------------
+WATCHDOG_MEASURES_PROPERTY ..................... YES (deployed, 6/6)
+SERVICE_WARMS_AT_STARTUP ....................... YES (4.59 s, ready)
+KAIROS_READ_ONLY_IDENTITY ...................... YES (403 live)
+STORE_IDENTITY_GUARD ........................... YES (3/3, M2 untested)
+INDEX_ITEM_2_COMPLETE .......................... NO  (4 sub-items left)
+NOT_WORTH_CONTINUING ........................... no
+
+Conflicts of interest: the guard that caused the 3-hour hang was mine
+(this morning); the tests that exonerate its replacement are also mine.
+What would falsify this packet: one live tick that restarts a healthy
+service, or one hung interval longer than 15 minutes with an "ok" line
+inside it.
+
+Reviewer's bottom line: is a single bounded authenticated search the
+right productivity property for this service, or does it need a write
+path probe too?
+================================================================================
+END OF PACKET
+================================================================================

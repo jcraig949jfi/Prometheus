@@ -44,7 +44,21 @@ def connect(require_schema: bool = True):
     if str(REPO) not in sys.path:
         sys.path.insert(0, str(REPO))
     from evidence_wiki.ew import db as ewdb
+    from . import identity
     conn = ewdb.connect()
+    # IDENTITY before structure (D-24 amendment 1, on Hermes #68). The
+    # structural check below answers "is this a comms database"; this answers
+    # "is it OURS". They are different questions: a database given
+    # comms/schema.sql verbatim satisfies the structural check on any cluster
+    # (comms/tests/test_identity.py builds one and proves it). `init` runs
+    # with require_schema=False and is therefore covered by this line too,
+    # which is what makes `comms init` on an unregistered environment refuse
+    # instead of forking the queue.
+    try:
+        identity.require(conn, identity.current_environment())
+    except identity.WrongEnvironment:
+        conn.close()
+        raise
     if require_schema:
         cur = conn.cursor()
         cur.execute("select to_regclass(%s)", (schema() + ".messages",))

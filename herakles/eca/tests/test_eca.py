@@ -294,3 +294,92 @@ def test_the_published_T8_map_is_untouched_by_the_T9_fixture():
     with open(p8, encoding="utf-8") as fh:
         fx8 = json.load(fh)
     assert fx8["scope"]["steps"] == 8 and fx8["n_classes"] == 224
+
+
+# ---------------------------------------------------------------------------
+# block_output_score: the Capcarrere-Sipper-Tomassini 1996 convention.
+# Protocol: herakles/specimens/spec-capcarrere-r1-density/PROTOCOL.md.
+# These are the controls the protocol names; the footnote [13] replication
+# itself is a run, not a test.
+# ---------------------------------------------------------------------------
+
+def _T(n):
+    return (n + 1) // 2          # ceil(N/2)
+
+
+def test_positive_control_rule_184_and_226_are_perfect_by_theorem():
+    for variant in ("bernoulli", "uniform_density"):
+        for n in (7, 8, 21, 149, 150):
+            ics = eca.make_ics(200, n, 20260911, variant=variant)
+            for rule in (184, 226):
+                r = eca.block_output_score(rule, ics, _T(n))
+                assert r["score"] == 1.0, (variant, n, rule, r["score"])
+                assert r["n_eligible"] == 200
+
+
+def test_cheat_control_the_planted_answer_fires_the_detector_at_zero_steps():
+    for n in (7, 8, 149, 150):
+        targets = ("above", "below") + (("tie",) if n % 2 == 0 else ())
+        for t in targets:
+            cfg = eca.planted_block_configuration(n, t)
+            assert eca.block_output_correct(cfg, cfg).all(), (n, t)
+            # and through the scorer, under the identity rule
+            assert eca.block_output_score(204, cfg, 0)["score"] == 1.0
+
+
+def test_cheat_control_is_a_control_the_wrong_planted_block_is_refused():
+    """A 00 block on a >0.5 density must NOT count. Otherwise the cheat
+    control would pass for the wrong reason."""
+    cfg = eca.planted_block_configuration(149, "above").copy()   # 11 pair
+    wrong = 1 - cfg                                              # 00 pair,
+    # density of `wrong` is < 0.5 so it is correct AS a below case; force
+    # the mismatch by scoring the wrong final against the original IC.
+    assert not eca.block_output_correct(cfg, wrong).any()
+
+
+def test_negative_control_constant_rules_sit_on_the_floor_of_one_half():
+    ics = eca.make_ics(4000, 149, 20260911, variant="bernoulli")
+    d = eca.density(ics)
+    r0 = eca.block_output_score(0, ics, 75)
+    r255 = eca.block_output_score(255, ics, 75)
+    # rule 0 ends all-zero: correct exactly on the ICs below 0.5
+    assert r0["n_correct"] == int((d < 0.5).sum())
+    assert r255["n_correct"] == int((d > 0.5).sum())
+    assert r0["n_correct"] + r255["n_correct"] == 4000     # odd N, no ties
+    assert 0.45 < r0["score"] < 0.55
+
+
+def test_negative_control_identity_and_shifts_score_the_ic_itself():
+    ics = eca.make_ics(500, 149, 20260911, variant="bernoulli")
+    ident = eca.block_output_score(204, ics, 75)
+    assert ident["score"] < 0.02
+    for shift in (170, 240):
+        assert eca.block_output_score(shift, ics, 75)["n_correct"] == \
+            ident["n_correct"]
+
+
+def test_wrong_criterion_control_rule_184_fails_the_fixed_point_reading():
+    ics = eca.make_ics(500, 149, 20260911, variant="bernoulli")
+    fp = eca.uniform_at_T_score(184, ics, 75)
+    assert fp["score"] < 0.02
+    assert fp["n_eligible"] == 500
+
+
+def test_every_ic_is_eligible_including_ties_on_even_n():
+    ics = eca.make_ics(300, 8, 3, variant="bernoulli")
+    r = eca.block_output_score(184, ics, 4)
+    assert r["n_eligible"] == 300
+    ties = int((eca.density(ics) == 0.5).sum())
+    assert ties > 0                       # the tie branch was exercised
+    assert r["score"] == 1.0              # and rule 184 handles it
+
+
+def test_ic_variants_are_distinct_and_seeded():
+    a1 = eca.make_ics(100, 149, 1, variant="bernoulli")
+    a2 = eca.make_ics(100, 149, 1, variant="bernoulli")
+    b = eca.make_ics(100, 149, 1, variant="uniform_density")
+    assert (a1 == a2).all()
+    assert not (a1 == b).all()
+    assert eca.density(b).std() > 2 * eca.density(a1).std()
+    with pytest.raises(eca.EcaError):
+        eca.make_ics(10, 149, 1, variant="whatever")

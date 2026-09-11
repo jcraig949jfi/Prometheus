@@ -1,22 +1,34 @@
 {
  "candidate_set_id": "cs-c3-2",
- "indexed_at": "2026-09-10T12:16:34",
+ "indexed_at": "2026-09-11T14:54:15",
  "namespace": "prod",
  "command": "python ops/index_candidate_sets.py --candidate-set cs-c3-2 --namespace prod",
+ "all_statuses": false,
+ "workspace": {
+  "base_sha": "81ab7c7dc1bd767b05e3e1b528aad47c447de535",
+  "branch": "mnemosyne/baserole-adopt",
+  "worktree_path": "F:\\Prometheus-worktrees\\mnemosyne-baserole\\evidence_wiki",
+  "dirty": true
+ },
  "counts": {
   "rows_total": 150,
-  "rows_completed": 107,
-  "rows_skipped": 43,
-  "refs_inserted": 428,
-  "refs_duplicate_identical": 0,
+  "rows_completed": 149,
+  "rows_skipped": 1,
+  "rows_by_status": {
+   "completed": 149,
+   "failed": 1
+  },
+  "rows_indexed_non_completed": 0,
+  "refs_inserted": 168,
+  "refs_duplicate_identical": 428,
   "refs_conflict": 0,
   "refs_rejected": 0
  },
  "refs_by_kind": {
-  "EXPERIMENT": 107,
-  "OBSERVATION": 107,
-  "ENCOUNTER": 107,
-  "RECEIPT": 107
+  "EXPERIMENT": 149,
+  "OBSERVATION": 149,
+  "ENCOUNTER": 149,
+  "RECEIPT": 149
  },
  "artifacts_present": 0,
  "rows_with_unresolved_references": [],
@@ -29,5 +41,5 @@
   "reproduction_state": "benchmark-attempted for a completed executed row"
  },
  "reference_only": "every digest is engine-supplied on the queue row; no scientific bytes were read, copied or recomputed",
- "seconds": 146.5
+ "seconds": 15.8
 }

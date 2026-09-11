@@ -1,5 +1,5 @@
 {
- "ran_at": "2026-09-11T03:40:02",
+ "ran_at": "2026-09-11T14:49:43",
  "host": "127.0.0.1",
  "machine": "M1",
  "service": {
@@ -8,24 +8,30 @@
   "schema_version": 4,
   "ontology_version": 2,
   "fossil_contract": "pew.fossil.v2",
+  "uptime_s": 306.8,
+  "search": {
+   "ready": true,
+   "loading": false,
+   "error": null,
+   "load_seconds": 4.59,
+   "loaded_at": "2026-09-11T14:44:41"
+  },
   "workspace": {
-   "base_sha": "7c36278f2363b84b8245c24f3ade1d71231c67ad",
+   "base_sha": "e301547dd32d083903a4a727944daac663ea06a5",
    "branch": "HEAD",
    "worktree_path": "F:\\Prometheus-worktrees\\mnemosyne-pew\\evidence_wiki",
-   "dirty": true,
+   "dirty": false,
    "main_worktree": false
   }
  },
- "n_scored": 11,
- "n_pass": 11,
- "skipped": [
-  "A_hash_semantics"
- ],
+ "n_scored": 12,
+ "n_pass": 12,
+ "skipped": [],
  "all_pass": true,
  "bound_evidence_id": "E-6f1fd58b5a5a",
  "fixture_encounter": "TESTFIX-HARMONIA-ENC-0002",
  "fixture_run": "TESTFIX-RUN-0002",
- "real_sfe_encounter": null,
+ "real_sfe_encounter": "SEAM-evt_690daf98a741067be25d9641",
  "gates": [
   {
    "gate": "I_live_migration_state",
@@ -35,9 +41,9 @@
   },
   {
    "gate": "A_hash_semantics",
-   "pass": false,
-   "skipped": true,
-   "detail": "no SFE ledger available"
+   "pass": true,
+   "skipped": false,
+   "detail": "sanctioned event entry_hash+event_id -> 200; wrong-class unpaired {'blob_hash': 422, 'artifact_id': 422, 'world_head_hash': 422}; bad hash shape -> 422; non-evt event_id -> 422"
   },
   {
    "gate": "B_evidence_to_fossil_traversal",
@@ -79,7 +85,7 @@
    "gate": "G_namespace_firewall",
    "pass": true,
    "skipped": false,
-   "detail": "test/seam rows in prod fossil namespace: 0; prod encounters still 5887; seam evidence rows visible in ew.evidence_prod: 0 (must be 0); classification=['test']"
+   "detail": "test/seam rows in prod fossil namespace: 0; prod encounters still 5978; seam evidence rows visible in ew.evidence_prod: 0 (must be 0); classification=['test']"
   },
   {
    "gate": "G2_unknown_namespace_refused",

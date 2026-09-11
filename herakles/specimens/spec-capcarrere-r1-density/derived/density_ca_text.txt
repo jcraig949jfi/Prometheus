@@ -1,0 +1,293 @@
+VOLUME 77, NUMBER 2 4 PHYSICAL REVIEW LETTERS 9D ECEMBER 1996
+Two-state, r 5 1 Cellular Automaton that Classiﬁes Density
+Mathieu S. Capcarrere,* Moshe Sipper,* and Marco Tomassini*,†
+Logic Systems Laboratory, Swiss Federal Institute of Technology,
+IN-Ecublens, CH-1015 Lausanne, Switzerland
+(Received 26 August 1996)
+It has recently been shown that no one-dimensional, two-state cellular automaton can classify binary
+strings according to whether their density of 1s exceeds 0.5 or not. We show that by changing
+the output speciﬁcation, namely, the ﬁnal pattern toward which the system should converge, without
+increasing its computational complexity, a two-state,r ­ 1 cellular automaton exists that can perfectly
+solve the density problem. [S0031-9007(96)01847-9]
+PACS numbers: 89.80.+h, 02.70.Rw, 07.05.Bx
+Cellular automata (CA) are discrete, dynamical systems
+that perform computations in a distributed fashion on a
+spatially extended grid. A cellular automaton consists
+of an array of cells, each of which can be in one of a
+ﬁnite number of possible states, updated synchronously
+in discrete time steps according to a local, identical
+interaction rule.
+The dynamical behavior of a CA may give rise to emer-
+gent computation, referring to the appearance of global
+information processing capabilities that are not explic-
+itly represented in the system’s elementary components
+or in their local interconnections [1]. As such, they offer
+an austere yet versatile model for studying natural phe-
+nomena, as well as a powerful paradigm for attaining ﬁne-
+grained, massively parallel computation.
+An example of such emergent computation is to use a
+CA to determine the global density of bits in an initial
+state conﬁguration. Known as the density classiﬁcation
+problem, the one-dimensional, two-state CA is presented
+with an arbitrary initial conﬁguration, and should con-
+verge in time to a state of all1s if the initial conﬁguration
+contains a density of1s .0.5, and to all0s if this den-
+sity ,0.5; for an initial density of0.5, the CA’s behavior
+is undeﬁned. Spatially periodic boundary conditions are
+used, resulting in a circular grid.
+It has been shown that for a one-dimensional grid of
+ﬁxed size N, and for a ﬁxed radius r $ 1 [2], there
+exists no two-state CA rule which correctly classiﬁes
+all possible initial conﬁgurations [3]; this says nothing,
+however, about how well an imperfect CA might perform.
+One such CA, known as the GKL rule [4], can correctly
+classify approximately 82% out of a random sample
+of initial conﬁgurations, for a grid of size N ­ 149
+[5]. Recently, researchers have focused on the use of
+artiﬁcial evolution techniques, demonstrating that high-
+performance (though imperfect) CAs can be evolved to
+solve this problem [5–8].
+The density classiﬁcation problem studied to date speci-
+ﬁes convergence to one of two ﬁxed-point conﬁgurations,
+which are considered as the output of the computation.
+The main result of this paper is that a perfect CA density
+classiﬁer exists, upon deﬁning a different output speciﬁ-
+cation. Consider the two-state, r ­ 1 rule 184 CA [9],
+deﬁned as follows:
+s
+ist 1 1d ­
+(
+si21std ,i f sistd ­ 0,
+si11std ,i f sistd ­ 1,
+where sistd is the state of cell i at time t. Upon
+presentation of an arbitrary initial conﬁguration, the grid
+relaxes to a limit cycle, within dNy2e time steps, that
+provides a classiﬁcation of the initial conﬁguration’s
+density of 1s: If this density .0.5 (respectively, ,0.5),
+then the ﬁnal conﬁguration consists of one or more blocks
+of at least two consecutive 1s( 0s), interspersed by an
+alternation of 0s and 1s; for an initial density of exactly
+0.5, the ﬁnal conﬁguration consists of an alternation of0s
+and 1s. The computation’s output is given by the state
+of the consecutive block (or blocks) of same-state cells
+(Fig. 1); as proved in this paper, this rule performs perfect
+density classiﬁcation (including the density­ 0.5 case).
+We note in passing that the reﬂection-symmetric rule226
+holds the same properties of rule184 studied below.
+As the input conﬁguration is random, this entails a high
+Kolmogorov complexity; intuitively, for a given ﬁnite
+string, this measure concerns the size of the shortest
+program that computes the string [10]. Both the ﬁxed-
+point output of the original problem, as well as our own
+“blocks” output, involve a notable reduction with respect
+to this complexity measure. It has been noted by [8]
+that the computational complexity of the input is that of
+a nonregular language since a counter register is needed
+whose size is proportional to lnsNd, whereas the ﬁxed-
+point output of the original problem involves a simple
+regular language (all 0s or all 1s) [11]; we note that
+our novel output speciﬁcation also involves a regular
+language (a block of two state-0 or state-1 cells). We
+thus conclude that our newly proposed density classiﬁer
+is as viable as the original one with respect to these
+complexity measures, while surpassing the latter in terms
+of performance.
+In the remainder of this paper we prove rule 184’s
+ability to perfectly classify density. Throughout, we
+0031-9007y 96y77(24)y4969(3)$10.00 © 1996 The American Physical Society 4969
+Draft
+VOLUME 77, NUMBER 2 4 PHYSICAL REVIEW LETTERS 9D ECEMBER 1996
+FIG. 1. Density classiﬁcation: Demonstration of rule 184 on
+four initial conﬁgurations. White squares represent cells in
+state 0, black squares represent cells in state 1. The pattern
+of conﬁgurations is shown for the ﬁrst 200 time steps, with
+time increasing down the page. Initial conﬁgurations in (a)–
+(c) were randomly generated. (a) Grid size is N ­ 149.
+DsssSs0dddd ­ 0.497, i.e., 75 cells are in state 0, and 74 are
+in state 1. The ﬁnal conﬁguration consists of an alternation
+of 0s and 1s with a single block of two cells in state 0.
+(b) N ­ 149. DsssSs0dddd ­ 0.537. The ﬁnal conﬁguration
+consists of an alternation of0s and 1s with several blocks of
+two or more cells in state1. (c) N ­ 150. DsssSs0dddd ­ 0.5.
+The ﬁnal conﬁguration consists of an alternation of 0s and
+1s. (d) N ­ 149. Initial conﬁguration consists of a block of
+37 zeros, followed by 37 ones, followed by 37 zeros, ending
+with 38 ones. The ﬁnal conﬁguration consists of an alternation
+of 0s and 1s with a single block of two cells in state1. In all
+cases the CA correctly classiﬁes the initial conﬁguration.
+assume that cellular indices are computed modulus the
+grid sizeN (grid is circular), and that they are in the range
+h0, . . . ,N 2 1j; for brevity we omit this range hereafter.
+Theorem.—For a ﬁnite-size CA of size N, let Sstd ­
+hs0std,..., sN21stdj be the grid conﬁguration at time step
+t, letDssshsistd,..., si1k21stdjddd be the density of1s at time
+t over a block ofk cells at positionshi,..., i 1 k 2 1j,
+and letT ­ dNy2e. Then note the following.
+(1) If DsssSs0dddd . 0.5, then (a) there exists a pair of
+adjacent cellsi, i 1 1 such thatsisTd ­ 1 and si11sTd ­
+1, and (b) for alli, sisTd ­ 0 ) si11sTd ­ 1.
+(2) If DsssSs0dddd , 0.5, then (a) there exists a pair of
+adjacent cellsi, i 1 1 such thatsisTd ­ 0 and si11sTd ­
+0, and (b) for alli, sisTd ­ 1 ) si11sTd ­ 0.
+(3) IfDsssSs0dddd ­ 0.5, then for alli, sisTd ﬁ si11sTd.
+The proof of this theorem involves four lemmas, proved
+below.
+Lemma 1.—For a ﬁnite-size CA of size N, DsssSst 1
+1dddd ­ DsssSstdddd, t [ h0, 1, . . .j.
+Proof—Application of the transition rule to
+Sstd ­ 0N or Sstd ­ 1N yields Sst 1 1d ­ 0N or
+Sst 1 1d ­ 1N , respectively. Taking note of the grid’s
+circularity, any other conﬁguration Sstd can be ex-
+pressed as 1a1 0b1 ,...,1 an 0bn , where n $ 1, ai, bi . 0,
+i [ h1 ,..., nj, and
+Pn
+i­1 ai 1 bi ­ N. It follows di-
+rectly from the rule’s deﬁnition that a block1ai 0bi at time
+t is transformed into1ai 21010bi 21 at time t 1 1. Thus,
+each such block conserves its density over one time step
+and the lemma is proven [12].
+Corollary 1.1. —For a ﬁnite-size CA of size N,
+DsssSst 1 1dddd ­ DsssSs0dddd, t [ h0, 1, . . .j.
+Proof.—Follows directly from lemma 1 by recursive
+application.
+Lemma 2.—Given a block x0a1by, x, y [ h0, 1j, 2 #
+a, b# N 2 2, at time t, beginning at cell i (i.e., cell
+i is the block’s leftmost cell), then at timet 1y , y ­
+minsa, bd 2 1, and beginning at celli 1y : (1) Ifa.b
+there is a blockx0a2b111y. (2) Ifb.a there is a block
+x01b2a11y. (3) If a ­ b there is a blockx01y.
+Proof.—Applying the transition rule to a blockx0a1by
+at time t, beginning at celli, results at timet 1 1 in a
+block x0a211b21y beginning at cell i 1 1. By simple
+recursion, at time t 1 u, u # minsa, bd 2 2, there is a
+block x0a2u1b2uy, beginning at celli 1 u.
+Consider the casea.b , and letu ­ b2 2. At time
+t 1 u, there is a block x0a2b1212y, beginning at cell
+i 1 u. Applying the transition rule results at the next
+time step, t 1y , y ­ b2 1, in a block x0a2b111y,
+beginning at cell i 1y . The case b.a follows
+analogously.
+For a ­ b, at timet 1b2 2 there is a blockx0212y,
+beginning at cell i 1b2 2, which yields a block
+x01y at the next time step, beginning at celli 1b2 1
+s­ i 1y d.
+Lemma 3.—Given a block 0a (respectively, 1a), 1 #
+a# N, at timet beginning at celli, then at timet 2 u,
+u # t, there was a block0a s1ad beginning at celli 2 u
+si 1 ud.
+Proof.—By contradiction (we prove the 0a case, with
+the 1a case following analogously). Suppose at time
+t 2 1 there existsj [ hi 2 1 ,..., i 1a2 2j, such that
+sjst 2 1d ­ 1. Given that sj11std ­ 0, this implies that
+sj11st 2 1d ­ 1 and sj12st 2 1d ­ 0; however, this re-
+sults in sjstd ­ 1 and sj12std ­ 1, at least one of which
+must be within the0a block beginning at celli, thus con-
+tradicting the assumption. Therefore, at timet 2 1 there
+is a block0a beginning at celli 2 1; the lemma is proven
+by recursively applying this argument.
+Lemma 4.—For a ﬁnite-size CA of size N, no two
+blocks 0a and 1b, 2 #a , b# N 2 2, can coexist at
+time dNy2e.
+4970
+VOLUME 77, NUMBER 2 4 PHYSICAL REVIEW LETTERS 9D ECEMBER 1996
+Proof.—By contradiction. If two blocks 0a and 1b
+coexist at time dNy2e, then by lemma 3 they coexisted
+at time 0 (each shifted bydNy2e cells). This means that
+over the dNy2e time steps the blocks had been displaced
+by one cell per time step, the 0a block “moving” to
+the right, the 1b block moving to the left. Thus, both
+blocks would “meet” afterdsssN 2 sa1b ddddy2e time steps
+at the latest, satisfying the conditions of lemma 2. This
+implies that, at most, one block would remain after
+[sssN 2 sa1b ddddy2 1 minsa, bd 2 1] time steps. This
+latter expression,dNy2e, thus proving the lemma.
+Theorem proof.—According to corollary 1.1, the den-
+sity of the initial conﬁguration is preserved at each succes-
+sive time step. According to lemma 4, afterdNy2e steps
+only 0a or 1b blocks exist, 2 #a , b# N 2 2, but not
+both (except for density­ 0.5, where no such block ex-
+ists). This means that the “correct” block must exist, with
+no occurrence of the “incorrect” one, thereby proving the
+theorem. We also note that after dNy2e time steps the
+number of cells in state1 short (respectively, in excess) of
+b0.5Nc is given bys
+Pm
+i­1 aid 2 m, wherem is the number
+of 0ai s1ai d blocks, andai are their respective sizes.
+Note that in order to “read” the output one can either
+terminate the CA’s execution afterdNy2e time steps, or,
+alternatively, let it continue running (for a maximum of
+N 2 1 additional time steps) until the (cycling) two-cell,
+same-state block arrives at two predetermined cells.
+Are there any other density classiﬁers in the two-state,
+r ­ 1 class of CAs? Our experimental results suggest
+that rules 184 and 226 are the only ones that perform
+perfect density classiﬁcation with respect to the output
+speciﬁcation discussed in this paper [13].
+In summary, we have shown that a locally speci-
+ﬁed, r ­ 1 CA of any ﬁnite size N can classify
+the global density of bits for an arbitrary initial
+state conﬁguration. It has previously been deter-
+mined that this problem cannot be resolved by
+two-state CAs of any radius, if one insists on a
+ﬁxed-point output. By changing the output speci-
+ﬁcation, without increasing its complexity, perfect den-
+sity classiﬁcation can be attained. It is interesting that
+the system giving rise to this (difﬁcult) emergent com-
+putation exists in the simplest class of one-dimensional
+CAs, namely, two-state, r ­ 1. This raises the intrigu-
+ing question of whether other such simple CAs exist,
+which, while not capable of universal computation, may
+nonetheless prove highly efﬁcient in solving speciﬁc
+tasks.
+We are grateful to Daniel Mange and Jacques Zahnd
+for helpful discussions and their careful reading of this
+manuscript.
+*Electronic address of authors: {name.surname}@
+di.epfl.ch
+†Also at the Swiss Scientiﬁc Computing Center, Via
+Cantonale, CH-6928 Manno, Switzerland.
+[1] Emergent Computation: Self-organizing, Collective, and
+Cooperative Phenomena in Natural and Artiﬁcial Com-
+puting Networks, edited by S. Forrest (MIT Press, Cam-
+bridge, MA, 1991).
+[2] In a one-dimensional CA, each cell has2r 1 1 neighbors
+(r cells on either side, as well as itself), wherer is referred
+to as the radius.
+[3] M. Land and R. K. Belew, Phys. Rev. Lett. 74, 5148
+(1995).
+[4] P. Gacs, G. L. Kurdyumov, and L. A. Levin, Probl. Pereda.
+Inf. 14, 92 (1978).
+[5] D. Andre, F. H. Bennett III, and J. R. Koza, inGenetic
+Programming 1996: Proceedings of the First Annual
+Conference, edited by J. R. Koza, D. E. Goldberg, D. B.
+Fogel, and R. L. Riolo (MIT Press, Cambridge, MA,
+1996), pp. 3–11.
+[6] M. Sipper and E. Ruppin, Physica D (Amsterdam) (to be
+published).
+[7] M. Sipper, Physica (Amsterdam)92D, 193 (1996).
+[8] M. Mitchell, J. P. Crutchﬁeld, and P. T. Hraber, Physica
+(Amsterdam) 75D, 361 (1994).
+[9] Rule numbers are given in accordance with Wolfram’s
+convention, see S. Wolfram, Rev. Mod. Phys. 55, 601
+(1983).
+[10] M. Li and P. Vitányi, An Introduction to Kolmogorov
+Complexity and its Applications (Springer-Verlag, New
+York, 1993).
+[11] J. E. Hopcroft and J. D. Ullman,Introduction to Automata
+Theory Languages and Computation (Addison-Wesley,
+Redwood City, CA, 1979).
+[12] A different proof of this lemma, studied in a more general
+framework, is given by T. Hattori and S. Takesue, Physica
+(Amsterdam) 49D, 295 (1991).
+[13] Each of the256 two-state, r ­ 1 CA rules was tested on
+1000 randomly generated initial conﬁgurations for a grid
+of size N ­ 149, where a correct output is considered
+to be that speciﬁed by the theorem. As expected,
+rules 184 and 226 yielded a success rate of 100%,
+followed by rules 57 and 99 trailing markedly behind at
+60%. Interestingly, these latter two rules produce patterns
+that are visually similar to rules184 and 226; however;
+the simple aforementioned test reveals their complete
+inadequacy.
+4971

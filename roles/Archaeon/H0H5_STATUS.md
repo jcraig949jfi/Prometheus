@@ -1,9 +1,17 @@
 # H0–H5 status — compact, from receipts only
 
-Maintained by Archaeon. Updated 2026-09-11 ~04:00 (conformance gate WIRED and demonstrated). Review packet: `roles/Archaeon/REVIEW_PACKET_2026-09-10.md`. Delegation: `roles/Archaeon/prompts/2026-09-10_tracks/` (Tracks A-E from the operator's Chimera brief; three corrections verified: sqrt(6) counterexample, client_id retention gap, XOR-injection non-conservation). Design v0.1
+Maintained by Archaeon. Updated 2026-09-11 ~18:20 UTC (cs-h5-1-r1 issued; rule 10 adopted). Review packet: `roles/Archaeon/REVIEW_PACKET_2026-09-10.md`. Delegation: `roles/Archaeon/prompts/2026-09-10_tracks/` (Tracks A-E from the operator's Chimera brief; three corrections verified: sqrt(6) counterexample, client_id retention gap, XOR-injection non-conservation). Design v0.1
 (`roles/Archaeon/prompts/2026-09-08_h0h5/DESIGN_H0_H5_v0.1.md`). Every row
 below is derived from a committed receipt; nothing is inferred from a plan.
 Baseline: `archaeon/docs/h0h5/BASELINE_2026-09-09.json`.
+
+
+## 2026-09-11 ~18:20 UTC: cs-h5-1-r1 ISSUED on the measured engine property; rule 10 adopted; ARCH-31 closed
+
+- **ARCH-28**: the 24 transport-failed H5-1 rules reissued as `cs-h5-1-r1` at 18:12 UTC (engine CONFORMANT at every tick since 16:42 and at a manual gate 18:11; Daedalus never replied on #35/#41 -- the property, not the label, closed the gate). Rows QUEUED; the Vivarium consumer has no heartbeat since 17:30 UTC and no process on M1; reported to Vivarium, not started. Two first attempts (H5-1-245/246) failed after commit and stay as their own record; the readout dedups by spec_hash and names the attempt read. Receipt: `archaeon/docs/h0h5/H5_1_R1_ISSUE_RECEIPT_2026-09-11.json`.
+- **Base rule 10 (D-27)** adopted from Atalanta #86/#97: BOUND / ACCOUNTABLE SEAT columns on every MONITORS row; 12 ACTIVE rows UNDECLARED with a downward-only ratchet in the self-test; ArchaeonTick declared at 96 ticks (enforcement ARCH-33). **D-28** (producer-declaration) OPENED for the operator with a registry-form recommendation. **D-29**: keys.py gitignored vs D-23 ruled a constitution defect (s11); the mandate is suspended pending the operator's look at one literal (Eos P0-a). `roles/base-role/WAKE_DIRECTIVE.md` for the operator to paste (Hypatia #90). **D-24 amendment 2**: Hermes's convergence primitive promoted narrowly as a library; home comms/incidents/.
+- **ARCH-31 CLOSED**: identity guard accepted; the fork-side tests key the fork by hostname and are red on M1 (5/24), filed to Hermes.
+- **Eos #79** answered as referent owner: REFUSE (2609.09776 does not change "No LLM adjudicates"). **Coeus #84**: hygiene invariant stays residue; ARCH-34 makes it the preflight for the first informed policy.
 
 ## Iteration 1 — COMPLETE on every seat (2026-09-09); the H0/H1 gate is open
 

@@ -1,0 +1,1068 @@
+Co ev olving the /n5cIdeal/" T rainer/: Application to the
+Disco v ery of Cellular Automata Rules
+Hugues Juill /n13 e
+Computer Science Departmen t
+Brandeis Univ ersit y
+W altham/, Massac h usetts /0/2/2/5/4/-/9/1/1/0/, USA
+h ugues/@cs/.brandeis/.edu
+Jordan B/. P ollac k
+Computer Science Departmen t
+Brandeis Univ ersit y
+W altham/, Massac h usetts /0/2/2/5/4/-/9/1/1/0/, USA
+p ollac k/@cs/.brandeis/.edu
+ABSTRA CT
+Co ev olution pro vides a frame/-
+w ork to implemen t searc h heuris/-
+tics that are more elab orate than
+those driving the exploration of
+the state space in canonical ev olu/-
+tionary systems/. Ho w ev er/, some
+dra wbac ks ha v e also to be o v er/-
+come in order to ensure con tin/-
+uous progress on the long term/.
+This pap er presen ts the concept
+of co ev olutionary learning and in/-
+tro duces a searc h pro cedure whic h
+successfully addresses the underly/-
+ing imp edimen ts in co ev olutionary
+searc h/. The application of this al/-
+gorithm to the disco v ery of cellu/-
+lar automata rules for a classi/n0cca/-
+tion task is describ ed/. This w ork
+resulted in a signi/n0ccan t impro v e/-
+men t o v er previously kno wn b est
+rules for this task/.
+/1 In tro duction
+Some problems are di/n0ecult b ecause solutions ha v et o b e
+ev aluated against a v ery large n um b er of test cases in or/-
+der to determine their score accurately /. The disco v ery of
+game strategies and learning con trol pro cedures for au/-
+tonomous agen ts are a few examples of suc h problems/.
+T o mak e learning tractable/, solutions can be ev aluated
+only with resp ect to a training en vironmen t comp osed
+of a subset of all the test cases/. F or suc h problems/, a
+common approac h in mac hine learning consists in de/-
+signing a /n0cxed training en vironmen t/. Usually /, a signi/n0c/-
+can t amoun to fk n o wledge ab out the problem is explic/-
+itly in tro duced b y the designer in that stage/. Then/, the
+learning algorithm follo ws the gradien t implemen ted in
+the training en vironmen t/. Ho w ev er/, the p erformance of
+solutions relies hea vily on this training en vironmen t and
+on the searc h pro cedure to explore the state space/. If
+little kno wledge is a v ailable or if it is is di/n0ecult to in/-
+tro duce in the training en vironmen t/, the p erformance of
+the system is v ery limited/.
+Co ev olution is an alternativ e to get around that prob/-
+lem in the sense that the training en vironmen t for learn/-
+ers do esn/'t ha v e to b e designed explicitly /. In co ev olution/,
+the p erformance of individuals is ev aluated with resp ect
+to other mem b ers of the p opulation/, resulting in a dy/-
+namic /n0ctness landscap e/. The coun ter part is to ensure
+that the c hanging en vironmen t do es pro vide useful in/-
+formation to driv e the searc ht o w ards go o d solutions/. In
+this pap er/, w e de/n0cne c o evolutionary le arning as a frame/-
+w ork in whic h a p opulation of learners co ev olv e with a
+p opulation of problems suc h that c ontinuous pr o gr ess re/-
+sults from this in teraction/. By con tin uous progress/, w e
+mean that learners are able to solv e an increasing range
+of problems /n28and ev en tually the en tire set of problems
+that comp ose the task/n29/. Ho w ev er/, m ultiple reasons can
+prev en t suc h a system from con tin uously impro ving it/-
+self/. In the literature/, at least t w o suc h reasons ha v e
+b een recognized/. The /n0crst one/, named the Red Queen
+e/n0bect/, comes from the fact that individuals are ev aluated
+i nac hanging en vironmen t/. As a result/, they tend to sp e/-
+cialize with resp ect to the curren t training en vironmen t
+and they tend to forget some of the traits they learn t
+some generations earlier b ecause the relev an t test cases
+for those traits are no longer presen t in the curren t train/-
+ing en vironmen t/. Later/, if those test cases reapp ear/, the
+agen ts ha v e to learn again the appropriate traits/. The
+second reason is that the co ev olving agen ts can en ter a
+medio cre stable or meta/-stable state in whic han um be r
+of a v erage p erformance sp ecies co exist in the p opulation
+in a stable manner/. In this situation/, there is no driving
+force for agen ts to ev olv e/. An y sligh t alteration of an
+individual in one sp ecies results in no impro v emen to r a
+smaller p erformance/.
+In the researc h literature/, Hillis/' w ork mark ed an im/-
+p ortan t step b y sho wing that co ev olution can b e used to
+impro v e searc h p erformance /n28Hillis /1/9/9/2/n29/. In his w ork/, a
+p opulation of sorters /n28the hosts/n29 co ev olv e with input v ec/-
+tors /n28the parasites/n29/. The goal of sorters is to construct se/-
+quences of comparator/-sw aps that sort the input v ectors
+that are prop osed b y the parasites while parasites searc h
+for input v ectors that are di/n0ecult to sort/. In a sense/,
+this can be seen as an implemen tation of a co v erage/-
+based heuristic/: a construction is sough t that sorts cor/-
+rectly ev ery p ossible input v ector/, th us resulting in a
+sorting net w ork/. This heuristic adaptiv ely fo cuses the
+searc h for solving problem instances /n28i/.e/./, input v ectors/n29
+that are the most di/n0ecult for the p opulation of net w orks/.
+This w ork has b een follo w ed b y others using b oth com/-
+p etitiv e and co op erativ e mo dels of co ev olution/. F or in/-
+stance/, Husbands implemen ted a mo del similar to Hillis/'
+to address a generalized v ersion of the job/-shop sc hedul/-
+ing problem /n28Husbands /1/9/9/4/n29/. P aredis /n28P aredis /1/9/9/6/n29
+used comp etition b et w een a p opulation of solutions and
+a p opulation of problems as a searc h strategy for applica/-
+tions in inductiv e learning /n28P aredis /1/9/9/4 b /n29 and constrain t
+satisfaction problems /n28P aredis /1/9/9/4 a /n29/. Pursuer/n2fev ader
+games ha v e also b een used as a test problem for re/-
+searc h in co ev olution/. In particular/, Cli/n0b and Miller
+/n28Cli/n0b and Miller /1/9/9/5/, Cli/n0b and Miller /1/9/9/6/n29 dev elop ed
+sev eral to ols to trac k progress and detect loss of traits re/-
+sulting from the Red Queen e/n0bect/. Sims/' blo c k/-creatures
+/n28Sims /1/9/9/4/n29 and Reynolds/' exp erimen ts with the game
+of tag /n28Reynolds /1/9/9/4/n29 are also t w o successful applica/-
+tions of comp etitiv e ev olution/. Rosin/'s w ork on co ev o/-
+lutionary learning /n28Rosin /1/9/9/7/n29 addresses the di/n0beren t
+issues related to comp etitiv ee v olution in the con text of
+adv ersarial problems /n28e/.g/./, game strategies/n29/. The goal
+of this w ork is to de/n0cne a framew ork for co ev olutionary
+searc h that results in con tin uous progress on the long
+term/. In a theoretical analysis /n28Rosin and Belew /1/9/9/6/n29/,
+Rosin and Belew describ ed a co ev olutionary en vironmen t
+and pro v ed it allo ws the disco v ery of p erfect game strate/-
+gies/.
+Co op erativ e mo dels of co ev olution ha v e also b een im/-
+plemen ted/. Suc h mo dels ha v e b een used for function op/-
+timization /n28P otter and De Jong /1/9/9/4/n29 and for the design
+of con trol systems /n28P otter et al/. /1/9/9/5/n29/. Another applica/-
+tion is the searc h of a space of problem decomp ositions
+to construct mo dular solutions /n28P otter /1/9/9/7/, Moriart y
+/1/9/9/7/n29/. F ollo wing a di/n0beren t trac k/, P aredis /n28P aredis /1/9/9/5/n29
+designed a mo del exploiting a sym biotic relationship to
+co ev olv e solutions and their represen tation/.
+In this pap er/, w e in tro duce a framew ork whic h ad/-
+dresses the imp edimen ts related to co ev olution just dis/-
+cussed and whic h do es result in con tin uous impro v emen t/.
+Co ev olutionary learning is based on the con trolled ev o/-
+lution of the training en vironmen t in resp onse to the
+impro v emen t of the learners/. The goal is to disco v er
+the /n5cb est/" training en vironmen t/, giv en the p opulation
+of learners/, hence the name of our approac h/: /n5cco ev olv/-
+ing the /n5cideal/" trainer/"/. The application of this sys/-
+tem to a di/n0ecult problem/, namely the disco v ery of cel/-
+lular automata rules to implemen t the ma jorit y classi/n0c/-
+cation task/, is describ ed/. Signi/n0ccan tly b etter results are
+ac hiev ed b y the co ev olutionary approac h compared to
+previously kno wn solutions to that problem/.
+This pap er is organized as follo ws/. First/, our new co/-
+ev olutionary searc h pro cedure is describ ed and the un/-
+derlying heuristics exploited b y this algorithm are iden/-
+ti/n0ced/. Then/, section /3 presen ts cellular automata and
+the problem of ev olving rules to implemen t a particular
+classi/n0ccation task/. Section /4 describ es the application
+of our co ev olutionary approac h to this problem/, follo w ed
+b y exp erimen tal results in section /5/.
+/2 Co ev olving the /n5cIdeal/" T rainer
+As it w as discussed b efore/, the main issues w ew an tt o
+address are ho w to escap e from medio cre stable or meta/-
+stable states and ho wt oa v oid the Red Queen e/n0bect/.
+/2/./1 Description
+Since the space of problems to whic h learners can be
+exp osed is h uge/, learners can b e ev aluated only against a
+subset of the problems/. Therefore/, the goal is to disco v er
+learners that are able to generalize to unseen problem
+instances after they ha v e b een exp osed to this sample/.
+The cen tral idea of the co ev olutionary learning ap/-
+proac h presen ted in this pap er consists in exp osing learn/-
+ers to problems that are just be y ond those they kno w
+ho w to solv e/. By main taining this constan t pressure
+to w ards sligh tly more di/n0ecult problems/, a arms race
+among learners is induced suc h that learners that adapt
+b etter ha v ea n e v olutionary adv an tage/. The underlying
+heuristic implemen ted b y this arms race is that adapt/-
+ability is the driving force for impro v emen t/. In order to
+ac hiev e this result/, our searc h algorithm tries to satisfy
+the follo wing t w o goals/:
+/n0f to pro vide an /n5coptim um/" gradien t for searc h/. This
+means that the training en vironmen t de/n0cned b y the
+p opulation of problems can determine reliably whic h
+learners are the most promising at eac h stage of the
+searc h pro cess/. This means that problems m ust b e
+informativ e/. If problems are to o di/n0ecult/, n o bod y
+can solv e them/. On the con trary /, if they are to o
+easy /, ev eryb o dy can solv e them/. In b oth of those
+cases/, learners get little feedbac k and there is no
+gradien t to determine in whic h direction the searc h
+should fo cus/.
+/n0f to allo w con tin uous progress/. The goal is to a v oid
+the Red Queen e/n0bect b y pro viding a training en/-
+vironmen t whic h con tin ues to test learners ab out
+problems they solv ed in the past/. In a sense/, the
+training en vironmen t m ust also pla y the role of
+memory /.
+The di/n0ecult y resides in the accurate implemen tation of
+those concepts in a searc h algorithm/. So far/, our metho d/-
+ology to implemen t suc h a system consists in the con/-
+struction of an explicit top ology o v er the space of prob/-
+lems b y de/n0cning a partial order b et w een problems/. This
+partial order is de/n0cned with resp ect to the relativ e di/n0e/-
+cult y of problems among eac h other/. In our curren tw ork/,
+the concept of /n5crelativ e di/n0ecult y/" has b een de/n0cned b y
+exploiting some a priori kno wledge ab out the global task
+and is task/-sp eci/n0cc/. The de/n0cnition of this top ology o v er
+the space of problems mak es p ossible the implemen tation
+of the t w o goals to ac hiev ec o e v olutionary learning/:
+/n0f since learners can be ev aluated against a kno wn
+range of di/n0ecult y for problems/, it is p ossible to mea/-
+sure their progress and to exp ose them to problems
+that are just a little more di/n0ecult/. Ho w ev er/, this
+last op eration also requires the de/n0cnition of a dis/-
+tance measure in order to formalize the concept of
+/n5ca little more di/n0ecult/"/. Indeed/, the top ology o v er
+the space of problems is indep enden t of the top ol/-
+ogy o v er the space of learners/. The distance b et w een
+t w o problems with resp ect to their relativ e di/n0ecult y
+is not necessarily a direct mapping with the proba/-
+bilit y for a learner that solv es only one of them to
+adapt in order to solv e b oth problems/. In practice/,
+sev eral de/n0cnitions migh t b e tested and some tuning
+is required to get the appropriate result/.
+/n0f the progress of learners can b e monitored indirectly
+b y tracing the ev olution of problems to w ards in/-
+creased di/n0ecult y /. Con v ersely /, the ev olution in prob/-
+lems di/n0ecult y is con trolled b y the ev olution of the
+p erformance of learners/. Th us/, the ev olution of the
+training en vironmen t can b e con trolled suc h that the
+Red Queen e/n0bect is prev en ted /n28or at least suc h that
+its e/n0bect is limited/n29/.
+In the future/, our goal is to eliminate some of those
+explicit comp onen ts b yi n tro ducing some heuristics that
+automatically iden tify problems that are appropriate for
+the curren t set of learners while prev en ting the Red
+Queen e/n0bect/. The w ork of Rosin /n28Rosin /1/9/9/7/n29 already
+describ es some metho ds to address this issue/.
+/2/./2 Discussion
+As stated previously /, the co ev olutionary learning frame/-
+w ork in tro duces a pressure to w ards adaptabilit y /. The
+cen tral assumption is that individuals that adapt faster
+than others in order to solv e the new c hallenges they
+are exp osed to are also more lik ely to solv e ev en more
+di/n0ecult problems/. The main di/n0ecult y is to setup a co/-
+ev olutionary framew ork that implemen ts this heuristic
+accurately and e/n0ecien tly /.
+The idea of in tro ducing a pressure to w ards adapt/-
+abilit y as the cen tral heuristic for searc h is not new/.
+Sc hmidh ub er /n28Sc hmidh ub er /1/9/9/5/n29 prop osed the Incre/-
+men tal Self/-Impro v emen t system in whic h adaptabilit yi s
+the measure that is optimized/. In this system/, the searc h
+is p erformed in a sto c hastic depth/-/n0crst w a y and a Re/-
+inforcemen t Acceleration Criterion /n28RA C/n29 is computed
+regularly in order to determine if there has b een con tin/-
+uous acceleration of the amoun t of reinforcemen t infor/-
+mation receiv ed from the en vironmen t since the birth of
+the individual/. If RA C is not satis/n0ced/, a bac ktrac king
+op eration is p erformed/. That is/, the individual undo es
+its last mo di/n0ccations un til RA C is satis/n0ced again and
+new mo di/n0ccations are tried/.
+/3 Disco v ery of CA Rules for a
+Classi/n0ccation T ask
+/3/./1 One/-Dimensional Cellular Automata
+A one/-dimensional cellular automaton /n28CA/n29 is a linear
+wrap/-around arra y comp osed of N cells in whic h eac h
+cell can tak e one out of k p ossible states/. A rule is de/-
+/n0cned for eac h cell in order to up date its state/. This rule
+determines the next state of a cell giv en its curren t state
+and the state of cells in a prede/n0cned neigh bo r h ood /. F or
+the mo del discussed in this pap er/, this neigh b orho o d is
+comp osed of cells whose distance is at most r from the
+cen tral cell/. This op eration is p erformed sync hronously
+for all the cells in the CA/. F rom no w on/, w e will con/-
+sider that the state of cells is binary /n28 k /= /2/n29/, N /= /1/4/9
+and r /=/3 /. This means that the size of the rule space is
+/2
+/2
+/2 /n03 r /+/1
+/=/2
+/1/2/8
+/.
+Cellular automata ha v e b een studied widely as they
+represen t one of the simplest systems in whic h complex
+emergen t b eha viors can b e observ ed/. This mo del is v ery
+attractiv ea s a means to study complex systems in na/-
+ture/. Indeed/, the ev olution of suc h systems is ruled b y
+simple/, lo cally/-in teracting comp onen ts whic h result in
+the emergence of global/, co ordinated activit y /.
+/3/./2 The Ma jorit y F unction
+The task consists in disco v ering a rule for the one/-
+dimensional CA whic h implemen ts the ma jorit y function
+as accurately as p ossible/. This is a densit y classi/n0ccation
+task/, for whic h one w an ts the state of the cells of the
+CA to relax to all /0/'s or /1/'s dep ending on the densit yo f
+the initial con/n0cguration /n28IC/n29 of the CA/, within a maxi/-
+m um of M time steps/. F ollo wing /n28Mitc hell et al/. /1/9/9/4/n29/,
+/n1a
+c
+denotes the threshold for the classi/n0ccation task /n28here/,
+/n1a
+c
+/=/1 /= /2/n29/, /n1a denotes the densit y of /1/'s in a con/n0cguration
+and /n1a
+o
+denotes the densit y of /1/'s in the initial con/n0cgura/-
+tion/. Figure /1 presen ts t w o examples of the space/-time
+ev olution of a CA for N /= /1/4/9 with /n1a
+/0
+/n3c/n1a
+c
+on the left
+and /n1a
+/0
+/n3e/n1a
+c
+on the righ t/. The initial con/n0cguration is at
+the top of the diagram and the ev olution in time of the
+di/n0beren t con/n0cgurations is represen ted do wn w ard/.
+The task /n1a
+c
+/= /1 /= /2 is kno wn to be di/n0ecult/. In par/-
+ticular/, it has b een pro v en that no rule exists that will
+result in the CA relaxing to the correct state for all p os/-
+sible ICs /n28Land and Belew /1/9/9/5/n29/. Indeed/, the densit yi s
+20 40 60 80 100 120 140
+20
+40
+60
+80
+100
+120
+140
+160
+180
+200
+20 40 60 80 100 120 140
+20
+40
+60
+80
+100
+120
+140
+160
+180
+200
+Figure /1 Tw o space/-time diagrams describing the ev olution of CA states for the new rule Co ev olution
+/n28/2/n29 whic h scores /8/6 /: /0/n25 for N /= /1/4/9 /. White squares represen t cells in state /0 while blac k squares
+corresp ond to cells in state /1/. The initial state of the CA is at the top and the ev olution for the /n0crst
+/2/0/0 time steps is represen ted b ym o ving do wn w ard/.
+a global prop ert y of the initial con/n0cguration while indi/-
+vidual cells of the CA ha v e access to lo cal information
+only /. Disco v ering a rule that will displa y the appropriate
+computation b y the CA with the highest accuracy is a
+c hallenge/, and the upp er limit for this accuracy is still un/-
+kno wn/. T able /1 describ es the p erformance for that task
+for di/n0beren t published rules and di/n0beren t v alues of N /.
+The Gacs/-Kurdyumo v/-Levin /n28GKL/n29 rule w as designed in
+/1/9/7/8 for a di/n0beren t goal than the /n1a
+c
+/=/1 /= /2 task /n28Mitc hell
+et al/. /1/9/9/4/n29/. Ho w ev er/, for a while it pro vided the b est
+kno wn p erformance/. /n28Mitc hell et al/. /1/9/9/4/n29 and /n28Das et
+al/. /1/9/9/4/n29 used Genetic Algorithms /n28GAs/n29 to explore the
+space of rules/. This w ork resulted in an analysis of some
+of the complex b eha viors exhibited b y CAs using /n5cparti/-
+cles/"/. The GKL and Das rules are h uman/-written while
+the Andre/-Bennett/-Koza /n28ABK/n29 rule has b een disco v/-
+ered using the Genetic Programming paradigm /n28Andre
+et al/. /1/9/9/6/n29/. F or the /n1a
+c
+/=/1 /= /2 task/, it is b eliev ed that the
+rules that p erform reasonably w ell ha v e a densit y close
+to /0 /: /5 and/, indeed/, the GKL rule has densit y /0 /: /5 ex/-
+actly /. An in tuitiv e argumen t to supp ort this h yp othesis
+is presen ted in /n28Mitc hell et al/. /1/9/9/3/n29/. It is also b eliev ed
+that the most di/n0ecult ICs are those with densit y close
+to /0 /: /5 /n28since only a little mo di/n0ccation can mak e them
+switc h from /n1a
+/0
+/n3c /1 /= /2t o /n1a
+/0
+/n3e /1 /= /2/, and vice v ersa/n29/. This
+information is useful for the understanding of the exp er/-
+imen tal analysis presen ted in the follo wing sections/.
+In the researc h literature/, initial w ork p erformed b y
+/n28Das et al/. /1/9/9/4/, Mitc hell et al/. /1/9/9/4/n29 has b een follo w ed
+b y /n28Andre et al/. /1/9/9/6/n29 whose rule impro v ed the case
+N /= /1/4/9 but do esn/'t generalize as w ell as the GKL
+or the Das rule/. /n28Sipp er /1/9/9/4/n29 ev olv ed rules for non/-
+homogeneous CA for whic h eac h cell has its o wn inde/-
+p enden t v ersion of a rule/. /n28P aredis /1/9/9/7/n29 describ es a
+0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+0.9
+1
+0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1
+Ratio correct classification
+Density initial configurations
+N = 149
+N = 599
+N = 999
+Figure /2 Distribution of p erformance for the
+GKL rule for /n1a
+/0
+/2 /n5b/0 /: /0 /; /1 /: /0/n5d /.
+co ev olutionary approac h to searc h the space of rules and
+sho ws the di/n0ecult yo f c o e v olving consisten tly t w o p opu/-
+lations to w ards con tin uous impro v emen t/. /n28Cap carrere et
+al/. /1/9/9/6/n29 also rep orts that b yc hanging the sp eci/n0ccation
+of the con v ergence pattern of the CA from all /0
+/0
+s or all
+/1
+/0
+s to a pattern in whic h a blo c k of at least t w o consec/-
+utiv e/1
+/0
+s exists if and only if /n1a
+/0
+/n3e /1 /= /2 and a blo c ko fa t
+least t w o consecutiv e/0
+/0
+s exists if and only if /n1a
+/0
+/n3c /1 /= /2/,
+then a t w o/-state/, r /= /1 cellular automaton exists that
+can p erfectly solv e the densit y problem/.
+/4 Implemen tation of the Concept
+The co ev olutionary approac h describ ed in section /2 is
+applied to the /n1a
+c
+/=/1 /= /2 task/. It is b eliev ed/, that ICs b e/-
+come more and more di/n0ecult to classify correctly as their
+densit y gets closer to the /n1a
+c
+threshold/. This h yp othesis is
+T able /1 P erformance of di/n0beren t published CA rules and t w o new rules disco v ered using the co ev o/-
+lutionary learning paradigm for the /n1a
+c
+/=/1 /= /2 task/.
+N /1/4/9 /5/9/9 /9/9/9
+Co ev olution /n28/1/n29 /0/./8/5/1 /+/n2f/- /0/./0/0/1 /0/./8/1/0 /+/n2f/- /0/./0/0/1 /0/./7/9/5 /+/n2f/- /0/./0/0/1
+Co ev olution /n28/2/n29 /0/./8/6/0 /+/n2f/- /0/./0/0/1 /0/./8/0/2 /+/n2f/- /0/./0/0/1 /0/./7/8/5 /+/n2f/- /0/./0/0/1
+Das rule /0/./8/2/3 /+/n2f/- /0/./0/0/1 /0/./7/7/8 /+/n2f/- /0/./0/0/1 /0/./7/6/4 /+/n2f/- /0/./0/0/1
+ABK rule /0/./8/2/4 /+/n2f/- /0/./0/0/1 /0/./7/6/4 /+/n2f/- /0/./0/0/1 /0/./7/3/0 /+/n2f/- /0/./0/0/1
+GKL rule /0/./8/1/5 /+/n2f/- /0/./0/0/1 /0/./7/7/3 /+/n2f/- /0/./0/0/1 /0/./7/5/9 /+/n2f/- /0/./0/0/1
+supp orted b y the distribution of the p erformance for the
+GKL rule for /n1a
+/0
+/2 /n5b/0 /: /0 /; /1 /: /0/n5d presen ted in /n0cgure /2/. There/-
+fore/, our idea is to construct a framew ork that adapts
+the distribution of the densit y for the p opulation of ICs
+as CA/-rules are getting b etter to solv e the task/. The
+follo wing de/n0cnition for the /n0ctness of rules and ICs has
+b een used to ac hiev e this goal/.
+f /n28 R
+i
+/n29/=
+n
+IC
+X
+j /=/1
+W IC
+j
+/n02 cov er ed /n28 R
+i
+/;I C
+j
+/n29
+where/:
+W IC
+j
+/=
+/1
+P
+n
+R
+k /=/1
+cov er ed /n28 R
+k
+/;I C
+j
+/n29
+and
+f /n28 IC
+j
+/n29/=
+n
+R
+X
+i /=/1
+W R
+/0
+i
+/n02 E /n28 R
+i
+/;/n1a /n28 IC
+j
+/n29/n29 /n02 cov er ed /n28 R
+i
+/;I C
+j
+/n29
+where/:
+W R
+/0
+i
+/=
+/1
+P
+n
+IC
+k /=/1
+E /n28 R
+i
+/;/n1a /n28 IC
+k
+/n29/n29 /n02 cov er ed /n28 R
+i
+/;I C
+k
+/n29
+where cov er ed /n28 R
+i
+/;I C
+j
+/n29 returns /1 if a CA using rule R
+i
+and starting from initial con/n0cguration IC
+j
+relaxes to the
+correct state/. Otherwise/, it returns /0/. cov er ed /n28 R
+i
+/;I C
+j
+/n29
+returns the complemen to f cov er ed /n28 R
+i
+/;I C
+j
+/n29/.
+This de/n0cnition implemen ts a comp etitiv e relationship
+be t w een rules and ICs/. Rules get a higher pa y o/n0b b yc o v/-
+ering more ICs accurately while ICs get a higher pa y o/n0b
+b y defeating more rules/. This de/n0cnition also implemen ts
+a form of nic hing called resource sharing/. Resource shar/-
+ing implemen ts a co v erage/-based heuristic b y giving a
+higher pa y o/n0b to problems that few individuals can solv e/.
+In our case/, it is in tro duced in the de/n0cnition of the /n0ct/-
+ness of rules and ICs b yw eigh ting the outcome of eac h
+in teraction rule/n7bIC/. The w eigh t of an IC corresp onds to
+the pa y o/n0b it returns if a rule co v ers it/. The underlying
+mec hanism is that if few rules co v er an IC/, this w eigh t
+will b e m uc h larger than if a lot of rules co v er that same
+IC/. The de/n0cnition for the w eigh t of rules is similar/. The
+b ene/n0ct of resource sharing in the con text of searc h has
+already b een discussed in /n28Juill /n13 e and P ollac k /1/9/9/6/n29/.
+The de/n0cnition of the ICs/' /n0ctness has b een extended with
+a new comp onen t/, namely E /n28 R
+i
+/;/n1a /n28 IC
+j
+/n29/n29/. The purp ose
+of this new comp onen t is to p enalize ICs with densit y
+/n1a /n28 IC
+j
+/n29 if little information is collected with resp ect to
+the rule R
+i
+/. Indeed/, w e consider that if a rule R
+i
+has a
+/5/0/n25 classi/n0ccation accuracy o v er ICs with densit y /n1a /n28 IC
+j
+/n29
+then this is equiv alen t to random guessing and no pa y o/n0b
+should b e returned to IC
+j
+/. On the con trary /, if the p er/-
+formance of R
+i
+is signi/n0ccan tly b etter or w orse than the
+/5/0/n25 threshold for a giv en densit y of ICs this means that
+R
+i
+captured some relev an t prop erties to deal with those
+ICs/. Once again/, the idea is that the training en viron/-
+men t for rules should be comp osed of ICs that pro vide
+useful information to iden tify go o d rules from p o or ones/.
+ICs for whic h the p erformance of rules is close to /5/0/n25 are
+useless to satisfy this goal and they shouldn/'t b e explored
+further/. The training en vironmen t should also allo w con/-
+tin uous progress b y prev en ting the Red Queen e/n0bect/. In
+our implemen tation/, there is no explicit mec hanism to
+satisfy this purp ose/. Instead/, an in trinsic prop ert yo ft h e
+/n1a
+c
+/=/1 /= /2 task is exploited in order to satisfy this goal in/-
+directly /. Indeed/, it seems that CA/-rules that co v er ICs
+with densit y /n1a
+/0
+/n3c /1 /= /2 /n28resp ectiv ely /n1a
+/0
+/n3e /1 /= /2/n29 with high
+p erformance will also be v ery successful o v er ICs with
+densit y /n1a
+/0
+/0
+/n3c /n1a
+/0
+/n28resp ectiv ely /n1a
+/0
+/0
+/n3e /n1a
+/0
+/n29/. Therefore/, as
+ICs b ecome more di/n0ecult/, their densit y is approac hing
+/n1a
+/0
+/=/1 /= /2 but rules don/'t ha v e to b e tested against easier
+ICs/.
+F ollo wing this idea/, w e de/n0cned E /n28/n29 as the complemen to f
+the en trop y of the outcome b et w een a rule and ICs with
+a giv en densit y/:
+E /n28 R
+i
+/;/n1a /n28 IC
+j
+/n29/n29 /= log/n28/2/n29 /+ p log/n28 p /n29/+ q log /n28 q /n29
+where/: p is the probabilit y that an IC with densit y
+/n1a /n28 IC
+j
+/n29 defeats the rule R
+i
+and q /= /1 /n00 p /. Because of
+this credit assignmen t strategy /, a balance is main tained
+be t w een the searc h for more di/n0ecult ICs /n28comp etitiv e
+mo de of in teraction/n29 and ICs that can b e solv ed b y rules
+/n28co op eration be t w een rules and ICs/n29/. In practice/, en/-
+trop yi se v aluated b y p erforming some statistics o v er the
+p opulation of ICs/.
+/5 Exp erimen tal Results
+The b est t w o CA/-rules disco v ered so far are presen ted in
+table /1/. Those t w o new rules exhibit av ery signi/n0ccan t
+impro v emen to v er the previously kno wn b est rules with
+resp ect to the case N /= /1/4/9 as w ell as the generalization
+abilit y /n28tested with N /= /5/9/9 and N /= /9/9/9/n29/. The de/-
+scription of those CA rules is presen ted in table /2/. along
+with the description for the Das/, ABK and GKL rules/.
+The lo okup tables describ ed in table /2 are using the triv/-
+ial co ding/: the leftmost bit corresp onds to the output of
+the rule with input /0/0/0/0/0/0/0/, the second bit corresp onds
+to input /0/0/0/0/0/0/1/, /:/:/: and the righ tmost bit corresp onds
+to input /1/1/1/1/1/1/1/.
+In a /n0crst set of exp erimen ts comp osed of ab out /2/0
+runs/, the p opulation size for rules and ICs w as /4/0/0/. The
+implemen tation to searc h the space of rules is similar to
+the one describ ed in /n28Mitc hell et al/. /1/9/9/4/n29/. Eac h rule is
+co ded on a binary string of length /2
+/2 /n03 r /+/1
+/= /1/2/8/. One/-
+p oin t crosso v er is used with a /2/n25 bit m utation probabil/-
+it y /. The p opulation of rules is initialized according to a
+uniform distribution o v er /n5b/0 /: /0 /; /1 /: /0/n5d for the densit y /. Eac h
+individual in the p opulation of ICs represen ts a densit y
+/n1a
+/0
+/2 /n5b/0 /: /0 /; /1 /: /0/n5d/. This p opulation is also initialized accord/-
+ing to a uniform distribution o v er /n1a
+/0
+/2 /n5b/0 /: /0 /; /1 /: /0/n5d/. A t
+eac h generation/, eac h mem b er generates a new instance
+for an initial con/n0cguration with resp ect to the densit y
+it represen ts/. All rules are ev aluated against this new
+set of ICs/. The generation gap is /5/n25 for the p opula/-
+tion of ICs /n28i/.e/./, the top /9/5/n25 ICs repro duce to the next
+generation/n29/. There is no crosso v er nor m utation/. The
+new /5/n25 ICs are the result of a random sampling o v er
+/n1a
+/0
+/2 /n5b/0 /: /0 /; /1 /: /0/n5d according to a uniform probabilit y distri/-
+bution/. The generation gap is /8/0/n25 for the p opulation
+of rules/. New rules are created b y crosso v er and m uta/-
+tion/. P aren ts are randomly selected from the top /2/0/n25/.
+This c hoice for the v alue of the generation gap is a com/-
+promise b et w een sp eed of searc h and p erformance/. As a
+result/, some of the runs return a p o or result b ecause of
+unfa v orable sampling /n28in those runs/, ev olv ed rules don/'t
+score more than /7/6/n25/n29/. The rule /n5cCo ev olution /n28/1/n29/" pre/-
+sen ted in table /1 resulted from one of the runs in this
+exp erimen ts/.
+In a second of exp erimen ts comp osed of /8 runs/, using
+a p opulation size of /4/0/0 for rules and ICs and a genera/-
+tion gap of /1/0/n25 for the p opulation of rules/, some rules
+w ere ev olv ed that consisten tly scored ab o v e /8/0/n25/. In that
+case/, go o d rules are less lik ely to disapp ear from the p op/-
+ulation but progress is v ery slo w/. It migh t ho w ev er b e
+p ossible to impro v e the time p erformance b y a v oiding
+redundan t computation for the ev aluation of rules that
+ha v e b een in the p opulation for sev eral generations/.
+In another set of exp erimen ts comp osed of /6 runs/, us/-
+ing a p opulation size of /1/0/0/0 for b oth rules and ICs and
+the same v alue for the generation gaps as for the /n0crst set
+of exp erimen ts/, all runs consisten tly ev olv ed some rules
+that score ab o v e /8/2/n25/. The rule /n5cCo ev olution /n28/2/n29/" pre/-
+sen ted in table /1 resulted from one of those runs/. The
+goal of those exp erimen ts w as to test ho w the p erfor/-
+mance of ev olv ed rules w ould scale when increasing the
+p opulation size/. It migh t b e p ossible to ev olv ee v en b et/-
+ter rules with a larger p opulation size/. Ho w ev er/, with
+our curren t implemen tation/, a run tak es ab out one w eek
+o naw orkstation for /5/0/0/0 generations and a p opulation
+size of /1/0/0/0/.
+As a comparison/, /n28Andre et al/. /1/9/9/6/n29 used a p opulation
+of size /5/1 /; /2/0/0/. In their w ork/, the training en vironmen t
+w as comp osed of a /n0cxed training set constructed from
+a uniform sampling from the space of all ICs /n28th us/, the
+distribution for the densit y of ICs in the training set is
+binomial/, cen tered on /1 /= /2/n29/. In exp erimen ts describ ed
+in /n28Das et al/. /1/9/9/4/, Mitc hell et al/. /1/9/9/4/n29/, the learning
+en vironmen t is comp osed of a set of ICs sampled at
+eac h generation according to a uniform distribution o v er
+/n1a
+/0
+/2 /n5b/0 /: /0 /; /1 /: /0/n5d/. Those authors ac kno wledged that this
+distribution for the sampling of the space of ICs/, while
+helpful to b o otstrap the searc h/, migh t no longer pro vide
+useful information once some a v erage p erformance rules
+ha v e b een disco v ered/.
+Figures /3 and /4 describ e the ev olution of the densit y
+of rules and ICs for t w o runs/. As rules impro v e/, their
+densit y gets closer to /1 /= /2 and the densit y of ICs is dis/-
+tributed on t w o p eaks on eac h side of /n1a /=/1 /= /2/. In the case
+of /n0cgure /4/, it is only after /1 /; /3/0/0 generations that a signif/-
+ican t impro v emen t is observ ed for rules/. It is only at that
+time that the p opulation of ICs adapts dramatically in
+order to prop ose more c hallenging initial con/n0cgurations/.
+This sho ws that our strategy to co ev olv e the training
+en vironmen t and the learners has b een successfully im/-
+plemen ted in the de/n0cnition of the /n0ctness functions/. Ho w/-
+ev er/, it should b e noted that the t w o/-p eak distribution
+is a side/-e/n0bect of the metho d implemen ted to measure
+en trop y /. Indeed/, b ecause of the small p opulation size
+with resp ect to the range of v alues for the densit y /n28i/.e/./,
+N v alues/n29/, ICs w ere group ed in bins of size t w o/. That
+is/, there are N/= /2 bins instead of N to co v er the range of
+densities/. The t w o/-p eak distribution means that/, in our
+exp erimen ts/, ev olv ed rules ha v e an accuracy v ery close to
+/5/0/n25 with resp ect to the set of ICs in the bin comp osed of
+ICs with densit y/1 /= d
+N
+/2
+e and /1 /= b
+N
+/2
+c /. In exp erimen ts that
+use N bins/, the /n0cnal distribution is comp osed of a single
+p eak cen tered on /n1a
+/0
+/=/1 /= /2/. Ho w ev er/, empirical evidence
+seems to sho w that this t w o/-p eak distribution results in
+b etter p erformance for the /n0cnal CA/-rules/. This is sup/-
+p orted b y /n0cgure /5 whic h compares the distribution of
+the p erformance of the new rules to the GKL rule/. This
+distribution is represen ted only in the neigh bo r h ood of
+/n1a
+/0
+/= /1 /= /2/. Outside the range represen ted in those /n0cg/-
+ures/, the ratio of correct classi/n0ccation is /n28or is v ery close
+to/n29 /1/0/0/n25 for the three rules/. As discussed b efore/, those
+/n0cgures con/n0crm that for rules with go o d classi/n0ccation p er/-
+T able /2 Description of the curren t b est rules and previously published rules for the /n1a
+c
+/=/1 /= /2 task/.
+Co ev olution /n28/1/n29 /0/0/0/0/0/0/0/1 /0/0/0/1/0/1/0/0 /0/0/1/1/0/0/0/0 /1/1/0/1/0/1/1/1 /0/0/0/1/0/0/0/1 /0/0/0/0/1/1/1/1 /0/0/1/1/1/0/0/1 /0/1/0/1/0/1/1/1
+/0/0/0/0/0/1/0/1 /1/0/1/1/0/1/0/0 /1/1/1/1/1/1/1/1 /0/0/0/1/0/1/1/1 /1/1/1/1/0/0/0/1 /0/0/1/1/1/1/0/1 /1/1/1/1/1/0/0/1 /0/1/0/1/0/1/1/1
+Co ev olution /n28/2/n29 /0/0/0/1/0/1/0/0 /0/1/0/1/0/0/0/1 /0/0/1/1/0/0/0/0 /0/1/0/1/1/1/0/0 /0/0/0/0/0/0/0/0 /0/1/0/1/0/0/0/0 /1/1/0/0/1/1/1/0 /0/1/0/1/1/1/1/1
+/0/0/0/1/0/1/1/1 /0/0/0/1/0/0/0/1 /1/1/1/1/1/1/1/1 /0/1/0/1/1/1/1/1 /0/0/0/0/1/1/1/1 /0/1/0/1/0/0/1/1 /1/1/0/0/1/1/1/1 /0/1/0/1/1/1/1/1
+Das rule /0/0/0/0/0/1/1/1 /0/0/0/0/0/0/0/0 /0/0/0/0/0/1/1/1 /1/1/1/1/1/1/1/1 /0/0/0/0/1/1/1/1 /0/0/0/0/0/0/0/0 /0/0/0/0/1/1/1/1 /1/1/1/1/1/1/1/1
+/0/0/0/0/1/1/1/1 /0/0/0/0/0/0/0/0 /0/0/0/0/0/1/1/1 /1/1/1/1/1/1/1/1 /0/0/0/0/1/1/1/1 /0/0/1/1/0/0/0/1 /0/0/0/0/1/1/1/1 /1/1/1/1/1/1/1/1
+ABK rule /0/0/0/0/0/1/0/1 /0/0/0/0/0/0/0/0 /0/1/0/1/0/1/0/1 /0/0/0/0/0/1/0/1 /0/0/0/0/0/1/0/1 /0/0/0/0/0/0/0/0 /0/1/0/1/0/1/0/1 /0/0/0/0/0/1/0/1
+/0/1/0/1/0/1/0/1 /1/1/1/1/1/1/1/1 /0/1/0/1/0/1/0/1 /1/1/1/1/1/1/1/1 /0/1/0/1/0/1/0/1 /1/1/1/1/1/1/1/1 /0/1/0/1/0/1/0/1 /1/1/1/1/1/1/1/1
+GKL rule /0/0/0/0/0/0/0/0 /0/1/0/1/1/1/1/1 /0/0/0/0/0/0/0/0 /0/1/0/1/1/1/1/1 /0/0/0/0/0/0/0/0 /0/1/0/1/1/1/1/1 /0/0/0/0/0/0/0/0 /0/1/0/1/1/1/1/1
+/0/0/0/0/0/0/0/0 /0/1/0/1/1/1/1/1 /1/1/1/1/1/1/1/1 /0/1/0/1/1/1/1/1 /0/0/0/0/0/0/0/0 /0/1/0/1/1/1/1/1 /1/1/1/1/1/1/1/1 /0/1/0/1/1/1/1/1
+0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1
+0
+200
+400
+600
+800
+1000
+1200
+1400
+1600
+0
+200
+400
+Generation
+Rules density
+# rules
+0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1
+0
+200
+400
+600
+800
+1000
+1200
+1400
+1600
+0
+100
+200
+Generation
+ICs density
+# ICs
+Figure /3 Ev olution in time of the distribution of CA rules densit y /n28left/n29 and ICs densit y /n28righ t/n29
+describing the co ev olution of rules and ICs/.
+0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1
+0
+500
+1000
+1500
+2000
+2500
+0
+100
+200
+300
+Generation
+Rules density
+# rules
+0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1
+0
+500
+1000
+1500
+2000
+2500
+0
+50
+100
+150
+Generation
+ICs density
+# ICs
+Figure /4 Ev olution in time of the distribution of CA rules densit y /n28left/n29 and ICs densit y /n28righ t/n29/. In
+that case/, the sharp transition around generation /1/,/3/0/0 corresp onds to an impro v emen t of rules and
+results in an adaptation of the distribution of ICs to presen t more c hallenging problems/.
+0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+0.9
+1
+0.4 0.42 0.44 0.46 0.48 0.5 0.52 0.54 0.56 0.58 0.6
+Ratio correct classification
+Density initial configurations
+GKL
+Coevolution (1)
+Coevolution (2)
+0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+0.9
+1
+0.45 0.46 0.47 0.48 0.49 0.5 0.51 0.52 0.53 0.54 0.55
+Ratio correct classification
+Density initial configurations
+GKL
+Coevolution (1)
+Coevolution (2)
+0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+0.9
+1
+0.45 0.46 0.47 0.48 0.49 0.5 0.51 0.52 0.53 0.54 0.55
+Ratio correct classification
+Density initial configurations
+GKL
+Coevolution (1)
+Coevolution (2)
+Figure /5 Comparison of the distribution of p er/-
+formance for the t w o new rules and the GKL rule
+for N /= /1/4/9 /n28top/n29/, /5/9/9 and /9/9/9 /n28b ottom/n29/.
+formance/, the most di/n0ecult ICs are the ones with densit y
+close to /n1a
+/0
+/=/1 /= /2/. Therefore/, if the densit y of ICs in the
+p opulation of initial conditions con v erge to a single p eak
+cen tered on /n1a
+/0
+/= /1 /= /2/, the training en vironmen t w ould
+pro vide only little feedbac k /n28since the ratio of correct
+classi/n0ccation is v ery close to /5/0/n25/n29/. It w ould b e di/n0ecult
+to distinguish rules with high p erformance from others
+b ecause ev en a v erage p erformance rules ha v e a similar
+b eha vior in this area of the space of ICs/.
+/6 Conclusion
+This pap er presen ts the concept of c o evolutionary le arn/-
+ing /, a new framew ork for learning based on the co ev o/-
+lution b et w een learners and problems/. The exploration
+of the space of learners and problems is p erformed suc h
+that/:
+/n0f /n5coptim um/" gradien t information is pro vided to
+learners/, and
+/n0f con tin uous progress is main tained/.
+The w ork presen ted in this pap er addresses those is/-
+sues b y de/n0cning a top ology o v er the space of problems/.
+Then/, a pro cedure is implemen ted suc h that the train/-
+ing en vironmen t automatically adapts in resp onse to the
+progress of learners b y prop osing more c hallenging prob/-
+lems/. This approac h allo ws a more reliable estimate of
+the absolute p erformance of learners while pro viding an
+e/n0ecien t gradien t for searc h/. W e apply this framew ork
+to the problem of ev olving CA rules for a classi/n0cca/-
+tion task/. Our exp erimen ts resulted in new rules whose
+p erformance impro v es v ery signi/n0ccan tly o v er previously
+kno wn rules for that particular task/.
+Another goal of this pap er is to pro vide some insigh ts
+on the use of co ev olutionary approac hes for searc h al/-
+gorithms/. By pro viding a metho dology in whic h indi/-
+viduals are ev aluated in a c hanging en vironmen t/, more
+elab orate heuristics can be implemen ted for searc h/. In
+the system presen ted in this pap er/, the principal underly/-
+ing heuristic in tro duces a pressure to w ards adaptabilit y /.
+In previous w ork /n28Juill /n13 e and P ollac k /1/9/9/6/n29/, co ev olution
+w as used as a nic hing tec hnique to implemen ta c o v erage/-
+based heuristic/.
+Ac kno wledgmen t
+The authors gratefully thank Melanie Mitc hell for her
+help and useful discussions/. Da vid Andre made helpful
+commen ts on a preliminary v ersion of this pap er/.
+References
+Andre/, Da vid/, F orrest H/. Bennett I I I and John R/. Koza
+/n28/1/9/9/6/n29/. Ev olution of in tricate long/-distance comm u/-
+nication signals in cellular automata using genetic
+programming/. In/: Pr o c e e dings of the Fifth A rti/n0ccial
+Life Confer enc e /. pp/. /1/6/n7b/1/8/.
+Cap carrere/, M/. S/./, M/. Sipp er and M/. T omassini /n28/1/9/9/6/n29/.
+Tw o/-state/, r/=/1 cellular automaton that classi/n0ces
+densit y /. Physic al R eview L etters /7/7 /n28/2/4/n29/, /4/9/6/9/n7b/4/9/7/1/.
+Cli/n0b/, Da v e and Geo/n0brey F/. Miller /n28/1/9/9/5/n29/. T rac king the
+red queen/: Measuremen ts of adaptiv e progress in
+co/-ev olutionary sim ulations/. In/: The Thir d Eur o/-
+p e an Confer enc eo n A rti/n0ccial Life /. Springer/-V erlag/.
+pp/. /2/0/0/n7b/2/1/8/. LNCS /9/2/9/.
+Cli/n0b/, Da v e and Geo/n0brey F/. Miller /n28/1/9/9/6/n29/. Co/-ev olution
+of pursuit and ev asion ii/: Sim ulation metho ds and
+results/. In/: Pr o c e e dings of the F ourth International
+Confer enc e on Simulation of A daptive Behavior
+/n28P attie Maes/, Ma ja J/. Mataric/, Jean/-Arcady Mey er/,
+Jordan P ollac k and Stew art W/. Wilson/, Eds/./n29/. MIT
+Press/. Cam bridge/, Massac h usetts/. pp/. /5/0/6/n7b/5/1/5/.
+Das/, Ra jarshi/, Melanie Mitc hell and James P /. Crutc h/-
+/n0celd /n28/1/9/9/4/n29/. A genetic algorithm disco v ers particle/-
+based computation in cellular automata/. In/: Par/-
+al lel Pr oblem Solving fr om Natur e III/, LNCS /8/6/6 /.
+Springer/-V erlag/. pp/. /3/4/4/n7b/3/5/3/.
+Hillis/, W/. Daniel /n28/1/9/9/2/n29/. Co/-ev olving parasites impro v e
+sim ulated ev olution as an optimization pro cedure/.
+In/: A rti/n0ccial Life II /n28Chris Langton et al/./, Eds/./n29/.
+Addison W esley /. pp/. /3/1/3/n7b/3/2/4/.
+Husbands/, Phil /n28/1/9/9/4/n29/. Distributed co ev olutionary ge/-
+netic algorithms for m ulti/-criteria and m ulti/-
+constrain t optimisation/. In/: Pr o c e e dings of Evolu/-
+tionary c omputing/, AISB Workshop Sele cte d Pa/-
+p ers /n28T/. F ogart y /, Ed/./n29/. Springer/-V erlag/. pp/. /1/5/0/n7b
+/1/6/5/. LNCS /8/6/5/.
+Juill /n13 e/, Hugues and Jordan B/. P ollac k /n28/1/9/9/6/n29/. Co/-ev olving
+in tert wined spirals/. In/: Pr o c e e dings of the Fifth
+A nnual Confer enc e on Evolutionary Pr o gr amming /.
+MIT Press/. pp/. /4/6/1/n7b/4/6/8/.
+Land/, Mark and Ric hard K/. Belew /n28/1/9/9/5/n29/. No p erfect
+t w o/-state cellular automata for densit y classi/n0ccation
+exists/. Physic al R eview L etters /7/4 /n28/2/5/n29/, /1/5/4/8/n7b/1/5/5/0/.
+Mitc hell/, Melanie/, James P /. Crutc h/n0celd and P eter T/.
+Hrab er /n28/1/9/9/4/n29/. Ev olving cellular automata to p er/-
+form computations/: Mec hanisms and imp edimen ts/.
+Physic aD /7/5 /, /3/6/1/n7b/3/9/1/.
+Mitc hell/, Melanie/, P eter T/. Hrab er and James P /. Crutc h/-
+/n0celd /n28/1/9/9/3/n29/. Revisiting the edge of c haos/: Ev olving
+cellular automata to p erform computations/. Com/-
+plex Systems /7 /, /8/9/n7b/1/3/0/.
+Moriart y /, Da vid Eric /n28/1/9/9/7/n29/. Sym biotic Ev olution of
+Neural Net w orks in Sequen tial Decision T asks/. PhD
+thesis/. Univ ersit yo f T exas at Austin/, USA/.
+P aredis/, Jan /n28/1/9/9/4 a /n29/. Co/-ev olutionary constrain t satis/-
+faction/. In/: Par al lel Pr oblem Solving fr om Natur e/-
+PPSN III/, LNCS /8/6/6 /. Springer/-V erlag/. pp/. /4/6/n7b/5/5/.
+P aredis/, Jan /n28/1/9/9/4 b /n29/. Steps to w ards co/-ev olutionary clas/-
+si/n0ccation neural net w orks/. In/: A rti/n0ccial Life IV
+/n28Bro oks and Maes/, Eds/./n29/. MIT Press/. pp/. /1/0/2/n7b/1/0/8/.
+P aredis/, Jan /n28/1/9/9/5/n29/. The sym biotic ev olution of solu/-
+tions and their represen tations/. In/: Pr o c e e dings of
+the Sixth International Confer enc e on Genetic A l/-
+gorithms /n28Larry J/. Eshelman/, Ed/./n29/. Morgan Kauf/-
+mann/. pp/. /3/5/9/n7b/3/6/5/.
+P aredis/, Jan /n28/1/9/9/6/n29/. Co ev olutionary computation/. A rti/-
+/n0ccial Life /. T o app ear/.
+P aredis/, Jan /n28/1/9/9/7/n29/. Co ev olving cellular automata/: Be
+a w are of the red queen/!/. In/: Pr o c e e dings of the
+Seventh International Confer enc e on Genetic A l/-
+gorithms /n28Thomas B/n7f a c k/, Ed/./n29/. Morgan Kaufmann/.
+pp/. /3/9/3/n7b/4/0/0/.
+P otter/, Mitc hell A/. /n28/1/9/9/7/n29/. The Design and Analysis of a
+Computational Mo del of Co op erativ eC o e v olution/.
+PhD thesis/. George Mason Univ ersit y /,F airfax/, Vir/-
+ginia/.
+P otter/, Mitc hell A/. and Kenneth A/. De Jong /n28/1/9/9/4/n29/.
+A co op erativ ec o e v olutionary approac h to function
+optimization/. In/: Par al lel Pr oblem Solving fr om
+Natur e /- PPSN III/, LNCS /8/6/6 /. Springer/-V erlag/.
+pp/. /2/4/9/n7b/2/5/7/.
+P otter/, Mitc hell A/./, Kenneth A/. De Jong and John J/.
+Grefenstette /n28/1/9/9/5/n29/. A co ev olutionary approac ht o
+learning sequen tial decision rules/. In/: Pr o c e e dings of
+the Sixth International Confer enc e on Genetic A l/-
+gorithms /n28Larry J/. Eshelman/, Ed/./n29/. Morgan Kau/n0b/-
+mann/. San Mateo/, California/. pp/. /3/6/6/n7b/3/7/2/.
+Reynolds/, Craig W/. /n28/1/9/9/4/n29/. Comp etition/, co ev olution/,
+and the game of tag/. In/: A rti/n0ccial Life IV /n28Bro oks
+and Maes/, Eds/./n29/. MIT Press/.
+Rosin/, Christopher D/. and Ric hard K/. Belew /n28/1/9/9/6/n29/. A
+comp etitiv e approac h to game learning/. In/: Pr o/-
+c e e dings of the Ninth A nnual A CM Confer enc e on
+Computational L e arning The ory /.
+Rosin/, Christopher Darrell /n28/1/9/9/7/n29/. Co ev olutionary
+Searc h Among Adv ersaries/. PhD thesis/. Univ ersit y
+of California/, San Diego/.
+Sc hmidh ub er/, J /n7f urgen /n28/1/9/9/5/n29/. Disco v ering solutions with
+lo wk olmogoro v complexit y and high generalization
+capabilit y /. In/: Machine L e arning/: Pr o c e e dings of
+the twelfth International Confer enc e /n28A/. Prieditis
+amd S/. Russell/, Ed/./n29/. Morgan Kaufmann/. pp/. /1/8/8/n7b
+/1/9/6/.
+Sims/, Karl /n28/1/9/9/4/n29/. Ev olving /3d morphology and b eha vior
+b y comp etition/. In/: A rti/n0ccial Life IV /n28Bro oks and
+Maes/, Eds/./n29/. MIT Press/. pp/. /2/8/n7b/3/9/.
+Sipp er/, Moshe /n28/1/9/9/4/n29/. Co ev olving non/-uniform cellu/-
+lar automata to p erform computations/. Physic a D
+/9/2 /, /1/9/3/n7b/2/0/8/.
