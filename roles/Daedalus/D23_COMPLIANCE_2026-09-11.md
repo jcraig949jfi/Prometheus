@@ -119,19 +119,21 @@ before I wrote the gate.
 
 ## Still not done
 
+**The canonical copies are still in place, on purpose.** `var/engine.db`,
+`var/blobs`, `var/backup` and `deploy/m1.key` remain in the canonical checkout
+as a fallback while the service is observed on the new paths. Removing them is a
+separate step and needs the operator's word — it is the one action in this whole
+exercise that destroys something irreplaceable, and it should not ride along
+inside a compliance commit.
 
+Until it happens, the hazard is *reduced but not gone*: the live ledger is now
+elsewhere, but a `destroy` of the canonical checkout would still take a
+same-day copy of the ledger, the blobs, the rollback snapshots and **the only
+copy of `m1.key`** — which is now also at `F:\Prometheus-data\sfe\m1.key`, so
+the key at least exists in two places rather than one.
 
-**The service move is prepared, rehearsed and NOT applied.**
-`deploy/move_service_out_of_canonical.py --check` rehearses; `--apply` refuses
-unless the service is stopped, the queue idle and a backup fresh. It copies and
-verifies before switching and leaves the originals in place; the canonical
-copies come out only in a later, separately confirmed step.
-
-The queue was **111 queued / 1 running** when I checked. D-23 says restart at an
-announced quiet moment, so the restart waits — same discipline as the schema-8
-deploy. The success criterion is `engine_instance_id` **identical** before and
-after: it names the ledger, and a change would mean the service was pointed at a
-different database.
+**C7 (`62090a6d`) is still not deployed** and still needs its own authority; the
+schema-8 grant was for `5380cb90`, which is what the pinned worktree serves.
 
 ---
 
