@@ -130,6 +130,24 @@ out" *after* their experiment was committed.
 wait, and derive one from the other rather than setting both to the same
 number. Blocks: nobody, silently corrupts everybody's error accounting.
 
+**2026-09-11 CODE_FIXED, client side only, no engine change.**
+`sfclient/client.py` now derives `DEFAULT_TIMEOUT_S = ENGINE_BUSY_TIMEOUT_S *
+DEADLINE_MARGIN` (30.0 x 1.5 = 45.0 s); `tests/test_sfe_client_deadline.py`
+reads the engine bound off `Store.__init__`'s signature and the overshoot off
+the profile, with a cheat control (the old 30 s is rejected). `sfe/*.py`
+untouched, so `engine_source_hash` is unchanged and nothing needs a deploy;
+a consumer picks it up by restarting on the SHA.
+
+**What this does NOT fix, measured on Vivarium's own rows
+(`viv.research_experiment_queue`, 28 failed today):** their consumer has run
+`SfeRunner(timeout=60.0)` since `8b940a165`, already above 33.11 s. Its rows
+died at exactly **60.0 s** ("read operation timed out") or at **33-53 s**
+(HTTP 500 = the engine's own busy wait expiring). So the engine HELD requests
+past 60 s without answering and without the busy handler firing -- the
+request was stuck somewhere other than `BEGIN IMMEDIATE`. That is the
+stall (C9 / H1), not the deadline ordering. Comms 29 asked for the timeout
+change; the change is landed and it is not the fix for those 13 rows.
+
 ### A2. A timed-out write is not safely retryable — `PARTIAL`
 `sfclient` sends `Idempotency-Key` on some routes, and `create_world` (and
 several others) take no `idem_key` at all. A caller that times out on a
