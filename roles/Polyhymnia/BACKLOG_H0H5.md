@@ -1,0 +1,19 @@
+# Polyhymnia backlog (schema: roles/Archaeon/prompts/2026-09-10_backlog/00_BACKLOG_SCHEMA.md)
+
+Currency: 2026-09-11. PROVISIONAL. The schema requires 20 to 60 items;
+this file holds 9 because the archaeology (ARCHAEOLOGY_2026-09-11.md)
+left 0 executable items and the re-premise is an operator decision.
+Inventing eleven more would be fabrication. It is rewritten to the schema
+on the day the re-premised charter lands (POLY-01). Per the operator's
+2026-09-11 directive nothing on this list is started on this pass; the
+"first five" rule is suspended until the operator lifts "execute nothing".
+
+POLY-XL-01 | Decide the fate of the untracked tensor body (agents/polyhymnia/tensor/tesserae.jsonl, 4,917 lines, 11.5 MB, one copy in the canonical checkout): track it, archive it to the large-data share, or leave it | EVIDENCE | program | XL | operator decision NEW: "is a 11.5 MB untracked knowledge body residue worth preserving before its host changes" | the decision id in archaeon/docs/expansion/DECISIONS.md and, if preserved, the committed path or archive receipt with sha256
+POLY-XL-02 | Decide the re-premise: name the consumer of an Omnitensor row inside the 2.0 ecology (an SFE world, an organism's sensory input, a PEW reference index, or none) or PARK the seat | ENGINE | program | XL | operator decision NEW: "who consumes an Omnitensor row and what does it change" | roles/Polyhymnia/prompts/<date>_charter/ with MANIFEST; RESPONSIBILITIES.md rewritten with a one-sentence contract
+POLY-01 | Commit the re-premised charter verbatim with a MANIFEST and rewrite RESPONSIBILITIES.md around it | ENGINE | program | S | POLY-XL-02 | MANIFEST verifying under python -m comms.manifest verify; the rewritten entry file
+POLY-02 | File the 20-60 item backlog in the schema, first five startable, XL rows naming decision ids | ENGINE | program | S | POLY-01 | this file rewritten, passing a line-count and column-count check
+POLY-03 | Annotate agents/polyhymnia/CHARTER.md section by section with the archaeology classes (SUPERSEDED storage section, SUPERSEDED operator line, SUPERSEDED heartbeat) so the old text cannot be read as current; never rewrite it | ENGINE | program | S | none (deferred by "execute nothing"; a documentation edit, not a run) | the annotated charter with dated markers beside each superseded paragraph
+POLY-04 | Count distinct coordinate signatures in the tensor body and the per-axis cardinalities with the command committed, so "4,917 rows" becomes "N cells" | EVIDENCE | program | S | POLY-XL-01 (the body must still exist) | roles/Polyhymnia/science/ledgers/body_census_<date>.json with the command and the sha256 of the body it read
+POLY-05 | Measure the saturation curve of the shipped scour from events.jsonl (integrated vs null per day, 05-24 to 05-30) and commit it as the seat's first productivity-signal fixture | EVIDENCE | program | S | none (a read of an untracked log; deferred by "execute nothing") | roles/Polyhymnia/science/ledgers/scour_saturation_2026-05.json and the plotting-free table in the journal
+POLY-06 | Write the daemon's D-23 guard (refuse the canonical checkout), a last_input_at / last_success_at file, and a domain-level productivity signal (new cells per tick) BEFORE any restart; add the cheat control (a planted candidate cell that must integrate) and the positive/negative controls | ENGINE | alpha | M | POLY-XL-02 (no restart without a consumer) | agents/polyhymnia/tests/test_daemon_controls.py passing; the freshness file path named in the MONITORS.md row
+POLY-07 | Restate the "missing cell" lens (Mendeleev-gap over a slice) as a candidate gap-finding primitive for whichever consumer POLY-XL-02 names, with its null model written before any run | ENGINE | alpha | M | POLY-XL-02 | a design note under roles/Polyhymnia/science/ with the null model and the eligibility count, no run

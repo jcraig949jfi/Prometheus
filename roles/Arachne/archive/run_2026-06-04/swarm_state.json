@@ -1,0 +1,325 @@
+{
+  "updated_at": "2026-06-04T11:21:33.319995+00:00",
+  "tick": 700,
+  "landscapes_available": [
+    "mathlib",
+    "lmfdb",
+    "algolib",
+    "oeis",
+    "knots",
+    "groups"
+  ],
+  "alive": 7,
+  "fabric": {
+    "edges": 21209,
+    "nodes": 5621
+  },
+  "crawlers": [
+    {
+      "id": "oeis-0-4",
+      "parent": null,
+      "generation": 0,
+      "landscape": "oeis",
+      "born_landscape": "oeis",
+      "alive": true,
+      "death_reason": null,
+      "steps": 700,
+      "total_edges": 3396,
+      "fitness": 13.97,
+      "stall_streak": 0,
+      "frontier": 1716,
+      "visited": 446,
+      "ruleset": {
+        "max_neighbors": 6,
+        "novelty_floor": 0.8,
+        "hop": false,
+        "frontier_mode": "bfs",
+        "reseed_every": 40
+      }
+    },
+    {
+      "id": "oeis-1-28",
+      "parent": "lmfdb-0-22",
+      "generation": 1,
+      "landscape": "oeis",
+      "born_landscape": "oeis",
+      "alive": true,
+      "death_reason": null,
+      "steps": 525,
+      "total_edges": 2934,
+      "fitness": 7.48,
+      "stall_streak": 0,
+      "frontier": 1698,
+      "visited": 340,
+      "ruleset": {
+        "max_neighbors": 6,
+        "novelty_floor": 0.85,
+        "hop": false,
+        "frontier_mode": "bfs",
+        "reseed_every": 20
+      }
+    },
+    {
+      "id": "groups-6-104",
+      "parent": "groups-5-99",
+      "generation": 6,
+      "landscape": "groups",
+      "born_landscape": "groups",
+      "alive": true,
+      "death_reason": null,
+      "steps": 129,
+      "total_edges": 582,
+      "fitness": 2.764,
+      "stall_streak": 0,
+      "frontier": 103,
+      "visited": 58,
+      "ruleset": {
+        "max_neighbors": 6,
+        "novelty_floor": 0.7,
+        "hop": false,
+        "frontier_mode": "random",
+        "reseed_every": 50
+      }
+    },
+    {
+      "id": "lmfdb-4-119",
+      "parent": "mathlib-3-117",
+      "generation": 4,
+      "landscape": "lmfdb",
+      "born_landscape": "lmfdb",
+      "alive": true,
+      "death_reason": null,
+      "steps": 70,
+      "total_edges": 132,
+      "fitness": 2.099,
+      "stall_streak": 4,
+      "frontier": 27,
+      "visited": 32,
+      "ruleset": {
+        "max_neighbors": 6,
+        "novelty_floor": 0.95,
+        "hop": false,
+        "frontier_mode": "bfs",
+        "reseed_every": 20
+      }
+    },
+    {
+      "id": "algolib-2-125",
+      "parent": "algolib-1-123",
+      "generation": 2,
+      "landscape": "algolib",
+      "born_landscape": "algolib",
+      "alive": true,
+      "death_reason": null,
+      "steps": 12,
+      "total_edges": 16,
+      "fitness": 1.967,
+      "stall_streak": 1,
+      "frontier": 53,
+      "visited": 12,
+      "ruleset": {
+        "max_neighbors": 8,
+        "novelty_floor": 0.77,
+        "hop": false,
+        "frontier_mode": "random",
+        "reseed_every": 40
+      }
+    },
+    {
+      "id": "knots-1-126",
+      "parent": "mathlib-0-124",
+      "generation": 1,
+      "landscape": "knots",
+      "born_landscape": "knots",
+      "alive": true,
+      "death_reason": null,
+      "steps": 9,
+      "total_edges": 22,
+      "fitness": 2.533,
+      "stall_streak": 0,
+      "frontier": 52,
+      "visited": 9,
+      "ruleset": {
+        "max_neighbors": 8,
+        "novelty_floor": 0.77,
+        "hop": false,
+        "frontier_mode": "bfs",
+        "reseed_every": 40
+      }
+    },
+    {
+      "id": "mathlib-0-127",
+      "parent": null,
+      "generation": 0,
+      "landscape": "mathlib",
+      "born_landscape": "mathlib",
+      "alive": true,
+      "death_reason": null,
+      "steps": 1,
+      "total_edges": 0,
+      "fitness": 0.0,
+      "stall_streak": 1,
+      "frontier": 3,
+      "visited": 1,
+      "ruleset": {
+        "max_neighbors": 8,
+        "novelty_floor": 0.92,
+        "hop": false,
+        "frontier_mode": "bfs",
+        "reseed_every": 40
+      }
+    }
+  ],
+  "rosetta": {
+    "id": "rosetta",
+    "landscape": "rosetta",
+    "alive": true,
+    "total_edges": 1800,
+    "concepts_indexed": 2213,
+    "bridging_concepts": 189
+  },
+  "operational": {
+    "id": "operational",
+    "landscape": "operational",
+    "alive": true,
+    "total_edges": 0,
+    "funcs_tried": 12,
+    "funcs_total": 12,
+    "matched": 57
+  },
+  "graveyard_size": 120,
+  "recent_dead": [
+    {
+      "id": "mathlib-0-101",
+      "parent": null,
+      "generation": 0,
+      "landscape": "mathlib",
+      "born_landscape": "mathlib",
+      "alive": false,
+      "death_reason": "starved_or_looping",
+      "steps": 113,
+      "total_edges": 58,
+      "fitness": 0.691,
+      "stall_streak": 12,
+      "frontier": 2,
+      "visited": 109,
+      "ruleset": {
+        "max_neighbors": 8,
+        "novelty_floor": 0.92,
+        "hop": false,
+        "frontier_mode": "bfs",
+        "reseed_every": 40
+      }
+    },
+    {
+      "id": "algolib-2-120",
+      "parent": "groups-1-118",
+      "generation": 2,
+      "landscape": "algolib",
+      "born_landscape": "algolib",
+      "alive": false,
+      "death_reason": "starved_or_looping",
+      "steps": 47,
+      "total_edges": 50,
+      "fitness": 0.447,
+      "stall_streak": 12,
+      "frontier": 166,
+      "visited": 36,
+      "ruleset": {
+        "max_neighbors": 12,
+        "novelty_floor": 0.77,
+        "hop": false,
+        "frontier_mode": "bfs",
+        "reseed_every": 40
+      }
+    },
+    {
+      "id": "mathlib-0-122",
+      "parent": null,
+      "generation": 0,
+      "landscape": "mathlib",
+      "born_landscape": "mathlib",
+      "alive": false,
+      "death_reason": "starved_or_looping",
+      "steps": 12,
+      "total_edges": 0,
+      "fitness": 0.0,
+      "stall_streak": 12,
+      "frontier": 3,
+      "visited": 12,
+      "ruleset": {
+        "max_neighbors": 8,
+        "novelty_floor": 0.92,
+        "hop": false,
+        "frontier_mode": "bfs",
+        "reseed_every": 40
+      }
+    },
+    {
+      "id": "knots-0-121",
+      "parent": null,
+      "generation": 0,
+      "landscape": "knots",
+      "born_landscape": "knots",
+      "alive": false,
+      "death_reason": "starved_or_looping",
+      "steps": 40,
+      "total_edges": 126,
+      "fitness": 1.14,
+      "stall_streak": 12,
+      "frontier": 52,
+      "visited": 28,
+      "ruleset": {
+        "max_neighbors": 6,
+        "novelty_floor": 0.8,
+        "hop": false,
+        "frontier_mode": "bfs",
+        "reseed_every": 40
+      }
+    },
+    {
+      "id": "algolib-1-123",
+      "parent": "mathlib-0-122",
+      "generation": 1,
+      "landscape": "algolib",
+      "born_landscape": "algolib",
+      "alive": false,
+      "death_reason": "starved_or_looping",
+      "steps": 16,
+      "total_edges": 2,
+      "fitness": 0.2,
+      "stall_streak": 12,
+      "frontier": 41,
+      "visited": 15,
+      "ruleset": {
+        "max_neighbors": 8,
+        "novelty_floor": 0.77,
+        "hop": false,
+        "frontier_mode": "bfs",
+        "reseed_every": 40
+      }
+    },
+    {
+      "id": "mathlib-0-124",
+      "parent": null,
+      "generation": 0,
+      "landscape": "mathlib",
+      "born_landscape": "mathlib",
+      "alive": false,
+      "death_reason": "starved_or_looping",
+      "steps": 12,
+      "total_edges": 0,
+      "fitness": 0.0,
+      "stall_streak": 12,
+      "frontier": 3,
+      "visited": 12,
+      "ruleset": {
+        "max_neighbors": 8,
+        "novelty_floor": 0.92,
+        "hop": false,
+        "frontier_mode": "bfs",
+        "reseed_every": 40
+      }
+    }
+  ]
+}
