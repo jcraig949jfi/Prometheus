@@ -18,6 +18,17 @@ from qualification_rules import (                                    # noqa: E40
 from adversarial_fixtures import (                                   # noqa: E402
     FIXTURES_VERSION, run_battery, detect_f6)
 
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(
+    os.path.dirname(os.path.abspath(__file__)))), "contracts"))
+try:                                                   # D-23 startup refusal
+    from workspace_guard import assert_not_canonical, CanonicalCheckoutRefused
+    assert_not_canonical("run the H0-H5 qualification (it WRITES ledgers)")
+except ImportError:                                    # pragma: no cover
+    pass
+except CanonicalCheckoutRefused as e:
+    print("REFUSING: %s" % e)
+    raise SystemExit(2)
+
 OUT = {}
 print("=" * 74)
 print("H0-H5 QUALIFICATION  rules %s  fixtures %s" % (RULES_VERSION, FIXTURES_VERSION))
