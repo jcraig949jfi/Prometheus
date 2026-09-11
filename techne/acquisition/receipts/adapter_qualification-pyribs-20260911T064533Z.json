@@ -1,0 +1,477 @@
+{
+  "schema": "techne.acquisition.receipt/1",
+  "receipt_id": "adapter_qualification-pyribs-20260911T064533Z",
+  "stage": "ADAPTER_QUALIFICATION",
+  "does_not_establish": [
+    "INSTALLATION",
+    "FIRST_USEFUL_CHECK",
+    "PAPER_REPRODUCTION",
+    "LOCAL_SCIENTIFIC_BENEFIT"
+  ],
+  "entry_id": "pyribs",
+  "tool": "ribs",
+  "design_version": "0.1",
+  "written_utc": "2026-09-11T06:45:33+00:00",
+  "seat": "Techne",
+  "repo": {
+    "commit": "1953b0b8847619ef10e8ee281aaa6247b12fd9e0",
+    "branch": "techne/track-d-2026-09-10",
+    "dirty": true
+  },
+  "runner": {
+    "python": "3.12.10",
+    "executable": "F:\\Prometheus\\vault\\techne_tools\\envs\\h0h5_tools\\Scripts\\python.exe",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "tool_cache": "F:\\Prometheus\\vault\\techne_tools",
+    "tool_cache_source": "TECHNE_TOOL_CACHE env",
+    "tool_cache_note": "host-local and gitignored; only its HASHES are tracked"
+  },
+  "commands_run": [],
+  "observations": {
+    "seam": {
+      "seam": "archaeon.h3.stream.v0 -> techne.h3.stream/0",
+      "format_doc": "archaeon/docs/h0h5/H3_STREAM_FORMAT.md",
+      "n": 150,
+      "n_failed": 0,
+      "assay_ref_structured": {
+        "assay_id": "ca_density_v0",
+        "assay_version": "6d5d7406f:seed_root=930001:n_ic=100:steps=320:stable",
+        "digest": "sha256:497cc5a0c5355d1907de1b4c9b4fb36003f6f6b108baf6d23cac99bed1517d9a",
+        "original": "ca_density_v0@6d5d7406f:seed_root=930001:n_ic=100:steps=320:stable",
+        "version_includes_parameter_tail": true
+      },
+      "lineage_kind_derived_from_parent_ids": {
+        "SEEDED": 150,
+        "MUTATED": 0,
+        "RECOMBINED": 0
+      },
+      "grid_dims": [
+        4,
+        4
+      ],
+      "measure_ranges": [
+        [
+          -1.28e-07,
+          128.000000128
+        ],
+        [
+          -6.4e-08,
+          64.000000064
+        ]
+      ],
+      "descriptors_outside_declared_edges": 144,
+      "objective_degeneracy": {
+        "n_scored": 150,
+        "n_distinct_scores": 8,
+        "modal_score": 0.0,
+        "modal_count": 126,
+        "modal_fraction": 0.84,
+        "why_it_matters": "exact ties are resolved FIRST_WRITER_WINS, so a stream whose objective is mostly one value makes retention a function of ARRIVAL ORDER rather than of quality, for that mass. That is a property of the stream to report, not a parameter to tune."
+      },
+      "WEAKENED_AT_THE_SEAM": [
+        {
+          "id": "W1",
+          "property": "candidate digests",
+          "fixture": "recomputed from the payload the row carries",
+          "real_stream": "CARRIED ONLY -- the digest is over the sealed spec, which does not travel in the record, so the consumer cannot recompute it",
+          "still_holds": "duplicate detection, and tamper-detection against the stream digest",
+          "lost": "independent verification that the digest matches the candidate"
+        },
+        {
+          "id": "W2",
+          "property": "recoverable results",
+          "fixture": "resolver returns bytes; length AND sha256 both checked",
+          "real_stream": "replay_ref carries no content digest, so with a resolver the check is resolves-and-length-matches, and without one it is structural",
+          "still_holds": "every non-retained candidate keeps a resolvable reference",
+          "lost": "content verification of the resolved result"
+        }
+      ]
+    },
+    "stream_validation": {
+      "schema": "techne.h3.stream/0",
+      "seam_mode": true,
+      "digests_carried_not_recomputed": 150,
+      "result_refs_without_a_content_digest": 150,
+      "stream_id": "cs-c3-2",
+      "n_rows": 150,
+      "properties_checked": [
+        "ordered_ids",
+        "digests",
+        "birth",
+        "fixed_assay",
+        "recoverable",
+        "measures",
+        "caps"
+      ],
+      "result_refs_resolved": false,
+      "recoverability_check": "STRUCTURAL ONLY -- no resolver supplied, so the declared bytes and digest are the producer's claim, not a verified fact",
+      "unresolved_result_refs": 150,
+      "duplicate_digests_under_distinct_ids": {},
+      "n_duplicate_content_groups": 0,
+      "birth_status_counts": {
+        "SEEDED": 150,
+        "MUTATED": 0,
+        "RECOMBINED": 0,
+        "REPLAYED": 0
+      },
+      "stream_digest": "sha256:a408566af813c98d9808fd093b342312aed61a1fa387928d358d922d5a130254"
+    },
+    "techne_pyribs": {
+      "caps": {
+        "max_retained": 16,
+        "max_bytes": 1406830,
+        "retained": 8,
+        "retained_bytes": 7423,
+        "refused_for_count": 0,
+        "refused_for_bytes": 0
+      },
+      "counts": {
+        "RETAINED_NEW_CELL": 8,
+        "RETAINED_IMPROVED_CELL": 1,
+        "REJECTED_BY_ARCHIVE": 141,
+        "CAP_REFUSED_COUNT": 0,
+        "CAP_REFUSED_BYTES": 0,
+        "SKIPPED_NO_SCORE": 0
+      },
+      "binding": "NONE",
+      "grid_cells": 16,
+      "retained_bytes": 7423,
+      "retained_ids": [
+        "cand-00000",
+        "cand-00002",
+        "cand-00005",
+        "cand-00006",
+        "cand-00007",
+        "cand-00010",
+        "cand-00031",
+        "cand-00037"
+      ],
+      "tie_policy": "FIRST_WRITER_WINS",
+      "tie_verified": true,
+      "emitter_guard": {
+        "live_emitter_instances": [],
+        "live_scheduler_instances": [],
+        "modules_imported": 28,
+        "gate": "INSTANCE-LEVEL (module presence is unreachable: importing ribs.archives eagerly imports the emitters and schedulers packages)",
+        "pass": true
+      },
+      "notes": [
+        "NEITHER declared cap bound on this run. The caps are therefore implemented but NOT exercised, and this run is not evidence that they work. Use techne/h3_retention/fixture/stream_v0_capbind.jsonl or lower the caps."
+      ]
+    },
+    "archaeon_stream_manifest": {
+      "schema": "archaeon.h3.stream.v0",
+      "n": 150,
+      "n_failed": 0,
+      "stream_digest": "sha256:d0c2bab57e51c177c15f9788dfde1e55ad2ab453837aa7e33fb09a52205c0322",
+      "assay_ref": "ca_density_v0@6d5d7406f:seed_root=930001:n_ic=100:steps=320:stable",
+      "duplicate_digests": {},
+      "descriptor_dims": 2
+    },
+    "archaeon_policies": {
+      "top_k": {
+        "policy_id": "h3.top_k.v0",
+        "bounds": {
+          "retained_n": 16,
+          "retained_bytes": 15216,
+          "cap_items": 16,
+          "cap_bytes": 1406830,
+          "grid_cells": 16,
+          "count_pressure_events": 134,
+          "byte_pressure_events": 0,
+          "at_grid_capacity": false,
+          "binding": "COUNT",
+          "none_bound_note": null,
+          "event_counts": {
+            "evicted": 14,
+            "inserted": 30,
+            "refused_full": 120
+          }
+        },
+        "retained_stream_ids": [
+          2,
+          3,
+          4,
+          5,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29
+        ],
+        "archive_digest": "sha256:fd0c87be9359c533fe118f0134d378d96f221b2197be8fce0aa2e140e43dd5a7",
+        "agreement_with_pyribs": {
+          "identical": false,
+          "jaccard": 0.0909,
+          "only_in_policy": [
+            3,
+            4,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29
+          ],
+          "only_in_pyribs": [
+            0,
+            6,
+            7,
+            10,
+            31,
+            37
+          ]
+        }
+      },
+      "uniform": {
+        "policy_id": "h3.uniform.v0#20260910",
+        "bounds": {
+          "retained_n": 16,
+          "retained_bytes": 14991,
+          "cap_items": 16,
+          "cap_bytes": 1406830,
+          "grid_cells": 16,
+          "count_pressure_events": 29,
+          "byte_pressure_events": 0,
+          "at_grid_capacity": false,
+          "binding": "COUNT",
+          "none_bound_note": null,
+          "event_counts": {
+            "evicted": 29,
+            "inserted": 45,
+            "reservoir_skip": 105
+          }
+        },
+        "retained_stream_ids": [
+          1,
+          6,
+          21,
+          25,
+          32,
+          35,
+          38,
+          41,
+          50,
+          57,
+          79,
+          89,
+          107,
+          112,
+          128,
+          130
+        ],
+        "archive_digest": "sha256:d201cc3dc55d329a8dd5c13ffa5b01aba65c27ac07d936efdb226d2cdfff00fe",
+        "agreement_with_pyribs": {
+          "identical": false,
+          "jaccard": 0.0435,
+          "only_in_policy": [
+            1,
+            21,
+            25,
+            32,
+            35,
+            38,
+            41,
+            50,
+            57,
+            79,
+            89,
+            107,
+            112,
+            128,
+            130
+          ],
+          "only_in_pyribs": [
+            0,
+            2,
+            5,
+            7,
+            10,
+            31,
+            37
+          ]
+        }
+      },
+      "behavioral": {
+        "policy_id": "h3.behavioral.v0",
+        "bounds": {
+          "retained_n": 15,
+          "retained_bytes": 13966,
+          "cap_items": 16,
+          "cap_bytes": 1406830,
+          "grid_cells": 16,
+          "count_pressure_events": 0,
+          "byte_pressure_events": 0,
+          "at_grid_capacity": false,
+          "binding": "NONE",
+          "none_bound_note": "no bound was operative for this policy on this stream; its retained set is not evidence that its caps work",
+          "event_counts": {
+            "inserted": 15,
+            "rejected_incumbent_wins": 134,
+            "replaced": 1
+          }
+        },
+        "retained_stream_ids": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          10,
+          33,
+          36,
+          37,
+          40,
+          67,
+          86,
+          128
+        ],
+        "archive_digest": "sha256:bbdbc647c2541f0e6a836af02fb0864a9cac7454932ae92e77cc8dee63cfd37a",
+        "agreement_with_pyribs": {
+          "identical": false,
+          "jaccard": 0.3529,
+          "only_in_policy": [
+            1,
+            3,
+            4,
+            33,
+            36,
+            40,
+            67,
+            86,
+            128
+          ],
+          "only_in_pyribs": [
+            0,
+            31
+          ]
+        }
+      },
+      "hybrid": {
+        "policy_id": "h3.hybrid.v0#20260910",
+        "bounds": {
+          "retained_n": 16,
+          "retained_bytes": 14919,
+          "cap_items": 16,
+          "cap_bytes": 1406830,
+          "grid_cells": 16,
+          "count_pressure_events": 26,
+          "byte_pressure_events": 0,
+          "at_grid_capacity": true,
+          "binding": "COUNT+GRID_CELLS",
+          "none_bound_note": null,
+          "event_counts": {
+            "evicted": 14,
+            "inserted": 30,
+            "refused_full": 12,
+            "rejected_incumbent_wins": 125,
+            "replaced": 1,
+            "reservoir_skip": 132
+          }
+        },
+        "retained_stream_ids": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          10,
+          13,
+          33,
+          36,
+          37,
+          40,
+          42,
+          113,
+          143
+        ],
+        "archive_digest": "sha256:75eaa5a5b1d4c42f45130def79c8a871674575c82b69e098ff8788da6e3ed934",
+        "agreement_with_pyribs": {
+          "identical": false,
+          "jaccard": 0.3333,
+          "only_in_policy": [
+            1,
+            3,
+            4,
+            13,
+            33,
+            36,
+            40,
+            42,
+            113,
+            143
+          ],
+          "only_in_pyribs": [
+            0,
+            31
+          ]
+        }
+      }
+    },
+    "degeneracy_reading": {
+      "modal_score": 0.0,
+      "modal_fraction": 0.84,
+      "what_the_archives_do": "Under FIRST_WRITER_WINS an exactly equal objective never displaces an incumbent. So for the modal mass, retention is decided by ARRIVAL ORDER and by which descriptor cell each candidate lands in -- not by quality, because on that mass there is no quality difference to act on. behavioral and hybrid therefore retain the FIRST candidate to reach each cell; top_k retains the earliest of the tied best; uniform is unaffected because it never reads the objective.",
+      "not_tuned": "no cap, edge or descriptor was adjusted to make this more interesting. The degeneracy is a property of the stream and is reported as one."
+    }
+  },
+  "deviations": [],
+  "unrun_or_blocked": [],
+  "status": "COMPARED",
+  "check": "h3_policy_comparison_on_one_stream",
+  "consumer": "H3 retention replay (Archaeon)",
+  "stream_source": {
+    "candidates": "techne/h3_retention/c3_2/candidates.json",
+    "label": "cs-c3-2 under H3_DESCRIPTORS_v1 CONFIG A-grid-limited"
+  },
+  "budget_profile": {
+    "purpose": "run a first-useful-check or a reproduction fixture against ALREADY acquired bytes.",
+    "network": "FORBIDDEN -- enforced by the check harness, which asserts no acquisition step runs under this profile",
+    "max_wall_seconds": 600,
+    "max_download_bytes": 0,
+    "max_disk_bytes": 1073741824,
+    "max_rss_bytes": 4294967296,
+    "max_processes": 2,
+    "rationale": "Scientific execution uses already-available inputs and dependencies. A check that needs the network is an acquisition step wearing a check's name.",
+    "name": "offline_check"
+  },
+  "resource_receipt": {
+    "profile": "offline_check",
+    "network_policy": "FORBIDDEN -- enforced by the check harness, which asserts no acquisition step runs under this profile",
+    "wall_seconds": 21.797,
+    "wall_ceiling": 600,
+    "downloaded_bytes": 0,
+    "download_ceiling": 0,
+    "cache_bytes_before": 2618269711,
+    "cache_bytes_after": 0,
+    "cache_delta_bytes": -2618269711,
+    "peak_rss_bytes_os_counter": 232652800,
+    "peak_rss_bytes_sampled": 220155904,
+    "rss_method": "GetProcessMemoryInfo",
+    "rss_ceiling": 4294967296,
+    "rss_samples": 85,
+    "rss_ceiling_exceeded_during_sampling": false,
+    "rss_enforcement": "NOT ENFORCED -- no job object / cgroup cap. peak_rss_bytes_os_counter is the OS peak-working-set counter for this process and IS reliable; rss_ceiling_exceeded_during_sampling is sampled and can miss a spike. Neither stops a step.",
+    "rss_excludes_children": "This is THIS process only. pip, git and venv run as children and their RSS is NOT included.",
+    "children_spawned": 0,
+    "process_cap": 2,
+    "aborted_on": null
+  }
+}

@@ -78,6 +78,24 @@ def structured_assay(assay_ref: str) -> dict:
     }
 
 
+def bin_index(value: float, edges: Sequence[float]) -> int:
+    """Archaeon's binning, verbatim: k = the number of declared edges the value is at or above.
+
+    THIS IS WHY IT EXISTS. pyribs GridArchive bins by EQUAL WIDTH over (dims, ranges); it cannot
+    express arbitrary declared edges. Archaeon's v1 edges are equal-MASS, so on axis 0 the four
+    bins have widths 60.5 / 4.0 / 4.0 / 59.5. Handing the raw descriptor to a GridArchive would
+    silently apply a different binning and the two implementations would disagree about which
+    cell a candidate is in.
+
+    v0's edges happened to be equal-width (32/32/32/32 and 16/16/16/16), so an equal-width grid
+    reproduced them BY COINCIDENCE -- which is why the 2026-09-10 run agreed exactly and why
+    that agreement was weaker evidence than it looked. The fix is to bin HERE, against the
+    declared edges, and hand the archive an integer cell index whose equal-width grid is then
+    exact by construction.
+    """
+    return sum(1 for e in edges if value >= e)
+
+
 def ranges_from_edges(edges: Sequence[Sequence[float]],
                       descriptors: Sequence[Sequence[float]]) -> list[list[float]]:
     """Archaeon bins descriptors by declared EDGES; my archive takes ranges + dims.
@@ -131,11 +149,17 @@ def from_candidates(candidates: Iterable[Any], *, edges: Sequence[Sequence[float
                         f"comparison needs one instrument")
     assay = structured_assay(next(iter(assays))) if assays else None
 
-    descriptors = [tuple(float(x) for x in r["descriptors"]) for r in rows_in]
+    raw_descriptors = [tuple(float(x) for x in r["descriptors"]) for r in rows_in]
     dims = dims_from_edges(edges)
-    ranges = ranges_from_edges(edges, descriptors)
+    # PRE-BINNED measures: the archive receives the declared cell index per axis, not the raw
+    # descriptor, so an equal-width grid over integers reproduces Archaeon's declared edges
+    # exactly instead of approximating them.
+    descriptors = [tuple(float(bin_index(d[j], edges[j])) for j in range(len(edges)))
+                   for d in raw_descriptors]
+    # an integer axis with n bins needs a range that puts bin k in cell k under equal width
+    ranges = [[0.0, float(len(es) + 1)] for es in edges]
     out_of_declared_edges = sum(
-        1 for d in descriptors
+        1 for d in raw_descriptors
         for j, es in enumerate(edges)
         if es and (d[j] < min(es) or d[j] > max(es)))
 
@@ -186,6 +210,20 @@ def from_candidates(candidates: Iterable[Any], *, edges: Sequence[Sequence[float
             k: sum(1 for r in raw_rows if r["birth"]["status"] == k)
             for k in ("SEEDED", "MUTATED", "RECOMBINED")},
         "grid_dims": dims, "measure_ranges": ranges,
+        "measures_are_PRE_BINNED": {
+            "what": "the archive receives the declared BIN INDEX per axis, not the raw "
+                    "descriptor",
+            "why": "pyribs GridArchive bins by equal width and cannot express arbitrary "
+                   "declared edges. v1's edges are equal-MASS, giving bin widths "
+                   "60.5/4.0/4.0/59.5 on axis 0; handing raw descriptors to an equal-width grid "
+                   "would apply a DIFFERENT binning. v0's edges were equal-width, so the "
+                   "2026-09-10 agreement was exact by coincidence rather than by construction.",
+            "binning_function": "k = count of declared edges the value is at or above "
+                                "(Archaeon's _cell, verbatim)",
+            "raw_descriptor_ranges_observed": [
+                [min(d[j] for d in raw_descriptors), max(d[j] for d in raw_descriptors)]
+                for j in range(len(edges))],
+        },
         "descriptors_outside_declared_edges": out_of_declared_edges,
         "objective_degeneracy": {
             "n_scored": len(scores), "n_distinct_scores": len(score_hist),

@@ -21,6 +21,28 @@ PYTHONPATH=<repo> <tool_cache>/envs/h0h5_tools/Scripts/python \
 Receipts: `techne/acquisition/receipts/adapter_qualification-pyribs-20260910T2220{45,58}Z.json`
 and `…T222118Z.json`.
 
+## ERRATUM, 2026-09-11 — the agreement below was COINCIDENTAL, and is now by construction
+
+The headline agreement in this receipt is real but was weaker evidence than I presented it as.
+
+My seam handed pyribs the RAW descriptor with `(dims, ranges)`, and `GridArchive` bins by EQUAL
+WIDTH. Archaeon's v0 edges happened to be equal-width — `[32, 64, 96]` over 0–128 gives bin
+widths 32/32/32/32, and `[16, 32, 48]` over 0–64 gives 16/16/16/16 — so an equal-width grid
+reproduced the declared binning **by coincidence**. It was not evidence that the seam honours
+declared edges, because it did not.
+
+Archaeon's v1 descriptors are equal-MASS: `[60.5, 64.5, 68.5]` gives bin widths
+**60.5 / 4.0 / 4.0 / 59.5**. On those, my adapter silently applied a different binning and
+disagreed with `behavioral` — 8 retained against 15, jaccard 0.35.
+
+FIXED: the seam now bins against the declared edges itself (`archaeon_seam.bin_index`, Archaeon's
+`_cell` verbatim) and hands the archive an integer cell index, so an equal-width grid over
+integers reproduces any declared edges exactly. Re-verified both directions: **v1 now agrees
+(15 retained, jaccard 1.0) and v0 still agrees (8 retained, jaccard 1.0)**. The agreement holds by
+construction rather than by luck.
+
+Everything below stands as measured. What changes is what it was evidence FOR.
+
 ## The headline: two independent implementations agree exactly
 
 `behavioral` — Archaeon's policy — and my pyribs adapter retain the **identical set**, in all
