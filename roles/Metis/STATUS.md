@@ -1,21 +1,28 @@
 # Metis STATUS
 
-Currency: 2026-09-11, written on the seating pass. Plain language.
+Currency: 2026-09-11, second update (seated, then re-premised by
+operator ruling the same day). Plain language.
 
-## Seat state: BLOCKED
+## Seat state: AWAITING SEASON PROMPT
 
-- The operator's directive on 2026-09-11 is bootstrap and registration
-  only. Nothing under agents/metis/ or scripts/ was executed, repaired
-  or restarted on this pass.
-- Named blocker: an operator ruling on
-  roles/Metis/ARCHAEOLOGY_2026-09-11.md -- METIS-01 (does this seat own
-  the unclaimed portfolio-brief producer chain) and METIS-02 (is the
-  seat re-premised around the typing rule, or parked). Both are XL rows
-  in BACKLOG_H0H5.md.
-- Asserting PRESENT: two code bodies, a brief residue, two declared
-  consumers, two registry rows. NOT ACTIVE, NOT PRODUCTIVE. Every
-  productivity claim in this seat's history is UNVALIDATED, including
-  the ones on the face of its own briefs.
+- METIS-02 RULED: the seat is RE-PREMISED. The lane is COMPOSITION --
+  whether heterogeneous failure evidence combines into a better next
+  experiment than any single channel would select. Ruling committed
+  verbatim at roles/Metis/prompts/2026-09-11_season1_ruling/.
+- METIS-01 RULED, by implication: Metis does NOT own the dashboard
+  brief. "Not an orchestrator, judge, or daily-report generator." The
+  producer is still dead and still unowned; re-routed as METIS-01R to
+  the operator and Archaeon. Metis declining the lane is not the lane
+  being fixed, and this seat will not let its own exit read as closure.
+- METIS-14 (TALOS-10): provisional NONE explicitly endorsed and HELD
+  until the season establishes whether this seat has an instrument
+  worth exposing to other seats.
+- Nothing of the season executes until the operator's season prompt
+  exists and its hashes verify against a MANIFEST. The seat is not
+  blocked on a decision; it is waiting on a specification, which is a
+  different state and a shorter one.
+- Asserting PRESENT. NOT ACTIVE, NOT PRODUCTIVE. Every productivity
+  claim in this seat's history remains UNVALIDATED.
 
 ## Where the seat is
 
@@ -100,10 +107,41 @@ Currency: 2026-09-11, written on the seating pass. Plain language.
   answer is NONE, with the reason written into METIS-14; it is not
   posted on this pass.
 
+## Season 1 precondition, discharged 2026-09-11
+
+Base rule 9 makes upstream liveness a LAUNCH precondition. The season's
+upstream is five named dead episodes; the survey is
+roles/Metis/ledgers/EPISODE_PRECONDITION_2026-09-11.md and it was run
+before the ruling was acknowledged.
+
+    Geometry-1        RECOVERABLE, strong (retraction registry; the
+                      cheaper test was written and run 10 days LATE)
+    Saxl              RECOVERABLE, strong; an INVERSION -- the registry
+                      asserted the false form ~3 months while the
+                      arXiv withdrawal was public
+    Erebos            RECOVERABLE but AMBIGUOUS between two threads;
+                      "transport" names one, "composition" is the one
+                      that fits the season. Operator to disambiguate.
+    greedy-LoRA       RECOVERABLE, strong, and NOT a failure: a
+                      headline collapse, +0.678 raw decomposing to
+                      ~+0.097 genuine reasoning over a 0.669 prior
+                      floor. Four CORRELATED channels agreed.
+    Apollo lift       RECOVERABLE, strongest provenance (pre-registered
+                      kill condition). Carries a trap: the April
+                      llm_alive=0 signal that looks like a 3-month-early
+                      warning was an instrument artifact.
+
+One error of this seat's own is recorded in the survey and as C-05: the
+first pass reported greedy-LoRA not locatable, because it read a
+prefix (`head -40`) of a sorted listing. The claim was wrong and would
+have removed the best episode from the set.
+
 ## Next executable action
 
-Await the operator on METIS-01 (ownership of the dashboard brief's
-content) and METIS-02 (re-premise or park). Nothing restarts: both
-dormant loops stay stopped, and the 61-hour-old brief is not
-regenerated, because regenerating it under an alarm that cannot fire
-would produce a fresh envelope around the same blind spot.
+Receive the season prompt, verify its hashes against its MANIFEST, and
+report the two design risks named in section 7 of the precondition
+ledger before building anything: five episodes cannot both fit and test
+a rule, and every surviving record was authored with the outcome known,
+which biases all five the same way. Nothing restarts meanwhile: both
+dormant loops stay stopped and the 61-hour-old brief is not
+regenerated.

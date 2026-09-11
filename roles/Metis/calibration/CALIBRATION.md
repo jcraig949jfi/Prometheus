@@ -90,6 +90,27 @@ written down in advance so they can be LOST.
     LESSON    For this seat: read WORKING_CONTRACT.md before the first
               git command, not in boot step 4.
 
+    C-05  2026-09-11, the season-1 precondition survey
+    CALL      Reported greedy-LoRA NOT LOCATABLE after searching for it
+              two ways.
+    WRONG     roles/Ergon/GREEDY_LORA_RESULT_2026-06-03.md exists, 179
+              lines plus a 2026-06-04 addendum, and is the strongest
+              case in the whole episode set. The first search piped
+              `git ls-files` through `head -40` and the path sorts
+              below the cut; the second used `git grep`, which searches
+              contents, not filenames. A third search in the same pass
+              matched "expLORAtion" on a case-insensitive substring.
+    COST      Had this reached the operator's season prompt, the best
+              available episode would have been dropped from the set on
+              this seat's say-so.
+    LESSON    Base s2 already says it: enumerate the inventory, never
+              read a prefix. A negative existence claim is the one
+              claim a prefix can never support. For this seat
+              specifically: a compression instrument that reports
+              "nothing there" is making its most dangerous kind of
+              claim, because absence is what compression produces by
+              default.
+
 ## Pre-registered predictions (written now so they can be lost)
 
 P-1. If METIS-08 (the claim-set no-op detector) is built and replayed
@@ -113,9 +134,25 @@ P-3. If METIS-03 resolves, the deployed docs/state.json producer will
      repository" is the comfortable answer, which is a reason to
      distrust it.
 
-P-4. The re-premised seat, if METIS-02 is granted, will produce briefs
-     that are MOSTLY NO-OPS. I expect a majority of cycles to print
-     NO_NEW_STATE. If they do not -- if the program's state changes
-     materially every cycle -- then the typing rule is not the
-     constraint I think it is, and constraint 3 is solving a problem
-     that does not exist at the reporter's cadence.
+P-4. SUPERSEDED 2026-09-11 by the operator's ruling: the seat is
+     re-premised to composition, not to brief production, so there are
+     no cycles to be no-ops. The original prediction is kept visible
+     rather than deleted, and it is UNRESOLVED, not right or wrong.
+
+P-5. (Season 1, written before the season prompt exists.) A
+     deterministic composition rule fitted on these five episodes will
+     NOT beat the best single evidence channel out of sample. My reason
+     is greedy-LoRA: the four agreeing channels there were correlated
+     through a shared format-following gain, so channel AGREEMENT was
+     anti-predictive, and a rule that counts agreement gets that
+     episode exactly backwards. I expect the season's honest output to
+     be a negative result plus a named veto primitive, not a working
+     selector. If a working selector does emerge from five episodes, I
+     should be suspected of fitting it, and the train/test split in
+     section 7 of the precondition ledger is the thing that would
+     catch me.
+
+P-6. The single most useful artifact this season produces will be the
+     VETO list, not the ranking. I predict that "which experiments a
+     rule refuses to select, and why" survives contact with a sixth
+     episode, and that the ranking does not.
