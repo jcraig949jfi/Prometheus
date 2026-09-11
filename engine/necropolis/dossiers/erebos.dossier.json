@@ -73,7 +73,9 @@
       "[EXECUTED engine/necropolis/dossiers/erebos_evidence/erebos_external_refs_result.json] P57 grep replicated in its own scope (case-sensitive EREBOS over engine/, techne/, charon/BACKLOG.md, charon/CHARON_SESSION_*.md): 3 files, all autopsy/queue ledgers written by the same program; same scope case-insensitive: 14 files. Tracked tree, case-insensitive, excluding the agent's own dir and pivot/erebos_*: 198 files, of which charon/agents/stygian=53, harmonia=19; code importers of charon.agents.erebos outside it: ['charon/agents/_base.py', 'charon/agents/stygian/executor.py', 'charon/agents/stygian/tests/test_phase0_integration.py', 'harmonia/primitives/test_baseline_costume_parity.py', 'roles/Polyhymnia/ledgers/tensor_body_2026-09-11/tesserae.jsonl'].",
       "[EXECUTED engine/necropolis/dossiers/erebos_evidence/erebos_seam_census_result.json] REGISTRY=25 plugins; executor force-imports 29 composition loader modules, 29 register, 0 import failures; find_loader() resolves a daemon-shaped row for 14/25 plugins; the 11 plugins with 0 loaders are exactly the 11 quarantined by _quarantine.py (loader-debt cap); daemon queue-row keys cover every key the loaders read (missing=[]); non-erebos control row resolves=False.",
       "[EXECUTED engine/necropolis/dossiers/erebos_evidence/erebos_tests_offline_result.json] pytest offline at baseline: erebos tests {'passed': 608, 'skipped': 1}, sprint1 {'passed': 59}, stygian composition {'passed': 146}; total passed=813 failed/error=0; 0 network-library imports in the packages grepped.",
-      "[EXECUTED engine/necropolis/dossiers/erebos_evidence/erebos_consumer_audit_rerun_result.json via scripts/composed_claim_consumer_audit.py] ComposedClaim fields 16, with consumers 14, zero-use ['information_gain_nats', 'reuse_value_count'] (May 28 audit: 4 zero-use; the two cost fields gained consumers after May 28 [QUOTED pivot/erebos_composed_claim_consumer_audit_2026-05-28.json])."
+      "[EXECUTED engine/necropolis/dossiers/erebos_evidence/erebos_consumer_audit_rerun_result.json via scripts/composed_claim_consumer_audit.py] ComposedClaim fields 16, with consumers 14, zero-use ['information_gain_nats', 'reuse_value_count'] (May 28 audit: 4 zero-use; the two cost fields gained consumers after May 28 [QUOTED pivot/erebos_composed_claim_consumer_audit_2026-05-28.json]).",
+      "[EXECUTED-BY-CLERIC engine/necropolis/dossiers/erebos_evidence/cleric_lift_only_calibration_result.json] committed harness pair_aware_permutation_null.py, lift-only planted signal class, 699 rows, 3 seeds: NULL observed [1,2,0] null_p95 [1,1,1] p [0.275,0.03,1.0] -> 1/3 false positive at observed=2; LIFT2 observed [5,10,6] null_p95 [9,9,7] p [0.69,0.04,0.23] detected 1/3; LIFT3 observed [7,11,7] null_p95 [10,9,8] p [0.44,0.01,0.2] detected 1/3. The null floor is marginal-dependent (p95 1 here, 2 historically, 7-10 under concentrated marginals).",
+      "[EXECUTED-BY-KEEPER git log --date=iso-local -- charon/agents/erebos pivot/sprint1/phase3] ITER-56..66 committed 2026-05-30 02:33..05:50 local, BEFORE the 11:40-12:25 fleet halt; ITER-83/84 (Phase 3.K, d7120eb5a) committed 2026-06-03 06:27, AFTER it; no ITER commit after 06-03; the 06-15 reset came 12 days later. The fleet halt stopped the daemon, not the pre-committed ITER stream."
     ],
     "artifact_counts": {
       "agora_erebos_tick_rows": 213,
@@ -102,6 +104,8 @@
   },
   "autopsy": {
     "prior_verdicts": [
+      "2026-05-30 ITER-56/57 (author): H-B v1 FAIL on counter baseline, 'empirically falsified'; redesign required.",
+      "2026-05-30 ITER-58 (author): H-B v2 PASS, 3 deltas vs counter; ITER-63/64/66 (same day): p=0.055, HIERARCHICAL_ONLY, 'null grew faster than signal', claim NARROWS.",
       "2026-06-03 Charon Phase 3.K: pair-aware claim STATISTICALLY UNDERDETERMINED (p=0.105), triplet FALSIFIED; 'no Erebos Layer-2 real-data signal claim survives a permutation null'.",
       "2026-06-15 Charon reset: PAUSED, off-spine until it has a consumer.",
       "2026-06-23 disposition row 33: PAUSED -> revive only post-organism; realized~0 (0 perm-null survivors); pre-committed kill at ITER-100.",
@@ -127,8 +131,8 @@
         "review": "PARTIALLY_UPHELD",
         "errors": [
           "'Loader never shipped' is false: 19 loader commits 2026-05-26..05-30, 29 modules, ITER-5 tally 2 PROMOTED / 4 REJECTED / 1 UNVERIFIED [EXECUTED history census; QUOTED iter5 doc].",
-          "'realized=none' converts STATISTICALLY UNDERDETERMINED into zero; the statistic has no resolution at N=699 [EXECUTED calibration].",
-          "Correctly relayed: Phase 3.K numbers, the PAUSED state, and the absence of a downstream organism."
+          "'realized=none' is literally true on the record (nothing consumed a PROMOTED claim; no Layer-2 signal cleared a null); the error is the inference that 0 survivors is a null RESULT about Layer-2 value -- the statistic was at its floor and computed over pipeline state [EXECUTED calibrations; READ fbe4f6b7a].",
+          "Correctly relayed: Phase 3.K numbers, the PAUSED state, the absence of a downstream organism, and the ITER-66 trend."
         ]
       },
       {
@@ -136,20 +140,18 @@
         "claim": "PAUSED -> revive only post-organism; realized~0 (0 perm-null survivors); latent high; pre-committed kill at ITER-100.",
         "review": "PARTIALLY_UPHELD",
         "errors": [
-          "'0 perm-null survivors' re-labels an underdetermined test as a null result; the ITER-100 kill it cites was never executed (max ITER-84), so no Erebos kill condition fired."
+          "One inference only: '0 perm-null survivors' read as a null result about Layer-2 value; the count is true, the reading is not supported (instrument at floor, outcome column carried pipeline state). The ITER-100 kill it cites was never executed (max ITER-84) and had already been abandoned on 06-03. Everything else in the row stands. (The enum cannot express 'UPHELD with one error'; DD-10.)"
         ]
       },
       {
         "source": "charon/CHARON_SESSION_2026-06-03.md + pivot/sprint1/phase3/PHASE3_K_PAIR_AWARE_NULL_VERDICT_2026-06-03.md",
-        "claim": "Pair-aware claim STATISTICALLY UNDERDETERMINED (p=0.105, 7-seed mean 0.102); triplet claim FALSIFIED; no Layer-2 real-data signal claim survives a permutation null.",
-        "review": "PARTIALLY_UPHELD",
-        "errors": [
-          "The numbers stand as quoted and the author's own label (underdetermined) is honest; but 'does not survive' overstates: on 699-row ledgers the substrate-vs-pair-aware delta statistic cannot clear p<0.05 even for a strongly planted linkage (0/3) [EXECUTED calibration]. The triplet FALSIFIED verdict was not re-executed (ledger absent)."
-        ]
+        "claim": "Pair-aware claim STATISTICALLY UNDERDETERMINED (p=0.105, 7-seed mean 0.102); triplet claim FALSIFIED; 'no Layer-2 real-data signal claim survives a permutation null'; section 7 names the shrinking-with-N trend as the strongest single diagnostic.",
+        "review": "UPHELD",
+        "errors": []
       },
       {
         "source": "charon/CHARON_SESSION_2026-06-15.md (program reset)",
-        "claim": "PAUSE Erebos; off-spine until it has a consumer (an organism), the swarm is an immune system with no organism.",
+        "claim": "PAUSE Erebos; 'OFF until they have a consumer: ... Erebos composition (paused; reframe Phase-3 docs honestly -- 0 signal passes survive nulls, 1 infra pass stands)' [aporia/docs/STATUS_2026-06-15_reset.md L102-103]; the swarm is an immune system with no organism [CHARON_SESSION_2026-06-15.md].",
         "review": "UPHELD",
         "errors": []
       },
@@ -166,35 +168,39 @@
         "claim": "Realized value ~0 with 0 permanence-null survivors; likely a defended TRUE_CORPSE.",
         "review": "OVERTURNED",
         "errors": [
-          "TRUE_CORPSE needs a FAIR test and a HYPOTHESIS/PREMISE failure; the record has neither: the only Layer-2 value test was underdetermined by its instrument and the pre-committed kill never ran."
+          "TRUE_CORPSE needs a FAIR test and a HYPOTHESIS/PREMISE failure; the record has neither: the only Layer-2 value test was computed over a column of pipeline state with a statistic at its floor, and the pre-committed kill never ran. The record LEANS the queue's way (v1 refuted, v2 narrowed, trend against) -- the label is unearned, not necessarily wrong."
         ]
       }
     ],
     "cause_of_death_stack": {
       "HYPOTHESIS": {
-        "verdict": "VALID",
-        "finding": "Two hypotheses sit under one agent_id. H-A (Layer 1): composing existing Stygian/Pollux/Hecate verdicts into new falsifiable claims yields claims the falsifier can verdict. H-B (Layer 2): a kill_tensor + cross-cell motif + routing substrate adds measurable value over a Layer-1-only baseline (pre-committed test at ITER-100). Neither was refuted on the record: H-A was exercised (14/25 plugins reached a loader; PROMOTED/REJECTED/UNVERIFIED verdicts by ITER-5, later self-reclassified to catalog/substrate tier); H-B's pair-aware claim was reported STATISTICALLY UNDERDETERMINED and its triplet sub-claim FALSIFIED, and the ITER-100 test was never run (max ITER-84). Not a HYPOTHESIS_FAILURE on this record; also not a confirmation.",
+        "verdict": "NOT_EXAMINED",
+        "finding": "Two hypotheses under one agent_id, and H-B in two versions. H-A (Layer 1): composing existing Stygian/Pollux/Hecate verdicts into new falsifiable claims. H-B v1 (Layer 2 as originally built): motif routing adds value over a per-plugin counter -- REFUTED on real data by its author at ITER-56 and ITER-57 (routing exactly equals the majority counter; the author's word is 'falsified'). H-B v2 (cross-cell motif primitive, same day, ITER-58): 3 deltas, then narrowed under every adversarial pass (ITER-63 p=0.055, ITER-66 worse at 5x, ITER-64 lateral zero, Phase 3.K p=0.105, triplet below null). The v1 refutation is a design fact (a counter by construction) and is filed on DESIGN; H-B v2 and H-A's value premise were never carried to the pre-committed test, and every VALID reading of this layer on the previous pass rested on quoted verdicts, not executed evidence (LAW N17). NOT_EXAMINED is the honest verdict; it does NOT say well-posed and it does NOT say HYPOTHESIS_FAILURE.",
         "evidence": [
-          "[EXECUTED engine/necropolis/dossiers/erebos_evidence/erebos_seam_census_result.json] REGISTRY=25 plugins; executor force-imports 29 composition loader modules, 29 register, 0 import failures; find_loader() resolves a daemon-shaped row for 14/25 plugins; the 11 plugins with 0 loaders are exactly the 11 quarantined by _quarantine.py (loader-debt cap); daemon queue-row keys cover every key the loaders read (missing=[]); non-erebos control row resolves=False.",
-          "[EXECUTED engine/necropolis/dossiers/erebos_evidence/erebos_history_census_result.json] git log charon/agents/erebos: 39 commits 2026-05-26..2026-06-03; composition loaders: 19 commits 2026-05-26..2026-05-30; highest ITER named in docs/code below 100 = 84; ITER-100 named only as the future pre-committed kill (5 mentions); runtime state/artifacts/logs/queues absent in this worktree, the main worktree and the data backup.",
-          "[QUOTED pivot/erebos_substrate_finding_iter5_salem_extends_to_band_2026-05-26.md] tally at ITER-5: 7 composition loaders, 2 PROMOTED, 4 REJECTED at expected kill pattern, 1 UNVERIFIED.",
-          "[QUOTED pivot/erebos_finding_reclassification_2026-05-27.md] the author moved the ITER-4/5/13 findings to Catalog tier and G10/G15 to Substrate tier: real verdicts, modest mathematics.",
-          "[QUOTED pivot/sprint1/phase3/PHASE3_K_PAIR_AWARE_NULL_VERDICT_2026-06-03.md] **Verdict:** **STATISTICALLY UNDERDETERMINED** (pair-aware claim) **+ FALSIFIED** (triplet claim). The architecture's single strongest real-data validation \u2014 the Phase 3.E \"ROBUST PASS, lift filter is load-bearing\" claim"
+          "[READ git show fbe4f6b7a (2026-05-30 02:33 local, ITER-56)] 'Layer 2's motif-based routing recommendation EXACTLY matches the trivial per-plugin majority counter. Zero actionable routing deltas.' and '570 rows but only ~8 distinct REAL Layer-1 verdicts; rest are pending / not-yet-implemented.' Re-read by the Keeper 2026-09-11; reproduces as the Cleric quoted it (C-1, C-4).",
+          "[READ git show f837d4281 (2026-05-30 04:50 local, ITER-57)] combined 638 rows: 'Plugins where Layer 2 != counter: STILL 0 / 16'; 'Actionable routing deltas: STILL 0'; 'Verdict: still FAIL on counter baseline'; redesign required.",
+          "[READ git show c7977df3f (2026-05-30 05:12 local, ITER-58)] H-B v2 (cross-cell motif primitive): 3 actionable deltas vs counter on 640 rows; the three deltas listed are of the form given (g02_contrast, kp_pending) counter says stygian_hecate_meta_test_not_yet_implemented / substrate says stygian_no_loader_registered -- pipeline state predicting pipeline state (C-4).",
+          "[READ git show 36f46b97f (2026-05-30 05:50 local, ITER-63/64/66)] permutation null p=0.055 (ITER-63); 5x scale stress: null mean 0.64->1.74, z 2.48->1.92, p 0.055->0.080, 'null grew faster than signal', 'INCONCLUSIVE leaning fail' (ITER-66); lateral signatures 14 -> ZERO deltas, HIERARCHICAL_ONLY, 'empirically falsified on lateral structure' (ITER-64); 'Possibility C (doctrine's main claim is wrong) is now LIVE'.",
+          "[QUOTED pivot/sprint1/phase3/PHASE3_K_PAIR_AWARE_NULL_VERDICT_2026-06-03.md] N_PERMUTATIONS=200, SEED=1789, observed vs pair-aware=2, vs per-plugin=3, p=0.105, 7-seed mean=0.102."
         ],
         "cause_classes": [],
         "load_bearing": false
       },
       "DESIGN": {
-        "verdict": "VALID",
-        "finding": "The design pre-committed its own kill (ITER-100 Layer-2-vs-Layer-1; Sprint-1 rule >=4/10 fails -> PAUSED), capped loader debt with an explicit quarantine (the 11 loaderless plugins are exactly the 11 quarantined), and shaped its queue rows to the loader contract. Two design weaknesses are recorded but not found load-bearing: (i) two hypotheses share one agent and one kill switch; (ii) the Sprint-1 gate ran on synthetic fixtures (10/10 PASS) and is calibration, not value.",
+        "verdict": "INVALID",
+        "finding": "The design could not answer its own question. (1) The value premise was 'PROMOTED claims per cost' but no consumer of PROMOTED composed claims and no cost producer were named at birth (LAW N6), so realised value was unmeasurable by construction; no organism ever consumed a PROMOTED claim. (2) H-B v1's Layer-2 primitive was a per-plugin counter by construction (ITER-56/57), repaired at ITER-58 -- repaired before the pre-committed test, so not load-bearing on its own. (3) The Layer-2 value test was designed over a kill_ledger whose outcome column mostly carried pipeline state (see MEASUREMENT). What the design did well stands: a pre-committed kill (ITER-100), a Sprint-1 kill rule, a loader-debt quarantine. Load-bearing: (1) alone makes the certificates' 'realised ~0' unfalsifiable in either direction.",
         "evidence": [
+          "[QUOTED pivot/COMPONENT_DOSSIERS_2026-06-24.md ### Erebos] value premise stated as PROMOTED claims per cost; no organism named to consume PROMOTED composed claims; no cost producer named (C-8; LAW N6 'consumer at birth': 'A resurrection candidate without a concrete named consumer and a consumption-proof mechanism is malformed').",
+          "[READ git show fbe4f6b7a (2026-05-30 02:33 local, ITER-56)] 'Layer 2's motif-based routing recommendation EXACTLY matches the trivial per-plugin majority counter. Zero actionable routing deltas.' and '570 rows but only ~8 distinct REAL Layer-1 verdicts; rest are pending / not-yet-implemented.' Re-read by the Keeper 2026-09-11; reproduces as the Cleric quoted it (C-1, C-4).",
+          "[READ git show f837d4281 (2026-05-30 04:50 local, ITER-57)] combined 638 rows: 'Plugins where Layer 2 != counter: STILL 0 / 16'; 'Actionable routing deltas: STILL 0'; 'Verdict: still FAIL on counter baseline'; redesign required.",
           "[EXECUTED engine/necropolis/dossiers/erebos_evidence/erebos_seam_census_result.json] REGISTRY=25 plugins; executor force-imports 29 composition loader modules, 29 register, 0 import failures; find_loader() resolves a daemon-shaped row for 14/25 plugins; the 11 plugins with 0 loaders are exactly the 11 quarantined by _quarantine.py (loader-debt cap); daemon queue-row keys cover every key the loaders read (missing=[]); non-erebos control row resolves=False.",
-          "[EXECUTED engine/necropolis/dossiers/erebos_evidence/erebos_tests_offline_result.json] pytest offline at baseline: erebos tests {'passed': 608, 'skipped': 1}, sprint1 {'passed': 59}, stygian composition {'passed': 146}; total passed=813 failed/error=0; 0 network-library imports in the packages grepped.",
           "[READ charon/agents/erebos/sprint1/verdict.py] KILL_RULE_MAX_FAILS = 4; go_no_go PROCEED/PAUSED.",
           "[READ pivot/erebos_doctrine_v1_2026-05-27.md L55; pivot/erebos_design_philosophy_dna_2026-05-26.md L309] ITER-100 pre-commitment text."
         ],
-        "cause_classes": [],
-        "load_bearing": false
+        "cause_classes": [
+          "DESIGN_ERROR"
+        ],
+        "load_bearing": true
       },
       "IMPLEMENTATION": {
         "verdict": "VALID",
@@ -209,8 +215,8 @@
         "load_bearing": false
       },
       "CONFIGURATION": {
-        "verdict": "VALID",
-        "finding": "No configuration defect found. Daemon input paths are the three sibling kill_ledgers under charon/agents/*/state plus Hecate artifacts (LOOKBACK_DAYS=7); the daemon's own tick summaries report stygian_recent=166 / pollux_recent=95, i.e. it saw its inputs. Queue-row keys match loader keys (0 missing). Caveat: the runtime config it actually ran under (M2, May 2026) is not on the tree; this verdict rests on the code contract plus the daemon's self-reports.",
+        "verdict": "NOT_EXAMINED",
+        "finding": "The code contract is verified (queue-row keys cover every loader key, 0 missing; LOOKBACK_DAYS=7; input paths are the three sibling kill_ledgers plus Hecate artifacts). The runtime configuration the daemon actually ran under in May 2026 is attested only by the daemon's own tick summaries (stygian_recent=166 / pollux_recent=95), which are dual-recorded single-mechanism self-report. No independent artifact of the run-time configuration survives, so this layer is not examined rather than VALID (C-7, DD-8).",
         "evidence": [
           "[EXECUTED engine/necropolis/dossiers/erebos_evidence/erebos_seam_census_result.json] REGISTRY=25 plugins; executor force-imports 29 composition loader modules, 29 register, 0 import failures; find_loader() resolves a daemon-shaped row for 14/25 plugins; the 11 plugins with 0 loaders are exactly the 11 quarantined by _quarantine.py (loader-debt cap); daemon queue-row keys cover every key the loaders read (missing=[]); non-erebos control row resolves=False.",
           "[EXECUTED-BY-KEEPER engine/necropolis/dossiers/_keeper_evidence/intelligence_outputs_census_result.json] agora.intelligence_outputs: 213 rows stage erebos_tick_complete, all success=true, 2026-05-26 02:32 .. 2026-05-30 11:59 local, 213 distinct cycle_id; every summary ends enqueued=True; heartbeat online at last row. Dual-recorded, single-mechanism: written by the Erebos daemon itself."
@@ -219,36 +225,43 @@
         "load_bearing": false
       },
       "EXECUTION": {
-        "verdict": "VALID",
-        "finding": "It ran: 213 tick rows 2026-05-26 02:32 .. 2026-05-30 11:59 (local), all success=true, every summary enqueued=True; 39 commits on the agent dir 05-26..06-03 reaching ITER-84 of a 100-ITER pre-commitment. It did not stop on its own: 15 May-fleet agents wrote their last row 11:40-12:25 on 05-30 (fleet halt), Stygian/Pollux/Hecate included. 234 composed_claim artifacts (P57 count) vs 213 ticks: different objects or windows; gap recorded, not reconciled. No runtime artifact survives on this host.",
+        "verdict": "INVALID",
+        "finding": "It ran (213 tick rows 05-26..05-30, 39 commits 05-26..06-03), but the intended experiment was not executed to completion and its artifacts were not kept: the pre-committed 100-ITER programme stopped at ITER-84 (Phase 3.K, 06-03) and no later ITER exists; the kill_ledger, composed_claim artifacts, per-plugin logs and queue files survive on no surface. SCHEMA EXECUTION asks for 'artifacts kept, no ... partial runs'; both fail. Keeper timeline finding: the ITER stream was NOT truncated by the 05-30 fleet halt -- ITER-56..66 precede the halt by six hours and ITER-83/84 follow it by four days; the stream ended with the author's own Phase 3.K downgrade, twelve days before the 06-15 reset. 'Every summary enqueued=True' is restated as 3 of 3 sampled. Load-bearing: the certificates cite the pre-committed kill as if it were reachable and 'realised ~0' as if the run were complete.",
         "evidence": [
-          "[EXECUTED-BY-KEEPER engine/necropolis/dossiers/_keeper_evidence/intelligence_outputs_census_result.json] agora.intelligence_outputs: 213 rows stage erebos_tick_complete, all success=true, 2026-05-26 02:32 .. 2026-05-30 11:59 local, 213 distinct cycle_id; every summary ends enqueued=True; heartbeat online at last row. Dual-recorded, single-mechanism: written by the Erebos daemon itself.",
           "[EXECUTED engine/necropolis/dossiers/erebos_evidence/erebos_history_census_result.json] git log charon/agents/erebos: 39 commits 2026-05-26..2026-06-03; composition loaders: 19 commits 2026-05-26..2026-05-30; highest ITER named in docs/code below 100 = 84; ITER-100 named only as the future pre-committed kill (5 mentions); runtime state/artifacts/logs/queues absent in this worktree, the main worktree and the data backup.",
+          "[EXECUTED-BY-KEEPER git log --date=iso-local -- charon/agents/erebos pivot/sprint1/phase3] ITER-56..66 committed 2026-05-30 02:33..05:50 local, BEFORE the 11:40-12:25 fleet halt; ITER-83/84 (Phase 3.K, d7120eb5a) committed 2026-06-03 06:27, AFTER it; no ITER commit after 06-03; the 06-15 reset came 12 days later. The fleet halt stopped the daemon, not the pre-committed ITER stream.",
+          "[EXECUTED-BY-KEEPER engine/necropolis/dossiers/_keeper_evidence/intelligence_outputs_census_result.json] agora.intelligence_outputs: 213 rows stage erebos_tick_complete, all success=true, 2026-05-26 02:32 .. 2026-05-30 11:59 local, 213 distinct cycle_id; every summary ends enqueued=True; heartbeat online at last row. Dual-recorded, single-mechanism: written by the Erebos daemon itself.",
+          "[EXECUTED-BY-KEEPER engine/necropolis/dossiers/_keeper_evidence/intelligence_outputs_census.py] the summary read used `limit 3`; 'every summary ends enqueued=True' is 3 of 3 sampled, not 213 of 213 (C-6, DD-7).",
           "[EXECUTED-BY-KEEPER engine/necropolis/dossiers/_keeper_evidence/fleet_halt_census_result.json] stygian last 2026-05-30 12:03, hecate 12:20, pollux 11:55, erebos 11:59 (local)."
         ],
-        "cause_classes": [],
-        "load_bearing": false
+        "cause_classes": [
+          "EXECUTION_ERROR"
+        ],
+        "load_bearing": true
       },
       "INSTRUMENTATION": {
         "verdict": "INVALID",
-        "finding": "The primary observations (kill_ledger.jsonl, composed_claim_*.md artifacts, per-plugin logs, tick_counter, stygian_priority queue) were gitignored and were never archived: absent from this worktree, the main worktree and the data backup; Harmonia B already reported 'real ledgers absent on M2' on 2026-06-15. What survives is second-hand: pivot docs, the 06-03 verdict doc, and the daemon's own agora rows. Not load-bearing for the original run (the instruments wrote), but load-bearing for any re-audit: the 699-row ledger behind Phase 3.K cannot be re-measured.",
+        "finding": "Two defects. (1) The statistic that carried the final verdict (count of substrate-vs-pair-aware routing disagreements under a permutation null) has a chance floor at or above the effect size and that floor depends on marginal structure that can no longer be measured: Necromancer calibration (partner-conditioned plant, detected 0/3, null_p95 1), Cleric calibration (lift-only plant, detected 1/3, NULL false positive 1/3 at observed=2, null_p95 1..10 by marginals), historical null_p95 2. The instrument could not say yes or no at N=699 for either planted class. (2) The primary observations were gitignored and never archived; Harmonia B reported 'real ledgers absent on M2' on 2026-06-15. Load-bearing: the death certificates rest on a number this apparatus could not resolve.",
         "evidence": [
+          "[EXECUTED engine/necropolis/dossiers/erebos_evidence/erebos_null_instrument_calibration_result.json] committed harness pair_aware_permutation_null.py run unchanged on synthetic 699-row ledgers: NULL worlds observed=[0, 0, 0] null_p95=[1, 1, 1] p=[1.0, 1.0, 1.0]; PLANTED strong partner-conditioned linkage observed=[0, 1, 0] p=[1.0, 0.345, 1.0] detected at p<0.05: 0/3; smallest observed count that clears p<0.05 = [2, 3]. Historical Phase 3.K: observed=2, null_p95=2, p=0.105 [QUOTED pivot/sprint1/phase3/PHASE3_K_PAIR_AWARE_NULL_VERDICT_2026-06-03.md].",
+          "[EXECUTED-BY-CLERIC engine/necropolis/dossiers/erebos_evidence/cleric_lift_only_calibration_result.json] committed harness pair_aware_permutation_null.py, lift-only planted signal class, 699 rows, 3 seeds: NULL observed [1,2,0] null_p95 [1,1,1] p [0.275,0.03,1.0] -> 1/3 false positive at observed=2; LIFT2 observed [5,10,6] null_p95 [9,9,7] p [0.69,0.04,0.23] detected 1/3; LIFT3 observed [7,11,7] null_p95 [10,9,8] p [0.44,0.01,0.2] detected 1/3. The null floor is marginal-dependent (p95 1 here, 2 historically, 7-10 under concentrated marginals).",
           "[EXECUTED engine/necropolis/dossiers/erebos_evidence/erebos_history_census_result.json] git log charon/agents/erebos: 39 commits 2026-05-26..2026-06-03; composition loaders: 19 commits 2026-05-26..2026-05-30; highest ITER named in docs/code below 100 = 84; ITER-100 named only as the future pre-committed kill (5 mentions); runtime state/artifacts/logs/queues absent in this worktree, the main worktree and the data backup.",
-          "[EXECUTED-BY-KEEPER engine/necropolis/dossiers/_keeper_evidence/intelligence_outputs_census_result.json] agora.intelligence_outputs: 213 rows stage erebos_tick_complete, all success=true, 2026-05-26 02:32 .. 2026-05-30 11:59 local, 213 distinct cycle_id; every summary ends enqueued=True; heartbeat online at last row. Dual-recorded, single-mechanism: written by the Erebos daemon itself.",
           "[READ git show 2905c5659] Harmonia B 2026-06-15: imports charon.agents.erebos._cross_cell_motif and sprint1.phase3 harnesses; notes real ledgers absent on M2."
         ],
         "cause_classes": [
           "INSTRUMENT_ERROR"
         ],
-        "load_bearing": false
+        "load_bearing": true
       },
       "MEASUREMENT": {
         "verdict": "INVALID",
-        "finding": "The number behind '0 permutation-null survivors' is Phase 3.K: observed=2 substrate-vs-pair-aware deltas against a null with p95=2 (p=0.105, N=699 rows, 200 permutations, seed 1789). Executing the committed harness unchanged on synthetic 699-row ledgers shows the statistic has no resolution in this regime: NULL worlds give observed 0 with null_p95 1; a strongly PLANTED partner-conditioned linkage gives observed 0-1 and is detected 0/3 times, because the pair-aware counter captures the same linkage the substrate does. The smallest count that clears p<0.05 is 2-3. 'Underdetermined' was therefore a property of the instrument, not evidence about Layer-2 value. Scope limit: the planted signal is one class; a lift-only signal class was not tried.",
+        "finding": "The recorded quantity was not the quantity the design named. The design named Layer-2 routing value over real Layer-1 verdicts; the kill_ledger outcome column carried pipeline state for most rows ('570 rows but only ~8 distinct REAL Layer-1 verdicts; rest are pending / not-yet-implemented', ITER-56), and the only Layer-2 signal ever found (ITER-58's three deltas) was that state predicting itself: given kp_pending, counter says *_not_yet_implemented, substrate says no_loader_registered. SCHEMA MEASUREMENT names exactly this defect: 'instrument state not in the outcome column'. The Phase 3.K numbers (observed 2, null_p95 2, p 0.105, 699 rows, 200 permutations, seed 1789) were computed over that column; the 'no resolution at N=699' argument moves to INSTRUMENTATION. This is the primary cause: the historical answer ('realised ~0 / 0 survivors') was read off a column that carried its own answer.",
         "evidence": [
-          "[EXECUTED engine/necropolis/dossiers/erebos_evidence/erebos_null_instrument_calibration_result.json] committed harness pair_aware_permutation_null.py run unchanged on synthetic 699-row ledgers: NULL worlds observed=[0, 0, 0] null_p95=[1, 1, 1] p=[1.0, 1.0, 1.0]; PLANTED strong partner-conditioned linkage observed=[0, 1, 0] p=[1.0, 0.345, 1.0] detected at p<0.05: 0/3; smallest observed count that clears p<0.05 = [2, 3]. Historical Phase 3.K: observed=2, null_p95=2, p=0.105 [QUOTED pivot/sprint1/phase3/PHASE3_K_PAIR_AWARE_NULL_VERDICT_2026-06-03.md].",
+          "[READ git show fbe4f6b7a (2026-05-30 02:33 local, ITER-56)] 'Layer 2's motif-based routing recommendation EXACTLY matches the trivial per-plugin majority counter. Zero actionable routing deltas.' and '570 rows but only ~8 distinct REAL Layer-1 verdicts; rest are pending / not-yet-implemented.' Re-read by the Keeper 2026-09-11; reproduces as the Cleric quoted it (C-1, C-4).",
+          "[READ git show c7977df3f (2026-05-30 05:12 local, ITER-58)] H-B v2 (cross-cell motif primitive): 3 actionable deltas vs counter on 640 rows; the three deltas listed are of the form given (g02_contrast, kp_pending) counter says stygian_hecate_meta_test_not_yet_implemented / substrate says stygian_no_loader_registered -- pipeline state predicting pipeline state (C-4).",
+          "[READ git show 36f46b97f (2026-05-30 05:50 local, ITER-63/64/66)] permutation null p=0.055 (ITER-63); 5x scale stress: null mean 0.64->1.74, z 2.48->1.92, p 0.055->0.080, 'null grew faster than signal', 'INCONCLUSIVE leaning fail' (ITER-66); lateral signatures 14 -> ZERO deltas, HIERARCHICAL_ONLY, 'empirically falsified on lateral structure' (ITER-64); 'Possibility C (doctrine's main claim is wrong) is now LIVE'.",
           "[QUOTED pivot/sprint1/phase3/PHASE3_K_PAIR_AWARE_NULL_VERDICT_2026-06-03.md] N_PERMUTATIONS=200, SEED=1789, observed vs pair-aware=2, vs per-plugin=3, p=0.105, 7-seed mean=0.102.",
-          "[QUOTED charon/CHARON_SESSION_2026-06-03.md] triplet: observed 1 vs null ~14, FALSIFIED; per-plugin p 0.055->0.075 on the 699-row ledger. Not re-executed (ledger absent)."
+          "[EXECUTED engine/necropolis/dossiers/erebos_evidence/erebos_null_instrument_calibration_result.json] committed harness pair_aware_permutation_null.py run unchanged on synthetic 699-row ledgers: NULL worlds observed=[0, 0, 0] null_p95=[1, 1, 1] p=[1.0, 1.0, 1.0]; PLANTED strong partner-conditioned linkage observed=[0, 1, 0] p=[1.0, 0.345, 1.0] detected at p<0.05: 0/3; smallest observed count that clears p<0.05 = [2, 3]. Historical Phase 3.K: observed=2, null_p95=2, p=0.105 [QUOTED pivot/sprint1/phase3/PHASE3_K_PAIR_AWARE_NULL_VERDICT_2026-06-03.md]."
         ],
         "cause_classes": [
           "MEASUREMENT_ERROR"
@@ -257,12 +270,13 @@
       },
       "INTERPRETATION": {
         "verdict": "INVALID",
-        "finding": "Two later interpretations diverge from the primary record. (1) 'STATISTICALLY UNDERDETERMINED' (06-03) became 'realized ~0 (0 perm-null survivors)' (06-23/24) and 'realized value ~0' (queue): an unresolved test read as a null result. (2) P57 (08-21) asserted the seam 'was never built' and 'ZERO external references' from a case-sensitive grep whose scope excluded charon/agents/stygian (53 files naming Erebos, 29 loaders) and harmonia/ (19 files, one importing Erebos code), and read review.py (a per-plugin health runner) as self-verdicting. The grep reproduces inside its own scope, so the error is scope, not fabrication. Load-bearing for the SELF-CONTAINED-GENERATION label; not the cause of the pause.",
+        "finding": "Two later interpretations diverge from the primary record, one of them narrowly. (1) 'realised ~0 (0 perm-null survivors)' (06-23/06-24, queue) is literally true on the record -- nothing consumed a PROMOTED claim and no Layer-2 signal cleared a null -- and the authors were relaying a real trend (ITER-66 'null grew faster than signal'; Phase 3.K section 7). The error is one inference: '0 survivors' read as a null RESULT about Layer-2 value when the test was underdetermined by its instrument and computed over a column of pipeline state. (2) P57 (08-21) asserted the seam 'was never built' and 'ZERO external references' from a case-sensitive grep whose scope excluded charon/agents/stygian (53 files, 29 loaders) and harmonia/ (19 files, one importing Erebos code), and read review.py (a per-plugin health runner) as self-verdicting; the grep reproduces inside its own scope, so the error is scope, not fabrication. (2) is load-bearing for the SELF-CONTAINED-GENERATION label; (1) is load-bearing for 'likely TRUE_CORPSE'. Neither caused the pause.",
         "evidence": [
           "[EXECUTED engine/necropolis/dossiers/erebos_evidence/erebos_external_refs_result.json] P57 grep replicated in its own scope (case-sensitive EREBOS over engine/, techne/, charon/BACKLOG.md, charon/CHARON_SESSION_*.md): 3 files, all autopsy/queue ledgers written by the same program; same scope case-insensitive: 14 files. Tracked tree, case-insensitive, excluding the agent's own dir and pivot/erebos_*: 198 files, of which charon/agents/stygian=53, harmonia=19; code importers of charon.agents.erebos outside it: ['charon/agents/_base.py', 'charon/agents/stygian/executor.py', 'charon/agents/stygian/tests/test_phase0_integration.py', 'harmonia/primitives/test_baseline_costume_parity.py', 'roles/Polyhymnia/ledgers/tensor_body_2026-09-11/tesserae.jsonl'].",
           "[EXECUTED engine/necropolis/dossiers/erebos_evidence/erebos_seam_census_result.json] REGISTRY=25 plugins; executor force-imports 29 composition loader modules, 29 register, 0 import failures; find_loader() resolves a daemon-shaped row for 14/25 plugins; the 11 plugins with 0 loaders are exactly the 11 quarantined by _quarantine.py (loader-debt cap); daemon queue-row keys cover every key the loaders read (missing=[]); non-erebos control row resolves=False.",
           "[QUOTED engine/ledger/AGENT_AUTOPSIES.jsonl Erebos row] 'the compose->falsify seam, which was never built ... ZERO external references across charon session docs, backlogs, and other workers' artifacts'.",
-          "[QUOTED pivot/COMPONENT_DOSSIERS_2026-06-24.md L317] 'composition-aware loader never shipped (claims short-circuit as *_pending)'; contradicted by 19 loader commits 05-26..05-30 and ITER-5 verdicts."
+          "[QUOTED pivot/COMPONENT_DOSSIERS_2026-06-24.md L317] 'composition-aware loader never shipped (claims short-circuit as *_pending)'; contradicted by 19 loader commits 05-26..05-30 and ITER-5 verdicts.",
+          "[READ git show 36f46b97f (2026-05-30 05:50 local, ITER-63/64/66)] permutation null p=0.055 (ITER-63); 5x scale stress: null mean 0.64->1.74, z 2.48->1.92, p 0.055->0.080, 'null grew faster than signal', 'INCONCLUSIVE leaning fail' (ITER-66); lateral signatures 14 -> ZERO deltas, HIERARCHICAL_ONLY, 'empirically falsified on lateral structure' (ITER-64); 'Possibility C (doctrine's main claim is wrong) is now LIVE'."
         ],
         "cause_classes": [
           "INTERPRETATION_ERROR"
@@ -271,68 +285,81 @@
       },
       "ECOSYSTEM": {
         "verdict": "INVALID",
-        "finding": "Erebos stopped because its ecosystem stopped, twice: the 2026-05-30 fleet halt (all May agents within 45 minutes) and the 2026-06-15 program reset ('immune system with no organism'; 'off-spine until it has a consumer'), where 'consumer' meant an organism that uses verdicts, not the falsifier (which existed and had loaders). No kill condition of Erebos's own ever fired: Sprint-1 rule 10/10 PASS, ITER-100 unreached. This is the primary cause of death.",
+        "finding": "Nothing consumed what Erebos emitted: no organism used a PROMOTED composed claim, and whether Stygian dequeued the daemon's rows is unproven (no dequeue record on any surface). Two halts are on record: the 05-30 fleet halt (15 May-fleet agents in 45 minutes, Stygian 4 minutes after Erebos) and the 06-15 reset, which paused Erebos 'until they have a consumer' AND for '0 signal passes survive nulls' in one clause. Load-bearing FALSE for the historical answer: the missing consumer was a design omission (filed on DESIGN), the fleet halt did not stop the ITER stream (see EXECUTION), and the reset formalised a stop the author had already made on 06-03. The Necromancer's 'primary cause of death' reading is withdrawn; the fleet halt is an orchestration event with no admissible cause class (DD-1). Corrected from the previous pass, where the Keeper's fleet-halt census was allowed to shape this verdict without a timeline check.",
         "evidence": [
+          "[READ aporia/docs/STATUS_2026-06-15_reset.md L102-103] 'OFF until they have a consumer: ... Erebos composition (paused; reframe Phase-3 docs honestly -- 0 signal passes survive nulls, 1 infra pass stands).' The pause names BOTH the missing consumer and the null result in one clause (C-5).",
+          "[EXECUTED-BY-KEEPER engine/necropolis/dossiers/_keeper_evidence/fleet_halt_census_result.json] stygian last 2026-05-30 12:03, hecate 12:20, pollux 11:55, erebos 11:59 (local).",
+          "[EXECUTED-BY-KEEPER git log --date=iso-local -- charon/agents/erebos pivot/sprint1/phase3] ITER-56..66 committed 2026-05-30 02:33..05:50 local, BEFORE the 11:40-12:25 fleet halt; ITER-83/84 (Phase 3.K, d7120eb5a) committed 2026-06-03 06:27, AFTER it; no ITER commit after 06-03; the 06-15 reset came 12 days later. The fleet halt stopped the daemon, not the pre-committed ITER stream.",
           "[EXECUTED-BY-KEEPER engine/necropolis/dossiers/_keeper_evidence/intelligence_outputs_census_result.json] agora.intelligence_outputs: 213 rows stage erebos_tick_complete, all success=true, 2026-05-26 02:32 .. 2026-05-30 11:59 local, 213 distinct cycle_id; every summary ends enqueued=True; heartbeat online at last row. Dual-recorded, single-mechanism: written by the Erebos daemon itself.",
-          "[EXECUTED engine/necropolis/dossiers/erebos_evidence/erebos_history_census_result.json] git log charon/agents/erebos: 39 commits 2026-05-26..2026-06-03; composition loaders: 19 commits 2026-05-26..2026-05-30; highest ITER named in docs/code below 100 = 84; ITER-100 named only as the future pre-committed kill (5 mentions); runtime state/artifacts/logs/queues absent in this worktree, the main worktree and the data backup.",
           "[QUOTED charon/CHARON_SESSION_2026-06-15.md L7,L51-52] reset; 'Don't reopen Erebos ... off-spine until it has a consumer.'",
           "[QUOTED pivot/COMPONENT_DISPOSITION_PLAN_2026-06-23.md L75] 'PAUSED -> revive only post-organism ... Pre-committed kill at ITER-100.'"
         ],
         "cause_classes": [
           "ECOSYSTEM_FAILURE"
         ],
-        "load_bearing": true
+        "load_bearing": false
       }
     },
     "fair_test": {
       "verdict": "UNFAIR",
-      "scope": "H-B (Layer-2 value over Layer-1) is the claim the death certificates rest on; the only real-data test of it (Phase 3.K, 2026-06-03, 699-row ledger) used a statistic shown to have no resolution in that regime, and the pre-committed ITER-100 discriminating test was never run. H-A (the composer) was exercised for 14/25 plugins over 4.4 days and produced verdicts; no kill condition of its own fired; its findings were self-graded catalog-tier. Scope excludes the 11 quarantined plugins (never exercised: no loader) and the triplet sub-claim (falsified on the record, not re-executed).",
-      "finding": "No fair test of the capability the grave is labelled for exists on the record. The composer worked mechanically; the value bet was measured with an instrument that cannot say yes or no at the ledger size available; then the ecosystem stopped.",
+      "scope": "H-B v1 (Layer 2 as first built) WAS fairly tested and lost at ITER-56/57 -- that is on the record and belongs here -- but v1 was superseded the same day, before the pre-committed test. H-B v2 (the claim the certificates rest on) and H-A's value premise were never fairly tested: no consumer or cost producer at birth, a ledger whose outcome column was mostly pipeline state, a statistic at its chance floor, and a pre-commitment stopped at 84/100. Scope excludes the 11 quarantined plugins (never exercised) and the triplet sub-claim (falsified on the record, not re-executed).",
+      "finding": "No fair test of the capability the grave is labelled for exists on the record, on the charter's own ground: the historical experiment could not have answered its own question. The composer worked mechanically; the value bet was measured over a column that carried its own answer, with an instrument that could not say yes or no at the ledger size available; the discriminating test was never run. Everything on the record LEANS against H-B (v1 refuted, v2 narrowed under every pass, trend worsening with N) and a resurrection reader must be told so; lean is not a kill.",
       "evidence": [
+        "[READ git show fbe4f6b7a (2026-05-30 02:33 local, ITER-56)] 'Layer 2's motif-based routing recommendation EXACTLY matches the trivial per-plugin majority counter. Zero actionable routing deltas.' and '570 rows but only ~8 distinct REAL Layer-1 verdicts; rest are pending / not-yet-implemented.' Re-read by the Keeper 2026-09-11; reproduces as the Cleric quoted it (C-1, C-4).",
+        "[READ git show c7977df3f (2026-05-30 05:12 local, ITER-58)] H-B v2 (cross-cell motif primitive): 3 actionable deltas vs counter on 640 rows; the three deltas listed are of the form given (g02_contrast, kp_pending) counter says stygian_hecate_meta_test_not_yet_implemented / substrate says stygian_no_loader_registered -- pipeline state predicting pipeline state (C-4).",
+        "[READ git show 36f46b97f (2026-05-30 05:50 local, ITER-63/64/66)] permutation null p=0.055 (ITER-63); 5x scale stress: null mean 0.64->1.74, z 2.48->1.92, p 0.055->0.080, 'null grew faster than signal', 'INCONCLUSIVE leaning fail' (ITER-66); lateral signatures 14 -> ZERO deltas, HIERARCHICAL_ONLY, 'empirically falsified on lateral structure' (ITER-64); 'Possibility C (doctrine's main claim is wrong) is now LIVE'.",
         "[EXECUTED engine/necropolis/dossiers/erebos_evidence/erebos_null_instrument_calibration_result.json] committed harness pair_aware_permutation_null.py run unchanged on synthetic 699-row ledgers: NULL worlds observed=[0, 0, 0] null_p95=[1, 1, 1] p=[1.0, 1.0, 1.0]; PLANTED strong partner-conditioned linkage observed=[0, 1, 0] p=[1.0, 0.345, 1.0] detected at p<0.05: 0/3; smallest observed count that clears p<0.05 = [2, 3]. Historical Phase 3.K: observed=2, null_p95=2, p=0.105 [QUOTED pivot/sprint1/phase3/PHASE3_K_PAIR_AWARE_NULL_VERDICT_2026-06-03.md].",
+        "[EXECUTED-BY-CLERIC engine/necropolis/dossiers/erebos_evidence/cleric_lift_only_calibration_result.json] committed harness pair_aware_permutation_null.py, lift-only planted signal class, 699 rows, 3 seeds: NULL observed [1,2,0] null_p95 [1,1,1] p [0.275,0.03,1.0] -> 1/3 false positive at observed=2; LIFT2 observed [5,10,6] null_p95 [9,9,7] p [0.69,0.04,0.23] detected 1/3; LIFT3 observed [7,11,7] null_p95 [10,9,8] p [0.44,0.01,0.2] detected 1/3. The null floor is marginal-dependent (p95 1 here, 2 historically, 7-10 under concentrated marginals).",
         "[EXECUTED engine/necropolis/dossiers/erebos_evidence/erebos_history_census_result.json] git log charon/agents/erebos: 39 commits 2026-05-26..2026-06-03; composition loaders: 19 commits 2026-05-26..2026-05-30; highest ITER named in docs/code below 100 = 84; ITER-100 named only as the future pre-committed kill (5 mentions); runtime state/artifacts/logs/queues absent in this worktree, the main worktree and the data backup.",
-        "[EXECUTED-BY-KEEPER engine/necropolis/dossiers/_keeper_evidence/intelligence_outputs_census_result.json] agora.intelligence_outputs: 213 rows stage erebos_tick_complete, all success=true, 2026-05-26 02:32 .. 2026-05-30 11:59 local, 213 distinct cycle_id; every summary ends enqueued=True; heartbeat online at last row. Dual-recorded, single-mechanism: written by the Erebos daemon itself.",
-        "[EXECUTED engine/necropolis/dossiers/erebos_evidence/erebos_seam_census_result.json] REGISTRY=25 plugins; executor force-imports 29 composition loader modules, 29 register, 0 import failures; find_loader() resolves a daemon-shaped row for 14/25 plugins; the 11 plugins with 0 loaders are exactly the 11 quarantined by _quarantine.py (loader-debt cap); daemon queue-row keys cover every key the loaders read (missing=[]); non-erebos control row resolves=False."
+        "[QUOTED pivot/COMPONENT_DOSSIERS_2026-06-24.md ### Erebos] value premise stated as PROMOTED claims per cost; no organism named to consume PROMOTED composed claims; no cost producer named (C-8; LAW N6 'consumer at birth': 'A resurrection candidate without a concrete named consumer and a consumption-proof mechanism is malformed')."
       ]
     },
-    "primary_cause": "ECOSYSTEM_FAILURE",
+    "primary_cause": "MEASUREMENT_ERROR",
     "contributing_causes": [
-      "MEASUREMENT_ERROR",
+      "DESIGN_ERROR",
+      "INSTRUMENT_ERROR",
+      "EXECUTION_ERROR",
       "INTERPRETATION_ERROR",
-      "INSTRUMENT_ERROR"
+      "ECOSYSTEM_FAILURE"
     ],
     "premise_exclusion": [],
     "failure_classes": [
-      "ECOSYSTEM_FAILURE",
       "MEASUREMENT_ERROR",
+      "DESIGN_ERROR",
+      "INSTRUMENT_ERROR",
+      "EXECUTION_ERROR",
       "INTERPRETATION_ERROR",
-      "INSTRUMENT_ERROR"
+      "ECOSYSTEM_FAILURE"
     ],
-    "kill_boundary": "KILLED on this record: (1) the SELF-CONTAINED-GENERATION label for Erebos -- the outward seam existed, executed, and is executable today; (2) 'ZERO external references'; (3) 'loader never shipped'; (4) '0 perm-null survivors' as a measurement of Layer-2 value -- it is an underdetermined statistic at the instrument floor; (5) the queue's 'likely TRUE_CORPSE' -- no fair test and no hypothesis failure on record. NOT KILLED: (a) H-B may still be worthless -- nothing here shows Layer-2 routing adds value; the triplet sub-claim stands falsified as quoted; (b) H-A's realized value was modest by its author's own reclassification (catalog-tier Mahler/Salem findings), and 11/25 plugins never produced a falsifiable claim; (c) the 06-15 judgement that no organism consumed the verdicts stands; (d) that Stygian actually dequeued the daemon's rows (vs manual loader runs) is unproven -- the queue and ledgers are gone.",
+    "kill_boundary": "KILLED on this record: (1) the SELF-CONTAINED-GENERATION label -- the outward seam existed, executed, and is executable today; (2) 'ZERO external references'; (3) 'loader never shipped'; (4) '0 perm-null survivors' as a MEASUREMENT of Layer-2 value -- the count is real, the column it was counted over carried pipeline state and the statistic sits at its chance floor; (5) the queue's 'likely TRUE_CORPSE' as an earned label; (6) 'the fleet halt stopped the pre-committed test' (Necromancer pass) -- the ITER stream ran before and after the halt and ended with the author's own 06-03 downgrade; (7) 'neither hypothesis was refuted on the record' (Necromancer pass) -- H-B v1 was. NOT KILLED: (a) H-B v2 may well be worthless: refuted v1, a redesign that narrowed under every adversarial pass, hierarchical-only signal, a trend that worsens with N, the only observed deltas being plumbing; (b) H-A's realised value was zero by its own premise (no consumer) and modest by its author's reclassification; 11/25 plugins never produced a falsifiable claim; (c) the 06-15 judgement that no organism consumed the verdicts stands; (d) that Stygian dequeued the daemon's rows is unproven; (e) 'realised ~0' as a literal statement.",
     "surviving_claims": [
-      "The composer + loader seam runs end to end offline at baseline (813 tests pass; 29 loaders import; 14/25 plugins resolve).",
+      "The composer + loader seam runs end to end offline at baseline (813 tests pass; 29 loaders import; 14/25 plugins resolve) -- re-executed identically by the Cleric.",
       "By ITER-5 the loop produced 2 PROMOTED / 4 REJECTED / 1 UNVERIFIED composition verdicts [QUOTED]; the author then reclassified them to catalog/substrate tier -- an honest downgrade, not a failure.",
-      "Erebos never fired its own kill: Sprint-1 rule 10/10 PASS (synthetic); ITER-100 unreached (ITER-84).",
-      "Erebos stopped with the fleet on 2026-05-30 and was paused by the 2026-06-15 reset for lack of an organism, not for lack of a falsifier."
+      "H-B v1 was fairly tested against a per-plugin counter on real data and lost (ITER-56/57); H-B v2 narrowed under every subsequent pass; the author's own summary: 'the affirmative evidence for the doctrine's main claim is, as of this audit, absent'.",
+      "Erebos never fired its own kill: Sprint-1 rule 10/10 PASS (synthetic); ITER-100 unreached (ITER-84); the ITER stream ended 06-03 with the author's downgrade, not with the fleet halt.",
+      "The one artefact that would settle H-B v2 is buildable from the tree: a Layer-2-vs-Layer-1 run of the committed harnesses on a ledger of REAL Layer-1 verdicts only, at N above the calibrated floor, with the lateral/hierarchical split reported."
     ],
     "uncertainty": [
-      "Whether the loader verdicts at ITER-3..5 flowed through Stygian's dequeue of daemon rows or through Charon invoking loaders directly: queue/ledger files are gone; the daemon's enqueued=True is self-report.",
+      "Whether the loader verdicts at ITER-3..5 flowed through Stygian's dequeue of daemon rows or through Charon invoking loaders directly: queue/ledger files are gone; the daemon's enqueued=True is self-report sampled 3 of 213.",
       "234 artifacts (P57, counted in August on a host that still had them) vs 213 ticks (agora): not reconciled.",
-      "The calibration planted one signal class (partner-conditioned kill pattern); a lift-only class might separate the two counters. The finding is 'no resolution for this class at N=699', not 'no power for any signal'.",
+      "The null floor of the Phase 3.K statistic depends on marginal structure of the real ledger that no longer exists (null_p95 1 / 2 / 7-10 across synthetic worlds and the historical run); 'at the floor' is asserted from worlds that bracket, not reproduce, the real one (DD-11).",
       "The triplet FALSIFIED verdict (observed 1 vs null ~14) is quoted, not re-executed.",
-      "Whether the 06-15 'consumer' reading (organism, not falsifier) is the only reasonable reading of that session note.",
-      "Alternative classification a competent reader could reach: CONSUMER_BLOCKED (the 06-15 reason) with the same stack; or NEEDS_MORE_EVIDENCE if executed-by-original-author evidence is ruled inadmissible for MEASUREMENT."
+      "Whether primary_cause means the cause of the stop, of the certificates being wrong, or of the question being unanswerable; this dossier rules the third (Keeper ruling, recorded in DEFECTS as DD-2 / D-62) and under the other two readings a competent reader gets ECOSYSTEM_FAILURE or INTERPRETATION_ERROR.",
+      "Alternative classification a competent reader could reach: CONSUMER_BLOCKED for H-A alone (the design named no consumer and none appeared); MEASUREMENT_FAILURE on the same stack; NEEDS_MORE_EVIDENCE if quoted-by-original-author evidence is ruled inadmissible for MEASUREMENT.",
+      "Whether a pre-committed test abandoned by its own author after an adverse interim result is EXECUTION_ERROR (partial run, ruled here), DESIGN (the kill was designed but not reached) or no defect (DD-9)."
     ],
     "contradictory_evidence": [
       "Against overturning P57: its grep genuinely reproduces within its stated scope (3 files, all self-hits), and the ROSTER lists source_locations [] -- the certificate was written without the code in view.",
       "Against 'seam worked': no artifact independent of the daemon shows a dequeue; the 06-24 dossier author (with artifacts in hand) still wrote 'claims short-circuit as *_pending', which is true for the 11 loaderless plugins and may have been true for a large share of rows.",
-      "Against 'no fair test': Charon's Phase 3.K was a competent, pre-registered-style null test that the author labelled underdetermined rather than claiming a kill; the unfairness is in the statistic's power, not in conduct."
+      "Against 'no fair test': Charon's Phase 3.K was a competent, pre-registered-style null test that the author labelled underdetermined rather than claiming a kill; the unfairness is in the statistic's power, not in conduct.",
+      "Against the resurrection-bias correction: the ITER-58 deltas being plumbing does not by itself show that a ledger of real verdicts would carry NO Layer-2 signal; ITER-56 also measured motif concentration 9.80 sigma above shuffled-label noise on the same real rows ('real structure exists in the kill_ledger'), which is structure the counter also captures but is not nothing.",
+      "Against 'lean is not a kill': three adversarial passes in one day, each worse than the last, is exactly the shape a null leaves on a low-power instrument, and the author wrote 'itself a signal worth heeding'. A reader who weights the author's own trajectory reading more than the instrument calibration reaches HYPOTHESIS_FAILURE for H-B v2; that reader must first show DESIGN_ERROR and MEASUREMENT_ERROR are not load-bearing, which nothing on the record does."
     ],
     "capability_contingency": {
       "frontier_dependent": false,
       "frontiers": [],
       "era_bound_claim": "Not era-bound: the composer and loaders are deterministic code over catalogues (Mossinghoff/Mahler, BSD strata); no LLM is in the tick path (daemon has no LLM call; generators are rule-based).",
-      "what_would_move_it": "Not the model frontier. What would move it: a Layer-2-vs-Layer-1 test with a statistic that has power at the available N (or a ledger >= the size at which the pair-aware delta count clears its floor), plus an organism that consumes PROMOTED composed claims."
+      "what_would_move_it": "Not the model frontier. What would move it: a Layer-2-vs-Layer-1 run of the committed harnesses (_cross_cell_motif.py, pair_aware_permutation_null.py; 813 tests pass today) on a ledger whose kill_pattern column contains only real Layer-1 verdicts, at or above the N where the calibrations show the statistic clearing its floor for a planted lift-only signal, with the ITER-64 lateral/hierarchical split reported; plus, for H-A, a named organism that consumes PROMOTED composed claims. Zero lateral deltas and p above 0.05 against the pair-aware counter on that run would be a fair death for H-B v2."
     }
   },
   "residue": {
@@ -362,17 +389,18 @@
       "charon/agents/stygian/tests/test_composition_* (146 pass)"
     ],
     "representation_hints": [
-      "The Layer-2 value question needs a statistic whose null floor is below the effect size at the available N; 'count of disagreements between two counters' is not that statistic.",
-      "Runtime ledgers must be archived (or dual-written to a store that is later exported) or every re-audit reduces to prose."
+      "The Layer-2 value question needs (a) a ledger whose outcome column holds real Layer-1 verdicts only -- pipeline states (pending, not_yet_implemented, no_loader_registered) must live in a separate column -- and (b) a statistic whose null floor is below the effect size at the available N and whose floor is calibrated against the real ledger's marginals; 'count of disagreements between two counters' is neither.",
+      "Runtime ledgers must be archived (or dual-written to a store that is later exported) or every re-audit reduces to prose.",
+      "Any resurrection sketch (pair_aware_counter_recommendations, a new statistic) is premature until (a) exists; the salvageable_operators list is parts, not a plan."
     ]
   },
   "disposition": {
     "classification": "NO_FAIR_TEST_ON_RECORD",
-    "rationale": "The capability the grave is labelled for (Layer-2 routing value over Layer-1, with the composer as its substrate) was never fairly tested: the one real-data test used a statistic shown by executing the committed harness to have no resolution at the ledger size it ran on, and the pre-committed ITER-100 discriminator was never reached because the ecosystem halted (05-30) and was reset (06-15). The composer itself was exercised for 14/25 plugins and produced verdicts; no Erebos kill condition fired. The SELF-CONTAINED-GENERATION certificate is overturned on executed evidence. This is not a resurrection claim: nothing here shows Layer-2 adds value, and the author's own catalog-tier downgrade of the Layer-1 findings stands."
+    "rationale": "NO_FAIR_TEST_ON_RECORD retained from the Necromancer pass, on different grounds. The historical experiment could not have answered its own question: the value premise ('PROMOTED claims per cost') had no consumer and no cost producer at birth (DESIGN_ERROR, load-bearing); the Layer-2 value tests ran over a kill_ledger whose outcome column was mostly the pipeline's own state, and the only Layer-2 signal ever observed was that state predicting itself (MEASUREMENT_ERROR, primary); the statistic that carried the final verdict has a chance floor at the effect size (INSTRUMENT_ERROR, load-bearing); the pre-committed discriminating test stopped at 84 of 100 and its artifacts were not kept (EXECUTION_ERROR, load-bearing). The SELF-CONTAINED-GENERATION certificate is overturned on executed evidence. H-B as first built was fairly tested and lost at ITER-56/57; that is on the record and was missing from the previous pass. This is not a resurrection claim: everything on the record leans against Layer-2 value and the author's own catalog-tier downgrade of the Layer-1 findings stands. ADJUDICATION (Rhadamanthus, 2026-09-11, after CLERIC.md C-1..C-11): Cleric objections C-1..C-8 accepted in full after the Keeper re-read every cited commit (fbe4f6b7a, f837d4281, c7977df3f, 36f46b97f) and aporia/docs/STATUS_2026-06-15_reset.md L102-103 and re-executed the git timeline; C-9..C-11 recorded as defects (drift in external_refs counts is noted, the Necromancer's result file is left as committed). Rulings: (i) primary_cause is the cause the stack supports for the question being unanswerable, not for the process stopping (DD-2; recorded, not silently resolved) -> MEASUREMENT_ERROR, by SCHEMA MEASUREMENT's own words ('instrument state not in the outcome column'); (ii) EXECUTION is INVALID/EXECUTION_ERROR load-bearing by SCHEMA EXECUTION's own words ('artifacts kept, no partial runs'), with the Keeper's timeline finding that the truncation was not the fleet halt; (iii) ECOSYSTEM load_bearing is set FALSE -- the Keeper's own fleet-halt census had been allowed to shape the ECOSYSTEM verdict on the previous pass without a timeline check, a correlation channel the Keeper records against itself in calibration/LEDGER.md; (iv) 'UPHELD-with-one-error' is not in the enum, so 06-23 stays PARTIALLY_UPHELD with its error narrowed to the single inference, 06-24 stays PARTIALLY_UPHELD on two errors, Phase 3.K and 06-15 become UPHELD with their full sentences quoted (DD-10 recorded). Charter outcome: NO_FAIR_TEST_ON_RECORD; nearest honest neighbour CONSUMER_BLOCKED for H-A alone; recoverable residue is the loader seam, the harnesses and the tests; a discriminating Frankenstein counterfactual is warranted (DESIGN ONLY: erebos-real-verdict-ledger -- the settling artefact named in fair_test and capability_contingency). Stronger conclusion NOT supported: that Erebos is a TRUE_CORPSE, i.e. that Layer-2 routing over falsification residue was fairly tested and found worthless -- the record leans that way and a resurrection reader is told so, but the pre-committed test never ran and the only observations were made through a column that carried its own answer. No Zombie authorised."
   },
   "provenance": {
-    "investigator": "Rhadamanthus (Necromancer fork)",
-    "role": "Necromancer",
+    "investigator": "Rhadamanthus (Necromancer fork; Cleric fork; adjudicated as Keeper and Judge -- the schema role enum has no adjudicator value, DEFECTS D-61)",
+    "role": "Keeper",
     "branch": "rhadamanthus/native-trial-2026-09-11",
     "baseline_sha": "e17934d9a82855b6e0ae1c0bf54c0cce569b7795",
     "evidence_paths": [
@@ -392,7 +420,12 @@
       "charon/CHARON_SESSION_2026-06-15.md",
       "engine/ledger/AGENT_AUTOPSIES.jsonl",
       "pivot/COMPONENT_DOSSIERS_2026-06-24.md",
-      "pivot/COMPONENT_DISPOSITION_PLAN_2026-06-23.md"
+      "pivot/COMPONENT_DISPOSITION_PLAN_2026-06-23.md",
+      "engine/necropolis/dossiers/erebos_evidence/CLERIC.md",
+      "engine/necropolis/dossiers/erebos_evidence/cleric_lift_only_calibration.py",
+      "engine/necropolis/dossiers/erebos_evidence/cleric_lift_only_calibration_result.json",
+      "aporia/docs/STATUS_2026-06-15_reset.md",
+      "engine/necropolis/dossiers/_keeper_evidence/intelligence_outputs_census.py"
     ],
     "commands_run": [
       "python engine/necropolis/dossiers/erebos_evidence/erebos_seam_census.py",
@@ -406,14 +439,23 @@
       "git grep -l EREBOS -- engine techne charon/BACKLOG.md charon/CHARON_SESSION_*.md",
       "git grep -i -l erebos",
       "git show 2905c5659 (read)",
-      "python <scratch>/erebos_validate/validate.py (on a scratch copy of engine/necropolis; never in the worktree)"
+      "python <scratch>/erebos_validate/validate.py (on a scratch copy of engine/necropolis; never in the worktree)",
+      "python engine/necropolis/dossiers/erebos_evidence/cleric_lift_only_calibration.py (Cleric, from scratch copy)",
+      "git show fbe4f6b7a f837d4281 c7977df3f 36f46b97f (Cleric, then re-read by the Keeper)",
+      "git log --format='%h %ad %s' --date=iso-local --since=2026-05-29 --until=2026-06-05 -- charon/agents/erebos pivot/sprint1/phase3 (Keeper)",
+      "sed -n '98,106p' aporia/docs/STATUS_2026-06-15_reset.md (Keeper)",
+      "python engine/necropolis/validate.py (Keeper, in the worktree, twice)"
     ],
     "unresolved_questions": [
-      "Did Stygian dequeue and execute the daemon's stygian_priority rows in May 2026, and for what share of the 213 ticks? (Needs Stygian's agora output_summary rows or the lost queue/ledger files.)",
-      "Why 234 composed_claim artifacts vs 213 tick rows? (Manual runs? multi-claim ticks? different window?)",
-      "Does a lift-only planted signal separate the substrate from the pair-aware counter at N=699, i.e. is the statistic powerless for every signal class or only for partner-conditioned ones?",
+      "Did Stygian dequeue and execute the daemon's stygian_priority rows in May 2026, and for what share of the 213 ticks? (Needs Stygian's agora output_summary rows or the lost queue/ledger files; the current census sampled 3 summaries.)",
+      "Why 234 composed_claim artifacts vs 213 tick rows?",
+      "What share of the 699-row Phase 3.K ledger held real Layer-1 verdicts vs pipeline state? ITER-56 says ~8 distinct real verdicts in 570 rows; the 699-row ledger is gone.",
+      "Would a ledger of real verdicts only, at N above the calibrated floor, show any lateral Layer-2 delta? (The settling artefact; Frankenstein DESIGN ONLY.)",
       "Where were the May runtime ledgers when P57 counted 234 artifacts on 2026-08-21, and do they still exist on any host?",
-      "Is executed-by-the-original-author evidence (Phase 3.K) admissible for a VALID layer verdict under LAW N17, or must the Necromancer re-execute? (Portability defect; see README section 7.)"
+      "Is quoted-by-original-author evidence admissible for an INVALID load-bearing MEASUREMENT verdict under LAW N17 when the input ledger cannot be re-executed? Ruled admissible here because the author's own commit text states the defect; recorded as DD-8/D-34.",
+      "Why did the author abandon the pre-committed ITER-100 test after Phase 3.K on 06-03, twelve days before the reset? No document says.",
+      "Does the doctrine need a cause class for fleet-wide orchestration halts (DD-1)? Every May-fleet grave will hit this.",
+      "Two different ITERs are labelled 'Phase 3.K' on the record (ITER-66 scale stress in 36f46b97f; ITER-83/84 pair-aware null in d7120eb5a); which one a certificate means must be inferred from its numbers."
     ],
     "created": "2026-09-11"
   }
