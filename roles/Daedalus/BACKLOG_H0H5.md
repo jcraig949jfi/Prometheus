@@ -62,6 +62,37 @@ rather than all 67 at once. **Sequence: after step 5.** Building it before any
 consumer holds the gate would be sharpening an instrument nobody is holding —
 which is the whole lesson of this backlog's top item.
 
+### A6. The engine cannot record its own unavailability, so a stall reads as data — `NOTHING`
+**Found by Vivarium 2026-09-11, and it is the sharpest consequence of C9.**
+
+When `BEGIN IMMEDIATE` exceeds its 30 s wait, `sqlite3.OperationalError`
+propagates past the `FoundryError` handler (`sfe/api.py:514`, which only catches
+`FoundryError`) as an unhandled 500. The only `except sqlite3.OperationalError`
+in `sfe/` is `store.py:631` — the unrelated `initialize()` fast path.
+
+**Nothing is written to the ledger. By construction it cannot be: recording the
+failure needs the very lock that just failed.** So the hash chain is silent
+exactly when the engine is the thing that broke, and a reader reconstructing
+events from the ledger afterwards sees no trace at all.
+
+**Why that is worse than losing rows.** The 13 rows the engine failed on
+2026-09-11 were `cs-h5-1` arm `map`, rules **143–155 — thirteen CONSECUTIVE**.
+Contiguous because they were consecutive in the producer's issue order and the
+engine stalled for seventeen minutes; nothing about the rules. But the rule
+number is the x-axis of what H5 plots, so a block-shaped hole is the shape most
+likely to be read as a property of rule space. The map completes at 243 of 256,
+and the difference between reporting *"243"* and *"243 with a named contiguous
+gap at 143–155"* is the whole of whether a later reader can tell an instrument
+failure from a finding.
+
+**Do:** the record has to live somewhere the lock cannot block — that is the
+design constraint, not an implementation detail. Options: a structured
+unavailability log outside SQLite; a counter surfaced on `/v2/health` (**B3**)
+so a consumer can ask "were you refusing writes during my window?"; or a
+deliberate second connection reserved for incident records. Anything that writes
+to the same ledger through the same lock is circular.
+Blocks: nobody today, and it silently taxes every campaign that hits a stall.
+
 ### A1. The client abandons a request ~3 s BEFORE the engine gives up — `PARTIAL`
 Measured, `SerendipityFoundry/SerendipityFoundryEngine/deploy/WRITE_PATH_PROFILE_2026-09-10.json`: the client's socket
 timeout fires at **30.01 s**; the engine's SQLite lock wait actually runs to
@@ -310,6 +341,16 @@ writes. None of it went through the HTTP service, which is exactly the gap C9
 names. 416 tests, still all single-process.
 **Do:** a load fixture that drives the real HTTP surface with N concurrent
 clients, asserting latency and error class — and run it before the next deploy.
+
+**Fixture spec, sharpened by Vivarium 2026-09-11 and worth following exactly:**
+the concurrency that matters is *not* N clients hammering one route. It is N
+clients whose writes **interleave across a transaction boundary**, with
+**different transaction rhythms**. Their consumer does ~18 writes per row and
+never stalled on its own load however long it ran — every stall coincided with a
+*second writer*. N identical clients would reproduce throughput and miss the
+bimodality entirely, and bimodality is the tell: `create_session` measured
+23.46 s once and 0.28 s minutes later, with every other call 0.03–0.32 s in both
+passes. A fixture that produces a smooth latency curve has not reproduced this.
 
 ### C10. `NKScanDidNotConverge` has no caller — `EXISTS`
 Added because a mutant *hung* instead of failing. Nothing in the engine runs the
