@@ -1,0 +1,71 @@
+{
+  "schema": "nyx.chop/0",
+  "record_kind": "SPECIMEN",
+  "id": "specimen.lean_simp",
+  "name": "Lean 4 simp (core implementation lineage) with mathlib4 as its lemma-set and extension host",
+  "lineage": [
+    "theorem proving",
+    "symbolic reasoning"
+  ],
+  "status": "OPEN",
+  "opened": "2026-09-11",
+  "famous_names": [
+    "simp",
+    "simp_all",
+    "dsimp",
+    "simp only",
+    "simp_rw",
+    "simp?",
+    "simproc",
+    "simprocs",
+    "simp set",
+    "simp lemma",
+    "simp lemmas",
+    "simp normal form",
+    "Lean",
+    "Lean 4",
+    "mathlib",
+    "Mathlib",
+    "discrimination tree",
+    "DiscrTree",
+    "congruence lemma",
+    "congr lemma",
+    "simp attribute",
+    "@[simp]",
+    "field_simp",
+    "norm_num",
+    "push_cast",
+    "rewriting",
+    "term rewriting",
+    "rewrite system"
+  ],
+  "chosen_because": "operator-assigned hostile proving specimen (production trial 2026-09-11): intentionally harder than MAP-Elites or DreamCoder; the question is whether Nyx can cut BELOW the famous name at all. The specimen is the implementation lineage at a pin, not the word simplification. The prompt names parser/simplifier/theorem-database/result as a FAILED cut in advance.",
+  "provenance": {
+    "sources": [
+      {
+        "ref": "Lean 4 toolchain leanprover/lean4:v4.30.0, commit d024af099ca4bf2c86f649261ebf59565dc8c622 (lean --version), source src/lean/Lean/Meta/Tactic/Simp/ (6357 lines, 13 files + Arith/ + BuiltinSimprocs/), installed under the elan toolchains directory on this machine BEFORE this seat existed; NOT under Techne management (no receipt in techne/acquisition/receipts names it). Bytes cited as found; nothing installed or updated by Nyx.",
+        "grade": "T1-LOCAL"
+      },
+      {
+        "ref": "mathlib4 checkout external_deps/mathlib4 at c9f8814322b00af24869d176c1896117d10e5d35 (2026-05-28, 'feat(CategoryTheory): local epimorphisms wrt. an object property (#39731)'), lean-toolchain leanprover/lean4:v4.30.0 (matches the installed toolchain), working tree clean, origin github.com/leanprover-community/mathlib4; gitignored at .gitignore:376; NOT under Techne management. 48,076 @[...simp...] attribute occurrences under Mathlib/ (grep -rhoE '@\\[[^]]*\bsimp\b'); 29 files mention simproc.",
+        "grade": "T1-LOCAL"
+      },
+      {
+        "ref": "Lean 4 core files outside the Simp directory that the specimen includes: Lean/Meta/Tactic/Simp.lean (38), Lean/Elab/Tactic/Simp.lean (758), Lean/Meta/DiscrTree/{Basic,Types,Util,Main}.lean (1003 total; header 'Copyright (c) 2019 Microsoft Corporation ... Authors: Leonardo de Moura, Jannis Limperg, Kim Morrison', Apache 2.0), Lean/Meta/CongrTheorems.lean (484)",
+        "grade": "T1-LOCAL"
+      },
+      {
+        "ref": "nyx/specimens/lean_simp/PREREG_CUT1.md (boundary, procedure, bookkeeping, predictions P1-P5, stopping rule; written before the cut)",
+        "grade": "T1-LOCAL"
+      },
+      {
+        "ref": "roles/Nyx/prompts/2026-09-11_production_trial/PROMPT_verbatim.md (the assignment)",
+        "grade": "T1-LOCAL"
+      },
+      {
+        "ref": "Lean 3 / Isabelle simp ancestry: NOT cited; out of boundary; any such claim in an organ record is T2 and marked",
+        "grade": "unknown"
+      }
+    ]
+  }
+}
