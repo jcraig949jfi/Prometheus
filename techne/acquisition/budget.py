@@ -219,11 +219,19 @@ class Budget:
     aborted: str | None = None
     _jobs: dict = field(default_factory=dict)
     _cancelled: set = field(default_factory=set)
+    workspace: dict = field(default_factory=dict)
     _job_failures: list = field(default_factory=list)
     _kills: list = field(default_factory=list)
 
     # ---- lifecycle -------------------------------------------------------
     def __enter__(self) -> "Budget":
+        # D-23 rule 1 and rule d: the refusal goes on the ENTRY POINT. Every
+        # acquisition step and every check in this seat runs inside a Budget, so
+        # one guard here covers them all -- and it covers a step that has not been
+        # written yet, which a per-script guard would not.
+        from .. import workspace                                 # noqa: PLC0415
+        self.workspace = workspace.assert_not_canonical(
+            "run a budgeted step (%s)" % self.profile.get("name", "?"))
         self.started = time.monotonic()
         self.disk_before = _dir_bytes(paths.tool_cache())
         self._sampler = threading.Thread(target=self._sample_loop, daemon=True)

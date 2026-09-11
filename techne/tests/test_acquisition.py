@@ -421,3 +421,44 @@ def test_cancelling_the_same_child_twice_does_not_invent_a_degraded_kill():
     b._kill_one(p)
     b._kill_one(p)
     assert len(b._kills) == 1, "one cancellation is one row, however many times it is swept"
+
+
+# --------------------------------------------------------------------------
+# D-23 (operator, 2026-09-11): the workspace invariant, on this seat's entry points.
+# --------------------------------------------------------------------------
+def test_the_canonical_checkout_is_detected_without_a_path_assumption():
+    """Archaeon's test, and the reason it is theirs rather than mine: a
+    path-based check would have to know a drive letter, which is the exact
+    portability defect this seat exists to catch in other people's code."""
+    from techne import workspace
+    # The tests themselves run from a linked worktree, so this is the real answer
+    # for the tree under test, not a stub.
+    assert workspace.is_main_worktree() is False
+    r = workspace.receipt()
+    assert r["base_sha"] and len(r["base_sha"]) == 40
+    assert r["branch"] and r["worktree_path"]
+    assert r["tool_cache_versioned"] is False, (
+        "base_sha pins this seat's CODE and not its installed tools; a receipt "
+        "implying otherwise would claim a reproducibility this seat does not have")
+
+
+def test_a_budgeted_step_refuses_to_run_from_the_canonical_checkout():
+    """Rule 1 and rule d: the refusal is on the ENTRY POINT, and every check in
+    this seat runs inside a Budget -- including ones not yet written."""
+    from techne import workspace
+    real = workspace.is_main_worktree
+    workspace.is_main_worktree = lambda path=None: True
+    try:
+        with pytest.raises(workspace.CanonicalCheckoutRefused) as exc:
+            with budget.Budget(profile={"name": "t", "network": "FORBIDDEN"}):
+                pass
+        assert "canonical checkout" in str(exc.value)
+    finally:
+        workspace.is_main_worktree = real
+
+
+def test_every_receipt_carries_the_four_fields_d23_requires():
+    from techne.acquisition import receipt as R
+    ws = R.new("INSTALLATION", "probe")["workspace"]
+    for field_name in ("base_sha", "branch", "worktree_path", "dirty"):
+        assert field_name in ws, field_name
