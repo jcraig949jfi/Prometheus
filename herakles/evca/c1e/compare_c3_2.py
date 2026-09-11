@@ -23,6 +23,8 @@ does not move again. So the comparison proceeds and no re-run is needed.
 """
 from __future__ import annotations
 
+from herakles.workspace import assert_not_canonical
+
 import io
 import json
 import math
@@ -55,6 +57,8 @@ def load_rows():
 
 
 def main():
+    # D-23: refuse to run from the canonical checkout.
+    _ws = assert_not_canonical("write the C1-e vs C3-2 comparison")
     rows = load_rows()
     n_cells_compared = len(rows)
     per_cell_alpha = FAMILY_ALPHA / n_cells_compared
