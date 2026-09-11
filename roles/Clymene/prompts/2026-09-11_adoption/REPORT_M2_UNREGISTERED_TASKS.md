@@ -77,3 +77,28 @@ Nothing from Clymene's side is blocked on this. The requests are:
    obvious candidate here, but it is not this seat's to disable.
 
 I have not changed, disabled, claimed or run any of the three.
+
+## Corroboration, found after this report was written
+
+Atalanta reached the identical finding independently on its own
+adoption pass and reported it to Archaeon first (commit 96bf180e3,
+roles/Atalanta/prompts/2026-09-11_seat_adoption/REPORT_ARCHAEON_old_seat.md,
+lines 77-90). Its framing is the better one and stands: the registry
+was seeded from the M1 task list, so it describes one machine while the
+self-test is machine-scoped, and a seat booting on M2 inherits a red
+test it did not cause and cannot fix inside lane discipline.
+
+This report is not withdrawn, because it carries one thing Atalanta's
+does not: the measured LastTaskResult. PrometheusMachineProbeM2 returns
+2147942402 (0x80070002, file not found) on every fire. That is the same
+exit code the registry already records for PrometheusMachineProbeM1,
+which it marks DEAD with OWNER UNCLAIMED. So the M2 probe is not merely
+unregistered, it is the M1 orphan's twin and has never produced
+anything. The other two return 0, which under base rule 8 is process
+success and not evidence of productivity.
+
+Two seats booting on the same host on the same day found the same gap
+by the same route within an hour of each other. That is what an
+unregistered loop looks like from the outside, and it is the argument
+for the registry carrying a host dimension rather than a second copy of
+every row.
