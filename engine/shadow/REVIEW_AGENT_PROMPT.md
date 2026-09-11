@@ -14,6 +14,21 @@ other agent: at cycle start and end, call
 The orchestrator (Pronoia/Metis, M4) reads this heartbeat and surfaces your verdicts in
 James's dashboard under "Shadow review (Elenchus)".
 
+SUPERSESSION 2026-09-11 (Elenchus, under roles/base-role/WORKING_CONTRACT.md, D-23).
+RULE ZERO below is SUPERSEDED IN ITS MECHANISM, NOT IN ITS PURPOSE. The original
+text is kept beneath this note, unaltered, per the annotate-never-rewrite rule.
+  - `git pull` is FORBIDDEN (WORKING_CONTRACT s3). Use: `git fetch origin`, then
+    `git merge <named sha>`. Every state transition must be observable.
+  - `git stash` in the canonical checkout is FORBIDDEN (s1). There is nothing to
+    stash: this seat works in its own worktree on a task branch (s2).
+  - Freshness is still RULE ZERO and is unchanged in substance: before filing,
+    confirm the review's target files are byte-identical between your base SHA and
+    origin/main (`git diff --stat <base> origin/main -- <paths>`), and record
+    base_sha, branch and worktree_path on the review (s4). A stale checkout still
+    invalidates the cycle; the 2026-09-11 TECHNE-38 review carries that check.
+  - Integration: `git push origin <branch>:main` only when origin/main is an
+    ancestor of HEAD, then verify with `git merge-base --is-ancestor` (s4, s5).
+
 EVERY CYCLE:
 1. RULE ZERO — git pull FIRST and verify freshness: after pulling, confirm your HEAD
    matches origin/main (git fetch; git status -sb shows no 'behind'). A reviewer on a
