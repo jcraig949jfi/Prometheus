@@ -462,3 +462,39 @@ def test_every_receipt_carries_the_four_fields_d23_requires():
     ws = R.new("INSTALLATION", "probe")["workspace"]
     for field_name in ("base_sha", "branch", "worktree_path", "dirty"):
         assert field_name in ws, field_name
+
+
+def test_the_semantic_leak_checker_catches_what_my_string_test_cannot():
+    """The gap Vivarium's checker closed: my test is string equality on
+    s-expressions, so the SAME FUNCTION under a different spelling escapes it.
+    This asserts the two disagree on exactly that case, because if they never
+    disagreed there would be no reason to carry both."""
+    from techne.scripts import export_component_library as X
+
+    # (or x1 x2) computes the same function as the solved program (or x2 x1),
+    # and is spelled differently -- invisible to the syntactic test.
+    body = "(or x1 x2)"
+    res = {"ok": True, "n_abstractions": 1, "original_cost": 9, "final_cost": 8,
+           "names": ["fn_0"], "arities": [0], "uses": [3], "bodies": [body]}
+    by = {body: {"ast": ["or", ["input", 1], ["input", 2]], "tasks": ["x"], "phases": {1}}}
+    out = X._score(res, "SYN", [body], by, held_out={"(or x2 x1)"},
+                   ar=_StubArchaeon(), pb=_StubProteus(), va=_StubViv(),
+                   vl=_StubLeak(), target_tts={"tgt-10": "01110111"})
+    assert out["n_components_from_held_out_phase2"] == 0, (
+        "the syntactic test must MISS this -- that is the point of the test")
+    assert out["viv_library_leak"]["verdict"] == "SOLVES_A_TASK"
+    assert out["exportable_for_phase2_use"] is False, (
+        "the semantic verdict must be the one that decides")
+
+
+class _StubLeak:
+    """Stands in for viv.library_leak with its contract, not its implementation:
+    a component whose truth table matches a task's is SOLVES_A_TASK."""
+
+    @staticmethod
+    def check(components, task_truth_tables, *, known_solutions=None):
+        hit = [c["name"] for c in components if task_truth_tables]
+        return {"verdict": "SOLVES_A_TASK" if hit else "CLEAN",
+                "usable_as_a_library_effect": not hit,
+                "n_components": len(components), "n_tasks": len(task_truth_tables),
+                "findings": [{"component": n, "class": "SOLVES_A_TASK"} for n in hit]}
