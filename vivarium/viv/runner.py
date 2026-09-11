@@ -420,24 +420,50 @@ class SfeRunner:
         exp_id = exp["exp_id"]
         out.sfe_experiment_id = exp_id
 
-        env = self.audit_envelope(wid, exp_id)
-        for key in ("sealed_spec_hash_in_ledger", "spec_hash_recomputed"):
-            got = env.get(key)
-            if got != sealed:
-                raise SpecIntegrityError(
-                    "engine sealed a different spec: queue=%s %s=%s "
-                    "(exp_id=%s)" % (sealed, key, got, exp_id))
-
-        # Execution really became possible at the commit above. From here on,
-        # ANY exception is a failure of a run that crossed the boundary, and
-        # must reach the loop as an ExecutionFailure carrying what was
-        # observed -- otherwise the row records crossed=True with no fossil,
-        # which is exactly what a live SFE outage produced on 2026-09-06.
+        # THE BOUNDARY IS THE COMMIT ABOVE, AND THE FLAG MOVES WITH IT.
+        #
+        # This used to be set thirteen lines lower, after the audit-envelope
+        # read -- so a failure in that gap left an experiment COMMITTED in the
+        # engine while the row recorded crossed_boundary False, no
+        # sfe_experiment_id and no failure_class, because the exception was a
+        # bare transport error rather than an ExecutionFailure and the loop's
+        # generic handler had no partial result to record.
+        #
+        # That produced 13 orphans on 2026-09-11: committed experiments in SFE
+        # that the register does not name and nobody can find from either side.
+        # The comment here already said "from here on, ANY exception is a
+        # failure of a run that crossed the boundary" -- it was true and the
+        # code started saying it too late.
         out.crossed_boundary = True
         # PEW keys a fossil on (encounter_id, run_id). Until a work item is
         # claimed the execution's identity IS the experiment, so run_id is
         # exp_id alone -- unique, and not an invented work id.
         out.run_id = exp_id
+
+        # The envelope read is now INSIDE the boundary, so a transport failure
+        # here reaches the loop carrying the exp_id it orphaned.
+        try:
+            env = self.audit_envelope(wid, exp_id)
+            for key in ("sealed_spec_hash_in_ledger", "spec_hash_recomputed"):
+                got = env.get(key)
+                if got != sealed:
+                    raise SpecIntegrityError(
+                        "engine sealed a different spec: queue=%s %s=%s "
+                        "(exp_id=%s)" % (sealed, key, got, exp_id))
+        except SpecIntegrityError as exc:
+            # A DIFFERENT FAILURE FROM A TRANSPORT ONE and kept distinct: the
+            # engine answered, and what it sealed is not what the queue sealed.
+            raise ExecutionFailure(
+                str(exc), partial=out,
+                failure_class="SPEC_INTEGRITY") from exc
+        except Exception as exc:                    # noqa: BLE001
+            raise ExecutionFailure(
+                "%s reading the audit envelope after the experiment was "
+                "committed: %s. The experiment EXISTS in the engine (%s) and "
+                "this row is how it is found."
+                % (type(exc).__name__, exc, exp_id),
+                partial=out, failure_class="ENGINE_TRANSPORT") from exc
+
         if on_running is not None:
             on_running(exp_id, {"world_id": wid, "hyp_id": hyp_id,
                                 "pred_id": pred_id,
