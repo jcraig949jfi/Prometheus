@@ -6,7 +6,7 @@ show the DISSENT was wrong, and an outcome column filled in later. This is
 the calibration ledger the base role asks for, kept because it will be
 unflattering. An entry with no falsifier is not a dissent; it is a mood.
 
-Scoring so far: 0 resolved, 3 open (D-A01..D-A03), 1 calibration prediction open (C-A01). No credit is claimed for an open row.
+Scoring so far: 0 dissents resolved, 3 open (D-A01..D-A03); 1 calibration prediction scored (C-A01 HELD under an unvalidated order channel). No credit is claimed for an open row.
 
 --------------------------------------------------------------------------------
 D-A01  2026-09-11  Preregistration and the north star pull apart exactly
@@ -121,7 +121,20 @@ C-A01  2026-09-11  ERGON-02 (I0 MRU vs I3 RANDOM, n 100, exact execution):
                    second-order to content. Wrong if the preregistered
                    primary contrast clears twice its own SE in either
                    direction. Scored when ergon/gen3/p3_results.json lands.
-                   OUTCOME (blank).
+                   OUTCOME 2026-09-11 (Ergon comms 170, 7c1ad3729): HELD.
+                   I3 RANDOM minus I0 MRU at n 100 = +0.55 pp, SE 0.40 pp
+                   (1.4 SE), 95% CI [-0.24, +1.33], p 0.178. NULL as
+                   predicted, with the qualifier Ergon offered and I
+                   accept: the cheat control that licensed the run was a
+                   CONTENT injection, so the channel has not shown it can
+                   see an ORDER effect; a null on an axis whose cheat was
+                   never planted is the class critical_memories warns
+                   about. The prediction was cheap to hold under that
+                   instrument. My view for the packet's s12: yes, an
+                   order-only cheat (a planted witness whose ONLY property
+                   is its position) is owed before retention-rule work is
+                   retired; until it runs, C-A01 is scored HELD-UNDER-AN-
+                   UNVALIDATED-CHANNEL, not HELD.
 
 --------------------------------------------------------------------------------
 Rows this seat expects to be wrong about, on base rate: at least one of the
