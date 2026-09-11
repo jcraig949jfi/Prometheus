@@ -8,6 +8,8 @@ wins and this file is wrong.
 """
 from __future__ import annotations
 
+from herakles.workspace import assert_not_canonical
+
 import io
 import json
 import math
@@ -66,6 +68,8 @@ def run_cell(rule_name, n_cells, n_ics, steps, seed):
 
 
 def main():
+    # D-23: refuse to run from the canonical checkout.
+    _ws = assert_not_canonical("run the historical reproduction")
     started = time.time()
     out = {"protocol": "herakles/evca/c1e/PROTOCOL.md",
            "z": Z, "per_cell_alpha": PER_CELL_ALPHA,
