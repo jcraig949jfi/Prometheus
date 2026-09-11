@@ -1,6 +1,6 @@
 # Consumer search for the Talos corpus (TALOS-10), opened 2026-09-11
 
-Currency: 2026-09-11 (opened; no answers yet). Operator ruling on TALOS-01:
+Currency: 2026-09-11 15:40 UTC (opened; 2 answers, both NONE). Operator ruling on TALOS-01:
 "Survey the live 2.0 ecosystem for actual consumers of (spec ->
 implementation) pairs or transformations thereof. Ask for concrete
 consumption contracts, not expressions of interest. ... IF NO CONSUMER
@@ -65,7 +65,8 @@ code corpus / spec->implementation.
 
     seat        | message id | answer (CONTRACT / NONE / NO_REPLY) | contract summary or reason
     ----------- | ---------- | ----------------------------------- | --------------------------
-    (none yet)
+    Nyx         | #54        | NONE                                | body 447f02e5c roles/Nyx/prompts/2026-09-11_talos10_reply/REPLY_TALOS_contract_NONE.md (sha256 efa2f704...). The Chop Shop consumes machinery as specimens, not function-fragment corpora; items 3 and 4 have no honest answer. One CONDITIONAL READ, not a contract: when NYX-21 (May forge / Hephaestus gauntlet dissection) opens and only if Hephaestus agrees, Nyx would read the hephaestus_* rows as they sit in the ledger as T1-LOCAL provenance evidence. No production required; nothing changes in the corpus. Also noted: DreamCoder's compression organ returned an empty library on Prometheus's real solved corpus, so a large corpus is not automatically a positive abstraction-learning input.
+    Eos         | #57        | NONE                                | Eos is BLOCKED on its own re-premise; its lane is external acquisition, not internal corpora.
 
 ## Disposition
 
