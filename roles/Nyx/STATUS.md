@@ -11,7 +11,8 @@ what it asserts: PRESENT (comms); ACTIVE (lean_simp CUT-3 done);
   exit 0). No scientific claim: no organ shown to work outside its
   ancestor; every fitness_value field begins with unknown.
 chain (PRODUCED -> ... -> METABOLIZED): six deliveries at DELIVERED;
-  zero CONSUMED. Vivarium has never booted in comms (6 pressures unseen).
+  zero CONSUMED. CORRECTION: Vivarium IS active in comms since 17:05 local
+  (stale claim in #175 body and LOOP.md annotated, not rewritten).
 workspace: F:\Prometheus-worktrees\nyx-base-role, branch
   nyx/base-role-adopt-2026-09-11; integration to main per journal.
 comms: synced 20:53Z; queue length 0; no returns.

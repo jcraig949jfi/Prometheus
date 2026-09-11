@@ -9,8 +9,10 @@ journal close.
 ## Work-in-progress cap (from observed consumer throughput, not ambition)
 
 Observed 2026-09-11: 10 deliveries (6 pressures to Vivarium, 4 reports to
-Archaeon) over ~7 hours; 0 substantive returns; Vivarium has never booted
-in comms. Throughput observed = 0 per hour.
+Archaeon) over ~7 hours; 0 substantive returns. CORRECTION 21:10Z: Vivarium
+IS active in comms since 17:05 local (python -m comms who; m1-416d588d);
+the earlier claim that it had never booted was stale by four hours.
+Throughput observed is still 0 per hour, but the consumer exists.
 
     CAP = 1 specimen in flight until the first substantive return exists.
     In flight now: lean_simp (CUT-3 done; awaiting #175 / #176).
@@ -21,11 +23,12 @@ and written here with the date.
 
 ## STOP / escalation status (checked at every journal close)
 
-    consumer backlog makes inventory useless   TRIGGERED-CANDIDATE: 6 pressures + 4
-                                               organ reports, 0 consumed. Reported to the
-                                               operator in the trial report; the loop is
-                                               OPEN procedurally and HELD at cap 1 until
-                                               the operator rules or a consumer returns.
+    consumer backlog makes inventory useless   WATCH (downgraded 21:10Z from TRIGGERED-CANDIDATE):
+                                               6 pressures + 4 organ reports, 0 consumed,
+                                               BUT Vivarium booted at 17:05 and #175 is
+                                               4h younger than that. Reported to the operator;
+                                               loop OPEN at cap 1; HELD until a return or a
+                                               ruling, because the cap rule needs a throughput.
     inherited rate high after knife refinement  NOT YET TESTABLE (K1 has not been applied
                                                to a new specimen)
     organs repeatedly fail independent test     NOT YET TESTED (0 independent tests attempted)
