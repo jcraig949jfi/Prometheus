@@ -109,3 +109,39 @@ def test_a_harness_linked_worktree_under_the_canonical_path_passes_the_guard(tmp
 def test_this_test_runs_from_a_linked_worktree_and_journals_are_committable_here():
     assert W.is_main_worktree(REPO) is False, W.receipt(REPO)
     assert not _ignored("roles/Archaeon/journal/2026-09-11.md")
+
+
+def _registry_names():
+    text = (BASE / "MONITORS.md").read_text(encoding="utf-8")
+    names = set()
+    for line in text.splitlines():
+        if " | " in line and not line.startswith(("  ", "One row", "name |")):
+            head = line.split(" | ", 1)[0].strip()
+            for n in head.split(" / "):
+                names.add(n.strip())
+    return names
+
+
+def test_monitor_registry_rows_carry_every_column():
+    text = (BASE / "MONITORS.md").read_text(encoding="utf-8")
+    rows = [l for l in text.splitlines() if l.count(" | ") >= 8 and not l.startswith("  name")]
+    assert len(rows) >= 8
+    for r in rows:
+        cols = [c.strip() for c in r.split(" | ")]
+        assert all(cols[:9]), "empty column in registry row: {}".format(r[:60])
+        assert any(k in cols[8] for k in ("ACTIVE", "DORMANT", "DISABLED", "UNLOCATED")), r[:60]
+
+
+def test_every_enabled_prometheus_scheduled_task_on_this_host_is_registered():
+    """Base rule 7: an unregistered standing loop is unmanaged. Windows only."""
+    import shutil
+    if not shutil.which("powershell"):
+        pytest.skip("no Task Scheduler on this host")
+    cmd = ("Get-ScheduledTask | Where-Object { $_.TaskName -match 'Prometheus|Tick|Watchdog|PEW|SFE|Vivarium|Aporia|Elenchus' "
+           "-and $_.State -ne 'Disabled' } | ForEach-Object { $_.TaskName }")
+    out = subprocess.run(["powershell", "-NoProfile", "-Command", cmd], capture_output=True, text=True, timeout=120).stdout
+    tasks = {l.strip() for l in out.splitlines() if l.strip()}
+    if not tasks:
+        pytest.skip("no Prometheus scheduled tasks on this host")
+    missing = sorted(tasks - _registry_names())
+    assert not missing, "enabled scheduled tasks with no registry row: {}".format(missing)

@@ -106,7 +106,8 @@ database writes, model training and experiment runners:
 7. DORMANCY MUST BE VISIBLE. Any standing audit, monitor, shadow,
    validator or qualification loop exposes freshness and last-success
    state. Silence is never observationally equivalent to health; a dead
-   watchdog is itself a failed instrument.
+   watchdog is itself a failed instrument. The registry is
+   roles/base-role/MONITORS.md; boot step 7 keeps it current.
 
 A seat that experiments on ITS OWN SUBSTRATE is doing science: Mnemosyne
 does not adjudicate domain hypotheses, it scientifically validates the
@@ -156,6 +157,16 @@ reads instead of any local memory directory.
    the newest prompt, and the status of the seats you depend on. Then start
    on the first one unless the operator redirects. The seat should always
    be working.
+7. FEED YOUR WATCHDOGS BEFORE YOUR TASKS. Enumerate every standing loop,
+   monitor, shadow, validator or qualification loop you own OR FEED
+   (roles/base-role/MONITORS.md is the registry). For each: does it have
+   a named input with a producer; does it write last_input_at and
+   last_success_at where they can be read without running it; does it
+   have a dormancy threshold with an alarm routed somewhere; is its row
+   current. Fix what you own, declare DORMANT / DISABLED / UNLOCATED what
+   you cannot, and only then proceed to task work. A monitor whose
+   silence would be read as health is a failed instrument you are
+   carrying into every result (base rule 7; operator 2026-09-11).
 
 ## 2. Doctrine every seat carries
 

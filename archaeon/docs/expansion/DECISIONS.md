@@ -119,3 +119,9 @@ Principle added to the contract (s10): the constitution is falsifiable -- a rule
 - Elenchus: write scope widened to everything that is not the audited object; mandate program-wide on commission with the Aporia shadow as the default standing lane; ELEN-03 proceeds; the dormant shadow loop is a failed instrument until it exposes freshness.
 - The journal collision (four seats, one .gitignore rule) is a confirmed base-role bug, fixed and tested at 2b79c140a; no further operator question.
 
+## D-23 amendment 4 (2026-09-11): feed the watchdogs; the interrupted-checkout mechanism reproduced
+
+- roles/base-role/MONITORS.md is the registry of every standing loop (input, freshness source, dormancy threshold, alarm, state); boot step 7 makes monitor compliance precede task work; the self-test requires every enabled Prometheus scheduled task on the host to have a row.
+- Elenchus's shadow is DORMANT because its INPUT (Aporia's WORKLOG) stopped at P177 on 2026-09-01; feeding it means reviving Aporia's loop or repointing the shadow at a live input under Elenchus's program-wide mandate -- the operator rules which. The mailer the operator still receives is UNLOCATED on M1 (Hermes brief script; no task, cron or process) and must be identified from an email's headers.
+- The mechanism behind the canonical checkout's ~11,000 missing files was reproduced live: `timeout 120 git worktree add` on the 39,067-file tree was killed at ~80% and left every file missing with the index intact and the worktree locked "initializing". Contract s3 now forbids short timeouts on checkout-class operations (budget 900 s or run unbounded).
+

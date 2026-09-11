@@ -13,6 +13,7 @@ seat inherits. Adopted by the operator 2026-09-11.
   worktrees for long-running processes, destroy-not-nurse, conformance as
   provenance.
 - INHERITANCE.md -- the list of roles and the banner each carries.
+- MONITORS.md -- the registry of standing loops, watchdogs and shadows: input, freshness source, dormancy threshold, alarm, state.
 
 A seat's own documents ADD to these files and may not contradict them.
 Where a seat file predates this directory and disagrees, this directory
