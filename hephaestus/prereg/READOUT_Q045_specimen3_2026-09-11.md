@@ -116,3 +116,11 @@ INCONCLUSIVE row is the same family. Neither run has an A0/A2 witness or alias o
 
 Expected: `closure_sizes` 3502 / 1366 / 61230, `summary.LOST` 18 / 2 / 0 with A2_LEAK 0 and
 C_robust 20, `summary.CONTROL` 10 / 10.
+
+---
+*Annotation 2026-09-11 (later the same day; v2 characterization, `READOUT_Q045_v2_Z7_2026-09-11.md`).
+The numbers above are frozen and unchanged. v2 found that this run's shift column was ill-posed:
+shift inputs carried the entry 6 (outside Z6) and permuting ops kept it while reducing ops folded it,
+so witness-level `robust` flags here contain false negatives (4 found) and Z6-identity artefacts.
+The target-level coordinates (C robust 20/20; CONTROL robust 10/10) and every classification stand
+under the well-posed Z7 column. Operator rulings of 2026-09-11 govern: this result is not rewritten.*

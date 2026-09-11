@@ -62,3 +62,14 @@ reading of the gauntlet's own output by this seat is a same-author reading.
   The "300,000 evaluation budget" bounded evaluations, never runtime; a
   budget that does not bound the thing you wait for is not the bound you
   think it is.
+- 2026-09-01 (found 2026-09-11 by Q045 v2): v1's "structural shift" column was
+  ill-posed. Shift inputs carried the entry 6, outside Z6; ops that reduce
+  (p02..p05, p07..p09) folded it to 0 while ops that only permute (p00, p01)
+  kept it as 6, so v1 compared a target and a candidate under mixed
+  semantics. Consequence: v1's witness-level `robust` flags contain false
+  negatives (4 B-arm witnesses correct in Z6, e.g. emul(econst1(X), rot(X))
+  for p00(X), were marked not robust). The target-level statements (C robust
+  20/20; CONTROL robust 10/10) survive under the well-posed Z7 column. v1 is
+  frozen and annotated, not rewritten. Lesson: an out-of-alphabet shift is
+  only a test if every op has defined semantics on the shifted alphabet;
+  choose a ring that CONTAINS the shifted values.

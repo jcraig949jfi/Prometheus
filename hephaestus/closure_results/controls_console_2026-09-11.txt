@@ -1,0 +1,24 @@
+== vacuous_truth: ALL_PASS=True (154.8s)
+   NEGATIVE     PASS=True  expect: n_mechanism == 0 in A1, A2, B (aliases allowed, reported)
+      A1: mech 0 alias 0 evaluated 300000
+      A2: mech 0 alias 0 evaluated 300000
+      B: mech 0 alias 0 evaluated 107629
+   POSITIVE-A1  PASS=True  expect: n_mechanism >= 1 and minimal witness depth == 1 for target pigeonhole_check(d, s)
+      mech 5 min depth 1 named present True first ['pigeonhole_check(d, s)', 'pigeonhole_check(0, all_but_n(s, d))']
+   POSITIVE-B   PASS=True  expect: n_mechanism >= 1 and minimal witness depth == 1 for target eq(d, s)
+      mech 5 min depth 1 named present True first ['eq(d, s)', 'le(d, s)']
+   CHEAT        PASS=True  expect: decoy witness at depth 1 in A1+decoy on every route; decoy witness present in A2-only injection
+      universal: baseline A1 mech 3 (min d 2); A1+decoy mech 5 (min d 1) PASS True; A2-only decoy present True
+      negative_universal: baseline A1 mech 5 (min d 1); A1+decoy mech 5 (min d 1) PASS True; A2-only decoy present True
+      existential: baseline A1 mech 5 (min d 1); A1+decoy mech 5 (min d 1) PASS True; A2-only decoy present True
+== consistency_check: ALL_PASS=True (0.8s)
+   NEGATIVE     PASS=True  expect: n_mechanism == 0 in A1, A2, B (aliases allowed, reported)
+      A1: mech 0 alias 0 evaluated 55
+      A2: mech 0 alias 0 evaluated 908
+      B: mech 0 alias 0 evaluated 20
+   POSITIVE-A2  PASS=True  expect: n_mechanism >= 1 and minimal witness depth == 2 for target is_none(topological_sort(rels))
+      mech 5 min depth 2 named present True first ['is_none(topological_sort(rels))', 'not(is_some(topological_sort(rels)))']
+   POSITIVE-B   PASS=True  expect: n_mechanism >= 1 and minimal witness depth == 1 for target has_cycle_dfs(rels)
+      mech 2 min depth 1 named present True first ['has_cycle_dfs(rels)', 'not(not(has_cycle_dfs(rels)))']
+   CHEAT        PASS=True  expect: decoy witness at depth 1 in A1+decoy on every route; decoy witness present in A2-only injection
+      consistent: baseline A1 mech 0 (min d None); A1+decoy mech 1 (min d 1) PASS True; A2-only decoy present True

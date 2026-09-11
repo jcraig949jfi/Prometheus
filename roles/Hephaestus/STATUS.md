@@ -1,6 +1,6 @@
 # Hephaestus status
 
-Currency: 2026-09-11 13:15 UTC (adoption pass + specimen 3 executed). Plain language. Update at
+Currency: 2026-09-11 15:15 UTC (rulings applied; controls ALL_PASS; v2 executed, kill fired on v1's shift column). Plain language. Update at
 least every four hours of activity. Each status line says which of
 PRESENT / ACTIVE / PRODUCTIVE / VALID it asserts.
 
@@ -42,6 +42,25 @@ PRESENT / ACTIVE / PRODUCTIVE / VALID it asserts.
   corrected code. CALIBRATION.md and the readout carry the detail.
 - Same-author reading (conflict declared). Not admitted anywhere.
 
+## Gauntlet controls on the boolean specs -- EXECUTED, ALL_PASS (HEPH-09/10)
+
+- hephaestus/prereg/READOUT_gauntlet_controls_2026-09-11.md. Negative (random
+  target: 0 witnesses in A1/A2/B on both specs), positive (named depth-1/2
+  expressions found at their depth), cheat (injected kernel appears at depth 1;
+  on consistency_check the frozen arm had 0 witnesses and the decoy is the only
+  one). Same-author. Establishes discrimination on these two specs only.
+
+## Q045 v2 (Z7 shift) -- EXECUTED (instrument characterization, ruling 1)
+
+- Preregistered alone at 3fdb32f8a. V2-P1, V2-P2 TRUE (identical witnesses
+  and classes; certified programs robust in Z7). V2-P4 kill FIRED: 4 v1
+  false negatives, because v1's shift inputs (entry 6) were outside Z6 and
+  permuting ops did not reduce them. Target-level coordinates survive: C
+  robust 20/20, CONTROL robust 10/10. 43 arm-level decreases (86 witness-
+  level losses), each Z6-exhaustive-equal yet Z7-different; two identity
+  families by inspection (x^3=x; 6x=0). v1 frozen, annotated beside; readout
+  hephaestus/prereg/READOUT_Q045_v2_Z7_2026-09-11.md.
+
 ## The forge's engines -- PRESENT, not re-verified this pass
 
 - +11pp R3 / +32pp R4 last reproduced 2026-08-19 (ABLATION_CARD). Not
@@ -59,7 +78,6 @@ PRESENT / ACTIVE / PRODUCTIVE / VALID it asserts.
 
 ## Next executable action
 
-HEPH-11 (freshness file for the queue), then HEPH-09/10 (generalised
-negative and cheat controls for the gauntlet on the boolean specs), then
-HEPH-24 (Z7 ring change as a versioned tooling change) -- in that order,
-unless the operator answers HEPH-17 first.
+HEPH-29 (forward_chain through the gauntlet as a typed spec, preregistered)
+then HEPH-30 (behavioural NCD lifted as an instrument with controls).
+Waiting on Archaeon's one-line disposition for HEPH-25.

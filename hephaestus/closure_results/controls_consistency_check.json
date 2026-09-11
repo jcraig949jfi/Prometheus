@@ -1,0 +1,145 @@
+{
+  "spec": "consistency_check",
+  "depth": 3,
+  "budget": 300000,
+  "seed": 20260911,
+  "basis": {
+    "version": "A2-GENERIC-v1",
+    "hash": "7f2ef69196e7f128"
+  },
+  "generated": "2026-09-11T13:44:18Z",
+  "controls": [
+    {
+      "control": "NEGATIVE",
+      "expect": "n_mechanism == 0 in A1, A2, B (aliases allowed, reported)",
+      "observed": {
+        "A1": {
+          "evaluated": 55,
+          "n_mechanism": 0,
+          "n_robust": 0,
+          "n_alias": 0,
+          "min_witness_depth": null,
+          "witnesses": [],
+          "aliases": []
+        },
+        "A2": {
+          "evaluated": 908,
+          "n_mechanism": 0,
+          "n_robust": 0,
+          "n_alias": 0,
+          "min_witness_depth": null,
+          "witnesses": [],
+          "aliases": []
+        },
+        "B": {
+          "evaluated": 20,
+          "n_mechanism": 0,
+          "n_robust": 0,
+          "n_alias": 0,
+          "min_witness_depth": null,
+          "witnesses": [],
+          "aliases": []
+        }
+      },
+      "PASS": true
+    },
+    {
+      "control": "POSITIVE-A2",
+      "expect": "n_mechanism >= 1 and minimal witness depth == 2 for target is_none(topological_sort(rels))",
+      "observed": {
+        "evaluated": 908,
+        "n_mechanism": 5,
+        "n_robust": 5,
+        "n_alias": 1,
+        "min_witness_depth": 2,
+        "witnesses": [
+          "is_none(topological_sort(rels))",
+          "not(is_some(topological_sort(rels)))",
+          "and(pigeonhole_check(1, 0), is_none(topological_sort(rels)))",
+          "and(is_none(topological_sort(rels)), pigeonhole_check(1, 0))",
+          "and(pigeonhole_check(len_edges(rels), 0), is_none(topological_sort(rels)))"
+        ],
+        "aliases": [
+          "count_true(diag(check_transitivity(rels)))"
+        ]
+      },
+      "named_expression_present": true,
+      "PASS": true
+    },
+    {
+      "control": "POSITIVE-B",
+      "expect": "n_mechanism >= 1 and minimal witness depth == 1 for target has_cycle_dfs(rels)",
+      "observed": {
+        "evaluated": 20,
+        "n_mechanism": 2,
+        "n_robust": 2,
+        "n_alias": 0,
+        "min_witness_depth": 1,
+        "witnesses": [
+          "has_cycle_dfs(rels)",
+          "not(not(has_cycle_dfs(rels)))"
+        ],
+        "aliases": []
+      },
+      "named_expression_present": true,
+      "PASS": true
+    },
+    {
+      "control": "CHEAT",
+      "expect": "decoy witness at depth 1 in A1+decoy on every route; decoy witness present in A2-only injection",
+      "observed": {
+        "consistent": {
+          "baseline_A1": {
+            "evaluated": 55,
+            "n_mechanism": 0,
+            "n_robust": 0,
+            "n_alias": 0,
+            "min_witness_depth": null,
+            "witnesses": [],
+            "aliases": []
+          },
+          "A1_plus_decoy": {
+            "evaluated": 56,
+            "n_mechanism": 1,
+            "n_robust": 1,
+            "n_alias": 0,
+            "min_witness_depth": 1,
+            "witnesses": [
+              "decoy_kernel(rels)"
+            ],
+            "aliases": []
+          },
+          "A2only_decoy": {
+            "evaluated": 909,
+            "n_mechanism": 5,
+            "n_robust": 5,
+            "n_alias": 0,
+            "min_witness_depth": 1,
+            "witnesses": [
+              "decoy_kernel(rels)",
+              "and(decoy_kernel(rels), decoy_kernel(rels))",
+              "or(pigeonhole_check(0, 0), decoy_kernel(rels))",
+              "and(pigeonhole_check(1, 0), decoy_kernel(rels))",
+              "and(decoy_kernel(rels), pigeonhole_check(1, 0))"
+            ],
+            "aliases": []
+          },
+          "PASS_A1": true,
+          "PASS_A2": true,
+          "note": "A2-only injection: the frozen arm is unchanged by construction; the leak is visible when the A2 arm carries the decoy witness"
+        }
+      },
+      "PASS": true
+    }
+  ],
+  "ALL_PASS": true,
+  "seconds": 0.8,
+  "workspace": {
+    "base_sha": "5d784becf94cbdde4b1aba1a88582436182226a5",
+    "branch": "hephaestus/base-role-adopt-2026-09-11",
+    "worktree_path": "F:\\Prometheus-worktrees\\hephaestus-base-role",
+    "dirty": true,
+    "main_worktree": false,
+    "allow_canonical_override": false
+  }
+}
