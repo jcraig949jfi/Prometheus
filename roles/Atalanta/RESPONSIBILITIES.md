@@ -2,8 +2,15 @@
 
 > Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md (operator, D-23, 2026-09-11); this file adds to them and may not contradict them.
 
-Currency: 2026-09-11 (old agent reanimated as a roles/ seat; base role
-adopted; lane BLOCKED pending an operator ruling, ATALANTA-01).
+Currency: 2026-09-11. SEAT RETIRED the same day it was adopted.
+
+> RETIRED 2026-09-11 by the operator, on this seat's own recommendation.
+> ATALANTA-01 was ruled RETIRE-AND-LIFT-ASSET, ATALANTA-04 was executed,
+> and the resurrection test found nothing operationally unique left to
+> revive. The retirement annotation, the laws lifted and the handovers are
+> in roles/Atalanta/RETIREMENT_2026-09-11.md. Everything below this banner
+> is the state at adoption and is kept as written; it is history, not a
+> live description of a working seat.
 
 Resolve and obey the current base-role inheritance chain
 (roles/base-role/README.md and the files it lists, then
