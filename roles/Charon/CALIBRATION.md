@@ -16,3 +16,6 @@ Format: date | call | direction of the error | how caught | source
 Pattern across the 09-01 rows: three of five errors pushed toward a BIGGER finding
 (severity), not a more favourable one. The drift guard that audits the flattering
 direction last must treat severity as a flattering direction for this seat.
+
+2026-09-11 | Boot report (comms #149) said block B's residue pool "has moved again since the ruling": 534 rows now vs 275 in the ruling | inflated severity | 534 is every raw line, 275 is the rep-1 subset the ruling quoted; the ruling's own table (275/220/55) matches the file exactly; mtime 08-25, last commit d5e372cb9 (08-30). Withdrawn in charon/probe/RULINGS_2026-09-11.md section 0 | roles/Charon/comms_out/2026-09-11_boot_report.md "ONE FACT MEASURED"
+2026-09-11 | First draft of check_c2 keyed on uid, not row; on block A (206 rep-1 rows, 200 uids: each failure retried under its uid) it would have fired on a loader that correctly dropped the failure and kept the retry | own instrument fires on the fixed case | the block A count (200 admitted uids vs 206 records) before the check shipped; re-keyed on (uid, seq), UNATTRIBUTABLE branch added, two tests | charon/probe/RULINGS_2026-09-11.md section 1, C2
