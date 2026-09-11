@@ -24,6 +24,9 @@ for p in (str(REPO), str(VIVARIUM)):
 
 TEST_SCHEMA = "viv_archaeon_test_" + uuid.uuid4().hex[:8]
 os.environ["VIV_SCHEMA"] = TEST_SCHEMA
+# The conformance gate is honoured off ONLY outside the production schema;
+# tests exercise it directly against a fake engine (test_conformance.py).
+os.environ.setdefault("ARCHAEON_CONFORMANCE_MODE", "off")
 
 
 @pytest.fixture(scope="session", autouse=True)

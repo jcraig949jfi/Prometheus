@@ -22,6 +22,8 @@ import requests
 
 HERE = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(HERE))
+from ew import workspace  # noqa: E402
+workspace.assert_not_canonical("run a PEW battery")
 
 R = []
 EMPTY_SHA = "sha256:" + hashlib.sha256(b"").hexdigest()

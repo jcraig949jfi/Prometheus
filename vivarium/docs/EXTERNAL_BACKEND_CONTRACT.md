@@ -1,6 +1,7 @@
-# The bounded external-backend contract (v1)
+# The bounded external-backend contract (v1.1)
 
-*Vivarium, 2026-09-11. Design v0.1 "Bounded external execution". This is the
+*Vivarium, 2026-09-11; amended the same day with sections 3.1/3.2 and fixture
+F15b from Techne’s stitch qualification. Design v0.1 "Bounded external execution". This is the
 RULE; Techne builds an adapter against it. Written to clear TECHNE-13.*
 
 ---
@@ -237,6 +238,61 @@ output" is meaningless until somebody says which bytes count.
 | 5 runs at a DIFFERENT thread count | whether determinism is a property of the TOOL or of the pinning |
 | 5 runs at the pinned settings under the declared `limits` | it is still repeatable when constrained — a backend that is deterministic unconstrained can be nondeterministic when it hits a memory ceiling and changes strategy |
 
+### 3.1 The projection is declared field by field, and it is not free
+
+**Amended 2026-09-11 from a finding Techne produced while qualifying stitch.**
+
+Their first thread-arm pass gave four different whole-file hashes across four
+thread counts — exactly the reduction-reordering signature §3 predicts. It was
+not that. Stitch writes `cmd` into its own output, recording the invocation
+*including the `--out` path*, and they had varied that path per run. Hold the
+path constant and the four hashes collapse to one.
+
+**So a whole-file hash is not a valid repeatability statistic for any backend
+whose output embeds its own invocation** — and you cannot know in advance which
+backends those are. This is the concrete reason §3 says *declared projection*
+and not *the output*.
+
+The rule, tightened:
+
+* The projection is declared **field by field**, with a reason for every
+  exclusion. "Everything except the noisy bits" is not a projection.
+* Only two classes may be excluded. **Self-referential**: the invocation, the
+  paths, the pid, anything naming where the run happened. **Environmental**:
+  timestamps, wall time, host, resource use.
+* **Parsed configuration may NOT be excluded.** Techne got this exactly right
+  by excluding `cmd` and keeping `args`: `cmd` is the backend describing its
+  own launch, `args` is the configuration it actually parsed. Excluding parsed
+  configuration would hide a real drift in what the backend thinks it was told
+  — which is the failure the whole check exists to catch.
+
+**And a projection needs its own positive control**, because the same move that
+makes F15 pass honestly can make it pass vacuously. An over-broad projection
+turns "byte-identical across runs" into a statement about how much was thrown
+away.
+
+> **F15b.** Vary one declared parameter from `argv_from_payload` and show the
+> projection **changes**. A projection that survives a configuration change is
+> not measuring the backend.
+
+F15 and F15b are a pair. The first says the backend is repeatable; the second
+says the thing being compared is still the backend.
+
+### 3.2 What the thread arm actually returned, and what it did not settle
+
+Techne measured stitch **invariant** across `RAYON_NUM_THREADS` 1, 2, 4, 8 and
+16, on both the projection and the whole file once the path was held constant.
+**My §3 prediction did not hold for this backend.** The arm is still required,
+because it is now doing the job it was written for — telling the tool's
+determinism apart from the pinning's — and on this backend the answer is that
+the pinning is not load-bearing.
+
+They are pinning `thread_count` anyway, on the grounds that *invariance
+measured on one input is not invariance proved*. That is the right reading and
+the contract endorses it: a declaration records what was measured and the scope
+it was measured over, and a pin costs nothing while an unpinned assumption
+costs a silent change of science later.
+
 The second arm does not have to agree. If it disagrees, that is a finding and
 the backend is admitted **with `thread_count` load-bearing**, recorded as such,
 so nobody later "optimises" it to 8 threads and silently changes the science.
@@ -279,6 +335,7 @@ a boundary.
 | F13 | backend exits 0 having written nothing | `MISSING_OUTPUT`; **not** treated as an empty result |
 | F14 | backend exits non-zero having written a complete output | refused; a backend that says it failed is believed over its own file |
 | F15 | two identical runs under the declaration | byte-identical declared projection (§3) |
+| F15b | one declared `argv_from_payload` parameter varied | the projection **changes**; a projection that survives a configuration change is not measuring the backend (§3.1) |
 
 F9, F10 and F11 are the three that a container makes people assume rather than
 test. On a bare host they need explicit enforcement, and the declaration's

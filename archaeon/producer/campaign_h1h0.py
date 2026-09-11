@@ -432,6 +432,8 @@ def issue(conn, rows: Sequence[Dict[str, Any]], *, locators_by_digest: Optional[
         raise RuntimeError("H1/H0 rows do not validate: {}".format(c["blockers"] or c["invalid"]))
     phase = {r["phase"] for r in rows}
     csid = candidate_set_id or "cs-h1h0-1-p{}".format("".join(str(x) for x in sorted(phase)))
+    from .. import conformance as _conf
+    conf_rec = _conf.compact(_conf.require(getattr(config, "conformance", None)))     # halts before any row
     ids = []
     with C.Meter() as m:
         for r in rows:
@@ -442,6 +444,7 @@ def issue(conn, rows: Sequence[Dict[str, Any]], *, locators_by_digest: Optional[
                   "selection_basis": "operator_directed_family",
                   "authority": "H1/H0 alpha on cegis_boolean_v1: phase 1 harvests source witnesses; "
                                "phase 2 issues the arms and cells; no contrast is computed by the producer",
+                  "conformance": conf_rec,
                   "upstream_selection_history": "UNKNOWN"}
             if r["artifact_digests"]:
                 missing = [d for d in r["artifact_digests"] if d not in locators_by_digest]
@@ -506,6 +509,8 @@ def degeneracy_check_row(split: Optional[Dict[str, Any]] = None) -> Dict[str, An
 
 
 def main(argv=None) -> int:
+    from .. import workspace as _ws
+    _ws.assert_not_canonical("run a campaign CLI")               # D-23
     ap = argparse.ArgumentParser(prog="archaeon.producer.campaign_h1h0")
     ap.add_argument("--split", action="store_true"); ap.add_argument("--phase1", action="store_true")
     ap.add_argument("--check-phase1", action="store_true"); ap.add_argument("--issue-phase1", action="store_true")

@@ -54,10 +54,21 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import ssl
+import time
 import sys
 import urllib.error
 import urllib.request
+
+
+# --- D-23: refuse to run from the canonical checkout -----------------------
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+try:
+    from workspace_guard import assert_not_canonical, CanonicalCheckoutRefused
+except ImportError:                                                # pragma: no cover
+    assert_not_canonical = None
+
 
 FAIL = []        # breaking: forces state 1
 INCOMPLETE = []  # additive: forces state 3 unless a consumer needs a new route
@@ -94,6 +105,12 @@ def req(url, cafile=None, token=None, session=None, method="GET", body=None):
 
 
 def main():
+    if assert_not_canonical is not None:
+        try:
+            assert_not_canonical("run the conformance gate")
+        except CanonicalCheckoutRefused as e:
+            print("REFUSING: %s" % e)
+            return 2
     ap = argparse.ArgumentParser()
     ap.add_argument("--contract", required=True)
     ap.add_argument("--cacert", default=None)
@@ -166,11 +183,25 @@ def main():
         r for r in (a.consumer_routes or []) if tuple(r.split(" ", 1)) not in con_routes)
 
     # semantic drift: does session scoping still behave as recorded?
-    st, body = req(root + "/v2/clients", a.cacert, method="POST",
-                   body={"name": "conformance-check"})
+    # RETRY THE PROBE REGISTRATION. A transient here is not drift: failing to
+    # ESTABLISH the probe is "we could not look", not "the contract moved".
+    # Classifying it as DRIFT is actively harmful, because DRIFT is the one
+    # state whose instruction is never retry -- so a network blip would tell
+    # the operator to stop the loop and regenerate a contract that is fine.
+    # I told Archaeon and Vivarium to retry transients before treating a stop
+    # as real; this gate did not do it itself until 2026-09-11.
+    st, body = None, ""
+    for _attempt in range(3):
+        st, body = req(root + "/v2/clients", a.cacert, method="POST",
+                       body={"name": "conformance-check"})
+        if st == 200:
+            break
+        time.sleep(1.0)
     if st != 200:
-        check("session_scoping_sample", False,
-              "could not register a client to probe with: %s" % st)
+        print("  [UNREACHABLE] could not register a probe client after 3 "
+              "attempts: %s" % st)
+        print("  This is an inability to LOOK, not evidence of drift. Retry.")
+        return UNREACHABLE
     else:
         tok = json.loads(body)["token"]
         ids = {"wid": "wld_" + "0" * 24, "eid": "exp_" + "0" * 24,

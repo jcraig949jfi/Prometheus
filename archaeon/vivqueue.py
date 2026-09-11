@@ -319,6 +319,15 @@ def submit(conn, *, candidates: Sequence[Dict[str, Any]],
     csid = candidate_set_id or ("cs-" + uuid.uuid4().hex[:16])
 
     assert_queue_ready(conn)
+    # Operator 2026-09-11: fail-closed conformance at the write boundary.
+    # Raises ConformanceHalt (nothing is written); the record travels on
+    # every row so conformance is provenance on the corpus.
+    from . import conformance as _conf
+    from . import workspace as _ws
+    ws_rec = _ws.assert_not_canonical("write the queue", allow_override=False)   # D-23: never from the canonical checkout
+    conf_rec = _conf.compact(_conf.require(getattr(config, "conformance", None)))
+    for c in candidates:
+        c["source_evidence"] = dict(c.get("source_evidence") or {}, conformance=conf_rec, workspace=ws_rec)
 
     cur = conn.cursor()
     try:

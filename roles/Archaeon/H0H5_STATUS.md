@@ -1,6 +1,6 @@
 # H0–H5 status — compact, from receipts only
 
-Maintained by Archaeon. Updated 2026-09-10 ~21:15 (C3-3 built and preflighted; H5-1 running; D-6 first allocated tick). Review packet: `roles/Archaeon/REVIEW_PACKET_2026-09-10.md`. Delegation: `roles/Archaeon/prompts/2026-09-10_tracks/` (Tracks A-E from the operator's Chimera brief; three corrections verified: sqrt(6) counterexample, client_id retention gap, XOR-injection non-conservation). Design v0.1
+Maintained by Archaeon. Updated 2026-09-11 ~04:00 (conformance gate WIRED and demonstrated). Review packet: `roles/Archaeon/REVIEW_PACKET_2026-09-10.md`. Delegation: `roles/Archaeon/prompts/2026-09-10_tracks/` (Tracks A-E from the operator's Chimera brief; three corrections verified: sqrt(6) counterexample, client_id retention gap, XOR-injection non-conservation). Design v0.1
 (`roles/Archaeon/prompts/2026-09-08_h0h5/DESIGN_H0_H5_v0.1.md`). Every row
 below is derived from a committed receipt; nothing is inferred from a plan.
 Baseline: `archaeon/docs/h0h5/BASELINE_2026-09-09.json`.
@@ -66,6 +66,28 @@ Baseline: `archaeon/docs/h0h5/BASELINE_2026-09-09.json`.
 
 
 
+
+
+
+## 2026-09-11 ~05:00: LOOP PAUSED at the operator's request; workspace invariant D-23 issued and complied with
+
+- The canonical checkout F:\Prometheus was found on a branch that no longer exists on origin (vivarium/v0-2026-09-05) with 35 modified tracked files and 96 untracked files belonging to at least six seats, and with Vivarium's consumer worktree INSIDE it. Snapshot committed beside the missive.
+- Missive to every seat (roles/Archaeon/prompts/2026-09-11_workspace/MISSIVE_ALL_SEATS.md): worktree per seat under F:\Prometheus-worktrees, short-lived task branches from a recorded base SHA, no `git pull`, receipts carry base_sha/branch/worktree_path/dirty, fast-forward integration then remove/delete, pinned worktrees for long-running processes, destroy-not-nurse, startup refusal in the canonical checkout, and a same-day clean-up (claim or delete your own files in the canonical checkout; prune your worktrees; delete merged branches; move long-lived processes).
+- Archaeon's compliance: archaeon/workspace.py (main-worktree detection by git-dir == git-common-dir; `assert_not_canonical` on the loop, every campaign CLI, and the queue writer with no override; `receipt()` on every tick and queue row); the scheduled tick moved to the pinned worktree F:\Prometheus-worktrees\archaeon-tick (detached at the SHA recorded in the task change); archaeon/v0 retires as a long-lived branch -- subsequent work is on task branches.
+- The loop is PAUSED: no wakeup scheduled. Resume on the operator's word ("resume the loop").
+
+## 2026-09-11 ~04:00: the four-state conformance gate is WIRED into Archaeon, fail-closed, and demonstrated (operator step 5)
+
+- **Where**: archaeon/conformance.py, called at the two boundaries where Archaeon begins work -- `archaeon.vivqueue.submit` (every queue write, human or autonomous; a halt writes nothing) and the first line of `archaeon.producer.tick` (before any fossil is read) -- plus the phase-2 enqueue branch. The record (state, live identity, contract hash and identities, gate mode/exit/time, declared consumer routes) travels on every row's `source_evidence.conformance` and in the tick receipt: conformance is provenance on the corpus, not a preflight.
+- **How**: Harmonia's script is the authority (subprocess, `--consumer-routes` declared: Archaeon's only engine route today is `GET /v2/version`; the ledger FILE read stays under the schema guard; the B1 read routes join when the grant lands). Two tiers: the identity call on every crossing (instance / profile / enforcement mismatch halts at once; a source-hash or schema change forces the full gate); Harmonia's full gate (route diff + scoping probe, which registers one client) when the identity tuple or the contract hash changes or the last full result is older than 24 h. UNREACHABLE retries 3 times with 5 s backoff, then halts. INCOMPLETE proceeds only when every declared route is in the contract (her exit-0-with-routes-covered), else halts. **In the production schema the gate cannot be switched off** (the test-only env override is ignored when VIV_SCHEMA is `viv`; tested).
+- **Demonstrated with real engines** (archaeon/docs/h0h5/CONFORMANCE_WIRING_RECEIPT_2026-09-11.json; the tick in dry-run so nothing was written either way):
+  - A conformant: live M1 (schema 8) + the real contract -> CONFORMANT (full gate, exit 0); the tick READ 1148 fossils and reached its decision (NO_WRITE_CADENCE).
+  - B drift: the same engine against a tampered contract (a route the engine lacks, a different build hash) -> DRIFT; the tick halted BEFORE reading a fossil.
+  - C wrong instance: Daedalus's scratch engine (same build, disposable ledger, instance eng_8ee83461668d32f219849a50) -> WRONG_INSTANCE at tier 1; halted, no fossil read, no full gate run.
+  - D unreachable: no engine on the port -> 4 attempts, 2 s backoff, UNREACHABLE; halted.
+- Tests: 8 gate tests on a fake engine (identity, retry, cache, DRIFT/INCOMPLETE plumbing, the production no-off rule, the submit boundary opening no cursor on a halt); 317 total pass.
+- **Vivarium's half** is theirs (viv/loop.py claim/dispatch before hydrate, the complete route set declared, the record on the load receipt): roles/Vivarium/INBOX_ARCHAEON_CONFORMANCE_WIRING_2026-09-11.md. The next newly issued corpus (C3-3) waits for both halves.
+- Consequence for the live tick: from the next run the full gate runs once (registering one client named conformance-check on M1, as Harmonia's script does) and is then cached for 24 h per identity tuple.
 
 ## Wake 23 (2026-09-10, ~21:45): Techne's three asks cleared
 

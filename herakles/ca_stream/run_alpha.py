@@ -10,6 +10,8 @@ can be compared with what the readout alone achieves.
 """
 from __future__ import annotations
 
+from herakles.workspace import assert_not_canonical
+
 import io
 import json
 import os
@@ -41,6 +43,8 @@ def substrates():
 
 
 def main():
+    # D-23: refuse to run from the canonical checkout.
+    _ws = assert_not_canonical("run the H2 alpha")
     t0 = time.perf_counter()
     streams = cs.all_streams(HORIZON)
     parts = cs.partitions(len(streams), 64, 64)

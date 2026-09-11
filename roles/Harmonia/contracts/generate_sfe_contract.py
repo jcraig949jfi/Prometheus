@@ -103,7 +103,22 @@ def required_fields(schema, comps, depth=0):
     return list(schema.get("required", []))
 
 
+
+# --- D-23: refuse to run from the canonical checkout -----------------------
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+try:
+    from workspace_guard import assert_not_canonical, CanonicalCheckoutRefused
+except ImportError:                                                # pragma: no cover
+    assert_not_canonical = None
+
+
 def main():
+    if assert_not_canonical is not None:
+        try:
+            assert_not_canonical("generate the SFE contract (it WRITES four files)")
+        except CanonicalCheckoutRefused as e:
+            print("REFUSING: %s" % e)
+            return 2
     ap = argparse.ArgumentParser()
     ap.add_argument("--base", default="https://192.168.1.202:8811")
     ap.add_argument("--cacert", default=None)
