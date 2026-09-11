@@ -1,0 +1,468 @@
+{
+  "schema": "techne.acquisition.receipt/1",
+  "receipt_id": "adapter_qualification-techne_budget_wrapper-20260911T072256Z",
+  "stage": "ADAPTER_QUALIFICATION",
+  "does_not_establish": [
+    "INSTALLATION",
+    "FIRST_USEFUL_CHECK",
+    "PAPER_REPRODUCTION",
+    "LOCAL_SCIENTIFIC_BENEFIT"
+  ],
+  "entry_id": "techne_budget_wrapper",
+  "tool": "techne_budget_wrapper",
+  "design_version": "0.1",
+  "written_utc": "2026-09-11T07:22:56+00:00",
+  "seat": "Techne",
+  "repo": {
+    "commit": "6e225dc745a37e85549e5ae8b09e833f34ce9e0a",
+    "branch": "techne/track-d-2026-09-10",
+    "dirty": true
+  },
+  "runner": {
+    "python": "3.12.10",
+    "executable": "F:\\Prometheus\\vault\\techne_tools\\envs\\h0h5_tools\\Scripts\\python.exe",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "tool_cache": "F:\\Prometheus\\vault\\techne_tools",
+    "tool_cache_source": "TECHNE_TOOL_CACHE env",
+    "tool_cache_note": "host-local and gitignored; only its HASHES are tracked"
+  },
+  "commands_run": [],
+  "observations": {
+    "schema": "techne.tools.cancellation_probe/2",
+    "clears": "TECHNE-44",
+    "why": "Vivarium's contract ruled taskkill /T insufficient. budget.py now uses a Windows job object with KILL_ON_JOB_CLOSE. This measures the replacement rather than documenting it.",
+    "workloads": {
+      "LIVE": "a child that forks a grandchild and then sleeps past the budget",
+      "ORPHAN": "a child that forks a grandchild and exits at once, reparenting it"
+    },
+    "arms": {
+      "LIVE_JOB": [
+        {
+          "parent_pid": 2416,
+          "grandchildren_seen": [
+            "22856"
+          ],
+          "parent_alive_after_cancel": false,
+          "survivors": [],
+          "tree_reaped": true,
+          "cancel_seconds": 1.922,
+          "mechanism_used": [
+            "job_object"
+          ],
+          "jobs_failed_to_arm": []
+        },
+        {
+          "parent_pid": 22172,
+          "grandchildren_seen": [
+            "5944"
+          ],
+          "parent_alive_after_cancel": false,
+          "survivors": [],
+          "tree_reaped": true,
+          "cancel_seconds": 1.938,
+          "mechanism_used": [
+            "job_object"
+          ],
+          "jobs_failed_to_arm": []
+        },
+        {
+          "parent_pid": 27508,
+          "grandchildren_seen": [
+            "30132"
+          ],
+          "parent_alive_after_cancel": false,
+          "survivors": [],
+          "tree_reaped": true,
+          "cancel_seconds": 1.937,
+          "mechanism_used": [
+            "job_object"
+          ],
+          "jobs_failed_to_arm": []
+        },
+        {
+          "parent_pid": 18092,
+          "grandchildren_seen": [
+            "10892"
+          ],
+          "parent_alive_after_cancel": false,
+          "survivors": [],
+          "tree_reaped": true,
+          "cancel_seconds": 1.922,
+          "mechanism_used": [
+            "job_object"
+          ],
+          "jobs_failed_to_arm": []
+        },
+        {
+          "parent_pid": 30388,
+          "grandchildren_seen": [
+            "27364"
+          ],
+          "parent_alive_after_cancel": false,
+          "survivors": [],
+          "tree_reaped": true,
+          "cancel_seconds": 1.969,
+          "mechanism_used": [
+            "job_object"
+          ],
+          "jobs_failed_to_arm": []
+        }
+      ],
+      "LIVE_TASKKILL": [
+        {
+          "parent_pid": 22208,
+          "grandchildren_seen": [
+            "17256"
+          ],
+          "parent_alive_after_cancel": false,
+          "survivors": [],
+          "tree_reaped": true,
+          "cancel_seconds": 1.985,
+          "mechanism_used": [
+            "taskkill_tree_DEGRADED"
+          ],
+          "jobs_failed_to_arm": [
+            {
+              "pid": 22208,
+              "reason": "FORCED for the comparison arm"
+            }
+          ]
+        },
+        {
+          "parent_pid": 16396,
+          "grandchildren_seen": [
+            "9128"
+          ],
+          "parent_alive_after_cancel": false,
+          "survivors": [],
+          "tree_reaped": true,
+          "cancel_seconds": 1.984,
+          "mechanism_used": [
+            "taskkill_tree_DEGRADED"
+          ],
+          "jobs_failed_to_arm": [
+            {
+              "pid": 16396,
+              "reason": "FORCED for the comparison arm"
+            }
+          ]
+        },
+        {
+          "parent_pid": 9432,
+          "grandchildren_seen": [
+            "18420"
+          ],
+          "parent_alive_after_cancel": false,
+          "survivors": [],
+          "tree_reaped": true,
+          "cancel_seconds": 1.985,
+          "mechanism_used": [
+            "taskkill_tree_DEGRADED"
+          ],
+          "jobs_failed_to_arm": [
+            {
+              "pid": 9432,
+              "reason": "FORCED for the comparison arm"
+            }
+          ]
+        },
+        {
+          "parent_pid": 28332,
+          "grandchildren_seen": [
+            "15536"
+          ],
+          "parent_alive_after_cancel": false,
+          "survivors": [],
+          "tree_reaped": true,
+          "cancel_seconds": 2.0,
+          "mechanism_used": [
+            "taskkill_tree_DEGRADED"
+          ],
+          "jobs_failed_to_arm": [
+            {
+              "pid": 28332,
+              "reason": "FORCED for the comparison arm"
+            }
+          ]
+        },
+        {
+          "parent_pid": 29288,
+          "grandchildren_seen": [
+            "8852"
+          ],
+          "parent_alive_after_cancel": false,
+          "survivors": [],
+          "tree_reaped": true,
+          "cancel_seconds": 2.0,
+          "mechanism_used": [
+            "taskkill_tree_DEGRADED"
+          ],
+          "jobs_failed_to_arm": [
+            {
+              "pid": 29288,
+              "reason": "FORCED for the comparison arm"
+            }
+          ]
+        }
+      ],
+      "ORPHAN_JOB": [
+        {
+          "parent_pid": 9948,
+          "grandchildren_seen": [
+            "13444"
+          ],
+          "parent_alive_after_cancel": false,
+          "survivors": [],
+          "tree_reaped": true,
+          "cancel_seconds": 1.922,
+          "mechanism_used": [
+            "job_object"
+          ],
+          "jobs_failed_to_arm": []
+        },
+        {
+          "parent_pid": 10852,
+          "grandchildren_seen": [
+            "2340"
+          ],
+          "parent_alive_after_cancel": false,
+          "survivors": [],
+          "tree_reaped": true,
+          "cancel_seconds": 1.922,
+          "mechanism_used": [
+            "job_object"
+          ],
+          "jobs_failed_to_arm": []
+        },
+        {
+          "parent_pid": 808,
+          "grandchildren_seen": [
+            "23264"
+          ],
+          "parent_alive_after_cancel": false,
+          "survivors": [],
+          "tree_reaped": true,
+          "cancel_seconds": 1.921,
+          "mechanism_used": [
+            "job_object"
+          ],
+          "jobs_failed_to_arm": []
+        },
+        {
+          "parent_pid": 26396,
+          "grandchildren_seen": [
+            "28684"
+          ],
+          "parent_alive_after_cancel": false,
+          "survivors": [],
+          "tree_reaped": true,
+          "cancel_seconds": 1.938,
+          "mechanism_used": [
+            "job_object"
+          ],
+          "jobs_failed_to_arm": []
+        },
+        {
+          "parent_pid": 29324,
+          "grandchildren_seen": [
+            "30440"
+          ],
+          "parent_alive_after_cancel": false,
+          "survivors": [],
+          "tree_reaped": true,
+          "cancel_seconds": 1.922,
+          "mechanism_used": [
+            "job_object"
+          ],
+          "jobs_failed_to_arm": []
+        }
+      ],
+      "ORPHAN_TASKKILL": [
+        {
+          "parent_pid": 26136,
+          "grandchildren_seen": [
+            "30244"
+          ],
+          "parent_alive_after_cancel": false,
+          "survivors": [
+            "30244"
+          ],
+          "tree_reaped": false,
+          "cancel_seconds": 1.937,
+          "mechanism_used": [
+            "none_NO_JOB_AND_PID_DEAD"
+          ],
+          "jobs_failed_to_arm": [
+            {
+              "pid": 26136,
+              "reason": "FORCED for the comparison arm"
+            }
+          ]
+        },
+        {
+          "parent_pid": 10468,
+          "grandchildren_seen": [
+            "27688"
+          ],
+          "parent_alive_after_cancel": false,
+          "survivors": [
+            "27688"
+          ],
+          "tree_reaped": false,
+          "cancel_seconds": 1.937,
+          "mechanism_used": [
+            "none_NO_JOB_AND_PID_DEAD"
+          ],
+          "jobs_failed_to_arm": [
+            {
+              "pid": 10468,
+              "reason": "FORCED for the comparison arm"
+            }
+          ]
+        },
+        {
+          "parent_pid": 28000,
+          "grandchildren_seen": [
+            "24832"
+          ],
+          "parent_alive_after_cancel": false,
+          "survivors": [
+            "24832"
+          ],
+          "tree_reaped": false,
+          "cancel_seconds": 1.906,
+          "mechanism_used": [
+            "none_NO_JOB_AND_PID_DEAD"
+          ],
+          "jobs_failed_to_arm": [
+            {
+              "pid": 28000,
+              "reason": "FORCED for the comparison arm"
+            }
+          ]
+        },
+        {
+          "parent_pid": 27388,
+          "grandchildren_seen": [
+            "9248"
+          ],
+          "parent_alive_after_cancel": false,
+          "survivors": [
+            "9248"
+          ],
+          "tree_reaped": false,
+          "cancel_seconds": 3.984,
+          "mechanism_used": [
+            "none_NO_JOB_AND_PID_DEAD"
+          ],
+          "jobs_failed_to_arm": [
+            {
+              "pid": 27388,
+              "reason": "FORCED for the comparison arm"
+            }
+          ]
+        },
+        {
+          "parent_pid": 25156,
+          "grandchildren_seen": [
+            "11252"
+          ],
+          "parent_alive_after_cancel": false,
+          "survivors": [
+            "11252"
+          ],
+          "tree_reaped": false,
+          "cancel_seconds": 1.937,
+          "mechanism_used": [
+            "none_NO_JOB_AND_PID_DEAD"
+          ],
+          "jobs_failed_to_arm": [
+            {
+              "pid": 25156,
+              "reason": "FORCED for the comparison arm"
+            }
+          ]
+        }
+      ]
+    },
+    "summary": {
+      "LIVE_JOB": {
+        "trials": 5,
+        "grandchildren_observed": 5,
+        "trees_reaped": 5,
+        "survivors_total": 0,
+        "mechanisms": [
+          "job_object"
+        ]
+      },
+      "LIVE_TASKKILL": {
+        "trials": 5,
+        "grandchildren_observed": 5,
+        "trees_reaped": 5,
+        "survivors_total": 0,
+        "mechanisms": [
+          "taskkill_tree_DEGRADED"
+        ]
+      },
+      "ORPHAN_JOB": {
+        "trials": 5,
+        "grandchildren_observed": 5,
+        "trees_reaped": 5,
+        "survivors_total": 0,
+        "mechanisms": [
+          "job_object"
+        ]
+      },
+      "ORPHAN_TASKKILL": {
+        "trials": 5,
+        "grandchildren_observed": 5,
+        "trees_reaped": 0,
+        "survivors_total": 5,
+        "mechanisms": [
+          "none_NO_JOB_AND_PID_DEAD"
+        ]
+      }
+    },
+    "reference_probe": {
+      "path": "vivarium/tools/probe_process_tree_kill.py",
+      "result_on_this_host": "TREE REAPED",
+      "note": "Vivarium's own probe, run unmodified. This one differs in that it cancels THROUGH budget.py rather than through a hand-built job, and adds the orphan case."
+    },
+    "what_a_clean_live_taskkill_arm_does_NOT_mean": "that the contract is wrong. Absence of a survivor on one host at one timing is not a guarantee; taskkill walks a parent/child relation it reads at kill time and promises nothing about a process that forks between the read and the kill."
+  },
+  "deviations": [],
+  "unrun_or_blocked": [],
+  "status": "INCOMPLETE",
+  "check": "process_tree_cancellation_mechanism",
+  "consumer": "techne.acquisition.budget, which meters preparation-time work (pip, git, cargo, the stitch binary)",
+  "clears": "TECHNE-44",
+  "checks": [
+    {
+      "claim": "the SHIPPING arm reaps every live tree it was given, grandchildren included",
+      "pass": true
+    },
+    {
+      "claim": "the shipping arm actually used the job object, never the degraded path",
+      "pass": true
+    },
+    {
+      "claim": "the workload really did fork -- a probe that saw no grandchild would be testing nothing",
+      "pass": true
+    },
+    {
+      "claim": "the degraded LIVE arm was genuinely degraded, so LIVE_JOB and LIVE_TASKKILL differ in MECHANISM and not in setup",
+      "pass": true
+    },
+    {
+      "claim": "in the ORPHAN arms the recorded pid is already dead, so the degraded path has NOTHING TO KILL and records none_NO_JOB_AND_PID_DEAD -- which is the mechanism of the defect rather than a gap in the probe",
+      "pass": true
+    },
+    {
+      "claim": "the job object reaps ORPHANS -- the case a parent/child walk cannot reach",
+      "pass": true
+    }
+  ],
+  "all_passed": true,
+  "verdict": "LIVE: job 5/5 reaped (0 survivors), taskkill 5/5 (0 survivors). ORPHAN: job 5/5 reaped (0 survivors), taskkill 0/5 (5 survivors). THE ORPHAN ARM SEPARATES THEM: taskkill left 5 orphaned grandchildren alive and the job object left none. That is direct measured evidence for Vivarium's ruling rather than an appeal to documentation.",
+  "scope": "This qualifies a PREPARATION-time metering wrapper. It does not make budget.py an admitted in-run backend: Vivarium's contract admits a backend, not a kill mechanism."
+}

@@ -301,3 +301,123 @@ def test_unit_is_not_guessed_for_an_undeclared_memory_number():
     mem = [f for f in rep["conflicts_with_measured_host"] if f["dimension"] == "memory"][0]
     assert "GiB" in mem["exceeds_available_under_readings"]
     assert "bytes" not in mem["exceeds_available_under_readings"]
+
+
+# --------------------------------------------------------------------------
+# TECHNE-14: the component-library export. Three concrete risks, no mirroring.
+# --------------------------------------------------------------------------
+def test_export_refuses_to_parse_an_expression_it_was_not_given_an_ast_for():
+    """A stitch body that is not a whole solved program has no published AST.
+    The exporter must REFUSE it, because the alternative is a second parser
+    that agrees with Proteus's grammar until it does not."""
+    from techne.scripts import export_component_library as X
+
+    res = {"ok": True, "n_abstractions": 1, "original_cost": 9, "final_cost": 8,
+           "names": ["fn_0"], "arities": [1], "uses": [2], "bodies": ["(xor x1 x2)"]}
+    out = X._score(res, "SYNTHETIC", ["(not (xor x1 x2))"], by_sexpr={}, held_out=set(),
+                   ar=_StubArchaeon(), pb=None, va=_StubViv())
+    assert out["refused_components"], "a body with no published AST must be refused"
+    assert not out["components"]
+    assert "will not parse an expression itself" in out["refused_components"][0]["refused"]
+
+
+def test_a_component_that_is_a_held_out_solution_marks_the_corpus_unexportable():
+    """The leak that matters: a component which IS a held-out target's solution
+    turns that target into a size-1 leaf, so the library measures the leak."""
+    from techne.scripts import export_component_library as X
+
+    body = "(or x2 x1)"
+    res = {"ok": True, "n_abstractions": 1, "original_cost": 9, "final_cost": 8,
+           "names": ["fn_0"], "arities": [0], "uses": [6], "bodies": [body]}
+    by = {body: {"ast": ["or", ["input", 2], ["input", 1]], "tasks": ["tgt-10"], "phases": {2}}}
+    out = X._score(res, "ALL", [body], by, held_out={body},
+                   ar=_StubArchaeon(), pb=_StubProteus(), va=_StubViv())
+    assert out["n_components_from_held_out_phase2"] == 1
+    assert out["exportable_for_phase2_use"] is False
+    assert "size-1 LEAF" in out["why_not_exportable"]
+
+
+def test_the_exported_artifact_is_json_with_no_pickle():
+    """Deliverable 5 of the acquisition brief, at the one place bytes actually
+    leave this seat for a consumer."""
+    from techne.scripts import export_component_library as X
+
+    body = "(and x0 x2)"
+    res = {"ok": True, "n_abstractions": 1, "original_cost": 9, "final_cost": 8,
+           "names": ["fn_0"], "arities": [0], "uses": [2], "bodies": [body]}
+    by = {body: {"ast": ["and", ["input", 0], ["input", 2]], "tasks": ["src-17"], "phases": {1}}}
+    out = X._score(res, "P1", [body], by, held_out=set(),
+                   ar=_StubArchaeon(), pb=_StubProteus(), va=_StubViv())
+    raw = out["artifact"]["canonical_json"].encode("utf-8")
+    assert out["no_pickle"]["codec"] == "canonical-json-v1"
+    assert json.loads(raw)["interface_id"] == "boolean-components-v1"
+    # pickle protocol 2+ opens with \x80; a JSON document never does.
+    assert not raw.startswith(b"\x80")
+    assert b"__reduce__" not in raw and b"cPickle" not in raw
+
+
+class _StubArchaeon:
+    """Only the envelope call is stubbed, and it is stubbed to the SHAPE the
+    real library_object returns -- the real one is exercised by the run itself."""
+
+    @staticmethod
+    def library_object(components, *, provenance):
+        obj = {"artifact_type": "component_library", "schema_version": "1",
+               "interface_id": "boolean-components-v1", "components": [dict(c) for c in components]}
+        raw = json.dumps(obj, sort_keys=True, separators=(",", ":")).encode("utf-8")
+        return {"object": obj, "raw": raw, "provenance": provenance,
+                "slot": {"digest": "sha256:stub", "expected_bytes": len(raw)}}
+
+
+class _StubProteus:
+    @staticmethod
+    def truth_table(expr):
+        return [0] * 8
+
+
+class _StubViv:
+    @staticmethod
+    def _check_boolean_components_v1(obj, limits):
+        return {"component_count": len(obj["components"])}
+
+
+# --------------------------------------------------------------------------
+# TECHNE-44: cancellation. Two concrete risks, both found by the probe.
+# --------------------------------------------------------------------------
+def test_a_resource_receipt_does_not_keep_changing_after_it_is_taken():
+    """The defect the cancellation probe surfaced: resource_receipt() handed out
+    a reference to the live kill list, so a receipt taken inside the context kept
+    growing during teardown and every reading of it disagreed with the last."""
+    prof = {"name": "t", "network": "FORBIDDEN", "max_wall_seconds": 60,
+            "max_processes": 4, "max_download_bytes": 0}
+    b = budget.Budget(profile=prof)
+    taken = b.resource_receipt()["cancellation"]
+    before = json.dumps(taken, sort_keys=True)
+    b._kills.append({"pid": 1, "mechanism": "job_object"})
+    b._job_failures.append({"pid": 1, "reason": "synthetic"})
+    assert json.dumps(taken, sort_keys=True) == before, (
+        "a receipt is a record of a moment; one that mutates afterwards cannot be "
+        "compared against anything, including itself")
+
+
+def test_cancelling_the_same_child_twice_does_not_invent_a_degraded_kill():
+    """__exit__ sweeps kill_tree() over every child, so a process the caller
+    already cancelled arrives a second time when it is dead and its job is gone.
+    Recording that as 'nothing could be reaped' would manufacture a degraded
+    cancellation out of ordinary teardown."""
+    prof = {"name": "t", "network": "FORBIDDEN", "max_wall_seconds": 60,
+            "max_processes": 4, "max_download_bytes": 0}
+    b = budget.Budget(profile=prof)
+
+    class _Dead:
+        pid = 4242
+
+        @staticmethod
+        def poll():
+            return 0
+
+    p = _Dead()
+    b._kill_one(p)
+    b._kill_one(p)
+    b._kill_one(p)
+    assert len(b._kills) == 1, "one cancellation is one row, however many times it is swept"
