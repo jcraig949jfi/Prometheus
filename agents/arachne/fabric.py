@@ -41,7 +41,14 @@ class Fabric:
         self._keys: set[str] = set()
         self._nodes: set[str] = set()
         self._edge_count = 0
+        self.recent: list = []          # new edges since the last drain (ARACHNE-07 productivity)
+        self.recent_nodes: list = []    # new node ids since the last drain
         self._load()
+
+    def drain_recent(self) -> tuple:
+        out = (self.recent, self.recent_nodes)
+        self.recent, self.recent_nodes = [], []
+        return out
 
     def _load(self) -> None:
         if not self.edges_path.exists():
@@ -73,10 +80,12 @@ class Fabric:
                 continue
             self._keys.add(e.key)
             buf.append(json.dumps(asdict(e), ensure_ascii=False))
+            self.recent.append(e)
             new_e += 1
             for node in (e.src, e.dst):
                 if node not in self._nodes:
                     self._nodes.add(node)
+                    self.recent_nodes.append(node)
                     new_n += 1
         if buf:
             with self.edges_path.open("a", encoding="utf-8") as f:
