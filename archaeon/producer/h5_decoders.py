@@ -191,3 +191,38 @@ def draw_provenance(dec: Decoder, genome: int, child: int, bit: int, seed: int) 
     return {"schema": "archaeon.h5.draw.v0", "decoder_id": getattr(dec, "decoder_id", dec.__name__),
             "parent_genome": genome, "child_genome": child, "flipped_bit": bit,
             "flip_seed": seed, "rule": dec(child), "parent_rule": dec(genome)}
+
+
+
+def table_sha256(table: Sequence[int]) -> str:
+    """sha256 over the 4,096 output bytes in genome order -- the artifact's identity."""
+    import hashlib
+    return hashlib.sha256(bytes(int(v) for v in table)).hexdigest()      # same form as check_exact
+
+
+def load_table_decoder(path, expected_sha256: Optional[str] = None) -> Decoder:
+    """A decoder from a committed table artifact: JSON {decoder_id, table[4096] of
+    0..255, table_sha256, provenance}. The table is the representation the H5
+    lane consumes (reproducible without importing another seat's code); the
+    constructor and its parameters are provenance. Verifies the sha256 against
+    the file's own field and, if given, the expected one; runs check_exact.
+    Contract to Polyhymnia (comms #67 reply), 2026-09-11."""
+    import json
+    from pathlib import Path
+    doc = json.loads(Path(path).read_text(encoding="utf-8"))
+    table = doc["table"]
+    if len(table) != 4096 or any((not isinstance(v, int)) or v < 0 or v > 255 for v in table):
+        raise ValueError("table must be 4096 ints in 0..255")
+    digest = table_sha256(table)
+    if doc.get("table_sha256") != digest:
+        raise ValueError("table_sha256 in the artifact {} != computed {}".format(doc.get("table_sha256"), digest))
+    if expected_sha256 is not None and expected_sha256 != digest:
+        raise ValueError("expected {} got {}".format(expected_sha256, digest))
+    dec: Decoder = lambda g: table[g]
+    setattr(dec, "decoder_id", doc.get("decoder_id", "table:" + digest[:16]))
+    setattr(dec, "table_sha256", digest)
+    setattr(dec, "provenance", doc.get("provenance"))
+    ok = check_exact(dec)
+    if not ok.get("total"):
+        raise ValueError("artifact fails check_exact: {}".format(ok))
+    return dec

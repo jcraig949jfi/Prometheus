@@ -1,71 +1,63 @@
 # Arachne STATUS
 
-Currency: 2026-09-11 (written at the base-role adoption pass). Plain language.
+Currency: 2026-09-11 (end of the first active pass). Plain language.
 
-## Seat state: BLOCKED
+## Seat state: ACTIVE (on the frozen specimen only); crawl NOT authorised
 
-- Blocker: an operator ruling on roles/Arachne/ARCHAEOLOGY_2026-09-11.md
-  (BACKLOG ARACHNE-01). The operator's instruction on 2026-09-11 was set-up
-  only: "Don't execute anything. Just set up."
-- Asserting: PRESENT (folder, code, archive, registry rows). Not ACTIVE,
-  not PRODUCTIVE. Nothing under agents/arachne/ has run since 2026-06-04.
+- ARACHNE-01 ruled ACTIVE by the operator on 2026-09-11 for
+  ARCHAEOLOGY-AS-EXPERIMENT (prompts/2026-09-11_ruling_active/, sha256
+  96986463b4e5...). "Do not interpret ACTIVE as authorization to restart
+  the crawlers." No tick, no edge, no crawl happened.
+- Asserting: PRESENT, ACTIVE (this pass produced rows), PRODUCTIVE (five
+  ledgers with rows, two preregistrations, 21 tests), VALID is the
+  operator's and the reviewers' question.
+- The verdict and the recommendation (C. METABOLIZE) are in
+  ARCHAEOLOGY_AS_EXPERIMENT_2026-09-11.md; the next decision is
+  ARACHNE-31 (operator).
 
 ## Where the seat is
 
-- workspace: F:\Prometheus-worktrees\arachne-base-role (linked worktree; the
-  canonical guard passes: git-dir differs from git-common-dir)
-- branch: arachne/base-role-adopt-2026-09-11, base_sha 56125e9e4
-- base role: read at 56125e9e4 (origin/main at the fetch), adopted; receipt
-  roles/Arachne/BASE_ROLE_ADOPTION_2026-09-11.txt
-- comms: synced (read through message 1 at 56125e9e4); status blocked
+- workspace: F:\Prometheus-worktrees\arachne-base-role (linked worktree; guard passes)
+- branch: arachne/base-role-adopt-2026-09-11; base for this pass 8f707d68f
+- comms: booted, status active; synced before and after the pass
 - machine: M1
 - long-running processes owned: none
 - worktrees owned: this one only
-- last run of the seat's code: 2026-06-04T11:21Z, tick 700, from the
-  canonical checkout (pre-D-23); residue archived at
-  roles/Arachne/archive/run_2026-06-04/
 
 ## What is live and what is dormant (base rule 7)
 
-- ArachneSwarm loop (agents/arachne/swarm.py --loop): DORMANT since
-  2026-06-04. Never scheduled; no freshness file; no productivity signal;
-  landscape availability unmeasured since June. Registered in
-  roles/base-role/MONITORS.md.
-- Landscape adapters: UNVERIFIED. Six answered on 2026-06-04. The LMFDB
-  host moved after that (192.168.1.176 dead by 2026-06-23; local restore
-  per roles/Ergon/DB_DIAGNOSIS_2026-06-23.md). Not probed on this pass
-  (no execution).
-- damage.py: code present, 9/9 operators per its June commit; in use by
-  Ergon's damage lane as a reference implementation; no test fixtures
-  (ARACHNE-20).
-- Consumers of Arachne output: none with a receipt.
+- ArachneSwarm loop: DORMANT since 2026-06-04; now instrumented (freshness
+  file, productivity line, intervention ledger, loud adapters) but NOT run;
+  registered in roles/base-role/MONITORS.md with the verdict document as
+  its no-op reason.
+- Landscapes (census 2026-09-11): lmfdb, oeis, knots, groups, algolib
+  answer from the worktree; mathlib4 answers with ARACHNE_MATHLIB_ROOT.
+  Nothing lost since June.
+- damage.py: present; fixtures still owed (ARACHNE-20).
+- Consumers of Arachne output: none with a receipt. The harvest audit
+  found no consumer ever existed for the June harvest.
 
-## What the June run left (facts, from the archive)
+## What this pass established (numbers in the ledgers)
 
-- 700 ticks; 21,209 edges; 5,621 nodes; six landscapes available.
-- 21,209 of 21,209 edges carry crawler, landscape, op and null_p.
-- Edge mix: oeis shares_prefix 6,393; knots same_determinant 4,492; groups
-  same_order 3,636; lmfdb same_conductor 2,090; rosetta shares_concept
-  1,870; mathlib uses 998; algolib calls 701; lmfdb isogenous 484; oeis
-  similar_growth 273; groups same_exponent 188; operational computes 57;
-  knots same_crossing 14; groups same_n_conjugacy 13.
-- Lineage: 82 branches, 124 deaths, 42 floor revivals, 219 rosetta weaves,
-  3 operational weaves; 7 alive at tick 700.
-- Judge: holdout real_closer_frac 0.088 (bridge-only fabric; negative).
-- Harvest: 5 verified computes anchors; 58 void targets; no consumer.
-
-## Today (2026-09-11)
-
-- Adopted the base role; created roles/Arachne with entry file, archaeology,
-  backlog (30 items), calibration ledger (7 rows), status, journal, the
-  operator prompt verbatim with manifest, the June archive with manifest.
-- Added the D-23 guard to swarm.py (tick) and traverse.py (harvest).
-- Added the ArachneSwarm row to MONITORS.md and the Arachne rows to
-  INHERITANCE.md.
-- Executed: nothing of the seat's science. Ran: comms boot/sync, a syntax
-  check on the two patched files, the base-role self-test on the merged tree.
+- Branching under the mechanism that ran was a death rattle: parents
+  branched at their trough (39 of 82 at 0.0), 59 of 79 died within 16
+  ticks; children beat parents at the same age (30/43, CI [0.55, 0.81])
+  but not fresh default births (35/68, CI [0.40, 0.63]): mutation decorative.
+- Emergence: not earned. Communities are the invariant classes
+  (within-landscape NMI 0.88-0.99); every statistic sits inside or between
+  the class-constrained and LIMIT-n nulls except BFS/adapter signatures;
+  bridge redundancy 0.246 is below a degree-preserving rewiring; the n=2
+  mixed-triangle test is at chance. Two frozen gates were mis-specified
+  (CALIBRATION.md rows 8-10); readings kept, dispositions annotated.
+- Feral: implementation defect (frontier/hop mismatch, p ~ 1/6 per step;
+  P(death by 28) = 0.40); no revival path; no bridge capability;
+  uninformative about "fewer rules".
+- Harvest: ran on the segment-1 fabric; rule unrecoverable; three 3-term
+  prefix groups; 22 of 29 names already state a rule; no consumer, no
+  routing, no experiment.
 
 ## Next executable action
 
-None until ARACHNE-01. On an ACTIVE ruling: ARACHNE-02 (landscape census)
-then ARACHNE-03, -06, -07 before any tick.
+ARACHNE-32 (operational joiner fixtures) and ARACHNE-34 (tight-matched
+C4) need no ruling and start next. ARACHNE-31 and -33 wait on the
+operator. No crawl under any item.

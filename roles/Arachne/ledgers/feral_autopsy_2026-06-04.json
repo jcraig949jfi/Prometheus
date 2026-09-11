@@ -1,0 +1,193 @@
+{
+ "specimen_hashes": {
+  "edges.jsonl": "75adee0029b3329db5430e993eeccbf8ac0515faa7916dd79d061a13927a032f",
+  "harvest_2026-06-04.md": "59140e3685003d6d5f1a2ff2c0fa52038ef26998921ed6f3967eda20c3ebccaf",
+  "lineage.jsonl": "828e4f63bc79f63cc78ed66246aededed4ec4a4d74ebec7ce115f71ea4c39653",
+  "population.json": "4d74be79c7fda24d9d370297c515d9995d3bfe5fefb3e73ec489ce01df87de7b",
+  "README.md": "228eab79b25f4d46ea8b5fe7bb3d8618a200b732b91386eaf673b4248bd1f58f",
+  "swarm_state.json": "fa834d8185a686a5e6d6920634c3458695c67044d2687971754cf8ba4d62d303"
+ },
+ "organisms": [
+  {
+   "segment": 1,
+   "id": "feral-0-7",
+   "ruleset": {
+    "max_neighbors": 12,
+    "novelty_floor": 0.97,
+    "hop": true,
+    "frontier_mode": "random",
+    "reseed_every": 40,
+    "seed": 505
+   },
+   "born_tick": 0,
+   "death_tick": null,
+   "death_reason": null,
+   "censored_at": 45,
+   "edges": 120,
+   "nodes_introduced": 70,
+   "productive_ticks": {
+    "2": {
+     "lmfdb": 12
+    },
+    "5": {
+     "lmfdb": 12
+    },
+    "12": {
+     "lmfdb": 12
+    },
+    "13": {
+     "lmfdb": 12
+    },
+    "20": {
+     "lmfdb": 12
+    },
+    "31": {
+     "oeis": 12
+    },
+    "38": {
+     "oeis": 12
+    },
+    "41": {
+     "oeis": 12
+    },
+    "43": {
+     "oeis": 12
+    },
+    "44": {
+     "oeis": 12
+    }
+   },
+   "landscapes_touched": {
+    "lmfdb": 60,
+    "oeis": 60
+   },
+   "cross_landscape_edges": 0,
+   "min_fitness": 0.0,
+   "fitness_at_death_or_end": 8.13,
+   "last_productive_tick": 44
+  },
+  {
+   "segment": 2,
+   "id": "feral-0-7",
+   "ruleset": {
+    "max_neighbors": 12,
+    "novelty_floor": 0.97,
+    "hop": true,
+    "frontier_mode": "random",
+    "reseed_every": 40,
+    "seed": 505
+   },
+   "born_tick": 0,
+   "death_tick": 28,
+   "death_reason": "starved_or_looping",
+   "censored_at": null,
+   "edges": 47,
+   "nodes_introduced": 16,
+   "productive_ticks": {
+    "1": {
+     "lmfdb": 6
+    },
+    "3": {
+     "lmfdb": 9
+    },
+    "6": {
+     "lmfdb": 9
+    },
+    "11": {
+     "lmfdb": 9
+    },
+    "12": {
+     "lmfdb": 9
+    },
+    "16": {
+     "lmfdb": 5
+    }
+   },
+   "landscapes_touched": {
+    "lmfdb": 47
+   },
+   "cross_landscape_edges": 0,
+   "min_fitness": 0.218,
+   "fitness_at_death_or_end": 0.218,
+   "last_productive_tick": 16
+  }
+ ],
+ "other_hop_true_organisms": [
+  {
+   "segment": 2,
+   "id": "lmfdb-1-75",
+   "born_tick": 441,
+   "death_tick": 454,
+   "death_reason": "starved_or_looping",
+   "lifetime": 13,
+   "edges": 6,
+   "landscapes_touched": {
+    "oeis": 6
+   }
+  },
+  {
+   "segment": 2,
+   "id": "algolib-4-93",
+   "born_tick": 515,
+   "death_tick": 566,
+   "death_reason": "starved_or_looping",
+   "lifetime": 51,
+   "edges": 38,
+   "landscapes_touched": {
+    "knots": 18,
+    "mathlib": 2,
+    "groups": 18
+   }
+  }
+ ],
+ "segment2_founders": [
+  {
+   "id": "mathlib-0-1",
+   "death_tick": 12,
+   "edges": 0,
+   "lifetime": 12
+  },
+  {
+   "id": "lmfdb-0-2",
+   "death_tick": 21,
+   "edges": 38,
+   "lifetime": 21
+  },
+  {
+   "id": "algolib-0-3",
+   "death_tick": 12,
+   "edges": 0,
+   "lifetime": 12
+  },
+  {
+   "id": "oeis-0-4",
+   "death_tick": null,
+   "edges": 3396,
+   "lifetime": 700
+  },
+  {
+   "id": "knots-0-5",
+   "death_tick": 40,
+   "edges": 168,
+   "lifetime": 40
+  },
+  {
+   "id": "groups-0-6",
+   "death_tick": 31,
+   "edges": 108,
+   "lifetime": 31
+  }
+ ],
+ "mismatch_mechanism": {
+  "live_landscapes": 6,
+  "p_success_if_frontier_single_landscape": 0.1667,
+  "observed_productive_rate_before_last_success": 0.375,
+  "P_death_within_28_ticks_at_p_1_over_L": 0.4021,
+  "P_death_within_28_ticks_at_observed_rate": 0.0255,
+  "P_death_within_700_ticks_at_p_1_over_L": 1.0,
+  "P_death_within_700_ticks_at_observed_rate": 0.6121,
+  "P_death_within_700_ticks_for_a_specialist_at_p_0.9": 0.0,
+  "revival_path": "none: the population floor iterates over self.landscapes; 'feral' is a ruleset, not a landscape, so a dead feral is never revived (swarm.py step_all); the two hop=True children came from mutate() flipping hop, not from any feral lineage",
+  "cross_landscape_capability": "none: every adapter emits edges inside its own landscape; hop changes which adapter is asked, never the endpoints; a feral organism cannot weave a bridge, only the rosetta and operational weavers do"
+ }
+}
