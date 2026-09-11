@@ -1,6 +1,6 @@
 {
  "schema": "vivarium.conformance_demo.v1",
- "at": "2026-09-11T16:03:44+00:00",
+ "at": "2026-09-11T16:07:20+00:00",
  "live_base": "https://192.168.1.202:8811/v2",
  "scratch_base": "http://127.0.0.1:8907/v2",
  "dead_base": "http://127.0.0.1:9/v2",
@@ -119,6 +119,30 @@
    },
    "queued_unchanged": true,
    "reached_dispatch": 0,
+   "AS_EXPECTED": true
+  },
+  {
+   "case": "CHEAT_gate_removed_same_wrong_engine",
+   "expected": "PROCEED, the row is claimed and reaches dispatch",
+   "gate_state": "GATE_REMOVED",
+   "halted": false,
+   "reason": "cheat control: the gate is not wired for this case",
+   "live_identity": null,
+   "contract_identity": null,
+   "gate_mode": null,
+   "gate_exit": null,
+   "attempts": 0,
+   "tick_outcome": "FAILED",
+   "queue_before": {
+    "queued": 4,
+    "failed": 1
+   },
+   "queue_after": {
+    "queued": 3,
+    "failed": 2
+   },
+   "queued_unchanged": false,
+   "reached_dispatch": 1,
    "AS_EXPECTED": true
   }
  ],

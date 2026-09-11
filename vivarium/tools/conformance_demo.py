@@ -72,18 +72,29 @@ def _spec():
             "pew": None}
 
 
-def _case(name, conn, schema, cfg, expect_halt):
-    """One case: enqueue a row, tick, and report what the queue did."""
+def _case(name, conn, schema, cfg, expect_halt, gate=True):
+    """One case: enqueue a row, tick, and report what the queue did.
+
+    `gate=False` is the CHEAT CONTROL, and it is the case that makes the other
+    four mean anything. Three of them are scored on an ABSENCE -- no dispatch,
+    queue unchanged -- and an absence is equally consistent with a harness that
+    cannot see work at all. Running the same wrong engine with the gate removed
+    must show the channel reporting work BEGINNING; if it does not, the blocks
+    above measure nothing.
+    """
     _q.enqueue(conn, created_by="conformance-demo", source_reason=name,
                experiment_spec=_spec(), schema=schema)
     conn.commit()
     before = _q.counts(conn, schema=schema)
 
-    rec = _conf.evaluate(cfg, schema="viv")      # scored as production
+    rec = ({"state": "GATE_REMOVED", "halted": False,
+            "reason": "cheat control: the gate is not wired for this case"}
+           if not gate else _conf.evaluate(cfg, schema="viv"))
 
     double = _Double()
     v = Vivarium(worker_id="demo-" + name, schema=schema, config={},
-                 conformance=cfg, runner=double, log=lambda *a: None)
+                 conformance=(cfg if gate else False), runner=double,
+                 log=lambda *a: None)
     # Force the gate to be judged under production rules inside the tick too.
     v.schema_for_gate = "viv"
     orig = _conf.require
@@ -170,6 +181,12 @@ def main() -> int:
                            cfg(a.dead_base, retries=2, backoff_s=0.2,
                                timeout_s=2.0),
                            expect_halt=True))
+        # CHEAT CONTROL. The same wrong engine that produced WRONG_INSTANCE
+        # above, with the gate removed. Work must BEGIN here, or the three
+        # absences above are unfalsifiable.
+        cases.append(_case("CHEAT_gate_removed_same_wrong_engine", conn,
+                           schema, cfg(a.scratch_base), expect_halt=False,
+                           gate=False))
     finally:
         _db.drop_schema(conn, schema)
         conn.close()
