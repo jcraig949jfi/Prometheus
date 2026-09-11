@@ -35,3 +35,5 @@ Every role below carries the banner on its primary document(s):
 | Vivarium | RESPONSIBILITIES.md (already), CHARTER.md (already) |
 
 Roles with no document received a stub RESPONSIBILITIES.md to fill. Stamping is an annotation on line 2; nothing else in any seat file was changed.
+
+RULE (operator 2026-09-11): the banner is the mandatory pointer -- a seat resolves and obeys the current base-role inheritance chain BEFORE its local bootstrap, and does not restate inherited boot mechanics except as a dated migration annotation.

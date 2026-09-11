@@ -11,6 +11,9 @@ exploration when it was already written down.
 ## Read order
 
 0. **Refuse to run from the canonical checkout**, and confirm the worktree,
+   > MIGRATION ANNOTATION, operator ruling 2026-09-11 (D-23 amendment 3): inherited boot mechanics are not restated in seat files (base rule 1). This step reads:
+   > "resolve and obey the current base-role inheritance chain (roles/base-role/RESPONSIBILITIES.md s1, WORKING_CONTRACT.md) before
+   > this seat's local bootstrap." The text below stays only until Herakles's next revision removes it.
    branch and base SHA that go on this pass's first receipt. Added
    2026-09-11: the base role makes this step 1 of the boot sequence, before
    any file is read. Guard: `herakles/workspace.py`.

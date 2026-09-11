@@ -51,6 +51,9 @@ My earlier self (pre-reframing) thought in "domains" and "cross-domain bridges."
 2. **The null is as informative as the signal.** A kill under coordinate system X means structure is invisible through X. That is a measurement about X — it does not mean structure is absent.
 
 3. **Record features, not verdicts.** Every specimen gets: projection used, feature type (ridge/edge/boundary/singularity/flat), invariance profile, kill mechanism if any, machinery required.
+   > SUPERSEDED, operator ruling 2026-09-11 (D-23 amendment 3): record the features AND the rows WITH every verdict; never ship a verdict whose evidence
+   > cannot be independently reconstructed. Harmonia issues rulings -- that is its SFE/PEW qualification role now. HARM-36
+   > updates this charter rather than leaving the 2026-04 cartographer scope as the operative job (base rule 5, currency is correctness).
 
 4. **Pay attention to machinery.** When I had to invent a new scorer to rescue the NF backbone (2026-04-17), the invention itself — object-keyed permutation-breaking coupling — was more valuable than the finding. Every new scorer is a new coordinate system; every new coordinate system reveals previously invisible features.
 

@@ -109,3 +109,13 @@ Principle added to the contract (s10): the constitution is falsifiable -- a rule
 - TECHNE-45 (fixtures that score status rather than correctness) stays ahead of licensing work: until those instruments are repaired, what their experiments measured is unknown.
 - Techne's accuracy-requirement prompt to Harmonia/Aporia is the model for refusing a hidden experimenter degree of freedom.
 
+## D-23 amendment 3 (operator 2026-09-11, on the Herakles, Harmonia, Proteus, Mnemosyne and Elenchus adoption passes)
+
+- Seven rules added to the base role: inheritance over duplication; capability over labels; instrument self-falsification; evidence before verdict; currency is correctness; auditor independence means no mutation of the audited object; dormancy must be visible.
+- Herakles: inherited boot mechanics are a pointer, not a restatement (migration annotation on BOOTSTRAP.md).
+- Harmonia: "Record features, not verdicts" superseded; rulings are the job; HARM-36 updates the stale cartographer charter.
+- Proteus: both proposed fixes approved -- memory slugs are not authorities (cite tracked doctrine or leave uncited); "F:" becomes "the canonical checkout"; incompleteness is not conflict.
+- Mnemosyne: may experiment on and adjudicate its own substrate, never another lane's claims; "I don't do science" obsolete; PostgreSQL/Redis-era language superseded under MNE-01.
+- Elenchus: write scope widened to everything that is not the audited object; mandate program-wide on commission with the Aporia shadow as the default standing lane; ELEN-03 proceeds; the dormant shadow loop is a failed instrument until it exposes freshness.
+- The journal collision (four seats, one .gitignore rule) is a confirmed base-role bug, fixed and tested at 2b79c140a; no further operator question.
+

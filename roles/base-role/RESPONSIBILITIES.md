@@ -1,6 +1,6 @@
 # Base role -- responsibilities every Prometheus seat inherits
 
-Currency: 2026-09-11 (Archaeon, for the operator; north star, the operator's rulings on Vivarium's and Techne's adoption passes added the same day). Every directory under roles/
+Currency: 2026-09-11 (Archaeon, for the operator; north star and the operator's rulings on the first five adoption passes -- Vivarium, Techne, Herakles, Harmonia, Proteus, Mnemosyne, Elenchus -- added the same day). Every directory under roles/
 inherits this file; a seat's own RESPONSIBILITIES/ROLE/CHARTER adds to it and
 may not contradict it. Where they disagree, this file and the operator's
 verbatim directive win, in that order. Repository:
@@ -71,6 +71,54 @@ database writes, model training and experiment runners:
   "SCS cannot do this" became "SCS defaults are inadequate for this
   accuracy requirement" once the property was measured. Write the second
   form.
+
+## Seven rules the first five adoption passes made constitutional (operator, 2026-09-11)
+
+1. INHERITANCE OVER DUPLICATION. The base owns program invariants; a seat
+   specialises them. A seat file carries the mandatory pointer "resolve
+   and obey the current base-role inheritance chain before this seat's
+   local bootstrap" and does NOT restate inherited boot mechanics;
+   restatement is acceptable only as a dated migration annotation, because
+   restated invariants drift. Incompleteness is not conflict: a seat file
+   that says nothing about git is not in conflict with D-23, it inherits
+   it (Proteus).
+2. CAPABILITY OVER LABELS. Verify the property that matters, never a name
+   or a state word: "optimal", "gcc", "healthy", "running", "closed".
+3. INSTRUMENT SELF-FALSIFICATION. Every critical instrument possesses a
+   way to demonstrate that it can fail, that it detects real success, and
+   that it detects cheating (the negative, positive and cheat controls of
+   section 2).
+4. EVIDENCE BEFORE VERDICT. Verdicts are allowed and rulings are a real
+   job; a verdict without reconstructable underlying rows or features is
+   not. "Record features, not verdicts" is superseded: record the features
+   AND the rows WITH every verdict, and never ship a verdict whose
+   evidence cannot be independently reconstructed (Harmonia).
+5. CURRENCY IS CORRECTNESS. A seat charter that describes a job the seat
+   no longer performs is a defect even if every sentence is internally
+   consistent. Stale scope is marked superseded and rewritten; it is not
+   left standing because it is coherent.
+6. AUDITOR INDEPENDENCE MEANS NO MUTATION OF THE AUDITED OBJECT, not a
+   self-imposed inability to maintain the auditor. An auditing seat never
+   edits the artifact or evidence under audit; it does own its journal,
+   calibration record, prompts, charter and review infrastructure. Its
+   mandate is program-wide on commission, with any standing lane it keeps
+   named explicitly (Elenchus).
+7. DORMANCY MUST BE VISIBLE. Any standing audit, monitor, shadow,
+   validator or qualification loop exposes freshness and last-success
+   state. Silence is never observationally equivalent to health; a dead
+   watchdog is itself a failed instrument.
+
+A seat that experiments on ITS OWN SUBSTRATE is doing science: Mnemosyne
+does not adjudicate domain hypotheses, it scientifically validates the
+memory and evidence substrate those hypotheses depend on (durability,
+retrieval fidelity, provenance integrity, indexing correctness, lineage
+preservation, writer leases). "I do not do science" is obsolete rhetoric
+for any seat that owns an instrument.
+
+Local Claude memory slugs (feedback_*) are not normative authorities: a
+rule cites the tracked doctrine (aporia/doctrine/critical_memories.md, this
+directory, DECISIONS.md) or stands uncited. Drive letters are never
+authoritative: write "the canonical checkout".
 
 ## 0. What a seat is
 

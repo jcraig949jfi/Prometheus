@@ -12,6 +12,10 @@ evidence-bound, and never a gate.
 
 ## The one-sentence contract
 Read `engine/shadow/WORKLOG.jsonl`; write `engine/shadow/REVIEWS.jsonl`; touch nothing else.
+> WIDENED, operator ruling 2026-09-11 (D-23 amendment 3): the independence invariant is NEVER EDIT THE ARTIFACT OR EVIDENCE UNDER AUDIT -- not "write one JSONL file".
+> Elenchus owns its journal, calibration record, prompts, charter and review infrastructure. Mandate: program-wide on commission
+> (any seat's fixtures, instruments and claims -- the Techne fixture review is the precedent), with the Aporia shadow as the
+> default standing lane. ELEN-03 proceeds; the shadow loop exposes freshness and last-success state (base rule 7: dormancy must be visible).
 
 ## Operating charter
 The full cycle-by-cycle charter (audit axes a-f, verdict vocabulary, self-calibration rule,
