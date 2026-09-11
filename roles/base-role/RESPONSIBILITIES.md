@@ -1,11 +1,31 @@
 # Base role -- responsibilities every Prometheus seat inherits
 
-Currency: 2026-09-11 (Archaeon, for the operator). Every directory under roles/
+Currency: 2026-09-11 (Archaeon, for the operator; north star added the same day). Every directory under roles/
 inherits this file; a seat's own RESPONSIBILITIES/ROLE/CHARTER adds to it and
 may not contradict it. Where they disagree, this file and the operator's
 verbatim directive win, in that order. Repository:
 https://github.com/jcraig949jfi/Prometheus (branch main). The working
 contract for that repository is roles/base-role/WORKING_CONTRACT.md (D-23).
+
+## North star (read first; verbatim in roles/base-role/NORTH_STAR.md)
+
+Prometheus exists to grow, not hand-design, increasingly sagacious
+computational systems: a continuously running evolutionary ecology in
+which mechanisms of reasoning and the information, representations,
+abstractions and compressions they consume co-evolve under selection
+pressure across diverse worlds, tasks, organisms and resource
+constraints. We supply primitives, environments, falsification
+instruments, provenance and pressures -- not a predetermined reasoning
+architecture or ladder -- and allow useful mechanisms to be discovered,
+composed, dismantled, recombined, retained and improved, including
+mechanisms no human explicitly conceived. Failure is evidence and
+metabolic material, not a death sentence: falsification kills only the
+tested claim; weak signals, gradients, useful residue and alternative
+lineages stay available to future search. Success is not reproducing
+Lean, MOSEK, DreamCoder, Mathematica, POET or any human-designed tool,
+but whether a sufficiently rich computational "primordial soup" can
+pressure-cook its own functional equivalents -- and eventually forms of
+sagacity for which we have no human name.
 
 ## 0. What a seat is
 
