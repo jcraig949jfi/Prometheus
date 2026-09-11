@@ -56,6 +56,17 @@ OPEN DECISIONS (XL rows in BACKLOG_H0H5.md; the operator's queue is derivable)
   LEX-23 the one-line forge fix and its owner
   LEX-24 the three 08-25 freeze recommendations: current disposition
 
+CEILING PRECONDITION (LEX-06, 2026-09-11)
+  congruence_audit.py at HEAD, PYTHONHASHSEED=0: all five verdicts PASS; the
+  operator module apollo/src/ has 0 commits since 08-25. One count differs from
+  the committed 08-25 rows (5026 -> 5029 records; today's matches the documented
+  figure). notes/CONGRUENCE_RECHECK_2026-09-11.md. VALID as of this date.
+
+COMMS POSTED
+  15 -> Apollo   delegation  LEX-05 (Task 2 over the fixture, or rule retired)
+  16 -> Archaeon report      manifest defect, reply-to Diomedes's 14
+
 NEXT EXECUTABLE ACTION
-  LEX-06: congruence_audit.py at HEAD over the current apollo/ tree (16 commits
-  since the 08-25 measurement), because the ceiling is conditional on it.
+  LEX-07: cheat control for g5_redundancy.py and bundle_test.py (a gold-reading
+  primitive must score full dE AND be flagged), so the instruments can show
+  they detect leakage before any further candidate is scored.
