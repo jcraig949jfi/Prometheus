@@ -82,7 +82,7 @@ def main(argv=None) -> int:
         print(receipt.write(rec)); return 3
 
     with _budget.Budget(profile=_budget.get_profile(a.profile)) as b:
-        same = [run(binary, root, fixture, out, threads_env=4, b=b) for _ in range(3)]
+        same = [run(binary, root, fixture, out, threads_env=4, b=b) for _ in range(5)]
         threads = {t: run(binary, root, fixture, out, threads_env=t, b=b)
                    for t in (1, 2, 4, 8, 16)}
         rec["resource_receipt"] = b.resource_receipt()
@@ -93,9 +93,9 @@ def main(argv=None) -> int:
     p_thr = {t: r["projection_sha256"] for t, r in threads.items() if r["ok"]}
 
     checks = [
-        ("F15: three runs at a fixed thread count agree on the declared projection",
+        ("F15: five runs at a fixed thread count (N=5, as the contract requires) agree on the declared projection",
          len(p_same) == 1),
-        ("F15 stronger: those runs are byte-identical on the WHOLE file too", len(f_same) == 1),
+        ("F15 stronger: those five runs are byte-identical on the WHOLE file too", len(f_same) == 1),
         ("thread-count invariance on the declared projection (1,2,4,8,16)",
          len(set(p_thr.values())) == 1),
         ("thread-count invariance on the whole file as well",
