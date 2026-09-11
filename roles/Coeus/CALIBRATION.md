@@ -59,6 +59,27 @@ an "undervalued, BOOST" note attached, and labelled tool-by-task pairings
 rate without its eligible count is not a measurement. Found today by this
 seat. See ARCHAEOLOGY_2026-09-11.md D2 and D3b.
 
+C-06 | 2026-09-11 | Reported, in this seat's own first pass, that
+`goodhart_indicators` had no external consumer. VERDICT: wrong, and wrong
+in the same shape as C-05. The claim came from a grep piped through
+`head`, whose ten lines were filled by matches in coeus.py and never
+reached `agents/nous/src/nous.py:113`, which reads the block and turns it
+into generative sampling weights. A truncated search read as an absence,
+committed within an hour of writing that a rate must never be read without
+its denominator. The June 2026 component dossier had named the consumer
+correctly at line 651 and was right; a prior verdict that is cited and not
+trusted still has to be READ. Retracted in FINDINGS_2026-09-11.md F6.
+
+C-07 | 2026-09-11 | Wrote in the archaeology that the forge queue was cut
+at a top-N, and designed the first selection trace around cut membership.
+VERDICT: wrong about the operating mode. In continuous mode -- how the
+pipeline actually ran -- hephaestus sets args.all = True and leaves top_n
+None (L2398-2402), so no cut is applied at all and the whole backlog is
+sorted. The 20-item cut exists only in --runonce. Caught by this seat
+before the finding shipped, by reading the argument parser instead of the
+function signature. Recorded because the near miss is the useful part: the
+first measurement was aimed at a decision that did not exist.
+
 ## What has NOT been got wrong, because it has not been attempted
 
 This seat has produced no positive result, run no experiment since
