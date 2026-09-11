@@ -2,9 +2,11 @@
 
 > Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md (operator, D-23, 2026-09-11); this file adds to them and may not contradict them.
 
-Currency: 2026-09-11, written on the adoption pass. 25 rows, priority
-order. The first five are what this seat starts next pass; nothing on
-this list was started today, by operator instruction. XL rows are the
+Currency: 2026-09-11, adoption pass plus the same day's second pass. 30 rows, priority
+order. The first five are what this seat starts next pass. The adoption
+pass started nothing, by operator instruction; the second pass of the same
+day executed the identity-guard assignment (HERMES-26..30 below) and
+nothing else. XL rows are the
 operator's queue and are stated with a recommendation, never as an open
 question.
 
@@ -46,3 +48,11 @@ HERMES-XL-3 | Rule on where Hermes is seated, given that the machinery it owns r
 
 HERMES-25 | SUPERSEDED 2026-09-11, same day it was written: NOT A NEW FINDING. Four seats seated on M2 today hit the same resolver gap first and already filed it -- Atalanta (ATALANTA-05, STATUS.md line 44, journal line 51), Eos (EOS-24, journal lines 39-60), Coeus (journal lines 106-124, which also proposes it as a WORKING_CONTRACT s10 defect) and Clymene (calibration/LEDGER.md line 70). Hermes filed a duplicate because it did not run boot step 3 (read sibling seats' commits before claiming a gap) for this particular finding. Re-aimed below; no comms message was sent claiming it, so nothing is owed a retraction | TOOLS | alpha | S | none | this annotation, plus HERMES-25b
 HERMES-25b | Add the ONE thing four independent reports have not produced: that five seats hit the same wrong database on the same day IS the measurement, and the fix belongs in the resolver as a capability check (does this connection carry comms.agents; refuse if not) rather than in five seats' journals as a documented override | TOOLS | alpha | S | Archaeon (comms) and Mnemosyne (substrate) | a comms report citing all five occurrences by path, and either the resolver refusing a connection that lacks the expected schema, or EW_DB_HOST named in comms/README.md -- whichever Archaeon rules
+
+## Second pass, 2026-09-11 (operator: make the wrong database impossible)
+
+HERMES-26 | Track the identity-guard packet to a ruling: Archaeon on comms (upgrade the structural check), Mnemosyne on the Evidence Wiki (the open path); record an applied SHA or a reasoned rejection, either being a result | TOOLS | alpha | S | Archaeon and Mnemosyne | the ruling recorded in roles/Hermes/incidents/c84e26826cc12217.md STATUS, and the incident closed or re-opened on evidence
+HERMES-27 | Build the instance-UUID upgrade ONLY when a pg_basebackup or streaming clone first exists in the fleet; until then record that the class is unreachable and why | TOOLS | program | S | a physical clone existing (none today: M2's fork has a different system_identifier, which proves dump/restore) | either the one-row identity table plus a test that a same-sysid clone is rejected, or a dated note that the precondition still does not hold
+HERMES-28 | Measure whether the guard should be per-connection or per-pool, with the round-trip cost of pg_control_system() under the pool's real concurrency, rather than recommending from intuition as the packet currently does | TOOLS | beta | S | HERMES-26 | a committed timing with the command, and the recommendation revised or confirmed against it
+HERMES-29 | Propose to Archaeon that comms/incidents/ becomes the home of the signature files, or accept a different home; a mechanism living in one seat's directory is a mechanism one seat uses | TOOLS | beta | S | Archaeon | the directory existing wherever Archaeon rules, with the demonstration file moved and the guard's message string matching it
+HERMES-30 | State the guard's blind spot in its own docstring as a testable claim: it proves WHICH store, never whether that store is current; a canonical store restored from an old backup passes | EVIDENCE | beta | S | none | a test asserting the guard accepts a stale-but-correct-identity target, so the limit is executable rather than prose

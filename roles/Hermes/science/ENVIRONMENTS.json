@@ -1,0 +1,35 @@
+{
+  "_comment": [
+    "The committed expectation a Prometheus client checks its connection against.",
+    "Hermes, 2026-09-11. Proposed canonical home: repository root or comms/;",
+    "it lives under roles/Hermes/science/ until Archaeon and Mnemosyne rule on",
+    "the patch packet (roles/Hermes/prompts/2026-09-11_comms_identity/).",
+    "",
+    "KEYED BY ENVIRONMENT, NEVER BY HOST. db_host is configuration and two",
+    "machines ship the same value; that is the whole defect this file exists",
+    "to close. Nothing here is a credential.",
+    "",
+    "db_system_id is pg_control_system().system_identifier, assigned at initdb",
+    "and inherited only by physical (basebackup/streaming) clones. Values below",
+    "were measured on 2026-09-11 by connecting to each cluster and running",
+    "SELECT system_identifier::text, current_database() FROM pg_control_system()."
+  ],
+  "environments": {
+    "prometheus-canonical": {
+      "db_system_id": "7628127204585430828",
+      "db_name": "prometheus_fire",
+      "expected_uuid": null,
+      "description": "M1 (SKULLPORT, 192.168.1.202): the canonical store. Holds comms (66 messages, 16 agents at registration), ew (41 tables), agora, viv, archaeon and 18 further schemas. postmaster up since 2026-08-27T19:46:35-04.",
+      "measured_at": "2026-09-11T16:03:45Z",
+      "measured_by": "Hermes"
+    },
+    "m2-local-fork": {
+      "db_system_id": "7681719240261676752",
+      "db_name": "prometheus_fire",
+      "expected_uuid": null,
+      "description": "M2 (SPECTREX5) local fork, created 2026-09-04, QUARANTINED. Same db_name as canonical, reachable as localhost, carries ew with 34 of 41 tables and has diverged in both directions. Registered here so a client that DELIBERATELY wants the fork can name it, and so that naming it is a visible act instead of a default. Never the target of a seat that means the program's store.",
+      "measured_at": "2026-09-11T16:03:45Z",
+      "measured_by": "Hermes"
+    }
+  }
+}
