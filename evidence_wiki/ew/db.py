@@ -34,6 +34,25 @@ _POOL = None
 _POOL_LOCK = __import__("threading").Lock()
 
 
+def _require_environment(conn):
+    """STORE IDENTITY GUARD (Hermes patch, comms #69, accepted by Mnemosyne
+    2026-09-11). `ew` exists in BOTH the canonical store (M1) and the M2
+    local fork, both named prometheus_fire, so every structural check
+    passes on either and a caller with no EW_DB_HOST on M2 reached the fork
+    silently (439 post-split write_log rows there). Identity, not host name,
+    is the check: pg_control_system().system_identifier against the
+    environment registry (comms/environments.json). The expected environment
+    is PROMETHEUS_ENV, default prometheus-canonical; deliberate fork work
+    names m2-local-fork and is thereby a visible act. Refusal raises
+    comms.identity.WrongEnvironment: fail closed, never a warning."""
+    import sys
+    root = str(Path(__file__).resolve().parents[2])
+    if root not in sys.path:
+        sys.path.insert(0, root)
+    from comms import identity as _ident
+    _ident.require(conn, os.environ.get("PROMETHEUS_ENV", "prometheus-canonical"))
+
+
 def _get_pool():
     global _POOL
     if _POOL is None:
@@ -41,9 +60,17 @@ def _get_pool():
             if _POOL is None:
                 from psycopg2.pool import ThreadedConnectionPool
                 cfg = load_config()
-                _POOL = ThreadedConnectionPool(
+                pool = ThreadedConnectionPool(
                     2, 16, host=cfg["db_host"], dbname=cfg["db_name"],
                     user=cfg["db_user"], password=cfg["db_password"])
+                # Once per process: every pooled connection shares host and
+                # dbname, so one identity read answers for the pool.
+                c = pool.getconn()
+                try:
+                    _require_environment(c)
+                finally:
+                    pool.putconn(c)
+                _POOL = pool
     return _POOL
 
 
@@ -72,11 +99,17 @@ class _PooledConn:
 def connect():
     try:
         return _PooledConn(_get_pool().getconn())
-    except Exception:
+    except Exception as e:
+        # A WrongEnvironment is a refusal, not a pool problem: never route
+        # around it through the direct path.
+        if type(e).__name__ == "WrongEnvironment":
+            raise
         cfg = load_config()  # pool exhausted/broken: fall back to direct
-        return psycopg2.connect(
+        conn = psycopg2.connect(
             host=cfg["db_host"], dbname=cfg["db_name"],
             user=cfg["db_user"], password=cfg["db_password"])
+        _require_environment(conn)  # the fallback is not an unchecked back door
+        return conn
 
 
 def next_revision(cur) -> int:

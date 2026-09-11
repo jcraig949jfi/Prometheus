@@ -36,6 +36,12 @@ $head = ""
 if ($git) { $head = (& $git -C $root rev-parse HEAD 2>$null | Out-String).Trim() }
 if ($head) { $env:EW_SOURCE_COMMIT = $head }
 
+# STORE IDENTITY (2026-09-11, Hermes #69 accepted): ew.db now refuses any
+# store whose pg_control_system() identity is not the expected environment.
+# This service DELIBERATELY serves the M2 local fork (operator ruling
+# 2026-09-04), so it names that environment; naming it is the visible act.
+$env:PROMETHEUS_ENV = "m2-local-fork"
+
 function Start-Service-Fresh {
     Log "starting M2-INDEPENDENT service (M2-local Postgres) via $py (commit=$env:EW_SOURCE_COMMIT)"
     Start-Process -FilePath $py -ArgumentList "-m","ew.service" `
