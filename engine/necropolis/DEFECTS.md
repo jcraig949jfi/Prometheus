@@ -468,3 +468,30 @@ D-80 EREBOS TOOL The Necromancer's external_refs counts drifted between the
      pass and the Cleric re-run (A 3->4, A2 14->19, B 198->207) because the
      tree moved and OWN_PREFIXES is incomplete; the committed result file is
      a snapshot without a tree SHA in its own body. (Erebos C-9.)
+
+## Frankenstein-stage entries (Keeper writing as Doctor Frankenstein, 2026-09-11)
+
+D-81 KEEPER PROC ORGANS.jsonl carried executed_by_necromancer = null for every
+     nous.*, erebos.* and pollux.* organ at the point the first monsters were
+     filed, although the dossier prose and evidence scripts record
+     executions (Nous: 5918/5918 scorer replay, salvage build row-for-row,
+     1212-row forge join; Erebos: 146 / 608+1 / 59 test passes, harness run
+     on synthetic ledgers, consumer audit re-run). The mechanism exists
+     (ORGAN_NOTES.json Keeper overlay, consumed by build_organs.py) but
+     nothing in the Necromancer or Keeper procedure says WHEN to populate
+     it, and the three Necromancer forks recorded execution only as
+     parentheses inside residue strings. Fixed for nous.*/erebos.* by the
+     Keeper on 2026-09-11 (30/88 organs now true); pollux.* still null
+     pending the Pollux adjudication. Procedure gap, not schema gap.
+     (Pairs with D-68.)
+
+D-82 KEEPER PROV The historical Erebos kill_ledger.jsonl and
+     kill_ledger_enriched.jsonl are gitignored (charon/agents/.gitignore
+     */state/) and absent from the canonical tree and the worktree; every
+     Phase 3 number on the record was computed over bytes no reader can
+     recover. MONSTER_SCHEMA ancestral_comparison allows "the closest
+     recoverable proxy" but nothing in SCHEMA.json requires a dossier to
+     say, per load-bearing evidence row, whether the input bytes still
+     exist. FRANK-003 says so in prose. (Instance of D-67 at the monster
+     layer; erebos.representation_hints.1 is the organism-level statement.)
+

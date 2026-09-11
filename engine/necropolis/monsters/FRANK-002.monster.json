@@ -74,7 +74,7 @@
       "failures_recorded_against": []
     }
   ],
-  "organ_execution_plan": "ORGANS.jsonl records executed_by_necromancer null for every nous.* organ although the Nous dossier text records nous.code.0, nous.code.1, nous.data.0 and nous.data.2 as EXECUTED (the inventory field was never populated by build_organs.py from the dossier prose; recorded as a defect, not silently fixed here). Before stage 1 reads anything: (a) re-run dossiers/nous_evidence/nous_scorer_replay.py and require 5918/5918; (b) re-run dossiers/nous_evidence/nous_salvage_reproduce.py and require row-for-row equality with techne/registry/concepts_index.jsonl; (c) re-run dossiers/nous_evidence/nous_forge_join.py and require the on-record numbers (1212 joined rows; implementability AUC 0.4182 within forge day; high_potential 41.8% v1 / 0.84% v2) to reproduce to the printed precision; (d) run generate_combinations (nous.code.2, READ only by the Necromancer) with a fixed seed for 300 triples and check the field-balance claim (bias 0.8) against the drawn field composition; (e) load priority_triples.json and require 15 rows with 11 resolving to ledger keys. Any failure in (a)-(e) leaves the monster PROPOSED with the failure recorded in cleric_gate.notes; the hint organ is not executed, it is the hypothesis and stage 2 is its execution.",
+  "organ_execution_plan": "ORGAN_NOTES.json (Keeper overlay, populated 2026-09-11 from the evidence scripts) records nous.code.0/1, nous.data.0/1/2 and nous.tests.0/1/2 as executed during the Necromancer pass and nous.code.2 (generate_combinations) and nous.code.3 as read only; the schema organs nous.schemas.* stay null. The plan restates the executions so they are re-run, not inherited (LAW N17). Before stage 1 reads anything: (a) re-run dossiers/nous_evidence/nous_scorer_replay.py and require 5918/5918; (b) re-run dossiers/nous_evidence/nous_salvage_reproduce.py and require row-for-row equality with techne/registry/concepts_index.jsonl; (c) re-run dossiers/nous_evidence/nous_forge_join.py and require the on-record numbers (1212 joined rows; implementability AUC 0.4182 within forge day; high_potential 41.8% v1 / 0.84% v2) to reproduce to the printed precision; (d) run generate_combinations (nous.code.2, READ only by the Necromancer) with a fixed seed for 300 triples and check the field-balance claim (bias 0.8) against the drawn field composition; (e) load priority_triples.json and require 15 rows with 11 resolving to ledger keys. Any failure in (a)-(e) leaves the monster PROPOSED with the failure recorded in cleric_gate.notes; the hint organ is not executed, it is the hypothesis and stage 2 is its execution.",
   "counterfactual_repair": {
     "ancestor": "Nous",
     "historical_assembly": "Cross-field sampler (generate_combinations, bias 0.8) -> one hypothesis per triple from the LLM under PROMPT_TEMPLATE v1 then v2 (engineer prompt, commit da42cc7e0) -> self-rating composite (score_response) selects high_potential rows -> Hephaestus forge under a judge whose version and api_state were not recorded per row -> forged/scrap outcome in agents/hephaestus/ledger.jsonl. Every forged row came from the Nous sampler; no comparison arm ever existed.",
@@ -138,8 +138,10 @@
     "author": "Rhadamanthus (Keeper and Judge), writing as Doctor Frankenstein; DESIGN ONLY, no LLM calls made",
     "branch": "rhadamanthus/native-trial-2026-09-11",
     "baseline_sha": "fc85d10e33dcf176f8bc48362fda106ab32b9bb0",
-    "organs_inventory_sha": "461685282e141536dc62c1d7fe74cd10858cb8fc9873dcaaadf0763f14ee53b8",
+    "organs_inventory_sha": "eae20e3cdd8a6599baab4a9643fc686c406812d4c33b67f42c1628f5237fb248",
     "created_at": "2026-09-11",
-    "amendments": []
+    "amendments": [
+      "2026-09-11 Keeper: organs_inventory_sha refreshed after ORGAN_NOTES.json gained executed_by_necromancer entries for the nous.*/erebos.* organs (organ set and text unchanged: 88 organs); organ_execution_plan first sentence corrected to cite the overlay instead of claiming the field was unpopulated by design."
+    ]
   }
 }
