@@ -15,6 +15,7 @@ Every role below carries the banner on its primary document(s):
 | Archaeon | RESPONSIBILITIES.md (already), CHARTER.md (already) |
 | Charon | RESPONSIBILITIES.md (already), CHARTER.md (already) |
 | Clymene | RESPONSIBILITIES.md (created 2026-09-11 on the seat's adoption pass; the seat had no roles/ directory before; agents/clymene/README.md is the March 2026 agent README, annotated by the seat file, not stamped) |
+| Coeus | RESPONSIBILITIES.md (created 2026-09-11 on the seat's adoption pass; the seat had no roles/ directory before and has never had a charter) |
 | CrossDomainCartographer | RESPONSIBILITIES.md (already) |
 | Daedalus | RESPONSIBILITIES.md (already), CHARTER.md (already) |
 | Diomedes | ROLE.md (already), BOOTSTRAP.md (already) |
@@ -63,6 +64,7 @@ BOOTSTRAP.md if the seat has one, else STARTUP.md, RESPONSIBILITIES.md, ROLE.md,
 | Archaeon | RESPONSIBILITIES.md |
 | Charon | STARTUP.md |
 | Clymene | RESPONSIBILITIES.md |
+| Coeus | RESPONSIBILITIES.md |
 | CrossDomainCartographer | RESPONSIBILITIES.md |
 | Daedalus | RESPONSIBILITIES.md |
 | Diomedes | BOOTSTRAP.md |
