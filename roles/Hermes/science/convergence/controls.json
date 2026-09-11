@@ -1,0 +1,107 @@
+{
+  "_doc": [
+    "Specificity controls for the convergence probe. Hermes, 2026-09-11.",
+    "",
+    "probe.py measures SENSITIVITY: do observers of one failure converge?",
+    "That is the easy half, and on its own it rewards a signature that merges",
+    "everything. These rows measure the other half: does the key ALSO match",
+    "something that is not this failure?",
+    "",
+    "A signature is only useful if sensitivity and specificity are both high.",
+    "s1_type_only converges every case in probe.py and is worthless, which is",
+    "why it is in the strategy list: it is the null that a sensitivity-only",
+    "score cannot reject.",
+    "",
+    "`must_not_match` names the case whose key this row must NOT collide with.",
+    "A collision is a FALSE MERGE: two different failures, or a failure and a",
+    "non-failure, landing in one incident.",
+    "",
+    "control_kind decides how a collision is read, and the distinction was forced by the first run: 'non_failure' means the key also matches something that is not a failure at all, which makes the key meaningless (CASE-E); 'different_cause_same_symptom' means the key correctly names a symptom that has more than one cause, which is survivable IF the incident keeps its observations independent and can be split later (CASE-A); 'different_failure' means the key must stay distinct and a collision would be a true false-merge."
+  ],
+  "controls": [
+    {
+      "id": "CTL-1",
+      "must_not_match": "CASE-A",
+      "title": "a different schema genuinely absent on a correct host",
+      "rationale": "viv is not installed everywhere. This must not be read as the wrong-database failure.",
+      "observed": {
+        "exception_type": "psycopg2.errors.UndefinedTable",
+        "message": "relation \"viv.queue\" does not exist",
+        "exit_state": "raised"
+      },
+      "constructed": true,
+      "control_kind": "different_failure"
+    },
+    {
+      "id": "CTL-2",
+      "must_not_match": "CASE-A",
+      "title": "the CORRECT database, before comms init has ever been run",
+      "rationale": "The legitimate first-time bootstrap on the canonical store produces the SAME exception on the SAME schema as the wrong-database failure. If a signature cannot separate these, symptom-level convergence over-merges a real failure with a normal state, and the incident record must be able to split later. This is the probe's most important control and it is EXPECTED TO COLLIDE.",
+      "observed": {
+        "exception_type": "psycopg2.errors.UndefinedTable",
+        "message": "relation \"comms.messages\" does not exist",
+        "exit_state": "raised"
+      },
+      "constructed": true,
+      "expected_collision": true,
+      "control_kind": "different_cause_same_symptom"
+    },
+    {
+      "id": "CTL-3",
+      "must_not_match": "CASE-B",
+      "title": "a genuinely misspelled seat name",
+      "rationale": "A typo is not the roster-timing defect; it is user error with an identical message shape. N2 maps only names that ARE seats, so a non-seat token must survive normalization and stay distinct.",
+      "observed": {
+        "exception_type": "ValueError",
+        "message": "unknown agent 'Hermez'",
+        "exit_state": "raised"
+      },
+      "constructed": true,
+      "control_kind": "different_failure"
+    },
+    {
+      "id": "CTL-4",
+      "must_not_match": "CASE-E",
+      "title": "a successful, entirely legitimate fetch of an up-to-date repository",
+      "rationale": "This is the control that kills case E. The point-of-failure observation Atalanta and Hermes recorded -- 'Already up to date.', exit 0 -- is INDISTINGUISHABLE from ordinary success. A signature over it matches every non-failure of the same shape.",
+      "observed": {
+        "exception_type": "NoError",
+        "message": "Already up to date.",
+        "exit_state": "success",
+        "exit_code": 0
+      },
+      "constructed": true,
+      "expected_collision": true,
+      "control_kind": "non_failure"
+    },
+    {
+      "id": "CTL-5",
+      "must_not_match": "CASE-D",
+      "title": "a loop that produced no rows because there was genuinely nothing to do",
+      "rationale": "An idle tick and a dead-upstream tick both report zero rows. Only the named missing input separates them, which is why s3 exists and why a zero-row observation alone is not signable.",
+      "observed": {
+        "exception_type": "NoError",
+        "message": "stream produced 0 examples",
+        "exit_state": "no_op",
+        "tick_count": 1,
+        "rows_produced": 0
+      },
+      "constructed": true,
+      "expected_collision": true,
+      "control_kind": "non_failure"
+    },
+    {
+      "id": "CTL-6",
+      "must_not_match": "CASE-A",
+      "title": "the same schema, a different missing object class",
+      "rationale": "A stale-but-correct store with comms present and one column missing is a different failure. A different exception type must keep it apart even though N1 collapses the identifier.",
+      "observed": {
+        "exception_type": "psycopg2.errors.UndefinedColumn",
+        "message": "column \"comms.agents.tier\" does not exist",
+        "exit_state": "raised"
+      },
+      "constructed": true,
+      "control_kind": "different_failure"
+    }
+  ]
+}

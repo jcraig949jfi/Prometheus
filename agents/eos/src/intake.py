@@ -16,13 +16,21 @@ Terminal states, as ruled by the operator:
               external capability
     REFUSED   rejected, with the reason preserved
 
-THE GATE CAN ONLY REFUSE. It never assigns ANCHOR or ACQUIRE. Admission is
-a human act (base role s2: "No LLM adjudicates. The model proposes; a
-deterministic predicate or a human decides. Admission, retirement and
-promotion are human acts."). An item that survives every check leaves the
-gate as PENDING_ADMISSION and waits for a person. RESOURCE is the one state
-the gate may settle on its own, because its evidence is a measurement this
-seat took rather than a judgement anyone has to make.
+THE GATE CAN ONLY REFUSE. It assigns NO terminal state except REFUSED.
+Admission is a human act (base role s2). An item that survives every check
+leaves the gate as PENDING_ADMISSION and waits for a person.
+
+RESOURCE USED TO BE THE ONE EXCEPTION and the exception was wrong. The
+docstring here used to say the gate could settle it "because its evidence is
+a measurement this seat took". Nemesis (NEMESIS-01, 2026-09-11) showed that
+the evidence the measurement was taken is the string
+`observed_by == "eos-intake"` carried in the claim, and settled 30 of 30
+fabricated observations pointing at a host that was never called. That is
+the base role's first rule -- verify the property, never the label -- failing
+inside a gate built to enforce it. The exception is removed rather than
+patched: an observation is now read from a committed probe ARTIFACT on disk,
+and even then the state is PENDING_ADMISSION, because certifying external
+capacity is not something this seat may do alone.
 
 WHAT THE GATE DOES NOT DO, stated here so no reader has to discover it:
 it verifies that a referent EXISTS, not that the referent is the RIGHT one.
@@ -55,6 +63,17 @@ PENDING = "PENDING_ADMISSION"
 #: rule; the first season produced one of these and it would otherwise have
 #: been reported as a refusal on evidence).
 INDETERMINATE = "INDETERMINATE"
+#: Also not a terminal state and NOT a refusal: the claim handed to the gate
+#: never named a real place, because nothing tried to find one. Nemesis
+#: (NEMESIS-01b, 2026-09-11) measured that 49 of the first season's 51
+#: "refusals" were of this kind -- an auto-generated referent pointing into a
+#: directory that has never existed -- and were banked as 49 decisions about
+#: the frontier. They were decisions about a claim constructor. A refusal
+#: that would be identical whatever the item said is not evidence about the
+#: item, and calling it one is the same error as banking instrument failure.
+NOT_EXAMINED = "NOT_EXAMINED"
+#: Claims whose proposer marks them auto-generated are eligible for it.
+AUTO_PROPOSER_MARKERS = ("auto", "constructor", "generated")
 
 #: A RESOURCE observation older than this is not evidence of capacity, it is
 #: a claim about a day in the past (charter constraint 7, decay windows).
@@ -108,7 +127,12 @@ class Claim:
     destination: str = ""
     capability_markers: List[str] = field(default_factory=list)
     consumer: str = ""
+    #: RETAINED FOR THE RECORD ONLY. Never trusted since NEMESIS-01: a caller
+    #: can write anything here, including observed_by="eos-intake".
     observation: Dict[str, Any] = field(default_factory=dict)
+    #: "<repo-relative probe artifact>#<record index>". The gate opens this
+    #: file itself; this is the only thing a RESOURCE claim is believed on.
+    observation_ref: str = ""
     proposed_by: str = "unattributed"
 
 
@@ -265,7 +289,11 @@ def _git_grep_count(marker: str, timeout: int = GREP_TIMEOUT_S) -> int:
     """Files in the TRACKED tree containing `marker`, excluding this seat's own
     intake artifacts. Returns -1 for INDETERMINATE (the search did not answer)."""
     try:
-        r = subprocess.run(["git", "grep", "-l", "-F", "--", marker, *SELF_PATHS],
+        # --cached searches the INDEX, not the working tree. Nemesis measured
+        # 43 vs 97 files for one literal in a sparse worktree -- the gate was
+        # reporting "0 hits in the tracked tree" after searching 44 per cent
+        # of it. It is also markedly faster.
+        r = subprocess.run(["git", "grep", "--cached", "-l", "-F", "--", marker, *SELF_PATHS],
                            cwd=str(REPO), capture_output=True, text=True, timeout=timeout)
     except (OSError, subprocess.TimeoutExpired):
         return -1
@@ -332,25 +360,53 @@ def check_consumer(claim: Claim) -> Check:
 
 
 def check_observation(claim: Claim, now: Optional[datetime] = None) -> Check:
-    """RESOURCE: a measurement this seat took, recently, with an outcome.
+    """RESOURCE: the observation must be READ FROM A COMMITTED PROBE ARTIFACT,
+    not asserted in the claim.
 
-    Required keys: endpoint, observed_at (ISO-8601, tz-aware), status,
-    observed_by. A documentation claim satisfies none of them.
+    The claim supplies `observation_ref` = "<repo-relative probe artifact>#<n>",
+    naming the artifact and the index of the record inside it. The gate opens
+    that file itself. A proposer can still commit a fabricated artifact, but
+    it is then a file in the repository with a diff and an author, which is a
+    different thing from a string nobody can see.
+
+    Before NEMESIS-01 this check read `claim.observation` directly and
+    accepted `observed_by == "eos-intake"` as proof that a call happened. 30
+    of 30 fabricated observations passed. The lesson is the base role's own:
+    a field a caller writes is a label, not the property.
     """
     now = now or datetime.now(timezone.utc)
-    o = claim.observation or {}
-    missing = [k for k in ("endpoint", "observed_at", "status", "observed_by") if not o.get(k)]
-    if missing:
-        return Check("observation_complete", False,
-                     "measurement missing: {}".format(", ".join(missing)))
-    if o.get("observed_by") != OBSERVER:
-        return Check("observation_is_ours", False,
-                     "observed_by={!r}; only {!r} measurements count, a provider's claim is a label"
-                     .format(o.get("observed_by"), OBSERVER))
+    ref = (claim.observation_ref or "").strip()
+    if "#" not in ref:
+        return Check("observation_ref_form", False,
+                     "RESOURCE needs observation_ref '<probe artifact path>#<record index>'; "
+                     "a self-asserted observation dict is no longer accepted (NEMESIS-01)")
+    rel, _, idx = ref.partition("#")
+    p = _repo_path(rel.strip())
+    if p is None or not p.is_file():
+        return Check("observation_artifact_exists", False,
+                     "no probe artifact at {}".format(rel))
     try:
-        ts = datetime.fromisoformat(str(o["observed_at"]).replace("Z", "+00:00"))
+        payload = json.loads(p.read_text(encoding="utf-8"))
+        rec = payload["records"][int(idx)]
+    except (ValueError, KeyError, IndexError, TypeError) as e:
+        return Check("observation_artifact_readable", False,
+                     "cannot read record {} of {}: {}".format(idx, rel, type(e).__name__))
+    if payload.get("observer") != OBSERVER:
+        return Check("observation_artifact_is_ours", False,
+                     "artifact observer is {!r}, not {!r}".format(payload.get("observer"), OBSERVER))
+    missing = [k for k in ("endpoint", "observed_at", "status") if not rec.get(k)]
+    if missing:
+        return Check("observation_complete", False, "record missing: {}".format(", ".join(missing)))
+    # Something only a real request produces. A fabricated record can carry
+    # these too, but it has to carry them, and they are on disk to be read.
+    if not isinstance(rec.get("latency_ms"), int) or rec.get("bytes") in (None, 0):
+        return Check("observation_response_derived", False,
+                     "record carries no response-derived evidence (latency_ms and bytes); "
+                     "a status code alone can be typed by anyone")
+    try:
+        ts = datetime.fromisoformat(str(rec["observed_at"]).replace("Z", "+00:00"))
     except ValueError:
-        return Check("observation_fresh", False, "unparseable observed_at: {!r}".format(o["observed_at"]))
+        return Check("observation_fresh", False, "unparseable observed_at")
     if ts.tzinfo is None:
         return Check("observation_fresh", False, "observed_at has no timezone")
     age = now - ts
@@ -360,7 +416,9 @@ def check_observation(claim: Claim, now: Optional[datetime] = None) -> Check:
     if age < timedelta(0):
         return Check("observation_fresh", False, "observed_at is in the future")
     return Check("observation_fresh", True,
-                 "{} at {} ({} d old), status={}".format(o["endpoint"], o["observed_at"], age.days, o["status"]))
+                 "{} at {} ({} d old), status={}, {} bytes in {} ms, from committed artifact {}"
+                 .format(rec["endpoint"], rec["observed_at"], age.days, rec["status"],
+                         rec.get("bytes"), rec.get("latency_ms"), rel))
 
 
 # ---------------------------------------------------------------------------
@@ -411,14 +469,21 @@ def classify(item: Item, claim: Claim, now: Optional[datetime] = None) -> Verdic
                        "; ".join("{}: {}".format(c.name, c.detail) for c in undecided),
                        sought, checks, claim)
     failed = [c for c in checks if not c.passed]
+    auto = any(m in (claim.proposed_by or "").lower() for m in AUTO_PROPOSER_MARKERS)
+    if auto and failed and all(c.name in ("referent_resolves", "referent_form",
+                                          "not_already_absorbed") for c in failed):
+        return Verdict(item.id, NOT_EXAMINED,
+                       "the claim's referent was auto-generated and names no real place, so this "
+                       "verdict would be identical whatever the item said: " +
+                       "; ".join("{}: {}".format(c.name, c.detail) for c in failed),
+                       sought, checks, claim)
     if failed:
         return Verdict(item.id, "REFUSED",
                        "; ".join("{}: {}".format(c.name, c.detail) for c in failed),
                        sought, checks, claim)
-    if sought == "RESOURCE":
-        return Verdict(item.id, "RESOURCE", "measurement satisfies every check", sought, checks, claim)
     return Verdict(item.id, PENDING,
-                   "every check passed; {} requires human admission".format(sought),
+                   "every check passed; {} requires human admission (the gate settles no "
+                   "terminal state but REFUSED)".format(sought),
                    sought, checks, claim)
 
 
@@ -427,7 +492,8 @@ def season(pairs: Sequence[Any], now: Optional[datetime] = None) -> List[Verdict
 
 
 def summarise(verdicts: Sequence[Verdict]) -> Dict[str, int]:
-    out = {k: 0 for k in ("ANCHOR", "ACQUIRE", "RESOURCE", "REFUSED", PENDING, INDETERMINATE)}
+    out = {k: 0 for k in ("ANCHOR", "ACQUIRE", "RESOURCE", "REFUSED", PENDING,
+                          INDETERMINATE, NOT_EXAMINED)}
     for v in verdicts:
         out[v.state] = out.get(v.state, 0) + 1
     return out
