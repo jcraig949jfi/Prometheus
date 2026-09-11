@@ -85,3 +85,7 @@ the bindings byte for byte on one hash-pinned input); anything leaving the
 host goes through the core. Archaeon records this beside the ruling rather
 than over it; the operator amends D-17 to v1 or not.
 
+## D-22 (operator 2026-09-11) The conformance gate is wired, fail-closed, before the next newly issued corpus
+
+Harmonia's four-state gate is called at every boundary where a consumer begins work; live build hash, contract hash, engine instance and gate state are recorded with the resulting corpus/run. DRIFT and wrong engine_instance_id halt; UNREACHABLE retries per contract then halts; INCOMPLETE proceeds only where the consumer's complete route set is represented by the contract. Archaeon's half landed with a four-engine demonstration (CONFORMANCE_WIRING_RECEIPT_2026-09-11.json); Vivarium's half is asked for (F-28). No newly issued corpus until both halves are wired.
+

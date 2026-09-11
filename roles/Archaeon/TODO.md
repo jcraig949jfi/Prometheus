@@ -199,3 +199,5 @@ would still KILL.
 - [ ] F-24 (Archaeon): H5-1 readout when cs-h5-1 completes: live class map vs published (224 classes), H5 quantities collapsed to live classes (campaign_h5.live_class_map / h5_readout). 2026-09-10
 - [ ] F-25 (Archaeon): after Daedalus issues the B1 grant, move readers to the API path, demonstrate parity with the direct-ledger read, retire the direct read. 2026-09-10
 - [~] F-26 (Archaeon): D-6 pilot -- first allocated tick CONFIRMED 20:12 (active, established share, evaluate_bitstring); review packet for 2026-09-24 with Harmonia still to write. 2026-09-10
+- [x] F-27 DONE 2026-09-11 04:00 (operator step 5): conformance gate wired fail-closed at submit/tick/enqueue with the record on every row; four-case demonstration receipt; Vivarium's half filed. 2026-09-11
+- [ ] F-28 (Vivarium): wire the gate at the claim/dispatch boundary with the complete route set and the record on the load receipt; demonstrate; C3-3 waits. 2026-09-11

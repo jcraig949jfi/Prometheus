@@ -99,6 +99,17 @@ def tick(conn, config: Optional[cfg.ArchaeonConfig] = None, *,
                            "lane": lane, "utc_day": day, "dry_run": dry_run,
                            "wrote": False, "experiment_id": None}
 
+    # 0. the conformance gate, BEFORE any work (operator 2026-09-11) --------
+    from .. import conformance as _conf
+    try:
+        out["conformance"] = _conf.compact(_conf.require(getattr(config, "conformance", None)))
+    except _conf.ConformanceHalt as halt:
+        out["conformance"] = _conf.compact(halt.record)
+        out["halted"] = {"by": "conformance", "state": halt.record.get("state"), "reason": halt.record.get("reason"),
+                         "attempts": halt.record.get("attempts")}
+        out["decision"] = "HALTED_CONFORMANCE"
+        return out
+
     try:
         # 1. the scientific input -----------------------------------------
         corpus = readers.recent_fossils(config.chart, lookback_rows)

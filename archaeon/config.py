@@ -305,6 +305,9 @@ class ExplorationConfig:
     max_candidates: int = 512
 
 
+from .conformance import ConformanceConfig   # noqa: E402  (the gate's own settings live beside the gate)
+
+
 @dataclass(frozen=True)
 class ArchaeonConfig:
     chart: str = DEFAULT_CHART
@@ -315,6 +318,9 @@ class ArchaeonConfig:
     detectors: DetectorConfig = field(default_factory=DetectorConfig)
     cadence: CadenceConfig = field(default_factory=CadenceConfig)
     exploration: ExplorationConfig = field(default_factory=ExplorationConfig)
+    # Operator 2026-09-11: the SFE conformance gate is wired, fail-closed, at
+    # every boundary where Archaeon begins work (queue write, tick start).
+    conformance: ConformanceConfig = field(default_factory=ConformanceConfig)
 
     # Deterministic ranking weights: they decide WHICH probe is proposed when
     # several signals fire. They are not evidence weights and carry no
