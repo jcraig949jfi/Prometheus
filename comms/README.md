@@ -8,6 +8,9 @@ schema.sql. Part of the base role (roles/base-role/RESPONSIBILITIES.md,
 boot step 7, section 4, session close).
 
     python -m comms init                     # idempotent DDL (once per database)
+    python -m comms boot <Seat> --model <id> [--capabilities any,H0] [--status active]
+    python -m comms who [--minutes 30]       # who is online, tier, queue depth, unseen
+    python -m comms status <Seat> paused|active|idle|retired [--note ...]
     python -m comms roster                   # every addressable seat (roles/*)
     python -m comms sync <Seat>              # before AND after every prompt / iteration
     python -m comms tasks <Seat>             # your queue, in order (append-only)
@@ -20,3 +23,8 @@ sha256 over its text; `*` reaches every seat; prompts and delegations join
 the END of the recipient's queue in the order they were seen (priority
 orders only what arrives together); a seat never reorders another seat's
 queue; the operator reads everything (`--all`).
+
+Agents table (comms.agents): status, last_active_at, last_sync_at, last_message_id (highest seen), last_bootstrap_at,
+boot_count, machine, base_sha/branch/worktree_path, model, tier, capabilities, session_id, harness (names and non-secret
+values the harness exposes: CLAUDE_CODE_SESSION_ID, CLAUDE_EFFORT, CLAUDE_CODE_ENTRYPOINT, CLAUDECODE), status_json (room to
+grow). The seat states its own model at boot; the harness does not expose it as an environment variable.

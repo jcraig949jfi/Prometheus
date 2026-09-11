@@ -137,3 +137,7 @@ Principle added to the contract (s10): the constitution is falsifiable -- a rule
 
 The April Agora (Redis streams, mirrored to agora.messages) is replaced by a Postgres-native comms layer (schema `comms`: messages with sha256, per-agent receipts, append-only task queues; repository package comms/). Every seat syncs its inbox and the broadcasts BEFORE and AFTER each prompt or loop iteration and appends prompts and delegations to the end of its task queue. Cross-seat prompts are posted here after being committed; the operator relays by paste only to seats that are not running. DDL note: the `comms` schema is new and additive, created by comms.init_schema (idempotent); the standing "no DDL" constraint on Archaeon's loop applies to the viv and ew schemas, which are untouched.
 
+## D-24 amendment (operator 2026-09-11): the agents table
+
+comms.agents records, per seat: status, last active, last sync, the last message pointer, last bootstrap and boot count, machine, workspace receipt, model and tier (light: haiku/sonnet; heavy: opus/fable), capabilities, session id and harness metadata (names and non-secret values only). Every seat records its boot (`python -m comms boot`), every comms call marks activity, and `python -m comms who` is the delegation view. The model is stated by the seat from its own system prompt; the harness exposes the session id and effort level, not the model.
+
