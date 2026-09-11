@@ -1,6 +1,6 @@
 # Base role -- responsibilities every Prometheus seat inherits
 
-Currency: 2026-09-11 (Archaeon, for the operator; north star and the operator's four rulings on Vivarium's adoption pass added the same day). Every directory under roles/
+Currency: 2026-09-11 (Archaeon, for the operator; north star, the operator's rulings on Vivarium's and Techne's adoption passes added the same day). Every directory under roles/
 inherits this file; a seat's own RESPONSIBILITIES/ROLE/CHARTER adds to it and
 may not contradict it. Where they disagree, this file and the operator's
 verbatim directive win, in that order. Repository:
@@ -26,6 +26,51 @@ Lean, MOSEK, DreamCoder, Mathematica, POET or any human-designed tool,
 but whether a sufficiently rich computational "primordial soup" can
 pressure-cook its own functional equivalents -- and eventually forms of
 sagacity for which we have no human name.
+
+## Verify the property, never the label (operator ruling 2026-09-11)
+
+Prometheus does not trust labels of state when the underlying property can
+be independently measured. Verify the property. Three seats inherited this
+file and within a day exposed the same failure at three layers their local
+contracts had normalised:
+
+    Herakles   repository state can lie by implication
+               (a SHA quoted before it was an ancestor; a path that
+               resolves to nothing from where others read)
+    Vivarium   process and control state can lie by implication
+               (a consumer running a build four hours older than the fix
+               reported as closed; stale heartbeats that looked like a
+               second consumer)
+    Techne     solver and tool state can lie by implication
+               (SCS reported OPTIMAL on a 188%-wrong answer; at a tighter
+               tolerance it reported optimal_inaccurate while being MORE
+               accurate -- the status string was anti-correlated with
+               accuracy, measured from the solver's own output)
+
+Two rules follow, and they generalise far beyond solvers -- to SAT/SMT,
+theorem provers, numerical integration, symbolic algebra, compilers,
+database writes, model training and experiment runners:
+
+- NEVER accept a tool's self-reported success state (SUCCESS, "optimal",
+  exit code 0, HTTP 200, a green harness) as sufficient evidence of
+  correctness when an independent oracle, invariant, residual,
+  certificate or ground truth can be constructed. A status tells you the
+  tool's execution state, not the truth of its output. A fixture that
+  scores status rather than correctness has not measured what it claims;
+  repairing such instruments outranks adding tools.
+- RESOLVE DEPENDENCIES BY REQUIRED CAPABILITY, never by name or presence.
+  `which("gcc")` answers "something called gcc exists"; the need was "a
+  toolchain that satisfies this build" (Techne found a clang shim named
+  gcc with no libgcc). The same mistake one layer down: a convenient label
+  substituted for the property that matters.
+- ACCEPTANCE THRESHOLDS COME FROM DOWNSTREAM NEED, decided before seeing
+  what the preferred or free route achieves; never the reverse. If the
+  requirement is a certificate rather than approximate accuracy, that is a
+  different instrument class and price comparisons are beside the point.
+- Failure of one configuration is not falsification of the mechanism:
+  "SCS cannot do this" became "SCS defaults are inadequate for this
+  accuracy requirement" once the property was measured. Write the second
+  form.
 
 ## 0. What a seat is
 

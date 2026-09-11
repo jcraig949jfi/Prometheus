@@ -101,3 +101,11 @@ F:\Prometheus is the canonical clone (fetch, inspection, worktree management onl
 4. The two-control rule stands with the cheat control defined as qualitatively distinct from a negative control.
 Principle added to the contract (s10): the constitution is falsifiable -- a rule that cannot be followed, observed or reconciled with repository mechanics is a defect in the constitution, not the seat; the base role tests its own claims (archaeon/tests/test_base_role.py).
 
+## D-23 amendment 2 (operator 2026-09-11, on Techne's adoption pass ad15ae44e / d3ce43c24)
+
+- The journal defect is confirmed independently by Vivarium and Techne: repaired centrally with the self-conformance test (2b79c140a); Techne's WORKLOG workaround was compliant and may now retire to roles/Techne/journal/.
+- Techne's "BEFORE external publication" clause is SUPERSEDED TERMINOLOGY, not permission: annotated in roles/Techne/RESPONSIBILITIES.md as "run the required synthetic null control before promoting or communicating any cross-domain claim beyond its experimental context".
+- Elevated to the base role beside the north star: Prometheus does not trust labels of state when the property can be measured (Herakles: repository state; Vivarium: process/control state; Techne: solver/tool state); never accept a tool's self-reported success as correctness when an oracle/invariant/residual/certificate/ground truth can be constructed; resolve dependencies by required capability, not by name; acceptance thresholds come from downstream need before seeing what the free route achieves; failure of a configuration is not falsification of the mechanism.
+- TECHNE-45 (fixtures that score status rather than correctness) stays ahead of licensing work: until those instruments are repaired, what their experiments measured is unknown.
+- Techne's accuracy-requirement prompt to Harmonia/Aporia is the model for refusing a hidden experimenter degree of freedom.
+
