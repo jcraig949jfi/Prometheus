@@ -10,6 +10,7 @@ Every role below carries the banner on its primary document(s):
 | Alethelia | RESPONSIBILITIES.md (already) |
 | Apollo | CHARTER.md (already) |
 | Aporia | RESPONSIBILITIES.md (already) |
+| Arachne | RESPONSIBILITIES.md (created with the banner, 2026-09-11 adoption pass; the seat had no roles/ directory before) |
 | Archaeon | RESPONSIBILITIES.md (already), CHARTER.md (already) |
 | Charon | RESPONSIBILITIES.md (already), CHARTER.md (already) |
 | CrossDomainCartographer | RESPONSIBILITIES.md (already) |
@@ -48,6 +49,7 @@ BOOTSTRAP.md if the seat has one, else STARTUP.md, RESPONSIBILITIES.md, ROLE.md,
 | Alethelia | RESPONSIBILITIES.md |
 | Apollo | BOOTSTRAP.md |
 | Aporia | RESPONSIBILITIES.md |
+| Arachne | RESPONSIBILITIES.md |
 | Archaeon | RESPONSIBILITIES.md |
 | Charon | STARTUP.md |
 | CrossDomainCartographer | RESPONSIBILITIES.md |

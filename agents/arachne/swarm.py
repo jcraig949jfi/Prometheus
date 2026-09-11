@@ -333,6 +333,10 @@ def main():
         print(f"queued tweak {args.id}: {knobs}")
         return 0
 
+    # D-23 (2026-09-11): a tick writes fabric/ and state/; never from the canonical checkout.
+    from archaeon.workspace import assert_not_canonical
+    assert_not_canonical("run the Arachne swarm", allow_override=False)
+
     sw = Swarm()
     if not sw.landscapes:
         print("FATAL: no landscapes available (check mathlib4 clone / PGPASSWORD / sympy)")
