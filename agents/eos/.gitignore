@@ -1,0 +1,14 @@
+# Eos runtime state and credentials -- never tracked.
+# The root .gitignore re-includes agents/eos/ without a /** glob precisely so
+# that this file stays authoritative. .env is the program's de-facto keyring
+# (keys.py reads it); it is never read, printed or committed (EOS-04).
+.env
+.env.*
+*.key
+*secret*
+*credential*
+reports/
+__pycache__/
+*.pyc
+*.pid
+state/

@@ -47,6 +47,9 @@ class AlgolibLandscape:
     def available(self) -> bool:
         return self._ok
 
+    def unavailable_reason(self) -> str:
+        return "ok" if self._ok else "fewer than 51 callables importable from {}".format(list(_SEED_MODULES))
+
     def _source(self, name: str):
         if name in self._src:
             return self._src[name]

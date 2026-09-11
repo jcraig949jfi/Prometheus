@@ -1,0 +1,40 @@
+{
+  "what_this_is": "A SECOND, post-hoc attempt, recorded separately and never folded into the preregistered season. The first attempt was REFUSED on destination: the proposer (Eos) named vivarium/worlds/microcosmos, a path it never verified. The gate caught the PROPOSER's error, not the item's. Nothing in the gate changed between the two runs; only the claim did, and both claims are on the record.",
+  "first_attempt": {
+    "destination": "vivarium/worlds/microcosmos",
+    "state": "REFUSED",
+    "reason": "parent directory does not exist"
+  },
+  "resubmission": {
+    "destination": "vivarium/specs/microcosmos.json",
+    "state": "PENDING_ADMISSION",
+    "reason": "every check passed; ACQUIRE requires human admission",
+    "checks": [
+      {
+        "name": "provenance",
+        "passed": true,
+        "detail": "arxiv at 2026-09-11T16:03:41+00:00"
+      },
+      {
+        "name": "rationale_admissible",
+        "passed": true,
+        "detail": "192 chars, no inadmissible words"
+      },
+      {
+        "name": "capability_absent",
+        "passed": true,
+        "detail": "2 markers, 0 hits in the tracked tree (excluding this seat's own records)"
+      },
+      {
+        "name": "destination",
+        "passed": true,
+        "detail": "parent of vivarium/specs/microcosmos.json exists"
+      },
+      {
+        "name": "consumer",
+        "passed": true,
+        "detail": "consumer exists: roles/Vivarium/CHARTER.md"
+      }
+    ]
+  }
+}

@@ -103,12 +103,30 @@ def live_class_map(results: Dict[int, Dict[str, Any]]) -> Dict[str, Any]:
             "scope": SCOPE}
 
 
-def h5_readout(equivalence: Dict[int, int]) -> Dict[str, Any]:
-    """The H5 quantities, exact, collapsed to the (live) classes."""
+def h5_readout(equivalence: Dict[int, int], instruments: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+    """The H5 quantities, exact, collapsed to the (live) classes.
+
+    `instruments`: outside decoders loaded from table artifacts
+    (h5_decoders.load_table_decoder), reported under out["instruments"] in a
+    SEPARATE block with their scrambled twin beside each -- an instrument row
+    (a hand-designed structured decoder) is never evidence for learned
+    evolvability (design v0.1 s5). Contract: Polyhymnia #67 reply."""
     from . import h5_decoders as H
     from . import h5_reference as R
     decs = {"direct": H.direct, "balanced_7": H.make_balanced(7), "scrambled_direct_3": H.make_scrambled(H.direct, 3)}
-    out = {}
+    out: Dict[str, Any] = {}
+    if instruments:
+        out["instruments"] = {}
+        for name, dec in instruments.items():
+            block = {}
+            for sub, dd in (("member", dec), ("scrambled_3", H.make_scrambled(dec, 3))):
+                raw = R.exact_reference(dd); col = R.exact_reference(dd, equivalence=equivalence)
+                block[sub] = {"mean_reach_rules": raw["mean_reach"], "mean_reach_classes": col["mean_reach"],
+                              "max_reach_classes": col["max_reach"], "mean_neutral": raw.get("mean_neutral")}
+            block["structure_gain_classes"] = block["member"]["mean_reach_classes"] - block["scrambled_3"]["mean_reach_classes"]
+            block["drop_rule"] = "DROPPED from the readout if structure_gain_classes <= 0 on the live map (the structure adds no class-reach beyond its multiplicity histogram)"
+            block["table_sha256"] = getattr(dec, "table_sha256", None); block["decoder_id"] = getattr(dec, "decoder_id", name)
+            out["instruments"][name] = block
     for name, dec in decs.items():
         raw = R.exact_reference(dec)
         col = R.exact_reference(dec, equivalence=equivalence)
