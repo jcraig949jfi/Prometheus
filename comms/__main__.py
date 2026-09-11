@@ -30,6 +30,10 @@ def main(argv=None) -> int:
     s.add_argument("--kind", default="prompt", choices=api.KINDS); s.add_argument("--subject", required=True)
     s.add_argument("--body-file", required=True); s.add_argument("--reply-to", type=int); s.add_argument("--task-ref"); s.add_argument("--priority", type=int, default=100)
     s = sub.add_parser("done"); s.add_argument("agent"); s.add_argument("message_id", type=int); s.add_argument("--note")
+    s = sub.add_parser("boot"); s.add_argument("agent"); s.add_argument("--model"); s.add_argument("--capabilities", default="")
+    s.add_argument("--status", default="active"); s.add_argument("--session-id"); s.add_argument("--json", action="store_true")
+    s = sub.add_parser("who"); s.add_argument("--minutes", type=int, default=api.ONLINE_MINUTES); s.add_argument("--json", action="store_true")
+    s = sub.add_parser("status"); s.add_argument("agent"); s.add_argument("state", choices=["active", "idle", "paused", "retired"]); s.add_argument("--note")
     a = ap.parse_args(argv)
     conn = api.connect()
     try:
@@ -66,6 +70,28 @@ def main(argv=None) -> int:
             print("posted", mid); return 0
         if a.cmd == "done":
             api.done(conn, a.agent, a.message_id, a.note); print("done", a.message_id); return 0
+        if a.cmd == "boot":
+            caps = [x.strip() for x in a.capabilities.split(",") if x.strip()]
+            r = api.boot(conn, a.agent, model=a.model, capabilities=caps, status=a.status, session_id=a.session_id)
+            if a.json:
+                print(json.dumps(r, default=str, indent=1))
+            else:
+                print("booted {} on {} | model {} ({}) | {} @ {} [{}] | session {}".format(
+                    r["agent"], r["machine"], r["model"], r["tier"], (r["workspace"].get("base_sha") or "?")[:9],
+                    r["workspace"].get("worktree_path"), r["workspace"].get("branch"), r["session_id"]))
+            return 0
+        if a.cmd == "who":
+            rows = api.who(conn, online_minutes=a.minutes)
+            if a.json:
+                print(json.dumps(rows, default=str, indent=1)); return 0
+            print("{:<12} {:<7} {:<12} {:<8} {:<18} {:<6} {:<6} {:<20} {}".format("agent", "online", "status", "tier", "model", "queued", "unseen", "last_active", "capabilities"))
+            for r in rows:
+                print("{:<12} {:<7} {:<12} {:<8} {:<18} {:<6} {:<6} {:<20} {}".format(
+                    r["agent"], "yes" if r["online"] else "no", r["status"], r.get("tier") or "?", (r.get("model") or "?")[:18],
+                    r.get("queued") or 0, "?" if r.get("unseen") is None else r["unseen"], str(r.get("last_active_at") or "-")[:19], ",".join(r.get("capabilities") or [])))
+            return 0
+        if a.cmd == "status":
+            api.set_status(conn, a.agent, a.state, a.note); print(a.agent, "->", a.state); return 0
     finally:
         conn.close()
     return 1

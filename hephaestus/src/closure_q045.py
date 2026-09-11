@@ -116,12 +116,21 @@ def run(deep_size=8, deep_candidates=30_000_000):
     full = W.PRIMS
     imp = [p for i, p in enumerate(full) if i != MISSING]
     R_full5, c1, _ = closure_with_programs(full, 5, 6_000_000)
+    print(f"[stage] R_full5 built: {len(R_full5)} sigs, {c1} candidates, {time.time()-t0:.0f}s", file=sys.stderr, flush=True)
     R_imp5, c2, _ = closure_with_programs(imp, 5, 6_000_000)
+    print(f"[stage] R_imp5 built: {len(R_imp5)} sigs, {c2} candidates, {time.time()-t0:.0f}s", file=sys.stderr, flush=True)
+    t_deep = time.time()
     R_deep, c3, exhausted = closure_with_programs(imp, deep_size, deep_candidates)
+    deep_seconds = round(time.time() - t_deep, 1)
+    print(f"[stage] R_imp{deep_size} built: {len(R_deep)} sigs, {c3} candidates, exhausted={exhausted}, {deep_seconds}s", file=sys.stderr, flush=True)
     deep_used = deep_size
     lost, control = [], []
-    for key, prog in sorted(R_full5.items(), key=lambda kv: (W.size_of(kv[1]), kv[0][1])):
-        if key[0] != W.V or W.size_of(prog) > MAX_FULL_SIZE or prog == ("X",):
+    # 2026-09-11 tooling correction (first execution): sort V-typed behaviours only. The committed
+    # comparator sorted S (int signature) and V (tuple signature) together and raised TypeError;
+    # S entries were never eligible, so the preregistered canonical order (size, signature) is unchanged.
+    v_items = [(k, p) for k, p in R_full5.items() if k[0] == W.V]
+    for key, prog in sorted(v_items, key=lambda kv: (W.size_of(kv[1]), kv[0][1])):
+        if W.size_of(prog) > MAX_FULL_SIZE or prog == ("X",):
             continue
         if key not in R_imp5 and key not in R_deep:
             if len(lost) < N_LOST: lost.append((key, prog))
@@ -136,7 +145,7 @@ def run(deep_size=8, deep_candidates=30_000_000):
     results = {"prereg": "hephaestus/prereg/PREREG_Q045_specimen3_2026-09-01.md", "basis": {"version": BASIS_VERSION, "hash": basis_hash()},
                "missing_primitive": full[MISSING]["name"] + " (elementwise vector multiply)", "probes": PROBES,
                "closure_sizes": {"R_full5": len([k for k in R_full5 if k[0] == W.V]), "R_imp5": len([k for k in R_imp5 if k[0] == W.V]),
-                                 f"R_imp{deep_used}": len([k for k in R_deep if k[0] == W.V]), "deep_budget_exhausted": exhausted, "deep_size_used": deep_used,
+                                 f"R_imp{deep_used}": len([k for k in R_deep if k[0] == W.V]), "deep_budget_exhausted": exhausted, "deep_size_used": deep_used, "deep_seconds": deep_seconds,
                                  "candidates": [c1, c2, c3]},
                "n_lost_targets": len(lost), "n_control_targets": len(control), "depth": DEPTH, "budget": BUDGET, "targets": []}
 
@@ -174,8 +183,10 @@ def run(deep_size=8, deep_candidates=30_000_000):
 
     for key, prog in lost:
         results["targets"].append(eval_target(key, prog, "LOST"))
+        print(f"[stage] LOST target {len(results['targets'])}: {results['targets'][-1]['class']} {time.time()-t0:.0f}s", file=sys.stderr, flush=True)
     for key, prog in control:
         results["targets"].append(eval_target(key, prog, "CONTROL"))
+        print(f"[stage] CONTROL target {len(results['targets'])}: {results['targets'][-1]['class']} {time.time()-t0:.0f}s", file=sys.stderr, flush=True)
     # Shift column (prereg s1): out-of-alphabet inputs (entries 0..6) under the world's mod-6
     # arithmetic, evaluated by enumerate_arm in the same call as the other columns. No ring change.
     lost_recs = [t for t in results["targets"] if t["kind"] == "LOST"]; ctrl_recs = [t for t in results["targets"] if t["kind"] == "CONTROL"]
@@ -197,6 +208,9 @@ def run(deep_size=8, deep_candidates=30_000_000):
         "P4_C_witnesses_robust": s["LOST"]["C_robust"] == s["LOST"]["OPERATOR"],
         "P5_some_A0_aliases_on_lost": s["LOST"]["A0_aliases_present"] > 0,
     }
+    # D-23: every result records where it was built (base_sha, branch, worktree_path, dirty).
+    from hephaestus.workspace_guard import receipt
+    results["workspace"] = receipt()
     out = ROOT / "hephaestus" / "closure_results" / "q045_lost_class.json"
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(results, indent=2, default=str), encoding="utf-8")
@@ -204,6 +218,8 @@ def run(deep_size=8, deep_candidates=30_000_000):
 
 
 if __name__ == "__main__":
+    from hephaestus.workspace_guard import refuse_canonical  # D-23
+    refuse_canonical("specimen 3 (Q045)")
     ds = int(sys.argv[1]) if len(sys.argv) > 1 else 8
     dc = int(sys.argv[2]) if len(sys.argv) > 2 else 30_000_000
     r = run(ds, dc)

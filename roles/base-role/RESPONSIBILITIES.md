@@ -151,7 +151,12 @@ reads instead of any local memory directory.
 
 1. Refuse to run from the canonical checkout (WORKING_CONTRACT.md s1;
    archaeon/workspace.py is the reference guard). Confirm your worktree,
-   branch and base SHA; they go on your first receipt.
+   branch and base SHA; they go on your first receipt. Then RECORD THE
+   BOOT: `python -m comms boot <Seat> --model <your model id>
+   --capabilities <any|lanes you take>` -- it writes your workspace,
+   machine, model and tier (light: haiku/sonnet; heavy: opus/fable),
+   session and harness metadata to comms.agents, the table the program
+   reads to know who is online for delegation (`python -m comms who`).
 2. Read your own entry file first: BOOTSTRAP.md if you have one, else
    RESPONSIBILITIES.md, then CHARTER.md, then METHOD.md, then the newest
    prompt addressed to you under roles/<Seat>/prompts/ and roles/*/prompts/,
@@ -294,6 +299,14 @@ reads instead of any local memory directory.
   with a MANIFEST of sha256 at issuance, prepended by a 00_COMMON block
   that states authority and reporting rules. Chat-only claims do not
   count; everything reported is a committed path or a SHA.
+- BEFORE DELEGATING, LOOK AT WHO IS ONLINE: `python -m comms who` lists
+  every seat with its online flag (active within 30 min), status, tier,
+  model, queue depth and unseen count. Route light work (transcription,
+  indexing, formatting, a single measurement with a declared procedure)
+  to a light-tier seat that lists `any`; route adjudication, design and
+  anything that changes a claim to the seat that owns the lane. A seat
+  that is offline still receives the message; it is queued for its next
+  sync, and you say so in your receipt.
 - WHEN BLOCKED, DO NOT WAIT AND DO NOT ASK THE OPERATOR TO DECIDE WHAT
   YOU COULD DECIDE. Write the prompt that would unblock you, addressed to
   the seat that owns the blocker, in the paste-block form, with: the

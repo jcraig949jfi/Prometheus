@@ -5,6 +5,9 @@ not stay live). Postgres-native; no Redis.
 
 Every seat, before and after each prompt or loop iteration:
 
+    python -m comms boot <Seat> --model <model id> [--capabilities any,H0,H3] [--status active]
+                                       # record the bootstrap: workspace, machine, model/tier, session
+    python -m comms who                # who is online (active within 30 min), tier, queue depth, unseen
     python -m comms sync <Seat>        # print unseen inbox + broadcasts,
                                        # mark them seen, append prompts and
                                        # delegations to the seat's task queue
@@ -16,6 +19,6 @@ Every seat, before and after each prompt or loop iteration:
 Doctrine: a message is committed text (sha256 recorded); chat is not a
 channel; a prompt delivered here is as binding as one the operator pastes.
 """
-from .api import (broadcast, done, enqueue, inbox, init_schema, mark_seen, post, roster, sync, tasks)
+from .api import (boot, broadcast, done, enqueue, inbox, init_schema, mark_seen, post, roster, set_status, sync, tasks, touch, who)
 
-__all__ = ["broadcast", "done", "enqueue", "inbox", "init_schema", "mark_seen", "post", "roster", "sync", "tasks"]
+__all__ = ["boot", "broadcast", "done", "enqueue", "inbox", "init_schema", "mark_seen", "post", "roster", "set_status", "sync", "tasks", "touch", "who"]

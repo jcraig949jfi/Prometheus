@@ -1,0 +1,78 @@
+ALETHELIA -- BASE-ROLE ADOPTION RECEIPT -- 2026-09-11
+================================================================================
+
+WORKSPACE
+  worktree_path  F:\Prometheus-worktrees\alethelia-base-role (linked; git-dir differs
+                 from git-common-dir; the canonical checkout was refused)
+  branch         alethelia/base-role-adopt-2026-09-11
+  base_sha       7466bd6ac (worktree created), merged forward to 8600edd68 (named SHA)
+  dirty          tracked changes staged for this commit only
+  base role read at 7466bd6ac: NORTH_STAR, RESPONSIBILITIES, WORKING_CONTRACT,
+                 INHERITANCE, MONITORS, README; aporia/doctrine/critical_memories.md
+
+COMMS
+  python -m comms sync Alethelia  11:38:32Z  1 new (Archaeon broadcast 402c3445443d1be5)
+                                              0 queued; queue length 0
+
+WHAT WAS DONE (artifacts, all in this commit)
+  agents/alethelia/alethelia.py        v0.1: 7 anomaly rules (FIRED/CLEAR/INDETERMINATE),
+                                       calm only at 0 fired + 0 indeterminate, comms
+                                       liveness property, workspace receipt, D-23 guard
+  agents/alethelia/test_alethelia.py   7 controls: negative, positive, cheat A (dead
+                                       sources), indeterminate, cheat B (live anomalies
+                                       cannot read calm), guard, guard passthrough
+  stations/REPORT_latest.{md,json}     the 2026-09-11 report (first committed since 08-20)
+  roles/Alethelia/RESPONSIBILITIES.md  adoption annotation; 4 clauses annotated in place
+  roles/Alethelia/STATUS.md            new
+  roles/Alethelia/BACKLOG_H0H5.md      new, 24 rows, 2 XL (ALET-04 host; ALET-18 paging)
+  roles/Alethelia/CALIBRATION.md       new, 4 wrong calls
+  roles/Alethelia/journal/2026-09-11.md
+  roles/Alethelia/notes/*.md           2 files claimed byte-for-byte from the canonical
+                                       checkout (sha256 a188dc00.. / 5337c68c..)
+  roles/base-role/MONITORS.md          row AletheliaReport, state DORMANT (no host)
+  roles/Archaeon/INBOX_ALETHELIA_BASE_ROLE_ADOPTION_2026-09-11.md   report to Archaeon
+
+CONTROLS
+  agents/alethelia/test_alethelia.py   7/7 pass on the merged tree (8600edd68 + this)
+  archaeon/tests/test_base_role.py     7 passed, 1 failed on the merged tree; the failure
+                                       (test_issued_manifests_verify_against_their_files,
+                                       roles/Archaeon/prompts/2026-09-11_comms/00_BROADCAST.md)
+                                       is PRE-EXISTING at 7466bd6ac with my changes stashed
+                                       and is already reported by Diomedes f08c81c66 and
+                                       Lexis 8600edd68 (13 of 13 entries hashed over CRLF).
+                                       Not fixed here (Archaeon's file; fix centrally).
+
+LIVE REPORT, 2026-09-11 (base 8600edd68)
+  19 fields, 0 UNKNOWN. 5 of 7 rules FIRED:
+    stale_heartbeats        35 of 36 agora.agent_heartbeats rows > 6h and not DEAD
+    no_unblocked_work       BACKLOG.jsonl 644 PARKED / 138 DONE / 0 QUEUED
+    shadow_input_dormant    last Aporia pass P177 = 10.5 days (threshold 48h)
+    unanswered_reviews      7 (all ELEN-*)
+    unreviewed_passes       5 (P173..P177)
+  CLEAR: zombie_running (no RUNNING threads); dormant_on_comms (20 eligible seats
+    hold unseen messages, none older than 24h; 6 seats have synced).
+
+SCOPED OUTCOME
+  The reporter can no longer print a calm banner over a stale fleet (cheat control B),
+  refuses the canonical checkout, reads seat liveness from the comms property, and is
+  registered as what it is: DORMANT, with no host.
+
+FAILURE THIS PASS (reported, not repaired)
+  Ran the OLD reporter from the canonical checkout to "prove the guard"; it wrote
+  stations/REPORT_latest.md and .json there (D-23 s1 violation by this seat). Pre-state
+  not reconstructible; committed content is b781e06af. Repair declined by the operator;
+  left as found. CALIBRATION.md item 4.
+
+REMAINING BLOCKER, AND ON WHOM
+  ALET-04 (operator): the reporter has no host. Recommendation: hourly scheduled task on
+  M1 from a pinned worktree (the sources are all on M1); M4 stays a parked option.
+  Until decided the registry row is DORMANT and every run is manual.
+
+NEXT EXECUTABLE ACTION
+  ALET-05: per-source last_input_at beside each section (base rule 7 mechanic 2), then
+  ALET-06: read every MONITORS.md row's freshness source and report its age.
+
+THIS ENABLES
+  Archaeon and the operator to read program liveness from one committed file whose
+  every number carries its query, and Elenchus's DORMANT shadow row to have an alarm
+  (shadow_input_dormant) the moment ALET-04 gives the reporter a host.

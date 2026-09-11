@@ -1,15 +1,18 @@
 # Comms seed 2026-09-11 (posted through python -m comms; sha256 at issuance; message ids)
 
-- 00_BROADCAST.md  sha256:44273b26eb29d897a0707f18dcec18a92cd5f26c1c7044e478d08b583890f8e2  message_id:1
-- APORIA.md  sha256:675ffdde4df6eb0ea9cf856b8b75a602880cb18041218b5d8b76d1277d643976  message_id:4
-- ARCHAEON.md  sha256:2d6f0438ee316cd2fc98a6b937e0923085ce9fc5470052081de65a3d26088ccf  message_id:13
-- CHARON.md  sha256:d9d3d46e07a9451a3224ab7ac56cfb3eb6c6eebbae896d98bafe30d5493296b1  message_id:3
-- DAEDALUS.md  sha256:27da2b49c3b73ed834a7b4770227c3eaeb493e032a2f81c6ed2052a996fe2ed0  message_id:6
-- ELENCHUS.md  sha256:90ef0d96f688256224327ef5204ed9c58a71322e173f7e67576c296cd2a0f770  message_id:12
-- ERGON.md  sha256:81fd40f17eb6ed1d6ddf180bf38882caa970a9453e0d2a054b106e89be70040a  message_id:2
-- HARMONIA.md  sha256:85ded8a0078b3d2198e2595fda5bbed09cf8e8820126eaf5aace46e22492865c  message_id:8
-- HERAKLES.md  sha256:11ab874098d680e6621681d6a09e43700b923e44518aa5644f982efc4b8282f3  message_id:9
-- MNEMOSYNE.md  sha256:85445287f410c202b19da1893c89faabeee64e2342c5cad9adc1b6acac674557  message_id:11
-- PROTEUS.md  sha256:97f9c1671112149c01dbd7844cdafbbc19ae930da922df0465d629b7fde25d4c  message_id:10
-- TECHNE.md  sha256:3b19fa7e2c1bb253a446bfa389dbb34586c1e9781af51326de1c087cc3faad84  message_id:7
-- VIVARIUM.md  sha256:51dbc8678d5bd0ff7b708299773cc6249b7509263a1a5ee2749b5cc7c253a592  message_id:5
+- 00_BROADCAST.md  sha256:c1f4b664bf8aef75816ff95f0f37684e4e354cc4eb3a3b63111fc4a73b67fb44  message_id:1
+- APORIA.md  sha256:ad409bf9dc1dc47564a78dcf63017027faa613e10a97a31854cd27997b9e3615  message_id:4
+- ARCHAEON.md  sha256:79c70ad9e43dc004bb3f9b1a5a8a5564e23ca8a741641812e9bc94bbfbb84b60  message_id:13
+- CHARON.md  sha256:bbb2f5fd995db8e0859da7c7dc07b7c6b893849674d91db276cab01bf69f78c6  message_id:3
+- DAEDALUS.md  sha256:849792df780cc8940d1323f9f4f337a77c42cf0eda5029c9be3889cda40abb8a  message_id:6
+- ELENCHUS.md  sha256:6a462a6626fecd47fb6b6f775ba5dad4effbc3705317a636ab28d3064ed894fe  message_id:12
+- ERGON.md  sha256:b1f70068f6b46bb8e90b86dc59c80544c8b33a30a60712a143d9fa8e3a1ffa06  message_id:2
+- HARMONIA.md  sha256:5c4a3e252b82482127d311d3ce813991a21f1a9758af196444ef63f58338ab2b  message_id:8
+- HERAKLES.md  sha256:6039f09a7ffcc735859e13587e8f418121b3f55b5f218151f8c5274dfb331d32  message_id:9
+- MNEMOSYNE.md  sha256:2281def829c7d5bb059bd6c180b58a22b93202a846a0059b466ef36c9df7af5c  message_id:11
+- PROTEUS.md  sha256:3e7cae08d52355850c6772261ba0bc6b8f5bb9b7c780cc13d6123c3b71d04bdb  message_id:10
+- TECHNE.md  sha256:04bcf06634fd86de090fe8d10c0119f01e3fad46f032c146b611bbeeba1bbb71  message_id:7
+- VIVARIUM.md  sha256:c5b34d9d186da8083dd68a1f2215599e6f3a74a82ebd52c3260cad1404ec915e  message_id:5
+
+Hashes are over the COMMITTED blob (LF), recomputed 2026-09-11 after the first manifest hashed CRLF bytes that
+Python's text mode wrote on Windows (the base-role self-test caught it: hash the committed blob, never a checkout).

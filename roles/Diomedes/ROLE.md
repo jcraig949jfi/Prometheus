@@ -158,6 +158,8 @@ unconsumed successes and this seat is the kind that ends up there.
   not anticipate: the corpus cannot identify the question. See §9.3 — the condition was
   under-specified, not satisfied.**
 - **It starts producing documents instead of CARs** ⇒ that is the 1,500:1 prose ratio reappearing
+  *(Annotation 2026-09-11: base-mandated artifacts -- STATUS, journal, backlog, calibration,
+  receipts -- are excluded from this ratio by construction; the clause binds lane output only.)*
   in a new costume. Retire on the ratio, not on a debate.
 
 Retirement follows `feedback_retirement_needs_thoughtwork_dossier_hitl`: no delete state, 4-question
@@ -175,7 +177,10 @@ Reduced from v1 — most of the shell's open slots resolved themselves through t
 - **Whether reopening the June steering line is mine to do.** That lane is Aporia's preregistration
   and Aporia's null. Options unchanged: file the §2 population argument as a finding *to* Aporia and
   let Aporia rule; James rules directly; or Lane M stays parked. My preference is the first.
-- **Registration.** Not in `scripts/portfolio_monitor.py` `EXPECTED_AGENTS`, no heartbeat, no
+- **Registration.** *SUPERSEDED 2026-09-11:* the roster is `roles/base-role/INHERITANCE.md`
+  (Diomedes stamped) and liveness is the comms sync receipt (`roles/base-role/MONITORS.md`, last
+  row). The original text follows for the record.
+  Not in `scripts/portfolio_monitor.py` `EXPECTED_AGENTS`, no heartbeat, no
   git-stash tag. Per Alethelia's precedent the roster reflects seats that exist — registration lands
   at kickoff, not before.
 - **Declared bias, restated.** "The program's problem is that its coordinate systems are inadequate,
@@ -291,6 +296,10 @@ Full detail: `REVIEW_ROUND2_CORRECTIONS_2026-08-25.md` §6. **This is a handoff,
 start.**
 
 ### 9.8 Operational note
+
+> **MIGRATION ANNOTATION 2026-09-11 (D-23).** The two rules below (explicit pathspec in one
+> invocation, verify the carrier SHA; never remove another seat's lock) are now
+> `roles/base-role/WORKING_CONTRACT.md` s5 and s3. Kept as this seat's own incident record.
 
 Four times in one session, files staged by this seat were swept into other seats' commits by
 pathspec-less `git commit`. Content was never lost; the message-to-content association was, and was
