@@ -222,6 +222,12 @@ agents/*
 # Alethelia -- truthful reporter, charter RATIFIED 2026-08-17, built P29 (2026-08-20)
 !agents/alethelia/
 !agents/alethelia/**
+# Eos -- horizon scanner / acquisition instrument (seat re-premised 2026-09-11,
+# EOS-01 ACTIVE). Re-included WITHOUT a /** glob so agents/eos/.gitignore
+# stays authoritative for .env, reports/ and runtime state. Before today the
+# seat's 7 files were force-added and every new file was silently ignored --
+# which is why 163 days of digests never reached the repository.
+!agents/eos/
 # Shared library code used by multiple agents (SelfImprovingDaemon mixin, etc.)
 !agents/_shared/
 roles/*/SESSION_JOURNAL_*.md

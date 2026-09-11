@@ -1,0 +1,11 @@
+# Vivarium runtime state. Never committed, and scoped here rather than in the
+# repository root because `var/` is this seat's directory and the root file is
+# shared.
+#
+# var/ holds per-HOST, per-PROCESS state: the stop flag the daemon polls
+# between ticks, the consumer's log, and the conformance gate's cache of full
+# gate results. The cache in particular is keyed by live engine identity and
+# contract hash, so a committed copy would be one machine's answer travelling
+# to another machine as though it were that machine's -- which is the exact
+# failure the gate exists to prevent.
+var/

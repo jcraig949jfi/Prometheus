@@ -15,7 +15,11 @@ from collections import Counter
 from pathlib import Path
 
 _REPO = Path(__file__).resolve().parents[3]
-_ROOT = _REPO / "external_deps" / "mathlib4" / "Mathlib"
+# ARACHNE-03 (2026-09-11): the checkout is gitignored and lives beside the
+# canonical clone, not in every worktree; resolve by configuration first,
+# then the repository-relative default, and say which one was tried.
+import os as _os
+_ROOT = Path(_os.environ.get("ARACHNE_MATHLIB_ROOT") or (_REPO / "external_deps" / "mathlib4" / "Mathlib"))
 
 _DECL_RE = re.compile(r"^\s*(?:@\[[^\]]*\]\s*)?(?:theorem|lemma|def|instance|abbrev)\s+([A-Za-z_][\w.']*)", re.M)
 _IDENT_RE = re.compile(r"[A-Za-z_][\w.']*")
@@ -41,6 +45,11 @@ class MathlibLandscape:
 
     def available(self) -> bool:
         return bool(self._files)
+
+    def unavailable_reason(self) -> str:
+        if self._files:
+            return "ok"
+        return "no *.lean files under {} (set ARACHNE_MATHLIB_ROOT to the Mathlib directory of a mathlib4 checkout)".format(_ROOT)
 
     def _parse_file(self, path: Path) -> None:
         try:

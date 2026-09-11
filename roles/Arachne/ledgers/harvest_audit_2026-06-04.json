@@ -1,0 +1,439 @@
+{
+ "specimen_hashes": {
+  "edges.jsonl": "75adee0029b3329db5430e993eeccbf8ac0515faa7916dd79d061a13927a032f",
+  "harvest_2026-06-04.md": "59140e3685003d6d5f1a2ff2c0fa52038ef26998921ed6f3967eda20c3ebccaf",
+  "lineage.jsonl": "828e4f63bc79f63cc78ed66246aededed4ec4a4d74ebec7ce115f71ea4c39653",
+  "population.json": "4d74be79c7fda24d9d370297c515d9995d3bfe5fefb3e73ec489ce01df87de7b",
+  "README.md": "228eab79b25f4d46ea8b5fe7bb3d8618a200b732b91386eaf673b4248bd1f58f",
+  "swarm_state.json": "fa834d8185a686a5e6d6920634c3458695c67044d2687971754cf8ba4d62d303"
+ },
+ "db_read_flag": {
+  "performed": true,
+  "table": "analysis.oeis",
+  "rows_requested": 34,
+  "edges_written": 0
+ },
+ "anchors": {
+  "count": 5,
+  "rows": [
+   {
+    "function": "algolib:catalan",
+    "target": "oeis:A000108",
+    "null_p": 0.05,
+    "name": "Catalan numbers: C(n) = binomial(2n,n)/(n+1) = (2n)!/(n!(n+1)!)."
+   },
+   {
+    "function": "algolib:factorial",
+    "target": "oeis:A000142",
+    "null_p": 0.1,
+    "name": "Factorial numbers: n! = 1*2*3*4*...*n (order of symmetric group S_n, number of permutations of n letters)."
+   },
+   {
+    "function": "algolib:factorial",
+    "target": "oeis:A370360",
+    "null_p": 0.1,
+    "name": "Number of labeled semisimple rings with n elements."
+   },
+   {
+    "function": "algolib:lucas",
+    "target": "oeis:A000032",
+    "null_p": 0.1,
+    "name": "Lucas numbers beginning at 2: L(n) = L(n-1) + L(n-2), L(0) = 2, L(1) = 1."
+   },
+   {
+    "function": "algolib:lucas",
+    "target": "oeis:A000204",
+    "null_p": 0.1,
+    "name": "Lucas numbers (beginning with 1): L(n) = L(n-1) + L(n-2) with L(1) = 1, L(2) = 3."
+   }
+  ],
+  "information_content": "calibration only: each anchor states that a sympy function computes the canonical OEIS sequence it is documented to compute (e.g. catalan -> A000108); no consumer needs this except an instrument checking that the operational joiner works. Value realised: the joiner's own positive control (11 of 12 functions recover their canonical sequence)."
+ },
+ "void_targets": {
+  "count_by_harvest_rule": 29,
+  "count_listed_in_file": 25,
+  "harvest_ran_on": "segment 1 fabric (file stamped 10:21Z, 1,424 typed edges), not the final 21,209-edge fabric",
+  "rule": "shares_prefix degree >= 10 and no incoming computes edge, on the segment-1 fabric",
+  "functions_ever_run": [
+   "totient",
+   "catalan",
+   "fibonacci",
+   "prime",
+   "bell",
+   "divisor_count",
+   "divisor_sigma",
+   "mobius",
+   "primepi",
+   "factorial",
+   "lucas",
+   "partition"
+  ],
+  "functions_count": 12,
+  "prefix_groups": {
+   "(1, 8, 28)": 19,
+   "(2, 3, 4)": 5,
+   "(1, 12, 66)": 5
+  },
+  "names_state_a_rule": 22,
+  "names_found": 29,
+  "rows": [
+   {
+    "oeis_id": "A355958",
+    "shares_prefix_degree": 14,
+    "prefix": [
+     2,
+     3,
+     4
+    ],
+    "name": "Positions where primes occur in A104589.",
+    "name_states_a_rule": true,
+    "in_truncated_harvest_list": true
+   },
+   {
+    "oeis_id": "A263581",
+    "shares_prefix_degree": 13,
+    "prefix": [
+     2,
+     3,
+     4
+    ],
+    "name": "Prime powers (p^k, p prime, k >= 1) such that k*p^k - 1 is also a power of a prime.",
+    "name_states_a_rule": true,
+    "in_truncated_harvest_list": true
+   },
+   {
+    "oeis_id": "A267439",
+    "shares_prefix_degree": 13,
+    "prefix": [
+     2,
+     3,
+     4
+    ],
+    "name": "Indices of (Abatzoglou-Silverberg-Sutherland-Wong) primes in A267437.",
+    "name_states_a_rule": true,
+    "in_truncated_harvest_list": true
+   },
+   {
+    "oeis_id": "A300273",
+    "shares_prefix_degree": 13,
+    "prefix": [
+     2,
+     3,
+     4
+    ],
+    "name": "Sorted list of Heinz numbers of collapsible integer partitions.",
+    "name_states_a_rule": false,
+    "in_truncated_harvest_list": true
+   },
+   {
+    "oeis_id": "A119761",
+    "shares_prefix_degree": 12,
+    "prefix": [
+     2,
+     3,
+     4
+    ],
+    "name": "Values n such that the largest prime factor of repunit R_n=(10^n -1)/9 is a unique prime,i.e.,whose reciprocal has unique decimal period length.",
+    "name_states_a_rule": true,
+    "in_truncated_harvest_list": true
+   },
+   {
+    "oeis_id": "A211066",
+    "shares_prefix_degree": 12,
+    "prefix": [
+     1,
+     8,
+     28
+    ],
+    "name": "Number of 2 X 2 matrices having all terms in {1,...,n} and nonnegative even determinant.",
+    "name_states_a_rule": true,
+    "in_truncated_harvest_list": true
+   },
+   {
+    "oeis_id": "A229713",
+    "shares_prefix_degree": 12,
+    "prefix": [
+     1,
+     8,
+     28
+    ],
+    "name": "Number of arrays of length n that are sums of 3 consecutive elements of length n+2 permutations of 0..n+1, and no two consecutive rises or falls in the latter permutation.",
+    "name_states_a_rule": true,
+    "in_truncated_harvest_list": true
+   },
+   {
+    "oeis_id": "A244613",
+    "shares_prefix_degree": 12,
+    "prefix": [
+     1,
+     8,
+     28
+    ],
+    "name": "Least number k > 0 such that 2^k ends in exactly n consecutive increasing digits.",
+    "name_states_a_rule": true,
+    "in_truncated_harvest_list": true
+   },
+   {
+    "oeis_id": "A293289",
+    "shares_prefix_degree": 12,
+    "prefix": [
+     1,
+     8,
+     28
+    ],
+    "name": "Number of level n squares on a Sierpinski carpet that intersect the edge of a circle with the same center and diameter.",
+    "name_states_a_rule": true,
+    "in_truncated_harvest_list": true
+   },
+   {
+    "oeis_id": "A328535",
+    "shares_prefix_degree": 12,
+    "prefix": [
+     1,
+     8,
+     28
+    ],
+    "name": "G.f. = Phi^2*F^4, where Phi = g.f. for A028930, F = g.f. for A028959.",
+    "name_states_a_rule": true,
+    "in_truncated_harvest_list": true
+   },
+   {
+    "oeis_id": "A340964",
+    "shares_prefix_degree": 12,
+    "prefix": [
+     1,
+     8,
+     28
+    ],
+    "name": "Number of ways to write n as an ordered sum of 8 primes.",
+    "name_states_a_rule": true,
+    "in_truncated_harvest_list": true
+   },
+   {
+    "oeis_id": "A045850",
+    "shares_prefix_degree": 11,
+    "prefix": [
+     1,
+     8,
+     28
+    ],
+    "name": "Number of nonnegative solutions of x1^2 + x2^2 + ... + x8^2 = n.",
+    "name_states_a_rule": true,
+    "in_truncated_harvest_list": true
+   },
+   {
+    "oeis_id": "A100182",
+    "shares_prefix_degree": 11,
+    "prefix": [
+     1,
+     8,
+     28
+    ],
+    "name": "Structured tetragonal anti-prism numbers.",
+    "name_states_a_rule": false,
+    "in_truncated_harvest_list": true
+   },
+   {
+    "oeis_id": "A121739",
+    "shares_prefix_degree": 11,
+    "prefix": [
+     1,
+     8,
+     28
+    ],
+    "name": "Dimensions of the irreducible representations of the simple Lie algebra of type D4 over the complex numbers, listed in increasing order.",
+    "name_states_a_rule": false,
+    "in_truncated_harvest_list": true
+   },
+   {
+    "oeis_id": "A255276",
+    "shares_prefix_degree": 11,
+    "prefix": [
+     1,
+     8,
+     28
+    ],
+    "name": "A255275(2^n-1).",
+    "name_states_a_rule": true,
+    "in_truncated_harvest_list": true
+   },
+   {
+    "oeis_id": "A271870",
+    "shares_prefix_degree": 11,
+    "prefix": [
+     1,
+     12,
+     66
+    ],
+    "name": "Convolution of nonzero hexagonal numbers (A000384) with themselves.",
+    "name_states_a_rule": false,
+    "in_truncated_harvest_list": true
+   },
+   {
+    "oeis_id": "A272259",
+    "shares_prefix_degree": 11,
+    "prefix": [
+     1,
+     8,
+     28
+    ],
+    "name": "Irregular triangle read by rows: Row n >= 32 gives the smallest square loop, i.e., lexicographically earliest circular permutation of length n such that any two adjacent numbers sum to a perfect square.",
+    "name_states_a_rule": true,
+    "in_truncated_harvest_list": true
+   },
+   {
+    "oeis_id": "A299289",
+    "shares_prefix_degree": 11,
+    "prefix": [
+     1,
+     8,
+     28
+    ],
+    "name": "Coordination sequence for \"tsi\" 3D uniform tiling.",
+    "name_states_a_rule": false,
+    "in_truncated_harvest_list": true
+   },
+   {
+    "oeis_id": "A306545",
+    "shares_prefix_degree": 11,
+    "prefix": [
+     1,
+     8,
+     28
+    ],
+    "name": "Number of permutations p of [2n+2] such that min_{j=1..2n+2} |p(j)-j| = n.",
+    "name_states_a_rule": true,
+    "in_truncated_harvest_list": true
+   },
+   {
+    "oeis_id": "A316512",
+    "shares_prefix_degree": 11,
+    "prefix": [
+     1,
+     8,
+     28
+    ],
+    "name": "Number of nXn 0..1 arrays with every element unequal to 0, 1, 2, 3, 7 or 8 king-move adjacent elements, with upper left element zero.",
+    "name_states_a_rule": true,
+    "in_truncated_harvest_list": true
+   },
+   {
+    "oeis_id": "A321237",
+    "shares_prefix_degree": 11,
+    "prefix": [
+     1,
+     8,
+     28
+    ],
+    "name": "Start with a square of dimension 1 X 1, and repeatedly append along the squares of the previous step squares with half their side length that do not overlap with any prior square; a(n) gives the number of squares appended at n-th step.",
+    "name_states_a_rule": true,
+    "in_truncated_harvest_list": true
+   },
+   {
+    "oeis_id": "A353325",
+    "shares_prefix_degree": 11,
+    "prefix": [
+     1,
+     8,
+     28
+    ],
+    "name": "G.f. A(x) satisfies: A(x) = ( A(-x) + sqrt( A(-x)^2 + 64*x/A(-x) ) )/2.",
+    "name_states_a_rule": true,
+    "in_truncated_harvest_list": true
+   },
+   {
+    "oeis_id": "A009504",
+    "shares_prefix_degree": 10,
+    "prefix": [
+     1,
+     8,
+     28
+    ],
+    "name": "\"Pascal sweep\" for k=7: draw a horizontal line through the 1 at C(k,0) in Pascal's triangle; rotate this line and record the sum of the numbers on it (excluding the initial 1).",
+    "name_states_a_rule": true,
+    "in_truncated_harvest_list": false
+   },
+   {
+    "oeis_id": "A027380",
+    "shares_prefix_degree": 10,
+    "prefix": [
+     1,
+     8,
+     28
+    ],
+    "name": "Number of irreducible polynomials of degree n over GF(8); dimensions of free Lie algebras.",
+    "name_states_a_rule": true,
+    "in_truncated_harvest_list": false
+   },
+   {
+    "oeis_id": "A112142",
+    "shares_prefix_degree": 10,
+    "prefix": [
+     1,
+     12,
+     66
+    ],
+    "name": "McKay-Thompson series of class 8B for the Monster group.",
+    "name_states_a_rule": false,
+    "in_truncated_harvest_list": true
+   },
+   {
+    "oeis_id": "A126815",
+    "shares_prefix_degree": 10,
+    "prefix": [
+     1,
+     8,
+     28
+    ],
+    "name": "Ramanujan numbers (A000594) read mod 32.",
+    "name_states_a_rule": false,
+    "in_truncated_harvest_list": false
+   },
+   {
+    "oeis_id": "A161805",
+    "shares_prefix_degree": 10,
+    "prefix": [
+     1,
+     12,
+     66
+    ],
+    "name": "A trisection of A161804: a(n) = A161804(3n) for n>=0.",
+    "name_states_a_rule": true,
+    "in_truncated_harvest_list": true
+   },
+   {
+    "oeis_id": "A200190",
+    "shares_prefix_degree": 10,
+    "prefix": [
+     1,
+     12,
+     66
+    ],
+    "name": "Number of -6..6 arrays x(0..n-1) of n elements with zero sum, adjacent elements differing by more than one, and elements alternately increasing and decreasing.",
+    "name_states_a_rule": true,
+    "in_truncated_harvest_list": true
+   },
+   {
+    "oeis_id": "A284641",
+    "shares_prefix_degree": 10,
+    "prefix": [
+     1,
+     12,
+     66
+    ],
+    "name": "Expansion of (Sum_{k>=0} x^(k^2*(k+1)^2/4))^12.",
+    "name_states_a_rule": true,
+    "in_truncated_harvest_list": false
+   }
+  ]
+ },
+ "consumers": {
+  "named_in_record": [
+   "Aporia science_of_failure_v0.1 (catalog of typed signals; never built)",
+   "Ergon damage lane (cites damage.py, not the harvest)",
+   "Harmonia proposal D (bring-up scan; not a consumer of harvest)"
+  ],
+  "with_a_receipt_against_harvest_output": [],
+  "routing_events_on_record": "none: the harvest file was written to agents/arachne/state/ (gitignored) and never posted, committed or handed to a seat; its only appearance is the commit message f62343df9"
+ }
+}
