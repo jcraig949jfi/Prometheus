@@ -1,0 +1,53 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree/Spin-version-6.5.2/Src",
+  "probe": [
+    {
+      "name": "toolchain",
+      "cmd": "gcc --version | head -1; bison --version | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "make spin",
+      "cmd": "make -s 2>&1 | grep -v -i warning | tail -3; test -x ./spin"
+    }
+  ],
+  "runs": [
+    {
+      "name": "spin version",
+      "cmd": "./spin -V",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "Spin Version 6.5.2"
+        ]
+      }
+    },
+    {
+      "name": "exhaustive verification of Peterson mutex",
+      "cmd": "mkdir -p $BODY/build && cd $BODY/build && $BODY/upstream/tree/Spin-version-6.5.2/Src/spin -a $HARNESS/mutex.pml && gcc -O2 -DSAFETY -o pan pan.c && ./pan",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "errors: 0"
+        ]
+      }
+    }
+  ],
+  "tests": [
+    {
+      "name": "a planted violation IS found (assert ncrit == 2 must fail)",
+      "cmd": "mkdir -p $BODY/build/bad && cd $BODY/build/bad && sed 's/ncrit == 1/ncrit == 2/' $HARNESS/mutex.pml > bad.pml && $BODY/upstream/tree/Spin-version-6.5.2/Src/spin -a bad.pml && gcc -O2 -DSAFETY -o pan pan.c && ./pan; true",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "errors: 1"
+        ]
+      }
+    }
+  ],
+  "test_kind": "TECHNE",
+  "classification_if_ok": "RUNNABLE_CONTAINER"
+}

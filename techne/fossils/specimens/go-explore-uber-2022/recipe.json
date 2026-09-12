@@ -1,0 +1,19 @@
+{
+  "runner": "native",
+  "workdir": "upstream/tree/robustified",
+  "probe": [{"name": "python", "cmd": "python --version"}],
+  "build": [],
+  "runs": [
+    {"name": "SOURCE-AT-PINNED-REVISION: the exploration modules parse (no execution, no env)",
+     "cmd": "python -c \"import ast,pathlib; fs=sorted(pathlib.Path('goexplore_py').glob('*.py')); [ast.parse(f.read_text(encoding='utf-8')) for f in fs]; print(len(fs),'goexplore_py files parse')\"",
+     "expect": {"exit": 0, "stdout_contains": ["files parse"]}},
+    {"name": "the blocking dependency is named: importing the package fails on a missing dep, not a syntax error",
+     "cmd": "python -c \"import goexplore_py.randselectors\" 2>&1; echo \"exit=$?\"",
+     "expect": {"exit": 0, "stdout_regex": "ModuleNotFoundError|ImportError"}}
+  ],
+  "tests": [],
+  "track_products": false,
+  "classification_if_ok": "SOURCE_ONLY",
+  "test_classification_if_none": "NO_TESTS",
+  "notes": "Nyx requested a source-at-pinned-revision receipt (comms 201), no environment. The archive/selection logic (goexplore.py, randselectors.py) is pure Python, but the package __init__ chain imports the Atari/gym stack (first block: `loky`), which is NOT installed. Run 1 proves the source is syntactically whole; run 2 records the exact first blocking import. Classification SOURCE_ONLY, not RUNNABLE, is the honest state and is itself the evidence for the transfer question the operator ruling asks."
+}

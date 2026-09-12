@@ -1,0 +1,279 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "graphplan-blum-furst-1995",
+  "canonical_name": "Graphplan -- Avrim Blum and Merrick Furst (CMU), C implementation",
+  "aliases": [
+    "graphplan",
+    "Graphplan"
+  ],
+  "lineage": "Graphplan (1995, CMU): STRIPS planning by building a layered planning graph with mutual-exclusion relations and extracting a plan by backward search; the redesign that made classical planning fast",
+  "domain": [
+    "planning",
+    "search",
+    "symbolic-ai",
+    "strips"
+  ],
+  "era": "1995",
+  "version": "CMU AFS distribution as served 2026-09-12 (Source.tar.gz + domain files)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "https://www.cs.cmu.edu/afs/cs.cmu.edu/usr/avrim/Planning/Graphplan/Source.tar.gz",
+        "filename": "Source.tar.gz",
+        "sha256": "bf98cf7f87c7d95deb560403f1d5b3cd4124138ce3107af806c843440c30723c",
+        "bytes": 56400,
+        "extracted_to": "upstream/tree/Source"
+      },
+      {
+        "kind": "url",
+        "url": "https://www.cs.cmu.edu/afs/cs.cmu.edu/usr/avrim/Planning/Graphplan/BW.tar.gz",
+        "filename": "BW.tar.gz",
+        "extract": false,
+        "sha256": "b2b8fea70312cdcd6beee9717ce9c51d06c22faf3f38f83e6c260de32c5e50b0",
+        "bytes": 5665
+      },
+      {
+        "kind": "url",
+        "url": "https://www.cs.cmu.edu/afs/cs.cmu.edu/usr/avrim/Planning/Graphplan/README",
+        "filename": "README",
+        "extract": false,
+        "sha256": "18071e82d76f0a63237f4764978b91236ffb01fa76915b75c92f2078a187d4aa",
+        "bytes": 9717
+      },
+      {
+        "kind": "url",
+        "url": "https://www.cs.cmu.edu/afs/cs.cmu.edu/usr/avrim/Planning/Graphplan/rocket_ops",
+        "filename": "domains/rocket_ops",
+        "extract": false,
+        "sha256": "651faadab7704d0f2cf25ccdf1cbbd630bb418b786650a8f73e38c3e51a241fc",
+        "bytes": 626
+      },
+      {
+        "kind": "url",
+        "url": "https://www.cs.cmu.edu/afs/cs.cmu.edu/usr/avrim/Planning/Graphplan/rocket_facts2",
+        "filename": "domains/rocket_facts2",
+        "extract": false,
+        "sha256": "623c6c438c65d440d8a6f463d7cad847267614ab87b6e37baf71a9de3f693328",
+        "bytes": 341
+      },
+      {
+        "kind": "url",
+        "url": "https://www.cs.cmu.edu/afs/cs.cmu.edu/usr/avrim/Planning/Graphplan/rocket_facts4",
+        "filename": "domains/rocket_facts4",
+        "extract": false,
+        "sha256": "0b7104d55de730f4460a71d2e7104b3d996034c6475dd1baac9279b46e11ea2e",
+        "bytes": 440
+      },
+      {
+        "kind": "url",
+        "url": "https://www.cs.cmu.edu/afs/cs.cmu.edu/usr/avrim/Planning/Graphplan/monkey_ops",
+        "filename": "domains/monkey_ops",
+        "extract": false,
+        "sha256": "8210d71d5524f3ea1ceb82ee4e82da2124b3b0f9f6268873376a45a900b34237",
+        "bytes": 1025
+      },
+      {
+        "kind": "url",
+        "url": "https://www.cs.cmu.edu/afs/cs.cmu.edu/usr/avrim/Planning/Graphplan/monkey_facts1",
+        "filename": "domains/monkey_facts1",
+        "extract": false,
+        "sha256": "4b6125fc6a91976a17f99b24b4dce6182b72358af7ee45b3ecc386a8cf1e65dc",
+        "bytes": 169
+      },
+      {
+        "kind": "url",
+        "url": "https://www.cs.cmu.edu/afs/cs.cmu.edu/usr/avrim/Planning/Graphplan/blocks_ops",
+        "filename": "domains/blocks_ops",
+        "extract": false,
+        "sha256": "a30ed76ff974954f477fa91312207b113757838f7f53c279d7737780604b20ba",
+        "bytes": 1013
+      },
+      {
+        "kind": "url",
+        "url": "https://www.cs.cmu.edu/afs/cs.cmu.edu/usr/avrim/Planning/Graphplan/blocks_facts4",
+        "filename": "domains/blocks_facts4",
+        "extract": false,
+        "sha256": "981cd581a90f88423f5f5ea9027a784ab55372cd512ced60b9c8c5aab6a9bf66",
+        "bytes": 257
+      },
+      {
+        "kind": "url",
+        "url": "https://www.cs.cmu.edu/afs/cs.cmu.edu/usr/avrim/Planning/Graphplan/logistics_ops",
+        "filename": "domains/logistics_ops",
+        "extract": false,
+        "sha256": "d7316a8855da92d580564ba4d0aec388cfc18db5978fac404252bb27c85ba190",
+        "bytes": 1338
+      },
+      {
+        "kind": "url",
+        "url": "https://www.cs.cmu.edu/afs/cs.cmu.edu/usr/avrim/Planning/Graphplan/logistics_facts4",
+        "filename": "domains/logistics_facts4",
+        "extract": false,
+        "sha256": "0fd3d590a45e15e0d95050f043efd0d21691fb299bf11859ce542ff6073ec732",
+        "bytes": 847
+      },
+      {
+        "kind": "url",
+        "url": "https://www.cs.cmu.edu/afs/cs.cmu.edu/usr/avrim/Planning/Graphplan/fixit_ops",
+        "filename": "domains/fixit_ops",
+        "extract": false,
+        "sha256": "f79f8a4fe62f28fdb914d45dddfbf1c6202ea8d54b328f668000b109fe1928b8",
+        "bytes": 2178
+      },
+      {
+        "kind": "url",
+        "url": "https://www.cs.cmu.edu/afs/cs.cmu.edu/usr/avrim/Planning/Graphplan/fixit_facts1",
+        "filename": "domains/fixit_facts1",
+        "extract": false,
+        "sha256": "f4285a62b93afa704a605ab7d1cc6e1640e428e7e20c5fd50252f235f9941164",
+        "bytes": 560
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "site": "www.cs.cmu.edu/~avrim/graphplan.html",
+    "path": "afs/cs.cmu.edu/usr/avrim/Planning/Graphplan/"
+  },
+  "hashes": {
+    "tree_sha256": "b0abf2bffcad7f5f05713bd91698153593b94b27bce9948f88e3ae41cb47aab2",
+    "n_files": 27,
+    "bytes": 269672,
+    "artifacts": [
+      {
+        "filename": "Source.tar.gz",
+        "sha256": "bf98cf7f87c7d95deb560403f1d5b3cd4124138ce3107af806c843440c30723c",
+        "commit": null
+      },
+      {
+        "filename": "BW.tar.gz",
+        "sha256": "b2b8fea70312cdcd6beee9717ce9c51d06c22faf3f38f83e6c260de32c5e50b0",
+        "commit": null
+      },
+      {
+        "filename": "README",
+        "sha256": "18071e82d76f0a63237f4764978b91236ffb01fa76915b75c92f2078a187d4aa",
+        "commit": null
+      },
+      {
+        "filename": "domains/rocket_ops",
+        "sha256": "651faadab7704d0f2cf25ccdf1cbbd630bb418b786650a8f73e38c3e51a241fc",
+        "commit": null
+      },
+      {
+        "filename": "domains/rocket_facts2",
+        "sha256": "623c6c438c65d440d8a6f463d7cad847267614ab87b6e37baf71a9de3f693328",
+        "commit": null
+      },
+      {
+        "filename": "domains/rocket_facts4",
+        "sha256": "0b7104d55de730f4460a71d2e7104b3d996034c6475dd1baac9279b46e11ea2e",
+        "commit": null
+      },
+      {
+        "filename": "domains/monkey_ops",
+        "sha256": "8210d71d5524f3ea1ceb82ee4e82da2124b3b0f9f6268873376a45a900b34237",
+        "commit": null
+      },
+      {
+        "filename": "domains/monkey_facts1",
+        "sha256": "4b6125fc6a91976a17f99b24b4dce6182b72358af7ee45b3ecc386a8cf1e65dc",
+        "commit": null
+      },
+      {
+        "filename": "domains/blocks_ops",
+        "sha256": "a30ed76ff974954f477fa91312207b113757838f7f53c279d7737780604b20ba",
+        "commit": null
+      },
+      {
+        "filename": "domains/blocks_facts4",
+        "sha256": "981cd581a90f88423f5f5ea9027a784ab55372cd512ced60b9c8c5aab6a9bf66",
+        "commit": null
+      },
+      {
+        "filename": "domains/logistics_ops",
+        "sha256": "d7316a8855da92d580564ba4d0aec388cfc18db5978fac404252bb27c85ba190",
+        "commit": null
+      },
+      {
+        "filename": "domains/logistics_facts4",
+        "sha256": "0fd3d590a45e15e0d95050f043efd0d21691fb299bf11859ce542ff6073ec732",
+        "commit": null
+      },
+      {
+        "filename": "domains/fixit_ops",
+        "sha256": "f79f8a4fe62f28fdb914d45dddfbf1c6202ea8d54b328f668000b109fe1928b8",
+        "commit": null
+      },
+      {
+        "filename": "domains/fixit_facts1",
+        "sha256": "f4285a62b93afa704a605ab7d1cc6e1640e428e7e20c5fd50252f235f9941164",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\graphplan-blum-furst-1995",
+    "hash_list": "techne/fossils/specimens/graphplan-blum-furst-1995/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "unstated (academic distribution; README)",
+    "status": "UNRESOLVED -- read README",
+    "evidence": "README in the vault"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "C",
+    "lex/yacc (generated lex.yy.c, y.tab.c shipped)"
+  ],
+  "build_system": "Makefile",
+  "compiler_or_interpreter": "gcc 13 (WSL2)",
+  "dependencies": [],
+  "run_classification": "RUNNABLE_NATIVE",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "./graphplan -o <ops> -f <facts>"
+  ],
+  "example": {
+    "command": "./graphplan -o domains/rocket_ops -f domains/rocket_facts2",
+    "input": "STRIPS operators and facts/goals files",
+    "output": "a plan by time step, or 'problem not solvable'"
+  },
+  "environment": {
+    "runner": "wsl"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Blum, Furst, Fast Planning Through Planning Graph Analysis, AIJ 90 (1997); IJCAI 1995",
+    "https://www.cs.cmu.edu/afs/cs.cmu.edu/usr/avrim/Planning/Graphplan/README"
+  ],
+  "human_capability_summary": {
+    "built_to": "find a parallel plan (sequence of action sets) from an initial state to a goal in STRIPS domains",
+    "pressure": "exponential blow-up of plan-space and state-space planners on modest problems (rocket, logistics, blocks)",
+    "success_means": "a valid plan with minimal number of time steps, found orders of magnitude faster than 1994 planners"
+  },
+  "known_human_problem_solved": "classical STRIPS planning via planning graphs",
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/graphplan-blum-furst-1995/receipts/run-graphplan-blum-furst-1995-20260912T125108Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/graphplan-blum-furst-1995/receipts/run-graphplan-blum-furst-1995-20260912T125257Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_NATIVE",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body at F:\\Prometheus\\vault\\fossils\\graphplan-blum-furst-1995 ; tracked record + hashes at techne/fossils/specimens/graphplan-blum-furst-1995/",
+    "where_it_came_from": "{'site': 'www.cs.cmu.edu/~avrim/graphplan.html', 'path': 'afs/cs.cmu.edu/usr/avrim/Planning/Graphplan/'} ; source_type ORIGINAL_AUTHORITATIVE_RELEASE ; unstated (academic distribution; README)",
+    "how_to_run_it": "techne/fossils/specimens/graphplan-blum-furst-1995/recipe.json (runner wsl) ; `python -m techne.fossils.harvest run graphplan-blum-furst-1995` reproduces the receipt",
+    "how_we_know_it_runs": "RUNNABLE_NATIVE / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/graphplan-blum-furst-1995/receipts/run-graphplan-blum-furst-1995-20260912T125257Z.json",
+    "what_humans_used_it_for": "find a parallel plan (sequence of action sets) from an initial state to a goal in STRIPS domains"
+  },
+  "seat": "Techne"
+}

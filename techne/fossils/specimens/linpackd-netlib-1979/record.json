@@ -1,0 +1,103 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "linpackd-netlib-1979",
+  "canonical_name": "LINPACK benchmark, double precision (linpackd) -- Dongarra, Bunch, Moler, Stewart",
+  "aliases": [
+    "linpackd",
+    "LINPACK 100",
+    "linpack benchmark"
+  ],
+  "lineage": "LINPACK (1979, Argonne / U New Mexico / Sandia / Michigan): LU factorisation with partial pivoting (DGEFA/DGESL) over the BLAS-1 kernels (DAXPY, DDOT, DSCAL, IDAMAX); the benchmark that defined machine performance for two decades",
+  "domain": [
+    "numerical-linear-algebra",
+    "benchmark",
+    "scientific-computing"
+  ],
+  "era": "1979",
+  "version": "netlib.org/benchmark/linpackd as served 2026-09-12 (file carries its own 'linpack benchmark' revision comments)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/benchmark/linpackd",
+        "filename": "linpackd.f",
+        "extract": false,
+        "sha256": "4bb5e28a4d060ba832a3cb55903c5287c966b6ccd51bf987d4d8fdb5d070a2a5",
+        "bytes": 22841
+      }
+    ]
+  },
+  "source_type": "HISTORICAL_ARCHIVE_MIRROR",
+  "source_identity": {
+    "archive": "netlib.org (the authors' own distribution channel since 1985)",
+    "path": "benchmark/linpackd"
+  },
+  "hashes": {
+    "tree_sha256": "568392d920a61e0ef0b715d670f9e78bfcaad1ed1228f71c1731454af25b27c7",
+    "n_files": 1,
+    "bytes": 22841,
+    "artifacts": [
+      {
+        "filename": "linpackd.f",
+        "sha256": "4bb5e28a4d060ba832a3cb55903c5287c966b6ccd51bf987d4d8fdb5d070a2a5",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\linpackd-netlib-1979",
+    "hash_list": "techne/fossils/specimens/linpackd-netlib-1979/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "public-domain (netlib LINPACK; no licence text in file)",
+    "status": "netlib distribution, no restriction stated",
+    "evidence": "file header"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "Fortran 77"
+  ],
+  "build_system": "single file, gfortran",
+  "compiler_or_interpreter": "gfortran (WinLibs GCC 15.2, Windows native)",
+  "dependencies": [],
+  "run_classification": "RUNNABLE_NATIVE",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "PROGRAM (main) in linpackd.f: factor and solve a 100x100 system, report residual and MFLOPS"
+  ],
+  "example": {
+    "command": "gfortran -O2 -std=legacy -o linpackd linpackd.f && ./linpackd",
+    "input": "none (self-generating matrix)",
+    "output": "norm. resid / resid / machep / x(1) / x(n) lines then the timing table"
+  },
+  "environment": {
+    "runner": "native Windows, WinLibs gfortran 15.2"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Dongarra, Bunch, Moler, Stewart, LINPACK Users' Guide, SIAM 1979",
+    "netlib.org/benchmark/"
+  ],
+  "human_capability_summary": {
+    "built_to": "solve dense systems of linear equations Ax=b reliably on the machines of the late 1970s, and (as the benchmark) measure how fast a machine does it",
+    "pressure": "numerical stability under floating-point round-off (partial pivoting), and portability across vendors' Fortran compilers",
+    "success_means": "a small normalised residual on the solved system; for the benchmark, MFLOPS on the 100x100 problem"
+  },
+  "known_human_problem_solved": "dense linear solve with pivoting; the LINPACK MFLOPS number",
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/linpackd-netlib-1979/receipts/run-linpackd-netlib-1979-20260912T124501Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_NATIVE",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body at F:\\Prometheus\\vault\\fossils\\linpackd-netlib-1979 ; tracked record + hashes at techne/fossils/specimens/linpackd-netlib-1979/",
+    "where_it_came_from": "{'archive': \"netlib.org (the authors' own distribution channel since 1985)\", 'path': 'benchmark/linpackd'} ; source_type HISTORICAL_ARCHIVE_MIRROR ; public-domain (netlib LINPACK; no licence text in file)",
+    "how_to_run_it": "techne/fossils/specimens/linpackd-netlib-1979/recipe.json (runner native) ; `python -m techne.fossils.harvest run linpackd-netlib-1979` reproduces the receipt",
+    "how_we_know_it_runs": "RUNNABLE_NATIVE / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/linpackd-netlib-1979/receipts/run-linpackd-netlib-1979-20260912T124501Z.json",
+    "what_humans_used_it_for": "solve dense systems of linear equations Ax=b reliably on the machines of the late 1970s, and (as the benchmark) measure how fast a machine does it"
+  },
+  "seat": "Techne"
+}

@@ -1,0 +1,107 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "ldpc-codes-neal-2001",
+  "canonical_name": "LDPC-codes -- Radford M. Neal's software for low density parity check codes",
+  "aliases": [
+    "LDPC-codes",
+    "ldpc"
+  ],
+  "lineage": "Neal LDPC software (2001-2012, U Toronto): construction of sparse parity-check matrices, encoding via dense/mixed/sparse methods, channel simulation, and belief-propagation (sum-product) decoding; a reference implementation for Gallager/MacKay-Neal codes",
+  "domain": [
+    "error-correcting-codes",
+    "coding-theory",
+    "belief-propagation",
+    "inference"
+  ],
+  "era": "2001 (last revision 2012)",
+  "version": "github.com/radfordneal/LDPC-codes default branch as of 2026-09-12 (recorded commit in hashes)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/radfordneal/LDPC-codes",
+        "commit": "74a8e283be8259dbff7a6bab38ad7e9327825cbf",
+        "commit_resolved": "74a8e283be8259dbff7a6bab38ad7e9327825cbf",
+        "commit_date": "2020-09-08T20:22:12-04:00"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/radfordneal/LDPC-codes"
+  },
+  "hashes": {
+    "tree_sha256": "132aa1f564f37d4bfa10c1e1293b8f5b9f3f3551245545a089e645913dc2b168",
+    "n_files": 93,
+    "bytes": 792759,
+    "artifacts": [
+      {
+        "filename": "https://github.com/radfordneal/LDPC-codes",
+        "sha256": null,
+        "commit": "74a8e283be8259dbff7a6bab38ad7e9327825cbf"
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\ldpc-codes-neal-2001",
+    "hash_list": "techne/fossils/specimens/ldpc-codes-neal-2001/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "custom permissive (Neal: free for any purpose with notice; see index.html/COPYRIGHT)",
+    "status": "permissive",
+    "evidence": "the tree's COPYRIGHT / index.html"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "C"
+  ],
+  "build_system": "make (Makefile; make test)",
+  "compiler_or_interpreter": "gcc 13 (WSL2)",
+  "dependencies": [],
+  "run_classification": "RUNNABLE_NATIVE",
+  "test_classification": "UPSTREAM_TESTS_PASS",
+  "entry_points": [
+    "make-ldpc, make-gen, encode, transmit, decode, verify, extract (pipeline of CLI tools)"
+  ],
+  "example": {
+    "command": "make && make test",
+    "input": "the shipped test scripts (random codes, BSC/AWGN channels)",
+    "output": "decoding error rates per test"
+  },
+  "environment": {
+    "runner": "wsl"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "radfordneal.github.io/LDPC-codes/",
+    "MacKay & Neal, Near Shannon limit performance of low density parity check codes, 1996"
+  ],
+  "human_capability_summary": {
+    "built_to": "correct transmission errors with sparse-graph codes decoded by iterative probabilistic message passing",
+    "pressure": "approach the Shannon limit with practical decoding complexity",
+    "success_means": "block/bit error rate after decoding, at a given channel noise, near the code's threshold"
+  },
+  "known_human_problem_solved": "near-capacity error correction by belief propagation",
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/ldpc-codes-neal-2001/receipts/run-ldpc-codes-neal-2001-20260912T125109Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "UPSTREAM_TESTS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/ldpc-codes-neal-2001/receipts/run-ldpc-codes-neal-2001-20260912T125302Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_NATIVE",
+      "test_classification": "UPSTREAM_TESTS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body at F:\\Prometheus\\vault\\fossils\\ldpc-codes-neal-2001 ; tracked record + hashes at techne/fossils/specimens/ldpc-codes-neal-2001/",
+    "where_it_came_from": "{'repo': 'github.com/radfordneal/LDPC-codes'} ; source_type ORIGINAL_AUTHORITATIVE_RELEASE ; custom permissive (Neal: free for any purpose with notice; see index.html/COPYRIGHT)",
+    "how_to_run_it": "techne/fossils/specimens/ldpc-codes-neal-2001/recipe.json (runner wsl) ; `python -m techne.fossils.harvest run ldpc-codes-neal-2001` reproduces the receipt",
+    "how_we_know_it_runs": "RUNNABLE_NATIVE / UPSTREAM_TESTS_PASS ; receipt techne/fossils/specimens/ldpc-codes-neal-2001/receipts/run-ldpc-codes-neal-2001-20260912T125302Z.json",
+    "what_humans_used_it_for": "correct transmission errors with sparse-graph codes decoded by iterative probabilistic message passing"
+  },
+  "seat": "Techne"
+}

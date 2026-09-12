@@ -1,0 +1,108 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "tinyscheme-1.42",
+  "canonical_name": "TinyScheme 1.42 -- Dimitrios Souflis et al.",
+  "aliases": [
+    "tinyscheme",
+    "TinyScheme"
+  ],
+  "lineage": "TinyScheme (2000-, from Atsushi Moriwaki's MiniScheme 1989): a small R5RS-ish Scheme interpreter in one C file -- s-expression reader, eval/apply on a dispatch loop, mark-and-sweep GC, call/cc, tail calls",
+  "domain": [
+    "languages",
+    "interpreters",
+    "lisp",
+    "garbage-collection"
+  ],
+  "era": "1989/2000 (1.42 released 2021)",
+  "version": "tinyscheme-1.42.tar.gz (sourceforge)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "https://sourceforge.net/projects/tinyscheme/files/tinyscheme/tinyscheme-1.42/tinyscheme-1.42.tar.gz/download",
+        "filename": "tinyscheme-1.42.tar.gz",
+        "sha256": "17b0b1bffd22f3d49d5833e22a120b339039d2cfda0b46d6fc51dd2f01b407ad",
+        "bytes": 62156,
+        "extracted_to": "upstream/tree/tinyscheme-1.42"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "project": "sourceforge.net/projects/tinyscheme",
+    "release": "1.42"
+  },
+  "hashes": {
+    "tree_sha256": "134ca51590fd79bbcc7549318aa450540f39980f5b7bb22af4cff199f69921ce",
+    "n_files": 16,
+    "bytes": 318776,
+    "artifacts": [
+      {
+        "filename": "tinyscheme-1.42.tar.gz",
+        "sha256": "17b0b1bffd22f3d49d5833e22a120b339039d2cfda0b46d6fc51dd2f01b407ad",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\tinyscheme-1.42",
+    "hash_list": "techne/fossils/specimens/tinyscheme-1.42/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "BSD-3-Clause",
+    "status": "permissive",
+    "evidence": "COPYING in tarball"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "C",
+    "Scheme"
+  ],
+  "build_system": "makefile",
+  "compiler_or_interpreter": "gcc 13 (WSL2)",
+  "dependencies": [
+    "libm",
+    "libdl (optional)"
+  ],
+  "run_classification": "RUNNABLE_NATIVE",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "./scheme (REPL; reads init.scm)",
+    "./scheme file.scm"
+  ],
+  "example": {
+    "command": "echo '(display (+ 1 2))' | ./scheme",
+    "input": "Scheme expressions",
+    "output": "3"
+  },
+  "environment": {
+    "runner": "wsl"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "tinyscheme.sourceforge.net",
+    "Manual.txt in tarball"
+  ],
+  "human_capability_summary": {
+    "built_to": "embed a complete, tiny Scheme in a C program as a scripting/extension language",
+    "pressure": "memory and code-size limits of embedded and scripting hosts; correctness of tail calls and continuations in little code",
+    "success_means": "R5RS programs evaluate correctly within a few hundred kilobytes"
+  },
+  "known_human_problem_solved": "a minimal, embeddable Lisp interpreter",
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/tinyscheme-1.42/receipts/run-tinyscheme-1.42-20260912T124715Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_NATIVE",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body at F:\\Prometheus\\vault\\fossils\\tinyscheme-1.42 ; tracked record + hashes at techne/fossils/specimens/tinyscheme-1.42/",
+    "where_it_came_from": "{'project': 'sourceforge.net/projects/tinyscheme', 'release': '1.42'} ; source_type ORIGINAL_AUTHORITATIVE_RELEASE ; BSD-3-Clause",
+    "how_to_run_it": "techne/fossils/specimens/tinyscheme-1.42/recipe.json (runner wsl) ; `python -m techne.fossils.harvest run tinyscheme-1.42` reproduces the receipt",
+    "how_we_know_it_runs": "RUNNABLE_NATIVE / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/tinyscheme-1.42/receipts/run-tinyscheme-1.42-20260912T124715Z.json",
+    "what_humans_used_it_for": "embed a complete, tiny Scheme in a C program as a scripting/extension language"
+  },
+  "seat": "Techne"
+}

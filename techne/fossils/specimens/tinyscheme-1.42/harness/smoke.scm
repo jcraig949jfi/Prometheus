@@ -1,0 +1,7 @@
+(define (loop n acc) (if (= n 0) acc (loop (- n 1) (+ acc 1))))
+(display (loop 100000 0)) (newline)
+(display (call/cc (lambda (k) (+ 1 (k 42))))) (newline)
+(define (make-counter) (let ((n 0)) (lambda () (set! n (+ n 1)) n)))
+(define c (make-counter)) (c) (c)
+(display (c)) (newline)
+(quit)

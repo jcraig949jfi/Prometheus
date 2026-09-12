@@ -1,0 +1,125 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "go-explore-uber-2022",
+  "canonical_name": "Go-Explore (Uber AI Labs reference implementation)",
+  "aliases": [
+    "go-explore",
+    "uber-research/go-explore",
+    "Go-Explore robustified"
+  ],
+  "lineage": "Go-Explore (Ecoffet, Huizinga, Lehman, Stanley, Clune 2019/2021): archive-based exploration -- remember cells, return to them, explore from them, then robustify",
+  "domain": [
+    "search",
+    "exploration",
+    "reinforcement-learning",
+    "quality-diversity",
+    "archive"
+  ],
+  "era": "2019-2022",
+  "version": "git 702fb9c7a9aeecf2872d07ced236c730d5536a8f (2022-01-10, 'clarify readme'; default-branch HEAD on 2026-09-12)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/uber-research/go-explore",
+        "commit": "702fb9c7a9aeecf2872d07ced236c730d5536a8f",
+        "commit_resolved": "702fb9c7a9aeecf2872d07ced236c730d5536a8f",
+        "commit_date": "2022-01-09T17:37:14-08:00"
+      }
+    ],
+    "requested_by": "Nyx, comms msg 201 (N3 specimen, operator ruling 2026-09-12 roles/Nyx/prompts/2026-09-12_ruling_n3_open/)"
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/uber-research/go-explore",
+    "commit": "702fb9c7a9aeecf2872d07ced236c730d5536a8f"
+  },
+  "hashes": {
+    "tree_sha256": "67bfdebe5f01b0bf3b3df32e6b72e98476fbcc578f55b90b9c999ece28fba6c0",
+    "n_files": 128,
+    "bytes": 3732865,
+    "artifacts": [
+      {
+        "filename": "https://github.com/uber-research/go-explore",
+        "sha256": null,
+        "commit": "702fb9c7a9aeecf2872d07ced236c730d5536a8f"
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\go-explore-uber-2022",
+    "hash_list": "techne/fossils/specimens/go-explore-uber-2022/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "Apache-2.0 (root LICENSE text is the Apache License 2.0 boilerplate; verify against the hash row before relying on it)",
+    "status": "root LICENSE (4868 bytes) + policy_based/atari_reset/LICENSE (third-party, 1087 bytes); read and recorded by hash, not paraphrased",
+    "evidence": "UPSTREAM_HASHES.txt rows for LICENSE and policy_based/atari_reset/LICENSE"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "Python 3"
+  ],
+  "build_system": "none (pure Python; requirements.txt per subtree)",
+  "compiler_or_interpreter": "CPython 3.x",
+  "dependencies": [
+    "robustified/requirements.txt (gym, atari, tensorflow pins -- NOT installed: exploration-phase source pin only, per Nyx's request)"
+  ],
+  "run_classification": "SOURCE_ONLY",
+  "test_classification": "NO_TESTS",
+  "entry_points": [
+    "robustified/goexplore_py/main.py (orchestration)",
+    "robustified/goexplore_py/goexplore.py (archive, cells, return-then-explore loop)",
+    "robustified/goexplore_py/randselectors.py (cell selection weights)",
+    "robustified/goexplore_py/explorers.py",
+    "robustified/goexplore_py/basics.py"
+  ],
+  "example": {
+    "command": "see recipe.json: import-level smoke of the pure-Python modules without Atari/MuJoCo",
+    "input": "n/a",
+    "output": "n/a"
+  },
+  "environment": {
+    "note": "source-at-pinned-revision receipt; no environment built. The Atari/MuJoCo requirements are recorded, not installed.",
+    "measured_2026-09-12": "the first blocking import from a clean CPython 3.12 is `loky` (basics.py line 24), before any gym/atari import; randselectors -> import_ai -> basics -> loky. A source-at-pinned-revision receipt was requested and no dependency was installed."
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "README.md at the pinned commit",
+    "arXiv:1901.10995 (Go-Explore: a New Approach for Hard-Exploration Problems)",
+    "Nature 590, 580-586 (2021) 'First return, then explore'"
+  ],
+  "human_capability_summary": {
+    "built_to": "solve hard-exploration reinforcement-learning problems (Montezuma's Revenge, Pitfall) by keeping an archive of visited states ('cells'), deterministically returning to promising cells, exploring from them, and later robustifying the discovered trajectories into a policy",
+    "pressure": "sparse and deceptive rewards where naive exploration forgets promising states and never returns to them; the environment punishes detachment and derailment",
+    "success_means": "reaching previously unreached game states and scores; in the paper, surpassing the human world record on Montezuma's Revenge and solving all Atari hard-exploration games"
+  },
+  "known_human_problem_solved": "detachment and derailment in exploration: remembering where you have been and going back on purpose",
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/go-explore-uber-2022/receipts/run-go-explore-uber-2022-20260912T123537Z.json",
+      "ok": false,
+      "classification": "BLOCKED_DEPENDENCY",
+      "test_classification": "NO_TESTS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/go-explore-uber-2022/receipts/run-go-explore-uber-2022-20260912T125345Z.json",
+      "ok": false,
+      "classification": "BLOCKED_DEPENDENCY",
+      "test_classification": "NO_TESTS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/go-explore-uber-2022/receipts/run-go-explore-uber-2022-20260912T125406Z.json",
+      "ok": true,
+      "classification": "SOURCE_ONLY",
+      "test_classification": "NO_TESTS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body at F:\\Prometheus\\vault\\fossils\\go-explore-uber-2022 ; tracked record + hashes at techne/fossils/specimens/go-explore-uber-2022/",
+    "where_it_came_from": "{'repo': 'github.com/uber-research/go-explore', 'commit': '702fb9c7a9aeecf2872d07ced236c730d5536a8f'} ; source_type ORIGINAL_AUTHORITATIVE_RELEASE ; Apache-2.0 (root LICENSE text is the Apache License 2.0 boilerplate; verify against the hash row before relying on it)",
+    "how_to_run_it": "techne/fossils/specimens/go-explore-uber-2022/recipe.json (runner native) ; `python -m techne.fossils.harvest run go-explore-uber-2022` reproduces the receipt",
+    "how_we_know_it_runs": "SOURCE_ONLY / NO_TESTS ; receipt techne/fossils/specimens/go-explore-uber-2022/receipts/run-go-explore-uber-2022-20260912T125406Z.json",
+    "what_humans_used_it_for": "solve hard-exploration reinforcement-learning problems (Montezuma's Revenge, Pitfall) by keeping an archive of visited states ('cells'), deterministically returning to promising cells, exploring from them, and later robustifying the discovered trajectories into a policy"
+  },
+  "seat": "Techne"
+}

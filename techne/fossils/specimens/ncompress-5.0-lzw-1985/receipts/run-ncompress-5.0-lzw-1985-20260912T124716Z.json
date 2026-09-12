@@ -1,0 +1,96 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "ncompress-5.0-lzw-1985",
+  "receipt_id": "run-ncompress-5.0-lzw-1985-20260912T124716Z",
+  "written_utc": "20260912T124716Z",
+  "runner": "wsl",
+  "image": null,
+  "workdir": "upstream/tree/ncompress-5.0",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "5de18704eb9c8c16a0e8ca28ae333541504bc24968b1fda4a76226185c5948ff",
+  "recipe_sha256": "caae4a4bb15cb9dc127423e01add90a174230d0559211b606f1d21bf324d296a",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1",
+      "exit": 0,
+      "seconds": 0.07,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "make",
+      "cmd": "make -s compress 2>&1 | grep -i error; test -x ./compress",
+      "exit": 0,
+      "seconds": 0.44,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "LZW round trip on compress.c",
+      "cmd": "mkdir -p $BODY/build && ./compress -c compress.c > $BODY/build/c.Z && ./compress -dc $BODY/build/c.Z | cmp - compress.c && echo ROUNDTRIP_OK $(stat -c %s compress.c) '->' $(stat -c %s $BODY/build/c.Z)",
+      "exit": 0,
+      "seconds": 0.09,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "ROUNDTRIP_OK 44489 -> 21423\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [
+    {
+      "name": "a corrupted .Z is refused, not silently decoded",
+      "cmd": "cp $BODY/build/c.Z $BODY/build/bad.Z && printf '\\xff\\xff\\xff\\xff' | dd of=$BODY/build/bad.Z bs=1 seek=100 conv=notrunc 2>/dev/null && ./compress -dc $BODY/build/bad.Z > /dev/null 2>&1; test $? -ne 0 && echo CORRUPTION_DETECTED",
+      "exit": 0,
+      "seconds": 0.1,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "CORRUPTION_DETECTED\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "produced": [
+    {
+      "path": "compress",
+      "sha256": "e2aecd63bd7712d264d46785ac2bfe188e0905075502957e033607d0ebd3093c",
+      "bytes": 69352
+    },
+    {
+      "path": "Makefile",
+      "sha256": "4561e3be8ce6d15d76e7639c5dff264caf8f8a41f749a683fe18ceb4ccc954cd",
+      "bytes": 2010
+    }
+  ],
+  "classification": "RUNNABLE_NATIVE",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true
+}

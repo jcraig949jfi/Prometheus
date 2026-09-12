@@ -1,0 +1,114 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "tscp-1.81-kerrigan-1997",
+  "canonical_name": "TSCP 1.81 -- Tom Kerrigan's Simple Chess Program",
+  "aliases": [
+    "tscp",
+    "TSCP"
+  ],
+  "lineage": "TSCP (1997-, Tom Kerrigan): the didactic chess engine -- 0x88-free mailbox board, alpha-beta with iterative deepening, quiescence, killer moves, history heuristic, simple evaluation",
+  "domain": [
+    "games",
+    "chess",
+    "alpha-beta-search",
+    "game-tree-search"
+  ],
+  "era": "1997 (1.81 released 2001)",
+  "version": "tscp181.zip from tckerrigan.com (the author's site)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "http://www.tckerrigan.com/Chess/TSCP/tscp181.zip",
+        "filename": "tscp181.zip",
+        "sha256": "4b72c74fa56169710149639061e7cb0e0dd60a10b6658b4927e244af9fa90145",
+        "bytes": 77019,
+        "extracted_to": "upstream/tree/tscp181"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "site": "tckerrigan.com/Chess/TSCP",
+    "release": "1.81"
+  },
+  "hashes": {
+    "tree_sha256": "3f85294cf11763e5e0a43e9c4c38b4e2db151142bce1295f931d744ba7010ec4",
+    "n_files": 13,
+    "bytes": 315042,
+    "artifacts": [
+      {
+        "filename": "tscp181.zip",
+        "sha256": "4b72c74fa56169710149639061e7cb0e0dd60a10b6658b4927e244af9fa90145",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\tscp-1.81-kerrigan-1997",
+    "hash_list": "techne/fossils/specimens/tscp-1.81-kerrigan-1997/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "custom (author permits use for learning; see the source header)",
+    "status": "read the header before redistribution",
+    "evidence": "header comment in main.c / readme"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "C"
+  ],
+  "build_system": "none (gcc *.c)",
+  "compiler_or_interpreter": "gcc 13 (WSL2)",
+  "dependencies": [],
+  "run_classification": "RUNNABLE_NATIVE",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "./tscp (interactive: 'st <sec>', 'sd <depth>', moves in coordinate notation, 'go', 'bench')"
+  ],
+  "example": {
+    "command": "printf 'sd 4\\ngo\\nquit\\n' | ./tscp",
+    "input": "commands on stdin",
+    "output": "the engine's move and search statistics"
+  },
+  "environment": {
+    "runner": "wsl"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "tckerrigan.com/Chess/TSCP/"
+  ],
+  "human_capability_summary": {
+    "built_to": "play legal, reasonable chess with the smallest readable code, so people could learn how chess programs search",
+    "pressure": "the branching factor of chess: search must prune (alpha-beta), order moves (killers, history) and resolve tactics (quiescence)",
+    "success_means": "playing strength on a clock; here, deterministic best-move output at a fixed depth"
+  },
+  "known_human_problem_solved": "game-tree search for a two-player zero-sum game",
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/tscp-1.81-kerrigan-1997/receipts/run-tscp-1.81-kerrigan-1997-20260912T124714Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/tscp-1.81-kerrigan-1997/receipts/run-tscp-1.81-kerrigan-1997-20260912T124927Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/tscp-1.81-kerrigan-1997/receipts/run-tscp-1.81-kerrigan-1997-20260912T125013Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_NATIVE",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body at F:\\Prometheus\\vault\\fossils\\tscp-1.81-kerrigan-1997 ; tracked record + hashes at techne/fossils/specimens/tscp-1.81-kerrigan-1997/",
+    "where_it_came_from": "{'site': 'tckerrigan.com/Chess/TSCP', 'release': '1.81'} ; source_type ORIGINAL_AUTHORITATIVE_RELEASE ; custom (author permits use for learning; see the source header)",
+    "how_to_run_it": "techne/fossils/specimens/tscp-1.81-kerrigan-1997/recipe.json (runner wsl) ; `python -m techne.fossils.harvest run tscp-1.81-kerrigan-1997` reproduces the receipt",
+    "how_we_know_it_runs": "RUNNABLE_NATIVE / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/tscp-1.81-kerrigan-1997/receipts/run-tscp-1.81-kerrigan-1997-20260912T125013Z.json",
+    "what_humans_used_it_for": "play legal, reasonable chess with the smallest readable code, so people could learn how chess programs search"
+  },
+  "seat": "Techne"
+}

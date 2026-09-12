@@ -1,0 +1,105 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "clips-6.4.2-nasa",
+  "canonical_name": "CLIPS 6.4.2 (C Language Integrated Production System), NASA Johnson lineage",
+  "aliases": [
+    "CLIPS",
+    "clipsrules"
+  ],
+  "lineage": "CLIPS (1985, NASA JSC, Gary Riley): forward-chaining production-rule system with a Rete pattern matcher, later with COOL objects; the public-domain expert-system shell",
+  "domain": [
+    "expert-systems",
+    "production-rules",
+    "symbolic-ai",
+    "pattern-matching"
+  ],
+  "era": "1985 (this release 2024)",
+  "version": "6.4.2 core source (sourceforge clipsrules, clips_core_source_642.zip)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "https://sourceforge.net/projects/clipsrules/files/CLIPS/6.4.2/clips_core_source_642.zip/download",
+        "filename": "clips_core_source_642.zip",
+        "sha256": "55369287510f8826a66f9ce162ff0213bfdef42fc85736b82049ab7dca8315c3",
+        "bytes": 1230890,
+        "extracted_to": "upstream/tree/clips_core_source_642"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "project": "sourceforge.net/projects/clipsrules",
+    "release": "6.4.2"
+  },
+  "hashes": {
+    "tree_sha256": "deedb3f3d49a0f766aec231f5d6cb11e8c866cd711e37645bdc69dbbadf75cf7",
+    "n_files": 345,
+    "bytes": 7774759,
+    "artifacts": [
+      {
+        "filename": "clips_core_source_642.zip",
+        "sha256": "55369287510f8826a66f9ce162ff0213bfdef42fc85736b82049ab7dca8315c3",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\clips-6.4.2-nasa",
+    "hash_list": "techne/fossils/specimens/clips-6.4.2-nasa/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "public-domain (CLIPS is released into the public domain; see the release notes)",
+    "status": "unrestricted",
+    "evidence": "clipsrules project description; verify in the zip's docs"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "C"
+  ],
+  "build_system": "makefile (core/)",
+  "compiler_or_interpreter": "gcc 13 (WSL2 Ubuntu 24.04)",
+  "dependencies": [
+    "libm"
+  ],
+  "run_classification": "RUNNABLE_NATIVE",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "core/clips (REPL and -f2 batch)"
+  ],
+  "example": {
+    "command": "./clips -f2 <rules.clp>",
+    "input": "a .clp file asserting facts and defining rules",
+    "output": "the rules' printouts"
+  },
+  "environment": {
+    "runner": "wsl"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "CLIPS Reference Manual (clipsrules.net)",
+    "Giarratano & Riley, Expert Systems: Principles and Programming"
+  ],
+  "human_capability_summary": {
+    "built_to": "let domain experts encode knowledge as if-then rules over facts and have the machine chain them forward to conclusions, without writing procedural code",
+    "pressure": "NASA needed portable, embeddable, verifiable expert systems in the mid-1980s when Lisp machines were expensive; Rete makes rule matching incremental",
+    "success_means": "the right rules fire on the right facts, in a defensible order (salience, conflict resolution), fast enough for real-time use"
+  },
+  "known_human_problem_solved": "encoding and executing expert knowledge as production rules",
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/clips-6.4.2-nasa/receipts/run-clips-6.4.2-nasa-20260912T124643Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_NATIVE",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body at F:\\Prometheus\\vault\\fossils\\clips-6.4.2-nasa ; tracked record + hashes at techne/fossils/specimens/clips-6.4.2-nasa/",
+    "where_it_came_from": "{'project': 'sourceforge.net/projects/clipsrules', 'release': '6.4.2'} ; source_type ORIGINAL_AUTHORITATIVE_RELEASE ; public-domain (CLIPS is released into the public domain; see the release notes)",
+    "how_to_run_it": "techne/fossils/specimens/clips-6.4.2-nasa/recipe.json (runner wsl) ; `python -m techne.fossils.harvest run clips-6.4.2-nasa` reproduces the receipt",
+    "how_we_know_it_runs": "RUNNABLE_NATIVE / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/clips-6.4.2-nasa/receipts/run-clips-6.4.2-nasa-20260912T124643Z.json",
+    "what_humans_used_it_for": "let domain experts encode knowledge as if-then rules over facts and have the machine chain them forward to conclusions, without writing procedural code"
+  },
+  "seat": "Techne"
+}

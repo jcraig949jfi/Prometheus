@@ -1,0 +1,86 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "sqlite-3.49.1-amalgamation",
+  "receipt_id": "run-sqlite-3.49.1-amalgamation-20260912T124717Z",
+  "written_utc": "20260912T124717Z",
+  "runner": "wsl",
+  "image": null,
+  "workdir": "upstream/tree/sqlite-amalgamation-3490100",
+  "harness_sha256": {
+    "smoke.sql": "13b7159523d19055fc9ca86ea55ec5795bc1832cfa0928c8c91278488224b5ff"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "5028c95217712699af046f2ea520fc4173bf17191a0c45789191bcd69656a0eb",
+  "recipe_sha256": "2144c9ecbd19553141593055496720111fcac6454ff03da55e65d71295e55983",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1",
+      "exit": 0,
+      "seconds": 0.08,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "compile shell",
+      "cmd": "mkdir -p $BODY/build && gcc -O2 -DSQLITE_THREADSAFE=0 -o $BODY/build/sqlite3 shell.c sqlite3.c -lm -ldl 2>&1 | grep -i error; test -x $BODY/build/sqlite3",
+      "exit": 0,
+      "seconds": 15.28,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "version",
+      "cmd": "$BODY/build/sqlite3 -version",
+      "exit": 0,
+      "seconds": 0.1,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "3.49.1 2025-02-18 13:38:58 873d4e274b4988d260ba8354a9718324a1c26187a4ab4c1cc0227c03d0f10e70 (64-bit)\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    },
+    {
+      "name": "transactions, join, index, rollback",
+      "cmd": "$BODY/build/sqlite3 :memory: < $HARNESS/smoke.sql",
+      "exit": 0,
+      "seconds": 0.09,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "x|21\nz|30\n3\nQUERY PLAN\n`--SEARCH b USING INDEX b_aid (aid=?)\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [],
+  "classification": "RUNNABLE_NATIVE",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true
+}

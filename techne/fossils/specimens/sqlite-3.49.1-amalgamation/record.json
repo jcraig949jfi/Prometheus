@@ -1,0 +1,116 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "sqlite-3.49.1-amalgamation",
+  "canonical_name": "SQLite 3.49.1 amalgamation -- D. Richard Hipp",
+  "aliases": [
+    "sqlite",
+    "sqlite3"
+  ],
+  "lineage": "SQLite (2000-, Hipp): embedded transactional SQL database in one C file -- bytecode VM (VDBE), B-tree pager with rollback/WAL journaling, cost-based query planner, full ACID in-process",
+  "domain": [
+    "databases",
+    "query-planning",
+    "b-tree",
+    "transactions",
+    "storage-engine",
+    "virtual-machine"
+  ],
+  "era": "2000 (3.49.1 released 2025)",
+  "version": "3.49.1 amalgamation (sqlite.org/2025/sqlite-amalgamation-3490100.zip)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "https://sqlite.org/2025/sqlite-amalgamation-3490100.zip",
+        "filename": "sqlite-amalgamation-3490100.zip",
+        "sha256": "6cebd1d8403fc58c30e93939b246f3e6e58d0765a5cd50546f16c00fd805d2c3",
+        "bytes": 2826319,
+        "extracted_to": "upstream/tree/sqlite-amalgamation-3490100"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "site": "sqlite.org",
+    "release": "3.49.1",
+    "form": "amalgamation (generated from the canonical Fossil tree; not the source tree with the TCL tests)"
+  },
+  "hashes": {
+    "tree_sha256": "5028c95217712699af046f2ea520fc4173bf17191a0c45789191bcd69656a0eb",
+    "n_files": 5,
+    "bytes": 13812322,
+    "artifacts": [
+      {
+        "filename": "sqlite-amalgamation-3490100.zip",
+        "sha256": "6cebd1d8403fc58c30e93939b246f3e6e58d0765a5cd50546f16c00fd805d2c3",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\sqlite-3.49.1-amalgamation",
+    "hash_list": "techne/fossils/specimens/sqlite-3.49.1-amalgamation/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "public-domain (blessing)",
+    "status": "unrestricted",
+    "evidence": "sqlite.org/copyright.html; header of sqlite3.c"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "C"
+  ],
+  "build_system": "none (gcc shell.c sqlite3.c)",
+  "compiler_or_interpreter": "gcc 13 (WSL2)",
+  "dependencies": [
+    "libm",
+    "libpthread",
+    "libdl (optional)"
+  ],
+  "run_classification": "RUNNABLE_NATIVE",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "./sqlite3 (shell)",
+    "sqlite3.h C API"
+  ],
+  "example": {
+    "command": "./sqlite3 :memory: < smoke.sql",
+    "input": "SQL",
+    "output": "query results"
+  },
+  "environment": {
+    "runner": "wsl"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "sqlite.org/arch.html",
+    "sqlite.org/vdbe.html",
+    "sqlite.org/fileformat2.html"
+  ],
+  "human_capability_summary": {
+    "built_to": "give any program a full relational database with transactions in a single file, no server, no configuration",
+    "pressure": "crash safety on power loss, tiny footprint, portability, and correctness under concurrent readers",
+    "success_means": "SQL executed correctly and durably; the project's own TH3/TCL test suites (not in the amalgamation) at 100% branch coverage"
+  },
+  "known_human_problem_solved": "embedded ACID storage and SQL query execution",
+  "versions_preserved": [
+    {
+      "note": "sqlite-2.8.17 (2005) queued as the pre-3.0 file-format lineage; not yet acquired"
+    }
+  ],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/sqlite-3.49.1-amalgamation/receipts/run-sqlite-3.49.1-amalgamation-20260912T124717Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_NATIVE",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body at F:\\Prometheus\\vault\\fossils\\sqlite-3.49.1-amalgamation ; tracked record + hashes at techne/fossils/specimens/sqlite-3.49.1-amalgamation/",
+    "where_it_came_from": "{'site': 'sqlite.org', 'release': '3.49.1', 'form': 'amalgamation (generated from the canonical Fossil tree; not the source tree with the TCL tests)'} ; source_type ORIGINAL_AUTHORITATIVE_RELEASE ; public-domain (blessing)",
+    "how_to_run_it": "techne/fossils/specimens/sqlite-3.49.1-amalgamation/recipe.json (runner wsl) ; `python -m techne.fossils.harvest run sqlite-3.49.1-amalgamation` reproduces the receipt",
+    "how_we_know_it_runs": "RUNNABLE_NATIVE / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/sqlite-3.49.1-amalgamation/receipts/run-sqlite-3.49.1-amalgamation-20260912T124717Z.json",
+    "what_humans_used_it_for": "give any program a full relational database with transactions in a single file, no server, no configuration"
+  },
+  "seat": "Techne"
+}

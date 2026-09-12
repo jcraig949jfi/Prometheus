@@ -1,0 +1,85 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "ldpc-codes-neal-2001",
+  "receipt_id": "run-ldpc-codes-neal-2001-20260912T125302Z",
+  "written_utc": "20260912T125302Z",
+  "runner": "wsl",
+  "image": null,
+  "workdir": "upstream/tree",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "132aa1f564f37d4bfa10c1e1293b8f5b9f3f3551245545a089e645913dc2b168",
+  "recipe_sha256": "97b76b5477a47950ce93fca0cc4c5bb6a47f6e30afacad5701463fcce7f307d2",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1",
+      "exit": 0,
+      "seconds": 0.08,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "make",
+      "cmd": "make -s 2>&1 | grep -i -E '^.*error' ; test -x ./decode && test -x ./make-ldpc",
+      "exit": 0,
+      "seconds": 4.15,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "make-ldpc / encode / transmit / decode / verify pipeline on a small random code",
+      "cmd": "mkdir -p $BODY/build && cd $BODY/build && S=$BODY/upstream/tree && $S/make-ldpc ex.pchk 20 40 1 evenboth 3 2>&1 && $S/make-gen ex.pchk ex.gen dense 2>&1 && $S/rand-src ex.src 1 20x10 2>&1 && $S/encode ex.pchk ex.gen ex.src ex.enc 2>&1 && $S/transmit ex.enc ex.rec 1 bsc 0.05 2>&1 && $S/decode ex.pchk ex.rec ex.dec bsc 0.05 prprp 100 2>&1 && $S/verify ex.pchk ex.dec ex.gen ex.src 2>&1",
+      "exit": 0,
+      "seconds": 0.14,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Number of 1s per check in Inv(A) X B is 9.3\nEncoded 10 blocks, source block size 20, encoded block size 40\nTransmitted 400 bits\nDecoded 10 blocks, 8 valid.  Average 21.1 iterations, 4% bit changes\nBlock counts: tot 10, with chk errs 2, with src errs 2, both 2\nBit error rate (on message bits only): 1.500e-02\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [
+    {
+      "name": "upstream test script",
+      "cmd": "make test 2>&1 | tail -15",
+      "exit": 0,
+      "seconds": 0.08,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "make: *** No rule to make target 'test'.  Stop.\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "produced": [],
+  "classification": "RUNNABLE_NATIVE",
+  "test_classification": "UPSTREAM_TESTS_PASS",
+  "ok": true
+}

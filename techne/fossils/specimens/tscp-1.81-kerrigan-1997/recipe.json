@@ -1,0 +1,44 @@
+{
+  "runner": "wsl",
+  "workdir": "upstream/tree/tscp181",
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "compile",
+      "cmd": "gcc -O2 -o tscp *.c 2>&1 | grep -i error; test -x ./tscp"
+    }
+  ],
+  "runs": [
+    {
+      "name": "built-in fixed-depth benchmark (iterative deepening 1..5 from the opening)",
+      "cmd": "printf 'bench\\nquit\\n' | ./tscp | tail -12",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "Nodes: 550778"
+        ]
+      }
+    }
+  ],
+  "tests": [
+    {
+      "name": "the benchmark node count is deterministic across two runs",
+      "cmd": "a=$(printf 'bench\\nquit\\n' | ./tscp | grep -i '^Nodes:'); b=$(printf 'bench\\nquit\\n' | ./tscp | grep -i '^Nodes:'); echo \"$a\"; test \"$a\" = \"$b\" && echo DETERMINISTIC",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "DETERMINISTIC",
+          "550778"
+        ]
+      }
+    }
+  ],
+  "test_kind": "TECHNE",
+  "classification_if_ok": "RUNNABLE_NATIVE",
+  "notes": "TSCP's 'go'/'sd N' interactive commands make the engine PLAY (it then waits for the next move on stdin); the shipped 'bench' command is the deterministic fixed workload -- alpha-beta with the same move ordering visits exactly 550778 nodes to depth 5 from the start, which is what makes it a clean fossil to perturb. Nodes-per-second is machine-dependent and is NOT gated."
+}
