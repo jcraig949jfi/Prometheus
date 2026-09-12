@@ -1,0 +1,16 @@
+# go-explore MINIMAL environment (Techne 2026-09-12, for Nyx NYX-44 / comms 204).
+# The robustified/requirements.txt pins, MINUS the Atari and MuJoCo stack that Nyx
+# excluded: no atari-py, no gym[atari], no mujoco-py, no glfw, no baselines, no tensorflow.
+# Era interpreter is Python 3.7 (the 2020 pins need it); this is a COMPATIBILITY environment,
+# isolated and recorded, not a change to any algorithm.
+numpy==1.18.4
+scipy==1.4.1
+opencv-python==4.2.0.34
+matplotlib==3.2.1
+Pillow==7.1.2
+imageio==2.8.0
+tqdm==4.46.0
+loky==2.3.1
+psutil==5.7.0
+gym==0.10.11
+# dataclasses: stdlib in Python 3.7 (the 0.7 backport is 3.6-only); removed
