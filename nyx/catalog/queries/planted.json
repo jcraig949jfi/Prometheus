@@ -93,13 +93,14 @@
         "in_geometry": "SEQUENCE",
         "out_geometry": "SEQUENCE",
         "order_req": "TOTAL",
-        "strategy": "DIVIDE_CONQUER"
+        "strategy": "PARTITION_BY_VALUE"
       },
       "expect_top": [
         "bit.order.partition_around_pivot"
       ],
       "kind": "positive",
-      "added": "2026-09-12 v0.2 after the batch-1 collapse"
+      "added": "2026-09-12 v0.2 after the batch-1 collapse",
+      "edited": "2026-09-12 v0.3: the control was written under v0.2 vocabulary (DIVIDE_CONQUER); its story already named value-based splitting; the query value was updated to the refined term BEFORE rerun and this note ledgered (ruling: repair a malformed control only with a ledger entry)"
     },
     {
       "id": "q.strategy_separates_matchers",
