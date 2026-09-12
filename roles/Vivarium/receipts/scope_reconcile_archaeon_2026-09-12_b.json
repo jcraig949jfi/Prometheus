@@ -1,0 +1,33 @@
+{
+  "schema": "viv.scope_reconcile.v1",
+  "at": "2026-09-12T17:41:38.782298+00:00",
+  "trigger": "cli",
+  "dry_run": false,
+  "pid": 9240,
+  "owner_client_id": null,
+  "scopes": [
+    {
+      "schema": "read_scope_grant_receipt.v1",
+      "at": "2026-09-12T17:41:38Z",
+      "owner_client_id": null,
+      "grantee_client_id": "cli_1029e9255a074157a1b3ba1e",
+      "scope_name": "archaeon-campaigns",
+      "worlds_owned_matching": 617,
+      "dry_run": false,
+      "scope_id": "scp_1be32ffbe7c9bf3b29ec8d85",
+      "scope_created": false,
+      "worlds_in_scope_before": 617,
+      "worlds_in_scope_after": 617,
+      "worlds_added_this_run": 0,
+      "not_yours": [],
+      "grant_id": "gnt_1ecdeae69f800240e03221ed",
+      "grant_revoked_ts": null,
+      "revoke_route": "POST /v2/read/grants/gnt_1ecdeae69f800240e03221ed/revoke (owner only)",
+      "extend": "re-run this command after each campaign; adds are idempotent",
+      "name_prefix": "viv-"
+    }
+  ],
+  "added_total": 0,
+  "productive": false,
+  "receipt": "F:\\Prometheus-data\\vivarium\\var\\scope_reconcile-2026-09-12T174138.78.json"
+}
