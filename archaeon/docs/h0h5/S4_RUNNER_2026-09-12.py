@@ -22,6 +22,17 @@ BUDGET = {int(k): v for k, v in PRE["budget"]["probes_per_arm"].items()}
 QUICK = "--quick" in sys.argv
 if QUICK:
     SEEDS = {k: max(2, v // 10) for k, v in SEEDS.items()}
+# SUBSET mode (2026-09-12 22:4x UTC, after the full batch's L 32 tail was stopped as COMPUTATIONALLY_INTRACTABLE):
+# --lengths 8,12,16,24 --seeds 10 --tag SUBSET  runs the same preregistered design on fewer seeds so the
+# SECONDARY analyses (trajectories, complementarity, convergence, cost) have rows; the PRIMARY verdict comes
+# from the full batch log (S4_PRIMARY_FROM_LOG_2026-09-12.json). Labelled as a subset in the output file name.
+TAG = ""
+if "--lengths" in sys.argv:
+    LENGTHS = [int(x) for x in sys.argv[sys.argv.index("--lengths") + 1].split(",")]
+if "--seeds" in sys.argv:
+    n = int(sys.argv[sys.argv.index("--seeds") + 1]); SEEDS = {k: min(v, n) for k, v in SEEDS.items()}
+if "--tag" in sys.argv:
+    TAG = "_" + sys.argv[sys.argv.index("--tag") + 1]
 
 
 def score(x, t):
@@ -180,7 +191,7 @@ def main():
     else:
         verdict = "NO_SEPARATION"
     res = {"schema": "archaeon.fossil_metabolism_s4.results.v0", "preregistration": "S4_PREREG_2026-09-12.json", "producer_version": P.PRODUCER_VERSION, "quick": QUICK, "table": table, "cell_best_at_bar": cell_best, "verdict": verdict, "worlds": worlds}
-    out = Path(__file__).parent / ("S4_RESULTS_2026-09-12.json" if not QUICK else "S4_RESULTS_QUICK_2026-09-12.json")
+    out = Path(__file__).parent / ("S4_RESULTS%s_2026-09-12.json" % (TAG or ("_QUICK" if QUICK else "")))
     out.write_text(json.dumps(res, indent=1), encoding="utf-8")
     for k, cell in table.items():
         print(k, {a: round(v["mean_nAUC"], 3) for a, v in cell["arms"].items()}, "best-at-bar:", cell_best.get(k), "| G=W frac", round(cell["G_W_same_probe_frac"], 2), "| when G poor: W>G", cell["when_G_poor"]["W_beats_G_frac"], "U>G", cell["when_G_poor"]["U_beats_G_frac"])
