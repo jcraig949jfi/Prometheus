@@ -223,3 +223,29 @@ Future specimens record the temptation at the moment it is felt, before the cont
     c01  HOLD, untested -- unless a live consumer specifically asks for it.
     Held routes: Proteus halves of #189/#190; Diomedes half of #192 (never booted). Not delivered.
     No more anatomy until a consumer creates demand.
+
+## RE-PREMISE 2026-09-12 ~05:10Z -- Keeper directive (roles/Nyx/prompts/2026-09-12_directive_catalogue_loop/)
+
+The Keeper: "loop until the end of time building out this database, graph or tensor.
+Pull from existing databases, lists, wikis first then, chop chop chop. The smallest
+components computable. Human descriptions are OK but the Classification for
+searchability is the real gem ... Imagine a tool seeing a weird solution produced by
+an organism to survive. We want to match that against a similar set of known
+algorithmic bits."
+
+How this sits against the standing rulings, stated plainly:
+  - N4 gate condition E (the Keeper supplies a different experiment) is met by this
+    directive. The production loop reopens FOR THE CATALOGUE.
+  - The product changes: from ORGANs delivered to consumers (fitness = consumption)
+    to a CATALOGUE of algorithmic bits with behavioural classification (fitness =
+    a held-out description of a known mechanism retrieves it; a recurrence is
+    detected by classification, not by name). The anti-collection law is kept in
+    its adapted form: a bit that cannot be retrieved by a behavioural query is
+    inventory failure; the count of bits is not a score.
+  - Delivery of ORGANs to consumers stays ON DEMAND ONLY (ruling 04:50Z); the
+    catalogue does not deliver, it answers queries.
+  - Provenance grades travel: list/wiki-seeded bits are T2 (human description of a
+    known mechanism) until a chop or a run makes them T1; the grade is a field.
+  - Recurrence (N2/N3 rulings) becomes the catalogue's core operation: two bits with
+    the same behavioural signature are one bit with two ancestries.
+Layout: nyx/catalog/ (schema, search, seed, loop); records under nyx/catalog/bits/.
