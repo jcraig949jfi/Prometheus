@@ -94,3 +94,15 @@ def test_trap_table_and_siblings(U):
     q = A.q1_exact(U, T)
     assert q["traps"] == T["n"] and q["per_depth"]["5"]["traps_proven_graph"] <= q["traps"]
     assert sib["exact_match_6_features"] <= sib["with_any_nontrap_sibling"] <= T["n"]
+
+
+def test_greedy_never_stops_early_for_tierless_policies(U):
+    obs = Observer(U); D = U["D"]; rng = random.Random(9)
+    live = [(int(s), int(j)) for s, j in np.argwhere(D >= 2)]
+    for pol in ("B0", "B1"):
+        p = make_policy(pol, obs)
+        for _ in range(200):
+            s, j = live[rng.randrange(len(live))]; t = U["targets"][j]
+            g = greedy_walk(obs, p, s, t, D[:, j])
+            # an unsolved walk must have taken a trap: without one, a DAG walk from a live state ends at the target
+            assert g["solved"] or g["catastrophic"]

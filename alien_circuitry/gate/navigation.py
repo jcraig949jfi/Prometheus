@@ -41,10 +41,11 @@ class Cost:
 
 def make_policy(name: str, obs: Observer, seed: int = 0):
     rng = random.Random(seed)
+    # every key starts with a tier: 0 target/proven safe, 1 unknown, 2 proven dead.  B0/B1 never prove anything.
     if name == "B0":
-        return lambda s, t, idx, cost: (rng.random(),)
+        return lambda s, t, idx, cost: (1, rng.random(), 0, idx)
     if name == "B1":
-        return lambda s, t, idx, cost: (int(obs.LEN[s]), idx)
+        return lambda s, t, idx, cost: (1, int(obs.LEN[s]), 0, idx)
     def b2_key(s, t, idx):
         if s == t:
             return (0, 0, 0, idx)
