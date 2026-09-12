@@ -1,0 +1,46 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.transform.multiply_by_transform_pointwise_product_inverse",
+  "name": "multiply by transforming, multiplying pointwise, and transforming back",
+  "lineage": [
+    "automated mathematics",
+    "symbolic reasoning"
+  ],
+  "mechanism": "view the digit sequences as polynomials, evaluate both at roots of unity by a fast transform, multiply pointwise, transform back, and propagate carries, so the convolution costs near-linear time",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Schönhage–Strassen algorithm' in section Computational mathematics / Number theoretic algorithms: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "TRANSFORM",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "SEQUENCE",
+  "order_req": "NONE",
+  "metric_req": "INNER_PRODUCT",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "DIVIDE_CONQUER",
+  "iteration": "NONE",
+  "cost": "LINEARITHMIC",
+  "requires": [
+    "a ring with suitable roots of unity",
+    "a fast transform"
+  ],
+  "fails_when": [
+    "only pays for very large operands"
+  ],
+  "instances": [
+    "Schönhage–Strassen algorithm"
+  ],
+  "related": [
+    {
+      "rel": "REQUIRES",
+      "id": "bit.transform.decompose_signal_into_basis_coefficients"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch07 (T2)"
+}

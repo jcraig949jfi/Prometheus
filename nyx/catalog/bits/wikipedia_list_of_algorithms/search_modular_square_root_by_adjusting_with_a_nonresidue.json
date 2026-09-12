@@ -1,0 +1,45 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.modular_square_root_by_adjusting_with_a_nonresidue",
+  "name": "modular square root by correcting a guess with powers of a non-residue",
+  "lineage": [
+    "automated mathematics",
+    "symbolic reasoning"
+  ],
+  "mechanism": "write the prime minus one as an odd part times a power of two, form an initial guess from the odd part, and repeatedly fix the guess by multiplying with appropriate powers of a known non-residue until its square matches",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Tonelli–Shanks algorithm' in section Computational mathematics / Number theoretic algorithms: ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Cipolla's algorithm': ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "SCALAR",
+  "out_geometry": "SCALAR",
+  "order_req": "NONE",
+  "metric_req": "EQUALITY",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "INCREMENTAL",
+  "iteration": "NONE",
+  "cost": "LOG",
+  "requires": [
+    "a quadratic non-residue (found by random trial)"
+  ],
+  "fails_when": [
+    "composite moduli need factoring first"
+  ],
+  "instances": [
+    "Tonelli–Shanks algorithm",
+    "Cipolla's algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch07 (T2)"
+}

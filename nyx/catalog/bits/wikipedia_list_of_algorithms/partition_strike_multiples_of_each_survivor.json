@@ -1,0 +1,50 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.partition.strike_multiples_of_each_survivor",
+  "name": "strike out the multiples of each surviving number",
+  "lineage": [
+    "automated mathematics",
+    "symbolic reasoning"
+  ],
+  "mechanism": "list the integers up to a bound and for each number not yet struck, strike every multiple of it beyond itself; the unstruck numbers are the primes",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Sieve of Eratosthenes' in section Computational mathematics / Number theoretic algorithms: ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Sieve of Atkin': ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Sieve of Sundaram': ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "PARTITION",
+  "in_geometry": "SCALAR",
+  "out_geometry": "SET",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "DIRECT",
+  "iteration": "SWEEP",
+  "cost": "LINEARITHMIC",
+  "requires": [
+    "memory for the bound"
+  ],
+  "fails_when": [
+    "memory proportional to the bound (segmented variants fix)"
+  ],
+  "instances": [
+    "Sieve of Eratosthenes",
+    "Sieve of Atkin",
+    "Sieve of Sundaram"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch07 (T2)"
+}

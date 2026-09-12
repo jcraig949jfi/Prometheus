@@ -1,0 +1,45 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.transform.multiply_by_splitting_into_fewer_subproducts",
+  "name": "multiply by splitting into fewer sub-products",
+  "lineage": [
+    "automated mathematics",
+    "symbolic reasoning"
+  ],
+  "mechanism": "split each number into halves (or k parts), compute fewer than the naive number of sub-products by exploiting that the cross terms can be recovered from sums of products of sums, and recombine with shifts and additions, recursing on the sub-products",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Karatsuba algorithm' in section Computational mathematics / Number theoretic algorithms: ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Toom–Cook multiplication': ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "TRANSFORM",
+  "in_geometry": "SCALAR",
+  "out_geometry": "SCALAR",
+  "order_req": "NONE",
+  "metric_req": "NONE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "DIVIDE_CONQUER",
+  "iteration": "NONE",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "additions cheaper than multiplications"
+  ],
+  "fails_when": [
+    "constant factors make it lose below a size threshold"
+  ],
+  "instances": [
+    "Karatsuba algorithm",
+    "Toom–Cook multiplication"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch07 (T2)"
+}
