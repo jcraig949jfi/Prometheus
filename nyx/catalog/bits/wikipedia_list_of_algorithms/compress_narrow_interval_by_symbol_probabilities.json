@@ -1,0 +1,50 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.compress.narrow_interval_by_symbol_probabilities",
+  "name": "narrow an interval by successive symbol probabilities",
+  "lineage": [
+    "abstraction and compression"
+  ],
+  "mechanism": "start with the unit interval and for each symbol shrink to the sub-interval proportional to that symbol's probability given the model; emit enough digits to identify the final interval, so the code length approaches the information content",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Arithmetic coding' in section Information theory and signal processing / Coding theory / Lossless compression algorithms: advanced entropy coding",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Range encoding': same as arithmetic coding, but looked at in a slightly different way",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Shannon–Fano–Elias coding': precursor to arithmetic encoding",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "COMPRESS",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "BITSTRING",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "OPTIMAL",
+  "strategy": "INCREMENTAL",
+  "iteration": "SWEEP",
+  "cost": "LINEAR",
+  "requires": [
+    "a probability model shared with the decoder (the model is where compression comes from)"
+  ],
+  "fails_when": [
+    "finite precision needs renormalisation",
+    "a wrong model expands"
+  ],
+  "instances": [
+    "Arithmetic coding",
+    "Range encoding",
+    "Shannon–Fano–Elias coding"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch04 (T2)"
+}

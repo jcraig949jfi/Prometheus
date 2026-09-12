@@ -1,0 +1,40 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.correct.locate_errors_by_solving_syndrome_equations",
+  "name": "locate errors by solving the syndrome equations",
+  "lineage": [
+    "symbolic reasoning"
+  ],
+  "mechanism": "evaluate the received polynomial at the code's fixed points to get syndromes, solve a small linear system for the coefficients of a polynomial whose roots are the error positions, find the roots, then solve for the error values and subtract them",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Peterson–Gorenstein–Zierler algorithm' in section Information theory and signal processing / Coding theory / Error detection and correction: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "CORRECT",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "SEQUENCE",
+  "order_req": "NONE",
+  "metric_req": "DISTANCE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "DIRECT",
+  "iteration": "NONE",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "finite-field arithmetic",
+    "a code with known evaluation points"
+  ],
+  "fails_when": [
+    "more errors than the design distance allows decode to a wrong word or fail"
+  ],
+  "instances": [
+    "Peterson–Gorenstein–Zierler algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch04 (T2)"
+}

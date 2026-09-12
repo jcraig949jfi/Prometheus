@@ -1242,9 +1242,10 @@
     "Approximate sequence matching"
    ],
    "depth": 2,
-   "classification": "BIT",
+   "classification": "NOT_A_BIT",
    "bit_id": "bit.compare.positionwise_mismatch_count",
-   "classified_at": "2026-09-12T11:48Z"
+   "classified_at": "2026-09-12T12:21Z",
+   "reason": "duplicate of the Sequence-algorithms entry already classified (bit.compare.positionwise_mismatch_count)"
   },
   {
    "name": "Jaro–Winkler distance",
@@ -8704,7 +8705,9 @@
     "Error detection and correction"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "NOT_A_BIT",
+   "reason": "a code family, category or field, not a mechanism",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Berlekamp–Massey algorithm",
@@ -8716,7 +8719,9 @@
     "Error detection and correction"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.predict.shortest_recurrence_generating_sequence",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Peterson–Gorenstein–Zierler algorithm",
@@ -8728,7 +8733,9 @@
     "Error detection and correction"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.correct.locate_errors_by_solving_syndrome_equations",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Reed–Solomon error correction",
@@ -8740,7 +8747,9 @@
     "Error detection and correction"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "NOT_A_BIT",
+   "reason": "a code family, category or field, not a mechanism",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "BCJR algorithm",
@@ -8752,7 +8761,9 @@
     "Error detection and correction"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.predict.forward_backward_posteriors_on_a_trellis",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Forward error correction",
@@ -8764,7 +8775,9 @@
     "Error detection and correction"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "NOT_A_BIT",
+   "reason": "a code family, category or field, not a mechanism",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Gray code",
@@ -8776,7 +8789,9 @@
     "Error detection and correction"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.transform.adjacent_values_differ_in_one_bit",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Hamming codes",
@@ -8788,7 +8803,9 @@
     "Error detection and correction"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "NOT_A_BIT",
+   "reason": "a code family, category or field, not a mechanism",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Hamming(7,4)",
@@ -8800,7 +8817,9 @@
     "Error detection and correction"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.correct.syndrome_locates_single_error",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Hamming distance",
@@ -8824,7 +8843,9 @@
     "Error detection and correction"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.accumulate.count_set_bits",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Redundancy checks",
@@ -8836,7 +8857,9 @@
     "Error detection and correction"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "NOT_A_BIT",
+   "reason": "a code family, category or field, not a mechanism",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Adler-32",
@@ -8848,7 +8871,9 @@
     "Error detection and correction"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.detect.append_check_symbol_from_linear_combination",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Cyclic redundancy check",
@@ -8860,7 +8885,9 @@
     "Error detection and correction"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.detect.polynomial_division_remainder_check",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Damm algorithm",
@@ -8872,7 +8899,9 @@
     "Error detection and correction"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.detect.check_digit_by_nonabelian_group_operation",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Fletcher's checksum",
@@ -8884,7 +8913,9 @@
     "Error detection and correction"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.detect.append_check_symbol_from_linear_combination",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Longitudinal redundancy check (LRC)",
@@ -8896,7 +8927,9 @@
     "Error detection and correction"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.detect.append_check_symbol_from_linear_combination",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Luhn algorithm",
@@ -8908,7 +8941,9 @@
     "Error detection and correction"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.detect.weighted_digit_sum_check",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Luhn mod N algorithm",
@@ -8920,7 +8955,9 @@
     "Error detection and correction"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.detect.weighted_digit_sum_check",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Parity",
@@ -8932,7 +8969,9 @@
     "Error detection and correction"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.detect.append_check_symbol_from_linear_combination",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Verhoeff algorithm",
@@ -8944,7 +8983,9 @@
     "Error detection and correction"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.detect.check_digit_by_nonabelian_group_operation",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Burrows–Wheeler transform",
@@ -8956,7 +8997,9 @@
     "Lossless compression algorithms"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.transform.sort_rotations_take_last_column",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Context tree weighting",
@@ -8968,7 +9011,9 @@
     "Lossless compression algorithms"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "DEFER",
+   "reason": "a named scheme whose mechanism is not characterised from the list line; needs a source read (grade would be T2 at best)",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Delta encoding",
@@ -8980,7 +9025,9 @@
     "Lossless compression algorithms"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.compress.store_differences_from_predecessor",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Dynamic Markov compression",
@@ -8992,7 +9039,9 @@
     "Lossless compression algorithms"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "DEFER",
+   "reason": "a named scheme whose mechanism is not characterised from the list line; needs a source read (grade would be T2 at best)",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Dictionary coders",
@@ -9004,7 +9053,9 @@
     "Lossless compression algorithms"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "NOT_A_BIT",
+   "reason": "a code family, category or field, not a mechanism",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Byte pair encoding (BPE)",
@@ -9016,7 +9067,9 @@
     "Lossless compression algorithms"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.compress.merge_most_frequent_adjacent_pair",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Deflate",
@@ -9028,7 +9081,9 @@
     "Lossless compression algorithms"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.compress.replace_repeat_with_back_reference",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Lempel–Ziv",
@@ -9040,7 +9095,9 @@
     "Lossless compression algorithms"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "NOT_A_BIT",
+   "reason": "a code family, category or field, not a mechanism",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "LZ77 and LZ78",
@@ -9052,7 +9109,9 @@
     "Lossless compression algorithms"
    ],
    "depth": 3,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.compress.replace_repeat_with_back_reference",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Lempel–Ziv Jeff Bonwick (LZJB)",
@@ -9064,7 +9123,9 @@
     "Lossless compression algorithms"
    ],
    "depth": 3,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.compress.replace_repeat_with_back_reference",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Lempel–Ziv–Markov chain algorithm (LZMA)",
@@ -9076,7 +9137,9 @@
     "Lossless compression algorithms"
    ],
    "depth": 3,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.compress.replace_repeat_with_back_reference",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Lempel–Ziv–Oberhumer (LZO)",
@@ -9088,7 +9151,9 @@
     "Lossless compression algorithms"
    ],
    "depth": 3,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.compress.replace_repeat_with_back_reference",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Lempel–Ziv Ross Williams (LZRW)",
@@ -9100,7 +9165,9 @@
     "Lossless compression algorithms"
    ],
    "depth": 3,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.compress.replace_repeat_with_back_reference",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Lempel–Ziv–Stac (LZS)",
@@ -9112,7 +9179,9 @@
     "Lossless compression algorithms"
    ],
    "depth": 3,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.compress.replace_repeat_with_back_reference",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Lempel–Ziv–Storer–Szymanski (LZSS)",
@@ -9124,7 +9193,9 @@
     "Lossless compression algorithms"
    ],
    "depth": 3,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.compress.replace_repeat_with_back_reference",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Lempel–Ziv–Welch (LZW)",
@@ -9136,7 +9207,9 @@
     "Lossless compression algorithms"
    ],
    "depth": 3,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.compress.replace_repeat_with_back_reference",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "LZWL",
@@ -9148,7 +9221,9 @@
     "Lossless compression algorithms"
    ],
    "depth": 3,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.compress.replace_repeat_with_back_reference",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "LZX",
@@ -9160,7 +9235,9 @@
     "Lossless compression algorithms"
    ],
    "depth": 3,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.compress.replace_repeat_with_back_reference",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Entropy encoding",
@@ -9172,7 +9249,9 @@
     "Lossless compression algorithms"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "NOT_A_BIT",
+   "reason": "a code family, category or field, not a mechanism",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Arithmetic coding",
@@ -9184,7 +9263,9 @@
     "Lossless compression algorithms"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.compress.narrow_interval_by_symbol_probabilities",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Range encoding",
@@ -9196,7 +9277,9 @@
     "Lossless compression algorithms"
    ],
    "depth": 3,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.compress.narrow_interval_by_symbol_probabilities",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Huffman coding",
@@ -9208,7 +9291,9 @@
     "Lossless compression algorithms"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.compress.merge_two_least_probable_into_a_tree",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Adaptive Huffman coding",
@@ -9220,7 +9305,9 @@
     "Lossless compression algorithms"
    ],
    "depth": 3,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.compress.merge_two_least_probable_into_a_tree",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Package-merge algorithm",
@@ -9232,7 +9319,9 @@
     "Lossless compression algorithms"
    ],
    "depth": 3,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.compress.merge_two_least_probable_into_a_tree",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Shannon–Fano coding",
@@ -9244,7 +9333,9 @@
     "Lossless compression algorithms"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.compress.merge_two_least_probable_into_a_tree",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Shannon–Fano–Elias coding",
@@ -9256,7 +9347,9 @@
     "Lossless compression algorithms"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.compress.narrow_interval_by_symbol_probabilities",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Entropy coding with known entropy characteristics",
@@ -9268,7 +9361,9 @@
     "Lossless compression algorithms"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "NOT_A_BIT",
+   "reason": "a code family, category or field, not a mechanism",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Golomb coding",
@@ -9280,7 +9375,9 @@
     "Lossless compression algorithms"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.compress.encode_integer_by_self_delimiting_prefix",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Rice coding",
@@ -9292,7 +9389,9 @@
     "Lossless compression algorithms"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.compress.encode_integer_by_self_delimiting_prefix",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Truncated binary encoding",
@@ -9304,7 +9403,9 @@
     "Lossless compression algorithms"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.compress.encode_integer_by_self_delimiting_prefix",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Unary coding",
@@ -9316,7 +9417,9 @@
     "Lossless compression algorithms"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.compress.encode_integer_by_self_delimiting_prefix",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Universal codes",
@@ -9328,7 +9431,9 @@
     "Lossless compression algorithms"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "NOT_A_BIT",
+   "reason": "a code family, category or field, not a mechanism",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Elias delta, gamma, and omega coding",
@@ -9340,7 +9445,9 @@
     "Lossless compression algorithms"
    ],
    "depth": 3,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.compress.encode_integer_by_self_delimiting_prefix",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Exponential-Golomb coding",
@@ -9352,7 +9459,9 @@
     "Lossless compression algorithms"
    ],
    "depth": 3,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.compress.encode_integer_by_self_delimiting_prefix",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Fibonacci coding",
@@ -9364,7 +9473,9 @@
     "Lossless compression algorithms"
    ],
    "depth": 3,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.compress.encode_integer_by_self_delimiting_prefix",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Levenshtein coding",
@@ -9376,7 +9487,9 @@
     "Lossless compression algorithms"
    ],
    "depth": 3,
-   "classification": "PENDING"
+   "classification": "DEFER",
+   "reason": "a named scheme whose mechanism is not characterised from the list line; needs a source read (grade would be T2 at best)",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Fast Efficient & Lossless Image Compression System (FELICS)",
@@ -9388,7 +9501,9 @@
     "Lossless compression algorithms"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "DEFER",
+   "reason": "a named scheme whose mechanism is not characterised from the list line; needs a source read (grade would be T2 at best)",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Incremental encoding",
@@ -9400,7 +9515,9 @@
     "Lossless compression algorithms"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.compress.store_differences_from_predecessor",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Prediction by partial matching (PPM)",
@@ -9412,7 +9529,9 @@
     "Lossless compression algorithms"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.predict.blend_context_statistics_with_escape",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Run-length encoding",
@@ -9424,7 +9543,9 @@
     "Lossless compression algorithms"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.compress.replace_run_with_count_and_symbol",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "SEQUITUR algorithm",
@@ -9436,7 +9557,9 @@
     "Lossless compression algorithms"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.compress.merge_most_frequent_adjacent_pair",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "3Dc",
@@ -9448,7 +9571,9 @@
     "Lossy compression algorithms"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "DEFER",
+   "reason": "a named scheme whose mechanism is not characterised from the list line; needs a source read (grade would be T2 at best)",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Audio and Speech compression",
@@ -9460,7 +9585,9 @@
     "Lossy compression algorithms"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "NOT_A_BIT",
+   "reason": "a code family, category or field, not a mechanism",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "A-law algorithm",
@@ -9472,7 +9599,9 @@
     "Lossy compression algorithms"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.compress.compand_by_logarithmic_curve",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Code-excited linear prediction (CELP)",
@@ -9484,7 +9613,9 @@
     "Lossy compression algorithms"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.compress.transmit_predictor_coefficients_and_residual",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Linear predictive coding (LPC)",
@@ -9496,7 +9627,9 @@
     "Lossy compression algorithms"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.compress.transmit_predictor_coefficients_and_residual",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Mu-law algorithm",
@@ -9508,7 +9641,9 @@
     "Lossy compression algorithms"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.compress.compand_by_logarithmic_curve",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Warped Linear Predictive Coding (WLPC)",
@@ -9520,7 +9655,9 @@
     "Lossy compression algorithms"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "DEFER",
+   "reason": "a named scheme whose mechanism is not characterised from the list line; needs a source read (grade would be T2 at best)",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Image compression",
@@ -9532,7 +9669,9 @@
     "Lossy compression algorithms"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "NOT_A_BIT",
+   "reason": "a code family, category or field, not a mechanism",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Block Truncation Coding (BTC)",
@@ -9544,7 +9683,9 @@
     "Lossy compression algorithms"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "DEFER",
+   "reason": "a named scheme whose mechanism is not characterised from the list line; needs a source read (grade would be T2 at best)",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Embedded Zerotree Wavelet (EZW)",
@@ -9556,7 +9697,9 @@
     "Lossy compression algorithms"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "DEFER",
+   "reason": "a named scheme whose mechanism is not characterised from the list line; needs a source read (grade would be T2 at best)",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Fast Cosine Transform algorithms (FCT algorithms)",
@@ -9568,7 +9711,9 @@
     "Lossy compression algorithms"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.transform.decompose_signal_into_basis_coefficients",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Fractal compression",
@@ -9580,7 +9725,9 @@
     "Lossy compression algorithms"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "DEFER",
+   "reason": "a named scheme whose mechanism is not characterised from the list line; needs a source read (grade would be T2 at best)",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Set Partitioning in Hierarchical Trees (SPIHT)",
@@ -9592,7 +9739,9 @@
     "Lossy compression algorithms"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "DEFER",
+   "reason": "a named scheme whose mechanism is not characterised from the list line; needs a source read (grade would be T2 at best)",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Wavelet compression",
@@ -9604,7 +9753,9 @@
     "Lossy compression algorithms"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "NOT_A_BIT",
+   "reason": "a code family, category or field, not a mechanism",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Transform coding",
@@ -9616,7 +9767,9 @@
     "Lossy compression algorithms"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "NOT_A_BIT",
+   "reason": "a code family, category or field, not a mechanism",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Vector quantization",
@@ -9628,7 +9781,9 @@
     "Lossy compression algorithms"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.compress.replace_vector_by_nearest_codebook_index",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "TurboQuant",
@@ -9640,7 +9795,9 @@
     "Lossy compression algorithms"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "DEFER",
+   "reason": "a named scheme whose mechanism is not characterised from the list line; needs a source read (grade would be T2 at best)",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Video compression",
@@ -9652,7 +9809,9 @@
     "Lossy compression algorithms"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "NOT_A_BIT",
+   "reason": "a code family, category or field, not a mechanism",
+   "classified_at": "2026-09-12T12:21Z"
   },
   {
    "name": "Adaptive-additive algorithm (AA algorithm)",

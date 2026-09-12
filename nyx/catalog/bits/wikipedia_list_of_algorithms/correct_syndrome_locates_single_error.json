@@ -1,0 +1,40 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.correct.syndrome_locates_single_error",
+  "name": "syndrome locates a single error",
+  "lineage": [
+    "symbolic reasoning"
+  ],
+  "mechanism": "add check bits so that every single-bit error produces a distinct pattern of failed checks; the receiver recomputes the checks and the pattern of failures is the position of the flipped bit, which is then corrected",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Hamming(7,4)' in section Information theory and signal processing / Coding theory / Error detection and correction: a Hamming code that encodes 4 bits of data into 7 bits by adding 3 parity bits",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "CORRECT",
+  "in_geometry": "BITSTRING",
+  "out_geometry": "BITSTRING",
+  "order_req": "NONE",
+  "metric_req": "DISTANCE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "PRECOMPUTED_TABLE",
+  "iteration": "SWEEP",
+  "cost": "LINEAR",
+  "requires": [
+    "a check matrix whose columns are distinct and nonzero"
+  ],
+  "fails_when": [
+    "two errors decode to a wrong position",
+    "rate cost of the check bits"
+  ],
+  "instances": [
+    "Hamming(7,4)"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch04 (T2)"
+}
