@@ -245,3 +245,15 @@ def test_design_owner_declares_the_three_levels():
     assert {"selected", "randomized", "analyzed", "declared_by"} <= set(lv)
     assert lv["randomized"].startswith("WORLD")
     assert lv["analyzed"].startswith("WORLD")
+
+
+def test_labels_describe_the_cause_not_the_visibility():
+    """Phase 2 (operator 2026-09-12): a fired signal that could not direct the
+    draw leaves the row a uniform draw: WROTE_RANDOM / exploration. Only a
+    region-directed draw is WROTE_WEAK_SIGNAL / weak_signal. The historical
+    rows labelled the other way stay as they are."""
+    from archaeon.producer import tick as T
+    fired = [object()]                                    # ranked non-empty: the corpus was seen and something fired
+    assert T.selection_labels(fired, None) == ("exploration", T.WROTE_RANDOM)          # fossil did not affect selection
+    assert T.selection_labels([], None) == ("exploration", T.WROTE_RANDOM)
+    assert T.selection_labels(fired, {"seed_root": 1, "length": 8, "world_id": "w"}) == ("weak_signal", T.WROTE_SIGNAL)   # fossil affected selection
