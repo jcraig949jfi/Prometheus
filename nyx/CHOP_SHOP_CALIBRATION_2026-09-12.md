@@ -24,12 +24,12 @@ Nothing here is a score; it is what the ledgers say side by side.
     ORGAN at last cut                     4             6             0
     PRESSURE written                      4 (+1 held)   1 (+1 held)   0 (1 tempted, refused)
     inherited rate at CUT-1               0.87          0.56          1.00
-    inherited-and-supported               0             2             7
+    inherited-and-supported               0             2             6
     inherited-and-falsified               0             0             0
     boundaries drawn across defs          3             8             0
     executable contact before paper?      no            yes           yes (only cut)
     kind changes by argument / by run     7 / 1         0 / 1         0 / 0 (dispositions set once)
-    independent-of-ancestor tests run     0             3             7 (all textbook recurrences)
+    independent-of-ancestor tests run     0             3             6 (all textbook recurrences)
     cheat controls fired / did not        1 / 1         3 / 1         3 / 0
     hidden machinery found                2 (eq_self;   1 (label      1 (LCG power-of-two
                                           unifier)      alignment)    bootstrap degeneracy)
@@ -54,8 +54,8 @@ misses should be quoted beside it when it is written.
 ## Inherited boundaries: the rate is not the story
 
     Lean 0.87 with 0 supported; shrinker 0.56 with 2 inherited-and-supported;
-    census 1.00 with 7 inherited-and-supported (every function recomputed to
-    a textbook quantity on foreign inputs). Three specimens, three different
+    census 1.00 with 6 inherited-and-supported (every function that was run
+    recomputed to a textbook quantity on foreign inputs; entropy read only). Three specimens, three different
     meanings of the same rate: on Lean it measured a habit; on the shrinker
     it measured where the programmer had already found the mechanism; on
     the census it measured a file made of textbook pieces. The four-category

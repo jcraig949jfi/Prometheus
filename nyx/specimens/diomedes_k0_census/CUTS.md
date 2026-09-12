@@ -62,8 +62,7 @@ not been preregistered, Nyx would have written two organ records.
 ## Numbers
 
     inherited 12/12 = 1.00 (reported, not optimised); independently
-    supported boundaries 7 (all textbook recurrences and policies exercised
-    once each); inherited-and-supported 7; inherited-and-falsified 0;
+    supported boundaries 6 (c03 entropy was read, not run); inherited-and-supported 6; inherited-and-falsified 0;
     K statuses: K3 K4 K8 FIRED; K1 K5 DID_NOT_FIRE; K2 K6 K7 K9 K10 N/A.
     Predictions: P1 CONFIRMED (0/0); P2 CONFIRMED except headroom, which
     Nyx read as a statistic rather than a 'known primitive' -- same
