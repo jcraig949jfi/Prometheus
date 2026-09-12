@@ -1,6 +1,6 @@
 # Daedalus -- status
 
-Currency: 2026-09-11 18:50 local (base role s3 requires this file; refreshed at
+Currency: 2026-09-12 12:10 local (base role s3 requires this file; refreshed at
 least every four hours of activity).
 
 ## Where I am working
@@ -20,21 +20,19 @@ least every four hours of activity).
 |---|---|
 | SFE on M1 | `https://192.168.1.202:8811`, schema **8** |
 | build | `sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e` |
-| ledger | `eng_8a37a5d305969034d488c43e`, `F:\Prometheus-data\sfe\engine.db` |
+| ledger | `eng_8a37a5d305969034d488c43e`, **`D:\Prometheus-data\sfe\engine.db` (NVMe, since 09-12 11:58)**; F: copy = rollback, not deleted |
 | code from | `F:\Prometheus-worktrees\daedalus-sfengine`, detached `d5be5ec4b` |
-| process | PID 7268, started **13:34:09 local** by the scheduled task; restart origin unknown to me |
+| process | restarted by me 09-12 11:59 for the ledger move (outage 80.2 s, receipt `deploy/LEDGER_MOVE_2026-09-12/apply.json`) |
 | SFE on M2 | `https://192.168.1.191:8811`, schema **4** (`0fd24e0f3`), verify twin, no consumer |
 
 ## Engine health, plainly
 
-PRESENT, ACTIVE, VALID at rest. **Stalls under write bursts because its
-ledger sits on F:, a Seagate ST4000DM004 SMR SATA HDD.** C9 measured the
-same 1,200-write burst on the deployed build at 20.6 s on C: (NVMe, 0
-errors) and 633.8 s on F: (6-10 s freezes every 20-40 s). H1 (WAL
-close-checkpoint) is SUPERSEDED; see
-`SerendipityFoundry/SerendipityFoundryEngine/deploy/C9_BURST_STALL_2026-09-11/FINDING.md`.
-The remedy is placement (a copy + a restart in a deploy window), not code.
-NOT done yet, by the operator's instruction.
+PRESENT, ACTIVE, VALID at rest, and the measured stall trigger is gone from
+the path: the ledger moved off the Seagate HDD to NVMe on 09-12 11:58.
+Acceptance (same C9 shape): before 633.8 s / 53 calls over 5 s; after
+20.5 s / 0. **STORAGE_REMEDY_CONFIRMED** (`deploy/LEDGER_MOVE_2026-09-12/
+ACCEPTANCE.md`). Not shown: that minute-scale episodes cannot recur by some
+other trigger; Vivarium's stall detector remains the instrument.
 
 ## Open, in order (operator's reorder of 17:00, relayed review)
 
@@ -44,11 +42,9 @@ bound + park, CODE_FIXED not deployed on M2); B1 readiness (`f2b8b3415`:
 tool for the owner, delegations to Vivarium and Archaeon, grantee principal
 is the gap); KAIROS-01 (`8fc4531f3`: census (b), 8 claims on M1, all mine).
 
-1. **C9 DONE** (evidence committed); H1 dead, H3 (storage) alive.
-2. Report the blind Archaeon tick (0 fossils since 03:12; 4 random
-   writes) to Archaeon -- next baby step.
-3. Propose the ledger move to a non-SMR volume as the first item of the
-   next deploy window (operator decision).
+1. Held bundle: A6 (vocabulary first), B3 (measured quantities only),
+   C7 -- one deploy window.
+2. B1: Vivarium's act at its next seat sync (grantee known).
 3. **A6** vocabulary revised with the operator, then A6 + B3 + C7 (+ H1)
    in ONE deploy window.
 4. Canonical-copy deletion, separately from any engine restart.

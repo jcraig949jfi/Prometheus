@@ -46,7 +46,7 @@ import sqlite3
 import sys
 import time
 
-DEFAULT_DB = r"F:\Prometheus-data\sfe\engine.db"
+DEFAULT_DB = r"D:\Prometheus-data\sfe\engine.db"   # moved off the HDD 2026-09-12 (C9)
 
 #: Work states that mean a run may still legitimately produce its observation.
 OUTSTANDING = ("QUEUED", "CLAIMED", "RUNNING", "RETRYABLE")
