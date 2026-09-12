@@ -1,0 +1,45 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.predict.advance_state_by_the_slope_at_the_new_point",
+  "name": "advance the state by the slope taken at the new point",
+  "lineage": [
+    "numerical methods",
+    "scientific software"
+  ],
+  "mechanism": "choose the next state so that the rate evaluated AT that next state, times the step, is exactly the move from the current state; each step is therefore an equation to solve, usually by a few fixed-point or Newton iterations",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Backward Euler method' in section Computational mathematics / Numerical algorithms / Differential equation solving: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "PREDICT",
+  "in_geometry": "FUNCTION",
+  "out_geometry": "SEQUENCE",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "APPROXIMATE",
+  "strategy": "FIXPOINT_ITERATION",
+  "iteration": "SWEEP",
+  "cost": "LINEAR",
+  "requires": [
+    "a solver for the per-step implicit equation"
+  ],
+  "fails_when": [
+    "each step costs a solve; damps genuine oscillations along with instabilities"
+  ],
+  "instances": [
+    "Backward Euler method"
+  ],
+  "related": [
+    {
+      "rel": "CONTRASTS_WITH",
+      "id": "bit.predict.advance_state_by_step_times_current_slope"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch08 (T2)"
+}

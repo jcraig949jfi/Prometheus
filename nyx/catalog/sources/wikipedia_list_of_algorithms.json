@@ -3537,7 +3537,9 @@
     "Differential equation solving"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.predict.advance_state_by_the_slope_at_the_new_point",
+   "classified_at": "2026-09-12T13:21Z"
   },
   {
    "name": "Euler method",
@@ -3549,7 +3551,9 @@
     "Differential equation solving"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.predict.advance_state_by_step_times_current_slope",
+   "classified_at": "2026-09-12T13:21Z"
   },
   {
    "name": "Linear multistep methods",
@@ -3561,7 +3565,9 @@
     "Differential equation solving"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.predict.advance_by_fixed_combination_of_previous_states_and_slopes",
+   "classified_at": "2026-09-12T13:21Z"
   },
   {
    "name": "Multigrid methods (MG methods), a group of algorithms for solving differential equations using a hierarchy of discretiza",
@@ -3573,7 +3579,9 @@
     "Differential equation solving"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.search.smooth_on_the_fine_grid_and_correct_from_coarser_grids",
+   "classified_at": "2026-09-12T13:21Z"
   },
   {
    "name": "Partial differential equation:",
@@ -3585,7 +3593,9 @@
     "Differential equation solving"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "NOT_A_BIT",
+   "reason": "a header, problem or category, not a mechanism",
+   "classified_at": "2026-09-12T13:21Z"
   },
   {
    "name": "Crank–Nicolson method for diffusion equations",
@@ -3597,7 +3607,9 @@
     "Differential equation solving"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.predict.advance_state_by_the_mean_of_old_and_new_slopes",
+   "classified_at": "2026-09-12T13:21Z"
   },
   {
    "name": "Finite difference method",
@@ -3609,7 +3621,9 @@
     "Differential equation solving"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.transform.replace_derivatives_by_difference_quotients_on_a_grid",
+   "classified_at": "2026-09-12T13:21Z"
   },
   {
    "name": "Lax–Wendroff for wave equations",
@@ -3621,7 +3635,9 @@
     "Differential equation solving"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.transform.trade_time_derivatives_for_space_derivatives_then_difference",
+   "classified_at": "2026-09-12T13:21Z"
   },
   {
    "name": "Runge–Kutta methods",
@@ -3633,7 +3649,9 @@
     "Differential equation solving"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.predict.combine_slopes_sampled_within_the_step",
+   "classified_at": "2026-09-12T13:21Z"
   },
   {
    "name": "Euler integration",
@@ -3645,7 +3663,9 @@
     "Differential equation solving"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.predict.advance_state_by_step_times_current_slope",
+   "classified_at": "2026-09-12T13:21Z"
   },
   {
    "name": "Trapezoidal rule (differential equations)",
@@ -3657,7 +3677,9 @@
     "Differential equation solving"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.predict.advance_state_by_the_mean_of_old_and_new_slopes",
+   "classified_at": "2026-09-12T13:21Z"
   },
   {
    "name": "Verlet integration ()",
@@ -3669,7 +3691,9 @@
     "Differential equation solving"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.predict.advance_position_from_two_previous_positions_and_acceleration",
+   "classified_at": "2026-09-12T13:21Z"
   },
   {
    "name": "Computation of π:",
@@ -3681,7 +3705,9 @@
     "Elementary and special functions"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "NOT_A_BIT",
+   "reason": "a header, problem or category, not a mechanism",
+   "classified_at": "2026-09-12T13:21Z"
   },
   {
    "name": "Bailey–Borwein–Plouffe formula",
@@ -3693,7 +3719,9 @@
     "Elementary and special functions"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.generate.emit_digits_of_a_constant_from_a_bounded_carry_state",
+   "classified_at": "2026-09-12T13:21Z"
   },
   {
    "name": "Borwein's algorithm",
@@ -3705,7 +3733,9 @@
     "Elementary and special functions"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "DEFER",
+   "reason": "several distinct iterations share the name (quadratic, quartic, nonic); the list line does not say which; needs a source read",
+   "classified_at": "2026-09-12T13:21Z"
   },
   {
    "name": "Chudnovsky algorithm",
@@ -3717,7 +3747,9 @@
     "Elementary and special functions"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.accumulate.evaluate_a_rational_series_by_recursive_halving",
+   "classified_at": "2026-09-12T13:21Z"
   },
   {
    "name": "Gauss–Legendre algorithm",
@@ -3729,7 +3761,9 @@
     "Elementary and special functions"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.search.iterate_arithmetic_and_geometric_means_to_their_common_limit",
+   "classified_at": "2026-09-12T13:21Z"
   },
   {
    "name": "Division algorithms",
@@ -3741,7 +3775,9 @@
     "Elementary and special functions"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "NOT_A_BIT",
+   "reason": "a header, problem or category, not a mechanism",
+   "classified_at": "2026-09-12T13:21Z"
   },
   {
    "name": "Goldschmidt division",
@@ -3753,7 +3789,9 @@
     "Elementary and special functions"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.transform.scale_numerator_and_denominator_by_a_common_factor_toward_one",
+   "classified_at": "2026-09-12T13:21Z"
   },
   {
    "name": "Long division",
@@ -3765,7 +3803,9 @@
     "Elementary and special functions"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.transform.bring_down_a_digit_and_subtract_the_largest_fitting_multiple",
+   "classified_at": "2026-09-12T13:21Z"
   },
   {
    "name": "Newton–Raphson division",
@@ -3777,7 +3817,9 @@
     "Elementary and special functions"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.search.step_to_the_zero_of_the_local_linearisation",
+   "classified_at": "2026-09-12T13:21Z"
   },
   {
    "name": "Non-restoring division",
@@ -3789,7 +3831,9 @@
     "Elementary and special functions"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.transform.keep_a_negative_remainder_and_add_next_step_instead_of_restoring",
+   "classified_at": "2026-09-12T13:21Z"
   },
   {
    "name": "Restoring division",
@@ -3801,7 +3845,9 @@
     "Elementary and special functions"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.transform.bring_down_a_digit_and_subtract_the_largest_fitting_multiple",
+   "classified_at": "2026-09-12T13:21Z"
   },
   {
    "name": "SRT division",
@@ -3813,7 +3859,9 @@
     "Elementary and special functions"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.transform.choose_quotient_digit_from_a_table_on_leading_bits_with_redundant_digits",
+   "classified_at": "2026-09-12T13:21Z"
   },
   {
    "name": "Exponentiation:",
@@ -3825,7 +3873,9 @@
     "Elementary and special functions"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "NOT_A_BIT",
+   "reason": "a header, problem or category, not a mechanism",
+   "classified_at": "2026-09-12T13:21Z"
   },
   {
    "name": "Addition-chain exponentiation",
@@ -3837,7 +3887,9 @@
     "Elementary and special functions"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.search.shortest_chain_of_sums_reaching_the_exponent",
+   "classified_at": "2026-09-12T13:21Z"
   },
   {
    "name": "Exponentiating by squaring",
@@ -3849,7 +3901,9 @@
     "Elementary and special functions"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.transform.square_and_multiply_by_the_binary_digits_of_the_exponent",
+   "classified_at": "2026-09-12T13:21Z"
   },
   {
    "name": "Hyperbolic and Trigonometric Functions:",
@@ -3861,7 +3915,9 @@
     "Elementary and special functions"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "NOT_A_BIT",
+   "reason": "a header, problem or category, not a mechanism",
+   "classified_at": "2026-09-12T13:21Z"
   },
   {
    "name": "BKM algorithm",
@@ -3873,7 +3929,9 @@
     "Elementary and special functions"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.transform.apply_fixed_shrinking_elementary_steps_choosing_each_sign_by_the_residual",
+   "classified_at": "2026-09-12T13:21Z"
   },
   {
    "name": "CORDIC",
@@ -3885,7 +3943,9 @@
     "Elementary and special functions"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.transform.apply_fixed_shrinking_elementary_steps_choosing_each_sign_by_the_residual",
+   "classified_at": "2026-09-12T13:21Z"
   },
   {
    "name": "Montgomery reduction",
@@ -3897,7 +3957,9 @@
     "Elementary and special functions"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.transform.work_in_a_scaled_residue_form_so_reduction_becomes_a_shift",
+   "classified_at": "2026-09-12T13:21Z"
   },
   {
    "name": "Multiplication algorithms",
@@ -3909,7 +3971,9 @@
     "Elementary and special functions"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "NOT_A_BIT",
+   "reason": "a header, problem or category, not a mechanism",
+   "classified_at": "2026-09-12T13:21Z"
   },
   {
    "name": "Booth's multiplication algorithm",
@@ -3921,7 +3985,9 @@
     "Elementary and special functions"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.transform.recode_runs_of_ones_as_one_subtract_and_one_add",
+   "classified_at": "2026-09-12T13:21Z"
   },
   {
    "name": "Fürer's algorithm",
@@ -3933,7 +3999,9 @@
     "Elementary and special functions"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.transform.multiply_by_transform_pointwise_product_inverse",
+   "classified_at": "2026-09-12T13:21Z"
   },
   {
    "name": "Karatsuba algorithm",
@@ -3945,7 +4013,9 @@
     "Elementary and special functions"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.transform.multiply_by_splitting_into_fewer_subproducts",
+   "classified_at": "2026-09-12T13:21Z"
   },
   {
    "name": "Schönhage–Strassen algorithm",
@@ -3957,7 +4027,9 @@
     "Elementary and special functions"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.transform.multiply_by_transform_pointwise_product_inverse",
+   "classified_at": "2026-09-12T13:21Z"
   },
   {
    "name": "Toom–Cook multiplication",
@@ -3969,7 +4041,9 @@
     "Elementary and special functions"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.transform.multiply_by_splitting_into_fewer_subproducts",
+   "classified_at": "2026-09-12T13:21Z"
   },
   {
    "name": "Multiplicative inverse Algorithms",
@@ -3981,7 +4055,9 @@
     "Elementary and special functions"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "NOT_A_BIT",
+   "reason": "a header, problem or category, not a mechanism",
+   "classified_at": "2026-09-12T13:21Z"
   },
   {
    "name": "Newton's method",
@@ -3993,7 +4069,9 @@
     "Elementary and special functions"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.search.step_to_the_zero_of_the_local_linearisation",
+   "classified_at": "2026-09-12T13:21Z"
   },
   {
    "name": "Rounding functions",
@@ -4005,7 +4083,9 @@
     "Elementary and special functions"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "NOT_A_BIT",
+   "reason": "a family of conventions (which way to round) -- policy, not a mechanism",
+   "classified_at": "2026-09-12T13:21Z"
   },
   {
    "name": "Spigot algorithm",
@@ -4017,7 +4097,9 @@
     "Elementary and special functions"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.generate.emit_digits_of_a_constant_from_a_bounded_carry_state",
+   "classified_at": "2026-09-12T13:21Z"
   },
   {
    "name": "Square and Nth root of a number:",
@@ -4029,7 +4111,9 @@
     "Elementary and special functions"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "NOT_A_BIT",
+   "reason": "a header, problem or category, not a mechanism",
+   "classified_at": "2026-09-12T13:21Z"
   },
   {
    "name": "Alpha max plus beta min algorithm",
@@ -4041,7 +4125,9 @@
     "Elementary and special functions"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.transform.approximate_a_norm_by_weighted_larger_and_smaller_magnitudes",
+   "classified_at": "2026-09-12T13:21Z"
   },
   {
    "name": "Methods of computing square roots",
@@ -4053,7 +4139,9 @@
     "Elementary and special functions"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "NOT_A_BIT",
+   "reason": "a header, problem or category, not a mechanism",
+   "classified_at": "2026-09-12T13:21Z"
   },
   {
    "name": "nth root algorithm",
@@ -4065,7 +4153,9 @@
     "Elementary and special functions"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.search.step_to_the_zero_of_the_local_linearisation",
+   "classified_at": "2026-09-12T13:21Z"
   },
   {
    "name": "Summation:",
@@ -4077,7 +4167,9 @@
     "Elementary and special functions"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "NOT_A_BIT",
+   "reason": "a header, problem or category, not a mechanism",
+   "classified_at": "2026-09-12T13:21Z"
   },
   {
    "name": "Binary splitting",
@@ -4089,7 +4181,9 @@
     "Elementary and special functions"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.accumulate.evaluate_a_rational_series_by_recursive_halving",
+   "classified_at": "2026-09-12T13:21Z"
   },
   {
    "name": "Kahan summation algorithm",
@@ -4101,7 +4195,9 @@
     "Elementary and special functions"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.accumulate.carry_the_rounding_error_of_each_addition_into_the_next",
+   "classified_at": "2026-09-12T13:21Z"
   },
   {
    "name": "Unrestricted algorithm",
@@ -4113,7 +4209,9 @@
     "Elementary and special functions"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "DEFER",
+   "reason": "the list line names a property (no preset precision limit), not a mechanism; needs a source read",
+   "classified_at": "2026-09-12T13:21Z"
   },
   {
    "name": "Filtered back-projection",
@@ -4125,7 +4223,9 @@
     "Geometric"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.transform.filter_each_projection_then_smear_it_back_along_its_rays",
+   "classified_at": "2026-09-12T13:21Z"
   },
   {
    "name": "Level set method (LSM)",
@@ -4137,7 +4237,9 @@
     "Geometric"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.transform.represent_a_moving_boundary_as_the_zero_level_of_an_evolving_field",
+   "classified_at": "2026-09-12T13:21Z"
   },
   {
    "name": "Birkhoff interpolation",

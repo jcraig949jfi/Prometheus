@@ -1,0 +1,56 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.step_to_the_zero_of_the_local_linearisation",
+  "name": "step to the zero of the local linearisation",
+  "lineage": [
+    "numerical methods",
+    "scientific software"
+  ],
+  "mechanism": "at the current guess, replace the function by its tangent line and jump to where that line crosses zero; repeat -- the error roughly squares each step once close",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Newton's method' in section Computational mathematics / Numerical algorithms / Elementary and special functions: ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Newton–Raphson division': uses Newton's method to find the reciprocal of D, and multiply that reciprocal by N to find the final quotient Q.",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'nth root algorithm': ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "FUNCTION",
+  "out_geometry": "SCALAR",
+  "order_req": "NONE",
+  "metric_req": "NONE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "APPROXIMATE",
+  "strategy": "GREEDY",
+  "iteration": "NONE",
+  "cost": "LOG",
+  "requires": [
+    "a derivative at every guess",
+    "a starting guess in the basin"
+  ],
+  "fails_when": [
+    "divergence or cycling from a poor start; flat derivative"
+  ],
+  "instances": [
+    "Newton's method",
+    "Newton–Raphson division",
+    "nth root algorithm"
+  ],
+  "related": [
+    {
+      "rel": "GENERALIZES",
+      "id": "bit.search.step_to_minimum_of_local_quadratic"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch08 (T2)"
+}

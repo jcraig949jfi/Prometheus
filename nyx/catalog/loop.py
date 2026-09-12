@@ -28,7 +28,7 @@ ROOT = Path("nyx/catalog")
 
 
 def _sources():
-    return {p.stem: json.loads(p.read_text(encoding="utf-8")) for p in sorted((ROOT / "sources").glob("*.json"))}
+    return {p.stem: json.loads(p.read_text(encoding="utf-8")) for p in sorted((ROOT / "sources").glob("*.json")) if "n_entries" in json.loads(p.read_text(encoding="utf-8"))}
 
 
 def status():
@@ -38,6 +38,9 @@ def status():
         by_grade[b["grade"]] = by_grade.get(b["grade"], 0) + 1
     print(f"bits {len(bits)} by grade {by_grade}")
     for sid, s in _sources().items():
+        if "n_entries" not in s:  # a pointer list (e.g. a specimen vault), not a classification source
+            print(f"  {sid}: {s.get('kind')} ({len(s.get('entries', []))} entries; {s.get('status')})")
+            continue
         pend = sum(1 for e in s["entries"] if e["classification"] == "PENDING")
         done = {}
         for e in s["entries"]:
@@ -70,7 +73,8 @@ def commit(batch_path: str) -> int:
     stamp = _dt.datetime.now(_dt.timezone.utc).strftime("%Y-%m-%dT%H:%MZ")
     for d in batch:
         s = sources[d["source"]]
-        entry = next((e for e in s["entries"] if e["name"] == d["entry"]), None)
+        # a name can appear in two sections of one list; classify the PENDING one first, then fall back to any
+        entry = next((e for e in s["entries"] if e["name"] == d["entry"] and e["classification"] == "PENDING"), None)             or next((e for e in s["entries"] if e["name"] == d["entry"]), None)
         if entry is None:
             print("UNKNOWN ENTRY", d["entry"]); return 2
         if d["decision"] == "BIT":

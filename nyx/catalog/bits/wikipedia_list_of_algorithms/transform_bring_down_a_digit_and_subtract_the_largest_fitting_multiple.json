@@ -1,0 +1,45 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.transform.bring_down_a_digit_and_subtract_the_largest_fitting_multiple",
+  "name": "bring down a digit and subtract the largest fitting multiple",
+  "lineage": [
+    "numerical methods",
+    "computer arithmetic"
+  ],
+  "mechanism": "from the most significant end, append the next digit of the dividend to the partial remainder, find the largest single digit whose multiple of the divisor fits, emit that digit and subtract; the remainder carries to the next position",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Long division' in section Computational mathematics / Numerical algorithms / Elementary and special functions: ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Restoring division': ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "TRANSFORM",
+  "in_geometry": "SCALAR",
+  "out_geometry": "SCALAR",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "DIRECT",
+  "iteration": "SWEEP",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "comparison and subtraction on the partial remainder"
+  ],
+  "fails_when": [
+    "one digit per step; quadratic in length"
+  ],
+  "instances": [
+    "Long division",
+    "Restoring division"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch08 (T2)"
+}

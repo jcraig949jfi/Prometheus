@@ -1,0 +1,41 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.transform.approximate_a_norm_by_weighted_larger_and_smaller_magnitudes",
+  "name": "approximate a norm by a weighted sum of the larger and smaller magnitudes",
+  "lineage": [
+    "numerical methods",
+    "computer arithmetic",
+    "controllers"
+  ],
+  "mechanism": "take the absolute values of the two components, scale the larger by one constant and the smaller by another, and add; the constants are chosen so the worst-case relative error over all angles is minimised",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Alpha max plus beta min algorithm' in section Computational mathematics / Numerical algorithms / Elementary and special functions: an approximation of the square-root of the sum of two squares",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "TRANSFORM",
+  "in_geometry": "SCALAR",
+  "out_geometry": "SCALAR",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "APPROXIMATE",
+  "strategy": "DIRECT",
+  "iteration": "NONE",
+  "cost": "CONSTANT",
+  "requires": [
+    "two constants (data)"
+  ],
+  "fails_when": [
+    "error of a few percent; not a substitute where the exact norm matters"
+  ],
+  "instances": [
+    "Alpha max plus beta min algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch08 (T2)"
+}

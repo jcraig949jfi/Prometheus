@@ -1,0 +1,41 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.smooth_on_the_fine_grid_and_correct_from_coarser_grids",
+  "name": "smooth on the fine grid, correct from coarser grids",
+  "lineage": [
+    "numerical methods",
+    "scientific software"
+  ],
+  "mechanism": "a few relaxation sweeps on the fine grid remove the rapidly varying error; the remaining residual is transferred to a coarser grid where the slowly varying error is cheap to solve (recursively), the coarse correction is interpolated back and added, and a final smoothing sweep cleans the interpolation",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Multigrid methods (MG methods), a group of algorithms for solving differential equations using a hierarchy of discretiza' in section Computational mathematics / Numerical algorithms / Differential equation solving: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "MATRIX",
+  "out_geometry": "TENSOR",
+  "order_req": "NONE",
+  "metric_req": "DISTANCE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "APPROXIMATE",
+  "strategy": "DIVIDE_CONQUER",
+  "iteration": "SWEEP",
+  "cost": "LINEAR",
+  "requires": [
+    "a hierarchy of grids with transfer operators",
+    "a smoother that kills high-frequency error"
+  ],
+  "fails_when": [
+    "anisotropic or non-elliptic operators defeat the smoother/coarse split"
+  ],
+  "instances": [
+    "Multigrid methods (MG methods), a group of algorithms for solving differential equations using a hierarchy of discretiza"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch08 (T2)"
+}

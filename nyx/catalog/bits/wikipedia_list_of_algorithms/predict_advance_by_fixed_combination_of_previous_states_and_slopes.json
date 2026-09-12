@@ -1,0 +1,46 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.predict.advance_by_fixed_combination_of_previous_states_and_slopes",
+  "name": "advance by a fixed linear combination of previous states and slopes",
+  "lineage": [
+    "numerical methods",
+    "scientific software"
+  ],
+  "mechanism": "keep a window of the last few states and their rates; the next state is a fixed linear combination of them (and, in implicit forms, of its own rate), so only one new rate evaluation is needed per step",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Linear multistep methods' in section Computational mathematics / Numerical algorithms / Differential equation solving: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "PREDICT",
+  "in_geometry": "FUNCTION",
+  "out_geometry": "SEQUENCE",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "APPROXIMATE",
+  "strategy": "INCREMENTAL",
+  "iteration": "SWEEP",
+  "cost": "LINEAR",
+  "requires": [
+    "a start-up procedure to fill the window",
+    "fixed coefficient sets (data)"
+  ],
+  "fails_when": [
+    "changing the step length invalidates the window; some coefficient sets are unstable"
+  ],
+  "instances": [
+    "Linear multistep methods"
+  ],
+  "related": [
+    {
+      "rel": "CONTRASTS_WITH",
+      "id": "bit.predict.combine_slopes_sampled_within_the_step"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch08 (T2)"
+}
