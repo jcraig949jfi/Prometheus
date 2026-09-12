@@ -11,7 +11,7 @@ def _bit(i, **over):
          "mechanism": "given a keyed archive and a candidate record, keep the candidate only if it is better under a total order on fitness",
          "scale": "PRIMITIVE", "sources": [{"ref": "test", "grade": "T3"}], "grade": "T3",
          "verb": "SELECT", "in_geometry": "MAP", "out_geometry": "MAP", "order_req": "TOTAL", "metric_req": "EQUALITY",
-         "state_req": "GLOBAL", "control": "CALLBACK", "guarantee": "MONOTONE", "strategy": "GREEDY", "cost": "CONSTANT",
+         "state_req": "GLOBAL", "control": "CALLBACK", "guarantee": "MONOTONE", "strategy": "GREEDY", "iteration": "NONE", "cost": "CONSTANT",
          "requires": ["a key per candidate"], "fails_when": ["ties under the order"], "instances": [], "related": []}
     b.update(over)
     return b

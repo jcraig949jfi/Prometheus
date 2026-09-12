@@ -115,6 +115,41 @@
       ],
       "kind": "positive",
       "added": "2026-09-12 v0.2"
+    },
+    {
+      "id": "q.level_by_level_not_deepest",
+      "story": "an organism explored its surroundings ring by ring -- everything one step away, then everything two steps away -- never diving down one path",
+      "query": {
+        "verb": "SEARCH",
+        "in_geometry": "GRAPH",
+        "guarantee": "COMPLETE",
+        "strategy": "INCREMENTAL",
+        "iteration": "FIFO"
+      },
+      "expect_top": [
+        "bit.search.expand_frontier_level_by_level"
+      ],
+      "kind": "positive",
+      "added": "2026-09-12 after batch 2 collision BFS/DFS",
+      "edited": "2026-09-12 v0.4: iteration=FIFO added -- the story ('ring by ring') is this axis; ledgered before rerun"
+    },
+    {
+      "id": "q.grow_one_tree_not_rounds",
+      "story": "an organism built a connected structure by always attaching the cheapest link from what it already had to something new -- one structure, one link at a time",
+      "query": {
+        "verb": "SELECT",
+        "in_geometry": "GRAPH",
+        "out_geometry": "TREE",
+        "order_req": "TOTAL",
+        "strategy": "GREEDY",
+        "iteration": "PRIORITY"
+      },
+      "expect_top": [
+        "bit.select.grow_tree_by_cheapest_crossing_edge"
+      ],
+      "kind": "positive",
+      "added": "2026-09-12 after batch 2 collision of five spanning-tree mechanisms",
+      "edited": "2026-09-12 v0.4: iteration=PRIORITY added -- 'always attaching the cheapest link' is a priority discipline; ledgered before rerun"
     }
   ]
 }

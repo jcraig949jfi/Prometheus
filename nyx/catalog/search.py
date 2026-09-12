@@ -42,6 +42,9 @@ NEAR = {  # partial credit between vocabulary values on the same axis
     ("strategy", "INCREMENTAL", "STREAMING"): 0.5, ("strategy", "EXCHANGE", "FIXPOINT_ITERATION"): 0.5,
     ("strategy", "BACKTRACKING", "BRANCH_AND_BOUND"): 0.5, ("strategy", "DISTRIBUTION", "PRECOMPUTED_TABLE"): 0.25,
     ("strategy", "DIRECT", "PRECOMPUTED_TABLE"): 0.25, ("strategy", "RANDOMIZED", "DIRECT"): 0.25,
+    # iteration (v0.4)
+    ("iteration", "FIFO", "PARALLEL_ROUNDS"): 0.5, ("iteration", "PRIORITY", "SORTED_GLOBAL"): 0.5,
+    ("iteration", "LIFO", "PRIORITY"): 0.25, ("iteration", "SWEEP", "FIFO"): 0.25, ("iteration", "RANDOM", "NONE"): 0.25,
 }
 FORBIDDEN_QUERY_KEYS = {"name", "lineage", "sources", "mechanism", "id", "instances"}
 
