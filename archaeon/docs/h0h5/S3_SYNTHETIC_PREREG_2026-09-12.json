@@ -1,0 +1,32 @@
+{
+ "schema": "archaeon.fossil_metabolism_s3.synthetic_prereg.v0",
+ "status": "PREREGISTERED_BEFORE_THE_BATCH",
+ "question": "Does information-directed probe selection produce a better information state than uniform probing under an equal probe budget, when the returned observation must influence the next choice?",
+ "world": "evaluate_bitstring semantics: hidden target t in {0,1}^L, probe q returns the exact score (L - d_H(q,t))/L; feasible set T(E) by archaeon.producer.fossil_inference (block solver, falsified against enumeration)",
+ "acquisition_objective": {
+  "primary": "ER(q|E) = sum_d n_d^2 / N: expected remaining feasible targets after observing q, under a UNIFORM prior over T(E) (a named indifference assumption, not a claim about the generator); minimise; exact integers, no enumeration of targets",
+  "reported_beside_never_used_to_choose": ["worst-case remaining max_d n_d", "expected eliminated N - ER", "outcome entropy H(d)", "expected immediate score E[s]"],
+  "ties": "equal ER numerator = TIED; the class is recorded; the lexicographically smallest probe names the row",
+  "probe_pool": "archaeon.producer.acquisition.probe_pool: every fossil, its complement, every single-bit flip of every fossil, the posterior mode and its single-bit flips, plus 32 uniform random probes (rng seeded per world/step); scored by ER alone; the pool is the scalable admissible set, and on L <= 8 worlds it reached the enumeration optimum class on >= 6 of 12 worlds (test)"
+ },
+ "arms": {
+  "I": "information-selected: at each step choose argmin ER over the pool built from the arm's CURRENT evidence; observe the exact score; append the fossil; recompute",
+  "U": "uniform: at each step draw a uniform random probe (the existing uniform policy); observe; append; recompute (U's evidence state is updated too, so the comparison is between selection rules, not between updating and not updating)"
+ },
+ "matching": "same L, same hidden target, same initial evidence (one uniform random fossil -- the production reality: one fossil per landscape), same probe budget N_steps, same rng seed lineage per world; the arms' evidence states are separate objects and never share a returned fossil",
+ "worlds": {"lengths": [8, 12, 16, 24], "seeds_per_length": 30, "target": "uniform random per (L, seed)", "initial_fossil": "one uniform random candidate scored against the target", "steps": {"8": 6, "12": 8, "16": 10, "24": 12}},
+ "primary_information_metric": "log2 |T(E)| after N_steps probes (lower is better); paired per world (I - U)",
+ "secondary_metrics": ["log2 |T| trajectory at every step", "uniquely fixed bits at every step", "probes needed to reach |T| = 1 (capped at N_steps + 1 if not reached)", "immediate task score of each probe and its cumulative mean (SOLUTION vs INFORMATION progress)", "per selected probe: Hamming distance to the nearest fossil (candidate diversity), number of distinct outcomes in its partition and its outcome entropy (outcome diversity), ER (information value), E[score] (immediate quality), fixed-bit increment realised (incremental constraint value)"],
+ "diversity_test": "Spearman rank correlation, per world-step over the whole probe pool, between candidate diversity (Hamming distance to the nearest fossil) and information value (-ER); reported per L as the median over world-steps with a bootstrap-free interquartile range; the claim 'diverse inputs produce diverse consequences' is judged by whether that correlation is materially positive (median rho >= 0.5) -- preregistered as a QUESTION, no direction assumed",
+ "licensing_threshold_preregistered": {
+  "INFORMATION_SELECTOR_VALIDATED": "for EVERY L in {8,12,16,24}: the paired mean of (log2|T_U| - log2|T_I|) at N_steps is >= 1.0 bit AND I <= U (log2|T|) on >= 24 of 30 seeds (exact one-sided sign test p < 0.001 at 30)",
+  "NO_ADVANTAGE_OVER_UNIFORM": "some L fails both clauses without I being worse",
+  "INFORMATION_OBJECTIVE_MISALIGNED": "I reaches a smaller feasible set but the realised fixed-bit count or identification steps are NOT better than U on any L (the objective moves the metric it optimises but not the decision-useful quantities)",
+  "COMPUTATIONALLY_INTRACTABLE": "any (L, step) selection exceeds 60 s wall time on this host",
+  "REPRESENTATION_INSUFFICIENT": "a contradiction arises from exact scores (would indicate a defect in the evidence representation) -- fail closed",
+  "note": "task score is measured and reported; it is NOT part of the licensing rule: an informative probe may score badly by design"
+ },
+ "stopping_rule": "run every (L, seed) once; no re-runs; no seed selection after the fact",
+ "assumptions": ["uniform prior over T(E) for every expectation", "the probe pool is the admissible set; a probe outside it is never chosen", "exact scores (no noise): this matches the executor (BIT_DETERMINISTIC)"],
+ "runner": "scratch script archaeon/docs/h0h5/S3_SYNTHETIC_RUNNER_2026-09-12.py (committed beside this file); output S3_SYNTHETIC_RESULTS_2026-09-12.json"
+}

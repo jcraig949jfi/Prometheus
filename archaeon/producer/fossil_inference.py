@@ -145,22 +145,38 @@ def infer(fossils: Sequence[Fossil]) -> Inference:
     blocks = blocks_of(canon)
     sols: List[Tuple[int, ...]] = []
     weights: List[int] = []
-    for u in itertools.product(*[range(b.positions.__len__() + 1) for b in blocks]):
-        ok = True
-        for i, m in enumerate(ms):
-            tot = 0
-            for b, ub in zip(blocks, u):
-                n = len(b.positions)
-                tot += (n - ub) if b.pattern[i] == 1 else ub
-            if tot != m:
-                ok = False
-                break
-        if ok:
-            sols.append(u)
-            w = 1
-            for b, ub in zip(blocks, u):
-                w *= comb(len(b.positions), ub)
-            weights.append(w)
+    # Depth-first over blocks with exact bound pruning: after choosing u for the
+    # first k blocks, fossil i's mismatch count so far must leave a deficit that
+    # the remaining blocks can still supply (each remaining block B contributes
+    # between 0 and n_B mismatches to every fossil). Exhaustive and exact; the
+    # itertools.product form (S2) was exponential in the block count.
+    N = len(ms); K = len(blocks); sizes = [len(b.positions) for b in blocks]
+    suffix = [0] * (K + 1)
+    for k in range(K - 1, -1, -1):
+        suffix[k] = suffix[k + 1] + sizes[k]
+    def dfs(k: int, partial: List[int], u: List[int], w: int):
+        if k == K:
+            if all(partial[i] == ms[i] for i in range(N)):
+                sols.append(tuple(u)); weights.append(w)
+            return
+        n = sizes[k]; pat = blocks[k].pattern
+        for ub in range(n + 1):
+            ok = True
+            for i in range(N):
+                add = (n - ub) if pat[i] == 1 else ub
+                deficit = ms[i] - (partial[i] + add)
+                if deficit < 0 or deficit > suffix[k + 1]:
+                    ok = False; break
+            if not ok:
+                continue
+            for i in range(N):
+                partial[i] += (n - ub) if pat[i] == 1 else ub
+            u.append(ub)
+            dfs(k + 1, partial, u, w * comb(n, ub))
+            u.pop()
+            for i in range(N):
+                partial[i] -= (n - ub) if pat[i] == 1 else ub
+    dfs(0, [0] * N, [], 1)
     if not sols:
         raise Contradiction("no target satisfies all {} fossils (mismatch counts {})".format(len(canon), ms))
     total = sum(weights)
