@@ -1,0 +1,92 @@
+{
+ "n": 6,
+ "k": 3,
+ "genset": "cycle+map",
+ "seed": 1,
+ "generators": {
+  "cycle": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   0
+  ],
+  "map_r4": [
+   3,
+   3,
+   5,
+   3,
+   1,
+   0
+  ],
+  "map_r5": [
+   5,
+   3,
+   2,
+   5,
+   1,
+   4
+  ]
+ },
+ "states": 46656,
+ "targets": 90,
+ "reachability_equals_kernel_criterion": false,
+ "kernel_compatible_pairs": 486000,
+ "reachable_pairs": 462960,
+ "kernel_compatible_but_unreachable_fraction": 0.047407407407407454,
+ "reachable_but_kernel_incompatible": 0,
+ "targets_reachable_from_somewhere": 90,
+ "live_fraction": 0.11025377229080932,
+ "live_triples": 1388880,
+ "traps": 582840,
+ "trap_rate": 0.41964748574390875,
+ "traps_by_generator": {
+  "cycle": 0,
+  "map_r4": 373320,
+  "map_r5": 209520
+ },
+ "traps_visible_by_rank_drop_below_target_rank": 35640,
+ "rank_invisible_trap_fraction": 0.938851142680667,
+ "retained_edges": 806040,
+ "retained_not_on_shortest_path": 303586,
+ "distinct_trap_successors": 7033,
+ "post_trap_region_size_quartiles": [
+  36,
+  216,
+  1296,
+  1296,
+  7176
+ ],
+ "post_trap_eccentricity_quartiles": [
+  5,
+  8,
+  13,
+  13,
+  18
+ ],
+ "D_histogram": {
+  "0": 90,
+  "1": 90,
+  "2": 180,
+  "3": 620,
+  "4": 1330,
+  "5": 5144,
+  "6": 9428,
+  "7": 31682,
+  "8": 55532,
+  "9": 77334,
+  "10": 85944,
+  "11": 72344,
+  "12": 54078,
+  "13": 36932,
+  "14": 21744,
+  "15": 8208,
+  "16": 2280
+ },
+ "max_D": 16,
+ "random_walk_solve_rate_D_ge_4": 0.0,
+ "mean_forward_bfs_expansions": 3507.9575,
+ "mean_D_sampled": 10.09,
+ "oracle_SA_vs_forward_bfs_states": 0.9971236823707242
+}
