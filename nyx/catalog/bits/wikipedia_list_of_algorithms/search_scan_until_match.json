@@ -1,0 +1,41 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.scan_until_match",
+  "name": "scan until match",
+  "lineage": [
+    "search"
+  ],
+  "mechanism": "examine elements one after another in order and stop at the first that satisfies the test",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Linear search' in section Combinatorial algorithms / Sequence algorithms / Sequence search: locates an item in an unsorted sequence",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "SCALAR",
+  "order_req": "NONE",
+  "metric_req": "EQUALITY",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "COMPLETE",
+  "cost": "LINEAR",
+  "requires": [
+    "a membership test"
+  ],
+  "fails_when": [
+    "cost linear in position of the target"
+  ],
+  "instances": [
+    "Linear search"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)",
+  "strategy": "DIRECT",
+  "classification_log": [
+    "2026-09-12 v0.2 strategy backfilled by Nyx from the mechanism sentence"
+  ]
+}

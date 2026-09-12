@@ -1,0 +1,41 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.transform.row_insertion_with_bumping",
+  "name": "row insertion with bumping",
+  "lineage": [
+    "symbolic reasoning"
+  ],
+  "mechanism": "insert each element of a sequence into the first row of a growing tableau, bumping the smallest larger entry down to the next row and repeating, recording where growth happened in a second tableau, giving a bijection from permutations to pairs of tableaux",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Schensted algorithm' in section Combinatorial algorithms / Sequence algorithms / Sequence permutations: constructs a pair of Young tableaux from a permutation",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "TRANSFORM",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "RECORD",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "a total order"
+  ],
+  "fails_when": [
+    "ties need a convention"
+  ],
+  "instances": [
+    "Schensted algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)",
+  "strategy": "INCREMENTAL",
+  "classification_log": [
+    "2026-09-12 v0.2 strategy backfilled by Nyx from the mechanism sentence"
+  ]
+}

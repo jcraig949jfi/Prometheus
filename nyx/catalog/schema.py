@@ -52,6 +52,7 @@ VERB = (  # what the bit DOES; the primary axis
     "REMEMBER",    # store and retrieve by key/content (cache, index, archive)
     "RESUME",      # return to a previously recorded state (checkpoint/restore, replay)
     "GENERATE",    # produce candidates/objects from a grammar, model, or prior
+    "COMPARE",     # measure a distance/similarity/alignment between two objects (added v0.1, see changelog)
 )
 GEOMETRY = (  # value geometry of inputs/outputs
     "SCALAR", "BOOLEAN", "SEQUENCE", "SET", "MULTISET", "MAP", "TREE", "DAG", "GRAPH", "MATRIX",
@@ -66,18 +67,39 @@ GUARANTEE = (  # the strongest property the bit promises, chosen from this list
     "NONE", "TERMINATES", "SOUND", "COMPLETE", "OPTIMAL", "LOCAL_OPTIMUM", "MONOTONE",
     "IDEMPOTENT", "DETERMINISTIC", "PROBABILISTIC_BOUND", "EXACT", "APPROXIMATE",
 )
+STRATEGY = (  # HOW the work is organised (added v0.2 after batch 1 collapsed distinct mechanisms into one signature)
+    "DIRECT",              # one pass / one formula / a table lookup; no organising idea beyond doing it
+    "INCREMENTAL",         # grow a solution one element at a time, maintaining an invariant
+    "EXCHANGE",            # local swaps/moves until an invariant holds everywhere
+    "DIVIDE_CONQUER",      # split, solve parts independently, combine
+    "DISTRIBUTION",        # use the key itself as an address (bucket, radix, hashing)
+    "PRECOMPUTED_TABLE",   # preprocess one input into a table that speeds every later query
+    "DYNAMIC_PROGRAMMING", # fill a table of overlapping subproblems
+    "GREEDY",              # commit to the locally best choice, never revisit
+    "RANDOMIZED",          # correctness or cost relies on random choices
+    "DATA_INDEPENDENT",    # a fixed schedule of operations regardless of input values (networks, oblivious)
+    "BIT_PARALLEL",        # word-level parallelism over sets encoded as bits
+    "FIXPOINT_ITERATION",  # repeat a step until nothing changes
+    "BACKTRACKING",        # depth-first choice with undo on failure
+    "BRANCH_AND_BOUND",    # search with pruning by bounds
+    "STREAMING",           # one pass with bounded state over a stream
+    "ADAPTIVE_SWITCH",     # choose among strategies by observed behaviour/budget
+    "UNKNOWN",
+)
 COST = ("CONSTANT", "LOG", "LINEAR", "LINEARITHMIC", "POLYNOMIAL", "EXPONENTIAL", "UNKNOWN")
 SCALE = ("PRIMITIVE", "MECHANISM")
 GRADES = ("T1-LOCAL", "T1-SOURCE", "T2", "T3", "unknown")
 
 VOCAB_CHANGELOG = [
     "2026-09-12 v0: initial vocabularies, written before any external list was ingested; extension requires a dated entry here and a reason from a failed query or a failed recurrence check",
+    "2026-09-12 v0.2: STRATEGY axis added to the signature. Reason (observed failure after batch 1 commit, LOOP_LOG 2026-09-12): the recurrence check merged SIX distinct sorting mechanisms (swap-adjacent, insert-into-prefix, partition-around-pivot, merge-runs, comparator network, restricted-move) under one signature ORDER|SEQUENCE|SEQUENCE|TOTAL|NONE|NONE|PURE|EXACT, and three pattern matchers (failure links, last-occurrence skips, bit-parallel) under another. A matcher that cannot tell 'split and recombine' from 'swap neighbours until done' is not matching mechanisms. The eight v0 axes describe WHAT and TO WHAT under WHICH requirements; STRATEGY describes HOW the work is organised. Backfilled onto all 50 bits at the same commit; the planted query q.strategy_separates_sorts must pass from then on.",
+    "2026-09-12 v0.1: VERB += COMPARE. Reason (observed failure, batch 1 wikipedia_list_of_algorithms 'Sequence algorithms'): edit distance, Hamming distance, Jaro-Winkler, Dice, dynamic time warping and sequence alignment measure a distance/similarity/alignment between TWO objects; none of the 21 v0 verbs expressed 'measure how far apart two things are' -- ACCUMULATE, TRANSFORM and PREDICT were each wrong in a way a matcher would feel (a query for 'the organism scored how alike two strings were' had no verb to use).",
 ]
 
-SIGNATURE_FIELDS = ("verb", "in_geometry", "out_geometry", "order_req", "metric_req", "state_req", "control", "guarantee")
+SIGNATURE_FIELDS = ("verb", "in_geometry", "out_geometry", "order_req", "metric_req", "state_req", "control", "guarantee", "strategy")
 REQUIRED = ("schema", "id", "name", "mechanism", "scale", "lineage", "sources", "grade",
             "verb", "in_geometry", "out_geometry", "order_req", "metric_req", "state_req", "control",
-            "guarantee", "cost", "requires", "fails_when", "instances", "related")
+            "guarantee", "strategy", "cost", "requires", "fails_when", "instances", "related")
 
 Finding = Tuple[str, str]
 
@@ -98,7 +120,7 @@ def validate(rec: Dict[str, Any]) -> List[Finding]:
         out.append(("BAD_SCHEMA", f"schema must be {SCHEMA}"))
     for k, vocab in (("verb", VERB), ("in_geometry", GEOMETRY), ("out_geometry", GEOMETRY), ("order_req", ORDER_REQ),
                      ("metric_req", METRIC_REQ), ("state_req", STATE_REQ), ("control", CONTROL),
-                     ("guarantee", GUARANTEE), ("cost", COST), ("scale", SCALE), ("grade", GRADES)):
+                     ("guarantee", GUARANTEE), ("strategy", STRATEGY), ("cost", COST), ("scale", SCALE), ("grade", GRADES)):
         if rec[k] not in vocab:
             out.append(("BAD_VOCAB", f"bit.{k}={rec[k]!r} not in {k} vocabulary"))
     if not isinstance(rec["mechanism"], str) or len(rec["mechanism"].split()) < 8:

@@ -1,0 +1,41 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.interpolate_position",
+  "name": "interpolate the probe position",
+  "lineage": [
+    "search"
+  ],
+  "mechanism": "estimate where the target lies in a sorted range from the target's value relative to the range's end values, probe there, and shrink the range around the miss",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Predictive search' in section Combinatorial algorithms / Sequence algorithms / Sequence search: binary-like search which factors in magnitude of search term versus the high and low values in the search. Sometimes called dictionary search or interpolated se",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "SCALAR",
+  "order_req": "TOTAL",
+  "metric_req": "DISTANCE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "cost": "LOG",
+  "requires": [
+    "numeric keys roughly uniformly distributed"
+  ],
+  "fails_when": [
+    "skewed distributions degrade to linear"
+  ],
+  "instances": [
+    "Predictive search"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)",
+  "strategy": "DIVIDE_CONQUER",
+  "classification_log": [
+    "2026-09-12 v0.2 strategy backfilled by Nyx from the mechanism sentence"
+  ]
+}

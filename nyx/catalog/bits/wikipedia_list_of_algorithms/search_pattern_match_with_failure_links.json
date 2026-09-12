@@ -1,0 +1,47 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.pattern_match_with_failure_links",
+  "name": "pattern match with failure links",
+  "lineage": [
+    "search",
+    "symbolic reasoning"
+  ],
+  "mechanism": "precompute for each pattern prefix the longest proper prefix that is also a suffix, so that after a mismatch the scan resumes at that prefix without re-reading text characters; a trie of many patterns gives one automaton for all",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Knuth–Morris–Pratt algorithm' in section Combinatorial algorithms / Sequence algorithms / Substrings: substring search which bypasses reexamination of matched characters",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Aho–Corasick string matching algorithm': trie based algorithm for finding all substring matches to any of a finite set of strings",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "STRING",
+  "out_geometry": "SET",
+  "order_req": "NONE",
+  "metric_req": "EQUALITY",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "cost": "LINEAR",
+  "requires": [
+    "a preprocessing pass over the pattern(s)"
+  ],
+  "fails_when": [
+    "preprocessing cost per pattern set change"
+  ],
+  "instances": [
+    "Knuth–Morris–Pratt algorithm",
+    "Aho–Corasick string matching algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)",
+  "strategy": "PRECOMPUTED_TABLE",
+  "classification_log": [
+    "2026-09-12 v0.2 strategy backfilled by Nyx from the mechanism sentence"
+  ]
+}

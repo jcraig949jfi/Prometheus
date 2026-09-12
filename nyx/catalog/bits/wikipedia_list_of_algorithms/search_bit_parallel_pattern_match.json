@@ -1,0 +1,42 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.bit_parallel_pattern_match",
+  "name": "bit-parallel pattern match",
+  "lineage": [
+    "search",
+    "symbolic reasoning"
+  ],
+  "mechanism": "keep the set of pattern positions currently matched as a bit vector and update it for each text character with shifts and masks precomputed per character, so a match is detected when a designated bit becomes set; approximate variants keep one vector per allowed error",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Bitap algorithm' in section Combinatorial algorithms / Sequence algorithms / Approximate sequence matching: fuzzy algorithm that determines if strings are approximately equal.",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "STRING",
+  "out_geometry": "SET",
+  "order_req": "NONE",
+  "metric_req": "EQUALITY",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "cost": "LINEAR",
+  "requires": [
+    "pattern length within the machine word (or multi-word emulation)"
+  ],
+  "fails_when": [
+    "patterns longer than a word lose the constant factor"
+  ],
+  "instances": [
+    "Bitap algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)",
+  "strategy": "BIT_PARALLEL",
+  "classification_log": [
+    "2026-09-12 v0.2 strategy backfilled by Nyx from the mechanism sentence"
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.order.merge_sorted_runs",
+  "name": "merge sorted runs",
+  "lineage": [
+    "search"
+  ],
+  "mechanism": "consume several already-ordered sequences by repeatedly taking the smallest head among them, producing one ordered sequence",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Simple merge algorithm' in section Combinatorial algorithms / Sequence algorithms / Sequence merging: ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'k-way merge algorithm': ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Union (merge, with elements on the output not repeated)': ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Merge sort': sort the first and second half of the list separately, then merge the sorted lists",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Timsort': adaptative algorithm derived from merge sort and insertion sort. Used in Python 2.3 and up, and Java SE 7.",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Strand sort': ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "ORDER",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "SEQUENCE",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "cost": "LINEARITHMIC",
+  "requires": [
+    "inputs already ordered",
+    "a total order"
+  ],
+  "fails_when": [
+    "unordered inputs give unordered output silently"
+  ],
+  "instances": [
+    "Simple merge algorithm",
+    "k-way merge algorithm",
+    "Union (merge, with elements on the output not repeated)",
+    "Merge sort",
+    "Timsort",
+    "Strand sort"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)",
+  "strategy": "DIVIDE_CONQUER",
+  "classification_log": [
+    "2026-09-12 v0.2 strategy backfilled by Nyx from the mechanism sentence"
+  ]
+}

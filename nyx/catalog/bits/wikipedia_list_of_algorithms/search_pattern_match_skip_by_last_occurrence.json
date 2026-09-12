@@ -1,0 +1,53 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.pattern_match_skip_by_last_occurrence",
+  "name": "pattern match skipping by last occurrence",
+  "lineage": [
+    "search",
+    "symbolic reasoning"
+  ],
+  "mechanism": "compare the pattern from its end, and on a mismatch shift the pattern forward by how far the mismatching text character is from its last occurrence in the pattern, skipping text without examining it",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Boyer–Moore string-search algorithm' in section Combinatorial algorithms / Sequence algorithms / Substrings: amortized linear (sublinear in most times) algorithm for substring search",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Boyer–Moore–Horspool algorithm': Simplification of Boyer–Moore",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Zhu–Takaoka string matching algorithm': a variant of Boyer–Moore",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "STRING",
+  "out_geometry": "SET",
+  "order_req": "NONE",
+  "metric_req": "EQUALITY",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "cost": "LINEAR",
+  "requires": [
+    "a table of last occurrences per alphabet symbol"
+  ],
+  "fails_when": [
+    "small alphabets shrink the skips",
+    "worst case still linear-quadratic in some variants"
+  ],
+  "instances": [
+    "Boyer–Moore string-search algorithm",
+    "Boyer–Moore–Horspool algorithm",
+    "Zhu–Takaoka string matching algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)",
+  "strategy": "PRECOMPUTED_TABLE",
+  "classification_log": [
+    "2026-09-12 v0.2 strategy backfilled by Nyx from the mechanism sentence"
+  ]
+}

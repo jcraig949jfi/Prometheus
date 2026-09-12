@@ -1,0 +1,42 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.compare.positionwise_mismatch_count",
+  "name": "positionwise mismatch count",
+  "lineage": [
+    "search",
+    "symbolic reasoning"
+  ],
+  "mechanism": "compare two equal-length sequences position by position and count the positions where they differ",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Hamming distance' in section Combinatorial algorithms / Sequence algorithms / Approximate sequence matching: sum number of positions which are different",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "COMPARE",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "SCALAR",
+  "order_req": "NONE",
+  "metric_req": "EQUALITY",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "cost": "LINEAR",
+  "requires": [
+    "equal lengths"
+  ],
+  "fails_when": [
+    "insertions shift every later position and inflate the count"
+  ],
+  "instances": [
+    "Hamming distance"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)",
+  "strategy": "DIRECT",
+  "classification_log": [
+    "2026-09-12 v0.2 strategy backfilled by Nyx from the mechanism sentence"
+  ]
+}

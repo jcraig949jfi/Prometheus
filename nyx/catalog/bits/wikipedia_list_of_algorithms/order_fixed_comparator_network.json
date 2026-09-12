@@ -1,0 +1,41 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.order.fixed_comparator_network",
+  "name": "fixed comparator network",
+  "lineage": [
+    "search"
+  ],
+  "mechanism": "apply a data-independent fixed sequence of compare-and-swap operations on pairs of positions whose pattern guarantees an ordered output for any input of that size",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Bitonic sorter' in section Combinatorial algorithms / Sequence algorithms / Sequence sorting: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "ORDER",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "SEQUENCE",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "cost": "LINEARITHMIC",
+  "requires": [
+    "fixed input size (padding otherwise)"
+  ],
+  "fails_when": [
+    "not adaptive to already-sorted input"
+  ],
+  "instances": [
+    "Bitonic sorter"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)",
+  "strategy": "DATA_INDEPENDENT",
+  "classification_log": [
+    "2026-09-12 v0.2 strategy backfilled by Nyx from the mechanism sentence"
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.order.distribute_by_key_value",
+  "name": "distribute by key value",
+  "lineage": [
+    "search"
+  ],
+  "mechanism": "use the key itself (or a digit or bucket of it) as an address: count or bucket elements by key, then read the buckets out in key order, repeating per digit for long keys",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Counting sort' in section Combinatorial algorithms / Sequence algorithms / Sequence sorting: ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Bucket sort': ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Pigeonhole sort': ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Postman sort': variant of Bucket sort which takes advantage of hierarchical structure",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Radix sort': sorts strings letter by letter",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Flashsort': ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Bead sort': ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "ORDER",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "SEQUENCE",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "cost": "LINEAR",
+  "requires": [
+    "keys that map to a bounded integer range or fixed-width digits"
+  ],
+  "fails_when": [
+    "large key ranges cost memory",
+    "arbitrary comparison keys are not addressable"
+  ],
+  "instances": [
+    "Counting sort",
+    "Bucket sort",
+    "Pigeonhole sort",
+    "Postman sort",
+    "Radix sort",
+    "Flashsort",
+    "Bead sort"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)",
+  "strategy": "DISTRIBUTION",
+  "classification_log": [
+    "2026-09-12 v0.2 strategy backfilled by Nyx from the mechanism sentence"
+  ]
+}

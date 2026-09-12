@@ -1,0 +1,51 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.order.insert_into_sorted_prefix",
+  "name": "insert each element into the sorted prefix",
+  "lineage": [
+    "search"
+  ],
+  "mechanism": "grow an ordered prefix one element at a time by finding where the next element belongs among the ordered ones and shifting to make room",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Insertion sort' in section Combinatorial algorithms / Sequence algorithms / Sequence sorting: determine where the current item belongs in the list of sorted ones, and insert it there",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Shell sort': an attempt to improve insertion sort",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Library sort': ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "ORDER",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "SEQUENCE",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "a total order"
+  ],
+  "fails_when": [
+    "quadratic shifts on far-from-sorted input (gap sequences and gaps in storage are the repairs)"
+  ],
+  "instances": [
+    "Insertion sort",
+    "Shell sort",
+    "Library sort"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)",
+  "strategy": "INCREMENTAL",
+  "classification_log": [
+    "2026-09-12 v0.2 strategy backfilled by Nyx from the mechanism sentence"
+  ]
+}

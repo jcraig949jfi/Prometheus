@@ -1,0 +1,42 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.select.kth_by_partition",
+  "name": "kth element by partitioning",
+  "lineage": [
+    "search"
+  ],
+  "mechanism": "partition the sequence around a pivot into smaller and larger parts, then recurse only into the part that must contain the kth element until the pivot lands at position k",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Quickselect' in section Combinatorial algorithms / Sequence algorithms / Selection algorithms: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SELECT",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "SCALAR",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "cost": "LINEAR",
+  "requires": [
+    "a total order",
+    "a pivot rule (policy)"
+  ],
+  "fails_when": [
+    "adversarial pivots degrade to quadratic"
+  ],
+  "instances": [
+    "Quickselect"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)",
+  "strategy": "DIVIDE_CONQUER",
+  "classification_log": [
+    "2026-09-12 v0.2 strategy backfilled by Nyx from the mechanism sentence"
+  ]
+}

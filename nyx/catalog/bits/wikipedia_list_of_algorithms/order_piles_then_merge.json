@@ -1,0 +1,55 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.order.piles_then_merge",
+  "name": "deal into ordered piles then merge",
+  "lineage": [
+    "search"
+  ],
+  "mechanism": "deal elements onto the leftmost pile whose top is not smaller (found by halving over pile tops), creating a new pile when none qualifies, then merge the piles; the pile count is the longest increasing subsequence length",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Patience sorting' in section Combinatorial algorithms / Sequence algorithms / Sequence sorting: ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Longest increasing subsequence problem': Find the longest increasing subsequence of a given sequence",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "ORDER",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "SEQUENCE",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "cost": "LINEARITHMIC",
+  "requires": [
+    "a total order"
+  ],
+  "fails_when": [
+    "the merge step dominates on random input"
+  ],
+  "instances": [
+    "Patience sorting",
+    "Longest increasing subsequence problem"
+  ],
+  "related": [
+    {
+      "rel": "REQUIRES",
+      "id": "bit.search.halve_sorted_range"
+    },
+    {
+      "rel": "REQUIRES",
+      "id": "bit.order.merge_sorted_runs"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)",
+  "strategy": "GREEDY",
+  "classification_log": [
+    "2026-09-12 v0.2 strategy backfilled by Nyx from the mechanism sentence"
+  ]
+}

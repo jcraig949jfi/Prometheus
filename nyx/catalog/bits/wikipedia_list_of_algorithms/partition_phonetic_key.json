@@ -1,0 +1,68 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.partition.phonetic_key",
+  "name": "phonetic key",
+  "lineage": [
+    "search",
+    "symbolic reasoning"
+  ],
+  "mechanism": "map a word to a short canonical code by keeping its first letter and replacing the rest with classes of similar-sounding consonants while dropping vowels and repeats, so words that sound alike collide on the same code",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Soundex' in section Combinatorial algorithms / Sequence algorithms / Approximate sequence matching: a phonetic algorithm for indexing names by sound, as pronounced in English",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Daitch–Mokotoff Soundex': a Soundex refinement which allows matching of Slavic and Germanic surnames",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Double Metaphone': an improvement on Metaphone",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Match rating approach': a phonetic algorithm developed by Western Airlines",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Metaphone': an algorithm for indexing words by their sound, when pronounced in English",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'NYSIIS': phonetic algorithm, improves on Soundex",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "PARTITION",
+  "in_geometry": "STRING",
+  "out_geometry": "STRING",
+  "order_req": "NONE",
+  "metric_req": "EQUALITY",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "DETERMINISTIC",
+  "cost": "LINEAR",
+  "requires": [
+    "a table from letters to sound classes (policy, language-specific)"
+  ],
+  "fails_when": [
+    "language-specific tables misclassify other languages",
+    "collisions are the point and also the failure: unrelated words share a code"
+  ],
+  "instances": [
+    "Soundex",
+    "Daitch–Mokotoff Soundex",
+    "Double Metaphone",
+    "Match rating approach",
+    "Metaphone",
+    "NYSIIS"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)",
+  "strategy": "PRECOMPUTED_TABLE",
+  "classification_log": [
+    "2026-09-12 v0.2 strategy backfilled by Nyx from the mechanism sentence"
+  ]
+}

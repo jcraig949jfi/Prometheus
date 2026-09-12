@@ -1,0 +1,46 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.generate.next_permutation_by_transposition",
+  "name": "next permutation by one transposition",
+  "lineage": [
+    "search"
+  ],
+  "mechanism": "enumerate all permutations so that each is produced from the previous by swapping exactly two elements, using a small amount of state to decide which pair",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Heap's permutation generation algorithm' in section Combinatorial algorithms / Sequence algorithms / Sequence permutations: interchange elements to generate next permutation",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Steinhaus–Johnson–Trotter algorithm (also known as the Johnson–Trotter algorithm)': generates permutations by transposing elements",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "GENERATE",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "STREAM",
+  "order_req": "NONE",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "COMPLETE",
+  "cost": "CONSTANT",
+  "requires": [
+    "mutable sequence"
+  ],
+  "fails_when": [
+    "factorial total output"
+  ],
+  "instances": [
+    "Heap's permutation generation algorithm",
+    "Steinhaus–Johnson–Trotter algorithm (also known as the Johnson–Trotter algorithm)"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)",
+  "strategy": "INCREMENTAL",
+  "classification_log": [
+    "2026-09-12 v0.2 strategy backfilled by Nyx from the mechanism sentence"
+  ]
+}

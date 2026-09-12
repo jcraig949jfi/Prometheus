@@ -84,6 +84,36 @@
       },
       "expect_error": true,
       "kind": "cheat"
+    },
+    {
+      "id": "q.strategy_separates_sorts",
+      "story": "an organism ordered a sequence by splitting it around a chosen element and treating the two sides separately -- NOT by swapping neighbours or by merging runs",
+      "query": {
+        "verb": "ORDER",
+        "in_geometry": "SEQUENCE",
+        "out_geometry": "SEQUENCE",
+        "order_req": "TOTAL",
+        "strategy": "DIVIDE_CONQUER"
+      },
+      "expect_top": [
+        "bit.order.partition_around_pivot"
+      ],
+      "kind": "positive",
+      "added": "2026-09-12 v0.2 after the batch-1 collapse"
+    },
+    {
+      "id": "q.strategy_separates_matchers",
+      "story": "an organism matched a pattern by keeping which positions were still alive as bits and shifting them",
+      "query": {
+        "verb": "SEARCH",
+        "in_geometry": "STRING",
+        "strategy": "BIT_PARALLEL"
+      },
+      "expect_top": [
+        "bit.search.bit_parallel_pattern_match"
+      ],
+      "kind": "positive",
+      "added": "2026-09-12 v0.2"
     }
   ]
 }

@@ -1,0 +1,42 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.remember.suffix_tree_online_construction",
+  "name": "online suffix tree construction",
+  "lineage": [
+    "memory and retrieval"
+  ],
+  "mechanism": "extend a compressed trie of all suffixes one character at a time, using suffix links and an active point so each extension costs amortised constant time",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Ukkonen's algorithm' in section Combinatorial algorithms / Sequence algorithms / Substrings: a linear-time, online algorithm for constructing suffix trees",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "REMEMBER",
+  "in_geometry": "STRING",
+  "out_geometry": "TREE",
+  "order_req": "NONE",
+  "metric_req": "EQUALITY",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "cost": "LINEAR",
+  "requires": [
+    "a terminal symbol",
+    "an alphabet"
+  ],
+  "fails_when": [
+    "memory-heavy; constant factors large"
+  ],
+  "instances": [
+    "Ukkonen's algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)",
+  "strategy": "INCREMENTAL",
+  "classification_log": [
+    "2026-09-12 v0.2 strategy backfilled by Nyx from the mechanism sentence"
+  ]
+}
