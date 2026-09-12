@@ -32,3 +32,20 @@ alphageometry | automated mathematics; search | QUEUED | C3 | auxiliary-construc
 alphacode | program synthesis | QUEUED | H1 | massive sampling plus filtering by execution; the filter is the organ, the model is the cost
 apollo (Prometheus) | historical Prometheus machinery | QUEUED, wait (awakening 2026-09-11) | EVIDENCE | mining jobs A-L and the source viability gate
 ergon (Prometheus) | historical Prometheus machinery | QUEUED, wait (awakening 2026-09-11) | EVIDENCE | metabolization probe pipeline; MRU vs RANDOM
+
+## Keeper's lineage universe (received 2026-09-12 ~05:00Z, verbatim in roles/Nyx/prompts/2026-09-12_keeper_lineage_list/)
+
+theorem provers; network protocols; databases; operating systems; compressors;
+schedulers; optimizers; controllers; search procedures; error-correcting systems;
+memory managers; numerical methods; planning systems; distributed systems; games;
+scientific software; biological and artificial dynamical systems; "and thousands of
+other computational lineages".
+
+Recorded as the universe the queue draws from, not as a choice. N4 gate CLOSED
+(ruling 2026-09-12); no specimen selected; no anatomy until a consumer creates
+demand. Lineages already cut: theorem provers (Lean simp), search procedures
+(shrinker, Go-Explore), quality-diversity/program-synthesis (MAP-Elites, DreamCoder),
+historical Prometheus machinery (Diomedes census). Lineages in this list with NO cut
+yet: network protocols, databases, operating systems, compressors, schedulers,
+controllers, error-correcting systems, memory managers, numerical methods,
+distributed systems, games, dynamical systems.
