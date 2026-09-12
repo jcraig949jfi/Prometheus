@@ -1,0 +1,87 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "lru-cache-goldsborough",
+  "receipt_id": "run-lru-cache-goldsborough-20260912T162752Z",
+  "written_utc": "20260912T162752Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree",
+  "harness_sha256": {
+    "drv.cpp": "02b1c85e6249ba9537a3c4e0d7840e23cf1dff8a05f99f3c52c15c07eca5aa7f"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "6b9266080ddb9edd0c18061143ab3b8cbc8bd481a45390fcf5adb082bf3209b8",
+  "recipe_sha256": "6fd198da00319ed5af8b51770ee3f748b87332c303680439a3fad343bda694f4",
+  "patches": [],
+  "probe": [
+    {
+      "name": "g++",
+      "cmd": "g++ --version | head -1",
+      "exit": 0,
+      "seconds": 0.82,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "g++ (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "compile driver against the header library",
+      "cmd": "g++ -O2 -std=c++17 -Iinclude -o $BODY/lru $HARNESS/drv.cpp 2>&1 | grep -i 'error:' | head -5; test -x $BODY/lru",
+      "exit": 0,
+      "seconds": 2.09,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "LRU evicts the least-recently-inserted key",
+      "cmd": "$BODY/lru",
+      "exit": 0,
+      "seconds": 0.83,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "has1=0 has2=1 has3=1 has4=1\nLRU_EVICT_OK\nthrash_hit_rate=0.00%\nLRU_THRASH_CONFIRMED\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [
+    {
+      "name": "pathological: working set >> capacity thrashes (hit rate -> 0)",
+      "cmd": "$BODY/lru",
+      "exit": 0,
+      "seconds": 0.9,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "has1=0 has2=1 has3=1 has4=1\nLRU_EVICT_OK\nthrash_hit_rate=0.00%\nLRU_THRASH_CONFIRMED\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "produced": [],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true
+}

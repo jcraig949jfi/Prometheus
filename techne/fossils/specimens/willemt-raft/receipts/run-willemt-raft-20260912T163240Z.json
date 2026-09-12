@@ -1,0 +1,78 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "willemt-raft",
+  "receipt_id": "run-willemt-raft-20260912T163240Z",
+  "written_utc": "20260912T163240Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "4a8b3aca72e1b778176c868e69979071ab0eb33984b00dbbb4b12322616b7603",
+  "recipe_sha256": "04c671dfce67cfa1333cbfa269eaab31778ed6e9b986f5d658d909588d097fd0",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1",
+      "exit": 0,
+      "seconds": 0.88,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gcc (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "make tests",
+      "cmd": "make tests 2>&1 | grep -viE 'warning' | tail -6; ls tests_main 2>/dev/null; true",
+      "exit": 0,
+      "seconds": 0.86,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "mkdir -p ./CLinkedListQueue/.git\ngit --git-dir=./CLinkedListQueue/.git init \n/bin/bash: line 1: git: command not found\nmake[1]: *** [Makefile:36: clinkedlistqueue] Error 127\nmake[1]: Leaving directory '/w/upstream/tree'\nmake: *** [Makefile:42: tests/main_test.c] Error 2\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "Raft election + log-replication unit/fuzz tests",
+      "cmd": "make tests 2>&1 | tail -8",
+      "exit": 0,
+      "seconds": 0.9,
+      "ok": false,
+      "why_not": [
+        "stdout does not match /(?i)(OK|passed|[0-9]+ tests|100%)/"
+      ],
+      "stdout": {
+        "text": "if test -d ./CLinkedListQueue; \\\nthen echo have contribs; \\\nelse make download-contrib; \\\nfi\nhave contribs\ncd ./tests && sh make-tests.sh \"test_*.c\" > main_test.c && cd ..\nmake: *** No rule to make target 'CLinkedListQueue/linked_list_queue.c', needed by 'tests'.  Stop.\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [
+    {
+      "path": "tests/main_test.c",
+      "sha256": "040ce17ba0c04f8d70898b696d017c3c54fad6193d66513536a1189b3f9e8ad7",
+      "bytes": 27253
+    }
+  ],
+  "classification": "BUILDS_BUT_NOT_RUN",
+  "test_classification": "UPSTREAM_TESTS_PASS",
+  "ok": false
+}

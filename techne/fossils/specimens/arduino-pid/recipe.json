@@ -1,0 +1,44 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree",
+  "probe": [
+    {
+      "name": "g++",
+      "cmd": "g++ --version | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "compile PID + plant harness",
+      "cmd": "g++ -O2 -DARDUINO=10800 -I. -I$HARNESS -o $BODY/pid $HARNESS/drv.cpp PID_v1.cpp 2>&1 | grep -i 'error:'; test -x $BODY/pid"
+    }
+  ],
+  "runs": [
+    {
+      "name": "step response: modest gains converge the controlled variable to the setpoint",
+      "cmd": "$BODY/pid 1 0.5 0.02",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "PID_CONVERGED"
+        ]
+      }
+    }
+  ],
+  "tests": [
+    {
+      "name": "pathological: 200x proportional gain destabilises the loop",
+      "cmd": "$BODY/pid 200 0.5 0.02",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "PID_UNSTABLE"
+        ]
+      }
+    }
+  ],
+  "test_kind": "TECHNE",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "Techne supplies a minimal Arduino.h (millis) + a two-lag (third-order-with-integrator) plant; the PID source is unmodified. Run (Kp=1) converges to the setpoint via integral action; the test run (Kp=200) is the FAILURE-axis receipt: excess gain destabilises the feedback loop (output rails). behavioral_entry_point: pass Kp Ki Kd on argv -- Kp>=~4 already leaves the converged regime."
+}

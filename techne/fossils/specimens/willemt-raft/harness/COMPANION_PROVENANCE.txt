@@ -1,0 +1,9 @@
+Companion dependency vendored for the raft test suite (network-sealed build world).
+
+  linked_list_queue.c / .h
+    origin:  https://github.com/willemt/CLinkedListQueue (willemt, same author as raft)
+    fetched: raw.githubusercontent.com/willemt/CLinkedListQueue/master/ on 2026-09-12
+    why:     willemt/raft's Makefile downloads this via `git pull` at build time
+             (target: download-contrib). The fossil build world has no network, so the
+             two files are vendored here unchanged. This is a companion DEPENDENCY, not a
+             modification of the raft source; the raft tree under upstream/ is untouched.

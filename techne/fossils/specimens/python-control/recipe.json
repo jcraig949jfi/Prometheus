@@ -1,0 +1,29 @@
+{
+  "runner": "docker",
+  "image": "python:3.11-slim",
+  "workdir": "upstream/tree",
+  "probe": [
+    {
+      "name": "python",
+      "cmd": "python --version"
+    }
+  ],
+  "build": [],
+  "runs": [
+    {
+      "name": "design an LQR and drive a double integrator to the origin",
+      "cmd": "pip install -q numpy scipy matplotlib >/dev/null 2>&1 && MPLBACKEND=Agg PYTHONPATH=. python $HARNESS/drv.py",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "LQR_STABILIZED"
+        ]
+      }
+    }
+  ],
+  "tests": [],
+  "test_kind": "TECHNE",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "numpy/scipy are pip-installed; the acquired python-control source itself is run via PYTHONPATH=. (the fossil, not a PyPI copy). Oracle: LQR must place all closed-loop eigenvalues in the left half-plane and drive the perturbed state to ~0."
+}

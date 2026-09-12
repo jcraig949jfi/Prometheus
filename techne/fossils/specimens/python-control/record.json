@@ -1,0 +1,132 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "python-control",
+  "canonical_name": "python-control -- the Python Control Systems Library",
+  "aliases": [
+    "python-control",
+    "control"
+  ],
+  "lineage": "python-control (2010-, Murray et al., Caltech): LTI systems, state-space and transfer functions, LQR/LQE optimal control, pole placement, frequency response; the open reference implementing the classical/modern control toolbox in Python",
+  "domain": [
+    "control",
+    "optimal-control",
+    "state-feedback",
+    "lqr",
+    "feedback-control"
+  ],
+  "era": "2010-",
+  "version": "github.com/python-control/python-control main as of 2026-09-12 (commit in hashes)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/python-control/python-control",
+        "commit": "a7754794dcc9d3ef2060cc1b2486bd42b73395cc",
+        "commit_resolved": "a7754794dcc9d3ef2060cc1b2486bd42b73395cc",
+        "commit_date": "2026-08-13T23:31:56-07:00"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/python-control/python-control"
+  },
+  "hashes": {
+    "tree_sha256": "63a1737525ab96f4f176896cd3ae3a1115aa92d6c75de1db62cfb3fdd725a723",
+    "n_files": 339,
+    "bytes": 14259742,
+    "artifacts": [
+      {
+        "filename": "https://github.com/python-control/python-control",
+        "sha256": null,
+        "commit": "a7754794dcc9d3ef2060cc1b2486bd42b73395cc"
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\python-control",
+    "hash_list": "techne/fossils/specimens/python-control/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "BSD-3-Clause",
+    "status": "permissive",
+    "evidence": "LICENSE"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "Python"
+  ],
+  "build_system": "pip install . (numpy+scipy)",
+  "compiler_or_interpreter": "CPython 3.11 + numpy/scipy (docker python:3.11-slim, pip at run time)",
+  "dependencies": [
+    "numpy",
+    "scipy"
+  ],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "control.lqr / control.ss / control.forced_response -- design an LQR gain and simulate the closed loop"
+  ],
+  "example": {
+    "command": "Techne harness: build a 2-state plant, design an LQR gain, simulate to the origin from a perturbed state",
+    "input": "a state-space plant + cost matrices Q,R",
+    "output": "the closed-loop state trajectory driven to zero"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "python:3.11-slim"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "python-control.readthedocs.io",
+    "Astrom & Murray, Feedback Systems"
+  ],
+  "human_capability_summary": {
+    "built_to": "design and simulate controllers for linear dynamical systems -- compute an optimal state-feedback gain (LQR) that trades control effort against state error, and simulate the resulting closed loop",
+    "pressure": "a multivariable plant with coupled states where hand-tuning fails; the controller must stabilise and optimise a quadratic cost",
+    "success_means": "the closed-loop system is stable and drives the state to the target with the intended effort/error trade-off"
+  },
+  "known_human_problem_solved": "model-based optimal control design (LQR and friends)",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "coupled multivariable dynamics, control-effort limits, the effort-vs-error trade-off",
+  "human_failure_condition": "an unstable or badly-tuned gain lets the state diverge; in a physical plant that is a crash",
+  "behavioral_entry_point": "change Q/R (cheap vs expensive control), perturb the initial state, or add a disturbance to the simulated plant and watch the LQR response",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/python-control/receipts/run-python-control-20260912T164222Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/python-control/receipts/run-python-control-20260912T164322Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/python-control/receipts/run-python-control-20260912T164354Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\python-control ; tracked techne/fossils/specimens/python-control",
+    "where_it_came_from": "https://github.com/python-control/python-control ; ORIGINAL_AUTHORITATIVE_RELEASE @ a7754794dcc9d3ef2060cc1b2486bd42b73395cc",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run python-control",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/python-control/receipts/run-python-control-20260912T164354Z.json",
+    "what_humans_used_it_for": "design and simulate controllers for linear dynamical systems -- compute an optimal state-feedback gain (LQR) that trades control effort against state error, and simulate the resulting closed loop"
+  },
+  "seat": "Techne"
+}

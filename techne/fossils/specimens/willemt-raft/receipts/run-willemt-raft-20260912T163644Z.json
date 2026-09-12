@@ -1,0 +1,74 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "willemt-raft",
+  "receipt_id": "run-willemt-raft-20260912T163644Z",
+  "written_utc": "20260912T163644Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree",
+  "harness_sha256": {
+    "COMPANION_PROVENANCE.txt": "421d480e7fe90db01346a4d53610420fe4a2af136c0f232af6d6ced4d6a1e60c",
+    "linked_list_queue.c": "90ee37658180e58103cd63d156980057ca26343533326bcd4beed31a142ebb5e",
+    "linked_list_queue.h": "22a8bc3cd7dc5dc7e2f27727f9892b2ee879de4d8b95a6f431bcc6c0a95e1ccc"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "4a8b3aca72e1b778176c868e69979071ab0eb33984b00dbbb4b12322616b7603",
+  "recipe_sha256": "8e2090f2d930f7f548803d0bcc3641b8f87bcd7f4f743c09f0caac346be7cae0",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1",
+      "exit": 0,
+      "seconds": 0.82,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gcc (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "generate the CuTest AllTests driver, then compile the raft test suite",
+      "cmd": "cd tests && sh make-tests.sh 'test_*.c' > main_test.c && cd .. && gcc -O2 -w -Iinclude -Itests -I$HARNESS -o $BODY/traft src/raft_server.c src/raft_server_properties.c src/raft_log.c src/raft_node.c tests/main_test.c tests/test_log.c tests/test_node.c tests/test_scenario.c tests/test_server.c tests/test_snapshotting.c tests/mock_send_functions.c tests/CuTest.c $HARNESS/linked_list_queue.c 2>&1 | grep -i 'error:' | head; test -x $BODY/traft",
+      "exit": 0,
+      "seconds": 3.32,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "Raft election + log-replication + snapshotting unit/scenario tests",
+      "cmd": "$BODY/traft > /tmp/raft.tap 2>&1; tail -2 /tmp/raft.tap; echo PASS=$(grep -c '^ok ' /tmp/raft.tap) NOTOK=$(grep -c 'not ok' /tmp/raft.tap)",
+      "exit": 0,
+      "seconds": 0.83,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "ok 157 - TestRaft_leader_sends_snapshot_if_log_was_compacted\n\nPASS=157 NOTOK=0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "UPSTREAM_TESTS_PASS",
+  "ok": true
+}

@@ -62,6 +62,10 @@ def skeleton(specimen_id: str, **fields) -> dict:
         "human_capability_summary": {"built_to": "", "pressure": "", "success_means": ""},
         "known_human_problem_solved": "",
         "hardware_assumptions": "",
+        # batch 04 (machinery under pressure): context only, never a Nyx decomposition.
+        "human_environmental_pressure": "",   # the external condition that made this necessary
+        "human_failure_condition": "",        # what happens if it fails at its human purpose
+        "behavioral_entry_point": "",         # one reproducible way to stimulate/perturb it
         # charter 2026-09-12: observability is a set of independent yes/no/unknown flags, and
         # lineage is a list of provenance edges. Both default empty; the harvest fills them.
         "observability": {d: "unknown" for d in OBSERVABILITY_DIMS},

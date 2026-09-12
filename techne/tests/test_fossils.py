@@ -41,20 +41,34 @@ def test_every_specimen_record_is_valid_and_has_a_capability_summary(sid):
                       "how_we_know_it_runs", "what_humans_used_it_for"}
 
 
+#: A specimen legitimately has no recipe/receipt only when it is deliberately not run.
+_NO_RUN = {"SOURCE_ONLY", "BINARY_ONLY", "BLOCKED_DEPENDENCY", "BLOCKED_PLATFORM",
+           "BROKEN_UPSTREAM", "LEGAL_RESTRICTION", "NOT_ATTEMPTED"}
+
+
 @pytest.mark.skipif(not SPECIMENS, reason="no specimens on this tree")
 @pytest.mark.parametrize("sid", SPECIMENS)
-def test_every_specimen_has_a_recipe_and_a_hash_list(sid):
+def test_every_specimen_has_a_hash_list_and_a_recipe_unless_source_only(sid):
     d = vault.specimen_dir(sid)
-    assert (d / "recipe.json").exists()
     assert (d / "UPSTREAM_HASHES.txt").exists()
-    txt = (d / "UPSTREAM_HASHES.txt").read_text(encoding="utf-8")
-    assert "TREE_SHA256" in txt
+    assert "TREE_SHA256" in (d / "UPSTREAM_HASHES.txt").read_text(encoding="utf-8")
+    if record.load(sid)["run_classification"] not in _NO_RUN:
+        assert (d / "recipe.json").exists(), "%s is not SOURCE_ONLY but has no recipe" % sid
 
 
 @pytest.mark.skipif(not SPECIMENS, reason="no specimens on this tree")
-def test_at_least_one_receipt_per_specimen_that_was_run():
-    ran = [s for s in SPECIMENS if record.load(s)["run_classification"] != "NOT_ATTEMPTED"]
+def test_every_run_specimen_has_a_receipt():
+    ran = [s for s in SPECIMENS if record.load(s)["run_classification"] not in _NO_RUN]
     assert ran, "no specimen has been run"
     for s in ran:
-        assert (vault.specimen_dir(s) / "receipts").exists() and \
-               any((vault.specimen_dir(s) / "receipts").glob("*.json")), s
+        rd = vault.specimen_dir(s) / "receipts"
+        assert rd.exists() and any(rd.glob("*.json")), s
+
+
+@pytest.mark.skipif(not SPECIMENS, reason="no specimens on this tree")
+@pytest.mark.parametrize("sid", SPECIMENS)
+def test_observability_and_lineage_fields_present(sid):
+    r = record.load(sid)
+    assert set(r["observability"]) >= set(record.OBSERVABILITY_DIMS)
+    for e in r.get("lineage_relations", []):
+        assert e["relation"] in record.LINEAGE_RELATIONS, e

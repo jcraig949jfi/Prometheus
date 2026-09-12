@@ -1,0 +1,29 @@
+{
+  "runner": "docker",
+  "image": "python:3.11-slim",
+  "workdir": "upstream/tree",
+  "probe": [
+    {
+      "name": "python",
+      "cmd": "python --version"
+    }
+  ],
+  "build": [],
+  "runs": [
+    {
+      "name": "self-organise a map over three clusters (quantization error drops)",
+      "cmd": "pip install -q numpy >/dev/null 2>&1 && PYTHONPATH=. python $HARNESS/drv.py",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "SOM_ORGANIZED"
+        ]
+      }
+    }
+  ],
+  "tests": [],
+  "test_kind": "TECHNE",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "Oracle: quantization error must fall substantially as the SOM self-organises (competitive learning). behavioral_entry_point: shrink sigma/lr or feed unclustered noise to make it fail to organise."
+}

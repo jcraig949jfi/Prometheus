@@ -1,0 +1,132 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "hopfield-takyamamoto",
+  "canonical_name": "Hopfield Network (Python reference, Takuya Yamamoto)",
+  "aliases": [
+    "hopfield",
+    "Hopfield-Network"
+  ],
+  "lineage": "The Hopfield network (Hopfield 1982): a recurrent associative memory where patterns are stored as attractors of an energy function; presented a corrupted pattern, the dynamics descend the energy landscape and recall the nearest stored memory",
+  "domain": [
+    "connectionist",
+    "hopfield-network",
+    "associative-memory",
+    "attractor-dynamics",
+    "recurrent",
+    "recovery"
+  ],
+  "era": "1982 lineage; this impl modern",
+  "version": "github.com/takyamamoto/Hopfield-Network master as of 2026-09-12 (commit in hashes)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/takyamamoto/Hopfield-Network",
+        "commit": "18655d51765720315f02543a9c2dd3d3f5042f2c",
+        "commit_resolved": "18655d51765720315f02543a9c2dd3d3f5042f2c",
+        "commit_date": "2018-07-31T00:40:13+09:00"
+      }
+    ]
+  },
+  "source_type": "PSEUDOCODE_PLUS_REFERENCE_IMPL",
+  "source_identity": {
+    "repo": "github.com/takyamamoto/Hopfield-Network"
+  },
+  "hashes": {
+    "tree_sha256": "52d091ff7e6e6f5d96b7edd674bf6900a5c027323d1fe194e48f7373df11abc2",
+    "n_files": 10,
+    "bytes": 129322,
+    "artifacts": [
+      {
+        "filename": "https://github.com/takyamamoto/Hopfield-Network",
+        "sha256": null,
+        "commit": "18655d51765720315f02543a9c2dd3d3f5042f2c"
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\hopfield-takyamamoto",
+    "hash_list": "techne/fossils/specimens/hopfield-takyamamoto/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "see repo LICENSE",
+    "status": "read before redistribution",
+    "evidence": "repo"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "Python"
+  ],
+  "build_system": "python (numpy); the repo's own demo",
+  "compiler_or_interpreter": "CPython 3.11 + numpy (docker python:3.11-slim)",
+  "dependencies": [
+    "numpy",
+    "matplotlib (for the demo plots; a headless run skips them)"
+  ],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "train (Hebbian weight matrix from patterns); predict (async/sync update to an attractor)"
+  ],
+  "example": {
+    "command": "Techne harness: store a few binary patterns, present a NOISE-corrupted one, iterate the dynamics, check it recalls the correct stored pattern",
+    "input": "a corrupted version of a stored pattern",
+    "output": "the recovered (denoised) stored pattern; energy decreasing"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "python:3.11-slim"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Hopfield, Neural networks and physical systems with emergent collective computational abilities, 1982"
+  ],
+  "human_capability_summary": {
+    "built_to": "store patterns as stable attractors and RECALL the nearest stored pattern from a noisy or partial cue by iterating recurrent dynamics that minimise an energy function",
+    "pressure": "recall from corrupted/partial input, and a hard capacity limit (~0.14N patterns) beyond which memories interfere and recall fails",
+    "success_means": "a corrupted cue converges to the correct stored pattern; the network denoises and completes"
+  },
+  "known_human_problem_solved": "content-addressable (associative) memory with error correction by attractor dynamics",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "noisy/partial input, bounded storage capacity, spurious attractors",
+  "human_failure_condition": "above capacity (or with correlated patterns) it converges to a spurious/wrong attractor -- recalls a memory that was never stored",
+  "behavioral_entry_point": "raise the corruption level of the cue, or store MORE patterns than ~0.14N, and watch recall fail into spurious attractors",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/hopfield-takyamamoto/receipts/run-hopfield-takyamamoto-20260912T163932Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/hopfield-takyamamoto/receipts/run-hopfield-takyamamoto-20260912T164033Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/hopfield-takyamamoto/receipts/run-hopfield-takyamamoto-20260912T164159Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\hopfield-takyamamoto ; tracked techne/fossils/specimens/hopfield-takyamamoto",
+    "where_it_came_from": "https://github.com/takyamamoto/Hopfield-Network ; PSEUDOCODE_PLUS_REFERENCE_IMPL @ 18655d51765720315f02543a9c2dd3d3f5042f2c",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run hopfield-takyamamoto",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/hopfield-takyamamoto/receipts/run-hopfield-takyamamoto-20260912T164159Z.json",
+    "what_humans_used_it_for": "store patterns as stable attractors and RECALL the nearest stored pattern from a noisy or partial cue by iterating recurrent dynamics that minimise an energy function"
+  },
+  "seat": "Techne"
+}
