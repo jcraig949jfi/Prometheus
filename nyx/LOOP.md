@@ -20,6 +20,10 @@ Throughput observed is still 0 per hour, but the consumer exists.
     N2 diomedes K0 census: DONE 2026-09-12 00:21Z as a NEGATIVE CHOP (ruling): 0 organs,
     0 pressures, boundary VALID, null SUPPORTED; one owner finding (#192).
     In flight now: NOTHING. General loop CLOSED; N3 requires a ruling.
+    RULING 2026-09-12 (metabolic gate holds): HOLD THE WAREHOUSE; ATTACK EXISTING
+    CLAIMS (NYX-32/37/38 on existing specimens only, no new inventory); REPAIR
+    ROUTING; WAIT FOR DIGESTION. Routing repaired #197 (Proteus and Diomedes have
+    NEVER BOOTED; #191 lacked a concrete consumer, interface and requested action).
     WAITING-ON-CONSUMER (not WIP): lean_simp (#176 open at Archaeon; #175
     RETURNED by Vivarium #182 at 21:23Z, 0.5 h after posting), map_elites
     (#44 returned: world sketch, blocked on the objective family), dreamcoder
@@ -121,3 +125,40 @@ rather than argued away.
     #191          Archaeon         DELIVERED, no return
     #192          Diomedes+Archaeon DELIVERED (failure finding), no return
     ORGANs CONSUMED 0; pressures OPERATIONALIZED 0.
+
+## The four questions, recorded narrowly (ruling 2026-09-12)
+
+    1 Can Nyx catch a bad cut?                 YES, on the Lean/simp specimen.
+    2 Does a learned knife transfer?           SOME RULES transferred Lean -> Hypothesis;
+                                               others correctly did not fire.
+    3 Can Nyx refrain from inventing anatomy?  YES on the preregistered Diomedes negative.
+    4 Can an ORGAN leave its ancestor and      UNKNOWN. ORGANs consumed: 0. Outranks harvesting.
+      cause a useful downstream effect?
+    Bounded results. Not "Nyx validated", not "Chop Shop validated", not "decomposition solved".
+
+## Standing diagnostic: PROMOTION TEMPTATION (not a success metric)
+
+Candidates that looked promotable before the decisive control and were refused.
+    lean_simp             not counted -- the ledger has no pre-control temptation record
+                          (c23 was demoted by a control, but it was not documented as
+                          tempted BEFORE the control; the count is not manufactured)
+    hypothesis_shrinker   not counted -- same reason (c02 "organ or data?" was a post-hoc
+                          attack note, not a pre-control temptation)
+    diomedes_k0_census    2 (c02 headroom statistic; c07 identifiability ceiling), each
+                          with independent behaviour RUN and refused on the preregistered
+                          duplicate control; cuts.json tempted_organ_reading = true
+Future specimens record the temptation at the moment it is felt, before the control runs.
+
+## Reopen conditions for N3 (ruling 2026-09-12; ONE suffices)
+
+    A  an ORGAN receives a substantive consumer return
+    B  #191 is explicitly rejected because no current consumer can test any delivered organ
+    C  evidence that the delivery/interface contract itself prevents consumption
+    D  the Keeper issues a new scientific reason
+    Status 03:30Z: none met. Routing repair #197 asks Archaeon to put B on the record if it is true.
+
+## Class counted separately (ruling): useful outcomes with no ORGAN and no PRESSURE
+
+    downstream failures made cheaper   3   (#44 preflight count; Techne target-7 located;
+                                            Diomedes bootstrap zero-width, scope exactly n = 4 8 16 32
+                                            observed, 5 17 24 100 fine -- not generalised)
