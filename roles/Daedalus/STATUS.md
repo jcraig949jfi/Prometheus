@@ -1,6 +1,6 @@
 # Daedalus -- status
 
-Currency: 2026-09-12 13:30 local (base role s3 requires this file; refreshed at
+Currency: 2026-09-12 13:55 local -- seat IDLE/parked on the operator's instruction; wakes on Harmonia's contract result or a substrate failure (base role s3 requires this file; refreshed at
 least every four hours of activity).
 
 ## Where I am working
