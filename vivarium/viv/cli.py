@@ -579,6 +579,20 @@ def cmd_unpark(args, conn) -> int:
     return 0
 
 
+def cmd_scope_reconcile(args, conn) -> int:
+    """B1 recurrence by hand: extend the declared read scopes with this
+    owner's newly eligible worlds (add-only, idempotent). Prints the record;
+    a receipt lands in var_dir either way."""
+    conn.close()
+    _workspace.assert_not_canonical("reconcile read scopes", allow_override=False)
+    v = _loop.Vivarium(schema=args.schema, log=print)
+    rec = v.reconcile_scopes(trigger="cli", dry_run=args.dry_run)
+    print(_j(rec))
+    if args.receipt:
+        Path(args.receipt).write_text(_j(rec) + "\n", encoding="utf-8")
+    return 0 if not any("error" in s for s in rec.get("scopes", [])) else 1
+
+
 def cmd_tick(args, conn) -> int:
     """Exactly one tick, reported as JSON. The unit the daemon drives."""
     _workspace.assert_not_canonical("execute a tick", allow_override=False)
@@ -816,6 +830,12 @@ def build_parser() -> argparse.ArgumentParser:
     s.add_argument("--interval", type=float, default=None)
     s.add_argument("--worker-id", default=None)
     s.set_defaults(fn=cmd_run)
+
+    s = sub.add_parser("scope-reconcile", help="B1 recurrence: extend the "
+                       "declared read scopes with newly eligible owner worlds")
+    s.add_argument("--dry-run", action="store_true")
+    s.add_argument("--receipt", default=None)
+    s.set_defaults(fn=cmd_scope_reconcile)
 
     s = sub.add_parser("tick", help="exactly one tick, reported as JSON")
     s.add_argument("--worker-id", default=None)
