@@ -77,3 +77,35 @@ Deterministic reset, answered (PREREG s4): PRIMARILY A PROPERTY DEMANDED OF THE 
 + a POLICY (carry the token with the elite and resume from it rather than replay
 actions). No mechanism in the IN files performs the reset. Preserved as COUPLED_CLUSTER
 c03; the world-side requirement becomes pressure P-A.
+
+## Result (one cut; stopped at the evidence boundary; no CUT-2 -- nothing ran and nothing returned)
+
+    candidates 14; ORGAN 1 (c04); RECURRENCE 1 (c01 -> MAP-Elites cell replacement);
+    COUPLED_CLUSTER 1 (c03 deterministic reset); POLICY 6; SCAFFOLDING 4; DATA 1
+    PRESSURE 1 (resume_from_remembered_places; hostable UNKNOWN; owner candidate Archaeon)
+    inherited-boundary rate 12/14 = 0.86 (reported, not optimised; the two cross-def
+    boundaries, c01 and c03, are the ones that shaped the result)
+    boundary_support: 14 UNTESTED -- executable attacks NOT RUN (no managed pin; Techne #201 open)
+    literal unknowns 2 (the organ's fitness_value and ablation)
+    PROMOTION TEMPTATION 3 (c01 refused: recurrence; c02 refused: a table; c04 admitted)
+    K: K1 K2 K5 K7 K8 K9 K10 FIRED; K3 K4 DID_NOT_FIRE (blocked on management, pre-declared); K6 N/A
+
+Deterministic reset: ENVIRONMENTAL AFFORDANCE (emulator clone/restore, outside
+the boundary) + STATE ASSUMPTION (exact resumption) + POLICY (carry the token
+with the elite; resume rather than replay). No mechanism in the IN files
+performs a reset. Preserved as c03 COUPLED_CLUSTER; the world-side requirement
+became the pressure.
+
+The c07 question: NOT answerable as "recurred" -- nothing was run, so
+runnable_outside_ancestor is SPECIFIED for c04, not RUN. The transfer-interface
+ledger shows a different class: for c04 no Prometheus site holds the kind of
+state it needs (a sample of observations + a key family + an archive willing to
+be re-keyed) -> NO CURRENT CONSUMER; for c03 the value geometry is the WORLD's
+(a token the world produces and accepts back) and cannot leave by construction.
+
+Predictions: P1 CONFIRMED (affordance + assumption + policy); P2 CONFIRMED
+(admission rule -> recurrence of MAP-Elites; the tie-break is policy); P3
+CONFIRMED (cell representation and weights POLICY); P4 CONFIRMED (1 organ <= 2;
+3 temptations, recorded at drawing); P5 NOT TESTABLE (nothing ran; the ledger
+gives the geometry answer instead); P6 CONFIRMED (one pressure, hostable UNKNOWN,
+owner named, compared against the inventory: new).

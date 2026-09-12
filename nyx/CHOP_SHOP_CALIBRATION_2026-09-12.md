@@ -90,3 +90,23 @@ changes only when a consumer's failure says so.
     #191 Archaeon (shrinker organs)                    DELIVERED, no return
     #175 Vivarium (Lean pressures)                     REJECTED_BLOCKED via #182
     ORGANs CONSUMED: 0. Pressures OPERATIONALIZED: 0. Open architectural risk, unchanged.
+
+## Added 2026-09-12 05:0xZ: fourth specimen (Go-Explore, N3) and the c07 question
+
+    quantity                              lean_simp   shrinker   census   go_explore
+    candidates at CUT-1                   23          18         12       14
+    ORGAN at last cut                     4           6          0        1
+    RECURRENCE                            0           0          5        1 (of an INVENTORY organ: first time)
+    PRESSURE written                      4           1          0        1 (hostable UNKNOWN, owner named)
+    inherited rate at CUT-1               0.87        0.56       1.00     0.86
+    boundaries across defs                3           8          0        2 (both decisive: recurrence + coupled cluster)
+    executable contact                    yes         yes        yes      NO (blocked on management; pre-declared)
+    promotion temptation (recorded)       n/c         n/c        2        3
+    c07 pathology recurred?               n/a         first seen n/a      NOT TESTABLE (nothing ran); geometry ledger says a
+                                                                          different class: no site holds the state (c04);
+                                                                          the world owns the geometry (c03)
+The fourth specimen is the first where an ORGAN candidate was refused as a
+RECURRENCE OF AN INVENTORY ORGAN (c01 vs MAP-Elites cell replacement) rather than
+of a textbook -- the duplicate control from the N2 ruling did its first
+cross-specimen work. It is also the first specimen with NO executable contact,
+and the numbers show it: all 14 boundaries UNTESTED, every ablation NOT RUN.

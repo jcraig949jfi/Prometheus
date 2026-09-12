@@ -19,7 +19,9 @@ Throughput observed is still 0 per hour, but the consumer exists.
     no CUT-3 -- no return, no patched-build ablation); deliveries #190 #191.
     N2 diomedes K0 census: DONE 2026-09-12 00:21Z as a NEGATIVE CHOP (ruling): 0 organs,
     0 pressures, boundary VALID, null SUPPORTED; one owner finding (#192).
-    In flight now: NOTHING. General loop CLOSED; N3 requires a ruling.
+    N3 Go-Explore: DONE 2026-09-12 05:0xZ at its evidence boundary (one cut; 1 organ NO CURRENT CONSUMER,
+    1 pressure delivered #202 hostable UNKNOWN, 1 recurrence of an inventory organ, 1 coupled cluster).
+    In flight now: NOTHING. STOP by ruling; N4 NOT opened.
     RULING 2026-09-12 (metabolic gate holds): HOLD THE WAREHOUSE; ATTACK EXISTING
     CLAIMS (NYX-32/37/38 on existing specimens only, no new inventory); REPAIR
     ROUTING; WAIT FOR DIGESTION. Routing repaired #197 (Proteus and Diomedes have
@@ -100,9 +102,9 @@ consumer this week).
 
 ## ANTI-COLLECTION table (program level; refreshed at journal close)
 
-    organs delivered                 18  (MAP-Elites 3, DreamCoder 3, lean_simp 8, hypothesis_shrinker 6 at CUT-2 via #191)
+    organs delivered                 18  (unchanged: go_explore c04 marked NO CURRENT CONSUMER and NOT delivered)
     organs actually consumed          0
-    pressures delivered               7  (#190 to Vivarium+Proteus, owner named; +2 held: mutual_normalisation, encoding-decides-reachability)
+    pressures delivered               8  (#202 resume_from_remembered_places, hostable UNKNOWN, owner candidate named; +3 held)
     pressures operationalized         0  (6 returned: 1 world sketch blocked on semantics, 1 vacuous, 4 unhostable -- no rewriting substrate)
     cuts falsified                    2  (lean c23; shrinker c08); negative chops completed 1 (census: expected zero -> zero)
     cuts materially revised          17  (lean_simp 15 + 1 + orientation cheat read-out on #182; MAP-Elites/DreamCoder annotated, not recut)
@@ -175,3 +177,8 @@ Future specimens record the temptation at the moment it is felt, before the cont
     first organ consumer return        #200, 2026-09-12 03:42Z, 4.6 h after #191
     The c07 lesson as ruled: 'runnable outside the ancestor' != 'consumable by an existing downstream site'.
     NOT learned: flat-sequence organs are bad; tree organs are better; seek Prometheus-shaped organs.
+
+## Recurrence of inventory organs (first instance 2026-09-12)
+
+    go_explore c01 archive admission -> RECURRENCE of organ.map_elites cell replacement (and of h3_replay's admission rule)
+    The Chop Shop did not manufacture apparent diversity here; the anti-collection law worked once.
