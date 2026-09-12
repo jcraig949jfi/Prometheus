@@ -21,7 +21,9 @@ Throughput observed is still 0 per hour, but the consumer exists.
     0 pressures, boundary VALID, null SUPPORTED; one owner finding (#192).
     N3 Go-Explore: DONE 2026-09-12 05:0xZ at its evidence boundary (one cut; 1 organ NO CURRENT CONSUMER,
     1 pressure delivered #202 hostable UNKNOWN, 1 recurrence of an inventory organ, 1 coupled cluster).
-    In flight now: NOTHING. STOP by ruling; N4 NOT opened.
+    In flight now: NOTHING. RULING 2026-09-12 (roles/Nyx/prompts/2026-09-12_ruling_n3_accepted_n4_closed/): N3 ACCEPTED; N4 CLOSED;
+    production loop CLOSED. ATTACK EXISTING CLAIMS; DO NOT GROW THE WAREHOUSE. NYX-44 pre-authorized
+    on a managed pin (#201); controls FROZEN before any result (ablations/n3_c04_controls.py).
     RULING 2026-09-12 (metabolic gate holds): HOLD THE WAREHOUSE; ATTACK EXISTING
     CLAIMS (NYX-32/37/38 on existing specimens only, no new inventory); REPAIR
     ROUTING; WAIT FOR DIGESTION. Routing repaired #197 (Proteus and Diomedes have
@@ -182,3 +184,31 @@ Future specimens record the temptation at the moment it is felt, before the cont
 
     go_explore c01 archive admission -> RECURRENCE of organ.map_elites cell replacement (and of h3_replay's admission rule)
     The Chop Shop did not manufacture apparent diversity here; the anti-collection law worked once.
+
+## Three transfer failures, recorded SEPARATELY (ruling 2026-09-12; provisional classes, not ontology)
+
+    TYPE A  interface mismatch at an existing site     c07 (#200): consumer exists; its value geometry does not fit the organ's contract
+    TYPE B  no current consumer state                  c04: no site holds the state/value/interface the organ needs
+    TYPE C  capability belongs to the environment      c03: reset/resume is the world's; policy + assumption ride on it
+    Not collapsed into one bit. nyx.chop/0 unchanged.
+
+## Standing diagnostic: CROSS-LINEAGE ORGAN RECURRENCE (ruling 2026-09-12)
+
+    2026-09-12  go_explore c01 (RL/search) -> organ.map_elites cell replacement by fitness in a behaviour-keyed archive (quality diversity)
+                Both ancestries preserved (nyx/specimens/map_elites/, nyx/specimens/go_explore/cuts.json c01).
+    Counts as: two independent cuts reaching materially equivalent machinery.
+    Does NOT count as: new organ / validation of the existing organ / proof of universality.
+
+## N4 gate (ruling 2026-09-12): CLOSED. Reconsider after ANY of
+    A  NYX-44 executable evidence about c04      B  #202 substantive pressure return
+    C  another substantive consumer attempt on an existing ORGAN
+    D  cross-lineage recurrence gives a concrete reason to test another lineage
+    E  the Keeper supplies a more informative experiment
+    Availability of another interesting tool is not sufficient.
+
+## The questions that now matter (ruling)
+    Can c04 survive executable attack?  (NYX-44; the unique-key-family cheat control especially)
+    Can #202 become an operational world pressure?  (decisive: does an EXISTING world supply opaque
+      state capture, exact restoration, world-owned novelty accounting, explicit cost -- without
+      anyone manufacturing Go-Explore around the pressure)
+    Can any ORGAN become genuinely CONSUMED?

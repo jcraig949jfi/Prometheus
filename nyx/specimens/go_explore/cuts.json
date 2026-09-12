@@ -37,7 +37,13 @@
         "CUT-1": "same mechanism as MAP-Elites cell replacement by fitness in a behaviour-keyed archive; (score, -length) fitness and the restore payload are POLICY/DATA on it"
       },
       "tempted_organ_reading": true,
-      "recurrence_of": "organ.map_elites.cell_replacement (nyx/specimens/map_elites/organs/)"
+      "recurrence_of": "organ.map_elites.cell_replacement (nyx/specimens/map_elites/organs/)",
+      "cross_lineage_recurrence": {
+        "of": "organ.map_elites.cell_replacement (lineage: quality diversity; nyx/specimens/map_elites/)",
+        "in": "go_explore c01 archive admission (lineage: reinforcement learning / search)",
+        "ruling": "roles/Nyx/prompts/2026-09-12_ruling_n3_accepted_n4_closed/",
+        "reading": "two independent cuts reached materially equivalent machinery; NOT a new organ, NOT validation of the existing organ, NOT proof of universality; both ancestries preserved"
+      }
     },
     {
       "id": "c02",
@@ -103,7 +109,8 @@
       "boundary_support_ref": "none",
       "organ_record": "none",
       "notes": {
-        "CUT-1": "affordance (emulator clone/restore, OUT) + state assumption (exact resumption) + policy (carry the token; resume rather than replay); no mechanism in the IN files performs the reset; pressure P-A extracted"
+        "CUT-1": "affordance (emulator clone/restore, OUT) + state assumption (exact resumption) + policy (carry the token; resume rather than replay); no mechanism in the IN files performs the reset; pressure P-A extracted",
+        "ruling_2026-09-12": "NOT presently supported as an ORGAN inside the boundary: environmental affordance + state assumption + policy; coupled cluster preserved; the pressure form (#202) may be tested downstream. TRANSFER FAILURE TYPE C (capability belongs to the environment)."
       },
       "tempted_organ_reading": false
     },
@@ -140,7 +147,8 @@
       "boundary_support_ref": "none",
       "organ_record": "representation_selection.cut1.json",
       "notes": {
-        "CUT-1": "materially new vs inventory (declared descriptors there; learned here); image-only family shipped; NOT RUN"
+        "CUT-1": "materially new vs inventory (declared descriptors there; learned here); image-only family shipped; NOT RUN",
+        "ruling_2026-09-12": "CANDIDATE ORGAN: specified / untested / no current consumer. Status may not be strengthened until executable contact. TRANSFER FAILURE TYPE B (no current consumer state). NYX-44 pre-authorized on a managed pin (#201); controls frozen in ablations/n3_c04_controls.py BEFORE any pin or result."
       },
       "tempted_organ_reading": true
     },
@@ -603,5 +611,33 @@
     "question": "does the c07 interface pathology (runnable outside the ancestor but not consumable at an existing site) recur?",
     "c04": "CANNOT be answered as 'recurred' because nothing was run (runnable = SPECIFIED, not RUN); consumable = NO CURRENT CONSUMER -- a different failure class: not 'the site holds the wrong geometry' but 'no site holds this kind of state at all'",
     "c03": "the coupled cluster's geometry is the WORLD's (a token the world produces and accepts); it cannot leave the ancestor by construction -- the pressure is the transferable form"
+  },
+  "transfer_failure_types_provisional": {
+    "note": "provisional empirical classes recorded per the ruling; NOT nyx.chop/0 ontology",
+    "A_interface_mismatch_at_existing_site": [
+      "hypothesis_shrinker c07 (#200): a candidate consumer exists; its value geometry (nested program trees) does not satisfy the organ's contract (flat orderable sequence)"
+    ],
+    "B_no_current_consumer_state": [
+      "go_explore c04: no existing site holds a sample of observations + a key-function family + an archive willing to be re-keyed"
+    ],
+    "C_capability_belongs_to_environment": [
+      "go_explore c03: the reset/resume capability is the emulator's; policy and a state assumption ride on it"
+    ]
+  },
+  "n4_gate": {
+    "status": "CLOSED (ruling roles/Nyx/prompts/2026-09-12_ruling_n3_accepted_n4_closed/)",
+    "reopen_any_of": [
+      "A NYX-44 produces executable evidence about c04",
+      "B #202 produces a substantive pressure return",
+      "C an existing ORGAN receives another substantive consumer attempt",
+      "D cross-lineage recurrence creates a concrete scientific reason to test another lineage",
+      "E the Keeper supplies a more informative experiment"
+    ]
+  },
+  "nyx44_controls_frozen": {
+    "file": "nyx/specimens/go_explore/ablations/n3_c04_controls.py",
+    "sha256": "398da889ebcfbd3fc1b10eaf3e6e5eccf01274992b8c60b5b772a68add25509a",
+    "frozen": "2026-09-12T04:40Z",
+    "rule": "not altered after a result except to repair a demonstrably malformed control, ledgered before rerun (ruling 2026-09-12)"
   }
 }

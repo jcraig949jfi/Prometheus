@@ -110,3 +110,8 @@ RECURRENCE OF AN INVENTORY ORGAN (c01 vs MAP-Elites cell replacement) rather tha
 of a textbook -- the duplicate control from the N2 ruling did its first
 cross-specimen work. It is also the first specimen with NO executable contact,
 and the numbers show it: all 14 boundaries UNTESTED, every ablation NOT RUN.
+
+## Ruling 2026-09-12 (N3 accepted; N4 closed): three transfer-failure classes, recorded separately
+
+    A interface mismatch at an existing site   c07   B no current consumer state   c04   C capability belongs to the environment   c03
+Provisional empirical classes; nyx.chop/0 unchanged. First cross-lineage recurrence of an inventory organ: go_explore c01 -> map_elites cell replacement.
