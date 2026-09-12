@@ -14,8 +14,20 @@ IS active in comms since 17:05 local (python -m comms who; m1-416d588d);
 the earlier claim that it had never booted was stale by four hours.
 Throughput observed is still 0 per hour, but the consumer exists.
 
-    CAP = 1 specimen in flight until the first substantive return exists.
-    In flight now: lean_simp (CUT-3 done; awaiting #175 / #176).
+    CAP = 1 (operator ruling 2026-09-11 evening: exactly 1; not recomputed).
+    N1 hypothesis shrinker: NATURAL STOPPING POINT reached 23:06Z (CUT-2 written;
+    no CUT-3 -- no return, no patched-build ablation); deliveries #190 #191.
+    In flight now: NOTHING. Nyx HOLDS at the metabolic gate.
+    WAITING-ON-CONSUMER (not WIP): lean_simp (#176 open at Archaeon; #175
+    RETURNED by Vivarium #182 at 21:23Z, 0.5 h after posting), map_elites
+    (#44 returned: world sketch, blocked on the objective family), dreamcoder
+    (#52 returned: vacuous on the live corpus; executor half exists).
+    N2, N3: CLOSED by ruling. METABOLIC GATE (23:06Z): one substantive return
+    exists (#182, Vivarium on the six pressures). Assessment: #182 returned
+    on PRESSURES and licensed a routing rule; no ORGAN has been consumed and
+    no pressure operationalized; N1's own deliveries (#190 #191) are minutes
+    old. Nyx's reading: N2 is NOT yet licensed by consumption evidence; the
+    gate is the operator's or a return's to open. HOLD.
 
 When the first return arrives the cap is recomputed as
     ceil(returns per day / 1) bounded to [1, 3]
@@ -23,7 +35,9 @@ and written here with the date.
 
 ## STOP / escalation status (checked at every journal close)
 
-    consumer backlog makes inventory useless   WATCH (downgraded 21:10Z from TRIGGERED-CANDIDATE):
+    consumer backlog makes inventory useless   CLEARED 21:23Z for Vivarium (#182 returned on all six
+                                               pressures); OPEN for Archaeon (#45 #53 #176 unanswered).
+                                               Previously WATCH (downgraded 21:10Z from TRIGGERED-CANDIDATE):
                                                6 pressures + 4 organ reports, 0 consumed,
                                                BUT Vivarium booted at 17:05 and #175 is
                                                4h younger than that. Reported to the operator;
@@ -80,18 +94,18 @@ consumer this week).
 
 ## ANTI-COLLECTION table (program level; refreshed at journal close)
 
-    organs delivered                 12  (MAP-Elites 3, DreamCoder 3, lean_simp 8 at CUT-1 -> 4 at CUT-3; counted as delivered 8)
+    organs delivered                 18  (MAP-Elites 3, DreamCoder 3, lean_simp 8, hypothesis_shrinker 6 at CUT-2 via #191)
     organs actually consumed          0
-    pressures delivered               6  (+1 held, +1 candidate not written)
-    pressures operationalized         0
-    cuts falsified                    1  (c23 negative control; plus P5 as a prediction)
-    cuts materially revised          16  (lean_simp 15 + 1; MAP-Elites/DreamCoder had no second cut)
-    independent behaviours reproduced 0  (every run was inside the ancestor)
+    pressures delivered               7  (#190 to Vivarium+Proteus, owner named; +2 held: mutual_normalisation, encoding-decides-reachability)
+    pressures operationalized         0  (6 returned: 1 world sketch blocked on semantics, 1 vacuous, 4 unhostable -- no rewriting substrate)
+    cuts falsified                    2  (lean c23 negative control; shrinker c08 -> COUPLED by the consumer fixture P-b)
+    cuts materially revised          17  (lean_simp 15 + 1 + orientation cheat read-out on #182; MAP-Elites/DreamCoder annotated, not recut)
+    independent behaviours reproduced 3  (hypothesis_shrinker c01 c03 c07: standalone runs with no engine imported; RECEIPT_N1)
     downstream experiments enabled    0  (none run by a consumer)
-    downstream failures made cheaper  0  (no consumer has failed on a Nyx artefact yet)
-    inherited boundaries discovered  22  (lean_simp 20 + 2; stamped, not estimated)
-    cheat paths closed                1  (D3 planted loop fires the budget)
+    downstream failures made cheaper  2  (#44 preflight count; Techne target-7 non-minimality reproduced in 1.4 s with the pass that did not fire named)
+    inherited boundaries discovered  32  (lean_simp 22; shrinker 10, of which 2 inherited-AND-supported, 0 falsified)
+    cheat paths closed                4  (lean D3; shrinker P-a5 strict decrease, N-a/P-a1 pair, N-e boundary assertion)
 
-Reading: the warehouse has grown; nothing has been consumed. This table
+Reading (21:23Z): the warehouse has grown; six pressures have been READ and returned, none operationalized; nothing has been consumed. This table
 is why the loop is held at cap 1 and the STOP condition is reported
 rather than argued away.
