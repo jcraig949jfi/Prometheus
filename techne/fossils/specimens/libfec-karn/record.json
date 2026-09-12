@@ -1,0 +1,121 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "libfec-karn",
+  "canonical_name": "libfec -- Phil Karn's forward-error-correction library (Viterbi + Reed-Solomon)",
+  "aliases": [
+    "libfec",
+    "Karn FEC"
+  ],
+  "lineage": "libfec (1995-, Phil Karn KA9Q): optimised VITERBI decoders for convolutional codes (the trellis / add-compare-select / traceback machinery) plus Reed-Solomon; the amateur-radio and deep-space FEC reference",
+  "domain": [
+    "error-correcting-codes",
+    "viterbi",
+    "convolutional-codes",
+    "estimation",
+    "signal-processing",
+    "state-estimation"
+  ],
+  "era": "1995-",
+  "version": "github.com/ka9q/libfec master as of 2026-09-12 (commit in hashes)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/ka9q/libfec",
+        "commit": "HEAD"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/ka9q/libfec",
+    "author": "Phil Karn"
+  },
+  "hashes": {
+    "tree_sha256": "e140027b76e27d81b19322968c6d54cfaf0c768d1d4c14807cb742cce737770f",
+    "n_files": 127,
+    "bytes": 520060,
+    "artifacts": [
+      {
+        "filename": "https://github.com/ka9q/libfec",
+        "sha256": null,
+        "commit": "7c6706fb969c3f8fe6ec7778b2472762e0d88acc"
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\libfec-karn",
+    "hash_list": "techne/fossils/specimens/libfec-karn/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "LGPL-2.1-or-later",
+    "status": "copyleft",
+    "evidence": "LICENSE / source headers"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "C"
+  ],
+  "build_system": "./configure && make",
+  "compiler_or_interpreter": "gcc 12 (docker bookworm-lang)",
+  "dependencies": [],
+  "run_classification": "BLOCKED_PLATFORM",
+  "test_classification": "UPSTREAM_TESTS_NOT_RUN",
+  "entry_points": [
+    "the shipped vtest / vtest27 (Viterbi self-test); rstest (Reed-Solomon)"
+  ],
+  "example": {
+    "command": "make && ./vtest27 (encode a random frame, add noise, Viterbi-decode)",
+    "input": "a random bitstream + simulated channel noise",
+    "output": "bit-error rate after decoding vs SNR"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-lang:bookworm",
+    "obstruction_2026-09-12": "libfec's Viterbi decoders ship hand-written 32-bit x86 MMX/SSE assembly (mmxbfly27.s: `push` with 32-bit suffixes) that will not assemble on x86-64, and its 1990s configure emits an invalid -march=x86_64. The portable C path (viterbi27_port.c) exists but the lib target forces the SIMD objects. A faithful run needs an i386 world (gcc -m32 / a 32-bit container) = RUNNABLE_HISTORICAL_TOOLCHAIN, queued. Source is pinned+hashed; nothing modernised. This is a preserved 'needs an old machine' fossil, not a failure."
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "ka9q.net",
+    "Viterbi 1967"
+  ],
+  "human_capability_summary": {
+    "built_to": "recover the most-likely transmitted bit sequence from a noisy convolutionally-coded signal by the Viterbi algorithm (dynamic programming over a trellis of hidden encoder states), and to correct Reed-Solomon block errors",
+    "pressure": "channel noise on band-limited links (satellite, deep space, radio); the decoder must find the maximum-likelihood path through an exponential state space in linear time",
+    "success_means": "decoded bit-error rate at or below the code's theoretical curve for a given SNR; the self-tests pass"
+  },
+  "known_human_problem_solved": "maximum-likelihood decoding of noisy coded signals (hidden-state estimation)",
+  "hardware_assumptions": "",
+  "observability": {
+    "EXECUTABLE": "no",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/libfec-karn/receipts/run-libfec-karn-20260912T153530Z.json",
+      "ok": false,
+      "classification": "BROKEN_UPSTREAM",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/libfec-karn/receipts/run-libfec-karn-20260912T153815Z.json",
+      "ok": false,
+      "classification": "BROKEN_UPSTREAM",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\libfec-karn ; tracked techne/fossils/specimens/libfec-karn/",
+    "where_it_came_from": "{'repo': 'github.com/ka9q/libfec', 'author': 'Phil Karn'} ; ORIGINAL_AUTHORITATIVE_RELEASE ; LGPL-2.1-or-later",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run libfec-karn",
+    "how_we_know_it_runs": "BLOCKED_PLATFORM / UPSTREAM_TESTS_NOT_RUN ; receipt none (pinned+hashed)",
+    "what_humans_used_it_for": "recover the most-likely transmitted bit sequence from a noisy convolutionally-coded signal by the Viterbi algorithm (dynamic programming over a trellis of hidden encoder states), and to correct Reed-Solomon block errors"
+  },
+  "seat": "Techne"
+}

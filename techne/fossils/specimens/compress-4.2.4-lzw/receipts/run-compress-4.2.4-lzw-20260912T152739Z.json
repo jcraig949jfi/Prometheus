@@ -1,0 +1,81 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "compress-4.2.4-lzw",
+  "receipt_id": "run-compress-4.2.4-lzw-20260912T152739Z",
+  "written_utc": "20260912T152739Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree/ncompress-4.2.4.6",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "d729870244f7739a50fed2b8382a405ef37261fcb0f935bdd2a391e3e88f13a5",
+  "recipe_sha256": "ac4c1b46ae856e18d7d75437091f79f088756f09efdeddbac43f8582749e346e",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1",
+      "exit": 0,
+      "seconds": 0.78,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gcc (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "make",
+      "cmd": "make -s 2>&1 | grep -i 'error:' ; ls compress 2>/dev/null; test -x ./compress || (gcc -w -O2 -o compress *.c 2>&1 | grep -i error: ; test -x ./compress)",
+      "exit": 0,
+      "seconds": 0.97,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "compress\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "LZW round trip on the source itself",
+      "cmd": "F=$(ls *.c | head -1); ./compress -c $F > $BODY/c.Z && ./compress -dc $BODY/c.Z | cmp - $F && echo ROUNDTRIP_OK $(stat -c %s $F) '->' $(stat -c %s $BODY/c.Z)",
+      "exit": 0,
+      "seconds": 0.81,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "ROUNDTRIP_OK 47466 -> 22674\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [
+    {
+      "path": "compress",
+      "sha256": "911f2edd9fc5e6451e9ce4e35c8356fd8310303db77ed8e125d60f952b7c84fd",
+      "bytes": 52912
+    },
+    {
+      "path": "Makefile",
+      "sha256": "bcfd3a614aa08dc350148eacdbd21edb44dea0502f423dae8b9ef081c095f1bc",
+      "bytes": 2267
+    }
+  ],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true
+}

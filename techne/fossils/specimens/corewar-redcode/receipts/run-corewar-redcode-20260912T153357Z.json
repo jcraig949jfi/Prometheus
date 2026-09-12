@@ -1,0 +1,74 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "corewar-redcode",
+  "receipt_id": "run-corewar-redcode-20260912T153357Z",
+  "written_utc": "20260912T153357Z",
+  "runner": "docker",
+  "image": "python:2.7-slim",
+  "workdir": "upstream/tree",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "c1929dc0440cbac70a726aee6fd10811f9c80ebb7f347c1236f87e6b92d0a089",
+  "recipe_sha256": "59a73b39ea63a4d09779d687b42127de2f778d38b074e2d5948ec62de3bd97ff",
+  "patches": [],
+  "probe": [
+    {
+      "name": "python",
+      "cmd": "python3 --version",
+      "exit": 127,
+      "seconds": 4.81,
+      "ok": false,
+      "why_not": [
+        "exit 127 != expected 0"
+      ],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": "Unable to find image 'python:2.7-slim' locally\n2.7-slim: Pulling from library/python\n13e9cd8f0ea1: Pulling fs layer\n123275d6e508: Pulling fs layer\ndd1cd6637523: Pulling fs layer\n0c4e6d630f2c: Pulling fs layer\ndd1cd6637523: Download complete\n13e9cd8f0ea1: Download complete\n0c4e6d630f2c: Download complete\n123275d6e508: Download complete\n123275d6e508: Pull complete\ndd1cd6637523: Pull complete\n0c4e6d630f2c: Pull complete\n13e9cd8f0ea1: Pull complete\nDigest: sha256:6c1ffdff499e29ea663e6e67c9b6b9a3b401d554d2c9f061f9a45344e3992363\nStatus: Downloaded newer image for python:2.7-slim\nbash: python3: command not found\n"
+      }
+    }
+  ],
+  "build": [],
+  "runs": [
+    {
+      "name": "run the MARS + Redcode-assembler unit tests",
+      "cmd": "python3 tests.py 2>&1 | tail -15",
+      "exit": 0,
+      "seconds": 0.77,
+      "ok": false,
+      "why_not": [
+        "stdout does not match /(?i)(Ran [0-9]+ test|\\bOK\\b)/"
+      ],
+      "stdout": {
+        "text": "bash: python3: command not found\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [
+    {
+      "name": "assemble and run a warrior (imp) for a few cycles without error",
+      "cmd": "python3 -c \"import sys; sys.path.insert(0,'.'); from corewar import mars, redcode; w=redcode.parse(open([f for f in __import__('glob').glob('warriors/*.red')][0]).read().splitlines()); print('PARSED', getattr(w,'name','warrior'))\" 2>&1 | tail -4; echo WARRIORDONE",
+      "exit": 0,
+      "seconds": 0.81,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "bash: python3: command not found\nWARRIORDONE\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "produced": [],
+  "classification": "BUILDS_BUT_NOT_RUN",
+  "test_classification": "UPSTREAM_TESTS_PASS",
+  "ok": false
+}

@@ -1,0 +1,128 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "gnu-prolog-1.5.0",
+  "canonical_name": "GNU Prolog 1.5.0 -- Daniel Diaz (WAM-compiling Prolog)",
+  "aliases": [
+    "gprolog",
+    "GNU Prolog"
+  ],
+  "lineage": "GNU Prolog (1996-, Diaz): an ISO Prolog that COMPILES to a WAM (Warren Abstract Machine) and thence to native code, with a finite-domain constraint solver; a WAM lineage distinct from SWI's VM interpreter",
+  "domain": [
+    "languages",
+    "logic-programming",
+    "prolog",
+    "wam",
+    "unification",
+    "resolution",
+    "constraint-solving"
+  ],
+  "era": "1996 (1.5.0 rel. 2020)",
+  "version": "1.5.0 from gprolog.org (the author's site)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "http://www.gprolog.org/gprolog-1.5.0.tar.gz",
+        "filename": "gprolog-1.5.0.tar.gz"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "site": "gprolog.org",
+    "release": "1.5.0"
+  },
+  "hashes": {
+    "tree_sha256": "4fcc7ba2899110e8d4d1e8cf1ddee872b43283b53cf324d3d07549f2fdb72033",
+    "n_files": 595,
+    "bytes": 18162151,
+    "artifacts": [
+      {
+        "filename": "gprolog-1.5.0.tar.gz",
+        "sha256": "670642b43c0faa27ebd68961efb17ebe707688f91b6809566ddd606139512c01",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\gnu-prolog-1.5.0",
+    "hash_list": "techne/fossils/specimens/gnu-prolog-1.5.0/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "LGPL-3.0-or-later / GPL-2.0-or-later",
+    "status": "copyleft",
+    "evidence": "COPYING in tarball"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "C",
+    "Prolog",
+    "WAM assembly"
+  ],
+  "build_system": "./configure && make (bootstraps a WAM->native pipeline; heavier)",
+  "compiler_or_interpreter": "gcc 12 (docker bookworm-lang)",
+  "dependencies": [],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "gprolog (REPL); gplc (compile a .pl to native)"
+  ],
+  "example": {
+    "command": "echo \"append(X,[c],[a,b,c]), write(X), nl, halt.\" | gprolog",
+    "input": "Prolog goals",
+    "output": "[a,b] unified"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-lang:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "gprolog.org",
+    "Warren, An Abstract Prolog Instruction Set, 1983 (the WAM)"
+  ],
+  "human_capability_summary": {
+    "built_to": "run Prolog by COMPILING clauses to Warren Abstract Machine instructions and then to native code -- unification, backtracking and SLD resolution as compiled machine operations rather than interpreted",
+    "pressure": "interpreted resolution is slow; the WAM is the classic answer, specialising unification and clause indexing into a register machine",
+    "success_means": "correct goal solving at compiled speed; a WAM the fossil record can hold beside SWI's interpreter"
+  },
+  "known_human_problem_solved": "compiling logic programs to a register (WAM) machine",
+  "hardware_assumptions": "",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "shares_ancestor_with",
+      "to": "swipl-9.2.9",
+      "note": "both ISO Prolog; gprolog compiles to WAM->native, SWI interprets a VM"
+    },
+    {
+      "relation": "algorithm_from",
+      "to": "Warren, The WAM, 1983",
+      "note": "Warren Abstract Machine"
+    }
+  ],
+  "acquisition_tags": [],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/gnu-prolog-1.5.0/receipts/run-gnu-prolog-1.5.0-20260912T153603Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\gnu-prolog-1.5.0 ; tracked techne/fossils/specimens/gnu-prolog-1.5.0/",
+    "where_it_came_from": "{'site': 'gprolog.org', 'release': '1.5.0'} ; ORIGINAL_AUTHORITATIVE_RELEASE ; LGPL-3.0-or-later / GPL-2.0-or-later",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run gnu-prolog-1.5.0",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/gnu-prolog-1.5.0/receipts/run-gnu-prolog-1.5.0-20260912T153603Z.json",
+    "what_humans_used_it_for": "run Prolog by COMPILING clauses to Warren Abstract Machine instructions and then to native code -- unification, backtracking and SLD resolution as compiled machine operations rather than interpreted"
+  },
+  "seat": "Techne"
+}

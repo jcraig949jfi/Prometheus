@@ -1,0 +1,48 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-lang:bookworm",
+  "workdir": "upstream/tree",
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "make release",
+      "cmd": "make -s release 2>&1 | grep -viE 'warning' | tail -3; test -x ./flisp"
+    }
+  ],
+  "runs": [
+    {
+      "name": "evaluate an expression",
+      "cmd": "echo '(princ (+ 1 2 (* 3 4)))' | ./flisp",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "15"
+        ]
+      }
+    }
+  ],
+  "tests": [
+    {
+      "name": "femtolisp's own unittest.lsp",
+      "cmd": "cd tests && ../flisp unittest.lsp 2>&1 | tail -12; echo UNITDONE",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "UNITDONE"
+        ],
+        "stdout_not_contains": [
+          "FAILED",
+          "error:"
+        ]
+      }
+    }
+  ],
+  "test_kind": "UPSTREAM",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "flisp compiles s-expressions to bytecode and runs them on a stack VM with GC; unittest.lsp is upstream's own suite."
+}

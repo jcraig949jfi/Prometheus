@@ -1,0 +1,120 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "buddy-bdd",
+  "canonical_name": "BuDDy -- a Binary Decision Diagram package (Jorn Lind-Nielsen)",
+  "aliases": [
+    "buddy",
+    "BuDDy",
+    "BDD"
+  ],
+  "lineage": "BuDDy (1996-, Lind-Nielsen, DTU): a reduced ordered Binary Decision Diagram library -- canonical DAG representation of Boolean functions with a unique-table + computed-cache, ITE, and dynamic variable reordering; the representation behind model checkers",
+  "domain": [
+    "representation-transformation",
+    "binary-decision-diagram",
+    "boolean-function",
+    "canonicalization",
+    "symbolic"
+  ],
+  "era": "1996-",
+  "version": "sourceforge buddy latest as of 2026-09-12 (release in hashes)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "https://sourceforge.net/projects/buddy/files/latest/download",
+        "filename": "buddy.tar.gz"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "project": "sourceforge.net/projects/buddy"
+  },
+  "hashes": {
+    "tree_sha256": "8090220207a7cae1411b7459f4c03507c4a809adabc4d7c32d38ac83470e597e",
+    "n_files": 114,
+    "bytes": 4158913,
+    "artifacts": [
+      {
+        "filename": "buddy.tar.gz",
+        "sha256": "d3df80a6a669d9ae408cb46012ff17bd33d855529d20f3a7e563d0d913358836",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\buddy-bdd",
+    "hash_list": "techne/fossils/specimens/buddy-bdd/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "custom permissive (BuDDy terms)",
+    "status": "permissive",
+    "evidence": "COPYING in tarball"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "C",
+    "C++"
+  ],
+  "build_system": "./configure && make",
+  "compiler_or_interpreter": "gcc 12 (docker bookworm-lang)",
+  "dependencies": [],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "libbdd; the shipped examples (e.g. the queens / adder demos)"
+  ],
+  "example": {
+    "command": "build and run a shipped example, or a Techne driver building (a & b) | (a & c) as a BDD and checking node count / SAT count",
+    "input": "a Boolean formula",
+    "output": "the canonical BDD's node and satisfying-assignment counts"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-lang:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Lind-Nielsen, BuDDy manual",
+    "Bryant, Graph-Based Algorithms for Boolean Function Manipulation, 1986"
+  ],
+  "human_capability_summary": {
+    "built_to": "represent and manipulate Boolean functions as reduced ordered BDDs -- a canonical form where equivalence is pointer identity and operations are memoised graph algorithms -- so huge functions become tractable",
+    "pressure": "the exponential size of truth tables; the right variable order can make a function's BDD linear or exponential, so reordering is itself a search",
+    "success_means": "correct canonical BDDs (equal functions -> identical DAGs), fast ITE/apply, and satisfiability/counting read directly off the graph"
+  },
+  "known_human_problem_solved": "canonical symbolic representation of Boolean functions (BDDs)",
+  "hardware_assumptions": "",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/buddy-bdd/receipts/run-buddy-bdd-20260912T153515Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/buddy-bdd/receipts/run-buddy-bdd-20260912T153805Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\buddy-bdd ; tracked techne/fossils/specimens/buddy-bdd/",
+    "where_it_came_from": "{'project': 'sourceforge.net/projects/buddy'} ; ORIGINAL_AUTHORITATIVE_RELEASE ; custom permissive (BuDDy terms)",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run buddy-bdd",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/buddy-bdd/receipts/run-buddy-bdd-20260912T153805Z.json",
+    "what_humans_used_it_for": "represent and manipulate Boolean functions as reduced ordered BDDs -- a canonical form where equivalence is pointer identity and operations are memoised graph algorithms -- so huge functions become tractable"
+  },
+  "seat": "Techne"
+}

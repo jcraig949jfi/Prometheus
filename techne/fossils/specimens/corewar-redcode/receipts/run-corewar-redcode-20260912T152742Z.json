@@ -1,0 +1,74 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "corewar-redcode",
+  "receipt_id": "run-corewar-redcode-20260912T152742Z",
+  "written_utc": "20260912T152742Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-lang:bookworm",
+  "workdir": "upstream/tree",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "0c71baf632b5e8b103839cf1eb1989ed6c72a7f83c8b9058e0a7846d4d238f71",
+  "recipe_sha256": "f2c2fc39394a2d5c4cd9d33dbe3a6559627c4473c2c2bcf3becd55de261e8910",
+  "patches": [],
+  "probe": [
+    {
+      "name": "python",
+      "cmd": "python3 --version",
+      "exit": 127,
+      "seconds": 0.81,
+      "ok": false,
+      "why_not": [
+        "exit 127 != expected 0"
+      ],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": "bash: line 1: python3: command not found\n"
+      }
+    }
+  ],
+  "build": [],
+  "runs": [
+    {
+      "name": "run the MARS + Redcode-assembler unit tests",
+      "cmd": "python3 -m pytest tests -q 2>&1 | tail -8 || python3 tests.py 2>&1 | tail -12",
+      "exit": 0,
+      "seconds": 1.36,
+      "ok": false,
+      "why_not": [
+        "stdout does not match /(?i)(passed|OK|[0-9]+ test)/"
+      ],
+      "stdout": {
+        "text": "bash: line 1: python3: command not found\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [
+    {
+      "name": "assemble and run a warrior (imp) for a few cycles without error",
+      "cmd": "python3 -c \"import sys; sys.path.insert(0,'.'); from corewar import mars, redcode; w=redcode.parse(open([f for f in __import__('glob').glob('warriors/*.red')][0]).read().splitlines()); print('PARSED', getattr(w,'name','warrior'))\" 2>&1 | tail -4; echo WARRIORDONE",
+      "exit": 0,
+      "seconds": 0.82,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "bash: line 1: python3: command not found\nWARRIORDONE\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "produced": [],
+  "classification": "BUILDS_BUT_NOT_RUN",
+  "test_classification": "UPSTREAM_TESTS_PASS",
+  "ok": false
+}

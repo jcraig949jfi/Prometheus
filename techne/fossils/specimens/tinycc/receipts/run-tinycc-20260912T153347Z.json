@@ -1,0 +1,85 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "tinycc",
+  "receipt_id": "run-tinycc-20260912T153347Z",
+  "written_utc": "20260912T153347Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "926f8626193eebf953c48cb590cb5d1b0bb51cbe7cd653df1557f16efb5a460c",
+  "recipe_sha256": "de45bf8cbac3837830e530dc662bb42d9bac7d8e49d5a1446aff03ee1bdd7307",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1",
+      "exit": 0,
+      "seconds": 6.45,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gcc (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "configure+make",
+      "cmd": "bash ./configure >/dev/null 2>&1 && make -s 2>&1 | grep -viE 'warning' | tail -3; test -x ./tcc",
+      "exit": 0,
+      "seconds": 1.52,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "(skipping tcc-doc.html - no makeinfo)\n(skipping tcc-doc.info - no makeinfo)\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "tcc compiles and runs a C program in memory",
+      "cmd": "echo 'int main(){int s=0,i;for(i=1;i<=9;i++)s+=i;return s;}' > $BODY/t.c && ./tcc -B. -run $BODY/t.c; echo exit=$?",
+      "exit": 0,
+      "seconds": 0.79,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "exit=45\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [
+    {
+      "name": "tcc compiles itself is out of scope; instead check -run of a second program",
+      "cmd": "echo 'int main(){return 7*6;}' > $BODY/u.c && ./tcc -B. -run $BODY/u.c; echo rc=$?",
+      "exit": 0,
+      "seconds": 0.84,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "rc=42\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "produced": [],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true
+}

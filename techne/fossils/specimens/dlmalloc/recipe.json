@@ -1,0 +1,35 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream",
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "compile driver + malloc.c",
+      "cmd": "gcc -O2 -w -DUSE_DL_PREFIX=1 -o $BODY/drv $HARNESS/drv.c malloc.c 2>&1 | grep -i 'error:' ; test -x $BODY/drv"
+    }
+  ],
+  "runs": [
+    {
+      "name": "2000-block alloc/write/free/realloc stress",
+      "cmd": "$BODY/drv",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "DLMALLOC_OK",
+          "no clobber"
+        ]
+      }
+    }
+  ],
+  "tests": [],
+  "test_kind": "TECHNE",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "The driver is Techne's, not upstream's: it only demonstrates the allocator hands out distinct writable blocks and frees them cleanly. It is a smoke of execution, not a decomposition of the binning/boundary-tag machinery (Nyx's)."
+}

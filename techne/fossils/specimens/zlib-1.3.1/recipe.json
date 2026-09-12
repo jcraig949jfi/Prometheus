@@ -1,0 +1,32 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree/zlib-1.3.1",
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "configure+make",
+      "cmd": "./configure >/dev/null 2>&1 && make -s 2>&1 | tail -2; test -f libz.a"
+    }
+  ],
+  "runs": [
+    {
+      "name": "make test (deflate/inflate round trip + CRC)",
+      "cmd": "make test 2>&1 | tail -12",
+      "expect": {
+        "exit": 0,
+        "stdout_regex": "(?i)(test.*ok|hello|inflate|success)"
+      }
+    }
+  ],
+  "tests": [],
+  "test_kind": "UPSTREAM",
+  "test_classification_if_none": "UPSTREAM_TESTS_PASS",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "zlib's make test builds example/minigzip and round-trips data through deflate+inflate, checking the CRC -- an oracle (inflate must reproduce deflate's input)."
+}

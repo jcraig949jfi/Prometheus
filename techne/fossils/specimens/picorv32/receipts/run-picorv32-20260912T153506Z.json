@@ -1,0 +1,72 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "picorv32",
+  "receipt_id": "run-picorv32-20260912T153506Z",
+  "written_utc": "20260912T153506Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-hw:bookworm",
+  "workdir": "upstream/tree",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "647455da29695832218941a94052b274f9ce2cf7b1b57d59eddfdfb5d661d653",
+  "recipe_sha256": "5540187530740f4a3109532c560e218fda2267d71da68d49fb02ef515bae4933",
+  "patches": [],
+  "probe": [
+    {
+      "name": "iverilog",
+      "cmd": "iverilog -V 2>&1 | head -1",
+      "exit": 0,
+      "seconds": 6.65,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Icarus Verilog version 11.0 (stable) ()\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "build testbench_ez (no firmware, no riscv-gcc)",
+      "cmd": "iverilog -o $BODY/tb_ez.vvp testbench_ez.v picorv32.v 2>&1 | grep -viE 'warning' | tail -3; test -f $BODY/tb_ez.vvp",
+      "exit": 0,
+      "seconds": 0.76,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "run the self-contained testbench_ez",
+      "cmd": "vvp -N $BODY/tb_ez.vvp 2>&1 | tail -25",
+      "exit": 0,
+      "seconds": 0.72,
+      "ok": false,
+      "why_not": [
+        "stdout does not match /(?i)(DONE|OK|TRAP|finished|cycles|passed)/"
+      ],
+      "stdout": {
+        "text": "ifetch 0x00000014: 0xff5ff06f\nwrite  0x000003fc: 0x00000029 (wstrb=1111)\nifetch 0x00000008: 0x0000a103\nifetch 0x0000000c: 0x00110113\nread   0x000003fc: 0x00000029\nifetch 0x00000010: 0x0020a023\nifetch 0x00000014: 0xff5ff06f\nwrite  0x000003fc: 0x0000002a (wstrb=1111)\nifetch 0x00000008: 0x0000a103\nifetch 0x0000000c: 0x00110113\nread   0x000003fc: 0x0000002a\nifetch 0x00000010: 0x0020a023\nifetch 0x00000014: 0xff5ff06f\nwrite  0x000003fc: 0x0000002b (wstrb=1111)\nifetch 0x00000008: 0x0000a103\nifetch 0x0000000c: 0x00110113\nread   0x000003fc: 0x0000002b\nifetch 0x00000010: 0x0020a023\nifetch 0x00000014: 0xff5ff06f\nwrite  0x000003fc: 0x0000002c (wstrb=1111)\nifetch 0x00000008: 0x0000a103\nifetch 0x0000000c: 0x00110113\nread   0x000003fc: 0x0000002c\nifetch 0x00000010: 0x0020a023\nifetch 0x00000014: 0xff5ff06f\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [],
+  "classification": "BUILDS_BUT_NOT_RUN",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": false
+}

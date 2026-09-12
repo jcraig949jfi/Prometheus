@@ -1,0 +1,60 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "quadpack-netlib",
+  "receipt_id": "run-quadpack-netlib-20260912T152540Z",
+  "written_utc": "20260912T152540Z",
+  "runner": "native",
+  "image": null,
+  "workdir": "upstream",
+  "harness_sha256": {
+    "drv.f": "0a2acab3edeb45fe8b6ecc85b119a846869c0de3a4238f7778dcccdb2d9264b6",
+    "xerror_stub.f": "2bcb28a46c0f89bf804d5964895e22c6839be52652db85967039820235ac99c0"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "4ff67363757329faa6feae5e99c3aa8e8863ff21b762e49976b54d6b112b4aa8",
+  "recipe_sha256": "ff54fee2329a1d14a60b0290907cee04b68c05f3b598eb5ffe8ab188ea97ed12",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gfortran",
+      "cmd": "gfortran --version | head -1",
+      "exit": 0,
+      "seconds": 0.22,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "GNU Fortran (MinGW-W64 x86_64-ucrt-posix-seh, built by Brecht Sanders, r4) 15.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "compile QUADPACK + a Techne driver on dqags (adaptive integration)",
+      "cmd": "gfortran -std=legacy -w -O1 -o $BODY/quadpack_test.exe $HARNESS/drv.f $HARNESS/xerror_stub.f *.f 2>&1 | grep -i 'error:'; test -x $BODY/quadpack_test.exe",
+      "exit": 1,
+      "seconds": 4.99,
+      "ok": false,
+      "why_not": [
+        "exit 1 != expected 0"
+      ],
+      "stdout": {
+        "text": "collect2.exe: error: ld returned 1 exit status\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [],
+  "tests": [],
+  "produced": [],
+  "classification": "BROKEN_UPSTREAM",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": false
+}

@@ -1,0 +1,113 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "zlib-1.3.1",
+  "canonical_name": "zlib 1.3.1 -- the DEFLATE reference (Gailly & Adler)",
+  "aliases": [
+    "zlib",
+    "libz"
+  ],
+  "lineage": "zlib (1995-, Jean-loup Gailly & Mark Adler): the reference DEFLATE -- LZ77 sliding-window matching + Huffman coding of literals/lengths/distances; the compression behind gzip, PNG, zip and HTTP",
+  "domain": [
+    "compression",
+    "lz77",
+    "huffman",
+    "dictionary-coding"
+  ],
+  "era": "1995 (1.3.1 rel. 2024)",
+  "version": "git tag v1.3.1, github.com/madler/zlib",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "https://github.com/madler/zlib/archive/refs/tags/v1.3.1.tar.gz",
+        "filename": "zlib-1.3.1.tar.gz"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/madler/zlib",
+    "tag": "v1.3.1"
+  },
+  "hashes": {
+    "tree_sha256": "de66ed57b3a84acfb93b8c2e73f365df280754b56118c4f1dc7499cce68fc327",
+    "n_files": 258,
+    "bytes": 5971365,
+    "artifacts": [
+      {
+        "filename": "zlib-1.3.1.tar.gz",
+        "sha256": "17e88863f3600672ab49182f217281b6fc4d3c762bde361935e436a95214d05c",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\zlib-1.3.1",
+    "hash_list": "techne/fossils/specimens/zlib-1.3.1/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "Zlib",
+    "status": "permissive",
+    "evidence": "LICENSE in tarball"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "C"
+  ],
+  "build_system": "./configure && make (or make test)",
+  "compiler_or_interpreter": "gcc 12 (docker bookworm)",
+  "dependencies": [],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "UPSTREAM_TESTS_PASS",
+  "entry_points": [
+    "libz (deflate/inflate); the shipped example / minigzip"
+  ],
+  "example": {
+    "command": "make && make test (example round-trips data through deflate/inflate)",
+    "input": "the test data",
+    "output": "inflate reproduces deflate's input; CRC matches"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-c:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "zlib.net",
+    "Deutsch, DEFLATE RFC 1951",
+    "Ziv & Lempel 1977"
+  ],
+  "human_capability_summary": {
+    "built_to": "compress and decompress a byte stream losslessly by finding repeated substrings within a 32KB window (LZ77) and entropy-coding the result (Huffman)",
+    "pressure": "the LZ77 vs DEFLATE competitors of the early 90s and the LZW patent; zlib had to be free, fast, and byte-stream-safe",
+    "success_means": "inflate exactly reconstructs deflate's input, at a competitive ratio and speed; the test suite's CRCs match"
+  },
+  "known_human_problem_solved": "lossless general-purpose stream compression (DEFLATE)",
+  "hardware_assumptions": "",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/zlib-1.3.1/receipts/run-zlib-1.3.1-20260912T152727Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "UPSTREAM_TESTS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\zlib-1.3.1 ; tracked techne/fossils/specimens/zlib-1.3.1/",
+    "where_it_came_from": "{'repo': 'github.com/madler/zlib', 'tag': 'v1.3.1'} ; ORIGINAL_AUTHORITATIVE_RELEASE ; Zlib",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run zlib-1.3.1",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / UPSTREAM_TESTS_PASS ; receipt techne/fossils/specimens/zlib-1.3.1/receipts/run-zlib-1.3.1-20260912T152727Z.json",
+    "what_humans_used_it_for": "compress and decompress a byte stream losslessly by finding repeated substrings within a 32KB window (LZ77) and entropy-coding the result (Huffman)"
+  },
+  "seat": "Techne"
+}

@@ -165,7 +165,11 @@ def git_pin(url: str, commit: str, dest: pathlib.Path, timeout: int = 900) -> di
     """Clone and check out EXACTLY `commit`; refuse to proceed if HEAD disagrees."""
     dest.parent.mkdir(parents=True, exist_ok=True)
     if not (dest / ".git").exists():
-        subprocess.run(["git", "clone", "--quiet", url, str(dest)], check=True, timeout=timeout)
+        # Force LF and no autocrlf so the working tree is BYTE-EXACT upstream, not Windows-
+        # converted -- otherwise text files get CRLF on a Windows checkout and (a) the tree hash
+        # would not match a Linux re-fetch and (b) shell scripts like tinycc's configure break.
+        subprocess.run(["git", "-c", "core.autocrlf=false", "-c", "core.eol=lf",
+                        "clone", "--quiet", url, str(dest)], check=True, timeout=timeout)
     if commit == "HEAD":
         # "whatever the default branch is right now" -- resolved ONCE here and written back to
         # the record as commit_resolved, so the pin becomes exact from this moment on.

@@ -1,0 +1,273 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "pforth",
+  "receipt_id": "run-pforth-20260912T152709Z",
+  "written_utc": "20260912T152709Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-lang:bookworm",
+  "workdir": "upstream/tree",
+  "harness_sha256": {
+    "t.fth": "ec8d3531e02ca9865100fa1dbb2ebcfac1619268e3cdf1f3f9f8dee273f3e9ff"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "12f831c38bdf3e12a56b40828f32e556998afbb61f3d0641a42c95f65284f07b",
+  "recipe_sha256": "94c4624b1e954e87577a886b604171134a07c1b92ebee7b3f1c5567727d2a377",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gcc/cmake",
+      "cmd": "gcc --version | head -1",
+      "exit": 0,
+      "seconds": 0.9,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gcc (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "build via platforms/unix make",
+      "cmd": "cd platforms/unix && make -s 2>&1 | grep -viE 'warning' | tail -3; ls pforth pforth_standalone 2>/dev/null; test -x pforth || test -x pforth_standalone",
+      "exit": 0,
+      "seconds": 6.25,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "\n\nStandalone pForth executable written to pforth_standalone\npforth\npforth_standalone\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "square and a loop",
+      "cmd": "cd platforms/unix && (./pforth_standalone < $HARNESS/t.fth 2>&1 || ./pforth < $HARNESS/t.fth 2>&1) | tail -6",
+      "exit": 0,
+      "seconds": 0.9,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "PForth V2.2.0, LE, built Sep 12 2026 15:27:14 (static)\n\n: sq dup * ; 7 sq . cr 100 0 do i loop . cr bye 49 \n99 \n\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [
+    {
+      "path": "platforms/unix/paging/lockpage.eo",
+      "sha256": "a99eba321d8f76ab6dfe17455db3218550ec3f4dd4f09f2bf138f36c3eff2657",
+      "bytes": 8544
+    },
+    {
+      "path": "platforms/unix/paging/lockpage.o",
+      "sha256": "a99eba321d8f76ab6dfe17455db3218550ec3f4dd4f09f2bf138f36c3eff2657",
+      "bytes": 8544
+    },
+    {
+      "path": "platforms/unix/paging/pagedmem.eo",
+      "sha256": "f23b125ffa782a2754739924221a8366e7599c3fc8b72662b137a5546550491c",
+      "bytes": 2776
+    },
+    {
+      "path": "platforms/unix/paging/pagedmem.o",
+      "sha256": "f23b125ffa782a2754739924221a8366e7599c3fc8b72662b137a5546550491c",
+      "bytes": 2776
+    },
+    {
+      "path": "platforms/unix/paging/qadmpage.eo",
+      "sha256": "18075bd010178b6b5b7ac5a763ae046c0bf8c91e90aa27eb5412544311d1ce54",
+      "bytes": 2776
+    },
+    {
+      "path": "platforms/unix/paging/qadmpage.o",
+      "sha256": "18075bd010178b6b5b7ac5a763ae046c0bf8c91e90aa27eb5412544311d1ce54",
+      "bytes": 2776
+    },
+    {
+      "path": "platforms/unix/pf_cglue.eo",
+      "sha256": "1b58733f0310461bdf80b2df6fa55f0d536cff614169c1bd7a436bdbca8abf13",
+      "bytes": 25768
+    },
+    {
+      "path": "platforms/unix/pf_cglue.o",
+      "sha256": "1b58733f0310461bdf80b2df6fa55f0d536cff614169c1bd7a436bdbca8abf13",
+      "bytes": 25768
+    },
+    {
+      "path": "platforms/unix/pf_clib.eo",
+      "sha256": "41235d98ec46c71d06a8775d36a56233d547010a72081118c16e7e0c04e0ec31",
+      "bytes": 3624
+    },
+    {
+      "path": "platforms/unix/pf_clib.o",
+      "sha256": "41235d98ec46c71d06a8775d36a56233d547010a72081118c16e7e0c04e0ec31",
+      "bytes": 3624
+    },
+    {
+      "path": "platforms/unix/pf_core.eo",
+      "sha256": "8554503b50adffaa0e89db3d43e2f7c6d0a564c700c85f36f41a9b18b783875f",
+      "bytes": 58776
+    },
+    {
+      "path": "platforms/unix/pf_core.o",
+      "sha256": "8b796b6a55f176c685e2ceaec5cee1e56379f3fe67f5e02b2dcf036336d407d9",
+      "bytes": 58776
+    },
+    {
+      "path": "platforms/unix/pf_fileio_stdio.eo",
+      "sha256": "83441c50ebe5b6fafe1355ef735f73272794503ac73962bb908f365aaff59443",
+      "bytes": 14456
+    },
+    {
+      "path": "platforms/unix/pf_fileio_stdio.o",
+      "sha256": "83441c50ebe5b6fafe1355ef735f73272794503ac73962bb908f365aaff59443",
+      "bytes": 14456
+    },
+    {
+      "path": "platforms/unix/pf_inner.eo",
+      "sha256": "dc80e309b46b665c34d3b9e8a83d5e21ff22fc081fb74f7b3678097889cd1225",
+      "bytes": 111248
+    },
+    {
+      "path": "platforms/unix/pf_inner.o",
+      "sha256": "dc80e309b46b665c34d3b9e8a83d5e21ff22fc081fb74f7b3678097889cd1225",
+      "bytes": 111248
+    },
+    {
+      "path": "platforms/unix/pf_io.eo",
+      "sha256": "8450155a25f5690a9eec47453b156a57def2ce67b46f1f7347e57337f98a8246",
+      "bytes": 15200
+    },
+    {
+      "path": "platforms/unix/pf_io.o",
+      "sha256": "8450155a25f5690a9eec47453b156a57def2ce67b46f1f7347e57337f98a8246",
+      "bytes": 15200
+    },
+    {
+      "path": "platforms/unix/pf_io_none.eo",
+      "sha256": "57cbfbacb87cb29f7fda27882322c89ff4b1d20a52458365c25ca5d3ce898624",
+      "bytes": 2768
+    },
+    {
+      "path": "platforms/unix/pf_io_none.o",
+      "sha256": "57cbfbacb87cb29f7fda27882322c89ff4b1d20a52458365c25ca5d3ce898624",
+      "bytes": 2768
+    },
+    {
+      "path": "platforms/unix/pf_io_posix.eo",
+      "sha256": "817eda46ce5360ecdadf1dd510a3adc04b16a4f5ccc27e90195645aad5d31d3c",
+      "bytes": 15824
+    },
+    {
+      "path": "platforms/unix/pf_io_posix.o",
+      "sha256": "817eda46ce5360ecdadf1dd510a3adc04b16a4f5ccc27e90195645aad5d31d3c",
+      "bytes": 15824
+    },
+    {
+      "path": "platforms/unix/pf_main.eo",
+      "sha256": "fafabada6c77f9dbcdea5d8b50c0cb07defe932b45263d13fecd2c30aa158bba",
+      "bytes": 7944
+    },
+    {
+      "path": "platforms/unix/pf_main.o",
+      "sha256": "406ceec4a9554064c6b37108c60531e2ed7a9531eb364e11d5e27c22f08d3a05",
+      "bytes": 8072
+    },
+    {
+      "path": "platforms/unix/pf_mem.eo",
+      "sha256": "21eb034f5691fdf6283b13c236ed96558388db915ad8886ed880be92c92ed801",
+      "bytes": 2944
+    },
+    {
+      "path": "platforms/unix/pf_mem.o",
+      "sha256": "21eb034f5691fdf6283b13c236ed96558388db915ad8886ed880be92c92ed801",
+      "bytes": 2944
+    },
+    {
+      "path": "platforms/unix/pf_save.eo",
+      "sha256": "c46668da6ed09710844b51e227b33932cd950ef3ea22eb50df22d6eed11d42b9",
+      "bytes": 180800
+    },
+    {
+      "path": "platforms/unix/pf_save.o",
+      "sha256": "7f031b0929d570d1b43069d363b2c9ea616bdfb7d229ea187ca2dffc90baa8fd",
+      "bytes": 57848
+    },
+    {
+      "path": "platforms/unix/pf_text.eo",
+      "sha256": "d919115541f1ad405ea3c8c5828994668880e20a7e7c8ef20c7d151608252e61",
+      "bytes": 29544
+    },
+    {
+      "path": "platforms/unix/pf_text.o",
+      "sha256": "d919115541f1ad405ea3c8c5828994668880e20a7e7c8ef20c7d151608252e61",
+      "bytes": 29544
+    },
+    {
+      "path": "platforms/unix/pf_words.eo",
+      "sha256": "4c7ee30fbbfe2ba83b99eb26d05acef4e6002b95fec913f19519434bc2cedca3",
+      "bytes": 26800
+    },
+    {
+      "path": "platforms/unix/pf_words.o",
+      "sha256": "4c7ee30fbbfe2ba83b99eb26d05acef4e6002b95fec913f19519434bc2cedca3",
+      "bytes": 26800
+    },
+    {
+      "path": "platforms/unix/pfcompil.eo",
+      "sha256": "e83b8818c9baab34ac9a1d92f9c9626c4b93915a4483a6b07c476387f28d2f12",
+      "bytes": 236600
+    },
+    {
+      "path": "platforms/unix/pfcompil.o",
+      "sha256": "e83b8818c9baab34ac9a1d92f9c9626c4b93915a4483a6b07c476387f28d2f12",
+      "bytes": 236600
+    },
+    {
+      "path": "platforms/unix/pfcustom.eo",
+      "sha256": "8e344eaf29119ce5ccaaafcd69e1fb2597526a42fe942d9809a3c0846ed564b6",
+      "bytes": 7880
+    },
+    {
+      "path": "platforms/unix/pfcustom.o",
+      "sha256": "8e344eaf29119ce5ccaaafcd69e1fb2597526a42fe942d9809a3c0846ed564b6",
+      "bytes": 7880
+    },
+    {
+      "path": "platforms/unix/pfdicdat.h",
+      "sha256": "d6d492ca5be5fddf46068d6f4fe686d11fea43d3e7c176cdbb9039dffd01f8ab",
+      "bytes": 740197
+    },
+    {
+      "path": "platforms/unix/pforth",
+      "sha256": "497bf2352a8313cdfdffc39d12ed039a635dffccd433f3919641b285c69e2d54",
+      "bytes": 288360
+    },
+    {
+      "path": "platforms/unix/pforth.dic",
+      "sha256": "34eb1cecfc6fd88f7296f0345f13b7368e23c882afc989570db5d75aba1b7f01",
+      "bytes": 115296
+    },
+    {
+      "path": "platforms/unix/pforth_standalone",
+      "sha256": "321095d5850224ab089545666ee28ba5e56cea6e05d88fa29bf6e150a5fab572",
+      "bytes": 408160
+    }
+  ],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true
+}

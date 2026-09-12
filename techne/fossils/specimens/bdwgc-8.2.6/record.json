@@ -1,0 +1,116 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "bdwgc-8.2.6",
+  "canonical_name": "Boehm-Demers-Weiser conservative garbage collector 8.2.6",
+  "aliases": [
+    "bdwgc",
+    "Boehm GC",
+    "libgc"
+  ],
+  "lineage": "BDWGC (1988-, Hans Boehm, Alan Demers, Mark Weiser): a conservative mark-sweep (optionally generational, incremental, parallel) garbage collector usable as a drop-in malloc replacement for C/C++; the GC behind many language runtimes",
+  "domain": [
+    "operating-systems",
+    "garbage-collection",
+    "memory-management",
+    "mark-sweep"
+  ],
+  "era": "1988 (8.2.6 rel. 2024)",
+  "version": "git tag v8.2.6, github.com/ivmai/bdwgc",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "https://github.com/ivmai/bdwgc/archive/refs/tags/v8.2.6.tar.gz",
+        "filename": "bdwgc-8.2.6.tar.gz"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/ivmai/bdwgc",
+    "tag": "v8.2.6"
+  },
+  "hashes": {
+    "tree_sha256": "581c541df2d1bab80e8a0de5f1619b0d28fc9b0e752dfc4fa6f0b99fcb1f7b4f",
+    "n_files": 181,
+    "bytes": 3888600,
+    "artifacts": [
+      {
+        "filename": "bdwgc-8.2.6.tar.gz",
+        "sha256": "3bfc2b1dd385bfb46d2dab029211a66249a309795b6893f4e00554904999e40a",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\bdwgc-8.2.6",
+    "hash_list": "techne/fossils/specimens/bdwgc-8.2.6/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "MIT-style (Boehm GC license)",
+    "status": "permissive",
+    "evidence": "LICENSE in tarball"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "C"
+  ],
+  "build_system": "./autogen.sh && ./configure && make (or cmake)",
+  "compiler_or_interpreter": "gcc 12 + autotools (docker bookworm-lang)",
+  "dependencies": [
+    "libatomic_ops (bundled or system)",
+    "autotools"
+  ],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "UPSTREAM_TESTS_PASS",
+  "entry_points": [
+    "GC_malloc / GC_free_ignored; the shipped test/gctest"
+  ],
+  "example": {
+    "command": "make check (runs gctest)",
+    "input": "the collector's own stress test",
+    "output": "gctest completes without leak/corruption"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-lang:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Boehm & Weiser, Garbage Collection in an Uncooperative Environment, SP&E 1988",
+    "hboehm.info/gc"
+  ],
+  "human_capability_summary": {
+    "built_to": "reclaim unreachable heap memory automatically in a language (C/C++) that gives the collector no cooperation -- scanning the stack and heap conservatively for anything that looks like a pointer",
+    "pressure": "no type information about what is a pointer; must never free reachable memory (soundness) while freeing most garbage (completeness) without stopping the program too long",
+    "success_means": "no use-after-free of live objects, bounded pause times, and most garbage reclaimed; gctest passes"
+  },
+  "known_human_problem_solved": "automatic memory reclamation without language support",
+  "hardware_assumptions": "",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/bdwgc-8.2.6/receipts/run-bdwgc-8.2.6-20260912T153532Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "UPSTREAM_TESTS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\bdwgc-8.2.6 ; tracked techne/fossils/specimens/bdwgc-8.2.6/",
+    "where_it_came_from": "{'repo': 'github.com/ivmai/bdwgc', 'tag': 'v8.2.6'} ; ORIGINAL_AUTHORITATIVE_RELEASE ; MIT-style (Boehm GC license)",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run bdwgc-8.2.6",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / UPSTREAM_TESTS_PASS ; receipt techne/fossils/specimens/bdwgc-8.2.6/receipts/run-bdwgc-8.2.6-20260912T153532Z.json",
+    "what_humans_used_it_for": "reclaim unreachable heap memory automatically in a language (C/C++) that gives the collector no cooperation -- scanning the stack and heap conservatively for anything that looks like a pointer"
+  },
+  "seat": "Techne"
+}

@@ -57,3 +57,27 @@ toolchain); build a minimal smoke harness only to prove execution + observable b
 RECORD the package record incl. observability dims, lineage relations, human context; never
 substitute a modern rewrite for original machinery; near-duplicates are kept; nothing is
 classified into organs (Nyx's job). Preserve first, classify later.
+
+## Batch 03 done (2026-09-12): 19 specimens, vault now 41
+hardware: picorv32, espresso-logic | os: dlmalloc, bdwgc, xv6(SRC) | lang: pforth, femtolisp,
+gnu-prolog(WAM) | numerical: fftpack, quadpack, eispack | estimation: libfec(BLOCKED i386 asm)
+| compression: zlib, bzip2, compress-4.2.4(version pair w/ ncompress-5.0) | representation:
+buddy(BDD), tinycc | alife/weird: corewar(py2.7), avida(SRC).
+
+## Thin axes AFTER batch 03 (target these next; do not hide)
+- HARDWARE still thin: need an arbiter, cache controller, branch predictor, sorting network,
+  NoC/routing fabric, FSM controller (Verilog/VHDL). Discovered candidates: espresso's
+  descendants MIS/SIS/ABC (logic synthesis); opencores arbiters/FIFOs.
+- PROBABILISTIC/ESTIMATION: Kalman, HMM (Baum-Welch/forward-backward), particle filter, MCMC,
+  belief-net. libfec's Viterbi is blocked on i386 asm -> acquire an i386 world OR a portable
+  Viterbi. 
+- CONTROL: EMPTY -- PID, MPC, adaptive control, an estimator loop.
+- CONTENTION/RETRY/RECOVERY: EMPTY -- TCP Tahoe/Reno congestion, Ethernet backoff, Raft/Paxos,
+  a failure detector, checkpoint/restart.
+- NEURAL/CONNECTIONIST history: EMPTY -- perceptron, Hopfield, SOM, reservoir, an early NN sim.
+- GAMES beyond chess: Go, checkers (Chinook lineage), retrograde endgame generator, MCTS.
+- BINARY-ONLY + lawful recovery: not yet exercised (the charter's disassemble/decompile path).
+- Versions: extend the compress pair; add a SAT lineage (minisat 1.14 vs 2.2.0), a TCP
+  congestion lineage (Tahoe->Reno->CUBIC), an allocator lineage.
+- Follow-on edges seen this batch: SLATEC (d1mach/xerror/dgtsl chain), EISPACK->LAPACK
+  transition, Core War pMARS, Karn i386 FEC.
