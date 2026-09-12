@@ -4251,7 +4251,9 @@
     "Interpolation and extrapolation"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.predict.fit_a_polynomial_matching_values_and_derivatives_at_the_points",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "Cubic interpolation",
@@ -4263,7 +4265,9 @@
     "Interpolation and extrapolation"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.predict.join_low_degree_pieces_with_matching_derivatives_at_the_knots",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "Hermite interpolation",
@@ -4275,7 +4279,9 @@
     "Interpolation and extrapolation"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.predict.fit_a_polynomial_matching_values_and_derivatives_at_the_points",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "Lagrange interpolation",
@@ -4287,7 +4293,9 @@
     "Interpolation and extrapolation"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.predict.fit_the_unique_polynomial_through_all_the_points",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "Linear interpolation",
@@ -4299,7 +4307,9 @@
     "Interpolation and extrapolation"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.predict.weight_the_two_neighbours_by_position_along_the_segment",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "Monotone cubic interpolation",
@@ -4311,7 +4321,9 @@
     "Interpolation and extrapolation"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.predict.clamp_the_knot_slopes_so_every_piece_stays_monotone",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "Multivariate interpolation",
@@ -4323,7 +4335,9 @@
     "Interpolation and extrapolation"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "NOT_A_BIT",
+   "reason": "a header or category, not a mechanism",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "Bicubic interpolation",
@@ -4335,7 +4349,9 @@
     "Interpolation and extrapolation"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.predict.join_low_degree_pieces_with_matching_derivatives_at_the_knots",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "Bilinear interpolation",
@@ -4347,7 +4363,9 @@
     "Interpolation and extrapolation"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.predict.weight_the_two_neighbours_by_position_along_the_segment",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "Lanczos resampling (\"Lanzosh\")",
@@ -4359,7 +4377,9 @@
     "Interpolation and extrapolation"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.predict.convolve_the_samples_with_a_windowed_sinc_kernel",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "Nearest-neighbor interpolation",
@@ -4371,7 +4391,9 @@
     "Interpolation and extrapolation"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.predict.copy_the_value_of_the_nearest_sample",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "Tricubic interpolation",
@@ -4383,7 +4405,9 @@
     "Interpolation and extrapolation"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.predict.join_low_degree_pieces_with_matching_derivatives_at_the_knots",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "Pareto interpolation",
@@ -4395,7 +4419,9 @@
     "Interpolation and extrapolation"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "DEFER",
+   "reason": "a parametric estimator (fit a two-parameter law to two bracketing points and read off the median); the list line does not fix the mechanism; needs a source read",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "Polynomial interpolation",
@@ -4407,7 +4433,9 @@
     "Interpolation and extrapolation"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.predict.fit_the_unique_polynomial_through_all_the_points",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "Neville's algorithm",
@@ -4419,7 +4447,9 @@
     "Interpolation and extrapolation"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.predict.build_higher_degree_interpolants_from_pairs_of_lower_ones",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "Spline interpolation",
@@ -4431,7 +4461,9 @@
     "Interpolation and extrapolation"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.predict.join_low_degree_pieces_with_matching_derivatives_at_the_knots",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "De Boor algorithm",
@@ -4443,7 +4475,9 @@
     "Interpolation and extrapolation"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.predict.repeatedly_blend_adjacent_control_points_at_the_parameter",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "De Casteljau's algorithm",
@@ -4455,7 +4489,9 @@
     "Interpolation and extrapolation"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.predict.repeatedly_blend_adjacent_control_points_at_the_parameter",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "Trigonometric interpolation",
@@ -4467,7 +4503,9 @@
     "Interpolation and extrapolation"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.transform.decompose_signal_into_basis_coefficients",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "Eigenvalue algorithms",
@@ -4479,7 +4517,9 @@
     "Linear algebra"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "NOT_A_BIT",
+   "reason": "a header or category, not a mechanism",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "Arnoldi iteration",
@@ -4491,7 +4531,9 @@
     "Linear algebra"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.search.solve_within_the_span_of_successive_matrix_powers_of_a_vector",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "Inverse iteration",
@@ -4503,7 +4545,9 @@
     "Linear algebra"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.search.repeatedly_solve_with_a_shifted_matrix_to_amplify_the_nearest_eigenvector",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "Jacobi method",
@@ -4515,7 +4559,9 @@
     "Linear algebra"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.transform.rotate_in_a_plane_to_zero_the_largest_off_diagonal_entry_repeatedly",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "Lanczos iteration",
@@ -4527,7 +4573,9 @@
     "Linear algebra"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.search.solve_within_the_span_of_successive_matrix_powers_of_a_vector",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "Power iteration",
@@ -4539,7 +4587,9 @@
     "Linear algebra"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.search.multiply_by_the_matrix_repeatedly_and_renormalise",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "QR algorithm",
@@ -4551,7 +4601,9 @@
     "Linear algebra"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.transform.factor_into_orthogonal_times_triangular_and_remultiply_in_reverse",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "Rayleigh quotient iteration",
@@ -4563,7 +4615,9 @@
     "Linear algebra"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.search.move_the_shift_to_the_current_quotient_each_round",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "Gram–Schmidt process",
@@ -4575,7 +4629,9 @@
     "Linear algebra"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.transform.subtract_the_projections_onto_the_previous_vectors_then_normalise",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "Krylov methods (for large sparse matrix problems; third most-important numerical method class of the 20th century as ran",
@@ -4587,7 +4643,9 @@
     "Linear algebra"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.search.solve_within_the_span_of_successive_matrix_powers_of_a_vector",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "Matrix multiplication algorithms",
@@ -4599,7 +4657,9 @@
     "Linear algebra"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "NOT_A_BIT",
+   "reason": "a header or category, not a mechanism",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "Cannon's algorithm",
@@ -4611,7 +4671,9 @@
     "Linear algebra"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.transform.shift_blocks_around_a_torus_so_each_node_multiplies_its_current_pair",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "Coppersmith–Winograd algorithm",
@@ -4623,7 +4685,9 @@
     "Linear algebra"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.transform.multiply_by_splitting_into_fewer_subproducts",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "Freivalds' algorithm",
@@ -4635,7 +4699,9 @@
     "Linear algebra"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.verify.compare_both_sides_applied_to_a_random_vector",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "Strassen algorithm",
@@ -4647,7 +4713,9 @@
     "Linear algebra"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.transform.multiply_by_splitting_into_fewer_subproducts",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "Solving systems of linear equations",
@@ -4659,7 +4727,9 @@
     "Linear algebra"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "NOT_A_BIT",
+   "reason": "a header or category, not a mechanism",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "Biconjugate gradient method",
@@ -4671,7 +4741,9 @@
     "Linear algebra"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.search.step_along_conjugate_directions",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "Conjugate gradient",
@@ -4683,7 +4755,9 @@
     "Linear algebra"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.search.step_along_conjugate_directions",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "Gauss–Jordan elimination",
@@ -4695,7 +4769,9 @@
     "Linear algebra"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.transform.eliminate_each_variable_below_its_pivot_then_back_substitute",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "Gauss–Seidel method",
@@ -4707,7 +4783,9 @@
     "Linear algebra"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.search.update_each_variable_in_turn_from_the_latest_values_of_the_others",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "Gaussian elimination",
@@ -4719,7 +4797,9 @@
     "Linear algebra"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.transform.eliminate_each_variable_below_its_pivot_then_back_substitute",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "Levinson recursion",
@@ -4731,7 +4811,9 @@
     "Linear algebra"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.transform.extend_the_solution_one_order_at_a_time_using_the_shift_structure",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "Stone's method",
@@ -4743,7 +4825,9 @@
     "Linear algebra"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.search.iterate_corrections_through_an_incomplete_factorisation_that_keeps_the_sparsity",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "Successive over-relaxation (SOR)",
@@ -4755,7 +4839,9 @@
     "Linear algebra"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.search.overshoot_each_update_by_a_fixed_relaxation_factor",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "Tridiagonal matrix algorithm (Thomas algorithm)",
@@ -4767,7 +4853,9 @@
     "Linear algebra"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.transform.eliminate_each_variable_below_its_pivot_then_back_substitute",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "SMAWK Algorithm",
@@ -4779,7 +4867,9 @@
     "Linear algebra"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.search.prune_dominated_columns_then_recurse_on_the_even_rows_for_row_maxima",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "Sparse matrix algorithms",
@@ -4791,7 +4881,9 @@
     "Linear algebra"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "NOT_A_BIT",
+   "reason": "a header or category, not a mechanism",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "Cuthill–McKee algorithm",
@@ -4803,7 +4895,9 @@
     "Linear algebra"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.order.number_vertices_by_breadth_first_levels_from_a_peripheral_start",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "Minimum degree algorithm",
@@ -4815,7 +4909,9 @@
     "Linear algebra"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.order.eliminate_the_vertex_of_smallest_degree_first",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "Symbolic Cholesky decomposition",
@@ -4827,7 +4923,9 @@
     "Linear algebra"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.transform.compute_the_fill_pattern_before_the_numeric_factorisation",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "Gibbs sampling",
@@ -4839,7 +4937,9 @@
     "Monte Carlo"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.sample.redraw_one_variable_from_its_conditional_given_the_rest",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "Hybrid Monte Carlo",
@@ -4851,7 +4951,9 @@
     "Monte Carlo"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.sample.propose_by_simulating_momentum_dynamics_then_accept",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "Metropolis–Hastings algorithm",
@@ -4863,7 +4965,9 @@
     "Monte Carlo"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.sample.propose_a_move_and_accept_by_the_density_ratio",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "Wang and Landau algorithm",
@@ -4875,7 +4979,9 @@
     "Monte Carlo"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.sample.penalise_revisited_levels_to_flatten_the_visit_histogram",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "MISER algorithm",
@@ -4887,7 +4993,9 @@
     "Numerical integration"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.sample.split_the_region_where_the_variance_is_largest_and_allocate_samples_to_it",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "Bisection method",
@@ -4899,7 +5007,9 @@
     "Root finding"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.search.halve_the_bracket_keeping_the_half_with_the_sign_change",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "False position method",
@@ -4911,7 +5021,9 @@
     "Root finding"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.search.step_to_the_zero_of_the_chord_while_keeping_the_sign_change",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "Halley's method",
@@ -4923,7 +5035,9 @@
     "Root finding"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.search.step_to_the_zero_of_the_local_second_order_rational_model",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "ITP method",
@@ -4935,7 +5049,9 @@
     "Root finding"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.search.project_the_interpolated_step_into_a_shrinking_bisection_window",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "Muller's method",
@@ -4947,7 +5063,9 @@
     "Root finding"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.search.step_to_the_zero_of_a_model_fitted_through_the_last_few_points",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "Newton's method",
@@ -4959,7 +5077,9 @@
     "Root finding"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.search.step_to_the_zero_of_the_local_linearisation",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "Ridder's method",
@@ -4971,7 +5091,9 @@
     "Root finding"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.search.step_to_the_zero_of_a_model_fitted_through_the_last_few_points",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "Secant method",
@@ -4983,7 +5105,9 @@
     "Root finding"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.search.step_to_the_zero_of_a_model_fitted_through_the_last_few_points",
+   "classified_at": "2026-09-12T13:48Z"
   },
   {
    "name": "Alpha–beta pruning",

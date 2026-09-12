@@ -1,0 +1,50 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.sample.propose_by_simulating_momentum_dynamics_then_accept",
+  "name": "propose by simulating momentum dynamics, then accept or reject",
+  "lineage": [
+    "numerical methods",
+    "biological and artificial dynamical systems"
+  ],
+  "mechanism": "give the current point a random momentum, simulate frictionless motion under the potential given by the negative log density for a fixed time with a reversible integrator, and accept the endpoint by the usual ratio test on the total energy; long coherent moves replace random-walk steps",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Hybrid Monte Carlo' in section Computational mathematics / Numerical algorithms / Monte Carlo: generates a sequence of samples using Hamiltonian weighted Markov chain Monte Carlo, from a probability distribution which is difficult to sample directly.",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SAMPLE",
+  "in_geometry": "FUNCTION",
+  "out_geometry": "SEQUENCE",
+  "order_req": "NONE",
+  "metric_req": "INNER_PRODUCT",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "PROBABILISTIC_BOUND",
+  "strategy": "RANDOMIZED",
+  "iteration": "RANDOM",
+  "cost": "LINEAR",
+  "requires": [
+    "a gradient of the log density",
+    "a reversible integrator and a step length (policy)"
+  ],
+  "fails_when": [
+    "discrete variables; step-length tuning"
+  ],
+  "instances": [
+    "Hybrid Monte Carlo"
+  ],
+  "related": [
+    {
+      "rel": "SPECIALIZES",
+      "id": "bit.sample.propose_a_move_and_accept_by_the_density_ratio"
+    },
+    {
+      "rel": "REQUIRES",
+      "id": "bit.predict.advance_position_from_two_previous_positions_and_acceleration"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+}

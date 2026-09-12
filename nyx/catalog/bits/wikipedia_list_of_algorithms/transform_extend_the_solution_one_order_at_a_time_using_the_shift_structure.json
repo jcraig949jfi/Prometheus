@@ -1,0 +1,42 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.transform.extend_the_solution_one_order_at_a_time_using_the_shift_structure",
+  "name": "extend the solution one order at a time using the shift structure",
+  "lineage": [
+    "numerical methods",
+    "scientific software",
+    "optimizers",
+    "compressors"
+  ],
+  "mechanism": "for a matrix whose entries depend only on the difference of their indices, the solution of the order-n system is obtained from the order-(n-1) solution and its reversal by one inner product and one scaling, so the whole solve costs a square rather than a cube",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Levinson recursion' in section Computational mathematics / Numerical algorithms / Linear algebra: solves equation involving a Toeplitz matrix",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "TRANSFORM",
+  "in_geometry": "MATRIX",
+  "out_geometry": "TENSOR",
+  "order_req": "TOTAL",
+  "metric_req": "INNER_PRODUCT",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "INCREMENTAL",
+  "iteration": "SWEEP",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "constant-along-diagonals structure"
+  ],
+  "fails_when": [
+    "numerically weaker than elimination on ill-conditioned inputs"
+  ],
+  "instances": [
+    "Levinson recursion"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+}

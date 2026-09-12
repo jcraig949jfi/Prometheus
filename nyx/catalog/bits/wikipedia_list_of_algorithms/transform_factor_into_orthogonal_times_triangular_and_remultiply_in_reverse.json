@@ -1,0 +1,41 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.transform.factor_into_orthogonal_times_triangular_and_remultiply_in_reverse",
+  "name": "factor into orthogonal times triangular, remultiply in reverse order, repeat",
+  "lineage": [
+    "numerical methods",
+    "scientific software",
+    "optimizers"
+  ],
+  "mechanism": "factor the matrix as an orthogonal factor times an upper-triangular factor, multiply them back in the opposite order to get a similar matrix, and repeat; the sub-diagonal decays and the eigenvalues appear on the diagonal (shifts and deflation accelerate it)",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'QR algorithm' in section Computational mathematics / Numerical algorithms / Linear algebra: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "TRANSFORM",
+  "in_geometry": "MATRIX",
+  "out_geometry": "MATRIX",
+  "order_req": "NONE",
+  "metric_req": "INNER_PRODUCT",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "APPROXIMATE",
+  "strategy": "FIXPOINT_ITERATION",
+  "iteration": "NONE",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "an orthogonal-triangular factorisation"
+  ],
+  "fails_when": [
+    "cubic per iteration without a preliminary reduction to compact form"
+  ],
+  "instances": [
+    "QR algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+}

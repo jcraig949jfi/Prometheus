@@ -1,0 +1,47 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.repeatedly_solve_with_a_shifted_matrix_to_amplify_the_nearest_eigenvector",
+  "name": "repeatedly solve with a shifted matrix to amplify the eigenvector nearest the shift",
+  "lineage": [
+    "numerical methods",
+    "scientific software",
+    "optimizers"
+  ],
+  "mechanism": "instead of multiplying by the matrix, solve a linear system with the matrix minus a chosen shift each round; the eigenvalue closest to the shift becomes the dominant one of the inverse, so the vector converges to its eigenvector",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Inverse iteration' in section Computational mathematics / Numerical algorithms / Linear algebra: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "MATRIX",
+  "out_geometry": "TENSOR",
+  "order_req": "NONE",
+  "metric_req": "INNER_PRODUCT",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "APPROXIMATE",
+  "strategy": "FIXPOINT_ITERATION",
+  "iteration": "NONE",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "a linear solve per round",
+    "a shift near the wanted eigenvalue (policy)"
+  ],
+  "fails_when": [
+    "each round costs a solve; a shift exactly on an eigenvalue is singular"
+  ],
+  "instances": [
+    "Inverse iteration"
+  ],
+  "related": [
+    {
+      "rel": "SPECIALIZES",
+      "id": "bit.search.multiply_by_the_matrix_repeatedly_and_renormalise"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+}

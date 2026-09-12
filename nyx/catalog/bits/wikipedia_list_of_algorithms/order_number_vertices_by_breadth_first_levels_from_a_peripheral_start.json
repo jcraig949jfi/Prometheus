@@ -1,0 +1,46 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.order.number_vertices_by_breadth_first_levels_from_a_peripheral_start",
+  "name": "number vertices by breadth-first levels from a peripheral start",
+  "lineage": [
+    "numerical methods",
+    "scientific software",
+    "optimizers"
+  ],
+  "mechanism": "start at a vertex of low degree far from the centre, visit the graph level by level breadth-first (neighbours in increasing degree), and number the vertices in visiting order (reversing the order at the end); connected vertices then have nearby numbers so the matrix nonzeros hug the diagonal",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Cuthill–McKee algorithm' in section Computational mathematics / Numerical algorithms / Linear algebra: reduce the bandwidth of a symmetric sparse matrix",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "ORDER",
+  "in_geometry": "GRAPH",
+  "out_geometry": "SEQUENCE",
+  "order_req": "NONE",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "APPROXIMATE",
+  "strategy": "GREEDY",
+  "iteration": "FIFO",
+  "cost": "LINEAR",
+  "requires": [
+    "a symmetric sparsity pattern"
+  ],
+  "fails_when": [
+    "a bad starting vertex gives a wide band"
+  ],
+  "instances": [
+    "Cuthill–McKee algorithm"
+  ],
+  "related": [
+    {
+      "rel": "REQUIRES",
+      "id": "bit.search.expand_frontier_level_by_level"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+}

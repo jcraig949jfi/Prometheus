@@ -1,0 +1,41 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.sample.split_the_region_where_the_variance_is_largest_and_allocate_samples_to_it",
+  "name": "split the region where the variance is largest and allocate samples in proportion",
+  "lineage": [
+    "numerical methods",
+    "scientific software"
+  ],
+  "mechanism": "spend a few samples estimating the variance of the integrand in each half of the region along each axis, split along the axis that most reduces total variance, give each half a share of the remaining samples proportional to its estimated spread, and recurse until the budget is small",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'MISER algorithm' in section Computational mathematics / Numerical algorithms / Numerical integration: Monte Carlo simulation, numerical integration",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SAMPLE",
+  "in_geometry": "FUNCTION",
+  "out_geometry": "SCALAR",
+  "order_req": "NONE",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "PROBABILISTIC_BOUND",
+  "strategy": "DIVIDE_CONQUER",
+  "iteration": "RANDOM",
+  "cost": "LINEAR",
+  "requires": [
+    "a bounded region",
+    "a minimum sample budget per leaf (policy)"
+  ],
+  "fails_when": [
+    "variance estimates from few samples misdirect the split"
+  ],
+  "instances": [
+    "MISER algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+}
