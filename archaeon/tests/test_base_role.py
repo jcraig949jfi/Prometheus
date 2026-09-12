@@ -18,7 +18,9 @@ from archaeon import workspace as W
 
 REPO = Path(__file__).resolve().parents[2]
 BASE = REPO / "roles" / "base-role"
-BANNER = "> Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md"
+# The PROPERTY is a declared inheritance of both base files; the blockquote prefix is a label
+# (Rhadamanthus #146: Mnemosyne's rewritten file declares it in prose and the test was red on main).
+BANNER = "Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md"
 PRIMARY = ("RESPONSIBILITIES.md", "ROLE.md", "BOOTSTRAP.md", "CHARTER.md")
 MANDATORY = ("journal/2026-01-01.md", "INBOX_SOMEONE_TOPIC_2026-01-01.md", "prompts/2026-01-01_topic/PROMPT.md",
              "BACKLOG_H0H5.md", "STATUS.md",

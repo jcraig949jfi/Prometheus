@@ -1,10 +1,17 @@
 # H0–H5 status — compact, from receipts only
 
-Maintained by Archaeon. Updated 2026-09-11 ~18:20 UTC (cs-h5-1-r1 issued; rule 10 adopted). Review packet: `roles/Archaeon/REVIEW_PACKET_2026-09-10.md`. Delegation: `roles/Archaeon/prompts/2026-09-10_tracks/` (Tracks A-E from the operator's Chimera brief; three corrections verified: sqrt(6) counterexample, client_id retention gap, XOR-injection non-conservation). Design v0.1
+Maintained by Archaeon. Updated 2026-09-11 ~22:45 UTC (H5-1 complete on 256 rules; B1 grantee; ARCH-36). Review packet: `roles/Archaeon/REVIEW_PACKET_2026-09-10.md`. Delegation: `roles/Archaeon/prompts/2026-09-10_tracks/` (Tracks A-E from the operator's Chimera brief; three corrections verified: sqrt(6) counterexample, client_id retention gap, XOR-injection non-conservation). Design v0.1
 (`roles/Archaeon/prompts/2026-09-08_h0h5/DESIGN_H0_H5_v0.1.md`). Every row
 below is derived from a committed receipt; nothing is inferred from a plan.
 Baseline: `archaeon/docs/h0h5/BASELINE_2026-09-09.json`.
 
+
+
+## 2026-09-11 ~22:45 UTC: H5-1 COMPLETE on 256 rules (calibration, not evidence); B1 grantee posted; candidate-set misuse fixed
+
+- **H5-1 (F-24/ARCH-28) CLOSED**: cs-h5-1-r1 24/24 completed 21:13-21:18 UTC under Vivarium's relaunched consumer (rule-10 bound 17280 ticks / Archaeon). Readout on all 256 rules: live class map = published (224 classes, 0 disagreements); direct 8.0 / 7.78, balanced_7 11.73 / 11.55, scrambled_direct_3 8.0 / 7.88 (rules / classes) -- every number at its analytic bound, so this is the instrument calibrated on the live map and carries NO evidence about learned evolvability. `archaeon/docs/h0h5/H5_1_READOUT_2026-09-11.md`. ARCH-30 (instrument arms) waits on Polyhymnia's table artifacts.
+- **B1**: grantee = cli_1029e9255a074157a1b3ba1e posted to Vivarium + Daedalus (#185); Vivarium runs the grant; then F-25.
+- **ARCH-36**: every campaign had reused one candidate_set_id across N submits, which the consumer honestly bound as one-chosen-over-(N-1) (Vivarium #181 item 4). `vivqueue.submit` now refuses a reused id; campaigns carry `source_evidence.campaign_set`; readers match both shapes. Historical rows keep the misbinding as history; no readout used it.
 
 ## 2026-09-11 ~18:20 UTC: cs-h5-1-r1 ISSUED on the measured engine property; rule 10 adopted; ARCH-31 closed
 

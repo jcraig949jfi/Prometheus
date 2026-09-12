@@ -1,0 +1,51 @@
+{
+  "schema": "nyx.chop/0",
+  "record_kind": "ORGAN",
+  "id": "organ.hypothesis_shrinker.order_gated_acceptance.cut2",
+  "specimen": "hypothesis_shrinker",
+  "name": "order-gated greedy acceptance: a candidate is rejected before evaluation unless it is smaller under the order, and adopted only if it satisfies the predicate, is smaller, and the transition is allowed",
+  "scale": "PRIMITIVE",
+  "cost_class": "CPU_SCALE",
+  "provenance": {
+    "ancestor": "hypothesis Shrinker.cached_test_function + incorporate_test_data; the same shape in shrinking.common.Shrinker.consider",
+    "sources": [
+      {
+        "ref": "hypothesis 6.165.10 (Techne lock; shrinker.py sha256 f364cbff...) hypothesis/internal/conjecture/shrinker.py 397-427 (cached_test_function: prefix check; sort_key(self.nodes) < sort_key(nodes) -> reject; choice_permitted gate; engine call; incorporate_test_data; check_calls), 429-441 (incorporate_test_data: status >= VALID, predicate, sort_key smaller, allow_transition)",
+        "grade": "T1-LOCAL"
+      },
+      {
+        "ref": "hypothesis 6.165.10 (Techne lock; shrinker.py sha256 f364cbff...) hypothesis/internal/conjecture/shrinking/common.py 92-120 (consider: make_immutable, canonical dedupe against a seen set, check_invariants, left_is_better, predicate, accept)",
+        "grade": "T1-LOCAL"
+      },
+      {
+        "ref": "nyx/specimens/hypothesis_shrinker/PROVENANCE.md",
+        "grade": "T1-LOCAL"
+      }
+    ]
+  },
+  "questions": {
+    "ancestry": "Both copies are in the pinned bytes; the two files were read separately and the shape matched. Whether one was derived from the other is unknown (T2 at best); the boundary was drawn from the repeated flow, not from either def.",
+    "mechanism": "Given the current best and a candidate: (1) if the candidate is not strictly smaller under the order, do not even evaluate it; (2) if it violates a constraint (or was seen before, in the standalone form), do not evaluate it; (3) evaluate; (4) adopt iff the property holds and (in the engine form) an external allow_transition agrees. Every adoption is a strict decrease under the order, so the process cannot cycle.",
+    "input": "current best (a choice sequence or a plain value), a candidate of the same kind, a predicate, a strict total-ish order (c02 or a left_is_better)",
+    "output": "a Bool (adopted or not) and, as a side effect, the new best",
+    "state": "the current best; in the standalone form a seen-set of canonical values (so a rejected candidate is never re-evaluated); in the engine form the evaluation count and the stall counter (check_calls raises StopShrinking)",
+    "assumptions": "that the order is strict and well-founded on the values that arise (termination follows); that the predicate is deterministic (the engine form exits FLAKY otherwise, c17); that 'smaller before evaluating' loses nothing worth having -- i.e. no larger intermediate is ever needed to reach a smaller final (the greedy assumption)",
+    "interface": "consider(candidate) -> bool over (best, predicate, order); the engine form adds allow_transition(best, candidate) -> bool and a call counter",
+    "fitness_value": "MEASURED (standalone, outside the engine; nyx/specimens/hypothesis_shrinker/ablations/RECEIPT_N1_2026-09-11.json P-a5): from 1000 with predicate n > 42, the accepted sequence was 488, 232, 104, 52, 50, 48, 46, 44, 43 -- strictly decreasing at every adoption, 14 predicate calls to reach 43. N-a: predicate always-false -> initial returned unchanged (28 calls spent, none adopted). The 'no wasted evaluations on non-improvements' half remains unknown -- pre-evaluation rejections are not counted by the specimen.",
+    "failure_landscape": "(a) greedy: a local minimum under the pass set is a fixed point (the specimen's docstring says so: 'a local minimum for each shrink pass'); (b) the order decides everything -- a candidate that is simpler by the CONSUMER's order but not by c02 is rejected at step (1) unseen (Proteus states exactly this: 'THAT IS NOT THIS ORDER'); (c) allow_transition is a hook whose semantics live outside.",
+    "ablation": "unknown -- designed: remove step (1) (evaluate everything, adopt only if smaller). Prediction: identical results, more evaluations. Not run; needs a patched copy, not a switch.",
+    "decomposability": "(1) the pre-evaluation order gate, (2) the validity/seen gate, (3) the accept rule. (1) and (3) share the order; (2) is c15/scaffolding. Nothing further.",
+    "composability": "Any local search over a totally ordered space with a Boolean property: Proteus's minimiser is the live consumer (it supplies its own order and predicate and asks Hypothesis to run this); the standalone form (c07) already composes it with value-specific move generators.",
+    "human_prior": "That smaller-first is the right search discipline (never accept a lateral or upward move). The specimen's own initial_coarse_reduction admits the prior costs something: 'they have much more ability to make the test case worse' is why rerandomising moves are quarantined outside the greedy loop.",
+    "control": "RUN: positive P-a1 (43), negative N-a (unchanged), cheat P-a5 (strict decrease asserted over the accepted sequence, true). Ref nyx/specimens/hypothesis_shrinker/ablations/RECEIPT_N1_2026-09-11.json.",
+    "cheat": "Reporting a candidate that never satisfied the predicate as the result (unsound minimisation); Techne's receipt measures exactly this as n_unsound (0 of 45) and Proteus's still_solves re-check is the control."
+  },
+  "alternative_cuts": [
+    "CUTS.md c05: acceptance is not separable from the schedule that proposes candidates (cut B: the class is one organ)"
+  ],
+  "pressure_refs": [
+    "pressure.hypothesis_shrinker.smallest_witness_not_first.cut1"
+  ],
+  "cut": "CUT-2",
+  "derived_from": "organs/order_gated_acceptance.cut1.json (preserved)"
+}

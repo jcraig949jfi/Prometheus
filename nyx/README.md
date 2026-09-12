@@ -19,6 +19,14 @@ Organs and failure landscapes go to Archaeon (ecological coordinator).
 Pressures go to Vivarium (world builder). Nyx never builds the world for
 her own pressure; the idea must cross a seat boundary first.
 
+## Procedure and loop (2026-09-11)
+
+    KNIFE.md    decomposition rules, each with ancestry to an observed failure
+    LOOP.md     the continuous loop: WIP cap from consumer throughput, STOP status,
+                next specimens, the anti-collection table
+    chop/cutledger.py   deterministic per-specimen bookkeeping (cuts.json)
+    CHOP_SHOP_ASSESSMENT_<specimen>_<date>.md   the Chopper assessed, not the specimen
+
 ## Layout
 
     chop/schema.py          record checks (SPECIMEN / ORGAN / PRESSURE), v0

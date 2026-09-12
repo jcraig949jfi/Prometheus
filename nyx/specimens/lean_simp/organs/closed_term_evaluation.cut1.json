@@ -1,0 +1,47 @@
+{
+  "schema": "nyx.chop/0",
+  "record_kind": "ORGAN",
+  "id": "organ.lean_simp.closed_term_evaluation.cut1",
+  "specimen": "lean_simp",
+  "name": "closed-term evaluation: subterms with no free variables over decidable or computable types are evaluated by computation and the result is certified by a decision procedure or by reflexivity",
+  "scale": "MECHANISM",
+  "cost_class": "CPU_SCALE",
+  "provenance": {
+    "ancestor": "Lean 4 simp, Rewrite.simpGround / sevalGround / simpUsingDecide / simpArith + BuiltinSimprocs",
+    "sources": [
+      {
+        "ref": "Lean v4.30.0 d024af099 src/lean/Lean/Meta/Tactic/Simp/Rewrite.lean lines 275-291 simpUsingDecide (Prop with Decidable instance: evaluate decide, proof by of_decide_eq_true), 292-320 simpArith (Nat/Int linear arithmetic normalisation when config.arith), 410-523 dischargeGround / sevalGround / seval / simpGround (ground terms handled by a separate symbolic-evaluation simproc set with its own context, 467-501)",
+        "grade": "T1-LOCAL"
+      },
+      {
+        "ref": "Lean v4.30.0 d024af099 src/lean/Lean/Meta/Tactic/Simp/BuiltinSimprocs/Nat.lean (366), Int.lean (136), BitVec.lean (363), Fin.lean (178), UInt.lean, Char.lean, String.lean, List.lean, Array.lean: literal-folding procedures registered by key (e.g. Nat.reduceAdd on HAdd.hAdd _ _ _ _ lit lit); read by directory listing and one file header only",
+        "grade": "T1-LOCAL"
+      },
+      {
+        "ref": "nyx/specimens/lean_simp/PROVENANCE.md",
+        "grade": "T1-LOCAL"
+      }
+    ]
+  },
+  "questions": {
+    "ancestry": "Lean 4 simp. The Decidable-based evaluation and the builtin simprocs are Lean 4 additions (the source names simprocs as a Lean 4 feature; T2 for the history).",
+    "mechanism": "Three routes for a subterm without free variables: (1) if it is a proposition with a Decidable instance, run the decision procedure at elaboration time and, if true, rewrite to True with proof of_decide_eq_true (if false, to False); (2) if its head is a registered literal-folding procedure (Nat.reduceAdd etc.), compute the literal and return it with a proof by rfl/decide; (3) if config.ground, run a dedicated symbolic-evaluation simproc set over the ground term. The results feed back into the traversal as ordinary rewrites.",
+    "input": "an Expr subterm; the environment (instances, simproc registrations); config flags decide / ground / arith",
+    "output": "Step / Result with a literal or True/False and a proof",
+    "state": "none beyond the traversal's; the seval route builds its OWN Context (mkSEvalContext 478-485) -- a nested simplifier with a different store",
+    "assumptions": "that the kernel or the compiler can evaluate the term (Decidable instance reduces; literals are native); that computation is cheaper than rewriting with lemmas for closed terms; that kernel-checked decide is acceptable in proofs (a known cost centre)",
+    "interface": "simproc-shaped: Expr -> SimpM Step, registered by key path, participating in the same pre/post slots as rewrite rules",
+    "fitness_value": "Arithmetic and other closed computations are done by computing rather than by hundreds of lemma steps; claimed; the builtin Nat simprocs alone are 366 lines of literal cases, which is itself a measure of how much rewriting they replace.",
+    "failure_landscape": "(a) decide on a large instance is slow or times out at kernel check -- correctness preserved, budget lost; (b) a Decidable instance that is not reducible makes decide fail silently (rewrite does not fire); (c) each type needs hand-written literal procedures (the BuiltinSimprocs directory is the evidence: no generic mechanism, one file per type); (d) the seval nested context means two stores, two configs.",
+    "ablation": "The specimen exposes decide := false, ground := false, arith := false as config; and simprocs can be erased by name. Prediction: with all off, 2 + 2 = 4 is proved by Nat lemmas or not at all. Not run.",
+    "decomposability": "(1) the Decidable route (generic over any decidable Prop: PRIMITIVE), (2) the per-type literal folders (DATA-like: a table of cases), (3) the arithmetic normaliser (a separate algorithm, Arith/), (4) the seval nested-simplifier route. Only (1) is a clean primitive; (2) is closer to a lookup table.",
+    "composability": "Any organism whose terms include closed computable subterms: Proteus boolean programs evaluate closed subexpressions trivially, so (1) is already implicit there; the transferable idea is 'compute when closed, certify the result', which C3 certificates would host.",
+    "human_prior": "Which types deserve literal folders (Nat, Int, BitVec, Fin, UInt, Char, String, List, Array) is a human list; that decide is trusted to run at elaboration time is a proof-engineering policy.",
+    "control": "Positive: 2 + 2 = 4 closes with decide := true and no arithmetic lemmas in the store. Negative: with decide := false and an empty store it does not close. Cheat control: a folder that returns the right literal with a WRONG proof term must be caught by the kernel, so the control needs Lean execution.",
+    "cheat": "Evaluating with an external calculator and asserting the result is exactly what a proof-by-decide prevents; an organism that skips the certificate passes any term-comparison test."
+  },
+  "alternative_cuts": [
+    "CUTS.md c23-alt: closed-term evaluation is three organs (decide / literal folding / arith) glued by the simproc slot, not one"
+  ],
+  "pressure_refs": []
+}

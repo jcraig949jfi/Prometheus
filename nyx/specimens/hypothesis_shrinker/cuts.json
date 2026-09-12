@@ -1,0 +1,969 @@
+{
+  "specimen": "specimen.hypothesis_shrinker",
+  "cuts": [
+    "CUT-1",
+    "CUT-2"
+  ],
+  "candidates": [
+    {
+      "id": "c01",
+      "name": "order-gated greedy acceptance",
+      "introduced_in": "CUT-1",
+      "origin": "DISCOVERED",
+      "source_boundary": "none: the same flow in shrinker.cached_test_function+incorporate_test_data and shrinking.common.Shrinker.consider",
+      "dispositions": {
+        "CUT-1": "ORGAN",
+        "CUT-2": "ORGAN"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        },
+        {
+          "cut": "CUT-2",
+          "relation": "SURVIVED",
+          "from": [
+            "c01"
+          ]
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": [
+          "fitness_value",
+          "ablation"
+        ],
+        "CUT-2": [
+          "ablation"
+        ]
+      },
+      "record_bytes": {
+        "CUT-1": 5707,
+        "CUT-2": 5914
+      },
+      "independent_test": "run",
+      "independent_test_ref": "nyx/specimens/hypothesis_shrinker/ablations/RECEIPT_N1_2026-09-11.json P-a1 P-a5 N-a (common.Shrinker.consider exercised with no engine)",
+      "ancestor_free_contract": true,
+      "consumer_returns": [],
+      "boundary_support": "SUPPORTED",
+      "boundary_support_ref": "nyx/specimens/hypothesis_shrinker/ablations/RECEIPT_N1_2026-09-11.json P-a5 (strict decrease on every adoption, standalone) + N-a",
+      "organ_record": "order_gated_acceptance.cut2.json",
+      "notes": {
+        "CUT-2": "boundary drawn across two files; the standalone copy behaves as the record says"
+      }
+    },
+    {
+      "id": "c02",
+      "name": "the simplicity order with its inverse",
+      "introduced_in": "CUT-1",
+      "origin": "DISCOVERED",
+      "source_boundary": "none: shrinker.sort_key + choice.choice_to_index/choice_from_index (two files)",
+      "dispositions": {
+        "CUT-1": "ORGAN",
+        "CUT-2": "ORGAN"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        },
+        {
+          "cut": "CUT-2",
+          "relation": "SURVIVED",
+          "from": [
+            "c02"
+          ]
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": [
+          "fitness_value",
+          "ablation"
+        ],
+        "CUT-2": [
+          "fitness_value",
+          "ablation"
+        ]
+      },
+      "record_bytes": {
+        "CUT-1": 6326,
+        "CUT-2": 6326
+      },
+      "independent_test": "specified",
+      "independent_test_ref": "organ record; the round-trip control not run",
+      "ancestor_free_contract": true,
+      "consumer_returns": [],
+      "boundary_support": "UNTESTED",
+      "boundary_support_ref": "none",
+      "organ_record": "simplicity_order.cut1.json",
+      "notes": {
+        "CUT-2": "P-b shows the ORDER's disagreement with the consumer (9 vs 5) but does not isolate c02 from the passes; boundary stays UNTESTED. Attack 'organ or data?': kept ORGAN at PRIMITIVE because choice_from_index makes it constructive; a second Chopper may say DATA"
+      }
+    },
+    {
+      "id": "c03",
+      "name": "adaptive step search (find_integer)",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "def find_integer, junkdrawer.py",
+      "dispositions": {
+        "CUT-1": "ORGAN",
+        "CUT-2": "ORGAN"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        },
+        {
+          "cut": "CUT-2",
+          "relation": "SURVIVED",
+          "from": [
+            "c03"
+          ]
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": [
+          "fitness_value",
+          "ablation"
+        ],
+        "CUT-2": [
+          "ablation"
+        ]
+      },
+      "record_bytes": {
+        "CUT-1": 4217,
+        "CUT-2": 4301
+      },
+      "independent_test": "run",
+      "independent_test_ref": "nyx/specimens/hypothesis_shrinker/ablations/RECEIPT_N1_2026-09-11.json P-a4 N-e",
+      "ancestor_free_contract": true,
+      "consumer_returns": [],
+      "boundary_support": "SUPPORTED",
+      "boundary_support_ref": "nyx/specimens/hypothesis_shrinker/ablations/RECEIPT_N1_2026-09-11.json P-a4 (37 in 12 calls) + N-e (local boundary 3 on non-monotone f)",
+      "organ_record": "adaptive_step_search.cut2.json",
+      "notes": {
+        "CUT-2": "INHERITED and SUPPORTED: the programmer's def boundary is the mechanistic one"
+      }
+    },
+    {
+      "id": "c04",
+      "name": "pass-step enumeration by choice tree",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "module shrinking/choicetree.py",
+      "dispositions": {
+        "CUT-1": "ORGAN",
+        "CUT-2": "ORGAN"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        },
+        {
+          "cut": "CUT-2",
+          "relation": "SURVIVED",
+          "from": [
+            "c04"
+          ]
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": [
+          "fitness_value",
+          "ablation"
+        ],
+        "CUT-2": [
+          "fitness_value",
+          "ablation"
+        ]
+      },
+      "record_bytes": {
+        "CUT-1": 5505,
+        "CUT-2": 5505
+      },
+      "independent_test": "specified",
+      "independent_test_ref": "organ record control (4 steps to exhaustion) not run",
+      "ancestor_free_contract": true,
+      "consumer_returns": [],
+      "boundary_support": "UNTESTED",
+      "boundary_support_ref": "none",
+      "organ_record": "pass_step_enumeration.cut1.json",
+      "notes": {
+        "CUT-2": "no direct test run; the P-b profile shows passes being stepped but does not test exhaustion; stays UNTESTED"
+      }
+    },
+    {
+      "id": "c05",
+      "name": "fixpoint scheduling of passes (20 failures, random after 10, reorder by deletion, stall padding)",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "def fixate_shrink_passes",
+      "dispositions": {
+        "CUT-1": "POLICY",
+        "CUT-2": "POLICY"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        },
+        {
+          "cut": "CUT-2",
+          "relation": "SURVIVED",
+          "from": [
+            "c05"
+          ]
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": [],
+        "CUT-2": []
+      },
+      "record_bytes": {
+        "CUT-1": 0,
+        "CUT-2": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "boundary_support": "UNTESTED",
+      "boundary_support_ref": "none",
+      "organ_record": "none",
+      "notes": {
+        "CUT-2": "P-b profile confirms the schedule's reorder (reorder_spans first after it shrank); policy as drawn"
+      }
+    },
+    {
+      "id": "c06",
+      "name": "termination budget (max_stall adaptive + MAX_SHRINKING_SECONDS)",
+      "introduced_in": "CUT-1",
+      "origin": "DISCOVERED",
+      "source_boundary": "none: shrinker.check_calls/update_shrink_target + engine deadline",
+      "dispositions": {
+        "CUT-1": "POLICY",
+        "CUT-2": "POLICY"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        },
+        {
+          "cut": "CUT-2",
+          "relation": "SURVIVED",
+          "from": [
+            "c06"
+          ]
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": [],
+        "CUT-2": []
+      },
+      "record_bytes": {
+        "CUT-1": 0,
+        "CUT-2": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "boundary_support": "UNTESTED",
+      "boundary_support_ref": "none",
+      "organ_record": "none"
+    },
+    {
+      "id": "c07",
+      "name": "standalone value shrinkers",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "package shrinking/",
+      "dispositions": {
+        "CUT-1": "ORGAN",
+        "CUT-2": "ORGAN"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        },
+        {
+          "cut": "CUT-2",
+          "relation": "SURVIVED",
+          "from": [
+            "c07"
+          ]
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": [
+          "fitness_value",
+          "ablation"
+        ],
+        "CUT-2": [
+          "ablation"
+        ]
+      },
+      "record_bytes": {
+        "CUT-1": 6485,
+        "CUT-2": 6633
+      },
+      "independent_test": "run",
+      "independent_test_ref": "nyx/specimens/hypothesis_shrinker/ablations/RECEIPT_N1_2026-09-11.json P-a1..P-a3, N-a, N-b",
+      "ancestor_free_contract": true,
+      "consumer_returns": [],
+      "boundary_support": "SUPPORTED",
+      "boundary_support_ref": "nyx/specimens/hypothesis_shrinker/ablations/RECEIPT_N1_2026-09-11.json P-a1 P-a2 P-a3 N-a N-b N-b2 (package run with no engine)",
+      "organ_record": "standalone_value_shrinkers.cut2.json",
+      "notes": {
+        "CUT-2": "INHERITED and SUPPORTED: package boundary is the mechanistic one; P4 confirmed"
+      }
+    },
+    {
+      "id": "c08",
+      "name": "span-structured passes",
+      "introduced_in": "CUT-1",
+      "origin": "DISCOVERED",
+      "source_boundary": "none: five defs united by the foreign state (data.Span) they read",
+      "dispositions": {
+        "CUT-1": "ORGAN",
+        "CUT-2": "COUPLED_CLUSTER"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        },
+        {
+          "cut": "CUT-2",
+          "relation": "DEMOTED",
+          "from": [
+            "c08"
+          ]
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": [
+          "fitness_value",
+          "ablation"
+        ],
+        "CUT-2": []
+      },
+      "record_bytes": {
+        "CUT-1": 5627,
+        "CUT-2": 0
+      },
+      "independent_test": "run",
+      "independent_test_ref": "nyx/specimens/hypothesis_shrinker/ablations/RECEIPT_N1_2026-09-11.json N-g P-b",
+      "ancestor_free_contract": false,
+      "consumer_returns": [],
+      "boundary_support": "SUPPORTED",
+      "boundary_support_ref": "nyx/specimens/hypothesis_shrinker/ablations/RECEIPT_N1_2026-09-11.json P-b (pass_to_descendant 0 calls on the consumer strategy) vs N-g (fires on a plain recursive strategy)",
+      "organ_record": "span_structured_passes.cut2.json",
+      "notes": {
+        "CUT-2": "the boundary 'united by foreign span state' is exactly what P-b exposed: applicability decided by strategy-recorded labels; inseparable from the ecosystem"
+      }
+    },
+    {
+      "id": "c09",
+      "name": "coupled-value passes",
+      "introduced_in": "CUT-1",
+      "origin": "DISCOVERED",
+      "source_boundary": "none: five defs united by 'cannot shrink alone'",
+      "dispositions": {
+        "CUT-1": "ORGAN",
+        "CUT-2": "ORGAN"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        },
+        {
+          "cut": "CUT-2",
+          "relation": "SURVIVED",
+          "from": [
+            "c09"
+          ]
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": [
+          "fitness_value",
+          "ablation"
+        ],
+        "CUT-2": [
+          "fitness_value",
+          "ablation"
+        ]
+      },
+      "record_bytes": {
+        "CUT-1": 4993,
+        "CUT-2": 4993
+      },
+      "independent_test": "specified",
+      "independent_test_ref": "docstring-shape fixtures not run",
+      "ancestor_free_contract": true,
+      "consumer_returns": [],
+      "boundary_support": "UNTESTED",
+      "boundary_support_ref": "none",
+      "organ_record": "coupled_value_passes.cut1.json",
+      "notes": {
+        "CUT-2": "P-b: lower_integers_together 15 calls / 0 shrinks, redistribute 14 / 0, minimize_duplicated 5 / 0 -- fired, did not help there; their own claim untested"
+      }
+    },
+    {
+      "id": "c10",
+      "name": "shape repair after a size-controlling change",
+      "introduced_in": "CUT-1",
+      "origin": "DISCOVERED",
+      "source_boundary": "none: try_shrinking_nodes repair + try_lower_node_as_alternative + minimize_individual_choices fixup",
+      "dispositions": {
+        "CUT-1": "UNRESOLVED",
+        "CUT-2": "UNRESOLVED"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        },
+        {
+          "cut": "CUT-2",
+          "relation": "SURVIVED",
+          "from": [
+            "c10"
+          ]
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": [],
+        "CUT-2": []
+      },
+      "record_bytes": {
+        "CUT-1": 0,
+        "CUT-2": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "boundary_support": "UNTESTED",
+      "boundary_support_ref": "none",
+      "organ_record": "none",
+      "notes": {
+        "CUT-2": "P-b: 0 misaligned, so the repair cluster never engaged; still undecided"
+      }
+    },
+    {
+      "id": "c11",
+      "name": "explain phase (sensitivity analysis over arg spans)",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "def _explain / Phase.explain",
+      "dispositions": {
+        "CUT-1": "UNRESOLVED",
+        "CUT-2": "UNRESOLVED"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        },
+        {
+          "cut": "CUT-2",
+          "relation": "SURVIVED",
+          "from": [
+            "c11"
+          ]
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": [],
+        "CUT-2": []
+      },
+      "record_bytes": {
+        "CUT-1": 0,
+        "CUT-2": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "boundary_support": "UNTESTED",
+      "boundary_support_ref": "none",
+      "organ_record": "none",
+      "notes": {
+        "CUT-2": "explain phase not exercised (Phase.explain excluded); a different capability; candidate for a separate specimen"
+      }
+    },
+    {
+      "id": "c12",
+      "name": "engine data cache + DataTree simulation (a candidate answered without running)",
+      "introduced_in": "CUT-1",
+      "origin": "DISCOVERED",
+      "source_boundary": "none in the boundary: engine.cached_test_function + datatree.simulate_test_function (OUT)",
+      "dispositions": {
+        "CUT-1": "COUPLED_CLUSTER",
+        "CUT-2": "COUPLED_CLUSTER"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        },
+        {
+          "cut": "CUT-2",
+          "relation": "SURVIVED",
+          "from": [
+            "c12"
+          ]
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": [],
+        "CUT-2": []
+      },
+      "record_bytes": {
+        "CUT-1": 0,
+        "CUT-2": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "boundary_support": "UNTESTED",
+      "boundary_support_ref": "none",
+      "organ_record": "none",
+      "notes": {
+        "CUT-2": "P5 NOT observed: N-c (shrink off) returned exactly the first satisfying example; no reduction outside the shrinker on that fixture; the cache/tree did not visibly shape anything here. K5 named it; the evidence did not move the boundary"
+      }
+    },
+    {
+      "id": "c13",
+      "name": "strategy-encoding heuristics (one_of selector guess; ValueHole re-encoding)",
+      "introduced_in": "CUT-1",
+      "origin": "DISCOVERED",
+      "source_boundary": "none: reduce_each_alternative + widen_to_span_with_recorded_value united by the smuggled generator knowledge",
+      "dispositions": {
+        "CUT-1": "POLICY",
+        "CUT-2": "POLICY"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        },
+        {
+          "cut": "CUT-2",
+          "relation": "SURVIVED",
+          "from": [
+            "c13"
+          ]
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": [],
+        "CUT-2": []
+      },
+      "record_bytes": {
+        "CUT-1": 0,
+        "CUT-2": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "boundary_support": "UNTESTED",
+      "boundary_support_ref": "none",
+      "organ_record": "none",
+      "notes": {
+        "CUT-2": "P-b: the double Not persisted; the one_of-selector heuristic and ValueHole re-encoding did not rescue the consumer's case"
+      }
+    },
+    {
+      "id": "c14",
+      "name": "per-pass statistics and profiling report",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "dataclass ShrinkPass + shrink() report",
+      "dispositions": {
+        "CUT-1": "SCAFFOLDING",
+        "CUT-2": "SCAFFOLDING"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        },
+        {
+          "cut": "CUT-2",
+          "relation": "SURVIVED",
+          "from": [
+            "c14"
+          ]
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": [],
+        "CUT-2": []
+      },
+      "record_bytes": {
+        "CUT-1": 0,
+        "CUT-2": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "boundary_support": "UNTESTED",
+      "boundary_support_ref": "none",
+      "organ_record": "none"
+    },
+    {
+      "id": "c15",
+      "name": "choice validity gate",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "def choice_permitted",
+      "dispositions": {
+        "CUT-1": "SCAFFOLDING",
+        "CUT-2": "SCAFFOLDING"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        },
+        {
+          "cut": "CUT-2",
+          "relation": "SURVIVED",
+          "from": [
+            "c15"
+          ]
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": [],
+        "CUT-2": []
+      },
+      "record_bytes": {
+        "CUT-1": 0,
+        "CUT-2": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "boundary_support": "UNTESTED",
+      "boundary_support_ref": "none",
+      "organ_record": "none"
+    },
+    {
+      "id": "c16",
+      "name": "per-node constraints (shrink_towards, bounds, alphabet shrink order)",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "TypedDicts in choice.py; supplied by strategies",
+      "dispositions": {
+        "CUT-1": "DATA",
+        "CUT-2": "DATA"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        },
+        {
+          "cut": "CUT-2",
+          "relation": "SURVIVED",
+          "from": [
+            "c16"
+          ]
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": [],
+        "CUT-2": []
+      },
+      "record_bytes": {
+        "CUT-1": 0,
+        "CUT-2": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "boundary_support": "UNTESTED",
+      "boundary_support_ref": "none",
+      "organ_record": "none"
+    },
+    {
+      "id": "c17",
+      "name": "what counts as still failing (same interesting_origin; flaky exit)",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "def shrink_interesting_test_cases (engine)",
+      "dispositions": {
+        "CUT-1": "POLICY",
+        "CUT-2": "POLICY"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        },
+        {
+          "cut": "CUT-2",
+          "relation": "SURVIVED",
+          "from": [
+            "c17"
+          ]
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": [],
+        "CUT-2": []
+      },
+      "record_bytes": {
+        "CUT-1": 0,
+        "CUT-2": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "boundary_support": "UNTESTED",
+      "boundary_support_ref": "none",
+      "organ_record": "none"
+    },
+    {
+      "id": "c18",
+      "name": "node-program mini-DSL with one command",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "def run_node_program",
+      "dispositions": {
+        "CUT-1": "SCAFFOLDING",
+        "CUT-2": "SCAFFOLDING"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        },
+        {
+          "cut": "CUT-2",
+          "relation": "SURVIVED",
+          "from": [
+            "c18"
+          ]
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": [],
+        "CUT-2": []
+      },
+      "record_bytes": {
+        "CUT-1": 0,
+        "CUT-2": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "boundary_support": "UNTESTED",
+      "boundary_support_ref": "none",
+      "organ_record": "none"
+    },
+    {
+      "id": "c19",
+      "name": "label alignment between strategy combinators and the descendant pass: pass_to_descendant fires on st.recursive(base, one_of(...)) and makes no calls on the same shape wrapped in .map()/.filter() (Proteus's solving_programs)",
+      "introduced_in": "CUT-2",
+      "origin": "PERTURBED",
+      "source_boundary": "none: found by the P-b profile (0 calls) against N-g (fired); the condition lives in how strategies record span labels (data.py / strategies), outside the boundary",
+      "dispositions": {
+        "CUT-2": "DATA"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-2",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-2": []
+      },
+      "record_bytes": {
+        "CUT-2": 0
+      },
+      "independent_test": "run",
+      "independent_test_ref": "nyx/specimens/hypothesis_shrinker/ablations/RECEIPT_N1_2026-09-11.json N-g vs P-b",
+      "ancestor_free_contract": false,
+      "consumer_returns": [],
+      "boundary_support": "SUPPORTED",
+      "boundary_support_ref": "nyx/specimens/hypothesis_shrinker/ablations/RECEIPT_N1_2026-09-11.json N-g vs P-b",
+      "organ_record": "none",
+      "notes": {
+        "CUT-2": "the DATA the structural passes need; Proteus's strategy does not produce it in the shape the pass requires. Whether this is the whole explanation of the 24/45 non-minimal cases is NOT shown (one target run)."
+      }
+    }
+  ],
+  "deliveries": [
+    {
+      "seat": "Vivarium+Proteus",
+      "msg": 190,
+      "posted": "2026-09-11T23:06Z",
+      "cut": "CUT-2",
+      "first_substantive_return": null,
+      "content": "1 pressure (HOSTABLE_CANDIDATE, owner Proteus)",
+      "state": "DELIVERED"
+    },
+    {
+      "seat": "Archaeon",
+      "msg": 191,
+      "posted": "2026-09-11T23:06Z",
+      "cut": "CUT-2",
+      "first_substantive_return": null,
+      "content": "6 organs, c19 finding, knife ledger",
+      "state": "DELIVERED"
+    }
+  ],
+  "cheat_controls": [
+    {
+      "candidate": "c01",
+      "fired": true,
+      "ref": "nyx/specimens/hypothesis_shrinker/ablations/RECEIPT_N1_2026-09-11.json P-a5 (strict decrease held; a non-strict adoption would have been caught)"
+    },
+    {
+      "candidate": "c02",
+      "fired": "not_run",
+      "ref": "organs/simplicity_order.cut1.json control/cheat fields"
+    },
+    {
+      "candidate": "c03",
+      "fired": true,
+      "ref": "nyx/specimens/hypothesis_shrinker/ablations/RECEIPT_N1_2026-09-11.json N-e (non-monotone misuse yields the local boundary; the assertion f(lo) and not f(lo+1) holds)"
+    },
+    {
+      "candidate": "c04",
+      "fired": "not_run",
+      "ref": "organs/pass_step_enumeration.cut1.json control/cheat fields"
+    },
+    {
+      "candidate": "c07",
+      "fired": true,
+      "ref": "nyx/specimens/hypothesis_shrinker/ablations/RECEIPT_N1_2026-09-11.json N-a + P-a1 (returns-initial-for-everything cheat excluded by the pair)"
+    },
+    {
+      "candidate": "c08",
+      "fired": "not_run",
+      "ref": "organs/span_structured_passes.cut1.json control/cheat fields"
+    },
+    {
+      "candidate": "c09",
+      "fired": "not_run",
+      "ref": "organs/coupled_value_passes.cut1.json control/cheat fields"
+    },
+    {
+      "candidate": "c08",
+      "fired": false,
+      "ref": "nyx/specimens/hypothesis_shrinker/ablations/RECEIPT_N1_2026-09-11.json P-b: the 'success attributed to structure' control could not be run -- no structural pass succeeded on the consumer's fixture to attribute; reorder_spans was the only shrinker"
+    }
+  ],
+  "knife_application": {
+    "K1": {
+      "status": "FIRED",
+      "evidence": "applied as written; inherited-boundary rate 10/18 = 0.56 vs 0.87 on Lean; 8 boundaries drawn ACROSS defs (c01 c02 c06 c08 c09 c10 c12 c13). Of the 10 inherited, 3 are now inherited-AND-SUPPORTED (c03 c07 by standalone runs; c08 by P-b) and 0 inherited-and-falsified: the programmer's boundaries held where tested. Per the ruling the rate is reported, not optimised."
+    },
+    "K2": {
+      "status": "FIRED",
+      "evidence": "14 literal unknowns at CUT-1 (0 on Lean); 3 became measured at CUT-2 with receipt refs (c01 c03 c07 fitness_value) -- the preregistered composite's third clause is attainable for the first time"
+    },
+    "K3": {
+      "status": "FIRED",
+      "evidence": "switches and controls ran BEFORE the paper attack; P-b changed c08's disposition (ORGAN -> COUPLED_CLUSTER) and produced c19; the paper attack alone changed only c02's scale note"
+    },
+    "K4": {
+      "status": "FIRED",
+      "evidence": "negatives ran first: N-a (fired as designed), N-b (local minimum confirmed, P3), N-e (contract boundary). None revealed HIDDEN machinery this time -- the negatives confirmed the read; see K6"
+    },
+    "K5": {
+      "status": "DID_NOT_FIRE",
+      "evidence": "the foreign callee (c12 engine cache + DataTree) was named at prereg and probed by N-c; the null configuration returned the first satisfying example unchanged, so no out-of-boundary participation was observed; the boundary was not altered. P5 not supported on this fixture."
+    },
+    "K6": {
+      "status": "DID_NOT_FIRE",
+      "evidence": "N-c: Phase.shrink excluded -> returned == first satisfying example seen (362881 == 362881). The null configuration WAS null here; Lean's hidden-builtin pattern did not recur"
+    },
+    "K7": {
+      "status": "FIRED",
+      "evidence": "one pressure written (Vivarium had returned on #175 before N1 opened); the second candidate (P6: 'the encoding decides what is reachable') HELD as a note pending a return on the first"
+    },
+    "K8": {
+      "status": "FIRED",
+      "evidence": "origins in the ledger were written by the CUT-1 generator at drawing; c19 stamped PERTURBED at the moment the profile was read"
+    },
+    "K9": {
+      "status": "FIRED",
+      "evidence": "the pressure record carries hosting.owner = Proteus with the substrate named (still_solves, size_key, minimal_by_enumeration exist); delivery goes to Vivarium + Proteus in one message"
+    },
+    "K10": {
+      "status": "FIRED",
+      "evidence": "the pressure's cheat_control notes state the one-sided direction explicitly"
+    }
+  },
+  "note": "empty at preregistration 2026-09-11 ~23:00Z; candidates appended as drawn from the flow log (K1), origin and source boundary stamped at drawing (K8), boundary_support UNTESTED until an intervention or a return",
+  "pressures": {
+    "CUT-1": [
+      "smallest_witness_not_first.cut1.json"
+    ],
+    "CUT-2": [
+      "smallest_witness_not_first.cut1.json"
+    ]
+  },
+  "ablations_run": {
+    "ref": "nyx/specimens/hypothesis_shrinker/ablations/RECEIPT_N1_2026-09-11.json",
+    "run": [
+      "N-a",
+      "N-b",
+      "N-b2",
+      "N-e",
+      "P-a1..P-a5",
+      "S-a",
+      "S-b",
+      "N-c",
+      "N-d",
+      "N-f",
+      "N-g",
+      "P-b"
+    ],
+    "not_run": [
+      "remove-pass ablations (no switch; needs a pass-list harness)",
+      "order swap (allow_transition cannot re-rank)",
+      "K6 beyond phases (the database and the reuse phase were disabled, not probed)"
+    ]
+  }
+}

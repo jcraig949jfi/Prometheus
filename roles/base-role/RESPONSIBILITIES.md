@@ -228,6 +228,14 @@ reads instead of any local memory directory.
    machine, model and tier (light: haiku/sonnet; heavy: opus/fable),
    session and harness metadata to comms.agents, the table the program
    reads to know who is online for delegation (`python -m comms who`).
+   A seat may run as several INSTANCES at once (D-24 amendment 3, Harmonia
+   #154): every comms call carries a derived tag <machine>-<8 of the
+   harness session id> (`python -m comms instance`), `who` lists instances
+   beneath the seat, unseen messages are per instance, and a claim race
+   tells the loser it lost. When more than one instance of your seat may
+   be running, put the tag in your subjects, journal file names and
+   commit trailers as roles/Harmonia/INSTANCES.md does, so two instances
+   are never indistinguishable in any log.
 2. Read your own entry file first: BOOTSTRAP.md if you have one, else
    RESPONSIBILITIES.md, then CHARTER.md, then METHOD.md, then the newest
    prompt addressed to you under roles/<Seat>/prompts/ and roles/*/prompts/,
