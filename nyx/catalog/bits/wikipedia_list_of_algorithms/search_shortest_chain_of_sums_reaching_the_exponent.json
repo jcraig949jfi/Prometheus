@@ -1,0 +1,45 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.shortest_chain_of_sums_reaching_the_exponent",
+  "name": "find a short chain of sums reaching the exponent, one multiplication per link",
+  "lineage": [
+    "numerical methods",
+    "computer arithmetic"
+  ],
+  "mechanism": "search for a sequence starting at one in which every element is the sum of two earlier elements and the last is the exponent; each link then costs one multiplication of already-computed powers, so a short chain gives a minimal-multiplication power",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Addition-chain exponentiation' in section Computational mathematics / Numerical algorithms / Elementary and special functions: exponentiation by positive integer powers that requires a minimal number of multiplications",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "SCALAR",
+  "out_geometry": "SEQUENCE",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "OPTIMAL",
+  "strategy": "BRANCH_AND_BOUND",
+  "iteration": "LIFO",
+  "cost": "EXPONENTIAL",
+  "requires": [
+    "a fixed exponent worth optimising for"
+  ],
+  "fails_when": [
+    "finding the shortest chain is hard; heuristics give near-minimal chains"
+  ],
+  "instances": [
+    "Addition-chain exponentiation"
+  ],
+  "related": [
+    {
+      "rel": "GENERALIZES",
+      "id": "bit.transform.square_and_multiply_by_the_binary_digits_of_the_exponent"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch08 (T2)"
+}

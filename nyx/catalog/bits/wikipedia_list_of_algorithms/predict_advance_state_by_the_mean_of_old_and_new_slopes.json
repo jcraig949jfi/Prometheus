@@ -1,0 +1,50 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.predict.advance_state_by_the_mean_of_old_and_new_slopes",
+  "name": "advance the state by the mean of the old and new slopes",
+  "lineage": [
+    "numerical methods",
+    "scientific software"
+  ],
+  "mechanism": "choose the next state so that the move equals the step times the average of the rate at the current state and the rate at the next state; implicit like the backward step but second-order and non-damping",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Trapezoidal rule (differential equations)' in section Computational mathematics / Numerical algorithms / Differential equation solving: ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Crank–Nicolson method for diffusion equations': ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "PREDICT",
+  "in_geometry": "FUNCTION",
+  "out_geometry": "SEQUENCE",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "APPROXIMATE",
+  "strategy": "FIXPOINT_ITERATION",
+  "iteration": "SWEEP",
+  "cost": "LINEAR",
+  "requires": [
+    "a solver for the per-step implicit equation"
+  ],
+  "fails_when": [
+    "oscillatory (not damped) error on very stiff components"
+  ],
+  "instances": [
+    "Trapezoidal rule (differential equations)",
+    "Crank–Nicolson method for diffusion equations"
+  ],
+  "related": [
+    {
+      "rel": "CONTRASTS_WITH",
+      "id": "bit.predict.advance_state_by_the_slope_at_the_new_point"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch08 (T2)"
+}

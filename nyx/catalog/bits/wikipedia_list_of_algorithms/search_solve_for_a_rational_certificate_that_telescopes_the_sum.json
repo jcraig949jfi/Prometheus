@@ -1,0 +1,41 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.solve_for_a_rational_certificate_that_telescopes_the_sum",
+  "name": "solve for a rational certificate that telescopes the sum",
+  "lineage": [
+    "automated mathematics",
+    "symbolic reasoning",
+    "theorem provers"
+  ],
+  "mechanism": "write the term ratio as a quotient of polynomials in a normalised form, bound the degree of an unknown polynomial from that form, and solve the resulting linear system; a solution gives a closed form whose consecutive differences are the terms, and no solution proves that no such closed form exists",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Gosper's algorithm' in section Computational mathematics / Computer algebra: find sums of hypergeometric terms that are themselves hypergeometric terms",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "FUNCTION",
+  "out_geometry": "FUNCTION",
+  "order_req": "NONE",
+  "metric_req": "EQUALITY",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "COMPLETE",
+  "strategy": "DIRECT",
+  "iteration": "NONE",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "a term ratio that is a rational function"
+  ],
+  "fails_when": [
+    "sums with no hypergeometric closed form return a proof of absence, not a value"
+  ],
+  "instances": [
+    "Gosper's algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+}

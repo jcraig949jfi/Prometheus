@@ -1,0 +1,40 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.predict.copy_the_value_of_the_nearest_sample",
+  "name": "copy the value of the nearest sample",
+  "lineage": [
+    "numerical methods",
+    "scientific software"
+  ],
+  "mechanism": "return the value of whichever sample lies closest to the query; the result is piecewise constant with jumps midway between samples",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Nearest-neighbor interpolation' in section Computational mathematics / Numerical algorithms / Interpolation and extrapolation: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "PREDICT",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "FUNCTION",
+  "order_req": "NONE",
+  "metric_req": "DISTANCE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "APPROXIMATE",
+  "strategy": "DIRECT",
+  "iteration": "NONE",
+  "cost": "CONSTANT",
+  "requires": [
+    "a distance to each sample"
+  ],
+  "fails_when": [
+    "discontinuous; blocky under magnification"
+  ],
+  "instances": [
+    "Nearest-neighbor interpolation"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+}

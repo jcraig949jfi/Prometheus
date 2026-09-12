@@ -1,0 +1,46 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.move_the_shift_to_the_current_quotient_each_round",
+  "name": "move the shift to the current quotient each round",
+  "lineage": [
+    "numerical methods",
+    "scientific software",
+    "optimizers"
+  ],
+  "mechanism": "run the shifted-solve iteration but, after each round, replace the shift by the current vector's own estimate of its eigenvalue (the quotient of the two inner products); convergence becomes cubic near a solution",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Rayleigh quotient iteration' in section Computational mathematics / Numerical algorithms / Linear algebra: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "MATRIX",
+  "out_geometry": "TENSOR",
+  "order_req": "NONE",
+  "metric_req": "INNER_PRODUCT",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "APPROXIMATE",
+  "strategy": "ADAPTIVE_SWITCH",
+  "iteration": "NONE",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "a fresh factorisation every round"
+  ],
+  "fails_when": [
+    "which eigenvalue it finds depends on the start"
+  ],
+  "instances": [
+    "Rayleigh quotient iteration"
+  ],
+  "related": [
+    {
+      "rel": "SPECIALIZES",
+      "id": "bit.search.repeatedly_solve_with_a_shifted_matrix_to_amplify_the_nearest_eigenvector"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+}

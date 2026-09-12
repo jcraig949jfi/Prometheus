@@ -1,0 +1,46 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.predict.combine_slopes_sampled_within_the_step",
+  "name": "combine slopes sampled at trial points inside the step",
+  "lineage": [
+    "numerical methods",
+    "scientific software"
+  ],
+  "mechanism": "evaluate the rate at the current state, use it to reach a trial point part-way through the step, evaluate again there, repeat for a fixed number of stages, and advance by a fixed weighted combination of the sampled slopes chosen so low-order errors cancel",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Runge–Kutta methods' in section Computational mathematics / Numerical algorithms / Differential equation solving: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "PREDICT",
+  "in_geometry": "FUNCTION",
+  "out_geometry": "SEQUENCE",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "APPROXIMATE",
+  "strategy": "DIRECT",
+  "iteration": "SWEEP",
+  "cost": "LINEAR",
+  "requires": [
+    "a rate function evaluable at trial states",
+    "a tableau of stage weights (data)"
+  ],
+  "fails_when": [
+    "several rate evaluations per step; explicit forms still fail on stiff problems"
+  ],
+  "instances": [
+    "Runge–Kutta methods"
+  ],
+  "related": [
+    {
+      "rel": "GENERALIZES",
+      "id": "bit.predict.advance_state_by_step_times_current_slope"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch08 (T2)"
+}

@@ -1,0 +1,50 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.transform.exponentiate_in_a_group_whose_order_only_the_key_holder_knows",
+  "name": "exponentiate in a group whose order only the key holder knows",
+  "lineage": [
+    "network protocols",
+    "error-correcting systems"
+  ],
+  "mechanism": "raise the message to a public exponent modulo a product of two secret primes; only someone who knows the primes knows the group order and can compute the inverse exponent that undoes the operation; the same pair of exponents, applied in the other order, produces and checks a signature",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'RSA' in section Computer science / Cryptography: ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'RSA': ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "TRANSFORM",
+  "in_geometry": "SCALAR",
+  "out_geometry": "SCALAR",
+  "order_req": "NONE",
+  "metric_req": "NONE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "DIRECT",
+  "iteration": "NONE",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "a modulus whose factorisation is secret",
+    "padding (policy) before exponentiation"
+  ],
+  "fails_when": [
+    "deterministic without padding; broken if the modulus is factored"
+  ],
+  "instances": [
+    "RSA"
+  ],
+  "related": [
+    {
+      "rel": "REQUIRES",
+      "id": "bit.transform.square_and_multiply_by_the_binary_digits_of_the_exponent"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch11 (T2)"
+}

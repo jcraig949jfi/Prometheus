@@ -1,0 +1,42 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.transform.filter_each_projection_then_smear_it_back_along_its_rays",
+  "name": "filter each projection, then smear it back along its rays",
+  "lineage": [
+    "numerical methods",
+    "scientific software",
+    "scientific software"
+  ],
+  "mechanism": "apply a ramp high-pass filter to each one-dimensional projection, then add each filtered projection back into the image along the rays that produced it; the filter cancels the blur that plain smearing would give",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Filtered back-projection' in section Computational mathematics / Numerical algorithms / Geometric: efficiently computes the inverse 2-dimensional Radon transform.",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "TRANSFORM",
+  "in_geometry": "MATRIX",
+  "out_geometry": "MATRIX",
+  "order_req": "TOTAL",
+  "metric_req": "DISTANCE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "DIRECT",
+  "iteration": "SWEEP",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "projections at many angles",
+    "a one-dimensional filter"
+  ],
+  "fails_when": [
+    "few or noisy angles give streak artefacts"
+  ],
+  "instances": [
+    "Filtered back-projection"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch08 (T2)"
+}

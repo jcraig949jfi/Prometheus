@@ -1,0 +1,42 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.transform.represent_a_moving_boundary_as_the_zero_level_of_an_evolving_field",
+  "name": "represent a moving boundary as the zero level of an evolving field",
+  "lineage": [
+    "numerical methods",
+    "scientific software",
+    "biological and artificial dynamical systems"
+  ],
+  "mechanism": "instead of tracking boundary points, store a field over the whole grid whose zero contour is the boundary; evolve the field by a speed equation and read the boundary off wherever the field crosses zero, so merging and splitting need no special handling",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Level set method (LSM)' in section Computational mathematics / Numerical algorithms / Geometric: a numerical technique for tracking interfaces and shapes",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "TRANSFORM",
+  "in_geometry": "FUNCTION",
+  "out_geometry": "FUNCTION",
+  "order_req": "TOTAL",
+  "metric_req": "DISTANCE",
+  "state_req": "GLOBAL",
+  "control": "PURE",
+  "guarantee": "APPROXIMATE",
+  "strategy": "INCREMENTAL",
+  "iteration": "SWEEP",
+  "cost": "LINEAR",
+  "requires": [
+    "a grid over the whole domain",
+    "periodic re-initialisation to a distance field"
+  ],
+  "fails_when": [
+    "one dimension more storage than the boundary itself; the field drifts from a distance function"
+  ],
+  "instances": [
+    "Level set method (LSM)"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch08 (T2)"
+}

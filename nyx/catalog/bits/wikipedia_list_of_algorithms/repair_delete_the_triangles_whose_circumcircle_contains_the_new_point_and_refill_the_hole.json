@@ -1,0 +1,43 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.repair.delete_the_triangles_whose_circumcircle_contains_the_new_point_and_refill_the_hole",
+  "name": "delete the triangles whose circumcircle contains the new point and refill the hole from it",
+  "lineage": [
+    "computational geometry",
+    "games",
+    "scientific software",
+    "scientific software"
+  ],
+  "mechanism": "start with a super-triangle; insert points one at a time: remove every triangle whose circumscribed circle contains the new point (they form a connected hole), and connect the new point to every edge of the hole boundary; the empty-circle property is restored after each insertion",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Bowyer–Watson algorithm' in section Computational mathematics / Geometry: create voronoi diagram in any number of dimensions",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "REPAIR",
+  "in_geometry": "SET",
+  "out_geometry": "GRAPH",
+  "order_req": "NONE",
+  "metric_req": "DISTANCE",
+  "state_req": "GLOBAL",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "INCREMENTAL",
+  "iteration": "SWEEP",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "an in-circle test",
+    "a locating step for the containing triangle"
+  ],
+  "fails_when": [
+    "four co-circular points are ambiguous; worst case quadratic"
+  ],
+  "instances": [
+    "Bowyer–Watson algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+}

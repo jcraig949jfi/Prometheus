@@ -1,0 +1,46 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.vary_a_nonce_until_the_hash_falls_below_a_target",
+  "name": "vary a nonce until the hash falls below a target",
+  "lineage": [
+    "distributed systems",
+    "network protocols"
+  ],
+  "mechanism": "append a counter to the data and hash; if the result is not below the target, change the counter and hash again; the expected number of tries is set by the target, and anyone can verify the winning counter with one hash",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Proof-of-work algorithms' in section Computer science / Cryptography: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "STRING",
+  "out_geometry": "SCALAR",
+  "order_req": "NONE",
+  "metric_req": "NONE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "PROBABILISTIC_BOUND",
+  "strategy": "RANDOMIZED",
+  "iteration": "SWEEP",
+  "cost": "EXPONENTIAL",
+  "requires": [
+    "a hash whose output is unpredictable",
+    "a target (policy)"
+  ],
+  "fails_when": [
+    "the cost is pure waste by design; specialised hardware concentrates it"
+  ],
+  "instances": [
+    "Proof-of-work algorithms"
+  ],
+  "related": [
+    {
+      "rel": "SPECIALIZES",
+      "id": "bit.search.enumerate_all_candidates"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch11 (T2)"
+}
