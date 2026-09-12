@@ -1,0 +1,143 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "arduino-pid",
+  "canonical_name": "Arduino PID Library -- Brett Beauregard",
+  "aliases": [
+    "arduino-pid",
+    "PID_v1",
+    "br3ttb PID"
+  ],
+  "lineage": "Beauregard PID (2011-): a widely-copied, carefully-engineered PID controller -- proportional/integral/derivative feedback with anti-windup, derivative-on-measurement, and bumpless mode switching; the reference small feedback controller of the maker world",
+  "domain": [
+    "control",
+    "feedback-control",
+    "pid",
+    "regulation"
+  ],
+  "era": "2011-",
+  "version": "github.com/br3ttb/Arduino-PID-Library master as of 2026-09-12 (commit in hashes)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/br3ttb/Arduino-PID-Library",
+        "commit": "524a4268fc01e6ea397e7fc5b5d820741e9b662f",
+        "commit_resolved": "524a4268fc01e6ea397e7fc5b5d820741e9b662f",
+        "commit_date": "2024-05-31T06:04:34-04:00"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/br3ttb/Arduino-PID-Library"
+  },
+  "hashes": {
+    "tree_sha256": "f4b65bd9cdf08236942485491bb73de0c5e3e4d16a357450e4f21bc0932c902b",
+    "n_files": 10,
+    "bytes": 19519,
+    "artifacts": [
+      {
+        "filename": "https://github.com/br3ttb/Arduino-PID-Library",
+        "sha256": null,
+        "commit": "524a4268fc01e6ea397e7fc5b5d820741e9b662f"
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\arduino-pid",
+    "hash_list": "techne/fossils/specimens/arduino-pid/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "MIT",
+    "status": "permissive",
+    "evidence": "LICENSE"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "C++"
+  ],
+  "build_system": "compile PID_v1.cpp with a Techne Arduino-shim + a plant simulator",
+  "compiler_or_interpreter": "g++ 12 (docker bookworm)",
+  "dependencies": [
+    "an Arduino.h shim providing millis() (Techne harness supplies a minimal one)"
+  ],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "PID::Compute() -- run each control step on (Input, Setpoint) -> Output"
+  ],
+  "example": {
+    "command": "Techne harness: a first-order plant + PID, step the setpoint, log the response",
+    "input": "setpoint + disturbance",
+    "output": "the controlled variable converging to setpoint"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-c:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Beauregard, Improving the Beginner's PID (blog series)",
+    "Astrom & Hagglund, PID Controllers"
+  ],
+  "human_capability_summary": {
+    "built_to": "drive a measured process variable to a setpoint by feeding back the error through proportional, integral and derivative terms, robustly, on a tiny microcontroller",
+    "pressure": "actuator limits (windup), noisy measurements (derivative kick), and mode changes (bumpless transfer) in a real physical loop with lag",
+    "success_means": "the process variable reaches and holds the setpoint with acceptable overshoot/settling despite disturbances and saturation"
+  },
+  "known_human_problem_solved": "closed-loop regulation of a physical process",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "actuator lag and saturation, measurement noise, load disturbance, setpoint changes",
+  "human_failure_condition": "oscillation or runaway: bad gains make the loop unstable; integral windup overshoots; the controlled machine overheats/crashes/breaks",
+  "behavioral_entry_point": "change the setpoint (step), inject a load disturbance, or set aggressive gains (Kp/Ki high) to drive it UNSTABLE -- the harness does the last as a pathological-behavior receipt",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/arduino-pid/receipts/run-arduino-pid-20260912T163238Z.json",
+      "ok": false,
+      "classification": "BROKEN_UPSTREAM",
+      "test_classification": "NO_TESTS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/arduino-pid/receipts/run-arduino-pid-20260912T163459Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "TECHNE_SMOKE_HARNESS_FAIL"
+    },
+    {
+      "receipt": "techne/fossils/specimens/arduino-pid/receipts/run-arduino-pid-20260912T163640Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/arduino-pid/receipts/run-arduino-pid-20260912T163837Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/arduino-pid/receipts/run-arduino-pid-20260912T163917Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\arduino-pid ; tracked techne/fossils/specimens/arduino-pid",
+    "where_it_came_from": "https://github.com/br3ttb/Arduino-PID-Library ; ORIGINAL_AUTHORITATIVE_RELEASE @ 524a4268fc01e6ea397e7fc5b5d820741e9b662f",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run arduino-pid",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/arduino-pid/receipts/run-arduino-pid-20260912T163917Z.json",
+    "what_humans_used_it_for": "drive a measured process variable to a setpoint by feeding back the error through proportional, integral and derivative terms, robustly, on a tiny microcontroller"
+  },
+  "seat": "Techne"
+}

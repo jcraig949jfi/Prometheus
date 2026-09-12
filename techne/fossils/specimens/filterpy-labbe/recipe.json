@@ -1,0 +1,29 @@
+{
+  "runner": "docker",
+  "image": "python:3.11-slim",
+  "workdir": "upstream/tree",
+  "probe": [
+    {
+      "name": "python",
+      "cmd": "python --version"
+    }
+  ],
+  "build": [],
+  "runs": [
+    {
+      "name": "Kalman track of a noisy constant-velocity target",
+      "cmd": "pip install -q numpy scipy >/dev/null 2>&1 && PYTHONPATH=. python $HARNESS/drv.py",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "FILTERPY_OK"
+        ]
+      }
+    }
+  ],
+  "tests": [],
+  "test_kind": "TECHNE",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "Oracle: filtered RMSE < raw sensor RMSE. This repo IS the adversarial pair -- the plant GENERATES process+measurement noise (the pressure) and the KF RECOVERS the hidden position/velocity (the response); raise R/Q or drop measurements to break it."
+}

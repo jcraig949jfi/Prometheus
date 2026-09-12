@@ -1,0 +1,73 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "verilog-generic-fifo",
+  "receipt_id": "run-verilog-generic-fifo-20260912T163226Z",
+  "written_utc": "20260912T163226Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-hw:bookworm",
+  "workdir": "upstream/tree",
+  "harness_sha256": {
+    "generic_dpram.v": "eeee90fd5d8f9124b95f4e9647b4f1790d3eae59820ff3487792be430c5013cb",
+    "tb_sc.v": "6208958a9fc39a6054627a66209bbfc151d19afe2fc50063c171b8f97f86efed"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "71549df2068e4712d08e36abdace415f88bad4cafed1651f5ba217e69dc284a4",
+  "recipe_sha256": "b93d9b56eae3e2423725a0dcbe5adf236adcebfa6f65dc113ec3cd92d3310211",
+  "patches": [],
+  "probe": [
+    {
+      "name": "iverilog",
+      "cmd": "iverilog -V 2>&1 | head -1",
+      "exit": 0,
+      "seconds": 0.91,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Icarus Verilog version 11.0 (stable) ()\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "compile Techne SC testbench + FIFO rtl + Techne dpram primitive",
+      "cmd": "iverilog -Irtl/verilog -o $BODY/fifo.vvp $HARNESS/tb_sc.v rtl/verilog/generic_fifo_sc_a.v $HARNESS/generic_dpram.v 2>&1 | grep -viE 'warning' | tail -6; test -f $BODY/fifo.vvp",
+      "exit": 0,
+      "seconds": 0.82,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "fill the FIFO to full (backpressure), drain it, check FIFO order + empty/full flags",
+      "cmd": "vvp -N $BODY/fifo.vvp 2>&1 | tail -20",
+      "exit": 0,
+      "seconds": 0.83,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "filled=8 full=1 empty=0 level=11\nSC_FIFO_DONE_OK\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [],
+  "classification": "RUNNABLE_EMULATED",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true
+}

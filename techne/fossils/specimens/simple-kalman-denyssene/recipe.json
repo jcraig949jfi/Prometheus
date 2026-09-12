@@ -1,0 +1,34 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree/src",
+  "probe": [
+    {
+      "name": "g++",
+      "cmd": "g++ --version | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "compile filter + harness",
+      "cmd": "g++ -O2 -I. -I$HARNESS -o $BODY/kf $HARNESS/drv.cpp SimpleKalmanFilter.cpp 2>&1 | grep -i 'error:'; test -x $BODY/kf"
+    }
+  ],
+  "runs": [
+    {
+      "name": "filter noisy measurements of a hidden constant",
+      "cmd": "$BODY/kf",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "KALMAN_OK"
+        ]
+      }
+    }
+  ],
+  "tests": [],
+  "test_kind": "TECHNE",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "Oracle: the filtered RMS error must be below half the raw measurement RMS -- the filter is recovering the hidden value from noise. behavioral_entry_point: raise the noise amplitude or step the truth."
+}

@@ -1,0 +1,119 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "verilog-rr-arbiter",
+  "canonical_name": "Round-robin arbiter (Verilog, freecores)",
+  "aliases": [
+    "round_robin_arbiter",
+    "rr-arbiter"
+  ],
+  "lineage": "Round-robin arbitration: when several requesters compete for one shared resource, grant fairly in rotation so none starves; the arbiter is a small finite-state DECISION machine at the heart of buses, NoCs and schedulers",
+  "domain": [
+    "hardware",
+    "arbiter",
+    "contention",
+    "finite-state-machine",
+    "fairness",
+    "verilog"
+  ],
+  "era": "classic (this Verilog impl)",
+  "version": "github.com/freecores/round_robin_arbiter master as of 2026-09-12 (commit in hashes)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/freecores/round_robin_arbiter",
+        "commit": "b207eb19fe19c5b520a23fa105730ce70b8fd126",
+        "commit_resolved": "b207eb19fe19c5b520a23fa105730ce70b8fd126",
+        "commit_date": "2010-03-26T00:09:11Z"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/freecores/round_robin_arbiter (OpenCores)"
+  },
+  "hashes": {
+    "tree_sha256": "b87f9278bbf6a9630ee8e487f67fe6ab7f45b2239610491b2c3a45fc434058e8",
+    "n_files": 5,
+    "bytes": 6023,
+    "artifacts": [
+      {
+        "filename": "https://github.com/freecores/round_robin_arbiter",
+        "sha256": null,
+        "commit": "b207eb19fe19c5b520a23fa105730ce70b8fd126"
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\verilog-rr-arbiter",
+    "hash_list": "techne/fossils/specimens/verilog-rr-arbiter/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "see repo (OpenCores; often LGPL/BSD)",
+    "status": "read before redistribution",
+    "evidence": "repo"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "Verilog"
+  ],
+  "build_system": "iverilog + a Techne testbench driving request vectors",
+  "compiler_or_interpreter": "Icarus Verilog (docker prometheus-fossil-hw)",
+  "dependencies": [
+    "iverilog"
+  ],
+  "run_classification": "RUNNABLE_EMULATED",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "the arbiter module: request[] in, grant[] out, with a rotating priority pointer"
+  ],
+  "example": {
+    "command": "Techne testbench: assert several request lines at once across cycles, capture which gets the grant each cycle",
+    "input": "per-cycle request bit-vectors",
+    "output": "the grant sequence -- fair rotation, no starvation"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-hw:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Dally & Towles, Principles and Practices of Interconnection Networks"
+  ],
+  "human_capability_summary": {
+    "built_to": "decide, each clock, which of several simultaneous requesters gets a shared resource, rotating priority so every requester is served and none is starved",
+    "pressure": "more requesters than resources, arriving simultaneously; a fixed-priority scheme starves low-priority requesters under load",
+    "success_means": "every requester eventually granted (no starvation), with bounded waiting, at one grant per cycle"
+  },
+  "known_human_problem_solved": "fair arbitration of a shared hardware resource",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "resource contention: simultaneous competing requests for one grant",
+  "human_failure_condition": "starvation: a requester never gets the resource; or a grant collision (two grants at once) corrupts the shared bus",
+  "behavioral_entry_point": "drive all request lines high every cycle and confirm the grant rotates; hold one requester high forever and confirm others still progress",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/verilog-rr-arbiter/receipts/run-verilog-rr-arbiter-20260912T162136Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_EMULATED",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\verilog-rr-arbiter ; tracked techne/fossils/specimens/verilog-rr-arbiter",
+    "where_it_came_from": "https://github.com/freecores/round_robin_arbiter ; ORIGINAL_AUTHORITATIVE_RELEASE @ b207eb19fe19c5b520a23fa105730ce70b8fd126",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run verilog-rr-arbiter",
+    "how_we_know_it_runs": "RUNNABLE_EMULATED / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/verilog-rr-arbiter/receipts/run-verilog-rr-arbiter-20260912T162136Z.json",
+    "what_humans_used_it_for": "decide, each clock, which of several simultaneous requesters gets a shared resource, rotating priority so every requester is served and none is starved"
+  },
+  "seat": "Techne"
+}

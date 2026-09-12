@@ -81,3 +81,30 @@ buddy(BDD), tinycc | alife/weird: corewar(py2.7), avida(SRC).
   congestion lineage (Tahoe->Reno->CUBIC), an allocator lineage.
 - Follow-on edges seen this batch: SLATEC (d1mach/xerror/dgtsl chain), EISPACK->LAPACK
   transition, Core War pMARS, Karn i386 FEC.
+
+## Batch 04 done (2026-09-12): 16 specimens (14 runnable), vault now 57 -- MACHINERY UNDER PRESSURE
+contention: willemt-raft, linux-tcp-congestion(SRC) | control: arduino-pid, python-control(LQR),
+do-mpc(SRC) | estimation: simple-kalman, filterpy(KF), viterbi-hmm | memory-scarcity: lru-cache,
+buddy-alloc | hardware: verilog-rr-arbiter, verilog-generic-fifo, verilog-uart2bus | connectionist:
+genann, minisom, hopfield. Pathological receipts: PID gain-instability, LRU thrash. Adversarial
+pair: filterpy (noise generator <-> state estimator). Pressure series: linux-tcp CUBIC->BBR.
+
+## Thin axes AFTER batch 04 (target these next; do not hide)
+- CONTENTION/RETRY/RECOVERY still thin in RUNNABLE form (only raft runs; TCP source-only): need
+  exponential backoff/retry, a phi-accrual failure detector, a distributed lock/lease, a leader
+  lease, gossip/anti-entropy, a circuit breaker, a thundering-herd demo.
+- ESTIMATION breadth: particle filter, MCMC/Gibbs, EKF/UKF exercised (filterpy ships them),
+  Baum-Welch TRAINING (Viterbi is decode-only), an information/belief filter.
+- CONTROL breadth: adaptive/MRAC, bang-bang/sliding-mode, a RUNNABLE MPC (do-mpc is source-only).
+- ADVERSARIAL PAIRS: only 1 -- add attacker/defender, self-play game, fuzzer-vs-parser.
+- FAILURE/BAD-BEHAVIOR: only 2 self-induced -- add deadlock, livelock, priority inversion, race,
+  memory corruption/leak-in-action, retry storm.
+- PRECISION/SAFETY-CRITICAL: only navigation-grade estimation -- add fixed-point pipeline, TMR/
+  voting, a watchdog, ECC under injected faults.
+- HARDWARE still narrow (arbiter/FIFO/UART): branch predictor, cache-coherence, sorting network,
+  CORDIC, clock-domain-crossing failure demo.
+- BINARY-ONLY + lawful recovery: STILL not exercised (open since batch 03).
+- Follow-on edges seen this batch: Raft->etcd/hashicorp-raft lineage; TCP Tahoe/Reno BEFORE the
+  CUBIC/BBR pair; SOM/Hopfield->modern-embeddings; genann->tiny-dnn; CasADi/IPOPT world for do-mpc.
+- Tooling: a runner mode that builds on a disposable copy of upstream/tree so in-place builds
+  never dirty the preserved body (this batch git-clean'd 8 bodies back to the pin post-run).

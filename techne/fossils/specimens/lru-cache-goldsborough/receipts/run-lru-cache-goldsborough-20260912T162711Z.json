@@ -1,0 +1,59 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "lru-cache-goldsborough",
+  "receipt_id": "run-lru-cache-goldsborough-20260912T162711Z",
+  "written_utc": "20260912T162711Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree",
+  "harness_sha256": {
+    "drv.cpp": "02b1c85e6249ba9537a3c4e0d7840e23cf1dff8a05f99f3c52c15c07eca5aa7f"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "6b9266080ddb9edd0c18061143ab3b8cbc8bd481a45390fcf5adb082bf3209b8",
+  "recipe_sha256": "5bdbf80667c6d1261864896824b8a9454e1cac1e37eeb8f6380c1da4c48b1072",
+  "patches": [],
+  "probe": [
+    {
+      "name": "g++",
+      "cmd": "g++ --version | head -1",
+      "exit": 0,
+      "seconds": 0.82,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "g++ (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "compile driver against the header library",
+      "cmd": "g++ -O2 -std=c++14 -Iinclude -o $BODY/lru $HARNESS/drv.cpp 2>&1 | grep -i 'error:' | head -5; test -x $BODY/lru",
+      "exit": 1,
+      "seconds": 1.32,
+      "ok": false,
+      "why_not": [
+        "exit 1 != expected 0"
+      ],
+      "stdout": {
+        "text": "include/lru/internal/optional.hpp:34:23: error: \u00e2\u20ac\u02dcoptional\u00e2\u20ac\u2122 in namespace \u00e2\u20ac\u02dcstd\u00e2\u20ac\u2122 does not name a template type\ninclude/lru/internal/base-iterator.hpp:205:3: error: \u00e2\u20ac\u02dcOptional\u00e2\u20ac\u2122 does not name a type\ninclude/lru/internal/base-iterator.hpp:106:7: error: \u00e2\u20ac\u02dc_entry\u00e2\u20ac\u2122 was not declared in this scope; did you mean \u00e2\u20ac\u02dcentry\u00e2\u20ac\u2122?\ninclude/lru/internal/base-iterator.hpp:132:33: error: class \u00e2\u20ac\u02dcLRU::Internal::BaseIterator<IteratorTag, Key, Value, Cache, UnderlyingIterator>\u00e2\u20ac\u2122 does not have any field named \u00e2\u20ac\u02dc_entry\u00e2\u20ac\u2122\ninclude/lru/internal/base-iterator.hpp:151:5: error: class \u00e2\u20ac\u02dcLRU::Internal::BaseIterator<IteratorTag, Key, Value, Cache, UnderlyingIterator>\u00e2\u20ac\u2122 does not have any field named \u00e2\u20ac\u02dc_entry\u00e2\u20ac\u2122\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [],
+  "tests": [],
+  "produced": [],
+  "classification": "BROKEN_UPSTREAM",
+  "test_classification": "NO_TESTS",
+  "ok": false
+}

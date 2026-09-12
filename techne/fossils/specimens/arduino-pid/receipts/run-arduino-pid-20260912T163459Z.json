@@ -1,0 +1,92 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "arduino-pid",
+  "receipt_id": "run-arduino-pid-20260912T163459Z",
+  "written_utc": "20260912T163459Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree",
+  "harness_sha256": {
+    "Arduino.h": "3143fa1a42a0d12f6c4f47c2fd45b6c79dbb621dfc43eb4d4d700c630e6f70d6",
+    "drv.cpp": "f43596d2e96f868263c2727cc867ce456975f779611d5d4909837e70fa6a87a1"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "f4b65bd9cdf08236942485491bb73de0c5e3e4d16a357450e4f21bc0932c902b",
+  "recipe_sha256": "518752f7f369e2a315f5383ae0021b0faecf201b91cc1369a5484ff936c0ab43",
+  "patches": [],
+  "probe": [
+    {
+      "name": "g++",
+      "cmd": "g++ --version | head -1",
+      "exit": 0,
+      "seconds": 0.96,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "g++ (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "compile PID + plant harness",
+      "cmd": "g++ -O2 -DARDUINO=10800 -I. -I$HARNESS -o $BODY/pid $HARNESS/drv.cpp PID_v1.cpp 2>&1 | grep -i 'error:'; test -x $BODY/pid",
+      "exit": 0,
+      "seconds": 1.17,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "step response converges to setpoint",
+      "cmd": "$BODY/pid 2.0",
+      "exit": 0,
+      "seconds": 0.84,
+      "ok": false,
+      "why_not": [
+        "stdout lacks 'PID_CONVERGED'"
+      ],
+      "stdout": {
+        "text": "final=2.0500 setpoint=1.0 peak=2.050\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [
+    {
+      "name": "pathological: 20x proportional gain drives the loop UNSTABLE",
+      "cmd": "$BODY/pid 200.0",
+      "exit": 0,
+      "seconds": 0.85,
+      "ok": false,
+      "why_not": [
+        "stdout lacks 'PID_UNSTABLE'"
+      ],
+      "stdout": {
+        "text": "final=50.0000 setpoint=1.0 peak=50.000\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "produced": [],
+  "classification": "BUILDS_BUT_NOT_RUN",
+  "test_classification": "TECHNE_SMOKE_HARNESS_FAIL",
+  "ok": false
+}
