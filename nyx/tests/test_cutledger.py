@@ -64,6 +64,25 @@ def test_support_and_knife_status_need_evidence():
     assert any("K9" in x for x in d)
 
 
+def test_recurrence_needs_ancestry_and_delivery_states_are_typed():
+    l = _base()
+    l["candidates"][0]["dispositions"]["CUT-2"] = "RECURRENCE"  # no recurrence_of
+    l["deliveries"] = [{"seat": "Vivarium", "msg": 1, "posted": "2026-09-11T20:53Z", "cut": "CUT-1",
+                        "first_substantive_return": "2026-09-11T21:23Z", "state": "REJECTED_BLOCKED"},  # no state_ref
+                       {"seat": "Archaeon", "msg": 2, "posted": "2026-09-11T20:53Z", "cut": "CUT-1",
+                        "first_substantive_return": None, "state": "METABOLIZED"}]  # not a state
+    d = cutledger.check(l)
+    assert any("RECURRENCE without recurrence_of" in x for x in d)
+    assert any("msg 1" in x and "state_ref" in x for x in d)
+    assert any("msg 2" in x and "not in" in x for x in d)
+    l["candidates"][0]["recurrence_of"] = "organ.lean_simp.x.cut1"
+    l["deliveries"][0]["state_ref"] = "msg 182"
+    l["deliveries"][1]["state"] = "DELIVERED"
+    assert cutledger.check(l) == []
+    by = cutledger.metrics(l)["consumers"]["deliveries_by_metabolic_state (ruling 2026-09-12; never collapsed to one bit)"]
+    assert by["REJECTED_BLOCKED"] == 1 and by["DELIVERED"] == 1 and by["CONSUMED"] == 0
+
+
 def test_defects_withhold_metrics():
     l = _base()
     l["candidates"][0]["independent_test"] = "run"  # no ref
