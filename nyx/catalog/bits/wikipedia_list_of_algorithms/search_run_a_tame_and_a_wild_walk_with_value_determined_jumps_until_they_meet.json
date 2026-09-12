@@ -1,0 +1,46 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.run_a_tame_and_a_wild_walk_with_value_determined_jumps_until_they_meet",
+  "name": "run a tame walk from a known point and a wild walk from the target, with value-determined jumps, until they meet",
+  "lineage": [
+    "automated mathematics",
+    "network protocols"
+  ],
+  "mechanism": "each walk jumps by an amount chosen from the current value alone, so once two walks land on a common point they coincide forever; start one from a known exponent, record its distance travelled, start the other from the unknown, and when the wild walk hits a point the tame one recorded, the two distances give the unknown",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Pollard's kangaroo algorithm (also known as Pollard's lambda algorithm)' in section Computational mathematics / Computer algebra: an algorithm for solving the discrete logarithm problem",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "SCALAR",
+  "out_geometry": "SCALAR",
+  "order_req": "TOTAL",
+  "metric_req": "EQUALITY",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "PROBABILISTIC_BOUND",
+  "strategy": "RANDOMIZED",
+  "iteration": "NONE",
+  "cost": "EXPONENTIAL",
+  "requires": [
+    "the unknown known to lie in an interval",
+    "a jump function of the value alone"
+  ],
+  "fails_when": [
+    "the walks may miss; expected cost is the square root of the interval width"
+  ],
+  "instances": [
+    "Pollard's kangaroo algorithm (also known as Pollard's lambda algorithm)"
+  ],
+  "related": [
+    {
+      "rel": "CONTRASTS_WITH",
+      "id": "bit.search.detect_cycle_in_pseudorandom_walk_for_collision"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+}

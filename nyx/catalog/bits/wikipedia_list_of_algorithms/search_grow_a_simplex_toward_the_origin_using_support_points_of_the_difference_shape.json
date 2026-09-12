@@ -1,0 +1,42 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.grow_a_simplex_toward_the_origin_using_support_points_of_the_difference_shape",
+  "name": "grow a simplex toward the origin using support points of the difference shape",
+  "lineage": [
+    "computational geometry",
+    "games",
+    "scientific software",
+    "controllers"
+  ],
+  "mechanism": "the two shapes intersect exactly when their pointwise difference contains the origin; keep a small simplex of difference points, find the point of the difference shape farthest in the direction from the simplex toward the origin (one support query per shape), add it, drop the vertex that no longer helps, and repeat until the origin is enclosed or no progress is possible (the closest distance)",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Gilbert–Johnson–Keerthi distance algorithm' in section Computational mathematics / Geometry: determining the smallest distance between two convex shapes.",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "SET",
+  "out_geometry": "SCALAR",
+  "order_req": "NONE",
+  "metric_req": "INNER_PRODUCT",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "GREEDY",
+  "iteration": "NONE",
+  "cost": "LINEAR",
+  "requires": [
+    "a support function for each convex shape"
+  ],
+  "fails_when": [
+    "non-convex shapes must be decomposed; numerical stall near touching"
+  ],
+  "instances": [
+    "Gilbert–Johnson–Keerthi distance algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+}

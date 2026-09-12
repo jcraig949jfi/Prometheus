@@ -1,0 +1,40 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.detect.mark_a_point_as_surface_if_some_cone_from_it_contains_no_other_point",
+  "name": "mark a point as surface if some cone from it contains no other point",
+  "lineage": [
+    "scientific software",
+    "biological and artificial dynamical systems"
+  ],
+  "mechanism": "for each point, test a set of cone directions of fixed opening angle; if any cone anchored at the point holds none of its neighbours, the point is on the surface; otherwise it is interior",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Cone algorithm' in section Computational mathematics / Geometry: identify surface points",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "DETECT",
+  "in_geometry": "SET",
+  "out_geometry": "SET",
+  "order_req": "NONE",
+  "metric_req": "DISTANCE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "APPROXIMATE",
+  "strategy": "DIRECT",
+  "iteration": "SWEEP",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "a cone opening angle and neighbour radius (policy)"
+  ],
+  "fails_when": [
+    "concave pockets fool the test; parameter-dependent"
+  ],
+  "instances": [
+    "Cone algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+}

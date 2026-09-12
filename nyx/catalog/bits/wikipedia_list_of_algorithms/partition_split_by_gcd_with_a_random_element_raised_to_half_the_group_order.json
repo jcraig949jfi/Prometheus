@@ -1,0 +1,48 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.partition.split_by_gcd_with_a_random_element_raised_to_half_the_group_order",
+  "name": "split by a gcd with a random element raised to half the group order",
+  "lineage": [
+    "automated mathematics",
+    "symbolic reasoning",
+    "theorem provers",
+    "error-correcting systems"
+  ],
+  "mechanism": "a product of equal-degree factors splits the residue ring into components; raise a random element to half the order of each component's multiplicative group, so it becomes plus or minus one in each component independently; the gcd of (result minus one) with the input collects exactly the components where it was plus one",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Cantor–Zassenhaus algorithm' in section Computational mathematics / Computer algebra: factor polynomials over finite fields",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "PARTITION",
+  "in_geometry": "FUNCTION",
+  "out_geometry": "SET",
+  "order_req": "NONE",
+  "metric_req": "EQUALITY",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "PROBABILISTIC_BOUND",
+  "strategy": "RANDOMIZED",
+  "iteration": "RANDOM",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "a squarefree input already separated by factor degree",
+    "an odd field size"
+  ],
+  "fails_when": [
+    "each trial splits with probability about one half; needs a separate handling in characteristic two"
+  ],
+  "instances": [
+    "Cantor–Zassenhaus algorithm"
+  ],
+  "related": [
+    {
+      "rel": "RECURRENCE_OF",
+      "id": "bit.search.exploit_smooth_group_order_by_large_power"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+}

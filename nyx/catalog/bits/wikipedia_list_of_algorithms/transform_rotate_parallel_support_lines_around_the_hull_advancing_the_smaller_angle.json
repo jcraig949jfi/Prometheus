@@ -1,0 +1,46 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.transform.rotate_parallel_support_lines_around_the_hull_advancing_the_smaller_angle",
+  "name": "rotate two parallel support lines around the hull, advancing whichever has the smaller angle to its next edge",
+  "lineage": [
+    "computational geometry",
+    "games",
+    "scientific software"
+  ],
+  "mechanism": "rest two parallel lines on opposite vertices of a convex polygon; rotate both together, at each step turning by the smaller of the two angles needed to reach the next edge and advancing that vertex; every pair of opposite vertices is visited once, in one pass around the polygon",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Rotating calipers' in section Computational mathematics / Geometry: determine all antipodal pairs of points and vertices on a convex polygon or convex hull.",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "TRANSFORM",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "SEQUENCE",
+  "order_req": "TOTAL",
+  "metric_req": "DISTANCE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "DIRECT",
+  "iteration": "SWEEP",
+  "cost": "LINEAR",
+  "requires": [
+    "a convex polygon in order"
+  ],
+  "fails_when": [
+    "parallel edges produce ties"
+  ],
+  "instances": [
+    "Rotating calipers"
+  ],
+  "related": [
+    {
+      "rel": "RECURRENCE_OF",
+      "id": "bit.search.sort_both_sides_then_advance_the_smaller_key"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+}

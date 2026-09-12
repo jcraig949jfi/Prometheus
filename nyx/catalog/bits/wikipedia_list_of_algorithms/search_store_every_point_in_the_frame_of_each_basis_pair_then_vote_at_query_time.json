@@ -1,0 +1,43 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.store_every_point_in_the_frame_of_each_basis_pair_then_vote_at_query_time",
+  "name": "store every point in the frame of each basis pair, then vote at query time",
+  "lineage": [
+    "computational geometry",
+    "games",
+    "scientific software",
+    "scientific software"
+  ],
+  "mechanism": "offline, for every ordered pair of model points as a basis, express all other model points in that basis and store (quantised coordinates -> model, basis) in a table; online, pick a basis from the scene, express the scene points in it, look each up and vote; a model-basis pair with many votes is a match under the transformation",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Geometric hashing' in section Computational mathematics / Geometry: a method for efficiently finding two-dimensional objects represented by discrete points that have undergone an affine transformation",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "SET",
+  "out_geometry": "RECORD",
+  "order_req": "NONE",
+  "metric_req": "DISTANCE",
+  "state_req": "GLOBAL",
+  "control": "PURE",
+  "guarantee": "APPROXIMATE",
+  "strategy": "PRECOMPUTED_TABLE",
+  "iteration": "RANDOM",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "a quantisation grid (policy)",
+    "a transformation group fixed by two points"
+  ],
+  "fails_when": [
+    "table size is cubic in model points; quantisation boundaries lose votes"
+  ],
+  "instances": [
+    "Geometric hashing"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+}

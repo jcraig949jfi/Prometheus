@@ -1,0 +1,41 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.transform.find_the_bridge_across_the_median_then_recurse_on_each_side",
+  "name": "find the hull edge that bridges the median split, then recurse on each side",
+  "lineage": [
+    "computational geometry",
+    "games",
+    "scientific software"
+  ],
+  "mechanism": "split the points by a vertical median line, find directly (by a prune-and-search over point pairs) the single hull edge that crosses the line, discard every point under that edge, and recurse on the two sides; the work is proportional to the input times the log of the output size",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Kirkpatrick–Seidel algorithm' in section Computational mathematics / Geometry: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "TRANSFORM",
+  "in_geometry": "SET",
+  "out_geometry": "SEQUENCE",
+  "order_req": "TOTAL",
+  "metric_req": "DISTANCE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "OPTIMAL",
+  "strategy": "DIVIDE_CONQUER",
+  "iteration": "NONE",
+  "cost": "LINEARITHMIC",
+  "requires": [
+    "linear-time median and a bridge-finding routine"
+  ],
+  "fails_when": [
+    "large constants; rarely faster in practice"
+  ],
+  "instances": [
+    "Kirkpatrick–Seidel algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+}
