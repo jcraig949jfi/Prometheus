@@ -44,6 +44,7 @@ from . import design as _design
 from . import identity as _identity
 from . import pew as _pew
 from . import queue as _q
+from . import scope as _scope
 from . import selection as _selection
 from . import spec as _spec
 from . import vardir as _vardir
@@ -650,6 +651,29 @@ class Vivarium:
         except Exception:                           # noqa: BLE001, S110
             pass
         return report
+
+    # -- B1 recurrence -------------------------------------------------------
+    def reconcile_scopes(self, *, trigger: str = "manual",
+                         dry_run: bool = False) -> dict:
+        """Extend the declared read scopes with this owner's newly eligible
+        worlds (viv/scope.py). Between ticks only; never on a row's path."""
+        scopes = _scope.declared(self.cfg)
+        runner = self._runner if self._runner is not None else (
+            self.runner() if scopes else None)
+        client = getattr(runner, "c", None)
+        if scopes and client is None:
+            rec = {"schema": "viv.scope_reconcile.v1", "trigger": trigger,
+                   "skipped": "runner exposes no engine client", "scopes": [],
+                   "added_total": 0, "productive": False,
+                   "at": __import__("datetime").datetime.now(
+                       __import__("datetime").timezone.utc).isoformat()}
+            self.log("[viv] scope reconcile (%s): skipped, no engine client" % trigger)
+            return rec
+        rec = _scope.reconcile(client, scopes, dry_run=dry_run, log=self.log,
+                               trigger=trigger)
+        rec["receipt"] = str(_scope.write_receipt(
+            rec, _vardir.resolve(self.cfg)) or "")
+        return rec
 
     # -- health ------------------------------------------------------------
     def health(self) -> dict:
