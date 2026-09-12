@@ -1,0 +1,96 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "python-control",
+  "receipt_id": "run-python-control-20260912T164322Z",
+  "written_utc": "20260912T164322Z",
+  "runner": "docker",
+  "image": "python:3.11-slim",
+  "workdir": "upstream/tree",
+  "harness_sha256": {
+    "drv.py": "2fa52ba49c0cf6aa3f5e79d2bcd5be4fbac7f4400caeff3281dd9ab80c1518ca"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "63a1737525ab96f4f176896cd3ae3a1115aa92d6c75de1db62cfb3fdd725a723",
+  "recipe_sha256": "714fcf5145e0e3b2dc7a7f613151c039e7fc38488c45c668b67812cb0e13d14a",
+  "patches": [],
+  "probe": [
+    {
+      "name": "python",
+      "cmd": "python --version",
+      "exit": 0,
+      "seconds": 0.98,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Python 3.11.16\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [],
+  "runs": [
+    {
+      "name": "design an LQR and drive a double integrator to the origin",
+      "cmd": "pip install -q numpy scipy >/dev/null 2>&1 && PYTHONPATH=. python $HARNESS/drv.py",
+      "exit": 1,
+      "seconds": 9.02,
+      "ok": false,
+      "why_not": [
+        "exit 1 != expected 0",
+        "stdout lacks 'LQR_STABILIZED'"
+      ],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": "Traceback (most recent call last):\n  File \"/w/harness/drv.py\", line 1, in <module>\n    import numpy as np, control as ct\n  File \"/w/upstream/tree/control/__init__.py\", line 57, in <module>\n    from .nlsys import *\n  File \"/w/upstream/tree/control/nlsys.py\", line 28, in <module>\n    from .timeresp import TimeResponseData, TimeResponseList, \\\n  File \"/w/upstream/tree/control/timeresp.py\", line 51, in <module>\n    from .timeplot import time_response_plot\n  File \"/w/upstream/tree/control/timeplot.py\", line 15, in <module>\n    import matplotlib.pyplot as plt\nModuleNotFoundError: No module named 'matplotlib'\n"
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [
+    {
+      "path": "control/__pycache__/__init__.cpython-311.pyc",
+      "sha256": "d311b3f5819cb1880b049158220c857f091126809f818a4992b4ce13ab2b2185",
+      "bytes": 2979
+    },
+    {
+      "path": "control/__pycache__/config.cpython-311.pyc",
+      "sha256": "e8b9362ceebd94c823596586b968af58127a82011547b6bb5806e6786be02f0a",
+      "bytes": 22518
+    },
+    {
+      "path": "control/__pycache__/exception.cpython-311.pyc",
+      "sha256": "88e61dfa80f83aaa27d31a955ae4d39515f6bba1f87002824b40fd56d017a27f",
+      "bytes": 2781
+    },
+    {
+      "path": "control/__pycache__/iosys.cpython-311.pyc",
+      "sha256": "54e797c5a9cc67cd25884c704a623286455d30e27e9be620485a7daecfc1ba68",
+      "bytes": 56121
+    },
+    {
+      "path": "control/__pycache__/nlsys.cpython-311.pyc",
+      "sha256": "7c1a5455ffb1152e1254642006abb81f3ac98bc214bdd448619177fe8b16b360",
+      "bytes": 138319
+    },
+    {
+      "path": "control/__pycache__/timeplot.cpython-311.pyc",
+      "sha256": "a0ab54fc4dad49120ff8c923c41b43a6d70bf3746838f1fa533cec2afd2623b8",
+      "bytes": 27153
+    },
+    {
+      "path": "control/__pycache__/timeresp.cpython-311.pyc",
+      "sha256": "411f3299de217104eb0649ad1c9b2a1390441f3e772bd86e77a103363fe1ec72",
+      "bytes": 95027
+    }
+  ],
+  "classification": "BUILDS_BUT_NOT_RUN",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": false
+}

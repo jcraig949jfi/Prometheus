@@ -1,0 +1,127 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "filterpy-labbe",
+  "canonical_name": "FilterPy -- Bayesian filtering library (Roger Labbe)",
+  "aliases": [
+    "filterpy",
+    "Kalman-and-Bayesian-Filters"
+  ],
+  "lineage": "FilterPy (2014-, Labbe): reference implementations of the Kalman family (KF/EKF/UKF), particle filters, and other Bayesian filters, written for clarity alongside the book 'Kalman and Bayesian Filters in Python'; carries example systems (a noisy nonlinear plant) AND the estimators that recover their hidden state",
+  "domain": [
+    "estimation",
+    "particle-filter",
+    "kalman-filter",
+    "unscented-kalman",
+    "bayesian-inference",
+    "state-estimation"
+  ],
+  "era": "2014-",
+  "version": "github.com/rlabbe/filterpy master as of 2026-09-12 (commit in hashes)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/rlabbe/filterpy",
+        "commit": "3b51149ebcff0401ff1e10bf08ffca7b6bbc4a33",
+        "commit_resolved": "3b51149ebcff0401ff1e10bf08ffca7b6bbc4a33",
+        "commit_date": "2022-08-22T11:21:12-07:00"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/rlabbe/filterpy"
+  },
+  "hashes": {
+    "tree_sha256": "c7592f02163aef1d42504b50a30e88f0d1346f47660cd5739be87ee5d53f832d",
+    "n_files": 113,
+    "bytes": 612167,
+    "artifacts": [
+      {
+        "filename": "https://github.com/rlabbe/filterpy",
+        "sha256": null,
+        "commit": "3b51149ebcff0401ff1e10bf08ffca7b6bbc4a33"
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\filterpy-labbe",
+    "hash_list": "techne/fossils/specimens/filterpy-labbe/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "MIT",
+    "status": "permissive",
+    "evidence": "LICENSE"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "Python"
+  ],
+  "build_system": "pip install . (numpy+scipy)",
+  "compiler_or_interpreter": "CPython 3.11 + numpy/scipy (docker python:3.11-slim)",
+  "dependencies": [
+    "numpy",
+    "scipy"
+  ],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "filterpy.kalman.KalmanFilter / UnscentedKalmanFilter; filterpy.monte_carlo (systematic_resample) for the particle filter"
+  ],
+  "example": {
+    "command": "Techne harness: a 1-D constant-velocity target with process+measurement noise, estimated by a KF; check RMSE below the raw sensor",
+    "input": "noisy position measurements",
+    "output": "a filtered track with RMSE < the sensor noise"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "python:3.11-slim"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Labbe, Kalman and Bayesian Filters in Python (the book)",
+    "rlabbe.github.io/Kalman-and-Bayesian-Filters-in-Python"
+  ],
+  "human_capability_summary": {
+    "built_to": "estimate the hidden state of a dynamical system from noisy measurements across the whole Bayesian-filter family -- linear (KF), nonlinear (EKF/UKF), and non-Gaussian (particle filter)",
+    "pressure": "nonlinearity and non-Gaussian noise where the plain Kalman filter fails; hidden state that must be tracked through a noisy, possibly multimodal posterior",
+    "success_means": "a state estimate that tracks truth with low error and calibrated uncertainty, even when the system is nonlinear or the posterior is multimodal"
+  },
+  "known_human_problem_solved": "Bayesian state estimation across the filter family",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "noisy observation, nonlinear dynamics, non-Gaussian / multimodal uncertainty, hidden state",
+  "human_failure_condition": "a diverged filter (EKF linearisation error) or a degenerate particle set (all weight on one particle) loses the track entirely",
+  "behavioral_entry_point": "ADVERSARIAL PAIR within this repo: the example systems GENERATE process+measurement noise (the pressure) and the filters RECOVER the state (the response). Raise noise, add nonlinearity, or drop measurements to break the estimator; force particle degeneracy by shrinking the particle count.",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/filterpy-labbe/receipts/run-filterpy-labbe-20260912T164217Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/filterpy-labbe/receipts/run-filterpy-labbe-20260912T164310Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\filterpy-labbe ; tracked techne/fossils/specimens/filterpy-labbe",
+    "where_it_came_from": "https://github.com/rlabbe/filterpy ; ORIGINAL_AUTHORITATIVE_RELEASE @ 3b51149ebcff0401ff1e10bf08ffca7b6bbc4a33",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run filterpy-labbe",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/filterpy-labbe/receipts/run-filterpy-labbe-20260912T164310Z.json",
+    "what_humans_used_it_for": "estimate the hidden state of a dynamical system from noisy measurements across the whole Bayesian-filter family -- linear (KF), nonlinear (EKF/UKF), and non-Gaussian (particle filter)"
+  },
+  "seat": "Techne"
+}

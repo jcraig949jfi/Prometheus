@@ -1,0 +1,193 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "python-control",
+  "receipt_id": "run-python-control-20260912T164354Z",
+  "written_utc": "20260912T164354Z",
+  "runner": "docker",
+  "image": "python:3.11-slim",
+  "workdir": "upstream/tree",
+  "harness_sha256": {
+    "drv.py": "2fa52ba49c0cf6aa3f5e79d2bcd5be4fbac7f4400caeff3281dd9ab80c1518ca"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "63a1737525ab96f4f176896cd3ae3a1115aa92d6c75de1db62cfb3fdd725a723",
+  "recipe_sha256": "dfca6c95b6b23798c6bc85609888aa7d19b490b4dd0b7e35ef2c442fc561267f",
+  "patches": [],
+  "probe": [
+    {
+      "name": "python",
+      "cmd": "python --version",
+      "exit": 0,
+      "seconds": 0.93,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Python 3.11.16\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [],
+  "runs": [
+    {
+      "name": "design an LQR and drive a double integrator to the origin",
+      "cmd": "pip install -q numpy scipy matplotlib >/dev/null 2>&1 && MPLBACKEND=Agg PYTHONPATH=. python $HARNESS/drv.py",
+      "exit": 0,
+      "seconds": 14.73,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "closed_loop_eig_real_max -0.8660\nfinal_state -5.2985e-08 3.5160e-08\nLQR_STABILIZED\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [
+    {
+      "path": "control/__pycache__/bdalg.cpython-311.pyc",
+      "sha256": "5b969f943fbf99e2d9c7247bdbff40e1221b2ec59b374c07c04223369c680d83",
+      "bytes": 27657
+    },
+    {
+      "path": "control/__pycache__/canonical.cpython-311.pyc",
+      "sha256": "660b7cf3a6b8ab48d5105edfd2484a0afbe868684382a4201139297644f46b2e",
+      "bytes": 18783
+    },
+    {
+      "path": "control/__pycache__/ctrlplot.cpython-311.pyc",
+      "sha256": "a26051806f56a390d2b8d0370c032fd242743220dabb8d401be5bfe9bb8184c4",
+      "bytes": 30307
+    },
+    {
+      "path": "control/__pycache__/ctrlutil.cpython-311.pyc",
+      "sha256": "b4f654d6f7c924f6a77412a31f01e51e42fc5bbe0233f544011457fe8b1cab82",
+      "bytes": 3617
+    },
+    {
+      "path": "control/__pycache__/delay.cpython-311.pyc",
+      "sha256": "36166303e234fc33a9c64c96c860781f388113a8309210d637cc9036f2a757f7",
+      "bytes": 3441
+    },
+    {
+      "path": "control/__pycache__/descfcn.cpython-311.pyc",
+      "sha256": "8978b76609ef20a50d010e30062b7fcb6027410351086e1691ba103b7ea6c36d",
+      "bytes": 32963
+    },
+    {
+      "path": "control/__pycache__/dtime.cpython-311.pyc",
+      "sha256": "c6f29d8befc2ff43e040d9032fba3606974488cc20981b727b9823684b7a27b1",
+      "bytes": 3353
+    },
+    {
+      "path": "control/__pycache__/frdata.cpython-311.pyc",
+      "sha256": "f77398a2a36fb11b1ed59be40c86406ecd2bb2ae225c8ecef25aecf5d8d81443",
+      "bytes": 51578
+    },
+    {
+      "path": "control/__pycache__/freqplot.cpython-311.pyc",
+      "sha256": "73b23e38c68fbcdf333ab673476d99ed4c9817b46db743e8de8443dac5d2e0a6",
+      "bytes": 118357
+    },
+    {
+      "path": "control/__pycache__/grid.cpython-311.pyc",
+      "sha256": "a09bd902b703bb479d5677913aaa544553ea15fbc0eb98e2a93848e56b5b60af",
+      "bytes": 12144
+    },
+    {
+      "path": "control/__pycache__/lti.cpython-311.pyc",
+      "sha256": "14e69105ef62bf40402935e6664beb30cc43fb3214440c04c46fa8f30dae9b3f",
+      "bytes": 28500
+    },
+    {
+      "path": "control/__pycache__/margins.cpython-311.pyc",
+      "sha256": "babe0ef5c56d4d71c43e039b7c17903ea50f0bde1fa6c2491f42d6ae460d2e3a",
+      "bytes": 30738
+    },
+    {
+      "path": "control/__pycache__/mateqn.cpython-311.pyc",
+      "sha256": "796e2985b24bcfb89bce6ed9091c846e2e02853ebb70b9c188e67786fa636200",
+      "bytes": 32106
+    },
+    {
+      "path": "control/__pycache__/modelsimp.cpython-311.pyc",
+      "sha256": "fc360f8e618a7be4b9c121b3f9f27128310cb1f84f640ad53365521e9d9621ae",
+      "bytes": 27780
+    },
+    {
+      "path": "control/__pycache__/nichols.cpython-311.pyc",
+      "sha256": "19af6237533ccd571b85e96c3e20c5d70034c7119774f7ded7dee3630e900711",
+      "bytes": 17256
+    },
+    {
+      "path": "control/__pycache__/optimal.cpython-311.pyc",
+      "sha256": "c117f47f880ec53425dda8cd194d4449c92ed70bbcc78651fd94eacf7d08d1bf",
+      "bytes": 108063
+    },
+    {
+      "path": "control/__pycache__/passivity.cpython-311.pyc",
+      "sha256": "c21c5b7821bb2bfe1a82052dcd06e472aa63b4a4cd9ea97f508eb453a96785ff",
+      "bytes": 12582
+    },
+    {
+      "path": "control/__pycache__/phaseplot.cpython-311.pyc",
+      "sha256": "0abb481537c5b8a8a006e60a1e2d207d7e653be74c9f155a8d5842e4233aa229",
+      "bytes": 64726
+    },
+    {
+      "path": "control/__pycache__/pzmap.cpython-311.pyc",
+      "sha256": "281c3273b3b19c3a550477de4ca41e347738c4ab90e29c9b64437f8369098bd5",
+      "bytes": 31191
+    },
+    {
+      "path": "control/__pycache__/rlocus.cpython-311.pyc",
+      "sha256": "6d317231e3abb0c215495329d35c219f12aadb050c99141a8778a2b84029852e",
+      "bytes": 22804
+    },
+    {
+      "path": "control/__pycache__/robust.cpython-311.pyc",
+      "sha256": "5673e5400a82f4ccc6c7d4afd35559b7d2c34f3b184fcec66bcd41ccd891e1bd",
+      "bytes": 13038
+    },
+    {
+      "path": "control/__pycache__/sisotool.cpython-311.pyc",
+      "sha256": "0b1e1a228851c30939d37c7e121c114d8b5585d33fec2dbd24b819db4b4fd7e5",
+      "bytes": 20920
+    },
+    {
+      "path": "control/__pycache__/statefbk.cpython-311.pyc",
+      "sha256": "3702adcfd061d9e673104c4f6d3ccb14f6a01c4a33d20ca1abd889db82b74d84",
+      "bytes": 47587
+    },
+    {
+      "path": "control/__pycache__/statesp.cpython-311.pyc",
+      "sha256": "d93656825bb2ef6b622c47ada911010135af52fe9a1acb7422e56aa8f99f915b",
+      "bytes": 111940
+    },
+    {
+      "path": "control/__pycache__/stochsys.cpython-311.pyc",
+      "sha256": "99777049fccc0e4b025003fecf1c8e0fe7ec5d2c7f060e09fc9632083398a62f",
+      "bytes": 30580
+    },
+    {
+      "path": "control/__pycache__/sysnorm.cpython-311.pyc",
+      "sha256": "78eee32ae3d291ac20e0a2abab4c9e5623dc3ebf586d9085d06e2cf785520b7a",
+      "bytes": 11788
+    },
+    {
+      "path": "control/__pycache__/xferfcn.cpython-311.pyc",
+      "sha256": "944edc62b52e69f52f3eba3948e0b2529292a3a0b1037c758fa20e12825f969d",
+      "bytes": 92521
+    }
+  ],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true
+}

@@ -1,0 +1,88 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "arduino-pid",
+  "receipt_id": "run-arduino-pid-20260912T163917Z",
+  "written_utc": "20260912T163917Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree",
+  "harness_sha256": {
+    "Arduino.h": "3143fa1a42a0d12f6c4f47c2fd45b6c79dbb621dfc43eb4d4d700c630e6f70d6",
+    "drv.cpp": "80e034ff884835662f266504c4a3aaf7ffcb414d8e8c2eaa735679dff388a614"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "f4b65bd9cdf08236942485491bb73de0c5e3e4d16a357450e4f21bc0932c902b",
+  "recipe_sha256": "73a3350845c2a93a6003d48030814cc0ea9561b8f808cd5d6092963c7e4c6f85",
+  "patches": [],
+  "probe": [
+    {
+      "name": "g++",
+      "cmd": "g++ --version | head -1",
+      "exit": 0,
+      "seconds": 0.92,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "g++ (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "compile PID + plant harness",
+      "cmd": "g++ -O2 -DARDUINO=10800 -I. -I$HARNESS -o $BODY/pid $HARNESS/drv.cpp PID_v1.cpp 2>&1 | grep -i 'error:'; test -x $BODY/pid",
+      "exit": 0,
+      "seconds": 1.12,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "step response: modest gains converge the controlled variable to the setpoint",
+      "cmd": "$BODY/pid 1 0.5 0.02",
+      "exit": 0,
+      "seconds": 0.84,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Kp=1.0 final=1.0050 late_crossings=0 late_max=1.005\nPID_CONVERGED\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [
+    {
+      "name": "pathological: 200x proportional gain destabilises the loop",
+      "cmd": "$BODY/pid 200 0.5 0.02",
+      "exit": 0,
+      "seconds": 0.86,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Kp=200.0 final=50.0000 late_crossings=0 late_max=50.000\nPID_UNSTABLE\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "produced": [],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true
+}

@@ -1,0 +1,113 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "do-mpc",
+  "canonical_name": "do-mpc -- Model Predictive Control toolbox (TU Dortmund)",
+  "aliases": [
+    "do-mpc",
+    "MPC"
+  ],
+  "lineage": "do-mpc (2016-, Fiedler/Lucia et al.): nonlinear and robust Model Predictive Control -- at each step solve a finite-horizon optimal-control problem over a model, apply the first input, re-solve (receding horizon); built on CasADi/IPOPT",
+  "domain": [
+    "control",
+    "model-predictive-control",
+    "optimization",
+    "receding-horizon",
+    "feedback-control"
+  ],
+  "era": "2016-",
+  "version": "github.com/do-mpc/do-mpc master as of 2026-09-12 (commit in hashes)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/do-mpc/do-mpc",
+        "commit": "6ec14cb70daa189d7eb70c0e6f6d90442db01c92",
+        "commit_resolved": "6ec14cb70daa189d7eb70c0e6f6d90442db01c92",
+        "commit_date": "2026-09-03T14:43:53+02:00"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/do-mpc/do-mpc"
+  },
+  "hashes": {
+    "tree_sha256": "df82e517cdf342d17261d5adea8272c7e5cc27f4fdad4194906ed8bff71804b6",
+    "n_files": 271,
+    "bytes": 60353328,
+    "artifacts": [
+      {
+        "filename": "https://github.com/do-mpc/do-mpc",
+        "sha256": null,
+        "commit": "6ec14cb70daa189d7eb70c0e6f6d90442db01c92"
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\do-mpc",
+    "hash_list": "techne/fossils/specimens/do-mpc/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "LGPL-3.0",
+    "status": "copyleft",
+    "evidence": "LICENSE"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "Python"
+  ],
+  "build_system": "pip install do-mpc casadi (heavy; NOT built this pass)",
+  "compiler_or_interpreter": "CPython + CasADi + IPOPT (deferred)",
+  "dependencies": [
+    "casadi",
+    "numpy",
+    "an NLP solver (IPOPT)"
+  ],
+  "run_classification": "SOURCE_ONLY",
+  "test_classification": "NO_TESTS",
+  "entry_points": [
+    "do_mpc.controller.MPC over a do_mpc.model; the receding-horizon loop"
+  ],
+  "example": {
+    "command": "SOURCE ONLY this pass -- the CasADi/IPOPT stack is a heavy install deferred",
+    "input": "a model + horizon + constraints",
+    "output": "the predicted-optimal input sequence, first step applied"
+  },
+  "environment": {
+    "runner": "none this pass -- SOURCE pinned; CasADi/IPOPT build deferred (RUNNABLE_CONTAINER candidate)"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "do-mpc.com",
+    "Rawlings, Mayne, Diehl, Model Predictive Control: Theory, Computation, and Design"
+  ],
+  "human_capability_summary": {
+    "built_to": "control a constrained dynamical system by repeatedly solving, at each step, a finite-horizon optimisation over a model of the plant and applying only the first move -- anticipating the future and respecting constraints",
+    "pressure": "hard constraints (actuator/state limits) and a plant where greedy feedback violates them; the controller must look ahead and re-plan as reality diverges from the model",
+    "success_means": "constraint-respecting control that optimises a horizon cost and re-plans fast enough to run in real time"
+  },
+  "known_human_problem_solved": "constrained predictive control by receding-horizon optimisation",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "hard state/actuator constraints, model mismatch, a real-time solve deadline",
+  "human_failure_condition": "the horizon optimisation is infeasible or too slow -> the controller stalls or violates a constraint (a physical limit is breached)",
+  "behavioral_entry_point": "tighten a constraint or shorten the solve deadline until the receding-horizon problem becomes infeasible",
+  "observability": {
+    "EXECUTABLE": "no",
+    "OBSERVABLE": "no",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [],
+  "versions_preserved": [],
+  "receipts": [],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\do-mpc ; tracked techne/fossils/specimens/do-mpc",
+    "where_it_came_from": "https://github.com/do-mpc/do-mpc ; ORIGINAL_AUTHORITATIVE_RELEASE @ 6ec14cb70daa189d7eb70c0e6f6d90442db01c92",
+    "how_to_run_it": "SOURCE_ONLY: do-mpc builds on CasADi + IPOPT (heavy nonlinear-optimisation stack). Preserved + tree-hashed; a runnable MPC receipt is deferred to a world with CasADi/IPOPT.",
+    "how_we_know_it_runs": "not executed; body tree_sha256 df82e517cdf342d1 pinned in UPSTREAM_HASHES.txt",
+    "what_humans_used_it_for": "control a constrained dynamical system by repeatedly solving, at each step, a finite-horizon optimisation over a model of the plant and applying only the first move -- anticipating the future and respecting constraints"
+  },
+  "seat": "Techne"
+}

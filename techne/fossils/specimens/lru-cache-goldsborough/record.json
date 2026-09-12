@@ -1,0 +1,127 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "lru-cache-goldsborough",
+  "canonical_name": "lru-cache -- a C++ LRU cache (Peter Goldsborough)",
+  "aliases": [
+    "lru-cache"
+  ],
+  "lineage": "LRU (least-recently-used) eviction: when a bounded cache is full, discard the entry unused for longest; a hash-map + intrusive list, the standard caching mechanism across CPUs, OSes and databases",
+  "domain": [
+    "memory-management",
+    "cache",
+    "replacement-policy",
+    "data-structures",
+    "scarcity"
+  ],
+  "era": "LRU 1960s-; this impl modern",
+  "version": "github.com/goldsborough/lru-cache master as of 2026-09-12 (commit in hashes)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/goldsborough/lru-cache",
+        "commit": "13f30ad33a227a3e9682578c450777380ecddfcf",
+        "commit_resolved": "13f30ad33a227a3e9682578c450777380ecddfcf",
+        "commit_date": "2017-03-30T10:11:40+01:00"
+      }
+    ]
+  },
+  "source_type": "PSEUDOCODE_PLUS_REFERENCE_IMPL",
+  "source_identity": {
+    "repo": "github.com/goldsborough/lru-cache"
+  },
+  "hashes": {
+    "tree_sha256": "6b9266080ddb9edd0c18061143ab3b8cbc8bd481a45390fcf5adb082bf3209b8",
+    "n_files": 52,
+    "bytes": 383563,
+    "artifacts": [
+      {
+        "filename": "https://github.com/goldsborough/lru-cache",
+        "sha256": null,
+        "commit": "13f30ad33a227a3e9682578c450777380ecddfcf"
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\lru-cache-goldsborough",
+    "hash_list": "techne/fossils/specimens/lru-cache-goldsborough/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "MIT",
+    "status": "permissive",
+    "evidence": "LICENSE"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "C++"
+  ],
+  "build_system": "header-only; compile a Techne driver",
+  "compiler_or_interpreter": "g++ 12 (docker bookworm)",
+  "dependencies": [],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "LRU::Cache<K,V> insert/find/contains with a capacity bound"
+  ],
+  "example": {
+    "command": "Techne driver: fill past capacity, verify the least-recently-used key is the one evicted; then a THRASH pattern (working set > capacity) showing near-zero hit rate",
+    "input": "an access sequence",
+    "output": "hit/miss counts; the evicted key on overflow"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-c:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Denning, The Working Set Model, 1968"
+  ],
+  "human_capability_summary": {
+    "built_to": "keep the most useful bounded subset of data in fast memory by evicting the least-recently-used entry when capacity is exceeded",
+    "pressure": "memory/cache far smaller than the data; every miss costs a slow fetch, so the eviction choice determines performance",
+    "success_means": "a high hit rate on workloads with temporal locality, within a fixed capacity"
+  },
+  "known_human_problem_solved": "bounded-capacity caching by recency",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "bounded memory, a working set larger than capacity, temporal-locality (or its absence)",
+  "human_failure_condition": "cache thrashing: when the working set exceeds capacity and locality is poor, the hit rate collapses toward zero and the cache is pure overhead",
+  "behavioral_entry_point": "access a working set LARGER than the capacity (the harness does this) to induce thrashing -- a pathological-behavior receipt",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/lru-cache-goldsborough/receipts/run-lru-cache-goldsborough-20260912T162524Z.json",
+      "ok": false,
+      "classification": "BROKEN_UPSTREAM",
+      "test_classification": "NO_TESTS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/lru-cache-goldsborough/receipts/run-lru-cache-goldsborough-20260912T162711Z.json",
+      "ok": false,
+      "classification": "BROKEN_UPSTREAM",
+      "test_classification": "NO_TESTS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/lru-cache-goldsborough/receipts/run-lru-cache-goldsborough-20260912T162752Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\lru-cache-goldsborough ; tracked techne/fossils/specimens/lru-cache-goldsborough",
+    "where_it_came_from": "https://github.com/goldsborough/lru-cache ; PSEUDOCODE_PLUS_REFERENCE_IMPL @ 13f30ad33a227a3e9682578c450777380ecddfcf",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run lru-cache-goldsborough",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/lru-cache-goldsborough/receipts/run-lru-cache-goldsborough-20260912T162752Z.json",
+    "what_humans_used_it_for": "keep the most useful bounded subset of data in fast memory by evicting the least-recently-used entry when capacity is exceeded"
+  },
+  "seat": "Techne"
+}

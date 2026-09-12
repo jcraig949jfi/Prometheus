@@ -1,0 +1,57 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "minisom",
+  "receipt_id": "run-minisom-20260912T164039Z",
+  "written_utc": "20260912T164039Z",
+  "runner": "docker",
+  "image": "python:3.11-slim",
+  "workdir": "upstream/tree",
+  "harness_sha256": {
+    "drv.py": "adc839cab4ed8c622978cbf154dd00043824f6c5a009b7256df6b0aaff7eb2c5"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "6a09c9f371ea8e0c7b68dcdf04fa3398f7e4bdc1356f8fe0d3c5170d82ed24df",
+  "recipe_sha256": "4896827836e5b0676c2af2a755ddb6fa9b8ae6e23f4a0231c8f5f645be84bbf9",
+  "patches": [],
+  "probe": [
+    {
+      "name": "python",
+      "cmd": "python --version",
+      "exit": 0,
+      "seconds": 0.91,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Python 3.11.16\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [],
+  "runs": [
+    {
+      "name": "self-organise a map over three clusters (quantization error drops)",
+      "cmd": "pip install -q numpy >/dev/null 2>&1 && PYTHONPATH=. python $HARNESS/drv.py",
+      "exit": 0,
+      "seconds": 4.69,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "qerr_before 3.6279 qerr_after 0.1413\nSOM_ORGANIZED\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true
+}

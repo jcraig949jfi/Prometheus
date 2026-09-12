@@ -1,0 +1,96 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "viterbi-hmm-xukmin",
+  "receipt_id": "run-viterbi-hmm-xukmin-20260912T162528Z",
+  "written_utc": "20260912T162528Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "090ce20d7d7c9b28970092ebdac2c6ec16b3f86113bdaecbfa67299a113d5433",
+  "recipe_sha256": "0187406584c9b53f9a2315fba6fd5bdc9f022c506f9321fd3a230e30c66b32fa",
+  "patches": [],
+  "probe": [
+    {
+      "name": "g++",
+      "cmd": "g++ --version | head -1",
+      "exit": 0,
+      "seconds": 0.71,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "g++ (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "make",
+      "cmd": "make -s 2>&1 | grep -viE 'warning' | tail -3; ls viterbi viterbi_test 2>/dev/null; test -x ./viterbi_test || test -x ./viterbi",
+      "exit": 0,
+      "seconds": 2.03,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "viterbi_test\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "the shipped Viterbi/HMM test",
+      "cmd": "./viterbi_test 2>&1 | tail -10 || make test 2>&1 | tail -10; echo VITERBIDONE",
+      "exit": 0,
+      "seconds": 2.26,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "encoded = 1111111100111110110111100001101100010110011010110010100010000010100100110001011000011000100111111010101111100101100000010010010110010110100011110000100001000110101110101000010000110111011111111101100000110100010101111101011100110111100011111101101011110100010010000001010000110100011110001101110100011011000100001110111111\ndecoded = 10001001011101110100000011101101\n\nencoded = 1111111011000011010111110101110001011000001010111010011110000001111101110110001011010010101101000010011110001001010110111101101100100011101110000111100111011001110110011011010001111111101000010011001011101000000011001100010101010110111011111111101110110000101000111000100000100011001100101000100101010000100101110000111111\ndecoded = 11101111011000110110110110101011\n\nencoded = 1111111100111101001000101110000001110001110111110110010101011010110101101110100001011111100010011101110101000001011010000001001010111110000110111111011100100100110001001000000111010000000101001000110001100100100111010101101011010010101010110001001001000010100011011000001110000110000110001010110010010011011001110000111111\ndecoded = 10101101011010110001000100100111\n\nPASS\nVITERBIDONE\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [
+    {
+      "path": "viterbi.o",
+      "sha256": "320e0539ebbd9786f41853eb722fbed1a0c5a31d8ebe974bf882dbfdec10c3a5",
+      "bytes": 153496
+    },
+    {
+      "path": "viterbi_main",
+      "sha256": "25ba39f34ac5e6559ea251fe0f63e943a0dedafe38dd633d1c9f462948595cf8",
+      "bytes": 100568
+    },
+    {
+      "path": "viterbi_main.o",
+      "sha256": "d2102a25d50ff8948bcdce96fc6e8d0a79781292db872807cbbb373c5c728bf7",
+      "bytes": 92536
+    },
+    {
+      "path": "viterbi_test",
+      "sha256": "d4e49f35c4ecb1fcec1f6a6dacb94984bb9219edb3b9aabb51258847f06bdbd6",
+      "bytes": 92584
+    },
+    {
+      "path": "viterbi_test.o",
+      "sha256": "e7d88cc5a87a55ca20d270d19e8809c7a3b2a17a7ed5c540ef337360bf3a10bf",
+      "bytes": 64672
+    }
+  ],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "UPSTREAM_TESTS_PASS",
+  "ok": true
+}

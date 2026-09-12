@@ -1,0 +1,75 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "verilog-generic-fifo",
+  "receipt_id": "run-verilog-generic-fifo-20260912T162806Z",
+  "written_utc": "20260912T162806Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-hw:bookworm",
+  "workdir": "upstream/tree",
+  "harness_sha256": {
+    "generic_dpram.v": "eeee90fd5d8f9124b95f4e9647b4f1790d3eae59820ff3487792be430c5013cb"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "71549df2068e4712d08e36abdace415f88bad4cafed1651f5ba217e69dc284a4",
+  "recipe_sha256": "164717f35665472d3d6d8fa1bd12c4837a8d7939eefa61b19eb18f43e0c1438f",
+  "patches": [],
+  "probe": [
+    {
+      "name": "iverilog",
+      "cmd": "iverilog -V 2>&1 | head -1",
+      "exit": 0,
+      "seconds": 0.92,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Icarus Verilog version 11.0 (stable) ()\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "compile OpenCores bench + FIFO rtl + Techne dpram primitive",
+      "cmd": "iverilog -Ibench/verilog -Irtl/verilog -o $BODY/fifo.vvp bench/verilog/test_bench_top.v $(ls rtl/verilog/*.v) $HARNESS/generic_dpram.v 2>&1 | grep -viE 'warning' | tail -6; test -f $BODY/fifo.vvp",
+      "exit": 0,
+      "seconds": 0.87,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "run the DC + SC FIFO sanity passes (fill/drain, data integrity)",
+      "cmd": "vvp -N $BODY/fifo.vvp 2>&1 | tail -30",
+      "exit": 143,
+      "seconds": 58.14,
+      "ok": false,
+      "why_not": [
+        "exit 143 != expected 0",
+        "stdout lacks 'DONE'"
+      ],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [],
+  "classification": "BUILDS_BUT_NOT_RUN",
+  "test_classification": "UPSTREAM_TESTS_PASS",
+  "ok": false
+}

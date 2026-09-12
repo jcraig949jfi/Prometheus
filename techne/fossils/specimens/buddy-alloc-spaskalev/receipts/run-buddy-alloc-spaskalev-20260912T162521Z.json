@@ -1,0 +1,72 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "buddy-alloc-spaskalev",
+  "receipt_id": "run-buddy-alloc-spaskalev-20260912T162521Z",
+  "written_utc": "20260912T162521Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree",
+  "harness_sha256": {
+    "drv.c": "7f151661eb4b4252ca3873041fd15af01e046c6d728ae8d7715b59bf7a01cbca"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "38db38112475eef217db6cbec5cdfa1214805241ad6b8fd243e3c92e0dbbbe21",
+  "recipe_sha256": "ce5582b9ee1b9800081a97bb3b636a5123785e7153e3cd74548958e5b05fc068",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1",
+      "exit": 0,
+      "seconds": 0.92,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gcc (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "compile driver against the header",
+      "cmd": "gcc -O2 -w -I. -o $BODY/bd $HARNESS/drv.c 2>&1 | grep -i 'error:' | head -3; test -x $BODY/bd",
+      "exit": 0,
+      "seconds": 1.21,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "alloc/free 500 blocks in a 1MB arena, then coalesce",
+      "cmd": "$BODY/bd",
+      "exit": 0,
+      "seconds": 0.8,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "COALESCE_OK\nBUDDY_OK\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true
+}

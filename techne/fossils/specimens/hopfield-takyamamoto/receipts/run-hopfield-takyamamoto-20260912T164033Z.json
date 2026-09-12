@@ -1,0 +1,63 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "hopfield-takyamamoto",
+  "receipt_id": "run-hopfield-takyamamoto-20260912T164033Z",
+  "written_utc": "20260912T164033Z",
+  "runner": "docker",
+  "image": "python:3.11-slim",
+  "workdir": "upstream/tree",
+  "harness_sha256": {
+    "drv.py": "40694a95e68713f968cf4d80ee6b40b4a686403d40c94f910235c2f363b7040e"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "52d091ff7e6e6f5d96b7edd674bf6900a5c027323d1fe194e48f7373df11abc2",
+  "recipe_sha256": "02b287ef73a7d312c66d450f9b2e405636706e3abeebbab971caa77f1e37e373",
+  "patches": [],
+  "probe": [
+    {
+      "name": "python",
+      "cmd": "python --version",
+      "exit": 0,
+      "seconds": 0.98,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Python 3.11.16\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [],
+  "runs": [
+    {
+      "name": "store patterns, recall from a corrupted cue (attractor dynamics)",
+      "cmd": "pip install -q numpy >/dev/null 2>&1 && PYTHONPATH=. python $HARNESS/drv.py",
+      "exit": 0,
+      "seconds": 4.72,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "IMPORT_FALLBACK No module named 'matplotlib'\nrecovered_matches_stored True\nHOPFIELD_OK\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [
+    {
+      "path": "__pycache__/network.cpython-311.pyc",
+      "sha256": "95cad86af4fa2e8c7bf00143bcf293c2038b194869f64437860e92411f9f588b",
+      "bytes": 4901
+    }
+  ],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true
+}
