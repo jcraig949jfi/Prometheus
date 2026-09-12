@@ -1,0 +1,139 @@
+{
+ "schema": "techne.fossil.second_source_check/1",
+ "written_utc": "2026-09-12T20:26:49Z",
+ "specimens": [
+  {
+   "specimen_id": "gnu-prolog-1.5.0",
+   "recorded_archive_sha256": "670642b43c0faa27ebd68961efb17ebe707688f91b6809566ddd606139512c01",
+   "vault_archive_sha256_now": "670642b43c0faa27ebd68961efb17ebe707688f91b6809566ddd606139512c01",
+   "restored_files": [
+    {
+     "path": "tree/gprolog-1.5.0/doc/copyright.tex",
+     "recorded_sha256": "b423c559daeced21d3488e6835a2bc6f258013ffc363a7394fc7742e96672ad7",
+     "now_sha256": "b423c559daeced21d3488e6835a2bc6f258013ffc363a7394fc7742e96672ad7",
+     "matches_recorded": true,
+     "in_sources": {
+      "recorded_origin": [
+       "gprolog-1.5.0/doc/copyright.tex"
+      ],
+      "gnu_ftp_mirror": [
+       "gprolog-1.5.0/doc/copyright.tex"
+      ]
+     }
+    },
+    {
+     "path": "tree/gprolog-1.5.0/src/EnginePl/gp_config.h",
+     "recorded_sha256": "3fa0a726c223167adc21d462a0575ca40c150ff7a1662cad537112d290d1df40",
+     "now_sha256": "3fa0a726c223167adc21d462a0575ca40c150ff7a1662cad537112d290d1df40",
+     "matches_recorded": true,
+     "in_sources": {
+      "recorded_origin": [
+       "gprolog-1.5.0/src/EnginePl/gp_config.h"
+      ],
+      "gnu_ftp_mirror": [
+       "gprolog-1.5.0/src/EnginePl/gp_config.h"
+      ]
+     }
+    },
+    {
+     "path": "tree/gprolog-1.5.0/src/EnginePl/gprolog_cst.h",
+     "recorded_sha256": "3e75027e24fb74b72bfefa9dae8cbf9f1575870eb406a2e2deb448b41cb93c44",
+     "now_sha256": "3e75027e24fb74b72bfefa9dae8cbf9f1575870eb406a2e2deb448b41cb93c44",
+     "matches_recorded": true,
+     "in_sources": {
+      "recorded_origin": [
+       "gprolog-1.5.0/src/EnginePl/gprolog_cst.h"
+      ],
+      "gnu_ftp_mirror": [
+       "gprolog-1.5.0/src/EnginePl/gprolog_cst.h"
+      ]
+     }
+    }
+   ],
+   "sources": [
+    {
+     "name": "recorded_origin",
+     "url": "http://www.gprolog.org/gprolog-1.5.0.tar.gz",
+     "fetched": true,
+     "archive_sha256": "670642b43c0faa27ebd68961efb17ebe707688f91b6809566ddd606139512c01",
+     "archive_matches_recorded_artifact": true,
+     "restored_files_found_by_content": "3/3",
+     "status": "MATCH"
+    },
+    {
+     "name": "gnu_ftp_mirror",
+     "url": "https://ftp.gnu.org/gnu/gprolog/gprolog-1.5.0.tar.gz",
+     "fetched": true,
+     "archive_sha256": "670642b43c0faa27ebd68961efb17ebe707688f91b6809566ddd606139512c01",
+     "archive_matches_recorded_artifact": true,
+     "restored_files_found_by_content": "3/3",
+     "status": "MATCH"
+    }
+   ]
+  },
+  {
+   "specimen_id": "zlib-1.3.1",
+   "recorded_archive_sha256": "17e88863f3600672ab49182f217281b6fc4d3c762bde361935e436a95214d05c",
+   "vault_archive_sha256_now": "17e88863f3600672ab49182f217281b6fc4d3c762bde361935e436a95214d05c",
+   "restored_files": [
+    {
+     "path": "tree/zlib-1.3.1/Makefile",
+     "recorded_sha256": "ef23b08ce01239843f1ded3f373bfc432627a477d62f945cbf63b2ac03db118a",
+     "now_sha256": "ef23b08ce01239843f1ded3f373bfc432627a477d62f945cbf63b2ac03db118a",
+     "matches_recorded": true,
+     "in_sources": {
+      "recorded_origin": [
+       "zlib-1.3.1/Makefile"
+      ],
+      "zlib_net_fossils": [
+       "zlib-1.3.1/Makefile"
+      ]
+     }
+    },
+    {
+     "path": "tree/zlib-1.3.1/zconf.h",
+     "recorded_sha256": "f5134250a67d57459234b63858f0d9d3ef8dcc48e9e1028d3f4fdcf6eae677ae",
+     "now_sha256": "f5134250a67d57459234b63858f0d9d3ef8dcc48e9e1028d3f4fdcf6eae677ae",
+     "matches_recorded": true,
+     "in_sources": {
+      "recorded_origin": [
+       "zlib-1.3.1/zconf.h",
+       "zlib-1.3.1/zconf.h.in"
+      ],
+      "zlib_net_fossils": [
+       "zlib-1.3.1/zconf.h.in",
+       "zlib-1.3.1/zconf.h"
+      ]
+     }
+    }
+   ],
+   "sources": [
+    {
+     "name": "recorded_origin",
+     "url": "https://github.com/madler/zlib/archive/refs/tags/v1.3.1.tar.gz",
+     "fetched": true,
+     "archive_sha256": "17e88863f3600672ab49182f217281b6fc4d3c762bde361935e436a95214d05c",
+     "archive_matches_recorded_artifact": true,
+     "restored_files_found_by_content": "2/2",
+     "status": "MATCH"
+    },
+    {
+     "name": "zlib_net_release",
+     "url": "https://zlib.net/zlib-1.3.1.tar.gz",
+     "fetched": false,
+     "status": "ORIGIN_UNAVAILABLE",
+     "error": "HTTP Error 404: Not Found; curl: Command '['curl', '-sSL', '--fail', '-m', '180', '-o', 'C:\\\\Users\\\\jcrai\\\\AppData\\\\Local\\\\Temp\\\\ss-foug3cdo\\\\zlib-1.3.1-zlib_net_release.tar.gz', 'https://zlib.net/zlib-1.3.1.tar.gz']' returned non-zero exit status 22."
+    },
+    {
+     "name": "zlib_net_fossils",
+     "url": "https://zlib.net/fossils/zlib-1.3.1.tar.gz",
+     "fetched": true,
+     "archive_sha256": "9a93b2b7dfdac77ceba5a558a580e74667dd6fede4585b91eefb60f03b72df23",
+     "archive_matches_recorded_artifact": false,
+     "restored_files_found_by_content": "2/2",
+     "status": "MATCH"
+    }
+   ]
+  }
+ ]
+}
