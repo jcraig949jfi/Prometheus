@@ -74,7 +74,15 @@ from pathlib import Path
 from typing import Any, Dict, List
 
 DISPOSITIONS = ("ORGAN", "PRESSURE", "DATA", "POLICY", "SCAFFOLDING", "COUPLED_CLUSTER",
-                "UNRESOLVED", "DEAD_CUT")
+                "UNRESOLVED", "DEAD_CUT",
+                # operator ruling 2026-09-12 (N2 negative chop): an instance of a mechanism already in
+                # the Chop Shop inventory is a RECURRENCE (with `recurrence_of` naming the organ id),
+                # not a new ORGAN; a pressure whose world requirements and fitness condition match an
+                # existing one is a RECURRENT_PRESSURE (with `recurrence_of`), not new inventory.
+                "RECURRENCE", "RECURRENT_PRESSURE")
+# operator ruling 2026-09-12: the metabolic state of a delivery is one of these, never one bit.
+DELIVERY_STATES = ("DELIVERED", "ATTEMPTED", "REJECTED_BLOCKED", "OPERATIONALIZED", "CONSUMED",
+                   "CAUSED_DOWNSTREAM_EFFECT")
 ORIGINS = ("INHERITED", "DISCOVERED", "PERTURBED")
 RELATIONS = ("NEW", "SURVIVED", "SPLIT", "MERGED", "DEMOTED", "PROMOTED", "KILLED")
 SUPPORT = ("UNTESTED", "SUPPORTED", "FALSIFIED")
@@ -120,6 +128,16 @@ def check(ledger: Dict[str, Any]) -> List[str]:
             out.append("{}: boundary_support {} not in {}".format(cid, sup, SUPPORT))
         if sup != "UNTESTED" and c.get("boundary_support_ref") in (None, "", "none"):
             out.append("{}: boundary_support {} without a ref is an assertion".format(cid, sup))
+    for c in ledger.get("candidates", []):
+        if any(d in ("RECURRENCE", "RECURRENT_PRESSURE") for d in (c.get("dispositions") or {}).values()):
+            if not str(c.get("recurrence_of", "")).strip():
+                out.append("{}: RECURRENCE without recurrence_of (the existing organ/pressure id) is an assertion".format(c.get("id")))
+    for d in ledger.get("deliveries", []):
+        st = d.get("state", "DELIVERED")
+        if st not in DELIVERY_STATES:
+            out.append("delivery msg {}: state {} not in {}".format(d.get("msg"), st, DELIVERY_STATES))
+        if st != "DELIVERED" and not str(d.get("state_ref", "")).strip():
+            out.append("delivery msg {}: state {} without a state_ref (the return that established it)".format(d.get("msg"), st))
     for k, v in (ledger.get("knife_application") or {}).items():
         if not isinstance(v, dict) or v.get("status") not in KNIFE_STATUS:
             out.append("knife_application[{}]: status must be one of {}".format(k, KNIFE_STATUS))
@@ -220,7 +238,11 @@ def metrics(ledger: Dict[str, Any]) -> Dict[str, Any]:
             pass
     rejecting = ("cannot operationalize", "vacuous", "hidden ancestor state", "no independent behavior",
                  "specifies the solution", "cheat control cannot fire", "collapses candidate advantage")
+    by_state: Dict[str, int] = {s: 0 for s in DELIVERY_STATES}
+    for d in deliveries:
+        by_state[d.get("state", "DELIVERED")] = by_state.get(d.get("state", "DELIVERED"), 0) + 1
     m["consumers"] = {
+        "deliveries_by_metabolic_state (ruling 2026-09-12; never collapsed to one bit)": by_state,
         "deliveries": len(deliveries),
         "deliveries_with_substantive_return": len(answered),
         "hours_to_first_substantive_return": ("min {:.1f} / max {:.1f}".format(min(ttr), max(ttr)) if ttr else "none yet"),

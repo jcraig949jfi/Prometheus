@@ -31,3 +31,4 @@ NOT RUN  the explain phase in isolation (c11)
 D1  a shrinker that returns the initial for every input passes N-a and fails P-a1: run both
 D2  a 'minimal' claim that is local-minimality under the move set (Techne separates SOUND from MINIMAL for this reason)
 D3  success attributed to structure when reorder or deletion did it: read the profile per pass
+F5' (2026-09-12, NYX-38) F5 widened: pass_to_descendant 0 calls on 42/45 targets; inert on this strategy, not target-specific; its absence does not by itself explain non-minimality   nyx/specimens/hypothesis_shrinker/ablations/RECEIPT_N1_targets24_2026-09-12.json

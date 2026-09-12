@@ -824,10 +824,11 @@
       "ancestor_free_contract": false,
       "consumer_returns": [],
       "boundary_support": "SUPPORTED",
-      "boundary_support_ref": "nyx/specimens/hypothesis_shrinker/ablations/RECEIPT_N1_2026-09-11.json N-g vs P-b",
+      "boundary_support_ref": "nyx/specimens/hypothesis_shrinker/ablations/RECEIPT_N1_2026-09-11.json N-g vs P-b; nyx/specimens/hypothesis_shrinker/ablations/RECEIPT_N1_targets24_2026-09-12.json (42/45 zero calls)",
       "organ_record": "none",
       "notes": {
-        "CUT-2": "the DATA the structural passes need; Proteus's strategy does not produce it in the shape the pass requires. Whether this is the whole explanation of the 24/45 non-minimal cases is NOT shown (one target run)."
+        "CUT-2": "the DATA the structural passes need; Proteus's strategy does not produce it in the shape the pass requires. Whether this is the whole explanation of the 24/45 non-minimal cases is NOT shown (one target run).",
+        "2026-09-12_NYX-38": "SCOPE CORRECTED by running all 45 Techne-scored targets (nyx/specimens/hypothesis_shrinker/ablations/RECEIPT_N1_targets24_2026-09-12.json): pass_to_descendant made ZERO calls on 42/45 targets -- including 23 of the 26 non-minimal AND all 19 minimal ones. So (a) the label-alignment condition is a property of the STRATEGY, not of target 7; (b) the pass's absence is NOT by itself the explanation of non-minimality (necessary-shaped, not sufficient: minimal targets show the same zero). Passes that shrank anything, by target count: {\"reorder_spans\": 29, \"minimize_individual_choices\": 15, \"try_trivial_spans\": 4, \"redistribute_numeric_pairs\": 9, \"node_program_X\": 12, \"node_program_XXX\": 2, \"node_program_XX\": 1}. Agreement with Techne's excess counts: 41/45 (26 non-minimal here vs their 24: two targets differ; not investigated). The #190/#191 sentence 'this is one target, not 24' is superseded by this note."
       }
     }
   ],
@@ -838,7 +839,8 @@
       "posted": "2026-09-11T23:06Z",
       "cut": "CUT-2",
       "first_substantive_return": null,
-      "content": "1 pressure (HOSTABLE_CANDIDATE, owner Proteus)"
+      "content": "1 pressure (HOSTABLE_CANDIDATE, owner Proteus)",
+      "state": "DELIVERED"
     },
     {
       "seat": "Archaeon",
@@ -846,7 +848,8 @@
       "posted": "2026-09-11T23:06Z",
       "cut": "CUT-2",
       "first_substantive_return": null,
-      "content": "6 organs, c19 finding, knife ledger"
+      "content": "6 organs, c19 finding, knife ledger",
+      "state": "DELIVERED"
     }
   ],
   "cheat_controls": [
@@ -963,5 +966,15 @@
       "order swap (allow_transition cannot re-rank)",
       "K6 beyond phases (the database and the reuse phase were disabled, not probed)"
     ]
-  }
+  },
+  "attacks_on_existing_claims": [
+    {
+      "date": "2026-09-12",
+      "task": "NYX-38",
+      "claim": "c19 explains target 7 only (one target, not 24)",
+      "result": "scope widened: the pass never fires on 42/45 targets; its absence does not by itself explain non-minimality",
+      "ref": "nyx/specimens/hypothesis_shrinker/ablations/RECEIPT_N1_targets24_2026-09-12.json",
+      "inventory_created": 0
+    }
+  ]
 }

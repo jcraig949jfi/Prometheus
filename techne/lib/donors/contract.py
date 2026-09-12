@@ -275,6 +275,20 @@ class DonorAdapter:
 # -- registry -----------------------------------------------------------------------------
 registry: dict = {}
 
+#: RETIRED ADAPTERS (operator ruling TECHNE-51, 2026-09-12; verbatim at
+#: roles/Techne/prompts/2026-09-12_techne51_ruling/OPERATOR.md). The adapter is retired,
+#: NOT the donor: DisCoPy and cvc5 stay candidates on their own evidence. The modules
+#: are kept verbatim under techne/lib/donors/retired/ so the history, the tests and the
+#: cvc5 teardown-ordering lesson survive; importing one still registers it, but `get`
+#: and `available` refuse the name unless the caller says include_retired=True. See
+#: techne/lib/donors/retired/RETIREMENT.md for the evidence.
+RETIRED: dict = {
+    "discopy": "0 consumers anywhere on the tree after 11 days (measured 2026-09-12, "
+               "techne/scripts/donor_disposition.py); the donor itself is not retired",
+    "cvc5": "0 consumers anywhere; SUPERSEDED as an SMT route by z3 5.0.0.0, qualified "
+            "2026-09-10 (2048/2048 parity, 5 direct consumers); the donor itself is not retired",
+}
+
 
 def register(name: str) -> Callable:
     def deco(cls):
@@ -283,19 +297,26 @@ def register(name: str) -> Callable:
     return deco
 
 
-def get(name: str) -> DonorAdapter:
+def get(name: str, include_retired: bool = False) -> DonorAdapter:
+    if name in RETIRED and not include_retired:
+        raise KeyError("donor adapter %r is RETIRED (TECHNE-51, 2026-09-12): %s. Consume the "
+                       "donor directly, or pass include_retired=True for archaeology."
+                       % (name, RETIRED[name]))
     if name not in registry:
         raise KeyError("no donor adapter " + repr(name) + "; registered: " + repr(sorted(registry)))
     return registry[name]()
 
 
-def available() -> list:
+def available(include_retired: bool = False) -> list:
     """Adapters whose donor actually imports here. An adapter may be registered and its donor
-    absent; that is VETTED_NOT_INSTALLED, not an error."""
+    absent; that is VETTED_NOT_INSTALLED, not an error. Retired adapters are excluded unless
+    asked for, so a stale import cannot resurrect one by accident."""
     ok = []
     for name in sorted(registry):
+        if name in RETIRED and not include_retired:
+            continue
         try:
-            get(name).identity()
+            get(name, include_retired=include_retired).identity()
             ok.append(name)
         except Exception:                                             # noqa: BLE001
             continue
