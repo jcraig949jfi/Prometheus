@@ -106,5 +106,8 @@ pair: filterpy (noise generator <-> state estimator). Pressure series: linux-tcp
 - BINARY-ONLY + lawful recovery: STILL not exercised (open since batch 03).
 - Follow-on edges seen this batch: Raft->etcd/hashicorp-raft lineage; TCP Tahoe/Reno BEFORE the
   CUBIC/BBR pair; SOM/Hopfield->modern-embeddings; genann->tiny-dnn; CasADi/IPOPT world for do-mpc.
-- Tooling: a runner mode that builds on a disposable copy of upstream/tree so in-place builds
-  never dirty the preserved body (this batch git-clean'd 8 bodies back to the pin post-run).
+- Tooling DONE 2026-09-12: `harvest run` now builds in a disposable copy (<vault>/<id>/work/) and
+  writes body_preserved into every receipt; `verify --all` is the census, `restore <id>` the repair.
+  The census BEFORE the fix found 23 of 57 bodies dirtied by in-place builds; all 23 restored
+  (techne/fossils/VAULT_INTEGRITY_2026-09-12{,_after_restore}.json). Run `verify --all` at the
+  start of every batch; a body that differs is repaired before anything new is acquired.

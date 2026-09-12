@@ -1,0 +1,176 @@
+================================================================================
+REVIEW PACKET
+FOSSIL VAULT INTEGRITY: 23 OF 57 BODIES HAD DRIFTED; ISOLATION + RESTORE
+================================================================================
+Prepared:        2026-09-12   frozen (rows committed, main fast-forwarded)
+Seat/Instance:   Techne  m1-8c399e8f   worktree techne-pass-0912
+Location/Code:   techne/fossils/harvest.py (run, drift, verify_all, restore)
+                 techne/tests/test_fossil_isolation.py
+Artifacts:       techne/fossils/VAULT_INTEGRITY_2026-09-12.json   (before)
+                 techne/fossils/VAULT_INTEGRITY_2026-09-12_after_restore.json
+                 techne/fossils/specimens/<id>/receipts/restore-*.json (23)
+                 roles/Techne/journal/2026-09-12.md units 8, 9
+Version/Hash:    base 3f31cbcac -> 7c5bfcb08 (tooling+census) -> 96f981d07
+                 (restore) -> 73bdf5864 = origin/main (verified ancestor)
+Headline:        The vault's preservation invariant was FALSE for 23/57 bodies
+                 while every run receipt said PASS; the runner now executes in
+                 a disposable copy and MEASURES the preserved body; all 23 put
+                 back with 0 UNRECOVERABLE; after-census 57/57.
+
+--------------------------------------------------------------------------------
+1. CLAIM / SUBJECT UNDER REVIEW
+--------------------------------------------------------------------------------
+Claim A (defect): before this pass, `harvest run` executed recipes INSIDE the
+preserved upstream/ tree. Builds wrote products there and configure scripts
+rewrote source files, so the bodies Techne hands to Nyx as byte-exact no
+longer matched their recorded TREE_SHA256. The run receipts recorded the run's
+success, not the body's state (base-role rule 2: a label that lied).
+Claim B (repair): with the disposable-copy isolation, a recipe that builds and
+edits leaves the preserved body verified, and the receipt carries the measured
+property (body_preserved). Falsifier: any run whose receipt says
+body_preserved=true while `harvest verify` differs afterwards.
+Claim C (restore): every drifted body is back at its pin, from its own
+immutable sources only. Falsifier: `harvest verify --all` != 57/57, or a
+restore receipt with fabricated content (none: UNRECOVERABLE is a reported
+state, not a repair).
+
+--------------------------------------------------------------------------------
+2. METHOD / SETUP / SUBSTRATE
+--------------------------------------------------------------------------------
+Body layout (host-local, gitignored): <vault>/<id>/upstream/ = archive(s) as
+fetched + extracted tree (or a pinned git clone). Tracked half:
+UPSTREAM_HASHES.txt (sha256 + bytes per file, TREE_SHA256 over those lines),
+record.json (hashes.tree_sha256), recipe.json, receipts/.
+drift(id): re-hash upstream/ (skipping .git), diff against the hash list ->
+rows added / removed / modified, plus recorded vs now tree hash.
+run(id): stage <vault>/<id>/work/ = copytree(upstream) + harness/ + empty
+build/; execute the recipe there ($BODY = work, so no recipe changed); after
+the run re-hash the PRESERVED upstream/ -> tree_sha256_after, body_preserved.
+Recipe key "in_place": true opts out; receipt says isolation=in_place.
+restore(id): delete added rows; for modified/missing rows, `git checkout` at
+the pin (-c core.autocrlf=false) if the tree is a git clone, else re-extract
+every archive beside the tree into a temp dir, index by sha256, copy the file
+whose CONTENT matches the recorded hash; anything unmatched -> UNRECOVERABLE.
+Re-drift; write a tracked restore receipt with every row.
+
+--------------------------------------------------------------------------------
+3. GROUND TRUTH / KEY DEFINITIONS
+--------------------------------------------------------------------------------
+PRESERVED       tree_sha256(now) == record.hashes.tree_sha256 (the pin taken at
+                acquisition, tracked in git).
+DRIFTED         not PRESERVED; classified by rows: added (in body, not in
+                list), removed (in list, not in body), modified (hash differs).
+RESTORED        PRESERVED again, with every deleted/recovered path listed.
+UNRECOVERABLE   a wanted hash found in neither the git pin nor any archive
+                beside the tree; the body stays DRIFTED and nothing is written.
+
+--------------------------------------------------------------------------------
+4. INPUTS / CONDITIONS
+--------------------------------------------------------------------------------
+Vault: 57 specimens (batches 01-04), 858 MB on this host, F:\Prometheus\vault
+\fossils (derived from git-common-dir, no drive letter assumed in code).
+Runners exercised: wsl (tscp-1.81), docker (picosat-965). Native runner
+exercised only by the synthetic tests (bash present).
+
+--------------------------------------------------------------------------------
+5. PRIMARY RESULT
+--------------------------------------------------------------------------------
+Census                     specimens  match  differ  body_missing
+------------------------   ---------  -----  ------  ------------
+before (7c5bfcb08)                57     34      23             0
+after restore (96f981d07)         57     57       0             0
+
+Drift shape over the 23 (rows in VAULT_INTEGRITY_2026-09-12.json):
+  files added     1518 total (build products: .o .lo .plo .la .a .pyc, exes)
+                  largest glpk +588, bdwgc +220, gnu-prolog +184, clips +169
+  files removed   0 in every specimen
+  files modified  5: gnu-prolog gp_config.h, gprolog_cst.h, doc/copyright.tex;
+                  zlib Makefile, zconf.h (all configure rewrites); 0 CRLF
+Restore over the 23: deleted 1518; restored_from_git 0; restored_from_archive
+5; UNRECOVERABLE 0; VERIFIED 23/23.
+
+--------------------------------------------------------------------------------
+6. DELIVERABLE + ACCEPTANCE CRITERIA
+--------------------------------------------------------------------------------
+harvest run stages work/ and writes body_preserved ........ yes (receipts)
+harvest verify --all writes the census as rows ............ yes (2 files)
+harvest restore repairs from own sources only ............. yes (23 receipts)
+recipes unchanged (57/57 recipe.json untouched) ........... yes
+tests ship before bodies are touched (separate commit) .... yes (7c5bfcb08)
+rows ship with every verdict .............................. yes
+main fast-forwarded after tests on merged tree ............ yes (73bdf5864)
+
+--------------------------------------------------------------------------------
+7. CONTROLS
+--------------------------------------------------------------------------------
+Synthetic specimen (techne/tests/test_fossil_isolation.py, 8 passed):
+  NEGATIVE   clean recipe, both modes -> body_preserved true, verify true
+  POSITIVE   in-place build+edit -> run ok=true BUT body_preserved false;
+             drift names tree/product.o added, tree/hello.txt modified
+  FIX        same recipe, disposable copy -> body_preserved true, product.o
+             exists in work/, produced[] still tracks it, verify true
+  RESTORE    dirtied body -> deleted [product.o], from_archive [hello.txt],
+             verified true, one restore receipt
+  UNRECOV.   archive removed, file corrupted -> UNRECOVERABLE, verify false,
+             corrupted bytes left in place (nothing fabricated)
+  NO-OP      matching body -> no receipt written
+Real vault: tscp-1.81 (wsl) and picosat-965 (docker) re-run under isolation ->
+recipes PASS, BODY PRESERVED (receipts run-...-20260912T175210Z / T175221Z).
+Regression: test_fossils.py 175 passed; techne/tests -m "not slow" 383 passed,
+3 skipped, on the merged tree.
+
+--------------------------------------------------------------------------------
+8. KNOWN LIMITATIONS & CAVEATS
+--------------------------------------------------------------------------------
+- Only 2 of 57 real recipes were re-run under the new isolation. A recipe that
+  reads a path OUTSIDE $BODY (none found by grep; 84 $BODY references) or
+  relies on state from a previous in-place build would surface only on re-run.
+- work/ is a full copy of upstream/ including .git (up to 93 MB for do-mpc/
+  avida); acceptable today, a cost at 10x the vault.
+- restore trusts UPSTREAM_HASHES.txt as the authority. If that list had been
+  regenerated AFTER a dirtying (not observed: all 23 recorded hashes predate
+  the drift and matched the archives' content), restore would enshrine drift.
+- The archive-content path recovers a file only if some archive beside the
+  tree holds identical bytes; files that acquire() fetched loose (ff domains,
+  ex/) have no archive source and would be UNRECOVERABLE if modified. None
+  were modified in this census.
+- Bodies are still host-local only (PRESERVATION.md gap; TECHNE-65, XL,
+  operator decision on the mirror location).
+- The census before the fix is itself a Techne measurement of Techne's own
+  defect; the tests are synthetic; no other seat has verified it.
+
+--------------------------------------------------------------------------------
+9. REPRODUCTION
+--------------------------------------------------------------------------------
+From any worktree at or after 73bdf5864, on the host holding the bodies:
+    python -m techne.fossils.harvest verify --all
+        expect: specimens 57  matches 57  differs 0  body_missing 0
+    python -m techne.fossils.harvest run picosat-965
+        expect last line: BODY PRESERVED (isolation=disposable_copy)
+    python -m pytest techne/tests/test_fossil_isolation.py -q
+        expect: 8 passed
+    python - <<X
+    import json
+    c = json.load(open('techne/fossils/VAULT_INTEGRITY_2026-09-12.json'))
+    bad = [r for r in c['rows'] if not r['matches']]
+    print(c['differs'], sum(len(r['added']) for r in bad))
+    X
+        expect: 23 1518
+
+--------------------------------------------------------------------------------
+10. VERDICT / DECISION
+--------------------------------------------------------------------------------
+PRESERVATION INVARIANT HELD BEFORE ................ NO (23/57 false)
+RUN RECEIPTS DETECTED IT .......................... NO (label, not property)
+DETECTOR NOW FIRES ON THE FAILURE MODE ............ YES (positive control)
+ALL DRIFT REPAIRED FROM OWN SOURCES ............... YES (0 UNRECOVERABLE)
+ANY BODY FABRICATED OR SILENTLY REWRITTEN ......... NO
+STOP RECOMMENDED? ................................. NO; do verify --all at
+                                                    every batch start
+Reviewer's bottom line: is "recovered by sha256 content from the archive
+beside the tree" an acceptable proof that the 5 restored files are the
+upstream bytes, or should the 2 tarball specimens be re-fetched from origin
+and re-hashed as an independent check?
+================================================================================
+END OF PACKET
+================================================================================

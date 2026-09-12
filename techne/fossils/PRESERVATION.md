@@ -17,6 +17,20 @@ Linux re-fetch. (Fixed 2026-09-12 after tinycc's `configure` arrived with CRLF; 
 git bodies predate the fix and should be re-verified on a Linux fetch before their hashes are
 trusted cross-platform -- queued.)
 
+## The preserved body is never executed in (2026-09-12)
+`harvest run` stages a disposable copy of the body at `<vault>/<id>/work/` and runs the
+recipe there; afterwards it re-hashes the PRESERVED `upstream/` and writes
+`tree_sha256_after` and `body_preserved` into the run receipt, so the property is measured
+on every run rather than asserted. This rule exists because the census that preceded it
+(`harvest verify --all`, `VAULT_INTEGRITY_2026-09-12.json`) found 23 of 57 bodies dirtied by
+in-place builds while their run receipts said PASS: 0 files removed, 5 modified (configure
+rewrites), the rest build products added under `upstream/tree`. All 23 were put back with
+`harvest restore <id>` (added rows deleted; modified rows recovered from the body's own git pin
+or by sha256 content from the archive kept beside the tree; anything neither holds is reported
+UNRECOVERABLE, never fabricated), each with a tracked restore receipt, and the after-census is
+57/57 (`VAULT_INTEGRITY_2026-09-12_after_restore.json`). A recipe may set `"in_place": true`
+to opt out; the receipt then says so. Controls: techne/tests/test_fossil_isolation.py.
+
 ## Host-local now (bodies)
 The bodies themselves live under `<vault>/fossils/<id>/upstream/` (default
 `<canonical checkout>/vault/fossils`, `$TECHNE_FOSSIL_VAULT` overridable) and are gitignored.
