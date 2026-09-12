@@ -422,7 +422,8 @@ class WorkFail(_Body):
 def create_app(db_path: str, *, registration_open: bool = True,
                session_enforcement: str = "advisory",
                science_profile: str = "warn",
-               max_artifact_bytes: Optional[int] = None) -> FastAPI:
+               max_artifact_bytes: Optional[int] = None,
+               incidents_dir: Optional[str] = None) -> FastAPI:
     """session_enforcement:
       "advisory" (default) -- a MISSING session key is allowed and counted.
       "strict"             -- a missing key on a bound session is 428.
@@ -457,6 +458,15 @@ def create_app(db_path: str, *, registration_open: bool = True,
     app.state.science_profile = science_profile
     # v8: the per-artifact ceiling. None means the engine default.
     app.state.max_artifact_bytes = max_artifact_bytes
+    # A6 (2026-09-12): the intent journal lives OUTSIDE SQLite, beside the
+    # ledger by default, so a lock failure cannot silence it. Fails open.
+    import os as _os
+    import time as _time
+    from sfe.attestation import Journal, route_is_mutating
+    app.state.journal = Journal(incidents_dir or _os.path.join(
+        _os.path.dirname(_os.path.abspath(db_path)), "incidents"))
+    app.state.started_at = _time.time()
+    app.state.counters = {"requests": 0, "responses_5xx": 0, "responses_4xx": 0}
 
     @app.middleware("http")
     async def _stamp_release(request, call_next):
@@ -466,9 +476,26 @@ def create_app(db_path: str, *, registration_open: bool = True,
         # /version. Build-derived, not asserted.
         from sfe.store import SCHEMA_VERSION
         from starlette.responses import JSONResponse
+        journal = app.state.journal
+        rid = None
+        if route_is_mutating(request.method):
+            # A6: intent BEFORE any ledger lock is touched. The client field is
+            # the session key's fingerprint (never a credential); the idem key
+            # is what a later reader joins to the ledger on.
+            sk = request.headers.get("X-SFE-Session")
+            rid = journal.intent(route="%s %s" % (request.method, request.url.path),
+                                 client=("sfp:" + key_fingerprint(sk)) if sk else None,
+                                 idem_key=request.headers.get("Idempotency-Key"))
+        app.state.counters["requests"] += 1
         try:
             response = await call_next(request)
-        except Exception:                            # noqa: BLE001
+        except Exception as exc:                     # noqa: BLE001
+            if rid is not None:
+                # a lock timeout arrives here as sqlite3.OperationalError; the
+                # refusal is recorded where the lock cannot block it
+                journal.refused(rid, reason="unhandled:%s:%s" % (
+                    type(exc).__name__, str(exc)[:80]))
+            app.state.counters["responses_5xx"] += 1
             # The RESPONSE stays deliberately opaque -- it must not leak
             # internals to a client. But swallowing the traceback entirely made
             # every 500 undiagnosable after the fact: a real one sat in this
@@ -479,6 +506,20 @@ def create_app(db_path: str, *, registration_open: bool = True,
             response = JSONResponse(status_code=500, content={
                 "detail": {"error": "internal_error",
                            "message": "unhandled server error"}})
+        else:
+            if response.status_code >= 500:
+                app.state.counters["responses_5xx"] += 1
+            elif response.status_code >= 400:
+                app.state.counters["responses_4xx"] += 1
+            if rid is not None:
+                if response.status_code < 400:
+                    # the handler's ledger COMMIT has returned by now: this
+                    # relays the ledger's answer, it does not guess
+                    journal.effected(rid, kind="%s %s" % (request.method, request.url.path))
+                else:
+                    journal.refused(rid, reason="http_%d" % response.status_code)
+        if rid is not None:
+            response.headers["X-SFE-Request-Id"] = rid
         response.headers["X-SFE-Engine-Source-Hash"] = release.ENGINE_SOURCE_HASH
         response.headers["X-SFE-Api-Version"] = "2.2.0"
         response.headers["X-SFE-Schema-Version"] = str(SCHEMA_VERSION)
@@ -694,6 +735,54 @@ def create_app(db_path: str, *, registration_open: bool = True,
                 # verify-anchor or by parsing a session key. It is not a secret
                 # -- both of those already publish it.
                 **f.engine_identity()}
+
+    @app.get("/v2/health")
+    def health(f: Foundry = Depends(get_foundry)):
+        """B3 (2026-09-12): what the engine MEASURES about itself, and only
+        that. Every number here is read from a timer, a counter, or the
+        ledger at this instant -- nothing is inferred from configuration.
+
+        `write_lock` is the time BEGIN IMMEDIATE took to return (sfe/store.py
+        write()), which is the actual lock acquisition wait; `attestation` is
+        the A6 intent journal's own state. `ledger` reads the events table:
+        the base-rule-8 productivity signal is `experiments_committed_last_hour`
+        and `observations_last_hour`, and an idle engine with no consumer
+        reports zeros -- that is idle, not unhealthy, and the no-op reason is
+        the consumer's to state. The route holds no lock and takes no view;
+        the caller judges."""
+        import os as _os
+        import time as _time
+        from sfe.store import SCHEMA_VERSION, WRITE_LOCK_STATS
+        now = _time.time()
+        cx = f.store.read()
+        last_ts = cx.execute("SELECT MAX(ts) FROM events").fetchone()[0]
+        hour = now - 3600.0
+        exp_h = cx.execute("SELECT COUNT(*) FROM experiments WHERE committed_ts >= ?", (hour,)).fetchone()[0]
+        obs_h = cx.execute("SELECT COUNT(*) FROM observations WHERE created_ts >= ?", (hour,)).fetchone()[0]
+        ev_h = cx.execute("SELECT COUNT(*) FROM events WHERE ts >= ?", (hour,)).fetchone()[0]
+        work = {r[0]: r[1] for r in cx.execute("SELECT status, COUNT(*) FROM work_items GROUP BY status")}
+        j = app.state.journal
+        db_path = _os.path.abspath(app.state.db_path)
+        return {
+            "api": API_VERSION, "schema_version": SCHEMA_VERSION,
+            "measured_at": now,
+            "process": {"started_at": app.state.started_at,
+                        "uptime_s": round(now - app.state.started_at, 1),
+                        **app.state.counters},
+            "ledger": {"path": db_path,
+                       "volume": _os.path.splitdrive(db_path)[0] or None,
+                       "last_event_ts": last_ts,
+                       "last_event_age_s": None if last_ts is None else round(now - last_ts, 1),
+                       "events_last_hour": ev_h,
+                       "experiments_committed_last_hour": exp_h,
+                       "observations_last_hour": obs_h,
+                       "work_items": work},
+            "write_lock": WRITE_LOCK_STATS.snapshot(),
+            "attestation": {"dir": j.directory, "degraded": j.degraded,
+                            "degraded_reason": j.degraded_reason,
+                            "counts": dict(j.counts),
+                            "open_intents_over_60s": len(j.open_intents(older_than_s=60.0))},
+            **f.engine_identity()}
 
     # -- worlds ------------------------------------------------------------
     @app.post("/v2/worlds")

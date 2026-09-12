@@ -57,6 +57,9 @@ def main() -> int:
                          "bound session is 428. A key from ANOTHER engine is "
                          "421 WRONG_SESSION in both modes -- that is never "
                          "optional.")
+    ap.add_argument("--incidents-dir", default=None,
+                    help="A6 intent journal directory (default: <db dir>/incidents); "
+                         "written outside SQLite so a lock failure cannot silence it")
     ap.add_argument("--registration", choices=("open", "closed"),
                     default="open",
                     help="closed = POST /v2/clients is operator-gated (403); "
@@ -102,7 +105,8 @@ def main() -> int:
                      registration_open=(args.registration == "open"),
                      session_enforcement=args.session_enforcement,
                      science_profile=args.science_profile,
-                     max_artifact_bytes=args.max_artifact_bytes)
+                     max_artifact_bytes=args.max_artifact_bytes,
+                     incidents_dir=args.incidents_dir)
     scheme = "https" if tls else "http"
     print(f"Serendipity Foundry Engine listening on {scheme}://{args.host}:"
           f"{args.port}  db={args.db}")
