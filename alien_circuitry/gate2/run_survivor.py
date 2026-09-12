@@ -27,10 +27,25 @@ def sample_problems(U, per_stratum, seed):
     return out
 
 
-def run(which: str, per_stratum: int = 40, budget: int = 40000, do_nav: bool = True, seed: int = 20260912) -> dict:
+def _rss():
+    try:
+        import psutil; return round(psutil.Process().memory_info().rss / 2**20)
+    except Exception:
+        return -1
+
+
+def stage(msg):
+    print(f"[stage] {msg}  rss={_rss()} MB", flush=True)
+
+
+def run(which: str, per_stratum: int = 40, budget: int = 40000, do_nav: bool = True, seed: int = 20260912, phase: str = "all") -> dict:
     t0 = time.perf_counter(); n = 7
+    out_path = os.path.join(HERE, "results", "survivor", f"{which}_n{n}.json")
     gens = pch_generators(n) if which == "PCH" else uc1_generators(n)
-    U = build_monoid(which, n, gens, target_rank=2)
+    U = build_monoid(which, n, gens, target_rank=2); stage("built")
+    if phase == "nav":
+        res = json.load(open(out_path)); ecc, region, ncls = ecc_region_by_class(U); obs = MonoidObserver(U, ecc, region); D = U["D"]
+        return _nav(which, n, U, obs, res, per_stratum, budget, seed, out_path)
     res = {"universe": which, "n": n, "generators": U["gens"], "NS": U["NS"], "edges_nominal": int(len(U["src"])), "self_loops_nominal": U["self_loops_nominal"],
            "edges_distinct": int(len(U["dsrc"])), "targets": len(U["targets"]), "hashes": hashes(U), "features": FEATURES,
            "build_seconds": round(time.perf_counter() - t0, 1)}
@@ -39,7 +54,7 @@ def run(which: str, per_stratum: int = 40, budget: int = 40000, do_nav: bool = T
     res["generated_monoid_from_identity"] = generated_monoid(U)
     from ..gate.termination import scc_evidence
     res["scc"] = scc_evidence(U)
-    ecc, region, ncls = ecc_region_by_class(U); res["count_vector_classes"] = ncls
+    stage("scc done"); ecc, region, ncls = ecc_region_by_class(U); res["count_vector_classes"] = ncls; stage("ecc done")
     obs = MonoidObserver(U, ecc, region)
     D = U["D"]; corpus = U["rank"] >= 3
     live = (D >= 0) & corpus[:, None]
@@ -54,15 +69,30 @@ def run(which: str, per_stratum: int = 40, budget: int = 40000, do_nav: bool = T
                     "post_trap_ecc_quartiles": [int(np.percentile(ecc[T["dst"]], q)) for q in (0, 25, 50, 75, 100)],
                     "rank_visible": int((U["rank"][T["dst"]] < U["rank"][np.array(U["targets"])[T["target_j"]]]).sum()),
                     "D_src_hist": {str(k): int(v) for k, v in sorted(collections.Counter(T["D_src"].tolist()).items())}}
-    res["Q1"] = A.q1_exact(U, T, ecc)
+    stage("traps done"); res["Q1"] = A.q1_exact(U, T, ecc); stage("Q1 done")
     res["ball_costs"] = sample_ball_costs(obs, U, 3000, seed)
-    lay = A.layers(U, T); R1_flags = lay.pop("R1_flags"); res["layers"] = lay
+    stage("ball costs done"); lay = A.layers(U, T); R1_flags = lay.pop("R1_flags"); res["layers"] = lay; stage("layers done")
     if R1_flags.any():
         res["traps"]["R1_trap_ecc_quartiles"] = [int(np.percentile(ecc[T["dst"][R1_flags]], q)) for q in (0, 25, 50, 75, 100)]
         res["traps"]["R1_trap_region_quartiles"] = [int(np.percentile(region[T["dst"][R1_flags]], q)) for q in (0, 25, 50, 75, 100)]
-    t1 = time.perf_counter(); res["leakage"] = A.leakage_attack(U, T); res["t_leakage"] = round(time.perf_counter() - t1, 1)
-    t1 = time.perf_counter(); res["distance_attack"] = A.distance_attack(U); res["t_distance"] = round(time.perf_counter() - t1, 1)
-    if do_nav:
+    t1 = time.perf_counter(); res["leakage"] = A.leakage_attack(U, T); res["t_leakage"] = round(time.perf_counter() - t1, 1); stage("leakage done")
+    _dump(res, out_path); del T
+    t1 = time.perf_counter(); res["distance_attack"] = A.distance_attack(U); res["t_distance"] = round(time.perf_counter() - t1, 1); stage("distance done")
+    _dump(res, out_path); stage("analysis results written")
+    if do_nav and phase == "all":
+        return _nav(which, n, U, obs, res, per_stratum, budget, seed, out_path)
+    res["seconds"] = round(time.perf_counter() - t0, 1); _dump(res, out_path); return res
+
+
+def _dump(r, out_path):
+    os.makedirs(os.path.dirname(out_path), exist_ok=True)
+    with open(out_path, "w") as f:
+        json.dump(r, f, indent=1, default=lambda o: int(o) if isinstance(o, np.integer) else (float(o) if isinstance(o, np.floating) else str(o)))
+
+
+def _nav(which, n, U, obs, res, per_stratum, budget, seed, out_path):
+    t0 = time.perf_counter(); D = U["D"]
+    if True:
         S = M.Searcher(U); probs = sample_problems(U, per_stratum, seed)
         nav = {"problems": len(probs), "per_stratum": dict(collections.Counter(p[0] for p in probs)), "budget": budget, "policies": {}}
         base = []
@@ -101,7 +131,7 @@ def run(which: str, per_stratum: int = 40, budget: int = 40000, do_nav: bool = T
                 if ii:
                     entry[st] = {"dfs_solve_rate": float(np.mean([Dd[i]["solved"] for i in ii])), "dfs_mean_transitions": float(np.mean([dexm[i] for i in ii])),
                                  "greedy_solve_rate": float(np.mean([G[i]["solved"] for i in ii])), "oracle_mean_transitions": float(O_[ii, 1].mean())}
-            nav["policies"][pol] = entry
+            nav["policies"][pol] = entry; stage(f"nav {pol} done"); res["navigation"] = nav; _dump(res, out_path)
         cheap = [p for p in POLICIES if p != "KA"]
         best = min(cheap, key=lambda p: (-(nav["policies"][p]["dfs"]["solve_rate"]), nav["policies"][p]["dfs"]["mean_transitions_examined_incl_lookahead"]))
         nav["H1"] = {"best_cheap_policy": best, "transitions": nav["policies"][best]["dfs_SA_oracle_transitions"], "states": nav["policies"][best]["dfs_SA_oracle_states"],
@@ -109,18 +139,15 @@ def run(which: str, per_stratum: int = 40, budget: int = 40000, do_nav: bool = T
         nav["H2"] = {"kernel_aware_residual_blind": "KA", "transitions": nav["policies"]["KA"]["dfs_SA_oracle_transitions"], "states": nav["policies"]["KA"]["dfs_SA_oracle_states"],
                      "KA_solve_rate": nav["policies"]["KA"]["dfs"]["solve_rate"]}
         res["navigation"] = nav
-    res["seconds"] = round(time.perf_counter() - t0, 1)
-    os.makedirs(os.path.join(HERE, "results", "survivor"), exist_ok=True)
-    with open(os.path.join(HERE, "results", "survivor", f"{which}_n{n}.json"), "w") as f:
-        json.dump(res, f, indent=1, default=lambda o: int(o) if isinstance(o, np.integer) else (float(o) if isinstance(o, np.floating) else str(o)))
+    res["nav_seconds"] = round(time.perf_counter() - t0, 1); _dump(res, out_path)
     return res
 
 
 if __name__ == "__main__":
-    ap = argparse.ArgumentParser(); ap.add_argument("which"); ap.add_argument("--per-stratum", type=int, default=40); ap.add_argument("--budget", type=int, default=40000); ap.add_argument("--no-nav", action="store_true")
-    a = ap.parse_args(); r = run(a.which, a.per_stratum, a.budget, not a.no_nav)
+    ap = argparse.ArgumentParser(); ap.add_argument("which"); ap.add_argument("--per-stratum", type=int, default=40); ap.add_argument("--budget", type=int, default=40000); ap.add_argument("--no-nav", action="store_true"); ap.add_argument("--phase", default="all", choices=["all", "analysis", "nav"])
+    a = ap.parse_args(); r = run(a.which, a.per_stratum, a.budget, not a.no_nav, phase=a.phase)
     q = r["Q1"]; print(json.dumps({"universe": a.which, "NS": r["NS"], "edges": r["edges_nominal"], "traps": r["traps"]["total"], "H_obs": q["H_obs"],
                                      "LA5_recall": q["per_depth"]["5"]["recall"], "layers": {k: r["layers"][k] for k in ("R0", "R1", "reachable", "R1_fraction_of_kernel_compatible", "R1_traps", "R1_trap_fraction_of_traps")},
                                      "leak_A_prauc": r["leakage"]["tuple_A"]["pr_auc"], "leak_B_prauc": r["leakage"]["tuple_B"]["pr_auc"], "leak_B_nmi": r["leakage"]["tuple_B"]["normalised_MI"],
                                      "dist_table": r["distance_attack"]["table_regressor"], "dist_linear": r["distance_attack"]["linear_regressor"],
-                                     "H0": r.get("navigation", {}).get("baselines", {}), "H1": r.get("navigation", {}).get("H1"), "H2": r.get("navigation", {}).get("H2"), "seconds": r["seconds"]}, indent=1))
+                                     "H0": r.get("navigation", {}).get("baselines", {}), "H1": r.get("navigation", {}).get("H1"), "H2": r.get("navigation", {}).get("H2"), "seconds": r.get("seconds"), "nav_seconds": r.get("nav_seconds")}, indent=1))

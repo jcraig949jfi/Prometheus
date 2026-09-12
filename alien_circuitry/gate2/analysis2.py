@@ -126,23 +126,26 @@ def table_classifier(key_train, y_train, key_test, y_test, prior: float) -> dict
               "observed": float(y[bi == b].mean()) if (bi == b).any() else None} for b in range(10)]
     # plug-in mutual information on test with train-estimated conditionals
     H = _entropy(np.array([prior])) if 0 < prior < 1 else 0.0
-    Hc = float(np.mean([_entropy(np.array([q])) for q in p])) if len(p) else 0.0
+    pc = np.clip(p, 1e-12, 1 - 1e-12); Hc = float(np.mean(-(pc * np.log2(pc) + (1 - pc) * np.log2(1 - pc)))) if len(p) else 0.0
     return {"train_rows": int(len(key_train)), "test_rows": int(len(key_test)), "cells": int(len(ku)), "unseen_test_fraction": float(1 - seen.mean()),
             "pr_auc": _pr_auc(p, y.astype(float)), "base_rate_test": float(y.mean()), "best_train_threshold_metrics_on_test": m,
             "recall_at_precision_0.5": rec_at_p50, "calibration": calib, "H_trap_bits": H, "H_trap_given_features_bits": Hc,
             "normalised_MI": (H - Hc) / H if H > 0 else None}
 
 
-def leakage_attack(U: dict, T: dict, R1_flags: np.ndarray | None = None) -> dict:
+def leakage_attack(U: dict, T: dict, R1_flags: np.ndarray | None = None, max_rows: int = 3_000_000, seed: int = 0) -> dict:
     """Trap prediction on rank-dropping actions from permitted features only.  Tuple A: action, rank f, rank f',
     block sizes f', counts of values 0/1 in f, rank t, block sizes t.  Tuple B: A + full count vectors of f' and t."""
     src, dst, rid, D, C, rank, bs = U["src"], U["dst"], U["rule"], U["D"], U["C"].astype(np.int64), U["rank"].astype(np.int64), U["bs_id"]
     fam = np.array([r.family for r in U["rules"]]); drop = fam[rid] == "rankdrop"
     E = np.nonzero(drop & (src != dst))[0]
-    rows_e, rows_j, ys = [], [], []
+    rows_e, rows_j, ys = [], [], []; total_rows = 0
+    rng = np.random.default_rng(seed); per_target = max(1, max_rows // len(U["targets"]))
     for j in range(len(U["targets"])):
-        live = D[src[E], j] >= 0; e = E[live]
-        rows_e.append(e); rows_j.append(np.full(len(e), j)); ys.append((D[dst[e], j] < 0))
+        live = D[src[E], j] >= 0; e = E[live]; total_rows += int(len(e))
+        if len(e) > per_target:  # memory cap: seeded uniform subsample per target BEFORE concatenation
+            e = e[rng.choice(len(e), per_target, replace=False)]
+        rows_e.append(e.astype(np.int32)); rows_j.append(np.full(len(e), j, dtype=np.int32)); ys.append((D[dst[e], j] < 0))
     e = np.concatenate(rows_e); j = np.concatenate(rows_j); y = np.concatenate(ys)
     tj = np.array(U["targets"])[j]
     tr = _split(src[e])
@@ -151,21 +154,24 @@ def leakage_attack(U: dict, T: dict, R1_flags: np.ndarray | None = None) -> dict
     A = _pack([rid[e], rank[src[e]], rank[dst[e]], np.unique(bs[dst[e]], return_inverse=True)[1], C[src[e], 0], C[src[e], 1], rank[tj], np.unique(bs[tj], return_inverse=True)[1]])
     Bcols = [A] + [C[dst[e], v] for v in range(U["n"])] + [ct[:, v] for v in range(U["n"])]
     B = _pack(Bcols)
-    out = {"rows": int(len(e)), "base_rate": float(y.mean()),
+    out = {"rows": int(len(e)), "total_live_rankdrop_triples": total_rows, "base_rate": float(y.mean()),
            "tuple_A": table_classifier(A[tr], y[tr], A[~tr], y[~tr], prior), "tuple_B": table_classifier(B[tr], y[tr], B[~tr], y[~tr], prior)}
     return out
 
 
-def distance_attack(U: dict, max_rows: int = 3_000_000, seed: int = 0) -> dict:
+def distance_attack(U: dict, max_rows: int = 250_000, seed: int = 0) -> dict:
     """Predict D on reachable (f, t) pairs from permitted features.  Table regressor on (rank f, rank t, block sizes f,
     block sizes t, count vector f, count vector t); linear regressor on numeric features."""
     from scipy.stats import spearmanr
     D, C, rank, bs = U["D"], U["C"].astype(np.int64), U["rank"].astype(np.int64), U["bs_id"]
     corpus = np.nonzero(U["rank"] >= 3)[0]
-    S, J = np.nonzero(D[corpus] >= 0); S = corpus[S]
-    if len(S) > max_rows:
-        sel = np.random.default_rng(seed).choice(len(S), max_rows, replace=False); S, J = S[sel], J[sel]
-    tj = np.array(U["targets"])[J]; y = D[S, J].astype(float)
+    rng = np.random.default_rng(seed); per_target = max(1, max_rows // D.shape[1]); Ss, Js = [], []
+    for j in range(D.shape[1]):  # per-target subsample before concatenation (memory cap)
+        s_ = corpus[D[corpus, j] >= 0]
+        if len(s_) > per_target: s_ = s_[rng.choice(len(s_), per_target, replace=False)]
+        Ss.append(s_.astype(np.int32)); Js.append(np.full(len(s_), j, dtype=np.int32))
+    S = np.concatenate(Ss); J = np.concatenate(Js)
+    tj = np.array(U["targets"])[J]; y = D[S, J].astype(np.float32); C = C.astype(np.int16)
     tr = _split(S)
     key = _pack([rank[S], rank[tj], np.unique(bs[S], return_inverse=True)[1], np.unique(bs[tj], return_inverse=True)[1]] + [C[S, v] for v in range(U["n"])] + [C[tj, v] for v in range(U["n"])])
     ku, inv = np.unique(key[tr], return_inverse=True); cnt = np.bincount(inv).astype(float); mean = np.bincount(inv, weights=y[tr]) / cnt
@@ -175,7 +181,9 @@ def distance_attack(U: dict, max_rows: int = 3_000_000, seed: int = 0) -> dict:
     def metrics(pred):
         return {"R2": float(1 - ((yt - pred) ** 2).sum() / ss), "exact_match": float((np.round(pred) == yt).mean()), "within_1": float((np.abs(np.round(pred) - yt) <= 1).mean()),
                 "MAE": float(np.abs(pred - yt).mean()), "spearman": float(spearmanr(pred, yt).correlation)}
-    X = np.stack([rank[S], rank[tj], rank[S] - rank[tj], np.abs(C[S] - C[tj]).sum(axis=1), (C[S] * C[tj]).sum(axis=1), np.ones(len(S))], axis=1).astype(float)
+    CS = C[S].astype(np.int32); CT = C[tj].astype(np.int32)
+    X = np.stack([rank[S], rank[tj], rank[S] - rank[tj], np.abs(CS - CT).sum(axis=1), (CS * CT).sum(axis=1), np.ones(len(S))], axis=1).astype(np.float32)
+    del CS, CT
     beta, *_ = np.linalg.lstsq(X[tr], y[tr], rcond=None); lin = X[~tr] @ beta
     return {"rows": int(len(S)), "train_rows": int(tr.sum()), "test_rows": int((~tr).sum()), "cells": int(len(ku)), "unseen_test_fraction": float(1 - seen.mean()),
             "std_D_test": float(yt.std()), "table_regressor": metrics(pred), "linear_regressor": metrics(lin),
