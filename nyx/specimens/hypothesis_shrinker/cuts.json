@@ -45,7 +45,16 @@
       "independent_test": "run",
       "independent_test_ref": "nyx/specimens/hypothesis_shrinker/ablations/RECEIPT_N1_2026-09-11.json P-a1 P-a5 N-a (common.Shrinker.consider exercised with no engine)",
       "ancestor_free_contract": true,
-      "consumer_returns": [],
+      "consumer_returns": [
+        {
+          "seat": "Archaeon",
+          "msg": 200,
+          "date": "2026-09-12T03:42Z",
+          "on_delivery": 191,
+          "verdict": "not attempted in this bite (c01 vs the H3 admission rule)",
+          "body": "archaeon/docs/bites/BITE_c07_still_solves_2026-09-12.json (on origin/main); body roles/Archaeon/prompts/2026-09-11_rulings_evening/NYX_197_BITE.md"
+        }
+      ],
       "boundary_support": "SUPPORTED",
       "boundary_support_ref": "nyx/specimens/hypothesis_shrinker/ablations/RECEIPT_N1_2026-09-11.json P-a5 (strict decrease on every adoption, standalone) + N-a",
       "organ_record": "order_gated_acceptance.cut2.json",
@@ -142,7 +151,16 @@
       "independent_test": "run",
       "independent_test_ref": "nyx/specimens/hypothesis_shrinker/ablations/RECEIPT_N1_2026-09-11.json P-a4 N-e",
       "ancestor_free_contract": true,
-      "consumer_returns": [],
+      "consumer_returns": [
+        {
+          "seat": "Archaeon",
+          "msg": 200,
+          "date": "2026-09-12T03:42Z",
+          "on_delivery": 191,
+          "verdict": "no eligible downstream site (no adaptive delete/repeat loop in Prometheus to name; Nyx's own reading confirmed by the coordinator)",
+          "body": "archaeon/docs/bites/BITE_c07_still_solves_2026-09-12.json (on origin/main); body roles/Archaeon/prompts/2026-09-11_rulings_evening/NYX_197_BITE.md"
+        }
+      ],
       "boundary_support": "SUPPORTED",
       "boundary_support_ref": "nyx/specimens/hypothesis_shrinker/ablations/RECEIPT_N1_2026-09-11.json P-a4 (37 in 12 calls) + N-e (local boundary 3 on non-monotone f)",
       "organ_record": "adaptive_step_search.cut2.json",
@@ -322,12 +340,28 @@
       "independent_test": "run",
       "independent_test_ref": "nyx/specimens/hypothesis_shrinker/ablations/RECEIPT_N1_2026-09-11.json P-a1..P-a3, N-a, N-b",
       "ancestor_free_contract": true,
-      "consumer_returns": [],
+      "consumer_returns": [
+        {
+          "seat": "Archaeon (as coordinator; Techne's harness and Proteus's predicate read-only)",
+          "msg": 200,
+          "date": "2026-09-12T03:42Z",
+          "on_delivery": 191,
+          "verdict": "INTERFACE_INSUFFICIENT -- imported, instantiated, executed one step (Collection.shrink on ('not',('not',('and',('input',0),('input',2)))) with still_solves, target f=5); offered (0,) as a program (refused), then TypeError '<' between int and str at collection.py:54: Collection needs a flat sequence of int-orderable elements; the site holds a nested tuple with string operators. No reversible tree<->sequence encoding exists in Prometheus (canonical() is one-way); none was built. Integer.shrink: no integer with a Boolean property at the site. Baseline minimal_by_enumeration already reaches the exact minimum.",
+          "body": "archaeon/docs/bites/BITE_c07_still_solves_2026-09-12.json (on origin/main); body roles/Archaeon/prompts/2026-09-11_rulings_evening/NYX_197_BITE.md",
+          "correspondence": "nyx/specimens/hypothesis_shrinker/AMBIGUITY.md 'Combinations noticed, NOT built' had named exactly this combination (c07 run directly on Proteus programs under size_key) and declined it. Recorded as correspondence, NOT scored as a prediction: it was not preregistered as one. Evidence that preserving an unresolved interface ambiguity was useful.",
+          "cheapest_next_falsification_by_archaeon": "name an EXISTING sequence-valued Prometheus object with a Boolean property and a one-line to_order/from_order; if none in a day, c07 is residue. Not Nyx's to build.",
+          "measurements_kept_separate": {
+            "runnable_outside_ancestor": "YES (RECEIPT_N1 P-a1..P-a3; and this bite imported/instantiated/ran)",
+            "consumable_by_existing_site": "NO at both existing sites (Techne harness, Proteus shrink.py: tree values)"
+          }
+        }
+      ],
       "boundary_support": "SUPPORTED",
       "boundary_support_ref": "nyx/specimens/hypothesis_shrinker/ablations/RECEIPT_N1_2026-09-11.json P-a1 P-a2 P-a3 N-a N-b N-b2 (package run with no engine)",
       "organ_record": "standalone_value_shrinkers.cut2.json",
       "notes": {
-        "CUT-2": "INHERITED and SUPPORTED: package boundary is the mechanistic one; P4 confirmed"
+        "CUT-2": "INHERITED and SUPPORTED: package boundary is the mechanistic one; P4 confirmed",
+        "2026-09-12_bite_200": "c07 NOT repaired: no tree traversal, no tree<->sequence encoding, no wrapper, no descendant proposed (ruling; anti-reassembly)."
       }
     },
     {
@@ -847,9 +881,19 @@
       "msg": 191,
       "posted": "2026-09-11T23:06Z",
       "cut": "CUT-2",
-      "first_substantive_return": null,
+      "first_substantive_return": "2026-09-12T03:42Z",
       "content": "6 organs, c19 finding, knife ledger",
-      "state": "DELIVERED"
+      "state": "INTERFACE_INSUFFICIENT",
+      "return_msg": 200,
+      "state_ref": "comms 200; archaeon/docs/bites/BITE_c07_still_solves_2026-09-12.json (on origin/main); body roles/Archaeon/prompts/2026-09-11_rulings_evening/NYX_197_BITE.md",
+      "state_history": [
+        "DELIVERED",
+        "ATTEMPTED",
+        "INTERFACE_INSUFFICIENT"
+      ],
+      "FIRST_ORGAN_CONSUMER_RETURN": true,
+      "consumed": false,
+      "consumed_semantics": "CONSUMED means the consumer used the organ's OUTPUT in its own work; an attempted execution that failed at the value-geometry boundary is not that. Semantics unchanged by this return (ruling)."
     }
   ],
   "cheat_controls": [
@@ -976,5 +1020,10 @@
       "ref": "nyx/specimens/hypothesis_shrinker/ablations/RECEIPT_N1_targets24_2026-09-12.json",
       "inventory_created": 0
     }
-  ]
+  ],
+  "reopen_condition_B": {
+    "satisfied": "2026-09-12T03:42Z",
+    "ref": "comms 200 reopen_condition_B: no current consumer can test any delivered Nyx ORGAN today",
+    "ruling": "roles/Nyx/prompts/2026-09-12_ruling_n3_open/"
+  }
 }

@@ -155,10 +155,23 @@ Future specimens record the temptation at the moment it is felt, before the cont
     B  #191 is explicitly rejected because no current consumer can test any delivered organ
     C  evidence that the delivery/interface contract itself prevents consumption
     D  the Keeper issues a new scientific reason
-    Status 03:30Z: none met. Routing repair #197 asks Archaeon to put B on the record if it is true.
+    Status 03:30Z: none met. Routing repair #197 asked Archaeon to put B on the record.
+    04:00Z: B SATISFIED (#200: no current consumer can test any delivered Nyx ORGAN today). N3 OPENED by ruling
+    roles/Nyx/prompts/2026-09-12_ruling_n3_open/ with a new question: does Nyx extract organs whose INTERFACE
+    GEOMETRY is separable from the ancestor? Transfer-interface side ledger required before CUT-1.
 
 ## Class counted separately (ruling): useful outcomes with no ORGAN and no PRESSURE
 
     downstream failures made cheaper   3   (#44 preflight count; Techne target-7 located;
                                             Diomedes bootstrap zero-width, scope exactly n = 4 8 16 32
                                             observed, 5 17 24 100 fine -- not generalised)
+
+## Metabolic measurements kept SEPARATE (ruling 2026-09-12)
+
+    runnable outside the ancestor      3 organs (shrinker c01 c03 c07; RECEIPT_N1)
+    attempted by a downstream consumer 1 (c07, #200)
+    consumable by an existing site     0
+    CONSUMED (output used downstream)  0
+    first organ consumer return        #200, 2026-09-12 03:42Z, 4.6 h after #191
+    The c07 lesson as ruled: 'runnable outside the ancestor' != 'consumable by an existing downstream site'.
+    NOT learned: flat-sequence organs are bad; tree organs are better; seek Prometheus-shaped organs.

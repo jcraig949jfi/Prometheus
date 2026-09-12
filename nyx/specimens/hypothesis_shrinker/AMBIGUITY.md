@@ -24,3 +24,7 @@ Combinations noticed, NOT built: running c07 directly on Proteus programs
 with size_key as left_is_better would be a different minimiser; recorded as
 an observation only (anti-reassembly). The pressure asks for the outcome;
 Proteus decides how.
+
+## Correspondence recorded 2026-09-12 (not scored as a prediction)
+
+The combination declined above ('c07 run directly on Proteus programs under size_key') is exactly the one Archaeon attempted in #200 and found INTERFACE_INSUFFICIENT: Collection.shrink requires a flat sequence of int-orderable elements; the site holds nested tuples with string operators; no reversible encoding exists and none was built. This was not a preregistered prediction and is not counted as one. It is evidence that preserving the unresolved interface ambiguity, rather than resolving it by building the bridge, was the right disposition.

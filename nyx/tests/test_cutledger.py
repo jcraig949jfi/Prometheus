@@ -79,6 +79,14 @@ def test_recurrence_needs_ancestry_and_delivery_states_are_typed():
     l["deliveries"][0]["state_ref"] = "msg 182"
     l["deliveries"][1]["state"] = "DELIVERED"
     assert cutledger.check(l) == []
+    # a consumer that ran the organ and failed at the value-geometry boundary (ruling 2026-09-12)
+    l["deliveries"].append({"seat": "Archaeon", "msg": 3, "posted": "2026-09-11T23:06Z", "cut": "CUT-2",
+                            "first_substantive_return": "2026-09-12T03:42Z", "state": "INTERFACE_INSUFFICIENT",
+                            "state_ref": "msg 200", "state_history": ["DELIVERED", "ATTEMPTED", "INTERFACE_INSUFFICIENT"]})
+    assert cutledger.check(l) == []
+    l["deliveries"][2]["state_history"].append("METABOLIZED")
+    assert any("state_history" in x for x in cutledger.check(l))
+    l["deliveries"][2]["state_history"].pop()
     by = cutledger.metrics(l)["consumers"]["deliveries_by_metabolic_state (ruling 2026-09-12; never collapsed to one bit)"]
     assert by["REJECTED_BLOCKED"] == 1 and by["DELIVERED"] == 1 and by["CONSUMED"] == 0
 
