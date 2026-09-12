@@ -1,0 +1,76 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "verilog-uart2bus",
+  "receipt_id": "run-verilog-uart2bus-20260912T162148Z",
+  "written_utc": "20260912T162148Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-hw:bookworm",
+  "workdir": "upstream/tree/verilog",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "3b41bf158603334d2b93d267637134759522d8c508cef6f700452585dc34da7a",
+  "recipe_sha256": "896f5aee889255288bd3bccd8b6c08f0a8d54c1dd11144203120aeba33b4c202",
+  "patches": [],
+  "probe": [
+    {
+      "name": "iverilog",
+      "cmd": "iverilog -V 2>&1 | head -1",
+      "exit": 0,
+      "seconds": 0.87,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Icarus Verilog version 11.0 (stable) ()\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "compile UART2bus rtl + the tb_uart2bus_top bench",
+      "cmd": "iverilog -Ibench -Irtl -o $BODY/uart.vvp bench/tb_uart2bus_top.v bench/reg_file_model.v $(ls rtl/*.v) 2>&1 | grep -viE 'warning' | tail -6; test -f $BODY/uart.vvp",
+      "exit": 0,
+      "seconds": 0.92,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "bench/tb_uart2bus_top.v:146:        : Padding 8 high bits of the port.\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "drive serial frames into the UART->bus controller, watch the register writes/reads",
+      "cmd": "vvp -N $BODY/uart.vvp 2>&1 | tail -30; echo UART2BUSDONE",
+      "exit": 0,
+      "seconds": 1.72,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "VCD info: dumpfile test.vcd opened for output.\nSending character 0x77 (\"w\"), at 115207 baud (err=0), 8 bits, NONE parity, 1 stops\nSending character 0x20 (\" \"), at 115207 baud (err=0), 8 bits, NONE parity, 1 stops\nSending character 0x34 (\"4\"), at 115207 baud (err=0), 8 bits, NONE parity, 1 stops\nSending character 0x63 (\"c\"), at 115207 baud (err=0), 8 bits, NONE parity, 1 stops\nSending character 0x64 (\"d\"), at 115207 baud (err=0), 8 bits, NONE parity, 1 stops\nSending character 0x39 (\"9\"), at 115207 baud (err=0), 8 bits, NONE parity, 1 stops\nSending character 0x20 (\" \"), at 115207 baud (err=0), 8 bits, NONE parity, 1 stops\nSending character 0x31 (\"1\"), at 115207 baud (err=0), 8 bits, NONE parity, 1 stops\nSending character 0x61 (\"a\"), at 115207 baud (err=0), 8 bits, NONE parity, 1 stops\nSending character 0x0d (\"\u00b0\"), at 115207 baud (err=0), 8 bits, NONE parity, 1 stops\nSending character 0x72 (\"r\"), at 115207 baud (err=0), 8 bits, NONE parity, 1 stops\nSending character 0x20 (\" \"), at 115207 baud (err=0), 8 bits, NONE parity, 1 stops\nSending character 0x31 (\"1\"), at 115207 baud (err=0), 8 bits, NONE parity, 1 stops\nSending character 0x61 (\"a\"), at 115207 baud (err=0), 8 bits, NONE parity, 1 stops\nSending character 0x0d (\"\u00b0\"), at 115207 baud (err=0), 8 bits, NONE parity, 1 stops\nreceived byte 0x44 (\"D\") at              1377210 ns\nreceived byte 0x39 (\"9\") at              1463910 ns\nreceived byte 0x0d (\"\u00b0\") at              1550710 ns\nreceived byte 0x0a (\"\u00b0\") at              1637535 ns\nUART2BUSDONE\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [
+    {
+      "path": "test.vcd",
+      "sha256": "a424d0af5605fcf3f7029d2ab18bceb1494648d252cc30fe0828caf627676e9c",
+      "bytes": 3407180
+    }
+  ],
+  "classification": "RUNNABLE_EMULATED",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true
+}

@@ -1,0 +1,60 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "arduino-pid",
+  "receipt_id": "run-arduino-pid-20260912T163238Z",
+  "written_utc": "20260912T163238Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree",
+  "harness_sha256": {
+    "Arduino.h": "3143fa1a42a0d12f6c4f47c2fd45b6c79dbb621dfc43eb4d4d700c630e6f70d6",
+    "drv.cpp": "f43596d2e96f868263c2727cc867ce456975f779611d5d4909837e70fa6a87a1"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "f4b65bd9cdf08236942485491bb73de0c5e3e4d16a357450e4f21bc0932c902b",
+  "recipe_sha256": "89246f6578f7981b5845199f06764e34088ac40db66443b3e03a8cc82d4b3359",
+  "patches": [],
+  "probe": [
+    {
+      "name": "g++",
+      "cmd": "g++ --version | head -1",
+      "exit": 0,
+      "seconds": 0.88,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "g++ (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "compile PID + plant harness",
+      "cmd": "g++ -O2 -I. -I$HARNESS -o $BODY/pid $HARNESS/drv.cpp PID_v1.cpp 2>&1 | grep -i 'error:'; test -x $BODY/pid",
+      "exit": 1,
+      "seconds": 1.04,
+      "ok": false,
+      "why_not": [
+        "exit 1 != expected 0"
+      ],
+      "stdout": {
+        "text": "PID_v1.cpp:11:12: fatal error: WProgram.h: No such file or directory\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [],
+  "tests": [],
+  "produced": [],
+  "classification": "BROKEN_UPSTREAM",
+  "test_classification": "NO_TESTS",
+  "ok": false
+}

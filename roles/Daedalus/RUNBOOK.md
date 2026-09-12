@@ -34,12 +34,13 @@ paths are on **M1 / SKULLPORT** unless noted.
 | Engine host | M1 / SKULLPORT, IP `192.168.1.202` |
 | Listen | `https://192.168.1.202:8811`, TLS, `/v2` API |
 | Service | Windows scheduled task **`SFEngine`** (S4U, AtLogOn + AtStartup, runs on battery, no time limit) |
-| Launch cmd | `F:\Prometheus\SerendipityFoundry\SerendipityFoundryEngine\deploy\sfengine.cmd` |
-| Interpreter | `H:\Python312\python.exe` (via the project venv) |
-| DB | `...\SerendipityFoundryEngine\var\engine.db` (SQLite WAL — authoritative substrate) |
-| TLS | `deploy\m1.crt` / `deploy\m1.key` (CN/SAN `192.168.1.202`, valid → Dec 2028). **Key never leaves M1, never enters git.** |
+| Launch cmd | `D:\Prometheus-data\sfe\sfengine.cmd` **(since 2026-09-12 11:58)**; the code it runs is the pinned worktree `F:\Prometheus-worktrees\daedalus-sfengine` detached at `d5be5ec4b`. Superseded: `F:\Prometheus-data\sfe\sfengine.cmd` (09-11 03:48..09-12 11:58); `F:\Prometheus\...\deploy\sfengine.cmd` (before 09-11) |
+| Interpreter | `F:\SerendipityD\.venv\Scripts\python.exe` (launcher stub) -> `H:\Python312\python.exe` (child that serves) |
+| DB | `D:\Prometheus-data\sfe\engine.db` (SQLite WAL, authoritative). **On an NVMe volume by C9's ruling** (`SerendipityFoundry/SerendipityFoundryEngine/deploy/C9_BURST_STALL_2026-09-11/FINDING.md`): the same write burst ran 31x slower with multi-second freezes on the Seagate ST4000DM004 HDD it used to sit on. The F: copy (`F:\Prometheus-data\sfe`) is the rollback and is NOT deleted; retirement is a separate gate. Move receipt: `deploy/LEDGER_MOVE_2026-09-12/apply.json` |
+| Blobs / rollback | `D:\Prometheus-data\sfelobs`, `D:\Prometheus-data\sfeackup` (schema-7 and schema-8 snapshots) |
+| TLS | `D:\Prometheus-data\sfe\m1.crt` / `m1.key` (CN/SAN `192.168.1.202`, valid -> Dec 2028). **Key never leaves M1, never enters git.** Public cert also at `SerendipityFoundryClient/config/m1.crt` |
 | Firewall | inbound rule `SFEngine (LAN)`, Allow, TCP 8811, RemoteAddress `192.168.1.0/24` |
-| Log | `deploy\sfengine.log` |
+| Log | `D:\Prometheus-data\sfe\sfengine.log` (uvicorn text, NO timestamps -- use the ledger's `events.ts` as the clock) |
 | Neighbor (do NOT disturb) | live D-13 service on `192.168.1.202:8799` |
 
 ## Liveness

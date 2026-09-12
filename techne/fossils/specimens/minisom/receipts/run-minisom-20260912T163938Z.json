@@ -1,0 +1,96 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "minisom",
+  "receipt_id": "run-minisom-20260912T163938Z",
+  "written_utc": "20260912T163938Z",
+  "runner": "docker",
+  "image": "python:3.11-slim",
+  "workdir": "upstream/tree",
+  "harness_sha256": {
+    "drv.py": "adc839cab4ed8c622978cbf154dd00043824f6c5a009b7256df6b0aaff7eb2c5"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "6a09c9f371ea8e0c7b68dcdf04fa3398f7e4bdc1356f8fe0d3c5170d82ed24df",
+  "recipe_sha256": "09052034ed5db02417f2557527ffcd3df967b1bfa3c30d0053fa43ceca00c031",
+  "patches": [],
+  "probe": [
+    {
+      "name": "pip install",
+      "cmd": "pip install -q numpy . 2>&1 | tail -2; python -c 'import minisom;print(\"minisom ok\")'",
+      "exit": 0,
+      "seconds": 5.58,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "[notice] A new release of pip is available: 24.0 -> 26.2.1\n[notice] To update, run: pip install --upgrade pip\nminisom ok\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [],
+  "runs": [
+    {
+      "name": "self-organise a map over three clusters (quantization error drops)",
+      "cmd": "python $HARNESS/drv.py",
+      "exit": 1,
+      "seconds": 0.94,
+      "ok": false,
+      "why_not": [
+        "exit 1 != expected 0",
+        "stdout lacks 'SOM_ORGANIZED'"
+      ],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": "Traceback (most recent call last):\n  File \"/w/harness/drv.py\", line 1, in <module>\n    import numpy as np\nModuleNotFoundError: No module named 'numpy'\n"
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [
+    {
+      "path": "__pycache__/minisom.cpython-311.pyc",
+      "sha256": "879877963007879776ddad3f091a4cc6155ed89e58c191d942d7df9d735b4122",
+      "bytes": 95877
+    },
+    {
+      "path": "build/lib/minisom.py",
+      "sha256": "4ddb5b1ce198b9c3dec26833422b4db22f23cea46ea70780d47c72f10536d4e3",
+      "bytes": 65191
+    },
+    {
+      "path": "MiniSom.egg-info/dependency_links.txt",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "bytes": 1
+    },
+    {
+      "path": "MiniSom.egg-info/PKG-INFO",
+      "sha256": "2b0d4af1cc305f6533a434e50ee567256e8e81a0e27f43984cbc35260a753283",
+      "bytes": 787
+    },
+    {
+      "path": "MiniSom.egg-info/requires.txt",
+      "sha256": "237175f614d8b93f974905abf7a4f27fa421b4e28f0c6c84f9ff6c69c439ec13",
+      "bytes": 14
+    },
+    {
+      "path": "MiniSom.egg-info/SOURCES.txt",
+      "sha256": "cd4cc67846d8e50a59cdf8c76b98c85edfa0ad9672d52107cb45d0f9a4a41925",
+      "bytes": 191
+    },
+    {
+      "path": "MiniSom.egg-info/top_level.txt",
+      "sha256": "9fec91838c8bb3ba2d5dc81396fdea80ef214576b9453e5d41b747ed46eb7fa0",
+      "bytes": 8
+    }
+  ],
+  "classification": "BUILDS_BUT_NOT_RUN",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": false
+}

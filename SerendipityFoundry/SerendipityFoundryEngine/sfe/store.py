@@ -27,6 +27,7 @@ from __future__ import annotations
 
 import contextlib
 import sqlite3
+import threading
 import time
 from pathlib import Path
 from typing import Any, Iterator, Optional
@@ -582,6 +583,47 @@ CREATE TABLE IF NOT EXISTS measurements (
 """
 
 
+class _WriteLockStats:
+    """Process-wide, measured: BEGIN IMMEDIATE acquisition time. Nothing here
+    is inferred from configuration; every field comes from a timed call."""
+
+    def __init__(self):
+        self._lock = threading.Lock()
+        self.reset()
+
+    def reset(self):
+        with self._lock:
+            self.acquisitions = 0
+            self.failures = 0
+            self.max_wait_s = 0.0
+            self.waits_over_1s = 0
+            self.last_wait_s = None
+            self.last_at = None
+
+    def record(self, wait_s: float, *, acquired: bool):
+        with self._lock:
+            if acquired:
+                self.acquisitions += 1
+            else:
+                self.failures += 1
+            self.max_wait_s = max(self.max_wait_s, wait_s)
+            if wait_s > 1.0:
+                self.waits_over_1s += 1
+            self.last_wait_s = wait_s
+            self.last_at = time.time()
+
+    def snapshot(self) -> dict:
+        with self._lock:
+            return {"acquisitions": self.acquisitions, "failures": self.failures,
+                    "max_wait_s": round(self.max_wait_s, 4),
+                    "waits_over_1s": self.waits_over_1s,
+                    "last_wait_s": None if self.last_wait_s is None else round(self.last_wait_s, 4),
+                    "last_at": self.last_at}
+
+
+WRITE_LOCK_STATS = _WriteLockStats()
+
+
 class Store:
     """A per-thread connection to the Gen-2 database. Open one per worker."""
 
@@ -831,8 +873,19 @@ class Store:
     def write(self) -> Iterator[sqlite3.Connection]:
         """A write transaction. BEGIN IMMEDIATE takes the write lock up front,
         so a read-then-write (e.g. claim a work item) is atomic against other
-        writers -- the single most important property for the work queue."""
-        self._conn.execute("BEGIN IMMEDIATE")
+        writers -- the single most important property for the work queue.
+
+        B3 (2026-09-12): the time BEGIN IMMEDIATE takes to return IS the write
+        lock acquisition wait (SQLite's busy handler runs inside it), so it is
+        measured here and nowhere else, and reported by /v2/health under that
+        name. A failure to acquire (OperationalError) is counted as such."""
+        t0 = time.monotonic()
+        try:
+            self._conn.execute("BEGIN IMMEDIATE")
+        except sqlite3.OperationalError:
+            WRITE_LOCK_STATS.record(time.monotonic() - t0, acquired=False)
+            raise
+        WRITE_LOCK_STATS.record(time.monotonic() - t0, acquired=True)
         try:
             yield self._conn
             self._conn.execute("COMMIT")

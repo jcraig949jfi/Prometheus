@@ -101,3 +101,25 @@ def test_no_credential_material_in_evidence():
     for n in RUNS:
         text = open(os.path.join(EVID, n + ".json"), encoding="ascii").read().lower()
         assert "gen2_" not in text and "bearer" not in text and "token" not in text
+
+
+# -- after the move (2026-09-12): the acceptance criterion as a test ---------
+AFTER = "run3_D_asdeployed_after_move"
+
+
+def test_acceptance_after_move_no_paired_freezes_and_nvme_regime():
+    """Operator's criterion 2026-09-12: no paired multi-second freeze
+    pattern; zero or bounded calls over 5 s; producer and reader latency
+    back in the NVMe-class regime measured in C9 run1."""
+    before = _load("run2_F_asdeployed")
+    after = _load(AFTER)
+    ref = _load("run1_C_asdeployed")
+    assert after["engine"]["engine_source_hash"] == before["engine"]["engine_source_hash"]
+    assert after["copy_from"].lower().startswith("d:/")
+    assert len([s for s in after["slow_calls"] if s["dt_s"] >= 5]) == 0
+    assert sum(v["over_10s"] for v in after["summary"].values()) == 0
+    for who in ("burst/producer", "burst/reader"):
+        assert after["summary"][who]["p95_s"] <= 2 * ref["summary"][who]["p95_s"] + 0.02
+        assert after["summary"][who]["max_s"] < 1.0
+    assert after["t_burst_s"] < before["t_burst_s"] / 20
+    assert after["wal_max_bytes"] < 2 * 1024 * 1024

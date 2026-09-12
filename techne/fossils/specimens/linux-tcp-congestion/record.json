@@ -1,0 +1,155 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "linux-tcp-congestion",
+  "canonical_name": "Linux TCP congestion control -- CUBIC and BBR (the congestion-avoidance lineage under pressure)",
+  "aliases": [
+    "tcp_cubic",
+    "tcp_bbr",
+    "TCP congestion control"
+  ],
+  "lineage": "TCP congestion control (1988-, Van Jacobson onward): Tahoe -> Reno -> NewReno -> CUBIC (2008, loss-based, the Linux default) -> BBR (2016, Google, model-based rate/RTT). Each redesign was forced by a changed network: higher bandwidth-delay products, then bufferbloat. Preserved here as the actual Linux kernel modules tcp_cubic.c and tcp_bbr.c.",
+  "domain": [
+    "networks",
+    "congestion-control",
+    "feedback-control",
+    "adaptation",
+    "contention"
+  ],
+  "era": "1988- (cubic 2008, bbr 2016)",
+  "version": "linux v6.6 net/ipv4/tcp_cubic.c + tcp_bbr.c (pinned tag)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "https://raw.githubusercontent.com/torvalds/linux/v6.6/net/ipv4/tcp_cubic.c",
+        "filename": "tcp_cubic.c",
+        "extract": false,
+        "sha256": "0a5d08e29d616fdf085ee3d34d6c9bbbe5d2d7bfe4899a87884a070f63c699ba",
+        "bytes": 16549
+      },
+      {
+        "kind": "url",
+        "url": "https://raw.githubusercontent.com/torvalds/linux/v6.6/net/ipv4/tcp_bbr.c",
+        "filename": "tcp_bbr.c",
+        "extract": false,
+        "sha256": "ba7d0706259dfef5bf455f26ac4bab65f43b9209b9cfd4f761c64c89816bdfe4",
+        "bytes": 42724
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "torvalds/linux",
+    "tag": "v6.6",
+    "files": [
+      "net/ipv4/tcp_cubic.c",
+      "net/ipv4/tcp_bbr.c"
+    ]
+  },
+  "hashes": {
+    "tree_sha256": "9a8f38abdfec736771b1a9d41ac5cf049231927506b7be3d39efa895a7566e6f",
+    "n_files": 2,
+    "bytes": 59273,
+    "artifacts": [
+      {
+        "filename": "tcp_cubic.c",
+        "sha256": "0a5d08e29d616fdf085ee3d34d6c9bbbe5d2d7bfe4899a87884a070f63c699ba",
+        "commit": null
+      },
+      {
+        "filename": "tcp_bbr.c",
+        "sha256": "ba7d0706259dfef5bf455f26ac4bab65f43b9209b9cfd4f761c64c89816bdfe4",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\linux-tcp-congestion",
+    "hash_list": "techne/fossils/specimens/linux-tcp-congestion/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "GPL-2.0",
+    "status": "copyleft",
+    "evidence": "SPDX header in each file"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "C (Linux kernel)"
+  ],
+  "build_system": "none standalone (kernel module context)",
+  "compiler_or_interpreter": "Linux kernel build (NOT built standalone)",
+  "dependencies": [
+    "the Linux kernel TCP stack (struct tcp_sock, the congestion_ops interface)"
+  ],
+  "run_classification": "SOURCE_ONLY",
+  "test_classification": "NO_TESTS",
+  "entry_points": [
+    "struct tcp_congestion_ops: .cong_avoid / .ssthresh / .cong_control (cubic); the BBR state machine (STARTUP/DRAIN/PROBE_BW/PROBE_RTT)"
+  ],
+  "example": {
+    "command": "SOURCE ONLY -- read cubic's window growth vs bbr's rate/RTT model; a live run needs a kernel + netem",
+    "input": "n/a",
+    "output": "n/a"
+  },
+  "environment": {
+    "runner": "none this pass -- SOURCE pinned; a runnable comparison needs a kernel with tc/netem injecting loss and delay (RUNNABLE_EMULATED candidate via a VM)"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Ha, Rhee, Xu, CUBIC: A New TCP-Friendly High-Speed TCP Variant, 2008",
+    "Cardwell et al., BBR: Congestion-Based Congestion Control, 2016",
+    "Jacobson, Congestion Avoidance and Control, 1988"
+  ],
+  "human_capability_summary": {
+    "built_to": "regulate a TCP sender's transmission rate so it uses available bandwidth without collapsing the shared network -- inferring congestion from loss (CUBIC) or from a bandwidth/RTT model (BBR)",
+    "pressure": "a shared link of unknown, varying capacity with many competing senders; too fast causes loss and congestion collapse, too slow wastes the link",
+    "success_means": "high throughput, low queueing delay, and fairness to other flows across a range of bandwidth-delay products and loss rates"
+  },
+  "known_human_problem_solved": "congestion avoidance on a shared network",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "bandwidth scarcity, packet loss, variable RTT, bufferbloat, competing flows",
+  "human_failure_condition": "congestion collapse (1986): everyone retransmits into a saturated link and useful throughput drops toward zero",
+  "behavioral_entry_point": "the two files ARE the before/after of a documented redesign: CUBIC's loss-triggered cubic window vs BBR's explicit bandwidth+RTT probing. Read them side by side; a live study injects loss/delay with netem.",
+  "observability": {
+    "EXECUTABLE": "no",
+    "OBSERVABLE": "no",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "superseded",
+      "to": "TCP Reno/NewReno",
+      "note": "CUBIC replaced Reno-family as Linux default"
+    },
+    {
+      "relation": "algorithm_from",
+      "to": "Jacobson 1988",
+      "note": "the congestion-avoidance lineage all descend from"
+    }
+  ],
+  "acquisition_tags": [],
+  "versions_preserved": [
+    {
+      "version": "CUBIC (2008)",
+      "role": "TRANSITION -- loss-based, replaced Reno/BIC as the Linux default"
+    },
+    {
+      "version": "BBR (2016)",
+      "role": "AFTER -- model-based, a paradigm change from loss-triggered to rate/RTT estimation"
+    },
+    {
+      "note": "BEFORE (Tahoe/Reno/NewReno, 1988-1999) referenced but not preserved here; queued from historical BSD"
+    }
+  ],
+  "receipts": [],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\linux-tcp-congestion ; tracked techne/fossils/specimens/linux-tcp-congestion",
+    "where_it_came_from": "https://raw.githubusercontent.com/torvalds/linux/v6.6/net/ipv4/tcp_cubic.c ; ORIGINAL_AUTHORITATIVE_RELEASE",
+    "how_to_run_it": "SOURCE_ONLY: CUBIC and BBR are Linux-kernel congestion modules (tcp_cubic.c, tcp_bbr.c) that link against the kernel's TCP stack; running them means booting a kernel with a network under load. Preserved + tree-hashed for Nyx to read the avoidance/backoff logic; no in-vault runner.",
+    "how_we_know_it_runs": "not executed; body tree_sha256 9a8f38abdfec7367 pinned in UPSTREAM_HASHES.txt",
+    "what_humans_used_it_for": "regulate a TCP sender's transmission rate so it uses available bandwidth without collapsing the shared network -- inferring congestion from loss (CUBIC) or from a bandwidth/RTT model (BBR)"
+  },
+  "seat": "Techne"
+}
