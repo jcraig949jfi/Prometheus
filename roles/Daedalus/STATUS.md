@@ -1,6 +1,6 @@
 # Daedalus -- status
 
-Currency: 2026-09-12 12:10 local (base role s3 requires this file; refreshed at
+Currency: 2026-09-12 12:35 local (base role s3 requires this file; refreshed at
 least every four hours of activity).
 
 ## Where I am working
@@ -42,9 +42,12 @@ bound + park, CODE_FIXED not deployed on M2); B1 readiness (`f2b8b3415`:
 tool for the owner, delegations to Vivarium and Archaeon, grantee principal
 is the gap); KAIROS-01 (`8fc4531f3`: census (b), 8 claims on M1, all mine).
 
-1. Held bundle: A6 (vocabulary first), B3 (measured quantities only),
-   C7 -- one deploy window.
-2. B1: Vivarium's act at its next seat sync (grantee known).
+1. Deploy candidate `8c53d04e6` (A6 + B3 + C7, hash 726275da) in one
+   window ONCE Harmonia regenerates the contract (comms 215); otherwise
+   both consumers' gates read state 3.
+2. B1: Vivarium's act at its next seat sync (grantee known; not issued
+   at 12:26).
+3. Archaeon re-points sfe_db to D: (216); F: copy is frozen.
 3. **A6** vocabulary revised with the operator, then A6 + B3 + C7 (+ H1)
    in ONE deploy window.
 4. Canonical-copy deletion, separately from any engine restart.
